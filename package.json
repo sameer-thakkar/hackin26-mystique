@@ -2,17 +2,26 @@
   "name": "mystique",
   "version": "1.0.0",
   "description": "Microbrands at Headout",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "next -p 8000",
+    "deploy": "now"
   },
   "author": "Aakash Goel",
   "license": "ISC",
   "dependencies": {
+    "@zeit/next-css": "^1.0.1",
     "next": "^9.0.3",
     "prismic-javascript": "^2.1.1",
     "prismic-reactjs": "^1.0.1",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "react-json-tree": "^0.11.2"
+  },
+  "devDependencies": {
+    "@types/node": "^12.7.1",
+    "@types/react": "^16.9.0",
+    "prettier": "^1.18.2",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.5.3"
   }
 }
