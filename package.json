@@ -4,6 +4,8 @@
   "description": "Microbrands at Headout",
   "scripts": {
     "dev": "next -p 8000",
+    "build": "next build",
+    "start": "next start",
     "deploy": "now"
   },
   "author": "Aakash Goel",
