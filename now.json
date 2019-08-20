@@ -1,6 +1,10 @@
 {
   "version": 2,
-  "alias": ["microbrand.tickets-amsterdam.com", "microbrand.eiffeltickets.com"],
+  "alias": [
+    "microbrand.tickets-amsterdam.com",
+    "microbrand.eiffeltickets.com",
+    "microbrand.vaticantickets.org"
+  ],
   "name": " mystique",
   "routes": [
     {
