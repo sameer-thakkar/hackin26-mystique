@@ -28,6 +28,7 @@ class MyDocument extends Document {
             type="text/javascript"
             src="//static.cdn.prismic.io/prismic.min.js"
           />
+          <link rel="stylesheet" href="../static/style.css" />
         </Head>
         <body>
           <Main />

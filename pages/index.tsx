@@ -19,11 +19,15 @@ const getPropsFromReq = req => {
       ? pathname.substr(0, pathname.length - 1)
       : pathname;
 
-  const languages = ["en", "es", "it"];
+  const languages = ["en", "es", "it", "fr", "pt", "de", "nl"];
   const langMap = {
     en: "en-us",
     es: "es-es",
-    it: "it-it"
+    it: "it-it",
+    fr: "fr-fr",
+    pt: "pt-pt",
+    nl: "nl-nl",
+    de: "de-de"
   };
 
   const pathnameSlugs = pathnameWithoutTrailingSlash(pathname)
@@ -31,6 +35,8 @@ const getPropsFromReq = req => {
     .filter(item => item);
 
   let requestedLang = pathnameSlugs[0];
+
+  console.log(requestedLang);
 
   const isLangValid = languages.includes(requestedLang);
   if (isLangValid) {
