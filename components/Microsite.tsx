@@ -3,6 +3,7 @@ import Header from "./Header";
 import Banner from "./Banner";
 import PopulateUncategorizedProducts from "./PopulateUncategorizedProducts";
 import Footer from "./Footer";
+import LongForm from "./LongForm";
 
 export default class Microsite extends Component<any, any> {
   constructor(props) {
@@ -21,7 +22,9 @@ export default class Microsite extends Component<any, any> {
     const { data } = this.props.data;
     const uncategorizedTours = data.body1;
     uncategorizedTours[0].items.map(tour => all_tgids.push(tour.tgid));
-    const fetchPrices = await fetch(`https://api.headout.com/api/v5/tour-group/list?ids[]=${all_tgids}`);
+    const fetchPrices = await fetch(
+      `https://api.headout.com/api/v5/tour-group/list?ids[]=${all_tgids}`
+    );
     const response = await fetchPrices.json();
     const currencySymbol = response.currencies[0].localSymbol;
     response.tourGroups.map(tour => {
@@ -38,8 +41,10 @@ export default class Microsite extends Component<any, any> {
   }
 
   toggleDropdown = () => {
-    (this.state.languageDropdown) ? this.setState({languageDropdown: false}) : this.setState({languageDropdown: true})
-  }
+    this.state.languageDropdown
+      ? this.setState({ languageDropdown: false })
+      : this.setState({ languageDropdown: true });
+  };
 
   render() {
     const { url: logoUrl } = this.props.data.data.link_to_logo_file;
@@ -67,6 +72,7 @@ export default class Microsite extends Component<any, any> {
       show_less_text: showLessText
     } = this.props.data.data;
     const { text: disclaimer } = this.props.data.data.disclaimer[0];
+    const longFormContent = this.props.data.data.body2;
     return (
       <div className="microsite-container">
         <Header
@@ -99,6 +105,7 @@ export default class Microsite extends Component<any, any> {
             showLessText={showLessText}
           />
         )}
+        {longFormContent ? <LongForm content={longFormContent} /> : null}
         <Footer
           logoUrl={uploadedFooterLogoUrl || footerLogoUrl || null}
           footerLinks={footerLinks ? footerLinks : null}
