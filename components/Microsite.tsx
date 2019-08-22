@@ -77,7 +77,9 @@ export default class Microsite extends Component<any, any> {
       read_more_text: readMoreText,
       show_less_text: showLessText
     } = this.props.data.data;
-    const { text: disclaimer } = this.props.data.data.disclaimer[0];
+    const { text: disclaimer } = this.props.data.data.disclaimer[0] || {
+      text: ""
+    };
     const longFormContent = this.props.data.data.body2;
     return (
       <div className="microsite-container">
