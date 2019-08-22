@@ -4,6 +4,7 @@ import Banner from "./Banner";
 import PopulateUncategorizedProducts from "./PopulateUncategorizedProducts";
 import Footer from "./Footer";
 import LongForm from "./LongForm";
+import GroupBooking from "./GroupBooking";
 
 export default class Microsite extends Component<any, any> {
   constructor(props) {
@@ -12,7 +13,8 @@ export default class Microsite extends Component<any, any> {
     this.state = {
       tourPrices: [],
       currencySymbol: "",
-      languageDropdown: false
+      languageDropdown: false,
+      showGroupBookingModal: false
     };
   }
 
@@ -46,6 +48,10 @@ export default class Microsite extends Component<any, any> {
       : this.setState({ languageDropdown: true });
   };
 
+  openGroupBookingModal = () => this.setState({ showGroupBookingModal: true });
+  closeGroupBookingModal = () =>
+    this.setState({ showGroupBookingModal: false });
+
   render() {
     const { url: logoUrl } = this.props.data.data.link_to_logo_file;
     const { url: uploadedLogoUrl, alt: altText } = this.props.data.data.logo;
@@ -75,6 +81,11 @@ export default class Microsite extends Component<any, any> {
     const longFormContent = this.props.data.data.body2;
     return (
       <div className="microsite-container">
+        {this.state.showGroupBookingModal && (
+          <GroupBooking
+            closeGroupBookingModal={() => this.closeGroupBookingModal}
+          />
+        )}
         <Header
           languages={languages ? languages : null}
           headerLinks={headerLinks ? headerLinks : null}
