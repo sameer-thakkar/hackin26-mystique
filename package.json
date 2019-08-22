@@ -12,14 +12,18 @@
   "license": "ISC",
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
-    "next": "^9.0.3",
-    "prismic-dom": "^2.1.0",
+    "libphonenumber-js": "^1.7.22",
+    "next": "^9.0.4",
     "prismic-javascript": "^2.1.1",
     "prismic-reactjs": "^1.0.1",
-    "react": "^16.8.6",
-    "react-alice-carousel": "^1.15.3",
-    "react-device-detect": "^1.7.5",
-    "react-dom": "^16.8.6",
+    "react": "^16.9.0",
+    "react-alice-carousel": "^1.15.2",
+    "react-datepicker": "^2.8.0",
+    "react-dom": "^16.9.0",
+    "react-json-tree": "^0.11.2",
+    "react-modal": "^3.9.1",
+    "react-select": "^3.0.4",
+    "react-telephone-input": "^4.73.4",
     "react-id-swiper": "^2.3.2",
     "react-json-tree": "^0.11.2",
     "swiper": "^4.5.0"
@@ -37,5 +41,7 @@
     "hooks": {
       "pre-commit": "pretty-quick --staged"
     }
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/headout/mystique.git"
 }

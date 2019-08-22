@@ -42,7 +42,10 @@ export default class Header extends Component<any, any> {
             <div className="bar2"></div>
             <div className="bar3"></div>
           </div>
-          <HeaderLinks headerLinks={headerLinks} isMobile={isMobile} />
+          <HeaderLinks
+            headerLinks={headerLinks}
+            openGroupBookingModal={this.props.openGroupBookingModal}
+          />
           <LanguageSelector
             languages={languages}
             availableLanguages={availableLanguages}

@@ -1,14 +1,14 @@
 import React from "react";
 
-type MyProps = {
+type IPriceProps = {
   tgid: number;
 };
-type MyState = {
+type IPriceState = {
   error: any;
   isLoaded: Boolean;
   data: any;
 };
-class InlinePrice extends React.Component<MyProps, MyState> {
+class InlinePrice extends React.Component<IPriceProps, IPriceState> {
   constructor(props) {
     super(props);
     this.state = {

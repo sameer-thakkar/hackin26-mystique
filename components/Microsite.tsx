@@ -7,6 +7,7 @@ import LongForm from "./LongForm";
 import Prismic from "prismic-javascript";
 import { apiEndpoint } from "../prismic-config";
 import FreeTourPopup from "./FreeTourPopup";
+import GroupBooking from "./GroupBooking";
 
 export default class Microsite extends Component<any, any> {
   constructor(props) {
@@ -17,6 +18,7 @@ export default class Microsite extends Component<any, any> {
       currencySymbol: "",
       languageDropdown: false,
       popupOpen: false
+      showGroupBookingModal: false
     };
   }
 
@@ -55,6 +57,9 @@ export default class Microsite extends Component<any, any> {
       ? this.setState({ popupOpen: false })
       : this.setState({ popupOpen: true });
   };
+  openGroupBookingModal = () => this.setState({ showGroupBookingModal: true });
+  closeGroupBookingModal = () =>
+    this.setState({ showGroupBookingModal: false });
 
   render() {
     const isMobile = () => {
@@ -107,6 +112,11 @@ export default class Microsite extends Component<any, any> {
     return (
       <div>
         <div className="microsite-container">
+          {this.state.showGroupBookingModal && (
+          <GroupBooking
+            closeGroupBookingModal={() => this.closeGroupBookingModal}
+          />
+        )}
           <Header
             languages={languages ? languages : null}
             headerLinks={headerLinks ? headerLinks : null}
@@ -116,15 +126,15 @@ export default class Microsite extends Component<any, any> {
             availableLanguages={availableLanguages}
             selectedLanguage={currentLanguage}
             currentDomain={currentDomain}
-            languageDropdown={this.state.languageDropdown}
-            toggleDropdown={this.toggleDropdown}
-            isMobile={isMobile}
-          />
-          <Banner
-            bannerImages={bannerImages ? bannerImages : null}
-            bannerHeading={bannerHeading ? bannerHeading : null}
-            bannerCtaText={bannerCtaText ? bannerCtaText : null}
-          />
+          languageDropdown={this.state.languageDropdown}
+          toggleDropdown={this.toggleDropdown}
+          openGroupBookingModal={this.openGroupBookingModal}
+        />
+        <Banner
+          bannerImages={bannerImages ? bannerImages : null}
+          bannerHeading={bannerHeading ? bannerHeading : null}
+          bannerCtaText={bannerCtaText ? bannerCtaText : null}
+        />
           {uncategorizedToursList.length > 0 && (
             <PopulateUncategorizedProducts
               uncategorizedTours={uncategorizedToursList}

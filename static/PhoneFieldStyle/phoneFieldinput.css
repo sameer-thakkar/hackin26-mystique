@@ -1,0 +1,93 @@
+/******************************
+ ** Font & Font Colors
+ ******************************/
+.react-tel-input {
+  width: calc(100% - 40px) !important;
+  padding: 8.5px 20px;
+  border: 1px solid #ebebeb;
+}
+.react-tel-input input[type="tel"] {
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 0 0 44px !important;
+  font-size: 1em;
+  color: #545454;
+}
+.react-tel-input input[type="tel"].hidden {
+  visibility: hidden;
+}
+.react-tel-input input[type="tel"]:focus {
+  border-color: #ffffff !important;
+  outline: none !important;
+}
+.react-tel-input input[type="tel"].invalid-number {
+  background-color: #ffffff !important;
+}
+.react-tel-input .flag-dropdown {
+  border: none !important;
+  background-color: #ffffff !important;
+  outline: none !important;
+  top: 0em !important;
+}
+.react-tel-input .flag-dropdown .selected-flag {
+  width: 40px !important;
+  border: none !important;
+  padding: 8.5px 0 !important;
+  background-color: #ffffff !important;
+  outline: none !important;
+}
+.react-tel-input .flag-dropdown .selected-flag .flag {
+  margin-top: 8px !important;
+  outline: none !important;
+}
+.react-tel-input .flag-dropdown .selected-flag .arrow {
+  margin-left: 8px;
+  border-left: 4.3px solid transparent;
+  border-right: 4.3px solid transparent;
+  border-top: 4.3px solid #545454;
+}
+.react-tel-input .flag-dropdown .selected-flag .arrow.up {
+  border-top: none !important;
+  border-bottom: 4.3px solid #545454;
+}
+.react-tel-input .country-list {
+  width: 28em !important;
+  height: 28em !important;
+  top: 3.5em !important;
+  right: -12.5em;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16) !important;
+  border: none !important;
+}
+.react-tel-input .country-list .country {
+  display: flex !important;
+  white-space: normal !important;
+}
+.react-tel-input .country-list .country:hover {
+  background-color: #ebebeb !important;
+}
+.react-tel-input .country-list .country.highlight {
+  background-color: #ebebeb !important;
+}
+.react-tel-input .country-list .preferred:nth-child(4) {
+  border-bottom: 0.5px solid #cbcbcb;
+}
+.react-tel-input .country-list .country-name {
+  font-family: "Avenir", "proxima-nova", "arial", sans-serif !important;
+  font-weight: normal !important;
+  line-height: 1.36 !important;
+  font-size: 1em !important;
+}
+.react-tel-input .country-list .dial-code {
+  font-family: "Avenir", "proxima-nova", "arial", sans-serif !important;
+  font-weight: 300 !important;
+  line-height: 1.36 !important;
+  font-size: 1em !important;
+  color: #595959 !important;
+}
+.telephone-input-label-animated {
+  color: #9a9a9a !important;
+  font-size: 10px !important;
+  text-transform: uppercase !important;
+  transform: translate3d(0, -1.4em, 0) !important;
+  transition: all 0.2s ease-in-out;
+}
