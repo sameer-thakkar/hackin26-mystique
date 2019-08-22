@@ -97,6 +97,7 @@ export default class Microsite extends Component<any, any> {
           currentDomain={currentDomain}
           languageDropdown={this.state.languageDropdown}
           toggleDropdown={this.toggleDropdown}
+          openGroupBookingModal={this.openGroupBookingModal}
         />
         <Banner
           bannerImages={bannerImages ? bannerImages : null}

@@ -5,6 +5,9 @@ export default class HeaderLinks extends Component<any, any> {
     const { headerLinks } = this.props;
     return (
       <div className="header-links">
+        <a onClick={this.props.openGroupBookingModal}>
+          Group Tickets (15+ PAX)
+        </a>
         {headerLinks.map((link, index) => (
           <a target={link.link_url.target} href={link.link_url.url} key={index}>
             {link.link_heading}

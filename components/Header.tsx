@@ -21,7 +21,10 @@ export default class Header extends Component<any, any> {
           <img src={logoUrl} alt={logoAltText} />
         </div>
         <div className="header-links-lang-container">
-          <HeaderLinks headerLinks={headerLinks} />
+          <HeaderLinks
+            headerLinks={headerLinks}
+            openGroupBookingModal={this.props.openGroupBookingModal}
+          />
           <LanguageSelector
             languages={languages}
             availableLanguages={availableLanguages}
