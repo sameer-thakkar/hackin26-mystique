@@ -29,7 +29,7 @@ export default class Product extends Component<any, any> {
     }
   };
 
-  togglePopup = () => {
+  handlePopup = () => {
     const { togglePopup } = this.props;
     togglePopup();
   };
@@ -40,7 +40,6 @@ export default class Product extends Component<any, any> {
       descriptors,
       highlights,
       tgid,
-      tid,
       tourPrices,
       currentDomain,
       currencySymbol,
@@ -48,108 +47,117 @@ export default class Product extends Component<any, any> {
       bookNowText,
       readMoreText,
       hasOffer,
-      productOffer
+      productOffer,
+      offerId,
+      isMobile,
+      popupState
     } = this.props;
-    const isMobile = window.innerWidth < 768;
     const descriptorsList = descriptors.split(",");
     const langCode = currentLanguage.substring(0, 2);
     const domainSplit = currentDomain.split(".");
     const domain = domainSplit[1] + "." + domainSplit[2];
-    console.log(domain);
     return (
-      <div className="product">
-        <div className="product-header">
-          <div className="product-header-left">
-            <div className="product-title">{title}</div>
-            <div className="product-tags">
-              {descriptorsList.map((tag, index) => {
-                return (
-                  <span key={index} className="product-tag">
-                    {tag} <span className="bullet">•</span>
-                  </span>
-                );
-              })}
-            </div>
-            {hasOffer &&
-              !isMobile &&
-              productOffer.map((offer, index) => {
-                return (
-                  <div
-                    key={index}
-                    onClick={this.togglePopup}
-                    className="product-offer"
-                  >
-                    <RichText
-                      render={offer.data.offer_title}
-                      htmlSerializer={shortCodeSerializer}
-                    />
-                  </div>
-                );
-              })}
-          </div>
-          <div className="product-header-right">
-            <div className="product-price">
-              {tourPrices.map(price => {
-                if (price.tgid == tgid) {
-                  return `${currencySymbol}${price.price}`;
-                }
-              })}
-            </div>
-            <a
-              target="_blank"
-              href={`http://book.${domain}${
-                langCode === "en" ? "" : `/${langCode}`
-              }/book/${tgid}`}
-            >
-              <div className="book-now-cta">
-                <span className="book-now-text">{bookNowText}</span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div onClick={this.togglePopup} className="product-offer-mobile">
-          <div className="product-offer-mobile-left">
-            <div className="gift-image">
-              <img
-                src="https://cdn-imgix-open.headout.com/new-product-card/line expand.svg"
-                alt="gift-image"
-              />
-            </div>
-            <div className="product-offer-text">
-              {hasOffer &&
-                isMobile &&
-                productOffer.map((offer, index) => {
+      <div>
+        <div className="product">
+          <div className="product-header">
+            <div className="product-header-left">
+              <div className="product-title">{title}</div>
+              <div className="product-tags">
+                {descriptorsList.map((tag, index) => {
                   return (
-                    <RichText
-                      key={index}
-                      render={offer.data.offer_title}
-                      htmlSerializer={shortCodeSerializer}
-                    />
+                    <span key={index} className="product-tag">
+                      {tag} <span className="bullet">•</span>
+                    </span>
                   );
                 })}
+              </div>
+              {hasOffer &&
+                productOffer.map((offer, index) => {
+                  if (offer.id === offerId) {
+                    return (
+                      <div
+                        key={index}
+                        onClick={this.handlePopup}
+                        className="product-offer"
+                      >
+                        <RichText
+                          render={offer.data.offer_title}
+                          htmlSerializer={shortCodeSerializer}
+                        />
+                      </div>
+                    );
+                  }
+                })}
+            </div>
+            <div className="product-header-right">
+              <div className="product-price">
+                {tourPrices.map(price => {
+                  if (price.tgid == tgid) {
+                    return `${currencySymbol}${price.price}`;
+                  }
+                })}
+              </div>
+              <a
+                target="_blank"
+                href={`http://book.${domain}${
+                  langCode === "en" ? "" : `/${langCode}`
+                }/book/${tgid}`}
+              >
+                <div
+                  className="book-now-cta"
+                  style={langCode == "fr" ? { width: "12.5em" } : {}}
+                >
+                  <span className="book-now-text">{bookNowText}</span>
+                </div>
+              </a>
             </div>
           </div>
-          <div className="product-offer-mobile-right">
-            <div className="product-offer-arrow">
-              <img src="https://cdn-imgix-open.headout.com/new-product-card/Path 24.svg" />
+          {hasOffer && isMobile && (
+            <div onClick={this.handlePopup} className="product-offer-mobile">
+              <div className="product-offer-mobile-left">
+                <div className="gift-image">
+                  <img
+                    src="https://cdn-imgix-open.headout.com/new-product-card/line expand.svg"
+                    alt="gift-image"
+                  />
+                </div>
+                <div className="product-offer-text">
+                  {productOffer.map((offer, index) => {
+                    if (offer.id === offerId) {
+                      return (
+                        <RichText
+                          key={index}
+                          render={offer.data.offer_title}
+                          htmlSerializer={shortCodeSerializer}
+                        />
+                      );
+                    }
+                  })}
+                </div>
+              </div>
+              <div className="product-offer-mobile-right">
+                <div className="product-offer-arrow">
+                  <img src="https://cdn-imgix-open.headout.com/new-product-card/Path 24.svg" />
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div className="desc-wrapper">
-          <div className="product-desc">
-            <ul>
-              {highlights.map((highlight, index) => (
-                <li key={index}>{highlight.text}</li>
-              ))}
-            </ul>
-          </div>
-          <div
-            ref={this.readMoreRef}
-            data-open="0"
-            onClick={() => this.readMore(this.readMoreRef.current)}
-            className="read-more"
-          >
-            {readMoreText}
+          )}
+          <div className="desc-wrapper">
+            <div className="product-desc">
+              <ul>
+                {highlights.map((highlight, index) => (
+                  <li key={index}>{highlight.text}</li>
+                ))}
+              </ul>
+            </div>
+            <div
+              ref={this.readMoreRef}
+              data-open="0"
+              onClick={() => this.readMore(this.readMoreRef.current)}
+              className="read-more"
+            >
+              {readMoreText}
+            </div>
           </div>
         </div>
       </div>

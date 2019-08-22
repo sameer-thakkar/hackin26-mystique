@@ -16,9 +16,6 @@ export default class Microsite extends Component<any, any> {
       tourPrices: [],
       currencySymbol: "",
       languageDropdown: false,
-      offers: [],
-      hasOffer: false,
-      isFetched: false,
       popupOpen: false
     };
   }
@@ -26,13 +23,9 @@ export default class Microsite extends Component<any, any> {
   async componentDidMount() {
     const all_tgids = [];
     const tgidsWithPrices = [];
-    const { lang } = this.props;
     const { data } = this.props.data;
     const uncategorizedTours = data.body1;
     uncategorizedTours[0].items.map(tour => all_tgids.push(tour.tgid));
-    const checkOffer = uncategorizedTours[0].items.map(tour =>
-      tour.offer__free_tour.hasOwnProperty("id")
-    );
     const fetchPrices = await fetch(
       `https://api.headout.com/api/v5/tour-group/list?ids[]=${all_tgids}`
     );
@@ -45,22 +38,9 @@ export default class Microsite extends Component<any, any> {
       };
       tgidsWithPrices.push(tgidAndPrice);
     });
-    const offerIds = uncategorizedTours[0].items.map(
-      id => id.offer__free_tour.id
-    );
-    const fetchOfferData = await Prismic.getApi(apiEndpoint, {});
-    const offerData =
-      checkOffer[0] != false && lang === "en-us"
-        ? await fetchOfferData.getByIDs(offerIds)
-        : "";
-    const offers = offerData ? offerData.results : "";
-    const offerBool = checkOffer[0] != false ? true : false;
     this.setState({
       tourPrices: tgidsWithPrices,
-      currencySymbol: currencySymbol,
-      offers: offers,
-      hasOffer: offerBool,
-      isFetched: true
+      currencySymbol: currencySymbol
     });
   }
 
@@ -77,7 +57,9 @@ export default class Microsite extends Component<any, any> {
   };
 
   render() {
-    console.log(this.state);
+    const isMobile = () => {
+      return document.documentElement.clientWidth < 768;
+    };
     const { url: logoUrl } = this.props.data.data.link_to_logo_file;
     const { url: uploadedLogoUrl, alt: altText } = this.props.data.data.logo;
     const { logo_alt_text: logoAltText } = this.props.data.data;
@@ -113,62 +95,72 @@ export default class Microsite extends Component<any, any> {
       footer_logo_alt_text: footerAltText,
       has_terms_page: hasTermsPage
     } = this.props.data.data;
+    const { results: productOffer } = this.props.offerData;
+    const productOfferIds = uncategorizedToursList.map(
+      offerId => offerId.offer__free_tour.id
+    );
+    const offerId = productOfferIds[0];
+    const hasOffer = offerId ? true : false;
+    const filterOfferPopup = productOffer.filter(popup => popup.id === offerId);
+    const offerPopup = filterOfferPopup[0];
+
     return (
       <div>
-        {this.state.isFetched && (
-          <div className="microsite-container">
-            <Header
-              languages={languages ? languages : null}
-              headerLinks={headerLinks ? headerLinks : null}
-              logoUrl={logoUrl || uploadedLogoUrl || null}
-              currentLanguage={currentLanguage ? currentLanguage : null}
-              logoAltText={altText || logoAltText}
-              availableLanguages={availableLanguages}
-              selectedLanguage={currentLanguage}
+        <div className="microsite-container">
+          <Header
+            languages={languages ? languages : null}
+            headerLinks={headerLinks ? headerLinks : null}
+            logoUrl={logoUrl || uploadedLogoUrl || null}
+            currentLanguage={currentLanguage ? currentLanguage : null}
+            logoAltText={altText || logoAltText}
+            availableLanguages={availableLanguages}
+            selectedLanguage={currentLanguage}
+            currentDomain={currentDomain}
+            languageDropdown={this.state.languageDropdown}
+            toggleDropdown={this.toggleDropdown}
+            isMobile={isMobile}
+          />
+          <Banner
+            bannerImages={bannerImages ? bannerImages : null}
+            bannerHeading={bannerHeading ? bannerHeading : null}
+            bannerCtaText={bannerCtaText ? bannerCtaText : null}
+          />
+          {uncategorizedToursList.length > 0 && (
+            <PopulateUncategorizedProducts
+              uncategorizedTours={uncategorizedToursList}
+              uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
+              tourPrices={this.state.tourPrices}
+              currencySymbol={this.state.currencySymbol}
               currentDomain={currentDomain}
-              languageDropdown={this.state.languageDropdown}
-              toggleDropdown={this.toggleDropdown}
+              currentLanguage={currentLanguage}
+              bookNowText={bookNowText}
+              readMoreText={readMoreText}
+              showLessText={showLessText}
+              productOffer={productOffer}
+              hasOffer={hasOffer}
+              isFetched={this.state.isFetched}
+              togglePopup={this.togglePopup}
+              isMobile={isMobile}
             />
-            <Banner
-              bannerImages={bannerImages ? bannerImages : null}
-              bannerHeading={bannerHeading ? bannerHeading : null}
-              bannerCtaText={bannerCtaText ? bannerCtaText : null}
-            />
-            {uncategorizedToursList.length > 0 && (
-              <PopulateUncategorizedProducts
-                uncategorizedTours={uncategorizedToursList}
-                uncategorizedToursHeading={
-                  uncategorizedToursHeading.list_heading
-                }
-                tourPrices={this.state.tourPrices}
-                currencySymbol={this.state.currencySymbol}
-                currentDomain={currentDomain}
-                currentLanguage={currentLanguage}
-                bookNowText={bookNowText}
-                readMoreText={readMoreText}
-                showLessText={showLessText}
-                productOffer={this.state.offers}
-                hasOffer={this.state.hasOffer}
-                isFetched={this.state.isFetched}
-                togglePopup={this.togglePopup}
-              />
-            )}
-            {longFormContent ? <LongForm content={longFormContent} /> : null}
-            <Footer
-              logoUrl={uploadedFooterLogoUrl || footerLogoUrl || null}
-              footerLinks={footerLinks ? footerLinks : null}
-              disclaimer={disclaimer ? disclaimer : null}
-              footerAltText={footerAltText || footerAltTextUploaded || null}
-              hasTermsPage={hasTermsPage}
-            />
+          )}
+          {longFormContent ? <LongForm content={longFormContent} /> : null}
+          <Footer
+            logoUrl={uploadedFooterLogoUrl || footerLogoUrl || null}
+            footerLinks={footerLinks ? footerLinks : null}
+            disclaimer={disclaimer ? disclaimer : null}
+            footerAltText={footerAltText || footerAltTextUploaded || null}
+            hasTermsPage={hasTermsPage}
+            isMobile={isMobile}
+          />
+          {hasOffer && (
             <FreeTourPopup
               popupState={this.state.popupOpen}
               togglePopup={this.togglePopup}
-              productOffer={this.state.offers}
-              hasOffer={this.state.hasOffer}
+              productOffer={offerPopup}
+              isMobile={isMobile}
             />
-          </div>
-        )}
+          )}
+        </div>
       </div>
     );
   }

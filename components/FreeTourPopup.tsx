@@ -5,6 +5,7 @@ import Swiper from "react-id-swiper";
 export default class FreeTourPopup extends Component<any, any> {
   constructor(props) {
     super(props);
+    console.log(props, "sadasds");
   }
 
   handlePopup = () => {
@@ -13,7 +14,7 @@ export default class FreeTourPopup extends Component<any, any> {
   };
 
   renderSlider = () => {
-    const { productOffer, hasOffer } = this.props;
+    const { productOffer } = this.props;
     const params = {
       direction: "horizontal",
       pagination: {
@@ -24,30 +25,34 @@ export default class FreeTourPopup extends Component<any, any> {
       autoplay: {
         delay: 2500,
         disableOnInteraction: false
-      }
+      },
+      rebuildOnUpdate: true
     };
 
     return (
       <Swiper {...params}>
-        {hasOffer &&
-          productOffer.map(data => {
-            return data.data.carousel_images.map((image, index) => {
-              return (
-                <div key={index} className="swiper-slide">
-                  <img
-                    src={image.image_url.url || image.image_source.url || null}
-                    alt=""
-                  />
-                </div>
-              );
-            });
-          })}
+        {productOffer.data.carousel_images.map((image, index) => {
+          return (
+            <div key={index} className="swiper-slide">
+              <img
+                src={image.image_url.url || image.image_source.url || null}
+                alt=""
+              />
+            </div>
+          );
+        })}
       </Swiper>
     );
   };
 
   render() {
-    const { productOffer, popupState, hasOffer } = this.props;
+    const {
+      productOffer,
+      popupState,
+      hasOffer,
+      isMobile,
+      currentDomain
+    } = this.props;
 
     return (
       <div className={`popupv2-cont ${popupState ? "active" : ""}`}>
@@ -72,24 +77,20 @@ export default class FreeTourPopup extends Component<any, any> {
             <div className="contents">
               <div className="sub-title">Book Now & Get This Tour For Free</div>
               <div className="title">
-                {hasOffer &&
-                  productOffer.map(offer => offer.data.tour_heading_override)}
+                {productOffer.data.tour_heading_override}
               </div>
               <div className="scratch-price">
                 <span className="price_10481"></span>
-                <InlinePrice tgid={10481} />
+                <InlinePrice tgid={productOffer.data.offer_tgid} />
               </div>
               <div className="price">FREE</div>
               <div className="popupv2-list">
                 <ul>
-                  {hasOffer &&
-                    productOffer.map(offer => {
-                      return offer.data.tour_description_override.map(
-                        (description, index) => {
-                          return <li key={index}>{description.text}</li>;
-                        }
-                      );
-                    })}
+                  {productOffer.data.tour_description_override.map(
+                    (description, index) => {
+                      return <li key={index}>{description.text}</li>;
+                    }
+                  )}
                 </ul>
               </div>
             </div>

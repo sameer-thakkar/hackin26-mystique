@@ -962,7 +962,7 @@ width: 80%; */
 .mask {
   grid-row: 1;
   grid-column: 1 / 2;
-  background: #000;
+  background: rgba(0, 0, 0, 0.4);
   height: 100%;
   width: 100%;
   opacity: 0.4;
@@ -1690,4 +1690,35 @@ body.popupv2-active {
 
 .product-offer p {
   margin: 0;
+}
+
+.product {
+  padding: 0 5%;
+  margin-top: 20px;
+}
+.product-name {
+  font-size: 18px;
+  font-weight: 500;
+  font-family: "Graphik", "Proxima Nova", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
+  line-height: 1.25;
+  color: rgba(0, 0, 0, 0.75);
+  letter-spacing: 1px;
+}
+.product-desc {
+  margin-top: 10px;
+  font-size: 14px;
+  width: 100%;
+  font-family: Avenir, Proxima-Nova, arial, sans-serif;
+  font-weight: 300;
+  line-height: 1.5;
+  text-align: justify;
+}
+@media (max-width: 768px) {
+  .product-name {
+    font-size: 16px;
+  }
+  .product-desc {
+    font-size: 12px;
+  }
 }

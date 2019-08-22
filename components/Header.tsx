@@ -24,16 +24,15 @@ export default class Header extends Component<any, any> {
       selectedLanguage,
       currentDomain,
       languageDropdown,
-      toggleDropdown
+      toggleDropdown,
+      isMobile
     } = this.props;
-    const isMobile = window.innerWidth < 768;
     return (
       <div className="header-container">
         <div className="header-logo">
           <img src={logoUrl} alt={logoAltText} />
         </div>
         <div className="header-links-lang-container">
-          {!isMobile && <HeaderLinks headerLinks={headerLinks} />}
           <div
             ref={this.hamburgerRef}
             className="hamburger"
@@ -43,7 +42,7 @@ export default class Header extends Component<any, any> {
             <div className="bar2"></div>
             <div className="bar3"></div>
           </div>
-          {isMobile && <HeaderLinks headerLinks={headerLinks} />}
+          <HeaderLinks headerLinks={headerLinks} isMobile={isMobile} />
           <LanguageSelector
             languages={languages}
             availableLanguages={availableLanguages}

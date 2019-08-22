@@ -18,6 +18,7 @@
     "prismic-reactjs": "^1.0.1",
     "react": "^16.8.6",
     "react-alice-carousel": "^1.15.3",
+    "react-device-detect": "^1.7.5",
     "react-dom": "^16.8.6",
     "react-id-swiper": "^2.3.2",
     "react-json-tree": "^0.11.2",

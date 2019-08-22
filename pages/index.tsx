@@ -3,6 +3,7 @@ import JSONTree from "react-json-tree";
 import Microsite from "../components/Microsite";
 import PlanYourVisit from "../components/PlanYourVisit";
 import PrismicReact from "prismic-reactjs";
+import Prismic from "prismic-javascript";
 import {
   Client,
   apiEndpoint,
@@ -111,9 +112,19 @@ export default class Page extends React.Component<any, any> {
         uid = reqUID;
         lang = reqLang;
       }
-      const data = await Client(req).getByUID(uidType, uid, { lang });
+      const micrositeData = Client(req).getByUID(uidType, uid, { lang });
+      const offerData = Client(req).query(
+        Prismic.Predicates.at("document.type", "offer_free_tour")
+      );
+
+      const response = await Promise.all([micrositeData, offerData]).then(
+        res => {
+          return { data: res[0], offerData: res[1] };
+        }
+      );
+
       return {
-        data,
+        response,
         uidType,
         uid,
         lang
@@ -125,16 +136,23 @@ export default class Page extends React.Component<any, any> {
   }
 
   render() {
-    const { data, uidType, uid, lang } = this.props;
+    const { response, uidType, uid, lang } = this.props;
 
     if (uidType === "microsite") {
-      return <Microsite data={data} uid={uid} lang={lang} />;
+      return (
+        <Microsite
+          data={response.data}
+          uid={uid}
+          lang={lang}
+          offerData={response.offerData}
+        />
+      );
     } else if (uidType === "plan_your_visit") {
-      return <PlanYourVisit data={data} uid={uid} lang={lang} />;
+      return <PlanYourVisit data={response.data} uid={uid} lang={lang} />;
     }
     return (
       <div>
-        <JSONTree data={data} invertTheme />
+        <JSONTree data={response.data} invertTheme />
       </div>
     );
   }
