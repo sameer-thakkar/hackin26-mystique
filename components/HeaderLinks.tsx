@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { isMobile } from "react-device-detect";
 
 export default class HeaderLinks extends Component<any, any> {
   render() {
@@ -15,6 +14,7 @@ export default class HeaderLinks extends Component<any, any> {
             {link.link_heading}
           </a>
         ))}
+      </div>
       </div>
     );
   }
