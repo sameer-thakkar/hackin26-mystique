@@ -17,7 +17,7 @@ export default class Microsite extends Component<any, any> {
       tourPrices: [],
       currencySymbol: "",
       languageDropdown: false,
-      popupOpen: false
+      popupOpen: false,
       showGroupBookingModal: false
     };
   }
