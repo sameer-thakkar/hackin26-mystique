@@ -71,7 +71,6 @@ const getShortcodesList = stringToSearch => {
   let match;
   let matches = [];
   while ((match = findShortcodeRegExp.exec(stringToSearch)) !== null) {
-    // console.log('match', match)
     if (match[1] === "{" && match[7] === "}") {
       continue;
     }
@@ -107,13 +106,11 @@ const renderShortCodes = CMSString => {
     renderedRichList.push(
       CMSString.slice(cursor + 1, shortCodeObj.indices.start)
     );
-    console.log(shortCodeObj);
     renderedRichList.push(
       React.createElement(shortCodesDict[shortCodeObj.name].component, {
         ...shortCodeObj.attributes.named
       })
     );
-    console.log(renderedRichList);
     cursor = shortCodeObj.indices.end;
   });
   renderedRichList.push(CMSString.slice(cursor + 1, fullLength));

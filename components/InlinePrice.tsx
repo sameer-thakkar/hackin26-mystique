@@ -42,7 +42,7 @@ class InlinePrice extends React.Component<MyProps, MyState> {
       return "";
     } else {
       return data.listingPrice ? (
-        <span className="inline-price" style={{ color: "#ec1943" }}>
+        <span className="inline-price">
           {" "}
           {data.currency.localSymbol}
           {data.listingPrice.finalPrice}{" "}

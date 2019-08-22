@@ -8,12 +8,15 @@ export default class LongForm extends Component<any, any> {
     return (
       <div className="long-form select-wrapper">
         {content.map(slice =>
-          slice.items.map(block => (
-            <RichText
-              render={block.text}
-              htmlSerializer={shortCodeSerializer}
-            />
-          ))
+          slice.items.map((block, index) => {
+            return (
+              <RichText
+                key={index}
+                render={block.text}
+                htmlSerializer={shortCodeSerializer}
+              />
+            );
+          })
         )}
         <style jsx global>
           {`

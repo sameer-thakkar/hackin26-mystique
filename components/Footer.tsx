@@ -1,28 +1,28 @@
 import React, { Component } from "react";
+import Link from "next/link";
 
 export default class Footer extends Component<any, any> {
   render() {
-    const { logoUrl, disclaimer } = this.props;
+    const { logoUrl, disclaimer, footerAltText, hasTermsPage } = this.props;
     return (
-      <footer className="extract-this ">
-        <div className="f-logo">
-          <div className="block-logo">
-            <img
-              src={logoUrl}
-              style={{ width: "160px", filter: "brightness(0) invert(1)" }}
-            />
-          </div>
+      <div className="footer">
+        <div className="footer-logo">
+          <img src={logoUrl} alt={footerAltText} />
         </div>
-        <hr className="white"></hr>
-        <div className="footer-wrap wrapper">
+        <div className="line-and-disclaimer">
+          <hr className="footer-line" />
           <div className="disclaimer">
-            <span>{disclaimer}</span>
-          </div>
-          <div className="terms">
-            <a href="/terms">Terms & Conditions</a>
+            <span className="disclaimer-text">{disclaimer}</span>
+            {hasTermsPage === "Yes" ? (
+              <Link href="/terms">
+                <span className="terms-tab">Terms & Conditions</span>
+              </Link>
+            ) : (
+              ""
+            )}
           </div>
         </div>
-      </footer>
+      </div>
     );
   }
 }

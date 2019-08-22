@@ -11,15 +11,17 @@
   "author": "Aakash Goel",
   "license": "ISC",
   "dependencies": {
-    "@glidejs/glide": "^3.3.0",
     "@zeit/next-css": "^1.0.1",
     "next": "^9.0.3",
+    "prismic-dom": "^2.1.0",
     "prismic-javascript": "^2.1.1",
     "prismic-reactjs": "^1.0.1",
     "react": "^16.8.6",
-    "react-alice-carousel": "^1.15.2",
+    "react-alice-carousel": "^1.15.3",
     "react-dom": "^16.8.6",
-    "react-json-tree": "^0.11.2"
+    "react-id-swiper": "^2.3.2",
+    "react-json-tree": "^0.11.2",
+    "swiper": "^4.5.0"
   },
   "devDependencies": {
     "@types/node": "^12.7.1",

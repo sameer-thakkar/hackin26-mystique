@@ -28,6 +28,10 @@ class MyDocument extends Document {
             type="text/javascript"
             src="//static.cdn.prismic.io/prismic.min.js"
           />
+          <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/css/swiper.min.css"
+          />
           <link rel="stylesheet" href="../static/style.css" />
         </Head>
         <body>

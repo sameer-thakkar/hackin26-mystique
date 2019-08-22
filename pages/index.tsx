@@ -36,8 +36,6 @@ const getPropsFromReq = req => {
 
   let requestedLang = pathnameSlugs[0];
 
-  console.log(requestedLang);
-
   const isLangValid = languages.includes(requestedLang);
   if (isLangValid) {
     pathnameSlugs.shift();
