@@ -16,7 +16,7 @@ export default class Banner extends Component<any, any> {
   }
 
   componentDidMount() {
-    this.autoSlide();
+    if (this.props.bannerImages.length > 1) this.autoSlide();
   }
 
   nextSlide = () => {
