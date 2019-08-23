@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import Link from 'next/link';
+import Link from "next/link";
 
 const flagsUrl = {
   en: {
-    flag: "https://cdn-imgix-open.headout.com/flags-new/icons8-great-britain-96.png",
-    language: 'English'
+    flag:
+      "https://cdn-imgix-open.headout.com/flags-new/icons8-great-britain-96.png",
+    language: "English"
   },
   it: {
     flag: "https://cdn-imgix-open.headout.com/flags-new/icons8-italy.svg",
@@ -35,35 +36,39 @@ const flagsUrl = {
 export default class LanguageSelector extends Component<any, any> {
   langDropdownRef: any;
   arrowRef: any;
+
   constructor(props) {
     super(props);
     this.langDropdownRef = React.createRef();
     this.arrowRef = React.createRef();
     this.state = {
-      arrowActive : false
-    }
+      arrowActive: false
+    };
   }
 
   getAvailableLanguages = () => {
-    const liveLanguages = []
+    const liveLanguages = [];
     const { selectedLanguage, availableLanguages } = this.props;
     const selectedLangCode = selectedLanguage.substring(0, 2);
-    Object.keys(flagsUrl).map((langCode) => {
-      availableLanguages.map((availLangCode) => {
-        if(langCode === selectedLangCode || langCode === availLangCode.lang.substring(0,2)){
-          if(liveLanguages.indexOf(langCode) == -1) {
+    Object.keys(flagsUrl).map(langCode => {
+      availableLanguages.map(availLangCode => {
+        if (
+          langCode === selectedLangCode ||
+          langCode === availLangCode.lang.substring(0, 2)
+        ) {
+          if (liveLanguages.indexOf(langCode) == -1) {
             liveLanguages.push(langCode);
           }
         }
-      })
-    })
+      });
+    });
     return liveLanguages;
   };
 
   handleClick = () => {
-    const {toggleDropdown} = this.props;
+    const { toggleDropdown } = this.props;
     toggleDropdown();
-  }
+  };
 
   render() {
     const { selectedLanguage, languageDropdown } = this.props;
@@ -77,15 +82,25 @@ export default class LanguageSelector extends Component<any, any> {
             </div>
             <span className="current-lang-code">{selectedLangCode}</span>
           </div>
-          <div ref={this.arrowRef} className={`arrow ${languageDropdown ? 'arrow-active' : ''}`}>
+          <div
+            ref={this.arrowRef}
+            className={`arrow ${languageDropdown ? "arrow-active" : ""}`}
+          >
             ^
           </div>
         </div>
-        <div ref={this.langDropdownRef} className={`language-dropdown ${languageDropdown ? 'language-dropdown-active' : ''}`}>
+        <div
+          ref={this.langDropdownRef}
+          className={`language-dropdown ${
+            languageDropdown ? "language-dropdown-active" : ""
+          }`}
+        >
           {this.getAvailableLanguages().map((language, index) => {
             return (
-              <Link href={`/${language}`}>
-                <a key={index} className={selectedLangCode == language ? "selected-tab" : ""}>
+              <Link key={index} href={`/${language}`}>
+                <a
+                  className={selectedLangCode == language ? "selected-tab" : ""}
+                >
                   <div className="language">
                     <div className="language-flag">
                       <img src={flagsUrl[language].flag} alt="flag" />
@@ -94,7 +109,7 @@ export default class LanguageSelector extends Component<any, any> {
                   </div>
                 </a>
               </Link>
-            )
+            );
           })}
         </div>
       </div>

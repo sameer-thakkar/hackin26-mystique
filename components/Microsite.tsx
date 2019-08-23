@@ -4,6 +4,9 @@ import Banner from "./Banner";
 import PopulateUncategorizedProducts from "./PopulateUncategorizedProducts";
 import Footer from "./Footer";
 import LongForm from "./LongForm";
+import Prismic from "prismic-javascript";
+import { apiEndpoint } from "../prismic-config";
+import FreeTourPopup from "./FreeTourPopup";
 import GroupBooking from "./GroupBooking";
 
 export default class Microsite extends Component<any, any> {
@@ -14,6 +17,7 @@ export default class Microsite extends Component<any, any> {
       tourPrices: [],
       currencySymbol: "",
       languageDropdown: false,
+      popupOpen: false,
       showGroupBookingModal: false
     };
   }
@@ -48,11 +52,19 @@ export default class Microsite extends Component<any, any> {
       : this.setState({ languageDropdown: true });
   };
 
+  togglePopup = () => {
+    this.state.popupOpen
+      ? this.setState({ popupOpen: false })
+      : this.setState({ popupOpen: true });
+  };
   openGroupBookingModal = () => this.setState({ showGroupBookingModal: true });
   closeGroupBookingModal = () =>
     this.setState({ showGroupBookingModal: false });
 
   render() {
+    const isMobile = () => {
+      return document.documentElement.clientWidth < 768;
+    };
     const { url: logoUrl } = this.props.data.data.link_to_logo_file;
     const { url: uploadedLogoUrl, alt: altText } = this.props.data.data.logo;
     const { logo_alt_text: logoAltText } = this.props.data.data;
@@ -69,7 +81,10 @@ export default class Microsite extends Component<any, any> {
       items: uncategorizedToursList,
       primary: uncategorizedToursHeading
     } = this.props.data.data.body1[0];
-    const { url: uploadedFooterLogoUrl } = this.props.data.data.footer_logo;
+    const {
+      url: uploadedFooterLogoUrl,
+      alt: footerAltTextUploaded
+    } = this.props.data.data.footer_logo;
     const { url: footerLogoUrl } = this.props.data.data.footer_logo_link;
     const {
       footer_links: footerLinks,
@@ -81,22 +96,36 @@ export default class Microsite extends Component<any, any> {
       text: ""
     };
     const longFormContent = this.props.data.data.body2;
+    const {
+      footer_logo_alt_text: footerAltText,
+      has_terms_page: hasTermsPage
+    } = this.props.data.data;
+    const { results: productOffer } = this.props.offerData;
+    const productOfferIds = uncategorizedToursList.map(
+      offerId => offerId.offer__free_tour.id
+    );
+    const offerId = productOfferIds[0];
+    const hasOffer = offerId ? true : false;
+    const filterOfferPopup = productOffer.filter(popup => popup.id === offerId);
+    const offerPopup = filterOfferPopup[0];
+
     return (
-      <div className="microsite-container">
-        {this.state.showGroupBookingModal && (
+      <div>
+        <div className="microsite-container">
+          {this.state.showGroupBookingModal && (
           <GroupBooking
             closeGroupBookingModal={() => this.closeGroupBookingModal}
           />
         )}
-        <Header
-          languages={languages ? languages : null}
-          headerLinks={headerLinks ? headerLinks : null}
-          logoUrl={logoUrl || uploadedLogoUrl || null}
-          currentLanguage={currentLanguage ? currentLanguage : null}
-          logoAltText={altText || logoAltText}
-          availableLanguages={availableLanguages}
-          selectedLanguage={currentLanguage}
-          currentDomain={currentDomain}
+          <Header
+            languages={languages ? languages : null}
+            headerLinks={headerLinks ? headerLinks : null}
+            logoUrl={logoUrl || uploadedLogoUrl || null}
+            currentLanguage={currentLanguage ? currentLanguage : null}
+            logoAltText={altText || logoAltText}
+            availableLanguages={availableLanguages}
+            selectedLanguage={currentLanguage}
+            currentDomain={currentDomain}
           languageDropdown={this.state.languageDropdown}
           toggleDropdown={this.toggleDropdown}
           openGroupBookingModal={this.openGroupBookingModal}
@@ -106,25 +135,42 @@ export default class Microsite extends Component<any, any> {
           bannerHeading={bannerHeading ? bannerHeading : null}
           bannerCtaText={bannerCtaText ? bannerCtaText : null}
         />
-        {uncategorizedToursList.length > 0 && (
-          <PopulateUncategorizedProducts
-            uncategorizedTours={uncategorizedToursList}
-            uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
-            tourPrices={this.state.tourPrices}
-            currencySymbol={this.state.currencySymbol}
-            currentDomain={currentDomain}
-            currentLanguage={currentLanguage}
-            bookNowText={bookNowText}
-            readMoreText={readMoreText}
-            showLessText={showLessText}
+          {uncategorizedToursList.length > 0 && (
+            <PopulateUncategorizedProducts
+              uncategorizedTours={uncategorizedToursList}
+              uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
+              tourPrices={this.state.tourPrices}
+              currencySymbol={this.state.currencySymbol}
+              currentDomain={currentDomain}
+              currentLanguage={currentLanguage}
+              bookNowText={bookNowText}
+              readMoreText={readMoreText}
+              showLessText={showLessText}
+              productOffer={productOffer}
+              hasOffer={hasOffer}
+              isFetched={this.state.isFetched}
+              togglePopup={this.togglePopup}
+              isMobile={isMobile}
+            />
+          )}
+          {longFormContent ? <LongForm content={longFormContent} /> : null}
+          <Footer
+            logoUrl={uploadedFooterLogoUrl || footerLogoUrl || null}
+            footerLinks={footerLinks ? footerLinks : null}
+            disclaimer={disclaimer ? disclaimer : null}
+            footerAltText={footerAltText || footerAltTextUploaded || null}
+            hasTermsPage={hasTermsPage}
+            isMobile={isMobile}
           />
-        )}
-        {longFormContent ? <LongForm content={longFormContent} /> : null}
-        <Footer
-          logoUrl={uploadedFooterLogoUrl || footerLogoUrl || null}
-          footerLinks={footerLinks ? footerLinks : null}
-          disclaimer={disclaimer ? disclaimer : null}
-        />
+          {hasOffer && (
+            <FreeTourPopup
+              popupState={this.state.popupOpen}
+              togglePopup={this.togglePopup}
+              productOffer={offerPopup}
+              isMobile={isMobile}
+            />
+          )}
+        </div>
       </div>
     );
   }

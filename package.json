@@ -11,7 +11,6 @@
   "author": "Aakash Goel",
   "license": "ISC",
   "dependencies": {
-    "@glidejs/glide": "^3.3.0",
     "@zeit/next-css": "^1.0.1",
     "libphonenumber-js": "^1.7.22",
     "next": "^9.0.4",
@@ -24,7 +23,10 @@
     "react-json-tree": "^0.11.2",
     "react-modal": "^3.9.1",
     "react-select": "^3.0.4",
-    "react-telephone-input": "^4.73.4"
+    "react-telephone-input": "^4.73.4",
+    "react-id-swiper": "^2.3.2",
+    "react-json-tree": "^0.11.2",
+    "swiper": "^4.5.0"
   },
   "devDependencies": {
     "@types/node": "^12.7.1",

@@ -12,7 +12,12 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
       currentLanguage,
       bookNowText,
       showLessText,
-      readMoreText
+      readMoreText,
+      productOffer,
+      hasOffer,
+      togglePopup,
+      popupState,
+      isMobile
     } = this.props;
     return (
       <div className="uncategorized-container">
@@ -36,6 +41,12 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
               bookNowText={bookNowText}
               showLessText={showLessText}
               readMoreText={readMoreText}
+              productOffer={productOffer}
+              hasOffer={hasOffer}
+              togglePopup={togglePopup}
+              offerId={tour.offer__free_tour.id}
+              popupState={popupState}
+              isMobile={isMobile}
             />
           ))}
         </div>
