@@ -113,10 +113,10 @@ export default class Microsite extends Component<any, any> {
       <div>
         <div className="microsite-container">
           {this.state.showGroupBookingModal && (
-          <GroupBooking
-            closeGroupBookingModal={() => this.closeGroupBookingModal}
-          />
-        )}
+            <GroupBooking
+              closeGroupBookingModal={() => this.closeGroupBookingModal}
+            />
+          )}
           <Header
             languages={languages ? languages : null}
             headerLinks={headerLinks ? headerLinks : null}
@@ -126,15 +126,16 @@ export default class Microsite extends Component<any, any> {
             availableLanguages={availableLanguages}
             selectedLanguage={currentLanguage}
             currentDomain={currentDomain}
-          languageDropdown={this.state.languageDropdown}
-          toggleDropdown={this.toggleDropdown}
-          openGroupBookingModal={this.openGroupBookingModal}
-        />
-        <Banner
-          bannerImages={bannerImages ? bannerImages : null}
-          bannerHeading={bannerHeading ? bannerHeading : null}
-          bannerCtaText={bannerCtaText ? bannerCtaText : null}
-        />
+            languageDropdown={this.state.languageDropdown}
+            toggleDropdown={this.toggleDropdown}
+            openGroupBookingModal={this.openGroupBookingModal}
+            isMobile={isMobile}
+          />
+          <Banner
+            bannerImages={bannerImages ? bannerImages : null}
+            bannerHeading={bannerHeading ? bannerHeading : null}
+            bannerCtaText={bannerCtaText ? bannerCtaText : null}
+          />
           {uncategorizedToursList.length > 0 && (
             <PopulateUncategorizedProducts
               uncategorizedTours={uncategorizedToursList}

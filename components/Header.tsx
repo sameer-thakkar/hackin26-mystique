@@ -45,6 +45,7 @@ export default class Header extends Component<any, any> {
           <HeaderLinks
             headerLinks={headerLinks}
             openGroupBookingModal={this.props.openGroupBookingModal}
+            isMobile={isMobile}
           />
           <LanguageSelector
             languages={languages}
