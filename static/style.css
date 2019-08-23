@@ -411,9 +411,6 @@ ul {
     margin: 0px;
   }
 
-  .mb-carousel.boxed {
-    margin-top: 68px;
-  }
   .language-selector {
     margin-top: 5px;
   }
@@ -626,7 +623,7 @@ ul {
   max-width: 1200px;
   width: 100%;
   margin: auto;
-  margin-top: 130px;
+  margin-top: 80px;
 }
 
 .mb-carousel .mb-slide {
@@ -1524,6 +1521,9 @@ body.popupv2-active {
 @media (max-width: 768px) {
   .popupv2-wrap {
     width: 100%;
+  }
+  .mb-carousel.boxed {
+    margin-top: 68px;
   }
 
   .popupv2-cont {
