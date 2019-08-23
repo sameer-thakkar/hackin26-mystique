@@ -1,68 +1,59 @@
 import React, { Component } from "react";
 
 export default class Banner extends Component<any, any> {
-  componentDidMount() {
-    const MB_CAROUSEL = document.querySelector('.mb-carousel');
-    const SLIDES = MB_CAROUSEL.querySelectorAll('.mb-slide');
-    const MAX_SLIDES = SLIDES.length;
-    const SLIDE_CHANGE_INTERVAL = 3500;
-    let activeSlideIndex = MAX_SLIDES - 1;
-    let MB_CAROUSEL_INT;
-    let indicators;
-    let indi = true;
-    const nextSlide = () => {
-      clearInterval(MB_CAROUSEL_INT)
-      changeSlide(1)
-      autoSlide()
-    }
-    const prevSlide = () => {
-      clearInterval(MB_CAROUSEL_INT)
-      changeSlide(-1)
-      autoSlide()
-    }
-    const genIndicators = () => {
-      let html = document.createElement('div')
-      html.classList.add('indicators')
-
-      SLIDES.forEach((e, i) => {
-        html.innerHTML += "<div class='indicator' onclick='slideTo(" + i + ")'></div>"
-      })
-      MB_CAROUSEL.appendChild(html)
-      return MB_CAROUSEL.querySelectorAll('.indicator')
-    }
-    if (indi && (MAX_SLIDES > 1))
-      indicators = genIndicators()
-    else
-      indicators = false
-    const slideTo = (index = 0) => {
-      clearInterval(MB_CAROUSEL_INT)
-      SLIDES[activeSlideIndex].classList.remove('active-mb-slide')
-      indi && indicators[activeSlideIndex].classList.remove('active')
-      activeSlideIndex = getBoundedIndex(index, -1);
-      changeSlide()
-      autoSlide()
-    }
-    const getBoundedIndex = (index, dir) => {
-      index = index == 0 ? MAX_SLIDES : index;
-      index = (index + (1 * dir)) % MAX_SLIDES;
-      return index;
-    }
-    const changeSlide = (dir = 1) => {
-      SLIDES[activeSlideIndex].classList.remove('active-mb-slide')
-      indi && indicators[activeSlideIndex].classList.remove('active')
-      activeSlideIndex = getBoundedIndex(activeSlideIndex, dir)
-      SLIDES[activeSlideIndex].classList.add('active-mb-slide')
-      indi && indicators[activeSlideIndex].classList.add('active')
-
-    }
-
-    const autoSlide = () => {
-      if (MAX_SLIDES > 1)
-        MB_CAROUSEL_INT = setInterval(changeSlide, SLIDE_CHANGE_INTERVAL)
-    }
-    changeSlide();
-    autoSlide();
+  hasIndicators: boolean;
+  MAX_SLIDES: number;
+  SLIDE_CHANGE_INTERVAL: number;
+  activeSlideIndex: number;
+  MB_CAROUSEL_INT: any;
+  constructor(props) {
+    super(props);
+    this.hasIndicators = true;
+    this.MAX_SLIDES = this.props.bannerImages.length;
+    this.SLIDE_CHANGE_INTERVAL = 3500;
+    this.activeSlideIndex = 0;
+    this.state = { counter: 0 };
   }
+
+  componentDidMount() {
+    if (this.props.bannerImages.length > 1) this.autoSlide();
+  }
+
+  nextSlide = () => {
+    clearInterval(this.MB_CAROUSEL_INT);
+    this.changeSlide(1);
+    this.autoSlide();
+  };
+  prevSlide = () => {
+    clearInterval(this.MB_CAROUSEL_INT);
+    this.changeSlide(-1);
+    this.autoSlide();
+  };
+
+  getBoundedIndex = (index, dir) => {
+    index = index == 0 ? this.MAX_SLIDES : index;
+    index = (index + 1 * dir) % this.MAX_SLIDES;
+    return index;
+  };
+
+  changeSlide = (dir = 1) => {
+    this.activeSlideIndex = this.getBoundedIndex(this.activeSlideIndex, dir);
+    this.setState({ counter: this.state.counter + 1 });
+  };
+
+  autoSlide = () => {
+    this.MB_CAROUSEL_INT = setInterval(
+      this.changeSlide,
+      this.SLIDE_CHANGE_INTERVAL
+    );
+  };
+
+  slideTo = (index = 0) => {
+    clearInterval(this.MB_CAROUSEL_INT);
+    this.activeSlideIndex = this.getBoundedIndex(index, -1);
+    this.changeSlide();
+    this.autoSlide();
+  };
 
   render() {
     const { bannerCtaText, bannerHeading, bannerImages } = this.props;
@@ -70,7 +61,13 @@ export default class Banner extends Component<any, any> {
       <div className="mb-carousel boxed">
         {bannerImages.map((banner, index) => {
           return (
-            <div key={index} className="mb-slide active-mb-slide">
+            <div
+              key={index}
+              className={
+                "mb-slide " +
+                (this.activeSlideIndex == index ? "active-mb-slide" : "")
+              }
+            >
               <img
                 src={banner.image_src.url || banner.uploaded_image.url}
                 alt=""
@@ -87,6 +84,21 @@ export default class Banner extends Component<any, any> {
             </a>
           </div>
         </div>
+        {this.hasIndicators && bannerImages.length > 1 ? (
+          <div className="indicators">
+            {bannerImages.map((banner, index) => (
+              <div
+                className={
+                  "indicator " +
+                  (this.activeSlideIndex == index ? "active" : "")
+                }
+                onClick={() => {
+                  this.slideTo(index);
+                }}
+              ></div>
+            ))}
+          </div>
+        ) : null}
       </div>
     );
   }
