@@ -364,7 +364,7 @@ body {
 }
 .read-more {
   padding-left: 2.9em;
-  width: 100%;
+  width: 80%;
   text-decoration: underline;
   line-height: 1.2;
   display: block;
@@ -564,10 +564,6 @@ ul {
   ul {
     margin: 0 !important;
   }
-  .product-tag {
-    margin-right: 0.4em;
-    margin-left: 0.4em;
-  }
 }
 
 /* Select Your Tickets */
@@ -599,6 +595,16 @@ ul {
   }
   .product-offer-text p {
     margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: Graphik;
+  }
+  .product-offer-text p > span {
+    display: block;
+    font-size: 12px;
+    font-weight: 300;
+    font-family: Avenir;
+    line-height: 1.25;
   }
   .product-offer-text {
     color: #593be5;
