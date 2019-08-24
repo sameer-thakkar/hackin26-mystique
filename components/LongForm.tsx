@@ -7,8 +7,12 @@ import ImageTextGrid from "./ImageTextGrid";
 const sliceHandler = slice => {
   switch (slice.slice_type) {
     case "rich_text":
-      return slice.items.map(block => (
-        <RichText render={block.text} htmlSerializer={shortCodeSerializer} />
+      return slice.items.map((block, index) => (
+        <RichText
+          key={index}
+          render={block.text}
+          htmlSerializer={shortCodeSerializer}
+        />
       ));
       break;
     case "image_grid":
@@ -33,8 +37,10 @@ export default class LongForm extends Component<any, any> {
     const { content } = this.props;
     return (
       <div className="long-form select-wrapper">
-        {content.map(slice => (
-          <div className="slice-block">{sliceHandler(slice)}</div>
+        {content.map((slice, index) => (
+          <div key={index} className="slice-block">
+            {sliceHandler(slice)}
+          </div>
         ))}
         <style jsx global>
           {`

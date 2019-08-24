@@ -27,7 +27,6 @@ export const isGroupValid = (adults, children) => +adults + +children >= 15;
 
 export const checkPhoneNumberValidity = phoneWithCountryCode => {
   const { phone, countryDialCode } = phoneWithCountryCode;
-  console.log(phone, countryDialCode);
   if (phone === countryDialCode || !countryDialCode || !phone) {
     return false;
   }
@@ -39,7 +38,6 @@ export const checkPhoneNumberValidity = phoneWithCountryCode => {
     return true;
   }
   if (phone && parseMobile(`${phone}`)) {
-    console.log("beta");
     return parseMobile(`${phone}`).isValid();
   }
   return true;
@@ -52,7 +50,6 @@ export const fetchUserGeoLocation = url =>
       return json.country;
     })
     .catch(err => {
-      console.log("Error in fetching country code", err);
       return err;
     });
 

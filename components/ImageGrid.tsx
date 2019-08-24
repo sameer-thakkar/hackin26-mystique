@@ -17,8 +17,8 @@ class ImageGrid extends React.Component<ImageGridProps, any> {
     const { images, cols } = this.props;
     return (
       <div className="image-grid">
-        {images.map(image => (
-          <div className="image-box">
+        {images.map((image, index) => (
+          <div key={index} className="image-box">
             <img src={image.image_url.url} alt="" />
           </div>
         ))}

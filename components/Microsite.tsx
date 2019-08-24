@@ -4,10 +4,29 @@ import Banner from "./Banner";
 import PopulateUncategorizedProducts from "./PopulateUncategorizedProducts";
 import Footer from "./Footer";
 import LongForm from "./LongForm";
-import Prismic from "prismic-javascript";
-import { apiEndpoint } from "../prismic-config";
 import FreeTourPopup from "./FreeTourPopup";
 import GroupBooking from "./GroupBooking";
+import ReactHtmlParser, {
+  processNodes,
+  convertNodeToElement,
+  htmlparser2
+} from "react-html-parser";
+import Head from "next/head";
+
+export const populateHead = props => {
+  const { data } = props;
+  const otherMetaTags = data.data.other_meta_tags;
+  const html = `
+  <title>${data.data.title}</title>
+  <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+  <link rel="icon" href=${data.data.favicon.url} />
+  ${otherMetaTags.map(meta => {
+    return meta.meta_tag;
+  })}
+  `;
+
+  return <Head>{ReactHtmlParser(html)}</Head>;
+};
 
 export default class Microsite extends Component<any, any> {
   constructor(props) {
@@ -117,6 +136,7 @@ export default class Microsite extends Component<any, any> {
               closeGroupBookingModal={() => this.closeGroupBookingModal}
             />
           )}
+          {populateHead(this.props)}
           <Header
             languages={languages ? languages : null}
             headerLinks={headerLinks ? headerLinks : null}

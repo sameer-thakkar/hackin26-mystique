@@ -21,8 +21,8 @@ class ImageText extends React.Component<ImageTextProps, any> {
     const { cards, cols } = this.props;
     return (
       <div className="combo-cards-grid">
-        {cards.map(card => (
-          <div className="combo-card">
+        {cards.map((card, index) => (
+          <div key={index} className="combo-card">
             <div className="card-title">{card.card_title}</div>
             <img src={card.image_url.url} alt="" />
             <div className="description">
