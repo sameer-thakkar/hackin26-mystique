@@ -28,35 +28,55 @@ import "./../static/PhoneFieldStyle/phoneFelid.css";
 import "./../static/PhoneFieldStyle/phoneFieldinput.css";
 
 export default class GroupBooking extends Component<any, any> {
-  state = {
-    fname: "",
-    email: "",
-    phone: "",
-    tour: "",
-    lang: "",
-    time: "",
-    adults: "",
-    children: "",
-    isSendingRequest: false,
-    error: {
-      isFullNameValid: false,
-      isEmailValid: false,
-      isPhoneValid: false,
-      isTourSelected: false,
-      isLangSelected: false,
-      isTimeSelected: false,
-      isGroupSizeValid: false
-    },
-    date: new Date(),
-    showPhoneFeild: false,
-    userCountry: null,
-    isFetchingGeolocation: false,
-    countryDialCode: null,
-    isBookingSuccessful: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      fname: "",
+      email: "",
+      phone: "",
+      tour: "",
+      lang: "",
+      time: "",
+      adults: "",
+      children: "",
+      isSendingRequest: false,
+      error: {
+        isFullNameValid: false,
+        isEmailValid: false,
+        isPhoneValid: false,
+        isTourSelected: false,
+        isLangSelected: false,
+        isTimeSelected: false,
+        isGroupSizeValid: false
+      },
+      date: new Date(),
+      showPhoneFeild: false,
+      userCountry: null,
+      isFetchingGeolocation: false,
+      countryDialCode: null,
+      isBookingSuccessful: false,
+      telDropdownOffset: {
+        top: "",
+        left: ""
+      }
+    };
+  }
+
+  telInputRef = React.createRef();
 
   componentDidMount() {
     this.getUserGeoLocation();
+    window.addEventListener("resize", () => this.generateOffset());
+  }
+
+  generateOffset() {
+    const telInputElement = document.getElementById("telInput");
+    const offset = telInputElement.getBoundingClientRect();
+    const telDropdownOffset = {
+      top: offset.top + telInputElement.offsetHeight,
+      left: offset.left
+    };
+    this.setState({ telDropdownOffset });
   }
 
   getUserGeoLocation = async () => {
@@ -72,7 +92,10 @@ export default class GroupBooking extends Component<any, any> {
     }
   };
 
-  showPhoneFieldComponent = () => this.setState({ showPhoneFeild: true });
+  showPhoneFieldComponent = () => {
+    this.generateOffset();
+    this.setState({ showPhoneFeild: true });
+  };
 
   handleReactSelectChange = (value, state) => this.setState({ [state]: value });
 
@@ -236,7 +259,7 @@ export default class GroupBooking extends Component<any, any> {
 
   render() {
     return (
-      <Modal isOpen={true} style={MODAL_STYLE}>
+      <Modal isOpen={true} style={MODAL_STYLE} shouldCloseOnOverlayClick>
         <div className="popup-wrapper">
           <div className="popup-title">
             <span>Group Tickets 15+ Pax</span>
@@ -280,11 +303,13 @@ export default class GroupBooking extends Component<any, any> {
                       classNamePrefix="react-select"
                       onBlur={() => this.handleInputBlur("TOUR")}
                     />
-                    {this.state.error.isTourSelected && (
-                      <div className="error">
-                        <span>'Please select your prefered tour'</span>
-                      </div>
-                    )}
+                    <div className="error">
+                      <span>
+                        {this.state.error.isTourSelected
+                          ? "Please select your prefered tour"
+                          : ""}
+                      </span>
+                    </div>
                   </div>
                   <div className="input-wrapper">
                     <div className="split">
@@ -307,13 +332,13 @@ export default class GroupBooking extends Component<any, any> {
                         onBlur={() => this.handleInputBlur("GROUP")}
                       />
                     </div>
-                    {this.state.error.isGroupSizeValid && (
-                      <div className="error">
-                        <span>
-                          '*Minimum group size is 15 (adult + children)'
-                        </span>
-                      </div>
-                    )}
+                    <div className="error">
+                      <span>
+                        {this.state.error.isGroupSizeValid
+                          ? "* Minimum group size is 15 (adult + children)"
+                          : ""}
+                      </span>
+                    </div>
                   </div>
                   <div className="split">
                     <div
@@ -332,11 +357,13 @@ export default class GroupBooking extends Component<any, any> {
                         classNamePrefix="react-select"
                         onBlur={() => this.handleInputBlur("LANG")}
                       />
-                      {this.state.error.isLangSelected && (
-                        <div className="error">
-                          <span>'Select your prefered language'</span>
-                        </div>
-                      )}
+                      <div className="error">
+                        <span>
+                          {this.state.error.isLangSelected
+                            ? "Select your prefered language"
+                            : ""}
+                        </span>
+                      </div>
                     </div>
                     <div className="input-wrapper">
                       <Select
@@ -351,11 +378,13 @@ export default class GroupBooking extends Component<any, any> {
                         classNamePrefix="react-select"
                         onBlur={() => this.handleInputBlur("TIME")}
                       />
-                      {this.state.error.isTimeSelected && (
-                        <div className="error">
-                          <span>'Select your prefered time slot'</span>
-                        </div>
-                      )}
+                      <div className="error">
+                        <span>
+                          {this.state.error.isTimeSelected
+                            ? "Select your prefered time slot"
+                            : ""}
+                        </span>
+                      </div>
                     </div>
                   </div>
                   <div className="date-picker">
@@ -383,11 +412,13 @@ export default class GroupBooking extends Component<any, any> {
                       onChange={e => this.handleInputChange(e)}
                       onBlur={() => this.handleInputBlur("FULL_NAME")}
                     />
-                    {this.state.error.isFullNameValid && (
-                      <div className="error">
-                        <span>'Please enter your fullname'</span>
-                      </div>
-                    )}
+                    <div className="error">
+                      <span>
+                        {this.state.error.isFullNameValid
+                          ? "Please enter your fullname"
+                          : ""}
+                      </span>
+                    </div>
                   </div>
                   <div className="input-wrapper">
                     <input
@@ -398,13 +429,15 @@ export default class GroupBooking extends Component<any, any> {
                       onChange={e => this.handleInputChange(e)}
                       onBlur={() => this.handleInputBlur("EMAIL")}
                     />
-                    {this.state.error.isEmailValid && (
-                      <div className="error">
-                        <span>'Please enter a valid email'</span>
-                      </div>
-                    )}
+                    <div className="error">
+                      <span>
+                        {this.state.error.isEmailValid
+                          ? "Please enter a valid email"
+                          : ""}
+                      </span>
+                    </div>
                   </div>
-                  <div className="input-wrapper">
+                  <div className="input-wrapper" id="telInput">
                     {this.state.showPhoneFeild &&
                     this.state.userCountry !== null ? (
                       <ReactTelInput
@@ -418,6 +451,15 @@ export default class GroupBooking extends Component<any, any> {
                         name="phone"
                         onChange={this.handlePhoneInputChange}
                         onBlur={() => this.handleInputBlur("PHONE")}
+                        listStyle={
+                          !isMobileDevice()
+                            ? {
+                                position: "fixed",
+                                top: this.state.telDropdownOffset.top,
+                                left: this.state.telDropdownOffset.left
+                              }
+                            : {}
+                        }
                       />
                     ) : (
                       <input
@@ -427,11 +469,13 @@ export default class GroupBooking extends Component<any, any> {
                         onFocus={this.showPhoneFieldComponent}
                       />
                     )}
-                    {this.state.error.isPhoneValid && (
-                      <div className="error">
-                        <span>'Please enter a valid phone number'</span>
-                      </div>
-                    )}
+                    <div className="error">
+                      <span>
+                        {this.state.error.isPhoneValid
+                          ? "Please enter a valid phone number"
+                          : ""}
+                      </span>
+                    </div>
                   </div>
                 </form>
               </div>
