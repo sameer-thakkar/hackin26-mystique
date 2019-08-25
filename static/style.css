@@ -151,6 +151,7 @@ body {
   font-family: Avenir;
   font-size: 16px;
   text-transform: uppercase;
+  cursor: pointer;
 }
 
 .header-links a:hover {
@@ -666,7 +667,6 @@ ul {
 
 .indicators {
   display: grid;
-  z-index: 12;
   grid-auto-flow: column;
   grid-auto-columns: 1fr;
   grid-gap: 10px;
@@ -1694,7 +1694,6 @@ body.popupv2-active {
   }
 }
 
-=======
 /* GROUP BOOKING */
 .hide-desk {
   display: none;
@@ -1804,7 +1803,7 @@ form.form {
 }
 .form-wrapper .react-select__option {
   display: block;
-  padding: 15px;
+  padding: 13px;
   background-color: #fff;
   font-weight: 400;
   margin-bottom: 0;
@@ -1814,6 +1813,11 @@ form.form {
   font-size: 1em;
   font-family: "Graphik";
   text-transform: capitalize;
+}
+.form-wrapper .react-select__option:hover,
+.form-wrapper .react-select__option--is-selected {
+  color: #546c84;
+  background-color: #fbfbfb;
 }
 .form-wrapper .react-select__single-value {
   font-size: 1em;
@@ -2035,4 +2039,5 @@ form.form {
   color: #ec1943;
   padding-top: 6px;
   font-family: Graphik;
+  position: absolute;
 }
