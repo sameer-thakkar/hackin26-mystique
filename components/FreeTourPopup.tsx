@@ -5,7 +5,6 @@ import Swiper from "react-id-swiper";
 export default class FreeTourPopup extends Component<any, any> {
   constructor(props) {
     super(props);
-    console.log(props, "sadasds");
   }
 
   handlePopup = () => {

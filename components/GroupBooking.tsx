@@ -67,7 +67,6 @@ export default class GroupBooking extends Component<any, any> {
     if (country !== null) {
       this.setState({ userCountry: country, isFetchingGeolocation: false });
     } else {
-      console.log("Error in fetching location");
       this.setState({ isFetchingGeolocation: false });
     }
   };
@@ -228,7 +227,6 @@ export default class GroupBooking extends Component<any, any> {
       if (status === "Successful") {
         this.setState({ isBookingSuccessful: true, isSendingRequest: false });
       } else {
-        console.log(status, "error");
         this.setState({ isSendingRequest: false });
       }
     }
