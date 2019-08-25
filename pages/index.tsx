@@ -87,9 +87,11 @@ export default class Page extends React.Component<any, any> {
      *  to create similar output object
      */
     try {
-      const { mystique_uid: queryParamUID, lang: queryParamLang } = query;
-      const { host } = req.headers;
-      const pathname = req.url;
+      const { mystique_uid: queryParamUID, lang: queryParamLang } = query
+        ? query
+        : window.location.search;
+      const { host } = req ? req.headers : window.location;
+      const pathname = req ? req.url : window.location.href;
 
       let uidType = "";
       switch (pathname) {
