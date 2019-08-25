@@ -389,7 +389,7 @@ export default class GroupBooking extends Component<any, any> {
                     <DatePicker
                       selected={this.state.date}
                       onChange={this.handleDateChange}
-                      monthsShown={isMobileDevice ? 1 : 2}
+                      monthsShown={isMobileDevice() ? 1 : 2}
                     />
                     <img
                       className="input-icon group-cal-icon cal-icon"
