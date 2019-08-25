@@ -51,9 +51,9 @@
   border-bottom: 4.3px solid #545454;
 }
 .react-tel-input .country-list {
-  width: 28em !important;
-  height: 28em !important;
-  top: 3.5em !important;
+  width: 28em;
+  height: 28em;
+  top: 3.5em;
   right: -12.5em;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16) !important;
   border: none !important;
