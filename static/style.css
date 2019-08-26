@@ -2041,3 +2041,25 @@ form.form {
   font-family: Graphik;
   position: absolute;
 }
+
+.sub-heading {
+  max-width: 1200px;
+  margin: auto;
+  font-weight: 600;
+  font-size: 20px;
+  color: #545454;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.text {
+  font-family: Avenir;
+  max-width: 1200px;
+  margin: auto;
+  line-height: 1.2;
+  color: #545454;
+}
+
+.terms-container {
+  margin-top: 100px;
+}

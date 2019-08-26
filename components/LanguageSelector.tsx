@@ -46,6 +46,20 @@ export default class LanguageSelector extends Component<any, any> {
     };
   }
 
+  getAllLanguages = () => {
+    const allLanguages = [];
+    const { languages } = this.props;
+    Object.keys(flagsUrl).map(langCode => {
+      languages.map(lang => {
+        if (lang.language.split("-")[1] == langCode.toUpperCase()) {
+          const value = `${lang.language.split("-")[1]}`;
+          allLanguages.push(value.toLowerCase());
+        }
+      });
+    });
+    return allLanguages;
+  };
+
   getAvailableLanguages = () => {
     const liveLanguages = [];
     const { selectedLanguage, availableLanguages } = this.props;
@@ -62,6 +76,7 @@ export default class LanguageSelector extends Component<any, any> {
         }
       });
     });
+    this.getAllLanguages();
     return liveLanguages;
   };
 
@@ -71,8 +86,16 @@ export default class LanguageSelector extends Component<any, any> {
   };
 
   render() {
-    const { selectedLanguage, languageDropdown } = this.props;
+    const {
+      selectedLanguage,
+      languageDropdown,
+      availableLanguages,
+      currentDomain
+    } = this.props;
     const selectedLangCode = selectedLanguage.substring(0, 2);
+    const ABslug = currentDomain.split(".");
+    const slug = ABslug[ABslug.length - 1];
+
     return (
       <div onClick={this.handleClick} className="language-selector-container">
         <div className="language-selector">
@@ -95,6 +118,27 @@ export default class LanguageSelector extends Component<any, any> {
             languageDropdown ? "language-dropdown-active" : ""
           }`}
         >
+          {availableLanguages.length === 0 &&
+            this.getAllLanguages().map((language, index) => {
+              return (
+                <Link key={index} href={`/${language}/${slug}`}>
+                  <a
+                    className={
+                      selectedLangCode == language ? "selected-tab" : ""
+                    }
+                  >
+                    <div className="language">
+                      <div className="language-flag">
+                        <img src={flagsUrl[language].flag} alt="flag" />
+                      </div>
+                      <span className="lang">
+                        {flagsUrl[language].language}
+                      </span>
+                    </div>
+                  </a>
+                </Link>
+              );
+            })}
           {this.getAvailableLanguages().map((language, index) => {
             return (
               <Link key={index} href={`/${language}`}>

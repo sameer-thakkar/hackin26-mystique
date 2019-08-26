@@ -14,43 +14,40 @@ import ReactHtmlParser, {
 import Head from "next/head";
 
 function getSchemaJson(props) {
+  const url = props.data.data.domain_name;
+  const langCode = props.data.lang.substring(0, 2);
   return {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "WebSite",
-        "@id": `https://#website`,
-        url: "https://www.vaticantickets.org/",
+        "@id": `https://${props.data.uid}#website`,
+        url: `https://${props.data.uid}/`,
         name: "",
         potentialAction: {
           "@type": "SearchAction",
-          target: "https://www.vaticantickets.org/?s={search_term_string}",
+          target: `https://${props.data.uid}/?s={search_term_string}`,
           "query-input": "required name=search_term_string"
         }
       },
       {
         "@type": "ImageObject",
-        "@id": "https://www.vaticantickets.org/#primaryimage",
-        url:
-          "https://www.vaticantickets.org/wp-content/uploads/2019/03/vatican-logo-02-02.png",
+        "@id": `https://${props.data.uid}/#primaryimage`,
+        url: `${props.data.data.favicon.url}`,
         width: 1727,
         height: 453
       },
       {
         "@type": "WebPage",
-        "@id": "https://www.vaticantickets.org/#webpage",
-        url: "https://www.vaticantickets.org/",
-        inLanguage: "en",
-        name:
-          "Skip The Line Vatican Tickets - Vatican Museum &amp; Sistine Chapel",
-        isPartOf: { "@id": "https://www.vaticantickets.org/#website" },
+        "@id": `${url}/#webpage`,
+        url: `${url}`,
+        inLanguage: `${langCode}`,
+        name: `${props.data.data.title}`,
+        isPartOf: { "@id": `https://${props.data.uid}/#website` },
         primaryImageOfPage: {
-          "@id": "https://www.vaticantickets.org/#primaryimage"
+          "@id": `https://${url}/#primaryimage`
         },
-        datePublished: "2019-05-18T09:16:45+00:00",
-        dateModified: "2019-08-21T08:12:19+00:00",
-        description:
-          "Get skip the line Vatican tickets to the Vatican Museums, Sistine Chapel & St. Peter\u2019s Basilica. Go for a guided tour & enjoy a wonderful day at the Vatican"
+        description: `${props.data.data.description}`
       }
     ]
   };
@@ -61,7 +58,7 @@ export const populateHead = props => {
   const otherMetaTags = data.data.other_meta_tags;
   const dynamicMeta = (
     <React.Fragment>
-      <title>data.data.title</title>
+      <title>{data.data.title}</title>
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       <link rel="icon" href={`${data.data.favicon.url}`} />
       <script type="application/ld+json">
