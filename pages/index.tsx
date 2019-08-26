@@ -12,8 +12,8 @@ import {
 } from "../prismic-config";
 
 const getPropsFromReq = req => {
-  const host = req.headers.host;
-  const pathname = req.url;
+  const { host } = req ? req.headers : window.location;
+  const pathname = req ? req.url : window.location.href;
 
   const pathnameWithoutTrailingSlash = pathname =>
     pathname.lastIndexOf("/") === pathname.length - 1
