@@ -11,10 +11,7 @@ import {
   linkResolver
 } from "../prismic-config";
 
-const getPropsFromReq = req => {
-  const { host } = req ? req.headers : window.location;
-  const pathname = req ? req.url : window.location.href;
-
+const getPropsFromReq = ({ host, pathname }) => {
   const pathnameWithoutTrailingSlash = pathname =>
     pathname.lastIndexOf("/") === pathname.length - 1
       ? pathname.substr(0, pathname.length - 1)
@@ -86,12 +83,52 @@ export default class Page extends React.Component<any, any> {
      *  - deconstruct host and pathname
      *  to create similar output object
      */
+    const { host } = req ? req.headers : window.location;
+    const isDev = host.includes("localhost:");
+
     try {
-      const { mystique_uid: queryParamUID, lang: queryParamLang } = query
-        ? query
-        : window.location.search;
-      const { host } = req ? req.headers : window.location;
-      const pathname = req ? req.url : window.location.href;
+      let uid, lang, pathname;
+      if (req) {
+        // server render
+        pathname = req.url;
+        if (isDev) {
+          const { mystique_uid: queryParamUID, lang: queryParamLang } = query;
+          uid = queryParamUID;
+          lang = queryParamLang;
+        } else {
+          const { uid: reqUID, lang: reqLang } = getPropsFromReq({
+            host: req.headers.host,
+            pathname
+          });
+          uid = reqUID;
+          lang = reqLang;
+        }
+      } else {
+        if (isDev) {
+          const qsObject: any = window.location.search
+            .replace("?", "")
+            .split("&")
+            .reduce((accum, item) => {
+              const qs = item.split("=");
+              return {
+                ...accum,
+                [qs[0]]: qs[1]
+              };
+            }, {});
+          uid = qsObject.mystique_uid;
+          lang = qsObject.lang;
+          pathname = window.location.pathname;
+        } else {
+          const { host } = window.location;
+          pathname = window.location.pathname;
+          const { uid: reqUID, lang: reqLang } = getPropsFromReq({
+            host,
+            pathname
+          });
+          uid = reqUID;
+          lang = reqLang;
+        }
+      }
 
       let uidType = "";
       switch (pathname) {
@@ -102,18 +139,6 @@ export default class Page extends React.Component<any, any> {
           uidType = "microsite";
       }
 
-      const isDev = host.includes("localhost:");
-      let uid;
-      let lang;
-      if (isDev) {
-        uid = queryParamUID;
-        // TODO: make queryParamLang accept `en`, `es` kind of input
-        lang = queryParamLang;
-      } else {
-        const { uid: reqUID, lang: reqLang } = getPropsFromReq(req);
-        uid = reqUID;
-        lang = reqLang;
-      }
       const micrositeData = Client(req).getByUID(uidType, uid, { lang });
       const offerData = Client(req).query(
         Prismic.Predicates.at("document.type", "offer_free_tour")
