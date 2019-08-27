@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "alias": ["microbrand.vaticantickets.org"],
-  "name": "mystique stage",
+  "alias": ["www.vaticantickets.org"],
+  "name": "mystique prod",
   "routes": [
     {
       "src": "/_next/(.*)",

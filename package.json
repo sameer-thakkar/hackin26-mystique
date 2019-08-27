@@ -6,7 +6,8 @@
     "dev": "next -p 8000",
     "build": "next build",
     "start": "next start",
-    "deploy": "now"
+    "production": "now -A now.production.json --target production",
+    "staging": "now --target production"
   },
   "author": "Aakash Goel",
   "license": "ISC",
