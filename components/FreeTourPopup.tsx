@@ -90,10 +90,7 @@ export default class FreeTourPopup extends Component<any, any> {
           </div>
 
           <div className="popupv2-contents">
-            <div
-              onClick={e => this.handlePopup(e, "Close")}
-              className="close-trigger close"
-            >
+            <div onClick={e => this.handlePopup(e, "Close")} className="close-trigger close">
               <Image
                 height={26}
                 width={26}
