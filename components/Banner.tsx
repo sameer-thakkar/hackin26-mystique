@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Image from "./Image";
 
 export default class Banner extends Component<any, any> {
   hasIndicators: boolean;
@@ -56,7 +57,7 @@ export default class Banner extends Component<any, any> {
   };
 
   render() {
-    const { bannerCtaText, bannerHeading, bannerImages } = this.props;
+    const { bannerCtaText, bannerHeading, bannerImages, isMobile } = this.props;
     return (
       <div className="mb-carousel boxed">
         {bannerImages.map((banner, index) => {
@@ -68,9 +69,15 @@ export default class Banner extends Component<any, any> {
                 (this.activeSlideIndex == index ? "active-mb-slide" : "")
               }
             >
-              <img
+              {/* <img
                 src={banner.image_src.url || banner.uploaded_image.url}
                 alt=""
+              /> */}
+              <Image
+                height={isMobile ? 401 : 682}
+                width={isMobile ? 375 : 1000}
+                format="pjpg"
+                url={banner.image_src.url || banner.uploaded_image.url}
               />
             </div>
           );

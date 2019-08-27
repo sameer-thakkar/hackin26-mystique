@@ -1,6 +1,7 @@
 import React from "react";
 import { RichText } from "prismic-reactjs";
 import { shortCodeSerializer } from "../utils/shortCodes";
+import Image from "./Image";
 type ImgTxtCardObject = {
   card_description: Array<Object>;
   card_title: String;
@@ -24,7 +25,8 @@ class ImageText extends React.Component<ImageTextProps, any> {
         {cards.map((card, index) => (
           <div key={index} className="combo-card">
             <div className="card-title">{card.card_title}</div>
-            <img src={card.image_url.url} alt="" />
+            {/* <img src={card.image_url.url} alt="" /> */}
+            <Image width={600} format="pjpg" url={card.image_url.url} />
             <div className="description">
               <RichText
                 render={card.card_description}
