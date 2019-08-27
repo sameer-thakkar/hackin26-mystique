@@ -13,7 +13,7 @@ export default class Image extends React.Component<any, any> {
     };
     return (
       <picture>
-        <source type="image/webp" data-srcSet={makeUrl(1, "webp")} />
+        <source type="image/webp" data-srcset={makeUrl(1, "webp")} />
         <img className="lazyload" data-src={makeUrl(1, format)} />
       </picture>
     );

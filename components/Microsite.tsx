@@ -73,7 +73,9 @@ export const populateHead = props => {
   const scriptTags = headerScripts
     .map(script => script.script_tag)
     .map(str => str.replace("<script>", "").replace("</script>", ""))
-    .map(item => <script dangerouslySetInnerHTML={{ __html: item }} />);
+    .map((item, index) => (
+      <script key={index} dangerouslySetInnerHTML={{ __html: item }} />
+    ));
 
   return (
     <Head>
