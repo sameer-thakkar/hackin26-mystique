@@ -3246,6 +3246,11 @@ launch-editor@2.2.1:
     chalk "^2.3.0"
     shell-quote "^1.6.1"
 
+lazysizes@^5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/lazysizes/-/lazysizes-5.1.1.tgz#7ca0266519d531ce740d6782e42faf700883646c"
+  integrity sha512-UCbdRSsozjlS6r56dPMFXX+AW2t8G0duRKxQDwvEpNTrWOHQo56YlTx5ssT7epU87PoruF1q9tvW3kSbQjorMw==
+
 libphonenumber-js@^1.7.22:
   version "1.7.22"
   resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.7.22.tgz#e206e3c227ec47ff306f7405ac52c331911e1b35"

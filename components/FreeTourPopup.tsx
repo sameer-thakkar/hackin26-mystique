@@ -1,10 +1,20 @@
 import React, { Component } from "react";
 import InlinePrice from "./InlinePrice";
 import Swiper from "react-id-swiper";
+import Image from "./Image";
 
 export default class FreeTourPopup extends Component<any, any> {
   constructor(props) {
     super(props);
+    this.state = {
+      isClient: false
+    };
+  }
+
+  componentDidMount() {
+    this.setState({
+      isClient: true
+    });
   }
 
   handlePopup = (e, closeType) => {
@@ -25,6 +35,11 @@ export default class FreeTourPopup extends Component<any, any> {
 
   renderSlider = () => {
     const { productOffer } = this.props;
+    const isMobile = () => {
+      return document.documentElement.clientWidth < 768;
+    };
+    const height = isMobile() ? 220 : 750;
+    const width = isMobile() ? 495 : 495;
     const params = {
       direction: "horizontal",
       pagination: {
@@ -44,9 +59,11 @@ export default class FreeTourPopup extends Component<any, any> {
         {productOffer.data.carousel_images.map((image, index) => {
           return (
             <div key={index} className="swiper-slide">
-              <img
-                src={image.image_url.url || image.image_source.url || null}
-                alt=""
+              <Image
+                height={height}
+                width={width}
+                url={image.image_url.url || image.image_source.url || null}
+                format="pjpg"
               />
             </div>
           );
@@ -56,13 +73,10 @@ export default class FreeTourPopup extends Component<any, any> {
   };
 
   render() {
-    const {
-      productOffer,
-      popupState,
-      hasOffer,
-      isMobile,
-      currentDomain
-    } = this.props;
+    if (!this.state.isClient) {
+      return null;
+    }
+    const { productOffer, popupState } = this.props;
 
     return (
       <div className={`popupv2-cont ${popupState ? "active" : ""}`}>
@@ -80,10 +94,11 @@ export default class FreeTourPopup extends Component<any, any> {
               onClick={e => this.handlePopup(e, "Close")}
               className="close-trigger close"
             >
-              <img
-                src="https://cdn-imgix-open.headout.com/icons/cancel-icon.svg"
-                alt=""
-                className=""
+              <Image
+                height={26}
+                width={26}
+                url="https://cdn-imgix-open.headout.com/icons/cancel-icon.svg"
+                format="pjpg"
               />
             </div>
 

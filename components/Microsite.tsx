@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "lazysizes";
 import Header from "./Header";
 import Banner from "./Banner";
 import PopulateUncategorizedProducts from "./PopulateUncategorizedProducts";
@@ -23,7 +24,7 @@ function getSchemaJson(props) {
         "@type": "WebSite",
         "@id": `https://${props.data.uid}#website`,
         url: `https://${props.data.uid}/`,
-        name: "",
+        name: `${props.data.data.title}`,
         potentialAction: {
           "@type": "SearchAction",
           target: `https://${props.data.uid}/?s={search_term_string}`,
@@ -221,6 +222,7 @@ export default class Microsite extends Component<any, any> {
             bannerImages={bannerImages ? bannerImages : null}
             bannerHeading={bannerHeading ? bannerHeading : null}
             bannerCtaText={bannerCtaText ? bannerCtaText : null}
+            isMobile={isMobile}
           />
           {uncategorizedToursList.length > 0 && (
             <PopulateUncategorizedProducts

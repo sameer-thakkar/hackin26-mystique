@@ -1,4 +1,6 @@
 import React from "react";
+import Image from "./Image";
+
 type PrismicImageObject = {
   image_url: any;
   image_source: any;
@@ -19,7 +21,8 @@ class ImageGrid extends React.Component<ImageGridProps, any> {
       <div className="image-grid">
         {images.map((image, index) => (
           <div key={index} className="image-box">
-            <img src={image.image_url.url} alt="" />
+            {/* <img src={image.image_url.url} alt="" /> */}
+            <Image width={600} format="pjpg" url={image.image_url.url} />
           </div>
         ))}
         <style jsx>
