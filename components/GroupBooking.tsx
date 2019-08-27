@@ -109,7 +109,10 @@ export default class GroupBooking extends Component<any, any> {
       countryDialCode: selectedCountry.dialCode
     });
 
-  handleDateChange = date => this.setState({ date });
+  handleDateChange = date =>
+    this.setState({ date }, () => console.log(date.getDate()));
+
+  formatDate = date => date.toLocaleString().slice(0, 10);
 
   validateInputData = () => {
     const {
@@ -145,12 +148,12 @@ export default class GroupBooking extends Component<any, any> {
     error.isTimeSelected = !isFeildSelected(time);
     this.setState({ error });
     return (
-      error.isFullNameValid &&
-      error.isEmailValid &&
-      error.isTourSelected &&
-      error.isLangSelected &&
-      error.isTimeSelected &&
-      error.isPhoneValid &&
+      error.isFullNameValid ||
+      error.isEmailValid ||
+      error.isTourSelected ||
+      error.isLangSelected ||
+      error.isTimeSelected ||
+      error.isPhoneValid ||
       error.isGroupSizeValid
     );
   };
@@ -193,6 +196,7 @@ export default class GroupBooking extends Component<any, any> {
         return;
       case "PHONE":
         hasError = !checkPhoneNumberValidity(phoneWithCountryCode);
+        console.log(error);
         error = { ...this.state.error };
         error.isPhoneValid = hasError;
         this.setState({ error: error });
@@ -235,16 +239,9 @@ export default class GroupBooking extends Component<any, any> {
     } = this.state;
     const hasError = this.validateInputData();
     if (!hasError) {
-      const data = {
-        fname: fname,
-        email: email,
-        show: tour,
-        lang: lang,
-        time: time,
-        contact: phone,
-        group: parseInt(adults) + parseInt(children),
-        date: date
-      };
+      let formattedDate = this.formatDate(date);
+      let group = +adults + +children;
+      const data = `fname=${fname}&email=${email}&show=${tour.value}&lang=${lang.value}&time=${time.value}&contact=${phone}&group=${group}&date=${formattedDate}`;
       this.setState({ isSendingRequest: true });
       const status = await createGroupBooking(GROUP_BOOKING_URL, data);
       if (status === "Successful") {
@@ -478,7 +475,11 @@ export default class GroupBooking extends Component<any, any> {
                 </form>
               </div>
               <button
-                className="form-button"
+                className={
+                  this.state.isSendingRequest
+                    ? "form-button disabled"
+                    : "form-button"
+                }
                 onClick={this.sendBookingRequest}
                 disabled={this.state.isSendingRequest}
               >

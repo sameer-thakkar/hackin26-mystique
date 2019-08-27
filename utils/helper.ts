@@ -40,7 +40,7 @@ export const checkPhoneNumberValidity = phoneWithCountryCode => {
   if (phone && parseMobile(`${phone}`)) {
     return parseMobile(`${phone}`).isValid();
   }
-  return true;
+  return false;
 };
 
 export const fetchUserGeoLocation = url =>
@@ -54,13 +54,14 @@ export const fetchUserGeoLocation = url =>
     });
 
 export const createGroupBooking = (url, data) =>
-  fetch("/api/v2/account/auth/email", {
+  fetch(url, {
+    mode: "no-cors",
     method: "POST",
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json"
+      Accept: "application/x-www-form-urlencoded",
+      "Content-Type": "application/x-www-form-urlencoded"
     },
-    body: JSON.stringify(data)
+    body: data
   })
-    .then(response => response.json())
-    .then(json => json.message);
+    .then(response => "Successful")
+    .catch(error => `Error: ${error}`);

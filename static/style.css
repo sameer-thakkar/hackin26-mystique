@@ -1766,6 +1766,11 @@ body.popupv2-active {
   font-size: 14px;
   text-transform: uppercase;
 }
+button.form-button.disabled {
+  border: solid 1px #ebebeb;
+  color: #fff;
+  background-color: #ebebeb;
+}
 .css-1okebmr-indicatorSeparator {
   display: none;
 }
