@@ -31,7 +31,23 @@ export default class Product extends Component<any, any> {
 
   handlePopup = () => {
     const { togglePopup } = this.props;
+    this.sendPopupViewedEvent();
     togglePopup();
+  };
+
+  sendBookNowEvent = () => {
+    this.props.trackEvent({
+      eventName: "Book Now Clicked",
+      tgid: this.props.tgid
+    });
+  };
+
+  sendPopupViewedEvent = () => {
+    this.props.trackEvent({
+      eventName: "Popup Viewed",
+      popupType: "FreeTour",
+      tgid: this.props.tgid
+    });
   };
 
   render() {
@@ -105,6 +121,7 @@ export default class Product extends Component<any, any> {
               >
                 <div
                   className="book-now-cta"
+                  onClick={this.sendBookNowEvent}
                   style={langCode == "fr" ? { width: "12.5em" } : {}}
                 >
                   <span className="book-now-text">{bookNowText}</span>

@@ -41,6 +41,17 @@ export default class Microsite extends Component<any, any> {
     };
   }
 
+  trackEvent = ({ eventName, ...labelProps }) => {
+    if (window && (window as any).dataLayer) {
+      const allProps = {
+        event: eventName,
+        url: window.location.href,
+        ...labelProps
+      };
+      (window as any).dataLayer.push(allProps);
+    }
+  };
+
   async componentDidMount() {
     const all_tgids = [];
     const tgidsWithPrices = [];
@@ -172,6 +183,9 @@ export default class Microsite extends Component<any, any> {
               isFetched={this.state.isFetched}
               togglePopup={this.togglePopup}
               isMobile={isMobile}
+              trackEvent={({ eventName, ...labelProps }) =>
+                this.trackEvent({ eventName, ...labelProps })
+              }
             />
           )}
           {longFormContent ? <LongForm content={longFormContent} /> : null}
@@ -189,6 +203,9 @@ export default class Microsite extends Component<any, any> {
               togglePopup={this.togglePopup}
               productOffer={offerPopup}
               isMobile={isMobile}
+              trackEvent={({ eventName, ...labelProps }) =>
+                this.trackEvent({ eventName, ...labelProps })
+              }
             />
           )}
         </div>

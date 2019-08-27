@@ -7,9 +7,20 @@ export default class FreeTourPopup extends Component<any, any> {
     super(props);
   }
 
-  handlePopup = () => {
+  handlePopup = (e, closeType) => {
     const { togglePopup } = this.props;
+    const clickedElement = e.target;
+    this.sendPopupClosedEvent(clickedElement, closeType);
     togglePopup();
+  };
+
+  sendPopupClosedEvent = (clickedElement, closeType) => {
+    this.props.trackEvent({
+      eventName: "Popup Closed",
+      popupType: "FreeTour",
+      closeType,
+      clickedElement
+    });
   };
 
   renderSlider = () => {
@@ -65,7 +76,10 @@ export default class FreeTourPopup extends Component<any, any> {
           </div>
 
           <div className="popupv2-contents">
-            <div onClick={this.handlePopup} className="close-trigger close">
+            <div
+              onClick={e => this.handlePopup(e, "Close")}
+              className="close-trigger close"
+            >
               <img
                 src="https://cdn-imgix-open.headout.com/icons/cancel-icon.svg"
                 alt=""
@@ -94,14 +108,17 @@ export default class FreeTourPopup extends Component<any, any> {
               </div>
             </div>
             <div
-              onClick={this.handlePopup}
+              onClick={e => this.handlePopup(e, "CTA")}
               className="close-trigger popupv2-cta"
             >
               Okay, Got It
             </div>
           </div>
         </div>
-        <div onClick={this.handlePopup} className="mask close-trigger"></div>
+        <div
+          onClick={e => this.handlePopup(e, "OutsidePopup")}
+          className="mask close-trigger"
+        ></div>
       </div>
     );
   }
