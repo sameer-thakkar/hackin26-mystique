@@ -17,7 +17,8 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
       hasOffer,
       togglePopup,
       popupState,
-      isMobile
+      isMobile,
+      trackEvent
     } = this.props;
     return (
       <div className="uncategorized-container">
@@ -47,6 +48,7 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
               offerId={tour.offer__free_tour.id}
               popupState={popupState}
               isMobile={isMobile}
+              trackEvent={trackEvent}
             />
           ))}
         </div>
