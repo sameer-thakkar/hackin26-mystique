@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import LanguageSelector from "./LanguageSelector";
 import HeaderLinks from "./HeaderLinks";
+import Image from "./Image";
 
 export default class Header extends Component<any, any> {
   hamburgerRef: any;
@@ -30,7 +31,8 @@ export default class Header extends Component<any, any> {
     return (
       <div className="header-container">
         <div className="header-logo">
-          <img src={logoUrl} alt={logoAltText} />
+          {/* <img src={logoUrl} alt={logoAltText} /> */}
+          <Image width={150} foramt="pjpg" url={logoUrl} />
         </div>
         <div className="header-links-lang-container">
           <div

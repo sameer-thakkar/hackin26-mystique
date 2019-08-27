@@ -74,8 +74,7 @@ export default class Banner extends Component<any, any> {
                 alt=""
               /> */}
               <Image
-                height={isMobile ? 401 : 682}
-                width={isMobile ? 375 : 1000}
+                width={800}
                 format="pjpg"
                 url={banner.image_src.url || banner.uploaded_image.url}
               />
