@@ -180,13 +180,9 @@ export default class terms extends React.Component<any, any> {
 
   render() {
     const { response } = this.props;
-
-    console.log(response, "repsonsesese");
-
     const isMobile = () => {
       return document.documentElement.clientWidth < 768;
     };
-
     const { url: logoUrl } = response.data.link_to_logo_file;
     const { url: uploadedLogoUrl, alt: altText } = response.data.logo;
     const { logo_alt_text: logoAltText } = response.data;
@@ -196,9 +192,6 @@ export default class terms extends React.Component<any, any> {
       header_links: headerLinks
     } = response.data;
     const { lang: currentLanguage, uid: currentDomain } = response;
-
-    console.log(availableLanguages, "adasdasdadasdasdasdas");
-
     const {
       url: uploadedFooterLogoUrl,
       alt: footerAltTextUploaded
@@ -226,14 +219,18 @@ export default class terms extends React.Component<any, any> {
           openGroupBookingModal={this.openGroupBookingModal}
           isMobile={isMobile}
         />
-        <div className="select-wrapper" id="select-tickets">
+        <div
+          className="select-wrapper"
+          id="select-tickets"
+          style={{ margin: "0px" }}
+        >
           <h1 className="select-text">Terms And Conditions</h1>
           <div className="divider"></div>
         </div>
         <div className="sub-heading">Terms of Use</div>
         <div className="text">
           This web page represents a legal document that serves as the terms of
-          use for our website (“Terms of Use”), www.vaticantickets.org and any
+          use for our website (“Terms of Use”), {currentDomain} and any
           associated mobile application (collectively, “Website”). Capitalized
           terms, unless otherwise defined, have the meaning specified within the
           Definitions section below. This Terms of Use,, and other posted
@@ -378,7 +375,10 @@ export default class terms extends React.Component<any, any> {
         </div>
         <br />
         <div className="text">You can contact us at - </div>
-        <div className="text">By E-mail: support@vaticantickets.org</div>
+        <div className="text">
+          By E-mail: support@
+          {currentDomain.split(".")[1] + "." + currentDomain.split(".")[2]}
+        </div>
         <div className="sub-heading">Intellectual Property</div>
         <div className="text">
           Our Website may contain our trademarks as well as those of Providers,

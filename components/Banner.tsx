@@ -69,10 +69,6 @@ export default class Banner extends Component<any, any> {
                 (this.activeSlideIndex == index ? "active-mb-slide" : "")
               }
             >
-              {/* <img
-                src={banner.image_src.url || banner.uploaded_image.url}
-                alt=""
-              /> */}
               <Image
                 width={800}
                 format="pjpg"
