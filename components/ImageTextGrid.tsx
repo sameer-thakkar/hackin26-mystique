@@ -26,7 +26,12 @@ class ImageText extends React.Component<ImageTextProps, any> {
           <div key={index} className="combo-card">
             <div className="card-title">{card.card_title}</div>
             {/* <img src={card.image_url.url} alt="" /> */}
-            <Image width={600} format="pjpg" url={card.image_url.url} />
+            <Image
+              width={580}
+              height={300}
+              format="pjpg"
+              url={card.image_url.url}
+            />
             <div className="description">
               <RichText
                 render={card.card_description}
