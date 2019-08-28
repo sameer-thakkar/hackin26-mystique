@@ -73,7 +73,6 @@ export default class Banner extends Component<any, any> {
                 width={800}
                 format="pjpg"
                 url={banner.image_src.url || banner.uploaded_image.url}
-                lazyLoad={false}
               />
             </div>
           );
