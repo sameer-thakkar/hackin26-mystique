@@ -94,6 +94,7 @@ export default class Banner extends Component<any, any> {
           <div className="indicators">
             {bannerImages.map((banner, index) => (
               <div
+                key={index}
                 className={
                   "indicator " +
                   (this.activeSlideIndex == index ? "active" : "")
