@@ -22,7 +22,12 @@ class ImageGrid extends React.Component<ImageGridProps, any> {
         {images.map((image, index) => (
           <div key={index} className="image-box">
             {/* <img src={image.image_url.url} alt="" /> */}
-            <Image width={600} format="pjpg" url={image.image_url.url} />
+            <Image
+              width={580}
+              height={300}
+              format="pjpg"
+              url={image.image_url.url}
+            />
           </div>
         ))}
         <style jsx>
