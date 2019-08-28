@@ -61,7 +61,7 @@ export default class LongForm extends Component<any, any> {
               margin: 0 0 0.75em;
             }
             .long-form .slice-block {
-              margin: 40px 0;
+              margin: 60px 0;
             }
             .long-form .slice-block img {
               width: 100%;
