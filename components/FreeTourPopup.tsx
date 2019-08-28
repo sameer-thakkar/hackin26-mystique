@@ -38,7 +38,7 @@ export default class FreeTourPopup extends Component<any, any> {
     const isMobile = () => {
       return document.documentElement.clientWidth < 768;
     };
-    const height = isMobile() ? 220 : 750;
+    const height = isMobile() ? 400 : 750;
     const width = isMobile() ? 495 : 495;
     const params = {
       direction: "horizontal",
@@ -90,7 +90,10 @@ export default class FreeTourPopup extends Component<any, any> {
           </div>
 
           <div className="popupv2-contents">
-            <div onClick={e => this.handlePopup(e, "Close")} className="close-trigger close">
+            <div
+              onClick={e => this.handlePopup(e, "Close")}
+              className="close-trigger close"
+            >
               <Image
                 height={26}
                 width={26}
