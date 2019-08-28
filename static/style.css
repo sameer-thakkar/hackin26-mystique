@@ -637,13 +637,18 @@ ul {
 
 .mb-carousel .mb-slide {
   display: none;
-  animation: fade-in 0.5s ease 1 backwards;
 }
 
-.mb-carousel .mb-slide.active-mb-slide {
+.mb-carousel .mb-slide.active-mb-slide,
+.mb-carousel .mb-slide.prev-slide {
   display: block;
   height: inherit;
-  animation: fade-in 0.5s ease 1 forwards;
+}
+.fade-in {
+  animation: fade 0.3s ease forwards;
+}
+.fade-out {
+  animation: fade 0.3s ease backwards;
 }
 
 .mb-carousel .mb-slide img {
@@ -653,7 +658,7 @@ ul {
   object-position: 20% 10%;
 }
 
-@-webkit-keyframes fade-in {
+@-webkit-keyframes fade {
   0% {
     opacity: 0;
   }
@@ -707,7 +712,8 @@ ul {
 }
 
 .mb-captions,
-.mb-slide.active-mb-slide {
+.mb-slide.active-mb-slide,
+.mb-carousel .mb-slide.prev-slide {
   grid-column: 1 / 2;
   grid-row: 1 / 2;
 }
