@@ -6,13 +6,14 @@ export default class Banner extends Component<any, any> {
   MAX_SLIDES: number;
   SLIDE_CHANGE_INTERVAL: number;
   activeSlideIndex: number;
+  prevSlideIndex: number;
   MB_CAROUSEL_INT: any;
   constructor(props) {
     super(props);
     this.hasIndicators = true;
     this.MAX_SLIDES = this.props.bannerImages.length;
     this.SLIDE_CHANGE_INTERVAL = 3500;
-    this.activeSlideIndex = 0;
+    this.prevSlideIndex = this.activeSlideIndex = 0;
     this.state = { counter: 0 };
   }
 
@@ -38,6 +39,7 @@ export default class Banner extends Component<any, any> {
   };
 
   changeSlide = (dir = 1) => {
+    this.prevSlideIndex = this.activeSlideIndex;
     this.activeSlideIndex = this.getBoundedIndex(this.activeSlideIndex, dir);
     this.setState({ counter: this.state.counter + 1 });
   };
@@ -66,7 +68,10 @@ export default class Banner extends Component<any, any> {
               key={index}
               className={
                 "mb-slide " +
-                (this.activeSlideIndex == index ? "active-mb-slide" : "")
+                (this.activeSlideIndex == index
+                  ? "active-mb-slide fade-in"
+                  : "") +
+                (this.prevSlideIndex == index ? "prev-slide fade-out" : "")
               }
             >
               <Image
