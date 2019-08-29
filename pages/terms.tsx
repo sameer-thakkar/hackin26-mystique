@@ -108,7 +108,7 @@ export default class terms extends React.Component<any, any> {
         } else {
           const { uid: reqUID, lang: reqLang } = getPropsFromReq({
             host: req.headers.host,
-            pathname
+            pathname: "/"
           });
           uid = reqUID;
           lang = reqLang;
@@ -133,21 +133,14 @@ export default class terms extends React.Component<any, any> {
           pathname = window.location.pathname;
           const { uid: reqUID, lang: reqLang } = getPropsFromReq({
             host,
-            pathname
+            pathname: "/"
           });
           uid = reqUID;
           lang = reqLang;
         }
       }
 
-      let uidType = "";
-      switch (pathname) {
-        case "/plan-your-visit":
-          uidType = "plan_your_visit";
-          break;
-        default:
-          uidType = "microsite";
-      }
+      let uidType = "microsite";
 
       const response = await Client(req).getByUID(uidType, uid, { lang });
 
