@@ -54,11 +54,12 @@ const getPropsFromReq = ({ host, pathname }) => {
 };
 
 export default class Page extends React.Component<any, any> {
-  static async getInitialProps({ req, query }) {
+  static async getInitialProps({ req, query, pathname }) {
     try {
       const props = await Page.getMicrositeData({
         req,
-        query
+        query,
+        reqPathname: pathname
       });
       if (process.browser) (window as any).prismic.setupEditButton();
       return props;
@@ -68,7 +69,7 @@ export default class Page extends React.Component<any, any> {
     }
   }
 
-  static async getMicrositeData({ req, query }) {
+  static async getMicrositeData({ req, query, reqPathname }) {
     /**
      * www.tickets-amsterdam.com/madame-tussauds
      * www.tickets-amsterdam.com/es/madame-tussauds
@@ -90,7 +91,7 @@ export default class Page extends React.Component<any, any> {
       let uid, lang, pathname;
       if (req) {
         // server render
-        pathname = req.url;
+        pathname = reqPathname;
         if (isDev) {
           const { mystique_uid: queryParamUID, lang: queryParamLang } = query;
           uid = queryParamUID;
