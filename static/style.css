@@ -130,7 +130,7 @@ body {
 }
 
 .header-logo img {
-  margin-left: 10px;
+  margin-left: -8px;
   width: 150px;
 }
 
@@ -179,7 +179,6 @@ body {
   text-decoration: none;
   color: #545454;
 }
-
 .current-langauge {
   display: flex;
   margin-right: 2px;
@@ -204,7 +203,7 @@ body {
   font-size: 17px;
   font-weight: 800;
   transition: 0.2s;
-  transform: translateY(-5px) rotate(180deg);
+  transform: translateY(-2px) rotate(180deg);
 }
 
 .language {
@@ -409,6 +408,9 @@ ul {
 }
 
 @media (max-width: 768px) {
+  .header-logo img {
+    margin-left: 10px;
+  }
   .header-links {
     margin: 0px;
   }
@@ -577,8 +579,11 @@ ul {
   font-family: "Graphik", "Proxima Nova", "Helvetica Neue", Helvetica, Arial,
     sans-serif;
   color: #000000;
+  border-left: 3px solid #669dde;
+  padding: 5px 10px 5px;
 }
 .divider {
+  display: none;
   width: 100px;
   border: 2px solid #669dde;
 }
@@ -588,6 +593,7 @@ ul {
   }
   .select-text {
     font-size: 24px;
+    margin: 25px 0;
   }
   .divider {
     width: 60px;
@@ -889,7 +895,7 @@ footer hr.white {
 }
 
 .arrow-active {
-  transform: translateY(5px) rotate(0deg);
+  transform: translateY(2px) rotate(0deg);
 }
 
 .popupv2-wrap.pixel-fix * {
