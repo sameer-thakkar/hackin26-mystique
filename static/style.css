@@ -139,10 +139,6 @@ body {
   align-items: center;
 }
 
-.header-links {
-  margin-right: 30px;
-}
-
 .header-links a {
   text-decoration: none;
   padding: 0 10px;
@@ -223,6 +219,7 @@ body {
 
 .language-selector-container {
   position: relative;
+  margin-left: 30px;
 }
 
 .lang {
@@ -2078,6 +2075,12 @@ form.form {
 .terms-container {
   margin: 10px;
   margin-top: 100px;
+  max-width: 1200px;
+  margin: 100px auto 10px;
+}
+.terms-container div {
+  font-family: Graphik;
+  line-height: 1.5;
 }
 
 .language-dropdown {

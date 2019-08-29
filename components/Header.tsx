@@ -26,7 +26,8 @@ export default class Header extends Component<any, any> {
       currentDomain,
       languageDropdown,
       toggleDropdown,
-      isMobile
+      isMobile,
+      parentComponent
     } = this.props;
     return (
       <div className="header-container">
@@ -49,15 +50,18 @@ export default class Header extends Component<any, any> {
               headerLinks={headerLinks}
               openGroupBookingModal={this.props.openGroupBookingModal}
               isMobile={isMobile}
+              parentComponent={parentComponent}
             />
-            <LanguageSelector
-              languages={languages}
-              availableLanguages={availableLanguages}
-              selectedLanguage={selectedLanguage}
-              currentDomain={currentDomain}
-              languageDropdown={languageDropdown}
-              toggleDropdown={toggleDropdown}
-            />
+            {!(parentComponent === "TERMS") && (
+              <LanguageSelector
+                languages={languages}
+                availableLanguages={availableLanguages}
+                selectedLanguage={selectedLanguage}
+                currentDomain={currentDomain}
+                languageDropdown={languageDropdown}
+                toggleDropdown={toggleDropdown}
+              />
+            )}
           </div>
         </div>
       </div>
