@@ -149,7 +149,7 @@ body {
   padding: 0 10px;
   color: #545454;
   font-family: Avenir;
-  font-size: 16px;
+  font-size: 14px;
   text-transform: uppercase;
   cursor: pointer;
 }
@@ -159,8 +159,8 @@ body {
 }
 
 .current-language-flag img {
-  height: 30px;
-  width: 30px;
+  height: 18px;
+  width: 18px;
   margin-right: 5px;
 }
 
@@ -183,21 +183,21 @@ body {
 
 .current-langauge {
   display: flex;
-  margin-right: 5px;
-  align-items: center;
+  margin-right: 2px;
+  align-items: baseline;
 }
 
 .language-dropdown {
   display: none;
   position: absolute;
   right: 0;
-  top: 50px;
+  top: 40px;
 }
 
 .current-lang-code {
   text-transform: uppercase;
   font-family: Avenir;
-  font-size: 20px;
+  font-size: 18px;
   color: #545454;
   transform: translateY(-3px);
 }
@@ -205,7 +205,7 @@ body {
   font-size: 17px;
   font-weight: 800;
   transition: 0.2s;
-  transform: translateY(-7px) rotate(-180deg);
+  transform: translateY(-5px) rotate(180deg);
 }
 
 .language {
@@ -413,10 +413,6 @@ ul {
   .header-links {
     margin: 0px;
   }
-
-  .language-selector {
-    margin-top: 5px;
-  }
   .product {
     margin: 0.6em;
     position: relative;
@@ -490,6 +486,7 @@ ul {
   .product-offer-mobile-left {
     display: flex;
     align-items: center;
+    width: 90%;
   }
   .gift-image {
     margin-right: 0.8em;
@@ -588,7 +585,7 @@ ul {
 }
 @media (max-width: 768px) {
   .select-wrapper {
-    margin: 10px;
+    margin: 16.8px 10px;
   }
   .select-text {
     font-size: 24px;
@@ -893,7 +890,7 @@ footer hr.white {
 }
 
 .arrow-active {
-  transform: rotate(0deg);
+  transform: translateY(5px) rotate(0deg);
 }
 
 .popupv2-wrap.pixel-fix * {
@@ -2090,4 +2087,28 @@ form.form {
     font-size: 16px;
     padding: 10px 20px;
   }
+}
+
+.header-wrapper {
+  height: 68px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.language-selector {
+  line-height: 0;
+}
+
+.current-language-flag {
+  line-height: 0;
 }

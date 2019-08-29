@@ -3,32 +3,31 @@ import Link from "next/link";
 
 const flagsUrl = {
   en: {
-    flag:
-      "https://cdn-imgix-open.headout.com/flags-new/icons8-great-britain-96.png",
+    flag: "https://s.w.org/images/core/emoji/12.0.0-1/svg/1f1ec-1f1e7.svg",
     language: "English"
   },
   it: {
-    flag: "https://cdn-imgix-open.headout.com/flags-new/icons8-italy.svg",
+    flag: "https://s.w.org/images/core/emoji/12.0.0-1/svg/1f1ee-1f1f9.svg",
     language: "Italiano"
   },
   es: {
-    flag: "https://cdn-imgix-open.headout.com/flags-new/icons8-spain-flag.svg",
+    flag: "https://s.w.org/images/core/emoji/12.0.0-1/svg/1f1ea-1f1f8.svg",
     language: "Español"
   },
   fr: {
-    flag: "https://cdn-imgix-open.headout.com/flags-new/icons8-france.svg",
+    flag: "https://s.w.org/images/core/emoji/12.0.0-1/svg/1f1eb-1f1f7.svg",
     language: "Français"
   },
   de: {
-    flag: "https://cdn-imgix-open.headout.com/flags-new/icons8-germany.svg",
+    flag: "https://s.w.org/images/core/emoji/12.0.0-1/svg/1f1e9-1f1ea.svg",
     language: "Deutsch"
   },
   nl: {
-    flag: "https://cdn-imgix-open.headout.com/flags-new/icons8-netherlands.svg",
+    flag: "https://s.w.org/images/core/emoji/12.0.0-1/svg/1f1f3-1f1f1.svg",
     language: "Nederlands"
   },
   pt: {
-    flag: "https://cdn-imgix-open.headout.com/flags-new/icons8-portugal.svg",
+    flag: "https://s.w.org/images/core/emoji/12.0.0-1/svg/1f1f5-1f1f9.svg",
     language: "Português"
   }
 };

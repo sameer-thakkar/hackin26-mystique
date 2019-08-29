@@ -30,33 +30,35 @@ export default class Header extends Component<any, any> {
     } = this.props;
     return (
       <div className="header-container">
-        <div className="header-logo">
-          {/* <img src={logoUrl} alt={logoAltText} /> */}
-          <Image width={150} foramt="pjpg" url={logoUrl} />
-        </div>
-        <div className="header-links-lang-container">
-          <div
-            ref={this.hamburgerRef}
-            className="hamburger"
-            onClick={x => this.hamburgerToggle(this.hamburgerRef.current)}
-          >
-            <div className="bar1"></div>
-            <div className="bar2"></div>
-            <div className="bar3"></div>
+        <div className="header-wrapper">
+          <div className="header-logo">
+            {/* <img src={logoUrl} alt={logoAltText} /> */}
+            <Image width={150} foramt="pjpg" url={logoUrl} />
           </div>
-          <HeaderLinks
-            headerLinks={headerLinks}
-            openGroupBookingModal={this.props.openGroupBookingModal}
-            isMobile={isMobile}
-          />
-          <LanguageSelector
-            languages={languages}
-            availableLanguages={availableLanguages}
-            selectedLanguage={selectedLanguage}
-            currentDomain={currentDomain}
-            languageDropdown={languageDropdown}
-            toggleDropdown={toggleDropdown}
-          />
+          <div className="header-links-lang-container">
+            <div
+              ref={this.hamburgerRef}
+              className="hamburger"
+              onClick={x => this.hamburgerToggle(this.hamburgerRef.current)}
+            >
+              <div className="bar1"></div>
+              <div className="bar2"></div>
+              <div className="bar3"></div>
+            </div>
+            <HeaderLinks
+              headerLinks={headerLinks}
+              openGroupBookingModal={this.props.openGroupBookingModal}
+              isMobile={isMobile}
+            />
+            <LanguageSelector
+              languages={languages}
+              availableLanguages={availableLanguages}
+              selectedLanguage={selectedLanguage}
+              currentDomain={currentDomain}
+              languageDropdown={languageDropdown}
+              toggleDropdown={toggleDropdown}
+            />
+          </div>
         </div>
       </div>
     );
