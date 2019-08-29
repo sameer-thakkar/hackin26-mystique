@@ -137,7 +137,6 @@ body {
 .header-links-lang-container {
   display: flex;
   align-items: center;
-  margin-right: 20px;
 }
 
 .header-links {
