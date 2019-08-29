@@ -121,7 +121,7 @@ export default class LanguageSelector extends Component<any, any> {
           {availableLanguages.length === 0 &&
             this.getAllLanguages().map((language, index) => {
               return (
-                <Link key={index} href={`/${language}/${slug}`}>
+                <Link key={index} href={`/${language}/${slug ? slug : ""}`}>
                   <a
                     className={
                       selectedLangCode == language ? "selected-tab" : ""
@@ -141,7 +141,7 @@ export default class LanguageSelector extends Component<any, any> {
             })}
           {this.getAvailableLanguages().map((language, index) => {
             return (
-              <Link key={index} href={`/${language}`}>
+              <Link key={index} href={`/${language}/${slug ? slug : ""}`}>
                 <a
                   className={selectedLangCode == language ? "selected-tab" : ""}
                 >
