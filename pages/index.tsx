@@ -32,7 +32,11 @@ const getPropsFromReq = ({ host, pathname }) => {
     .split("/")
     .filter(item => item);
 
+  console.log(pathnameSlugs, "pathnameslugs");
+
   let requestedLang = pathnameSlugs[0];
+
+  console.log(requestedLang, "requestedLang");
 
   const isLangValid = languages.includes(requestedLang);
   if (isLangValid) {
@@ -41,11 +45,19 @@ const getPropsFromReq = ({ host, pathname }) => {
     requestedLang = "en";
   }
 
+  console.log(isLangValid, "isLang Valid");
+
+  console.log(requestedLang, "after if");
+
   const uid = `${pathnameWithoutTrailingSlash(
     `${host}/${pathnameSlugs.join("/")}`
   )}`
     .replace("microbrand.", "www.")
     .replace(/\//g, ".");
+
+  console.log(uid, "uid");
+
+  console.log(langMap[requestedLang], "langmap");
 
   return {
     uid,
@@ -101,6 +113,8 @@ export default class Page extends React.Component<any, any> {
             host: req.headers.host,
             pathname
           });
+          console.log(uid, "uid in microstedata");
+          console.log(reqLang, "reqLang in microstedata");
           uid = reqUID;
           lang = reqLang;
         }
@@ -139,6 +153,8 @@ export default class Page extends React.Component<any, any> {
         default:
           uidType = "microsite";
       }
+
+      console.log(uid, uidType, lang);
 
       const micrositeData = Client(req).getByUID(uidType, uid, { lang });
       const offerData = Client(req).query(
