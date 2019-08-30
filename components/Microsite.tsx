@@ -186,12 +186,14 @@ export default class Microsite extends Component<any, any> {
     const longFormContent = this.props.data.data.body2;
     const {
       footer_logo_alt_text: footerAltText,
-      has_terms_page: hasTermsPage
+      has_terms_page: hasTermsPage,
+      enable_localization_menu: hasLanguageSelector
     } = this.props.data.data;
     const { results: productOffer } = this.props.offerData;
     const productOfferIds = uncategorizedToursList.map(
       offerId => offerId.offer__free_tour.id
     );
+    const slug = this.props.data.data.slug;
     const offerId = productOfferIds[0];
     const hasOffer = offerId ? true : false;
     const filterOfferPopup = productOffer.filter(popup => popup.id === offerId);
@@ -219,6 +221,8 @@ export default class Microsite extends Component<any, any> {
             toggleDropdown={this.toggleDropdown}
             openGroupBookingModal={this.openGroupBookingModal}
             isMobile={isMobile}
+            slug={slug}
+            hasLanguageSelector={hasLanguageSelector}
           />
           <Banner
             bannerImages={bannerImages ? bannerImages : null}
