@@ -4,10 +4,6 @@
 // ./pages/_document.js
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import { apiEndpoint } from "../prismic-config";
-const Sentry = require("@sentry/node");
-Sentry.init({
-  dsn: "https://a952d80706b3435388b1fb5983c74b18@sentry.io/1545593"
-});
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
