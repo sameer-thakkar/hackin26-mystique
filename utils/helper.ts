@@ -65,5 +65,3 @@ export const createGroupBooking = (url, data) =>
   })
     .then(response => "Successful")
     .catch(error => `Error: ${error}`);
-
-export const IS_MOBILE = () => window.outerWidth < 768;
