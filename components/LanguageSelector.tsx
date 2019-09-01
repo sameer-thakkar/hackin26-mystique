@@ -45,37 +45,37 @@ export default class LanguageSelector extends Component<any, any> {
     };
   }
 
-  getAllLanguages = () => {
-    const allLanguages = [];
-    const { languages } = this.props;
-    Object.keys(flagsUrl).map(langCode => {
-      languages.map(lang => {
-        if (lang.language.split("-")[1] == langCode.toUpperCase()) {
-          const value = `${lang.language.split("-")[1]}`;
-          allLanguages.push(value.toLowerCase());
-        }
-      });
-    });
-    return allLanguages;
-  };
-
-  getAvailableLanguages = () => {
+  getLanguages = () => {
     const liveLanguages = [];
-    const { selectedLanguage, availableLanguages } = this.props;
+    const { selectedLanguage, availableLanguages, languages } = this.props;
     const selectedLangCode = selectedLanguage.substring(0, 2);
-    Object.keys(flagsUrl).map(langCode => {
-      availableLanguages.map(availLangCode => {
-        if (
-          langCode === selectedLangCode ||
-          langCode === availLangCode.lang.substring(0, 2)
-        ) {
-          if (liveLanguages.indexOf(langCode) == -1) {
-            liveLanguages.push(langCode);
+    if (availableLanguages.length > 0) {
+      languages.map(lang => {
+        availableLanguages.map(availLanguage => {
+          if (
+            lang.language.split("-")[1].toLowerCase() ==
+              availLanguage.lang.substring(0, 2) ||
+            lang.language.split("-")[1].toLowerCase() == selectedLangCode
+          ) {
+            if (
+              liveLanguages.indexOf(
+                lang.language.split("-")[1].toLowerCase()
+              ) == -1
+            ) {
+              liveLanguages.push(lang.language.split("-")[1].toLowerCase());
+            }
           }
+        });
+      });
+    } else {
+      languages.map(lang => {
+        if (
+          liveLanguages.indexOf(lang.language.split("-")[1].toLowerCase()) == -1
+        ) {
+          liveLanguages.push(lang.language.split("-")[1].toLowerCase());
         }
       });
-    });
-    this.getAllLanguages();
+    }
     return liveLanguages;
   };
 
@@ -85,15 +85,9 @@ export default class LanguageSelector extends Component<any, any> {
   };
 
   render() {
-    const {
-      selectedLanguage,
-      languageDropdown,
-      availableLanguages,
-      currentDomain
-    } = this.props;
+    const { selectedLanguage, languageDropdown, slug } = this.props;
     const selectedLangCode = selectedLanguage.substring(0, 2);
-    const ABslug = currentDomain.split(".");
-    const slug = ABslug[ABslug.length - 1];
+    const urlSlug = `/${slug}`;
 
     return (
       <div onClick={this.handleClick} className="language-selector-container">
@@ -117,30 +111,14 @@ export default class LanguageSelector extends Component<any, any> {
             languageDropdown ? "language-dropdown-active" : ""
           }`}
         >
-          {availableLanguages.length === 0 &&
-            this.getAllLanguages().map((language, index) => {
-              return (
-                <Link key={index} href={`/${language}/${slug}`}>
-                  <a
-                    className={
-                      selectedLangCode == language ? "selected-tab" : ""
-                    }
-                  >
-                    <div className="language">
-                      <div className="language-flag">
-                        <img src={flagsUrl[language].flag} alt="flag" />
-                      </div>
-                      <span className="lang">
-                        {flagsUrl[language].language}
-                      </span>
-                    </div>
-                  </a>
-                </Link>
-              );
-            })}
-          {this.getAvailableLanguages().map((language, index) => {
+          {this.getLanguages().map((language, index) => {
             return (
-              <Link key={index} href={`/${language}`}>
+              <Link
+                key={index}
+                href={`/${language == "en" ? "" : language}${
+                  slug ? urlSlug : ""
+                }`}
+              >
                 <a
                   className={selectedLangCode == language ? "selected-tab" : ""}
                 >

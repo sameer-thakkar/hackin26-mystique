@@ -2,19 +2,46 @@ import React, { Component } from "react";
 import InlinePrice from "./InlinePrice";
 import Swiper from "react-id-swiper";
 import Image from "./Image";
+import { IS_MOBILE } from "../utils/helper";
 
 export default class FreeTourPopup extends Component<any, any> {
+  FTPopupElement: any;
+  FTWrapElement: any;
   constructor(props) {
     super(props);
     this.state = {
-      isClient: false
+      isClient: false,
+      scaleStyles: {},
+      scaleSet: false
     };
   }
-
   componentDidMount() {
     this.setState({
       isClient: true
     });
+  }
+
+  componentDidUpdate() {
+    // Hack to find the CSS Transform Scale Down Value Iteratively till Popup Fits Screen (+guttter)
+    if (this.props.popupState && !this.state.scaleSet && !IS_MOBILE) {
+      let parentHeight = this.FTWrapElement.clientHeight; //Parent Height is same as Screen Height
+      let popupHeight = this.FTPopupElement.clientHeight;
+      if (popupHeight > parentHeight) {
+        let scaleFactor = 1;
+        while (scaleFactor * popupHeight + 20 > parentHeight) {
+          scaleFactor -= 0.01;
+        }
+        this.setState({
+          scaleStyles: {
+            transform: `translate(-50%, -50%)  scale3d(${scaleFactor}, ${scaleFactor}, ${scaleFactor})`,
+            position: "fixed",
+            left: "50%",
+            top: "50%"
+          },
+          scaleSet: true
+        });
+      }
+    }
   }
 
   handlePopup = (e, closeType) => {
@@ -77,10 +104,22 @@ export default class FreeTourPopup extends Component<any, any> {
       return null;
     }
     const { productOffer, popupState } = this.props;
-
     return (
-      <div className={`popupv2-cont ${popupState ? "active" : ""}`}>
-        <div className="popupv2-wrap">
+      <div
+        className={`popupv2-cont ${popupState ? "active" : ""}`}
+        ref={FTWrapElement => {
+          this.FTWrapElement = FTWrapElement;
+        }}
+      >
+        <div
+          className={
+            "popupv2-wrap " + (this.state.scaleSet ? "pixel-fix" : null)
+          }
+          ref={FTPopupElement => {
+            this.FTPopupElement = FTPopupElement;
+          }}
+          style={this.state.scaleStyles}
+        >
           <div className="carousel">
             <div className="swiper-container">
               <div className="swiper-wrapper">{this.renderSlider()}</div>
