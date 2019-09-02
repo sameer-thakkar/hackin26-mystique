@@ -85,7 +85,9 @@ export default class Banner extends Component<any, any> {
 
         <div className="mb-captions">
           <div className="mb-caption">
-            <div className="caption">{bannerHeading}</div>
+            <div className="caption">
+              <h1>{bannerHeading}</h1>
+            </div>
             <a className="mb-cta book-now-text" href="#select-tickets">
               {bannerCtaText}
             </a>
