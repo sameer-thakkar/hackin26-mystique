@@ -9,7 +9,10 @@ export default class Image extends React.Component<any, any> {
     const makeUrl = (density = 1.5, fm = "pjpg") => {
       const w = width ? `&w=${width * density}` : "";
       const h = height ? `&h=${height * density}` : "";
-      return `${url}?auto=compress&fm=${fm}${w}${h}&crop=faces&fit=min`;
+      return `${url.replace(
+        /\s/g,
+        "%20"
+      )}?auto=compress&fm=${fm}${w}${h}&crop=faces&fit=min`;
     };
     return (
       <picture>

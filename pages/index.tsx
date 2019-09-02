@@ -54,12 +54,12 @@ const getPropsFromReq = ({ host, pathname }) => {
 };
 
 export default class Page extends React.Component<any, any> {
-  static async getInitialProps({ req, query, pathname }) {
+  static async getInitialProps({ req, query }) {
     try {
       const props = await Page.getMicrositeData({
         req,
         query,
-        reqPathname: pathname
+        reqPathname: req ? req.url.split("?")[0].split("#")[0] : null
       });
       if (process.browser) (window as any).prismic.setupEditButton();
       return props;

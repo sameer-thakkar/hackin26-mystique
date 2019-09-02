@@ -87,7 +87,6 @@ export default class LanguageSelector extends Component<any, any> {
   render() {
     const { selectedLanguage, languageDropdown, slug } = this.props;
     const selectedLangCode = selectedLanguage.substring(0, 2);
-    const urlSlug = `/${slug}`;
 
     return (
       <div onClick={this.handleClick} className="language-selector-container">
@@ -113,12 +112,7 @@ export default class LanguageSelector extends Component<any, any> {
         >
           {this.getLanguages().map((language, index) => {
             return (
-              <Link
-                key={index}
-                href={`/${language == "en" ? "" : language}${
-                  slug ? urlSlug : ""
-                }`}
-              >
+              <Link key={index} href={`/${language}/${slug ? slug : ""}`}>
                 <a
                   className={selectedLangCode == language ? "selected-tab" : ""}
                 >

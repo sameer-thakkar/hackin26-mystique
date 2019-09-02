@@ -199,7 +199,7 @@ body {
   font-size: 17px;
   font-weight: 800;
   transition: 0.2s;
-  transform: translateY(-2px) rotate(180deg);
+  transform: translateY(-3px) rotate(180deg);
 }
 
 .language {
@@ -892,7 +892,7 @@ footer hr.white {
 }
 
 .arrow-active {
-  transform: translateY(2px) rotate(0deg);
+  transform: translateY(3px) rotate(0deg);
 }
 
 .popupv2-wrap.pixel-fix * {

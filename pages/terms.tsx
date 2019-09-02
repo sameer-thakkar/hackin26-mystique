@@ -1,57 +1,10 @@
-import React from "react";
-import JSONTree from "react-json-tree";
+import React, { Component } from "react";
+import Prismic from "prismic-javascript";
+import { Client } from "../prismic-config";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import {
-  Client,
-  apiEndpoint,
-  hrefResolver,
-  linkResolver
-} from "../prismic-config";
 
-const getPropsFromReq = ({ host, pathname }) => {
-  const pathnameWithoutTrailingSlash = pathname =>
-    pathname.lastIndexOf("/") === pathname.length - 1
-      ? pathname.substr(0, pathname.length - 1)
-      : pathname;
-
-  const languages = ["en", "es", "it", "fr", "pt", "de", "nl"];
-  const langMap = {
-    en: "en-us",
-    es: "es-es",
-    it: "it-it",
-    fr: "fr-fr",
-    pt: "pt-pt",
-    nl: "nl-nl",
-    de: "de-de"
-  };
-
-  const pathnameSlugs = pathnameWithoutTrailingSlash(pathname)
-    .split("/")
-    .filter(item => item);
-
-  let requestedLang = pathnameSlugs[0];
-
-  const isLangValid = languages.includes(requestedLang);
-  if (isLangValid) {
-    pathnameSlugs.shift();
-  } else {
-    requestedLang = "en";
-  }
-
-  const uid = `${pathnameWithoutTrailingSlash(
-    `${host}/${pathnameSlugs.join("/")}`
-  )}`
-    .replace("microbrand.", "www.")
-    .replace(/\//g, ".");
-
-  return {
-    uid,
-    lang: langMap[requestedLang]
-  };
-};
-
-export default class terms extends React.Component<any, any> {
+export default class terms extends Component<any, any> {
   constructor(props) {
     super(props);
     console.log(props);
@@ -63,97 +16,22 @@ export default class terms extends React.Component<any, any> {
       showGroupBookingModal: false
     };
   }
-  static async getInitialProps({ req, query }) {
+  static async getInitialProps({ req }) {
     try {
-      const props = await terms.getMicrositeData({
-        req,
-        query
-      });
-      if (process.browser) (window as any).prismic.setupEditButton();
+      const props = await terms.getTermsData({ req });
       return props;
-    } catch (e) {
-      console.log(e);
-      return {};
+    } catch (error) {
+      console.log(error);
     }
   }
 
-  static async getMicrositeData({ req, query }) {
-    /**
-     * www.tickets-amsterdam.com/madame-tussauds
-     * www.tickets-amsterdam.com/es/madame-tussauds
-     */
-
-    /**
-     * if working locally
-     *  - read from query param
-     *  ?mystique_uid=www.tickets-amsterdam.com.madame-tussauds&lang=es
-     *  Output object: {mystique_uid: '',  lang: ''}
-     * if working on prod
-     *  - deconstruct host and pathname
-     *  to create similar output object
-     */
-
+  static async getTermsData({ req }) {
     const { host } = req ? req.headers : window.location;
-    const isDev = host.includes("localhost:");
-
-    try {
-      let uid, lang, pathname;
-      if (req) {
-        // server render
-        pathname = req.url;
-        if (isDev) {
-          const { mystique_uid: queryParamUID, lang: queryParamLang } = query;
-          uid = queryParamUID;
-          lang = queryParamLang;
-        } else {
-          const { uid: reqUID, lang: reqLang } = getPropsFromReq({
-            host: req.headers.host,
-            pathname: "/"
-          });
-          uid = reqUID;
-          lang = reqLang;
-        }
-      } else {
-        if (isDev) {
-          const qsObject: any = window.location.search
-            .replace("?", "")
-            .split("&")
-            .reduce((accum, item) => {
-              const qs = item.split("=");
-              return {
-                ...accum,
-                [qs[0]]: qs[1]
-              };
-            }, {});
-          uid = qsObject.mystique_uid;
-          lang = qsObject.lang;
-          pathname = window.location.pathname;
-        } else {
-          const { host } = window.location;
-          pathname = window.location.pathname;
-          const { uid: reqUID, lang: reqLang } = getPropsFromReq({
-            host,
-            pathname: "/"
-          });
-          uid = reqUID;
-          lang = reqLang;
-        }
-      }
-
-      let uidType = "microsite";
-
-      const response = await Client(req).getByUID(uidType, uid, { lang });
-
-      return {
-        response,
-        uidType,
-        uid,
-        lang
-      };
-    } catch (error) {
-      console.log(error);
-      return error;
-    }
+    const uid = host.replace("microbrand", "www");
+    const lang = "en-us";
+    const uidType = "microsite";
+    const response = await Client(req).getByUID(uidType, uid, { lang });
+    return { response };
   }
 
   toggleDropdown = () => {

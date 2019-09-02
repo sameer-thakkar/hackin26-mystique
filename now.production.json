@@ -20,6 +20,10 @@
       "dest": "/api/$1"
     },
     {
+      "src": "/terms",
+      "dest": "/terms"
+    },
+    {
       "src": "/(.*)",
       "dest": "/index"
     }

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import LanguageSelector from "./LanguageSelector";
 import HeaderLinks from "./HeaderLinks";
 import Image from "./Image";
-import Link from "next/link";
 
 export default class Header extends Component<any, any> {
   hamburgerRef: any;
@@ -32,18 +31,12 @@ export default class Header extends Component<any, any> {
       slug,
       hasLanguageSelector
     } = this.props;
-    const urlSlug = `/${slug}`;
     return (
       <div className="header-container">
         <div className="header-wrapper">
-          <Link href={slug ? urlSlug : "/"}>
-            <a>
-              <div className="header-logo">
-                {/* <img src={logoUrl} alt={logoAltText} /> */}
-                <Image width={150} foramt="pjpg" url={logoUrl} />
-              </div>
-            </a>
-          </Link>
+          <div className="header-logo">
+            <img src={logoUrl} alt={logoAltText} />
+          </div>
           <div className="header-links-lang-container">
             <div
               ref={this.hamburgerRef}
