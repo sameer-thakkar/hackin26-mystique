@@ -89,7 +89,6 @@ export const populateHead = props => {
 export default class Microsite extends Component<any, any> {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       tourPrices: [],
       currencySymbol: "",

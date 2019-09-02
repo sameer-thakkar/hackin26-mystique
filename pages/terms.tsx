@@ -7,7 +7,6 @@ import Footer from "../components/Footer";
 export default class terms extends Component<any, any> {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       tourPrices: [],
       currencySymbol: "",
