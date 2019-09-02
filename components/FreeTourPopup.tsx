@@ -23,7 +23,8 @@ export default class FreeTourPopup extends Component<any, any> {
 
   componentDidUpdate() {
     // Hack to find the CSS Transform Scale Down Value Iteratively till Popup Fits Screen (+guttter)
-    if (this.props.popupState && !this.state.scaleSet && !IS_MOBILE) {
+    console.log("Updated");
+    if (this.props.popupState && !this.state.scaleSet && !IS_MOBILE()) {
       let parentHeight = this.FTWrapElement.clientHeight; //Parent Height is same as Screen Height
       let popupHeight = this.FTPopupElement.clientHeight;
       if (popupHeight > parentHeight) {
