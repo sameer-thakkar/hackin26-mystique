@@ -23,7 +23,7 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
     return (
       <div className="uncategorized-container">
         <div className="select-wrapper" id="select-tickets">
-          <h1 className="select-text">{heading}</h1>
+          <div className="select-text">{heading}</div>
           <div className="divider"></div>
         </div>
         <div className="products-container">
