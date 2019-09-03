@@ -4,6 +4,7 @@ import Microsite from "../components/Microsite";
 import PlanYourVisit from "../components/PlanYourVisit";
 import PrismicReact from "prismic-reactjs";
 import Prismic from "prismic-javascript";
+import fetch from "isomorphic-unfetch";
 import {
   Client,
   apiEndpoint,
@@ -151,8 +152,50 @@ export default class Page extends React.Component<any, any> {
         }
       );
 
+      const { items: uncategorizedToursList } = response.data.data.body1[0];
+
+      const idsToFetchFromScorpio = uncategorizedToursList.reduce(
+        (accum, tour) => {
+          const {
+            tgid,
+            tour_title_override: title,
+            marketing_highlights_override: descriptors,
+            tour_description_override: highlights
+          } = tour;
+          const hasHighlights = highlights.filter(item => item.text);
+          if (!title || !hasHighlights || !descriptors) {
+            return [...accum, tgid];
+          }
+          return accum;
+        },
+        []
+      );
+
+      const scorpioResponses = await Promise.all(
+        idsToFetchFromScorpio.map(id =>
+          fetch(
+            `https://api.headout.com/api/v5/tour-group/get/${id}?language=${
+              lang.split("-")[0]
+            }`
+          ).then(r => r.json())
+        )
+      );
+
+      const scorpioData = scorpioResponses.reduce(
+        (accum, response: any, idx) => ({
+          ...accum,
+          [idsToFetchFromScorpio[idx]]: {
+            title: response.name,
+            highlights: response.microBrandsHighlight,
+            descriptors: response.microBrandsDescriptor
+          }
+        }),
+        {}
+      );
+
       return {
         response,
+        scorpioData,
         uidType,
         uid,
         lang
@@ -164,12 +207,13 @@ export default class Page extends React.Component<any, any> {
   }
 
   render() {
-    const { response, uidType, uid, lang } = this.props;
+    const { response, scorpioData, uidType, uid, lang } = this.props;
 
     if (uidType === "microsite") {
       return (
         <Microsite
           data={response.data}
+          scorpioData={scorpioData}
           uid={uid}
           lang={lang}
           offerData={response.offerData}

@@ -18,7 +18,8 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
       togglePopup,
       popupState,
       isMobile,
-      trackEvent
+      trackEvent,
+      scorpioData
     } = this.props;
     return (
       <div className="uncategorized-container">
@@ -35,6 +36,7 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
               title={tour.tour_title_override}
               descriptors={tour.marketing_highlights_override}
               highlights={tour.tour_description_override}
+              scorpioData={scorpioData[tour.tgid]}
               tourPrices={tourPrices}
               currencySymbol={currencySymbol}
               currentDomain={currentDomain}

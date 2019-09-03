@@ -192,7 +192,6 @@ export default class Microsite extends Component<any, any> {
     const productOfferIds = uncategorizedToursList.map(
       offerId => offerId.offer__free_tour.id
     );
-    const slug = this.props.data.data.slug;
     const offerId = productOfferIds[0];
     const hasOffer = offerId ? true : false;
     const filterOfferPopup = productOffer.filter(popup => popup.id === offerId);
@@ -220,7 +219,6 @@ export default class Microsite extends Component<any, any> {
             toggleDropdown={this.toggleDropdown}
             openGroupBookingModal={this.openGroupBookingModal}
             isMobile={isMobile}
-            slug={slug}
             hasLanguageSelector={hasLanguageSelector}
           />
           <Banner
@@ -232,6 +230,7 @@ export default class Microsite extends Component<any, any> {
           {uncategorizedToursList.length > 0 && (
             <PopulateUncategorizedProducts
               uncategorizedTours={uncategorizedToursList}
+              scorpioData={this.props.scorpioData}
               uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
               tourPrices={this.state.tourPrices}
               currencySymbol={this.state.currencySymbol}

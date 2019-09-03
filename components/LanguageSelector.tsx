@@ -41,8 +41,15 @@ export default class LanguageSelector extends Component<any, any> {
     this.langDropdownRef = React.createRef();
     this.arrowRef = React.createRef();
     this.state = {
-      arrowActive: false
+      arrowActive: false,
+      pathname: ""
     };
+  }
+
+  componentDidMount() {
+    this.setState({
+      pathname: window.location.pathname
+    });
   }
 
   getLanguages = () => {
@@ -85,8 +92,17 @@ export default class LanguageSelector extends Component<any, any> {
   };
 
   render() {
-    const { selectedLanguage, languageDropdown, slug } = this.props;
+    const { selectedLanguage, languageDropdown } = this.props;
     const selectedLangCode = selectedLanguage.substring(0, 2);
+    const { pathname } = this.state;
+    const slug = pathname
+      .replace("en/", "")
+      .replace("fr/", "")
+      .replace("de/", "")
+      .replace("it/", "")
+      .replace("nl/", "")
+      .replace("pt/", "")
+      .replace("es/", "");
 
     return (
       <div onClick={this.handleClick} className="language-selector-container">
@@ -112,7 +128,7 @@ export default class LanguageSelector extends Component<any, any> {
         >
           {this.getLanguages().map((language, index) => {
             return (
-              <Link key={index} href={`/${language}/${slug ? slug : ""}`}>
+              <Link key={index} href={`/${language}${slug}`}>
                 <a
                   className={selectedLangCode == language ? "selected-tab" : ""}
                 >
