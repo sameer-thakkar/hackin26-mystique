@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { shortCodeSerializer } from "../utils/shortCodes";
 import { RichText } from "prismic-reactjs";
+import ReactMarkdown from "react-markdown";
+
+const isLengthyArray = item => Array.isArray(item) && item.length;
 
 export default class Product extends Component<any, any> {
   readMoreRef: any;
@@ -66,18 +69,23 @@ export default class Product extends Component<any, any> {
       productOffer,
       offerId,
       isMobile,
-      popupState
+      popupState,
+      scorpioData
     } = this.props;
-    const descriptorsList = descriptors.split(",");
+    const descriptorsCsv = descriptors || scorpioData.descriptors;
+    const cardTitle = title || scorpioData.title;
+    const descriptorsList = descriptorsCsv ? descriptorsCsv.split(",") : [];
     const langCode = currentLanguage.substring(0, 2);
     const domainSplit = currentDomain.split(".");
     const domain = domainSplit[1] + "." + domainSplit[2];
+    const isHighlightsFromPrismic =
+      isLengthyArray(highlights) && highlights.filter(item => item.text).length;
     return (
       <div>
         <div className="product">
           <div className="product-header">
             <div className="product-header-left">
-              <div className="product-title">{title}</div>
+              <div className="product-title">{cardTitle}</div>
               <div className="product-tags">
                 {descriptorsList.map((tag, index) => {
                   return (
@@ -161,11 +169,17 @@ export default class Product extends Component<any, any> {
           )}
           <div className="desc-wrapper">
             <div className="product-desc">
-              <ul>
-                {highlights.map((highlight, index) => (
-                  <li key={index}>{highlight.text}</li>
-                ))}
-              </ul>
+              {isHighlightsFromPrismic ? (
+                <ul>
+                  {highlights
+                    .filter(item => item.text)
+                    .map((highlight, index) => (
+                      <li key={index}>{highlight.text}</li>
+                    ))}
+                </ul>
+              ) : (
+                <ReactMarkdown source={scorpioData.highlights} />
+              )}
             </div>
             <div
               ref={this.readMoreRef}

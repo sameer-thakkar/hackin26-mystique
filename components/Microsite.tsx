@@ -230,6 +230,7 @@ export default class Microsite extends Component<any, any> {
           {uncategorizedToursList.length > 0 && (
             <PopulateUncategorizedProducts
               uncategorizedTours={uncategorizedToursList}
+              scorpioData={this.props.scorpioData}
               uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
               tourPrices={this.state.tourPrices}
               currencySymbol={this.state.currencySymbol}
