@@ -4,7 +4,7 @@ import builder from "xmlbuilder";
 
 function getPage(api, uid, documents) {
   return api
-    .query(Prismic.Predicates.any("document.tags", [uid]))
+    .query(Prismic.Predicates.any("document.tags", [uid]), { lang: "*" })
     .then(response => {
       return documents.concat(response.results);
     });
@@ -12,6 +12,13 @@ function getPage(api, uid, documents) {
 
 const fullDomain = req =>
   req.headers["x-forwarded-proto"] + "://" + req.headers.host;
+
+const createLoc = doc => {
+  if (doc.lang === "en-us") {
+    return `https://${doc.uid}/`;
+  }
+  return `https://${doc.uid}/${doc.lang.split("-")[0]}`;
+};
 
 export default function handle(req, res) {
   const url = fullDomain(req);
@@ -43,7 +50,7 @@ export default function handle(req, res) {
           // skip all A/B variant pages from sitemap
           const { data } = doc;
           xmlDoc.urlset.url.push({
-            loc: `https://${doc.uid}/`,
+            loc: createLoc(doc),
             lastmod: doc.last_publication_date,
             "image:image": {
               "image:loc": data.image.url
