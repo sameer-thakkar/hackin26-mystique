@@ -1,5 +1,6 @@
 import Prismic from "prismic-javascript";
 import { apiEndpoint } from "../../prismic-config";
+import builder from "xmlbuilder";
 
 function getPage(api, uid, documents) {
   return api
@@ -20,20 +21,39 @@ export default function handle(req, res) {
   } else {
     uid = req.headers.host;
   }
+
+  const xmlDoc = {
+    urlset: {
+      "@xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+      "@xmlns:image": "http://www.google.com/schemas/sitemap-image/1.1",
+      "@xsi:schemaLocation":
+        "http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd",
+      "@xmlns": "http://www.sitemaps.org/schemas/sitemap/0.9",
+      url: []
+    }
+  };
+
   Prismic.getApi(apiEndpoint, { req })
     .then(api => {
       return getPage(api, uid, []);
     })
     .then(documents => {
-      let body = "";
       documents.forEach(doc => {
         if (doc.data.is_variant_page !== "Yes") {
           // skip all A/B variant pages from sitemap
-          console.log(doc);
-          body += `${doc.data.domain_name}\r\n`;
+          const { data } = doc;
+          xmlDoc.urlset.url.push({
+            loc: `https://${doc.uid}/`,
+            lastmod: doc.last_publication_date,
+            "image:image": {
+              "image:loc": data.image.url
+            }
+          });
         }
       });
-      res.send(body);
+      const xml = builder.create(xmlDoc, { encoding: "utf-8" });
+      const xmlStr = xml.end();
+      res.send(xmlStr);
     })
     .catch(err => {
       res.status(500).send(`Error: ${err.message}`);
