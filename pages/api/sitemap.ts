@@ -13,6 +13,13 @@ function getPage(api, uid, documents) {
 const fullDomain = req =>
   req.headers["x-forwarded-proto"] + "://" + req.headers.host;
 
+const createLoc = doc => {
+  if (doc.lang === "en-us") {
+    return `https://${doc.uid}/`;
+  }
+  return `https://${doc.uid}/${doc.lang.split("-")[0]}`;
+};
+
 export default function handle(req, res) {
   const url = fullDomain(req);
   let uid;
@@ -42,12 +49,6 @@ export default function handle(req, res) {
         if (doc.data.is_variant_page !== "Yes") {
           // skip all A/B variant pages from sitemap
           const { data } = doc;
-          const createLoc = doc => {
-            if (doc.lang === "en-us") {
-              return `https://${doc.uid}/`;
-            }
-            return `https://${doc.uid}/${doc.lang.split("-")[0]}`;
-          };
           xmlDoc.urlset.url.push({
             loc: createLoc(doc),
             lastmod: doc.last_publication_date,
