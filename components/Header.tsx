@@ -28,7 +28,6 @@ export default class Header extends Component<any, any> {
       toggleDropdown,
       isMobile,
       parentComponent,
-      slug,
       hasLanguageSelector
     } = this.props;
     return (
@@ -61,7 +60,6 @@ export default class Header extends Component<any, any> {
                 currentDomain={currentDomain}
                 languageDropdown={languageDropdown}
                 toggleDropdown={toggleDropdown}
-                slug={slug}
               />
             )}
           </div>
