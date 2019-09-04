@@ -56,8 +56,8 @@ function getSchemaJson(props) {
 
 export const populateHead = props => {
   const { data } = props;
-  const otherMetaTags = data.data.other_meta_tags;
-  const headerScripts = data.data.header_scripts;
+  const otherMetaTags = data.data.other_meta_tags || [];
+  const headerScripts = data.data.header_scripts || [];
   const dynamicMeta = (
     <React.Fragment>
       <title>{data.data.title}</title>
@@ -72,6 +72,7 @@ export const populateHead = props => {
   const metaTags = otherMetaTags.map(meta => ReactHtmlParser(meta.meta_tag));
   const scriptTags = headerScripts
     .map(script => script.script_tag)
+    .filter(str => str)
     .map(str => str.replace("<script>", "").replace("</script>", ""))
     .map((item, index) => (
       <script key={index} dangerouslySetInnerHTML={{ __html: item }} />
