@@ -30,7 +30,7 @@ class MyDocument extends Document {
           <script dangerouslySetInnerHTML={{ __html: this.returnPrismic() }} />
           <script
             type="text/javascript"
-            src="//static.cdn.prismic.io/prismic.min.js"
+            src="//static.cdn.prismic.io/prismic.min.js?new=true"
           />
           <link
             rel="stylesheet"

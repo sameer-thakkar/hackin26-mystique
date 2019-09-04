@@ -1,6 +1,18 @@
 {
   "version": 2,
-  "alias": ["www.vaticantickets.org"],
+  "alias": [
+    "www.mezquita-de-cordoba.org",
+    "siam-parks.tickets-tenerife.com",
+    "loro-parque.tickets-tenerife.com",
+    "picasso-museum.tickets-barcelona.org",
+    "hop-on-hop-off.tickets-barcelona.org",
+    "la-giralda.sevilletickets.com",
+    "city-card.tickets-amsterdam.com",
+    "boboli-gardens.florencetickets.org",
+    "palazzo-pitti.florencetickets.org",
+    "www.daytripfromparis.com",
+    "toledo.tickets-madrid.org"
+  ],
   "name": "mystique prod",
   "routes": [
     {
@@ -9,6 +21,10 @@
     },
     {
       "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/favicon.ico",
       "dest": "/static/$1"
     },
     {
@@ -22,6 +38,10 @@
     {
       "src": "/terms",
       "dest": "/terms"
+    },
+    {
+      "src": "/sitemap.xml",
+      "dest": "/api/sitemap"
     },
     {
       "src": "/(.*)",
