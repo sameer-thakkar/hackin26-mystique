@@ -266,7 +266,7 @@ export default class GroupBooking extends Component<any, any> {
             <br className="hide-mobi" />
             <small className="hide-mobi">
               {" "}
-              and best prices for each of our Tours at Vatican.
+              and best prices for each of our Tours.
             </small>
             <img
               src="https://cdn-imgix-open.headout.com/sites/assets/close-thin.svg?auto=compress&amp;q=10"

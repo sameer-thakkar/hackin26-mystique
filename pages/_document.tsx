@@ -3,7 +3,6 @@
 
 // ./pages/_document.js
 import Document, { Html, Head, Main, NextScript } from "next/document";
-import { apiEndpoint } from "../prismic-config";
 const Sentry = require("@sentry/node");
 Sentry.init({
   dsn: "https://a952d80706b3435388b1fb5983c74b18@sentry.io/1545593"
@@ -15,22 +14,15 @@ class MyDocument extends Document {
     return initialProps;
   }
 
-  returnPrismic() {
-    return `
-      window.prismic = {
-        endpoint: "${apiEndpoint}"
-      };
-    `;
-  }
-
   render() {
     return (
       <Html>
         <Head>
-          <script dangerouslySetInnerHTML={{ __html: this.returnPrismic() }} />
           <script
             type="text/javascript"
-            src="//static.cdn.prismic.io/prismic.min.js?new=true"
+            async
+            defer
+            src={`//static.cdn.prismic.io/prismic.min.js?repo=mystique&new=true`}
           />
           <link
             rel="stylesheet"
