@@ -7,11 +7,7 @@ import Footer from "./Footer";
 import LongForm from "./LongForm";
 import FreeTourPopup from "./FreeTourPopup";
 import GroupBooking from "./GroupBooking";
-import ReactHtmlParser, {
-  processNodes,
-  convertNodeToElement,
-  htmlparser2
-} from "react-html-parser";
+import ReactHtmlParser from "react-html-parser";
 import Head from "next/head";
 
 function getSchemaJson(props) {
@@ -55,17 +51,91 @@ function getSchemaJson(props) {
 }
 
 export const populateHead = props => {
-  const { data } = props;
-  const otherMetaTags = data.data.other_meta_tags || [];
-  const headerScripts = data.data.header_scripts || [];
+  const {
+    title,
+    description,
+    favicon,
+    image,
+    nofollow,
+    noindex,
+    gtm_id: gtmID,
+    canonical_link: canonicalLink,
+    other_meta_tags: otherMetaTags = [],
+    header_scripts: headerScripts = [],
+    seo_keywords: seoKeywords,
+    google_site_verification: googleSiteVerification,
+    bing_site_verification: bingSiteVerification
+  } = props.data.data;
+
+  const robotsContent = [];
+  if (nofollow === "True") {
+    robotsContent.push("nofollow");
+  }
+  if (noindex === "True") {
+    robotsContent.push("noindex");
+  }
+
   const dynamicMeta = (
     <React.Fragment>
-      <title>{data.data.title}</title>
+      <title>{title}</title>
+      <meta property="og:title" content={title} />
+      <meta property="twitter:title" content={title} />
+
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      <link rel="icon" href={`${data.data.favicon.url}`} />
+      <link rel="icon" href={`${favicon.url}`} />
+
+      <meta name="description" content={description} />
+      <meta property="og:description" content={description} />
+      <meta name="twitter:description" content={description} />
+
+      <meta name="twitter:image" content={image.url} />
+
+      <meta property="og:locale" content="en_US" />
+      <meta property="og:type" content="website" />
+
+      <meta name="keywords" content={seoKeywords} />
+      <meta name="google-site-verification" content={googleSiteVerification} />
+      <meta name="msvalidate.01" content={bingSiteVerification} />
+
+      <link rel="canonical" href={canonicalLink} />
+
+      {robotsContent.length ? (
+        <meta name="robots" content={robotsContent.join(", ")} />
+      ) : null}
+
       <script type="application/ld+json">
         {JSON.stringify(getSchemaJson(props))}
       </script>
+
+      {gtmID ? (
+        <React.Fragment>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `//<![CDATA[
+            var dataLayer = dataLayer || [];
+          //]]>
+          `
+            }}
+          ></script>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `//<![CDATA[
+            var dataLayer_content = [];
+            dataLayer.push( dataLayer_content );//]]>`
+            }}
+          ></script>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `//<![CDATA[
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            '//www.googletagmanager.com/gtm.'+'js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','${gtmID}');//]]>`
+            }}
+          ></script>
+        </React.Fragment>
+      ) : null}
     </React.Fragment>
   );
 
@@ -187,8 +257,10 @@ export default class Microsite extends Component<any, any> {
     const {
       footer_logo_alt_text: footerAltText,
       has_terms_page: hasTermsPage,
-      enable_localization_menu: hasLanguageSelector
+      enable_localization_menu: hasLanguageSelector,
+      enable_group_booking: enableGroupBooking
     } = this.props.data.data;
+    const showGroupBooking = enableGroupBooking === "Yes";
     const { results: productOffer } = this.props.offerData;
     const productOfferIds = uncategorizedToursList.map(
       offerId => offerId.offer__free_tour.id
@@ -221,6 +293,7 @@ export default class Microsite extends Component<any, any> {
             openGroupBookingModal={this.openGroupBookingModal}
             isMobile={isMobile}
             hasLanguageSelector={hasLanguageSelector}
+            showGroupBooking={showGroupBooking}
           />
           <Banner
             bannerImages={bannerImages ? bannerImages : null}

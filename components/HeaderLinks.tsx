@@ -2,11 +2,16 @@ import React, { Component } from "react";
 
 export default class HeaderLinks extends Component<any, any> {
   render() {
-    const { headerLinks, isMobile, parentComponent } = this.props;
+    const {
+      headerLinks,
+      isMobile,
+      parentComponent,
+      showGroupBooking
+    } = this.props;
     return (
       <div className={isMobile ? "dropdown header-links" : "header-links"}>
         <div className="header-links">
-          {!(parentComponent === "TERMS") && (
+          {parentComponent !== "TERMS" && showGroupBooking && (
             <a onClick={this.props.openGroupBookingModal}>
               Group Tickets (15+ PAX)
             </a>
