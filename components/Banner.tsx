@@ -62,19 +62,17 @@ export default class Banner extends Component<any, any> {
   render() {
     const { bannerCtaText, bannerHeading, bannerImages, boxed } = this.props;
     return (
-      <div className={classNames("mb-carousel", boxed)}>
+      <div className={classNames("mb-carousel", { boxed: boxed })}>
         {bannerImages.map((banner, index) => {
           let imageUrl = banner.image_src.url || banner.uploaded_image.url;
           return (
             <div
               key={index}
-              className={
-                "mb-slide " +
-                (this.activeSlideIndex == index
-                  ? "active-mb-slide fade-in"
-                  : "") +
-                (this.prevSlideIndex == index ? "prev-slide fade-out" : "")
-              }
+              className={classNames(
+                "mb-slide",
+                { "active-mb-slide fade-in": this.activeSlideIndex == index },
+                { "prev-slide fade-out": this.prevSlideIndex == index }
+              )}
             >
               {imageUrl && <Image width={800} format="pjpg" url={imageUrl} />}
             </div>
@@ -98,10 +96,9 @@ export default class Banner extends Component<any, any> {
             {bannerImages.map((banner, index) => (
               <div
                 key={index}
-                className={
-                  "indicator " +
-                  (this.activeSlideIndex == index ? "active" : "")
-                }
+                className={classNames("indicator", {
+                  active: this.activeSlideIndex == index
+                })}
                 onClick={() => {
                   this.slideTo(index);
                 }}
