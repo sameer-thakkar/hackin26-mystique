@@ -163,7 +163,7 @@ export default class FreeTourPopup extends Component<any, any> {
                 <div className="price">FREE</div>
               )}
 
-              {productOfferHighlights.length == 0 ? (
+              {productOfferHighlights.length ? (
                 <div className="popupv2-list">
                   <ul>
                     {productOfferHighlights.map((description, index) => {
@@ -188,7 +188,7 @@ export default class FreeTourPopup extends Component<any, any> {
                 }
                 className="close-trigger popupv2-cta"
               >
-                {productOffer.data.cta_text}
+                {productOffer.data.cta_text || "Okay, Got It!"}
               </div>
             }
           </div>
