@@ -365,6 +365,7 @@ export default class Microsite extends Component<any, any> {
               popupState={this.state.popupOpen}
               togglePopup={this.togglePopup}
               productOffer={offerPopup}
+              scorpioData={this.props.scorpioData}
               isMobile={isMobile}
               trackEvent={({ eventName, ...labelProps }) =>
                 this.trackEvent({ eventName, ...labelProps })

@@ -44,7 +44,10 @@ export default class FreeTourPopup extends Component<any, any> {
     }
   }
 
-  handlePopup = (e, closeType) => {
+  handlePopup = (e, closeType, url) => {
+    if (url) {
+      return (window.location.href = url);
+    }
     const { togglePopup } = this.props;
     const clickedElement = e.target;
     this.sendPopupClosedEvent(clickedElement, closeType);
@@ -103,7 +106,12 @@ export default class FreeTourPopup extends Component<any, any> {
     if (!this.state.isClient) {
       return null;
     }
-    const { productOffer, popupState } = this.props;
+    const { productOffer, popupState, scorpioData } = this.props;
+    const offer_tgid = productOffer.data.offer_tgid;
+    const productOfferHighlights =
+      productOffer.data.tour_description_override.length > 0
+        ? productOffer.data.tour_description_override
+        : "";
     return (
       <div
         className={`popupv2-cont ${popupState ? "active" : ""}`}
@@ -130,7 +138,7 @@ export default class FreeTourPopup extends Component<any, any> {
 
           <div className="popupv2-contents">
             <div
-              onClick={e => this.handlePopup(e, "Close")}
+              onClick={e => this.handlePopup(e, "Close", null)}
               className="close-trigger close"
             >
               <Image
@@ -142,35 +150,51 @@ export default class FreeTourPopup extends Component<any, any> {
             </div>
 
             <div className="contents">
-              <div className="sub-title">Book Now & Get This Tour For Free</div>
+              <div className="sub-title">{productOffer.data.popup_heading}</div>
               <div className="title">
-                {productOffer.data.tour_heading_override}
+                {productOffer.data.tour_heading_override ||
+                  scorpioData[offer_tgid].productTitle}
               </div>
               <div className="scratch-price">
                 <span className="price_10481"></span>
-                <InlinePrice tgid={productOffer.data.offer_tgid} />
+                <InlinePrice tgid={offer_tgid} />
               </div>
-              <div className="price">FREE</div>
-              <div className="popupv2-list">
-                <ul>
-                  {productOffer.data.tour_description_override.map(
-                    (description, index) => {
+              {productOffer.data.show_free_label === "Yes" && (
+                <div className="price">FREE</div>
+              )}
+
+              {productOfferHighlights.length == 0 ? (
+                <div className="popupv2-list">
+                  <ul>
+                    {productOfferHighlights.map((description, index) => {
                       return <li key={index}>{description.text}</li>;
-                    }
-                  )}
-                </ul>
+                    })}
+                  </ul>
+                </div>
+              ) : (
+                <div
+                  className="popupv2-list"
+                  dangerouslySetInnerHTML={{
+                    __html: scorpioData[offer_tgid].productHighlights
+                  }}
+                />
+              )}
+            </div>
+
+            {
+              <div
+                onClick={e =>
+                  this.handlePopup(e, "CTA", productOffer.data.cta_url)
+                }
+                className="close-trigger popupv2-cta"
+              >
+                {productOffer.data.cta_text}
               </div>
-            </div>
-            <div
-              onClick={e => this.handlePopup(e, "CTA")}
-              className="close-trigger popupv2-cta"
-            >
-              Okay, Got It
-            </div>
+            }
           </div>
         </div>
         <div
-          onClick={e => this.handlePopup(e, "OutsidePopup")}
+          onClick={e => this.handlePopup(e, "OutsidePopup", null)}
           className="mask close-trigger"
         ></div>
       </div>

@@ -132,7 +132,7 @@ export default class Page extends React.Component<any, any> {
           lang = reqLang;
         }
       }
-
+      let initial_tgids = [];
       const { CMSContent, ContentType } = await Client(req)
         .getByUID(CONTENT_TYPES.MICROSITE, uid, {
           lang
@@ -140,9 +140,23 @@ export default class Page extends React.Component<any, any> {
         .then(async res => {
           let completeMicrosite = { data: res };
           if (completeMicrosite.data && completeMicrosite.data.uid == uid) {
-            (completeMicrosite as any).offerData = await Client(req).query(
-              Prismic.Predicates.at("document.type", "offer_free_tour")
+            let tours = completeMicrosite.data.data.body1[0].items || [];
+            let offers = tours
+              .filter(tour => tour.offer__free_tour)
+              .map(tour => tour.offer__free_tour.id);
+            let uniqueOfferIds = offers.filter(
+              (id, index) => offers.indexOf(id) === index
             );
+
+            (completeMicrosite as any).offerData = await Client(req)
+              .getByIDs(uniqueOfferIds)
+              .then(offerData => {
+                offerData.results.map(offer => {
+                  initial_tgids.push(offer.data.offer_tgid);
+                });
+                return offerData;
+              });
+
             return {
               CMSContent: completeMicrosite,
               ContentType: CONTENT_TYPES.MICROSITE
@@ -194,7 +208,7 @@ export default class Page extends React.Component<any, any> {
             }
             return accum;
           },
-          []
+          [...initial_tgids]
         );
 
         const scorpioResponses = await Promise.all(
@@ -213,7 +227,9 @@ export default class Page extends React.Component<any, any> {
             [idsToFetchFromScorpio[idx]]: {
               title: response.name,
               highlights: response.microBrandsHighlight,
-              descriptors: response.microBrandsDescriptor
+              descriptors: response.microBrandsDescriptor,
+              productHighlights: response.highlights,
+              productTitle: response.name
             }
           }),
           {}
