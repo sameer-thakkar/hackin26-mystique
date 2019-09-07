@@ -1,37 +1,6 @@
 import React, { Component } from "react";
-import { RichText } from "prismic-reactjs";
-import { shortCodeSerializer } from "../utils/shortCodes";
-import ImageGrid from "./ImageGrid";
-import ImageTextGrid from "./ImageTextGrid";
+import { sliceHandler } from "./Slices";
 
-const sliceHandler = slice => {
-  switch (slice.slice_type) {
-    case "rich_text":
-      return slice.items.map((block, index) => (
-        <RichText
-          key={index}
-          render={block.text}
-          htmlSerializer={shortCodeSerializer}
-        />
-      ));
-      break;
-    case "image_grid":
-      return (
-        <ImageGrid
-          cols={slice.primary.number_of_columns || 1}
-          images={slice.items}
-        />
-      );
-      break;
-    case "image_text_combo_grid":
-      return (
-        <ImageTextGrid
-          cols={slice.primary.number_of_columns || 3}
-          cards={slice.items}
-        />
-      );
-  }
-};
 export default class LongForm extends Component<any, any> {
   render() {
     const { content } = this.props;

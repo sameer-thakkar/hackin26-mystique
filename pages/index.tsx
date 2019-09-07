@@ -1,7 +1,7 @@
 import React from "react";
 import JSONTree from "react-json-tree";
 import Microsite from "../components/Microsite";
-import PlanYourVisit from "../components/PlanYourVisit";
+import SubPage from "../components/SubPage";
 import PrismicReact from "prismic-reactjs";
 import Prismic from "prismic-javascript";
 import fetch from "isomorphic-unfetch";
@@ -11,6 +11,7 @@ import {
   hrefResolver,
   linkResolver
 } from "../prismic-config";
+import { CONTENT_TYPES } from "../constants";
 
 const getPropsFromReq = ({ host, pathname }) => {
   const pathnameWithoutTrailingSlash = pathname =>
@@ -132,74 +133,106 @@ export default class Page extends React.Component<any, any> {
         }
       }
 
-      let uidType = "";
-      switch (pathname) {
-        case "/plan-your-visit":
-          uidType = "plan_your_visit";
-          break;
-        default:
-          uidType = "microsite";
+      const { CMSContent, ContentType } = await Client(req)
+        .getByUID(CONTENT_TYPES.MICROSITE, uid, {
+          lang
+        })
+        .then(async res => {
+          let completeMicrosite = { data: res };
+          if (completeMicrosite.data && completeMicrosite.data.uid == uid) {
+            (completeMicrosite as any).offerData = await Client(req).query(
+              Prismic.Predicates.at("document.type", "offer_free_tour")
+            );
+            return {
+              CMSContent: completeMicrosite,
+              ContentType: CONTENT_TYPES.MICROSITE
+            };
+          } else {
+            return await Client(req)
+              .getByUID(CONTENT_TYPES.CONTENT_PAGE, uid)
+              .then(page => {
+                let completePage = {
+                  body: page.data.body,
+                  featured: {
+                    image: page.data.featured_image,
+                    title: page.data.featured_title
+                  },
+                  subs: {}
+                };
+
+                let subComponents = [];
+                page.data.header_ref.id &&
+                  subComponents.push(page.data.header_ref.id);
+                page.data.footer_ref.id &&
+                  subComponents.push(page.data.footer_ref.id);
+                let SubComponentPromise = Client(req).getByIDs(subComponents);
+
+                return Promise.all([SubComponentPromise]).then((res: any) => {
+                  completePage.subs = res[0].results;
+                  return {
+                    CMSContent: completePage,
+                    ContentType: CONTENT_TYPES.CONTENT_PAGE
+                  };
+                });
+              });
+          }
+        });
+      if (ContentType === CONTENT_TYPES.MICROSITE) {
+        const { items: uncategorizedToursList } = CMSContent.data.data.body1[0];
+
+        const idsToFetchFromScorpio = uncategorizedToursList.reduce(
+          (accum, tour) => {
+            const {
+              tgid,
+              tour_title_override: title,
+              marketing_highlights_override: descriptors,
+              tour_description_override: highlights
+            } = tour;
+            const hasHighlights = highlights.filter(item => item.text);
+            if (!title || !hasHighlights || !descriptors) {
+              return [...accum, tgid];
+            }
+            return accum;
+          },
+          []
+        );
+
+        const scorpioResponses = await Promise.all(
+          idsToFetchFromScorpio.map(id =>
+            fetch(
+              `https://api.headout.com/api/v5/tour-group/get/${id}?language=${
+                lang.split("-")[0]
+              }`
+            ).then(r => r.json())
+          )
+        );
+
+        const scorpioData = scorpioResponses.reduce(
+          (accum, response: any, idx) => ({
+            ...accum,
+            [idsToFetchFromScorpio[idx]]: {
+              title: response.name,
+              highlights: response.microBrandsHighlight,
+              descriptors: response.microBrandsDescriptor
+            }
+          }),
+          {}
+        );
+        return {
+          CMSContent,
+          ContentType,
+          scorpioData,
+          uid,
+          lang
+        };
+      } else {
+        return {
+          CMSContent,
+          ContentType,
+          uid,
+          lang
+        };
       }
-
-      const micrositeData = Client(req).getByUID(uidType, uid, { lang });
-      const offerData = Client(req).query(
-        Prismic.Predicates.at("document.type", "offer_free_tour")
-      );
-
-      const response = await Promise.all([micrositeData, offerData]).then(
-        res => {
-          return { data: res[0], offerData: res[1] };
-        }
-      );
-
-      const { items: uncategorizedToursList } = response.data.data.body1[0];
-
-      const idsToFetchFromScorpio = uncategorizedToursList.reduce(
-        (accum, tour) => {
-          const {
-            tgid,
-            tour_title_override: title,
-            marketing_highlights_override: descriptors,
-            tour_description_override: highlights
-          } = tour;
-          const hasHighlights = highlights.filter(item => item.text);
-          if (!title || !hasHighlights || !descriptors) {
-            return [...accum, tgid];
-          }
-          return accum;
-        },
-        []
-      );
-
-      const scorpioResponses = await Promise.all(
-        idsToFetchFromScorpio.map(id =>
-          fetch(
-            `https://api.headout.com/api/v5/tour-group/get/${id}?language=${
-              lang.split("-")[0]
-            }`
-          ).then(r => r.json())
-        )
-      );
-
-      const scorpioData = scorpioResponses.reduce(
-        (accum, response: any, idx) => ({
-          ...accum,
-          [idsToFetchFromScorpio[idx]]: {
-            title: response.name,
-            highlights: response.microBrandsHighlight,
-            descriptors: response.microBrandsDescriptor
-          }
-        }),
-        {}
-      );
-
-      return {
-        response,
-        scorpioData,
-        uidType,
-        uid,
-        lang
-      };
     } catch (error) {
       console.log(error);
       return error;
@@ -207,24 +240,24 @@ export default class Page extends React.Component<any, any> {
   }
 
   render() {
-    const { response, scorpioData, uidType, uid, lang } = this.props;
-
-    if (uidType === "microsite") {
+    const { CMSContent, scorpioData, ContentType, uid, lang } = this.props;
+    if (ContentType === CONTENT_TYPES.MICROSITE) {
       return (
         <Microsite
-          data={response.data}
+          data={CMSContent.data}
           scorpioData={scorpioData}
           uid={uid}
           lang={lang}
-          offerData={response.offerData}
+          key={CMSContent.data.id}
+          offerData={CMSContent.offerData}
         />
       );
-    } else if (uidType === "plan_your_visit") {
-      return <PlanYourVisit data={response.data} uid={uid} lang={lang} />;
+    } else if (ContentType === CONTENT_TYPES.CONTENT_PAGE) {
+      return <SubPage {...CMSContent} key={uid} />;
     }
     return (
       <div>
-        <JSONTree data={response.data} invertTheme />
+        <JSONTree data={CMSContent} invertTheme />
       </div>
     );
   }

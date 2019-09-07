@@ -102,13 +102,14 @@ const renderShortCodes = CMSString => {
   let fullLength = CMSString.length;
   let renderedRichList = [];
   let cursor = -1;
-  shortCodesList.forEach(shortCodeObj => {
+  shortCodesList.forEach((shortCodeObj, index) => {
     renderedRichList.push(
       CMSString.slice(cursor + 1, shortCodeObj.indices.start)
     );
     renderedRichList.push(
       React.createElement(shortCodesDict[shortCodeObj.name].component, {
-        ...shortCodeObj.attributes.named
+        ...shortCodeObj.attributes.named,
+        key: index
       })
     );
     cursor = shortCodeObj.indices.end;

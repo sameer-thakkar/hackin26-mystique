@@ -109,8 +109,7 @@ export default class GroupBooking extends Component<any, any> {
       countryDialCode: selectedCountry.dialCode
     });
 
-  handleDateChange = date =>
-    this.setState({ date }, () => console.log(date.getDate()));
+  handleDateChange = date => this.setState({ date });
 
   formatDate = date => date.toLocaleString().slice(0, 10);
 
@@ -289,7 +288,7 @@ export default class GroupBooking extends Component<any, any> {
                     <Select
                       value={this.state.tour}
                       name="tour"
-                      options={GROUP_TOUR_PREFERED_TOUR}
+                      options={this.props.groupBookingTourTitles}
                       onChange={value =>
                         this.handleReactSelectChange(value, "tour")
                       }

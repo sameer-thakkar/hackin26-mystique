@@ -71,3 +71,10 @@ export const MODAL_STYLE = {
     border: "none"
   }
 };
+
+export const CONTENT_TYPES = {
+  MICROSITE: "microsite",
+  CONTENT_PAGE: "content_page",
+  FOOTER: "common_footer",
+  HEADER: "common_header"
+};

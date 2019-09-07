@@ -270,6 +270,30 @@ export default class Microsite extends Component<any, any> {
     const hasOffer = offerId ? true : false;
     const filterOfferPopup = productOffer.filter(popup => popup.id === offerId);
     const offerPopup = filterOfferPopup[0];
+    const {
+      group_booking_excluded_tgids: groupBookingExcludedTgids
+    } = this.props.data.data;
+
+    let groupBookingTourTitles = [];
+
+    if (showGroupBooking) {
+      let titles = uncategorizedToursList
+        .filter(function(tour) {
+          return !groupBookingExcludedTgids.find(function(excludedTour) {
+            return tour.tgid === excludedTour.tgid;
+          });
+        })
+        .map(tour => {
+          groupBookingTourTitles.push({
+            value:
+              tour.tour_title_override ||
+              this.props.scorpioData[tour.tgid].title,
+            label:
+              tour.tour_title_override ||
+              this.props.scorpioData[tour.tgid].title
+          });
+        });
+    }
 
     return (
       <div>
@@ -277,6 +301,7 @@ export default class Microsite extends Component<any, any> {
           {this.state.showGroupBookingModal && (
             <GroupBooking
               closeGroupBookingModal={() => this.closeGroupBookingModal}
+              groupBookingTourTitles={groupBookingTourTitles}
             />
           )}
           {populateHead(this.props)}
@@ -302,6 +327,7 @@ export default class Microsite extends Component<any, any> {
             bannerHeading={bannerHeading ? bannerHeading : null}
             bannerCtaText={bannerCtaText ? bannerCtaText : null}
             isMobile={isMobile}
+            boxed={true}
           />
           {uncategorizedToursList.length > 0 && (
             <PopulateUncategorizedProducts

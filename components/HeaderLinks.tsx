@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { IS_MOBILE } from "./../utils/helper";
 
 export default class HeaderLinks extends Component<any, any> {
   render() {

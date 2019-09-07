@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Image from "./Image";
+import classNames from "classnames";
 
 export default class Banner extends Component<any, any> {
   hasIndicators: boolean;
@@ -59,10 +60,11 @@ export default class Banner extends Component<any, any> {
   };
 
   render() {
-    const { bannerCtaText, bannerHeading, bannerImages, isMobile } = this.props;
+    const { bannerCtaText, bannerHeading, bannerImages, boxed } = this.props;
     return (
-      <div className="mb-carousel boxed">
+      <div className={classNames("mb-carousel", boxed)}>
         {bannerImages.map((banner, index) => {
+          let imageUrl = banner.image_src.url || banner.uploaded_image.url;
           return (
             <div
               key={index}
@@ -74,11 +76,7 @@ export default class Banner extends Component<any, any> {
                 (this.prevSlideIndex == index ? "prev-slide fade-out" : "")
               }
             >
-              <Image
-                width={800}
-                format="pjpg"
-                url={banner.image_src.url || banner.uploaded_image.url}
-              />
+              {imageUrl && <Image width={800} format="pjpg" url={imageUrl} />}
             </div>
           );
         })}
@@ -88,9 +86,11 @@ export default class Banner extends Component<any, any> {
             <div className="caption">
               <h1>{bannerHeading}</h1>
             </div>
-            <a className="mb-cta book-now-text" href="#select-tickets">
-              {bannerCtaText}
-            </a>
+            {bannerCtaText && (
+              <a className="mb-cta book-now-text" href="#select-tickets">
+                {bannerCtaText}
+              </a>
+            )}
           </div>
         </div>
         {this.hasIndicators && bannerImages.length > 1 ? (
