@@ -258,7 +258,8 @@ export default class Microsite extends Component<any, any> {
       footer_logo_alt_text: footerAltText,
       has_terms_page: hasTermsPage,
       enable_localization_menu: hasLanguageSelector,
-      enable_group_booking: enableGroupBooking
+      enable_group_booking: enableGroupBooking,
+      enable_buy_tickets_shortcut: enableBuyTickets
     } = this.props.data.data;
     const showGroupBooking = enableGroupBooking === "Yes";
     const { results: productOffer } = this.props.offerData;
@@ -294,6 +295,7 @@ export default class Microsite extends Component<any, any> {
             isMobile={isMobile}
             hasLanguageSelector={hasLanguageSelector}
             showGroupBooking={showGroupBooking}
+            enableBuyTickets={enableBuyTickets}
           />
           <Banner
             bannerImages={bannerImages ? bannerImages : null}

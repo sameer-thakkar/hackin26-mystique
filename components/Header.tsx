@@ -29,7 +29,8 @@ export default class Header extends Component<any, any> {
       isMobile,
       parentComponent,
       showGroupBooking,
-      hasLanguageSelector
+      hasLanguageSelector,
+      enableBuyTickets
     } = this.props;
     return (
       <div className="header-container">
@@ -54,7 +55,14 @@ export default class Header extends Component<any, any> {
               parentComponent={parentComponent}
               showGroupBooking={showGroupBooking}
             />
-            {!(parentComponent === "TERMS") && (
+            {enableBuyTickets === "Yes" && (
+              <div className="navbar-buy-tickets">
+                <a href="#select-tickets">
+                  <span className="nav-buy-tickets-text">Buy Tickets</span>
+                </a>
+              </div>
+            )}
+            {!(parentComponent === "TERMS") && hasLanguageSelector === "Yes" ? (
               <LanguageSelector
                 languages={languages}
                 availableLanguages={availableLanguages}
@@ -63,7 +71,7 @@ export default class Header extends Component<any, any> {
                 languageDropdown={languageDropdown}
                 toggleDropdown={toggleDropdown}
               />
-            )}
+            ) : null}
           </div>
         </div>
       </div>

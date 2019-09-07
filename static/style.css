@@ -2126,3 +2126,21 @@ form.form {
 .current-language-flag {
   line-height: 0;
 }
+
+.navbar-buy-tickets {
+  margin-left: 20px;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-family: Avenir;
+}
+
+.navbar-buy-tickets a {
+  text-decoration: none;
+  color: #ec1943;
+}
+
+@media (max-width: 768px) {
+  .navbar-buy-tickets {
+    margin-left: 0px;
+  }
+}
