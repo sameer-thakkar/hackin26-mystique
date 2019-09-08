@@ -142,7 +142,7 @@ export default class Page extends React.Component<any, any> {
           if (completeMicrosite.data && completeMicrosite.data.uid == uid) {
             let tours = completeMicrosite.data.data.body1[0].items || [];
             let offers = tours
-              .filter(tour => tour.offer__free_tour)
+              .filter(tour => tour.offer__free_tour.id)
               .map(tour => tour.offer__free_tour.id);
             let uniqueOfferIds = offers.filter(
               (id, index) => offers.indexOf(id) === index
