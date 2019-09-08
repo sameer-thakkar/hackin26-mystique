@@ -64,7 +64,8 @@ export const populateHead = props => {
     header_scripts: headerScripts = [],
     seo_keywords: seoKeywords,
     google_site_verification: googleSiteVerification,
-    bing_site_verification: bingSiteVerification
+    bing_site_verification: bingSiteVerification,
+    localization: languages
   } = props.data.data;
 
   const robotsContent = [];
@@ -148,10 +149,22 @@ export const populateHead = props => {
       <script key={index} dangerouslySetInnerHTML={{ __html: item }} />
     ));
 
+  const hrefLangs = languages.map(({ language }) => {
+    let langCode = language.split("-")[1].toLowerCase();
+
+    return (
+      <link
+        rel="alternate"
+        hrefLang={langCode}
+        href={"/" + (langCode === "en" ? "" : langCode)}
+      />
+    );
+  });
   return (
     <Head>
       {dynamicMeta}
       {metaTags}
+      {hrefLangs}
       {scriptTags}
     </Head>
   );
@@ -262,14 +275,11 @@ export default class Microsite extends Component<any, any> {
       enable_buy_tickets_shortcut: enableBuyTickets
     } = this.props.data.data;
     const showGroupBooking = enableGroupBooking === "Yes";
-    const { results: productOffer } = this.props.offerData;
-    const productOfferIds = uncategorizedToursList.map(
-      offerId => offerId.offer__free_tour.id
-    );
-    const offerId = productOfferIds[0];
-    const hasOffer = offerId ? true : false;
-    const filterOfferPopup = productOffer.filter(popup => popup.id === offerId);
-    const offerPopup = filterOfferPopup[0];
+    const { results: productOffer } = this.props.offerData
+      ? this.props.offerData
+      : { results: [] };
+    const hasOffer = productOffer.length > 0;
+    const offerPopup = hasOffer ? productOffer[0] : null;
     const {
       group_booking_excluded_tgids: groupBookingExcludedTgids
     } = this.props.data.data;

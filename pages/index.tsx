@@ -147,15 +147,15 @@ export default class Page extends React.Component<any, any> {
             let uniqueOfferIds = offers.filter(
               (id, index) => offers.indexOf(id) === index
             );
-
-            (completeMicrosite as any).offerData = await Client(req)
-              .getByIDs(uniqueOfferIds)
-              .then(offerData => {
-                offerData.results.map(offer => {
-                  initial_tgids.push(offer.data.offer_tgid);
+            if (uniqueOfferIds.length)
+              (completeMicrosite as any).offerData = await Client(req)
+                .getByIDs(uniqueOfferIds)
+                .then(offerData => {
+                  offerData.results.map(offer => {
+                    initial_tgids.push(offer.data.offer_tgid);
+                  });
+                  return offerData;
                 });
-                return offerData;
-              });
 
             return {
               CMSContent: completeMicrosite,
