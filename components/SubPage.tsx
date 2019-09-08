@@ -6,7 +6,7 @@ import CustomFooter from "./CustomFooter";
 import Masthead from "./Masthead";
 import populateHead from "./common/meta";
 // import Banner from "./Banner";
-// import { IS_MOBILE } from "../utils/helper";
+import { IS_MOBILE } from "../utils/helper";
 
 export default class SubPage extends Component<any, any> {
   prettifyProps(props) {
@@ -42,8 +42,6 @@ export default class SubPage extends Component<any, any> {
       lang
     } = this.props;
 
-    // console.log(data);
-
     const contentPageHasOtherMetaTags = data.other_meta_tags.filter(
       ({ meta_tag }) => meta_tag
     );
@@ -65,7 +63,11 @@ export default class SubPage extends Component<any, any> {
           lang
         })}
         <header>
-          <CustomHeader {...header_ref.data} parentComponent="SubPage" />
+          <CustomHeader
+            isMobile={IS_MOBILE}
+            {...header_ref.data}
+            parentComponent="SubPage"
+          />
         </header>
         <main>
           <Masthead title={featured.title} image={featured.image.url} />

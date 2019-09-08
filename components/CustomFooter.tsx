@@ -9,7 +9,7 @@ export default class CustomFooter extends Component<any, any> {
 
     return (
       <div className="custom-footer">
-        <div className="custom-footer logo">
+        <div className="logo">
           <img src={logoUrl} alt={altText} />
         </div>
         <div className="columns">
@@ -26,7 +26,7 @@ export default class CustomFooter extends Component<any, any> {
           {`
             .custom-footer {
               max-width: 1190px;
-              min-height: 250px;
+              padding: 50px;
               margin: auto;
               display: grid;
               align-items: center;
@@ -34,9 +34,14 @@ export default class CustomFooter extends Component<any, any> {
               grid-template-columns: max-content max-content;
               grid-column-gap: 1em;
             }
-            .custom-footer.logo img {
-              height: 10em;
-              width: auto;
+            .logo {
+              align-self: flex-start;
+            }
+            .custom-footer .logo img {
+              height: auto;
+              width: 150px;
+              filter: invert(1);
+              align-self: flex-start;
             }
             .columns {
               display: grid;
@@ -59,6 +64,8 @@ export default class CustomFooter extends Component<any, any> {
             @media (max-width: 768px) {
               .custom-footer {
                 grid-template-columns: unset;
+                grid-row-gap: 30px;
+                justify-content: center;
               }
               .terms-line {
                 grid-column: unset;

@@ -75,7 +75,7 @@ export default class Microsite extends Component<any, any> {
     const isMobile = () => {
       return document.documentElement.clientWidth < 768;
     };
-    // console.log(JSON.stringify(this.props, null, 4));
+
     const { url: logoUrl } = this.props.data.data.link_to_logo_file;
     const { url: uploadedLogoUrl, alt: altText } = this.props.data.data.logo;
     const { logo_alt_text: logoAltText } = this.props.data.data;
