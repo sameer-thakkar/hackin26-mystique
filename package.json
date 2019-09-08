@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Microbrands at Headout",
   "scripts": {
-    "dev": "now dev",
+    "dev": "next -p 3001",
     "build": "next build",
     "start": "next start",
     "production": "now -A now.production.json --prod",
