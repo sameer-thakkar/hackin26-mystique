@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Microbrands at Headout",
   "scripts": {
-    "dev": "next -p 8000",
+    "dev": "now dev",
     "build": "next build",
     "start": "next start",
     "production": "now -A now.production.json --prod",
@@ -33,6 +33,7 @@
     "react-select": "^3.0.4",
     "react-telephone-input": "^4.73.4",
     "swiper": "^4.5.0",
+    "url-parse": "^1.4.7",
     "xmlbuilder": "^13.0.2"
   },
   "devDependencies": {

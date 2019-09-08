@@ -1,45 +1,71 @@
 import React, { Component } from "react";
-import JSONTree from "react-json-tree";
 import { CONTENT_TYPES } from "../constants";
 import CustomHeader from "./CustomHeader";
 import { sliceHandler } from "./Slices";
 import CustomFooter from "./CustomFooter";
 import Masthead from "./Masthead";
-import Banner from "./Banner";
-import { IS_MOBILE } from "../utils/helper";
+import populateHead from "./common/meta";
+// import Banner from "./Banner";
+// import { IS_MOBILE } from "../utils/helper";
 
 export default class SubPage extends Component<any, any> {
-  constructor(props) {
-    super(props);
-  }
   prettifyProps(props) {
-    let body = props.body;
+    let body = props.data.body;
     let featured = props.featured;
-    let footer, header;
+    let footer;
 
     props.subs.forEach(sub => {
       switch (sub.type) {
         case CONTENT_TYPES.FOOTER:
           footer = sub;
           break;
-        case CONTENT_TYPES.HEADER:
-          header = sub;
-          break;
       }
     });
     return {
-      header,
       footer,
       body,
-      featured
+      featured,
+      data: props.data
     };
   }
   render() {
-    let { header, footer, body, featured } = this.prettifyProps(this.props);
+    const {
+      footer,
+      data,
+      data: { body, header_ref, microsite_document_ref },
+      featured
+    } = this.prettifyProps(this.props);
+
+    const {
+      first_publication_date: datePublished,
+      last_publication_date: dateModified,
+      lang
+    } = this.props;
+
+    // console.log(data);
+
+    const contentPageHasOtherMetaTags = data.other_meta_tags.filter(
+      ({ meta_tag }) => meta_tag
+    );
+
+    const headProps = {
+      ...this.props.data,
+      ...microsite_document_ref.data,
+      other_meta_tags: contentPageHasOtherMetaTags
+        ? this.props.data.other_meta_tags
+        : microsite_document_ref.other_meta_tags
+    };
+
     return (
       <div className="page-wrapper">
+        {populateHead({
+          ...headProps,
+          datePublished,
+          dateModified,
+          lang
+        })}
         <header>
-          <CustomHeader {...header.data} parentComponent="SubPage" />
+          <CustomHeader {...header_ref.data} parentComponent="SubPage" />
         </header>
         <main>
           <Masthead title={featured.title} image={featured.image.url} />

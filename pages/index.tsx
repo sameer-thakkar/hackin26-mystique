@@ -162,11 +162,39 @@ export default class Page extends React.Component<any, any> {
               ContentType: CONTENT_TYPES.MICROSITE
             };
           } else {
+            const propsFromHeader = [
+              "header_links",
+              "logo",
+              "link_to_logo_file",
+              "logo_alt_text",
+              "enable_group_booking",
+              "header_links"
+            ].map(prop => `${CONTENT_TYPES.HEADER}.${prop}`);
+
+            const propsFromLinkedMicrosite = [
+              "gtm_id",
+              "header_scripts",
+              "title",
+              "description",
+              "image",
+              "favicon",
+              "seo_keywords",
+              "google_site_verification",
+              "bing_site_verification",
+              "canonical_link",
+              "noindex",
+              "nofollow",
+              "other_meta_tags"
+            ].map(prop => `${CONTENT_TYPES.MICROSITE}.${prop}`);
+
             return await Client(req)
-              .getByUID(CONTENT_TYPES.CONTENT_PAGE, uid)
+              .getByUID(CONTENT_TYPES.CONTENT_PAGE, uid, {
+                fetchLinks: [...propsFromHeader, ...propsFromLinkedMicrosite]
+              })
               .then(page => {
+                // console.log(JSON.stringify(page, null, 4));
                 let completePage = {
-                  body: page.data.body,
+                  ...page,
                   featured: {
                     image: page.data.featured_image,
                     title: page.data.featured_title
@@ -175,8 +203,6 @@ export default class Page extends React.Component<any, any> {
                 };
 
                 let subComponents = [];
-                page.data.header_ref.id &&
-                  subComponents.push(page.data.header_ref.id);
                 page.data.footer_ref.id &&
                   subComponents.push(page.data.footer_ref.id);
                 let SubComponentPromise = Client(req).getByIDs(subComponents);
@@ -256,20 +282,17 @@ export default class Page extends React.Component<any, any> {
   }
 
   render() {
-    const { CMSContent, scorpioData, ContentType, uid, lang } = this.props;
+    const { CMSContent, scorpioData, ContentType } = this.props;
     if (ContentType === CONTENT_TYPES.MICROSITE) {
       return (
         <Microsite
           data={CMSContent.data}
           scorpioData={scorpioData}
-          uid={uid}
-          lang={lang}
-          key={CMSContent.data.id}
           offerData={CMSContent.offerData}
         />
       );
     } else if (ContentType === CONTENT_TYPES.CONTENT_PAGE) {
-      return <SubPage {...CMSContent} key={uid} />;
+      return <SubPage {...CMSContent} />;
     }
     return (
       <div>
