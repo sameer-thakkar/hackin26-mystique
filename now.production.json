@@ -11,7 +11,8 @@
     "boboli-gardens.florencetickets.org",
     "palazzo-pitti.florencetickets.org",
     "www.daytripfromparis.com",
-    "toledo.tickets-madrid.org"
+    "toledo.tickets-madrid.org",
+    "microbrands.headout.com"
   ],
   "name": "mystique prod",
   "routes": [
@@ -38,6 +39,10 @@
     {
       "src": "/terms",
       "dest": "/terms"
+    },
+    {
+      "src": "/create-uid",
+      "dest": "/create-uid"
     },
     {
       "src": "/sitemap.xml",

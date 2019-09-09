@@ -12,7 +12,8 @@
     "stage.boboli-gardens.florencetickets.org",
     "stage.palazzo-pitti.florencetickets.org",
     "stage.www.daytripfromparis.com",
-    "stage.toledo.tickets-madrid.org"
+    "stage.toledo.tickets-madrid.org",
+    "microbrands.headout.com"
   ],
   "name": "mystique stage",
   "routes": [
@@ -39,6 +40,10 @@
     {
       "src": "/terms",
       "dest": "/terms"
+    },
+    {
+      "src": "/create-uid",
+      "dest": "/create-uid"
     },
     {
       "src": "/sitemap.xml",
