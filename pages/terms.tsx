@@ -26,7 +26,7 @@ export default class terms extends Component<any, any> {
 
   static async getTermsData({ req }) {
     const { host } = req ? req.headers : window.location;
-    const uid = host.replace("microbrand", "www");
+    const uid = host.replace("stage.", "");
     const lang = "en-us";
     const uidType = "microsite";
     const response = await Client(req).getByUID(uidType, uid, { lang });
