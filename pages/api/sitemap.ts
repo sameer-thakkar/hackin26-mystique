@@ -44,7 +44,7 @@ export default function handle(req, res) {
   if (url.includes("localhost:")) {
     uid = req.query.mystique_uid;
   } else {
-    uid = req.headers.host.replace("microbrand.", "www.");
+    uid = req.headers.host.replace("stage.", "");
   }
 
   const xmlDoc = {

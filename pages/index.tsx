@@ -46,7 +46,7 @@ const getPropsFromReq = ({ host, pathname }) => {
   const uid = `${pathnameWithoutTrailingSlash(
     `${host}/${pathnameSlugs.join("/")}`
   )}`
-    .replace("microbrand.", "www.")
+    .replace("stage.", "")
     .replace(/\//g, ".");
 
   return {
