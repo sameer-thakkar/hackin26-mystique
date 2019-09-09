@@ -5,10 +5,63 @@ import { sliceHandler } from "./Slices";
 import CustomFooter from "./CustomFooter";
 import Masthead from "./Masthead";
 import populateHead from "./common/meta";
+import { Client } from "../prismic-config";
 // import Banner from "./Banner";
 import { IS_MOBILE } from "../utils/helper";
+import GroupBooking from "./GroupBooking";
 
 export default class SubPage extends Component<any, any> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showGroupBookingModal: false,
+      groupBookingTourTitles: null
+    };
+  }
+  async componentDidMount() {
+    const {
+      enable_group_booking: enableGroupBooking
+    } = this.props.data.header_ref.data;
+    if (enableGroupBooking === "Yes") {
+      let groupBookingTourTitles = [];
+      let res = await Client().getByIDs([
+        this.props.data.microsite_document_ref.id
+      ]);
+      const {
+        group_booking_excluded_tgids: groupBookingExcludedTgids,
+        body1
+      } = res.results[0].data;
+      let lang = this.props.data.microsite_document_ref.lang.split("-")[0];
+      let tours = body1[0].items || [];
+      let filteredTours = tours.filter(function(tour) {
+        return !groupBookingExcludedTgids.find(function(excludedTour) {
+          return tour.tgid === excludedTour.tgid;
+        });
+      });
+      filteredTours.map(async (tour, index) => {
+        if (!tour.tour_title_override) {
+          let tourTitle = await fetch(
+            `https://api.headout.com/api/v5/tour-group/get/${tour.tgid}?language=${lang}`
+          ).then(r => r.json());
+          groupBookingTourTitles.push({
+            value: tourTitle.name,
+            label: tourTitle.name
+          });
+        } else {
+          groupBookingTourTitles.push({
+            value: tour.tour_title_override,
+            label: tour.tour_title_override
+          });
+        }
+      });
+      this.setState({ groupBookingTourTitles });
+    }
+  }
+
+  openGroupBookingModal = () => this.setState({ showGroupBookingModal: true });
+  closeGroupBookingModal = () =>
+    this.setState({ showGroupBookingModal: false });
+
   prettifyProps(props) {
     let body = props.data.body;
     let featured = props.featured;
@@ -28,6 +81,7 @@ export default class SubPage extends Component<any, any> {
       data: props.data
     };
   }
+
   render() {
     const {
       footer,
@@ -35,7 +89,6 @@ export default class SubPage extends Component<any, any> {
       data: { body, header_ref, microsite_document_ref },
       featured
     } = this.prettifyProps(this.props);
-
     const {
       first_publication_date: datePublished,
       last_publication_date: dateModified,
@@ -54,8 +107,20 @@ export default class SubPage extends Component<any, any> {
         : microsite_document_ref.other_meta_tags
     };
 
+    const {
+      enable_group_booking: enableGroupBooking
+    } = this.props.data.header_ref.data;
+    const showGroupBooking = enableGroupBooking === "Yes";
+    const { groupBookingTourTitles } = this.state;
+
     return (
       <div className="page-wrapper">
+        {this.state.showGroupBookingModal && groupBookingTourTitles && (
+          <GroupBooking
+            closeGroupBookingModal={() => this.closeGroupBookingModal}
+            groupBookingTourTitles={groupBookingTourTitles}
+          />
+        )}
         {populateHead({
           ...headProps,
           datePublished,
@@ -67,6 +132,8 @@ export default class SubPage extends Component<any, any> {
             isMobile={IS_MOBILE}
             {...header_ref.data}
             parentComponent="SubPage"
+            openGroupBookingModal={this.openGroupBookingModal}
+            showGroupBooking={showGroupBooking}
           />
         </header>
         <main>
