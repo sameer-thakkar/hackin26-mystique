@@ -31,7 +31,7 @@ export default class CustomFooter extends Component<any, any> {
               display: grid;
               align-items: center;
               justify-content: space-between;
-              grid-template-columns: max-content max-content;
+              grid-template-columns: 25% 75%;
               grid-column-gap: 1em;
             }
             .logo {
@@ -46,7 +46,7 @@ export default class CustomFooter extends Component<any, any> {
             .columns {
               display: grid;
               grid-auto-flow: column;
-              grid-auto-columns: 1fr;
+              justify-content: space-between;
               grid-gap: 2em;
             }
             .terms-line {

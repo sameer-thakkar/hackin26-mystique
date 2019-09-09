@@ -44,6 +44,8 @@ export default class CustomHeader extends Component<any, any> {
               headerLinks={headerLinks}
               isMobile={isMobile}
               parentComponent={parentComponent}
+              openGroupBookingModal={this.props.openGroupBookingModal}
+              showGroupBooking={this.props.showGroupBooking}
             />
           </div>
         </div>
