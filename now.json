@@ -1,6 +1,19 @@
 {
   "version": 2,
-  "alias": ["microbrand.vaticantickets.org"],
+  "alias": [
+    "stage.www.vaticantickets.org",
+    "stage.www.mezquita-de-cordoba.org",
+    "stage.siam-parks.tickets-tenerife.com",
+    "stage.loro-parque.tickets-tenerife.com",
+    "stage.picasso-museum.tickets-barcelona.org",
+    "stage.hop-on-hop-off.tickets-barcelona.org",
+    "stage.la-giralda.sevilletickets.com",
+    "stage.city-card.tickets-amsterdam.com",
+    "stage.boboli-gardens.florencetickets.org",
+    "stage.palazzo-pitti.florencetickets.org",
+    "stage.www.daytripfromparis.com",
+    "stage.toledo.tickets-madrid.org"
+  ],
   "name": "mystique stage",
   "routes": [
     {
