@@ -2131,29 +2131,65 @@ form.form {
   margin: auto;
   margin-bottom: 40px;
 }
-.subpage-container .slice-block p {
-  font-size: 16px;
-  line-height: 28px;
-  color: #666666;
-  text-align: justify;
-  font-family: Avenir, Proxima-Nova, arial, sans-serif;
-}
-.subpage-container .slice-block .heading {
+
+.subpage-container .slice-block h2 {
   font-weight: 600;
-  font-size: 28px !important;
-  padding-top: 30px;
-  color: #000000;
+  font-size: 30px;
+  color: #080808;
   font-family: "Graphik", "Proxima Nova", "Helvetica Neue", Helvetica, Arial,
     sans-serif;
   text-transform: capitalize;
-  font-family: Graphik;
+  margin: 60px 0 40px;
+  position: relative;
+  line-height: 30px;
 }
-.subpage-container .slice-block .divider-1 {
+.subpage-container .slice-block h3 {
+  font-weight: 600;
+  font-size: 1.375rem;
+  color: #080808;
+  font-family: "Graphik", "Proxima Nova", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
+  text-transform: capitalize;
+  margin-top: 20px;
+  position: relative;
+  line-height: 30px;
+}
+
+.subpage-container .slice-block h2::after {
+  color: #ec1943;
+  width: 80px;
+  border-top: solid 2px;
+  margin: 0;
+  position: absolute;
+  bottom: -15px;
+  left: 0;
+  content: "";
+}
+
+.subpage-container .slice-block p {
+  color: #545454;
+  font-family: Avenir;
+  font-size: 18px;
+  margin: auto;
+  margin-bottom: auto;
+  text-align: justify;
+  margin-bottom: 40px;
+  line-height: 30px;
+}
+.subpage-container .product .product-left p {
+  margin-bottom: 20px;
+}
+@media (max-width: 768px) {
+  .subpage-container .slice-block h2 {
+    font-size: 25px;
+  }
+}
+/* .subpage-container .slice-block .divider-1 {
   border: 2px solid #ec1943;
   width: 80px;
   margin: 20px 0;
   display: block;
-}
+} */
 .navigation-bar {
   display: flex;
   justify-content: space-between;
@@ -2263,6 +2299,9 @@ form.form {
   border-radius: 5px;
   padding: 0px 40px;
 }
+.subpage-container .products:last-child {
+  margin-bottom: 70px;
+}
 .product-heading {
   font-family: Graphik;
   font-weight: 600;
@@ -2270,6 +2309,7 @@ form.form {
   margin-bottom: 10px;
   margin-top: 20px;
   color: #080808;
+  line-height: 1.4;
 }
 .product-offer {
   font-family: Avenir;
@@ -2292,7 +2332,7 @@ form.form {
   }
   .subpage-container .product {
     display: block;
-    margin: 0;
+    padding: 0 20px;
   }
   .book-now {
     width: 200px;
@@ -2321,9 +2361,10 @@ form.form {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
+  overflow-x: hidden;
 }
 .banner img {
-  width: 100%;
+  width: 100vw;
   height: 500px;
   filter: brightness(0.7);
   object-fit: cover;
@@ -2422,7 +2463,6 @@ h3 {
   text-decoration: none;
   color: #ec1943;
 }
-
 @media (max-width: 768px) {
   .navbar-buy-tickets {
     margin-left: 0px;

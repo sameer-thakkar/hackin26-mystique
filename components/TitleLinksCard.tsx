@@ -49,6 +49,12 @@ export default class TitleLinksCard extends Component<TitleLinksProps, any> {
               text-decoration: none;
               font-size: 16px;
             }
+            @media (max-width: 768px) {
+              .links-card {
+                grid-gap: unset;
+                place-items: center;
+              }
+            }
           `}
         </style>
       </div>
