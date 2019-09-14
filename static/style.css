@@ -780,6 +780,10 @@ strong {
   font-weight: 500;
 }
 
+.product-offer strong {
+  font-weight: 600;
+}
+
 .footer-wrap.wrapper a {
   color: #fff;
   display: inherit;
