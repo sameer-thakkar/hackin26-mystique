@@ -1,16 +1,9 @@
 import React from "react";
-import JSONTree from "react-json-tree";
 import Microsite from "../components/Microsite";
 import SubPage from "../components/SubPage";
-import PrismicReact from "prismic-reactjs";
-import Prismic from "prismic-javascript";
+import ErrorPage from "next/error";
 import fetch from "isomorphic-unfetch";
-import {
-  Client,
-  apiEndpoint,
-  hrefResolver,
-  linkResolver
-} from "../prismic-config";
+import { Client } from "../prismic-config";
 import { CONTENT_TYPES } from "../constants";
 
 const getPropsFromReq = ({ host, pathname }) => {
@@ -56,7 +49,7 @@ const getPropsFromReq = ({ host, pathname }) => {
 };
 
 export default class Page extends React.Component<any, any> {
-  static async getInitialProps({ req, query }) {
+  static async getInitialProps({ req, query, res }) {
     try {
       const props = await Page.getMicrositeData({
         req,
@@ -64,6 +57,9 @@ export default class Page extends React.Component<any, any> {
         reqPathname: req ? req.url.split("?")[0].split("#")[0] : null
       });
       if (process.browser) (window as any).prismic.setupEditButton();
+      if (props.statusCode && res) {
+        res.statusCode = props.statusCode;
+      }
       return props;
     } catch (e) {
       console.log(e);
@@ -132,8 +128,9 @@ export default class Page extends React.Component<any, any> {
           lang = reqLang;
         }
       }
+
       let initial_tgids = [];
-      const { CMSContent, ContentType } = await Client(req)
+      const { CMSContent, ContentType, statusCode } = await Client(req)
         .getByUID(CONTENT_TYPES.MICROSITE, uid, {
           lang
         })
@@ -192,6 +189,11 @@ export default class Page extends React.Component<any, any> {
                 fetchLinks: [...propsFromHeader, ...propsFromLinkedMicrosite]
               })
               .then(page => {
+                if (!(page && page.data)) {
+                  return {
+                    statusCode: 404
+                  };
+                }
                 // console.log(JSON.stringify(page, null, 4));
                 let completePage = {
                   ...page,
@@ -217,6 +219,22 @@ export default class Page extends React.Component<any, any> {
               });
           }
         });
+
+      if (statusCode) {
+        return {
+          statusCode
+        };
+      }
+
+      if (ContentType === CONTENT_TYPES.CONTENT_PAGE) {
+        return {
+          CMSContent,
+          ContentType,
+          uid,
+          lang
+        };
+      }
+
       if (ContentType === CONTENT_TYPES.MICROSITE) {
         const { items: uncategorizedToursList } = CMSContent.data.data.body1[0];
 
@@ -267,37 +285,34 @@ export default class Page extends React.Component<any, any> {
           uid,
           lang
         };
-      } else {
-        return {
-          CMSContent,
-          ContentType,
-          uid,
-          lang
-        };
       }
     } catch (error) {
       console.log(error);
-      return error;
+      return {
+        statusCode: 500
+      };
     }
   }
 
   render() {
-    const { CMSContent, scorpioData, ContentType } = this.props;
-    if (ContentType === CONTENT_TYPES.MICROSITE) {
-      return (
-        <Microsite
-          data={CMSContent.data}
-          scorpioData={scorpioData}
-          offerData={CMSContent.offerData}
-        />
-      );
-    } else if (ContentType === CONTENT_TYPES.CONTENT_PAGE) {
-      return <SubPage {...CMSContent} />;
+    const { CMSContent, scorpioData, ContentType, statusCode } = this.props;
+    if (statusCode) {
+      return <ErrorPage statusCode={statusCode} />;
     }
-    return (
-      <div>
-        <JSONTree data={CMSContent} invertTheme />
-      </div>
-    );
+
+    switch (ContentType) {
+      case CONTENT_TYPES.MICROSITE:
+        return (
+          <Microsite
+            data={CMSContent.data}
+            scorpioData={scorpioData}
+            offerData={CMSContent.offerData}
+          />
+        );
+      case CONTENT_TYPES.CONTENT_PAGE:
+        return <SubPage {...CMSContent} />;
+      default:
+        return <ErrorPage statusCode={500} />;
+    }
   }
 }
