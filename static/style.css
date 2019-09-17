@@ -1275,7 +1275,7 @@ body.popupv2-active {
     );
   }
   .header-links-lang-container {
-    margin-right: 70px;
+    margin-right: 20px;
   }
   .language-dropdown {
     right: -45px;
@@ -1668,7 +1668,6 @@ body.popupv2-active {
 
 .footer-logo img {
   width: 180px;
-  filter: invert(1);
 }
 
 .footer-line {
@@ -2504,5 +2503,8 @@ h3 {
 @media (max-width: 768px) {
   .navbar-buy-tickets {
     margin-left: 0px;
+  }
+  .addMargin {
+    margin-right: 70px;
   }
 }

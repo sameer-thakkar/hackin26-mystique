@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import LanguageSelector from "./LanguageSelector";
 import HeaderLinks from "./HeaderLinks";
-import Image from "./Image";
+import classNames from "classnames";
 
 export default class Header extends Component<any, any> {
   hamburgerRef: any;
@@ -32,22 +32,29 @@ export default class Header extends Component<any, any> {
       hasLanguageSelector,
       enableBuyTickets
     } = this.props;
+    const hamburgerIconCheck = showGroupBooking || headerLinks.length;
     return (
       <div className="header-container">
         <div className="header-wrapper">
           <div className="header-logo">
             <img src={logoUrl} alt={logoAltText} />
           </div>
-          <div className="header-links-lang-container">
-            <div
-              ref={this.hamburgerRef}
-              className="hamburger"
-              onClick={x => this.hamburgerToggle(this.hamburgerRef.current)}
-            >
-              <div className="bar1"></div>
-              <div className="bar2"></div>
-              <div className="bar3"></div>
-            </div>
+          <div
+            className={classNames("header-links-lang-container", {
+              addMargin: hamburgerIconCheck
+            })}
+          >
+            {hamburgerIconCheck ? (
+              <div
+                ref={this.hamburgerRef}
+                className="hamburger"
+                onClick={x => this.hamburgerToggle(this.hamburgerRef.current)}
+              >
+                <div className="bar1"></div>
+                <div className="bar2"></div>
+                <div className="bar3"></div>
+              </div>
+            ) : null}
             <HeaderLinks
               headerLinks={headerLinks}
               openGroupBookingModal={this.props.openGroupBookingModal}
