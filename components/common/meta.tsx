@@ -4,7 +4,7 @@ import Head from "next/head";
 import parse from "url-parse";
 
 const withoutTrailingSlash = url =>
-  url.charAt(url.length - 1) === "/" ? url.substr(0, url.length - 2) : url;
+  url.charAt(url.length - 1) === "/" ? url.substr(0, url.length - 1) : url;
 
 function getSchemaJson(data) {
   const {
