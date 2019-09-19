@@ -13,13 +13,9 @@ export default class Footer extends Component<any, any> {
           <hr className="footer-line" />
           <div className="disclaimer">
             <span className="disclaimer-text">{disclaimer}</span>
-            {hasTermsPage === "Yes" ? (
-              <Link href="/terms">
-                <span className="terms-tab">Terms & Conditions</span>
-              </Link>
-            ) : (
-              ""
-            )}
+            <Link href="/terms">
+              <span className="terms-tab">Terms & Conditions</span>
+            </Link>
           </div>
         </div>
       </div>

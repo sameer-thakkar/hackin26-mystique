@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { shortCodeSerializer } from "../utils/shortCodes";
 import { RichText } from "prismic-reactjs";
 import ReactMarkdown from "react-markdown";
+import parse from "url-parse";
 
 const isLengthyArray = item => Array.isArray(item) && item.length;
 
@@ -71,14 +72,24 @@ export default class Product extends Component<any, any> {
       isMobile,
       isFetched,
       popupState,
-      scorpioData
+      scorpioData,
+      pageUrl,
+      host
     } = this.props;
     const descriptorsCsv = descriptors || scorpioData.descriptors;
     const cardTitle = title || scorpioData.title;
     const descriptorsList = descriptorsCsv ? descriptorsCsv.split(",") : [];
     const langCode = currentLanguage.substring(0, 2);
-    const domainSplit = currentDomain.split(".");
-    const domain = domainSplit[1] + "." + domainSplit[2];
+    let url = host || window.location.host;
+    const isDev = url.includes("localhost");
+    const currentHost = !isDev ? url : parse(currentDomain, true).pathname;
+    const hostName = currentHost.includes("stage")
+      ? currentHost.replace("stage.", "")
+      : currentHost;
+    let hostSplit = hostName.split(".");
+    hostSplit.shift();
+    const bookingUrl = hostSplit.join(".");
+
     const isHighlightsFromPrismic =
       isLengthyArray(highlights) && highlights.filter(item => item.text).length;
     return (
@@ -86,7 +97,7 @@ export default class Product extends Component<any, any> {
         <div className="product">
           <div className="product-header">
             <div className="product-header-left">
-              <div className="product-title">{cardTitle}</div>
+              <h2 className="product-title">{cardTitle}</h2>
               <div className="product-tags">
                 {descriptorsList.map((tag, index) => {
                   return (
@@ -120,7 +131,7 @@ export default class Product extends Component<any, any> {
               </div>
               <a
                 target="_blank"
-                href={`http://book.${domain}${
+                href={`http://book.${bookingUrl}${
                   langCode === "en" ? "" : `/${langCode}`
                 }/book/${tgid}`}
               >

@@ -8,6 +8,7 @@ import LongForm from "./LongForm";
 import FreeTourPopup from "./FreeTourPopup";
 import GroupBooking from "./GroupBooking";
 import populateHead from "./common/meta";
+import CustomFooter from "./CustomFooter";
 
 export default class Microsite extends Component<any, any> {
   constructor(props) {
@@ -137,7 +138,8 @@ export default class Microsite extends Component<any, any> {
       header_links: headerLinks,
       images: bannerImages,
       heading: bannerHeading,
-      cta_text: bannerCtaText
+      cta_text: bannerCtaText,
+      page_url: pageUrl
     } = this.props.data.data;
     const { lang: currentLanguage, uid: currentDomain } = this.props.data;
     const {
@@ -164,7 +166,8 @@ export default class Microsite extends Component<any, any> {
       has_terms_page: hasTermsPage,
       enable_localization_menu: hasLanguageSelector,
       enable_group_booking: enableGroupBooking,
-      enable_buy_tickets_shortcut: enableBuyTickets
+      enable_buy_tickets_shortcut: enableBuyTickets,
+      logo_redirection_url: logoRedirectionURL
     } = this.props.data.data;
     const showGroupBooking = enableGroupBooking === "Yes";
     const { results: productOffer } = this.props.offerData
@@ -173,7 +176,8 @@ export default class Microsite extends Component<any, any> {
     const hasOffer = productOffer.length > 0;
     const offerPopup = hasOffer ? productOffer[0] : null;
     const {
-      group_booking_excluded_tgids: groupBookingExcludedTgids
+      group_booking_excluded_tgids: groupBookingExcludedTgids,
+      customFooter
     } = this.props.data.data;
 
     let groupBookingTourTitles = [];
@@ -200,8 +204,10 @@ export default class Microsite extends Component<any, any> {
     const {
       first_publication_date: datePublished,
       last_publication_date: dateModified,
-      lang
+      lang,
+      host
     } = this.props;
+
     return (
       <div>
         <div className="microsite-container">
@@ -233,6 +239,7 @@ export default class Microsite extends Component<any, any> {
             hasLanguageSelector={hasLanguageSelector}
             showGroupBooking={showGroupBooking}
             enableBuyTickets={enableBuyTickets}
+            logoRedirectionURL={logoRedirectionURL.url || "/"}
           />
           <Banner
             bannerImages={bannerImages ? bannerImages : null}
@@ -257,21 +264,29 @@ export default class Microsite extends Component<any, any> {
               hasOffer={hasOffer}
               isFetched={this.state.isFetched}
               togglePopup={this.togglePopup}
+              pageUrl={pageUrl}
               isMobile={isMobile}
               trackEvent={({ eventName, ...labelProps }) =>
                 this.trackEvent({ eventName, ...labelProps })
               }
+              host={host}
             />
           )}
           {longFormContent ? <LongForm content={longFormContent} /> : null}
-          <Footer
-            logoUrl={uploadedFooterLogoUrl || footerLogoUrl || null}
-            footerLinks={footerLinks ? footerLinks : null}
-            disclaimer={disclaimer ? disclaimer : null}
-            footerAltText={footerAltText || footerAltTextUploaded || null}
-            hasTermsPage={hasTermsPage}
-            isMobile={isMobile}
-          />
+          {customFooter ? (
+            <footer>
+              <CustomFooter {...customFooter.data} />
+            </footer>
+          ) : (
+            <Footer
+              logoUrl={uploadedFooterLogoUrl || footerLogoUrl || null}
+              footerLinks={footerLinks ? footerLinks : null}
+              disclaimer={disclaimer ? disclaimer : null}
+              footerAltText={footerAltText || footerAltTextUploaded || null}
+              hasTermsPage={hasTermsPage}
+              isMobile={isMobile}
+            />
+          )}
           {hasOffer && (
             <FreeTourPopup
               popupState={this.state.popupOpen}

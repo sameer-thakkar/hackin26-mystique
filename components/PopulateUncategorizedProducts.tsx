@@ -20,7 +20,9 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
       isFetched,
       isMobile,
       trackEvent,
-      scorpioData
+      scorpioData,
+      pageUrl,
+      host
     } = this.props;
     return (
       <div className="uncategorized-container">
@@ -53,6 +55,8 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
               isMobile={isMobile}
               isFetched={isFetched}
               trackEvent={trackEvent}
+              pageUrl={pageUrl}
+              host={host}
             />
           ))}
         </div>

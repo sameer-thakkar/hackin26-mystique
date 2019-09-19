@@ -21,18 +21,22 @@ export default class CustomFooter extends Component<any, any> {
         </div>
         <div className="terms-line">
           {sliceHandler({ items: [{ text: terms }], slice_type: "rich_text" })}
+          <Link href="/terms">
+            <span className="terms-tab">Terms & Conditions</span>
+          </Link>
         </div>
         <style jsx global>
           {`
             .custom-footer {
               max-width: 1190px;
-              padding: 50px;
+              padding: 50px 50px 20px;
               margin: auto;
               display: grid;
               align-items: center;
               justify-content: space-between;
               grid-template-columns: 25% 75%;
               grid-column-gap: 1em;
+              grid-row-gap: 2em;
             }
             .logo {
               align-self: flex-start;
@@ -53,9 +57,10 @@ export default class CustomFooter extends Component<any, any> {
               grid-column: 1 / 3;
               color: white;
               font-family: Avenir;
-              font-size: 10px;
+              font-size: 12px;
               text-align: center;
-              padding-bottom: 10px;
+              padding-top: 20px;
+              opacity: 0.6;
             }
             .terms-line a {
               color: #fff;
@@ -65,7 +70,8 @@ export default class CustomFooter extends Component<any, any> {
               .custom-footer {
                 grid-template-columns: unset;
                 grid-row-gap: 30px;
-                justify-content: center;
+                justify-items: center;
+                grid-row-gap: 1em;
               }
               .terms-line {
                 grid-column: unset;

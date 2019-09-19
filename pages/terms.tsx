@@ -3,6 +3,8 @@ import Prismic from "prismic-javascript";
 import { Client } from "../prismic-config";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import parse from "url-parse";
+import CustomFooter from "../components/CustomFooter";
 
 export default class terms extends Component<any, any> {
   constructor(props) {
@@ -30,7 +32,12 @@ export default class terms extends Component<any, any> {
     const lang = "en-us";
     const uidType = "microsite";
     const response = await Client(req).getByUID(uidType, uid, { lang });
-    return { response };
+    const footerID = response.data.footer_ref.id;
+    if (footerID) {
+      const customFooter = await Client(req).getByID(footerID);
+      response.data.customFooter = customFooter;
+    }
+    return { response, host };
   }
 
   toggleDropdown = () => {
@@ -49,7 +56,7 @@ export default class terms extends Component<any, any> {
     this.setState({ showGroupBookingModal: false });
 
   render() {
-    const { response } = this.props;
+    const { response, host } = this.props;
     const isMobile = () => {
       return document.documentElement.clientWidth < 768;
     };
@@ -59,8 +66,11 @@ export default class terms extends Component<any, any> {
     const { alternate_languages: availableLanguages } = response;
     const {
       localization: languages,
-      header_links: headerLinks
+      header_links: headerLinks,
+      logo_redirection_url: logoRedirectionURL,
+      customFooter
     } = response.data;
+
     const { lang: currentLanguage, uid: currentDomain } = response;
     const {
       url: uploadedFooterLogoUrl,
@@ -72,6 +82,16 @@ export default class terms extends Component<any, any> {
       text: ""
     };
     const { footer_logo_alt_text: footerAltText } = response.data;
+
+    let url = host || window.location.host;
+    const isDev = url.includes("localhost");
+    const currentHost = !isDev ? url : parse(currentDomain, true).pathname;
+    const micrositeUrl = currentHost.includes("stage")
+      ? currentHost.replace("stage.", "")
+      : currentHost;
+    let hostSplit = micrositeUrl.split(".");
+    hostSplit.shift();
+    const supportURL = hostSplit.join(".");
 
     return (
       <React.Fragment>
@@ -89,6 +109,7 @@ export default class terms extends Component<any, any> {
           openGroupBookingModal={this.openGroupBookingModal}
           isMobile={isMobile}
           parentComponent={"TERMS"}
+          logoRedirectionURL={logoRedirectionURL.url || "/"}
         />
         <div className="terms-container">
           <div
@@ -102,7 +123,7 @@ export default class terms extends Component<any, any> {
           <div className="sub-heading">Terms of Use</div>
           <div className="text">
             This web page represents a legal document that serves as the terms
-            of use for our website (“Terms of Use”), {currentDomain} and any
+            of use for our website (“Terms of Use”), {micrositeUrl} and any
             associated mobile application (collectively, “Website”). Capitalized
             terms, unless otherwise defined, have the meaning specified within
             the Definitions section below. This Terms of Use,, and other posted
@@ -251,7 +272,7 @@ export default class terms extends Component<any, any> {
           <div className="text">You can contact us at - </div>
           <div className="text">
             By E-mail: support@
-            {currentDomain.split(".")[1] + "." + currentDomain.split(".")[2]}
+            {supportURL}
           </div>
           <div className="sub-heading">Intellectual Property</div>
           <div className="text">
@@ -369,13 +390,19 @@ export default class terms extends Component<any, any> {
             provision nor of the right to enforce such provision.
           </div>
         </div>
-        <Footer
-          logoUrl={uploadedFooterLogoUrl || footerLogoUrl || null}
-          footerLinks={footerLinks ? footerLinks : null}
-          disclaimer={disclaimer ? disclaimer : null}
-          footerAltText={footerAltText || footerAltTextUploaded || null}
-          isMobile={isMobile}
-        />
+        {customFooter ? (
+          <footer>
+            <CustomFooter {...customFooter.data} />
+          </footer>
+        ) : (
+          <Footer
+            logoUrl={uploadedFooterLogoUrl || footerLogoUrl || null}
+            footerLinks={footerLinks ? footerLinks : null}
+            disclaimer={disclaimer ? disclaimer : null}
+            footerAltText={footerAltText || footerAltTextUploaded || null}
+            isMobile={isMobile}
+          />
+        )}
       </React.Fragment>
     );
   }

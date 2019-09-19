@@ -30,15 +30,18 @@ export default class Header extends Component<any, any> {
       parentComponent,
       showGroupBooking,
       hasLanguageSelector,
-      enableBuyTickets
+      enableBuyTickets,
+      logoRedirectionURL
     } = this.props;
     const hamburgerIconCheck = showGroupBooking || headerLinks.length;
     return (
       <div className="header-container">
         <div className="header-wrapper">
-          <div className="header-logo">
-            <img src={logoUrl} alt={logoAltText} />
-          </div>
+          <a href={logoRedirectionURL}>
+            <div className="header-logo">
+              <img src={logoUrl} alt={logoAltText} />
+            </div>
+          </a>
           <div
             className={classNames("header-links-lang-container", {
               addMargin: hamburgerIconCheck

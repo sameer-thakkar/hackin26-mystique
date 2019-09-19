@@ -108,7 +108,8 @@ export default class SubPage extends Component<any, any> {
     };
 
     const {
-      enable_group_booking: enableGroupBooking
+      enable_group_booking: enableGroupBooking,
+      logo_redirection_url: logoRedirectionURL
     } = this.props.data.header_ref.data;
     const showGroupBooking = enableGroupBooking === "Yes";
     const { groupBookingTourTitles } = this.state;
@@ -134,6 +135,7 @@ export default class SubPage extends Component<any, any> {
             parentComponent="SubPage"
             openGroupBookingModal={this.openGroupBookingModal}
             showGroupBooking={showGroupBooking}
+            logoRedirectionURL={logoRedirectionURL.url || "/"}
           />
         </header>
         <main>

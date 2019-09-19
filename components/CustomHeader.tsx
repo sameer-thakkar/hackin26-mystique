@@ -20,16 +20,19 @@ export default class CustomHeader extends Component<any, any> {
       header_links: headerLinks,
       logo,
       isMobile,
-      parentComponent
+      parentComponent,
+      logoRedirectionURL
     } = this.props;
 
     let { url: logoUrl, alt: logoAltText } = logo;
     return (
       <div className="header-container">
         <div className="header-wrapper">
-          <div className="header-logo">
-            <img src={logoUrl} alt={logoAltText} />
-          </div>
+          <a href={logoRedirectionURL}>
+            <div className="header-logo">
+              <img src={logoUrl} alt={logoAltText} />
+            </div>
+          </a>
           <div className="header-links-lang-container">
             <div
               ref={this.hamburgerRef}

@@ -201,6 +201,14 @@ export default class Page extends React.Component<any, any> {
               {}
             );
 
+            const footerID =
+              completeMicrosite.data.data.footer_ref.id ||
+              baseLangData.data.footer_ref.id;
+            if (footerID) {
+              const customFooter = await Client(req).getByID(footerID);
+              completeMicrosite.data.data.customFooter = customFooter;
+            }
+
             const micrositeData = {
               ...completeMicrosite,
               data: {
@@ -208,7 +216,11 @@ export default class Page extends React.Component<any, any> {
                 data: {
                   ...completeMicrosite.data.data,
                   ...strValues,
-                  ...objValues
+                  ...objValues,
+                  logo_redirection_url: completeMicrosite.data.data
+                    .logo_redirection_url.url
+                    ? completeMicrosite.data.data.logo_redirection_url
+                    : baseLangData.data.logo_redirection_url
                 }
               }
             };
@@ -224,7 +236,8 @@ export default class Page extends React.Component<any, any> {
               "link_to_logo_file",
               "logo_alt_text",
               "enable_group_booking",
-              "header_links"
+              "header_links",
+              "logo_redirection_url"
             ].map(prop => `${CONTENT_TYPES.HEADER}.${prop}`);
 
             const propsFromLinkedMicrosite = [
@@ -342,7 +355,8 @@ export default class Page extends React.Component<any, any> {
           ContentType,
           scorpioData,
           uid,
-          lang
+          lang,
+          host
         };
       }
     } catch (error) {
@@ -354,7 +368,13 @@ export default class Page extends React.Component<any, any> {
   }
 
   render() {
-    const { CMSContent, scorpioData, ContentType, statusCode } = this.props;
+    const {
+      CMSContent,
+      scorpioData,
+      ContentType,
+      statusCode,
+      host
+    } = this.props;
     if (statusCode) {
       return <ErrorPage statusCode={statusCode} />;
     }
@@ -366,6 +386,7 @@ export default class Page extends React.Component<any, any> {
             data={CMSContent.data}
             scorpioData={scorpioData}
             offerData={CMSContent.offerData}
+            host={host}
           />
         );
       case CONTENT_TYPES.CONTENT_PAGE:
