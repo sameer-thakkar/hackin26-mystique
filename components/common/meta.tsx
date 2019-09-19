@@ -74,7 +74,8 @@ export default data => {
     seo_keywords: seoKeywords,
     google_site_verification: googleSiteVerification,
     bing_site_verification: bingSiteVerification,
-    localization: languages = []
+    localization: languages = [],
+    logo
   } = data;
 
   const robotsContent = [];
@@ -84,6 +85,7 @@ export default data => {
   if (noindex === "True") {
     robotsContent.push("noindex");
   }
+  // console.log(title)
 
   const dynamicMeta = (
     <React.Fragment>
@@ -98,7 +100,9 @@ export default data => {
       <meta property="og:description" content={description} />
       <meta name="twitter:description" content={description} />
 
-      <meta name="twitter:image" content={image.url} />
+      <meta name="image" content={image.url || logo.url} />
+      <meta property="og:image" content={image.url || logo.url} />
+      <meta name="twitter:image" content={image.url || logo.url} />
 
       <meta property="og:locale" content="en_US" />
       <meta property="og:type" content="website" />

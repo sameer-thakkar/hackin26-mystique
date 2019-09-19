@@ -150,7 +150,6 @@ export default class Microsite extends Component<any, any> {
       last_publication_date: dateModified,
       lang
     } = this.props;
-
     return (
       <div>
         <div className="microsite-container">

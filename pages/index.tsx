@@ -130,6 +130,7 @@ export default class Page extends React.Component<any, any> {
       }
 
       let initial_tgids = [];
+
       const { CMSContent, ContentType, statusCode } = await Client(req)
         .getByUID(CONTENT_TYPES.MICROSITE, uid, {
           lang
@@ -137,11 +138,11 @@ export default class Page extends React.Component<any, any> {
         .then(async res => {
           let completeMicrosite = { data: res };
           if (completeMicrosite.data && completeMicrosite.data.uid == uid) {
-            let tours = completeMicrosite.data.data.body1[0].items || [];
-            let offers = tours
+            const tours = completeMicrosite.data.data.body1[0].items || [];
+            const offers = tours
               .filter(tour => tour.offer__free_tour.id)
               .map(tour => tour.offer__free_tour.id);
-            let uniqueOfferIds = offers.filter(
+            const uniqueOfferIds = offers.filter(
               (id, index) => offers.indexOf(id) === index
             );
             if (uniqueOfferIds.length)
@@ -153,9 +154,67 @@ export default class Page extends React.Component<any, any> {
                   });
                   return offerData;
                 });
+            const baseLangData =
+              lang !== "en"
+                ? await Client(req)
+                    .getByUID(CONTENT_TYPES.MICROSITE, uid, {
+                      lang: "en-us"
+                    })
+                    .then(res => res)
+                : {};
+
+            const strKeys = [
+              "title",
+              "description",
+              "gtm_id",
+              "seo_keywords",
+              "google_site_verification",
+              "bing_site_verification",
+              "canonical_link",
+              "noindex",
+              "nofollow",
+              "page_url"
+            ];
+            const objKeys = [
+              "header_scripts",
+              "image",
+              "favicon",
+              "other_meta_tags"
+            ];
+
+            const strValues = strKeys.reduce(
+              (acc, elem) => ({
+                ...acc,
+                [elem]:
+                  completeMicrosite.data.data[elem] || baseLangData.data[elem]
+              }),
+              {}
+            );
+
+            const objValues = objKeys.reduce(
+              (acc, elem) => ({
+                ...acc,
+                [elem]: Object.keys(completeMicrosite.data.data[elem]).length
+                  ? completeMicrosite.data.data[elem]
+                  : baseLangData.data[elem]
+              }),
+              {}
+            );
+
+            const micrositeData = {
+              ...completeMicrosite,
+              data: {
+                ...completeMicrosite.data,
+                data: {
+                  ...completeMicrosite.data.data,
+                  ...strValues,
+                  ...objValues
+                }
+              }
+            };
 
             return {
-              CMSContent: completeMicrosite,
+              CMSContent: micrositeData,
               ContentType: CONTENT_TYPES.MICROSITE
             };
           } else {
