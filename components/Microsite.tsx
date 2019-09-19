@@ -17,7 +17,8 @@ export default class Microsite extends Component<any, any> {
       currencySymbol: "",
       languageDropdown: false,
       popupOpen: false,
-      showGroupBookingModal: false
+      showGroupBookingModal: false,
+      isFetched: false
     };
   }
 
@@ -33,26 +34,77 @@ export default class Microsite extends Component<any, any> {
   };
 
   async componentDidMount() {
-    const all_tgids = [];
-    const tgidsWithPrices = [];
     const { data } = this.props.data;
     const uncategorizedTours = data.body1;
-    uncategorizedTours[0].items.map(tour => all_tgids.push(tour.tgid));
-    const fetchPrices = await fetch(
-      `https://api.headout.com/api/v5/tour-group/list?ids[]=${all_tgids}`
+    const [variantTgids, tourGroupTgids] = uncategorizedTours[0].items.reduce(
+      (accum, elem) => {
+        if (elem.tour_variant_id) {
+          return [
+            [...accum[0], { tgid: elem.tgid, tid: elem.tour_variant_id }],
+            [...accum[1]]
+          ];
+        } else {
+          return [[...accum[0]], [...accum[1], elem.tgid]];
+        }
+      },
+      [[], []]
     );
-    const response = await fetchPrices.json();
-    const currencySymbol = response.currencies[0].localSymbol;
-    response.tourGroups.map(tour => {
-      const tgidAndPrice = {
-        tgid: tour.id,
-        price: tour.listingPrice.finalPrice
+
+    const fetchTourGroupPrices = fetch(
+      `https://api.headout.com/api/v5/tour-group/list?ids[]=${tourGroupTgids}`
+    ).then(res => res.json());
+    const fetchVariantPrices = variantTgids.map(tourVariant =>
+      fetch(
+        `https://api.headout.com/api/v5/tour-group/inventory/get/${tourVariant.tgid}`
+      ).then(res => res.json())
+    );
+    const response = await Promise.all([
+      fetchTourGroupPrices,
+      ...fetchVariantPrices
+    ]).then(res => res);
+    const tourGroup = response[0];
+    const variants = response.slice(1);
+    const currencySymbol = tourGroup.currencies.length
+      ? tourGroup.currencies[0].localSymbol
+      : variants[0].currency.localSymbol;
+    const tourGroupPrices = tourGroup.tourGroups.reduce(
+      (accum, res, index) => ({
+        ...accum,
+        [tourGroup.tourGroups[index].id]: {
+          price: res.listingPrice.finalPrice,
+          scratchPrice: res.listingPrice.originalPrice
+        }
+      }),
+      {}
+    );
+
+    const mapVariantPrices = variants.map((tourVariant: any, index) => {
+      const inv = tourVariant.inventoryList.find(
+        inventoryList => inventoryList.tourId == variantTgids[index].tid
+      );
+      return {
+        tgid: variantTgids[index].tgid,
+        tid: variantTgids[index].tid,
+        price: inv.finalPriceProfile.persons[0].price
       };
-      tgidsWithPrices.push(tgidAndPrice);
     });
+
+    const variantPrices = mapVariantPrices.reduce(
+      (accum, res, index) => ({
+        ...accum,
+        [mapVariantPrices[index].tgid]: {
+          price: res.price
+        }
+      }),
+      {}
+    );
+
+    const tourPrices = Object.assign(tourGroupPrices, variantPrices);
+
     this.setState({
-      tourPrices: tgidsWithPrices,
-      currencySymbol: currencySymbol
+      tourPrices: tourPrices,
+      currencySymbol: currencySymbol,
+      isFetched: true
     });
   }
 

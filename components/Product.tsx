@@ -69,6 +69,7 @@ export default class Product extends Component<any, any> {
       productOffer,
       offerId,
       isMobile,
+      isFetched,
       popupState,
       scorpioData
     } = this.props;
@@ -115,11 +116,7 @@ export default class Product extends Component<any, any> {
             </div>
             <div className="product-header-right">
               <div className="product-price">
-                {tourPrices.map(price => {
-                  if (price.tgid == tgid) {
-                    return `${currencySymbol}${price.price}`;
-                  }
-                })}
+                {isFetched && `${currencySymbol}${tourPrices[tgid].price}`}
               </div>
               <a
                 target="_blank"

@@ -17,6 +17,7 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
       hasOffer,
       togglePopup,
       popupState,
+      isFetched,
       isMobile,
       trackEvent,
       scorpioData
@@ -50,6 +51,7 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
               offerId={tour.offer__free_tour.id}
               popupState={popupState}
               isMobile={isMobile}
+              isFetched={isFetched}
               trackEvent={trackEvent}
             />
           ))}
