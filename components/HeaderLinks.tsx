@@ -12,20 +12,14 @@ export default class HeaderLinks extends Component<any, any> {
     return (
       <div className={isMobile ? "dropdown header-links" : "header-links"}>
         <div className="header-links">
-          {parentComponent !== "TERMS" && showGroupBooking && (
-            <a onClick={this.props.openGroupBookingModal}>
-              Group Tickets (15+ PAX)
-            </a>
-          )}
           {headerLinks.map((link, index) => (
-            <a
-              target={link.link_url.target}
-              href={link.link_url.url}
-              key={index}
-            >
+            <a target="_blank" href={link.link_url.url} key={index}>
               {link.link_heading}
             </a>
           ))}
+          {parentComponent !== "TERMS" && showGroupBooking && (
+            <a onClick={this.props.openGroupBookingModal}>Group Tickets</a>
+          )}
         </div>
       </div>
     );
