@@ -17,7 +17,7 @@ const fullDomain = req =>
 const createLoc = doc => {
   if (doc.type === CONTENT_TYPES.MICROSITE) {
     if (doc.lang === "en-us") {
-      return `https://${doc.uid}/`;
+      return doc.data.page_url ? doc.data.page_url : `https://${doc.uid}/`;
     }
     return `https://${doc.uid}/${doc.lang.split("-")[0]}`;
   }
