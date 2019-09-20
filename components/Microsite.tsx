@@ -72,8 +72,8 @@ export default class Microsite extends Component<any, any> {
       (accum, res, index) => ({
         ...accum,
         [tourGroup.tourGroups[index].id]: {
-          price: res.listingPrice.finalPrice,
-          scratchPrice: res.listingPrice.originalPrice
+          price: res.listingPrice ? res.listingPrice.finalPrice : "",
+          scratchPrice: res.listingPrice ? res.listingPrice.originalPrice : ""
         }
       }),
       {}
