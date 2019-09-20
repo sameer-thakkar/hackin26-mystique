@@ -99,9 +99,48 @@ export default class SubPage extends Component<any, any> {
       ({ meta_tag }) => meta_tag
     );
 
-    const headProps = {
+    const strKeys = [
+      "title",
+      "description",
+      "gtm_id",
+      "seo_keywords",
+      "google_site_verification",
+      "bing_site_verification",
+      "canonical_link",
+      "noindex",
+      "nofollow",
+      "page_url"
+    ];
+    const objKeys = ["image", "other_meta_tags"];
+
+    const strValues = strKeys.reduce(
+      (acc, elem) => ({
+        ...acc,
+        [elem]: this.props.data[elem] || microsite_document_ref.data[elem]
+      }),
+      {}
+    );
+
+    const objValues = objKeys.reduce(
+      (acc, elem) => ({
+        ...acc,
+        [elem]: Object.keys(this.props.data[elem]).length
+          ? this.props.data[elem]
+          : microsite_document_ref.data[elem]
+      }),
+      {}
+    );
+
+    const micrositeData = {
       ...this.props.data,
-      ...microsite_document_ref.data,
+      ...strValues,
+      ...objValues
+    };
+
+    const headProps = {
+      ...micrositeData,
+      favicon: microsite_document_ref.data.favicon,
+      header_scripts: microsite_document_ref.data.header_scripts,
       other_meta_tags: contentPageHasOtherMetaTags
         ? this.props.data.other_meta_tags
         : microsite_document_ref.other_meta_tags
