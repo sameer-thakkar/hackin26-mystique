@@ -127,7 +127,9 @@ export default class Product extends Component<any, any> {
             </div>
             <div className="product-header-right">
               <div className="product-price">
-                {isFetched && `${currencySymbol}${tourPrices[tgid].price}`}
+                {isFetched && tourPrices[tgid].price
+                  ? `${currencySymbol}${tourPrices[tgid].price}`
+                  : null}
               </div>
               <a
                 target="_blank"

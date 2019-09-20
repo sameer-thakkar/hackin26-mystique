@@ -86,7 +86,7 @@ export default class Microsite extends Component<any, any> {
       return {
         tgid: variantTgids[index].tgid,
         tid: variantTgids[index].tid,
-        price: inv.finalPriceProfile.persons[0].price
+        price: inv ? inv.finalPriceProfile.persons[0].price : ""
       };
     });
 
