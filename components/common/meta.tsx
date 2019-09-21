@@ -178,7 +178,7 @@ export default data => {
       <link
         rel="alternate"
         hrefLang={langCode}
-        href={`/${langCode === "en" ? "" : langCode}`}
+        href={`/${langCode === "en" ? "" : langCode}/`}
       />
     );
   });

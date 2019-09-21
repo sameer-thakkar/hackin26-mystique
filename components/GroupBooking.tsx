@@ -385,6 +385,7 @@ export default class GroupBooking extends Component<any, any> {
                     <DatePicker
                       selected={this.state.date}
                       onChange={this.handleDateChange}
+                      dateFormat="dd/MM/yyyy"
                       monthsShown={isMobileDevice() ? 1 : 2}
                     />
                     <img
