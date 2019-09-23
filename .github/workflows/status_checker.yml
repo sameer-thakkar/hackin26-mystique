@@ -3,7 +3,7 @@ name: Prod MB Status
 on:
   schedule:
     # to test - run it every minute of every day
-    - cron: "* * * * *"
+    - cron: "0 * * * *"
 
 jobs:
   ensurer:

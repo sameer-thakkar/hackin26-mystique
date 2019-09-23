@@ -2,7 +2,8 @@ const signale = require("signale");
 const fetch = require("isomorphic-unfetch");
 
 // fetch("https://mystique-tests.headout.com/run.prod.json")
-fetch("http://www.json-generator.com/api/json/get/ceaegykWcy?indent=2")
+fetch("https://www.json-generator.com/api/json/get/ceaegykWcy?indent=2")
+  // fetch('https://mystique-tests.headout.com/features')
   .then(res => res.json())
   .then(data => {
     const { statusCode } = data.report;
