@@ -1,0 +1,20 @@
+name: MB_Status
+
+on:
+  schedule:
+    # to test - run it every minute of every day
+    - cron: "* * * * *"
+
+jobs:
+  ensurer:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "10.x"
+      - name: Mystique tests
+        run: |
+          node tests.js

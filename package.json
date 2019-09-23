@@ -33,6 +33,7 @@
     "react-modal": "^3.9.1",
     "react-select": "^3.0.4",
     "react-telephone-input": "^4.73.4",
+    "signale": "^1.4.0",
     "swiper": "^4.5.0",
     "url-parse": "^1.4.7",
     "xmlbuilder": "^13.0.2"
