@@ -1,4 +1,4 @@
-name: MB_Status
+name: Prod MB Status
 
 on:
   schedule:
