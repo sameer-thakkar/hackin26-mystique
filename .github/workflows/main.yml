@@ -15,10 +15,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "10.x"
-      - name: npm install
+      - name: rollout to stage
         env:
           ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
         run: |
-          npm install
           now --version
           now --token ${ZEIT_TOKEN} --scope headout --target production --debug
