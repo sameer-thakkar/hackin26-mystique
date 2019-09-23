@@ -1,0 +1,23 @@
+name: CD
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  rollout:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "10.x"
+      - name: now deploy
+        env:
+          ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
+        run: |
+          now --version
+          now --token ${ZEIT_TOKEN} -A now.production.json --scope headout --target production --debug
