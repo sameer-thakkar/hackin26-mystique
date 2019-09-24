@@ -18,6 +18,8 @@ jobs:
       - name: rollout to stage
         env:
           ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
+          GIT_BRANCH: ${{ github.head_ref }}
+          GIT_ACTOR: ${{ github.actor }}
         run: |
           now --version
-          now --token ${ZEIT_TOKEN} --scope headout --target production --debug
+          now --token ${ZEIT_TOKEN} --scope headout --target production -e GIT_BRANCH=${GIT_BRANCH} -e GIT_ACTOR=${GIT_ACTOR}

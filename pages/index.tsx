@@ -60,6 +60,10 @@ export default class Page extends React.Component<any, any> {
       if (props.statusCode && res) {
         res.statusCode = props.statusCode;
       }
+      if (req && req.headers.host.startsWith("stage.")) {
+        res.setHeader("x-git-branch", process.env.GIT_BRANCH);
+        res.setHeader("x-git-actor", process.env.GIT_ACTOR);
+      }
       return props;
     } catch (e) {
       console.log(e);
