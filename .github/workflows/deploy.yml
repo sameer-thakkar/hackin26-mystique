@@ -5,6 +5,10 @@ on:
     tags:
       - "*"
 
+# [TODO] [fail the rollout step if tests fail]
+# [HOW] add a test step which'll pull all domains from `now.production.json`
+# then add a `stage.` to all of them, and hit the testing API with these domains
+# only if that responds back with success, we'll let `rollout` happen
 jobs:
   rollout:
     runs-on: ubuntu-latest
@@ -20,4 +24,4 @@ jobs:
           ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
         run: |
           now --version
-          now --token ${ZEIT_TOKEN} -A now.production.json --scope headout --target production --debug
+          now --token ${ZEIT_TOKEN} -A now.production.json --scope headout --prod

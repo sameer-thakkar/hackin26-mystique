@@ -2,7 +2,6 @@ name: Prod MB Status
 
 on:
   schedule:
-    # to test - run it every minute of every day
     - cron: "0 * * * *"
 
 jobs:
@@ -20,4 +19,4 @@ jobs:
       - name: Mystique tests
         run: |
           yarn
-          node tests.js
+          node ./tests/slack.js
