@@ -14,10 +14,7 @@ export default class InternalContentCard extends PureComponent<any, any> {
               <a key={index} href={card.card_cta.url}>
                 <div className="more-reads">
                   <div className="more-reads-image">
-                    <img
-                      src="http://www.parkguelltickets.org/wp-content/uploads/2018/05/Park-Guell-Entrance.jpg"
-                      alt="image"
-                    />
+                    <img src={card.image_link.url} alt="image" />
                   </div>
                   <div className="more-reads-text">
                     <span className="more-reads-text-heading">
