@@ -410,6 +410,10 @@ ul {
 }
 
 @media (max-width: 768px) {
+  .product-desc p {
+    font-size: 0.8em;
+    line-height: 1.7em;
+  }
   .header-logo img {
     margin-left: 10px;
   }
