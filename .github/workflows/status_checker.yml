@@ -2,7 +2,7 @@ name: Prod MB Status
 
 on:
   schedule:
-    - cron: "0 * * * *"
+    - cron: "30 5/* * * *"
 
 jobs:
   ensurer:
