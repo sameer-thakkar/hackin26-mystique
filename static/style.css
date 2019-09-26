@@ -295,6 +295,10 @@ body {
 .product-desc ul {
   padding: 0px;
 }
+.product-desc p {
+  margin: 0;
+  line-height: 1.95em;
+}
 .book-now-cta {
   width: 10.1em;
   height: 3.1em;
