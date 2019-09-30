@@ -13,10 +13,7 @@ export const accessToken = "";
 // Manages links to internal Prismic documents
 // Modify as your project grows to handle any new routes you've made
 export const linkResolver = doc => {
-  if (doc.type === "post") {
-    return `/blog/${doc.uid}`;
-  }
-  return "/";
+  return `/prismic/resolve?type=${doc.type}&uid=${doc.uid}&lang=${doc.lang}`;
 };
 
 // Additional helper function for Next/Link components

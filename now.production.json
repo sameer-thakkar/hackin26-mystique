@@ -83,6 +83,14 @@
       "dest": "/api/sitemap"
     },
     {
+      "src": "/prismic/preview(.*)",
+      "dest": "/api/preview"
+    },
+    {
+      "src": "/prismic/resolve(.*)",
+      "dest": "/api/resolve"
+    },
+    {
       "src": "/(.*)",
       "dest": "/index"
     }
