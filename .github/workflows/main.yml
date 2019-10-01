@@ -23,6 +23,7 @@ jobs:
         run: |
           now --version
           now --token ${ZEIT_TOKEN} --scope headout --prod -e GIT_BRANCH=${GIT_BRANCH} -e GIT_ACTOR=${GIT_ACTOR}
+          now --token ${ZEIT_TOKEN} -A now.2.json --scope headout --prod -e GIT_BRANCH=${GIT_BRANCH} -e GIT_ACTOR=${GIT_ACTOR}
 
   test:
     runs-on: ubuntu-latest
