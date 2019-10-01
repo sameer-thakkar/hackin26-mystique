@@ -87,7 +87,9 @@ export default class Page extends React.Component<any, any> {
      *  to create similar output object
      */
     const { host } = req ? req.headers : window.location;
-    const isDev = host.includes("localhost:");
+    const isDev = req
+      ? !!query.mystique_uid
+      : window.location.search.includes("mystique_uid");
 
     try {
       let uid, lang, pathname;

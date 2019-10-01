@@ -12,8 +12,26 @@ export default function handle(req, res) {
       })
     )
     .then(response => {
+      if (response && !response.data.page_url) {
+        // if response exists (which implies document is published)
+        // then Page URL should exist!
+        res.send("Please enter `Page URL` in Prismic for its Preview to work!");
+        res.end();
+        return;
+      }
+
+      const protocol = req.headers["x-forwarded-proto"];
+      const host = req.headers["x-forwarded-host"];
+
+      const redirectUrl =
+        !response || host.startsWith("localhost:")
+          ? `${protocol}://${host}?mystique_uid=${uid}&lang=${lang}`
+          : host.startsWith("stage.")
+          ? response.data.page_url.replace("://", "://stage.")
+          : response.data.page_url;
+
       res.writeHead(302, {
-        Location: response.data.page_url
+        Location: redirectUrl
       });
       res.end();
     });

@@ -39,9 +39,8 @@ const createImg = doc => {
 };
 
 export default function handle(req, res) {
-  const url = fullDomain(req);
   let uid;
-  if (url.includes("localhost:")) {
+  if (req.query.mystique_uid) {
     uid = req.query.mystique_uid;
   } else {
     uid = req.headers.host.replace("stage.", "");
