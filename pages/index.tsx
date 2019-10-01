@@ -276,7 +276,9 @@ export default class Page extends React.Component<any, any> {
                 let completePage = {
                   ...page,
                   featured: {
-                    image: page.data.featured_image,
+                    image: page.data.featured_image.url
+                      ? page.data.featured_image
+                      : page.data.featured_image_link,
                     title: page.data.featured_title
                   },
                   subs: {}
