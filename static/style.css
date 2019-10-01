@@ -2517,3 +2517,14 @@ h3 {
     margin-right: 70px;
   }
 }
+
+.subpage-container .slice-block ul {
+  padding-left: 20px;
+}
+
+.subpage-container .slice-block ul li {
+  font-family: Avenir;
+  font-size: 18px;
+  color: #545454;
+  line-height: 40px;
+}

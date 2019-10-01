@@ -44,7 +44,6 @@ export default class CustomFooter extends Component<any, any> {
             .custom-footer .logo img {
               height: auto;
               width: 150px;
-              filter: invert(1);
               align-self: flex-start;
             }
             .columns {
