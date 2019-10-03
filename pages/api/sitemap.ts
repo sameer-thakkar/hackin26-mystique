@@ -82,13 +82,15 @@ export default function handle(req, res) {
         .forEach(doc => {
           xmlDoc.urlset.url.push({
             loc: createLoc(doc),
-            lastmod: doc.last_publication_date,
+            lastmod: new Date(doc.last_publication_date).toISOString(),
             ...createImg(doc)
           });
         });
       const xml = builder.create(xmlDoc, { encoding: "utf-8" });
       const xmlStr = xml.end();
+      res.setHeader("Content-Type", "application/xml");
       res.send(xmlStr);
+      res.end();
     })
     .catch(err => {
       res.status(500).send(`Error: ${err.message}`);
