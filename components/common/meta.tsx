@@ -85,7 +85,8 @@ export default data => {
   if (noindex === "True") {
     robotsContent.push("noindex");
   }
-  // console.log(title)
+
+  const imageUrl = image ? image.url : logo ? logo.url : null;
 
   const dynamicMeta = (
     <React.Fragment>
@@ -100,9 +101,13 @@ export default data => {
       <meta property="og:description" content={description} />
       <meta name="twitter:description" content={description} />
 
-      <meta name="image" content={image.url || logo.url} />
-      <meta property="og:image" content={image.url || logo.url} />
-      <meta name="twitter:image" content={image.url || logo.url} />
+      {imageUrl ? (
+        <React.Fragment>
+          <meta name="image" content={imageUrl} />
+          <meta property="og:image" content={imageUrl} />
+          <meta name="twitter:image" content={imageUrl} />
+        </React.Fragment>
+      ) : null}
 
       <meta property="og:locale" content="en_US" />
       <meta property="og:type" content="website" />
