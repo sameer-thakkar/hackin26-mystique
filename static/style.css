@@ -2196,10 +2196,16 @@ form.form {
 .subpage-container .product .product-left p {
   margin-bottom: 20px;
 }
+.subpage-container .product .product-left {
+  width: 75%;
+}
 @media (max-width: 768px) {
   .subpage-container .slice-block h2 {
     font-size: 20px;
     margin: 40px 0;
+  }
+  .subpage-container .product .product-left {
+    width: 100%;
   }
   .subpage-container .slice-block p,
   .subpage-container .slice-block .more-reads-text-text {
