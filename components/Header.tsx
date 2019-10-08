@@ -19,10 +19,10 @@ export default class Header extends Component<any, any> {
     const {
       languages,
       headerLinks,
+      currentLanguage,
       logoUrl,
       logoAltText,
       availableLanguages,
-      selectedLanguage,
       currentDomain,
       languageDropdown,
       toggleDropdown,
@@ -31,9 +31,12 @@ export default class Header extends Component<any, any> {
       showGroupBooking,
       hasLanguageSelector,
       enableBuyTickets,
-      logoRedirectionURL
+      logoRedirectionURL,
+      host
     } = this.props;
+
     const hamburgerIconCheck = showGroupBooking || headerLinks.length;
+
     return (
       <div className="header-container">
         <div className="header-wrapper">
@@ -76,10 +79,11 @@ export default class Header extends Component<any, any> {
               <LanguageSelector
                 languages={languages}
                 availableLanguages={availableLanguages}
-                selectedLanguage={selectedLanguage}
+                currentLanguage={currentLanguage}
                 currentDomain={currentDomain}
                 languageDropdown={languageDropdown}
                 toggleDropdown={toggleDropdown}
+                host={host}
               />
             ) : null}
           </div>

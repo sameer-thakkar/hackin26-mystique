@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import Product from "./Product";
+import * as labels from "../static/localization/labels";
 
 export default class PopulateUncategorizedProducts extends Component<any, any> {
   render() {
     const {
       uncategorizedTours: tours,
-      uncategorizedToursHeading: heading,
       tourPrices,
       currencySymbol,
       currentDomain,
@@ -24,10 +24,13 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
       pageUrl,
       host
     } = this.props;
+
     return (
       <div className="uncategorized-container">
         <div className="select-wrapper" id="select-tickets">
-          <div className="select-text">{heading}</div>
+          <div className="select-text">
+            {labels[currentLanguage].TOUR_LIST_HEADING}
+          </div>
           <div className="divider"></div>
         </div>
         <div className="products-container">

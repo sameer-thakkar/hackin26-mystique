@@ -141,7 +141,8 @@ export default class Microsite extends Component<any, any> {
       cta_text: bannerCtaText,
       page_url: pageUrl
     } = this.props.data.data;
-    const { lang: currentLanguage, uid: currentDomain } = this.props.data;
+    const { uid: currentDomain } = this.props.data;
+    const currentLanguage = this.props.data.lang.substring(0, 2);
     const {
       items: uncategorizedToursList,
       primary: uncategorizedToursHeading
@@ -230,7 +231,6 @@ export default class Microsite extends Component<any, any> {
             currentLanguage={currentLanguage ? currentLanguage : null}
             logoAltText={altText || logoAltText}
             availableLanguages={availableLanguages}
-            selectedLanguage={currentLanguage}
             currentDomain={currentDomain}
             languageDropdown={this.state.languageDropdown}
             toggleDropdown={this.toggleDropdown}
@@ -240,11 +240,13 @@ export default class Microsite extends Component<any, any> {
             showGroupBooking={showGroupBooking}
             enableBuyTickets={enableBuyTickets}
             logoRedirectionURL={logoRedirectionURL.url || "/"}
+            host={host}
           />
           <Banner
             bannerImages={bannerImages ? bannerImages : null}
             bannerHeading={bannerHeading ? bannerHeading : null}
             bannerCtaText={bannerCtaText ? bannerCtaText : null}
+            currentLanguage={currentLanguage ? currentLanguage : null}
             isMobile={isMobile}
             boxed={true}
           />

@@ -4,31 +4,38 @@ import Link from "next/link";
 const flagsUrl = {
   en: {
     flag: "https://s.w.org/images/core/emoji/12.0.0-1/svg/1f1ec-1f1e7.svg",
-    language: "English"
+    language: "English",
+    paramLang: "en-us"
   },
   it: {
     flag: "https://s.w.org/images/core/emoji/12.0.0-1/svg/1f1ee-1f1f9.svg",
-    language: "Italiano"
+    language: "Italiano",
+    paramLang: "it-it"
   },
   es: {
     flag: "https://s.w.org/images/core/emoji/12.0.0-1/svg/1f1ea-1f1f8.svg",
-    language: "Español"
+    language: "Español",
+    paramLang: "es-es"
   },
   fr: {
     flag: "https://s.w.org/images/core/emoji/12.0.0-1/svg/1f1eb-1f1f7.svg",
-    language: "Français"
+    language: "Français",
+    paramLang: "fr-fr"
   },
   de: {
     flag: "https://s.w.org/images/core/emoji/12.0.0-1/svg/1f1e9-1f1ea.svg",
-    language: "Deutsch"
+    language: "Deutsch",
+    paramLang: "de-de"
   },
   nl: {
     flag: "https://s.w.org/images/core/emoji/12.0.0-1/svg/1f1f3-1f1f1.svg",
-    language: "Nederlands"
+    language: "Nederlands",
+    paramLang: "nl-nl"
   },
   pt: {
     flag: "https://s.w.org/images/core/emoji/12.0.0-1/svg/1f1f5-1f1f9.svg",
-    language: "Português"
+    language: "Português",
+    paramLang: "pt-pt"
   }
 };
 
@@ -53,37 +60,21 @@ export default class LanguageSelector extends Component<any, any> {
   }
 
   getLanguages = () => {
-    const liveLanguages = [];
-    const { selectedLanguage, availableLanguages, languages } = this.props;
-    const selectedLangCode = selectedLanguage.substring(0, 2);
+    const { currentLanguage, availableLanguages, languages } = this.props;
+    const prismicLanguages = languages.map(prismicLang =>
+      prismicLang.language.split("-")[1].toLowerCase()
+    );
+    const publishedLanguages = availableLanguages.map(
+      publishLang => publishLang.lang.split("-")[0]
+    );
+    publishedLanguages.push(currentLanguage);
     if (availableLanguages.length > 0) {
-      languages.map(lang => {
-        availableLanguages.map(availLanguage => {
-          if (
-            lang.language.split("-")[1].toLowerCase() ==
-              availLanguage.lang.substring(0, 2) ||
-            lang.language.split("-")[1].toLowerCase() == selectedLangCode
-          ) {
-            if (
-              liveLanguages.indexOf(
-                lang.language.split("-")[1].toLowerCase()
-              ) == -1
-            ) {
-              liveLanguages.push(lang.language.split("-")[1].toLowerCase());
-            }
-          }
-        });
-      });
-    } else {
-      languages.map(lang => {
-        if (
-          liveLanguages.indexOf(lang.language.split("-")[1].toLowerCase()) == -1
-        ) {
-          liveLanguages.push(lang.language.split("-")[1].toLowerCase());
-        }
-      });
+      const liveLanguages = prismicLanguages.filter(
+        prismicLang => publishedLanguages.indexOf(prismicLang) != -1
+      );
+      return liveLanguages;
     }
-    return liveLanguages;
+    return prismicLanguages;
   };
 
   handleClick = () => {
@@ -92,8 +83,12 @@ export default class LanguageSelector extends Component<any, any> {
   };
 
   render() {
-    const { selectedLanguage, languageDropdown } = this.props;
-    const selectedLangCode = selectedLanguage.substring(0, 2);
+    const {
+      currentLanguage,
+      languageDropdown,
+      host,
+      currentDomain
+    } = this.props;
     const { pathname } = this.state;
     const slug = pathname
       .replace("en/", "")
@@ -104,14 +99,16 @@ export default class LanguageSelector extends Component<any, any> {
       .replace("pt/", "")
       .replace("es/", "");
 
+    const isDev = host.includes("localhost");
+
     return (
       <div onClick={this.handleClick} className="language-selector-container">
         <div className="language-selector">
           <div className="current-langauge">
             <div className="current-language-flag">
-              <img src={flagsUrl[selectedLangCode].flag} alt="flag" />
+              <img src={flagsUrl[currentLanguage].flag} alt="flag" />
             </div>
-            <span className="current-lang-code">{selectedLangCode}</span>
+            <span className="current-lang-code">{currentLanguage}</span>
           </div>
           <div
             ref={this.arrowRef}
@@ -126,22 +123,47 @@ export default class LanguageSelector extends Component<any, any> {
             languageDropdown ? "language-dropdown-active" : ""
           }`}
         >
-          {this.getLanguages().map((language, index) => {
-            return (
-              <Link key={index} href={`/${language}${slug}`}>
-                <a
-                  className={selectedLangCode == language ? "selected-tab" : ""}
-                >
-                  <div className="language">
-                    <div className="language-flag">
-                      <img src={flagsUrl[language].flag} alt="flag" />
+          {isDev
+            ? this.getLanguages().map((language, index) => {
+                return (
+                  <a
+                    className={
+                      currentLanguage == language ? "selected-tab" : ""
+                    }
+                    key={index}
+                    href={`/?mystique_uid=${currentDomain}&lang=${flagsUrl[language].paramLang}`}
+                  >
+                    <div className="language">
+                      <div className="language-flag">
+                        <img src={flagsUrl[language].flag} alt="flag" />
+                      </div>
+                      <span className="lang">
+                        {flagsUrl[language].language}
+                      </span>
                     </div>
-                    <span className="lang">{flagsUrl[language].language}</span>
-                  </div>
-                </a>
-              </Link>
-            );
-          })}
+                  </a>
+                );
+              })
+            : this.getLanguages().map((language, index) => {
+                return (
+                  <Link key={index} href={`/${language}${slug}`}>
+                    <a
+                      className={
+                        currentLanguage == language ? "selected-tab" : ""
+                      }
+                    >
+                      <div className="language">
+                        <div className="language-flag">
+                          <img src={flagsUrl[language].flag} alt="flag" />
+                        </div>
+                        <span className="lang">
+                          {flagsUrl[language].language}
+                        </span>
+                      </div>
+                    </a>
+                  </Link>
+                );
+              })}
         </div>
       </div>
     );

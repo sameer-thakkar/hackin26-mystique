@@ -3,6 +3,7 @@ import { shortCodeSerializer } from "../utils/shortCodes";
 import { RichText } from "prismic-reactjs";
 import ReactMarkdown from "react-markdown";
 import parse from "url-parse";
+import * as labels from "../static/localization/labels";
 
 const isLengthyArray = item => Array.isArray(item) && item.length;
 
@@ -14,17 +15,17 @@ export default class Product extends Component<any, any> {
   }
 
   readMore = context => {
-    const { readMoreText, showLessText } = this.props;
+    const { currentLanguage } = this.props;
     let desc = context.previousElementSibling;
     let more = context;
     if (more.dataset.open == 0) {
-      more.innerHTML = `${showLessText}`;
+      more.innerHTML = `- ${labels[currentLanguage].SHOW_LESS_TEXT}`;
       more.style.background = "none";
       desc.style.transition = "all 0.15s ease-in-out";
       desc.style.height = "auto";
       more.dataset.open = 1;
     } else if (more.dataset.open == 1) {
-      more.innerHTML = `${readMoreText}`;
+      more.innerHTML = `+ ${labels[currentLanguage].READ_MORE_TEXT}`;
       more.style.background =
         "linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,0.7),rgba(255,255,255,1))";
       desc.style.transition = "all 0.15s ease-in-out";
@@ -64,8 +65,6 @@ export default class Product extends Component<any, any> {
       currentDomain,
       currencySymbol,
       currentLanguage,
-      bookNowText,
-      readMoreText,
       hasOffer,
       productOffer,
       offerId,
@@ -76,10 +75,10 @@ export default class Product extends Component<any, any> {
       pageUrl,
       host
     } = this.props;
+
     const descriptorsCsv = descriptors || scorpioData.descriptors;
     const cardTitle = title || scorpioData.title;
     const descriptorsList = descriptorsCsv ? descriptorsCsv.split(",") : [];
-    const langCode = currentLanguage.substring(0, 2);
     let url = host || window.location.host;
     const isDev = url.includes("localhost");
     const currentHost = !isDev ? url : parse(currentDomain, true).pathname;
@@ -92,6 +91,7 @@ export default class Product extends Component<any, any> {
 
     const isHighlightsFromPrismic =
       isLengthyArray(highlights) && highlights.filter(item => item.text).length;
+
     return (
       <div>
         <div className="product">
@@ -134,15 +134,17 @@ export default class Product extends Component<any, any> {
               <a
                 target="_blank"
                 href={`http://book.${bookingUrl}${
-                  langCode === "en" ? "" : `/${langCode}`
+                  currentLanguage === "en" ? "" : `/${currentLanguage}`
                 }/book/${tgid}`}
               >
                 <div
                   className="book-now-cta"
                   onClick={this.sendBookNowEvent}
-                  style={langCode == "fr" ? { width: "12.5em" } : {}}
+                  style={currentLanguage == "fr" ? { width: "12.5em" } : {}}
                 >
-                  <span className="book-now-text">{bookNowText}</span>
+                  <span className="book-now-text">
+                    {labels[currentLanguage].BOOK_NOW_CTA}
+                  </span>
                 </div>
               </a>
             </div>
@@ -197,7 +199,7 @@ export default class Product extends Component<any, any> {
               onClick={() => this.readMore(this.readMoreRef.current)}
               className="read-more"
             >
-              {readMoreText}
+              {`+ ${labels[currentLanguage].READ_MORE_TEXT}`}
             </div>
           </div>
         </div>

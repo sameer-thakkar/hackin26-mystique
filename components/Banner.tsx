@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Image from "./Image";
 import classNames from "classnames";
+import * as labels from "../static/localization/labels";
 
 export default class Banner extends Component<any, any> {
   hasIndicators: boolean;
@@ -60,7 +61,8 @@ export default class Banner extends Component<any, any> {
   };
 
   render() {
-    const { bannerCtaText, bannerHeading, bannerImages, boxed } = this.props;
+    const { bannerHeading, bannerImages, boxed, currentLanguage } = this.props;
+
     return (
       <div className={classNames("mb-carousel", { boxed: boxed })}>
         {bannerImages.map((banner, index) => {
@@ -84,11 +86,9 @@ export default class Banner extends Component<any, any> {
             <div className="caption">
               <h1>{bannerHeading}</h1>
             </div>
-            {bannerCtaText && (
-              <a className="mb-cta book-now-text" href="#select-tickets">
-                {bannerCtaText}
-              </a>
-            )}
+            <a className="mb-cta book-now-text" href="#select-tickets">
+              {labels[currentLanguage].BANNER_CTA}
+            </a>
           </div>
         </div>
         {this.hasIndicators && bannerImages.length > 1 ? (
