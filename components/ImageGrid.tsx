@@ -26,7 +26,7 @@ class ImageGrid extends React.Component<ImageGridProps, any> {
               width={580}
               height={300}
               format="pjpg"
-              url={image.image_url.url}
+              url={image.image_url.url || image.image_source.url}
             />
           </div>
         ))}
@@ -36,14 +36,12 @@ class ImageGrid extends React.Component<ImageGridProps, any> {
               display: grid;
               grid-gap: 1.5em;
               grid-template-columns: repeat(${cols}, 1fr);
+              max-width: 100%;
             }
             .image-box {
               padding: 20px;
               border-radius: 3px;
               box-shadow: 0 1px 8px rgba(0, 0, 0, 0.18);
-            }
-            img {
-              width: 100%;
             }
             @media (max-width: 768px) {
               .image-grid {
@@ -52,6 +50,15 @@ class ImageGrid extends React.Component<ImageGridProps, any> {
               .image-box {
                 padding: 10px;
               }
+            }
+          `}
+        </style>
+        <style jsx global>
+          {`
+            .image-box img {
+              width: 100%;
+              max-width: 100%;
+              object-fit: cover;
             }
           `}
         </style>
