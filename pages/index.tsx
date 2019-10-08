@@ -2,6 +2,7 @@ import React from "react";
 import Microsite from "../components/Microsite";
 import SubPage from "../components/SubPage";
 import ErrorPage from "next/error";
+import Router from "next/router";
 import fetch from "isomorphic-unfetch";
 import { Client } from "../prismic-config";
 import { CONTENT_TYPES } from "../constants";
@@ -56,6 +57,25 @@ export default class Page extends React.Component<any, any> {
         query,
         reqPathname: req ? req.url.split("?")[0].split("#")[0] : null
       });
+
+      try {
+        const redirectTo = props.CMSContent
+          ? props.CMSContent.data.data.redirect_url
+          : null;
+
+        if (redirectTo && redirectTo.url) {
+          if (res) {
+            res.writeHead(302, {
+              Location: redirectTo.url
+            });
+            res.end();
+          } else {
+            Router.push(redirectTo.url);
+          }
+          return;
+        }
+      } catch (e) {}
+
       if (process.browser) (window as any).prismic.setupEditButton();
       if (props.statusCode && res) {
         res.statusCode = props.statusCode;
@@ -148,7 +168,8 @@ export default class Page extends React.Component<any, any> {
         .then(async res => {
           let completeMicrosite = { data: res };
           if (completeMicrosite.data && completeMicrosite.data.uid == uid) {
-            const tours = completeMicrosite.data.data.body1[0].items || [];
+            const itemsParent = completeMicrosite.data.data.body1[0];
+            const tours = itemsParent ? itemsParent.items : [];
             const offers = tours
               .filter(tour => tour.offer__free_tour.id)
               .map(tour => tour.offer__free_tour.id);
@@ -320,7 +341,8 @@ export default class Page extends React.Component<any, any> {
       }
 
       if (ContentType === CONTENT_TYPES.MICROSITE) {
-        const { items: uncategorizedToursList } = CMSContent.data.data.body1[0];
+        const { items: uncategorizedToursList } = CMSContent.data.data
+          .body1[0] || { items: [] };
 
         const idsToFetchFromScorpio = uncategorizedToursList.reduce(
           (accum, tour) => {
