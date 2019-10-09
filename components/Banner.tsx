@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Image from "./Image";
 import classNames from "classnames";
+import { BANNER_PARAMS } from "../constants/index";
 import * as labels from "../static/localization/labels";
 
 export default class Banner extends Component<any, any> {
@@ -10,16 +11,26 @@ export default class Banner extends Component<any, any> {
   activeSlideIndex: number;
   prevSlideIndex: number;
   MB_CAROUSEL_INT: any;
+
   constructor(props) {
     super(props);
     this.hasIndicators = true;
     this.MAX_SLIDES = this.props.bannerImages.length;
     this.SLIDE_CHANGE_INTERVAL = 3500;
     this.prevSlideIndex = this.activeSlideIndex = 0;
-    this.state = { counter: 0 };
+    this.state = {
+      counter: 0,
+      isMobile: null,
+      isClient: false
+    };
   }
 
   componentDidMount() {
+    const mobileCheck = window.innerWidth < 768;
+    this.setState({
+      isMobile: mobileCheck,
+      isClient: true
+    });
     if (this.props.bannerImages.length > 1) this.autoSlide();
   }
 
@@ -60,8 +71,33 @@ export default class Banner extends Component<any, any> {
     this.autoSlide();
   };
 
+  renderBanners = url => {
+    const { isMobile } = this.state;
+    const imgixUrl = (url, format, w, ar) =>
+      `${url}${
+        url.indexOf("?") != -1 ? "&" : "?"
+      }auto=compress&w=${w}&fm=${format}&crop=faces&fit=crop&ar=${ar}`;
+    const { ASPECT_RATIO, WIDTH } = isMobile
+      ? BANNER_PARAMS.MOBILE
+      : BANNER_PARAMS.DESKTOP;
+    return (
+      <picture>
+        <source
+          type="image/webp"
+          data-srcset={imgixUrl(url, "webp", WIDTH, ASPECT_RATIO)}
+          srcSet={imgixUrl(url, "webp", WIDTH, ASPECT_RATIO)}
+        ></source>
+        <img
+          data-src={imgixUrl(url, "pjpg", WIDTH, ASPECT_RATIO)}
+          src={imgixUrl(url, "pjpg", WIDTH, ASPECT_RATIO)}
+        />
+      </picture>
+    );
+  };
+
   render() {
     const { bannerHeading, bannerImages, boxed, currentLanguage } = this.props;
+    const { isClient } = this.state;
 
     return (
       <div className={classNames("mb-carousel", { boxed: boxed })}>
@@ -76,7 +112,7 @@ export default class Banner extends Component<any, any> {
                 { "prev-slide fade-out": this.prevSlideIndex == index }
               )}
             >
-              {imageUrl && <Image width={800} format="pjpg" url={imageUrl} />}
+              {isClient ? this.renderBanners(imageUrl) : null}
             </div>
           );
         })}

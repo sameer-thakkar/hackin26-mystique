@@ -78,3 +78,14 @@ export const CONTENT_TYPES = {
   FOOTER: "common_footer",
   HEADER: "common_header"
 };
+
+export const BANNER_PARAMS = {
+  DESKTOP: {
+    ASPECT_RATIO: "4:1.8",
+    WIDTH: "1200"
+  },
+  MOBILE: {
+    ASPECT_RATIO: "1:1:07",
+    WIDTH: "500"
+  }
+};
