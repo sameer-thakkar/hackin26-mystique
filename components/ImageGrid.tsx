@@ -59,6 +59,12 @@ class ImageGrid extends React.Component<ImageGridProps, any> {
               width: 100%;
               max-width: 100%;
               object-fit: cover;
+              height: 350px;
+            }
+            @media (max-width: 768px) {
+              .image-box img {
+                height: 200px;
+              }
             }
           `}
         </style>
