@@ -71,7 +71,7 @@
     },
     {
       "src": "/robots.txt",
-      "dest": "/static/robots.txt"
+      "dest": "/api/robots"
     },
     {
       "src": "/api/(.*)",

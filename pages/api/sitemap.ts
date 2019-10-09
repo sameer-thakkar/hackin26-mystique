@@ -11,9 +11,6 @@ function getPage(api, uid, documents) {
     });
 }
 
-const fullDomain = req =>
-  req.headers["x-forwarded-proto"] + "://" + req.headers.host;
-
 const createLoc = doc => {
   if (doc.type === CONTENT_TYPES.MICROSITE) {
     if (doc.lang === "en-us") {
