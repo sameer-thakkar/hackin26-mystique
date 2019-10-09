@@ -201,7 +201,6 @@ export default class Page extends React.Component<any, any> {
               "seo_keywords",
               "google_site_verification",
               "bing_site_verification",
-              "canonical_link",
               "noindex",
               "nofollow",
               "page_url"
@@ -248,6 +247,9 @@ export default class Page extends React.Component<any, any> {
                   ...completeMicrosite.data.data,
                   ...strValues,
                   ...objValues,
+                  canonical_link:
+                    completeMicrosite.data.data.canonical_link ||
+                    completeMicrosite.data.data.page_url,
                   logo_redirection_url: completeMicrosite.data.data
                     .logo_redirection_url.url
                     ? completeMicrosite.data.data.logo_redirection_url

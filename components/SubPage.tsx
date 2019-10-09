@@ -106,7 +106,6 @@ export default class SubPage extends Component<any, any> {
       "seo_keywords",
       "google_site_verification",
       "bing_site_verification",
-      "canonical_link",
       "noindex",
       "nofollow",
       "page_url"
@@ -141,6 +140,8 @@ export default class SubPage extends Component<any, any> {
       ...micrositeData,
       favicon: microsite_document_ref.data.favicon,
       header_scripts: microsite_document_ref.data.header_scripts,
+      canonical_link:
+        this.props.data.canonical_link || this.props.data.page_url,
       other_meta_tags: contentPageHasOtherMetaTags
         ? this.props.data.other_meta_tags
         : microsite_document_ref.other_meta_tags

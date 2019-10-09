@@ -6,6 +6,12 @@ import parse from "url-parse";
 const withoutTrailingSlash = url =>
   url.charAt(url.length - 1) === "/" ? url.substr(0, url.length - 1) : url;
 
+const withTrailingSlash = url =>
+  url.charAt(url.length - 1) !== "/" ? `${url}/` : url;
+
+const withHttps = url =>
+  (url.startsWith("http") ? url : `https://${url}`).replace("http:", "https:");
+
 function getSchemaJson(data) {
   const {
     page_url: pageUrl,
@@ -123,7 +129,12 @@ export default data => {
         <meta name="msvalidate.01" content={bingSiteVerification} />
       ) : null}
 
-      {canonicalLink ? <link rel="canonical" href={canonicalLink} /> : null}
+      {canonicalLink ? (
+        <link
+          rel="canonical"
+          href={withTrailingSlash(withHttps(canonicalLink))}
+        />
+      ) : null}
 
       {robotsContent.length ? (
         <meta name="robots" content={robotsContent.join(", ")} />
