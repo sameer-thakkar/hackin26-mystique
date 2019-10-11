@@ -23,5 +23,7 @@ jobs:
         env:
           ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
         run: |
+          sudo rm /usr/local/bin/now
+          sudo npm i -g now@16.3.1
           now --version
           now --token ${ZEIT_TOKEN} -A now.production.json --scope headout --prod
