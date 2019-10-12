@@ -132,6 +132,7 @@ body {
 .header-logo img {
   margin-left: -8px;
   height: 44px;
+  max-width: 200px;
 }
 
 .header-links-lang-container {
@@ -2516,12 +2517,20 @@ h3 {
   text-decoration: none;
   color: #ec1943;
 }
+
+.fr-book-now-cta {
+  width: 12.5em;
+}
+
 @media (max-width: 768px) {
   .navbar-buy-tickets {
     margin-left: 0px;
   }
   .addMargin {
     margin-right: 70px;
+  }
+  .fr-book-now-cta {
+    width: 316px;
   }
 }
 

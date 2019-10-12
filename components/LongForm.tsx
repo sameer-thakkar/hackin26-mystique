@@ -47,6 +47,7 @@ export default class LongForm extends Component<any, any> {
               display: block;
               height: 3px;
               background: #ec1943;
+              margin-top: 20px;
             }
             .long-form h3 {
               font-size: 1.4rem;

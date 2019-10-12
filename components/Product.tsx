@@ -138,9 +138,10 @@ export default class Product extends Component<any, any> {
                 }/book/${tgid}`}
               >
                 <div
-                  className="book-now-cta"
+                  className={`book-now-cta ${
+                    currentLanguage == "fr" ? "fr-book-now-cta" : ""
+                  }`}
                   onClick={this.sendBookNowEvent}
-                  style={currentLanguage == "fr" ? { width: "12.5em" } : {}}
                 >
                   <span className="book-now-text">
                     {labels[currentLanguage].BOOK_NOW_CTA}

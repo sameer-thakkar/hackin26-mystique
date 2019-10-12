@@ -5,7 +5,8 @@ import { sliceHandler } from "./Slices";
 export default class CustomFooter extends Component<any, any> {
   render() {
     const { logo, terms, body } = this.props;
-    const { url: logoUrl, alt: altText } = logo;
+    const logoUrl = logo ? logo.url : "";
+    const altText = logo ? logo.alt : "";
 
     return (
       <div className="custom-footer">
@@ -71,6 +72,7 @@ export default class CustomFooter extends Component<any, any> {
                 grid-row-gap: 30px;
                 justify-items: center;
                 grid-row-gap: 1em;
+                justify-content: center;
               }
               .terms-line {
                 grid-column: unset;

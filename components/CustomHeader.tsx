@@ -24,7 +24,9 @@ export default class CustomHeader extends Component<any, any> {
       logoRedirectionURL
     } = this.props;
 
-    let { url: logoUrl, alt: logoAltText } = logo;
+    const logoUrl = logo ? logo.url : "";
+    const logoAltText = logo ? logo.alt : "";
+
     return (
       <div className="header-container">
         <div className="header-wrapper">
