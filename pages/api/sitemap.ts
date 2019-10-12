@@ -2,6 +2,13 @@ import Prismic from "prismic-javascript";
 import { apiEndpoint } from "../../prismic-config";
 import builder from "xmlbuilder";
 import { CONTENT_TYPES } from "../../constants";
+import parse from "url-parse";
+
+const withHttps = url =>
+  (url.startsWith("http") ? url : `https://${url}`).replace("http:", "https:");
+
+const withTrailingSlash = url =>
+  url.charAt(url.length - 1) !== "/" ? `${url}/` : url;
 
 function getPage(api, uid, documents) {
   return api
@@ -12,13 +19,27 @@ function getPage(api, uid, documents) {
 }
 
 const createLoc = doc => {
+  const pageUrl = doc.data.page_url;
   if (doc.type === CONTENT_TYPES.MICROSITE) {
     if (doc.lang === "en-us") {
-      return doc.data.page_url ? doc.data.page_url : `https://${doc.uid}/`;
+      return pageUrl;
     }
-    return `https://${doc.uid}/${doc.lang.split("-")[0]}`;
+    const langParam = doc.lang.split("-")[0];
+    const { host, pathname } = parse(pageUrl, true);
+    // lang is not english and it's a MB with a pathname
+    // eg. experiment pages with /home urls or MBs on pathname
+    if (pathname.length) {
+      if (
+        pathname.startsWith(`/${langParam}`) &&
+        (pathname === `/${langParam}` || pathname.startsWith(`/${langParam}/`))
+      ) {
+        return `https://${host}${pathname}`;
+      }
+      return `https://${host}/${langParam}${pathname}`;
+    }
+    return `${pageUrl}/${langParam}`;
   }
-  return doc.data.page_url;
+  return pageUrl;
 };
 
 const createImg = doc => {
@@ -78,7 +99,7 @@ export default function handle(req, res) {
         .filter(doc => doc.data.is_excluded_from_sitemap !== "Yes")
         .forEach(doc => {
           xmlDoc.urlset.url.push({
-            loc: createLoc(doc),
+            loc: withTrailingSlash(withHttps(createLoc(doc))),
             lastmod: new Date(doc.last_publication_date).toISOString(),
             ...createImg(doc)
           });
