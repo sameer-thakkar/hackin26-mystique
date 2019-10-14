@@ -9,7 +9,7 @@ import FreeTourPopup from "./FreeTourPopup";
 import GroupBooking from "./GroupBooking";
 import populateHead from "./common/meta";
 import CustomFooter from "./CustomFooter";
-
+import { docCookies } from "../utils/helper";
 export default class Microsite extends Component<any, any> {
   constructor(props) {
     super(props);
@@ -34,6 +34,12 @@ export default class Microsite extends Component<any, any> {
     }
   };
 
+  sendVariableToDataLayer = JSONObject => {
+    if (window && (window as any).dataLayer) {
+      (window as any).dataLayer.push(JSONObject);
+    }
+  };
+
   async componentDidMount() {
     const { data } = this.props.data;
     const uncategorizedTours = data.body1;
@@ -53,7 +59,26 @@ export default class Microsite extends Component<any, any> {
 
     const fetchTourGroupPrices = fetch(
       `https://api.headout.com/api/v5/tour-group/list?ids[]=${tourGroupTgids}`
-    ).then(res => res.json());
+    ).then(res => {
+      const HSID = res.headers.get("x-h-sid");
+      if (!docCookies.hasItem("h-sid")) {
+        const nakedDomain = window.location.host
+          .replace("stage.", "")
+          .split(".")
+          .slice(1)
+          .join(".");
+        docCookies.setItem(
+          "h-sid",
+          HSID,
+          (new Date().getTime() / 1000) * 2,
+          "/",
+          nakedDomain,
+          false
+        );
+      }
+      this.sendVariableToDataLayer({ "h-sid": HSID });
+      return res.json();
+    });
     const fetchVariantPrices = variantTgids.map(tourVariant =>
       fetch(
         `https://api.headout.com/api/v5/tour-group/inventory/get/${tourVariant.tgid}`
@@ -206,7 +231,8 @@ export default class Microsite extends Component<any, any> {
       first_publication_date: datePublished,
       last_publication_date: dateModified,
       lang,
-      host
+      host,
+      isDev
     } = this.props;
 
     return (
@@ -222,7 +248,8 @@ export default class Microsite extends Component<any, any> {
             ...this.props.data.data,
             datePublished,
             dateModified,
-            lang
+            lang,
+            isDev
           })}
           <Header
             languages={languages ? languages : null}

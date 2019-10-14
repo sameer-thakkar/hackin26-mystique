@@ -108,5 +108,9 @@
       "src": "/(.*)",
       "dest": "/index"
     }
-  ]
+  ],
+  "env": {
+    "AMPLITUDE_PROD": "@amplitude_prod",
+    "AMPLITUDE_DEV": "@amplitude_dev"
+  }
 }

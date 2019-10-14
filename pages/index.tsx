@@ -392,7 +392,8 @@ export default class Page extends React.Component<any, any> {
           scorpioData,
           uid,
           lang,
-          host
+          host,
+          isDev
         };
       }
     } catch (error) {
@@ -409,7 +410,8 @@ export default class Page extends React.Component<any, any> {
       scorpioData,
       ContentType,
       statusCode,
-      host
+      host,
+      isDev
     } = this.props;
     if (statusCode) {
       return <ErrorPage statusCode={statusCode} />;
@@ -423,10 +425,11 @@ export default class Page extends React.Component<any, any> {
             scorpioData={scorpioData}
             offerData={CMSContent.offerData}
             host={host}
+            isDev={isDev}
           />
         );
       case CONTENT_TYPES.CONTENT_PAGE:
-        return <SubPage {...CMSContent} />;
+        return <SubPage {...CMSContent} isDev={isDev} />;
       default:
         return <ErrorPage statusCode={500} />;
     }

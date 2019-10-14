@@ -92,7 +92,8 @@ export default class SubPage extends Component<any, any> {
     const {
       first_publication_date: datePublished,
       last_publication_date: dateModified,
-      lang
+      lang,
+      isDev
     } = this.props;
 
     const contentPageHasOtherMetaTags = data.other_meta_tags.filter(
@@ -166,7 +167,8 @@ export default class SubPage extends Component<any, any> {
           ...headProps,
           datePublished,
           dateModified,
-          lang
+          lang,
+          isDev
         })}
         <header>
           <CustomHeader
