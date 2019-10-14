@@ -12,7 +12,10 @@ const withTrailingSlash = url =>
 
 function getPage(api, uid, documents) {
   return api
-    .query(Prismic.Predicates.any("document.tags", [uid]), { lang: "*" })
+    .query(Prismic.Predicates.any("document.tags", [uid]), {
+      lang: "*",
+      pageSize: 100
+    })
     .then(response => {
       return documents.concat(response.results);
     });
