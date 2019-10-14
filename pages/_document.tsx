@@ -28,7 +28,7 @@ class MyDocument extends Document {
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/css/swiper.min.css"
           />
-          <link rel="stylesheet" href="../static/style.css" />
+          <link rel="stylesheet" href="/static/style.css" />
         </Head>
         <body>
           <Main />
