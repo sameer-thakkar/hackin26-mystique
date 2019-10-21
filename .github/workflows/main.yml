@@ -15,6 +15,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "10.x"
+      - name: Use Yarn
+        uses: "borales/actions-yarn@v2.0.0"
       - name: rollout to stage
         env:
           ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
@@ -23,9 +25,10 @@ jobs:
         run: |
           sudo rm /usr/local/bin/now
           sudo npm i -g now@16.3.1
+          sudo yarn
           now --version
-          now --token ${ZEIT_TOKEN} --scope headout --prod -e GIT_BRANCH=${GIT_BRANCH} -e GIT_ACTOR=${GIT_ACTOR}
-          now --token ${ZEIT_TOKEN} -A now.2.json --scope headout --prod -e GIT_BRANCH=${GIT_BRANCH} -e GIT_ACTOR=${GIT_ACTOR}
+          node ./deployment/stage
+          find now.*.json | xargs -n1 -I {} /bin/bash -c 'now --token ${ZEIT_TOKEN} -A {} --scope headout --prod -e GIT_BRANCH=${GIT_BRANCH} -e GIT_ACTOR=${GIT_ACTOR}'
 
   test:
     runs-on: ubuntu-latest
@@ -38,7 +41,7 @@ jobs:
         with:
           node-version: "10.x"
       - name: Use Yarn
-        uses: "nuxt/actions-yarn@master"
+        uses: "borales/actions-yarn@v2.0.0"
       - name: run tests
         run: |
           yarn

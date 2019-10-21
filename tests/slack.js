@@ -1,3 +1,3 @@
-const fetch = require("isomorphic-unfetch");
+const runTests = require("./mystique-tests");
 
-fetch("https://mystique-tests.headout.com/run/production");
+runTests("stage", true);
