@@ -108,5 +108,6 @@ module.exports = [
   "stage.view-from-shard.tickets-london.co.uk",
   "stage.westminster-abbey.tickets-london.co.uk",
   "stage.windsor-castle.tickets-london.co.uk",
+  "stage.bonfire-night.tickets-london.co.uk",
   "stage.microbrands.headout.com"
 ];
