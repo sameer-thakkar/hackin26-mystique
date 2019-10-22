@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import classNames from "classnames";
 
 export default class Tabs extends Component<any, any> {
   constructor(props) {
@@ -17,13 +18,17 @@ export default class Tabs extends Component<any, any> {
     }
     const { tabs } = this.props;
     return (
-      <div className="navigation-bar">
+      <div
+        className={classNames("navigation-bar", {
+          "center-align-tabs": tabs.length < 2
+        })}
+      >
         {tabs.map((tab, index) => (
           <a key={index} href={tab.tab_link.url}>
             <div
-              className={`${
-                tab.is_selected_link === "Yes" ? "selected-nav-tab" : ""
-              } navigation-tab`}
+              className={classNames("navigation-tab", {
+                "selected-nav-tab": tab.is_selected_link === "Yes"
+              })}
             >
               {tab.title}
             </div>

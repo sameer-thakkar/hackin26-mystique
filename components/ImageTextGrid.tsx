@@ -30,7 +30,7 @@ class ImageText extends React.Component<ImageTextProps, any> {
               width={580}
               height={300}
               format="pjpg"
-              url={card.image_url.url}
+              url={card.image_url.url || card.image_source.url}
             />
             <div className="description">
               <RichText
