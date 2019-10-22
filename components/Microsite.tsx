@@ -10,13 +10,17 @@ import GroupBooking from "./GroupBooking";
 import populateHead from "./common/meta";
 import CustomFooter from "./CustomFooter";
 import { docCookies } from "../utils/helper";
+import { DROPDOWN_ELEMENT } from "../constants";
 export default class Microsite extends Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
       tourPrices: [],
       currencySymbol: "",
-      languageDropdown: false,
+      dropdown: {
+        lang: false,
+        hamburger: false
+      },
       popupOpen: false,
       showGroupBookingModal: false,
       isFetched: false
@@ -134,10 +138,33 @@ export default class Microsite extends Component<any, any> {
     });
   }
 
-  toggleDropdown = () => {
-    this.state.languageDropdown
-      ? this.setState({ languageDropdown: false })
-      : this.setState({ languageDropdown: true });
+  handleDropdownToggle = elementIdentifier => {
+    switch (elementIdentifier) {
+      case DROPDOWN_ELEMENT.HAMBURGER: {
+        this.setState({
+          ...this.state,
+          dropdown: {
+            ...this.state.dropdown,
+            hamburger: !this.state.dropdown.hamburger,
+            lang: false
+          }
+        });
+        break;
+      }
+      case DROPDOWN_ELEMENT.LANGUAGE_SELECTOR: {
+        this.setState({
+          ...this.state,
+          dropdown: {
+            ...this.state.dropdown,
+            lang: !this.state.dropdown.lang,
+            hamburger: false
+          }
+        });
+        break;
+      }
+      default:
+        return;
+    }
   };
 
   togglePopup = () => {
@@ -259,8 +286,8 @@ export default class Microsite extends Component<any, any> {
             logoAltText={altText || logoAltText}
             availableLanguages={availableLanguages}
             currentDomain={currentDomain}
-            languageDropdown={this.state.languageDropdown}
-            toggleDropdown={this.toggleDropdown}
+            dropdown={this.state.dropdown}
+            handleDropdownToggle={this.handleDropdownToggle}
             openGroupBookingModal={this.openGroupBookingModal}
             isMobile={isMobile}
             hasLanguageSelector={hasLanguageSelector}

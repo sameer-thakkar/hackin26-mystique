@@ -2,19 +2,17 @@ import React, { Component } from "react";
 import LanguageSelector from "./LanguageSelector";
 import HeaderLinks from "./HeaderLinks";
 import Image from "./Image";
-
+import { DROPDOWN_ELEMENT } from "../constants";
 export default class CustomHeader extends Component<any, any> {
   hamburgerRef: any;
   constructor(props) {
     super(props);
     this.hamburgerRef = React.createRef();
   }
-
   hamburgerToggle = x => {
-    x.classList.toggle("change");
-    x.nextElementSibling.classList.toggle("show");
-    x.nextElementSibling.lastChild.classList.remove("up");
+    this.props.handleDropdownToggle(DROPDOWN_ELEMENT.HAMBURGER);
   };
+
   render() {
     const {
       header_links: headerLinks,
@@ -39,7 +37,7 @@ export default class CustomHeader extends Component<any, any> {
             <div
               ref={this.hamburgerRef}
               className="hamburger"
-              onClick={x => this.hamburgerToggle(this.hamburgerRef.current)}
+              onClick={this.hamburgerToggle}
             >
               <div className="bar1"></div>
               <div className="bar2"></div>

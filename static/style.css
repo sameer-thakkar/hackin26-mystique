@@ -1287,9 +1287,6 @@ body.popupv2-active {
   .header-links-lang-container {
     margin-right: 20px;
   }
-  .language-dropdown {
-    right: -45px;
-  }
   .dropdown {
     position: fixed;
     right: 3%;

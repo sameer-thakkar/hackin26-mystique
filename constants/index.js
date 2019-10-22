@@ -89,3 +89,8 @@ export const BANNER_PARAMS = {
     WIDTH: "500"
   }
 };
+
+export const DROPDOWN_ELEMENT = {
+  HAMBURGER: "HAMBURGER",
+  LANGUAGE_SELECTOR: "LANGUAGE_SELECTOR"
+};

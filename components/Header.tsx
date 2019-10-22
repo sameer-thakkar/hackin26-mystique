@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import LanguageSelector from "./LanguageSelector";
 import HeaderLinks from "./HeaderLinks";
 import classNames from "classnames";
+import { DROPDOWN_ELEMENT } from "../constants";
 
 export default class Header extends Component<any, any> {
   hamburgerRef: any;
@@ -11,10 +12,9 @@ export default class Header extends Component<any, any> {
   }
 
   hamburgerToggle = x => {
-    x.classList.toggle("change");
-    x.nextElementSibling.classList.toggle("show");
-    x.nextElementSibling.lastChild.classList.remove("up");
+    this.props.handleDropdownToggle(DROPDOWN_ELEMENT.HAMBURGER);
   };
+
   render() {
     const {
       languages,
@@ -24,8 +24,8 @@ export default class Header extends Component<any, any> {
       logoAltText,
       availableLanguages,
       currentDomain,
-      languageDropdown,
-      toggleDropdown,
+      dropdown,
+      handleDropdownToggle,
       isMobile,
       parentComponent,
       showGroupBooking,
@@ -53,8 +53,10 @@ export default class Header extends Component<any, any> {
             {hamburgerIconCheck ? (
               <div
                 ref={this.hamburgerRef}
-                className="hamburger"
-                onClick={x => this.hamburgerToggle(this.hamburgerRef.current)}
+                className={classNames("hamburger", {
+                  change: dropdown.hamburger
+                })}
+                onClick={this.hamburgerToggle}
               >
                 <div className="bar1"></div>
                 <div className="bar2"></div>
@@ -67,6 +69,8 @@ export default class Header extends Component<any, any> {
               isMobile={isMobile}
               parentComponent={parentComponent}
               showGroupBooking={showGroupBooking}
+              dropdown={dropdown}
+              handleDropdownToggle={handleDropdownToggle}
             />
             {enableBuyTickets === "Yes" && (
               <div className="navbar-buy-tickets">
@@ -81,8 +85,8 @@ export default class Header extends Component<any, any> {
                 availableLanguages={availableLanguages}
                 currentLanguage={currentLanguage}
                 currentDomain={currentDomain}
-                languageDropdown={languageDropdown}
-                toggleDropdown={toggleDropdown}
+                dropdown={dropdown}
+                handleDropdownToggle={handleDropdownToggle}
                 host={host}
               />
             ) : null}

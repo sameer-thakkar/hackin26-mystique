@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Link from "next/link";
+import { DROPDOWN_ELEMENT } from "../constants";
 
 const flagsUrl = {
   en: {
@@ -78,17 +79,12 @@ export default class LanguageSelector extends Component<any, any> {
   };
 
   handleClick = () => {
-    const { toggleDropdown } = this.props;
-    toggleDropdown();
+    const { handleDropdownToggle } = this.props;
+    handleDropdownToggle(DROPDOWN_ELEMENT.LANGUAGE_SELECTOR);
   };
 
   render() {
-    const {
-      currentLanguage,
-      languageDropdown,
-      host,
-      currentDomain
-    } = this.props;
+    const { currentLanguage, dropdown, host, currentDomain } = this.props;
     const { pathname } = this.state;
     const slug = pathname
       .replace("en/", "")
@@ -112,7 +108,7 @@ export default class LanguageSelector extends Component<any, any> {
           </div>
           <div
             ref={this.arrowRef}
-            className={`arrow ${languageDropdown ? "arrow-active" : ""}`}
+            className={`arrow ${dropdown.lang ? "arrow-active" : ""}`}
           >
             ^
           </div>
@@ -120,7 +116,7 @@ export default class LanguageSelector extends Component<any, any> {
         <div
           ref={this.langDropdownRef}
           className={`language-dropdown ${
-            languageDropdown ? "language-dropdown-active" : ""
+            dropdown.lang ? "language-dropdown-active" : ""
           }`}
         >
           {isDev

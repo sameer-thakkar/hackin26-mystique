@@ -12,7 +12,6 @@ export default class terms extends Component<any, any> {
     this.state = {
       tourPrices: [],
       currencySymbol: "",
-      languageDropdown: false,
       popupOpen: false,
       showGroupBookingModal: false
     };
@@ -39,21 +38,6 @@ export default class terms extends Component<any, any> {
     }
     return { response, host };
   }
-
-  toggleDropdown = () => {
-    this.state.languageDropdown
-      ? this.setState({ languageDropdown: false })
-      : this.setState({ languageDropdown: true });
-  };
-
-  togglePopup = () => {
-    this.state.popupOpen
-      ? this.setState({ popupOpen: false })
-      : this.setState({ popupOpen: true });
-  };
-  openGroupBookingModal = () => this.setState({ showGroupBookingModal: true });
-  closeGroupBookingModal = () =>
-    this.setState({ showGroupBookingModal: false });
 
   render() {
     const { response, host } = this.props;
@@ -104,9 +88,6 @@ export default class terms extends Component<any, any> {
           availableLanguages={availableLanguages}
           selectedLanguage={currentLanguage}
           currentDomain={currentDomain}
-          languageDropdown={this.state.languageDropdown}
-          toggleDropdown={this.toggleDropdown}
-          openGroupBookingModal={this.openGroupBookingModal}
           isMobile={isMobile}
           parentComponent={"TERMS"}
           logoRedirectionURL={logoRedirectionURL.url || "/"}
