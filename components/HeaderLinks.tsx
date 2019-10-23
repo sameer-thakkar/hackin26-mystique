@@ -11,6 +11,7 @@ export default class HeaderLinks extends Component<any, any> {
       showGroupBooking,
       dropdown
     } = this.props;
+
     return (
       <div
         className={classNames(

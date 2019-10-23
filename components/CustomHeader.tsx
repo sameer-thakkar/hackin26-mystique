@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import LanguageSelector from "./LanguageSelector";
 import HeaderLinks from "./HeaderLinks";
 import Image from "./Image";
+import classNames from "classnames";
 import { DROPDOWN_ELEMENT } from "../constants";
+
 export default class CustomHeader extends Component<any, any> {
   hamburgerRef: any;
   constructor(props) {
@@ -19,7 +21,8 @@ export default class CustomHeader extends Component<any, any> {
       logo,
       isMobile,
       parentComponent,
-      logoRedirectionURL
+      logoRedirectionURL,
+      dropdown
     } = this.props;
 
     const logoUrl = logo ? logo.url : "";
@@ -36,7 +39,9 @@ export default class CustomHeader extends Component<any, any> {
           <div className="header-links-lang-container">
             <div
               ref={this.hamburgerRef}
-              className="hamburger"
+              className={classNames("hamburger", {
+                change: dropdown.hamburger
+              })}
               onClick={this.hamburgerToggle}
             >
               <div className="bar1"></div>
@@ -49,6 +54,8 @@ export default class CustomHeader extends Component<any, any> {
               parentComponent={parentComponent}
               openGroupBookingModal={this.props.openGroupBookingModal}
               showGroupBooking={this.props.showGroupBooking}
+              dropdown={this.props.dropdown}
+              handleDropdownToggle={this.props.handleDropdownToggle}
             />
           </div>
         </div>

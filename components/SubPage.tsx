@@ -9,13 +9,18 @@ import { Client } from "../prismic-config";
 // import Banner from "./Banner";
 import { IS_MOBILE } from "../utils/helper";
 import GroupBooking from "./GroupBooking";
+import { DROPDOWN_ELEMENT } from "../constants";
 
 export default class SubPage extends Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
       showGroupBookingModal: false,
-      groupBookingTourTitles: null
+      groupBookingTourTitles: null,
+      dropdown: {
+        lang: false,
+        hamburger: false
+      }
     };
   }
   async componentDidMount() {
@@ -81,6 +86,34 @@ export default class SubPage extends Component<any, any> {
       data: props.data
     };
   }
+  handleDropdownToggle = elementIdentifier => {
+    switch (elementIdentifier) {
+      case DROPDOWN_ELEMENT.HAMBURGER: {
+        this.setState({
+          ...this.state,
+          dropdown: {
+            ...this.state.dropdown,
+            hamburger: !this.state.dropdown.hamburger,
+            lang: false
+          }
+        });
+        break;
+      }
+      case DROPDOWN_ELEMENT.LANGUAGE_SELECTOR: {
+        this.setState({
+          ...this.state,
+          dropdown: {
+            ...this.state.dropdown,
+            lang: !this.state.dropdown.lang,
+            hamburger: false
+          }
+        });
+        break;
+      }
+      default:
+        return;
+    }
+  };
 
   render() {
     const {
@@ -178,6 +211,8 @@ export default class SubPage extends Component<any, any> {
             openGroupBookingModal={this.openGroupBookingModal}
             showGroupBooking={showGroupBooking}
             logoRedirectionURL={logoRedirectionURL.url || "/"}
+            dropdown={this.state.dropdown}
+            handleDropdownToggle={this.handleDropdownToggle}
           />
         </header>
         <main>
