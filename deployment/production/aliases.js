@@ -60,5 +60,8 @@ module.exports = [
   "www.st-peters-basilica-tickets.com",
   "www.seine-river-cruises.com",
   "www.cabaret-paris.com",
+  "www.accademia-tickets.com",
+  "casa-batllo.tickets-barcelona.org",
+  "www.gondola-rides-venice.com",
   "microbrands.headout.com"
 ];
