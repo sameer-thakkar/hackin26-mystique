@@ -1,8 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import LanguageSelector from "./LanguageSelector";
 import HeaderLinks from "./HeaderLinks";
 import classNames from "classnames";
+import { POWERED_BY_HEADOUT_LOGO } from "../constants";
 import { DROPDOWN_ELEMENT } from "../constants";
+import PoweredByHeadout from "./PoweredByHeadout";
 
 export default class Header extends Component<any, any> {
   hamburgerRef: any;
@@ -32,7 +34,8 @@ export default class Header extends Component<any, any> {
       hasLanguageSelector,
       enableBuyTickets,
       logoRedirectionURL,
-      host
+      host,
+      hasPoweredByHeadoutLogo
     } = this.props;
 
     const hamburgerIconCheck = showGroupBooking || headerLinks.length;
@@ -41,8 +44,9 @@ export default class Header extends Component<any, any> {
       <div className="header-container">
         <div className="header-wrapper">
           <a href={logoRedirectionURL}>
-            <div className="header-logo">
+            <div className="logo-wrapper">
               <img src={logoUrl} alt={logoAltText} />
+              {hasPoweredByHeadoutLogo ? <PoweredByHeadout /> : null}
             </div>
           </a>
           <div

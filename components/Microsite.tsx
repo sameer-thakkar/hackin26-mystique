@@ -212,8 +212,10 @@ export default class Microsite extends Component<any, any> {
       footer_links: footerLinks,
       book_now_text: bookNowText,
       read_more_text: readMoreText,
-      show_less_text: showLessText
+      show_less_text: showLessText,
+      enable_powered_by_headout_logo: hasPoweredByHeadoutLogo
     } = this.props.data.data;
+
     const { text: disclaimer } = this.props.data.data.disclaimer[0] || {
       text: ""
     };
@@ -299,6 +301,7 @@ export default class Microsite extends Component<any, any> {
             enableBuyTickets={enableBuyTickets}
             logoRedirectionURL={logoRedirectionURL.url || "/"}
             host={host}
+            hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo}
           />
           <Banner
             bannerImages={bannerImages ? bannerImages : null}

@@ -134,6 +134,20 @@ body {
   height: 44px;
   max-width: 200px;
 }
+.logo-wrapper {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: max-content max-content max-content;
+  grid-column-gap: 10px;
+}
+.logo-wrapper img {
+  height: 40px;
+}
+.line {
+  background: #bababa;
+  height: 100%;
+  width: 1px;
+}
 
 .header-links-lang-container {
   display: flex;
@@ -410,6 +424,15 @@ ul {
 }
 
 @media (max-width: 768px) {
+  .logo-wrapper {
+    display: grid;
+    grid-auto-flow: column;
+    width: 200px;
+    margin-left: 5%;
+  }
+  .logo-wrapper img {
+    height: 30px;
+  }
   .product-desc p {
     font-size: 0.8em;
     line-height: 1.7em;

@@ -211,6 +211,10 @@ export default class SubPage extends Component<any, any> {
             openGroupBookingModal={this.openGroupBookingModal}
             showGroupBooking={showGroupBooking}
             logoRedirectionURL={logoRedirectionURL.url || "/"}
+            hasPoweredByHeadoutLogo={
+              microsite_document_ref.data.enable_powered_by_headout_logo ===
+              "Yes"
+            }
             dropdown={this.state.dropdown}
             handleDropdownToggle={this.handleDropdownToggle}
           />

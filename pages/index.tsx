@@ -253,7 +253,12 @@ export default class Page extends React.Component<any, any> {
                   logo_redirection_url: completeMicrosite.data.data
                     .logo_redirection_url.url
                     ? completeMicrosite.data.data.logo_redirection_url
-                    : baseLangData.data.logo_redirection_url
+                    : baseLangData.data.logo_redirection_url,
+                  enable_powered_by_headout_logo: completeMicrosite.data.data
+                    .enable_powered_by_headout_logo
+                    ? completeMicrosite.data.data
+                        .enable_powered_by_headout_logo === "Yes"
+                    : baseLangData.data.enable_powered_by_headout_logo === "Yes"
                 }
               }
             };
@@ -286,7 +291,8 @@ export default class Page extends React.Component<any, any> {
               "canonical_link",
               "noindex",
               "nofollow",
-              "other_meta_tags"
+              "other_meta_tags",
+              "enable_powered_by_headout_logo"
             ].map(prop => `${CONTENT_TYPES.MICROSITE}.${prop}`);
 
             return await Client(req)

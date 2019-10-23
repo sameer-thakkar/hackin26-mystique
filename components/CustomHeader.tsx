@@ -1,8 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import LanguageSelector from "./LanguageSelector";
 import HeaderLinks from "./HeaderLinks";
 import Image from "./Image";
 import classNames from "classnames";
+import { POWERED_BY_HEADOUT_LOGO } from "../constants";
+import PoweredByHeadout from "./PoweredByHeadout";
 import { DROPDOWN_ELEMENT } from "../constants";
 
 export default class CustomHeader extends Component<any, any> {
@@ -22,6 +24,7 @@ export default class CustomHeader extends Component<any, any> {
       isMobile,
       parentComponent,
       logoRedirectionURL,
+      hasPoweredByHeadoutLogo,
       dropdown
     } = this.props;
 
@@ -32,8 +35,9 @@ export default class CustomHeader extends Component<any, any> {
       <div className="header-container">
         <div className="header-wrapper">
           <a href={logoRedirectionURL}>
-            <div className="header-logo">
+            <div className="logo-wrapper">
               <img src={logoUrl} alt={logoAltText} />
+              {hasPoweredByHeadoutLogo ? <PoweredByHeadout /> : null}
             </div>
           </a>
           <div className="header-links-lang-container">
