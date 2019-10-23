@@ -89,8 +89,7 @@ export default class Product extends Component<any, any> {
     let hostSplit = hostName.split(".");
     hostSplit.shift();
     const bookingUrl = hostSplit.join(".");
-    const showScratchPrice =
-      isFetched && tourPrices[tgid].scratchPrice && isScratchPriceEnabled;
+    const showScratchPrice = isFetched && isScratchPriceEnabled;
 
     const isHighlightsFromPrismic =
       isLengthyArray(highlights) && highlights.filter(item => item.text).length;
@@ -132,15 +131,18 @@ export default class Product extends Component<any, any> {
               <div className="price-container">
                 {showScratchPrice ? (
                   <div className="product-scratch-price">
-                    {currencySymbol}
-                    {tourPrices[tgid].scratchPrice}
+                    {tourPrices[tgid].scratchPrice
+                      ? `${currencySymbol}${tourPrices[tgid].scratchPrice}`
+                      : null}
                   </div>
                 ) : null}
-                <div className="product-price">
-                  {isFetched && tourPrices[tgid].price
-                    ? `${currencySymbol}${tourPrices[tgid].price}`
-                    : null}
-                </div>
+                {isFetched ? (
+                  <div className="product-price">
+                    {tourPrices[tgid].price
+                      ? `${currencySymbol}${tourPrices[tgid].price}`
+                      : null}
+                  </div>
+                ) : null}
               </div>
               <a
                 target="_blank"
