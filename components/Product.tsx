@@ -73,7 +73,8 @@ export default class Product extends Component<any, any> {
       popupState,
       scorpioData,
       pageUrl,
-      host
+      host,
+      isScratchPriceEnabled
     } = this.props;
 
     const descriptorsCsv = descriptors || scorpioData.descriptors;
@@ -88,6 +89,8 @@ export default class Product extends Component<any, any> {
     let hostSplit = hostName.split(".");
     hostSplit.shift();
     const bookingUrl = hostSplit.join(".");
+    const showScratchPrice =
+      isFetched && tourPrices[tgid].scratchPrice && isScratchPriceEnabled;
 
     const isHighlightsFromPrismic =
       isLengthyArray(highlights) && highlights.filter(item => item.text).length;
@@ -126,10 +129,18 @@ export default class Product extends Component<any, any> {
                 })}
             </div>
             <div className="product-header-right">
-              <div className="product-price">
-                {isFetched && tourPrices[tgid].price
-                  ? `${currencySymbol}${tourPrices[tgid].price}`
-                  : null}
+              <div className="price-container">
+                {showScratchPrice ? (
+                  <div className="product-scratch-price">
+                    {currencySymbol}
+                    {tourPrices[tgid].scratchPrice}
+                  </div>
+                ) : null}
+                <div className="product-price">
+                  {isFetched && tourPrices[tgid].price
+                    ? `${currencySymbol}${tourPrices[tgid].price}`
+                    : null}
+                </div>
               </div>
               <a
                 target="_blank"

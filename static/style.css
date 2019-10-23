@@ -329,7 +329,6 @@ body {
   letter-spacing: normal;
   text-align: left;
   color: #545454;
-  margin-bottom: 20px;
 }
 .limited-offer-text {
   font-weight: 500;
@@ -594,7 +593,28 @@ ul {
   width: 100px;
   border: 2px solid #669dde;
 }
+
+.price-container {
+  display: grid;
+  grid-auto-flow: column;
+  align-items: flex-end;
+  grid-column-gap: 10px;
+  margin-bottom: 20px;
+}
+.product-scratch-price {
+  font-size: 22px;
+  text-decoration: line-through;
+  font-weight: 500;
+  color: #545454;
+  font-family: Avenir;
+}
+
 @media (max-width: 768px) {
+  .price-container {
+    text-align: right;
+    display: block;
+    margin-bottom: 0px;
+  }
   .select-wrapper {
     margin: 16.8px 10px;
   }
@@ -620,6 +640,10 @@ ul {
   }
   .product-offer-text {
     color: #593be5;
+  }
+  .product-scratch-price {
+    font-size: 1em;
+    margin-bottom: 5px;
   }
 }
 

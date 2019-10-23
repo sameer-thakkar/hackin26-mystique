@@ -60,6 +60,7 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
               trackEvent={trackEvent}
               pageUrl={pageUrl}
               host={host}
+              isScratchPriceEnabled={tour.show_scratch_price === "Yes"}
             />
           ))}
         </div>
