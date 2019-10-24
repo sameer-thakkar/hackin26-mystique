@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import Select from "react-select";
 import ReactTelInput from "react-telephone-input";
 import DatePicker from "react-datepicker";
+import moment from "moment";
 import {
   IP_INFO_TOKEN,
   PREFERRED_COUNTRIES_CODES,
@@ -195,7 +196,6 @@ export default class GroupBooking extends Component<any, any> {
         return;
       case "PHONE":
         hasError = !checkPhoneNumberValidity(phoneWithCountryCode);
-        console.log(error);
         error = { ...this.state.error };
         error.isPhoneValid = hasError;
         this.setState({ error: error });
@@ -251,7 +251,22 @@ export default class GroupBooking extends Component<any, any> {
     }
   };
 
+  getDatesInRange = (startDate, endDate) => {
+    const dateRange = [];
+    let nextDate = startDate;
+    while (moment(nextDate).isSameOrBefore(moment(endDate))) {
+      dateRange.push(moment(nextDate).toDate());
+      nextDate = moment(nextDate).add(1, "days");
+    }
+    return dateRange;
+  };
+
   render() {
+    const { blackoutStartDate, blackoutEndDate } = this.props;
+    const blackoutDateRange = this.getDatesInRange(
+      blackoutStartDate,
+      blackoutEndDate
+    );
     return (
       <Modal isOpen={true} style={MODAL_STYLE} shouldCloseOnOverlayClick>
         <div className="popup-wrapper">
@@ -385,6 +400,8 @@ export default class GroupBooking extends Component<any, any> {
                     <DatePicker
                       selected={this.state.date}
                       onChange={this.handleDateChange}
+                      minDate={moment().toDate()}
+                      excludeDates={blackoutDateRange}
                       dateFormat="dd/MM/yyyy"
                       monthsShown={isMobileDevice() ? 1 : 2}
                     />

@@ -226,7 +226,9 @@ export default class Microsite extends Component<any, any> {
       enable_localization_menu: hasLanguageSelector,
       enable_group_booking: enableGroupBooking,
       enable_buy_tickets_shortcut: enableBuyTickets,
-      logo_redirection_url: logoRedirectionURL
+      logo_redirection_url: logoRedirectionURL,
+      blackout_start_date: blackoutStartDate,
+      blackout_end_date: blackoutEndDate
     } = this.props.data.data;
     const showGroupBooking = enableGroupBooking === "Yes";
     const { results: productOffer } = this.props.offerData
@@ -275,6 +277,8 @@ export default class Microsite extends Component<any, any> {
             <GroupBooking
               closeGroupBookingModal={() => this.closeGroupBookingModal}
               groupBookingTourTitles={groupBookingTourTitles}
+              blackoutStartDate={blackoutStartDate}
+              blackoutEndDate={blackoutEndDate}
             />
           )}
           {populateHead({

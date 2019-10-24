@@ -185,15 +185,20 @@ export default class SubPage extends Component<any, any> {
       enable_group_booking: enableGroupBooking,
       logo_redirection_url: logoRedirectionURL
     } = this.props.data.header_ref.data;
+    const {
+      blackout_start_date: blackoutStartDate,
+      blackout_end_date: blackoutEndDate
+    } = this.props.data.microsite_document_ref.data;
     const showGroupBooking = enableGroupBooking === "Yes";
     const { groupBookingTourTitles } = this.state;
-
     return (
       <div className="page-wrapper">
         {this.state.showGroupBookingModal && groupBookingTourTitles && (
           <GroupBooking
             closeGroupBookingModal={() => this.closeGroupBookingModal}
             groupBookingTourTitles={groupBookingTourTitles}
+            blackoutStartDate={blackoutStartDate}
+            blackoutEndDate={blackoutEndDate}
           />
         )}
         {populateHead({

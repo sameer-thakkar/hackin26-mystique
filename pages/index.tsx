@@ -203,7 +203,9 @@ export default class Page extends React.Component<any, any> {
               "bing_site_verification",
               "noindex",
               "nofollow",
-              "page_url"
+              "page_url",
+              "blackout_start_date",
+              "blackout_end_date"
             ];
             const objKeys = [
               "header_scripts",
@@ -277,7 +279,6 @@ export default class Page extends React.Component<any, any> {
               "header_links",
               "logo_redirection_url"
             ].map(prop => `${CONTENT_TYPES.HEADER}.${prop}`);
-
             const propsFromLinkedMicrosite = [
               "gtm_id",
               "header_scripts",
@@ -292,6 +293,8 @@ export default class Page extends React.Component<any, any> {
               "noindex",
               "nofollow",
               "other_meta_tags",
+              "blackout_start_date",
+              "blackout_end_date",
               "enable_powered_by_headout_logo"
             ].map(prop => `${CONTENT_TYPES.MICROSITE}.${prop}`);
 

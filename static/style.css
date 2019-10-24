@@ -1981,6 +1981,9 @@ form.form {
   color: #4d4d4d;
   font-size: 14px;
 }
+.form .react-datepicker__day--disabled {
+  color: #cbcbcb;
+}
 .form .react-datepicker__day--selected {
   background: #f1f1f1;
   border-radius: 4px;
