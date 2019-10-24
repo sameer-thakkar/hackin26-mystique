@@ -63,5 +63,6 @@ module.exports = [
   "www.accademia-tickets.com",
   "casa-batllo.tickets-barcelona.org",
   "www.gondola-rides-venice.com",
+  "bonfire-night.tickets-london.co.uk",
   "microbrands.headout.com"
 ];
