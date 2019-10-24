@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import parse from "url-parse";
 import CustomFooter from "../components/CustomFooter";
+import { DROPDOWN_ELEMENT } from "../constants";
 
 export default class terms extends Component<any, any> {
   constructor(props) {
@@ -13,7 +14,11 @@ export default class terms extends Component<any, any> {
       tourPrices: [],
       currencySymbol: "",
       popupOpen: false,
-      showGroupBookingModal: false
+      showGroupBookingModal: false,
+      dropdown: {
+        lang: false,
+        hamburger: false
+      }
     };
   }
   static async getInitialProps({ req }) {
@@ -38,6 +43,34 @@ export default class terms extends Component<any, any> {
     }
     return { response, host };
   }
+  handleDropdownToggle = elementIdentifier => {
+    switch (elementIdentifier) {
+      case DROPDOWN_ELEMENT.HAMBURGER: {
+        this.setState({
+          ...this.state,
+          dropdown: {
+            ...this.state.dropdown,
+            hamburger: !this.state.dropdown.hamburger,
+            lang: false
+          }
+        });
+        break;
+      }
+      case DROPDOWN_ELEMENT.LANGUAGE_SELECTOR: {
+        this.setState({
+          ...this.state,
+          dropdown: {
+            ...this.state.dropdown,
+            lang: !this.state.dropdown.lang,
+            hamburger: false
+          }
+        });
+        break;
+      }
+      default:
+        return;
+    }
+  };
 
   render() {
     const { response, host } = this.props;
@@ -91,6 +124,8 @@ export default class terms extends Component<any, any> {
           isMobile={isMobile}
           parentComponent={"TERMS"}
           logoRedirectionURL={logoRedirectionURL.url || "/"}
+          dropdown={this.state.dropdown}
+          handleDropdownToggle={this.handleDropdownToggle}
         />
         <div className="terms-container">
           <div
