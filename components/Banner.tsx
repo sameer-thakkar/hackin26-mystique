@@ -96,7 +96,13 @@ export default class Banner extends Component<any, any> {
   };
 
   render() {
-    const { bannerHeading, bannerImages, boxed, currentLanguage } = this.props;
+    const {
+      bannerHeading,
+      bannerImages,
+      boxed,
+      currentLanguage,
+      isHomepage
+    } = this.props;
     const { isClient } = this.state;
 
     return (
@@ -120,11 +126,13 @@ export default class Banner extends Component<any, any> {
         <div className="mb-captions">
           <div className="mb-caption">
             <div className="caption">
-              <h1>{bannerHeading}</h1>
+              {!isHomepage ? <h1>{bannerHeading}</h1> : null}
             </div>
-            <a className="mb-cta book-now-text" href="#select-tickets">
-              {labels[currentLanguage].BANNER_CTA}
-            </a>
+            {!isHomepage ? (
+              <a className="mb-cta book-now-text" href="#select-tickets">
+                {labels[currentLanguage].BANNER_CTA}
+              </a>
+            ) : null}
           </div>
         </div>
         {this.hasIndicators && bannerImages.length > 1 ? (

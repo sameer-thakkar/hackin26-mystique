@@ -9,8 +9,10 @@ import FreeTourPopup from "./FreeTourPopup";
 import GroupBooking from "./GroupBooking";
 import populateHead from "./common/meta";
 import CustomFooter from "./CustomFooter";
+import MicrobrandList from "./MicrobrandsList";
 import { docCookies } from "../utils/helper";
 import { DROPDOWN_ELEMENT } from "../constants";
+
 export default class Microsite extends Component<any, any> {
   constructor(props) {
     super(props);
@@ -23,7 +25,8 @@ export default class Microsite extends Component<any, any> {
       },
       popupOpen: false,
       showGroupBookingModal: false,
-      isFetched: false
+      isFetched: false,
+      isClient: false
     };
   }
 
@@ -47,99 +50,106 @@ export default class Microsite extends Component<any, any> {
   async componentDidMount() {
     const { data } = this.props.data;
     const uncategorizedTours = data.body1;
-    const [variantTgids, tourGroupTgids] = uncategorizedTours[0].items.reduce(
-      (accum, elem) => {
-        if (elem.tour_variant_id) {
-          return [
-            [...accum[0], { tgid: elem.tgid, tid: elem.tour_variant_id }],
-            [...accum[1]]
-          ];
-        } else {
-          return [[...accum[0]], [...accum[1], elem.tgid]];
-        }
-      },
-      [[], []]
-    );
-
-    const fetchTourGroupPrices = fetch(
-      `https://api.headout.com/api/v5/tour-group/list?ids[]=${tourGroupTgids}`
-    ).then(res => {
-      const HSID = res.headers.get("x-h-sid");
-      if (!docCookies.hasItem("h-sid")) {
-        const nakedDomain = window.location.host
-          .replace("stage.", "")
-          .split(".")
-          .slice(1)
-          .join(".");
-        docCookies.setItem(
-          "h-sid",
-          HSID,
-          (new Date().getTime() / 1000) * 2,
-          "/",
-          nakedDomain,
-          false
-        );
-      }
-      this.sendVariableToDataLayer({ "h-sid": HSID });
-      return res.json();
-    });
-    const fetchVariantPrices = variantTgids.map(tourVariant =>
-      fetch(
-        `https://api.headout.com/api/v5/tour-group/inventory/get/${tourVariant.tgid}`
-      ).then(res => res.json())
-    );
-    const response = await Promise.all([
-      fetchTourGroupPrices,
-      ...fetchVariantPrices
-    ]).then(res => res);
-    const tourGroup = response[0];
-    const variants = response.slice(1);
-    const currencySymbol = tourGroup.currencies.length
-      ? tourGroup.currencies[0].localSymbol
-      : variants[0].currency.localSymbol;
-    const tourGroupPrices = tourGroup.tourGroups.reduce(
-      (accum, res, index) => ({
-        ...accum,
-        [tourGroup.tourGroups[index].id]: {
-          price: res.listingPrice ? res.listingPrice.finalPrice : "",
-          scratchPrice:
-            res.listingPrice &&
-            res.listingPrice.finalPrice < res.listingPrice.originalPrice
-              ? res.listingPrice.originalPrice
-              : ""
-        }
-      }),
-      {}
-    );
-
-    const mapVariantPrices = variants.map((tourVariant: any, index) => {
-      const inv = tourVariant.inventoryList.find(
-        inventoryList => inventoryList.tourId == variantTgids[index].tid
+    const checkIfToursAvailable =
+      uncategorizedTours.length > 0 &&
+      uncategorizedTours[0].items[0].tgid != null;
+    if (checkIfToursAvailable) {
+      console.log("testt");
+      const [variantTgids, tourGroupTgids] = uncategorizedTours[0].items.reduce(
+        (accum, elem) => {
+          if (elem.tour_variant_id) {
+            return [
+              [...accum[0], { tgid: elem.tgid, tid: elem.tour_variant_id }],
+              [...accum[1]]
+            ];
+          } else {
+            return [[...accum[0]], [...accum[1], elem.tgid]];
+          }
+        },
+        [[], []]
       );
-      return {
-        tgid: variantTgids[index].tgid,
-        tid: variantTgids[index].tid,
-        price: inv ? inv.finalPriceProfile.persons[0].price : ""
-      };
-    });
 
-    const variantPrices = mapVariantPrices.reduce(
-      (accum, res, index) => ({
-        ...accum,
-        [mapVariantPrices[index].tgid]: {
-          price: res.price
+      const fetchTourGroupPrices = fetch(
+        `https://api.headout.com/api/v5/tour-group/list?ids[]=${tourGroupTgids}`
+      ).then(res => {
+        const HSID = res.headers.get("x-h-sid");
+        if (!docCookies.hasItem("h-sid")) {
+          const nakedDomain = window.location.host
+            .replace("stage.", "")
+            .split(".")
+            .slice(1)
+            .join(".");
+          docCookies.setItem(
+            "h-sid",
+            HSID,
+            (new Date().getTime() / 1000) * 2,
+            "/",
+            nakedDomain,
+            false
+          );
         }
-      }),
-      {}
-    );
+        this.sendVariableToDataLayer({ "h-sid": HSID });
+        return res.json();
+      });
 
-    const tourPrices = Object.assign(tourGroupPrices, variantPrices);
+      const fetchVariantPrices = variantTgids.map(tourVariant =>
+        fetch(
+          `https://api.headout.com/api/v5/tour-group/inventory/get/${tourVariant.tgid}`
+        ).then(res => res.json())
+      );
 
-    this.setState({
-      tourPrices: tourPrices,
-      currencySymbol: currencySymbol,
-      isFetched: true
-    });
+      const response = await Promise.all([
+        fetchTourGroupPrices,
+        ...fetchVariantPrices
+      ]).then(res => res);
+      const [tourGroup, ...variants] = response;
+      const currencySymbol = tourGroup.currencies.length
+        ? tourGroup.currencies[0].localSymbol
+        : variants[0].currency.localSymbol;
+      const tourGroupPrices = tourGroup.tourGroups.reduce(
+        (accum, res, index) => ({
+          ...accum,
+          [tourGroup.tourGroups[index].id]: {
+            price: res.listingPrice ? res.listingPrice.finalPrice : "",
+            scratchPrice: res.listingPrice ? res.listingPrice.originalPrice : ""
+          }
+        }),
+        {}
+      );
+
+      const mapVariantPrices = variants.map((tourVariant: any, index) => {
+        const inv = tourVariant.inventoryList.find(
+          inventoryList => inventoryList.tourId == variantTgids[index].tid
+        );
+        return {
+          tgid: variantTgids[index].tgid,
+          tid: variantTgids[index].tid,
+          price: inv ? inv.finalPriceProfile.persons[0].price : ""
+        };
+      });
+
+      const variantPrices = mapVariantPrices.reduce(
+        (accum, res, index) => ({
+          ...accum,
+          [mapVariantPrices[index].tgid]: {
+            price: res.price
+          }
+        }),
+        {}
+      );
+
+      const tourPrices = Object.assign(tourGroupPrices, variantPrices);
+
+      this.setState({
+        tourPrices: tourPrices,
+        currencySymbol: currencySymbol,
+        isFetched: true
+      });
+    } else {
+      this.setState({
+        isClient: true
+      });
+    }
   }
 
   handleDropdownToggle = elementIdentifier => {
@@ -176,6 +186,7 @@ export default class Microsite extends Component<any, any> {
       ? this.setState({ popupOpen: false })
       : this.setState({ popupOpen: true });
   };
+
   openGroupBookingModal = () => this.setState({ showGroupBookingModal: true });
   closeGroupBookingModal = () =>
     this.setState({ showGroupBookingModal: false });
@@ -199,10 +210,16 @@ export default class Microsite extends Component<any, any> {
     } = this.props.data.data;
     const { uid: currentDomain } = this.props.data;
     const currentLanguage = this.props.data.lang.substring(0, 2);
-    const {
-      items: uncategorizedToursList,
-      primary: uncategorizedToursHeading
-    } = this.props.data.data.body1[0];
+    const uncategorizedTours = this.props.data.data.body1;
+    const checkIfToursAvailable =
+      uncategorizedTours.length > 0 &&
+      uncategorizedTours[0].items[0].tgid != null;
+    const uncategorizedToursList = checkIfToursAvailable
+      ? uncategorizedTours[0].items
+      : [];
+    const uncategorizedToursHeading = checkIfToursAvailable
+      ? uncategorizedTours[0].primary
+      : "";
     const {
       url: uploadedFooterLogoUrl,
       alt: footerAltTextUploaded
@@ -240,7 +257,11 @@ export default class Microsite extends Component<any, any> {
       group_booking_excluded_tgids: groupBookingExcludedTgids,
       customFooter
     } = this.props.data.data;
-
+    const microbrandCards = this.props.data.data.microbrand_cards;
+    const isHomepage =
+      !uncategorizedTours.length ||
+      uncategorizedTours[0].items[0].tgid === null;
+    const { isClient } = this.state;
     let groupBookingTourTitles = [];
 
     if (showGroupBooking) {
@@ -261,6 +282,8 @@ export default class Microsite extends Component<any, any> {
           });
         });
     }
+
+    console.log(isHomepage, "isHomepage");
 
     const {
       first_publication_date: datePublished,
@@ -313,9 +336,10 @@ export default class Microsite extends Component<any, any> {
             bannerCtaText={bannerCtaText ? bannerCtaText : null}
             currentLanguage={currentLanguage ? currentLanguage : null}
             isMobile={isMobile}
+            isHomepage={isHomepage}
             boxed={true}
           />
-          {uncategorizedToursList.length > 0 && (
+          {checkIfToursAvailable ? (
             <PopulateUncategorizedProducts
               uncategorizedTours={uncategorizedToursList}
               scorpioData={this.props.scorpioData}
@@ -338,7 +362,10 @@ export default class Microsite extends Component<any, any> {
               }
               host={host}
             />
-          )}
+          ) : null}
+          {isHomepage && isClient ? (
+            <MicrobrandList microbrandCards={microbrandCards} />
+          ) : null}
           {longFormContent ? <LongForm content={longFormContent} /> : null}
           {customFooter ? (
             <footer>

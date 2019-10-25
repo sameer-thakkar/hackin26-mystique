@@ -12,6 +12,7 @@ import RichTextBox from "./RichTextBox";
 import FeatureBox from "./FeatureBox";
 import TitleLinksCard from "./TitleLinksCard";
 import { any } from "prop-types";
+import CardCarousel from "./slices/CardCaoursel";
 
 export const sliceHandler = slice => {
   switch (slice.slice_type) {
@@ -61,6 +62,13 @@ export const sliceHandler = slice => {
     case "footer_column":
       return (
         <TitleLinksCard title={slice.primary.heading} links={slice.items} />
+      );
+    case "card_carousel":
+      return (
+        <CardCarousel
+          carouselHeading={slice.primary.carousel_heading}
+          cards={slice.items}
+        />
       );
       break;
     default:

@@ -18,6 +18,7 @@ export default class TitleLinksCard extends Component<TitleLinksProps, any> {
             ))}
           </ul>
         </div>
+
         <style jsx>
           {`
             .links-card {
