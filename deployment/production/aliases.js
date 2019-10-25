@@ -64,5 +64,10 @@ module.exports = [
   "casa-batllo.tickets-barcelona.org",
   "www.gondola-rides-venice.com",
   "bonfire-night.tickets-london.co.uk",
+  "www.tickets-london.co.uk",
+  "tower-bridge.tickets-london.co.uk",
+  "st-pauls-cathedral.tickets-london.co.uk",
+  "view-from-shard.tickets-london.co.uk",
+  "up-at-the-o2.tickets-london.co.uk",
   "microbrands.headout.com"
 ];
