@@ -131,7 +131,7 @@ export default class Microsite extends Component<any, any> {
         (accum, res, index) => ({
           ...accum,
           [mapVariantPrices[index].tgid]: {
-            price: res.price
+            price: res.price || ""
           }
         }),
         {}

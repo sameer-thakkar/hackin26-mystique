@@ -129,7 +129,8 @@ export default class Product extends Component<any, any> {
             </div>
             <div className="product-header-right">
               <div className="price-container">
-                {showScratchPrice ? (
+                {showScratchPrice &&
+                tourPrices[tgid].scratchPrice > tourPrices[tgid].price ? (
                   <div className="product-scratch-price">
                     {tourPrices[tgid].scratchPrice
                       ? `${currencySymbol}${tourPrices[tgid].scratchPrice}`
