@@ -54,7 +54,6 @@ export default class Microsite extends Component<any, any> {
       uncategorizedTours.length > 0 &&
       uncategorizedTours[0].items[0].tgid != null;
     if (checkIfToursAvailable) {
-      console.log("testt");
       const [variantTgids, tourGroupTgids] = uncategorizedTours[0].items.reduce(
         (accum, elem) => {
           if (elem.tour_variant_id) {
@@ -282,8 +281,6 @@ export default class Microsite extends Component<any, any> {
           });
         });
     }
-
-    console.log(isHomepage, "isHomepage");
 
     const {
       first_publication_date: datePublished,

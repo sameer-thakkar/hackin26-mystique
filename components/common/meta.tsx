@@ -73,7 +73,6 @@ export default data => {
     image,
     nofollow,
     noindex,
-    gtm_id: gtmID,
     canonical_link: canonicalLink,
     other_meta_tags: otherMetaTags = [],
     header_scripts: headerScripts = [],
@@ -152,35 +151,32 @@ export default data => {
         }}
       />
 
-      {gtmID ? (
-        <React.Fragment>
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `//<![CDATA[
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `//<![CDATA[
             var dataLayer = dataLayer || [];
           //]]>
           `
-            }}
-          ></script>
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `//<![CDATA[
+        }}
+      ></script>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `//<![CDATA[
             var dataLayer_content = [];
             dataLayer.push( dataLayer_content );//]]>`
-            }}
-          ></script>
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `//<![CDATA[
+        }}
+      ></script>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `//<![CDATA[
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             '//www.googletagmanager.com/gtm.'+'js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','${gtmID}');//]]>`
-            }}
-          ></script>
-        </React.Fragment>
-      ) : null}
+            })(window,document,'script','dataLayer','GTM-TR8SRJG');//]]>`
+        }}
+      ></script>
+
       {amplitude_key ? (
         <script
           dangerouslySetInnerHTML={{
@@ -207,7 +203,7 @@ export default data => {
             e=(!e||e.length===0?"$default_instance":e).toLowerCase()
             ;if(!n._iq.hasOwnProperty(e)){n._iq[e]={_q:[]};v(n._iq[e])}return n._iq[e]}
             ;e.amplitude=n})(window,document);
-            
+
             amplitude.getInstance().init('${amplitude_key}');`
           }}
         ></script>
