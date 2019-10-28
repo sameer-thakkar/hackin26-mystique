@@ -93,7 +93,6 @@ export default class Product extends Component<any, any> {
 
     const isHighlightsFromPrismic =
       isLengthyArray(highlights) && highlights.filter(item => item.text).length;
-
     return (
       <div>
         <div className="product">
@@ -110,6 +109,7 @@ export default class Product extends Component<any, any> {
                 })}
               </div>
               {hasOffer &&
+                offerId &&
                 productOffer.map((offer, index) => {
                   if (offer.id === offerId) {
                     return (
@@ -163,7 +163,7 @@ export default class Product extends Component<any, any> {
               </a>
             </div>
           </div>
-          {hasOffer && isMobile && (
+          {hasOffer && offerId && isMobile && (
             <div onClick={this.handlePopup} className="product-offer-mobile">
               <div className="product-offer-mobile-left">
                 <div className="gift-image">
