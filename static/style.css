@@ -1626,6 +1626,7 @@ body.popupv2-active {
     grid-template-rows: 220px 1fr;
     align-items: start;
     width: 100vw;
+    align-self: start;
   }
   .popupv2-wrap .contents {
     display: grid;
@@ -1665,6 +1666,7 @@ body.popupv2-active {
 
   .carousel img {
     width: 100%;
+    height: 100%;
   }
 
   .sub-title {
@@ -2591,7 +2593,8 @@ h3 {
   padding-left: 20px;
 }
 
-.subpage-container .slice-block ul li {
+.subpage-container .slice-block ul li,
+.subpage-container .slice-block ol li {
   font-family: Avenir;
   font-size: 18px;
   color: #545454;
