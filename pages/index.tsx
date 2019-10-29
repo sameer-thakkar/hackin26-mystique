@@ -420,7 +420,8 @@ export default class Page extends React.Component<any, any> {
       ContentType,
       statusCode,
       host,
-      isDev
+      isDev,
+      pathname
     } = this.props;
     if (statusCode) {
       return <ErrorPage statusCode={statusCode} />;
@@ -434,6 +435,7 @@ export default class Page extends React.Component<any, any> {
             scorpioData={scorpioData}
             offerData={CMSContent.offerData}
             host={host}
+            pathname={pathname}
             isDev={isDev}
           />
         );

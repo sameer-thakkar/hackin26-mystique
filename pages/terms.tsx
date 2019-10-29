@@ -88,7 +88,7 @@ export default class terms extends Component<any, any> {
       customFooter
     } = response.data;
 
-    const { lang: currentLanguage, uid: currentDomain } = response;
+    const { lang: currentLanguage, uid } = response;
     const {
       url: uploadedFooterLogoUrl,
       alt: footerAltTextUploaded
@@ -102,7 +102,7 @@ export default class terms extends Component<any, any> {
 
     let url = host || window.location.host;
     const isDev = url.includes("localhost");
-    const currentHost = !isDev ? url : parse(currentDomain, true).pathname;
+    const currentHost = !isDev ? url : parse(uid, true).pathname;
     const micrositeUrl = currentHost.includes("stage")
       ? currentHost.replace("stage.", "")
       : currentHost;
@@ -120,7 +120,7 @@ export default class terms extends Component<any, any> {
           logoAltText={altText || logoAltText}
           availableLanguages={availableLanguages}
           selectedLanguage={currentLanguage}
-          currentDomain={currentDomain}
+          uid={uid}
           isMobile={isMobile}
           parentComponent={"TERMS"}
           logoRedirectionURL={logoRedirectionURL.url || "/"}

@@ -207,7 +207,7 @@ export default class Microsite extends Component<any, any> {
       cta_text: bannerCtaText,
       page_url: pageUrl
     } = this.props.data.data;
-    const { uid: currentDomain } = this.props.data;
+    const { uid } = this.props.data;
     const currentLanguage = this.props.data.lang.substring(0, 2);
     const uncategorizedTours = this.props.data.data.body1;
     const checkIfToursAvailable =
@@ -287,7 +287,8 @@ export default class Microsite extends Component<any, any> {
       last_publication_date: dateModified,
       lang,
       host,
-      isDev
+      isDev,
+      pathname
     } = this.props;
 
     return (
@@ -306,7 +307,8 @@ export default class Microsite extends Component<any, any> {
             datePublished,
             dateModified,
             lang,
-            isDev
+            isDev,
+            currentLanguage
           })}
           <Header
             languages={languages ? languages : null}
@@ -315,7 +317,7 @@ export default class Microsite extends Component<any, any> {
             currentLanguage={currentLanguage ? currentLanguage : null}
             logoAltText={altText || logoAltText}
             availableLanguages={availableLanguages}
-            currentDomain={currentDomain}
+            uid={uid}
             dropdown={this.state.dropdown}
             handleDropdownToggle={this.handleDropdownToggle}
             openGroupBookingModal={this.openGroupBookingModal}
@@ -343,7 +345,7 @@ export default class Microsite extends Component<any, any> {
               uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
               tourPrices={this.state.tourPrices}
               currencySymbol={this.state.currencySymbol}
-              currentDomain={currentDomain}
+              uid={uid}
               currentLanguage={currentLanguage}
               bookNowText={bookNowText}
               readMoreText={readMoreText}

@@ -82,7 +82,8 @@ export default data => {
     localization: languages = [],
     logo,
     page_url: pageUrl,
-    isDev
+    isDev,
+    currentLanguage
   } = data;
   const amplitude_key = isDev
     ? process.env.AMPLITUDE_DEV
@@ -219,15 +220,34 @@ export default data => {
     .map((item, index) => (
       <script key={index} dangerouslySetInnerHTML={{ __html: item }} />
     ));
+
+  const { host, pathname } = parse(pageUrl);
+
+  const pathnameWithTrailingSlash = pathname.endsWith("/")
+    ? pathname
+    : `${pathname}/`;
+
+  const getPathName = () => {
+    if (pathname.startsWith(`/${currentLanguage}`)) {
+      // For language pages
+      // For language pages of subpages MBs
+      return pathnameWithTrailingSlash.replace(`/${currentLanguage}/`, "");
+    }
+    // For '/' and subpages like /home/
+    return pathnameWithTrailingSlash.replace("/", "");
+  };
+
+  const getHref = langCode => {
+    return `https://${host}/${
+      langCode === "en" ? "" : `${langCode}/`
+    }${getPathName()}`;
+  };
+
   const hrefLangs = languages.map(({ language }) => {
     let langCode = language.split("-")[1].toLowerCase();
 
     return (
-      <link
-        rel="alternate"
-        hrefLang={langCode}
-        href={`/${langCode === "en" ? "" : `${langCode}/`}`}
-      />
+      <link rel="alternate" hrefLang={langCode} href={getHref(langCode)} />
     );
   });
   return (

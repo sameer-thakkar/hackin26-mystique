@@ -84,7 +84,7 @@ export default class LanguageSelector extends Component<any, any> {
   };
 
   render() {
-    const { currentLanguage, dropdown, host, currentDomain } = this.props;
+    const { currentLanguage, dropdown, host, uid } = this.props;
     const { pathname } = this.state;
     const slug = pathname
       .replace("en/", "")
@@ -127,7 +127,7 @@ export default class LanguageSelector extends Component<any, any> {
                       currentLanguage == language ? "selected-tab" : ""
                     }
                     key={index}
-                    href={`/?mystique_uid=${currentDomain}&lang=${flagsUrl[language].paramLang}`}
+                    href={`/?mystique_uid=${uid}&lang=${flagsUrl[language].paramLang}`}
                   >
                     <div className="language">
                       <div className="language-flag">

@@ -62,7 +62,7 @@ export default class Product extends Component<any, any> {
       highlights,
       tgid,
       tourPrices,
-      currentDomain,
+      uid,
       currencySymbol,
       currentLanguage,
       hasOffer,
@@ -82,7 +82,7 @@ export default class Product extends Component<any, any> {
     const descriptorsList = descriptorsCsv ? descriptorsCsv.split(",") : [];
     let url = host || window.location.host;
     const isDev = url.includes("localhost");
-    const currentHost = !isDev ? url : parse(currentDomain, true).pathname;
+    const currentHost = !isDev ? url : parse(uid, true).pathname;
     const hostName = currentHost.includes("stage")
       ? currentHost.replace("stage.", "")
       : currentHost;

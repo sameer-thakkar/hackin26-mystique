@@ -25,7 +25,7 @@ export default class Header extends Component<any, any> {
       logoUrl,
       logoAltText,
       availableLanguages,
-      currentDomain,
+      uid,
       dropdown,
       handleDropdownToggle,
       isMobile,
@@ -88,7 +88,7 @@ export default class Header extends Component<any, any> {
                 languages={languages}
                 availableLanguages={availableLanguages}
                 currentLanguage={currentLanguage}
-                currentDomain={currentDomain}
+                uid={uid}
                 dropdown={dropdown}
                 handleDropdownToggle={handleDropdownToggle}
                 host={host}
