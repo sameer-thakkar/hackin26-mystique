@@ -30,6 +30,10 @@ export default class Microsite extends Component<any, any> {
     };
   }
 
+  isMobile = () => {
+    return document.documentElement.clientWidth < 768;
+  };
+
   trackEvent = ({ eventName, ...labelProps }) => {
     if (window && (window as any).dataLayer) {
       const allProps = {
@@ -191,10 +195,6 @@ export default class Microsite extends Component<any, any> {
     this.setState({ showGroupBookingModal: false });
 
   render() {
-    const isMobile = () => {
-      return document.documentElement.clientWidth < 768;
-    };
-
     const { url: logoUrl } = this.props.data.data.link_to_logo_file;
     const { url: uploadedLogoUrl, alt: altText } = this.props.data.data.logo;
     const { logo_alt_text: logoAltText } = this.props.data.data;
@@ -321,7 +321,7 @@ export default class Microsite extends Component<any, any> {
             dropdown={this.state.dropdown}
             handleDropdownToggle={this.handleDropdownToggle}
             openGroupBookingModal={this.openGroupBookingModal}
-            isMobile={isMobile}
+            isMobile={this.isMobile}
             hasLanguageSelector={hasLanguageSelector}
             showGroupBooking={showGroupBooking}
             enableBuyTickets={enableBuyTickets}
@@ -334,7 +334,7 @@ export default class Microsite extends Component<any, any> {
             bannerHeading={bannerHeading ? bannerHeading : null}
             bannerCtaText={bannerCtaText ? bannerCtaText : null}
             currentLanguage={currentLanguage ? currentLanguage : null}
-            isMobile={isMobile}
+            isMobile={this.isMobile}
             isHomepage={isHomepage}
             boxed={true}
           />
@@ -355,7 +355,7 @@ export default class Microsite extends Component<any, any> {
               isFetched={this.state.isFetched}
               togglePopup={this.togglePopup}
               pageUrl={pageUrl}
-              isMobile={isMobile}
+              isMobile={this.isMobile}
               trackEvent={({ eventName, ...labelProps }) =>
                 this.trackEvent({ eventName, ...labelProps })
               }
@@ -377,7 +377,7 @@ export default class Microsite extends Component<any, any> {
               disclaimer={disclaimer ? disclaimer : null}
               footerAltText={footerAltText || footerAltTextUploaded || null}
               hasTermsPage={hasTermsPage}
-              isMobile={isMobile}
+              isMobile={this.isMobile}
             />
           )}
           {hasOffer && (
@@ -386,7 +386,7 @@ export default class Microsite extends Component<any, any> {
               togglePopup={this.togglePopup}
               productOffer={offerPopup}
               scorpioData={this.props.scorpioData}
-              isMobile={isMobile}
+              isMobile={this.isMobile}
               trackEvent={({ eventName, ...labelProps }) =>
                 this.trackEvent({ eventName, ...labelProps })
               }

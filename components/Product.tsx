@@ -76,7 +76,6 @@ export default class Product extends Component<any, any> {
       host,
       isScratchPriceEnabled
     } = this.props;
-
     const descriptorsCsv = descriptors || scorpioData.descriptors;
     const cardTitle = title || scorpioData.title;
     const descriptorsList = descriptorsCsv ? descriptorsCsv.split(",") : [];
@@ -146,7 +145,7 @@ export default class Product extends Component<any, any> {
                 ) : null}
               </div>
               <a
-                target="_blank"
+                target={isFetched && isMobile() ? null : "_blank"}
                 href={`http://book.${bookingUrl}${
                   currentLanguage === "en" ? "" : `/${currentLanguage}`
                 }/book/${tgid}`}
