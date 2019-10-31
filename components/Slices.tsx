@@ -1,17 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import ImageGrid from "./ImageGrid";
 import ImageTextGrid from "./ImageTextGrid";
 import InternalContentCard from "./InternalContentCard";
 import Tabs from "./Tabs";
 import { RichText } from "prismic-reactjs";
 import { shortCodeSerializer } from "../utils/shortCodes";
-import Banner from "./Banner";
-import { IS_MOBILE } from "../utils/helper";
 import FWActionCard from "./FWActionCard";
 import RichTextBox from "./RichTextBox";
 import FeatureBox from "./FeatureBox";
 import TitleLinksCard from "./TitleLinksCard";
-import { any } from "prop-types";
 import CardCarousel from "./slices/CardCaoursel";
 
 export const sliceHandler = slice => {

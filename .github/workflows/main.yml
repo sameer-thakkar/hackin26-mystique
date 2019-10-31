@@ -1,9 +1,6 @@
 name: CI
 
-on:
-  pull_request:
-    branches:
-      - master
+on: ["deployment"]
 
 jobs:
   build:
@@ -11,13 +8,22 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
+
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
           node-version: "10.x"
+
+      # - name: "Deployment pending"
+      #   uses: "deliverybot/deployment-status@master"
+      #   with:
+      #     state: "pending"
+      #     token: "${{ github.token }}"
+
       - name: Use Yarn
         uses: "borales/actions-yarn@v2.0.0"
-      - name: rollout to stage
+
+      - name: rollout to ${{ github.event.deployment.environment }}
         env:
           ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
           GIT_BRANCH: ${{ github.head_ref }}
@@ -27,8 +33,21 @@ jobs:
           sudo npm i -g now@16.3.1
           sudo yarn
           now --version
-          node ./deployment/stage
+          node ./deployment/${{ github.event.deployment.environment }}
           find now.*.json | xargs -n1 -I {} /bin/bash -c 'now --token ${ZEIT_TOKEN} -A {} --scope headout --prod -e GIT_BRANCH=${GIT_BRANCH} -e GIT_ACTOR=${GIT_ACTOR}'
+
+      # - name: "Deployment success"
+      #   if: success()
+      #   uses: "deliverybot/deployment-status@master"
+      #   with:
+      #     state: "success"
+      #     token: "${{ github.token }}"
+      # - name: "Deployment failure"
+      #   if: failure()
+      #   uses: "deliverybot/deployment-status@master"
+      #   with:
+      #     state: "failure"
+      #     token: "${{ github.token }}"
 
   test:
     runs-on: ubuntu-latest
@@ -45,4 +64,4 @@ jobs:
       - name: run tests
         run: |
           yarn
-          node ./tests/stage.js
+          node ./tests/${{ github.event.deployment.environment }}.js

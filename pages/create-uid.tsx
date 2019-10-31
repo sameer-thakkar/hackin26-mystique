@@ -1,10 +1,7 @@
 import React from "react";
 import Head from "next/head";
-import parse from "url-parse";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-
-const withoutTrailingSlash = url =>
-  url.charAt(url.length - 1) === "/" ? url.substr(0, url.length - 2) : url;
+import { getUID } from "../utils/helper";
 
 export default class CreateUID extends React.Component<any, any> {
   constructor(props) {
@@ -22,12 +19,7 @@ export default class CreateUID extends React.Component<any, any> {
     if (text.indexOf("http") !== 0) {
       text = `https://${text}`;
     }
-    const { hostname, pathname } = parse(text, true);
-    const uid = `${hostname}${withoutTrailingSlash(pathname).replace(
-      /\//g,
-      "."
-    )}`;
-    this.setState({ uid, copied: false });
+    this.setState({ uid: getUID(text), copied: false });
   }
 
   render() {

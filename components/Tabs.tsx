@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import classNames from "classnames";
+import LinkResolver from "./LinkResolver";
 
 export default class Tabs extends Component<any, any> {
   constructor(props) {
@@ -24,7 +25,7 @@ export default class Tabs extends Component<any, any> {
         })}
       >
         {tabs.map((tab, index) => (
-          <a key={index} href={tab.tab_link.url}>
+          <LinkResolver key={index} url={tab.tab_link.url}>
             <div
               className={classNames("navigation-tab", {
                 "selected-nav-tab": tab.is_selected_link === "Yes"
@@ -32,7 +33,7 @@ export default class Tabs extends Component<any, any> {
             >
               {tab.title}
             </div>
-          </a>
+          </LinkResolver>
         ))}
       </div>
     );

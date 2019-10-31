@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import classNames from "classnames";
-import { IS_MOBILE } from "./../utils/helper";
+import LinkResolver from "./LinkResolver";
 
 export default class HeaderLinks extends Component<any, any> {
   render() {
@@ -22,9 +22,9 @@ export default class HeaderLinks extends Component<any, any> {
       >
         <div className="header-links">
           {headerLinks.map((link, index) => (
-            <a target="_blank" href={link.link_url.url} key={index}>
+            <LinkResolver target="_blank" url={link.link_url.url} key={index}>
               {link.link_heading}
-            </a>
+            </LinkResolver>
           ))}
           {parentComponent !== "TERMS" && showGroupBooking && (
             <a onClick={this.props.openGroupBookingModal}>Group Tickets</a>

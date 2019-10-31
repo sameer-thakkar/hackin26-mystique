@@ -1,0 +1,7 @@
+production:
+  environment: production
+  production_environment: true
+
+staging:
+  environment: stage
+  production_environment: false

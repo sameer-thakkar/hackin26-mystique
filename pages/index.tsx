@@ -6,13 +6,10 @@ import Router from "next/router";
 import fetch from "isomorphic-unfetch";
 import { Client } from "../prismic-config";
 import { CONTENT_TYPES } from "../constants";
+import { withoutTrailingSlash } from "../utils/helper";
+import EnvironmentContext from "../contexts/environmentContext";
 
 const getPropsFromReq = ({ host, pathname }) => {
-  const pathnameWithoutTrailingSlash = pathname =>
-    pathname.lastIndexOf("/") === pathname.length - 1
-      ? pathname.substr(0, pathname.length - 1)
-      : pathname;
-
   const languages = ["en", "es", "it", "fr", "pt", "de", "nl"];
   const langMap = {
     en: "en-us",
@@ -24,7 +21,7 @@ const getPropsFromReq = ({ host, pathname }) => {
     de: "de-de"
   };
 
-  const pathnameSlugs = pathnameWithoutTrailingSlash(pathname)
+  const pathnameSlugs = withoutTrailingSlash(pathname)
     .split("/")
     .filter(item => item);
 
@@ -37,9 +34,7 @@ const getPropsFromReq = ({ host, pathname }) => {
     requestedLang = "en";
   }
 
-  const uid = `${pathnameWithoutTrailingSlash(
-    `${host}/${pathnameSlugs.join("/")}`
-  )}`
+  const uid = `${withoutTrailingSlash(`${host}/${pathnameSlugs.join("/")}`)}`
     .replace("stage.", "")
     .replace(/\//g, ".");
 
@@ -88,7 +83,13 @@ export default class Page extends React.Component<any, any> {
         res.setHeader("x-git-branch", process.env.GIT_BRANCH);
         res.setHeader("x-git-actor", process.env.GIT_ACTOR);
       }
-      return props;
+
+      return {
+        ...props,
+        windowUrl: req
+          ? `${req.headers["x-forwarded-proto"]}://${req.headers["x-forwarded-host"]}${req.url}`
+          : window.location.href
+      };
     } catch (e) {
       console.log(e);
       return {};
@@ -347,7 +348,8 @@ export default class Page extends React.Component<any, any> {
           CMSContent,
           ContentType,
           uid,
-          lang
+          lang,
+          isDev
         };
       }
 
@@ -421,15 +423,18 @@ export default class Page extends React.Component<any, any> {
       statusCode,
       host,
       isDev,
+      windowUrl,
       pathname
     } = this.props;
     if (statusCode) {
       return <ErrorPage statusCode={statusCode} />;
     }
 
+    let Component;
+
     switch (ContentType) {
       case CONTENT_TYPES.MICROSITE:
-        return (
+        Component = (
           <Microsite
             data={CMSContent.data}
             scorpioData={scorpioData}
@@ -439,10 +444,24 @@ export default class Page extends React.Component<any, any> {
             isDev={isDev}
           />
         );
+        break;
       case CONTENT_TYPES.CONTENT_PAGE:
-        return <SubPage {...CMSContent} isDev={isDev} />;
+        Component = <SubPage {...CMSContent} isDev={isDev} />;
+        break;
       default:
-        return <ErrorPage statusCode={500} />;
+        Component = <ErrorPage statusCode={500} />;
+        break;
     }
+
+    return (
+      <EnvironmentContext.Provider
+        value={{
+          isDev,
+          windowUrl
+        }}
+      >
+        {Component}
+      </EnvironmentContext.Provider>
+    );
   }
 }

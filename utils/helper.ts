@@ -1,4 +1,8 @@
 import { parsePhoneNumberFromString as parseMobile } from "libphonenumber-js/mobile";
+import parse from "url-parse";
+
+export const withoutTrailingSlash = url =>
+  url.charAt(url.length - 1) === "/" ? url.substr(0, url.length - 1) : url;
 
 export const isMobileDevice = () => {
   return document.documentElement.clientWidth < 768;
@@ -156,4 +160,13 @@ export const docCookies = {
     }
     return aKeys;
   }
+};
+
+export const getUID = url => {
+  const { hostname, pathname } = parse(url, true);
+  const uid = `${hostname}${withoutTrailingSlash(pathname).replace(
+    /\//g,
+    "."
+  )}`;
+  return uid;
 };

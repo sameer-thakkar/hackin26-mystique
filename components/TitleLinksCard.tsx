@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import LinkResolver from "./LinkResolver";
 type TitleLinksProps = {
   title: string;
   links: Array<any>;
 };
+
 export default class TitleLinksCard extends Component<TitleLinksProps, any> {
   render() {
     const { links, title } = this.props;
@@ -13,7 +15,9 @@ export default class TitleLinksCard extends Component<TitleLinksProps, any> {
           <ul className="link-list">
             {links.map((link, index) => (
               <li key={index}>
-                <a href={link.link_type.url}>{link.link_text}</a>
+                <LinkResolver className="link-item" url={link.link_type.url}>
+                  {link.link_text}
+                </LinkResolver>
               </li>
             ))}
           </ul>
@@ -45,7 +49,7 @@ export default class TitleLinksCard extends Component<TitleLinksProps, any> {
               padding: 0;
               list-style: none;
             }
-            .link-list a {
+            .link-list :global(.link-item) {
               color: white;
               text-decoration: none;
               font-size: 16px;

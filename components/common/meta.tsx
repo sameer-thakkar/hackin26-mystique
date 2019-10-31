@@ -2,9 +2,7 @@ import React from "react";
 import ReactHtmlParser from "react-html-parser";
 import Head from "next/head";
 import parse from "url-parse";
-
-const withoutTrailingSlash = url =>
-  url.charAt(url.length - 1) === "/" ? url.substr(0, url.length - 1) : url;
+import { withoutTrailingSlash } from "../../utils/helper";
 
 const withTrailingSlash = url =>
   url.charAt(url.length - 1) !== "/" ? `${url}/` : url;

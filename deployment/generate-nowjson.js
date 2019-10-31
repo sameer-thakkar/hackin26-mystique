@@ -1,5 +1,5 @@
 const fs = require("fs");
-const BATCH_SIZE = 64;
+const BATCH_SIZE = 32;
 
 module.exports = env => {
   const aliases = require(`${__dirname}/${env}/aliases.js`);
