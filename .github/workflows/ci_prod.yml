@@ -1,9 +1,9 @@
-name: CI
+name: NowCI (prod)
 
 on: ["deployment"]
 
 jobs:
-  build:
+  ci_prod:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,11 +14,11 @@ jobs:
         with:
           node-version: "10.x"
 
-      # - name: "Deployment pending"
-      #   uses: "deliverybot/deployment-status@master"
-      #   with:
-      #     state: "pending"
-      #     token: "${{ github.token }}"
+      - name: "Deployment pending"
+        uses: "deliverybot/deployment-status@master"
+        with:
+          state: "pending"
+          token: "${{ github.token }}"
 
       - name: Use Yarn
         uses: "borales/actions-yarn@v2.0.0"
@@ -30,28 +30,29 @@ jobs:
           GIT_ACTOR: ${{ github.actor }}
         run: |
           sudo rm /usr/local/bin/now
-          sudo npm i -g now@16.3.1
+          sudo npm i -g now@16.4.4
           sudo yarn
           now --version
           node ./deployment/${{ github.event.deployment.environment }}
-          find now.*.json | xargs -n1 -I {} /bin/bash -c 'now --token ${ZEIT_TOKEN} -A {} --scope headout --prod -e GIT_BRANCH=${GIT_BRANCH} -e GIT_ACTOR=${GIT_ACTOR}'
+          find now.*.json | xargs -n1 -I {} /bin/bash -c 'now --token ${ZEIT_TOKEN} -A {} --scope headout --prod -e GIT_BRANCH=${GIT_BRANCH} -e GIT_ACTOR=${GIT_ACTOR} --no-clipboard --debug'
 
-      # - name: "Deployment success"
-      #   if: success()
-      #   uses: "deliverybot/deployment-status@master"
-      #   with:
-      #     state: "success"
-      #     token: "${{ github.token }}"
-      # - name: "Deployment failure"
-      #   if: failure()
-      #   uses: "deliverybot/deployment-status@master"
-      #   with:
-      #     state: "failure"
-      #     token: "${{ github.token }}"
+      - name: "Deployment success"
+        if: success()
+        uses: "deliverybot/deployment-status@master"
+        with:
+          state: "success"
+          token: "${{ github.token }}"
 
-  test:
+      - name: "Deployment failure"
+        if: failure()
+        uses: "deliverybot/deployment-status@master"
+        with:
+          state: "failure"
+          token: "${{ github.token }}"
+
+  ci_prod_test:
     runs-on: ubuntu-latest
-    needs: build
+    needs: ci_prod
 
     steps:
       - uses: actions/checkout@v1
