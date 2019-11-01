@@ -65,6 +65,7 @@ export default class LanguageSelector extends Component<any, any> {
     const prismicLanguages = languages.map(prismicLang =>
       prismicLang.language.split("-")[1].toLowerCase()
     );
+
     const publishedLanguages = availableLanguages.map(
       publishLang => publishLang.lang.split("-")[0]
     );

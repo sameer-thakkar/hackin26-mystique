@@ -38,6 +38,7 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
             <Product
               key={index}
               tgid={tour.tgid}
+              earliestAvailability={tour.earliestAvailability}
               tid={tour.tour_variant_id}
               title={tour.tour_title_override}
               descriptors={tour.marketing_highlights_override}

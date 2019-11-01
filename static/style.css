@@ -344,6 +344,22 @@ body {
   text-align: left;
   color: #545454;
 }
+.earliest-availability {
+  font-size: 0.875em;
+  font-family: Graphik;
+  margin-top: -15px;
+  margin-bottom: 10px;
+  line-height: 1.24;
+}
+.earliest-availability span {
+  color: #ec1943;
+  font-weight: 500;
+}
+.earliest-availability.left {
+  margin: 0;
+  padding-top: 15px;
+  position: relative;
+}
 .limited-offer-text {
   font-weight: 500;
 }
@@ -448,6 +464,9 @@ ul {
     position: relative;
     padding-bottom: 4em;
   }
+  .product.product__with-date {
+    padding-bottom: 5em;
+  }
   .product-header {
     grid-template-columns: 13.4fr 5.1fr;
     padding: 1.2em;
@@ -458,7 +477,7 @@ ul {
   }
   .product-header-left {
     padding: 0px;
-    display: contents;
+    /* display: contents; */
   }
   .product-header-right {
     border: none;
@@ -474,6 +493,16 @@ ul {
     font-size: 1.8em;
     text-align: end;
   }
+
+  .earliest-availability.bottom {
+    margin-bottom: 0;
+    text-align: center;
+    left: 0;
+    right: 0;
+    bottom: 1em;
+    position: absolute;
+  }
+
   .product-offer-mobile {
     display: flex;
     justify-content: space-between;
@@ -564,6 +593,11 @@ ul {
     text-align: left;
     color: #ffffff;
     text-transform: uppercase;
+  }
+
+  .book-now-cta.book-now-cta__with-date {
+    margin-bottom: 0;
+    bottom: 2.4em;
   }
   .product-tags {
     font-family: Graphik;

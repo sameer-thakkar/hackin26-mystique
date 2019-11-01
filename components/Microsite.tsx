@@ -26,6 +26,7 @@ export default class Microsite extends Component<any, any> {
       popupOpen: false,
       showGroupBookingModal: false,
       isFetched: false,
+      earliestAvailabilityQueue: [],
       isClient: false
     };
   }
@@ -143,10 +144,30 @@ export default class Microsite extends Component<any, any> {
 
       const tourPrices = Object.assign(tourGroupPrices, variantPrices);
 
+      const {
+        enable_earliest_availability: enableEarliestAvailability
+      } = this.props.data.data;
+      const showEarliestAvailability = enableEarliestAvailability === "Yes";
+
+      if (showEarliestAvailability) {
+        const requestQueue = uncategorizedTours[0].items.map(tour =>
+          fetch(
+            `https://api.headout.com/api/v5/tour-group/inventory/get/${tour.tgid}`
+          )
+            .then(res => res.json())
+            .then(response => response)
+        );
+        const response = await Promise.all(requestQueue).then(res =>
+          res.map(tour => (tour as any).inventoryList[0].startDate)
+        );
+        this.setState({ earliestAvailabilityQueue: response });
+      }
+
       this.setState({
         tourPrices: tourPrices,
         currencySymbol: currencySymbol,
-        isFetched: true
+        isFetched: true,
+        showEarliestAvailability
       });
     } else {
       this.setState({
@@ -241,6 +262,7 @@ export default class Microsite extends Component<any, any> {
       has_terms_page: hasTermsPage,
       enable_localization_menu: hasLanguageSelector,
       enable_group_booking: enableGroupBooking,
+      enable_earliest_availability: enableEarliestAvailability,
       enable_buy_tickets_shortcut: enableBuyTickets,
       logo_redirection_url: logoRedirectionURL,
       blackout_start_date: blackoutStartDate,
@@ -260,7 +282,7 @@ export default class Microsite extends Component<any, any> {
     const isHomepage =
       !uncategorizedTours.length ||
       uncategorizedTours[0].items[0].tgid === null;
-    const { isClient } = this.state;
+    const { isClient, showEarliestAvailability } = this.state;
     let groupBookingTourTitles = [];
 
     if (showGroupBooking) {
@@ -282,6 +304,12 @@ export default class Microsite extends Component<any, any> {
         });
     }
 
+    const uncategorizedToursData = showEarliestAvailability
+      ? uncategorizedToursList.map((tour, index) => ({
+          ...tour,
+          earliestAvailability: this.state.earliestAvailabilityQueue[index]
+        }))
+      : uncategorizedToursList;
     const {
       first_publication_date: datePublished,
       last_publication_date: dateModified,
@@ -340,7 +368,7 @@ export default class Microsite extends Component<any, any> {
           />
           {checkIfToursAvailable ? (
             <PopulateUncategorizedProducts
-              uncategorizedTours={uncategorizedToursList}
+              uncategorizedTours={uncategorizedToursData}
               scorpioData={this.props.scorpioData}
               uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
               tourPrices={this.state.tourPrices}

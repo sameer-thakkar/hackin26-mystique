@@ -104,7 +104,6 @@ export default class Banner extends Component<any, any> {
       isHomepage
     } = this.props;
     const { isClient } = this.state;
-
     return (
       <div className={classNames("mb-carousel", { boxed: boxed })}>
         {bannerImages.map((banner, index) => {

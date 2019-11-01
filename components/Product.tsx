@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { shortCodeSerializer } from "../utils/shortCodes";
 import { RichText } from "prismic-reactjs";
 import ReactMarkdown from "react-markdown";
+import moment from "moment";
 import parse from "url-parse";
+import classNames from "classnames";
 import * as labels from "../static/localization/labels";
 
 const isLengthyArray = item => Array.isArray(item) && item.length;
@@ -54,6 +56,17 @@ export default class Product extends Component<any, any> {
       tgid: this.props.tgid
     });
   };
+  getDate = (date, currentLanguage) => {
+    const today = moment().format("YYYY-MM-DD");
+    const tomorrow = moment()
+      .add(1, "days")
+      .format("YYYY-MM-DD");
+    if (date === today) return labels[currentLanguage].TODAY;
+    if (date === tomorrow) return labels[currentLanguage].TOMORROW;
+    return moment(date)
+      .locale(currentLanguage)
+      .format("MMM Do");
+  };
 
   render() {
     const {
@@ -74,8 +87,10 @@ export default class Product extends Component<any, any> {
       scorpioData,
       pageUrl,
       host,
+      earliestAvailability,
       isScratchPriceEnabled
     } = this.props;
+
     const descriptorsCsv = descriptors || scorpioData.descriptors;
     const cardTitle = title || scorpioData.title;
     const descriptorsList = descriptorsCsv ? descriptorsCsv.split(",") : [];
@@ -92,9 +107,14 @@ export default class Product extends Component<any, any> {
 
     const isHighlightsFromPrismic =
       isLengthyArray(highlights) && highlights.filter(item => item.text).length;
+
     return (
       <div>
-        <div className="product">
+        <div
+          className={classNames("product", {
+            "product__with-date": earliestAvailability
+          })}
+        >
           <div className="product-header">
             <div className="product-header-left">
               <h2 className="product-title">{cardTitle}</h2>
@@ -125,6 +145,14 @@ export default class Product extends Component<any, any> {
                     );
                   }
                 })}
+              {/* {earliestAvailability && (
+                <div className="earliest-availability left">
+                  {`${labels[currentLanguage].NEXT_AVAILABLE}: `}
+                  <span>
+                    {this.getDate(earliestAvailability, currentLanguage)}
+                  </span>
+                </div>
+              )} */}
             </div>
             <div className="product-header-right">
               <div className="price-container">
@@ -144,6 +172,14 @@ export default class Product extends Component<any, any> {
                   </div>
                 ) : null}
               </div>
+              {earliestAvailability && (
+                <div className="earliest-availability bottom">
+                  {`${labels[currentLanguage].NEXT_AVAILABLE}: `}
+                  <span>
+                    {this.getDate(earliestAvailability, currentLanguage)}
+                  </span>
+                </div>
+              )}
               <a
                 target={isFetched && isMobile() ? null : "_blank"}
                 href={`http://book.${bookingUrl}${
@@ -151,9 +187,11 @@ export default class Product extends Component<any, any> {
                 }/book/${tgid}`}
               >
                 <div
-                  className={`book-now-cta ${
-                    currentLanguage == "fr" ? "fr-book-now-cta" : ""
-                  }`}
+                  className={classNames(
+                    "book-now-cta",
+                    { "book-now-cta__with-date": earliestAvailability },
+                    { "fr-book-now-cta": currentLanguage == "fr" }
+                  )}
                   onClick={this.sendBookNowEvent}
                 >
                   <span className="book-now-text">

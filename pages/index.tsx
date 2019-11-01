@@ -205,6 +205,7 @@ export default class Page extends React.Component<any, any> {
               "noindex",
               "nofollow",
               "page_url",
+              "enable_earliest_availability",
               "blackout_start_date",
               "blackout_end_date"
             ];
@@ -257,6 +258,8 @@ export default class Page extends React.Component<any, any> {
                     .logo_redirection_url.url
                     ? completeMicrosite.data.data.logo_redirection_url
                     : baseLangData.data.logo_redirection_url,
+                  enable_earliest_availability:
+                    baseLangData.data.enable_earliest_availability,
                   enable_powered_by_headout_logo: completeMicrosite.data.data
                     .enable_powered_by_headout_logo
                     ? completeMicrosite.data.data

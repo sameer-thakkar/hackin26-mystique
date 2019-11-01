@@ -21,7 +21,7 @@ export default class Tabs extends Component<any, any> {
     return (
       <div
         className={classNames("navigation-bar", {
-          "center-align-tabs": tabs.length < 2
+          "center-align-tabs": tabs.length <= 2
         })}
       >
         {tabs.map((tab, index) => (
