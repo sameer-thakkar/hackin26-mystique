@@ -69,5 +69,7 @@ module.exports = [
   "st-pauls-cathedral.tickets-london.co.uk",
   "view-from-shard.tickets-london.co.uk",
   "up-at-the-o2.tickets-london.co.uk",
+  "www.borghesegallerytickets.com",
+  "www.pompeii-tickets.com",
   "microbrands.headout.com"
 ];
