@@ -52,7 +52,7 @@ export const fr = {
   BOOK_NOW_CTA: "Réservez Maintenant",
   READ_MORE_TEXT: "En Savoir Plus",
   SHOW_LESS_TEXT: "Voir Moins",
-  NEXT_AVAILABLE: "Prochainement Disponible",
+  NEXT_AVAILABLE: "Bientôt Disponible",
   EARLIEST_AVAILABILITY: "Disponibilité la Plus Tôt",
   TODAY: "Aujourd'hui",
   TOMORROW: "Demain"
