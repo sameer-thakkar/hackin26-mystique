@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "lazysizes";
+import { scroller } from "react-scroll";
 import Header from "./Header";
 import Banner from "./Banner";
 import PopulateUncategorizedProducts from "./PopulateUncategorizedProducts";
@@ -54,6 +55,7 @@ export default class Microsite extends Component<any, any> {
 
   async componentDidMount() {
     const { data } = this.props.data;
+    const { tgidToScroll } = this.props;
     const uncategorizedTours = data.body1;
     const checkIfToursAvailable =
       uncategorizedTours.length > 0 &&
@@ -174,6 +176,14 @@ export default class Microsite extends Component<any, any> {
         isClient: true
       });
     }
+    if (tgidToScroll) {
+      scroller.scrollTo(tgidToScroll, {
+        duration: 1500,
+        delay: 100,
+        offset: this.isMobile() ? -80 : -100,
+        smooth: "easeInOutQuint"
+      });
+    }
   }
 
   handleDropdownToggle = elementIdentifier => {
@@ -285,6 +295,8 @@ export default class Microsite extends Component<any, any> {
     const { isClient, showEarliestAvailability } = this.state;
     let groupBookingTourTitles = [];
 
+    const { tgidToScroll } = this.props;
+
     if (showGroupBooking) {
       uncategorizedToursList
         .filter(function(tour) {
@@ -310,6 +322,16 @@ export default class Microsite extends Component<any, any> {
           earliestAvailability: this.state.earliestAvailabilityQueue[index]
         }))
       : uncategorizedToursList;
+
+    const orderedUncategorizedTours = tgidToScroll
+      ? uncategorizedToursData.reduce((accum = [], item) => {
+          if (item.tgid === tgidToScroll) {
+            return [item, ...accum];
+          } else {
+            return [...accum, item];
+          }
+        }, [])
+      : uncategorizedToursData;
     const {
       first_publication_date: datePublished,
       last_publication_date: dateModified,
@@ -368,7 +390,7 @@ export default class Microsite extends Component<any, any> {
           />
           {checkIfToursAvailable ? (
             <PopulateUncategorizedProducts
-              uncategorizedTours={uncategorizedToursData}
+              uncategorizedTours={orderedUncategorizedTours}
               scorpioData={this.props.scorpioData}
               uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
               tourPrices={this.state.tourPrices}

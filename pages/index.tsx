@@ -401,6 +401,15 @@ export default class Page extends React.Component<any, any> {
           }),
           {}
         );
+        const tgidToScroll = (function getScrollTgid() {
+          const pathname = req ? req.url : window.location.pathname;
+          const doesTgidExist = pathname.includes("tgid");
+          if (doesTgidExist) {
+            const tgidToScroll = pathname.split("=").pop();
+            return tgidToScroll;
+          }
+          return null;
+        })();
         return {
           CMSContent,
           ContentType,
@@ -408,7 +417,8 @@ export default class Page extends React.Component<any, any> {
           uid,
           lang,
           host,
-          isDev
+          isDev,
+          tgidToScroll
         };
       }
     } catch (error) {
@@ -428,7 +438,8 @@ export default class Page extends React.Component<any, any> {
       host,
       isDev,
       windowUrl,
-      pathname
+      pathname,
+      tgidToScroll
     } = this.props;
     if (statusCode) {
       return <ErrorPage statusCode={statusCode} />;
@@ -446,6 +457,7 @@ export default class Page extends React.Component<any, any> {
             host={host}
             pathname={pathname}
             isDev={isDev}
+            tgidToScroll={tgidToScroll}
           />
         );
         break;

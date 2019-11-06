@@ -113,6 +113,7 @@ export default class Product extends Component<any, any> {
         className={classNames("product", {
           "product__with-date": earliestAvailability
         })}
+        id={tgid}
       >
         <div className="product-header">
           <div className="product-header-left">

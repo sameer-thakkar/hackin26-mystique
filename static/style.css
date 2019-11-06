@@ -247,6 +247,7 @@ body {
   max-width: 74.7em;
   border: solid 0.08em #e6e6e6;
   margin: 2.5em auto;
+  position: relative;
 }
 .product-title {
   font-family: Graphik;

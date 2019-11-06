@@ -24,7 +24,6 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
       pageUrl,
       host
     } = this.props;
-
     return (
       <div className="uncategorized-container">
         <div className="select-wrapper" id="select-tickets">
