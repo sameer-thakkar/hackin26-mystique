@@ -63,8 +63,7 @@ export default class FreeTourPopup extends Component<any, any> {
     });
   };
 
-  renderSlider = () => {
-    const { productOffer } = this.props;
+  renderSlider = productOffer => {
     const isMobile = () => {
       return document.documentElement.clientWidth < 768;
     };
@@ -90,8 +89,6 @@ export default class FreeTourPopup extends Component<any, any> {
           return (
             <div key={index} className="swiper-slide">
               <Image
-                height={height}
-                width={width}
                 url={image.image_url.url || image.image_source.url || null}
                 format="pjpg"
               />
@@ -100,6 +97,13 @@ export default class FreeTourPopup extends Component<any, any> {
         })}
       </Swiper>
     );
+  };
+
+  renderImage = image => {
+    if (image)
+      return (
+        <Image url={image.image_url.url || image.image_source.url || null} />
+      );
   };
 
   render() {
@@ -130,7 +134,11 @@ export default class FreeTourPopup extends Component<any, any> {
         >
           <div className="carousel">
             <div className="swiper-container">
-              <div className="swiper-wrapper">{this.renderSlider()}</div>
+              <div className="swiper-wrapper">
+                {productOffer.data.carousel_images.length > 1
+                  ? this.renderSlider(productOffer)
+                  : this.renderImage(productOffer.data.carousel_images[0])}
+              </div>
 
               <div className="swiper-pagination"></div>
             </div>

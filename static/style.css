@@ -1449,10 +1449,9 @@ span.swiper-pagination-bullet {
 .popupv2-wrap {
   display: grid;
   grid-template-columns: 42.5% 57.5%;
-  max-width: 1164px;
+  max-width: 900px;
   /* margin: auto; */
   /*  width: 1164px;*/
-  /*height:692px;*/
   /* height: 84%;
 width: 80%; */
   grid-row: 1;
