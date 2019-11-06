@@ -88,9 +88,9 @@ export default class Product extends Component<any, any> {
       pageUrl,
       host,
       earliestAvailability,
+      ctaUrlSuffix,
       isScratchPriceEnabled
     } = this.props;
-
     const descriptorsCsv = descriptors || scorpioData.descriptors;
     const cardTitle = title || scorpioData.title;
     const descriptorsList = descriptorsCsv ? descriptorsCsv.split(",") : [];
@@ -109,43 +109,42 @@ export default class Product extends Component<any, any> {
       isLengthyArray(highlights) && highlights.filter(item => item.text).length;
 
     return (
-      <div>
-        <div
-          className={classNames("product", {
-            "product__with-date": earliestAvailability
-          })}
-        >
-          <div className="product-header">
-            <div className="product-header-left">
-              <h2 className="product-title">{cardTitle}</h2>
-              <div className="product-tags">
-                {descriptorsList.map((tag, index) => {
+      <div
+        className={classNames("product", {
+          "product__with-date": earliestAvailability
+        })}
+      >
+        <div className="product-header">
+          <div className="product-header-left">
+            <h2 className="product-title">{cardTitle}</h2>
+            <div className="product-tags">
+              {descriptorsList.map((tag, index) => {
+                return (
+                  <span key={index} className="product-tag">
+                    {tag} <span className="bullet">•</span>
+                  </span>
+                );
+              })}
+            </div>
+            {hasOffer &&
+              offerId &&
+              productOffer.map((offer, index) => {
+                if (offer.id === offerId) {
                   return (
-                    <span key={index} className="product-tag">
-                      {tag} <span className="bullet">•</span>
-                    </span>
+                    <div
+                      key={index}
+                      onClick={this.handlePopup}
+                      className="product-offer"
+                    >
+                      <RichText
+                        render={offer.data.offer_title}
+                        htmlSerializer={shortCodeSerializer}
+                      />
+                    </div>
                   );
-                })}
-              </div>
-              {hasOffer &&
-                offerId &&
-                productOffer.map((offer, index) => {
-                  if (offer.id === offerId) {
-                    return (
-                      <div
-                        key={index}
-                        onClick={this.handlePopup}
-                        className="product-offer"
-                      >
-                        <RichText
-                          render={offer.data.offer_title}
-                          htmlSerializer={shortCodeSerializer}
-                        />
-                      </div>
-                    );
-                  }
-                })}
-              {/* {earliestAvailability && (
+                }
+              })}
+            {/* {earliestAvailability && (
                 <div className="earliest-availability left">
                   {`${labels[currentLanguage].NEXT_AVAILABLE}: `}
                   <span>
@@ -153,106 +152,105 @@ export default class Product extends Component<any, any> {
                   </span>
                 </div>
               )} */}
+          </div>
+          <div className="product-header-right">
+            <div className="price-container">
+              {showScratchPrice &&
+              tourPrices[tgid].scratchPrice > tourPrices[tgid].price ? (
+                <div className="product-scratch-price">
+                  {tourPrices[tgid].scratchPrice
+                    ? `${currencySymbol}${tourPrices[tgid].scratchPrice}`
+                    : null}
+                </div>
+              ) : null}
+              {isFetched ? (
+                <div className="product-price">
+                  {tourPrices[tgid].price
+                    ? `${currencySymbol}${tourPrices[tgid].price}`
+                    : null}
+                </div>
+              ) : null}
             </div>
-            <div className="product-header-right">
-              <div className="price-container">
-                {showScratchPrice &&
-                tourPrices[tgid].scratchPrice > tourPrices[tgid].price ? (
-                  <div className="product-scratch-price">
-                    {tourPrices[tgid].scratchPrice
-                      ? `${currencySymbol}${tourPrices[tgid].scratchPrice}`
-                      : null}
-                  </div>
-                ) : null}
-                {isFetched ? (
-                  <div className="product-price">
-                    {tourPrices[tgid].price
-                      ? `${currencySymbol}${tourPrices[tgid].price}`
-                      : null}
-                  </div>
-                ) : null}
+            {earliestAvailability && (
+              <div className="earliest-availability bottom">
+                {`${labels[currentLanguage].NEXT_AVAILABLE}: `}
+                <span>
+                  {this.getDate(earliestAvailability, currentLanguage)}
+                </span>
               </div>
-              {earliestAvailability && (
-                <div className="earliest-availability bottom">
-                  {`${labels[currentLanguage].NEXT_AVAILABLE}: `}
-                  <span>
-                    {this.getDate(earliestAvailability, currentLanguage)}
-                  </span>
-                </div>
-              )}
-              <a
-                target={isFetched && isMobile() ? null : "_blank"}
-                href={`http://book.${bookingUrl}${
-                  currentLanguage === "en" ? "" : `/${currentLanguage}`
-                }/book/${tgid}`}
+            )}
+            <a
+              target={isFetched && isMobile() ? null : "_blank"}
+              href={`http://book.${bookingUrl}${
+                currentLanguage === "en" ? "" : `/${currentLanguage}`
+              }/book/${tgid}${ctaUrlSuffix}`}
+            >
+              <div
+                className={classNames(
+                  "book-now-cta",
+                  { "book-now-cta__with-date": earliestAvailability },
+                  { "fr-book-now-cta": currentLanguage == "fr" }
+                )}
+                onClick={this.sendBookNowEvent}
               >
-                <div
-                  className={classNames(
-                    "book-now-cta",
-                    { "book-now-cta__with-date": earliestAvailability },
-                    { "fr-book-now-cta": currentLanguage == "fr" }
-                  )}
-                  onClick={this.sendBookNowEvent}
-                >
-                  <span className="book-now-text">
-                    {labels[currentLanguage].BOOK_NOW_CTA}
-                  </span>
-                </div>
-              </a>
+                <span className="book-now-text">
+                  {labels[currentLanguage].BOOK_NOW_CTA}
+                </span>
+              </div>
+            </a>
+          </div>
+        </div>
+        {hasOffer && offerId && isMobile && (
+          <div onClick={this.handlePopup} className="product-offer-mobile">
+            <div className="product-offer-mobile-left">
+              <div className="gift-image">
+                <img
+                  src="https://cdn-imgix-open.headout.com/new-product-card/line expand.svg"
+                  alt="gift-image"
+                />
+              </div>
+              <div className="product-offer-text">
+                {productOffer.map((offer, index) => {
+                  if (offer.id === offerId) {
+                    return (
+                      <RichText
+                        key={index}
+                        render={offer.data.offer_title}
+                        htmlSerializer={shortCodeSerializer}
+                      />
+                    );
+                  }
+                })}
+              </div>
+            </div>
+            <div className="product-offer-mobile-right">
+              <div className="product-offer-arrow">
+                <img src="https://cdn-imgix-open.headout.com/new-product-card/Path 24.svg" />
+              </div>
             </div>
           </div>
-          {hasOffer && offerId && isMobile && (
-            <div onClick={this.handlePopup} className="product-offer-mobile">
-              <div className="product-offer-mobile-left">
-                <div className="gift-image">
-                  <img
-                    src="https://cdn-imgix-open.headout.com/new-product-card/line expand.svg"
-                    alt="gift-image"
-                  />
-                </div>
-                <div className="product-offer-text">
-                  {productOffer.map((offer, index) => {
-                    if (offer.id === offerId) {
-                      return (
-                        <RichText
-                          key={index}
-                          render={offer.data.offer_title}
-                          htmlSerializer={shortCodeSerializer}
-                        />
-                      );
-                    }
-                  })}
-                </div>
-              </div>
-              <div className="product-offer-mobile-right">
-                <div className="product-offer-arrow">
-                  <img src="https://cdn-imgix-open.headout.com/new-product-card/Path 24.svg" />
-                </div>
-              </div>
-            </div>
-          )}
-          <div className="desc-wrapper">
-            <div className="product-desc">
-              {isHighlightsFromPrismic ? (
-                <ul>
-                  {highlights
-                    .filter(item => item.text)
-                    .map((highlight, index) => (
-                      <li key={index}>{highlight.text}</li>
-                    ))}
-                </ul>
-              ) : (
-                <ReactMarkdown source={scorpioData.highlights} />
-              )}
-            </div>
-            <div
-              ref={this.readMoreRef}
-              data-open="0"
-              onClick={() => this.readMore(this.readMoreRef.current)}
-              className="read-more"
-            >
-              {`+ ${labels[currentLanguage].READ_MORE_TEXT}`}
-            </div>
+        )}
+        <div className="desc-wrapper">
+          <div className="product-desc">
+            {isHighlightsFromPrismic ? (
+              <ul>
+                {highlights
+                  .filter(item => item.text)
+                  .map((highlight, index) => (
+                    <li key={index}>{highlight.text}</li>
+                  ))}
+              </ul>
+            ) : (
+              <ReactMarkdown source={scorpioData.highlights} />
+            )}
+          </div>
+          <div
+            ref={this.readMoreRef}
+            data-open="0"
+            onClick={() => this.readMore(this.readMoreRef.current)}
+            className="read-more"
+          >
+            {`+ ${labels[currentLanguage].READ_MORE_TEXT}`}
           </div>
         </div>
       </div>

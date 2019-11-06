@@ -61,6 +61,7 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
               trackEvent={trackEvent}
               pageUrl={pageUrl}
               host={host}
+              ctaUrlSuffix={tour.cta_url_suffix || ""}
               isScratchPriceEnabled={tour.show_scratch_price === "Yes"}
             />
           ))}

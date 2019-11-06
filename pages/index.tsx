@@ -207,7 +207,8 @@ export default class Page extends React.Component<any, any> {
               "page_url",
               "enable_earliest_availability",
               "blackout_start_date",
-              "blackout_end_date"
+              "blackout_end_date",
+              "cta_url_suffix"
             ];
             const objKeys = [
               "header_scripts",
