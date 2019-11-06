@@ -110,5 +110,6 @@ module.exports = [
   "stage.windsor-castle.tickets-london.co.uk",
   "stage.bonfire-night.tickets-london.co.uk",
   "stage.www.hop-on-hop-off-london.com",
+  "stage.www.tickets-milan.com",
   "stage.microbrands.headout.com"
 ];
