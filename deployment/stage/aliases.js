@@ -111,5 +111,6 @@ module.exports = [
   "stage.bonfire-night.tickets-london.co.uk",
   "stage.www.hop-on-hop-off-london.com",
   "stage.www.tickets-milan.com",
+  "www.st-marks-basilica.com",
   "stage.microbrands.headout.com"
 ];
