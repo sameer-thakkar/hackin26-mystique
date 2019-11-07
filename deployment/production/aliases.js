@@ -71,5 +71,7 @@ module.exports = [
   "up-at-the-o2.tickets-london.co.uk",
   "www.borghesegallerytickets.com",
   "www.pompeii-tickets.com",
+  "www.uffizi-tickets.org",
+  "www.doge-palace-tickets.com",
   "microbrands.headout.com"
 ];
