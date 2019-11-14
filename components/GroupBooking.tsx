@@ -239,7 +239,7 @@ export default class GroupBooking extends Component<any, any> {
     const hasError = this.validateInputData();
     if (!hasError) {
       let formattedDate = this.formatDate(date);
-      let group = +adults + +children;
+      let group = `Adults: ${adults} ${children ? ", Child:" + children : ""}`;
       const data = `fname=${fname}&email=${email}&show=${tour.value}&lang=${lang.value}&time=${time.value}&contact=${phone}&group=${group}&date=${formattedDate}`;
       this.setState({ isSendingRequest: true });
       const status = await createGroupBooking(GROUP_BOOKING_URL, data);

@@ -42,12 +42,19 @@ module.exports = {
       dest: "/api/resolve"
     },
     {
+      src: "/group-submit-form",
+      methods: ["POST"],
+      dest: "/api/group-submit-form"
+    },
+    {
       src: "/(.*)",
       dest: "/index"
     }
   ],
   env: {
     AMPLITUDE_PROD: "@amplitude_prod",
-    AMPLITUDE_DEV: "@amplitude_dev"
+    AMPLITUDE_DEV: "@amplitude_dev",
+    SENDGRID_API_KEY: "@sendgrid_api_key_sec",
+    SLACK_GRP_BKNG_WEBHOOK: "@slack_grp_bkng_webhook_sec"
   }
 };

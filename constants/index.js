@@ -43,8 +43,7 @@ export const ERROR = {
   TIME: "Select your prefered time."
 };
 
-export const GROUP_BOOKING_URL =
-  "https://www.versailles-palace-tickets.com/gsubmit";
+export const GROUP_BOOKING_URL = "/group-submit-form";
 
 export const MODAL_STYLE = {
   overlay: {
