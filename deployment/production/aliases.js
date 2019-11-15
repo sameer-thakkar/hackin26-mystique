@@ -77,5 +77,8 @@ module.exports = [
   "scheepvaartmuseum.tickets-amsterdam.com",
   "harry-potter.london-studio-tours.com",
   "www.st-marks-basilica.com",
+  "www.versailles-palace-tickets.com",
+  "royal-palace.tickets-madrid.org",
+  "orsay.paris-tickets.org",
   "microbrands.headout.com"
 ];
