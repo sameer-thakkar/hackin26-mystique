@@ -187,7 +187,8 @@ export default class SubPage extends Component<any, any> {
     } = this.props.data.header_ref.data;
     const {
       blackout_start_date: blackoutStartDate,
-      blackout_end_date: blackoutEndDate
+      blackout_end_date: blackoutEndDate,
+      block_n_days_group_booking: blockNDaysGroupBooking
     } = this.props.data.microsite_document_ref.data;
     const showGroupBooking = enableGroupBooking === "Yes";
     const { groupBookingTourTitles } = this.state;
@@ -199,6 +200,7 @@ export default class SubPage extends Component<any, any> {
             groupBookingTourTitles={groupBookingTourTitles}
             blackoutStartDate={blackoutStartDate}
             blackoutEndDate={blackoutEndDate}
+            blockNDaysGroupBooking={blockNDaysGroupBooking}
           />
         )}
         {populateHead({

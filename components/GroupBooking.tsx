@@ -262,7 +262,11 @@ export default class GroupBooking extends Component<any, any> {
   };
 
   render() {
-    const { blackoutStartDate, blackoutEndDate } = this.props;
+    const {
+      blackoutStartDate,
+      blackoutEndDate,
+      blockNDaysGroupBooking
+    } = this.props;
     const blackoutDateRange = this.getDatesInRange(
       blackoutStartDate,
       blackoutEndDate
@@ -400,8 +404,10 @@ export default class GroupBooking extends Component<any, any> {
                     <DatePicker
                       selected={this.state.date}
                       onChange={this.handleDateChange}
-                      minDate={moment().toDate()}
-                      excludeDates={blackoutDateRange}
+                      minDate={moment()
+                        .add(blockNDaysGroupBooking, "days")
+                        .toDate()}
+                      excludeDates={[...blackoutDateRange]}
                       dateFormat="dd/MM/yyyy"
                       monthsShown={isMobileDevice() ? 1 : 2}
                     />

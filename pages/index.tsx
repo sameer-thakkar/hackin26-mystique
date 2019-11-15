@@ -208,7 +208,8 @@ export default class Page extends React.Component<any, any> {
               "enable_earliest_availability",
               "blackout_start_date",
               "blackout_end_date",
-              "cta_url_suffix"
+              "cta_url_suffix",
+              "block_n_days_group_booking"
             ];
             const objKeys = [
               "header_scripts",
@@ -300,6 +301,7 @@ export default class Page extends React.Component<any, any> {
               "other_meta_tags",
               "blackout_start_date",
               "blackout_end_date",
+              "block_n_days_group_booking",
               "enable_powered_by_headout_logo"
             ].map(prop => `${CONTENT_TYPES.MICROSITE}.${prop}`);
 
