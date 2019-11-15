@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Link from "next/link";
+import classNames from "classnames";
 import { sliceHandler } from "./Slices";
 
 export default class CustomFooter extends Component<any, any> {
@@ -10,15 +11,23 @@ export default class CustomFooter extends Component<any, any> {
 
     return (
       <div className="custom-footer">
-        <div className="logo">
-          <img src={logoUrl} alt={altText} />
-        </div>
-        <div className="columns">
-          {body.map((slice, index) => (
-            <div key={index} className="col">
-              {sliceHandler(slice)}
+        <div
+          className={classNames("logo-wrapper", {
+            "center-logo": body.length === 0
+          })}
+        >
+          <div className="logo">
+            <img src={logoUrl} alt={altText} />
+          </div>
+          {body.length ? (
+            <div className="columns">
+              {body.map((slice, index) => (
+                <div key={index} className="col">
+                  {sliceHandler(slice)}
+                </div>
+              ))}
             </div>
-          ))}
+          ) : null}
         </div>
         <div className="terms-line">
           {sliceHandler({ items: [{ text: terms }], slice_type: "rich_text" })}
@@ -34,13 +43,17 @@ export default class CustomFooter extends Component<any, any> {
               margin: auto;
               display: grid;
               align-items: center;
-              justify-content: space-between;
-              grid-template-columns: 25% 75%;
+              justify-content: center;
               grid-column-gap: 1em;
               grid-row-gap: 2em;
+              grid-auto-flow: row;
             }
             .logo {
               align-self: flex-start;
+            }
+            .logo-wrapper {
+              display: grid;
+              grid-template-columns: 25% 75%;
             }
             .custom-footer .logo img {
               height: auto;
@@ -54,7 +67,6 @@ export default class CustomFooter extends Component<any, any> {
               grid-gap: 2em;
             }
             .terms-line {
-              grid-column: 1 / 3;
               color: white;
               font-family: Avenir;
               font-size: 12px;
@@ -64,6 +76,11 @@ export default class CustomFooter extends Component<any, any> {
             }
             .terms-line a {
               color: #fff;
+            }
+
+            .center-logo {
+              grid-template-columns: auto;
+              justify-self: center;
             }
 
             @media (max-width: 768px) {
