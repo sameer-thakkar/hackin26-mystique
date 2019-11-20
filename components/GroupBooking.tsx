@@ -112,7 +112,7 @@ export default class GroupBooking extends Component<any, any> {
 
   handleDateChange = date => this.setState({ date });
 
-  formatDate = date => date.toLocaleString().slice(0, 10);
+  formatDate = date => moment(date).format("DD/MM/YYYY");
 
   validateInputData = () => {
     const {
