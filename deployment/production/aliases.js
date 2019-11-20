@@ -80,5 +80,13 @@ module.exports = [
   "www.versailles-palace-tickets.com",
   "royal-palace.tickets-madrid.org",
   "orsay.paris-tickets.org",
+  "siamparkcity.bangkok-tickets.com",
+  "sealife.bangkok-tickets.com",
+  "mahanakhonskywalk.bangkok-tickets.com",
+  "madametussauds.bangkok-tickets.com",
+  "day-tours.bangkok-tickets.com",
+  "kidzania.bangkok-tickets.com",
+  "linevillage.bangkok-tickets.com",
+  "pororoaquapark.bangkok-tickets.com",
   "microbrands.headout.com"
 ];

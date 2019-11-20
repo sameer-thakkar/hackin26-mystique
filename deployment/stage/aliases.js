@@ -113,5 +113,13 @@ module.exports = [
   "stage.www.tickets-milan.com",
   "stage.www.st-marks-basilica.com",
   "stage.scheepvaartmuseum.tickets-amsterdam.com",
+  "stage.siamparkcity.bangkok-tickets.com",
+  "stage.sealife.bangkok-tickets.com",
+  "stage.mahanakhonskywalk.bangkok-tickets.com",
+  "stage.madametussauds.bangkok-tickets.com",
+  "stage.day-tours.bangkok-tickets.com",
+  "stage.kidzania.bangkok-tickets.com",
+  "stage.linevillage.bangkok-tickets.com",
+  "stage.pororoaquapark.bangkok-tickets.com",
   "stage.microbrands.headout.com"
 ];
