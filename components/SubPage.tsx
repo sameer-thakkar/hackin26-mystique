@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import classNames from "classnames";
 import { CONTENT_TYPES } from "../constants";
 import CustomHeader from "./CustomHeader";
 import { sliceHandler } from "./Slices";
@@ -226,8 +227,12 @@ export default class SubPage extends Component<any, any> {
             handleDropdownToggle={this.handleDropdownToggle}
           />
         </header>
-        <main>
-          <Masthead title={featured.title} image={featured.image.url} />
+        <main
+          className={classNames({ "content-wrapper": !featured.image.url })}
+        >
+          {featured.image.url && (
+            <Masthead title={featured.title} image={featured.image.url} />
+          )}
           <div className="subpage-container">
             {body.map((slice, index) => (
               <div key={index} className="slice-block">

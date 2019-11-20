@@ -2862,3 +2862,7 @@ h3 {
     top: -15px;
   }
 }
+
+.content-wrapper {
+  margin-top: 90px;
+}

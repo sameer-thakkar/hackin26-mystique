@@ -4,7 +4,7 @@ const Masthead = props => {
   const { title, image } = props;
   return (
     <div className="banner">
-      <img src={image} alt="banner" />>
+      <img src={image} alt="banner" />
       <div className="banner-text">
         <h1>{title}</h1>
       </div>
