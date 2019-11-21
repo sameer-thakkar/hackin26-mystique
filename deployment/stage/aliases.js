@@ -121,5 +121,10 @@ module.exports = [
   "stage.kidzania.bangkok-tickets.com",
   "stage.linevillage.bangkok-tickets.com",
   "stage.pororoaquapark.bangkok-tickets.com",
+  "stage.www.berlin-tickets.com",
+  "stage.www.tickets-hamburg.org",
+  "stage.www.hafenrundfahrt-hamburg.com",
+  "stage.www.barcelona-flamenco-shows.com",
+  "stage.www.alhambra-granada-tickets.com",
   "stage.microbrands.headout.com"
 ];

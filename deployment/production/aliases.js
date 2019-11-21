@@ -88,5 +88,9 @@ module.exports = [
   "kidzania.bangkok-tickets.com",
   "linevillage.bangkok-tickets.com",
   "pororoaquapark.bangkok-tickets.com",
+  "www.berlin-tickets.com",
+  "www.tickets-hamburg.org",
+  "www.hafenrundfahrt-hamburg.com",
+  "www.barcelona-flamenco-shows.com",
   "microbrands.headout.com"
 ];
