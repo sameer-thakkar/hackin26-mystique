@@ -91,6 +91,17 @@ export default class CustomFooter extends Component<any, any> {
                 grid-row-gap: 1em;
                 justify-content: center;
               }
+              .logo {
+                padding-bottom: 2em;
+              }
+              .logo-wrapper {
+                display: grid;
+                width: 200px;
+                margin-left: 5%;
+                grid-template-rows: max-content max-content max-content;
+                grid-template-columns: auto;
+                place-items: center;
+              }
               .terms-line {
                 grid-column: unset;
               }
