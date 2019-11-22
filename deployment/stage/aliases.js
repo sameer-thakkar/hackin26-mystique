@@ -126,5 +126,6 @@ module.exports = [
   "stage.www.hafenrundfahrt-hamburg.com",
   "stage.www.barcelona-flamenco-shows.com",
   "stage.www.alhambra-granada-tickets.com",
+  "stage.duomo.tickets-milan.com",
   "stage.microbrands.headout.com"
 ];
