@@ -93,5 +93,8 @@ module.exports = [
   "www.hafenrundfahrt-hamburg.com",
   "www.barcelona-flamenco-shows.com",
   "duomo.tickets-milan.com",
+  "catacombs.paris-tickets.org",
+  "www.alhambra-granada-tickets.com",
+  "www.alcazar-seville-tickets.com",
   "microbrands.headout.com"
 ];
