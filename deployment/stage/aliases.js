@@ -127,5 +127,7 @@ module.exports = [
   "stage.www.barcelona-flamenco-shows.com",
   "stage.www.alhambra-granada-tickets.com",
   "stage.duomo.tickets-milan.com",
+  "stage.sydney.hop-on-hop-off.org",
+  "stage.www.hop-on-hop-off.org",
   "stage.microbrands.headout.com"
 ];

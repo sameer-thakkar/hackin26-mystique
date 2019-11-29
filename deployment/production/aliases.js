@@ -96,5 +96,7 @@ module.exports = [
   "catacombs.paris-tickets.org",
   "www.alhambra-granada-tickets.com",
   "www.alcazar-seville-tickets.com",
+  "sydney.hop-on-hop-off.org",
+  "www.hop-on-hop-off.org",
   "microbrands.headout.com"
 ];
