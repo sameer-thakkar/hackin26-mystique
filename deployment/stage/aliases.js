@@ -129,5 +129,6 @@ module.exports = [
   "stage.duomo.tickets-milan.com",
   "stage.sydney.hop-on-hop-off.org",
   "stage.www.hop-on-hop-off.org",
+  "stage.super-park.bangkok-tickets.com",
   "stage.microbrands.headout.com"
 ];
