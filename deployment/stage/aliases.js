@@ -130,6 +130,7 @@ module.exports = [
   "stage.sydney.hop-on-hop-off.org",
   "stage.www.hop-on-hop-off.org",
   "stage.super-park.bangkok-tickets.com",
+  "stage.this-is-holland.tickets-amsterdam.com",
   "stage.www.tickets-sydney.com",
   "stage.www.tickets-phuket.com",
   "stage.www.tickets-melbourne.com",
