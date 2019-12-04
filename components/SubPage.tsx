@@ -179,7 +179,8 @@ export default class SubPage extends Component<any, any> {
         this.props.data.canonical_link || this.props.data.page_url,
       other_meta_tags: contentPageHasOtherMetaTags
         ? this.props.data.other_meta_tags
-        : microsite_document_ref.other_meta_tags
+        : microsite_document_ref.other_meta_tags,
+      faq_schema: this.props.data.faq_schema
     };
 
     const {
