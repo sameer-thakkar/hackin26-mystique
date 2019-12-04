@@ -99,5 +99,6 @@ module.exports = [
   "sydney.hop-on-hop-off.org",
   "www.hop-on-hop-off.org",
   "super-park.bangkok-tickets.com",
+  "taronga-zoo.tickets-sydney.com",
   "microbrands.headout.com"
 ];
