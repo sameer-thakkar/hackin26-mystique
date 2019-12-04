@@ -17,14 +17,15 @@ function getSchemaJson(data) {
     favicon,
     description,
     datePublished,
-    dateModified
+    dateModified,
+    faq_schema
   } = data;
   const { origin, href } = parse(pageUrl, true);
   const microbrandUrl = withoutTrailingSlash(origin);
   const contentPageUrl = withoutTrailingSlash(href);
   const langCode = data.lang ? data.lang.substring(0, 2) : "en-us";
-
-  return {
+  const faqSchemaExists = faq_schema.length && faq_schema[0].question;
+  const baseSchema = {
     "@context": "https://schema.org",
     "@graph": [
       {
@@ -61,6 +62,26 @@ function getSchemaJson(data) {
       }
     ]
   };
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq_schema.map(obj => {
+      return {
+        "@type": "Question",
+        name: `${obj.question}`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: `${obj.answer}`
+        }
+      };
+    })
+  };
+
+  if (faqSchemaExists) {
+    return [baseSchema, faqSchema];
+  }
+  return [baseSchema];
 }
 
 export default data => {
