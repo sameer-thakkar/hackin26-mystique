@@ -151,5 +151,6 @@ module.exports = [
   "stage.bird-park.tickets-phuket.com",
   "stage.botanic-garden.tickets-phuket.com",
   "stage.www.sevilletickets.com",
+  "stage.taronga-zoo.tickets-sydney.com",
   "stage.microbrands.headout.com"
 ];
