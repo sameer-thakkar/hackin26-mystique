@@ -2384,6 +2384,7 @@ form.form {
   height: 250px;
   object-fit: cover;
   max-width: 100%;
+  width: 100%;
 }
 .more-reads {
   border: 1px solid #ebebeb;
