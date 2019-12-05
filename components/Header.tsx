@@ -44,7 +44,7 @@ export default class Header extends Component<any, any> {
       <div className="header-container">
         <div className="header-wrapper">
           <a href={logoRedirectionURL}>
-            <div className="logo-wrapper">
+            <div className="header-logo-wrapper">
               <img src={logoUrl} alt={logoAltText} />
               {hasPoweredByHeadoutLogo ? <PoweredByHeadout /> : null}
             </div>

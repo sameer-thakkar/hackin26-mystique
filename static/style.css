@@ -134,13 +134,13 @@ body {
   height: 44px;
   max-width: 200px;
 }
-.logo-wrapper {
+.header-logo-wrapper {
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: max-content max-content max-content;
   grid-column-gap: 10px;
 }
-.logo-wrapper img {
+.header-logo-wrapper img {
   height: 40px;
 }
 .line {
@@ -441,13 +441,13 @@ ul {
 }
 
 @media (max-width: 768px) {
-  .logo-wrapper {
+  .header-logo-wrapper {
     display: grid;
     grid-auto-flow: column;
     width: 200px;
     margin-left: 5%;
   }
-  .logo-wrapper img {
+  .header-logo-wrapper img {
     height: 30px;
   }
   .product-desc p {
