@@ -1,4 +1,5 @@
 import InlinePrice from "../components/InlinePrice";
+import InlineInvPrice from "../components/InlineInvPrice";
 import React from "react";
 
 interface ShortCodeDictionary {
@@ -10,6 +11,9 @@ interface ShortCodeDictionary {
 const shortCodesDict: ShortCodeDictionary = {
   price: {
     component: InlinePrice
+  },
+  "inv-price": {
+    component: InlineInvPrice
   }
 };
 
