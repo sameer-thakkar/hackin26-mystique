@@ -278,7 +278,9 @@ export default class Microsite extends Component<any, any> {
       logo_redirection_url: logoRedirectionURL,
       blackout_start_date: blackoutStartDate,
       blackout_end_date: blackoutEndDate,
-      block_n_days_group_booking: blockNDaysGroupBooking
+      block_n_days_group_booking: blockNDaysGroupBooking,
+      minimum_pax: minimumPax,
+      maximum_pax: maximumPax
     } = this.props.data.data;
     const showGroupBooking = enableGroupBooking === "Yes";
     const { results: productOffer } = this.props.offerData
@@ -353,6 +355,8 @@ export default class Microsite extends Component<any, any> {
               blackoutStartDate={blackoutStartDate}
               blackoutEndDate={blackoutEndDate}
               blockNDaysGroupBooking={blockNDaysGroupBooking}
+              minimumPax={minimumPax ? minimumPax : 15}
+              maximumPax={maximumPax ? maximumPax : undefined}
             />
           )}
           {populateHead({

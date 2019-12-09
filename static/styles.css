@@ -2042,6 +2042,15 @@ form.form {
   transform: translateY(-50%);
   right: 20px;
 }
+.hide-mobi a {
+  color: #fff;
+}
+.popup-title small {
+  font-weight: 300;
+}
+.popup-title small {
+  font-weight: 300;
+}
 @media (max-width: 768px) {
   .ReactModal__Overlay--after-open {
     overflow: scroll;

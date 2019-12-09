@@ -27,7 +27,13 @@ export const validateFullName = fullName => {
 
 export const isFeildSelected = field => !(field.length === 0);
 
-export const isGroupValid = (adults, children) => +adults + +children >= 15;
+export const isGroupValid = (adults, children, minPax, maxPax) => {
+  return +adults + +children < +minPax
+    ? `* Minimum group size is ${minPax} (adult + children)`
+    : +adults + +children > +maxPax
+    ? `* Maximum group size is ${maxPax} (adult + children)`
+    : "";
+};
 
 export const checkPhoneNumberValidity = phoneWithCountryCode => {
   const { phone, countryDialCode } = phoneWithCountryCode;

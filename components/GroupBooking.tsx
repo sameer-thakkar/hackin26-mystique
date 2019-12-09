@@ -48,7 +48,7 @@ export default class GroupBooking extends Component<any, any> {
         isTourSelected: false,
         isLangSelected: false,
         isTimeSelected: false,
-        isGroupSizeValid: false
+        isGroupSizeValid: ""
       },
       date: new Date(),
       showPhoneFeild: false,
@@ -133,17 +133,23 @@ export default class GroupBooking extends Component<any, any> {
       isTourSelected: false,
       isLangSelected: false,
       isTimeSelected: false,
-      isGroupSizeValid: false
+      isGroupSizeValid: ""
     };
     const phoneWithCountryCode = {
       phone,
       countryDialCode
     };
+    const { minimumPax, maximumPax } = this.props;
     error.isFullNameValid = !validateFullName(fname);
     error.isEmailValid = !validateEmail(email);
     error.isPhoneValid = !checkPhoneNumberValidity(phoneWithCountryCode);
     error.isTourSelected = !isFeildSelected(tour);
-    error.isGroupSizeValid = !isGroupValid(adults, children);
+    error.isGroupSizeValid = isGroupValid(
+      adults,
+      children,
+      minimumPax,
+      maximumPax
+    );
     error.isLangSelected = !isFeildSelected(lang);
     error.isTimeSelected = !isFeildSelected(time);
     this.setState({ error });
@@ -175,6 +181,7 @@ export default class GroupBooking extends Component<any, any> {
       phone,
       countryDialCode
     };
+    const { minimumPax, maximumPax } = this.props;
     switch (input) {
       case "FULL_NAME":
         hasError = !validateFullName(fname);
@@ -207,7 +214,7 @@ export default class GroupBooking extends Component<any, any> {
         this.setState({ error });
         return;
       case "GROUP":
-        hasError = !isGroupValid(adults, children);
+        hasError = isGroupValid(adults, children, minimumPax, maximumPax);
         error = { ...this.state.error };
         error.isGroupSizeValid = hasError;
         this.setState({ error: error });
@@ -265,7 +272,9 @@ export default class GroupBooking extends Component<any, any> {
     const {
       blackoutStartDate,
       blackoutEndDate,
-      blockNDaysGroupBooking
+      blockNDaysGroupBooking,
+      minimumPax,
+      maximumPax
     } = this.props;
     const blackoutDateRange = this.getDatesInRange(
       blackoutStartDate,
@@ -275,7 +284,7 @@ export default class GroupBooking extends Component<any, any> {
       <Modal isOpen={true} style={MODAL_STYLE} shouldCloseOnOverlayClick>
         <div className="popup-wrapper">
           <div className="popup-title">
-            <span>Group Tickets 15+ Pax</span>
+            <span>Group Tickets {minimumPax}+ Pax</span>
             <br />
             <small className="hide-mobi">
               Regardless of the size of group, we offer an exceptional level of
@@ -285,6 +294,9 @@ export default class GroupBooking extends Component<any, any> {
             <small className="hide-mobi">
               {" "}
               and best prices for each of our Tours.
+              <br />
+              Call us on <a href="tel:+1 347-897-0100"> +1 347-897-0100</a>,
+              Available 24*7
             </small>
             <img
               data-src="https://cdn-imgix-open.headout.com/sites/assets/close-thin.svg?auto=compress&amp;q=10"
@@ -298,6 +310,8 @@ export default class GroupBooking extends Component<any, any> {
               Regardless of the size of group, we offer an exceptional level of
               service and best prices for each of our Tours at Vatican.
             </span>
+            <span>Call us on +1 347-897-0100</span>
+            <span>Available 24*7</span>
           </div>
           {!this.state.isBookingSuccessful ? (
             <div className="form-wrapper">
@@ -346,11 +360,7 @@ export default class GroupBooking extends Component<any, any> {
                       />
                     </div>
                     <div className="error">
-                      <span>
-                        {this.state.error.isGroupSizeValid
-                          ? "* Minimum group size is 15 (adult + children)"
-                          : ""}
-                      </span>
+                      <span>{this.state.error.isGroupSizeValid}</span>
                     </div>
                   </div>
                   <div className="split">
