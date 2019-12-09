@@ -138,5 +138,6 @@ module.exports = [
   "hot-air-ballon.tickets-dubai.org",
   "airport-transfers.tickets-dubai.org",
   "city-tour.tickets-dubai.org",
+  "www.paris-tickets.org",
   "microbrands.headout.com"
 ];
