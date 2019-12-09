@@ -11,8 +11,8 @@ const domains = [
 ];
 
 const BENCHMARK_PERF = {
-  MOBILE: 20,
-  DESKTOP: 60
+  MOBILE: 30,
+  DESKTOP: 70
 };
 
 const parseResponse = pagespeedResponse => {
