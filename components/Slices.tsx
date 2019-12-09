@@ -1,15 +1,18 @@
 import React from "react";
-import ImageGrid from "./ImageGrid";
-import ImageTextGrid from "./ImageTextGrid";
-import InternalContentCard from "./InternalContentCard";
-import Tabs from "./Tabs";
+import dynamic from "next/dynamic";
 import { RichText } from "prismic-reactjs";
+
 import { shortCodeSerializer } from "../utils/shortCodes";
-import FWActionCard from "./FWActionCard";
-import RichTextBox from "./RichTextBox";
-import FeatureBox from "./FeatureBox";
-import TitleLinksCard from "./TitleLinksCard";
-import CardCarousel from "./slices/CardCaoursel";
+
+const ImageGrid = dynamic(() => import("./ImageGrid"));
+const ImageTextGrid = dynamic(() => import("./ImageTextGrid"));
+const InternalContentCard = dynamic(() => import("./InternalContentCard"));
+const Tabs = dynamic(() => import("./Tabs"));
+const FWActionCard = dynamic(() => import("./FWActionCard"));
+const RichTextBox = dynamic(() => import("./RichTextBox"));
+const FeatureBox = dynamic(() => import("./FeatureBox"));
+const TitleLinksCard = dynamic(() => import("./TitleLinksCard"));
+const CardCarousel = dynamic(() => import("./slices/CardCaoursel"));
 
 export const sliceHandler = slice => {
   switch (slice.slice_type) {

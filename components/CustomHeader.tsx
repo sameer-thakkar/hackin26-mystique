@@ -1,11 +1,9 @@
 import React, { Component, Fragment } from "react";
-import LanguageSelector from "./LanguageSelector";
 import HeaderLinks from "./HeaderLinks";
-import Image from "./Image";
 import classNames from "classnames";
-import { POWERED_BY_HEADOUT_LOGO } from "../constants";
 import PoweredByHeadout from "./PoweredByHeadout";
 import { DROPDOWN_ELEMENT } from "../constants";
+import { attachQueryParam } from "../utils/helper";
 
 export default class CustomHeader extends Component<any, any> {
   hamburgerRef: any;
@@ -29,14 +27,19 @@ export default class CustomHeader extends Component<any, any> {
     } = this.props;
 
     const logoUrl = logo ? logo.url : "";
-    const logoAltText = logo ? logo.alt : "";
+    const logoAltText = logo ? logo.alt : "logo";
 
     return (
       <div className="header-container">
         <div className="header-wrapper">
           <a href={logoRedirectionURL}>
             <div className="header-logo-wrapper">
-              <img src={logoUrl} alt={logoAltText} />
+              <img
+                className="lazyload"
+                src={attachQueryParam(logoUrl, "h=40&q=10")}
+                data-src={attachQueryParam(logoUrl, "h=40")}
+                alt={logoAltText}
+              />
               {hasPoweredByHeadoutLogo ? <PoweredByHeadout /> : null}
             </div>
           </a>

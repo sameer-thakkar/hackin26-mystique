@@ -2,9 +2,9 @@ import React, { Component, Fragment } from "react";
 import LanguageSelector from "./LanguageSelector";
 import HeaderLinks from "./HeaderLinks";
 import classNames from "classnames";
-import { POWERED_BY_HEADOUT_LOGO } from "../constants";
 import { DROPDOWN_ELEMENT } from "../constants";
 import PoweredByHeadout from "./PoweredByHeadout";
+import { attachQueryParam } from "../utils/helper";
 
 export default class Header extends Component<any, any> {
   hamburgerRef: any;
@@ -45,7 +45,12 @@ export default class Header extends Component<any, any> {
         <div className="header-wrapper">
           <a href={logoRedirectionURL}>
             <div className="header-logo-wrapper">
-              <img src={logoUrl} alt={logoAltText} />
+              <img
+                data-src={attachQueryParam(logoUrl, "h=40")}
+                src={attachQueryParam(logoUrl, "h=40&q=10")}
+                alt={logoAltText}
+                className="lazyload"
+              />
               {hasPoweredByHeadoutLogo ? <PoweredByHeadout /> : null}
             </div>
           </a>

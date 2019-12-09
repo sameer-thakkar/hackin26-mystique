@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import parse from "url-parse";
 import CustomFooter from "../components/CustomFooter";
 import { DROPDOWN_ELEMENT } from "../constants";
+import "../static/styles.css";
 
 export default class terms extends Component<any, any> {
   constructor(props) {

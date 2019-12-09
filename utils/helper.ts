@@ -170,3 +170,10 @@ export const getUID = url => {
   )}`;
   return uid;
 };
+
+export const attachQueryParam = (url, queryString) => {
+  if (url.includes("?")) {
+    return `${url}&${queryString}`;
+  }
+  return `${url}?${queryString}`;
+};

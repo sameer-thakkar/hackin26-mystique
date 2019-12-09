@@ -4,7 +4,11 @@ import { POWERED_BY_HEADOUT_LOGO } from "../constants";
 const PoweredByHeadout = () => (
   <Fragment>
     <div className="line"></div>
-    <img src={POWERED_BY_HEADOUT_LOGO} alt="Powered By Headout logo" />
+    <img
+      data-src={POWERED_BY_HEADOUT_LOGO}
+      alt="Powered By Headout logo"
+      className="lazyload"
+    />
   </Fragment>
 );
 

@@ -15,8 +15,9 @@ export default class InternalContentCard extends PureComponent<any, any> {
                 <div className="more-reads">
                   <div className="more-reads-image">
                     <img
-                      src={card.image_link.url || card.image_source.url}
+                      data-src={card.image_link.url || card.image_source.url}
                       alt="image"
+                      className="lazyload"
                     />
                   </div>
                   <div className="more-reads-text">

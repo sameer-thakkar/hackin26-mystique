@@ -1,13 +1,17 @@
 import React from "react";
-import Microsite from "../components/Microsite";
-import SubPage from "../components/SubPage";
-import ErrorPage from "next/error";
+import dynamic from "next/dynamic";
 import Router from "next/router";
 import fetch from "isomorphic-unfetch";
+
+const Microsite = dynamic(() => import("../components/Microsite"));
+const SubPage = dynamic(() => import("../components/SubPage"));
+const ErrorPage = dynamic(() => import("next/error"));
+
 import { Client } from "../prismic-config";
 import { CONTENT_TYPES } from "../constants";
 import { withoutTrailingSlash } from "../utils/helper";
 import EnvironmentContext from "../contexts/environmentContext";
+import "../static/styles.css";
 
 const getPropsFromReq = ({ host, pathname }) => {
   const languages = ["en", "es", "it", "fr", "pt", "de", "nl"];
@@ -46,6 +50,7 @@ const getPropsFromReq = ({ host, pathname }) => {
 
 export default class Page extends React.Component<any, any> {
   static async getInitialProps({ req, query, res }) {
+    const serverRequestStartTimestamp = Math.floor(new Date().getTime());
     try {
       const props = await Page.getMicrositeData({
         req,
@@ -72,8 +77,11 @@ export default class Page extends React.Component<any, any> {
       } catch (e) {}
 
       if (process.browser) (window as any).prismic.setupEditButton();
-      if (props.statusCode && res) {
-        res.statusCode = props.statusCode;
+      if (res) {
+        if (props.statusCode) {
+          // statusCode here implies non 2xx statusCode
+          res.statusCode = props.statusCode;
+        }
       }
       if (
         req &&
@@ -86,6 +94,7 @@ export default class Page extends React.Component<any, any> {
 
       return {
         ...props,
+        serverRequestStartTimestamp,
         windowUrl: req
           ? `${req.headers["x-forwarded-proto"]}://${req.headers["x-forwarded-host"]}${req.url}`
           : window.location.href
@@ -441,7 +450,8 @@ export default class Page extends React.Component<any, any> {
       isDev,
       windowUrl,
       pathname,
-      tgidToScroll
+      tgidToScroll,
+      serverRequestStartTimestamp
     } = this.props;
     if (statusCode) {
       return <ErrorPage statusCode={statusCode} />;
@@ -460,11 +470,18 @@ export default class Page extends React.Component<any, any> {
             pathname={pathname}
             isDev={isDev}
             tgidToScroll={tgidToScroll}
+            serverRequestStartTimestamp={serverRequestStartTimestamp}
           />
         );
         break;
       case CONTENT_TYPES.CONTENT_PAGE:
-        Component = <SubPage {...CMSContent} isDev={isDev} />;
+        Component = (
+          <SubPage
+            {...CMSContent}
+            isDev={isDev}
+            serverRequestStartTimestamp={serverRequestStartTimestamp}
+          />
+        );
         break;
       default:
         Component = <ErrorPage statusCode={500} />;

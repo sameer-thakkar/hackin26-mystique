@@ -1,18 +1,19 @@
 import React, { Component } from "react";
+import dynamic from "next/dynamic";
 import "lazysizes";
 import { scroller } from "react-scroll";
 import Header from "./Header";
 import Banner from "./Banner";
-import PopulateUncategorizedProducts from "./PopulateUncategorizedProducts";
 import Footer from "./Footer";
 import LongForm from "./LongForm";
-import FreeTourPopup from "./FreeTourPopup";
-import GroupBooking from "./GroupBooking";
 import populateHead from "./common/meta";
 import CustomFooter from "./CustomFooter";
-import MicrobrandList from "./MicrobrandsList";
 import { docCookies } from "../utils/helper";
 import { DROPDOWN_ELEMENT } from "../constants";
+import PopulateUncategorizedProducts from "./PopulateUncategorizedProducts";
+const FreeTourPopup = dynamic(() => import("./FreeTourPopup"), { ssr: false });
+const GroupBooking = dynamic(() => import("./GroupBooking"), { ssr: false });
+const MicrobrandList = dynamic(() => import("./MicrobrandsList"));
 
 export default class Microsite extends Component<any, any> {
   constructor(props) {
@@ -339,7 +340,7 @@ export default class Microsite extends Component<any, any> {
       lang,
       host,
       isDev,
-      pathname
+      serverRequestStartTimestamp
     } = this.props;
 
     return (
@@ -360,7 +361,8 @@ export default class Microsite extends Component<any, any> {
             dateModified,
             lang,
             isDev,
-            currentLanguage
+            currentLanguage,
+            serverRequestStartTimestamp
           })}
           <Header
             languages={languages ? languages : null}

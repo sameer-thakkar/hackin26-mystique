@@ -24,7 +24,7 @@ jobs:
           GIT_ACTOR: ${{ github.actor }}
         run: |
           sudo rm /usr/local/bin/now
-          sudo npm i -g now@16.4.4
+          sudo npm i -g now@16.6.0
           sudo yarn
           now --version
           node ./deployment/stage

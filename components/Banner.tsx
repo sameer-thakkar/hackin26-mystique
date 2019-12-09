@@ -1,8 +1,14 @@
 import React, { Component } from "react";
-import Image from "./Image";
 import classNames from "classnames";
 import { BANNER_PARAMS } from "../constants/index";
 import * as labels from "../static/localization/labels";
+import { attachQueryParam } from "../utils/helper";
+
+const imgixUrl = (url, format, w, ar, q = 75) =>
+  attachQueryParam(
+    url,
+    `auto=compress&w=${w}&fm=${format}&crop=faces&fit=crop&ar=${ar}&q=${q}`
+  );
 
 export default class Banner extends Component<any, any> {
   hasIndicators: boolean;
@@ -73,10 +79,6 @@ export default class Banner extends Component<any, any> {
 
   renderBanners = url => {
     const { isMobile } = this.state;
-    const imgixUrl = (url, format, w, ar) =>
-      `${url}${
-        url.indexOf("?") != -1 ? "&" : "?"
-      }auto=compress&w=${w}&fm=${format}&crop=faces&fit=crop&ar=${ar}`;
     const { ASPECT_RATIO, WIDTH } = isMobile
       ? BANNER_PARAMS.MOBILE
       : BANNER_PARAMS.DESKTOP;
@@ -85,11 +87,13 @@ export default class Banner extends Component<any, any> {
         <source
           type="image/webp"
           data-srcset={imgixUrl(url, "webp", WIDTH, ASPECT_RATIO)}
-          srcSet={imgixUrl(url, "webp", WIDTH, ASPECT_RATIO)}
+          srcSet={imgixUrl(url, "webp", WIDTH, ASPECT_RATIO, 10)}
         ></source>
         <img
+          className="lazyload"
           data-src={imgixUrl(url, "pjpg", WIDTH, ASPECT_RATIO)}
-          src={imgixUrl(url, "pjpg", WIDTH, ASPECT_RATIO)}
+          src={imgixUrl(url, "pjpg", WIDTH, ASPECT_RATIO, 10)}
+          alt={"banner"}
         />
       </picture>
     );

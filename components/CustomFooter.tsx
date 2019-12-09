@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import Link from "next/link";
 import classNames from "classnames";
 import { sliceHandler } from "./Slices";
+import { attachQueryParam } from "../utils/helper";
 
 export default class CustomFooter extends Component<any, any> {
   render() {
     const { logo, terms, body } = this.props;
     const logoUrl = logo ? logo.url : "";
-    const altText = logo ? logo.alt : "";
+    const altText = logo ? logo.alt : "logo";
 
     return (
       <div className="custom-footer">
@@ -17,7 +18,11 @@ export default class CustomFooter extends Component<any, any> {
           })}
         >
           <div className="logo">
-            <img src={logoUrl} alt={altText} />
+            <img
+              data-src={attachQueryParam(logoUrl, "w=150")}
+              alt={altText}
+              className="lazyload"
+            />
           </div>
           {body.length ? (
             <div className="columns">

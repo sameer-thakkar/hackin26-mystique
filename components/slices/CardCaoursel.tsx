@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { RichText } from "prismic-reactjs";
 import Image from "../Image";
-import Swiper from "react-id-swiper";
+import Swiper from "../Swiper";
 
 export default class CardCarousel extends Component<any, any> {
   state = {

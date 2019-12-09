@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "lazysizes";
 import classNames from "classnames";
 import { CONTENT_TYPES } from "../constants";
 import CustomHeader from "./CustomHeader";
@@ -9,7 +10,8 @@ import populateHead from "./common/meta";
 import { Client } from "../prismic-config";
 // import Banner from "./Banner";
 import { IS_MOBILE } from "../utils/helper";
-import GroupBooking from "./GroupBooking";
+import dynamic from "next/dynamic";
+const GroupBooking = dynamic(() => import("./GroupBooking"), { ssr: false });
 import { DROPDOWN_ELEMENT } from "../constants";
 
 export default class SubPage extends Component<any, any> {
@@ -60,7 +62,9 @@ export default class SubPage extends Component<any, any> {
           });
         }
       });
-      this.setState({ groupBookingTourTitles });
+      this.setState({
+        groupBookingTourTitles
+      });
     }
   }
 
@@ -127,7 +131,8 @@ export default class SubPage extends Component<any, any> {
       first_publication_date: datePublished,
       last_publication_date: dateModified,
       lang,
-      isDev
+      isDev,
+      serverRequestStartTimestamp
     } = this.props;
 
     const contentPageHasOtherMetaTags = data.other_meta_tags.filter(
@@ -210,7 +215,8 @@ export default class SubPage extends Component<any, any> {
           datePublished,
           dateModified,
           lang,
-          isDev
+          isDev,
+          serverRequestStartTimestamp
         })}
         <header>
           <CustomHeader

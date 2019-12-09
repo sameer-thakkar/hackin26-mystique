@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Link from "next/link";
+import { attachQueryParam } from "../utils/helper";
 
 export default class Footer extends Component<any, any> {
   render() {
@@ -7,7 +8,11 @@ export default class Footer extends Component<any, any> {
     return (
       <div className="footer">
         <div className="footer-logo">
-          <img src={logoUrl} alt={footerAltText} />
+          <img
+            data-src={attachQueryParam(logoUrl, "w=180")}
+            alt={footerAltText}
+            className="lazyload"
+          />
         </div>
         <div className="line-and-disclaimer">
           <hr className="footer-line" />

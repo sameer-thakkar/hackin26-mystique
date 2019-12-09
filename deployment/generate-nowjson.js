@@ -10,10 +10,23 @@ module.exports = env => {
 
   [...new Array(nowFilesRequired)].forEach((_item, idx) => {
     const fileName = `now.${env}.${idx + 1}.json`;
+
+    const requiredAliases = aliases.slice(
+      idx * BATCH_SIZE,
+      (idx + 1) * BATCH_SIZE
+    );
+
+    const alias =
+      requiredAliases.length === 1 ? requiredAliases[0] : requiredAliases;
+
     const fileContent = {
       ...baseJson,
       ...extendJson,
-      alias: aliases.slice(idx * BATCH_SIZE, (idx + 1) * BATCH_SIZE)
+      alias,
+      name:
+        requiredAliases.length === 1
+          ? alias.split(".").join(" ")
+          : extendJson.name
     };
 
     fs.writeFileSync(

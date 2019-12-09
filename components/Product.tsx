@@ -206,7 +206,8 @@ export default class Product extends Component<any, any> {
             <div className="product-offer-mobile-left">
               <div className="gift-image">
                 <img
-                  src="https://cdn-imgix-open.headout.com/new-product-card/line expand.svg"
+                  className="lazyload"
+                  data-src="https://cdn-imgix-open.headout.com/new-product-card/line%20expand.svg"
                   alt="gift-image"
                 />
               </div>
@@ -226,7 +227,11 @@ export default class Product extends Component<any, any> {
             </div>
             <div className="product-offer-mobile-right">
               <div className="product-offer-arrow">
-                <img src="https://cdn-imgix-open.headout.com/new-product-card/Path 24.svg" />
+                <img
+                  data-src="https://cdn-imgix-open.headout.com/new-product-card/Path%2024.svg"
+                  className="lazyload"
+                  alt="image"
+                />
               </div>
             </div>
           </div>

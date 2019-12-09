@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import InlinePrice from "./InlinePrice";
-import Swiper from "react-id-swiper";
+import Swiper from "./Swiper";
 import Image from "./Image";
 import { IS_MOBILE } from "../utils/helper";
 

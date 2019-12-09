@@ -102,7 +102,8 @@ export default data => {
     logo,
     page_url: pageUrl,
     isDev,
-    currentLanguage
+    currentLanguage,
+    serverRequestStartTimestamp
   } = data;
   const amplitude_key = isDev
     ? process.env.AMPLITUDE_DEV
@@ -165,6 +166,27 @@ export default data => {
       ) : null}
 
       <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            var mystiquePerf = {
+              serverTimestamp: ${serverRequestStartTimestamp},
+              clientTimestamp: null,
+              ttl: null,
+              ttlUnits: 'ms',
+              fired: false
+            };
+            if (!mystiquePerf.fired) {
+              mystiquePerf.clientTimestamp = ${Math.floor(
+                new Date().getTime()
+              )};
+              mystiquePerf.ttl = mystiquePerf.clientTimestamp - mystiquePerf.serverTimestamp;
+              mystiquePerf.fired = true;
+            }
+          `
+        }}
+      />
+
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(getSchemaJson(data))
@@ -191,7 +213,7 @@ export default data => {
           __html: `//<![CDATA[
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.defer=true;j.src=
             '//www.googletagmanager.com/gtm.'+'js?id='+i+dl;f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','GTM-TR8SRJG');//]]>`
         }}
@@ -203,7 +225,7 @@ export default data => {
             __html: `(function(e,t){var n=e.amplitude||{_q:[],_iq:{}};var r=t.createElement("script")
             ;r.type="text/javascript"
             ;r.integrity="sha384-a+mq7tiLwde/00Oc7avFHLn/ttGfdAq1rtZc7u97SEzIiyYoT2IsOKWCkAThwdEu"
-            ;r.crossOrigin="anonymous";r.async=true
+            ;r.crossOrigin="anonymous";r.defer=true
             ;r.src="https://cdn.amplitude.com/libs/amplitude-5.3.0-min.gz.js"
             ;r.onload=function(){if(!e.amplitude.runQueuedFunctions){
             console.log("[Amplitude] Error: could not load SDK")}}
@@ -262,11 +284,16 @@ export default data => {
     }${getPathName()}`;
   };
 
-  const hrefLangs = languages.map(({ language }) => {
+  const hrefLangs = languages.map(({ language }, idx) => {
     let langCode = language.split("-")[1].toLowerCase();
 
     return (
-      <link rel="alternate" hrefLang={langCode} href={getHref(langCode)} />
+      <link
+        key={`altlang_${idx}`}
+        rel="alternate"
+        hrefLang={langCode}
+        href={getHref(langCode)}
+      />
     );
   });
   return (

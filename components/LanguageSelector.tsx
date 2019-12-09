@@ -132,7 +132,11 @@ export default class LanguageSelector extends Component<any, any> {
                   >
                     <div className="language">
                       <div className="language-flag">
-                        <img src={flagsUrl[language].flag} alt="flag" />
+                        <img
+                          className="lazyload"
+                          data-src={flagsUrl[language].flag}
+                          alt="flag"
+                        />
                       </div>
                       <span className="lang">
                         {flagsUrl[language].language}
@@ -151,7 +155,11 @@ export default class LanguageSelector extends Component<any, any> {
                     >
                       <div className="language">
                         <div className="language-flag">
-                          <img src={flagsUrl[language].flag} alt="flag" />
+                          <img
+                            data-src={flagsUrl[language].flag}
+                            alt="flag"
+                            className="lazyload"
+                          />
                         </div>
                         <span className="lang">
                           {flagsUrl[language].language}

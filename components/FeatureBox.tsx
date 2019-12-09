@@ -10,7 +10,11 @@ export default class RichTextBox extends PureComponent<any, any> {
         {this.props.slices.map((block, index) => (
           <div className="feature-box">
             <div className="feature-box__image-wrapper">
-              <img src={block.image_url.url || block.image_source.url} />
+              <img
+                className="lazyload"
+                data-src={block.image_url.url || block.image_source.url}
+                alt={`feature-box_${index}`}
+              />
             </div>
             <div className="feature-box__text-wrapper">
               <RichText
