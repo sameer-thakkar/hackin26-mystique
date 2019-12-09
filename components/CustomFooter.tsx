@@ -48,7 +48,6 @@ export default class CustomFooter extends Component<any, any> {
               margin: auto;
               display: grid;
               align-items: center;
-              justify-content: center;
               grid-column-gap: 1em;
               grid-row-gap: 2em;
               grid-auto-flow: row;
