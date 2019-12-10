@@ -155,7 +155,7 @@ module.exports = (env, trackInsights = false) => {
           Object.keys(insights).forEach(payloadKey => {
             axios
               .post(
-                `http://184.72.150.70:9091/metrics/job/microbrand-metrics/insights/${insightsName}/provider/mystique`,
+                `http://52.23.245.115:9091/metrics/job/microbrand-metrics/insights/${insightsName}/provider/mystique`,
                 `${payloadKey} ${insights[payloadKey]}\n`,
                 {
                   headers: { "Content-Type": "text/plain" }
