@@ -27,7 +27,7 @@ module.exports = {
     },
     {
       src: "/create-uid",
-      dest: "/create-uid.html"
+      dest: "/create-uid"
     },
     {
       src: "/sitemap.xml",
