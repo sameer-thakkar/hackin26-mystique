@@ -141,5 +141,7 @@ module.exports = [
   "www.paris-tickets.org",
   "www.tickets-amsterdam.com",
   "prado.tickets-madrid.org",
+  "www.dubai-city-tours.com",
+  "www.dhow-cruise.com",
   "microbrands.headout.com"
 ];
