@@ -172,5 +172,9 @@ module.exports = [
   "stage.sydney.opera-tickets.org",
   "stage.www.dubai-city-tours.com",
   "stage.www.dhow-cruise.com",
+  "stage.creek.dhow-cruise.com",
+  "stage.marina.dhow-cruise.com",
+  "stage.sightseeing.dhow-cruise.com",
+  "stage.dinner.dhow-cruise.com",
   "stage.microbrands.headout.com"
 ];

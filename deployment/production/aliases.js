@@ -143,5 +143,9 @@ module.exports = [
   "prado.tickets-madrid.org",
   "www.dubai-city-tours.com",
   "www.dhow-cruise.com",
+  "creek.dhow-cruise.com",
+  "marina.dhow-cruise.com",
+  "sightseeing.dhow-cruise.com",
+  "dinner.dhow-cruise.com",
   "microbrands.headout.com"
 ];
