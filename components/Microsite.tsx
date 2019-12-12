@@ -79,7 +79,7 @@ export default class Microsite extends Component<any, any> {
       const fetchTourGroupPrices = fetch(
         `https://api.headout.com/api/v5/tour-group/list?ids[]=${tourGroupTgids}`
       ).then(res => {
-        const HSID = res.headers.get("x-h-sid");
+        let HSID = res.headers.get("x-h-sid");
         if (!docCookies.hasItem("h-sid")) {
           const nakedDomain = window.location.host
             .replace("stage.", "")
@@ -94,6 +94,8 @@ export default class Microsite extends Component<any, any> {
             nakedDomain,
             false
           );
+        } else {
+          HSID = docCookies.getItem("h-sid");
         }
         this.sendVariableToDataLayer({ "h-sid": HSID });
         return res.json();
