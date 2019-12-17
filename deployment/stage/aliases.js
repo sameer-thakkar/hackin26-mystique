@@ -176,5 +176,9 @@ module.exports = [
   "stage.marina.dhow-cruise.com",
   "stage.sightseeing.dhow-cruise.com",
   "stage.dinner.dhow-cruise.com",
+  "stage.alcazar.sevilletickets.com",
+  "stage.bateaux-parisiens.seine-river-cruise.com",
+  "stage.lido.cabaret-paris.com",
+  "stage.pantheon.paris-tickets.org",
   "stage.microbrands.headout.com"
 ];

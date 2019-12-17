@@ -147,5 +147,9 @@ module.exports = [
   "marina.dhow-cruise.com",
   "sightseeing.dhow-cruise.com",
   "dinner.dhow-cruise.com",
+  "alcazar.sevilletickets.com",
+  "bateaux-parisiens.seine-river-cruise.com",
+  "lido.cabaret-paris.com",
+  "pantheon.paris-tickets.org",
   "microbrands.headout.com"
 ];
