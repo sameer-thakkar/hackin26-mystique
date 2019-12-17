@@ -10,6 +10,7 @@ import populateHead from "./common/meta";
 import CustomFooter from "./CustomFooter";
 import { docCookies } from "../utils/helper";
 import { DROPDOWN_ELEMENT } from "../constants";
+import { en } from "../static/localization/labels";
 import PopulateUncategorizedProducts from "./PopulateUncategorizedProducts";
 const FreeTourPopup = dynamic(() => import("./FreeTourPopup"), { ssr: false });
 const GroupBooking = dynamic(() => import("./GroupBooking"), { ssr: false });
@@ -295,6 +296,9 @@ export default class Microsite extends Component<any, any> {
       customFooter
     } = this.props.data.data;
     const microbrandCards = this.props.data.data.microbrand_cards;
+    const microbrandCardsHeading = this.props.data.data.microbrand_cards_heading
+      ? this.props.data.data.microbrand_cards_heading
+      : en.MICROBRAND_CARDS_HEADING;
     const isHomepage =
       !uncategorizedTours.length ||
       uncategorizedTours[0].items[0].tgid === null;
@@ -423,7 +427,10 @@ export default class Microsite extends Component<any, any> {
             />
           ) : null}
           {isHomepage && isClient ? (
-            <MicrobrandList microbrandCards={microbrandCards} />
+            <MicrobrandList
+              microbrandCards={microbrandCards}
+              microbrandCardsHeading={microbrandCardsHeading}
+            />
           ) : null}
           {longFormContent ? <LongForm content={longFormContent} /> : null}
           {customFooter ? (

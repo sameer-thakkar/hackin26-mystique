@@ -7,7 +7,8 @@ export const en = {
   NEXT_AVAILABLE: "Next Available",
   EARLIEST_AVAILABILITY: "Earliest Availability",
   TODAY: "Today",
-  TOMORROW: "Tomorrow"
+  TOMORROW: "Tomorrow",
+  MICROBRAND_CARDS_HEADING: "Popular Categories"
 };
 
 export const es = {

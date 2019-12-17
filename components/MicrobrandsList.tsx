@@ -32,12 +32,12 @@ export default class MicrobrandList extends Component<any, any> {
   }
 
   render() {
-    const { microbrandCards } = this.props;
+    const { microbrandCards, microbrandCardsHeading } = this.props;
     const { isFetched, currencySymbol, cardPrices } = this.state;
     return (
       <div className="microbrands-list">
         <div className="microbrands-list-heading">
-          <h1>Popular Categories</h1>
+          <h1>{microbrandCardsHeading}</h1>
         </div>
         <div className="microbrand-cards">
           {microbrandCards.map((card, index) => {
