@@ -324,6 +324,7 @@ body {
 .product-desc p {
   margin: 0;
   line-height: 1.95em;
+  margin-left: -20px;
 }
 .book-now-cta {
   width: 10.1em;
@@ -463,6 +464,7 @@ ul {
   .product-desc p {
     font-size: 0.8em;
     line-height: 1.7em;
+    margin-left: -20px;
   }
   .header-logo img {
     margin-left: 10px;
@@ -2277,8 +2279,8 @@ form.form {
 
 .subpage-container .slice-block h2::after {
   color: #ec1943;
-  width: 80px;
-  border-top: solid 2px;
+  width: 75px;
+  border-top: solid 3px;
   margin: 0;
   position: absolute;
   bottom: -15px;

@@ -43,7 +43,7 @@ export default class LongForm extends Component<any, any> {
             }
             .long-form h2::after {
               content: "";
-              width: 50%;
+              width: 75px;
               display: block;
               height: 3px;
               background: #ec1943;
