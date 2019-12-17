@@ -13,6 +13,7 @@ const RichTextBox = dynamic(() => import("./RichTextBox"));
 const FeatureBox = dynamic(() => import("./FeatureBox"));
 const TitleLinksCard = dynamic(() => import("./TitleLinksCard"));
 const CardCarousel = dynamic(() => import("./slices/CardCaoursel"));
+const Table = dynamic(() => import("./slices/Table"));
 
 export const sliceHandler = slice => {
   switch (slice.slice_type) {
@@ -62,6 +63,14 @@ export const sliceHandler = slice => {
     case "footer_column":
       return (
         <TitleLinksCard title={slice.primary.heading} links={slice.items} />
+      );
+    case "table":
+      return (
+        <Table
+          title={slice.primary.table_heading}
+          numberOfColumns={slice.primary.number_of_column}
+          columnsData={slice.items}
+        />
       );
     case "card_carousel":
       return (

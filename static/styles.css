@@ -2870,6 +2870,27 @@ h3 {
   width: unset;
 }
 
+.content-wrapper {
+  margin-top: 90px;
+}
+
+.description-table {
+  table-layout: fixed;
+  width: 100%;
+  border: 1px solid #545454;
+  border-spacing: 0;
+}
+
+.description-table td {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  word-break: break-word;
+  padding: 0px 10px;
+  border: 1px solid #545454;
+  vertical-align: baseline;
+}
+
 @media (max-width: 768px) {
   .microbrands-list-heading h1 {
     font-size: 24px;
@@ -2880,8 +2901,14 @@ h3 {
   .carousel-slider .swiper-pagination.swiper-pagination-bullets {
     top: -15px;
   }
-}
 
-.content-wrapper {
-  margin-top: 90px;
+  .description-table {
+    table-layout: auto;
+  }
+  .table-container {
+    overflow: auto;
+  }
+  .description-table td {
+    word-break: unset;
+  }
 }
