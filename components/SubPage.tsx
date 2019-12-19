@@ -8,7 +8,6 @@ import CustomFooter from "./CustomFooter";
 import Masthead from "./Masthead";
 import populateHead from "./common/meta";
 import { Client } from "../prismic-config";
-// import Banner from "./Banner";
 import { isMobile } from "../utils/helper";
 import dynamic from "next/dynamic";
 const GroupBooking = dynamic(() => import("./GroupBooking"), { ssr: false });
@@ -132,8 +131,10 @@ export default class SubPage extends Component<any, any> {
       last_publication_date: dateModified,
       lang,
       isDev,
-      host,
-      serverRequestStartTimestamp
+      serverRequestStartTimestamp,
+      alternate_languages,
+      uid,
+      host
     } = this.props;
 
     const contentPageHasOtherMetaTags = data.other_meta_tags.filter(
@@ -191,7 +192,9 @@ export default class SubPage extends Component<any, any> {
 
     const {
       enable_group_booking: enableGroupBooking,
-      logo_redirection_url: logoRedirectionURL
+      logo_redirection_url: logoRedirectionURL,
+      localization: languages,
+      enable_localization_menu
     } = this.props.data.header_ref.data;
     const {
       blackout_start_date: blackoutStartDate,
@@ -202,6 +205,7 @@ export default class SubPage extends Component<any, any> {
     } = this.props.data.microsite_document_ref.data;
     const showGroupBooking = enableGroupBooking === "Yes";
     const { groupBookingTourTitles } = this.state;
+    const currentLanguageSplit = lang.split("-")[0];
     return (
       <div className="page-wrapper">
         {this.state.showGroupBookingModal && groupBookingTourTitles && (
@@ -238,6 +242,12 @@ export default class SubPage extends Component<any, any> {
             }
             dropdown={this.state.dropdown}
             handleDropdownToggle={this.handleDropdownToggle}
+            languages={languages}
+            availableLanguages={alternate_languages}
+            currentLanguage={currentLanguageSplit}
+            uid={uid}
+            host={host}
+            enableLocalizationMenu={enable_localization_menu === "Yes"}
           />
         </header>
         <main

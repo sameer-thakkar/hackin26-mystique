@@ -294,7 +294,9 @@ export default class Page extends React.Component<any, any> {
               "logo_alt_text",
               "enable_group_booking",
               "header_links",
-              "logo_redirection_url"
+              "logo_redirection_url",
+              "localization",
+              "enable_localization_menu"
             ].map(prop => `${CONTENT_TYPES.HEADER}.${prop}`);
             const propsFromLinkedMicrosite = [
               "gtm_id",
@@ -318,7 +320,8 @@ export default class Page extends React.Component<any, any> {
 
             return await Client(req)
               .getByUID(CONTENT_TYPES.CONTENT_PAGE, uid, {
-                fetchLinks: [...propsFromHeader, ...propsFromLinkedMicrosite]
+                fetchLinks: [...propsFromHeader, ...propsFromLinkedMicrosite],
+                lang
               })
               .then(page => {
                 if (!(page && page.data)) {

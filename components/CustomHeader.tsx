@@ -4,6 +4,7 @@ import classNames from "classnames";
 import PoweredByHeadout from "./PoweredByHeadout";
 import { DROPDOWN_ELEMENT } from "../constants";
 import { attachQueryParam } from "../utils/helper";
+import LanguageSelector from "./LanguageSelector";
 
 export default class CustomHeader extends Component<any, any> {
   hamburgerRef: any;
@@ -23,7 +24,14 @@ export default class CustomHeader extends Component<any, any> {
       parentComponent,
       logoRedirectionURL,
       hasPoweredByHeadoutLogo,
-      dropdown
+      dropdown,
+      languages,
+      handleDropdownToggle,
+      availableLanguages,
+      currentLanguage,
+      uid,
+      host,
+      enableLocalizationMenu
     } = this.props;
 
     const logoUrl = logo ? logo.url : "";
@@ -64,6 +72,17 @@ export default class CustomHeader extends Component<any, any> {
               dropdown={this.props.dropdown}
               handleDropdownToggle={this.props.handleDropdownToggle}
             />
+            {enableLocalizationMenu ? (
+              <LanguageSelector
+                languages={languages}
+                availableLanguages={availableLanguages}
+                currentLanguage={currentLanguage}
+                uid={uid}
+                dropdown={dropdown}
+                handleDropdownToggle={handleDropdownToggle}
+                host={host}
+              />
+            ) : null}
           </div>
         </div>
       </div>
