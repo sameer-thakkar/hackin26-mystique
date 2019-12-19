@@ -96,3 +96,12 @@ export const DROPDOWN_ELEMENT = {
   HAMBURGER: "HAMBURGER",
   LANGUAGE_SELECTOR: "LANGUAGE_SELECTOR"
 };
+
+export const ANALYTICS_EVENTS = {
+  COLLECTION_PAGE_VIEWED: "Collection Page Viewed",
+  EXPERIENCE_DETAILS_VIEWED: "Experience Details Viewed",
+  EXPERIENCE_CARD_CLICKED: "Experience Card Clicked"
+};
+export const PAGE_TYPE = {
+  COLLECTION_PAGE: "Collection Page"
+};

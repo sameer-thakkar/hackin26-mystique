@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import InlinePrice from "./InlinePrice";
 import Swiper from "./Swiper";
 import Image from "./Image";
-import { IS_MOBILE } from "../utils/helper";
+import { isMobile } from "../utils/helper";
 
 export default class FreeTourPopup extends Component<any, any> {
   FTPopupElement: any;
@@ -23,7 +23,7 @@ export default class FreeTourPopup extends Component<any, any> {
 
   componentDidUpdate() {
     // Hack to find the CSS Transform Scale Down Value Iteratively till Popup Fits Screen (+guttter)
-    if (this.props.popupState && !this.state.scaleSet && !IS_MOBILE()) {
+    if (this.props.popupState && !this.state.scaleSet && !isMobile()) {
       let parentHeight = this.FTWrapElement.clientHeight; //Parent Height is same as Screen Height
       let popupHeight = this.FTPopupElement.clientHeight;
       if (popupHeight > parentHeight) {
@@ -50,17 +50,7 @@ export default class FreeTourPopup extends Component<any, any> {
     }
     const { togglePopup } = this.props;
     const clickedElement = e.target;
-    this.sendPopupClosedEvent(clickedElement, closeType);
     togglePopup();
-  };
-
-  sendPopupClosedEvent = (clickedElement, closeType) => {
-    this.props.trackEvent({
-      eventName: "Popup Closed",
-      popupType: "FreeTour",
-      closeType,
-      clickedElement
-    });
   };
 
   renderSlider = productOffer => {

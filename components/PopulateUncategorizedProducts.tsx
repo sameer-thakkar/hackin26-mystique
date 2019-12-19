@@ -34,10 +34,10 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
       popupState,
       isFetched,
       isMobile,
-      trackEvent,
       scorpioData,
       pageUrl,
-      host
+      host,
+      analytics
     } = this.props;
     const [firstTour, ...otherTours] = tours;
 
@@ -73,11 +73,11 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
             popupState={popupState}
             isMobile={isMobile}
             isFetched={isFetched}
-            trackEvent={trackEvent}
             pageUrl={pageUrl}
             host={host}
             ctaUrlSuffix={firstTour.cta_url_suffix || ""}
             isScratchPriceEnabled={firstTour.show_scratch_price === "Yes"}
+            analytics={analytics}
           />
 
           {this.state.isClient
@@ -105,11 +105,11 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
                   popupState={popupState}
                   isMobile={isMobile}
                   isFetched={isFetched}
-                  trackEvent={trackEvent}
                   pageUrl={pageUrl}
                   host={host}
                   ctaUrlSuffix={tour.cta_url_suffix || ""}
                   isScratchPriceEnabled={tour.show_scratch_price === "Yes"}
+                  analytics={analytics}
                 />
               ))
             : null}

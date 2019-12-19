@@ -6,6 +6,7 @@ import moment from "moment";
 import parse from "url-parse";
 import classNames from "classnames";
 import * as labels from "../static/localization/labels";
+import { ANALYTICS_EVENTS } from "../constants";
 
 const isLengthyArray = item => Array.isArray(item) && item.length;
 
@@ -17,7 +18,7 @@ export default class Product extends Component<any, any> {
   }
 
   readMore = context => {
-    const { currentLanguage } = this.props;
+    const { currentLanguage, analytics } = this.props;
     let desc = context.previousElementSibling;
     let more = context;
     if (more.dataset.open == 0) {
@@ -26,6 +27,10 @@ export default class Product extends Component<any, any> {
       desc.style.transition = "all 0.15s ease-in-out";
       desc.style.height = "auto";
       more.dataset.open = 1;
+      analytics.setVariableInDataLayer({
+        event: ANALYTICS_EVENTS.EXPERIENCE_DETAILS_VIEWED,
+        "Tour Group Id": this.props.tgid
+      });
     } else if (more.dataset.open == 1) {
       more.innerHTML = `+ ${labels[currentLanguage].READ_MORE_TEXT}`;
       more.style.background =
@@ -38,24 +43,16 @@ export default class Product extends Component<any, any> {
 
   handlePopup = () => {
     const { togglePopup } = this.props;
-    this.sendPopupViewedEvent();
     togglePopup();
   };
-
   sendBookNowEvent = () => {
-    this.props.trackEvent({
-      eventName: "Book Now Clicked",
-      tgid: this.props.tgid
+    const { analytics, tgid } = this.props;
+    analytics.setVariableInDataLayer({
+      event: ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED,
+      "Tour Group Id": tgid
     });
   };
 
-  sendPopupViewedEvent = () => {
-    this.props.trackEvent({
-      eventName: "Popup Viewed",
-      popupType: "FreeTour",
-      tgid: this.props.tgid
-    });
-  };
   getDate = (date, currentLanguage) => {
     const today = moment().format("YYYY-MM-DD");
     const tomorrow = moment()

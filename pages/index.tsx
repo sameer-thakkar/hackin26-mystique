@@ -275,7 +275,9 @@ export default class Page extends React.Component<any, any> {
                     .enable_powered_by_headout_logo
                     ? completeMicrosite.data.data
                         .enable_powered_by_headout_logo === "Yes"
-                    : baseLangData.data.enable_powered_by_headout_logo === "Yes"
+                    : baseLangData.data.enable_powered_by_headout_logo ===
+                      "Yes",
+                  baseLangPageTitle: baseLangData.data.title
                 }
               }
             };
@@ -364,7 +366,8 @@ export default class Page extends React.Component<any, any> {
           ContentType,
           uid,
           lang,
-          isDev
+          isDev,
+          host
         };
       }
 
@@ -479,6 +482,7 @@ export default class Page extends React.Component<any, any> {
           <SubPage
             {...CMSContent}
             isDev={isDev}
+            host={host}
             serverRequestStartTimestamp={serverRequestStartTimestamp}
           />
         );

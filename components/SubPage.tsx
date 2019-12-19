@@ -9,7 +9,7 @@ import Masthead from "./Masthead";
 import populateHead from "./common/meta";
 import { Client } from "../prismic-config";
 // import Banner from "./Banner";
-import { IS_MOBILE } from "../utils/helper";
+import { isMobile } from "../utils/helper";
 import dynamic from "next/dynamic";
 const GroupBooking = dynamic(() => import("./GroupBooking"), { ssr: false });
 import { DROPDOWN_ELEMENT } from "../constants";
@@ -132,6 +132,7 @@ export default class SubPage extends Component<any, any> {
       last_publication_date: dateModified,
       lang,
       isDev,
+      host,
       serverRequestStartTimestamp
     } = this.props;
 
@@ -220,11 +221,12 @@ export default class SubPage extends Component<any, any> {
           dateModified,
           lang,
           isDev,
+          originalHost: host,
           serverRequestStartTimestamp
         })}
         <header>
           <CustomHeader
-            isMobile={IS_MOBILE}
+            isMobile={isMobile}
             {...header_ref.data}
             parentComponent="SubPage"
             openGroupBookingModal={this.openGroupBookingModal}

@@ -9,12 +9,13 @@ import LongForm from "./LongForm";
 import populateHead from "./common/meta";
 import CustomFooter from "./CustomFooter";
 import { docCookies } from "../utils/helper";
-import { DROPDOWN_ELEMENT } from "../constants";
+import { DROPDOWN_ELEMENT, ANALYTICS_EVENTS } from "../constants";
 import { en } from "../static/localization/labels";
 import PopulateUncategorizedProducts from "./PopulateUncategorizedProducts";
 const FreeTourPopup = dynamic(() => import("./FreeTourPopup"), { ssr: false });
 const GroupBooking = dynamic(() => import("./GroupBooking"), { ssr: false });
 const MicrobrandList = dynamic(() => import("./MicrobrandsList"));
+import Analytics from "../utils/Analytics";
 
 export default class Microsite extends Component<any, any> {
   constructor(props) {
@@ -30,7 +31,8 @@ export default class Microsite extends Component<any, any> {
       showGroupBookingModal: false,
       isFetched: false,
       earliestAvailabilityQueue: [],
-      isClient: false
+      isClient: false,
+      analytics: new Analytics()
     };
   }
 
@@ -38,27 +40,13 @@ export default class Microsite extends Component<any, any> {
     return document.documentElement.clientWidth < 768;
   };
 
-  trackEvent = ({ eventName, ...labelProps }) => {
-    if (window && (window as any).dataLayer) {
-      const allProps = {
-        event: eventName,
-        url: window.location.href,
-        ...labelProps
-      };
-      (window as any).dataLayer.push(allProps);
-    }
-  };
-
-  sendVariableToDataLayer = JSONObject => {
-    if (window && (window as any).dataLayer) {
-      (window as any).dataLayer.push(JSONObject);
-    }
-  };
-
   async componentDidMount() {
-    const { data } = this.props.data;
+    const { data, lang } = this.props.data;
+    const { analytics } = this.state;
     const { tgidToScroll } = this.props;
     const uncategorizedTours = data.body1;
+    const { baseLangPageTitle } = this.props.data.data;
+    const currentLanguage = lang.substring(0, 2);
     const checkIfToursAvailable =
       uncategorizedTours.length > 0 &&
       uncategorizedTours[0].items[0].tgid != null;
@@ -98,7 +86,7 @@ export default class Microsite extends Component<any, any> {
         } else {
           HSID = docCookies.getItem("h-sid");
         }
-        this.sendVariableToDataLayer({ "h-sid": HSID });
+        analytics.sendHsidToDataLayer({ "h-sid": HSID });
         return res.json();
       });
 
@@ -188,6 +176,14 @@ export default class Microsite extends Component<any, any> {
         smooth: "easeInOutQuint"
       });
     }
+    analytics.sendGenericPageEvents({
+      Language: currentLanguage,
+      "Page Title": baseLangPageTitle
+    });
+    analytics.setVariableInDataLayer({
+      event: ANALYTICS_EVENTS.COLLECTION_PAGE_VIEWED,
+      "Collection Type": "Microbrand"
+    });
   }
 
   handleDropdownToggle = elementIdentifier => {
@@ -306,6 +302,7 @@ export default class Microsite extends Component<any, any> {
     let groupBookingTourTitles = [];
 
     const { tgidToScroll } = this.props;
+    const { analytics } = this.state;
 
     if (showGroupBooking) {
       uncategorizedToursList
@@ -371,6 +368,7 @@ export default class Microsite extends Component<any, any> {
             dateModified,
             lang,
             isDev,
+            originalHost: host,
             currentLanguage,
             serverRequestStartTimestamp
           })}
@@ -420,10 +418,8 @@ export default class Microsite extends Component<any, any> {
               togglePopup={this.togglePopup}
               pageUrl={pageUrl}
               isMobile={this.isMobile}
-              trackEvent={({ eventName, ...labelProps }) =>
-                this.trackEvent({ eventName, ...labelProps })
-              }
               host={host}
+              analytics={analytics}
             />
           ) : null}
           {isHomepage && isClient ? (
@@ -454,9 +450,6 @@ export default class Microsite extends Component<any, any> {
               productOffer={offerPopup}
               scorpioData={this.props.scorpioData}
               isMobile={this.isMobile}
-              trackEvent={({ eventName, ...labelProps }) =>
-                this.trackEvent({ eventName, ...labelProps })
-              }
             />
           )}
         </div>

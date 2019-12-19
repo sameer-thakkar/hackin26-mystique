@@ -103,11 +103,17 @@ export default data => {
     page_url: pageUrl,
     isDev,
     currentLanguage,
+    originalHost,
     serverRequestStartTimestamp
   } = data;
-  const amplitude_key = isDev
+
+  const isNonProd = isDev || originalHost.startsWith("stage.");
+
+  const amplitude_key = isNonProd
     ? process.env.AMPLITUDE_DEV
     : process.env.AMPLITUDE_PROD;
+
+  const GTM_key = isNonProd ? "GTM-N5L6JFS" : "GTM-TR8SRJG";
 
   const robotsContent = [];
   if (nofollow === "True") {
@@ -215,7 +221,7 @@ export default data => {
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.defer=true;j.src=
             '//www.googletagmanager.com/gtm.'+'js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-TR8SRJG');//]]>`
+            })(window,document,'script','dataLayer','${GTM_key}');//]]>`
         }}
       ></script>
 

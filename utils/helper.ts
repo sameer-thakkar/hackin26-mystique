@@ -76,7 +76,9 @@ export const createGroupBooking = (url, data) =>
     .then(response => "Successful")
     .catch(error => `Error: ${error}`);
 
-export const IS_MOBILE = () => window.outerWidth < 768;
+export const isMobile = () => {
+  return document.documentElement.clientWidth < 768;
+};
 
 export const docCookies = {
   getItem: function(sKey) {
