@@ -46,10 +46,12 @@ export default class Product extends Component<any, any> {
     togglePopup();
   };
   sendBookNowEvent = () => {
-    const { analytics, tgid } = this.props;
+    const { analytics, tgid, position } = this.props;
     analytics.setVariableInDataLayer({
       event: ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED,
-      "Tour Group Id": tgid
+      "Tour Group Id": tgid,
+      Position: position,
+      "Div Type": "product-list"
     });
   };
 

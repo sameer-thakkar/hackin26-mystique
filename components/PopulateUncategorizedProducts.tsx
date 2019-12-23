@@ -78,12 +78,13 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
             ctaUrlSuffix={firstTour.cta_url_suffix || ""}
             isScratchPriceEnabled={firstTour.show_scratch_price === "Yes"}
             analytics={analytics}
+            position={1}
           />
 
           {this.state.isClient
             ? otherTours.map((tour, index) => (
                 <Product
-                  key={index}
+                  key={index + 1}
                   tgid={tour.tgid}
                   earliestAvailability={tour.earliestAvailability}
                   tid={tour.tour_variant_id}
@@ -110,6 +111,7 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
                   ctaUrlSuffix={tour.cta_url_suffix || ""}
                   isScratchPriceEnabled={tour.show_scratch_price === "Yes"}
                   analytics={analytics}
+                  position={index + 2}
                 />
               ))
             : null}
