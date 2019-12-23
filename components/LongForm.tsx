@@ -25,7 +25,7 @@ export default class LongForm extends Component<any, any> {
             .long-form h4,
             .long-form h5,
             .long-form h6 {
-              color: #333;
+              color: #545454;
               line-height: 1.2;
               margin: 0 0 0.75em;
             }
@@ -37,7 +37,7 @@ export default class LongForm extends Component<any, any> {
             }
             .long-form h2 {
               display: inline-block;
-              color: #000;
+              color: #545454;
               font-size: 1.8rem;
               font-weight: 500;
             }
@@ -60,7 +60,8 @@ export default class LongForm extends Component<any, any> {
             .long-form h4 > *,
             .long-form h5 > *,
             .long-form h6 > * {
-              all: inherit;
+              font-weight: 500;
+              color: #545454;
             }
             .long-form p {
               font-size: 1rem;
@@ -71,7 +72,7 @@ export default class LongForm extends Component<any, any> {
             }
             .long-form a {
               text-decoration: none;
-              color: #000;
+              color: #ec1943;
             }
 
             .long-form ul {

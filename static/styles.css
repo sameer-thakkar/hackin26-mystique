@@ -2280,7 +2280,7 @@ form.form {
   border-top: solid 3px;
   margin: 0;
   position: absolute;
-  bottom: -15px;
+  bottom: -20px;
   left: 0;
   content: "";
 }
@@ -2578,8 +2578,12 @@ form.form {
 }
 .subpage-container h1,
 h2,
-h3 {
+h3,
+h4,
+h5,
+h6 {
   font-family: "Graphik";
+  color: #545454;
 }
 .feature-box-wrapper {
   display: grid;
@@ -2911,4 +2915,14 @@ h3 {
   .description-table td {
     word-break: unset;
   }
+}
+
+h1 > strong,
+h2 > strong,
+h3 > strong,
+h4 > strong,
+h5 > strong,
+h6 > strong {
+  font-weight: 500;
+  color: #545454;
 }
