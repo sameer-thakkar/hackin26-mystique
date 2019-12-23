@@ -151,5 +151,6 @@ module.exports = [
   "bateaux-parisiens.seine-river-cruises.com",
   "lido.cabaret-paris.com",
   "pantheon.paris-tickets.org",
+  "www.hop-on-hop-off-tickets.com",
   "microbrands.headout.com"
 ];
