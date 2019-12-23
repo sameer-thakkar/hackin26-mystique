@@ -2339,7 +2339,7 @@ form.form {
   margin-bottom: 40px;
 }
 .navigation-bar.center-align-tabs {
-  justify-content: center;
+  justify-content: space-around;
 }
 .navigation-tab {
   font-weight: 600;
