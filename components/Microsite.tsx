@@ -152,7 +152,11 @@ export default class Microsite extends Component<any, any> {
             .then(response => response)
         );
         const response = await Promise.all(requestQueue).then(res =>
-          res.map(tour => (tour as any).inventoryList[0].startDate)
+          res.map(tour =>
+            (tour as any).inventoryList[0]
+              ? (tour as any).inventoryList[0].startDate
+              : ""
+          )
         );
         this.setState({ earliestAvailabilityQueue: response });
       }
