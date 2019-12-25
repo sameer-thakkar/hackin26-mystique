@@ -90,7 +90,7 @@ export const BANNER_PARAMS = {
 };
 
 export const POWERED_BY_HEADOUT_LOGO =
-  "https://cdn-imgix-open.headout.com/Powered%20By%20Headout/Powered%20by.png";
+  "https://cdn-imgix-open.headout.com/Powered%20By%20Headout/powered-by-logo.svg";
 
 export const DROPDOWN_ELEMENT = {
   HAMBURGER: "HAMBURGER",
