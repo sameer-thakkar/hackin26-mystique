@@ -193,7 +193,7 @@ export default class SubPage extends Component<any, any> {
     const {
       enable_group_booking: enableGroupBooking,
       logo_redirection_url: logoRedirectionURL,
-      localization: languages,
+      localization,
       enable_localization_menu
     } = this.props.data.header_ref.data;
     const {
@@ -226,7 +226,8 @@ export default class SubPage extends Component<any, any> {
           lang,
           isDev,
           originalHost: host,
-          serverRequestStartTimestamp
+          serverRequestStartTimestamp,
+          localization
         })}
         <header>
           <CustomHeader
@@ -242,7 +243,7 @@ export default class SubPage extends Component<any, any> {
             }
             dropdown={this.state.dropdown}
             handleDropdownToggle={this.handleDropdownToggle}
-            languages={languages}
+            languages={localization}
             availableLanguages={alternate_languages}
             currentLanguage={currentLanguageSplit}
             uid={uid}
