@@ -2479,9 +2479,9 @@ form.form {
   border: 2px solid #ec1943;
   border-radius: 5px;
   color: #ec1943;
-  padding: 15px 38px;
+  padding: 15px 20px;
   font-family: Graphik;
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 500;
 }
 @media (max-width: 768px) {
