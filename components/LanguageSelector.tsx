@@ -87,15 +87,11 @@ export default class LanguageSelector extends Component<any, any> {
   render() {
     const { currentLanguage, dropdown, host, uid } = this.props;
     const { pathname } = this.state;
-    const slug = pathname
-      .replace("en/", "")
-      .replace("fr/", "")
-      .replace("de/", "")
-      .replace("it/", "")
-      .replace("nl/", "")
-      .replace("pt/", "")
-      .replace("es/", "");
-
+    const langCodeRegex = /^(\/){0,1}(en|fr|de|it|nl|pt|es)(\/){0,1}/;
+    const removeLangFromPathname = pathname.replace(langCodeRegex, "");
+    const slugWithoutLeadingSlash = slug =>
+      slug.charAt(slug[0]) === "/" ? slug.substr(1, slug.length) : slug;
+    const slug = slugWithoutLeadingSlash(removeLangFromPathname);
     const isDev = host.includes("localhost");
 
     return (
@@ -147,7 +143,7 @@ export default class LanguageSelector extends Component<any, any> {
               })
             : this.getLanguages().map((language, index) => {
                 return (
-                  <Link key={index} href={`/${language}${slug}`}>
+                  <Link key={index} href={`/${language}/${slug}`}>
                     <a
                       className={
                         currentLanguage == language ? "selected-tab" : ""
