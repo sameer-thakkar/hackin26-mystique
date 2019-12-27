@@ -169,7 +169,6 @@ module.exports = [
   "stage.hot-air-ballon.tickets-dubai.org",
   "stage.airport-transfers.tickets-dubai.org",
   "stage.city-tour.tickets-dubai.org",
-  "stage.sydney.opera-tickets.org",
   "stage.www.dubai-city-tours.com",
   "stage.www.dhow-cruise.com",
   "stage.creek.dhow-cruise.com",
