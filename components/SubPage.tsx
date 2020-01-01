@@ -136,6 +136,7 @@ export default class SubPage extends Component<any, any> {
       uid,
       host
     } = this.props;
+    const currentLanguage = lang.split("-")[0];
 
     const contentPageHasOtherMetaTags = data.other_meta_tags.filter(
       ({ meta_tag }) => meta_tag
@@ -227,7 +228,8 @@ export default class SubPage extends Component<any, any> {
           isDev,
           originalHost: host,
           serverRequestStartTimestamp,
-          localization
+          localization,
+          currentLanguage
         })}
         <header>
           <CustomHeader
