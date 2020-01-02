@@ -13,7 +13,7 @@ const withTrailingSlash = url =>
 function getPage(api, uid, documents) {
   return api
     .query(Prismic.Predicates.any("document.tags", [uid]), {
-      lang: "*",
+      lang: "en-us",
       pageSize: 100
     })
     .then(response => {
@@ -23,25 +23,6 @@ function getPage(api, uid, documents) {
 
 const createLoc = doc => {
   const pageUrl = doc.data.page_url;
-  if (doc.type === CONTENT_TYPES.MICROSITE) {
-    if (doc.lang === "en-us") {
-      return pageUrl;
-    }
-    const langParam = doc.lang.split("-")[0];
-    const { host, pathname } = parse(pageUrl, true);
-    // lang is not english and it's a MB with a pathname
-    // eg. experiment pages with /home urls or MBs on pathname
-    if (pathname.length) {
-      if (
-        pathname.startsWith(`/${langParam}`) &&
-        (pathname === `/${langParam}` || pathname.startsWith(`/${langParam}/`))
-      ) {
-        return `https://${host}${pathname}`;
-      }
-      return `https://${host}/${langParam}${pathname}`;
-    }
-    return `${pageUrl}/${langParam}`;
-  }
   return pageUrl;
 };
 
