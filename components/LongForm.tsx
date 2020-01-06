@@ -27,7 +27,6 @@ export default class LongForm extends Component<any, any> {
             .long-form h6 {
               color: #545454;
               line-height: 1.2;
-              margin: 0 0 0.75em;
             }
             .long-form .slice-block {
               margin: 60px 0;
