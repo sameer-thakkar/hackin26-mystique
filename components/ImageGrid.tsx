@@ -39,16 +39,12 @@ class ImageGrid extends React.Component<ImageGridProps, any> {
               max-width: 100%;
             }
             .image-box {
-              padding: 20px;
               border-radius: 3px;
               box-shadow: 0 1px 8px rgba(0, 0, 0, 0.18);
             }
             @media (max-width: 768px) {
               .image-grid {
                 grid-template-columns: 1fr;
-              }
-              .image-box {
-                padding: 10px;
               }
             }
           `}
@@ -60,6 +56,7 @@ class ImageGrid extends React.Component<ImageGridProps, any> {
               max-width: 100%;
               object-fit: cover;
               height: 350px;
+              display: block;
             }
             @media (max-width: 768px) {
               .image-box img {

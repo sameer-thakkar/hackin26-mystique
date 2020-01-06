@@ -2413,7 +2413,7 @@ form.form {
   display: block;
   font-family: Graphik;
   font-weight: 600;
-  font-size: 20px;
+  font-size: 18px;
   color: #080808;
   line-height: 1.5;
 }
@@ -2429,9 +2429,6 @@ form.form {
   font-size: 16px;
   line-height: 1.5;
   color: #545454;
-}
-.more-reads-image {
-  padding: 20px 20px 0;
 }
 @media (max-width: 768px) {
   .more-reads {
@@ -2584,6 +2581,7 @@ h5,
 h6 {
   font-family: "Graphik";
   color: #545454;
+  font-weight: 500;
 }
 .feature-box-wrapper {
   display: grid;
