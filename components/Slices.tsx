@@ -27,6 +27,7 @@ export const sliceHandler = slice => {
         />
       ));
       break;
+    case "image":
     case "image_grid":
       return (
         <ImageGrid
