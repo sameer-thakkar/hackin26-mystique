@@ -14,6 +14,7 @@ const FeatureBox = dynamic(() => import("./FeatureBox"));
 const TitleLinksCard = dynamic(() => import("./TitleLinksCard"));
 const CardCarousel = dynamic(() => import("./slices/CardCaoursel"));
 const Table = dynamic(() => import("./slices/Table"));
+const MicrobrandCards = dynamic(() => import("./slices/MicrobrandCards"));
 
 export const sliceHandler = slice => {
   switch (slice.slice_type) {
@@ -81,6 +82,10 @@ export const sliceHandler = slice => {
         />
       );
       break;
+    case "microbrand_cards":
+      return (
+        <MicrobrandCards cards={slice.items} cardsContent={slice.primary} />
+      );
     default:
     // ToDo: Add to Error Logs (Slice)
   }

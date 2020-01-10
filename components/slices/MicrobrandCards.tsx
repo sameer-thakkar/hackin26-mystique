@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import Image from "./Image";
+import Image from "../Image";
+import { RichText } from "prismic-reactjs";
 
-export default class MicrobrandList extends Component<any, any> {
+export default class MicrobrandCards extends Component<any, any> {
   state = {
     cardPrices: {},
     currencySymbol: "",
@@ -9,8 +10,8 @@ export default class MicrobrandList extends Component<any, any> {
   };
 
   async componentDidMount() {
-    const { microbrandCards } = this.props;
-    const tgids = microbrandCards.map(card => card.tgid);
+    const { cards } = this.props;
+    const tgids = cards.map(card => card.tgid);
     const tgidsExist = tgids.filter(tgid => tgid);
     if (tgidsExist.length) {
       const fetchPrice = await fetch(
@@ -35,15 +36,15 @@ export default class MicrobrandList extends Component<any, any> {
   }
 
   render() {
-    const { microbrandCards, microbrandCardsHeading } = this.props;
+    const { cards } = this.props;
     const { isFetched, currencySymbol, cardPrices } = this.state;
     return (
       <div className="microbrands-list">
-        <div className="microbrands-list-heading">
-          <h1>{microbrandCardsHeading}</h1>
+        <div className="microbrand-cards-content">
+          <RichText render={this.props.cardsContent.microbrand_cards_content} />
         </div>
         <div className="microbrand-cards">
-          {microbrandCards.map((card, index) => {
+          {cards.map((card, index) => {
             return (
               <div key={index} className="microbrand-card-wrapper">
                 <a target="_blank" href={card.microbrand_link.url}>
