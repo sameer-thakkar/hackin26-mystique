@@ -1,10 +1,11 @@
 import InlinePrice from "../components/InlinePrice";
 import InlineInvPrice from "../components/InlineInvPrice";
+import CTAShortCode from "../components/CTAShortCode";
 import React from "react";
 
 interface ShortCodeDictionary {
   [key: string]: {
-    component: React.ComponentClass;
+    component: React.ComponentClass | React.FunctionComponent;
   };
 }
 
@@ -14,6 +15,9 @@ const shortCodesDict: ShortCodeDictionary = {
   },
   "inv-price": {
     component: InlineInvPrice
+  },
+  cta: {
+    component: CTAShortCode
   }
 };
 
