@@ -63,13 +63,9 @@ export default class Page extends React.Component<any, any> {
           ? props.CMSContent.data.data.redirect_url
           : null;
 
-        const redirectCode = props.CMSContent
-          ? props.CMSContent.data.data.redirect_code.split("-")[1]
-          : null;
-
         if (redirectTo && redirectTo.url) {
           if (res) {
-            res.writeHead(redirectCode, {
+            res.writeHead(302, {
               Location: redirectTo.url
             });
             res.end();
