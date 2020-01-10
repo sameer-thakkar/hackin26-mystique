@@ -315,7 +315,8 @@ export default class Page extends React.Component<any, any> {
               "blackout_start_date",
               "blackout_end_date",
               "block_n_days_group_booking",
-              "enable_powered_by_headout_logo"
+              "enable_powered_by_headout_logo",
+              "group_form_blocked_days"
             ].map(prop => `${CONTENT_TYPES.MICROSITE}.${prop}`);
 
             return await Client(req)

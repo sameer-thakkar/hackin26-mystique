@@ -268,13 +268,22 @@ export default class GroupBooking extends Component<any, any> {
     return dateRange;
   };
 
+  isDayAvailable = (date, blockedDays = "") => {
+    const theDay = date
+      .toDateString()
+      .slice(0, 2)
+      .toLowerCase();
+    return blockedDays.toLowerCase().indexOf(theDay) == -1;
+  };
+
   render() {
     const {
       blackoutStartDate,
       blackoutEndDate,
       blockNDaysGroupBooking,
       minimumPax,
-      maximumPax
+      maximumPax,
+      blockedDays
     } = this.props;
     const blackoutDateRange = this.getDatesInRange(
       blackoutStartDate,
@@ -419,6 +428,9 @@ export default class GroupBooking extends Component<any, any> {
                         .toDate()}
                       excludeDates={[...blackoutDateRange]}
                       dateFormat="dd/MM/yyyy"
+                      filterDate={date =>
+                        this.isDayAvailable(date, blockedDays)
+                      }
                       monthsShown={isMobileDevice() ? 1 : 2}
                     />
                     <img
