@@ -181,5 +181,6 @@ module.exports = [
   "stage.pantheon.paris-tickets.org",
   "stage.www.sagradafamiliatickets.com",
   "stage.www.hop-on-hop-off-tickets.com",
+  "stage.orangerie.paris-tickets.org",
   "stage.microbrands.headout.com"
 ];
