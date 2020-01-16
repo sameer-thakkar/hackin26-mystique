@@ -1,4 +1,5 @@
 module.exports = [
+  "www.last-supper-milan.com",
   "www.vaticantickets.org",
   "www.mezquita-de-cordoba.org",
   "siam-parks.tickets-tenerife.com",
