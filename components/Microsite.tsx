@@ -319,8 +319,8 @@ export default class Microsite extends Component<any, any> {
         .forEach(tour => {
           groupBookingTourTitles.push({
             value:
-              tour.tour_title_override ||
-              this.props.scorpioData[tour.tgid].title,
+              (tour.tour_title_override ||
+                this.props.scorpioData[tour.tgid].title) + ` [${tour.tgid}]`,
             label:
               tour.tour_title_override ||
               this.props.scorpioData[tour.tgid].title

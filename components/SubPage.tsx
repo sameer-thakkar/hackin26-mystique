@@ -51,12 +51,12 @@ export default class SubPage extends Component<any, any> {
             `https://api.headout.com/api/v5/tour-group/get/${tour.tgid}?language=${lang}`
           ).then(r => r.json());
           groupBookingTourTitles.push({
-            value: tourTitle.name,
+            value: tourTitle.name + ` [${tour.tgid}]`,
             label: tourTitle.name
           });
         } else {
           groupBookingTourTitles.push({
-            value: tour.tour_title_override,
+            value: tour.tour_title_override + ` [${tour.tgid}]`,
             label: tour.tour_title_override
           });
         }
