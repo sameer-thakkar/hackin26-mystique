@@ -300,7 +300,7 @@ export default class Microsite extends Component<any, any> {
     const microbrandCards = this.props.data.data.microbrand_cards;
     const microbrandCardsHeading = this.props.data.data.microbrand_cards_heading
       ? this.props.data.data.microbrand_cards_heading
-      : en.MICROBRAND_CARDS_HEADING;
+      : null;
     const isHomepage =
       !uncategorizedTours.length ||
       uncategorizedTours[0].items[0].tgid === null;
