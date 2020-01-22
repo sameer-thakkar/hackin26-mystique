@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import { RichText } from "prismic-reactjs";
 
 import { shortCodeSerializer } from "../utils/shortCodes";
+import { ContentTabs } from "./slices/ContentTabs";
 
 const ImageGrid = dynamic(() => import("./ImageGrid"));
 const ImageTextGrid = dynamic(() => import("./ImageTextGrid"));
@@ -86,6 +87,14 @@ export const sliceHandler = slice => {
       return (
         <MicrobrandCards cards={slice.items} cardsContent={slice.primary} />
       );
+    case "content_tabs":
+      return (
+        <ContentTabs
+          tabsArr={slice.primary.tab_list.split(",").map(t => t.trim())}
+          contentArr={slice.items}
+        />
+      );
+      break;
     default:
     // ToDo: Add to Error Logs (Slice)
   }
