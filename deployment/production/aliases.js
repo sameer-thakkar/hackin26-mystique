@@ -1,4 +1,5 @@
 module.exports = [
+  "www.expo2020-dubai-tickets.com",
   "www.tickets-pattaya.com",
   "ramayana-waterpark.tickets-pattaya.com",
   "underwater-world.tickets-pattaya.com",
