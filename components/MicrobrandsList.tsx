@@ -44,6 +44,7 @@ export default class MicrobrandList extends Component<any, any> {
             <h1>{microbrandCardsHeading}</h1>
           </div>
         )}
+        {microbrandCards.length ? <br /> : null}
         <div className="microbrand-cards">
           {microbrandCards.map((card, index) => {
             return (
