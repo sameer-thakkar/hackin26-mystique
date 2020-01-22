@@ -2950,3 +2950,8 @@ h6 > strong {
 .short-code-cta:hover {
   transform: scale(1.02, 1.08);
 }
+
+.group-booking-disclaimer p {
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+}

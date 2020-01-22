@@ -27,6 +27,7 @@ import {
 import "react-datepicker/dist/react-datepicker.css";
 import "./../static/PhoneFieldStyle/phoneFelid.css";
 import "./../static/PhoneFieldStyle/phoneFieldinput.css";
+import { RichText } from "prismic-reactjs";
 
 export default class GroupBooking extends Component<any, any> {
   constructor(props) {
@@ -283,7 +284,8 @@ export default class GroupBooking extends Component<any, any> {
       blockNDaysGroupBooking,
       minimumPax,
       maximumPax,
-      blockedDays
+      blockedDays,
+      disclaimer
     } = this.props;
     const blackoutDateRange = this.getDatesInRange(
       blackoutStartDate,
@@ -307,6 +309,12 @@ export default class GroupBooking extends Component<any, any> {
               Call us on <a href="tel:+1 347-897-0100"> +1 347-897-0100</a>,
               Available 24*7
             </small>
+            <br />
+            {disclaimer && (
+              <small className="group-booking-disclaimer">
+                <RichText render={disclaimer} />
+              </small>
+            )}
             <img
               data-src="https://cdn-imgix-open.headout.com/sites/assets/close-thin.svg?auto=compress&amp;q=10"
               alt="close"

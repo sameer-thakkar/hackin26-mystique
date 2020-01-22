@@ -296,7 +296,8 @@ export default class Page extends React.Component<any, any> {
               "header_links",
               "logo_redirection_url",
               "localization",
-              "enable_localization_menu"
+              "enable_localization_menu",
+              "group_booking_disclaimer"
             ].map(prop => `${CONTENT_TYPES.HEADER}.${prop}`);
             const propsFromLinkedMicrosite = [
               "gtm_id",
@@ -407,7 +408,7 @@ export default class Page extends React.Component<any, any> {
         );
 
         const scorpioData = scorpioResponses.reduce(
-          (accum, response: any, idx) => ({
+          (accum: {}, response: any, idx) => ({
             ...accum,
             [idsToFetchFromScorpio[idx]]: {
               title: response.name,

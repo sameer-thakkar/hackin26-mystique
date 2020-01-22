@@ -194,9 +194,11 @@ export default class SubPage extends Component<any, any> {
     const {
       enable_group_booking: enableGroupBooking,
       logo_redirection_url: logoRedirectionURL,
+      group_booking_disclaimer: groupBookingDisclaimer,
       localization,
       enable_localization_menu
     } = this.props.data.header_ref.data;
+
     const {
       blackout_start_date: blackoutStartDate,
       blackout_end_date: blackoutEndDate,
@@ -205,9 +207,11 @@ export default class SubPage extends Component<any, any> {
       maximum_pax: maximumPax,
       group_form_blocked_days: blockedDays
     } = this.props.data.microsite_document_ref.data;
+
     const showGroupBooking = enableGroupBooking === "Yes";
     const { groupBookingTourTitles } = this.state;
     const currentLanguageSplit = lang.split("-")[0];
+
     return (
       <div className="page-wrapper">
         {this.state.showGroupBookingModal && groupBookingTourTitles && (
@@ -220,6 +224,7 @@ export default class SubPage extends Component<any, any> {
             minimumPax={minimumPax ? minimumPax : 15}
             maximumPax={maximumPax ? minimumPax : undefined}
             blockedDays={blockedDays || ""}
+            disclaimer={groupBookingDisclaimer}
           />
         )}
         {populateHead({
