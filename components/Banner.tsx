@@ -100,13 +100,7 @@ export default class Banner extends Component<any, any> {
   };
 
   render() {
-    const {
-      bannerHeading,
-      bannerImages,
-      boxed,
-      currentLanguage,
-      isHomepage
-    } = this.props;
+    const { bannerHeading, bannerImages, boxed, currentLanguage } = this.props;
     const { isClient } = this.state;
     return (
       <div className={classNames("mb-carousel", { boxed: boxed })}>
@@ -129,13 +123,11 @@ export default class Banner extends Component<any, any> {
         <div className="mb-captions">
           <div className="mb-caption">
             <div className="caption">
-              {!isHomepage ? <h1>{bannerHeading}</h1> : null}
+              <h1>{bannerHeading}</h1>
             </div>
-            {!isHomepage ? (
-              <a className="mb-cta book-now-text" href="#select-tickets">
-                {labels[currentLanguage].BANNER_CTA}
-              </a>
-            ) : null}
+            <a className="mb-cta book-now-text" href="#select-tickets">
+              {labels[currentLanguage].BANNER_CTA}
+            </a>
           </div>
         </div>
         {this.hasIndicators && bannerImages.length > 1 ? (

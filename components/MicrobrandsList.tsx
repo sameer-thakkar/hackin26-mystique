@@ -41,7 +41,7 @@ export default class MicrobrandList extends Component<any, any> {
       <div className="microbrands-list">
         {microbrandCardsHeading && (
           <div className="microbrands-list-heading">
-            <h1>{microbrandCardsHeading}</h1>
+            {microbrandCardsHeading}
           </div>
         )}
         {microbrandCards.length ? <br /> : null}

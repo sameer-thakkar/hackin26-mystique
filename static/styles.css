@@ -2789,7 +2789,7 @@ h6 {
   overflow: hidden;
 }
 
-.microbrands-list-heading h1 {
+.microbrands-list-heading {
   border-left: 3px solid #669dde;
   padding: 5px 10px 5px;
   font-family: "Graphik", "Proxima Nova", "Helvetica Neue", Helvetica, Arial,
@@ -2797,6 +2797,7 @@ h6 {
   font-weight: 500;
   color: #000000;
   margin: 40px 0px;
+  font-size: 2em;
 }
 
 .carousel-slider .swiper-button-next.swiper-button-disabled,
@@ -2892,7 +2893,7 @@ h6 {
 }
 
 @media (max-width: 768px) {
-  .microbrands-list-heading h1 {
+  .microbrands-list-heading {
     font-size: 24px;
   }
   .swiper-wrapper {

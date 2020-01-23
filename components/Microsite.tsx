@@ -10,12 +10,12 @@ import populateHead from "./common/meta";
 import CustomFooter from "./CustomFooter";
 import { docCookies } from "../utils/helper";
 import { DROPDOWN_ELEMENT, ANALYTICS_EVENTS } from "../constants";
-import { en } from "../static/localization/labels";
 import PopulateUncategorizedProducts from "./PopulateUncategorizedProducts";
+import Analytics from "../utils/Analytics";
+
 const FreeTourPopup = dynamic(() => import("./FreeTourPopup"), { ssr: false });
 const GroupBooking = dynamic(() => import("./GroupBooking"), { ssr: false });
 const MicrobrandList = dynamic(() => import("./MicrobrandsList"));
-import Analytics from "../utils/Analytics";
 
 export default class Microsite extends Component<any, any> {
   constructor(props) {
@@ -301,9 +301,6 @@ export default class Microsite extends Component<any, any> {
     const microbrandCardsHeading = this.props.data.data.microbrand_cards_heading
       ? this.props.data.data.microbrand_cards_heading
       : null;
-    const isHomepage =
-      !uncategorizedTours.length ||
-      uncategorizedTours[0].items[0].tgid === null;
     const { isClient, showEarliestAvailability } = this.state;
     let groupBookingTourTitles = [];
 
@@ -405,7 +402,6 @@ export default class Microsite extends Component<any, any> {
             bannerCtaText={bannerCtaText ? bannerCtaText : null}
             currentLanguage={currentLanguage ? currentLanguage : null}
             isMobile={this.isMobile}
-            isHomepage={isHomepage}
             boxed={true}
           />
           {checkIfToursAvailable ? (
@@ -430,7 +426,7 @@ export default class Microsite extends Component<any, any> {
               analytics={analytics}
             />
           ) : null}
-          {isHomepage && isClient ? (
+          {isClient ? (
             <MicrobrandList
               microbrandCards={microbrandCards}
               microbrandCardsHeading={microbrandCardsHeading}
