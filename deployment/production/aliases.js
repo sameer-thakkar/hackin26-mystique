@@ -1,4 +1,6 @@
 module.exports = [
+  "leaning-tower.pisatickets.com",
+  "www.pisatickets.com",
   "www.expo2020-dubai-tickets.com",
   "www.tickets-pattaya.com",
   "ramayana-waterpark.tickets-pattaya.com",
