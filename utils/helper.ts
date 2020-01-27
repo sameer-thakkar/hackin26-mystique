@@ -185,3 +185,10 @@ export const attachQueryParam = (url, queryString) => {
   }
   return `${url}?${queryString}`;
 };
+
+// Reflects promises to avoid running into the catch block
+export const reflect = promise =>
+  promise.then(
+    payload => ({ payload, status: "resolved" }),
+    error => ({ error, status: "rejected" })
+  );

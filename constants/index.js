@@ -75,7 +75,8 @@ export const CONTENT_TYPES = {
   MICROSITE: "microsite",
   CONTENT_PAGE: "content_page",
   FOOTER: "common_footer",
-  HEADER: "common_header"
+  HEADER: "common_header",
+  REDIRECT: "redirect"
 };
 
 export const BANNER_PARAMS = {

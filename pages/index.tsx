@@ -9,7 +9,7 @@ const ErrorPage = dynamic(() => import("next/error"));
 
 import { Client } from "../prismic-config";
 import { CONTENT_TYPES } from "../constants";
-import { withoutTrailingSlash } from "../utils/helper";
+import { withoutTrailingSlash, reflect } from "../utils/helper";
 import EnvironmentContext from "../contexts/environmentContext";
 import "../static/styles.css";
 
@@ -52,11 +52,41 @@ export default class Page extends React.Component<any, any> {
   static async getInitialProps({ req, query, res }) {
     const serverRequestStartTimestamp = Math.floor(new Date().getTime());
     try {
-      const props = await Page.getMicrositeData({
-        req,
-        query,
-        reqPathname: req ? req.url.split("?")[0].split("#")[0] : null
-      });
+      const isDev = req
+        ? !!query.mystique_uid
+        : window.location.search.includes("mystique_uid");
+      let redirectUID;
+
+      if (isDev) {
+        redirectUID = query.mystique_uid.split(".");
+      } else {
+        const { uid } = getPropsFromReq({
+          host: req.headers.host,
+          pathname: req ? req.url.split("?")[0].split("#")[0] : null
+        });
+        redirectUID = uid.split(".");
+      }
+      redirectUID.shift();
+      redirectUID = redirectUID.join(".");
+
+      const [redirect, { payload: props }] = await Promise.all(
+        [
+          Client(req)
+            .getByUID(CONTENT_TYPES.REDIRECT, redirectUID)
+            .then(r => {
+              const redirectUrl = r.data.redirect_url.url;
+              if (res && redirectUrl) {
+                res.writeHead(302, { Location: redirectUrl });
+                res.end();
+              }
+            }),
+          Page.getMicrositeData({
+            req,
+            query,
+            reqPathname: req ? req.url.split("?")[0].split("#")[0] : null
+          })
+        ].map(reflect)
+      );
 
       try {
         const redirectTo = props.CMSContent
