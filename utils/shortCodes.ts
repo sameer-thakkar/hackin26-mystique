@@ -1,7 +1,8 @@
+import React from "react";
 import InlinePrice from "../components/InlinePrice";
 import InlineInvPrice from "../components/InlineInvPrice";
 import CTAShortCode from "../components/CTAShortCode";
-import React from "react";
+import IFrame from "../components/IFrame";
 
 interface ShortCodeDictionary {
   [key: string]: {
@@ -18,6 +19,9 @@ const shortCodesDict: ShortCodeDictionary = {
   },
   cta: {
     component: CTAShortCode
+  },
+  iframe: {
+    component: IFrame
   }
 };
 
