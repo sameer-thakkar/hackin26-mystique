@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import LinkResolver from "./LinkResolver";
+import { GRAPHIK } from "../constants/ui-constants";
 type TitleLinksProps = {
   title: string;
   links: Array<any>;
@@ -30,14 +31,13 @@ export default class TitleLinksCard extends Component<TitleLinksProps, any> {
               grid-gap: 1em;
               align-items: start;
               grid-template-rows: max-content max-content;
-              font-family: "Graphik", "Proxima Nova", "Helvetica Neue",
-                Helvetica, Arial, sans-serif;
-              line-height: 1.6;
+              font-family: ${GRAPHIK.FONT_STACK};
+              line-height: 1.4;
             }
             .title {
               color: white;
               font-size: 20px;
-              font-weight: 600;
+              font-weight: ${GRAPHIK.SEMIBOLD};
               text-transform: Capitalize;
             }
             .link-list {
@@ -48,6 +48,7 @@ export default class TitleLinksCard extends Component<TitleLinksProps, any> {
               margin: 0;
               padding: 0;
               list-style: none;
+              font-weight: ${GRAPHIK.REGULAR};
             }
             .link-list :global(.link-item) {
               color: white;

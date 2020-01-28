@@ -1,0 +1,90 @@
+import React, { Component, useContext, useState, useLayoutEffect } from "react";
+import { Product } from "./Product";
+import { FullLengthProductCard } from "./FullLengthProductCard";
+import { PAGETYPE } from "../../constants";
+import { InteractionContext } from "../contexts/Interaction";
+import { scroller } from "react-scroll";
+
+export const RowComponent = props => {
+  const interactionContext = useContext(InteractionContext);
+
+  const handleProductClicked = productTgid => {
+    const { isMobile } = props;
+    if (isMobile) {
+      props.changePage({
+        name: PAGETYPE.MOBILE_PRODUCT_PAGE,
+        tgid: productTgid
+      });
+    } else {
+      interactionContext.clickTour(productTgid);
+    }
+  };
+
+  const closeDescription = () => {
+    interactionContext.closeTour();
+  };
+
+  useLayoutEffect(() => {
+    const tgid = interactionContext.activeTour.tgid;
+    if (tgid)
+      scroller.scrollTo(`main-${tgid}`, {
+        duration: 750,
+        delay: 100,
+        smooth: "easeInQuad",
+        offset: 45
+      });
+  });
+
+  const { tgidsSubArr, allTours, isMobile, currentLanguage, host, uid } = props;
+  const { activeTour } = interactionContext;
+  const tgidClicked = activeTour.tgid;
+  const cardPosition = tgidsSubArr.indexOf(activeTour.tgid);
+  const showDescription = cardPosition > -1;
+  return (
+    <div className="products-row">
+      {tgidsSubArr.map((tgid, index) => {
+        return (
+          <Product
+            tgid={tgid}
+            productClick={handleProductClicked}
+            allTours={allTours}
+            isMobile={isMobile}
+            key={index}
+            cardIdPrefix="main"
+          />
+        );
+      })}
+      <React.Fragment>
+        {showDescription ? (
+          <FullLengthProductCard
+            tgidClicked={tgidClicked}
+            allTours={allTours}
+            isMobile={isMobile}
+            currentLanguage={currentLanguage}
+            host={host}
+            uid={uid}
+            key={tgidClicked}
+            cardPosition={cardPosition + 1}
+            closeDescription={closeDescription}
+          />
+        ) : null}
+      </React.Fragment>
+      <style jsx>{`
+        .products-row {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          grid-column-gap: 24px;
+          grid-row-gap: 24px;
+          max-width: 100%;
+        }
+
+        @media (max-width: 768px) {
+          .products-row {
+            grid-template-columns: repeat(2, 1fr);
+            grid-column-gap: 16px;
+          }
+        }
+      `}</style>
+    </div>
+  );
+};

@@ -1,0 +1,263 @@
+import React, { Component, useState, useEffect, useRef } from "react";
+import Link from "next/link";
+import { useCaptureClickOutside } from "../hooks/ClickOutside";
+import { GRAPHIK } from "../../constants/ui-constants";
+
+const languageMap = {
+  en: {
+    language: "English",
+    paramLang: "en-us"
+  },
+  it: {
+    language: "Italiano",
+    paramLang: "it-it"
+  },
+  es: {
+    language: "Español",
+    paramLang: "es-es"
+  },
+  fr: {
+    language: "Français",
+    paramLang: "fr-fr"
+  },
+  de: {
+    language: "Deutsch",
+    paramLang: "de-de"
+  },
+  nl: {
+    language: "Nederlands",
+    paramLang: "nl-nl"
+  },
+  pt: {
+    language: "Português",
+    paramLang: "pt-pt"
+  }
+};
+
+export const LanguageSelector = props => {
+  const [arrowActive, setArrowActive] = useState(false);
+  const [pathname, setPathname] = useState("");
+
+  useEffect(() => {
+    setPathname(window.location.pathname);
+  }, []);
+
+  const getLanguages = () => {
+    const { currentLanguage, availableLanguages, languages } = props;
+    const prismicLanguages = languages.map(prismicLang =>
+      prismicLang.language.split("-")[1].toLowerCase()
+    );
+    const publishedLanguages = availableLanguages.map(
+      publishLang => publishLang.lang.split("-")[0]
+    );
+    publishedLanguages.push(currentLanguage);
+    if (availableLanguages.length > 0) {
+      const liveLanguages = prismicLanguages.filter(
+        prismicLang => publishedLanguages.indexOf(prismicLang) != -1
+      );
+      return liveLanguages;
+    }
+    return prismicLanguages;
+  };
+
+  const handleClick = () => {
+    const { toggleDropdown } = props;
+    toggleDropdown();
+  };
+
+  const {
+    currentLanguage,
+    languageDropdown,
+    host,
+    currentDomain,
+    isMobile
+  } = props;
+  const availableLanguages = getLanguages();
+  if (availableLanguages.length <= 1) {
+    return null;
+  }
+
+  const slug = pathname
+    .replace("en/", "")
+    .replace("fr/", "")
+    .replace("de/", "")
+    .replace("it/", "")
+    .replace("nl/", "")
+    .replace("pt/", "")
+    .replace("es/", "");
+
+  const isDev = host.includes("localhost");
+
+  const getURL = (language, dev) => {
+    if (dev)
+      return `/?mystique_uid=${currentDomain}&lang=${languageMap[language].paramLang}`;
+    else return `/${language}${slug}`;
+  };
+
+  const selectorRef = useRef(null);
+  const parentRef = useRef(null);
+  const exceptionElementRefs = [parentRef];
+  useCaptureClickOutside(selectorRef, handleClick, exceptionElementRefs);
+
+  return (
+    <div
+      onClick={handleClick}
+      ref={parentRef}
+      className="language-selector-container"
+    >
+      <div className="current-langauge">
+        <span className="current-language-toggle">
+          {isMobile
+            ? currentLanguage.slice(0, 2)
+            : languageMap[currentLanguage].language}
+        </span>
+      </div>
+      {languageDropdown ? (
+        <div
+          ref={selectorRef}
+          className={`language-dropdown ${
+            languageDropdown ? "language-dropdown-active" : ""
+          }`}
+        >
+          {availableLanguages.map((language, index) => {
+            return (
+              <a
+                className={currentLanguage == language ? "active-tab" : ""}
+                key={index}
+                href={getURL(language, isDev)}
+              >
+                <div className="language">
+                  <span className="lang-option">
+                    {languageMap[language].language}
+                  </span>
+                  {currentLanguage == language ? (
+                    <img
+                      className="check-mark"
+                      src="https://cdn-imgix-open.headout.com/mystique/assets/tick.svg"
+                    />
+                  ) : null}
+                </div>
+              </a>
+            );
+          })}
+          {isMobile ? (
+            <div onClick={handleClick} className="close-btn">
+              Close
+            </div>
+          ) : null}
+        </div>
+      ) : null}
+      {isMobile && languageDropdown ? (
+        <div onClick={handleClick} className="close-mask"></div>
+      ) : null}
+      <style jsx>
+        {`
+          .language-dropdown {
+            z-index: 10;
+            border: 1px solid #dadada;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.08);
+          }
+          .language-selector-container {
+            margin: 0;
+          }
+          .language-selector {
+            line-height: 1;
+          }
+          .current-language-toggle {
+            font-family: ${GRAPHIK.FONT_STACK};
+            font-size: 16px;
+            text-transform: capitalize;
+            cursor: pointer;
+            font-weight: ${GRAPHIK.REGULAR};
+          }
+          .language-dropdown {
+            padding: 20px 15px;
+            background: #fff;
+            grid-row-gap: 24px;
+            border-radius: 4px;
+            display: grid;
+          }
+
+          .language,
+          .close-btn {
+            font-family: ${GRAPHIK.FONT_STACK};
+            cursor: pointer;
+            font-size: 16px;
+            border: none;
+            text-transform: capitalize;
+            display: grid;
+            padding: 0;
+            grid-template-columns: auto 16px;
+            grid-gap: 10px;
+            justify-items: space-between;
+            min-width: 150px;
+          }
+          .language-dropdown .active-tab {
+            color: #ec1943;
+          }
+
+          @media (max-width: 768px) {
+            .language-dropdown {
+              position: fixed;
+              bottom: -2px;
+              top: unset;
+              left: 50%;
+              transform: translateX(-50%);
+              z-index: 999;
+              width: 95%;
+              text-align: center;
+              grid-gap: 0;
+              padding: 0;
+              border-radius: 4px;
+            }
+            .language-dropdown-active {
+              animation: scroll-in ease 0.3s forwards;
+            }
+            .language-dropdown .active-tab {
+              color: #545454;
+            }
+            .current-language-toggle {
+              text-transform: uppercase;
+            }
+
+            .language-selector-container {
+              position: unset !important;
+            }
+            .language,
+            .close-btn {
+              border-bottom: 1px solid #dadada;
+              padding: 16px 0;
+              background: none;
+            }
+            .language .check-mark {
+              display: none;
+            }
+
+            .close-mask {
+              position: fixed;
+              top: 0;
+              left: 0;
+              height: 100vh;
+              width: 100vw;
+              background: #000;
+              opacity: 0.5;
+              z-index: 500;
+            }
+            .close-btn {
+              color: #ec1943;
+            }
+
+            @keyframes scroll-in {
+              from {
+                bottom: -100%;
+              }
+              to {
+                bottom: -2px;
+              }
+            }
+          }
+        `}
+      </style>
+    </div>
+  );
+};
