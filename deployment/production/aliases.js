@@ -1,4 +1,6 @@
 module.exports = [
+    'carnival.tickets-venice.com',
+    'www.tickets-venice.com',
     'www.tickets-barcelona.org',
     'leaning-tower.pisatickets.com',
     'www.pisatickets.com',
