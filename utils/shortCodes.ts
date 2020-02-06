@@ -6,7 +6,7 @@ import CTAShortCode from '../components/CTAShortCode';
 import Booster from '../components/Booster';
 import RatingBoosterCombo from '../components/shortcodes/RatingBoosterCombo';
 import PopupTrigger from '../components/shortcodes/PopupTrigger';
-import IFrame from '../components/IFrame';
+import IFrame from '../components/shortcodes/IFrame';
 
 interface ShortCodeDictionary {
     [key: string]: {
