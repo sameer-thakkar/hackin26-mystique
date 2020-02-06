@@ -259,7 +259,16 @@ export default class GroupBooking extends Component<any, any> {
             let group = `Adults: ${adults} ${
                 children ? ', Child:' + children : ''
             }`;
-            const data = `fname=${fname}&email=${email}&show=${tour.value}&lang=${lang.value}&time=${time.value}&contact=${phone}&group=${group}&date=${formattedDate}`;
+            const data = {
+                fname,
+                email,
+                show: tour.value,
+                lang: lang.value,
+                time: time.value,
+                contact: phone,
+                group,
+                date: formattedDate,
+            };
             this.setState({ isSendingRequest: true });
             const status = await createGroupBooking(GROUP_BOOKING_URL, data);
             if (status === 'Successful') {

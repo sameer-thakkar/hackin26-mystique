@@ -237,8 +237,13 @@ export default class Microsite extends Component<any, any> {
             : this.setState({ popupOpen: true });
     };
 
-    openGroupBookingModal = () =>
+    openGroupBookingModal = () => {
+        const { analytics } = this.state;
+        analytics.pushToDataLayer({
+            event: 'Group Form Viewed',
+        });
         this.setState({ showGroupBookingModal: true });
+    };
     closeGroupBookingModal = () =>
         this.setState({ showGroupBookingModal: false });
 

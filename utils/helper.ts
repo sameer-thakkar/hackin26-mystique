@@ -63,19 +63,14 @@ export const fetchUserGeoLocation = url =>
             return err;
         });
 
-export const createGroupBooking = (url, data) =>
-    fetch(url, {
-        mode: 'no-cors',
+export const createGroupBooking = (url, data) => {
+    return fetch(url, {
         method: 'POST',
-        headers: {
-            Accept: 'application/x-www-form-urlencoded',
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: data,
+        body: JSON.stringify(data),
     })
         .then(response => 'Successful')
         .catch(error => `Error: ${error}`);
-
+};
 export const isMobile = () => {
     return document.documentElement.clientWidth < 768;
 };
