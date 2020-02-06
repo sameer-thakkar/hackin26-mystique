@@ -1,4 +1,5 @@
 module.exports = [
+    'camp-nou.tickets-barcelona.org',
     'www.tickets-madrid.org',
     'carnival.tickets-venice.com',
     'www.tickets-venice.com',
