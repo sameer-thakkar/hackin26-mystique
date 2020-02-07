@@ -1,4 +1,6 @@
 module.exports = [
+    'stage.www.mount-fuji.com',
+    'stage.www.cherry-blossom-tours.com',
     'stage.www.go-skydiving.com',
     'stage.www.tickets-madrid.org',
     'stage.carnival.tickets-venice.com',
