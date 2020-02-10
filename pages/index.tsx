@@ -6,10 +6,10 @@ import fetch from 'isomorphic-unfetch';
 const Microsite = dynamic(() => import('../components/Microsite'));
 const SubPage = dynamic(() => import('../components/SubPage'));
 const ErrorPage = dynamic(() => import('next/error'));
+const MicroBrand = dynamic(() => import('../components/MicroBrand/MicroBrand'));
 
 import { Client } from '../prismic-config';
 import { CONTENT_TYPES, DESIGN } from '../constants';
-import MicroBrand from '../components/MicroBrand/MicroBrand';
 import { withoutTrailingSlash, reflect } from '../utils/helper';
 import EnvironmentContext from '../contexts/environmentContext';
 import '../static/styles.css';

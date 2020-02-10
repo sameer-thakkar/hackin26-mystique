@@ -44,6 +44,7 @@ export const TourComparisonTable = props => {
             let content = [
                 ...tour.contentBlocks.left,
                 ...tour.contentBlocks.right,
+                ...tour.contentBlocks.hidden,
             ];
             content = content.reduce((accum, block) => {
                 if (!labels[block.labelId]) labels[block.labelId] = {};
@@ -256,6 +257,7 @@ export const TourComparisonTable = props => {
         .product-comparision-table {
           width: 100%;
           max-width: calc(100vw - 32px);
+          color: #545454;
         }
         .tour-options {
           display: grid;
@@ -272,6 +274,8 @@ export const TourComparisonTable = props => {
         }
         .comparision-description {
           margin-bottom: 32px;
+          font-size: 14px;
+          font-family: ${AVENIR.FONT_STACK};
         }
         .tour-column {
           position: relative;

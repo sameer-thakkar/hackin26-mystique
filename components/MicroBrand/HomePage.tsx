@@ -112,13 +112,13 @@ export const HomePage = props => {
             <style jsx global>
                 {`
                     .hero-slice-section {
+                        margin-top: 24px;
                         margin-bottom: 56px;
                     }
                     .select-wrapper {
                         all: unset;
                     }
                     .city-selector {
-                        margin-top: 24px;
                         margin-bottom: 24px;
                     }
                     .long-form .slice-block.rich_text {

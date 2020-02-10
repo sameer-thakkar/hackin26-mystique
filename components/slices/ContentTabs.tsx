@@ -7,6 +7,7 @@ import React, {
     useState,
 } from 'react';
 import { RichText } from 'prismic-reactjs';
+import { AVENIR } from '../../constants/ui-constants';
 
 export const ContentTabs = props => {
     const { tabsArr, contentArr } = props;
@@ -42,6 +43,7 @@ export const ContentTabs = props => {
                 .content-tabs-wrap {
                     display: grid;
                     grid-row-gap: 16px;
+                    font-family: ${AVENIR.FONT_STACK};
                 }
                 .tabs {
                     display: grid;
