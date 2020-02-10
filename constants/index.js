@@ -81,7 +81,6 @@ export const CONTENT_TYPES = {
 export const DESIGN = {
     V1: 'V1 - Horizontal Card Layout',
     V2: 'V2 - Gird Cards Layout',
-    REDIRECT: 'redirect',
 };
 
 export const PAGETYPE = {

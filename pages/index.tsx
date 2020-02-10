@@ -10,7 +10,7 @@ const MicroBrand = dynamic(() => import('../components/MicroBrand/MicroBrand'));
 
 import { Client } from '../prismic-config';
 import { CONTENT_TYPES, DESIGN } from '../constants';
-import { withoutTrailingSlash, reflect } from '../utils/helper';
+import { withoutTrailingSlash } from '../utils/helper';
 import EnvironmentContext from '../contexts/environmentContext';
 import '../static/styles.css';
 
@@ -53,43 +53,12 @@ export default class Page extends React.Component<any, any> {
     static async getInitialProps({ req, query, res }) {
         const serverRequestStartTimestamp = Math.floor(new Date().getTime());
         try {
-            const isDev = req
-                ? !!query.mystique_uid
-                : window.location.search.includes('mystique_uid');
-            let redirectUID;
-
-            if (isDev) {
-                redirectUID = query.mystique_uid.split('.');
-            } else {
-                const { uid } = getPropsFromReq({
-                    host: req.headers.host,
-                    pathname: req ? req.url.split('?')[0].split('#')[0] : null,
-                });
-                redirectUID = uid.split('.');
-            }
-            redirectUID.shift();
-            redirectUID = redirectUID.join('.');
-
-            const [redirect, { payload: props }] = await Promise.all(
-                [
-                    Client(req)
-                        .getByUID(CONTENT_TYPES.REDIRECT, redirectUID)
-                        .then(r => {
-                            const redirectUrl = r.data.redirect_url.url;
-                            if (res && redirectUrl) {
-                                res.writeHead(302, { Location: redirectUrl });
-                                res.end();
-                            }
-                        }),
-                    Page.getMicrositeData({
-                        req,
-                        query,
-                        reqPathname: req
-                            ? req.url.split('?')[0].split('#')[0]
-                            : null,
-                    }),
-                ].map(reflect)
-            );
+            const props = await Page.getMicrositeData({
+                res,
+                req,
+                query,
+                reqPathname: req ? req.url.split('?')[0].split('#')[0] : null,
+            });
 
             try {
                 const redirectTo = props.CMSContent
@@ -138,21 +107,7 @@ export default class Page extends React.Component<any, any> {
         }
     }
 
-    static async getMicrositeData({ req, query, reqPathname }) {
-        /**
-         * www.tickets-amsterdam.com/madame-tussauds
-         * www.tickets-amsterdam.com/es/madame-tussauds
-         */
-
-        /**
-         * if working locally
-         *  - read from query param
-         *  ?mystique_uid=www.tickets-amsterdam.com.madame-tussauds&lang=es
-         *  Output object: {mystique_uid: '',  lang: ''}
-         * if working on prod
-         *  - deconstruct host and pathname
-         *  to create similar output object
-         */
+    static async getMicrositeData({ res: serverRes, req, query, reqPathname }) {
         const { host } = req ? req.headers : window.location;
         const isDev = req
             ? !!query.mystique_uid
@@ -356,6 +311,7 @@ export default class Page extends React.Component<any, any> {
                             'group_booking_disclaimer',
                         ].map(prop => `${CONTENT_TYPES.HEADER}.${prop}`);
                         const propsFromLinkedMicrosite = [
+                            'redirect_url',
                             'gtm_id',
                             'header_scripts',
                             'title',
@@ -390,7 +346,22 @@ export default class Page extends React.Component<any, any> {
                                         statusCode: 404,
                                     };
                                 }
-                                // console.log(JSON.stringify(page, null, 4));
+
+                                // Redirect logic (if redirect exists on content page)
+                                const redirectTo =
+                                    page.data.microsite_document_ref?.data
+                                        .redirect_url?.url;
+                                if (redirectTo) {
+                                    if (serverRes) {
+                                        serverRes.writeHead(302, {
+                                            Location: redirectTo,
+                                        });
+                                        serverRes.end();
+                                    } else {
+                                        Router.push(redirectTo);
+                                    }
+                                }
+
                                 let completePage = {
                                     ...page,
                                     featured: {
