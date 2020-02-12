@@ -1,4 +1,6 @@
 module.exports = [
+    'stage.airport-transfers.tickets-sydney.com',
+    'stage.airport-transfers.tickets-melbourne.com',
     'stage.www.ticket-madrid.com',
     'stage.www.barcelona-tickets.com',
     'stage.www.tickets-lisbon.com',
