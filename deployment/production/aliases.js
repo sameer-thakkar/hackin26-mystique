@@ -1,4 +1,5 @@
 module.exports = [
+    'santiago-bernabeu.tickets-madrid.org',
     'airport-transfers.tickets-sydney.com',
     'airport-transfers.tickets-melbourne.com',
     'www.ticket-madrid.com',
