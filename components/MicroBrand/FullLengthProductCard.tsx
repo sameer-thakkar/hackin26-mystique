@@ -1,119 +1,133 @@
-import React, { Component, useContext } from "react";
-import Image from "../Image";
-import { RichText } from "prismic-reactjs";
-import parse from "url-parse";
-import { CLOSE_WHITE } from "../../static/svg-icons";
-import { GRAPHIK, COLORS, AVENIR } from "../../constants/ui-constants";
-import { shortCodeSerializerWithParentProps } from "../../utils/shortCodes";
-import { MBContext } from "../contexts/MBContext";
+import React, { Component, useContext } from 'react';
+import Image from '../Image';
+import { RichText } from 'prismic-reactjs';
+import parse from 'url-parse';
+import { CLOSE_WHITE } from '../../static/svg-icons';
+import { GRAPHIK, COLORS, AVENIR } from '../../constants/ui-constants';
+import { shortCodeSerializerWithParentProps } from '../../utils/shortCodes';
+import { MBContext } from '../contexts/MBContext';
 
 export const FullLengthProductCard = props => {
-  const closeDescriptionCard = () => {
-    props.closeDescription();
-  };
-  const mbContext = useContext(MBContext);
-  const { lang, nakedDomain } = mbContext;
-  const {
-    allTours,
-    tgidClicked,
-    currentLanguage,
-    host,
-    uid,
-    cardPosition
-  } = props;
+    const closeDescriptionCard = () => {
+        props.closeDescription();
+    };
+    const mbContext = useContext(MBContext);
+    const { lang, nakedDomain } = mbContext;
+    const {
+        allTours,
+        tgidClicked,
+        currentLanguage,
+        host,
+        uid,
+        cardPosition,
+    } = props;
 
-  const activeTour = allTours[tgidClicked];
-  const rightBlocksCount = activeTour.contentBlocks.right.length;
-  return (
-    <div className="product-v2-description">
-      <div className="indicator-triangle"></div>
-      <div className="product-v2-description-left">
-        <div className="v2-desc-title">{activeTour.title}</div>
+    const activeTour = allTours[tgidClicked];
+    const rightBlocksCount = activeTour.contentBlocks.right.length;
+    return (
+        <div className="product-v2-description">
+            <div className="indicator-triangle"></div>
+            <div className="product-v2-description-left">
+                <div className="v2-desc-title">{activeTour.title}</div>
 
-        <div className="v2-desc-columns">
-          <div className="v2-desc-left">
-            {activeTour.contentBlocks.left.map((block, index) => {
-              return (
-                <div
-                  className={`description-content-block ${block.align
-                    .toLowerCase()
-                    .replace(/\s/g, "-")}`}
-                  key={index}
-                >
-                  <span className="description-label">{block.label}: </span>
-                  <span className="description-content">
-                    <RichText
-                      render={block.content}
-                      htmlSerializer={(...defaultArgs: any) =>
-                        shortCodeSerializerWithParentProps(
-                          defaultArgs,
-                          activeTour
-                        )
-                      }
-                    />
-                  </span>
+                <div className="v2-desc-columns">
+                    <div className="v2-desc-left">
+                        {activeTour.contentBlocks.left.map((block, index) => {
+                            return (
+                                <div
+                                    className={`description-content-block ${block.align
+                                        .toLowerCase()
+                                        .replace(/\s/g, '-')}`}
+                                    key={index}
+                                >
+                                    <span className="description-label">
+                                        {block.label}:{' '}
+                                    </span>
+                                    <span className="description-content">
+                                        <RichText
+                                            render={block.content}
+                                            htmlSerializer={(
+                                                ...defaultArgs: any
+                                            ) =>
+                                                shortCodeSerializerWithParentProps(
+                                                    defaultArgs,
+                                                    activeTour
+                                                )
+                                            }
+                                        />
+                                    </span>
+                                </div>
+                            );
+                        })}
+                    </div>
+                    <div className="v2-desc-right">
+                        {activeTour.contentBlocks.right.map((block, index) => {
+                            return (
+                                <div
+                                    className="description-content-block right"
+                                    key={index}
+                                >
+                                    <span className="description-label">
+                                        {block.label}:{' '}
+                                    </span>
+                                    <span className="description-content">
+                                        <RichText
+                                            render={block.content}
+                                            htmlSerializer={(
+                                                ...defaultArgs: any
+                                            ) =>
+                                                shortCodeSerializerWithParentProps(
+                                                    defaultArgs,
+                                                    activeTour
+                                                )
+                                            }
+                                        />
+                                    </span>
+                                </div>
+                            );
+                        })}
+                        <div className="desc-cta-price">
+                            <div className="desc-price">
+                                <div className="desc-final-price">
+                                    {activeTour.currencySymbol}
+                                    {activeTour.price}
+                                </div>
+                                <div className="desc-scratch-price">
+                                    {activeTour.currencySymbol}
+                                    {activeTour.scratchPrice}
+                                </div>
+                            </div>
+                            <a
+                                target="_blank"
+                                href={`https://book.${nakedDomain}${
+                                    lang === 'en' ? '' : `/${lang}`
+                                }/book/${tgidClicked}`}
+                            >
+                                <div className="desc-book-now-cta">
+                                    <span className="desc-book-now-text">
+                                        Book Now
+                                    </span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-              );
-            })}
-          </div>
-          <div className="v2-desc-right">
-            {activeTour.contentBlocks.right.map((block, index) => {
-              return (
-                <div className="description-content-block right" key={index}>
-                  <span className="description-label">{block.label}: </span>
-                  <span className="description-content">
-                    <RichText
-                      render={block.content}
-                      htmlSerializer={(...defaultArgs: any) =>
-                        shortCodeSerializerWithParentProps(
-                          defaultArgs,
-                          activeTour
-                        )
-                      }
-                    />
-                  </span>
-                </div>
-              );
-            })}
-            <div className="desc-cta-price">
-              <div className="desc-price">
-                <div className="desc-final-price">
-                  {activeTour.currencySymbol}
-                  {activeTour.price}
-                </div>
-                <div className="desc-scratch-price">
-                  {activeTour.currencySymbol}
-                  {activeTour.scratchPrice}
-                </div>
-              </div>
-              <a
-                target="_blank"
-                href={`https://book.${nakedDomain}${
-                  lang === "en" ? "" : `/${lang}`
-                }/book/${tgidClicked}`}
-              >
-                <div className="desc-book-now-cta">
-                  <span className="desc-book-now-text">Book Now</span>
-                </div>
-              </a>
             </div>
-          </div>
-        </div>
-      </div>
-      <div className="product-v2-description-right">
-        {/* <Image url={activeTour.descriptionImage} width={1200} height={750} format="pjpg" /> */}
-        <Image
-          url={`${activeTour.descriptionImage || activeTour.productImage}`}
-          width={1200}
-          height={750}
-          format="pjpg"
-          imageId={tgidClicked}
-        />
-        <div onClick={closeDescriptionCard} className="close-button">
-          {CLOSE_WHITE}
-        </div>
-      </div>
-      <style jsx>{`
+            <div className="product-v2-description-right">
+                {/* <Image url={activeTour.descriptionImage} width={1200} height={750} format="pjpg" /> */}
+                <Image
+                    url={`${activeTour.descriptionImage ||
+                        activeTour.productImage}`}
+                    width={1200}
+                    height={750}
+                    format="pjpg"
+                    imageId={tgidClicked}
+                />
+                <div onClick={closeDescriptionCard} className="close-button">
+                    {CLOSE_WHITE}
+                </div>
+            </div>
+            <style jsx>{`
         .product-v2-description {
           grid-column: 1 / 5;
           display: grid;
@@ -288,24 +302,23 @@ export const FullLengthProductCard = props => {
         }
       `}</style>
 
-      <style jsx global>{`
-        .product-v2-description-right img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-        .description-content p {
-          margin: 0;
-        }
+            <style jsx global>{`
+                .product-v2-description-right img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+                .description-content p {
+                    margin: 0;
+                }
 
-        .description-content ul {
-          padding: 0;
-          list-style: none;
-        }
-        .description-content p {
-          line-height: 1.4;
-        }
-      `}</style>
-    </div>
-  );
+                .description-content ul {
+                    padding-left: 1em;
+                }
+                .description-content p {
+                    line-height: 1.4;
+                }
+            `}</style>
+        </div>
+    );
 };

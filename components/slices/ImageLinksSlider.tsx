@@ -40,8 +40,6 @@ export const ImageLinksSlider = props => {
         };
     }, [swiper, updateIndex]);
 
-    const productsContext = useContext(ProductsContext);
-
     const { cards, carouselOptions, heading, description, isMobile } = props;
 
     return (
@@ -199,12 +197,6 @@ export const ImageLinksSlider = props => {
                         }
                         .image-link-slider .link-description {
                         }
-                        .image-link-slider .card-title {
-                            font-size: 14px;
-                            font-family: ${GRAPHIK.FONT_STACK};
-                            line-height: 1.3;
-                            margin-top: 8px;
-                        }
                         .image-link-slider
                             .links-container
                             .swiper-slide:last-child {
@@ -223,6 +215,7 @@ ImageLinksSlider.defaultProps = {
         speed: 650,
         slidesPerView: 4,
         spaceBetween: 24,
+        rebuildOnUpdate: false,
         navigaton: {
             nextEl: '.swiper-btn.btn-left',
             prevEl: '.swiper-btn.btn-right',
@@ -235,10 +228,31 @@ export default ImageLinksSlider;
 const Slide = (card, index) => {
     return (
         <div key={index} className="swiper-slide">
-            <a href={card.link.url} target={card.link.target}>
+            <a
+                href={card.link.url}
+                target={card.link.target}
+                className="image-card"
+            >
                 <Image url={card.image.url} alt={card.image.alt} />
-                <div className="card-title">{card.title}</div>
+                <div className="card-title">{card.card_title}</div>
             </a>
+            <style jsx>{`
+                .image-card{
+                    display: grid;
+                }
+                .card-title{
+                    font-family: ${AVENIR.FONT_STACK};
+                    font-size: 16px;
+                    font-weight: ${AVENIR.HEAVY};
+                    color: ${COLORS.DAVY_GREY};
+                }
+                @media (max-width: 768px){
+                    .card-title{
+                        font-size: 14px;
+                        font-weight
+                    }
+                }
+            `}</style>
         </div>
     );
 };

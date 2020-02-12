@@ -175,6 +175,7 @@ export const sliceHandler = (slice, props: any = {}) => {
                             alt: card.uploaded_image.alt || card.card_link.url,
                         },
                         link: card.card_link,
+                        card_title: card.card_title,
                     },
                 ];
             }, []);

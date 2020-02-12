@@ -137,7 +137,9 @@ class MicroBrand extends Component<any, any> {
             alternate_languages: availableLanguages,
         } = CMSContent;
         const { localization: languages } = CMSData;
-
+        const buttons = {
+            see_more_text: CMSContent.data.see_more_text,
+        };
         const currentLanguage = CMSContent.lang.substring(0, 2);
         const { isMobile } = this.state;
         const languageProps = {
@@ -367,7 +369,11 @@ class MicroBrand extends Component<any, any> {
         const longFormContent = this.props.data.data.body2;
         let activePage = this.state.page.name;
         return (
-            <MBContextProvider uid={currentDomain} lang={lang}>
+            <MBContextProvider
+                uid={currentDomain}
+                lang={lang}
+                buttons={buttons}
+            >
                 <InteractionContextProvider {...categoryProps}>
                     {populateHead({
                         ...this.props.data.data,

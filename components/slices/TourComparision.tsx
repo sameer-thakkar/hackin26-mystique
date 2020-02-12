@@ -127,7 +127,7 @@ export const TourComparisonTable = props => {
                                         }
                                     }}
                                 >
-                                    <div className="tour-name">
+                                    <div className="tour-title">
                                         {tour.title}
                                         <div className="tour-booster">
                                             <RichText
@@ -280,7 +280,7 @@ export const TourComparisonTable = props => {
         .tour-column {
           position: relative;
         }
-        .tour-name {
+        .tour-title {
           font-family: ${AVENIR.FONT_STACK};
           font-weight: ${AVENIR.HEAVY};
         }

@@ -1,6 +1,7 @@
 import React, { Component, useState, useContext, useEffect } from 'react';
 import { RowComponent } from './RowComponent';
 import { InteractionContext } from '../contexts/Interaction';
+import { MBContext } from '../contexts/MBContext';
 
 export const PopulateProducts = props => {
     const {
@@ -17,6 +18,7 @@ export const PopulateProducts = props => {
     } = props;
 
     const interactionContext = useContext(InteractionContext);
+    const mbContext = useContext(MBContext);
     const firstView = rowsToShow || 4;
 
     const [rowsInView, setRowsInView] = useState(firstView);
@@ -70,7 +72,7 @@ export const PopulateProducts = props => {
 
             {tgidsSubArr.length > rowsInView && !showAll ? (
                 <div className="view-more" onClick={viewMore}>
-                    View more shows
+                    {mbContext.buttons.see_more_text || 'View more'}
                 </div>
             ) : null}
             <style jsx>{`
