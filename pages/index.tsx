@@ -16,8 +16,8 @@ import {
   COMMON_HEADER_PROPS,
   LINKED_MICROSITE_PROPS,
 } from '../constants';
-import EnvironmentContext from '../contexts/environmentContext';
 import { redirectTo, getPrismicProps, reflect } from '../utils';
+import EnvironmentContext from '../contexts/environmentContext';
 import '../public/static/styles.css';
 
 export default class Page extends React.Component<any, any> {
@@ -274,7 +274,7 @@ export default class Page extends React.Component<any, any> {
                 /*
                 Fetching data of referenced custom types which cannot be
                 fetched using the fetchLink method due to prismic constraints
-                Current includes: Common Footer
+                Currently includes: Common Footer
                 */
                 let subComponents = [];
                 page.data.footer_ref.id &&

@@ -7,18 +7,18 @@ module.exports = {
         loader: 'babel-loader',
         options: {
           presets: [['react-app', { flow: false, typescript: true }]],
-          plugins: ['styled-components'],
+          plugins: ['styled-components', 'react-docgen'],
         },
       },
     });
     config.resolve.extensions.push('.ts', '.tsx');
     return config;
   },
-  stories: ['../stories/**/*.stories.tsx'],
+  stories: ['../stories/**/*.stories.(tsx|js|mdx)'],
   addons: [
-    '@storybook/addon-actions',
     '@storybook/addon-links',
     '@storybook/addon-viewport/register',
     '@storybook/addon-knobs/register',
+    '@storybook/addon-docs',
   ],
 };

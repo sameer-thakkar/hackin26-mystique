@@ -9,35 +9,59 @@ Mystique is the tech that powers over 100 different microbrands at Headout.
 
 ### Requirements
 
--   [Nodejs](https://nodejs.org/) (v10 and above)
--   [Yarn](https://legacy.yarnpkg.com/) (package manager)
--   [Now CLI](https://zeit.co/download) (Globally installed)
--   [Git](https://git-scm.com/) (🧐)
+- [Nodejs](https://nodejs.org/) (v10 and above)
+- [Yarn](https://legacy.yarnpkg.com/) (package manager)
+- [Now CLI](https://zeit.co/download) (Globally installed)
+- [Git](https://git-scm.com/) (🧐)
 
 ### Developing
 
--   Setup a `.env` file in the root of the repository:
+- Setup a `.env` file in the root of the repository:
 
-    ```bash
-    SENDGRID_API_KEY=#Sendgrid api key
-    SLACK_GRP_BKNG_WEBHOOK=#Slack webhook
-    AMPLITUDE_PROD=#Amplitude production
-    AMPLITUDE_TEST=#Amplitude test
-    AMPLITUDE_DEV=#Amplitude development
-    ```
+  ```bash
+  SENDGRID_API_KEY=#Sendgrid api key
+  SLACK_GRP_BKNG_WEBHOOK=#Slack webhook
+  AMPLITUDE_PROD=#Amplitude production
+  AMPLITUDE_TEST=#Amplitude test
+  AMPLITUDE_DEV=#Amplitude development
+  ```
 
--   Install dependencies by running:
+- Install dependencies by running:
 
-    ```bash
-    yarn
-    ```
+  ```bash
+  yarn
+  ```
 
--   Start the development server by running:
+- Start the development server by running:
 
-    ```bash
-    now dev
-    ```
+  ```bash
+  now dev
+  ```
 
--   Visit any microbrand using the mystique_uid param (along with a lang param) in your query.
-    Example:
-    `http://localhost:3000?mystique_uid=www.vaticantickets.org&lang=en-us`
+- Visit any microbrand using the mystique_uid param (along with a lang param) in your query.
+
+  Example:
+
+  ```
+  http://localhost:3000?mystique_uid=www.vaticantickets.org&lang=en-us
+  ```
+
+### Storybook Development
+
+- Running storybook:
+
+```bash
+yarn storybook
+```
+
+- Building storybook:
+
+```bash
+yarn build-storybook
+```
+
+- Deploying storybook to github pages:
+
+```bash
+yarn deploy-storybook
+```

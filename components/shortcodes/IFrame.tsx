@@ -25,6 +25,19 @@ const StyledIFrame = styled.iframe`
      height: 100%;
 `;
 
+/**
+ *
+ * Use the `iframe` shortcode to embed different media (videos, other websites etc.).
+ *
+ * Example Use:
+ *
+ * ```js
+ * {iframe src="https://www.youtube.com/embed/GrrpLGAD_Y0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope
+ * picture-in-picture" allowfullscreen}
+ * ```
+ *
+ */
+
 const IFrame: React.FC<IFrameProps> = ({
   name,
   src,

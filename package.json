@@ -1,7 +1,7 @@
 {
   "name": "mystique",
   "main": "n/a",
-  "version": "2.2.6",
+  "version": "2.3.1",
   "repository": "https://github.com/headout/mystique.git",
   "description": "Microbrands @ Headout",
   "author": "Aakash Goel",
@@ -51,7 +51,7 @@
     "@babel/core": "^7.8.4",
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
-    "@storybook/addon-actions": "^5.3.12",
+    "@storybook/addon-docs": "^5.3.13",
     "@storybook/addon-knobs": "^5.3.13",
     "@storybook/addon-links": "^5.3.12",
     "@storybook/addon-viewport": "^5.3.13",
