@@ -1,15 +1,26 @@
-import React, { Component } from "react";
-import { RichText } from "prismic-reactjs";
-import Image from "../Image";
-import Swiper from "../Swiper";
+import React, { Component } from 'react';
+import { RichText } from 'prismic-reactjs';
+import Image from '../Image';
+import Swiper from '../Swiper';
 
-export default class CardCarousel extends Component<any, any> {
+type CardCarouselProps = {
+  cards: any[];
+  carouselHeading: string;
+  lazyLoadImages?: boolean;
+};
+export default class CardCarousel extends Component<CardCarouselProps> {
   state = {
     isMobile: null,
     isClient: false,
     cardPrices: {},
-    currencySymbol: "",
-    isFetched: false
+    currencySymbol: '',
+    isFetched: false,
+  };
+
+  static defaultProps = {
+    cards: [],
+    carouselHeading: '',
+    lazyLoadImages: true,
   };
 
   async componentDidMount() {
@@ -23,8 +34,8 @@ export default class CardCarousel extends Component<any, any> {
       (accum, response) => ({
         ...accum,
         [response.id]: {
-          price: response.listingPrice ? response.listingPrice.finalPrice : ""
-        }
+          price: response.listingPrice ? response.listingPrice.finalPrice : '',
+        },
       }),
       {}
     );
@@ -34,7 +45,7 @@ export default class CardCarousel extends Component<any, any> {
       currencySymbol: currencySymbol,
       isFetched: true,
       isMobile: mobileCheck,
-      isClient: true
+      isClient: true,
     });
   }
 
@@ -44,7 +55,7 @@ export default class CardCarousel extends Component<any, any> {
     const slidesPerView = isMobile ? 1 : 4;
     const slidesPerGroup = isMobile ? 1 : 4;
     const params = {
-      direction: "horizontal",
+      direction: 'horizontal',
       speed: 650,
       slidesPerView: slidesPerView,
       rebuildOnUpdate: true,
@@ -54,14 +65,14 @@ export default class CardCarousel extends Component<any, any> {
       slidesPerGroup: slidesPerGroup,
       centeredSlides: isMobile,
       navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev"
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
       },
       pagination: {
-        el: ".swiper-pagination",
-        type: "bullets",
-        clickable: true
-      }
+        el: '.swiper-pagination',
+        type: 'bullets',
+        clickable: true,
+      },
     };
 
     return (
@@ -73,6 +84,7 @@ export default class CardCarousel extends Component<any, any> {
                 <div className="microbrand-card">
                   <div className="card-image">
                     <Image
+                      dontLazyLoad={!this.props.lazyLoadImages}
                       format="pjpg"
                       width={600}
                       height={300}
@@ -83,7 +95,7 @@ export default class CardCarousel extends Component<any, any> {
                     <span className="card-title">{card.card_title}</span>
                     <span className="card-price">
                       {currencySymbol}
-                      {isFetched ? cardPrices[card.tgid].price : ""}
+                      {isFetched ? cardPrices[card.tgid].price : ''}
                     </span>
                   </div>
                 </div>
@@ -104,7 +116,7 @@ export default class CardCarousel extends Component<any, any> {
           <RichText render={carouselHeading} />
         </div>
         <div className="carousel-slider">
-          {isClient ? this.renderCardsSlider() : ""}
+          {isClient ? this.renderCardsSlider() : ''}
         </div>
       </div>
     );

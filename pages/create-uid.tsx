@@ -1,15 +1,15 @@
-import React from "react";
-import Head from "next/head";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import { getUID } from "../utils/helper";
-import "../static/styles.css";
+import React from 'react';
+import Head from 'next/head';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { getUID } from '../utils/helper';
+import '../public/static/styles.css';
 
 export default class CreateUID extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
-      uid: "",
-      copied: false
+      uid: '',
+      copied: false,
     };
 
     this.onChangeURL = this.onChangeURL.bind(this);
@@ -17,7 +17,7 @@ export default class CreateUID extends React.Component<any, any> {
 
   onChangeURL(e) {
     let text = e.target.value;
-    if (text.indexOf("http") !== 0) {
+    if (text.indexOf('http') !== 0) {
       text = `https://${text}`;
     }
     this.setState({ uid: getUID(text), copied: false });
@@ -31,15 +31,15 @@ export default class CreateUID extends React.Component<any, any> {
           <title>Headout | Generate Prismic UID</title>
         </Head>
 
-        <div style={{ width: "600px", margin: "0 auto", padding: "5rem 0" }}>
+        <div style={{ width: '600px', margin: '0 auto', padding: '5rem 0' }}>
           <form>
             <label
               htmlFor="uid-url"
               style={{
-                fontFamily: "Graphik",
-                fontSize: "18px",
-                marginBottom: "4px",
-                display: "block"
+                fontFamily: 'Graphik',
+                fontSize: '18px',
+                marginBottom: '4px',
+                display: 'block',
               }}
             >
               Enter Full Page URL here:
@@ -50,16 +50,16 @@ export default class CreateUID extends React.Component<any, any> {
               name="uid-url"
               onChange={this.onChangeURL}
               style={{
-                height: "40px",
-                width: "100%",
-                outline: "none",
-                border: "2px solid #aaa",
-                borderRadius: "0",
-                display: "block",
-                lineHeight: "40px",
-                padding: "0 8px",
-                fontSize: "24px",
-                boxSizing: "border-box"
+                height: '40px',
+                width: '100%',
+                outline: 'none',
+                border: '2px solid #aaa',
+                borderRadius: '0',
+                display: 'block',
+                lineHeight: '40px',
+                padding: '0 8px',
+                fontSize: '24px',
+                boxSizing: 'border-box',
               }}
             />
           </form>
@@ -71,33 +71,33 @@ export default class CreateUID extends React.Component<any, any> {
             >
               <div
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between"
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
                 }}
               >
                 <p
                   style={{
-                    cursor: "pointer",
-                    fontFamily: "Graphik",
-                    fontSize: "18px",
-                    marginRight: "8px"
+                    cursor: 'pointer',
+                    fontFamily: 'Graphik',
+                    fontSize: '18px',
+                    marginRight: '8px',
                   }}
                 >
                   UID: {this.state.uid}
                 </p>
                 <button
                   style={{
-                    lineHeight: "16px",
-                    fontSize: "16px",
-                    background: "none",
-                    color: "green",
-                    border: "none",
-                    outline: "none",
-                    cursor: "pointer",
-                    flex: "0 0 210px",
+                    lineHeight: '16px',
+                    fontSize: '16px',
+                    background: 'none',
+                    color: 'green',
+                    border: 'none',
+                    outline: 'none',
+                    cursor: 'pointer',
+                    flex: '0 0 210px',
                     padding: 0,
-                    textAlign: "right"
+                    textAlign: 'right',
                   }}
                 >
                   Tap anywhere to copy!
@@ -109,9 +109,9 @@ export default class CreateUID extends React.Component<any, any> {
           {this.state.copied ? (
             <p
               style={{
-                color: "green",
-                fontSize: "12px",
-                fontFamily: "Graphik"
+                color: 'green',
+                fontSize: '12px',
+                fontFamily: 'Graphik',
               }}
             >
               Copied.

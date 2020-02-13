@@ -1069,8 +1069,8 @@
 .react-tel-input .v-hide {
   visibility: hidden;
 }
-.react-tel-input input[type="text"],
-.react-tel-input input[type="tel"] {
+.react-tel-input input[type='text'],
+.react-tel-input input[type='tel'] {
   position: relative;
   z-index: 0;
   margin-top: 0 !important;
@@ -1085,19 +1085,19 @@
   height: 28px;
   width: 100%;
 }
-.react-tel-input input[type="text"]:focus,
-.react-tel-input input[type="tel"]:focus {
+.react-tel-input input[type='text']:focus,
+.react-tel-input input[type='tel']:focus {
   border-color: #42bdff;
   border-left-color: #cacaca;
 }
-.react-tel-input input[type="text"].invalid-number,
-.react-tel-input input[type="tel"].invalid-number {
+.react-tel-input input[type='text'].invalid-number,
+.react-tel-input input[type='tel'].invalid-number {
   border: 1px solid #d79f9f;
   background-color: #faf0f0;
   border-left-color: #cacaca;
 }
-.react-tel-input input[type="text"].invalid-number:focus,
-.react-tel-input input[type="tel"].invalid-number:focus {
+.react-tel-input input[type='text'].invalid-number:focus,
+.react-tel-input input[type='tel'].invalid-number:focus {
   border: 1px solid #d79f9f;
   border-left-color: #cacaca;
   background-color: #faf0f0;
@@ -1202,51 +1202,51 @@
 .react-tel-input .country-list .country-name {
   margin: 0 6px 0 -60px;
 }
-.country[data-flag-key="flag_no_29"],
-.country[data-flag-key="flag_no_32"],
-.country[data-flag-key="flag_no_44"],
-.country[data-flag-key="flag_no_50"],
-.country[data-flag-key="flag_no_51"],
-.country[data-flag-key="flag_no_59"],
-.country[data-flag-key="flag_no_63"],
-.country[data-flag-key="flag_no_67"],
-.country[data-flag-key="flag_no_76"],
-.country[data-flag-key="flag_no_77"],
-.country[data-flag-key="flag_no_71"],
-.country[data-flag-key="flag_no_123"],
-.country[data-flag-key="flag_no_136"],
-.country[data-flag-key="flag_no_148"],
-.country[data-flag-key="flag_no_155"],
-.country[data-flag-key="flag_no_179"],
-.country[data-flag-key="flag_no_180"],
-.country[data-flag-key="flag_no_181"],
-.country[data-flag-key="flag_no_184"],
-.country[data-flag-key="flag_no_224"],
-.country[data-flag-key="flag_no_230"] {
+.country[data-flag-key='flag_no_29'],
+.country[data-flag-key='flag_no_32'],
+.country[data-flag-key='flag_no_44'],
+.country[data-flag-key='flag_no_50'],
+.country[data-flag-key='flag_no_51'],
+.country[data-flag-key='flag_no_59'],
+.country[data-flag-key='flag_no_63'],
+.country[data-flag-key='flag_no_67'],
+.country[data-flag-key='flag_no_76'],
+.country[data-flag-key='flag_no_77'],
+.country[data-flag-key='flag_no_71'],
+.country[data-flag-key='flag_no_123'],
+.country[data-flag-key='flag_no_136'],
+.country[data-flag-key='flag_no_148'],
+.country[data-flag-key='flag_no_155'],
+.country[data-flag-key='flag_no_179'],
+.country[data-flag-key='flag_no_180'],
+.country[data-flag-key='flag_no_181'],
+.country[data-flag-key='flag_no_184'],
+.country[data-flag-key='flag_no_224'],
+.country[data-flag-key='flag_no_230'] {
   padding: 0 16px !important;
   margin-top: 2px !important;
 }
-.country[data-flag-key="flag_no_29"] .country-name,
-.country[data-flag-key="flag_no_32"] .country-name,
-.country[data-flag-key="flag_no_44"] .country-name,
-.country[data-flag-key="flag_no_50"] .country-name,
-.country[data-flag-key="flag_no_51"] .country-name,
-.country[data-flag-key="flag_no_59"] .country-name,
-.country[data-flag-key="flag_no_63"] .country-name,
-.country[data-flag-key="flag_no_67"] .country-name,
-.country[data-flag-key="flag_no_76"] .country-name,
-.country[data-flag-key="flag_no_77"] .country-name,
-.country[data-flag-key="flag_no_71"] .country-name,
-.country[data-flag-key="flag_no_123"] .country-name,
-.country[data-flag-key="flag_no_136"] .country-name,
-.country[data-flag-key="flag_no_148"] .country-name,
-.country[data-flag-key="flag_no_155"] .country-name,
-.country[data-flag-key="flag_no_179"] .country-name,
-.country[data-flag-key="flag_no_180"] .country-name,
-.country[data-flag-key="flag_no_181"] .country-name,
-.country[data-flag-key="flag_no_184"] .country-name,
-.country[data-flag-key="flag_no_224"] .country-name,
-.country[data-flag-key="flag_no_230"] .country-name {
+.country[data-flag-key='flag_no_29'] .country-name,
+.country[data-flag-key='flag_no_32'] .country-name,
+.country[data-flag-key='flag_no_44'] .country-name,
+.country[data-flag-key='flag_no_50'] .country-name,
+.country[data-flag-key='flag_no_51'] .country-name,
+.country[data-flag-key='flag_no_59'] .country-name,
+.country[data-flag-key='flag_no_63'] .country-name,
+.country[data-flag-key='flag_no_67'] .country-name,
+.country[data-flag-key='flag_no_76'] .country-name,
+.country[data-flag-key='flag_no_77'] .country-name,
+.country[data-flag-key='flag_no_71'] .country-name,
+.country[data-flag-key='flag_no_123'] .country-name,
+.country[data-flag-key='flag_no_136'] .country-name,
+.country[data-flag-key='flag_no_148'] .country-name,
+.country[data-flag-key='flag_no_155'] .country-name,
+.country[data-flag-key='flag_no_179'] .country-name,
+.country[data-flag-key='flag_no_180'] .country-name,
+.country[data-flag-key='flag_no_181'] .country-name,
+.country[data-flag-key='flag_no_184'] .country-name,
+.country[data-flag-key='flag_no_224'] .country-name,
+.country[data-flag-key='flag_no_230'] .country-name {
   width: 75% !important;
 }
 .country {
@@ -1258,21 +1258,21 @@
   margin-top: 0 !important;
   margin-right: 8px !important;
 }
-.country[data-flag-key="flag_no_23"] .country-name {
+.country[data-flag-key='flag_no_23'] .country-name {
   margin: 0 6px 0 -49px !important;
 }
-.country[data-flag-key="flag_no_205"] .country-name {
+.country[data-flag-key='flag_no_205'] .country-name {
   margin: 0 6px 0 -40px !important;
 }
-.country[data-flag-key="flag_no_137"] .country-name {
+.country[data-flag-key='flag_no_137'] .country-name {
   margin: 0 6px 0 -55px !important;
 }
-.country[data-flag-key="flag_no_146"] .country-name {
+.country[data-flag-key='flag_no_146'] .country-name {
   margin: 0 6px 0 -29px !important;
 }
-.country[data-flag-key="flag_no_151"] .country-name {
+.country[data-flag-key='flag_no_151'] .country-name {
   margin: 0 6px 0 -50px !important;
 }
-.country[data-flag-key="flag_no_230"] .country-name {
+.country[data-flag-key='flag_no_230'] .country-name {
   margin: 0 6px 0 -40px !important;
 }

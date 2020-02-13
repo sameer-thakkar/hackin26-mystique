@@ -1,35 +1,25 @@
-import React, { Component, useContext } from 'react';
+import React, { useContext } from 'react';
 import Image from '../Image';
 import { RichText } from 'prismic-reactjs';
-import parse from 'url-parse';
-import { CLOSE_WHITE } from '../../static/svg-icons';
+import { CLOSE_WHITE } from '../../public/static/svg-icons';
 import { GRAPHIK, COLORS, AVENIR } from '../../constants/ui-constants';
 import { shortCodeSerializerWithParentProps } from '../../utils/shortCodes';
 import { MBContext } from '../contexts/MBContext';
 
 export const FullLengthProductCard = props => {
-    const closeDescriptionCard = () => {
-        props.closeDescription();
-    };
-    const mbContext = useContext(MBContext);
-    const { lang, nakedDomain } = mbContext;
-    const {
-        allTours,
-        tgidClicked,
-        currentLanguage,
-        host,
-        uid,
-        cardPosition,
-    } = props;
-
-    const activeTour = allTours[tgidClicked];
-    const rightBlocksCount = activeTour.contentBlocks.right.length;
-    return (
+  const closeDescriptionCard = () => {
+    props.closeDescription();
+  };
+  const mbContext = useContext(MBContext);
+  const { lang, nakedDomain } = mbContext;
+  const { allTours, tgidClicked, cardPosition } = props;
+  const activeTour = allTours[tgidClicked];
+  const rightBlocksCount = activeTour.contentBlocks.right.length;
+  return (
         <div className="product-v2-description">
             <div className="indicator-triangle"></div>
             <div className="product-v2-description-left">
                 <div className="v2-desc-title">{activeTour.title}</div>
-
                 <div className="v2-desc-columns">
                     <div className="v2-desc-left">
                         {activeTour.contentBlocks.left.map((block, index) => {

@@ -1,25 +1,25 @@
-import React, { Component } from "react";
-import Prismic from "prismic-javascript";
-import { Client } from "../prismic-config";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import parse from "url-parse";
-import CustomFooter from "../components/CustomFooter";
-import { DROPDOWN_ELEMENT } from "../constants";
-import "../static/styles.css";
+import React, { Component } from 'react';
+import Prismic from 'prismic-javascript';
+import { Client } from '../prismic-config';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import parse from 'url-parse';
+import CustomFooter from '../components/CustomFooter';
+import { DROPDOWN_ELEMENT } from '../constants';
+import '../public/static/styles.css';
 
 export default class terms extends Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
       tourPrices: [],
-      currencySymbol: "",
+      currencySymbol: '',
       popupOpen: false,
       showGroupBookingModal: false,
       dropdown: {
         lang: false,
-        hamburger: false
-      }
+        hamburger: false,
+      },
     };
   }
   static async getInitialProps({ req }) {
@@ -33,9 +33,9 @@ export default class terms extends Component<any, any> {
 
   static async getTermsData({ req }) {
     const { host } = req ? req.headers : window.location;
-    const uid = host.replace("stage.", "");
-    const lang = "en-us";
-    const uidType = "microsite";
+    const uid = host.replace('stage.', '');
+    const lang = 'en-us';
+    const uidType = 'microsite';
     const response = await Client(req).getByUID(uidType, uid, { lang });
     const footerID = response.data.footer_ref.id;
     if (footerID) {
@@ -52,8 +52,8 @@ export default class terms extends Component<any, any> {
           dropdown: {
             ...this.state.dropdown,
             hamburger: !this.state.dropdown.hamburger,
-            lang: false
-          }
+            lang: false,
+          },
         });
         break;
       }
@@ -63,8 +63,8 @@ export default class terms extends Component<any, any> {
           dropdown: {
             ...this.state.dropdown,
             lang: !this.state.dropdown.lang,
-            hamburger: false
-          }
+            hamburger: false,
+          },
         });
         break;
       }
@@ -86,30 +86,30 @@ export default class terms extends Component<any, any> {
       localization: languages,
       header_links: headerLinks,
       logo_redirection_url: logoRedirectionURL,
-      customFooter
+      customFooter,
     } = response.data;
 
     const { lang: currentLanguage, uid } = response;
     const {
       url: uploadedFooterLogoUrl,
-      alt: footerAltTextUploaded
+      alt: footerAltTextUploaded,
     } = response.data.footer_logo;
     const { url: footerLogoUrl } = response.data.footer_logo_link;
     const { footer_links: footerLinks } = response.data;
     const { text: disclaimer } = response.data.disclaimer[0] || {
-      text: ""
+      text: '',
     };
     const { footer_logo_alt_text: footerAltText } = response.data;
 
     let url = host || window.location.host;
-    const isDev = url.includes("localhost");
+    const isDev = url.includes('localhost');
     const currentHost = !isDev ? url : parse(uid, true).pathname;
-    const micrositeUrl = currentHost.includes("stage")
-      ? currentHost.replace("stage.", "")
+    const micrositeUrl = currentHost.includes('stage')
+      ? currentHost.replace('stage.', '')
       : currentHost;
-    let hostSplit = micrositeUrl.split(".");
+    let hostSplit = micrositeUrl.split('.');
     hostSplit.shift();
-    const supportURL = hostSplit.join(".");
+    const supportURL = hostSplit.join('.');
 
     return (
       <React.Fragment>
@@ -123,8 +123,8 @@ export default class terms extends Component<any, any> {
           selectedLanguage={currentLanguage}
           uid={uid}
           isMobile={isMobile}
-          parentComponent={"TERMS"}
-          logoRedirectionURL={logoRedirectionURL.url || "/"}
+          parentComponent={'TERMS'}
+          logoRedirectionURL={logoRedirectionURL.url || '/'}
           dropdown={this.state.dropdown}
           handleDropdownToggle={this.handleDropdownToggle}
         />
@@ -132,7 +132,7 @@ export default class terms extends Component<any, any> {
           <div
             className="select-wrapper"
             id="select-tickets"
-            style={{ margin: "0px" }}
+            style={{ margin: '0px' }}
           >
             <h1 className="select-text">Terms And Conditions</h1>
             <div className="divider"></div>

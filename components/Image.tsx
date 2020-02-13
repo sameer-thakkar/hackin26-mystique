@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 export default class Image extends React.Component<any, any> {
   static defaultProps = {
-    imageId: ""
+    imageId: '',
   };
   constructor(props) {
     super(props);
@@ -18,23 +18,23 @@ export default class Image extends React.Component<any, any> {
       format,
       imageId,
       dontLazyLoad,
-      alt
+      alt,
     } = this.props;
-    const makeUrl = (density = 1.5, fm = "pjpg") => {
-      const w = width ? `&w=${width * density}` : "";
-      const h = height ? `&h=${height * density}` : "";
+    const makeUrl = (density = 1.5, fm = 'pjpg') => {
+      const w = width ? `&w=${width * density}` : '';
+      const h = height ? `&h=${height * density}` : '';
       if (!url) {
         return null;
       }
       return `${url.replace(
         /\s/g,
-        "%20"
+        '%20'
       )}?auto=compress&fm=${fm}${w}${h}&crop=faces&fit=min`;
     };
     if (!dontLazyLoad)
       return (
         <picture>
-          <source type="image/webp" data-srcset={makeUrl(1, "webp")} />
+          <source type="image/webp" data-srcset={makeUrl(1, 'webp')} />
           {/* a non-static className (imageId) is required for lazyLoad specific classNames to be reset to original on re-render,
         fixes cards continue showing previous render images */}
           <img

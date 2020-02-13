@@ -1,71 +1,70 @@
-import React from "react";
-import Image from "./Image";
+import React from 'react';
+import Image from './Image';
+import styled from 'styled-components';
 
 type PrismicImageObject = {
-  image_url: any;
-  image_source: any;
+  image_url?: any;
+  image_source?: any;
 };
+
 type ImageGridProps = {
   cols: number;
   images: Array<PrismicImageObject>;
+  lazyLoadImages?: boolean;
 };
+
+const StyledImageGrid = styled.div`
+  display: grid;
+  grid-gap: 1.5em;
+  grid-template-columns: repeat(${({ cols }) => cols}, 1fr);
+  max-width: 100%;
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const ImageBox = styled.div`
+  border-radius: 3px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.18);
+  img {
+    width: 100%;
+    max-width: 100%;
+    object-fit: cover;
+    height: 350px;
+    display: block;
+  }
+  @media (max-width: 768px) {
+    img {
+      height: 200px !important;
+    }
+  }
+`;
 
 class ImageGrid extends React.Component<ImageGridProps, any> {
   constructor(props) {
     super(props);
   }
 
+  static defaultProps = {
+    lazyLoadImages: true,
+  };
+
   render() {
-    const { images, cols } = this.props;
+    const { images, cols, lazyLoadImages } = this.props;
     return (
-      <div className="image-grid">
+      <StyledImageGrid cols={cols}>
         {images.map((image, index) => (
-          <div key={index} className="image-box">
-            {/* <img src={image.image_url.url} alt="" /> */}
+          <ImageBox key={index}>
             <Image
+              dontLazyLoad={!lazyLoadImages}
               width={580}
               height={300}
               format="pjpg"
               url={image.image_url.url || image.image_source.url}
             />
-          </div>
+          </ImageBox>
         ))}
-        <style jsx>
-          {`
-            .image-grid {
-              display: grid;
-              grid-gap: 1.5em;
-              grid-template-columns: repeat(${cols}, 1fr);
-              max-width: 100%;
-            }
-            .image-box {
-              border-radius: 3px;
-              box-shadow: 0 1px 8px rgba(0, 0, 0, 0.18);
-            }
-            @media (max-width: 768px) {
-              .image-grid {
-                grid-template-columns: 1fr;
-              }
-            }
-          `}
-        </style>
-        <style jsx global>
-          {`
-            .image-box img {
-              width: 100%;
-              max-width: 100%;
-              object-fit: cover;
-              height: 350px;
-              display: block;
-            }
-            @media (max-width: 768px) {
-              .image-box img {
-                height: 200px;
-              }
-            }
-          `}
-        </style>
-      </div>
+      </StyledImageGrid>
     );
   }
 }

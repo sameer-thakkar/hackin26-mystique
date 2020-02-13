@@ -1,22 +1,22 @@
-import React, { Component, useState, useEffect, useRef } from "react";
-import Link from "next/link";
-import { CHEVRON_DOWN } from "../../static/svg-icons";
-import { useCaptureClickOutside } from "../hooks/ClickOutside";
-import { COLORS, GRAPHIK } from "../../constants/ui-constants";
+import React, { Component, useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
+import { CHEVRON_DOWN } from '../../public/static/svg-icons';
+import { useCaptureClickOutside } from '../hooks/ClickOutside';
+import { COLORS, GRAPHIK } from '../../constants/ui-constants';
 
 export const SortSelector = props => {
   let filters = [
     {
-      name: "Popularity",
-      key: "popularity"
+      name: 'Popularity',
+      key: 'popularity',
     },
     {
-      name: "Price",
-      key: "price"
-    }
+      name: 'Price',
+      key: 'price',
+    },
   ];
 
-  let pathName = "";
+  let pathName = '';
   const [dropdownActive, setDropdownActive] = useState(false);
   const [activeFilter, setActiveFilter] = useState(0);
 
@@ -47,10 +47,10 @@ export const SortSelector = props => {
     <div className="filter-selector-container" ref={parentRef}>
       <div onClick={toggleFilterDropdown} className="current-filter-toggle">
         <span>
-          Sort By:{" "}
+          Sort By:{' '}
           <span className="current-filter">{filters[activeFilter].name}</span>
         </span>
-        <div className={"icon " + (dropdownActive ? "active" : "")}>
+        <div className={'icon ' + (dropdownActive ? 'active' : '')}>
           {CHEVRON_DOWN}
         </div>
       </div>
@@ -60,7 +60,7 @@ export const SortSelector = props => {
             const isActive = filters[activeFilter].name == filter.name;
             return (
               <div
-                className={isActive ? "selected-tab" : ""}
+                className={isActive ? 'selected-tab' : ''}
                 key={index}
                 onClick={() => {
                   changeFilter(index);

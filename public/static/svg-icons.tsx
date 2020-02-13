@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 export const CHEVRON_LEFT = (
   <svg
     width="20"

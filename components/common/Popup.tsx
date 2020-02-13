@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import { sliceHandler } from "../Slices";
-import { CLOSE_WHITE } from "../../static/svg-icons";
-import { COLORS } from "../../constants/ui-constants";
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import { sliceHandler } from '../Slices';
+import { CLOSE_WHITE } from '../../public/static/svg-icons';
+import { COLORS } from '../../constants/ui-constants';
 
 const Popup = props => {
   const { data, togglePopup } = props;

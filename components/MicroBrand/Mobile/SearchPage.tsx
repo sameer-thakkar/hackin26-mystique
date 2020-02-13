@@ -1,16 +1,16 @@
-import React, { Component, useState, useEffect } from "react";
-import { Header } from "../Header";
-import { Banner } from "../Banner";
-import { CategoryImageBar } from "./CategoryImageBar";
-import { CategoryBar } from "../CategoryBar";
-import LongForm from "../../LongForm";
-import { SearchBox } from "../SearchBox";
-import { PAGETYPE } from "../../../constants";
-import { CHEVRON_LEFT, CLOSE_WHITE } from "../../../static/svg-icons";
-import { SearchItem } from "../SearchItem";
-import { PopulateProducts } from "../PopulateProducts";
-import { isMobileDevice } from "../../../utils/helper";
-import { AVENIR } from "../../../constants/ui-constants";
+import React, { Component, useState, useEffect } from 'react';
+import { Header } from '../Header';
+import { Banner } from '../Banner';
+import { CategoryImageBar } from './CategoryImageBar';
+import { CategoryBar } from '../CategoryBar';
+import LongForm from '../../LongForm';
+import { SearchBox } from '../SearchBox';
+import { PAGETYPE } from '../../../constants';
+import { CHEVRON_LEFT, CLOSE_WHITE } from '../../../public/static/svg-icons';
+import { SearchItem } from '../SearchItem';
+import { PopulateProducts } from '../PopulateProducts';
+import { isMobileDevice } from '../../../utils/helper';
+import { AVENIR } from '../../../constants/ui-constants';
 
 export const SearchPage = props => {
   const [results, setResults] = useState([]);
@@ -26,7 +26,7 @@ export const SearchPage = props => {
   const searchItemClick = productTgid => {
     props.changePage({
       name: PAGETYPE.MOBILE_PRODUCT_PAGE,
-      tgid: productTgid
+      tgid: productTgid,
     });
   };
 

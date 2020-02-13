@@ -1,8 +1,8 @@
-import React, { Component, useState, useEffect, useRef } from "react";
-import { useCaptureClickOutside } from "../hooks/ClickOutside";
-import Image from "../Image";
-import { AVENIR, COLORS, GRAPHIK } from "../../constants/ui-constants";
-import { CHEVRON_DOWN } from "../../static/svg-icons";
+import React, { Component, useState, useEffect, useRef } from 'react';
+import { useCaptureClickOutside } from '../hooks/ClickOutside';
+import Image from '../Image';
+import { AVENIR, COLORS, GRAPHIK } from '../../constants/ui-constants';
+import { CHEVRON_DOWN } from '../../public/static/svg-icons';
 
 export const ResponsiveSelector = props => {
   const {
@@ -11,11 +11,11 @@ export const ResponsiveSelector = props => {
     host,
     isMobile,
     onChange,
-    customClassName = "",
+    customClassName = '',
     options,
     icon,
     iconPosition,
-    toggleIcon = true
+    toggleIcon = true,
   } = props;
 
   const [toggleActive, setToggleActive] = useState(false);
@@ -46,7 +46,7 @@ export const ResponsiveSelector = props => {
         </span>
         {icon ? (
           <span className="field-icon">
-            {typeof icon === "string" && icon.trim().startsWith("http") ? (
+            {typeof icon === 'string' && icon.trim().startsWith('http') ? (
               <Image url={icon} alt="Selector Icon" />
             ) : (
               icon
@@ -54,7 +54,7 @@ export const ResponsiveSelector = props => {
           </span>
         ) : null}
         {toggleIcon ? (
-          <div className={"toggle-icon " + (toggleActive ? "active" : "")}>
+          <div className={'toggle-icon ' + (toggleActive ? 'active' : '')}>
             {CHEVRON_DOWN}
           </div>
         ) : null}
@@ -63,14 +63,14 @@ export const ResponsiveSelector = props => {
         <div
           ref={selectorRef}
           className={`responsive-dropdown ${
-            toggleActive ? "responsive-dropdown-active" : ""
+            toggleActive ? 'responsive-dropdown-active' : ''
           }`}
         >
           {options.map((option, index) => {
             return (
               <div
                 className={`responsive-option ${
-                  current == index ? "active" : ""
+                  current == index ? 'active' : ''
                 }`}
                 key={index}
                 onClick={() => selectionChangeHandler(index)}
@@ -146,9 +146,9 @@ export const ResponsiveSelector = props => {
           }
           .current-selection {
             display: grid;
-            grid-template-columns: auto ${icon ? "auto" : ""} ${toggleIcon
-                ? "auto"
-                : ""};
+            grid-template-columns: auto ${icon ? 'auto' : ''} ${toggleIcon
+                ? 'auto'
+                : ''};
             justify-content: space-between;
             align-items: center;
             grid-gap: 8px;
@@ -158,8 +158,8 @@ export const ResponsiveSelector = props => {
             color: ${COLORS.DAVY_GREY};
           }
           .current-selection .field-icon {
-            grid-column: ${iconPosition == "left" ? 1 : 2};
-            grid-row: ${iconPosition == "left" ? 1 : "unset"};
+            grid-column: ${iconPosition == 'left' ? 1 : 2};
+            grid-row: ${iconPosition == 'left' ? 1 : 'unset'};
           }
           .responsive-option.active {
             color: ${COLORS.RHAPSODY};

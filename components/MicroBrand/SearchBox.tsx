@@ -1,19 +1,19 @@
-import React, { Component, useContext, useState, useEffect } from "react";
-import Fuse from "fuse.js";
-import { SEARCH_ICON, CLOSE_WHITE } from "../../static/svg-icons";
-import { GRAPHIK, COLORS } from "../../constants/ui-constants";
-import { InteractionContext } from "../contexts/Interaction";
+import React, { Component, useContext, useState, useEffect } from 'react';
+import Fuse from 'fuse.js';
+import { SEARCH_ICON, CLOSE_WHITE } from '../../public/static/svg-icons';
+import { GRAPHIK, COLORS } from '../../constants/ui-constants';
+import { InteractionContext } from '../contexts/Interaction';
 
 export const SearchBox = props => {
   let fuse;
   let interactionContext = useContext(InteractionContext);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
 
   useEffect(() => {
     const opts = {
       shouldSort: true,
       threshold: 0.4,
-      keys: ["title"]
+      keys: ['title'],
     };
     const searchableTours = props.allToursArray.filter(tour => tour.available);
     fuse = new Fuse(searchableTours, opts);
@@ -36,7 +36,7 @@ export const SearchBox = props => {
   };
 
   const clearSearch = () => {
-    search("");
+    search('');
   };
 
   const { isMobile } = props;

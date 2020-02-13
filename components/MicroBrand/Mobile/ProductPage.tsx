@@ -1,13 +1,17 @@
-import React, { Component, useEffect } from "react";
-import Image from "../../Image";
-import { RichText } from "prismic-reactjs";
-import { CLOSE_WHITE, CHEVRON_LEFT, STAR } from "../../../static/svg-icons";
-import { shortCodeSerializer } from "../../../utils/shortCodes";
-import { PAGETYPE } from "../../../constants";
-import parse from "url-parse";
-import { Banner } from "../Banner";
-import Swiper from "react-id-swiper";
-import { AVENIR, GRAPHIK, COLORS } from "../../../constants/ui-constants";
+import React, { Component, useEffect } from 'react';
+import Image from '../../Image';
+import { RichText } from 'prismic-reactjs';
+import {
+  CLOSE_WHITE,
+  CHEVRON_LEFT,
+  STAR,
+} from '../../../public/static/svg-icons';
+import { shortCodeSerializer } from '../../../utils/shortCodes';
+import { PAGETYPE } from '../../../constants';
+import parse from 'url-parse';
+import { Banner } from '../Banner';
+import Swiper from 'react-id-swiper';
+import { AVENIR, GRAPHIK, COLORS } from '../../../constants/ui-constants';
 
 export const MobileProductPage = props => {
   const closeProductCard = () => {
@@ -24,20 +28,20 @@ export const MobileProductPage = props => {
     extendedSwiperOptions = {
       autoplay: false,
       loop: false,
-      noSwiping: true
+      noSwiping: true,
     };
   }
   const allContent = [...tour.contentBlocks.left, ...tour.contentBlocks.right];
   let url = host || window.location.host;
-  const isDev = url.includes("localhost");
+  const isDev = url.includes('localhost');
   const currentHost = !isDev ? url : parse(uid, true).pathname;
-  const hostName = currentHost.includes("stage")
-    ? currentHost.replace("stage.", "")
+  const hostName = currentHost.includes('stage')
+    ? currentHost.replace('stage.', '')
     : currentHost;
-  let hostSplit = hostName.split(".");
+  let hostSplit = hostName.split('.');
   hostSplit.shift();
-  const bookingUrl = hostSplit.join(".");
-  const descriptors = tour.descriptors.split(",").filter(desc => desc.length);
+  const bookingUrl = hostSplit.join('.');
+  const descriptors = tour.descriptors.split(',').filter(desc => desc.length);
   return (
     <div className="mobile-product-wrap">
       <div className="header">
@@ -79,7 +83,7 @@ export const MobileProductPage = props => {
           {tour.averageRating > 0 ? (
             <div className="auto-boosters-box">
               <div className="rating">
-                {STAR("#FFBB58")} <span>{tour.averageRating}</span>
+                {STAR('#FFBB58')} <span>{tour.averageRating}</span>
               </div>
               <div className="divider-line"></div>
               <div className="cta-boost">{tour.ctaBooster}</div>
@@ -133,7 +137,7 @@ export const MobileProductPage = props => {
         <a
           target="_blank"
           href={`https://book.${bookingUrl}${
-            currentLanguage === "en" ? "" : `/${currentLanguage}`
+            currentLanguage === 'en' ? '' : `/${currentLanguage}`
           }/book/${tgid}`}
         >
           <div className="cta-text">Book Now</div>
@@ -148,7 +152,7 @@ export const MobileProductPage = props => {
             overflow: hidden;
           }
           .mobile-product-wrap::before {
-            content: "";
+            content: '';
             display: block;
           }
           .mobile-product-wrap .prod-image {
@@ -306,7 +310,7 @@ export const MobileProductPage = props => {
             display: grid;
             grid-auto-flow: column;
             grid-auto-columns: max-content;
-            font-family: "Graphik";
+            font-family: 'Graphik';
             font-size: 11px;
             font-weight: 300;
             grid-gap: 8px;
@@ -343,7 +347,7 @@ export const MobileProductPage = props => {
             border-top: 1px solid #ebebeb;
           }
           .mobile-product-wrap {
-            font-family: "Graphik", "Proxima Nova", "Helvetica Neue", Helvetica,
+            font-family: 'Graphik', 'Proxima Nova', 'Helvetica Neue', Helvetica,
               Arial, sans-serif;
           }
           .mobile-product-wrap .tags p {
@@ -396,7 +400,7 @@ export const MobileProductPage = props => {
             display: flex;
           }
           .descriptors::after {
-            content: "";
+            content: '';
             margin-right: 32px;
             display: block;
           }
@@ -408,13 +412,13 @@ export const MobileProductPage = props => {
 
 MobileProductPage.defaultProps = {
   carouselOptions: {
-    direction: "horizontal",
+    direction: 'horizontal',
     speed: 650,
-    slidesPerView: "auto",
+    slidesPerView: 'auto',
     loop: false,
     centered: true,
     spaceBetween: 8,
     autoplay: false,
-    rebuildOnUpdate: true
-  }
+    rebuildOnUpdate: true,
+  },
 };

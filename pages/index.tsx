@@ -1,6 +1,5 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
-import Router from 'next/router';
 import fetch from 'isomorphic-unfetch';
 
 const Microsite = dynamic(() => import('../components/Microsite'));
@@ -9,587 +8,478 @@ const ErrorPage = dynamic(() => import('next/error'));
 const MicroBrand = dynamic(() => import('../components/MicroBrand/MicroBrand'));
 
 import { Client } from '../prismic-config';
-import { CONTENT_TYPES, DESIGN } from '../constants';
-import { withoutTrailingSlash } from '../utils/helper';
+import {
+  CONTENT_TYPES,
+  DESIGN,
+  MICROSITE_STRING_KEYS,
+  MICROSITE_OBJECT_KEYS,
+  COMMON_HEADER_PROPS,
+  LINKED_MICROSITE_PROPS,
+} from '../constants';
 import EnvironmentContext from '../contexts/environmentContext';
-import '../static/styles.css';
-
-const getPropsFromReq = ({ host, pathname }) => {
-    const languages = ['en', 'es', 'it', 'fr', 'pt', 'de', 'nl'];
-    const langMap = {
-        en: 'en-us',
-        es: 'es-es',
-        it: 'it-it',
-        fr: 'fr-fr',
-        pt: 'pt-pt',
-        nl: 'nl-nl',
-        de: 'de-de',
-    };
-
-    const pathnameSlugs = withoutTrailingSlash(pathname)
-        .split('/')
-        .filter(item => item);
-
-    let requestedLang = pathnameSlugs[0];
-
-    const isLangValid = languages.includes(requestedLang);
-    if (isLangValid) {
-        pathnameSlugs.shift();
-    } else {
-        requestedLang = 'en';
-    }
-
-    const uid = `${withoutTrailingSlash(`${host}/${pathnameSlugs.join('/')}`)}`
-        .replace('stage.', '')
-        .replace(/\//g, '.');
-
-    return {
-        uid,
-        lang: langMap[requestedLang],
-    };
-};
+import { redirectTo, getPrismicProps, reflect } from '../utils';
+import '../public/static/styles.css';
 
 export default class Page extends React.Component<any, any> {
-    static async getInitialProps({ req, query, res }) {
-        const serverRequestStartTimestamp = Math.floor(new Date().getTime());
-        try {
-            const props = await Page.getMicrositeData({
-                res,
-                req,
-                query,
-                reqPathname: req ? req.url.split('?')[0].split('#')[0] : null,
-            });
+  static async getInitialProps({ req, query, res }) {
+    const serverRequestStartTimestamp = Math.floor(new Date().getTime());
 
-            try {
-                const redirectTo = props.CMSContent
-                    ? props.CMSContent.data.data.redirect_url
-                    : null;
+    // Checking is mystique is running in dev
+    const isDev = req
+      ? !!query.mystique_uid
+      : window.location.search.includes('mystique_uid');
 
-                if (redirectTo && redirectTo.url) {
-                    if (res) {
-                        res.writeHead(302, {
-                            Location: redirectTo.url,
-                        });
-                        res.end();
-                    } else {
-                        Router.push(redirectTo.url);
-                    }
-                    return;
-                }
-            } catch (e) {}
-
-            if (process.browser) (window as any).prismic.setupEditButton();
-            if (res) {
-                if (props.statusCode) {
-                    // statusCode here implies non 2xx statusCode
-                    res.statusCode = props.statusCode;
-                }
-            }
-            if (
-                req &&
-                req.headers.host.startsWith('stage.') &&
-                process.env.GIT_BRANCH
-            ) {
-                res.setHeader('x-git-branch', process.env.GIT_BRANCH);
-                res.setHeader('x-git-actor', process.env.GIT_ACTOR);
-            }
-
-            return {
-                ...props,
-                serverRequestStartTimestamp,
-                windowUrl: req
-                    ? `${req.headers['x-forwarded-proto']}://${req.headers['x-forwarded-host']}${req.url}`
-                    : window.location.href,
-            };
-        } catch (e) {
-            console.log(e);
-            return {};
-        }
+    // Logic to get the redirect uid
+    let redirectUID;
+    if (isDev) {
+      if (req) {
+        redirectUID = query.mystique_uid;
+      } else {
+        const urlParams = new URLSearchParams(window.location.search);
+        redirectUID = urlParams.get('mystique_uid');
+      }
+    } else {
+      if (req) {
+        redirectUID = req.headers.host;
+      } else {
+        redirectUID = window.location.host;
+      }
     }
+    redirectUID = redirectUID.replace('stage.', '');
 
-    static async getMicrositeData({ res: serverRes, req, query, reqPathname }) {
-        const { host } = req ? req.headers : window.location;
-        const isDev = req
-            ? !!query.mystique_uid
-            : window.location.search.includes('mystique_uid');
-
-        try {
-            let uid, lang, pathname;
-            if (req) {
-                // server render
-                pathname = reqPathname;
-                if (isDev) {
-                    const {
-                        mystique_uid: queryParamUID,
-                        lang: queryParamLang,
-                    } = query;
-                    uid = queryParamUID;
-                    lang = queryParamLang;
-                } else {
-                    const { uid: reqUID, lang: reqLang } = getPropsFromReq({
-                        host: req.headers.host,
-                        pathname,
-                    });
-                    uid = reqUID;
-                    lang = reqLang;
-                }
-            } else {
-                if (isDev) {
-                    const qsObject: any = window.location.search
-                        .replace('?', '')
-                        .split('&')
-                        .reduce((accum, item) => {
-                            const qs = item.split('=');
-                            return {
-                                ...accum,
-                                [qs[0]]: qs[1],
-                            };
-                        }, {});
-                    uid = qsObject.mystique_uid;
-                    lang = qsObject.lang;
-                    pathname = window.location.pathname;
-                } else {
-                    const { host } = window.location;
-                    pathname = window.location.pathname;
-                    const { uid: reqUID, lang: reqLang } = getPropsFromReq({
-                        host,
-                        pathname,
-                    });
-                    uid = reqUID;
-                    lang = reqLang;
-                }
+    // Asynchronously check if a redirect exists for the request and get the data
+    const [_redirect, { payload: props }] = await Promise.all(
+      [
+        Client(req)
+          .getByUID(CONTENT_TYPES.REDIRECT, redirectUID)
+          .then(r => {
+            const redirectUrl = r.data?.redirect_to_url?.url;
+            if (redirectUrl) {
+              redirectTo({ res, url: redirectUrl });
             }
+          }),
+        Page.getData({
+          res,
+          req,
+          query,
+          reqPathname: req ? req.url.split('?')[0].split('#')[0] : null,
+          isDev,
+        }),
+      ].map(reflect)
+    );
 
-            let initial_tgids = [];
+    try {
+      const url = props?.CMSContent?.data?.data?.redirect_url?.url;
+      if (url) {
+        redirectTo({ res, url });
+      }
 
-            const { CMSContent, ContentType, statusCode } = await Client(req)
-                .getByUID(CONTENT_TYPES.MICROSITE, uid, {
-                    lang,
-                })
-                .then(async res => {
-                    let completeMicrosite = { data: res };
-                    if (
-                        completeMicrosite.data &&
-                        completeMicrosite.data.uid == uid
-                    ) {
-                        const itemsParent =
-                            completeMicrosite.data.data.body1[0];
-                        const tours = itemsParent ? itemsParent.items : [];
-                        const offers = tours
-                            .filter(tour => tour.offer__free_tour.id)
-                            .map(tour => tour.offer__free_tour.id);
-                        const uniqueOfferIds = offers.filter(
-                            (id, index) => offers.indexOf(id) === index
-                        );
-                        if (uniqueOfferIds.length)
-                            (completeMicrosite as any).offerData = await Client(
-                                req
-                            )
-                                .getByIDs(uniqueOfferIds)
-                                .then(offerData => {
-                                    offerData.results.map(offer => {
-                                        initial_tgids.push(
-                                            offer.data.offer_tgid
-                                        );
-                                    });
-                                    return offerData;
-                                });
-                        const baseLangData =
-                            lang !== 'en'
-                                ? await Client(req)
-                                      .getByUID(CONTENT_TYPES.MICROSITE, uid, {
-                                          lang: 'en-us',
-                                      })
-                                      .then(res => res)
-                                : {};
-
-                        const strKeys = [
-                            'title',
-                            'description',
-                            'gtm_id',
-                            'seo_keywords',
-                            'google_site_verification',
-                            'bing_site_verification',
-                            'noindex',
-                            'nofollow',
-                            'page_url',
-                            'enable_earliest_availability',
-                            'blackout_start_date',
-                            'blackout_end_date',
-                            'cta_url_suffix',
-                            'block_n_days_group_booking',
-                        ];
-                        const objKeys = [
-                            'header_scripts',
-                            'image',
-                            'favicon',
-                            'other_meta_tags',
-                        ];
-
-                        const strValues = strKeys.reduce(
-                            (acc, elem) => ({
-                                ...acc,
-                                [elem]:
-                                    completeMicrosite.data.data[elem] ||
-                                    baseLangData.data[elem],
-                            }),
-                            {}
-                        );
-
-                        const objValues = objKeys.reduce(
-                            (acc, elem) => ({
-                                ...acc,
-                                [elem]: Object.keys(
-                                    completeMicrosite.data.data[elem]
-                                ).length
-                                    ? completeMicrosite.data.data[elem]
-                                    : baseLangData.data[elem],
-                            }),
-                            {}
-                        );
-
-                        const footerID =
-                            completeMicrosite.data.data.footer_ref.id ||
-                            baseLangData.data.footer_ref.id;
-                        if (footerID) {
-                            const customFooter = await Client(req).getByID(
-                                footerID
-                            );
-                            completeMicrosite.data.data.customFooter = customFooter;
-                        }
-
-                        const micrositeData = {
-                            ...completeMicrosite,
-                            data: {
-                                ...completeMicrosite.data,
-                                data: {
-                                    ...completeMicrosite.data.data,
-                                    ...strValues,
-                                    ...objValues,
-                                    canonical_link:
-                                        completeMicrosite.data.data
-                                            .canonical_link ||
-                                        completeMicrosite.data.data.page_url,
-                                    logo_redirection_url: completeMicrosite.data
-                                        .data.logo_redirection_url.url
-                                        ? completeMicrosite.data.data
-                                              .logo_redirection_url
-                                        : baseLangData.data
-                                              .logo_redirection_url,
-                                    enable_earliest_availability:
-                                        baseLangData.data
-                                            .enable_earliest_availability,
-                                    enable_powered_by_headout_logo: completeMicrosite
-                                        .data.data
-                                        .enable_powered_by_headout_logo
-                                        ? completeMicrosite.data.data
-                                              .enable_powered_by_headout_logo ===
-                                          'Yes'
-                                        : baseLangData.data
-                                              .enable_powered_by_headout_logo ===
-                                          'Yes',
-                                    baseLangPageTitle: baseLangData.data.title,
-                                },
-                            },
-                        };
-
-                        return {
-                            CMSContent: micrositeData,
-                            ContentType: CONTENT_TYPES.MICROSITE,
-                        };
-                    } else {
-                        const propsFromHeader = [
-                            'header_links',
-                            'logo',
-                            'link_to_logo_file',
-                            'logo_alt_text',
-                            'enable_group_booking',
-                            'header_links',
-                            'logo_redirection_url',
-                            'localization',
-                            'enable_localization_menu',
-                            'group_booking_disclaimer',
-                        ].map(prop => `${CONTENT_TYPES.HEADER}.${prop}`);
-                        const propsFromLinkedMicrosite = [
-                            'redirect_url',
-                            'gtm_id',
-                            'header_scripts',
-                            'title',
-                            'description',
-                            'image',
-                            'favicon',
-                            'seo_keywords',
-                            'google_site_verification',
-                            'bing_site_verification',
-                            'canonical_link',
-                            'noindex',
-                            'nofollow',
-                            'other_meta_tags',
-                            'blackout_start_date',
-                            'blackout_end_date',
-                            'block_n_days_group_booking',
-                            'enable_powered_by_headout_logo',
-                            'group_form_blocked_days',
-                        ].map(prop => `${CONTENT_TYPES.MICROSITE}.${prop}`);
-
-                        return await Client(req)
-                            .getByUID(CONTENT_TYPES.CONTENT_PAGE, uid, {
-                                fetchLinks: [
-                                    ...propsFromHeader,
-                                    ...propsFromLinkedMicrosite,
-                                ],
-                                lang,
-                            })
-                            .then(page => {
-                                if (!(page && page.data)) {
-                                    return {
-                                        statusCode: 404,
-                                    };
-                                }
-
-                                // Redirect logic (if redirect exists on content page)
-                                const redirectTo =
-                                    page.data.microsite_document_ref?.data
-                                        .redirect_url?.url;
-                                if (redirectTo) {
-                                    if (serverRes) {
-                                        serverRes.writeHead(302, {
-                                            Location: redirectTo,
-                                        });
-                                        serverRes.end();
-                                    } else {
-                                        Router.push(redirectTo);
-                                    }
-                                }
-
-                                let completePage = {
-                                    ...page,
-                                    featured: {
-                                        image: page.data.featured_image.url
-                                            ? page.data.featured_image
-                                            : page.data.featured_image_link,
-                                        title: page.data.featured_title,
-                                    },
-                                    subs: {},
-                                };
-
-                                let subComponents = [];
-                                page.data.footer_ref.id &&
-                                    subComponents.push(page.data.footer_ref.id);
-                                let SubComponentPromise = Client(req).getByIDs(
-                                    subComponents
-                                );
-
-                                return Promise.all([SubComponentPromise]).then(
-                                    (res: any) => {
-                                        completePage.subs = res[0].results;
-                                        return {
-                                            CMSContent: completePage,
-                                            ContentType:
-                                                CONTENT_TYPES.CONTENT_PAGE,
-                                        };
-                                    }
-                                );
-                            });
-                    }
-                });
-
-            if (statusCode) {
-                return {
-                    statusCode,
-                };
-            }
-
-            if (ContentType === CONTENT_TYPES.CONTENT_PAGE) {
-                return {
-                    CMSContent,
-                    ContentType,
-                    uid,
-                    lang,
-                    isDev,
-                    host,
-                };
-            }
-
-            if (ContentType === CONTENT_TYPES.MICROSITE) {
-                const MBDesign = CMSContent.data.data.design || '';
-                const { items: uncategorizedToursList } = CMSContent.data.data
-                    .body1[0] || { items: [] };
-
-                const all_tours_tab_tgids =
-                    CMSContent.data.data.all_tours.reduce((accum, tour) => {
-                        return [...accum, tour.primary.tgid];
-                    }, []) || [];
-
-                let labelIds;
-                if (all_tours_tab_tgids.length) {
-                    labelIds = CMSContent.data.data.content_order.reduce(
-                        (accum, label) => {
-                            return [...accum, label.label.id];
-                        },
-                        []
-                    );
-                    CMSContent.data.data.labels = await Client(req)
-                        .getByIDs(labelIds)
-                        .then(res => {
-                            return res.results;
-                        });
-                }
-
-                const idsToFetchFromScorpio = uncategorizedToursList.reduce(
-                    (accum, tour) => {
-                        const {
-                            tgid,
-                            tour_title_override: title,
-                            marketing_highlights_override: descriptors,
-                            tour_description_override: highlights,
-                        } = tour;
-                        const hasHighlights = highlights.filter(
-                            item => item.text
-                        );
-                        if (!title || !hasHighlights || !descriptors) {
-                            return [...accum, tgid];
-                        }
-                        return accum;
-                    },
-                    [...initial_tgids, ...all_tours_tab_tgids]
-                );
-
-                const scorpioResponses = await Promise.all(
-                    idsToFetchFromScorpio.map(id =>
-                        fetch(
-                            `https://api.headout.com/api/v5/tour-group/get/${id}?language=${
-                                lang.split('-')[0]
-                            }`
-                        ).then(r => r.json())
-                    )
-                );
-
-                const scorpioData = scorpioResponses.reduce(
-                    (accum: {}, response: any, idx) => ({
-                        ...accum,
-                        [idsToFetchFromScorpio[idx]]: {
-                            title: response.name,
-                            highlights: response.microBrandsHighlight,
-                            descriptors: response.microBrandsDescriptor,
-                            productHighlights: response.highlights,
-                            productTitle: response.name,
-                            images: response.imageUploads,
-                            averageRating: response.averageRating,
-                            reviewCount: response.reviewCount,
-                            ctaBooster: response.callToAction,
-                            available: !(response.listingPrice == null),
-                        },
-                    }),
-                    {}
-                );
-                const tgidToScroll = (function getScrollTgid() {
-                    const pathname = req ? req.url : window.location.pathname;
-                    const doesTgidExist = pathname.includes('tgid');
-                    if (doesTgidExist) {
-                        const tgidToScroll = pathname.split('=').pop();
-                        return tgidToScroll;
-                    }
-                    return null;
-                })();
-                return {
-                    CMSContent,
-                    ContentType,
-                    scorpioData,
-                    uid,
-                    lang,
-                    host,
-                    MBDesign,
-                    isDev,
-                    tgidToScroll,
-                };
-            }
-        } catch (error) {
-            console.log(error);
-            return {
-                statusCode: 500,
-            };
+      if (process.browser) (window as any).prismic.setupEditButton();
+      if (res) {
+        if (props.statusCode) {
+          // statusCode here implies non 2xx statusCode
+          res.statusCode = props.statusCode;
         }
-    }
+      }
+      if (
+        req &&
+        req.headers.host.startsWith('stage.') &&
+        process.env.GIT_BRANCH
+      ) {
+        res.setHeader('x-git-branch', process.env.GIT_BRANCH);
+        res.setHeader('x-git-actor', process.env.GIT_ACTOR);
+      }
 
-    render() {
-        const {
-            CMSContent,
-            scorpioData,
-            ContentType,
-            statusCode,
-            host,
-            MBDesign,
-            isDev,
-            windowUrl,
+      return {
+        ...props,
+        serverRequestStartTimestamp,
+        windowUrl: req
+          ? `${req.headers['x-forwarded-proto']}://${req.headers['x-forwarded-host']}${req.url}`
+          : window.location.href,
+      };
+    } catch (e) {
+      console.log(e);
+      return {};
+    }
+  }
+
+  static async getData({
+    res: serverResponse,
+    req,
+    query,
+    reqPathname,
+    isDev,
+  }) {
+    const { host } = req ? req.headers : window.location;
+
+    try {
+      let uid, lang, pathname;
+      if (req) {
+        // server render
+        pathname = reqPathname;
+        if (isDev) {
+          const { mystique_uid: queryParamUID, lang: queryParamLang } = query;
+          uid = queryParamUID;
+          lang = queryParamLang;
+        } else {
+          const { uid: reqUID, lang: reqLang } = getPrismicProps({
+            host: req.headers.host,
             pathname,
-            tgidToScroll,
-            serverRequestStartTimestamp,
-            lang,
-        } = this.props;
-        if (statusCode) {
-            return <ErrorPage statusCode={statusCode} />;
+          });
+          uid = reqUID;
+          lang = reqLang;
         }
-        const PAGETYPE = ContentType + (MBDesign || '');
-        let Component;
-        switch (PAGETYPE) {
-            case CONTENT_TYPES.MICROSITE + DESIGN.V2:
-                Component = (
-                    <MicroBrand
-                        data={CMSContent.data}
-                        lang={lang}
-                        host={host}
-                        isDev={isDev}
-                        scorpioData={scorpioData}
-                        serverRequestStartTimestamp={
-                            serverRequestStartTimestamp
-                        }
-                    />
-                );
-                break;
-            case CONTENT_TYPES.MICROSITE:
-            case CONTENT_TYPES.MICROSITE + DESIGN.V1:
-                Component = (
-                    <Microsite
-                        data={CMSContent.data}
-                        scorpioData={scorpioData}
-                        offerData={CMSContent.offerData}
-                        host={host}
-                        pathname={pathname}
-                        isDev={isDev}
-                        tgidToScroll={tgidToScroll}
-                        serverRequestStartTimestamp={
-                            serverRequestStartTimestamp
-                        }
-                    />
-                );
-                break;
-            case CONTENT_TYPES.CONTENT_PAGE:
-                Component = (
-                    <SubPage
-                        {...CMSContent}
-                        isDev={isDev}
-                        host={host}
-                        serverRequestStartTimestamp={
-                            serverRequestStartTimestamp
-                        }
-                    />
-                );
-                break;
-            default:
-                Component = <ErrorPage statusCode={500} />;
-                break;
+      } else {
+        if (isDev) {
+          const urlParams = new URLSearchParams(window.location.search);
+          uid = urlParams.get('mystique_uid');
+          lang = urlParams.get('lang');
+          pathname = window.location.pathname;
+        } else {
+          const { host } = window.location;
+          pathname = window.location.pathname;
+          const { uid: reqUID, lang: reqLang } = getPrismicProps({
+            host,
+            pathname,
+          });
+          uid = reqUID;
+          lang = reqLang;
+        }
+      }
+
+      let initial_tgids = [];
+
+      const { CMSContent, ContentType, statusCode } = await Client(req)
+        .getByUID(CONTENT_TYPES.MICROSITE, uid, {
+          lang,
+        })
+        .then(async res => {
+          let completeMicrosite = { data: res };
+          if (completeMicrosite.data && completeMicrosite.data.uid == uid) {
+            const itemsParent = completeMicrosite.data.data.body1[0];
+            const tours = itemsParent ? itemsParent.items : [];
+            const offers = tours
+              .filter(tour => tour.offer__free_tour.id)
+              .map(tour => tour.offer__free_tour.id);
+            const uniqueOfferIds = offers.filter(
+              (id, index) => offers.indexOf(id) === index
+            );
+            if (uniqueOfferIds.length)
+              (completeMicrosite as any).offerData = await Client(req)
+                .getByIDs(uniqueOfferIds)
+                .then(offerData => {
+                  offerData.results.map(offer => {
+                    initial_tgids.push(offer.data.offer_tgid);
+                  });
+                  return offerData;
+                });
+            const baseLangData =
+              lang !== 'en'
+                ? await Client(req)
+                    .getByUID(CONTENT_TYPES.MICROSITE, uid, {
+                      lang: 'en-us',
+                    })
+                    .then(res => res)
+                : {};
+
+            const strValues = MICROSITE_STRING_KEYS.reduce(
+              (acc, elem) => ({
+                ...acc,
+                [elem]:
+                  completeMicrosite.data.data[elem] || baseLangData.data[elem],
+              }),
+              {}
+            );
+
+            const objValues = MICROSITE_OBJECT_KEYS.reduce(
+              (acc, elem) => ({
+                ...acc,
+                [elem]: Object.keys(completeMicrosite.data.data[elem]).length
+                  ? completeMicrosite.data.data[elem]
+                  : baseLangData.data[elem],
+              }),
+              {}
+            );
+
+            const footerID =
+              completeMicrosite.data.data.footer_ref.id ||
+              baseLangData.data.footer_ref.id;
+            if (footerID) {
+              const customFooter = await Client(req).getByID(footerID);
+              completeMicrosite.data.data.customFooter = customFooter;
+            }
+
+            const micrositeData = {
+              ...completeMicrosite,
+              data: {
+                ...completeMicrosite.data,
+                data: {
+                  ...completeMicrosite.data.data,
+                  ...strValues,
+                  ...objValues,
+                  canonical_link:
+                    completeMicrosite.data.data.canonical_link ||
+                    completeMicrosite.data.data.page_url,
+                  logo_redirection_url: completeMicrosite.data.data
+                    .logo_redirection_url.url
+                    ? completeMicrosite.data.data.logo_redirection_url
+                    : baseLangData.data.logo_redirection_url,
+                  enable_earliest_availability:
+                    baseLangData.data.enable_earliest_availability,
+                  enable_powered_by_headout_logo: completeMicrosite.data.data
+                    .enable_powered_by_headout_logo
+                    ? completeMicrosite.data.data
+                        .enable_powered_by_headout_logo === 'Yes'
+                    : baseLangData.data.enable_powered_by_headout_logo ===
+                      'Yes',
+                  baseLangPageTitle: baseLangData.data.title,
+                },
+              },
+            };
+
+            return {
+              CMSContent: micrositeData,
+              ContentType: CONTENT_TYPES.MICROSITE,
+            };
+          } else {
+            return await Client(req)
+              .getByUID(CONTENT_TYPES.CONTENT_PAGE, uid, {
+                fetchLinks: [...COMMON_HEADER_PROPS, ...LINKED_MICROSITE_PROPS],
+                lang,
+              })
+              .then(page => {
+                if (!(page && page.data)) {
+                  return {
+                    statusCode: 404,
+                  };
+                }
+
+                // Redirect logic (if redirect exists on content page)
+                const url =
+                  page.data.microsite_document_ref?.data.redirect_url?.url;
+                if (url) {
+                  redirectTo({ res: serverResponse, url });
+                }
+
+                let completePage = {
+                  ...page,
+                  featured: {
+                    image: page.data.featured_image.url
+                      ? page.data.featured_image
+                      : page.data.featured_image_link,
+                    title: page.data.featured_title,
+                  },
+                  subs: {},
+                };
+                /*
+                Fetching data of referenced custom types which cannot be
+                fetched using the fetchLink method due to prismic constraints
+                Current includes: Common Footer
+                */
+                let subComponents = [];
+                page.data.footer_ref.id &&
+                  subComponents.push(page.data.footer_ref.id);
+                let SubComponentPromise = Client(req).getByIDs(subComponents);
+
+                return Promise.all([SubComponentPromise]).then((res: any) => {
+                  completePage.subs = res[0].results;
+                  return {
+                    CMSContent: completePage,
+                    ContentType: CONTENT_TYPES.CONTENT_PAGE,
+                  };
+                });
+              });
+          }
+        });
+
+      if (statusCode) {
+        return {
+          statusCode,
+        };
+      }
+
+      if (ContentType === CONTENT_TYPES.CONTENT_PAGE) {
+        return {
+          CMSContent,
+          ContentType,
+          uid,
+          lang,
+          isDev,
+          host,
+        };
+      }
+
+      if (ContentType === CONTENT_TYPES.MICROSITE) {
+        const MBDesign = CMSContent.data.data.design || '';
+        const { items: uncategorizedToursList } = CMSContent.data.data
+          .body1[0] || { items: [] };
+
+        const all_tours_tab_tgids =
+          CMSContent.data.data.all_tours.reduce((accum, tour) => {
+            return [...accum, tour.primary.tgid];
+          }, []) || [];
+
+        let labelIds;
+        if (all_tours_tab_tgids.length) {
+          labelIds = CMSContent.data.data.content_order.reduce(
+            (accum, label) => {
+              return [...accum, label.label.id];
+            },
+            []
+          );
+          CMSContent.data.data.labels = await Client(req)
+            .getByIDs(labelIds)
+            .then(res => {
+              return res.results;
+            });
         }
 
-        return (
-            <EnvironmentContext.Provider
-                value={{
-                    isDev,
-                    windowUrl,
-                }}
-            >
-                {Component}
-            </EnvironmentContext.Provider>
+        const idsToFetchFromScorpio = uncategorizedToursList.reduce(
+          (accum, tour) => {
+            const {
+              tgid,
+              tour_title_override: title,
+              marketing_highlights_override: descriptors,
+              tour_description_override: highlights,
+            } = tour;
+            const hasHighlights = highlights.filter(item => item.text);
+            if (!title || !hasHighlights || !descriptors) {
+              return [...accum, tgid];
+            }
+            return accum;
+          },
+          [...initial_tgids, ...all_tours_tab_tgids]
         );
+
+        const scorpioResponses = await Promise.all(
+          idsToFetchFromScorpio.map(id =>
+            fetch(
+              `https://api.headout.com/api/v5/tour-group/get/${id}?language=${
+                lang.split('-')[0]
+              }`
+            ).then(r => r.json())
+          )
+        );
+
+        const scorpioData = scorpioResponses.reduce(
+          (accum: {}, response: any, idx) => ({
+            ...accum,
+            [idsToFetchFromScorpio[idx]]: {
+              title: response.name,
+              highlights: response.microBrandsHighlight,
+              descriptors: response.microBrandsDescriptor,
+              productHighlights: response.highlights,
+              productTitle: response.name,
+              images: response.imageUploads,
+              averageRating: response.averageRating,
+              reviewCount: response.reviewCount,
+              ctaBooster: response.callToAction,
+              available: !(response.listingPrice == null),
+            },
+          }),
+          {}
+        );
+        const tgidToScroll = (function getScrollTgid() {
+          const pathname = req ? req.url : window.location.pathname;
+          const doesTgidExist = pathname.includes('tgid');
+          if (doesTgidExist) {
+            const tgidToScroll = pathname.split('=').pop();
+            return tgidToScroll;
+          }
+          return null;
+        })();
+        return {
+          CMSContent,
+          ContentType,
+          scorpioData,
+          uid,
+          lang,
+          host,
+          MBDesign,
+          isDev,
+          tgidToScroll,
+        };
+      }
+    } catch (error) {
+      console.log(error);
+      return {
+        statusCode: 500,
+      };
     }
+  }
+
+  render() {
+    const {
+      CMSContent,
+      scorpioData,
+      ContentType,
+      statusCode,
+      host,
+      MBDesign,
+      isDev,
+      windowUrl,
+      pathname,
+      tgidToScroll,
+      serverRequestStartTimestamp,
+      lang,
+    } = this.props;
+    if (statusCode) {
+      return <ErrorPage statusCode={statusCode} />;
+    }
+    const PAGETYPE = ContentType + (MBDesign || '');
+    let Component;
+    switch (PAGETYPE) {
+      case CONTENT_TYPES.MICROSITE + DESIGN.V2:
+        Component = (
+          <MicroBrand
+            data={CMSContent.data}
+            lang={lang}
+            host={host}
+            isDev={isDev}
+            scorpioData={scorpioData}
+            serverRequestStartTimestamp={serverRequestStartTimestamp}
+          />
+        );
+        break;
+      case CONTENT_TYPES.MICROSITE:
+      case CONTENT_TYPES.MICROSITE + DESIGN.V1:
+        Component = (
+          <Microsite
+            data={CMSContent.data}
+            scorpioData={scorpioData}
+            offerData={CMSContent.offerData}
+            host={host}
+            pathname={pathname}
+            isDev={isDev}
+            tgidToScroll={tgidToScroll}
+            serverRequestStartTimestamp={serverRequestStartTimestamp}
+          />
+        );
+        break;
+      case CONTENT_TYPES.CONTENT_PAGE:
+        Component = (
+          <SubPage
+            {...CMSContent}
+            isDev={isDev}
+            host={host}
+            serverRequestStartTimestamp={serverRequestStartTimestamp}
+          />
+        );
+        break;
+      default:
+        Component = <ErrorPage statusCode={500} />;
+        break;
+    }
+
+    return (
+      <EnvironmentContext.Provider
+        value={{
+          isDev,
+          windowUrl,
+        }}
+      >
+        {Component}
+      </EnvironmentContext.Provider>
+    );
+  }
 }
