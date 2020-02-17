@@ -1,6 +1,6 @@
-import React from "react";
-import { RichText } from "prismic-reactjs";
-import { shortCodeSerializer } from "../utils/shortCodes";
+import React from 'react';
+import { RichText } from 'prismic-reactjs';
+import { shortCodeSerializer } from '../../utils/shortCodes';
 
 const RichTextBox = props => {
   return (

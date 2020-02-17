@@ -1,5 +1,5 @@
-import React, { Component, useState, useEffect } from "react";
-import Image from "../../Image";
+import React, { Component, useState, useEffect } from 'react';
+import Image from '../../UI/Image';
 
 export const CategoryImageBar = props => {
   const [ready, setReady] = useState(false);

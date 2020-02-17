@@ -45,7 +45,7 @@
     "styled-components": "^5.0.1",
     "swiper": "^5.3.0",
     "url-parse": "^1.4.7",
-    "xmlbuilder": "^13.0.2"
+    "xmlbuilder": "^14.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -60,6 +60,7 @@
     "@storybook/storybook-deployer": "^2.8.1",
     "@types/node": "^12.7.1",
     "@types/react": "^16.9.0",
+    "@types/react-scroll": "^1.5.4",
     "babel-loader": "^8.0.6",
     "babel-plugin-styled-components": "^1.10.7",
     "babel-preset-react-app": "^9.1.1",

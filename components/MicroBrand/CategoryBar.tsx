@@ -4,11 +4,11 @@ import React, {
   useEffect,
   useContext,
   useLayoutEffect,
-  useRef
-} from "react";
-import { SortSelector } from "./SortSelector";
-import { InteractionContext } from "../contexts/Interaction";
-import { GRAPHIK, AVENIR, SIZES } from "../../constants/ui-constants";
+  useRef,
+} from 'react';
+import { SortSelector } from './SortSelector';
+import { InteractionContext } from '../../contexts/Interaction';
+import { GRAPHIK, AVENIR, SIZES } from '../../constants/ui-constants';
 
 export const CategoryBar = props => {
   const interactionCtx = useContext(InteractionContext);
@@ -20,7 +20,7 @@ export const CategoryBar = props => {
   const [filterDropdownActive, setFilterDropdownActive] = useState(false);
   const [indicatorStyles, setIndicatorStyles] = useState({
     width: null,
-    left: null
+    left: null,
   });
   const [sticky, setSticky] = useState(false);
   const { categories, isMobile } = props;
@@ -31,12 +31,12 @@ export const CategoryBar = props => {
 
   const centerActiveCategory = () => {
     const parentElement = parent.current;
-    const selectedTab = parentElement.querySelector(".tab.active");
+    const selectedTab = parentElement.querySelector('.tab.active');
     if (isMobile) {
       selectedTab.scrollIntoView({
-        inline: "center",
-        behavior: "smooth",
-        block: "end"
+        inline: 'center',
+        behavior: 'smooth',
+        block: 'end',
       });
     }
   };
@@ -45,10 +45,10 @@ export const CategoryBar = props => {
     let { categories, isMobile } = props;
     props.changeCategory({
       tgidArray: categories[index].ranking.popularity,
-      index: index
+      index: index,
     });
     if (scroll_div.current) {
-      scroll_div.current.scrollIntoView({ behavior: "smooth" });
+      scroll_div.current.scrollIntoView({ behavior: 'smooth' });
     }
 
     interactionCtx.changeCategory(categories[index].ranking.popularity);
@@ -59,7 +59,7 @@ export const CategoryBar = props => {
     let { categories, changeCategory } = props;
     changeCategory({
       tgidArray: categories[activeCategory].ranking[orderKey],
-      index: activeCategory
+      index: activeCategory,
     });
 
     interactionCtx.changeCategory(categories[activeCategory].ranking[orderKey]);
@@ -67,7 +67,7 @@ export const CategoryBar = props => {
 
   const getActiveLineDimension = () => {
     const parentElement = parent.current;
-    const tag = parentElement.querySelector(".tab.active");
+    const tag = parentElement.querySelector('.tab.active');
     const { isMobile } = props;
     let seletectedTab = window.getComputedStyle(tag);
     let width = parseFloat(seletectedTab.width);
@@ -101,7 +101,7 @@ export const CategoryBar = props => {
                   onClick={() => {
                     changeCategory(index);
                   }}
-                  className={"tab " + (activeCategory == index ? "active" : "")}
+                  className={'tab ' + (activeCategory == index ? 'active' : '')}
                   data-tgid={category.ranking.popularity}
                 >
                   {category.name}
@@ -239,7 +239,7 @@ export const CategoryBar = props => {
               width: 100%;
             }
             .category-bar.sticky::before {
-              content: "";
+              content: '';
               height: 80px;
               display: block;
             }

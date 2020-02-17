@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { sliceHandler } from '../Slices';
 import { CLOSE_WHITE } from '../../public/static/svg-icons';

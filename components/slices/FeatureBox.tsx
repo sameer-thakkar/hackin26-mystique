@@ -1,7 +1,6 @@
-import React, { PureComponent } from "react";
-import { RichText } from "prismic-reactjs";
-import { shortCodeSerializer } from "../utils/shortCodes";
-import Image from "./Image";
+import React, { PureComponent } from 'react';
+import { RichText } from 'prismic-reactjs';
+import { shortCodeSerializer } from '../../utils/shortCodes';
 
 export default class RichTextBox extends PureComponent<any, any> {
   render() {

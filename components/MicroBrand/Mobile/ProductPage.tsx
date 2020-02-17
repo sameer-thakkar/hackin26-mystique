@@ -1,5 +1,5 @@
 import React, { Component, useEffect } from 'react';
-import Image from '../../Image';
+import Image from '../../UI/Image';
 import { RichText } from 'prismic-reactjs';
 import {
   CLOSE_WHITE,

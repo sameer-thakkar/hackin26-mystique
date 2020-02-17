@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import Image from "../Image";
-import { AVENIR, GRAPHIK } from "../../constants/ui-constants";
+import React from 'react';
+import Image from '../UI/Image';
+import { AVENIR, GRAPHIK } from '../../constants/ui-constants';
 
-export const TrustBoosters = props => {
+const TrustBoosters = props => {
   const { boosters } = props;
   return (
     <div className="trust-boosters">
@@ -80,3 +80,5 @@ export const TrustBoosters = props => {
     </div>
   );
 };
+
+export default TrustBoosters;

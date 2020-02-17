@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import LinkResolver from "./LinkResolver";
-import { GRAPHIK } from "../constants/ui-constants";
+import React, { Component } from 'react';
+import LinkResolver from '../LinkResolver';
+import { GRAPHIK } from '../../constants/ui-constants';
 type TitleLinksProps = {
   title: string;
   links: Array<any>;

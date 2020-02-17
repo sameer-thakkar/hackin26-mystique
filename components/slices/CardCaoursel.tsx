@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { RichText } from 'prismic-reactjs';
-import Image from '../Image';
+import Image from '../UI/Image';
 import Swiper from '../Swiper';
 
 type CardCarouselProps = {

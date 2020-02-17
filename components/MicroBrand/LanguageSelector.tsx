@@ -1,42 +1,42 @@
-import React, { Component, useState, useEffect, useRef } from "react";
-import Link from "next/link";
-import { useCaptureClickOutside } from "../hooks/ClickOutside";
-import { GRAPHIK } from "../../constants/ui-constants";
+import React, { Component, useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
+import { useCaptureClickOutside } from '../hooks/ClickOutside';
+import { GRAPHIK } from '../../constants/ui-constants';
 
 const languageMap = {
   en: {
-    language: "English",
-    paramLang: "en-us"
+    language: 'English',
+    paramLang: 'en-us',
   },
   it: {
-    language: "Italiano",
-    paramLang: "it-it"
+    language: 'Italiano',
+    paramLang: 'it-it',
   },
   es: {
-    language: "Español",
-    paramLang: "es-es"
+    language: 'Español',
+    paramLang: 'es-es',
   },
   fr: {
-    language: "Français",
-    paramLang: "fr-fr"
+    language: 'Français',
+    paramLang: 'fr-fr',
   },
   de: {
-    language: "Deutsch",
-    paramLang: "de-de"
+    language: 'Deutsch',
+    paramLang: 'de-de',
   },
   nl: {
-    language: "Nederlands",
-    paramLang: "nl-nl"
+    language: 'Nederlands',
+    paramLang: 'nl-nl',
   },
   pt: {
-    language: "Português",
-    paramLang: "pt-pt"
-  }
+    language: 'Português',
+    paramLang: 'pt-pt',
+  },
 };
 
 export const LanguageSelector = props => {
   const [arrowActive, setArrowActive] = useState(false);
-  const [pathname, setPathname] = useState("");
+  const [pathname, setPathname] = useState('');
 
   useEffect(() => {
     setPathname(window.location.pathname);
@@ -45,10 +45,10 @@ export const LanguageSelector = props => {
   const getLanguages = () => {
     const { currentLanguage, availableLanguages, languages } = props;
     const prismicLanguages = languages.map(prismicLang =>
-      prismicLang.language.split("-")[1].toLowerCase()
+      prismicLang.language.split('-')[1].toLowerCase()
     );
     const publishedLanguages = availableLanguages.map(
-      publishLang => publishLang.lang.split("-")[0]
+      publishLang => publishLang.lang.split('-')[0]
     );
     publishedLanguages.push(currentLanguage);
     if (availableLanguages.length > 0) {
@@ -70,7 +70,7 @@ export const LanguageSelector = props => {
     languageDropdown,
     host,
     currentDomain,
-    isMobile
+    isMobile,
   } = props;
   const availableLanguages = getLanguages();
   if (availableLanguages.length <= 1) {
@@ -78,15 +78,15 @@ export const LanguageSelector = props => {
   }
 
   const slug = pathname
-    .replace("en/", "")
-    .replace("fr/", "")
-    .replace("de/", "")
-    .replace("it/", "")
-    .replace("nl/", "")
-    .replace("pt/", "")
-    .replace("es/", "");
+    .replace('en/', '')
+    .replace('fr/', '')
+    .replace('de/', '')
+    .replace('it/', '')
+    .replace('nl/', '')
+    .replace('pt/', '')
+    .replace('es/', '');
 
-  const isDev = host.includes("localhost");
+  const isDev = host.includes('localhost');
 
   const getURL = (language, dev) => {
     if (dev)
@@ -116,13 +116,13 @@ export const LanguageSelector = props => {
         <div
           ref={selectorRef}
           className={`language-dropdown ${
-            languageDropdown ? "language-dropdown-active" : ""
+            languageDropdown ? 'language-dropdown-active' : ''
           }`}
         >
           {availableLanguages.map((language, index) => {
             return (
               <a
-                className={currentLanguage == language ? "active-tab" : ""}
+                className={currentLanguage == language ? 'active-tab' : ''}
                 key={index}
                 href={getURL(language, isDev)}
               >

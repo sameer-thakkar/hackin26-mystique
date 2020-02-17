@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import Image from "../Image";
+import React, { Component } from 'react';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+import Image from '../UI/Image';
 
 const InteractiveImage = props => {
   const { src, alt } = props;

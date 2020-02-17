@@ -1,13 +1,9 @@
-import React, { Component, useState } from 'react';
+import React from 'react';
 import { Header } from './Header';
 import { Banner } from './Banner';
-import { CategoryImageBar } from './Mobile/CategoryImageBar';
-import { CategoryBar } from './CategoryBar';
-import { ProductsContextProvider } from '../contexts/Products';
+import { ProductsContextProvider } from '../../contexts/Products';
 import { LongForm } from './LongForm';
 import { ProductsWrapper } from './ProductsWrapper';
-import { TrustBoosters } from './TrustBoosters';
-import { InteractionContextProvider } from '../contexts/Interaction';
 import { Footer } from './Footer';
 import { sliceHandler } from '../Slices';
 import { ResponsiveSelector } from './ResponsiveSelector';

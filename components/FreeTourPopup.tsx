@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import InlinePrice from "./InlinePrice";
-import Swiper from "./Swiper";
-import Image from "./Image";
-import { isMobile } from "../utils/helper";
+import React, { Component } from 'react';
+import InlinePrice from './InlinePrice';
+import Swiper from './Swiper';
+import Image from './UI/Image';
+import { isMobile } from '../utils/helper';
 
 export default class FreeTourPopup extends Component<any, any> {
   FTPopupElement: any;
@@ -12,12 +12,12 @@ export default class FreeTourPopup extends Component<any, any> {
     this.state = {
       isClient: false,
       scaleStyles: {},
-      scaleSet: false
+      scaleSet: false,
     };
   }
   componentDidMount() {
     this.setState({
-      isClient: true
+      isClient: true,
     });
   }
 
@@ -34,11 +34,11 @@ export default class FreeTourPopup extends Component<any, any> {
         this.setState({
           scaleStyles: {
             transform: `translate(-50%, -50%)  scale3d(${scaleFactor}, ${scaleFactor}, ${scaleFactor})`,
-            position: "fixed",
-            left: "50%",
-            top: "50%"
+            position: 'fixed',
+            left: '50%',
+            top: '50%',
           },
-          scaleSet: true
+          scaleSet: true,
         });
       }
     }
@@ -60,17 +60,17 @@ export default class FreeTourPopup extends Component<any, any> {
     const height = isMobile() ? 400 : 750;
     const width = isMobile() ? 495 : 495;
     const params = {
-      direction: "horizontal",
+      direction: 'horizontal',
       pagination: {
-        el: ".swiper-pagination"
+        el: '.swiper-pagination',
       },
       speed: 650,
       loop: true,
       autoplay: {
         delay: 2500,
-        disableOnInteraction: false
+        disableOnInteraction: false,
       },
-      rebuildOnUpdate: true
+      rebuildOnUpdate: true,
     };
 
     return (
@@ -105,17 +105,17 @@ export default class FreeTourPopup extends Component<any, any> {
     const productOfferHighlights =
       productOffer.data.tour_description_override.length > 0
         ? productOffer.data.tour_description_override
-        : "";
+        : '';
     return (
       <div
-        className={`popupv2-cont ${popupState ? "active" : ""}`}
+        className={`popupv2-cont ${popupState ? 'active' : ''}`}
         ref={FTWrapElement => {
           this.FTWrapElement = FTWrapElement;
         }}
       >
         <div
           className={
-            "popupv2-wrap " + (this.state.scaleSet ? "pixel-fix" : null)
+            'popupv2-wrap ' + (this.state.scaleSet ? 'pixel-fix' : null)
           }
           ref={FTPopupElement => {
             this.FTPopupElement = FTPopupElement;
@@ -136,7 +136,7 @@ export default class FreeTourPopup extends Component<any, any> {
 
           <div className="popupv2-contents">
             <div
-              onClick={e => this.handlePopup(e, "Close", null)}
+              onClick={e => this.handlePopup(e, 'Close', null)}
               className="close-trigger close"
             >
               <Image
@@ -157,7 +157,7 @@ export default class FreeTourPopup extends Component<any, any> {
                 <span className="price_10481"></span>
                 <InlinePrice tgid={offer_tgid} />
               </div>
-              {productOffer.data.show_free_label === "Yes" && (
+              {productOffer.data.show_free_label === 'Yes' && (
                 <div className="price">FREE</div>
               )}
 
@@ -173,7 +173,7 @@ export default class FreeTourPopup extends Component<any, any> {
                 <div
                   className="popupv2-list"
                   dangerouslySetInnerHTML={{
-                    __html: scorpioData[offer_tgid].productHighlights
+                    __html: scorpioData[offer_tgid].productHighlights,
                   }}
                 />
               )}
@@ -182,17 +182,17 @@ export default class FreeTourPopup extends Component<any, any> {
             {
               <div
                 onClick={e =>
-                  this.handlePopup(e, "CTA", productOffer.data.cta_url)
+                  this.handlePopup(e, 'CTA', productOffer.data.cta_url)
                 }
                 className="close-trigger popupv2-cta"
               >
-                {productOffer.data.cta_text || "Okay, Got It!"}
+                {productOffer.data.cta_text || 'Okay, Got It!'}
               </div>
             }
           </div>
         </div>
         <div
-          onClick={e => this.handlePopup(e, "OutsidePopup", null)}
+          onClick={e => this.handlePopup(e, 'OutsidePopup', null)}
           className="mask close-trigger"
         ></div>
       </div>

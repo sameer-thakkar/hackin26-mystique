@@ -1,22 +1,22 @@
-import React, { Component } from "react";
-import Link from "next/link";
-import classNames from "classnames";
-import { sliceHandler } from "../Slices";
-import { AVENIR, GRAPHIK } from "../../constants/ui-constants";
-import Image from "../Image";
-import SocialLinks from "./SocialLinks";
+import React, { Component } from 'react';
+import Link from 'next/link';
+import classNames from 'classnames';
+import { sliceHandler } from '../Slices';
+import { AVENIR, GRAPHIK } from '../../constants/ui-constants';
+import Image from '../UI/Image';
+import SocialLinks from './SocialLinks';
 export const Footer = props => {
   const { logo, body, favicon, mb_name, isMobile } = props;
-  const logoUrl = logo ? logo.url : "";
+  const logoUrl = logo ? logo.url : '';
 
-  const altText = logo.alt ? logo.alt : "Footer Logo";
+  const altText = logo.alt ? logo.alt : 'Footer Logo';
   return (
     <footer>
       <div className="main-wrapper">
         <div className="custom-footer">
           <div
-            className={classNames("footer-wrapper", {
-              "center-logo": body.length === 0
+            className={classNames('footer-wrapper', {
+              'center-logo': body.length === 0,
             })}
           >
             <div className="logo">
@@ -138,8 +138,8 @@ export const Footer = props => {
             grid-template-columns: auto auto;
             justify-content: space-between;
             border-top: ${body.length > 0 || logo.url
-              ? "1px solid #ffffff4d"
-              : "none"};
+              ? '1px solid #ffffff4d'
+              : 'none'};
             padding-top: 26px;
             padding-bottom: 58px;
           }
@@ -196,5 +196,5 @@ export const Footer = props => {
   );
 };
 Footer.defaultProps = {
-  body: []
+  body: [],
 };

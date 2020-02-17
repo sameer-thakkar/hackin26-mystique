@@ -1,12 +1,14 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
 import fetch from 'isomorphic-unfetch';
+import { ThemeProvider } from 'styled-components';
 
+const ErrorPage = dynamic(() => import('next/error'));
 const Microsite = dynamic(() => import('../components/Microsite'));
 const SubPage = dynamic(() => import('../components/SubPage'));
-const ErrorPage = dynamic(() => import('next/error'));
 const MicroBrand = dynamic(() => import('../components/MicroBrand/MicroBrand'));
 
+import theme from '../theme';
 import { Client } from '../prismic-config';
 import {
   CONTENT_TYPES,
@@ -47,7 +49,10 @@ export default class Page extends React.Component<any, any> {
     }
     redirectUID = redirectUID.replace('stage.', '');
 
-    // Asynchronously check if a redirect exists for the request and get the data
+    /**
+     * Asynchronously check if a redirect exists for the request
+     * and get the data for microsite or content page
+     */
     const [_redirect, { payload: props }] = await Promise.all(
       [
         Client(req)
@@ -77,7 +82,6 @@ export default class Page extends React.Component<any, any> {
       if (process.browser) (window as any).prismic.setupEditButton();
       if (res) {
         if (props.statusCode) {
-          // statusCode here implies non 2xx statusCode
           res.statusCode = props.statusCode;
         }
       }
@@ -115,7 +119,7 @@ export default class Page extends React.Component<any, any> {
     try {
       let uid, lang, pathname;
       if (req) {
-        // server render
+        // Server side rendering
         pathname = reqPathname;
         if (isDev) {
           const { mystique_uid: queryParamUID, lang: queryParamLang } = query;
@@ -130,6 +134,7 @@ export default class Page extends React.Component<any, any> {
           lang = reqLang;
         }
       } else {
+        // Client side rendering
         if (isDev) {
           const urlParams = new URLSearchParams(window.location.search);
           uid = urlParams.get('mystique_uid');
@@ -271,11 +276,12 @@ export default class Page extends React.Component<any, any> {
                   },
                   subs: {},
                 };
-                /*
-                Fetching data of referenced custom types which cannot be
-                fetched using the fetchLink method due to prismic constraints
-                Currently includes: Common Footer
-                */
+
+                /**
+                 *  Fetching data of referenced custom types which cannot be
+                 * fetched using the fetchLink method due to prismic constraints
+                 * Currently includes: Common Footer
+                 */
                 let subComponents = [];
                 page.data.footer_ref.id &&
                   subComponents.push(page.data.footer_ref.id);
@@ -478,7 +484,7 @@ export default class Page extends React.Component<any, any> {
           windowUrl,
         }}
       >
-        {Component}
+        <ThemeProvider theme={theme}>{Component}</ThemeProvider>
       </EnvironmentContext.Provider>
     );
   }

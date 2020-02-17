@@ -5,6 +5,8 @@
 
 Mystique is the tech that powers over 100 different microbrands at Headout.
 
+## [Documentation (Storybook)](https://headout.github.io/mystique/)
+
 ## Development
 
 ### Requirements
@@ -50,18 +52,18 @@ Mystique is the tech that powers over 100 different microbrands at Headout.
 
 - Running storybook:
 
-```bash
-yarn storybook
-```
+  ```bash
+  yarn storybook
+  ```
 
 - Building storybook:
 
-```bash
-yarn build-storybook
-```
+  ```bash
+  yarn build-storybook
+  ```
 
 - Deploying storybook to github pages:
 
-```bash
-yarn deploy-storybook
-```
+  ```bash
+  yarn deploy-storybook
+  ```

@@ -1,4 +1,4 @@
-import React, { Component, createContext } from "react";
+import React, { Component, createContext } from 'react';
 
 export const LongFormInteractionContext = createContext({});
 
@@ -8,9 +8,9 @@ export class LongFormInteractionContextProvider extends Component<any, any> {
     this.state = {
       activeTour: {
         tgid: null,
-        hoist: false
+        hoist: false,
       },
-      activeCategoryTgids: []
+      activeCategoryTgids: [],
     };
   }
 
@@ -19,7 +19,7 @@ export class LongFormInteractionContextProvider extends Component<any, any> {
       let newState = { ...this.state };
       newState.activeTour = {
         tgid,
-        hoist
+        hoist,
       };
       if (hoist) {
         newState.activeCategoryTgids = [tgid, ...newState.activeCategoryTgids];
@@ -29,8 +29,8 @@ export class LongFormInteractionContextProvider extends Component<any, any> {
       this.setState({
         ...this.state,
         activeTour: {
-          tgid: null
-        }
+          tgid: null,
+        },
       });
   };
 
@@ -38,8 +38,8 @@ export class LongFormInteractionContextProvider extends Component<any, any> {
     this.setState({
       ...this.state,
       activeTour: {
-        tgid: null
-      }
+        tgid: null,
+      },
     });
   };
 
@@ -49,7 +49,7 @@ export class LongFormInteractionContextProvider extends Component<any, any> {
         value={{
           ...this.state,
           clickTour: this.clickTour,
-          closeTour: this.closeTour
+          closeTour: this.closeTour,
         }}
       >
         {this.props.children}

@@ -1,11 +1,11 @@
 import React, { useState, useContext, useEffect, useCallback } from 'react';
 import Swiper from '../Swiper';
-import { ProductsContext } from '../contexts/Products';
+import { ProductsContext } from '../../contexts/Products';
 import { CHEVRON_LEFT } from '../../public/static/svg-icons';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 import { RichText } from 'prismic-reactjs';
 import { GRAPHIK, AVENIR, COLORS } from '../../constants/ui-constants';
-import Image from '../Image';
+import Image from '../UI/Image';
 
 export const ImageLinksSlider = props => {
   const carouselId = props.heading.replace(/\s/g, '-').toLowerCase();

@@ -1,6 +1,6 @@
-import React, { PureComponent } from "react";
-import { RichText } from "prismic-reactjs";
-import { shortCodeSerializer } from "../utils/shortCodes";
+import React, { PureComponent } from 'react';
+import { RichText } from 'prismic-reactjs';
+import { shortCodeSerializer } from '../../utils/shortCodes';
 
 export default class FWActionCard extends PureComponent<any, any> {
   render() {

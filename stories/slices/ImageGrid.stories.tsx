@@ -1,7 +1,6 @@
 import React from 'react';
-import ImageGrid from '../../components/ImageGrid';
 import { withKnobs, number } from '@storybook/addon-knobs';
-import '../../public/static/styles.css';
+import ImageGrid from '../../components/slices/ImageGrid';
 
 export default {
   title: 'Slices/Image Grid',
@@ -34,14 +33,13 @@ export const Basic = () => {
     groupId
   );
   let images = [];
-  while (true) {
+  for (let i = 0; i < noOfImages; i++) {
     images.push({
       image_url: {
         url:
           'https://images.prismic.io/mystique/23fc7d42-5897-401c-9345-4f74f4e9c0ef_Disneyland+Paris+Rides+6.jpg?auto=compress,format',
       },
     });
-    if (images.length === noOfImages) break;
   }
   return <ImageGrid cols={cols} images={images} lazyLoadImages={false} />;
 };

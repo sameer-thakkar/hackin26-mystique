@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from './Image';
+import Image from '../UI/Image';
 import styled from 'styled-components';
 
 type PrismicImageObject = {
@@ -23,7 +23,7 @@ const StyledImageGrid = styled.div`
   }
 `;
 
-const ImageBox = styled.div`
+const StyledImageBox = styled.div`
   border-radius: 3px;
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.18);
   img {
@@ -54,7 +54,7 @@ class ImageGrid extends React.Component<ImageGridProps, any> {
     return (
       <StyledImageGrid cols={cols}>
         {images.map((image, index) => (
-          <ImageBox key={index}>
+          <StyledImageBox key={index}>
             <Image
               dontLazyLoad={!lazyLoadImages}
               width={580}
@@ -62,7 +62,7 @@ class ImageGrid extends React.Component<ImageGridProps, any> {
               format="pjpg"
               url={image.image_url.url || image.image_source.url}
             />
-          </ImageBox>
+          </StyledImageBox>
         ))}
       </StyledImageGrid>
     );
