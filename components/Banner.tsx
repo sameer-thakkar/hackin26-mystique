@@ -77,7 +77,8 @@ export default class Banner extends Component<any, any> {
     this.autoSlide();
   };
 
-  renderBanners = url => {
+  renderBanners = image => {
+    const { url, alt } = image;
     const { isMobile } = this.state;
     const { ASPECT_RATIO, WIDTH } = isMobile
       ? BANNER_PARAMS.MOBILE
@@ -93,7 +94,7 @@ export default class Banner extends Component<any, any> {
           className="lazyload"
           data-src={imgixUrl(url, 'pjpg', WIDTH, ASPECT_RATIO)}
           src={imgixUrl(url, 'pjpg', WIDTH, ASPECT_RATIO, 10)}
-          alt={'banner'}
+          alt={alt || 'banner'}
         />
       </picture>
     );
@@ -106,6 +107,7 @@ export default class Banner extends Component<any, any> {
       <div className={classNames('mb-carousel', { boxed: boxed })}>
         {bannerImages.map((banner, index) => {
           let imageUrl = banner.image_src.url || banner.uploaded_image.url;
+          let imageAlt = banner.image_alt || banner.uploaded_image.alt;
           return (
             <div
               key={index}
@@ -119,7 +121,9 @@ export default class Banner extends Component<any, any> {
                 }
               )}
             >
-              {isClient ? this.renderBanners(imageUrl) : null}
+              {isClient
+                ? this.renderBanners({ url: imageUrl, alt: imageAlt })
+                : null}
             </div>
           );
         })}
