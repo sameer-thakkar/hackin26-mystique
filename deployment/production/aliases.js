@@ -1,4 +1,5 @@
 module.exports = [
+  'www.tickets-hamburg.com',
   'tower-of-london.tickets-london.co.uk',
   'www.sagradafamiliatickets.com',
   'www.stonehenge-london-tours.com',
