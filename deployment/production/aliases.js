@@ -1,4 +1,8 @@
 module.exports = [
+  'www.prague-cruise.com',
+  'www.budapest-cruises.com',
+  'www.praguecastletickets.com',
+  'www.budapest-baths.com',
   'www.tickets-hamburg.com',
   'tower-of-london.tickets-london.co.uk',
   'www.sagradafamiliatickets.com',
