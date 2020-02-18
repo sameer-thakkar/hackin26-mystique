@@ -1,4 +1,8 @@
 module.exports = [
+  'moorish-castle.lisbon-tickets.com',
+  'montserrate-palace.lisbon-tickets.com',
+  'sintra-palace.lisbon-tickets.com',
+  'queluz-national-palace.lisbon-tickets.com',
   'www.prague-cruise.com',
   'www.budapest-cruises.com',
   'www.praguecastletickets.com',
