@@ -2317,12 +2317,7 @@ form.form {
     font-size: 18px;
   }
 }
-/* .subpage-container .slice-block .divider-1 {
- border: 2px solid #ec1943;
- width: 80px;
- margin: 20px 0;
- display: block;
-} */
+
 .navigation-bar {
   display: flex;
   justify-content: space-between;

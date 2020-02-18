@@ -5,13 +5,13 @@ import { ThemeProvider } from 'styled-components';
 
 const ErrorPage = dynamic(() => import('next/error'));
 const Microsite = dynamic(() => import('../components/Microsite'));
-const SubPage = dynamic(() => import('../components/SubPage'));
+const ContentPage = dynamic(() => import('../components/ContentPage'));
 const MicroBrand = dynamic(() => import('../components/MicroBrand/MicroBrand'));
 
 import theme from '../theme';
 import { Client } from '../prismic-config';
 import {
-  CONTENT_TYPES,
+  CUSTOM_TYPES,
   DESIGN,
   MICROSITE_STRING_KEYS,
   MICROSITE_OBJECT_KEYS,
@@ -56,7 +56,7 @@ export default class Page extends React.Component<any, any> {
     const [_redirect, { payload: props }] = await Promise.all(
       [
         Client(req)
-          .getByUID(CONTENT_TYPES.REDIRECT, redirectUID)
+          .getByUID(CUSTOM_TYPES.REDIRECT, redirectUID)
           .then(r => {
             const redirectUrl = r.data?.redirect_to_url?.url;
             if (redirectUrl) {
@@ -155,7 +155,7 @@ export default class Page extends React.Component<any, any> {
       let initial_tgids = [];
 
       const { CMSContent, ContentType, statusCode } = await Client(req)
-        .getByUID(CONTENT_TYPES.MICROSITE, uid, {
+        .getByUID(CUSTOM_TYPES.MICROSITE, uid, {
           lang,
         })
         .then(async res => {
@@ -181,7 +181,7 @@ export default class Page extends React.Component<any, any> {
             const baseLangData =
               lang !== 'en'
                 ? await Client(req)
-                    .getByUID(CONTENT_TYPES.MICROSITE, uid, {
+                    .getByUID(CUSTOM_TYPES.MICROSITE, uid, {
                       lang: 'en-us',
                     })
                     .then(res => res)
@@ -244,11 +244,11 @@ export default class Page extends React.Component<any, any> {
 
             return {
               CMSContent: micrositeData,
-              ContentType: CONTENT_TYPES.MICROSITE,
+              ContentType: CUSTOM_TYPES.MICROSITE,
             };
           } else {
             return await Client(req)
-              .getByUID(CONTENT_TYPES.CONTENT_PAGE, uid, {
+              .getByUID(CUSTOM_TYPES.CONTENT_PAGE, uid, {
                 fetchLinks: [...COMMON_HEADER_PROPS, ...LINKED_MICROSITE_PROPS],
                 lang,
               })
@@ -291,7 +291,7 @@ export default class Page extends React.Component<any, any> {
                   completePage.subs = res[0].results;
                   return {
                     CMSContent: completePage,
-                    ContentType: CONTENT_TYPES.CONTENT_PAGE,
+                    ContentType: CUSTOM_TYPES.CONTENT_PAGE,
                   };
                 });
               });
@@ -304,7 +304,7 @@ export default class Page extends React.Component<any, any> {
         };
       }
 
-      if (ContentType === CONTENT_TYPES.CONTENT_PAGE) {
+      if (ContentType === CUSTOM_TYPES.CONTENT_PAGE) {
         return {
           CMSContent,
           ContentType,
@@ -315,7 +315,7 @@ export default class Page extends React.Component<any, any> {
         };
       }
 
-      if (ContentType === CONTENT_TYPES.MICROSITE) {
+      if (ContentType === CUSTOM_TYPES.MICROSITE) {
         const MBDesign = CMSContent.data.data.design || '';
         const { items: uncategorizedToursList } = CMSContent.data.data
           .body1[0] || { items: [] };
@@ -435,7 +435,7 @@ export default class Page extends React.Component<any, any> {
     const PAGETYPE = ContentType + (MBDesign || '');
     let Component;
     switch (PAGETYPE) {
-      case CONTENT_TYPES.MICROSITE + DESIGN.V2:
+      case CUSTOM_TYPES.MICROSITE + DESIGN.V2:
         Component = (
           <MicroBrand
             data={CMSContent.data}
@@ -447,8 +447,8 @@ export default class Page extends React.Component<any, any> {
           />
         );
         break;
-      case CONTENT_TYPES.MICROSITE:
-      case CONTENT_TYPES.MICROSITE + DESIGN.V1:
+      case CUSTOM_TYPES.MICROSITE:
+      case CUSTOM_TYPES.MICROSITE + DESIGN.V1:
         Component = (
           <Microsite
             data={CMSContent.data}
@@ -462,9 +462,9 @@ export default class Page extends React.Component<any, any> {
           />
         );
         break;
-      case CONTENT_TYPES.CONTENT_PAGE:
+      case CUSTOM_TYPES.CONTENT_PAGE:
         Component = (
-          <SubPage
+          <ContentPage
             {...CMSContent}
             isDev={isDev}
             host={host}

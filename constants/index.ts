@@ -88,7 +88,7 @@ export const MODAL_STYLE = {
   },
 };
 
-export const CONTENT_TYPES = {
+export const CUSTOM_TYPES = {
   MICROSITE: 'microsite',
   CONTENT_PAGE: 'content_page',
   FOOTER: 'common_footer',
@@ -96,6 +96,7 @@ export const CONTENT_TYPES = {
   POPUP: 'popup',
   REDIRECT: 'redirect',
 };
+
 export const DESIGN = {
   V1: 'V1 - Horizontal Card Layout',
   V2: 'V2 - Gird Cards Layout',
@@ -147,7 +148,7 @@ export const COMMON_HEADER_PROPS: string[] = [
   'localization',
   'enable_localization_menu',
   'group_booking_disclaimer',
-].map(prop => `${CONTENT_TYPES.HEADER}.${prop}`);
+].map(prop => `${CUSTOM_TYPES.HEADER}.${prop}`);
 
 export const LINKED_MICROSITE_PROPS: string[] = [
   'redirect_url',
@@ -169,7 +170,7 @@ export const LINKED_MICROSITE_PROPS: string[] = [
   'block_n_days_group_booking',
   'enable_powered_by_headout_logo',
   'group_form_blocked_days',
-].map(prop => `${CONTENT_TYPES.MICROSITE}.${prop}`);
+].map(prop => `${CUSTOM_TYPES.MICROSITE}.${prop}`);
 
 export const MICROSITE_STRING_KEYS: string[] = [
   'title',
