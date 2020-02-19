@@ -1,15 +1,10 @@
-import React, { Component, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Image from '../../UI/Image';
 import { RichText } from 'prismic-reactjs';
-import {
-  CLOSE_WHITE,
-  CHEVRON_LEFT,
-  STAR,
-} from '../../../public/static/svg-icons';
+import { CHEVRON_LEFT, STAR } from '../../../public/static/svg-icons';
 import { shortCodeSerializer } from '../../../utils/shortCodes';
 import { PAGETYPE } from '../../../constants';
 import parse from 'url-parse';
-import { Banner } from '../Banner';
 import Swiper from 'react-id-swiper';
 import { AVENIR, GRAPHIK, COLORS } from '../../../constants/ui-constants';
 

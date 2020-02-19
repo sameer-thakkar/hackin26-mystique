@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
-import { HomePage } from './HomePage';
-import { SearchPage } from './Mobile/SearchPage';
+import { HomePage } from './views/HomePage';
+import { SearchPage } from './views/SearchPage';
 import 'lazysizes';
-import { CategoryPage } from './CategoryPage';
 import { PAGETYPE } from '../../constants';
-import { MobileProductPage } from './Mobile/ProductPage';
+import { MobileProductPage } from './views/ProductPage';
 import { withRouter } from 'next/router';
 import populateHead from '../common/meta';
 import { InteractionContextProvider } from '../../contexts/Interaction';
 import { docCookies } from '../../utils/helper';
 import { RichText } from 'prismic-reactjs';
 import { MBContextProvider } from '../../contexts/MBContext';
-class MicroBrand extends Component<any, any> {
+class MicrositeV2 extends Component<any, any> {
   state = {
     isMobile: null,
     cardPrices: {},
@@ -412,4 +411,4 @@ class MicroBrand extends Component<any, any> {
   }
 }
 
-export default withRouter(MicroBrand);
+export default withRouter(MicrositeV2);

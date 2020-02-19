@@ -1,15 +1,9 @@
-import React, { Component, useState, useEffect } from 'react';
-import { Header } from '../Header';
-import { Banner } from '../Banner';
-import { CategoryImageBar } from './CategoryImageBar';
-import { CategoryBar } from '../CategoryBar';
-import LongForm from '../../LongForm';
+import React, { useState } from 'react';
 import { SearchBox } from '../SearchBox';
 import { PAGETYPE } from '../../../constants';
-import { CHEVRON_LEFT, CLOSE_WHITE } from '../../../public/static/svg-icons';
+import { CLOSE_WHITE } from '../../../public/static/svg-icons';
 import { SearchItem } from '../SearchItem';
-import { PopulateProducts } from '../PopulateProducts';
-import { isMobileDevice } from '../../../utils/helper';
+import PopulateProducts from '../PopulateProducts';
 import { AVENIR } from '../../../constants/ui-constants';
 
 export const SearchPage = props => {

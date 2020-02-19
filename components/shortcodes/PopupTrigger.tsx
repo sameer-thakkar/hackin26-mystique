@@ -20,18 +20,19 @@ const PopupTrigger = props => {
       });
   }, []);
 
-  return (
-    data && (
-      <>
-        <span onClick={() => setActive(!active)}>{text}</span>
-        {active ? <Popup togglePopup={setActive} data={data} /> : null}
-        <style jsx>{`
-          span {
-            color: ${COLORS.TEAL};
-          }
-        `}</style>
-      </>
-    )
+  return data ? (
+    <>
+      <span onClick={() => setActive(!active)}>{text}</span>
+      {active ? <Popup togglePopup={setActive} data={data} /> : null}
+      <style jsx>{`
+        span {
+          color: ${COLORS.TEAL};
+          cursor: pointer;
+        }
+      `}</style>
+    </>
+  ) : (
+    <>{'\u00A0'}</>
   );
 };
 

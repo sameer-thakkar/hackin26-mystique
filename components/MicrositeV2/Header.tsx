@@ -1,14 +1,13 @@
 import React, { useContext, useState } from 'react';
-import { LanguageSelector } from './LanguageSelector';
+import LanguageSelector from './LanguageSelector';
 import { SearchBox } from './SearchBox';
 import { PAGETYPE } from '../../constants';
 import { SEARCH_ICON } from '../../public/static/svg-icons';
 import { InteractionContext } from '../../contexts/Interaction';
 import { SearchItem } from './SearchItem';
-import Select from 'react-select';
 import { COLORS, AVENIR, SIZES } from '../../constants/ui-constants';
 import { ResponsiveSelector } from './ResponsiveSelector';
-export const Header = props => {
+const Header = props => {
   const interactionContext = useContext(InteractionContext);
   const [languageDropdown, setLanguageDropdown] = useState(false);
   const [results, setResults] = useState([]);
@@ -255,3 +254,5 @@ export const Header = props => {
     </div>
   );
 };
+
+export default Header;

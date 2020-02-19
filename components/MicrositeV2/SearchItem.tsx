@@ -1,8 +1,6 @@
 import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 import Image from '../UI/Image';
-import Link from 'next/link';
-import { InteractionContext } from '../../contexts/Interaction';
 import { AVENIR, GRAPHIK, COLORS } from '../../constants/ui-constants';
 
 export const SearchItem = props => {

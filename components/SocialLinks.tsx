@@ -1,10 +1,4 @@
-import { RichText } from 'prismic-reactjs';
-import { shortCodeSerializer } from '../../utils/shortCodes';
-import Image from '../UI/Image';
-import Link from 'next/link';
-import { InteractionContext } from '../../contexts/Interaction';
-import { AVENIR, GRAPHIK, COLORS } from '../../constants/ui-constants';
-import { FACEBOOK, TWITTER, INSTAGRAM } from '../../public/static/svg-icons';
+import { FACEBOOK, TWITTER, INSTAGRAM } from '../public/static/svg-icons';
 
 const SocialLinks = props => {
   return (

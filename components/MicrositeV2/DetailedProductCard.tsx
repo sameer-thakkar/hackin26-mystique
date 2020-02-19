@@ -6,7 +6,7 @@ import { GRAPHIK, COLORS, AVENIR } from '../../constants/ui-constants';
 import { shortCodeSerializerWithParentProps } from '../../utils/shortCodes';
 import { MBContext } from '../../contexts/MBContext';
 
-export const FullLengthProductCard = props => {
+const DetailedProductCard = props => {
   const closeDescriptionCard = () => {
     props.closeDescription();
   };
@@ -298,3 +298,5 @@ export const FullLengthProductCard = props => {
     </div>
   );
 };
+
+export default DetailedProductCard;

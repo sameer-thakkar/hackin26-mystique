@@ -1,6 +1,6 @@
-import React, { Component, useContext, useEffect, useState } from 'react';
-import { PopulateProducts } from './PopulateProducts';
-import { CategoryBar } from './CategoryBar';
+import React, { useContext, useEffect, useState } from 'react';
+import PopulateProducts from './PopulateProducts';
+import CategoryBar from './CategoryBar';
 import { InteractionContext } from '../../contexts/Interaction';
 
 export const ProductsWrapper = props => {

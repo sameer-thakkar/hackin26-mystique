@@ -1,14 +1,14 @@
 import React from 'react';
-import { Header } from './Header';
-import { Banner } from './Banner';
-import { ProductsContextProvider } from '../../contexts/Products';
-import { LongForm } from './LongForm';
-import { ProductsWrapper } from './ProductsWrapper';
-import { Footer } from './Footer';
-import { sliceHandler } from '../Slices';
-import { ResponsiveSelector } from './ResponsiveSelector';
-import { LOCATION } from '../../public/static/svg-icons';
-import { SIZES } from '../../constants/ui-constants';
+import Header from '../Header';
+import { Banner } from '../Banner';
+import { ProductsContextProvider } from '../../../contexts/Products';
+import LongForm from '../LongForm';
+import { ProductsWrapper } from '../ProductsWrapper';
+import Footer from '../Footer';
+import { sliceHandler } from '../../Slices';
+import { ResponsiveSelector } from '../ResponsiveSelector';
+import { LOCATION } from '../../../public/static/svg-icons';
+import { SIZES } from '../../../constants/ui-constants';
 
 export const HomePage = props => {
   const {
@@ -37,7 +37,7 @@ export const HomePage = props => {
   // const customFooterProps = customFooter ? customFooter.data : null;
   const hasToursSection = categoryProps.categories.length > 0;
   return (
-    <>
+    <div className="microsite-v2-wrapper">
       <Header
         {...header}
         host={host}
@@ -64,7 +64,7 @@ export const HomePage = props => {
       {heroSectionSlice.length ? (
         <div className="main-wrapper hero-slice-section">
           {heroSectionSlice.map((slice, index) => (
-            <div key={index} className={'slice-block ' + slice.slice_type}>
+            <div key={index} className={`slice-block ${slice.slice_type}`}>
               {sliceHandler(slice, { isMobile })}
             </div>
           ))}
@@ -104,6 +104,7 @@ export const HomePage = props => {
       <Footer {...footer} {...customFooter} isMobile={isMobile} />
       <style jsx global>
         {`
+          // TODO: Handle Space Between Slices Elsewhere.
           .hero-slice-section {
             margin-top: 24px;
             margin-bottom: 56px;
@@ -122,6 +123,6 @@ export const HomePage = props => {
           }
         `}
       </style>
-    </>
+    </div>
   );
 };

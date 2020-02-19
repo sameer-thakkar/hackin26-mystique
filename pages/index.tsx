@@ -4,10 +4,9 @@ import fetch from 'isomorphic-unfetch';
 import { ThemeProvider } from 'styled-components';
 
 const ErrorPage = dynamic(() => import('next/error'));
-const Microsite = dynamic(() => import('../components/Microsite'));
+const Microsite = dynamic(() => import('../components/MicrositeV1'));
 const ContentPage = dynamic(() => import('../components/ContentPage'));
-const MicroBrand = dynamic(() => import('../components/MicroBrand/MicroBrand'));
-
+const MicrositeV2 = dynamic(() => import('../components/MicrositeV2'));
 import theme from '../theme';
 import { Client } from '../prismic-config';
 import {
@@ -437,7 +436,7 @@ export default class Page extends React.Component<any, any> {
     switch (PAGETYPE) {
       case CUSTOM_TYPES.MICROSITE + DESIGN.V2:
         Component = (
-          <MicroBrand
+          <MicrositeV2
             data={CMSContent.data}
             lang={lang}
             host={host}

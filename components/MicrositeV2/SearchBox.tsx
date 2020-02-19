@@ -1,4 +1,4 @@
-import React, { Component, useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Fuse from 'fuse.js';
 import { SEARCH_ICON, CLOSE_WHITE } from '../../public/static/svg-icons';
 import { GRAPHIK, COLORS } from '../../constants/ui-constants';

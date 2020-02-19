@@ -73,6 +73,9 @@ const Popup = props => {
           z-index: 0;
           background: rgba(0, 0, 0, 0.6);
         }
+        .close {
+          cursor: pointer;
+        }
         @media (max-width: 768px) {
           .aio-popup-container {
             padding: 0;

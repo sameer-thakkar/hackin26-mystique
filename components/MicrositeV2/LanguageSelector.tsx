@@ -1,5 +1,4 @@
-import React, { Component, useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
+import React, { useState, useEffect, useRef } from 'react';
 import { useCaptureClickOutside } from '../hooks/ClickOutside';
 import { GRAPHIK } from '../../constants/ui-constants';
 
@@ -34,8 +33,7 @@ const languageMap = {
   },
 };
 
-export const LanguageSelector = props => {
-  const [arrowActive, setArrowActive] = useState(false);
+const LanguageSelector = props => {
   const [pathname, setPathname] = useState('');
 
   useEffect(() => {
@@ -261,3 +259,5 @@ export const LanguageSelector = props => {
     </div>
   );
 };
+
+export default LanguageSelector;

@@ -3,7 +3,7 @@ import { RowComponent } from './RowComponent';
 import { InteractionContext } from '../../contexts/Interaction';
 import { MBContext } from '../../contexts/MBContext';
 
-export const PopulateProducts = props => {
+const PopulateProducts = props => {
   const {
     isMobile,
     propTgids,
@@ -103,3 +103,5 @@ export const PopulateProducts = props => {
     </div>
   );
 };
+
+export default PopulateProducts;

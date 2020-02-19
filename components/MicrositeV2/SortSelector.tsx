@@ -1,5 +1,4 @@
-import React, { Component, useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
+import React, { useState, useRef } from 'react';
 import { CHEVRON_DOWN } from '../../public/static/svg-icons';
 import { useCaptureClickOutside } from '../hooks/ClickOutside';
 import { COLORS, GRAPHIK } from '../../constants/ui-constants';

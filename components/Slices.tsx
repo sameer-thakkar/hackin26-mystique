@@ -19,8 +19,8 @@ const RichTextBox = dynamic(() => import('./slices/RichTextBox'));
 const FeatureBox = dynamic(() => import('./slices/FeatureBox'));
 const TitleLinksCard = dynamic(() => import('./slices/TitleLinksCard'));
 const CardCarousel = dynamic(() => import('./slices/CardCaoursel'));
-const CategorySection = dynamic(() => import('./MicroBrand/CategorySection'));
-const CategorySlider = dynamic(() => import('./MicroBrand/CategorySlider'));
+const CategorySection = dynamic(() => import('./MicrositeV2/CategorySection'));
+const CategorySlider = dynamic(() => import('./MicrositeV2/CategorySlider'));
 const Table = dynamic(() => import('./slices/Table'));
 const MicrobrandCards = dynamic(() => import('./slices/MicrobrandCards'));
 

@@ -1,18 +1,18 @@
-import { sliceHandler } from "../Slices";
-import { COLORS } from "../../constants/ui-constants";
+import { sliceHandler } from '../Slices';
+import { COLORS } from '../../constants/ui-constants';
 
-export const LongForm = props => {
+const LongForm = props => {
   const { content, props: sliceProps, hasToursSection } = props;
   return (
-    <div className={`long-form-wrap ${!hasToursSection ? "no-border" : ""}`}>
+    <div className={`long-form-wrap ${!hasToursSection ? 'no-border' : ''}`}>
       {content.map((slice, index) => (
-        <div key={index} className={"slice-block " + slice.slice_type}>
+        <div key={index} className={'slice-block ' + slice.slice_type}>
           {sliceHandler(slice, sliceProps)}
         </div>
       ))}
       <style global jsx>{`
         .long-form-wrap {
-          font-family: "Graphik", "Proxima Nova", "Helvetica Neue", Helvetica,
+          font-family: 'Graphik', 'Proxima Nova', 'Helvetica Neue', Helvetica,
             Arial, sans-serif;
           line-height: 1.6;
           color: #545454;
@@ -58,3 +58,5 @@ export const LongForm = props => {
     </div>
   );
 };
+
+export default LongForm;

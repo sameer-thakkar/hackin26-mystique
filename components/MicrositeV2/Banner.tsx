@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from '../UI/Image';
-import Swiper from '../../components/Swiper';
+import Swiper from '../Swiper';
 import { SIZES } from '../../constants/ui-constants';
 import { scroller } from 'react-scroll';
 

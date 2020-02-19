@@ -123,17 +123,7 @@ const TourComparisonTable = props => {
                     }
                   }}
                 >
-                  <div className="tour-title">
-                    {tour.title}
-                    <div className="tour-booster">
-                      <RichText
-                        render={tour.cardFooter}
-                        htmlSerializer={(...defaultArgs: any) =>
-                          shortCodeSerializerWithParentProps(defaultArgs, tour)
-                        }
-                      />
-                    </div>
-                  </div>
+                  <div className="tour-title">{tour.title}</div>
                   <div className="price-block">
                     <div className="current-price">
                       {tour.currencySymbol}
@@ -145,6 +135,14 @@ const TourComparisonTable = props => {
                         {tour.scratchPrice}
                       </div>
                     ) : null}
+                  </div>
+                  <div className="tour-booster">
+                    <RichText
+                      render={tour.cardFooter}
+                      htmlSerializer={(...defaultArgs: any) =>
+                        shortCodeSerializerWithParentProps(defaultArgs, tour)
+                      }
+                    />
                   </div>
                 </div>
                 <div className="content-blocks">
@@ -256,15 +254,27 @@ const TourComparisonTable = props => {
         .tour-title {
           font-family: ${AVENIR.FONT_STACK};
           font-weight: ${AVENIR.HEAVY};
+          grid-column: 1 / 3;
         }
         .tour-chin {
           display: grid;
           position: sticky;
-          top: 80px;
+          top: 0;
+          z-index: 15;
           background: #fff;
-          grid-template-columns: auto auto;
-          grid-gap: 24px;
+          grid-template-columns: auto 1fr;
+          grid-gap: 8px;
           justify-content: space-between;
+          justify-items: flex-end;
+        }
+        /* TODO: Improve this, Handle in code. */
+        .tour-chin::after {
+          position: absolute;
+          content: '';
+          height: 100%;
+          width: 24px;
+          right: -24px;
+          background: #fff;
         }
         .block-label {
           font-size: 16px;
@@ -275,7 +285,7 @@ const TourComparisonTable = props => {
           font-family: ${AVENIR.FONT_STACK};
           font-weight: ${AVENIR.HEAVY};
           font-size: 16px;
-          text-align: right;
+          text-align: left;
           line-height: 1;
           display: grid;
           grid-row-gap: 8px;
@@ -284,6 +294,7 @@ const TourComparisonTable = props => {
         .old-price {
           font-weight: ${AVENIR.ROMAN};
           font-size: 12px;
+          grid-row: 1;
           text-decoration: line-through;
         }
         .content-blocks {
@@ -296,19 +307,19 @@ const TourComparisonTable = props => {
           margin-bottom: 32px;
           grid-row-gap: 32px;
         }
-        .tour-cta {
+        /* .tour-cta {
           position: sticky;
           bottom: 0px;
           padding-bottom: 15px;
           background: #fff;
-        }
+        } */
         .tour-cta .cta-btn {
           padding: 16px;
           display: block;
-          width: calc(100% - 32px);
-          background: ${COLORS.RHAPSODY};
+          width: calc(100% - 34px);
+          border:1px solid ${COLORS.RHAPSODY};
           border-radius: 4px;
-          color: ${COLORS.WHITE};
+          color: ${COLORS.RHAPSODY};
           font-size: 16px;
           font-family: ${AVENIR.FONT_STACK};
           text-align: center;
@@ -317,6 +328,9 @@ const TourComparisonTable = props => {
         }
         . .block {
           line-height: 1.33;
+        }
+        .tour-booster, .price-block{
+          align-self: end;
         }
         @media (max-width: 768px) {
           .tour-options {
@@ -333,6 +347,10 @@ const TourComparisonTable = props => {
           .tour-options::after {
             content: "";
           }
+          .tour-chin::after{
+            width: 12px;
+            right: -12px;
+          }
           .tour-chin {
             position: initial;
             grid-template-columns: auto;
@@ -343,22 +361,20 @@ const TourComparisonTable = props => {
           }
           .price-block {
             height: max-content;
+            text-align: left;
+          }
+          .tour-chin{
+            justify-items: left;
           }
           .tour-title {
             font-family: ${GRAPHIK.FONT_STACK};
             font-size: 14px;
+            grid-column: 1 / 2;
             font-weight: ${GRAPHIK.HEAVY};
           }
           .price-block {
             display: none;
           }
-
-          /* .tour-column:first-child{
-            padding-left: 16px;
-          }
-          .tour-column:last-child{
-            padding-right: 32px;
-          } */
         }
       `}</style>
       <style global jsx>{`

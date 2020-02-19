@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { RichText } from 'prismic-reactjs';
 import Image from '../UI/Image';
 import { shortCodeSerializerWithParentProps } from '../../utils/shortCodes';
 import { truncate } from '../../utils/helper';
 import { AVENIR, GRAPHIK, COLORS } from '../../constants/ui-constants';
 
-export const Product = props => {
+const Product = props => {
   const handleProductClick = () => {
     props.productClick(props.tgid, props.cardIdPrefix);
   };
@@ -31,8 +31,22 @@ export const Product = props => {
         ) : null}
       </div>
       <div className="product-v2-bottom">
+        <div className="title-wrap">
+          <div className="product-v2-title">{truncate(tour.title, 70)}</div>
+        </div>
         <div className="product-v2-bottom-left">
-          <div className="product-v2-title">{truncate(tour.title, 40)}</div>
+          {tour.scratchPrice > tour.price ? (
+            <div className="product-v2-scratch-price">
+              {tour.currencySymbol}
+              {tour.scratchPrice}
+            </div>
+          ) : null}
+          <div className="product-v2-price">
+            {tour.currencySymbol}
+            {tour.price}
+          </div>
+        </div>
+        <div className="product-v2-bottom-right">
           {tour.cardFooter.length ? (
             <div
               className="product-v2-boosters"
@@ -44,18 +58,6 @@ export const Product = props => {
                   shortCodeSerializerWithParentProps(defaultArgs, tour)
                 }
               />
-            </div>
-          ) : null}
-        </div>
-        <div className="product-v2-bottom-right">
-          <div className="product-v2-price">
-            {tour.currencySymbol}
-            {tour.price}
-          </div>
-          {tour.scratchPrice > tour.price ? (
-            <div className="product-v2-scratch-price">
-              {tour.currencySymbol}
-              {tour.scratchPrice}
             </div>
           ) : null}
         </div>
@@ -76,6 +78,9 @@ export const Product = props => {
           line-height: 24px;
           color: #545454;
           font-weight: 800;
+        }
+        .title-wrap {
+          grid-column: 1 / 3;
         }
         .product-v2-image {
           display: block;
@@ -107,18 +112,19 @@ export const Product = props => {
           align-items: baseline;
           justify-content: space-between;
           grid-template-columns: 1fr auto;
-          grid-column-gap: 8px;
+          grid-gap: 8px;
           height: max-content;
         }
         .product-v2-bottom-right {
           display: grid;
           grid-row-gap: 8px;
+          align-self: end;
         }
         .product-v2-price {
           font-family: ${AVENIR.FONT_STACK};
           font-size: 16px;
           line-height: 1;
-          text-align: right;
+          text-align: left;
           color: ${COLORS.DAVY_GREY};
           font-weight: ${AVENIR.HEAVY};
         }
@@ -127,7 +133,6 @@ export const Product = props => {
           font-weight: ${AVENIR.ROMAN};
           font-size: 12px;
           line-height: 1;
-          text-align: right;
           text-decoration-line: line-through;
           color: #757575;
         }
@@ -150,6 +155,9 @@ export const Product = props => {
           }
           .product-v2-bottom-left {
             width: 100%;
+          }
+          .title-wrap {
+            grid-column: 1 / 2;
           }
           .product-v2-bottom-right {
             width: 100%;
@@ -237,3 +245,5 @@ export const Product = props => {
 Product.defaultProps = {
   productClick: () => {},
 };
+
+export default Product;

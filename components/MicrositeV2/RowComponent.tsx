@@ -1,6 +1,6 @@
-import React, { Component, useContext, useState, useLayoutEffect } from 'react';
-import { Product } from './Product';
-import { FullLengthProductCard } from './FullLengthProductCard';
+import React, { useContext, useLayoutEffect } from 'react';
+import Product from './Product';
+import DetailedProductCard from './DetailedProductCard';
 import { PAGETYPE } from '../../constants';
 import { InteractionContext } from '../../contexts/Interaction';
 import { scroller } from 'react-scroll';
@@ -64,7 +64,7 @@ export const RowComponent = props => {
       })}
       <React.Fragment>
         {showDescription ? (
-          <FullLengthProductCard
+          <DetailedProductCard
             tgidClicked={tgidClicked}
             allTours={allTours}
             isMobile={isMobile}

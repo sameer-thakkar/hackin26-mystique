@@ -1,15 +1,14 @@
 import React, {
-  Component,
   useState,
   useLayoutEffect,
   useContext,
   useEffect,
   useCallback,
 } from 'react';
-import Swiper from '../../components/Swiper';
+import Swiper from '../Swiper';
 import { ProductsContext } from '../../contexts/Products';
-import { Product } from './Product';
-import { FullLengthProductCard } from './FullLengthProductCard';
+import Product from './Product';
+import DetailedProductCard from './DetailedProductCard';
 import { scroller } from 'react-scroll';
 import { CHEVRON_LEFT } from '../../public/static/svg-icons';
 
@@ -130,7 +129,7 @@ export const CategorySlider = props => {
       </div>
       <div className="slider-product-description">
         {tgidClicked ? (
-          <FullLengthProductCard
+          <DetailedProductCard
             tgidClicked={tgidClicked}
             key={carouselId}
             allTours={allTours}

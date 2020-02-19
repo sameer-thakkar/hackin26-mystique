@@ -37,7 +37,6 @@ const RatingBoosterCombo = props => {
       </span>
       <style jsx>{`
         .booster-container {
-          margin-top: 4px;
           display: grid;
           grid-template-columns: auto auto auto;
           justify-content: left;
@@ -59,6 +58,12 @@ const RatingBoosterCombo = props => {
         }
         .booster-container .booster-text {
           color: ${COLORS.DAVY_GREY};
+        }
+      `}</style>
+      <style jsx global>{`
+        .booster-rating svg {
+          height: 12px;
+          width: 12px;
         }
       `}</style>
     </>

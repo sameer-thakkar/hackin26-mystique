@@ -1,7 +1,7 @@
-import React, { Component, useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useCaptureClickOutside } from '../hooks/ClickOutside';
 import Image from '../UI/Image';
-import { AVENIR, COLORS, GRAPHIK } from '../../constants/ui-constants';
+import { COLORS, GRAPHIK } from '../../constants/ui-constants';
 import { CHEVRON_DOWN } from '../../public/static/svg-icons';
 
 export const ResponsiveSelector = props => {

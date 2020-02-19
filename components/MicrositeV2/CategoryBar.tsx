@@ -1,16 +1,9 @@
-import React, {
-  Component,
-  useState,
-  useEffect,
-  useContext,
-  useLayoutEffect,
-  useRef,
-} from 'react';
+import React, { useState, useContext, useLayoutEffect, useRef } from 'react';
 import { SortSelector } from './SortSelector';
 import { InteractionContext } from '../../contexts/Interaction';
-import { GRAPHIK, AVENIR, SIZES } from '../../constants/ui-constants';
+import { AVENIR, SIZES } from '../../constants/ui-constants';
 
-export const CategoryBar = props => {
+const CategoryBar = props => {
   const interactionCtx = useContext(InteractionContext);
   const tagsRef = {};
   const parent = useRef(null);
@@ -47,9 +40,6 @@ export const CategoryBar = props => {
       tgidArray: categories[index].ranking.popularity,
       index: index,
     });
-    if (scroll_div.current) {
-      scroll_div.current.scrollIntoView({ behavior: 'smooth' });
-    }
 
     interactionCtx.changeCategory(categories[index].ranking.popularity);
     setActiveCategory(index);
@@ -257,3 +247,5 @@ export const CategoryBar = props => {
     </>
   );
 };
+
+export default CategoryBar;

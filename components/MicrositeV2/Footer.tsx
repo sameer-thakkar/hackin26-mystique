@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
-import Link from 'next/link';
+import React from 'react';
 import classNames from 'classnames';
 import { sliceHandler } from '../Slices';
-import { AVENIR, GRAPHIK } from '../../constants/ui-constants';
+import { GRAPHIK } from '../../constants/ui-constants';
 import Image from '../UI/Image';
-import SocialLinks from './SocialLinks';
-export const Footer = props => {
+import SocialLinks from '../SocialLinks';
+const Footer = props => {
   const { logo, body, favicon, mb_name, isMobile } = props;
   const logoUrl = logo ? logo.url : '';
 
@@ -198,3 +197,5 @@ export const Footer = props => {
 Footer.defaultProps = {
   body: [],
 };
+
+export default Footer;

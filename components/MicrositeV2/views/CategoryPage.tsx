@@ -1,8 +1,8 @@
 import React, { Component, useState, useLayoutEffect } from 'react';
-import { PAGETYPE } from '../../constants';
-import { CHEVRON_LEFT, SEARCH_ICON } from '../../public/static/svg-icons';
-import { SortSelector } from './SortSelector';
-import { ProductsWrapper } from './ProductsWrapper';
+import { PAGETYPE } from '../../../constants';
+import { CHEVRON_LEFT, SEARCH_ICON } from '../../../public/static/svg-icons';
+import { SortSelector } from '../SortSelector';
+import { ProductsWrapper } from '../ProductsWrapper';
 
 export const CategoryPage = props => {
   const [filterDropdown, setFilterDropdown] = useState(false);
