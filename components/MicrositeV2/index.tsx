@@ -158,7 +158,7 @@ class MicrositeV2 extends Component<any, any> {
       headerLinks: CMSData.header_links,
       logoUrl: CMSData.logo.url || CMSData.link_to_logo_file,
       logoAltText: CMSData.logo.alt || CMSData.logo_alt_text,
-      logoRedirectionUrl: CMSData.logo_redirection_url.url || '/',
+      logoRedirectionURL: CMSData.logo_redirection_url.url || '/',
       enableSearch: CMSData.enable_search == 'Yes',
       recommendedTours:
         (CMSData.search_recommend_csv &&
