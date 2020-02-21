@@ -61,6 +61,7 @@ const Popup = props => {
           display: grid;
           align-items: center;
           justify-content: right;
+          border-bottom: 1px solid ${COLORS.DADDY};
           padding: 16px;
         }
         .popup-slices {
