@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { sliceHandler } from '../Slices';
 import { CLOSE_WHITE } from '../../public/static/svg-icons';
-import { COLORS } from '../../constants/ui-constants';
+import { COLORS, GRAPHIK, AVENIR } from '../../constants/ui-constants';
 
 const Popup = props => {
   const { data, togglePopup } = props;
@@ -28,7 +28,11 @@ const Popup = props => {
         </div>
         <div className="popup-slices">
           {body.map((slice, index) => {
-            return <div className="popup-slice">{sliceHandler(slice)}</div>;
+            return (
+              <div className={`popup-slice ${slice.slice_type}`}>
+                {sliceHandler(slice)}
+              </div>
+            );
           })}
         </div>
       </div>
@@ -46,8 +50,9 @@ const Popup = props => {
           display: grid;
           padding: 50px;
           grid-template-rows: 60px auto;
-          width: max-content;
+          width: auto;
           justify-self: center;
+          z-index: 10;
           align-self: center;
         }
         .aio-header {
@@ -61,9 +66,13 @@ const Popup = props => {
         .popup-slices {
           display: grid;
           justify-content: center;
+          height: max-content;
         }
         .popup-slice {
-          display: flex;
+          display: block;
+          font-family: ${GRAPHIK.FONT_STACK};
+          font-weight: ${GRAPHIK.REGULAR};
+          background: #fff;
         }
         .popup-mask {
           position: absolute;
@@ -96,6 +105,35 @@ const Popup = props => {
           stroke: ${COLORS.DAVY_GREY};
           height: 32px;
           width: 32px;
+        }
+        .popup-slices h1 {
+          text-align: center;
+        }
+        .popup-slices p,
+        .popup-slices li {
+          font-size: 1.2em;
+          line-height: 1.5;
+        }
+        .popup-slice.rich_text {
+          border-top: none;
+          padding: 0 1em 2em 0;
+          color: ${COLORS.DAVY_GREY};
+          font-family: ${AVENIR.FONT_STACK};
+        }
+        @media (max-width: 768px) {
+          .popup-slice.rich_text {
+            padding: 0;
+          }
+          .popup-slices p,
+          .popup-slices li {
+            font-size: 1em;
+          }
+          .popup-slice.rich_text ul {
+            padding: 0.5em;
+          }
+          .popup-slice.rich_text h1 {
+            margin: 0;
+          }
         }
       `}</style>
     </div>,
