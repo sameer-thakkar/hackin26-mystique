@@ -48,6 +48,7 @@ const Popup = props => {
           grid-template-rows: 60px auto;
           width: max-content;
           justify-self: center;
+          align-self: center;
         }
         .aio-header {
           z-index: 1;
@@ -87,7 +88,11 @@ const Popup = props => {
         }
       `}</style>
       <style jsx global>{`
-        svg path {
+        .aio-popup-container .close svg {
+          height: 24px;
+          width: 24px;
+        }
+        .aio-popup-container .close svg path {
           stroke: ${COLORS.DAVY_GREY};
           height: 32px;
           width: 32px;

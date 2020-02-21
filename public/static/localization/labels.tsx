@@ -8,6 +8,7 @@ export const en = {
   EARLIEST_AVAILABILITY: 'Earliest Availability',
   TODAY: 'Today',
   TOMORROW: 'Tomorrow',
+  MORE_FROM: 'More from',
 };
 
 export const es = {

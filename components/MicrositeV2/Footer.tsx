@@ -106,7 +106,7 @@ const Footer = props => {
           }
 
           .copyrights .icon {
-            filter: contrast(0) invert(1);
+            filter: contrast(0) brightness(0) invert(1);
           }
 
           .center-logo {

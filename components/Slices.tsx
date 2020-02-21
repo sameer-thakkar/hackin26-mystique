@@ -128,12 +128,18 @@ export const sliceHandler = (slice, props: any = {}) => {
           },
         ];
       }, []);
+      const vendor = slice.primary.csv_vendors?.split(',').map(v => v.trim());
+      const vendorLinks = slice.primary.csv_vendor_links
+        ?.split(',')
+        .map(v => v.trim());
       return (
         <TourComparisonTable
           isMobile={props.isMobile}
           heading={slice.primary.comparision_heading}
           description={slice.primary.comparison_description}
           tgidsCSV={slice.primary.product_tgids}
+          vendors={vendor}
+          vendorLinks={vendorLinks}
           orderedLabels={orderedLabels}
         />
       );

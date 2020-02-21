@@ -384,6 +384,9 @@ export const MobileProductPage = props => {
           .boosters p *:first-child {
             display: unset;
           }
+          .boosters .cta-booster-combo {
+            display: none !important;
+          }
           .header {
             position: fixed;
             width: 100%;

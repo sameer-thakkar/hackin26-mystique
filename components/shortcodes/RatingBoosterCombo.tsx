@@ -22,7 +22,7 @@ const RatingBoosterCombo = props => {
 
   return ready ? (
     <>
-      <span className="booster-container">
+      <span className="cta-booster-combo booster-container">
         {booster.rating ? (
           <span className="booster-rating">
             {STAR('#FFBB58')}

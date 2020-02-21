@@ -7,13 +7,22 @@ import EnvironmentContext from '../../contexts/environmentContext';
 import { ProductsContext } from '../../contexts/Products';
 import { shortCodeSerializerWithParentProps } from '../../utils/shortCodes';
 import { MBContext } from '../../contexts/MBContext';
+import * as LABELS from '../../public/static/localization/labels';
 
 const TourComparisonTable = props => {
   const closeDescriptionCard = () => {
     props.closeDescription();
   };
 
-  const { heading, description, tgidsCSV, isMobile, orderedLabels } = props;
+  const {
+    heading,
+    description,
+    tgidsCSV,
+    isMobile,
+    orderedLabels,
+    vendors,
+    vendorLinks,
+  } = props;
   const NB_SPACE = '\u00A0';
 
   const envContext = useContext(EnvironmentContext);
@@ -39,7 +48,7 @@ const TourComparisonTable = props => {
       },
     };
 
-    toursArr = toursArr.reduce((acc, tour) => {
+    toursArr = toursArr.reduce((acc, tour, index) => {
       labels.title.max = Math.max(labels.title.max, tour.title.length);
       let content = [
         ...tour.contentBlocks.left,
@@ -67,6 +76,8 @@ const TourComparisonTable = props => {
         {
           ...tour,
           contentBlocks: content,
+          vendor: vendors && vendors[index],
+          vendorLink: vendorLinks && vendorLinks[index],
         },
       ];
     }, []);
@@ -188,7 +199,9 @@ const TourComparisonTable = props => {
                         key={blockIndex}
                       >
                         <div className="block-label">
-                          {index == 0 ? block_content.label : NB_SPACE}
+                          {index == 0 && block_content.content
+                            ? block_content.label
+                            : NB_SPACE}
                         </div>
                         <div className="block-content">
                           {block_content.content ? (
@@ -219,6 +232,13 @@ const TourComparisonTable = props => {
                     Book Now
                   </a>
                 </div>
+                {tour.vendor ? (
+                  <div className="vendor-cta">
+                    <a href={tour.vendorLink} className="cta-btn">
+                      {LABELS[lang].MORE_FROM} {tour.vendor}
+                    </a>
+                  </div>
+                ) : null}
               </div>
             </div>
           );
@@ -332,9 +352,21 @@ const TourComparisonTable = props => {
         .tour-booster, .price-block{
           align-self: end;
         }
+        .vendor-cta{
+          text-align: center;
+          margin-top: 24px;
+          font-weight: ${AVENIR.MEDIUM};
+          font-size: 14px;
+          font-family: ${AVENIR.FONT_STACK};
+        }
+        .vendor-cta a{
+          color: ${COLORS.RHAPSODY};
+          text-decoration: underline;
+        }
         @media (max-width: 768px) {
           .tour-options {
             width: 100vw;
+            overflow-y: hidden;
             overflow-x: scroll;
             grid-gap: 12px;
             grid-template-columns: 4px repeat(${tgidArray.length}, 164px) 16px;

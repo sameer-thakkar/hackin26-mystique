@@ -3,7 +3,10 @@ import Image from '../UI/Image';
 import { RichText } from 'prismic-reactjs';
 import { CLOSE_WHITE } from '../../public/static/svg-icons';
 import { GRAPHIK, COLORS, AVENIR } from '../../constants/ui-constants';
-import { shortCodeSerializerWithParentProps } from '../../utils/shortCodes';
+import {
+  shortCodeSerializerWithParentProps,
+  shortCodeSerializer,
+} from '../../utils/shortCodes';
 import { MBContext } from '../../contexts/MBContext';
 
 const DetailedProductCard = props => {
@@ -15,11 +18,36 @@ const DetailedProductCard = props => {
   const { allTours, tgidClicked, cardPosition } = props;
   const activeTour = allTours[tgidClicked];
   const rightBlocksCount = activeTour.contentBlocks.right.length;
+  const descriptors = activeTour.descriptors
+    .split(',')
+    .filter(d => d.length)
+    .map(d => d.trim());
   return (
     <div className="product-v2-description">
       <div className="indicator-triangle"></div>
       <div className="product-v2-description-left">
-        <div className="v2-desc-title">{activeTour.title}</div>
+        <div className="full-width-section">
+          <div className="v2-desc-title">{activeTour.title}</div>
+          {descriptors.length > 0 ? (
+            <div className="v2-descriptors">
+              {descriptors.map((descriptor, index) => {
+                return (
+                  <div className="v2-descriptor" key={index}>
+                    {descriptor.trim()}
+                  </div>
+                );
+              })}
+            </div>
+          ) : null}
+          {activeTour.description && activeTour.description.length ? (
+            <div className="content-block tour-description">
+              <RichText
+                render={activeTour.description}
+                htmlSerializer={shortCodeSerializer}
+              />
+            </div>
+          ) : null}
+        </div>
         <div className="v2-desc-columns">
           <div className="v2-desc-left">
             {activeTour.contentBlocks.left.map((block, index) => {
@@ -153,6 +181,27 @@ const DetailedProductCard = props => {
           font-family: ${GRAPHIK.FONT_STACK};
           font-weight: ${GRAPHIK.SEMIBOLD};
         }
+        .full-width-section{
+          display: grid;
+          grid-row-gap: 8px;
+        }
+        .v2-descriptors{
+          display: grid;
+          grid-template-columns: repeat(5,auto);
+          grid-gap: 12px;
+          justify-content: left;
+        }
+        .v2-descriptor{
+          border-radius: 2px;
+          font-size: 12px;
+          color: ${COLORS.DAVY_GREY};
+          font-weight: 400;
+          line-height: 1;
+          text-transform: capitalize;
+        }
+        .tour-description{
+          font-family: ${AVENIR.FONT_STACK};
+        }
 
         .description-content {
           font-size: 16px;
@@ -283,8 +332,12 @@ const DetailedProductCard = props => {
           width: 100%;
           height: 100%;
           object-fit: cover;
+          border-radius: 0 0 4px 0;
         }
         .description-content p {
+          margin: 0;
+        }
+        .tour-description p {
           margin: 0;
         }
 
