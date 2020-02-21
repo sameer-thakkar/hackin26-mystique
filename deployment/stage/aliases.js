@@ -1,4 +1,5 @@
 module.exports = [
+  'stage.barcelona-week.tickets-barcelona.org',
   'stage.www.auschwitz-tours.org',
   'stage.pena-palace.tickets-lisbon.com',
   'stage.moorish-castle.tickets-lisbon.com',
