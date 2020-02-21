@@ -1,4 +1,5 @@
 module.exports = [
+  'stage.www.auschwitz-tours.org',
   'stage.pena-palace.tickets-lisbon.com',
   'stage.moorish-castle.tickets-lisbon.com',
   'stage.monserrate-palace.tickets-lisbon.com',
