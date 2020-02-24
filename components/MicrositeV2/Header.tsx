@@ -82,7 +82,7 @@ const Header = props => {
           </div>
           <div className="header-right">
             {/* <nav></nav> */}
-            {isMobile && (
+            {isMobile && headerProps.enableSearch && (
               <div
                 className="mobi-search-trigger"
                 onClick={() => {

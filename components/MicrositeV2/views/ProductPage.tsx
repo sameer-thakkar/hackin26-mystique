@@ -375,8 +375,7 @@ export const MobileProductPage = props => {
           }
           .content-block ul {
             margin: 0;
-            padding-left: 0;
-            list-style: none;
+            padding-left: 1em;
           }
           .boosters p * {
             display: none;

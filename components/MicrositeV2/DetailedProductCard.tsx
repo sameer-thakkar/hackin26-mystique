@@ -138,6 +138,7 @@ const DetailedProductCard = props => {
           grid-template-columns: 1fr 0.9fr;
           grid-column-gap: 24px;
           border: 1px solid #757575;
+          color: ${COLORS.DAVY_GREY};
           border-left: none;
           border-right: none;
           position: relative;
@@ -188,12 +189,15 @@ const DetailedProductCard = props => {
         .v2-descriptors{
           display: grid;
           grid-template-columns: repeat(5,auto);
+          font-family: ${GRAPHIK.FONT_STACK};
           grid-gap: 12px;
           justify-content: left;
         }
         .v2-descriptor{
+          background: ${COLORS.CHALK};
           border-radius: 2px;
           font-size: 12px;
+          padding: 8px 12px;
           color: ${COLORS.DAVY_GREY};
           font-weight: 400;
           line-height: 1;
