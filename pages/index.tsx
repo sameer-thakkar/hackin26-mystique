@@ -204,19 +204,37 @@ export default class Page extends React.Component<any, any> {
               }),
               {}
             );
-
+            /**
+             * References Handler;
+             * The final case empty string was added
+             * to handle promise resolve more neatly.
+             */
             const footerID =
               completeMicrosite.data.data.footer_ref.id ||
-              baseLangData.data.footer_ref.id;
-            if (footerID) {
-              const customFooter = await Client(req).getByID(footerID);
-              completeMicrosite.data.data.customFooter = customFooter;
-            }
+              baseLangData.data.footer_ref.id ||
+              '';
+            const contentSectionId =
+              completeMicrosite.data.data.content_framework.id ||
+              baseLangData.data.content_framework.id ||
+              '';
+
+            const linkedRefIDs = [];
+            linkedRefIDs.push(footerID);
+            linkedRefIDs.push(contentSectionId);
+
+            const [
+              customFooter,
+              contentFramework,
+            ] = await this.getRefsArrayByIds(linkedRefIDs, req);
 
             const micrositeData = {
               ...completeMicrosite,
               data: {
                 ...completeMicrosite.data,
+                refs: {
+                  customFooter,
+                  contentFramework,
+                },
                 data: {
                   ...completeMicrosite.data.data,
                   ...strValues,
@@ -251,7 +269,7 @@ export default class Page extends React.Component<any, any> {
                 fetchLinks: [...COMMON_HEADER_PROPS, ...LINKED_MICROSITE_PROPS],
                 lang,
               })
-              .then(page => {
+              .then(async page => {
                 if (!(page && page.data)) {
                   return {
                     statusCode: 404,
@@ -265,6 +283,24 @@ export default class Page extends React.Component<any, any> {
                   redirectTo({ res: serverResponse, url });
                 }
 
+                /**
+                 *  Fetching data of referenced custom types which cannot be
+                 * fetched using the fetchLink method due to prismic constraints
+                 * Currently includes: Common Footer
+                 */
+                let subComponents = [];
+                const footerID = page.data.footer_ref.id || '';
+                const contentSectionID =
+                  page.data.content_framework?.data?.id || '';
+
+                const linkedRefIDs = [];
+                linkedRefIDs.push(footerID);
+                linkedRefIDs.push(contentSectionID);
+
+                const [
+                  customFooter,
+                  contentFramework,
+                ] = await this.getRefsArrayByIds(linkedRefIDs, req);
                 let completePage = {
                   ...page,
                   featured: {
@@ -273,26 +309,15 @@ export default class Page extends React.Component<any, any> {
                       : page.data.featured_image_link,
                     title: page.data.featured_title,
                   },
-                  subs: {},
+                  refs: {
+                    customFooter,
+                    contentFramework,
+                  },
                 };
-
-                /**
-                 *  Fetching data of referenced custom types which cannot be
-                 * fetched using the fetchLink method due to prismic constraints
-                 * Currently includes: Common Footer
-                 */
-                let subComponents = [];
-                page.data.footer_ref.id &&
-                  subComponents.push(page.data.footer_ref.id);
-                let SubComponentPromise = Client(req).getByIDs(subComponents);
-
-                return Promise.all([SubComponentPromise]).then((res: any) => {
-                  completePage.subs = res[0].results;
-                  return {
-                    CMSContent: completePage,
-                    ContentType: CUSTOM_TYPES.CONTENT_PAGE,
-                  };
-                });
+                return {
+                  CMSContent: completePage,
+                  ContentType: CUSTOM_TYPES.CONTENT_PAGE,
+                };
               });
           }
         });
@@ -411,6 +436,13 @@ export default class Page extends React.Component<any, any> {
         statusCode: 500,
       };
     }
+  }
+
+  static async getRefsArrayByIds(ref_ids: Array<String>, req: Request) {
+    const linkedRefsPromise = Client(req).getByIDs(ref_ids);
+    return await Promise.resolve(linkedRefsPromise).then((res: any) => {
+      return res.results;
+    });
   }
 
   render() {
