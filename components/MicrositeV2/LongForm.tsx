@@ -1,11 +1,11 @@
-import sliceHandler from '../Slices';
+import { sliceHandler } from '../Slices';
 import { COLORS } from '../../constants/ui-constants';
 
 const LongForm = props => {
-  const { slicesArray, props: sliceProps, hasToursSection } = props;
+  const { content, props: sliceProps, hasToursSection } = props;
   return (
     <div className={`long-form-wrap ${!hasToursSection ? 'no-border' : ''}`}>
-      {slicesArray.map((slice, index) => (
+      {content.map((slice, index) => (
         <div key={index} className={'slice-block ' + slice.slice_type}>
           {sliceHandler(slice, sliceProps)}
         </div>

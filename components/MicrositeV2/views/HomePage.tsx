@@ -1,15 +1,14 @@
 import React from 'react';
 import Header from '../Header';
-import LongForm from '../LongForm';
-import Footer from '../Footer';
-import sliceHandler from '../../Slices';
 import { Banner } from '../Banner';
 import { ProductsContextProvider } from '../../../contexts/Products';
+import LongForm from '../LongForm';
 import { ProductsWrapper } from '../ProductsWrapper';
+import Footer from '../Footer';
+import { sliceHandler } from '../../Slices';
 import { ResponsiveSelector } from '../ResponsiveSelector';
 import { LOCATION } from '../../../public/static/svg-icons';
 import { SIZES } from '../../../constants/ui-constants';
-import { groupSlices } from '../../../utils/helper';
 
 export const HomePage = props => {
   const {
@@ -28,16 +27,14 @@ export const HomePage = props => {
     heroSectionSlice,
     isFetched,
     customFooter,
-    contentFramework,
   } = props;
+
   const { dropdownLinks } = header;
   const selectorLinkChangeHandler = option => {
     window.location.href = option.value;
   };
-  const slices = contentFramework?.body;
-  const contentFWSlices = (slices && groupSlices(slices)) || [];
-  const longFormSlices = [...contentFWSlices, ...longFormContent];
   const { currentLanguage } = props.header.languageProps;
+  // const customFooterProps = customFooter ? customFooter.data : null;
   const hasToursSection = categoryProps.categories.length > 0;
   return (
     <div className="microsite-v2-wrapper">
@@ -91,7 +88,7 @@ export const HomePage = props => {
         <div className="main-wrapper">
           {longFormContent ? (
             <LongForm
-              slicesArray={longFormSlices}
+              content={longFormContent}
               props={{
                 allTours,
                 isMobile,

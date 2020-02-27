@@ -12,7 +12,6 @@ import { docCookies } from '../utils/helper';
 import { DROPDOWN_ELEMENT, ANALYTICS_EVENTS } from '../constants';
 import PopulateUncategorizedProducts from './PopulateUncategorizedProducts';
 import Analytics from '../utils/Analytics';
-import sliceHandler from './Slices';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
@@ -242,8 +241,7 @@ export default class MicrositeV1 extends Component<any, any> {
     const { url: logoUrl } = this.props.data.data.link_to_logo_file;
     const { url: uploadedLogoUrl, alt: altText } = this.props.data.data.logo;
     const { logo_alt_text: logoAltText } = this.props.data.data;
-    const { alternate_languages: availableLanguages, refs } = this.props.data;
-    const { contentFramework } = refs;
+    const { alternate_languages: availableLanguages } = this.props.data;
     const {
       localization: languages,
       header_links: headerLinks,
@@ -305,8 +303,8 @@ export default class MicrositeV1 extends Component<any, any> {
     const offerPopup = hasOffer ? productOffer[0] : null;
     const {
       group_booking_excluded_tgids: groupBookingExcludedTgids,
+      customFooter,
     } = this.props.data.data;
-    const { customFooter } = this.props.data.refs;
     const microbrandCards = this.props.data.data.microbrand_cards;
     const microbrandCardsHeading = this.props.data.data.microbrand_cards_heading
       ? this.props.data.data.microbrand_cards_heading
@@ -441,13 +439,6 @@ export default class MicrositeV1 extends Component<any, any> {
               microbrandCards={microbrandCards}
               microbrandCardsHeading={microbrandCardsHeading}
             />
-          ) : null}
-          {contentFramework ? (
-            <div className="content-fw-wrapper">
-              {contentFramework.body?.map((slice, index) => {
-                return sliceHandler(slice);
-              })}
-            </div>
           ) : null}
           {longFormContent ? <LongForm content={longFormContent} /> : null}
           {customFooter ? (
