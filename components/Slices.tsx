@@ -23,11 +23,8 @@ const CategorySection = dynamic(() => import('./MicrositeV2/CategorySection'));
 const CategorySlider = dynamic(() => import('./MicrositeV2/CategorySlider'));
 const Table = dynamic(() => import('./slices/Table'));
 const MicrobrandCards = dynamic(() => import('./slices/MicrobrandCards'));
-const TabWrapper = dynamic(() => import('./slices/TabWrapper'));
-const Tab = dynamic(() => import('./slices/Tab'));
-const FAQSlider = dynamic(() => import('./slices/FAQSlider'));
 
-const sliceHandler = (slice, props: any = {}) => {
+export const sliceHandler = (slice, props: any = {}) => {
   switch (slice.slice_type) {
     case 'rich_text':
     case 'rich_text_only':
@@ -192,48 +189,7 @@ const sliceHandler = (slice, props: any = {}) => {
           contentArr={slice.items}
         />
       );
-    case 'tab_wrapper':
-      return (
-        <TabWrapper
-          slices={slice.slices}
-          heading={slice.primary.title}
-          sliceProps={props}
-        />
-      );
-    case 'tab':
-      return (
-        <Tab
-          slices={slice.slices}
-          title={slice.primary.title}
-          isDefault={slice.primary.is_default == 'Yes'}
-          sliceProps={props}
-        />
-      );
-    case 'question':
-      const faqs = slice.items.reduce((acc, slice) => {
-        const images = slice.items.reduce((acci, image) => {
-          let img = {
-            url: image.upload_image?.url || image.linked_image,
-            caption: image.upload_image?.alt || image.image_caption,
-            alt: image.alt_text,
-          };
-          return [...acci, img];
-        }, []);
-        return [
-          ...acc,
-          {
-            question: slice.primary.question,
-            answer: slice.primary.answer,
-            images,
-          },
-        ];
-      }, []);
-      return (
-        <FAQSlider isMobile={props.isMobile} faqs={faqs} sliceProps={props} />
-      );
     default:
     // ToDo: Add to Error Logs (Slice)
   }
 };
-
-export default sliceHandler;

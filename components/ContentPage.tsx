@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import 'lazysizes';
 import classNames from 'classnames';
-import dynamic from 'next/dynamic';
+import { CUSTOM_TYPES } from '../constants';
 import CustomHeader from './CustomHeader';
-import sliceHandler from './Slices';
+import { sliceHandler } from './Slices';
 import CustomFooter from './CustomFooter';
 import Masthead from './Masthead';
 import populateHead from './common/meta';
-import { CUSTOM_TYPES } from '../constants';
 import { Client } from '../prismic-config';
 import { isMobile } from '../utils/helper';
-
+import dynamic from 'next/dynamic';
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 import { DROPDOWN_ELEMENT } from '../constants';
 
@@ -72,18 +71,23 @@ export default class ContentPage extends Component<any, any> {
   closeGroupBookingModal = () =>
     this.setState({ showGroupBookingModal: false });
 
-  // TODO: Discard this method, as clean content comes from index.
   prettifyProps(props) {
     let body = props.data.body;
     let featured = props.featured;
-    let footer = props.refs.customFooter;
+    let footer;
 
+    props.subs.forEach(sub => {
+      switch (sub.type) {
+        case CUSTOM_TYPES.FOOTER:
+          footer = sub;
+          break;
+      }
+    });
     return {
       footer,
       body,
       featured,
       data: props.data,
-      contentFramework: props.refs.contentFramework,
     };
   }
   handleDropdownToggle = elementIdentifier => {
@@ -121,7 +125,6 @@ export default class ContentPage extends Component<any, any> {
       data,
       data: { body, header_ref, microsite_document_ref },
       featured,
-      contentFramework,
     } = this.prettifyProps(this.props);
     const {
       first_publication_date: datePublished,

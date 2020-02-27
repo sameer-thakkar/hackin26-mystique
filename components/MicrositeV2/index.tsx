@@ -313,8 +313,13 @@ class MicrositeV2 extends Component<any, any> {
       active: 0,
     };
 
-    const { favicon, footer_logo_link, footer_logo } = this.props.data.data;
-    const { customFooter, contentFramework } = this.props.data.refs;
+    const {
+      favicon,
+      footer_logo_link,
+      footer_logo,
+      customFooter,
+    } = this.props.data.data;
+
     const heroSectionSlice = this.props.data.data.body4;
     const customFooterProps = customFooter ? customFooter.data : null;
     const MBData = {
@@ -335,7 +340,6 @@ class MicrositeV2 extends Component<any, any> {
       groupBooking,
       scorpioData,
       heroSectionSlice,
-      contentFramework: contentFramework?.data,
     };
 
     const directTgid = isMobile ? null : this.props.router.query.tgid;

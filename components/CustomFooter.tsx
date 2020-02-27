@@ -1,25 +1,25 @@
-import React, { Component } from 'react';
-import Link from 'next/link';
-import classNames from 'classnames';
-import sliceHandler from './Slices';
-import { attachQueryParam } from '../utils/helper';
+import React, { Component } from "react";
+import Link from "next/link";
+import classNames from "classnames";
+import { sliceHandler } from "./Slices";
+import { attachQueryParam } from "../utils/helper";
 
 export default class CustomFooter extends Component<any, any> {
   render() {
     const { logo, terms, body } = this.props;
-    const logoUrl = logo ? logo.url : '';
-    const altText = logo ? logo.alt : 'logo';
+    const logoUrl = logo ? logo.url : "";
+    const altText = logo ? logo.alt : "logo";
 
     return (
       <div className="custom-footer">
         <div
-          className={classNames('logo-wrapper', {
-            'center-logo': body.length === 0,
+          className={classNames("logo-wrapper", {
+            "center-logo": body.length === 0
           })}
         >
           <div className="logo">
             <img
-              data-src={attachQueryParam(logoUrl, 'w=150')}
+              data-src={attachQueryParam(logoUrl, "w=150")}
               alt={altText}
               className="lazyload"
             />
@@ -35,7 +35,7 @@ export default class CustomFooter extends Component<any, any> {
           ) : null}
         </div>
         <div className="terms-line">
-          {sliceHandler({ items: [{ text: terms }], slice_type: 'rich_text' })}
+          {sliceHandler({ items: [{ text: terms }], slice_type: "rich_text" })}
           <Link href="/terms">
             <span className="terms-tab">Terms & Conditions</span>
           </Link>
