@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { sliceHandler } from "./Slices";
+import React, { Component } from 'react';
+import sliceHandler from './Slices';
 
 export default class LongForm extends Component<any, any> {
   render() {
@@ -7,14 +7,14 @@ export default class LongForm extends Component<any, any> {
     return (
       <div className="long-form select-wrapper">
         {content.map((slice, index) => (
-          <div key={index} className={"slice-block " + slice.slice_type}>
+          <div key={index} className={'slice-block ' + slice.slice_type}>
             {sliceHandler(slice, props)}
           </div>
         ))}
         <style jsx global>
           {`
             .long-form {
-              font-family: "Graphik", "Proxima Nova", "Helvetica Neue",
+              font-family: 'Graphik', 'Proxima Nova', 'Helvetica Neue',
                 Helvetica, Arial, sans-serif;
               line-height: 1.6;
               color: #545454;
@@ -41,7 +41,7 @@ export default class LongForm extends Component<any, any> {
               font-weight: 500;
             }
             .long-form h2::after {
-              content: "";
+              content: '';
               width: 75px;
               display: block;
               height: 3px;

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { sliceHandler } from '../Slices';
+import sliceHandler from '../Slices';
 import { CLOSE_WHITE } from '../../public/static/svg-icons';
 import { COLORS, GRAPHIK, AVENIR } from '../../constants/ui-constants';
 

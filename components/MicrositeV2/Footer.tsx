@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { sliceHandler } from '../Slices';
+import sliceHandler from '../Slices';
 import { GRAPHIK } from '../../constants/ui-constants';
 import Image from '../UI/Image';
 import SocialLinks from '../SocialLinks';
