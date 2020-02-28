@@ -23,7 +23,7 @@ const Product = props => {
           format="pjpg"
           width={800}
           imageId={tgid}
-          height={700}
+          height={500}
           alt={tour.title}
         />
         {tour.overlayBooster ? (
