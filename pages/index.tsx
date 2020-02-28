@@ -539,14 +539,16 @@ export default class Page extends React.Component<any, any> {
     }
 
     return (
-      <EnvironmentContext.Provider
-        value={{
-          isDev,
-          windowUrl,
-        }}
-      >
-        <ThemeProvider theme={theme}>{Component}</ThemeProvider>
-      </EnvironmentContext.Provider>
+      <div id="body-wrap">
+        <EnvironmentContext.Provider
+          value={{
+            isDev,
+            windowUrl,
+          }}
+        >
+          <ThemeProvider theme={theme}>{Component}</ThemeProvider>
+        </EnvironmentContext.Provider>
+      </div>
     );
   }
 }

@@ -116,7 +116,7 @@ const sliceHandler = (slice, props: any = {}) => {
         };
         return [...accum, booster];
       }, []);
-      return <TrustBoosters boosters={boosters} />;
+      return <TrustBoosters boosters={boosters} {...props} />;
     case 'microbrand_cards':
       return (
         <MicrobrandCards cards={slice.items} cardsContent={slice.primary} />
@@ -144,13 +144,14 @@ const sliceHandler = (slice, props: any = {}) => {
           vendors={vendor}
           vendorLinks={vendorLinks}
           orderedLabels={orderedLabels}
+          slice={slice}
         />
       );
     case 'interactive_image':
       const { primary } = slice;
       const url = primary.linked_image.url || primary.uploaded_image.url;
       const alt = primary.uploaded_image.alt || 'Popup Image';
-      return <InteractiveImage src={url} alt={alt} />;
+      return <InteractiveImage src={url} alt={alt} isMobile={props.isMobile} />;
     case 'image_links_carousel':
       const cards = slice.items.reduce((acc, card) => {
         return [

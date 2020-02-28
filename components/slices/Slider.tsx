@@ -41,6 +41,10 @@ const StyledSlider = styled.div`
     grid-auto-flow: column;
   }
   @media (max-width: 768px) {
+    .swiper-container {
+      width: 100%;
+      height: auto;
+    }
     .slider-bullet {
       height: 6px;
       width: 6px;

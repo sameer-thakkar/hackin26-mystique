@@ -4,7 +4,7 @@ import { SearchPage } from './views/SearchPage';
 import 'lazysizes';
 import { PAGETYPE } from '../../constants';
 import { MobileProductPage } from './views/ProductPage';
-import { withRouter } from 'next/router';
+import { withRouter, Router } from 'next/router';
 import populateHead from '../common/meta';
 import { InteractionContextProvider } from '../../contexts/Interaction';
 import { docCookies } from '../../utils/helper';
@@ -23,6 +23,7 @@ class MicrositeV2 extends Component<any, any> {
       tgid: null,
     },
     scrollY: 0,
+    ready: false,
   };
   sendVariableToDataLayer = JSONObject => {
     if (window && (window as any).dataLayer) {
@@ -91,6 +92,7 @@ class MicrositeV2 extends Component<any, any> {
     }
     this.setState({
       isMobile: isMobile,
+      ready: true,
     });
   }
 
@@ -277,7 +279,7 @@ class MicrositeV2 extends Component<any, any> {
           return [...acc, tour.tgid];
         }, []),
     };
-    const { isFetched } = this.state;
+    const { isFetched, ready } = this.state;
     const tgidsOrderByPrice: any = isFetched
       ? Object.values(allTours)
           .sort((a: any, b: any) => a.price - b.price)
@@ -371,6 +373,7 @@ class MicrositeV2 extends Component<any, any> {
               host={host}
               uid={currentDomain}
               directTgid={directTgid}
+              ready={ready}
             />
           </div>
           {activePage == PAGETYPE.MOBILE_PRODUCT_PAGE ? (

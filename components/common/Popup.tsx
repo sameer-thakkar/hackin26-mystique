@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import sliceHandler from '../Slices';
 import { CLOSE_WHITE } from '../../public/static/svg-icons';
@@ -6,6 +6,10 @@ import { COLORS, GRAPHIK, AVENIR } from '../../constants/ui-constants';
 
 const Popup = props => {
   const { data, togglePopup } = props;
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    if (window) setIsMobile(window?.innerWidth < 768);
+  }, []);
   const { body } = data;
   return ReactDOM.createPortal(
     <div className="aio-popup-wrap">
@@ -30,7 +34,7 @@ const Popup = props => {
           {body.map((slice, index) => {
             return (
               <div className={`popup-slice ${slice.slice_type}`}>
-                {sliceHandler(slice)}
+                {sliceHandler(slice, { isMobile })}
               </div>
             );
           })}
@@ -45,10 +49,11 @@ const Popup = props => {
           height: 100vh;
           display: grid;
           z-index: 999;
+          place-content: center;
         }
         .aio-popup-container {
           display: grid;
-          padding: 50px;
+          margin: 50px;
           grid-template-rows: 60px auto;
           width: auto;
           justify-self: center;
@@ -90,7 +95,9 @@ const Popup = props => {
         @media (max-width: 768px) {
           .aio-popup-container {
             padding: 0;
-            align-self: end;
+            place-content: unset;
+            max-width: 100%;
+            width: 100%;
           }
           .aio-header {
             width: calc(100% - 32px);
@@ -134,6 +141,10 @@ const Popup = props => {
           }
           .popup-slice.rich_text h1 {
             margin: 0;
+          }
+          .popup-slice img {
+            height: auto;
+            width: 100%;
           }
         }
       `}</style>

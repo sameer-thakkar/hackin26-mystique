@@ -29,6 +29,7 @@ export const HomePage = props => {
     isFetched,
     customFooter,
     contentFramework,
+    ready,
   } = props;
   const { dropdownLinks } = header;
   const selectorLinkChangeHandler = option => {
@@ -61,7 +62,7 @@ export const HomePage = props => {
           />
         </div>
       ) : null}
-      {heroProps.banners.length ? (
+      {heroProps.banners.length && ready ? (
         <Banner {...heroProps} isMobile={isMobile} />
       ) : null}
       {heroSectionSlice.length ? (
