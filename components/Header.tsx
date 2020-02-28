@@ -1,10 +1,10 @@
-import React, { Component, Fragment } from "react";
-import LanguageSelector from "./LanguageSelector";
-import HeaderLinks from "./HeaderLinks";
-import classNames from "classnames";
-import { DROPDOWN_ELEMENT } from "../constants";
-import PoweredByHeadout from "./PoweredByHeadout";
-import { attachQueryParam } from "../utils/helper";
+import React, { Component } from 'react';
+import LanguageSelector from './LanguageSelector';
+import HeaderLinks from './HeaderLinks';
+import classNames from 'classnames';
+import { DROPDOWN_ELEMENT } from '../constants';
+import PoweredByHeadout from './PoweredByHeadout';
+import { attachQueryParam } from '../utils/helper';
 
 export default class Header extends Component<any, any> {
   hamburgerRef: any;
@@ -35,7 +35,7 @@ export default class Header extends Component<any, any> {
       enableBuyTickets,
       logoRedirectionURL,
       host,
-      hasPoweredByHeadoutLogo
+      hasPoweredByHeadoutLogo,
     } = this.props;
 
     const hamburgerIconCheck = showGroupBooking || headerLinks.length;
@@ -46,8 +46,8 @@ export default class Header extends Component<any, any> {
           <a href={logoRedirectionURL}>
             <div className="header-logo-wrapper">
               <img
-                data-src={attachQueryParam(logoUrl, "h=40")}
-                src={attachQueryParam(logoUrl, "h=40&q=10")}
+                data-src={attachQueryParam(logoUrl, 'h=40')}
+                src={attachQueryParam(logoUrl, 'h=40&q=10')}
                 alt={logoAltText}
                 className="lazyload"
               />
@@ -55,15 +55,15 @@ export default class Header extends Component<any, any> {
             </div>
           </a>
           <div
-            className={classNames("header-links-lang-container", {
-              addMargin: hamburgerIconCheck
+            className={classNames('header-links-lang-container', {
+              addMargin: hamburgerIconCheck,
             })}
           >
             {hamburgerIconCheck ? (
               <div
                 ref={this.hamburgerRef}
-                className={classNames("hamburger", {
-                  change: dropdown.hamburger
+                className={classNames('hamburger', {
+                  change: dropdown.hamburger,
                 })}
                 onClick={this.hamburgerToggle}
               >
@@ -81,14 +81,14 @@ export default class Header extends Component<any, any> {
               dropdown={dropdown}
               handleDropdownToggle={handleDropdownToggle}
             />
-            {enableBuyTickets === "Yes" && (
+            {enableBuyTickets === 'Yes' && (
               <div className="navbar-buy-tickets">
                 <a href="#select-tickets">
                   <span className="nav-buy-tickets-text">Buy Tickets</span>
                 </a>
               </div>
             )}
-            {!(parentComponent === "TERMS") && hasLanguageSelector === "Yes" ? (
+            {!(parentComponent === 'TERMS') && hasLanguageSelector === 'Yes' ? (
               <LanguageSelector
                 languages={languages}
                 availableLanguages={availableLanguages}

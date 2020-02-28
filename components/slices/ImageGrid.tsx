@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 type PrismicImageObject = {
   image_url?: any;
+  image_alt?: string;
   image_source?: any;
 };
 
@@ -40,33 +41,51 @@ const StyledImageBox = styled.div`
   }
 `;
 
-class ImageGrid extends React.Component<ImageGridProps, any> {
-  constructor(props) {
-    super(props);
-  }
+/**
+ *
+ * A simple image grid
+ *
+ * **All fields marked with a * are mandatory and will break the slice if left blank.**
+ *
+ * ### Non-repeatable zone
+ * - Number of columns
+ *  - Defaults to 1
+ *
+ * ### Repeatable zone
+ * - Image Source
+ *  - Add your image from prismic
+ *  - Additionally add an 'alt' field
+ * - Image URL
+ *  - Add a link to the image directly
+ *  - Will take precedence over 'Image Source'
+ * - Image Alt
+ *  - 'alt' field for Image URL
+ *  - Will take precedence over 'Image Source' alt
+ *
+ * **Note: Either 'Image Source' or 'Image URL' is required and if left blank will break the slice**
+ */
 
-  static defaultProps = {
-    lazyLoadImages: true,
-  };
-
-  render() {
-    const { images, cols, lazyLoadImages } = this.props;
-    return (
-      <StyledImageGrid cols={cols}>
-        {images.map((image, index) => (
-          <StyledImageBox key={index}>
-            <Image
-              dontLazyLoad={!lazyLoadImages}
-              width={580}
-              height={300}
-              format="pjpg"
-              url={image.image_url.url || image.image_source.url}
-            />
-          </StyledImageBox>
-        ))}
-      </StyledImageGrid>
-    );
-  }
-}
+const ImageGrid: React.FC<ImageGridProps> = ({
+  images,
+  cols,
+  lazyLoadImages = true,
+}) => {
+  return (
+    <StyledImageGrid cols={cols}>
+      {images.map((image, index) => (
+        <StyledImageBox key={index}>
+          <Image
+            dontLazyLoad={!lazyLoadImages}
+            width={580}
+            height={300}
+            format="pjpg"
+            url={image.image_url.url || image.image_source.url}
+            alt={image.image_alt || image.image_source.alt}
+          />
+        </StyledImageBox>
+      ))}
+    </StyledImageGrid>
+  );
+};
 
 export default ImageGrid;

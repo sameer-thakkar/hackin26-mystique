@@ -8,11 +8,12 @@ import Footer from './Footer';
 import LongForm from './LongForm';
 import populateHead from './common/meta';
 import CustomFooter from './CustomFooter';
-import { docCookies } from '../utils/helper';
-import { DROPDOWN_ELEMENT, ANALYTICS_EVENTS } from '../constants';
+import sliceHandler from './Slices';
 import PopulateUncategorizedProducts from './PopulateUncategorizedProducts';
 import Analytics from '../utils/Analytics';
-import sliceHandler from './Slices';
+import { docCookies } from '../utils/helper';
+import { DROPDOWN_ELEMENT, ANALYTICS_EVENTS } from '../constants';
+import { groupSlices } from '../utils/helper';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
@@ -34,14 +35,13 @@ export default class MicrositeV1 extends Component<any, any> {
       earliestAvailabilityQueue: [],
       isClient: false,
       analytics: new Analytics(),
+      isMobile: null,
     };
   }
 
-  isMobile = () => {
-    return document.documentElement.clientWidth < 768;
-  };
-
   async componentDidMount() {
+    const isMobile = window.innerWidth < 768;
+    this.setState({ isMobile });
     const { data, lang } = this.props.data;
     const { analytics } = this.state;
     const { tgidToScroll } = this.props;
@@ -179,7 +179,7 @@ export default class MicrositeV1 extends Component<any, any> {
       scroller.scrollTo(tgidToScroll, {
         duration: 1500,
         delay: 100,
-        offset: this.isMobile() ? -80 : -100,
+        offset: this.state.isMobile ? -80 : -100,
         smooth: 'easeInOutQuint',
       });
     }
@@ -252,7 +252,7 @@ export default class MicrositeV1 extends Component<any, any> {
       cta_text: bannerCtaText,
       page_url: pageUrl,
     } = this.props.data.data;
-    const languages = localization.filter(lang => lang.langauge);
+    const languages = localization.filter(lang => lang.language);
     const { uid } = this.props.data;
     const currentLanguage = this.props.data.lang.substring(0, 2);
     const uncategorizedTours = this.props.data.data.body1;
@@ -361,7 +361,8 @@ export default class MicrositeV1 extends Component<any, any> {
       isDev,
       serverRequestStartTimestamp,
     } = this.props;
-
+    const slices = contentFramework?.data?.body;
+    const contentFWSlices = (slices && groupSlices(slices)) || [];
     return (
       <div>
         <div className="microsite-container">
@@ -400,7 +401,7 @@ export default class MicrositeV1 extends Component<any, any> {
             dropdown={this.state.dropdown}
             handleDropdownToggle={this.handleDropdownToggle}
             openGroupBookingModal={this.openGroupBookingModal}
-            isMobile={this.isMobile}
+            isMobile={this.state.isMobile}
             hasLanguageSelector={hasLanguageSelector}
             showGroupBooking={showGroupBooking}
             enableBuyTickets={enableBuyTickets}
@@ -413,7 +414,7 @@ export default class MicrositeV1 extends Component<any, any> {
             bannerHeading={bannerHeading ? bannerHeading : null}
             bannerCtaText={bannerCtaText ? bannerCtaText : null}
             currentLanguage={currentLanguage ? currentLanguage : null}
-            isMobile={this.isMobile}
+            isMobile={this.state.isMobile}
             boxed={true}
           />
           {checkIfToursAvailable ? (
@@ -433,7 +434,7 @@ export default class MicrositeV1 extends Component<any, any> {
               isFetched={this.state.isFetched}
               togglePopup={this.togglePopup}
               pageUrl={pageUrl}
-              isMobile={this.isMobile}
+              isMobile={this.state.isMobile}
               host={host}
               analytics={analytics}
             />
@@ -444,6 +445,12 @@ export default class MicrositeV1 extends Component<any, any> {
               microbrandCardsHeading={microbrandCardsHeading}
             />
           ) : null}
+          {longFormContent ? (
+            <LongForm
+              content={[...longFormContent, ...contentFWSlices]}
+              isMobile={this.state.isMobile}
+            />
+          ) : null}
           {contentFramework ? (
             <div className="content-fw-wrapper">
               {contentFramework.body?.map((slice, index) => {
@@ -451,7 +458,6 @@ export default class MicrositeV1 extends Component<any, any> {
               })}
             </div>
           ) : null}
-          {longFormContent ? <LongForm content={longFormContent} /> : null}
           {customFooter ? (
             <footer>
               <CustomFooter {...customFooter.data} />
@@ -463,7 +469,7 @@ export default class MicrositeV1 extends Component<any, any> {
               disclaimer={disclaimer ? disclaimer : null}
               footerAltText={footerAltText || footerAltTextUploaded || null}
               hasTermsPage={hasTermsPage}
-              isMobile={this.isMobile}
+              isMobile={this.state.isMobile}
             />
           )}
           {hasOffer && (
@@ -472,7 +478,7 @@ export default class MicrositeV1 extends Component<any, any> {
               togglePopup={this.togglePopup}
               productOffer={offerPopup}
               scorpioData={this.props.scorpioData}
-              isMobile={this.isMobile}
+              isMobile={this.state.isMobile}
             />
           )}
         </div>

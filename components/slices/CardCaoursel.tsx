@@ -8,6 +8,11 @@ type CardCarouselProps = {
   carouselHeading: string;
   lazyLoadImages?: boolean;
 };
+
+/**
+ * This slice is currently undergoing a revamp. Please hold on for the documentation.
+ */
+
 export default class CardCarousel extends Component<CardCarouselProps> {
   state = {
     isMobile: null,

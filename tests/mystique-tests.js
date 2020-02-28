@@ -1,5 +1,5 @@
-const signale = require("signale");
-const axios = require("axios");
+const signale = require('signale');
+const axios = require('axios');
 
 module.exports = (env, slackUpdate = false) => {
   /**
@@ -10,14 +10,14 @@ module.exports = (env, slackUpdate = false) => {
    */
   let aliases = require(`${__dirname}/../deployment/production/aliases`);
 
-  if (env === "stage") {
+  if (env === 'stage') {
     aliases = aliases.map(alias => `stage.${alias}`);
   }
 
   const opts = {
     url: aliases,
     slack_update: slackUpdate,
-    env: env === "stage" ? "Staging" : "Production"
+    env: env === 'stage' ? 'Staging' : 'Production',
   };
 
   return axios
@@ -25,26 +25,25 @@ module.exports = (env, slackUpdate = false) => {
     .then(response => {
       const { statusCode } = response.data.report;
       signale.info(statusCode);
-      const fatalErrors = statusCode["500"];
+      const fatalErrors = statusCode['500'];
       if (fatalErrors && fatalErrors.length) {
         fatalErrors.map(url => signale.fatal(url));
         signale.fatal(
           new Error(`${fatalErrors.length} URLs have 500 status code`)
         );
         signale.complete({
-          prefix: "[tests]",
-          message: "Build Failed!"
+          prefix: '[tests]',
+          message: 'Rollout Failed!',
         });
         process.exit(1);
-        return;
       }
-
       signale.success({
-        prefix: "[tests]",
-        message: "Build Success!"
+        prefix: '[tests]',
+        message: 'Tests passed successfully!',
       });
+      process.exit(1);
     })
     .catch(e => {
-      signale.fatal("Something went wrong", e);
+      signale.fatal('Something went wrong', e);
     });
 };

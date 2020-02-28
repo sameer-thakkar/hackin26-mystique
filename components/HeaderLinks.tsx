@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import classNames from "classnames";
-import LinkResolver from "./LinkResolver";
+import React, { Component } from 'react';
+import classNames from 'classnames';
+import LinkResolver from './LinkResolver';
 
 export default class HeaderLinks extends Component<any, any> {
   render() {
@@ -9,14 +9,14 @@ export default class HeaderLinks extends Component<any, any> {
       isMobile,
       parentComponent,
       showGroupBooking,
-      dropdown
+      dropdown,
     } = this.props;
 
     return (
       <div
         className={classNames(
-          { "dropdown header-links": isMobile },
-          { "header-links": isMobile },
+          { 'dropdown header-links': isMobile },
+          { 'header-links': isMobile },
           { show: dropdown.hamburger }
         )}
       >
@@ -26,7 +26,7 @@ export default class HeaderLinks extends Component<any, any> {
               {link.link_heading}
             </LinkResolver>
           ))}
-          {parentComponent !== "TERMS" && showGroupBooking && (
+          {parentComponent !== 'TERMS' && showGroupBooking && (
             <a onClick={this.props.openGroupBookingModal}>Group Tickets</a>
           )}
         </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
-import { AVENIR } from '../../constants/ui-constants';
+import { AVENIR, COLORS } from '../../constants/ui-constants';
 
 type ContentTabsProps = {
   tabsArr: any[];
@@ -16,6 +16,7 @@ const StyledContentTabsWrapper = styled.div`
 
 const StyledContentTabs = styled.div`
   display: grid;
+  color: ${COLORS.DAVY_GREY};
   grid-auto-flow: column;
   font-size: 18px;
   grid-column-gap: 32px;
@@ -39,6 +40,7 @@ const StyledTab = styled.div(({ active }) => {
 const StyledContent = styled.div`
   p {
     margin: 0;
+    color: ${COLORS.DAVY_GREY};
   }
   img {
     width: 100%;
@@ -48,6 +50,27 @@ const StyledContent = styled.div`
     color: #ec1943;
   }
 `;
+
+/**
+ *
+ * A tabs component with each tab having rich text as content
+ *
+ * **All fields marked with a * are mandatory and will break the slice if left blank.**
+ *
+ * ### Non-repeatable zone
+ * - *Tab List
+ *  - A comma separated tabs list. eg: Fire, Water, Earth
+ *
+ * ### Repeatable zone
+ * - *Tab Name
+ *  - One of the tab names specified in the 'Tab List'
+ * - Default Open Tab
+ *  - Displays the tab by default when the page loads
+ *  - Only select this as 'Yes' for one of the tabs
+ * - *Tab Content
+ *  - Rich Text field
+ *
+ */
 
 const ContentTabs: React.FC<ContentTabsProps> = ({ tabsArr, contentArr }) => {
   const defaultTab = contentArr.find(tab => tab.default_tab == 'Yes');

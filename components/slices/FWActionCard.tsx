@@ -51,29 +51,47 @@ const StyledProductCardRight = styled.div`
   }
 `;
 
-const FWActionCard: React.FC<FWActionCardProps> = ({ title, cards }) => (
-  <>
-    <h2>{title}</h2>
-    {cards.map((card, index) => (
-      <StyledProductCard key={index}>
-        <StyledProductCardLeft>
-          <StyledProductCardHeading>
-            {card.card_heading}
-          </StyledProductCardHeading>
-          <RichText
-            key={0}
-            render={card.card_description}
-            htmlSerializer={shortCodeSerializer}
-          />
-        </StyledProductCardLeft>
-        <StyledProductCardRight>
-          <a href={card.cta_link} target="_blank">
-            <Button>{card.cta_title}</Button>
-          </a>
-        </StyledProductCardRight>
-      </StyledProductCard>
-    ))}
-  </>
-);
+/**
+ *
+ * A full width action card with a 'Call to Action' button.
+ *
+ * ### Non-repeatable zone
+ * - Title (title of the section)
+ *
+ * ### Repeatable zone
+ * - Card Heading
+ * - Card Description
+ *  - Rich Text field
+ * - CTA Title
+ * - CTA Link
+ */
+
+const FWActionCard: React.FC<FWActionCardProps> = ({ title, cards }) => {
+  console.log(cards);
+  return (
+    <>
+      <h2>{title}</h2>
+      {cards.map((card, index) => (
+        <StyledProductCard key={index}>
+          <StyledProductCardLeft>
+            <StyledProductCardHeading>
+              {card.card_heading}
+            </StyledProductCardHeading>
+            <RichText
+              key={0}
+              render={card.card_description}
+              htmlSerializer={shortCodeSerializer}
+            />
+          </StyledProductCardLeft>
+          <StyledProductCardRight>
+            <a href={card.cta_link} target="_blank">
+              <Button>{card.cta_title}</Button>
+            </a>
+          </StyledProductCardRight>
+        </StyledProductCard>
+      ))}
+    </>
+  );
+};
 
 export default FWActionCard;

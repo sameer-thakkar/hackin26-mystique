@@ -3,7 +3,7 @@ name: Rollout by Tag
 on:
   push:
     tags:
-      - "*"
+      - '*'
 
 jobs:
   tag_test:
@@ -14,9 +14,9 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: "10.x"
+          node-version: '10.x'
       - name: Use Yarn
-        uses: "borales/actions-yarn@v2.0.0"
+        uses: 'borales/actions-yarn@v2.0.0'
       - name: run tests
         run: |
           yarn
@@ -31,7 +31,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: "10.x"
+          node-version: '10.x'
       - name: now deploy
         env:
           ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
@@ -41,6 +41,7 @@ jobs:
           now --version
           node ./deployment/production
           find now.*.json | xargs -n1 -I {} /bin/bash -c 'now --token ${ZEIT_TOKEN} -A {} --scope headout --prod --no-clipboard --debug'
+          yarn deploy-storybook
 
   pagespeed_insights:
     runs-on: ubuntu-latest
@@ -51,9 +52,9 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: "10.x"
+          node-version: '10.x'
       - name: Use Yarn
-        uses: "borales/actions-yarn@v2.0.0"
+        uses: 'borales/actions-yarn@v2.0.0'
       - name: push to prometheus
         run: |
           yarn

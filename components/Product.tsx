@@ -185,7 +185,7 @@ export default class Product extends Component<any, any> {
               </div>
             )}
             <a
-              target={isFetched && isMobile() ? null : '_blank'}
+              target={isFetched && isMobile ? null : '_blank'}
               href={`http://book.${bookingUrl}${
                 currentLanguage === 'en' ? '' : `/${currentLanguage}`
               }/book/${tgid}${ctaUrlSuffix}`}

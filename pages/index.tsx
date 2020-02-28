@@ -194,6 +194,7 @@ export default class Page extends React.Component<any, any> {
                     });
                     return offerData;
                   });
+              
               const baseLangData =
                 lang !== 'en'
                   ? await Client(req)
@@ -317,20 +318,20 @@ export default class Page extends React.Component<any, any> {
                 /**
                  *  Fetching data of referenced custom types which cannot be
                  * fetched using the fetchLink method due to prismic constraints
-                 * Currently includes: Common Footer
+                 * Currently includes: Common Footer, Content Framework
                  */
                 const footerID = page.data.footer_ref.id || '';
-                const contentSectionID =
+                const contentFrameworkID =
                   page.data.content_framework?.data?.id || '';
 
                 const linkedRefIDs = [];
                 linkedRefIDs.push(footerID);
-                linkedRefIDs.push(contentSectionID);
-
+                linkedRefIDs.push(contentFrameworkID);
                 const [
                   customFooter,
                   contentFramework,
                 ] = await this.getRefsArrayByIds(linkedRefIDs, req);
+
                 let completePage = {
                   ...page,
                   featured: {

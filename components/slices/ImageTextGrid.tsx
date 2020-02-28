@@ -1,94 +1,105 @@
 import React from 'react';
+import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
-import { shortCodeSerializer } from '../../utils/shortCodes';
 import Image from '../UI/Image';
-type ImgTxtCardObject = {
-  card_description: Array<Object>;
-  card_title: String;
-  image_source: any;
-  image_url: any;
-};
+import { shortCodeSerializer } from '../../utils/shortCodes';
+
 type ImageTextProps = {
   cols: number;
-  cards: Array<ImgTxtCardObject>;
+  cards: any[];
+  lazyLoadImages?: boolean;
 };
 
-class ImageText extends React.Component<ImageTextProps, any> {
-  constructor(props) {
-    super(props);
+const StyledWrapper = styled.div`
+  display: grid;
+  grid-gap: 1.5em;
+  grid-template-columns: repeat(${props => props.cols}, 1fr);
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
   }
+`;
 
-  render() {
-    const { cards, cols } = this.props;
-    return (
-      <div className="combo-cards-grid">
-        {cards.map((card, index) => (
-          <div key={index} className="combo-card">
-            <h2 className="card-title">{card.card_title}</h2>
-            {/* <img src={card.image_url.url} alt="" /> */}
-            <Image
-              width={580}
-              height={300}
-              format="pjpg"
-              url={card.image_url.url || card.image_source.url}
-            />
-            <div className="description">
-              <RichText
-                render={card.card_description}
-                htmlSerializer={shortCodeSerializer}
-              />
-            </div>
-          </div>
-        ))}
-
-        <style jsx>
-          {`
-            .combo-cards-grid {
-              display: grid;
-              grid-gap: 1.5em;
-              grid-template-columns: repeat(${cols}, 1fr);
-            }
-            .combo-card {
-              display: grid;
-              grid-template-rows: auto auto 1fr;
-              grid-gap: 10px;
-              padding: 20px;
-              border-radius: 3px;
-              box-shadow: 0 1px 8px rgba(0, 0, 0, 0.18);
-            }
-            .combo-card .card-title {
-              font-size: 22px;
-              line-height: 1.4;
-              color: #666666;
-              text-align: justify;
-              font-weight: 600;
-              font-family: Avenir, Proxima-Nova, arial, sans-serif;
-            }
-
-            @media (max-width: 768px) {
-              .combo-cards-grid {
-                grid-template-columns: 1fr;
-              }
-              .combo-card {
-                padding: 10px;
-              }
-            }
-          `}
-        </style>
-        <style jsx global>
-          {`
-            .combo-card > *,
-            .description > * {
-              margin: 0;
-            }
-            .long-form .card-title::after {
-              content: unset;
-            }
-          `}
-        </style>
-      </div>
-    );
+const StyledComboCard = styled.div`
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  grid-gap: 10px;
+  padding: 20px;
+  border-radius: 3px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.18);
+  img {
+    width: 100%;
   }
-}
+  h2 {
+    font-size: 22px !important;
+    line-height: 1.4;
+    color: #666666;
+    text-align: justify;
+    font-weight: 600;
+    font-family: Avenir, Proxima-Nova, arial, sans-serif;
+    margin: unset;
+    ::after {
+      content: unset !important;
+    }
+  }
+  div {
+    p {
+      margin: unset !important;
+    }
+  }
+  @media (max-width: 768px) {
+    padding: 10px;
+  }
+`;
 
-export default ImageText;
+/**
+ *
+ * Image Text Combo Card Grid
+ *
+ * ### Non-repeatable zone
+ * - Number of Columns
+ *  - The no. of cards that appear in each row
+ *
+ * ### Repeatable zone
+ * - Image Source
+ *  - Add your image from prismic
+ *  - Additionally add an 'alt' field
+ * - Image URL
+ *  - Add a link to the image directly
+ *  - Will take precedence over 'Image Source'
+ * - Card Title
+ * - Card Description
+ *  - Rich Text field
+ * - Image Alt
+ *  - 'alt' field for Image URL
+ *  - Will take precedence over 'Image Source' alt
+ */
+
+const ImageTextGrid: React.FC<ImageTextProps> = ({
+  cards,
+  cols,
+  lazyLoadImages = true,
+}) => (
+  <StyledWrapper cols={cols}>
+    {cards.map((card, index) => (
+      <StyledComboCard key={index}>
+        <h2>{card.card_title}</h2>
+        <Image
+          dontLazyLoad={!lazyLoadImages}
+          width={580}
+          height={300}
+          format="pjpg"
+          url={card.image_url.url || card.image_source.url}
+          alt={card.image_alt || card.image_source.alt}
+        />
+        <div>
+          <RichText
+            render={card.card_description}
+            htmlSerializer={shortCodeSerializer}
+          />
+        </div>
+      </StyledComboCard>
+    ))}
+  </StyledWrapper>
+);
+
+export default ImageTextGrid;

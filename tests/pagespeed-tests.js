@@ -169,6 +169,7 @@ module.exports = (env, trackInsights = false) => {
         prefix: '[tests]',
         message: 'Benchmark Success!',
       });
+      process.exit(1);
     })
     .catch(e => {
       signale.fatal(e.response.data.error);

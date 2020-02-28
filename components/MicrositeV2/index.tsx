@@ -344,6 +344,7 @@ class MicrositeV2 extends Component<any, any> {
 
     const longFormContent = this.props.data.data.body2;
     let activePage = this.state.page.name;
+
     return (
       <MBContextProvider uid={currentDomain} lang={lang} buttons={buttons}>
         <InteractionContextProvider {...categoryProps}>
