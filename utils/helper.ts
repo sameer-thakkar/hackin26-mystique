@@ -188,29 +188,37 @@ const slicesSorter = (a, b) => {
   }
 };
 const autoClose = slices => {
-  let closedSlices = [];
+  const allSlices = [];
   let currentOpen;
   slices.forEach((slice, index) => {
-    if (
-      (currentOpen && slice.slice_type === currentOpen) ||
-      /___end/.exec(slice.slice_type)
-    ) {
-      closedSlices.push({
-        slice_type: currentOpen.replace(/___start$/, '___end'),
-      });
+    if (currentOpen) {
+      const thisSliceType = slice.slice_type;
+      const currentCloseSignature = currentOpen.replace(/___start$/, '___end');
+      const isManuallyClosedSlice = thisSliceType === currentCloseSignature;
+      const isClosingSlice = /___end/.exec(slice.slice_type);
+      // Ignore Manual Closed, Check if adjacent (same level) slice was opened or parent closed.
+      if (
+        !isManuallyClosedSlice &&
+        (thisSliceType === currentOpen || isClosingSlice)
+      ) {
+        allSlices.push({
+          slice_type: currentOpen.replace(/___start$/, '___end'),
+        });
+      }
     }
-    closedSlices.push(slice);
+    allSlices.push(slice);
     if (/___start$/.exec(slice.slice_type)) {
       currentOpen = slice.slice_type;
     }
   });
-  return closedSlices;
+  return allSlices;
 };
 
 export const groupSlices = slices => {
   const groups = { slices: [] };
   let ref: any = groups;
   const autoClosedSlices = autoClose(slices);
+  console.log(autoClosedSlices);
   let repeatables: any = {
     items: [],
     slice_type: null,

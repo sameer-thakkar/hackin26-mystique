@@ -2,6 +2,7 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from '../utils/shortCodes';
+import TableV2 from './slices/TableV2';
 
 const ImageLinksSlider = dynamic(() => import('./slices/ImageLinksSlider'));
 const InteractiveImage = dynamic(() => import('./slices/InteractiveImage'));
@@ -230,6 +231,27 @@ const sliceHandler = (slice, props: any = {}) => {
       }, []);
       return (
         <FAQSlider isMobile={props.isMobile} faqs={faqs} sliceProps={props} />
+      );
+    case 'table_v2':
+      const rows =
+        slice.slices
+          .filter(t_slice => t_slice.slice_type === 'table_rows')[0]
+          ?.items?.reduce((acc, row) => {
+            return [
+              ...acc,
+              {
+                columns: row.items,
+                primary: row.primary,
+              },
+            ];
+          }, []) || [];
+      console.log(slice);
+      return (
+        <TableV2
+          title={slice.primary.title}
+          rows={rows}
+          isMobile={props.isMobile}
+        />
       );
     default:
     // ToDo: Add to Error Logs (Slice)
