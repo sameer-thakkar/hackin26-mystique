@@ -168,9 +168,9 @@ class MicrositeV2 extends Component<any, any> {
             .split(',')
             .map(tgid => parseInt(tgid))) ||
         [],
+      enableDropdownLinks: CMSData.enable_dropdown == 'Yes',
       dropdownLinks: dropdownLinksArray,
     };
-
     // TODO: Add Interaction Field on Primic and Map it to Each Banner
     const heroProps = {
       banners: CMSData.images.reduce((accum, image) => {

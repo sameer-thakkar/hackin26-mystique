@@ -28,10 +28,20 @@ const Header = props => {
     clickTour(tgid, true);
     setResultClicked(true);
   };
-  const headerProps = props;
-  const { languageProps, isMobile, allTours, host } = props;
+  const {
+    languageProps,
+    isMobile,
+    allTours,
+    host,
+    enableDropdownLinks,
+    dropdownLinks,
+    logoRedirectionURL,
+    logoUrl,
+    logoAltText,
+    enableSearch,
+  } = props;
   const allToursArray = Object.values(allTours);
-  const hasDropdownLinks = headerProps.dropdownLinks.length;
+  const hasDropdownLinks = enableDropdownLinks && dropdownLinks.length;
   const hasLanguageDropdown =
     languageProps.availableLanguages.length &&
     languageProps.languages.length &&
@@ -41,21 +51,21 @@ const Header = props => {
       <div className="fixed-wrap">
         <header className="mb-wrapper">
           <div className="header-left">
-            <a href={headerProps.logoRedirectionURL}>
+            <a href={logoRedirectionURL}>
               <div className="header-logo">
-                <img src={headerProps.logoUrl} alt={headerProps.logoAltText} />
+                <img src={logoUrl} alt={logoAltText} />
               </div>
             </a>
             {!props.isMobile && hasDropdownLinks ? (
               <div className="header-links">
                 <ResponsiveSelector
-                  options={headerProps.dropdownLinks}
+                  options={dropdownLinks}
                   onChange={option => (window.location.href = option.value)}
                   customClassName="header-city-selector"
                 />
               </div>
             ) : null}
-            {!isMobile && headerProps.enableSearch && (
+            {!isMobile && enableSearch && (
               <div className="search-wrapper">
                 <SearchBox
                   isMobile={isMobile}
@@ -81,8 +91,7 @@ const Header = props => {
             )}
           </div>
           <div className="header-right">
-            {/* <nav></nav> */}
-            {isMobile && headerProps.enableSearch && (
+            {isMobile && enableSearch && (
               <div
                 className="mobi-search-trigger"
                 onClick={() => {

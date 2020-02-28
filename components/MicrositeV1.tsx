@@ -245,13 +245,14 @@ export default class MicrositeV1 extends Component<any, any> {
     const { alternate_languages: availableLanguages, refs } = this.props.data;
     const { contentFramework } = refs;
     const {
-      localization: languages,
+      localization,
       header_links: headerLinks,
       images: bannerImages,
       heading: bannerHeading,
       cta_text: bannerCtaText,
       page_url: pageUrl,
     } = this.props.data.data;
+    const languages = localization.filter(lang => lang.langauge);
     const { uid } = this.props.data;
     const currentLanguage = this.props.data.lang.substring(0, 2);
     const uncategorizedTours = this.props.data.data.body1;
@@ -379,6 +380,7 @@ export default class MicrositeV1 extends Component<any, any> {
           )}
           {populateHead({
             ...this.props.data.data,
+            localization: languages,
             datePublished,
             dateModified,
             lang,
