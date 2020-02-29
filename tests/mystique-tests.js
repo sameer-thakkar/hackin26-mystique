@@ -41,7 +41,7 @@ module.exports = (env, slackUpdate = false) => {
         prefix: '[tests]',
         message: 'Tests passed successfully!',
       });
-      process.exit(1);
+      process.exit(0);
     })
     .catch(e => {
       signale.fatal('Something went wrong', e);
