@@ -13,7 +13,7 @@ export const en = {
 
 export const es = {
   TOUR_LIST_HEADING: 'Selecciona Tus Entradas',
-  BANNER_CTA: 'Compra boletos',
+  BANNER_CTA: 'Compra Entradas',
   BOOK_NOW_CTA: 'Reserva ahora',
   READ_MORE_TEXT: 'Leer más',
   SHOW_LESS_TEXT: 'Mostrar menos',

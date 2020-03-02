@@ -43,14 +43,33 @@ const CategorySection = props => {
           font-size: 22px;
           font-family: ${AVENIR.FONT_STACK};
           font-weight: ${AVENIR.HEAVY};
-          line-height: 1.36;
+          line-height: 33px;
+          color: ${COLORS.TWO_BLACK};
         }
         .category-description {
           margin: 0;
           font-size: 14px;
-          font-family: ${GRAPHIK.FONT_STACK};
-          line-height: 1.4;
-          font-weight: ${GRAPHIK.REGULAR};
+          font-family: ${AVENIR.FONT_STACK};
+          line-height: 20px;
+          font-weight: ${AVENIR.MEDIUM};
+          color: ${COLORS.FOUR_BLACK};
+        }
+        @media (max-width: 768px) {
+          .category-slider {
+            grid-row-gap: 8px;
+          }
+          .category-heading {
+            margin: 0;
+            font-size: 24px;
+            font-family: ${GRAPHIK.FONT_STACK};
+            font-weight: ${GRAPHIK.SEMIBOLD};
+            line-height: 26px;
+          }
+          .category-description {
+            font-family: ${GRAPHIK.FONT_STACK};
+            line-height: 20px;
+            font-weight: ${GRAPHIK.REGULAR};
+          }
         }
       `}</style>
     </div>

@@ -3,6 +3,7 @@ import { COLORS } from '../../constants/ui-constants';
 
 const LongForm = props => {
   const { slicesArray, props: sliceProps, hasToursSection } = props;
+
   return (
     <div className={`long-form-wrap ${!hasToursSection ? 'no-border' : ''}`}>
       {slicesArray.map((slice, index) => (

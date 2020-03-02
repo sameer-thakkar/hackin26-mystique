@@ -14,6 +14,7 @@ import {
   DESIGN,
   MICROSITE_STRING_KEYS,
   MICROSITE_OBJECT_KEYS,
+  MICROSITE_ARRAY_KEYS,
   COMMON_HEADER_PROPS,
   LINKED_MICROSITE_PROPS,
 } from '../constants';
@@ -24,6 +25,8 @@ import '../public/static/styles.css';
 export default class Page extends React.Component<any, any> {
   static async getInitialProps({ req, query, res }) {
     const serverRequestStartTimestamp = Math.floor(new Date().getTime());
+    const pathname =
+      req?.url.split('?')[0].split('#')[0] || window.location.pathname;
 
     // Checking is mystique is running in dev
     const isDev = req
@@ -57,9 +60,15 @@ export default class Page extends React.Component<any, any> {
         Client(req)
           .getByUID(CUSTOM_TYPES.REDIRECT, redirectUID)
           .then(r => {
-            const redirectUrl = r.data?.redirect_to_url?.url;
-            if (redirectUrl) {
-              redirectTo({ res, url: redirectUrl });
+            let redirectURL = r.data?.redirect_to_url?.url;
+            if (redirectURL) {
+              if (redirectURL[redirectURL.length - 1] === '/')
+                redirectURL = redirectURL.slice(0, -1);
+              redirectTo({
+                res,
+                url: `${redirectURL}${pathname !== '/index' ? pathname : ''}`,
+                type: r.data?.redirect_type,
+              });
             }
           }),
         Page.getData({
@@ -113,20 +122,19 @@ export default class Page extends React.Component<any, any> {
     reqPathname,
     isDev,
   }) {
-    const { host } = req ? req.headers : window.location;
-
+    const { host } = req.headers || window.location;
+    const pathname = reqPathname || window.location.pathname;
     try {
-      let uid, lang, pathname;
+      let uid, lang;
       if (req) {
         // Server side rendering
-        pathname = reqPathname;
         if (isDev) {
           const { mystique_uid: queryParamUID, lang: queryParamLang } = query;
           uid = queryParamUID;
           lang = queryParamLang;
         } else {
           const { uid: reqUID, lang: reqLang } = getPrismicProps({
-            host: req.headers.host,
+            host,
             pathname,
           });
           uid = reqUID;
@@ -138,10 +146,7 @@ export default class Page extends React.Component<any, any> {
           const urlParams = new URLSearchParams(window.location.search);
           uid = urlParams.get('mystique_uid');
           lang = urlParams.get('lang');
-          pathname = window.location.pathname;
         } else {
-          const { host } = window.location;
-          pathname = window.location.pathname;
           const { uid: reqUID, lang: reqLang } = getPrismicProps({
             host,
             pathname,
@@ -159,110 +164,137 @@ export default class Page extends React.Component<any, any> {
         })
         .then(async res => {
           let completeMicrosite = { data: res };
-          if (completeMicrosite.data && completeMicrosite.data.uid == uid) {
-            const itemsParent = completeMicrosite.data.data.body1[0];
-            const tours = itemsParent ? itemsParent.items : [];
-            const offers = tours
-              .filter(tour => tour.offer__free_tour.id)
-              .map(tour => tour.offer__free_tour.id);
-            const uniqueOfferIds = offers.filter(
-              (id, index) => offers.indexOf(id) === index
-            );
-            if (uniqueOfferIds.length)
-              (completeMicrosite as any).offerData = await Client(req)
-                .getByIDs(uniqueOfferIds)
-                .then(offerData => {
-                  offerData.results.map(offer => {
-                    initial_tgids.push(offer.data.offer_tgid);
+          if (completeMicrosite.data) {
+            if (completeMicrosite.data.uid !== uid) {
+              let url = completeMicrosite.data.data?.page_url;
+              if (host.slice(0, 5) === 'stage') {
+                url = url.split('//');
+                url = url.join('//stage.');
+              }
+              redirectTo({
+                res: serverResponse,
+                url,
+                type: completeMicrosite.data.data.redirect_type,
+              });
+            } else {
+              const itemsParent = completeMicrosite.data.data.body1[0];
+              const tours = itemsParent ? itemsParent.items : [];
+              const offers = tours
+                .filter(tour => tour.offer__free_tour.id)
+                .map(tour => tour.offer__free_tour.id);
+              const uniqueOfferIds = offers.filter(
+                (id, index) => offers.indexOf(id) === index
+              );
+              if (uniqueOfferIds.length)
+                (completeMicrosite as any).offerData = await Client(req)
+                  .getByIDs(uniqueOfferIds)
+                  .then(offerData => {
+                    offerData.results.map(offer => {
+                      initial_tgids.push(offer.data.offer_tgid);
+                    });
+                    return offerData;
                   });
-                  return offerData;
-                });
-            const baseLangData =
-              lang !== 'en'
-                ? await Client(req)
-                    .getByUID(CUSTOM_TYPES.MICROSITE, uid, {
-                      lang: 'en-us',
-                    })
-                    .then(res => res)
-                : {};
 
-            const strValues = MICROSITE_STRING_KEYS.reduce(
-              (acc, elem) => ({
-                ...acc,
-                [elem]:
-                  completeMicrosite.data.data[elem] || baseLangData.data[elem],
-              }),
-              {}
-            );
+              const baseLangData =
+                lang !== 'en'
+                  ? await Client(req)
+                      .getByUID(CUSTOM_TYPES.MICROSITE, uid, {
+                        lang: 'en-us',
+                      })
+                      .then(res => res)
+                  : {};
 
-            const objValues = MICROSITE_OBJECT_KEYS.reduce(
-              (acc, elem) => ({
-                ...acc,
-                [elem]: Object.keys(completeMicrosite.data.data[elem]).length
-                  ? completeMicrosite.data.data[elem]
-                  : baseLangData.data[elem],
-              }),
-              {}
-            );
-            /**
-             * References Handler;
-             * The final case empty string was added
-             * to handle promise resolve more neatly.
-             */
-            const footerID =
-              completeMicrosite.data.data.footer_ref.id ||
-              baseLangData.data.footer_ref.id ||
-              '';
-            const contentSectionId =
-              completeMicrosite.data.data.content_framework.id ||
-              baseLangData.data.content_framework.id ||
-              '';
+              const strValues = MICROSITE_STRING_KEYS.reduce(
+                (acc, elem) => ({
+                  ...acc,
+                  [elem]:
+                    completeMicrosite.data.data[elem] ||
+                    baseLangData.data[elem],
+                }),
+                {}
+              );
 
-            const linkedRefIDs = [];
-            linkedRefIDs.push(footerID);
-            linkedRefIDs.push(contentSectionId);
+              const objValues = MICROSITE_OBJECT_KEYS.reduce(
+                (acc, elem) => ({
+                  ...acc,
+                  [elem]: Object.keys(completeMicrosite.data.data[elem]).length
+                    ? completeMicrosite.data.data[elem]
+                    : baseLangData.data[elem],
+                }),
+                {}
+              );
 
-            const [
-              customFooter,
-              contentFramework,
-            ] = await this.getRefsArrayByIds(linkedRefIDs, req);
+              const arrValues = MICROSITE_ARRAY_KEYS.reduce(
+                (acc, elem) => ({
+                  ...acc,
+                  [elem]: completeMicrosite.data.data[elem].length
+                    ? completeMicrosite.data.data[elem]
+                    : baseLangData.data[elem],
+                }),
+                {}
+              );
 
-            const micrositeData = {
-              ...completeMicrosite,
-              data: {
-                ...completeMicrosite.data,
-                refs: {
-                  customFooter,
-                  contentFramework,
-                },
+              /**
+               * References Handler;
+               * The final case empty string was added
+               * to handle promise resolve more neatly.
+               */
+              const footerID =
+                completeMicrosite.data.data.footer_ref.id ||
+                baseLangData.data.footer_ref.id ||
+                '';
+              const contentSectionId =
+                completeMicrosite.data.data.content_framework.id ||
+                baseLangData.data.content_framework.id ||
+                '';
+
+              const linkedRefIDs = [];
+              linkedRefIDs.push(footerID);
+              linkedRefIDs.push(contentSectionId);
+
+              const [
+                customFooter,
+                contentFramework,
+              ] = await this.getRefsArrayByIds(linkedRefIDs, req);
+
+              const micrositeData = {
+                ...completeMicrosite,
                 data: {
-                  ...completeMicrosite.data.data,
-                  ...strValues,
-                  ...objValues,
-                  canonical_link:
-                    completeMicrosite.data.data.canonical_link ||
-                    completeMicrosite.data.data.page_url,
-                  logo_redirection_url: completeMicrosite.data.data
-                    .logo_redirection_url.url
-                    ? completeMicrosite.data.data.logo_redirection_url
-                    : baseLangData.data.logo_redirection_url,
-                  enable_earliest_availability:
-                    baseLangData.data.enable_earliest_availability,
-                  enable_powered_by_headout_logo: completeMicrosite.data.data
-                    .enable_powered_by_headout_logo
-                    ? completeMicrosite.data.data
-                        .enable_powered_by_headout_logo === 'Yes'
-                    : baseLangData.data.enable_powered_by_headout_logo ===
-                      'Yes',
-                  baseLangPageTitle: baseLangData.data.title,
+                  ...completeMicrosite.data,
+                  refs: {
+                    customFooter,
+                    contentFramework,
+                  },
+                  data: {
+                    ...completeMicrosite.data.data,
+                    ...strValues,
+                    ...objValues,
+                    ...arrValues,
+                    canonical_link:
+                      completeMicrosite.data.data.canonical_link ||
+                      completeMicrosite.data.data.page_url,
+                    logo_redirection_url: completeMicrosite.data.data
+                      .logo_redirection_url.url
+                      ? completeMicrosite.data.data.logo_redirection_url
+                      : baseLangData.data.logo_redirection_url,
+                    enable_earliest_availability:
+                      baseLangData.data.enable_earliest_availability,
+                    enable_powered_by_headout_logo: completeMicrosite.data.data
+                      .enable_powered_by_headout_logo
+                      ? completeMicrosite.data.data
+                          .enable_powered_by_headout_logo === 'Yes'
+                      : baseLangData.data.enable_powered_by_headout_logo ===
+                        'Yes',
+                    baseLangPageTitle: baseLangData.data.title,
+                  },
                 },
-              },
-            };
+              };
 
-            return {
-              CMSContent: micrositeData,
-              ContentType: CUSTOM_TYPES.MICROSITE,
-            };
+              return {
+                CMSContent: micrositeData,
+                ContentType: CUSTOM_TYPES.MICROSITE,
+              };
+            }
           } else {
             return await Client(req)
               .getByUID(CUSTOM_TYPES.CONTENT_PAGE, uid, {
@@ -286,21 +318,20 @@ export default class Page extends React.Component<any, any> {
                 /**
                  *  Fetching data of referenced custom types which cannot be
                  * fetched using the fetchLink method due to prismic constraints
-                 * Currently includes: Common Footer
+                 * Currently includes: Common Footer, Content Framework
                  */
-                let subComponents = [];
                 const footerID = page.data.footer_ref.id || '';
-                const contentSectionID =
+                const contentFrameworkID =
                   page.data.content_framework?.data?.id || '';
 
                 const linkedRefIDs = [];
                 linkedRefIDs.push(footerID);
-                linkedRefIDs.push(contentSectionID);
-
+                linkedRefIDs.push(contentFrameworkID);
                 const [
                   customFooter,
                   contentFramework,
                 ] = await this.getRefsArrayByIds(linkedRefIDs, req);
+
                 let completePage = {
                   ...page,
                   featured: {
@@ -509,14 +540,16 @@ export default class Page extends React.Component<any, any> {
     }
 
     return (
-      <EnvironmentContext.Provider
-        value={{
-          isDev,
-          windowUrl,
-        }}
-      >
-        <ThemeProvider theme={theme}>{Component}</ThemeProvider>
-      </EnvironmentContext.Provider>
+      <div id="body-wrap">
+        <EnvironmentContext.Provider
+          value={{
+            isDev,
+            windowUrl,
+          }}
+        >
+          <ThemeProvider theme={theme}>{Component}</ThemeProvider>
+        </EnvironmentContext.Provider>
+      </div>
     );
   }
 }

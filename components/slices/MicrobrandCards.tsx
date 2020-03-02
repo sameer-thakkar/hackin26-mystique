@@ -3,10 +3,37 @@ import Image from '../UI/Image';
 import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 
-interface MicrobrandCardsProps {
+type MicrobrandCardsProps = {
   cards: any[];
   cardsContent: any;
-}
+  lazyLoadImages?: boolean;
+};
+
+/**
+ * A card grid for microbrands
+ *
+ * **All fields marked with a * are mandatory and will break the slice if left blank.**
+ *
+ * ### Non-repeatable zone
+ * - Content Above Cards
+ *  - Rich Text field
+ * - Content Below Cards
+ *  - Rich Text field
+ *
+ * ### Repeatable zone
+ * - Image Source
+ *  - Add your image from prismic
+ *  - Additionally add an 'alt' field
+ * - Image URL
+ *  - Add a link to the image directly
+ *  - Will take precedence over 'Image Source'
+ * - Image Alt
+ *  - 'alt' field for Image URL
+ *  - Will take precedence over 'Image Source' alt
+ * - Microbrand Link
+ * - TGID
+ * - Card Title
+ */
 
 const MicrobrandCards: React.FC<MicrobrandCardsProps> = props => {
   const [state, setState] = useState({
@@ -15,8 +42,10 @@ const MicrobrandCards: React.FC<MicrobrandCardsProps> = props => {
     isFetched: false,
   });
 
+  const { cards, lazyLoadImages, cardsContent } = props;
+  const { isFetched, currencySymbol, cardPrices } = state;
+
   useEffect(() => {
-    const { cards } = props;
     const tgidsExist = cards.map(card => card.tgid).filter(tgid => tgid);
     if (tgidsExist.length) {
       fetch(
@@ -45,14 +74,11 @@ const MicrobrandCards: React.FC<MicrobrandCardsProps> = props => {
     }
   }, []);
 
-  const { cards } = props;
-  const { isFetched, currencySymbol, cardPrices } = state;
-
   return (
     <div className="microbrands-list">
       <div className="microbrand-cards-content">
         <RichText
-          render={props.cardsContent.content_above_cards}
+          render={cardsContent.content_above_cards}
           htmlSerializer={shortCodeSerializer}
         />
       </div>
@@ -67,7 +93,9 @@ const MicrobrandCards: React.FC<MicrobrandCardsProps> = props => {
                       format="pjpg"
                       width={600}
                       height={300}
-                      url={card.image_source.url || card.image_url.url}
+                      dontLazyLoad={!lazyLoadImages}
+                      url={card.image_url.url || card.image_source.url}
+                      alt={card.image_alt || card.image_source.alt}
                     />
                   </div>
                   <div className="card-bottom">
@@ -89,7 +117,7 @@ const MicrobrandCards: React.FC<MicrobrandCardsProps> = props => {
       </div>
       <div className="microbrand-cards-content">
         <RichText
-          render={props.cardsContent.content_below_cards}
+          render={cardsContent.content_below_cards}
           htmlSerializer={shortCodeSerializer}
         />
       </div>

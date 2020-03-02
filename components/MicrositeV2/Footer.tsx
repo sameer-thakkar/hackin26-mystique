@@ -4,11 +4,11 @@ import sliceHandler from '../Slices';
 import { GRAPHIK } from '../../constants/ui-constants';
 import Image from '../UI/Image';
 import SocialLinks from '../SocialLinks';
+
 const Footer = props => {
   const { logo, body, favicon, mb_name, isMobile } = props;
-  const logoUrl = logo ? logo.url : '';
-
   const altText = logo.alt ? logo.alt : 'Footer Logo';
+
   return (
     <footer>
       <div className="main-wrapper">
@@ -94,6 +94,7 @@ const Footer = props => {
             grid-gap: 10px;
             font-family: ${GRAPHIK.FONT_STACK};
             font-size: 12px;
+            line-height: 20px;
             text-align: left;
           }
           .copyrights a {

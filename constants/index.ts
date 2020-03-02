@@ -194,4 +194,7 @@ export const MICROSITE_OBJECT_KEYS: string[] = [
   'image',
   'favicon',
   'other_meta_tags',
+  'logo',
 ];
+
+export const MICROSITE_ARRAY_KEYS: string[] = ['images'];

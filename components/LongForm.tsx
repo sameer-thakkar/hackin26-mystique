@@ -3,12 +3,12 @@ import sliceHandler from './Slices';
 
 export default class LongForm extends Component<any, any> {
   render() {
-    const { content, props } = this.props;
+    const { content, ...props } = this.props;
     return (
       <div className="long-form select-wrapper">
         {content.map((slice, index) => (
           <div key={index} className={'slice-block ' + slice.slice_type}>
-            {sliceHandler(slice, props)}
+            {sliceHandler(slice, { ...props })}
           </div>
         ))}
         <style jsx global>

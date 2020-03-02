@@ -194,6 +194,11 @@ export const CategorySlider = props => {
           left: unset;
           right: -32px;
         }
+        @media (max-width: 768px) {
+          .category-slider {
+            grid-row-gap: 8px;
+          }
+        }
       `}</style>
       <style global jsx>
         {`

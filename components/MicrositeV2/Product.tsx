@@ -2,7 +2,7 @@ import React from 'react';
 import { RichText } from 'prismic-reactjs';
 import Image from '../UI/Image';
 import { shortCodeSerializerWithParentProps } from '../../utils/shortCodes';
-import { truncate } from '../../utils/helper';
+import { truncate, isMobile } from '../../utils/helper';
 import { AVENIR, GRAPHIK, COLORS } from '../../constants/ui-constants';
 
 const Product = props => {
@@ -23,7 +23,7 @@ const Product = props => {
           format="pjpg"
           width={800}
           imageId={tgid}
-          height={700}
+          height={500}
           alt={tour.title}
         />
         {tour.overlayBooster ? (
@@ -31,6 +31,9 @@ const Product = props => {
         ) : null}
       </div>
       <div className="product-v2-bottom">
+        {tour.vendor && isMobile?.length ? (
+          <div className="vendor-name">{tour.vendor}</div>
+        ) : null}
         <div className="title-wrap">
           <div className="product-v2-title">{truncate(tour.title, 70)}</div>
         </div>
@@ -76,11 +79,8 @@ const Product = props => {
           font-family: ${AVENIR.FONT_STACK};
           font-size: 16px;
           line-height: 24px;
-          color: #545454;
+          color: ${COLORS.TWO_BLACK};
           font-weight: 800;
-        }
-        .title-wrap {
-          grid-column: 1 / 3;
         }
         .product-v2-image {
           display: block;
@@ -123,18 +123,28 @@ const Product = props => {
         .product-v2-price {
           font-family: ${AVENIR.FONT_STACK};
           font-size: 16px;
-          line-height: 1;
+          line-height: 20px;
           text-align: left;
-          color: ${COLORS.DAVY_GREY};
+          color: ${COLORS.TWO_BLACK};
           font-weight: ${AVENIR.HEAVY};
         }
         .product-v2-scratch-price {
           font-family: ${AVENIR.FONT_STACK};
           font-weight: ${AVENIR.ROMAN};
           font-size: 12px;
-          line-height: 1;
+          line-height: 16px;
           text-decoration-line: line-through;
           color: #757575;
+        }
+
+        .vendor-name {
+          font-family: ${AVENIR.FONT_STACK};
+          font-weight: ${AVENIR.MEDIUM};
+          text-transform: uppercase;
+          font-size: 11px;
+          line-height: 11px;
+          letter-spacing: 0.5px;
+          color: ${COLORS.EIGHT_GRAY};
         }
 
         @media (max-width: 768px) {

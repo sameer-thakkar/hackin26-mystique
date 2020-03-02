@@ -29,9 +29,10 @@ export const getPrismicProps = ({ host, pathname }) => {
 };
 
 // Used for redirecting
-export const redirectTo = ({ res, url }) => {
+export const redirectTo = ({ res, url, type = 302 }) => {
+  if (!type) type = 302;
   if (res) {
-    res.writeHead(302, {
+    res.writeHead(type, {
       Location: url,
     });
     res.end();

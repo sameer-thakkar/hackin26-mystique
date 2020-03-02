@@ -39,6 +39,7 @@ export const Basic = () => {
         url:
           'https://images.prismic.io/mystique/23fc7d42-5897-401c-9345-4f74f4e9c0ef_Disneyland+Paris+Rides+6.jpg?auto=compress,format',
       },
+      image_alt: 'something',
     });
   }
   return <ImageGrid cols={cols} images={images} lazyLoadImages={false} />;

@@ -138,7 +138,7 @@ const DetailedProductCard = props => {
           grid-template-columns: 1fr 0.9fr;
           grid-column-gap: 24px;
           border: 1px solid #757575;
-          color: ${COLORS.DAVY_GREY};
+          color: ${COLORS.FOUR_BLACK};
           border-left: none;
           border-right: none;
           position: relative;
@@ -146,7 +146,7 @@ const DetailedProductCard = props => {
         .v2-desc-title {
           font-size: 24px;
           line-height: 1.37;
-          color: ${COLORS.DAVY_GREY};
+          color: ${COLORS.TWO_BLACK};
           font-family: ${AVENIR.FONT_STACK};
           font-weight: ${AVENIR.HEAVY};
         }
@@ -178,7 +178,7 @@ const DetailedProductCard = props => {
         .description-label {
           font-size: 16px;
           line-height: 1.4;
-          color: ${COLORS.DAVY_GREY};
+          color: ${COLORS.TWO_BLACK};
           font-family: ${GRAPHIK.FONT_STACK};
           font-weight: ${GRAPHIK.SEMIBOLD};
         }
@@ -210,7 +210,7 @@ const DetailedProductCard = props => {
         .description-content {
           font-size: 16px;
           line-height: 1.37;
-          color: ${COLORS.DAVY_GREY};
+          color: ${COLORS.FOUR_BLACK};
           font-family: ${GRAPHIK.FONT_STACK};
           font-weight: ${GRAPHIK.REGULAR};
         }
@@ -253,7 +253,7 @@ const DetailedProductCard = props => {
           font-family: ${AVENIR.FONT_STACK};
           font-size: 20px;
           line-height: 20px;
-          color: ${COLORS.DAVY_GREY};
+          color: ${COLORS.TWO_BLACK};
           font-weight: ${AVENIR.HEAVY};
         }
 
@@ -263,7 +263,7 @@ const DetailedProductCard = props => {
           font-size: 14px;
           line-height: 15px;
           text-decoration-line: line-through;
-          color: ${COLORS.GREY_75};
+          color: ${COLORS.FOUR_BLACK};
           margin-top: 8px;
         }
 

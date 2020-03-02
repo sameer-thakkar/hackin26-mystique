@@ -4,7 +4,7 @@ import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from '../utils/shortCodes';
 import TableV2 from './slices/TableV2';
 
-const ImageLinksSlider = dynamic(() => import('./slices/ImageLinksSlider'));
+const ImageLinksCarousel = dynamic(() => import('./slices/ImageLinksCarousel'));
 const InteractiveImage = dynamic(() => import('./slices/InteractiveImage'));
 const TrustBoosters = dynamic(() => import('./slices/TrustBoosters'));
 const TourComparisonTable = dynamic(() => import('./slices/TourComparision'));
@@ -27,6 +27,8 @@ const MicrobrandCards = dynamic(() => import('./slices/MicrobrandCards'));
 const TabWrapper = dynamic(() => import('./slices/TabWrapper'));
 const Tab = dynamic(() => import('./slices/Tab'));
 const FAQSlider = dynamic(() => import('./slices/FAQSlider'));
+const CardSection = dynamic(() => import('./slices/CardSection'));
+const Card = dynamic(() => import('./slices/Card'));
 
 const sliceHandler = (slice, props: any = {}) => {
   switch (slice.slice_type) {
@@ -65,7 +67,7 @@ const sliceHandler = (slice, props: any = {}) => {
     case 'content_box':
       return <RichTextBox slices={slice.items} />;
     case 'feature_box':
-      return <FeatureBox slices={slice.items} />;
+      return <FeatureBox blocks={slice.items} />;
     case 'footer_column':
       return (
         <TitleLinksCard title={slice.primary.heading} links={slice.items} />
@@ -117,7 +119,7 @@ const sliceHandler = (slice, props: any = {}) => {
         };
         return [...accum, booster];
       }, []);
-      return <TrustBoosters boosters={boosters} />;
+      return <TrustBoosters boosters={boosters} {...props} />;
     case 'microbrand_cards':
       return (
         <MicrobrandCards cards={slice.items} cardsContent={slice.primary} />
@@ -145,13 +147,14 @@ const sliceHandler = (slice, props: any = {}) => {
           vendors={vendor}
           vendorLinks={vendorLinks}
           orderedLabels={orderedLabels}
+          slice={slice}
         />
       );
     case 'interactive_image':
       const { primary } = slice;
       const url = primary.linked_image.url || primary.uploaded_image.url;
       const alt = primary.uploaded_image.alt || 'Popup Image';
-      return <InteractiveImage src={url} alt={alt} />;
+      return <InteractiveImage src={url} alt={alt} isMobile={props.isMobile} />;
     case 'image_links_carousel':
       const cards = slice.items.reduce((acc, card) => {
         return [
@@ -159,7 +162,7 @@ const sliceHandler = (slice, props: any = {}) => {
           {
             image: {
               url: card.uploaded_image.url || card.linked_image.url,
-              alt: card.uploaded_image.alt || card.card_link.url,
+              alt: card.uploaded_image.alt || card.image_alt,
             },
             link: card.card_link,
             card_title: card.card_title,
@@ -167,7 +170,7 @@ const sliceHandler = (slice, props: any = {}) => {
         ];
       }, []);
       return (
-        <ImageLinksSlider
+        <ImageLinksCarousel
           description={slice.primary.carousel_description}
           heading={slice.primary.carousel_heading}
           cards={cards}
@@ -193,6 +196,7 @@ const sliceHandler = (slice, props: any = {}) => {
           contentArr={slice.items}
         />
       );
+
     case 'tab_wrapper':
       return (
         <TabWrapper
@@ -251,6 +255,61 @@ const sliceHandler = (slice, props: any = {}) => {
           title={slice.primary.title}
           rows={rows}
           isMobile={props.isMobile}
+        />
+      );
+
+    case 'card_section':
+      const {
+        card_section_title,
+        card_section_type,
+        card_type,
+      } = slice.primary;
+
+      let type;
+      switch (card_type) {
+        case 'Desktop Card':
+          type = 'desktop';
+          break;
+        case 'Column Card':
+          type = 'column';
+          break;
+        case 'Mobile Card':
+          type = 'mobile';
+          break;
+      }
+
+      return (
+        <CardSection
+          slices={slice.slices}
+          title={card_section_title}
+          sectionType={card_section_type}
+          cardType={type}
+        />
+      );
+    case 'card':
+      const {
+        card_title,
+        card_description,
+        cta_text,
+        cta_link,
+      } = slice.primary;
+      const images = slice.items
+        .filter(image => {
+          if (image.image_source.url || image.image_url.url) return true;
+        })
+        .map(image => ({
+          url: image.image_source.url || image.image_url.url,
+          alt: image.image_source.alt || image.image_alt,
+        }));
+
+      return (
+        <Card
+          key={props.index}
+          images={images}
+          title={card_title}
+          description={card_description}
+          cta={{ text: cta_text, link: cta_link }}
+          type={props.cardType}
         />
       );
     default:

@@ -4,7 +4,7 @@ import { SearchPage } from './views/SearchPage';
 import 'lazysizes';
 import { PAGETYPE } from '../../constants';
 import { MobileProductPage } from './views/ProductPage';
-import { withRouter } from 'next/router';
+import { withRouter, Router } from 'next/router';
 import populateHead from '../common/meta';
 import { InteractionContextProvider } from '../../contexts/Interaction';
 import { docCookies } from '../../utils/helper';
@@ -23,6 +23,7 @@ class MicrositeV2 extends Component<any, any> {
       tgid: null,
     },
     scrollY: 0,
+    ready: false,
   };
   sendVariableToDataLayer = JSONObject => {
     if (window && (window as any).dataLayer) {
@@ -91,6 +92,7 @@ class MicrositeV2 extends Component<any, any> {
     }
     this.setState({
       isMobile: isMobile,
+      ready: true,
     });
   }
 
@@ -166,9 +168,9 @@ class MicrositeV2 extends Component<any, any> {
             .split(',')
             .map(tgid => parseInt(tgid))) ||
         [],
+      enableDropdownLinks: CMSData.enable_dropdown == 'Yes',
       dropdownLinks: dropdownLinksArray,
     };
-
     // TODO: Add Interaction Field on Primic and Map it to Each Banner
     const heroProps = {
       banners: CMSData.images.reduce((accum, image) => {
@@ -265,6 +267,7 @@ class MicrositeV2 extends Component<any, any> {
           description: tourData.full_description,
           available: scorpioData[tourData.tgid].available,
           overlayBooster: tourData.overlay_booster,
+          vendor: tourData.vendor_name,
         },
       };
     }, {});
@@ -277,7 +280,7 @@ class MicrositeV2 extends Component<any, any> {
           return [...acc, tour.tgid];
         }, []),
     };
-    const { isFetched } = this.state;
+    const { isFetched, ready } = this.state;
     const tgidsOrderByPrice: any = isFetched
       ? Object.values(allTours)
           .sort((a: any, b: any) => a.price - b.price)
@@ -342,6 +345,7 @@ class MicrositeV2 extends Component<any, any> {
 
     const longFormContent = this.props.data.data.body2;
     let activePage = this.state.page.name;
+
     return (
       <MBContextProvider uid={currentDomain} lang={lang} buttons={buttons}>
         <InteractionContextProvider {...categoryProps}>
@@ -371,6 +375,7 @@ class MicrositeV2 extends Component<any, any> {
               host={host}
               uid={currentDomain}
               directTgid={directTgid}
+              ready={ready}
             />
           </div>
           {activePage == PAGETYPE.MOBILE_PRODUCT_PAGE ? (

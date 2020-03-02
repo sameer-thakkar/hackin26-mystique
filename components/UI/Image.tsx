@@ -1,28 +1,28 @@
 import React from 'react';
 
-export default class Image extends React.Component<any, any> {
-  static defaultProps = {
-    imageId: '',
-  };
-  constructor(props) {
-    super(props);
-  }
-  componentDidMount() {
-    this.setState({ ready: true });
-  }
-  getRenderedImage = () => {
-    const {
-      url,
-      width,
-      height,
-      format,
-      imageId,
-      dontLazyLoad,
-      alt,
-    } = this.props;
+type ImageProps = {
+  url: string;
+  width?: number | string;
+  height?: number | string;
+  format?: string;
+  imageId?: string;
+  dontLazyLoad?: boolean;
+  alt?: string;
+};
+
+const Image: React.FC<ImageProps> = ({
+  url,
+  width,
+  height,
+  format,
+  imageId = '',
+  dontLazyLoad = false,
+  alt = '',
+}) => {
+  const getRenderedImage = () => {
     const makeUrl = (density = 1.5, fm = 'pjpg') => {
-      const w = width ? `&w=${width * density}` : '';
-      const h = height ? `&h=${height * density}` : '';
+      const w = width ? `&w=${Number(width) * density}` : '';
+      const h = height ? `&h=${Number(height) * density}` : '';
       if (!url) {
         return null;
       }
@@ -35,7 +35,7 @@ export default class Image extends React.Component<any, any> {
       return (
         <picture>
           <source type="image/webp" data-srcset={makeUrl(1, 'webp')} />
-          {/* a non-static className (imageId) is required for lazyLoad specific classNames to be reset to original on re-render,
+          {/* a non-static className (imageId) is required for lazyloading specific classNames to be reset to original on re-render,
         fixes cards continue showing previous render images */}
           <img
             className={`lazyload ${imageId}`}
@@ -44,9 +44,10 @@ export default class Image extends React.Component<any, any> {
           />
         </picture>
       );
-    else return <img src={makeUrl(1, format)} />;
+    else return <img src={makeUrl(1, format)} alt={alt} />;
   };
-  render() {
-    return <React.Fragment>{this.getRenderedImage()}</React.Fragment>;
-  }
-}
+
+  return <React.Fragment>{getRenderedImage()}</React.Fragment>;
+};
+
+export default Image;

@@ -59,6 +59,9 @@ export const MobileProductPage = props => {
       </div>
       <div className="prod-content">
         <div className="head">
+          {tour.vendor?.length ? (
+            <div className="vendor-name">{tour.vendor}</div>
+          ) : null}
           <div className="title">{tour.title}</div>
           <div className="price">
             <div className="current-price">
@@ -319,6 +322,22 @@ export const MobileProductPage = props => {
             background: #ebebeb;
             border-radius: 2px;
             color: #545454;
+          }
+          .vendor-name {
+            grid-column: 1 / 3;
+            font-family: ${AVENIR.FONT_STACK};
+            font-weight: ${AVENIR.MEDIUM};
+            text-transform: uppercase;
+            font-size: 11px;
+            line-height: 11px;
+            letter-spacing: 0.5px;
+            color: ${COLORS.EIGHT_GRAY};
+            display: none;
+          }
+          @media (max-width: 768px) {
+            .vendor-name {
+              display: initial;
+            }
           }
         `}
       </style>

@@ -1,4 +1,5 @@
 module.exports = [
+  'el-escorial.tickets-madrid.org',
   'barcelona-week.tickets-barcelona.org',
   'www.auschwitz-tours.org',
   'pena-palace.tickets-lisbon.com',
@@ -27,6 +28,7 @@ module.exports = [
   'www.tickets-athens.com',
   'www.mount-fuji.com',
   'www.cherry-blossom-tours.com',
+  'www.go-skydiving.com',
   'camp-nou.tickets-barcelona.org',
   'www.tickets-madrid.org',
   'carnival.tickets-venice.com',
