@@ -249,7 +249,6 @@ const sliceHandler = (slice, props: any = {}) => {
               },
             ];
           }, []) || [];
-      console.log(slice);
       return (
         <TableV2
           title={slice.primary.title}

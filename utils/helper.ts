@@ -218,10 +218,8 @@ export const groupSlices = slices => {
   const groups = { slices: [] };
   let ref: any = groups;
   const autoClosedSlices = autoClose(slices);
-  console.log(autoClosedSlices);
   let repeatables: any = {
     items: [],
-    slice_type: null,
   };
   autoClosedSlices.forEach(slice => {
     if (/___repeatable$/.exec(slice.slice_type)) {

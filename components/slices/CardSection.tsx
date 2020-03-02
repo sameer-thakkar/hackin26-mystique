@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import sliceHandler from '../Slices';
 import useWindowSize from '../hooks/useWindowSize';
+import Swiper from '../Swiper';
+import {
+  CHEVRON_LEFT,
+  CHEVRON_LEFT_CIRCLE,
+} from '../../public/static/svg-icons';
 
 const StyledCardSection = styled.div`
   display: ${props => {
@@ -21,6 +26,42 @@ const StyledCardSection = styled.div`
     return `100%`;
   }};
   grid-gap: 20px;
+`;
+
+const StyledSwiper = styled.div`
+  display: flex;
+  position: relative;
+  .cards-section-wrapper {
+    display: grid;
+    grid-auto-flow: column;
+    padding: 25px 0;
+  }
+  .prev-slide,
+  .next-slide {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: -30px;
+    cursor: pointer;
+    z-index: 5;
+    svg {
+      fill: #fff;
+      circle {
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+      }
+      border-radius: 100%;
+      box-shadow: path {
+        stroke-width: 2px;
+      }
+    }
+  }
+  .next-slide {
+    left: unset;
+    right: -30px;
+    svg {
+      transform: rotate(180deg);
+    }
+  }
 `;
 
 type CardSectionProps = {
@@ -64,11 +105,75 @@ const CardSection: React.FC<CardSectionProps> = ({
     return sliceHandler(slice, { cardType: finalCardType, index });
   });
 
-  cards.pop();
-
   React.useEffect(() => {
     setIsMobile(width <= 760);
   }, [width, setIsMobile]);
+
+  if (sectionType === 'Carousel') {
+    const [swiper, updateSwiper] = useState(null);
+    const [_currentIndex, updateCurrentIndex] = useState(0);
+    const goNext = () => {
+      if (swiper !== null) {
+        swiper.slideNext();
+      }
+    };
+
+    const goPrev = () => {
+      if (swiper !== null) {
+        swiper.slidePrev();
+      }
+    };
+
+    const updateIndex = useCallback(
+      () => updateCurrentIndex(swiper.realIndex),
+      [swiper]
+    );
+
+    useEffect(() => {
+      if (isMobile) return;
+      if (swiper !== null) {
+        swiper.on('slideChange', updateIndex);
+      }
+
+      return () => {
+        if (swiper !== null) {
+          swiper.off('slideChange', updateIndex);
+        }
+      };
+    }, [swiper, updateIndex]);
+    const options = {
+      slidesPerView: 2,
+      wrapperClass: 'cards-section-wrapper',
+      spaceBetween: 20,
+      getSwiper: updateSwiper,
+    };
+
+    return (
+      <StyledSwiper>
+        <Swiper {...options}>
+          {cards.map((card, index) => {
+            return (
+              <div key={index} className="swiper-slide">
+                {card}
+              </div>
+            );
+          })}
+        </Swiper>
+        <div className="controls">
+          {!swiper?.isBeginning ? (
+            <div className="prev-slide" onClick={goPrev}>
+              {CHEVRON_LEFT_CIRCLE}
+            </div>
+          ) : null}
+          {!swiper?.isEnd ? (
+            <div className="next-slide" onClick={goNext}>
+              {CHEVRON_LEFT_CIRCLE}
+            </div>
+          ) : null}
+        </div>
+      </StyledSwiper>
+    );
+  }
 
   return (
     <>

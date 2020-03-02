@@ -38,6 +38,10 @@ const StyledCard = styled.div(props => {
   border: 1px solid ${COLORS.CHALK};
   grid-template-columns: ${styles.gridTemplateColumns};
   color: ${COLORS.DAVY_GREY};
+  height: 100%;
+  .flex{
+    display: flex;
+  }
   img {
     height: ${styles.img.height};
     object-fit: cover;
@@ -148,7 +152,7 @@ const Card: React.FC<CardProps> = ({
       break;
     default:
       imageView = (
-        <div>
+        <div className="flex">
           <Swiper {...swiperParams}>
             {images.map((image, index) => {
               return <img key={index} src={image.url} alt={image.alt} />;

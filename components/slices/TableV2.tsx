@@ -42,6 +42,15 @@ const StyledColumn = styled.div`
   p {
     margin: 0;
   }
+  @media (max-width: 768px) {
+    &:nth-of-type(1) {
+      display: none;
+    }
+    &:nth-of-type(${({ colCount }) => colCount + 1}) {
+      grid-column: 1 / 3;
+      grid-row: 1;
+    }
+  }
 `;
 
 const TableV2 = props => {
@@ -54,11 +63,12 @@ const TableV2 = props => {
       </div>
       {rows.map((row, rowIndex) => {
         if (isMobile && rowIndex === 0) return null;
+        const actualColumns = [...headings, ...row.columns];
         return (
           <StyledRow rowCount={headings.length}>
-            {[...headings, ...row.columns].map((column, colIndex) => {
+            {actualColumns.map((column, colIndex) => {
               return (
-                <StyledColumn>
+                <StyledColumn colCount={row.columns.length}>
                   <RichText
                     key={colIndex}
                     render={column.content}

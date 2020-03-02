@@ -67,7 +67,6 @@ const StyledProductCardRight = styled.div`
  */
 
 const FWActionCard: React.FC<FWActionCardProps> = ({ title, cards }) => {
-  console.log(cards);
   return (
     <>
       <h2>{title}</h2>
