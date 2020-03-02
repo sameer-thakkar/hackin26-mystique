@@ -12,7 +12,7 @@ import { MBContext } from '../../contexts/MBContext';
 import CommonCTA from '../UI/CTA';
 import styled from 'styled-components';
 import Popup from '../common/Popup';
-import { CHEVRON_LEFT } from '../../public/static/svg-icons';
+import { CHEVRON_LEFT, CHEVRON_DOWN } from '../../public/static/svg-icons';
 
 const StyledTourComparisionTable = styled.div`
   width: auto;
@@ -24,16 +24,23 @@ const StyledTourComparisionTable = styled.div`
     margin-bottom: 4px;
     font-weight: ${AVENIR.HEAVY};
     font-family: ${AVENIR.FONT_STACK};
+    color: ${COLORS.TWO_BLACK};
+    line-height: 33px;
   }
   .comparision-description {
     padding-bottom: 32px;
     font-size: 14px;
     font-family: ${AVENIR.FONT_STACK};
+    line-height: 20px;
+    color: ${COLORS.FOUR_BLACK};
   }
   .tour-title {
     font-family: ${AVENIR.FONT_STACK};
     font-weight: ${AVENIR.HEAVY};
-    line-height: 1.33;
+    font-size: 16px;
+    color: ${COLORS.TWO_BLACK};
+    letter-spacing: 0.0035em;
+    line-height: 24px;
     grid-column: 1 / 3;
   }
   .tour-chin {
@@ -53,7 +60,9 @@ const StyledTourComparisionTable = styled.div`
   .row {
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: repeat(${({ tourCount }) => tourCount}, 1fr) 16px;
+    grid-template-columns: repeat(${({ tourCount }) => tourCount}, 1fr) ${({
+        isMobile,
+      }) => (isMobile ? '16px' : '')};
     grid-column-gap: 24px;
   }
   .tour-booster {
@@ -69,18 +78,28 @@ const StyledTourComparisionTable = styled.div`
     font-size: 12px;
     font-family: ${AVENIR.FONT_STACK};
     color: ${COLORS.GREY_75};
+    line-height: 16px;
     grid-row: 1;
     text-decoration: line-through;
   }
   .current-price {
     font-size: 16px;
     font-family: ${AVENIR.FONT_STACK};
-    color: ${COLORS.DAVY_GREY};
+    font-weight: ${AVENIR.HEAVY};
+    color: ${COLORS.FOUR_BLACK};
+    line-height: 20px;
   }
   .flat-price-block .current-price {
     font-family: ${GRAPHIK.FONT_STACK};
-    font-weight: ${GRAPHIK.HEAVY};
-    color: ${COLORS.DAVY_GREY};
+    font-weight: ${GRAPHIK.SEMIBOLD};
+    color: ${COLORS.FOUR_BLACK};
+  }
+
+  .flat-price-block .old-price {
+    font-size: 16px;
+    font-family: ${GRAPHIK.FONT_STACK};
+    margin-left: 8px;
+    color: ${COLORS.FOUR_BLACK};
   }
 
   .row.sticky {
@@ -93,6 +112,10 @@ const StyledTourComparisionTable = styled.div`
   .column p {
     margin: 0;
   }
+  .content-block .popup-trigger {
+    font-size: 13px;
+    line-height: 20px;
+  }
   .tour-image {
     margin-bottom: -32px;
   }
@@ -104,24 +127,30 @@ const StyledTourComparisionTable = styled.div`
   }
   .content-block {
     display: grid;
-    grid-row-gap: 8px;
+    grid-row-gap: 12px;
     grid-template-rows: 1em 1fr;
   }
   .block-label {
     font-size: 16px;
     font-weight: ${AVENIR.HEAVY};
     font-family: ${AVENIR.FONT_STACK};
-    line-height: 1.12;
+    line-height: 18px;
+    letter-spacing: 0.5px;
+    color: ${COLORS.EIGHT_GRAY};
   }
   .block-content {
     font-size: 15px;
-    line-height: 1.33;
+    line-height: 20px;
     font-family: ${GRAPHIK.FONT_STACK};
     font-weight: ${GRAPHIK.REGULAR};
   }
   .vendor-cta {
     margin-top: -8px;
     text-align: center;
+    line-height: 16px;
+    font-size: 14px;
+    font-family: ${AVENIR.FONT_STACK};
+    font-weight: ${AVENIR.MEDIUM};
   }
   .vendor-cta a {
     color: ${COLORS.RHAPSODY};
@@ -136,15 +165,11 @@ const StyledTourComparisionTable = styled.div`
   @media (max-width: 768px) {
     .full-width-wrap {
       margin: 0 -16px;
-      ${({ isExpanded, isMobile }) =>
-        !isExpanded && isMobile
-          ? `
-        overflow-y: hidden;
-        overflow-x: scroll;
-        overscroll-behavior-x: contain;
-        padding-bottom: 20px;
-      `
-          : ''}
+      max-width: 768px;
+      overflow-y: hidden;
+      overflow-x: scroll;
+      overscroll-behavior-x: contain;
+      margin-bottom: 16px;
     }
     .table {
       grid-row-gap: 32px;
@@ -152,26 +177,29 @@ const StyledTourComparisionTable = styled.div`
     }
     .row {
       grid-column-gap: 12px;
+      grid-template-columns: 4px repeat(4, 1fr) 4px;
+    }
+    .row::before {
+      dispaly: grid;
+      content: '';
     }
     .column .tour-image img {
       width: auto;
       height: 102px;
     }
-    .full-width-wrap {
-      margin-bottom: 32px;
-    }
-    .column:first-child {
-      padding-left: 16px;
-    }
-    .column:last-child {
-      padding-right: 16px;
-    }
     .row .column:not(:first-child) .block-label {
       visibility: initial;
+    }
+    .flat-price-block .current-price {
+      font-size: 15px;
+    }
+    .flat-price-block .old-price {
+      font-size: 12px;
     }
     .tour-title {
       font-size: 14px;
       grid-column: 1;
+      line-height: 18px;
     }
     .tour-chin {
       grid-template-columns: 1fr;
@@ -189,50 +217,37 @@ const StyledTourComparisionTable = styled.div`
       font-size: 12px;
       color: ${COLORS.GREY_75};
       font-family: ${GRAPHIK.FONT_STACK};
-      font-weight: ${GRAPHIK.MEDIUM};
+      font-weight: ${GRAPHIK.HEAVY};
     }
     .block-content {
       font-size: 15px;
     }
-  }
-`;
-
-const StyledPortal = styled.div`
-  padding: 0 16px;
-  display: grid;
-  overflow: hidden;
-  height: 100vh;
-  grid-template-rows: 60px auto;
-  .portal-header {
-    display: grid;
-    align-items: center;
-    justify-content: left;
-  }
-  .full-width-wrap {
-    overflow: scroll;
-    height: calc(100vh - 60px);
-  }
-  .back {
-    padding: 8px;
-    padding-left: 0;
-  }
-  .row {
-    margin-left: 16px;
-  }
-  .row::after {
-    content: '';
-    width: 4px;
-    height: 4px;
-    display: block;
-  }
-  .column:first-child {
-    padding-left: 0;
-  }
-  .column:last-child {
-    padding-right: 0;
-  }
-  .vendor-cta {
-    margin-bottom: 40px;
+    .comparision-heading {
+      font-family: ${GRAPHIK.FONT_STACK};
+      font-weight: ${GRAPHIK.SEMIBOLD};
+      line-height: 26px;
+      margin-bottom: 8px;
+    }
+    .comparision-description {
+      font-size: 14px;
+      color: ${COLORS.DAVY_GREY};
+      font-weight: ${GRAPHIK.REGULAR};
+    }
+    .row.sticky {
+      z-index: unset;
+    }
+    .start-compare-icon {
+      display: grid;
+      grid-template-columns: auto auto;
+      grid-column-gap: 10px;
+      justify-content: center;
+      svg {
+        path {
+          stroke: ${COLORS.RHAPSODY};
+          stroke-width: 1.5px;
+        }
+      }
+    }
   }
 `;
 
@@ -297,37 +312,15 @@ const TourComparisonTable = props => {
     .filter(tgid => allTours[tgid].available);
   const content_normalized_tours = getContentNormalizedTours(tgidArray);
   const [isExpanded, setExpand] = useState(false);
-  const togglePopup = () => {
-    setExpand(!isExpanded);
-  };
-  const [scrollPosition, setScrollPosition] = useState(0);
 
-  useEffect(() => {
-    if (window) {
-      const mbParentEl = window.document.getElementById('body-wrap');
-      if (isExpanded) {
-        setScrollPosition(window.scrollY);
-        mbParentEl.style.display = 'none';
-        window.scrollTo(0, 0);
-      } else {
-        mbParentEl.style.display = 'unset';
-        window.scrollTo(0, scrollPosition);
-      }
-    }
-  }, [isExpanded]);
   const ComparisionTable = (
     <StyledTourComparisionTable
       isExpanded={isExpanded}
       isMobile={isMobile}
       tourCount={tgidArray.length}
     >
-      {!isExpanded ? (
-        <>
-          <div className="comparision-heading">{heading}</div>
-          <div className="comparision-description">{description}</div>
-        </>
-      ) : null}
-
+      <div className="comparision-heading">{heading}</div>
+      <div className="comparision-description">{description}</div>
       <div className="full-width-wrap">
         <div className="table">
           <div className="row max-content">
@@ -352,18 +345,6 @@ const TourComparisonTable = props => {
                 <div className="column">
                   <div className="tour-chin">
                     <div className="tour-title">{tour.title}</div>
-                    <div className="price-block">
-                      <div className="current-price">
-                        {tour.currencySymbol}
-                        {tour.price}
-                      </div>
-                      {tour.scratchPrice > tour.price ? (
-                        <div className="old-price">
-                          {tour.currencySymbol}
-                          {tour.scratchPrice}
-                        </div>
-                      ) : null}
-                    </div>
                     <div className="tour-booster">
                       <RichText
                         render={tour.cardFooter}
@@ -371,6 +352,51 @@ const TourComparisonTable = props => {
                           shortCodeSerializerWithParentProps(defaultArgs, tour)
                         }
                       />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          {isExpanded ? (
+            <div className="row" style={{ marginTop: -8 }}>
+              {content_normalized_tours.map((tour, cellIndex) => {
+                const props = {
+                  link: {
+                    url: `https://book.${nakedDomain}/book/${
+                      lang == 'en' ? '' : lang + '/'
+                    }${tour.tgid}`,
+                  },
+                  bordered: true,
+                };
+                return (
+                  <div className="column">
+                    <div className="tour-cta">
+                      <CommonCTA {...props}>Book Now</CommonCTA>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : null}
+          <div className="row max-content">
+            {content_normalized_tours.map((tour, cellIndex) => {
+              return (
+                <div className="column flat-price-block">
+                  <div className="content-block">
+                    <div className="block-label">Price</div>
+                    <div className="block-content">
+                      <span className="current-price">
+                        {tour.currencySymbol}
+                        {tour.price}
+                      </span>
+                      {NB_SPACE}
+                      {tour.scratchPrice > tour.price ? (
+                        <span className="old-price">
+                          {tour.currencySymbol}
+                          {tour.scratchPrice}
+                        </span>
+                      ) : null}
                     </div>
                   </div>
                 </div>
@@ -407,105 +433,76 @@ const TourComparisonTable = props => {
                 </div>
               );
             })}
-          <div className="row max-content">
-            {content_normalized_tours.map((tour, cellIndex) => {
-              return (
-                <div className="column flat-price-block">
-                  <div className="content-block">
-                    <div className="block-label">Price</div>
-                    <div className="block-content">
-                      <span className="current-price">
-                        {tour.currencySymbol}
-                        {tour.price}
-                      </span>
-                      {NB_SPACE}
-                      {tour.scratchPrice > tour.price ? (
-                        <span className="old-price">
+          {(isMobile && isExpanded) || !isMobile ? (
+            <div className="row max-content">
+              {content_normalized_tours.map((tour, cellIndex) => {
+                return (
+                  <div className="column flat-price-block">
+                    <div className="content-block">
+                      <div className="block-label">Price</div>
+                      <div className="block-content">
+                        <span className="current-price">
                           {tour.currencySymbol}
-                          {tour.scratchPrice}
+                          {tour.price}
                         </span>
-                      ) : null}
+                        {NB_SPACE}
+                        {tour.scratchPrice > tour.price ? (
+                          <span className="old-price">
+                            {tour.currencySymbol}
+                            {tour.scratchPrice}
+                          </span>
+                        ) : null}
+                      </div>
                     </div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : null}
+          <div className="row">
+            {content_normalized_tours.map((tour, cellIndex) => {
+              const props = {
+                link: {
+                  url: `https://book.${nakedDomain}/book/${
+                    lang == 'en' ? '' : lang + '/'
+                  }${tour.tgid}`,
+                },
+              };
+              return (
+                <div className="column">
+                  <div className="tour-cta">
+                    <CommonCTA {...props}>Book Now</CommonCTA>
                   </div>
                 </div>
               );
             })}
           </div>
-          {isExpanded || !isMobile ? (
-            <>
-              <div className="row">
-                {content_normalized_tours.map((tour, cellIndex) => {
-                  const props = {
-                    link: {
-                      url: `https://book.${nakedDomain}/book/${
-                        lang == 'en' ? '' : lang + '/'
-                      }${tour.tgid}`,
-                    },
-                    text: 'Book Now',
-                    bordered: true,
-                  };
-                  return (
-                    <div className="column">
-                      <div className="tour-cta">
-                        <CommonCTA {...props} />
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="row">
-                {content_normalized_tours.map((tour, cellIndex) => {
-                  const props = {
-                    link: {
-                      url: `https://book.${nakedDomain}/book/${
-                        lang == 'en' ? '' : lang + '/'
-                      }${tour.tgid}`,
-                    },
-                    text: 'Book Now',
-                    bordered: true,
-                  };
-                  return (
-                    <div className="column">
-                      {tour.vendor ? (
-                        <div className="vendor-cta">
-                          <a href={tour.vendorLink} className="cta-btn">
-                            {LABELS[lang].MORE_FROM} {isMobile ? <br /> : null}{' '}
-                            {tour.vendor}
-                          </a>
-                        </div>
-                      ) : null}
-                    </div>
-                  );
-                })}
-              </div>
-            </>
-          ) : null}
         </div>
       </div>
-      <div>
-        {isMobile && !isExpanded ? (
-          <CommonCTA
-            text={'Compare ' + content_normalized_tours.length}
-            clickHandler={() => togglePopup()}
-            bordered={true}
-          />
-        ) : null}
-      </div>
+      {isMobile && !isExpanded ? (
+        <CommonCTA clickHandler={() => setExpand(true)} bordered={true}>
+          <div className="start-compare-icon">
+            Compare All Details {CHEVRON_DOWN}
+          </div>
+        </CommonCTA>
+      ) : null}
     </StyledTourComparisionTable>
   );
-  if (isMobile && isExpanded)
-    return ReactDOM.createPortal(
-      <StyledPortal>
-        <div className="portal-header">
-          <div className="back" onClick={() => togglePopup()}>
-            {CHEVRON_LEFT}
-          </div>
-        </div>
-        {ComparisionTable}
-      </StyledPortal>,
-      document.body
-    );
-  else return ComparisionTable;
+  // if (isMobile && isExpanded)
+  //   return ReactDOM.createPortal(
+  //     <StyledPortal>
+  //       <div className="portal-header">
+  //         <div className="back" onClick={() => togglePopup()}>
+  //           {CHEVRON_LEFT}
+  //         </div>
+  //       </div>
+  //       {ComparisionTable}
+  //     </StyledPortal>,
+  //     document.body
+  //   );
+  // else return ;
+
+  return ComparisionTable;
 };
 
 export default TourComparisonTable;

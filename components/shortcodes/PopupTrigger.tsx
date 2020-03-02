@@ -22,12 +22,15 @@ const PopupTrigger = props => {
 
   return data ? (
     <>
-      <span onClick={() => setActive(!active)}>{text}</span>
+      <span className="popup-trigger" onClick={() => setActive(!active)}>
+        {text}
+      </span>
       {active ? <Popup togglePopup={setActive} data={data} /> : null}
       <style jsx>{`
         span {
           color: ${COLORS.TEAL};
           cursor: pointer;
+          line-height: 20px;
         }
       `}</style>
     </>

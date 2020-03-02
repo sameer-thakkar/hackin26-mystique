@@ -94,6 +94,7 @@ const Footer = props => {
             grid-gap: 10px;
             font-family: ${GRAPHIK.FONT_STACK};
             font-size: 12px;
+            line-height: 20px;
             text-align: left;
           }
           .copyrights a {

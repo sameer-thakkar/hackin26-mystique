@@ -267,6 +267,7 @@ class MicrositeV2 extends Component<any, any> {
           description: tourData.full_description,
           available: scorpioData[tourData.tgid].available,
           overlayBooster: tourData.overlay_booster,
+          vendor: tourData.vendor_name,
         },
       };
     }, {});

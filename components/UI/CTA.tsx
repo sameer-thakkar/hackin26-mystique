@@ -5,14 +5,14 @@ import { COLORS, AVENIR } from '../../constants/ui-constants';
 const StyledCTA = styled.div`
   cursor: pointer;
   width: calc(100% - 32px);
-  padding: 12px 16px;
+  padding: 16px;
   text-align: center;
-  border-radius: 4px;
+  border-radius: 2px;
   color: ${COLORS.RHAPSODY};
   font-family: ${AVENIR.FONT_STACK};
   text-align: center;
   font-weight: ${AVENIR.HEAVY};
-
+  line-height: 16px;
   a {
     text-decoration: none;
     color: ${COLORS.WHITE};
@@ -29,16 +29,16 @@ const StyledCTA = styled.div`
 `;
 
 const CommonCTA = props => {
-  const { text, link, clickHandler } = props;
+  const { text, link, clickHandler, children } = props;
 
   return (
     <StyledCTA onClick={clickHandler} {...props}>
       {link ? (
         <a href={link.url} target={link.target}>
-          {text}
+          {children}
         </a>
       ) : (
-        text
+        children
       )}
     </StyledCTA>
   );
