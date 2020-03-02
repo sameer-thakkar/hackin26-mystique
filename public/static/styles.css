@@ -1223,11 +1223,11 @@ body.popupv2-active {
     -webkit-overflow-scrolling: touch;
     /* height: unset; */
   }
+
   .swiper-container {
     height: 100%;
-    width: max-content;
-    width: 100vw;
   }
+
   .mask {
     display: none;
   }
@@ -1649,8 +1649,6 @@ body.popupv2-active {
   }
   .swiper-container {
     height: 100%;
-    width: max-content;
-    width: 100vw;
   }
   .mask {
     display: none;

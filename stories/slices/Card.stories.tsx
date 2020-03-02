@@ -43,7 +43,7 @@ const data = {
 
 export const Basic = () => {
   return (
-    <div style={{ width: 1200 }}>
+    <div style={{ width: 1200, padding: 50 }}>
       <Card
         images={data.images}
         title={data.title}
@@ -55,7 +55,7 @@ export const Basic = () => {
 };
 
 export const Mobile = () => (
-  <div style={{ width: 350 }}>
+  <div style={{ width: 350, padding: 50 }}>
     <Card
       images={data.images}
       title={data.title}
@@ -74,12 +74,12 @@ export const Mobile = () => (
 
 export const ColumnCard = () => {
   return (
-    <div style={{ width: 500 }}>
+    <div style={{ width: 500, padding: 50 }}>
       <Card
         images={data.images}
         title={data.title}
         description={data.description}
-        type="secondary"
+        type="column"
       />
     </div>
   );
@@ -87,12 +87,8 @@ export const ColumnCard = () => {
 
 export const OnlyText = () => {
   return (
-    <div style={{ width: 500 }}>
-      <Card
-        title={data.title}
-        description={data.description}
-        type="secondary"
-      />
+    <div style={{ width: 500, padding: 50 }}>
+      <Card title={data.title} description={data.description} type="column" />
     </div>
   );
 };

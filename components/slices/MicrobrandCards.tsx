@@ -9,6 +9,32 @@ type MicrobrandCardsProps = {
   lazyLoadImages?: boolean;
 };
 
+/**
+ * A card grid for microbrands
+ *
+ * **All fields marked with a * are mandatory and will break the slice if left blank.**
+ *
+ * ### Non-repeatable zone
+ * - Content Above Cards
+ *  - Rich Text field
+ * - Content Below Cards
+ *  - Rich Text field
+ *
+ * ### Repeatable zone
+ * - Image Source
+ *  - Add your image from prismic
+ *  - Additionally add an 'alt' field
+ * - Image URL
+ *  - Add a link to the image directly
+ *  - Will take precedence over 'Image Source'
+ * - Image Alt
+ *  - 'alt' field for Image URL
+ *  - Will take precedence over 'Image Source' alt
+ * - Microbrand Link
+ * - TGID
+ * - Card Title
+ */
+
 const MicrobrandCards: React.FC<MicrobrandCardsProps> = props => {
   const [state, setState] = useState({
     cardPrices: {},

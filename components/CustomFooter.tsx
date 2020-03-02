@@ -7,8 +7,8 @@ import { attachQueryParam } from '../utils/helper';
 export default class CustomFooter extends Component<any, any> {
   render() {
     const { logo, terms, body } = this.props;
-    const logoUrl = logo ? logo.url : '';
-    const altText = logo ? logo.alt : 'logo';
+    const logoUrl = logo?.url ?? '';
+    const altText = logo?.alt ?? 'logo';
 
     return (
       <div className="custom-footer">

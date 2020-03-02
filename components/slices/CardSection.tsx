@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import sliceHandler from '../Slices';
+import useWindowSize from '../hooks/useWindowSize';
 
 const StyledCardSection = styled.div`
   display: ${props => {
@@ -10,10 +11,12 @@ const StyledCardSection = styled.div`
     return `grid`;
   }};
   grid-template-columns: ${props => {
-    if (props.cardType === 'secondary') {
+    if (props.cardType === 'column') {
       return `50% 50%`;
-    } else if (props.cardType === 'mobile') {
-      return `repeat(${props.noOfCards}, ${100 / props.noOfCards}%)`;
+    } else if (props.cardType === 'mobile' && !props.isMobile) {
+      return `repeat(${props.noOfCards}, calc(${100 /
+        props.noOfCards}% - ${((props.noOfCards - 1) * 20) /
+        props.noOfCards}px))`;
     }
     return `100%`;
   }};
@@ -27,6 +30,24 @@ type CardSectionProps = {
   title?: string;
 };
 
+/**
+ * A card section displaying different types of Cards in a gird.
+ *
+ * This is a special kind of slice. To use follow below instructions:
+ *
+ * You have to first insert a 'Card Section Start' slice with the following fields:
+ *
+ * ### Non-repeatable zone
+ * - Card Section Title
+ * - Card Section Type
+ * - Card Type
+ *
+ * ### Repeatable zone
+ * Nil.
+ *
+ * After this, keep adding intermediate Card slices to your needs and then close the Section with a 'Card Section End' slice.
+ */
+
 const CardSection: React.FC<CardSectionProps> = ({
   slices,
   cardType,
@@ -34,7 +55,20 @@ const CardSection: React.FC<CardSectionProps> = ({
   title,
 }) => {
   let finalCardType = cardType;
-  if (slices.length === 1) finalCardType = 'primary';
+  if (slices.length === 1) finalCardType = 'desktop';
+
+  const { width } = useWindowSize();
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  let cards = slices.map((slice, index) => {
+    return sliceHandler(slice, { cardType: finalCardType, index });
+  });
+
+  cards.pop();
+
+  React.useEffect(() => {
+    setIsMobile(width <= 760);
+  }, [width, setIsMobile]);
 
   return (
     <>
@@ -42,11 +76,10 @@ const CardSection: React.FC<CardSectionProps> = ({
       <StyledCardSection
         cardType={finalCardType}
         sectionType={sectionType}
-        noOfCards={slices.length}
+        noOfCards={cards.length}
+        isMobile={isMobile}
       >
-        {slices.map((slice, index) => {
-          return sliceHandler(slice, { cardType: finalCardType, index });
-        })}
+        {cards}
       </StyledCardSection>
     </>
   );

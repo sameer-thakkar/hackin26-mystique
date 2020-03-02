@@ -41,7 +41,6 @@ jobs:
           now --version
           node ./deployment/production
           find now.*.json | xargs -n1 -I {} /bin/bash -c 'now --token ${ZEIT_TOKEN} -A {} --scope headout --prod --no-clipboard --debug'
-          yarn deploy-storybook
 
   pagespeed_insights:
     runs-on: ubuntu-latest

@@ -7,13 +7,13 @@ import Button from '../UI/Button';
 import { COLORS, GRAPHIK, AVENIR } from '../../constants/ui-constants';
 
 const variantStyles = {
-  primary: {
+  desktop: {
     gridTemplateColumns: '49% 51%',
     img: {
       height: '382px',
     },
   },
-  secondary: {
+  column: {
     gridTemplateColumns: '100%',
     img: {
       height: '382px',
@@ -41,6 +41,7 @@ const StyledCard = styled.div(props => {
   img {
     height: ${styles.img.height};
     object-fit: cover;
+    width: 100%;
   }
   .card-content-section {
     padding: 16px;
@@ -108,24 +109,26 @@ const Card: React.FC<CardProps> = ({
   description,
   images = [],
   cta = {},
-  type = 'primary',
+  type = 'desktop',
 }) => {
   const { width } = useWindowSize();
-  let isMobile = false;
+  const [isMobile, setIsMobile] = React.useState(false);
 
-  switch (type) {
-    case 'primary':
-      isMobile = width <= 960;
-      break;
-    case 'secondary':
-      isMobile = width <= 760;
-      break;
-    case 'mobile':
-      isMobile = true;
-      break;
-    default:
-      break;
-  }
+  React.useEffect(() => {
+    switch (type) {
+      case 'desktop':
+        setIsMobile(width <= 960);
+        break;
+      case 'column':
+        setIsMobile(width <= 760);
+        break;
+      case 'mobile':
+        setIsMobile(true);
+        break;
+      default:
+        break;
+    }
+  }, [width, setIsMobile]);
 
   const swiperParams = {
     pagination: {
@@ -155,9 +158,8 @@ const Card: React.FC<CardProps> = ({
       );
       break;
   }
-
   return (
-    <StyledCard isMobile={isMobile} type={type} className="swiper-slide">
+    <StyledCard isMobile={isMobile} type={type}>
       {imageView}
       <div className="card-content-section">
         <span>{title}</span>

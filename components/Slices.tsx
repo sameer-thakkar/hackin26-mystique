@@ -241,18 +241,20 @@ const sliceHandler = (slice, props: any = {}) => {
         card_section_type,
         card_type,
       } = slice.primary;
+
       let type;
       switch (card_type) {
         case 'Desktop Card':
-          type = 'primary';
+          type = 'desktop';
           break;
         case 'Column Card':
-          type = 'secondary';
+          type = 'column';
           break;
         case 'Mobile Card':
           type = 'mobile';
           break;
       }
+
       return (
         <CardSection
           slices={slice.slices}
