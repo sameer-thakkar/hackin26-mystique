@@ -88,32 +88,31 @@ const CardSection: React.FC<CardSectionProps> = ({
   sectionType,
   title,
 }) => {
+  const { width } = useWindowSize();
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  useEffect(() => {
+    setIsMobile(width <= 760);
+  }, [width, setIsMobile]);
+
   let finalCardType = cardType;
 
   // Display desktop card if only 1 slice is available
   if (slices.length === 1) finalCardType = 'desktop';
 
   // Display a grid style if card type is mobile and no. of card are <= 4
-  if (finalCardType === 'mobile') {
+  if (finalCardType === 'mobile' && !isMobile) {
     if (slices.length <= 4) {
       sectionType = 'Grid';
     }
   }
 
-  const { width } = useWindowSize();
-  const [isMobile, setIsMobile] = React.useState(false);
-
   let cards = slices.map((slice, index) => {
     return sliceHandler(slice, { cardType: finalCardType, index });
   });
 
-  useEffect(() => {
-    setIsMobile(width <= 760);
-  }, [width, setIsMobile]);
-
   // Carousel (and Overflow Scroll for mobile) Logic
-
-  if (sectionType === 'Carousel') {
+  if (sectionType === 'Carousel' && !isMobile) {
     let slidesPerView = 1;
     switch (cardType) {
       case 'column':
@@ -168,33 +167,38 @@ const CardSection: React.FC<CardSectionProps> = ({
     return (
       <>
         {title ? <h2>{title}</h2> : null}
-        {isMobile ? (
-          <OverflowScroll>{cards}</OverflowScroll>
-        ) : (
-          <StyledSwiper>
-            <Swiper {...swiperParams}>
-              {cards.map((card, index) => {
-                return (
-                  <div key={index} className="swiper-slide">
-                    {card}
-                  </div>
-                );
-              })}
-            </Swiper>
-            <div className="controls">
-              {!swiper?.isBeginning ? (
-                <div className="prev-slide" onClick={goPrev}>
-                  {CHEVRON_LEFT_CIRCLE}
+        <StyledSwiper>
+          <Swiper {...swiperParams}>
+            {cards.map((card, index) => {
+              return (
+                <div key={index} className="swiper-slide">
+                  {card}
                 </div>
-              ) : null}
-              {!swiper?.isEnd ? (
-                <div className="next-slide" onClick={goNext}>
-                  {CHEVRON_LEFT_CIRCLE}
-                </div>
-              ) : null}
-            </div>
-          </StyledSwiper>
-        )}
+              );
+            })}
+          </Swiper>
+          <div className="controls">
+            {!swiper?.isBeginning ? (
+              <div className="prev-slide" onClick={goPrev}>
+                {CHEVRON_LEFT_CIRCLE}
+              </div>
+            ) : null}
+            {!swiper?.isEnd ? (
+              <div className="next-slide" onClick={goNext}>
+                {CHEVRON_LEFT_CIRCLE}
+              </div>
+            ) : null}
+          </div>
+        </StyledSwiper>
+      </>
+    );
+  }
+
+  if (sectionType === 'Carousel' && isMobile) {
+    return (
+      <>
+        {title ? <h2>{title}</h2> : null}
+        <OverflowScroll>{cards}</OverflowScroll>
       </>
     );
   }
