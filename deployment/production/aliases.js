@@ -1,4 +1,5 @@
 module.exports = [
+  'uffizi.tickets-florence.it',
   'www.parkguell-tickets.com',
   'www.toledo-day-trips.com',
   'www.tickets-sintra.com',
