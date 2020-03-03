@@ -1,4 +1,5 @@
 import React from 'react';
+
 export const CHEVRON_LEFT = (
   <svg
     width="20"
@@ -15,6 +16,7 @@ export const CHEVRON_LEFT = (
     />
   </svg>
 );
+
 export const CHEVRON_DOWN = (
   <svg
     width="16"

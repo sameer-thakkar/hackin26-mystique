@@ -3,30 +3,23 @@ import styled from 'styled-components';
 import sliceHandler from '../Slices';
 import useWindowSize from '../hooks/useWindowSize';
 import Swiper from '../Swiper';
-import {
-  CHEVRON_LEFT,
-  CHEVRON_LEFT_CIRCLE,
-} from '../../public/static/svg-icons';
+import OverflowScroll from '../UI/OverflowScroll';
+import { CHEVRON_LEFT_CIRCLE } from '../../public/static/svg-icons';
 
-const StyledCardSection = styled.div`
-  display: ${props => {
-    if (props.sectionType.toLowerCase() === 'grid') {
-      return `grid`;
-    }
-    return `grid`;
-  }};
-  grid-template-columns: ${props => {
-    if (props.cardType === 'column') {
-      return `50% 50%`;
-    } else if (props.cardType === 'mobile' && !props.isMobile) {
-      return `repeat(${props.noOfCards}, calc(${100 /
-        props.noOfCards}% - ${((props.noOfCards - 1) * 20) /
-        props.noOfCards}px))`;
-    }
-    return `100%`;
-  }};
-  grid-gap: 20px;
+const StyledCardSection = styled.div(({ cardType, isMobile, noOfCards }) => {
+  let gridTemplateColumns = `100%`;
+  if (cardType === 'column') {
+    gridTemplateColumns = `50% 50%`;
+  } else if (cardType === 'mobile' && !isMobile) {
+    gridTemplateColumns = `repeat(${noOfCards}, calc(${100 /
+      noOfCards}% - ${((noOfCards - 1) * 20) / noOfCards}px))`;
+  }
+  return `
+    display: grid;
+    grid-template-columns: ${gridTemplateColumns};
+    grid-gap: 20px;
 `;
+});
 
 const StyledSwiper = styled.div`
   display: flex;
@@ -41,7 +34,7 @@ const StyledSwiper = styled.div`
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    left: -30px;
+    left: -20px;
     cursor: pointer;
     z-index: 5;
     svg {
@@ -57,7 +50,7 @@ const StyledSwiper = styled.div`
   }
   .next-slide {
     left: unset;
-    right: -30px;
+    right: -20px;
     svg {
       transform: rotate(180deg);
     }
@@ -96,7 +89,16 @@ const CardSection: React.FC<CardSectionProps> = ({
   title,
 }) => {
   let finalCardType = cardType;
+
+  // Display desktop card if only 1 slice is available
   if (slices.length === 1) finalCardType = 'desktop';
+
+  // Display a grid style if card type is mobile and no. of card are <= 4
+  if (finalCardType === 'mobile') {
+    if (slices.length <= 4) {
+      sectionType = 'Grid';
+    }
+  }
 
   const { width } = useWindowSize();
   const [isMobile, setIsMobile] = React.useState(false);
@@ -105,13 +107,27 @@ const CardSection: React.FC<CardSectionProps> = ({
     return sliceHandler(slice, { cardType: finalCardType, index });
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     setIsMobile(width <= 760);
   }, [width, setIsMobile]);
 
+  // Carousel (and Overflow Scroll for mobile) Logic
+
   if (sectionType === 'Carousel') {
+    let slidesPerView = 1;
+    switch (cardType) {
+      case 'column':
+        slidesPerView = 2;
+        break;
+      case 'mobile':
+        slidesPerView = 4;
+      default:
+        break;
+    }
+
     const [swiper, updateSwiper] = useState(null);
     const [_currentIndex, updateCurrentIndex] = useState(0);
+
     const goNext = () => {
       if (swiper !== null) {
         swiper.slideNext();
@@ -141,37 +157,45 @@ const CardSection: React.FC<CardSectionProps> = ({
         }
       };
     }, [swiper, updateIndex]);
-    const options = {
-      slidesPerView: 2,
+
+    const swiperParams = {
+      slidesPerView,
       wrapperClass: 'cards-section-wrapper',
       spaceBetween: 20,
       getSwiper: updateSwiper,
     };
 
     return (
-      <StyledSwiper>
-        <Swiper {...options}>
-          {cards.map((card, index) => {
-            return (
-              <div key={index} className="swiper-slide">
-                {card}
-              </div>
-            );
-          })}
-        </Swiper>
-        <div className="controls">
-          {!swiper?.isBeginning ? (
-            <div className="prev-slide" onClick={goPrev}>
-              {CHEVRON_LEFT_CIRCLE}
+      <>
+        {title ? <h2>{title}</h2> : null}
+        {isMobile ? (
+          <OverflowScroll>{cards}</OverflowScroll>
+        ) : (
+          <StyledSwiper>
+            <Swiper {...swiperParams}>
+              {cards.map((card, index) => {
+                return (
+                  <div key={index} className="swiper-slide">
+                    {card}
+                  </div>
+                );
+              })}
+            </Swiper>
+            <div className="controls">
+              {!swiper?.isBeginning ? (
+                <div className="prev-slide" onClick={goPrev}>
+                  {CHEVRON_LEFT_CIRCLE}
+                </div>
+              ) : null}
+              {!swiper?.isEnd ? (
+                <div className="next-slide" onClick={goNext}>
+                  {CHEVRON_LEFT_CIRCLE}
+                </div>
+              ) : null}
             </div>
-          ) : null}
-          {!swiper?.isEnd ? (
-            <div className="next-slide" onClick={goNext}>
-              {CHEVRON_LEFT_CIRCLE}
-            </div>
-          ) : null}
-        </div>
-      </StyledSwiper>
+          </StyledSwiper>
+        )}
+      </>
     );
   }
 
