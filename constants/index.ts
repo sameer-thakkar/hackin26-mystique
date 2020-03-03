@@ -198,3 +198,54 @@ export const MICROSITE_OBJECT_KEYS: string[] = [
 ];
 
 export const MICROSITE_ARRAY_KEYS: string[] = ['images'];
+
+export const FOOTER_DISCLAIMER_ARRAY = [
+  {
+    UID: 'www.colosseum-rome-tickets.com',
+    Category: 'Colosseum',
+    City: 'Rome',
+  },
+  {
+    UID: 'www.versailles-palace-tickets.com',
+    Category: 'Versailles',
+    City: 'Paris',
+  },
+  { UID: 'www.eiffeltickets.com', Category: 'Eiffel Tower', City: 'Paris' },
+  {
+    UID: 'www.alcazar-seville-tickets.com',
+    Category: 'Alcazar',
+    City: 'Seville',
+  },
+  {
+    UID: 'www.alhambra-granada-tickets.com',
+    Category: 'Alhambra Granada',
+    City: 'Granada',
+  },
+  {
+    UID: 'www.borghesegallerytickets.com',
+    Category: 'Borghese Gallery',
+    City: 'Rome',
+  },
+  {
+    UID: 'harry-potter.london-studio-tours.com',
+    Category: 'Warner Bros. Studio',
+    City: 'London',
+  },
+  { UID: 'www.accademia-tickets.com', Category: 'Accademia', City: 'Florence' },
+  {
+    UID: 'www.st-peters-basilica-tickets.com',
+    Category: "St. Peter's Basilica",
+    City: 'Rome',
+  },
+  {
+    UID: 'www.doge-palace-tickets.com',
+    Category: "Doge's Palace",
+    City: 'Venice',
+  },
+  { UID: 'lido.cabaret-paris.com', Category: 'Paris Cabaret', City: 'Paris' },
+  {
+    UID: 'www.neuschwanstein-tours.com',
+    Category: 'Neuschwanstein',
+    City: 'Munich',
+  },
+];

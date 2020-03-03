@@ -3,57 +3,7 @@ import Link from 'next/link';
 import classNames from 'classnames';
 import sliceHandler from './Slices';
 import { attachQueryParam } from '../utils/helper';
-
-const data = [
-  {
-    UID: 'www.colosseum-rome-tickets.com',
-    Category: 'Colosseum',
-    City: 'Rome',
-  },
-  {
-    UID: 'www.versailles-palace-tickets.com',
-    Category: 'Versailles',
-    City: 'Paris',
-  },
-  { UID: 'www.eiffeltickets.com', Category: 'Eiffel Tower', City: 'Paris' },
-  {
-    UID: 'www.alcazar-seville-tickets.com',
-    Category: 'Alcazar',
-    City: 'Seville',
-  },
-  {
-    UID: 'www.alhambra-granada-tickets.com',
-    Category: 'Alhambra Granada',
-    City: 'Granada',
-  },
-  {
-    UID: 'www.borghesegallerytickets.com',
-    Category: 'Borghese Gallery',
-    City: 'Rome',
-  },
-  {
-    UID: 'harry-potter.london-studio-tours.com',
-    Category: 'Warner Bros. Studio',
-    City: 'London',
-  },
-  { UID: 'www.accademia-tickets.com', Category: 'Accademia', City: 'Florence' },
-  {
-    UID: 'www.st-peters-basilica-tickets.com',
-    Category: "St. Peter's Basilica",
-    City: 'Rome',
-  },
-  {
-    UID: 'www.doge-palace-tickets.com',
-    Category: "Doge's Palace",
-    City: 'Venice',
-  },
-  { UID: 'lido.cabaret-paris.com', Category: 'Paris Cabaret', City: 'Paris' },
-  {
-    UID: 'www.neuschwanstein-tours.com',
-    Category: 'Neuschwanstein',
-    City: 'Munich',
-  },
-];
+import { FOOTER_DISCLAIMER_ARRAY } from '../constants';
 
 export default class CustomFooter extends Component<any, any> {
   render() {
@@ -61,7 +11,7 @@ export default class CustomFooter extends Component<any, any> {
     const logoUrl = logo?.url ?? '';
     const altText = logo?.alt ?? 'logo';
     let block = '';
-    data.forEach(item => {
+    FOOTER_DISCLAIMER_ARRAY.forEach(item => {
       if (item.UID === uid) {
         block = `
        ${body[0].primary.heading} is an online website that is owned and operated by Headout which
@@ -90,6 +40,7 @@ export default class CustomFooter extends Component<any, any> {
                 paddingRight: 10,
                 fontSize: 14,
                 lineHeight: 1.13,
+                marginTop: 20,
               }}
             >
               {block}
@@ -155,6 +106,7 @@ export default class CustomFooter extends Component<any, any> {
             }
             .logo {
               align-self: flex-start;
+              margin-right: 30px;
             }
             .logo-wrapper {
               display: grid;
@@ -172,6 +124,7 @@ export default class CustomFooter extends Component<any, any> {
               grid-gap: 2em;
             }
             .terms-line {
+              margin-bottom: 150px;
               color: white;
               font-family: Avenir;
               font-size: 12px;

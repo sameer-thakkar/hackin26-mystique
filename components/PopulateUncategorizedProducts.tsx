@@ -1,7 +1,19 @@
 import React, { Component } from 'react';
 import Product from './Product';
 import * as labels from '../public/static/localization/labels';
+import styled from 'styled-components';
 
+const StyledTourListSubHeading = styled.div`
+  margin-top: 20px;
+  font-family: Graphik;
+  font-size: 18px;
+  line-height: 1.33;
+  text-align: left;
+  color: #545454;
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+`;
 export default class PopulateUncategorizedProducts extends Component<any, any> {
   constructor(props) {
     super(props);
@@ -46,22 +58,9 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
         <div className="select-wrapper" id="select-tickets">
           <div className="select-text">
             {labels[currentLanguage].TOUR_LIST_HEADING}
-            <div
-              style={{
-                marginTop: 20,
-                fontFamily: 'Graphik',
-                fontSize: '18px !important',
-                fontWeight: 'normal',
-                fontStyle: 'normal',
-                fontStretch: 'normal',
-                lineHeight: 1.33,
-                letterSpacing: 'normal',
-                textAlign: 'left',
-                color: '#545454',
-              }}
-            >
+            <StyledTourListSubHeading>
               {labels[currentLanguage].TOUR_LIST_SUB_HEADING}
-            </div>
+            </StyledTourListSubHeading>
           </div>
           <div className="divider"></div>
         </div>
