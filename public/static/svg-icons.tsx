@@ -1,4 +1,5 @@
 import React from 'react';
+
 export const CHEVRON_LEFT = (
   <svg
     width="20"
@@ -15,6 +16,7 @@ export const CHEVRON_LEFT = (
     />
   </svg>
 );
+
 export const CHEVRON_DOWN = (
   <svg
     width="16"
@@ -165,5 +167,71 @@ export const FACEBOOK = (
       d="M8.35552 14.0002H6.34221V7.99994H5V5.93764H6.34221V4.73758C6.34221 3.01249 6.74487 2.00024 8.52357 2.00024H10V4.06255H9.06045C8.35606 4.06255 8.32224 4.36256 8.32224 4.88759V5.93764H10L9.83196 7.99994H8.35552V14.0002Z"
       fill="white"
     />
+  </svg>
+);
+
+export const CHEVRON_LEFT_CIRCLE = (
+  <svg
+    width="40"
+    height="40"
+    viewBox="0 0 40 40"
+    fill="white"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g filter="url(#filter0_d)">
+      <circle r="16" transform="matrix(-1 0 0 1 20 18)" fill="white" />
+    </g>
+    <g clip-path="url(#clip0)">
+      <path
+        d="M23.3333 24.6666L16.6667 17.9999L23.3333 11.3333"
+        stroke="#545454"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </g>
+    <defs>
+      <filter
+        id="filter0_d"
+        x="0"
+        y="0"
+        width="40"
+        height="40"
+        filterUnits="userSpaceOnUse"
+        colorInterpolationFilters="sRGB"
+      >
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
+        <feColorMatrix
+          in="SourceAlpha"
+          type="matrix"
+          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+        />
+        <feOffset dy="2" />
+        <feGaussianBlur stdDeviation="2" />
+        <feColorMatrix
+          type="matrix"
+          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+        />
+        <feBlend
+          mode="normal"
+          in2="BackgroundImageFix"
+          result="effect1_dropShadow"
+        />
+        <feBlend
+          mode="normal"
+          in="SourceGraphic"
+          in2="effect1_dropShadow"
+          result="shape"
+        />
+      </filter>
+      <clipPath id="clip0">
+        <rect
+          width="16"
+          height="16"
+          transform="matrix(-1 0 0 1 28 10)"
+          fill="white"
+        />
+      </clipPath>
+    </defs>
   </svg>
 );

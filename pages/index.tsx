@@ -194,7 +194,7 @@ export default class Page extends React.Component<any, any> {
                     });
                     return offerData;
                   });
-              
+
               const baseLangData =
                 lang !== 'en'
                   ? await Client(req)
