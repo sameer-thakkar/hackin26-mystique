@@ -1,4 +1,9 @@
 module.exports = [
+  'www.parkguell-tickets.com',
+  'www.toledo-day-trips.com',
+  'www.tickets-sintra.com',
+  'www.thevaticantickets.com',
+  'www.theauschwitztours.com',
   'vatican.tickets-rome.com',
   'uffizi.florencetickets.org',
   'park-guell.tickets-barcelona.org',
