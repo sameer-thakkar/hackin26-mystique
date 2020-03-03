@@ -407,7 +407,7 @@ export default class MicrositeV1 extends Component<any, any> {
             enableBuyTickets={enableBuyTickets}
             logoRedirectionURL={logoRedirectionURL.url || '/'}
             host={host}
-            hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo}
+            hasPoweredByHeadoutLogo={true}
           />
           <Banner
             bannerImages={bannerImages ? bannerImages : null}
@@ -460,7 +460,7 @@ export default class MicrositeV1 extends Component<any, any> {
           ) : null}
           {customFooter ? (
             <footer>
-              <CustomFooter {...customFooter.data} />
+              <CustomFooter {...customFooter.data} uid={uid} />
             </footer>
           ) : (
             <Footer
@@ -470,6 +470,7 @@ export default class MicrositeV1 extends Component<any, any> {
               footerAltText={footerAltText || footerAltTextUploaded || null}
               hasTermsPage={hasTermsPage}
               isMobile={this.state.isMobile}
+              uid={uid}
             />
           )}
           {hasOffer && (

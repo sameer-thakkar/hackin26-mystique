@@ -26,6 +26,14 @@
       "dest": "/terms"
     },
     {
+      "src": "/privacy-policy",
+      "dest": "/privacy-policy"
+    },
+    {
+      "src": "/company-details",
+      "dest": "/company-details"
+    },
+    {
       "src": "/create-uid",
       "dest": "/create-uid.html"
     },

@@ -121,6 +121,33 @@ body {
 
 /* HEADER */
 
+.footer-super-text {
+  font-family: Graphik;
+  padding-right: 10px;
+}
+
+.super-stuff {
+  margin-bottom: 100px;
+}
+
+.super-stuff .text {
+  margin-top: 20px;
+}
+
+.text-sub {
+  margin: 10px 0px;
+  font-size: 18px;
+}
+
+.terms-new {
+  margin-top: 20px !important;
+  float: left;
+  font-size: 18px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
 .header-container {
   height: 68px;
   position: fixed;
@@ -653,8 +680,21 @@ ul {
     sans-serif;
   color: #000000;
   border-left: 3px solid #669dde;
-  padding: 5px 10px 5px;
+  padding: 5px 20px 5px;
 }
+
+.select-text .sub-select-text {
+  font-family: Graphik;
+  font-size: 1.1em !important;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: left;
+  color: #545454;
+}
+
 .divider {
   display: none;
   width: 100px;
@@ -1788,6 +1828,7 @@ body.popupv2-active {
   font-family: Avenir;
 }
 .terms-tab {
+  text-align: left;
   font-size: 12px;
   margin-left: 5px;
   text-decoration: underline;

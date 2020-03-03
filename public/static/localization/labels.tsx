@@ -1,5 +1,7 @@
 export const en = {
   TOUR_LIST_HEADING: 'Select Your Experience',
+  TOUR_LIST_SUB_HEADING:
+    'Choose from multiple tickets, tours and combo options by verified operators',
   BANNER_CTA: 'Buy Tickets',
   BOOK_NOW_CTA: 'Book Now',
   READ_MORE_TEXT: 'Read More',
@@ -13,6 +15,8 @@ export const en = {
 
 export const es = {
   TOUR_LIST_HEADING: 'Selecciona Tus Entradas',
+  TOUR_LIST_SUB_HEADING:
+    'Choose from multiple tickets, tours and combo options by verified operators',
   BANNER_CTA: 'Compra Entradas',
   BOOK_NOW_CTA: 'Reserva ahora',
   READ_MORE_TEXT: 'Leer más',
@@ -25,6 +29,8 @@ export const es = {
 
 export const de = {
   TOUR_LIST_HEADING: 'Wählen Sie Ihre Tickets',
+  TOUR_LIST_SUB_HEADING:
+    'Choose from multiple tickets, tours and combo options by verified operators',
   BANNER_CTA: 'Tickets kaufen',
   BOOK_NOW_CTA: 'Jetzt buchen',
   READ_MORE_TEXT: 'Mehr anzeigen',
@@ -37,6 +43,8 @@ export const de = {
 
 export const it = {
   TOUR_LIST_HEADING: 'Seleziona i tuoi biglietti',
+  TOUR_LIST_SUB_HEADING:
+    'Choose from multiple tickets, tours and combo options by verified operators',
   BANNER_CTA: 'Acquista biglietti',
   BOOK_NOW_CTA: 'Prenota ora',
   READ_MORE_TEXT: 'Leggi di più',
@@ -49,6 +57,8 @@ export const it = {
 
 export const fr = {
   TOUR_LIST_HEADING: 'Sélectionner Vos Billets',
+  TOUR_LIST_SUB_HEADING:
+    'Choose from multiple tickets, tours and combo options by verified operators',
   BANNER_CTA: 'Acheter des billets',
   BOOK_NOW_CTA: 'Réservez Maintenant',
   READ_MORE_TEXT: 'En Savoir Plus',
@@ -61,6 +71,8 @@ export const fr = {
 
 export const nl = {
   TOUR_LIST_HEADING: 'Kies Je Tickets',
+  TOUR_LIST_SUB_HEADING:
+    'Choose from multiple tickets, tours and combo options by verified operators',
   BANNER_CTA: 'Koop Tickets',
   BOOK_NOW_CTA: 'Koop Nu',
   READ_MORE_TEXT: 'Lees Meer',

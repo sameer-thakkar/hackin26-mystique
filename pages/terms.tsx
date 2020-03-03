@@ -22,28 +22,40 @@ export default class terms extends Component<any, any> {
       },
     };
   }
-  static async getInitialProps({ req }) {
+  static async getInitialProps({ req, query }) {
     try {
-      const props = await terms.getTermsData({ req });
+      const isDev = req
+        ? !!query.mystique_uid
+        : window.location.search.includes('mystique_uid');
+
+      const props = await terms.getTermsData({ req, isDev, query });
       return props;
     } catch (error) {
       console.log(error);
     }
   }
 
-  static async getTermsData({ req }) {
-    const { host } = req ? req.headers : window.location;
-    const uid = host.replace('stage.', '');
+  static async getTermsData({ req, isDev, query }) {
+    let superHost;
+    if (isDev) {
+      superHost = req
+        ? query.mystique_uid
+        : window.location.search.includes('mystique_uid');
+    } else {
+      const { host } = req ? req.headers : window.location;
+      superHost = host.replace('stage.', '');
+    }
     const lang = 'en-us';
     const uidType = 'microsite';
-    const response = await Client(req).getByUID(uidType, uid, { lang });
+    const response = await Client(req).getByUID(uidType, superHost, { lang });
     const footerID = response.data.footer_ref.id;
     if (footerID) {
       const customFooter = await Client(req).getByID(footerID);
       response.data.customFooter = customFooter;
     }
-    return { response, host };
+    return { response, host: superHost };
   }
+
   handleDropdownToggle = elementIdentifier => {
     switch (elementIdentifier) {
       case DROPDOWN_ELEMENT.HAMBURGER: {
@@ -141,18 +153,19 @@ export default class terms extends Component<any, any> {
           <div className="text">
             This web page represents a legal document that serves as the terms
             of use for our website (“Terms of Use”), {micrositeUrl} and any
-            associated mobile application (collectively, “Website”). Capitalized
-            terms, unless otherwise defined, have the meaning specified within
-            the Definitions section below. This Terms of Use,, and other posted
-            guidelines within our Website, (collectively “Legal Terms”),
-            constitute the entire and only agreement between you and this
-            website, and supersede all other agreements, representations,
-            warranties and understandings with respect to our Website and the
-            subject matter contained herein. We may amend our Legal Terms at any
-            time without specific notice to you. The latest copies of our Legal
-            Terms will be posted on our Website, and you should review all Legal
-            Terms prior to using our Website. After any revisions to our Legal
-            Terms are posted, you agree to be bound to any such changes to them.
+            associated mobile application (collectively, “Website”) as owned and
+            operated by Headout Inc (“Headout”). Capitalized terms, unless
+            otherwise defined, have the meaning specified within the Definitions
+            section below. This Terms of Use,, and other posted guidelines
+            within our Website, (collectively “Legal Terms”), constitute the
+            entire and only agreement between you and this website, and
+            supersede all other agreements, representations, warranties and
+            understandings with respect to our Website and the subject matter
+            contained herein. We may amend our Legal Terms at any time without
+            specific notice to you. The latest copies of our Legal Terms will be
+            posted on our Website, and you should review all Legal Terms prior
+            to using our Website. After any revisions to our Legal Terms are
+            posted, you agree to be bound to any such changes to them.
             Therefore, it is important for you to periodically review our Legal
             Terms to make sure you still agree to them. <br />
             By using our Website, you agree to fully comply with and be bound by
@@ -169,13 +182,10 @@ export default class terms extends Component<any, any> {
             A “Member” is an individual that has registered with our Website to
             use our Website’s features.
             <br />
-            The terms: “us” or “we” or “our” refers to the owner of the Website.
-            <br />
             A “Provider” is a Member of our Website that is a business offering
-            tours, activities, and other travel-related goods and services to
-            the general public and has registered with our Website to offer
-            their goods/services. We refer to a Member who purchases
-            goods/services from Providers as a “Customer”.
+            tours, activities, attractions and other travel-related goods and
+            services to the general public and has registered with Headout to
+            offer their goods/services.
             <br />
             A “Profile” is an online collection of information provided by a
             Member about their business if a Provider, or generally about
@@ -185,6 +195,9 @@ export default class terms extends Component<any, any> {
             or a Member.
             <br />
             A “Visitor” is someone who merely browses our Website.
+            <br />
+            A “Customer” is a user who purchases goods/services through the
+            Website
             <br />
             All text, information, graphics, audio, video, and data offered
             through our Website, whether free to all or part of our paid
@@ -205,11 +218,12 @@ export default class terms extends Component<any, any> {
           </div>
           <div className="sub-heading">Our Relationship to You</div>
           <div className="text">
-            This website is strictly a venue does NOT enter into any other
-            relationship with you, other than that of an independent contractor.
-            Our Legal Terms in no way create any agency, partnership, joint
-            venture, employee-employer or franchisor-franchisee relationship
-            between you and other Users, or our affiliates.
+            This website is strictly an intermediary service for purchasing
+            goods/services and does NOT enter into any other relationship with
+            you, other than that of an independent contractor. Our Legal Terms
+            in no way create any agency, partnership, joint venture,
+            employee-employer or franchisor-franchisee relationship between you
+            and other Users, or our affiliates.
           </div>
           <div className="sub-heading">Legal Compliance</div>
           <div className="text">
@@ -287,9 +301,15 @@ export default class terms extends Component<any, any> {
           </div>
           <br />
           <div className="text">You can contact us at - </div>
+          <div className="text">By E-mail: support@headout.com</div>
+          <div className="text">By Mail: Headout Inc.</div>
+          <div className="text">311 W 43d St, Suite 12036</div>
+          <div className="text">New York, NY 10036</div>
           <div className="text">
-            By E-mail: support@
-            {supportURL}
+            We will only respond to those notices that substantially comply with
+            the above requirements. We will investigate your claim and will
+            notify you by the method of contact you used to file your notice
+            with us.
           </div>
           <div className="sub-heading">Intellectual Property</div>
           <div className="text">
@@ -326,6 +346,19 @@ export default class terms extends Component<any, any> {
             Party Websites. We have no control over the legal documents and
             privacy practices of third party websites; as such, you access any
             such Third Party Websites at your own risk.
+          </div>
+          <div className="sub-heading">Data Protection</div>
+          <div className="text">
+            We collect and use personal data of users to the extent that is
+            necessary for the creation, design of content or modification of the
+            contractual conditions between the user and us. <br /> If we are
+            involved in the communication for a service agreement between the
+            user and the respective Provider, we shall transfer the data
+            required for this agreement to the respective Provider. This
+            Provider processes and uses the data to initiate, conclude and
+            execute the contract on its own responsibility. <br /> Further
+            information can be found in our data protection conditions at
+            https://www.headout.com/privacy-policy.
           </div>
           <div className="sub-heading">Warranty Disclaimer</div>
           <div className="text">
@@ -386,7 +419,7 @@ export default class terms extends Component<any, any> {
             pending the completion of arbitration. Each party shall bear
             one-half of the arbitration fees and costs, but the prevailing party
             may seek return of such arbitration fees and reasonable attorney
-            fees. ISSUES, OR FORCE MAJEURE.
+            fees.
           </div>
           <div className="sub-heading">General Terms</div>
           <div className="text">

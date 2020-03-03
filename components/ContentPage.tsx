@@ -244,8 +244,9 @@ export default class ContentPage extends Component<any, any> {
             showGroupBooking={showGroupBooking}
             logoRedirectionURL={logoRedirectionURL.url || '/'}
             hasPoweredByHeadoutLogo={
-              microsite_document_ref.data.enable_powered_by_headout_logo ===
-              'Yes'
+              // microsite_document_ref.data.enable_powered_by_headout_logo ===
+              // 'Yes'
+              true
             }
             dropdown={this.state.dropdown}
             handleDropdownToggle={this.handleDropdownToggle}

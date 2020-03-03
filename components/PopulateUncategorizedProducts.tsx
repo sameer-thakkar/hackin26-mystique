@@ -46,6 +46,22 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
         <div className="select-wrapper" id="select-tickets">
           <div className="select-text">
             {labels[currentLanguage].TOUR_LIST_HEADING}
+            <div
+              style={{
+                marginTop: 20,
+                fontFamily: 'Graphik',
+                fontSize: '18px !important',
+                fontWeight: 'normal',
+                fontStyle: 'normal',
+                fontStretch: 'normal',
+                lineHeight: 1.33,
+                letterSpacing: 'normal',
+                textAlign: 'left',
+                color: '#545454',
+              }}
+            >
+              {labels[currentLanguage].TOUR_LIST_SUB_HEADING}
+            </div>
           </div>
           <div className="divider"></div>
         </div>

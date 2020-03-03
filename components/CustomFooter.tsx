@@ -4,11 +4,71 @@ import classNames from 'classnames';
 import sliceHandler from './Slices';
 import { attachQueryParam } from '../utils/helper';
 
+const data = [
+  {
+    UID: 'www.colosseum-rome-tickets.com',
+    Category: 'Colosseum',
+    City: 'Rome',
+  },
+  {
+    UID: 'www.versailles-palace-tickets.com',
+    Category: 'Versailles',
+    City: 'Paris',
+  },
+  { UID: 'www.eiffeltickets.com', Category: 'Eiffel Tower', City: 'Paris' },
+  {
+    UID: 'www.alcazar-seville-tickets.com',
+    Category: 'Alcazar',
+    City: 'Seville',
+  },
+  {
+    UID: 'www.alhambra-granada-tickets.com',
+    Category: 'Alhambra Granada',
+    City: 'Granada',
+  },
+  {
+    UID: 'www.borghesegallerytickets.com',
+    Category: 'Borghese Gallery',
+    City: 'Rome',
+  },
+  {
+    UID: 'harry-potter.london-studio-tours.com',
+    Category: 'Warner Bros. Studio',
+    City: 'London',
+  },
+  { UID: 'www.accademia-tickets.com', Category: 'Accademia', City: 'Florence' },
+  {
+    UID: 'www.st-peters-basilica-tickets.com',
+    Category: "St. Peter's Basilica",
+    City: 'Rome',
+  },
+  {
+    UID: 'www.doge-palace-tickets.com',
+    Category: "Doge's Palace",
+    City: 'Venice',
+  },
+  { UID: 'lido.cabaret-paris.com', Category: 'Paris Cabaret', City: 'Paris' },
+  {
+    UID: 'www.neuschwanstein-tours.com',
+    Category: 'Neuschwanstein',
+    City: 'Munich',
+  },
+];
+
 export default class CustomFooter extends Component<any, any> {
   render() {
-    const { logo, terms, body } = this.props;
+    const { uid, logo, terms, body } = this.props;
     const logoUrl = logo?.url ?? '';
     const altText = logo?.alt ?? 'logo';
+    let block = '';
+    data.forEach(item => {
+      if (item.UID === uid) {
+        block = `
+       ${body[0].primary.heading} is an online website that is owned and operated by Headout which
+            gives you the opportunity to buy guided tours and tickets to the
+            ${item.Category} and other highlights in ${item.City}.`;
+      }
+    });
 
     return (
       <div className="custom-footer">
@@ -23,6 +83,17 @@ export default class CustomFooter extends Component<any, any> {
               alt={altText}
               className="lazyload"
             />
+            <br />
+            <div
+              style={{
+                fontFamily: 'Graphik',
+                paddingRight: 10,
+                fontSize: 14,
+                lineHeight: 1.13,
+              }}
+            >
+              {block}
+            </div>
           </div>
           {body.length ? (
             <div className="columns">
@@ -35,10 +106,40 @@ export default class CustomFooter extends Component<any, any> {
           ) : null}
         </div>
         <div className="terms-line">
-          {sliceHandler({ items: [{ text: terms }], slice_type: 'rich_text' })}
-          <Link href="/terms">
-            <span className="terms-tab">Terms & Conditions</span>
-          </Link>
+          <div style={{ textAlign: 'left', fontSize: 16 }}>
+            {sliceHandler({
+              items: [{ text: terms }],
+              slice_type: 'rich_text',
+            })}
+          </div>
+          <div className="terms-new">
+            <div
+              className="terms"
+              style={{
+                float: 'left',
+                marginBottom: 10,
+                fontSize: 16,
+                marginTop: 20,
+              }}
+            >
+              © 2020 Headout. All rights reserved.
+            </div>
+            <div style={{ display: 'flex' }}>
+              <div className="terms-tab" style={{ marginRight: 8 }}>
+                <Link href="/terms">Terms & Conditions</Link>
+              </div>
+              <Link href="/privacy-policy">
+                <div className="terms-tab" style={{ marginRight: 8 }}>
+                  Privacy Policy
+                </div>
+              </Link>
+              <Link href="/company-details">
+                <div className="terms-tab" style={{ marginRight: 8 }}>
+                  Company Details
+                </div>
+              </Link>
+            </div>
+          </div>
         </div>
         <style jsx global>
           {`
