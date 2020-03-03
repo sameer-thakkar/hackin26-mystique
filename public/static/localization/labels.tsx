@@ -1,5 +1,5 @@
 export const en = {
-  TOUR_LIST_HEADING: 'Select Your Tickets',
+  TOUR_LIST_HEADING: 'Select Your Experience',
   BANNER_CTA: 'Buy Tickets',
   BOOK_NOW_CTA: 'Book Now',
   READ_MORE_TEXT: 'Read More',
@@ -26,10 +26,10 @@ export const es = {
 export const de = {
   TOUR_LIST_HEADING: 'Wählen Sie Ihre Tickets',
   BANNER_CTA: 'Tickets kaufen',
-  BOOK_NOW_CTA: 'Buchen Sie jetzt',
-  READ_MORE_TEXT: 'Mehr Anzeigen',
-  SHOW_LESS_TEXT: 'Weniger Anzeigen',
-  NEXT_AVAILABLE: 'Nächste verfügbare',
+  BOOK_NOW_CTA: 'Jetzt buchen',
+  READ_MORE_TEXT: 'Mehr anzeigen',
+  SHOW_LESS_TEXT: 'Weniger anzeigen',
+  NEXT_AVAILABLE: 'Verfügbar ab',
   EARLIEST_AVAILABILITY: 'Früheste verfügbare',
   TODAY: 'Heute',
   TOMORROW: 'Morgen',
