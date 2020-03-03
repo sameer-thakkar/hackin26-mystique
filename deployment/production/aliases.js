@@ -1,4 +1,11 @@
 module.exports = [
+  'vatican.tickets-rome.com',
+  'uffizi.florencetickets.org',
+  'park-guell.tickets-barcelona.org',
+  'reina-sofia.ticket-madrid.com',
+  'santiago-bernabeu.ticket-madrid.com',
+  'royal-palace.ticket-madrid.com',
+  'prado.ticket-madrid.com',
   'el-escorial.tickets-madrid.org',
   'barcelona-week.tickets-barcelona.org',
   'www.auschwitz-tours.org',
