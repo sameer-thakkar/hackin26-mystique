@@ -10,7 +10,7 @@ module.exports = [
   'sightseeing-bus.barcelona-tickets.com',
   'flamenco.barcelona-tickets.com',
   'montjuic-cable-car.barcelona-tickets.com',
-  'aquarium.barcelona-tickets.com.org',
+  'aquarium.barcelona-tickets.com',
   'aerobus.barcelona-tickets.com',
   'uffizi.tickets-florence.it',
   'www.parkguell-tickets.com',
