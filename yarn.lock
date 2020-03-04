@@ -11790,6 +11790,13 @@ react-id-swiper@^2.3.2:
   dependencies:
     object-assign "^4.1.1"
 
+react-in-viewport@^1.0.0-alpha.11:
+  version "1.0.0-alpha.11"
+  resolved "https://registry.yarnpkg.com/react-in-viewport/-/react-in-viewport-1.0.0-alpha.11.tgz#d6629830a0a0284c7023fb26886fb324017d397a"
+  integrity sha512-T56ehLD+phvpEBZ4U2rZKtBfwqLvacZDOujsoNoEdAQVl5CT8DOeOzjUnvtJnUXLmlrQSxGg0pYMJnb/aj6rmg==
+  dependencies:
+    hoist-non-react-statics "^3.0.0"
+
 react-input-autosize@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/react-input-autosize/-/react-input-autosize-2.2.2.tgz#fcaa7020568ec206bc04be36f4eb68e647c4d8c2"

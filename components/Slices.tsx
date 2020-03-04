@@ -2,7 +2,6 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from '../utils/shortCodes';
-import TableV2 from './slices/TableV2';
 
 const ImageLinksCarousel = dynamic(() => import('./slices/ImageLinksCarousel'));
 const InteractiveImage = dynamic(() => import('./slices/InteractiveImage'));
@@ -29,6 +28,7 @@ const Tab = dynamic(() => import('./slices/Tab'));
 const FAQSlider = dynamic(() => import('./slices/FAQSlider'));
 const CardSection = dynamic(() => import('./slices/CardSection'));
 const Card = dynamic(() => import('./slices/Card'));
+const TableV2 = dynamic(() => import('./slices/TableV2'));
 
 const sliceHandler = (slice, props: any = {}) => {
   switch (slice.slice_type) {

@@ -3,8 +3,9 @@ import Image from '../UI/Image';
 import Swiper from '../Swiper';
 import { SIZES } from '../../constants/ui-constants';
 import { scroller } from 'react-scroll';
+import { stringIdfy } from '../../utils/helper';
 
-export const Banner = props => {
+const Banner = props => {
   const { banners, isMobile, carouselOptions, ready } = props;
   if (isMobile) {
     carouselOptions.spaceBetween = 8;
@@ -54,8 +55,11 @@ export const Banner = props => {
                           ? image.mobile_url
                           : image.url)
                       }
+                      height={isMobile ? 204 : 400}
+                      width={isMobile ? 343 : 1200}
                       dontLazyLoad={index == 0}
                       alt={image.alt}
+                      imageId={stringIdfy(image.alt || '') + index}
                     />
                   </div>
                 );
@@ -120,6 +124,8 @@ export const Banner = props => {
     </div>
   );
 };
+
+export default Banner;
 
 Banner.defaultProps = {
   carouselOptions: {

@@ -8,13 +8,14 @@ const RatingBoosterCombo = props => {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    fetch(`https://api.headout.com/api/v5/tour-group/get/${tgid}`)
+    fetch(`https://api.headout.com/api/v5/tour-group/list?ids[]=${tgid}`)
       .then(res => res.json())
       .then(data => {
+        const tour = data?.tourGroups[0];
         setBooster({
           isLoaded: true,
-          rating: data.averageRating,
-          boosterText: text || data.callToAction,
+          rating: tour?.averageRating,
+          boosterText: text || tour?.callToAction,
         });
         setReady(true);
       });

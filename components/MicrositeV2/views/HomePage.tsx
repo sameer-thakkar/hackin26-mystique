@@ -1,9 +1,10 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import Header from '../Header';
 import LongForm from '../LongForm';
-import Footer from '../Footer';
 import sliceHandler from '../../Slices';
-import { Banner } from '../Banner';
+const Banner = dynamic(() => import('../Banner'), { ssr: false });
+const Footer = dynamic(() => import('../Footer'), { ssr: false });
 import { ProductsContextProvider } from '../../../contexts/Products';
 import { ProductsWrapper } from '../ProductsWrapper';
 import { ResponsiveSelector } from '../ResponsiveSelector';
