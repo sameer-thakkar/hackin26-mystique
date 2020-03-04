@@ -1,4 +1,8 @@
 module.exports = [
+  'palazzo-pitti.florence-tickets.it',
+  'boboli-gardens.florence-tickets.it',
+  'siena-cathedral.florence-tickets.it',
+  'www.london-stadium-tours.com',
   'www.catacombs-paris.com',
   'www.vaticantickets.org',
   'www.mezquita-de-cordoba.org',
