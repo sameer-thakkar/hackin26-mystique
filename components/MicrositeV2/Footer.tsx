@@ -27,7 +27,6 @@ const Footer = props => {
                 alt={altText}
               />
             </div>
-            {isMobile ? <SocialLinks isMobile={isMobile} /> : null}
             {body.length ? (
               <div className="columns">
                 {body.map((slice, index) => (
@@ -37,6 +36,7 @@ const Footer = props => {
                 ))}
               </div>
             ) : null}
+            {isMobile ? <SocialLinks isMobile={isMobile} /> : null}
           </div>
         </div>
         <div className="footer-chin">
@@ -148,12 +148,11 @@ const Footer = props => {
             .custom-footer {
               grid-template-columns: unset;
               grid-row-gap: 30px;
-              justify-items: center;
               grid-row-gap: 1em;
-              justify-content: center;
+              padding-bottom: 24px;
             }
             .footer-wrapper {
-              grid-template-columns: auto auto;
+              grid-template-columns: auto;
               grid-row-gap: 64px;
             }
 
@@ -165,9 +164,8 @@ const Footer = props => {
               padding-top: 24px;
             }
             .columns {
-              grid-column: 1 / 3;
               grid-auto-flow: unset;
-              grid-template-columns: auto auto;
+              grid-template-columns: auto;
             }
             .col {
               justify-self: left;

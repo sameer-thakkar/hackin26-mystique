@@ -28,7 +28,7 @@ const TrustBoosters = props => {
             justify-content: space-between;
             grid-gap: 32px;
             margin-top: 32px;
-            margin-bottom: 32px;
+            margin-bottom: 59px;
           }
           .trust-boosters .trust-booster {
             display: grid;

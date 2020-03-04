@@ -67,7 +67,7 @@ const sliceHandler = (slice, props: any = {}) => {
     case 'content_box':
       return <RichTextBox slices={slice.items} />;
     case 'feature_box':
-      return <FeatureBox blocks={slice.items} />;
+      return <FeatureBox blocks={slice.items} lazyLoad={true} />;
     case 'footer_column':
       return (
         <TitleLinksCard title={slice.primary.heading} links={slice.items} />

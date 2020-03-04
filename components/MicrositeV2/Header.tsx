@@ -118,8 +118,8 @@ const Header = props => {
             grid-template-columns: auto auto;
             justify-content: space-between;
             align-items: center;
-            padding-top: 19px;
-            padding-bottom: 19px;
+            padding-top: 14px;
+            padding-bottom: 14px;
             z-index: ${languageDropdown ? 100 : 15};
             user-select: none;
           }
@@ -138,6 +138,7 @@ const Header = props => {
           header .header-logo {
             height: unset;
             display: flex;
+            padding: 8px;
             margin-right: 16px;
           }
           header .header-logo img {
@@ -181,7 +182,10 @@ const Header = props => {
               height: 24px;
             }
             header {
-              padding: 16px;
+              padding: 12px;
+            }
+            header .header-logo {
+              padding: 4px;
             }
             .fixed-wrap {
               min-height: 56px;

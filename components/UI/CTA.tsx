@@ -21,6 +21,7 @@ const StyledCTA = styled.div`
     (bordered
       ? `
     border: 1px solid ${COLORS.RHAPSODY};
+    width: calc(100% - 34px);
     a {
       color: ${COLORS.RHAPSODY};
     }

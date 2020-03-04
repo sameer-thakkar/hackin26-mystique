@@ -28,7 +28,7 @@ const LongForm = props => {
         .long-form-wrap.no-border {
           border-top: unset;
           padding-top: 0;
-          margin-top: 0;
+          margin-top: 24px;
         }
         .long-form-wrap h1,
         .long-form-wrap h2,

@@ -26,7 +26,15 @@ export const MobileProductPage = props => {
       noSwiping: true,
     };
   }
-  const allContent = [...tour.contentBlocks.left, ...tour.contentBlocks.right];
+  let allContent = [...tour.contentBlocks.left, ...tour.contentBlocks.right];
+  allContent = allContent.sort((a, b) => {
+    let aLen = a.len;
+    let bLen = b.len;
+    // TODO: (unHack) Push Cancellation Policy to the end
+    if (/cancel/.exec(a.label.toLowerCase())) aLen += 500000;
+    if (/cancel/.exec(b.label.toLowerCase())) bLen += 500000;
+    return aLen - bLen;
+  });
   let url = host || window.location.host;
   const isDev = url.includes('localhost');
   const currentHost = !isDev ? url : parse(uid, true).pathname;
@@ -47,15 +55,21 @@ export const MobileProductPage = props => {
       <div className="prod-image">
         {/* <img src={tour.descriptionImage} alt="" /> */}
         {/* <Banner  isMobile={true} carouselOptions/> */}
-        <Swiper {...carouselOptions} {...extendedSwiperOptions}>
-          {tour.images.map((image, index) => {
-            return (
-              <div key={index} className="swiper-slide">
-                <Image url={image.url} dontLazyLoad={index == 0} />
-              </div>
-            );
-          })}
-        </Swiper>
+        {tour.images.length > 1 ? (
+          <Swiper {...carouselOptions} {...extendedSwiperOptions}>
+            {tour.images.map((image, index) => {
+              return (
+                <div key={index} className="swiper-slide">
+                  <Image url={image.url} dontLazyLoad={index == 0} />
+                </div>
+              );
+            })}
+          </Swiper>
+        ) : (
+          <div className="single-image">
+            <Image url={tour.images[0]?.url} dontLazyLoad={true} />
+          </div>
+        )}
       </div>
       <div className="prod-content">
         <div className="head">
@@ -102,16 +116,16 @@ export const MobileProductPage = props => {
 
         <div className="content-blocks">
           {tour.description && tour.description.length ? (
-            <div className="content-block tour-description">
+            <div className="content-block full-block tour-description">
               <RichText
                 render={tour.description}
                 htmlSerializer={shortCodeSerializer}
               />
             </div>
           ) : null}
-          <div className="hr-line"></div>
+          <div className="hr-line full-block "></div>
           {tour.theater ? (
-            <div className="content-block">
+            <div className="content-block full-block ">
               <RichText
                 render={tour.theater}
                 htmlSerializer={shortCodeSerializer}
@@ -119,8 +133,14 @@ export const MobileProductPage = props => {
             </div>
           ) : null}
           {allContent.map((block, index) => {
+            const isShortBlock = block.len < 50;
             return (
-              <div className="content-block" key={index}>
+              <div
+                className={`content-block ${
+                  !isShortBlock ? 'full-block' : ''
+                } `}
+                key={index}
+              >
                 <span className="label-title">{block.label}: </span>
                 <RichText
                   render={block.content}
@@ -146,7 +166,7 @@ export const MobileProductPage = props => {
           .mobile-product-wrap {
             display: grid;
             grid-row-gap: 24px;
-            grid-template-rows: 56px 220px auto;
+            grid-template-rows: 56px 214px auto;
             overflow: hidden;
           }
           .mobile-product-wrap::before {
@@ -189,10 +209,10 @@ export const MobileProductPage = props => {
           }
           .mobile-product-wrap .title {
             font-size: 18px;
-            font-family: ${AVENIR.FONT_STACK};
-            font-weight: ${AVENIR.HEAVY};
-            color: #545454;
-            line-height: 1.33;
+            font-family: ${GRAPHIK.FONT_STACK};
+            font-weight: ${GRAPHIK.SEMIBOLD};
+            color: ${COLORS.TWO_BLACK};
+            line-height: 24px;
             text-transform: unset;
           }
 
@@ -202,17 +222,19 @@ export const MobileProductPage = props => {
             grid-row-gap: 8px;
           }
           .price {
-            font-family: ${GRAPHIK.FONT_STACK};
+            font-family: ${AVENIR.FONT_STACK};
+            font-weight: ${AVENIR.HEAVY};
+            margin-left: 16px;
           }
           .mobile-product-wrap .current-price {
             font-size: 18px;
-            font-weight: ${GRAPHIK.MEDIUM};
-            color: #545454;
+            font-weight: ${AVENIR.HEAVY};
+            color: ${COLORS.TWO_BLACK};
           }
           .price .scratched {
-            font-weight: ${GRAPHIK.REGULAR};
+            font-weight: ${AVENIR.MEDIUM};
             font-size: 12px;
-            color: ${COLORS.GREY_75};
+            color: ${COLORS.FOUR_BLACK};
           }
           .mobile-product-wrap .tags {
             color: #ec1943;
@@ -244,7 +266,7 @@ export const MobileProductPage = props => {
             display: grid;
             grid-column: 1 / 3;
             align-items: center;
-            color: ${COLORS.GREY_75};
+            color: ${COLORS.FOUR_BLACK};
             grid-auto-flow: column;
             justify-content: left;
             grid-gap: 8px;
@@ -268,6 +290,7 @@ export const MobileProductPage = props => {
             font-size: 16px;
             font-weight: ${AVENIR.HEAVY};
             font-family: ${AVENIR.FONT_STACK};
+            color: ${COLORS.TWO_BLACK};
           }
 
           .cta-wrap {
@@ -321,7 +344,7 @@ export const MobileProductPage = props => {
             padding: 7px 12px;
             background: #ebebeb;
             border-radius: 2px;
-            color: #545454;
+            color: ${COLORS.TWO_BLACK};
           }
           .vendor-name {
             grid-column: 1 / 3;
@@ -354,7 +377,11 @@ export const MobileProductPage = props => {
           }
           .content-blocks {
             display: grid;
+            grid-template-column: 1fr 1fr;
             grid-row-gap: 32px;
+          }
+          .full-block {
+            grid-column: 1 / 3;
           }
           .hr-line {
             margin-top: -8px;
@@ -382,7 +409,8 @@ export const MobileProductPage = props => {
             height: 100%;
             width: 100%;
           }
-          .prod-image .swiper-container img {
+          .prod-image .swiper-container img,
+          .single-image img {
             border-radius: 4px;
           }
           .boosters .inline-availability {

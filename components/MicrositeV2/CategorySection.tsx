@@ -49,6 +49,7 @@ const CategorySection = props => {
         .category-description {
           margin: 0;
           font-size: 14px;
+          width: 60%;
           font-family: ${AVENIR.FONT_STACK};
           line-height: 20px;
           font-weight: ${AVENIR.MEDIUM};
@@ -68,6 +69,7 @@ const CategorySection = props => {
           .category-description {
             font-family: ${GRAPHIK.FONT_STACK};
             line-height: 20px;
+            width: 100%;
             font-weight: ${GRAPHIK.REGULAR};
           }
         }

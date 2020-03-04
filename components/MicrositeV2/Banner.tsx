@@ -5,7 +5,7 @@ import { SIZES } from '../../constants/ui-constants';
 import { scroller } from 'react-scroll';
 
 export const Banner = props => {
-  const { banners, isMobile, carouselOptions } = props;
+  const { banners, isMobile, carouselOptions, ready } = props;
   if (isMobile) {
     carouselOptions.spaceBetween = 8;
   }
@@ -49,11 +49,13 @@ export const Banner = props => {
                   >
                     <Image
                       url={
-                        isMobile && image.mobile_url
+                        ready &&
+                        (isMobile && image.mobile_url
                           ? image.mobile_url
-                          : image.url
+                          : image.url)
                       }
                       dontLazyLoad={index == 0}
+                      alt={image.alt}
                     />
                   </div>
                 );
@@ -76,7 +78,7 @@ export const Banner = props => {
           }
           .carousel {
             max-width: ${SIZES.MAX_WIDTH};
-            fmargin: 0 auto;
+            margin: 0 auto;
           }
 
           @media (max-width: 768px) {

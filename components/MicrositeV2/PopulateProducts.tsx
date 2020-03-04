@@ -98,6 +98,9 @@ const PopulateProducts = props => {
             padding: 16px;
             text-align: center;
           }
+          .product-wrapper {
+            margin-top: 24px;
+          }
         }
       `}</style>
     </div>

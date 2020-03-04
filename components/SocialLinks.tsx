@@ -36,7 +36,7 @@ const SocialLinks = props => {
           }
           @media (max-width: 768px) {
             .social-links {
-              justify-content: right;
+              justify-content: left;
             }
           }
         `}

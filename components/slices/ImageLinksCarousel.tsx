@@ -34,7 +34,7 @@ const StyledContent = styled.div`
     font-size: 24px !important;
     line-height: 33px;
     font-weight: ${AVENIR.HEAVY};
-    color: ${COLORS.DAVY_GREY};
+    color: ${COLORS.TWO_BLACK};
   }
   div {
     margin: 0;
@@ -42,6 +42,7 @@ const StyledContent = styled.div`
     font-family: ${AVENIR.FONT_STACK};
     font-size: 14px;
     line-height: 20px;
+    color: ${COLORS.FOUR_BLACK};
     p {
       margin: 0;
     }
@@ -52,6 +53,7 @@ const StyledContent = styled.div`
     }
     div {
       line-height: 20px;
+      margin-bottom: 8px;
     }
   }
 `;
@@ -95,18 +97,20 @@ const StyledSlide = styled.div`
   img {
     height: 175px;
     width: 290px !important;
+    border-radius: 4px;
   }
   div {
     font-family: ${AVENIR.FONT_STACK};
     font-size: 16px;
     font-weight: ${AVENIR.HEAVY};
-    color: ${COLORS.DAVY_GREY};
+    color: ${COLORS.TWO_BLACK};
+    margin-top: 4px;
   }
   @media (max-width: 768px) {
-    margin-right: 5px;
+    margin-right: 0px;
     img {
-      width: 120px !important;
-      height: 67.5px;
+      width: 104px !important;
+      height: 60px;
     }
     div {
       font-size: 14px;
@@ -122,8 +126,8 @@ const Slide = props => (
         url={props.image.url}
         alt={props.image.alt}
       />
-      <div>{props.card_title}</div>
     </a>
+    <div>{props.card_title}</div>
   </StyledSlide>
 );
 

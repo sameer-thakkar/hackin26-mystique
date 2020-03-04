@@ -1,14 +1,14 @@
-import React from "react";
-import ReactHtmlParser from "react-html-parser";
-import Head from "next/head";
-import parse from "url-parse";
-import { withoutTrailingSlash } from "../../utils/helper";
+import React from 'react';
+import ReactHtmlParser from 'react-html-parser';
+import Head from 'next/head';
+import parse from 'url-parse';
+import { withoutTrailingSlash } from '../../utils/helper';
 
 const withTrailingSlash = url =>
-  url.charAt(url.length - 1) !== "/" ? `${url}/` : url;
+  url.charAt(url.length - 1) !== '/' ? `${url}/` : url;
 
 const withHttps = url =>
-  (url.startsWith("http") ? url : `https://${url}`).replace("http:", "https:");
+  (url.startsWith('http') ? url : `https://${url}`).replace('http:', 'https:');
 
 function getSchemaJson(data) {
   const {
@@ -18,64 +18,64 @@ function getSchemaJson(data) {
     description,
     datePublished,
     dateModified,
-    faq_schema
+    faq_schema,
   } = data;
   const { origin, href } = parse(pageUrl, true);
   const microbrandUrl = withoutTrailingSlash(origin);
   const contentPageUrl = withoutTrailingSlash(href);
-  const langCode = data.lang ? data.lang.substring(0, 2) : "en-us";
+  const langCode = data.lang ? data.lang.substring(0, 2) : 'en-us';
   const faqSchemaExists = faq_schema.length && faq_schema[0].question;
   const baseSchema = {
-    "@context": "https://schema.org",
-    "@graph": [
+    '@context': 'https://schema.org',
+    '@graph': [
       {
-        "@type": "WebSite",
-        "@id": `${microbrandUrl}/#website`,
+        '@type': 'WebSite',
+        '@id': `${microbrandUrl}/#website`,
         url: `${microbrandUrl}/`,
         name: `${title}`,
         potentialAction: {
-          "@type": "SearchAction",
+          '@type': 'SearchAction',
           target: `${microbrandUrl}/?s={search_term_string}`,
-          "query-input": "required name=search_term_string"
-        }
+          'query-input': 'required name=search_term_string',
+        },
       },
       {
-        "@type": "ImageObject",
-        "@id": `${contentPageUrl}/#primaryimage`,
+        '@type': 'ImageObject',
+        '@id': `${contentPageUrl}/#primaryimage`,
         url: `${favicon.url}`,
         width: 1727,
-        height: 453
+        height: 453,
       },
       {
-        "@type": "WebPage",
-        "@id": `${contentPageUrl}/#webpage`,
+        '@type': 'WebPage',
+        '@id': `${contentPageUrl}/#webpage`,
         url: `${contentPageUrl}/`,
         inLanguage: `${langCode}`,
         name: `${title}`,
-        isPartOf: { "@id": `${microbrandUrl}/#website` },
+        isPartOf: { '@id': `${microbrandUrl}/#website` },
         primaryImageOfPage: {
-          "@id": `${contentPageUrl}/#primaryimage`
+          '@id': `${contentPageUrl}/#primaryimage`,
         },
         description,
         datePublished,
-        dateModified
-      }
-    ]
+        dateModified,
+      },
+    ],
   };
 
   const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
     mainEntity: faq_schema.map(obj => {
       return {
-        "@type": "Question",
+        '@type': 'Question',
         name: `${obj.question}`,
         acceptedAnswer: {
-          "@type": "Answer",
-          text: `${obj.answer}`
-        }
+          '@type': 'Answer',
+          text: `${obj.answer}`,
+        },
       };
-    })
+    }),
   };
 
   if (faqSchemaExists) {
@@ -104,23 +104,23 @@ export default data => {
     isDev,
     currentLanguage,
     originalHost,
-    serverRequestStartTimestamp
+    serverRequestStartTimestamp,
   } = data;
 
-  const isNonProd = isDev || originalHost.startsWith("stage.");
+  const isNonProd = isDev || originalHost.startsWith('stage.');
 
   const amplitude_key = isNonProd
     ? process.env.AMPLITUDE_DEV
     : process.env.AMPLITUDE_PROD;
 
-  const GTM_key = isNonProd ? "GTM-N5L6JFS" : "GTM-TR8SRJG";
+  const GTM_key = isNonProd ? 'GTM-N5L6JFS' : 'GTM-TR8SRJG';
 
   const robotsContent = [];
-  if (nofollow === "True") {
-    robotsContent.push("nofollow");
+  if (nofollow === 'True') {
+    robotsContent.push('nofollow');
   }
-  if (noindex === "True") {
-    robotsContent.push("noindex");
+  if (noindex === 'True') {
+    robotsContent.push('noindex');
   }
 
   const imageUrl = image ? image.url : logo ? logo.url : null;
@@ -131,7 +131,7 @@ export default data => {
       <meta property="og:title" content={title} />
       <meta property="twitter:title" content={title} />
 
-      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      <meta name="viewport" content="width=device-width" />
       <link rel="icon" href={`${favicon.url}`} />
 
       <meta name="description" content={description} />
@@ -168,7 +168,7 @@ export default data => {
       ) : null}
 
       {robotsContent.length ? (
-        <meta name="robots" content={robotsContent.join(", ")} />
+        <meta name="robots" content={robotsContent.join(', ')} />
       ) : null}
 
       <script
@@ -188,14 +188,14 @@ export default data => {
               mystiquePerf.ttl = mystiquePerf.clientTimestamp - mystiquePerf.serverTimestamp;
               mystiquePerf.fired = true;
             }
-          `
+          `,
         }}
       />
 
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(getSchemaJson(data))
+          __html: JSON.stringify(getSchemaJson(data)),
         }}
       />
 
@@ -204,14 +204,14 @@ export default data => {
           __html: `//<![CDATA[
             var dataLayer = dataLayer || [];
           //]]>
-          `
+          `,
         }}
       ></script>
       <script
         dangerouslySetInnerHTML={{
           __html: `//<![CDATA[
             var dataLayer_content = [];
-            dataLayer.push( dataLayer_content );//]]>`
+            dataLayer.push( dataLayer_content );//]]>`,
         }}
       ></script>
       <script
@@ -221,7 +221,7 @@ export default data => {
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.defer=true;j.src=
             '//www.googletagmanager.com/gtm.'+'js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','${GTM_key}');//]]>`
+            })(window,document,'script','dataLayer','${GTM_key}');//]]>`,
         }}
       ></script>
 
@@ -252,7 +252,7 @@ export default data => {
             ;if(!n._iq.hasOwnProperty(e)){n._iq[e]={_q:[]};v(n._iq[e])}return n._iq[e]}
             ;e.amplitude=n})(window,document);
 
-            amplitude.getInstance().init('${amplitude_key}');`
+            amplitude.getInstance().init('${amplitude_key}');`,
           }}
         ></script>
       ) : null}
@@ -263,14 +263,14 @@ export default data => {
   const scriptTags = headerScripts
     .map(script => script.script_tag)
     .filter(str => str)
-    .map(str => str.replace("<script>", "").replace("</script>", ""))
+    .map(str => str.replace('<script>', '').replace('</script>', ''))
     .map((item, index) => (
       <script key={index} dangerouslySetInnerHTML={{ __html: item }} />
     ));
 
   const { host, pathname } = parse(pageUrl);
 
-  const pathnameWithTrailingSlash = pathname.endsWith("/")
+  const pathnameWithTrailingSlash = pathname.endsWith('/')
     ? pathname
     : `${pathname}/`;
 
@@ -278,20 +278,20 @@ export default data => {
     if (pathname.startsWith(`/${currentLanguage}`)) {
       // For language pages
       // For language pages of subpages MBs
-      return pathnameWithTrailingSlash.replace(`/${currentLanguage}/`, "");
+      return pathnameWithTrailingSlash.replace(`/${currentLanguage}/`, '');
     }
     // For '/' and subpages like /home/
-    return pathnameWithTrailingSlash.replace("/", "");
+    return pathnameWithTrailingSlash.replace('/', '');
   };
 
   const getHref = langCode => {
     return `https://${host}/${
-      langCode === "en" ? "" : `${langCode}/`
+      langCode === 'en' ? '' : `${langCode}/`
     }${getPathName()}`;
   };
 
   const hrefLangs = languages.map(({ language }, idx) => {
-    let langCode = language.split("-")[1].toLowerCase();
+    let langCode = language.split('-')[1].toLowerCase();
 
     return (
       <link

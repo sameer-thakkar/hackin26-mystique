@@ -73,6 +73,8 @@ const FeatureBox: React.FC<FeatureBoxProps> = ({ blocks, lazyLoad }) => (
             {imageURL ? (
               <Image
                 dontLazyLoad={!lazyLoad}
+                height={375}
+                width={580}
                 url={imageURL}
                 alt={`feature-box_${index}`}
               />

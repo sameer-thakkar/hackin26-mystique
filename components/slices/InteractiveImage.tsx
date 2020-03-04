@@ -28,6 +28,9 @@ const InteractiveImage = props => {
           width: 800px;
           height: 400px;
         }
+        .react-transform-element {
+          cursor: crosshair;
+        }
         @media (max-width: 768px) {
           .react-transform-element {
             // transform-origin: -50% -50%;

@@ -29,6 +29,7 @@ const StyledTourComparisionTable = styled.div`
   }
   .comparision-description {
     padding-bottom: 32px;
+    width: 60%;
     font-size: 14px;
     font-family: ${AVENIR.FONT_STACK};
     line-height: 20px;
@@ -77,7 +78,7 @@ const StyledTourComparisionTable = styled.div`
   .old-price {
     font-size: 12px;
     font-family: ${AVENIR.FONT_STACK};
-    color: ${COLORS.GREY_75};
+    color: ${COLORS.EIGHT_GRAY};
     line-height: 16px;
     grid-row: 1;
     text-decoration: line-through;
@@ -143,6 +144,7 @@ const StyledTourComparisionTable = styled.div`
     line-height: 20px;
     font-family: ${GRAPHIK.FONT_STACK};
     font-weight: ${GRAPHIK.REGULAR};
+    color: ${COLORS.FOUR_BLACK};
   }
   .vendor-cta {
     margin-top: -8px;
@@ -161,6 +163,7 @@ const StyledTourComparisionTable = styled.div`
   }
   ul {
     list-style: initial;
+    padding-left: 1em;
   }
   @media (max-width: 768px) {
     .full-width-wrap {
@@ -177,7 +180,7 @@ const StyledTourComparisionTable = styled.div`
     }
     .row {
       grid-column-gap: 12px;
-      grid-template-columns: 4px repeat(4, 1fr) 4px;
+      grid-template-columns: 4px repeat(${({ tourCount }) => tourCount}, 1fr) 4px;
     }
     .row::before {
       dispaly: grid;
@@ -232,6 +235,8 @@ const StyledTourComparisionTable = styled.div`
       font-size: 14px;
       color: ${COLORS.DAVY_GREY};
       font-weight: ${GRAPHIK.REGULAR};
+      padding-bottom: 24px;
+      width: 100%;
     }
     .row.sticky {
       z-index: unset;
@@ -384,7 +389,7 @@ const TourComparisonTable = props => {
               return (
                 <div className="column flat-price-block">
                   <div className="content-block">
-                    <div className="block-label">Price</div>
+                    <div className="block-label">Prices Starting</div>
                     <div className="block-content">
                       <span className="current-price">
                         {tour.currencySymbol}
@@ -439,7 +444,7 @@ const TourComparisonTable = props => {
                 return (
                   <div className="column flat-price-block">
                     <div className="content-block">
-                      <div className="block-label">Price</div>
+                      <div className="block-label">Prices Starting</div>
                       <div className="block-content">
                         <span className="current-price">
                           {tour.currencySymbol}

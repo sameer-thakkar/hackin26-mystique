@@ -181,6 +181,7 @@ class MicrositeV2 extends Component<any, any> {
             mobile_url:
               image.mobile_banner_uploaded.url || image.mobile_banner_url.url,
             interaction: image.interaction,
+            alt: image.uploaded_image.alt || image.image_alt,
           },
         ];
       }, []),

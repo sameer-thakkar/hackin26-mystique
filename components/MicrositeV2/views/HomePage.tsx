@@ -62,8 +62,8 @@ export const HomePage = props => {
           />
         </div>
       ) : null}
-      {heroProps.banners.length && ready ? (
-        <Banner {...heroProps} isMobile={isMobile} />
+      {heroProps.banners.length ? (
+        <Banner {...heroProps} isMobile={isMobile} ready={ready} />
       ) : null}
       {heroSectionSlice.length ? (
         <div className="main-wrapper hero-slice-section">

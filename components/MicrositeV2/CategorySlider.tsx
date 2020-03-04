@@ -212,6 +212,9 @@ export const CategorySlider = props => {
           .controls .btn svg {
             stroke-width: 1.5px;
           }
+          .category-slider .content > p {
+            width: 100%;
+          }
           .controls .btn-right svg {
             transform: rotate(180deg);
           }
