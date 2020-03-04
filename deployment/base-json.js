@@ -2,59 +2,67 @@ module.exports = {
   version: 2,
   routes: [
     {
-      src: "/_next/(.*)",
-      dest: "/_next/$1"
+      src: '/_next/(.*)',
+      dest: '/_next/$1',
     },
     {
-      src: "/static/(.*)",
-      dest: "/static/$1"
+      src: '/static/(.*)',
+      dest: '/static/$1',
     },
     {
-      src: "/favicon.ico",
-      dest: "/static/$1"
+      src: '/favicon.ico',
+      dest: '/static/$1',
     },
     {
-      src: "/robots.txt",
-      dest: "/api/robots"
+      src: '/robots.txt',
+      dest: '/api/robots',
     },
     {
-      src: "/api/(.*)",
-      dest: "/api/$1"
+      src: '/api/(.*)',
+      dest: '/api/$1',
     },
     {
-      src: "/terms",
-      dest: "/terms"
+      src: '/terms',
+      dest: '/terms',
     },
     {
-      src: "/create-uid",
-      dest: "/create-uid"
+      src: '/privacy-policy',
+      dest: '/privacy-policy',
     },
     {
-      src: "/sitemap.xml",
-      dest: "/api/sitemap"
+      src: '/company-details',
+      dest: '/company-details',
     },
     {
-      src: "/prismic/preview(.*)",
-      dest: "/api/preview"
+      src: '/create-uid',
+      dest: '/create-uid',
     },
     {
-      src: "/prismic/resolve(.*)",
-      dest: "/api/resolve"
+      src: '/sitemap.xml',
+      dest: '/api/sitemap',
     },
     {
-      src: "/group-submit-form",
-      methods: ["POST"],
-      dest: "/api/group-submit-form"
+      src: '/prismic/preview(.*)',
+      dest: '/api/preview',
     },
     {
-      src: "/(.*)",
-      dest: "/index"
-    }
+      src: '/prismic/resolve(.*)',
+      dest: '/api/resolve',
+    },
+    {
+      src: '/group-submit-form',
+      methods: ['POST'],
+      dest: '/api/group-submit-form',
+    },
+    {
+      src: '/(.*)',
+      dest: '/index',
+    },
   ],
   env: {
-    AMPLITUDE_PROD: "@amplitude_prod",
-    AMPLITUDE_DEV: "@amplitude_dev",
-    SENDGRID_API_KEY: "@sendgrid_api_key_sec",
-    SLACK_GRP_BKNG_WEBHOOK: "@slack_grp_bkng_webhook_sec"
-  }
+    AMPLITUDE_PROD: '@amplitude_prod',
+    AMPLITUDE_DEV: '@amplitude_dev',
+    SENDGRID_API_KEY: '@sendgrid_api_key_sec',
+    SLACK_GRP_BKNG_WEBHOOK: '@slack_grp_bkng_webhook_sec',
+  },
 };

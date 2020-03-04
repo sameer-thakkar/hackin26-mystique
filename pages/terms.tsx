@@ -1,59 +1,57 @@
 import React, { Component } from 'react';
-import Prismic from 'prismic-javascript';
-import { Client } from '../prismic-config';
+import parse from 'url-parse';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import parse from 'url-parse';
 import CustomFooter from '../components/CustomFooter';
-import { DROPDOWN_ELEMENT } from '../constants';
+import ContentContainer from '../components/UI/ContentContainer';
+import Paragraph from '../components/UI/Paragraph';
+import { DROPDOWN_ELEMENT, CUSTOM_TYPES } from '../constants';
+import { Client } from '../prismic-config';
+import { TopHeading, SubHeading } from '../components/UI/Headings';
 import '../public/static/styles.css';
 
-export default class terms extends Component<any, any> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tourPrices: [],
-      currencySymbol: '',
-      popupOpen: false,
-      showGroupBookingModal: false,
-      dropdown: {
-        lang: false,
-        hamburger: false,
-      },
-    };
-  }
+export default class TermsPage extends Component<any, any> {
+  state = {
+    dropdown: {
+      lang: false,
+      hamburger: false,
+    },
+    isMobile: false,
+  };
+
   static async getInitialProps({ req, query }) {
     try {
       const isDev = req
         ? !!query.mystique_uid
         : window.location.search.includes('mystique_uid');
 
-      const props = await terms.getTermsData({ req, isDev, query });
+      const props = await TermsPage.getData({ req, isDev, query });
       return props;
     } catch (error) {
       console.log(error);
     }
   }
 
-  static async getTermsData({ req, isDev, query }) {
-    let superHost;
+  static async getData({ req, isDev, query }) {
+    let uid;
     if (isDev) {
-      superHost = req
+      uid = req
         ? query.mystique_uid
         : window.location.search.includes('mystique_uid');
     } else {
       const { host } = req ? req.headers : window.location;
-      superHost = host.replace('stage.', '');
+      uid = host.replace('stage.', '');
     }
     const lang = 'en-us';
-    const uidType = 'microsite';
-    const response = await Client(req).getByUID(uidType, superHost, { lang });
+    const response = await Client(req).getByUID(CUSTOM_TYPES.MICROSITE, uid, {
+      lang,
+    });
     const footerID = response.data.footer_ref.id;
     if (footerID) {
       const customFooter = await Client(req).getByID(footerID);
       response.data.customFooter = customFooter;
     }
-    return { response, host: superHost };
+    return { response, host: parse(uid, true).pathname, uid };
   }
 
   handleDropdownToggle = elementIdentifier => {
@@ -85,11 +83,12 @@ export default class terms extends Component<any, any> {
     }
   };
 
+  componentDidMount() {
+    this.setState({ isMobile: window.innerWidth < 768 });
+  }
+
   render() {
     const { response, host } = this.props;
-    const isMobile = () => {
-      return document.documentElement.clientWidth < 768;
-    };
     const { url: logoUrl } = response.data.link_to_logo_file;
     const { url: uploadedLogoUrl, alt: altText } = response.data.logo;
     const { logo_alt_text: logoAltText } = response.data;
@@ -112,16 +111,7 @@ export default class terms extends Component<any, any> {
       text: '',
     };
     const { footer_logo_alt_text: footerAltText } = response.data;
-
-    let url = host || window.location.host;
-    const isDev = url.includes('localhost');
-    const currentHost = !isDev ? url : parse(uid, true).pathname;
-    const micrositeUrl = currentHost.includes('stage')
-      ? currentHost.replace('stage.', '')
-      : currentHost;
-    let hostSplit = micrositeUrl.split('.');
-    hostSplit.shift();
-    const supportURL = hostSplit.join('.');
+    const micrositeURL = host;
 
     return (
       <React.Fragment>
@@ -134,25 +124,19 @@ export default class terms extends Component<any, any> {
           availableLanguages={availableLanguages}
           selectedLanguage={currentLanguage}
           uid={uid}
-          isMobile={isMobile}
+          isMobile={this.state.isMobile}
           parentComponent={'TERMS'}
           logoRedirectionURL={logoRedirectionURL.url || '/'}
           dropdown={this.state.dropdown}
           handleDropdownToggle={this.handleDropdownToggle}
         />
-        <div className="terms-container">
-          <div
-            className="select-wrapper"
-            id="select-tickets"
-            style={{ margin: '0px' }}
-          >
-            <h1 className="select-text">Terms And Conditions</h1>
-            <div className="divider"></div>
-          </div>
-          <div className="sub-heading">Terms of Use</div>
-          <div className="text">
+        <ContentContainer>
+          <TopHeading h1>Terms and Conditions</TopHeading>
+          <br />
+          <SubHeading>Terms of Use</SubHeading>
+          <Paragraph>
             This web page represents a legal document that serves as the terms
-            of use for our website (“Terms of Use”), {micrositeUrl} and any
+            of use for our website (“Terms of Use”), {micrositeURL} and any
             associated mobile application (collectively, “Website”) as owned and
             operated by Headout Inc (“Headout”). Capitalized terms, unless
             otherwise defined, have the meaning specified within the Definitions
@@ -174,9 +158,9 @@ export default class terms extends Component<any, any> {
             accept our Legal Terms, you should not access our Website. If you
             have already accessed our Website and do not accept our Legal Terms,
             you should immediately discontinue use of our Website.
-          </div>
-          <div className="sub-heading">Definitions</div>
-          <div className="text">
+          </Paragraph>
+          <SubHeading>Definitions</SubHeading>
+          <Paragraph>
             The terms: “us” or “we” or “our” refers to the owner of the Website.
             <br />
             A “Member” is an individual that has registered with our Website to
@@ -206,27 +190,25 @@ export default class terms extends Component<any, any> {
             their Profile or in other postings to our Website, as “Member
             Content.” When we refer to our Website, our Content is included by
             reference.
-          </div>
-          <div className="sub-heading">Limited License</div>
-          <div className="text">
-            <span className="limited-license">
-              You are granted a non-exclusive, non-transferable, revocable
-              license to access and use our Website strictly in accordance with
-              our Legal Terms. Your use of our Website is solely for the
-              purposes as provided herein.
-            </span>
-          </div>
-          <div className="sub-heading">Our Relationship to You</div>
-          <div className="text">
+          </Paragraph>
+          <SubHeading>Limited License</SubHeading>
+          <Paragraph>
+            You are granted a non-exclusive, non-transferable, revocable license
+            to access and use our Website strictly in accordance with our Legal
+            Terms. Your use of our Website is solely for the purposes as
+            provided herein.
+          </Paragraph>
+          <SubHeading>Our Relationship to You</SubHeading>
+          <Paragraph>
             This website is strictly an intermediary service for purchasing
             goods/services and does NOT enter into any other relationship with
             you, other than that of an independent contractor. Our Legal Terms
             in no way create any agency, partnership, joint venture,
             employee-employer or franchisor-franchisee relationship between you
             and other Users, or our affiliates.
-          </div>
-          <div className="sub-heading">Legal Compliance</div>
-          <div className="text">
+          </Paragraph>
+          <SubHeading>Legal Compliance</SubHeading>
+          <Paragraph>
             You agree to comply with all applicable domestic and international
             laws, statutes, ordinances, and regulations regarding your use of
             our Website. We reserve the right to investigate complaints or
@@ -238,34 +220,27 @@ export default class terms extends Component<any, any> {
             or entities relating to your profile, email addresses, usage
             history, posted materials, IP addresses and traffic information, as
             allowed under our Privacy Policy.
-          </div>
-          <div className="sub-heading">
-            Eligibility and Registration for Membership
-          </div>
-          <div className="text">
-            <span className="eligibility">
-              You certify that you are at least age 18 years of age or older. If
-              you are between the ages of 13 and 18, you certify that you have
-              your parent’s permission to use our Website and become a Member.
-              You may not access this website if you are under the age of 13.
-              Any registration or use our our site by any Member in
-              contravention of the above limitations is unauthorized, unlicensed
-              and in violation of our Legal Terms. You agree to and to abide by
-              all of the terms and conditions of our Legal Terms. This website
-              has the sole right and discretion to determine whether to accept a
-              Member, and may reject a Member’s registration, with or without
-              explanation.
-            </span>
-          </div>
-          <div className="sub-heading">Information From Children</div>
-          <div className="text">
+          </Paragraph>
+          <SubHeading>Eligibility and Registration for Membership</SubHeading>
+          <Paragraph>
+            You certify that you are at least age 18 years of age or older. If
+            you are between the ages of 13 and 18, you certify that you have
+            your parent’s permission to use our Website and become a Member. You
+            may not access this website if you are under the age of 13. Any
+            registration or use our our site by any Member in contravention of
+            the above limitations is unauthorized, unlicensed and in violation
+            of our Legal Terms. You agree to and to abide by all of the terms
+            and conditions of our Legal Terms. This website has the sole right
+            and discretion to determine whether to accept a Member, and may
+            reject a Member’s registration, with or without explanation.
+          </Paragraph>
+          <SubHeading>Information From Children</SubHeading>
+          <Paragraph>
             We do not knowingly solicit, collect or retain information from any
             individuals under the age of 13.
-          </div>
-          <div className="sub-heading">
-            Digital Millennium Copyright Act Compliance
-          </div>
-          <div className="text">
+          </Paragraph>
+          <SubHeading>Digital Millennium Copyright Act Compliance</SubHeading>
+          <Paragraph>
             If you believe that your work has been copied on our Website, or any
             of our other systems or networks in a way that constitutes, please
             provide the following information to Company for receipt of
@@ -298,21 +273,20 @@ export default class terms extends Component<any, any> {
                 owner’s behalf.
               </li>
             </ul>
-          </div>
-          <br />
-          <div className="text">You can contact us at - </div>
-          <div className="text">By E-mail: support@headout.com</div>
-          <div className="text">By Mail: Headout Inc.</div>
-          <div className="text">311 W 43d St, Suite 12036</div>
-          <div className="text">New York, NY 10036</div>
-          <div className="text">
+          </Paragraph>
+          <Paragraph>You can contact us at - </Paragraph>
+          <Paragraph>By E-mail: support@headout.com</Paragraph>
+          <Paragraph>By Mail: Headout Inc.</Paragraph>
+          <Paragraph>311 W 43d St, Suite 12036</Paragraph>
+          <Paragraph>New York, NY 10036</Paragraph>
+          <Paragraph>
             We will only respond to those notices that substantially comply with
             the above requirements. We will investigate your claim and will
             notify you by the method of contact you used to file your notice
             with us.
-          </div>
-          <div className="sub-heading">Intellectual Property</div>
-          <div className="text">
+          </Paragraph>
+          <SubHeading>Intellectual Property</SubHeading>
+          <Paragraph>
             Our Website may contain our trademarks as well as those of
             Providers, our affiliates, and other companies, in the form of
             words, graphics, and logos. Your use of our Website does not
@@ -326,17 +300,17 @@ export default class terms extends Component<any, any> {
             Member Content, but by providing it to our Website, you do not
             receive any other rights in our Content other than what belongs to
             you already.
-          </div>
-          <div className="sub-heading">Linking to Our Website</div>
-          <div className="text">
+          </Paragraph>
+          <SubHeading>Linking to Our Website</SubHeading>
+          <Paragraph>
             You may provide links to our Website, provided (a) that you do not
             remove or obscure, by framing or otherwise, any portion of our
             Website, (b) your Website does not engage in illegal or immoral
             activities, and (c) you discontinue providing links to our Website
             immediately upon request by us.
-          </div>
-          <div className="sub-heading">Links to Other Websites</div>
-          <div className="text">
+          </Paragraph>
+          <SubHeading>Links to Other Websites</SubHeading>
+          <Paragraph>
             Our Website may contain links to third party websites (“Third Party
             Websites”). These links are provided solely as a convenience to you.
             By linking to these Third Party Websites, we do not create or have
@@ -346,9 +320,9 @@ export default class terms extends Component<any, any> {
             Party Websites. We have no control over the legal documents and
             privacy practices of third party websites; as such, you access any
             such Third Party Websites at your own risk.
-          </div>
-          <div className="sub-heading">Data Protection</div>
-          <div className="text">
+          </Paragraph>
+          <SubHeading>Data Protection</SubHeading>
+          <Paragraph>
             We collect and use personal data of users to the extent that is
             necessary for the creation, design of content or modification of the
             contractual conditions between the user and us. <br /> If we are
@@ -359,9 +333,9 @@ export default class terms extends Component<any, any> {
             execute the contract on its own responsibility. <br /> Further
             information can be found in our data protection conditions at
             https://www.headout.com/privacy-policy.
-          </div>
-          <div className="sub-heading">Warranty Disclaimer</div>
-          <div className="text">
+          </Paragraph>
+          <SubHeading>Warranty Disclaimer</SubHeading>
+          <Paragraph>
             We reserves the right to change any and all Content and features of
             our Website, at any time without notice. Our Website may be
             temporarily unavailable from time to time for maintenance or other
@@ -381,9 +355,9 @@ export default class terms extends Component<any, any> {
             personal injury or death, resulting from anyone’s use of our
             Website, or for any interactions between Users of our Website,
             whether online or offline.
-          </div>
-          <div className="sub-heading">Limitation of Liability</div>
-          <div className="text">
+          </Paragraph>
+          <SubHeading>Limitation of Liability</SubHeading>
+          <Paragraph>
             <strong>We</strong>, as well as all our affiliates, shall not be
             liable for any loss, injury, claim, liability, or damage of any kind
             resulting in any way from (a) any errors in or omissions from our
@@ -398,9 +372,9 @@ export default class terms extends Component<any, any> {
             SPECIFIED HEREIN, FOR ANY REASON, INCLUDING, BUT NOT LIMITED TO,
             DELAYS, CANCELLATIONS, STRIKES, GOVERNMENTAL ISSUES, OR FORCE
             MAJEURE.
-          </div>
-          <div className="sub-heading">Arbitration</div>
-          <div className="text">
+          </Paragraph>
+          <SubHeading>Arbitration</SubHeading>
+          <Paragraph>
             Any legal controversy or legal claim arising out of or relating to
             our Legal Terms and/or our Website, excluding legal action taken by
             us to collect or recover damages for, or obtain any injunction
@@ -420,9 +394,9 @@ export default class terms extends Component<any, any> {
             one-half of the arbitration fees and costs, but the prevailing party
             may seek return of such arbitration fees and reasonable attorney
             fees.
-          </div>
-          <div className="sub-heading">General Terms</div>
-          <div className="text">
+          </Paragraph>
+          <SubHeading>General Terms</SubHeading>
+          <Paragraph>
             Our Legal Terms shall be treated as though it were executed and
             performed in New York, NY, USA, and shall be governed by and
             construed in accordance with the laws of the State of New York, USA,
@@ -438,8 +412,8 @@ export default class terms extends Component<any, any> {
             Legal Terms shall take precedence. Our failure to enforce any
             provision of our Legal Terms shall not be deemed a waiver of such
             provision nor of the right to enforce such provision.
-          </div>
-        </div>
+          </Paragraph>
+        </ContentContainer>
         {customFooter ? (
           <footer>
             <CustomFooter {...customFooter.data} />
@@ -450,7 +424,7 @@ export default class terms extends Component<any, any> {
             footerLinks={footerLinks ? footerLinks : null}
             disclaimer={disclaimer ? disclaimer : null}
             footerAltText={footerAltText || footerAltTextUploaded || null}
-            isMobile={isMobile}
+            isMobile={this.state.isMobile}
           />
         )}
       </React.Fragment>

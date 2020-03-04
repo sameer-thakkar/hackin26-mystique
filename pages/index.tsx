@@ -302,6 +302,20 @@ export default class Page extends React.Component<any, any> {
                 lang,
               })
               .then(async page => {
+                if (page) {
+                  if (page.uid !== uid) {
+                    let url = page.data?.page_url;
+                    if (host.slice(0, 5) === 'stage') {
+                      url = url.split('//');
+                      url = url.join('//stage.');
+                    }
+                    redirectTo({
+                      res: serverResponse,
+                      url,
+                      type: 301,
+                    });
+                  }
+                }
                 if (!(page && page.data)) {
                   return {
                     statusCode: 404,

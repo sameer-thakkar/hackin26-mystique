@@ -1,60 +1,63 @@
 import React, { Component } from 'react';
-import Prismic from 'prismic-javascript';
 import { Client } from '../prismic-config';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import parse from 'url-parse';
 import CustomFooter from '../components/CustomFooter';
-import { DROPDOWN_ELEMENT } from '../constants';
+import { DROPDOWN_ELEMENT, CUSTOM_TYPES } from '../constants';
+import ContentContainer from '../components/UI/ContentContainer';
 import '../public/static/styles.css';
+import { TopHeading, SubHeading } from '../components/UI/Headings';
+import Paragraph from '../components/UI/Paragraph';
+import styled from 'styled-components';
 
+const Title = styled.div`
+  margin: 10px 0px;
+
+  font-size: 18px;
+`;
 export default class privacy extends Component<any, any> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tourPrices: [],
-      currencySymbol: '',
-      popupOpen: false,
-      showGroupBookingModal: false,
-      dropdown: {
-        lang: false,
-        hamburger: false,
-      },
-    };
-  }
+  state = {
+    dropdown: {
+      lang: false,
+      hamburger: false,
+    },
+    isMobile: false,
+  };
+
   static async getInitialProps({ req, query }) {
     try {
       const isDev = req
         ? !!query.mystique_uid
         : window.location.search.includes('mystique_uid');
 
-      const props = await privacy.getTermsData({ req, isDev, query });
+      const props = await privacy.getData({ req, isDev, query });
       return props;
     } catch (error) {
       console.log(error);
     }
   }
 
-  static async getTermsData({ req, isDev, query }) {
-    let superHost;
+  static async getData({ req, isDev, query }) {
+    let uid;
     if (isDev) {
-      superHost = req
+      uid = req
         ? query.mystique_uid
         : window.location.search.includes('mystique_uid');
     } else {
       const { host } = req ? req.headers : window.location;
-      superHost = host.replace('stage.', '');
+      uid = host.replace('stage.', '');
     }
-
     const lang = 'en-us';
-    const uidType = 'microsite';
-    const response = await Client(req).getByUID(uidType, superHost, { lang });
+    const response = await Client(req).getByUID(CUSTOM_TYPES.MICROSITE, uid, {
+      lang,
+    });
     const footerID = response.data.footer_ref.id;
     if (footerID) {
       const customFooter = await Client(req).getByID(footerID);
       response.data.customFooter = customFooter;
     }
-    return { response, host: superHost };
+    return { response, host: parse(uid, true).pathname, uid };
   }
   handleDropdownToggle = elementIdentifier => {
     switch (elementIdentifier) {
@@ -85,11 +88,12 @@ export default class privacy extends Component<any, any> {
     }
   };
 
+  componentDidMount() {
+    this.setState({ isMobile: window.innerWidth < 768 });
+  }
+
   render() {
     const { response, host } = this.props;
-    const isMobile = () => {
-      return document.documentElement.clientWidth < 768;
-    };
     const { url: logoUrl } = response.data.link_to_logo_file;
     const { url: uploadedLogoUrl, alt: altText } = response.data.logo;
     const { logo_alt_text: logoAltText } = response.data;
@@ -112,19 +116,10 @@ export default class privacy extends Component<any, any> {
       text: '',
     };
     const { footer_logo_alt_text: footerAltText } = response.data;
-
-    let url = host || window.location.host;
-    const isDev = url.includes('localhost');
-    const currentHost = !isDev ? url : parse(uid, true).pathname;
-    const micrositeUrl = currentHost.includes('stage')
-      ? currentHost.replace('stage.', '')
-      : currentHost;
-    let hostSplit = micrositeUrl.split('.');
-    hostSplit.shift();
-    const supportURL = hostSplit.join('.');
+    const micrositeURL = host;
 
     return (
-      <React.Fragment>
+      <>
         <Header
           languages={languages ? languages : null}
           headerLinks={headerLinks ? headerLinks : null}
@@ -134,39 +129,32 @@ export default class privacy extends Component<any, any> {
           availableLanguages={availableLanguages}
           selectedLanguage={currentLanguage}
           uid={uid}
-          isMobile={isMobile}
+          isMobile={this.state.isMobile}
           parentComponent={'TERMS'}
           logoRedirectionURL={logoRedirectionURL.url || '/'}
           dropdown={this.state.dropdown}
           handleDropdownToggle={this.handleDropdownToggle}
         />
-        <div className="terms-container">
-          <div
-            className="select-wrapper"
-            id="select-tickets"
-            style={{ margin: '0px' }}
-          >
-            <h1 className="select-text">Privacy Policy</h1>
-            <div className="divider"></div>
-          </div>
-          <div className="text">
+        <ContentContainer>
+          <TopHeading h1>Privacy Policy</TopHeading>
+          <Paragraph>
             This document represents a legal document that serves as our privacy
             policy (“Privacy Policy”). It governs the privacy terms of our
             Website. Our Privacy Policy is part of our Legal Terms. Capitalized
             terms, unless otherwise defined below, have the meaning specified
             within the Definitions section our Terms of Use. <br />
-            The last update to our Privacy Policy was posted on {micrositeUrl}
+            The last update to our Privacy Policy was posted on {micrositeURL}
             /privacy-policy
-          </div>
-          <div className="sub-heading">Your Privacy</div>
-          <div className="text">
+          </Paragraph>
+          <SubHeading>Your Privacy</SubHeading>
+          <Paragraph>
             Headout Inc. (“Headout”/”We”/”Us”) follows all legal requirements to
             protect your privacy. Our Privacy Policy is a legal statement that
             explains how we may collect information from you, how we may share
             your information, and how you can limit our sharing of your
             information.
-          </div>
-          <div className="text">
+          </Paragraph>
+          <Paragraph>
             We break up the types of information you share into Non Personal
             Information and Personally Identifiable Information.
             <ul>
@@ -192,56 +180,56 @@ export default class privacy extends Component<any, any> {
                 information provided through our Website).
               </li>
             </ul>
-          </div>
-          <div className="sub-heading">Information We Collect</div>
-          <div className="text">
+          </Paragraph>
+          <SubHeading>Information We Collect</SubHeading>
+          <Paragraph>
             Generally, you control the amount and type of information you
             provide to Headout when using our Website. As a Visitor, you can
             browse our Website to find out more about our Website a You are not
             required to provide us with any Personally Identifiable Information
             as a Visitor.
-            <div className="text">
+            <Paragraph>
               However, if registered as a Member or a Customer, you must provide
               Personally Identifiable Information to Headout in order for us to
               provide you with certain features our Website. We collect your
               Personally Identifiable Information in the following ways:
-            </div>
-          </div>
-          <div className="text-sub">At Member Registration</div>
-          <div>
+            </Paragraph>
+          </Paragraph>
+          <Title>At Member Registration</Title>
+          <Paragraph>
             When you register for membership, we collect your name and email
             address so that we can communicate with you about our Website.
-          </div>
-          <div className="text-sub">Participation in Our Website</div>
-          <div className="text">
+          </Paragraph>
+          <Title>Participation in Our Website</Title>
+          <Paragraph>
             You can upload Member Content as part of using our Website. You
             should take great care in what you may upload so as not to infringe
             on your own privacy or that of others. We don’t have a duty to
             review what you upload.
-          </div>
-          <div className="text-sub">Online Purchases</div>
-          <div className="text">
+          </Paragraph>
+          <Title>Online Purchases</Title>
+          <Paragraph>
             Members and Visitors can make purchases of products/services from a
             Provider through our Website. The payment information you provide
             clearly contains Personally Identifiable Information. However, any
             payment information that you give to a Provider outside of our
             Website is not subject to this Privacy Policy.
-          </div>
-          <div className="text-sub">Online Forms</div>
-          <div className="text">
+          </Paragraph>
+          <Title>Online Forms</Title>
+          <Paragraph>
             There may be online forms used in our Website. The information you
             enter into these online forms may contain Personally Identifiable
             Information.
-          </div>
-          <div className="sub-heading">Computer Information Collected</div>
-          <div className="text">
+          </Paragraph>
+          <Title>Computer Information Collected</Title>
+          <Paragraph>
             When you use our Website, we automatically collect certain computer
             information by the interaction of your mobile phone or web browser
             with our Website. Such information is typically considered Non
             Personal Information. We also collect the following:
-          </div>
-          <div className="text-sub">Cookies</div>
-          <div className="text">
+          </Paragraph>
+          <Title>Cookies</Title>
+          <Paragraph>
             Our Website uses “Cookies” to identify the areas of our Website that
             you have visited. A Cookie is a small piece of data stored on your
             computer or mobile device by your web browser. We use Cookies to
@@ -250,9 +238,9 @@ export default class privacy extends Component<any, any> {
             disable Cookies, you may not be able to access functionality on our
             Website correctly or at all. We never place Personally Identifiable
             Information in Cookies.
-          </div>
-          <div className="text-sub">Web Beacons</div>
-          <div className="text">
+          </Paragraph>
+          <Title>Web Beacons</Title>
+          <Paragraph>
             We may also use a technology called, web beacons, to collect general
             information about your use of our Website and your use of special
             promotions or newsletters (“Web Beacons”). The information we
@@ -261,9 +249,9 @@ export default class privacy extends Component<any, any> {
             your activity outside of our Website. We do not link Non Personal
             Information from the Web Beacons to Personally Identifiable
             Information without your permission.
-          </div>
-          <div className="text-sub">Automatic Information</div>
-          <div className="text">
+          </Paragraph>
+          <Title>Automatic Information</Title>
+          <Paragraph>
             We automatically receive information from your web browser or mobile
             device. This information includes the name of the Website from which
             you entered our Website, if any, as well as the name of the Website
@@ -273,19 +261,19 @@ export default class privacy extends Component<any, any> {
             browser type, type of mobile device, and computer operating system.
             We use all of this information to analyze trends among our Users to
             help improve our Website.
-          </div>
-          <div className="sub-heading">How We Use Your Information</div>
-          <div className="text">
+          </Paragraph>
+          <SubHeading>How We Use Your Information</SubHeading>
+          <Paragraph>
             We use the information we receive from you as follows:
-          </div>
-          <div className="text-sub">Providing and Improving Our Website</div>
-          <div className="text">
+          </Paragraph>
+          <Title>Providing and Improving Our Website</Title>
+          <Paragraph>
             We may use the Personally Identifiable information you provide to us
             along with any computer information we receive to provide our
             Website to you as well as to make improvements to it.
-          </div>
-          <div className="sub-heading">Communications and Email Alerts</div>
-          <div className="text">
+          </Paragraph>
+          <SubHeading>Communications and Email Alerts</SubHeading>
+          <Paragraph>
             When we communicate with you about our Website, we will use the
             email address you provided when registering as a Member. We may also
             send you Website alerts regarding your use of our Website. Finally,
@@ -294,11 +282,11 @@ export default class privacy extends Component<any, any> {
             change contact preferences at any time through your account. While
             you can opt-out of promotional messages, you cannot opt-out of
             receiving Website alerts.
-          </div>
-          <div className="text-sub">
+          </Paragraph>
+          <Title>
             Sharing Information with Affiliates and Other Third Parties
-          </div>
-          <div className="text">
+          </Title>
+          <Paragraph>
             We do not sell, rent, or otherwise provide your Personally
             Identifiable Information to third parties for marketing purposes. We
             may provide your Personally Identifiable Information to affiliates
@@ -307,11 +295,9 @@ export default class privacy extends Component<any, any> {
             will only receive information necessary to provide the respective
             services and will be bound by confidentiality agreements limiting
             the use of such information.
-          </div>
-          <div className="sub-heading">
-            Legally Required Releases of Information
-          </div>
-          <div className="text">
+          </Paragraph>
+          <SubHeading>Legally Required Releases of Information</SubHeading>
+          <Paragraph>
             We may be legally required to disclose your Personally Identifiable
             Information, if such disclosure is (a) required by subpoena, law, or
             other legal process; (b) necessary to assist law enforcement
@@ -321,9 +307,9 @@ export default class privacy extends Component<any, any> {
             parties including you and/or other Members; and/or (e) necessary to
             protect the legal rights, personal/real property, or personal safety
             of Headout, our Users, employees, and affiliates.
-          </div>
-          <div className="text-sub">Disclosures to Successors</div>
-          <div className="text">
+          </Paragraph>
+          <SubHeading>Disclosures to Successors</SubHeading>
+          <Paragraph>
             If we are acquired or merge, in whole or in part, with another
             business that would become responsible for providing the Website to
             you, we retain the right to transfer your Personally Identifiable
@@ -331,9 +317,9 @@ export default class privacy extends Component<any, any> {
             right to use your Personally Identifiable Information according to
             the terms of this Privacy Policy as well as to any changes to this
             Privacy Policy as instituted by the new business.
-          </div>
-          <div className="sub-heading">Protecting Your Child’s Privacy</div>
-          <div className="text">
+          </Paragraph>
+          <SubHeading>Protecting Your Child’s Privacy</SubHeading>
+          <Paragraph>
             We want to protect your Child’s privacy. Even though our Website is
             not designed for use by a Child, we realize that a Child may attempt
             to access our Website. We do not knowingly collect Personally
@@ -347,20 +333,20 @@ export default class privacy extends Component<any, any> {
             information to third parties. You acknowledge that we do not verify
             the age of our users nor do we have any liability to do so. If you
             are a Child, please do not access our Website.
-          </div>
-          <div className="sub-heading">
+          </Paragraph>
+          <SubHeading>
             Protecting the Privacy Rights of Third Parties
-          </div>
-          <div className="text">
+          </SubHeading>
+          <Paragraph>
             We believe in everyone’s right to privacy. If any Member Content you
             upload to our Website contain the images of third parties (i.e.
             bystanders), you need to make sure you have permission to include
             them in your image. While we are not legally liable for the actions
             of our Users, we will remove any images for which we are notified
             that such images violate the privacy rights of others.
-          </div>
-          <div className="sub-heading">Links to Other Websites</div>
-          <div className="text">
+          </Paragraph>
+          <SubHeading>Links to Other Websites</SubHeading>
+          <Paragraph>
             Our Website may contain links to other websites (“Third Party
             Websites”). You agree that we have no control over such Third Party
             Websites and that such Third Party Websites are NOT subject to this
@@ -370,17 +356,17 @@ export default class privacy extends Component<any, any> {
             documents of such Third Party Websites to see how they treat your
             personal information. You acknowledge that your use and access of
             these Websites is solely at your own risk.
-          </div>
-          <div className="sub-heading">Our Email Policy</div>
-          <div className="text">
+          </Paragraph>
+          <SubHeading>Our Email Policy</SubHeading>
+          <Paragraph>
             We and our affiliates fully comply with international laws regarding
             SPAM. You can always opt out of receipt of further email
             correspondence from us and/or our affiliates. We agree that we will
             not sell, rent, or trade your email address to any unaffiliated
             third-party without your permission.
-          </div>
-          <div className="sub-heading">Our Security Policy</div>
-          <div className="text">
+          </Paragraph>
+          <SubHeading>Our Security Policy</SubHeading>
+          <Paragraph>
             We have constructed our Website using industry standard encryption
             and authentication tools to protect your Personally Identifiable
             Information. When we collect your Personally Identifiable
@@ -394,9 +380,9 @@ export default class privacy extends Component<any, any> {
             anyone. You should always log out of our Website when not in use,
             especially if you are sharing a computer or mobile device with
             someone else or are using a public computer.
-          </div>
-          <div className="sub-heading">Privacy Policy Updates</div>
-          <div className="text">
+          </Paragraph>
+          <SubHeading>Privacy Policy Updates</SubHeading>
+          <Paragraph>
             We reserves the right to modify this Privacy Policy at any time. You
             should review this Privacy Policy frequently. If we make material
             changes to this policy, we will notify you here, by email, or by
@@ -404,22 +390,22 @@ export default class privacy extends Component<any, any> {
             Updated" date at the beginning of this Privacy Policy. Any changes
             we make to our Privacy Policy are effective as of this Last Updated
             date and replace any prior Privacy Policies.
-          </div>
-          <div className="sub-heading">Changing Your Information</div>
-          <div className="text">
+          </Paragraph>
+          <SubHeading>Changing Your Information</SubHeading>
+          <Paragraph>
             You may change your email address or other Personally Identifiable
             Information at any time using the account management features found
             on our Website.
-          </div>
-          <div className="sub-heading">
+          </Paragraph>
+          <SubHeading>
             Questions About Our Privacy Practices or This Privacy Policy
-          </div>
-          <div className="text">
+          </SubHeading>
+          <Paragraph>
             If you have any questions about our Privacy Practices or this
             Policy, please contact us by email at privacy@headout.com
-          </div>
-          <div className="sub-heading">Your California Privacy Rights</div>
-          <div className="text">
+          </Paragraph>
+          <SubHeading>Your California Privacy Rights</SubHeading>
+          <Paragraph>
             Your California Privacy Rights identifies the practices of Headout
             as they relate to the use and sharing of personal information about
             California residents collected through this website. Under the law
@@ -434,13 +420,13 @@ export default class privacy extends Component<any, any> {
             prior calendar year. To obtain from us the information specified by
             California law, please contact:
             <br />
-            <div className="text">You can contact us at - </div>
-            <div className="text">By E-mail: support@headout.com</div>
-            <div className="text">By Mail: Headout Inc.</div>
-            <div className="text">311 W 43d St, Suite 12036</div>
-            <div className="text">New York, NY 10036</div>
-          </div>
-        </div>
+            <Paragraph>You can contact us at - </Paragraph>
+            <Paragraph>By E-mail: support@headout.com</Paragraph>
+            <Paragraph>By Mail: Headout Inc.</Paragraph>
+            <Paragraph>311 W 43d St, Suite 12036</Paragraph>
+            <Paragraph>New York, NY 10036</Paragraph>
+          </Paragraph>
+        </ContentContainer>
         {customFooter ? (
           <footer>
             <CustomFooter {...customFooter.data} />
@@ -451,10 +437,10 @@ export default class privacy extends Component<any, any> {
             footerLinks={footerLinks ? footerLinks : null}
             disclaimer={disclaimer ? disclaimer : null}
             footerAltText={footerAltText || footerAltTextUploaded || null}
-            isMobile={isMobile}
+            isMobile={this.state.isMobile}
           />
         )}
-      </React.Fragment>
+      </>
     );
   }
 }

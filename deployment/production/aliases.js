@@ -1,4 +1,11 @@
 module.exports = [
+  'www.catacombs-paris.com',
+  'www.vaticantickets.org',
+  'www.mezquita-de-cordoba.org',
+  'www.duomo-florence.com',
+  'www.parkguelltickets.org',
+  'www.uffizi-tickets.org',
+  'www.st-marks-basilica.com',
   'www.tickets-florence.it',
   'duomo.tickets-florence.it',
   'casa-vicens.barcelona-tickets.com',

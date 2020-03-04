@@ -11,6 +11,7 @@ const StyledWrapper = styled.div`
   display: grid;
   grid-auto-flow: row;
   grid-row-gap: 16px;
+  overflow: hidden;
 `;
 
 const StyledMobileSlider = styled.div`
