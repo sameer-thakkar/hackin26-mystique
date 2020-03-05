@@ -1,4 +1,12 @@
 module.exports = [
+  'www.tickets-osaka.com',
+  'usj.tickets-osaka.com',
+  'www.tickets-tokyo.com',
+  'robot-restaurant.tickets-tokyo.com',
+  'sumo-experience.tickets-tokyo.com',
+  'www.hagia-sophia-tickets.com',
+  'www.bosphorus-cruises.com',
+  'www.acropolis-tickets.com',
   'www.mezquitadescordoba.com',
   'tulip-garden.tickets-amsterdam.com',
   'palazzo-pitti.tickets-florence.it',
