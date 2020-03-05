@@ -1,4 +1,5 @@
 module.exports = [
+  'www.mezquitadescordoba.com',
   'tulip-garden.tickets-amsterdam.com',
   'palazzo-pitti.tickets-florence.it',
   'boboli-gardens.tickets-florence.it',
