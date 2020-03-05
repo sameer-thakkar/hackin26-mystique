@@ -7,7 +7,7 @@ import parse from 'url-parse';
 import classNames from 'classnames';
 import * as labels from '../public/static/localization/labels';
 import { ANALYTICS_EVENTS } from '../constants';
-import { COLORS } from '../constants/ui-constants';
+import { COLORS, GRAPHIK } from '../constants/ui-constants';
 
 const isLengthyArray = item => Array.isArray(item) && item.length;
 
@@ -128,9 +128,14 @@ export default class Product extends Component<any, any> {
                 );
               })}
             </div>
-            <div className="v1-booster">
-              <RichText render={booster} htmlSerializer={shortCodeSerializer} />
-            </div>
+            {!isMobile && RichText.asText(booster).trim().length > 0 ? (
+              <div className="v1-booster">
+                <RichText
+                  render={booster}
+                  htmlSerializer={shortCodeSerializer}
+                />
+              </div>
+            ) : null}
             {hasOffer &&
               offerId &&
               productOffer.map((offer, index) => {
@@ -244,6 +249,11 @@ export default class Product extends Component<any, any> {
             </div>
           </div>
         )}
+        {isMobile && RichText.asText(booster).trim().length > 0 ? (
+          <div className="v1-booster">
+            <RichText render={booster} htmlSerializer={shortCodeSerializer} />
+          </div>
+        ) : null}
         <div className="desc-wrapper">
           <div className="product-desc">
             {isHighlightsFromPrismic ? (
@@ -273,17 +283,50 @@ export default class Product extends Component<any, any> {
             font-weight: 400;
             line-height: 1.31;
             text-align: left;
-            color: ${COLORS.TEAL};
-            margin-top: 4px;
+            color: ${COLORS.CORAL};
+            margin: 0.8em 0;
             font-size: 1em;
-            margin-bottom: 0;
             grid-column: 1/3;
             display: inline-block;
+          }
+
+          @media (max-width: 768px) {
+            .v1-booster {
+              font-size: 0.8em;
+              display: grid;
+              grid-template-columns: 40px auto;
+              grid-gap: 10px;
+              padding: 1.2em;
+              border-bottom: 1px solid #ebebebeb;
+              align-items: center;
+              margin: 0;
+            }
           }
         `}</style>
         <style global jsx>{`
           .v1-booster p {
             margin: 0;
+          }
+          .v1-booster br {
+            display: none;
+          }
+          .v1-booster .block-img img {
+            display: none;
+          }
+          .v1-booster p strong {
+            font-weight: unset;
+          }
+          @media (max-width: 768px) {
+            .v1-booster br {
+              display: initial;
+            }
+            .v1-booster .block-img img {
+              width: 100%;
+              display: inline;
+            }
+            .v1-booster p strong {
+              font-weight: ${GRAPHIK.HEAVY};
+            }
           }
         `}</style>
       </div>

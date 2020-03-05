@@ -29,6 +29,7 @@ export const COLORS = {
   DAVY_GREY: '#545454',
   GREY_75: '#757575',
   CHALK: '#EBEBEB',
+  CORAL: '#593BE5',
   ETHER: '#4FC3F7',
   MED_STATE_BLUE: '#7B68DB',
   RHAPSODY_GRADIENT: 'linear-gradient(45deg, #EC1943 0%, #FF5888 100%)',
