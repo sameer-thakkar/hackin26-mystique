@@ -41,6 +41,10 @@ const StyledSlider = styled.div`
     grid-auto-flow: column;
   }
   @media (max-width: 768px) {
+    height: max-content;
+    .swiper-wrapper {
+      height: max-content;
+    }
     .swiper-container {
       width: 100%;
       height: auto;
@@ -57,7 +61,7 @@ const StyledSlider = styled.div`
 `;
 
 export const Slider = props => {
-  const { images, carouselOptions, rebuildOnUpdate } = props;
+  const { images, carouselOptions, rebuildOnUpdate, isMobile } = props;
   carouselOptions.rebuildOnUpdate = rebuildOnUpdate;
   const [swiper, updateSwiper] = useState(null);
   const [currentIndex, updateCurrentIndex] = useState(0);
@@ -94,7 +98,12 @@ export const Slider = props => {
         {images.map((image, index) => {
           return (
             <div key={index} className="swiper-slide">
-              <Image dontLazyLoad={true} url={image?.url} alt={image.alt} />
+              <Image
+                height={isMobile ? 195 : 375}
+                dontLazyLoad={true}
+                url={image?.url}
+                alt={image.alt}
+              />
             </div>
           );
         })}

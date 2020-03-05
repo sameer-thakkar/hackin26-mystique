@@ -36,6 +36,7 @@ export const COLORS = {
   TWO_BLACK: '#222',
   FOUR_BLACK: '#444',
   EIGHT_GRAY: '#888',
+  LIGHTER_WHITE: '#FAFAFA',
 };
 
 export const SIZES = {

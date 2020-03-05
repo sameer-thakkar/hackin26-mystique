@@ -7,7 +7,6 @@ const StyledChevron = styled.div`
   height: 1.25em;
   display: inline-block;
   position: relative;
-  margin: 0 1em;
   cursor: pointer;
   &::before,
   &::after {

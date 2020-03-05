@@ -61,9 +61,8 @@ const StyledTourComparisionTable = styled.div`
   .row {
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: repeat(${({ tourCount }) => tourCount}, 1fr) ${({
-        isMobile,
-      }) => (isMobile ? '16px' : '')};
+    grid-template-columns: repeat(4, 1fr) ${({ isMobile }) =>
+        isMobile ? '16px' : ''};
     grid-column-gap: 24px;
   }
   .tour-booster {

@@ -15,11 +15,18 @@ const StyledTable = styled.div`
     font-weight: ${GRAPHIK.SEMIBOLD};
     margin-bottom: 40px;
   }
+  @media (max-width: 768px) {
+    .heading {
+      margin-bottom: 0;
+    }
+    grid-gap: 24px;
+  }
 `;
 const StyledRow = styled.div`{
-  background: ${COLORS.CHALK};
+  background: ${COLORS.WHITE};
   &:nth-of-type(2n){
-    background: ${COLORS.WHITE};
+    background: ${COLORS.LIGHTER_WHITE};
+    color: ${COLORS.FOUR_BLACK};
   }
   display: grid;
   grid-auto-flow: column;
@@ -31,6 +38,7 @@ const StyledRow = styled.div`{
     }
     grid-template-columns: unset;
     grid-template-rows: repeat(${({ rowCount }) => rowCount}, auto);
+    margin-top: 0;
   }
 `;
 const StyledColumn = styled.div`
@@ -46,12 +54,37 @@ const StyledColumn = styled.div`
     &:nth-of-type(1) {
       display: none;
     }
+    background: ${COLORS.WHITE};
+    &:nth-of-type(2n) {
+      background: ${COLORS.LIGHTER_WHITE};
+    }
     &:nth-of-type(${({ colCount }) => colCount + 1}) {
       grid-column: 1 / 3;
       grid-row: 1;
+      font-size: 18px;
+      padding-left: 0;
+      padding-top: 0;
+      background: ${COLORS.WHITE};
+      font-weight: ${GRAPHIK.HEAVY};
     }
   }
 `;
+
+/**
+ *
+ *
+ * A table on prismic, is a mix of two `slice types`.
+ *
+ * Steps to create a table.
+ *
+ * **Step 1:** We mark the beginning of a table by adding a `Table Start` slice. (additionally you can add a heading for your table here.)
+ *
+ * **Step 2:** Add any number of `Table Row` slices as required. (`Table Row` slice also controls number of columns in each row, can be left blank to skip a column)
+ *
+ * **Step 3:** Close the Table by adding the `Table End` slice
+ *
+ * > PS: On Mobile, The First Row gets transformed as First column, and first column becomes the heading for each row.[Use the canvas tab to visualize this.]
+ */
 
 const TableV2 = props => {
   const { rows, title, isMobile } = props;

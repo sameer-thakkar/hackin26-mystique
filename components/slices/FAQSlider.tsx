@@ -10,6 +10,9 @@ const StyledFAQSlider = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 24px;
+  border: 1px solid #ebebeb;
+  border-radius: 2px;
+  height: max-content;
   width: 100%;
   line-height: 1.4;
   @media (max-width: 768px) {
@@ -19,7 +22,6 @@ const StyledFAQSlider = styled.div`
 
 const StyledSliderWrapper = styled.div`
   display: grid;
-  height: 368px;
   overflow: hidden;
   max-height: 368px;
   width: auto;
@@ -32,20 +34,27 @@ const StyledSliderWrapper = styled.div`
   }
   @media (max-width: 768px) {
     max-height: 195px;
-    margin-bottom: 16px;
+    .swiper-slide img {
+      height: 195px;
+    }
   }
 `;
 
 const StyledFAQWrap = styled.div`
   .faq-item {
     padding: 16px 0;
+    margin-right: 24px;
     border-bottom: 1px solid ${COLORS.CHALK};
     display: grid;
     grid-template-rows: max-content max-content;
   }
+  .faq-item:last-child {
+    border-bottom: none;
+  }
   .question {
     display: grid;
     grid-template-columns: 1fr auto;
+    grid-column-gap: 10px;
     font-weight: ${AVENIR.HEAVY};
     font-family: ${AVENIR.FONT_STACK};
   }
@@ -55,13 +64,15 @@ const StyledFAQWrap = styled.div`
   @media (max-width: 768px) {
     .faq-item {
       grid-row-gap: 16px;
+      margin-right: 0;
+      padding: 16px;
     }
   }
 `;
 
 const StyledTextBlock = styled.div`
-  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
-  margin-top: 8px;
+  display: ${({ isOpen }) => (isOpen ? 'grid' : 'none')};
+  grid-row-gap: 8px;
   font-family: ${GRAPHIK.FONT_STACK};
   p {
     margin: 0;
@@ -136,10 +147,13 @@ const FAQSlider = props => {
                     <Slider
                       images={faqs[openFAQIndex].images}
                       id={Math.random()}
+                      isMobile={isMobile}
                     />
                   </StyledSliderWrapper>
                 ) : null}
-                <RichText render={faqItem.answer} />
+                <div className="answer-content">
+                  <RichText render={faqItem.answer} />
+                </div>
               </StyledTextBlock>
             </div>
           );
