@@ -208,6 +208,7 @@ export default class ContentPage extends Component<any, any> {
     const showGroupBooking = enableGroupBooking === 'Yes';
     const { groupBookingTourTitles } = this.state;
     const currentLanguageSplit = lang.split('-')[0];
+    const micrositeURL = this.props.data.page_url;
 
     return (
       <div className="page-wrapper">
@@ -275,7 +276,7 @@ export default class ContentPage extends Component<any, any> {
           </div>
         </main>
         <footer>
-          <CustomFooter {...footer.data} />
+          <CustomFooter {...footer.data} micrositeURL={micrositeURL} />
         </footer>
       </div>
     );
