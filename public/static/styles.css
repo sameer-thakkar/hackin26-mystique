@@ -886,6 +886,32 @@ ul {
 
 /* FOOTER */
 
+.legal-info {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 100px;
+}
+
+.copyright-line {
+  float: left;
+  margin-bottom: 10px;
+  font-size: 16px;
+  margin-top: 20px;
+  font-family: Graphik;
+}
+
+.legal-links {
+  display: flex;
+  margin-bottom: 30px;
+}
+
+.legal-links a {
+  color: rgba(255, 255, 255, 0.8);
+  margin-right: 10px;
+  font-family: Graphik;
+  font-size: 12px;
+}
+
 footer {
   background: #3a3a3a;
   color: #fff;
@@ -1795,8 +1821,10 @@ body.popupv2-active {
   margin-top: 40px;
 }
 
-.line-and-disclaimer {
+.footer-content-wrapper {
+  padding: 50px 0px;
   width: 100%;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .footer-logo img {
@@ -1807,6 +1835,7 @@ body.popupv2-active {
   opacity: 0.4;
   color: #fff;
   margin: 0;
+  width: 100%;
 }
 
 .footer-logo {
@@ -1816,16 +1845,15 @@ body.popupv2-active {
   align-items: center;
   padding: 100px 0;
 }
+
 .disclaimer {
   color: rgba(255, 255, 255, 0.8);
-  padding: 10px 150px;
-  text-align: center;
+  margin: 10px 100px;
+  font-size: 16px;
+  text-align: left;
+  font-family: Graphik;
 }
-.disclaimer-text {
-  font-size: 12px;
-  text-align: center;
-  font-family: Avenir;
-}
+
 .terms-tab {
   text-align: left;
   font-size: 12px;

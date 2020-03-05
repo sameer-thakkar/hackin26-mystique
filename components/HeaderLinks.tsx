@@ -4,13 +4,7 @@ import LinkResolver from './LinkResolver';
 
 export default class HeaderLinks extends Component<any, any> {
   render() {
-    const {
-      headerLinks,
-      isMobile,
-      parentComponent,
-      showGroupBooking,
-      dropdown,
-    } = this.props;
+    const { headerLinks, isMobile, showGroupBooking, dropdown } = this.props;
 
     return (
       <div
@@ -26,7 +20,7 @@ export default class HeaderLinks extends Component<any, any> {
               {link.link_heading}
             </LinkResolver>
           ))}
-          {parentComponent !== 'TERMS' && showGroupBooking && (
+          {showGroupBooking && (
             <a onClick={this.props.openGroupBookingModal}>Group Tickets</a>
           )}
         </div>

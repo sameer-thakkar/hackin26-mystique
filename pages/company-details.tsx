@@ -1,27 +1,21 @@
 import React, { Component } from 'react';
-import Prismic from 'prismic-javascript';
-import { Client } from '../prismic-config';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import parse from 'url-parse';
 import CustomFooter from '../components/CustomFooter';
+import ContentContainer from '../components/UI/ContentContainer';
+import { Client } from '../prismic-config';
 import { DROPDOWN_ELEMENT } from '../constants';
 import '../public/static/styles.css';
 
 export default class companyDetails extends Component<any, any> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tourPrices: [],
-      currencySymbol: '',
-      popupOpen: false,
-      showGroupBookingModal: false,
-      dropdown: {
-        lang: false,
-        hamburger: false,
-      },
-    };
-  }
+  state = {
+    dropdown: {
+      lang: false,
+      hamburger: false,
+    },
+    isMobile: false,
+  };
+
   static async getInitialProps({ req, query }) {
     try {
       const isDev = req
@@ -54,8 +48,9 @@ export default class companyDetails extends Component<any, any> {
       const customFooter = await Client(req).getByID(footerID);
       response.data.customFooter = customFooter;
     }
-    return { response, host: superHost };
+    return { response };
   }
+
   handleDropdownToggle = elementIdentifier => {
     switch (elementIdentifier) {
       case DROPDOWN_ELEMENT.HAMBURGER: {
@@ -85,22 +80,23 @@ export default class companyDetails extends Component<any, any> {
     }
   };
 
+  componentDidMount() {
+    this.setState({ isMobile: window.innerWidth < 768 });
+  }
+
   render() {
-    const { response, host } = this.props;
-    const isMobile = () => {
-      return document.documentElement.clientWidth < 768;
-    };
+    const { response } = this.props;
     const { url: logoUrl } = response.data.link_to_logo_file;
     const { url: uploadedLogoUrl, alt: altText } = response.data.logo;
     const { logo_alt_text: logoAltText } = response.data;
     const { alternate_languages: availableLanguages } = response;
+    const { page_url: micrositeURL } = response.data;
     const {
       localization: languages,
       header_links: headerLinks,
       logo_redirection_url: logoRedirectionURL,
       customFooter,
     } = response.data;
-
     const { lang: currentLanguage, uid } = response;
     const {
       url: uploadedFooterLogoUrl,
@@ -113,16 +109,6 @@ export default class companyDetails extends Component<any, any> {
     };
     const { footer_logo_alt_text: footerAltText } = response.data;
 
-    let url = host || window.location.host;
-    const isDev = url.includes('localhost');
-    const currentHost = !isDev ? url : parse(uid, true).pathname;
-    const micrositeUrl = currentHost.includes('stage')
-      ? currentHost.replace('stage.', '')
-      : currentHost;
-    let hostSplit = micrositeUrl.split('.');
-    hostSplit.shift();
-    const supportURL = hostSplit.join('.');
-
     return (
       <React.Fragment>
         <Header
@@ -134,13 +120,12 @@ export default class companyDetails extends Component<any, any> {
           availableLanguages={availableLanguages}
           selectedLanguage={currentLanguage}
           uid={uid}
-          isMobile={isMobile}
-          parentComponent={'TERMS'}
+          isMobile={this.state.isMobile}
           logoRedirectionURL={logoRedirectionURL.url || '/'}
           dropdown={this.state.dropdown}
           handleDropdownToggle={this.handleDropdownToggle}
         />
-        <div className="terms-container">
+        <ContentContainer>
           <div
             className="select-wrapper"
             id="select-tickets"
@@ -177,10 +162,10 @@ export default class companyDetails extends Component<any, any> {
               ec.europa.eu/consumers/odr/main
             </div>
           </div>
-        </div>
+        </ContentContainer>
         {customFooter ? (
           <footer>
-            <CustomFooter {...customFooter.data} />
+            <CustomFooter {...customFooter.data} micrositeURL={micrositeURL} />
           </footer>
         ) : (
           <Footer
@@ -188,7 +173,8 @@ export default class companyDetails extends Component<any, any> {
             footerLinks={footerLinks ? footerLinks : null}
             disclaimer={disclaimer ? disclaimer : null}
             footerAltText={footerAltText || footerAltTextUploaded || null}
-            isMobile={isMobile}
+            isMobile={this.state.isMobile}
+            micrositeURL={micrositeURL}
           />
         )}
       </React.Fragment>

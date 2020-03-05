@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import parse from 'url-parse';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import CustomFooter from '../components/CustomFooter';
@@ -34,12 +33,12 @@ export default class TermsPage extends Component<any, any> {
 
   static async getData({ req, isDev, query }) {
     let uid;
+    const { host } = req ? req.headers : window.location;
     if (isDev) {
       uid = req
         ? query.mystique_uid
         : window.location.search.includes('mystique_uid');
     } else {
-      const { host } = req ? req.headers : window.location;
       uid = host.replace('stage.', '');
     }
     const lang = 'en-us';
@@ -51,7 +50,7 @@ export default class TermsPage extends Component<any, any> {
       const customFooter = await Client(req).getByID(footerID);
       response.data.customFooter = customFooter;
     }
-    return { response, host: parse(uid, true).pathname, uid };
+    return { response, host, uid };
   }
 
   handleDropdownToggle = elementIdentifier => {
@@ -93,6 +92,7 @@ export default class TermsPage extends Component<any, any> {
     const { url: uploadedLogoUrl, alt: altText } = response.data.logo;
     const { logo_alt_text: logoAltText } = response.data;
     const { alternate_languages: availableLanguages } = response;
+    const { page_url: micrositeURL } = response.data;
     const {
       localization: languages,
       header_links: headerLinks,
@@ -111,10 +111,9 @@ export default class TermsPage extends Component<any, any> {
       text: '',
     };
     const { footer_logo_alt_text: footerAltText } = response.data;
-    const micrositeURL = host;
 
     return (
-      <React.Fragment>
+      <>
         <Header
           languages={languages ? languages : null}
           headerLinks={headerLinks ? headerLinks : null}
@@ -125,7 +124,6 @@ export default class TermsPage extends Component<any, any> {
           selectedLanguage={currentLanguage}
           uid={uid}
           isMobile={this.state.isMobile}
-          parentComponent={'TERMS'}
           logoRedirectionURL={logoRedirectionURL.url || '/'}
           dropdown={this.state.dropdown}
           handleDropdownToggle={this.handleDropdownToggle}
@@ -136,22 +134,22 @@ export default class TermsPage extends Component<any, any> {
           <SubHeading>Terms of Use</SubHeading>
           <Paragraph>
             This web page represents a legal document that serves as the terms
-            of use for our website (“Terms of Use”), {micrositeURL} and any
-            associated mobile application (collectively, “Website”) as owned and
-            operated by Headout Inc (“Headout”). Capitalized terms, unless
-            otherwise defined, have the meaning specified within the Definitions
-            section below. This Terms of Use,, and other posted guidelines
-            within our Website, (collectively “Legal Terms”), constitute the
-            entire and only agreement between you and this website, and
-            supersede all other agreements, representations, warranties and
-            understandings with respect to our Website and the subject matter
-            contained herein. We may amend our Legal Terms at any time without
-            specific notice to you. The latest copies of our Legal Terms will be
-            posted on our Website, and you should review all Legal Terms prior
-            to using our Website. After any revisions to our Legal Terms are
-            posted, you agree to be bound to any such changes to them.
-            Therefore, it is important for you to periodically review our Legal
-            Terms to make sure you still agree to them. <br />
+            of use for our website (“Terms of Use”), {host} and any associated
+            mobile application (collectively, “Website”) as owned and operated
+            by Headout Inc (“Headout”). Capitalized terms, unless otherwise
+            defined, have the meaning specified within the Definitions section
+            below. This Terms of Use,, and other posted guidelines within our
+            Website, (collectively “Legal Terms”), constitute the entire and
+            only agreement between you and this website, and supersede all other
+            agreements, representations, warranties and understandings with
+            respect to our Website and the subject matter contained herein. We
+            may amend our Legal Terms at any time without specific notice to
+            you. The latest copies of our Legal Terms will be posted on our
+            Website, and you should review all Legal Terms prior to using our
+            Website. After any revisions to our Legal Terms are posted, you
+            agree to be bound to any such changes to them. Therefore, it is
+            important for you to periodically review our Legal Terms to make
+            sure you still agree to them. <br />
             By using our Website, you agree to fully comply with and be bound by
             our Legal Terms. Please review them carefully. If you do not accept
             our Legal Terms, do not access and use our Website. If you do not
@@ -414,9 +412,13 @@ export default class TermsPage extends Component<any, any> {
             provision nor of the right to enforce such provision.
           </Paragraph>
         </ContentContainer>
+        <br />
+        <br />
+        <br />
+        <br />
         {customFooter ? (
           <footer>
-            <CustomFooter {...customFooter.data} />
+            <CustomFooter {...customFooter.data} micrositeURL={micrositeURL} />
           </footer>
         ) : (
           <Footer
@@ -425,9 +427,10 @@ export default class TermsPage extends Component<any, any> {
             disclaimer={disclaimer ? disclaimer : null}
             footerAltText={footerAltText || footerAltTextUploaded || null}
             isMobile={this.state.isMobile}
+            micrositeURL={micrositeURL}
           />
         )}
-      </React.Fragment>
+      </>
     );
   }
 }

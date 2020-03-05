@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Link from 'next/link';
 import classNames from 'classnames';
 import sliceHandler from './Slices';
 import { attachQueryParam } from '../utils/helper';
@@ -7,7 +6,11 @@ import { FOOTER_DISCLAIMER_ARRAY } from '../constants';
 
 export default class CustomFooter extends Component<any, any> {
   render() {
-    const { uid, logo, terms, body } = this.props;
+    const { uid, logo, terms, body, micrositeURL } = this.props;
+    let url = micrositeURL;
+    if (micrositeURL[micrositeURL.length - 1] === '/') {
+      url = micrositeURL.slice(0, -1);
+    }
     const logoUrl = logo?.url ?? '';
     const altText = logo?.alt ?? 'logo';
     let block = '';
@@ -28,11 +31,7 @@ export default class CustomFooter extends Component<any, any> {
           })}
         >
           <div className="logo">
-            <img
-              data-src={attachQueryParam(logoUrl, 'w=150')}
-              alt={altText}
-              className="lazyload"
-            />
+            <img src={attachQueryParam(logoUrl, 'w=150')} alt={altText} />
             <br />
             <div
               style={{
@@ -77,18 +76,14 @@ export default class CustomFooter extends Component<any, any> {
             </div>
             <div style={{ display: 'flex' }}>
               <div className="terms-tab" style={{ marginRight: 8 }}>
-                <Link href="/terms">Terms & Conditions</Link>
+                <a href={`${url}/terms`}>Terms & Conditions</a>
               </div>
-              <Link href="/privacy-policy">
-                <div className="terms-tab" style={{ marginRight: 8 }}>
-                  Privacy Policy
-                </div>
-              </Link>
-              <Link href="/company-details">
-                <div className="terms-tab" style={{ marginRight: 8 }}>
-                  Company Details
-                </div>
-              </Link>
+              <div className="terms-tab" style={{ marginRight: 8 }}>
+                <a href={`${url}/privacy-policy`}>Privacy Policy</a>
+              </div>
+              <div className="terms-tab" style={{ marginRight: 8 }}>
+                <a href={`${url}/company-details`}>Company Details</a>
+              </div>
             </div>
           </div>
         </div>

@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
-import { Client } from '../prismic-config';
+import styled from 'styled-components';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import parse from 'url-parse';
 import CustomFooter from '../components/CustomFooter';
-import { DROPDOWN_ELEMENT, CUSTOM_TYPES } from '../constants';
 import ContentContainer from '../components/UI/ContentContainer';
-import '../public/static/styles.css';
-import { TopHeading, SubHeading } from '../components/UI/Headings';
 import Paragraph from '../components/UI/Paragraph';
-import styled from 'styled-components';
+import { TopHeading, SubHeading } from '../components/UI/Headings';
+import { Client } from '../prismic-config';
+import { DROPDOWN_ELEMENT, CUSTOM_TYPES } from '../constants';
+import '../public/static/styles.css';
 
 const Title = styled.div`
   margin: 10px 0px;
-
   font-size: 18px;
 `;
+
 export default class privacy extends Component<any, any> {
   state = {
     dropdown: {
@@ -40,12 +39,12 @@ export default class privacy extends Component<any, any> {
 
   static async getData({ req, isDev, query }) {
     let uid;
+    const { host } = req ? req.headers : window.location;
     if (isDev) {
       uid = req
         ? query.mystique_uid
         : window.location.search.includes('mystique_uid');
     } else {
-      const { host } = req ? req.headers : window.location;
       uid = host.replace('stage.', '');
     }
     const lang = 'en-us';
@@ -57,8 +56,9 @@ export default class privacy extends Component<any, any> {
       const customFooter = await Client(req).getByID(footerID);
       response.data.customFooter = customFooter;
     }
-    return { response, host: parse(uid, true).pathname, uid };
+    return { response, host, uid };
   }
+
   handleDropdownToggle = elementIdentifier => {
     switch (elementIdentifier) {
       case DROPDOWN_ELEMENT.HAMBURGER: {
@@ -98,6 +98,7 @@ export default class privacy extends Component<any, any> {
     const { url: uploadedLogoUrl, alt: altText } = response.data.logo;
     const { logo_alt_text: logoAltText } = response.data;
     const { alternate_languages: availableLanguages } = response;
+    const { page_url: micrositeURL } = response.data;
     const {
       localization: languages,
       header_links: headerLinks,
@@ -116,7 +117,6 @@ export default class privacy extends Component<any, any> {
       text: '',
     };
     const { footer_logo_alt_text: footerAltText } = response.data;
-    const micrositeURL = host;
 
     return (
       <>
@@ -143,7 +143,7 @@ export default class privacy extends Component<any, any> {
             Website. Our Privacy Policy is part of our Legal Terms. Capitalized
             terms, unless otherwise defined below, have the meaning specified
             within the Definitions section our Terms of Use. <br />
-            The last update to our Privacy Policy was posted on {micrositeURL}
+            The last update to our Privacy Policy was posted on {host}
             /privacy-policy
           </Paragraph>
           <SubHeading>Your Privacy</SubHeading>
@@ -427,9 +427,13 @@ export default class privacy extends Component<any, any> {
             <Paragraph>New York, NY 10036</Paragraph>
           </Paragraph>
         </ContentContainer>
+        <br />
+        <br />
+        <br />
+        <br />
         {customFooter ? (
           <footer>
-            <CustomFooter {...customFooter.data} />
+            <CustomFooter {...customFooter.data} micrositeURL={micrositeURL} />
           </footer>
         ) : (
           <Footer
@@ -438,6 +442,7 @@ export default class privacy extends Component<any, any> {
             disclaimer={disclaimer ? disclaimer : null}
             footerAltText={footerAltText || footerAltTextUploaded || null}
             isMobile={this.state.isMobile}
+            micrositeURL={micrositeURL}
           />
         )}
       </>

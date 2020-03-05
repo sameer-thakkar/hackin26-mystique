@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import Link from 'next/link';
 import { attachQueryParam } from '../utils/helper';
 
 export default class Footer extends Component<any, any> {
   render() {
-    const { logoUrl, disclaimer, footerAltText, hasTermsPage } = this.props;
+    const { logoUrl, disclaimer, footerAltText, micrositeURL } = this.props;
+    let url = micrositeURL;
+    if (micrositeURL[micrositeURL.length - 1] === '/') {
+      url = micrositeURL.slice(0, -1);
+    }
     return (
       <div className="footer">
         <div className="footer-logo">
@@ -14,46 +17,17 @@ export default class Footer extends Component<any, any> {
             className="lazyload"
           />
         </div>
-        <div className="line-and-disclaimer">
-          <hr className="footer-line" />
-          <div className="disclaimer">
-            <div
-              style={{ textAlign: 'left', fontSize: 16, fontFamily: 'Graphik' }}
-            >
-              {disclaimer}
+        <hr className="footer-line" />
+        <div className="footer-content-wrapper">
+          <div className="disclaimer">{disclaimer}</div>
+          <div className="legal-info">
+            <div className="copyright-line">
+              © 2020 Headout. All rights reserved.
             </div>
-            <div className="terms-new">
-              <div
-                className="terms"
-                style={{
-                  float: 'left',
-                  marginBottom: 10,
-                  fontSize: 16,
-                  marginTop: 20,
-                  fontFamily: 'Graphik',
-                }}
-              >
-                © 2020 Headout. All rights reserved.
-              </div>
-              <div style={{ display: 'flex', marginBottom: 30 }}>
-                <div className="terms-tab" style={{ marginRight: 8 }}>
-                  <Link href="/terms">
-                    <div className="terms-tab" style={{ marginRight: 8 }}>
-                      Terms & Conditions
-                    </div>
-                  </Link>
-                </div>
-                <Link href="/privacy-policy">
-                  <div className="terms-tab" style={{ marginRight: 8 }}>
-                    Privacy Policy
-                  </div>
-                </Link>
-                <Link href="/company-details">
-                  <div className="terms-tab" style={{ marginRight: 8 }}>
-                    Company Details
-                  </div>
-                </Link>
-              </div>
+            <div className="legal-links">
+              <a href={`${url}/terms`}>Terms & Conditions</a>
+              <a href={`${url}/privacy-policy`}>Privacy Policy</a>
+              <a href={`${url}/company-details`}>Company Details</a>
             </div>
           </div>
         </div>

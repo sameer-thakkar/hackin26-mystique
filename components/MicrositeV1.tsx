@@ -460,7 +460,11 @@ export default class MicrositeV1 extends Component<any, any> {
           ) : null}
           {customFooter ? (
             <footer>
-              <CustomFooter {...customFooter.data} uid={uid} />
+              <CustomFooter
+                {...customFooter.data}
+                uid={uid}
+                micrositeURL={pageUrl}
+              />
             </footer>
           ) : (
             <Footer
@@ -471,6 +475,7 @@ export default class MicrositeV1 extends Component<any, any> {
               hasTermsPage={hasTermsPage}
               isMobile={this.state.isMobile}
               uid={uid}
+              micrositeURL={pageUrl}
             />
           )}
           {hasOffer && (

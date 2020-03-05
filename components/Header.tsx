@@ -29,9 +29,8 @@ export default class Header extends Component<any, any> {
       dropdown,
       handleDropdownToggle,
       isMobile,
-      parentComponent,
-      showGroupBooking,
-      hasLanguageSelector,
+      showGroupBooking = false,
+      hasLanguageSelector = 'No',
       enableBuyTickets,
       logoRedirectionURL,
       host,
@@ -76,7 +75,6 @@ export default class Header extends Component<any, any> {
               headerLinks={headerLinks}
               openGroupBookingModal={this.props.openGroupBookingModal}
               isMobile={isMobile}
-              parentComponent={parentComponent}
               showGroupBooking={showGroupBooking}
               dropdown={dropdown}
               handleDropdownToggle={handleDropdownToggle}
@@ -88,7 +86,7 @@ export default class Header extends Component<any, any> {
                 </a>
               </div>
             )}
-            {!(parentComponent === 'TERMS') && hasLanguageSelector === 'Yes' ? (
+            {hasLanguageSelector === 'Yes' ? (
               <LanguageSelector
                 languages={languages}
                 availableLanguages={availableLanguages}
