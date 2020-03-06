@@ -58,7 +58,7 @@ const DetailedProductCard = props => {
                     .replace(/\s/g, '-')}`}
                   key={index}
                 >
-                  <span className="description-label">{block.label}: </span>
+                  <span className="description-label">{block.label} </span>
                   <span className="description-content">
                     <RichText
                       render={block.content}
@@ -78,7 +78,7 @@ const DetailedProductCard = props => {
             {activeTour.contentBlocks.right.map((block, index) => {
               return (
                 <div className="description-content-block right" key={index}>
-                  <span className="description-label">{block.label}: </span>
+                  <span className="description-label">{block.label} </span>
                   <span className="description-content">
                     <RichText
                       render={block.content}
@@ -194,17 +194,18 @@ const DetailedProductCard = props => {
           justify-content: left;
         }
         .v2-descriptor{
-          background: ${COLORS.CHALK};
+          background: ${COLORS.FO_GRAY};
           border-radius: 2px;
           font-size: 12px;
           padding: 8px 12px;
-          color: ${COLORS.DAVY_GREY};
+          color: ${COLORS.TWO_BLACK};
           font-weight: 400;
           line-height: 1;
           text-transform: capitalize;
         }
         .tour-description{
           font-family: ${AVENIR.FONT_STACK};
+          margin-top: 4px;
         }
 
         .description-content {

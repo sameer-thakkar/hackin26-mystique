@@ -7,7 +7,7 @@ import Booster from '../components/Booster';
 import RatingBoosterCombo from '../components/shortcodes/RatingBoosterCombo';
 import PopupTrigger from '../components/shortcodes/PopupTrigger';
 import IFrame from '../components/shortcodes/IFrame';
-import renderOnView from '../components/common/renderOnView';
+import { WrapInLazyComponent } from '../components/common/LazyComponent';
 
 interface ShortCodeDictionary {
   [key: string]: {
@@ -176,7 +176,7 @@ export const shortCodeSerializer = (
   let props = {};
   if (getShortcodesList(content).length && !children.length) {
     let renderedChildrens: any = renderShortCodes(content, parentProps);
-    renderedChildrens = renderOnView(renderedChildrens);
+    renderedChildrens = WrapInLazyComponent(renderedChildrens);
     return React.createElement(
       tagsMap[type] || React.Fragment,
       propsWithUniqueKey(props, key),

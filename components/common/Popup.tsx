@@ -33,7 +33,7 @@ const Popup = props => {
         <div className="popup-slices">
           {body.map((slice, index) => {
             return (
-              <div className={`popup-slice ${slice.slice_type}`}>
+              <div key={index} className={`popup-slice ${slice.slice_type}`}>
                 {sliceHandler(slice, { isMobile })}
               </div>
             );
@@ -53,26 +53,22 @@ const Popup = props => {
         }
         .aio-popup-container {
           display: grid;
-          margin: 50px;
-          grid-template-rows: 60px auto;
+          grid-template-rows: auto;
           width: auto;
           justify-self: center;
           z-index: 10;
           align-self: center;
+          position: relative;
         }
         .aio-header {
           z-index: 1;
-          background: #fff;
-          display: grid;
-          align-items: center;
-          justify-content: right;
-          border-bottom: 1px solid ${COLORS.DADDY};
-          padding: 16px;
+          padding: 8px;
+          display: contents;
         }
         .popup-slices {
           display: grid;
           justify-content: center;
-          height: max-content;
+          height: auto;
         }
         .popup-slice {
           display: block;
@@ -91,6 +87,12 @@ const Popup = props => {
         }
         .close {
           cursor: pointer;
+          position: absolute;
+          top: 0;
+          right: 0;
+          padding: 8px;
+          z-index: 1;
+          background: #000;
         }
         @media (max-width: 768px) {
           .aio-popup-container {

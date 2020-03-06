@@ -324,8 +324,12 @@ export default class Product extends Component<any, any> {
               width: 100%;
               display: inline;
             }
+            .v1-booster p {
+              font-size: 12px;
+            }
             .v1-booster p strong {
               font-weight: ${GRAPHIK.HEAVY};
+              line-height: 1.5;
             }
           }
         `}</style>

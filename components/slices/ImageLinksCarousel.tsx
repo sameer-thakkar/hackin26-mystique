@@ -10,8 +10,12 @@ import { AVENIR, COLORS } from '../../constants/ui-constants';
 const StyledWrapper = styled.div`
   display: grid;
   grid-auto-flow: row;
-  grid-row-gap: 16px;
+  grid-row-gap: 32px;
   overflow: hidden;
+  @media (max-width: 768px) {
+    overflow: unset;
+    grid-row-gap: 24px;
+  }
 `;
 
 const StyledMobileSlider = styled.div`
@@ -20,17 +24,25 @@ const StyledMobileSlider = styled.div`
   grid-auto-columns: max-content;
   grid-gap: 12px;
   overflow: scroll;
+  overscroll-behavior-x: contain;
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    width: 0 !important;
+  }
   margin: 0 -16px;
   padding: 0 16px;
   last-child {
     margin-right: 16px;
+    grid-row-gap: 8px;
   }
 `;
 
 const StyledContent = styled.div`
+  display: grid;
+  grid-row-gap: 8px;
   h2 {
     margin: 0;
-    margin-bottom: 8px;
     font-family: ${AVENIR.FONT_STACK};
     font-size: 24px !important;
     line-height: 33px;
@@ -39,7 +51,6 @@ const StyledContent = styled.div`
   }
   div {
     margin: 0;
-    margin-bottom: 16px;
     font-family: ${AVENIR.FONT_STACK};
     font-size: 14px;
     line-height: 20px;
@@ -54,7 +65,6 @@ const StyledContent = styled.div`
     }
     div {
       line-height: 20px;
-      margin-bottom: 8px;
     }
   }
 `;

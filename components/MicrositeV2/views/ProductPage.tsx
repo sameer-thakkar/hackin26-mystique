@@ -84,14 +84,6 @@ export const MobileProductPage = props => {
             </div>
             <div className="scratched">{tour.scratchedPrice}</div>
           </div>
-          {tour.cardFooter.length ? (
-            <div className="boosters">
-              <RichText
-                render={tour.cardFooter}
-                htmlSerializer={shortCodeSerializer}
-              />
-            </div>
-          ) : null}
           {tour.averageRating > 0 ? (
             <div className="auto-boosters-box">
               <div className="rating">
@@ -141,7 +133,7 @@ export const MobileProductPage = props => {
                 } `}
                 key={index}
               >
-                <span className="label-title">{block.label}: </span>
+                <span className="label-title">{block.label} </span>
                 <RichText
                   render={block.content}
                   htmlSerializer={shortCodeSerializer}
@@ -331,18 +323,23 @@ export const MobileProductPage = props => {
             display: grid;
             grid-auto-flow: column;
             grid-auto-columns: max-content;
-            font-family: 'Graphik';
-            font-size: 11px;
-            font-weight: 300;
+            font-family: ${GRAPHIK.FONT_STACK};
+            font-size: 12px;
+            font-weight: ${GRAPHIK.REGULAR};
             grid-gap: 8px;
             grid-column: 1 / 3;
             max-width: calc(100vw - 32px);
             overflow-x: scroll;
-            margin-top: 8px;
+            overscroll-behavior-x: contain;
+            overflow: -moz-scrollbars-none;
+            -ms-overflow-style: none;
+          }
+          .descriptors::-webkit-scrollbar {
+            width: 0 !important;
           }
           .descriptor {
             padding: 7px 12px;
-            background: #ebebeb;
+            background: ${COLORS.FO_GRAY};
             border-radius: 2px;
             color: ${COLORS.TWO_BLACK};
           }
@@ -423,6 +420,8 @@ export const MobileProductPage = props => {
           .content-block ul {
             margin: 0;
             padding-left: 1em;
+            display: grid;
+            grid-row-gap: 6px;
           }
           .boosters p * {
             display: none;

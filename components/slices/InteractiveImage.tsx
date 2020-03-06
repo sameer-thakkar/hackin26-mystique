@@ -10,7 +10,7 @@ const InteractiveImage = props => {
   return (
     <div className="interactive-image">
       <TransformWrapper
-        scale={isMobile ? 3 : 1}
+        scale={isMobile ? 4 : 1}
         options={isMobile ? mobileProps : {}}
       >
         <TransformComponent>
@@ -21,12 +21,12 @@ const InteractiveImage = props => {
       </TransformWrapper>
       <style jsx global>{`
         .interactive-image img {
-          width: 800px;
-          height: auto;
+          width: 100%;
+          height: 80vh;
         }
-        .zoom-wrap {
-          width: 800px;
-          height: 400px;
+        .zoom-wrapper {
+          width: 80vw;
+          height: 100%;
         }
         .react-transform-element {
           cursor: crosshair;
@@ -38,13 +38,13 @@ const InteractiveImage = props => {
 
           .interactive-image {
             display: grid;
-            height: 90vh;
+            height: 100vh;
           }
+
           .zoom-wrapper {
-            height: calc(100vh - 60px);
+            height: 100vh;
+            width: 100%;
             display: block;
-            align-items: center;
-            justify-content: center;
           }
           .interactive-image img {
             height: auto;

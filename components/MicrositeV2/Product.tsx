@@ -131,8 +131,8 @@ const Product = props => {
         .product-v2-scratch-price {
           font-family: ${AVENIR.FONT_STACK};
           font-weight: ${AVENIR.ROMAN};
-          font-size: 12px;
-          line-height: 12px;
+          font-size: 14px;
+          line-height: 14px;
           letter-spacing: 0.5px;
           text-align: right;
           text-decoration-line: line-through;

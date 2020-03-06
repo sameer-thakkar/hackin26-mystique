@@ -65,6 +65,7 @@ const RatingBoosterCombo = props => {
         .booster-rating svg {
           height: 12px;
           width: 12px;
+          margin-bottom: 1px;
         }
       `}</style>
     </>

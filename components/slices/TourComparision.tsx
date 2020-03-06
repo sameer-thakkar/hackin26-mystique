@@ -128,7 +128,7 @@ const StyledTourComparisionTable = styled.div`
   .content-block {
     display: grid;
     grid-row-gap: 12px;
-    grid-template-rows: 1em 1fr;
+    grid-template-rows: auto 1fr;
   }
   .block-label {
     font-size: 16px;
@@ -163,6 +163,8 @@ const StyledTourComparisionTable = styled.div`
   ul {
     list-style: initial;
     padding-left: 1em;
+    display: grid;
+    grid-row-gap: 8px;
   }
   @media (max-width: 768px) {
     .full-width-wrap {
@@ -171,8 +173,13 @@ const StyledTourComparisionTable = styled.div`
       overflow-y: hidden;
       overflow-x: scroll;
       overscroll-behavior-x: contain;
-      margin-bottom: 16px;
+      overflow: -moz-scrollbars-none;
+      -ms-overflow-style: none;
     }
+    .full-width-wrap::-webkit-scrollbar {
+      width: 0 !important;
+    }
+
     .table {
       grid-row-gap: 32px;
       position: relative;
@@ -214,12 +221,15 @@ const StyledTourComparisionTable = styled.div`
     .tour-chin .price-block {
       display: none;
     }
-
+    .content-block {
+      grid-row-gap: 8px;
+    }
     .block-label {
       font-size: 12px;
       color: ${COLORS.GREY_75};
       font-family: ${GRAPHIK.FONT_STACK};
       font-weight: ${GRAPHIK.HEAVY};
+      line-height: 12px;
     }
     .block-content {
       font-size: 15px;
