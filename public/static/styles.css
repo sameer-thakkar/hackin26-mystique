@@ -148,7 +148,7 @@ body {
 }
 
 .header-container {
-  height: 68px;
+  height: 56px;
   position: fixed;
   top: 0;
   width: 100%;
@@ -174,7 +174,7 @@ body {
   grid-column-gap: 10px;
 }
 .header-logo-wrapper img {
-  height: 40px;
+  height: 36px;
 }
 .line {
   background: #bababa;
@@ -201,18 +201,6 @@ body {
   color: #ec1943;
 }
 
-.current-language-flag img {
-  height: 18px;
-  width: 18px;
-  margin-right: 5px;
-}
-
-.language-flag img {
-  height: 30px;
-  width: 30px;
-  margin-right: 10px;
-}
-
 .language-selector {
   display: flex;
   align-items: center;
@@ -223,23 +211,18 @@ body {
   text-decoration: none;
   color: #545454;
 }
-.current-langauge {
-  display: flex;
-  margin-right: 2px;
-  align-items: baseline;
-}
 
 .language-dropdown {
   display: none;
   position: absolute;
-  right: 0;
-  top: 40px;
+  left: -25px;
+  top: 20px;
 }
 
 .current-lang-code {
-  text-transform: uppercase;
-  font-family: Avenir;
-  font-size: 18px;
+  margin-top: 7px;
+  font-family: Graphik;
+  font-size: 14px;
   color: #545454;
   transform: translateY(-3px);
 }
@@ -482,7 +465,7 @@ ul {
     margin-left: 5%;
   }
   .header-logo-wrapper img {
-    height: 30px;
+    height: 26px;
   }
   .product-desc p {
     font-size: 0.8em;
@@ -1402,17 +1385,17 @@ body.popupv2-active {
   .bar1,
   .bar2,
   .bar3 {
-    width: 35px;
-    height: 5px;
-    background-color: #000;
-    margin: 6px 0;
+    width: 19.25px;
+    height: 1px;
+    background-color: #545454;
+    margin: 5px 0;
     transition: 0.4s;
     border-radius: 50px;
   }
 
   .change .bar1 {
-    -webkit-transform: rotate(-45deg) translate(-9px, 6px);
-    transform: rotate(-45deg) translate(-9px, 6px);
+    -webkit-transform: rotate(-45deg) translate(-2px, 3px);
+    transform: rotate(-45deg) translate(-2px, 3px);
     background: linear-gradient(
       to right,
       rgba(0, 0, 0, 1) 0%,
@@ -1427,8 +1410,8 @@ body.popupv2-active {
   }
 
   .change .bar3 {
-    -webkit-transform: rotate(45deg) translate(-8px, -8px);
-    transform: rotate(45deg) translate(-8px, -8px);
+    -webkit-transform: rotate(45deg) translate(-4px, -8px);
+    transform: rotate(45deg) translate(-4px, -8px);
     background: linear-gradient(
       to left,
       rgba(0, 0, 0, 1) 0%,
@@ -1440,10 +1423,11 @@ body.popupv2-active {
   .header-links-lang-container {
     margin-right: 20px;
   }
+
   .dropdown {
     position: fixed;
     right: 3%;
-    top: 68px;
+    top: 56px;
     box-shadow: 0px 10px 12px -4px rgba(33, 33, 33, 0.15);
     z-index: 3000;
     display: none;
@@ -1702,7 +1686,7 @@ body.popupv2-active {
     width: 100%;
   }
   .mb-carousel.boxed {
-    margin-top: 68px;
+    margin-top: 56px;
   }
 
   .popupv2-cont {
@@ -2284,7 +2268,7 @@ form.form {
 }
 
 .header-wrapper {
-  height: 68px;
+  height: 56px;
   position: fixed;
   top: 0;
   width: 100%;
@@ -2669,7 +2653,7 @@ h6 {
 }
 
 .navbar-buy-tickets {
-  margin-left: 20px;
+  margin: 0 20px;
   font-size: 14px;
   text-transform: uppercase;
   font-family: Avenir;
@@ -2689,7 +2673,7 @@ h6 {
     margin-left: 0px;
   }
   .addMargin {
-    margin-right: 70px;
+    margin-right: 60px;
   }
   .fr-book-now-cta {
     width: 316px;

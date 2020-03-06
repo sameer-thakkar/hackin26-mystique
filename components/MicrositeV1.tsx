@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import dynamic from 'next/dynamic';
 import 'lazysizes';
 import { scroller } from 'react-scroll';
-import Header from './Header';
+import Header from './common/Header';
 import Banner from './Banner';
 import Footer from './Footer';
 import LongForm from './LongForm';
@@ -51,6 +51,7 @@ export default class MicrositeV1 extends Component<any, any> {
     const checkIfToursAvailable =
       uncategorizedTours.length > 0 &&
       uncategorizedTours[0].items[0].tgid != null;
+
     if (checkIfToursAvailable) {
       const [variantTgids, tourGroupTgids] = uncategorizedTours[0].items.reduce(
         (accum, elem) => {
@@ -193,14 +194,14 @@ export default class MicrositeV1 extends Component<any, any> {
     });
   }
 
-  handleDropdownToggle = elementIdentifier => {
+  handleDropdownToggle = (elementIdentifier, forceBool = null) => {
     switch (elementIdentifier) {
       case DROPDOWN_ELEMENT.HAMBURGER: {
         this.setState({
           ...this.state,
           dropdown: {
             ...this.state.dropdown,
-            hamburger: !this.state.dropdown.hamburger,
+            hamburger: forceBool ?? !this.state.dropdown.hamburger,
             lang: false,
           },
         });
@@ -242,7 +243,7 @@ export default class MicrositeV1 extends Component<any, any> {
     const { url: logoUrl } = this.props.data.data.link_to_logo_file;
     const { url: uploadedLogoUrl, alt: altText } = this.props.data.data.logo;
     const { logo_alt_text: logoAltText } = this.props.data.data;
-    const { alternate_languages: availableLanguages, refs } = this.props.data;
+    const { alternate_languages: alternateLanguages, refs } = this.props.data;
     const { contentFramework } = refs;
     const {
       localization,
@@ -394,9 +395,9 @@ export default class MicrositeV1 extends Component<any, any> {
             languages={languages ? languages : null}
             headerLinks={headerLinks ? headerLinks : null}
             logoUrl={logoUrl || uploadedLogoUrl || null}
-            currentLanguage={currentLanguage ? currentLanguage : null}
             logoAltText={altText || logoAltText}
-            availableLanguages={availableLanguages}
+            currentLanguage={currentLanguage ? currentLanguage : null}
+            alternateLanguages={alternateLanguages}
             uid={uid}
             dropdown={this.state.dropdown}
             handleDropdownToggle={this.handleDropdownToggle}
@@ -460,11 +461,7 @@ export default class MicrositeV1 extends Component<any, any> {
           ) : null}
           {customFooter ? (
             <footer>
-              <CustomFooter
-                {...customFooter.data}
-                uid={uid}
-                micrositeURL={pageUrl}
-              />
+              <CustomFooter {...customFooter.data} uid={uid} />
             </footer>
           ) : (
             <Footer
@@ -475,7 +472,6 @@ export default class MicrositeV1 extends Component<any, any> {
               hasTermsPage={hasTermsPage}
               isMobile={this.state.isMobile}
               uid={uid}
-              micrositeURL={pageUrl}
             />
           )}
           {hasOffer && (

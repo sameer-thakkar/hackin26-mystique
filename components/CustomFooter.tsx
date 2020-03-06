@@ -6,11 +6,7 @@ import { FOOTER_DISCLAIMER_ARRAY } from '../constants';
 
 export default class CustomFooter extends Component<any, any> {
   render() {
-    const { uid, logo, terms, body, micrositeURL } = this.props;
-    let url = micrositeURL;
-    if (micrositeURL[micrositeURL.length - 1] === '/') {
-      url = micrositeURL.slice(0, -1);
-    }
+    const { uid, logo, terms, body } = this.props;
     const logoUrl = logo?.url ?? '';
     const altText = logo?.alt ?? 'logo';
     let block = '';
@@ -76,13 +72,13 @@ export default class CustomFooter extends Component<any, any> {
             </div>
             <div style={{ display: 'flex' }}>
               <div className="terms-tab" style={{ marginRight: 8 }}>
-                <a href={`${url}/terms`}>Terms & Conditions</a>
+                <a href={`/terms`}>Terms & Conditions</a>
               </div>
               <div className="terms-tab" style={{ marginRight: 8 }}>
-                <a href={`${url}/privacy-policy`}>Privacy Policy</a>
+                <a href={`/privacy-policy`}>Privacy Policy</a>
               </div>
               <div className="terms-tab" style={{ marginRight: 8 }}>
-                <a href={`${url}/company-details`}>Company Details</a>
+                <a href={`/company-details`}>Company Details</a>
               </div>
             </div>
           </div>

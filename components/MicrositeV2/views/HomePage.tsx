@@ -41,6 +41,7 @@ export const HomePage = props => {
   const longFormSlices = [...contentFWSlices, ...longFormContent];
   const { currentLanguage } = props.header.languageProps;
   const hasToursSection = categoryProps.categories.length > 0;
+
   return (
     <div className="microsite-v2-wrapper">
       <Header

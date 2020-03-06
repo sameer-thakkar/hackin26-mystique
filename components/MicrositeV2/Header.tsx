@@ -46,6 +46,7 @@ const Header = props => {
     languageProps.availableLanguages.length &&
     languageProps.languages.length &&
     languageProps.languageDropdown;
+
   return (
     <div className="fixed-offset">
       <div className="fixed-wrap">

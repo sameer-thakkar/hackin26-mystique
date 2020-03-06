@@ -289,7 +289,6 @@ export default class Page extends React.Component<any, any> {
                   },
                 },
               };
-
               return {
                 CMSContent: micrositeData,
                 ContentType: CUSTOM_TYPES.MICROSITE,

@@ -1,4 +1,4 @@
-const fs = require("fs");
+const fs = require('fs');
 const BATCH_SIZE = 10;
 
 module.exports = env => {
@@ -25,8 +25,8 @@ module.exports = env => {
       alias,
       name:
         requiredAliases.length === 1
-          ? alias.split(".").join(" ")
-          : extendJson.name
+          ? alias.split('.').join(' ')
+          : extendJson.name,
     };
 
     fs.writeFileSync(

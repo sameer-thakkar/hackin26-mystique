@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 import 'lazysizes';
 import classNames from 'classnames';
 import dynamic from 'next/dynamic';
-import CustomHeader from './CustomHeader';
+import Header from './common/Header';
 import sliceHandler from './Slices';
 import CustomFooter from './CustomFooter';
 import Masthead from './Masthead';
 import populateHead from './common/meta';
-import { CUSTOM_TYPES } from '../constants';
 import { Client } from '../prismic-config';
-import { isMobile } from '../utils/helper';
 
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 import { DROPDOWN_ELEMENT } from '../constants';
@@ -24,12 +22,14 @@ export default class ContentPage extends Component<any, any> {
         lang: false,
         hamburger: false,
       },
+      isMobile: false,
     };
   }
   async componentDidMount() {
     const {
       enable_group_booking: enableGroupBooking,
     } = this.props.data.header_ref.data;
+    this.setState({ isMobile: window.innerWidth < 768 });
     if (enableGroupBooking === 'Yes') {
       let groupBookingTourTitles = [];
       let res = await Client().getByIDs([
@@ -46,6 +46,7 @@ export default class ContentPage extends Component<any, any> {
           return tour.tgid === excludedTour.tgid;
         });
       });
+
       filteredTours.map(async (tour, index) => {
         if (!tour.tour_title_override) {
           let tourTitle = await fetch(
@@ -86,14 +87,14 @@ export default class ContentPage extends Component<any, any> {
       contentFramework: props.refs.contentFramework,
     };
   }
-  handleDropdownToggle = elementIdentifier => {
+  handleDropdownToggle = (elementIdentifier, forceBool = null) => {
     switch (elementIdentifier) {
       case DROPDOWN_ELEMENT.HAMBURGER: {
         this.setState({
           ...this.state,
           dropdown: {
             ...this.state.dropdown,
-            hamburger: !this.state.dropdown.hamburger,
+            hamburger: forceBool ?? !this.state.dropdown.hamburger,
             lang: false,
           },
         });
@@ -194,6 +195,9 @@ export default class ContentPage extends Component<any, any> {
       group_booking_disclaimer: groupBookingDisclaimer,
       localization,
       enable_localization_menu,
+      logo,
+      logo_alt_text: logoAltText,
+      header_links: headerLinks,
     } = this.props.data.header_ref.data;
 
     const {
@@ -236,29 +240,24 @@ export default class ContentPage extends Component<any, any> {
           localization,
           currentLanguage,
         })}
-        <header>
-          <CustomHeader
-            isMobile={isMobile}
-            {...header_ref.data}
-            parentComponent="SubPage"
-            openGroupBookingModal={this.openGroupBookingModal}
-            showGroupBooking={showGroupBooking}
-            logoRedirectionURL={logoRedirectionURL.url || '/'}
-            hasPoweredByHeadoutLogo={
-              // microsite_document_ref.data.enable_powered_by_headout_logo ===
-              // 'Yes'
-              true
-            }
-            dropdown={this.state.dropdown}
-            handleDropdownToggle={this.handleDropdownToggle}
-            languages={localization}
-            availableLanguages={alternate_languages}
-            currentLanguage={currentLanguageSplit}
-            uid={uid}
-            host={host}
-            enableLocalizationMenu={enable_localization_menu === 'Yes'}
-          />
-        </header>
+        <Header
+          languages={localization}
+          headerLinks={headerLinks}
+          currentLanguage={currentLanguageSplit}
+          logoUrl={logo.url}
+          logoAltText={logoAltText || logo.alt || ''}
+          alternateLanguages={alternate_languages}
+          uid={uid}
+          dropdown={this.state.dropdown}
+          handleDropdownToggle={this.handleDropdownToggle}
+          isMobile={this.state.isMobile}
+          showGroupBooking={showGroupBooking}
+          hasLanguageSelector={enable_localization_menu}
+          logoRedirectionURL={logoRedirectionURL.url || '/'}
+          host={host}
+          hasPoweredByHeadoutLogo={true}
+          openGroupBookingModal={this.openGroupBookingModal}
+        />
         <main
           className={classNames({
             'content-wrapper': !featured.image.url,
@@ -276,7 +275,7 @@ export default class ContentPage extends Component<any, any> {
           </div>
         </main>
         <footer>
-          <CustomFooter {...footer.data} micrositeURL={micrositeURL} />
+          <CustomFooter {...footer.data} />
         </footer>
       </div>
     );

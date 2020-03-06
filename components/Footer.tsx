@@ -3,11 +3,7 @@ import { attachQueryParam } from '../utils/helper';
 
 export default class Footer extends Component<any, any> {
   render() {
-    const { logoUrl, disclaimer, footerAltText, micrositeURL } = this.props;
-    let url = micrositeURL;
-    if (micrositeURL[micrositeURL.length - 1] === '/') {
-      url = micrositeURL.slice(0, -1);
-    }
+    const { logoUrl, disclaimer, footerAltText } = this.props;
     return (
       <div className="footer">
         <div className="footer-logo">
@@ -25,9 +21,9 @@ export default class Footer extends Component<any, any> {
               © 2020 Headout. All rights reserved.
             </div>
             <div className="legal-links">
-              <a href={`${url}/terms`}>Terms & Conditions</a>
-              <a href={`${url}/privacy-policy`}>Privacy Policy</a>
-              <a href={`${url}/company-details`}>Company Details</a>
+              <a href={`/terms`}>Terms & Conditions</a>
+              <a href={`/privacy-policy`}>Privacy Policy</a>
+              <a href={`/company-details`}>Company Details</a>
             </div>
           </div>
         </div>

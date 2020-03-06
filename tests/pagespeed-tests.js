@@ -3,7 +3,7 @@ const signale = require('signale');
 
 const domains = [
   'https://frame.tickets-dubai.org',
-  'https://sagradafamilia.tickets-barcelona.org',
+  'https://sagradafamilia.barcelona-tickets.com',
   'https://bateaux-parisiens.seine-river-cruises.com',
   'https://www.alcazar-seville-tickets.com/',
   'https://www.alhambra-granada-tickets.com',
