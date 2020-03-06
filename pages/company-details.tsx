@@ -5,6 +5,7 @@ import CustomFooter from '../components/CustomFooter';
 import ContentContainer from '../components/UI/ContentContainer';
 import { Client } from '../prismic-config';
 import { DROPDOWN_ELEMENT } from '../constants';
+import 'lazysizes';
 import '../public/static/styles.css';
 
 export default class companyDetails extends Component<any, any> {
@@ -93,7 +94,6 @@ export default class companyDetails extends Component<any, any> {
     const { page_url: micrositeURL } = response.data;
     const {
       localization: languages,
-      header_links: headerLinks,
       logo_redirection_url: logoRedirectionURL,
       customFooter,
     } = response.data;
@@ -113,7 +113,7 @@ export default class companyDetails extends Component<any, any> {
       <React.Fragment>
         <Header
           languages={languages ? languages : null}
-          headerLinks={headerLinks ? headerLinks : null}
+          headerLinks={null}
           logoUrl={logoUrl || uploadedLogoUrl || null}
           currentLanguage={currentLanguage ? currentLanguage : null}
           logoAltText={altText || logoAltText}

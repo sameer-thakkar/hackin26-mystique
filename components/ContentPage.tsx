@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import 'lazysizes';
 import classNames from 'classnames';
 import dynamic from 'next/dynamic';
 import Header from './common/Header';

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { HomePage } from './views/HomePage';
 import { SearchPage } from './views/SearchPage';
-import 'lazysizes';
 import { PAGETYPE } from '../../constants';
 import { MobileProductPage } from './views/ProductPage';
 import { withRouter, Router } from 'next/router';

@@ -2,12 +2,8 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import fetch from 'isomorphic-unfetch';
 import { ThemeProvider } from 'styled-components';
-
-const ErrorPage = dynamic(() => import('next/error'));
-const Microsite = dynamic(() => import('../components/MicrositeV1'));
-const ContentPage = dynamic(() => import('../components/ContentPage'));
-const MicrositeV2 = dynamic(() => import('../components/MicrositeV2'));
 import theme from '../theme';
+import EnvironmentContext from '../contexts/environmentContext';
 import { Client } from '../prismic-config';
 import {
   CUSTOM_TYPES,
@@ -19,8 +15,13 @@ import {
   LINKED_MICROSITE_PROPS,
 } from '../constants';
 import { redirectTo, getPrismicProps, reflect } from '../utils';
-import EnvironmentContext from '../contexts/environmentContext';
+import 'lazysizes';
 import '../public/static/styles.css';
+
+const ErrorPage = dynamic(() => import('next/error'));
+const Microsite = dynamic(() => import('../components/MicrositeV1'));
+const ContentPage = dynamic(() => import('../components/ContentPage'));
+const MicrositeV2 = dynamic(() => import('../components/MicrositeV2'));
 
 export default class Page extends React.Component<any, any> {
   static async getInitialProps({ req, query, res }) {

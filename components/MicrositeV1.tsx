@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import dynamic from 'next/dynamic';
-import 'lazysizes';
 import { scroller } from 'react-scroll';
 import Header from './common/Header';
 import Banner from './Banner';

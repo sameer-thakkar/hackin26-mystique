@@ -7,6 +7,7 @@ import Paragraph from '../components/UI/Paragraph';
 import { DROPDOWN_ELEMENT, CUSTOM_TYPES } from '../constants';
 import { Client } from '../prismic-config';
 import { TopHeading, SubHeading } from '../components/UI/Headings';
+import 'lazysizes';
 import '../public/static/styles.css';
 
 export default class TermsPage extends Component<any, any> {
@@ -95,7 +96,6 @@ export default class TermsPage extends Component<any, any> {
     const { page_url: micrositeURL } = response.data;
     const {
       localization: languages,
-      header_links: headerLinks,
       logo_redirection_url: logoRedirectionURL,
       customFooter,
     } = response.data;
@@ -116,7 +116,7 @@ export default class TermsPage extends Component<any, any> {
       <>
         <Header
           languages={languages ? languages : null}
-          headerLinks={headerLinks ? headerLinks : null}
+          headerLinks={null}
           logoUrl={logoUrl || uploadedLogoUrl || null}
           currentLanguage={currentLanguage ? currentLanguage : null}
           logoAltText={altText || logoAltText}

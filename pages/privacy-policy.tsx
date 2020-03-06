@@ -8,6 +8,7 @@ import Paragraph from '../components/UI/Paragraph';
 import { TopHeading, SubHeading } from '../components/UI/Headings';
 import { Client } from '../prismic-config';
 import { DROPDOWN_ELEMENT, CUSTOM_TYPES } from '../constants';
+import 'lazysizes';
 import '../public/static/styles.css';
 
 const Title = styled.div`
@@ -101,7 +102,6 @@ export default class privacy extends Component<any, any> {
     const { page_url: micrositeURL } = response.data;
     const {
       localization: languages,
-      header_links: headerLinks,
       logo_redirection_url: logoRedirectionURL,
       customFooter,
     } = response.data;
@@ -122,7 +122,7 @@ export default class privacy extends Component<any, any> {
       <>
         <Header
           languages={languages ? languages : null}
-          headerLinks={headerLinks ? headerLinks : null}
+          headerLinks={null}
           logoUrl={logoUrl || uploadedLogoUrl || null}
           currentLanguage={currentLanguage ? currentLanguage : null}
           logoAltText={altText || logoAltText}

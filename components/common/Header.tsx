@@ -112,7 +112,7 @@ const Header: React.FC<any> = props => {
     hasPoweredByHeadoutLogo,
     openGroupBookingModal,
   } = props;
-  const hamburgerIconCheck = showGroupBooking || headerLinks.length;
+  const hamburgerIconCheck = showGroupBooking ?? headerLinks?.length;
   const someRef = useRef(null);
   useCaptureClickOutside(
     someRef,
@@ -142,14 +142,16 @@ const Header: React.FC<any> = props => {
                 <Hamburger />
               </div>
             ) : null}
-            <HeaderLinks
-              headerLinks={headerLinks}
-              openGroupBookingModal={openGroupBookingModal}
-              isMobile={isMobile}
-              showGroupBooking={showGroupBooking}
-              dropdown={dropdown}
-              handleDropdownToggle={handleDropdownToggle}
-            />
+            {headerLinks ? (
+              <HeaderLinks
+                headerLinks={headerLinks}
+                openGroupBookingModal={openGroupBookingModal}
+                isMobile={isMobile}
+                showGroupBooking={showGroupBooking}
+                dropdown={dropdown}
+                handleDropdownToggle={handleDropdownToggle}
+              />
+            ) : null}
           </div>
           {enableBuyTickets === 'Yes' ? (
             <StyledBuyTickets>
