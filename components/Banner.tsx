@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
+import { scroller } from 'react-scroll';
 import { BANNER_PARAMS } from '../constants/index';
 import * as labels from '../public/static/localization/labels';
 import { attachQueryParam } from '../utils/helper';
@@ -100,6 +101,14 @@ export default class Banner extends Component<any, any> {
     );
   };
 
+  scrollTicketSection = () => {
+    scroller.scrollTo('select-tickets', {
+      duration: 1200,
+      offset: this.state.isMobile ? -80 : -100,
+      smooth: 'easeInOutQuart',
+    });
+  };
+
   render() {
     const { bannerHeading, bannerImages, boxed, currentLanguage } = this.props;
     const { isClient } = this.state;
@@ -133,9 +142,12 @@ export default class Banner extends Component<any, any> {
             <div className="caption">
               <h1>{bannerHeading}</h1>
             </div>
-            <a className="mb-cta book-now-text" href="#select-tickets">
+            <div
+              className="mb-cta book-now-text"
+              onClick={this.scrollTicketSection}
+            >
               {labels[currentLanguage].BANNER_CTA}
-            </a>
+            </div>
           </div>
         </div>
         {this.hasIndicators && bannerImages.length > 1 ? (
