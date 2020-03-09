@@ -2,6 +2,7 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from '../utils/shortCodes';
+import HorizontalLine from './slices/HorizontalLine';
 
 const ImageLinksCarousel = dynamic(() => import('./slices/ImageLinksCarousel'));
 const InteractiveImage = dynamic(() => import('./slices/InteractiveImage'));
@@ -311,6 +312,8 @@ const sliceHandler = (slice, props: any = {}) => {
           type={props.cardType}
         />
       );
+    case 'horizontal_line':
+      return <HorizontalLine />;
     default:
     // ToDo: Add to Error Logs (Slice)
   }

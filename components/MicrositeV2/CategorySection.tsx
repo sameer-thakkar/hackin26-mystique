@@ -35,7 +35,7 @@ const CategorySection = props => {
       <style jsx>{`
         .category-slider {
           display: grid;
-          grid-row-gap: 4px;
+          grid-row-gap: 8px;
           color: ${COLORS.DAVY_GREY};
         }
         .category-heading {

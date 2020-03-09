@@ -21,7 +21,7 @@ const StyledTourComparisionTable = styled.div`
   font-family: ${GRAPHIK.FONT_STACK};
   .comparision-heading {
     font-size: 24px;
-    margin-bottom: 4px;
+    margin-bottom: 8px;
     font-weight: ${AVENIR.HEAVY};
     font-family: ${AVENIR.FONT_STACK};
     color: ${COLORS.TWO_BLACK};
