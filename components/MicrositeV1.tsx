@@ -9,9 +9,11 @@ import Footer from './common/Footer';
 import sliceHandler from './Slices';
 import PopulateUncategorizedProducts from './PopulateUncategorizedProducts';
 import Analytics from '../utils/Analytics';
+import allToursParser from './common/alltoursParser';
 import { docCookies } from '../utils/helper';
 import { DROPDOWN_ELEMENT, ANALYTICS_EVENTS } from '../constants';
 import { groupSlices } from '../utils/helper';
+import { ProductsContextProvider } from '../contexts/Products';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
@@ -64,9 +66,17 @@ export default class MicrositeV1 extends Component<any, any> {
         },
         [[], []]
       );
-
+      const allTourTgids = this.props.data.data.all_tours.reduce(
+        (acc, tour) => {
+          return [...acc, parseInt(tour.primary.tgid)];
+        },
+        []
+      );
       const fetchTourGroupPrices = fetch(
-        `https://api.headout.com/api/v5/tour-group/list?ids[]=${tourGroupTgids}`
+        `https://api.headout.com/api/v5/tour-group/list?ids[]=${[
+          ...tourGroupTgids,
+          ...allTourTgids,
+        ]}`
       ).then(res => {
         let HSID = res.headers.get('x-h-sid');
         if (!docCookies.hasItem('h-sid')) {
@@ -364,6 +374,14 @@ export default class MicrositeV1 extends Component<any, any> {
     } = this.props;
     const slices = contentFramework?.data?.body;
     const contentFWSlices = (slices && groupSlices(slices)) || [];
+    const pricingData = {
+      isFetched: this.state.isFetched,
+      cardPrices: this.state.tourPrices,
+      currencySymbol: this.state.currencySymbol,
+    };
+    const scorpioData = this.props.scorpioData;
+    const CMSData = this.props.data.data;
+    const allTours = allToursParser(CMSData, scorpioData, pricingData);
     return (
       <div>
         <div className="microsite-container">
@@ -446,19 +464,21 @@ export default class MicrositeV1 extends Component<any, any> {
               microbrandCardsHeading={microbrandCardsHeading}
             />
           ) : null}
-          {longFormContent ? (
-            <LongForm
-              content={[...longFormContent, ...contentFWSlices]}
-              isMobile={this.state.isMobile}
-            />
-          ) : null}
-          {contentFramework ? (
-            <div className="content-fw-wrapper">
-              {contentFramework.body?.map((slice, index) => {
-                return sliceHandler(slice);
-              })}
-            </div>
-          ) : null}
+          <ProductsContextProvider allTours={allTours}>
+            {longFormContent ? (
+              <LongForm
+                content={[...longFormContent, ...contentFWSlices]}
+                isMobile={this.state.isMobile}
+              />
+            ) : null}
+            {contentFramework ? (
+              <div className="content-fw-wrapper">
+                {contentFramework.body?.map((slice, index) => {
+                  return sliceHandler(slice);
+                })}
+              </div>
+            ) : null}
+          </ProductsContextProvider>
           <Footer
             currentLanguage={currentLanguage}
             attraction={commonFooter?.data?.attraction || 'attraction'}
