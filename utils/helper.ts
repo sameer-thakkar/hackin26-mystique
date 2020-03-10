@@ -260,5 +260,8 @@ export const attachQueryParam = (url, queryString) => {
   return `${url}?${queryString}`;
 };
 export const stringIdfy = string => {
-  return string.replace(/\s/, '-').toLowerCase();
+  return string
+    .trim()
+    .replace(/\s/g, '-')
+    .toLowerCase();
 };

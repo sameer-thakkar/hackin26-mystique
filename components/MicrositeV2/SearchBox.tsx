@@ -27,7 +27,7 @@ export const SearchBox = props => {
     setQuery(str);
 
     if (str.length >= 3) {
-      interactionContext.closeTour();
+      if (interactionContext.activeTour.tgid) interactionContext.closeTour();
       const results = fuse.search(str);
       props.handleResults(results.slice(0, 5));
     } else {

@@ -30,8 +30,9 @@ const StyledTourComparisionTable = styled.div`
   .comparision-description {
     padding-bottom: 32px;
     width: 60%;
-    font-size: 14px;
-    font-family: ${AVENIR.FONT_STACK};
+    font-size: 16px;
+    font-family: ${GRAPHIK.FONT_STACK};
+    font-weight: ${GRAPHIK.REGULAR};
     line-height: 20px;
     color: ${COLORS.FOUR_BLACK};
   }
@@ -57,6 +58,15 @@ const StyledTourComparisionTable = styled.div`
     grid-auto-rows: max-content;
     grid-row-gap: 32px;
     grid-column-gap: 8px;
+  }
+  .cta-table-wrap .row {
+    background: ${COLORS.WHITE};
+    padding-top: 32px;
+    padding-bottom: 32px;
+    margin-bottom: -32px;
+    position: sticky;
+    bottom: 0;
+    z-index: 15;
   }
   .row {
     display: grid;
@@ -104,9 +114,10 @@ const StyledTourComparisionTable = styled.div`
 
   .row.sticky {
     position: sticky;
-    top: 0;
+    top: 12px;
     background: ${COLORS.WHITE};
     z-index: 15;
+    padding-bottom: 8px;
   }
 
   .column p {
@@ -186,7 +197,7 @@ const StyledTourComparisionTable = styled.div`
     }
     .row {
       grid-column-gap: 12px;
-      grid-template-columns: 4px repeat(${({ tourCount }) => tourCount}, 1fr) 4px;
+      grid-template-columns: 4px repeat(${({ tourCount }) => tourCount}, 164px) 4px;
     }
     .row::before {
       dispaly: grid;
@@ -241,7 +252,7 @@ const StyledTourComparisionTable = styled.div`
       margin-bottom: 8px;
     }
     .comparision-description {
-      font-size: 14px;
+      font-size: 16px;
       color: ${COLORS.DAVY_GREY};
       font-weight: ${GRAPHIK.REGULAR};
       padding-bottom: 24px;
@@ -249,6 +260,10 @@ const StyledTourComparisionTable = styled.div`
     }
     .row.sticky {
       z-index: unset;
+    }
+    .cta-table-wrap .row {
+      padding-bottom: 8px;
+      margin-bottom: 0;
     }
     .start-compare-icon {
       display: grid;
@@ -337,7 +352,7 @@ const TourComparisonTable = props => {
       <div className="comparision-description">{description}</div>
       <div className="full-width-wrap">
         <div className="table">
-          <div className="row max-content">
+          <div className="row max-content" style={{ zIndex: -1 }}>
             {content_normalized_tours.map((tour, cellIndex) => {
               return (
                 <div className="column">
@@ -473,6 +488,8 @@ const TourComparisonTable = props => {
               })}
             </div>
           ) : null}
+        </div>
+        <div className="table cta-table-wrap">
           <div className="row">
             {content_normalized_tours.map((tour, cellIndex) => {
               const props = {

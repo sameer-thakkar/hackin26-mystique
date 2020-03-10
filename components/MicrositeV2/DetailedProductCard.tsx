@@ -290,7 +290,7 @@ const DetailedProductCard = props => {
           position: absolute;
           top: 0;
           background-color: #000;
-          right: 1px;
+          right: 0;
           padding: 16px;
           cursor: pointer;
           display: flex;
@@ -337,7 +337,6 @@ const DetailedProductCard = props => {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          border-radius: 0 0 4px 0;
         }
         .description-content p {
           margin: 0;

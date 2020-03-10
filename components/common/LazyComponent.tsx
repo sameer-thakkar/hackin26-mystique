@@ -16,7 +16,7 @@ const LazyWrapper = props => {
 
 const LazyComponent = handleViewport(
   LazyWrapper,
-  {},
+  { rootMargin: '250px' },
   { disconnectOnLeave: true }
 );
 

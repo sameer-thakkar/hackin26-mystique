@@ -5,12 +5,14 @@ import Swiper from '../Swiper';
 import Image from '../UI/Image';
 import { CHEVRON_LEFT } from '../../public/static/svg-icons';
 import { shortCodeSerializer } from '../../utils/shortCodes';
-import { AVENIR, COLORS } from '../../constants/ui-constants';
+import { AVENIR, COLORS, GRAPHIK } from '../../constants/ui-constants';
+import { scroller } from 'react-scroll';
+import { stringIdfy } from '../../utils/helper';
 
 const StyledWrapper = styled.div`
   display: grid;
   grid-auto-flow: row;
-  grid-row-gap: 32px;
+  grid-row-gap: 22px;
   overflow: hidden;
   @media (max-width: 768px) {
     overflow: unset;
@@ -52,7 +54,7 @@ const StyledContent = styled.div`
   div {
     margin: 0;
     font-family: ${AVENIR.FONT_STACK};
-    font-size: 14px;
+    font-size: 16px;
     line-height: 20px;
     color: ${COLORS.FOUR_BLACK};
     p {
@@ -62,9 +64,13 @@ const StyledContent = styled.div`
   @media (max-width: 768px) {
     h2 {
       line-height: 26px;
+      font-family: ${GRAPHIK.FONT_STACK};
+      font-weight: ${GRAPHIK.SEMIBOLD};
     }
     div {
       line-height: 20px;
+      font-family: ${GRAPHIK.FONT_STACK};
+      font-weight: ${GRAPHIK.REGULAR};
     }
   }
 `;
@@ -79,6 +85,9 @@ const StyledSlider = styled.div`
     width: 100%;
     max-width: 1200px;
     margin: auto;
+  }
+  .swiper-container {
+    padding-top: 10px;
   }
   .controls {
     display: flex;
@@ -105,6 +114,11 @@ const StyledSlider = styled.div`
 
 const StyledSlide = styled.div`
   margin-right: 20px;
+  transform: translate3d(0, 0, 0);
+  transition: ease 0.2s;
+  &:hover {
+    transform: translate3d(0, -5px, 0);
+  }
   img {
     height: 175px;
     width: 290px !important;
@@ -126,12 +140,32 @@ const StyledSlide = styled.div`
     div {
       font-size: 14px;
     }
+    transform: unset;
+    transition: unset;
+    &:hover {
+      transform: unset;
+    }
   }
 `;
 
+const desktopInteraction = (event, { card_title, isMobile }) => {
+  if (!isMobile) {
+    event.preventDefault();
+    scroller.scrollTo(stringIdfy(card_title), {
+      duration: 1200,
+      offset: isMobile ? -80 : -100,
+      smooth: 'easeInOutQuart',
+    });
+  }
+};
+
 const Slide = props => (
   <StyledSlide>
-    <a href={props.link.url} target={props.link.target}>
+    <a
+      href={props.link.url}
+      target={props.link.target}
+      onClick={e => desktopInteraction(e, props)}
+    >
       <Image
         dontLazyLoad={!props.lazyLoad}
         url={props.image.url}
@@ -242,7 +276,12 @@ const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = props => {
       {isMobile ? (
         <StyledMobileSlider>
           {cards.map((card, index) => (
-            <Slide key={index} {...card} lazyLoad={lazyLoadImages} />
+            <Slide
+              key={index}
+              {...card}
+              lazyLoad={lazyLoadImages}
+              isMobile={isMobile}
+            />
           ))}
         </StyledMobileSlider>
       ) : (
@@ -250,7 +289,12 @@ const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = props => {
           <div className="slider-container">
             <Swiper {...swiperParams} getSwiper={updateSwiper}>
               {cards.map((card, index) => (
-                <Slide key={index} {...card} lazyLoad={lazyLoadImages} />
+                <Slide
+                  key={index}
+                  {...card}
+                  isMobile={isMobile}
+                  lazyLoad={lazyLoadImages}
+                />
               ))}
             </Swiper>
           </div>

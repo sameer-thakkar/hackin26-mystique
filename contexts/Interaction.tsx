@@ -27,7 +27,7 @@ export const InteractionContextProvider = props => {
     ...defaultCategory,
   ]);
 
-  const clickTour = (tgid, hoist, section) => {
+  const clickTour = (tgid, hoist, section = 'main') => {
     if (activeTour.tgid != tgid) {
       if (hoist) {
         setActiveCategory(uniqueTgids([tgid, ...activeCategoryTgids]));

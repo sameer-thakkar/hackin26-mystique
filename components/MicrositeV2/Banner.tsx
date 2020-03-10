@@ -12,8 +12,8 @@ const Banner = props => {
   }
   const scrollToSection = sectionId => {
     scroller.scrollTo(sectionId, {
-      duration: 750,
-      delay: 100,
+      duration: 1000,
+      delay: 4000,
       smooth: 'easeInQuad',
       offset: -75,
     });
@@ -24,12 +24,7 @@ const Banner = props => {
       const [type, target] = interaction.split(':');
       switch (type.toLowerCase().trim()) {
         case 'section':
-          scrollToSection(
-            target
-              .trim()
-              .replace(' ', '-')
-              .toLowerCase()
-          );
+          scrollToSection(stringIdfy(target));
       }
     }
   };
@@ -55,8 +50,8 @@ const Banner = props => {
                           ? image.mobile_url
                           : image.url)
                       }
-                      height={isMobile ? 204 : 400}
-                      width={isMobile ? 343 : 1200}
+                      height={isMobile ? 408 : 400}
+                      width={isMobile ? 686 : 1200}
                       dontLazyLoad={index == 0}
                       alt={image.alt}
                       imageId={stringIdfy(image.alt || '') + index}
@@ -83,6 +78,11 @@ const Banner = props => {
           .carousel {
             max-width: ${SIZES.MAX_WIDTH};
             margin: 0 auto;
+          }
+
+          .swiper-slide {
+            -webkit-transform-style: preserve-3d;
+            -webkit-backface-visibility: hidden;
           }
 
           @media (max-width: 768px) {

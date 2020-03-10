@@ -48,7 +48,7 @@ const CategorySection = props => {
         }
         .category-description {
           margin: 0;
-          font-size: 14px;
+          font-size: 16px;
           width: 60%;
           font-family: ${AVENIR.FONT_STACK};
           line-height: 20px;

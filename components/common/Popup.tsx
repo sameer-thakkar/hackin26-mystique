@@ -112,7 +112,7 @@ const Popup = props => {
           width: 24px;
         }
         .aio-popup-container .close svg path {
-          stroke: ${COLORS.DAVY_GREY};
+          stroke: ${COLORS.WHITE};
           height: 32px;
           width: 32px;
         }

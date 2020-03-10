@@ -51,6 +51,7 @@ const LongForm = props => {
           .long-form-wrap {
             border: none;
             padding: 0;
+            grid-row-gap: 48px;
             margin-top: 56px;
             margin-bottom: 56px;
           }

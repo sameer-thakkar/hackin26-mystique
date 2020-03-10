@@ -136,6 +136,12 @@ export const HomePage = props => {
             margin-right: auto;
             font-family: Graphik;
           }
+          @media (max-width: 768px) {
+            .hero-slice-section {
+              margin-top: 48px;
+              margin-bottom: 48px;
+            }
+          }
         `}
       </style>
     </div>

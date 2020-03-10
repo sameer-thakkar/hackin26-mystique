@@ -74,6 +74,11 @@ const Product = props => {
           display: grid;
           grid-template-rows: 176px auto;
           grid-row-gap: 8px;
+          transform: translate3d(0, 0, 0);
+          transition: ease 0.2s;
+        }
+        .product-v2:hover {
+          transform: translate3d(0, -5px, 0);
         }
         .product-v2-title {
           font-family: ${AVENIR.FONT_STACK};
@@ -193,7 +198,12 @@ const Product = props => {
             font-weight: ${GRAPHIK.REGULAR};
             font-family: ${GRAPHIK.FONT_STACK};
           }
-          .product-v2-boosters {
+          .product-v2 {
+            transform: unset;
+            transition: unset;
+          }
+          .product-v2:hover {
+            transform: unset;
           }
         }
       `}</style>

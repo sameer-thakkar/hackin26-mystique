@@ -171,7 +171,7 @@ export const MobileProductPage = props => {
           .header {
             display: grid;
             align-items: center;
-            padding: 16px;
+            padding: 18px 16px;
             border-bottom: 1px solid #dadada;
           }
           .mobile-product-wrap .prod-image .close {
@@ -333,6 +333,9 @@ export const MobileProductPage = props => {
             overscroll-behavior-x: contain;
             overflow: -moz-scrollbars-none;
             -ms-overflow-style: none;
+            grid: unset;
+            display: flex;
+            flex-wrap: wrap;
           }
           .descriptors::-webkit-scrollbar {
             width: 0 !important;
@@ -342,6 +345,8 @@ export const MobileProductPage = props => {
             background: ${COLORS.FO_GRAY};
             border-radius: 2px;
             color: ${COLORS.TWO_BLACK};
+            margin-right: 8px;
+            margin-bottom: 8px;
           }
           .vendor-name {
             grid-column: 1 / 3;
