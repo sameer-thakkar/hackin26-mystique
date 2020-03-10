@@ -92,6 +92,7 @@ export default class Product extends Component<any, any> {
       isScratchPriceEnabled,
       booster,
     } = this.props;
+    const boosterHasIcon = booster.filter(i => i.type === 'image').length > 0;
     const descriptorsCsv = descriptors || scorpioData.descriptors;
     const cardTitle = title || scorpioData.title;
     const descriptorsList = descriptorsCsv ? descriptorsCsv.split(',') : [];
@@ -294,7 +295,7 @@ export default class Product extends Component<any, any> {
             .v1-booster {
               font-size: 0.8em;
               display: grid;
-              grid-template-columns: 40px auto;
+              grid-template-columns: ${boosterHasIcon ? '40px' : ''} auto;
               grid-gap: 10px;
               padding: 1.2em;
               border-bottom: 1px solid #ebebebeb;
