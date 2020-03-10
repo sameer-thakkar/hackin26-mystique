@@ -92,3 +92,31 @@ export const OnlyText = () => {
     </div>
   );
 };
+
+export const WithFullCardLink = () => {
+  return (
+    <div style={{ width: 500, padding: 50 }}>
+      <Card
+        title={data.title}
+        description={data.description}
+        type="column"
+        linkType="Full Card"
+        link={{ url: 'https://www.headout.com', target: '_blank' }}
+      />
+    </div>
+  );
+};
+
+export const WithTitleLink = () => {
+  return (
+    <div style={{ width: 500, padding: 50 }}>
+      <Card
+        title={data.title}
+        description={data.description}
+        type="column"
+        linkType="Title"
+        link={{ url: 'https://www.headout.com', target: '_blank' }}
+      />
+    </div>
+  );
+};

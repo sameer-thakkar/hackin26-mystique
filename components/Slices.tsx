@@ -292,6 +292,8 @@ const sliceHandler = (slice, props: any = {}) => {
         card_description,
         cta_text,
         cta_link,
+        card_link,
+        card_link_type,
       } = slice.primary;
       const images = slice.items
         .filter(image => {
@@ -310,6 +312,8 @@ const sliceHandler = (slice, props: any = {}) => {
           description={card_description}
           cta={{ text: cta_text, link: cta_link }}
           type={props.cardType}
+          link={card_link}
+          linkType={card_link_type}
         />
       );
     case 'horizontal_line':

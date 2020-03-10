@@ -49,11 +49,13 @@ const StyledCard = styled.div(props => {
   }
   .card-content-section {
     padding: 16px;
-    span {
+    span, a {
       font-family: ${GRAPHIK.FONT_STACK};
       font-style: normal;
       font-weight: ${GRAPHIK.HEAVY};
       font-size: 20px;
+      text-decoration: none;
+      color: ${COLORS.DAVY_GREY}
     }
     p {
       font-size: 16px;
@@ -68,6 +70,8 @@ const StyledCard = styled.div(props => {
 `;
 });
 
+const StyledTitle = styled.span``;
+
 type CardProps = {
   title: string;
   description: any[];
@@ -80,6 +84,8 @@ type CardProps = {
     text: string;
   };
   type?: string;
+  link?: any;
+  linkType?: string;
 };
 
 /**
@@ -91,6 +97,9 @@ type CardProps = {
  * - *Card Title
  * - *Card Description
  *  - Rich Text field
+ * - Card Link
+ * - Card Link Type
+ *  - 'Full Card' will make the entire card a link and 'Title' will only make the title a link
  * - CTA Text
  * - CTA Link
  *
@@ -114,6 +123,8 @@ const Card: React.FC<CardProps> = ({
   images = [],
   cta = {},
   type = 'desktop',
+  link = '',
+  linkType = '',
 }) => {
   const { width } = useWindowSize();
   const [isMobile, setIsMobile] = React.useState(false);
@@ -163,10 +174,26 @@ const Card: React.FC<CardProps> = ({
       break;
   }
   return (
-    <StyledCard isMobile={isMobile} type={type}>
+    <StyledCard
+      {...(linkType === 'Full Card' && {
+        as: 'a',
+        href: link.url,
+        target: link.target,
+      })}
+      isMobile={isMobile}
+      type={type}
+    >
       {imageView}
       <div className="card-content-section">
-        <span>{title}</span>
+        <StyledTitle
+          {...(linkType === 'Title' && {
+            as: 'a',
+            href: link.url,
+            target: link.target,
+          })}
+        >
+          {title}
+        </StyledTitle>
         <RichText render={description} />
         {cta.link && cta.text ? (
           <a href={cta.link.url} target={cta.link.target}>
