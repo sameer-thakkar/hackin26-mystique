@@ -203,9 +203,9 @@ const Footer: React.FC<FooterProps> = ({
             </div>
             <div className="help">
               <StyledLinksHeader>Get Help</StyledLinksHeader>
-              <StyledLink href="https://www.headout.com/help" target="_blank">
+              {/* <StyledLink href="https://www.headout.com/help" target="_blank">
                 Help & FAQs
-              </StyledLink>
+              </StyledLink> */}
               <StyledLink
                 href="https://secure.livechatinc.com/licence/8339531/v2/open_chat.cgi?groups=0"
                 target="_blank"
