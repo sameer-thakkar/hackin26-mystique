@@ -39,6 +39,7 @@ export const COLORS = {
   EIGHT_GRAY: '#888',
   LIGHTER_WHITE: '#FAFAFA',
   FO_GRAY: '#F0F0F0',
+  BEACH: '#03829D',
 };
 
 export const SIZES = {

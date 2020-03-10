@@ -3,10 +3,9 @@ import dynamic from 'next/dynamic';
 import { scroller } from 'react-scroll';
 import Header from './common/Header';
 import Banner from './Banner';
-import Footer from './Footer';
 import LongForm from './LongForm';
 import populateHead from './common/meta';
-import CustomFooter from './CustomFooter';
+import Footer from './common/Footer';
 import sliceHandler from './Slices';
 import PopulateUncategorizedProducts from './PopulateUncategorizedProducts';
 import Analytics from '../utils/Analytics';
@@ -265,11 +264,17 @@ export default class MicrositeV1 extends Component<any, any> {
     const uncategorizedToursHeading = checkIfToursAvailable
       ? uncategorizedTours[0].primary
       : '';
-    const {
-      url: uploadedFooterLogoUrl,
-      alt: footerAltTextUploaded,
-    } = this.props.data.data.footer_logo;
-    const { url: footerLogoUrl } = this.props.data.data.footer_logo_link;
+
+    const footerLogoURL =
+      this.props.data.refs?.commonFooter?.data?.logo?.url ||
+      this.props.data.data.footer_logo.url ||
+      this.props.data.data.footer_logo_link?.url;
+
+    const footerLogoAlt =
+      this.props.data.refs?.commonFooter?.data?.logo?.alt ||
+      this.props.data.data.footer_logo.alt ||
+      this.props.data.data?.footer_logo_alt;
+
     const {
       footer_links: footerLinks,
       book_now_text: bookNowText,
@@ -278,12 +283,8 @@ export default class MicrositeV1 extends Component<any, any> {
       enable_powered_by_headout_logo: hasPoweredByHeadoutLogo,
     } = this.props.data.data;
 
-    const { text: disclaimer } = this.props.data.data.disclaimer[0] || {
-      text: '',
-    };
     const longFormContent = this.props.data.data.body2;
     const {
-      footer_logo_alt_text: footerAltText,
       has_terms_page: hasTermsPage,
       enable_localization_menu: hasLanguageSelector,
       enable_group_booking: enableGroupBooking,
@@ -307,7 +308,7 @@ export default class MicrositeV1 extends Component<any, any> {
     const {
       group_booking_excluded_tgids: groupBookingExcludedTgids,
     } = this.props.data.data;
-    const { customFooter } = this.props.data.refs;
+    const { commonFooter } = this.props.data.refs;
     const microbrandCards = this.props.data.data.microbrand_cards;
     const microbrandCardsHeading = this.props.data.data.microbrand_cards_heading
       ? this.props.data.data.microbrand_cards_heading
@@ -407,7 +408,7 @@ export default class MicrositeV1 extends Component<any, any> {
             enableBuyTickets={enableBuyTickets}
             logoRedirectionURL={logoRedirectionURL.url || '/'}
             host={host}
-            hasPoweredByHeadoutLogo={true}
+            hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo}
           />
           <Banner
             bannerImages={bannerImages ? bannerImages : null}
@@ -458,21 +459,17 @@ export default class MicrositeV1 extends Component<any, any> {
               })}
             </div>
           ) : null}
-          {customFooter ? (
-            <footer>
-              <CustomFooter {...customFooter.data} uid={uid} />
-            </footer>
-          ) : (
-            <Footer
-              logoUrl={uploadedFooterLogoUrl || footerLogoUrl || null}
-              footerLinks={footerLinks ? footerLinks : null}
-              disclaimer={disclaimer ? disclaimer : null}
-              footerAltText={footerAltText || footerAltTextUploaded || null}
-              hasTermsPage={hasTermsPage}
-              isMobile={this.state.isMobile}
-              uid={uid}
-            />
-          )}
+          <Footer
+            currentLanguage={currentLanguage}
+            attraction={commonFooter?.data?.attraction || 'attraction'}
+            logoURL={footerLogoURL}
+            logoAlt={footerLogoAlt}
+            hasPoweredByHeadoutLogo={
+              commonFooter?.data?.powered_by_headout || false
+            }
+            microbrandType={commonFooter?.data?.microbrand_type}
+            slices={commonFooter?.data?.body || []}
+          />
           {hasOffer && (
             <FreeTourPopup
               popupState={this.state.popupOpen}

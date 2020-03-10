@@ -317,14 +317,14 @@ class MicrositeV2 extends Component<any, any> {
     };
 
     const { favicon, footer_logo_link, footer_logo } = this.props.data.data;
-    const { customFooter, contentFramework } = this.props.data.refs;
+    const { commonFooter, contentFramework } = this.props.data.refs;
     const heroSectionSlice = this.props.data.data.body4;
-    const customFooterProps = customFooter ? customFooter.data : null;
+    const commonFooterProps = commonFooter ? commonFooter.data : null;
     const MBData = {
       footer: {
         favicon,
         logo: footer_logo.url ? footer_logo : footer_logo_link,
-        ...customFooterProps,
+        ...commonFooterProps,
       },
       isMobile,
       host,

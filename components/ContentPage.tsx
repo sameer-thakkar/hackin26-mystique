@@ -3,13 +3,13 @@ import classNames from 'classnames';
 import dynamic from 'next/dynamic';
 import Header from './common/Header';
 import sliceHandler from './Slices';
-import CustomFooter from './CustomFooter';
+import Footer from './common/Footer';
 import Masthead from './Masthead';
 import populateHead from './common/meta';
 import { Client } from '../prismic-config';
+import { DROPDOWN_ELEMENT } from '../constants';
 
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
-import { DROPDOWN_ELEMENT } from '../constants';
 
 export default class ContentPage extends Component<any, any> {
   constructor(props) {
@@ -76,7 +76,7 @@ export default class ContentPage extends Component<any, any> {
   prettifyProps(props) {
     let body = props.data.body;
     let featured = props.featured;
-    let footer = props.refs.customFooter;
+    let footer = props.refs.commonFooter;
 
     return {
       footer,
@@ -206,12 +206,15 @@ export default class ContentPage extends Component<any, any> {
       minimum_pax: minimumPax,
       maximum_pax: maximumPax,
       group_form_blocked_days: blockedDays,
+      enable_powered_by_headout_logo: hasPoweredByHeadoutLogo,
     } = this.props.data.microsite_document_ref.data;
+    const { commonFooter } = this.props.refs;
+    const footerLogoURL = this.props.refs?.commonFooter?.data?.logo?.url;
+    const footerLogoAlt = this.props.refs?.commonFooter?.data?.logo?.alt;
 
     const showGroupBooking = enableGroupBooking === 'Yes';
     const { groupBookingTourTitles } = this.state;
     const currentLanguageSplit = lang.split('-')[0];
-    const micrositeURL = this.props.data.page_url;
 
     return (
       <div className="page-wrapper">
@@ -254,7 +257,7 @@ export default class ContentPage extends Component<any, any> {
           hasLanguageSelector={enable_localization_menu}
           logoRedirectionURL={logoRedirectionURL.url || '/'}
           host={host}
-          hasPoweredByHeadoutLogo={true}
+          hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo}
           openGroupBookingModal={this.openGroupBookingModal}
         />
         <main
@@ -273,9 +276,17 @@ export default class ContentPage extends Component<any, any> {
             ))}
           </div>
         </main>
-        <footer>
-          <CustomFooter {...footer.data} />
-        </footer>
+        <Footer
+          currentLanguage={currentLanguage}
+          attraction={commonFooter?.data?.attraction || 'attraction'}
+          logoURL={footerLogoURL}
+          logoAlt={footerLogoAlt}
+          hasPoweredByHeadoutLogo={
+            commonFooter?.data?.powered_by_headout || false
+          }
+          microbrandType={commonFooter?.data?.microbrand_type}
+          slices={commonFooter?.data?.body || []}
+        />
       </div>
     );
   }

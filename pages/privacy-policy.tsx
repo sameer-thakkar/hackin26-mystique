@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Header from '../components/common/Header';
-import Footer from '../components/Footer';
-import CustomFooter from '../components/CustomFooter';
+import Footer from '../components/common/Footer';
 import ContentContainer from '../components/UI/ContentContainer';
 import Paragraph from '../components/UI/Paragraph';
 import { TopHeading, SubHeading } from '../components/UI/Headings';
@@ -54,8 +53,8 @@ export default class privacy extends Component<any, any> {
     });
     const footerID = response.data.footer_ref.id;
     if (footerID) {
-      const customFooter = await Client(req).getByID(footerID);
-      response.data.customFooter = customFooter;
+      const commonFooter = await Client(req).getByID(footerID);
+      response.data.commonFooter = commonFooter;
     }
     return { response, host, uid };
   }
@@ -99,24 +98,21 @@ export default class privacy extends Component<any, any> {
     const { url: uploadedLogoUrl, alt: altText } = response.data.logo;
     const { logo_alt_text: logoAltText } = response.data;
     const { alternate_languages: availableLanguages } = response;
-    const { page_url: micrositeURL } = response.data;
     const {
       localization: languages,
       logo_redirection_url: logoRedirectionURL,
-      customFooter,
+      commonFooter,
     } = response.data;
+    const footerLogoURL =
+      commonFooter.data.logo.url ||
+      response.data.footer_logo_link ||
+      response.data.footer_logo;
+    const footerLogoAlt =
+      commonFooter.data.logo.alt ||
+      response.data.footer_logo_alt ||
+      response.data.footer_logo.alt;
 
     const { lang: currentLanguage, uid } = response;
-    const {
-      url: uploadedFooterLogoUrl,
-      alt: footerAltTextUploaded,
-    } = response.data.footer_logo;
-    const { url: footerLogoUrl } = response.data.footer_logo_link;
-    const { footer_links: footerLinks } = response.data;
-    const { text: disclaimer } = response.data.disclaimer[0] || {
-      text: '',
-    };
-    const { footer_logo_alt_text: footerAltText } = response.data;
 
     return (
       <>
@@ -431,20 +427,17 @@ export default class privacy extends Component<any, any> {
         <br />
         <br />
         <br />
-        {customFooter ? (
-          <footer>
-            <CustomFooter {...customFooter.data} micrositeURL={micrositeURL} />
-          </footer>
-        ) : (
-          <Footer
-            logoUrl={uploadedFooterLogoUrl || footerLogoUrl || null}
-            footerLinks={footerLinks ? footerLinks : null}
-            disclaimer={disclaimer ? disclaimer : null}
-            footerAltText={footerAltText || footerAltTextUploaded || null}
-            isMobile={this.state.isMobile}
-            micrositeURL={micrositeURL}
-          />
-        )}
+        <Footer
+          currentLanguage={currentLanguage}
+          logoURL={footerLogoURL}
+          logoAlt={footerLogoAlt}
+          attraction={commonFooter.data.attraction || 'attraction'}
+          microbrandType={commonFooter.data.microbrand_type}
+          hasPoweredByHeadoutLogo={
+            commonFooter.data.powered_by_headout || false
+          }
+          slices={[]}
+        />
       </>
     );
   }

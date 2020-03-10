@@ -3,8 +3,8 @@ import dynamic from 'next/dynamic';
 import Header from '../Header';
 import LongForm from '../LongForm';
 import sliceHandler from '../../Slices';
+import Footer from '../../common/Footer';
 const Banner = dynamic(() => import('../Banner'), { ssr: false });
-const Footer = dynamic(() => import('../Footer'), { ssr: false });
 import { ProductsContextProvider } from '../../../contexts/Products';
 import { ProductsWrapper } from '../ProductsWrapper';
 import { ResponsiveSelector } from '../ResponsiveSelector';
@@ -23,12 +23,11 @@ export const HomePage = props => {
     categoryProps,
     heroProps,
     changePage,
-    openCategory,
+    _openCategory,
     uid,
     directTgid,
     heroSectionSlice,
-    isFetched,
-    customFooter,
+    _isFetched,
     contentFramework,
     ready,
   } = props;
@@ -41,7 +40,10 @@ export const HomePage = props => {
   const longFormSlices = [...contentFWSlices, ...longFormContent];
   const { currentLanguage } = props.header.languageProps;
   const hasToursSection = categoryProps.categories.length > 0;
+  const footerLogoURL = footer.logo.url;
+  const footerLogoAlt = footer.footer_logo_alt || footer.footer_logo?.alt;
 
+  console.log(footer);
   return (
     <div className="microsite-v2-wrapper">
       <Header
@@ -89,7 +91,6 @@ export const HomePage = props => {
           uid={uid}
         />
       ) : null}
-
       <ProductsContextProvider allTours={allTours}>
         <div className="main-wrapper">
           {longFormContent ? (
@@ -107,7 +108,15 @@ export const HomePage = props => {
           ) : null}
         </div>
       </ProductsContextProvider>
-      <Footer {...footer} {...customFooter} isMobile={isMobile} />
+      <Footer
+        currentLanguage={currentLanguage}
+        attraction={footer.attraction || 'attraction'}
+        logoURL={footerLogoURL}
+        logoAlt={footerLogoAlt}
+        hasPoweredByHeadoutLogo={footer.powered_by_headout || false}
+        microbrandType={footer.microbrand_type || ''}
+        slices={footer.body || []}
+      />
       <style jsx global>
         {`
           // TODO: Handle Space Between Slices Elsewhere.

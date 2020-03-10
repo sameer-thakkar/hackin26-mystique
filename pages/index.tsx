@@ -254,7 +254,7 @@ export default class Page extends React.Component<any, any> {
               linkedRefIDs.push(contentSectionId);
 
               const [
-                customFooter,
+                commonFooter,
                 contentFramework,
               ] = await this.getRefsArrayByIds(linkedRefIDs, req);
 
@@ -263,7 +263,7 @@ export default class Page extends React.Component<any, any> {
                 data: {
                   ...completeMicrosite.data,
                   refs: {
-                    customFooter,
+                    commonFooter,
                     contentFramework,
                   },
                   data: {
@@ -342,7 +342,7 @@ export default class Page extends React.Component<any, any> {
                 linkedRefIDs.push(footerID);
                 linkedRefIDs.push(contentFrameworkID);
                 const [
-                  customFooter,
+                  commonFooter,
                   contentFramework,
                 ] = await this.getRefsArrayByIds(linkedRefIDs, req);
 
@@ -355,7 +355,7 @@ export default class Page extends React.Component<any, any> {
                     title: page.data.featured_title,
                   },
                   refs: {
-                    customFooter,
+                    commonFooter,
                     contentFramework,
                   },
                 };

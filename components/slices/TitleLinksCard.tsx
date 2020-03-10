@@ -1,69 +1,58 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import LinkResolver from '../LinkResolver';
-import { GRAPHIK } from '../../constants/ui-constants';
+import { GRAPHIK, COLORS } from '../../constants/ui-constants';
+
 type TitleLinksProps = {
   title: string;
   links: Array<any>;
 };
 
+const StyledLinksCard = styled.div`
+  display: grid;
+  align-items: start;
+  grid-template-rows: max-content max-content;
+  font-family: ${GRAPHIK.FONT_STACK};
+  color: ${COLORS.DAVY_GREY};
+  .link-item {
+    color: ${COLORS.BEACH};
+    text-decoration: none;
+    margin-top: 12px;
+    :last-child {
+      margin-bottom: 0;
+    }
+  }
+`;
+
+const StyledLinksTitle = styled.div`
+  font-size: 14px;
+  font-weight: ${GRAPHIK.SEMIBOLD};
+  margin-bottom: 4px;
+`;
+
+const StyledLinksList = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+`;
+
 export default class TitleLinksCard extends Component<TitleLinksProps, any> {
   render() {
     const { links, title } = this.props;
     return (
-      <div className="links-card">
-        <div className="title">{title}</div>
-        <div className="card-links">
-          <ul className="link-list">
-            {links.map((link, index) => (
-              <li key={index}>
-                <LinkResolver className="link-item" url={link.link_type.url}>
-                  {link.link_text}
-                </LinkResolver>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <style jsx>
-          {`
-            .links-card {
-              display: grid;
-              grid-gap: 1em;
-              align-items: start;
-              grid-template-rows: max-content max-content;
-              font-family: ${GRAPHIK.FONT_STACK};
-              line-height: 1.4;
-            }
-            .title {
-              color: white;
-              font-size: 20px;
-              font-weight: ${GRAPHIK.SEMIBOLD};
-              text-transform: Capitalize;
-            }
-            .link-list {
-              display: grid;
-              align-self: start;
-              grid-auto-flow: row;
-              grid-row-gap: 10px;
-              margin: 0;
-              padding: 0;
-              list-style: none;
-              font-weight: ${GRAPHIK.REGULAR};
-            }
-            .link-list :global(.link-item) {
-              color: white;
-              text-decoration: none;
-              font-size: 16px;
-            }
-            @media (max-width: 768px) {
-              .links-card {
-                grid-gap: unset;
-                place-items: center;
-              }
-            }
-          `}
-        </style>
-      </div>
+      <StyledLinksCard>
+        <StyledLinksTitle>{title}</StyledLinksTitle>
+        <StyledLinksList>
+          {links.map((link, index) => (
+            <LinkResolver
+              key={index}
+              className="link-item"
+              url={link.link_type.url}
+            >
+              {link.link_text}
+            </LinkResolver>
+          ))}
+        </StyledLinksList>
+      </StyledLinksCard>
     );
   }
 }
