@@ -112,7 +112,7 @@ export default class privacy extends Component<any, any> {
       response.data.footer_logo_alt ||
       response.data.footer_logo.alt;
 
-    const { lang: currentLanguage, uid } = response;
+    const { uid } = response;
 
     return (
       <>
@@ -120,10 +120,10 @@ export default class privacy extends Component<any, any> {
           languages={languages ? languages : null}
           headerLinks={null}
           logoUrl={logoUrl || uploadedLogoUrl || null}
-          currentLanguage={currentLanguage ? currentLanguage : null}
+          currentLanguage={'en'}
           logoAltText={altText || logoAltText}
           availableLanguages={availableLanguages}
-          selectedLanguage={currentLanguage}
+          selectedLanguage={'en'}
           uid={uid}
           isMobile={this.state.isMobile}
           parentComponent={'TERMS'}
@@ -428,7 +428,7 @@ export default class privacy extends Component<any, any> {
         <br />
         <br />
         <Footer
-          currentLanguage={currentLanguage}
+          currentLanguage={'en'}
           logoURL={footerLogoURL}
           logoAlt={footerLogoAlt}
           attraction={commonFooter.data.attraction || 'attraction'}

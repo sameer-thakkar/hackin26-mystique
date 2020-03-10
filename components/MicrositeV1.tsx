@@ -9,7 +9,7 @@ import Footer from './common/Footer';
 import sliceHandler from './Slices';
 import PopulateUncategorizedProducts from './PopulateUncategorizedProducts';
 import Analytics from '../utils/Analytics';
-import allToursParser from './common/alltoursParser';
+import allToursParser from '../utils/alltoursParser';
 import { docCookies } from '../utils/helper';
 import { DROPDOWN_ELEMENT, ANALYTICS_EVENTS } from '../constants';
 import { groupSlices } from '../utils/helper';

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Header from '../components/common/Header';
 import Footer from '../components/common/Footer';
 import ContentContainer from '../components/UI/ContentContainer';
+import Paragraph from '../components/UI/Paragraph';
+import { TopHeading } from '../components/UI/Headings';
 import { Client } from '../prismic-config';
 import { DROPDOWN_ELEMENT } from '../constants';
 import 'lazysizes';
@@ -95,7 +97,7 @@ export default class companyDetails extends Component<any, any> {
       logo_redirection_url: logoRedirectionURL,
       commonFooter,
     } = response.data;
-    const { lang: currentLanguage, uid } = response;
+    const { uid } = response;
     const footerLogoURL =
       commonFooter.data.logo.url ||
       response.data.footer_logo_link ||
@@ -111,10 +113,10 @@ export default class companyDetails extends Component<any, any> {
           languages={languages ? languages : null}
           headerLinks={null}
           logoUrl={logoUrl || uploadedLogoUrl || null}
-          currentLanguage={currentLanguage ? currentLanguage : null}
+          currentLanguage={'en'}
           logoAltText={altText || logoAltText}
           availableLanguages={availableLanguages}
-          selectedLanguage={currentLanguage}
+          selectedLanguage={'en'}
           uid={uid}
           isMobile={this.state.isMobile}
           logoRedirectionURL={logoRedirectionURL.url || '/'}
@@ -122,45 +124,45 @@ export default class companyDetails extends Component<any, any> {
           handleDropdownToggle={this.handleDropdownToggle}
         />
         <ContentContainer>
-          <div
-            className="select-wrapper"
-            id="select-tickets"
-            style={{ margin: '0px' }}
-          >
-            <h1 className="select-text">Company Details</h1>
-            <div className="divider"></div>
-          </div>
-          <div className="super-stuff">
-            <div className="text">
-              <b>Website operator:</b> <br />
-              Headout UK Ltd. <br /> 14 Grays Inn Road, <br /> London, WC1X 8HN,
-              <br /> United Kingdom
-            </div>
-            <div className="text">
-              <b>Management:</b>
-              <br /> Varun M. Khona, Suren Sultania
-            </div>
-            <div className="text">
-              <b>Contact information</b> <br />
-              support@headout.com
-            </div>
-            <div className="text">
-              <b>Company Number:</b> 10497035 (Companies House, UK)
-            </div>
-
-            <div className="text">
-              <b> VAT Number:</b> 275 5393 71
-            </div>
-
-            <div className="text">
-              <b> Online Dispute Resolution website of the EU-Commission:</b>
-              <br />
-              ec.europa.eu/consumers/odr/main
-            </div>
-          </div>
+          <TopHeading h1>Company Details</TopHeading>
+          <Paragraph>
+            <b>Website operator:</b> <br />
+            Headout UK Ltd. <br /> 14 Grays Inn Road, <br /> London, WC1X 8HN,
+            <br /> United Kingdom
+          </Paragraph>
+          <Paragraph>
+            <b>Management:</b>
+            <br /> Varun M. Khona, Suren Sultania
+          </Paragraph>
+          <Paragraph>
+            <b>Contact information</b> <br />
+            support@headout.com
+          </Paragraph>
+          <Paragraph>
+            <b>Company Number:</b> 10497035 (Companies House, UK)
+          </Paragraph>
+          <Paragraph>
+            <b> VAT Number:</b> 275 5393 71
+          </Paragraph>
+          <Paragraph>
+            <b> Online Dispute Resolution website of the EU-Commission:</b>
+            <br />
+            ec.europa.eu/consumers/odr/main
+          </Paragraph>
         </ContentContainer>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
         <Footer
-          currentLanguage={currentLanguage}
+          currentLanguage={'en'}
           logoURL={footerLogoURL}
           logoAlt={footerLogoAlt}
           attraction={commonFooter.data.attraction || 'attraction'}

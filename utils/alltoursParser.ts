@@ -1,9 +1,11 @@
 import { RichText } from 'prismic-reactjs';
+
 type ToursData = {
   cardPrices: object;
   currencySymbol: string;
   isFetched: boolean;
 };
+
 const allToursParser = (CMSData, scorpioData, pricingData: ToursData) => {
   const { cardPrices, currencySymbol, isFetched } = pricingData;
   const labelIDMap = CMSData?.labels?.reduce((accum, label) => {

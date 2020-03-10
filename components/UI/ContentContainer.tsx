@@ -9,6 +9,9 @@ const ContentContainer = styled.div`
     font-family: Graphik;
     line-height: 1.5;
   }
+  @media (max-width: 768px) {
+    margin: 100px 16px 10px;
+  }
 `;
 
 export default ContentContainer;

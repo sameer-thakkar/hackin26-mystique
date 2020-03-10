@@ -61,23 +61,24 @@ const StyledFooterLegalWrapper = styled.div`
       grid-column-gap: 12px;
       align-items: center;
       justify-items: left;
+      svg {
+        height: 16px;
+      }
     }
     .social-links {
       grid-area: social-links;
     }
-    svg {
-      height: 16px;
-    }
+
     @media (max-width: 768px) {
       .headout-logo {
         grid-template-columns: max-content max-content;
+        svg {
+          height: 12px;
+        }
       }
       grid-template-columns: 1fr;
       grid-template-areas: 'social-links' 'white-line' 'headout-logo';
       grid-row-gap: 24px;
-      svg {
-        height: 12px;
-      }
     }
   }
 `;

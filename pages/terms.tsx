@@ -98,7 +98,7 @@ export default class TermsPage extends Component<any, any> {
       commonFooter,
     } = response.data;
 
-    const { lang: currentLanguage, uid } = response;
+    const { uid } = response;
     const footerLogoURL =
       commonFooter.data.logo.url ||
       response.data.footer_logo_link ||
@@ -114,10 +114,10 @@ export default class TermsPage extends Component<any, any> {
           languages={languages ? languages : null}
           headerLinks={null}
           logoUrl={logoUrl || uploadedLogoUrl || null}
-          currentLanguage={currentLanguage ? currentLanguage : null}
+          currentLanguage={'en'}
           logoAltText={altText || logoAltText}
           availableLanguages={availableLanguages}
-          selectedLanguage={currentLanguage}
+          selectedLanguage={'en'}
           uid={uid}
           isMobile={this.state.isMobile}
           logoRedirectionURL={logoRedirectionURL.url || '/'}
@@ -413,7 +413,7 @@ export default class TermsPage extends Component<any, any> {
         <br />
         <br />
         <Footer
-          currentLanguage={currentLanguage}
+          currentLanguage={'en'}
           logoURL={footerLogoURL}
           logoAlt={footerLogoAlt}
           attraction={commonFooter.data.attraction || 'attraction'}

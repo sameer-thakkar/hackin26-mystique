@@ -120,33 +120,6 @@ body {
 
 /* HEADER */
 
-.footer-super-text {
-  font-family: Graphik;
-  padding-right: 10px;
-}
-
-.super-stuff {
-  margin-bottom: 100px;
-}
-
-.super-stuff .text {
-  margin-top: 20px;
-}
-
-.text-sub {
-  margin: 10px 0px;
-  font-size: 18px;
-}
-
-.terms-new {
-  margin-top: 20px !important;
-  float: left;
-  font-size: 18px;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-}
-
 .header-container {
   height: 56px;
   position: fixed;

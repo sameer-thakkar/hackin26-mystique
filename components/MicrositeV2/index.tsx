@@ -9,7 +9,7 @@ import { InteractionContextProvider } from '../../contexts/Interaction';
 import { docCookies } from '../../utils/helper';
 import { RichText } from 'prismic-reactjs';
 import { MBContextProvider } from '../../contexts/MBContext';
-import allToursParser from '../common/alltoursParser';
+import allToursParser from '../../utils/alltoursParser';
 class MicrositeV2 extends Component<any, any> {
   state = {
     isMobile: null,
