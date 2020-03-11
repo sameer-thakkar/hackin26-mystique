@@ -3,12 +3,17 @@ import sliceHandler from './Slices';
 
 export default class LongForm extends Component<any, any> {
   render() {
-    const { content, ...props } = this.props;
+    const { content, ...sliceProps } = this.props;
     return (
-      <div className="long-form select-wrapper">
+      <div className="long-form">
         {content.map((slice, index) => (
-          <div key={index} className={'slice-block ' + slice.slice_type}>
-            {sliceHandler(slice, { ...props })}
+          <div
+            key={index}
+            className={`${
+              slice.slice_type !== 'background' ? 'main-wrapper' : ''
+            } slice-block ${slice.slice_type}`}
+          >
+            {sliceHandler(slice, { sliceProps })}
           </div>
         ))}
         <style jsx global>
@@ -28,8 +33,9 @@ export default class LongForm extends Component<any, any> {
               color: #545454;
               line-height: 1.2;
             }
-            .long-form .slice-block {
-              margin: 60px 0;
+            .long-form {
+              display: grid;
+              grid-row-gap: 60px;
             }
             .long-form .slice-block img {
               width: 100%;

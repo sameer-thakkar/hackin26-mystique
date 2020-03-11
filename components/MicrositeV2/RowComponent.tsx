@@ -26,7 +26,6 @@ export const RowComponent = props => {
 
   useLayoutEffect(() => {
     const { tgid, section: activeSection } = interactionContext.activeTour;
-    console.log(`${activeSection}-${tgid}`);
     if (tgid)
       scroller.scrollTo(`${activeSection}-${tgid}`, {
         duration: 750,

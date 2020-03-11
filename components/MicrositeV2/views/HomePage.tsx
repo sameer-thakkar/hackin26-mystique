@@ -43,7 +43,6 @@ export const HomePage = props => {
   const footerLogoURL = footer.logo.url;
   const footerLogoAlt = footer.footer_logo_alt || footer.footer_logo?.alt;
 
-  console.log(footer);
   return (
     <div className="microsite-v2-wrapper">
       <Header
@@ -70,9 +69,12 @@ export const HomePage = props => {
         <Banner {...heroProps} isMobile={isMobile} ready={ready} />
       ) : null}
       {heroSectionSlice.length ? (
-        <div className="main-wrapper hero-slice-section">
+        <div className="hero-slice-section">
           {heroSectionSlice.map((slice, index) => (
-            <div key={index} className={`slice-block ${slice.slice_type}`}>
+            <div
+              key={index}
+              className={`main-wrapper slice-block ${slice.slice_type}`}
+            >
               {sliceHandler(slice, { isMobile })}
             </div>
           ))}
@@ -92,7 +94,7 @@ export const HomePage = props => {
         />
       ) : null}
       <ProductsContextProvider allTours={allTours}>
-        <div className="main-wrapper">
+        <div>
           {longFormContent ? (
             <LongForm
               slicesArray={longFormSlices}

@@ -30,6 +30,7 @@ const FAQSlider = dynamic(() => import('./slices/FAQSlider'));
 const CardSection = dynamic(() => import('./slices/CardSection'));
 const Card = dynamic(() => import('./slices/Card'));
 const TableV2 = dynamic(() => import('./slices/TableV2'));
+const Background = dynamic(() => import('./slices/Background'));
 
 const sliceHandler = (slice, props: any = {}) => {
   switch (slice.slice_type) {
@@ -314,6 +315,16 @@ const sliceHandler = (slice, props: any = {}) => {
           type={props.cardType}
           link={card_link}
           linkType={card_link_type}
+        />
+      );
+    case 'background':
+      return (
+        <Background
+          color={slice.primary.color}
+          textCenter={slice.primary.centered}
+          gridCenter={slice.primary.grid_center}
+          slices={slice.slices}
+          sliceProps={props}
         />
       );
     case 'horizontal_line':
