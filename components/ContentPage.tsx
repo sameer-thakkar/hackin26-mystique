@@ -123,7 +123,7 @@ export default class ContentPage extends Component<any, any> {
       featured,
       contentFramework,
     } = this.prettifyProps(this.props);
-    const slices = contentFramework.data?.body || [];
+    const slices = contentFramework?.data?.body || [];
     const contentFWSlices = groupSlices(slices);
     const {
       first_publication_date: datePublished,
