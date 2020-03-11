@@ -1,4 +1,5 @@
 module.exports = [
+  'segovia.toledo-day-trips.com',
   'national-palace.tickets-sintra.com',
   'pena-palace.tickets-sintra.com',
   'moorish-castle.tickets-sintra.com',
@@ -33,7 +34,7 @@ module.exports = [
   'palau-de-la-musica.barcelona-tickets.com',
   'picasso-museum.barcelona-tickets.com',
   'poble-espanyol.barcelona-tickets.com',
-  'monserrat.barcelona-tickets.com',
+  'montserrat.barcelona-tickets.com',
   'sagradafamilia.barcelona-tickets.com',
   'portaventura.barcelona-tickets.com',
   'zoo.barcelona-tickets.com',
