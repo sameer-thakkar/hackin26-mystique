@@ -84,13 +84,12 @@ export const MobileProductPage = props => {
             </div>
             <div className="scratched">{tour.scratchedPrice}</div>
           </div>
-          {tour.averageRating > 0 ? (
-            <div className="auto-boosters-box">
-              <div className="rating">
-                {STAR('#FFBB58')} <span>{tour.averageRating}</span>
-              </div>
-              <div className="divider-line"></div>
-              <div className="cta-boost">{tour.ctaBooster}</div>
+          {tour.cardFooter.length ? (
+            <div className="boosters">
+              <RichText
+                render={tour.cardFooter}
+                htmlSerializer={shortCodeSerializer}
+              />
             </div>
           ) : null}
           {descriptors.length > 0 ? (
@@ -251,6 +250,7 @@ export const MobileProductPage = props => {
 
           .boosters {
             grid-column: 1 / 3;
+            min-height: 1em;
           }
 
           .auto-boosters-box {
@@ -427,15 +427,6 @@ export const MobileProductPage = props => {
             padding-left: 1em;
             display: grid;
             grid-row-gap: 6px;
-          }
-          .boosters p * {
-            display: none;
-          }
-          .boosters p *:first-child {
-            display: unset;
-          }
-          .boosters .cta-booster-combo {
-            display: none !important;
           }
           .header {
             position: fixed;

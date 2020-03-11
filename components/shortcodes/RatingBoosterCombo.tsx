@@ -47,6 +47,7 @@ const RatingBoosterCombo = props => {
           font-size: 12px;
           font-family: ${GRAPHIK.FONT_STACK};
           line-height: 1;
+          color: ${COLORS.DAVY_GREY};
         }
         .booster-container .new {
           color: ${COLORS.TEAL};
