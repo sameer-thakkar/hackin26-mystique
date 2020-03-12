@@ -1,4 +1,11 @@
 module.exports = [
+  'stage.sant-pau.barcelona-tickets.com',
+  'stage.egyptian-museum.barcelona-tickets.com',
+  'stage.columbus-monument.barcelona-tickets.com',
+  'stage.museu-del-modernisme.barcelona-tickets.com',
+  'stage.medina-azahara.tickets-cordoba.com',
+  'stage.alcazar.tickets-cordoba.com',
+  'stage.cathedral.barcelona-tickets.com',
   'stage.segovia.toledo-day-trips.com',
   'stage.national-palace.tickets-sintra.com',
   'stage.pena-palace.tickets-sintra.com',
