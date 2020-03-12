@@ -5,12 +5,12 @@ export default class LongForm extends Component<any, any> {
   render() {
     const { content, ...sliceProps } = this.props;
     return (
-      <div className="long-form">
+      <div className="long-form main-wrapper">
         {content.map((slice, index) => (
           <div
             key={index}
             className={`${
-              slice.slice_type !== 'background' ? 'main-wrapper' : ''
+              slice.slice_type !== 'background' ? 'slice-wrapper' : ''
             } slice-block ${slice.slice_type}`}
           >
             {sliceHandler(slice, { sliceProps })}
@@ -23,6 +23,17 @@ export default class LongForm extends Component<any, any> {
                 Helvetica, Arial, sans-serif;
               line-height: 1.6;
               color: #545454;
+            }
+            .main-wrapper {
+              margin: unset;
+              padding: 0;
+              max-width: unset;
+            }
+            .slice-wrapper {
+              max-width: 1200px;
+              padding: 0 5.46vw;
+              margin: auto;
+              width: 100%;
             }
             .long-form h1,
             .long-form h2,

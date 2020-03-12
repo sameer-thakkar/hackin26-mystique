@@ -69,11 +69,11 @@ export const HomePage = props => {
         <Banner {...heroProps} isMobile={isMobile} ready={ready} />
       ) : null}
       {heroSectionSlice.length ? (
-        <div className="hero-slice-section">
+        <div className="hero-slice-section main-wrapper">
           {heroSectionSlice.map((slice, index) => (
             <div
               key={index}
-              className={`main-wrapper slice-block ${slice.slice_type}`}
+              className={`slice-wrapper slice-block ${slice.slice_type}`}
             >
               {sliceHandler(slice, { isMobile })}
             </div>
