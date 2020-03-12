@@ -1,4 +1,5 @@
 module.exports = [
+  'www.tulip-garden-tickets.com',
   'sant-pau.barcelona-tickets.com',
   'egyptian-museum.barcelona-tickets.com',
   'columbus-monument.barcelona-tickets.com',
