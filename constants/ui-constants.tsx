@@ -40,6 +40,8 @@ export const COLORS = {
   LIGHTER_WHITE: '#FAFAFA',
   FO_GRAY: '#F0F0F0',
   BEACH: '#03829D',
+  GREY_FO: '#F0F0F0',
+  GREY_7C: '#7C7C7C',
 };
 
 export const SIZES = {

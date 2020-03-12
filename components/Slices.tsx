@@ -31,6 +31,7 @@ const CardSection = dynamic(() => import('./slices/CardSection'));
 const Card = dynamic(() => import('./slices/Card'));
 const TableV2 = dynamic(() => import('./slices/TableV2'));
 const Background = dynamic(() => import('./slices/Background'));
+const Breadcrumb = dynamic(() => import('./slices/Breadcrumb'));
 
 const sliceHandler = (slice, props: any = {}) => {
   switch (slice.slice_type) {
@@ -329,6 +330,18 @@ const sliceHandler = (slice, props: any = {}) => {
       );
     case 'horizontal_line':
       return <HorizontalLine />;
+    case 'breadcrumbs':
+      const orderedLinks = slice.items.reduce((acc, crumb) => {
+        return [
+          ...acc,
+          {
+            text: crumb.title,
+            link: crumb.url,
+          },
+        ];
+      }, []);
+      orderedLinks.push({ text: slice.primary.current_title, url: {} });
+      return <Breadcrumb orderedLinks={orderedLinks} />;
     default:
     // ToDo: Add to Error Logs (Slice)
   }

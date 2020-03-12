@@ -19,7 +19,7 @@ export const es = {
   TOUR_LIST_HEADING: 'Selecciona Tu Experiencia',
   TOUR_LIST_SUB_HEADING:
     'Elige entre una gran variedad de entradas, tours y combos de operadores verificados',
-  BANNER_CTA: 'Compra Entradas',
+  BANNER_CTA: 'Comprar Entradas',
   BOOK_NOW_CTA: 'Reserva ahora',
   READ_MORE_TEXT: 'Leer más',
   SHOW_LESS_TEXT: 'Mostrar menos',

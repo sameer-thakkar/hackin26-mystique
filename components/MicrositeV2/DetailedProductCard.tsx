@@ -194,7 +194,7 @@ const DetailedProductCard = props => {
           justify-content: left;
         }
         .v2-descriptor{
-          background: ${COLORS.FO_GRAY};
+          background: ${COLORS.GREY_FO};
           border-radius: 2px;
           font-size: 12px;
           padding: 8px 12px;

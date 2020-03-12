@@ -342,7 +342,7 @@ export const MobileProductPage = props => {
           }
           .descriptor {
             padding: 7px 12px;
-            background: ${COLORS.FO_GRAY};
+            background: ${COLORS.GREY_FO};
             border-radius: 2px;
             color: ${COLORS.TWO_BLACK};
             margin-right: 8px;
