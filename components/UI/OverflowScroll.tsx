@@ -5,8 +5,8 @@ const StyledWrapper = styled.div`
   display: flex;
   overflow-x: auto;
   padding: 0 16px 40px 20px;
-  margin-right: -10px;
-  margin-left: -10px;
+  margin-right: -16px;
+  margin-left: -16px;
 `;
 
 const StyledChild = styled.div`

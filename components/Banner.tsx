@@ -4,6 +4,7 @@ import { scroller } from 'react-scroll';
 import { BANNER_PARAMS } from '../constants/index';
 import * as labels from '../public/static/localization/labels';
 import { attachQueryParam } from '../utils/helper';
+import Button from './UI/Button';
 
 const imgixUrl = (url, format, w, ar, q = 75) =>
   attachQueryParam(
@@ -102,7 +103,7 @@ export default class Banner extends Component<any, any> {
   };
 
   scrollTicketSection = () => {
-    scroller.scrollTo('select-tickets', {
+    scroller.scrollTo('tour-list-heading', {
       duration: 1200,
       offset: this.state.isMobile ? -80 : -100,
       smooth: 'easeInOutQuart',
@@ -142,12 +143,9 @@ export default class Banner extends Component<any, any> {
             <div className="caption">
               <h1>{bannerHeading}</h1>
             </div>
-            <div
-              className="mb-cta book-now-text"
-              onClick={this.scrollTicketSection}
-            >
+            <Button type="whiteBordered" onClick={this.scrollTicketSection}>
               {labels[currentLanguage].BANNER_CTA}
-            </div>
+            </Button>
           </div>
         </div>
         {this.hasIndicators && bannerImages.length > 1 ? (

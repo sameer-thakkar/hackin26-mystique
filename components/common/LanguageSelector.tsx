@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Router from 'next/router';
 import styled from 'styled-components';
 import { withoutTrailingSlash } from '../../utils/helper';
+import { GLOBE } from '../../public/static/svg-icons';
 
 const flagsUrl = {
   en: {
@@ -35,6 +36,11 @@ const flagsUrl = {
   },
 };
 
+const StyledLanguageContainer = styled.div`
+  margin-left: 32px;
+  position: relative;
+`;
+
 const StyledMobileSelect = styled.div`
   position: relative;
   margin: 20px 15px 32px 0px;
@@ -59,10 +65,14 @@ const StyledMobileSelect = styled.div`
 const StyledLanguage = styled.span`
   margin-top: 7px;
   font-family: Graphik;
-  font-size: 14px;
+  font-size: 16px;
   color: #545454;
   cursor: pointer;
   transform: translateY(-3px);
+  svg {
+    margin-right: 6px;
+    margin-bottom: -2px;
+  }
 `;
 
 class LanguageSelector extends Component<any, any> {
@@ -143,8 +153,11 @@ class LanguageSelector extends Component<any, any> {
     }
 
     return (
-      <div onClick={this.handleClick} className="language-selector-container">
-        <StyledLanguage>{flagsUrl[currentLanguage].language}</StyledLanguage>
+      <StyledLanguageContainer onClick={this.handleClick}>
+        <StyledLanguage>
+          {GLOBE}
+          {flagsUrl[currentLanguage].language}
+        </StyledLanguage>
         <div
           className={`language-dropdown ${
             this.state.showDropdown ? 'language-dropdown-active' : ''
@@ -186,7 +199,7 @@ class LanguageSelector extends Component<any, any> {
                 );
               })}
         </div>
-      </div>
+      </StyledLanguageContainer>
     );
   }
 }

@@ -166,7 +166,6 @@ body {
   color: #545454;
   font-family: Avenir;
   font-size: 14px;
-  text-transform: uppercase;
   cursor: pointer;
 }
 
@@ -452,7 +451,7 @@ ul {
     margin: 0px;
   }
   .product {
-    margin: 0.6em;
+    margin: 16px;
     position: relative;
     padding-bottom: 4em;
   }
@@ -678,7 +677,7 @@ ul {
     margin-bottom: 0px;
   }
   .select-wrapper {
-    margin: 16.8px 10px;
+    margin: 16.8px 16px;
   }
   .select-text {
     font-size: 24px;
@@ -713,21 +712,14 @@ ul {
 
 .mb-carousel {
   display: grid;
-  height: 55vh;
+  height: 400px;
   width: 100%;
   position: relative;
   box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.16);
   font-family: 'Graphik', 'Proxima Nova', 'Helvetica Neue', Helvetica, Arial,
     sans-serif;
   margin-top: 80px;
-}
-
-.mb-carousel.boxed {
-  height: 60vh;
-  max-width: 1200px;
-  width: 100%;
-  margin: auto;
-  margin-top: 80px;
+  margin-bottom: 40px;
 }
 
 .mb-carousel .mb-slide {
@@ -815,7 +807,8 @@ ul {
 
 .mb-captions .mb-caption {
   display: grid;
-  grid-gap: 15px;
+  grid-gap: 14px;
+  justify-items: center;
 }
 
 .mb-captions .mb-cta {
@@ -2225,9 +2218,9 @@ form.form {
 }
 
 .caption h1 {
-  font-size: 23px;
+  font-size: 24px;
   font-family: Graphik;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 @media (max-width: 768px) {

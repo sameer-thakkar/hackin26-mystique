@@ -100,13 +100,13 @@ export default class TermsPage extends Component<any, any> {
 
     const { uid } = response;
     const footerLogoURL =
-      commonFooter.data.logo.url ||
-      response.data.footer_logo_link ||
-      response.data.footer_logo;
+      commonFooter?.data?.logo.url ||
+      response.data?.footer_logo_link?.url ||
+      response.data?.footer_logo?.url;
     const footerLogoAlt =
-      commonFooter.data.logo.alt ||
-      response.data.footer_logo_alt ||
-      response.data.footer_logo.alt;
+      commonFooter?.data?.logo.alt ||
+      response?.data?.footer_logo_alt ||
+      response?.data?.footer_logo?.alt;
 
     return (
       <>
@@ -416,10 +416,10 @@ export default class TermsPage extends Component<any, any> {
           currentLanguage={'en'}
           logoURL={footerLogoURL}
           logoAlt={footerLogoAlt}
-          attraction={commonFooter.data.attraction || 'attraction'}
-          microbrandType={commonFooter.data.microbrand_type}
+          attraction={commonFooter?.data?.attraction || 'attraction'}
+          microbrandType={commonFooter?.data?.microbrand_type}
           hasPoweredByHeadoutLogo={
-            commonFooter.data.powered_by_headout || false
+            commonFooter?.data?.powered_by_headout || false
           }
           slices={[]}
         />

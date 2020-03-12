@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
+import { scroller } from 'react-scroll';
 import LanguageSelector from './LanguageSelector';
 import HeaderLinks from '../HeaderLinks';
 import Hamburger from '../UI/Hamburger';
@@ -9,12 +10,11 @@ import { POWERED_BY_HEADOUT } from '../../public/static/svg-icons';
 import { DROPDOWN_ELEMENT } from '../../constants';
 
 const StyledHeader = styled.header`
-  height: 68px;
+  height: 80px;
   position: fixed;
   top: 0;
   width: 100%;
   background-color: rgba(255, 255, 255, 1);
-  box-shadow: 0 0 12px 2px rgba(33, 33, 33, 0.25);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -28,7 +28,7 @@ const StyledHeader = styled.header`
 
 const StyledHeaderContainer = styled.div`
   max-width: 1200px;
-  height: 68px;
+  height: 80px;
   position: fixed;
   top: 0;
   width: 100%;
@@ -52,10 +52,11 @@ const StyledLogo = styled.div`
   grid-column-gap: 10px;
   align-items: center;
   img {
-    height: 36px;
+    height: 44px;
   }
   svg {
-    height: 36px;
+    height: 44px;
+    width: 113px;
   }
   @media (max-width: 768px) {
     display: grid;
@@ -63,6 +64,10 @@ const StyledLogo = styled.div`
     margin-left: 15px;
     img {
       height: 26px;
+    }
+    svg {
+      height: 26px;
+      width: 67px;
     }
   }
 `;
@@ -82,13 +87,14 @@ const StyledHeaderElements = styled.div`
 `;
 
 const StyledBuyTickets = styled.div`
-  margin: 0 15px;
-  font-size: 14px;
-  text-transform: uppercase;
-  font-family: Avenir;
-  a {
-    color: red;
-    text-decoration: none;
+  margin-left: 32px;
+  font-size: 16px;
+  font-family: Graphik;
+  color: red;
+  text-decoration: none;
+  cursor: pointer;
+  @media (max-width: 768px) {
+    margin: 0 20px;
   }
 `;
 
@@ -154,8 +160,16 @@ const Header: React.FC<any> = props => {
             ) : null}
           </div>
           {enableBuyTickets === 'Yes' ? (
-            <StyledBuyTickets>
-              <a href="#select-tickets">Buy Tickets</a>
+            <StyledBuyTickets
+              onClick={() => {
+                scroller.scrollTo('tour-list-heading', {
+                  duration: 1200,
+                  offset: isMobile ? -80 : -100,
+                  smooth: 'easeInOutQuart',
+                });
+              }}
+            >
+              Buy Tickets
             </StyledBuyTickets>
           ) : null}
           {hasLanguageSelector === 'Yes' ? (

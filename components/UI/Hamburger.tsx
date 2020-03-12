@@ -2,12 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledHamburger = styled.div`
-  display: inline-block;
+  display: none;
   cursor: pointer;
   position: absolute;
   right: 5%;
   top: 50%;
   transform: translateY(-50%);
+  @media (max-width: 768px) {
+    display: inline-block;
+  }
 `;
 
 const StyledBar = styled.div`

@@ -1,4 +1,4 @@
-import { COLORS } from '../constants/ui-constants';
+import { COLORS, GRAPHIK } from '../constants/ui-constants';
 
 export default {
   button: {
@@ -6,6 +6,7 @@ export default {
     borderRadius: '5px',
     fontSize: '18px',
     fontFamily: 'Graphik',
+    fontWeight: GRAPHIK.HEAVY,
   },
   card: {
     breakpoints: {},

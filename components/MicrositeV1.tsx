@@ -286,7 +286,6 @@ export default class MicrositeV1 extends Component<any, any> {
       this.props.data.data?.footer_logo_alt;
 
     const {
-      footer_links: footerLinks,
       book_now_text: bookNowText,
       read_more_text: readMoreText,
       show_less_text: showLessText,
@@ -382,6 +381,7 @@ export default class MicrositeV1 extends Component<any, any> {
     const scorpioData = this.props.scorpioData;
     const CMSData = this.props.data.data;
     const allTours = allToursParser(CMSData, scorpioData, pricingData);
+
     return (
       <div>
         <div className="microsite-container">

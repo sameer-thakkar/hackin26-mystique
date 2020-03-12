@@ -2,16 +2,40 @@ import React, { Component } from 'react';
 import Product from './Product';
 import * as labels from '../public/static/localization/labels';
 import styled from 'styled-components';
+import { COLORS } from '../constants/ui-constants';
+
+const StyledUncategorizedContainer = styled.div`
+  margin: 0 auto;
+  max-width: 1200px;
+  #tour-list-heading {
+    @media (max-width: 768px) {
+      margin: 0 16px 24px 16px;
+    }
+  }
+`;
+
+const StyledTourListHeading = styled.div`
+  font-family: Avenir;
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 44px;
+  color: ${COLORS.DAVY_GREY};
+  @media (max-width: 768px) {
+    font-size: 22px;
+    line-height: 30px;
+  }
+`;
 
 const StyledTourListSubHeading = styled.div`
-  margin-top: 20px;
+  margin-top: 18px;
   font-family: Graphik;
   font-size: 18px;
   line-height: 1.33;
   text-align: left;
-  color: #545454;
+  color: ${COLORS.DAVY_GREY};
   @media (max-width: 768px) {
     font-size: 14px;
+    margin-top: 4px;
   }
 `;
 export default class PopulateUncategorizedProducts extends Component<any, any> {
@@ -54,15 +78,14 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
     const [firstTour, ...otherTours] = tours;
 
     return (
-      <div className="uncategorized-container">
-        <div className="select-wrapper" id="select-tickets">
-          <div className="select-text">
+      <StyledUncategorizedContainer>
+        <div id="tour-list-heading">
+          <StyledTourListHeading>
             {labels[currentLanguage].TOUR_LIST_HEADING}
-            <StyledTourListSubHeading>
-              {labels[currentLanguage].TOUR_LIST_SUB_HEADING}
-            </StyledTourListSubHeading>
-          </div>
-          <div className="divider"></div>
+          </StyledTourListHeading>
+          <StyledTourListSubHeading>
+            {labels[currentLanguage].TOUR_LIST_SUB_HEADING}
+          </StyledTourListSubHeading>
         </div>
         <div className="products-container">
           <Product
@@ -133,7 +156,7 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
               ))
             : null}
         </div>
-      </div>
+      </StyledUncategorizedContainer>
     );
   }
 }

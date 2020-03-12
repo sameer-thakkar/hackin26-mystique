@@ -14,6 +14,7 @@ const StyledFooter = styled.footer`
   display: grid;
   font-family: Graphik;
   font-size: 14px;
+  margin-top: 40px;
 `;
 
 const StyledFooterLinksWrapper = styled.div`

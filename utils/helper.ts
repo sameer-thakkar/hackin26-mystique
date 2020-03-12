@@ -7,10 +7,12 @@ export const withoutTrailingSlash = url =>
 export const isMobileDevice = () => {
   return document.documentElement.clientWidth < 768;
 };
+
 export const validateEmail = email => {
   let regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return regEx.test(String(email).toLowerCase());
 };
+
 export const validateFullName = fullName => {
   const parts = fullName.trim().split(' ');
   const hasAtLeastTwoParts = parts.length >= 2;
