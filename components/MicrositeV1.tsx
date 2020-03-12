@@ -473,7 +473,7 @@ export default class MicrositeV1 extends Component<any, any> {
             ) : null}
             {contentFramework ? (
               <div className="content-fw-wrapper">
-                {contentFramework?.body?.map((slice, index) => {
+                {contentFramework.body?.map((slice, index) => {
                   return sliceHandler(slice);
                 })}
               </div>

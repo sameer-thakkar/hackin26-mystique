@@ -270,18 +270,17 @@ export default class ContentPage extends Component<any, any> {
           {featured.image.url && (
             <Masthead title={featured.title} image={featured.image.url} />
           )}
-          <div className="subpage-container">
-            {[...contentFWSlices, ...body].map((slice, index) => (
-              <div
-                key={index}
-                className={`${
-                  slice.slice_type !== 'background' ? 'slice-wrapper' : ''
-                } slice-block ${slice.slice_type} `}
-              >
+          {[...contentFWSlices, ...body].map((slice, index) => (
+            <div
+              className={`${
+                slice.slice_type !== 'background' ? 'subpage-container' : ''
+              } `}
+            >
+              <div key={index} className={`slice-block ${slice.slice_type}`}>
                 {sliceHandler(slice)}
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </main>
         <Footer
           currentLanguage={currentLanguage}
@@ -294,17 +293,6 @@ export default class ContentPage extends Component<any, any> {
           microbrandType={commonFooter?.data?.microbrand_type}
           slices={commonFooter?.data?.body || []}
         />
-        <style jsx>{`
-          .subpage-container {
-            max-width: unset;
-          }
-          .slice-wrapper {
-            max-width: 1200px;
-            padding: 0 5.46vw;
-            margin: auto;
-            width: 100%;
-          }
-        `}</style>
       </div>
     );
   }
