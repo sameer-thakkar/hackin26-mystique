@@ -336,7 +336,7 @@ export default class Page extends React.Component<any, any> {
                  */
                 const footerID = page.data.footer_ref.id || '';
                 const contentFrameworkID =
-                  page.data.content_framework?.id || '';
+                  page.data.content_framework?.data?.id || '';
 
                 const linkedRefIDs = [];
                 linkedRefIDs.push(footerID);

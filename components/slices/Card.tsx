@@ -34,8 +34,6 @@ const StyledCard = styled.div(props => {
   return `
   display: grid;
   align-content: start;
-  background: ${COLORS.WHITE};
-  text-align: left;
   box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.07);
   border: 1px solid ${COLORS.CHALK};
   grid-template-columns: ${styles.gridTemplateColumns};

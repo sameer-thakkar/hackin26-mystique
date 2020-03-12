@@ -9,6 +9,7 @@ import populateHead from './common/meta';
 import { Client } from '../prismic-config';
 import { DROPDOWN_ELEMENT } from '../constants';
 import { groupSlices } from '../utils/helper';
+
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 
 export default class ContentPage extends Component<any, any> {
@@ -270,17 +271,13 @@ export default class ContentPage extends Component<any, any> {
           {featured.image.url && (
             <Masthead title={featured.title} image={featured.image.url} />
           )}
-          {[...contentFWSlices, ...body].map((slice, index) => (
-            <div
-              className={`${
-                slice.slice_type !== 'background' ? 'subpage-container' : ''
-              } `}
-            >
+          <div className="subpage-container">
+            {body.map((slice, index) => (
               <div key={index} className={`slice-block ${slice.slice_type}`}>
                 {sliceHandler(slice)}
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </main>
         <Footer
           currentLanguage={currentLanguage}

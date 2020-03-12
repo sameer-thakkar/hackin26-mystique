@@ -1,6 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import Image from '../UI/Image';
 import parse from 'url-parse';
+import * as LABELS from '../../public/static/localization/labels';
 import EnvironmentContext from '../../contexts/environmentContext';
 import { RichText } from 'prismic-reactjs';
 import { AVENIR, COLORS, GRAPHIK } from '../../constants/ui-constants';
@@ -9,7 +11,8 @@ import { shortCodeSerializerWithParentProps } from '../../utils/shortCodes';
 import { MBContext } from '../../contexts/MBContext';
 import CommonCTA from '../UI/CTA';
 import styled from 'styled-components';
-import { CHEVRON_DOWN } from '../../public/static/svg-icons';
+import Popup from '../common/Popup';
+import { CHEVRON_LEFT, CHEVRON_DOWN } from '../../public/static/svg-icons';
 
 const StyledTourComparisionTable = styled.div`
   width: auto;
