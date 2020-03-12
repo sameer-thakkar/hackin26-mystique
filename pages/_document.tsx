@@ -2,17 +2,38 @@
 // Event handlers like onClick can't be added to this file
 
 // ./pages/_document.js
-import Document, { Html, Head, Main, NextScript } from "next/document";
+import Document, { Html, Head, Main, NextScript } from 'next/document';
+import { ServerStyleSheet } from 'styled-components';
 
-const Sentry = require("@sentry/node");
+const Sentry = require('@sentry/node');
 Sentry.init({
-  dsn: "https://a952d80706b3435388b1fb5983c74b18@sentry.io/1545593"
+  dsn: 'https://a952d80706b3435388b1fb5983c74b18@sentry.io/1545593',
 });
 
 class MystiqueDocument extends Document {
   static async getInitialProps(ctx) {
-    const initialProps = await Document.getInitialProps(ctx);
-    return initialProps;
+    const sheet = new ServerStyleSheet();
+    const originalRenderPage = ctx.renderPage;
+
+    try {
+      ctx.renderPage = () =>
+        originalRenderPage({
+          enhanceApp: App => props => sheet.collectStyles(<App {...props} />),
+        });
+
+      const initialProps = await Document.getInitialProps(ctx);
+      return {
+        ...initialProps,
+        styles: (
+          <>
+            {initialProps.styles}
+            {sheet.getStyleElement()}
+          </>
+        ),
+      };
+    } finally {
+      sheet.seal();
+    }
   }
 
   render() {
