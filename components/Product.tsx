@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { shortCodeSerializer } from '../utils/shortCodes';
 import { RichText } from 'prismic-reactjs';
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown from 'react-markdown/with-html';
 import moment from 'moment';
 import parse from 'url-parse';
 import classNames from 'classnames';
@@ -266,7 +266,10 @@ export default class Product extends Component<any, any> {
                   ))}
               </ul>
             ) : (
-              <ReactMarkdown source={scorpioData.highlights} />
+              <ReactMarkdown
+                source={scorpioData.highlights}
+                escapeHtml={false}
+              />
             )}
           </div>
           <div
