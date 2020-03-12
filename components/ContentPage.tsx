@@ -227,7 +227,7 @@ export default class ContentPage extends Component<any, any> {
             blackoutStartDate={blackoutStartDate}
             blackoutEndDate={blackoutEndDate}
             blockNDaysGroupBooking={blockNDaysGroupBooking}
-            minimumPax={minimumPax ? minimumPax : 15}
+            minimumPax={minimumPax ? minimumPax : 10}
             maximumPax={maximumPax ? minimumPax : undefined}
             blockedDays={blockedDays || ''}
             disclaimer={groupBookingDisclaimer}
