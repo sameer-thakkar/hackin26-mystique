@@ -1,4 +1,5 @@
 module.exports = [
+  'stage.www.thecitypasses.com',
   'stage.www.tulip-garden-tickets.com',
   'stage.sant-pau.barcelona-tickets.com',
   'stage.egyptian-museum.barcelona-tickets.com',
