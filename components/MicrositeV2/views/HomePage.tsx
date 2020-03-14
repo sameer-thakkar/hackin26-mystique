@@ -138,6 +138,7 @@ export const HomePage = props => {
         hasPoweredByHeadoutLogo={footer.powered_by_headout || false}
         microbrandType={footer.microbrand_type || ''}
         slices={footer.body || []}
+        invertLogoColor={footer.invert_logo_color}
       />
       <style jsx>
         {`

@@ -319,6 +319,7 @@ export default class ContentPage extends Component<any, any> {
           }
           microbrandType={commonFooter?.data?.microbrand_type}
           slices={commonFooter?.data?.body || []}
+          invertLogoColor={commonFooter?.data?.invert_logo_color}
         />
       </div>
     );

@@ -109,6 +109,7 @@ const StyledFooterLegal = styled.div`
       img {
         margin-right: 10px;
         height: 40px;
+        ${props => (props.invertLogoColor ? `filter: invert(1);` : '')}
       }
       svg {
         height: 40px;
@@ -160,6 +161,7 @@ type FooterProps = {
   logoAlt: string;
   hasPoweredByHeadoutLogo?: boolean;
   microbrandType: string;
+  invertLogoColor?: boolean;
   slices?: Array<any>;
 };
 
@@ -171,6 +173,7 @@ const Footer: React.FC<FooterProps> = ({
   logoAlt,
   hasPoweredByHeadoutLogo = false,
   microbrandType = '',
+  invertLogoColor = false,
   slices = [],
 }) => {
   return (
@@ -187,7 +190,7 @@ const Footer: React.FC<FooterProps> = ({
       ) : null}
       <StyledFooterLegalWrapper>
         <StyledContainer>
-          <StyledFooterLegal>
+          <StyledFooterLegal invertLogoColor={invertLogoColor}>
             <div className="logo-disclaimer">
               <div className="logo-wrapper">
                 <Image url={logoURL} alt={logoAlt} />
@@ -204,9 +207,6 @@ const Footer: React.FC<FooterProps> = ({
             </div>
             <div className="help">
               <StyledLinksHeader>Get Help</StyledLinksHeader>
-              {/* <StyledLink href="https://www.headout.com/help" target="_blank">
-                Help & FAQs
-              </StyledLink> */}
               <StyledLink
                 href="https://secure.livechatinc.com/licence/8339531/v2/open_chat.cgi?groups=0"
                 target="_blank"
