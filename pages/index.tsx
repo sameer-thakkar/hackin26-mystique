@@ -235,6 +235,13 @@ export default class Page extends React.Component<any, any> {
                 {}
               );
 
+              if (
+                Object.keys(completeMicrosite.data.data['alert_popup'])
+                  .length === 1
+              ) {
+                completeMicrosite.data.data['alert_popup'] =
+                  baseLangData.data['alert_popup'];
+              }
               /**
                * References Handler;
                * The final case empty string was added

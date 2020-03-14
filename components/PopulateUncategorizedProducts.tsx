@@ -27,7 +27,7 @@ const StyledTourListHeading = styled.div`
 `;
 
 const StyledTourListSubHeading = styled.div`
-  margin-top: 18px;
+  margin-top: 8px;
   font-family: Graphik;
   font-size: 18px;
   line-height: 1.33;

@@ -170,6 +170,8 @@ export const LINKED_MICROSITE_PROPS: string[] = [
   'block_n_days_group_booking',
   'enable_powered_by_headout_logo',
   'group_form_blocked_days',
+  'alert_popup',
+  'show_covid19_alert',
 ].map(prop => `${CUSTOM_TYPES.MICROSITE}.${prop}`);
 
 export const MICROSITE_STRING_KEYS: string[] = [
@@ -187,6 +189,7 @@ export const MICROSITE_STRING_KEYS: string[] = [
   'blackout_end_date',
   'cta_url_suffix',
   'block_n_days_group_booking',
+  'show_covid19_alert',
 ];
 
 export const MICROSITE_OBJECT_KEYS: string[] = [

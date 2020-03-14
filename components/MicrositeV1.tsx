@@ -10,6 +10,9 @@ import sliceHandler from './Slices';
 import PopulateUncategorizedProducts from './PopulateUncategorizedProducts';
 import Analytics from '../utils/Analytics';
 import allToursParser from '../utils/alltoursParser';
+import Alert from './UI/Alert';
+import * as labels from '../public/static/localization/labels';
+import DismissAlert from './UI/DismissAlert';
 import { docCookies } from '../utils/helper';
 import { DROPDOWN_ELEMENT, ANALYTICS_EVENTS } from '../constants';
 import { groupSlices } from '../utils/helper';
@@ -36,6 +39,7 @@ export default class MicrositeV1 extends Component<any, any> {
       isClient: false,
       analytics: new Analytics(),
       isMobile: null,
+      covid19AlertOpen: true,
     };
   }
 
@@ -237,6 +241,10 @@ export default class MicrositeV1 extends Component<any, any> {
       : this.setState({ popupOpen: true });
   };
 
+  handleClose = () => {
+    this.setState({ covid19AlertOpen: false });
+  };
+
   openGroupBookingModal = () => {
     const { analytics } = this.state;
     analytics.pushToDataLayer({
@@ -328,6 +336,11 @@ export default class MicrositeV1 extends Component<any, any> {
     const { tgidToScroll } = this.props;
     const { analytics } = this.state;
 
+    let alertPopup = null;
+    if (this.props.data?.data?.alert_popup?.id) {
+      alertPopup = this.props.data.data.alert_popup;
+    }
+
     if (showGroupBooking) {
       uncategorizedToursList
         .filter(function(tour) {
@@ -378,6 +391,7 @@ export default class MicrositeV1 extends Component<any, any> {
       cardPrices: this.state.tourPrices,
       currencySymbol: this.state.currencySymbol,
     };
+    const showCovid19Alert = this.props.data?.data?.show_covid19_alert;
     const scorpioData = this.props.scorpioData;
     const CMSData = this.props.data.data;
     const allTours = allToursParser(CMSData, scorpioData, pricingData);
@@ -428,6 +442,14 @@ export default class MicrositeV1 extends Component<any, any> {
             host={host}
             hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo}
           />
+          {showCovid19Alert && this.state.covid19AlertOpen ? (
+            <DismissAlert
+              readMore={labels[currentLanguage].COVID19_ALERT.READ_MORE}
+              keyText={labels[currentLanguage].COVID19_ALERT.KEY_TEXT}
+              text={labels[currentLanguage].COVID19_ALERT.TEXT}
+              handleClose={this.handleClose}
+            />
+          ) : null}
           <Banner
             bannerImages={bannerImages ? bannerImages : null}
             bannerHeading={bannerHeading ? bannerHeading : null}
@@ -436,6 +458,12 @@ export default class MicrositeV1 extends Component<any, any> {
             isMobile={this.state.isMobile}
             boxed={true}
           />
+          {alertPopup ? (
+            <Alert
+              popupUID={alertPopup.uid}
+              currentLanguage={currentLanguage}
+            />
+          ) : null}
           {checkIfToursAvailable ? (
             <PopulateUncategorizedProducts
               uncategorizedTours={orderedUncategorizedTours}

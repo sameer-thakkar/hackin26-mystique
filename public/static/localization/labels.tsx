@@ -2,6 +2,17 @@ export const en = {
   TOUR_LIST_HEADING: 'Select Your Experience',
   TOUR_LIST_SUB_HEADING:
     'Choose from multiple tickets, tours and combo options by verified operators',
+  SANITARY_ALERT: {
+    KEY_TEXT: 'Your safety is our priority',
+    TEXT:
+      "We've taken significant steps to improve cleanliness using disinfectants with comprehensive and frequent surface cleaning. Crowds are also being controlled to prevent congestion.",
+  },
+  COVID19_ALERT: {
+    KEY_TEXT: 'Update on COVID-19',
+    TEXT:
+      'You are our priority. Please check our help page to find the latest updates on our flexible cancellation policies.',
+  },
+  READ_MORE: 'Read More',
   BANNER_CTA: 'Buy Tickets',
   BOOK_NOW_CTA: 'Book Now',
   READ_MORE_TEXT: 'Read More',
@@ -19,6 +30,17 @@ export const es = {
   TOUR_LIST_HEADING: 'Selecciona Tu Experiencia',
   TOUR_LIST_SUB_HEADING:
     'Elige entre una gran variedad de entradas, tours y combos de operadores verificados',
+  SANITARY_ALERT: {
+    KEY_TEXT: 'Your safety is our priority',
+    TEXT:
+      "We've taken significant steps to improve cleanliness using disinfectants with comprehensive and frequent surface cleaning. Crowds are also being controlled to prevent congestion.",
+  },
+  COVID19_ALERT: {
+    KEY_TEXT: 'Información actualizada sobre COVID-19',
+    TEXT:
+      'Tú eres nuestra prioridad. Por favor, consulta nuestra página de ayuda para encontrar las últimas actualizaciones en nuestras políticas de cancelación flexibles.',
+  },
+  READ_MORE: 'Leer Más',
   BANNER_CTA: 'Comprar Entradas',
   BOOK_NOW_CTA: 'Reserva ahora',
   READ_MORE_TEXT: 'Leer más',
@@ -35,6 +57,17 @@ export const de = {
   TOUR_LIST_HEADING: 'Wählen Sie Ihr Erlebnis',
   TOUR_LIST_SUB_HEADING:
     'Finden Sie zahlreiche Tickets, Touren und Kombinationen von geprüften Anbietern',
+  SANITARY_ALERT: {
+    KEY_TEXT: 'Your safety is our priority',
+    TEXT:
+      "We've taken significant steps to improve cleanliness using disinfectants with comprehensive and frequent surface cleaning. Crowds are also being controlled to prevent congestion.",
+  },
+  COVID19_ALERT: {
+    KEY_TEXT: 'Update Covid-19',
+    TEXT:
+      'Ihr Wohlergehen ist unsere Priorität. Weitere Informationen zu uneren flexiblen Stornierungsbedingungen finden Sie auf der Seite „Hilfe & FAQs“.',
+  },
+  READ_MORE: 'Weiterlesen',
   BANNER_CTA: 'Tickets kaufen',
   BOOK_NOW_CTA: 'Jetzt buchen',
   READ_MORE_TEXT: 'Mehr anzeigen',
@@ -51,6 +84,17 @@ export const it = {
   TOUR_LIST_HEADING: 'Seleziona La Tua Esperienza',
   TOUR_LIST_SUB_HEADING:
     'Scegli tra una varietà di biglietti, tour e opzioni combinate fornite da operatori verificati',
+  SANITARY_ALERT: {
+    KEY_TEXT: 'Your safety is our priority',
+    TEXT:
+      "We've taken significant steps to improve cleanliness using disinfectants with comprehensive and frequent surface cleaning. Crowds are also being controlled to prevent congestion.",
+  },
+  COVID19_ALERT: {
+    KEY_TEXT: 'Aggiornamento riguardo COVID-19',
+    TEXT:
+      'La nostra priorità sei tu. Consulta la nostra pagina di aiuto per trovare gli ultimi aggiornamenti sulle nostre politiche di cancellazione flessibili.',
+  },
+  READ_MORE: 'Leggi Tutto',
   BANNER_CTA: 'Acquista biglietti',
   BOOK_NOW_CTA: 'Prenota ora',
   READ_MORE_TEXT: 'Leggi di più',
@@ -67,6 +111,16 @@ export const fr = {
   TOUR_LIST_HEADING: 'Sélectionnez Votre Activité',
   TOUR_LIST_SUB_HEADING:
     'Choisissez parmi plusieurs excursions, offres combo et billets proposés par des agences vérifiées',
+  SANITARY_ALERT: {
+    KEY_TEXT: 'Your safety is our priority',
+    TEXT:
+      "We've taken significant steps to improve cleanliness using disinfectants with comprehensive and frequent surface cleaning. Crowds are also being controlled to prevent congestion.",
+  },
+  COVID19_ALERT: {
+    KEY_TEXT: 'Mise à jour concernant le COVID-19',
+    TEXT: `Vous êtes notre priorité. Veuillez consulter notre page d'assistance pour connaître les dernières mises à jour de nos politiques d'annulation flexibles.`,
+  },
+  READ_MORE: 'En savoir plus',
   BANNER_CTA: 'Acheter des billets',
   BOOK_NOW_CTA: 'Réservez Maintenant',
   READ_MORE_TEXT: 'En Savoir Plus',
@@ -82,6 +136,17 @@ export const nl = {
   TOUR_LIST_HEADING: 'Selecteer Uw Ervaring',
   TOUR_LIST_SUB_HEADING:
     'Kies uit meerdere tickets, tours en combo-opties door geverifieerde operators',
+  SANITARY_ALERT: {
+    KEY_TEXT: 'Your safety is our priority',
+    TEXT:
+      "We've taken significant steps to improve cleanliness using disinfectants with comprehensive and frequent surface cleaning. Crowds are also being controlled to prevent congestion.",
+  },
+  COVID19_ALERT: {
+    KEY_TEXT: 'Update over COVID-19',
+    TEXT:
+      'Jij bent onze prioriteit. Kijk op onze helppagina voor de laatste updates over ons flexibele annuleringsbeleid.',
+  },
+  READ_MORE: 'Lees verder',
   BANNER_CTA: 'Koop Tickets',
   BOOK_NOW_CTA: 'Koop Nu',
   READ_MORE_TEXT: 'Lees Meer',
@@ -98,6 +163,17 @@ export const pt = {
   TOUR_LIST_HEADING: 'Selecione Sua Experiência',
   TOUR_LIST_SUB_HEADING:
     'Escolha entre diferentes opções de ingressos, excursões e combos de operadores verificados',
+  SANITARY_ALERT: {
+    KEY_TEXT: 'Your safety is our priority',
+    TEXT:
+      "We've taken significant steps to improve cleanliness using disinfectants with comprehensive and frequent surface cleaning. Crowds are also being controlled to prevent congestion.",
+  },
+  COVID19_ALERT: {
+    KEY_TEXT: 'Atualização sobre o COVID-19',
+    TEXT:
+      'Você é nossa prioridade. Consulte nossa página de ajuda para encontrar as últimas atualizações sobre nossa política de cancelamento flexível.',
+  },
+  READ_MORE: 'Saiba mais',
   BANNER_CTA: 'Compre Ingressos',
   BOOK_NOW_CTA: 'Compre agora',
   READ_MORE_TEXT: 'Leia Mais',

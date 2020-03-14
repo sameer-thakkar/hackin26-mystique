@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import sliceHandler from '../Slices';
-import { CLOSE_WHITE } from '../../public/static/svg-icons';
+import { BLACK_CLOSE } from '../../public/static/svg-icons';
 import { COLORS, GRAPHIK, AVENIR } from '../../constants/ui-constants';
 
 const Popup = props => {
@@ -11,6 +11,7 @@ const Popup = props => {
     if (window) setIsMobile(window?.innerWidth < 768);
   }, []);
   const { body } = data;
+
   return ReactDOM.createPortal(
     <div className="aio-popup-wrap">
       <div
@@ -27,17 +28,13 @@ const Popup = props => {
               togglePopup(false);
             }}
           >
-            {CLOSE_WHITE}
+            {BLACK_CLOSE}
           </div>
         </div>
         <div className="popup-slices">
-          {body.map((slice, index) => {
-            return (
-              <div key={index} className={`popup-slice ${slice.slice_type}`}>
-                {sliceHandler(slice, { isMobile })}
-              </div>
-            );
-          })}
+          <div className={`popup-slice ${body[0].slice_type}`}>
+            {sliceHandler(body[0], { isMobile })}
+          </div>
         </div>
       </div>
       <style jsx>{`
@@ -90,11 +87,16 @@ const Popup = props => {
           position: absolute;
           top: 0;
           right: 0;
-          padding: 8px;
-          z-index: 1;
-          background: #000;
+          z-index: 2;
+          margin: 8px;
         }
         @media (max-width: 768px) {
+          .popup-slice {
+            ${props.alert ? 'border-radius: 8px 8px 0px 0px;' : ''}
+          }
+          .aio-popup-wrap {
+            ${props.alert ? 'place-content: end;' : ''}
+          }
           .aio-popup-container {
             padding: 0;
             place-content: unset;

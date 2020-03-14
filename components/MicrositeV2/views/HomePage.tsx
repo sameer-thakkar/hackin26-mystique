@@ -1,10 +1,12 @@
-import React from 'react';
-import dynamic from 'next/dynamic';
+import React, { useState } from 'react';
 import Header from '../Header';
 import LongForm from '../LongForm';
 import sliceHandler from '../../Slices';
+import Banner from '../Banner';
+import DismissAlert from '../../UI/DismissAlert';
+import Alert from '../../UI/Alert';
 import Footer from '../../common/Footer';
-const Banner = dynamic(() => import('../Banner'), { ssr: false });
+import * as labels from '../../../public/static/localization/labels';
 import { ProductsContextProvider } from '../../../contexts/Products';
 import { ProductsWrapper } from '../ProductsWrapper';
 import { ResponsiveSelector } from '../ResponsiveSelector';
@@ -30,7 +32,12 @@ export const HomePage = props => {
     _isFetched,
     contentFramework,
     ready,
+    alertPopup,
+    showCovid19Alert,
   } = props;
+
+  const [covid19AlertOpen, setCovid19AlertOpen] = useState(true);
+
   const { dropdownLinks } = header;
   const selectorLinkChangeHandler = option => {
     window.location.href = option.value;
@@ -43,7 +50,6 @@ export const HomePage = props => {
   const footerLogoURL = footer.logo.url;
   const footerLogoAlt = footer.footer_logo_alt || footer.footer_logo?.alt;
 
-  console.log(footer);
   return (
     <div className="microsite-v2-wrapper">
       <Header
@@ -66,8 +72,24 @@ export const HomePage = props => {
           />
         </div>
       ) : null}
+      {true && covid19AlertOpen ? (
+        <DismissAlert
+          readMore={labels[currentLanguage].READ_MORE}
+          keyText={labels[currentLanguage].COVID19_ALERT.KEY_TEXT}
+          text={labels[currentLanguage].COVID19_ALERT.TEXT}
+          handleClose={() => {
+            setCovid19AlertOpen(false);
+          }}
+        />
+      ) : null}
       {heroProps.banners.length ? (
         <Banner {...heroProps} isMobile={isMobile} ready={ready} />
+      ) : null}
+
+      {alertPopup?.uid ? (
+        <div className="alert-wrapper">
+          <Alert popupUID={alertPopup?.uid} currentLanguage={currentLanguage} />
+        </div>
       ) : null}
       {heroSectionSlice.length ? (
         <div className="main-wrapper hero-slice-section">
@@ -117,6 +139,13 @@ export const HomePage = props => {
         microbrandType={footer.microbrand_type || ''}
         slices={footer.body || []}
       />
+      <style jsx>
+        {`
+          .alert-wrapper {
+            margin-top: 40px;
+          }
+        `}
+      </style>
       <style jsx global>
         {`
           // TODO: Handle Space Between Slices Elsewhere.

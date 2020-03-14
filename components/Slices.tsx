@@ -31,6 +31,7 @@ const CardSection = dynamic(() => import('./slices/CardSection'));
 const Card = dynamic(() => import('./slices/Card'));
 const TableV2 = dynamic(() => import('./slices/TableV2'));
 const Breadcrumb = dynamic(() => import('./slices/Breadcrumb'));
+const AlertPopup = dynamic(() => import('./slices/AlertPopup'));
 
 const sliceHandler = (slice, props: any = {}) => {
   switch (slice.slice_type) {
@@ -331,6 +332,14 @@ const sliceHandler = (slice, props: any = {}) => {
       }, []);
       orderedLinks.push({ text: slice.primary.current_title, url: {} });
       return <Breadcrumb orderedLinks={orderedLinks} />;
+    case 'alert':
+      return (
+        <AlertPopup
+          images={slice.items || []}
+          title={slice.primary.alert_title || 'Your safety is our Priority'}
+          description={slice.primary.alert_description || []}
+        />
+      );
     default:
     // ToDo: Add to Error Logs (Slice)
   }

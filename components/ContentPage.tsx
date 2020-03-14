@@ -6,6 +6,9 @@ import sliceHandler from './Slices';
 import Footer from './common/Footer';
 import Masthead from './Masthead';
 import populateHead from './common/meta';
+import Alert from './UI/Alert';
+import DismissAlert from './UI/DismissAlert';
+import * as labels from '../public/static/localization/labels';
 import { Client } from '../prismic-config';
 import { DROPDOWN_ELEMENT } from '../constants';
 import { groupSlices } from '../utils/helper';
@@ -23,6 +26,7 @@ export default class ContentPage extends Component<any, any> {
         hamburger: false,
       },
       isMobile: false,
+      covid19AlertOpen: true,
     };
   }
   async componentDidMount() {
@@ -87,6 +91,11 @@ export default class ContentPage extends Component<any, any> {
       contentFramework: props.refs.contentFramework,
     };
   }
+
+  handleClose = () => {
+    this.setState({ covid19AlertOpen: false });
+  };
+
   handleDropdownToggle = (elementIdentifier, forceBool = null) => {
     switch (elementIdentifier) {
       case DROPDOWN_ELEMENT.HAMBURGER: {
@@ -219,6 +228,12 @@ export default class ContentPage extends Component<any, any> {
     const { groupBookingTourTitles } = this.state;
     const currentLanguageSplit = lang.split('-')[0];
 
+    const alertPopup = this.props.data?.microsite_document_ref?.data
+      ?.alert_popup;
+
+    const showCovid19Alert = this.props.data?.microsite_document_ref?.data
+      ?.show_covid19_alert;
+
     return (
       <div className="page-wrapper">
         {this.state.showGroupBookingModal && groupBookingTourTitles && (
@@ -263,6 +278,14 @@ export default class ContentPage extends Component<any, any> {
           hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo}
           openGroupBookingModal={this.openGroupBookingModal}
         />
+        {showCovid19Alert && this.state.covid19AlertOpen ? (
+          <DismissAlert
+            readMore={labels[currentLanguage].COVID19_ALERT.READ_MORE}
+            keyText={labels[currentLanguage].COVID19_ALERT.KEY_TEXT}
+            text={labels[currentLanguage].COVID19_ALERT.TEXT}
+            handleClose={this.handleClose}
+          />
+        ) : null}
         <main
           className={classNames({
             'content-wrapper': !featured.image.url,
@@ -271,6 +294,13 @@ export default class ContentPage extends Component<any, any> {
           {featured.image.url && (
             <Masthead title={featured.title} image={featured.image.url} />
           )}
+          {alertPopup ? (
+            <Alert
+              popupUID={alertPopup?.uid}
+              currentLanguage={currentLanguage}
+            />
+          ) : null}
+
           <div className="subpage-container">
             {body.map((slice, index) => (
               <div key={index} className={`slice-block ${slice.slice_type}`}>

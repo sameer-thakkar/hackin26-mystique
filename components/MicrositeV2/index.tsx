@@ -7,7 +7,6 @@ import { withRouter, Router } from 'next/router';
 import populateHead from '../common/meta';
 import { InteractionContextProvider } from '../../contexts/Interaction';
 import { docCookies } from '../../utils/helper';
-import { RichText } from 'prismic-reactjs';
 import { MBContextProvider } from '../../contexts/MBContext';
 import allToursParser from '../../utils/alltoursParser';
 class MicrositeV2 extends Component<any, any> {
@@ -187,6 +186,8 @@ class MicrositeV2 extends Component<any, any> {
       }, []),
     };
 
+    console.log(CMSContent);
+
     const { cardPrices, currencySymbol, isFetched, ready } = this.state;
     const pricingData = {
       cardPrices,
@@ -261,6 +262,8 @@ class MicrositeV2 extends Component<any, any> {
       scorpioData,
       heroSectionSlice,
       contentFramework: contentFramework?.data,
+      alertPopup: CMSContent?.data?.alert_popup,
+      showCovid19Alert: CMSContent?.data.show_covid19_alert,
     };
 
     const directTgid = isMobile ? null : this.props.router.query.tgid;

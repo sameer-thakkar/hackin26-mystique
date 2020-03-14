@@ -20,14 +20,13 @@ const StyledHeader = styled.header`
   justify-content: space-between;
   left: 0;
   right: 0;
-  z-index: 2;
+  z-index: 3;
   @media (max-width: 768px) {
     height: 56px;
   }
 `;
 
 const StyledHeaderContainer = styled.div`
-  max-width: 1200px;
   height: 80px;
   position: fixed;
   top: 0;
@@ -118,7 +117,7 @@ const Header: React.FC<any> = props => {
     hasPoweredByHeadoutLogo,
     openGroupBookingModal,
   } = props;
-  const hamburgerIconCheck = showGroupBooking ?? headerLinks?.length;
+  const hamburgerIconCheck = showGroupBooking || !!headerLinks?.length;
   const someRef = useRef(null);
   useCaptureClickOutside(
     someRef,

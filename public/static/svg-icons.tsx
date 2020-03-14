@@ -337,3 +337,67 @@ export const GLOBE = (
     />
   </svg>
 );
+
+export const SHIELD = (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z"
+      stroke="#1A4D57"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+export const BLACK_CLOSE = (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect width="24" height="24" rx="2" fill="black" />
+    <path
+      d="M17.3333 6.66666L6.66667 17.3333"
+      stroke="white"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M6.66667 6.66666L17.3333 17.3333"
+      stroke="white"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+export const YELLOW_CLOSE = (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M13.3333 2.66667L2.66663 13.3333"
+      stroke="#755A0F"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M2.66663 2.66667L13.3333 13.3333"
+      stroke="#755A0F"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
