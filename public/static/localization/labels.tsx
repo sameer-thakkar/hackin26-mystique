@@ -65,7 +65,7 @@ export const de = {
   COVID19_ALERT: {
     KEY_TEXT: 'Update Covid-19',
     TEXT:
-      'Ihr Wohlergehen ist unsere Priorität. Weitere Informationen zu uneren flexiblen Stornierungsbedingungen finden Sie auf der Seite „Hilfe & FAQs“.',
+      'Ihr Wohlergehen ist unsere Priorität. Weitere Informationen zu unseren flexiblen Stornierungsbedingungen finden Sie auf der Seite „Hilfe & FAQs“.',
   },
   READ_MORE: 'Weiterlesen',
   BANNER_CTA: 'Tickets kaufen',
