@@ -355,15 +355,16 @@ export default class Page extends React.Component<any, any> {
 
                 let completePage = {
                   ...page,
+                  data: {
+                    ...page.data,
+                    footer_ref: commonFooter,
+                    content_framework: contentFramework,
+                  },
                   featured: {
                     image: page.data.featured_image.url
                       ? page.data.featured_image
                       : page.data.featured_image_link,
                     title: page.data.featured_title,
-                  },
-                  refs: {
-                    commonFooter,
-                    contentFramework,
                   },
                 };
                 return {

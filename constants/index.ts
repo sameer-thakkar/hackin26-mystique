@@ -172,6 +172,7 @@ export const LINKED_MICROSITE_PROPS: string[] = [
   'group_form_blocked_days',
   'alert_popup',
   'show_covid19_alert',
+  'page_url',
 ].map(prop => `${CUSTOM_TYPES.MICROSITE}.${prop}`);
 
 export const MICROSITE_STRING_KEYS: string[] = [

@@ -11,7 +11,6 @@ import DismissAlert from './UI/DismissAlert';
 import * as labels from '../public/static/localization/labels';
 import { Client } from '../prismic-config';
 import { DROPDOWN_ELEMENT } from '../constants';
-import { groupSlices } from '../utils/helper';
 
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 
@@ -77,21 +76,6 @@ export default class ContentPage extends Component<any, any> {
   closeGroupBookingModal = () =>
     this.setState({ showGroupBookingModal: false });
 
-  // TODO: Discard this method, as clean content comes from index.
-  prettifyProps(props) {
-    let body = props.data.body;
-    let featured = props.featured;
-    let footer = props.refs.commonFooter;
-
-    return {
-      footer,
-      body,
-      featured,
-      data: props.data,
-      contentFramework: props.refs.contentFramework,
-    };
-  }
-
   handleClose = () => {
     this.setState({ covid19AlertOpen: false });
   };
@@ -126,16 +110,10 @@ export default class ContentPage extends Component<any, any> {
   };
 
   render() {
+    const { groupBookingTourTitles } = this.state;
     const {
-      footer,
-      data,
-      data: { body, header_ref, microsite_document_ref },
       featured,
-      contentFramework,
-    } = this.prettifyProps(this.props);
-    const slices = contentFramework?.data?.body || [];
-    const contentFWSlices = groupSlices(slices);
-    const {
+      data,
       first_publication_date: datePublished,
       last_publication_date: dateModified,
       lang,
@@ -145,12 +123,17 @@ export default class ContentPage extends Component<any, any> {
       uid,
       host,
     } = this.props;
-    const currentLanguage = lang.split('-')[0];
+    const {
+      footer_ref: commonFooter,
+      header_ref: commonHeader,
+      body,
+      microsite_document_ref,
+    } = data;
 
+    // Data extraction for populating head
     const contentPageHasOtherMetaTags = data.other_meta_tags.filter(
       ({ meta_tag }) => meta_tag
     );
-
     const strKeys = [
       'title',
       'description',
@@ -163,7 +146,6 @@ export default class ContentPage extends Component<any, any> {
       'page_url',
     ];
     const objKeys = ['image', 'other_meta_tags'];
-
     const strValues = strKeys.reduce(
       (acc, elem) => ({
         ...acc,
@@ -171,7 +153,6 @@ export default class ContentPage extends Component<any, any> {
       }),
       {}
     );
-
     const objValues = objKeys.reduce(
       (acc, elem) => ({
         ...acc,
@@ -181,13 +162,11 @@ export default class ContentPage extends Component<any, any> {
       }),
       {}
     );
-
     const micrositeData = {
       ...this.props.data,
       ...strValues,
       ...objValues,
     };
-
     const headProps = {
       ...micrositeData,
       favicon: microsite_document_ref.data.favicon,
@@ -209,7 +188,7 @@ export default class ContentPage extends Component<any, any> {
       logo,
       logo_alt_text: logoAltText,
       header_links: headerLinks,
-    } = this.props.data.header_ref.data;
+    } = commonHeader.data;
 
     const {
       blackout_start_date: blackoutStartDate,
@@ -219,20 +198,13 @@ export default class ContentPage extends Component<any, any> {
       maximum_pax: maximumPax,
       group_form_blocked_days: blockedDays,
       enable_powered_by_headout_logo: hasPoweredByHeadoutLogo,
-    } = this.props.data.microsite_document_ref.data;
-    const { commonFooter } = this.props.refs;
-    const footerLogoURL = this.props.refs?.commonFooter?.data?.logo?.url;
-    const footerLogoAlt = this.props.refs?.commonFooter?.data?.logo?.alt;
+      page_url: pageUrl,
+      alert_popup: alertPopup,
+      show_covid19_alert: showCovid19Alert,
+    } = microsite_document_ref.data;
 
     const showGroupBooking = enableGroupBooking === 'Yes';
-    const { groupBookingTourTitles } = this.state;
-    const currentLanguageSplit = lang.split('-')[0];
-
-    const alertPopup = this.props.data?.microsite_document_ref?.data
-      ?.alert_popup;
-
-    const showCovid19Alert = this.props.data?.microsite_document_ref?.data
-      ?.show_covid19_alert;
+    const currentLanguage = lang.split('-')[0];
 
     return (
       <div className="page-wrapper">
@@ -263,7 +235,7 @@ export default class ContentPage extends Component<any, any> {
         <Header
           languages={localization}
           headerLinks={headerLinks}
-          currentLanguage={currentLanguageSplit}
+          currentLanguage={currentLanguage}
           logoUrl={logo.url}
           logoAltText={logoAltText || logo.alt || ''}
           alternateLanguages={alternate_languages}
@@ -273,7 +245,7 @@ export default class ContentPage extends Component<any, any> {
           isMobile={this.state.isMobile}
           showGroupBooking={showGroupBooking}
           hasLanguageSelector={enable_localization_menu}
-          logoRedirectionURL={logoRedirectionURL.url || '/'}
+          logoRedirectionURL={logoRedirectionURL?.url || pageUrl}
           host={host}
           hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo}
           openGroupBookingModal={this.openGroupBookingModal}
@@ -312,8 +284,8 @@ export default class ContentPage extends Component<any, any> {
         <Footer
           currentLanguage={currentLanguage}
           attraction={commonFooter?.data?.attraction || 'attraction'}
-          logoURL={footerLogoURL}
-          logoAlt={footerLogoAlt}
+          logoURL={commonFooter?.data?.logo?.url}
+          logoAlt={commonFooter?.data?.logo?.alt}
           hasPoweredByHeadoutLogo={
             commonFooter?.data?.powered_by_headout || false
           }

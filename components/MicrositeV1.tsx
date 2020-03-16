@@ -438,7 +438,7 @@ export default class MicrositeV1 extends Component<any, any> {
             hasLanguageSelector={hasLanguageSelector}
             showGroupBooking={showGroupBooking}
             enableBuyTickets={enableBuyTickets}
-            logoRedirectionURL={logoRedirectionURL.url || '/'}
+            logoRedirectionURL={logoRedirectionURL?.url || pageUrl}
             host={host}
             hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo}
           />

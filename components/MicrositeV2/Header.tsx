@@ -52,7 +52,7 @@ const Header = props => {
       <div className="fixed-wrap">
         <header className="mb-wrapper">
           <div className="header-left">
-            <a href={logoRedirectionURL}>
+            <a href={logoRedirectionURL || '/'}>
               <div className="header-logo">
                 <img src={logoUrl} alt={logoAltText} />
               </div>
