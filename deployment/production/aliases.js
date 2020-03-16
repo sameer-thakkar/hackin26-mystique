@@ -1,4 +1,12 @@
 module.exports = [
+  'reina-sofia.tickets-madrid.org',
+  'santiago-bernabeu.tickets-madrid.org',
+  'aerobus.tickets-barcelona.org',
+  'montjuic-cable-car.tickets-barcelona.org',
+  'portaventura.tickets-barcelona.org',
+  'casa-mila.tickets-barcelona.org',
+  'aquarium.tickets-barcelona.org',
+  'hola-barcelona.tickets-barcelona.org',
   'www.thecitypasses.com',
   'www.tulip-garden-tickets.com',
   'sant-pau.barcelona-tickets.com',
