@@ -132,7 +132,7 @@ const Header: React.FC<any> = props => {
       <StyledHeaderContainer>
         <a href={logoRedirectionURL}>
           <StyledLogo>
-            <Image url={logoUrl} alt={logoAltText} />
+            <Image url={logoUrl} alt={logoAltText} dontLazyLoad={true} />
             {hasPoweredByHeadoutLogo ? POWERED_BY_HEADOUT : null}
           </StyledLogo>
         </a>
