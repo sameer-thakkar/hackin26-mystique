@@ -2973,3 +2973,24 @@ h6 > strong {
   margin-block-start: 0em;
   margin-block-end: 0em;
 }
+
+.sub-input.check-box {
+  display: grid;
+  grid-template-columns: 20px auto;
+  justify-content: left;
+  align-items: center;
+  grid-gap: 5px;
+  margin-bottom: 7px;
+  font-family: Graphik;
+  font-size: 14px;
+  color: #545454;
+  letter-spacing: -0.5px;
+}
+
+.sub-input.check-box input {
+  width: 15px;
+  height: 15px;
+  background: transparent;
+  color: #fff;
+  border: 1px solid #000;
+}

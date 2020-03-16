@@ -50,7 +50,10 @@ export default class GroupBooking extends Component<any, any> {
         isLangSelected: false,
         isTimeSelected: false,
         isGroupSizeValid: '',
+        isCompanyValid: false,
       },
+      isAgent: false,
+      company: false,
       date: new Date(),
       showPhoneFeild: false,
       userCountry: null,
@@ -104,8 +107,12 @@ export default class GroupBooking extends Component<any, any> {
   handleReactSelectChange = (value, state) => this.setState({ [state]: value });
 
   handleInputChange = e => {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
+    const { name, value, type } = e.target;
+    let finalValue = value;
+    if (type === 'checkbox') {
+      finalValue = e.target.checked;
+    }
+    this.setState({ [name]: finalValue });
   };
 
   handlePhoneInputChange = (telNumber, selectedCountry) =>
@@ -129,6 +136,8 @@ export default class GroupBooking extends Component<any, any> {
       adults,
       children,
       countryDialCode,
+      isAgent,
+      company,
     } = this.state;
     const error = {
       isFullNameValid: false,
@@ -138,6 +147,7 @@ export default class GroupBooking extends Component<any, any> {
       isLangSelected: false,
       isTimeSelected: false,
       isGroupSizeValid: '',
+      isCompanyValid: true,
     };
     const phoneWithCountryCode = {
       phone,
@@ -156,6 +166,7 @@ export default class GroupBooking extends Component<any, any> {
     );
     error.isLangSelected = !isFeildSelected(lang);
     error.isTimeSelected = !isFeildSelected(time);
+    error.isCompanyValid = !(isAgent ? company.length > 0 : true);
     this.setState({ error });
     return (
       error.isFullNameValid ||
@@ -164,7 +175,8 @@ export default class GroupBooking extends Component<any, any> {
       error.isLangSelected ||
       error.isTimeSelected ||
       error.isPhoneValid ||
-      error.isGroupSizeValid
+      error.isGroupSizeValid ||
+      error.isCompanyValid
     );
   };
 
@@ -179,6 +191,8 @@ export default class GroupBooking extends Component<any, any> {
       adults,
       children,
       countryDialCode,
+      isAgent,
+      company,
     } = this.state;
     let hasError, error;
     const phoneWithCountryCode = {
@@ -229,6 +243,12 @@ export default class GroupBooking extends Component<any, any> {
         error.isTimeSelected = hasError;
         this.setState({ error: error });
         return;
+      case 'COMPANY':
+        hasError = isAgent === true && company.length === 0;
+        error = { ...this.state.error };
+        error.isCompanyValid = hasError;
+        this.setState({ error: error });
+        return;
       default:
         return;
     }
@@ -246,6 +266,8 @@ export default class GroupBooking extends Component<any, any> {
       children,
       countryDialCode,
       date,
+      company,
+      isAgent,
     } = this.state;
     const hasError = this.validateInputData();
     if (!hasError) {
@@ -259,10 +281,14 @@ export default class GroupBooking extends Component<any, any> {
         time: time.value,
         contact: phone,
         group,
+        adults,
+        children,
+        company,
         date: formattedDate,
       };
       this.setState({ isSendingRequest: true });
       const status = await createGroupBooking(GROUP_BOOKING_URL, data);
+
       if (status === 'Successful') {
         this.setState({
           isBookingSuccessful: true,
@@ -482,6 +508,37 @@ export default class GroupBooking extends Component<any, any> {
                           : ''}
                       </span>
                     </div>
+                  </div>
+                  <div className="input-wrapper">
+                    <div className="sub-input check-box">
+                      <input
+                        className="input-box"
+                        type="checkbox"
+                        id="is-agent"
+                        name="isAgent"
+                        onChange={e => this.handleInputChange(e)}
+                      />{' '}
+                      <label htmlFor="is-agent"> I am a travel agent </label>
+                    </div>
+                    {this.state.isAgent == true ? (
+                      <div className="sub-input">
+                        <input
+                          className="input-box"
+                          type="company"
+                          placeholder="Company"
+                          name="company"
+                          onChange={e => this.handleInputChange(e)}
+                          onBlur={() => this.handleInputBlur('COMPANY')}
+                        />
+                        <div className="error">
+                          <span>
+                            {this.state.error.isCompanyValid
+                              ? 'Please enter a valid company name'
+                              : ''}
+                          </span>
+                        </div>
+                      </div>
+                    ) : null}
                   </div>
                   <div className="input-wrapper">
                     <input
