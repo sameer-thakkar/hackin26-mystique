@@ -499,13 +499,6 @@ export default class MicrositeV1 extends Component<any, any> {
                 isMobile={this.state.isMobile}
               />
             ) : null}
-            {contentFramework ? (
-              <div className="content-fw-wrapper">
-                {contentFramework.body?.map((slice, index) => {
-                  return sliceHandler(slice);
-                })}
-              </div>
-            ) : null}
           </ProductsContextProvider>
           <Footer
             currentLanguage={currentLanguage}

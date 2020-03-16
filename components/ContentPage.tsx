@@ -11,6 +11,7 @@ import DismissAlert from './UI/DismissAlert';
 import * as labels from '../public/static/localization/labels';
 import { Client } from '../prismic-config';
 import { DROPDOWN_ELEMENT } from '../constants';
+import { groupSlices } from '../utils/helper';
 
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 
@@ -126,9 +127,13 @@ export default class ContentPage extends Component<any, any> {
     const {
       footer_ref: commonFooter,
       header_ref: commonHeader,
+      content_framework: contentFramework,
       body,
       microsite_document_ref,
     } = data;
+
+    const CFWBody = contentFramework?.data?.body;
+    const contentFWSlices = groupSlices(CFWBody || []);
 
     // Data extraction for populating head
     const contentPageHasOtherMetaTags = data.other_meta_tags.filter(
@@ -274,8 +279,13 @@ export default class ContentPage extends Component<any, any> {
           ) : null}
 
           <div className="subpage-container">
-            {body.map((slice, index) => (
-              <div key={index} className={`slice-block ${slice.slice_type}`}>
+            {[...body, ...contentFWSlices].map((slice, index) => (
+              <div
+                key={index}
+                className={`${
+                  slice.slice_type !== 'background' ? 'slice-wrapper' : ''
+                } slice-block ${slice.slice_type}`}
+              >
                 {sliceHandler(slice)}
               </div>
             ))}

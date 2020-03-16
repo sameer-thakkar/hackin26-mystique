@@ -4,6 +4,7 @@ import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 import { COLORS, GRAPHIK } from '../../constants/ui-constants';
 import { stringIdfy } from '../../utils/helper';
+import useWindowSize from '../hooks/useWindowSize';
 
 const StyledTable = styled.div`
   display: grid;
@@ -87,7 +88,10 @@ const StyledColumn = styled.div`
  */
 
 const TableV2 = props => {
-  const { rows, title, isMobile } = props;
+  const { rows, title } = props;
+  const { width } = useWindowSize();
+  const isMobile = width < 768;
+
   const headings = isMobile ? rows[0]?.columns : [];
   return (
     <StyledTable>

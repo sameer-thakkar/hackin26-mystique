@@ -203,9 +203,13 @@ const autoClose = slices => {
         !isManuallyClosedSlice &&
         (thisSliceType === currentOpen || isClosingSlice)
       ) {
-        allSlices.push({
-          slice_type: currentOpen.replace(/___start$/, '___end'),
-        });
+        // TODO: Start using stack to keep track of opened sections (below, hack for closing multi-level open sections
+        const isAlreadyClosed =
+          allSlices[allSlices.length - 1].slice_type === currentCloseSignature;
+        if (!isAlreadyClosed)
+          allSlices.push({
+            slice_type: currentOpen.replace(/___start$/, '___end'),
+          });
       }
     }
     allSlices.push(slice);

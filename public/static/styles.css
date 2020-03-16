@@ -2257,8 +2257,9 @@ form.form {
   line-height: 0;
 }
 .subpage-container {
-  max-width: 1190px;
-  margin: auto;
+  display: grid;
+  grid-row-gap: 40px;
+  margin-top: 40px;
   margin-bottom: 40px;
 }
 
@@ -2354,17 +2355,6 @@ form.form {
 .subpage-container a {
   text-decoration: none;
   color: #ec1943;
-}
-.subpage-container .slice-block {
-  margin: 40px 0;
-}
-@media (max-width: 768px) {
-  .subpage-container {
-    margin: 0 10px 40px;
-  }
-  .subpage-container .slice-block {
-    margin: 0;
-  }
 }
 
 .selected-nav-tab {
@@ -2658,15 +2648,26 @@ h6 {
   line-height: 40px;
 }
 
-.main-wrapper {
+.main-wrapper,
+.slice-wrapper {
   max-width: 1200px;
   padding: 0 5.46vw;
   margin: auto;
+}
+.slice-wrapper.slice-block {
+  width: 100%;
 }
 
 @media (max-width: 768px) {
   .main-wrapper {
     padding: 0 16px;
+  }
+  .subpage-container {
+    grid-row-gap: 20px;
+  }
+  .slice-wrapper.slice-block {
+    padding: 0 16px;
+    width: calc(100% - 32px);
   }
 }
 .microbrands-list {

@@ -31,6 +31,7 @@ const CardSection = dynamic(() => import('./slices/CardSection'));
 const Card = dynamic(() => import('./slices/Card'));
 const TableV2 = dynamic(() => import('./slices/TableV2'));
 const Breadcrumb = dynamic(() => import('./slices/Breadcrumb'));
+const Background = dynamic(() => import('./slices/Background'));
 const AlertPopup = dynamic(() => import('./slices/AlertPopup'));
 
 const sliceHandler = (slice, props: any = {}) => {
@@ -332,6 +333,16 @@ const sliceHandler = (slice, props: any = {}) => {
       }, []);
       orderedLinks.push({ text: slice.primary.current_title, url: {} });
       return <Breadcrumb orderedLinks={orderedLinks} />;
+    case 'background':
+      return (
+        <Background
+          color={slice.primary.color}
+          textCenter={slice.primary.centered}
+          gridCenter={slice.primary.grid_center}
+          slices={slice.slices}
+          sliceProps={props} 
+        />
+      );
     case 'alert':
       return (
         <AlertPopup

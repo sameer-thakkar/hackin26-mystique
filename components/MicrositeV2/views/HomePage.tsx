@@ -114,7 +114,7 @@ export const HomePage = props => {
         />
       ) : null}
       <ProductsContextProvider allTours={allTours}>
-        <div className="main-wrapper">
+        <div className="main-wrapper v2-long-form">
           {longFormContent ? (
             <LongForm
               slicesArray={longFormSlices}
@@ -159,6 +159,11 @@ export const HomePage = props => {
           }
           .city-selector {
             margin-bottom: 24px;
+          }
+          .main-wrapper.v2-long-form {
+            max-width: unset;
+            padding: unset;
+            margin: unset;
           }
           .long-form .slice-block.rich_text {
             max-width: ${SIZES.MAX_WIDTH};

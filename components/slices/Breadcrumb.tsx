@@ -7,14 +7,16 @@ type BreadcrumbProps = {
 };
 
 const BreadcrumbContainer = styled.div`
+  a {
+    color: ${COLORS.GREY_7C};
+  }
   @media (max-width: 768px) {
-    padding: 10px;
+    padding: 0;
   }
 `;
 
 const StyledBreadcrumb = styled.a`
   text-decoration: none;
-  color: ${COLORS.GREY_7C};
   &:last-child {
     color: ${COLORS.TEAL};
   }

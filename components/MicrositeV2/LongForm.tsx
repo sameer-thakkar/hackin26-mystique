@@ -7,7 +7,12 @@ const LongForm = props => {
   return (
     <div className={`long-form-wrap ${!hasToursSection ? 'no-border' : ''}`}>
       {slicesArray.map((slice, index) => (
-        <div key={index} className={'slice-block ' + slice.slice_type}>
+        <div
+          key={index}
+          className={`${
+            slice.slice_type !== 'background' ? 'slice-wrapper' : ''
+          } slice-block ${slice.slice_type}`}
+        >
           {sliceHandler(slice, sliceProps)}
         </div>
       ))}
@@ -39,6 +44,9 @@ const LongForm = props => {
           color: #333;
           line-height: 1.2;
           margin: 0 0 0.75em;
+        }
+        .slice-wrapper {
+          width: 100%;
         }
 
         .long-form-wrap h2 {
