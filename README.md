@@ -27,6 +27,7 @@ Mystique is the tech that powers over 100 different microbrands at Headout.
   AMPLITUDE_PROD=#Amplitude production
   AMPLITUDE_TEST=#Amplitude test
   AMPLITUDE_DEV=#Amplitude development
+  ZENDESK_GRP_BKNG_TOKEN=#Zendesk Group Booking Token
   ```
 
 - Install dependencies by running:
