@@ -257,6 +257,7 @@ export default class ContentPage extends Component<any, any> {
         />
         {showCovid19Alert && this.state.covid19AlertOpen ? (
           <DismissAlert
+            readMoreLink={labels[currentLanguage].COVID19_ALERT.LINK}
             readMore={labels[currentLanguage].READ_MORE}
             keyText={labels[currentLanguage].COVID19_ALERT.KEY_TEXT}
             text={labels[currentLanguage].COVID19_ALERT.TEXT}

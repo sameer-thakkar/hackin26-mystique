@@ -74,16 +74,14 @@ const DismissAlert: React.FC<{
   keyText: string;
   text: string;
   handleClose: any;
-}> = ({ readMore, keyText, text, handleClose }) => {
+  readMoreLink: string;
+}> = ({ readMore, keyText, text, handleClose, readMoreLink }) => {
   return (
     <StyledAlert>
       <StyledContent>
         <div className="alert-key-text">{keyText}</div>
         <div className="alert-text">{text}</div>
-        <StyledReadMore
-          href="https://medium.com/headout/coronavirus-outbreak-cancellation-policy-8fe8e1104b83"
-          target="_blank"
-        >
+        <StyledReadMore href={readMoreLink} target="_blank">
           {readMore}
         </StyledReadMore>
         <div className="close" onClick={handleClose}>

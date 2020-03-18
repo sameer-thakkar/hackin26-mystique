@@ -10,7 +10,9 @@ export const en = {
   COVID19_ALERT: {
     KEY_TEXT: 'Update on COVID-19',
     TEXT:
-      'You are our priority. Please check our help page to find the latest updates on our flexible cancellation policies.',
+      'You are our priority. Please check our help page to find the latest updates on our flexible cancellation policies',
+    LINK:
+      'https://medium.com/headout/coronavirus-outbreak-cancellation-policy-8fe8e1104b83',
   },
   READ_MORE: 'Read More',
   BANNER_CTA: 'Buy Tickets',
@@ -39,6 +41,8 @@ export const es = {
     KEY_TEXT: 'Información actualizada sobre COVID-19',
     TEXT:
       'Tú eres nuestra prioridad. Por favor, consulta nuestra página de ayuda para encontrar las últimas actualizaciones en nuestras políticas de cancelación flexibles.',
+    LINK:
+      'https://medium.com/headout/epidemia-de-coronavirus-pol%C3%ADtica-de-cancelaci%C3%B3n-e577f63d5553',
   },
   READ_MORE: 'Leer Más',
   BANNER_CTA: 'Comprar Entradas',
@@ -66,6 +70,8 @@ export const de = {
     KEY_TEXT: 'Update Covid-19',
     TEXT:
       'Ihr Wohlergehen ist unsere Priorität. Weitere Informationen zu unseren flexiblen Stornierungsbedingungen finden Sie auf der Seite „Hilfe & FAQs“.',
+    LINK:
+      'https://medium.com/headout/coronavirus-ausbruch-stornierungsbedingungen-cec74ac7641b',
   },
   READ_MORE: 'Weiterlesen',
   BANNER_CTA: 'Tickets kaufen',
@@ -93,6 +99,8 @@ export const it = {
     KEY_TEXT: 'Aggiornamento riguardo COVID-19',
     TEXT:
       'La nostra priorità sei tu. Consulta la nostra pagina di aiuto per trovare gli ultimi aggiornamenti sulle nostre politiche di cancellazione flessibili.',
+    LINK:
+      'https://medium.com/headout/epidemia-coronavirus-polizza-di-cancellazione-e7abdfb20451',
   },
   READ_MORE: 'Leggi Tutto',
   BANNER_CTA: 'Acquista biglietti',
@@ -119,6 +127,8 @@ export const fr = {
   COVID19_ALERT: {
     KEY_TEXT: 'Mise à jour concernant le COVID-19',
     TEXT: `Vous êtes notre priorité. Veuillez consulter notre page d'assistance pour connaître les dernières mises à jour de nos politiques d'annulation flexibles.`,
+    LINK:
+      'https://medium.com/headout/%C3%A9pid%C3%A9mie-de-coronavirus-politique-dannulation-595a47a8bb50',
   },
   READ_MORE: 'En savoir plus',
   BANNER_CTA: 'Acheter des billets',
@@ -145,6 +155,8 @@ export const nl = {
     KEY_TEXT: 'Update over COVID-19',
     TEXT:
       'Jij bent onze prioriteit. Kijk op onze helppagina voor de laatste updates over ons flexibele annuleringsbeleid.',
+    LINK:
+      'https://medium.com/headout/coronavirus-outbreak-cancellation-policy-8fe8e1104b83',
   },
   READ_MORE: 'Lees verder',
   BANNER_CTA: 'Koop Tickets',
@@ -172,6 +184,8 @@ export const pt = {
     KEY_TEXT: 'Atualização sobre o COVID-19',
     TEXT:
       'Você é nossa prioridade. Consulte nossa página de ajuda para encontrar as últimas atualizações sobre nossa política de cancelamento flexível.',
+    LINK:
+      'https://medium.com/headout/surto-coronav%C3%ADrus-pol%C3%ADtica-de-cancelamento-18a2fb65b25',
   },
   READ_MORE: 'Saiba mais',
   BANNER_CTA: 'Compre Ingressos',
