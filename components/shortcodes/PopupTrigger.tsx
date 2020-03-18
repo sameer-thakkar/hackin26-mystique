@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import Popup from '../common/Popup';
 import { Client } from '../../prismic-config';
 import { CUSTOM_TYPES } from '../../constants';
-import Popup from '../common/Popup';
 import { COLORS } from '../../constants/ui-constants';
 
+const StyledTrigger = styled.span`
+  color: ${COLORS.TEAL};
+  cursor: pointer;
+  line-height: 20px;
+`;
 const PopupTrigger = props => {
   const { id, text, lang = 'en' } = props;
   const [active, setActive] = useState(null);
@@ -20,22 +26,13 @@ const PopupTrigger = props => {
       });
   }, []);
 
-  return data ? (
+  return (
     <>
-      <span className="popup-trigger" onClick={() => setActive(!active)}>
+      <StyledTrigger {...(data && { onClick: () => setActive(!active) })}>
         {text}
-      </span>
+      </StyledTrigger>
       {active ? <Popup togglePopup={setActive} data={data} /> : null}
-      <style jsx>{`
-        span {
-          color: ${COLORS.TEAL};
-          cursor: pointer;
-          line-height: 20px;
-        }
-      `}</style>
     </>
-  ) : (
-    <>{'\u00A0'}</>
   );
 };
 
