@@ -35,9 +35,6 @@ export default class LongForm extends Component<any, any> {
               color: #545454;
               line-height: 1.2;
             }
-            .long-form .slice-block {
-              width: 100%;
-            }
             .long-form .slice-block img {
               width: 100%;
             }

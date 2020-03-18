@@ -1,6 +1,6 @@
 import React, { useState, useContext, useLayoutEffect, useRef } from 'react';
 import { SortSelector } from './SortSelector';
-import { InteractionContext } from '../../contexts/Interaction';
+import InteractionContext from '../../contexts/Interaction';
 import { AVENIR, SIZES } from '../../constants/ui-constants';
 
 const CategoryBar = props => {

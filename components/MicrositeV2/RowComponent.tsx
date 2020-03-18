@@ -2,7 +2,7 @@ import React, { useContext, useLayoutEffect } from 'react';
 import Product from './Product';
 import DetailedProductCard from './DetailedProductCard';
 import { PAGETYPE } from '../../constants';
-import { InteractionContext } from '../../contexts/Interaction';
+import InteractionContext from '../../contexts/Interaction';
 import { scroller } from 'react-scroll';
 
 export const RowComponent = props => {

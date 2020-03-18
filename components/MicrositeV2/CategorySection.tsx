@@ -1,5 +1,7 @@
 import PopulateProducts from './PopulateProducts';
 import { AVENIR, GRAPHIK, COLORS } from '../../constants/ui-constants';
+import { useContext } from 'react';
+import ProductsContext from '../../contexts/Products';
 const CategorySection = props => {
   const {
     tgidsArray,
@@ -8,9 +10,10 @@ const CategorySection = props => {
     heading,
     description,
     changePage,
-    allTours,
     isMobile,
   } = props;
+  const toursContext = useContext(ProductsContext);
+  const allTours = toursContext.allTours;
   let filteredTgids = tgidsArray.filter(
     tgid => allTours[tgid] && allTours[tgid].available
   );

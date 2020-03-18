@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import Fuse from 'fuse.js';
 import { SEARCH_ICON, CLOSE_WHITE } from '../../public/static/svg-icons';
 import { GRAPHIK, COLORS } from '../../constants/ui-constants';
-import { InteractionContext } from '../../contexts/Interaction';
+import InteractionContext from '../../contexts/Interaction';
 
 export const SearchBox = props => {
   let fuse;

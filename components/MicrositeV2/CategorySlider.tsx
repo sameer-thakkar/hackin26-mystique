@@ -6,7 +6,7 @@ import React, {
   useCallback,
 } from 'react';
 import Swiper from '../Swiper';
-import { ProductsContext } from '../../contexts/Products';
+import ProductsContext from '../../contexts/Products';
 import Product from './Product';
 import DetailedProductCard from './DetailedProductCard';
 import { scroller } from 'react-scroll';

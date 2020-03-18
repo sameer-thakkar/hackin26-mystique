@@ -3,7 +3,7 @@ import LanguageSelector from './LanguageSelector';
 import { SearchBox } from './SearchBox';
 import { PAGETYPE } from '../../constants';
 import { SEARCH_ICON } from '../../public/static/svg-icons';
-import { InteractionContext } from '../../contexts/Interaction';
+import InteractionContext from '../../contexts/Interaction';
 import { SearchItem } from './SearchItem';
 import { COLORS, AVENIR, SIZES } from '../../constants/ui-constants';
 import { ResponsiveSelector } from './ResponsiveSelector';

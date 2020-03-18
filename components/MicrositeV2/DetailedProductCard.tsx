@@ -99,10 +99,12 @@ const DetailedProductCard = props => {
                   {activeTour.currencySymbol}
                   {activeTour.price}
                 </div>
-                <div className="desc-scratch-price">
-                  {activeTour.currencySymbol}
-                  {activeTour.scratchPrice}
-                </div>
+                {activeTour.price < activeTour.scratchPrice ? (
+                  <div className="desc-scratch-price">
+                    {activeTour.currencySymbol}
+                    {activeTour.scratchPrice}
+                  </div>
+                ) : null}
               </div>
               <a
                 target="_blank"
@@ -192,6 +194,7 @@ const DetailedProductCard = props => {
           font-family: ${GRAPHIK.FONT_STACK};
           grid-gap: 12px;
           justify-content: left;
+          height: max-content;
         }
         .v2-descriptor{
           background: ${COLORS.GREY_FO};

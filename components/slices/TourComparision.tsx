@@ -1,18 +1,15 @@
-import React, { useContext, useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useContext, useState } from 'react';
 import Image from '../UI/Image';
 import parse from 'url-parse';
-import * as LABELS from '../../public/static/localization/labels';
+import styled from 'styled-components';
 import EnvironmentContext from '../../contexts/environmentContext';
+import ProductsContext from '../../contexts/Products';
+import CommonCTA from '../UI/CTA';
 import { RichText } from 'prismic-reactjs';
 import { AVENIR, COLORS, GRAPHIK } from '../../constants/ui-constants';
-import { ProductsContext } from '../../contexts/Products';
 import { shortCodeSerializerWithParentProps } from '../../utils/shortCodes';
 import { MBContext } from '../../contexts/MBContext';
-import CommonCTA from '../UI/CTA';
-import styled from 'styled-components';
-import Popup from '../common/Popup';
-import { CHEVRON_LEFT, CHEVRON_DOWN } from '../../public/static/svg-icons';
+import { CHEVRON_DOWN } from '../../public/static/svg-icons';
 
 const StyledTourComparisionTable = styled.div`
   width: auto;
@@ -304,7 +301,8 @@ const TourComparisonTable = props => {
     : currentHost;
   let hostSplit = hostName.split('.');
   hostSplit.shift();
-  const allTours = toursContext.allTours;
+  const { allTours, ready: allToursReady } = toursContext;
+  if (!allToursReady) return null;
   const getContentNormalizedTours = tgidArray => {
     let toursArr = tgidArray.map(tgid => allTours[tgid]);
     toursArr = toursArr.reduce((acc, tour, index) => {

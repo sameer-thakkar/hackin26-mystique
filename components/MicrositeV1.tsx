@@ -6,13 +6,13 @@ import Banner from './Banner';
 import LongForm from './LongForm';
 import populateHead from './common/meta';
 import Footer from './common/Footer';
-import sliceHandler from './Slices';
 import PopulateUncategorizedProducts from './PopulateUncategorizedProducts';
 import Analytics from '../utils/Analytics';
 import allToursParser from '../utils/alltoursParser';
 import Alert from './UI/Alert';
 import * as labels from '../public/static/localization/labels';
 import DismissAlert from './UI/DismissAlert';
+import { InteractionContextProvider } from '../contexts/Interaction';
 import { docCookies } from '../utils/helper';
 import { DROPDOWN_ELEMENT, ANALYTICS_EVENTS } from '../constants';
 import { groupSlices } from '../utils/helper';
@@ -52,30 +52,30 @@ export default class MicrositeV1 extends Component<any, any> {
     const uncategorizedTours = data.body1;
     const { baseLangPageTitle } = this.props.data.data;
     const currentLanguage = lang.substring(0, 2);
+    const allTourTgids = this.props.data.data.all_tours.reduce((acc, tour) => {
+      return [...acc, parseInt(tour.primary.tgid)];
+    }, []);
     const checkIfToursAvailable =
       uncategorizedTours.length > 0 &&
       uncategorizedTours[0].items[0].tgid != null;
+    const hasAllTours = allTourTgids.length > 0;
 
-    if (checkIfToursAvailable) {
-      const [variantTgids, tourGroupTgids] = uncategorizedTours[0].items.reduce(
-        (accum, elem) => {
-          if (elem.tour_variant_id) {
-            return [
-              [...accum[0], { tgid: elem.tgid, tid: elem.tour_variant_id }],
-              [...accum[1]],
-            ];
-          } else {
-            return [[...accum[0]], [...accum[1], elem.tgid]];
-          }
-        },
-        [[], []]
-      );
-      const allTourTgids = this.props.data.data.all_tours.reduce(
-        (acc, tour) => {
-          return [...acc, parseInt(tour.primary.tgid)];
-        },
-        []
-      );
+    if (checkIfToursAvailable || hasAllTours) {
+      const [variantTgids, tourGroupTgids] = checkIfToursAvailable
+        ? uncategorizedTours[0].items.reduce(
+            (accum, elem) => {
+              if (elem.tour_variant_id) {
+                return [
+                  [...accum[0], { tgid: elem.tgid, tid: elem.tour_variant_id }],
+                  [...accum[1]],
+                ];
+              } else {
+                return [[...accum[0]], [...accum[1], elem.tgid]];
+              }
+            },
+            [[], []]
+          )
+        : [[], []];
       const fetchTourGroupPrices = fetch(
         `https://api.headout.com/api/v5/tour-group/list?ids[]=${[
           ...tourGroupTgids,
@@ -176,7 +176,6 @@ export default class MicrositeV1 extends Component<any, any> {
         );
         this.setState({ earliestAvailabilityQueue: response });
       }
-
       this.setState({
         tourPrices: tourPrices,
         currencySymbol: currencySymbol,
@@ -394,7 +393,10 @@ export default class MicrositeV1 extends Component<any, any> {
     const showCovid19Alert = this.props.data?.data?.show_covid19_alert;
     const scorpioData = this.props.scorpioData;
     const CMSData = this.props.data.data;
-    const allTours = allToursParser(CMSData, scorpioData, pricingData);
+    const allTours =
+      (this.state.isFetched &&
+        allToursParser(CMSData, scorpioData, pricingData)) ||
+      {};
 
     return (
       <div>
@@ -492,13 +494,18 @@ export default class MicrositeV1 extends Component<any, any> {
               microbrandCardsHeading={microbrandCardsHeading}
             />
           ) : null}
-          <ProductsContextProvider allTours={allTours}>
-            {longFormContent ? (
-              <LongForm
-                content={[...longFormContent, ...contentFWSlices]}
-                isMobile={this.state.isMobile}
-              />
-            ) : null}
+          <ProductsContextProvider
+            allTours={allTours}
+            ready={this.state.isFetched}
+          >
+            <InteractionContextProvider>
+              {longFormContent ? (
+                <LongForm
+                  content={[...longFormContent, ...contentFWSlices]}
+                  isMobile={this.state.isMobile}
+                />
+              ) : null}
+            </InteractionContextProvider>
           </ProductsContextProvider>
           <Footer
             currentLanguage={currentLanguage}

@@ -113,7 +113,7 @@ export const HomePage = props => {
           uid={uid}
         />
       ) : null}
-      <ProductsContextProvider allTours={allTours}>
+      <ProductsContextProvider allTours={allTours} ready={ready}>
         <div className="main-wrapper v2-long-form">
           {longFormContent ? (
             <LongForm

@@ -1,6 +1,6 @@
 import React, { Component, useState, useContext, useEffect } from 'react';
 import { RowComponent } from './RowComponent';
-import { InteractionContext } from '../../contexts/Interaction';
+import InteractionContext from '../../contexts/Interaction';
 import { MBContext } from '../../contexts/MBContext';
 
 const PopulateProducts = props => {

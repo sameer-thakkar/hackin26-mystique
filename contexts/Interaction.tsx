@@ -1,18 +1,12 @@
-import React, {
-  Component,
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-} from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
-export const InteractionContext = createContext(null);
+const InteractionContext = createContext(null);
+export default InteractionContext;
 
 export const InteractionContextProvider = props => {
   const { categories } = props;
   const defaultCategory =
     (categories[0] && categories[0].ranking.popularity) || [];
-  // const defaultCategory = []
   useEffect(() => {
     changeCategory(defaultCategory);
   }, []);
@@ -80,4 +74,8 @@ export const InteractionContextProvider = props => {
       {props.children}
     </InteractionContext.Provider>
   );
+};
+
+InteractionContextProvider.defaultProps = {
+  categories: [],
 };
