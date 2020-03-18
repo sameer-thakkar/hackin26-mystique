@@ -277,6 +277,31 @@ const StyledTourComparisionTable = styled.div`
   }
 `;
 
+/**
+ * Comparision table slice allows you to compare product highlights of two or more tours side-by-side
+ *
+ * ## Repeatable Zone:
+ *  - Label Order: ('Select Lables')
+ *
+ *  > Select the order in which the labels need to appear in the table.
+ *
+ * ## Non Repeatable Zone;
+ * - Heading:
+ *
+ *  > Sets the Heading for the Coparision Table.
+ * - Description
+ *
+ *  > Sets a short description for Comparision Table.
+ *
+ *
+ * - CSV TGIDs List:
+ *
+ *  > Add comma seperated tgids of the tour to be shown in the table (ex: 508, 509...)
+ *
+ *  > **Ensure** the TGID you enter has been entered in the All Tours Tab
+ *
+ */
+
 const TourComparisonTable = props => {
   const {
     heading,
