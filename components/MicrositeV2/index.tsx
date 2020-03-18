@@ -169,6 +169,7 @@ class MicrositeV2 extends Component<any, any> {
         [],
       enableDropdownLinks: CMSData.enable_dropdown == 'Yes',
       dropdownLinks: dropdownLinksArray,
+      hasPoweredByHeadoutLogo: CMSData.enable_powered_by_headout_logo,
     };
     // TODO: Add Interaction Field on Primic and Map it to Each Banner
     const heroProps = {

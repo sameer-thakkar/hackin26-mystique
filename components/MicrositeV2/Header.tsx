@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import LanguageSelector from './LanguageSelector';
 import { SearchBox } from './SearchBox';
 import { PAGETYPE } from '../../constants';
-import { SEARCH_ICON } from '../../public/static/svg-icons';
+import { SEARCH_ICON, POWERED_BY_HEADOUT } from '../../public/static/svg-icons';
 import InteractionContext from '../../contexts/Interaction';
 import { SearchItem } from './SearchItem';
 import { COLORS, AVENIR, SIZES } from '../../constants/ui-constants';
@@ -39,6 +39,7 @@ const Header = props => {
     logoUrl,
     logoAltText,
     enableSearch,
+    hasPoweredByHeadoutLogo,
   } = props;
   const allToursArray = Object.values(allTours);
   const hasDropdownLinks = enableDropdownLinks && dropdownLinks.length;
@@ -55,6 +56,9 @@ const Header = props => {
             <a href={logoRedirectionURL || '/'}>
               <div className="header-logo">
                 <img src={logoUrl} alt={logoAltText} />
+                {hasPoweredByHeadoutLogo ? (
+                  <span className="poweredBy">{POWERED_BY_HEADOUT}</span>
+                ) : null}
               </div>
             </a>
             {!props.isMobile && hasDropdownLinks ? (
@@ -138,7 +142,9 @@ const Header = props => {
           }
           header .header-logo {
             height: unset;
-            display: flex;
+            display: grid;
+            grid-auto-flow: column;
+            grid-column-gap: 10px;
             padding: 8px;
             margin-right: 16px;
           }
@@ -257,10 +263,19 @@ const Header = props => {
             color: #24a1b2;
           }
 
+          .poweredBy svg {
+            height: 36px;
+            width: auto;
+          }
+
           @media (max-width: 768px) {
             header {
               padding: 12px 16px;
               border-bottom: 1px solid #dadada;
+            }
+            .poweredBy svg {
+              height: 24px;
+              width: auto;
             }
           }
         `}
