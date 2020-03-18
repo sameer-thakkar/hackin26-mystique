@@ -7,6 +7,7 @@ import Paragraph from '../components/UI/Paragraph';
 import { TopHeading, SubHeading } from '../components/UI/Headings';
 import { Client } from '../prismic-config';
 import { DROPDOWN_ELEMENT, CUSTOM_TYPES } from '../constants';
+import { MinimalHelmet } from '../components/common/meta';
 import 'lazysizes';
 import '../public/static/styles.css';
 
@@ -94,15 +95,16 @@ export default class privacy extends Component<any, any> {
 
   render() {
     const { response, host } = this.props;
-    const { url: logoUrl } = response.data.link_to_logo_file;
-    const { url: uploadedLogoUrl, alt: altText } = response.data.logo;
-    const { logo_alt_text: logoAltText } = response.data;
-    const { alternate_languages: availableLanguages } = response;
+    const { alternate_languages: availableLanguages, uid, data } = response;
     const {
+      link_to_logo_file: { url: logoUrl },
+      logo: { url: uploadedLogoUrl, alt: altText },
+      favicon,
+      logo_alt_text: logoAltText,
       localization: languages,
       logo_redirection_url: logoRedirectionURL,
       commonFooter,
-    } = response.data;
+    } = data;
     const footerLogoURL =
       commonFooter?.data?.logo.url ||
       response.data?.footer_logo_link?.url ||
@@ -112,10 +114,13 @@ export default class privacy extends Component<any, any> {
       response?.data?.footer_logo_alt ||
       response?.data?.footer_logo?.alt;
 
-    const { uid } = response;
-
     return (
       <>
+        <MinimalHelmet
+          title="Privacy Policy"
+          favicon={favicon}
+          description={`Privacy Policy page for ${host}`}
+        />
         <Header
           languages={languages ? languages : null}
           headerLinks={null}
@@ -150,7 +155,7 @@ export default class privacy extends Component<any, any> {
             your information, and how you can limit our sharing of your
             information.
           </Paragraph>
-          <Paragraph>
+          <Paragraph as="div">
             We break up the types of information you share into Non Personal
             Information and Personally Identifiable Information.
             <ul>

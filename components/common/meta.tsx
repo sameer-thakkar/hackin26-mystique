@@ -311,3 +311,24 @@ export default data => {
     </Head>
   );
 };
+
+export const MinimalHelmet: React.FC<any> = ({
+  title,
+  description,
+  favicon,
+}) => {
+  return (
+    <Head>
+      <title>{title}</title>
+      <meta property="og:title" content={title} />
+      <meta property="twitter:title" content={title} />
+      <meta name="viewport" content="width=device-width" />
+      <link rel="icon" href={`${favicon?.url}`} />
+      <meta name="description" content={description} />
+      <meta property="og:description" content={description} />
+      <meta name="twitter:description" content={description} />
+      <meta property="og:locale" content="en_US" />
+      <meta property="og:type" content="website" />
+    </Head>
+  );
+};

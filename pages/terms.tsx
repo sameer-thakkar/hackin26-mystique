@@ -6,6 +6,7 @@ import Paragraph from '../components/UI/Paragraph';
 import { DROPDOWN_ELEMENT, CUSTOM_TYPES } from '../constants';
 import { Client } from '../prismic-config';
 import { TopHeading, SubHeading } from '../components/UI/Headings';
+import { MinimalHelmet } from '../components/common/meta';
 import 'lazysizes';
 import '../public/static/styles.css';
 
@@ -88,17 +89,16 @@ export default class TermsPage extends Component<any, any> {
 
   render() {
     const { response, host } = this.props;
-    const { url: logoUrl } = response.data.link_to_logo_file;
-    const { url: uploadedLogoUrl, alt: altText } = response.data.logo;
-    const { logo_alt_text: logoAltText } = response.data;
-    const { alternate_languages: availableLanguages } = response;
+    const { alternate_languages: availableLanguages, uid, data } = response;
     const {
+      link_to_logo_file: { url: logoUrl },
+      logo: { url: uploadedLogoUrl, alt: altText },
+      favicon,
+      logo_alt_text: logoAltText,
       localization: languages,
       logo_redirection_url: logoRedirectionURL,
       commonFooter,
-    } = response.data;
-
-    const { uid } = response;
+    } = data;
     const footerLogoURL =
       commonFooter?.data?.logo.url ||
       response.data?.footer_logo_link?.url ||
@@ -107,9 +107,13 @@ export default class TermsPage extends Component<any, any> {
       commonFooter?.data?.logo.alt ||
       response?.data?.footer_logo_alt ||
       response?.data?.footer_logo?.alt;
-
     return (
       <>
+        <MinimalHelmet
+          title="Terms"
+          favicon={favicon}
+          description={`Terms and Conditions page for ${host}`}
+        />
         <Header
           languages={languages ? languages : null}
           headerLinks={null}
@@ -234,7 +238,7 @@ export default class TermsPage extends Component<any, any> {
             individuals under the age of 13.
           </Paragraph>
           <SubHeading>Digital Millennium Copyright Act Compliance</SubHeading>
-          <Paragraph>
+          <Paragraph as="div">
             If you believe that your work has been copied on our Website, or any
             of our other systems or networks in a way that constitutes, please
             provide the following information to Company for receipt of

@@ -6,6 +6,7 @@ import Paragraph from '../components/UI/Paragraph';
 import { TopHeading } from '../components/UI/Headings';
 import { Client } from '../prismic-config';
 import { DROPDOWN_ELEMENT } from '../constants';
+import { MinimalHelmet } from '../components/common/meta';
 import 'lazysizes';
 import '../public/static/styles.css';
 
@@ -87,17 +88,17 @@ export default class companyDetails extends Component<any, any> {
   }
 
   render() {
-    const { response } = this.props;
-    const { url: logoUrl } = response.data.link_to_logo_file;
-    const { url: uploadedLogoUrl, alt: altText } = response.data.logo;
-    const { logo_alt_text: logoAltText } = response.data;
-    const { alternate_languages: availableLanguages } = response;
+    const { response, host } = this.props;
+    const { alternate_languages: availableLanguages, uid, data } = response;
     const {
+      link_to_logo_file: { url: logoUrl },
+      logo: { url: uploadedLogoUrl, alt: altText },
+      favicon,
+      logo_alt_text: logoAltText,
       localization: languages,
       logo_redirection_url: logoRedirectionURL,
       commonFooter,
-    } = response.data;
-    const { uid } = response;
+    } = data;
     const footerLogoURL =
       commonFooter?.data?.logo.url ||
       response.data?.footer_logo_link?.url ||
@@ -108,7 +109,12 @@ export default class companyDetails extends Component<any, any> {
       response?.data?.footer_logo?.alt;
 
     return (
-      <React.Fragment>
+      <>
+        <MinimalHelmet
+          title="Company Details"
+          favicon={favicon}
+          description={`Company Details page for ${host}`}
+        />
         <Header
           languages={languages ? languages : null}
           headerLinks={null}
@@ -172,7 +178,7 @@ export default class companyDetails extends Component<any, any> {
           }
           slices={[]}
         />
-      </React.Fragment>
+      </>
     );
   }
 }
