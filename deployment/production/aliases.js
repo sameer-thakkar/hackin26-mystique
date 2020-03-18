@@ -1,4 +1,9 @@
 module.exports = [
+  'cruise.tickets-tokyo.com',
+  'karate-experience.tickets-tokyo.com',
+  'shows.tickets-tokyo.com',
+  'themepark.tickets-tokyo.com',
+  'attractions.tickets-tokyo.com',
   'reina-sofia.tickets-madrid.org',
   'santiago-bernabeu.tickets-madrid.org',
   'aerobus.tickets-barcelona.org',

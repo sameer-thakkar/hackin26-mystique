@@ -1,4 +1,9 @@
 module.exports = [
+  'stage.cruise.tickets-tokyo.com',
+  'stage.karate-experience.tickets-tokyo.com',
+  'stage.shows.tickets-tokyo.com',
+  'stage.themepark.tickets-tokyo.com',
+  'stage.attractions.tickets-tokyo.com',
   'stage.www.thecitypasses.com',
   'stage.www.tulip-garden-tickets.com',
   'stage.sant-pau.barcelona-tickets.com',
