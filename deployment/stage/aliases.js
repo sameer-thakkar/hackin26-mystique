@@ -1,4 +1,5 @@
 module.exports = [
+  'stage.mario-kart.tickets-tokyo.com',
   'stage.cruise.tickets-tokyo.com',
   'stage.karate-experience.tickets-tokyo.com',
   'stage.shows.tickets-tokyo.com',
