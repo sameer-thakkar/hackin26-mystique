@@ -6,13 +6,12 @@ import Swiper from '../Swiper';
 import OverflowScroll from '../UI/OverflowScroll';
 import { CHEVRON_LEFT_CIRCLE } from '../../public/static/svg-icons';
 
-const StyledCardSection = styled.div(({ cardType, isMobile, noOfCards }) => {
+const StyledCardSection = styled.div(({ cardType, isMobile }) => {
   let gridTemplateColumns = `100%`;
   if (cardType === 'column') {
     gridTemplateColumns = `50% 50%`;
   } else if (cardType === 'mobile' && !isMobile) {
-    gridTemplateColumns = `repeat(${noOfCards}, calc(${100 /
-      noOfCards}% - ${((noOfCards - 1) * 20) / noOfCards}px))`;
+    gridTemplateColumns = `repeat(4, calc(25% - 15px))`;
   }
   return `
     display: grid;
@@ -209,7 +208,6 @@ const CardSection: React.FC<CardSectionProps> = ({
       <StyledCardSection
         cardType={finalCardType}
         sectionType={sectionType}
-        noOfCards={cards.length}
         isMobile={isMobile}
       >
         {cards}
