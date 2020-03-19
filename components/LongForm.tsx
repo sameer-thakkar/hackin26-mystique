@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import sliceHandler from './Slices';
+import { COLORS } from '../constants/ui-constants';
 
 export default class LongForm extends Component<any, any> {
   render() {
@@ -22,7 +23,7 @@ export default class LongForm extends Component<any, any> {
               font-family: 'Graphik', 'Proxima Nova', 'Helvetica Neue',
                 Helvetica, Arial, sans-serif;
               line-height: 1.6;
-              color: #545454;
+              color: ${COLORS.FOUR_BLACK};
               display: grid;
               grid-row-gap: 60px;
             }
@@ -32,7 +33,7 @@ export default class LongForm extends Component<any, any> {
             .long-form h4,
             .long-form h5,
             .long-form h6 {
-              color: #545454;
+              color: ${COLORS.FOUR_BLACK};
               line-height: 1.2;
             }
             .long-form .slice-block img {
@@ -40,7 +41,7 @@ export default class LongForm extends Component<any, any> {
             }
             .long-form h2 {
               display: inline-block;
-              color: #545454;
+              color: ${COLORS.FOUR_BLACK};
               font-size: 1.8rem;
               font-weight: 500;
             }
@@ -64,16 +65,16 @@ export default class LongForm extends Component<any, any> {
             .long-form h5 > *,
             .long-form h6 > * {
               font-weight: 500;
-              color: #545454;
+              color: ${COLORS.FOUR_BLACK};
             }
             .long-form p {
               font-size: 1rem;
               line-height: 1.8;
-              color: #545454;
+              color: ${COLORS.FOUR_BLACK};
               text-align: justify;
               font-family: Avenir, Proxima-Nova, arial, sans-serif;
             }
-            .long-form a {
+            .long-form > p > a {
               text-decoration: none;
               color: #ec1943;
             }

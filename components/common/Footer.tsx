@@ -15,6 +15,8 @@ const StyledFooter = styled.footer`
   font-family: Graphik;
   font-size: 14px;
   margin-top: 40px;
+  padding-top: 40px;
+  border-top: 1px solid ${COLORS.DADDY};
 `;
 
 const StyledFooterLinksWrapper = styled.div`

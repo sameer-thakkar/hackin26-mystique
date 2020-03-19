@@ -1,5 +1,5 @@
 export const GRAPHIK = {
-  FONT_STACK: "Graphik, Arial, Helvetica, 'san serif'",
+  FONT_STACK: "Graphik, Arial, Helvetica, 'sans-serif'",
   THIN: '100',
   EX_LIGHT: '200',
   LIGHT: '300',
@@ -13,7 +13,7 @@ export const GRAPHIK = {
 };
 
 export const AVENIR = {
-  FONT_STACK: "Avenir, Arial, Helvetica, 'san serif'",
+  FONT_STACK: "Avenir, Arial, Helvetica, 'sans-serif'",
   BOOK: '400',
   ROMAN: '400',
   MEDIUM: '500',

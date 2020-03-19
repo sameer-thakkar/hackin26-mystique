@@ -251,7 +251,7 @@ export const groupSlices = slices => {
       const temp = ref.parent;
       delete ref.parent;
       ref = temp;
-      ref.slices = ref.slices.sort(slicesSorter);
+      if (ref.parent) ref.slices = ref.slices.sort(slicesSorter);
     } else {
       ref.slices.push(slice);
     }

@@ -46,7 +46,7 @@ const LongForm = props => {
           margin: 0 0 0.75em;
         }
         .slice-wrapper {
-          width: 100%;
+          width: calc(100% - (5.46vw * 2));
         }
 
         .long-form-wrap h2 {

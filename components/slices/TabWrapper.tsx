@@ -33,6 +33,7 @@ const StyledTabWrapper = styled.div`
   @media (max-width: 768px) {
     .tabs {
       overflow-x: scroll;
+      grid-auto-columns: max-content;
     }
   }
 `;
