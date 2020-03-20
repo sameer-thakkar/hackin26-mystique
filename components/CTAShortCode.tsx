@@ -12,6 +12,9 @@ const CTAShortCode = props => {
           </div>
         </a>
         <style jsx>{`
+          .short-code-cta-container a {
+            text-decoration: none;
+          }
           .center {
             text-align: center;
           }
@@ -20,6 +23,7 @@ const CTAShortCode = props => {
           }
           .fill {
             background: ${COLORS.RHAPSODY};
+            background: ${COLORS.RHAPSODY_GRADIENT};
             color: ${COLORS.WHITE};
           }
         `}</style>
