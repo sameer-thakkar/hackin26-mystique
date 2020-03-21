@@ -9,6 +9,7 @@ import { InteractionContextProvider } from '../../contexts/Interaction';
 import { docCookies } from '../../utils/helper';
 import { MBContextProvider } from '../../contexts/MBContext';
 import allToursParser from '../../utils/alltoursParser';
+import { tourListApiParser } from '../../utils/DataParsers';
 class MicrositeV2 extends Component<any, any> {
   state = {
     isMobile: null,
@@ -58,20 +59,7 @@ class MicrositeV2 extends Component<any, any> {
         return res.json();
       })
       .then(jsonTours => {
-        const cardPrices = jsonTours.tourGroups.reduce(
-          (accum, response) => ({
-            ...accum,
-            [response.id]: {
-              price: response.listingPrice
-                ? response.listingPrice.finalPrice
-                : '',
-              scratchPrice: response.listingPrice
-                ? response.listingPrice.originalPrice
-                : '',
-            },
-          }),
-          {}
-        );
+        const cardPrices = tourListApiParser(jsonTours);
         const currencySymbol = jsonTours.currencies[0].localSymbol;
         this.setState({
           cardPrices: cardPrices,
@@ -186,8 +174,6 @@ class MicrositeV2 extends Component<any, any> {
         ];
       }, []),
     };
-
-    console.log(CMSContent);
 
     const { cardPrices, currencySymbol, isFetched, ready } = this.state;
     const pricingData = {

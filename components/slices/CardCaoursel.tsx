@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { RichText } from 'prismic-reactjs';
 import Image from '../UI/Image';
 import Swiper from '../Swiper';
+import { tourListApiParser } from '../../utils/DataParsers';
 
 type CardCarouselProps = {
   cards: any[];
@@ -35,15 +36,7 @@ export default class CardCarousel extends Component<CardCarouselProps> {
     const fetchPrice = await fetch(
       `https://api.headout.com/api/v5/tour-group/list?ids[]=${tgids}`
     ).then(res => res.json());
-    const cardPrices = fetchPrice.tourGroups.reduce(
-      (accum, response) => ({
-        ...accum,
-        [response.id]: {
-          price: response.listingPrice ? response.listingPrice.finalPrice : '',
-        },
-      }),
-      {}
-    );
+    const cardPrices = tourListApiParser(fetchPrice);
     const currencySymbol = fetchPrice.currencies[0].localSymbol;
     this.setState({
       cardPrices: cardPrices,

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Image from './UI/Image';
+import { tourListApiParser } from '../utils/DataParsers';
 
 export default class MicrobrandList extends Component<any, any> {
   state = {
@@ -16,17 +17,7 @@ export default class MicrobrandList extends Component<any, any> {
       const fetchPrice = await fetch(
         `https://api.headout.com/api/v5/tour-group/list?ids[]=${tgidsExist}`
       ).then(res => res.json());
-      const cardPrices = fetchPrice.tourGroups.reduce(
-        (accum, response) => ({
-          ...accum,
-          [response.id]: {
-            price: response.listingPrice
-              ? response.listingPrice.finalPrice
-              : '',
-          },
-        }),
-        {}
-      );
+      const cardPrices = tourListApiParser(fetchPrice);
       const currencySymbol = fetchPrice.currencies[0].localSymbol;
       this.setState({
         cardPrices: cardPrices,

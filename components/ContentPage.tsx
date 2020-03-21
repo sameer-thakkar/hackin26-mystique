@@ -12,6 +12,10 @@ import * as labels from '../public/static/localization/labels';
 import { Client } from '../prismic-config';
 import { DROPDOWN_ELEMENT } from '../constants';
 import { groupSlices } from '../utils/helper';
+import allToursParser from '../utils/alltoursParser';
+import { ProductsContextProvider } from '../contexts/Products';
+import { InteractionContextProvider } from '../contexts/Interaction';
+import { tourListApiParser } from '../utils/DataParsers';
 
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 
@@ -21,6 +25,8 @@ export default class ContentPage extends Component<any, any> {
     this.state = {
       showGroupBookingModal: false,
       groupBookingTourTitles: null,
+      tourAPIData: null,
+      currency: '',
       dropdown: {
         lang: false,
         hamburger: false,
@@ -33,7 +39,36 @@ export default class ContentPage extends Component<any, any> {
     const {
       enable_group_booking: enableGroupBooking,
     } = this.props.data.header_ref.data;
-    this.setState({ isMobile: window.innerWidth < 768 });
+    const { data } = this.props;
+
+    const { microsite } = data;
+    const { all_tours } = microsite?.data;
+    const allTourTgids = all_tours
+      .filter(tour_slice => tour_slice?.primary?.tgid)
+      .map(tour_slice => tour_slice.primary.tgid);
+    this.setState({
+      ...this.state,
+      isMobile: window.innerWidth < 768,
+    });
+    if (allTourTgids.length > 0) {
+      const toursData = await fetch(
+        `https://api.headout.com/api/v5/tour-group/list?ids[]=${[
+          ...allTourTgids,
+        ]}`
+      ).then(res => {
+        return res.json();
+      });
+
+      const tourAPIData = tourListApiParser(toursData);
+
+      const currency = toursData?.currencies[0]?.localSymbol;
+      this.setState({
+        ...this.state,
+        tourAPIData,
+        currency,
+      });
+    }
+
     if (enableGroupBooking === 'Yes') {
       let groupBookingTourTitles = [];
       let res = await Client().getByIDs([
@@ -50,15 +85,31 @@ export default class ContentPage extends Component<any, any> {
           return tour.tgid === excludedTour.tgid;
         });
       });
+      const toursData = await fetch(
+        `https://api.headout.com/api/v5/tour-group/list?ids[]=${[
+          ...filteredTours,
+        ]}`
+      ).then(res => {
+        return res.json();
+      });
+
+      const groupBookingTourData = toursData?.tourGroups?.reduce(
+        (acc, tour) => {
+          return {
+            ...acc,
+            [tour.id]: {
+              title: tour.name,
+            },
+          };
+        },
+        {}
+      );
 
       filteredTours.map(async (tour, index) => {
         if (!tour.tour_title_override) {
-          let tourTitle = await fetch(
-            `https://api.headout.com/api/v5/tour-group/get/${tour.tgid}?language=${lang}`
-          ).then(r => r.json());
           groupBookingTourTitles.push({
-            value: tourTitle.name + ` [${tour.tgid}]`,
-            label: tourTitle.name,
+            value: groupBookingTourData[tour.tgid].name + ` [${tour.tgid}]`,
+            label: groupBookingTourData[tour.tgid].name,
           });
         } else {
           groupBookingTourTitles.push({
@@ -68,6 +119,7 @@ export default class ContentPage extends Component<any, any> {
         }
       });
       this.setState({
+        ...this.state,
         groupBookingTourTitles,
       });
     }
@@ -111,7 +163,7 @@ export default class ContentPage extends Component<any, any> {
   };
 
   render() {
-    const { groupBookingTourTitles } = this.state;
+    const { groupBookingTourTitles, currency, tourAPIData } = this.state;
     const {
       featured,
       data,
@@ -123,15 +175,23 @@ export default class ContentPage extends Component<any, any> {
       alternate_languages,
       uid,
       host,
+      scorpioData,
     } = this.props;
+
     const {
       footer_ref: commonFooter,
       header_ref: commonHeader,
       content_framework: contentFramework,
+      microsite,
       body,
       microsite_document_ref,
     } = data;
-
+    const apiReady = tourAPIData !== null;
+    const allTours = allToursParser(microsite?.data, scorpioData, {
+      cardPrices: tourAPIData,
+      currencySymbol: currency,
+      isFetched: apiReady,
+    });
     const CFWBody = contentFramework?.data?.body;
     const contentFWSlices = groupSlices(CFWBody || []);
 
@@ -280,16 +340,20 @@ export default class ContentPage extends Component<any, any> {
           ) : null}
 
           <div className="subpage-container">
-            {[...body, ...contentFWSlices].map((slice, index) => (
-              <div
-                key={index}
-                className={`${
-                  slice.slice_type !== 'background' ? 'slice-wrapper' : ''
-                } slice-block ${slice.slice_type}`}
-              >
-                {sliceHandler(slice)}
-              </div>
-            ))}
+            <ProductsContextProvider allTours={allTours} ready={apiReady}>
+              <InteractionContextProvider>
+                {[...body, ...contentFWSlices].map((slice, index) => (
+                  <div
+                    key={index}
+                    className={`${
+                      slice.slice_type !== 'background' ? 'slice-wrapper' : ''
+                    } slice-block ${slice.slice_type}`}
+                  >
+                    {sliceHandler(slice)}
+                  </div>
+                ))}
+              </InteractionContextProvider>
+            </ProductsContextProvider>
           </div>
         </main>
         <Footer

@@ -17,6 +17,7 @@ import {
 import { redirectTo, getPrismicProps, reflect } from '../utils';
 import 'lazysizes';
 import '../public/static/styles.css';
+import { uncategorizedToursListParser } from '../utils/DataParsers';
 
 const ErrorPage = dynamic(() => import('next/error'));
 const Microsite = dynamic(() => import('../components/MicrositeV1'));
@@ -344,12 +345,15 @@ export default class Page extends React.Component<any, any> {
                 const footerID = page.data.footer_ref.id || '';
                 const contentFrameworkID =
                   page.data.content_framework?.id || '';
+                const micrositeId = page.data.microsite_document_ref.id || '';
 
                 const linkedRefIDs = [];
                 linkedRefIDs.push(footerID);
+                linkedRefIDs.push(micrositeId);
                 linkedRefIDs.push(contentFrameworkID);
                 const [
                   commonFooter,
+                  micrositeData,
                   contentFramework,
                 ] = await this.getRefsArrayByIds(linkedRefIDs, req);
 
@@ -359,6 +363,7 @@ export default class Page extends React.Component<any, any> {
                     ...page.data,
                     footer_ref: commonFooter,
                     content_framework: contentFramework,
+                    microsite: micrositeData,
                   },
                   featured: {
                     image: page.data.featured_image.url
@@ -380,9 +385,13 @@ export default class Page extends React.Component<any, any> {
           statusCode,
         };
       }
-
+      /**
+       * AllData will yield different sets of Properties based on CUSTOM_TYPE,
+       * and finally gets returned with any other common data for CUSTOM_TYPE
+       */
+      let AllData = {};
       if (ContentType === CUSTOM_TYPES.CONTENT_PAGE) {
-        return {
+        AllData = {
           CMSContent,
           ContentType,
           uid,
@@ -391,77 +400,44 @@ export default class Page extends React.Component<any, any> {
           host,
         };
       }
+      /**
+       * Seting a Common Microsite Reference for Content Page & Regular Microsite
+       * Added to make tour data available on Content Pages.
+       * i.e Contentpage now contains all of the data from its related Microsite.
+       */
+      let microsite =
+        ContentType === CUSTOM_TYPES.CONTENT_PAGE
+          ? CMSContent.data.microsite
+          : CMSContent.data;
+
+      const all_tours_tab_tgids =
+        microsite.data.all_tours.reduce((accum, tour) => {
+          return [...accum, tour.primary.tgid];
+        }, []) || [];
+
+      let labelIds;
+      if (all_tours_tab_tgids.length) {
+        labelIds = microsite.data.content_order.reduce((accum, label) => {
+          return [...accum, label.label.id];
+        }, []);
+        microsite.data.labels = await Client(req)
+          .getByIDs(labelIds)
+          .then(res => {
+            return res.results;
+          });
+      }
+      let idsToFetchFromScorpio = [];
 
       if (ContentType === CUSTOM_TYPES.MICROSITE) {
         const MBDesign = CMSContent.data.data.design || '';
         const { items: uncategorizedToursList } = CMSContent.data.data
           .body1[0] || { items: [] };
 
-        const all_tours_tab_tgids =
-          CMSContent.data.data.all_tours.reduce((accum, tour) => {
-            return [...accum, tour.primary.tgid];
-          }, []) || [];
-
-        let labelIds;
-        if (all_tours_tab_tgids.length) {
-          labelIds = CMSContent.data.data.content_order.reduce(
-            (accum, label) => {
-              return [...accum, label.label.id];
-            },
-            []
-          );
-          CMSContent.data.data.labels = await Client(req)
-            .getByIDs(labelIds)
-            .then(res => {
-              return res.results;
-            });
-        }
-
-        const idsToFetchFromScorpio = uncategorizedToursList.reduce(
-          (accum, tour) => {
-            const {
-              tgid,
-              tour_title_override: title,
-              marketing_highlights_override: descriptors,
-              tour_description_override: highlights,
-            } = tour;
-            const hasHighlights = highlights.filter(item => item.text);
-            if (!title || !hasHighlights || !descriptors) {
-              return [...accum, tgid];
-            }
-            return accum;
-          },
-          [...initial_tgids, ...all_tours_tab_tgids]
+        idsToFetchFromScorpio = uncategorizedToursListParser(
+          uncategorizedToursList,
+          initial_tgids
         );
 
-        const scorpioResponses = await Promise.all(
-          idsToFetchFromScorpio.map(id =>
-            fetch(
-              `https://api.headout.com/api/v5/tour-group/get/${id}?language=${
-                lang.split('-')[0]
-              }`
-            ).then(r => r.json())
-          )
-        );
-
-        const scorpioData = scorpioResponses.reduce(
-          (accum: {}, response: any, idx) => ({
-            ...accum,
-            [idsToFetchFromScorpio[idx]]: {
-              title: response.name,
-              highlights: response.microBrandsHighlight,
-              descriptors: response.microBrandsDescriptor,
-              productHighlights: response.highlights,
-              productTitle: response.name,
-              images: response.imageUploads,
-              averageRating: response.averageRating,
-              reviewCount: response.reviewCount,
-              ctaBooster: response.callToAction,
-              available: !(response.listingPrice == null),
-            },
-          }),
-          {}
-        );
         const tgidToScroll = (function getScrollTgid() {
           const pathname = req ? req.url : window.location.pathname;
           const doesTgidExist = pathname.includes('tgid');
@@ -471,10 +447,9 @@ export default class Page extends React.Component<any, any> {
           }
           return null;
         })();
-        return {
+        AllData = {
           CMSContent,
           ContentType,
-          scorpioData,
           uid,
           lang,
           host,
@@ -483,6 +458,44 @@ export default class Page extends React.Component<any, any> {
           tgidToScroll,
         };
       }
+
+      idsToFetchFromScorpio = [
+        ...idsToFetchFromScorpio,
+        ...all_tours_tab_tgids,
+      ];
+      const scorpioResponses = await Promise.all(
+        idsToFetchFromScorpio.map(id =>
+          fetch(
+            `https://api.headout.com/api/v5/tour-group/get/${id}?language=${
+              lang.split('-')[0]
+            }`
+          ).then(r => r.json())
+        )
+      );
+
+      const scorpioData = scorpioResponses.reduce(
+        (accum: {}, response: any, idx) => ({
+          ...accum,
+          [idsToFetchFromScorpio[idx]]: {
+            title: response.name,
+            highlights: response.microBrandsHighlight,
+            descriptors: response.microBrandsDescriptor,
+            productHighlights: response.highlights,
+            productTitle: response.name,
+            images: response.imageUploads,
+            averageRating: response.averageRating,
+            reviewCount: response.reviewCount,
+            ctaBooster: response.callToAction,
+            available: !(response.listingPrice == null),
+          },
+        }),
+        {}
+      );
+
+      return {
+        ...AllData,
+        scorpioData,
+      };
     } catch (error) {
       console.log(error);
       return {
@@ -550,6 +563,7 @@ export default class Page extends React.Component<any, any> {
         Component = (
           <ContentPage
             {...CMSContent}
+            scorpioData={scorpioData}
             isDev={isDev}
             host={host}
             serverRequestStartTimestamp={serverRequestStartTimestamp}

@@ -17,6 +17,7 @@ import { docCookies } from '../utils/helper';
 import { DROPDOWN_ELEMENT, ANALYTICS_EVENTS } from '../constants';
 import { groupSlices } from '../utils/helper';
 import { ProductsContextProvider } from '../contexts/Products';
+import { tourListApiParser } from '../utils/DataParsers';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
@@ -118,18 +119,7 @@ export default class MicrositeV1 extends Component<any, any> {
       const currencySymbol = tourGroup.currencies.length
         ? tourGroup.currencies[0].localSymbol
         : variants[0].currency.localSymbol;
-      const tourGroupPrices = tourGroup.tourGroups.reduce(
-        (accum, res, index) => ({
-          ...accum,
-          [tourGroup.tourGroups[index].id]: {
-            price: res.listingPrice ? res.listingPrice.finalPrice : '',
-            scratchPrice: res.listingPrice
-              ? res.listingPrice.originalPrice
-              : '',
-          },
-        }),
-        {}
-      );
+      const tourGroupPrices = tourListApiParser(tourGroup);
 
       const mapVariantPrices = variants.map((tourVariant: any, index) => {
         const inv = tourVariant.inventoryList.find(

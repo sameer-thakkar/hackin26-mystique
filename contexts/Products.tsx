@@ -1,18 +1,11 @@
-import React, { Component, createContext } from 'react';
+import React, { Component, createContext, useState } from 'react';
 
 const ProductsContext = createContext(null);
 export default ProductsContext;
-export class ProductsContextProvider extends Component<any, any> {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return (
-      <ProductsContext.Provider
-        value={{ allTours: this.props.allTours, ready: this.props.ready }}
-      >
-        {this.props.children}
-      </ProductsContext.Provider>
-    );
-  }
-}
+export const ProductsContextProvider = ({ ready, allTours, children }) => {
+  return (
+    <ProductsContext.Provider value={{ allTours, ready }}>
+      {children}
+    </ProductsContext.Provider>
+  );
+};

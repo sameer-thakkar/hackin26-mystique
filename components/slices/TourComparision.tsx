@@ -327,7 +327,7 @@ const TourComparisonTable = props => {
   let hostSplit = hostName.split('.');
   hostSplit.shift();
   const { allTours, ready: allToursReady } = toursContext;
-  if (!allToursReady) return null;
+  // if (!allToursReady) return null;
   const getContentNormalizedTours = tgidArray => {
     let toursArr = tgidArray.map(tgid => allTours[tgid]);
     toursArr = toursArr.reduce((acc, tour, index) => {
@@ -361,7 +361,8 @@ const TourComparisonTable = props => {
   const tgidArray = tgidsCSV
     .split(',')
     .map(tgid => parseInt(tgid))
-    .filter(tgid => allTours[tgid].available);
+    .filter(tgid => allTours[tgid]?.available);
+  if (tgidArray.length === 0) return null;
   const content_normalized_tours = getContentNormalizedTours(tgidArray);
   const [isExpanded, setExpand] = useState(false);
 

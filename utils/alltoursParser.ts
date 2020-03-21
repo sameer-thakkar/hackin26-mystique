@@ -76,8 +76,8 @@ const allToursParser = (CMSData, scorpioData, pricingData: ToursData) => {
           scorpioData[tourData.tgid].images[1]
             ? scorpioData[tourData.tgid].images[1].url
             : '',
-        price: isFetched ? cardPrices[tourData.tgid].price : '',
-        scratchPrice: isFetched ? cardPrices[tourData.tgid].scratchPrice : '',
+        price: isFetched ? cardPrices[tourData.tgid]?.price : '',
+        scratchPrice: isFetched ? cardPrices[tourData.tgid]?.scratchPrice : '',
         currencySymbol: isFetched ? currencySymbol : '',
         tgid: parseInt(tourData.tgid),
         images: scorpioData[tourData.tgid].images,

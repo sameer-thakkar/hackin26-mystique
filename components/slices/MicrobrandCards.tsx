@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Image from '../UI/Image';
 import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from '../../utils/shortCodes';
+import { tourListApiParser } from '../../utils/DataParsers';
 
 type MicrobrandCardsProps = {
   cards: any[];
@@ -53,17 +54,7 @@ const MicrobrandCards: React.FC<MicrobrandCardsProps> = props => {
       )
         .then(res => res.json())
         .then(json => {
-          const cardPrices = json.tourGroups.reduce(
-            (accum: {}, response) => ({
-              ...accum,
-              [response.id]: {
-                price: response.listingPrice
-                  ? response.listingPrice.finalPrice
-                  : '',
-              },
-            }),
-            {}
-          );
+          const cardPrices = tourListApiParser(json);
           const currencySymbol = json.currencies[0].localSymbol;
           setState({
             cardPrices: cardPrices,

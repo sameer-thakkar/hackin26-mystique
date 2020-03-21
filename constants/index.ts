@@ -202,3 +202,15 @@ export const MICROSITE_OBJECT_KEYS: string[] = [
 ];
 
 export const MICROSITE_ARRAY_KEYS: string[] = ['images'];
+
+export const SLACK_USER_MAP = {
+  DENVER: 'UCD4L96E5',
+  SHADAB: 'US6UTFY5T',
+  AAKASH: 'UJU56QQDT',
+  SURYA: 'U0AH1EZ62',
+  AANCHAL: 'UKGHAUUMQ',
+  TWINKLE: 'UCK7VFQBA',
+  CHETAN: 'U21LHC4V9',
+  HEROSHA: 'U1ZEQS291',
+  KARTHIK: 'U6ALFJ4R5',
+};
