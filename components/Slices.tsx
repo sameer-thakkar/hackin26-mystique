@@ -20,7 +20,7 @@ const FWActionCard = dynamic(() => import('./slices/FWActionCard'));
 const RichTextBox = dynamic(() => import('./slices/RichTextBox'));
 const FeatureBox = dynamic(() => import('./slices/FeatureBox'));
 const TitleLinksCard = dynamic(() => import('./slices/TitleLinksCard'));
-const CardCarousel = dynamic(() => import('./slices/CardCaoursel'));
+const CardCarousel = dynamic(() => import('./slices/CardCarousel'));
 const CategorySection = dynamic(() => import('./MicrositeV2/CategorySection'));
 const CategorySlider = dynamic(() => import('./MicrositeV2/CategorySlider'));
 const Table = dynamic(() => import('./slices/Table'));

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import '../../public/static/styles.css';
+import React from 'react';
 import TableV2 from '../../components/slices/TableV2';
 import useWindowSize from '../../components/hooks/useWindowSize';
+import '../../public/static/styles.css';
 
 export default {
   title: 'Slices/Tables',
@@ -228,7 +228,6 @@ const data = {
 };
 
 export const Table = () => {
-  const [isMobile, setIsMobile] = useState(false);
   const { width } = useWindowSize();
   return <TableV2 {...data} isMobile={width < 768} />;
 };

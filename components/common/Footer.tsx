@@ -186,7 +186,15 @@ const Footer: React.FC<FooterProps> = ({
             <div className="quick-links-title">
               {linksTitle || 'Quick Links'}
             </div>
-            <div className="quick-links">{slices.map(sliceHandler)}</div>
+            <div className="quick-links">
+              {slices.map((slice, index) => {
+                return (
+                  <div className={`${slice.slice_type}`} key={index}>
+                    {sliceHandler(slice)}
+                  </div>
+                );
+              })}
+            </div>
           </StyledContainer>
         </StyledFooterLinksWrapper>
       ) : null}

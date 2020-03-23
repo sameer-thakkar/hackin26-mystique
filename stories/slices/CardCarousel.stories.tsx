@@ -1,5 +1,5 @@
 import React from 'react';
-import CardCarousel from '../../components/slices/CardCaoursel';
+import CardCarousel from '../../components/slices/CardCarousel';
 import '../../public/static/styles.css';
 
 export default {
@@ -66,11 +66,5 @@ const data = [
 ];
 
 export const Basic = () => {
-  return (
-    <CardCarousel
-      lazyLoadImages={false}
-      cards={data}
-      carouselHeading="Super Carousel"
-    />
-  );
+  return <CardCarousel cards={data} carouselHeading="Super Carousel" />;
 };

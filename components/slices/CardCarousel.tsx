@@ -11,7 +11,29 @@ type CardCarouselProps = {
 };
 
 /**
- * This slice is currently undergoing a revamp. Please hold on for the documentation.
+ * A simple carousel of cards displaying different products with prices (using TGIDs)
+ *
+ * **All fields marked with a * are mandatory and will break the slice if left blank.**
+ *
+ * ### Non-repeatable zone
+ * - Carousel Heading
+ *  - Rich Text field
+ *
+ * ### Repeatable zone
+ * - Image Source
+ *  - Add your image from prismic
+ *  - Additionally add an 'alt' field
+ * - Image Url
+ *  - Add a link to the image directly
+ *  - Will take precedence over 'Image Source'
+ * - Image Alt
+ *  - 'alt' field for Image URL
+ *  - Will take precedence over 'Image Source' alt
+ * - *TGID
+ *  - Tour group id of the card
+ * - *Card Title
+ * - Card Link
+ *  - Link which will open on clicking the card
  */
 
 export default class CardCarousel extends Component<CardCarouselProps> {
@@ -37,7 +59,7 @@ export default class CardCarousel extends Component<CardCarouselProps> {
       `https://api.headout.com/api/v5/tour-group/list?ids[]=${tgids}`
     ).then(res => res.json());
     const cardPrices = tourListApiParser(fetchPrice);
-    const currencySymbol = fetchPrice.currencies[0].localSymbol;
+    const currencySymbol = fetchPrice.currencies[0]?.localSymbol;
     this.setState({
       cardPrices: cardPrices,
       currencySymbol: currencySymbol,
@@ -78,7 +100,10 @@ export default class CardCarousel extends Component<CardCarouselProps> {
         {cards.map((card, index) => {
           return (
             <div key={index} className="swiper-slide">
-              <a target="_blank" href={card.card_link.url}>
+              <a
+                target={card.card_link?.target ?? '_blank'}
+                href={card.card_link?.url}
+              >
                 <div className="microbrand-card">
                   <div className="card-image">
                     <Image
@@ -86,7 +111,8 @@ export default class CardCarousel extends Component<CardCarouselProps> {
                       format="pjpg"
                       width={600}
                       height={300}
-                      url={card.image_source.url || card.image_url.url}
+                      url={card.image_url?.url || card.image_source?.url}
+                      alt={card.image_alt || card.image_source?.alt}
                     />
                   </div>
                   <div className="card-bottom">

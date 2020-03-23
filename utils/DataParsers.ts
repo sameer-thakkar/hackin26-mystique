@@ -28,7 +28,7 @@ export const tourListApiParser = apiResponse => {
         title: tour.name,
         price: tour.listingPrice?.finalPrice,
         scratchPrice: tour.listingPrice?.originalPrice,
-        currency: apiResponse.currencies[0].currency,
+        currency: apiResponse.currencies[0]?.currency,
         image: tour.imageUrl,
         reviewCount: tour.reviewCount,
         averageRating: tour.averageRating,

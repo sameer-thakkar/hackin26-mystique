@@ -35,24 +35,23 @@ const StyledLinksList = styled.div`
   grid-template-columns: 1fr;
 `;
 
-export default class TitleLinksCard extends Component<TitleLinksProps, any> {
-  render() {
-    const { links, title } = this.props;
-    return (
-      <StyledLinksCard>
-        <StyledLinksTitle>{title}</StyledLinksTitle>
-        <StyledLinksList>
-          {links.map((link, index) => (
-            <LinkResolver
-              key={index}
-              className="link-item"
-              url={link.link_type.url}
-            >
-              {link.link_text}
-            </LinkResolver>
-          ))}
-        </StyledLinksList>
-      </StyledLinksCard>
-    );
-  }
-}
+const TitleLinksCard: React.FC<TitleLinksProps> = ({ links, title }) => {
+  return (
+    <StyledLinksCard>
+      <StyledLinksTitle>{title}</StyledLinksTitle>
+      <StyledLinksList>
+        {links.map((link, index) => (
+          <LinkResolver
+            key={index}
+            className="link-item"
+            url={link.link_type.url}
+          >
+            {link.link_text}
+          </LinkResolver>
+        ))}
+      </StyledLinksList>
+    </StyledLinksCard>
+  );
+};
+
+export default TitleLinksCard;
