@@ -4,14 +4,14 @@ import styled from 'styled-components';
 const StyledWrapper = styled.div`
   display: flex;
   overflow-x: auto;
-  padding: 0 16px 40px 20px;
   margin-right: -16px;
   margin-left: -16px;
+  max-width: 100vw;
 `;
 
 const StyledChild = styled.div`
   min-width: ${props => props.minWidth}px;
-  margin-right: 10px;
+  margin: 0px 10px 30px 10px;
   padding-right: 10px;
 `;
 
