@@ -214,3 +214,22 @@ export const SLACK_USER_MAP = {
   HEROSHA: 'U1ZEQS291',
   KARTHIK: 'U6ALFJ4R5',
 };
+
+export const CURRENCY_SYMBOL_MAP = {
+  AED: 'AED',
+  SGD: 'S$',
+  USD: '$',
+  EUR: '€',
+  GBP: '£',
+  ISK: 'kr',
+  HKD: 'HK$',
+  INR: '₹',
+  AUD: 'AU$',
+  CAD: 'CA$',
+  NZD: 'NZ$',
+  KRW: '₩',
+  CHF: 'CHF',
+  JPY: '¥',
+  THB: '฿',
+  IDR: 'Rp',
+};

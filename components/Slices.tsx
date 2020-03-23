@@ -2,8 +2,9 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from '../utils/shortCodes';
-import HorizontalLine from './slices/HorizontalLine';
 
+const TicketCards = dynamic(() => import('./slices/TicketCards'));
+const HorizontalLine = dynamic(() => import('./slices/HorizontalLine'));
 const ImageLinksCarousel = dynamic(() => import('./slices/ImageLinksCarousel'));
 const InteractiveImage = dynamic(() => import('./slices/InteractiveImage'));
 const TrustBoosters = dynamic(() => import('./slices/TrustBoosters'));
@@ -340,7 +341,7 @@ const sliceHandler = (slice, props: any = {}) => {
           textCenter={slice.primary.centered}
           gridCenter={slice.primary.grid_center}
           slices={slice.slices}
-          sliceProps={props} 
+          sliceProps={props}
         />
       );
     case 'alert':
@@ -349,6 +350,14 @@ const sliceHandler = (slice, props: any = {}) => {
           images={slice.items || []}
           title={slice.primary.alert_title || 'Your safety is our Priority'}
           description={slice.primary.alert_description || []}
+        />
+      );
+    case 'ticket_cards':
+      return (
+        <TicketCards
+          title={slice.primary.title}
+          cards={slice.items}
+          twoColumns={slice.primary.show_2_cards_in_a_row}
         />
       );
     default:
