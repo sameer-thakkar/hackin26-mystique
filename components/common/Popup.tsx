@@ -5,7 +5,7 @@ import { BLACK_CLOSE } from '../../public/static/svg-icons';
 import { COLORS, GRAPHIK, AVENIR } from '../../constants/ui-constants';
 
 const Popup = props => {
-  const { data, togglePopup } = props;
+  const { data, togglePopup, children } = props;
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     if (window) setIsMobile(window?.innerWidth < 768);
@@ -32,9 +32,13 @@ const Popup = props => {
           </div>
         </div>
         <div className="popup-slices">
-          <div className={`popup-slice ${body[0].slice_type}`}>
-            {sliceHandler(body[0], { isMobile })}
-          </div>
+          {children ? (
+            children
+          ) : (
+            <div className={`popup-slice ${body[0].slice_type}`}>
+              {sliceHandler(body[0], { isMobile })}
+            </div>
+          )}
         </div>
       </div>
       <style jsx>{`

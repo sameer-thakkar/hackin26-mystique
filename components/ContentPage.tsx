@@ -10,7 +10,7 @@ import Alert from './UI/Alert';
 import DismissAlert from './UI/DismissAlert';
 import * as labels from '../public/static/localization/labels';
 import { Client } from '../prismic-config';
-import { DROPDOWN_ELEMENT } from '../constants';
+import { DROPDOWN_ELEMENT, FULL_WIDTH_SLICES } from '../constants';
 import { groupSlices } from '../utils/helper';
 import allToursParser from '../utils/alltoursParser';
 import { ProductsContextProvider } from '../contexts/Products';
@@ -346,7 +346,7 @@ export default class ContentPage extends Component<any, any> {
                   <div
                     key={index}
                     className={`${
-                      slice.slice_type !== 'background' ? 'slice-wrapper' : ''
+                      !FULL_WIDTH_SLICES.includes(slice.slice_type) ? 'slice-wrapper' : ''
                     } slice-block ${slice.slice_type}`}
                   >
                     {sliceHandler(slice)}

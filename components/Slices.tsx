@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from '../utils/shortCodes';
 
+const ImageGallery = dynamic(() => import('./slices/ImageGallery'));
 const TicketCards = dynamic(() => import('./slices/TicketCards'));
 const HorizontalLine = dynamic(() => import('./slices/HorizontalLine'));
 const ImageLinksCarousel = dynamic(() => import('./slices/ImageLinksCarousel'));
@@ -352,6 +353,14 @@ const sliceHandler = (slice, props: any = {}) => {
           description={slice.primary.alert_description || []}
         />
       );
+    case 'image_gallery':
+      return (
+        <ImageGallery
+          heading={slice.primary.heading}
+          images={slice.items}
+          mobileLayout={slice.primary.mobile_layout}
+          isMobile={props.isMobile}
+        />);
     case 'ticket_cards':
       return (
         <TicketCards

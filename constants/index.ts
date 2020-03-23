@@ -203,6 +203,8 @@ export const MICROSITE_OBJECT_KEYS: string[] = [
 
 export const MICROSITE_ARRAY_KEYS: string[] = ['images'];
 
+export const FULL_WIDTH_SLICES = ['background', 'image_gallery'];
+
 export const SLACK_USER_MAP = {
   DENVER: 'UCD4L96E5',
   SHADAB: 'US6UTFY5T',

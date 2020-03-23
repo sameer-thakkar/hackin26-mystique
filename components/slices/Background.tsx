@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { COLORS, GRAPHIK, AVENIR } from '../../constants/ui-constants';
 import sliceHandler from '../Slices';
+import { COLORS, GRAPHIK, AVENIR } from '../../constants/ui-constants';
+import { FULL_WIDTH_SLICES } from '../../constants';
 
 const StyledBackground = styled.div`
   padding: 40px 0;
@@ -51,7 +52,7 @@ const Background = props => {
         <div
           key={index}
           className={`${
-            slice.slice_type !== 'background' ? 'slice-wrapper' : ''
+            !FULL_WIDTH_SLICES.includes(slice.slice_type) ? 'slice-wrapper' : ''
           } slice-block ${slice.slice_type}`}
         >
           {sliceHandler(slice, sliceProps)}

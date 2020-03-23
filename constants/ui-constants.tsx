@@ -34,6 +34,7 @@ export const COLORS = {
   MED_STATE_BLUE: '#7B68DB',
   RHAPSODY_GRADIENT: 'linear-gradient(45deg, #EC1943 0%, #FF5888 100%)',
   WHITE: '#FFF',
+  BLACK: '#000',
   TWO_BLACK: '#222',
   FOUR_BLACK: '#444',
   EIGHT_GRAY: '#888',

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import sliceHandler from './Slices';
+import { FULL_WIDTH_SLICES } from '../constants';
 import { COLORS } from '../constants/ui-constants';
 
 export default class LongForm extends Component<any, any> {
@@ -11,7 +12,9 @@ export default class LongForm extends Component<any, any> {
           <div
             key={index}
             className={`${
-              slice.slice_type !== 'background' ? 'slice-wrapper' : ''
+              !FULL_WIDTH_SLICES.includes(slice.slice_type)
+                ? 'slice-wrapper'
+                : ''
             } slice-block ${slice.slice_type}`}
           >
             {sliceHandler(slice, { ...props })}

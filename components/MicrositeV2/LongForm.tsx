@@ -1,5 +1,6 @@
 import sliceHandler from '../Slices';
 import { COLORS } from '../../constants/ui-constants';
+import { FULL_WIDTH_SLICES } from '../../constants';
 
 const LongForm = props => {
   const { slicesArray, props: sliceProps, hasToursSection } = props;
@@ -10,7 +11,7 @@ const LongForm = props => {
         <div
           key={index}
           className={`${
-            slice.slice_type !== 'background' ? 'slice-wrapper' : ''
+            !FULL_WIDTH_SLICES.includes(slice.slice_type) ? 'slice-wrapper' : ''
           } slice-block ${slice.slice_type}`}
         >
           {sliceHandler(slice, sliceProps)}

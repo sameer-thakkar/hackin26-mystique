@@ -11,7 +11,7 @@ const StyledTrigger = styled.span`
   line-height: 20px;
 `;
 const PopupTrigger = props => {
-  const { id, text, lang = 'en' } = props;
+  const { id, text, lang = 'en', children, popupContents } = props;
   const [active, setActive] = useState(null);
   const [data, setData] = useState(false);
 
@@ -29,9 +29,13 @@ const PopupTrigger = props => {
   return (
     <>
       <StyledTrigger {...(data && { onClick: () => setActive(!active) })}>
-        {text}
+        {text || children}
       </StyledTrigger>
-      {active ? <Popup togglePopup={setActive} data={data} /> : null}
+      {active ? (
+        <Popup togglePopup={setActive} data={data}>
+          {popupContents}
+        </Popup>
+      ) : null}
     </>
   );
 };
