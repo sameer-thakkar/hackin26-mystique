@@ -7,7 +7,6 @@ export default class InternalContentCard extends PureComponent<any, any> {
       <React.Fragment>
         <h2 className="heading">{title}</h2>
         <div className="divider-1"></div>
-
         <div className="more-reads-section">
           {cards.map((card, index) => {
             return (

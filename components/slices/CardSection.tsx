@@ -21,6 +21,7 @@ const StyledCardSection = styled.div(({ cardType, isMobile }) => {
 });
 
 const StyledSwiper = styled.div`
+  overflow: hidden;
   display: flex;
   position: relative;
   .cards-section-wrapper {
@@ -28,6 +29,11 @@ const StyledSwiper = styled.div`
     grid-auto-flow: column;
     padding: 25px 0;
   }
+`;
+
+const StyledControls = styled.div`
+  position: relative;
+  top: -215px;
   .prev-slide,
   .next-slide {
     position: absolute;
@@ -110,6 +116,25 @@ const CardSection: React.FC<CardSectionProps> = ({
     return sliceHandler(slice, { cardType: finalCardType, index });
   });
 
+  const [swiper, updateSwiper] = useState(null);
+  const [_currentIndex, updateCurrentIndex] = useState(0);
+  const updateIndex = useCallback(() => updateCurrentIndex(swiper.realIndex), [
+    swiper,
+  ]);
+
+  useEffect(() => {
+    if (isMobile) return;
+    if (swiper !== null) {
+      swiper.on('slideChange', updateIndex);
+    }
+
+    return () => {
+      if (swiper !== null) {
+        swiper.off('slideChange', updateIndex);
+      }
+    };
+  }, [swiper, updateIndex]);
+
   // Carousel (and Overflow Scroll for mobile) Logic
   if (sectionType === 'Carousel' && !isMobile) {
     let slidesPerView = 1;
@@ -123,9 +148,6 @@ const CardSection: React.FC<CardSectionProps> = ({
         break;
     }
 
-    const [swiper, updateSwiper] = useState(null);
-    const [_currentIndex, updateCurrentIndex] = useState(0);
-
     const goNext = () => {
       if (swiper !== null) {
         swiper.slideNext();
@@ -138,24 +160,6 @@ const CardSection: React.FC<CardSectionProps> = ({
       }
     };
 
-    const updateIndex = useCallback(
-      () => updateCurrentIndex(swiper.realIndex),
-      [swiper]
-    );
-
-    useEffect(() => {
-      if (isMobile) return;
-      if (swiper !== null) {
-        swiper.on('slideChange', updateIndex);
-      }
-
-      return () => {
-        if (swiper !== null) {
-          swiper.off('slideChange', updateIndex);
-        }
-      };
-    }, [swiper, updateIndex]);
-
     const swiperParams = {
       slidesPerView,
       wrapperClass: 'cards-section-wrapper',
@@ -166,17 +170,19 @@ const CardSection: React.FC<CardSectionProps> = ({
     return (
       <>
         {title ? <h2>{title}</h2> : null}
-        <StyledSwiper>
-          <Swiper {...swiperParams}>
-            {cards.map((card, index) => {
-              return (
-                <div key={index} className="swiper-slide">
-                  {card}
-                </div>
-              );
-            })}
-          </Swiper>
-          <div className="controls">
+        <div>
+          <StyledSwiper>
+            <Swiper {...swiperParams}>
+              {cards.map((card, index) => {
+                return (
+                  <div key={index} className="swiper-slide">
+                    {card}
+                  </div>
+                );
+              })}
+            </Swiper>
+          </StyledSwiper>
+          <StyledControls className="controls">
             {!swiper?.isBeginning ? (
               <div className="prev-slide" onClick={goPrev}>
                 {CHEVRON_LEFT_CIRCLE}
@@ -187,8 +193,8 @@ const CardSection: React.FC<CardSectionProps> = ({
                 {CHEVRON_LEFT_CIRCLE}
               </div>
             ) : null}
-          </div>
-        </StyledSwiper>
+          </StyledControls>
+        </div>
       </>
     );
   }

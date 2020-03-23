@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import Swiper from '../Swiper';
-import useWindowSize from '../hooks/useWindowSize';
 import Button from '../UI/Button';
 import { COLORS, GRAPHIK, AVENIR } from '../../constants/ui-constants';
 
@@ -73,6 +72,11 @@ const StyledCard = styled.div(props => {
 
 const StyledTitle = styled.span``;
 
+const StyledSwiperWrapper = styled.div`
+  display: flex;
+  overflow: hidden;
+`;
+
 type CardProps = {
   title: string;
   description: any[];
@@ -127,10 +131,10 @@ const Card: React.FC<CardProps> = ({
   link = '',
   linkType = '',
 }) => {
-  const { width } = useWindowSize();
   const [isMobile, setIsMobile] = React.useState(false);
 
   React.useEffect(() => {
+    let width = window.innerWidth;
     switch (type) {
       case 'desktop':
         setIsMobile(width <= 960);
@@ -144,7 +148,7 @@ const Card: React.FC<CardProps> = ({
       default:
         break;
     }
-  }, [width, setIsMobile]);
+  }, [setIsMobile]);
 
   const swiperParams = {
     pagination: {
@@ -152,6 +156,7 @@ const Card: React.FC<CardProps> = ({
       type: 'bullets',
       clickable: true,
     },
+    rebuildOnUpdate: true,
   };
 
   let imageView;
@@ -164,13 +169,13 @@ const Card: React.FC<CardProps> = ({
       break;
     default:
       imageView = (
-        <div className="flex">
+        <StyledSwiperWrapper>
           <Swiper {...swiperParams}>
             {images.map((image, index) => {
               return <img key={index} src={image.url} alt={image.alt} />;
             })}
           </Swiper>
-        </div>
+        </StyledSwiperWrapper>
       );
       break;
   }

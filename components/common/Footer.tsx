@@ -15,11 +15,11 @@ const StyledFooter = styled.footer`
   font-family: Graphik;
   font-size: 14px;
   margin-top: 40px;
-  padding-top: 40px;
-  border-top: 1px solid ${COLORS.DADDY};
 `;
 
 const StyledFooterLinksWrapper = styled.div`
+  padding-top: 40px;
+  border-top: 1px solid ${COLORS.DADDY};
   margin-bottom: 40px;
   .quick-links-title {
     font-size: 22px;
@@ -100,7 +100,7 @@ const StyledFooterLegal = styled.div`
   grid-template-areas: 'logo-disclaimer help legal';
   align-items: start;
   justify-items: left;
-  grid-template-columns: 400px max-content max-content;
+  grid-template-columns: minmax(400px, max-content) max-content max-content;
   grid-column-gap: 120px;
   margin: 40px 0;
   line-height: 20px;

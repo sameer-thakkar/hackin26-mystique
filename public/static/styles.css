@@ -2389,6 +2389,11 @@ form.form {
   grid-template-columns: 1fr 1fr 1fr;
   grid-column-gap: 40px;
 }
+
+.more-reads-section a {
+  text-decoration: none;
+}
+
 .more-reads-image img {
   height: 250px;
   object-fit: cover;

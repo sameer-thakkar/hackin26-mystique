@@ -78,8 +78,7 @@ export default class ContentPage extends Component<any, any> {
         group_booking_excluded_tgids: groupBookingExcludedTgids,
         body1,
       } = res.results[0].data;
-      let lang = this.props.data.microsite_document_ref.lang.split('-')[0];
-      let tours = body1[0].items || [];
+      let tours = body1[0]?.items || [];
       let filteredTours = tours.filter(function(tour) {
         return !groupBookingExcludedTgids.find(function(excludedTour) {
           return tour.tgid === excludedTour.tgid;
@@ -346,7 +345,9 @@ export default class ContentPage extends Component<any, any> {
                   <div
                     key={index}
                     className={`${
-                      !FULL_WIDTH_SLICES.includes(slice.slice_type) ? 'slice-wrapper' : ''
+                      !FULL_WIDTH_SLICES.includes(slice.slice_type)
+                        ? 'slice-wrapper'
+                        : ''
                     } slice-block ${slice.slice_type}`}
                   >
                     {sliceHandler(slice)}
