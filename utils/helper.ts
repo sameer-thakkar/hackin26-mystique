@@ -271,3 +271,6 @@ export const stringIdfy = string => {
     .replace(/\s/g, '-')
     .toLowerCase();
 };
+
+export const csvTgidToArray = (csv = '') =>
+  csv.split(',').map(t => parseInt(t.trim()));

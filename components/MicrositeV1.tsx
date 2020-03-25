@@ -51,6 +51,7 @@ export default class MicrositeV1 extends Component<any, any> {
     const { analytics } = this.state;
     const { tgidToScroll } = this.props;
     const uncategorizedTours = data.body1;
+    const tourRanking = uncategorizedTours[0]?.primary?.ranking;
     const { baseLangPageTitle } = this.props.data.data;
     const currentLanguage = lang.substring(0, 2);
     const allTourTgids = this.props.data.data.all_tours.reduce((acc, tour) => {
@@ -168,6 +169,7 @@ export default class MicrositeV1 extends Component<any, any> {
       }
       this.setState({
         tourPrices: tourPrices,
+        tourRanking,
         currencySymbol: currencySymbol,
         isFetched: true,
         showEarliestAvailability,
@@ -323,7 +325,7 @@ export default class MicrositeV1 extends Component<any, any> {
     let groupBookingTourTitles = [];
 
     const { tgidToScroll } = this.props;
-    const { analytics } = this.state;
+    const { analytics, tourRanking } = this.state;
 
     let alertPopup = null;
     if (this.props.data?.data?.alert_popup?.id) {
@@ -477,6 +479,7 @@ export default class MicrositeV1 extends Component<any, any> {
               isMobile={this.state.isMobile}
               host={host}
               analytics={analytics}
+              ranking={tourRanking}
             />
           ) : null}
           {isClient ? (
