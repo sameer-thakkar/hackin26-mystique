@@ -2302,7 +2302,6 @@ form.form {
   font-size: 16px;
   margin: auto;
   margin-bottom: auto;
-  text-align: justify;
   margin-bottom: 30px;
   line-height: 30px;
 }
@@ -2657,6 +2656,7 @@ h6 {
   max-width: 1200px;
   padding: 0 5.46vw;
   margin: auto;
+  width: calc(100% - (5.46vw * 2));
 }
 .subpage-container .slice-wrapper.slice-block {
   width: 100%;

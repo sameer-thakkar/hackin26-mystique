@@ -123,9 +123,7 @@ class MicrositeV2 extends Component<any, any> {
       alternate_languages: availableLanguages,
     } = CMSContent;
     const { localization: languages } = CMSData;
-    const buttons = {
-      see_more_text: CMSContent.data.see_more_text,
-    };
+
     const currentLanguage = CMSContent.lang.substring(0, 2);
     const { isMobile } = this.state;
     const languageProps = {
@@ -259,67 +257,65 @@ class MicrositeV2 extends Component<any, any> {
     let activePage = this.state.page.name;
 
     return (
-      <MBContextProvider uid={currentDomain} lang={lang} buttons={buttons}>
-        <InteractionContextProvider {...categoryProps}>
-          {populateHead({
-            ...this.props.data.data,
-            first_publication_date: datePublished,
-            last_publication_date: dateModified,
-            lang,
-            originalHost: host,
-            isDev,
-            pathname,
-            currentLanguage,
-            serverRequestStartTimestamp,
-          })}
-          <div
-            style={{
-              display: activePage == PAGETYPE.HOMEPAGE ? 'block' : 'none',
-            }}
-          >
-            <HomePage
-              {...MBData}
-              isMobile={this.state.isMobile}
-              changePage={this.changePage}
-              openCategory={this.openCategory}
-              longFormContent={longFormContent}
-              isFetched={isFetched}
-              host={host}
-              uid={currentDomain}
-              directTgid={directTgid}
-              ready={ready}
-            />
-          </div>
-          {activePage == PAGETYPE.MOBILE_PRODUCT_PAGE ? (
-            <MobileProductPage
-              changePage={this.changePage}
-              tour={allTours[this.state.page.tgid]}
-              host={host}
-              uid={currentDomain}
-              currentLanguage={currentLanguage}
-              tgid={this.state.page.tgid}
-            />
-          ) : null}
-          {activePage == PAGETYPE.SEARCH ? (
-            <SearchPage
-              allTours={allTours}
-              headerProps={headerProps}
-              isMobile={isMobile}
-              changePage={this.changePage}
-            />
-          ) : null}
-          <style global jsx>{`
-            * {
-              text-rendering: optimizeLegibility;
-              -webkit-font-smoothing: antialiased;
-            }
-            svg {
-              display: flex;
-              align-items: center;
-            }
-          `}</style>
-        </InteractionContextProvider>
-      </MBContextProvider>
+      <InteractionContextProvider {...categoryProps}>
+        {populateHead({
+          ...this.props.data.data,
+          first_publication_date: datePublished,
+          last_publication_date: dateModified,
+          lang,
+          originalHost: host,
+          isDev,
+          pathname,
+          currentLanguage,
+          serverRequestStartTimestamp,
+        })}
+        <div
+          style={{
+            display: activePage == PAGETYPE.HOMEPAGE ? 'block' : 'none',
+          }}
+        >
+          <HomePage
+            {...MBData}
+            isMobile={this.state.isMobile}
+            changePage={this.changePage}
+            openCategory={this.openCategory}
+            longFormContent={longFormContent}
+            isFetched={isFetched}
+            host={host}
+            uid={currentDomain}
+            directTgid={directTgid}
+            ready={ready}
+          />
+        </div>
+        {activePage == PAGETYPE.MOBILE_PRODUCT_PAGE ? (
+          <MobileProductPage
+            changePage={this.changePage}
+            tour={allTours[this.state.page.tgid]}
+            host={host}
+            uid={currentDomain}
+            currentLanguage={currentLanguage}
+            tgid={this.state.page.tgid}
+          />
+        ) : null}
+        {activePage == PAGETYPE.SEARCH ? (
+          <SearchPage
+            allTours={allTours}
+            headerProps={headerProps}
+            isMobile={isMobile}
+            changePage={this.changePage}
+          />
+        ) : null}
+        <style global jsx>{`
+          * {
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+          }
+          svg {
+            display: flex;
+            align-items: center;
+          }
+        `}</style>
+      </InteractionContextProvider>
     );
   }
 }

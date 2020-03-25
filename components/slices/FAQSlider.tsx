@@ -100,7 +100,25 @@ const StyledSingleImage = styled.div`
     margin-bottom: 16px;
   }
 `;
-
+/**
+ * FAQ Slider allows you to add a image slider & question combo. Each question can have a image or a slider associated to it.
+ *
+ * ## Repeatable Zone:
+ *
+ *  Upload Image: if you have the image locally, use this option to upload.
+ *
+ *  Link to Image: If image already uploaded, add the image url here.
+ *
+ *  Alt Text: Sets the alternate text for the image (alt)
+ *
+ *
+ *
+ * ## Non Repeatable Zone;
+ *   Question: Enter the FAQ Question here.
+ *
+ *   Answer: Enter the FAQ Answer Here.
+ *
+ */
 const FAQSlider = props => {
   const { faqs, sliceProps } = props;
   const { isMobile } = sliceProps;

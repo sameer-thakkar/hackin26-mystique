@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
@@ -146,6 +146,7 @@ const StyledLightbox = styled.div`
   }
   .close {
     justify-self: right;
+    display: flex;
     margin-bottom: 22px;
     cursor: pointer;
     svg {
@@ -225,12 +226,55 @@ const StyledCaption = styled.div`
     color: ${COLORS.WHITE};
   }
 `;
+
+/**
+ * Image gallery allows you to add 'n' number of images into content framework, all images are clickable and trigger a popup (lightbox) with image expanded according to its aspect ratio.
+ *
+ *
+ * ### Non-repeatable zone
+ * - Heading
+ *  - Sets the Heading for the Gallery Section
+ * - Mobile Layout
+ *  - Currently Gallery Supports two layouts on Mobile (grid & scroll)
+ *    - Grid: Images will be shown in a grid of 2 columns upto 3 rows (i.e 5 images, 6th block will be a pagination to the lightbox popup)
+ *    - Scrollable: Images will be horizontally scrollable.
+ *
+ * ### Repeatable zone
+ * - Upload Image
+ *  - If you have the image locally, select this option to set the image
+ * - Link to Image
+ *  - If you have already uploaded the image elsewhere, provide link to the image here.
+ * - Image caption
+ *  - You can provide some caption to the image, will be used as alt text & will be shown below the image in the Lightbox mode.
+ * - Image Credits (Attribution)
+ *  - Allows you to credit the owner of the image.
+ */
+
 const ImageGallery = props => {
   const { layout, isMobile, images, heading } = props;
   const [ligtboxOpen, setLightbox] = useState(false);
   const [initialSlide, setInitialSlide] = useState(0);
   const [lightboxSwiper, getSwiper] = useState(null);
+  const [lightboxIndex, setCurrentLightboxIndex] = useState(0);
   const toggleLightbox = () => setLightbox(!ligtboxOpen);
+
+  const updateIndex = useCallback(
+    () => setCurrentLightboxIndex(lightboxSwiper.realIndex),
+    [lightboxSwiper]
+  );
+
+  useEffect(() => {
+    if (lightboxSwiper !== null) {
+      lightboxSwiper.on('slideChange', updateIndex);
+    }
+
+    return () => {
+      if (lightboxSwiper !== null) {
+        lightboxSwiper.off('slideChange', updateIndex);
+      }
+    };
+  }, [lightboxSwiper, getSwiper]);
+
   const swiperOpts = {
     slidesPerView: 'auto',
     spaceBetween: isMobile ? 14 : 24,
@@ -250,7 +294,9 @@ const ImageGallery = props => {
   };
   const swiperLightBoxOpts = {
     ...swiperOpts,
+    init: true,
     slidesPerView: 1,
+    rebuildOnUpdate: false,
     spaceBetween: 0,
     autoHeight: true,
     initialSlide,
@@ -297,7 +343,7 @@ const ImageGallery = props => {
             <div className="header">
               {isMobile ? (
                 <div className="nav-indicator">
-                  {lightboxSwiper && lightboxSwiper.realIndex}/{images.length}
+                  {lightboxIndex + 1}/{images.length}
                 </div>
               ) : null}
               <div className="close" onClick={toggleLightbox}>

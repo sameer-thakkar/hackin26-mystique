@@ -59,6 +59,33 @@ type TabWrapperProps = {
   sliceProps: Object;
 };
 
+/**
+ * Tab Wrapper Start/End Are the Wrapping Slices that are required to add n number of tabs.
+ *
+ * Inside a Tab Wrapper you're expected to add only `Tab` Slice type as adding any other slice type will cause it to glitch.
+ *
+ * > Structure
+ *
+ *```html
+ *...
+ *
+ *<tab_wrapper_start>
+ *  <tab />
+ *    <slice_a />
+ *    <slice_b />
+ *  <tab />
+ *    <slice_b />
+ *    <slice_a />
+ *    <slice_c />
+ *  <tab />
+ *    <slice_z />
+ *<tab_wrapper_end>
+ *
+ * ...
+ *```
+ *
+ *
+ */
 const TabWrapper = (props: TabWrapperProps) => {
   const { heading, slices, sliceProps: parentSliceProps } = props;
   const default_from_prismic = slices.filter(

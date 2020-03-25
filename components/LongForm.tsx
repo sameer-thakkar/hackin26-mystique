@@ -74,7 +74,6 @@ export default class LongForm extends Component<any, any> {
               font-size: 1rem;
               line-height: 1.8;
               color: ${COLORS.FOUR_BLACK};
-              text-align: justify;
               font-family: Avenir, Proxima-Nova, arial, sans-serif;
             }
             .long-form > p > a {

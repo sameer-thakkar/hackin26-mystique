@@ -18,6 +18,7 @@ import { redirectTo, getPrismicProps, reflect } from '../utils';
 import 'lazysizes';
 import '../public/static/styles.css';
 import { uncategorizedToursListParser } from '../utils/DataParsers';
+import { MBContextProvider } from '../contexts/MBContext';
 
 const ErrorPage = dynamic(() => import('next/error'));
 const Microsite = dynamic(() => import('../components/MicrositeV1'));
@@ -525,12 +526,17 @@ export default class Page extends React.Component<any, any> {
       tgidToScroll,
       serverRequestStartTimestamp,
       lang,
+      uid,
     } = this.props;
     if (statusCode) {
       return <ErrorPage statusCode={statusCode} />;
     }
     const PAGETYPE = ContentType + (MBDesign || '');
     let Component;
+    const microsite =
+      PAGETYPE == CUSTOM_TYPES.CONTENT_PAGE
+        ? CMSContent.data?.microsite?.data
+        : CMSContent.data?.data;
     switch (PAGETYPE) {
       case CUSTOM_TYPES.MICROSITE + DESIGN.V2:
         Component = (
@@ -583,7 +589,9 @@ export default class Page extends React.Component<any, any> {
             windowUrl,
           }}
         >
-          <ThemeProvider theme={theme}>{Component}</ThemeProvider>
+          <MBContextProvider uid={uid} lang={lang} microsite={microsite}>
+            <ThemeProvider theme={theme}>{Component}</ThemeProvider>
+          </MBContextProvider>
         </EnvironmentContext.Provider>
       </div>
     );
