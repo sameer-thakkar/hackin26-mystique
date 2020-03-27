@@ -1,4 +1,8 @@
-// next.config.js
-const withCSS = require("./next-css");
+const withCSS = require('./next-css');
+const withPurgeCss = require('next-purgecss');
 
-module.exports = withCSS({});
+module.exports = withCSS(
+  withPurgeCss({
+    purgeCssEnabled: ({ dev }) => !dev,
+  })
+);
