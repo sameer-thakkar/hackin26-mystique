@@ -118,7 +118,7 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
               productOffer={productOffer}
               hasOffer={hasOffer}
               togglePopup={togglePopup}
-              offerId={tour.offer__free_tour.id}
+              offerId={tour.offer__free_tour?.id}
               popupState={popupState}
               isMobile={isMobile}
               isFetched={isFetched}

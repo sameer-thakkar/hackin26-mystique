@@ -99,10 +99,10 @@ const TableV2 = props => {
         if (isMobile && rowIndex === 0) return null;
         const actualColumns = [...headings, ...row.columns];
         return (
-          <StyledRow rowCount={headings.length}>
+          <StyledRow rowCount={headings.length} key={rowIndex}>
             {actualColumns.map((column, colIndex) => {
               return (
-                <StyledColumn colCount={row.columns.length}>
+                <StyledColumn colCount={row.columns.length} key={colIndex}>
                   <RichText
                     key={colIndex}
                     render={column.content}

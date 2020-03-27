@@ -2,6 +2,7 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from '../utils/shortCodes';
+import { csvTgidToArray } from '../utils/helper';
 
 const ImageGallery = dynamic(() => import('./slices/ImageGallery'));
 const TicketCards = dynamic(() => import('./slices/TicketCards'));
@@ -360,7 +361,8 @@ const sliceHandler = (slice, props: any = {}) => {
           images={slice.items}
           mobileLayout={slice.primary.mobile_layout}
           isMobile={props.isMobile}
-        />);
+        />
+      );
     case 'ticket_cards':
       return (
         <TicketCards
@@ -375,3 +377,42 @@ const sliceHandler = (slice, props: any = {}) => {
 };
 
 export default sliceHandler;
+
+export const toursTabSliceHandler = async slice => {
+  switch (slice.slice_type) {
+    case 'tour_list':
+      return slice.items;
+    case 'category':
+      const limit = slice.primary.tour_count;
+      const prismicTourDataOverrides = slice.items.reduce((acc, tour) => {
+        return {
+          ...acc,
+          [tour.tgid]: {
+            ...tour,
+          },
+        };
+      }, {});
+      const categoryLevelFreetour = {
+        offer__free_tour: slice.primary.offer__free_tour,
+      };
+      const excludedTgids = csvTgidToArray(slice.primary.excluded_tgids);
+      const category: any = await fetch(
+        `https://api.headout.com/api/v1/feed/category/get/${slice.primary.category_id}`
+      ).then(res => res.json());
+      const tours = category?.products.reduce((acc, tour) => {
+        return [
+          ...acc,
+          {
+            tgid: tour.id,
+            ...categoryLevelFreetour,
+            ...prismicTourDataOverrides[tour.id],
+          },
+        ];
+      }, []);
+      return tours
+        .filter(t => excludedTgids.indexOf(t.tgid) === -1)
+        .slice(0, limit || tours.length);
+    default:
+    //
+  }
+};

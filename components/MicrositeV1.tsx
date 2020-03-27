@@ -49,7 +49,7 @@ export default class MicrositeV1 extends Component<any, any> {
     this.setState({ isMobile });
     const { data, lang } = this.props.data;
     const { analytics } = this.state;
-    const { tgidToScroll } = this.props;
+    const { tgidToScroll, toursList } = this.props;
     const uncategorizedTours = data.body1;
     const tourRanking = uncategorizedTours[0]?.primary?.ranking;
     const { baseLangPageTitle } = this.props.data.data;
@@ -57,27 +57,17 @@ export default class MicrositeV1 extends Component<any, any> {
     const allTourTgids = this.props.data.data.all_tours.reduce((acc, tour) => {
       return [...acc, parseInt(tour.primary.tgid)];
     }, []);
-    const checkIfToursAvailable =
-      uncategorizedTours.length > 0 &&
-      uncategorizedTours[0].items[0].tgid != null;
+    const checkIfToursAvailable = toursList.length > 0;
     const hasAllTours = allTourTgids.length > 0;
 
     if (checkIfToursAvailable || hasAllTours) {
-      const [variantTgids, tourGroupTgids] = checkIfToursAvailable
-        ? uncategorizedTours[0].items.reduce(
-            (accum, elem) => {
-              if (elem.tour_variant_id) {
-                return [
-                  [...accum[0], { tgid: elem.tgid, tid: elem.tour_variant_id }],
-                  [...accum[1]],
-                ];
-              } else {
-                return [[...accum[0]], [...accum[1], elem.tgid]];
-              }
-            },
-            [[], []]
-          )
-        : [[], []];
+      const variantTgids = toursList
+        .filter(t => t.tgid && t.tid)
+        .map(t => ({ tgid: t.tgid, tid: t.tid }));
+      const tourGroupTgids = toursList
+        .filter(t => t.tgid && !t.tid)
+        .map(t => t.tgid);
+
       const fetchTourGroupPrices = fetch(
         `https://api.headout.com/api/v5/tour-group/list?ids[]=${[
           ...tourGroupTgids,
@@ -142,7 +132,6 @@ export default class MicrositeV1 extends Component<any, any> {
         }),
         {}
       );
-
       const tourPrices = Object.assign(tourGroupPrices, variantPrices);
 
       const {
@@ -247,6 +236,7 @@ export default class MicrositeV1 extends Component<any, any> {
     this.setState({ showGroupBookingModal: false });
 
   render() {
+    const { toursList } = this.props;
     const { url: logoUrl } = this.props.data.data.link_to_logo_file;
     const { url: uploadedLogoUrl, alt: altText } = this.props.data.data.logo;
     const { logo_alt_text: logoAltText } = this.props.data.data;
@@ -264,12 +254,8 @@ export default class MicrositeV1 extends Component<any, any> {
     const { uid } = this.props.data;
     const currentLanguage = this.props.data.lang.substring(0, 2);
     const uncategorizedTours = this.props.data.data.body1;
-    const checkIfToursAvailable =
-      uncategorizedTours.length > 0 &&
-      uncategorizedTours[0].items[0].tgid != null;
-    const uncategorizedToursList = checkIfToursAvailable
-      ? uncategorizedTours[0].items
-      : [];
+    const checkIfToursAvailable = toursList.length > 0;
+    const uncategorizedToursList = toursList;
     const uncategorizedToursHeading = checkIfToursAvailable
       ? uncategorizedTours[0].primary
       : '';

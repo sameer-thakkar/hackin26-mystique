@@ -2,21 +2,13 @@ export const uncategorizedToursListParser = (
   uncategorizedToursList,
   initialVal
 ) => {
+  const initialTgids = initialVal.map(t => ({ tgid: t }));
   return uncategorizedToursList.reduce(
     (accum, tour) => {
-      const {
-        tgid,
-        tour_title_override: title,
-        marketing_highlights_override: descriptors,
-        tour_description_override: highlights,
-      } = tour;
-      const hasHighlights = highlights.filter(item => item.text);
-      if (!title || !hasHighlights || !descriptors) {
-        return [...accum, tgid];
-      }
-      return accum;
+      const { tgid, tid } = tour;
+      return [...accum, { tgid, tid, ...tour }];
     },
-    [...initialVal]
+    [...initialTgids]
   );
 };
 

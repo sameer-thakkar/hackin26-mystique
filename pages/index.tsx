@@ -19,6 +19,7 @@ import 'lazysizes';
 import '../public/static/styles.css';
 import { uncategorizedToursListParser } from '../utils/DataParsers';
 import { MBContextProvider } from '../contexts/MBContext';
+import { toursTabSliceHandler } from '../components/Slices';
 
 const ErrorPage = dynamic(() => import('next/error'));
 const Microsite = dynamic(() => import('../components/MicrositeV1'));
@@ -180,24 +181,6 @@ export default class Page extends React.Component<any, any> {
                 type: completeMicrosite.data.data.redirect_type,
               });
             } else {
-              const itemsParent = completeMicrosite.data.data.body1[0];
-              const tours = itemsParent ? itemsParent.items : [];
-              const offers = tours
-                .filter(tour => tour.offer__free_tour.id)
-                .map(tour => tour.offer__free_tour.id);
-              const uniqueOfferIds = offers.filter(
-                (id, index) => offers.indexOf(id) === index
-              );
-              if (uniqueOfferIds.length)
-                (completeMicrosite as any).offerData = await Client(req)
-                  .getByIDs(uniqueOfferIds)
-                  .then(offerData => {
-                    offerData.results.map(offer => {
-                      initial_tgids.push(offer.data.offer_tgid);
-                    });
-                    return offerData;
-                  });
-
               const baseLangData =
                 lang !== 'en'
                   ? await Client(req)
@@ -431,13 +414,32 @@ export default class Page extends React.Component<any, any> {
 
       if (ContentType === CUSTOM_TYPES.MICROSITE) {
         const MBDesign = CMSContent.data.data.design || '';
-        const { items: uncategorizedToursList } = CMSContent.data.data
-          .body1[0] || { items: [] };
+        const toursTabFirstSlice = CMSContent.data.data.body1[0];
+        const primsicTours = await toursTabSliceHandler(toursTabFirstSlice);
+        const offers = primsicTours
+          .filter(tour => tour.offer__free_tour?.id)
+          .map(tour => tour.offer__free_tour?.id);
+        const uniqueOfferIds = offers.filter(
+          (id, index) => offers.indexOf(id) === index
+        );
+        if (uniqueOfferIds.length)
+          (CMSContent as any).offerData = await Client(req)
+            .getByIDs(uniqueOfferIds)
+            .then(offerData => {
+              offerData.results.map(offer => {
+                if (parseInt(offer.data.offer_tgid) > 0)
+                  initial_tgids.push(offer.data.offer_tgid);
+              });
+              return offerData;
+            });
 
-        idsToFetchFromScorpio = uncategorizedToursListParser(
-          uncategorizedToursList,
+        const toursList = uncategorizedToursListParser(
+          primsicTours,
           initial_tgids
         );
+        idsToFetchFromScorpio = toursList.reduce((acc, tour) => {
+          return [...acc, tour.tgid];
+        }, []);
 
         const tgidToScroll = (function getScrollTgid() {
           const pathname = req ? req.url : window.location.pathname;
@@ -450,6 +452,7 @@ export default class Page extends React.Component<any, any> {
         })();
         AllData = {
           CMSContent,
+          toursList,
           ContentType,
           uid,
           lang,
@@ -527,6 +530,7 @@ export default class Page extends React.Component<any, any> {
       serverRequestStartTimestamp,
       lang,
       uid,
+      toursList,
     } = this.props;
     if (statusCode) {
       return <ErrorPage statusCode={statusCode} />;
@@ -558,6 +562,7 @@ export default class Page extends React.Component<any, any> {
             scorpioData={scorpioData}
             offerData={CMSContent.offerData}
             host={host}
+            toursList={toursList}
             pathname={pathname}
             isDev={isDev}
             tgidToScroll={tgidToScroll}

@@ -92,7 +92,7 @@ export default class Product extends Component<any, any> {
       isScratchPriceEnabled,
       booster,
     } = this.props;
-    const boosterHasIcon = booster.filter(i => i.type === 'image').length > 0;
+    const boosterHasIcon = booster?.filter(i => i.type === 'image').length > 0;
     const descriptorsCsv = descriptors || scorpioData.descriptors;
     const cardTitle = title || scorpioData.title;
     const descriptorsList = descriptorsCsv ? descriptorsCsv.split(',') : [];
@@ -106,10 +106,8 @@ export default class Product extends Component<any, any> {
     hostSplit.shift();
     const bookingUrl = hostSplit.join('.');
     const showScratchPrice = isFetched && isScratchPriceEnabled;
-
     const isHighlightsFromPrismic =
       isLengthyArray(highlights) && highlights.filter(item => item.text).length;
-
     return (
       <div
         className={classNames('product', {
@@ -129,7 +127,9 @@ export default class Product extends Component<any, any> {
                 );
               })}
             </div>
-            {!isMobile && RichText.asText(booster).trim().length > 0 ? (
+            {!isMobile &&
+            booster &&
+            RichText.asText(booster).trim().length > 0 ? (
               <div className="v1-booster">
                 <RichText
                   render={booster}
@@ -176,7 +176,7 @@ export default class Product extends Component<any, any> {
               ) : null}
               {isFetched ? (
                 <div className="product-price">
-                  {tourPrices[tgid].price
+                  {tourPrices[tgid]?.price
                     ? `${currencySymbol}${tourPrices[tgid].price}`
                     : null}
                 </div>
