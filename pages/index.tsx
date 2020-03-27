@@ -63,7 +63,7 @@ export default class Page extends React.Component<any, any> {
       [
         Client(req)
           .getByUID(CUSTOM_TYPES.REDIRECT, redirectUID)
-          .then(r => {
+          .then((r) => {
             let redirectURL = r.data?.redirect_to_url?.url;
             if (redirectURL) {
               if (redirectURL[redirectURL.length - 1] === '/')
@@ -166,7 +166,7 @@ export default class Page extends React.Component<any, any> {
         .getByUID(CUSTOM_TYPES.MICROSITE, uid, {
           lang,
         })
-        .then(async res => {
+        .then(async (res) => {
           let completeMicrosite = { data: res };
           if (completeMicrosite.data) {
             if (completeMicrosite.data.uid !== uid) {
@@ -187,7 +187,7 @@ export default class Page extends React.Component<any, any> {
                       .getByUID(CUSTOM_TYPES.MICROSITE, uid, {
                         lang: 'en-us',
                       })
-                      .then(res => res)
+                      .then((res) => res)
                   : {};
 
               const strValues = MICROSITE_STRING_KEYS.reduce(
@@ -293,7 +293,7 @@ export default class Page extends React.Component<any, any> {
                 fetchLinks: [...COMMON_HEADER_PROPS, ...LINKED_MICROSITE_PROPS],
                 lang,
               })
-              .then(async page => {
+              .then(async (page) => {
                 if (page) {
                   if (page.uid !== uid) {
                     let url = page.data?.page_url;
@@ -406,7 +406,7 @@ export default class Page extends React.Component<any, any> {
         }, []);
         microsite.data.labels = await Client(req)
           .getByIDs(labelIds)
-          .then(res => {
+          .then((res) => {
             return res.results;
           });
       }
@@ -415,18 +415,20 @@ export default class Page extends React.Component<any, any> {
       if (ContentType === CUSTOM_TYPES.MICROSITE) {
         const MBDesign = CMSContent.data.data.design || '';
         const toursTabFirstSlice = CMSContent.data.data.body1[0];
-        const primsicTours = await toursTabSliceHandler(toursTabFirstSlice);
+        const primsicTours = toursTabFirstSlice
+          ? await toursTabSliceHandler(toursTabFirstSlice)
+          : [];
         const offers = primsicTours
-          .filter(tour => tour.offer__free_tour?.id)
-          .map(tour => tour.offer__free_tour?.id);
+          .filter((tour) => tour.offer__free_tour?.id)
+          .map((tour) => tour.offer__free_tour?.id);
         const uniqueOfferIds = offers.filter(
           (id, index) => offers.indexOf(id) === index
         );
         if (uniqueOfferIds.length)
           (CMSContent as any).offerData = await Client(req)
             .getByIDs(uniqueOfferIds)
-            .then(offerData => {
-              offerData.results.map(offer => {
+            .then((offerData) => {
+              offerData.results.map((offer) => {
                 if (parseInt(offer.data.offer_tgid) > 0)
                   initial_tgids.push(offer.data.offer_tgid);
               });
@@ -468,12 +470,12 @@ export default class Page extends React.Component<any, any> {
         ...all_tours_tab_tgids,
       ];
       const scorpioResponses = await Promise.all(
-        idsToFetchFromScorpio.map(id =>
+        idsToFetchFromScorpio.map((id) =>
           fetch(
             `https://api.headout.com/api/v5/tour-group/get/${id}?language=${
               lang.split('-')[0]
             }`
-          ).then(r => r.json())
+          ).then((r) => r.json())
         )
       );
 
