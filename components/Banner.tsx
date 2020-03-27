@@ -116,8 +116,6 @@ export default class Banner extends Component<any, any> {
     return (
       <div className={classNames('mb-carousel', { boxed: boxed })}>
         {bannerImages.map((banner, index) => {
-          let imageUrl = banner.image_src.url || banner.uploaded_image.url;
-          let imageAlt = banner.image_alt || banner.uploaded_image.alt;
           return (
             <div
               key={index}
@@ -132,7 +130,7 @@ export default class Banner extends Component<any, any> {
               )}
             >
               {isClient
-                ? this.renderBanners({ url: imageUrl, alt: imageAlt })
+                ? this.renderBanners({ url: banner.url, alt: banner.alt })
                 : null}
             </div>
           );

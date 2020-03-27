@@ -11,7 +11,7 @@ export const MBContext = createContext({
 export const MBContextProvider = props => {
   const { uid, lang, microsite } = props;
   const buttons = {
-    see_more_text: microsite.see_more_text,
+    see_more_text: microsite?.see_more_text,
   };
   const nakedDomain = uid
     .replace('stage.', '')

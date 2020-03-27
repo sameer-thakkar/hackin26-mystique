@@ -13,7 +13,7 @@ import Alert from './UI/Alert';
 import * as labels from '../public/static/localization/labels';
 import DismissAlert from './UI/DismissAlert';
 import { InteractionContextProvider } from '../contexts/Interaction';
-import { docCookies } from '../utils/helper';
+import { docCookies, csvTgidToArray } from '../utils/helper';
 import { DROPDOWN_ELEMENT, ANALYTICS_EVENTS } from '../constants';
 import { groupSlices } from '../utils/helper';
 import { ProductsContextProvider } from '../contexts/Products';
@@ -51,7 +51,6 @@ export default class MicrositeV1 extends Component<any, any> {
     const { analytics } = this.state;
     const { tgidToScroll, toursList } = this.props;
     const uncategorizedTours = data.body1;
-    const tourRanking = uncategorizedTours[0]?.primary?.ranking;
     const { baseLangPageTitle } = this.props.data.data;
     const currentLanguage = lang.substring(0, 2);
     const allTourTgids = this.props.data.data.all_tours.reduce((acc, tour) => {
@@ -158,7 +157,6 @@ export default class MicrositeV1 extends Component<any, any> {
       }
       this.setState({
         tourPrices: tourPrices,
-        tourRanking,
         currencySymbol: currencySymbol,
         isFetched: true,
         showEarliestAvailability,
@@ -249,11 +247,14 @@ export default class MicrositeV1 extends Component<any, any> {
       heading: bannerHeading,
       cta_text: bannerCtaText,
       page_url: pageUrl,
+      auto_banner: autoBanner,
+      banner_limit: bannerLimit,
     } = this.props.data.data;
     const languages = localization.filter(lang => lang.language);
     const { uid } = this.props.data;
     const currentLanguage = this.props.data.lang.substring(0, 2);
     const uncategorizedTours = this.props.data.data.body1;
+    const tourRanking = uncategorizedTours[0]?.primary?.ranking;
     const checkIfToursAvailable = toursList.length > 0;
     const uncategorizedToursList = toursList;
     const uncategorizedToursHeading = checkIfToursAvailable
@@ -311,7 +312,7 @@ export default class MicrositeV1 extends Component<any, any> {
     let groupBookingTourTitles = [];
 
     const { tgidToScroll } = this.props;
-    const { analytics, tourRanking } = this.state;
+    const { analytics } = this.state;
 
     let alertPopup = null;
     if (this.props.data?.data?.alert_popup?.id) {
@@ -376,6 +377,25 @@ export default class MicrositeV1 extends Component<any, any> {
         allToursParser(CMSData, scorpioData, pricingData)) ||
       {};
 
+    let finalBannerImages = bannerImages.map(banner => {
+      return {
+        url: banner.image_src.url || banner.uploaded_image.url,
+        alt: banner.image_alt || banner.uploaded_image.alt,
+      };
+    });
+    if (autoBanner) {
+      const tgidArray = csvTgidToArray(tourRanking);
+      finalBannerImages = tgidArray
+        .map(tgid => {
+          let tour = scorpioData[tgid];
+          if (tour)
+            return {
+              url: `https:${tour.images[0]?.url}`,
+              alt: `https:${tour.images[0]?.alt}`,
+            };
+        })
+        .slice(0, bannerLimit);
+    }
     return (
       <div>
         <div className="microsite-container">
@@ -432,7 +452,7 @@ export default class MicrositeV1 extends Component<any, any> {
             />
           ) : null}
           <Banner
-            bannerImages={bannerImages ? bannerImages : null}
+            bannerImages={finalBannerImages ? finalBannerImages : null}
             bannerHeading={bannerHeading ? bannerHeading : null}
             bannerCtaText={bannerCtaText ? bannerCtaText : null}
             currentLanguage={currentLanguage ? currentLanguage : null}
