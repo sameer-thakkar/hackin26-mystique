@@ -72,7 +72,7 @@ export const HomePage = props => {
           />
         </div>
       ) : null}
-      {true && covid19AlertOpen ? (
+      {showCovid19Alert && covid19AlertOpen ? (
         <DismissAlert
           readMoreLink={labels[currentLanguage].COVID19_ALERT.LINK}
           readMore={labels[currentLanguage].READ_MORE}
@@ -165,6 +165,7 @@ export const HomePage = props => {
             max-width: unset;
             padding: unset;
             margin: unset;
+            width: unset;
           }
           .long-form .slice-block.rich_text {
             max-width: ${SIZES.MAX_WIDTH};

@@ -78,11 +78,17 @@ export const MobileProductPage = props => {
           ) : null}
           <div className="title">{tour.title}</div>
           <div className="price">
+            <span className="from-text">from</span>
             <div className="current-price">
               {tour.currencySymbol}
               {tour.price}
             </div>
-            <div className="scratched">{tour.scratchedPrice}</div>
+            {tour.price < tour.scratchPrice ? (
+              <div className="scratched-price">
+                {tour.currencySymbol}
+                {tour.scratchPrice}
+              </div>
+            ) : null}
           </div>
           {tour.cardFooter.length ? (
             <div className="boosters">
@@ -217,14 +223,23 @@ export const MobileProductPage = props => {
             font-weight: ${AVENIR.HEAVY};
             margin-left: 16px;
           }
-          .mobile-product-wrap .current-price {
+          .mobile-product-wrap .current-price,
+          .from-text {
             font-size: 18px;
+            line-height: 24px;
             font-weight: ${AVENIR.HEAVY};
             color: ${COLORS.TWO_BLACK};
           }
-          .price .scratched {
+          .from-text {
+            font-size: 14px;
+            line-height: 1;
+            font-weight: ${AVENIR.MEDIUM};
+            margin-bottom: 4px;
+          }
+          .price .scratched-price {
             font-weight: ${AVENIR.MEDIUM};
             font-size: 12px;
+            text-decoration: line-through;
             color: ${COLORS.FOUR_BLACK};
           }
           .mobile-product-wrap .tags {

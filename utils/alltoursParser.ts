@@ -15,7 +15,11 @@ const allToursParser = (CMSData, scorpioData, pricingData: ToursData) => {
   const contentOrderLabels = CMSData?.content_order?.reduce((accum, label) => {
     return [
       ...accum,
-      { labelID: label.label.id, globalAlign: label.alignment },
+      {
+        labelID: label.label.id,
+        globalAlign: label.alignment,
+        globalContent: label.default_content,
+      },
     ];
   }, []);
 
@@ -35,11 +39,18 @@ const allToursParser = (CMSData, scorpioData, pricingData: ToursData) => {
     contentOrderLabels.forEach(label => {
       if (!content[label.labelID]) return;
       const useGLOBAL = content[label.labelID].align == 'Global';
+      const blockContentLen = RichText.asText(
+        content[label.labelID].content
+      ).trim().length;
+      const finalContent =
+        blockContentLen === 0
+          ? label.globalContent
+          : content[label.labelID].content;
       let block = {
         label: labelIDMap[label.labelID],
-        content: content[label.labelID].content,
+        content: finalContent,
         align: useGLOBAL ? label.globalAlign : content[label.labelID].align,
-        len: RichText.asText(content[label.labelID].content).length,
+        len: RichText.asText(finalContent).length,
         labelId: label.labelID,
       };
       if (block.align == 'Right') right.push(block);

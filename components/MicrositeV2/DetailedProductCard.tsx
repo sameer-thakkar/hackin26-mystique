@@ -95,16 +95,19 @@ const DetailedProductCard = props => {
             })}
             <div className="desc-cta-price">
               <div className="desc-price">
-                <div className="desc-final-price">
-                  {activeTour.currencySymbol}
-                  {activeTour.price}
-                </div>
-                {activeTour.price < activeTour.scratchPrice ? (
-                  <div className="desc-scratch-price">
+                <span className="from-text">from</span>
+                <div className="price-wrapper">
+                  <div className="desc-final-price">
                     {activeTour.currencySymbol}
-                    {activeTour.scratchPrice}
+                    {activeTour.price}
                   </div>
-                ) : null}
+                  {activeTour.price < activeTour.scratchPrice ? (
+                    <div className="desc-scratch-price">
+                      {activeTour.currencySymbol}
+                      {activeTour.scratchPrice}
+                    </div>
+                  ) : null}
+                </div>
               </div>
               <a
                 target="_blank"
@@ -253,22 +256,34 @@ const DetailedProductCard = props => {
           text-align: left;
         }
 
-        .desc-final-price {
+        .desc-final-price, .from-text {
           font-family: ${AVENIR.FONT_STACK};
           font-size: 20px;
           line-height: 20px;
           color: ${COLORS.TWO_BLACK};
           font-weight: ${AVENIR.HEAVY};
         }
+        .price-wrapper{
+          display: grid;
+          grid-template-columns: auto auto;
+          grid-column-gap: 8px;
+          align-items: end;
+        }
+
+        .from-text{
+          font-size: 14px;
+          font-weight: 500;
+          margin-bottom: 4px;
+          line-height: 18px;
+        }
 
         .desc-scratch-price {
           font-family: ${GRAPHIK.FONT_STACK};
           font-weight: ${GRAPHIK.REGULAR};
           font-size: 14px;
-          line-height: 15px;
+          line-height: 20px;
           text-decoration-line: line-through;
           color: ${COLORS.FOUR_BLACK};
-          margin-top: 8px;
         }
 
         .desc-book-now-cta {
