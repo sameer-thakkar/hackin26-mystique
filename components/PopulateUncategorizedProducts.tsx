@@ -81,8 +81,8 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
     const orderedTours = orderedTGIDRanking
       ? tours.sort((tourA, tourB) => {
           return (
-            orderedTGIDRanking.indexOf(tourB.tgid) -
-            orderedTGIDRanking.indexOf(tourA.tgid)
+            orderedTGIDRanking.indexOf(parseInt(tourA.tgid)) -
+            orderedTGIDRanking.indexOf(parseInt(tourB.tgid))
           );
         })
       : tours;

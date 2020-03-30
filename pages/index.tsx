@@ -220,6 +220,13 @@ export default class Page extends React.Component<any, any> {
                 {}
               );
 
+              // Base lang Fallback for Tour Ranking.
+              const tourTabSlice = completeMicrosite.data.data.body1[0];
+              if (tourTabSlice?.primary && !tourTabSlice.primary.ranking) {
+                tourTabSlice.primary.ranking =
+                  baseLangData?.data?.body1[0]?.primary?.ranking;
+              }
+
               if (
                 Object.keys(completeMicrosite.data.data['alert_popup'])
                   .length === 1
