@@ -61,18 +61,18 @@ export default class MicrositeV1 extends Component<any, any> {
 
     if (checkIfToursAvailable || hasAllTours) {
       const variantTgids = toursList
-        .filter(t => t.tgid && t.tid)
-        .map(t => ({ tgid: t.tgid, tid: t.tid }));
+        .filter((t) => t.tgid && t.tid)
+        .map((t) => ({ tgid: t.tgid, tid: t.tid }));
       const tourGroupTgids = toursList
-        .filter(t => t.tgid && !t.tid)
-        .map(t => t.tgid);
+        .filter((t) => t.tgid && !t.tid)
+        .map((t) => t.tgid);
 
       const fetchTourGroupPrices = fetch(
         `https://api.headout.com/api/v5/tour-group/list?ids[]=${[
           ...tourGroupTgids,
           ...allTourTgids,
         ]}`
-      ).then(res => {
+      ).then((res) => {
         let HSID = res.headers.get('x-h-sid');
         if (!docCookies.hasItem('h-sid')) {
           const nakedDomain = window.location.host
@@ -95,16 +95,16 @@ export default class MicrositeV1 extends Component<any, any> {
         return res.json();
       });
 
-      const fetchVariantPrices = variantTgids.map(tourVariant =>
+      const fetchVariantPrices = variantTgids.map((tourVariant) =>
         fetch(
           `https://api.headout.com/api/v5/tour-group/inventory/get/${tourVariant.tgid}`
-        ).then(res => res.json())
+        ).then((res) => res.json())
       );
 
       const response = await Promise.all([
         fetchTourGroupPrices,
         ...fetchVariantPrices,
-      ]).then(res => res);
+      ]).then((res) => res);
       const [tourGroup, ...variants] = response;
       const currencySymbol = tourGroup.currencies.length
         ? tourGroup.currencies[0].localSymbol
@@ -113,7 +113,7 @@ export default class MicrositeV1 extends Component<any, any> {
 
       const mapVariantPrices = variants.map((tourVariant: any, index) => {
         const inv = tourVariant.inventoryList.find(
-          inventoryList => inventoryList.tourId == variantTgids[index].tid
+          (inventoryList) => inventoryList.tourId == variantTgids[index].tid
         );
         return {
           tgid: variantTgids[index].tgid,
@@ -139,15 +139,15 @@ export default class MicrositeV1 extends Component<any, any> {
       const showEarliestAvailability = enableEarliestAvailability === 'Yes';
 
       if (showEarliestAvailability) {
-        const requestQueue = uncategorizedTours[0].items.map(tour =>
+        const requestQueue = uncategorizedTours[0].items.map((tour) =>
           fetch(
             `https://api.headout.com/api/v5/tour-group/inventory/get/${tour.tgid}`
           )
-            .then(res => res.json())
-            .then(response => response)
+            .then((res) => res.json())
+            .then((response) => response)
         );
-        const response = await Promise.all(requestQueue).then(res =>
-          res.map(tour =>
+        const response = await Promise.all(requestQueue).then((res) =>
+          res.map((tour) =>
             (tour as any).inventoryList[0]
               ? (tour as any).inventoryList[0].startDate
               : ''
@@ -250,7 +250,7 @@ export default class MicrositeV1 extends Component<any, any> {
       auto_banner: autoBanner,
       banner_limit: bannerLimit,
     } = this.props.data.data;
-    const languages = localization.filter(lang => lang.language);
+    const languages = localization.filter((lang) => lang.language);
     const { uid } = this.props.data;
     const currentLanguage = this.props.data.lang.substring(0, 2);
     const uncategorizedTours = this.props.data.data.body1;
@@ -321,12 +321,12 @@ export default class MicrositeV1 extends Component<any, any> {
 
     if (showGroupBooking) {
       uncategorizedToursList
-        .filter(function(tour) {
-          return !groupBookingExcludedTgids.find(function(excludedTour) {
+        .filter(function (tour) {
+          return !groupBookingExcludedTgids.find(function (excludedTour) {
             return tour.tgid === excludedTour.tgid;
           });
         })
-        .forEach(tour => {
+        .forEach((tour) => {
           groupBookingTourTitles.push({
             value:
               (tour.tour_title_override ||
@@ -377,7 +377,7 @@ export default class MicrositeV1 extends Component<any, any> {
         allToursParser(CMSData, scorpioData, pricingData)) ||
       {};
 
-    let finalBannerImages = bannerImages.map(banner => {
+    let finalBannerImages = bannerImages.map((banner) => {
       return {
         url: banner.image_src.url || banner.uploaded_image.url,
         alt: banner.image_alt || banner.uploaded_image.alt,
@@ -386,7 +386,7 @@ export default class MicrositeV1 extends Component<any, any> {
     if (autoBanner) {
       const tgidArray = csvTgidToArray(tourRanking);
       finalBannerImages = tgidArray
-        .map(tgid => {
+        .map((tgid) => {
           let tour = scorpioData[tgid];
           if (tour)
             return {
@@ -394,7 +394,7 @@ export default class MicrositeV1 extends Component<any, any> {
               alt: `https:${tour.images[0]?.alt}`,
             };
         })
-        .slice(0, bannerLimit);
+        .slice(0, bannerLimit || orderedUncategorizedTours.length);
     }
     return (
       <div>
