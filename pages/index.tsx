@@ -481,7 +481,7 @@ export default class Page extends React.Component<any, any> {
           fetch(
             `https://api.headout.com/api/v5/tour-group/get/${id}?language=${
               lang.split('-')[0]
-            }`
+            }&fetch-variants=false&fetch-collection-svg=false`
           ).then((r) => r.json())
         )
       );
