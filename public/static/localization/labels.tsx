@@ -26,6 +26,7 @@ export const en = {
   MORE_FROM: 'More from',
   FOOTER_DISCLAIMER:
     'This website is not the official website of the <attraction>. It is run by Headout and works with attractions and tour operators to provide incredible experiences at the tap of a button.',
+  PRICES_STARTING: 'Prices Starting',
 };
 
 export const es = {
@@ -55,6 +56,7 @@ export const es = {
   TOMORROW: 'Mañana',
   FOOTER_DISCLAIMER:
     'Este sitio web no es el sitio web oficial de la atracción: <attraction>. Este sitio está operado por Headout, que trabajamos con operadores turísticos para atracciones y tours a fin de proporcionar experiencias increíbles a tu alcance',
+  PRICES_STARTING: 'Precios desde',
 };
 
 export const de = {
@@ -84,6 +86,7 @@ export const de = {
   TOMORROW: 'Morgen',
   FOOTER_DISCLAIMER:
     'Dies ist nicht die offizielle Website von der Attraktion: <attraction>. Sie wird von Headout betrieben, um gemeinsam mit Veranstaltern für Attraktionen und Touren unglaubliche Erlebnisse auf Knopfdruck anzubieten.',
+  PRICES_STARTING: 'Preise ab',
 };
 
 export const it = {
@@ -113,6 +116,7 @@ export const it = {
   TOMORROW: 'Domani',
   FOOTER_DISCLAIMER:
     'Questo sito web non è il sito ufficiale della seguente attrazione: <attraction>. Il sito è gestito da Headout in collaborazione con i tour operator per fornire esperienze incredibili e disponibili al semplice tocco di un pulsante.',
+  PRICES_STARTING: 'Prezzi A Partire Da',
 };
 
 export const fr = {
@@ -140,6 +144,7 @@ export const fr = {
   TODAY: "Aujourd'hui",
   TOMORROW: 'Demain',
   FOOTER_DISCLAIMER: `Ce site n'est pas le site officiel de l'attraction : <attraction>. Headout gère ce site et collabore avec des organisateurs et des agences de voyage pour vous offrir des expériences incroyables en un clic.`,
+  PRICES_STARTING: 'À partir de',
 };
 
 export const nl = {
@@ -198,4 +203,5 @@ export const pt = {
   TOMORROW: 'Amanhã',
   FOOTER_DISCLAIMER:
     'Este site não é o site oficial da atração: <attraction>. É mantido pela Headout em parceria com atrações e operadores turísticos para proporcionar experiências incríveis com apenas um clique.',
+  PRICES_STARTING: 'Preços a partir de',
 };

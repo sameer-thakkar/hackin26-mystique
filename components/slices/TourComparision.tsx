@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import EnvironmentContext from '../../contexts/environmentContext';
 import ProductsContext from '../../contexts/Products';
 import CommonCTA from '../UI/CTA';
+import * as labels from '../../public/static/localization/labels';
 import { RichText } from 'prismic-reactjs';
 import { AVENIR, COLORS, GRAPHIK } from '../../constants/ui-constants';
 import { shortCodeSerializerWithParentProps } from '../../utils/shortCodes';
@@ -302,7 +303,7 @@ const StyledTourComparisionTable = styled.div`
  *
  */
 
-const TourComparisonTable = props => {
+const TourComparisonTable = (props) => {
   const {
     heading,
     description,
@@ -328,8 +329,8 @@ const TourComparisonTable = props => {
   hostSplit.shift();
   const { allTours, ready: allToursReady } = toursContext;
   // if (!allToursReady) return null;
-  const getContentNormalizedTours = tgidArray => {
-    let toursArr = tgidArray.map(tgid => allTours[tgid]);
+  const getContentNormalizedTours = (tgidArray) => {
+    let toursArr = tgidArray.map((tgid) => allTours[tgid]);
     toursArr = toursArr.reduce((acc, tour, index) => {
       let content = [
         ...tour.contentBlocks.left,
@@ -360,8 +361,8 @@ const TourComparisonTable = props => {
   };
   const tgidArray = tgidsCSV
     .split(',')
-    .map(tgid => parseInt(tgid))
-    .filter(tgid => allTours[tgid]?.available);
+    .map((tgid) => parseInt(tgid))
+    .filter((tgid) => allTours[tgid]?.available);
   if (tgidArray.length === 0) return null;
   const content_normalized_tours = getContentNormalizedTours(tgidArray);
   const [isExpanded, setExpand] = useState(false);
@@ -425,7 +426,9 @@ const TourComparisonTable = props => {
                 return (
                   <div className="column">
                     <div className="tour-cta">
-                      <CommonCTA {...props}>Book Now</CommonCTA>
+                      <CommonCTA {...props}>
+                        ${labels[lang]['BOOK_NOW_CTA']}
+                      </CommonCTA>
                     </div>
                   </div>
                 );
