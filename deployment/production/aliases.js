@@ -1,4 +1,5 @@
 module.exports = [
+  'www.london-theater-tickets.com',
   'www.canal-cruise-amsterdam.com',
   'www.tickets-paris.fr',
   'orsay.tickets-paris.fr',
