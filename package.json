@@ -14,7 +14,7 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "deploy-storybook": "storybook-to-ghpages",
-    "lint": "eslint ."
+    "lint": "lint-staged"
   },
   "dependencies": {
     "@sendgrid/mail": "^6.4.0",
@@ -64,7 +64,7 @@
     "@types/node": "^12.7.1",
     "@types/react": "^16.9.0",
     "@types/react-scroll": "^1.5.4",
-    "babel-eslint": "^10.1.0",
+    "@typescript-eslint/parser": "^2.26.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-styled-components": "^1.10.7",
     "babel-preset-react-app": "^9.1.1",
@@ -77,6 +77,7 @@
     "find-up": "^4.1.0",
     "husky": "^4.2.1",
     "ignore-loader": "~0.1.2",
+    "lint-staged": "^10.1.1",
     "next-purgecss": "^4.0.0",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "prettier": "^2.0.2",
@@ -85,6 +86,9 @@
     "style-loader": "^1.1.3",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.5.3"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
   },
   "husky": {
     "hooks": {
