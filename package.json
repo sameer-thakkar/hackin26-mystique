@@ -7,12 +7,14 @@
   "author": "Aakash Goel",
   "license": "UNLICENSED",
   "scripts": {
+    "dev": "next -p 3001",
     "build": "next build",
     "production": "node ./deployment/production && find now.*.json | xargs -n1 -I {} /bin/bash -c 'now -A {} --scope headout --prod --no-clipboard --debug' && rm -r now.*.json",
     "staging": "node ./deployment/stage && find now.*.json | xargs -n1 -I {} /bin/bash -c 'now -A {} --scope headout --prod --no-clipboard --debug' && rm -r now.*.json",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "deploy-storybook": "storybook-to-ghpages"
+    "deploy-storybook": "storybook-to-ghpages",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@sendgrid/mail": "^6.4.0",
@@ -62,10 +64,15 @@
     "@types/node": "^12.7.1",
     "@types/react": "^16.9.0",
     "@types/react-scroll": "^1.5.4",
+    "babel-eslint": "^10.1.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-styled-components": "^1.10.7",
     "babel-preset-react-app": "^9.1.1",
     "css-loader": "^3.4.2",
+    "eslint": "^6.8.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^3.0.0",
     "extract-css-chunks-webpack-plugin": "^4.7.4",
     "find-up": "^4.1.0",
     "husky": "^4.2.1",
@@ -81,7 +88,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged",
+      "pre-commit": "yarn lint && pretty-quick --staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   }
