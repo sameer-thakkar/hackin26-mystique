@@ -1,17 +1,16 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import Image from '../UI/Image';
-import { GRAPHIK, COLORS } from '../../constants/ui-constants';
 import Swiper from '../Swiper';
+import { GRAPHIK, COLORS } from '../../constants/ui-constants';
 import {
   CHEVRON_LEFT_CIRCLE,
   CLOSE_WHITE,
 } from '../../public/static/svg-icons';
 import { stringIdfy } from '../../utils/helper';
 
-const StyledGallery = styled.div`
+const StyledImageGallery = styled.div`
   display: grid;
   grid-row-gap: 32px;
   width: 100vw;
@@ -103,6 +102,7 @@ const StyledGallery = styled.div`
     }
   }
 `;
+
 const StyledImage = styled.div`
   width: 180px;
   cursor: zoom-in;
@@ -115,7 +115,8 @@ const StyledImage = styled.div`
     width: 164px;
   }
 `;
-const StyledLightbox = styled.div`
+
+const Lightbox = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -199,6 +200,7 @@ const StyledLightbox = styled.div`
     }
   }
 `;
+
 const LightboxImage = styled.div`
   background: ${COLORS.WHITE};
   img {
@@ -218,7 +220,8 @@ const LightboxImage = styled.div`
     }
   }
 `;
-const StyledCaption = styled.div`
+
+const Caption = styled.div`
   font-family: ${GRAPHIK.FONT_STACK};
   padding: 8px;
   padding-bottom: 16px;
@@ -250,8 +253,8 @@ const StyledCaption = styled.div`
  *  - Allows you to credit the owner of the image.
  */
 
-const ImageGallery = props => {
-  const { layout, isMobile, images, heading } = props;
+const ImageGallery = (props) => {
+  const { _layout, isMobile, images, heading } = props;
   const [ligtboxOpen, setLightbox] = useState(false);
   const [initialSlide, setInitialSlide] = useState(0);
   const [lightboxSwiper, getSwiper] = useState(null);
@@ -273,7 +276,7 @@ const ImageGallery = props => {
         lightboxSwiper.off('slideChange', updateIndex);
       }
     };
-  }, [lightboxSwiper, getSwiper]);
+  }, [lightboxSwiper, updateIndex, getSwiper]);
 
   const swiperOpts = {
     slidesPerView: 'auto',
@@ -285,12 +288,20 @@ const ImageGallery = props => {
       nextEl: '.btn-right',
       prevEl: '.btn-left',
     },
-    renderNextButton: () => (
-      <div className="btn btn-right next-slide">{CHEVRON_LEFT_CIRCLE}</div>
-    ),
-    renderPrevButton: () => (
-      <div className="btn btn-left prev-slide">{CHEVRON_LEFT_CIRCLE}</div>
-    ),
+    renderNextButton: function nextButton() {
+      return (
+        <div role="button" tabIndex={0} className="btn btn-right next-slide">
+          {CHEVRON_LEFT_CIRCLE}
+        </div>
+      );
+    },
+    renderPrevButton: function prevButton() {
+      return (
+        <div tabIndex={0} role="button" className="btn btn-left prev-slide">
+          {CHEVRON_LEFT_CIRCLE}
+        </div>
+      );
+    },
   };
   const swiperLightBoxOpts = {
     ...swiperOpts,
@@ -304,13 +315,13 @@ const ImageGallery = props => {
     freeMode: false,
     freeModeMomentum: 1,
   };
-  const openInLightbox = index => {
+  const openInLightbox = (index) => {
     setInitialSlide(index);
     toggleLightbox();
   };
 
   return (
-    <StyledGallery>
+    <StyledImageGallery>
       <div className="heading" id={stringIdfy(heading)}>
         {heading}
       </div>
@@ -321,6 +332,7 @@ const ImageGallery = props => {
               const caption = RichText.asText(image.image_caption);
               return (
                 <StyledImage
+                  key={index}
                   title={caption}
                   onClick={() => openInLightbox(index)}
                 >
@@ -337,8 +349,13 @@ const ImageGallery = props => {
         </div>
       </div>
       {ligtboxOpen ? (
-        <StyledLightbox>
-          <div className="lightbox-mask" onClick={toggleLightbox}></div>
+        <Lightbox>
+          <div
+            className="lightbox-mask"
+            onClick={toggleLightbox}
+            role="button"
+            tabIndex={0}
+          />
           <div className="swiper">
             <div className="header">
               {isMobile ? (
@@ -346,7 +363,12 @@ const ImageGallery = props => {
                   {lightboxIndex + 1}/{images.length}
                 </div>
               ) : null}
-              <div className="close" onClick={toggleLightbox}>
+              <div
+                className="close"
+                onClick={toggleLightbox}
+                role="button"
+                tabIndex={0}
+              >
                 {CLOSE_WHITE}
               </div>
             </div>
@@ -354,21 +376,21 @@ const ImageGallery = props => {
               {images.map((image, index) => {
                 const caption = RichText.asText(image.image_caption);
                 return (
-                  <LightboxImage title={caption}>
+                  <LightboxImage key={index} title={caption}>
                     <Image
                       url={image.uploaded_image?.url || image.linked_image}
                       alt={caption}
                       dontLazyLoad={true}
                     />
-                    <StyledCaption>{caption}</StyledCaption>
+                    <Caption>{caption}</Caption>
                   </LightboxImage>
                 );
               })}
             </Swiper>
           </div>
-        </StyledLightbox>
+        </Lightbox>
       ) : null}
-    </StyledGallery>
+    </StyledImageGallery>
   );
 };
 

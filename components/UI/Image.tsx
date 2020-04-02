@@ -1,10 +1,14 @@
 import React from 'react';
+import { attachQueryParam } from '../../utils/helper';
 
 type ImageProps = {
+  className?: string;
   url: string;
   width?: number | string;
   height?: number | string;
   format?: string;
+  quality?: string | number;
+  aspectRatio?: string;
   imageId?: string;
   dontLazyLoad?: boolean;
   alt?: string;
@@ -14,40 +18,46 @@ const Image: React.FC<ImageProps> = ({
   url,
   width,
   height,
-  format,
+  quality = 100,
+  aspectRatio,
+  format = 'pjgp',
   imageId = '',
   dontLazyLoad = false,
   alt = '',
+  className = '',
 }) => {
-  const getRenderedImage = () => {
-    const makeUrl = (density = 1.5, fm = 'pjpg') => {
-      const w = width ? `&w=${Number(width) * density}` : '';
-      const h = height ? `&h=${Number(height) * density}` : '';
-      if (!url) {
-        return null;
-      }
-      return `${url.replace(
-        /\s/g,
-        '%20'
-      )}?auto=compress&fm=${fm}${w}${h}&crop=faces&fit=min`;
-    };
-    if (!dontLazyLoad)
-      return (
-        <picture>
-          <source type="image/webp" data-srcset={makeUrl(1, 'webp')} />
-          {/* a non-static className (imageId) is required for lazyloading specific classNames to be reset to original on re-render,
-        fixes cards continue showing previous render images */}
-          <img
-            className={`lazyload ${imageId}`}
-            data-src={makeUrl(1, format)}
-            alt={alt}
-          />
-        </picture>
-      );
-    else return <img src={makeUrl(1, format)} alt={alt} />;
+  const makeImageUrl = (fm: string): string => {
+    if (!url) {
+      return null;
+    }
+    const w = width ? `&w=${Number(width) * 1.5}` : '';
+    const h = height ? `&h=${Number(height) * 1.5}` : '';
+    const q = quality ? `&q=${Number(quality)}` : '';
+    const ar = aspectRatio ? `&ar=${aspectRatio}&fit=crop` : '&fit=min';
+    const extractedRect = /rect=[\d,.]*/.exec(url);
+    return attachQueryParam(
+      url,
+      `auto=compress,format&fm=${fm}${w}${h}${q}${ar}&crop=faces&${
+        extractedRect || ''
+      }`,
+      true
+    );
   };
 
-  return <React.Fragment>{getRenderedImage()}</React.Fragment>;
+  if (dontLazyLoad) {
+    return <img className={className} src={makeImageUrl(format)} alt={alt} />;
+  } else {
+    return (
+      <picture className={className}>
+        <source type="image/webp" data-srcset={makeImageUrl('webp')} />
+        <img
+          className={`lazyload ${imageId}`}
+          data-src={makeImageUrl(format)}
+          alt={alt}
+        />
+      </picture>
+    );
+  }
 };
 
 export default Image;

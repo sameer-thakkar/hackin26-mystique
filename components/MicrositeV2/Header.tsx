@@ -1,13 +1,15 @@
 import React, { useContext, useState } from 'react';
 import LanguageSelector from './LanguageSelector';
+import InteractionContext from '../../contexts/Interaction';
+import Image from '../UI/Image';
 import { SearchBox } from './SearchBox';
 import { PAGETYPE } from '../../constants';
 import { SEARCH_ICON, POWERED_BY_HEADOUT } from '../../public/static/svg-icons';
-import InteractionContext from '../../contexts/Interaction';
 import { SearchItem } from './SearchItem';
 import { COLORS, AVENIR, SIZES } from '../../constants/ui-constants';
 import { ResponsiveSelector } from './ResponsiveSelector';
-const Header = props => {
+
+const Header = (props) => {
   const interactionContext = useContext(InteractionContext);
   const [languageDropdown, setLanguageDropdown] = useState(false);
   const [results, setResults] = useState([]);
@@ -16,14 +18,14 @@ const Header = props => {
   const toggleLanguageDropdown = () => {
     setLanguageDropdown(!languageDropdown);
   };
-  const handleResults = results => {
+  const handleResults = (results) => {
     setResults(results);
     setResultClicked(false);
   };
   const loadSearchPage = () => {
     props.changePage({ name: PAGETYPE.SEARCH });
   };
-  const onSearchResultClick = tgid => {
+  const onSearchResultClick = (tgid) => {
     const { clickTour } = interactionContext;
     clickTour(tgid, true);
     setResultClicked(true);
@@ -55,7 +57,7 @@ const Header = props => {
           <div className="header-left">
             <a href={logoRedirectionURL || '/'}>
               <div className="header-logo">
-                <img src={logoUrl} alt={logoAltText} />
+                <Image url={logoUrl} alt={logoAltText} dontLazyLoad={true} />
                 {hasPoweredByHeadoutLogo ? (
                   <span className="poweredBy">{POWERED_BY_HEADOUT}</span>
                 ) : null}
@@ -65,7 +67,7 @@ const Header = props => {
               <div className="header-links">
                 <ResponsiveSelector
                   options={dropdownLinks}
-                  onChange={option => (window.location.href = option.value)}
+                  onChange={(option) => (window.location.href = option.value)}
                   customClassName="header-city-selector"
                 />
               </div>
@@ -84,6 +86,7 @@ const Header = props => {
                       {results.map((experience, index) => {
                         return (
                           <SearchItem
+                            key={index}
                             {...experience}
                             onSearchResultClick={onSearchResultClick}
                           />
@@ -99,6 +102,8 @@ const Header = props => {
             {isMobile && enableSearch && (
               <div
                 className="mobi-search-trigger"
+                role="button"
+                tabIndex={0}
                 onClick={() => {
                   loadSearchPage();
                 }}

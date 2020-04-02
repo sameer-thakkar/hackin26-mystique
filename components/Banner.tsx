@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import { scroller } from 'react-scroll';
-import { BANNER_PARAMS } from '../constants/index';
 import * as labels from '../public/static/localization/labels';
-import { attachQueryParam } from '../utils/helper';
 import Button from './UI/Button';
+import Image from './UI/Image';
 
-const imgixUrl = (url, format, w, ar, q = 75) =>
-  attachQueryParam(
-    url,
-    `auto=compress&w=${w}&fm=${format}&crop=faces&fit=crop&ar=${ar}&q=${q}`
-  );
-
+const BANNER_PARAMS = {
+  DESKTOP: {
+    ASPECT_RATIO: '4.5:1',
+    WIDTH: '1200',
+  },
+  MOBILE: {
+    ASPECT_RATIO: '1:1.07',
+    WIDTH: '500',
+  },
+};
 export default class Banner extends Component<any, any> {
   hasIndicators: boolean;
   MAX_SLIDES: number;
@@ -79,26 +82,20 @@ export default class Banner extends Component<any, any> {
     this.autoSlide();
   };
 
-  renderBanners = image => {
+  renderBanners = (image) => {
     const { url, alt } = image;
     const { isMobile } = this.state;
     const { ASPECT_RATIO, WIDTH } = isMobile
       ? BANNER_PARAMS.MOBILE
       : BANNER_PARAMS.DESKTOP;
+
     return (
-      <picture>
-        <source
-          type="image/webp"
-          data-srcset={imgixUrl(url, 'webp', WIDTH, ASPECT_RATIO)}
-          srcSet={imgixUrl(url, 'webp', WIDTH, ASPECT_RATIO, 10)}
-        ></source>
-        <img
-          className="lazyload"
-          data-src={imgixUrl(url, 'pjpg', WIDTH, ASPECT_RATIO)}
-          src={imgixUrl(url, 'pjpg', WIDTH, ASPECT_RATIO, 10)}
-          alt={alt || 'banner'}
-        />
-      </picture>
+      <Image
+        width={WIDTH}
+        aspectRatio={ASPECT_RATIO}
+        url={url}
+        alt={alt || 'banner'}
+      />
     );
   };
 
@@ -148,16 +145,18 @@ export default class Banner extends Component<any, any> {
         </div>
         {this.hasIndicators && bannerImages.length > 1 ? (
           <div className="indicators">
-            {bannerImages.map((banner, index) => (
+            {bannerImages.map((_banner, index) => (
               <div
                 key={index}
+                role="button"
+                tabIndex={0}
                 className={classNames('indicator', {
                   active: this.activeSlideIndex == index,
                 })}
                 onClick={() => {
                   this.slideTo(index);
                 }}
-              ></div>
+              />
             ))}
           </div>
         ) : null}

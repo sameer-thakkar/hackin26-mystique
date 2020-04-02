@@ -109,17 +109,6 @@ export const PAGETYPE = {
   MOBILE_PRODUCT_PAGE: 'MOBILE_PRODUCT_PAGE',
 };
 
-export const BANNER_PARAMS = {
-  DESKTOP: {
-    ASPECT_RATIO: '4:1.8',
-    WIDTH: '1200',
-  },
-  MOBILE: {
-    ASPECT_RATIO: '1:1:07',
-    WIDTH: '500',
-  },
-};
-
 export const POWERED_BY_HEADOUT_LOGO =
   'https://cdn-imgix-open.headout.com/Powered%20By%20Headout/powered-by-logo.svg';
 
@@ -148,7 +137,7 @@ export const COMMON_HEADER_PROPS: string[] = [
   'localization',
   'enable_localization_menu',
   'group_booking_disclaimer',
-].map(prop => `${CUSTOM_TYPES.HEADER}.${prop}`);
+].map((prop) => `${CUSTOM_TYPES.HEADER}.${prop}`);
 
 export const LINKED_MICROSITE_PROPS: string[] = [
   'redirect_url',
@@ -173,7 +162,7 @@ export const LINKED_MICROSITE_PROPS: string[] = [
   'alert_popup',
   'show_covid19_alert',
   'page_url',
-].map(prop => `${CUSTOM_TYPES.MICROSITE}.${prop}`);
+].map((prop) => `${CUSTOM_TYPES.MICROSITE}.${prop}`);
 
 export const MICROSITE_STRING_KEYS: string[] = [
   'title',

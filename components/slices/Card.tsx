@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import Swiper from '../Swiper';
+import Image from '../UI/Image';
 import Button from '../UI/Button';
 import { COLORS, GRAPHIK, AVENIR } from '../../constants/ui-constants';
 
@@ -9,24 +10,24 @@ const variantStyles = {
   desktop: {
     gridTemplateColumns: '49% 51%',
     img: {
-      height: '382px',
+      height: '382',
     },
   },
   column: {
     gridTemplateColumns: '100%',
     img: {
-      height: '382px',
+      height: '382',
     },
   },
   mobile: {
     gridTemplateColumns: '100%',
     img: {
-      height: '223px',
+      height: '223',
     },
   },
 };
 
-const StyledCard = styled.div(props => {
+const StyledCard = styled.div((props) => {
   const styles = props.isMobile
     ? variantStyles.mobile
     : variantStyles[props.type];
@@ -38,12 +39,12 @@ const StyledCard = styled.div(props => {
   border: 1px solid ${COLORS.CHALK};
   grid-template-columns: ${styles.gridTemplateColumns};
   color: ${COLORS.DAVY_GREY};
-  height: 100%;
+  height: ${props.type === 'desktop' ? `${styles.img.height}px` : `100%`};
   .flex{
     display: flex;
   }
   img {
-    height: ${styles.img.height};
+    height: ${styles.img.height}px;
     object-fit: cover;
     width: 100%;
   }
@@ -148,7 +149,7 @@ const Card: React.FC<CardProps> = ({
       default:
         break;
     }
-  }, [setIsMobile]);
+  }, [type, setIsMobile]);
 
   const swiperParams = {
     pagination: {
@@ -165,14 +166,28 @@ const Card: React.FC<CardProps> = ({
       imageView = null;
       break;
     case 1:
-      imageView = <img src={images[0].url} alt={images[0].alt} />;
+      imageView = (
+        <Image
+          url={images[0].url}
+          alt={images[0].alt}
+          height={variantStyles[type].img.height}
+        />
+      );
       break;
     default:
       imageView = (
         <StyledSwiperWrapper>
           <Swiper {...swiperParams}>
             {images.map((image, index) => {
-              return <img key={index} src={image.url} alt={image.alt} />;
+              return (
+                <Image
+                  className="swiper-slide"
+                  key={index}
+                  url={image.url}
+                  alt={image.alt}
+                  height={variantStyles[type].img.height}
+                />
+              );
             })}
           </Swiper>
         </StyledSwiperWrapper>

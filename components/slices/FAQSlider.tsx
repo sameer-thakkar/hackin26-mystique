@@ -20,7 +20,7 @@ const StyledFAQSlider = styled.div`
   }
 `;
 
-const StyledSliderWrapper = styled.div`
+const SliderWrapper = styled.div`
   display: grid;
   overflow: hidden;
   max-height: 368px;
@@ -40,7 +40,7 @@ const StyledSliderWrapper = styled.div`
   }
 `;
 
-const StyledFAQWrap = styled.div`
+const FAQWrap = styled.div`
   .faq-item {
     padding: 16px 0;
     margin-right: 24px;
@@ -70,7 +70,7 @@ const StyledFAQWrap = styled.div`
   }
 `;
 
-const StyledTextBlock = styled.div`
+const TextBlock = styled.div`
   display: ${({ isOpen }) => (isOpen ? 'grid' : 'none')};
   grid-row-gap: 8px;
   font-family: ${GRAPHIK.FONT_STACK};
@@ -84,9 +84,7 @@ const StyledTextBlock = styled.div`
     width: 100%;
   }
 `;
-const StyledSingleImage = styled.div`
-  display: flex
-  max-height: 368px;
+const SingleImage = styled.div`
   width: auto;
   display: grid;
   img {
@@ -95,7 +93,7 @@ const StyledSingleImage = styled.div`
     display: flex;
     object-fit: cover;
   }
-  @media (max-width: 768px){
+  @media (max-width: 768px) {
     max-height: 195px;
     margin-bottom: 16px;
   }
@@ -119,36 +117,40 @@ const StyledSingleImage = styled.div`
  *   Answer: Enter the FAQ Answer Here.
  *
  */
-const FAQSlider = props => {
+const FAQSlider = (props) => {
   const { faqs, sliceProps } = props;
   const { isMobile } = sliceProps;
   const [openFAQIndex, setOpenIndex] = useState(0);
   const images = faqs[openFAQIndex].images;
+
   return (
     <StyledFAQSlider>
       {!isMobile && openFAQIndex >= 0 ? (
-        <StyledSliderWrapper>
+        <SliderWrapper>
           {images.length > 1 ? (
             <Slider images={images} id={Math.random()} />
           ) : (
-            <StyledSingleImage>
+            <SingleImage>
               <Image
+                height={500}
                 imageId={images[0]?.alt}
                 dontLazyLoad={true}
                 url={images[0]?.url}
                 alt={images[0]?.alt}
               />
-            </StyledSingleImage>
+            </SingleImage>
           )}
-        </StyledSliderWrapper>
+        </SliderWrapper>
       ) : null}
 
-      <StyledFAQWrap>
+      <FAQWrap>
         {faqs.map((faqItem, index) => {
           const isOpen = index == openFAQIndex;
           return (
-            <div className="faq-item">
+            <div className="faq-item" key={index}>
               <div
+                role="button"
+                tabIndex={0}
                 className="question"
                 onClick={() => {
                   setOpenIndex(index);
@@ -159,24 +161,24 @@ const FAQSlider = props => {
                   <Chevron isActive={isOpen} />
                 </div>
               </div>
-              <StyledTextBlock isOpen={isOpen}>
+              <TextBlock isOpen={isOpen}>
                 {isMobile && isOpen ? (
-                  <StyledSliderWrapper>
+                  <SliderWrapper>
                     <Slider
                       images={faqs[openFAQIndex].images}
                       id={Math.random()}
                       isMobile={isMobile}
                     />
-                  </StyledSliderWrapper>
+                  </SliderWrapper>
                 ) : null}
                 <div className="answer-content">
                   <RichText render={faqItem.answer} />
                 </div>
-              </StyledTextBlock>
+              </TextBlock>
             </div>
           );
         })}
-      </StyledFAQWrap>
+      </FAQWrap>
     </StyledFAQSlider>
   );
 };

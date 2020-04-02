@@ -1,19 +1,19 @@
 import parse from 'url-parse';
 import { parsePhoneNumberFromString as parseMobile } from 'libphonenumber-js/mobile';
 
-export const withoutTrailingSlash = url =>
+export const withoutTrailingSlash = (url) =>
   url.charAt(url.length - 1) === '/' ? url.substr(0, url.length - 1) : url;
 
 export const isMobileDevice = () => {
   return document.documentElement.clientWidth < 768;
 };
 
-export const validateEmail = email => {
-  let regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+export const validateEmail = (email) => {
+  let regEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return regEx.test(String(email).toLowerCase());
 };
 
-export const validateFullName = fullName => {
+export const validateFullName = (fullName) => {
   const parts = fullName.trim().split(' ');
   const hasAtLeastTwoParts = parts.length >= 2;
   let hasAtLeastOneNonInitial = false;
@@ -27,7 +27,7 @@ export const validateFullName = fullName => {
   return hasAtLeastTwoParts && hasAtLeastOneNonInitial;
 };
 
-export const isFeildSelected = field => !(field.length === 0);
+export const isFeildSelected = (field) => !(field.length === 0);
 
 export const isGroupValid = (adults, children, minPax, maxPax) => {
   return +adults + +children < +minPax
@@ -37,7 +37,7 @@ export const isGroupValid = (adults, children, minPax, maxPax) => {
     : '';
 };
 
-export const checkPhoneNumberValidity = phoneWithCountryCode => {
+export const checkPhoneNumberValidity = (phoneWithCountryCode) => {
   const { phone, countryDialCode } = phoneWithCountryCode;
   if (phone === countryDialCode || !countryDialCode || !phone) {
     return false;
@@ -55,13 +55,13 @@ export const checkPhoneNumberValidity = phoneWithCountryCode => {
   return false;
 };
 
-export const fetchUserGeoLocation = url =>
+export const fetchUserGeoLocation = (url) =>
   fetch(url)
-    .then(response => response.json())
-    .then(json => {
+    .then((response) => response.json())
+    .then((json) => {
       return json.country;
     })
-    .catch(err => {
+    .catch((err) => {
       return err;
     });
 
@@ -70,15 +70,15 @@ export const createGroupBooking = (url, data) => {
     method: 'POST',
     body: JSON.stringify(data),
   })
-    .then(response => 'Successful')
-    .catch(error => `Error: ${error}`);
+    .then(() => 'Successful')
+    .catch((error) => `Error: ${error}`);
 };
 export const isMobile = () => {
   return document.documentElement.clientWidth < 768;
 };
 
 export const docCookies = {
-  getItem: function(sKey) {
+  getItem: function (sKey) {
     if (!sKey) {
       return null;
     }
@@ -87,7 +87,7 @@ export const docCookies = {
         document.cookie.replace(
           new RegExp(
             '(?:(?:^|.*;)\\s*' +
-              encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, '\\$&') +
+              encodeURIComponent(sKey).replace(/[-.+*]/g, '\\$&') +
               '\\s*\\=\\s*([^;]*).*$)|^.*$'
           ),
           '$1'
@@ -95,8 +95,8 @@ export const docCookies = {
       ) || null
     );
   },
-  setItem: function(sKey, sValue, vEnd, sPath, sDomain, bSecure) {
-    if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) {
+  setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure) {
+    if (!sKey || /^(?:expires|max-age|path|domain|secure)$/i.test(sKey)) {
       return false;
     }
     var sExpires = '';
@@ -135,7 +135,7 @@ export const docCookies = {
       (bSecure ? '; secure' : '');
     return true;
   },
-  removeItem: function(sKey, sPath, sDomain) {
+  removeItem: function (sKey, sPath, sDomain) {
     if (!this.hasItem(sKey)) {
       return false;
     }
@@ -146,20 +146,20 @@ export const docCookies = {
       (sPath ? '; path=' + sPath : '');
     return true;
   },
-  hasItem: function(sKey) {
-    if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) {
+  hasItem: function (sKey) {
+    if (!sKey || /^(?:expires|max-age|path|domain|secure)$/i.test(sKey)) {
       return false;
     }
     return new RegExp(
       '(?:^|;\\s*)' +
-        encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, '\\$&') +
+        encodeURIComponent(sKey).replace(/[-.+*]/g, '\\$&') +
         '\\s*\\='
     ).test(document.cookie);
   },
-  keys: function() {
+  keys: function () {
     var aKeys = document.cookie
-      .replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, '')
-      .split(/\s*(?:\=[^;]*)?;\s*/);
+      .replace(/((?:^|\s*;)[^=]+)(?=;|$)|^\s*|\s*(?:=[^;]*)?(?:\1|$)/g, '')
+      .split(/\s*(?:=[^;]*)?;\s*/);
     for (var nLen = aKeys.length, nIdx = 0; nIdx < nLen; nIdx++) {
       aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]);
     }
@@ -167,7 +167,7 @@ export const docCookies = {
   },
 };
 
-export const getUID = url => {
+export const getUID = (url) => {
   const { hostname, pathname } = parse(url, true);
   const uid = `${hostname}${withoutTrailingSlash(pathname).replace(
     /\//g,
@@ -189,10 +189,10 @@ const slicesSorter = (a, b) => {
     return -1;
   }
 };
-const autoClose = slices => {
+const autoClose = (slices) => {
   const allSlices = [];
   let currentOpen;
-  slices.forEach((slice, index) => {
+  slices.forEach((slice) => {
     if (currentOpen) {
       const thisSliceType = slice.slice_type;
       const currentCloseSignature = currentOpen.replace(/___start$/, '___end');
@@ -220,14 +220,14 @@ const autoClose = slices => {
   return allSlices;
 };
 
-export const groupSlices = slices => {
+export const groupSlices = (slices) => {
   const groups = { slices: [] };
   let ref: any = groups;
   const autoClosedSlices = autoClose(slices);
   let repeatables: any = {
     items: [],
   };
-  autoClosedSlices.forEach(slice => {
+  autoClosedSlices.forEach((slice) => {
     if (/___repeatable$/.exec(slice.slice_type)) {
       repeatables.slice_type = slice.slice_type.replace(/___repeatable$/, '');
       repeatables.items = [...repeatables.items, { ...slice }];
@@ -259,23 +259,28 @@ export const groupSlices = slices => {
   return groups.slices;
 };
 
-export const attachQueryParam = (url, queryString) => {
+export const attachQueryParam = (
+  url,
+  queryString,
+  replaceExistingParams = false
+) => {
   if (url.includes('?')) {
+    if (replaceExistingParams) {
+      return `${url.split('?')[0]}?${queryString}`;
+    }
     return `${url}&${queryString}`;
   }
   return `${url}?${queryString}`;
 };
-export const stringIdfy = string => {
-  return string
-    .trim()
-    .replace(/\s/g, '-')
-    .toLowerCase();
+
+export const stringIdfy = (string) => {
+  return string.trim().replace(/\s/g, '-').toLowerCase();
 };
 
-export const csvTgidToArray = csv => {
+export const csvTgidToArray = (csv) => {
   if (!csv) csv = '';
   return csv
     .split(',')
-    .map(t => parseInt(t.trim()))
-    .filter(t => t > 0);
+    .map((t) => parseInt(t.trim()))
+    .filter((t) => t > 0);
 };

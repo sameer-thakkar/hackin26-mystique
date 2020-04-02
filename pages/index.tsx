@@ -16,6 +16,7 @@ import {
 } from '../constants';
 import { redirectTo, getPrismicProps, reflect } from '../utils';
 import 'lazysizes';
+import 'lazysizes/plugins/attrchange/ls.attrchange';
 import '../public/static/styles.css';
 import { uncategorizedToursListParser } from '../utils/DataParsers';
 import { MBContextProvider } from '../contexts/MBContext';
