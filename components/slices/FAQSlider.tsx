@@ -134,7 +134,6 @@ const FAQSlider = (props) => {
               <Image
                 height={500}
                 imageId={images[0]?.alt}
-                dontLazyLoad={true}
                 url={images[0]?.url}
                 alt={images[0]?.alt}
               />

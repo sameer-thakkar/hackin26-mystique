@@ -7,7 +7,6 @@ const StyledChevron = styled.div`
   height: 1.25em;
   display: inline-block;
   position: relative;
-  cursor: pointer;
   &::before,
   &::after {
     content: '';
@@ -39,12 +38,13 @@ const StyledChevron = styled.div`
     &::after {
       -webkit-transform: rotate(45deg);
               transform: rotate(45deg);
-    }`
-      : '';
+    }
+    cursor: not-allowed;`
+      : 'cursor: pointer;';
   }}
 `;
 
-const Chevron = props => {
+const Chevron = (props) => {
   return <StyledChevron {...props}></StyledChevron>;
 };
 

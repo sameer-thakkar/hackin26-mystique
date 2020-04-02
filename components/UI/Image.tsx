@@ -18,7 +18,7 @@ const Image: React.FC<ImageProps> = ({
   url,
   width,
   height,
-  quality = 100,
+  quality = 75,
   aspectRatio,
   format = 'pjgp',
   imageId = '',
