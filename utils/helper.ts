@@ -189,32 +189,52 @@ const slicesSorter = (a, b) => {
     return -1;
   }
 };
+class Stack extends Array {
+  peek() {
+    return this[this.length - 1];
+  }
+}
+const genClosingSlice = (slice_type) => ({
+  slice_type: slice_type.replace(/___start$/, '___end'),
+});
+const getOpeningSlice = (slice_type) => ({
+  slice_type: slice_type.replace(/___end$/, '___start'),
+});
+const isClosingSlice = (slice_type) => /___end/.exec(slice_type);
+
 const autoClose = (slices) => {
   const allSlices = [];
-  let currentOpen;
+  const sliceTracker = new Stack();
   slices.forEach((slice) => {
-    if (currentOpen) {
-      const thisSliceType = slice.slice_type;
-      const currentCloseSignature = currentOpen.replace(/___start$/, '___end');
-      const isManuallyClosedSlice = thisSliceType === currentCloseSignature;
-      const isClosingSlice = /___end/.exec(slice.slice_type);
-      // Ignore Manual Closed, Check if adjacent (same level) slice was opened or parent closed.
-      if (
-        !isManuallyClosedSlice &&
-        (thisSliceType === currentOpen || isClosingSlice)
-      ) {
-        // TODO: Start using stack to keep track of opened sections (below, hack for closing multi-level open sections
-        const isAlreadyClosed =
-          allSlices[allSlices.length - 1].slice_type === currentCloseSignature;
-        if (!isAlreadyClosed)
+    const thisSliceType = slice.slice_type;
+    if (sliceTracker.peek()) {
+      if (thisSliceType === sliceTracker.peek()) {
+        allSlices.push(genClosingSlice(sliceTracker.peek()));
+        sliceTracker.pop();
+      }
+    }
+    if (isClosingSlice(thisSliceType)) {
+      if (thisSliceType === genClosingSlice(sliceTracker.peek()).slice_type)
+        sliceTracker.pop();
+      else {
+        while (
+          sliceTracker.peek() &&
+          sliceTracker.indexOf(getOpeningSlice(thisSliceType).slice_type) >
+            -1 &&
+          thisSliceType !== genClosingSlice(sliceTracker.peek()).slice_type
+        ) {
           allSlices.push({
-            slice_type: currentOpen.replace(/___start$/, '___end'),
+            ...genClosingSlice(sliceTracker.peek()),
+            by: 'loop',
           });
+          sliceTracker.pop();
+        }
+        sliceTracker.pop();
       }
     }
     allSlices.push(slice);
-    if (/___start$/.exec(slice.slice_type)) {
-      currentOpen = slice.slice_type;
+    if (/___start$/.exec(thisSliceType)) {
+      sliceTracker.push(thisSliceType);
     }
   });
   return allSlices;
