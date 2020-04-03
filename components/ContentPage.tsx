@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import classNames from 'classnames';
+import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 import Header from './common/Header';
 import sliceHandler from './Slices';
@@ -18,6 +18,13 @@ import { InteractionContextProvider } from '../contexts/Interaction';
 import { tourListApiParser } from '../utils/DataParsers';
 
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
+
+const ContentWrapper = styled.main`
+  margin-top: 80px;
+  @media (max-width: 768px) {
+    margin-top: 56px;
+  }
+`;
 
 export default class ContentPage extends Component<any, any> {
   constructor(props) {
@@ -44,8 +51,8 @@ export default class ContentPage extends Component<any, any> {
     const { microsite } = data;
     const { all_tours } = microsite?.data;
     const allTourTgids = all_tours
-      .filter(tour_slice => tour_slice?.primary?.tgid)
-      .map(tour_slice => tour_slice.primary.tgid);
+      .filter((tour_slice) => tour_slice?.primary?.tgid)
+      .map((tour_slice) => tour_slice.primary.tgid);
     this.setState({
       ...this.state,
       isMobile: window.innerWidth < 768,
@@ -55,7 +62,7 @@ export default class ContentPage extends Component<any, any> {
         `https://api.headout.com/api/v5/tour-group/list?ids[]=${[
           ...allTourTgids,
         ]}`
-      ).then(res => {
+      ).then((res) => {
         return res.json();
       });
 
@@ -79,8 +86,8 @@ export default class ContentPage extends Component<any, any> {
         body1,
       } = res.results[0].data;
       let tours = body1[0]?.items || [];
-      let filteredTours = tours.filter(function(tour) {
-        return !groupBookingExcludedTgids.find(function(excludedTour) {
+      let filteredTours = tours.filter(function (tour) {
+        return !groupBookingExcludedTgids.find(function (excludedTour) {
           return tour.tgid === excludedTour.tgid;
         });
       });
@@ -88,7 +95,7 @@ export default class ContentPage extends Component<any, any> {
         `https://api.headout.com/api/v5/tour-group/list?ids[]=${[
           ...filteredTours,
         ]}`
-      ).then(res => {
+      ).then((res) => {
         return res.json();
       });
 
@@ -104,7 +111,7 @@ export default class ContentPage extends Component<any, any> {
         {}
       );
 
-      filteredTours.map(async (tour, index) => {
+      filteredTours.map(async (tour) => {
         if (!tour.tour_title_override) {
           groupBookingTourTitles.push({
             value: groupBookingTourData[tour.tgid].name + ` [${tour.tgid}]`,
@@ -164,7 +171,6 @@ export default class ContentPage extends Component<any, any> {
   render() {
     const { groupBookingTourTitles, currency, tourAPIData } = this.state;
     const {
-      featured,
       data,
       first_publication_date: datePublished,
       last_publication_date: dateModified,
@@ -194,7 +200,7 @@ export default class ContentPage extends Component<any, any> {
     const CFWBody = contentFramework?.data?.body;
     const contentFWSlices = groupSlices(CFWBody || []);
 
-    // Data extraction for populating head
+    // START Data extraction for populating head
     const contentPageHasOtherMetaTags = data.other_meta_tags.filter(
       ({ meta_tag }) => meta_tag
     );
@@ -242,6 +248,7 @@ export default class ContentPage extends Component<any, any> {
         : microsite_document_ref.other_meta_tags,
       faq_schema: this.props.data.faq_schema,
     };
+    // END Data extraction for populating head
 
     const {
       enable_group_booking: enableGroupBooking,
@@ -261,12 +268,25 @@ export default class ContentPage extends Component<any, any> {
       minimum_pax: minimumPax,
       maximum_pax: maximumPax,
       group_form_blocked_days: blockedDays,
-      enable_powered_by_headout_logo: hasPoweredByHeadoutLogo,
       page_url: pageUrl,
       alert_popup: alertPopup,
       show_covid19_alert: showCovid19Alert,
     } = microsite_document_ref.data;
 
+    const {
+      featured_image,
+      featured_image_link,
+      featured_image_alt,
+      featured_title: featuredTitle,
+    } = data;
+    const featuredImage = {
+      url: featured_image_link.url || featured_image.url,
+      alt: featured_image_alt || featured_image.alt,
+    };
+
+    const hasPoweredByHeadoutLogo =
+      commonHeader.data.enable_powered_by_headout_logo ||
+      microsite_document_ref.data.enable_powered_by_headout_logo;
     const showGroupBooking = enableGroupBooking === 'Yes';
     const currentLanguage = lang.split('-')[0];
 
@@ -323,13 +343,13 @@ export default class ContentPage extends Component<any, any> {
             handleClose={this.handleClose}
           />
         ) : null}
-        <main
-          className={classNames({
-            'content-wrapper': !featured.image.url,
-          })}
-        >
-          {featured.image.url && (
-            <Masthead title={featured.title} image={featured.image.url} />
+        <ContentWrapper>
+          {featuredImage.url && (
+            <Masthead
+              title={featuredTitle}
+              image={featuredImage}
+              isMobile={this.state.isMobile}
+            />
           )}
           {alertPopup ? (
             <Alert
@@ -356,7 +376,7 @@ export default class ContentPage extends Component<any, any> {
               </InteractionContextProvider>
             </ProductsContextProvider>
           </div>
-        </main>
+        </ContentWrapper>
         <Footer
           currentLanguage={currentLanguage}
           attraction={commonFooter?.data?.attraction || 'attraction'}

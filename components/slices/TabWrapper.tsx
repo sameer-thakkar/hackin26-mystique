@@ -56,7 +56,7 @@ const StyledTab = styled.div`
 type TabWrapperProps = {
   heading: String;
   slices: Array<any>;
-  sliceProps: Object;
+  sliceProps?: Object;
 };
 
 /**
@@ -89,7 +89,7 @@ type TabWrapperProps = {
 const TabWrapper = (props: TabWrapperProps) => {
   const { heading, slices, sliceProps: parentSliceProps } = props;
   const default_from_prismic = slices.filter(
-    slice => slice.primary.is_default == 'Yes'
+    (slice) => slice.primary.is_default == 'Yes'
   );
   const defaultTab = stringIdfy(
     (default_from_prismic[0] || slices[0])?.primary?.title || ''
@@ -108,6 +108,7 @@ const TabWrapper = (props: TabWrapperProps) => {
           const tabId = stringIdfy(slice.primary.title);
           return (
             <StyledTab
+              key={index}
               isActive={activeTabId == tabId}
               onClick={() => setActiveTab(tabId)}
             >
@@ -117,7 +118,7 @@ const TabWrapper = (props: TabWrapperProps) => {
         })}
       </div>
       <div className="tab-content-wrap">
-        {slices.map((slice, index) => {
+        {slices.map((slice) => {
           return sliceHandler(slice, sliceProps);
         })}
       </div>

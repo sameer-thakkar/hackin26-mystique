@@ -2366,7 +2366,6 @@ form.form {
 }
 .subpage-container a {
   text-decoration: none;
-  color: #ec1943;
 }
 
 .selected-nav-tab {
@@ -2906,10 +2905,6 @@ h6 {
 .swiper-pagination-custom,
 .swiper-pagination-fraction {
   width: unset;
-}
-
-.content-wrapper {
-  margin-top: 90px;
 }
 
 .description-table {

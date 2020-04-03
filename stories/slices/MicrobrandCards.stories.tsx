@@ -1,7 +1,6 @@
 import React from 'react';
 import MicrobrandCards from '../../components/slices/MicrobrandCards';
 import { repeat } from '../../utils/storybook';
-import '../../public/static/global.css';
 
 export default {
   title: 'Slices/Microbrand Cards',

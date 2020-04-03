@@ -1,7 +1,6 @@
 import React from 'react';
 import FAQSlider from '../../components/slices/FAQSlider';
-
-import '../../public/static/styles.css';
+import '../../style/global.css';
 
 export default {
   title: 'Slices/FAQSlider',
@@ -74,24 +73,15 @@ const data = {
 };
 
 export const FAQSingleImage = () => {
-  const singleImageFAQs = data.faqs.filter(faq => faq.images.length === 1);
-  const label = 'Mobile View';
-  const defaultValue = false;
-  const groupId = 'GROUP-ID1';
+  const singleImageFAQs = data.faqs.filter((faq) => faq.images.length === 1);
   return <FAQSlider {...data} faqs={singleImageFAQs} />;
 };
 
 export const FAQMultiImage = () => {
-  const multiImageFAQs = data.faqs.filter(faq => faq.images.length > 1);
-  const label = 'Mobile View';
-  const defaultValue = false;
-  const groupId = 'GROUP-ID1';
+  const multiImageFAQs = data.faqs.filter((faq) => faq.images.length > 1);
   return <FAQSlider {...data} faqs={multiImageFAQs} />;
 };
 
 export const FAQSliderComplete = () => {
-  const label = 'Mobile View';
-  const defaultValue = false;
-  const groupId = 'GROUP-ID1';
   return <FAQSlider {...data} />;
 };

@@ -1,6 +1,5 @@
 import React from 'react';
 import TicketCards from '../../components/slices/TicketCards';
-import '../../public/static/global.css';
 
 export default {
   title: 'Slices/Ticket Cards',

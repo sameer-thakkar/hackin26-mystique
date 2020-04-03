@@ -1,7 +1,7 @@
 import React from 'react';
 import TableV2 from '../../components/slices/TableV2';
 import useWindowSize from '../../components/hooks/useWindowSize';
-import '../../public/static/styles.css';
+import '../../style/global.css';
 
 export default {
   title: 'Slices/Tables',

@@ -1,20 +1,58 @@
-import React from "react";
-import { attachQueryParam } from "../utils/helper";
+import React from 'react';
+import styled from 'styled-components';
+import Image from './UI/Image';
 
-const Masthead = props => {
-  const { title, image } = props;
+const StyledMasthead = styled.div`
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  overflow-x: hidden;
+  img {
+    width: 100vw;
+    height: 400px;
+    filter: brightness(0.7);
+    object-fit: cover;
+  }
+  @media (max-width: 768px) {
+    img {
+      height: 300px;
+    }
+  }
+`;
+
+const Title = styled.h1`
+  position: absolute;
+  top: 50%;
+  color: white;
+  font-family: Graphik;
+  font-weight: 600;
+  font-size: 2rem;
+  @media (max-width: 768px) {
+    text-align: center;
+    top: 42%;
+    font-weight: 600;
+    font-size: 1.5rem;
+  }
+`;
+
+const Masthead: React.FC<{
+  title: string;
+  image: { url: string; alt: string };
+  isMobile: boolean;
+}> = (props) => {
+  const { title, image, isMobile } = props;
   return (
-    <div className="banner">
-      <img
-        src={attachQueryParam(image, "q=10")}
-        data-src={image}
-        alt="banner"
-        className="lazyload"
+    <StyledMasthead>
+      <Image
+        url={image.url}
+        alt={image.alt}
+        width={isMobile ? 800 : 1200}
+        height={isMobile ? 300 : 400}
       />
-      <div className="banner-text">
-        <h1>{title}</h1>
-      </div>
-    </div>
+      <Title>{title}</Title>
+    </StyledMasthead>
   );
 };
 

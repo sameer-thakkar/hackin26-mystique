@@ -2,7 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { getUID } from '../utils/helper';
-import '../public/static/styles.css';
+import '../style/global.css';
 
 export default class CreateUID extends React.Component<any, any> {
   constructor(props) {

@@ -2,10 +2,10 @@ import { addParameters, addDecorator } from '@storybook/react';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import { ThemeProvider } from 'styled-components';
 import { DocsPage } from '@storybook/addon-docs/blocks';
-import theme from '../theme';
+import theme from '../style/theme';
 import 'lazysizes';
 
-addDecorator(storyFn => (
+addDecorator((storyFn) => (
   <ThemeProvider theme={theme}>{storyFn()}</ThemeProvider>
 ));
 

@@ -9,7 +9,7 @@ import { Client } from '../prismic-config';
 import { DROPDOWN_ELEMENT, CUSTOM_TYPES } from '../constants';
 import { MinimalHelmet } from '../components/common/meta';
 import 'lazysizes';
-import '../public/static/styles.css';
+import '../style/global.css';
 
 const Title = styled.div`
   margin: 10px 0px;
@@ -60,7 +60,7 @@ export default class privacy extends Component<any, any> {
     return { response, host, uid };
   }
 
-  handleDropdownToggle = elementIdentifier => {
+  handleDropdownToggle = (elementIdentifier) => {
     switch (elementIdentifier) {
       case DROPDOWN_ELEMENT.HAMBURGER: {
         this.setState({
@@ -160,12 +160,12 @@ export default class privacy extends Component<any, any> {
             Information and Personally Identifiable Information.
             <ul>
               <li>
-                "Non Personal Information" is information that is not personally
+                {`"Non Personal Information" is information that is not personally
                 identifiable to you and that we automatically collect when you
-                access our Website with a web browser.
+                access our Website with a web browser.`}
               </li>
               <li>
-                "Personally Identifiable Information" is non-public information
+                {`"Personally Identifiable Information" is non-public information
                 that is personally identifiable to you and obtained in order for
                 us to provide you within access to certain features of our
                 Website. This can include information about your Entity as a
@@ -178,7 +178,7 @@ export default class privacy extends Component<any, any> {
                 information that you may present when making a purchase from a
                 Provider through our Website (please note the important
                 exception below under Online Purchases regarding payment
-                information provided through our Website).
+                information provided through our Website).`}
               </li>
             </ul>
           </Paragraph>
@@ -384,13 +384,13 @@ export default class privacy extends Component<any, any> {
           </Paragraph>
           <SubHeading>Privacy Policy Updates</SubHeading>
           <Paragraph>
-            We reserves the right to modify this Privacy Policy at any time. You
+            {`We reserves the right to modify this Privacy Policy at any time. You
             should review this Privacy Policy frequently. If we make material
             changes to this policy, we will notify you here, by email, or by
             means of a notice on our home page. We will also change the "Last
             Updated" date at the beginning of this Privacy Policy. Any changes
             we make to our Privacy Policy are effective as of this Last Updated
-            date and replace any prior Privacy Policies.
+            date and replace any prior Privacy Policies.`}
           </Paragraph>
           <SubHeading>Changing Your Information</SubHeading>
           <Paragraph>

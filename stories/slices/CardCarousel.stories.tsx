@@ -1,6 +1,6 @@
 import React from 'react';
 import CardCarousel from '../../components/slices/CardCarousel';
-import '../../public/static/styles.css';
+import '../../style/global.css';
 
 export default {
   title: 'Slices/Card Carousel',

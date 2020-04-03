@@ -8,7 +8,7 @@ import { Client } from '../prismic-config';
 import { DROPDOWN_ELEMENT } from '../constants';
 import { MinimalHelmet } from '../components/common/meta';
 import 'lazysizes';
-import '../public/static/styles.css';
+import '../style/global.css';
 
 export default class companyDetails extends Component<any, any> {
   state = {
@@ -54,7 +54,7 @@ export default class companyDetails extends Component<any, any> {
     return { response };
   }
 
-  handleDropdownToggle = elementIdentifier => {
+  handleDropdownToggle = (elementIdentifier) => {
     switch (elementIdentifier) {
       case DROPDOWN_ELEMENT.HAMBURGER: {
         this.setState({

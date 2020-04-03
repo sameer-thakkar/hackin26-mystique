@@ -31,6 +31,7 @@ const StyledCard = styled.div((props) => {
   const styles = props.isMobile
     ? variantStyles.mobile
     : variantStyles[props.type];
+  const type = props.isMobile ? 'mobile' : props.type;
   return `
   display: grid;
   align-content: start;
@@ -39,7 +40,7 @@ const StyledCard = styled.div((props) => {
   border: 1px solid ${COLORS.CHALK};
   grid-template-columns: ${styles.gridTemplateColumns};
   color: ${COLORS.DAVY_GREY};
-  height: ${props.type === 'desktop' ? `${styles.img.height}px` : `100%`};
+  height: ${type === 'desktop' ? `${styles.img.height}px` : `100%`};
   .flex{
     display: flex;
   }

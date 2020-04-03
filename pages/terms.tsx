@@ -8,7 +8,7 @@ import { Client } from '../prismic-config';
 import { TopHeading, SubHeading } from '../components/UI/Headings';
 import { MinimalHelmet } from '../components/common/meta';
 import 'lazysizes';
-import '../public/static/styles.css';
+import '../style/global.css';
 
 export default class TermsPage extends Component<any, any> {
   state = {
@@ -54,7 +54,7 @@ export default class TermsPage extends Component<any, any> {
     return { response, host, uid };
   }
 
-  handleDropdownToggle = elementIdentifier => {
+  handleDropdownToggle = (elementIdentifier) => {
     switch (elementIdentifier) {
       case DROPDOWN_ELEMENT.HAMBURGER: {
         this.setState({

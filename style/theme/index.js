@@ -1,4 +1,4 @@
-import { COLORS, GRAPHIK } from '../constants/ui-constants';
+import { COLORS, GRAPHIK } from '../../constants/ui-constants';
 
 export default {
   button: {

@@ -1,6 +1,5 @@
 import React from 'react';
 import ImageLinksCarousel from '../../components/slices/ImageLinksCarousel';
-import '../../public/static/global.css';
 
 export default {
   title: 'Slices/Image Links Carousel',

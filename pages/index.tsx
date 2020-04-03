@@ -2,7 +2,7 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import fetch from 'isomorphic-unfetch';
 import { ThemeProvider } from 'styled-components';
-import theme from '../theme';
+import theme from '../style/theme';
 import EnvironmentContext from '../contexts/environmentContext';
 import { Client } from '../prismic-config';
 import {
@@ -15,12 +15,12 @@ import {
   LINKED_MICROSITE_PROPS,
 } from '../constants';
 import { redirectTo, getPrismicProps, reflect } from '../utils';
-import 'lazysizes';
-import 'lazysizes/plugins/attrchange/ls.attrchange';
-import '../public/static/styles.css';
 import { uncategorizedToursListParser } from '../utils/DataParsers';
 import { MBContextProvider } from '../contexts/MBContext';
 import { toursTabSliceHandler } from '../components/Slices';
+import 'lazysizes';
+import 'lazysizes/plugins/attrchange/ls.attrchange';
+import '../style/global.css';
 
 const ErrorPage = dynamic(() => import('next/error'));
 const Microsite = dynamic(() => import('../components/MicrositeV1'));
@@ -356,12 +356,6 @@ export default class Page extends React.Component<any, any> {
                     footer_ref: commonFooter,
                     content_framework: contentFramework,
                     microsite: micrositeData,
-                  },
-                  featured: {
-                    image: page.data.featured_image.url
-                      ? page.data.featured_image
-                      : page.data.featured_image_link,
-                    title: page.data.featured_title,
                   },
                 };
                 return {
