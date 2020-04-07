@@ -20,6 +20,7 @@ export const en = {
   READ_MORE_TEXT: 'Read More',
   SHOW_LESS_TEXT: 'Show Less',
   NEXT_AVAILABLE: 'Next Available',
+  AVAILABLE: 'Available',
   EARLIEST_AVAILABILITY: 'Earliest Availability',
   TODAY: 'Today',
   TOMORROW: 'Tomorrow',
@@ -27,6 +28,8 @@ export const en = {
   FOOTER_DISCLAIMER:
     'This website is not the official website of the <attraction>. It is run by Headout and works with attractions and tour operators to provide incredible experiences at the tap of a button.',
   PRICES_STARTING: 'Prices Starting',
+  FROM: 'From',
+  MORE_DETAILS: 'More Details',
 };
 
 export const es = {
@@ -51,12 +54,15 @@ export const es = {
   READ_MORE_TEXT: 'Leer más',
   SHOW_LESS_TEXT: 'Mostrar menos',
   NEXT_AVAILABLE: 'Próxima Disponible',
+  AVAILABLE: 'Disponible',
   EARLIEST_AVAILABILITY: 'Siguiente Disponible',
   TODAY: 'Hoy',
   TOMORROW: 'Mañana',
   FOOTER_DISCLAIMER:
     'Este sitio web no es el sitio web oficial de la atracción: <attraction>. Este sitio está operado por Headout, que trabajamos con operadores turísticos para atracciones y tours a fin de proporcionar experiencias increíbles a tu alcance',
   PRICES_STARTING: 'Precios desde',
+  FROM: 'From',
+  MORE_DETAILS: 'More Details',
 };
 
 export const de = {
@@ -81,12 +87,15 @@ export const de = {
   READ_MORE_TEXT: 'Mehr anzeigen',
   SHOW_LESS_TEXT: 'Weniger anzeigen',
   NEXT_AVAILABLE: 'Verfügbar ab',
+  AVAILABLE: 'Verfügbar',
   EARLIEST_AVAILABILITY: 'Früheste verfügbare',
   TODAY: 'Heute',
   TOMORROW: 'Morgen',
   FOOTER_DISCLAIMER:
     'Dies ist nicht die offizielle Website von der Attraktion: <attraction>. Sie wird von Headout betrieben, um gemeinsam mit Veranstaltern für Attraktionen und Touren unglaubliche Erlebnisse auf Knopfdruck anzubieten.',
   PRICES_STARTING: 'Preise ab',
+  FROM: 'From',
+  MORE_DETAILS: 'More Details',
 };
 
 export const it = {
@@ -111,12 +120,15 @@ export const it = {
   READ_MORE_TEXT: 'Leggi di più',
   SHOW_LESS_TEXT: 'Mostra meno',
   NEXT_AVAILABLE: 'Prossimo Disponibile',
+  AVAILABLE: 'Disponibile',
   EARLIEST_AVAILABILITY: 'Prima Disponibilità',
   TODAY: 'Oggi',
   TOMORROW: 'Domani',
   FOOTER_DISCLAIMER:
     'Questo sito web non è il sito ufficiale della seguente attrazione: <attraction>. Il sito è gestito da Headout in collaborazione con i tour operator per fornire esperienze incredibili e disponibili al semplice tocco di un pulsante.',
   PRICES_STARTING: 'Prezzi A Partire Da',
+  FROM: 'From',
+  MORE_DETAILS: 'More Details',
 };
 
 export const fr = {
@@ -140,11 +152,14 @@ export const fr = {
   READ_MORE_TEXT: 'En Savoir Plus',
   SHOW_LESS_TEXT: 'Voir Moins',
   NEXT_AVAILABLE: 'Bientôt Disponible',
+  AVAILABLE: 'Disponible',
   EARLIEST_AVAILABILITY: 'Disponibilité la Plus Tôt',
   TODAY: "Aujourd'hui",
   TOMORROW: 'Demain',
   FOOTER_DISCLAIMER: `Ce site n'est pas le site officiel de l'attraction : <attraction>. Headout gère ce site et collabore avec des organisateurs et des agences de voyage pour vous offrir des expériences incroyables en un clic.`,
   PRICES_STARTING: 'À partir de',
+  FROM: 'From',
+  MORE_DETAILS: 'More Details',
 };
 
 export const nl = {
@@ -169,11 +184,14 @@ export const nl = {
   READ_MORE_TEXT: 'Lees Meer',
   SHOW_LESS_TEXT: 'Toon Less',
   NEXT_AVAILABLE: 'Volgende Beschikbaar',
+  AVAILABLE: 'Beschikbaar',
   EARLIEST_AVAILABILITY: 'Vroegste Beschikbaarheid',
   TODAY: 'Vandaag',
   TOMORROW: 'Morgen',
   FOOTER_DISCLAIMER:
     'Deze website is niet de officiële website van de <attraction>. Het wordt gerund door Headout en werkt samen met attracties en touroperators om ongelooflijke ervaringen te bieden met één druk op de knop.',
+  FROM: 'From',
+  MORE_DETAILS: 'More Details',
 };
 
 export const pt = {
@@ -198,10 +216,13 @@ export const pt = {
   READ_MORE_TEXT: 'Leia Mais',
   SHOW_LESS_TEXT: 'Ver Menos',
   NEXT_AVAILABLE: 'Próxima Disponível',
+  AVAILABLE: 'Disponível',
   EARLIEST_AVAILABILITY: 'Seguinte Disponível',
   TODAY: 'Hoje',
   TOMORROW: 'Amanhã',
   FOOTER_DISCLAIMER:
     'Este site não é o site oficial da atração: <attraction>. É mantido pela Headout em parceria com atrações e operadores turísticos para proporcionar experiências incríveis com apenas um clique.',
   PRICES_STARTING: 'Preços a partir de',
+  FROM: 'From',
+  MORE_DETAILS: 'More Details',
 };

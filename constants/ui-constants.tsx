@@ -37,12 +37,14 @@ export const COLORS = {
   BLACK: '#000',
   TWO_BLACK: '#222',
   FOUR_BLACK: '#444',
-  EIGHT_GRAY: '#888',
+  GREY_G4: '#888',
   LIGHTER_WHITE: '#FAFAFA',
   FO_GRAY: '#F0F0F0',
   BEACH: '#03829D',
   GREY_FO: '#F0F0F0',
   GREY_7C: '#7C7C7C',
+  GREY_G6: '#E2E2E2',
+  GREY_G3: '#666666',
 };
 
 export const SIZES = {

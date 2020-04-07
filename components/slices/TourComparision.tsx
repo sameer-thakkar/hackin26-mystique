@@ -85,7 +85,7 @@ const StyledTourComparisionTable = styled.div`
   .old-price {
     font-size: 12px;
     font-family: ${AVENIR.FONT_STACK};
-    color: ${COLORS.EIGHT_GRAY};
+    color: ${COLORS.GREY_G4};
     line-height: 16px;
     grid-row: 1;
     text-decoration: line-through;
@@ -145,7 +145,7 @@ const StyledTourComparisionTable = styled.div`
     font-family: ${AVENIR.FONT_STACK};
     line-height: 18px;
     letter-spacing: 0.5px;
-    color: ${COLORS.EIGHT_GRAY};
+    color: ${COLORS.GREY_G4};
   }
   .block-content {
     font-size: 15px;
@@ -312,10 +312,9 @@ const TourComparisonTable = (props) => {
     orderedLabels,
     vendors,
     vendorLinks,
-    slice,
   } = props;
   const NB_SPACE = '\u00A0';
-
+  const [isExpanded, setExpand] = useState(false);
   const envContext = useContext(EnvironmentContext);
   const toursContext = useContext(ProductsContext);
   const mbContext = useContext(MBContext);
@@ -327,8 +326,7 @@ const TourComparisonTable = (props) => {
     : currentHost;
   let hostSplit = hostName.split('.');
   hostSplit.shift();
-  const { allTours, ready: allToursReady } = toursContext;
-  // if (!allToursReady) return null;
+  const { allTours } = toursContext;
   const getContentNormalizedTours = (tgidArray) => {
     let toursArr = tgidArray.map((tgid) => allTours[tgid]);
     toursArr = toursArr.reduce((acc, tour, index) => {
@@ -365,7 +363,6 @@ const TourComparisonTable = (props) => {
     .filter((tgid) => allTours[tgid]?.available);
   if (tgidArray.length === 0) return null;
   const content_normalized_tours = getContentNormalizedTours(tgidArray);
-  const [isExpanded, setExpand] = useState(false);
 
   const ComparisionTable = (
     <StyledTourComparisionTable
@@ -380,7 +377,7 @@ const TourComparisonTable = (props) => {
           <div className="row max-content" style={{ zIndex: -1 }}>
             {content_normalized_tours.map((tour, cellIndex) => {
               return (
-                <div className="column">
+                <div className="column" key={cellIndex}>
                   <div className="tour-image">
                     <Image
                       dontLazyLoad={true}
@@ -396,7 +393,7 @@ const TourComparisonTable = (props) => {
           <div className="row sticky">
             {content_normalized_tours.map((tour, cellIndex) => {
               return (
-                <div className="column">
+                <div className="column" key={cellIndex}>
                   <div className="tour-chin">
                     <div className="tour-title">{tour.title}</div>
                     <div className="tour-booster">
@@ -417,14 +414,14 @@ const TourComparisonTable = (props) => {
               {content_normalized_tours.map((tour, cellIndex) => {
                 const props = {
                   link: {
-                    url: `https://book.${nakedDomain}/book/${
+                    url: `https://book.${nakedDomain}/${
                       lang == 'en' ? '' : lang + '/'
-                    }${tour.tgid}`,
+                    }book/${tour.tgid}`,
                   },
                   bordered: true,
                 };
                 return (
-                  <div className="column">
+                  <div className="column" key={cellIndex}>
                     <div className="tour-cta">
                       <CommonCTA {...props}>
                         ${labels[lang]['BOOK_NOW_CTA']}
@@ -438,7 +435,7 @@ const TourComparisonTable = (props) => {
           <div className="row max-content">
             {content_normalized_tours.map((tour, cellIndex) => {
               return (
-                <div className="column flat-price-block">
+                <div className="column flat-price-block" key={cellIndex}>
                   <div className="content-block">
                     <div className="block-label">Prices Starting</div>
                     <div className="block-content">
@@ -465,10 +462,10 @@ const TourComparisonTable = (props) => {
             )
             .map((label, rowIndex) => {
               return (
-                <div className="row">
+                <div className="row" key={rowIndex}>
                   {content_normalized_tours.map((tour, cellIndex) => {
                     return (
-                      <div className="column content-block">
+                      <div className="column content-block" key={cellIndex}>
                         <div className="block-label">
                           {tour.contentBlocks[label.labelId]?.label}
                         </div>
@@ -493,7 +490,7 @@ const TourComparisonTable = (props) => {
             <div className="row max-content">
               {content_normalized_tours.map((tour, cellIndex) => {
                 return (
-                  <div className="column flat-price-block">
+                  <div className="column flat-price-block" key={cellIndex}>
                     <div className="content-block">
                       <div className="block-label">Prices Starting</div>
                       <div className="block-content">
@@ -521,15 +518,17 @@ const TourComparisonTable = (props) => {
             {content_normalized_tours.map((tour, cellIndex) => {
               const props = {
                 link: {
-                  url: `https://book.${nakedDomain}/book/${
+                  url: `https://book.${nakedDomain}/${
                     lang == 'en' ? '' : lang + '/'
-                  }${tour.tgid}`,
+                  }book/${tour.tgid}`,
                 },
               };
               return (
-                <div className="column">
+                <div className="column" key={cellIndex}>
                   <div className="tour-cta">
-                    <CommonCTA {...props}>Book Now</CommonCTA>
+                    <CommonCTA {...props}>
+                      ${labels[lang]['BOOK_NOW_CTA']}
+                    </CommonCTA>
                   </div>
                 </div>
               );
@@ -546,19 +545,6 @@ const TourComparisonTable = (props) => {
       ) : null}
     </StyledTourComparisionTable>
   );
-  // if (isMobile && isExpanded)
-  //   return ReactDOM.createPortal(
-  //     <StyledPortal>
-  //       <div className="portal-header">
-  //         <div className="back" onClick={() => togglePopup()}>
-  //           {CHEVRON_LEFT}
-  //         </div>
-  //       </div>
-  //       {ComparisionTable}
-  //     </StyledPortal>,
-  //     document.body
-  //   );
-  // else return ;
 
   return ComparisionTable;
 };

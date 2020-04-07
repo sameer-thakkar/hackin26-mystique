@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import Image from '../../UI/Image';
 import { RichText } from 'prismic-reactjs';
-import { CHEVRON_LEFT, STAR } from '../../../public/static/svg-icons';
+import { CHEVRON_LEFT } from '../../../public/static/svg-icons';
 import { shortCodeSerializer } from '../../../utils/shortCodes';
 import { PAGETYPE } from '../../../constants';
 import parse from 'url-parse';
 import Swiper from 'react-id-swiper';
 import { AVENIR, GRAPHIK, COLORS } from '../../../constants/ui-constants';
 
-export const MobileProductPage = props => {
+export const MobileProductPage = (props) => {
   const closeProductCard = () => {
     props.changePage({ name: PAGETYPE.HOMEPAGE });
   };
@@ -44,11 +44,17 @@ export const MobileProductPage = props => {
   let hostSplit = hostName.split('.');
   hostSplit.shift();
   const bookingUrl = hostSplit.join('.');
-  const descriptors = tour.descriptors.split(',').filter(desc => desc.length);
+  const descriptors = tour.descriptors.split(',').filter((desc) => desc.length);
   return (
     <div className="mobile-product-wrap">
       <div className="header">
-        <div onClick={closeProductCard} className="back">
+        <div
+          onClick={closeProductCard}
+          className="back"
+          onKeyDown={closeProductCard}
+          role="button"
+          tabIndex={0}
+        >
           {CHEVRON_LEFT}
         </div>
       </div>
@@ -151,6 +157,7 @@ export const MobileProductPage = props => {
       <div className="cta-wrap">
         <a
           target="_blank"
+          rel="noopener noreferrer"
           href={`https://book.${bookingUrl}${
             currentLanguage === 'en' ? '' : `/${currentLanguage}`
           }/book/${tgid}`}
@@ -371,7 +378,7 @@ export const MobileProductPage = props => {
             font-size: 11px;
             line-height: 11px;
             letter-spacing: 0.5px;
-            color: ${COLORS.EIGHT_GRAY};
+            color: ${COLORS.GREY_G4};
             display: none;
           }
           @media (max-width: 768px) {

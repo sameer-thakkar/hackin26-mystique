@@ -847,6 +847,63 @@ ul {
   text-decoration: none;
 }
 
+@media(max-width: 768px){
+  .mb-captions .mb-caption {
+      justify-items: left;
+      margin-bottom: 24px;
+      margin-left: 16px;
+      max-width: 85%;
+      z-index: 1;
+  }
+  .mb-captions.with-indicators .mb-caption{
+    margin-bottom: 56px;
+  }
+
+  .mb-captions {
+      place-content: unset;
+      text-align: left;
+      align-items: end;
+      background: unset;
+  }
+
+  .caption h1 {
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 120%;
+      margin: 0;
+  }
+
+  .mb-captions::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 200px;
+    width: 100%;
+    background: linear-gradient(180deg, rgba(34, 34, 34, 0) 0%, #222222 100%);
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  .indicators {
+    left: 16px;
+    transform: unset;
+    bottom: 24px;
+  }
+
+  .indicator {
+    height: 6px;
+    width: 6px;
+    border: unset;
+    background: rgba(255, 255, 255, 0.35);
+  }
+
+  .indicator.active {
+    transform: scale(1.3);
+  }
+  
+}
+
 /* FOOTER */
 
 .legal-info {
@@ -1667,6 +1724,7 @@ body.popupv2-active {
   }
   .mb-carousel.boxed {
     margin-top: 56px;
+    height: 360px;
   }
 
   .popupv2-cont {
@@ -2239,7 +2297,7 @@ form.form {
 
 @media (max-width: 768px) {
   .caption h1 {
-    font-size: 16px !important;
+    font-size: 16px;
   }
   .language {
     font-size: 16px;

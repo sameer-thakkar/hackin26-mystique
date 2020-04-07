@@ -1,25 +1,294 @@
-import React, { Component } from 'react';
+import React, { useRef } from 'react';
 import { shortCodeSerializer } from '../utils/shortCodes';
 import { RichText } from 'prismic-reactjs';
 import ReactMarkdown from 'react-markdown/with-html';
 import moment from 'moment';
 import parse from 'url-parse';
-import classNames from 'classnames';
 import * as labels from '../public/static/localization/labels';
 import { ANALYTICS_EVENTS } from '../constants';
-import { COLORS, GRAPHIK } from '../constants/ui-constants';
+import { COLORS, GRAPHIK, AVENIR } from '../constants/ui-constants';
+import styled from 'styled-components';
+import LocalisedPrice from './UI/LPrice';
+import HorizontalLine from './slices/HorizontalLine';
+import { CALENDAR } from '../public/static/svg-icons';
 
-const isLengthyArray = item => Array.isArray(item) && item.length;
-
-export default class Product extends Component<any, any> {
-  readMoreRef: any;
-  constructor(props) {
-    super(props);
-    this.readMoreRef = React.createRef();
+const isLengthyArray = (item) => Array.isArray(item) && item.length;
+const StyledProductCard = styled.div`
+  font-family: ${GRAPHIK.FONT_STACK};
+  padding: 32px 24px;
+  border: 1px solid ${COLORS.GREY_G6};
+  border-radius: 4px;
+  display: grid;
+  grid-row-gap: 24px;
+  .more-details {
+    font-weight: ${GRAPHIK.HEAVY};
+    font-size: 14px;
+    line-height: 15px;
+    color: ${COLORS.MED_STATE_BLUE};
+    margin-left: 1em;
+    margin-top: 16px;
+    cursor: pointer;
   }
+  @media (max-width: 768px) {
+    grid-row-gap: 16px;
+    padding: 24px 16px;
+    .more-details {
+      margin-top: -4px;
+      margin-left: 0;
+      margin-bottom: 16px;
+    }
+  }
+`;
+const ProductHeader = styled.div`
+  display: grid;
+  grid-template-columns: 1fr auto;
+  .header-left,
+  .header-right {
+    display: grid;
+    align-content: start;
+    grid-gap: 16px;
+  }
+  .tour-title {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: ${GRAPHIK.HEAVY};
+    margin: 0;
+  }
+  .tour-tags {
+    font-size: 14px;
+    font-weight: ${GRAPHIK.HEAVY};
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    justify-content: left;
+    grid-column-gap: 8px;
+    color: ${COLORS.GREY_G3};
+  }
+  @media (max-width: 768px) {
+    grid-template-columns: auto;
+    display: contents;
+    .tour-title {
+      font-size: 18px;
+      line-height: 24px;
+    }
+    .header-left,
+    .header-right {
+      display: contents;
+    }
+    .tour-tags {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: start;
+      font-size: 12px;
+      line-height: 13px;
+      margin-bottom: -8px;
+      .tour-tag,
+      .bullet {
+        margin-right: 8px;
+      }
+      .tour-tag {
+        margin-bottom: 8px;
+      }
+    }
+  }
+`;
 
-  readMore = context => {
-    const { currentLanguage, analytics } = this.props;
+const PriceBlock = styled.div`
+  justify-self: center;
+  display: grid;
+  justify-items: left;
+  grid-row-gap: 4px;
+  .tour-scratch-price {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-column-gap: 4px;
+    font-weight: ${GRAPHIK.REGULAR};
+    color: ${COLORS.GREY_G4};
+    font-size: 11px;
+    line-height: 12px;
+    span {
+      text-decoration: line-through;
+      display: block;
+    }
+  }
+  .tour-price {
+    font-size: 25px;
+    line-height: 32px;
+    display: flex;
+    font-weight: ${GRAPHIK.HEAVY};
+    color: ${COLORS.FOUR_BLACK};
+  }
+  @media (max-width: 768px) {
+    justify-self: left;
+    .tour-scratch-price {
+      font-size: 11px;
+      line-height: 12px;
+    }
+    .tour-price {
+      font-size: 18px;
+      line-height: 24px;
+    }
+  }
+`;
+const CTABlock = styled.div`
+  a {
+    text-decoration: none;
+  }
+  .tour-book-now-cta {
+    border-radius: 4px;
+    background: linear-gradient(219.75deg, #eb6b80 -72.45%, #da394b 166.49%);
+    padding: 14px 77px;
+    display: flex;
+    .book-now-label {
+      font-size: 16px;
+      font-family: ${AVENIR.FONT_STACK};
+      line-height: 22px;
+      font-weight: ${AVENIR.BLACK};
+      letter-spacing: 0.02em;
+      color: ${COLORS.WHITE};
+    }
+  }
+  @media (max-width: 768px) {
+    grid-row: 7;
+    .tour-book-now-cta {
+      justify-content: center;
+    }
+  }
+`;
+
+const ProductBody = styled.div`
+  display: grid;
+  .tour-description {
+    height: calc((1em * 8));
+    overflow: hidden;
+    font-family: ${GRAPHIK.FONT_STACK};
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: ${GRAPHIK.REGULAR};
+    color: ${COLORS.FOUR_BLACK};
+    opacity: 0.99;
+    display: grid;
+    grid-gap: 12px;
+    ul {
+      padding: 0;
+      padding-left: 1em;
+      display: grid;
+      grid-gap: 12px;
+    }
+    p {
+      margin: 0;
+      font-weight: ${GRAPHIK.HEAVY};
+    }
+  }
+  @media (max-width: 768px) {
+    display: contents;
+    .tour-description {
+      height: calc(3em * 2);
+      margin-top: 8px;
+      p {
+        display: none;
+      }
+    }
+  }
+`;
+
+const NextAvailableBlock = styled.div`
+  font-size: 14px;
+  font-weight: ${GRAPHIK.HEAVY};
+  color: ${COLORS.FOUR_BLACK};
+  line-height: 15px;
+  display: grid;
+  grid-column-gap: 8px;
+  grid-template-columns: auto auto;
+  align-items: center;
+  justify-content: center;
+  .icon {
+    display: flex;
+  }
+  @media (max-width: 768px) {
+    grid-row: 8;
+  }
+`;
+const ProductOfferBlock = styled.div`
+  font-size: 15px;
+  line-height: 15px;
+  font-family: ${GRAPHIK.FONT_STACK};
+  font-weight: ${GRAPHIK.HEAVY};
+  cursor: pointer;
+  color: ${COLORS.MED_STATE_BLUE};
+  p {
+    margin: 0;
+  }
+`;
+const V1BoosterBlock = styled.div`
+  font-family: Graphik;
+  font-weight: 400;
+  line-height: 1.31;
+  text-align: left;
+  color: ${COLORS.CORAL};
+  margin: 0.8em 0;
+  font-size: 1em;
+  display: inline-block;
+
+  p {
+    margin: 0;
+    strong {
+      font-weight: unset;
+    }
+  }
+  br {
+    display: none;
+  }
+  .block-img img {
+    display: none;
+  }
+  @media (max-width: 768px) {
+    br {
+      display: initial;
+    }
+    .block-img img {
+      width: 100%;
+      display: inline;
+    }
+    p {
+      font-size: 12px;
+      strong {
+        font-weight: ${GRAPHIK.HEAVY};
+        line-height: 1.5;
+      }
+    }
+    font-size: 0.8em;
+    display: grid;
+    grid-template-columns: ${(props) => (props.boosterHasIcon ? '40px' : '')} auto;
+    grid-gap: 10px;
+    align-items: center;
+    margin: 0;
+  }
+`;
+const Product = (props) => {
+  const moreDetailsRef = useRef();
+  const { analytics, tgid, position, currentLanguage, togglePopup } = props;
+  const {
+    title,
+    descriptors,
+    highlights,
+    tourPrices,
+    uid,
+    currencySymbol,
+    hasOffer,
+    productOffer,
+    offerId,
+    isMobile,
+    isFetched,
+    scorpioData,
+    host,
+    earliestAvailability,
+    ctaUrlSuffix,
+    isScratchPriceEnabled,
+    booster,
+  } = props;
+
+  const readMore = (context) => {
     let desc = context.previousElementSibling;
     let more = context;
     if (more.dataset.open == 0) {
@@ -30,24 +299,22 @@ export default class Product extends Component<any, any> {
       more.dataset.open = 1;
       analytics.setVariableInDataLayer({
         event: ANALYTICS_EVENTS.EXPERIENCE_DETAILS_VIEWED,
-        'Tour Group Id': this.props.tgid,
+        'Tour Group Id': tgid,
       });
     } else if (more.dataset.open == 1) {
-      more.innerHTML = `+ ${labels[currentLanguage].READ_MORE_TEXT}`;
+      more.innerHTML = `+ ${labels[currentLanguage].MORE_DETAILS}`;
       more.style.background =
         'linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,0.7),rgba(255,255,255,1))';
       desc.style.transition = 'all 0.15s ease-in-out';
-      desc.style.height = '8.125em';
+      desc.style.height = '';
       more.dataset.open = 0;
     }
   };
 
-  handlePopup = () => {
-    const { togglePopup } = this.props;
+  const handlePopup = () => {
     togglePopup();
   };
-  sendBookNowEvent = () => {
-    const { analytics, tgid, position } = this.props;
+  const sendBookNowEvent = () => {
     analytics.setVariableInDataLayer({
       event: ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED,
       'Tour Group Id': tgid,
@@ -56,140 +323,97 @@ export default class Product extends Component<any, any> {
     });
   };
 
-  getDate = (date, currentLanguage) => {
+  const getDate = (date, currentLanguage) => {
     const today = moment().format('YYYY-MM-DD');
-    const tomorrow = moment()
-      .add(1, 'days')
-      .format('YYYY-MM-DD');
+    const tomorrow = moment().add(1, 'days').format('YYYY-MM-DD');
     if (date === today) return labels[currentLanguage].TODAY;
     if (date === tomorrow) return labels[currentLanguage].TOMORROW;
-    return moment(date)
-      .locale(currentLanguage)
-      .format('MMM Do');
+    return moment(date).locale(currentLanguage).format('MMM Do');
   };
 
-  render() {
-    const {
-      title,
-      descriptors,
-      highlights,
-      tgid,
-      tourPrices,
-      uid,
-      currencySymbol,
-      currentLanguage,
-      hasOffer,
-      productOffer,
-      offerId,
-      isMobile,
-      isFetched,
-      popupState,
-      scorpioData,
-      pageUrl,
-      host,
-      earliestAvailability,
-      ctaUrlSuffix,
-      isScratchPriceEnabled,
-      booster,
-    } = this.props;
-    const boosterHasIcon = booster?.filter(i => i.type === 'image').length > 0;
-    const descriptorsCsv = descriptors || scorpioData.descriptors;
-    const cardTitle = title || scorpioData.title;
-    const descriptorsList = descriptorsCsv ? descriptorsCsv.split(',') : [];
-    let url = host || window.location.host;
-    const isDev = url.includes('localhost');
-    const currentHost = !isDev ? url : parse(uid, true).pathname;
-    const hostName = currentHost.includes('stage')
-      ? currentHost.replace('stage.', '')
-      : currentHost;
-    let hostSplit = hostName.split('.');
-    hostSplit.shift();
-    const bookingUrl = hostSplit.join('.');
-    const showScratchPrice = isFetched && isScratchPriceEnabled;
-    const isHighlightsFromPrismic =
-      isLengthyArray(highlights) && highlights.filter(item => item.text).length;
-    return (
-      <div
-        className={classNames('product', {
-          'product__with-date': earliestAvailability,
-        })}
-        id={tgid}
-      >
-        <div className="product-header">
-          <div className="product-header-left">
-            <h2 className="product-title">{cardTitle}</h2>
-            <div className="product-tags">
-              {descriptorsList.map((tag, index) => {
+  const boosterHasIcon = booster?.filter((i) => i.type === 'image').length > 0;
+  const descriptorsCsv = descriptors || scorpioData.descriptors;
+  const cardTitle = title || scorpioData.title;
+  const descriptorsList = descriptorsCsv ? descriptorsCsv.split(',') : [];
+  let url = host || window.location.host;
+  const isDev = url.includes('localhost');
+  const currentHost = !isDev ? url : parse(uid, true).pathname;
+  const hostName = currentHost.includes('stage')
+    ? currentHost.replace('stage.', '')
+    : currentHost;
+  let hostSplit = hostName.split('.');
+  hostSplit.shift();
+  const bookingUrl = hostSplit.join('.');
+  const showScratchPrice = isFetched && isScratchPriceEnabled;
+  const isHighlightsFromPrismic =
+    isLengthyArray(highlights) && highlights.filter((item) => item.text).length;
+
+  return (
+    <StyledProductCard>
+      <ProductHeader>
+        <div className="header-left">
+          <h2 className="tour-title">{cardTitle}</h2>
+          <div className="tour-tags">
+            {descriptorsList.map((tag, index) => {
+              return (
+                <>
+                  {index !== 0 && <div className="bullet">•</div>}
+                  <div key={index} className="tour-tag">
+                    {tag}
+                  </div>
+                </>
+              );
+            })}
+          </div>
+          {booster && RichText.asText(booster).trim().length > 0 ? (
+            <V1BoosterBlock boosterHasIcon={boosterHasIcon}>
+              <RichText render={booster} htmlSerializer={shortCodeSerializer} />
+            </V1BoosterBlock>
+          ) : null}
+
+          {hasOffer &&
+            offerId &&
+            productOffer.map((offer, index) => {
+              if (offer.id === offerId) {
                 return (
-                  <span key={index} className="product-tag">
-                    {tag} <span className="bullet">•</span>
-                  </span>
+                  <ProductOfferBlock
+                    key={index}
+                    onClick={handlePopup}
+                    className="tour-offer"
+                  >
+                    <RichText
+                      render={offer.data.offer_title}
+                      htmlSerializer={shortCodeSerializer}
+                    />
+                  </ProductOfferBlock>
                 );
-              })}
-            </div>
-            {!isMobile &&
-            booster &&
-            RichText.asText(booster).trim().length > 0 ? (
-              <div className="v1-booster">
-                <RichText
-                  render={booster}
-                  htmlSerializer={shortCodeSerializer}
+              }
+            })}
+        </div>
+        <div className="header-right">
+          <PriceBlock>
+            {showScratchPrice &&
+            tourPrices[tgid].scratchPrice > tourPrices[tgid].price ? (
+              <div className="tour-scratch-price">
+                <div>{labels[currentLanguage].FROM}</div>
+                <LocalisedPrice
+                  price={tourPrices[tgid].scratchPrice}
+                  currencySymbol={currencySymbol}
+                  lang={currentLanguage}
                 />
               </div>
             ) : null}
-            {hasOffer &&
-              offerId &&
-              productOffer.map((offer, index) => {
-                if (offer.id === offerId) {
-                  return (
-                    <div
-                      key={index}
-                      onClick={this.handlePopup}
-                      className="product-offer"
-                    >
-                      <RichText
-                        render={offer.data.offer_title}
-                        htmlSerializer={shortCodeSerializer}
-                      />
-                    </div>
-                  );
-                }
-              })}
-            {/* {earliestAvailability && (
-                <div className="earliest-availability left">
-                  {`${labels[currentLanguage].NEXT_AVAILABLE}: `}
-                  <span>
-                    {this.getDate(earliestAvailability, currentLanguage)}
-                  </span>
-                </div>
-              )} */}
-          </div>
-          <div className="product-header-right">
-            <div className="price-container">
-              {showScratchPrice &&
-              tourPrices[tgid].scratchPrice > tourPrices[tgid].price ? (
-                <div className="product-scratch-price">
-                  {tourPrices[tgid].scratchPrice
-                    ? `${currencySymbol}${tourPrices[tgid].scratchPrice}`
-                    : null}
-                </div>
-              ) : null}
-              {isFetched ? (
-                <div className="product-price">
-                  {tourPrices[tgid]?.price
-                    ? `${currencySymbol}${tourPrices[tgid].price}`
-                    : null}
-                </div>
-              ) : null}
-            </div>
-            {earliestAvailability && (
-              <div className="earliest-availability bottom">
-                {`${labels[currentLanguage].NEXT_AVAILABLE}: `}
-                <span>
-                  {this.getDate(earliestAvailability, currentLanguage)}
-                </span>
+            {isFetched ? (
+              <div className="tour-price">
+                <LocalisedPrice
+                  price={tourPrices[tgid].price}
+                  currencySymbol={currencySymbol}
+                  lang={currentLanguage}
+                />
               </div>
-            )}
+            ) : null}
+          </PriceBlock>
+          <CTABlock>
             <a
               target={isFetched && isMobile ? null : '_blank'}
               href={`http://book.${bookingUrl}${
@@ -197,147 +421,56 @@ export default class Product extends Component<any, any> {
               }/book/${tgid}${ctaUrlSuffix}`}
             >
               <div
-                className={classNames(
-                  'book-now-cta',
-                  {
-                    'book-now-cta__with-date': earliestAvailability,
-                  },
-                  {
-                    'fr-book-now-cta': currentLanguage == 'fr',
-                  }
-                )}
-                onClick={this.sendBookNowEvent}
+                className={`tour-book-now-cta`}
+                onClick={sendBookNowEvent}
+                onKeyDown={sendBookNowEvent}
+                role="button"
+                tabIndex={0}
               >
-                <span className="book-now-text">
+                <span className="book-now-label">
                   {labels[currentLanguage].BOOK_NOW_CTA}
                 </span>
               </div>
             </a>
-          </div>
-        </div>
-        {hasOffer && offerId && isMobile && (
-          <div onClick={this.handlePopup} className="product-offer-mobile">
-            <div className="product-offer-mobile-left">
-              <div className="gift-image">
-                <img
-                  className="lazyload"
-                  data-src="https://cdn-imgix-open.headout.com/new-product-card/line%20expand.svg"
-                  alt="gift-image"
-                />
-              </div>
-              <div className="product-offer-text">
-                {productOffer.map((offer, index) => {
-                  if (offer.id === offerId) {
-                    return (
-                      <RichText
-                        key={index}
-                        render={offer.data.offer_title}
-                        htmlSerializer={shortCodeSerializer}
-                      />
-                    );
-                  }
-                })}
-              </div>
-            </div>
-            <div className="product-offer-mobile-right">
-              <div className="product-offer-arrow">
-                <img
-                  data-src="https://cdn-imgix-open.headout.com/new-product-card/Path%2024.svg"
-                  className="lazyload"
-                  alt="image"
-                />
-              </div>
-            </div>
-          </div>
-        )}
-        {isMobile && RichText.asText(booster).trim().length > 0 ? (
-          <div className="v1-booster">
-            <RichText render={booster} htmlSerializer={shortCodeSerializer} />
-          </div>
-        ) : null}
-        <div className="desc-wrapper">
-          <div className="product-desc">
-            {isHighlightsFromPrismic ? (
-              <ul>
-                {highlights
-                  .filter(item => item.text)
-                  .map((highlight, index) => (
-                    <li key={index}>{highlight.text}</li>
-                  ))}
-              </ul>
-            ) : (
-              <ReactMarkdown
-                source={scorpioData.highlights}
-                escapeHtml={false}
-              />
-            )}
-          </div>
-          <div
-            ref={this.readMoreRef}
-            data-open="0"
-            onClick={() => this.readMore(this.readMoreRef.current)}
-            className="read-more"
-          >
-            {`+ ${labels[currentLanguage].READ_MORE_TEXT}`}
-          </div>
-        </div>
-        <style jsx>{`
-          .v1-booster {
-            font-family: Graphik;
-            font-weight: 400;
-            line-height: 1.31;
-            text-align: left;
-            color: ${COLORS.CORAL};
-            margin: 0.8em 0;
-            font-size: 1em;
-            grid-column: 1/3;
-            display: inline-block;
-          }
+          </CTABlock>
 
-          @media (max-width: 768px) {
-            .v1-booster {
-              font-size: 0.8em;
-              display: grid;
-              grid-template-columns: ${boosterHasIcon ? '40px' : ''} auto;
-              grid-gap: 10px;
-              padding: 1.2em;
-              border-bottom: 1px solid #ebebebeb;
-              align-items: center;
-              margin: 0;
-            }
-          }
-        `}</style>
-        <style global jsx>{`
-          .v1-booster p {
-            margin: 0;
-          }
-          .v1-booster br {
-            display: none;
-          }
-          .v1-booster .block-img img {
-            display: none;
-          }
-          .v1-booster p strong {
-            font-weight: unset;
-          }
-          @media (max-width: 768px) {
-            .v1-booster br {
-              display: initial;
-            }
-            .v1-booster .block-img img {
-              width: 100%;
-              display: inline;
-            }
-            .v1-booster p {
-              font-size: 12px;
-            }
-            .v1-booster p strong {
-              font-weight: ${GRAPHIK.HEAVY};
-              line-height: 1.5;
-            }
-          }
-        `}</style>
-      </div>
-    );
-  }
-}
+          {earliestAvailability && (
+            <NextAvailableBlock>
+              <div className="icon">{CALENDAR}</div>
+              <div className="available-text">
+                {`${labels[currentLanguage].AVAILABLE} `}
+                {getDate(earliestAvailability, currentLanguage)}
+              </div>
+            </NextAvailableBlock>
+          )}
+        </div>
+      </ProductHeader>
+      {!isMobile && <HorizontalLine color={COLORS.GREY_G6} />}
+      <ProductBody>
+        <div className="tour-description">
+          {isHighlightsFromPrismic ? (
+            <RichText
+              render={highlights}
+              htmlSerializer={shortCodeSerializer}
+            />
+          ) : (
+            <ReactMarkdown source={scorpioData.highlights} escapeHtml={false} />
+          )}
+        </div>
+        <div
+          ref={moreDetailsRef}
+          data-open="0"
+          onClick={() => readMore(moreDetailsRef.current)}
+          className="more-details"
+          onKeyDown={() => readMore(moreDetailsRef.current)}
+          role="button"
+          tabIndex={0}
+        >
+          {`+ ${labels[currentLanguage].MORE_DETAILS}`}
+        </div>
+      </ProductBody>
+    </StyledProductCard>
+  );
+};
+
+export default Product;

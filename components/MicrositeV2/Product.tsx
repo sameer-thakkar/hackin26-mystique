@@ -5,7 +5,7 @@ import { shortCodeSerializerWithParentProps } from '../../utils/shortCodes';
 import { truncate } from '../../utils/helper';
 import { AVENIR, GRAPHIK, COLORS } from '../../constants/ui-constants';
 
-const Product = props => {
+const Product = (props) => {
   const handleProductClick = () => {
     props.productClick(props.tgid, props.cardIdPrefix);
   };
@@ -16,6 +16,9 @@ const Product = props => {
       onClick={handleProductClick}
       className="product-v2"
       id={`${cardIdPrefix}-${tgid}`}
+      onKeyDown={handleProductClick}
+      role="button"
+      tabIndex={0}
     >
       <div className="product-v2-image">
         <Image
@@ -141,7 +144,7 @@ const Product = props => {
           letter-spacing: 0.5px;
           text-align: right;
           text-decoration-line: line-through;
-          color: ${COLORS.EIGHT_GRAY};
+          color: ${COLORS.GREY_G4};
         }
 
         .vendor-name {
@@ -151,7 +154,7 @@ const Product = props => {
           font-size: 11px;
           line-height: 11px;
           letter-spacing: 0.5px;
-          color: ${COLORS.EIGHT_GRAY};
+          color: ${COLORS.GREY_G4};
         }
 
         @media (max-width: 768px) {

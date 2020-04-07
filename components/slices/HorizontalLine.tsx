@@ -4,11 +4,11 @@ import { COLORS } from '../../constants/ui-constants';
 
 const StyledLine = styled.div`
   border-bottom: 1px solid;
-  border-color: ${COLORS.CHALK};
+  border-color: ${({ color }) => color};
 `;
 
-const HorizontalLine = props => {
-  return <StyledLine />;
+const HorizontalLine = (props) => {
+  return <StyledLine color={props.color || COLORS.CHALK} />;
 };
 
 export default HorizontalLine;

@@ -99,7 +99,6 @@ const TabWrapper = (props: TabWrapperProps) => {
     activeTabId,
     ...parentSliceProps,
   };
-
   return (
     <StyledTabWrapper>
       <h2>{heading}</h2>

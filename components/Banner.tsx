@@ -4,6 +4,7 @@ import { scroller } from 'react-scroll';
 import * as labels from '../public/static/localization/labels';
 import Button from './UI/Button';
 import Image from './UI/Image';
+import styled from 'styled-components';
 
 const BANNER_PARAMS = {
   DESKTOP: {
@@ -15,6 +16,16 @@ const BANNER_PARAMS = {
     WIDTH: '500',
   },
 };
+
+const StyledButton = styled.div`
+  @media (max-width: 768px) {
+    button {
+      font-size: 14px;
+      padding: 11px 25px;
+      line-height: 20px;
+    }
+  }
+`;
 export default class Banner extends Component<any, any> {
   hasIndicators: boolean;
   MAX_SLIDES: number;
@@ -133,14 +144,20 @@ export default class Banner extends Component<any, any> {
           );
         })}
 
-        <div className="mb-captions">
+        <div
+          className={`mb-captions ${
+            bannerImages.length > 1 ? 'with-indicators' : ''
+          }`}
+        >
           <div className="mb-caption">
             <div className="caption">
               <h1>{bannerHeading}</h1>
             </div>
-            <Button type="whiteBordered" onClick={this.scrollTicketSection}>
-              {labels[currentLanguage].BANNER_CTA}
-            </Button>
+            <StyledButton>
+              <Button type="whiteBordered" onClick={this.scrollTicketSection}>
+                {labels[currentLanguage].BANNER_CTA}
+              </Button>
+            </StyledButton>
           </div>
         </div>
         {this.hasIndicators && bannerImages.length > 1 ? (

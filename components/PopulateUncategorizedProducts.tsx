@@ -15,6 +15,17 @@ const StyledUncategorizedContainer = styled.div`
   }
 `;
 
+const ProductContainer = styled.div`
+  display: grid;
+  grid-row-gap: 24px;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  @media (max-width: 768px) {
+    margin: 0 16px;
+    margin-bottom: 60px;
+  }
+`;
+
 const StyledTourListHeading = styled.div`
   font-family: Avenir;
   font-weight: 800;
@@ -97,7 +108,7 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
             {labels[currentLanguage].TOUR_LIST_SUB_HEADING}
           </StyledTourListSubHeading>
         </div>
-        <div className="products-container">
+        <ProductContainer>
           {orderedTours.map((tour, index) => (
             <Product
               key={index}
@@ -131,7 +142,7 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
               booster={tour.product_booster}
             />
           ))}
-        </div>
+        </ProductContainer>
       </StyledUncategorizedContainer>
     );
   }
