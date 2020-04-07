@@ -8,7 +8,7 @@ type BreadcrumbProps = {
 
 const BreadcrumbContainer = styled.div`
   a {
-    color: ${COLORS.GREY_7C};
+    color: ${COLORS.TEAL};
   }
   @media (max-width: 768px) {
     padding: 0;
@@ -18,7 +18,7 @@ const BreadcrumbContainer = styled.div`
 const StyledBreadcrumb = styled.a`
   text-decoration: none;
   &:last-child {
-    color: ${COLORS.TEAL};
+    color: ${COLORS.GREY_7C};
   }
   font-family: ${GRAPHIK.FONT_STACK};
   font-weight: ${GRAPHIK.REGULAR};

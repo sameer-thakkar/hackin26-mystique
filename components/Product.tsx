@@ -159,7 +159,7 @@ const CTABlock = styled.div`
 const ProductBody = styled.div`
   display: grid;
   .tour-description {
-    height: calc((1em * 8));
+    height: calc((24px * 4) + (12px * 2));
     overflow: hidden;
     font-family: ${GRAPHIK.FONT_STACK};
     font-size: 16px;
@@ -183,7 +183,7 @@ const ProductBody = styled.div`
   @media (max-width: 768px) {
     display: contents;
     .tour-description {
-      height: calc(3em * 2);
+      height: calc((24px * 3) + 4px);
       margin-top: 8px;
       p {
         display: none;
