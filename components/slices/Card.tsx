@@ -40,6 +40,7 @@ const StyledCard = styled.div((props) => {
   grid-template-columns: ${styles.gridTemplateColumns};
   color: ${COLORS.DAVY_GREY};
   height: 100%;
+  text-decoration: none;
   .flex{
     display: flex;
   }
