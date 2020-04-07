@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { shortCodeSerializer } from '../utils/shortCodes';
 import { RichText } from 'prismic-reactjs';
 import ReactMarkdown from 'react-markdown/with-html';
@@ -28,14 +28,15 @@ const StyledProductCard = styled.div`
     margin-left: 1em;
     margin-top: 16px;
     cursor: pointer;
+    outline: none;
   }
   @media (max-width: 768px) {
     grid-row-gap: 16px;
     padding: 24px 16px;
     .more-details {
-      margin-top: -4px;
+      margin-top: 0;
       margin-left: 0;
-      margin-bottom: 16px;
+      margin-bottom: 0;
     }
   }
 `;
@@ -149,7 +150,7 @@ const CTABlock = styled.div`
     }
   }
   @media (max-width: 768px) {
-    grid-row: 7;
+    grid-row: ${({ showEarliestAvail }) => (showEarliestAvail ? 7 : 6)};
     .tour-book-now-cta {
       justify-content: center;
     }
@@ -159,8 +160,6 @@ const CTABlock = styled.div`
 const ProductBody = styled.div`
   display: grid;
   .tour-description {
-    height: calc((24px * 4) + (12px * 2));
-    overflow: hidden;
     font-family: ${GRAPHIK.FONT_STACK};
     font-size: 16px;
     line-height: 24px;
@@ -174,6 +173,14 @@ const ProductBody = styled.div`
       padding-left: 1em;
       display: grid;
       grid-gap: 12px;
+      ${({ collapsed }) =>
+        collapsed
+          ? `
+      li:nth-of-type(n + 3) {
+        display: none;
+      }
+      `
+          : ''}
     }
     p {
       margin: 0;
@@ -183,11 +190,20 @@ const ProductBody = styled.div`
   @media (max-width: 768px) {
     display: contents;
     .tour-description {
-      height: calc((24px * 3) + 4px);
       margin-top: 8px;
       p {
         display: none;
       }
+    }
+    ul {
+      ${({ collapsed }) =>
+        collapsed
+          ? `
+      li:nth-of-type(n + 2) {
+        display: none;
+      }
+      `
+          : ''}
     }
   }
 `;
@@ -288,28 +304,7 @@ const Product = (props) => {
     booster,
   } = props;
 
-  const readMore = (context) => {
-    let desc = context.previousElementSibling;
-    let more = context;
-    if (more.dataset.open == 0) {
-      more.innerHTML = `- ${labels[currentLanguage].SHOW_LESS_TEXT}`;
-      more.style.background = 'none';
-      desc.style.transition = 'all 0.15s ease-in-out';
-      desc.style.height = 'auto';
-      more.dataset.open = 1;
-      analytics.setVariableInDataLayer({
-        event: ANALYTICS_EVENTS.EXPERIENCE_DETAILS_VIEWED,
-        'Tour Group Id': tgid,
-      });
-    } else if (more.dataset.open == 1) {
-      more.innerHTML = `+ ${labels[currentLanguage].MORE_DETAILS}`;
-      more.style.background =
-        'linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,0.7),rgba(255,255,255,1))';
-      desc.style.transition = 'all 0.15s ease-in-out';
-      desc.style.height = '';
-      more.dataset.open = 0;
-    }
-  };
+  const [isContentOpen, toggleContentOpen] = useState(false);
 
   const handlePopup = () => {
     togglePopup();
@@ -413,7 +408,7 @@ const Product = (props) => {
               </div>
             ) : null}
           </PriceBlock>
-          <CTABlock>
+          <CTABlock showEarliestAvail={earliestAvailability}>
             <a
               target={isFetched && isMobile ? null : '_blank'}
               href={`http://book.${bookingUrl}${
@@ -446,7 +441,7 @@ const Product = (props) => {
         </div>
       </ProductHeader>
       {!isMobile && <HorizontalLine color={COLORS.GREY_G6} />}
-      <ProductBody>
+      <ProductBody collapsed={!isContentOpen}>
         <div className="tour-description">
           {isHighlightsFromPrismic ? (
             <RichText
@@ -460,13 +455,17 @@ const Product = (props) => {
         <div
           ref={moreDetailsRef}
           data-open="0"
-          onClick={() => readMore(moreDetailsRef.current)}
+          onClick={() => toggleContentOpen(!isContentOpen)}
           className="more-details"
-          onKeyDown={() => readMore(moreDetailsRef.current)}
+          onKeyDown={() => toggleContentOpen(!isContentOpen)}
           role="button"
           tabIndex={0}
         >
-          {`+ ${labels[currentLanguage].MORE_DETAILS}`}
+          {` ${
+            isContentOpen
+              ? '- ' + labels[currentLanguage].SHOW_LESS_TEXT
+              : '+ ' + labels[currentLanguage].MORE_DETAILS
+          }`}
         </div>
       </ProductBody>
     </StyledProductCard>
