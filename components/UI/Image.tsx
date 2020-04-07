@@ -1,5 +1,10 @@
 import React from 'react';
+import styled from 'styled-components';
 import { attachQueryParam } from '../../utils/helper';
+
+const Picture = styled.picture`
+  line-height: 0;
+`;
 
 type ImageProps = {
   className?: string;
@@ -48,14 +53,14 @@ const Image: React.FC<ImageProps> = ({
     return <img className={className} src={makeImageUrl(format)} alt={alt} />;
   } else {
     return (
-      <picture className={className}>
+      <Picture className={className}>
         <source type="image/webp" data-srcset={makeImageUrl('webp')} />
         <img
           className={`lazyload ${imageId}`}
           data-src={makeImageUrl(format)}
           alt={alt}
         />
-      </picture>
+      </Picture>
     );
   }
 };

@@ -31,7 +31,6 @@ const StyledCard = styled.div((props) => {
   const styles = props.isMobile
     ? variantStyles.mobile
     : variantStyles[props.type];
-  const type = props.isMobile ? 'mobile' : props.type;
   return `
   display: grid;
   align-content: start;
@@ -40,7 +39,7 @@ const StyledCard = styled.div((props) => {
   border: 1px solid ${COLORS.CHALK};
   grid-template-columns: ${styles.gridTemplateColumns};
   color: ${COLORS.DAVY_GREY};
-  height: ${type === 'desktop' ? `${styles.img.height}px` : `100%`};
+  height: 100%;
   .flex{
     display: flex;
   }
@@ -51,18 +50,13 @@ const StyledCard = styled.div((props) => {
   }
   .card-content-section {
     padding: 16px;
-    span, a {
-      font-family: ${GRAPHIK.FONT_STACK};
-      font-style: normal;
-      font-weight: ${GRAPHIK.HEAVY};
-      font-size: 20px;
-      text-decoration: none;
-      color: ${COLORS.DAVY_GREY}
-    }
     p {
       font-size: 16px;
       line-height: 160%;
       font-family: ${AVENIR.FONT_STACK}
+    }
+    a {
+      color: ${COLORS.RHAPSODY}
     }
   }
   .swiper-pagination.swiper-pagination-bullets {
@@ -72,9 +66,16 @@ const StyledCard = styled.div((props) => {
 `;
 });
 
-const StyledTitle = styled.span``;
+const Title = styled.span`
+  font-family: ${GRAPHIK.FONT_STACK};
+  font-style: normal;
+  font-weight: ${GRAPHIK.HEAVY};
+  font-size: 20px;
+  text-decoration: none;
+  color: ${COLORS.DAVY_GREY} !important;
+`;
 
-const StyledSwiperWrapper = styled.div`
+const SwiperWrapper = styled.div`
   display: flex;
   overflow: hidden;
 `;
@@ -177,7 +178,7 @@ const Card: React.FC<CardProps> = ({
       break;
     default:
       imageView = (
-        <StyledSwiperWrapper>
+        <SwiperWrapper>
           <Swiper {...swiperParams}>
             {images.map((image, index) => {
               return (
@@ -191,7 +192,7 @@ const Card: React.FC<CardProps> = ({
               );
             })}
           </Swiper>
-        </StyledSwiperWrapper>
+        </SwiperWrapper>
       );
       break;
   }
@@ -207,7 +208,7 @@ const Card: React.FC<CardProps> = ({
     >
       {imageView}
       <div className="card-content-section">
-        <StyledTitle
+        <Title
           {...(linkType === 'Title' && {
             as: 'a',
             href: link.url,
@@ -215,7 +216,7 @@ const Card: React.FC<CardProps> = ({
           })}
         >
           {title}
-        </StyledTitle>
+        </Title>
         <RichText render={description} />
         {cta.link && cta.text ? (
           <a href={cta.link.url} target={cta.link.target}>

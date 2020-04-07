@@ -6,7 +6,7 @@ import Swiper from '../Swiper';
 import OverflowScroll from '../UI/OverflowScroll';
 import { CHEVRON_LEFT_CIRCLE } from '../../public/static/svg-icons';
 
-const StyledCardSection = styled.div(({ cardType, isMobile }) => {
+const CardGrid = styled.div(({ cardType, isMobile }) => {
   let gridTemplateColumns = `100%`;
   if (cardType === 'column') {
     gridTemplateColumns = `50% 50%`;
@@ -20,6 +20,10 @@ const StyledCardSection = styled.div(({ cardType, isMobile }) => {
 `;
 });
 
+const CardCarousel = styled.div`
+  position: relative;
+`;
+
 const StyledSwiper = styled.div`
   overflow: hidden;
   display: flex;
@@ -31,9 +35,7 @@ const StyledSwiper = styled.div`
   }
 `;
 
-const StyledControls = styled.div`
-  position: relative;
-  top: -215px;
+const Controls = styled.div`
   .prev-slide,
   .next-slide {
     position: absolute;
@@ -171,7 +173,7 @@ const CardSection: React.FC<CardSectionProps> = ({
     return (
       <>
         {title ? <h2>{title}</h2> : null}
-        <div>
+        <CardCarousel>
           <StyledSwiper>
             <Swiper {...swiperParams}>
               {cards.map((card, index) => {
@@ -183,7 +185,7 @@ const CardSection: React.FC<CardSectionProps> = ({
               })}
             </Swiper>
           </StyledSwiper>
-          <StyledControls className="controls">
+          <Controls>
             {!swiper?.isBeginning ? (
               <div
                 className="prev-slide"
@@ -204,8 +206,8 @@ const CardSection: React.FC<CardSectionProps> = ({
                 {CHEVRON_LEFT_CIRCLE}
               </div>
             ) : null}
-          </StyledControls>
-        </div>
+          </Controls>
+        </CardCarousel>
       </>
     );
   }
@@ -222,13 +224,13 @@ const CardSection: React.FC<CardSectionProps> = ({
   return (
     <>
       {title ? <h2>{title}</h2> : null}
-      <StyledCardSection
+      <CardGrid
         cardType={finalCardType}
         sectionType={sectionType}
         isMobile={isMobile}
       >
         {cards}
-      </StyledCardSection>
+      </CardGrid>
     </>
   );
 };
