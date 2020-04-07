@@ -51,8 +51,8 @@ const StyledCard = styled.div((props) => {
   .card-content-section {
     padding: 16px;
     p, li {
-      font-size: 16px;
-      line-height: 160%;
+      font-size: 16px !important;
+      line-height: 160% !important;
       font-family: ${AVENIR.FONT_STACK};
     }
     a {
@@ -66,18 +66,27 @@ const StyledCard = styled.div((props) => {
 `;
 });
 
-const Title = styled.span`
+const Title = styled.div`
   font-family: ${GRAPHIK.FONT_STACK};
-  font-style: normal;
   font-weight: ${GRAPHIK.HEAVY};
   font-size: 20px;
   text-decoration: none;
+  line-height: 27px;
   color: ${COLORS.DAVY_GREY} !important;
+  margin-bottom: 8px;
 `;
 
 const SwiperWrapper = styled.div`
   display: flex;
   overflow: hidden;
+`;
+
+const ButtonWrapper = styled.div`
+  margin-top: 24px;
+  width: max-content;
+  @media (max-width: 768px) {
+    margin-top: 16px;
+  }
 `;
 
 type CardProps = {
@@ -219,9 +228,11 @@ const Card: React.FC<CardProps> = ({
         </Title>
         <RichText render={description} />
         {cta.link && cta.text ? (
-          <a href={cta.link.url} target={cta.link.target}>
-            <Button>{cta.text}</Button>
-          </a>
+          <ButtonWrapper>
+            <a href={cta.link.url} target={cta.link.target}>
+              <Button>{cta.text}</Button>
+            </a>
+          </ButtonWrapper>
         ) : null}
       </div>
     </StyledCard>

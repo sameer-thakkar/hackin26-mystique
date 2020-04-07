@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const StyledButton = styled.button(props => {
+const StyledButton = styled.button((props) => {
   if (props.type === 'whiteBordered') {
     return `
     border: 1px solid white;
