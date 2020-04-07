@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { RichText } from 'prismic-reactjs';
 import { AVENIR } from '../../constants/ui-constants';
-import { Slider } from './Slider';
+import { Slider } from '../UI/Slider';
 import { CHEVRON_DOWN } from '../../public/static/svg-icons';
 
-const Question = props => {
+const Question = (props) => {
   const {
     question,
     answer,
@@ -36,6 +36,8 @@ const Question = props => {
       <div className={`content ${isActiveItem ? 'active' : ''}`}>
         <div
           className="question"
+          role="button"
+          tabIndex={0}
           onClick={() => {
             (setActiveItem && setActiveItem(tabIndex)) || setOpen(!isOpen);
           }}

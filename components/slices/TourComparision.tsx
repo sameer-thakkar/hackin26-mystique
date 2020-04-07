@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
-import Image from '../UI/Image';
-import parse from 'url-parse';
 import styled from 'styled-components';
+import parse from 'url-parse';
+import Image from '../UI/Image';
 import EnvironmentContext from '../../contexts/environmentContext';
 import ProductsContext from '../../contexts/Products';
 import CommonCTA from '../UI/CTA';
@@ -313,8 +313,8 @@ const TourComparisonTable = (props) => {
     vendors,
     vendorLinks,
   } = props;
-  const NB_SPACE = '\u00A0';
   const [isExpanded, setExpand] = useState(false);
+  const NB_SPACE = '\u00A0';
   const envContext = useContext(EnvironmentContext);
   const toursContext = useContext(ProductsContext);
   const mbContext = useContext(MBContext);
@@ -361,10 +361,12 @@ const TourComparisonTable = (props) => {
     .split(',')
     .map((tgid) => parseInt(tgid))
     .filter((tgid) => allTours[tgid]?.available);
-  if (tgidArray.length === 0) return null;
   const content_normalized_tours = getContentNormalizedTours(tgidArray);
 
-  const ComparisionTable = (
+  // Return null if no tgids given
+  if (tgidArray.length === 0) return null;
+
+  return (
     <StyledTourComparisionTable
       isExpanded={isExpanded}
       isMobile={isMobile}
@@ -375,25 +377,20 @@ const TourComparisonTable = (props) => {
       <div className="full-width-wrap">
         <div className="table">
           <div className="row max-content" style={{ zIndex: -1 }}>
-            {content_normalized_tours.map((tour, cellIndex) => {
+            {content_normalized_tours.map((tour, index) => {
               return (
-                <div className="column" key={cellIndex}>
+                <div className="column" key={index}>
                   <div className="tour-image">
-                    <Image
-                      dontLazyLoad={true}
-                      url={tour.productImage}
-                      height={176}
-                      width={282}
-                    />
+                    <Image url={tour.productImage} height={176} width={282} />
                   </div>
                 </div>
               );
             })}
           </div>
           <div className="row sticky">
-            {content_normalized_tours.map((tour, cellIndex) => {
+            {content_normalized_tours.map((tour, index) => {
               return (
-                <div className="column" key={cellIndex}>
+                <div className="column" key={index}>
                   <div className="tour-chin">
                     <div className="tour-title">{tour.title}</div>
                     <div className="tour-booster">
@@ -411,7 +408,7 @@ const TourComparisonTable = (props) => {
           </div>
           {isExpanded ? (
             <div className="row" style={{ marginTop: -8 }}>
-              {content_normalized_tours.map((tour, cellIndex) => {
+              {content_normalized_tours.map((tour, index) => {
                 const props = {
                   link: {
                     url: `https://book.${nakedDomain}/${
@@ -421,7 +418,7 @@ const TourComparisonTable = (props) => {
                   bordered: true,
                 };
                 return (
-                  <div className="column" key={cellIndex}>
+                  <div className="column" key={index}>
                     <div className="tour-cta">
                       <CommonCTA {...props}>
                         ${labels[lang]['BOOK_NOW_CTA']}
@@ -433,9 +430,9 @@ const TourComparisonTable = (props) => {
             </div>
           ) : null}
           <div className="row max-content">
-            {content_normalized_tours.map((tour, cellIndex) => {
+            {content_normalized_tours.map((tour, index) => {
               return (
-                <div className="column flat-price-block" key={cellIndex}>
+                <div className="column flat-price-block" key={index}>
                   <div className="content-block">
                     <div className="block-label">Prices Starting</div>
                     <div className="block-content">
@@ -463,9 +460,9 @@ const TourComparisonTable = (props) => {
             .map((label, rowIndex) => {
               return (
                 <div className="row" key={rowIndex}>
-                  {content_normalized_tours.map((tour, cellIndex) => {
+                  {content_normalized_tours.map((tour, colIndex) => {
                     return (
-                      <div className="column content-block" key={cellIndex}>
+                      <div className="column content-block" key={colIndex}>
                         <div className="block-label">
                           {tour.contentBlocks[label.labelId]?.label}
                         </div>
@@ -488,9 +485,9 @@ const TourComparisonTable = (props) => {
             })}
           {(isMobile && isExpanded) || !isMobile ? (
             <div className="row max-content">
-              {content_normalized_tours.map((tour, cellIndex) => {
+              {content_normalized_tours.map((tour, index) => {
                 return (
-                  <div className="column flat-price-block" key={cellIndex}>
+                  <div className="column flat-price-block" key={index}>
                     <div className="content-block">
                       <div className="block-label">Prices Starting</div>
                       <div className="block-content">
@@ -515,7 +512,7 @@ const TourComparisonTable = (props) => {
         </div>
         <div className="table cta-table-wrap">
           <div className="row">
-            {content_normalized_tours.map((tour, cellIndex) => {
+            {content_normalized_tours.map((tour, index) => {
               const props = {
                 link: {
                   url: `https://book.${nakedDomain}/${
@@ -524,7 +521,7 @@ const TourComparisonTable = (props) => {
                 },
               };
               return (
-                <div className="column" key={cellIndex}>
+                <div className="column" key={index}>
                   <div className="tour-cta">
                     <CommonCTA {...props}>
                       ${labels[lang]['BOOK_NOW_CTA']}
@@ -545,8 +542,6 @@ const TourComparisonTable = (props) => {
       ) : null}
     </StyledTourComparisionTable>
   );
-
-  return ComparisionTable;
 };
 
 export default TourComparisonTable;

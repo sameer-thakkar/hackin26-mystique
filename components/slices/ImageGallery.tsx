@@ -1,14 +1,14 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
-import Image from '../UI/Image';
-import Swiper from '../Swiper';
-import { GRAPHIK, COLORS } from '../../constants/ui-constants';
+import React, { useCallback, useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { COLORS, GRAPHIK } from '../../constants/ui-constants';
 import {
   CHEVRON_LEFT_CIRCLE,
   CLOSE_WHITE,
 } from '../../public/static/svg-icons';
 import { stringIdfy } from '../../utils/helper';
+import Swiper from '../Swiper';
+import Image from '../UI/Image';
 
 const StyledImageGallery = styled.div`
   display: grid;
@@ -380,7 +380,6 @@ const ImageGallery = (props) => {
                     <Image
                       url={image.uploaded_image?.url || image.linked_image}
                       alt={caption}
-                      dontLazyLoad={true}
                     />
                     <Caption>{caption}</Caption>
                   </LightboxImage>

@@ -133,7 +133,7 @@ const CardSection: React.FC<CardSectionProps> = ({
         swiper.off('slideChange', updateIndex);
       }
     };
-  }, [swiper, updateIndex]);
+  }, [isMobile, swiper, updateIndex]);
 
   // Carousel (and Overflow Scroll for mobile) Logic
   if (sectionType === 'Carousel' && !isMobile) {
@@ -144,6 +144,7 @@ const CardSection: React.FC<CardSectionProps> = ({
         break;
       case 'mobile':
         slidesPerView = 4;
+        break;
       default:
         break;
     }
@@ -184,12 +185,22 @@ const CardSection: React.FC<CardSectionProps> = ({
           </StyledSwiper>
           <StyledControls className="controls">
             {!swiper?.isBeginning ? (
-              <div className="prev-slide" onClick={goPrev}>
+              <div
+                className="prev-slide"
+                role="button"
+                tabIndex={0}
+                onClick={goPrev}
+              >
                 {CHEVRON_LEFT_CIRCLE}
               </div>
             ) : null}
             {!swiper?.isEnd ? (
-              <div className="next-slide" onClick={goNext}>
+              <div
+                className="next-slide"
+                role="button"
+                tabIndex={0}
+                onClick={goNext}
+              >
                 {CHEVRON_LEFT_CIRCLE}
               </div>
             ) : null}

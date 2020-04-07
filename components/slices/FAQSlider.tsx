@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Chevron from '../UI/Chevron';
 import { RichText } from 'prismic-reactjs';
 import { AVENIR, GRAPHIK, COLORS } from '../../constants/ui-constants';
-import { Slider } from './Slider';
+import { Slider } from '../UI/Slider';
 import Image from '../UI/Image';
 
 const StyledFAQSlider = styled.div`
