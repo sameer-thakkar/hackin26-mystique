@@ -4,11 +4,11 @@ import Button from '../UI/Button';
 import { CURRENCY_SYMBOL_MAP } from '../../constants';
 import { COLORS, GRAPHIK } from '../../constants/ui-constants';
 
-const StyledTicketCardsWrapper = styled.div`
+const TicketCardsWrapper = styled.div`
   font-family: ${GRAPHIK.FONT_STACK};
   display: grid;
   grid-gap: 24px;
-  ${props => {
+  ${(props) => {
     if (props.twoColumns) {
       return `grid-template-columns: 1fr 1fr;`;
     }
@@ -18,7 +18,7 @@ const StyledTicketCardsWrapper = styled.div`
   }
 `;
 
-const StyledTicketCard = styled.div`
+const TicketCard = styled.div`
   display: grid;
   grid-template-columns: auto max-content max-content;
   grid-template-areas: 'heading price cta';
@@ -33,7 +33,7 @@ const StyledTicketCard = styled.div`
   }
 `;
 
-const StyledTicketCardHeading = styled.div`
+const TicketCardHeading = styled.div`
   grid-area: heading;
   font-size: 18px;
   font-weight: 600;
@@ -42,7 +42,7 @@ const StyledTicketCardHeading = styled.div`
   margin: 0;
 `;
 
-const StyledTicketCardPrice = styled.div`
+const TicketCardPrice = styled.div`
   grid-area: price;
   justify-self: flex-end;
   font-size: 20px;
@@ -65,7 +65,7 @@ const StyledTicketCardPrice = styled.div`
   }
 `;
 
-const StyledTicketCardCTA = styled.div`
+const TicketCardCTA = styled.div`
   grid-area: cta;
   @media (max-width: 768px) {
     justify-self: flex-end;
@@ -109,11 +109,11 @@ const TicketCards: React.FC<TicketCardsProps> = ({
     fetch(
       `https://api.headout.com/api/v6/tour-group/list?ids[]=${tours.join(',')}`
     )
-      .then(res => res.json())
-      .then(payload => {
+      .then((res) => res.json())
+      .then((payload) => {
         let finalCards = cards.reduce((acc, card) => {
           let temp = null;
-          payload.tourGroups.forEach(tour => {
+          payload.tourGroups.forEach((tour) => {
             if (tour.id === Number(card.tgid)) {
               temp = {
                 name: tour.name,
@@ -131,30 +131,41 @@ const TicketCards: React.FC<TicketCardsProps> = ({
   return (
     <>
       <h2>{title}</h2>
-      <StyledTicketCardsWrapper twoColumns={twoColumns}>
-        {data.map((card, index) => (
-          <StyledTicketCard key={index}>
-            <StyledTicketCardHeading>
-              {card.card_heading || card.name}
-            </StyledTicketCardHeading>
-            {card.listingPrice ? (
-              <StyledTicketCardPrice>
-                <div>
-                  {CURRENCY_SYMBOL_MAP[card.listingPrice.currencyCode]}
-                  {card.listingPrice.originalPrice}
-                </div>
-                {CURRENCY_SYMBOL_MAP[card.listingPrice.currencyCode]}
-                {card.listingPrice.finalPrice}
-              </StyledTicketCardPrice>
-            ) : null}
-            <StyledTicketCardCTA>
-              <a href={card.cta_link.url} target={card.cta_link.target}>
-                <Button>{card.cta_title || 'Book Now'}</Button>
-              </a>
-            </StyledTicketCardCTA>
-          </StyledTicketCard>
-        ))}
-      </StyledTicketCardsWrapper>
+      <TicketCardsWrapper twoColumns={twoColumns}>
+        {data.map(
+          (
+            {
+              card_heading: cardHeading,
+              name,
+              listingPrice,
+              cta_link: ctaLink,
+              cta_title: ctaTitle,
+            },
+            index
+          ) => (
+            <TicketCard key={index}>
+              <TicketCardHeading>{cardHeading || name}</TicketCardHeading>
+              {listingPrice ? (
+                <TicketCardPrice>
+                  {listingPrice.originalPrice > listingPrice.finalPrice ? (
+                    <div>
+                      {CURRENCY_SYMBOL_MAP[listingPrice.currencyCode]}
+                      {listingPrice.originalPrice}
+                    </div>
+                  ) : null}
+                  {CURRENCY_SYMBOL_MAP[listingPrice.currencyCode]}
+                  {listingPrice.finalPrice}
+                </TicketCardPrice>
+              ) : null}
+              <TicketCardCTA>
+                <a href={ctaLink.url} target={ctaLink.target}>
+                  <Button>{ctaTitle || 'Book Now'}</Button>
+                </a>
+              </TicketCardCTA>
+            </TicketCard>
+          )
+        )}
+      </TicketCardsWrapper>
     </>
   );
 };
