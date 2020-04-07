@@ -50,13 +50,13 @@ const StyledCard = styled.div((props) => {
   }
   .card-content-section {
     padding: 16px;
-    p {
+    p, li {
       font-size: 16px;
       line-height: 160%;
-      font-family: ${AVENIR.FONT_STACK}
+      font-family: ${AVENIR.FONT_STACK};
     }
     a {
-      color: ${COLORS.RHAPSODY}
+      color: ${COLORS.RHAPSODY};
     }
   }
   .swiper-pagination.swiper-pagination-bullets {

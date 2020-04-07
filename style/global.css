@@ -2714,14 +2714,6 @@ h6 {
   padding-left: 20px;
 }
 
-.subpage-container .slice-block ul li,
-.subpage-container .slice-block ol li {
-  font-family: Avenir;
-  font-size: 18px;
-  color: #444444;
-  line-height: 40px;
-}
-
 .main-wrapper,
 .slice-wrapper {
   max-width: 1200px;

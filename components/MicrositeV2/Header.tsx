@@ -153,12 +153,7 @@ const Header = (props) => {
             padding: 8px;
             margin-right: 16px;
           }
-          header .header-logo img {
-            height: 36px;
-            margin: 0;
-            max-width: unset;
-            width: auto;
-          }
+
           .header-left {
             display: grid;
             grid-template-columns: auto ${hasDropdownLinks ? '1fr' : ''} auto;
@@ -190,9 +185,6 @@ const Header = (props) => {
           }
 
           @media (max-width: 768px) {
-            header .header-logo img {
-              height: 24px;
-            }
             header {
               padding: 12px;
             }
@@ -224,6 +216,12 @@ const Header = (props) => {
       </style>
       <style jsx global>
         {`
+          header .header-logo img {
+            height: 36px;
+            margin: 0;
+            max-width: unset;
+            width: auto;
+          }
           .header-city-selector {
             min-width: 180px;
             font-family: ${AVENIR.FONT_STACK};
@@ -277,6 +275,9 @@ const Header = (props) => {
             header {
               padding: 12px 16px;
               border-bottom: 1px solid #dadada;
+            }
+            header .header-logo img {
+              height: 24px;
             }
             .poweredBy svg {
               height: 24px;

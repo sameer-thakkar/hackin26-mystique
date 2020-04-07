@@ -14,7 +14,7 @@ import { LOCATION } from '../../../public/static/svg-icons';
 import { SIZES } from '../../../constants/ui-constants';
 import { groupSlices } from '../../../utils/helper';
 
-export const HomePage = props => {
+export const HomePage = (props) => {
   const {
     header,
     footer,
@@ -38,8 +38,8 @@ export const HomePage = props => {
 
   const [covid19AlertOpen, setCovid19AlertOpen] = useState(true);
 
-  const { dropdownLinks } = header;
-  const selectorLinkChangeHandler = option => {
+  const { dropdownLinks, enableDropdownLinks } = header;
+  const selectorLinkChangeHandler = (option) => {
     window.location.href = option.value;
   };
   const slices = contentFramework?.body;
@@ -49,6 +49,7 @@ export const HomePage = props => {
   const hasToursSection = categoryProps.categories.length > 0;
   const footerLogoURL = footer.logo.url;
   const footerLogoAlt = footer.footer_logo_alt || footer.footer_logo?.alt;
+  const hasDropdownLinks = enableDropdownLinks && dropdownLinks.length;
 
   return (
     <div className="microsite-v2-wrapper">
@@ -59,7 +60,7 @@ export const HomePage = props => {
         isMobile={isMobile}
         allTours={allTours}
       />
-      {isMobile ? (
+      {isMobile && hasDropdownLinks ? (
         <div className="main-wrapper city-selector">
           <ResponsiveSelector
             options={dropdownLinks}
