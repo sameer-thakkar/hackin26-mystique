@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import sliceHandler from '../Slices';
+import RichContent from '../UI/RichContent';
+import TitleTextCombo from '../UI/TitleTextCombo';
 import { GRAPHIK } from '../../constants/ui-constants';
 import { stringIdfy } from '../../utils/helper';
 
@@ -57,6 +59,7 @@ type TabWrapperProps = {
   heading: String;
   slices: Array<any>;
   sliceProps?: Object;
+  description?: any[];
 };
 
 /**
@@ -87,7 +90,7 @@ type TabWrapperProps = {
  *
  */
 const TabWrapper = (props: TabWrapperProps) => {
-  const { heading, slices, sliceProps: parentSliceProps } = props;
+  const { heading, slices, sliceProps: parentSliceProps, description } = props;
   const default_from_prismic = slices.filter(
     (slice) => slice.primary.is_default == 'Yes'
   );
@@ -101,7 +104,10 @@ const TabWrapper = (props: TabWrapperProps) => {
   };
   return (
     <StyledTabWrapper>
-      <h2>{heading}</h2>
+      <TitleTextCombo noMargin={true}>
+        <h2>{heading}</h2>
+        {description ? <RichContent render={description} /> : null}
+      </TitleTextCombo>
       <div className="tabs">
         {slices.map((slice, index) => {
           const tabId = stringIdfy(slice.primary.title);

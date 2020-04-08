@@ -35,9 +35,11 @@ const StyledFeatureBox = styled.div`
   @media (max-width: 768px) {
     grid-template-rows: auto auto;
     grid-template-columns: unset;
+    .content {
+      padding: 0 10px;
+    }
     p {
       padding-right: 0;
-      padding: 0 10px;
     }
   }
 `;
@@ -80,7 +82,7 @@ const FeatureBox: React.FC<FeatureBoxProps> = ({ blocks, lazyLoad }) => (
               />
             ) : null}
           </div>
-          <div>
+          <div className="content">
             <RichText
               key={index}
               render={block.feature_description}

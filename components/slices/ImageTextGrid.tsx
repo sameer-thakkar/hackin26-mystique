@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import Image from '../UI/Image';
 import { shortCodeSerializer } from '../../utils/shortCodes';
+import { GRAPHIK } from '../../constants/ui-constants';
 
 type ImageTextProps = {
   cols: number;
@@ -13,7 +14,7 @@ type ImageTextProps = {
 const StyledWrapper = styled.div`
   display: grid;
   grid-gap: 1.5em;
-  grid-template-columns: repeat(${props => props.cols}, 1fr);
+  grid-template-columns: repeat(${(props) => props.cols}, 1fr);
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
@@ -24,24 +25,26 @@ const StyledComboCard = styled.div`
   grid-template-rows: auto auto 1fr;
   grid-gap: 10px;
   padding: 20px;
+  padding-top: 14px;
   border-radius: 3px;
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.18);
   img {
     width: 100%;
   }
-  h2 {
-    font-size: 22px !important;
+  h2.title {
+    font-size: 18px;
     line-height: 1.4;
     color: #666666;
     text-align: justify;
-    font-weight: 600;
-    font-family: Avenir, Proxima-Nova, arial, sans-serif;
+    font-weight: 500;
+    font-family: ${GRAPHIK.FONT_STACK};
     margin: unset;
     ::after {
       content: unset !important;
     }
   }
   div {
+    font-family: ${GRAPHIK.FONT_STACK};
     p {
       margin: unset !important;
     }
@@ -82,7 +85,7 @@ const ImageTextGrid: React.FC<ImageTextProps> = ({
   <StyledWrapper cols={cols}>
     {cards.map((card, index) => (
       <StyledComboCard key={index}>
-        <h2>{card.card_title}</h2>
+        <h2 className="title">{card.card_title}</h2>
         <Image
           dontLazyLoad={!lazyLoadImages}
           width={580}

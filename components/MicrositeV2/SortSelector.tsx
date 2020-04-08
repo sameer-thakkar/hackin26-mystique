@@ -3,7 +3,7 @@ import { CHEVRON_DOWN } from '../../public/static/svg-icons';
 import { useCaptureClickOutside } from '../hooks/ClickOutside';
 import { COLORS, GRAPHIK } from '../../constants/ui-constants';
 
-export const SortSelector = props => {
+export const SortSelector = (props) => {
   let filters = [
     {
       name: 'Popularity',
@@ -15,7 +15,6 @@ export const SortSelector = props => {
     },
   ];
 
-  let pathName = '';
   const [dropdownActive, setDropdownActive] = useState(false);
   const [activeFilter, setActiveFilter] = useState(0);
 
@@ -26,7 +25,7 @@ export const SortSelector = props => {
   };
 
   const toggleFilterDropdown = () => {
-    setDropdownActive(prevState => !prevState);
+    setDropdownActive((prevState) => !prevState);
   };
 
   const closeFilterDropdown = () => {
@@ -44,7 +43,12 @@ export const SortSelector = props => {
 
   return (
     <div className="filter-selector-container" ref={parentRef}>
-      <div onClick={toggleFilterDropdown} className="current-filter-toggle">
+      <div
+        onClick={toggleFilterDropdown}
+        className="current-filter-toggle"
+        role="button"
+        tabIndex={0}
+      >
         <span>
           Sort By:{' '}
           <span className="current-filter">{filters[activeFilter].name}</span>
@@ -64,12 +68,17 @@ export const SortSelector = props => {
                 onClick={() => {
                   changeFilter(index);
                 }}
+                role="button"
+                tabIndex={0}
               >
                 <div className="filter">
                   <span className="filter-name">
                     {filter.name}
                     {isActive ? (
-                      <img src="https://cdn-imgix-open.headout.com/mystique/assets/tick.svg" />
+                      <img
+                        alt="check"
+                        src="https://cdn-imgix-open.headout.com/mystique/assets/tick.svg"
+                      />
                     ) : null}
                   </span>
                 </div>
@@ -87,6 +96,9 @@ export const SortSelector = props => {
           .filter-selector-container {
             margin: 0;
             position: relative;
+          }
+          .selected-tab {
+            color: ${COLORS.RHAPSODY};
           }
           .filter-selector {
             line-height: 1;

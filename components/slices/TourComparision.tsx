@@ -6,6 +6,7 @@ import EnvironmentContext from '../../contexts/environmentContext';
 import ProductsContext from '../../contexts/Products';
 import CommonCTA from '../UI/CTA';
 import * as labels from '../../public/static/localization/labels';
+import LocalisedPrice from '../UI/LPrice';
 import { RichText } from 'prismic-reactjs';
 import { AVENIR, COLORS, GRAPHIK } from '../../constants/ui-constants';
 import { shortCodeSerializerWithParentProps } from '../../utils/shortCodes';
@@ -421,7 +422,7 @@ const TourComparisonTable = (props) => {
                   <div className="column" key={index}>
                     <div className="tour-cta">
                       <CommonCTA {...props}>
-                        ${labels[lang]['BOOK_NOW_CTA']}
+                        {labels[lang]['BOOK_NOW_CTA']}
                       </CommonCTA>
                     </div>
                   </div>
@@ -437,14 +438,20 @@ const TourComparisonTable = (props) => {
                     <div className="block-label">Prices Starting</div>
                     <div className="block-content">
                       <span className="current-price">
-                        {tour.currencySymbol}
-                        {tour.price}
+                        <LocalisedPrice
+                          price={tour.price}
+                          currencySymbol={tour.currencySymbol}
+                          lang={lang}
+                        />
                       </span>
                       {NB_SPACE}
                       {tour.scratchPrice > tour.price ? (
                         <span className="old-price">
-                          {tour.currencySymbol}
-                          {tour.scratchPrice}
+                          <LocalisedPrice
+                            price={tour.scratchPrice}
+                            currencySymbol={tour.currencySymbol}
+                            lang={lang}
+                          />
                         </span>
                       ) : null}
                     </div>
@@ -492,14 +499,20 @@ const TourComparisonTable = (props) => {
                       <div className="block-label">Prices Starting</div>
                       <div className="block-content">
                         <span className="current-price">
-                          {tour.currencySymbol}
-                          {tour.price}
+                          <LocalisedPrice
+                            price={tour.price}
+                            currencySymbol={tour.currencySymbol}
+                            lang={lang}
+                          />
                         </span>
                         {NB_SPACE}
                         {tour.scratchPrice > tour.price ? (
                           <span className="old-price">
-                            {tour.currencySymbol}
-                            {tour.scratchPrice}
+                            <LocalisedPrice
+                              price={tour.scratchPrice}
+                              currencySymbol={tour.currencySymbol}
+                              lang={lang}
+                            />
                           </span>
                         ) : null}
                       </div>
@@ -524,7 +537,7 @@ const TourComparisonTable = (props) => {
                 <div className="column" key={index}>
                   <div className="tour-cta">
                     <CommonCTA {...props}>
-                      ${labels[lang]['BOOK_NOW_CTA']}
+                      {labels[lang]['BOOK_NOW_CTA']}
                     </CommonCTA>
                   </div>
                 </div>

@@ -18,6 +18,12 @@ const StyledProductCard = styled.div`
   margin: 30px 0px;
   padding: 15px;
   color: #545454;
+  &:first-of-type {
+    margin-top: 0;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
   @media (max-width: 768px) {
     flex-direction: column;
   }
@@ -83,7 +89,7 @@ const FWActionCard: React.FC<FWActionCardProps> = ({ title, cards }) => {
             />
           </StyledProductCardLeft>
           <StyledProductCardRight>
-            <a href={card.cta_link} target="_blank">
+            <a href={card.cta_link} target="_blank" rel="noopener noreferrer">
               <Button>{card.cta_title}</Button>
             </a>
           </StyledProductCardRight>

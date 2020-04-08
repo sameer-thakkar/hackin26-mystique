@@ -99,7 +99,7 @@ const sliceHandler = (slice, props: any = {}) => {
     case 'category_carousel':
       const tgidArray = slice.primary.csv_tgids
         .split(',')
-        .map(tgid => parseInt(tgid.trim()));
+        .map((tgid) => parseInt(tgid.trim()));
       if (props.isMobile)
         return (
           <CategorySection
@@ -141,10 +141,10 @@ const sliceHandler = (slice, props: any = {}) => {
           },
         ];
       }, []);
-      const vendor = slice.primary.csv_vendors?.split(',').map(v => v.trim());
+      const vendor = slice.primary.csv_vendors?.split(',').map((v) => v.trim());
       const vendorLinks = slice.primary.csv_vendor_links
         ?.split(',')
-        .map(v => v.trim());
+        .map((v) => v.trim());
       return (
         <TourComparisonTable
           isMobile={props.isMobile}
@@ -187,7 +187,7 @@ const sliceHandler = (slice, props: any = {}) => {
     case 'category_section':
       const tgids = slice.primary.csv_tgids
         .split(',')
-        .map(tgid => parseInt(tgid.trim()));
+        .map((tgid) => parseInt(tgid.trim()));
       return (
         <CategorySection
           {...props}
@@ -199,7 +199,7 @@ const sliceHandler = (slice, props: any = {}) => {
     case 'content_tabs':
       return (
         <ContentTabs
-          tabsArr={slice.primary.tab_list.split(',').map(t => t.trim())}
+          tabsArr={slice.primary.tab_list.split(',').map((t) => t.trim())}
           contentArr={slice.items}
         />
       );
@@ -210,6 +210,7 @@ const sliceHandler = (slice, props: any = {}) => {
           slices={slice.slices}
           heading={slice.primary.title}
           sliceProps={props}
+          description={slice.primary.description}
         />
       );
     case 'tab':
@@ -246,7 +247,7 @@ const sliceHandler = (slice, props: any = {}) => {
     case 'table_v2':
       const rows =
         slice.slices
-          .filter(t_slice => t_slice.slice_type === 'table_rows')[0]
+          .filter((t_slice) => t_slice.slice_type === 'table_rows')[0]
           ?.items?.reduce((acc, row) => {
             return [
               ...acc,
@@ -259,6 +260,7 @@ const sliceHandler = (slice, props: any = {}) => {
       return (
         <TableV2
           title={slice.primary.title}
+          description={slice.primary.description}
           rows={rows}
           isMobile={props.isMobile}
         />
@@ -269,6 +271,7 @@ const sliceHandler = (slice, props: any = {}) => {
         card_section_title,
         card_section_type,
         card_type,
+        description,
       } = slice.primary;
 
       let type;
@@ -290,6 +293,7 @@ const sliceHandler = (slice, props: any = {}) => {
           title={card_section_title}
           sectionType={card_section_type}
           cardType={type}
+          description={description}
         />
       );
     case 'card':
@@ -302,10 +306,10 @@ const sliceHandler = (slice, props: any = {}) => {
         card_link_type,
       } = slice.primary;
       const images = slice.items
-        .filter(image => {
+        .filter((image) => {
           if (image.image_source.url || image.image_url.url) return true;
         })
-        .map(image => ({
+        .map((image) => ({
           url: image.image_source.url || image.image_url.url,
           alt: image.image_source.alt || image.image_alt,
         }));
@@ -378,7 +382,7 @@ const sliceHandler = (slice, props: any = {}) => {
 
 export default sliceHandler;
 
-export const toursTabSliceHandler = async slice => {
+export const toursTabSliceHandler = async (slice) => {
   switch (slice.slice_type) {
     case 'tour_list':
       return slice.items;
@@ -398,7 +402,7 @@ export const toursTabSliceHandler = async slice => {
       const excludedTgids = csvTgidToArray(slice.primary.excluded_tgids);
       const category: any = await fetch(
         `https://api.headout.com/api/v1/feed/category/get/${slice.primary.category_id}`
-      ).then(res => res.json());
+      ).then((res) => res.json());
       const tours = category?.products.reduce((acc, tour) => {
         return [
           ...acc,
@@ -410,7 +414,7 @@ export const toursTabSliceHandler = async slice => {
         ];
       }, []);
       return tours
-        .filter(t => excludedTgids.indexOf(t.tgid) === -1)
+        .filter((t) => excludedTgids.indexOf(t.tgid) === -1)
         .slice(0, limit || tours.length);
     default:
     //

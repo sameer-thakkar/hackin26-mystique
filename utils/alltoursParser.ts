@@ -23,7 +23,7 @@ const allToursParser = (CMSData, scorpioData, pricingData: ToursData) => {
     ];
   }, []);
 
-  const getOrderedContent = blocks => {
+  const getOrderedContent = (blocks) => {
     let left = [],
       right = [],
       hidden = [];
@@ -36,7 +36,7 @@ const allToursParser = (CMSData, scorpioData, pricingData: ToursData) => {
         },
       };
     }, {});
-    contentOrderLabels.forEach(label => {
+    contentOrderLabels.forEach((label) => {
       if (!content[label.labelID]) return;
       const useGLOBAL = content[label.labelID].align == 'Global';
       const blockContentLen = RichText.asText(
@@ -69,11 +69,14 @@ const allToursParser = (CMSData, scorpioData, pricingData: ToursData) => {
     return {
       ...accum,
       [tourData.tgid]: {
-        title: tourData.tour_title_override || scorpioData[tourData.tgid].title,
+        title:
+          tourData.tour_title_override ||
+          scorpioData[tourData.tgid].title ||
+          '',
         highlights: scorpioData[tourData.tgid].highlights,
         descriptors:
-          tourData.descriptors || scorpioData[tourData.tgid].descriptors,
-        productHighlights: scorpioData[tourData.tgid].productHighlights,
+          tourData.descriptors || scorpioData[tourData.tgid].descriptors || '',
+        productHighlights: scorpioData[tourData.tgid].productHighlights || '',
         cardFooter: tourData.card_tags,
         theater: tourData.theater_name,
         contentBlocks: getOrderedContent(tour.items),

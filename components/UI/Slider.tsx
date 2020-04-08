@@ -82,10 +82,16 @@ const Controls = styled.div`
     }
   }
 `;
-
 export const Slider = (props) => {
-  const { images, carouselOptions, isMobile, nextButton, prevButton } = props;
-
+  const {
+    images,
+    carouselOptions,
+    isMobile,
+    rebuildOnUpdate,
+    nextButton,
+    prevButton,
+  } = props;
+  carouselOptions.rebuildOnUpdate = rebuildOnUpdate;
   /* Swiper configration for using external controls starts here */
   const [swiper, updateSwiper] = useState(null);
   const [_currentIndex, updateCurrentIndex] = useState(0);
@@ -126,6 +132,8 @@ export const Slider = (props) => {
             <div key={index} className="swiper-slide">
               <Image
                 height={isMobile ? 195 : 375}
+                aspectRatio={'16:10'}
+                dontLazyLoad={true}
                 url={image?.url}
                 alt={image.alt}
               />

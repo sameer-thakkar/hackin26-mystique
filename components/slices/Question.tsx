@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { RichText } from 'prismic-reactjs';
-import { AVENIR } from '../../constants/ui-constants';
+import { AVENIR, COLORS } from '../../constants/ui-constants';
 import { Slider } from '../UI/Slider';
 import { CHEVRON_DOWN } from '../../public/static/svg-icons';
 
@@ -110,7 +110,7 @@ const Question = (props) => {
           object-fit: cover;
         }
         .answer a {
-          color: #ec1943;
+          color: ${COLORS.MED_SLATE_BLUE};
         }
       `}</style>
     </div>

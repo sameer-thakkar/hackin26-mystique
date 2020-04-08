@@ -109,12 +109,13 @@ const StyledFooterLegal = styled.div`
     .logo-wrapper {
       display: flex;
       img {
-        margin-right: 10px;
         height: 40px;
-        ${props => (props.invertLogoColor ? `filter: invert(1);` : '')}
+        max-width: 100%;
+        ${(props) => (props.invertLogoColor ? `filter: invert(1);` : '')}
       }
       svg {
         height: 40px;
+        margin-left: 10px;
         width: 100.5px;
         path {
           fill: white;

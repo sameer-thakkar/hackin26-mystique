@@ -1,8 +1,68 @@
 import React, { Component } from 'react';
 import { RichText } from 'prismic-reactjs';
-import Image from '../UI/Image';
 import Swiper from '../Swiper';
 import { tourListApiParser } from '../../utils/DataParsers';
+import styled from 'styled-components';
+import { LinkCards } from './MicrobrandCards';
+
+const CardCarouselContainer = styled.div`
+  max-width: 1200px;
+
+  .carousel-slider {
+    margin: 50px auto;
+    margin-top: 30px;
+    position: relative;
+    .swiper-slide {
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  .carousel-slider .swiper-container {
+    padding: 10px 6px;
+    overflow: hidden;
+  }
+
+  .carousel-slider .swiper-pagination-bullet-active {
+    background: #ec1943 !important;
+    opacity: 1 !important;
+  }
+  .carousel-slider .swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+    border-radius: 100%;
+    background: #000;
+    opacity: 0.2;
+  }
+
+  .carousel-slider .swiper-container {
+    margin: 0 35px;
+    width: auto;
+    position: static;
+  }
+
+  .carousel-slider .swiper-pagination.swiper-pagination-bullets {
+    top: -30px;
+    right: 41px;
+    bottom: unset;
+    left: unset;
+    width: unset;
+    grid-gap: unset;
+  }
+
+  .carousel-slider .swiper-button-next.swiper-button-disabled {
+    opacity: 0;
+  }
+  @media (max-width: 768px) {
+    .carousel-slider .swiper-pagination.swiper-pagination-bullets {
+      top: -15px;
+    }
+  }
+`;
 
 type CardCarouselProps = {
   cards: any[];
@@ -54,10 +114,10 @@ export default class CardCarousel extends Component<CardCarouselProps> {
   async componentDidMount() {
     const mobileCheck = window.innerWidth < 768;
     const { cards } = this.props;
-    const tgids = cards.map(card => card.tgid);
+    const tgids = cards.map((card) => card.tgid);
     const fetchPrice = await fetch(
       `https://api.headout.com/api/v5/tour-group/list?ids[]=${tgids}`
-    ).then(res => res.json());
+    ).then((res) => res.json());
     const cardPrices = tourListApiParser(fetchPrice);
     const currencySymbol = fetchPrice.currencies[0]?.localSymbol;
     this.setState({
@@ -71,14 +131,25 @@ export default class CardCarousel extends Component<CardCarouselProps> {
 
   renderCardsSlider = () => {
     const { cards } = this.props;
-    const { isFetched, currencySymbol, cardPrices, isMobile } = this.state;
+    const finalCards = cards.map((card) => {
+      return {
+        image: {
+          url: card.image_url?.url || card.image_source?.url,
+          alt: card.image_alt || card.image_source?.alt,
+        },
+        title: card.card_title,
+        tgid: card.tgid,
+        link: card.card_link?.url,
+      };
+    });
+    const { isMobile, isFetched, cardPrices, currencySymbol } = this.state;
     const slidesPerView = isMobile ? 1 : 4;
     const slidesPerGroup = isMobile ? 1 : 4;
-    const params = {
+    let params = {
       direction: 'horizontal',
       speed: 650,
       slidesPerView: slidesPerView,
-      rebuildOnUpdate: true,
+      shouldSwiperUpdate: true,
       lazy: true,
       initialSlide: 1,
       spaceBetween: 8,
@@ -97,36 +168,15 @@ export default class CardCarousel extends Component<CardCarouselProps> {
 
     return (
       <Swiper {...params}>
-        {cards.map((card, index) => {
-          return (
-            <div key={index} className="swiper-slide">
-              <a
-                target={card.card_link?.target ?? '_blank'}
-                href={card.card_link?.url}
-              >
-                <div className="microbrand-card">
-                  <div className="card-image">
-                    <Image
-                      dontLazyLoad={!this.props.lazyLoadImages}
-                      format="pjpg"
-                      width={600}
-                      height={300}
-                      url={card.image_url?.url || card.image_source?.url}
-                      alt={card.image_alt || card.image_source?.alt}
-                    />
-                  </div>
-                  <div className="card-bottom">
-                    <span className="card-title">{card.card_title}</span>
-                    <span className="card-price">
-                      {currencySymbol}
-                      {isFetched ? cardPrices[card.tgid].price : ''}
-                    </span>
-                  </div>
-                </div>
-              </a>
-            </div>
-          );
-        })}
+        <LinkCards
+          as={React.Fragment}
+          isFetched={isFetched}
+          cards={finalCards}
+          cardPrices={cardPrices}
+          cardClassName={'swiper-slide'}
+          currencySymbol={currencySymbol}
+          gridAutoCol={true}
+        />
       </Swiper>
     );
   };
@@ -135,14 +185,14 @@ export default class CardCarousel extends Component<CardCarouselProps> {
     const { carouselHeading } = this.props;
     const { isClient } = this.state;
     return (
-      <div className="card-carousel-container">
+      <CardCarouselContainer>
         <div className="card-carousel-heading">
           <RichText render={carouselHeading} />
         </div>
         <div className="carousel-slider">
           {isClient ? this.renderCardsSlider() : ''}
         </div>
-      </div>
+      </CardCarouselContainer>
     );
   }
 }

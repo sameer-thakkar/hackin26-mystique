@@ -33,7 +33,7 @@ const languageMap = {
   },
 };
 
-const LanguageSelector = props => {
+const LanguageSelector = (props) => {
   const [pathname, setPathname] = useState('');
 
   useEffect(() => {
@@ -42,16 +42,16 @@ const LanguageSelector = props => {
 
   const getLanguages = () => {
     const { currentLanguage, availableLanguages, languages } = props;
-    const prismicLanguages = languages.map(prismicLang =>
+    const prismicLanguages = languages.map((prismicLang) =>
       prismicLang.language.split('-')[1].toLowerCase()
     );
     const publishedLanguages = availableLanguages.map(
-      publishLang => publishLang.lang.split('-')[0]
+      (publishLang) => publishLang.lang.split('-')[0]
     );
     publishedLanguages.push(currentLanguage);
     if (availableLanguages.length > 0) {
       const liveLanguages = prismicLanguages.filter(
-        prismicLang => publishedLanguages.indexOf(prismicLang) != -1
+        (prismicLang) => publishedLanguages.indexOf(prismicLang) != -1
       );
       return liveLanguages;
     }
@@ -70,6 +70,12 @@ const LanguageSelector = props => {
     currentDomain,
     isMobile,
   } = props;
+
+  const selectorRef = useRef(null);
+  const parentRef = useRef(null);
+  const exceptionElementRefs = [parentRef];
+  useCaptureClickOutside(selectorRef, handleClick, exceptionElementRefs);
+
   const availableLanguages = getLanguages();
   if (availableLanguages.length <= 1) {
     return null;
@@ -92,16 +98,13 @@ const LanguageSelector = props => {
     else return `/${language}${slug}`;
   };
 
-  const selectorRef = useRef(null);
-  const parentRef = useRef(null);
-  const exceptionElementRefs = [parentRef];
-  useCaptureClickOutside(selectorRef, handleClick, exceptionElementRefs);
-
   return (
     <div
       onClick={handleClick}
       ref={parentRef}
       className="language-selector-container"
+      role="button"
+      tabIndex={0}
     >
       <div className="current-langauge">
         <span className="current-language-toggle">
@@ -131,6 +134,7 @@ const LanguageSelector = props => {
                   {currentLanguage == language ? (
                     <img
                       className="check-mark"
+                      alt="check"
                       src="https://cdn-imgix-open.headout.com/mystique/assets/tick.svg"
                     />
                   ) : null}
@@ -139,14 +143,24 @@ const LanguageSelector = props => {
             );
           })}
           {isMobile ? (
-            <div onClick={handleClick} className="close-btn">
+            <div
+              onClick={handleClick}
+              className="close-btn"
+              role="button"
+              tabIndex={0}
+            >
               Close
             </div>
           ) : null}
         </div>
       ) : null}
       {isMobile && languageDropdown ? (
-        <div onClick={handleClick} className="close-mask"></div>
+        <div
+          onClick={handleClick}
+          className="close-mask"
+          role="button"
+          tabIndex={0}
+        ></div>
       ) : null}
       <style jsx>
         {`
@@ -155,6 +169,16 @@ const LanguageSelector = props => {
             border: 1px solid #dadada;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.08);
           }
+
+          .language-selector-container {
+            position: relative;
+            margin-left: 30px;
+          }
+
+          .lang {
+            transform: translateY(-2px);
+          }
+
           .language-selector-container {
             margin: 0;
           }

@@ -34,6 +34,7 @@ const StyledImageGallery = styled.div`
   .swiper-wrapper,
   .swiper-container {
     position: unset;
+    overflow: unset;
   }
   .swiper-container {
     max-width: 1200px;
@@ -104,7 +105,7 @@ const StyledImageGallery = styled.div`
 `;
 
 const StyledImage = styled.div`
-  width: 180px;
+  width: 180px !important;
   cursor: zoom-in;
   img {
     width: 100%;
@@ -177,8 +178,8 @@ const Lightbox = styled.div`
       content: unset;
     }
   }
-  .swiper-wrapper {
-    // transition: unset !important;
+  .swiper-container-autoheight .swiper-wrapper {
+    align-items: center;
     transition-property: transform;
   }
   @media (max-width: 768px) {
@@ -203,13 +204,16 @@ const Lightbox = styled.div`
 
 const LightboxImage = styled.div`
   background: ${COLORS.WHITE};
-  img {
+  .swiper-slide img {
     padding: 8px;
     padding-bottom: 0;
     width: calc(100% - 16px);
     height: calc(100% - 16px);
     object-fit: cover;
     max-height: 80vh;
+  }
+  .swiper-container-autoheight .swiper-slide {
+    height: 100%;
   }
   @media (max-width: 768px) {
     background: unset;
@@ -282,7 +286,7 @@ const ImageGallery = (props) => {
     slidesPerView: 'auto',
     spaceBetween: isMobile ? 14 : 24,
     freeMode: isMobile ? true : false,
-    rebuildOnUpdate: true,
+    shouldSwiperUpdate: true,
     freeModeMomentum: 2,
     navigation: {
       nextEl: '.btn-right',
@@ -308,6 +312,7 @@ const ImageGallery = (props) => {
     init: true,
     slidesPerView: 1,
     rebuildOnUpdate: false,
+    shouldSwiperUpdate: false,
     spaceBetween: 0,
     autoHeight: true,
     initialSlide,
@@ -379,6 +384,7 @@ const ImageGallery = (props) => {
                   <LightboxImage key={index} title={caption}>
                     <Image
                       url={image.uploaded_image?.url || image.linked_image}
+                      dontLazyLoad={true}
                       alt={caption}
                     />
                     <Caption>{caption}</Caption>

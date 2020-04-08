@@ -4,6 +4,8 @@ import sliceHandler from '../Slices';
 import useWindowSize from '../hooks/useWindowSize';
 import Swiper from '../Swiper';
 import OverflowScroll from '../UI/OverflowScroll';
+import RichContent from '../UI/RichContent';
+import TitleTextCombo from '../UI/TitleTextCombo';
 import { CHEVRON_LEFT_CIRCLE } from '../../public/static/svg-icons';
 
 const CardGrid = styled.div(({ cardType, isMobile }) => {
@@ -69,6 +71,7 @@ type CardSectionProps = {
   cardType: string;
   sectionType: string;
   title?: string;
+  description?: any[];
 };
 
 /**
@@ -94,6 +97,7 @@ const CardSection: React.FC<CardSectionProps> = ({
   cardType,
   sectionType,
   title,
+  description,
 }) => {
   const { width } = useWindowSize();
   const [isMobile, setIsMobile] = React.useState(false);
@@ -172,7 +176,10 @@ const CardSection: React.FC<CardSectionProps> = ({
 
     return (
       <>
-        {title ? <h2>{title}</h2> : null}
+        <TitleTextCombo>
+          {title ? <h2>{title}</h2> : null}
+          {description ? <RichContent render={description} /> : null}
+        </TitleTextCombo>
         <CardCarousel>
           <StyledSwiper>
             <Swiper {...swiperParams}>
@@ -215,7 +222,10 @@ const CardSection: React.FC<CardSectionProps> = ({
   if (sectionType === 'Carousel' && isMobile) {
     return (
       <>
-        {title ? <h2>{title}</h2> : null}
+        <TitleTextCombo>
+          {title ? <h2>{title}</h2> : null}
+          {description ? <RichContent render={description} /> : null}
+        </TitleTextCombo>
         <OverflowScroll>{cards}</OverflowScroll>
       </>
     );
@@ -223,7 +233,10 @@ const CardSection: React.FC<CardSectionProps> = ({
 
   return (
     <>
-      {title ? <h2>{title}</h2> : null}
+      <TitleTextCombo>
+        {title ? <h2>{title}</h2> : null}
+        {description ? <RichContent render={description} /> : null}
+      </TitleTextCombo>
       <CardGrid
         cardType={finalCardType}
         sectionType={sectionType}

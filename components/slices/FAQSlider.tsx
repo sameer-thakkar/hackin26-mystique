@@ -5,6 +5,7 @@ import { RichText } from 'prismic-reactjs';
 import { AVENIR, GRAPHIK, COLORS } from '../../constants/ui-constants';
 import { Slider } from '../UI/Slider';
 import Image from '../UI/Image';
+import { shortCodeSerializer } from '../../utils/shortCodes';
 
 const StyledFAQSlider = styled.div`
   display: grid;
@@ -78,7 +79,7 @@ const TextBlock = styled.div`
     margin: 0;
   }
   a {
-    color: #ec1943;
+    color: ${COLORS.MED_SLATE_BLUE};
   }
   img {
     width: 100%;
@@ -133,6 +134,7 @@ const FAQSlider = (props) => {
             <SingleImage>
               <Image
                 height={500}
+                aspectRatio={'16:10'}
                 imageId={images[0]?.alt}
                 url={images[0]?.url}
                 alt={images[0]?.alt}
@@ -171,7 +173,10 @@ const FAQSlider = (props) => {
                   </SliderWrapper>
                 ) : null}
                 <div className="answer-content">
-                  <RichText render={faqItem.answer} />
+                  <RichText
+                    render={faqItem.answer}
+                    htmlSerializer={shortCodeSerializer}
+                  />
                 </div>
               </TextBlock>
             </div>

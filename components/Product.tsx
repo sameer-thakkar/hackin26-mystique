@@ -24,7 +24,7 @@ const StyledProductCard = styled.div`
     font-weight: ${GRAPHIK.HEAVY};
     font-size: 14px;
     line-height: 15px;
-    color: ${COLORS.MED_STATE_BLUE};
+    color: ${COLORS.MED_SLATE_BLUE};
     margin-left: 1em;
     margin-top: 16px;
     cursor: pointer;
@@ -150,7 +150,10 @@ const CTABlock = styled.div`
     }
   }
   @media (max-width: 768px) {
-    grid-row: ${({ showEarliestAvail }) => (showEarliestAvail ? 7 : 6)};
+    grid-row: ${({ showEarliestAvail, hasOffer }) =>
+      showEarliestAvail || hasOffer ? 6 : 5};
+    grid-row: ${({ showEarliestAvail, hasOffer }) =>
+      showEarliestAvail && hasOffer ? 7 : 6};
     .tour-book-now-cta {
       justify-content: center;
     }
@@ -190,7 +193,6 @@ const ProductBody = styled.div`
   @media (max-width: 768px) {
     display: contents;
     .tour-description {
-      margin-top: 8px;
       p {
         display: none;
       }
@@ -231,7 +233,7 @@ const ProductOfferBlock = styled.div`
   font-family: ${GRAPHIK.FONT_STACK};
   font-weight: ${GRAPHIK.HEAVY};
   cursor: pointer;
-  color: ${COLORS.MED_STATE_BLUE};
+  color: ${COLORS.MED_SLATE_BLUE};
   p {
     margin: 0;
   }
@@ -408,7 +410,10 @@ const Product = (props) => {
               </div>
             ) : null}
           </PriceBlock>
-          <CTABlock showEarliestAvail={earliestAvailability}>
+          <CTABlock
+            showEarliestAvail={earliestAvailability}
+            hasOffer={hasOffer}
+          >
             <a
               target={isFetched && isMobile ? null : '_blank'}
               href={`http://book.${bookingUrl}${

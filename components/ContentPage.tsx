@@ -26,6 +26,134 @@ const ContentWrapper = styled.main`
   }
 `;
 
+const StyledContentPage = styled.div`
+  display: grid;
+  grid-row-gap: 40px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+
+  .slice-block h2 {
+    font-weight: 500;
+    font-size: 30px;
+    color: #080808;
+    font-family: 'Graphik', 'Proxima Nova', 'Helvetica Neue', Helvetica, Arial,
+      sans-serif;
+    position: relative;
+    line-height: 1.4;
+    color: #444444;
+  }
+  .slice-block h3 {
+    font-weight: 500;
+    font-size: 26px;
+    color: #080808;
+    font-family: 'Graphik', 'Proxima Nova', 'Helvetica Neue', Helvetica, Arial,
+      sans-serif;
+    position: relative;
+    line-height: 1.4;
+    color: #444444;
+  }
+
+  .slice-block > h2 {
+    margin-bottom: 40px;
+  }
+
+  .slice-block > h2::after {
+    color: #ec1943;
+    width: 75px;
+    border-top: solid 3px;
+    margin: 0;
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    content: '';
+  }
+
+  .slice-block p {
+    color: #444444;
+    font-family: Avenir;
+    font-size: 16px;
+    margin: auto;
+    margin-bottom: auto;
+    margin-bottom: 15px;
+    line-height: 30px;
+  }
+  .product .product-left p {
+    margin: 0;
+  }
+  .product .product-left {
+    width: 75%;
+    display: grid;
+    grid-row-gap: 10px;
+  }
+
+  a {
+    text-decoration: none;
+    color: #ec1943;
+  }
+
+  .product {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid #ebebeb;
+    /*box-shadow: 0 1px 2px rgba(0,0,0,.18);*/
+    margin-bottom: 40px;
+    border-radius: 5px;
+    padding: 20px 40px;
+  }
+
+  .products:last-child {
+    margin-bottom: 70px;
+  }
+
+  .products .product .product-left .product-heading {
+    color: #444444;
+    margin: 0;
+  }
+
+  .slice-block ul {
+    padding-left: 20px;
+  }
+
+  .slice-block ul li,
+  .slice-block ol li {
+    font-family: Avenir;
+    font-size: 18px;
+    color: #444444;
+    line-height: 40px;
+  }
+  .slice-wrapper.slice-block {
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    grid-row-gap: 20px;
+    .slice-block h2 {
+      font-size: 20px;
+      margin: 40px 0;
+    }
+    .product .product-left {
+      width: 100%;
+    }
+    .slice-block p,
+    .slice-block .more-reads-text-text {
+      font-size: 16px;
+    }
+    .slice-block h3,
+    .slice-block .more-reads-text-heading,
+    .products .product .product-left .product-heading {
+      font-size: 18px;
+    }
+    .product {
+      display: block;
+      padding: 0 20px;
+    }
+    .slice-wrapper.slice-block {
+      padding: 0 16px;
+      width: calc(100% - 32px);
+    }
+  }
+`;
 export default class ContentPage extends Component<any, any> {
   constructor(props) {
     super(props);
@@ -358,7 +486,7 @@ export default class ContentPage extends Component<any, any> {
             />
           ) : null}
 
-          <div className="subpage-container">
+          <StyledContentPage>
             <ProductsContextProvider allTours={allTours} ready={apiReady}>
               <InteractionContextProvider>
                 {[...body, ...contentFWSlices].map((slice, index) => (
@@ -375,7 +503,7 @@ export default class ContentPage extends Component<any, any> {
                 ))}
               </InteractionContextProvider>
             </ProductsContextProvider>
-          </div>
+          </StyledContentPage>
         </ContentWrapper>
         <Footer
           currentLanguage={currentLanguage}

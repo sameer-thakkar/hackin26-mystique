@@ -57,7 +57,7 @@ const StyledCard = styled.div((props) => {
       font-family: ${AVENIR.FONT_STACK};
     }
     a {
-      color: ${COLORS.RHAPSODY};
+      color: ${COLORS.MED_SLATE_BLUE};
     }
   }
   .swiper-pagination.swiper-pagination-bullets {
@@ -80,6 +80,7 @@ const Title = styled.div`
 const SwiperWrapper = styled.div`
   display: flex;
   overflow: hidden;
+  height: max-content;
 `;
 
 const ButtonWrapper = styled.div`
@@ -169,7 +170,7 @@ const Card: React.FC<CardProps> = ({
       type: 'bullets',
       clickable: true,
     },
-    rebuildOnUpdate: true,
+    shouldSwiperUpdate: true,
   };
 
   let imageView;

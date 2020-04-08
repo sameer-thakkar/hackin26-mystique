@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import RichContent from '../UI/RichContent';
 import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 import { COLORS, GRAPHIK } from '../../constants/ui-constants';
 import { stringIdfy } from '../../utils/helper';
-import useWindowSize from '../hooks/useWindowSize';
+import TitleTextCombo from '../UI/TitleTextCombo';
 
 const StyledTable = styled.div`
   display: grid;
@@ -87,14 +88,15 @@ const StyledColumn = styled.div`
  * > PS: On Mobile, The First Row gets transformed as First column, and first column becomes the heading for each row.[Use the canvas tab to visualize this.]
  */
 
-const TableV2 = props => {
-  const { rows, title, isMobile } = props;
+const TableV2 = (props) => {
+  const { rows, title, isMobile, description } = props;
   const headings = isMobile ? rows[0]?.columns : [];
   return (
     <StyledTable>
-      <div className="heading" id={stringIdfy(title)}>
-        {title}
-      </div>
+      <TitleTextCombo id={stringIdfy(title)}>
+        <h2>{title}</h2>
+        {description ? <RichContent render={description} /> : null}
+      </TitleTextCombo>
       {rows.map((row, rowIndex) => {
         if (isMobile && rowIndex === 0) return null;
         const actualColumns = [...headings, ...row.columns];

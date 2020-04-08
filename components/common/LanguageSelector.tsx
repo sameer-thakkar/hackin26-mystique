@@ -4,6 +4,7 @@ import Router from 'next/router';
 import styled from 'styled-components';
 import { withoutTrailingSlash } from '../../utils/helper';
 import { GLOBE } from '../../public/static/svg-icons';
+import { COLORS } from '../../constants/ui-constants';
 
 const flagsUrl = {
   en: {
@@ -39,6 +40,38 @@ const flagsUrl = {
 const StyledLanguageContainer = styled.div`
   margin-left: 32px;
   position: relative;
+  .language-dropdown a {
+    text-decoration: none;
+    color: #444444;
+  }
+  .language-dropdown {
+    display: none;
+    position: absolute;
+    left: -25px;
+    top: 20px;
+  }
+  .language {
+    display: flex;
+    align-items: center;
+    border-bottom: 0.5px dotted #d8d8d8;
+    background-color: rgba(255, 255, 255, 0.99);
+    font-family: Avenir;
+    font-size: 18px;
+    padding: 10px 25px;
+    cursor: pointer;
+  }
+  .language:hover {
+    color: #ec1943;
+  }
+  .lang {
+    transform: translateY(-2px);
+  }
+  .selected-tab {
+    color: ${COLORS.RHAPSODY};
+  }
+  .language-dropdown-active {
+    display: block;
+  }
 `;
 
 const StyledMobileSelect = styled.div`
@@ -89,16 +122,16 @@ class LanguageSelector extends Component<any, any> {
 
   getLanguages = () => {
     const { currentLanguage, alternateLanguages, languages } = this.props;
-    const prismicLanguages = languages.map(prismicLang =>
+    const prismicLanguages = languages.map((prismicLang) =>
       prismicLang.language.split('-')[1].toLowerCase()
     );
     const publishedLanguages = alternateLanguages.map(
-      publishLang => publishLang.lang.split('-')[0]
+      (publishLang) => publishLang.lang.split('-')[0]
     );
     publishedLanguages.push(currentLanguage);
     if (alternateLanguages.length > 0) {
       const liveLanguages = prismicLanguages.filter(
-        prismicLang => publishedLanguages.indexOf(prismicLang) != -1
+        (prismicLang) => publishedLanguages.indexOf(prismicLang) != -1
       );
       return liveLanguages;
     }
@@ -109,7 +142,7 @@ class LanguageSelector extends Component<any, any> {
     this.setState({ showDropdown: !this.state.showDropdown });
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     const { pathname } = this.state;
     const { uid, host } = this.props;
     const langCodeRegex = /^(\/){0,1}(en|fr|de|it|nl|pt|es)(\/){0,1}/;
@@ -130,7 +163,7 @@ class LanguageSelector extends Component<any, any> {
     const { pathname } = this.state;
     const langCodeRegex = /^(\/){0,1}(en|fr|de|it|nl|pt|es)(\/){0,1}/;
     const removeLangFromPathname = pathname.replace(langCodeRegex, '');
-    const slugWithoutLeadingSlash = slug =>
+    const slugWithoutLeadingSlash = (slug) =>
       slug.charAt(slug[0]) === '/' ? slug.substr(1, slug.length) : slug;
     const slug = slugWithoutLeadingSlash(removeLangFromPathname);
     const isDev = host.includes('localhost');
@@ -139,7 +172,7 @@ class LanguageSelector extends Component<any, any> {
       return (
         <StyledMobileSelect>
           <span>{currentLanguage}</span>
-          <select value={currentLanguage} onChange={this.handleChange}>
+          <select value={currentLanguage} onBlur={this.handleChange}>
             {this.getLanguages().map((language, index) => {
               return (
                 <option value={language} key={index}>
@@ -188,6 +221,7 @@ class LanguageSelector extends Component<any, any> {
                       className={
                         currentLanguage == language ? 'selected-tab' : ''
                       }
+                      href={`/${language}/${slug}`}
                     >
                       <div className="language">
                         <span className="lang">
