@@ -54,7 +54,7 @@ const Question = (props) => {
               display: grid;
               grid-template-columns: 1fr auto;
               justify-items: space-between;
-              font-weight: ${AVENIR.HEAVY};
+              font-weight: ${AVENIR.BLACK};
               font-family: ${AVENIR.FONT_STACK};
             }
             .question-carousel{

@@ -47,7 +47,7 @@ const TicketCardPrice = styled.div`
   justify-self: flex-end;
   font-size: 20px;
   line-height: 24px;
-  font-weight: ${GRAPHIK.HEAVY};
+  font-weight: ${GRAPHIK.MEDIUM};
   div {
     display: flex;
     justify-content: flex-end;

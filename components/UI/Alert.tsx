@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Popup from '../common/Popup';
-import * as labels from '../../public/static/localization/labels';
+import * as labels from '../../constants/localization/labels';
 import { SHIELD } from '../../public/static/svg-icons';
 import { AVENIR } from '../../constants/ui-constants';
 import { Client } from '../../prismic-config';
@@ -37,7 +37,7 @@ const StyledTitle = styled.div`
   grid-area: title;
   font-size: 16px;
   line-height: 16px;
-  font-weight: ${AVENIR.HEAVY};
+  font-weight: ${AVENIR.BLACK};
 `;
 
 const StyledContent = styled.div`
@@ -66,7 +66,7 @@ const Alert: React.FC<AlertProps> = ({ popupUID, currentLanguage }) => {
       .getByUID(CUSTOM_TYPES.POPUP, popupUID, {
         lang: 'en-us',
       })
-      .then(res => {
+      .then((res) => {
         if (res.data) {
           setData(res.data);
         }

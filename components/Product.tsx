@@ -4,7 +4,7 @@ import { RichText } from 'prismic-reactjs';
 import ReactMarkdown from 'react-markdown/with-html';
 import moment from 'moment';
 import parse from 'url-parse';
-import * as labels from '../public/static/localization/labels';
+import * as labels from '../constants/localization/labels';
 import { ANALYTICS_EVENTS } from '../constants';
 import { COLORS, GRAPHIK, AVENIR } from '../constants/ui-constants';
 import styled from 'styled-components';
@@ -21,7 +21,7 @@ const StyledProductCard = styled.div`
   display: grid;
   grid-row-gap: 24px;
   .more-details {
-    font-weight: ${GRAPHIK.HEAVY};
+    font-weight: ${GRAPHIK.MEDIUM};
     font-size: 14px;
     line-height: 15px;
     color: ${COLORS.MED_SLATE_BLUE};
@@ -52,12 +52,12 @@ const ProductHeader = styled.div`
   .tour-title {
     font-size: 24px;
     line-height: 32px;
-    font-weight: ${GRAPHIK.HEAVY};
+    font-weight: ${GRAPHIK.MEDIUM};
     margin: 0;
   }
   .tour-tags {
     font-size: 14px;
-    font-weight: ${GRAPHIK.HEAVY};
+    font-weight: ${GRAPHIK.MEDIUM};
     display: grid;
     grid-auto-flow: column;
     align-items: center;
@@ -116,7 +116,7 @@ const PriceBlock = styled.div`
     font-size: 25px;
     line-height: 32px;
     display: flex;
-    font-weight: ${GRAPHIK.HEAVY};
+    font-weight: ${GRAPHIK.MEDIUM};
     color: ${COLORS.FOUR_BLACK};
   }
   @media (max-width: 768px) {
@@ -187,7 +187,7 @@ const ProductBody = styled.div`
     }
     p {
       margin: 0;
-      font-weight: ${GRAPHIK.HEAVY};
+      font-weight: ${GRAPHIK.MEDIUM};
     }
   }
   @media (max-width: 768px) {
@@ -212,7 +212,7 @@ const ProductBody = styled.div`
 
 const NextAvailableBlock = styled.div`
   font-size: 14px;
-  font-weight: ${GRAPHIK.HEAVY};
+  font-weight: ${GRAPHIK.MEDIUM};
   color: ${COLORS.FOUR_BLACK};
   line-height: 15px;
   display: grid;
@@ -231,7 +231,7 @@ const ProductOfferBlock = styled.div`
   font-size: 15px;
   line-height: 15px;
   font-family: ${GRAPHIK.FONT_STACK};
-  font-weight: ${GRAPHIK.HEAVY};
+  font-weight: ${GRAPHIK.MEDIUM};
   cursor: pointer;
   color: ${COLORS.MED_SLATE_BLUE};
   p {
@@ -271,7 +271,7 @@ const V1BoosterBlock = styled.div`
     p {
       font-size: 12px;
       strong {
-        font-weight: ${GRAPHIK.HEAVY};
+        font-weight: ${GRAPHIK.MEDIUM};
         line-height: 1.5;
       }
     }

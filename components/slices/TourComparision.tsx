@@ -5,7 +5,7 @@ import Image from '../UI/Image';
 import EnvironmentContext from '../../contexts/environmentContext';
 import ProductsContext from '../../contexts/Products';
 import CommonCTA from '../UI/CTA';
-import * as labels from '../../public/static/localization/labels';
+import * as labels from '../../constants/localization/labels';
 import LocalisedPrice from '../UI/LPrice';
 import { RichText } from 'prismic-reactjs';
 import { AVENIR, COLORS, GRAPHIK } from '../../constants/ui-constants';
@@ -21,7 +21,7 @@ const StyledTourComparisionTable = styled.div`
   .comparision-heading {
     font-size: 24px;
     margin-bottom: 8px;
-    font-weight: ${AVENIR.HEAVY};
+    font-weight: ${AVENIR.BLACK};
     font-family: ${AVENIR.FONT_STACK};
     color: ${COLORS.TWO_BLACK};
     line-height: 33px;
@@ -37,7 +37,7 @@ const StyledTourComparisionTable = styled.div`
   }
   .tour-title {
     font-family: ${AVENIR.FONT_STACK};
-    font-weight: ${AVENIR.HEAVY};
+    font-weight: ${AVENIR.BLACK};
     font-size: 16px;
     color: ${COLORS.TWO_BLACK};
     letter-spacing: 0.0035em;
@@ -94,7 +94,7 @@ const StyledTourComparisionTable = styled.div`
   .current-price {
     font-size: 16px;
     font-family: ${AVENIR.FONT_STACK};
-    font-weight: ${AVENIR.HEAVY};
+    font-weight: ${AVENIR.BLACK};
     color: ${COLORS.FOUR_BLACK};
     line-height: 20px;
   }
@@ -142,7 +142,7 @@ const StyledTourComparisionTable = styled.div`
   }
   .block-label {
     font-size: 16px;
-    font-weight: ${AVENIR.HEAVY};
+    font-weight: ${AVENIR.BLACK};
     font-family: ${AVENIR.FONT_STACK};
     line-height: 18px;
     letter-spacing: 0.5px;
@@ -238,7 +238,7 @@ const StyledTourComparisionTable = styled.div`
       font-size: 12px;
       color: ${COLORS.GREY_75};
       font-family: ${GRAPHIK.FONT_STACK};
-      font-weight: ${GRAPHIK.HEAVY};
+      font-weight: ${GRAPHIK.MEDIUM};
       line-height: 12px;
     }
     .block-content {

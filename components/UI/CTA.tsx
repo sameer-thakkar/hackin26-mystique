@@ -11,7 +11,7 @@ const StyledCTA = styled.div`
   color: ${COLORS.RHAPSODY};
   font-family: ${AVENIR.FONT_STACK};
   text-align: center;
-  font-weight: ${AVENIR.HEAVY};
+  font-weight: ${AVENIR.BLACK};
   line-height: 16px;
   a {
     text-decoration: none;
@@ -29,7 +29,7 @@ const StyledCTA = styled.div`
       : `background: ${COLORS.RHAPSODY}`) + ';'}
 `;
 
-const CommonCTA = props => {
+const CommonCTA = (props) => {
   const { text, link, clickHandler, children } = props;
 
   return (

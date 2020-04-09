@@ -1,24 +1,18 @@
 export const GRAPHIK = {
   FONT_STACK: "Graphik, Arial, Helvetica, 'sans-serif'",
-  THIN: '100',
-  EX_LIGHT: '200',
   LIGHT: '300',
   REGULAR: '400',
-  HEAVY: '500',
+  MEDIUM: '500',
   SEMIBOLD: '600',
-  MEDIUM: '600',
   BOLD: '700',
-  BLACK: '800',
-  SUPER: '900',
 };
 
 export const AVENIR = {
   FONT_STACK: "Avenir, Arial, Helvetica, 'sans-serif'",
-  BOOK: '400',
-  ROMAN: '400',
+  LIGHT: '300',
+  REGULAR: '400',
   MEDIUM: '500',
-  HEAVY: '800',
-  BLACK: '900',
+  BLACK: '800',
 };
 
 export const COLORS = {

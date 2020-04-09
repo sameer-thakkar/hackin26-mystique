@@ -227,14 +227,14 @@ export const MobileProductPage = (props) => {
           }
           .price {
             font-family: ${AVENIR.FONT_STACK};
-            font-weight: ${AVENIR.HEAVY};
+            font-weight: ${AVENIR.BLACK};
             margin-left: 16px;
           }
           .mobile-product-wrap .current-price,
           .from-text {
             font-size: 18px;
             line-height: 24px;
-            font-weight: ${AVENIR.HEAVY};
+            font-weight: ${AVENIR.BLACK};
             color: ${COLORS.TWO_BLACK};
           }
           .from-text {
@@ -302,7 +302,7 @@ export const MobileProductPage = (props) => {
 
           .mobile-product-wrap .content-block .label-title {
             font-size: 16px;
-            font-weight: ${AVENIR.HEAVY};
+            font-weight: ${AVENIR.BLACK};
             font-family: ${AVENIR.FONT_STACK};
             color: ${COLORS.TWO_BLACK};
           }
@@ -332,7 +332,7 @@ export const MobileProductPage = (props) => {
             padding: 16px;
             font-family: ${AVENIR.FONT_STACK};
             font-size: 16px;
-            font-weight: ${AVENIR.HEAVY};
+            font-weight: ${AVENIR.BLACK};
             font-style: normal;
             font-stretch: normal;
             line-height: 1;
@@ -391,7 +391,7 @@ export const MobileProductPage = (props) => {
       <style global jsx>
         {`
           .content-block .label-title {
-            font-weight: ${AVENIR.HEAVY};
+            font-weight: ${AVENIR.BLACK};
             font-family: ${AVENIR.FONT_STACK};
             line-height: 1.12;
           }

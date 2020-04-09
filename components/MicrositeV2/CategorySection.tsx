@@ -2,7 +2,7 @@ import PopulateProducts from './PopulateProducts';
 import { AVENIR, GRAPHIK, COLORS } from '../../constants/ui-constants';
 import { useContext } from 'react';
 import ProductsContext from '../../contexts/Products';
-const CategorySection = props => {
+const CategorySection = (props) => {
   const {
     tgidsArray,
     host,
@@ -15,12 +15,9 @@ const CategorySection = props => {
   const toursContext = useContext(ProductsContext);
   const allTours = toursContext.allTours;
   let filteredTgids = tgidsArray.filter(
-    tgid => allTours[tgid] && allTours[tgid].available
+    (tgid) => allTours[tgid] && allTours[tgid].available
   );
-  const elementId = heading
-    .trim()
-    .replace(/\s/g, '-')
-    .toLowerCase();
+  const elementId = heading.trim().replace(/\s/g, '-').toLowerCase();
   return (
     <div className="category-slider" id={elementId}>
       <h2 className="category-heading">{heading}</h2>
@@ -45,7 +42,7 @@ const CategorySection = props => {
           margin: 0;
           font-size: 22px;
           font-family: ${AVENIR.FONT_STACK};
-          font-weight: ${AVENIR.HEAVY};
+          font-weight: ${AVENIR.BLACK};
           line-height: 33px;
           color: ${COLORS.TWO_BLACK};
         }

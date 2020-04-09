@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import { scroller } from 'react-scroll';
-import * as labels from '../public/static/localization/labels';
+import * as labels from '../constants/localization/labels';
 import Button from './UI/Button';
 import Image from './UI/Image';
 import styled from 'styled-components';

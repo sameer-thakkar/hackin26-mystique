@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import Swiper from '../Swiper';
 import Image from '../UI/Image';
 import Button from '../UI/Button';
+import { MBContext } from '../../contexts/MBContext';
+import * as labels from '../../constants/localization/labels';
 import { COLORS, GRAPHIK, AVENIR } from '../../constants/ui-constants';
+import { CHEVRON_LEFT } from '../../public/static/svg-icons';
 
 const variantStyles = {
   desktop: {
@@ -69,7 +72,7 @@ const StyledCard = styled.div((props) => {
 
 const Title = styled.div`
   font-family: ${GRAPHIK.FONT_STACK};
-  font-weight: ${GRAPHIK.HEAVY};
+  font-weight: ${GRAPHIK.MEDIUM};
   font-size: 20px;
   text-decoration: none;
   line-height: 27px;
@@ -91,6 +94,24 @@ const ButtonWrapper = styled.div`
   }
 `;
 
+const CTALink = styled.a`
+  color: ${COLORS.RHAPSODY} !important;
+  font-weight: ${AVENIR.BLACK};
+  font-family: ${AVENIR.FONT_STACK};
+  margin-top: 24px;
+  svg {
+    opacity: 0.5;
+    transform: rotate(180deg);
+    height: 10px;
+    path {
+      stroke-width: 5px;
+    }
+  }
+  @media (max-width: 768px) {
+    margin-top: 16px;
+  }
+`;
+
 type CardProps = {
   title: string;
   description: any[];
@@ -100,7 +121,8 @@ type CardProps = {
       url: string;
       target: string;
     };
-    text: string;
+    text?: string;
+    type: string;
   };
   type?: string;
   link?: any;
@@ -121,10 +143,13 @@ type CardProps = {
  * - Card Link
  * - Card Link Type
  *  - 'Full Card' will make the entire card a link and 'Title' will only make the title a link
+ * - CTA Type
+ *  - Option between 'Button' or 'Link'
  * - CTA Text
+ *  - If left blank will default to 'Book Now' if CTA Type is 'Button' and 'Read More' if CTA Type is 'Link'
  * - CTA Link
  *
- * **Note: If either of the CTA fields is left blank, the CTA won't appear.**
+ * **Note: If the CTA link field is left blank, the CTA won't appear.**
  *
  * ### Repeatable zone
  * - Image Source
@@ -148,6 +173,9 @@ const Card: React.FC<CardProps> = ({
   linkType = '',
 }) => {
   const [isMobile, setIsMobile] = React.useState(false);
+  const mbContext = useContext(MBContext);
+
+  const lang = mbContext.lang || 'en';
 
   React.useEffect(() => {
     let width = window.innerWidth;
@@ -209,6 +237,27 @@ const Card: React.FC<CardProps> = ({
       );
       break;
   }
+
+  let CTA;
+  switch (cta.type) {
+    case 'Button':
+      CTA = (
+        <ButtonWrapper>
+          <a href={cta.link.url} target={cta.link.target}>
+            <Button>{cta.text || labels[lang]['BOOK_NOW_CTA']}</Button>
+          </a>
+        </ButtonWrapper>
+      );
+      break;
+    case 'Link':
+      CTA = (
+        <CTALink href={cta.link.url} target={cta.link.target}>
+          {cta.text || labels[lang]['READ_MORE_TEXT']}
+          {CHEVRON_LEFT}
+        </CTALink>
+      );
+  }
+
   return (
     <StyledCard
       {...(linkType === 'Full Card' && {
@@ -231,13 +280,7 @@ const Card: React.FC<CardProps> = ({
           {title}
         </Title>
         <RichText render={description} />
-        {cta.link && cta.text ? (
-          <ButtonWrapper>
-            <a href={cta.link.url} target={cta.link.target}>
-              <Button>{cta.text}</Button>
-            </a>
-          </ButtonWrapper>
-        ) : null}
+        {cta?.link?.url ? CTA : null}
       </div>
     </StyledCard>
   );

@@ -3,7 +3,7 @@ import { shortCodeSerializer } from '../../utils/shortCodes';
 import Image from '../UI/Image';
 import { AVENIR, GRAPHIK, COLORS } from '../../constants/ui-constants';
 
-export const SearchItem = props => {
+export const SearchItem = (props) => {
   const {
     tgid,
     productImage,
@@ -69,7 +69,7 @@ export const SearchItem = props => {
             font-family: ${AVENIR.FONT_STACK};
             font-size: 16px;
             color: ${COLORS.DAVY_GREY};
-            font-weight: ${AVENIR.HEAVY};
+            font-weight: ${AVENIR.BLACK};
             line-height: 1.2;
           }
 
@@ -99,12 +99,12 @@ export const SearchItem = props => {
           .search-item .current-price {
             font-size: 14px;
             color: ${COLORS.DAVY_GREY};
-            font-weight: ${GRAPHIK.HEAVY};
+            font-weight: ${GRAPHIK.MEDIUM};
           }
           @media (max-width: 768px) {
             .search-item .search-title {
               font-size: 14px;
-              font-weight: ${AVENIR.HEAVY};
+              font-weight: ${AVENIR.BLACK};
             }
           }
         `}

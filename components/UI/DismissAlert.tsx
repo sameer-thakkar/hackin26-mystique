@@ -37,7 +37,7 @@ const StyledContent = styled.div`
   padding: 8px;
   .alert-key-text {
     grid-area: key-text;
-    font-weight: ${AVENIR.HEAVY};
+    font-weight: ${AVENIR.BLACK};
     justify-self: end;
   }
   .alert-text {

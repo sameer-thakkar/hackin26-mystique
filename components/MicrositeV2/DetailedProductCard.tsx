@@ -9,7 +9,7 @@ import {
 } from '../../utils/shortCodes';
 import { MBContext } from '../../contexts/MBContext';
 
-const DetailedProductCard = props => {
+const DetailedProductCard = (props) => {
   const closeDescriptionCard = () => {
     props.closeDescription();
   };
@@ -20,8 +20,8 @@ const DetailedProductCard = props => {
   const rightBlocksCount = activeTour.contentBlocks.right.length;
   const descriptors = activeTour.descriptors
     .split(',')
-    .filter(d => d.length)
-    .map(d => d.trim());
+    .filter((d) => d.length)
+    .map((d) => d.trim());
   return (
     <div className="product-v2-description">
       <div className="indicator-triangle"></div>
@@ -153,7 +153,7 @@ const DetailedProductCard = props => {
           line-height: 1.37;
           color: ${COLORS.TWO_BLACK};
           font-family: ${AVENIR.FONT_STACK};
-          font-weight: ${AVENIR.HEAVY};
+          font-weight: ${AVENIR.BLACK};
         }
         .product-v2-description-left {
           padding: 24px 0;
@@ -261,7 +261,7 @@ const DetailedProductCard = props => {
           font-size: 20px;
           line-height: 20px;
           color: ${COLORS.TWO_BLACK};
-          font-weight: ${AVENIR.HEAVY};
+          font-weight: ${AVENIR.BLACK};
         }
         .price-wrapper{
           display: grid;

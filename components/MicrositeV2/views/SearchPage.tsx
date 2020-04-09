@@ -6,10 +6,10 @@ import { SearchItem } from '../SearchItem';
 import PopulateProducts from '../PopulateProducts';
 import { AVENIR } from '../../../constants/ui-constants';
 
-export const SearchPage = props => {
+export const SearchPage = (props) => {
   const [results, setResults] = useState([]);
   const [searchStarted, setsearchStarted] = useState(false);
-  const handleResults = results => {
+  const handleResults = (results) => {
     setResults(results);
     setsearchStarted(true);
   };
@@ -17,7 +17,7 @@ export const SearchPage = props => {
     props.changePage({ name: PAGETYPE.HOMEPAGE });
   };
 
-  const searchItemClick = productTgid => {
+  const searchItemClick = (productTgid) => {
     props.changePage({
       name: PAGETYPE.MOBILE_PRODUCT_PAGE,
       tgid: productTgid,
@@ -101,7 +101,7 @@ export const SearchPage = props => {
           }
           .heading {
             font-size: 22px;
-            font-weight: ${AVENIR.HEAVY};
+            font-weight: ${AVENIR.BLACK};
             font-family: ${AVENIR.FONT_STACK};
             color: #545454;
           }

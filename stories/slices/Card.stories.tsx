@@ -38,6 +38,7 @@ const data = {
       target: '_blank',
     },
     text: 'Book Now',
+    type: 'Button',
   },
 };
 
@@ -80,6 +81,26 @@ export const ColumnCard = () => {
         title={data.title}
         description={data.description}
         type="column"
+      />
+    </div>
+  );
+};
+
+export const WithLinkCTA = () => {
+  return (
+    <div style={{ width: 500, padding: 50 }}>
+      <Card
+        title={data.title}
+        images={data.images}
+        description={data.description}
+        cta={{
+          link: {
+            url: 'https://www.google.com',
+            target: '_blank',
+          },
+          type: 'Link',
+        }}
+        type="mobile"
       />
     </div>
   );

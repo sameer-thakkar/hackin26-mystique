@@ -6,7 +6,7 @@ import Banner from '../Banner';
 import DismissAlert from '../../UI/DismissAlert';
 import Alert from '../../UI/Alert';
 import Footer from '../../common/Footer';
-import * as labels from '../../../public/static/localization/labels';
+import * as labels from '../../../constants/localization/labels';
 import { ProductsContextProvider } from '../../../contexts/Products';
 import { ProductsWrapper } from '../ProductsWrapper';
 import { ResponsiveSelector } from '../ResponsiveSelector';

@@ -2,7 +2,7 @@ import React from 'react';
 import Image from '../UI/Image';
 import { AVENIR, GRAPHIK, COLORS } from '../../constants/ui-constants';
 
-const TrustBoosters = props => {
+const TrustBoosters = (props) => {
   const { boosters } = props;
   return (
     <div className="trust-boosters">
@@ -50,7 +50,7 @@ const TrustBoosters = props => {
             font-size: 16px;
             line-height: 22px;
             color: #545454;
-            font-weight: ${AVENIR.HEAVY};
+            font-weight: ${AVENIR.BLACK};
             color: ${COLORS.TWO_BLACK};
           }
           .trust-boosters .trust-booster .booster-text {

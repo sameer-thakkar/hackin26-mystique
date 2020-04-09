@@ -47,7 +47,7 @@ const StyledColumn = styled.div`
   display: grid;
   padding: 14px 16px;
   strong {
-    font-weight: ${GRAPHIK.HEAVY};
+    font-weight: ${GRAPHIK.MEDIUM};
   }
   p {
     margin: 0;
@@ -67,7 +67,7 @@ const StyledColumn = styled.div`
       padding-left: 0;
       padding-top: 0;
       background: ${COLORS.WHITE};
-      font-weight: ${GRAPHIK.HEAVY};
+      font-weight: ${GRAPHIK.MEDIUM};
     }
   }
 `;

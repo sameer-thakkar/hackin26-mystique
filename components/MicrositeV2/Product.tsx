@@ -134,11 +134,11 @@ const Product = (props) => {
           line-height: 20px;
           text-align: right;
           color: ${COLORS.TWO_BLACK};
-          font-weight: ${AVENIR.HEAVY};
+          font-weight: ${AVENIR.BLACK};
         }
         .product-v2-scratch-price {
           font-family: ${AVENIR.FONT_STACK};
-          font-weight: ${AVENIR.ROMAN};
+          font-weight: ${AVENIR.REGULAR};
           font-size: 14px;
           line-height: 14px;
           letter-spacing: 0.5px;
@@ -167,7 +167,7 @@ const Product = (props) => {
           .product-v2-title {
             font-size: 14px;
             line-height: 1.3;
-            font-weight: ${AVENIR.HEAVY};
+            font-weight: ${AVENIR.BLACK};
           }
           .product-v2-bottom {
             grid-template-columns: auto;

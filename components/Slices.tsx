@@ -306,6 +306,7 @@ const sliceHandler = (slice, props: any = {}) => {
         cta_link,
         card_link,
         card_link_type,
+        cta_type,
       } = slice.primary;
       const images = slice.items
         .filter((image) => {
@@ -322,7 +323,7 @@ const sliceHandler = (slice, props: any = {}) => {
           images={images}
           title={card_title}
           description={card_description}
-          cta={{ text: cta_text, link: cta_link }}
+          cta={{ text: cta_text, link: cta_link, type: cta_type ?? 'Button' }}
           type={props.cardType}
           link={card_link}
           linkType={card_link_type}

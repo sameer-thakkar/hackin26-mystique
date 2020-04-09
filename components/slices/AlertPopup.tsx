@@ -53,7 +53,7 @@ const StyledImages = styled.div`
 `;
 
 const StyledTitle = styled.div`
-  font-weight: ${AVENIR.HEAVY};
+  font-weight: ${AVENIR.BLACK};
   font-size: 22px;
   line-height: 24px;
   margin-bottom: 16px;

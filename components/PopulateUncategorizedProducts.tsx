@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Product from './Product';
-import * as labels from '../public/static/localization/labels';
+import * as labels from '../constants/localization/labels';
 import styled from 'styled-components';
 import { COLORS } from '../constants/ui-constants';
 import { csvTgidToArray } from '../utils/helper';

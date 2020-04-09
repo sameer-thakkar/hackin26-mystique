@@ -6,7 +6,7 @@ export default {
     borderRadius: '5px',
     fontSize: '18px',
     fontFamily: 'Graphik',
-    fontWeight: GRAPHIK.HEAVY,
+    fontWeight: GRAPHIK.MEDIUM,
   },
   card: {
     breakpoints: {},

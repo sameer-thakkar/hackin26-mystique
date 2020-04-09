@@ -8,7 +8,7 @@ import Masthead from './Masthead';
 import populateHead from './common/meta';
 import Alert from './UI/Alert';
 import DismissAlert from './UI/DismissAlert';
-import * as labels from '../public/static/localization/labels';
+import * as labels from '../constants/localization/labels';
 import { Client } from '../prismic-config';
 import { DROPDOWN_ELEMENT, FULL_WIDTH_SLICES } from '../constants';
 import { groupSlices } from '../utils/helper';

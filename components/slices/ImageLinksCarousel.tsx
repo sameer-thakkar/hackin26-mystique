@@ -48,7 +48,7 @@ const StyledContent = styled.div`
     font-family: ${AVENIR.FONT_STACK};
     font-size: 24px !important;
     line-height: 33px;
-    font-weight: ${AVENIR.HEAVY};
+    font-weight: ${AVENIR.BLACK};
     color: ${COLORS.TWO_BLACK};
   }
   div {
@@ -127,7 +127,7 @@ const StyledSlide = styled.div`
   div {
     font-family: ${AVENIR.FONT_STACK};
     font-size: 16px;
-    font-weight: ${AVENIR.HEAVY};
+    font-weight: ${AVENIR.BLACK};
     color: ${COLORS.TWO_BLACK};
     margin-top: 4px;
   }
@@ -159,12 +159,12 @@ const desktopInteraction = (event, { card_title, isMobile }) => {
   }
 };
 
-const Slide = props => (
+const Slide = (props) => (
   <StyledSlide>
     <a
       href={props.link.url}
       target={props.link.target}
-      onClick={e => desktopInteraction(e, props)}
+      onClick={(e) => desktopInteraction(e, props)}
     >
       <Image
         dontLazyLoad={!props.lazyLoad}
@@ -211,7 +211,7 @@ type ImageLinksCarouselProps = {
  * **Note: Either 'Uploaded Image' or 'Link to Image' is required and if left blank will break the slice**
  */
 
-const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = props => {
+const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
   const [swiper, updateSwiper] = useState(null);
   const [_currentIndex, updateCurrentIndex] = useState(0);
 

@@ -10,7 +10,7 @@ import PopulateUncategorizedProducts from './PopulateUncategorizedProducts';
 import Analytics from '../utils/Analytics';
 import allToursParser from '../utils/alltoursParser';
 import Alert from './UI/Alert';
-import * as labels from '../public/static/localization/labels';
+import * as labels from '../constants/localization/labels';
 import DismissAlert from './UI/DismissAlert';
 import { InteractionContextProvider } from '../contexts/Interaction';
 import { docCookies, csvTgidToArray } from '../utils/helper';

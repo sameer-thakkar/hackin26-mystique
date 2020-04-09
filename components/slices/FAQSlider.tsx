@@ -56,7 +56,7 @@ const FAQWrap = styled.div`
     display: grid;
     grid-template-columns: 1fr auto;
     grid-column-gap: 10px;
-    font-weight: ${AVENIR.HEAVY};
+    font-weight: ${AVENIR.BLACK};
     font-family: ${AVENIR.FONT_STACK};
   }
   .question-text {
