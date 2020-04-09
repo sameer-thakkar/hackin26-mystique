@@ -55,6 +55,10 @@ module.exports = {
       dest: '/api/group-submit-form',
     },
     {
+      src: '/blog/(.*)',
+      dest: 'https://blog.headout.com/$1',
+    },
+    {
       src: '/(.*)',
       dest: '/index',
     },

@@ -7,7 +7,7 @@ import { LinkCards } from './MicrobrandCards';
 
 const CardCarouselContainer = styled.div`
   max-width: 1200px;
-
+  margin: auto;
   .carousel-slider {
     margin: 50px auto;
     margin-top: 30px;
@@ -58,8 +58,30 @@ const CardCarouselContainer = styled.div`
     opacity: 0;
   }
   @media (max-width: 768px) {
+    max-width: 100vw;
     .carousel-slider .swiper-pagination.swiper-pagination-bullets {
       top: -15px;
+    }
+    .carousel-slider .swiper-container {
+      margin: 0;
+    }
+    .carousel-slider .swiper-pagination.swiper-pagination-bullets {
+      right: 12px;
+    }
+    .carousel-slider .swiper-container {
+      padding: 0;
+    }
+    .card-carousel-heading {
+      margin: 0 12px;
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        margin: 0;
+        margin-bottom: 10px;
+      }
     }
   }
 `;
@@ -143,7 +165,7 @@ export default class CardCarousel extends Component<CardCarouselProps> {
       };
     });
     const { isMobile, isFetched, cardPrices, currencySymbol } = this.state;
-    const slidesPerView = isMobile ? 1 : 4;
+    const slidesPerView = isMobile ? 1.1 : 4;
     const slidesPerGroup = isMobile ? 1 : 4;
     let params = {
       direction: 'horizontal',
@@ -154,11 +176,14 @@ export default class CardCarousel extends Component<CardCarouselProps> {
       initialSlide: 1,
       spaceBetween: 8,
       slidesPerGroup: slidesPerGroup,
+      swiperShouldUpdate: true,
       centeredSlides: isMobile,
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
+      navigation: isMobile
+        ? false
+        : {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
       pagination: {
         el: '.swiper-pagination',
         type: 'bullets',

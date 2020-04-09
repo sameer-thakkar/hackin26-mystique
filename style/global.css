@@ -233,3 +233,8 @@ h6 {
   color: #444444;
   font-weight: 500;
 }
+
+/* removes grid-gap for anchor slices. */
+.slice-wrapper.anchor_point + .slice-wrapper {
+  margin-top: -60px;
+}

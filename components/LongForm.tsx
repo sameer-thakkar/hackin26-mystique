@@ -4,7 +4,7 @@ import { FULL_WIDTH_SLICES } from '../constants';
 import { COLORS } from '../constants/ui-constants';
 import styled from 'styled-components';
 
-const StyledLongform = styled.div`
+export const StyledLongform = styled.div`
   font-family: 'Graphik', 'Proxima Nova', 'Helvetica Neue', Helvetica, Arial,
     sans-serif;
   line-height: 1.6;

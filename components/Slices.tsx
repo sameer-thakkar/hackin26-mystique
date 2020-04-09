@@ -36,6 +36,8 @@ const TableV2 = dynamic(() => import('./slices/TableV2'));
 const Breadcrumb = dynamic(() => import('./slices/Breadcrumb'));
 const Background = dynamic(() => import('./slices/Background'));
 const AlertPopup = dynamic(() => import('./slices/AlertPopup'));
+const AnchorPoint = dynamic(() => import('./slices/AnchorPoint'));
+const BlogFeed = dynamic(() => import('./slices/BlogFeed'));
 
 const sliceHandler = (slice, props: any = {}) => {
   switch (slice.slice_type) {
@@ -373,6 +375,15 @@ const sliceHandler = (slice, props: any = {}) => {
           title={slice.primary.title}
           cards={slice.items}
           twoColumns={slice.primary.show_2_cards_in_a_row}
+        />
+      );
+    case 'anchor_point':
+      return <AnchorPoint id={slice.primary.id} />;
+    case 'blog_feed':
+      return (
+        <BlogFeed
+          count={slice.primary.count}
+          feed_url={slice.primary.feed_url}
         />
       );
     default:
