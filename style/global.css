@@ -124,6 +124,14 @@ a {
 * {
   outline: none;
 }
+
+li,
+span,
+p,
+td,
+div {
+  color: #444;
+}
 .content-page-container {
   max-width: 1190px;
   margin: auto;
