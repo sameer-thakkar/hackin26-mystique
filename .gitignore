@@ -108,4 +108,9 @@ dist
 
 # Storybook builds
 storybook-static
+
+# Zeit Now cache
 .now
+
+# MacOS cache
+.DS_Store

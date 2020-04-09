@@ -1,13 +1,28 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import Swiper from '../Swiper';
-import { tourListApiParser } from '../../utils/DataParsers';
-import styled from 'styled-components';
 import { LinkCards } from './MicrobrandCards';
+import { tourListApiParser } from '../../utils/DataParsers';
 
 const CardCarouselContainer = styled.div`
   max-width: 1200px;
   margin: auto;
+  .swiper-button-next {
+    right: 5px;
+    background-image: url('https://cdn-imgix-open.headout.com/alhambra-new/Path 231@3x.png');
+    filter: invert(1);
+    height: 30px;
+    outline: none;
+  }
+  .swiper-button-prev {
+    left: 5px;
+    background-image: url('https://cdn-imgix-open.headout.com/alhambra-new/Path 231@3x.png');
+    filter: invert(1);
+    transform: rotate(180deg);
+    height: 30px;
+    outline: none;
+  }
   .carousel-slider {
     margin: 50px auto;
     margin-top: 30px;
@@ -20,12 +35,10 @@ const CardCarouselContainer = styled.div`
       }
     }
   }
-
   .carousel-slider .swiper-container {
     padding: 10px 6px;
     overflow: hidden;
   }
-
   .carousel-slider .swiper-pagination-bullet-active {
     background: #ec1943 !important;
     opacity: 1 !important;
@@ -38,13 +51,11 @@ const CardCarouselContainer = styled.div`
     background: #000;
     opacity: 0.2;
   }
-
   .carousel-slider .swiper-container {
     margin: 0 35px;
     width: auto;
     position: static;
   }
-
   .carousel-slider .swiper-pagination.swiper-pagination-bullets {
     top: -30px;
     right: 41px;
@@ -53,7 +64,6 @@ const CardCarouselContainer = styled.div`
     width: unset;
     grid-gap: unset;
   }
-
   .carousel-slider .swiper-button-next.swiper-button-disabled {
     opacity: 0;
   }

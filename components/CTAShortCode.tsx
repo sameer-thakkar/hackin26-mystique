@@ -43,17 +43,22 @@ const StyledCTAShortcode = styled.div`
   .short-code-cta:hover {
     transform: scale(1.02, 1.08);
   }
+  span {
+    color: white;
+  }
 `;
+
 const CTAShortCode = (props) => {
   const { text, link, align, fill } = props;
   return (
     <StyledCTAShortcode {...{ align, fill }}>
       <a href={link} target="_blank" rel="noopener noreferrer">
         <div className="short-code-cta">
-          <span className="short-code-cta-text">{text}</span>
+          <span>{text}</span>
         </div>
       </a>
     </StyledCTAShortcode>
   );
 };
+
 export default CTAShortCode;

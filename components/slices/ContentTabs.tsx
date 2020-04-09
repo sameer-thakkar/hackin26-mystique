@@ -34,6 +34,10 @@ const StyledTab = styled.div(({ active }) => {
   border-bottom: 2px solid;
   padding-bottom: 8px;
   `;
+  } else {
+    return `
+    cursor: pointer;
+    `;
   }
 });
 
@@ -73,7 +77,7 @@ const StyledContent = styled.div`
  */
 
 const ContentTabs: React.FC<ContentTabsProps> = ({ tabsArr, contentArr }) => {
-  const defaultTab = contentArr.find(tab => tab.default_tab == 'Yes');
+  const defaultTab = contentArr.find((tab) => tab.default_tab == 'Yes');
   const defaultTabName = defaultTab ? defaultTab.tab_name : '';
   const [activeTabName, setActiveTab] = useState(defaultTabName);
 
