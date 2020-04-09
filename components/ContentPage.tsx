@@ -72,8 +72,6 @@ const StyledContentPage = styled.div`
     color: #444444;
     font-family: Avenir;
     font-size: 16px;
-    margin: auto;
-    margin-bottom: auto;
     margin-bottom: 15px;
     line-height: 30px;
   }
