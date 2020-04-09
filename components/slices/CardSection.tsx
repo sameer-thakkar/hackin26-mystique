@@ -8,12 +8,18 @@ import RichContent from '../UI/RichContent';
 import TitleTextCombo from '../UI/TitleTextCombo';
 import { CHEVRON_LEFT_CIRCLE } from '../../public/static/svg-icons';
 
-const CardGrid = styled.div(({ cardType, isMobile }) => {
+const CardGrid = styled.div(({ noOfCards, cardType, isMobile }) => {
   let gridTemplateColumns = `100%`;
   if (cardType === 'column') {
     gridTemplateColumns = `50% 50%`;
   } else if (cardType === 'mobile' && !isMobile) {
-    gridTemplateColumns = `repeat(4, calc(25% - 15px))`;
+    if (noOfCards < 4) {
+      gridTemplateColumns = `repeat(${noOfCards}, calc(${
+        100 / noOfCards
+      }% - 15px))`;
+    } else {
+      gridTemplateColumns = `repeat(4, calc(25% - 15px))`;
+    }
   }
   return `
     display: grid;
@@ -77,6 +83,9 @@ type CardSectionProps = {
 /**
  * A card section displaying different types of Cards in a gird.
  *
+ *
+ * <div style="position: relative; padding-bottom: 62.5%; height: 0;"><iframe src="https://www.loom.com/embed/f8b2da748cc44a9e8ae95a6fd51dd892" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+ *
  * This is a special kind of slice. To use follow below instructions:
  *
  * You have to first insert a 'Card Section Start' slice with the following fields:
@@ -85,6 +94,8 @@ type CardSectionProps = {
  * - Card Section Title
  * - Card Section Type
  * - Card Type
+ * - Description
+ *  - Rich Text field
  *
  * ### Repeatable zone
  * Nil.
@@ -110,6 +121,9 @@ const CardSection: React.FC<CardSectionProps> = ({
 
   // Display desktop card if only 1 slice is available
   if (slices.length === 1) finalCardType = 'desktop';
+
+  // Display column card if only 2 slices are available and cardType is mobile
+  if (cardType === 'mobile' && slices.length === 2) finalCardType = 'column';
 
   // Display a grid style if card type is mobile and no. of card are <= 4
   if (finalCardType === 'mobile' && !isMobile) {
@@ -238,6 +252,7 @@ const CardSection: React.FC<CardSectionProps> = ({
         {description ? <RichContent render={description} /> : null}
       </TitleTextCombo>
       <CardGrid
+        noOfCards={cards.length}
         cardType={finalCardType}
         sectionType={sectionType}
         isMobile={isMobile}

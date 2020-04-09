@@ -1,5 +1,4 @@
 import React from 'react';
-import Breadcrumb from '../../components/slices/Breadcrumb';
 import TourComparisonTable from '../../components/slices/TourComparision';
 import useWindowSize from '../../components/hooks/useWindowSize';
 import { ProductsContextProvider } from '../../contexts/Products';
@@ -964,7 +963,7 @@ export const Basic = () => {
   const isMobile = useWindowSize().width < 768;
   return (
     <div style={{ width: 1200, padding: 50 }}>
-      <ProductsContextProvider allTours={allTours}>
+      <ProductsContextProvider allTours={allTours} ready={true}>
         <TourComparisonTable isMobile={isMobile} {...data} />
       </ProductsContextProvider>
     </div>

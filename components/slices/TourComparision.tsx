@@ -320,7 +320,8 @@ const TourComparisonTable = (props) => {
   const toursContext = useContext(ProductsContext);
   const mbContext = useContext(MBContext);
   const url = envContext.windowUrl;
-  const { uid, lang, nakedDomain } = mbContext;
+  const { uid, nakedDomain } = mbContext;
+  const lang = mbContext.lang || 'en';
   const currentHost = !envContext.isDev ? url : parse(uid, true).pathname;
   const hostName = currentHost.includes('stage')
     ? currentHost.replace('stage.', '')

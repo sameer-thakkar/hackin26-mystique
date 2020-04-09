@@ -110,6 +110,8 @@ type CardProps = {
 /**
  * A multi-variant card displaying an optional carousel of images and CTA along with a required title and body
  *
+ * <div style="position: relative; padding-bottom: 62.5%; height: 0;"><iframe src="https://www.loom.com/embed/f8b2da748cc44a9e8ae95a6fd51dd892" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+ *
  * **All fields marked with a * are mandatory and will break the slice if left blank.**
  *
  * ### Non-repeatable zone
