@@ -8,7 +8,6 @@ import { GRAPHIK } from '../../constants/ui-constants';
 type ImageTextProps = {
   cols: number;
   cards: any[];
-  lazyLoadImages?: boolean;
 };
 
 const StyledWrapper = styled.div`
@@ -77,17 +76,12 @@ const StyledComboCard = styled.div`
  *  - Will take precedence over 'Image Source' alt
  */
 
-const ImageTextGrid: React.FC<ImageTextProps> = ({
-  cards,
-  cols,
-  lazyLoadImages = true,
-}) => (
+const ImageTextGrid: React.FC<ImageTextProps> = ({ cards, cols }) => (
   <StyledWrapper cols={cols}>
     {cards.map((card, index) => (
       <StyledComboCard key={index}>
         <h2 className="title">{card.card_title}</h2>
         <Image
-          dontLazyLoad={!lazyLoadImages}
           width={580}
           height={300}
           format="pjpg"

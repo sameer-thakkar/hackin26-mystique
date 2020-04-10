@@ -9,7 +9,6 @@ export default {
 export const Basic = () => {
   return (
     <ImageLinksCarousel
-      lazyLoadImages={false}
       description={[
         {
           type: 'paragraph',
@@ -83,7 +82,6 @@ export const Basic = () => {
 export const Mobile = () => (
   <div style={{ width: 400 }}>
     <ImageLinksCarousel
-      lazyLoadImages={false}
       description={[
         {
           type: 'paragraph',

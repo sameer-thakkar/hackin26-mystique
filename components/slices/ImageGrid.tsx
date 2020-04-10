@@ -11,7 +11,6 @@ type PrismicImageObject = {
 type ImageGridProps = {
   cols: number;
   images: Array<PrismicImageObject>;
-  lazyLoadImages?: boolean;
 };
 
 const StyledImageGrid = styled.div`
@@ -65,17 +64,12 @@ const StyledImageBox = styled.div`
  * **Note: Either 'Image Source' or 'Image URL' is required and if left blank will break the slice**
  */
 
-const ImageGrid: React.FC<ImageGridProps> = ({
-  images,
-  cols,
-  lazyLoadImages = true,
-}) => {
+const ImageGrid: React.FC<ImageGridProps> = ({ images, cols }) => {
   return (
     <StyledImageGrid cols={cols}>
       {images.map((image, index) => (
         <StyledImageBox key={index}>
           <Image
-            dontLazyLoad={!lazyLoadImages}
             width={580}
             height={300}
             format="pjpg"

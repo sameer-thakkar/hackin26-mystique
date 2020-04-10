@@ -26,7 +26,6 @@ export const Basic = () => {
 
   return (
     <MicrobrandCards
-      lazyLoadImages={false}
       cardsContent={{
         content_above_cards: [
           {

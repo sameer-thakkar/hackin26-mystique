@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Image from '../UI/Image';
+import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
+import Image from '../UI/Image';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 import { tourListApiParser } from '../../utils/DataParsers';
-import styled from 'styled-components';
-
-type MicrobrandCardsProps = {
-  cards: any[];
-  cardsContent: any;
-  lazyLoadImages?: boolean;
-};
 
 const StyledMBCards = styled.div`
   display: grid;
@@ -100,12 +94,12 @@ export const LinkCards = (props) => {
     cards,
     isFetched,
     currencySymbol,
-    lazyLoadImages,
     cardPrices,
     cardClassName,
     as,
     gridAutoCol,
   } = props;
+
   return (
     <StyledMBCards gridAutoCol={gridAutoCol} as={as}>
       {cards.map((card, index) => {
@@ -115,11 +109,9 @@ export const LinkCards = (props) => {
               <MicrobrandCard div className="microbrand-card">
                 <div className="card-image">
                   <Image
-                    format="pjpg"
                     width={600}
                     height={300}
                     aspectRatio="16:10"
-                    dontLazyLoad={!lazyLoadImages}
                     url={card.image.url}
                     alt={card.image.alt}
                   />
@@ -177,14 +169,19 @@ const StyledMicrobandCards = styled.div`
  * - TGID
  * - Card Title
  */
+
+type MicrobrandCardsProps = {
+  cards: any[];
+  cardsContent: any;
+};
+
 const MicrobrandCards: React.FC<MicrobrandCardsProps> = (props) => {
   const [state, setState] = useState({
     cardPrices: {},
     currencySymbol: '',
     isFetched: false,
   });
-
-  const { cards, lazyLoadImages, cardsContent } = props;
+  const { cards, cardsContent } = props;
   const { isFetched, currencySymbol, cardPrices } = state;
 
   useEffect(() => {
@@ -204,7 +201,8 @@ const MicrobrandCards: React.FC<MicrobrandCardsProps> = (props) => {
           });
         });
     }
-  }, []);
+  }, [cards, setState]);
+
   const finalCards = cards.map((card) => {
     return {
       image: {
@@ -216,6 +214,7 @@ const MicrobrandCards: React.FC<MicrobrandCardsProps> = (props) => {
       link: card.microbrand_link.url,
     };
   });
+
   return (
     <StyledMicrobandCards>
       <div className="microbrand-cards-content">
@@ -225,7 +224,6 @@ const MicrobrandCards: React.FC<MicrobrandCardsProps> = (props) => {
         />
       </div>
       <LinkCards
-        lazyLoadImages={lazyLoadImages}
         isFetched={isFetched}
         cards={finalCards}
         cardPrices={cardPrices}

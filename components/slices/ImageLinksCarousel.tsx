@@ -166,11 +166,7 @@ const Slide = (props) => (
       target={props.link.target}
       onClick={(e) => desktopInteraction(e, props)}
     >
-      <Image
-        dontLazyLoad={!props.lazyLoad}
-        url={props.image.url}
-        alt={props.image.alt}
-      />
+      <Image url={props.image.url} alt={props.image.alt} />
     </a>
     <div>{props.card_title}</div>
   </StyledSlide>
@@ -181,7 +177,6 @@ type ImageLinksCarouselProps = {
   cards: any[];
   heading: string;
   description: any[];
-  lazyLoadImages?: boolean;
 };
 
 /**
@@ -244,13 +239,7 @@ const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
     };
   }, [swiper, updateIndex]);
 
-  const {
-    cards,
-    heading,
-    description,
-    isMobile,
-    lazyLoadImages = true,
-  } = props;
+  const { cards, heading, description, isMobile } = props;
 
   const swiperParams = {
     slidesPerGroup: 4,
@@ -276,12 +265,7 @@ const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
       {isMobile ? (
         <StyledMobileSlider>
           {cards.map((card, index) => (
-            <Slide
-              key={index}
-              {...card}
-              lazyLoad={lazyLoadImages}
-              isMobile={isMobile}
-            />
+            <Slide key={index} {...card} isMobile={isMobile} />
           ))}
         </StyledMobileSlider>
       ) : (
@@ -289,23 +273,28 @@ const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
           <div className="slider-container">
             <Swiper {...swiperParams} getSwiper={updateSwiper}>
               {cards.map((card, index) => (
-                <Slide
-                  key={index}
-                  {...card}
-                  isMobile={isMobile}
-                  lazyLoad={lazyLoadImages}
-                />
+                <Slide key={index} {...card} isMobile={isMobile} />
               ))}
             </Swiper>
           </div>
           <div className="controls">
             {swiper && !swiper.isBeginning ? (
-              <div className="swiper-btn btn btn-left" onClick={goPrev}>
+              <div
+                className="swiper-btn btn btn-left"
+                role="button"
+                tabIndex={0}
+                onClick={goPrev}
+              >
                 {CHEVRON_LEFT}
               </div>
             ) : null}
             {swiper && !swiper.isEnd ? (
-              <div className="swiper-btn btn btn-right" onClick={goNext}>
+              <div
+                className="swiper-btn btn btn-right"
+                role="button"
+                tabIndex={0}
+                onClick={goNext}
+              >
                 {CHEVRON_LEFT}
               </div>
             ) : null}

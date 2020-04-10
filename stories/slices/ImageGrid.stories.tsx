@@ -42,5 +42,5 @@ export const Basic = () => {
       image_alt: 'something',
     });
   }
-  return <ImageGrid cols={cols} images={images} lazyLoadImages={false} />;
+  return <ImageGrid cols={cols} images={images} />;
 };

@@ -50,5 +50,5 @@ export const Basic = () => {
       image_alt: 'lorem',
     });
   }
-  return <ImageTextGrid cols={cols} cards={cards} lazyLoadImages={false} />;
+  return <ImageTextGrid cols={cols} cards={cards} />;
 };

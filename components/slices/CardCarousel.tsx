@@ -99,7 +99,6 @@ const CardCarouselContainer = styled.div`
 type CardCarouselProps = {
   cards: any[];
   carouselHeading: string;
-  lazyLoadImages?: boolean;
 };
 
 /**
@@ -140,7 +139,6 @@ export default class CardCarousel extends Component<CardCarouselProps> {
   static defaultProps = {
     cards: [],
     carouselHeading: '',
-    lazyLoadImages: true,
   };
 
   async componentDidMount() {
