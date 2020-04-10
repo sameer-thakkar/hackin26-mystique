@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { CHEVRON_LEFT } from '../../public/static/svg-icons';
-import { COLORS } from '../../constants/ui-constants';
+import { COLORS, AVENIR } from '../../constants/ui-constants';
 import Image from '../UI/Image';
 
 const FeedContainer = styled.div`
@@ -19,6 +19,7 @@ const Card = styled.div`
     max-height: 180px;
     object-fit: cover;
     border-radius: 3px 3px 0 0;
+    width: 100%;
   }
   @media (max-width: 768px) {
     grid-template-columns: auto;
@@ -28,10 +29,12 @@ const Card = styled.div`
 const Content = styled.div`
   display: grid;
   grid-row-gap: 12px;
+  font-family: ${AVENIR.FONT_STACK};
+  line-height: 26px;
   padding: 12px;
   align-content: flex-start;
   div {
-    max-height: calc(26px * 2);
+    max-height: calc(26px * 3);
     overflow: hidden;
   }
   b {
