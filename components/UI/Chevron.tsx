@@ -29,7 +29,7 @@ const StyledChevron = styled.div`
     -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg);
   }
-  ${({ isActive }) => {
+  ${({ isActive, activeCursor = true }) => {
     return isActive
       ? `&::before {
       -webkit-transform: rotate(-45deg);
@@ -39,7 +39,7 @@ const StyledChevron = styled.div`
       -webkit-transform: rotate(45deg);
               transform: rotate(45deg);
     }
-    cursor: not-allowed;`
+    cursor ${activeCursor ? `pointer` : `not-allowed`};`
       : 'cursor: pointer;';
   }}
 `;

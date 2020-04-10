@@ -64,6 +64,9 @@ const StyledFooterLegalWrapper = styled.div`
       grid-column-gap: 12px;
       align-items: center;
       justify-items: left;
+      span {
+        color: white;
+      }
       svg {
         height: 16px;
       }
@@ -130,6 +133,7 @@ const StyledFooterLegal = styled.div`
     gird-area: legal;
   }
   .disclaimer-text {
+    color: white;
     margin-top: 16px;
     font-family: Avenir;
     line-height: 19px;
@@ -144,6 +148,7 @@ const StyledFooterLegal = styled.div`
 
 const StyledLinksHeader = styled.div`
   font-weight: ${GRAPHIK.MEDIUM};
+  color: white;
 `;
 
 const StyledLink = styled.a`

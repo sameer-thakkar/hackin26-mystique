@@ -159,7 +159,7 @@ const FAQSlider = (props) => {
               >
                 <div className="question-text">{faqItem.question}</div>
                 <div className="state-icon">
-                  <Chevron isActive={isOpen} />
+                  <Chevron isActive={isOpen} activeCursor={false} />
                 </div>
               </div>
               <TextBlock isOpen={isOpen}>
