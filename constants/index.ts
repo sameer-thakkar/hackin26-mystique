@@ -137,6 +137,7 @@ export const COMMON_HEADER_PROPS: string[] = [
   'localization',
   'enable_localization_menu',
   'group_booking_disclaimer',
+  'enable_powered_by_headout_logo',
 ].map((prop) => `${CUSTOM_TYPES.HEADER}.${prop}`);
 
 export const LINKED_MICROSITE_PROPS: string[] = [
