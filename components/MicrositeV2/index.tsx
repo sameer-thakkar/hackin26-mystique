@@ -3,11 +3,10 @@ import { HomePage } from './views/HomePage';
 import { SearchPage } from './views/SearchPage';
 import { PAGETYPE } from '../../constants';
 import { MobileProductPage } from './views/ProductPage';
-import { withRouter, Router } from 'next/router';
+import { withRouter } from 'next/router';
 import populateHead from '../common/meta';
 import { InteractionContextProvider } from '../../contexts/Interaction';
 import { docCookies } from '../../utils/helper';
-import { MBContextProvider } from '../../contexts/MBContext';
 import allToursParser from '../../utils/alltoursParser';
 import { tourListApiParser } from '../../utils/DataParsers';
 class MicrositeV2 extends Component<any, any> {
@@ -25,7 +24,7 @@ class MicrositeV2 extends Component<any, any> {
     scrollY: 0,
     ready: false,
   };
-  sendVariableToDataLayer = JSONObject => {
+  sendVariableToDataLayer = (JSONObject) => {
     if (window && (window as any).dataLayer) {
       (window as any).dataLayer.push(JSONObject);
     }
@@ -33,10 +32,10 @@ class MicrositeV2 extends Component<any, any> {
   componentDidMount() {
     const isMobile = window.innerWidth < 768;
     const { all_tours: allTours } = this.props.data.data;
-    const allTgids = allTours.map(tour => tour.primary.tgid);
+    const allTgids = allTours.map((tour) => tour.primary.tgid);
 
     fetch(`https://api.headout.com/api/v5/tour-group/list?ids[]=${allTgids}`)
-      .then(res => {
+      .then((res) => {
         let HSID = res.headers.get('x-h-sid');
         if (!docCookies.hasItem('h-sid')) {
           const nakedDomain = window.location.host
@@ -58,7 +57,7 @@ class MicrositeV2 extends Component<any, any> {
         this.sendVariableToDataLayer({ 'h-sid': HSID });
         return res.json();
       })
-      .then(jsonTours => {
+      .then((jsonTours) => {
         const cardPrices = tourListApiParser(jsonTours);
         const currencySymbol = jsonTours.currencies[0].localSymbol;
         this.setState({
@@ -83,7 +82,7 @@ class MicrositeV2 extends Component<any, any> {
     });
   }
 
-  changePage = page => {
+  changePage = (page) => {
     const newState = { ...this.state };
     newState.page = { ...page };
     if (newState.page.name !== PAGETYPE.HOMEPAGE) {
@@ -146,12 +145,13 @@ class MicrositeV2 extends Component<any, any> {
       logoUrl: CMSData.logo.url || CMSData.link_to_logo_file,
       logoAltText: CMSData.logo.alt || CMSData.logo_alt_text,
       logoRedirectionURL: CMSData.logo_redirection_url.url || '/',
+      enableBuyTickets: CMSData.enable_buy_tickets_shortcut === 'Yes',
       enableSearch: CMSData.enable_search == 'Yes',
       recommendedTours:
         (CMSData.search_recommend_csv &&
           CMSData.search_recommend_csv
             .split(',')
-            .map(tgid => parseInt(tgid))) ||
+            .map((tgid) => parseInt(tgid))) ||
         [],
       enableDropdownLinks: CMSData.enable_dropdown == 'Yes',
       dropdownLinks: dropdownLinksArray,
@@ -184,7 +184,7 @@ class MicrositeV2 extends Component<any, any> {
     const groupBooking = {
       hasGroupBooking: CMSData.enable_group_booking == 'Yes',
       excludedTourIds: CMSData.group_booking_excluded_tgids
-        .filter(ele => ele.tgid)
+        .filter((ele) => ele.tgid)
         .reduce((acc, tour) => {
           return [...acc, tour.tgid];
         }, []),
@@ -198,11 +198,10 @@ class MicrositeV2 extends Component<any, any> {
       : null;
     const raw_category = (CMSData.body[0] && CMSData.body[0].items) || [];
     let categories = raw_category.reduce((accum, category) => {
-      let cat_id = category.category_name.replace(/\s/g, '_').toLowerCase();
       let tgid_ranking = category.ranking
         .split(',')
-        .map(tgid => parseInt(tgid))
-        .filter(tgid => allTours[tgid] && allTours[tgid].available);
+        .map((tgid) => parseInt(tgid))
+        .filter((tgid) => allTours[tgid] && allTours[tgid].available);
 
       return [
         ...accum,
@@ -210,7 +209,7 @@ class MicrositeV2 extends Component<any, any> {
           ranking: {
             popularity: tgid_ranking,
             price: isFetched
-              ? tgidsOrderByPrice.filter(tgid => tgid_ranking.includes(tgid))
+              ? tgidsOrderByPrice.filter((tgid) => tgid_ranking.includes(tgid))
               : null,
           },
           name: category.category_name,

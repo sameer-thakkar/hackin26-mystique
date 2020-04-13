@@ -598,7 +598,12 @@ export default class Page extends React.Component<any, any> {
             windowUrl,
           }}
         >
-          <MBContextProvider uid={uid} lang={lang} microsite={microsite}>
+          <MBContextProvider
+            host={host}
+            uid={uid}
+            lang={lang}
+            microsite={microsite}
+          >
             <ThemeProvider theme={theme}>{Component}</ThemeProvider>
           </MBContextProvider>
         </EnvironmentContext.Provider>

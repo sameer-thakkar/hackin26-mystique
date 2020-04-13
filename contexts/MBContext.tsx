@@ -8,16 +8,15 @@ export const MBContext = createContext({
   buttons: null,
 });
 
-export const MBContextProvider = props => {
-  const { uid, lang, microsite } = props;
+export const MBContextProvider = (props) => {
+  const { uid, lang, microsite, host } = props;
   const buttons = {
     see_more_text: microsite?.see_more_text,
   };
-  const nakedDomain = uid
-    .replace('stage.', '')
-    .split('.')
-    .slice(1, 3)
-    .join('.');
+  const nakedDomain = !host.includes('localhost')
+    ? host.replace('stage.', '').split('.').slice(1).join('.')
+    : host;
+
   return (
     <MBContext.Provider
       value={{

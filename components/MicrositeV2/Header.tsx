@@ -6,7 +6,7 @@ import { SearchBox } from './SearchBox';
 import { PAGETYPE } from '../../constants';
 import { SEARCH_ICON, POWERED_BY_HEADOUT } from '../../public/static/svg-icons';
 import { SearchItem } from './SearchItem';
-import { COLORS, AVENIR, SIZES } from '../../constants/ui-constants';
+import { COLORS, AVENIR, SIZES, GRAPHIK } from '../../constants/ui-constants';
 import { ResponsiveSelector } from './ResponsiveSelector';
 
 const Header = (props) => {
@@ -30,6 +30,13 @@ const Header = (props) => {
     clickTour(tgid, true);
     setResultClicked(true);
   };
+  const buyTicketHandler = () => {
+    window.scrollBy({
+      top: 540,
+      behavior: 'smooth',
+    });
+  };
+
   const {
     languageProps,
     isMobile,
@@ -41,6 +48,7 @@ const Header = (props) => {
     logoUrl,
     logoAltText,
     enableSearch,
+    enableBuyTickets,
     hasPoweredByHeadoutLogo,
   } = props;
   const allToursArray = Object.values(allTours);
@@ -99,6 +107,16 @@ const Header = (props) => {
             )}
           </div>
           <div className="header-right">
+            {enableBuyTickets ? (
+              <div
+                className="buy-tickets"
+                tabIndex={0}
+                role="button"
+                onClick={buyTicketHandler}
+              >
+                Buy Tickets
+              </div>
+            ) : null}
             {isMobile && enableSearch && (
               <div
                 className="mobi-search-trigger"
@@ -183,8 +201,18 @@ const Header = (props) => {
             border: 1px solid #dadada;
             box-shadow: 0 4px 6px #0000002b;
           }
+          .buy-tickets {
+            font-size: 16px;
+            cursor: pointer;
+            font-family: ${GRAPHIK.FONT_STACK};
+            font-weight: ${GRAPHIK.REGULAR};
+            color: ${COLORS.DAVY_GREY};
+          }
 
           @media (max-width: 768px) {
+            .buy-tickets {
+              display: none;
+            }
             header {
               padding: 12px;
             }
