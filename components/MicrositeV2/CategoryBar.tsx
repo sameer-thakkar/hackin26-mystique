@@ -3,9 +3,8 @@ import { SortSelector } from './SortSelector';
 import InteractionContext from '../../contexts/Interaction';
 import { AVENIR, SIZES } from '../../constants/ui-constants';
 
-const CategoryBar = props => {
+const CategoryBar = (props) => {
   const interactionCtx = useContext(InteractionContext);
-  const tagsRef = {};
   const parent = useRef(null);
   const category_bar = useRef(null);
   const scroll_div = useRef(null);
@@ -15,11 +14,10 @@ const CategoryBar = props => {
     width: null,
     left: null,
   });
-  const [sticky, setSticky] = useState(false);
   const { categories, isMobile } = props;
 
   const toggleFilterDropdown = () => {
-    setFilterDropdownActive(oldState => !oldState);
+    setFilterDropdownActive((oldState) => !oldState);
   };
 
   const centerActiveCategory = () => {
@@ -34,18 +32,14 @@ const CategoryBar = props => {
     }
   };
 
-  const changeCategory = index => {
-    let { categories, isMobile } = props;
-    props.changeCategory({
-      tgidArray: categories[index].ranking.popularity,
-      index: index,
-    });
+  const changeCategory = (index) => {
+    let { categories } = props;
 
     interactionCtx.changeCategory(categories[index].ranking.popularity);
     setActiveCategory(index);
   };
 
-  const changeOrder = orderKey => {
+  const changeOrder = (orderKey) => {
     let { categories, changeCategory } = props;
     changeCategory({
       tgidArray: categories[activeCategory].ranking[orderKey],
@@ -88,6 +82,8 @@ const CategoryBar = props => {
               return (
                 <li
                   key={index}
+                  role="button"
+                  tabIndex={0}
                   onClick={() => {
                     changeCategory(index);
                   }}

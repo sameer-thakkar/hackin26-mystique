@@ -229,3 +229,5 @@ export const CURRENCY_SYMBOL_MAP = {
   THB: '฿',
   IDR: 'Rp',
 };
+
+export const DONT_AUTO_SCROLL = false;

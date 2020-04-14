@@ -304,3 +304,12 @@ export const csvTgidToArray = (csv) => {
     .map((t) => parseInt(t.trim()))
     .filter((t) => t > 0);
 };
+
+export const genManualSlice = ({ type, items, primary, extras = {} }) => {
+  return {
+    slice_type: type,
+    items,
+    primary,
+    extras,
+  };
+};

@@ -66,6 +66,14 @@ const allToursParser = (CMSData, scorpioData, pricingData: ToursData) => {
 
   const allTours = CMSData?.all_tours?.reduce((accum, tour) => {
     let tourData = tour.primary;
+    const orderedBlocks = getOrderedContent(tour.items);
+    const flatBlocks = [].concat(...Object.values(orderedBlocks));
+    const theatreBlock = flatBlocks.find((block) => {
+      return /theatre|theater/gi.test(block.label);
+    });
+    if (theatreBlock) {
+      tourData.theater_contentblock = RichText.asText(theatreBlock.content);
+    }
     return {
       ...accum,
       [tourData.tgid]: {
@@ -79,7 +87,8 @@ const allToursParser = (CMSData, scorpioData, pricingData: ToursData) => {
         productHighlights: scorpioData[tourData.tgid].productHighlights || '',
         cardFooter: tourData.card_tags,
         theater: tourData.theater_name,
-        contentBlocks: getOrderedContent(tour.items),
+        content_theater: tourData.theater_contentblock,
+        contentBlocks: orderedBlocks,
         productImage:
           tourData.product_image_override.url ||
           scorpioData[tourData.tgid].images[0]

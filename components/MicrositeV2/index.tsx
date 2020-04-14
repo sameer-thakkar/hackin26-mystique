@@ -6,7 +6,7 @@ import { MobileProductPage } from './views/ProductPage';
 import { withRouter } from 'next/router';
 import populateHead from '../common/meta';
 import { InteractionContextProvider } from '../../contexts/Interaction';
-import { docCookies } from '../../utils/helper';
+import { docCookies, genManualSlice } from '../../utils/helper';
 import allToursParser from '../../utils/alltoursParser';
 import { tourListApiParser } from '../../utils/DataParsers';
 class MicrositeV2 extends Component<any, any> {
@@ -214,9 +214,42 @@ class MicrositeV2 extends Component<any, any> {
           },
           name: category.category_name,
           image: category.category_image.url,
+          rank: 0,
         },
       ];
     }, []);
+    const directCategory = this.props.router.query.cat;
+    if (directCategory) {
+      const catRegex = new RegExp(directCategory, 'gi');
+      const index = categories.findIndex((cat) => catRegex.test(cat.name));
+      if (index > -1) {
+        categories[index].rank = 1;
+        categories = categories.sort((catA, catB) => catB.rank - catA.rank);
+      }
+    }
+    const directTheater = this.props.router.query.theater;
+    let hightlightSlice = {};
+    if (directTheater) {
+      const theaterNameRegex = new RegExp(directTheater, 'gi');
+      const toursArray: any = Object.values(allTours);
+      const tours = toursArray.filter((tour) =>
+        theaterNameRegex.test(tour.content_theater)
+      );
+      if (tours.length) {
+        // description={slice.primary.carousel_description}
+        //     heading={slice.primary.carousel_heading}
+        const slice = genManualSlice({
+          type: 'category_carousel',
+          primary: {
+            carousel_heading: tours[0].content_theater,
+            carousel_description: '',
+            csv_tgids: tours.map((t) => t.tgid).join(','),
+          },
+          items: [],
+        });
+        hightlightSlice = slice;
+      }
+    }
 
     const categoryProps = {
       categories,
@@ -225,7 +258,7 @@ class MicrositeV2 extends Component<any, any> {
 
     const { favicon, footer_logo_link, footer_logo } = this.props.data.data;
     const { commonFooter, contentFramework } = this.props.data.refs;
-    const heroSectionSlice = this.props.data.data.body4;
+    const heroSectionSlice = [...this.props.data.data.body4, hightlightSlice];
     const commonFooterProps = commonFooter ? commonFooter.data : null;
     const MBData = {
       footer: {

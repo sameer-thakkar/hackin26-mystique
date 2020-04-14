@@ -1,19 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PopulateProducts from './PopulateProducts';
 import CategoryBar from './CategoryBar';
 import InteractionContext from '../../contexts/Interaction';
+import { DONT_AUTO_SCROLL } from '../../constants';
 
-export const ProductsWrapper = props => {
+export const ProductsWrapper = (props) => {
   const interactionContext = useContext(InteractionContext);
-  const [productTgids, setProductTgids] = useState(
-    props.categoryProps.categories[props.activeCategory || 0].ranking.popularity
-  );
-  const [activeCategory, setActiveCategory] = useState(props.activeCategory);
-
-  const changeCategory = category => {
-    setProductTgids(category.tgidArray);
-    setActiveCategory(category.index);
-  };
 
   useEffect(() => {
     const { categoryProps, activeCategory, directTgid } = props;
@@ -22,7 +14,12 @@ export const ProductsWrapper = props => {
     interactionContext.changeCategory(tgidArray);
     setTimeout(() => {
       if (directTgid) {
-        interactionContext.clickTour(directTgid, true, 'main');
+        interactionContext.clickTour(
+          directTgid,
+          true,
+          'main',
+          DONT_AUTO_SCROLL
+        );
       }
     }, 1000);
   }, []);
@@ -35,17 +32,15 @@ export const ProductsWrapper = props => {
     currentLanguage,
     host,
     uid,
-    propsTgids,
   } = props;
 
-  const { activeCategoryTgids, activeTour } = interactionContext;
+  const { activeCategoryTgids } = interactionContext;
 
   return (
     <div className="main-wrapper relative-position">
       <CategoryBar
         {...categoryProps}
         availableTGIDs={Object.keys(allTours)}
-        changeCategory={changeCategory}
         isMobile={isMobile}
       />
       <PopulateProducts

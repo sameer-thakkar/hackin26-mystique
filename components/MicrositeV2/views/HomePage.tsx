@@ -11,8 +11,40 @@ import { ProductsContextProvider } from '../../../contexts/Products';
 import { ProductsWrapper } from '../ProductsWrapper';
 import { ResponsiveSelector } from '../ResponsiveSelector';
 import { LOCATION } from '../../../public/static/svg-icons';
-import { SIZES } from '../../../constants/ui-constants';
 import { groupSlices } from '../../../utils/helper';
+import styled from 'styled-components';
+import { SIZES } from '../../../constants/ui-constants';
+
+const V2MicrositeWrapper = styled.div`
+  .alert-wrapper {
+    margin-top: 40px;
+  }
+  .hero-slice-section {
+    margin-bottom: 24px;
+    margin-top: 56px;
+  }
+  .city-selector {
+    margin-bottom: 24px;
+  }
+  .main-wrapper.v2-long-form {
+    max-width: unset;
+    padding: unset;
+    margin: unset;
+    width: unset;
+  }
+  .long-form .slice-block.rich_text {
+    max-width: ${SIZES.MAX_WIDTH};
+    margin-left: auto;
+    margin-right: auto;
+    font-family: Graphik;
+  }
+  @media (max-width: 768px) {
+    .hero-slice-section {
+      margin-top: 48px;
+      margin-bottom: 48px;
+    }
+  }
+`;
 
 export const HomePage = (props) => {
   const {
@@ -25,11 +57,9 @@ export const HomePage = (props) => {
     categoryProps,
     heroProps,
     changePage,
-    _openCategory,
     uid,
     directTgid,
     heroSectionSlice,
-    _isFetched,
     contentFramework,
     ready,
     alertPopup,
@@ -52,7 +82,7 @@ export const HomePage = (props) => {
   const hasDropdownLinks = enableDropdownLinks && dropdownLinks.length;
 
   return (
-    <div className="microsite-v2-wrapper">
+    <V2MicrositeWrapper>
       <Header
         {...header}
         host={host}
@@ -94,13 +124,15 @@ export const HomePage = (props) => {
         </div>
       ) : null}
       {heroSectionSlice.length ? (
-        <div className="main-wrapper hero-slice-section">
-          {heroSectionSlice.map((slice, index) => (
-            <div key={index} className={`slice-block ${slice.slice_type}`}>
-              {sliceHandler(slice, { isMobile })}
-            </div>
-          ))}
-        </div>
+        <ProductsContextProvider allTours={allTours} ready={ready}>
+          <div className="main-wrapper hero-slice-section">
+            {heroSectionSlice.map((slice, index) => (
+              <div key={index} className={`slice-block ${slice.slice_type}`}>
+                {sliceHandler(slice, { isMobile })}
+              </div>
+            ))}
+          </div>
+        </ProductsContextProvider>
       ) : null}
       {hasToursSection ? (
         <ProductsWrapper
@@ -142,46 +174,6 @@ export const HomePage = (props) => {
         slices={footer.body || []}
         invertLogoColor={footer.invert_logo_color}
       />
-      <style jsx>
-        {`
-          .alert-wrapper {
-            margin-top: 40px;
-          }
-        `}
-      </style>
-      <style jsx global>
-        {`
-          // TODO: Handle Space Between Slices Elsewhere.
-          .hero-slice-section {
-            margin-top: 24px;
-            margin-bottom: 56px;
-          }
-          .select-wrapper {
-            all: unset;
-          }
-          .city-selector {
-            margin-bottom: 24px;
-          }
-          .main-wrapper.v2-long-form {
-            max-width: unset;
-            padding: unset;
-            margin: unset;
-            width: unset;
-          }
-          .long-form .slice-block.rich_text {
-            max-width: ${SIZES.MAX_WIDTH};
-            margin-left: auto;
-            margin-right: auto;
-            font-family: Graphik;
-          }
-          @media (max-width: 768px) {
-            .hero-slice-section {
-              margin-top: 48px;
-              margin-bottom: 48px;
-            }
-          }
-        `}
-      </style>
-    </div>
+    </V2MicrositeWrapper>
   );
 };

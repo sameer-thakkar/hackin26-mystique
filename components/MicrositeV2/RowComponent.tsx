@@ -5,7 +5,7 @@ import { PAGETYPE } from '../../constants';
 import InteractionContext from '../../contexts/Interaction';
 import { scroller } from 'react-scroll';
 
-export const RowComponent = props => {
+export const RowComponent = (props) => {
   const interactionContext = useContext(InteractionContext);
 
   const handleProductClicked = (productTgid, section) => {
@@ -25,8 +25,12 @@ export const RowComponent = props => {
   };
 
   useLayoutEffect(() => {
-    const { tgid, section: activeSection } = interactionContext.activeTour;
-    if (tgid)
+    const {
+      tgid,
+      section: activeSection,
+      autoScroll,
+    } = interactionContext.activeTour;
+    if (tgid && autoScroll)
       scroller.scrollTo(`${activeSection}-${tgid}`, {
         duration: 750,
         delay: 100,

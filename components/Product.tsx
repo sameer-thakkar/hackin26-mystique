@@ -344,6 +344,7 @@ const Product = (props) => {
   const showScratchPrice = isFetched && isScratchPriceEnabled;
   const isHighlightsFromPrismic =
     isLengthyArray(highlights) && highlights.filter((item) => item.text).length;
+  if (isFetched && !tourPrices[tgid]?.price) return null;
 
   return (
     <StyledProductCard>
