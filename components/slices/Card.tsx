@@ -10,19 +10,19 @@ import { COLORS, GRAPHIK, AVENIR } from '../../constants/ui-constants';
 import { CHEVRON_LEFT } from '../../public/static/svg-icons';
 
 const variantStyles = {
-  desktop: {
+  'full-width': {
     gridTemplateColumns: '49% 51%',
     img: {
       height: '382',
     },
   },
-  column: {
+  large: {
     gridTemplateColumns: '100%',
     img: {
       height: '382',
     },
   },
-  mobile: {
+  small: {
     gridTemplateColumns: '100%',
     img: {
       height: '223',
@@ -32,7 +32,7 @@ const variantStyles = {
 
 const StyledCard = styled.div((props) => {
   const styles = props.isMobile
-    ? variantStyles.mobile
+    ? variantStyles.small
     : variantStyles[props.type];
   return `
   display: grid;
@@ -130,9 +130,9 @@ type CardProps = {
 };
 
 /**
- * A multi-variant card displaying an optional carousel of images and CTA along with a required title and body
+ * A multi-variant card displaying an optional carousel of images and CTA along with a required title and body.
  *
- * <div style="position: relative; padding-bottom: 62.5%; height: 0;"><iframe src="https://www.loom.com/embed/f8b2da748cc44a9e8ae95a6fd51dd892" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+ * Please see the <a href="https://headout.github.io/mystique/?path=/docs/slices-card--with-link-cta">Card Section</a> documentation to begin with.
  *
  * **All fields marked with a * are mandatory and will break the slice if left blank.**
  *
@@ -168,7 +168,7 @@ const Card: React.FC<CardProps> = ({
   description,
   images = [],
   cta = {},
-  type = 'desktop',
+  type = 'full-width',
   link = '',
   linkType = '',
 }) => {
@@ -180,13 +180,13 @@ const Card: React.FC<CardProps> = ({
   React.useEffect(() => {
     let width = window.innerWidth;
     switch (type) {
-      case 'desktop':
+      case 'full-width':
         setIsMobile(width <= 960);
         break;
-      case 'column':
+      case 'large':
         setIsMobile(width <= 760);
         break;
-      case 'mobile':
+      case 'small':
         setIsMobile(true);
         break;
       default:

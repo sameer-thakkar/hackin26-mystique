@@ -8,18 +8,14 @@ import RichContent from '../UI/RichContent';
 import TitleTextCombo from '../UI/TitleTextCombo';
 import { CHEVRON_LEFT_CIRCLE } from '../../public/static/svg-icons';
 
-const CardGrid = styled.div(({ noOfCards, cardType, isMobile }) => {
+const CardGrid = styled.div(({ cardsInARow, isMobile }) => {
   let gridTemplateColumns = `100%`;
-  if (cardType === 'column') {
+  if (cardsInARow === 2 && !isMobile) {
     gridTemplateColumns = `50% 50%`;
-  } else if (cardType === 'mobile' && !isMobile) {
-    if (noOfCards < 4) {
-      gridTemplateColumns = `repeat(${noOfCards}, calc(${
-        100 / noOfCards
-      }% - 15px))`;
-    } else {
-      gridTemplateColumns = `repeat(4, calc(25% - 15px))`;
-    }
+  } else if (cardsInARow > 2 && !isMobile) {
+    gridTemplateColumns = `repeat(${cardsInARow}, calc(${
+      100 / cardsInARow
+    }% - 15px))`;
   }
   return `
     display: grid;
@@ -72,19 +68,25 @@ const Controls = styled.div`
   }
 `;
 
+const ExitDescription = styled.div`
+  margin-top: 32px;
+`;
+
 type CardSectionProps = {
   slices: any[];
-  cardType: string;
   sectionType: string;
+  cardsInARow: number;
   title?: string;
   description?: any[];
+  exitDescription?: any[];
 };
 
 /**
- * A card section displaying different types of Cards in a gird.
+ * A card section displaying different types of Cards in a gird or carousel.
  *
+ * Video Explanation:
  *
- * <div style="position: relative; padding-bottom: 62.5%; height: 0;"><iframe src="https://www.loom.com/embed/f8b2da748cc44a9e8ae95a6fd51dd892" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+ * <div style="position: relative; padding-bottom: 62.5%; height: 0;"><iframe src="https://www.loom.com/embed/201e52ef4704415e9a819728ad2ad511" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
  *
  * This is a special kind of slice. To use follow below instructions:
  *
@@ -93,43 +95,61 @@ type CardSectionProps = {
  * ### Non-repeatable zone
  * - Card Section Title
  * - Card Section Type
- * - Card Type
+ * - No. of Cards in a Row
+ *  - Min 1 (Default) and Max 4
+ *  - This field will decide how the cards look
+ *  - If 1 is selected a full-width card is displayed
  * - Description
  *  - Rich Text field
- *
+ * - Exit Description
+ *  - Rich Text field
  * ### Repeatable zone
  * Nil.
  *
- * After this, keep adding intermediate Card slices to your needs and then close the Section with a 'Card Section End' slice.
+ * After this, keep adding intermediate <a href="https://headout.github.io/mystique/?path=/docs/slices-card--with-link-cta">Card slices</a> and then close the Section with a 'Card Section End' slice.
  */
 
 const CardSection: React.FC<CardSectionProps> = ({
   slices,
-  cardType,
+  cardsInARow,
   sectionType,
   title,
   description,
+  exitDescription,
 }) => {
   const { width } = useWindowSize();
   const [isMobile, setIsMobile] = React.useState(false);
+
+  // Title and Text combo for the starting of the Card Section
+  const EntrySection = (
+    <TitleTextCombo>
+      {title ? <h2>{title}</h2> : null}
+      {description ? <RichContent render={description} /> : null}
+    </TitleTextCombo>
+  );
+
+  // Rich Text for ending of the Card Section
+  const ExitSection = exitDescription ? (
+    <ExitDescription>
+      <RichContent render={exitDescription} />
+    </ExitDescription>
+  ) : null;
 
   useEffect(() => {
     setIsMobile(width <= 760);
   }, [width, setIsMobile]);
 
-  let finalCardType = cardType;
-
-  // Display desktop card if only 1 slice is available
-  if (slices.length === 1) finalCardType = 'desktop';
-
-  // Display column card if only 2 slices are available and cardType is mobile
-  if (cardType === 'mobile' && slices.length === 2) finalCardType = 'column';
-
-  // Display a grid style if card type is mobile and no. of card are <= 4
-  if (finalCardType === 'mobile' && !isMobile) {
-    if (slices.length <= 4) {
-      sectionType = 'Grid';
-    }
+  let finalCardType;
+  switch (cardsInARow) {
+    case 1:
+      finalCardType = 'full-width';
+      break;
+    case 2:
+      finalCardType = 'large';
+      break;
+    default:
+      finalCardType = 'small';
+      break;
   }
 
   let cards = slices.map((slice, index) => {
@@ -157,18 +177,6 @@ const CardSection: React.FC<CardSectionProps> = ({
 
   // Carousel (and Overflow Scroll for mobile) Logic
   if (sectionType === 'Carousel' && !isMobile) {
-    let slidesPerView = 1;
-    switch (cardType) {
-      case 'column':
-        slidesPerView = 2;
-        break;
-      case 'mobile':
-        slidesPerView = 4;
-        break;
-      default:
-        break;
-    }
-
     const goNext = () => {
       if (swiper !== null) {
         swiper.slideNext();
@@ -182,7 +190,7 @@ const CardSection: React.FC<CardSectionProps> = ({
     };
 
     const swiperParams = {
-      slidesPerView,
+      slidesPerView: cardsInARow,
       wrapperClass: 'cards-section-wrapper',
       spaceBetween: 20,
       getSwiper: updateSwiper,
@@ -190,10 +198,7 @@ const CardSection: React.FC<CardSectionProps> = ({
 
     return (
       <>
-        <TitleTextCombo>
-          {title ? <h2>{title}</h2> : null}
-          {description ? <RichContent render={description} /> : null}
-        </TitleTextCombo>
+        {EntrySection}
         <CardCarousel>
           <StyledSwiper>
             <Swiper {...swiperParams}>
@@ -229,6 +234,7 @@ const CardSection: React.FC<CardSectionProps> = ({
             ) : null}
           </Controls>
         </CardCarousel>
+        {ExitSection}
       </>
     );
   }
@@ -236,29 +242,20 @@ const CardSection: React.FC<CardSectionProps> = ({
   if (sectionType === 'Carousel' && isMobile) {
     return (
       <>
-        <TitleTextCombo>
-          {title ? <h2>{title}</h2> : null}
-          {description ? <RichContent render={description} /> : null}
-        </TitleTextCombo>
+        {EntrySection}
         <OverflowScroll>{cards}</OverflowScroll>
+        {ExitSection}
       </>
     );
   }
 
   return (
     <>
-      <TitleTextCombo>
-        {title ? <h2>{title}</h2> : null}
-        {description ? <RichContent render={description} /> : null}
-      </TitleTextCombo>
-      <CardGrid
-        noOfCards={cards.length}
-        cardType={finalCardType}
-        sectionType={sectionType}
-        isMobile={isMobile}
-      >
+      {EntrySection}
+      <CardGrid cardsInARow={cardsInARow} isMobile={isMobile}>
         {cards}
       </CardGrid>
+      {ExitSection}
     </>
   );
 };

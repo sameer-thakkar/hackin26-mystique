@@ -42,50 +42,6 @@ const data = {
   },
 };
 
-export const Basic = () => {
-  return (
-    <div style={{ width: 1200, padding: 50 }}>
-      <Card
-        images={data.images}
-        title={data.title}
-        description={data.description}
-        cta={data.cta}
-      />
-    </div>
-  );
-};
-
-export const Mobile = () => (
-  <div style={{ width: 350, padding: 50 }}>
-    <Card
-      images={data.images}
-      title={data.title}
-      description={[
-        {
-          type: 'paragraph',
-          text: `The Raphael Rooms are a group of rooms in the public portion of the Vatican Palace (part of the Vatican Museums).`,
-          spans: [],
-        },
-      ]}
-      cta={data.cta}
-      type="mobile"
-    />
-  </div>
-);
-
-export const ColumnCard = () => {
-  return (
-    <div style={{ width: 500, padding: 50 }}>
-      <Card
-        images={data.images}
-        title={data.title}
-        description={data.description}
-        type="column"
-      />
-    </div>
-  );
-};
-
 export const WithLinkCTA = () => {
   return (
     <div style={{ width: 500, padding: 50 }}>
@@ -100,7 +56,7 @@ export const WithLinkCTA = () => {
           },
           type: 'Link',
         }}
-        type="mobile"
+        type="small"
       />
     </div>
   );
@@ -109,7 +65,7 @@ export const WithLinkCTA = () => {
 export const OnlyText = () => {
   return (
     <div style={{ width: 500, padding: 50 }}>
-      <Card title={data.title} description={data.description} type="column" />
+      <Card title={data.title} description={data.description} type="large" />
     </div>
   );
 };
@@ -120,7 +76,7 @@ export const WithFullCardLink = () => {
       <Card
         title={data.title}
         description={data.description}
-        type="column"
+        type="large"
         linkType="Full Card"
         link={{ url: 'https://www.headout.com', target: '_blank' }}
       />
@@ -134,7 +90,7 @@ export const WithTitleLink = () => {
       <Card
         title={data.title}
         description={data.description}
-        type="column"
+        type="large"
         linkType="Title"
         link={{ url: 'https://www.headout.com', target: '_blank' }}
       />
