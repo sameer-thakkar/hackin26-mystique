@@ -412,7 +412,7 @@ export default class Page extends React.Component<any, any> {
             return res.results;
           });
       }
-      let idsToFetchFromScorpio = [];
+      let tgidsArray = [];
 
       if (ContentType === CUSTOM_TYPES.MICROSITE) {
         const MBDesign = CMSContent.data.data.design || '';
@@ -441,7 +441,7 @@ export default class Page extends React.Component<any, any> {
           primsicTours,
           initial_tgids
         );
-        idsToFetchFromScorpio = toursList.reduce((acc, tour) => {
+        tgidsArray = toursList.reduce((acc, tour) => {
           return [...acc, tour.tgid];
         }, []);
 
@@ -467,34 +467,27 @@ export default class Page extends React.Component<any, any> {
         };
       }
 
-      idsToFetchFromScorpio = [
-        ...idsToFetchFromScorpio,
-        ...all_tours_tab_tgids,
-      ];
-      const scorpioResponses = await Promise.all(
-        idsToFetchFromScorpio.map((id) =>
-          fetch(
-            `https://api.headout.com/api/v5/tour-group/get/${id}?language=${
-              lang.split('-')[0]
-            }&fetch-variants=false&fetch-collection-svg=false`
-          ).then((r) => r.json())
-        )
-      );
+      tgidsArray = [...tgidsArray, ...all_tours_tab_tgids];
+      const tourGroupAPIResponses = await fetch(
+        `https://api.headout.com/api/v5/tour-group/list?ids[]=${tgidsArray}&language=${
+          lang.split('-')[0]
+        }`
+      ).then((r) => r.json());
 
-      const scorpioData = scorpioResponses.reduce(
-        (accum: {}, response: any, idx) => ({
+      const tourGroupData = tourGroupAPIResponses?.tourGroups?.reduce(
+        (accum: {}, tour: any) => ({
           ...accum,
-          [idsToFetchFromScorpio[idx]]: {
-            title: response.name,
-            highlights: response.microBrandsHighlight,
-            descriptors: response.microBrandsDescriptor,
-            productHighlights: response.highlights,
-            productTitle: response.name,
-            images: response.imageUploads,
-            averageRating: response.averageRating,
-            reviewCount: response.reviewCount,
-            ctaBooster: response.callToAction,
-            available: !(response.listingPrice == null),
+          [tour['id']]: {
+            title: tour.name,
+            highlights: tour.microBrandsHighlight,
+            descriptors: tour.microBrandsDescriptor,
+            productHighlights: tour.highlights,
+            productTitle: tour.name,
+            images: [{ url: tour.imageUrl }],
+            averageRating: tour.averageRating,
+            reviewCount: tour.reviewCount,
+            ctaBooster: tour.callToAction,
+            available: !(tour.listingPrice === null),
           },
         }),
         {}
@@ -502,7 +495,7 @@ export default class Page extends React.Component<any, any> {
 
       return {
         ...AllData,
-        scorpioData,
+        tourGroupData,
       };
     } catch (error) {
       console.log(error);
@@ -522,7 +515,7 @@ export default class Page extends React.Component<any, any> {
   render() {
     const {
       CMSContent,
-      scorpioData,
+      tourGroupData,
       ContentType,
       statusCode,
       host,
@@ -553,7 +546,7 @@ export default class Page extends React.Component<any, any> {
             lang={lang}
             host={host}
             isDev={isDev}
-            scorpioData={scorpioData}
+            scorpioData={tourGroupData}
             serverRequestStartTimestamp={serverRequestStartTimestamp}
           />
         );
@@ -563,7 +556,7 @@ export default class Page extends React.Component<any, any> {
         Component = (
           <Microsite
             data={CMSContent.data}
-            scorpioData={scorpioData}
+            scorpioData={tourGroupData}
             offerData={CMSContent.offerData}
             host={host}
             toursList={toursList}
@@ -578,7 +571,7 @@ export default class Page extends React.Component<any, any> {
         Component = (
           <ContentPage
             {...CMSContent}
-            scorpioData={scorpioData}
+            scorpioData={tourGroupData}
             isDev={isDev}
             host={host}
             serverRequestStartTimestamp={serverRequestStartTimestamp}

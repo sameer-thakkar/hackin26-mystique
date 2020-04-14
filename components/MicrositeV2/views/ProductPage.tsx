@@ -433,9 +433,14 @@ export const MobileProductPage = (props) => {
             height: 100%;
             width: 100%;
           }
+          .single-image {
+            width: 100%;
+            height: 100%;
+          }
           .prod-image .swiper-container img,
           .single-image img {
             border-radius: 4px;
+            object-fit: cover;
           }
           .boosters .inline-availability {
             color: #24a1b2;
