@@ -143,7 +143,7 @@ const StyledBanner = styled.div`
   }
 
   @media (max-width: 768px) {
-    margin-top: 60px;
+    margin-top: 56px;
     .mb-captions .mb-caption {
       justify-items: left;
       margin-bottom: 24px;

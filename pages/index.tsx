@@ -11,7 +11,6 @@ import {
   MICROSITE_STRING_KEYS,
   MICROSITE_OBJECT_KEYS,
   MICROSITE_ARRAY_KEYS,
-  COMMON_HEADER_PROPS,
   LINKED_MICROSITE_PROPS,
 } from '../constants';
 import { redirectTo, getPrismicProps, reflect } from '../utils';
@@ -298,7 +297,7 @@ export default class Page extends React.Component<any, any> {
           } else {
             return await Client(req)
               .getByUID(CUSTOM_TYPES.CONTENT_PAGE, uid, {
-                fetchLinks: [...COMMON_HEADER_PROPS, ...LINKED_MICROSITE_PROPS],
+                fetchLinks: [...LINKED_MICROSITE_PROPS],
                 lang,
               })
               .then(async (page) => {
@@ -335,16 +334,19 @@ export default class Page extends React.Component<any, any> {
                  * Currently includes: Common Footer, Content Framework
                  */
                 const footerID = page.data.footer_ref.id || '';
+                const headerID = page.data.header_ref.id || '';
                 const contentFrameworkID =
                   page.data.content_framework?.id || '';
                 const micrositeId = page.data.microsite_document_ref.id || '';
 
                 const linkedRefIDs = [];
                 linkedRefIDs.push(footerID);
+                linkedRefIDs.push(headerID);
                 linkedRefIDs.push(micrositeId);
                 linkedRefIDs.push(contentFrameworkID);
                 const [
                   commonFooter,
+                  commonHeader,
                   micrositeData,
                   contentFramework,
                 ] = await this.getRefsArrayByIds(linkedRefIDs, req);
@@ -354,6 +356,7 @@ export default class Page extends React.Component<any, any> {
                   data: {
                     ...page.data,
                     footer_ref: commonFooter,
+                    header_ref: commonHeader,
                     content_framework: contentFramework,
                     microsite: micrositeData,
                   },

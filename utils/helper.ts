@@ -202,12 +202,12 @@ const getOpeningSlice = (slice_type) => ({
 });
 const isClosingSlice = (slice_type) => /___end/.exec(slice_type);
 
-const autoClose = (slices) => {
+const autoClose = (slices, allowImmediateNesting) => {
   const allSlices = [];
   const sliceTracker = new Stack();
   slices.forEach((slice) => {
     const thisSliceType = slice.slice_type;
-    if (sliceTracker.peek()) {
+    if (sliceTracker.peek() && !allowImmediateNesting) {
       if (thisSliceType === sliceTracker.peek()) {
         allSlices.push(genClosingSlice(sliceTracker.peek()));
         sliceTracker.pop();
@@ -240,10 +240,10 @@ const autoClose = (slices) => {
   return allSlices;
 };
 
-export const groupSlices = (slices) => {
+export const groupSlices = (slices, allowImmediateNesting = false) => {
   const groups = { slices: [] };
   let ref: any = groups;
-  const autoClosedSlices = autoClose(slices);
+  const autoClosedSlices = autoClose(slices, allowImmediateNesting);
   let repeatables: any = {
     items: [],
   };

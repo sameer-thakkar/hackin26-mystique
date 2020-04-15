@@ -109,7 +109,7 @@ const BlogFeed = ({ feed_url, count = 0, defaultCards = [] }) => {
     } catch (_e) {
       return;
     }
-  });
+  }, []);
 
   return (
     <FeedContainer>

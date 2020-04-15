@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useLayoutEffect } from 'react';
 import styled from 'styled-components';
 import { scroller } from 'react-scroll';
 import LanguageSelector from './LanguageSelector';
@@ -8,6 +8,7 @@ import Image from '../UI/Image';
 import { useCaptureClickOutside } from '../hooks/ClickOutside';
 import { POWERED_BY_HEADOUT } from '../../public/static/svg-icons';
 import { DROPDOWN_ELEMENT } from '../../constants';
+import MultiLevelNav from '../MultiLevelNav';
 
 const StyledHeader = styled.header`
   height: 80px;
@@ -16,30 +17,29 @@ const StyledHeader = styled.header`
   width: 100%;
   background-color: rgba(255, 255, 255, 1);
   display: flex;
-  align-items: center;
-  justify-content: space-between;
   left: 0;
   right: 0;
   z-index: 3;
+  ${({ hasShadow }) =>
+    hasShadow
+      ? `
+    box-shadow: 0 1px 1em 0 rgba(0,0,0,.1);
+  `
+      : ''}
   @media (max-width: 768px) {
     height: 56px;
   }
 `;
 
 const StyledHeaderContainer = styled.div`
-  height: 80px;
-  position: fixed;
-  top: 0;
-  width: 100%;
   background-color: rgba(255, 255, 255, 1);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  left: 0;
-  right: 0;
-  z-index: 1;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: auto;
+  width: 100%;
   max-width: 1200px;
   margin: auto;
+  align-items: center;
   @media (max-width: 768px) {
     height: 56px;
   }
@@ -50,6 +50,8 @@ const StyledLogo = styled.div`
   grid-auto-flow: column;
   grid-column-gap: 10px;
   align-items: center;
+  justify-self: left;
+  justify-content: left;
   img {
     height: 44px;
   }
@@ -72,10 +74,11 @@ const StyledLogo = styled.div`
 `;
 
 const StyledHeaderElements = styled.div`
+  justify-self: right;
   display: flex;
   align-items: center;
   margin-right: 20px;
-  ${props => {
+  ${(props) => {
     if (props.active) {
       return `
       @media (max-width: 768px) {
@@ -97,7 +100,7 @@ const StyledBuyTickets = styled.div`
   }
 `;
 
-const Header: React.FC<any> = props => {
+const Header: React.FC<any> = (props) => {
   const {
     languages,
     headerLinks,
@@ -116,19 +119,47 @@ const Header: React.FC<any> = props => {
     host,
     hasPoweredByHeadoutLogo,
     openGroupBookingModal,
+    slices = [],
   } = props;
   const hamburgerIconCheck = showGroupBooking || !!headerLinks?.length;
   const someRef = useRef(null);
+  const multiNavRef = useRef(null);
+  const [scrollPos, setScrollPos] = useState(0);
   useCaptureClickOutside(
     someRef,
     () => {
       handleDropdownToggle(DROPDOWN_ELEMENT.HAMBURGER, false);
     },
-    []
+    [multiNavRef]
   );
 
+  const convertedRegularMenuItems = headerLinks.map((link) => ({
+    slice_type: 'menu_item',
+    primary: {
+      label: link.link_heading,
+      url: {
+        url: link.link_url.url,
+        target: link.link_url.target,
+      },
+    },
+  }));
+  if (showGroupBooking)
+    convertedRegularMenuItems.push({
+      slice_type: 'group_booking',
+      action: () => {
+        openGroupBookingModal();
+      },
+      toggleMenu: () => handleDropdownToggle(DROPDOWN_ELEMENT.HAMBURGER),
+    });
+
+  useLayoutEffect(() => {
+    const scrollHandler = () => {
+      setScrollPos(window.pageYOffset);
+    };
+    window.addEventListener('scroll', scrollHandler, { passive: true });
+  }, [scrollPos]);
   return (
-    <StyledHeader>
+    <StyledHeader hasShadow={scrollPos > 60}>
       <StyledHeaderContainer>
         <a href={logoRedirectionURL}>
           <StyledLogo>
@@ -143,11 +174,13 @@ const Header: React.FC<any> = props => {
                 onClick={() => {
                   handleDropdownToggle(DROPDOWN_ELEMENT.HAMBURGER);
                 }}
+                role="button"
+                tabIndex={0}
               >
-                <Hamburger />
+                <Hamburger isActive={dropdown.hamburger} />
               </div>
             ) : null}
-            {headerLinks ? (
+            {!slices && headerLinks ? (
               <HeaderLinks
                 headerLinks={headerLinks}
                 openGroupBookingModal={openGroupBookingModal}
@@ -158,6 +191,18 @@ const Header: React.FC<any> = props => {
               />
             ) : null}
           </div>
+          {slices ? (
+            <span ref={multiNavRef}>
+              <MultiLevelNav
+                isMobile={isMobile}
+                isActive={dropdown.hamburger}
+                slice={slices.filter(
+                  (slice) => slice.slice_type === 'navigation'
+                )}
+                oldMenuItems={convertedRegularMenuItems}
+              />
+            </span>
+          ) : null}
           {enableBuyTickets === 'Yes' ? (
             <StyledBuyTickets
               onClick={() => {

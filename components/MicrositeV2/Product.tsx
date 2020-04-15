@@ -224,6 +224,7 @@ const Product = (props) => {
           font-weight: 600;
           color: #bababa;
           position: relative;
+          line-height: 1.4;
         }
         .product-v2-image img::after {
           content: ' ' attr(alt);

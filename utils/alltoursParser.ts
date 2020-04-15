@@ -91,14 +91,14 @@ const allToursParser = (CMSData, scorpioData, pricingData: ToursData) => {
         contentBlocks: orderedBlocks,
         productImage:
           tourData.product_image_override.url ||
-          scorpioData[tourData.tgid].images[0]
+          (scorpioData[tourData.tgid].images[0]
             ? scorpioData[tourData.tgid].images[0].url
-            : '',
+            : ''),
         descriptionImage:
           tourData.description_image_override.url ||
-          scorpioData[tourData.tgid].images[1]
+          (scorpioData[tourData.tgid].images[1]
             ? scorpioData[tourData.tgid].images[1].url
-            : '',
+            : ''),
         price: isFetched ? cardPrices[tourData.tgid]?.price : '',
         scratchPrice: isFetched ? cardPrices[tourData.tgid]?.scratchPrice : '',
         currencySymbol: isFetched ? currencySymbol : '',

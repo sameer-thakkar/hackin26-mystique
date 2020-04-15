@@ -62,32 +62,6 @@ export const ERROR = {
 
 export const GROUP_BOOKING_URL = '/group-submit-form';
 
-export const MODAL_STYLE = {
-  overlay: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    zIndex: 3,
-  },
-  content: {
-    width: '75%',
-    maxWidth: '1020px',
-    margin: 'auto',
-    boxShadow: '0 3px 6px 0 rgba(0, 0, 0, 0.1)',
-    background: '#fff',
-    borderRadius: '4px',
-    padding: '0 0px 25px',
-    zIndex: '20',
-    top: 0,
-    bottom: 0,
-    height: 'max-content',
-    border: 'none',
-  },
-};
-
 export const CUSTOM_TYPES = {
   MICROSITE: 'microsite',
   CONTENT_PAGE: 'content_page',
@@ -125,20 +99,6 @@ export const ANALYTICS_EVENTS = {
 export const PAGE_TYPE = {
   COLLECTION_PAGE: 'Collection Page',
 };
-
-export const COMMON_HEADER_PROPS: string[] = [
-  'header_links',
-  'logo',
-  'link_to_logo_file',
-  'logo_alt_text',
-  'enable_group_booking',
-  'header_links',
-  'logo_redirection_url',
-  'localization',
-  'enable_localization_menu',
-  'group_booking_disclaimer',
-  'enable_powered_by_headout_logo',
-].map((prop) => `${CUSTOM_TYPES.HEADER}.${prop}`);
 
 export const LINKED_MICROSITE_PROPS: string[] = [
   'redirect_url',
@@ -229,5 +189,7 @@ export const CURRENCY_SYMBOL_MAP = {
   THB: '฿',
   IDR: 'Rp',
 };
+
+export const ALLOW_IMMEDIEATE_NESTING = true;
 
 export const DONT_AUTO_SCROLL = false;

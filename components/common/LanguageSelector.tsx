@@ -150,7 +150,7 @@ class LanguageSelector extends Component<any, any> {
     const slug = withoutTrailingSlash(removeLangFromPathname);
     const isDev = host.includes('localhost');
     if (isDev) {
-      window.location.href = `https://${host}/?mystique_uid=${uid}&lang=${
+      window.location.href = `http://${host}/?mystique_uid=${uid}&lang=${
         flagsUrl[e.target.value].paramLang
       }`;
     } else {
@@ -172,7 +172,11 @@ class LanguageSelector extends Component<any, any> {
       return (
         <StyledMobileSelect>
           <span>{currentLanguage}</span>
-          <select value={currentLanguage} onBlur={this.handleChange}>
+          <select
+            value={currentLanguage}
+            onChange={(e) => e.target.blur()}
+            onBlur={this.handleChange}
+          >
             {this.getLanguages().map((language, index) => {
               return (
                 <option value={language} key={index}>

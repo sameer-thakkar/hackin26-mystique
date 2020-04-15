@@ -280,10 +280,8 @@ export default class MicrositeV1 extends Component<any, any> {
 
     const longFormContent = this.props.data.data.body2;
     const {
-      has_terms_page: hasTermsPage,
       enable_localization_menu: hasLanguageSelector,
       enable_group_booking: enableGroupBooking,
-      enable_earliest_availability: enableEarliestAvailability,
       enable_buy_tickets_shortcut: enableBuyTickets,
       logo_redirection_url: logoRedirectionURL,
       blackout_start_date: blackoutStartDate,
@@ -409,6 +407,7 @@ export default class MicrositeV1 extends Component<any, any> {
               minimumPax={minimumPax ? minimumPax : 10}
               maximumPax={maximumPax ? maximumPax : undefined}
               blockedDays={blockedDays || ''}
+              isMobile={this.state.isMobile}
               disclaimer={groupBookingDisclaimer}
             />
           )}

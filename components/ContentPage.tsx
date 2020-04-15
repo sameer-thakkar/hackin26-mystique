@@ -10,12 +10,17 @@ import Alert from './UI/Alert';
 import DismissAlert from './UI/DismissAlert';
 import * as labels from '../constants/localization/labels';
 import { Client } from '../prismic-config';
-import { DROPDOWN_ELEMENT, FULL_WIDTH_SLICES } from '../constants';
+import {
+  DROPDOWN_ELEMENT,
+  FULL_WIDTH_SLICES,
+  ALLOW_IMMEDIEATE_NESTING,
+} from '../constants';
 import { groupSlices } from '../utils/helper';
 import allToursParser from '../utils/alltoursParser';
 import { ProductsContextProvider } from '../contexts/Products';
 import { InteractionContextProvider } from '../contexts/Interaction';
 import { tourListApiParser } from '../utils/DataParsers';
+import { COLORS } from '../constants/ui-constants';
 
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 
@@ -86,7 +91,7 @@ const StyledContentPage = styled.div`
 
   a {
     text-decoration: none;
-    color: #ec1943;
+    color: ${COLORS.MED_SLATE_BLUE};
   }
 
   .product {
@@ -219,7 +224,7 @@ export default class ContentPage extends Component<any, any> {
       });
       const toursData = await fetch(
         `https://api.headout.com/api/v5/tour-group/list?ids[]=${[
-          ...filteredTours,
+          ...filteredTours.map((t) => t.tgid),
         ]}`
       ).then((res) => {
         return res.json();
@@ -240,8 +245,8 @@ export default class ContentPage extends Component<any, any> {
       filteredTours.map(async (tour) => {
         if (!tour.tour_title_override) {
           groupBookingTourTitles.push({
-            value: groupBookingTourData[tour.tgid].name + ` [${tour.tgid}]`,
-            label: groupBookingTourData[tour.tgid].name,
+            value: groupBookingTourData[tour.tgid].title + ` [${tour.tgid}]`,
+            label: groupBookingTourData[tour.tgid].title,
           });
         } else {
           groupBookingTourTitles.push({
@@ -428,6 +433,7 @@ export default class ContentPage extends Component<any, any> {
             minimumPax={minimumPax ? minimumPax : 10}
             maximumPax={maximumPax ? minimumPax : undefined}
             blockedDays={blockedDays || ''}
+            isMobile={this.state.isMobile}
             disclaimer={groupBookingDisclaimer}
           />
         )}
@@ -459,6 +465,10 @@ export default class ContentPage extends Component<any, any> {
           host={host}
           hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo}
           openGroupBookingModal={this.openGroupBookingModal}
+          slices={groupSlices(
+            commonHeader?.data?.body,
+            ALLOW_IMMEDIEATE_NESTING
+          )}
         />
         {showCovid19Alert && this.state.covid19AlertOpen ? (
           <DismissAlert

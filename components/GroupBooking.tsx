@@ -4,13 +4,13 @@ import Select from 'react-select';
 import ReactTelInput from 'react-telephone-input';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import styled from 'styled-components';
 import {
   IP_INFO_TOKEN,
   PREFERRED_COUNTRIES_CODES,
   FLAGS_IMAGE,
   GROUP_TOUR_PREFERED_TIME,
   GROUP_TOUR_PREFERED_LANG,
-  MODAL_STYLE,
   GROUP_BOOKING_URL,
 } from './../constants';
 import {
@@ -27,7 +27,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './../public/static/PhoneFieldStyle/phoneFelid.css';
 import './../public/static/PhoneFieldStyle/phoneFieldinput.css';
 import { RichText } from 'prismic-reactjs';
-import styled from 'styled-components';
+import { MODAL_STYLE } from '../constants/ui-constants';
 
 const StyledGroupBooking = styled.div`
   .hide-desk {
@@ -48,6 +48,9 @@ const StyledGroupBooking = styled.div`
     border-bottom: 1px solid #44444452;
     font-weight: 500;
     font-family: Graphik;
+    span {
+      color: #fff;
+    }
   }
   .popup-wrapper img.close-group {
     /* filter: invert(1); */
@@ -711,13 +714,21 @@ export default class GroupBooking extends Component<any, any> {
       minimumPax,
       blockedDays,
       disclaimer,
+      isMobile,
     } = this.props;
     const blackoutDateRange = this.getDatesInRange(
       blackoutStartDate,
       blackoutEndDate
     );
+    const styles = MODAL_STYLE;
+    if (isMobile) {
+      styles.content = {
+        ...styles.content,
+        height: 'auto',
+      };
+    }
     return (
-      <Modal isOpen={true} style={MODAL_STYLE} shouldCloseOnOverlayClick>
+      <Modal isOpen={true} style={styles} shouldCloseOnOverlayClick>
         <StyledGroupBooking>
           <div className="popup-wrapper">
             <div className="popup-title">

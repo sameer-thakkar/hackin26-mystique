@@ -198,6 +198,9 @@ const LanguageSelector = (props) => {
             grid-row-gap: 24px;
             border-radius: 4px;
             display: grid;
+            position: absolute;
+            top: calc(100% + 10px);
+            left: -15px;
           }
 
           .language,
@@ -216,6 +219,9 @@ const LanguageSelector = (props) => {
           }
           .language-dropdown .active-tab {
             color: #ec1943;
+          }
+          .current-langauge {
+            display: flex;
           }
 
           @media (max-width: 768px) {
