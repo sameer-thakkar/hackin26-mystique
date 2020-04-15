@@ -44,6 +44,7 @@ const StyledCard = styled.div((props) => {
   color: ${COLORS.DAVY_GREY};
   height: 100%;
   text-decoration: none;
+  ${props.link && `cursor: pointer;`}
   .flex{
     display: flex;
   }
@@ -163,6 +164,14 @@ type CardProps = {
  *  - Will take precedence over 'Image Source' alt
  */
 
+const HyperLink = ({ children, data }) => {
+  return (
+    <a href={data.url} onClick={(e) => e.stopPropagation()}>
+      {children}
+    </a>
+  );
+};
+
 const Card: React.FC<CardProps> = ({
   title,
   description,
@@ -243,7 +252,11 @@ const Card: React.FC<CardProps> = ({
     case 'Button':
       CTA = (
         <ButtonWrapper>
-          <a href={cta.link.url} target={cta.link.target}>
+          <a
+            href={cta.link.url}
+            target={cta.link.target}
+            onClick={(e) => e.stopPropagation()}
+          >
             <Button>{cta.text || labels[lang]['BOOK_NOW_CTA']}</Button>
           </a>
         </ButtonWrapper>
@@ -251,7 +264,11 @@ const Card: React.FC<CardProps> = ({
       break;
     case 'Link':
       CTA = (
-        <CTALink href={cta.link.url} target={cta.link.target}>
+        <CTALink
+          href={cta.link.url}
+          target={cta.link.target}
+          onClick={(e) => e.stopPropagation()}
+        >
           {cta.text || labels[lang]['READ_MORE_TEXT']}
           {CHEVRON_LEFT}
         </CTALink>
@@ -261,9 +278,14 @@ const Card: React.FC<CardProps> = ({
   return (
     <StyledCard
       {...(linkType === 'Full Card' && {
-        as: 'a',
-        href: link.url,
-        target: link.target,
+        onClick: () => {
+          if (link?.target === '_blank') {
+            window.open(link?.url, '_blank');
+          } else {
+            window.location.href = link?.url;
+          }
+        },
+        link: true,
       })}
       isMobile={isMobile}
       type={type}
@@ -279,7 +301,12 @@ const Card: React.FC<CardProps> = ({
         >
           {title}
         </Title>
-        <RichText render={description} />
+        <RichText
+          elements={{
+            hyperlink: HyperLink,
+          }}
+          render={description}
+        />
         {cta?.link?.url ? CTA : null}
       </div>
     </StyledCard>
