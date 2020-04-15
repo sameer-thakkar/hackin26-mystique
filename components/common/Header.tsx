@@ -133,7 +133,7 @@ const Header: React.FC<any> = (props) => {
     [multiNavRef]
   );
 
-  const convertedRegularMenuItems = headerLinks.map((link) => ({
+  const convertedRegularMenuItems = headerLinks?.map((link) => ({
     slice_type: 'menu_item',
     primary: {
       label: link.link_heading,
