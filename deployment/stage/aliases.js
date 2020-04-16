@@ -1,4 +1,12 @@
 module.exports = [
+  'stage.waterbom.bali-tickets.com',
+  'stage.splash-waterpark.bali-tickets.com',
+  'stage.safari-and-marine-park.bali-tickets.com',
+  'stage.zoo.bali-tickets.com',
+  'stage.bird-park.bali-tickets.com',
+  'stage.river-rafting.bali-tickets.com',
+  'stage.atv-adventures.bali-tickets.com',
+  'stage.safari-park.bali-tickets.com',
   'stage.airport-transfers.tickets-london.co.uk',
   'stage.www.opera-tickets.org',
   'stage.www.london-theater-tickets.com',
