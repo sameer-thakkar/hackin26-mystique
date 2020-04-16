@@ -21,6 +21,9 @@ const CardGrid = styled.div(({ cardsInARow, isMobile }) => {
     display: grid;
     grid-template-columns: ${gridTemplateColumns};
     grid-gap: 20px;
+    @media(max-width: 768px){
+      grid-template-columns: auto;
+    }
 `;
 });
 
