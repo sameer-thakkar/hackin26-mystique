@@ -248,6 +248,7 @@ export default class MicrositeV1 extends Component<any, any> {
       cta_text: bannerCtaText,
       page_url: pageUrl,
       auto_banner: autoBanner,
+      hide_banner_cta: hideBannerCTA,
       banner_limit: bannerLimit,
     } = this.props.data.data;
     const languages = localization.filter((lang) => lang.language);
@@ -457,6 +458,7 @@ export default class MicrositeV1 extends Component<any, any> {
             currentLanguage={currentLanguage ? currentLanguage : null}
             isMobile={this.state.isMobile}
             boxed={true}
+            hideCTA={hideBannerCTA}
           />
           {alertPopup ? (
             <Alert

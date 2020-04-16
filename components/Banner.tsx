@@ -313,7 +313,12 @@ export default class Banner extends Component<any, any> {
   };
 
   render() {
-    const { bannerHeading, bannerImages, currentLanguage } = this.props;
+    const {
+      bannerHeading,
+      bannerImages,
+      currentLanguage,
+      hideCTA,
+    } = this.props;
     const { isClient } = this.state;
     return (
       <StyledBanner>
@@ -347,11 +352,13 @@ export default class Banner extends Component<any, any> {
             <div className="caption">
               <h1>{bannerHeading}</h1>
             </div>
-            <StyledButton>
-              <Button type="whiteBordered" onClick={this.scrollTicketSection}>
-                {labels[currentLanguage].BANNER_CTA}
-              </Button>
-            </StyledButton>
+            {hideCTA ? null : (
+              <StyledButton>
+                <Button type="whiteBordered" onClick={this.scrollTicketSection}>
+                  {labels[currentLanguage].BANNER_CTA}
+                </Button>
+              </StyledButton>
+            )}
           </div>
         </div>
         {this.hasIndicators && bannerImages.length > 1 ? (
