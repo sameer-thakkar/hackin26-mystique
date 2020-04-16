@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import sliceHandler from './Slices';
-import { FULL_WIDTH_SLICES } from '../constants';
-import { COLORS } from '../constants/ui-constants';
 import styled from 'styled-components';
+import sliceHandler from '../Slices';
+import { FULL_WIDTH_SLICES } from '../../constants';
+import { COLORS } from '../../constants/ui-constants';
 
-export const StyledLongform = styled.div`
+export const StyledLongForm = styled.div`
   font-family: 'Graphik', 'Proxima Nova', 'Helvetica Neue', Helvetica, Arial,
     sans-serif;
   line-height: 1.6;
@@ -98,7 +98,7 @@ export default class LongForm extends Component<any, any> {
   render() {
     const { content, ...props } = this.props;
     return (
-      <StyledLongform>
+      <StyledLongForm>
         {content.map((slice, index) => (
           <div
             key={index}
@@ -111,7 +111,7 @@ export default class LongForm extends Component<any, any> {
             {sliceHandler(slice, { ...props })}
           </div>
         ))}
-      </StyledLongform>
+      </StyledLongForm>
     );
   }
 }

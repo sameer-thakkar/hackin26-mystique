@@ -18,7 +18,8 @@ class MystiqueDocument extends Document {
     try {
       ctx.renderPage = () =>
         originalRenderPage({
-          enhanceApp: App => props => sheet.collectStyles(<App {...props} />),
+          enhanceApp: (App) => (props) =>
+            sheet.collectStyles(<App {...props} />),
         });
 
       const initialProps = await Document.getInitialProps(ctx);
@@ -44,9 +45,17 @@ class MystiqueDocument extends Document {
           <Main />
           <NextScript />
           <script
-            type="text/javascript"
+            dangerouslySetInnerHTML={{
+              __html: `
+  window.prismic = {
+    endpoint: 'https://mystique.cdn.prismic.io/api/v2'
+  };`,
+            }}
+          />
+          <script
             defer
-            src={`//static.cdn.prismic.io/prismic.min.js?repo=mystique&new=true`}
+            type="text/javascript"
+            src="https://static.cdn.prismic.io/prismic.min.js?new=true"
           />
         </body>
       </Html>

@@ -157,6 +157,7 @@ const StyledContentPage = styled.div`
     }
   }
 `;
+
 export default class ContentPage extends Component<any, any> {
   constructor(props) {
     super(props);
@@ -173,6 +174,7 @@ export default class ContentPage extends Component<any, any> {
       covid19AlertOpen: true,
     };
   }
+
   async componentDidMount() {
     const {
       enable_group_booking: enableGroupBooking,

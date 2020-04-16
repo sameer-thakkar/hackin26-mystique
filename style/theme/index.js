@@ -3,12 +3,9 @@ import { COLORS, GRAPHIK } from '../../constants/ui-constants';
 export default {
   button: {
     color: COLORS.RHAPSODY,
-    borderRadius: '5px',
+    borderRadius: '2px',
     fontSize: '18px',
-    fontFamily: 'Graphik',
+    fontFamily: GRAPHIK.FONT_STACK,
     fontWeight: GRAPHIK.MEDIUM,
-  },
-  card: {
-    breakpoints: {},
   },
 };

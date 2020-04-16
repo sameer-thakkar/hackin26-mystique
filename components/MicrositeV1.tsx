@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import { scroller } from 'react-scroll';
 import Header from './common/Header';
 import Banner from './Banner';
-import LongForm from './LongForm';
+import LongForm from './common/LongForm';
 import populateHead from './common/meta';
 import Footer from './common/Footer';
 import PopulateUncategorizedProducts from './PopulateUncategorizedProducts';

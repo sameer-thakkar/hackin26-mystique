@@ -65,9 +65,7 @@ export const HomePage = (props) => {
     alertPopup,
     showCovid19Alert,
   } = props;
-
   const [covid19AlertOpen, setCovid19AlertOpen] = useState(true);
-
   const { dropdownLinks, enableDropdownLinks } = header;
   const selectorLinkChangeHandler = (option) => {
     window.location.href = option.value;
@@ -115,7 +113,7 @@ export const HomePage = (props) => {
         />
       ) : null}
       {heroProps.banners.length ? (
-        <Banner {...heroProps} isMobile={isMobile} ready={ready} />
+        <Banner {...heroProps} isMobile={isMobile} ready={true} />
       ) : null}
 
       {alertPopup?.uid ? (

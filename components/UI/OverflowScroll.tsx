@@ -1,30 +1,33 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const StyledWrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   overflow-x: auto;
-  margin-right: -16px;
-  margin-left: -16px;
-  max-width: 100vw;
+  margin: 0 -16px;
+  max-width: calc(100vw - 32px);
+  padding: 0 16px;
 `;
 
-const StyledChild = styled.div`
-  min-width: ${props => props.minWidth}px;
-  margin: 0px 10px 30px 10px;
+const Child = styled.div`
+  min-width: ${({ minWidth }) => (minWidth ? `${minWidth}px` : `max-content`)};
+  margin: 0px 10px ${({ marginBottom }) => marginBottom}px 0;
   padding-right: 10px;
 `;
 
 const OverflowScroll: React.FC<{
   children: React.ReactNode[];
   minWidthChild?: number;
-}> = ({ children, minWidthChild = 300 }) => {
+  marginBottom?: number;
+}> = ({ children, minWidthChild = null, marginBottom = 0 }) => {
   return (
-    <StyledWrapper>
+    <Wrapper>
       {children.map(child => (
-        <StyledChild minWidth={minWidthChild}>{child}</StyledChild>
+        <Child minWidth={minWidthChild} marginBottom={marginBottom}>
+          {child}
+        </Child>
       ))}
-    </StyledWrapper>
+    </Wrapper>
   );
 };
 

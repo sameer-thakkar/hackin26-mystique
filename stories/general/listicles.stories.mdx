@@ -1,0 +1,144 @@
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+
+<Meta title="General/Listicle Pages" />
+
+# Listicle Page Setup
+
+<div
+  style={{
+    position: 'relative',
+    paddingBottom: '62.5%',
+    height: 0,
+  }}
+>
+  <iframe
+    src="https://www.loom.com/embed/99f5cdce0eb64ab6b0b09e976ef1fdc2"
+    frameBorder="0"
+    webkitallowfullscreen="true"
+    mozallowfullscreen="true"
+    allowFullScreen
+    style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+    }}
+  ></iframe>
+</div>
+
+Watch the video to learn how to setup a Listicle Page on any Prismic MB, alternatively follow the steps below;
+
+### Steps to Get Up and Running:
+
+**Step 1:** Create a Common Listicle Document
+
+**Step 1.1:** Fill in the Main tab with all the required fields at the least (marked with a \*)
+
+Fields:
+
+- `Prismic Preview Title`
+  - Title that appears when browswing/searching documents on Prismic
+- `Favicon *`
+- `Google Site Verification`
+  - Google site verification string to verify ownership of the site
+- `Bing Site Verification`
+  - Bing site verification string to verify ownership of the site
+- `Header Scripts`
+  - Repeatable field with each entry being a script tag
+  - Used to insert various scripts for tracking/analysis/AB Testing
+
+**Step 1.2:** Fill in the Listicle tab with all the required fields at the least (marked with a \*)
+
+Fields:
+
+- `Listicle Banner Images`
+  - Repeatable field with each entry being a banner image
+- `Listicle Common Title`
+  - Main Title of the Listicles of the MB
+- `Listicle Common Summary`
+  - The Rich Text field which follows the 'Listicle Common Title'
+- `Listicle Categories *`
+  - Repeatable field with each entry being a listicle category
+  - If you are at Step 1 then leave this field for now.
+- `Why Book From Us? Section`
+  - Repeatable field with each entry being a text line that will appear in the 'Why Book From Us?' section on the side of the page
+  - Each text line has a character limit of 80
+
+**Step 2:** Create a Listicle Document (Repeat this step for all the listicle categories you need to make)
+
+**Step 2.1:** Fill in the Main tab with all the required fields at the least (marked with a \*)
+
+Fields:
+
+- `UID *`
+  - The UID generated from the page url at which this category appears
+- `Page URL *`
+- `Prismic Preview Title`
+  - Title that appears when browswing/searching documents on Prismic
+- `Common Header *`
+  - Common Header Document for the Microbrand
+- `Common Footer *`
+  - Common Footer Document for the Microbrand
+- `Content Framework`
+  - Add a content framework document to add any sort of Longform content to the Listicle Page
+
+**Step 2.2:** Fill in the Listicle tab with all the required fields at the least (marked with a \*)
+
+- `Listicle Category Name`
+  - The Category Name (the category title that will appear on the page)
+- `Listicle Description`
+  - The Category Description that will appear after the title
+- `Common Listicle Data`
+  - Add the common listicle document you made above here.
+
+**Step 2.3:** Fill in the SEO tab with all the required fields at the least (marked with a \*)
+
+** All of the following are SEO related fields **
+
+Fields:
+
+- `Title`
+  - Page Title (appears as the tab name)
+- `Description`
+  - Metadata description (appears on rich link previews)
+- `Image`
+  - Metadata image (appears on rich link previews)
+- `SEO Keywords`
+  - Comma separated list of SEO keywords
+- `Noindex`
+  - True or False field
+  - Wether this page should be indexed by search engines or not
+- `Nofollow`
+  - True or False field
+  - Whether this page should be followed by search engines or not
+- `Other meta tags`
+  - Repeatable field with each entry being a meta tag
+- `FAQ Schema`
+  - Repeatable pair of fields with each entry being a question & answer
+
+**Step 3:** Create a Tour Listicle Document (Repeat this step for all the tours you need to add to the different categories)
+
+**Step 3.1:** Fill in the Main tab with all the required fields at the least (marked with a \*)
+
+Fields:
+
+- `Tour Group ID *`
+  - The TGID of the tour
+- `Listicle Categories`
+  - All the categories this tour belongs too
+  - Repeatable field with each entry being a listicle category
+- `Tags`
+  - Repeatable field with each entry being a info tag
+- `Tour Descriptor`
+  - A Descriptor appearing on the left of each card
+- `Tour Summary`
+  - The tour summary
+- `Know More Link`
+  - The link for the 'Know More' CTA
+- `Seating Chart Popup`
+  - Link a popup document for displaying a popup
+
+**Step 3.2:** Add the UIDs of all the listicle category pages this tour needs to appear on as tags.
+
+**Step 4:** Go back to your Common Listicle Document you made in ** Step 1 ** and fill in the `Listicle Categories` field appropriately with all the listicle category names and links.

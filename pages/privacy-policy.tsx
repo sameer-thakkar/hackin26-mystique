@@ -131,7 +131,6 @@ export default class privacy extends Component<any, any> {
           selectedLanguage={'en'}
           uid={uid}
           isMobile={this.state.isMobile}
-          parentComponent={'TERMS'}
           logoRedirectionURL={logoRedirectionURL.url || '/'}
           dropdown={this.state.dropdown}
           handleDropdownToggle={this.handleDropdownToggle}

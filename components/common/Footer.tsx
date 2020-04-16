@@ -147,7 +147,7 @@ const StyledFooterLegal = styled.div`
 `;
 
 const StyledLinksHeader = styled.div`
-  font-weight: ${GRAPHIK.MEDIUM};
+  font-weight: ${GRAPHIK.SEMIBOLD};
   color: white;
 `;
 

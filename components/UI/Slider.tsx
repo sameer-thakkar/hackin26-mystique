@@ -1,12 +1,13 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import Swiper from '../Swiper';
-import Image from './Image';
 import { COLORS } from '../../constants/ui-constants';
 
 const StyledSlider = styled.div`
   display: flex;
-  overflow: hidden;
+  position: relative;
+  ${({ parentOverflowHidden }) =>
+    parentOverflowHidden ? 'overflow: hidden;' : ''}
   .slider-bullet {
     height: 7px;
     width: 7px;
@@ -82,17 +83,17 @@ const Controls = styled.div`
     }
   }
 `;
-export const Slider = (props) => {
+
+const Slider = (props) => {
   const {
-    images,
-    carouselOptions,
-    isMobile,
-    rebuildOnUpdate,
+    children,
+    sliderOptions,
     nextButton,
     prevButton,
+    parentOverflowHidden = false,
   } = props;
-  carouselOptions.rebuildOnUpdate = rebuildOnUpdate;
-  /* Swiper configration for using external controls starts here */
+
+  /* Swiper configuration for using external controls starts here */
   const [swiper, updateSwiper] = useState(null);
   const [_currentIndex, updateCurrentIndex] = useState(0);
   const goNext = () => {
@@ -122,21 +123,15 @@ export const Slider = (props) => {
       }
     };
   }, [swiper, updateIndex]);
-  /* Swiper configration for using external controls ends here */
+  /* Swiper configuration for using external controls ends here */
 
   return (
-    <StyledSlider>
-      <Swiper {...carouselOptions} getSwiper={updateSwiper}>
-        {images.map((image, index) => {
+    <StyledSlider parentOverflowHidden={parentOverflowHidden}>
+      <Swiper {...sliderOptions} getSwiper={updateSwiper}>
+        {children.map((child, index) => {
           return (
-            <div key={index} className="swiper-slide">
-              <Image
-                height={isMobile ? 195 : 375}
-                aspectRatio={'16:10'}
-                dontLazyLoad={true}
-                url={image?.url}
-                alt={image.alt}
-              />
+            <div className="swiper-slide" key={index}>
+              {child}
             </div>
           );
         })}
@@ -169,19 +164,4 @@ export const Slider = (props) => {
   );
 };
 
-Slider.defaultProps = {
-  carouselOptions: {
-    direction: 'horizontal',
-    speed: 650,
-    navigaton: {
-      nextEl: '.swiper-btn.btn-left',
-      prevEl: '.swiper-btn.btn-right',
-    },
-    pagination: {
-      el: '.slider-pagination',
-      type: 'bullets',
-      clickable: true,
-      bulletClass: 'slider-bullet',
-    },
-  },
-};
+export default Slider;

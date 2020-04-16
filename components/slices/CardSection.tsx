@@ -103,6 +103,7 @@ type CardSectionProps = {
  *  - Rich Text field
  * - Exit Description
  *  - Rich Text field
+ *
  * ### Repeatable zone
  * Nil.
  *

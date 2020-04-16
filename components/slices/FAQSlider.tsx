@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Chevron from '../UI/Chevron';
 import { RichText } from 'prismic-reactjs';
-import { AVENIR, GRAPHIK, COLORS } from '../../constants/ui-constants';
-import { Slider } from '../UI/Slider';
+import Chevron from '../UI/Chevron';
+import Slider from '../UI/Slider';
 import Image from '../UI/Image';
+import { AVENIR, GRAPHIK, COLORS } from '../../constants/ui-constants';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 
 const StyledFAQSlider = styled.div`
@@ -27,7 +27,7 @@ const SliderWrapper = styled.div`
   max-height: 368px;
   width: auto;
   display: grid;
-  img {
+  .swiper-slide img {
     width: 100%;
     height: auto;
     display: flex;
@@ -123,13 +123,38 @@ const FAQSlider = (props) => {
   const { isMobile } = sliceProps;
   const [openFAQIndex, setOpenIndex] = useState(0);
   const images = faqs[openFAQIndex].images;
-
+  const sliderOptions = {
+    direction: 'horizontal',
+    speed: 650,
+    pagination: {
+      el: '.slider-pagination',
+      type: 'bullets',
+      clickable: true,
+      bulletClass: 'slider-bullet',
+    },
+  };
   return (
     <StyledFAQSlider>
       {!isMobile && openFAQIndex >= 0 ? (
         <SliderWrapper>
           {images.length > 1 ? (
-            <Slider images={images} id={Math.random()} />
+            <Slider
+              sliderOptions={sliderOptions}
+              parentOverflowHidden={true}
+              id={Math.random()}
+            >
+              {images.map((image, index) => {
+                return (
+                  <Image
+                    key={index}
+                    height={isMobile ? 195 : 375}
+                    aspectRatio={'16:10'}
+                    url={image?.url}
+                    alt={image.alt}
+                  />
+                );
+              })}
+            </Slider>
           ) : (
             <SingleImage>
               <Image
@@ -166,10 +191,22 @@ const FAQSlider = (props) => {
                 {isMobile && isOpen ? (
                   <SliderWrapper>
                     <Slider
-                      images={faqs[openFAQIndex].images}
+                      sliderOptions={sliderOptions}
+                      parentOverflowHidden={true}
                       id={Math.random()}
-                      isMobile={isMobile}
-                    />
+                    >
+                      {faqs[openFAQIndex].images.map((image, index) => {
+                        return (
+                          <Image
+                            key={index}
+                            height={isMobile ? 195 : 375}
+                            aspectRatio={'16:10'}
+                            url={image?.url}
+                            alt={image.alt}
+                          />
+                        );
+                      })}
+                    </Slider>
                   </SliderWrapper>
                 ) : null}
                 <div className="answer-content">

@@ -32,7 +32,9 @@ const StyledCTAShortcode = styled.div`
       border: none;
       background: ${COLORS.RHAPSODY};
       background: ${COLORS.RHAPSODY_GRADIENT};
-      color: ${COLORS.WHITE};
+      span {
+        color: ${COLORS.WHITE};
+      }
     `
         : ''}
   }
@@ -42,9 +44,6 @@ const StyledCTAShortcode = styled.div`
   }
   .short-code-cta:hover {
     transform: scale(1.02, 1.08);
-  }
-  span {
-    color: white;
   }
 `;
 

@@ -69,6 +69,8 @@ export const CUSTOM_TYPES = {
   HEADER: 'common_header',
   POPUP: 'popup',
   REDIRECT: 'redirect',
+  COMMON_DATA: 'common_data',
+  LISTICLE: 'page',
 };
 
 export const DESIGN = {
@@ -99,6 +101,18 @@ export const ANALYTICS_EVENTS = {
 export const PAGE_TYPE = {
   COLLECTION_PAGE: 'Collection Page',
 };
+
+export const COMMON_DATA_PROPS_FOR_LISTICLE: string[] = [
+  'listicle_banner_images',
+  'listicle_common_title',
+  'listicle_common_summary',
+  'listicle_categories',
+  'why_book_from_us',
+  'favicon',
+  'google_site_verification',
+  'bing_site_verification',
+  'header_scripts',
+].map((prop) => `${CUSTOM_TYPES.COMMON_DATA}.${prop}`);
 
 export const LINKED_MICROSITE_PROPS: string[] = [
   'redirect_url',

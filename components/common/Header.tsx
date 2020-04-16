@@ -5,10 +5,9 @@ import LanguageSelector from './LanguageSelector';
 import HeaderLinks from '../HeaderLinks';
 import Hamburger from '../UI/Hamburger';
 import Image from '../UI/Image';
+import MultiLevelNav from '../MultiLevelNav';
 import { useCaptureClickOutside } from '../hooks/ClickOutside';
 import { POWERED_BY_HEADOUT } from '../../public/static/svg-icons';
-import { DROPDOWN_ELEMENT } from '../../constants';
-import MultiLevelNav from '../MultiLevelNav';
 
 const StyledHeader = styled.header`
   height: 80px;
@@ -101,6 +100,7 @@ const StyledBuyTickets = styled.div`
 `;
 
 const Header: React.FC<any> = (props) => {
+  const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const {
     languages,
     headerLinks,
@@ -109,8 +109,6 @@ const Header: React.FC<any> = (props) => {
     logoAltText,
     alternateLanguages,
     uid,
-    dropdown,
-    handleDropdownToggle,
     isMobile,
     showGroupBooking = false,
     hasLanguageSelector = 'No',
@@ -122,13 +120,14 @@ const Header: React.FC<any> = (props) => {
     slices = [],
   } = props;
   const hamburgerIconCheck = showGroupBooking || !!headerLinks?.length;
-  const someRef = useRef(null);
+  const hamburgerRef = useRef(null);
   const multiNavRef = useRef(null);
   const [scrollPos, setScrollPos] = useState(0);
+
   useCaptureClickOutside(
-    someRef,
+    hamburgerRef,
     () => {
-      handleDropdownToggle(DROPDOWN_ELEMENT.HAMBURGER, false);
+      setHamburgerOpen(false);
     },
     [multiNavRef]
   );
@@ -143,13 +142,14 @@ const Header: React.FC<any> = (props) => {
       },
     },
   }));
+
   if (showGroupBooking)
     convertedRegularMenuItems.push({
       slice_type: 'group_booking',
       action: () => {
         openGroupBookingModal();
       },
-      toggleMenu: () => handleDropdownToggle(DROPDOWN_ELEMENT.HAMBURGER),
+      toggleMenu: () => setHamburgerOpen((c) => !c),
     });
 
   useLayoutEffect(() => {
@@ -168,16 +168,16 @@ const Header: React.FC<any> = (props) => {
           </StyledLogo>
         </a>
         <StyledHeaderElements active={hamburgerIconCheck}>
-          <div ref={someRef}>
+          <div ref={hamburgerRef}>
             {isMobile && hamburgerIconCheck ? (
               <div
                 onClick={() => {
-                  handleDropdownToggle(DROPDOWN_ELEMENT.HAMBURGER);
+                  setHamburgerOpen((c) => !c);
                 }}
                 role="button"
                 tabIndex={0}
               >
-                <Hamburger isActive={dropdown.hamburger} />
+                <Hamburger isActive={hamburgerOpen} />
               </div>
             ) : null}
             {!slices && headerLinks ? (
@@ -186,8 +186,7 @@ const Header: React.FC<any> = (props) => {
                 openGroupBookingModal={openGroupBookingModal}
                 isMobile={isMobile}
                 showGroupBooking={showGroupBooking}
-                dropdown={dropdown}
-                handleDropdownToggle={handleDropdownToggle}
+                hiddenMobile={hamburgerOpen}
               />
             ) : null}
           </div>
@@ -195,7 +194,7 @@ const Header: React.FC<any> = (props) => {
             <span ref={multiNavRef}>
               <MultiLevelNav
                 isMobile={isMobile}
-                isActive={dropdown.hamburger}
+                isActive={hamburgerOpen}
                 slice={slices.filter(
                   (slice) => slice.slice_type === 'navigation'
                 )}

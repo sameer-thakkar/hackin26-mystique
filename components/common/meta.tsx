@@ -4,10 +4,10 @@ import Head from 'next/head';
 import parse from 'url-parse';
 import { withoutTrailingSlash } from '../../utils/helper';
 
-const withTrailingSlash = url =>
+const withTrailingSlash = (url) =>
   url.charAt(url.length - 1) !== '/' ? `${url}/` : url;
 
-const withHttps = url =>
+const withHttps = (url) =>
   (url.startsWith('http') ? url : `https://${url}`).replace('http:', 'https:');
 
 function getSchemaJson(data) {
@@ -66,7 +66,7 @@ function getSchemaJson(data) {
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: faq_schema.map(obj => {
+    mainEntity: faq_schema.map((obj) => {
       return {
         '@type': 'Question',
         name: `${obj.question}`,
@@ -84,7 +84,7 @@ function getSchemaJson(data) {
   return [baseSchema];
 }
 
-export default data => {
+const PopulateHead = (data) => {
   const {
     title,
     description,
@@ -259,11 +259,11 @@ export default data => {
     </React.Fragment>
   );
 
-  const metaTags = otherMetaTags.map(meta => ReactHtmlParser(meta.meta_tag));
+  const metaTags = otherMetaTags.map((meta) => ReactHtmlParser(meta.meta_tag));
   const scriptTags = headerScripts
-    .map(script => script.script_tag)
-    .filter(str => str)
-    .map(str => str.replace('<script>', '').replace('</script>', ''))
+    .map((script) => script.script_tag)
+    .filter((str) => str)
+    .map((str) => str.replace('<script>', '').replace('</script>', ''))
     .map((item, index) => (
       <script key={index} dangerouslySetInnerHTML={{ __html: item }} />
     ));
@@ -284,7 +284,7 @@ export default data => {
     return pathnameWithTrailingSlash.replace('/', '');
   };
 
-  const getHref = langCode => {
+  const getHref = (langCode) => {
     return `https://${host}/${
       langCode === 'en' ? '' : `${langCode}/`
     }${getPathName()}`;
@@ -311,6 +311,8 @@ export default data => {
     </Head>
   );
 };
+
+export default PopulateHead;
 
 export const MinimalHelmet: React.FC<any> = ({
   title,

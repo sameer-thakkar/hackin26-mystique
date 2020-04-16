@@ -126,7 +126,7 @@ const TicketCards: React.FC<TicketCardsProps> = ({
         }, []);
         setData(finalCards);
       });
-  }, []);
+  }, [cards, setData]);
 
   return (
     <>

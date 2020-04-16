@@ -71,7 +71,7 @@ const Alert: React.FC<AlertProps> = ({ popupUID, currentLanguage }) => {
           setData(res.data);
         }
       });
-  }, [setData]);
+  }, [popupUID, setData]);
 
   return (
     <StyledAlert>

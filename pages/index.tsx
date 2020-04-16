@@ -12,6 +12,7 @@ import {
   MICROSITE_OBJECT_KEYS,
   MICROSITE_ARRAY_KEYS,
   LINKED_MICROSITE_PROPS,
+  COMMON_DATA_PROPS_FOR_LISTICLE,
 } from '../constants';
 import { redirectTo, getPrismicProps, reflect } from '../utils';
 import { uncategorizedToursListParser } from '../utils/DataParsers';
@@ -25,6 +26,7 @@ const ErrorPage = dynamic(() => import('next/error'));
 const Microsite = dynamic(() => import('../components/MicrositeV1'));
 const ContentPage = dynamic(() => import('../components/ContentPage'));
 const MicrositeV2 = dynamic(() => import('../components/MicrositeV2'));
+const Listicle = dynamic(() => import('../components/Listicle'));
 
 export default class Page extends React.Component<any, any> {
   static async getInitialProps({ req, query, res }) {
@@ -181,6 +183,24 @@ export default class Page extends React.Component<any, any> {
                 type: completeMicrosite.data.data.redirect_type,
               });
             } else {
+              const itemsParent = completeMicrosite.data.data.body1[0];
+              const tours = itemsParent ? itemsParent.items : [];
+              const offers = tours
+                .filter((tour) => tour.offer__free_tour.id)
+                .map((tour) => tour.offer__free_tour.id);
+              const uniqueOfferIds = offers.filter(
+                (id, index) => offers.indexOf(id) === index
+              );
+              if (uniqueOfferIds.length)
+                (completeMicrosite as any).offerData = await Client(req)
+                  .getByIDs(uniqueOfferIds)
+                  .then((offerData) => {
+                    offerData.results.map((offer) => {
+                      initial_tgids.push(offer.data.offer_tgid);
+                    });
+                    return offerData;
+                  });
+
               const baseLangData =
                 lang !== 'en'
                   ? await Client(req)
@@ -315,7 +335,45 @@ export default class Page extends React.Component<any, any> {
                     });
                   }
                 }
+                // Listicle Page Logic
                 if (!(page && page.data)) {
+                  const listicleResponse = await Client(req).getByUID(
+                    'page',
+                    uid,
+                    {
+                      fetchLinks: [...COMMON_DATA_PROPS_FOR_LISTICLE],
+                      lang,
+                    }
+                  );
+                  if (listicleResponse) {
+                    const {
+                      common_footer,
+                      common_header,
+                      content_framework,
+                    } = listicleResponse.data;
+
+                    const [
+                      commonFooter,
+                      commonHeader,
+                      contentFramework,
+                    ] = await this.getRefsArrayByIds(
+                      [
+                        common_footer.id,
+                        common_header.id,
+                        content_framework.id,
+                      ],
+                      req
+                    );
+                    return {
+                      CMSContent: {
+                        ...listicleResponse,
+                        commonFooter,
+                        commonHeader,
+                        contentFramework,
+                      },
+                      ContentType: 'page',
+                    };
+                  }
                   return {
                     statusCode: 404,
                   };
@@ -389,10 +447,13 @@ export default class Page extends React.Component<any, any> {
           host,
         };
       }
+      if (ContentType === 'page') {
+        return { CMSContent, ContentType, uid, lang, isDev, host };
+      }
       /**
-       * Seting a Common Microsite Reference for Content Page & Regular Microsite
+       * Setting a Common Microsite Reference for Content Page & Regular Microsite
        * Added to make tour data available on Content Pages.
-       * i.e Contentpage now contains all of the data from its related Microsite.
+       * i.e Content Page now contains all of the data from its related Microsite.
        */
       let microsite =
         ContentType === CUSTOM_TYPES.CONTENT_PAGE
@@ -470,7 +531,7 @@ export default class Page extends React.Component<any, any> {
         };
       }
 
-      tgidsArray = [...tgidsArray, ...all_tours_tab_tgids];
+      tgidsArray = [...tgidsArray, ...all_tours_tab_tgids].filter((x) => x);
       const tourGroupAPIResponses = await fetch(
         `https://api.headout.com/api/v5/tour-group/list?ids[]=${tgidsArray}&language=${
           lang.split('-')[0]
@@ -509,7 +570,7 @@ export default class Page extends React.Component<any, any> {
   }
 
   static async getRefsArrayByIds(ref_ids: Array<String>, req: Request) {
-    const linkedRefsPromise = Client(req).getByIDs(ref_ids);
+    const linkedRefsPromise = Client(req).getByIDs(ref_ids.filter((id) => id));
     return await Promise.resolve(linkedRefsPromise).then((res: any) => {
       return res.results;
     });
@@ -532,15 +593,15 @@ export default class Page extends React.Component<any, any> {
       uid,
       toursList,
     } = this.props;
+    console.log('1');
+
     if (statusCode) {
       return <ErrorPage statusCode={statusCode} />;
     }
+
     const PAGETYPE = ContentType + (MBDesign || '');
-    let Component;
-    const microsite =
-      PAGETYPE == CUSTOM_TYPES.CONTENT_PAGE
-        ? CMSContent.data?.microsite?.data
-        : CMSContent.data?.data;
+    let Component, microsite;
+
     switch (PAGETYPE) {
       case CUSTOM_TYPES.MICROSITE + DESIGN.V2:
         Component = (
@@ -553,6 +614,7 @@ export default class Page extends React.Component<any, any> {
             serverRequestStartTimestamp={serverRequestStartTimestamp}
           />
         );
+        microsite = CMSContent.data?.data;
         break;
       case CUSTOM_TYPES.MICROSITE:
       case CUSTOM_TYPES.MICROSITE + DESIGN.V1:
@@ -569,6 +631,7 @@ export default class Page extends React.Component<any, any> {
             serverRequestStartTimestamp={serverRequestStartTimestamp}
           />
         );
+        microsite = CMSContent.data?.data;
         break;
       case CUSTOM_TYPES.CONTENT_PAGE:
         Component = (
@@ -580,6 +643,18 @@ export default class Page extends React.Component<any, any> {
             serverRequestStartTimestamp={serverRequestStartTimestamp}
           />
         );
+        microsite = CMSContent.data?.microsite?.data;
+        break;
+      case 'page':
+        Component = (
+          <Listicle
+            {...CMSContent}
+            isDev={isDev}
+            host={host}
+            serverRequestStartTimestamp={serverRequestStartTimestamp}
+          />
+        );
+        microsite = {};
         break;
       default:
         Component = <ErrorPage statusCode={500} />;

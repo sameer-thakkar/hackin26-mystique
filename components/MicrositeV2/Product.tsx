@@ -189,7 +189,7 @@ const Product = (props) => {
           }
           .product-v2-price {
             text-align: left;
-            font-weight: ${GRAPHIK.MEDIUM};
+            font-weight: ${GRAPHIK.SEMIBOLD};
             font-size: 14px;
             line-height: 1;
             font-family: ${GRAPHIK.FONT_STACK};

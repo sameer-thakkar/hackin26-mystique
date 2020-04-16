@@ -48,13 +48,13 @@ const StyledHeaderLinksWrapper = styled.div`
 `;
 
 const HeaderLinks: React.FC<any> = ({
+  hiddenMobile = false,
   headerLinks,
   showGroupBooking,
-  dropdown,
   openGroupBookingModal,
 }) => {
   return (
-    <StyledHeaderLinksWrapper show={dropdown.hamburger}>
+    <StyledHeaderLinksWrapper show={hiddenMobile}>
       {headerLinks.map((link, index) => (
         <LinkResolver target="_blank" url={link.link_url.url} key={index}>
           {link.link_heading}

@@ -5,12 +5,13 @@ import { SIZES } from '../../constants/ui-constants';
 import { scroller } from 'react-scroll';
 import { stringIdfy } from '../../utils/helper';
 
-const Banner = props => {
+const Banner = (props) => {
   const { banners, isMobile, carouselOptions, ready } = props;
+
   if (isMobile) {
     carouselOptions.spaceBetween = 8;
   }
-  const scrollToSection = sectionId => {
+  const scrollToSection = (sectionId) => {
     scroller.scrollTo(sectionId, {
       duration: 1000,
       delay: 4000,
@@ -19,7 +20,7 @@ const Banner = props => {
     });
   };
 
-  const handleInteraction = interaction => {
+  const handleInteraction = (interaction) => {
     if (interaction) {
       const [type, target] = interaction.split(':');
       switch (type.toLowerCase().trim()) {
@@ -52,7 +53,7 @@ const Banner = props => {
                       }
                       height={isMobile ? 408 : 400}
                       width={isMobile ? 686 : 1200}
-                      dontLazyLoad={index == 0}
+                      dontLazyLoad={true}
                       alt={image.alt}
                       imageId={stringIdfy(image.alt || '') + index}
                     />

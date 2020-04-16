@@ -13,6 +13,7 @@ import HorizontalLine from './slices/HorizontalLine';
 import { CALENDAR } from '../public/static/svg-icons';
 
 const isLengthyArray = (item) => Array.isArray(item) && item.length;
+
 const StyledProductCard = styled.div`
   font-family: ${GRAPHIK.FONT_STACK};
   padding: 32px 24px;

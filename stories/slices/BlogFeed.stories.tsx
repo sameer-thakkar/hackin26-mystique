@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../style/global.css';
 import BlogFeed from '../../components/slices/BlogFeed';
-import { StyledLongform } from '../../components/LongForm';
+import { StyledLongForm } from '../../components/common/LongForm';
 
 export default {
   title: 'Slices/Blog Feed',
@@ -59,10 +59,10 @@ const data = {
 
 export const Basic = () => {
   return (
-    <StyledLongform>
+    <StyledLongForm>
       <div className="slice-wrapper slice-block">
         <BlogFeed {...data} />
       </div>
-    </StyledLongform>
+    </StyledLongForm>
   );
 };

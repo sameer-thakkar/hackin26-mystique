@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { RichText } from 'prismic-reactjs';
+import Slider from '../UI/Slider';
+import Image from '../UI/Image';
 import { AVENIR, COLORS } from '../../constants/ui-constants';
-import { Slider } from '../UI/Slider';
 import { CHEVRON_DOWN } from '../../public/static/svg-icons';
 
 const Question = (props) => {
@@ -13,6 +14,10 @@ const Question = (props) => {
     index: tabIndex,
     activeItem,
   } = props;
+  const [isOpen, setOpen] = useState(false);
+  let isActiveItem = tabIndex == activeItem;
+  if (!setActiveItem) isActiveItem = isOpen;
+
   const normalizedImages = images.reduce((acc, image) => {
     let img = {
       url: image.upload_image?.url || image.linked_image,
@@ -21,15 +26,36 @@ const Question = (props) => {
     };
     return [...acc, img];
   }, []);
-  const [isOpen, setOpen] = useState(false);
-  let isActiveItem = tabIndex == activeItem;
-  if (!setActiveItem) isActiveItem = isOpen;
+
   return (
     <div className="question-container">
       <div className={`question-carousel ${isActiveItem ? 'active' : ''}`}>
         {isActiveItem ? (
           <div className={`slider-wrap `}>
-            <Slider images={normalizedImages} />
+            <Slider
+              images={normalizedImages}
+              sliderOptions={{
+                direction: 'horizontal',
+                speed: 650,
+                pagination: {
+                  el: '.slider-pagination',
+                  type: 'bullets',
+                  clickable: true,
+                  bulletClass: 'slider-bullet',
+                },
+              }}
+              parentOverflowHidden={true}
+            >
+              {normalizedImages.map((image, index) => (
+                <Image
+                  key={index}
+                  height={195}
+                  aspectRatio={'16:10'}
+                  url={image?.url}
+                  alt={image.alt}
+                />
+              ))}
+            </Slider>
           </div>
         ) : null}
       </div>
