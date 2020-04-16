@@ -1,18 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useWindowWidth } from '@react-hook/window-size';
 import sliceHandler from '../Slices';
-import useWindowSize from '../hooks/useWindowSize';
 import Swiper from '../Swiper';
 import OverflowScroll from '../UI/OverflowScroll';
 import RichContent from '../UI/RichContent';
 import TitleTextCombo from '../UI/TitleTextCombo';
 import { CHEVRON_LEFT_CIRCLE } from '../../public/static/svg-icons';
 
-const CardGrid = styled.div(({ cardsInARow, isMobile }) => {
+const CardGrid = styled.div(({ cardsInARow }) => {
   let gridTemplateColumns = `100%`;
-  if (cardsInARow === 2 && !isMobile) {
+  if (cardsInARow === 2) {
     gridTemplateColumns = `50% 50%`;
-  } else if (cardsInARow > 2 && !isMobile) {
+  } else if (cardsInARow > 2) {
     gridTemplateColumns = `repeat(${cardsInARow}, calc(${
       100 / cardsInARow
     }% - 15px))`;
@@ -121,7 +121,7 @@ const CardSection: React.FC<CardSectionProps> = ({
   description,
   exitDescription,
 }) => {
-  const { width } = useWindowSize();
+  const width = useWindowWidth();
   const [isMobile, setIsMobile] = React.useState(false);
 
   // Title and Text combo for the starting of the Card Section
@@ -139,8 +139,9 @@ const CardSection: React.FC<CardSectionProps> = ({
     </ExitDescription>
   ) : null;
 
+  // isMobile effect
   useEffect(() => {
-    setIsMobile(width <= 760);
+    setIsMobile(width <= 768);
   }, [width, setIsMobile]);
 
   let finalCardType;
@@ -256,9 +257,7 @@ const CardSection: React.FC<CardSectionProps> = ({
   return (
     <>
       {EntrySection}
-      <CardGrid cardsInARow={cardsInARow} isMobile={isMobile}>
-        {cards}
-      </CardGrid>
+      <CardGrid cardsInARow={cardsInARow}>{cards}</CardGrid>
       {ExitSection}
     </>
   );

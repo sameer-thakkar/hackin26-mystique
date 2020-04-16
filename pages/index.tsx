@@ -183,24 +183,6 @@ export default class Page extends React.Component<any, any> {
                 type: completeMicrosite.data.data.redirect_type,
               });
             } else {
-              const itemsParent = completeMicrosite.data.data.body1[0];
-              const tours = itemsParent ? itemsParent.items : [];
-              const offers = tours
-                .filter((tour) => tour.offer__free_tour.id)
-                .map((tour) => tour.offer__free_tour.id);
-              const uniqueOfferIds = offers.filter(
-                (id, index) => offers.indexOf(id) === index
-              );
-              if (uniqueOfferIds.length)
-                (completeMicrosite as any).offerData = await Client(req)
-                  .getByIDs(uniqueOfferIds)
-                  .then((offerData) => {
-                    offerData.results.map((offer) => {
-                      initial_tgids.push(offer.data.offer_tgid);
-                    });
-                    return offerData;
-                  });
-
               const baseLangData =
                 lang !== 'en'
                   ? await Client(req)
@@ -531,7 +513,7 @@ export default class Page extends React.Component<any, any> {
         };
       }
 
-      tgidsArray = [...tgidsArray, ...all_tours_tab_tgids].filter((x) => x);
+      tgidsArray = [...tgidsArray, ...all_tours_tab_tgids];
       const tourGroupAPIResponses = await fetch(
         `https://api.headout.com/api/v5/tour-group/list?ids[]=${tgidsArray}&language=${
           lang.split('-')[0]
@@ -593,7 +575,6 @@ export default class Page extends React.Component<any, any> {
       uid,
       toursList,
     } = this.props;
-    console.log('1');
 
     if (statusCode) {
       return <ErrorPage statusCode={statusCode} />;

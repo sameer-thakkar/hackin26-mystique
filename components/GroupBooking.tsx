@@ -58,6 +58,9 @@ const StyledGroupBooking = styled.div`
     border: solid 1px #ebebeb;
     border-radius: 0;
   }
+  .react-datepicker-popper {
+    z-index: 1;
+  }
   .hide-desk {
     display: none;
   }
