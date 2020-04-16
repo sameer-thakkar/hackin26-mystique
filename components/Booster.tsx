@@ -1,22 +1,17 @@
-import React, { Component } from "react";
+import React from 'react';
+import { COLORS } from '../constants/ui-constants';
 
-export default class Booster extends Component<any, any> {
-  static defaultProps = {
-    color: "#24a1b2"
-  };
-  render() {
-    const { color, text } = this.props;
-    return (
-      <span className="inline-booster">
-        {text}
-        <style jsx>
-          {`
-            .inline-booster {
-              color: ${color};
-            }
-          `}
-        </style>
-      </span>
-    );
-  }
-}
+const Booster = (props) => {
+  const { color, text } = props;
+  return (
+    <span className="inline-booster" style={{ color }}>
+      {text}
+    </span>
+  );
+};
+
+Booster.defaultProps = {
+  color: COLORS.TEAL,
+};
+
+export default Booster;

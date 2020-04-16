@@ -1,55 +1,60 @@
 import { FACEBOOK, TWITTER, INSTAGRAM } from '../public/static/svg-icons';
+import styled from 'styled-components';
 
-const SocialLinks = props => {
+const StyledSocialLinks = styled.div`
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-column-gap: 15px;
+  @media (max-width: 768px) {
+    .social-links {
+      justify-content: left;
+    }
+  }
+`;
+
+const SocialIcon = styled.div`
+  display: flex;
+  a {
+    display: flex;
+  }
+  align-self: center;
+  svg {
+    height: 20px;
+    width: 20px;
+  }
+`;
+
+const SocialLinks = (props) => {
   return (
-    <div className="social-link-wrapper">
-      <div className="social-links">
-        <div className="facebook icon">
-          <a href="http://www.facebook.com/headoutapp" target="_blank">
-            {FACEBOOK}
-          </a>
-        </div>
-        <div className="twitter icon">
-          <a href="http://www.twitter.com/headout" target="_blank">
-            {TWITTER}
-          </a>
-        </div>
-        <div className="instagram icon">
-          <a href="http://www.instagram.com/headoutapp" target="_blank">
-            {INSTAGRAM}
-          </a>
-        </div>
-      </div>
-      <style jsx>
-        {`
-          .social-links {
-            display: grid;
-            grid-template-columns: auto auto auto;
-            grid-column-gap: 15px;
-          }
-          .social-links .icon {
-            align-self: center;
-          }
-          .social-links .icon,
-          .social-links .icon a {
-            display: flex;
-          }
-          @media (max-width: 768px) {
-            .social-links {
-              justify-content: left;
-            }
-          }
-        `}
-      </style>
-      <style jsx global>
-        {`
-          .social-link-wrapper .icon svg {
-            height: 20px;
-            width: 20px;
-          }
-        `}
-      </style>
-    </div>
+    <StyledSocialLinks className={props.className}>
+      <SocialIcon>
+        <a
+          href="http://www.facebook.com/headoutapp"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          {FACEBOOK}
+        </a>
+      </SocialIcon>
+      <SocialIcon>
+        <a
+          href="http://www.twitter.com/headout"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          {TWITTER}
+        </a>
+      </SocialIcon>
+      <SocialIcon>
+        <a
+          href="http://www.instagram.com/headoutapp"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          {INSTAGRAM}
+        </a>
+      </SocialIcon>
+    </StyledSocialLinks>
   );
 };
 

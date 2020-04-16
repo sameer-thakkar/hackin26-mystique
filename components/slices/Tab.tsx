@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import sliceHandler from '../Slices';
-import { GRAPHIK } from '../../constants/ui-constants';
+import { GRAPHIK, COLORS } from '../../constants/ui-constants';
 import { stringIdfy } from '../../utils/helper';
 
 const StyledTabPanel = styled.div`
@@ -11,7 +11,7 @@ const StyledTabPanel = styled.div`
   font-family: ${GRAPHIK.FONT_STACK};
   line-height: 1.5;
   a {
-    color: #ec1943;
+    color: ${COLORS.MED_SLATE_BLUE};
   }
   p {
     margin: 0;
@@ -22,14 +22,17 @@ const StyledTabContent = styled.div`
   display: ${({ isActive }) => (isActive ? 'block' : 'none')};
 `;
 
-const Tab = props => {
+const Tab = (props) => {
   const { slices, title, sliceProps } = props;
   const { activeTabId } = sliceProps;
   return (
     <StyledTabPanel>
       {slices.map((slice, index) => {
         return (
-          <StyledTabContent isActive={activeTabId == stringIdfy(title)}>
+          <StyledTabContent
+            key={index}
+            isActive={activeTabId == stringIdfy(title)}
+          >
             {sliceHandler(slice, {
               index,
               ...sliceProps,

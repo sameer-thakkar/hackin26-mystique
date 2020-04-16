@@ -62,6 +62,7 @@ const StyledCard = styled.div((props) => {
     }
     a {
       color: ${COLORS.MED_SLATE_BLUE};
+      word-wrap: break-word;
     }
   }
   .swiper-pagination.swiper-pagination-bullets {
