@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
 import Select from 'react-select';
-import ReactTelInput from 'react-telephone-input';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import styled from 'styled-components';
+import PhoneInput from 'react-phone-input-2';
+import { RichText } from 'prismic-reactjs';
 import {
   IP_INFO_TOKEN,
   PREFERRED_COUNTRIES_CODES,
-  FLAGS_IMAGE,
   GROUP_TOUR_PREFERED_TIME,
   GROUP_TOUR_PREFERED_LANG,
   GROUP_BOOKING_URL,
@@ -23,13 +23,41 @@ import {
   fetchUserGeoLocation,
   createGroupBooking,
 } from '../utils/helper';
-import 'react-datepicker/dist/react-datepicker.css';
-import './../public/static/PhoneFieldStyle/phoneFelid.css';
-import './../public/static/PhoneFieldStyle/phoneFieldinput.css';
-import { RichText } from 'prismic-reactjs';
 import { MODAL_STYLE } from '../constants/ui-constants';
+import 'react-datepicker/dist/react-datepicker.css';
+import 'react-phone-input-2/lib/style.css';
+
+const Checkbox = styled.div`
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: left;
+  align-items: center;
+  grid-gap: 5px;
+  font-family: Graphik;
+  font-size: 14px;
+  color: #444444;
+  letter-spacing: -0.5px;
+  input {
+    width: 15px !important;
+    height: 15px !important;
+    padding: 0 !important;
+    background: transparent;
+    color: #fff;
+    border: 1px solid #000;
+  }
+`;
 
 const StyledGroupBooking = styled.div`
+  .react-tel-input .form-control {
+    height: 50px;
+    width: 100%;
+    border: solid 1px #ebebeb;
+    border-radius: 0;
+  }
+  .react-tel-input .flag-dropdown {
+    border: solid 1px #ebebeb;
+    border-radius: 0;
+  }
   .hide-desk {
     display: none;
   }
@@ -53,7 +81,6 @@ const StyledGroupBooking = styled.div`
     }
   }
   .popup-wrapper img.close-group {
-    /* filter: invert(1); */
     width: 18px;
     cursor: pointer;
     height: 18px;
@@ -203,17 +230,7 @@ const StyledGroupBooking = styled.div`
   .form .react-datepicker__triangle {
     display: none;
   }
-  /* .form .react-datepicker__navigation--previous {
- left: 10px;
- border-left: 3px solid #ccc;
- border-bottom: 3px solid #ccc;
- border-top-color: transparent;
- border-right-color: transparent;
- transform: rotate(45deg);
- background-color: #FFF;
- border-radius: 0;
- padding: 4px;
-} */
+
   .form .react-datepicker {
     border-radius: 0;
     background-color: #fff;
@@ -223,17 +240,7 @@ const StyledGroupBooking = styled.div`
     grid-auto-flow: column;
     grid-column-gap: 20px;
   }
-  /* .form .react-datepicker__navigation--next {
- left: 10px;
- border-right: 3px solid #ccc;
- border-top: 3px solid #ccc;
- border-bottom-color: transparent;
- border-left-color: transparent;
- transform: rotate(45deg);
- background-color: #FFF;
- border-radius: 0;
- padding: 4px;
-} */
+
   .form .react-datepicker__triangle {
     display: none;
   }
@@ -277,30 +284,11 @@ const StyledGroupBooking = styled.div`
     font-weight: 300;
   }
   .group-booking-disclaimer p {
+    color: white;
     margin-block-start: 0em;
     margin-block-end: 0em;
   }
 
-  .sub-input.check-box {
-    display: grid;
-    grid-template-columns: 20px auto;
-    justify-content: left;
-    align-items: center;
-    grid-gap: 5px;
-    margin-bottom: 7px;
-    font-family: Graphik;
-    font-size: 14px;
-    color: #444444;
-    letter-spacing: -0.5px;
-  }
-
-  .sub-input.check-box input {
-    width: 15px;
-    height: 15px;
-    background: transparent;
-    color: #fff;
-    border: 1px solid #000;
-  }
   @media (max-width: 768px) {
     .ReactModal__Overlay--after-open {
       overflow: scroll;
@@ -329,6 +317,7 @@ const StyledGroupBooking = styled.div`
       text-align: center;
       font-family: Graphik;
       font-weight: 300;
+      line-height: 140%;
     }
     .popup-wrapper .form-wrapper {
       grid-template-columns: 1fr;
@@ -358,11 +347,6 @@ const StyledGroupBooking = styled.div`
     }
     .form-wrapper {
       margin-bottom: 80px;
-    }
-    .react-tel-input .country-list {
-      right: 0 !important;
-      left: -20px !important;
-      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16) !important;
     }
   }
   .form-wrapper .react-select__menu {
@@ -416,7 +400,9 @@ const StyledGroupBooking = styled.div`
   }
   .error {
     font-size: 0.625em;
-    color: #ec1943;
+    span {
+      color: #ec1943;
+    }
     padding-top: 6px;
     font-family: Graphik;
     position: absolute;
@@ -448,33 +434,15 @@ export default class GroupBooking extends Component<any, any> {
       isAgent: false,
       company: false,
       date: new Date(),
-      showPhoneFeild: false,
-      userCountry: null,
+      userCountry: 'us',
       isFetchingGeolocation: false,
       countryDialCode: null,
       isBookingSuccessful: false,
-      telDropdownOffset: {
-        top: '',
-        left: '',
-      },
     };
   }
-
-  telInputRef = React.createRef();
 
   componentDidMount() {
     this.getUserGeoLocation();
-    window.addEventListener('resize', () => this.generateOffset());
-  }
-
-  generateOffset() {
-    const telInputElement = document.getElementById('telInput');
-    const offset = telInputElement.getBoundingClientRect();
-    const telDropdownOffset = {
-      top: offset.top + telInputElement.offsetHeight,
-      left: offset.left,
-    };
-    this.setState({ telDropdownOffset });
   }
 
   getUserGeoLocation = async () => {
@@ -490,11 +458,6 @@ export default class GroupBooking extends Component<any, any> {
     } else {
       this.setState({ isFetchingGeolocation: false });
     }
-  };
-
-  showPhoneFieldComponent = () => {
-    this.generateOffset();
-    this.setState({ showPhoneFeild: true });
   };
 
   handleReactSelectChange = (value, state) => this.setState({ [state]: value });
@@ -549,7 +512,10 @@ export default class GroupBooking extends Component<any, any> {
     const { minimumPax, maximumPax } = this.props;
     error.isFullNameValid = !validateFullName(fname);
     error.isEmailValid = !validateEmail(email);
-    error.isPhoneValid = !checkPhoneNumberValidity(phoneWithCountryCode);
+    error.isPhoneValid = !checkPhoneNumberValidity(
+      phoneWithCountryCode,
+      this.state.userCountry
+    );
     error.isTourSelected = !isFeildSelected(tour);
     error.isGroupSizeValid = isGroupValid(
       adults,
@@ -610,13 +576,16 @@ export default class GroupBooking extends Component<any, any> {
         hasError = !isFeildSelected(lang);
         error = { ...this.state.error };
         error.isLangSelected = hasError;
-        this.setState({ error: error });
+        this.setState({ error });
         return;
       case 'PHONE':
-        hasError = !checkPhoneNumberValidity(phoneWithCountryCode);
+        hasError = !checkPhoneNumberValidity(
+          phoneWithCountryCode,
+          this.state.userCountry
+        );
         error = { ...this.state.error };
         error.isPhoneValid = hasError;
-        this.setState({ error: error });
+        this.setState({ error });
         return;
       case 'TOUR':
         hasError = !isFeildSelected(tour);
@@ -911,7 +880,7 @@ export default class GroupBooking extends Component<any, any> {
                       </div>
                     </div>
                     <div className="input-wrapper">
-                      <div className="sub-input check-box">
+                      <Checkbox className="sub-input">
                         <input
                           className="input-box"
                           type="checkbox"
@@ -920,8 +889,10 @@ export default class GroupBooking extends Component<any, any> {
                           onChange={(e) => this.handleInputChange(e)}
                         />{' '}
                         <label htmlFor="is-agent"> I am a travel agent </label>
-                      </div>
-                      {this.state.isAgent == true ? (
+                      </Checkbox>
+                    </div>
+                    {this.state.isAgent == true ? (
+                      <div className="input-wrapper">
                         <div className="sub-input">
                           <input
                             className="input-box"
@@ -939,8 +910,8 @@ export default class GroupBooking extends Component<any, any> {
                             </span>
                           </div>
                         </div>
-                      ) : null}
-                    </div>
+                      </div>
+                    ) : null}
                     <div className="input-wrapper">
                       <input
                         className="input-box"
@@ -959,36 +930,14 @@ export default class GroupBooking extends Component<any, any> {
                       </div>
                     </div>
                     <div className="input-wrapper" id="telInput">
-                      {this.state.showPhoneFeild &&
-                      this.state.userCountry !== null ? (
-                        <ReactTelInput
-                          preferredCountries={PREFERRED_COUNTRIES_CODES}
-                          flagsImagePath={FLAGS_IMAGE}
-                          defaultCountry={this.state.userCountry.toLowerCase()}
-                          placeholder="Enter Phone Number"
-                          autoFormat={true}
-                          value={this.state.phone}
-                          name="phone"
-                          onChange={this.handlePhoneInputChange}
-                          onBlur={() => this.handleInputBlur('PHONE')}
-                          listStyle={
-                            !isMobileDevice()
-                              ? {
-                                  position: 'fixed',
-                                  top: this.state.telDropdownOffset.top,
-                                  left: this.state.telDropdownOffset.left,
-                                }
-                              : {}
-                          }
-                        />
-                      ) : (
-                        <input
-                          className="input-box"
-                          type="text"
-                          placeholder="Phone"
-                          onFocus={this.showPhoneFieldComponent}
-                        />
-                      )}
+                      <PhoneInput
+                        country={this.state.userCountry.toLowerCase()}
+                        value={this.state.phone}
+                        onChange={this.handlePhoneInputChange}
+                        onBlur={() => this.handleInputBlur('PHONE')}
+                        preferredCountries={PREFERRED_COUNTRIES_CODES}
+                        placeholder="Enter Phone Number"
+                      />
                       <div className="error">
                         <span>
                           {this.state.error.isPhoneValid

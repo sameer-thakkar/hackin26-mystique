@@ -24,9 +24,6 @@ export const SUPPORTED_LANGUAGES_MAP = {
   de: 'de-de',
 };
 
-export const FLAGS_IMAGE =
-  'https://cdn-imgix-open.headout.com/flags/flags@2x.png';
-
 export const GROUP_TOUR_PREFERED_TOUR = [
   {
     value:

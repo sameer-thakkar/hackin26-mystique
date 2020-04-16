@@ -37,7 +37,7 @@ export const isGroupValid = (adults, children, minPax, maxPax) => {
     : '';
 };
 
-export const checkPhoneNumberValidity = (phoneWithCountryCode) => {
+export const checkPhoneNumberValidity = (phoneWithCountryCode, country) => {
   const { phone, countryDialCode } = phoneWithCountryCode;
   if (phone === countryDialCode || !countryDialCode || !phone) {
     return false;
@@ -46,11 +46,20 @@ export const checkPhoneNumberValidity = (phoneWithCountryCode) => {
     return false;
   }
   // Indian Exception for number starting with 6
-  if (phone.replace(/\D+/g, '').startsWith('+916')) {
+  if (phone.replace(/\D+/g, '').startsWith('916')) {
     return true;
   }
-  if (phone && parseMobile(`${phone}`)) {
-    return parseMobile(`${phone}`).isValid();
+  if (
+    phone &&
+    parseMobile(
+      `${phone.substring(countryDialCode.length, phone.length)}`,
+      country.toUpperCase()
+    )
+  ) {
+    return parseMobile(
+      `${phone.substring(countryDialCode.length, phone.length)}`,
+      country.toUpperCase()
+    ).isValid();
   }
   return false;
 };
