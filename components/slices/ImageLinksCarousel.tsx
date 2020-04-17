@@ -13,9 +13,7 @@ const StyledWrapper = styled.div`
   display: grid;
   grid-auto-flow: row;
   grid-row-gap: 22px;
-  overflow: hidden;
   @media (max-width: 768px) {
-    overflow: unset;
     grid-row-gap: 24px;
   }
 `;

@@ -7,6 +7,7 @@ import OverflowScroll from '../UI/OverflowScroll';
 import RichContent from '../UI/RichContent';
 import TitleTextCombo from '../UI/TitleTextCombo';
 import { CHEVRON_LEFT_CIRCLE } from '../../public/static/svg-icons';
+import { SIZES } from '../../constants/ui-constants';
 
 const CardGrid = styled.div(({ cardsInARow }) => {
   let gridTemplateColumns = `100%`;
@@ -35,6 +36,7 @@ const StyledSwiper = styled.div`
   overflow: hidden;
   display: flex;
   position: relative;
+  max-width: ${SIZES.MAX_WIDTH};
   .cards-section-wrapper {
     display: grid;
     grid-auto-flow: column;
@@ -198,6 +200,7 @@ const CardSection: React.FC<CardSectionProps> = ({
       slidesPerView: cardsInARow,
       wrapperClass: 'cards-section-wrapper',
       spaceBetween: 20,
+      shouldSwiperUpdate: true,
       getSwiper: updateSwiper,
     };
 
