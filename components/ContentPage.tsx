@@ -170,7 +170,7 @@ export default class ContentPage extends Component<any, any> {
         lang: false,
         hamburger: false,
       },
-      isMobile: false,
+      isMobile: props.isMobile,
       covid19AlertOpen: true,
     };
   }
@@ -508,7 +508,7 @@ export default class ContentPage extends Component<any, any> {
                         : ''
                     } slice-block ${slice.slice_type}`}
                   >
-                    {sliceHandler(slice)}
+                    {sliceHandler(slice, { isMobile: this.state.isMobile })}
                   </div>
                 ))}
               </InteractionContextProvider>

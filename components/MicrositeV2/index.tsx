@@ -10,20 +10,23 @@ import { docCookies, genManualSlice } from '../../utils/helper';
 import allToursParser from '../../utils/alltoursParser';
 import { tourListApiParser } from '../../utils/DataParsers';
 class MicrositeV2 extends Component<any, any> {
-  state = {
-    isMobile: null,
-    cardPrices: {},
-    currencySymbol: '',
-    isFetched: false,
-    directTgid: null,
-    page: {
-      name: PAGETYPE.HOMEPAGE,
-      activeCategory: 0,
-      tgid: null,
-    },
-    scrollY: 0,
-    ready: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      isMobile: props.isMobile,
+      cardPrices: {},
+      currencySymbol: '',
+      isFetched: false,
+      directTgid: null,
+      page: {
+        name: PAGETYPE.HOMEPAGE,
+        activeCategory: 0,
+        tgid: null,
+      },
+      scrollY: 0,
+      ready: false,
+    };
+  }
   sendVariableToDataLayer = (JSONObject) => {
     if (window && (window as any).dataLayer) {
       (window as any).dataLayer.push(JSONObject);
@@ -122,7 +125,6 @@ class MicrositeV2 extends Component<any, any> {
       alternate_languages: availableLanguages,
     } = CMSContent;
     const { localization: languages } = CMSData;
-
     const currentLanguage = CMSContent.lang.substring(0, 2);
     const { isMobile } = this.state;
     const languageProps = {

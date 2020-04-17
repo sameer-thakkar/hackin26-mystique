@@ -6,9 +6,7 @@ const StyledSocialLinks = styled.div`
   grid-template-columns: auto auto auto;
   grid-column-gap: 15px;
   @media (max-width: 768px) {
-    .social-links {
-      justify-content: left;
-    }
+    justify-content: left;
   }
 `;
 

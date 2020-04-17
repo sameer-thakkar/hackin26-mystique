@@ -1,9 +1,9 @@
-import React, { Component, useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { RowComponent } from './RowComponent';
 import InteractionContext from '../../contexts/Interaction';
 import { MBContext } from '../../contexts/MBContext';
 
-const PopulateProducts = props => {
+const PopulateProducts = (props) => {
   const {
     isMobile,
     propTgids,
@@ -27,7 +27,7 @@ const PopulateProducts = props => {
     setRowsInView(firstView);
   }, [interactionContext.activeCategoryTgids]);
 
-  const subArrays = tgidsArr => {
+  const subArrays = (tgidsArr) => {
     const { isMobile } = props;
     const perChunk = isMobile ? 2 : 4;
     const result = tgidsArr.reduce((resultArray, item, index) => {
@@ -71,7 +71,12 @@ const PopulateProducts = props => {
       })}
 
       {tgidsSubArr.length > rowsInView && !showAll ? (
-        <div className="view-more" onClick={viewMore}>
+        <div
+          className="view-more"
+          onClick={viewMore}
+          role="button"
+          tabIndex={0}
+        >
           {mbContext.buttons.see_more_text || 'View more'}
         </div>
       ) : null}
@@ -90,6 +95,7 @@ const PopulateProducts = props => {
           margin: auto;
           width: max-content;
           padding: 16px 32px;
+          line-height: 1;
           cursor: pointer;
         }
         @media (max-width: 768px) {

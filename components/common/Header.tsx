@@ -119,7 +119,8 @@ const Header: React.FC<any> = (props) => {
     openGroupBookingModal,
     slices = [],
   } = props;
-  const hamburgerIconCheck = showGroupBooking || !!headerLinks?.length;
+  const hamburgerIconCheck =
+    showGroupBooking || !!headerLinks?.length || slices.length;
   const hamburgerRef = useRef(null);
   const multiNavRef = useRef(null);
   const [scrollPos, setScrollPos] = useState(0);

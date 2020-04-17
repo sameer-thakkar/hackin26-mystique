@@ -17,6 +17,8 @@ export const SearchItem = (props) => {
   return (
     <div
       className="search-item"
+      role={'button'}
+      tabIndex={0}
       onClick={() => {
         onSearchResultClick(tgid);
       }}
@@ -27,8 +29,9 @@ export const SearchItem = (props) => {
             url={productImage}
             imageId={tgid}
             format="pjpg"
-            width={800}
-            height={700}
+            width={208}
+            height={128}
+            aspectRatio={'16:10'}
           />
         </div>
       </div>

@@ -160,7 +160,7 @@ const desktopInteraction = (event, { card_title, isMobile }) => {
 };
 
 const Slide = (props) => (
-  <StyledSlide>
+  <StyledSlide className={props.className}>
     <a
       href={props.link.url}
       target={props.link.target}
@@ -209,6 +209,7 @@ type ImageLinksCarouselProps = {
 const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
   const [swiper, updateSwiper] = useState(null);
   const [_currentIndex, updateCurrentIndex] = useState(0);
+  const { cards, heading, description, isMobile } = props;
 
   const goNext = () => {
     if (swiper !== null) {
@@ -237,9 +238,7 @@ const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
         swiper.off('slideChange', updateIndex);
       }
     };
-  }, [swiper, updateIndex]);
-
-  const { cards, heading, description, isMobile } = props;
+  }, [swiper, updateIndex, isMobile]);
 
   const swiperParams = {
     slidesPerGroup: 4,
@@ -248,6 +247,7 @@ const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
     slidesPerView: 4,
     spaceBetween: 24,
     rebuildOnUpdate: false,
+    shouldSwiperUpdate: true,
     navigaton: {
       nextEl: '.swiper-btn.btn-left',
       prevEl: '.swiper-btn.btn-right',
@@ -273,7 +273,12 @@ const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
           <div className="slider-container">
             <Swiper {...swiperParams} getSwiper={updateSwiper}>
               {cards.map((card, index) => (
-                <Slide key={index} {...card} isMobile={isMobile} />
+                <Slide
+                  className="swiper-slide"
+                  key={index}
+                  {...card}
+                  isMobile={isMobile}
+                />
               ))}
             </Swiper>
           </div>

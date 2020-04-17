@@ -178,10 +178,10 @@ export const CHEVRON_LEFT_CIRCLE = (
     fill="white"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <g filter="url(#filter0_d)">
+    <g filter="url(#chev_filter0_d)">
       <circle r="16" transform="matrix(-1 0 0 1 20 18)" fill="white" />
     </g>
-    <g clipPath="url(#clip0)">
+    <g clipPath="url(#chev_clip0)">
       <path
         d="M23.3333 24.6666L16.6667 17.9999L23.3333 11.3333"
         stroke="#545454"
@@ -192,7 +192,7 @@ export const CHEVRON_LEFT_CIRCLE = (
     </g>
     <defs>
       <filter
-        id="filter0_d"
+        id="chev_filter0_d"
         x="0"
         y="0"
         width="40"
@@ -224,7 +224,7 @@ export const CHEVRON_LEFT_CIRCLE = (
           result="shape"
         />
       </filter>
-      <clipPath id="clip0">
+      <clipPath id="chev_clip0">
         <rect
           width="16"
           height="16"
@@ -252,7 +252,7 @@ export const POWERED_BY_HEADOUT = (
       stroke="#EBEBEB"
       strokeWidth="0.5"
     />
-    <g clipPath="url(#clip0)">
+    <g clipPath="url(#pbh_clip0)">
       <path
         d="M9.71707 16.1268C10.5854 15.4439 11.8049 14.8683 13.1122 14.8683C14.3512 14.8683 15.3854 15.3756 15.3854 17.3073V23.8732H13.6585V17.7171C13.6585 16.6146 13.1707 16.3122 12.322 16.3122C11.3561 16.3122 10.4585 16.7707 9.72683 17.1902V23.8732H8V12H8.94634C9.60976 12 9.72683 12.1561 9.72683 13.1512V16.1268H9.71707Z"
         fill="#666666"
@@ -287,7 +287,7 @@ export const POWERED_BY_HEADOUT = (
       fill="#666666"
     />
     <defs>
-      <clipPath id="clip0">
+      <clipPath id="pbh_clip0">
         <path d="M8 12H66.8V24H8V12Z" fill="white" />
       </clipPath>
     </defs>

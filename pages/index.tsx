@@ -21,6 +21,7 @@ import { toursTabSliceHandler } from '../components/Slices';
 import 'lazysizes';
 import 'lazysizes/plugins/attrchange/ls.attrchange';
 import '../style/global.css';
+import { uaIsMobile } from '../utils/helper';
 
 const ErrorPage = dynamic(() => import('next/error'));
 const Microsite = dynamic(() => import('../components/MicrositeV1'));
@@ -33,7 +34,7 @@ export default class Page extends React.Component<any, any> {
     const serverRequestStartTimestamp = Math.floor(new Date().getTime());
     const pathname =
       req?.url.split('?')[0].split('#')[0] || window.location.pathname;
-
+    const isMobile = uaIsMobile(req.headers['user-agent']);
     // Checking is mystique is running in dev
     const isDev = req
       ? !!query.mystique_uid
@@ -114,6 +115,7 @@ export default class Page extends React.Component<any, any> {
         windowUrl: req
           ? `${req.headers['x-forwarded-proto']}://${req.headers['x-forwarded-host']}${req.url}`
           : window.location.href,
+        isMobile: isMobile,
       };
     } catch (e) {
       console.log(e);
@@ -574,6 +576,7 @@ export default class Page extends React.Component<any, any> {
       lang,
       uid,
       toursList,
+      isMobile,
     } = this.props;
 
     if (statusCode) {
@@ -593,6 +596,7 @@ export default class Page extends React.Component<any, any> {
             isDev={isDev}
             scorpioData={tourGroupData}
             serverRequestStartTimestamp={serverRequestStartTimestamp}
+            isMobile={isMobile}
           />
         );
         microsite = CMSContent.data?.data;
@@ -610,6 +614,7 @@ export default class Page extends React.Component<any, any> {
             isDev={isDev}
             tgidToScroll={tgidToScroll}
             serverRequestStartTimestamp={serverRequestStartTimestamp}
+            isMobile={isMobile}
           />
         );
         microsite = CMSContent.data?.data;
@@ -622,6 +627,7 @@ export default class Page extends React.Component<any, any> {
             isDev={isDev}
             host={host}
             serverRequestStartTimestamp={serverRequestStartTimestamp}
+            isMobile={isMobile}
           />
         );
         microsite = CMSContent.data?.microsite?.data;

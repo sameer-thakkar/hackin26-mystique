@@ -2,7 +2,8 @@ import LinkResolver from './LinkResolver';
 import styled from 'styled-components';
 import { COLORS, GRAPHIK } from '../constants/ui-constants';
 import { CHEVRON_DOWN } from '../public/static/svg-icons';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { useWindowWidth } from '@react-hook/window-size';
 
 const StyledMenuItem = styled.li`
   font-size: 16px;
@@ -20,6 +21,7 @@ const StyledMenuItem = styled.li`
     grid-column-gap: 10px;
     .nest-icon {
       display: flex;
+      justify-self: right;
       svg {
         height: 24px;
         path {
@@ -42,19 +44,30 @@ const StyledMenuItem = styled.li`
     .withIcon {
       .nest-icon {
         justify-self: end;
+        svg {
+          transition: transform 0.3s ease;
+        }
       }
     }
     a {
       display: block;
     }
+    & .nested-menu {
+      li {
+        padding-right: 0;
+      }
+    }
     ${({ nestOpen }) =>
       nestOpen &&
       `
       background: ${COLORS.FLOAT_PURPS};
-      & .nested-menu {
-        background: ${COLORS.FLOAT_PURPS};
-        li {
-          padding-right: 0;
+      & > a > .nested-menu {
+        display: grid;
+        visibility: unset;
+      }
+      & > a > .withIcon > .nest-icon {
+        svg{
+          transform: rotate(180deg)
         }
       }
     `}
@@ -62,7 +75,8 @@ const StyledMenuItem = styled.li`
 `;
 
 const NestedMenu = styled.ul`
-  display: none;
+  display: grid;
+  visibility: hidden;
   margin: 0;
   padding: 0;
   position: absolute;
@@ -72,12 +86,6 @@ const NestedMenu = styled.ul`
   background: #ffffff;
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
-  ${StyledMenuItem}:hover > a > & {
-    display: grid;
-    li:hover {
-      background: ${COLORS.FLOAT_PURPS};
-    }
-  }
   .nest-icon svg {
     transform: rotate(-90deg);
   }
@@ -85,14 +93,32 @@ const NestedMenu = styled.ul`
     left: 100%;
     top: 0;
   }
+  & ul.off-screen {
+    left: unset;
+    right: 100%;
+  }
+
+  ${StyledMenuItem}:hover > a > & {
+    visibility: unset;
+    li:hover {
+      background: ${COLORS.FLOAT_PURPS};
+    }
+  }
   @media (max-width: 768px) {
     position: unset;
+    display: none;
     top: unset;
     left: unset;
     box-shadow: unset;
     width: 100%;
+    background: transparent;
     .nest-icon svg {
       transform: unset;
+    }
+    ${StyledMenuItem}:hover > a > & {
+      li:hover {
+        background: initial;
+      }
     }
   }
 `;
@@ -121,11 +147,12 @@ const Nav = styled.nav`
         background: ${COLORS.WHITE};
         width: 100%;
         grid-auto-flow: row;
+        overflow: scroll;
         grid-gap: 0;
         & > li {
           padding: 16px;
         }
-        & > li > a .withIcon {
+        & > li > a > .withIcon {
           padding-bottom: 16px;
           border-bottom: 1px solid ${COLORS.GREY_G6};
         }
@@ -147,11 +174,25 @@ const Navigation = (props) => {
 
 const Menu = ({ label, url, slices, isMobile }) => {
   const [active, setActive] = useState(false);
-  const nestedMobileInteraction = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setActive(!active);
+  const nestedMobileInteraction = (event, clickedLabel) => {
+    if (!isMobile) return;
+    event.preventDefault();
+    event.stopPropagation();
+    if (clickedLabel === label) {
+      setActive(!active);
+    }
   };
+  const nestedMenuRef = useRef(null);
+  const windowWidth = useWindowWidth();
+  const [isOffScreen, setOffScreen] = useState(false);
+
+  useEffect(() => {
+    if (nestedMenuRef.current) {
+      const nestedMenuDim = nestedMenuRef.current?.getBoundingClientRect();
+      if (nestedMenuDim.width + nestedMenuDim.x > windowWidth)
+        setOffScreen(true);
+    }
+  }, [nestedMenuRef, windowWidth]);
 
   return (
     <>
@@ -159,10 +200,14 @@ const Menu = ({ label, url, slices, isMobile }) => {
         label={label}
         isNested={true}
         url={url}
-        onClick={nestedMobileInteraction}
+        onClick={(e) => nestedMobileInteraction(e, label)}
         nestOpen={active}
+        className={`${active ? 'nest-open' : 'nest-close'}`}
       >
-        <NestedMenu className={'nested-menu'}>
+        <NestedMenu
+          ref={nestedMenuRef}
+          className={`nested-menu ${isOffScreen ? 'off-screen' : ''}`}
+        >
           {slices.map((slice, index) =>
             HeaderSliceHandler(slice, { index, isMobile })
           )}
@@ -173,10 +218,18 @@ const Menu = ({ label, url, slices, isMobile }) => {
 };
 
 const MenuItem = (props) => {
-  const { isNested, url, label, children, onClick, nestOpen } = props;
+  const {
+    isNested,
+    url,
+    label,
+    children,
+    onClick,
+    nestOpen,
+    className,
+  } = props;
 
   return (
-    <StyledMenuItem nestOpen={nestOpen}>
+    <StyledMenuItem nestOpen={nestOpen} className={`${className}`}>
       <LinkResolver target={url?.target} url={url?.url}>
         <div
           className={isNested ? 'withIcon' : ''}

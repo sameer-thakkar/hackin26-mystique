@@ -39,7 +39,7 @@ export default class MicrositeV1 extends Component<any, any> {
       earliestAvailabilityQueue: [],
       isClient: false,
       analytics: new Analytics(),
-      isMobile: null,
+      isMobile: props.isMobile,
       covid19AlertOpen: true,
     };
   }

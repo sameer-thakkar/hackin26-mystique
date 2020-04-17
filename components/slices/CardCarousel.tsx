@@ -184,7 +184,6 @@ export default class CardCarousel extends Component<CardCarouselProps> {
       initialSlide: 1,
       spaceBetween: 8,
       slidesPerGroup: slidesPerGroup,
-      swiperShouldUpdate: true,
       centeredSlides: isMobile,
       navigation: isMobile
         ? false
