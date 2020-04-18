@@ -251,7 +251,9 @@ const CardSection: React.FC<CardSectionProps> = ({
     return (
       <>
         {EntrySection}
-        <OverflowScroll>{cards}</OverflowScroll>
+        <OverflowScroll minWidthChild="calc(100vw - 32px)" marginBottom={30}>
+          {cards}
+        </OverflowScroll>
         {ExitSection}
       </>
     );
