@@ -12,12 +12,14 @@ const CardCarouselContainer = styled.div`
     right: 5px;
     background-image: url('https://cdn-imgix-open.headout.com/alhambra-new/Path 231@3x.png');
     filter: invert(1);
+    background-size: cover;
     height: 30px;
     outline: none;
   }
   .swiper-button-prev {
     left: 5px;
     background-image: url('https://cdn-imgix-open.headout.com/alhambra-new/Path 231@3x.png');
+    background-size: cover;
     filter: invert(1);
     transform: rotate(180deg);
     height: 30px;

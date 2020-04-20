@@ -45,9 +45,17 @@ const StyledHamburger = styled.div`
   }
 `;
 
-const Hamburger: React.FC<any> = ({ isActive = false }) => {
+const Hamburger: React.FC<any> = ({
+  isActive = false,
+  onClickFn = null,
+  className = '',
+}) => {
   return (
-    <StyledHamburger isActive={isActive}>
+    <StyledHamburger
+      isActive={isActive}
+      onClick={onClickFn}
+      className={className}
+    >
       <div />
     </StyledHamburger>
   );

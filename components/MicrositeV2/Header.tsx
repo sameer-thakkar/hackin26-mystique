@@ -3,12 +3,15 @@ import LanguageSelector from './LanguageSelector';
 import InteractionContext from '../../contexts/Interaction';
 import Image from '../UI/Image';
 import { SearchBox } from './SearchBox';
-import { PAGETYPE } from '../../constants';
+import { PAGETYPE, ALLOW_IMMEDIEATE_NESTING } from '../../constants';
 import { SEARCH_ICON, POWERED_BY_HEADOUT } from '../../public/static/svg-icons';
 import { SearchItem } from './SearchItem';
 import { COLORS, AVENIR, GRAPHIK } from '../../constants/ui-constants';
 import { ResponsiveSelector } from './ResponsiveSelector';
 import styled from 'styled-components';
+import MultiLevelNav from '../MultiLevelNav';
+import { groupSlices } from '../../utils/helper';
+import Hamburger from '../UI/Hamburger';
 
 const StyledHeader = styled.span`
   header {
@@ -18,7 +21,7 @@ const StyledHeader = styled.span`
     align-items: center;
     padding-top: 14px;
     padding-bottom: 14px;
-    z-index: ${({ langDropdownActive: check }) => (check ? 100 : 15)};
+    z-index: ${({ overlayActive: check }) => (check ? 100 : 15)};
     user-select: none;
   }
   .fixed-wrap {
@@ -27,7 +30,7 @@ const StyledHeader = styled.span`
     top: 0;
     min-height: 80px;
     background: #fff;
-    z-index: ${({ langDropdownActive: check }) => (check ? 100 : 15)};
+    z-index: ${({ overlayActive: check }) => (check ? 100 : 15)};
   }
   .fixed-offset::after {
     content: '';
@@ -78,6 +81,7 @@ const HeaderRight = styled.div`
   display: grid;
   grid-gap: 22px;
   grid-auto-flow: column;
+  align-items: center;
   .buy-tickets {
     font-size: 16px;
     cursor: pointer;
@@ -96,6 +100,16 @@ const HeaderRight = styled.div`
     align-items: center;
     .buy-tickets {
       display: none;
+    }
+    .current-language-toggle {
+      margin-bottom: -2px;
+      padding: 2px;
+    }
+    .hamburger {
+      position: relative;
+      transform: unset;
+      top: unset;
+      right: unset;
     }
   }
 `;
@@ -184,6 +198,7 @@ const Header = (props) => {
   const [languageDropdown, setLanguageDropdown] = useState(false);
   const [results, setResults] = useState([]);
   const [resultClicked, setResultClicked] = useState(false);
+  const [navActive, toggleNav] = useState(false);
 
   const toggleLanguageDropdown = () => {
     setLanguageDropdown(!languageDropdown);
@@ -220,16 +235,20 @@ const Header = (props) => {
     enableSearch,
     enableBuyTickets,
     hasPoweredByHeadoutLogo,
+    headerSlices = [],
   } = props;
   const allToursArray = Object.values(allTours);
   const hasDropdownLinks = enableDropdownLinks && dropdownLinks.length;
   const hasLanguageDropdown =
-    languageProps.availableLanguages.length &&
-    languageProps.languages.length &&
+    languageProps.availableLanguages.length > 1 &&
+    languageProps.languages.length > 1 &&
     languageProps.languageDropdown;
-
+  const groupedHeaderSlices = groupSlices(
+    headerSlices,
+    ALLOW_IMMEDIEATE_NESTING
+  );
   return (
-    <StyledHeader langDropdownActive={languageDropdown}>
+    <StyledHeader overlayActive={languageDropdown || navActive}>
       <div className="fixed-offset"></div>
       <div className="fixed-wrap">
         <header className="main-wrapper">
@@ -278,6 +297,13 @@ const Header = (props) => {
             )}
           </HeaderLeft>
           <HeaderRight hasLanguageDropdown={hasLanguageDropdown}>
+            {groupedHeaderSlices ? (
+              <MultiLevelNav
+                isActive={navActive}
+                isMobile={isMobile}
+                slice={groupedHeaderSlices || []}
+              />
+            ) : null}
             {enableBuyTickets ? (
               <div
                 className="buy-tickets"
@@ -307,6 +333,13 @@ const Header = (props) => {
               host={host}
               isMobile={isMobile}
             />
+            {isMobile && groupedHeaderSlices.length ? (
+              <Hamburger
+                className={'hamburger'}
+                isActive={navActive}
+                onClickFn={() => toggleNav(!navActive)}
+              />
+            ) : null}
           </HeaderRight>
         </header>
       </div>

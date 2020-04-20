@@ -347,7 +347,7 @@ const HeaderSliceHandler = (slice, props) => {
  *
  */
 
-const MultiLevelNav = ({ slice, oldMenuItems, isMobile, isActive }) => {
+const MultiLevelNav = ({ slice, oldMenuItems = [], isMobile, isActive }) => {
   const [firstSlice, ..._ignored_only_one_nav_bar] = slice;
   const withOldMenu = [...(firstSlice?.slices || []), ...(oldMenuItems || [])];
 

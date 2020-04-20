@@ -259,7 +259,11 @@ class MicrositeV2 extends Component<any, any> {
     };
 
     const { favicon, footer_logo_link, footer_logo } = this.props.data.data;
-    const { commonFooter, contentFramework } = this.props.data.refs;
+    const {
+      commonFooter,
+      contentFramework,
+      commonHeader,
+    } = this.props.data.refs;
     const heroSectionSlice = [...this.props.data.data.body4, hightlightSlice];
     const commonFooterProps = commonFooter ? commonFooter.data : null;
     const MBData = {
@@ -272,6 +276,7 @@ class MicrositeV2 extends Component<any, any> {
       host,
       header: {
         ...headerProps,
+        headerSlices: commonHeader?.data?.body,
         languageProps,
       },
       heroProps,

@@ -14,7 +14,11 @@ import * as labels from '../constants/localization/labels';
 import DismissAlert from './UI/DismissAlert';
 import { InteractionContextProvider } from '../contexts/Interaction';
 import { docCookies, csvTgidToArray } from '../utils/helper';
-import { DROPDOWN_ELEMENT, ANALYTICS_EVENTS } from '../constants';
+import {
+  DROPDOWN_ELEMENT,
+  ANALYTICS_EVENTS,
+  ALLOW_IMMEDIEATE_NESTING,
+} from '../constants';
 import { groupSlices } from '../utils/helper';
 import { ProductsContextProvider } from '../contexts/Products';
 import { tourListApiParser } from '../utils/DataParsers';
@@ -235,9 +239,6 @@ export default class MicrositeV1 extends Component<any, any> {
 
   render() {
     const { toursList } = this.props;
-    const { url: logoUrl } = this.props.data.data.link_to_logo_file;
-    const { url: uploadedLogoUrl, alt: altText } = this.props.data.data.logo;
-    const { logo_alt_text: logoAltText } = this.props.data.data;
     const { alternate_languages: alternateLanguages, refs } = this.props.data;
     const { contentFramework } = refs;
     const {
@@ -272,15 +273,20 @@ export default class MicrositeV1 extends Component<any, any> {
       this.props.data.data.footer_logo.alt ||
       this.props.data.data?.footer_logo_alt;
 
-    const {
+    const { commonHeader } = this.props.data.refs;
+    const withCommonHeaderOverrides = {
+      ...this.props.data.data,
+      ...commonHeader?.data,
+    };
+    let {
+      link_to_logo_file: linkedLogo,
+      body2: longFormContent,
+      logo: uploadedLogo,
+      logo_alt_text: logoAltText,
       book_now_text: bookNowText,
       read_more_text: readMoreText,
       show_less_text: showLessText,
       enable_powered_by_headout_logo: hasPoweredByHeadoutLogo,
-    } = this.props.data.data;
-
-    const longFormContent = this.props.data.data.body2;
-    const {
       enable_localization_menu: hasLanguageSelector,
       enable_group_booking: enableGroupBooking,
       enable_buy_tickets_shortcut: enableBuyTickets,
@@ -292,7 +298,11 @@ export default class MicrositeV1 extends Component<any, any> {
       maximum_pax: maximumPax,
       group_form_blocked_days: blockedDays,
       group_booking_disclaimer: groupBookingDisclaimer,
-    } = this.props.data.data;
+      body: headerSlices,
+    } = withCommonHeaderOverrides;
+    const { url: logoUrl } = linkedLogo;
+    const { url: uploadedLogoUrl, alt: altText } = uploadedLogo;
+
     const showGroupBooking = enableGroupBooking === 'Yes';
     const { results: productOffer } = this.props.offerData
       ? this.props.offerData
@@ -441,6 +451,7 @@ export default class MicrositeV1 extends Component<any, any> {
             logoRedirectionURL={logoRedirectionURL?.url || pageUrl}
             host={host}
             hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo}
+            slices={groupSlices(headerSlices || [], ALLOW_IMMEDIEATE_NESTING)}
           />
           {showCovid19Alert && this.state.covid19AlertOpen ? (
             <DismissAlert

@@ -237,6 +237,7 @@ const ProductOfferBlock = styled.div`
   color: ${COLORS.MED_SLATE_BLUE};
   p {
     margin: 0;
+    color: ${COLORS.MED_SLATE_BLUE};
   }
 `;
 const V1BoosterBlock = styled.div`
@@ -251,6 +252,7 @@ const V1BoosterBlock = styled.div`
 
   p {
     margin: 0;
+    color: ${COLORS.MED_SLATE_BLUE};
     strong {
       font-weight: unset;
     }

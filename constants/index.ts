@@ -68,6 +68,7 @@ export const CUSTOM_TYPES = {
   REDIRECT: 'redirect',
   COMMON_DATA: 'common_data',
   LISTICLE: 'page',
+  CONTENT_FRAMEWORK: 'content_framework',
 };
 
 export const DESIGN = {

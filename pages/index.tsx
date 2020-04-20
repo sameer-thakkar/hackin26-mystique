@@ -251,15 +251,26 @@ export default class Page extends React.Component<any, any> {
                 completeMicrosite.data.data.content_framework.id ||
                 baseLangData.data.content_framework.id ||
                 '';
+              const commonHeaderId =
+                completeMicrosite.data.data.common_header_ref?.id ||
+                baseLangData.data.common_header_ref?.id ||
+                '';
 
               const linkedRefIDs = [];
               linkedRefIDs.push(footerID);
               linkedRefIDs.push(contentSectionId);
+              linkedRefIDs.push(commonHeaderId);
 
-              const [
-                commonFooter,
-                contentFramework,
-              ] = await this.getRefsArrayByIds(linkedRefIDs, req);
+              const refArray = await this.getRefsArrayByIds(linkedRefIDs, req);
+              const commonFooter = refArray.filter(
+                (ref) => ref.type === CUSTOM_TYPES.FOOTER
+              )[0];
+              const contentFramework = refArray.filter(
+                (ref) => ref.type === CUSTOM_TYPES.CONTENT_FRAMEWORK
+              )[0];
+              const commonHeader = refArray.filter(
+                (ref) => ref.type === CUSTOM_TYPES.HEADER
+              )[0];
 
               const micrositeData = {
                 ...completeMicrosite,
@@ -268,6 +279,7 @@ export default class Page extends React.Component<any, any> {
                   refs: {
                     commonFooter,
                     contentFramework,
+                    commonHeader,
                   },
                   data: {
                     ...completeMicrosite.data.data,
@@ -386,12 +398,22 @@ export default class Page extends React.Component<any, any> {
                 linkedRefIDs.push(headerID);
                 linkedRefIDs.push(micrositeId);
                 linkedRefIDs.push(contentFrameworkID);
-                const [
-                  commonFooter,
-                  commonHeader,
-                  micrositeData,
-                  contentFramework,
-                ] = await this.getRefsArrayByIds(linkedRefIDs, req);
+                const refArray = await this.getRefsArrayByIds(
+                  linkedRefIDs,
+                  req
+                );
+                const commonFooter = refArray.filter(
+                  (ref) => ref.type === CUSTOM_TYPES.FOOTER
+                )[0];
+                const contentFramework = refArray.filter(
+                  (ref) => ref.type === CUSTOM_TYPES.CONTENT_FRAMEWORK
+                )[0];
+                const commonHeader = refArray.filter(
+                  (ref) => ref.type === CUSTOM_TYPES.HEADER
+                )[0];
+                const micrositeData = refArray.filter(
+                  (ref) => ref.type === CUSTOM_TYPES.MICROSITE
+                )[0];
 
                 let completePage = {
                   ...page,
