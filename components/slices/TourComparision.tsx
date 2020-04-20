@@ -4,7 +4,7 @@ import parse from 'url-parse';
 import Image from '../UI/Image';
 import EnvironmentContext from '../../contexts/environmentContext';
 import ProductsContext from '../../contexts/Products';
-import CommonCTA from '../UI/CTA';
+import Button from '../UI/Button';
 import * as labels from '../../constants/localization/labels';
 import LocalisedPrice from '../UI/LPrice';
 import { RichText } from 'prismic-reactjs';
@@ -266,6 +266,7 @@ const StyledTourComparisionTable = styled.div`
     }
     .start-compare-icon {
       display: grid;
+      align-items: center;
       grid-template-columns: auto auto;
       grid-column-gap: 10px;
       justify-content: center;
@@ -411,20 +412,21 @@ const TourComparisonTable = (props) => {
           {isExpanded ? (
             <div className="row" style={{ marginTop: -8 }}>
               {content_normalized_tours.map((tour, index) => {
-                const props = {
+                const ctaProps = {
                   link: {
                     url: `https://book.${nakedDomain}/${
                       lang == 'en' ? '' : lang + '/'
                     }book/${tour.tgid}`,
                   },
-                  bordered: true,
                 };
                 return (
                   <div className="column" key={index}>
                     <div className="tour-cta">
-                      <CommonCTA {...props}>
-                        {labels[lang]['BOOK_NOW_CTA']}
-                      </CommonCTA>
+                      <a href={ctaProps.link.url}>
+                        <Button width="100%">
+                          {labels[lang]['BOOK_NOW_CTA']}
+                        </Button>
+                      </a>
                     </div>
                   </div>
                 );
@@ -527,7 +529,7 @@ const TourComparisonTable = (props) => {
         <div className="table cta-table-wrap">
           <div className="row">
             {content_normalized_tours.map((tour, index) => {
-              const props = {
+              const ctaProps = {
                 link: {
                   url: `https://book.${nakedDomain}/${
                     lang == 'en' ? '' : lang + '/'
@@ -537,9 +539,11 @@ const TourComparisonTable = (props) => {
               return (
                 <div className="column" key={index}>
                   <div className="tour-cta">
-                    <CommonCTA {...props}>
-                      {labels[lang]['BOOK_NOW_CTA']}
-                    </CommonCTA>
+                    <a href={ctaProps.link.url}>
+                      <Button type="fill" width="100%">
+                        {labels[lang]['BOOK_NOW_CTA']}
+                      </Button>
+                    </a>
                   </div>
                 </div>
               );
@@ -548,11 +552,11 @@ const TourComparisonTable = (props) => {
         </div>
       </div>
       {isMobile && !isExpanded ? (
-        <CommonCTA clickHandler={() => setExpand(true)} bordered={true}>
+        <Button onClick={() => setExpand(true)}>
           <div className="start-compare-icon">
             Compare All Details {CHEVRON_DOWN}
           </div>
-        </CommonCTA>
+        </Button>
       ) : null}
     </StyledTourComparisionTable>
   );

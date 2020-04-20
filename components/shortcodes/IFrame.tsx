@@ -18,11 +18,11 @@ const IFrameContainer = styled.div`
 `;
 
 const StyledIFrame = styled.iframe`
-     position: absolute;
-     top: 0;
-     left: 0;
-     width: 100%;
-     height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 `;
 
 /**

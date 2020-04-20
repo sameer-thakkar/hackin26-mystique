@@ -62,6 +62,26 @@ export const WithLinkCTA = () => {
   );
 };
 
+export const WithButtonCTA = () => {
+  return (
+    <div style={{ width: 500, padding: 50 }}>
+      <Card
+        title={data.title}
+        images={data.images}
+        description={data.description}
+        cta={{
+          link: {
+            url: 'https://www.google.com',
+            target: '_blank',
+          },
+          type: 'Button',
+        }}
+        type="small"
+      />
+    </div>
+  );
+};
+
 export const OnlyText = () => {
   return (
     <div style={{ width: 500, padding: 50 }}>

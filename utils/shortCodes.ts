@@ -2,7 +2,7 @@ import React from 'react';
 import InlinePrice from '../components/InlinePrice';
 import NextAvailable from '../components/NextAvailable';
 import InlineInvPrice from '../components/InlineInvPrice';
-import CTAShortCode from '../components/CTAShortCode';
+import CTA from '../components/shortcodes/CTA';
 import Booster from '../components/Booster';
 import RatingBoosterCombo from '../components/shortcodes/RatingBoosterCombo';
 import PopupTrigger from '../components/shortcodes/PopupTrigger';
@@ -29,7 +29,7 @@ const shortCodesDict: ShortCodeDictionary = {
     component: InlineInvPrice,
   },
   cta: {
-    component: CTAShortCode,
+    component: CTA,
   },
   'rating-cta': {
     component: RatingBoosterCombo,
@@ -42,7 +42,7 @@ const shortCodesDict: ShortCodeDictionary = {
   },
 };
 
-const getAllAttributes = attributesString => {
+const getAllAttributes = (attributesString) => {
   let attributePattern = /([\w-]+)\s*=\s*"([^"]*)"(?:\s|$)|([\w-]+)\s*=\s*'([^']*)'(?:\s|$)|([\w-]+)\s*=\s*([^\s'"]+)(?:\s|$)|"([^"]*)"(?:\s|$)|(\S+)(?:\s|$)/g;
   attributesString = attributesString.replace(/[\u00a0\u200b]/g, ' ');
 
@@ -90,7 +90,7 @@ const returnShortcodeObject = (
   };
 };
 
-const getShortcodesList = stringToSearch => {
+const getShortcodesList = (stringToSearch) => {
   const findShortcodeRegExp = new RegExp(
     '\\{(\\{?)(' +
       Object.keys(shortCodesDict).join('|') +
@@ -161,7 +161,7 @@ const tagsMap = {
   em: 'i',
 };
 
-const propsWithUniqueKey = function(props, key) {
+const propsWithUniqueKey = function (props, key) {
   return Object.assign(props || {}, { key });
 };
 

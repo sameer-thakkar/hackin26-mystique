@@ -1,11 +1,12 @@
-import { COLORS, GRAPHIK } from '../../constants/ui-constants';
+import { COLORS, AVENIR } from '../../constants/ui-constants';
 
 export default {
+  primaryColor: COLORS.RHAPSODY,
+  primaryGradient: COLORS.RHAPSODY_GRADIENT,
   button: {
-    color: COLORS.RHAPSODY,
-    borderRadius: '2px',
-    fontSize: '18px',
-    fontFamily: GRAPHIK.FONT_STACK,
-    fontWeight: GRAPHIK.MEDIUM,
+    borderRadius: '4px',
+    fontSize: '16px',
+    fontFamily: AVENIR.FONT_STACK,
+    fontWeight: AVENIR.BLACK,
   },
 };

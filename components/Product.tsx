@@ -1,15 +1,16 @@
 import React, { useRef, useState } from 'react';
-import { shortCodeSerializer } from '../utils/shortCodes';
-import { RichText } from 'prismic-reactjs';
-import ReactMarkdown from 'react-markdown/with-html';
-import moment from 'moment';
-import parse from 'url-parse';
-import * as labels from '../constants/localization/labels';
-import { ANALYTICS_EVENTS } from '../constants';
-import { COLORS, GRAPHIK, AVENIR } from '../constants/ui-constants';
 import styled from 'styled-components';
+import parse from 'url-parse';
+import moment from 'moment';
+import ReactMarkdown from 'react-markdown/with-html';
+import * as labels from '../constants/localization/labels';
 import LocalisedPrice from './UI/LPrice';
 import HorizontalLine from './slices/HorizontalLine';
+import Button from './UI/Button';
+import { RichText } from 'prismic-reactjs';
+import { shortCodeSerializer } from '../utils/shortCodes';
+import { ANALYTICS_EVENTS } from '../constants';
+import { COLORS, GRAPHIK } from '../constants/ui-constants';
 import { CALENDAR } from '../public/static/svg-icons';
 
 const isLengthyArray = (item) => Array.isArray(item) && item.length;
@@ -137,18 +138,7 @@ const CTABlock = styled.div`
     text-decoration: none;
   }
   .tour-book-now-cta {
-    border-radius: 4px;
-    background: linear-gradient(219.75deg, #eb6b80 -72.45%, #da394b 166.49%);
-    padding: 14px 77px;
-    display: flex;
-    .book-now-label {
-      font-size: 16px;
-      font-family: ${AVENIR.FONT_STACK};
-      line-height: 22px;
-      font-weight: ${AVENIR.BLACK};
-      letter-spacing: 0.02em;
-      color: ${COLORS.WHITE};
-    }
+    width: 100%;
   }
   @media (max-width: 768px) {
     grid-row: ${({ showEarliestAvail, hasOffer }) =>
@@ -424,17 +414,17 @@ const Product = (props) => {
                 currentLanguage === 'en' ? '' : `/${currentLanguage}`
               }/book/${tgid}${ctaUrlSuffix}`}
             >
-              <div
+              <Button
                 className={`tour-book-now-cta`}
+                paddingSides="77px"
+                type="fillGradient"
                 onClick={sendBookNowEvent}
                 onKeyDown={sendBookNowEvent}
                 role="button"
                 tabIndex={0}
               >
-                <span className="book-now-label">
-                  {labels[currentLanguage].BOOK_NOW_CTA}
-                </span>
-              </div>
+                {labels[currentLanguage].BOOK_NOW_CTA}
+              </Button>
             </a>
           </CTABlock>
 

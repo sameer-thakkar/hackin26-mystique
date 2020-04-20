@@ -348,16 +348,14 @@ const ListicleCard: React.FC<ListicleCardProps> = ({
             </div>
             <div className="cta">
               <a href={knowMoreLink?.url} target={knowMoreLink?.target}>
-                <Button fontSize="16px" paddingSides="40px">
-                  Know More
-                </Button>
+                <Button paddingSides="40px">Know More</Button>
               </a>
               <a
                 href={`${bookingUrl}${tgid}`}
                 rel="noopener noreferrer"
                 target={isMobile ? '' : '_blank'}
               >
-                <Button type="colored" fontSize="16px" paddingSides="41px">
+                <Button type="fillGradient" paddingSides="41px">
                   {labels[currentLanguage].BOOK_NOW_CTA}
                 </Button>
               </a>

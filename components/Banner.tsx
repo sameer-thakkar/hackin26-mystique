@@ -211,12 +211,14 @@ const BANNER_PARAMS = {
   },
 };
 
-const StyledButton = styled.div`
+const ButtonWrapper = styled.div`
+  button {
+    font-size: 18px;
+  }
   @media (max-width: 768px) {
     button {
       font-size: 14px;
       padding: 11px 25px;
-      line-height: 20px;
     }
   }
 `;
@@ -353,11 +355,11 @@ export default class Banner extends Component<any, any> {
               <h1>{bannerHeading}</h1>
             </div>
             {hideCTA ? null : (
-              <StyledButton>
+              <ButtonWrapper>
                 <Button type="whiteBordered" onClick={this.scrollTicketSection}>
                   {labels[currentLanguage].BANNER_CTA}
                 </Button>
-              </StyledButton>
+              </ButtonWrapper>
             )}
           </div>
         </div>
