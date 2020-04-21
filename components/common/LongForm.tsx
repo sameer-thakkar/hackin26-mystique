@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import sliceHandler from '../Slices';
 import { FULL_WIDTH_SLICES } from '../../constants';
-import { COLORS } from '../../constants/ui-constants';
+import { COLORS, GRAPHIK } from '../../constants/ui-constants';
 
 export const StyledLongForm = styled.div`
-  font-family: 'Graphik', 'Proxima Nova', 'Helvetica Neue', Helvetica, Arial,
-    sans-serif;
+  font-family: ${GRAPHIK.FONT_STACK};
   line-height: 1.6;
   color: ${COLORS.FOUR_BLACK};
   display: grid;

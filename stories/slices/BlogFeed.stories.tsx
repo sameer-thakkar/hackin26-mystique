@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../style/global.css';
 import BlogFeed from '../../components/slices/BlogFeed';
 import { StyledLongForm } from '../../components/common/LongForm';
 

@@ -20,7 +20,7 @@ import allToursParser from '../utils/alltoursParser';
 import { ProductsContextProvider } from '../contexts/Products';
 import { InteractionContextProvider } from '../contexts/Interaction';
 import { tourListApiParser } from '../utils/DataParsers';
-import { COLORS } from '../constants/ui-constants';
+import { COLORS, AVENIR, GRAPHIK } from '../constants/ui-constants';
 
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 
@@ -38,11 +38,10 @@ const StyledContentPage = styled.div`
   margin-bottom: 40px;
 
   .slice-block h2 {
-    font-weight: 500;
     font-size: 30px;
     color: #080808;
-    font-family: 'Graphik', 'Proxima Nova', 'Helvetica Neue', Helvetica, Arial,
-      sans-serif;
+    font-family: ${AVENIR.FONT_STACK};
+    font-weight: ${AVENIR.BLACK};
     position: relative;
     line-height: 1.4;
     color: #444444;
@@ -51,8 +50,8 @@ const StyledContentPage = styled.div`
     font-weight: 500;
     font-size: 26px;
     color: #080808;
-    font-family: 'Graphik', 'Proxima Nova', 'Helvetica Neue', Helvetica, Arial,
-      sans-serif;
+    font-family: ${AVENIR.FONT_STACK};
+    font-weight: ${AVENIR.BLACK};
     position: relative;
     line-height: 1.4;
     color: #444444;
@@ -75,11 +74,24 @@ const StyledContentPage = styled.div`
 
   .slice-block p {
     color: #444444;
-    font-family: Avenir;
+    font-family: ${GRAPHIK.FONT_STACK};
     font-size: 16px;
     margin-bottom: 15px;
     line-height: 30px;
   }
+
+  .slice-block ul {
+    padding-left: 20px;
+  }
+
+  .slice-block ul li,
+  .slice-block ol li {
+    font-family: ${GRAPHIK.FONT_STACK};
+    font-size: 16px;
+    color: #444444;
+    line-height: 40px;
+  }
+
   .product .product-left p {
     margin: 0;
   }
@@ -114,17 +126,6 @@ const StyledContentPage = styled.div`
     margin: 0;
   }
 
-  .slice-block ul {
-    padding-left: 20px;
-  }
-
-  .slice-block ul li,
-  .slice-block ol li {
-    font-family: Avenir;
-    font-size: 18px;
-    color: #444444;
-    line-height: 40px;
-  }
   .slice-wrapper.slice-block {
     width: 100%;
   }

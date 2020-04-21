@@ -42,9 +42,7 @@ const CTA = (props) => {
   return (
     <CTAWrapper {...{ align }}>
       <a href={link} target="_blank" rel="noopener noreferrer">
-        <Button {...(fill && { type: 'fillGradient' })} type={type}>
-          {text}
-        </Button>
+        <Button type={fill ? 'fillGradient' : type}>{text}</Button>
       </a>
     </CTAWrapper>
   );

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { tourListApiParser } from '../utils/DataParsers';
 import { LinkCards } from './slices/MicrobrandCards';
 import styled from 'styled-components';
+import { AVENIR } from '../constants/ui-constants';
 
 const StyledMBList = styled.div`
   max-width: 1200px;
@@ -10,9 +11,8 @@ const StyledMBList = styled.div`
   .microbrands-list-heading {
     border-left: 3px solid #669dde;
     padding: 5px 10px 5px;
-    font-family: 'Graphik', 'Proxima Nova', 'Helvetica Neue', Helvetica, Arial,
-      sans-serif;
-    font-weight: 500;
+    font-family: ${AVENIR.FONT_STACK};
+    font-weight: ${AVENIR.BLACK};
     color: #000000;
     margin: 40px 0px;
     font-size: 2em;

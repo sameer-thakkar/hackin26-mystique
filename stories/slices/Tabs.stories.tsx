@@ -1,6 +1,5 @@
 import React from 'react';
 import TabWrapper from '../../components/slices/TabWrapper';
-import '../../style/global.css';
 
 export default {
   title: 'Slices/Tabs',

@@ -1,8 +1,7 @@
 import React from 'react';
-import classNames from 'classnames';
 import styled from 'styled-components';
 import LinkResolver from './LinkResolver';
-import { COLORS } from '../constants/ui-constants';
+import { COLORS, GRAPHIK, AVENIR } from '../constants/ui-constants';
 
 const StyledHeaderLinksWrapper = styled.div`
   display: flex;
@@ -11,7 +10,7 @@ const StyledHeaderLinksWrapper = styled.div`
   a {
     margin-right: 32px;
     color: ${COLORS.DAVY_GREY};
-    font-family: Graphik;
+    font-family: ${GRAPHIK.FONT_STACK};
     font-size: 16px;
     cursor: pointer;
     color: ${COLORS.DAVY_GREY};
@@ -24,7 +23,7 @@ const StyledHeaderLinksWrapper = styled.div`
     }
   }
   @media (max-width: 768px) {
-    display: ${props => {
+    display: ${(props) => {
       if (!props.show) {
         return `none`;
       }
@@ -42,7 +41,7 @@ const StyledHeaderLinksWrapper = styled.div`
       padding: 10px 25px;
       text-align: center;
       border-bottom: 0.5px dotted #d8d8d8;
-      font-family: Avenir;
+      font-family: ${AVENIR.FONT_STACK};
     }
   }
 `;
@@ -61,7 +60,9 @@ const HeaderLinks: React.FC<any> = ({
         </LinkResolver>
       ))}
       {showGroupBooking && (
-        <div onClick={openGroupBookingModal}>Group Tickets</div>
+        <div onClick={openGroupBookingModal} role="button" tabIndex={0}>
+          Group Tickets
+        </div>
       )}
     </StyledHeaderLinksWrapper>
   );

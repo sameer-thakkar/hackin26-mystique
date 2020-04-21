@@ -5,14 +5,14 @@ import SocialLinks from '../SocialLinks';
 import sliceHandler from '../Slices';
 import * as labels from '../../constants/localization/labels';
 import { POWERED_BY_HEADOUT, WHITE_BLIP } from '../../public/static/svg-icons';
-import { COLORS, GRAPHIK } from '../../constants/ui-constants';
+import { COLORS, GRAPHIK, AVENIR } from '../../constants/ui-constants';
 
 const StyledFooter = styled.footer`
   width: 100%;
   background: white;
   color: black;
   display: grid;
-  font-family: Graphik;
+  font-family: ${GRAPHIK.FONT_STACK};
   font-size: 14px;
   margin-top: 40px;
 `;
@@ -23,7 +23,7 @@ const StyledFooterLinksWrapper = styled.div`
   margin-bottom: 40px;
   .quick-links-title {
     font-size: 22px;
-    font-family: Avenir;
+    font-family: ${AVENIR.FONT_STACK};
     margin-bottom: 32px;
     color: ${COLORS.DAVY_GREY};
   }
@@ -135,7 +135,7 @@ const StyledFooterLegal = styled.div`
   .disclaimer-text {
     color: white;
     margin-top: 16px;
-    font-family: Avenir;
+    font-family: ${AVENIR.FONT_STACK};
     line-height: 19px;
   }
   @media (max-width: 768px) {

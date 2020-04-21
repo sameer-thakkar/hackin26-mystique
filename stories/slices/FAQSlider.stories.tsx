@@ -1,6 +1,5 @@
 import React from 'react';
 import FAQSlider from '../../components/slices/FAQSlider';
-import '../../style/global.css';
 
 export default {
   title: 'Slices/FAQSlider',

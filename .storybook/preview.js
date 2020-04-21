@@ -3,6 +3,7 @@ import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import { ThemeProvider } from 'styled-components';
 import { DocsPage } from '@storybook/addon-docs/blocks';
 import theme from '../style/theme';
+import '!style-loader!css-loader!../style/global.css';
 import 'lazysizes';
 
 addDecorator((storyFn) => (

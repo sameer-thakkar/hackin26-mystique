@@ -5,6 +5,7 @@ import * as labels from '../constants/localization/labels';
 import Button from './UI/Button';
 import Image from './UI/Image';
 import styled from 'styled-components';
+import { AVENIR } from '../constants/ui-constants';
 
 const StyledBanner = styled.div`
   display: grid;
@@ -12,8 +13,7 @@ const StyledBanner = styled.div`
   width: 100%;
   position: relative;
   box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.16);
-  font-family: 'Graphik', 'Proxima Nova', 'Helvetica Neue', Helvetica, Arial,
-    sans-serif;
+  font-family: ${AVENIR.FONT_STACK};
   margin-top: 80px;
   margin-bottom: 40px;
 

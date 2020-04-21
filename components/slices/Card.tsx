@@ -55,10 +55,13 @@ const StyledCard = styled.div((props) => {
   }
   .card-content-section {
     padding: 16px;
+    * {
+      margin-top: 0;
+    }
     p, li {
       font-size: 16px !important;
       line-height: 160% !important;
-      font-family: ${AVENIR.FONT_STACK};
+      font-family: ${GRAPHIK.FONT_STACK};
     }
     a {
       color: ${COLORS.MED_SLATE_BLUE};
@@ -73,8 +76,8 @@ const StyledCard = styled.div((props) => {
 });
 
 const Title = styled.div`
-  font-family: ${GRAPHIK.FONT_STACK};
-  font-weight: ${GRAPHIK.MEDIUM};
+  font-family: ${AVENIR.FONT_STACK};
+  font-weight: ${AVENIR.MEDIUM};
   font-size: 20px;
   text-decoration: none;
   line-height: 27px;
@@ -307,6 +310,7 @@ const Card: React.FC<CardProps> = ({
             hyperlink: HyperLink,
           }}
           render={description}
+          h
         />
         {cta?.link?.url ? CTA : null}
       </div>

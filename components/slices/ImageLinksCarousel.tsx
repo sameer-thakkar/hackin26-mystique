@@ -47,11 +47,10 @@ const StyledContent = styled.div`
     font-size: 24px !important;
     line-height: 33px;
     font-weight: ${AVENIR.BLACK};
-    color: ${COLORS.TWO_BLACK};
   }
   div {
     margin: 0;
-    font-family: ${AVENIR.FONT_STACK};
+    font-family: ${GRAPHIK.FONT_STACK};
     font-size: 16px;
     line-height: 20px;
     color: ${COLORS.FOUR_BLACK};
