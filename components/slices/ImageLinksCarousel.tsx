@@ -128,6 +128,9 @@ const StyledSlide = styled.div`
     color: ${COLORS.TWO_BLACK};
     margin-top: 4px;
   }
+  a {
+    text-decoration: none;
+  }
   @media (max-width: 768px) {
     margin-right: 0px;
     img {
@@ -145,8 +148,11 @@ const StyledSlide = styled.div`
   }
 `;
 
-const desktopInteraction = (event, { card_title, isMobile }) => {
-  if (!isMobile) {
+const desktopInteraction = (
+  event,
+  { card_title, isMobile, clickInteraction }
+) => {
+  if (!isMobile && clickInteraction === 'Scroll to Heading') {
     event.preventDefault();
     scroller.scrollTo(stringIdfy(card_title), {
       duration: 1200,
@@ -164,8 +170,8 @@ const Slide = (props) => (
       onClick={(e) => desktopInteraction(e, props)}
     >
       <Image url={props.image.url} alt={props.image.alt} />
+      <div>{props.card_title}</div>
     </a>
-    <div>{props.card_title}</div>
   </StyledSlide>
 );
 
@@ -174,6 +180,7 @@ type ImageLinksCarouselProps = {
   cards: any[];
   heading: string;
   description: any[];
+  clickInteraction: string;
 };
 
 /**
@@ -186,6 +193,9 @@ type ImageLinksCarouselProps = {
  * - *Carousel Heading
  * - Carousel Description
  *  - Rich Text field
+ * - Click Interaction (Dropdown Selection)
+ *    - Option 1 (default): Open the link specified, as usual.
+ *    - Option 2: Scroll to Heading, if there is a tour section or jump link with same heading on the current page, clicking on the card will scroll to that section
  *
  * ### Repeatable zone
  * - Uploaded Image
@@ -206,7 +216,13 @@ type ImageLinksCarouselProps = {
 const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
   const [swiper, updateSwiper] = useState(null);
   const [_currentIndex, updateCurrentIndex] = useState(0);
-  const { cards, heading, description, isMobile } = props;
+  const {
+    cards,
+    heading,
+    description,
+    isMobile,
+    clickInteraction = 'Open Link',
+  } = props;
 
   const goNext = () => {
     if (swiper !== null) {
@@ -275,6 +291,7 @@ const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
                   key={index}
                   {...card}
                   isMobile={isMobile}
+                  clickInteraction={clickInteraction}
                 />
               ))}
             </Swiper>

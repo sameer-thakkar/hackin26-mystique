@@ -181,6 +181,7 @@ const sliceHandler = (slice, props: any = {}) => {
       return (
         <ImageLinksCarousel
           description={slice.primary.carousel_description}
+          clickInteraction={slice.primary.click_interaction}
           heading={slice.primary.carousel_heading}
           cards={cards}
           isMobile={props.isMobile}
