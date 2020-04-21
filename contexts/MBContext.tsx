@@ -6,10 +6,11 @@ export const MBContext = createContext({
   language_full: null,
   nakedDomain: null,
   buttons: null,
+  design: null,
 });
 
 export const MBContextProvider = (props) => {
-  const { uid, lang, microsite, host } = props;
+  const { uid, lang, microsite, host, design } = props;
   const buttons = {
     see_more_text: microsite?.see_more_text,
   };
@@ -25,6 +26,7 @@ export const MBContextProvider = (props) => {
         language_full: lang,
         nakedDomain,
         buttons: buttons,
+        design,
       }}
     >
       {props.children}

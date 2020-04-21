@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import Swiper from '../Swiper';
@@ -8,6 +8,8 @@ import { shortCodeSerializer } from '../../utils/shortCodes';
 import { AVENIR, COLORS, GRAPHIK } from '../../constants/ui-constants';
 import { scroller } from 'react-scroll';
 import { stringIdfy } from '../../utils/helper';
+import { MBContext } from '../../contexts/MBContext';
+import { DESIGN } from '../../constants';
 
 const StyledWrapper = styled.div`
   display: grid;
@@ -46,6 +48,8 @@ const StyledContent = styled.div`
     font-family: ${AVENIR.FONT_STACK};
     font-size: 24px !important;
     line-height: 33px;
+    color: ${({ design }) =>
+      design === DESIGN.V1 ? COLORS.FOUR_BLACK : COLORS.TWO_BLACK};
     font-weight: ${AVENIR.BLACK};
   }
   div {
@@ -62,7 +66,6 @@ const StyledContent = styled.div`
     h2 {
       line-height: 26px;
       font-family: ${GRAPHIK.FONT_STACK};
-      font-weight: ${GRAPHIK.SEMIBOLD};
     }
     div {
       line-height: 20px;
@@ -223,6 +226,7 @@ const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
     isMobile,
     clickInteraction = 'Open Link',
   } = props;
+  const { design } = useContext(MBContext);
 
   const goNext = () => {
     if (swiper !== null) {
@@ -269,7 +273,7 @@ const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
 
   return (
     <StyledWrapper>
-      <StyledContent>
+      <StyledContent design={design}>
         <h2>{heading}</h2>
         <div>
           <RichText render={description} htmlSerializer={shortCodeSerializer} />

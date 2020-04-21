@@ -683,6 +683,7 @@ export default class Page extends React.Component<any, any> {
             uid={uid}
             lang={lang}
             microsite={microsite}
+            design={MBDesign || DESIGN.V1}
           >
             <ThemeProvider theme={theme}>{Component}</ThemeProvider>
           </MBContextProvider>
