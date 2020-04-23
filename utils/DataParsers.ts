@@ -2,7 +2,7 @@ export const uncategorizedToursListParser = (
   uncategorizedToursList,
   initialVal
 ) => {
-  const initialTgids = initialVal.map(t => ({ tgid: t }));
+  const initialTgids = initialVal.map((t) => ({ tgid: t }));
   return uncategorizedToursList.reduce(
     (accum, tour) => {
       const { tgid, tid } = tour;
@@ -12,7 +12,7 @@ export const uncategorizedToursListParser = (
   );
 };
 
-export const tourListApiParser = apiResponse => {
+export const tourListApiParser = (apiResponse) => {
   return apiResponse?.tourGroups?.reduce((acc, tour) => {
     return {
       ...acc,
@@ -21,6 +21,7 @@ export const tourListApiParser = apiResponse => {
         price: tour.listingPrice?.finalPrice,
         scratchPrice: tour.listingPrice?.originalPrice,
         currency: apiResponse.currencies[0]?.currency,
+        currencySymbol: apiResponse.currencies[0]?.localSymbol,
         image: tour.imageUrl,
         reviewCount: tour.reviewCount,
         averageRating: tour.averageRating,

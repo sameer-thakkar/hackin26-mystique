@@ -54,7 +54,7 @@ export const StyledLongForm = styled.div`
     font-size: 1rem;
     line-height: 1.6;
     color: ${COLORS.FOUR_BLACK};
-    font-family: Avenir, Proxima-Nova, arial, sans-serif;
+    font-family: ${GRAPHIK.FONT_STACK};
   }
   & > p > a {
     text-decoration: none;

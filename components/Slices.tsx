@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from '../utils/shortCodes';
 import { csvTgidToArray } from '../utils/helper';
+import CustomLinkedTours from './slices/CustomLinkedTours';
 
 const ImageGallery = dynamic(() => import('./slices/ImageGallery'));
 const TicketCards = dynamic(() => import('./slices/TicketCards'));
@@ -375,6 +376,24 @@ const sliceHandler = (slice, props: any = {}) => {
         <BlogFeed
           count={slice.primary.count}
           feed_url={slice.primary.feed_url}
+        />
+      );
+    case 'custom_linked_tours':
+      const { content, common_page_link } = slice.primary;
+      const c_tgids = [];
+      const tours = slice.items.reduce((acc, tour) => {
+        c_tgids.push(tour.tgid);
+        return {
+          ...acc,
+          [tour.tgid]: { tgid: tour.tgid, ...tour.link_override },
+        };
+      }, {});
+      return (
+        <CustomLinkedTours
+          tours={tours}
+          tgids={c_tgids}
+          content={content}
+          commonLink={common_page_link}
         />
       );
     default:
