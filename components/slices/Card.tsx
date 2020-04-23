@@ -54,7 +54,7 @@ const StyledCard = styled.div((props) => {
     width: 100%;
   }
   .card-content-section {
-    padding: 16px;
+    padding: 16px 16px 0 16px;
     * {
       margin-top: 0;
     }

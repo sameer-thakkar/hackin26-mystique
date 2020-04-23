@@ -8,22 +8,21 @@ import { tourListApiParser } from '../../utils/DataParsers';
 const CardCarouselContainer = styled.div`
   max-width: 1200px;
   margin: auto;
+
   .swiper-button-next {
-    right: 5px;
-    background-image: url('https://cdn-imgix-open.headout.com/alhambra-new/Path 231@3x.png');
-    filter: invert(1);
-    background-size: cover;
-    height: 30px;
-    outline: none;
+    right: 0;
+    color: black;
+    :after {
+      font-size: 40px;
+    }
   }
   .swiper-button-prev {
-    left: 5px;
-    background-image: url('https://cdn-imgix-open.headout.com/alhambra-new/Path 231@3x.png');
-    background-size: cover;
-    filter: invert(1);
-    transform: rotate(180deg);
-    height: 30px;
-    outline: none;
+    left: 0;
+    color: black;
+    font-size: 40px;
+    :after {
+      font-size: 40px;
+    }
   }
   .carousel-slider {
     margin: 50px auto;

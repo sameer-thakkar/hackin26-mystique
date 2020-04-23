@@ -168,10 +168,6 @@ div {
 }
 
 /* SWIPER OVERRIDES */
-.swiper-button-prev.swiper-button-disabled {
-  opacity: 0;
-}
-
 .swiper-pagination.swiper-pagination-bullets {
   position: absolute;
   display: grid;
@@ -179,16 +175,13 @@ div {
   grid-gap: 5px;
 }
 
+.swiper-container {
+  width: 100%;
+}
+
 .swiper-pagination-custom,
 .swiper-pagination-fraction {
   width: unset;
-}
-
-.swiper-container {
-  width: 100%;
-  height: max-content;
-  height: 692px;
-  height: 100%;
 }
 
 .swiper-pagination.swiper-pagination-bullets {
