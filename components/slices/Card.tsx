@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { useWindowWidth } from '@react-hook/window-size';
 import { RichText } from 'prismic-reactjs';
 import Swiper from '../Swiper';
 import Image from '../UI/Image';
@@ -63,6 +64,9 @@ const StyledCard = styled.div((props) => {
       line-height: 160% !important;
       font-family: ${GRAPHIK.FONT_STACK};
     }
+    p {
+      margin-bottom: 16px !important;
+    }
     a {
       color: ${COLORS.MED_SLATE_BLUE};
       word-wrap: break-word;
@@ -98,8 +102,8 @@ const SwiperWrapper = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
-  margin-top: 24px;
-  width: max-content;
+margin 24px 0 16px 0 !important;
+width: max-content;
   @media (max-width: 768px) {
     margin-top: 16px;
   }
@@ -109,7 +113,8 @@ const CTALink = styled.a`
   color: ${COLORS.RHAPSODY} !important;
   font-weight: ${AVENIR.BLACK};
   font-family: ${AVENIR.FONT_STACK};
-  margin-top: 24px;
+  display: block;
+  margin 24px 0 16px 0 !important;
   svg {
     opacity: 0.5;
     transform: rotate(180deg);
@@ -191,13 +196,13 @@ const Card: React.FC<CardProps> = ({
   link = '',
   linkType = '',
 }) => {
+  const width = useWindowWidth();
   const [isMobile, setIsMobile] = React.useState(false);
   const mbContext = useContext(MBContext);
 
   const lang = mbContext.lang || 'en';
 
   React.useEffect(() => {
-    let width = window.innerWidth;
     switch (type) {
       case 'full-width':
         setIsMobile(width <= 960);
@@ -211,7 +216,7 @@ const Card: React.FC<CardProps> = ({
       default:
         break;
     }
-  }, [type, setIsMobile]);
+  }, [type, setIsMobile, width]);
 
   const swiperParams = {
     pagination: {
