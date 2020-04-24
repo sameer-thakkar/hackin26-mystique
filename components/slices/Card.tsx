@@ -43,7 +43,7 @@ const StyledCard = styled.div((props) => {
   border: 1px solid ${COLORS.CHALK};
   grid-template-columns: ${styles.gridTemplateColumns};
   color: ${COLORS.DAVY_GREY};
-  height: 100%;
+  height: calc(100% - 2px);
   text-decoration: none;
   ${props.link && `cursor: pointer;`}
   .flex{
@@ -289,6 +289,8 @@ const Card: React.FC<CardProps> = ({
         </CTALink>
       );
   }
+  const hasTextContent =
+    title?.length > 0 || RichText.asText(description || []).length > 0;
 
   return (
     <StyledCard
@@ -306,25 +308,27 @@ const Card: React.FC<CardProps> = ({
       type={type}
     >
       {imageView}
-      <div className="card-content-section">
-        <Title
-          {...(linkType === 'Title' && {
-            as: 'a',
-            href: link.url,
-            target: link.target,
-          })}
-        >
-          {title}
-        </Title>
-        <RichText
-          elements={{
-            hyperlink: HyperLink,
-          }}
-          render={description}
-          h
-        />
-        {cta?.link?.url ? CTA : null}
-      </div>
+      {hasTextContent ? (
+        <div className="card-content-section">
+          <Title
+            {...(linkType === 'Title' && {
+              as: 'a',
+              href: link.url,
+              target: link.target,
+            })}
+          >
+            {title}
+          </Title>
+          <RichText
+            elements={{
+              hyperlink: HyperLink,
+            }}
+            render={description}
+            h
+          />
+          {cta?.link?.url ? CTA : null}
+        </div>
+      ) : null}
     </StyledCard>
   );
 };
