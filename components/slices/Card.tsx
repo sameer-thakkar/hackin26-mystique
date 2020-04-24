@@ -72,6 +72,12 @@ const StyledCard = styled.div((props) => {
     top: unset;
     display: block;
   }
+  @media(max-width: 768px){
+    grid-template-columns: auto;
+    img{
+      height: 223px;
+    }
+  }
 `;
 });
 

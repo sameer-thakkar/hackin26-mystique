@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import sliceHandler from '../Slices';
 import { FULL_WIDTH_SLICES } from '../../constants';
-import { COLORS, GRAPHIK } from '../../constants/ui-constants';
+import { COLORS, GRAPHIK, AVENIR } from '../../constants/ui-constants';
 
 export const StyledLongForm = styled.div`
   font-family: ${GRAPHIK.FONT_STACK};
@@ -25,8 +25,8 @@ export const StyledLongForm = styled.div`
   h2 {
     display: inline-block;
     color: ${COLORS.FOUR_BLACK};
-    font-size: 24px;
-    font-weight: 500;
+    font-size: 30px;
+    font-weight: ${AVENIR.BLACK};
   }
   h2::after {
     content: '';
@@ -34,7 +34,7 @@ export const StyledLongForm = styled.div`
     display: block;
     height: 3px;
     background: #ec1943;
-    margin-top: 10px;
+    margin-top: 20px;
   }
   h3 {
     font-size: 1.4rem;
