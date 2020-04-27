@@ -1,4 +1,5 @@
 module.exports = [
+  'www.visitburjkhalifa.com',
   'waterbom.bali-tickets.com',
   'splash-waterpark.bali-tickets.com',
   'safari-and-marine-park.bali-tickets.com',
