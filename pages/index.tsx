@@ -272,6 +272,10 @@ export default class Page extends React.Component<any, any> {
                 (ref) => ref.type === CUSTOM_TYPES.HEADER
               )[0];
 
+              const poweredByHeadout =
+                completeMicrosite.data.data?.enable_powered_by_headout_logo ||
+                baseLangData.data?.enable_powered_by_headout_logo;
+
               const micrositeData = {
                 ...completeMicrosite,
                 data: {
@@ -295,12 +299,10 @@ export default class Page extends React.Component<any, any> {
                       : baseLangData.data.logo_redirection_url,
                     enable_earliest_availability:
                       baseLangData.data.enable_earliest_availability,
-                    enable_powered_by_headout_logo: completeMicrosite.data.data
-                      .enable_powered_by_headout_logo
-                      ? completeMicrosite.data.data
-                          .enable_powered_by_headout_logo === 'Yes'
-                      : baseLangData.data.enable_powered_by_headout_logo ===
-                        'Yes',
+                    enable_powered_by_headout_logo:
+                      typeof poweredByHeadout === 'string'
+                        ? poweredByHeadout === 'Yes'
+                        : poweredByHeadout,
                     baseLangPageTitle: baseLangData.data.title,
                   },
                 },
