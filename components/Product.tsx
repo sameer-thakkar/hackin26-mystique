@@ -324,7 +324,9 @@ const Product = (props) => {
   const boosterHasIcon = booster?.filter((i) => i.type === 'image').length > 0;
   const descriptorsCsv = descriptors || scorpioData.descriptors;
   const cardTitle = title || scorpioData.title;
-  const descriptorsList = descriptorsCsv ? descriptorsCsv.split(',') : [];
+  const descriptorsList = descriptorsCsv
+    ? descriptorsCsv.match(/(("|').*?("|')|[^",\s]+)(?=\s*,|\s*$)/g)
+    : [];
   let url = host || window.location.host;
   const isDev = url.includes('localhost');
   const currentHost = !isDev ? url : parse(uid, true).pathname;
@@ -350,7 +352,7 @@ const Product = (props) => {
                 <>
                   {index !== 0 && <div className="bullet">•</div>}
                   <div key={index} className="tour-tag">
-                    {tag}
+                    {tag.replace(/['"]+/g, '')}
                   </div>
                 </>
               );
