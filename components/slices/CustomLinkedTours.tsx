@@ -7,7 +7,7 @@ import { tourListApiParser } from '../../utils/DataParsers';
 import RichContent from '../UI/RichContent';
 import { MBContext } from '../../contexts/MBContext';
 import { AVENIR, COLORS, GRAPHIK } from '../../constants/ui-constants';
-import { DESIGN } from '../../constants';
+import { DESIGN, CURRENCY_SYMBOL_MAP } from '../../constants';
 
 const Tour = styled.a`
   display: grid;
@@ -149,7 +149,7 @@ const CustomLinkedTours = ({
                 <TitlePriceCombo>
                   <Title>{tour.title}</Title>
                   <LocalisedPrice
-                    currencySymbol={tour.currencySymbol}
+                    currencySymbol={CURRENCY_SYMBOL_MAP[tour.currency]}
                     price={tour.price}
                     lang={lang}
                   />
