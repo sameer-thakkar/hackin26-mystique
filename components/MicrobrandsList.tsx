@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { tourListApiParser } from '../utils/DataParsers';
+import { tourListApiParser } from '../utils/dataParsers';
 import { LinkCards } from './slices/MicrobrandCards';
 import styled from 'styled-components';
 import { AVENIR } from '../constants/ui-constants';

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import Image from '../UI/Image';
 import { shortCodeSerializer } from '../../utils/shortCodes';
-import { tourListApiParser } from '../../utils/DataParsers';
+import { tourListApiParser } from '../../utils/dataParsers';
 
 const StyledMBCards = styled.div`
   display: grid;

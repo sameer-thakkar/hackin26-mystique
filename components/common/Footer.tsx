@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Image from '../UI/Image';
-import SocialLinks from '../SocialLinks';
+import SocialLinks from '../UI/SocialLinks';
 import sliceHandler from '../Slices';
 import * as labels from '../../constants/localization/labels';
 import { POWERED_BY_HEADOUT, WHITE_BLIP } from '../../public/static/svg-icons';

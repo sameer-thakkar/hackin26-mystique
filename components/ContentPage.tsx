@@ -16,10 +16,10 @@ import {
   ALLOW_IMMEDIEATE_NESTING,
 } from '../constants';
 import { groupSlices } from '../utils/helper';
-import allToursParser from '../utils/alltoursParser';
+import allToursParser from '../utils/allToursParser';
 import { ProductsContextProvider } from '../contexts/Products';
 import { InteractionContextProvider } from '../contexts/Interaction';
-import { tourListApiParser } from '../utils/DataParsers';
+import { tourListApiParser } from '../utils/dataParsers';
 import { COLORS, AVENIR, GRAPHIK } from '../constants/ui-constants';
 
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });

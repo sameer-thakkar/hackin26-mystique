@@ -7,8 +7,8 @@ import { withRouter } from 'next/router';
 import populateHead from '../common/meta';
 import { InteractionContextProvider } from '../../contexts/Interaction';
 import { docCookies, genManualSlice } from '../../utils/helper';
-import allToursParser from '../../utils/alltoursParser';
-import { tourListApiParser } from '../../utils/DataParsers';
+import allToursParser from '../../utils/allToursParser';
+import { tourListApiParser } from '../../utils/dataParsers';
 class MicrositeV2 extends Component<any, any> {
   constructor(props) {
     super(props);

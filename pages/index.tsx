@@ -15,7 +15,7 @@ import {
   COMMON_DATA_PROPS_FOR_LISTICLE,
 } from '../constants';
 import { redirectTo, getPrismicProps, reflect } from '../utils';
-import { uncategorizedToursListParser } from '../utils/DataParsers';
+import { uncategorizedToursListParser } from '../utils/dataParsers';
 import { MBContextProvider } from '../contexts/MBContext';
 import { toursTabSliceHandler } from '../components/Slices';
 import 'lazysizes';

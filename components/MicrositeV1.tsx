@@ -7,8 +7,8 @@ import LongForm from './common/LongForm';
 import populateHead from './common/meta';
 import Footer from './common/Footer';
 import PopulateUncategorizedProducts from './PopulateUncategorizedProducts';
-import Analytics from '../utils/Analytics';
-import allToursParser from '../utils/alltoursParser';
+import Analytics from '../utils/analytics';
+import allToursParser from '../utils/allToursParser';
 import Alert from './UI/Alert';
 import * as labels from '../constants/localization/labels';
 import DismissAlert from './UI/DismissAlert';
@@ -21,7 +21,7 @@ import {
 } from '../constants';
 import { groupSlices } from '../utils/helper';
 import { ProductsContextProvider } from '../contexts/Products';
-import { tourListApiParser } from '../utils/DataParsers';
+import { tourListApiParser } from '../utils/dataParsers';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });

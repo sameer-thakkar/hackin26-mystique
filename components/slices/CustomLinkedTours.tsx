@@ -3,7 +3,7 @@ import Image from '../UI/Image';
 import LocalisedPrice from '../UI/LPrice';
 import { STAR_FULL } from '../../public/static/svg-icons';
 import { useEffect, useState, useContext } from 'react';
-import { tourListApiParser } from '../../utils/DataParsers';
+import { tourListApiParser } from '../../utils/dataParsers';
 import RichContent from '../UI/RichContent';
 import { MBContext } from '../../contexts/MBContext';
 import { AVENIR, COLORS, GRAPHIK } from '../../constants/ui-constants';

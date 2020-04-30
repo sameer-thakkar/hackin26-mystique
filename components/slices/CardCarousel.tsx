@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import Swiper from '../Swiper';
 import { LinkCards } from './MicrobrandCards';
-import { tourListApiParser } from '../../utils/DataParsers';
+import { tourListApiParser } from '../../utils/dataParsers';
 
 const CardCarouselContainer = styled.div`
   max-width: 1200px;
