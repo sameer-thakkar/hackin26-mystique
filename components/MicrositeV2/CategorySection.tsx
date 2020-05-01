@@ -2,6 +2,26 @@ import PopulateProducts from './PopulateProducts';
 import { AVENIR, GRAPHIK, COLORS } from '../../constants/ui-constants';
 import { useContext } from 'react';
 import ProductsContext from '../../contexts/Products';
+
+/**
+ * # Tours Section / Carousel
+ * This Allows you to show V2 Tour Cards by refering to them via their tgid, this requires the tour details to be already added on the microsite under the "All Tours" tab ([learn more](https://headout.github.io/mystique/?path=/docs/general-v2-products--page)),
+ *
+ * ### Non-repeatable zone
+ * - Heading
+ *  Title for the Section, Mandatory Field.
+ * - Description
+ *  Description for the section in RichText.
+ * - CSV TGIDs
+ *  Comma Separated Values of TGIDs, (Ex: 2936, 10051,...)
+ *
+ * ### Repeatable zone
+ * Nil.
+ *
+ * PS: Tours that are not added in "All Tours" will obviously not be shown, in addition to that tours that are currently unavailable will also be hidden form view automatically.
+ *
+ */
+
 const CategorySection = (props) => {
   const {
     tgidsArray,
