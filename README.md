@@ -22,7 +22,6 @@ Mystique is the tech that powers over 100 different microbrands at Headout.
 - Setup a `.env` file in the root of the repository:
 
   ```bash
-  SENDGRID_API_KEY=#Sendgrid api key
   SLACK_GRP_BKNG_WEBHOOK=#Slack webhook
   AMPLITUDE_PROD=#Amplitude production
   AMPLITUDE_TEST=#Amplitude test

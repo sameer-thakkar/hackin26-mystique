@@ -36,7 +36,12 @@ export const SearchPage = (props) => {
           handleResults={handleResults}
           isMobile={isMobile}
         />
-        <span onClick={loadHomepage} className="icon">
+        <span
+          onClick={loadHomepage}
+          role="button"
+          tabIndex={0}
+          className="icon"
+        >
           {CLOSE_WHITE}
         </span>
       </div>
@@ -54,12 +59,12 @@ export const SearchPage = (props) => {
       ) : null}
       <div className="search-results">
         {results.length
-          ? results.map((result, index) => {
+          ? results.map(({ item }, index) => {
               return (
                 <SearchItem
                   key={index}
                   onSearchResultClick={searchItemClick}
-                  {...result}
+                  {...item}
                 />
               );
             })

@@ -1,13 +1,10 @@
-import sgMail from '@sendgrid/mail';
-import emailTemplate from '../../templates/group-form-email';
 import SlackWebhook from 'slack-webhook';
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const slack = new SlackWebhook(process.env.SLACK_GRP_BKNG_WEBHOOK);
 
-const makeSlackMsgObj = data => {
+const makeSlackMsgObj = (data) => {
   let total = 0;
-  data.group.split(',').forEach(type => {
+  data.group.split(',').forEach((type) => {
     total += +type.split(':')[1];
   });
   return {
@@ -105,13 +102,6 @@ const FormHandler = async (req, res) => {
           : 'Tour',
     };
 
-    let emailObject = {
-      to: `groups@headout.com`,
-      from: `${formData.fname.split(' ')[0]} <${postBody.email}>`,
-      subject: 'Group Booking Request Received',
-      html: emailTemplate(formData),
-    };
-
     const zenMap = {
       adults: 360021522291,
       children: 360021522291,
@@ -125,7 +115,7 @@ const FormHandler = async (req, res) => {
       lang: 360021471332,
     };
 
-    const zenFields = Object.keys(zenMap).map(key => {
+    const zenFields = Object.keys(zenMap).map((key) => {
       return {
         id: zenMap[key],
         value: formData[key],
@@ -155,13 +145,12 @@ const FormHandler = async (req, res) => {
         }),
       }
     )
-      .then(d => d.json())
-      .then(d => {
+      .then((d) => d.json())
+      .then((d) => {
         return d;
       });
     let slackMessageObject = makeSlackMsgObj(formData);
     await slack.send(slackMessageObject);
-    // await sgMail.send(emailObject);
 
     res.statusCode = 200;
     res.json({ status: 'Success', body: data.ticket.id });

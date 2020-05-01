@@ -66,7 +66,6 @@ module.exports = {
   env: {
     AMPLITUDE_PROD: '@amplitude_prod',
     AMPLITUDE_DEV: '@amplitude_dev',
-    SENDGRID_API_KEY: '@sendgrid_api_key_sec',
     SLACK_GRP_BKNG_WEBHOOK: '@slack_grp_bkng_webhook_sec',
     ZENDESK_GRP_BKNG_TOKEN: '@zendesk_grp_bkng_token',
   },

@@ -281,11 +281,11 @@ const Header = (props) => {
                 {results.length ? (
                   <div>
                     <div className="results">
-                      {results.map((experience, index) => {
+                      {results.map(({ item }, index) => {
                         return (
                           <SearchItem
                             key={index}
-                            {...experience}
+                            {...item}
                             onSearchResultClick={onSearchResultClick}
                           />
                         );

@@ -1,13 +1,37 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+} from 'react';
 import Fuse from 'fuse.js';
 import { SEARCH_ICON, CLOSE_WHITE } from '../../public/static/svg-icons';
 import { GRAPHIK, COLORS } from '../../constants/ui-constants';
 import InteractionContext from '../../contexts/Interaction';
 
-export const SearchBox = props => {
-  let fuse;
+export const SearchBox = (props) => {
   let interactionContext = useContext(InteractionContext);
   const [query, setQuery] = useState('');
+  const fuse = useRef(null);
+
+  const search = useCallback(
+    (str) => {
+      setQuery(str);
+      if (str.length >= 3) {
+        if (interactionContext.activeTour.tgid) interactionContext.closeTour();
+        const results = fuse.current.search(str);
+        props.handleResults(results.slice(0, 5));
+      } else {
+        props.handleResults([]);
+      }
+    },
+    [interactionContext, props]
+  );
+
+  const handleClearSearch = useCallback(() => {
+    search('');
+  }, [search]);
 
   useEffect(() => {
     const opts = {
@@ -15,31 +39,15 @@ export const SearchBox = props => {
       threshold: 0.4,
       keys: ['title'],
     };
-    const searchableTours = props.allToursArray.filter(tour => tour.available);
-    fuse = new Fuse(searchableTours, opts);
+    const searchableTours = props.allToursArray.filter(
+      (tour) => tour.available
+    );
+    fuse.current = new Fuse(searchableTours, opts);
 
     if (props.clearSearch) {
-      clearSearch();
+      handleClearSearch();
     }
-  }, [props.allToursArray]);
-
-  const search = str => {
-    setQuery(str);
-
-    if (str.length >= 3) {
-      if (interactionContext.activeTour.tgid) interactionContext.closeTour();
-      const results = fuse.search(str);
-      props.handleResults(results.slice(0, 5));
-    } else {
-      props.handleResults([]);
-    }
-  };
-
-  const clearSearch = () => {
-    search('');
-  };
-
-  const { isMobile } = props;
+  }, [props.allToursArray, props.clearSearch, handleClearSearch, fuse]);
 
   return (
     <div className="rich-input">
@@ -47,7 +55,7 @@ export const SearchBox = props => {
         type="text"
         placeholder="Search"
         value={query}
-        onChange={e => {
+        onChange={(e) => {
           search(e.currentTarget.value);
         }}
       />
@@ -55,8 +63,10 @@ export const SearchBox = props => {
       {query.length > 0 ? (
         <div
           className="close-icon"
+          role="button"
+          tabIndex={0}
           onClick={() => {
-            clearSearch();
+            handleClearSearch();
           }}
         >
           {CLOSE_WHITE}
