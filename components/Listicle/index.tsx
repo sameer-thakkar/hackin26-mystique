@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Prismic from 'prismic-javascript';
 import styled from 'styled-components';
-import moment from 'moment';
+import dayjs from 'dayjs';
+import isBetween from 'dayjs/plugin/isBetween';
 import { useWindowWidth } from '@react-hook/window-size';
 import { RichText } from 'prismic-reactjs';
 import PopulateHead from '../common/meta';
@@ -20,6 +21,8 @@ import { AVENIR, COLORS } from '../../constants/ui-constants';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 import { CHEVRON_LEFT_CIRCLE } from '../../public/static/svg-icons';
 import WhyBookFromUs from './WhyBookFromUs';
+
+dayjs.extend(isBetween);
 
 const BannerWrapper = styled.div`
   margin-top: 80px;
@@ -164,27 +167,27 @@ const getToursAvailability = async (tours = []) => {
   data.forEach((item) => {
     item.slots.forEach((slot) => {
       if (
-        moment(slot.startDate).isBetween(
-          moment(),
-          moment().add(1, 'months').date(0)
+        dayjs(slot.startDate).isBetween(
+          dayjs(),
+          dayjs().add(1, 'month').date(0)
         )
       ) {
         if (!result.monthOne.includes(item.tgid)) {
           result.monthOne.push(item.tgid);
         }
       } else if (
-        moment(slot.startDate).isBetween(
-          moment().add(1, 'months').date(1),
-          moment().add(2, 'months').date(1)
+        dayjs(slot.startDate).isBetween(
+          dayjs().add(1, 'month').date(1),
+          dayjs().add(2, 'month').date(1)
         )
       ) {
         if (!result.monthTwo.includes(item.tgid)) {
           result.monthTwo.push(item.tgid);
         }
       } else if (
-        moment(slot.startDate).isBetween(
-          moment().add(2, 'months').date(1),
-          moment().add(3, 'months').date(1)
+        dayjs(slot.startDate).isBetween(
+          dayjs().add(2, 'month').date(1),
+          dayjs().add(3, 'month').date(1)
         )
       ) {
         if (!result.monthTwo.includes(item.tgid)) {
@@ -210,9 +213,9 @@ const Listicle = (props) => {
   const width = useWindowWidth();
   const filterOptions = {
     all: 'All Shows',
-    monthOne: moment().format('MMMM'),
-    monthTwo: moment().add(1, 'months').format('MMMM'),
-    monthThree: moment().add(2, 'months').format('MMMM'),
+    monthOne: dayjs().format('MMMM'),
+    monthTwo: dayjs().add(1, 'month').format('MMMM'),
+    monthThree: dayjs().add(2, 'month').format('MMMM'),
   };
 
   // Slots effect

@@ -1,61 +1,73 @@
-import React from "react";
-import Moment from "moment";
+import React from 'react';
+import dayjs from 'dayjs';
+import calendar from 'dayjs/plugin/calendar';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+import { HEADOUT_API_ENDPOINT } from '../constants';
 
-type NextAvailProps = {
+dayjs.extend(calendar);
+dayjs.extend(advancedFormat);
+
+type NextAvailableProps = {
   tid: number;
   text: string;
   parentProps: any;
 };
-type NextAvailState = {
+
+type NextAvailableState = {
   error: any;
   isLoaded: Boolean;
   data: any;
 };
-class NextAvailable extends React.Component<NextAvailProps, NextAvailState> {
+
+class NextAvailable extends React.Component<
+  NextAvailableProps,
+  NextAvailableState
+> {
   static defaultProps = {
-    text: "Available"
+    text: 'Available',
   };
+
   constructor(props) {
     super(props);
     this.state = {
       error: null,
       isLoaded: false,
-      data: []
+      data: [],
     };
   }
-  momentFormat = text => {
+
+  dayjsFormat = (text) => {
     return {
       sameDay: `[${text} Today]`,
       nextDay: `[${text} Tomorrow]`,
       lastWeek: `[last] dddd`,
       nextWeek: `[${text} on] Do MMM`,
       sameWeek: `ddd`,
-      sameElse: `[${text} on] Do MMM`
+      sameElse: `[${text} on] Do MMM`,
     };
   };
-  getFormattedDate = date => {
-    const momentDate = Moment(date).calendar(
-      null,
-      this.momentFormat("Available")
-    );
-    return momentDate.replace(/\s (\d)(st|nd|rd|th)/g, "$1<sup>$2</sup>");
+
+  getFormattedDate = (date) => {
+    const dayjsDate = dayjs(date).calendar(null, this.dayjsFormat('Available'));
+    return dayjsDate.replace(/\s (\d)(st|nd|rd|th)/g, '$1<sup>$2</sup>');
   };
+
   componentDidMount() {
     fetch(
-      `https://api.headout.com/api/public/v1/inventory/list-by/variant?variantId=${this.props.tid}`
+      `${HEADOUT_API_ENDPOINT}/public/v1/inventory/list-by/variant?variantId=${this.props.tid}`
     )
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(
-        data => {
+        (data) => {
           this.setState({
             isLoaded: true,
-            data
+            data,
           });
         },
-        error => {
+        (error) => {
           this.setState({
             isLoaded: true,
-            error
+            error,
           });
         }
       );
@@ -66,14 +78,14 @@ class NextAvailable extends React.Component<NextAvailProps, NextAvailState> {
     let nextAvailable = data.items ? data.items[0] : [];
 
     if (error || !isLoaded) {
-      return "";
+      return '';
     } else {
       return nextAvailable ? (
         <span className="inline-availability">
           {this.getFormattedDate(nextAvailable.startDateTime)}
         </span>
       ) : (
-        ""
+        ''
       );
     }
   }

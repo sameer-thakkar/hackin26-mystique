@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Modal from 'react-modal';
 import Select from 'react-select';
 import DatePicker from 'react-datepicker';
-import moment from 'moment';
+import dayjs from 'dayjs';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import styled from 'styled-components';
 import PhoneInput from 'react-phone-input-2';
 import { RichText } from 'prismic-reactjs';
@@ -26,6 +27,8 @@ import {
 import { MODAL_STYLE, AVENIR, GRAPHIK } from '../constants/ui-constants';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-phone-input-2/lib/style.css';
+
+dayjs.extend(isSameOrBefore);
 
 const Checkbox = styled.div`
   font-family: ${GRAPHIK.FONT_STACK};
@@ -485,8 +488,6 @@ export default class GroupBooking extends Component<any, any> {
 
   handleDateChange = (date) => this.setState({ date });
 
-  formatDate = (date) => moment(date).format('DD/MM/YYYY');
-
   validateInputData = () => {
     const {
       fname,
@@ -637,7 +638,7 @@ export default class GroupBooking extends Component<any, any> {
     } = this.state;
     const hasError = this.validateInputData();
     if (!hasError) {
-      let formattedDate = this.formatDate(date);
+      let formattedDate = dayjs(date).format('DD/MM/YYYY');
       let group = `Adults: ${adults} ${children ? ', Child:' + children : ''}`;
       const data = {
         fname,
@@ -669,10 +670,12 @@ export default class GroupBooking extends Component<any, any> {
   getDatesInRange = (startDate, endDate) => {
     const dateRange = [];
     let nextDate = startDate;
-    while (moment(nextDate).isSameOrBefore(moment(endDate))) {
-      dateRange.push(moment(nextDate).toDate());
-      nextDate = moment(nextDate).add(1, 'days');
+
+    while (dayjs(nextDate).isSameOrBefore(dayjs(endDate))) {
+      dateRange.push(dayjs(nextDate).toDate());
+      nextDate = dayjs(nextDate).add(1, 'day');
     }
+
     return dateRange;
   };
 
@@ -848,8 +851,8 @@ export default class GroupBooking extends Component<any, any> {
                       <DatePicker
                         selected={this.state.date}
                         onChange={this.handleDateChange}
-                        minDate={moment()
-                          .add(blockNDaysGroupBooking, 'days')
+                        minDate={dayjs()
+                          .add(blockNDaysGroupBooking, 'day')
                           .toDate()}
                         excludeDates={[...blackoutDateRange]}
                         dateFormat="dd/MM/yyyy"

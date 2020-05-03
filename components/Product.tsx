@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import parse from 'url-parse';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import ReactMarkdown from 'react-markdown/with-html';
 import * as labels from '../constants/localization/labels';
 import LocalisedPrice from './UI/LPrice';
@@ -12,6 +12,7 @@ import { shortCodeSerializer } from '../utils/shortCodes';
 import { ANALYTICS_EVENTS } from '../constants';
 import { COLORS, GRAPHIK } from '../constants/ui-constants';
 import { CALENDAR } from '../public/static/svg-icons';
+import '../utils/dayjsLocale';
 
 const isLengthyArray = (item) => Array.isArray(item) && item.length;
 
@@ -314,11 +315,11 @@ const Product = (props) => {
   };
 
   const getDate = (date, currentLanguage) => {
-    const today = moment().format('YYYY-MM-DD');
-    const tomorrow = moment().add(1, 'days').format('YYYY-MM-DD');
+    const today = dayjs().format('YYYY-MM-DD');
+    const tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');
     if (date === today) return labels[currentLanguage].TODAY;
     if (date === tomorrow) return labels[currentLanguage].TOMORROW;
-    return moment(date).locale(currentLanguage).format('MMM Do');
+    return dayjs(date).locale(currentLanguage).format('MMM Do');
   };
 
   const boosterHasIcon = booster?.filter((i) => i.type === 'image').length > 0;
