@@ -240,9 +240,7 @@ const Header = (props) => {
   const allToursArray = Object.values(allTours);
   const hasDropdownLinks = enableDropdownLinks && dropdownLinks.length;
   const hasLanguageDropdown =
-    languageProps.availableLanguages.length > 1 &&
-    languageProps.languages.length > 1 &&
-    languageProps.languageDropdown;
+    languageProps.languages.length > 1 && languageProps.languageDropdown;
   const groupedHeaderSlices = groupSlices(
     headerSlices,
     ALLOW_IMMEDIEATE_NESTING
