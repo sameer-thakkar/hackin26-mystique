@@ -39,9 +39,9 @@ const allToursParser = (CMSData, scorpioData, pricingData: ToursData) => {
     contentOrderLabels.forEach((label) => {
       if (!content[label.labelID]) return;
       const useGLOBAL = content[label.labelID].align == 'Global';
-      const blockContentLen = RichText.asText(
-        content[label.labelID].content
-      ).trim().length;
+      const blockContentLen =
+        RichText.asText(content[label.labelID].content).trim().length ||
+        content[label.labelID].content.filter((c) => c.type === 'image');
       const finalContent =
         blockContentLen === 0
           ? label.globalContent

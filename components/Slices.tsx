@@ -158,6 +158,8 @@ const sliceHandler = (slice, props: any = {}) => {
           vendorLinks={vendorLinks}
           orderedLabels={orderedLabels}
           slice={slice}
+          designType={slice.primary.design_type}
+          showImage={slice.primary.show_image}
         />
       );
     case 'interactive_image':

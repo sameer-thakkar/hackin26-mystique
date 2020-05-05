@@ -39,7 +39,9 @@ export const COLORS = {
   GREY_7C: '#7C7C7C',
   GREY_G6: '#E2E2E2',
   GREY_G3: '#666666',
+  GREY_6D: '#6D6C6E',
   FLOAT_PURPS: '#F8F6FF',
+  HOUT_CANDY: '#FA2F90',
 };
 
 export const SIZES = {

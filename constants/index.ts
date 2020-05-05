@@ -207,3 +207,8 @@ export const ALLOW_IMMEDIEATE_NESTING = true;
 export const DONT_AUTO_SCROLL = false;
 
 export const HEADOUT_API_ENDPOINT = 'https://api.headout.com/api';
+
+export const TOUR_COMPARISION_DESIGN = {
+  TYPE_1: 'Type-1',
+  TYPE_2: 'Type-2',
+};

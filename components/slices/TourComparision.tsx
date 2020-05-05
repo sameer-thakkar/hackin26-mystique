@@ -12,6 +12,7 @@ import { AVENIR, COLORS, GRAPHIK } from '../../constants/ui-constants';
 import { shortCodeSerializerWithParentProps } from '../../utils/shortCodes';
 import { MBContext } from '../../contexts/MBContext';
 import { CHEVRON_DOWN } from '../../public/static/svg-icons';
+import { TOUR_COMPARISION_DESIGN } from '../../constants';
 
 const StyledTourComparisionTable = styled.div`
   width: auto;
@@ -56,6 +57,12 @@ const StyledTourComparisionTable = styled.div`
     grid-auto-flow: row;
     grid-auto-rows: max-content;
     grid-row-gap: 32px;
+    ${({ designType }) =>
+      designType == TOUR_COMPARISION_DESIGN.TYPE_2
+        ? `
+      grid-row-gap: 16px;
+    `
+        : ``}
     grid-column-gap: 8px;
   }
   .cta-table-wrap .row {
@@ -71,8 +78,21 @@ const StyledTourComparisionTable = styled.div`
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: repeat(4, 1fr) ${({ isMobile }) =>
-        isMobile ? '16px' : ''};
+      isMobile ? '16px' : ''};
     grid-column-gap: 24px;
+    ${({ designType, showImage }) =>
+      designType == TOUR_COMPARISION_DESIGN.TYPE_2
+        ? `
+      border-bottom: 1px solid ${COLORS.GREY_G6};
+      padding-bottom: 16px;
+      &:nth-of-type(0n+1),
+      &:last-child
+      ${showImage ? ', &:nth-of-type(0n+2)' : ''}{
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+    `
+        : ``}
   }
   .tour-booster {
     align-self: end;
@@ -117,6 +137,12 @@ const StyledTourComparisionTable = styled.div`
     background: ${COLORS.WHITE};
     z-index: 15;
     padding-bottom: 8px;
+    ${({ designType }) =>
+      designType == TOUR_COMPARISION_DESIGN.TYPE_2
+        ? `
+      margin-bottom: -8px;
+    `
+        : ``}
   }
 
   .column p {
@@ -128,6 +154,12 @@ const StyledTourComparisionTable = styled.div`
   }
   .tour-image {
     margin-bottom: -32px;
+    ${({ designType }) =>
+      designType == TOUR_COMPARISION_DESIGN.TYPE_2
+        ? `
+      margin-bottom: -8px;
+  `
+        : ``}
   }
   .column .tour-image img {
     width: 100%;
@@ -147,13 +179,34 @@ const StyledTourComparisionTable = styled.div`
     line-height: 18px;
     letter-spacing: 0.5px;
     color: ${COLORS.GREY_G4};
+    ${({ designType }) =>
+      designType == TOUR_COMPARISION_DESIGN.TYPE_2
+        ? `
+      color: ${COLORS.GREY_6D};
+      font-size: 14px;
+      line-height: 22px;
+    `
+        : ``}
   }
+  
   .block-content {
     font-size: 15px;
     line-height: 20px;
     font-family: ${GRAPHIK.FONT_STACK};
     font-weight: ${GRAPHIK.REGULAR};
     color: ${COLORS.FOUR_BLACK};
+    ${({ designType }) =>
+      designType == TOUR_COMPARISION_DESIGN.TYPE_2
+        ? `
+      font-size: 14px;
+      line-height: 22px;
+    `
+        : ``}
+    img {
+      height: 20px;
+      width: 20px;
+      object-fit: cover;
+    }
   }
   .vendor-cta {
     margin-top: -8px;
@@ -175,7 +228,19 @@ const StyledTourComparisionTable = styled.div`
     padding-left: 1em;
     display: grid;
     grid-row-gap: 8px;
+    margin: 0;
   }
+  color: ${COLORS.GREY_6D};
+  font-size: 14px;
+  line-height: 22px;
+  ${({ designType }) =>
+    designType == TOUR_COMPARISION_DESIGN.TYPE_2
+      ? `
+    a {
+      color: ${COLORS.HOUT_CANDY};
+    }
+    `
+      : ``}
   @media (max-width: 768px) {
     .full-width-wrap {
       margin: 0 -16px;
@@ -191,17 +256,34 @@ const StyledTourComparisionTable = styled.div`
     }
 
     .table {
-      grid-row-gap: 32px;
       position: relative;
     }
     .row {
       grid-column-gap: 12px;
-      grid-template-columns: 4px repeat(${({ tourCount }) => tourCount}, 164px) 4px;
+      ${({ designType }) =>
+        designType == TOUR_COMPARISION_DESIGN.TYPE_2
+          ? `
+      grid-column-gap: 16px;
+      `
+          : ``}
+      grid-template-columns: 4px repeat(${({ tourCount }) =>
+        tourCount}, 164px) 4px;
+      position: relative;
     }
     .row::before {
-      dispaly: grid;
+      display: grid;
       content: '';
     }
+    .row::after{
+      content: '';
+      width: 16px;
+      background: #fff;
+      height: 2px;
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+    }
+
     .column .tour-image img {
       width: auto;
       height: 102px;
@@ -210,7 +292,13 @@ const StyledTourComparisionTable = styled.div`
       visibility: initial;
     }
     .flat-price-block .current-price {
+    ${({ designType }) =>
+      designType == TOUR_COMPARISION_DESIGN.TYPE_2
+        ? ``
+        : `
       font-size: 15px;
+    `}
+      
     }
     .flat-price-block .old-price {
       font-size: 12px;
@@ -235,14 +323,24 @@ const StyledTourComparisionTable = styled.div`
       grid-row-gap: 8px;
     }
     .block-label {
-      font-size: 12px;
+      ${({ designType }) =>
+        designType == TOUR_COMPARISION_DESIGN.TYPE_2
+          ? ``
+          : `
+        font-size: 12px;
+        line-height: 12px;
+      `}
       color: ${COLORS.GREY_75};
       font-family: ${GRAPHIK.FONT_STACK};
       font-weight: ${GRAPHIK.MEDIUM};
-      line-height: 12px;
     }
     .block-content {
+    ${({ designType }) =>
+      designType == TOUR_COMPARISION_DESIGN.TYPE_2
+        ? ``
+        : `
       font-size: 15px;
+    `}
     }
     .comparision-heading {
       font-family: ${GRAPHIK.FONT_STACK};
@@ -296,6 +394,14 @@ const StyledTourComparisionTable = styled.div`
  *
  *  > Sets a short description for Comparision Table.
  *
+ * - Show Image
+ *
+ *  > Set to no, if you want to hide the image.
+ *
+ * -Design Type,
+ *  > Currently there are two designs for Comparision Table, select the appropriate design you require.
+ *
+ *
  *
  * - CSV TGIDs List:
  *
@@ -314,6 +420,8 @@ const TourComparisonTable = (props) => {
     orderedLabels,
     vendors,
     vendorLinks,
+    designType = 'Type-1',
+    showImage = true,
   } = props;
   const [isExpanded, setExpand] = useState(false);
   const NB_SPACE = '\u00A0';
@@ -374,22 +482,26 @@ const TourComparisonTable = (props) => {
       isExpanded={isExpanded}
       isMobile={isMobile}
       tourCount={tgidArray.length}
+      designType={designType}
+      showImage={showImage}
     >
       <div className="comparision-heading">{heading}</div>
       <div className="comparision-description">{description}</div>
       <div className="full-width-wrap">
         <div className="table">
-          <div className="row max-content" style={{ zIndex: -1 }}>
-            {content_normalized_tours.map((tour, index) => {
-              return (
-                <div className="column" key={index}>
-                  <div className="tour-image">
-                    <Image url={tour.productImage} height={176} width={282} />
+          {showImage ? (
+            <div className="row max-content" style={{ zIndex: -1 }}>
+              {content_normalized_tours.map((tour, index) => {
+                return (
+                  <div className="column" key={index}>
+                    <div className="tour-image">
+                      <Image url={tour.productImage} height={176} width={282} />
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          ) : null}
           <div className="row sticky">
             {content_normalized_tours.map((tour, index) => {
               return (
@@ -438,7 +550,9 @@ const TourComparisonTable = (props) => {
               return (
                 <div className="column flat-price-block" key={index}>
                   <div className="content-block">
-                    <div className="block-label">Prices Starting</div>
+                    {designType == TOUR_COMPARISION_DESIGN.TYPE_1 ? (
+                      <div className="block-label">Prices Starting</div>
+                    ) : null}
                     <div className="block-content">
                       <span className="current-price">
                         <LocalisedPrice
