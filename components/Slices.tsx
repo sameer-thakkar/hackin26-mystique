@@ -18,7 +18,7 @@ const ImageTextGrid = dynamic(() => import('./slices/ImageTextGrid'));
 const InternalContentCard = dynamic(() =>
   import('./slices/InternalContentCard')
 );
-const Tabs = dynamic(() => import('./slices/Tabs'));
+const PageTabs = dynamic(() => import('./slices/PageTabs'));
 const FWActionCard = dynamic(() => import('./slices/FWActionCard'));
 const RichTextBox = dynamic(() => import('./slices/RichTextBox'));
 const FeatureBox = dynamic(() => import('./slices/FeatureBox'));
@@ -67,7 +67,12 @@ const sliceHandler = (slice, props: any = {}) => {
         />
       );
     case 'page_tabs':
-      return <Tabs tabs={slice.items} />;
+      return (
+        <PageTabs
+          tabs={slice.items}
+          align={slice.primary?.tab_alignment || 'center'}
+        />
+      );
     case 'internal_content_card':
       return (
         <InternalContentCard title={slice.primary.title} cards={slice.items} />

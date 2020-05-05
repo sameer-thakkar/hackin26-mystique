@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import dynamic from 'next/dynamic';
+import styled from 'styled-components';
 import { scroller } from 'react-scroll';
 import Header from './common/Header';
 import Banner from './Banner';
@@ -26,6 +27,10 @@ import { tourListApiParser } from '../utils/dataParsers';
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 const MicrobrandList = dynamic(() => import('./MicrobrandsList'));
+
+const CoverSlicesWrapper = styled.div`
+  margin-bottom: 32px;
+`;
 
 export default class MicrositeV1 extends Component<any, any> {
   constructor(props) {
@@ -405,6 +410,9 @@ export default class MicrositeV1 extends Component<any, any> {
         })
         .slice(0, bannerLimit || orderedUncategorizedTours.length);
     }
+
+    const coverSlices = this.props.data.data.body4;
+
     return (
       <div>
         <div className="microsite-container">
@@ -476,6 +484,11 @@ export default class MicrositeV1 extends Component<any, any> {
               popupUID={alertPopup.uid}
               currentLanguage={currentLanguage}
             />
+          ) : null}
+          {coverSlices ? (
+            <CoverSlicesWrapper>
+              <LongForm content={coverSlices} isMobile={this.state.isMobile} />
+            </CoverSlicesWrapper>
           ) : null}
           {checkIfToursAvailable ? (
             <PopulateUncategorizedProducts

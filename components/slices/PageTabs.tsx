@@ -1,19 +1,25 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import classNames from 'classnames';
 import LinkResolver from '../LinkResolver';
-import styled from 'styled-components';
 
-const StyledTabs = styled.div`
+const Tabs = styled.div`
   display: flex;
   justify-content: space-between;
   margin: auto;
   border-bottom: 1px solid #ebebeb;
-  ${({ center }) =>
-    center
-      ? `
-  justify-content: space-around;
-`
-      : ''}
+  justify-content: ${({ align }) => {
+    switch (align) {
+      case 'center':
+        return 'space-around';
+      case 'left':
+        return 'flex-start';
+      case 'right':
+        return 'flex-end';
+      default:
+        break;
+    }
+  }};
   .navigation-tab {
     font-weight: 600;
     font-family: Graphik;
@@ -51,7 +57,8 @@ const StyledTabs = styled.div`
     }
   }
 `;
-export default class Tabs extends Component<any, any> {
+
+export default class PageTabs extends Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
@@ -66,9 +73,9 @@ export default class Tabs extends Component<any, any> {
     if (!this.state.isClient) {
       return null;
     }
-    const { tabs } = this.props;
+    const { tabs, align } = this.props;
     return (
-      <StyledTabs center={tabs.length <= 2}>
+      <Tabs align={align}>
         {tabs.map((tab, index) => (
           <LinkResolver key={index} url={tab.tab_link.url}>
             <div
@@ -80,7 +87,7 @@ export default class Tabs extends Component<any, any> {
             </div>
           </LinkResolver>
         ))}
-      </StyledTabs>
+      </Tabs>
     );
   }
 }
