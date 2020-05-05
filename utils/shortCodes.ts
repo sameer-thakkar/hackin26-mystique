@@ -1,6 +1,6 @@
 import React from 'react';
 import InlinePrice from '../components/InlinePrice';
-import NextAvailable from '../components/NextAvailable';
+import NextAvailable from '../components/shortcodes/NextAvailable';
 import InlineInvPrice from '../components/InlineInvPrice';
 import CTA from '../components/shortcodes/CTA';
 import Booster from '../components/Booster';

@@ -1,16 +1,22 @@
 import React from 'react';
+import styled from 'styled-components';
 import dayjs from 'dayjs';
 import calendar from 'dayjs/plugin/calendar';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
-import { HEADOUT_API_ENDPOINT } from '../constants';
+import * as labels from '../../constants/localization/labels';
+import { MBContext } from '../../contexts/MBContext';
+import { HEADOUT_API_ENDPOINT } from '../../constants';
+import { GRAPHIK } from '../../constants/ui-constants';
 
 dayjs.extend(calendar);
 dayjs.extend(advancedFormat);
 
+const Text = styled.span`
+  font-family: ${GRAPHIK.FONT_STACK};
+`;
+
 type NextAvailableProps = {
   tid: number;
-  text: string;
-  parentProps: any;
 };
 
 type NextAvailableState = {
@@ -19,14 +25,26 @@ type NextAvailableState = {
   data: any;
 };
 
+/**
+ *
+ * Use the `next-available` shortcode to fetch and display the next available date of any tour (using a TID).
+ *
+ * Example Use:
+ *
+ * ```js
+ * {next-available tid=16539}
+ * ```
+ *
+ * Properties available:
+ *
+ * - `tid`
+ *  - The tour id of the variant
+ */
+
 class NextAvailable extends React.Component<
   NextAvailableProps,
   NextAvailableState
 > {
-  static defaultProps = {
-    text: 'Available',
-  };
-
   constructor(props) {
     super(props);
     this.state = {
@@ -47,8 +65,11 @@ class NextAvailable extends React.Component<
     };
   };
 
-  getFormattedDate = (date) => {
-    const dayjsDate = dayjs(date).calendar(null, this.dayjsFormat('Available'));
+  getFormattedDate = (date, currentLanguage) => {
+    const dayjsDate = dayjs(date).calendar(
+      null,
+      this.dayjsFormat(labels[currentLanguage].NEXT_AVAILABLE)
+    );
     return dayjsDate.replace(/\s (\d)(st|nd|rd|th)/g, '$1<sup>$2</sup>');
   };
 
@@ -81,9 +102,16 @@ class NextAvailable extends React.Component<
       return '';
     } else {
       return nextAvailable ? (
-        <span className="inline-availability">
-          {this.getFormattedDate(nextAvailable.startDateTime)}
-        </span>
+        <Text className="inline-availability">
+          <MBContext.Consumer>
+            {({ lang }) => {
+              return this.getFormattedDate(
+                nextAvailable.startDateTime,
+                lang || 'en'
+              );
+            }}
+          </MBContext.Consumer>
+        </Text>
       ) : (
         ''
       );
