@@ -97,7 +97,7 @@ export const de = {
   READ_MORE_TEXT: 'Mehr anzeigen',
   SHOW_LESS_TEXT: 'Weniger anzeigen',
   NEXT_AVAILABLE: 'Verfügbar ab',
-  AVAILABLE: 'Verfügbar',
+  AVAILABLE: 'Verfügbar am',
   EARLIEST_AVAILABILITY: 'Früheste verfügbare',
   TODAY: 'Heute',
   TOMORROW: 'Morgen',

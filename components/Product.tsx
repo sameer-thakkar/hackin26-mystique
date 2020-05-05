@@ -326,7 +326,7 @@ const Product = (props) => {
   const descriptorsCsv = descriptors || scorpioData.descriptors;
   const cardTitle = title || scorpioData.title;
   const descriptorsList = descriptorsCsv
-    ? descriptorsCsv.match(/(("|').*?("|')|[^",\s]+)(?=\s*,|\s*$)/g)
+    ? descriptorsCsv.match(/(("|').*?("|')|[^",]+)(?=\s*,|\s*$)/g)
     : [];
   let url = host || window.location.host;
   const isDev = url.includes('localhost');
@@ -348,16 +348,20 @@ const Product = (props) => {
         <div className="header-left">
           <h2 className="tour-title">{cardTitle}</h2>
           <div className="tour-tags">
-            {descriptorsList.map((tag, index) => {
-              return (
-                <>
-                  {index !== 0 && <div className="bullet">•</div>}
-                  <div key={index} className="tour-tag">
-                    {tag.replace(/['"]+/g, '')}
-                  </div>
-                </>
-              );
-            })}
+            {descriptorsList.reduce((acc, item, index) => {
+              const descriptor = item.trim();
+              if (descriptor) {
+                acc.push(
+                  <>
+                    {index !== 0 && <div className="bullet">•</div>}
+                    <div key={index} className="tour-tag">
+                      {descriptor.replace(/['"]+/g, '')}
+                    </div>
+                  </>
+                );
+              }
+              return acc;
+            }, [])}
           </div>
           {booster && RichText.asText(booster).trim().length > 0 ? (
             <V1BoosterBlock boosterHasIcon={boosterHasIcon}>
