@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import sliceHandler from '../Slices';
-import { COLORS, GRAPHIK, AVENIR } from '../../constants/ui-constants';
+import { COLORS, AVENIR } from '../../constants/ui-constants';
 import { FULL_WIDTH_SLICES } from '../../constants';
 
 const StyledBackground = styled.div`
@@ -36,7 +36,7 @@ const StyledBackground = styled.div`
  *
  */
 
-const Background = props => {
+const Background = (props) => {
   const { slices, sliceProps, color, gridCenter, textCenter } = props;
   const colorMap = {
     'Chalk Grey': COLORS.CHALK,

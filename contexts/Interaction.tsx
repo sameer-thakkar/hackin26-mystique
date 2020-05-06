@@ -23,7 +23,7 @@ export const InteractionContextProvider = (props) => {
   ]);
 
   const clickTour = (tgid, hoist, section = 'main', autoScroll = true) => {
-    if (activeTour.tgid != tgid) {
+    if (activeTour.tgid != tgid && activeTour.section != section) {
       if (hoist) {
         setActiveCategory(uniqueTgids([tgid, ...activeCategoryTgids]));
       }

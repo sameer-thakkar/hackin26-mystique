@@ -30,7 +30,7 @@ const Table = dynamic(() => import('./slices/Table'));
 const MicrobrandCards = dynamic(() => import('./slices/MicrobrandCards'));
 const TabWrapper = dynamic(() => import('./slices/TabWrapper'));
 const Tab = dynamic(() => import('./slices/Tab'));
-const FAQSlider = dynamic(() => import('./slices/FAQSlider'));
+const SliderAccordian = dynamic(() => import('./slices/SliderAccordian'));
 const CardSection = dynamic(() => import('./slices/CardSection'));
 const Card = dynamic(() => import('./slices/Card'));
 const TableV2 = dynamic(() => import('./slices/TableV2'));
@@ -39,6 +39,7 @@ const Background = dynamic(() => import('./slices/Background'));
 const AlertPopup = dynamic(() => import('./slices/AlertPopup'));
 const AnchorPoint = dynamic(() => import('./slices/AnchorPoint'));
 const BlogFeed = dynamic(() => import('./slices/BlogFeed'));
+const AccordianGroup = dynamic(() => import('./slices/AccordianGroup'));
 
 const sliceHandler = (slice, props: any = {}) => {
   switch (slice.slice_type) {
@@ -121,6 +122,7 @@ const sliceHandler = (slice, props: any = {}) => {
         return (
           <CategorySlider
             tgidsArray={tgidArray}
+            isFirstTourOpen={slice.primary.is_first_tour_open}
             description={slice.primary.carousel_description}
             heading={slice.primary.carousel_heading}
           />
@@ -203,6 +205,7 @@ const sliceHandler = (slice, props: any = {}) => {
         <CategorySection
           {...props}
           tgidsArray={tgids}
+          isFirstTourOpen={slice.primary.is_first_tour_open}
           description={slice.primary.carousel_description}
           heading={slice.primary.carousel_heading}
         />
@@ -253,7 +256,11 @@ const sliceHandler = (slice, props: any = {}) => {
         ];
       }, []);
       return (
-        <FAQSlider isMobile={props.isMobile} faqs={faqs} sliceProps={props} />
+        <SliderAccordian
+          isMobile={props.isMobile}
+          faqs={faqs}
+          sliceProps={props}
+        />
       );
     case 'table_v2':
       const rows =
@@ -403,6 +410,8 @@ const sliceHandler = (slice, props: any = {}) => {
           commonLink={common_page_link}
         />
       );
+    case 'accordian':
+      return <AccordianGroup accoridians={slice.items} />;
     default:
     // ToDo: Add to Error Logs (Slice)
   }

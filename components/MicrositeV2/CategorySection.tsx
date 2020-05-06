@@ -1,7 +1,9 @@
 import PopulateProducts from './PopulateProducts';
 import { AVENIR, GRAPHIK, COLORS } from '../../constants/ui-constants';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import ProductsContext from '../../contexts/Products';
+import InteractionContext from '../../contexts/Interaction';
+import { DONT_AUTO_SCROLL, DONT_HOIST } from '../../constants';
 
 /**
  * # Tours Section / Carousel
@@ -14,6 +16,8 @@ import ProductsContext from '../../contexts/Products';
  *  Description for the section in RichText.
  * - CSV TGIDs
  *  Comma Separated Values of TGIDs, (Ex: 2936, 10051,...)
+ * - Keep First Tour Open
+ *  Setting this to yes will make the first tour open by default.
  *
  * ### Repeatable zone
  * Nil.
@@ -30,14 +34,22 @@ const CategorySection = (props) => {
     heading,
     description,
     changePage,
+    isFirstTourOpen=false,
     isMobile,
   } = props;
   const toursContext = useContext(ProductsContext);
+  const interactionContext = useContext(InteractionContext);
   const allTours = toursContext.allTours;
   let filteredTgids = tgidsArray.filter(
     (tgid) => allTours[tgid] && allTours[tgid].available
   );
   const elementId = heading.trim().replace(/\s/g, '-').toLowerCase();
+  useEffect(()=>{
+    setTimeout(()=>{
+      if(isFirstTourOpen && filteredTgids[0] && !isMobile)
+        interactionContext.clickTour(filteredTgids[0], DONT_HOIST, elementId, DONT_AUTO_SCROLL)
+    })
+  },[])
   return (
     <div className="category-slider" id={elementId}>
       <h2 className="category-heading">{heading}</h2>

@@ -11,6 +11,8 @@ import Product from './Product';
 import DetailedProductCard from './DetailedProductCard';
 import { scroller } from 'react-scroll';
 import { CHEVRON_LEFT } from '../../public/static/svg-icons';
+import InteractionContext from '../../contexts/Interaction';
+import { DONT_HOIST, DONT_AUTO_SCROLL } from '../../constants';
 
 export const CategorySlider = props => {
   const [tgidClicked, setTgidClicked] = useState(null);
@@ -72,8 +74,10 @@ export const CategorySlider = props => {
     uid,
     heading,
     description,
+    isFirstTourOpen=false
   } = props;
   const { allTours, isMobile } = productsContext;
+  const interactionContext = useContext(InteractionContext);
   let filteredTgids = tgidsArray.filter(
     (tgid, index, arr) =>
       allTours[tgid] &&
@@ -85,6 +89,12 @@ export const CategorySlider = props => {
     .trim()
     .replace(/\s/g, '-')
     .toLowerCase();
+  useEffect(()=>{
+    setTimeout(()=>{
+      if(isFirstTourOpen && filteredTgids[0])
+        interactionContext.clickTour(filteredTgids[0], DONT_HOIST, elementId, DONT_AUTO_SCROLL)
+    })
+  },[])
   return (
     <div className="category-slider" id={elementId}>
       <div className="content">

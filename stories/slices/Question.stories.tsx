@@ -1,9 +1,9 @@
 import React from 'react';
-import FAQSlider from '../../components/slices/FAQSlider';
+import SliderAccordian from '../../components/slices/SliderAccordian';
 
 export default {
-  title: 'Slices/FAQSlider',
-  component: FAQSlider,
+  title: 'Slices/Question',
+  component: SliderAccordian,
 };
 
 const data = {
@@ -71,16 +71,16 @@ const data = {
   },
 };
 
-export const FAQSingleImage = () => {
+export const AccordianComboSingleImage = () => {
   const singleImageFAQs = data.faqs.filter((faq) => faq.images.length === 1);
-  return <FAQSlider {...data} faqs={singleImageFAQs} />;
+  return <SliderAccordian {...data} faqs={singleImageFAQs} />;
 };
 
-export const FAQMultiImage = () => {
+export const AccordianComboMultiImage = () => {
   const multiImageFAQs = data.faqs.filter((faq) => faq.images.length > 1);
-  return <FAQSlider {...data} faqs={multiImageFAQs} />;
+  return <SliderAccordian {...data} faqs={multiImageFAQs} />;
 };
 
-export const FAQSliderComplete = () => {
-  return <FAQSlider {...data} />;
+export const AccordianComboSliderComplete = () => {
+  return <SliderAccordian {...data} />;
 };
