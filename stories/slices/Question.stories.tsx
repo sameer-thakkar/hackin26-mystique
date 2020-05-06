@@ -1,9 +1,9 @@
 import React from 'react';
-import SliderAccordian from '../../components/slices/SliderAccordian';
+import SliderAccordion from '../../components/slices/SliderAccordion';
 
 export default {
   title: 'Slices/Question',
-  component: SliderAccordian,
+  component: SliderAccordion,
 };
 
 const data = {
@@ -71,16 +71,16 @@ const data = {
   },
 };
 
-export const AccordianComboSingleImage = () => {
+export const AccordionComboSingleImage = () => {
   const singleImageFAQs = data.faqs.filter((faq) => faq.images.length === 1);
-  return <SliderAccordian {...data} faqs={singleImageFAQs} />;
+  return <SliderAccordion {...data} faqs={singleImageFAQs} />;
 };
 
 export const AccordianComboMultiImage = () => {
   const multiImageFAQs = data.faqs.filter((faq) => faq.images.length > 1);
-  return <SliderAccordian {...data} faqs={multiImageFAQs} />;
+  return <SliderAccordion {...data} faqs={multiImageFAQs} />;
 };
 
 export const AccordianComboSliderComplete = () => {
-  return <SliderAccordian {...data} />;
+  return <SliderAccordion {...data} />;
 };

@@ -4,9 +4,9 @@ import { RichText } from 'prismic-reactjs';
 import Slider from '../UI/Slider';
 import Image from '../UI/Image';
 import { shortCodeSerializer } from '../../utils/shortCodes';
-import Accordian from './Accordian';
+import Accordion from './Accordion';
 
-const StyledSliderAccordian = styled.div`
+const StyledSliderAccordion = styled.div`
   display: grid;
   grid-template-columns: 1fr ${({ hasImageComponent }) =>
       hasImageComponent ? ` 1fr` : ``};
@@ -41,7 +41,7 @@ const SliderWrapper = styled.div`
   }
 `;
 
-const AccordiansWrap = styled.div``;
+const AccordionsWrap = styled.div``;
 
 const SingleImage = styled.div`
   width: auto;
@@ -57,9 +57,10 @@ const SingleImage = styled.div`
     margin-bottom: 16px;
   }
 `;
+
 /**
  * ### (a.k.a *TabAcco*, when used inside a tab.)
- * Question slice allows you to have a [accordian slice](/docs/slices-accordian--basic) and associate it with an image side by side. <br>
+ * Question slice allows you to have a [accordion slice](/docs/slices-accordion--basic) and associate it with an image side by side. <br>
  * Question Slice can be used inside any wrapper slice. It will fit the default width of its wrapper. (common usage is with tabs)
  *
  * examples:
@@ -86,21 +87,22 @@ const SingleImage = styled.div`
  *
  *  **Link to Image**: alternatively if you have the image uploaded already, you can use this field to add the link.
  *
- *  **Alt Text**: Alternate text for the image, if the image fails to load this text will be shown. (also adds seo benifits.)
+ *  **Alt Text**: Alternate text for the image, if the image fails to load this text will be shown. (also adds seo benefits.)
  *
  *
  *
  * ## Non Repeatable Zone;
- *   **Question**: Simple text field, will be set as the Accordian Heading, on click the answer/content will toggle between visible/hidden.
+ *   **Question**: Simple text field, will be set as the Accordion Heading, on click the answer/content will toggle between visible/hidden.
  *
  *   **Answer**: RichText field, will be hidden by default till user toggles the item open by clicking on the heading.
  *
  */
-const SliderAccordian = (props) => {
-  const { faqs: accordians, sliceProps } = props;
+
+const SliderAccordion = (props) => {
+  const { faqs: accordions, sliceProps } = props;
   const { isMobile } = sliceProps;
-  const [activeAccordianIndex, setActiveAccoridanIndex] = useState(0);
-  const activeAccordianImages = accordians[activeAccordianIndex].images.filter(
+  const [activeAccordionIndex, setActiveAccordionIndex] = useState(0);
+  const activeAccordionImages = accordions[activeAccordionIndex].images.filter(
     (i) => i.url
   );
   const sliderOptions = {
@@ -116,13 +118,13 @@ const SliderAccordian = (props) => {
 
   const SliderComponent = (
     <SliderWrapper>
-      {activeAccordianImages.length > 1 ? (
+      {activeAccordionImages.length > 1 ? (
         <Slider
           sliderOptions={sliderOptions}
           parentOverflowHidden={true}
           id={Math.random()}
         >
-          {activeAccordianImages.map((image, index) => {
+          {activeAccordionImages.map((image, index) => {
             return (
               <Image
                 key={index}
@@ -139,9 +141,9 @@ const SliderAccordian = (props) => {
           <Image
             height={500}
             aspectRatio={'16:10'}
-            imageId={activeAccordianImages[0]?.alt}
-            url={activeAccordianImages[0]?.url}
-            alt={activeAccordianImages[0]?.alt}
+            imageId={activeAccordionImages[0]?.alt}
+            url={activeAccordionImages[0]?.url}
+            alt={activeAccordionImages[0]?.alt}
           />
         </SingleImage>
       )}
@@ -149,35 +151,35 @@ const SliderAccordian = (props) => {
   );
 
   return (
-    <StyledSliderAccordian hasImageComponent={activeAccordianImages.length}>
-      {!isMobile && activeAccordianIndex >= 0 ? SliderComponent : null}
-      <AccordiansWrap>
-        {accordians.map((accordian, index) => {
-          const isOpen = index == activeAccordianIndex;
+    <StyledSliderAccordion hasImageComponent={activeAccordionImages.length}>
+      {!isMobile && activeAccordionIndex >= 0 ? SliderComponent : null}
+      <AccordionsWrap>
+        {accordions.map((accordion, index) => {
+          const isOpen = index == activeAccordionIndex;
           const content = (
             <>
               {isMobile ? SliderComponent : null}
               <div className="answer-content">
                 <RichText
-                  render={accordian.answer}
+                  render={accordion.answer}
                   htmlSerializer={shortCodeSerializer}
                 />
               </div>
             </>
           );
           return (
-            <Accordian
+            <Accordion
               content={content}
               isOpenOverride={isOpen}
-              heading={accordian.question}
-              clickHandler={() => setActiveAccoridanIndex(index)}
+              heading={accordion.question}
+              clickHandler={() => setActiveAccordionIndex(index)}
               key={index}
             />
           );
         })}
-      </AccordiansWrap>
-    </StyledSliderAccordian>
+      </AccordionsWrap>
+    </StyledSliderAccordion>
   );
 };
 
-export default SliderAccordian;
+export default SliderAccordion;

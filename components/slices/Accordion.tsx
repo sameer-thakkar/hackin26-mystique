@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { AVENIR, GRAPHIK, COLORS } from '../../constants/ui-constants';
 
-const StyledAccordian = styled.div`
+const StyledAccordion = styled.div`
   padding: 16px 0;
   margin-right: 24px;
   border-bottom: 1px solid ${COLORS.CHALK};
@@ -48,19 +48,19 @@ const ContentBlock = styled.div`
   }
 `;
 
-type AccordianProps = {
+type AccordionProps = {
   clickHandler?: Function;
   isOpenOverride?: Boolean;
   heading: string;
   content: any;
 };
 
-const Accordian = ({
+const Accordion = ({
   heading,
   content,
   isOpenOverride = false,
   clickHandler = null,
-}: AccordianProps) => {
+}: AccordionProps) => {
   const [isOpen, setOpen] = useState(false || isOpenOverride);
 
   useEffect(() => {
@@ -68,7 +68,7 @@ const Accordian = ({
   }, [isOpenOverride]);
 
   return (
-    <StyledAccordian isOpen={isOpen}>
+    <StyledAccordion isOpen={isOpen}>
       <Title
         role="button"
         tabIndex={0}
@@ -83,8 +83,8 @@ const Accordian = ({
         </div>
       </Title>
       <ContentBlock isOpen={isOpen}>{content}</ContentBlock>
-    </StyledAccordian>
+    </StyledAccordion>
   );
 };
 
-export default Accordian;
+export default Accordion;

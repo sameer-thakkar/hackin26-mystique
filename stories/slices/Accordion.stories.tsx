@@ -1,9 +1,9 @@
 import React from 'react';
-import AccordianGroup from '../../components/slices/AccordianGroup';
+import AccordionGroup from '../../components/slices/AccordionGroup';
 
 export default {
-  title: 'Slices/Accordian',
-  component: AccordianGroup,
+  title: 'Slices/Accordion',
+  component: AccordionGroup,
 };
 
 const data = [
@@ -43,5 +43,5 @@ const data = [
 ];
 
 export const Basic = () => {
-  return <AccordianGroup accoridians={data} />;
+  return <AccordionGroup accordions={data} />;
 };

@@ -30,7 +30,7 @@ const Table = dynamic(() => import('./slices/Table'));
 const MicrobrandCards = dynamic(() => import('./slices/MicrobrandCards'));
 const TabWrapper = dynamic(() => import('./slices/TabWrapper'));
 const Tab = dynamic(() => import('./slices/Tab'));
-const SliderAccordian = dynamic(() => import('./slices/SliderAccordian'));
+const SliderAccordion = dynamic(() => import('./slices/SliderAccordion'));
 const CardSection = dynamic(() => import('./slices/CardSection'));
 const Card = dynamic(() => import('./slices/Card'));
 const TableV2 = dynamic(() => import('./slices/TableV2'));
@@ -39,7 +39,7 @@ const Background = dynamic(() => import('./slices/Background'));
 const AlertPopup = dynamic(() => import('./slices/AlertPopup'));
 const AnchorPoint = dynamic(() => import('./slices/AnchorPoint'));
 const BlogFeed = dynamic(() => import('./slices/BlogFeed'));
-const AccordianGroup = dynamic(() => import('./slices/AccordianGroup'));
+const AccordionGroup = dynamic(() => import('./slices/AccordionGroup'));
 
 const sliceHandler = (slice, props: any = {}) => {
   switch (slice.slice_type) {
@@ -256,7 +256,7 @@ const sliceHandler = (slice, props: any = {}) => {
         ];
       }, []);
       return (
-        <SliderAccordian
+        <SliderAccordion
           isMobile={props.isMobile}
           faqs={faqs}
           sliceProps={props}
@@ -410,8 +410,8 @@ const sliceHandler = (slice, props: any = {}) => {
           commonLink={common_page_link}
         />
       );
-    case 'accordian':
-      return <AccordianGroup accoridians={slice.items} />;
+    case 'accordion':
+      return <AccordionGroup accordions={slice.items} />;
     default:
     // ToDo: Add to Error Logs (Slice)
   }
