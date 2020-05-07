@@ -193,7 +193,7 @@ const MicrobrandCards: React.FC<MicrobrandCardsProps> = (props) => {
         .then((res) => res.json())
         .then((json) => {
           const cardPrices = tourListApiParser(json);
-          const currencySymbol = json.currencies[0].localSymbol;
+          const currencySymbol = json.currencies[0]?.localSymbol;
           setState({
             cardPrices: cardPrices,
             currencySymbol: currencySymbol,

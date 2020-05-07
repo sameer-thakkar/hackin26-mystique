@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PAGETYPE } from '../../../constants';
 import { CHEVRON_LEFT, SEARCH_ICON } from '../../../assets/SvgIcons';
 import { SortSelector } from '../SortSelector';
@@ -8,7 +8,8 @@ export const CategoryPage = (props) => {
   const [filterDropdown, setFilterDropdown] = useState(false);
   const [activeCategoryArray, setActiveCategory] = useState(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    if (!window) return;
     window.scrollTo(0, 0);
   });
 

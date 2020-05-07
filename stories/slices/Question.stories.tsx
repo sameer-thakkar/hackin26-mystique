@@ -76,11 +76,11 @@ export const AccordionComboSingleImage = () => {
   return <SliderAccordion {...data} faqs={singleImageFAQs} />;
 };
 
-export const AccordianComboMultiImage = () => {
+export const AccordionComboMultiImage = () => {
   const multiImageFAQs = data.faqs.filter((faq) => faq.images.length > 1);
   return <SliderAccordion {...data} faqs={multiImageFAQs} />;
 };
 
-export const AccordianComboSliderComplete = () => {
+export const AccordiOnComboSliderComplete = () => {
   return <SliderAccordion {...data} />;
 };

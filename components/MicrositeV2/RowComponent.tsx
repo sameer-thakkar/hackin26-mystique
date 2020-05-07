@@ -1,4 +1,4 @@
-import React, { useContext, useLayoutEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Product from './Product';
 import DetailedProductCard from './DetailedProductCard';
 import { PAGETYPE } from '../../constants';
@@ -24,7 +24,8 @@ export const RowComponent = (props) => {
     interactionContext.closeTour();
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    if (!window) return;
     const {
       tgid,
       section: activeSection,

@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useLayoutEffect,
-  useContext,
-  useEffect,
-  useCallback,
-} from 'react';
+import React, { useState, useContext, useEffect, useCallback } from 'react';
 import Swiper from '../Swiper';
 import ProductsContext from '../../contexts/Products';
 import Product from './Product';
@@ -55,7 +49,8 @@ export const CategorySlider = (props) => {
     );
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    if (!window) return;
     if (tgidClicked)
       scroller.scrollTo(`${carouselId}-${tgidClicked}`, {
         duration: 750,
@@ -144,9 +139,9 @@ export const CategorySlider = (props) => {
           {swiper && !swiper.isEnd ? (
             <div
               className="swiper-btn btn btn-right"
-              role="button"
-              tabIndex={0}
               onClick={goNext}
+              tabIndex={0}
+              role="button"
             >
               {CHEVRON_LEFT}
             </div>

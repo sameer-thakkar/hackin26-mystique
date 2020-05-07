@@ -414,7 +414,12 @@ const sliceHandler = (slice, props: any = {}) => {
         />
       );
     case 'accordion':
-      return <AccordionGroup accordions={slice.items} />;
+      return (
+        <AccordionGroup
+          accordions={slice.items}
+          heading={slice.primary.heading}
+        />
+      );
     default:
     // ToDo: Add to Error Logs (Slice)
   }

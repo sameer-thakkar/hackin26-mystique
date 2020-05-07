@@ -1,4 +1,4 @@
-import React, { useRef, useState, useLayoutEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { scroller } from 'react-scroll';
 import LanguageSelector from './LanguageSelector';
@@ -153,7 +153,8 @@ const Header: React.FC<any> = (props) => {
       toggleMenu: () => setHamburgerOpen((c) => !c),
     });
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    if (!window) return;
     const scrollHandler = () => {
       setScrollPos(window.pageYOffset);
     };

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useLayoutEffect, useRef } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import { SortSelector } from './SortSelector';
 import InteractionContext from '../../contexts/Interaction';
 import { AVENIR, SIZES } from '../../constants/ui-constants';
@@ -20,18 +20,6 @@ const CategoryBar = (props) => {
     setFilterDropdownActive((oldState) => !oldState);
   };
 
-  const centerActiveCategory = () => {
-    const parentElement = parent.current;
-    const selectedTab = parentElement.querySelector('.tab.active');
-    if (isMobile) {
-      selectedTab.scrollIntoView({
-        inline: 'center',
-        behavior: 'smooth',
-        block: 'end',
-      });
-    }
-  };
-
   const changeCategory = (index) => {
     let { categories } = props;
 
@@ -49,38 +37,51 @@ const CategoryBar = (props) => {
     interactionCtx.changeCategory(categories[activeCategory].ranking[orderKey]);
   };
 
-  const getActiveLineDimension = () => {
-    const parentElement = parent.current;
-    const tag = parentElement.querySelector('.tab.active');
-    const { isMobile } = props;
-    let seletectedTab = window.getComputedStyle(tag);
-    let width = parseFloat(seletectedTab.width);
-    let selectedTabDimensions = tag.getBoundingClientRect();
-    let parentDimensions = parentElement.getBoundingClientRect();
-    let activeLineXOffset =
-      parseInt(selectedTabDimensions.x) -
-      parseInt(parentDimensions.left) +
-      parseInt(seletectedTab.paddingLeft);
-    if (isMobile) {
-      activeLineXOffset += parentElement.scrollLeft;
-    }
-    return { width: width, left: activeLineXOffset };
-  };
+  useEffect(() => {
+    if (!parent.current) return;
 
-  useLayoutEffect(() => {
+    const centerActiveCategory = () => {
+      const parentElement = parent.current;
+      const selectedTab = parentElement.querySelector('.tab.active');
+      if (isMobile) {
+        selectedTab.scrollIntoView({
+          inline: 'center',
+          behavior: 'smooth',
+          block: 'end',
+        });
+      }
+    };
+
+    const getActiveLineDimension = () => {
+      const parentElement = parent.current;
+      const tag = parentElement.querySelector('.tab.active');
+      let selectedTab = window.getComputedStyle(tag);
+      let width = parseFloat(selectedTab.width);
+      let selectedTabDimensions = tag.getBoundingClientRect();
+      let parentDimensions = parentElement.getBoundingClientRect();
+      let activeLineXOffset =
+        parseInt(selectedTabDimensions.x) -
+        parseInt(parentDimensions.left) +
+        parseInt(selectedTab.paddingLeft);
+      if (isMobile) {
+        activeLineXOffset += parentElement.scrollLeft;
+      }
+      return { width: width, left: activeLineXOffset };
+    };
+
     setIndicatorStyles(getActiveLineDimension());
     if (isMobile && parent.current) centerActiveCategory();
-  }, [activeCategory]);
+  }, [activeCategory, parent, isMobile]);
 
   return (
     <>
       <div className="scroll-reference" ref={scroll_div}></div>
       <div className={`category-bar `} ref={category_bar}>
         <div className="category-bar-wrapper" ref={parent}>
-          <ul className="tabs-wrap">
+          <div className="tabs-wrap">
             {categories.map((category, index) => {
               return (
-                <li
+                <div
                   key={index}
                   role="button"
                   tabIndex={0}
@@ -91,14 +92,14 @@ const CategoryBar = (props) => {
                   data-tgid={category.ranking.popularity}
                 >
                   {category.name}
-                </li>
+                </div>
               );
             })}
-            <li
+            <div
               className="active-indicator"
               style={{ ...indicatorStyles }}
-            ></li>
-          </ul>
+            ></div>
+          </div>
           {!isMobile ? (
             <div className="filter-wrapper">
               <SortSelector
