@@ -3,30 +3,35 @@ import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from '../utils/shortCodes';
 import { csvTgidToArray } from '../utils/helper';
-import CustomLinkedTours from './slices/CustomLinkedTours';
 
+// Non-dynamic imports
+import HorizontalLine from './slices/HorizontalLine';
+import ContentTabs from './slices/ContentTabs';
+import PageTabs from './slices/PageTabs';
+import RichTextBox from './slices/RichTextBox';
+import Table from './slices/Table';
+import Breadcrumb from './slices/Breadcrumb';
+import Background from './slices/Background';
+
+// Dynamic imports
+const CustomLinkedTours = dynamic(() => import('./slices/CustomLinkedTours'));
 const ImageGallery = dynamic(() => import('./slices/ImageGallery'));
 const TicketCards = dynamic(() => import('./slices/TicketCards'));
-const HorizontalLine = dynamic(() => import('./slices/HorizontalLine'));
 const ImageLinksCarousel = dynamic(() => import('./slices/ImageLinksCarousel'));
 const InteractiveImage = dynamic(() => import('./slices/InteractiveImage'));
 const TrustBoosters = dynamic(() => import('./slices/TrustBoosters'));
 const TourComparisonTable = dynamic(() => import('./slices/TourComparision'));
-const ContentTabs = dynamic(() => import('./slices/ContentTabs'));
 const ImageGrid = dynamic(() => import('./slices/ImageGrid'));
 const ImageTextGrid = dynamic(() => import('./slices/ImageTextGrid'));
 const InternalContentCard = dynamic(() =>
   import('./slices/InternalContentCard')
 );
-const PageTabs = dynamic(() => import('./slices/PageTabs'));
 const FWActionCard = dynamic(() => import('./slices/FWActionCard'));
-const RichTextBox = dynamic(() => import('./slices/RichTextBox'));
 const FeatureBox = dynamic(() => import('./slices/FeatureBox'));
 const TitleLinksCard = dynamic(() => import('./slices/TitleLinksCard'));
 const CardCarousel = dynamic(() => import('./slices/CardCarousel'));
 const CategorySection = dynamic(() => import('./MicrositeV2/CategorySection'));
 const CategorySlider = dynamic(() => import('./MicrositeV2/CategorySlider'));
-const Table = dynamic(() => import('./slices/Table'));
 const MicrobrandCards = dynamic(() => import('./slices/MicrobrandCards'));
 const TabWrapper = dynamic(() => import('./slices/TabWrapper'));
 const Tab = dynamic(() => import('./slices/Tab'));
@@ -34,8 +39,6 @@ const SliderAccordion = dynamic(() => import('./slices/SliderAccordion'));
 const CardSection = dynamic(() => import('./slices/CardSection'));
 const Card = dynamic(() => import('./slices/Card'));
 const TableV2 = dynamic(() => import('./slices/TableV2'));
-const Breadcrumb = dynamic(() => import('./slices/Breadcrumb'));
-const Background = dynamic(() => import('./slices/Background'));
 const AlertPopup = dynamic(() => import('./slices/AlertPopup'));
 const AnchorPoint = dynamic(() => import('./slices/AnchorPoint'));
 const BlogFeed = dynamic(() => import('./slices/BlogFeed'));

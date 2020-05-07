@@ -272,6 +272,7 @@ const HeaderSliceHandler = (slice, props) => {
     case 'group_booking':
       return (
         <StyledMenuItem
+          key={index}
           onClick={() => {
             props.isMobile && slice.toggleMenu();
             slice.action();

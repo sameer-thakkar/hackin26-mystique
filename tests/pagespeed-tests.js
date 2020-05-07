@@ -3,9 +3,9 @@ const signale = require('signale');
 
 const domains = [
   'https://frame.tickets-dubai.org',
-  'https://sagradafamilia.barcelona-tickets.com',
+  'https://www.tickets-amsterdam.com',
   'https://bateaux-parisiens.seine-river-cruises.com',
-  'https://www.alcazar-seville-tickets.com/',
+  'https://www.alcazar-seville-tickets.com',
   'https://www.alhambra-granada-tickets.com',
 ];
 
@@ -14,7 +14,7 @@ const BENCHMARK_PERF = {
   DESKTOP: 70,
 };
 
-const parseResponse = pagespeedResponse => {
+const parseResponse = (pagespeedResponse) => {
   const { data } = pagespeedResponse;
   const { audits, categories } = data.lighthouseResult;
   return {
@@ -29,7 +29,7 @@ const parseResponse = pagespeedResponse => {
   };
 };
 
-const aggregateInsights = insights =>
+const aggregateInsights = (insights) =>
   insights.reduce(
     (accum, item, index, array) => {
       if (index === array.length - 1) {
@@ -69,22 +69,22 @@ const aggregateInsights = insights =>
 
 module.exports = (env, trackInsights = false) => {
   const pagespeedFetchers = domains
-    .map(domain =>
+    .map((domain) =>
       env === 'stage' ? domain.replace('https://', 'https://stage.') : domain
     )
-    .map(domain =>
+    .map((domain) =>
       ['mobile', 'desktop'].map(
-        strategy =>
+        (strategy) =>
           `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(
             domain
           )}&key=AIzaSyCvQ0KgW7X4DQfKbxYUGFVMpWRji9nTTlc&strategy=${strategy}`
       )
     )
     .reduce((accum, item) => [...accum, ...item], [])
-    .map(pagespeedApiUrl => axios.get(pagespeedApiUrl));
+    .map((pagespeedApiUrl) => axios.get(pagespeedApiUrl));
 
   return Promise.all(pagespeedFetchers)
-    .then(responses => {
+    .then((responses) => {
       const [mobileResponses, desktopResponses] = responses.reduce(
         (accum, response, idx) => {
           if (idx % 2 === 0) {
@@ -96,10 +96,10 @@ module.exports = (env, trackInsights = false) => {
         [[], []]
       );
 
-      const mobileInsights = mobileResponses.map(response =>
+      const mobileInsights = mobileResponses.map((response) =>
         parseResponse(response)
       );
-      const desktopInsights = desktopResponses.map(response =>
+      const desktopInsights = desktopResponses.map((response) =>
         parseResponse(response)
       );
 
@@ -149,7 +149,7 @@ module.exports = (env, trackInsights = false) => {
             insightsName: 'desktopPageSpeedInsights',
           },
         ].forEach(({ insights, insightsName }) => {
-          Object.keys(insights).forEach(payloadKey => {
+          Object.keys(insights).forEach((payloadKey) => {
             axios
               .post(
                 `http://52.23.245.115:9091/metrics/job/microbrand-metrics/insights/${insightsName}/provider/mystique`,
@@ -158,7 +158,7 @@ module.exports = (env, trackInsights = false) => {
                   headers: { 'Content-Type': 'text/plain' },
                 }
               )
-              .catch(e => {
+              .catch((e) => {
                 console.log(e.data);
               });
           });
@@ -171,7 +171,7 @@ module.exports = (env, trackInsights = false) => {
       });
       process.exit(0);
     })
-    .catch(e => {
+    .catch((e) => {
       signale.fatal(e.response.data.error);
       process.exit(1);
     });

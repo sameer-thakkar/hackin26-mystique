@@ -1,11 +1,8 @@
 // _document is only rendered on the server side and not on the client side
-// Event handlers like onClick can't be added to this file
-
-// ./pages/_document.js
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
+import * as Sentry from '@sentry/node';
 
-const Sentry = require('@sentry/node');
 Sentry.init({
   dsn: 'https://a952d80706b3435388b1fb5983c74b18@sentry.io/1545593',
 });
@@ -40,11 +37,12 @@ class MystiqueDocument extends Document {
   render() {
     return (
       <Html>
-        <Head></Head>
+        <Head />
         <body>
           <Main />
           <NextScript />
           <script
+            async
             dangerouslySetInnerHTML={{
               __html: `
   window.prismic = {
@@ -53,7 +51,7 @@ class MystiqueDocument extends Document {
             }}
           />
           <script
-            defer
+            async
             type="text/javascript"
             src="https://static.cdn.prismic.io/prismic.min.js?new=true"
           />

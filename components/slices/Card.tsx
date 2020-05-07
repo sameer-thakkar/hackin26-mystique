@@ -324,7 +324,6 @@ const Card: React.FC<CardProps> = ({
               hyperlink: HyperLink,
             }}
             render={description}
-            h
           />
           {cta?.link?.url ? CTA : null}
         </div>
