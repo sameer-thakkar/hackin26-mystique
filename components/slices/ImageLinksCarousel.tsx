@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import Swiper from '../Swiper';
 import Image from '../UI/Image';
-import { CHEVRON_LEFT } from '../../public/static/svg-icons';
+import { CHEVRON_LEFT } from '../../assets/SvgIcons';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 import { AVENIR, COLORS, GRAPHIK } from '../../constants/ui-constants';
 import { scroller } from 'react-scroll';

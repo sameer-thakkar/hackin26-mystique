@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SearchBox } from '../SearchBox';
 import { PAGETYPE } from '../../../constants';
-import { CLOSE_WHITE } from '../../../public/static/svg-icons';
+import { CLOSE_WHITE } from '../../../assets/SvgIcons';
 import { SearchItem } from '../SearchItem';
 import PopulateProducts from '../PopulateProducts';
 import { AVENIR } from '../../../constants/ui-constants';

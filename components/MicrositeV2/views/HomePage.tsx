@@ -10,7 +10,7 @@ import * as labels from '../../../constants/localization/labels';
 import { ProductsContextProvider } from '../../../contexts/Products';
 import { ProductsWrapper } from '../ProductsWrapper';
 import { ResponsiveSelector } from '../ResponsiveSelector';
-import { LOCATION } from '../../../public/static/svg-icons';
+import { LOCATION } from '../../../assets/SvgIcons';
 import { groupSlices } from '../../../utils/helper';
 import styled from 'styled-components';
 import { SIZES } from '../../../constants/ui-constants';

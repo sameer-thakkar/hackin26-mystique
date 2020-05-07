@@ -1,4 +1,4 @@
-import { FACEBOOK, TWITTER, INSTAGRAM } from '../../public/static/svg-icons';
+import { FACEBOOK, TWITTER, INSTAGRAM } from '../../assets/SvgIcons';
 import styled from 'styled-components';
 
 const StyledSocialLinks = styled.div`

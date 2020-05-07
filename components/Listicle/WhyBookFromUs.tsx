@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import * as labels from '../../constants/localization/labels';
 import { AVENIR } from '../../constants/ui-constants';
-import { CIRCLE_TICK } from '../../public/static/svg-icons';
+import { CIRCLE_TICK } from '../../assets/SvgIcons';
 
 const WhyBookFromUsWrapper = styled.div`
   width: 384px;

@@ -2,10 +2,7 @@ import { RichText } from 'prismic-reactjs';
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { COLORS, GRAPHIK } from '../../constants/ui-constants';
-import {
-  CHEVRON_LEFT_CIRCLE,
-  CLOSE_WHITE,
-} from '../../public/static/svg-icons';
+import { CHEVRON_LEFT_CIRCLE, CLOSE_WHITE } from '../../assets/SvgIcons';
 import { stringIdfy } from '../../utils/helper';
 import Swiper from '../Swiper';
 import Image from '../UI/Image';

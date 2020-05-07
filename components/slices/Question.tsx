@@ -3,7 +3,7 @@ import { RichText } from 'prismic-reactjs';
 import Slider from '../UI/Slider';
 import Image from '../UI/Image';
 import { AVENIR, COLORS } from '../../constants/ui-constants';
-import { CHEVRON_DOWN } from '../../public/static/svg-icons';
+import { CHEVRON_DOWN } from '../../assets/SvgIcons';
 
 const Question = (props) => {
   const {

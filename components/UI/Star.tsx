@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  STAR_FULL,
-  STAR_EMPTY,
-  STAR_HALF,
-} from '../../public/static/svg-icons';
+import { STAR_FULL, STAR_EMPTY, STAR_HALF } from '../../assets/SvgIcons';
 import styled from 'styled-components';
 
 const StyledStar = styled.div`

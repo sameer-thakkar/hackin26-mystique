@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import { CHEVRON_LEFT } from '../../public/static/svg-icons';
+import { CHEVRON_LEFT } from '../../assets/SvgIcons';
 import { COLORS, AVENIR } from '../../constants/ui-constants';
 import Image from '../UI/Image';
 
@@ -109,7 +109,7 @@ const BlogFeed = ({ feed_url, count = 0, defaultCards = [] }) => {
     } catch (_e) {
       return;
     }
-  }, []);
+  }, [count, feed_url]);
 
   return (
     <FeedContainer>

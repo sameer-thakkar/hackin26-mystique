@@ -1,13 +1,17 @@
 import styled from 'styled-components';
 import Image from '../UI/Image';
 import LocalisedPrice from '../UI/LPrice';
-import { STAR_FULL } from '../../public/static/svg-icons';
+import { STAR_FULL } from '../../assets/SvgIcons';
 import { useEffect, useState, useContext } from 'react';
 import { tourListApiParser } from '../../utils/dataParsers';
 import RichContent from '../UI/RichContent';
 import { MBContext } from '../../contexts/MBContext';
 import { AVENIR, COLORS, GRAPHIK } from '../../constants/ui-constants';
-import { DESIGN, CURRENCY_SYMBOL_MAP } from '../../constants';
+import {
+  DESIGN,
+  CURRENCY_SYMBOL_MAP,
+  HEADOUT_API_ENDPOINT,
+} from '../../constants';
 
 const Tour = styled.a`
   display: grid;
@@ -115,14 +119,16 @@ const CustomLinkedTours = ({
   commonLink,
 }) => {
   const [apiTours, setTours] = useState(null);
+
   useEffect(() => {
-    fetch(`https://api.headout.com/api/v5/tour-group/list?ids[]=${tgids}`)
+    fetch(`${HEADOUT_API_ENDPOINT}/v5/tour-group/list?ids[]=${tgids}`)
       .then((r) => r.json())
       .then((res) => {
         const apiTours = tourListApiParser(res);
         setTours(apiTours);
       });
-  }, []);
+  }, [tgids]);
+
   const { lang, design, nakedDomain } = useContext(MBContext);
   const defaultURL = (tgid) =>
     `https://book.${nakedDomain}/${lang !== 'en/' ? lang : ''}book/${tgid}`;

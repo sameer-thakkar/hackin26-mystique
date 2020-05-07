@@ -1,7 +1,7 @@
 import LinkResolver from './LinkResolver';
 import styled from 'styled-components';
 import { COLORS, GRAPHIK } from '../constants/ui-constants';
-import { CHEVRON_DOWN } from '../public/static/svg-icons';
+import { CHEVRON_DOWN } from '../assets/SvgIcons';
 import { useState, useRef, useEffect } from 'react';
 import { useWindowWidth } from '@react-hook/window-size';
 

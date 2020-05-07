@@ -4,7 +4,7 @@ import InteractionContext from '../../contexts/Interaction';
 import Image from '../UI/Image';
 import { SearchBox } from './SearchBox';
 import { PAGETYPE, ALLOW_IMMEDIEATE_NESTING } from '../../constants';
-import { SEARCH_ICON, POWERED_BY_HEADOUT } from '../../public/static/svg-icons';
+import { SEARCH_ICON, POWERED_BY_HEADOUT } from '../../assets/SvgIcons';
 import { SearchItem } from './SearchItem';
 import { COLORS, AVENIR, GRAPHIK } from '../../constants/ui-constants';
 import { ResponsiveSelector } from './ResponsiveSelector';

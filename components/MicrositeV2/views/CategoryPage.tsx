@@ -1,10 +1,10 @@
-import React, { Component, useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { PAGETYPE } from '../../../constants';
-import { CHEVRON_LEFT, SEARCH_ICON } from '../../../public/static/svg-icons';
+import { CHEVRON_LEFT, SEARCH_ICON } from '../../../assets/SvgIcons';
 import { SortSelector } from '../SortSelector';
 import { ProductsWrapper } from '../ProductsWrapper';
 
-export const CategoryPage = props => {
+export const CategoryPage = (props) => {
   const [filterDropdown, setFilterDropdown] = useState(false);
   const [activeCategoryArray, setActiveCategory] = useState(null);
 
@@ -13,7 +13,7 @@ export const CategoryPage = props => {
   });
 
   const toggleFilterDropdown = () => {
-    setFilterDropdown(oldFilterDropdown => !oldFilterDropdown);
+    setFilterDropdown((oldFilterDropdown) => !oldFilterDropdown);
   };
 
   const loadHomepage = () => {
@@ -24,7 +24,7 @@ export const CategoryPage = props => {
     props.changePage({ name: PAGETYPE.SEARCH });
   };
 
-  const changeOrder = orderKey => {
+  const changeOrder = (orderKey) => {
     let { categories } = props.categoryProps;
     setActiveCategory(categories[props.category].ranking[orderKey]);
   };
@@ -34,6 +34,8 @@ export const CategoryPage = props => {
     <div>
       <div className="category-header">
         <span
+          role="button"
+          tabIndex={0}
           onClick={() => {
             loadHomepage();
           }}
@@ -42,7 +44,12 @@ export const CategoryPage = props => {
           {CHEVRON_LEFT}
         </span>
 
-        <span onClick={loadSearchPage} className="search-trigger icon">
+        <span
+          onClick={loadSearchPage}
+          role="button"
+          tabIndex={0}
+          className="search-trigger icon"
+        >
           {SEARCH_ICON}
         </span>
       </div>

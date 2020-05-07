@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { STAR } from '../../public/static/svg-icons';
+import { STAR } from '../../assets/SvgIcons';
 import { GRAPHIK, COLORS } from '../../constants/ui-constants';
+import { HEADOUT_API_ENDPOINT } from '../../constants';
 
-const RatingBoosterCombo = props => {
+const RatingBoosterCombo = (props) => {
   const { tgid, text } = props;
   const [booster, setBooster] = useState(null);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    fetch(`https://api.headout.com/api/v5/tour-group/list?ids[]=${tgid}`)
-      .then(res => res.json())
-      .then(data => {
+    fetch(`${HEADOUT_API_ENDPOINT}/v5/tour-group/list?ids[]=${tgid}`)
+      .then((res) => res.json())
+      .then((data) => {
         const tour = data?.tourGroups[0];
         setBooster({
           isLoaded: true,
@@ -19,7 +20,7 @@ const RatingBoosterCombo = props => {
         });
         setReady(true);
       });
-  }, []);
+  }, [tgid, text]);
 
   return ready ? (
     <>

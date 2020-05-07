@@ -6,7 +6,7 @@ import React, {
   useRef,
 } from 'react';
 import Fuse from 'fuse.js';
-import { SEARCH_ICON, CLOSE_WHITE } from '../../public/static/svg-icons';
+import { SEARCH_ICON, CLOSE_WHITE } from '../../assets/SvgIcons';
 import { GRAPHIK, COLORS } from '../../constants/ui-constants';
 import InteractionContext from '../../contexts/Interaction';
 

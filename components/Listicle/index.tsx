@@ -15,12 +15,13 @@ import Spinner from '../UI/Spinner';
 import ListicleCard from './ListicleCard';
 import LongForm from '../common/LongForm';
 import Footer from '../common/Footer';
+import WhyBookFromUs from './WhyBookFromUs';
 import { groupSlices } from '../../utils/helper';
 import { Client } from '../../prismic-config';
 import { AVENIR, COLORS } from '../../constants/ui-constants';
 import { shortCodeSerializer } from '../../utils/shortCodes';
-import { CHEVRON_LEFT_CIRCLE } from '../../public/static/svg-icons';
-import WhyBookFromUs from './WhyBookFromUs';
+import { CHEVRON_LEFT_CIRCLE } from '../../assets/SvgIcons';
+import { HEADOUT_API_ENDPOINT } from '../../constants';
 
 dayjs.extend(isBetween);
 
@@ -151,7 +152,7 @@ const getToursAvailability = async (tours = []) => {
   let data = await Promise.all(
     tours.map((tour) => {
       return fetch(
-        `https://api.headout.com/api/v5/tour-group/slots/get/${tour.data.tgid}?for-days=90`
+        `${HEADOUT_API_ENDPOINT}/v5/tour-group/slots/get/${tour.data.tgid}?for-days=90`
       ).then((r) => r.json());
     })
   );
@@ -293,7 +294,7 @@ const Listicle = (props) => {
         const tourData = await Promise.all(
           res.results.map((tour) => {
             return fetch(
-              `https://api.headout.com/api/v5/tour-group/get/${
+              `${HEADOUT_API_ENDPOINT}/v5/tour-group/get/${
                 tour.data.tgid
               }?fetch-variants=false&fetch-collection-svg=false&language=${
                 currentLanguage || 'en'
@@ -315,7 +316,15 @@ const Listicle = (props) => {
       .catch((err) => {
         console.log(err);
       });
-  }, [uid, lang, setLoading, setTours, setFilteredTours, currentLanguage]);
+  }, [
+    uid,
+    lang,
+    setLoading,
+    setTours,
+    setFilteredTours,
+    currentLanguage,
+    bookingUrl,
+  ]);
 
   const {
     data: {

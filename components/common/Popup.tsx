@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import sliceHandler from '../Slices';
-import { BLACK_CLOSE } from '../../public/static/svg-icons';
+import { BLACK_CLOSE } from '../../assets/SvgIcons';
 import { COLORS, GRAPHIK, AVENIR } from '../../constants/ui-constants';
 
-const Popup = props => {
+const Popup = (props) => {
   const { data, togglePopup, children } = props;
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
@@ -16,6 +16,8 @@ const Popup = props => {
     <div className="aio-popup-wrap">
       <div
         className="popup-mask"
+        role="button"
+        tabIndex={0}
         onClick={() => {
           togglePopup(false);
         }}
@@ -24,6 +26,8 @@ const Popup = props => {
         <div className="aio-header">
           <div
             className="close"
+            role="button"
+            tabIndex={0}
             onClick={() => {
               togglePopup(false);
             }}

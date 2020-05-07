@@ -4,7 +4,7 @@ import Image from '../UI/Image';
 import SocialLinks from '../UI/SocialLinks';
 import sliceHandler from '../Slices';
 import * as labels from '../../constants/localization/labels';
-import { POWERED_BY_HEADOUT, WHITE_BLIP } from '../../public/static/svg-icons';
+import { POWERED_BY_HEADOUT, WHITE_BLIP } from '../../assets/SvgIcons';
 import { COLORS, GRAPHIK, AVENIR } from '../../constants/ui-constants';
 
 const StyledFooter = styled.footer`

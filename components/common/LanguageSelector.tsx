@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Router from 'next/router';
 import styled from 'styled-components';
 import { withoutTrailingSlash } from '../../utils/helper';
-import { GLOBE } from '../../public/static/svg-icons';
+import { GLOBE } from '../../assets/SvgIcons';
 import { COLORS } from '../../constants/ui-constants';
 
 const flagsUrl = {

@@ -11,7 +11,7 @@ import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from '../utils/shortCodes';
 import { ANALYTICS_EVENTS } from '../constants';
 import { COLORS, GRAPHIK } from '../constants/ui-constants';
-import { CALENDAR } from '../public/static/svg-icons';
+import { CALENDAR } from '../assets/SvgIcons';
 import '../utils/dayjsLocale';
 
 const isLengthyArray = (item) => Array.isArray(item) && item.length;

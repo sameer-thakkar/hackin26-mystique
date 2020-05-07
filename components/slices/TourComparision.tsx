@@ -11,7 +11,7 @@ import { RichText } from 'prismic-reactjs';
 import { AVENIR, COLORS, GRAPHIK } from '../../constants/ui-constants';
 import { shortCodeSerializerWithParentProps } from '../../utils/shortCodes';
 import { MBContext } from '../../contexts/MBContext';
-import { CHEVRON_DOWN } from '../../public/static/svg-icons';
+import { CHEVRON_DOWN } from '../../assets/SvgIcons';
 import { TOUR_COMPARISION_DESIGN } from '../../constants';
 
 const StyledTourComparisionTable = styled.div`

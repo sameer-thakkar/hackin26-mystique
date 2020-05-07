@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { AVENIR } from '../../constants/ui-constants';
-import { YELLOW_CLOSE } from '../../public/static/svg-icons';
+import { YELLOW_CLOSE } from '../../assets/SvgIcons';
 
 const StyledAlert = styled.div`
   font-family: ${AVENIR.FONT_STACK};
@@ -84,7 +84,7 @@ const DismissAlert: React.FC<{
         <StyledReadMore href={readMoreLink} target="_blank">
           {readMore}
         </StyledReadMore>
-        <div className="close" onClick={handleClose}>
+        <div className="close" role="button" tabIndex={0} onClick={handleClose}>
           {YELLOW_CLOSE}
         </div>
       </StyledContent>

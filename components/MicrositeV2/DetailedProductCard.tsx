@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Image from '../UI/Image';
 import { RichText } from 'prismic-reactjs';
-import { CLOSE_WHITE } from '../../public/static/svg-icons';
+import { CLOSE_WHITE } from '../../assets/SvgIcons';
 import { GRAPHIK, COLORS, AVENIR } from '../../constants/ui-constants';
 import {
   shortCodeSerializerWithParentProps,
@@ -111,6 +111,7 @@ const DetailedProductCard = (props) => {
               </div>
               <a
                 target="_blank"
+                rel="noopener noreferrer"
                 href={`https://book.${nakedDomain}${
                   lang === 'en' ? '' : `/${lang}`
                 }/book/${tgidClicked}`}
@@ -132,7 +133,12 @@ const DetailedProductCard = (props) => {
           format="pjpg"
           imageId={tgidClicked}
         />
-        <div onClick={closeDescriptionCard} className="close-button">
+        <div
+          onClick={closeDescriptionCard}
+          role="button"
+          tabIndex={0}
+          className="close-button"
+        >
           {CLOSE_WHITE}
         </div>
       </div>

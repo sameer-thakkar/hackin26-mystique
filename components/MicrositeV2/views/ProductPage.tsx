@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Image from '../../UI/Image';
 import { RichText } from 'prismic-reactjs';
-import { CHEVRON_LEFT } from '../../../public/static/svg-icons';
+import { CHEVRON_LEFT } from '../../../assets/SvgIcons';
 import { shortCodeSerializer } from '../../../utils/shortCodes';
 import { PAGETYPE } from '../../../constants';
 import parse from 'url-parse';

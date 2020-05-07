@@ -10,11 +10,11 @@ import ProductsContext from '../../contexts/Products';
 import Product from './Product';
 import DetailedProductCard from './DetailedProductCard';
 import { scroller } from 'react-scroll';
-import { CHEVRON_LEFT } from '../../public/static/svg-icons';
+import { CHEVRON_LEFT } from '../../assets/SvgIcons';
 import InteractionContext from '../../contexts/Interaction';
 import { DONT_HOIST, DONT_AUTO_SCROLL } from '../../constants';
 
-export const CategorySlider = props => {
+export const CategorySlider = (props) => {
   const [tgidClicked, setTgidClicked] = useState(null);
   const carouselId = props.heading.replace(/\s/g, '-').toLowerCase();
   const [swiper, updateSwiper] = useState(null);
@@ -49,8 +49,10 @@ export const CategorySlider = props => {
 
   const productsContext = useContext(ProductsContext);
 
-  const handleProductClicked = productTgid => {
-    setTgidClicked(prevTgid => (prevTgid != productTgid ? productTgid : null));
+  const handleProductClicked = (productTgid) => {
+    setTgidClicked((prevTgid) =>
+      prevTgid != productTgid ? productTgid : null
+    );
   };
 
   useLayoutEffect(() => {
@@ -61,7 +63,7 @@ export const CategorySlider = props => {
         smooth: 'easeInQuad',
         offset: 100,
       });
-  }, [tgidClicked]);
+  }, [tgidClicked, carouselId]);
 
   const closeDescription = () => {
     setTgidClicked(null);
@@ -74,7 +76,7 @@ export const CategorySlider = props => {
     uid,
     heading,
     description,
-    isFirstTourOpen=false
+    isFirstTourOpen = false,
   } = props;
   const { allTours, isMobile } = productsContext;
   const interactionContext = useContext(InteractionContext);
@@ -85,16 +87,20 @@ export const CategorySlider = props => {
       arr.slice(0, index).indexOf(tgid) == -1
   );
   const cardPosition = filteredTgids.indexOf(tgidClicked) + 1;
-  const elementId = heading
-    .trim()
-    .replace(/\s/g, '-')
-    .toLowerCase();
-  useEffect(()=>{
-    setTimeout(()=>{
-      if(isFirstTourOpen && filteredTgids[0])
-        interactionContext.clickTour(filteredTgids[0], DONT_HOIST, elementId, DONT_AUTO_SCROLL)
-    })
-  },[])
+  const elementId = heading.trim().replace(/\s/g, '-').toLowerCase();
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (isFirstTourOpen && filteredTgids[0])
+        interactionContext.clickTour(
+          filteredTgids[0],
+          DONT_HOIST,
+          elementId,
+          DONT_AUTO_SCROLL
+        );
+    });
+  }, [elementId, filteredTgids, interactionContext, isFirstTourOpen]);
+
   return (
     <div className="category-slider" id={elementId}>
       <div className="content">
@@ -126,12 +132,22 @@ export const CategorySlider = props => {
         </div>
         <div className="controls">
           {swiper && !swiper.isBeginning ? (
-            <div className="swiper-btn btn btn-left" onClick={goPrev}>
+            <div
+              className="swiper-btn btn btn-left"
+              role="button"
+              tabIndex={0}
+              onClick={goPrev}
+            >
               {CHEVRON_LEFT}
             </div>
           ) : null}
           {swiper && !swiper.isEnd ? (
-            <div className="swiper-btn btn btn-right" onClick={goNext}>
+            <div
+              className="swiper-btn btn btn-right"
+              role="button"
+              tabIndex={0}
+              onClick={goNext}
+            >
               {CHEVRON_LEFT}
             </div>
           ) : null}

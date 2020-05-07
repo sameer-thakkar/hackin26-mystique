@@ -10,7 +10,7 @@ import * as labels from '../../constants/localization/labels';
 import { Client } from '../../prismic-config';
 import { CUSTOM_TYPES } from '../../constants';
 import { COLORS, AVENIR } from '../../constants/ui-constants';
-import { PIN } from '../../public/static/svg-icons';
+import { PIN } from '../../assets/SvgIcons';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 
 const CardWrapper = styled.div`

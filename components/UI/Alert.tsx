@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Popup from '../common/Popup';
 import * as labels from '../../constants/localization/labels';
-import { SHIELD } from '../../public/static/svg-icons';
+import { SHIELD } from '../../assets/SvgIcons';
 import { AVENIR } from '../../constants/ui-constants';
 import { Client } from '../../prismic-config';
 import { CUSTOM_TYPES } from '../../constants';

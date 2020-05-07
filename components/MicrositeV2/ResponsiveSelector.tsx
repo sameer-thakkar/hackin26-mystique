@@ -2,13 +2,11 @@ import React, { useState, useRef } from 'react';
 import { useCaptureClickOutside } from '../hooks/ClickOutside';
 import Image from '../UI/Image';
 import { COLORS, GRAPHIK } from '../../constants/ui-constants';
-import { CHEVRON_DOWN } from '../../public/static/svg-icons';
+import { CHEVRON_DOWN } from '../../assets/SvgIcons';
 
-export const ResponsiveSelector = props => {
+export const ResponsiveSelector = (props) => {
   const {
     currentSelectionIndex,
-    responsiveDropdown,
-    host,
     isMobile,
     onChange,
     customClassName = '',
@@ -21,14 +19,14 @@ export const ResponsiveSelector = props => {
   const [toggleActive, setToggleActive] = useState(false);
   const [current, setCurrent] = useState(currentSelectionIndex || 0);
 
-  const selectionChangeHandler = index => {
+  const selectionChangeHandler = (index) => {
     setCurrent(index);
     onChange(options[index]);
     handleMenuToggle();
   };
 
   const handleMenuToggle = () => {
-    setToggleActive(prevState => !prevState);
+    setToggleActive((prevState) => !prevState);
   };
 
   const selectorRef = useRef(null);
@@ -40,7 +38,12 @@ export const ResponsiveSelector = props => {
       ref={parentRef}
       className={`responsive-selector-container ${customClassName}`}
     >
-      <div className="current-selection" onClick={handleMenuToggle}>
+      <div
+        className="current-selection"
+        role="button"
+        tabIndex={0}
+        onClick={handleMenuToggle}
+      >
         <span className="current-selection-toggle">
           {options[current].label}
         </span>
@@ -73,6 +76,8 @@ export const ResponsiveSelector = props => {
                   current == index ? 'active' : ''
                 }`}
                 key={index}
+                role="button"
+                tabIndex={0}
                 onClick={() => selectionChangeHandler(index)}
               >
                 <span>{option.label}</span>
@@ -80,20 +85,31 @@ export const ResponsiveSelector = props => {
                   <img
                     className="check-mark"
                     src="https://cdn-imgix-open.headout.com/mystique/assets/tick.svg"
+                    alt=""
                   />
                 ) : null}
               </div>
             );
           })}
           {isMobile ? (
-            <div onClick={handleMenuToggle} className="close-btn">
+            <div
+              onClick={handleMenuToggle}
+              role="button"
+              tabIndex={0}
+              className="close-btn"
+            >
               Close
             </div>
           ) : null}
         </div>
       ) : null}
       {isMobile && toggleActive ? (
-        <div onClick={handleMenuToggle} className="close-mask"></div>
+        <div
+          onClick={handleMenuToggle}
+          role="button"
+          tabIndex={0}
+          className="close-mask"
+        ></div>
       ) : null}
       <style jsx>
         {`

@@ -7,7 +7,7 @@ import Hamburger from '../UI/Hamburger';
 import Image from '../UI/Image';
 import MultiLevelNav from '../MultiLevelNav';
 import { useCaptureClickOutside } from '../hooks/ClickOutside';
-import { POWERED_BY_HEADOUT } from '../../public/static/svg-icons';
+import { POWERED_BY_HEADOUT } from '../../assets/SvgIcons';
 
 const StyledHeader = styled.header`
   height: 80px;

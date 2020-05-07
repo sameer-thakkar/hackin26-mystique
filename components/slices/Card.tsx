@@ -8,7 +8,7 @@ import Button from '../UI/Button';
 import { MBContext } from '../../contexts/MBContext';
 import * as labels from '../../constants/localization/labels';
 import { COLORS, GRAPHIK, AVENIR } from '../../constants/ui-constants';
-import { CHEVRON_LEFT } from '../../public/static/svg-icons';
+import { CHEVRON_LEFT } from '../../assets/SvgIcons';
 
 const variantStyles = {
   'full-width': {
