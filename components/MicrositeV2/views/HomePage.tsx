@@ -168,6 +168,8 @@ export const HomePage = (props) => {
         logoURL={footerLogoURL}
         logoAlt={footerLogoAlt}
         hasPoweredByHeadoutLogo={footer.powered_by_headout || false}
+        showDisclaimer={footer.show_disclaimer}
+        disclaimerText={footer.disclaimer_text}
         microbrandType={footer.microbrand_type || ''}
         slices={footer.body || []}
         invertLogoColor={footer.invert_logo_color}

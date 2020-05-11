@@ -540,6 +540,8 @@ export default class MicrositeV1 extends Component<any, any> {
             hasPoweredByHeadoutLogo={
               commonFooter?.data?.powered_by_headout || false
             }
+            showDisclaimer={commonFooter?.data?.show_disclaimer}
+            disclaimerText={commonFooter?.data?.disclaimer_text}
             microbrandType={commonFooter?.data?.microbrand_type}
             slices={commonFooter?.data?.body || []}
             invertLogoColor={commonFooter?.data?.invert_logo_color}

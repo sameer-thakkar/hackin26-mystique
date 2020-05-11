@@ -668,7 +668,7 @@ const TourComparisonTable = (props) => {
       {isMobile && !isExpanded ? (
         <Button onClick={() => setExpand(true)}>
           <div className="start-compare-icon">
-            Compare All Details {CHEVRON_DOWN}
+            labels[lang].COMPARE_ALL_DETAILS {CHEVRON_DOWN}
           </div>
         </Button>
       ) : null}

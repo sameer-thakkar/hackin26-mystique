@@ -3,12 +3,15 @@ import styled from 'styled-components';
 import LinkResolver from '../LinkResolver';
 import { GRAPHIK, COLORS } from '../../constants/ui-constants';
 
-type TitleLinksProps = {
+type FooterColumnProps = {
   title: string;
-  links: Array<any>;
+  links: Array<{
+    link_text: string;
+    link_type: { url: string; target: string };
+  }>;
 };
 
-const StyledLinksCard = styled.div`
+const StyledFooterColumn = styled.div`
   display: grid;
   align-items: start;
   grid-template-rows: max-content max-content;
@@ -24,22 +27,22 @@ const StyledLinksCard = styled.div`
   }
 `;
 
-const StyledLinksTitle = styled.div`
+const Title = styled.div`
   font-size: 14px;
   font-weight: ${GRAPHIK.SEMIBOLD};
   margin-bottom: 4px;
 `;
 
-const StyledLinksList = styled.div`
+const LinksList = styled.div`
   display: grid;
   grid-template-columns: 1fr;
 `;
 
-const TitleLinksCard: React.FC<TitleLinksProps> = ({ links, title }) => {
+const FooterColumn: React.FC<FooterColumnProps> = ({ links, title }) => {
   return (
-    <StyledLinksCard>
-      <StyledLinksTitle>{title}</StyledLinksTitle>
-      <StyledLinksList>
+    <StyledFooterColumn>
+      <Title>{title}</Title>
+      <LinksList>
         {links.map((link, index) => (
           <LinkResolver
             key={index}
@@ -49,9 +52,9 @@ const TitleLinksCard: React.FC<TitleLinksProps> = ({ links, title }) => {
             {link.link_text}
           </LinkResolver>
         ))}
-      </StyledLinksList>
-    </StyledLinksCard>
+      </LinksList>
+    </StyledFooterColumn>
   );
 };
 
-export default TitleLinksCard;
+export default FooterColumn;

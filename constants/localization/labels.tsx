@@ -25,8 +25,6 @@ export const en = {
   TODAY: 'Today',
   TOMORROW: 'Tomorrow',
   MORE_FROM: 'More from',
-  FOOTER_DISCLAIMER:
-    'This website is not the official website of the <attraction>. It is run by Headout and works with attractions and tour operators to provide incredible experiences at the tap of a button.',
   LISTICLES: {
     SEATING_CHART: 'Seating Chart',
     KNOW_MORE: 'Know More',
@@ -35,6 +33,19 @@ export const en = {
   PRICES_STARTING: 'Prices Starting',
   FROM: 'From',
   MORE_DETAILS: 'More Details',
+  FOOTER: {
+    DISCLAIMER:
+      'This website is not the official website of the <attraction>. It is run by Headout and works with attractions and tour operators to provide incredible experiences at the tap of a button.',
+    GET_HELP: 'Get Help',
+    CHAT_WITH_US: 'Chat with Us',
+    CALL_US: 'Call Us',
+    EMAIL_US: 'Email Us',
+    LEGAL: 'Legal',
+    TERMS_AND_CONDITIONS: 'Terms & Conditions',
+    PRIVACY_POLICY: 'Privacy Policy',
+    COMPANY_DETAILS: 'Company Details',
+  },
+  COMPARE_ALL_DETAILS: 'Compare All Details',
 };
 
 export const es = {
@@ -63,8 +74,6 @@ export const es = {
   EARLIEST_AVAILABILITY: 'Siguiente Disponible',
   TODAY: 'Hoy',
   TOMORROW: 'Mañana',
-  FOOTER_DISCLAIMER:
-    'Este sitio web no es el sitio web oficial de la atracción: <attraction>. Este sitio está operado por Headout, que trabajamos con operadores turísticos para atracciones y tours a fin de proporcionar experiencias increíbles a tu alcance',
   LISTICLES: {
     SEATING_CHART: 'Plano de Asientos',
     KNOW_MORE: 'Leer Más',
@@ -73,6 +82,19 @@ export const es = {
   PRICES_STARTING: 'Precios desde',
   FROM: 'A partir de',
   MORE_DETAILS: 'Más Detalles',
+  FOOTER: {
+    DISCLAIMER:
+      'Este sitio no es el sitio web oficial <attraction>. Este sitio es operado por Headout quien trabaja de la mano con operadores turísticos para ofrecer experiencias increíbles en un sólo clic.',
+    GET_HELP: 'Ayuda',
+    CHAT_WITH_US: 'Chat en Vivo',
+    CALL_US: 'Teléfono',
+    EMAIL_US: 'Correo Electrónico',
+    LEGAL: 'Información Legal',
+    TERMS_AND_CONDITIONS: 'Términos y Condiciones',
+    PRIVACY_POLICY: 'Política de Privacidad',
+    COMPANY_DETAILS: 'Sobre la Empresa',
+  },
+  COMPARE_ALL_DETAILS: 'Compara los detalles',
 };
 
 export const de = {
@@ -101,8 +123,6 @@ export const de = {
   EARLIEST_AVAILABILITY: 'Früheste verfügbare',
   TODAY: 'Heute',
   TOMORROW: 'Morgen',
-  FOOTER_DISCLAIMER:
-    'Dies ist nicht die offizielle Website von der Attraktion: <attraction>. Sie wird von Headout betrieben, um gemeinsam mit Veranstaltern für Attraktionen und Touren unglaubliche Erlebnisse auf Knopfdruck anzubieten.',
   LISTICLES: {
     SEATING_CHART: 'Saalplan',
     KNOW_MORE: 'Wissenswertes',
@@ -111,6 +131,19 @@ export const de = {
   PRICES_STARTING: 'Preise ab',
   FROM: 'Ab',
   MORE_DETAILS: 'Weitere Informationen',
+  FOOTER: {
+    DISCLAIMER:
+      'Diese Website ist nicht die offizielle Website <attraction>. Die Website wird vom Unternehmen Headout betrieben, das mit Veranstaltern für Attraktionen und Touren zusammenarbeitet, um unglaubliche Erlebnisse auf Knopfdruck anzubieten.',
+    GET_HELP: 'Hilfe',
+    CHAT_WITH_US: 'Live-Chat',
+    CALL_US: 'Telefon',
+    EMAIL_US: 'E-Mail',
+    LEGAL: 'Rechtliches',
+    TERMS_AND_CONDITIONS: 'AGB',
+    PRIVACY_POLICY: 'Datenschutzrichtlinie',
+    COMPANY_DETAILS: 'Unternehmensangaben',
+  },
+  COMPARE_ALL_DETAILS: 'Alle vergleichen',
 };
 
 export const it = {
@@ -139,8 +172,6 @@ export const it = {
   EARLIEST_AVAILABILITY: 'Prima Disponibilità',
   TODAY: 'Oggi',
   TOMORROW: 'Domani',
-  FOOTER_DISCLAIMER:
-    'Questo sito web non è il sito ufficiale della seguente attrazione: <attraction>. Il sito è gestito da Headout in collaborazione con i tour operator per fornire esperienze incredibili e disponibili al semplice tocco di un pulsante.',
   LISTICLES: {
     SEATING_CHART: 'Mappa dei Posti a Sedere',
     KNOW_MORE: 'Altre Informazioni',
@@ -149,6 +180,19 @@ export const it = {
   PRICES_STARTING: 'Prezzi A Partire Da',
   FROM: 'A Partire Da',
   MORE_DETAILS: 'Altri Dettagli',
+  FOOTER: {
+    DISCLAIMER:
+      'Questo non è il sito internet ufficiale della seguente attrazione: <attraction>. Questo sito è gestito da Headout e lavora con attrazioni e tour operator per fornire esperienze incredibili al tocco di un pulsante.',
+    GET_HELP: 'Aiuto',
+    CHAT_WITH_US: 'Chatta con Noi',
+    CALL_US: 'Chiamaci',
+    EMAIL_US: 'Contattaci Via E-mail',
+    LEGAL: 'Informazioni Legali',
+    TERMS_AND_CONDITIONS: `Termini e Condizioni d'uso`,
+    PRIVACY_POLICY: 'Informativa sulla Privacy',
+    COMPANY_DETAILS: 'Dettagli sulla Società',
+  },
+  COMPARE_ALL_DETAILS: 'Confronta Tutti i Dettagli',
 };
 
 export const fr = {
@@ -176,7 +220,6 @@ export const fr = {
   EARLIEST_AVAILABILITY: 'Disponibilité la Plus Tôt',
   TODAY: "Aujourd'hui",
   TOMORROW: 'Demain',
-  FOOTER_DISCLAIMER: `Ce site n'est pas le site officiel de l'attraction : <attraction>. Headout gère ce site et collabore avec des organisateurs et des agences de voyage pour vous offrir des expériences incroyables en un clic.`,
   LISTICLES: {
     SEATING_CHART: 'Plan de la salle',
     KNOW_MORE: 'En savoir plus',
@@ -185,6 +228,18 @@ export const fr = {
   PRICES_STARTING: 'À partir de',
   FROM: 'À partir de',
   MORE_DETAILS: `Plus d'informations`,
+  FOOTER: {
+    DISCLAIMER: `Ce site n'est pas le site officiel <attraction>. Il est géré par Headout et travaille en collaboration avec des attractions et des tour-opérateurs pour vous offrir des expériences incroyables en un clic !`,
+    GET_HELP: 'Aide',
+    CHAT_WITH_US: 'Chattez avec nous',
+    CALL_US: 'Appelez-nous',
+    EMAIL_US: 'Contactez-nous',
+    LEGAL: 'Légal',
+    TERMS_AND_CONDITIONS: 'Conditions générales',
+    PRIVACY_POLICY: 'Politique de confidentialité',
+    COMPANY_DETAILS: 'Notre entreprise',
+  },
+  COMPARE_ALL_DETAILS: 'Comparer tous les détails',
 };
 
 export const nl = {
@@ -213,8 +268,6 @@ export const nl = {
   EARLIEST_AVAILABILITY: 'Vroegste Beschikbaarheid',
   TODAY: 'Vandaag',
   TOMORROW: 'Morgen',
-  FOOTER_DISCLAIMER:
-    'Deze website is niet de officiële website van de <attraction>. Het wordt gerund door Headout en werkt samen met attracties en touroperators om ongelooflijke ervaringen te bieden met één druk op de knop.',
   LISTICLES: {
     SEATING_CHART: 'Stoelenschema',
     KNOW_MORE: 'Meer weten',
@@ -223,6 +276,19 @@ export const nl = {
   PRICES_STARTING: 'Prijzen beginnen',
   FROM: 'Van',
   MORE_DETAILS: 'Meer details',
+  FOOTER: {
+    DISCLAIMER:
+      'Deze website is niet de officiële website van de <attraction>. Het wordt gerund door Headout en werkt samen met attracties en touroperators om ongelooflijke ervaringen te bieden met één druk op de knop.',
+    GET_HELP: 'Krijg hulp',
+    CHAT_WITH_US: 'Chat with Us',
+    CALL_US: 'Chat met ons',
+    EMAIL_US: 'Email ons',
+    LEGAL: 'Juridisch',
+    TERMS_AND_CONDITIONS: 'algemene voorwaarden',
+    PRIVACY_POLICY: 'Privacybeleid',
+    COMPANY_DETAILS: 'Bedrijfsgegevens',
+  },
+  COMPARE_ALL_DETAILS: 'Vergelijk alle details',
 };
 
 export const pt = {
@@ -251,8 +317,6 @@ export const pt = {
   EARLIEST_AVAILABILITY: 'Seguinte Disponível',
   TODAY: 'Hoje',
   TOMORROW: 'Amanhã',
-  FOOTER_DISCLAIMER:
-    'Este site não é o site oficial da atração: <attraction>. É mantido pela Headout em parceria com atrações e operadores turísticos para proporcionar experiências incríveis com apenas um clique.',
   LISTICLES: {
     SEATING_CHART: 'Mapa de assentos',
     KNOW_MORE: 'Saiba mais',
@@ -261,4 +325,17 @@ export const pt = {
   PRICES_STARTING: 'Preços a partir de',
   FROM: 'A partir de',
   MORE_DETAILS: 'Mais detalhes',
+  FOOTER: {
+    DISCLAIMER:
+      'O site não é a página oficial da atração <attraction>. O site é mantido pela Headout, que trabalha em colaboração com atrações e operadores locais para oferecer experiências incríveis com apenas um clique!',
+    GET_HELP: 'Ajuda',
+    CHAT_WITH_US: 'Chat',
+    CALL_US: 'Telefone',
+    EMAIL_US: 'E-mail',
+    LEGAL: 'Termos Legais',
+    TERMS_AND_CONDITIONS: 'Termos e Condições',
+    PRIVACY_POLICY: 'Política de Privacidade',
+    COMPANY_DETAILS: 'Sobre a empresa',
+  },
+  COMPARE_ALL_DETAILS: 'Compare os detalhes',
 };

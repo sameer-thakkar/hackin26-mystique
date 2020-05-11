@@ -28,7 +28,7 @@ const InternalContentCard = dynamic(() =>
 );
 const FWActionCard = dynamic(() => import('./slices/FWActionCard'));
 const FeatureBox = dynamic(() => import('./slices/FeatureBox'));
-const TitleLinksCard = dynamic(() => import('./slices/TitleLinksCard'));
+const FooterColumn = dynamic(() => import('./slices/FooterColumn'));
 const CardCarousel = dynamic(() => import('./slices/CardCarousel'));
 const CategorySection = dynamic(() => import('./MicrositeV2/CategorySection'));
 const CategorySlider = dynamic(() => import('./MicrositeV2/CategorySlider'));
@@ -88,9 +88,7 @@ const sliceHandler = (slice, props: any = {}) => {
     case 'feature_box':
       return <FeatureBox blocks={slice.items} lazyLoad={true} />;
     case 'footer_column':
-      return (
-        <TitleLinksCard title={slice.primary.heading} links={slice.items} />
-      );
+      return <FooterColumn title={slice.primary.heading} links={slice.items} />;
     case 'table':
       return (
         <Table

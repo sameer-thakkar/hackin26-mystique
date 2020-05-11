@@ -17,7 +17,7 @@ const StyledFooter = styled.footer`
   margin-top: 40px;
 `;
 
-const StyledFooterLinksWrapper = styled.div`
+const FooterLinksWrapper = styled.div`
   padding-top: 40px;
   border-top: 1px solid ${COLORS.DADDY};
   margin-bottom: 40px;
@@ -38,7 +38,7 @@ const StyledFooterLinksWrapper = styled.div`
   }
 `;
 
-const StyledFooterLegalWrapper = styled.div`
+const FooterLegalWrapper = styled.div`
   color: white;
   background: black;
   margin: 0 auto;
@@ -89,7 +89,7 @@ const StyledFooterLegalWrapper = styled.div`
   }
 `;
 
-const StyledContainer = styled.div`
+const Container = styled.div`
   width: 1200px;
   margin: 0 auto;
   @media (max-width: 768px) {
@@ -98,7 +98,7 @@ const StyledContainer = styled.div`
   }
 `;
 
-const StyledFooterLegal = styled.div`
+const FooterLegal = styled.div`
   display: grid;
   grid-template-areas: 'logo-disclaimer help legal';
   align-items: start;
@@ -146,12 +146,12 @@ const StyledFooterLegal = styled.div`
   }
 `;
 
-const StyledLinksHeader = styled.div`
+const LinksHeader = styled.div`
   font-weight: ${GRAPHIK.SEMIBOLD};
   color: white;
 `;
 
-const StyledLink = styled.a`
+const Link = styled.a`
   display: block;
   text-decoration: none;
   color: white;
@@ -169,6 +169,8 @@ type FooterProps = {
   logoAlt: string;
   hasPoweredByHeadoutLogo?: boolean;
   microbrandType: string;
+  showDisclaimer: boolean;
+  disclaimerText: string;
   invertLogoColor?: boolean;
   slices?: Array<any>;
 };
@@ -179,6 +181,8 @@ const Footer: React.FC<FooterProps> = ({
   attraction = '',
   logoURL,
   logoAlt,
+  showDisclaimer = false,
+  disclaimerText = '',
   hasPoweredByHeadoutLogo = false,
   microbrandType = '',
   invertLogoColor = false,
@@ -187,8 +191,8 @@ const Footer: React.FC<FooterProps> = ({
   return (
     <StyledFooter>
       {slices.length !== 0 ? (
-        <StyledFooterLinksWrapper>
-          <StyledContainer>
+        <FooterLinksWrapper>
+          <Container>
             <div className="quick-links-title">
               {linksTitle || 'Quick Links'}
             </div>
@@ -201,52 +205,59 @@ const Footer: React.FC<FooterProps> = ({
                 );
               })}
             </div>
-          </StyledContainer>
-        </StyledFooterLinksWrapper>
+          </Container>
+        </FooterLinksWrapper>
       ) : null}
-      <StyledFooterLegalWrapper>
-        <StyledContainer>
-          <StyledFooterLegal invertLogoColor={invertLogoColor}>
+      <FooterLegalWrapper>
+        <Container>
+          <FooterLegal invertLogoColor={invertLogoColor}>
             <div className="logo-disclaimer">
               <div className="logo-wrapper">
                 <Image url={logoURL} alt={logoAlt} />
                 {hasPoweredByHeadoutLogo ? POWERED_BY_HEADOUT : null}
               </div>
-              {microbrandType === 'C1' ? (
+              {microbrandType === 'C1' || showDisclaimer ? (
                 <div className="disclaimer-text">
-                  {labels[currentLanguage].FOOTER_DISCLAIMER.replace(
-                    '<attraction>',
-                    attraction
-                  )}
+                  {disclaimerText
+                    ? disclaimerText
+                    : labels[currentLanguage].FOOTER.DISCLAIMER.replace(
+                        '<attraction>',
+                        attraction
+                      )}
                 </div>
               ) : null}
             </div>
             <div className="help">
-              <StyledLinksHeader>Get Help</StyledLinksHeader>
-              <StyledLink
+              <LinksHeader>
+                {labels[currentLanguage].FOOTER.GET_HELP}
+              </LinksHeader>
+              <Link
                 href="https://secure.livechatinc.com/licence/8339531/v2/open_chat.cgi?groups=0"
                 target="_blank"
               >
-                Chat with Us
-              </StyledLink>
-              <StyledLink href="tel:+1 347 897 0100">Call Us</StyledLink>
-              <StyledLink href="mailto:support@headout.com" target="_blank">
-                Email Us
-              </StyledLink>
+                {labels[currentLanguage].FOOTER.CHAT_WITH_US}
+              </Link>
+              <Link href="tel:+1 347 897 0100">
+                {' '}
+                {labels[currentLanguage].FOOTER.CALL_US}
+              </Link>
+              <Link href="mailto:support@headout.com" target="_blank">
+                {labels[currentLanguage].FOOTER.EMAIL_US}
+              </Link>
             </div>
             <div className="legal">
-              <StyledLinksHeader>Legal</StyledLinksHeader>
-              <StyledLink href="/terms" target="_blank">
-                Terms & Conditions
-              </StyledLink>
-              <StyledLink href="/privacy-policy" target="_blank">
-                Privacy Policy
-              </StyledLink>
-              <StyledLink href="/company-details" target="_blank">
-                Company Details
-              </StyledLink>
+              <LinksHeader> {labels[currentLanguage].FOOTER.LEGAL}</LinksHeader>
+              <Link href="/terms" target="_blank">
+                {labels[currentLanguage].FOOTER.TERMS_AND_CONDITIONS}
+              </Link>
+              <Link href="/privacy-policy" target="_blank">
+                {labels[currentLanguage].FOOTER.PRIVACY_POLICY}
+              </Link>
+              <Link href="/company-details" target="_blank">
+                {labels[currentLanguage].FOOTER.COMPANY_DETAILS}
+              </Link>
             </div>
-          </StyledFooterLegal>
+          </FooterLegal>
           <div className="footer-chin">
             <div className="white-line" />
             <div className="headout-logo">
@@ -255,8 +266,8 @@ const Footer: React.FC<FooterProps> = ({
             </div>
             <SocialLinks className="social-links" />
           </div>
-        </StyledContainer>
-      </StyledFooterLegalWrapper>
+        </Container>
+      </FooterLegalWrapper>
     </StyledFooter>
   );
 };

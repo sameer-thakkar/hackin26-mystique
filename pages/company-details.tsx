@@ -176,6 +176,8 @@ export default class companyDetails extends Component<any, any> {
           hasPoweredByHeadoutLogo={
             commonFooter?.data?.powered_by_headout || false
           }
+          showDisclaimer={commonFooter?.data?.show_disclaimer}
+          disclaimerText={commonFooter?.data?.disclaimer_text}
           slices={[]}
         />
       </>
