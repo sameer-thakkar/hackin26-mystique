@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { useWindowWidth } from '@react-hook/window-size';
 import sliceHandler from '../Slices';
 import Swiper from '../Swiper';
-import OverflowScroll from '../UI/OverflowScroll';
-import RichContent from '../UI/RichContent';
-import TitleTextCombo from '../UI/TitleTextCombo';
-import { CHEVRON_LEFT_CIRCLE } from '../../assets/SvgIcons';
-import { SIZES } from '../../constants/ui-constants';
+import OverflowScroll from 'UI/OverflowScroll';
+import RichContent from 'UI/RichContent';
+import TitleTextCombo from 'UI/TitleTextCombo';
+import { CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
+import { SIZES } from 'constants/ui-constants';
 
 const CardGrid = styled.div(({ cardsInARow }) => {
   let gridTemplateColumns = `100%`;
