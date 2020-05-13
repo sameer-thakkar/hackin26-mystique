@@ -22,7 +22,7 @@ const StyledTourComparisionTable = styled.div`
   .comparision-heading {
     font-size: 24px;
     margin-bottom: 8px;
-    font-weight: ${AVENIR.BLACK};
+    font-weight: ${AVENIR.MEDIUM};
     font-family: ${AVENIR.FONT_STACK};
     color: ${COLORS.TWO_BLACK};
     line-height: 33px;
@@ -344,7 +344,7 @@ const StyledTourComparisionTable = styled.div`
     }
     .comparision-heading {
       font-family: ${GRAPHIK.FONT_STACK};
-      font-weight: ${GRAPHIK.SEMIBOLD};
+      font-weight: ${GRAPHIK.MEDIUM};
       line-height: 26px;
       margin-bottom: 8px;
     }

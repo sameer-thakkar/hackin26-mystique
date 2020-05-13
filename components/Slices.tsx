@@ -418,6 +418,8 @@ const sliceHandler = (slice, props: any = {}) => {
           heading={slice.primary.heading}
         />
       );
+    case 'unspace':
+      return <div className="unspace-slice"></div>;
     default:
     // ToDo: Add to Error Logs (Slice)
   }

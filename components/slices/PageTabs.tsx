@@ -4,7 +4,9 @@ import classNames from 'classnames';
 import LinkResolver from '../LinkResolver';
 
 const Tabs = styled.div`
-  display: flex;
+  display: grid;
+  grid-column-gap: 40px;
+  grid-auto-flow: column;
   justify-content: space-between;
   margin: auto;
   border-bottom: 1px solid #ebebeb;
@@ -26,7 +28,6 @@ const Tabs = styled.div`
     color: #444444;
     font-size: 18px;
     padding: 20px;
-    margin: 0 40px;
   }
 
   .selected-nav-tab {

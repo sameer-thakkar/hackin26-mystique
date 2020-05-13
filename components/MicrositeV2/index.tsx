@@ -349,10 +349,6 @@ class MicrositeV2 extends Component<any, any> {
             text-rendering: optimizeLegibility;
             -webkit-font-smoothing: antialiased;
           }
-          svg {
-            display: flex;
-            align-items: center;
-          }
         `}</style>
       </InteractionContextProvider>
     );

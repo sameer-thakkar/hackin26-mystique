@@ -12,6 +12,7 @@ import styled from 'styled-components';
 import MultiLevelNav from '../MultiLevelNav';
 import { groupSlices } from '../../utils/helper';
 import Hamburger from '../UI/Hamburger';
+import HeaderLinks from '../HeaderLinks';
 
 const StyledHeader = styled.span`
   header {
@@ -95,8 +96,10 @@ const HeaderRight = styled.div`
   }
   @media (max-width: 768px) {
     grid-auto-flow: unset;
-    grid-template-columns: auto ${({ hasLanguageDropdown: check }) =>
-        check ? 'auto' : ''};
+    grid-template-columns: ${({
+      hasLanguageDropdown: col1,
+      hasHamburger: col2,
+    }) => `repeat(${Number(col1) + Number(col2) + 1}, auto)`};
     align-items: center;
     .buy-tickets {
       display: none;
@@ -236,6 +239,7 @@ const Header = (props) => {
     enableBuyTickets,
     hasPoweredByHeadoutLogo,
     headerSlices = [],
+    headerLinks,
   } = props;
   const allToursArray = Object.values(allTours);
   const hasDropdownLinks = enableDropdownLinks && dropdownLinks.length;
@@ -245,6 +249,18 @@ const Header = (props) => {
     headerSlices,
     ALLOW_IMMEDIEATE_NESTING
   );
+  const convertedRegularMenuItems = headerLinks?.map((link) => ({
+    slice_type: 'menu_item',
+    primary: {
+      label: link.link_heading,
+      url: {
+        url: link.link_url.url,
+        target: link.link_url.target,
+      },
+    },
+  }));
+  const hamburgerIconCheck = !!headerLinks?.length || headerSlices.length;
+
   return (
     <StyledHeader overlayActive={languageDropdown || navActive}>
       <div className="fixed-offset"></div>
@@ -294,12 +310,24 @@ const Header = (props) => {
               </SearchWrapper>
             )}
           </HeaderLeft>
-          <HeaderRight hasLanguageDropdown={hasLanguageDropdown}>
+          <HeaderRight
+            hasLanguageDropdown={hasLanguageDropdown}
+            hasHamburger={isMobile && hamburgerIconCheck}
+          >
+            {!groupedHeaderSlices && headerLinks ? (
+              <HeaderLinks
+                headerLinks={headerLinks}
+                isMobile={isMobile}
+                hiddenMobile={navActive}
+              />
+            ) : null}
+
             {groupedHeaderSlices ? (
               <MultiLevelNav
                 isActive={navActive}
                 isMobile={isMobile}
                 slice={groupedHeaderSlices || []}
+                oldMenuItems={convertedRegularMenuItems}
               />
             ) : null}
             {enableBuyTickets ? (
@@ -331,7 +359,7 @@ const Header = (props) => {
               host={host}
               isMobile={isMobile}
             />
-            {isMobile && groupedHeaderSlices.length ? (
+            {isMobile && hamburgerIconCheck ? (
               <Hamburger
                 className={'hamburger'}
                 isActive={navActive}

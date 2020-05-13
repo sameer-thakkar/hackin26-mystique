@@ -1,11 +1,10 @@
 import sliceHandler from '../Slices';
-import { COLORS } from '../../constants/ui-constants';
+import { COLORS, GRAPHIK } from '../../constants/ui-constants';
 import { FULL_WIDTH_SLICES } from '../../constants';
 import styled from 'styled-components';
 
 const StyledLongform = styled.div`
-  font-family: 'Graphik', 'Proxima Nova', 'Helvetica Neue', Helvetica, Arial,
-    sans-serif;
+  font-family: ${GRAPHIK.FONT_STACK};
   line-height: 1.6;
   color: #545454;
   border-top: 1px solid ${COLORS.DADDY};
@@ -38,6 +37,11 @@ h6 {
 
   h2 {
     font-weight: 500;
+  }
+  p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: ${COLORS.FOUR_BLACK};
   }
   @media (max-width: 768px) {
     border: none;

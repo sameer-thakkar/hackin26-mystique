@@ -8,6 +8,8 @@ import RatingBoosterCombo from '../components/shortcodes/RatingBoosterCombo';
 import PopupTrigger from '../components/shortcodes/PopupTrigger';
 import IFrame from '../components/shortcodes/IFrame';
 import { WrapInLazyComponent } from '../components/common/LazyComponent';
+import Cross from '../components/shortcodes/Cross';
+import Check from '../components/shortcodes/Check';
 
 interface ShortCodeDictionary {
   [key: string]: {
@@ -39,6 +41,12 @@ const shortCodesDict: ShortCodeDictionary = {
   },
   iframe: {
     component: IFrame,
+  },
+  cross: {
+    component: Cross,
+  },
+  check: {
+    component: Check,
   },
 };
 

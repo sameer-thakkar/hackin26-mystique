@@ -4,6 +4,46 @@ import { useContext, useEffect } from 'react';
 import ProductsContext from '../../contexts/Products';
 import InteractionContext from '../../contexts/Interaction';
 import { DONT_AUTO_SCROLL, DONT_HOIST } from '../../constants';
+import styled from 'styled-components';
+
+const StyledCategorySection = styled.div`
+  display: grid;
+  grid-row-gap: 8px;
+  color: ${COLORS.DAVY_GREY};
+  .category-heading {
+    margin: 0;
+    font-size: 24px;
+    font-family: ${AVENIR.FONT_STACK};
+    font-weight: ${AVENIR.MEDIUM};
+    line-height: 33px;
+    color: ${COLORS.TWO_BLACK};
+  }
+  .category-description {
+    margin: 0;
+    font-size: 16px;
+    width: 60%;
+    font-family: ${AVENIR.FONT_STACK};
+    line-height: 20px;
+    font-weight: ${AVENIR.MEDIUM};
+    color: ${COLORS.FOUR_BLACK};
+  }
+  @media (max-width: 768px) {
+    grid-row-gap: 8px;
+    .category-heading {
+      margin: 0;
+      font-size: 24px;
+      font-family: ${GRAPHIK.FONT_STACK};
+      font-weight: ${GRAPHIK.SEMIBOLD};
+      line-height: 26px;
+    }
+    .category-description {
+      font-family: ${GRAPHIK.FONT_STACK};
+      line-height: 20px;
+      width: 100%;
+      font-weight: ${GRAPHIK.REGULAR};
+    }
+  }
+`;
 
 /**
  * # Tours Section / Carousel
@@ -31,10 +71,10 @@ const CategorySection = (props) => {
     tgidsArray,
     host,
     uid,
-    heading,
+    heading = '',
     description,
     changePage,
-    isFirstTourOpen=false,
+    isFirstTourOpen = false,
     isMobile,
   } = props;
   const toursContext = useContext(ProductsContext);
@@ -44,16 +84,25 @@ const CategorySection = (props) => {
     (tgid) => allTours[tgid] && allTours[tgid].available
   );
   const elementId = heading.trim().replace(/\s/g, '-').toLowerCase();
-  useEffect(()=>{
-    setTimeout(()=>{
-      if(isFirstTourOpen && filteredTgids[0] && !isMobile)
-        interactionContext.clickTour(filteredTgids[0], DONT_HOIST, elementId, DONT_AUTO_SCROLL)
-    })
-  },[])
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (isFirstTourOpen && filteredTgids[0] && !isMobile)
+        interactionContext.clickTour(
+          filteredTgids[0],
+          DONT_HOIST,
+          elementId,
+          DONT_AUTO_SCROLL
+        );
+    });
+  }, []);
+
   return (
-    <div className="category-slider" id={elementId}>
-      <h2 className="category-heading">{heading}</h2>
-      <p className="category-description">{description}</p>
+    <StyledCategorySection id={elementId}>
+      {heading ? <h2 className="category-heading">{heading}</h2> : null}
+      {description ? (
+        <p className="category-description">{description}</p>
+      ) : null}
       <PopulateProducts
         rowsToShow={2}
         propTgids={filteredTgids}
@@ -64,49 +113,7 @@ const CategorySection = (props) => {
         uid={uid}
         sectionId={elementId}
       />
-      <style jsx>{`
-        .category-slider {
-          display: grid;
-          grid-row-gap: 8px;
-          color: ${COLORS.DAVY_GREY};
-        }
-        .category-heading {
-          margin: 0;
-          font-size: 22px;
-          font-family: ${AVENIR.FONT_STACK};
-          font-weight: ${AVENIR.BLACK};
-          line-height: 33px;
-          color: ${COLORS.TWO_BLACK};
-        }
-        .category-description {
-          margin: 0;
-          font-size: 16px;
-          width: 60%;
-          font-family: ${AVENIR.FONT_STACK};
-          line-height: 20px;
-          font-weight: ${AVENIR.MEDIUM};
-          color: ${COLORS.FOUR_BLACK};
-        }
-        @media (max-width: 768px) {
-          .category-slider {
-            grid-row-gap: 8px;
-          }
-          .category-heading {
-            margin: 0;
-            font-size: 24px;
-            font-family: ${GRAPHIK.FONT_STACK};
-            font-weight: ${GRAPHIK.SEMIBOLD};
-            line-height: 26px;
-          }
-          .category-description {
-            font-family: ${GRAPHIK.FONT_STACK};
-            line-height: 20px;
-            width: 100%;
-            font-weight: ${GRAPHIK.REGULAR};
-          }
-        }
-      `}</style>
-    </div>
+    </StyledCategorySection>
   );
 };
 
