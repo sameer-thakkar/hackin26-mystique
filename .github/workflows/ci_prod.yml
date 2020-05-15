@@ -12,16 +12,13 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: '10.x'
+          node-version: '12'
 
       - name: 'Deployment pending'
         uses: 'deliverybot/deployment-status@master'
         with:
           state: 'pending'
           token: '${{ github.token }}'
-
-      - name: Use Yarn
-        uses: 'borales/actions-yarn@v2.0.0'
 
       - name: rollout to ${{ github.event.deployment.environment }}
         env:
@@ -31,7 +28,7 @@ jobs:
           PROFESSORX_SECRET: ${{ secrets.PROFESSORX_SECRET }}
         run: |
           sudo rm /usr/local/bin/now
-          sudo npm i -g now@16.6.0
+          sudo npm i -g now@16.7.3
           sudo yarn
           now --version
           node ./deployment/${{ github.event.deployment.environment }}
@@ -60,9 +57,8 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: '10.x'
-      - name: Use Yarn
-        uses: 'borales/actions-yarn@v2.0.0'
+          node-version: '12'
+
       - name: run tests
         run: |
           yarn

@@ -14,9 +14,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: '10.x'
-      - name: Use Yarn
-        uses: 'borales/actions-yarn@v2.0.0'
+          node-version: '12'
       - name: prepare now build ready for aliasing
         timeout-minutes: 10
         env:
@@ -25,7 +23,7 @@ jobs:
           GIT_ACTOR: ${{ github.actor }}
         run: |
           sudo rm /usr/local/bin/now
-          sudo npm i -g now@16.6.0
+          sudo npm i -g now@16.7.3
           sudo yarn
           now --version
           node ./deployment/stage

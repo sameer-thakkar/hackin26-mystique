@@ -2,7 +2,7 @@ name: Prod MB Status
 
 on:
   schedule:
-    - cron: "30 */6 * * *"
+    - cron: '30 */6 * * *'
 
 jobs:
   ensurer:
@@ -13,9 +13,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: "10.x"
-      - name: Use Yarn
-        uses: "nuxt/actions-yarn@master"
+          node-version: '12'
       - name: Mystique tests
         run: |
           yarn
