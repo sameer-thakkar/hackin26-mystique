@@ -1,6 +1,6 @@
 name: NowCI (prod)
 
-on: ["deployment"]
+on: ['deployment']
 
 jobs:
   ci_prod:
@@ -12,22 +12,23 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: "10.x"
+          node-version: '10.x'
 
-      - name: "Deployment pending"
-        uses: "deliverybot/deployment-status@master"
+      - name: 'Deployment pending'
+        uses: 'deliverybot/deployment-status@master'
         with:
-          state: "pending"
-          token: "${{ github.token }}"
+          state: 'pending'
+          token: '${{ github.token }}'
 
       - name: Use Yarn
-        uses: "borales/actions-yarn@v2.0.0"
+        uses: 'borales/actions-yarn@v2.0.0'
 
       - name: rollout to ${{ github.event.deployment.environment }}
         env:
           ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
           GIT_BRANCH: ${{ github.head_ref }}
           GIT_ACTOR: ${{ github.actor }}
+          PROFESSORX_SECRET: ${{ secrets.PROFESSORX_SECRET }}
         run: |
           sudo rm /usr/local/bin/now
           sudo npm i -g now@16.6.0
@@ -36,19 +37,19 @@ jobs:
           node ./deployment/${{ github.event.deployment.environment }}
           find now.*.json | xargs -n1 -I {} /bin/bash -c 'now --token ${ZEIT_TOKEN} -A {} --scope headout --prod -e GIT_BRANCH=${GIT_BRANCH} -e GIT_ACTOR=${GIT_ACTOR} --no-clipboard --debug'
 
-      - name: "Deployment success"
+      - name: 'Deployment success'
         if: success()
-        uses: "deliverybot/deployment-status@master"
+        uses: 'deliverybot/deployment-status@master'
         with:
-          state: "success"
-          token: "${{ github.token }}"
+          state: 'success'
+          token: '${{ github.token }}'
 
-      - name: "Deployment failure"
+      - name: 'Deployment failure'
         if: failure()
-        uses: "deliverybot/deployment-status@master"
+        uses: 'deliverybot/deployment-status@master'
         with:
-          state: "failure"
-          token: "${{ github.token }}"
+          state: 'failure'
+          token: '${{ github.token }}'
 
   ci_prod_test:
     runs-on: ubuntu-latest
@@ -59,9 +60,9 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: "10.x"
+          node-version: '10.x'
       - name: Use Yarn
-        uses: "borales/actions-yarn@v2.0.0"
+        uses: 'borales/actions-yarn@v2.0.0'
       - name: run tests
         run: |
           yarn

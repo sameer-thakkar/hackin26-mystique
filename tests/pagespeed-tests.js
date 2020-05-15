@@ -120,7 +120,7 @@ module.exports = (env, trackInsights = false) => {
           prefix: '[tests]',
           message: 'Benchmark Failed!',
         });
-        process.exit(1);
+        process.exit(0);
       }
 
       if (
@@ -135,7 +135,7 @@ module.exports = (env, trackInsights = false) => {
           prefix: '[tests]',
           message: 'Benchmark Failed!',
         });
-        process.exit(1);
+        process.exit(0);
       }
 
       if (trackInsights) {
