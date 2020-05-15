@@ -1,5 +1,7 @@
+const path = require('path');
+
 module.exports = {
-  webpackFinal: async config => {
+  webpackFinal: async (config) => {
     config.module.rules.push({
       test: /\.(ts|tsx)$/,
       exclude: /(node_modules|bower_components)/,
@@ -11,6 +13,14 @@ module.exports = {
         },
       },
     });
+    config.resolve.modules = [
+      ...(config.resolve.modules || []),
+      path.resolve('./'),
+    ];
+    config.resolve.alias = {
+      UI: path.resolve(__dirname, '../components/UI'),
+      hooks: path.resolve(__dirname, '../components/hooks'),
+    };
     config.resolve.extensions.push('.ts', '.tsx');
     return config;
   },

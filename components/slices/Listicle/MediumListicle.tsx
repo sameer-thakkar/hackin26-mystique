@@ -1,0 +1,351 @@
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import { RichText } from 'prismic-reactjs';
+import { useWindowWidth } from '@react-hook/window-size';
+import Tags from 'UI/Tags';
+import Chevron from 'UI/Chevron';
+import Button from 'UI/Button';
+import * as labels from 'constants/localization/labels';
+import Pricing from './Pricing';
+import { COLORS, SOLEIL } from 'constants/ui-constants';
+import { CANDY_STAR } from 'assets/SvgIcons';
+import { shortCodeSerializer } from 'utils/shortCodes';
+import Image from 'UI/Image';
+
+const CardWrapper = styled.div`
+  border: 1px solid ${COLORS.GREY_G6};
+  border-radius: 8px;
+  display: grid;
+  padding: 24px;
+  font-family: ${SOLEIL.FONT_STACK};
+  @media (max-width: 768px) {
+    padding: 0;
+  }
+`;
+
+const CardTop = styled.div`
+  display: grid;
+  grid-template-columns: 300px auto;
+  grid-column-gap: 21px;
+  cursor: pointer;
+  ${({ isActive }) =>
+    isActive
+      ? `  border-bottom: 1px solid ${COLORS.GREY_G6}; padding-bottom: 24px;`
+      : ``}
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .title-section {
+    margin-bottom: 24px;
+    .rating {
+      margin-top: 4px;
+    }
+  }
+  .price-section {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: flex-end;
+    margin-top: 40px;
+  }
+`;
+
+const Rating = styled.div`
+  margin-top: 4px;
+  color: ${COLORS.HEADOUT_CANDY};
+  span {
+    color: ${COLORS.GREY_G4};
+  }
+`;
+
+const ChevronWrapper = styled.div`
+  width: max-content;
+  display: flex;
+  justify-self: flex-end;
+`;
+
+const MobileCardTitleSection = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  padding: 8px 16px;
+`;
+
+const CardTitle = styled.div`
+  font-weight: ${SOLEIL.SEMIBOLD};
+  font-size: 21px;
+  line-height: 28px;
+  @media (max-width: 768px) {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    line-height: 18px;
+  }
+`;
+
+const CardBottom = styled.div`
+  display: ${({ isOpen }) => {
+    if (isOpen) return `grid`;
+    return `none`;
+  }};
+  padding-top: 24px;
+  @media (max-width: 768px) {
+    padding: 0;
+    border-top: 1px solid ${COLORS.GREY_G6};
+  }
+`;
+
+const CardBottomContent = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: 'summary summary' 'duration theatre' 'pricing cta';
+  grid-gap: 24px;
+  .summary {
+    grid-area: summary;
+    * {
+      font-family: ${SOLEIL.FONT_STACK};
+      font-size: 16px;
+      line-height: 24px;
+      margin-top: 0;
+      :last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  .pricing {
+    grid-area: pricing;
+  }
+  .cta {
+    grid-area: cta;
+  }
+  @media (max-width: 768px) {
+    padding: 16px;
+    grid-template-columns: 1fr;
+    grid-template-areas: 'tags' 'summary' 'duration' 'theatre' 'cta';
+    grid-row-gap: 16px;
+    .tags {
+      grid-area: tags;
+    }
+    .cta {
+      margin-top: 0px;
+      justify-self: unset;
+      width: unset;
+      button {
+        margin-top: 16px;
+        width: 100%;
+      }
+    }
+  }
+`;
+
+const DurationInfo = styled.div`
+  margin-top: 8px;
+  font-size: 16px;
+  grid-area: duration;
+  div {
+    font-weight: ${SOLEIL.SEMIBOLD};
+    line-height: 20px;
+    margin-bottom: 8px;
+  }
+`;
+
+const TheatreInfo = styled.div`
+  margin-top: 8px;
+  grid-area: theatre;
+  font-size: 16px;
+  div {
+    font-weight: ${SOLEIL.SEMIBOLD};
+    line-height: 20px;
+    margin-bottom: 8px;
+  }
+`;
+
+const StyledLink = styled.a`
+  text-decoration: none;
+  color: ${COLORS.HEADOUT_CANDY};
+`;
+
+const ReadMore = styled(Button)`
+  width: ${({ fullWidth }) => (fullWidth ? '100%;' : '42%; margin-right: 8px')};
+`;
+
+const BookNow = styled(Button)`
+  width: ${({ fullWidth }) => (fullWidth ? '100%' : '55%')};
+`;
+
+type MediumListicleProps = {
+  isOpen?: boolean;
+  primary: any;
+  items: any[];
+  currentLanguage: string;
+  tourData: any;
+};
+
+const MediumListicle: React.FC<MediumListicleProps> = ({
+  isOpen: cardOpen = false,
+  primary,
+  items,
+  currentLanguage,
+  tourData,
+}) => {
+  const [isOpen, setIsOpen] = useState(cardOpen || false);
+  const [isMobile, setIsMobile] = useState(false);
+  const width = useWindowWidth();
+
+  useEffect(() => {
+    if (width < 768) {
+      setIsMobile(true);
+    }
+  }, [width]);
+
+  const {
+    title,
+    tags,
+    show_price,
+    summary,
+    duration,
+    theatre_name,
+    seating_chart_link,
+    read_more_link,
+    book_now_link,
+  } = primary;
+
+  const image = {
+    url: items[0]?.image?.url || tourData?.imageUploads[0]?.url,
+    alt: items[0]?.image?.alt || tourData?.imageUploads[0]?.alt,
+  };
+  const finalTags = tags ? tags.split(',') : [];
+  const ratings = {
+    avg: tourData?.reviewsDetails.averageRating,
+    count: tourData?.reviewCount,
+  };
+
+  return (
+    <>
+      <CardWrapper>
+        {isMobile ? (
+          <div onClick={() => setIsOpen((c) => !c)} role="button" tabIndex={0}>
+            <Image url={image.url} alt={image.alt} height={213} width={341} />
+            <MobileCardTitleSection>
+              <div className="title-section">
+                <CardTitle>{title || tourData?.name}</CardTitle>
+                <Rating>
+                  {ratings.avg} {CANDY_STAR} <span>({ratings.count})</span>
+                </Rating>
+              </div>
+              {tourData && show_price ? (
+                <Pricing
+                  floatRight
+                  currentLanguage={currentLanguage}
+                  listingPrice={tourData.listingPrice}
+                />
+              ) : null}
+            </MobileCardTitleSection>
+          </div>
+        ) : (
+          <CardTop onClick={() => setIsOpen((c) => !c)} isActive={isOpen}>
+            <Image url={image.url} alt={image.alt} height={192} width={300} />
+            <div>
+              <div className="title-section">
+                <CardTitle>{title || tourData?.name}</CardTitle>
+                <Rating>
+                  {ratings.avg} {CANDY_STAR} <span>({ratings.count})</span>
+                </Rating>
+              </div>
+              <Tags
+                tags={finalTags}
+                color={COLORS.GREY_G3}
+                backgroundColor={COLORS.GREY.G7}
+              />
+              <div className="price-section">
+                {tourData && show_price ? (
+                  <Pricing
+                    currentLanguage={currentLanguage}
+                    listingPrice={tourData.listingPrice}
+                  />
+                ) : null}
+                <ChevronWrapper>
+                  <Chevron isActive={isOpen} />
+                </ChevronWrapper>
+              </div>
+            </div>
+          </CardTop>
+        )}
+        <CardBottom isOpen={isOpen}>
+          <CardBottomContent>
+            <div className="tags">
+              {isMobile ? (
+                <Tags
+                  tags={finalTags}
+                  color={COLORS.GREY_G3}
+                  backgroundColor={COLORS.GREY.G7}
+                />
+              ) : null}
+            </div>
+            <div className="summary">
+              <RichText render={summary} htmlSerializer={shortCodeSerializer} />
+            </div>
+            {duration ? (
+              <DurationInfo>
+                <div>{labels[currentLanguage].DURATION}</div>
+                {duration}
+              </DurationInfo>
+            ) : null}
+            {theatre_name ? (
+              <TheatreInfo>
+                <div>{labels[currentLanguage].THEATRE}</div>
+                {theatre_name}
+                <br />
+                {seating_chart_link?.url ? (
+                  <StyledLink href={seating_chart_link.url}>
+                    Seating Chart
+                  </StyledLink>
+                ) : null}
+              </TheatreInfo>
+            ) : null}
+            {isMobile ? null : (
+              <div className="pricing">
+                {tourData && show_price ? (
+                  <Pricing
+                    currentLanguage={currentLanguage}
+                    listingPrice={tourData.listingPrice}
+                  />
+                ) : null}
+              </div>
+            )}
+            <div className="cta">
+              {read_more_link?.url ? (
+                <a
+                  href={read_more_link.url}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <ReadMore fullWidth={!book_now_link?.url} paddingSides="0px">
+                    {labels[currentLanguage].READ_MORE}
+                  </ReadMore>
+                </a>
+              ) : null}
+              {book_now_link?.url ? (
+                <a
+                  href={book_now_link.url}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <BookNow
+                    fullWidth={!read_more_link?.url}
+                    type="fillGradient"
+                    paddingSides="0px"
+                  >
+                    {labels[currentLanguage].BOOK_NOW_CTA}
+                  </BookNow>
+                </a>
+              ) : null}
+            </div>
+          </CardBottomContent>
+        </CardBottom>
+      </CardWrapper>
+    </>
+  );
+};
+
+export default MediumListicle;

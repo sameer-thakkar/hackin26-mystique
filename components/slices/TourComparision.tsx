@@ -237,7 +237,7 @@ const StyledTourComparisionTable = styled.div`
     designType == TOUR_COMPARISION_DESIGN.TYPE_2
       ? `
     a {
-      color: ${COLORS.HOUT_CANDY};
+      color: ${COLORS.HEADOUT_CANDY};
     }
     `
       : ``}
@@ -668,7 +668,7 @@ const TourComparisonTable = (props) => {
       {isMobile && !isExpanded ? (
         <Button onClick={() => setExpand(true)}>
           <div className="start-compare-icon">
-            labels[lang].COMPARE_ALL_DETAILS {CHEVRON_DOWN}
+            {labels[lang].COMPARE_ALL_DETAILS} {CHEVRON_DOWN}
           </div>
         </Button>
       ) : null}

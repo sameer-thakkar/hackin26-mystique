@@ -12,6 +12,7 @@ import RichTextBox from './slices/RichTextBox';
 import Table from './slices/Table';
 import Breadcrumb from './slices/Breadcrumb';
 import Background from './slices/Background';
+import FooterColumn from './slices/FooterColumn';
 
 // Dynamic imports
 const CustomLinkedTours = dynamic(() => import('./slices/CustomLinkedTours'));
@@ -28,7 +29,6 @@ const InternalContentCard = dynamic(() =>
 );
 const FWActionCard = dynamic(() => import('./slices/FWActionCard'));
 const FeatureBox = dynamic(() => import('./slices/FeatureBox'));
-const FooterColumn = dynamic(() => import('./slices/FooterColumn'));
 const CardCarousel = dynamic(() => import('./slices/CardCarousel'));
 const CategorySection = dynamic(() => import('./MicrositeV2/CategorySection'));
 const CategorySlider = dynamic(() => import('./MicrositeV2/CategorySlider'));
@@ -43,6 +43,8 @@ const AlertPopup = dynamic(() => import('./slices/AlertPopup'));
 const AnchorPoint = dynamic(() => import('./slices/AnchorPoint'));
 const BlogFeed = dynamic(() => import('./slices/BlogFeed'));
 const AccordionGroup = dynamic(() => import('./slices/AccordionGroup'));
+const ListicleSection = dynamic(() => import('./slices/ListicleSection'));
+const Listicle = dynamic(() => import('./slices/Listicle'));
 
 const sliceHandler = (slice, props: any = {}) => {
   switch (slice.slice_type) {
@@ -419,7 +421,22 @@ const sliceHandler = (slice, props: any = {}) => {
         />
       );
     case 'unspace':
-      return <div className="unspace-slice"></div>;
+      return <div className="unspace-slice" />;
+    case 'listicle_section':
+      const {
+        primary: { section_title, listicle_type },
+        slices,
+      } = slice;
+      return (
+        <ListicleSection
+          title={section_title}
+          type={listicle_type.toLowerCase()}
+          slices={slices}
+        />
+      );
+    case 'listicle':
+      const { type, index } = props;
+      return <Listicle key={index} type={type} index={index} data={slice} />;
     default:
     // ToDo: Add to Error Logs (Slice)
   }

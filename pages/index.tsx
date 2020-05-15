@@ -18,16 +18,16 @@ import { redirectTo, getPrismicProps, reflect } from '../utils';
 import { uncategorizedToursListParser } from '../utils/dataParsers';
 import { MBContextProvider } from '../contexts/MBContext';
 import { toursTabSliceHandler } from '../components/Slices';
+import { uaIsMobile } from '../utils/helper';
 import 'lazysizes';
 import 'lazysizes/plugins/attrchange/ls.attrchange';
 import '../style/global.css';
-import { uaIsMobile } from '../utils/helper';
 
 const ErrorPage = dynamic(() => import('next/error'));
 const Microsite = dynamic(() => import('../components/MicrositeV1'));
 const ContentPage = dynamic(() => import('../components/ContentPage'));
 const MicrositeV2 = dynamic(() => import('../components/MicrositeV2'));
-const Listicle = dynamic(() => import('../components/Listicle'));
+const Listicle = dynamic(() => import('../components/ListiclePage'));
 
 export default class Page extends React.Component<any, any> {
   static async getInitialProps({ req, query, res }) {

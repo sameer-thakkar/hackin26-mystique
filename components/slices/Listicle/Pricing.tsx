@@ -1,0 +1,62 @@
+import React from 'react';
+import styled from 'styled-components';
+import * as labels from 'constants/localization/labels';
+import { COLORS, SOLEIL } from 'constants/ui-constants';
+import { CURRENCY_SYMBOL_MAP } from 'constants/index';
+
+const StyledPricing = styled.div`
+  width: max-content;
+  div {
+    color: ${COLORS.GREY_G4};
+    font-size: 14px;
+    line-height: 18px;
+    margin-bottom: 4px;
+    span {
+      color: ${COLORS.GREY_G4};
+      text-decoration: line-through;
+    }
+  }
+  @media (max-width: 768px) {
+    justify-self: flex-end;
+  }
+`;
+
+const Price = styled.span`
+  font-size: 21px;
+  line-height: 20px;
+  font-weight: ${SOLEIL.BOLD};
+  ${(props) => (props.floatRight ? `float: right;` : '')}
+`;
+
+type PricingProps = {
+  floatRight?: boolean;
+  listingPrice: any;
+  currentLanguage: string;
+};
+
+const Pricing: React.FC<PricingProps> = ({
+  floatRight = false,
+  listingPrice,
+  currentLanguage,
+}) => {
+  const currencySymbol = CURRENCY_SYMBOL_MAP[listingPrice.currencyCode];
+  return (
+    <StyledPricing>
+      {listingPrice.originalPrice > listingPrice.finalPrice ? (
+        <div>
+          {labels[currentLanguage].FROM}{' '}
+          <span>
+            {currencySymbol}
+            {listingPrice.originalPrice}
+          </span>
+        </div>
+      ) : null}
+      <Price floatRight={floatRight}>
+        {currencySymbol}
+        {listingPrice.finalPrice}
+      </Price>
+    </StyledPricing>
+  );
+};
+
+export default Pricing;

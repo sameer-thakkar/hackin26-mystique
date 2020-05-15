@@ -2,7 +2,7 @@ import React, { createContext } from 'react';
 
 export const MBContext = createContext({
   uid: null,
-  lang: null,
+  lang: 'en',
   language_full: null,
   nakedDomain: null,
   buttons: null,

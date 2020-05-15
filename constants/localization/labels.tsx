@@ -46,6 +46,10 @@ export const en = {
     COMPANY_DETAILS: 'Company Details',
   },
   COMPARE_ALL_DETAILS: 'Compare All Details',
+  WHY_TAKE_THIS_DAY_TRIP: 'Why Take this Day Trip?',
+  DURATION: 'Duration',
+  THEATRE: 'Theatre',
+  TIMINGS: 'Timings',
 };
 
 export const es = {
@@ -95,6 +99,10 @@ export const es = {
     COMPANY_DETAILS: 'Sobre la Empresa',
   },
   COMPARE_ALL_DETAILS: 'Compara los detalles',
+  WHY_TAKE_THIS_DAY_TRIP: '¿Por qué vale la pena hacer este viaje de 1 día?',
+  DURATION: 'Duración',
+  THEATRE: 'Teatro',
+  TIMINGS: 'Horarios',
 };
 
 export const de = {
@@ -144,6 +152,10 @@ export const de = {
     COMPANY_DETAILS: 'Unternehmensangaben',
   },
   COMPARE_ALL_DETAILS: 'Alle vergleichen',
+  WHY_TAKE_THIS_DAY_TRIP: 'Die Vorteile dieses Tagesausflugs',
+  DURATION: 'Dauer',
+  THEATRE: 'Theater',
+  TIMINGS: 'Zeiten',
 };
 
 export const it = {
@@ -193,6 +205,10 @@ export const it = {
     COMPANY_DETAILS: 'Dettagli sulla Società',
   },
   COMPARE_ALL_DETAILS: 'Confronta Tutti i Dettagli',
+  WHY_TAKE_THIS_DAY_TRIP: 'Perché vale la pena partecipare a questa gita?',
+  DURATION: 'Durata',
+  THEATRE: 'Teatro',
+  TIMINGS: 'Orari',
 };
 
 export const fr = {
@@ -240,6 +256,10 @@ export const fr = {
     COMPANY_DETAILS: 'Notre entreprise',
   },
   COMPARE_ALL_DETAILS: 'Comparer tous les détails',
+  WHY_TAKE_THIS_DAY_TRIP: 'Les avantages de cette excursion',
+  DURATION: 'Durée',
+  THEATRE: 'Théâtre',
+  TIMINGS: 'Horaires',
 };
 
 export const nl = {
@@ -289,6 +309,10 @@ export const nl = {
     COMPANY_DETAILS: 'Bedrijfsgegevens',
   },
   COMPARE_ALL_DETAILS: 'Vergelijk alle details',
+  WHY_TAKE_THIS_DAY_TRIP: 'Waarom deze dagtocht maken?',
+  DURATION: 'Looptijd',
+  THEATRE: 'Theater',
+  TIMINGS: 'Timings',
 };
 
 export const pt = {
@@ -338,4 +362,8 @@ export const pt = {
     COMPANY_DETAILS: 'Sobre a empresa',
   },
   COMPARE_ALL_DETAILS: 'Compare os detalhes',
+  WHY_TAKE_THIS_DAY_TRIP: 'Por que vale a pena fazer essa excursão de um dia?',
+  DURATION: 'Duração',
+  THEATRE: 'Teatro',
+  TIMINGS: 'Horários',
 };

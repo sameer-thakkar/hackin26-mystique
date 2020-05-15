@@ -15,6 +15,14 @@ export const AVENIR = {
   BLACK: '800',
 };
 
+export const SOLEIL = {
+  FONT_STACK: 'soleil, sans-serif',
+  REGULAR: '400',
+  MEDIUM: '500',
+  SEMIBOLD: '600',
+  BOLD: '700',
+};
+
 export const COLORS = {
   RHAPSODY: '#EC1943',
   DADDY: '#DADADA',
@@ -40,8 +48,12 @@ export const COLORS = {
   GREY_G6: '#E2E2E2',
   GREY_G3: '#666666',
   GREY_6D: '#6D6C6E',
+  GREY: {
+    G7: '#F0F0F0',
+    G8: '#F8F8F8',
+  },
   FLOAT_PURPS: '#F8F6FF',
-  HOUT_CANDY: '#FA2F90',
+  HEADOUT_CANDY: '#FA2F90',
 };
 
 export const SIZES = {
