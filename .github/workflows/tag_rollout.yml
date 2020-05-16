@@ -33,6 +33,7 @@ jobs:
       - name: now deploy
         env:
           ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
+          PROFESSORX_SECRET: ${{ secrets.PROFESSORX_SECRET }}
         run: |
           sudo rm /usr/local/bin/now
           sudo npm i -g now@16.7.3
