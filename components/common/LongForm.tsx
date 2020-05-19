@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import sliceHandler from '../Slices';
 import { FULL_WIDTH_SLICES } from '../../constants';
-import { COLORS, GRAPHIK, AVENIR } from '../../constants/ui-constants';
+import { COLORS, SOLEIL } from '../../constants/ui-constants';
 
 export const StyledLongForm = styled.div`
-  font-family: ${GRAPHIK.FONT_STACK};
+  font-family: ${SOLEIL.FONT_STACK};
   line-height: 1.6;
   color: ${COLORS.FOUR_BLACK};
   display: grid;
@@ -26,7 +26,7 @@ export const StyledLongForm = styled.div`
     display: inline-block;
     color: ${COLORS.FOUR_BLACK};
     font-size: 30px;
-    font-weight: ${AVENIR.BLACK};
+    font-weight: ${SOLEIL.SEMIBOLD};
   }
   h2::after {
     content: '';
@@ -54,7 +54,7 @@ export const StyledLongForm = styled.div`
     font-size: 1rem;
     line-height: 1.6;
     color: ${COLORS.FOUR_BLACK};
-    font-family: ${GRAPHIK.FONT_STACK};
+    font-family: ${SOLEIL.FONT_STACK};
   }
   & > p > a {
     text-decoration: none;

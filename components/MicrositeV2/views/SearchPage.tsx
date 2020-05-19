@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { SearchBox } from '../SearchBox';
-import { PAGETYPE } from '../../../constants';
-import { CLOSE_WHITE } from '../../../assets/SvgIcons';
+import { PAGETYPE } from 'constants/index';
+import { CLOSE_WHITE } from 'assets/SvgIcons';
 import { SearchItem } from '../SearchItem';
 import PopulateProducts from '../PopulateProducts';
-import { AVENIR } from '../../../constants/ui-constants';
+import { SOLEIL } from 'constants/ui-constants';
 
 export const SearchPage = (props) => {
   const [results, setResults] = useState([]);
@@ -83,7 +83,7 @@ export const SearchPage = (props) => {
             grid-template-columns: 1fr auto;
             align-items: center;
             justify-content: space-between;
-            font-family: Avenir;
+            font-family: ${SOLEIL.FONT_STACK};
             grid-gap: 10px;
             border-bottom: 1px solid #dadada;
           }
@@ -106,8 +106,8 @@ export const SearchPage = (props) => {
           }
           .heading {
             font-size: 22px;
-            font-weight: ${AVENIR.BLACK};
-            font-family: ${AVENIR.FONT_STACK};
+            font-weight: ${SOLEIL.SEMIBOLD};
+            font-family: ${SOLEIL.FONT_STACK};
             color: #545454;
           }
         `}

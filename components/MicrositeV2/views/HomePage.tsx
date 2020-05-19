@@ -3,17 +3,17 @@ import Header from '../Header';
 import LongForm from '../LongForm';
 import sliceHandler from '../../Slices';
 import Banner from '../Banner';
-import DismissAlert from '../../UI/DismissAlert';
-import Alert from '../../UI/Alert';
+import DismissAlert from 'UI/DismissAlert';
+import Alert from 'UI/Alert';
 import Footer from '../../common/Footer';
-import * as labels from '../../../constants/localization/labels';
-import { ProductsContextProvider } from '../../../contexts/Products';
+import * as labels from 'constants/localization/labels';
+import { ProductsContextProvider } from 'contexts/Products';
 import { ProductsWrapper } from '../ProductsWrapper';
 import { ResponsiveSelector } from '../ResponsiveSelector';
-import { LOCATION } from '../../../assets/SvgIcons';
-import { groupSlices } from '../../../utils/helper';
+import { LOCATION } from 'assets/SvgIcons';
+import { groupSlices } from 'utils/helper';
 import styled from 'styled-components';
-import { SIZES } from '../../../constants/ui-constants';
+import { SIZES, SOLEIL } from 'constants/ui-constants';
 
 const V2MicrositeWrapper = styled.div`
   .alert-wrapper {
@@ -36,7 +36,7 @@ const V2MicrositeWrapper = styled.div`
     max-width: ${SIZES.MAX_WIDTH};
     margin-left: auto;
     margin-right: auto;
-    font-family: Graphik;
+    font-family: ${SOLEIL.FONT_STACK};
   }
   @media (max-width: 768px) {
     .hero-slice-section {

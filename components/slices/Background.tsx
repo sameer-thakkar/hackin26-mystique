@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import sliceHandler from '../Slices';
-import { COLORS, AVENIR } from '../../constants/ui-constants';
+import { COLORS, SOLEIL } from '../../constants/ui-constants';
 import { FULL_WIDTH_SLICES } from '../../constants';
 
 const StyledBackground = styled.div`
   padding: 40px 0;
   background: ${({ color }) => color};
   text-align: ${({ textCenter }) => (textCenter ? 'center' : 'initial')};
-  font-family: ${AVENIR.FONT_STACK};
+  font-family: ${SOLEIL.FONT_STACK};
   font-size: 18px;
   line-height: 26px;
   color: ${COLORS.DAVY_GREY};

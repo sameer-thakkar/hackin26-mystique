@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
+import { SOLEIL } from 'constants/ui-constants';
 
 const StyledInternalContentCard = styled.div`
   .more-reads-section {
@@ -25,7 +26,7 @@ const StyledInternalContentCard = styled.div`
   }
   .more-reads-text-heading {
     display: block;
-    font-family: Graphik;
+    font-family: ${SOLEIL.FONT_STACK};
     font-weight: 600;
     font-size: 18px;
     color: #080808;
@@ -39,7 +40,7 @@ const StyledInternalContentCard = styled.div`
   }
   .more-reads-text-text {
     display: block;
-    font-family: Avenir;
+    font-family: ${SOLEIL.FONT_STACK};
     font-size: 16px;
     line-height: 1.5;
     color: #444444;

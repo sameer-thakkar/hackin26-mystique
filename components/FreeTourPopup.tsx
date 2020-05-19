@@ -116,7 +116,7 @@ width: 80%; */
   }
 
   .sub-title {
-    font-family: Graphik;
+    font-family: SOLEIL;
     font-size: 22px;
     font-weight: 500;
     font-style: normal;
@@ -129,7 +129,7 @@ width: 80%; */
   }
 
   .title {
-    font-family: Graphik;
+    font-family: SOLEIL;
     font-size: 26px;
     font-weight: 600;
     font-style: normal;
@@ -145,7 +145,7 @@ width: 80%; */
   .scratch-price {
     opacity: 0.6;
     text-decoration: line-through;
-    font-family: Graphik;
+    font-family: SOLEIL;
     font-size: 18px;
     font-weight: normal;
     font-style: normal;
@@ -158,7 +158,7 @@ width: 80%; */
   }
 
   .price {
-    font-family: Graphik;
+    font-family: SOLEIL;
     font-size: 28px;
     font-weight: 500;
     font-style: normal;
@@ -171,7 +171,7 @@ width: 80%; */
   }
 
   .popupv2-list li {
-    font-family: Avenir;
+    font-family: SOLEIL;
     font-size: 16px;
     font-weight: normal;
     font-style: normal;
@@ -194,7 +194,7 @@ width: 80%; */
 
   .popupv2-cta {
     background-color: #ec1943;
-    font-family: Graphik;
+    font-family: SOLEIL;
     font-size: 16px;
     font-weight: 500;
     font-style: normal;

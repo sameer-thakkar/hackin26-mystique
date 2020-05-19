@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { RichText } from 'prismic-reactjs';
 import Slider from '../UI/Slider';
 import Image from '../UI/Image';
-import { AVENIR, COLORS } from '../../constants/ui-constants';
+import { SOLEIL, COLORS } from '../../constants/ui-constants';
 import { CHEVRON_DOWN } from '../../assets/SvgIcons';
 
 const Question = (props) => {
@@ -80,8 +80,8 @@ const Question = (props) => {
               display: grid;
               grid-template-columns: 1fr auto;
               justify-items: space-between;
-              font-weight: ${AVENIR.BLACK};
-              font-family: ${AVENIR.FONT_STACK};
+              font-weight: ${SOLEIL.SEMIBOLD};
+              font-family: ${SOLEIL.FONT_STACK};
             }
             .question-carousel{
               display: flex;

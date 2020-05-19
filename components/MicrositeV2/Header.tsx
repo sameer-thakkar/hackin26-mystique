@@ -6,7 +6,7 @@ import { SearchBox } from './SearchBox';
 import { PAGETYPE, ALLOW_IMMEDIEATE_NESTING } from '../../constants';
 import { SEARCH_ICON, POWERED_BY_HEADOUT } from '../../assets/SvgIcons';
 import { SearchItem } from './SearchItem';
-import { COLORS, AVENIR, GRAPHIK } from '../../constants/ui-constants';
+import { COLORS, SOLEIL } from '../../constants/ui-constants';
 import { ResponsiveSelector } from './ResponsiveSelector';
 import styled from 'styled-components';
 import MultiLevelNav from '../MultiLevelNav';
@@ -40,7 +40,7 @@ const StyledHeader = styled.span`
   }
   header .header-city-selector {
     min-width: 180px;
-    font-family: ${AVENIR.FONT_STACK};
+    font-family: ${SOLEIL.FONT_STACK};
   }
   .header-city-selector .toggle-icon svg path {
     stroke-width: 1.5px;
@@ -86,8 +86,8 @@ const HeaderRight = styled.div`
   .buy-tickets {
     font-size: 16px;
     cursor: pointer;
-    font-family: ${GRAPHIK.FONT_STACK};
-    font-weight: ${GRAPHIK.REGULAR};
+    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: ${SOLEIL.REGULAR};
     color: ${COLORS.DAVY_GREY};
   }
   .mobi-search-trigger {
@@ -185,7 +185,7 @@ const SearchWrapper = styled.div`
     .booster * {
       font-size: 12px;
       font-weight: regular;
-      font-family: ${GRAPHIK.FONT_STACK};
+      font-family: ${SOLEIL.FONT_STACK};
     }
     .inline-availability {
       color: #24a1b2;

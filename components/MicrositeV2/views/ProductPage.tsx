@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import Image from '../../UI/Image';
+import Image from 'UI/Image';
 import { RichText } from 'prismic-reactjs';
-import { CHEVRON_LEFT } from '../../../assets/SvgIcons';
-import { shortCodeSerializer } from '../../../utils/shortCodes';
-import { PAGETYPE } from '../../../constants';
+import { CHEVRON_LEFT } from 'assets/SvgIcons';
+import { shortCodeSerializer } from 'utils/shortCodes';
+import { PAGETYPE } from 'constants/index';
 import parse from 'url-parse';
 import Swiper from 'react-id-swiper';
-import { AVENIR, GRAPHIK, COLORS } from '../../../constants/ui-constants';
+import { SOLEIL, COLORS } from 'constants/ui-constants';
 
 export const MobileProductPage = (props) => {
   const closeProductCard = () => {
@@ -213,8 +213,8 @@ export const MobileProductPage = (props) => {
           }
           .mobile-product-wrap .title {
             font-size: 18px;
-            font-family: ${GRAPHIK.FONT_STACK};
-            font-weight: ${GRAPHIK.SEMIBOLD};
+            font-family: ${SOLEIL.FONT_STACK};
+            font-weight: ${SOLEIL.SEMIBOLD};
             color: ${COLORS.TWO_BLACK};
             line-height: 24px;
             text-transform: unset;
@@ -226,25 +226,25 @@ export const MobileProductPage = (props) => {
             grid-row-gap: 8px;
           }
           .price {
-            font-family: ${AVENIR.FONT_STACK};
-            font-weight: ${AVENIR.BLACK};
+            font-family: ${SOLEIL.FONT_STACK};
+            font-weight: ${SOLEIL.SEMIBOLD};
             margin-left: 16px;
           }
           .mobile-product-wrap .current-price,
           .from-text {
             font-size: 18px;
             line-height: 24px;
-            font-weight: ${AVENIR.BLACK};
+            font-weight: ${SOLEIL.SEMIBOLD};
             color: ${COLORS.TWO_BLACK};
           }
           .from-text {
             font-size: 14px;
             line-height: 1;
-            font-weight: ${AVENIR.MEDIUM};
+            font-weight: ${SOLEIL.MEDIUM};
             margin-bottom: 4px;
           }
           .price .scratched-price {
-            font-weight: ${AVENIR.MEDIUM};
+            font-weight: ${SOLEIL.MEDIUM};
             font-size: 12px;
             text-decoration: line-through;
             color: ${COLORS.FOUR_BLACK};
@@ -263,8 +263,8 @@ export const MobileProductPage = (props) => {
           .mobile-product-wrap .content-block {
             font-size: 14px;
             line-height: 1.57;
-            font-family: ${GRAPHIK.FONT_STACK};
-            font-weight: ${GRAPHIK.REGULAR};
+            font-family: ${SOLEIL.FONT_STACK};
+            font-weight: ${SOLEIL.REGULAR};
             color: #545454;
             display: grid;
             grid-row-gap: 4px;
@@ -284,8 +284,8 @@ export const MobileProductPage = (props) => {
             grid-auto-flow: column;
             justify-content: left;
             grid-gap: 8px;
-            font-family: ${GRAPHIK.FONT_STACK};
-            font-weight: ${GRAPHIK.REGULAR};
+            font-family: ${SOLEIL.FONT_STACK};
+            font-weight: ${SOLEIL.REGULAR};
           }
           .divider-line {
             width: 1px;
@@ -302,8 +302,8 @@ export const MobileProductPage = (props) => {
 
           .mobile-product-wrap .content-block .label-title {
             font-size: 16px;
-            font-weight: ${AVENIR.BLACK};
-            font-family: ${AVENIR.FONT_STACK};
+            font-weight: ${SOLEIL.SEMIBOLD};
+            font-family: ${SOLEIL.FONT_STACK};
             color: ${COLORS.TWO_BLACK};
           }
 
@@ -330,9 +330,9 @@ export const MobileProductPage = (props) => {
 
           .cta-text {
             padding: 16px;
-            font-family: ${AVENIR.FONT_STACK};
+            font-family: ${SOLEIL.FONT_STACK};
             font-size: 16px;
-            font-weight: ${AVENIR.BLACK};
+            font-weight: ${SOLEIL.SEMIBOLD};
             font-style: normal;
             font-stretch: normal;
             line-height: 1;
@@ -345,9 +345,9 @@ export const MobileProductPage = (props) => {
             display: grid;
             grid-auto-flow: column;
             grid-auto-columns: max-content;
-            font-family: ${GRAPHIK.FONT_STACK};
+            font-family: ${SOLEIL.FONT_STACK};
             font-size: 12px;
-            font-weight: ${GRAPHIK.REGULAR};
+            font-weight: ${SOLEIL.REGULAR};
             grid-gap: 8px;
             grid-column: 1 / 3;
             max-width: calc(100vw - 32px);
@@ -372,8 +372,8 @@ export const MobileProductPage = (props) => {
           }
           .vendor-name {
             grid-column: 1 / 3;
-            font-family: ${AVENIR.FONT_STACK};
-            font-weight: ${AVENIR.MEDIUM};
+            font-family: ${SOLEIL.FONT_STACK};
+            font-weight: ${SOLEIL.MEDIUM};
             text-transform: uppercase;
             font-size: 11px;
             line-height: 11px;
@@ -391,8 +391,8 @@ export const MobileProductPage = (props) => {
       <style global jsx>
         {`
           .content-block .label-title {
-            font-weight: ${AVENIR.BLACK};
-            font-family: ${AVENIR.FONT_STACK};
+            font-weight: ${SOLEIL.SEMIBOLD};
+            font-family: ${SOLEIL.FONT_STACK};
             line-height: 1.12;
           }
           .content-block p {
@@ -412,8 +412,7 @@ export const MobileProductPage = (props) => {
             border-top: 1px solid #ebebeb;
           }
           .mobile-product-wrap {
-            font-family: 'Graphik', 'Proxima Nova', 'Helvetica Neue', Helvetica,
-              Arial, sans-serif;
+            font-family: ${SOLEIL.FONT_STACK};
           }
           .mobile-product-wrap .tags p {
             margin: 0px;

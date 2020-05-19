@@ -36,7 +36,6 @@ export default class CreateUID extends React.Component<any, any> {
             <label
               htmlFor="uid-url"
               style={{
-                fontFamily: 'Graphik',
                 fontSize: '18px',
                 marginBottom: '4px',
                 display: 'block',
@@ -79,7 +78,6 @@ export default class CreateUID extends React.Component<any, any> {
                 <p
                   style={{
                     cursor: 'pointer',
-                    fontFamily: 'Graphik',
                     fontSize: '18px',
                     marginRight: '8px',
                   }}
@@ -111,7 +109,6 @@ export default class CreateUID extends React.Component<any, any> {
               style={{
                 color: 'green',
                 fontSize: '12px',
-                fontFamily: 'Graphik',
               }}
             >
               Copied.

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { PAGETYPE } from '../../../constants';
-import { CHEVRON_LEFT, SEARCH_ICON } from '../../../assets/SvgIcons';
+import { PAGETYPE } from 'constants/index';
+import { CHEVRON_LEFT, SEARCH_ICON } from 'assets/SvgIcons';
 import { SortSelector } from '../SortSelector';
 import { ProductsWrapper } from '../ProductsWrapper';
+import { SOLEIL } from 'constants/ui-constants';
 
 export const CategoryPage = (props) => {
   const [filterDropdown, setFilterDropdown] = useState(false);
@@ -83,7 +84,7 @@ export const CategoryPage = (props) => {
             display: grid;
             grid-template-columns: auto 1fr auto;
             align-items: center;
-            font-family: Avenir;
+            font-family: ${SOLEIL.FONT_STACK};
             grid-gap: 10px;
             border-bottom: 1px solid #dadada;
           }
@@ -99,7 +100,7 @@ export const CategoryPage = (props) => {
           }
           .category-title {
             font-size: 24px;
-            font-family: Graphik;
+            font-family: SOLEIL;
             font-weight: 500;
           }
 

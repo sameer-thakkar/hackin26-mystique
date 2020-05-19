@@ -233,7 +233,7 @@ const MediumListicle: React.FC<MediumListicleProps> = ({
                   {ratings.avg} {CANDY_STAR} <span>({ratings.count})</span>
                 </Rating>
               </div>
-              {tourData && show_price ? (
+              {tourData?.listingPrice && show_price ? (
                 <Pricing
                   floatRight
                   currentLanguage={currentLanguage}
@@ -258,7 +258,7 @@ const MediumListicle: React.FC<MediumListicleProps> = ({
                 backgroundColor={COLORS.GREY.G7}
               />
               <div className="price-section">
-                {tourData && show_price ? (
+                {tourData?.listingPrice && show_price ? (
                   <Pricing
                     currentLanguage={currentLanguage}
                     listingPrice={tourData.listingPrice}
@@ -305,7 +305,7 @@ const MediumListicle: React.FC<MediumListicleProps> = ({
             ) : null}
             {isMobile ? null : (
               <div className="pricing">
-                {tourData && show_price ? (
+                {tourData?.listingPrice && show_price ? (
                   <Pricing
                     currentLanguage={currentLanguage}
                     listingPrice={tourData.listingPrice}

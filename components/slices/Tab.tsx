@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import sliceHandler from '../Slices';
-import { GRAPHIK, COLORS } from '../../constants/ui-constants';
+import { SOLEIL, COLORS } from '../../constants/ui-constants';
 import { stringIdfy } from '../../utils/helper';
 
 const StyledTabPanel = styled.div`
   position: relative;
   display: grid;
   grid-row-gap: 16px;
-  font-family: ${GRAPHIK.FONT_STACK};
+  font-family: ${SOLEIL.FONT_STACK};
   line-height: 1.5;
   a {
     color: ${COLORS.MED_SLATE_BLUE};

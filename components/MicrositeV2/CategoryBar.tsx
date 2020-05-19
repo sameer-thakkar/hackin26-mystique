@@ -1,7 +1,7 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { SortSelector } from './SortSelector';
 import InteractionContext from '../../contexts/Interaction';
-import { AVENIR, SIZES } from '../../constants/ui-constants';
+import { SOLEIL, SIZES } from '../../constants/ui-constants';
 
 const CategoryBar = (props) => {
   const interactionCtx = useContext(InteractionContext);
@@ -140,11 +140,11 @@ const CategoryBar = (props) => {
             }
 
             .tab {
-              font-family: ${AVENIR.FONT_STACK};
+              font-family: ${SOLEIL.FONT_STACK};
               font-size: 22px;
               line-height: 1.3;
               color: #545454;
-              font-weight: ${AVENIR.MEDIUM};
+              font-weight: ${SOLEIL.MEDIUM};
               text-align: center;
               cursor: pointer;
             }
@@ -173,7 +173,7 @@ const CategoryBar = (props) => {
               grid-template-columns: auto auto;
             }
             .filter-wrapper span {
-              font-family: Avenir;
+              font-family: SOLEIL;
             }
 
             @media (max-width: 768px) {
@@ -197,8 +197,8 @@ const CategoryBar = (props) => {
               }
               .tab {
                 font-size: 18px;
-                font-family: ${AVENIR.FONT_STACK};
-                font-weight: ${AVENIR.MEDIUM};
+                font-family: ${SOLEIL.FONT_STACK};
+                font-weight: ${SOLEIL.MEDIUM};
               }
               .filter-wrapper {
                 display: none;

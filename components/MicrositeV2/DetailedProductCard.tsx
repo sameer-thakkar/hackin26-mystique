@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Image from '../UI/Image';
 import { RichText } from 'prismic-reactjs';
 import { CLOSE_WHITE } from '../../assets/SvgIcons';
-import { GRAPHIK, COLORS, AVENIR } from '../../constants/ui-constants';
+import { SOLEIL, COLORS } from '../../constants/ui-constants';
 import {
   shortCodeSerializerWithParentProps,
   shortCodeSerializer,
@@ -158,8 +158,8 @@ const DetailedProductCard = (props) => {
           font-size: 24px;
           line-height: 1.37;
           color: ${COLORS.TWO_BLACK};
-          font-family: ${AVENIR.FONT_STACK};
-          font-weight: ${AVENIR.BLACK};
+          font-family: ${SOLEIL.FONT_STACK};
+          font-weight: ${SOLEIL.SEMIBOLD};
         }
         .product-v2-description-left {
           padding: 24px 0;
@@ -190,8 +190,8 @@ const DetailedProductCard = (props) => {
           font-size: 16px;
           line-height: 1.4;
           color: ${COLORS.TWO_BLACK};
-          font-family: ${GRAPHIK.FONT_STACK};
-          font-weight: ${GRAPHIK.SEMIBOLD};
+          font-family: ${SOLEIL.FONT_STACK};
+          font-weight: ${SOLEIL.SEMIBOLD};
         }
         .full-width-section{
           display: grid;
@@ -200,7 +200,7 @@ const DetailedProductCard = (props) => {
         .v2-descriptors{
           display: grid;
           grid-template-columns: repeat(5,auto);
-          font-family: ${GRAPHIK.FONT_STACK};
+          font-family: ${SOLEIL.FONT_STACK};
           grid-gap: 12px;
           justify-content: left;
           height: max-content;
@@ -216,7 +216,7 @@ const DetailedProductCard = (props) => {
           text-transform: capitalize;
         }
         .tour-description{
-          font-family: ${AVENIR.FONT_STACK};
+          font-family: ${SOLEIL.FONT_STACK};
           margin-top: 4px;
         }
 
@@ -224,8 +224,8 @@ const DetailedProductCard = (props) => {
           font-size: 16px;
           line-height: 1.37;
           color: ${COLORS.FOUR_BLACK};
-          font-family: ${GRAPHIK.FONT_STACK};
-          font-weight: ${GRAPHIK.REGULAR};
+          font-family: ${SOLEIL.FONT_STACK};
+          font-weight: ${SOLEIL.REGULAR};
         }
 
         .desc-cta-price {
@@ -263,11 +263,11 @@ const DetailedProductCard = (props) => {
         }
 
         .desc-final-price, .from-text {
-          font-family: ${AVENIR.FONT_STACK};
+          font-family: ${SOLEIL.FONT_STACK};
           font-size: 20px;
           line-height: 20px;
           color: ${COLORS.TWO_BLACK};
-          font-weight: ${AVENIR.BLACK};
+          font-weight: ${SOLEIL.SEMIBOLD};
         }
         .price-wrapper{
           display: grid;
@@ -284,8 +284,8 @@ const DetailedProductCard = (props) => {
         }
 
         .desc-scratch-price {
-          font-family: ${GRAPHIK.FONT_STACK};
-          font-weight: ${GRAPHIK.REGULAR};
+          font-family: ${SOLEIL.FONT_STACK};
+          font-weight: ${SOLEIL.REGULAR};
           font-size: 14px;
           line-height: 20px;
           text-decoration-line: line-through;
@@ -303,7 +303,7 @@ const DetailedProductCard = (props) => {
         }
 
         .desc-book-now-text {
-          font-family: Avenir;
+          font-family: SOLEIL;
           font-size: 16px;
           line-height: 16px;
           color: #ffffff;

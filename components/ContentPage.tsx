@@ -20,7 +20,7 @@ import allToursParser from '../utils/allToursParser';
 import { ProductsContextProvider } from '../contexts/Products';
 import { InteractionContextProvider } from '../contexts/Interaction';
 import { tourListApiParser } from '../utils/dataParsers';
-import { COLORS, AVENIR, GRAPHIK } from '../constants/ui-constants';
+import { COLORS, SOLEIL } from '../constants/ui-constants';
 
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 
@@ -40,8 +40,8 @@ const StyledContentPage = styled.div`
   .slice-block h2 {
     font-size: 30px;
     color: #080808;
-    font-family: ${AVENIR.FONT_STACK};
-    font-weight: ${AVENIR.BLACK};
+    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: ${SOLEIL.SEMIBOLD};
     position: relative;
     line-height: 1.4;
     color: #444444;
@@ -50,8 +50,8 @@ const StyledContentPage = styled.div`
     font-weight: 500;
     font-size: 26px;
     color: #080808;
-    font-family: ${AVENIR.FONT_STACK};
-    font-weight: ${AVENIR.BLACK};
+    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: ${SOLEIL.SEMIBOLD};
     position: relative;
     line-height: 1.4;
     color: #444444;
@@ -74,7 +74,7 @@ const StyledContentPage = styled.div`
 
   .slice-block p {
     color: #444444;
-    font-family: ${GRAPHIK.FONT_STACK};
+    font-family: ${SOLEIL.FONT_STACK};
     font-size: 16px;
     margin-bottom: 15px;
     line-height: 30px;
@@ -86,7 +86,7 @@ const StyledContentPage = styled.div`
 
   .slice-block ul li,
   .slice-block ol li {
-    font-family: ${GRAPHIK.FONT_STACK};
+    font-family: ${SOLEIL.FONT_STACK};
     font-size: 16px;
     color: #444444;
     line-height: 40px;

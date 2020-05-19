@@ -1,9 +1,9 @@
 import React from 'react';
 import { RichText } from 'prismic-reactjs';
-import Image from '../UI/Image';
-import { shortCodeSerializerWithParentProps } from '../../utils/shortCodes';
-import { truncate } from '../../utils/helper';
-import { AVENIR, GRAPHIK, COLORS } from '../../constants/ui-constants';
+import Image from 'UI/Image';
+import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
+import { truncate } from 'utils/helper';
+import { SOLEIL, COLORS } from 'constants/ui-constants';
 
 const Product = (props) => {
   const handleProductClick = () => {
@@ -84,7 +84,7 @@ const Product = (props) => {
           transform: translate3d(0, -5px, 0);
         }
         .product-v2-title {
-          font-family: ${AVENIR.FONT_STACK};
+          font-family: ${SOLEIL.FONT_STACK};
           font-size: 16px;
           line-height: 24px;
           color: ${COLORS.TWO_BLACK};
@@ -104,7 +104,7 @@ const Product = (props) => {
           border-radius: 0 2px 2px 0;
           color: #fff;
           line-height: 1;
-          font-family: Avenir;
+          font-family: ${SOLEIL.FONT_STACK};
           font-size: 12px;
           text-transform: uppercase;
           font-weight: 800;
@@ -129,16 +129,16 @@ const Product = (props) => {
           align-self: end;
         }
         .product-v2-price {
-          font-family: ${AVENIR.FONT_STACK};
+          font-family: ${SOLEIL.FONT_STACK};
           font-size: 16px;
           line-height: 20px;
           text-align: right;
           color: ${COLORS.TWO_BLACK};
-          font-weight: ${AVENIR.BLACK};
+          font-weight: ${SOLEIL.SEMIBOLD};
         }
         .product-v2-scratch-price {
-          font-family: ${AVENIR.FONT_STACK};
-          font-weight: ${AVENIR.REGULAR};
+          font-family: ${SOLEIL.FONT_STACK};
+          font-weight: ${SOLEIL.REGULAR};
           font-size: 14px;
           line-height: 14px;
           letter-spacing: 0.5px;
@@ -148,8 +148,8 @@ const Product = (props) => {
         }
 
         .vendor-name {
-          font-family: ${AVENIR.FONT_STACK};
-          font-weight: ${AVENIR.MEDIUM};
+          font-family: ${SOLEIL.FONT_STACK};
+          font-weight: ${SOLEIL.MEDIUM};
           text-transform: uppercase;
           font-size: 11px;
           line-height: 11px;
@@ -167,7 +167,7 @@ const Product = (props) => {
           .product-v2-title {
             font-size: 14px;
             line-height: 1.3;
-            font-weight: ${AVENIR.BLACK};
+            font-weight: ${SOLEIL.SEMIBOLD};
           }
           .product-v2-bottom {
             grid-template-columns: auto;
@@ -189,17 +189,17 @@ const Product = (props) => {
           }
           .product-v2-price {
             text-align: left;
-            font-weight: ${GRAPHIK.SEMIBOLD};
+            font-weight: ${SOLEIL.SEMIBOLD};
             font-size: 14px;
             line-height: 1;
-            font-family: ${GRAPHIK.FONT_STACK};
+            font-family: ${SOLEIL.FONT_STACK};
           }
           .product-v2-scratch-price {
             text-align: left;
             font-size: 10px;
             line-height: 1.2;
-            font-weight: ${GRAPHIK.REGULAR};
-            font-family: ${GRAPHIK.FONT_STACK};
+            font-weight: ${SOLEIL.REGULAR};
+            font-family: ${SOLEIL.FONT_STACK};
           }
           .product-v2 {
             transform: unset;
@@ -219,7 +219,7 @@ const Product = (props) => {
           width: 100%;
           object-fit: cover;
           border-radius: 4px;
-          font-family: Avenir;
+          font-family: ${SOLEIL.FONT_STACK};
           background: #ebebeb;
           font-weight: 600;
           color: #bababa;
@@ -247,7 +247,7 @@ const Product = (props) => {
         }
         body .product-v2-boosters,
         body .long-form .product-v2-boosters p {
-          font-family: ${GRAPHIK.FONT_STACK};
+          font-family: ${SOLEIL.FONT_STACK};
           font-size: 12px;
           line-height: 12px;
         }

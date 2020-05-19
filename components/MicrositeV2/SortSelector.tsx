@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { CHEVRON_DOWN } from '../../assets/SvgIcons';
-import { useCaptureClickOutside } from '../hooks/ClickOutside';
-import { COLORS, GRAPHIK } from '../../constants/ui-constants';
+import { CHEVRON_DOWN } from 'assets/SvgIcons';
+import { useCaptureClickOutside } from 'hooks/ClickOutside';
+import { COLORS, SOLEIL } from 'constants/ui-constants';
 
 export const SortSelector = (props) => {
   let filters = [
@@ -104,8 +104,8 @@ export const SortSelector = (props) => {
             line-height: 1;
           }
           .current-filter-toggle {
-            font-family: ${GRAPHIK.FONT_STACK};
-            font-weight: ${GRAPHIK.REGULAR};
+            font-family: ${SOLEIL.FONT_STACK};
+            font-weight: ${SOLEIL.REGULAR};
             font-size: 16px;
             text-transform: capitalize;
             cursor: pointer;
@@ -138,7 +138,7 @@ export const SortSelector = (props) => {
             display: grid;
           }
           .filter-name {
-            font-family: Avenir;
+            font-family: ${SOLEIL.FONT_STACK};
             cursor: pointer;
             font-size: 16px;
             border: none;

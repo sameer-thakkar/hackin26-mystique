@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from '../UI/Image';
-import { AVENIR, GRAPHIK, COLORS } from '../../constants/ui-constants';
+import { SOLEIL, COLORS } from '../../constants/ui-constants';
 
 const TrustBoosters = (props) => {
   const { boosters } = props;
@@ -46,17 +46,17 @@ const TrustBoosters = (props) => {
             grid-row-gap: 4px;
           }
           .trust-boosters .trust-booster .booster-heading {
-            font-family: ${AVENIR.FONT_STACK};
+            font-family: ${SOLEIL.FONT_STACK};
             font-size: 16px;
             line-height: 22px;
             color: #545454;
-            font-weight: ${AVENIR.BLACK};
+            font-weight: ${SOLEIL.SEMIBOLD};
             color: ${COLORS.TWO_BLACK};
           }
           .trust-boosters .trust-booster .booster-text {
-            font-family: ${GRAPHIK.FONT_STACK};
+            font-family: ${SOLEIL.FONT_STACK};
             font-size: 14px;
-            font-weight: ${GRAPHIK.REGULAR};
+            font-weight: ${SOLEIL.REGULAR};
             line-height: 15px;
             color: ${COLORS.FOUR_BLACK};
           }

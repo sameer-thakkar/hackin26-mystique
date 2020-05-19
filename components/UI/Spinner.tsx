@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS, AVENIR } from '../../constants/ui-constants';
+import { COLORS, SOLEIL } from '../../constants/ui-constants';
 
 const Wrapper = styled.div`
   width: max-content;
@@ -35,7 +35,7 @@ const StyledSpinner = styled.div`
 
 const Text = styled.div`
   font-size: 18px;
-  font-family: ${AVENIR.FONT_STACK};
+  font-family: ${SOLEIL.FONT_STACK};
   margin-top: 8px;
 `;
 

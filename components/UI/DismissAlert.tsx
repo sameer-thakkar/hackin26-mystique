@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AVENIR } from '../../constants/ui-constants';
+import { SOLEIL } from '../../constants/ui-constants';
 import { YELLOW_CLOSE } from '../../assets/SvgIcons';
 
 const StyledAlert = styled.div`
-  font-family: ${AVENIR.FONT_STACK};
+  font-family: ${SOLEIL.FONT_STACK};
   margin-top: 80px;
   position: fixed;
   top: 0;
@@ -37,7 +37,7 @@ const StyledContent = styled.div`
   padding: 8px;
   .alert-key-text {
     grid-area: key-text;
-    font-weight: ${AVENIR.BLACK};
+    font-weight: ${SOLEIL.SEMIBOLD};
     justify-self: end;
   }
   .alert-text {

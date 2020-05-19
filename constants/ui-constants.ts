@@ -1,20 +1,3 @@
-export const GRAPHIK = {
-  FONT_STACK: "Graphik, Arial, Helvetica, 'sans-serif'",
-  LIGHT: '300',
-  REGULAR: '400',
-  MEDIUM: '500',
-  SEMIBOLD: '600',
-  BOLD: '700',
-};
-
-export const AVENIR = {
-  FONT_STACK: "Avenir, Arial, Helvetica, 'sans-serif'",
-  LIGHT: '300',
-  REGULAR: '400',
-  MEDIUM: '500',
-  BLACK: '800',
-};
-
 export const SOLEIL = {
   FONT_STACK: 'soleil, sans-serif',
   REGULAR: '400',

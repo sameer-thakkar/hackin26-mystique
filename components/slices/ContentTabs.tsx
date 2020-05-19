@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
-import { AVENIR, COLORS } from '../../constants/ui-constants';
+import { SOLEIL, COLORS } from '../../constants/ui-constants';
 
 type ContentTabsProps = {
   tabsArr: any[];
@@ -11,7 +11,7 @@ type ContentTabsProps = {
 const StyledContentTabsWrapper = styled.div`
   display: grid;
   grid-row-gap: 16px;
-  font-family: ${AVENIR.FONT_STACK};
+  font-family: ${SOLEIL.FONT_STACK};
 `;
 
 const StyledContentTabs = styled.div`

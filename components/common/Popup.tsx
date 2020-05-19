@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import sliceHandler from '../Slices';
 import { BLACK_CLOSE } from '../../assets/SvgIcons';
-import { COLORS, GRAPHIK, AVENIR } from '../../constants/ui-constants';
+import { COLORS, SOLEIL } from '../../constants/ui-constants';
 
 const Popup = (props) => {
   const { data, togglePopup, children } = props;
@@ -77,8 +77,8 @@ const Popup = (props) => {
         }
         .popup-slice {
           display: block;
-          font-family: ${GRAPHIK.FONT_STACK};
-          font-weight: ${GRAPHIK.REGULAR};
+          font-family: ${SOLEIL.FONT_STACK};
+          font-weight: ${SOLEIL.REGULAR};
           background: #fff;
         }
         .popup-mask {
@@ -138,7 +138,7 @@ const Popup = (props) => {
           border-top: none;
           padding: 0 1em 2em 0;
           color: ${COLORS.DAVY_GREY};
-          font-family: ${AVENIR.FONT_STACK};
+          font-family: ${SOLEIL.FONT_STACK};
         }
         @media (max-width: 768px) {
           .popup-slice.rich_text {

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Popup from '../common/Popup';
-import * as labels from '../../constants/localization/labels';
-import { SHIELD } from '../../assets/SvgIcons';
-import { AVENIR } from '../../constants/ui-constants';
+import * as labels from 'constants/localization/labels';
+import { SHIELD } from 'assets/SvgIcons';
+import { SOLEIL } from 'constants/ui-constants';
 import { Client } from '../../prismic-config';
-import { CUSTOM_TYPES } from '../../constants';
+import { CUSTOM_TYPES } from 'constants/index';
 
 const StyledAlert = styled.div`
   background: #d6f8ff;
@@ -15,7 +15,7 @@ const StyledAlert = styled.div`
   margin: 0 auto;
   background: #d6f8ff;
   border-radius: 4px;
-  font-family: Avenir;
+  font-family: ${SOLEIL.FONT_STACK};
   color: #1a4d57;
   grid-row-gap: 8px;
   grid-column-gap: 12px;
@@ -37,7 +37,7 @@ const StyledTitle = styled.div`
   grid-area: title;
   font-size: 16px;
   line-height: 16px;
-  font-weight: ${AVENIR.BLACK};
+  font-weight: ${SOLEIL.SEMIBOLD};
 `;
 
 const StyledContent = styled.div`

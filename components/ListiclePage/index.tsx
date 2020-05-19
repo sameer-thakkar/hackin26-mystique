@@ -18,7 +18,7 @@ import Footer from '../common/Footer';
 import WhyBookFromUs from './WhyBookFromUs';
 import { groupSlices } from '../../utils/helper';
 import { Client } from '../../prismic-config';
-import { AVENIR, COLORS } from '../../constants/ui-constants';
+import { SOLEIL, COLORS } from '../../constants/ui-constants';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 import { CHEVRON_LEFT_CIRCLE } from '../../assets/SvgIcons';
 import { HEADOUT_API_ENDPOINT } from '../../constants';
@@ -39,7 +39,7 @@ const Wrapper = styled.div`
 `;
 
 const Content = styled.div`
-  font-family: ${AVENIR.FONT_STACK};
+  font-family: ${SOLEIL.FONT_STACK};
   color: ${COLORS.DAVY_GREY};
   width: 792px;
   margin-right: 24px;
@@ -51,7 +51,7 @@ const Content = styled.div`
 const Title = styled.div`
   font-size: 26px;
   line-height: 35px;
-  font-weight: ${AVENIR.BLACK};
+  font-weight: ${SOLEIL.SEMIBOLD};
   color: black;
   margin-bottom: 16px;
 `;

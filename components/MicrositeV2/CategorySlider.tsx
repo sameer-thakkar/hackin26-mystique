@@ -65,7 +65,7 @@ const StyledCategorySlider = styled.div`
     line-height: 12px !important;
     color: #24a1b2 !important;
     text-align: left !important;
-    font-family: Graphik !important;
+    font-family: SOLEIL !important;
   }
   .controls .btn svg {
     stroke-width: 1.5px;

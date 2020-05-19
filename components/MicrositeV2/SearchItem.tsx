@@ -1,7 +1,7 @@
 import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 import Image from '../UI/Image';
-import { AVENIR, GRAPHIK, COLORS } from '../../constants/ui-constants';
+import { SOLEIL, COLORS } from '../../constants/ui-constants';
 
 export const SearchItem = (props) => {
   const {
@@ -62,17 +62,17 @@ export const SearchItem = (props) => {
         {`
           .search-item {
             display: grid;
-            font-family: ${GRAPHIK.FONT_STACK};
+            font-family: ${SOLEIL.FONT_STACK};
             grid-template-columns: 105px auto;
             grid-column-gap: 16px;
             cursor: pointer;
           }
 
           .search-item .search-title {
-            font-family: ${AVENIR.FONT_STACK};
+            font-family: ${SOLEIL.FONT_STACK};
             font-size: 16px;
             color: ${COLORS.DAVY_GREY};
-            font-weight: ${AVENIR.BLACK};
+            font-weight: ${SOLEIL.SEMIBOLD};
             line-height: 1.2;
           }
 
@@ -97,17 +97,17 @@ export const SearchItem = (props) => {
             line-height: 12px;
             text-decoration: line-through;
             color: #757575;
-            font-weight: ${GRAPHIK.REGULAR};
+            font-weight: ${SOLEIL.REGULAR};
           }
           .search-item .current-price {
             font-size: 14px;
             color: ${COLORS.DAVY_GREY};
-            font-weight: ${GRAPHIK.MEDIUM};
+            font-weight: ${SOLEIL.MEDIUM};
           }
           @media (max-width: 768px) {
             .search-item .search-title {
               font-size: 14px;
-              font-weight: ${AVENIR.BLACK};
+              font-weight: ${SOLEIL.SEMIBOLD};
             }
           }
         `}

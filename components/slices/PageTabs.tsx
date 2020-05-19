@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import classNames from 'classnames';
 import LinkResolver from '../LinkResolver';
+import { SOLEIL } from 'constants/ui-constants';
 
 const Tabs = styled.div`
   display: grid;
@@ -24,7 +25,7 @@ const Tabs = styled.div`
   }};
   .navigation-tab {
     font-weight: 600;
-    font-family: Graphik;
+    font-family: ${SOLEIL.FONT_STACK};
     color: #444444;
     font-size: 18px;
     padding: 20px;

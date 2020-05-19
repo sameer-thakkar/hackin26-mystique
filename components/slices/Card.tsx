@@ -7,7 +7,7 @@ import Image from '../UI/Image';
 import Button from '../UI/Button';
 import { MBContext } from '../../contexts/MBContext';
 import * as labels from '../../constants/localization/labels';
-import { COLORS, GRAPHIK, AVENIR } from '../../constants/ui-constants';
+import { COLORS, SOLEIL } from '../../constants/ui-constants';
 import { CHEVRON_LEFT } from '../../assets/SvgIcons';
 
 const variantStyles = {
@@ -62,7 +62,7 @@ const StyledCard = styled.div((props) => {
     p, li {
       font-size: 16px !important;
       line-height: 160% !important;
-      font-family: ${GRAPHIK.FONT_STACK};
+      font-family: ${SOLEIL.FONT_STACK};
     }
     p {
       margin-bottom: 16px !important;
@@ -86,8 +86,8 @@ const StyledCard = styled.div((props) => {
 });
 
 const Title = styled.div`
-  font-family: ${AVENIR.FONT_STACK};
-  font-weight: ${AVENIR.MEDIUM};
+  font-family: ${SOLEIL.FONT_STACK};
+  font-weight: ${SOLEIL.MEDIUM};
   font-size: 20px;
   text-decoration: none;
   line-height: 27px;
@@ -111,8 +111,8 @@ width: max-content;
 
 const CTALink = styled.a`
   color: ${COLORS.RHAPSODY} !important;
-  font-weight: ${AVENIR.BLACK};
-  font-family: ${AVENIR.FONT_STACK};
+  font-weight: ${SOLEIL.SEMIBOLD};
+  font-family: ${SOLEIL.FONT_STACK};
   display: block;
   margin 24px 0 16px 0 !important;
   svg {

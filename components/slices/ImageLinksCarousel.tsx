@@ -5,7 +5,7 @@ import Swiper from '../Swiper';
 import Image from '../UI/Image';
 import { CHEVRON_LEFT } from '../../assets/SvgIcons';
 import { shortCodeSerializer } from '../../utils/shortCodes';
-import { AVENIR, COLORS, GRAPHIK } from '../../constants/ui-constants';
+import { SOLEIL, COLORS } from '../../constants/ui-constants';
 import { scroller } from 'react-scroll';
 import { stringIdfy } from '../../utils/helper';
 import { MBContext } from '../../contexts/MBContext';
@@ -45,16 +45,16 @@ const StyledContent = styled.div`
   grid-row-gap: 8px;
   h2 {
     margin: 0;
-    font-family: ${AVENIR.FONT_STACK};
+    font-family: ${SOLEIL.FONT_STACK};
     font-size: 24px !important;
     line-height: 33px;
     color: ${({ design }) =>
       design === DESIGN.V1 ? COLORS.FOUR_BLACK : COLORS.TWO_BLACK};
-    font-weight: ${AVENIR.BLACK};
+    font-weight: ${SOLEIL.SEMIBOLD};
   }
   div {
     margin: 0;
-    font-family: ${GRAPHIK.FONT_STACK};
+    font-family: ${SOLEIL.FONT_STACK};
     font-size: 16px;
     line-height: 20px;
     color: ${COLORS.FOUR_BLACK};
@@ -65,12 +65,12 @@ const StyledContent = styled.div`
   @media (max-width: 768px) {
     h2 {
       line-height: 26px;
-      font-family: ${GRAPHIK.FONT_STACK};
+      font-family: ${SOLEIL.FONT_STACK};
     }
     div {
       line-height: 20px;
-      font-family: ${GRAPHIK.FONT_STACK};
-      font-weight: ${GRAPHIK.REGULAR};
+      font-family: ${SOLEIL.FONT_STACK};
+      font-weight: ${SOLEIL.REGULAR};
     }
   }
 `;
@@ -125,9 +125,9 @@ const StyledSlide = styled.div`
     border-radius: 4px;
   }
   div {
-    font-family: ${AVENIR.FONT_STACK};
+    font-family: ${SOLEIL.FONT_STACK};
     font-size: 16px;
-    font-weight: ${AVENIR.BLACK};
+    font-weight: ${SOLEIL.SEMIBOLD};
     color: ${COLORS.TWO_BLACK};
     margin-top: 4px;
   }

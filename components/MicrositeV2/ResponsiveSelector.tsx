@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
-import { useCaptureClickOutside } from '../hooks/ClickOutside';
-import Image from '../UI/Image';
-import { COLORS, GRAPHIK } from '../../constants/ui-constants';
-import { CHEVRON_DOWN } from '../../assets/SvgIcons';
+import { useCaptureClickOutside } from 'hooks/ClickOutside';
+import Image from 'UI/Image';
+import { COLORS, SOLEIL } from 'constants/ui-constants';
+import { CHEVRON_DOWN } from 'assets/SvgIcons';
 
 export const ResponsiveSelector = (props) => {
   const {
@@ -128,7 +128,7 @@ export const ResponsiveSelector = (props) => {
             line-height: 1;
           }
           .current-responsive-toggle {
-            font-family: Avenir;
+            font-family: ${SOLEIL.FONT_STACK};
             font-size: 16px;
             text-transform: capitalize;
             cursor: pointer;
@@ -145,7 +145,7 @@ export const ResponsiveSelector = (props) => {
 
           .responsive-option,
           .close-btn {
-            font-family: Avenir;
+            font-family: ${SOLEIL.FONT_STACK};
             cursor: pointer;
             font-size: 16px;
             border: none;
@@ -169,8 +169,8 @@ export const ResponsiveSelector = (props) => {
             align-items: center;
             grid-gap: 8px;
             font-size: 16px;
-            font-family: ${GRAPHIK.FONT_STACK};
-            font-weight: ${GRAPHIK.REGULAR};
+            font-family: ${SOLEIL.FONT_STACK};
+            font-weight: ${SOLEIL.REGULAR};
             color: ${COLORS.DAVY_GREY};
           }
           .current-selection .field-icon {

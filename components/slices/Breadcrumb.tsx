@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { COLORS, GRAPHIK } from '../../constants/ui-constants';
+import { COLORS, SOLEIL } from '../../constants/ui-constants';
 
 type BreadcrumbProps = {
   orderedLinks: any[];
@@ -20,8 +20,8 @@ const StyledBreadcrumb = styled.a`
   &:last-child {
     color: ${COLORS.GREY_7C};
   }
-  font-family: ${GRAPHIK.FONT_STACK};
-  font-weight: ${GRAPHIK.REGULAR};
+  font-family: ${SOLEIL.FONT_STACK};
+  font-weight: ${SOLEIL.REGULAR};
 `;
 
 /**

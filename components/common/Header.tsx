@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import { scroller } from 'react-scroll';
 import LanguageSelector from './LanguageSelector';
 import HeaderLinks from '../HeaderLinks';
-import Hamburger from '../UI/Hamburger';
-import Image from '../UI/Image';
+import Hamburger from 'UI/Hamburger';
+import Image from 'UI/Image';
 import MultiLevelNav from '../MultiLevelNav';
-import { useCaptureClickOutside } from '../hooks/ClickOutside';
-import { POWERED_BY_HEADOUT } from '../../assets/SvgIcons';
+import { useCaptureClickOutside } from 'hooks/ClickOutside';
+import { POWERED_BY_HEADOUT } from 'assets/SvgIcons';
+import { SOLEIL } from 'constants/ui-constants';
 
 const StyledHeader = styled.header`
   height: 80px;
@@ -90,7 +91,7 @@ const StyledHeaderElements = styled.div`
 const StyledBuyTickets = styled.div`
   margin-left: 32px;
   font-size: 16px;
-  font-family: Graphik;
+  font-family: ${SOLEIL.FONT_STACK};
   color: red;
   text-decoration: none;
   cursor: pointer;

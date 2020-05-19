@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import { SOLEIL } from 'constants/ui-constants';
 
 const Paragraph = styled.p`
-  font-family: ${props => props.font || 'Graphik'};
+  font-family: ${SOLEIL.FONT_STACK};
   color: #545454;
   line-height: 1.5;
 `;

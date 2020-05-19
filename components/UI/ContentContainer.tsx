@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { SOLEIL } from 'constants/ui-constants';
 
 const ContentContainer = styled.div`
   margin: 10px;
@@ -6,7 +7,7 @@ const ContentContainer = styled.div`
   max-width: 1200px;
   margin: 100px auto 10px;
   div {
-    font-family: Graphik;
+    font-family: ${SOLEIL.FONT_STACK};
     line-height: 1.5;
   }
   @media (max-width: 768px) {

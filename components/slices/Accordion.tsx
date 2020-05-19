@@ -1,7 +1,7 @@
 import Chevron from '../UI/Chevron';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { AVENIR, GRAPHIK, COLORS } from '../../constants/ui-constants';
+import { SOLEIL, COLORS } from '../../constants/ui-constants';
 
 const StyledAccordion = styled.div`
   padding: 16px 0;
@@ -25,8 +25,8 @@ const Title = styled.div`
   grid-template-columns: 1fr auto;
   grid-column-gap: 10px;
   line-height: 20px;
-  font-weight: ${AVENIR.BLACK};
-  font-family: ${AVENIR.FONT_STACK};
+  font-weight: ${SOLEIL.SEMIBOLD};
+  font-family: ${SOLEIL.FONT_STACK};
 
   .question-text {
     cursor: pointer;
@@ -36,7 +36,7 @@ const Title = styled.div`
 const ContentBlock = styled.div`
   display: ${({ isOpen }) => (isOpen ? 'grid' : 'none')};
   grid-row-gap: 8px;
-  font-family: ${GRAPHIK.FONT_STACK};
+  font-family: ${SOLEIL.FONT_STACK};
   p {
     margin: 0;
   }

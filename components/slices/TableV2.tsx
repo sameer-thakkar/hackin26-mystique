@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import RichContent from '../UI/RichContent';
 import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from '../../utils/shortCodes';
-import { COLORS, GRAPHIK } from '../../constants/ui-constants';
+import { COLORS, SOLEIL } from '../../constants/ui-constants';
 import { stringIdfy } from '../../utils/helper';
 import TitleTextCombo from '../UI/TitleTextCombo';
 
@@ -11,10 +11,10 @@ const StyledTable = styled.div`
   display: grid;
   grid-auto-flow: row;
   grid-auto-rows: auto;
-  font-family: ${GRAPHIK.FONT_STACK};
+  font-family: ${SOLEIL.FONT_STACK};
   .heading {
     font-size: 26px;
-    font-weight: ${GRAPHIK.SEMIBOLD};
+    font-weight: ${SOLEIL.SEMIBOLD};
     margin-bottom: 40px;
   }
   @media (max-width: 768px) {
@@ -47,7 +47,7 @@ const StyledColumn = styled.div`
   display: grid;
   padding: 14px 16px;
   strong {
-    font-weight: ${GRAPHIK.MEDIUM};
+    font-weight: ${SOLEIL.MEDIUM};
   }
   p {
     margin: 0;
@@ -67,7 +67,7 @@ const StyledColumn = styled.div`
       padding-left: 0;
       padding-top: 0;
       background: ${COLORS.WHITE};
-      font-weight: ${GRAPHIK.MEDIUM};
+      font-weight: ${SOLEIL.MEDIUM};
     }
   }
 `;

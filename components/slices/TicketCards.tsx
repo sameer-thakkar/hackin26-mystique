@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Button from '../UI/Button';
 import { CURRENCY_SYMBOL_MAP } from '../../constants';
-import { COLORS, GRAPHIK } from '../../constants/ui-constants';
+import { COLORS, SOLEIL } from '../../constants/ui-constants';
 
 const TicketCardsWrapper = styled.div`
-  font-family: ${GRAPHIK.FONT_STACK};
+  font-family: ${SOLEIL.FONT_STACK};
   display: grid;
   grid-gap: 24px;
   ${(props) => {
@@ -47,7 +47,7 @@ const TicketCardPrice = styled.div`
   justify-self: flex-end;
   font-size: 20px;
   line-height: 24px;
-  font-weight: ${GRAPHIK.MEDIUM};
+  font-weight: ${SOLEIL.MEDIUM};
   div {
     display: flex;
     justify-content: flex-end;

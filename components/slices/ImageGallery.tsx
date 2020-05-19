@@ -1,7 +1,7 @@
 import { RichText } from 'prismic-reactjs';
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { COLORS, GRAPHIK } from '../../constants/ui-constants';
+import { COLORS, SOLEIL } from '../../constants/ui-constants';
 import { CHEVRON_LEFT_CIRCLE, CLOSE_WHITE } from '../../assets/SvgIcons';
 import { stringIdfy } from '../../utils/helper';
 import Swiper from '../Swiper';
@@ -17,8 +17,8 @@ const StyledImageGallery = styled.div`
   }
   .heading {
     font-size: 24px;
-    font-family: ${GRAPHIK.FONT_STACK};
-    font-weight: ${GRAPHIK.SEMIBOLD};
+    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: ${SOLEIL.SEMIBOLD};
     max-width: 1200px;
     width: 100%;
     line-height: 26px;
@@ -223,7 +223,7 @@ const LightboxImage = styled.div`
 `;
 
 const Caption = styled.div`
-  font-family: ${GRAPHIK.FONT_STACK};
+  font-family: ${SOLEIL.FONT_STACK};
   padding: 8px;
   padding-bottom: 16px;
   @media (max-width: 768px) {

@@ -24,14 +24,14 @@ import {
   fetchUserGeoLocation,
   createGroupBooking,
 } from '../utils/helper';
-import { MODAL_STYLE, AVENIR, GRAPHIK } from '../constants/ui-constants';
+import { MODAL_STYLE, SOLEIL } from '../constants/ui-constants';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-phone-input-2/lib/style.css';
 
 dayjs.extend(isSameOrBefore);
 
 const Checkbox = styled.div`
-  font-family: ${GRAPHIK.FONT_STACK};
+  font-family: ${SOLEIL.FONT_STACK};
   display: grid;
   grid-template-columns: auto auto;
   justify-content: left;
@@ -80,8 +80,8 @@ const StyledGroupBooking = styled.div`
     line-height: 1.5;
     font-weight: 400;
     border-bottom: 1px solid #44444452;
-    font-weight: ${AVENIR.BLACK};
-    font-family: ${AVENIR.FONT_STACK};
+    font-weight: ${SOLEIL.SEMIBOLD};
+    font-family: ${SOLEIL.FONT_STACK};
     span {
       color: #fff;
     }
@@ -164,7 +164,7 @@ const StyledGroupBooking = styled.div`
   }
   .form .react-select__placeholder {
     font-size: 1em;
-    font-family: ${GRAPHIK.FONT_STACK};
+    font-family: ${SOLEIL.FONT_STACK};
     width: 100%;
   }
   form.form {
@@ -187,7 +187,7 @@ const StyledGroupBooking = styled.div`
     color: #333333;
     line-height: 1.4;
     font-size: 1em;
-    font-family: ${GRAPHIK.FONT_STACK};
+    font-family: ${SOLEIL.FONT_STACK};
     text-transform: capitalize;
   }
   .form-wrapper .react-select__option:hover,
@@ -197,7 +197,7 @@ const StyledGroupBooking = styled.div`
   }
   .form-wrapper .react-select__single-value {
     font-size: 1em;
-    font-family: ${GRAPHIK.FONT_STACK};
+    font-family: ${SOLEIL.FONT_STACK};
   }
   .form-wrapper .split {
     display: grid;
@@ -228,7 +228,7 @@ const StyledGroupBooking = styled.div`
     width: calc(100% - 16px);
     cursor: pointer;
     font-size: 1em;
-    font-family: ${GRAPHIK.FONT_STACK};
+    font-family: ${SOLEIL.FONT_STACK};
   }
   .react-datepicker__input-container input:focus {
     border-color: #333;
@@ -281,7 +281,7 @@ const StyledGroupBooking = styled.div`
     right: 20px;
   }
   .hide-mobi {
-    font-family: ${GRAPHIK.FONT_STACK};
+    font-family: ${SOLEIL.FONT_STACK};
   }
   .hide-mobi a {
     color: #fff;
@@ -324,7 +324,7 @@ const StyledGroupBooking = styled.div`
       padding: 20px;
       display: block;
       text-align: center;
-      font-family: ${GRAPHIK.FONT_STACK};
+      font-family: ${SOLEIL.FONT_STACK};
       font-weight: 300;
       line-height: 140%;
     }
@@ -392,7 +392,7 @@ const StyledGroupBooking = styled.div`
     width: 15px;
   }
   .success .call span {
-    font-family: ${GRAPHIK.FONT_STACK};
+    font-family: ${SOLEIL.FONT_STACK};
     font-size: 16px;
     font-weight: 500;
     font-style: normal;
@@ -404,7 +404,7 @@ const StyledGroupBooking = styled.div`
   }
   .info-text {
     font-size: 1em;
-    font-family: ${GRAPHIK.FONT_STACK};
+    font-family: ${SOLEIL.FONT_STACK};
     line-height: 2.06;
   }
   .error {
@@ -413,7 +413,7 @@ const StyledGroupBooking = styled.div`
       color: #ec1943;
     }
     padding-top: 6px;
-    font-family: ${GRAPHIK.FONT_STACK};
+    font-family: ${SOLEIL.FONT_STACK};
     position: absolute;
   }
 `;

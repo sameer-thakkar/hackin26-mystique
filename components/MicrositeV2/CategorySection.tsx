@@ -1,5 +1,5 @@
 import PopulateProducts from './PopulateProducts';
-import { AVENIR, GRAPHIK, COLORS } from '../../constants/ui-constants';
+import { SOLEIL, COLORS } from '../../constants/ui-constants';
 import { useContext, useEffect } from 'react';
 import ProductsContext from '../../contexts/Products';
 import InteractionContext from '../../contexts/Interaction';
@@ -13,8 +13,8 @@ const StyledCategorySection = styled.div`
   .category-heading {
     margin: 0;
     font-size: 24px;
-    font-family: ${AVENIR.FONT_STACK};
-    font-weight: ${AVENIR.MEDIUM};
+    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: ${SOLEIL.MEDIUM};
     line-height: 33px;
     color: ${COLORS.TWO_BLACK};
   }
@@ -22,9 +22,9 @@ const StyledCategorySection = styled.div`
     margin: 0;
     font-size: 16px;
     width: 60%;
-    font-family: ${AVENIR.FONT_STACK};
+    font-family: ${SOLEIL.FONT_STACK};
     line-height: 20px;
-    font-weight: ${AVENIR.MEDIUM};
+    font-weight: ${SOLEIL.MEDIUM};
     color: ${COLORS.FOUR_BLACK};
   }
   @media (max-width: 768px) {
@@ -32,15 +32,15 @@ const StyledCategorySection = styled.div`
     .category-heading {
       margin: 0;
       font-size: 24px;
-      font-family: ${GRAPHIK.FONT_STACK};
-      font-weight: ${GRAPHIK.SEMIBOLD};
+      font-family: ${SOLEIL.FONT_STACK};
+      font-weight: ${SOLEIL.SEMIBOLD};
       line-height: 26px;
     }
     .category-description {
-      font-family: ${GRAPHIK.FONT_STACK};
+      font-family: ${SOLEIL.FONT_STACK};
       line-height: 20px;
       width: 100%;
-      font-weight: ${GRAPHIK.REGULAR};
+      font-weight: ${SOLEIL.REGULAR};
     }
   }
 `;

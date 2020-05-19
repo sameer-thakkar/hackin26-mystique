@@ -1,4 +1,4 @@
-import { COLORS, AVENIR } from '../../constants/ui-constants';
+import { COLORS, SOLEIL } from '../../constants/ui-constants';
 
 export default {
   primaryColor: COLORS.RHAPSODY,
@@ -6,7 +6,7 @@ export default {
   button: {
     borderRadius: '4px',
     fontSize: '16px',
-    fontFamily: AVENIR.FONT_STACK,
-    fontWeight: AVENIR.BLACK,
+    fontFamily: SOLEIL.FONT_STACK,
+    fontWeight: SOLEIL.SEMIBOLD,
   },
 };

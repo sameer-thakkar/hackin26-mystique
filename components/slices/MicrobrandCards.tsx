@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
-import Image from '../UI/Image';
-import { shortCodeSerializer } from '../../utils/shortCodes';
-import { tourListApiParser } from '../../utils/dataParsers';
+import Image from 'UI/Image';
+import { shortCodeSerializer } from 'utils/shortCodes';
+import { tourListApiParser } from 'utils/dataParsers';
+import { SOLEIL } from 'constants/ui-constants';
 
 const StyledMBCards = styled.div`
   display: grid;
@@ -50,17 +51,15 @@ const MicrobrandCard = styled.div`
   .card-bottom .card-title {
     font-size: 15px;
     color: #000;
-    font-family: 'Avenir', 'Proxima Nova', 'Helvetica Neue', Helvetica, Arial,
-      sans-serif;
-    font-weight: 500;
+    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: ${SOLEIL.MEDIUM};
     line-height: 1;
     grid-row: 1;
     grid-column: 1 / 2;
   }
 
   .card-bottom .card-price {
-    font-family: 'Avenir', 'Proxima Nova', 'Helvetica Neue', Helvetica, Arial,
-      sans-serif;
+    font-family: ${SOLEIL.FONT_STACK};
     font-size: 10px;
     justify-self: right;
     grid-row: 1;

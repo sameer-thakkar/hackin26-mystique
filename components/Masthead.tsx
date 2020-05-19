@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Image from './UI/Image';
-import { AVENIR } from '../constants/ui-constants';
+import { SOLEIL } from '../constants/ui-constants';
 
 const StyledMasthead = styled.div`
   width: 100%;
@@ -27,8 +27,8 @@ const Title = styled.h1`
   position: absolute;
   top: 50%;
   color: white;
-  font-family: ${AVENIR.FONT_STACK};
-  font-weight: ${AVENIR.BLACK};
+  font-family: ${SOLEIL.FONT_STACK};
+  font-weight: ${SOLEIL.SEMIBOLD};
   font-size: 2rem;
   @media (max-width: 768px) {
     text-align: center;

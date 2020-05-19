@@ -256,7 +256,7 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
       ) : null}
       <PriceAndCTASection>
         <div>
-          {tourData && show_price ? (
+          {tourData?.listingPrice && show_price ? (
             <Pricing
               currentLanguage={currentLanguage}
               listingPrice={tourData.listingPrice}

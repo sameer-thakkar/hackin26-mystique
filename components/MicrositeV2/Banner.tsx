@@ -39,6 +39,8 @@ const Banner = (props) => {
                 return (
                   <div
                     key={index}
+                    role="button"
+                    tabIndex={0}
                     className={`swiper-slide ${
                       image.interaction ? 'pointer' : ''
                     }`}

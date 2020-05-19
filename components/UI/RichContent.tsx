@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
-import { shortCodeSerializer } from '../../utils/shortCodes';
-import { COLORS } from '../../constants/ui-constants';
+import { shortCodeSerializer } from 'utils/shortCodes';
+import { COLORS, SOLEIL } from 'constants/ui-constants';
 
 const StyledRichContent = styled.div`
-  font-family: 'Graphik', 'Proxima Nova', 'Helvetica Neue', Helvetica, Arial,
-    sans-serif;
+  font-family: ${SOLEIL.FONT_STACK}
   line-height: 1.6;
   color: ${COLORS.FOUR_BLACK};
 `;

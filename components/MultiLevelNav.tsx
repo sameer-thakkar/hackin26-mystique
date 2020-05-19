@@ -1,6 +1,6 @@
 import LinkResolver from './LinkResolver';
 import styled from 'styled-components';
-import { COLORS, GRAPHIK } from '../constants/ui-constants';
+import { COLORS, SOLEIL } from '../constants/ui-constants';
 import { CHEVRON_DOWN } from '../assets/SvgIcons';
 import { useState, useRef, useEffect } from 'react';
 import { useWindowWidth } from '@react-hook/window-size';
@@ -9,7 +9,7 @@ const StyledMenuItem = styled.li`
   font-size: 16px;
   line-height: 24px;
   padding: 12px 16px;
-  font-family: ${GRAPHIK.FONT_STACK};
+  font-family: ${SOLEIL.FONT_STACK};
   color: ${COLORS.FOUR_BLACK};
   cursor: pointer;
   position: relative;

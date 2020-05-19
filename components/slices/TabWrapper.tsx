@@ -3,14 +3,14 @@ import styled from 'styled-components';
 import sliceHandler from '../Slices';
 import RichContent from '../UI/RichContent';
 import TitleTextCombo from '../UI/TitleTextCombo';
-import { GRAPHIK } from '../../constants/ui-constants';
+import { SOLEIL } from '../../constants/ui-constants';
 import { stringIdfy } from '../../utils/helper';
 
 const StyledTabWrapper = styled.div`
   display: grid;
   grid-row-gap: 16px;
   line-height: 1.5;
-  font-family: ${GRAPHIK.FONT_STACK};
+  font-family: ${SOLEIL.FONT_STACK};
   .tabs {
     display: grid;
     grid-auto-flow: column;

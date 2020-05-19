@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { STAR } from '../../assets/SvgIcons';
-import { GRAPHIK, COLORS } from '../../constants/ui-constants';
+import { SOLEIL, COLORS } from '../../constants/ui-constants';
 import { HEADOUT_API_ENDPOINT } from '../../constants';
 
 const RatingBoosterCombo = (props) => {
@@ -43,10 +43,10 @@ const RatingBoosterCombo = (props) => {
           grid-template-columns: auto auto auto;
           justify-content: left;
           align-items: center;
-          font-weight: ${GRAPHIK.REGULAR};
+          font-weight: ${SOLEIL.REGULAR};
           grid-gap: 5px;
           font-size: 12px;
-          font-family: ${GRAPHIK.FONT_STACK};
+          font-family: ${SOLEIL.FONT_STACK};
           line-height: 1;
           color: ${COLORS.DAVY_GREY};
         }

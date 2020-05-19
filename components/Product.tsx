@@ -3,28 +3,28 @@ import styled from 'styled-components';
 import parse from 'url-parse';
 import dayjs from 'dayjs';
 import ReactMarkdown from 'react-markdown/with-html';
-import * as labels from '../constants/localization/labels';
-import LocalisedPrice from './UI/LPrice';
+import * as labels from 'constants/localization/labels';
+import LocalisedPrice from 'UI/LPrice';
 import HorizontalLine from './slices/HorizontalLine';
-import Button from './UI/Button';
+import Button from 'UI/Button';
 import { RichText } from 'prismic-reactjs';
-import { shortCodeSerializer } from '../utils/shortCodes';
-import { ANALYTICS_EVENTS } from '../constants';
-import { COLORS, GRAPHIK } from '../constants/ui-constants';
-import { CALENDAR } from '../assets/SvgIcons';
-import '../utils/dayjsLocale';
+import { shortCodeSerializer } from 'utils/shortCodes';
+import { ANALYTICS_EVENTS } from 'constants/index';
+import { COLORS, SOLEIL } from 'constants/ui-constants';
+import { CALENDAR } from 'assets/SvgIcons';
+import 'utils/dayjsLocale';
 
 const isLengthyArray = (item) => Array.isArray(item) && item.length;
 
 const StyledProductCard = styled.div`
-  font-family: ${GRAPHIK.FONT_STACK};
+  font-family: ${SOLEIL.FONT_STACK};
   padding: 32px 24px;
   border: 1px solid ${COLORS.GREY_G6};
   border-radius: 4px;
   display: grid;
   grid-row-gap: 24px;
   .more-details {
-    font-weight: ${GRAPHIK.MEDIUM};
+    font-weight: ${SOLEIL.MEDIUM};
     font-size: 14px;
     line-height: 15px;
     color: ${COLORS.MED_SLATE_BLUE};
@@ -55,12 +55,12 @@ const ProductHeader = styled.div`
   .tour-title {
     font-size: 24px;
     line-height: 32px;
-    font-weight: ${GRAPHIK.MEDIUM};
+    font-weight: ${SOLEIL.MEDIUM};
     margin: 0;
   }
   .tour-tags {
     font-size: 14px;
-    font-weight: ${GRAPHIK.MEDIUM};
+    font-weight: ${SOLEIL.MEDIUM};
     display: grid;
     grid-auto-flow: column;
     align-items: center;
@@ -106,7 +106,7 @@ const PriceBlock = styled.div`
     display: grid;
     grid-template-columns: auto auto;
     grid-column-gap: 4px;
-    font-weight: ${GRAPHIK.REGULAR};
+    font-weight: ${SOLEIL.REGULAR};
     color: ${COLORS.GREY_G4};
     font-size: 11px;
     line-height: 12px;
@@ -119,7 +119,7 @@ const PriceBlock = styled.div`
     font-size: 25px;
     line-height: 32px;
     display: flex;
-    font-weight: ${GRAPHIK.MEDIUM};
+    font-weight: ${SOLEIL.MEDIUM};
     color: ${COLORS.FOUR_BLACK};
   }
   @media (max-width: 768px) {
@@ -155,10 +155,10 @@ const CTABlock = styled.div`
 const ProductBody = styled.div`
   display: grid;
   .tour-description {
-    font-family: ${GRAPHIK.FONT_STACK};
+    font-family: ${SOLEIL.FONT_STACK};
     font-size: 16px;
     line-height: 24px;
-    font-weight: ${GRAPHIK.REGULAR};
+    font-weight: ${SOLEIL.REGULAR};
     color: ${COLORS.FOUR_BLACK};
     opacity: 0.99;
     display: grid;
@@ -179,7 +179,7 @@ const ProductBody = styled.div`
     }
     p {
       margin: 0;
-      font-weight: ${GRAPHIK.MEDIUM};
+      font-weight: ${SOLEIL.MEDIUM};
     }
   }
   @media (max-width: 768px) {
@@ -204,7 +204,7 @@ const ProductBody = styled.div`
 
 const NextAvailableBlock = styled.div`
   font-size: 14px;
-  font-weight: ${GRAPHIK.MEDIUM};
+  font-weight: ${SOLEIL.MEDIUM};
   color: ${COLORS.FOUR_BLACK};
   line-height: 15px;
   display: grid;
@@ -222,8 +222,8 @@ const NextAvailableBlock = styled.div`
 const ProductOfferBlock = styled.div`
   font-size: 15px;
   line-height: 15px;
-  font-family: ${GRAPHIK.FONT_STACK};
-  font-weight: ${GRAPHIK.MEDIUM};
+  font-family: ${SOLEIL.FONT_STACK};
+  font-weight: ${SOLEIL.MEDIUM};
   cursor: pointer;
   color: ${COLORS.MED_SLATE_BLUE};
   p {
@@ -232,7 +232,7 @@ const ProductOfferBlock = styled.div`
   }
 `;
 const V1BoosterBlock = styled.div`
-  font-family: Graphik;
+  font-family: ${SOLEIL.FONT_STACK};
   font-weight: 400;
   line-height: 1.31;
   text-align: left;
@@ -265,7 +265,7 @@ const V1BoosterBlock = styled.div`
     p {
       font-size: 12px;
       strong {
-        font-weight: ${GRAPHIK.MEDIUM};
+        font-weight: ${SOLEIL.MEDIUM};
         line-height: 1.5;
       }
     }

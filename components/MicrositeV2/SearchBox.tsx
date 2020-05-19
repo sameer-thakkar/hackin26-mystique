@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import Fuse from 'fuse.js';
 import { SEARCH_ICON, CLOSE_WHITE } from '../../assets/SvgIcons';
-import { GRAPHIK, COLORS } from '../../constants/ui-constants';
+import { SOLEIL, COLORS } from '../../constants/ui-constants';
 import InteractionContext from '../../contexts/Interaction';
 
 export const SearchBox = (props) => {
@@ -85,8 +85,8 @@ export const SearchBox = (props) => {
             border: 1px solid ${COLORS.DADDY};
             width: calc(100% - 40px);
             min-width: 385px;
-            font-family: ${GRAPHIK.FONT_STACK};
-            font-weight: ${GRAPHIK.REGULAR};
+            font-family: ${SOLEIL.FONT_STACK};
+            font-weight: ${SOLEIL.REGULAR};
             font-size: 16px;
           }
           .input-icon {

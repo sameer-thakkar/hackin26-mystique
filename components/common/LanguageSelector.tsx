@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
 import styled from 'styled-components';
-import { withoutTrailingSlash } from '../../utils/helper';
-import { GLOBE } from '../../assets/SvgIcons';
-import { COLORS } from '../../constants/ui-constants';
+import { withoutTrailingSlash } from 'utils/helper';
+import { GLOBE } from 'assets/SvgIcons';
+import { COLORS, SOLEIL } from 'constants/ui-constants';
 
 const flagsUrl = {
   en: {
@@ -55,7 +55,7 @@ const StyledLanguageContainer = styled.div`
     align-items: center;
     border-bottom: 0.5px dotted #d8d8d8;
     background-color: rgba(255, 255, 255, 0.99);
-    font-family: Avenir;
+    font-family: ${SOLEIL.FONT_STACK};
     font-size: 18px;
     padding: 10px 25px;
     cursor: pointer;
@@ -82,7 +82,7 @@ const StyledMobileSelect = styled.div`
     top: 0;
     left: 0;
     text-transform: uppercase;
-    font-family: Graphik;
+    font-family: ${SOLEIL.FONT_STACK};
     font-size: 14px;
     color: #545454;
   }
@@ -97,7 +97,7 @@ const StyledMobileSelect = styled.div`
 
 const StyledLanguage = styled.span`
   margin-top: 7px;
-  font-family: Graphik;
+  font-family: ${SOLEIL.FONT_STACK};
   font-size: 16px;
   color: #545454;
   cursor: pointer;

@@ -1,29 +1,11 @@
-import React, { Component, useState, useEffect } from 'react';
+import React from 'react';
 import Image from '../UI/Image';
 
-export const CategoryImageBar = props => {
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    setReady(true);
-  }, []);
-
+export const CategoryImageBar = (props) => {
   let tagsRef = {};
-
-  const addTgidToCategory = tgid => {
-    if (this.props.availableTGIDs.tgid) {
-      let newState = this.state.categoryProps;
-      let { categories, active } = newState;
-      categories[active].push(tgid);
-      this.state.setState(newState);
-    }
-  };
-
-  const openCategory = (index: Number) => {
-    this.props.openCategory(index);
-  };
   let { categories, title } = props;
   categories = [...categories, ...categories, ...categories];
+
   return (
     <div className="category-bar-wrapper">
       <div className="category-heading">{title}</div>
@@ -32,10 +14,12 @@ export const CategoryImageBar = props => {
           return (
             <div
               key={index}
+              role="button"
+              tabIndex={0}
               onClick={() => {
                 this.openCategory(index);
               }}
-              ref={ref => {
+              ref={(ref) => {
                 tagsRef[index] = ref;
               }}
               className="category-card"
@@ -47,11 +31,10 @@ export const CategoryImageBar = props => {
           );
         })}
       </div>
-
       <style jsx>
         {`
           .category-heading {
-            font-family: Graphik;
+            font-family: SOLEIL;
             font-size: 24px;
             font-weight: 500;
             margin-left: 10px;
@@ -74,7 +57,7 @@ export const CategoryImageBar = props => {
           .category-card {
             display: grid;
             align-content: start;
-            font-family: Graphik;
+            font-family: SOLEIL;
             font-size: 14px;
             font-weight: 500;
             grid-row-gap: 8px;

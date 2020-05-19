@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import * as labels from '../../constants/localization/labels';
-import { AVENIR } from '../../constants/ui-constants';
+import { SOLEIL } from '../../constants/ui-constants';
 import { CIRCLE_TICK } from '../../assets/SvgIcons';
 
 const WhyBookFromUsWrapper = styled.div`
@@ -10,11 +10,11 @@ const WhyBookFromUsWrapper = styled.div`
   background: #f8f6ff;
   border-radius: 4px;
   padding: 24px 24px 20px 24px;
-  font-family: ${AVENIR.FONT_STACK};
+  font-family: ${SOLEIL.FONT_STACK};
 `;
 
 const Heading = styled.div`
-  font-weight: ${AVENIR.MEDIUM};
+  font-weight: ${SOLEIL.MEDIUM};
   font-size: 24px;
   line-height: 28px;
   margin-bottom: 24px;

@@ -6,7 +6,7 @@ import { useEffect, useState, useContext } from 'react';
 import { tourListApiParser } from '../../utils/dataParsers';
 import RichContent from '../UI/RichContent';
 import { MBContext } from '../../contexts/MBContext';
-import { AVENIR, COLORS, GRAPHIK } from '../../constants/ui-constants';
+import { SOLEIL, COLORS } from '../../constants/ui-constants';
 import {
   DESIGN,
   CURRENCY_SYMBOL_MAP,
@@ -33,8 +33,8 @@ const TitlePriceCombo = styled.div`
   grid-column-gap: 8px;
   grid-template-columns: 1fr auto;
   span {
-    font-family: ${AVENIR.FONT_STACK};
-    font-weight: ${AVENIR.BLACK};
+    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: ${SOLEIL.SEMIBOLD};
     font-size: 16px;
     line-height: 20px;
     text-align: right;
@@ -50,10 +50,10 @@ const TitlePriceCombo = styled.div`
 `;
 
 const Title = styled.div`
-  font-family: ${AVENIR.FONT_STACK};
+  font-family: ${SOLEIL.FONT_STACK};
   font-size: 16px;
   line-height: 24px;
-  font-weight: ${AVENIR.BLACK};
+  font-weight: ${SOLEIL.SEMIBOLD};
   @media (max-width: 768px) {
     font-size: 14px;
     line-height: 1.3;
@@ -68,9 +68,9 @@ const Booster = styled.div`
   grid-column-gap: 5px;
   span {
     align-items: center;
-    font-weight: ${GRAPHIK.REGULAR};
+    font-weight: ${SOLEIL.REGULAR};
     font-size: 12px;
-    font-family: ${GRAPHIK.FONT_STACK};
+    font-family: ${SOLEIL.FONT_STACK};
     line-height: 1;
   }
   svg {

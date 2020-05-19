@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { CHEVRON_LEFT } from '../../assets/SvgIcons';
-import { COLORS, AVENIR } from '../../constants/ui-constants';
+import { COLORS, SOLEIL } from '../../constants/ui-constants';
 import Image from '../UI/Image';
 
 const FeedContainer = styled.div`
@@ -29,7 +29,7 @@ const Card = styled.div`
 const Content = styled.div`
   display: grid;
   grid-row-gap: 12px;
-  font-family: ${AVENIR.FONT_STACK};
+  font-family: ${SOLEIL.FONT_STACK};
   line-height: 26px;
   padding: 12px;
   align-content: flex-start;

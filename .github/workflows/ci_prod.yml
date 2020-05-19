@@ -26,6 +26,7 @@ jobs:
           GIT_BRANCH: ${{ github.head_ref }}
           GIT_ACTOR: ${{ github.actor }}
           PROFESSORX_SECRET: ${{ secrets.PROFESSORX_SECRET }}
+        timeout-minutes: 20
         run: |
           sudo rm /usr/local/bin/now
           sudo npm i -g now@16.7.3

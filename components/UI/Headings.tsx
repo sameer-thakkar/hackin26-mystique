@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import { SOLEIL } from 'constants/ui-constants';
 
 export const StyledTopHeading = styled.div`
   font-size: 35px;
   font-weight: 500;
-  font-family: 'Graphik';
+  font-family: ${SOLEIL.FONT_STACK};
   color: #000000;
   border-left: 3px solid #669dde;
   padding: 5px 20px 5px;

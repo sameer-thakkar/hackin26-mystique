@@ -1,10 +1,10 @@
 import sliceHandler from '../Slices';
-import { COLORS, GRAPHIK } from '../../constants/ui-constants';
+import { COLORS, SOLEIL } from '../../constants/ui-constants';
 import { FULL_WIDTH_SLICES } from '../../constants';
 import styled from 'styled-components';
 
 const StyledLongform = styled.div`
-  font-family: ${GRAPHIK.FONT_STACK};
+  font-family: ${SOLEIL.FONT_STACK};
   line-height: 1.6;
   color: #545454;
   border-top: 1px solid ${COLORS.DADDY};

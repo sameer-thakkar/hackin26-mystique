@@ -6,13 +6,13 @@ import advancedFormat from 'dayjs/plugin/advancedFormat';
 import * as labels from '../../constants/localization/labels';
 import { MBContext } from '../../contexts/MBContext';
 import { HEADOUT_API_ENDPOINT } from '../../constants';
-import { GRAPHIK } from '../../constants/ui-constants';
+import { SOLEIL } from '../../constants/ui-constants';
 
 dayjs.extend(calendar);
 dayjs.extend(advancedFormat);
 
 const Text = styled.span`
-  font-family: ${GRAPHIK.FONT_STACK};
+  font-family: ${SOLEIL.FONT_STACK};
 `;
 
 type NextAvailableProps = {

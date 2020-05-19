@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useCaptureClickOutside } from '../hooks/ClickOutside';
-import { GRAPHIK } from '../../constants/ui-constants';
+import { SOLEIL } from '../../constants/ui-constants';
 
 const languageMap = {
   en: {
@@ -186,11 +186,11 @@ const LanguageSelector = (props) => {
             line-height: 1;
           }
           .current-language-toggle {
-            font-family: ${GRAPHIK.FONT_STACK};
+            font-family: ${SOLEIL.FONT_STACK};
             font-size: 16px;
             text-transform: capitalize;
             cursor: pointer;
-            font-weight: ${GRAPHIK.REGULAR};
+            font-weight: ${SOLEIL.REGULAR};
           }
           .language-dropdown {
             padding: 20px 15px;
@@ -205,7 +205,7 @@ const LanguageSelector = (props) => {
 
           .language,
           .close-btn {
-            font-family: ${GRAPHIK.FONT_STACK};
+            font-family: ${SOLEIL.FONT_STACK};
             cursor: pointer;
             font-size: 16px;
             border: none;

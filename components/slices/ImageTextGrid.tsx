@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import Image from '../UI/Image';
 import { shortCodeSerializer } from '../../utils/shortCodes';
-import { GRAPHIK } from '../../constants/ui-constants';
+import { SOLEIL } from '../../constants/ui-constants';
 
 type ImageTextProps = {
   cols: number;
@@ -36,14 +36,14 @@ const StyledComboCard = styled.div`
     color: #666666;
     text-align: justify;
     font-weight: 500;
-    font-family: ${GRAPHIK.FONT_STACK};
+    font-family: ${SOLEIL.FONT_STACK};
     margin: unset;
     ::after {
       content: unset !important;
     }
   }
   div {
-    font-family: ${GRAPHIK.FONT_STACK};
+    font-family: ${SOLEIL.FONT_STACK};
     p {
       margin: unset !important;
     }

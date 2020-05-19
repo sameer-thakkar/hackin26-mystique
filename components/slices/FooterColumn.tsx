@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import LinkResolver from '../LinkResolver';
-import { GRAPHIK, COLORS } from '../../constants/ui-constants';
+import { SOLEIL, COLORS } from '../../constants/ui-constants';
 
 type FooterColumnProps = {
   title: string;
@@ -15,7 +15,7 @@ const StyledFooterColumn = styled.div`
   display: grid;
   align-items: start;
   grid-template-rows: max-content max-content;
-  font-family: ${GRAPHIK.FONT_STACK};
+  font-family: ${SOLEIL.FONT_STACK};
   color: ${COLORS.DAVY_GREY};
   .link-item {
     color: ${COLORS.BEACH};
@@ -29,7 +29,7 @@ const StyledFooterColumn = styled.div`
 
 const Title = styled.div`
   font-size: 14px;
-  font-weight: ${GRAPHIK.SEMIBOLD};
+  font-weight: ${SOLEIL.SEMIBOLD};
   margin-bottom: 4px;
 `;
 

@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
-import { shortCodeSerializer } from '../../utils/shortCodes';
-import Button from '../UI/Button';
+import { shortCodeSerializer } from 'utils/shortCodes';
+import Button from 'UI/Button';
+import { SOLEIL } from 'constants/ui-constants';
 
 type FWActionCardProps = {
   title: string;
@@ -40,7 +41,7 @@ const StyledProductCardLeft = styled.div`
 `;
 
 const StyledProductCardHeading = styled.div`
-  font-family: Graphik;
+  font-family: ${SOLEIL.FONT_STACK};
   font-size: 18px;
   font-weight: 600;
   line-height: 1.4;

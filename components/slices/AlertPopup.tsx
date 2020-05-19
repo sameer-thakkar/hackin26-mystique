@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import Swiper from '../Swiper';
-import { AVENIR } from '../../constants/ui-constants';
+import { SOLEIL } from '../../constants/ui-constants';
 
 const StyledWrapper = styled.div`
   display: grid;
@@ -10,7 +10,7 @@ const StyledWrapper = styled.div`
   grid-template-areas: 'images content';
   grid-template-rows: max-content;
   grid-column-gap: 20px;
-  font-family: ${AVENIR.FONT_STACK};
+  font-family: ${SOLEIL.FONT_STACK};
   width: 850px;
   height: 522px;
   color: #444444;
@@ -53,7 +53,7 @@ const StyledImages = styled.div`
 `;
 
 const StyledTitle = styled.div`
-  font-weight: ${AVENIR.BLACK};
+  font-weight: ${SOLEIL.SEMIBOLD};
   font-size: 22px;
   line-height: 24px;
   margin-bottom: 16px;

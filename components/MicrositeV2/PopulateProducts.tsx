@@ -88,7 +88,7 @@ const PopulateProducts = (props) => {
         }
         .view-more {
           display: grid;
-          font-family: Graphik;
+          font-family: SOLEIL;
           color: #ec1943;
           border: 1px solid;
           border-radius: 4px;

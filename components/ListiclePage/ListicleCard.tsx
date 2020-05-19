@@ -9,7 +9,7 @@ import Popup from '../common/Popup';
 import * as labels from '../../constants/localization/labels';
 import { Client } from '../../prismic-config';
 import { CUSTOM_TYPES } from '../../constants';
-import { COLORS, AVENIR } from '../../constants/ui-constants';
+import { COLORS, SOLEIL } from '../../constants/ui-constants';
 import { PIN } from '../../assets/SvgIcons';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 
@@ -18,7 +18,7 @@ const CardWrapper = styled.div`
   max-width: 792px;
   display: grid;
   color: #545454;
-  font-family: ${AVENIR.FONT_STACK};
+  font-family: ${SOLEIL.FONT_STACK};
   margin-top: 24px;
   @media (max-width: 768px) {
     width: 100%;
@@ -99,12 +99,12 @@ const Pricing = styled.div`
     line-height: 16px;
     display: flex;
     justify-content: flex-end;
-    font-weight: ${AVENIR.REGULAR};
+    font-weight: ${SOLEIL.REGULAR};
   }
   width: max-content;
   font-size: 20px;
   line-height: 24px;
-  font-weight: ${AVENIR.MEDIUM};
+  font-weight: ${SOLEIL.MEDIUM};
   @media (max-width: 768px) {
     display: flex;
     justify-self: flex-end;

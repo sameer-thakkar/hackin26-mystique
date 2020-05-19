@@ -8,7 +8,7 @@ import Button from '../UI/Button';
 import * as labels from '../../constants/localization/labels';
 import LocalisedPrice from '../UI/LPrice';
 import { RichText } from 'prismic-reactjs';
-import { AVENIR, COLORS, GRAPHIK } from '../../constants/ui-constants';
+import { SOLEIL, COLORS } from '../../constants/ui-constants';
 import { shortCodeSerializerWithParentProps } from '../../utils/shortCodes';
 import { MBContext } from '../../contexts/MBContext';
 import { CHEVRON_DOWN } from '../../assets/SvgIcons';
@@ -18,12 +18,12 @@ const StyledTourComparisionTable = styled.div`
   width: auto;
   display: grid;
   line-height: 1.3;
-  font-family: ${GRAPHIK.FONT_STACK};
+  font-family: ${SOLEIL.FONT_STACK};
   .comparision-heading {
     font-size: 24px;
     margin-bottom: 8px;
-    font-weight: ${AVENIR.MEDIUM};
-    font-family: ${AVENIR.FONT_STACK};
+    font-weight: ${SOLEIL.MEDIUM};
+    font-family: ${SOLEIL.FONT_STACK};
     color: ${COLORS.TWO_BLACK};
     line-height: 33px;
   }
@@ -31,14 +31,14 @@ const StyledTourComparisionTable = styled.div`
     padding-bottom: 32px;
     width: 60%;
     font-size: 16px;
-    font-family: ${GRAPHIK.FONT_STACK};
-    font-weight: ${GRAPHIK.REGULAR};
+    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: ${SOLEIL.REGULAR};
     line-height: 20px;
     color: ${COLORS.FOUR_BLACK};
   }
   .tour-title {
-    font-family: ${AVENIR.FONT_STACK};
-    font-weight: ${AVENIR.BLACK};
+    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: ${SOLEIL.SEMIBOLD};
     font-size: 16px;
     color: ${COLORS.TWO_BLACK};
     letter-spacing: 0.0035em;
@@ -105,7 +105,7 @@ const StyledTourComparisionTable = styled.div`
   }
   .old-price {
     font-size: 12px;
-    font-family: ${AVENIR.FONT_STACK};
+    font-family: ${SOLEIL.FONT_STACK};
     color: ${COLORS.GREY_G4};
     line-height: 16px;
     grid-row: 1;
@@ -113,20 +113,20 @@ const StyledTourComparisionTable = styled.div`
   }
   .current-price {
     font-size: 16px;
-    font-family: ${AVENIR.FONT_STACK};
-    font-weight: ${AVENIR.BLACK};
+    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: ${SOLEIL.SEMIBOLD};
     color: ${COLORS.FOUR_BLACK};
     line-height: 20px;
   }
   .flat-price-block .current-price {
-    font-family: ${GRAPHIK.FONT_STACK};
-    font-weight: ${GRAPHIK.SEMIBOLD};
+    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: ${SOLEIL.SEMIBOLD};
     color: ${COLORS.FOUR_BLACK};
   }
 
   .flat-price-block .old-price {
     font-size: 16px;
-    font-family: ${GRAPHIK.FONT_STACK};
+    font-family: ${SOLEIL.FONT_STACK};
     margin-left: 8px;
     color: ${COLORS.FOUR_BLACK};
   }
@@ -174,8 +174,8 @@ const StyledTourComparisionTable = styled.div`
   }
   .block-label {
     font-size: 16px;
-    font-weight: ${AVENIR.BLACK};
-    font-family: ${AVENIR.FONT_STACK};
+    font-weight: ${SOLEIL.SEMIBOLD};
+    font-family: ${SOLEIL.FONT_STACK};
     line-height: 18px;
     letter-spacing: 0.5px;
     color: ${COLORS.GREY_G4};
@@ -192,8 +192,8 @@ const StyledTourComparisionTable = styled.div`
   .block-content {
     font-size: 15px;
     line-height: 20px;
-    font-family: ${GRAPHIK.FONT_STACK};
-    font-weight: ${GRAPHIK.REGULAR};
+    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: ${SOLEIL.REGULAR};
     color: ${COLORS.FOUR_BLACK};
     ${({ designType }) =>
       designType == TOUR_COMPARISION_DESIGN.TYPE_2
@@ -213,8 +213,8 @@ const StyledTourComparisionTable = styled.div`
     text-align: center;
     line-height: 16px;
     font-size: 14px;
-    font-family: ${AVENIR.FONT_STACK};
-    font-weight: ${AVENIR.MEDIUM};
+    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: ${SOLEIL.MEDIUM};
   }
   .vendor-cta a {
     color: ${COLORS.RHAPSODY};
@@ -331,8 +331,8 @@ const StyledTourComparisionTable = styled.div`
         line-height: 12px;
       `}
       color: ${COLORS.GREY_75};
-      font-family: ${GRAPHIK.FONT_STACK};
-      font-weight: ${GRAPHIK.MEDIUM};
+      font-family: ${SOLEIL.FONT_STACK};
+      font-weight: ${SOLEIL.MEDIUM};
     }
     .block-content {
     ${({ designType }) =>
@@ -343,15 +343,15 @@ const StyledTourComparisionTable = styled.div`
     `}
     }
     .comparision-heading {
-      font-family: ${GRAPHIK.FONT_STACK};
-      font-weight: ${GRAPHIK.MEDIUM};
+      font-family: ${SOLEIL.FONT_STACK};
+      font-weight: ${SOLEIL.MEDIUM};
       line-height: 26px;
       margin-bottom: 8px;
     }
     .comparision-description {
       font-size: 16px;
       color: ${COLORS.DAVY_GREY};
-      font-weight: ${GRAPHIK.REGULAR};
+      font-weight: ${SOLEIL.REGULAR};
       padding-bottom: 24px;
       width: 100%;
     }

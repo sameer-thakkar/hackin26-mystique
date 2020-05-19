@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Product from './Product';
-import * as labels from '../constants/localization/labels';
+import * as labels from 'constants/localization/labels';
 import styled from 'styled-components';
-import { COLORS } from '../constants/ui-constants';
-import { csvTgidToArray } from '../utils/helper';
+import { COLORS, SOLEIL } from 'constants/ui-constants';
+import { csvTgidToArray } from 'utils/helper';
 
 const StyledUncategorizedContainer = styled.div`
   margin: 0 auto;
@@ -27,7 +27,7 @@ const ProductContainer = styled.div`
 `;
 
 const StyledTourListHeading = styled.div`
-  font-family: Avenir;
+  font-family: ${SOLEIL.FONT_STACK};
   font-weight: 800;
   font-size: 32px;
   line-height: 44px;
@@ -40,7 +40,7 @@ const StyledTourListHeading = styled.div`
 
 const StyledTourListSubHeading = styled.div`
   margin-top: 8px;
-  font-family: Graphik;
+  font-family: ${SOLEIL.FONT_STACK};
   font-size: 18px;
   line-height: 1.33;
   text-align: left;
