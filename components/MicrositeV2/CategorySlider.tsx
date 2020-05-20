@@ -5,9 +5,8 @@ import Product from './Product';
 import DetailedProductCard from './DetailedProductCard';
 import { scroller } from 'react-scroll';
 import { CHEVRON_LEFT } from '../../assets/SvgIcons';
-import InteractionContext from '../../contexts/Interaction';
-import { DONT_HOIST, DONT_AUTO_SCROLL } from '../../constants';
 import styled from 'styled-components';
+import { SOLEIL } from 'constants/ui-constants';
 
 const StyledCategorySlider = styled.div`
   display: grid;
@@ -65,7 +64,7 @@ const StyledCategorySlider = styled.div`
     line-height: 12px !important;
     color: #24a1b2 !important;
     text-align: left !important;
-    font-family: SOLEIL !important;
+    font-family: ${SOLEIL.FONT_STACK} !important;
   }
   .controls .btn svg {
     stroke-width: 1.5px;
@@ -87,8 +86,20 @@ const StyledCategorySlider = styled.div`
 `;
 
 const CategorySlider = (props) => {
+  const {
+    tgidsArray,
+    carouselOptions,
+    currentLanguage,
+    host,
+    uid,
+    heading = '',
+    description,
+    isFirstTourOpen = false,
+  } = props;
+  let autoScroll = true;
+
   const [tgidClicked, setTgidClicked] = useState(null);
-  const carouselId = props.heading.replace(/\s/g, '-').toLowerCase();
+  const carouselId = heading.replace(/\s/g, '-').toLowerCase();
   const [swiper, updateSwiper] = useState(null);
   const [currentIndex, updateCurrentIndex] = useState(0);
   const goNext = () => {
@@ -127,32 +138,11 @@ const CategorySlider = (props) => {
     );
   };
 
-  useEffect(() => {
-    if (!window) return;
-    if (tgidClicked)
-      scroller.scrollTo(`${carouselId}-${tgidClicked}`, {
-        duration: 750,
-        delay: 100,
-        smooth: 'easeInQuad',
-        offset: 100,
-      });
-  }, [tgidClicked, carouselId]);
-
   const closeDescription = () => {
     setTgidClicked(null);
   };
-  const {
-    tgidsArray,
-    carouselOptions,
-    currentLanguage,
-    host,
-    uid,
-    heading = '',
-    description,
-    isFirstTourOpen = false,
-  } = props;
+
   const { allTours, isMobile } = productsContext;
-  const interactionContext = useContext(InteractionContext);
   let filteredTgids = tgidsArray.filter(
     (tgid, index, arr) =>
       allTours[tgid] &&
@@ -163,16 +153,20 @@ const CategorySlider = (props) => {
   const elementId = heading.trim().replace(/\s/g, '-').toLowerCase();
 
   useEffect(() => {
-    setTimeout(() => {
-      if (isFirstTourOpen && filteredTgids[0])
-        interactionContext.clickTour(
-          filteredTgids[0],
-          DONT_HOIST,
-          elementId,
-          DONT_AUTO_SCROLL
-        );
-    });
-  }, [elementId, filteredTgids, interactionContext, isFirstTourOpen]);
+    if (!window) return;
+    if (isFirstTourOpen && filteredTgids[0]) {
+      autoScroll = false;
+      setTgidClicked(filteredTgids[0]);
+    }
+    if (tgidClicked && autoScroll)
+      scroller.scrollTo(`${carouselId}-${tgidClicked}`, {
+        duration: 750,
+        delay: 100,
+        smooth: 'easeInQuad',
+        offset: 100,
+      });
+    autoScroll = true;
+  }, [tgidClicked, carouselId, isFirstTourOpen, filteredTgids]);
 
   return (
     <StyledCategorySlider id={elementId}>

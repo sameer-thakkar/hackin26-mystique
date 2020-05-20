@@ -112,6 +112,11 @@ class MicrositeV2 extends Component<any, any> {
   render() {
     const { data: CMSContent, host, scorpioData } = this.props;
     const {
+      commonFooter,
+      contentFramework,
+      commonHeader,
+    } = this.props.data.refs;
+    const {
       first_publication_date: datePublished,
       last_publication_date: dateModified,
       lang,
@@ -140,24 +145,33 @@ class MicrositeV2 extends Component<any, any> {
         return [...acc, { value: item.link.url, label: item.link_text }];
       else return acc;
     }, []);
+    const headerLinks = CMSData.header_links.length
+      ? CMSData.header_links
+      : commonHeader?.data?.header_links || [];
+    const overriddenHeaderData = { ...CMSData, ...commonHeader?.data };
     const headerProps = {
-      showGroupBooking: CMSData.enable_group_booking === 'Yes',
-      hasLanguageSelector: CMSData.enable_localization_menu === 'Yes',
-      headerLinks: CMSData.header_links,
-      logoUrl: CMSData.logo.url || CMSData.link_to_logo_file,
-      logoAltText: CMSData.logo.alt || CMSData.logo_alt_text,
-      logoRedirectionURL: CMSData.logo_redirection_url.url || '/',
-      enableBuyTickets: CMSData.enable_buy_tickets_shortcut === 'Yes',
-      enableSearch: CMSData.enable_search == 'Yes',
+      showGroupBooking: overriddenHeaderData.enable_group_booking === 'Yes',
+      hasLanguageSelector:
+        overriddenHeaderData.enable_localization_menu === 'Yes',
+      headerLinks,
+      logoUrl:
+        overriddenHeaderData.logo.url || overriddenHeaderData.link_to_logo_file,
+      logoAltText:
+        overriddenHeaderData.logo.alt || overriddenHeaderData.logo_alt_text,
+      logoRedirectionURL: overriddenHeaderData.logo_redirection_url.url || '/',
+      enableBuyTickets:
+        overriddenHeaderData.enable_buy_tickets_shortcut === 'Yes',
+      enableSearch: overriddenHeaderData.enable_search == 'Yes',
       recommendedTours:
-        (CMSData.search_recommend_csv &&
-          CMSData.search_recommend_csv
+        (overriddenHeaderData.search_recommend_csv &&
+          overriddenHeaderData.search_recommend_csv
             .split(',')
             .map((tgid) => parseInt(tgid))) ||
         [],
-      enableDropdownLinks: CMSData.enable_dropdown == 'Yes',
+      enableDropdownLinks: overriddenHeaderData.enable_dropdown == 'Yes',
       dropdownLinks: dropdownLinksArray,
-      hasPoweredByHeadoutLogo: CMSData.enable_powered_by_headout_logo,
+      hasPoweredByHeadoutLogo:
+        overriddenHeaderData.enable_powered_by_headout_logo,
     };
     // TODO: Add Interaction Field on Primic and Map it to Each Banner
     const heroProps = {
@@ -259,11 +273,6 @@ class MicrositeV2 extends Component<any, any> {
     };
 
     const { favicon, footer_logo_link, footer_logo } = this.props.data.data;
-    const {
-      commonFooter,
-      contentFramework,
-      commonHeader,
-    } = this.props.data.refs;
     const heroSectionSlice = [...this.props.data.data.body4, hightlightSlice];
     const commonFooterProps = commonFooter ? commonFooter.data : null;
     const MBData = {

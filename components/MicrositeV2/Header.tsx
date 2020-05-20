@@ -314,7 +314,7 @@ const Header = (props) => {
             hasLanguageDropdown={hasLanguageDropdown}
             hasHamburger={isMobile && hamburgerIconCheck}
           >
-            {!groupedHeaderSlices && headerLinks ? (
+            {!groupedHeaderSlices.length && headerLinks ? (
               <HeaderLinks
                 headerLinks={headerLinks}
                 isMobile={isMobile}
@@ -322,7 +322,7 @@ const Header = (props) => {
               />
             ) : null}
 
-            {groupedHeaderSlices ? (
+            {groupedHeaderSlices.length ? (
               <MultiLevelNav
                 isActive={navActive}
                 isMobile={isMobile}

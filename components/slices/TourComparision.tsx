@@ -69,7 +69,7 @@ const StyledTourComparisionTable = styled.div`
     background: ${COLORS.WHITE};
     padding-top: 32px;
     padding-bottom: 32px;
-    margin-bottom: -32px;
+    margin-bottom: -32px; /* This allows the Sticky Header to end early. without crossing over the CTA button. */
     position: sticky;
     bottom: 0;
     z-index: 15;
