@@ -81,7 +81,11 @@ const CategorySlider = styled.div`
         height: 80px;
     `;
     } else {
-      return `margin-bottom: 24px;`;
+      return `
+        margin-bottom: 24px;
+        .swiper-slide {
+          width: max-content;
+        }`;
     }
   }}
   @media (max-width: 768px) {
@@ -345,7 +349,7 @@ const Listicle = (props) => {
       listicle_common_title: listicleCommonTitle,
       listicle_common_summary: listicleCommonSummary,
       listicle_categories: listicleCategories,
-      why_book_from_us: whyBookFromUsData,
+      why_book_from_us: whyBookFromUsData = [],
       favicon,
       header_scripts,
       google_site_verification,
@@ -482,7 +486,7 @@ const Listicle = (props) => {
           ) : (
             <CategorySlider stickCategorySlider={stickElements}>
               <Slider
-                sliderOptions={{ slidesPerView: 7, spaceBetween: 24 }}
+                sliderOptions={{ slidesPerView: 'auto', spaceBetween: 24 }}
                 nextButton={CHEVRON_LEFT_CIRCLE}
                 prevButton={CHEVRON_LEFT_CIRCLE}
               >
@@ -533,7 +537,7 @@ const Listicle = (props) => {
             })
           )}
         </Content>
-        {isMobile ? null : (
+        {isMobile || whyBookFromUsData.length === 0 ? null : (
           <WhyBookFromUs
             data={whyBookFromUsData}
             currentLanguage={currentLanguage}
