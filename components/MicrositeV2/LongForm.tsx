@@ -12,7 +12,7 @@ const StyledLongform = styled.div`
   margin-top: 48px;
   display: grid;
   grid-auto-flow: row;
-  grid-row-gap: 64px;
+  grid-row-gap: 72px;
   margin-bottom: 112px;
   ${({ noBorder }) =>
     noBorder &&
@@ -46,9 +46,9 @@ h6 {
   @media (max-width: 768px) {
     border: none;
     padding: 0;
-    grid-row-gap: 48px;
-    margin-top: 56px;
-    margin-bottom: 56px;
+    grid-row-gap: 52px;
+    margin-top: 52px;
+    margin-bottom: 52px;
 
     ${({ noBorder }) =>
       noBorder &&

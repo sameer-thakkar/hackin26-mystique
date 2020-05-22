@@ -285,9 +285,23 @@ const FullImage = styled.div`
 
 const GallerySwiper = styled.div`
   position: relative;
+  ${StyledImage} {
+    display: grid;
+    grid-row-gap: 8px;
+    p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 22px;
+    }
+  }
+  img {
+    border-radius: 4px;
+  }
   @media (max-width: 768px) {
-    img {
-      border-radius: 4px;
+    ${StyledImage} {
+      p {
+        font-size: 14px;
+      }
     }
   }
 `;
@@ -448,6 +462,7 @@ const ImageGallery = (props) => {
                     height={112}
                     alt={caption}
                   />
+                  <RichContent render={image.heading} />
                 </StyledImage>
               );
             })}

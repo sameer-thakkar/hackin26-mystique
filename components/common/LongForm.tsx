@@ -9,7 +9,7 @@ export const StyledLongForm = styled.div`
   line-height: 1.6;
   color: ${COLORS.FOUR_BLACK};
   display: grid;
-  grid-row-gap: 40px;
+  grid-row-gap: 72px;
   h1,
   h2,
   h3,
@@ -68,6 +68,7 @@ export const StyledLongForm = styled.div`
   }
 
   @media (max-width: 768px) {
+    grid-row-gap: 52px;
     h1 {
       font-size: 1.6rem;
     }

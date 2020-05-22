@@ -33,9 +33,9 @@ const ContentWrapper = styled.main`
 
 const StyledContentPage = styled.div`
   display: grid;
-  grid-row-gap: 40px;
-  margin-top: 40px;
-  margin-bottom: 40px;
+  grid-row-gap: 72px;
+  margin-top: 72px;
+  margin-bottom: 72px;
 
   .slice-block h2 {
     font-size: 30px;
@@ -131,7 +131,7 @@ const StyledContentPage = styled.div`
   }
 
   @media (max-width: 768px) {
-    grid-row-gap: 20px;
+    grid-row-gap: 52px;
     .slice-block h2 {
       font-size: 20px;
       margin: 40px 0;
