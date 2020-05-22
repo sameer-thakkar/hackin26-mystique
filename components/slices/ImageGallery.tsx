@@ -1,20 +1,19 @@
 import { RichText } from 'prismic-reactjs';
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { COLORS, SOLEIL } from '../../constants/ui-constants';
-import { CHEVRON_LEFT_CIRCLE, CLOSE_WHITE } from '../../assets/SvgIcons';
-import { stringIdfy } from '../../utils/helper';
-import Swiper from '../Swiper';
-import Image from '../UI/Image';
+import { COLORS, SOLEIL } from 'constants/ui-constants';
+import { CHEVRON_LEFT_CIRCLE, CLOSE_WHITE } from 'assets/SvgIcons';
+import { stringIdfy } from 'utils/helper';
+import Swiper from 'components/Swiper';
+import Image from 'UI/Image';
+import RichContent from 'UI/RichContent';
 
 const StyledImageGallery = styled.div`
   display: grid;
-  grid-row-gap: 32px;
-  width: 100vw;
+  grid-row-gap: 22px;
   overflow: hidden;
-  .relative-wrapper {
-    position: relative;
-  }
+  padding: 0 16px;
+  margin: 0 -16px;
   .heading {
     font-size: 24px;
     font-family: ${SOLEIL.FONT_STACK};
@@ -22,49 +21,24 @@ const StyledImageGallery = styled.div`
     max-width: 1200px;
     width: 100%;
     line-height: 26px;
-    margin: auto;
   }
   .swiper {
     display: grid;
     margin: auto;
   }
-  .swiper-wrapper,
   .swiper-container {
     position: unset;
+    overflow: hidden;
+  }
+  .swiper-wrapper {
+    position: unset;
     overflow: unset;
-  }
-  .swiper-container {
-    max-width: 1200px;
-  }
-  .swiper-container {
-    &:before,
-    &:after {
-      display: block;
-      content: '';
-      position: absolute;
-      left: -50px;
-      height: 100%;
-      background: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0) -6.82%,
-        rgba(255, 255, 255, 0.92) 42.34%
-      );
-      z-index: 2;
-      width: 137px;
-      transform: rotate(180deg);
-      top: 0;
-    }
-    &:after {
-      transform: unset;
-      left: unset;
-      right: -50px;
-    }
   }
   .btn {
     z-index: 3;
     position: absolute;
     top: 50%;
-    left: 24px;
+    left: -16px;
     display: flex;
     cursor: pointer;
     transform: translateY(-50%);
@@ -75,7 +49,7 @@ const StyledImageGallery = styled.div`
   }
   .btn-right {
     left: unset;
-    right: 24px;
+    right: -16px;
     transform: translateY(-50%) rotate(180deg);
   }
   .btn.swiper-button-disabled {
@@ -84,8 +58,10 @@ const StyledImageGallery = styled.div`
 
   @media (max-width: 768px) {
     grid-row-gap: 16px;
+    padding: 0;
     .swiper-container {
       max-width: calc(100vw - 32px);
+      overflow: visible;
       &:before,
       &:after {
         display: none;
@@ -101,16 +77,55 @@ const StyledImageGallery = styled.div`
   }
 `;
 
+const Heading = styled.div`
+  font-family: ${SOLEIL.FONT_STACK};
+  font-style: normal;
+  font-weight: ${SOLEIL.SEMIBOLD};
+  font-size: 24px;
+  line-height: 30px;
+  p {
+    color: ${COLORS.WHITE};
+    margin: 0;
+  }
+  @media (max-width: 768px) {
+    font-size: 20px;
+    line-height: 25px;
+  }
+`;
+
+const Description = styled.div`
+  font-family: ${SOLEIL.FONT_STACK};
+  p {
+    font-family: Soleil;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+    color: ${COLORS.WHITE};
+    margin: 0;
+  }
+  @media (max-width: 768px) {
+    font-size: 14px;
+    line-height: 20px;
+  }
+`;
+
+const Content = styled.div`
+  font-family: ${SOLEIL.FONT_STACK};
+  display: grid;
+  grid-row-gap: 16px;
+`;
+
 const StyledImage = styled.div`
-  width: 180px !important;
-  cursor: zoom-in;
+  width: auto;
+  cursor: pointer;
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
   @media (max-width: 768px) {
-    width: 164px;
+    width: auto;
   }
 `;
 
@@ -146,7 +161,6 @@ const Lightbox = styled.div`
   .close {
     justify-self: right;
     display: flex;
-    margin-bottom: 22px;
     cursor: pointer;
     svg {
       height: 22px;
@@ -195,6 +209,13 @@ const Lightbox = styled.div`
     }
     .swiper-container {
       max-width: 100vw;
+      ${({ isZoomed }) =>
+        !isZoomed
+          ? `
+      `
+          : `
+      overflow: unset;
+      `}
     }
   }
 `;
@@ -214,20 +235,60 @@ const LightboxImage = styled.div`
   }
   @media (max-width: 768px) {
     background: unset;
+    &.swiper-slide-active.swiper-slide-zoomed {
+      width: auto !important;
+    }
     img {
       padding: 0;
       width: 100%;
       height: 100%;
     }
+    ${Content} {
+      padding: 20px 16px;z
+    }
   }
 `;
 
-const Caption = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
-  padding: 8px;
-  padding-bottom: 16px;
+const FullImage = styled.div`
+  display: grid;
+  img {
+    grid-row: 1;
+    grid-column: 1;
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+  }
+  &:after {
+    content: '';
+    background: linear-gradient(
+      180deg,
+      rgba(61, 56, 56, 0) 0%,
+      rgba(0, 0, 0, 0.64) 57.29%
+    );
+    height: 222px;
+    grid-row: 1;
+    grid-column: 1;
+    align-self: end;
+  }
+  ${Content} {
+    grid-row: 1;
+    grid-column: 1;
+    align-self: end;
+    z-index: 1;
+    line-height: 30px;
+    font-size: 24px;
+    padding: 40px;
+    font-weight: ${SOLEIL.SEMIBOLD};
+    color: #fff;
+  }
+`;
+
+const GallerySwiper = styled.div`
+  position: relative;
   @media (max-width: 768px) {
-    color: ${COLORS.WHITE};
+    img {
+      border-radius: 4px;
+    }
   }
 `;
 
@@ -238,18 +299,16 @@ const Caption = styled.div`
  * ### Non-repeatable zone
  * - Heading
  *  - Sets the Heading for the Gallery Section
- * - Mobile Layout
- *  - Currently Gallery Supports two layouts on Mobile (grid & scroll)
- *    - Grid: Images will be shown in a grid of 2 columns upto 3 rows (i.e 5 images, 6th block will be a pagination to the lightbox popup)
- *    - Scrollable: Images will be horizontally scrollable.
  *
  * ### Repeatable zone
  * - Upload Image
  *  - If you have the image locally, select this option to set the image
  * - Link to Image
  *  - If you have already uploaded the image elsewhere, provide link to the image here.
- * - Image caption
- *  - You can provide some caption to the image, will be used as alt text & will be shown below the image in the Lightbox mode.
+ * - Heading
+ *  - You can provide some caption to the image, will also be used as alt text & will be shown below the image in the Lightbox mode.
+ * - Content
+ *  - RichText field for image description.
  * - Image Credits (Attribution)
  *  - Allows you to credit the owner of the image.
  */
@@ -260,6 +319,7 @@ const ImageGallery = (props) => {
   const [initialSlide, setInitialSlide] = useState(0);
   const [lightboxSwiper, getSwiper] = useState(null);
   const [lightboxIndex, setCurrentLightboxIndex] = useState(0);
+  const [isZoomed, setZoomed] = useState(false);
   const toggleLightbox = () => setLightbox(!ligtboxOpen);
 
   const updateIndex = useCallback(
@@ -267,21 +327,31 @@ const ImageGallery = (props) => {
     [lightboxSwiper]
   );
 
+  const updateZoom = useCallback(
+    (scale) => {
+      setZoomed(scale != 1);
+    },
+    [lightboxSwiper]
+  );
+
   useEffect(() => {
     if (lightboxSwiper !== null) {
       lightboxSwiper.on('slideChange', updateIndex);
+      lightboxSwiper.on('zoomChange', updateZoom);
     }
 
     return () => {
       if (lightboxSwiper !== null) {
         lightboxSwiper.off('slideChange', updateIndex);
+        lightboxSwiper.off('zoomChange', updateZoom);
       }
     };
   }, [lightboxSwiper, updateIndex, getSwiper]);
 
   const swiperOpts = {
-    slidesPerView: 'auto',
-    spaceBetween: isMobile ? 14 : 24,
+    slidesPerView: isMobile ? 2.1 : 4,
+    slidesPerGroup: isMobile ? 1 : 3,
+    spaceBetween: isMobile ? 8 : 24,
     freeMode: isMobile ? true : false,
     shouldSwiperUpdate: true,
     freeModeMomentum: 2,
@@ -304,34 +374,68 @@ const ImageGallery = (props) => {
       );
     },
   };
+
   const swiperLightBoxOpts = {
     ...swiperOpts,
     init: true,
     slidesPerView: 1,
-    rebuildOnUpdate: false,
-    shouldSwiperUpdate: false,
+    slidesPerGroup: 1,
+    noSwiping: isZoomed,
+    shouldSwiperUpdate: true,
     spaceBetween: 0,
     autoHeight: true,
     initialSlide,
     getSwiper,
     freeMode: false,
     freeModeMomentum: 1,
+    zoom: {
+      maxRatio: 2,
+      toggle: true,
+      minRatio: 0.5,
+    },
   };
+
   const openInLightbox = (index) => {
     setInitialSlide(index);
-    toggleLightbox();
+    if (isMobile) toggleLightbox();
   };
+
+  const activeImage = images[initialSlide];
+  const fullImageHeading = RichText.asText(activeImage.heading);
 
   return (
     <StyledImageGallery>
       <div className="heading" id={stringIdfy(heading)}>
         {heading}
       </div>
-      <div className="relative-wrapper">
+      {!isMobile ? (
+        <FullImage>
+          <Image
+            url={
+              images[initialSlide].uploaded_image?.url ||
+              images[initialSlide].linked_image
+            }
+            dontLazyLoad={true}
+            aspectRatio={'16:10'}
+            imageId={`image-${initialSlide}`}
+            height={'400'}
+            alt={fullImageHeading}
+          />
+          <Content>
+            <Heading>
+              <RichContent render={activeImage.heading} />{' '}
+            </Heading>
+            <Description>
+              <RichContent render={activeImage.content} />
+            </Description>
+          </Content>
+        </FullImage>
+      ) : null}
+      <GallerySwiper>
         <div className="swiper">
           <Swiper {...swiperOpts}>
             {images.map((image, index) => {
-              const caption = RichText.asText(image.image_caption);
+              const caption = RichText.asText(image.heading);
               return (
                 <StyledImage
                   key={index}
@@ -349,9 +453,9 @@ const ImageGallery = (props) => {
             })}
           </Swiper>
         </div>
-      </div>
-      {ligtboxOpen ? (
-        <Lightbox>
+      </GallerySwiper>
+      {ligtboxOpen && isMobile ? (
+        <Lightbox isZoomed={lightboxSwiper?.zoom?.enabled}>
           <div
             className="lightbox-mask"
             onClick={toggleLightbox}
@@ -376,15 +480,25 @@ const ImageGallery = (props) => {
             </div>
             <Swiper {...swiperLightBoxOpts}>
               {images.map((image, index) => {
-                const caption = RichText.asText(image.image_caption);
+                const caption = RichText.asText(image.heading);
                 return (
                   <LightboxImage key={index} title={caption}>
-                    <Image
-                      url={image.uploaded_image?.url || image.linked_image}
-                      dontLazyLoad={true}
-                      alt={caption}
-                    />
-                    <Caption>{caption}</Caption>
+                    <div className={'swiper-zoom-container'}>
+                      <Image
+                        url={image.uploaded_image?.url || image.linked_image}
+                        dontLazyLoad={true}
+                        className={`swiper-zoom-target`}
+                        alt={caption}
+                      />
+                    </div>
+                    <Content>
+                      <Heading>
+                        <RichContent render={image.heading} />
+                      </Heading>
+                      <Description>
+                        <RichContent render={image.content} />
+                      </Description>
+                    </Content>
                   </LightboxImage>
                 );
               })}
