@@ -119,11 +119,7 @@ const SliderAccordion = (props) => {
   const SliderComponent = (
     <SliderWrapper>
       {activeAccordionImages.length > 1 ? (
-        <Slider
-          sliderOptions={sliderOptions}
-          parentOverflowHidden={true}
-          id={Math.random()}
-        >
+        <Slider sliderOptions={sliderOptions} parentOverflowHidden>
           {activeAccordionImages.map((image, index) => {
             return (
               <Image

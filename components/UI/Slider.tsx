@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import Swiper from '../Swiper';
-import { COLORS } from '../../constants/ui-constants';
+import { COLORS } from 'constants/ui-constants';
 
 const StyledSlider = styled.div`
   display: flex;
@@ -84,18 +84,31 @@ const Controls = styled.div`
   }
 `;
 
-const Slider = (props) => {
-  const {
-    children,
-    sliderOptions,
-    nextButton,
-    prevButton,
-    parentOverflowHidden = false,
-  } = props;
-
+const Slider: React.FC<{
+  children: React.ReactChild[];
+  sliderOptions?: any;
+  nextButton?: React.ReactElement;
+  prevButton?: React.ReactElement;
+  parentOverflowHidden?: boolean;
+  paginationClass?: string;
+}> = ({
+  children,
+  sliderOptions,
+  nextButton,
+  prevButton,
+  parentOverflowHidden = false,
+  paginationClass,
+}) => {
   /* Swiper configuration for using external controls starts here */
   const [swiper, updateSwiper] = useState(null);
-  const [_currentIndex, updateCurrentIndex] = useState(0);
+  const [currentIndex, updateCurrentIndex] = useState(0);
+
+  const goToSlide = (index) => {
+    if (swiper !== null) {
+      swiper.slideTo(index);
+    }
+  };
+
   const goNext = () => {
     if (swiper !== null) {
       swiper.slideNext();
@@ -159,6 +172,30 @@ const Slider = (props) => {
             </div>
           ) : null}
         </Controls>
+      ) : null}
+      {paginationClass ? (
+        <div
+          className={`${paginationClass} slider-pagination swiper-pagination-clickable swiper-pagination-bullets`}
+        >
+          {children.map((item, index) => {
+            return (
+              <span
+                key={index}
+                className={`slider-bullet ${
+                  index === currentIndex
+                    ? 'swiper-pagination-bullet-active'
+                    : ''
+                }`}
+                tabIndex={0}
+                role="button"
+                onClick={() => {
+                  goToSlide(index);
+                }}
+                aria-label={`Go to slide ${index}`}
+              />
+            );
+          })}
+        </div>
       ) : null}
     </StyledSlider>
   );

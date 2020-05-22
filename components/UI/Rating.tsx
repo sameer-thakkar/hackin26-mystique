@@ -25,7 +25,12 @@ const Rating = ({ value, starSize = '15px', ...props }) => {
       stars.push(star);
     }
     return stars.map((val, index) => (
-      <Star fillValue={val} key={index} starSize={starSize} />
+      <Star
+        fillColor={props.fillColor}
+        fillValue={val}
+        key={index}
+        starSize={starSize}
+      />
     ));
   }
   return <StyledRating {...props}>{getStars()}</StyledRating>;

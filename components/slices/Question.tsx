@@ -33,7 +33,6 @@ const Question = (props) => {
         {isActiveItem ? (
           <div className={`slider-wrap `}>
             <Slider
-              images={normalizedImages}
               sliderOptions={{
                 direction: 'horizontal',
                 speed: 650,

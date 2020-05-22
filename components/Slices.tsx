@@ -45,6 +45,7 @@ const BlogFeed = dynamic(() => import('./slices/BlogFeed'));
 const AccordionGroup = dynamic(() => import('./slices/AccordionGroup'));
 const ListicleSection = dynamic(() => import('./slices/ListicleSection'));
 const Listicle = dynamic(() => import('./slices/Listicle'));
+const Reviews = dynamic(() => import('./slices/Reviews'));
 
 const sliceHandler = (slice, props: any = {}) => {
   switch (slice.slice_type) {
@@ -437,6 +438,14 @@ const sliceHandler = (slice, props: any = {}) => {
     case 'listicle':
       const { type, index } = props;
       return <Listicle key={index} type={type} index={index} data={slice} />;
+    case 'reviews':
+      return (
+        <Reviews
+          title={slice.primary.title}
+          type={slice.primary.type}
+          reviews={slice.items}
+        />
+      );
     default:
     // ToDo: Add to Error Logs (Slice)
   }

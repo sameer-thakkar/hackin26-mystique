@@ -4,6 +4,7 @@ html,
 body {
   margin: 0;
   padding: 0;
+  font-family: 'soleil', sans-serif;
 }
 a {
   text-decoration: none;
@@ -45,7 +46,7 @@ div {
 
   .slice-wrapper.slice-block {
     padding: 0 16px;
-    width: calc(100% - 32px);
+    width: calc(100vw - 32px);
   }
 }
 
