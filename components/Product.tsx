@@ -129,7 +129,7 @@ const PriceBlock = styled.div`
       line-height: 12px;
     }
     .tour-price {
-      font-size: 18px;
+      font-size: 20px;
       line-height: 24px;
     }
   }

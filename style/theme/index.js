@@ -7,6 +7,6 @@ export default {
     borderRadius: '4px',
     fontSize: '16px',
     fontFamily: SOLEIL.FONT_STACK,
-    fontWeight: SOLEIL.SEMIBOLD,
+    fontWeight: SOLEIL.BOLD,
   },
 };

@@ -47,7 +47,7 @@ export const StyledLongForm = styled.div`
   h4 > *,
   h5 > *,
   h6 > * {
-    font-weight: 500;
+    font-weight: ${SOLEIL.SEMIBOLD};
     color: ${COLORS.FOUR_BLACK};
   }
   p {

@@ -10,6 +10,7 @@ a {
   text-decoration: none;
   color: #7b68db;
 }
+
 * {
   outline: none;
 }
@@ -22,6 +23,27 @@ div {
   color: #444;
 }
 
+h1 > strong,
+h2 > strong,
+h3 > strong,
+h4 > strong,
+h5 > strong,
+h6 > strong {
+  font-weight: 600;
+  color: #444444;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  color: #444444;
+}
+
+/* Some global css which which shouldn't exist */
 .content-page-container {
   max-width: 1190px;
   margin: auto;
@@ -47,6 +69,34 @@ div {
   .slice-wrapper.slice-block {
     padding: 0 16px;
     width: calc(100vw - 32px);
+  }
+}
+
+/* Removes grid-gap for anchor slices. */
+.slice-wrapper.anchor_point + .slice-wrapper {
+  margin-top: -60px;
+}
+
+.slice-wrapper.unspace + .slice-wrapper {
+  margin-top: -72px;
+}
+
+.slice-wrapper + .slice-wrapper.unspace + .slice-wrapper {
+  margin-top: -144px;
+}
+
+@media (min-width: 768px) and (max-width: 1200px) {
+  .main-wrapper,
+  .slice-wrapper {
+    padding: 0;
+    width: 100%;
+  }
+  .slice-wrapper.unspace + .slice-wrapper {
+    margin-top: -52px;
+  }
+
+  .slice-wrapper + .slice-wrapper.unspace + .slice-wrapper {
+    margin-top: -104px;
   }
 }
 
@@ -83,54 +133,5 @@ span.swiper-pagination-bullet-active {
 @media (max-width: 768px) {
   .swiper-wrapper {
     grid-template-columns: 1fr;
-  }
-}
-
-h1 > strong,
-h2 > strong,
-h3 > strong,
-h4 > strong,
-h5 > strong,
-h6 > strong {
-  font-weight: 500;
-  color: #444444;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: soleil, Arial, Helvetica, 'sans-serif';
-  color: #444444;
-  font-weight: 500;
-}
-
-/* removes grid-gap for anchor slices. */
-.slice-wrapper.anchor_point + .slice-wrapper {
-  margin-top: -60px;
-}
-
-.slice-wrapper.unspace + .slice-wrapper {
-  margin-top: -72px;
-}
-
-.slice-wrapper + .slice-wrapper.unspace + .slice-wrapper {
-  margin-top: -144px;
-}
-
-@media (min-width: 768px) and (max-width: 1200px) {
-  .main-wrapper,
-  .slice-wrapper {
-    padding: 0;
-    width: 100%;
-  }
-  .slice-wrapper.unspace + .slice-wrapper {
-    margin-top: -52px;
-  }
-
-  .slice-wrapper + .slice-wrapper.unspace + .slice-wrapper {
-    margin-top: -104px;
   }
 }
