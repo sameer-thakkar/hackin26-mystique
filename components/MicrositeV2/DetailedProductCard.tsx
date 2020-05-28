@@ -369,6 +369,10 @@ const DetailedProductCard = (props) => {
           margin: 0;
         }
 
+        .tour-description svg {
+          margin-top: 8px;
+        }
+
         .description-content ul {
           padding-left: 1em;
         }

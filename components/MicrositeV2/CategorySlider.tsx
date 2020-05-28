@@ -96,12 +96,24 @@ const CategorySlider = (props) => {
     description,
     isFirstTourOpen = false,
   } = props;
-  let autoScroll = true;
+  let autoScroll = !isFirstTourOpen;
 
-  const [tgidClicked, setTgidClicked] = useState(null);
   const carouselId = heading.replace(/\s/g, '-').toLowerCase();
   const [swiper, updateSwiper] = useState(null);
   const [currentIndex, updateCurrentIndex] = useState(0);
+  const productsContext = useContext(ProductsContext);
+  const { allTours, isMobile } = productsContext;
+
+  let filteredTgids = tgidsArray.filter(
+    (tgid, index, arr) =>
+      allTours[tgid] &&
+      allTours[tgid].available &&
+      arr.slice(0, index).indexOf(tgid) == -1
+  );
+  const [tgidClicked, setTgidClicked] = useState(
+    isFirstTourOpen ? filteredTgids[0] : null
+  );
+
   const goNext = () => {
     if (swiper !== null) {
       swiper.slideNext();
@@ -130,8 +142,6 @@ const CategorySlider = (props) => {
     };
   }, [swiper, updateIndex]);
 
-  const productsContext = useContext(ProductsContext);
-
   const handleProductClicked = (productTgid) => {
     setTgidClicked((prevTgid) =>
       prevTgid != productTgid ? productTgid : null
@@ -142,22 +152,11 @@ const CategorySlider = (props) => {
     setTgidClicked(null);
   };
 
-  const { allTours, isMobile } = productsContext;
-  let filteredTgids = tgidsArray.filter(
-    (tgid, index, arr) =>
-      allTours[tgid] &&
-      allTours[tgid].available &&
-      arr.slice(0, index).indexOf(tgid) == -1
-  );
   const cardPosition = filteredTgids.indexOf(tgidClicked) + 1;
   const elementId = heading.trim().replace(/\s/g, '-').toLowerCase();
 
   useEffect(() => {
     if (!window) return;
-    if (isFirstTourOpen && filteredTgids[0]) {
-      autoScroll = false;
-      setTgidClicked(filteredTgids[0]);
-    }
     if (tgidClicked && autoScroll)
       scroller.scrollTo(`${carouselId}-${tgidClicked}`, {
         duration: 750,
@@ -166,7 +165,7 @@ const CategorySlider = (props) => {
         offset: 100,
       });
     autoScroll = true;
-  }, [tgidClicked, carouselId, isFirstTourOpen, filteredTgids]);
+  }, [tgidClicked]);
 
   return (
     <StyledCategorySlider id={elementId}>
