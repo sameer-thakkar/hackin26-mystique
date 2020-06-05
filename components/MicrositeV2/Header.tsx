@@ -99,7 +99,7 @@ const HeaderRight = styled.div`
     grid-template-columns: ${({
       hasLanguageDropdown: col1,
       hasHamburger: col2,
-    }) => `repeat(${Number(col1) + Number(col2) + 1}, auto)`};
+    }) => `repeat(${Number(col1) + Number(col2)}, auto)`};
     align-items: center;
     .buy-tickets {
       display: none;
@@ -133,7 +133,7 @@ const HeaderLeft = styled.div`
     img {
       height: 36px;
       margin: 0;
-      max-width: unset;
+      max-width: 160px;
       width: auto;
     }
   }

@@ -76,11 +76,12 @@ const StyledLanguageContainer = styled.div`
 
 const StyledMobileSelect = styled.div`
   position: relative;
-  margin: 20px 15px 32px 0px;
+  margin: 0;
   span {
     position: absolute;
     top: 0;
     left: 0;
+    transform: translate(-50%, -50%);
     text-transform: uppercase;
     font-family: ${SOLEIL.FONT_STACK};
     font-size: 14px;

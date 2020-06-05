@@ -1,13 +1,286 @@
 import React, { useContext } from 'react';
-import Image from '../UI/Image';
+import Image from 'UI/Image';
+import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
-import { CLOSE_WHITE } from '../../assets/SvgIcons';
-import { SOLEIL, COLORS } from '../../constants/ui-constants';
+import { CLOSE_WHITE } from 'assets/SvgIcons';
+import { SOLEIL, COLORS } from 'constants/ui-constants';
 import {
   shortCodeSerializerWithParentProps,
   shortCodeSerializer,
-} from '../../utils/shortCodes';
-import { MBContext } from '../../contexts/MBContext';
+} from 'utils/shortCodes';
+import { MBContext } from 'contexts/MBContext';
+
+const DetailedDescriptionCard = styled.div`
+  grid-column: 1 / 5;
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  grid-column-gap: 24px;
+  border: 1px solid #757575;
+  color: ${COLORS.FOUR_BLACK};
+  border-left: none;
+  border-right: none;
+  position: relative;
+  .v2-desc-title {
+    font-size: 24px;
+    line-height: 1.37;
+    color: ${COLORS.TWO_BLACK};
+    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: ${SOLEIL.SEMIBOLD};
+  }
+  .product-v2-description-left {
+    padding: 24px 0;
+  }
+  .product-v2-description-left,
+  .product-v2-description-right {
+    display: grid;
+    grid-gap: 24px;
+  }
+  .product-v2-description-right {
+    z-index: 1;
+    display: flex;
+  }
+  .v2-desc-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 24px;
+    grid-auto-flow: row;
+    grid-auto-rows: max-content;
+  }
+  .v2-desc-blocks .left {
+    grid-column: 1;
+  }
+  .v2-desc-blocks .right {
+    grid-column: 2;
+  }
+  .description-label {
+    font-size: 16px;
+    line-height: 1.4;
+    color: ${COLORS.TWO_BLACK};
+    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: ${SOLEIL.SEMIBOLD};
+  }
+  .full-width-section {
+    display: grid;
+    grid-row-gap: 8px;
+  }
+  .v2-descriptors {
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    font-family: ${SOLEIL.FONT_STACK};
+    grid-gap: 12px;
+    justify-content: left;
+    height: max-content;
+  }
+  .v2-descriptor {
+    background: ${COLORS.GREY_FO};
+    border-radius: 2px;
+    font-size: 12px;
+    padding: 8px 12px;
+    color: ${COLORS.TWO_BLACK};
+    font-weight: 400;
+    line-height: 1;
+    text-transform: capitalize;
+  }
+  .tour-description {
+    font-family: ${SOLEIL.FONT_STACK};
+    margin-top: 4px;
+  }
+
+  .description-content {
+    font-size: 16px;
+    line-height: 1.37;
+    color: ${COLORS.FOUR_BLACK};
+    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: ${SOLEIL.REGULAR};
+  }
+
+  .desc-cta-price {
+    display: grid;
+    align-items: center;
+    grid-template-columns: auto auto;
+    align-self: end;
+    grid-column-gap: 30px;
+  }
+
+  .v2-desc-right,
+  .v2-desc-left {
+    display: grid;
+    grid-gap: 24px;
+    align-items: start;
+  }
+
+  .v2-desc-left {
+    grid-auto-flow: row;
+    grid-auto-rows: max-content;
+  }
+  .v2-desc-right {
+    grid-template-rows:
+      repeat(${({ rightBlocksCount }) => rightBlocksCount}, max-content)
+      auto;
+  }
+
+  .v2-desc-left .full-width {
+    grid-column: 1 / 3;
+  }
+
+  .desc-price {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+
+  .desc-final-price,
+  .from-text {
+    font-family: ${SOLEIL.FONT_STACK};
+    font-size: 20px;
+    line-height: 20px;
+    color: ${COLORS.TWO_BLACK};
+    font-weight: ${SOLEIL.SEMIBOLD};
+  }
+  .price-wrapper {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-column-gap: 8px;
+    align-items: end;
+  }
+
+  .from-text {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    line-height: 18px;
+  }
+
+  .desc-scratch-price {
+    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: ${SOLEIL.REGULAR};
+    font-size: 14px;
+    line-height: 20px;
+    text-decoration-line: line-through;
+    color: ${COLORS.FOUR_BLACK};
+  }
+
+  .desc-book-now-cta {
+    background: #ec1943;
+    border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 180px;
+    height: 48px;
+  }
+
+  .desc-book-now-text {
+    font-family: SOLEIL;
+    font-size: 16px;
+    line-height: 16px;
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  .close-button {
+    position: absolute;
+    top: 0;
+    background-color: #000;
+    right: 0;
+    padding: 16px;
+    cursor: pointer;
+    display: flex;
+  }
+  .close-button img {
+    height: 11px;
+    width: 11px;
+  }
+  .indicator-triangle::after,
+  .indicator-triangle::before {
+    border-width: 0;
+    transition: all 0.5s ease;
+  }
+  .indicator-triangle {
+    display: grid;
+  }
+  .indicator-triangle::after,
+  .indicator-triangle::before {
+    border-color: transparent transparent #75757596 transparent;
+    border-style: solid;
+    border-width: 13px;
+    content: '';
+    grid-row: 1;
+    grid-column: 1;
+    align-self: end;
+    justify-self: center;
+  }
+  .indicator-triangle::after {
+    border-color: transparent transparent #fff transparent;
+    border-width: 12px;
+    transform: translateY(2px);
+  }
+  .indicator-triangle {
+    position: absolute;
+    transform: translateY(-100%) translateX(-50%);
+    top: 0;
+    z-index: 0;
+    left: ${({ cardPosition }) => 25 * cardPosition - 12.5}%;
+  }
+  .product-v2-description-right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .description-content p {
+    margin: 0;
+  }
+  .tour-description p {
+    margin: 0;
+  }
+  .description-content li,
+  .description-content p {
+    line-height: 1.37;
+  }
+
+  .tour-description svg {
+    margin-top: 8px;
+  }
+
+  .description-content ul {
+    padding-left: 1em;
+  }
+  .description-content p {
+    line-height: 1.4;
+  }
+
+  .product-v2-description-right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .description-content p {
+    margin: 0;
+  }
+  .tour-description p {
+    margin: 0;
+  }
+
+  .left,
+  .right {
+    .description-content {
+      li,
+      p {
+        line-height: 1.37;
+      }
+      svg {
+        margin-top: 8px;
+      }
+    }
+  }
+
+  .description-content ul {
+    padding-left: 1em;
+  }
+  .description-content p {
+    line-height: 1.4;
+  }
+`;
 
 const DetailedProductCard = (props) => {
   const closeDescriptionCard = () => {
@@ -23,7 +296,7 @@ const DetailedProductCard = (props) => {
     .filter((d) => d.length)
     .map((d) => d.trim());
   return (
-    <div className="product-v2-description">
+    <DetailedDescriptionCard {...{ cardPosition, rightBlocksCount }}>
       <div className="indicator-triangle"></div>
       <div className="product-v2-description-left">
         <div className="full-width-section">
@@ -142,245 +415,7 @@ const DetailedProductCard = (props) => {
           {CLOSE_WHITE}
         </div>
       </div>
-      <style jsx>{`
-        .product-v2-description {
-          grid-column: 1 / 5;
-          display: grid;
-          grid-template-columns: 1fr 0.9fr;
-          grid-column-gap: 24px;
-          border: 1px solid #757575;
-          color: ${COLORS.FOUR_BLACK};
-          border-left: none;
-          border-right: none;
-          position: relative;
-        }
-        .v2-desc-title {
-          font-size: 24px;
-          line-height: 1.37;
-          color: ${COLORS.TWO_BLACK};
-          font-family: ${SOLEIL.FONT_STACK};
-          font-weight: ${SOLEIL.SEMIBOLD};
-        }
-        .product-v2-description-left {
-          padding: 24px 0;
-        }
-        .product-v2-description-left,
-        .product-v2-description-right {
-          display: grid;
-          grid-gap: 24px;
-        }
-        .product-v2-description-right{
-          z-index: 1;
-          display: flex;
-        }
-        .v2-desc-columns {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          grid-gap: 24px;
-          grid-auto-flow: row;
-          grid-auto-rows: max-content;
-        }
-        .v2-desc-blocks .left{
-          grid-column: 1;
-        }
-        .v2-desc-blocks .right{
-          grid-column: 2;
-        }
-        .description-label {
-          font-size: 16px;
-          line-height: 1.4;
-          color: ${COLORS.TWO_BLACK};
-          font-family: ${SOLEIL.FONT_STACK};
-          font-weight: ${SOLEIL.SEMIBOLD};
-        }
-        .full-width-section{
-          display: grid;
-          grid-row-gap: 8px;
-        }
-        .v2-descriptors{
-          display: grid;
-          grid-template-columns: repeat(5,auto);
-          font-family: ${SOLEIL.FONT_STACK};
-          grid-gap: 12px;
-          justify-content: left;
-          height: max-content;
-        }
-        .v2-descriptor{
-          background: ${COLORS.GREY_FO};
-          border-radius: 2px;
-          font-size: 12px;
-          padding: 8px 12px;
-          color: ${COLORS.TWO_BLACK};
-          font-weight: 400;
-          line-height: 1;
-          text-transform: capitalize;
-        }
-        .tour-description{
-          font-family: ${SOLEIL.FONT_STACK};
-          margin-top: 4px;
-        }
-
-        .description-content {
-          font-size: 16px;
-          line-height: 1.37;
-          color: ${COLORS.FOUR_BLACK};
-          font-family: ${SOLEIL.FONT_STACK};
-          font-weight: ${SOLEIL.REGULAR};
-        }
-
-        .desc-cta-price {
-          display: grid;
-          align-items: center;
-          grid-template-columns: auto auto;
-          align-self: end;
-          grid-column-gap: 30px;
-        }
-
-        .v2-desc-right,
-        .v2-desc-left {
-          display: grid;
-          grid-gap: 24px;
-          align-items: start;
-        }
-
-        .v2-desc-left {
-          grid-auto-flow: row;
-          grid-auto-rows: max-content;
-        }
-        .v2-desc-right {
-          grid-template-rows: repeat(${rightBlocksCount}, max-content) auto;
-        }
-
-        .v2-desc-left .full-width{
-          grid-column: 1 / 3;
-        }
-        
-
-        .desc-price {
-          display: flex;
-          flex-direction: column;
-          text-align: left;
-        }
-
-        .desc-final-price, .from-text {
-          font-family: ${SOLEIL.FONT_STACK};
-          font-size: 20px;
-          line-height: 20px;
-          color: ${COLORS.TWO_BLACK};
-          font-weight: ${SOLEIL.SEMIBOLD};
-        }
-        .price-wrapper{
-          display: grid;
-          grid-template-columns: auto auto;
-          grid-column-gap: 8px;
-          align-items: end;
-        }
-
-        .from-text{
-          font-size: 14px;
-          font-weight: 500;
-          margin-bottom: 4px;
-          line-height: 18px;
-        }
-
-        .desc-scratch-price {
-          font-family: ${SOLEIL.FONT_STACK};
-          font-weight: ${SOLEIL.REGULAR};
-          font-size: 14px;
-          line-height: 20px;
-          text-decoration-line: line-through;
-          color: ${COLORS.FOUR_BLACK};
-        }
-
-        .desc-book-now-cta {
-          background: #ec1943;
-          border-radius: 2px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 180px;
-          height: 48px;
-        }
-
-        .desc-book-now-text {
-          font-family: SOLEIL;
-          font-size: 16px;
-          line-height: 16px;
-          color: #ffffff;
-          font-weight: 600;
-        }
-
-        .close-button {
-          position: absolute;
-          top: 0;
-          background-color: #000;
-          right: 0;
-          padding: 16px;
-          cursor: pointer;
-          display: flex;
-        }
-        .close-button img {
-          height: 11px;
-          width: 11px;
-        }
-        .indicator-triangle::after, .indicator-triangle::before{
-          border-width: 0;
-          transition: all 0.5s ease;
-        }
-        .indicator-triangle{
-          display: grid;
-        }
-        .indicator-triangle::after, .indicator-triangle::before{
-          border-color: transparent transparent #75757596 transparent;
-          border-style: solid;
-          border-width: 13px;
-          content: "";
-          grid-row: 1;
-          grid-column: 1;
-          align-self: end;
-          justify-self: center;
-          /* transform: translateY(calc(100% + 30px)); */
-        }
-        .indicator-triangle::after{
-          border-color: transparent transparent #fff transparent;
-          border-width: 12px;
-          transform: translateY(2px);
-        }
-        .indicator-triangle{
-          position: absolute;
-          transform: translateY(-100%) translateX(-50%);
-          top: 0;
-          z-index: 0;
-          left: ${25 * cardPosition - 12.5}%;
-          /* left: calc(${cardPosition}px - 12.5%) */
-        }
-      `}</style>
-
-      <style jsx global>{`
-        .product-v2-description-right img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-        .description-content p {
-          margin: 0;
-        }
-        .tour-description p {
-          margin: 0;
-        }
-
-        .tour-description svg {
-          margin-top: 8px;
-        }
-
-        .description-content ul {
-          padding-left: 1em;
-        }
-        .description-content p {
-          line-height: 1.4;
-        }
-      `}</style>
-    </div>
+    </DetailedDescriptionCard>
   );
 };
 

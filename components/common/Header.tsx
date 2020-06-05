@@ -54,6 +54,7 @@ const StyledLogo = styled.div`
   justify-content: left;
   img {
     height: 44px;
+    max-width: 160px;
   }
   svg {
     height: 44px;

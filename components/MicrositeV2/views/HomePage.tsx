@@ -43,6 +43,11 @@ const V2MicrositeWrapper = styled.div`
       margin-top: 48px;
       margin-bottom: 48px;
     }
+    .main-wrapper {
+      padding-left: 16px;
+      padding-right: 16px;
+      width: calc(100% - 32px);
+    }
   }
 `;
 

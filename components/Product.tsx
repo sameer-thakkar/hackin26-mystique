@@ -439,7 +439,7 @@ const Product = (props) => {
             <NextAvailableBlock>
               <div className="icon">{CALENDAR}</div>
               <div className="available-text">
-                {`${labels[currentLanguage].AVAILABLE} `}
+                {`${labels[currentLanguage].NEXT_AVAILABLE} `},{' '}
                 {getDate(earliestAvailability, currentLanguage)}
               </div>
             </NextAvailableBlock>
