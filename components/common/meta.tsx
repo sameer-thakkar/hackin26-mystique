@@ -90,8 +90,6 @@ const PopulateHead = (data) => {
     description,
     favicon,
     image,
-    nofollow,
-    noindex,
     canonical_link: canonicalLink,
     other_meta_tags: otherMetaTags = [],
     header_scripts: headerScripts = [],
@@ -118,14 +116,6 @@ const PopulateHead = (data) => {
     ? 'psi3hURmBLey31qAhn7cPA'
     : 'ueaj9d1HgXEpkUp-zbbP0Q';
   const GTM_ENV = isNonProd ? 'env-27' : 'env-1';
-
-  const robotsContent = [];
-  if (nofollow === 'True') {
-    robotsContent.push('nofollow');
-  }
-  if (noindex === 'True') {
-    robotsContent.push('noindex');
-  }
 
   const imageUrl = image ? image.url : logo ? logo.url : null;
 
@@ -169,10 +159,6 @@ const PopulateHead = (data) => {
           rel="canonical"
           href={withTrailingSlash(withHttps(canonicalLink))}
         />
-      ) : null}
-
-      {robotsContent.length ? (
-        <meta name="robots" content={robotsContent.join(', ')} />
       ) : null}
 
       <script
