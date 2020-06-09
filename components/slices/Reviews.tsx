@@ -19,7 +19,8 @@ const StyledReviews = styled.div`
       return `
         .custom-pagination {
           top: 80%;
-          left: 80%;
+          right: 64px;
+          z-index: 1;
         }
     `;
     }
