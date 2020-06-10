@@ -100,7 +100,6 @@ export default class Page extends React.Component<any, any> {
           res.statusCode = props.statusCode;
         }
       }
-
       if (
         req &&
         req.headers.host.startsWith('stage.') &&
@@ -108,19 +107,6 @@ export default class Page extends React.Component<any, any> {
       ) {
         res.setHeader('x-git-branch', process.env.GIT_BRANCH);
         res.setHeader('x-git-actor', process.env.GIT_ACTOR);
-      }
-
-      if (
-        props?.CMSContent?.data?.data?.noindex === 'True' &&
-        props?.CMSContent?.data?.data?.nofollow === 'True'
-      ) {
-        res.setHeader('X-Robots-Tag', 'noindex, nofollow');
-      } else if (props?.CMSContent?.data?.data?.noindex === 'True') {
-        res.setHeader('X-Robots-Tag', 'noindex');
-      } else if (props?.CMSContent?.data?.data?.nofollow === 'True') {
-        res.setHeader('X-Robots-Tag', 'nofollow');
-      } else {
-        res.setHeader('X-Robots-Tag', 'all');
       }
 
       return {
