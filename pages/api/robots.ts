@@ -1,18 +1,35 @@
-const fullDomain = req =>
-  req.headers["x-forwarded-proto"] + "://" + req.headers.host;
+const fullDomain = (req) =>
+  req.headers['x-forwarded-proto'] + '://' + req.headers.host;
 
 const robotsContentForStage = () =>
   `User-agent: Screaming Frog SEO Spider\nDisallow:\n\nUser-agent: *\nDisallow: /`;
 
-const robotsContent = domain =>
+const robotsContent = (domain) =>
   `User-agent: *\n\nSitemap: ${domain}/sitemap.xml`;
+
+const tempRobotsContent = `User-agent: *\nDisallow: /`;
+
+const tempDomains = [
+  'rome-ticket.com',
+  'madrid-ticket.com',
+  'barcelonatickets.co',
+  'paris-tickets.co',
+  'versailles-tickets.com',
+  'granada-tickets.com',
+  'tickets-florence.com',
+];
 
 export default function handle(req, res) {
   const domain = fullDomain(req);
-  const content = domain.includes("stage.")
+  let content = domain.includes('stage.')
     ? robotsContentForStage()
     : robotsContent(domain);
-  res.setHeader("Content-type", "text/plain");
+  tempDomains.forEach((item) => {
+    if (domain.includes(item)) {
+      content = tempRobotsContent;
+    }
+  });
+  res.setHeader('Content-type', 'text/plain');
   res.send(content);
   res.end();
 }
