@@ -16,6 +16,7 @@ jobs:
         with:
           node-version: '12'
       - name: run tests
+        timeout-minutes: 10
         run: |
           yarn
           node ./tests/stage.js
@@ -31,6 +32,7 @@ jobs:
         with:
           node-version: '12'
       - name: now deploy
+        timeout-minutes: 20
         env:
           ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
           PROFESSORX_SECRET: ${{ secrets.PROFESSORX_SECRET }}
@@ -53,6 +55,7 @@ jobs:
         with:
           node-version: '12'
       - name: push to prometheus
+        timeout-minutes: 10
         run: |
           yarn
           node ./tests/production.js
