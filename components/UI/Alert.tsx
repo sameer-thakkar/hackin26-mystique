@@ -4,7 +4,7 @@ import Popup from '../common/Popup';
 import * as labels from 'constants/localization/labels';
 import { SHIELD } from 'assets/SvgIcons';
 import { SOLEIL } from 'constants/ui-constants';
-import { Client } from '../../prismic-config';
+import { Client } from '../../config/prismic-config';
 import { CUSTOM_TYPES } from 'constants/index';
 
 const StyledAlert = styled.div`

@@ -1,37 +1,37 @@
-import Prismic from "prismic-javascript";
-import { apiEndpoint } from "../../prismic-config";
+import Prismic from 'prismic-javascript';
+import { apiEndpoint } from '../../config/prismic-config';
 
 export default function handle(req, res) {
   const { uid, type, lang, ref } = req.query;
 
   Prismic.getApi(apiEndpoint, { req })
-    .then(api =>
+    .then((api) =>
       api.getByUID(type, uid, {
         lang,
-        ref
+        ref,
       })
     )
-    .then(response => {
+    .then((response) => {
       if (response && !response.data.page_url) {
         // if response exists (which implies document is published)
         // then Page URL should exist!
-        res.send("Please enter `Page URL` in Prismic for its Preview to work!");
+        res.send('Please enter `Page URL` in Prismic for its Preview to work!');
         res.end();
         return;
       }
 
-      const protocol = req.headers["x-forwarded-proto"];
-      const host = req.headers["x-forwarded-host"];
+      const protocol = req.headers['x-forwarded-proto'];
+      const host = req.headers['x-forwarded-host'];
 
       const redirectUrl =
-        !response || host.startsWith("localhost:")
+        !response || host.startsWith('localhost:')
           ? `${protocol}://${host}?mystique_uid=${uid}&lang=${lang}`
-          : host.startsWith("stage.")
-          ? response.data.page_url.replace("://", "://stage.")
+          : host.startsWith('stage.')
+          ? response.data.page_url.replace('://', '://stage.')
           : response.data.page_url;
 
       res.writeHead(302, {
-        Location: redirectUrl
+        Location: redirectUrl,
       });
       res.end();
     });

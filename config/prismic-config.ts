@@ -1,27 +1,27 @@
-import Prismic from "prismic-javascript";
+import Prismic from 'prismic-javascript';
 
 // -- Prismic API endpoint
 // Determines which repository to query and fetch data from
 // Configure your site's access point here
-export const apiEndpoint = "https://mystique.prismic.io/api/v2";
+export const apiEndpoint = 'https://mystique.prismic.io/api/v2';
 
 // -- Access Token if the repository is not public
 // Generate a token in your dashboard and configure it here if your repository is private
-export const accessToken = "";
+export const accessToken = '';
 
 // -- Link resolution rules
 // Manages links to internal Prismic documents
 // Modify as your project grows to handle any new routes you've made
-export const linkResolver = doc => {
+export const linkResolver = (doc) => {
   return `/prismic/resolve?type=${doc.type}&uid=${doc.uid}&lang=${doc.lang}`;
 };
 
 // Additional helper function for Next/Link components
-export const hrefResolver = doc => {
-  if (doc.type === "post") {
+export const hrefResolver = (doc) => {
+  if (doc.type === 'post') {
     return `/post?uid=${doc.uid}`;
   }
-  return "/";
+  return '/';
 };
 
 // -- Client method to query Prismic

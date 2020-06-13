@@ -57,7 +57,7 @@ export const ERROR = {
   TIME: 'Select your prefered time.',
 };
 
-export const GROUP_BOOKING_URL = '/group-submit-form';
+export const GROUP_BOOKING_URL = '/api/group-submit-form';
 
 export const CUSTOM_TYPES = {
   MICROSITE: 'microsite',

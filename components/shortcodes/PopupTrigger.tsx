@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Popup from '../common/Popup';
-import { Client } from '../../prismic-config';
+import { Client } from '../../config/prismic-config';
 import { CUSTOM_TYPES } from 'constants/index';
 import { COLORS } from 'constants/ui-constants';
 

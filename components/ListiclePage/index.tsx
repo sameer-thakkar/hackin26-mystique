@@ -17,7 +17,7 @@ import LongForm from '../common/LongForm';
 import Footer from '../common/Footer';
 import WhyBookFromUs from './WhyBookFromUs';
 import { groupSlices } from '../../utils/helper';
-import { Client } from '../../prismic-config';
+import { Client } from '../../config/prismic-config';
 import { SOLEIL, COLORS } from '../../constants/ui-constants';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 import { CHEVRON_LEFT_CIRCLE } from '../../assets/SvgIcons';

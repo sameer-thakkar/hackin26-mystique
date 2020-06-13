@@ -9,7 +9,7 @@ import populateHead from './common/meta';
 import Alert from './UI/Alert';
 import DismissAlert from './UI/DismissAlert';
 import * as labels from '../constants/localization/labels';
-import { Client } from '../prismic-config';
+import { Client } from '../config/prismic-config';
 import {
   DROPDOWN_ELEMENT,
   FULL_WIDTH_SLICES,

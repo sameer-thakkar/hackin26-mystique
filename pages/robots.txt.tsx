@@ -1,3 +1,5 @@
+import { Component } from 'react';
+
 const fullDomain = (req) =>
   req.headers['x-forwarded-proto'] + '://' + req.headers.host;
 
@@ -19,17 +21,20 @@ const tempDomains = [
   'tickets-florence.com',
 ];
 
-export default function handle(req, res) {
-  const domain = fullDomain(req);
-  let content = domain.includes('stage.')
-    ? robotsContentForStage()
-    : robotsContent(domain);
-  tempDomains.forEach((item) => {
-    if (domain.includes(item)) {
-      content = tempRobotsContent;
-    }
-  });
-  res.setHeader('Content-type', 'text/plain');
-  res.send(content);
-  res.end();
+export default class RobotsTxt extends Component {
+  static async getInitialProps({ res, req }) {
+    const domain = fullDomain(req);
+    let content = domain.includes('stage.')
+      ? robotsContentForStage()
+      : robotsContent(domain);
+    tempDomains.forEach((item) => {
+      if (domain.includes(item)) {
+        content = tempRobotsContent;
+      }
+    });
+    console.log(res);
+    res.setHeader('Content-type', 'text/plain');
+    res.write(content);
+    res.end();
+  }
 }

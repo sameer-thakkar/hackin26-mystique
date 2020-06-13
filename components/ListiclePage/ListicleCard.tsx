@@ -7,7 +7,7 @@ import Chevron from '../UI/Chevron';
 import Button from '../UI/Button';
 import Popup from '../common/Popup';
 import * as labels from '../../constants/localization/labels';
-import { Client } from '../../prismic-config';
+import { Client } from '../../config/prismic-config';
 import { CUSTOM_TYPES } from '../../constants';
 import { COLORS, SOLEIL } from '../../constants/ui-constants';
 import { PIN } from '../../assets/SvgIcons';
