@@ -13,7 +13,6 @@ Mystique is the tech that powers over 100 different microbrands at Headout.
 
 - [Nodejs](https://nodejs.org/) (v10 and above)
 - [Yarn](https://legacy.yarnpkg.com/) (package manager)
-- [Now CLI](https://zeit.co/download) (Globally installed)
 - [Git](https://git-scm.com/) (🧐)
 
 ### Developing
@@ -38,7 +37,7 @@ Mystique is the tech that powers over 100 different microbrands at Headout.
 - Start the development server by running:
 
   ```bash
-  now dev
+  yarn dev
   ```
 
 - Visit any microbrand using the mystique_uid param (along with a lang param) in your query.
@@ -47,6 +46,20 @@ Mystique is the tech that powers over 100 different microbrands at Headout.
 
   ```
   http://localhost:3000?mystique_uid=www.vaticantickets.org&lang=en-us
+  ```
+
+### Production
+
+- Build the next app using:
+
+  ```bash
+  yarn build
+  ```
+
+- Start the built app using:
+
+  ```bash
+  yarn start
   ```
 
 ### Storybook Development
