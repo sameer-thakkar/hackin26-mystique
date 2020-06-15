@@ -8,6 +8,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "dev": "next -p 3001",
+    "start": "next start",
     "build": "next build",
     "production": "node ./deployment/production && find now.*.json | xargs -n1 -I {} /bin/bash -c 'now -A {} --scope headout --prod --no-clipboard --debug' && rm -r now.*.json",
     "staging": "node ./deployment/stage && find now.*.json | xargs -n1 -I {} /bin/bash -c 'now -A {} --scope headout --prod --no-clipboard --debug' && rm -r now.*.json",
