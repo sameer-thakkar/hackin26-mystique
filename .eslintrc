@@ -1,16 +1,27 @@
 {
   "extends": [
     "eslint:recommended",
+    "plugin:prettier/recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:jsx-a11y/recommended"
   ],
-  "plugins": ["react", "react-hooks", "jsx-a11y"],
+  "plugins": [
+    "@typescript-eslint",
+    "prettier",
+    "react",
+    "react-hooks",
+    "jsx-a11y"
+  ],
   "rules": {
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "varsIgnorePattern": "^_" }
+    ],
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
     "jsx-a11y/click-events-have-key-events": "off",
-    "no-unused-vars": ["error", { "varsIgnorePattern": "^_" }],
+    "no-unused-vars": "off",
     "no-case-declarations": "off"
   },
   "parser": "@typescript-eslint/parser",
