@@ -1,0 +1,56 @@
+language: node_js
+node_js:
+  - "10.20.0"
+
+matrix:
+  include:
+    - env: APP_ENV=production
+
+before_install:
+  - sudo apt-get install -y jq zip
+  - sudo -H pip install awscli
+  - curl -o- -s -L https://yarnpkg.com/install.sh | bash -s -- --version 1.16.0
+  - export PATH="$HOME/.yarn/bin:$PATH"
+
+before_script:
+  - yarn
+  - aws --version
+  - docker info
+
+script:
+  - NODE_ENV=$APP_ENV DIST_URL_PATH=${TRAVIS_TAG:-$TRAVIS_BRANCH} RELEASE_VERSION=${TRAVIS_TAG:-$TRAVIS_BRANCH} npm run build
+  - docker build --build-arg APP_ENV=$APP_ENV -f ci/Dockerfile -t $TRAVIS_REPO_SLUG:latest .
+
+before_deploy:
+  # setup and deploy docker authentication
+  - eval $(aws ecr get-login --no-include-email)
+  - cat $HOME/.docker/config.json | jq -M '.auths' > .dockercfg
+  - aws s3 mv .dockercfg s3://$AWS_EB_S3_BUCKET/docker/.dockercfg
+  # setup docker tags and push
+  - export DOCKER_IMAGE_TAG=${TRAVIS_TAG:-$TRAVIS_BRANCH}-$(git show -s --format=%h)-$(date -u +%s)-$TRAVIS_JOB_ID
+  - docker tag $TRAVIS_REPO_SLUG:latest $ECR_DOCKER_REPO_HOST/headout/mystique:$DOCKER_IMAGE_TAG
+  - docker push $ECR_DOCKER_REPO_HOST/headout/mystique:$DOCKER_IMAGE_TAG
+  - docker images
+  # create zip for eb
+  - ./ci/scripts/eb.sh
+  - zip -r mystique-$DOCKER_IMAGE_TAG.zip Dockerrun.aws.json .ebextensions/
+  # set label for application version
+  - export ELASTIC_BEANSTALK_LABEL=travis-$APP_ENV-$DOCKER_IMAGE_TAG
+
+deploy:
+  - provider: elasticbeanstalk
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    region: $AWS_DEFAULT_REGION
+    app: "mystique"
+    env: "prod-mystique-env"
+    bucket_name: $AWS_EB_S3_BUCKET
+    bucket_path: mystique
+    skip_cleanup: true
+    only_create_app_version: true
+    zip_file: mystique-$DOCKER_IMAGE_TAG.zip
+    on:
+      all_branches: true
+
+after_deploy:
+  - echo "Application Deployed!"

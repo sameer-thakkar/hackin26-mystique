@@ -134,6 +134,9 @@ export default class Page extends React.Component<any, any> {
     const pathname = reqPathname || window.location.pathname;
     try {
       let uid, lang;
+      console.log(host);
+      console.log(reqPathname);
+      console.log(query);
       if (req) {
         // Server side rendering
         if (isDev) {

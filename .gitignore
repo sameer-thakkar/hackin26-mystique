@@ -115,3 +115,10 @@ storybook-static
 
 # MacOS cache
 .DS_Store
+
+# IDEA files
+.idea/*
+.idea
+*.iml
+*.ipr
+*.iws
