@@ -1,7 +1,7 @@
 {
   "name": "mystique",
   "main": "n/a",
-  "version": "2.3.1",
+  "version": "3.x.x",
   "repository": "https://github.com/headout/mystique.git",
   "description": "Microbrands @ Headout",
   "author": "Aakash Goel",
@@ -96,6 +96,8 @@
   },
   "husky": {
     "hooks": {
+      "pre-commit": "yarn lint && pretty-quick --staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   }
 }

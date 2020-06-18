@@ -1,5 +1,4 @@
 FROM ubuntu:18.04
-MAINTAINER Tarik "tarik@headout.com"
 ARG APP_ENV
 ENV NODE_ENV=$APP_ENV
 RUN apt-get update && apt-get install -y curl
