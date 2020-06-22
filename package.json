@@ -10,8 +10,6 @@
     "dev": "next -p 3001",
     "start": "next start",
     "build": "next build",
-    "production": "node ./deployment/production && find now.*.json | xargs -n1 -I {} /bin/bash -c 'now -A {} --scope headout --prod --no-clipboard --debug' && rm -r now.*.json",
-    "staging": "node ./deployment/stage && find now.*.json | xargs -n1 -I {} /bin/bash -c 'now -A {} --scope headout --prod --no-clipboard --debug' && rm -r now.*.json",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "deploy-storybook": "storybook-to-ghpages",

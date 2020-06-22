@@ -1,3 +1,0 @@
-staging:
-  environment: stage
-  production_environment: false
