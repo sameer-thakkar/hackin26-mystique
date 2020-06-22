@@ -89,7 +89,7 @@ const BlogFeed = ({ feed_url, count = 0, defaultCards = [] }) => {
   useEffect(() => {
     try {
       const feedURL = new URL(feed_url);
-      fetch(`/blog/${feedURL.pathname}`)
+      fetch(`/blog${feedURL.pathname}`)
         .then((res) => res.json())
         .then((jResp) => {
           const findFirstParagraphRegex = /<\s*p[^>]*>([\t\s\S]*?)<\s*\/\s*p>/;
