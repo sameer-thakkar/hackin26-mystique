@@ -83,7 +83,7 @@ const CategorySection = (props) => {
   let filteredTgids = tgidsArray.filter(
     (tgid) => allTours[tgid] && allTours[tgid].available
   );
-  const elementId = heading.trim().replace(/\s/g, '-').toLowerCase();
+  const elementId = heading?.trim().replace(/\s/g, '-').toLowerCase();
 
   useEffect(() => {
     setTimeout(() => {

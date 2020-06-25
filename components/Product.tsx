@@ -183,7 +183,6 @@ const ProductBody = styled.div`
     }
   }
   @media (max-width: 768px) {
-    display: contents;
     .tour-description {
       p {
         display: none;
@@ -216,7 +215,7 @@ const NextAvailableBlock = styled.div`
     display: flex;
   }
   @media (max-width: 768px) {
-    grid-row: 8;
+    grid-row: ${({ hasOffer }) => (hasOffer ? 8 : 7)};
   }
 `;
 const ProductOfferBlock = styled.div`
@@ -413,7 +412,7 @@ const Product = (props) => {
           </PriceBlock>
           <CTABlock
             showEarliestAvail={earliestAvailability}
-            hasOffer={hasOffer}
+            hasOffer={hasOffer && offerId}
           >
             <a
               target={isFetched && isMobile ? null : '_blank'}
@@ -423,7 +422,7 @@ const Product = (props) => {
             >
               <Button
                 className={`tour-book-now-cta`}
-                paddingSides="77px"
+                paddingSides={isMobile ? '16px' : '77px'}
                 type="fillGradient"
                 onClick={sendBookNowEvent}
                 onKeyDown={sendBookNowEvent}
@@ -436,7 +435,7 @@ const Product = (props) => {
           </CTABlock>
 
           {earliestAvailability && (
-            <NextAvailableBlock>
+            <NextAvailableBlock hasOffer={hasOffer && offerId}>
               <div className="icon">{CALENDAR}</div>
               <div className="available-text">
                 {`${labels[currentLanguage].NEXT_AVAILABLE}`},{' '}

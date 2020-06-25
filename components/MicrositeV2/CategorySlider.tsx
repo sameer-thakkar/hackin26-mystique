@@ -153,7 +153,7 @@ const CategorySlider = (props) => {
   };
 
   const cardPosition = filteredTgids.indexOf(tgidClicked) + 1;
-  const elementId = heading.trim().replace(/\s/g, '-').toLowerCase();
+  const elementId = heading?.trim().replace(/\s/g, '-').toLowerCase();
 
   useEffect(() => {
     if (!window) return;
@@ -169,10 +169,12 @@ const CategorySlider = (props) => {
 
   return (
     <StyledCategorySlider id={elementId}>
-      <div className="content">
-        {heading ? <h2>{heading}</h2> : null}
-        {description ? <p>{description}</p> : null}
-      </div>
+      {heading || description ? (
+        <div className="content">
+          {heading ? <h2>{heading}</h2> : null}
+          {description ? <p>{description}</p> : null}
+        </div>
+      ) : null}
       <div className="slider-wrap">
         <div className="slider-container">
           <Swiper

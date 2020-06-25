@@ -30,6 +30,8 @@ const Title = styled.h1`
   font-family: ${SOLEIL.FONT_STACK};
   font-weight: ${SOLEIL.SEMIBOLD};
   font-size: 2rem;
+  transform: translateY(-50%);
+  margin: 0;
   @media (max-width: 768px) {
     text-align: center;
     top: 42%;
