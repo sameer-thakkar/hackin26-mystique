@@ -1,10 +1,11 @@
 language: node_js
 node_js:
-  - "10.20.0"
+  - '10.20.0'
 
 matrix:
   include:
-    - env: APP_ENV=production
+    - if: tag IS present
+      env: APP_ENV=production
 
 before_install:
   - sudo apt-get install -y jq zip
@@ -42,8 +43,8 @@ deploy:
     access_key_id: $AWS_ACCESS_KEY_ID
     secret_access_key: $AWS_SECRET_ACCESS_KEY
     region: $AWS_DEFAULT_REGION
-    app: "mystique"
-    env: "prod-mystique-env"
+    app: 'mystique'
+    env: 'prod-mystique-env'
     bucket_name: $AWS_EB_S3_BUCKET
     bucket_path: mystique
     skip_cleanup: true
