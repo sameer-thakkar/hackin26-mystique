@@ -109,7 +109,6 @@ const Header: React.FC<any> = (props) => {
     currentLanguage,
     logoUrl,
     logoAltText,
-    alternateLanguages,
     uid,
     isMobile,
     showGroupBooking = false,
@@ -222,7 +221,6 @@ const Header: React.FC<any> = (props) => {
           {hasLanguageSelector === 'Yes' ? (
             <LanguageSelector
               languages={languages}
-              alternateLanguages={alternateLanguages}
               currentLanguage={currentLanguage}
               uid={uid}
               host={host}

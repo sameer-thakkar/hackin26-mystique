@@ -89,7 +89,7 @@ export default class TermsPage extends Component<any, any> {
 
   render() {
     const { response, host } = this.props;
-    const { alternate_languages: availableLanguages, uid, data } = response;
+    const { uid, data } = response;
     const {
       link_to_logo_file: { url: logoUrl },
       logo: { url: uploadedLogoUrl, alt: altText },
@@ -120,7 +120,6 @@ export default class TermsPage extends Component<any, any> {
           logoUrl={logoUrl || uploadedLogoUrl || null}
           currentLanguage={'en'}
           logoAltText={altText || logoAltText}
-          availableLanguages={availableLanguages}
           selectedLanguage={'en'}
           uid={uid}
           isMobile={this.state.isMobile}

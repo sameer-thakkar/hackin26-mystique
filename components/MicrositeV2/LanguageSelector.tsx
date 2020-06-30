@@ -1,37 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useCaptureClickOutside } from '../hooks/ClickOutside';
-import { SOLEIL } from '../../constants/ui-constants';
-
-const languageMap = {
-  en: {
-    language: 'English',
-    paramLang: 'en-us',
-  },
-  it: {
-    language: 'Italiano',
-    paramLang: 'it-it',
-  },
-  es: {
-    language: 'Español',
-    paramLang: 'es-es',
-  },
-  fr: {
-    language: 'Français',
-    paramLang: 'fr-fr',
-  },
-  de: {
-    language: 'Deutsch',
-    paramLang: 'de-de',
-  },
-  nl: {
-    language: 'Nederlands',
-    paramLang: 'nl-nl',
-  },
-  pt: {
-    language: 'Português',
-    paramLang: 'pt-pt',
-  },
-};
+import { useCaptureClickOutside } from 'hooks/ClickOutside';
+import { SOLEIL } from 'constants/ui-constants';
+import { FULL_LANGUAGE_MAP } from 'constants/index';
 
 const LanguageSelector = (props) => {
   const [pathname, setPathname] = useState('');
@@ -39,24 +9,6 @@ const LanguageSelector = (props) => {
   useEffect(() => {
     setPathname(window.location.pathname);
   }, []);
-
-  const getLanguages = () => {
-    const { currentLanguage, availableLanguages, languages } = props;
-    const prismicLanguages = languages.map((prismicLang) =>
-      prismicLang.language.split('-')[1].toLowerCase()
-    );
-    const publishedLanguages = availableLanguages.map(
-      (publishLang) => publishLang.lang.split('-')[0]
-    );
-    publishedLanguages.push(currentLanguage);
-    if (availableLanguages.length > 0) {
-      const liveLanguages = prismicLanguages.filter(
-        (prismicLang) => publishedLanguages.indexOf(prismicLang) != -1
-      );
-      return liveLanguages;
-    }
-    return prismicLanguages;
-  };
 
   const handleClick = () => {
     const { toggleDropdown } = props;
@@ -69,6 +21,7 @@ const LanguageSelector = (props) => {
     host,
     currentDomain,
     isMobile,
+    languages,
   } = props;
 
   const selectorRef = useRef(null);
@@ -76,7 +29,12 @@ const LanguageSelector = (props) => {
   const exceptionElementRefs = [parentRef];
   useCaptureClickOutside(selectorRef, handleClick, exceptionElementRefs);
 
-  const availableLanguages = getLanguages();
+  const availableLanguages = languages.reduce((acc, item) => {
+    const language = item.language.split('-')[1].toLowerCase();
+    if (currentLanguage !== language) return [...acc, language];
+    return acc;
+  }, []);
+
   if (availableLanguages.length <= 1) {
     return null;
   }
@@ -94,7 +52,7 @@ const LanguageSelector = (props) => {
 
   const getURL = (language, dev) => {
     if (dev)
-      return `/?mystique_uid=${currentDomain}&lang=${languageMap[language].paramLang}`;
+      return `/?mystique_uid=${currentDomain}&lang=${FULL_LANGUAGE_MAP[language].paramLang}`;
     else return `/${language}${slug}`;
   };
 
@@ -110,7 +68,7 @@ const LanguageSelector = (props) => {
         <span className="current-language-toggle">
           {isMobile
             ? currentLanguage.slice(0, 2)
-            : languageMap[currentLanguage].language}
+            : FULL_LANGUAGE_MAP[currentLanguage].language}
         </span>
       </div>
       {languageDropdown ? (
@@ -129,7 +87,7 @@ const LanguageSelector = (props) => {
               >
                 <div className="language">
                   <span className="lang-option">
-                    {languageMap[language].language}
+                    {FULL_LANGUAGE_MAP[language].language}
                   </span>
                   {currentLanguage == language ? (
                     <img

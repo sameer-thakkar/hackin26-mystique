@@ -244,7 +244,7 @@ export default class MicrositeV1 extends Component<any, any> {
 
   render() {
     const { toursList } = this.props;
-    const { alternate_languages: alternateLanguages, refs } = this.props.data;
+    const { refs } = this.props.data;
     const { contentFramework } = refs;
     const {
       localization,
@@ -447,7 +447,6 @@ export default class MicrositeV1 extends Component<any, any> {
             logoUrl={logoUrl || uploadedLogoUrl || null}
             logoAltText={altText || logoAltText}
             currentLanguage={currentLanguage ? currentLanguage : null}
-            alternateLanguages={alternateLanguages}
             uid={uid}
             dropdown={this.state.dropdown}
             handleDropdownToggle={this.handleDropdownToggle}

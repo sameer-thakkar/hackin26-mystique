@@ -311,7 +311,6 @@ export default class ContentPage extends Component<any, any> {
       lang,
       isDev,
       serverRequestStartTimestamp,
-      alternate_languages,
       uid,
       host,
       scorpioData,
@@ -457,7 +456,6 @@ export default class ContentPage extends Component<any, any> {
           currentLanguage={currentLanguage}
           logoUrl={logo.url}
           logoAltText={logoAltText || logo.alt || ''}
-          alternateLanguages={alternate_languages}
           uid={uid}
           dropdown={this.state.dropdown}
           handleDropdownToggle={this.handleDropdownToggle}

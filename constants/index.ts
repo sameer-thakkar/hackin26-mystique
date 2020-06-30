@@ -210,3 +210,34 @@ export const TOUR_COMPARISION_DESIGN = {
   TYPE_1: 'Type-1',
   TYPE_2: 'Type-2',
 };
+
+export const FULL_LANGUAGE_MAP = {
+  en: {
+    language: 'English',
+    paramLang: 'en-us',
+  },
+  it: {
+    language: 'Italiano',
+    paramLang: 'it-it',
+  },
+  es: {
+    language: 'Español',
+    paramLang: 'es-es',
+  },
+  fr: {
+    language: 'Français',
+    paramLang: 'fr-fr',
+  },
+  de: {
+    language: 'Deutsch',
+    paramLang: 'de-de',
+  },
+  nl: {
+    language: 'Nederlands',
+    paramLang: 'nl-nl',
+  },
+  pt: {
+    language: 'Português',
+    paramLang: 'pt-pt',
+  },
+};

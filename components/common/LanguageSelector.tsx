@@ -4,38 +4,8 @@ import Router from 'next/router';
 import styled from 'styled-components';
 import { withoutTrailingSlash } from 'utils/helper';
 import { GLOBE } from 'assets/SvgIcons';
+import { FULL_LANGUAGE_MAP } from 'constants/index';
 import { COLORS, SOLEIL } from 'constants/ui-constants';
-
-const flagsUrl = {
-  en: {
-    language: 'English',
-    paramLang: 'en-us',
-  },
-  it: {
-    language: 'Italiano',
-    paramLang: 'it-it',
-  },
-  es: {
-    language: 'Español',
-    paramLang: 'es-es',
-  },
-  fr: {
-    language: 'Français',
-    paramLang: 'fr-fr',
-  },
-  de: {
-    language: 'Deutsch',
-    paramLang: 'de-de',
-  },
-  nl: {
-    language: 'Nederlands',
-    paramLang: 'nl-nl',
-  },
-  pt: {
-    language: 'Português',
-    paramLang: 'pt-pt',
-  },
-};
 
 const StyledLanguageContainer = styled.div`
   margin-left: 32px;
@@ -121,24 +91,6 @@ class LanguageSelector extends Component<any, any> {
     });
   }
 
-  getLanguages = () => {
-    const { currentLanguage, alternateLanguages, languages } = this.props;
-    const prismicLanguages = languages.map((prismicLang) =>
-      prismicLang.language.split('-')[1].toLowerCase()
-    );
-    const publishedLanguages = alternateLanguages.map(
-      (publishLang) => publishLang.lang.split('-')[0]
-    );
-    publishedLanguages.push(currentLanguage);
-    if (alternateLanguages.length > 0) {
-      const liveLanguages = prismicLanguages.filter(
-        (prismicLang) => publishedLanguages.indexOf(prismicLang) != -1
-      );
-      return liveLanguages;
-    }
-    return prismicLanguages;
-  };
-
   handleClick = () => {
     this.setState({ showDropdown: !this.state.showDropdown });
   };
@@ -152,7 +104,7 @@ class LanguageSelector extends Component<any, any> {
     const isDev = host.includes('localhost');
     if (isDev) {
       window.location.href = `http://${host}/?mystique_uid=${uid}&lang=${
-        flagsUrl[e.target.value].paramLang
+        FULL_LANGUAGE_MAP[e.target.value].paramLang
       }`;
     } else {
       Router.push(`/${e.target.value}/${slug}`);
@@ -160,7 +112,12 @@ class LanguageSelector extends Component<any, any> {
   };
 
   render() {
-    const { currentLanguage, host, uid, isMobile } = this.props;
+    const { currentLanguage, host, uid, isMobile, languages } = this.props;
+    const availableLanguages = languages.reduce((acc, item) => {
+      const language = item.language.split('-')[1].toLowerCase();
+      if (currentLanguage !== language) return [...acc, language];
+      return acc;
+    }, []);
     const { pathname } = this.state;
     const langCodeRegex = /^(\/){0,1}(en|fr|de|it|nl|pt|es)(\/){0,1}/;
     const removeLangFromPathname = pathname.replace(langCodeRegex, '');
@@ -178,10 +135,10 @@ class LanguageSelector extends Component<any, any> {
             onChange={(e) => e.target.blur()}
             onBlur={this.handleChange}
           >
-            {this.getLanguages().map((language, index) => {
+            {availableLanguages.map((language, index) => {
               return (
                 <option value={language} key={index}>
-                  {flagsUrl[language].language}
+                  {FULL_LANGUAGE_MAP[language].language}
                 </option>
               );
             })}
@@ -194,7 +151,7 @@ class LanguageSelector extends Component<any, any> {
       <StyledLanguageContainer onClick={this.handleClick}>
         <StyledLanguage>
           {GLOBE}
-          {flagsUrl[currentLanguage].language}
+          {FULL_LANGUAGE_MAP[currentLanguage].language}
         </StyledLanguage>
         <div
           className={`language-dropdown ${
@@ -202,24 +159,24 @@ class LanguageSelector extends Component<any, any> {
           }`}
         >
           {isDev
-            ? this.getLanguages().map((language, index) => {
+            ? availableLanguages.map((language, index) => {
                 return (
                   <a
                     className={
                       currentLanguage == language ? 'selected-tab' : ''
                     }
                     key={index}
-                    href={`/?mystique_uid=${uid}&lang=${flagsUrl[language].paramLang}`}
+                    href={`/?mystique_uid=${uid}&lang=${FULL_LANGUAGE_MAP[language].paramLang}`}
                   >
                     <div className="language">
                       <span className="lang">
-                        {flagsUrl[language].language}
+                        {FULL_LANGUAGE_MAP[language].language}
                       </span>
                     </div>
                   </a>
                 );
               })
-            : this.getLanguages().map((language, index) => {
+            : availableLanguages.map((language, index) => {
                 return (
                   <Link key={index} href={`/${language}/${slug}`}>
                     <a
@@ -230,7 +187,7 @@ class LanguageSelector extends Component<any, any> {
                     >
                       <div className="language">
                         <span className="lang">
-                          {flagsUrl[language].language}
+                          {FULL_LANGUAGE_MAP[language].language}
                         </span>
                       </div>
                     </a>

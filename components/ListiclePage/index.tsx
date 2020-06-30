@@ -253,7 +253,6 @@ const Listicle = (props) => {
     data,
     lang,
     uid,
-    alternate_languages,
     host,
     isDev,
     serverRequestStartTimestamp,
@@ -432,7 +431,6 @@ const Listicle = (props) => {
         currentLanguage={currentLanguage}
         logoUrl={logo.url}
         logoAltText={logoAltText || logo.alt || ''}
-        alternateLanguages={alternate_languages}
         uid={uid}
         isMobile={isMobile}
         showGroupBooking={enableGroupBooking === 'Yes'}

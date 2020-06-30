@@ -124,18 +124,13 @@ class MicrositeV2 extends Component<any, any> {
       pathname,
       serverRequestStartTimestamp,
     } = this.props;
-    const {
-      uid: currentDomain,
-      data: CMSData,
-      alternate_languages: availableLanguages,
-    } = CMSContent;
+    const { uid: currentDomain, data: CMSData } = CMSContent;
     const { localization: languages } = CMSData;
     const currentLanguage = CMSContent.lang.substring(0, 2);
     const { isMobile } = this.state;
     const languageProps = {
       currentDomain,
       currentLanguage,
-      availableLanguages,
       languages,
       languageDropdown: CMSContent.data.enable_localization_menu === 'Yes',
     };
