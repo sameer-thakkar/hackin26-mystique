@@ -1,4 +1,5 @@
 import React from 'react';
+import ErrorPage from 'next/error';
 import dynamic from 'next/dynamic';
 import fetch from 'isomorphic-unfetch';
 import { ThemeProvider } from 'styled-components';
@@ -23,7 +24,6 @@ import 'lazysizes';
 import 'lazysizes/plugins/attrchange/ls.attrchange';
 import '../style/global.css';
 
-const ErrorPage = dynamic(() => import('next/error'));
 const Microsite = dynamic(() => import('../components/MicrositeV1'));
 const ContentPage = dynamic(() => import('../components/ContentPage'));
 const MicrositeV2 = dynamic(() => import('../components/MicrositeV2'));
