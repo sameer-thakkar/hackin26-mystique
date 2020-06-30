@@ -175,7 +175,7 @@ export const it = {
       'https://medium.com/headout/epidemia-coronavirus-polizza-di-cancellazione-e7abdfb20451',
   },
   READ_MORE: 'Leggi Tutto',
-  BANNER_CTA: 'Acquista biglietti',
+  BANNER_CTA: 'Acquista i Biglietti',
   BOOK_NOW_CTA: 'Prenota ora',
   READ_MORE_TEXT: 'Leggi di più',
   SHOW_LESS_TEXT: 'Mostra meno',

@@ -1,3 +1,4 @@
+import * as labels from 'constants/localization/labels';
 import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { scroller } from 'react-scroll';
@@ -215,7 +216,7 @@ const Header: React.FC<any> = (props) => {
                 });
               }}
             >
-              Buy Tickets
+              {labels[currentLanguage].BANNER_CTA}
             </StyledBuyTickets>
           ) : null}
           {hasLanguageSelector === 'Yes' ? (
