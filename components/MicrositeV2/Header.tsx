@@ -105,8 +105,8 @@ const HeaderRight = styled.div`
       display: none;
     }
     .current-language-toggle {
-      margin-bottom: -2px;
-      padding: 2px;
+      margin-bottom: 0;
+      padding: 0;
     }
     .hamburger {
       position: relative;
@@ -260,7 +260,6 @@ const Header = (props) => {
     },
   }));
   const hamburgerIconCheck = !!headerLinks?.length || headerSlices.length;
-
   return (
     <StyledHeader overlayActive={languageDropdown || navActive}>
       <div className="fixed-offset"></div>

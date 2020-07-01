@@ -62,11 +62,18 @@ const ProductHeader = styled.div`
     font-size: 14px;
     font-weight: ${SOLEIL.MEDIUM};
     display: grid;
-    grid-auto-flow: column;
-    align-items: center;
-    justify-content: left;
-    grid-column-gap: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: start;
+    margin-bottom: -8px;
     color: ${COLORS.GREY_G3};
+  }
+  .tour-tag {
+    display: grid;
+    margin-bottom: 8px;
+    grid-auto-flow: column;
+    grid-column-gap: 8px;
+    margin-right: 8px;
   }
   @media (max-width: 768px) {
     grid-template-columns: auto;
@@ -85,11 +92,6 @@ const ProductHeader = styled.div`
       align-items: start;
       font-size: 12px;
       line-height: 13px;
-      margin-bottom: -8px;
-      .tour-tag,
-      .bullet {
-        margin-right: 8px;
-      }
       .tour-tag {
         margin-bottom: 8px;
       }
@@ -351,12 +353,10 @@ const Product = (props) => {
               const descriptor = item.trim();
               if (descriptor) {
                 acc.push(
-                  <>
+                  <div key={index} className="tour-tag">
                     {index !== 0 && <div className="bullet">•</div>}
-                    <div key={index} className="tour-tag">
-                      {descriptor.replace(/['"]+/g, '')}
-                    </div>
-                  </>
+                    {descriptor.replace(/['"]+/g, '')}
+                  </div>
                 );
               }
               return acc;

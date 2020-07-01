@@ -111,7 +111,7 @@ const CategorySlider = (props) => {
       arr.slice(0, index).indexOf(tgid) == -1
   );
   const [tgidClicked, setTgidClicked] = useState(
-    isFirstTourOpen ? filteredTgids[0] : null
+    !isMobile && isFirstTourOpen ? filteredTgids[0] : null
   );
 
   const goNext = () => {
