@@ -19,6 +19,16 @@ const tempDomains = [
   'versailles-tickets.com',
   'granada-tickets.com',
   'tickets-florence.com',
+  'seville-tickets.com',
+  'milan-tickets.co',
+  'venice-tickets.co',
+  'naples-tickets.co',
+];
+
+const indexDomains = [
+  'parkguell.barcelonatickets.co',
+  'camp-nou.barcelonatickets.co',
+  'aerobus.barcelonatickets.co',
 ];
 
 export default class RobotsTxt extends Component {
@@ -32,7 +42,13 @@ export default class RobotsTxt extends Component {
         content = tempRobotsContent;
       }
     });
-    console.log(res);
+    indexDomains.forEach((item) => {
+      if (domain.includes(item)) {
+        content = domain.includes('stage.')
+          ? robotsContentForStage()
+          : robotsContent(domain);
+      }
+    });
     res.setHeader('Content-type', 'text/plain');
     res.write(content);
     res.end();
