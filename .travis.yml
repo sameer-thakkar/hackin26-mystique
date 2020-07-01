@@ -4,8 +4,7 @@ node_js:
 
 matrix:
   include:
-    - if: tag IS present
-      env: APP_ENV=production
+    - env: APP_ENV=production
 
 before_install:
   - sudo apt-get install -y jq zip
