@@ -19,7 +19,7 @@ before_script:
 
 script:
   - NODE_ENV=$APP_ENV DIST_URL_PATH=${TRAVIS_TAG:-$TRAVIS_BRANCH} RELEASE_VERSION=${TRAVIS_TAG:-$TRAVIS_BRANCH} npm run build
-  - docker build --build-arg APP_ENV=$APP_ENV -f ci/Dockerfile -t $TRAVIS_REPO_SLUG:latest .
+  - docker build --build-arg APP_ENV=$APP_ENV --build-arg SLACK_GRP_BKNG_WEBHOOK=$SLACK_GRP_BKNG_WEBHOOK --build-arg ZENDESK_GRP_BKNG_TOKEN=$ZENDESK_GRP_BKNG_TOKEN -f ci/Dockerfile -t $TRAVIS_REPO_SLUG:latest .
 
 before_deploy:
   # setup and deploy docker authentication
