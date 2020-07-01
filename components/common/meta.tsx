@@ -109,9 +109,7 @@ const PopulateHead = (data) => {
 
   const isNonProd = isDev || originalHost.startsWith('stage.');
 
-  const amplitude_key = isNonProd
-    ? process.env.AMPLITUDE_DEV
-    : process.env.AMPLITUDE_PROD;
+  const amplitude_key = 'b85ab528e443294e83c98f9f1915c23b';
 
   const GTM_CONTAINER_ID = 'GTM-5LJWNW3';
   const GTM_AUTH = isNonProd

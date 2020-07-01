@@ -21,11 +21,7 @@ Mystique is the tech that powers over 100 different microbrands at Headout.
 
   ```bash
   SLACK_GRP_BKNG_WEBHOOK=#Slack webhook
-  AMPLITUDE_PROD=#Amplitude production
-  AMPLITUDE_TEST=#Amplitude test
-  AMPLITUDE_DEV=#Amplitude development
   ZENDESK_GRP_BKNG_TOKEN=#Zendesk Group Booking Token
-  PROFESSORX_SECRET=#professorX secret to fetch subdomains
   ```
 
 - Install dependencies by running:
