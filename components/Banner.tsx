@@ -178,7 +178,7 @@ const StyledBanner = styled.div`
       width: 100%;
       background: linear-gradient(180deg, rgba(34, 34, 34, 0) 0%, #222222 100%);
       z-index: 0;
-      opacity: 0.4;
+      opacity: 0.6;
     }
 
     .indicators {
@@ -218,7 +218,7 @@ const ButtonWrapper = styled.div`
   @media (max-width: 768px) {
     button {
       font-size: 14px;
-      padding: 11px 25px;
+      padding: 13px 25px;
     }
   }
 `;

@@ -9,7 +9,7 @@ import Image from 'UI/Image';
 import MultiLevelNav from '../MultiLevelNav';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import { POWERED_BY_HEADOUT } from 'assets/SvgIcons';
-import { SOLEIL } from 'constants/ui-constants';
+import { SOLEIL, COLORS } from 'constants/ui-constants';
 
 const StyledHeader = styled.header`
   height: 80px;
@@ -94,11 +94,11 @@ const StyledBuyTickets = styled.div`
   margin-left: 32px;
   font-size: 16px;
   font-family: ${SOLEIL.FONT_STACK};
-  color: red;
+  color: ${COLORS.RHAPSODY};
   text-decoration: none;
   cursor: pointer;
   @media (max-width: 768px) {
-    margin: 0 20px;
+    margin-left: 16px;
   }
 `;
 
