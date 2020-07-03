@@ -25,6 +25,16 @@ export const tourListApiParser = (apiResponse) => {
         reviewCount: tour.reviewCount,
         averageRating: tour.averageRating,
         callToAction: tour.callToAction,
+        allTags: [
+          ...tour.allTags,
+          'SAFETY_MASK_STAFF',
+          'SAFETY_TEMPERATURE_GUEST',
+          'SAFETY_CLEANED_EQUIPMENTS',
+          'SAFETY_RESTRICTED_CAPACITY',
+        ],
+        dfListingPrice: tour.discountedFuturesListingPrice,
+        listingPrice: tour.listingPrice,
+        tgid: tour.id,
       },
     };
   }, {});

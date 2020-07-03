@@ -1,14 +1,22 @@
 import React, { useContext } from 'react';
 import Image from 'UI/Image';
+import * as labels from 'constants/localization/labels';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
-import { CLOSE_WHITE } from 'assets/SvgIcons';
+import { CLOSE_WHITE, BrownTicket, BorderedShield } from 'assets/SvgIcons';
 import { SOLEIL, COLORS } from 'constants/ui-constants';
 import {
   shortCodeSerializerWithParentProps,
   shortCodeSerializer,
 } from 'utils/shortCodes';
 import { MBContext } from 'contexts/MBContext';
+import IconCTA from 'UI/IconCTA';
+import { brownScheme, greenScheme } from 'style/theme';
+import Split, { StlyedSplit } from 'UI/Split';
+import DiscountedFutureSidebar from 'components/DiscountedFutureSidebar';
+import SafeExperiencesPitch from 'UI/SafeExperiencesPitch';
+import { isSafetyIncluded, isDiscountedFuture } from 'utils';
+import PriceBlock from 'UI/PriceBlock';
 
 const DetailedDescriptionCard = styled.div`
   grid-column: 1 / 5;
@@ -20,6 +28,11 @@ const DetailedDescriptionCard = styled.div`
   border-left: none;
   border-right: none;
   position: relative;
+  ${StlyedSplit} {
+    margin: 0;
+    max-width: unset;
+    padding: 0;
+  }
   .v2-desc-title {
     font-size: 24px;
     line-height: 1.37;
@@ -149,6 +162,7 @@ const DetailedDescriptionCard = styled.div`
     font-weight: 500;
     margin-bottom: 4px;
     line-height: 18px;
+    text-transform: lowercase;
   }
 
   .desc-scratch-price {
@@ -166,8 +180,8 @@ const DetailedDescriptionCard = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 180px;
-    height: 48px;
+    min-width: 180px;
+    padding: 16px;
   }
 
   .desc-book-now-text {
@@ -282,6 +296,14 @@ const DetailedDescriptionCard = styled.div`
   }
 `;
 
+const IconBoosters = styled.div`
+  margin-bottom: 16px;
+  margin-left: 16px;
+  ${StlyedSplit} {
+    grid-column-gap: 29px;
+  }
+`;
+
 const DetailedProductCard = (props) => {
   const closeDescriptionCard = () => {
     props.closeDescription();
@@ -295,12 +317,61 @@ const DetailedProductCard = (props) => {
     .split(',')
     .filter((d) => d.length)
     .map((d) => d.trim());
+
+  const { allTags = [], listingPrice, dfListingPrice } = activeTour;
+  const hasSafetyFlag = isSafetyIncluded(allTags);
+  const isDFProduct = isDiscountedFuture(allTags);
+  const isDFOnlyProduct = listingPrice === null && dfListingPrice !== null;
+  const {
+    sidebarModal: { addToAside },
+  } = useContext(MBContext);
+  const openDFSidebar = () => {
+    addToAside({
+      width: '27.5vw',
+      title: activeTour.title,
+      children: <DiscountedFutureSidebar product={activeTour} />,
+    });
+  };
+  const openSafeSidebar = () => {
+    addToAside({
+      width: '41.06vw',
+      children: (
+        <SafeExperiencesPitch
+          allTags={allTags}
+          images={activeTour.safetyImages}
+        />
+      ),
+      sidePadding: 40,
+    });
+  };
+
   return (
     <DetailedDescriptionCard {...{ cardPosition, rightBlocksCount }}>
       <div className="indicator-triangle"></div>
       <div className="product-v2-description-left">
         <div className="full-width-section">
           <div className="v2-desc-title">{activeTour.title}</div>
+          <IconBoosters>
+            <Split count={2} autoWidth={true} mobileLayout={'scroll'}>
+              {hasSafetyFlag ? (
+                <IconCTA
+                  text={labels[lang].SAFE_EXPERIENCE.FLAG_TEXT}
+                  colorScheme={greenScheme}
+                  ctaOnClick={openSafeSidebar}
+                  icon={BorderedShield}
+                />
+              ) : null}
+              {isDFProduct ? (
+                <IconCTA
+                  text={labels[lang].DISCOUNTED_FUTURES.FLAG_TEXT}
+                  colorScheme={brownScheme}
+                  ctaOnClick={openDFSidebar}
+                  icon={BrownTicket}
+                />
+              ) : null}
+            </Split>
+          </IconBoosters>
+
           {descriptors.length > 0 ? (
             <div className="v2-descriptors">
               {descriptors.map((descriptor, index) => {
@@ -368,18 +439,14 @@ const DetailedProductCard = (props) => {
             })}
             <div className="desc-cta-price">
               <div className="desc-price">
-                <span className="from-text">from</span>
+                <span className="from-text">{labels[lang].FROM}</span>
                 <div className="price-wrapper">
-                  <div className="desc-final-price">
-                    {activeTour.currencySymbol}
-                    {activeTour.price}
-                  </div>
-                  {activeTour.price < activeTour.scratchPrice ? (
-                    <div className="desc-scratch-price">
-                      {activeTour.currencySymbol}
-                      {activeTour.scratchPrice}
-                    </div>
-                  ) : null}
+                  <PriceBlock
+                    prefix={false}
+                    showScratchPrice={true}
+                    lang={lang}
+                    price={listingPrice || dfListingPrice}
+                  />
                 </div>
               </div>
               <a
@@ -387,10 +454,24 @@ const DetailedProductCard = (props) => {
                 rel="noopener noreferrer"
                 href={`https://book.${nakedDomain}${
                   lang === 'en' ? '' : `/${lang}`
-                }/book/${tgidClicked}`}
+                }/book/${tgidClicked}${
+                  isDFOnlyProduct ? '?discountedFuture=true' : ''
+                }`}
+                onClick={(e) => {
+                  if (isDFProduct && !isDFOnlyProduct) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    openDFSidebar();
+                    return false;
+                  }
+                }}
               >
                 <div className="desc-book-now-cta">
-                  <span className="desc-book-now-text">Book Now</span>
+                  <span className="desc-book-now-text">
+                    {isDFOnlyProduct
+                      ? labels[lang].DISCOUNTED_FUTURES.FLAG_TEXT
+                      : labels[lang].BOOK_NOW_CTA}
+                  </span>
                 </div>
               </a>
             </div>

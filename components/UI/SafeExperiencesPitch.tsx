@@ -1,0 +1,287 @@
+import styled from 'styled-components';
+import Image from './Image';
+import Slider from './Slider';
+import useWindowSize from 'hooks/useWindowSize';
+import Conditional from 'components/common/Conditional';
+import IconCTA, { StyledIconCTA } from './IconCTA';
+import * as labels from 'constants/localization/labels';
+import { CHEVRON_LEFT_CIRCLE, Shield } from 'assets/SvgIcons';
+import { SOLEIL, COLORS } from 'constants/ui-constants';
+import { greenScheme } from 'style/theme';
+import { SAFETY_DETAILS_IMAGES } from 'constants/index';
+import { useContext } from 'react';
+import { MBContext } from 'contexts/MBContext';
+
+const PitchGrid = styled.div`
+  display: grid;
+  grid-row-gap: 48px;
+  padding-bottom: 48px;
+`;
+
+const Section = styled.div`
+  display: grid;
+  grid-row-gap: 32px;
+`;
+
+const SliderSection = styled.div`
+  display: grid;
+  position: relative;
+  .swiper-container {
+    overflow: hidden;
+    max-width: calc(${(1440 * 41.06) / 100}px - 80px);
+  }
+  .next-slide {
+    right: -16px;
+  }
+  .prev-slide {
+    left: -16px;
+  }
+  .slide {
+    display: grid;
+    img {
+      width: calc(${(1440 * 41.06) / 100}px - 80px);
+      height: 394px;
+      object-fit: cover;
+    }
+  }
+  .next-slide {
+    left: unset;
+    right: -20px;
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+  .safe-pagination {
+    display: none;
+    top: 380px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  @media (max-width: 768px) {
+    margin: 0 -24px;
+    .swiper-container {
+      overflow: hidden;
+      max-width: 100vw;
+    }
+    .safe-pagination {
+      display: grid;
+    }
+    .slide {
+      display: grid;
+      img {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+      }
+    }
+    .prev-slide,
+    .next-slide {
+      display: none;
+    }
+  }
+`;
+
+const Caption = styled.div`
+  font-size: 12px;
+  color: ${COLORS.WHITE};
+  line-height: 19px;
+  background: ${COLORS.BLACK};
+  padding: 8px 16px;
+`;
+
+const Heading = styled.div`
+  font-family: ${SOLEIL.FONT_STACK};
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+`;
+
+const Text = styled.div`
+  font-family: ${SOLEIL.FONT_STACK};
+  color: ${COLORS.FOUR_BLACK};
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 19px;
+`;
+
+const Pitch = styled.div`
+  display: grid;
+  grid-row-gap: 24px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: right;
+  ${Heading} {
+    font-size: 24px;
+  }
+`;
+
+const EmphasizedText = styled.div`
+  font-family: ${SOLEIL.FONT_STACK}
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+`;
+
+const Content = styled.div`
+  display: grid;
+  grid-row-gap: 8px;
+  height: max-content;
+`;
+
+const ImageTextGrid = styled.div`
+  display: grid;
+  grid-gap: 16px;
+  grid-template-columns: auto auto;
+  grid-column-gap: 24px;
+  .section-image {
+    img {
+      border-radius: 2px;
+      width: 160px;
+      height: 120px;
+      object-fit: cover;
+    }
+  }
+
+  @media (max-width: 768px) {
+    grid-column-gap: 16px;
+    .section-image {
+      img {
+        width: 104px;
+      }
+    }
+  }
+`;
+
+const _FAQGrid = styled.div`
+  display: grid;
+  grid-row-gap: 16px;
+  margin-bottom: 32px;
+  & > div {
+    padding-bottom: 12px;
+    margin-right: 0;
+  }
+`;
+
+const SafetyCard = styled.div`
+  display: grid;
+  padding: 16px;
+  grid-column-gap: 24px;
+  border: 1px solid #e2e2e2;
+  border-radius: 4px;
+  grid-template-columns: auto auto;
+  ${StyledIconCTA} {
+    margin-left: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.08);
+    padding: 4px 7px;
+    padding-left: 18px;
+    background: ${COLORS.WHITE};
+    grid-template-columns: auto;
+    align-self: start;
+    svg {
+      transform: scale(1.1);
+    }
+  }
+  @media (max-width: 768px) {
+    grid-template-columns: auto;
+    grid-row-gap: 8px;
+  }
+`;
+
+const renderSafetyDetailsSection = (tags, lang, isMobile) =>
+  Object.entries(labels[lang].SAFE_EXPERIENCE.MODAL.DETAILS).map(
+    ([key, { HEADING, DESCRIPTION }]: any) => (
+      <Conditional key={key} if={tags.includes(key)}>
+        <ImageTextGrid>
+          <Content>
+            <EmphasizedText>{HEADING}</EmphasizedText>
+            <Text>{DESCRIPTION}</Text>
+          </Content>
+          <div className="section-image">
+            <Image
+              url={SAFETY_DETAILS_IMAGES[key]}
+              height={120}
+              width={isMobile ? 104 : 160}
+            />
+          </div>
+        </ImageTextGrid>
+      </Conditional>
+    )
+  );
+
+const SafeExperiencesPitch = ({
+  allTags = [],
+  generic = false,
+  images = [],
+}) => {
+  const { lang } = useContext(MBContext);
+  const { width } = useWindowSize();
+  const isMobile = width < 768;
+  let tags = allTags;
+  if (generic) {
+    tags = Object.keys(labels[lang].SAFE_EXPERIENCE.MODAL.DETAILS).filter(
+      (k) => k.indexOf('DEFAULT') > -1
+    );
+  }
+  return (
+    <PitchGrid>
+      <Section>
+        <Pitch>
+          <Heading>{labels[lang].SAFE_EXPERIENCE.MODAL.HEADING}</Heading>
+          <Text>{labels[lang].SAFE_EXPERIENCE.MODAL.SUB_HEADING}</Text>
+        </Pitch>
+      </Section>
+
+      {generic ? (
+        <SafetyCard>
+          <IconCTA
+            text={'Best Safety'}
+            colorScheme={greenScheme}
+            icon={Shield}
+          />
+          <Text>{labels[lang].SAFE_EXPERIENCE.MODAL.BADGE_DESCRIPTION}</Text>
+        </SafetyCard>
+      ) : null}
+
+      <Conditional if={images.length}>
+        <SliderSection>
+          <Slider
+            paginationClass={'safe-pagination'}
+            nextButton={CHEVRON_LEFT_CIRCLE}
+            prevButton={CHEVRON_LEFT_CIRCLE}
+            sliderOptions={{
+              pagination: false,
+              shouldSwiperUpdate: true,
+            }}
+          >
+            {images.map(({ url, altText, description }, index) => (
+              <div className="slide" key={index}>
+                <Image url={url} aspectRatio="1:2" alt={altText} height={400} />
+                <Conditional if={description}>
+                  <Caption>{description}</Caption>
+                </Conditional>
+              </div>
+            ))}
+          </Slider>
+        </SliderSection>
+      </Conditional>
+
+      <Section>{renderSafetyDetailsSection(tags, lang, isMobile)}</Section>
+
+      {/* <Section>
+        <Heading>{"FAQ's"}</Heading>
+        <FAQGrid>
+          <Accordion 
+            heading={"How does this work?"}
+            content={"Similar to a treasury bond, guests can purchase a $100 “hotel bond” directly from the hotels listed on the Buy Now Stay Later website. After a 60 day maturation period, that $100 bond will be worth $150. Basically, spend $100 and receive a gift certificate for $150. It’s as easy as that. And use it when you want! (after the 60 days of course)."}  
+          />
+        </FAQGrid>
+      </Section> */}
+    </PitchGrid>
+  );
+};
+
+export default SafeExperiencesPitch;

@@ -82,7 +82,9 @@ const Accordion = ({
           <Chevron isActive={isOpen} activeCursor={false} />
         </div>
       </Title>
-      <ContentBlock isOpen={isOpen}>{content}</ContentBlock>
+      <ContentBlock className={'answer'} isOpen={isOpen}>
+        {content}
+      </ContentBlock>
     </StyledAccordion>
   );
 };

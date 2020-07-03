@@ -555,11 +555,19 @@ export default class Page extends React.Component<any, any> {
             descriptors: tour.microBrandsDescriptor,
             productHighlights: tour.highlights,
             productTitle: tour.name,
-            images: [{ url: tour.imageUrl }],
+            images: [
+              { url: tour.imageUrl },
+              ...(tour.media?.productImages || []),
+            ],
             averageRating: tour.averageRating,
             reviewCount: tour.reviewCount,
             ctaBooster: tour.callToAction,
-            available: !(tour.listingPrice === null),
+            available:
+              !(tour.listingPrice === null) ||
+              !(tour.discountedFuturesListingPrice === null),
+            allTags: tour.allTags || [],
+            dfListingPrice: tour.discountedFuturesListingPrice,
+            safetyImages: tour.media?.safetyImages || [],
           },
         }),
         {}
@@ -680,15 +688,17 @@ export default class Page extends React.Component<any, any> {
             windowUrl,
           }}
         >
-          <MBContextProvider
-            host={host}
-            uid={uid}
-            lang={lang}
-            microsite={microsite}
-            design={MBDesign || DESIGN.V1}
-          >
-            <ThemeProvider theme={theme}>{Component}</ThemeProvider>
-          </MBContextProvider>
+          <ThemeProvider theme={theme}>
+            <MBContextProvider
+              host={host}
+              uid={uid}
+              lang={lang}
+              microsite={microsite}
+              design={MBDesign || DESIGN.V1}
+            >
+              {Component}
+            </MBContextProvider>
+          </ThemeProvider>
         </EnvironmentContext.Provider>
       </div>
     );

@@ -37,6 +37,7 @@ export const COLORS = {
   },
   FLOAT_PURPS: '#F8F6FF',
   HEADOUT_CANDY: '#FA2F90',
+  YOUNG_ORANGE: '#FFE7CE',
 };
 
 export const SIZES = {

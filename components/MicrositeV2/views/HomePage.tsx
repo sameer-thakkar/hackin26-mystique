@@ -14,6 +14,8 @@ import { LOCATION } from 'assets/SvgIcons';
 import { groupSlices } from 'utils/helper';
 import styled from 'styled-components';
 import { SIZES, SOLEIL } from 'constants/ui-constants';
+import SafeDFBannerWrapper from 'UI/SafeDFBannerWrapper';
+import { isSafetyIncluded, getDFValidityFromTags } from 'utils';
 
 const V2MicrositeWrapper = styled.div`
   .alert-wrapper {
@@ -83,7 +85,13 @@ export const HomePage = (props) => {
   const footerLogoURL = footer.logo.url;
   const footerLogoAlt = footer.footer_logo_alt || footer.footer_logo?.alt;
   const hasDropdownLinks = enableDropdownLinks && dropdownLinks.length;
-
+  const hasSafe = Object.values(allTours).some((tour: any) =>
+    isSafetyIncluded(tour.allTags)
+  );
+  const [dfExpiryDate, ..._others] = Object.values(allTours)
+    .map((tour: any) => getDFValidityFromTags(tour.allTags))
+    .sort()
+    .filter((d) => d);
   return (
     <V2MicrositeWrapper>
       <Header
@@ -126,6 +134,13 @@ export const HomePage = (props) => {
           <Alert popupUID={alertPopup?.uid} currentLanguage={currentLanguage} />
         </div>
       ) : null}
+
+      <SafeDFBannerWrapper
+        hasSafe={hasSafe}
+        dfExpiryDate={dfExpiryDate}
+        marginTop={40}
+      />
+
       {heroSectionSlice.length ? (
         <ProductsContextProvider allTours={allTours} ready={ready}>
           <div className="main-wrapper hero-slice-section">

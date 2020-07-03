@@ -1,36 +1,36 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 export default class InlineInvPrice extends Component<any, any> {
   state = {
-    price: "",
-    scratchPrice: "",
-    currencySymbol: "",
-    showScratchPrice: "",
-    isFetched: false
+    price: '',
+    scratchPrice: '',
+    currencySymbol: '',
+    showScratchPrice: '',
+    isFetched: false,
   };
 
   async componentDidMount() {
     if (this.props.tgid && this.props.tid) {
       const fetchTour = await fetch(
         `https://api.headout.com/api/v5/tour-group/inventory/get/${this.props.tgid}`
-      ).then(res => res.json());
+      ).then((res) => res.json());
       const currencySymbol = fetchTour.currency.localSymbol;
       const getTIDData = fetchTour.inventoryList.find(
-        inventoryList => inventoryList.tourId == this.props.tid
+        (inventoryList) => inventoryList.tourId == this.props.tid
       );
       const price = getTIDData.finalPriceProfile.persons[0].price;
       const invScratchPriceId = getTIDData.originalPriceProfileId;
       const scratchPrice =
         fetchTour.priceProfileMap[invScratchPriceId].persons[0].price;
-      const showScratchPrice = this.props["scratch-price"]
-        ? this.props["scratch-price"]
+      const showScratchPrice = this.props['scratch-price']
+        ? this.props['scratch-price']
         : false;
       this.setState({
         price,
         scratchPrice,
         currencySymbol,
         showScratchPrice,
-        isFetched: true
+        isFetched: true,
       });
     }
   }
@@ -41,7 +41,7 @@ export default class InlineInvPrice extends Component<any, any> {
       currencySymbol,
       isFetched,
       price,
-      showScratchPrice
+      showScratchPrice,
     } = this.state;
     const isScratchPriceExist =
       showScratchPrice && scratchPrice && price < scratchPrice;
@@ -55,7 +55,7 @@ export default class InlineInvPrice extends Component<any, any> {
                 {price}
               </span>
             ) : (
-              ""
+              ''
             )}
             {isScratchPriceExist ? (
               <span className="inline-scratchprice">
@@ -63,7 +63,7 @@ export default class InlineInvPrice extends Component<any, any> {
                 {scratchPrice}
               </span>
             ) : (
-              ""
+              ''
             )}
             <style jsx>{`
               .inline-scratchprice {

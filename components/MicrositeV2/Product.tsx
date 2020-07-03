@@ -4,13 +4,19 @@ import Image from 'UI/Image';
 import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import { truncate } from 'utils/helper';
 import { SOLEIL, COLORS } from 'constants/ui-constants';
+import { CURRENCY_SYMBOL_MAP } from 'constants/index';
 
 const Product = (props) => {
   const handleProductClick = () => {
     props.productClick(props.tgid, props.cardIdPrefix);
   };
   const { allTours, tgid, cardIdPrefix, isMobile } = props;
-  const tour = allTours[tgid];
+  if (!allTours[tgid]) return null;
+  const { listingPrice, dfListingPrice, ...tour } = allTours[tgid];
+  const priceObj = listingPrice || dfListingPrice;
+  const price = priceObj?.finalPrice;
+  const scratchPrice = priceObj.originalPrice;
+  const currencySymbol = CURRENCY_SYMBOL_MAP[priceObj.currencyCode];
   return (
     <div
       onClick={handleProductClick}
@@ -42,13 +48,13 @@ const Product = (props) => {
         </div>
         <div className="product-v2-bottom-left">
           <div className="product-v2-price">
-            {tour.currencySymbol}
-            {tour.price}
+            {currencySymbol}
+            {price}
           </div>
-          {tour.scratchPrice > tour.price ? (
+          {scratchPrice > price ? (
             <div className="product-v2-scratch-price">
-              {tour.currencySymbol}
-              {tour.scratchPrice}
+              {currencySymbol}
+              {scratchPrice}
             </div>
           ) : null}
         </div>

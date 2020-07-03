@@ -1,13 +1,37 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
+import * as labels from 'constants/localization/labels';
 import Image from 'UI/Image';
 import { RichText } from 'prismic-reactjs';
-import { CHEVRON_LEFT } from 'assets/SvgIcons';
+import { CHEVRON_LEFT, BorderedShield, BrownTicket } from 'assets/SvgIcons';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { PAGETYPE } from 'constants/index';
 import parse from 'url-parse';
 import Swiper from 'react-id-swiper';
 import { SOLEIL, COLORS } from 'constants/ui-constants';
+import { MBContext } from 'contexts/MBContext';
+import DiscountedFutureSidebar from 'components/DiscountedFutureSidebar';
+import SafeExperiencesPitch from 'UI/SafeExperiencesPitch';
+import Split, { StlyedSplit } from 'UI/Split';
+import IconCTA from 'UI/IconCTA';
+import { greenScheme, brownScheme } from 'style/theme';
+import styled from 'styled-components';
+import { isSafetyIncluded, isDiscountedFuture } from 'utils';
 
+const IconBoosters = styled.div`
+  margin-left: 12px;
+  grid-column: 1 / 3;
+  @media (max-width: 768px) {
+    margin-left: 0;
+    margin-bottom: 8px;
+    ${StlyedSplit} {
+      overflow-y: visible;
+      padding-left: 12px;
+      grid-template-columns: auto auto 8px;
+      grid-column-gap: 24px;
+      margin: 0;
+    }
+  }
+`;
 export const MobileProductPage = (props) => {
   const closeProductCard = () => {
     props.changePage({ name: PAGETYPE.HOMEPAGE });
@@ -45,6 +69,31 @@ export const MobileProductPage = (props) => {
   hostSplit.shift();
   const bookingUrl = hostSplit.join('.');
   const descriptors = tour.descriptors.split(',').filter((desc) => desc.length);
+  const { allTags = [], listingPrice, dfListingPrice } = tour;
+  const hasSafetyFlag = isSafetyIncluded(allTags);
+  const isDFProduct = isDiscountedFuture(allTags);
+  const isDFOnlyProduct = listingPrice === null && dfListingPrice !== null;
+
+  const {
+    sidebarModal: { addToAside },
+  } = useContext(MBContext);
+  const openDFSidebar = () => {
+    addToAside({
+      width: '27.5vw',
+      title: tour.title,
+      children: <DiscountedFutureSidebar product={tour} />,
+    });
+  };
+  const openSafeSidebar = () => {
+    addToAside({
+      width: '41.06vw',
+      children: (
+        <SafeExperiencesPitch images={tour.safetyImages} allTags={allTags} />
+      ),
+      sidePadding: 40,
+    });
+  };
+
   return (
     <div className="mobile-product-wrap">
       <div className="header">
@@ -104,6 +153,26 @@ export const MobileProductPage = (props) => {
               />
             </div>
           ) : null}
+          <IconBoosters>
+            <Split count={2} autoWidth={true} mobileLayout={'scroll'}>
+              {hasSafetyFlag ? (
+                <IconCTA
+                  text={labels[currentLanguage].SAFE_EXPERIENCE.FLAG_TEXT}
+                  colorScheme={greenScheme}
+                  ctaOnClick={openSafeSidebar}
+                  icon={BorderedShield}
+                />
+              ) : null}
+              {isDFProduct ? (
+                <IconCTA
+                  text={labels[currentLanguage].DISCOUNTED_FUTURES.FLAG_TEXT}
+                  colorScheme={brownScheme}
+                  ctaOnClick={openDFSidebar}
+                  icon={BrownTicket}
+                />
+              ) : null}
+            </Split>
+          </IconBoosters>
           {descriptors.length > 0 ? (
             <div className="descriptors">
               {descriptors.map((descriptor, index) => {
@@ -160,9 +229,21 @@ export const MobileProductPage = (props) => {
           rel="noopener noreferrer"
           href={`https://book.${bookingUrl}${
             currentLanguage === 'en' ? '' : `/${currentLanguage}`
-          }/book/${tgid}`}
+          }/book/${tgid}${isDFOnlyProduct ? '?discountedFuture=true' : ''}`}
+          onClick={(e) => {
+            if (isDFProduct && !isDFOnlyProduct) {
+              e.preventDefault();
+              e.stopPropagation();
+              openDFSidebar();
+              return false;
+            }
+          }}
         >
-          <div className="cta-text">Book Now</div>
+          <div className="cta-text">
+            {isDFOnlyProduct
+              ? labels[currentLanguage].DISCOUNTED_FUTURES.FLAG_TEXT
+              : labels[currentLanguage].BOOK_NOW_CTA}
+          </div>
         </a>
       </div>
       <style jsx>
@@ -311,7 +392,7 @@ export const MobileProductPage = (props) => {
             color: #fff;
             width: 100%;
             background: #fff;
-            z-index: 999;
+            z-index: 10;
             position: fixed;
             left: 0;
             bottom: 0;

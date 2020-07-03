@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 type IPriceProps = {
   tgid: number;
@@ -16,28 +16,28 @@ class InlinePrice extends React.Component<IPriceProps, IPriceState> {
       error: null,
       isLoaded: false,
       data: [],
-      showScratchPrice: ""
+      showScratchPrice: '',
     };
   }
   componentDidMount() {
     const showScratchPrice =
-      this.props["scratch-price"] !== undefined
-        ? this.props["scratch-price"]
+      this.props['scratch-price'] !== undefined
+        ? this.props['scratch-price']
         : false;
     fetch(`https://api.headout.com/api/v5/tour-group/get/${this.props.tgid}`)
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(
-        data => {
+        (data) => {
           this.setState({
             isLoaded: true,
             data,
-            showScratchPrice: showScratchPrice
+            showScratchPrice: showScratchPrice,
           });
         },
-        error => {
+        (error) => {
           this.setState({
             isLoaded: true,
-            error
+            error,
           });
         }
       );
@@ -51,14 +51,14 @@ class InlinePrice extends React.Component<IPriceProps, IPriceState> {
           data.listingPrice.finalPrice < data.listingPrice.originalPrice
         : false;
     if (error || !isLoaded) {
-      return "";
+      return '';
     } else {
       return data.listingPrice ? (
         <>
           <span className="inline-price">
-            {" "}
+            {' '}
             {data.currency.localSymbol}
-            {data.listingPrice.finalPrice}{" "}
+            {data.listingPrice.finalPrice}{' '}
           </span>
           {isScratchPriceExist ? (
             <span className="inline-scratch-price">
@@ -66,7 +66,7 @@ class InlinePrice extends React.Component<IPriceProps, IPriceState> {
               {data.listingPrice.originalPrice}
             </span>
           ) : (
-            ""
+            ''
           )}
           <style jsx>{`
             .inline-scratch-price {
@@ -76,7 +76,7 @@ class InlinePrice extends React.Component<IPriceProps, IPriceState> {
           `}</style>
         </>
       ) : (
-        ""
+        ''
       );
     }
   }

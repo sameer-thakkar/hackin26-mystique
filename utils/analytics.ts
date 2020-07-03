@@ -34,5 +34,5 @@ Analytics.prototype.sendGenericPageEvents = function (labelProps) {
 };
 
 Analytics.prototype.pushToDataLayer = function (props) {
-  (window as any).dataLayer.push(props);
+  if (this.isClient()) (window as any).dataLayer.push(props);
 };

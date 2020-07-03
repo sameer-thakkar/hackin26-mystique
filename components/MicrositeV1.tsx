@@ -23,6 +23,8 @@ import {
 import { groupSlices } from '../utils/helper';
 import { ProductsContextProvider } from '../contexts/Products';
 import { tourListApiParser } from '../utils/dataParsers';
+import SafeDFBannerWrapper from 'UI/SafeDFBannerWrapper';
+import { isSafetyIncluded, getDFValidityFromTags } from 'utils';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
@@ -106,7 +108,7 @@ export default class MicrositeV1 extends Component<any, any> {
 
       const fetchVariantPrices = variantTgids.map((tourVariant) =>
         fetch(
-          `https://api.headout.com/api/v5/tour-group/inventory/get/${tourVariant.tgid}`
+          `https://api.headout.com/api/v5/tour-group/inventory/get/${tourVariant.tgid}?for-days=2`
         ).then((res) => res.json())
       );
 
@@ -156,11 +158,13 @@ export default class MicrositeV1 extends Component<any, any> {
             .then((response) => response)
         );
         const response = await Promise.all(requestQueue).then((res) =>
-          res.map((tour) =>
-            (tour as any).inventoryList[0]
-              ? (tour as any).inventoryList[0].startDate
-              : ''
-          )
+          res.reduce((acc: any, tour: any, index) => {
+            const tgid = uncategorizedTours[0].items[index].tgid;
+            return {
+              ...acc,
+              [tgid]: tour?.inventoryList?.[0]?.startDate || '',
+            };
+          }, {})
         );
         this.setState({ earliestAvailabilityQueue: response });
       }
@@ -353,9 +357,9 @@ export default class MicrositeV1 extends Component<any, any> {
     }
 
     const uncategorizedToursData = showEarliestAvailability
-      ? uncategorizedToursList.map((tour, index) => ({
+      ? uncategorizedToursList.map((tour) => ({
           ...tour,
-          earliestAvailability: this.state.earliestAvailabilityQueue[index],
+          earliestAvailability: this.state.earliestAvailabilityQueue[tour.tgid],
         }))
       : uncategorizedToursList;
 
@@ -412,7 +416,14 @@ export default class MicrositeV1 extends Component<any, any> {
     }
 
     const coverSlices = this.props.data.data.body4;
-
+    const tours = scorpioData;
+    const hasSafe = Object.values(tours).some((tour: any) =>
+      isSafetyIncluded(tour.allTags)
+    );
+    const [dfExpiryDate, ..._others] = Object.values(tours)
+      .map((tour: any) => getDFValidityFromTags(tour.allTags))
+      .sort()
+      .filter((d) => d);
     return (
       <div>
         <div className="microsite-container">
@@ -484,11 +495,12 @@ export default class MicrositeV1 extends Component<any, any> {
               currentLanguage={currentLanguage}
             />
           ) : null}
-          {coverSlices ? (
+          {coverSlices.length ? (
             <CoverSlicesWrapper>
               <LongForm content={coverSlices} isMobile={this.state.isMobile} />
             </CoverSlicesWrapper>
           ) : null}
+          <SafeDFBannerWrapper hasSafe={hasSafe} dfExpiryDate={dfExpiryDate} />
           {checkIfToursAvailable ? (
             <PopulateUncategorizedProducts
               uncategorizedTours={orderedUncategorizedTours}

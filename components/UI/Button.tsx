@@ -34,6 +34,17 @@ const Button = styled.button((props) => {
       }
       `;
       break;
+    case 'redBordered':
+      styles = `
+      border: 1px solid ${props.theme.primaryColor};
+      color: ${props.theme.primaryColor};
+      background: ${COLORS.WHITE};
+      padding: 13px ${props.paddingSides || '21px'};
+      * {
+        color: ${props.theme.primaryColor};
+      }
+      `;
+      break;
     case 'whiteBordered':
       styles = `
       border: 1px solid ${COLORS.WHITE};
@@ -57,6 +68,7 @@ const Button = styled.button((props) => {
   font-weight: ${props.theme.button.fontWeight};
   line-height: 1;
   cursor: pointer;
+  text-align: center;
   :focus {
     outline: none;
   }

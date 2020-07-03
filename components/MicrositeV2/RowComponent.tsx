@@ -27,10 +27,8 @@ export const RowComponent = (props) => {
   useEffect(() => {
     if (!window) return;
     const {
-      tgid,
-      section: activeSection,
-      autoScroll,
-    } = interactionContext.activeTour;
+      activeTour: { tgid, section: activeSection, autoScroll },
+    } = interactionContext;
     if (tgid && autoScroll)
       scroller.scrollTo(`${activeSection}-${tgid}`, {
         duration: 750,
@@ -38,7 +36,7 @@ export const RowComponent = (props) => {
         smooth: 'easeInQuad',
         offset: 45,
       });
-  });
+  }, [interactionContext]);
 
   const {
     tgidsSubArr,

@@ -1,18 +1,26 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import styled from 'styled-components';
 import parse from 'url-parse';
 import dayjs from 'dayjs';
 import ReactMarkdown from 'react-markdown/with-html';
 import * as labels from 'constants/localization/labels';
-import LocalisedPrice from 'UI/LPrice';
 import HorizontalLine from './slices/HorizontalLine';
 import Button from 'UI/Button';
 import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { ANALYTICS_EVENTS } from 'constants/index';
 import { COLORS, SOLEIL } from 'constants/ui-constants';
-import { CALENDAR } from 'assets/SvgIcons';
+import { CALENDAR, BrownTicket, BorderedShield } from 'assets/SvgIcons';
 import 'utils/dayjsLocale';
+import Split, { StlyedSplit } from 'UI/Split';
+import IconCTA from 'UI/IconCTA';
+import { brownScheme, greenScheme } from 'style/theme';
+import { isDiscountedFuture, isSafetyIncluded } from 'utils';
+import { MBContext } from 'contexts/MBContext';
+import DiscountedFutureSidebar from './DiscountedFutureSidebar';
+import SafeExperiencesPitch from 'UI/SafeExperiencesPitch';
+import PriceBlock from 'UI/PriceBlock';
+import Conditional from './common/Conditional';
 
 const isLengthyArray = (item) => Array.isArray(item) && item.length;
 
@@ -23,6 +31,11 @@ const StyledProductCard = styled.div`
   border-radius: 4px;
   display: grid;
   grid-row-gap: 24px;
+  ${StlyedSplit} {
+    margin: 0;
+    max-width: unset;
+    padding: 0;
+  }
   .more-details {
     font-weight: ${SOLEIL.MEDIUM};
     font-size: 14px;
@@ -99,7 +112,7 @@ const ProductHeader = styled.div`
   }
 `;
 
-const PriceBlock = styled.div`
+const PriceContainer = styled.div`
   justify-self: center;
   display: grid;
   justify-items: left;
@@ -142,12 +155,11 @@ const CTABlock = styled.div`
   }
   .tour-book-now-cta {
     width: 100%;
+    min-width: 230px;
   }
   @media (max-width: 768px) {
-    grid-row: ${({ showEarliestAvail, hasOffer }) =>
-      showEarliestAvail || hasOffer ? 6 : 5};
-    grid-row: ${({ showEarliestAvail, hasOffer }) =>
-      showEarliestAvail && hasOffer ? 7 : 6};
+    grid-row: ${({ showEarliestAvail, hasOffer, hasIconBoosters }) =>
+      (showEarliestAvail && hasOffer ? 7 : 6) + (hasIconBoosters ? 1 : 0)};
     .tour-book-now-cta {
       justify-content: center;
     }
@@ -217,7 +229,8 @@ const NextAvailableBlock = styled.div`
     display: flex;
   }
   @media (max-width: 768px) {
-    grid-row: ${({ hasOffer }) => (hasOffer ? 8 : 7)};
+    grid-row: ${({ hasOffer, hasIconBoosters }) =>
+      (hasOffer ? 8 : 7) + (hasIconBoosters ? 1 : 0)};
   }
 `;
 const ProductOfferBlock = styled.div`
@@ -278,6 +291,22 @@ const V1BoosterBlock = styled.div`
     margin: 0;
   }
 `;
+
+const IconBoosters = styled.div`
+  margin-left: 16px;
+  ${StlyedSplit} {
+    grid-column-gap: 30px;
+  }
+  @media (max-width: 768px) {
+    margin-left: 0;
+    ${StlyedSplit} {
+      padding-left: 12px;
+      grid-template-columns: auto auto 8px;
+      grid-column-gap: 30px;
+    }
+  }
+`;
+
 const Product = (props) => {
   const moreDetailsRef = useRef();
   const { analytics, tgid, position, currentLanguage, togglePopup } = props;
@@ -287,7 +316,6 @@ const Product = (props) => {
     highlights,
     tourPrices,
     uid,
-    currencySymbol,
     hasOffer,
     productOffer,
     offerId,
@@ -341,8 +369,37 @@ const Product = (props) => {
   const showScratchPrice = isFetched && isScratchPriceEnabled;
   const isHighlightsFromPrismic =
     isLengthyArray(highlights) && highlights.filter((item) => item.text).length;
-  if (isFetched && !tourPrices[tgid]?.price) return null;
-
+  const {
+    sidebarModal: { addToAside },
+  } = useContext(MBContext);
+  const { listingPrice } = isFetched
+    ? tourPrices[tgid]
+    : { listingPrice: null };
+  const { allTags, dfListingPrice } = scorpioData;
+  if (isFetched && !tourPrices[tgid]?.price && dfListingPrice === null)
+    return null;
+  const hasSafetyFlag = isSafetyIncluded(allTags);
+  const isDFProduct = isDiscountedFuture(allTags);
+  const isDFOnlyProduct = listingPrice === null && dfListingPrice !== null;
+  const openDFSidebar = () => {
+    addToAside({
+      width: '27.5vw',
+      title: cardTitle,
+      children: <DiscountedFutureSidebar product={tourPrices[tgid]} />,
+    });
+  };
+  const openSafeSidebar = () => {
+    addToAside({
+      width: '41.06vw',
+      children: (
+        <SafeExperiencesPitch
+          allTags={allTags}
+          images={scorpioData.safetyImages}
+        />
+      ),
+      sidePadding: isMobile ? 0 : 40,
+    });
+  };
   return (
     <StyledProductCard>
       <ProductHeader>
@@ -362,6 +419,28 @@ const Product = (props) => {
               return acc;
             }, [])}
           </div>
+          <Conditional if={hasSafetyFlag || isDFProduct}>
+            <IconBoosters>
+              <Split count={2} autoWidth={true}>
+                {hasSafetyFlag ? (
+                  <IconCTA
+                    text={labels[currentLanguage].SAFE_EXPERIENCE.FLAG_TEXT}
+                    colorScheme={greenScheme}
+                    ctaOnClick={openSafeSidebar}
+                    icon={BorderedShield}
+                  />
+                ) : null}
+                {isDFProduct ? (
+                  <IconCTA
+                    text={labels[currentLanguage].DISCOUNTED_FUTURES.FLAG_TEXT}
+                    colorScheme={brownScheme}
+                    ctaOnClick={openDFSidebar}
+                    icon={BrownTicket}
+                  />
+                ) : null}
+              </Split>
+            </IconBoosters>
+          </Conditional>
           {booster && RichText.asText(booster).trim().length > 0 ? (
             <V1BoosterBlock boosterHasIcon={boosterHasIcon}>
               <RichText render={booster} htmlSerializer={shortCodeSerializer} />
@@ -388,54 +467,55 @@ const Product = (props) => {
             })}
         </div>
         <div className="header-right">
-          <PriceBlock>
-            {showScratchPrice &&
-            tourPrices[tgid].scratchPrice > tourPrices[tgid].price ? (
-              <div className="tour-scratch-price">
-                <div>{labels[currentLanguage].FROM}</div>
-                <LocalisedPrice
-                  price={tourPrices[tgid].scratchPrice}
-                  currencySymbol={currencySymbol}
-                  lang={currentLanguage}
-                />
-              </div>
-            ) : null}
-            {isFetched ? (
-              <div className="tour-price">
-                <LocalisedPrice
-                  price={tourPrices[tgid].price}
-                  currencySymbol={currencySymbol}
-                  lang={currentLanguage}
-                />
-              </div>
-            ) : null}
-          </PriceBlock>
+          <PriceContainer>
+            <PriceBlock
+              showScratchPrice={showScratchPrice}
+              price={listingPrice || dfListingPrice}
+              lang={currentLanguage}
+            />
+          </PriceContainer>
           <CTABlock
             showEarliestAvail={earliestAvailability}
             hasOffer={hasOffer && offerId}
+            hasIconBoosters={hasSafetyFlag || isDFProduct}
           >
             <a
               target={isFetched && isMobile ? null : '_blank'}
               href={`http://book.${bookingUrl}${
                 currentLanguage === 'en' ? '' : `/${currentLanguage}`
-              }/book/${tgid}${ctaUrlSuffix}`}
+              }/book/${tgid}${ctaUrlSuffix}${
+                isDFOnlyProduct ? '?discountedFuture=true' : ''
+              }`}
             >
               <Button
                 className={`tour-book-now-cta`}
-                paddingSides={isMobile ? '16px' : '77px'}
-                type="fillGradient"
-                onClick={sendBookNowEvent}
+                paddingSides={isMobile ? '16px' : '8px'}
+                type="fill"
+                onClick={(e) => {
+                  sendBookNowEvent();
+                  if (isDFProduct && !isDFOnlyProduct) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    openDFSidebar();
+                    return false;
+                  }
+                }}
                 onKeyDown={sendBookNowEvent}
                 role="button"
                 tabIndex={0}
               >
-                {labels[currentLanguage].BOOK_NOW_CTA}
+                {isDFOnlyProduct
+                  ? labels[currentLanguage].DISCOUNTED_FUTURES.FLAG_TEXT
+                  : labels[currentLanguage].BOOK_NOW_CTA}
               </Button>
             </a>
           </CTABlock>
 
           {earliestAvailability && (
-            <NextAvailableBlock hasOffer={hasOffer && offerId}>
+            <NextAvailableBlock
+              hasOffer={hasOffer && offerId}
+              hasIconBoosters={hasSafetyFlag || isDFProduct}
+            >
               <div className="icon">{CALENDAR}</div>
               <div className="available-text">
                 {`${labels[currentLanguage].NEXT_AVAILABLE}`},{' '}

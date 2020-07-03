@@ -40,6 +40,7 @@ const Image: React.FC<ImageProps> = ({
     const q = quality ? `&q=${Number(quality)}` : '';
     const ar = aspectRatio ? `&ar=${aspectRatio}&fit=crop` : '&fit=min';
     const extractedRect = /rect=[\d,.]*/.exec(url);
+    if (format === 'gif') return url;
     return attachQueryParam(
       url,
       `auto=compress,format&fm=${fm}${w}${h}${q}${ar}&crop=faces&${

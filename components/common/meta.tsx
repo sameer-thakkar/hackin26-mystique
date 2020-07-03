@@ -226,7 +226,6 @@ const PopulateHead = (data) => {
             })(window,document,'script','dataLayer','${GTM_CONTAINER_ID}');//]]>`,
         }}
       ></script>
-
       {amplitude_key ? (
         <script
           dangerouslySetInnerHTML={{

@@ -129,6 +129,10 @@ h6 {
 .content-wrapper {
   margin-top: 90px;
 }
+body.scroll-lock {
+  overflow: hidden;
+  padding-right: 1em;
+}
 
 @media (max-width: 768px) {
   .main-wrapper {

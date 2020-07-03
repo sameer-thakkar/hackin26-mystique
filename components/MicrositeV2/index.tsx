@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { HomePage } from './views/HomePage';
 import { SearchPage } from './views/SearchPage';
-import { PAGETYPE } from '../../constants';
+import { PAGETYPE, CURRENCY_SYMBOL_MAP } from '../../constants';
 import { MobileProductPage } from './views/ProductPage';
 import { withRouter } from 'next/router';
 import populateHead from '../common/meta';
@@ -62,7 +62,8 @@ class MicrositeV2 extends Component<any, any> {
       })
       .then((jsonTours) => {
         const cardPrices = tourListApiParser(jsonTours);
-        const currencySymbol = jsonTours.currencies[0].localSymbol;
+        const currencySymbol =
+          CURRENCY_SYMBOL_MAP[jsonTours.tourGroups[0]?.listingPrice?.currency];
         this.setState({
           cardPrices: cardPrices,
           currencySymbol: currencySymbol,

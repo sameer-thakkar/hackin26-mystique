@@ -211,6 +211,56 @@ export const TOUR_COMPARISION_DESIGN = {
   TYPE_2: 'Type-2',
 };
 
+
+export const SAFETY_DETAILS_IMAGES = {
+  SAFETY_MASK_STAFF: 'https://cdn-imgix-open.headout.com/sites/safe/mask.jpg',
+  SAFETY_MASK_GUEST: 'https://cdn-imgix-open.headout.com/sites/safe/mask.jpg',
+  SAFETY_MASK_BOTH: 'https://cdn-imgix-open.headout.com/sites/safe/mask.jpg',
+  SAFETY_MASK_DEFAULT: 'https://cdn-imgix-open.headout.com/sites/safe/mask.jpg',
+  SAFETY_TEMPERATURE_STAFF:
+    'https://cdn-imgix-open.headout.com/sites/safe/temp.jpg',
+  SAFETY_TEMPERATURE_GUEST:
+    'https://cdn-imgix-open.headout.com/sites/safe/temp.jpg',
+  SAFETY_TEMPERATURE_DEFAULT:
+    'https://cdn-imgix-open.headout.com/sites/safe/temp.jpg',
+  SAFETY_HANDWASH: 'https://cdn-imgix-open.headout.com/sites/safe/handwash.jpg',
+  SAFETY_CLEANED_VEHICLES:
+    'https://cdn-imgix-open.headout.com/sites/safe/equipments.jpg',
+  SAFETY_CLEANED_EQUIPMENTS:
+    'https://cdn-imgix-open.headout.com/sites/safe/equipments.jpg',
+  SAFETY_CLEANED_DEFAULT:
+    'https://cdn-imgix-open.headout.com/sites/safe/equipments.jpg',
+  SAFETY_TRAINED_STAFF:
+    'https://cdn-imgix-open.headout.com/sites/safe/trained.jpg',
+  SAFETY_SOCIAL_DISTANCING:
+    'https://cdn-imgix-open.headout.com/sites/safe/guidelines.jpg',
+  SAFETY_RESTRICTED_CAPACITY:
+    'https://cdn-imgix-open.headout.com/sites/safe/guidelines.jpg',
+  SAFETY_SOCIAL_DISTANCING_NO_GROUPS:
+    'https://cdn-imgix-open.headout.com/sites/safe/guidelines.jpg',
+  SAFETY_RESTRICTED_CAPACITY_NO_GROUPS:
+    'https://cdn-imgix-open.headout.com/sites/safe/guidelines.jpg',
+  SAFETY_SOCIAL_DISTANCING_DEFAULT:
+    'https://cdn-imgix-open.headout.com/sites/safe/guidelines.jpg',
+  SAFETY_CONTACTLESS:
+    'https://cdn-imgix-open.headout.com/sites/safe/contactless.jpg',
+};
+
+export const DISCOUNTED_FUTURE_IMAGES_SECTION = {
+  MOUNTAIN:
+    'https://cdn-s3.headout.com/assets/images/discounted-futures/mountain.png',
+  BEACH:
+    'https://cdn-s3.headout.com/assets/images/discounted-futures/beach.png',
+  SMILE:
+    'https://cdn-s3.headout.com/assets/images/discounted-futures/smile.png',
+  GIRLS:
+    'https://cdn-s3.headout.com/assets/images/discounted-futures/girls.png',
+  EXPERIENCE:
+    'https://cdn-s3.headout.com/assets/images/discounted-futures/experience.png',
+  ADVENTURE:
+    'https://cdn-s3.headout.com/assets/images/discounted-futures/adventure.png',
+};
+
 export const FULL_LANGUAGE_MAP = {
   en: {
     language: 'English',
