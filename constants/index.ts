@@ -196,6 +196,7 @@ export const CURRENCY_SYMBOL_MAP = {
   JPY: '¥',
   THB: '฿',
   IDR: 'Rp',
+  CNY: 'NT$',
 };
 
 export const ALLOW_IMMEDIEATE_NESTING = true;
@@ -210,7 +211,6 @@ export const TOUR_COMPARISION_DESIGN = {
   TYPE_1: 'Type-1',
   TYPE_2: 'Type-2',
 };
-
 
 export const SAFETY_DETAILS_IMAGES = {
   SAFETY_MASK_STAFF: 'https://cdn-imgix-open.headout.com/sites/safe/mask.jpg',
