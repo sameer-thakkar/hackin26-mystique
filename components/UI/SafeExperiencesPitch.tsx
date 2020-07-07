@@ -8,7 +8,11 @@ import * as labels from 'constants/localization/labels';
 import { CHEVRON_LEFT_CIRCLE, Shield } from 'assets/SvgIcons';
 import { SOLEIL, COLORS } from 'constants/ui-constants';
 import { greenScheme } from 'style/theme';
-import { SAFETY_DETAILS_IMAGES } from 'constants/index';
+import {
+  SAFETY_DETAILS_IMAGES,
+  SAFETY_DETAILS_TYPE,
+  CLUBBED_SAFETY_TAGS,
+} from 'constants/index';
 import { useContext } from 'react';
 import { MBContext } from 'contexts/MBContext';
 
@@ -226,6 +230,23 @@ const SafeExperiencesPitch = ({
       (k) => k.indexOf('DEFAULT') > -1
     );
   }
+  if (
+    tags.includes(SAFETY_DETAILS_TYPE.SAFETY_RESTRICTED_CAPACITY) &&
+    tags.includes(SAFETY_DETAILS_TYPE.SAFETY_SOCIAL_DISTANCING)
+  ) {
+    tags.splice(
+      tags.indexOf(SAFETY_DETAILS_TYPE.SAFETY_RESTRICTED_CAPACITY),
+      1
+    );
+  }
+  Object.entries(CLUBBED_SAFETY_TAGS).forEach((_key, value) => {
+    if (tags.includes(value[0]) && tags.includes(value[1])) {
+      tags.splice(tags.indexOf(value[0]), 1);
+      tags.splice(tags.indexOf(value[1]), 1);
+      tags.push(value[2]);
+    }
+  });
+
   return (
     <PitchGrid>
       <Section>
