@@ -239,7 +239,7 @@ const SafeExperiencesPitch = ({
       1
     );
   }
-  Object.entries(CLUBBED_SAFETY_TAGS).forEach((_key, value) => {
+  Object.entries(CLUBBED_SAFETY_TAGS).forEach(([_key, value]) => {
     if (tags.includes(value[0]) && tags.includes(value[1])) {
       tags.splice(tags.indexOf(value[0]), 1);
       tags.splice(tags.indexOf(value[1]), 1);
