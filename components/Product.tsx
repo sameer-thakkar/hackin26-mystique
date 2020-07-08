@@ -10,7 +10,7 @@ import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { ANALYTICS_EVENTS } from 'constants/index';
 import { COLORS, SOLEIL } from 'constants/ui-constants';
-import { CALENDAR, BrownTicket, BorderedShield } from 'assets/SvgIcons';
+import { CALENDAR, BrownTicket, Shield } from 'assets/SvgIcons';
 import 'utils/dayjsLocale';
 import Split, { StlyedSplit } from 'UI/Split';
 import IconCTA from 'UI/IconCTA';
@@ -427,7 +427,7 @@ const Product = (props) => {
                     text={labels[currentLanguage].SAFE_EXPERIENCE.FLAG_TEXT}
                     colorScheme={greenScheme}
                     ctaOnClick={openSafeSidebar}
-                    icon={BorderedShield}
+                    icon={Shield}
                   />
                 ) : null}
                 {isDFProduct ? (
