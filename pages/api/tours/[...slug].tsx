@@ -27,7 +27,7 @@ const ToursAPI = async (req, res) => {
           serialize('h-sid', hsid, {
             domain: nakedDomain,
             path: '/',
-            expires: new Date().getTime() + 30 * 24 * 60 * 60 * 1000,
+            expires: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
           })
         );
       res.write(JSON.stringify(r));

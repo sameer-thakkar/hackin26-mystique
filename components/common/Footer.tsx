@@ -300,7 +300,7 @@ const Footer: React.FC<FooterProps> = ({
                   href={`mailto:${
                     mbTheme === THEMES.DEFAULT
                       ? 'support@headout.com'
-                      : 'support@m-ticket.com'
+                      : 'support@online-tickets.co'
                   }`}
                   target="_blank"
                 >

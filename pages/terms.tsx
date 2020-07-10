@@ -157,7 +157,7 @@ export default class TermsPage extends Component<any, any> {
               This web page represents a legal document that serves as the terms
               of use for our website (“Terms of Use”), {nakedDomain} and any
               associated associated mobile application (collectively, “Website”)
-              as owned by `{organization || 'Headout Inc (“Headout”)'}`.
+              as owned by {organization || 'Headout Inc (“Headout”)'}.
               Capitalized terms, unless otherwise defined, have the meaning
               specified within the Definitions section below. This Terms of
               Use,, and other posted guidelines within our Website,

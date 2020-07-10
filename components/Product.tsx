@@ -47,7 +47,7 @@ const StyledProductCard = styled.div`
   }
   ${HorizontalLine} {
     grid-area: line;
-    margin: 8px;
+    margin: 8px 0;
   }
   .more-details {
     font-weight: ${SOLEIL.MEDIUM};
