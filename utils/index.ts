@@ -80,3 +80,9 @@ export const createBookingURL = ({ lang, nakedDomain, tgid, df = false }) => {
       .join('/') + query
   );
 };
+
+export const getNakedDomain = (host) => {
+  return !host.includes('localhost')
+    ? host.replace('stage.', '').split('.').slice(1).join('.')
+    : 'headout.com';
+};

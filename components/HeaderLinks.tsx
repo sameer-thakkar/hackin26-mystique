@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import LinkResolver from './LinkResolver';
 import { COLORS, SOLEIL } from '../constants/ui-constants';
+import { MBContext } from 'contexts/MBContext';
+import * as labels from 'constants/localization/labels';
 
 const StyledHeaderLinksWrapper = styled.div`
   display: flex;
@@ -52,6 +54,7 @@ const HeaderLinks: React.FC<any> = ({
   showGroupBooking,
   openGroupBookingModal,
 }) => {
+  const { lang } = useContext(MBContext);
   return (
     <StyledHeaderLinksWrapper show={hiddenMobile}>
       {headerLinks.map((link, index) => (
@@ -61,7 +64,7 @@ const HeaderLinks: React.FC<any> = ({
       ))}
       {showGroupBooking && (
         <div onClick={openGroupBookingModal} role="button" tabIndex={0}>
-          Group Tickets
+          {labels[lang].GROUP_TICKETS}
         </div>
       )}
     </StyledHeaderLinksWrapper>

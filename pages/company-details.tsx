@@ -173,7 +173,7 @@ export default class companyDetails extends Component<any, any> {
           attraction={commonFooter?.data?.attraction || 'attraction'}
           microbrandType={commonFooter?.data?.microbrand_type}
           hasPoweredByHeadoutLogo={
-            commonFooter?.data?.powered_by_headout || false
+            commonFooter?.data?.powered_by_superbrand || false
           }
           showDisclaimer={commonFooter?.data?.show_disclaimer}
           disclaimerText={commonFooter?.data?.disclaimer_text}

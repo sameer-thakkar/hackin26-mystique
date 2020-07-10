@@ -24,6 +24,7 @@ const de = {
   READ_MORE_TEXT: 'Mehr anzeigen',
   SHOW_LESS_TEXT: 'Weniger anzeigen',
   NEXT_AVAILABLE: 'Verfügbar ab',
+  SAVE_UPTO: 'Spare',
   AVAILABLE: 'Verfügbar am',
   EARLIEST_AVAILABILITY: 'Früheste verfügbare',
   TODAY: 'Heute',
@@ -56,17 +57,17 @@ const de = {
   SAFE_EXPERIENCE: {
     HEADING: 'Beste Sicherheitsstandards',
     SHORT_HEADING: 'Beste Sicherheitsstandards vor Ort',
-    MOBILE_HEADING: 'Sichere Erlebnisse von Headout',
+    MOBILE_HEADING: 'Sichere Erlebnisse',
     GENERAL_DESCRIPTION:
-      'Headout hat Sichere Erlebnisse eingeführt. Erlebnisse mit diesem Abzeichen entsprechen nachweislich den besten Sicherheitsstandards gemäß den WHO-Richtlinien.',
+      'hat Sichere Erlebnisse eingeführt. Erlebnisse mit diesem Abzeichen entsprechen nachweislich den besten Sicherheitsstandards gemäß den WHO-Richtlinien.',
     CTA_TEXT: 'Weitere Sicherheitsangaben',
     EXPERIENCE_DESCRIPTION:
       'Dieses Erlebnis entspricht nachweislich den besten Sicherheitsstandards in Übereinstimmung mit den örtlichen Vorschriften und der WHO.',
     FLAG_TEXT: 'Sicheres Erlebnis',
     MODAL: {
-      HEADING: 'Sichere Erlebnisse von Headout',
+      HEADING: 'Sichere Erlebnisse von',
       SUB_HEADING:
-        'Headout arbeitet mit Partnern auf der ganzen Welt an der Umsetzung der besten Sicherheitsstandards gemäß den WHO-Richtlinien. Alle vor Ort getroffenen Maßnahmen wurden überprüft und werden hier angezeigt. Es ist an der Zeit, dass wir unsere Welt wieder genießen.',
+        'arbeitet mit Partnern auf der ganzen Welt an der Umsetzung der besten Sicherheitsstandards gemäß den WHO-Richtlinien. Alle vor Ort getroffenen Maßnahmen wurden überprüft und werden hier angezeigt. Es ist an der Zeit, dass wir unsere Welt wieder genießen.',
       DETAILS: {
         SAFETY_MASK_DEFAULT: {
           HEADING: 'Maskenpflicht zu Ihrer Sicherheit',
@@ -160,7 +161,7 @@ const de = {
         },
       },
       BADGE_DESCRIPTION:
-        'Erlebnisse mit diesem Abzeichen entsprechen nachweislich den von Headout geprüften Sicherheitsstandards.',
+        'Erlebnisse mit diesem Abzeichen entsprechen nachweislich den von geprüften Sicherheitsstandards.',
     },
   },
   DISCOUNTED_FUTURES: {

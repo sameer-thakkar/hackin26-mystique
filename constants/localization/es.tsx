@@ -24,6 +24,7 @@ const es = {
   READ_MORE_TEXT: 'Leer más',
   SHOW_LESS_TEXT: 'Mostrar menos',
   NEXT_AVAILABLE: 'Próxima Disponible',
+  SAVE_UPTO: 'Ahorra hasta un',
   AVAILABLE: 'Disponible',
   EARLIEST_AVAILABILITY: 'Siguiente Disponible',
   TODAY: 'Hoy',
@@ -56,17 +57,17 @@ const es = {
   SAFE_EXPERIENCE: {
     HEADING: 'Estándares de Seguridad',
     SHORT_HEADING: 'Los mejores estándares de seguridad en vigor',
-    MOBILE_HEADING: 'Experiencias Seguras en Headout',
+    MOBILE_HEADING: 'Experiencias Seguras',
     GENERAL_DESCRIPTION:
-      'Headout ha lanzado la campaña Experiencias Seguras. Nos hemos dado a la tarea de verificar que las experiencias con esta insignia siguen los estándares de seguridad más estrictos, según las directrices de la OMS.',
+      'lanzado la campaña Experiencias Seguras. Nos hemos dado a la tarea de verificar que las experiencias con esta insignia siguen los estándares de seguridad más estrictos, según las directrices de la OMS.',
     CTA_TEXT: 'Estándares de Seguridad',
     EXPERIENCE_DESCRIPTION:
       'Se ha verificado que esta experiencia cumple con los estándares de seguridad más estrictos, conforme a las regulaciones locales y de la OMS.',
     FLAG_TEXT: 'Experiencia Segura',
     MODAL: {
-      HEADING: 'Experiencias Seguras en Headout',
+      HEADING: 'Experiencias Seguras en',
       SUB_HEADING:
-        'En Headout estamos trabajando de cerca con nuestros socios locales en todo el mundo para cumplir con los mejores estándares de seguridad, según las directrices de la OMS. Todas las medidas implementadas durante tu visita han sido verificadas y a continuación las podrás encontrar. Es hora de volver a disfrutar del mundo que nos rodea.',
+        'En estamos trabajando de cerca con nuestros socios locales en todo el mundo para cumplir con los mejores estándares de seguridad, según las directrices de la OMS. Todas las medidas implementadas durante tu visita han sido verificadas y a continuación las podrás encontrar. Es hora de volver a disfrutar del mundo que nos rodea.',
       DETAILS: {
         SAFETY_MASK_DEFAULT: {
           HEADING:
@@ -171,7 +172,7 @@ const es = {
         },
       },
       BADGE_DESCRIPTION:
-        'Cualquier experiencia con esta insignia confirma que los estándares de seguridad han sido verificados por Headout.',
+        'Cualquier experiencia con esta insignia confirma que los estándares de seguridad han sido verificados.',
     },
   },
   DISCOUNTED_FUTURES: {

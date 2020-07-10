@@ -333,7 +333,7 @@ const Listicle = (props) => {
     data: {
       enable_group_booking: enableGroupBooking,
       logo_redirection_url: logoRedirectionURL,
-      enable_powered_by_headout_logo: hasPoweredByHeadoutLogo,
+      enable_powered_by_superbrand_logo: hasPoweredByHeadoutLogo,
       localization,
       enable_localization_menu,
       logo,
@@ -553,7 +553,7 @@ const Listicle = (props) => {
         logoURL={commonFooter?.data?.logo?.url}
         logoAlt={commonFooter?.data?.logo?.alt}
         hasPoweredByHeadoutLogo={
-          commonFooter?.data?.powered_by_headout || false
+          commonFooter?.data?.powered_by_superbrand || false
         }
         showDisclaimer={commonFooter?.data?.show_disclaimer}
         disclaimerText={commonFooter?.data?.disclaimer_text}

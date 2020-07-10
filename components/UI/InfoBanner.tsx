@@ -8,6 +8,7 @@ export const StyledInfoBanner = styled.div`
   grid-column-gap: 8px;
   border-radius: 8px;
   justify-content: left;
+  align-items: start;
   background: ${({ colorScheme: cs }) => cs.background};
   * {
     color: ${({ colorScheme: cs }) => cs.color};

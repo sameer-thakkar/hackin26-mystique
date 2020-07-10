@@ -9,15 +9,15 @@ const StyledHamburger = styled.div`
   top: 50%;
   margin: 0;
   transform: translateY(-50%);
-  width: 19.25px;
+  width: 22px;
   &:after,
   &:before,
   & div {
-    background-color: #333;
+    background-color: ${({ theme }) => theme.primaryBGText || '#333'};
     border-radius: 3px;
     content: '';
     display: block;
-    height: 1px;
+    height: 2px;
     margin: 5px 0;
     transition: all 0.2s ease-in-out;
   }
@@ -27,11 +27,11 @@ const StyledHamburger = styled.div`
       isActive &&
       `
       &:before {
-        transform: translateY(6px) rotate(135deg);
+        transform: translateY(7px) rotate(135deg);
       }
       
       &:after {
-        transform: translateY(-6px) rotate(-135deg);
+        transform: translateY(-7px) rotate(-135deg);
       }
       & div {
         transform: scale(0);

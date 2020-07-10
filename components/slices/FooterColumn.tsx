@@ -19,6 +19,7 @@ const StyledFooterColumn = styled.div`
   color: ${COLORS.DAVY_GREY};
   .link-item {
     color: ${COLORS.BEACH};
+    color: ${({ theme }) => theme.footer.secondaryColor};
     text-decoration: none;
     margin-top: 12px;
     :last-child {

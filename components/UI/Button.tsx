@@ -27,7 +27,7 @@ const Button = styled.button((props) => {
       styles = `
       border: 0;
       color: ${COLORS.WHITE};
-      background: ${props.theme.primaryGradient};
+      background: ${props.theme.primaryColor};
       padding: 14px ${props.paddingSides || '22px'};
       * {
         color: ${COLORS.WHITE};

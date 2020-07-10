@@ -35,7 +35,7 @@ const LanguageSelector = (props) => {
     return acc;
   }, []);
 
-  if (availableLanguages.length <= 1) {
+  if (availableLanguages.length < 1) {
     return null;
   }
 

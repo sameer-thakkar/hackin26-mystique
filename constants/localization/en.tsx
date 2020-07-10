@@ -21,6 +21,7 @@ const en = {
   READ_MORE_TEXT: 'Read More',
   SHOW_LESS_TEXT: 'Show Less',
   NEXT_AVAILABLE: 'Next Available',
+  SAVE_UPTO: 'Save upto',
   AVAILABLE: 'Available',
   EARLIEST_AVAILABILITY: 'Earliest Availability',
   TODAY: 'Today',
@@ -54,7 +55,7 @@ const en = {
   SAFE_EXPERIENCE: {
     HEADING: 'Best Safety Standards',
     SHORT_HEADING: 'Best safety standards in place',
-    MOBILE_HEADING: 'Safe Experiences by Headout',
+    MOBILE_HEADING: 'Safe Experiences',
     GENERAL_DESCRIPTION:
       '500+ customers have visited and approved of the safety measures. All the safety equipments provided at the venue.',
     CTA_TEXT: 'Safety Details',
@@ -63,9 +64,9 @@ const en = {
       'This experience has been verified to follow best safety standards in compliance with local regulations and WHO',
     FLAG_TEXT: 'Best Safety',
     MODAL: {
-      HEADING: 'Safe Experiences by Headout',
+      HEADING: 'Safe Experiences',
       SUB_HEADING:
-        "Headout is working with our partners all over the globe to implement the best safety standards as per WHO guidelines. All the measures taken on ground have been verified and displayed here. It's time to enjoy the world around us again.",
+        "We are working with our partners all over the globe to implement the best safety standards as per WHO guidelines. All the measures taken on ground have been verified and displayed here. It's time to enjoy the world around us again.",
       DETAILS: {
         SAFETY_MASK_DEFAULT: {
           HEADING: 'Everyone wears masks for your safety',
@@ -159,7 +160,7 @@ const en = {
         },
       },
       BADGE_DESCRIPTION:
-        'This badge on an experience confirms that safety standards have been verified by Headout',
+        'This badge on an experience confirms that safety standards have been verified by Us',
     },
   },
   DISCOUNTED_FUTURES: {

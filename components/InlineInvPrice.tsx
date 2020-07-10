@@ -12,7 +12,7 @@ export default class InlineInvPrice extends Component<any, any> {
   async componentDidMount() {
     if (this.props.tgid && this.props.tid) {
       const fetchTour = await fetch(
-        `https://api.headout.com/api/v5/tour-group/inventory/get/${this.props.tgid}`
+        `/api/tours/v5/tour-group/inventory/get/${this.props.tgid}`
       ).then((res) => res.json());
       const currencySymbol = fetchTour.currency.localSymbol;
       const getTIDData = fetchTour.inventoryList.find(

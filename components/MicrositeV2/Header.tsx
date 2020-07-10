@@ -3,7 +3,7 @@ import LanguageSelector from './LanguageSelector';
 import InteractionContext from '../../contexts/Interaction';
 import Image from '../UI/Image';
 import { SearchBox } from './SearchBox';
-import { PAGETYPE, ALLOW_IMMEDIEATE_NESTING } from '../../constants';
+import { PAGETYPE, ALLOW_IMMEDIEATE_NESTING, THEMES } from '../../constants';
 import { SEARCH_ICON, POWERED_BY_HEADOUT } from '../../assets/SvgIcons';
 import { SearchItem } from './SearchItem';
 import { COLORS, SOLEIL } from '../../constants/ui-constants';
@@ -30,13 +30,15 @@ const StyledHeader = styled.span`
     width: 100%;
     top: 0;
     min-height: 80px;
-    background: #fff;
+    background-color: ${({ theme: { primaryBackground } }) =>
+      primaryBackground ? primaryBackground : '#fff'};
     z-index: ${({ overlayActive: check }) => (check ? 100 : 15)};
   }
   .fixed-offset::after {
     content: '';
     display: block;
-    height: 88px;
+    height: ${({ theme: { theme } }) =>
+      theme === THEMES.DEFAULT ? '88px' : '80px'};
   }
   header .header-city-selector {
     min-width: 180px;
@@ -65,7 +67,8 @@ const StyledHeader = styled.span`
     .fixed-offset::after {
       content: '';
       display: block;
-      height: 57px;
+      height: ${({ theme: { theme } }) =>
+        theme === THEMES.DEFAULT ? '57px' : '32px'};
       margin-bottom: 24px;
     }
     .header-links {
@@ -73,7 +76,8 @@ const StyledHeader = styled.span`
     }
     header {
       padding: 12px 16px;
-      border-bottom: 1px solid #dadada;
+      border-bottom: ${({ theme: { theme } }) =>
+        theme === THEMES.DEFAULT ? '1px solid #dadada' : 'none'};
     }
   }
 `;
@@ -88,7 +92,12 @@ const HeaderRight = styled.div`
     cursor: pointer;
     font-family: ${SOLEIL.FONT_STACK};
     font-weight: ${SOLEIL.REGULAR};
-    color: ${COLORS.DAVY_GREY};
+    color: ${({ theme: { primaryBGText } }) =>
+      primaryBGText ? primaryBGText : COLORS.FOUR_BLACK};
+  }
+  .current-language-toggle {
+    color: ${({ theme: { primaryBGText } }) =>
+      primaryBGText ? primaryBGText : COLORS.FOUR_BLACK};
   }
   .mobi-search-trigger {
     height: 20px;

@@ -19,12 +19,15 @@ import {
   DROPDOWN_ELEMENT,
   ANALYTICS_EVENTS,
   ALLOW_IMMEDIEATE_NESTING,
+  THEMES,
 } from '../constants';
 import { groupSlices } from '../utils/helper';
 import { ProductsContextProvider } from '../contexts/Products';
 import { tourListApiParser } from '../utils/dataParsers';
 import SafeDFBannerWrapper from 'UI/SafeDFBannerWrapper';
 import { isSafetyIncluded, getDFValidityFromTags } from 'utils';
+import TextBanner from './TextBanner';
+import Conditional from './common/Conditional';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
@@ -79,36 +82,19 @@ export default class MicrositeV1 extends Component<any, any> {
         .map((t) => t.tgid);
 
       const fetchTourGroupPrices = fetch(
-        `https://api.headout.com/api/v5/tour-group/list?ids[]=${[
+        `/api/tours/v5/tour-group/list?ids[]=${[
           ...tourGroupTgids,
           ...allTourTgids,
         ]}`
       ).then((res) => {
-        let HSID = res.headers.get('x-h-sid');
-        if (!docCookies.hasItem('h-sid')) {
-          const nakedDomain = window.location.host
-            .replace('stage.', '')
-            .split('.')
-            .slice(1)
-            .join('.');
-          docCookies.setItem(
-            'h-sid',
-            HSID,
-            (new Date().getTime() / 1000) * 2,
-            '/',
-            nakedDomain,
-            false
-          );
-        } else {
-          HSID = docCookies.getItem('h-sid');
-        }
+        const HSID = docCookies.getItem('h-sid');
         analytics.sendHsidToDataLayer({ 'h-sid': HSID });
         return res.json();
       });
 
       const fetchVariantPrices = variantTgids.map((tourVariant) =>
         fetch(
-          `https://api.headout.com/api/v5/tour-group/inventory/get/${tourVariant.tgid}?for-days=2`
+          `/api/tours/v5/tour-group/inventory/get/${tourVariant.tgid}?for-days=2`
         ).then((res) => res.json())
       );
 
@@ -151,9 +137,7 @@ export default class MicrositeV1 extends Component<any, any> {
 
       if (showEarliestAvailability) {
         const requestQueue = uncategorizedTours[0].items.map((tour) =>
-          fetch(
-            `https://api.headout.com/api/v5/tour-group/inventory/get/${tour.tgid}`
-          )
+          fetch(`/api/tours/v5/tour-group/inventory/get/${tour.tgid}`)
             .then((res) => res.json())
             .then((response) => response)
         );
@@ -281,6 +265,10 @@ export default class MicrositeV1 extends Component<any, any> {
       this.props.data.refs?.commonFooter?.data?.logo?.alt ||
       this.props.data.data.footer_logo.alt ||
       this.props.data.data?.footer_logo_alt;
+    let footerThemeOverride =
+      this.props.data.refs?.commonFooter?.data?.theme_override ||
+      THEMES.INHERIT;
+    footerThemeOverride = this.props.data.data.theme_override || THEMES.INHERIT;
 
     const { commonHeader } = this.props.data.refs;
     const withCommonHeaderOverrides = {
@@ -295,7 +283,7 @@ export default class MicrositeV1 extends Component<any, any> {
       book_now_text: bookNowText,
       read_more_text: readMoreText,
       show_less_text: showLessText,
-      enable_powered_by_headout_logo: hasPoweredByHeadoutLogo,
+      enable_powered_by_superbrand_logo: hasPoweredByHeadoutLogo,
       enable_localization_menu: hasLanguageSelector,
       enable_group_booking: enableGroupBooking,
       enable_buy_tickets_shortcut: enableBuyTickets,
@@ -329,7 +317,7 @@ export default class MicrositeV1 extends Component<any, any> {
     const { isClient, showEarliestAvailability } = this.state;
     let groupBookingTourTitles = [];
 
-    const { tgidToScroll } = this.props;
+    const { tgidToScroll, mbTheme } = this.props;
     const { analytics } = this.state;
 
     let alertPopup = null;
@@ -451,6 +439,7 @@ export default class MicrositeV1 extends Component<any, any> {
             originalHost: host,
             currentLanguage,
             serverRequestStartTimestamp,
+            mbTheme,
           })}
           <Header
             languages={languages ? languages : null}
@@ -480,15 +469,20 @@ export default class MicrositeV1 extends Component<any, any> {
               handleClose={this.handleClose}
             />
           ) : null}
-          <Banner
-            bannerImages={finalBannerImages ? finalBannerImages : null}
-            bannerHeading={bannerHeading ? bannerHeading : null}
-            bannerCtaText={bannerCtaText ? bannerCtaText : null}
-            currentLanguage={currentLanguage ? currentLanguage : null}
-            isMobile={this.state.isMobile}
-            boxed={true}
-            hideCTA={hideBannerCTA}
-          />
+          <Conditional if={mbTheme === THEMES.DEFAULT}>
+            <Banner
+              bannerImages={finalBannerImages ? finalBannerImages : null}
+              bannerHeading={bannerHeading ? bannerHeading : null}
+              bannerCtaText={bannerCtaText ? bannerCtaText : null}
+              currentLanguage={currentLanguage ? currentLanguage : null}
+              isMobile={this.state.isMobile}
+              boxed={true}
+              hideCTA={hideBannerCTA}
+            />
+          </Conditional>
+          <Conditional if={mbTheme === THEMES.MIN_BLUE}>
+            <TextBanner bannerHeading={bannerHeading ? bannerHeading : null} />
+          </Conditional>
           {alertPopup ? (
             <Alert
               popupUID={alertPopup.uid}
@@ -522,6 +516,7 @@ export default class MicrositeV1 extends Component<any, any> {
               host={host}
               analytics={analytics}
               ranking={tourRanking}
+              mbTheme={mbTheme}
             />
           ) : null}
           {isClient ? (
@@ -549,13 +544,14 @@ export default class MicrositeV1 extends Component<any, any> {
             logoURL={footerLogoURL}
             logoAlt={footerLogoAlt}
             hasPoweredByHeadoutLogo={
-              commonFooter?.data?.powered_by_headout || false
+              commonFooter?.data?.powered_by_superbrand || false
             }
             showDisclaimer={commonFooter?.data?.show_disclaimer}
             disclaimerText={commonFooter?.data?.disclaimer_text}
             microbrandType={commonFooter?.data?.microbrand_type}
             slices={commonFooter?.data?.body || []}
             invertLogoColor={commonFooter?.data?.invert_logo_color}
+            themeOverride={footerThemeOverride}
           />
           {hasOffer && (
             <FreeTourPopup

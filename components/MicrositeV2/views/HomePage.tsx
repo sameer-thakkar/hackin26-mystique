@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Header from '../Header';
 import LongForm from '../LongForm';
 import sliceHandler from '../../Slices';
@@ -16,6 +16,10 @@ import styled from 'styled-components';
 import { SIZES, SOLEIL } from 'constants/ui-constants';
 import SafeDFBannerWrapper from 'UI/SafeDFBannerWrapper';
 import { isSafetyIncluded, getDFValidityFromTags } from 'utils';
+import Conditional from 'components/common/Conditional';
+import TextBanner from 'components/TextBanner';
+import { MBContext } from 'contexts/MBContext';
+import { THEMES } from 'constants/index';
 
 const V2MicrositeWrapper = styled.div`
   .alert-wrapper {
@@ -84,7 +88,10 @@ export const HomePage = (props) => {
   const hasToursSection = categoryProps.categories.length > 0;
   const footerLogoURL = footer.logo.url;
   const footerLogoAlt = footer.footer_logo_alt || footer.footer_logo?.alt;
+  const themeOverride = footer.themeOverride;
   const hasDropdownLinks = enableDropdownLinks && dropdownLinks.length;
+  const { mbTheme } = useContext(MBContext);
+  const { bannerHeading } = heroProps;
   const hasSafe = Object.values(allTours).some((tour: any) =>
     isSafetyIncluded(tour.allTags)
   );
@@ -125,9 +132,12 @@ export const HomePage = (props) => {
           }}
         />
       ) : null}
-      {heroProps.banners.length ? (
+      <Conditional if={mbTheme === THEMES.DEFAULT && heroProps.banners.length}>
         <Banner {...heroProps} isMobile={isMobile} ready={true} />
-      ) : null}
+      </Conditional>
+      <Conditional if={mbTheme === THEMES.MIN_BLUE}>
+        <TextBanner bannerHeading={bannerHeading ? bannerHeading : null} />
+      </Conditional>
 
       {alertPopup?.uid ? (
         <div className="alert-wrapper">
@@ -187,12 +197,13 @@ export const HomePage = (props) => {
         attraction={footer.attraction || 'attraction'}
         logoURL={footerLogoURL}
         logoAlt={footerLogoAlt}
-        hasPoweredByHeadoutLogo={footer.powered_by_headout || false}
+        hasPoweredByHeadoutLogo={footer.powered_by_superbrand || false}
         showDisclaimer={footer.show_disclaimer}
         disclaimerText={footer.disclaimer_text}
         microbrandType={footer.microbrand_type || ''}
         slices={footer.body || []}
         invertLogoColor={footer.invert_logo_color}
+        themeOverride={themeOverride}
       />
     </V2MicrositeWrapper>
   );

@@ -64,7 +64,7 @@ const SaveLabel = styled.div`
 const LeanMore = styled.div`
   font-size: 14px;
   line-height: 16px;
-  color: ${COLORS.RHAPSODY};
+  color: ${({ theme }) => theme.primaryColor};
   text-decoration: underline;
   text-align: center;
   cursor: pointer;

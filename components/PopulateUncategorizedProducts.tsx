@@ -4,11 +4,16 @@ import * as labels from 'constants/localization/labels';
 import styled from 'styled-components';
 import { COLORS, SOLEIL } from 'constants/ui-constants';
 import { csvTgidToArray } from 'utils/helper';
+import Conditional from './common/Conditional';
+import { THEMES } from 'constants/index';
+import HorizontalLine from './slices/HorizontalLine';
 
 const StyledUncategorizedContainer = styled.div`
   margin: 0 auto;
-  max-width: 1200px;
   #tour-list-heading {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
     @media (max-width: 768px) {
       margin: 0 16px 24px 16px;
     }
@@ -17,11 +22,16 @@ const StyledUncategorizedContainer = styled.div`
 
 const ProductContainer = styled.div`
   display: grid;
-  grid-row-gap: 24px;
-  margin-top: 32px;
-  margin-bottom: 32px;
+  grid-row-gap: ${({ theme }) => theme.productCards.gap};
+  margin-top: 48px;
+  margin-bottom: 48px;
+  & > ${HorizontalLine} {
+    border-bottom-style: dashed;
+  }
+  & > ${HorizontalLine}:last-child {
+    display: none;
+  }
   @media (max-width: 768px) {
-    margin: 0 16px;
     margin-bottom: 60px;
   }
 `;
@@ -87,6 +97,7 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
       host,
       analytics,
       ranking,
+      mbTheme,
     } = this.props;
     const orderedTGIDRanking = csvTgidToArray(ranking);
     const orderedTours = orderedTGIDRanking
@@ -100,47 +111,55 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
 
     return (
       <StyledUncategorizedContainer>
-        <div id="tour-list-heading">
-          <StyledTourListHeading>
-            {labels[currentLanguage].TOUR_LIST_HEADING}
-          </StyledTourListHeading>
-          <StyledTourListSubHeading>
-            {labels[currentLanguage].TOUR_LIST_SUB_HEADING}
-          </StyledTourListSubHeading>
-        </div>
+        <Conditional if={mbTheme === THEMES.DEFAULT}>
+          <div id="tour-list-heading">
+            <StyledTourListHeading>
+              {labels[currentLanguage].TOUR_LIST_HEADING}
+            </StyledTourListHeading>
+            <StyledTourListSubHeading>
+              {labels[currentLanguage].TOUR_LIST_SUB_HEADING}
+            </StyledTourListSubHeading>
+          </div>
+        </Conditional>
         <ProductContainer>
           {orderedTours.map((tour, index) => (
-            <Product
-              key={index}
-              tgid={tour.tgid}
-              earliestAvailability={tour.earliestAvailability}
-              tid={tour.tour_variant_id}
-              title={tour.tour_title_override}
-              descriptors={tour.marketing_highlights_override}
-              highlights={tour.tour_description_override}
-              scorpioData={scorpioData[tour.tgid]}
-              tourPrices={tourPrices}
-              currencySymbol={currencySymbol}
-              uid={uid}
-              currentLanguage={currentLanguage}
-              bookNowText={bookNowText}
-              showLessText={showLessText}
-              readMoreText={readMoreText}
-              productOffer={productOffer}
-              hasOffer={hasOffer}
-              togglePopup={togglePopup}
-              offerId={tour.offer__free_tour?.id}
-              popupState={popupState}
-              isMobile={isMobile}
-              isFetched={isFetched}
-              pageUrl={pageUrl}
-              host={host}
-              ctaUrlSuffix={tour.cta_url_suffix || ''}
-              isScratchPriceEnabled={tour.show_scratch_price === 'Yes'}
-              analytics={analytics}
-              position={index + 1}
-              booster={tour.product_booster}
-            />
+            <>
+              <Product
+                key={index}
+                tgid={tour.tgid}
+                earliestAvailability={tour.earliestAvailability}
+                tid={tour.tour_variant_id}
+                title={tour.tour_title_override}
+                descriptors={tour.marketing_highlights_override}
+                highlights={tour.tour_description_override}
+                scorpioData={scorpioData[tour.tgid]}
+                tourPrices={tourPrices}
+                currencySymbol={currencySymbol}
+                uid={uid}
+                currentLanguage={currentLanguage}
+                bookNowText={bookNowText}
+                showLessText={showLessText}
+                readMoreText={readMoreText}
+                productOffer={productOffer}
+                hasOffer={hasOffer}
+                togglePopup={togglePopup}
+                offerId={tour.offer__free_tour?.id}
+                popupState={popupState}
+                isMobile={isMobile}
+                isFetched={isFetched}
+                pageUrl={pageUrl}
+                host={host}
+                ctaUrlSuffix={tour.cta_url_suffix || ''}
+                isScratchPriceEnabled={tour.show_scratch_price === 'Yes'}
+                analytics={analytics}
+                position={index + 1}
+                booster={tour.product_booster}
+                defaultOpen={orderedTours.length === 1}
+              />
+              <Conditional if={mbTheme === THEMES.MIN_BLUE}>
+                <HorizontalLine color={COLORS.GREY_G6} />
+              </Conditional>
+            </>
           ))}
         </ProductContainer>
       </StyledUncategorizedContainer>

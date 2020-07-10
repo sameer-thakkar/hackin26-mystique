@@ -1,5 +1,5 @@
 import * as labels from 'constants/localization/labels';
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { scroller } from 'react-scroll';
 import LanguageSelector from './LanguageSelector';
@@ -10,13 +10,15 @@ import MultiLevelNav from '../MultiLevelNav';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import { POWERED_BY_HEADOUT } from 'assets/SvgIcons';
 import { SOLEIL, COLORS } from 'constants/ui-constants';
+import { MBContext } from 'contexts/MBContext';
 
 const StyledHeader = styled.header`
   height: 80px;
-  position: fixed;
+  position: sticky;
   top: 0;
   width: 100%;
-  background-color: rgba(255, 255, 255, 1);
+  background-color: ${({ theme: { primaryBackground } }) =>
+    primaryBackground ? primaryBackground : '#fff'};
   display: flex;
   left: 0;
   right: 0;
@@ -33,7 +35,6 @@ const StyledHeader = styled.header`
 `;
 
 const StyledHeaderContainer = styled.div`
-  background-color: rgba(255, 255, 255, 1);
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: auto;
@@ -80,14 +81,23 @@ const StyledHeaderElements = styled.div`
   display: flex;
   align-items: center;
   margin-right: 20px;
+  * {
+    color: ${({ theme: { primaryBGText } }) =>
+      primaryBGText ? primaryBGText : COLORS.FOUR_BLACK};
+  }
   ${(props) => {
     if (props.active) {
       return `
       @media (max-width: 768px) {
-        margin-right: 60px;
+        margin-right: 55px;
         `;
     }
   }}
+  @media (max-width: 768px) {
+    * {
+      color: ${COLORS.FOUR_BLACK};
+    }
+  }
 `;
 
 const StyledBuyTickets = styled.div`
@@ -126,6 +136,7 @@ const Header: React.FC<any> = (props) => {
   const hamburgerRef = useRef(null);
   const multiNavRef = useRef(null);
   const [scrollPos, setScrollPos] = useState(0);
+  const { mbTheme } = useContext(MBContext);
 
   useCaptureClickOutside(
     hamburgerRef,
@@ -226,6 +237,7 @@ const Header: React.FC<any> = (props) => {
               uid={uid}
               host={host}
               isMobile={isMobile}
+              mbTheme={mbTheme}
             />
           ) : null}
         </StyledHeaderElements>

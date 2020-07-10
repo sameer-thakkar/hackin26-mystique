@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import Image from 'UI/Image';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { tourListApiParser } from 'utils/dataParsers';
-import { SOLEIL } from 'constants/ui-constants';
+import { SOLEIL, COLORS } from 'constants/ui-constants';
+import { THEMES } from 'constants/index';
+import Conditional from 'components/common/Conditional';
+import PriceBlock from 'UI/PriceBlock';
+import { MBContext } from 'contexts/MBContext';
 
 const StyledMBCards = styled.div`
   display: grid;
@@ -17,16 +21,6 @@ const StyledMBCards = styled.div`
   `
       : ''}
   grid-gap: 20px;
-  .card-image img {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-    border-radius: 5px;
-    grid-row: 1 / 2;
-    grid-column: 1 / 2;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-  }
 
   a {
     text-decoration: none;
@@ -44,30 +38,9 @@ const MicrobrandCard = styled.div`
   color: #444444;
   display: grid;
   grid-template-rows: 170px auto 1fr;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
   transition: all ease 0.2s;
+  grid-row-gap: 8px;
   border-radius: 5px;
-
-  .card-bottom .card-title {
-    font-size: 15px;
-    color: #000;
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.MEDIUM};
-    line-height: 1;
-    grid-row: 1;
-    grid-column: 1 / 2;
-  }
-
-  .card-bottom .card-price {
-    font-family: ${SOLEIL.FONT_STACK};
-    font-size: 10px;
-    justify-self: right;
-    grid-row: 1;
-    grid-column: 2 / 3;
-    letter-spacing: 0.5px;
-    text-align: right;
-    line-height: 1.3;
-  }
 
   .card-bottom .card-price {
     font-size: 16px;
@@ -86,6 +59,72 @@ const MicrobrandCard = styled.div`
     -webkit-perspective: 1000;
     -webkit-transform: translate3d(0, -6px, 0);
   }
+
+  .card-image img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+    grid-row: 1 / 2;
+    grid-column: 1 / 2;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+  .card-bottom .card-title {
+    font-size: 15px;
+    color: #000;
+    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: ${SOLEIL.MEDIUM};
+    line-height: 1;
+    grid-row: 1;
+    grid-column: 1 / 2;
+  }
+
+  .card-bottom .card-price {
+    font-family: ${SOLEIL.FONT_STACK};
+    justify-self: right;
+    grid-row: 1;
+    grid-column: 2 / 3;
+    letter-spacing: 0.5px;
+    text-align: right;
+    line-height: 1.3;
+  }
+
+  ${({ theme }) =>
+    theme.theme === THEMES.MIN_BLUE
+      ? `
+      .card-bottom {
+        padding: 0
+      }
+      .card-image img {
+        border-radius: 4px;
+      }
+      .card-bottom .card-price,
+      .card-bottom .card-title,
+      .card-bottom .tour-price {
+        grid-column: 1 / 3;
+        grid-row: unset;
+        font-size: 16px;
+        line-height: 22px;
+      }
+      .card-bottom .tour-scratch-price {
+        font-size: 12px;
+        line-height: 12px;
+        color: ${COLORS.GREY_G4};
+      }
+      .card-bottom .card-price,
+      .card-bottom .tour-price {
+        justify-self: left;
+        color: ${COLORS.GREY_G3};
+        font-weight: ${SOLEIL.BOLD};
+      }
+      .card-bottom .card-title {
+        font-weight: ${SOLEIL.SEMIBOLD};
+      }
+      `
+      : `
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+    `}
 `;
 
 export const LinkCards = (props) => {
@@ -98,6 +137,8 @@ export const LinkCards = (props) => {
     as,
     gridAutoCol,
   } = props;
+
+  const { lang } = useContext(MBContext);
 
   return (
     <StyledMBCards gridAutoCol={gridAutoCol} as={as}>
@@ -118,10 +159,22 @@ export const LinkCards = (props) => {
                 <div className="card-bottom">
                   <span className="card-title">{card.title}</span>
                   {isFetched && card.tgid ? (
-                    <span className="card-price">
-                      {currencySymbol}
-                      {cardPrices[card.tgid].price}
-                    </span>
+                    <>
+                      <Conditional if={cardPrices[card.tgid].listingPrice}>
+                        <PriceBlock
+                          lang={lang}
+                          price={cardPrices[card.tgid].listingPrice}
+                          showScratchPrice={true}
+                          prefix={false}
+                        />
+                      </Conditional>
+                      <Conditional if={!cardPrices[card.tgid].listingPrice}>
+                        <span className="card-price">
+                          {currencySymbol}
+                          {cardPrices[card.tgid].price}
+                        </span>
+                      </Conditional>
+                    </>
                   ) : (
                     ''
                   )}
@@ -186,9 +239,7 @@ const MicrobrandCards: React.FC<MicrobrandCardsProps> = (props) => {
   useEffect(() => {
     const tgidsExist = cards.map((card) => card.tgid).filter((tgid) => tgid);
     if (tgidsExist.length) {
-      fetch(
-        `https://api.headout.com/api/v5/tour-group/list?ids[]=${tgidsExist}`
-      )
+      fetch(`/api/tours/v5/tour-group/list?ids[]=${tgidsExist}`)
         .then((res) => res.json())
         .then((json) => {
           const cardPrices = tourListApiParser(json);

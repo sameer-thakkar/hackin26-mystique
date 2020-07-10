@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { HomePage } from './views/HomePage';
 import { SearchPage } from './views/SearchPage';
-import { PAGETYPE, CURRENCY_SYMBOL_MAP } from '../../constants';
+import { PAGETYPE, CURRENCY_SYMBOL_MAP, THEMES } from '../../constants';
 import { MobileProductPage } from './views/ProductPage';
 import { withRouter } from 'next/router';
 import populateHead from '../common/meta';
@@ -37,26 +37,9 @@ class MicrositeV2 extends Component<any, any> {
     const { all_tours: allTours } = this.props.data.data;
     const allTgids = allTours.map((tour) => tour.primary.tgid);
 
-    fetch(`https://api.headout.com/api/v5/tour-group/list?ids[]=${allTgids}`)
+    fetch(`/api/tours/v5/tour-group/list?ids[]=${allTgids}`)
       .then((res) => {
-        let HSID = res.headers.get('x-h-sid');
-        if (!docCookies.hasItem('h-sid')) {
-          const nakedDomain = window.location.host
-            .replace('stage.', '')
-            .split('.')
-            .slice(1)
-            .join('.');
-          docCookies.setItem(
-            'h-sid',
-            HSID,
-            (new Date().getTime() / 1000) * 2,
-            '/',
-            nakedDomain,
-            false
-          );
-        } else {
-          HSID = docCookies.getItem('h-sid');
-        }
+        const HSID = docCookies.getItem('h-sid');
         this.sendVariableToDataLayer({ 'h-sid': HSID });
         return res.json();
       })
@@ -167,7 +150,7 @@ class MicrositeV2 extends Component<any, any> {
       enableDropdownLinks: overriddenHeaderData.enable_dropdown == 'Yes',
       dropdownLinks: dropdownLinksArray,
       hasPoweredByHeadoutLogo:
-        overriddenHeaderData.enable_powered_by_headout_logo,
+        overriddenHeaderData.enable_powered_by_superbrand_logo,
     };
     // TODO: Add Interaction Field on Primic and Map it to Each Banner
     const heroProps = {
@@ -183,6 +166,7 @@ class MicrositeV2 extends Component<any, any> {
           },
         ];
       }, []),
+      bannerHeading: CMSData.heading,
     };
 
     const { cardPrices, currencySymbol, isFetched, ready } = this.state;
@@ -268,13 +252,24 @@ class MicrositeV2 extends Component<any, any> {
       active: 0,
     };
 
-    const { favicon, footer_logo_link, footer_logo } = this.props.data.data;
+    const {
+      favicon,
+      footer_logo_link,
+      footer_logo,
+      theme_override,
+    } = this.props.data.data;
     const heroSectionSlice = [...this.props.data.data.body4, hightlightSlice];
     const commonFooterProps = commonFooter ? commonFooter.data : null;
+    let themeOverride = theme_override || THEMES.INHERIT;
+    themeOverride =
+      themeOverride === THEMES.INHERIT
+        ? commonFooterProps?.theme_override
+        : themeOverride;
     const MBData = {
       footer: {
         favicon,
         logo: footer_logo.url ? footer_logo : footer_logo_link,
+        themeOverride: themeOverride || THEMES.INHERIT,
         ...commonFooterProps,
       },
       isMobile,

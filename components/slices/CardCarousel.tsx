@@ -13,15 +13,15 @@ const CardCarouselContainer = styled.div`
     right: 0;
     color: black;
     :after {
-      font-size: 40px;
+      font-size: 24px;
     }
   }
   .swiper-button-prev {
     left: 0;
     color: black;
-    font-size: 40px;
+    font-size: 24px;
     :after {
-      font-size: 40px;
+      font-size: 24px;
     }
   }
   .carousel-slider {
@@ -147,7 +147,7 @@ export default class CardCarousel extends Component<CardCarouselProps> {
     const { cards } = this.props;
     const tgids = cards.map((card) => card.tgid);
     const fetchPrice = await fetch(
-      `https://api.headout.com/api/v5/tour-group/list?ids[]=${tgids}`
+      `/api/tours/v5/tour-group/list?ids[]=${tgids}`
     ).then((res) => res.json());
     const cardPrices = tourListApiParser(fetchPrice);
     const currencySymbol = fetchPrice.currencies[0]?.localSymbol;

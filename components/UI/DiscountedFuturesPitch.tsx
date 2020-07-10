@@ -28,6 +28,12 @@ const Heading = styled.div`
   font-size: 20px;
   line-height: 24px;
   max-width: 65%;
+  @media (max-width: 768px) {
+    max-width: 100%;
+    &.main-heading {
+      max-width: 65%;
+    }
+  }
 `;
 
 const Text = styled.div`
@@ -144,7 +150,9 @@ const DiscountedFuturesPitch = ({ dfExpiryDate = '' }) => {
     <PitchGrid>
       <Section>
         <Pitch>
-          <Heading>{labels[lang].DISCOUNTED_FUTURES.HEADING}</Heading>
+          <Heading className={'main-heading'}>
+            {labels[lang].DISCOUNTED_FUTURES.HEADING}
+          </Heading>
           <Text>
             {labels[lang].DISCOUNTED_FUTURES.DESCRIPTION.replace(
               '<date>',

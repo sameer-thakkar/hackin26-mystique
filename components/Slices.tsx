@@ -472,7 +472,7 @@ export const toursTabSliceHandler = async (slice) => {
       };
       const excludedTgids = csvTgidToArray(slice.primary.excluded_tgids);
       const category: any = await fetch(
-        `https://api.headout.com/api/v1/feed/category/get/${slice.primary.category_id}`
+        `/api/tours/v1/feed/category/get/${slice.primary.category_id}`
       ).then((res) => res.json());
       const tours = category?.products.reduce((acc, tour) => {
         return [

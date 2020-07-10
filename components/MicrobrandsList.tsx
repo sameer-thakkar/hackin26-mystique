@@ -38,7 +38,7 @@ export default class MicrobrandList extends Component<any, any> {
     const tgidsExist = tgids.filter((tgid) => tgid);
     if (tgidsExist.length) {
       const fetchPrice = await fetch(
-        `https://api.headout.com/api/v5/tour-group/list?ids[]=${tgidsExist}`
+        `/api/tours/v5/tour-group/list?ids[]=${tgidsExist}`
       ).then((res) => res.json());
       const cardPrices = tourListApiParser(fetchPrice);
       const currencySymbol = fetchPrice.currencies[0].localSymbol;

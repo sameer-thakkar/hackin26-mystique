@@ -455,7 +455,7 @@ const DetailedProductCard = (props) => {
                 href={`https://book.${nakedDomain}${
                   lang === 'en' ? '' : `/${lang}`
                 }/book/${tgidClicked}${
-                  isDFOnlyProduct ? '?discountedFuture=true' : ''
+                  isDFOnlyProduct ? '?isDiscountedFutures=true' : ''
                 }`}
                 onClick={(e) => {
                   if (isDFProduct && !isDFOnlyProduct) {

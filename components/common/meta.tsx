@@ -3,6 +3,7 @@ import ReactHtmlParser from 'react-html-parser';
 import Head from 'next/head';
 import parse from 'url-parse';
 import { withoutTrailingSlash } from '../../utils/helper';
+import { THEMES } from 'constants/index';
 
 const withTrailingSlash = (url) =>
   url.charAt(url.length - 1) !== '/' ? `${url}/` : url;
@@ -105,13 +106,15 @@ const PopulateHead = (data) => {
     currentLanguage,
     originalHost,
     serverRequestStartTimestamp,
+    mbTheme,
   } = data;
 
   const isNonProd = isDev || originalHost.startsWith('stage.');
 
   const amplitude_key = 'b85ab528e443294e83c98f9f1915c23b';
 
-  const GTM_CONTAINER_ID = 'GTM-5LJWNW3';
+  const GTM_CONTAINER_ID =
+    mbTheme === THEMES.MIN_BLUE ? 'GTM-TS3V4HK' : 'GTM-5LJWNW3';
   const GTM_AUTH = isNonProd
     ? 'psi3hURmBLey31qAhn7cPA'
     : 'ueaj9d1HgXEpkUp-zbbP0Q';

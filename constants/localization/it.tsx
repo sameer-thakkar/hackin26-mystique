@@ -24,6 +24,7 @@ const it = {
   READ_MORE_TEXT: 'Leggi di più',
   SHOW_LESS_TEXT: 'Mostra meno',
   NEXT_AVAILABLE: 'Prossimo Disponibile',
+  SAVE_UPTO: 'Risparmia fino a',
   AVAILABLE: 'Disponibile',
   EARLIEST_AVAILABILITY: 'Prima Disponibilità',
   TODAY: 'Oggi',
@@ -56,17 +57,17 @@ const it = {
   SAFE_EXPERIENCE: {
     HEADING: 'I Più Alti Standard di Sicurezza',
     SHORT_HEADING: 'I migliori standard di sicurezza in vigore',
-    MOBILE_HEADING: 'Le Esperienze Sicure di Headout',
+    MOBILE_HEADING: 'Le Esperienze Sicure',
     GENERAL_DESCRIPTION:
-      "Headout ha inaugurato l'iniziativa Esperienze Sicure . Ogni esperienza contrassegnata da questo stemma è stata certificata per seguire i migliori standard di sicurezza in accordo con le linee guida dell'OMS.",
+      "ha inaugurato l'iniziativa Esperienze Sicure . Ogni esperienza contrassegnata da questo stemma è stata certificata per seguire i migliori standard di sicurezza in accordo con le linee guida dell'OMS.",
     CTA_TEXT: 'Dettagli sulle misure di sicurezza',
     EXPERIENCE_DESCRIPTION:
       "Questa esperienza è stata certificata per seguire i migliori standard di sicurezza in accordo con le linee guida dell'OMS",
     FLAG_TEXT: 'Massima Sicurezza',
     MODAL: {
-      HEADING: 'Le Esperienze Sicure di Headout',
+      HEADING: 'Le Esperienze Sicure',
       SUB_HEADING:
-        "Headout sta lavorando con i nostri partner in tutto il mondo per implementare i migliori standard di sicurezza in accordo con le linee guida dell'OMS. Tutte le misure adottate sul campo sono state verificate: le puoi vedere elencate in questa sezione. È tempo di godersi di nuovo il mondo che ci circonda.",
+        "sta lavorando con i nostri partner in tutto il mondo per implementare i migliori standard di sicurezza in accordo con le linee guida dell'OMS. Tutte le misure adottate sul campo sono state verificate: le puoi vedere elencate in questa sezione. È tempo di godersi di nuovo il mondo che ci circonda.",
       DETAILS: {
         SAFETY_MASK_DEFAULT: {
           HEADING: 'Tutti indossano maschere per garantire la tua sicurezza',
@@ -170,13 +171,13 @@ const it = {
         },
       },
       BADGE_DESCRIPTION:
-        "Questo stemma applicato a un'esperienza conferma che i suoi standard di sicurezza sono stati verificati da Headout",
+        "Questo stemma applicato a un'esperienza conferma che i suoi standard di sicurezza sono stati verificati",
     },
   },
   DISCOUNTED_FUTURES: {
     HEADING: 'Prenota Adesso, Viaggia Quando Vuoi, Risparmia Sempre',
     DESCRIPTION:
-      'Acquista i tuoi voucher scontati e goditi la tua esperienza prima del seguente termine: <stDate>. Così facendo, risparmi denaro e aiuti il settore turistico!',
+      'Acquista i tuoi voucher scontati e goditi la tua esperienza prima del seguente termine: <date>. Così facendo, risparmi denaro e aiuti il settore turistico!',
     FLAG_TEXT: 'Prenota per il Futuro',
     HEADING_WORKS: 'Come funziona?',
     FAQ_QUESTIONS: {

@@ -65,7 +65,6 @@ export default class SitemapXml extends Component {
         return getPage(api, uid, []);
       })
       .then((documents) => {
-        console.log('here');
         documents
           .filter((doc) =>
             [CUSTOM_TYPES.MICROSITE, CUSTOM_TYPES.CONTENT_PAGE].includes(

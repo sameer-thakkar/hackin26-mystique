@@ -14,7 +14,6 @@ const StyledBanner = styled.div`
   position: relative;
   box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.16);
   font-family: ${SOLEIL.FONT_STACK};
-  margin-top: 80px;
   margin-bottom: 40px;
 
   .mb-slide {
@@ -143,7 +142,6 @@ const StyledBanner = styled.div`
   }
 
   @media (max-width: 768px) {
-    margin-top: 56px;
     .mb-captions .mb-caption {
       justify-items: left;
       margin-bottom: 24px;

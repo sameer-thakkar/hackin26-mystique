@@ -130,7 +130,7 @@ export const LINKED_MICROSITE_PROPS: string[] = [
   'blackout_start_date',
   'blackout_end_date',
   'block_n_days_group_booking',
-  'enable_powered_by_headout_logo',
+  'enable_powered_by_superbrand_logo',
   'group_form_blocked_days',
   'alert_popup',
   'show_covid19_alert',
@@ -340,4 +340,10 @@ export const FULL_LANGUAGE_MAP = {
     language: 'Português',
     paramLang: 'pt-pt',
   },
+};
+
+export const THEMES = {
+  DEFAULT: 'Default',
+  MIN_BLUE: 'Minimal Blue',
+  INHERIT: 'Inherit',
 };

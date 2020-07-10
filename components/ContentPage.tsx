@@ -193,9 +193,7 @@ export default class ContentPage extends Component<any, any> {
     });
     if (allTourTgids.length > 0) {
       const toursData = await fetch(
-        `https://api.headout.com/api/v5/tour-group/list?ids[]=${[
-          ...allTourTgids,
-        ]}`
+        `/api/tours/v5/tour-group/list?ids[]=${[...allTourTgids]}`
       ).then((res) => {
         return res.json();
       });
@@ -226,7 +224,7 @@ export default class ContentPage extends Component<any, any> {
         });
       });
       const toursData = await fetch(
-        `https://api.headout.com/api/v5/tour-group/list?ids[]=${[
+        `/api/tours/v5/tour-group/list?ids[]=${[
           ...filteredTours.map((t) => t.tgid),
         ]}`
       ).then((res) => {
@@ -418,8 +416,8 @@ export default class ContentPage extends Component<any, any> {
     };
 
     const hasPoweredByHeadoutLogo =
-      commonHeader.data.enable_powered_by_headout_logo ||
-      microsite_document_ref.data.enable_powered_by_headout_logo;
+      commonHeader.data.enable_powered_by_superbrand_logo ||
+      microsite_document_ref.data.enable_powered_by_superbrand_logo;
     const showGroupBooking = enableGroupBooking === 'Yes';
     const currentLanguage = lang.split('-')[0];
 
@@ -520,7 +518,7 @@ export default class ContentPage extends Component<any, any> {
           logoURL={commonFooter?.data?.logo?.url}
           logoAlt={commonFooter?.data?.logo?.alt}
           hasPoweredByHeadoutLogo={
-            commonFooter?.data?.powered_by_headout || false
+            commonFooter?.data?.powered_by_superbrand || false
           }
           showDisclaimer={commonFooter?.data?.show_disclaimer}
           disclaimerText={commonFooter?.data?.disclaimer_text}

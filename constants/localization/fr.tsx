@@ -23,6 +23,7 @@ const fr = {
   READ_MORE_TEXT: 'En Savoir Plus',
   SHOW_LESS_TEXT: 'Voir Moins',
   NEXT_AVAILABLE: 'Bientôt Disponible',
+  SAVE_UPTO: "Économisez jusqu'à",
   AVAILABLE: 'Disponible',
   EARLIEST_AVAILABILITY: 'Disponibilité la Plus Tôt',
   TODAY: "Aujourd'hui",
@@ -54,17 +55,17 @@ const fr = {
   SAFE_EXPERIENCE: {
     HEADING: 'Les normes de sécurité et sanitaires',
     SHORT_HEADING: 'Les normes de sécurité et sanitaires en vigueur',
-    MOBILE_HEADING: 'Expériences classées sans risque par Headout',
+    MOBILE_HEADING: 'Expériences classées sans risque',
     GENERAL_DESCRIPTION:
-      " Headout a dressé une liste d'expériences sans risque. Toute expérience marquée de ce badge a été vérifiée et est conforme aux normes de sécurité et sanitaires selon les directives de l'OMS.",
+      " dressé une liste d'expériences sans risque. Toute expérience marquée de ce badge a été vérifiée et est conforme aux normes de sécurité et sanitaires selon les directives de l'OMS.",
     CTA_TEXT: 'Détails des mesures de sécurité et sanitaires',
     EXPERIENCE_DESCRIPTION:
       "Cette expérience a été vérifiée et respecte les normes de sécurité et sanitaires, conformément aux réglementations locales et à l'OMS",
     FLAG_TEXT: 'Expérience sans risque',
     MODAL: {
-      HEADING: 'Expériences classées sans risque par Headout',
+      HEADING: 'Expériences classées sans risque',
       SUB_HEADING:
-        "Headout collabore avec ses partenaires dans le monde entier pour appliquer les normes de sécurité et sanitaires conformément aux directives de l'OMS. Toutes les mesures prises sur le terrain ont été vérifiées et sont indiquées ici. Il est grand temps de profiter à nouveau du monde qui nous entoure.",
+        "collabore avec ses partenaires dans le monde entier pour appliquer les normes de sécurité et sanitaires conformément aux directives de l'OMS. Toutes les mesures prises sur le terrain ont été vérifiées et sont indiquées ici. Il est grand temps de profiter à nouveau du monde qui nous entoure.",
       DETAILS: {
         SAFETY_MASK_DEFAULT: {
           HEADING: 'Pour votre sécurité, tout le monde porte un masque',
@@ -159,7 +160,7 @@ const fr = {
         },
       },
       BADGE_DESCRIPTION:
-        'Ce badge atteste que les normes de sécurité et sanitaires ont été vérifiées par Headout pour cette expérience.',
+        'Ce badge atteste que les normes de sécurité et sanitaires ont été vérifiées pour cette expérience.',
     },
   },
   DISCOUNTED_FUTURES: {

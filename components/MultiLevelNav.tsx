@@ -1,18 +1,25 @@
 import LinkResolver from './LinkResolver';
 import styled from 'styled-components';
+import * as labels from 'constants/localization/labels';
 import { COLORS, SOLEIL } from '../constants/ui-constants';
 import { CHEVRON_DOWN } from '../assets/SvgIcons';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useContext } from 'react';
 import { useWindowWidth } from '@react-hook/window-size';
+import { MBContext } from 'contexts/MBContext';
 
 const StyledMenuItem = styled.li`
   font-size: 16px;
   line-height: 24px;
   padding: 12px 16px;
   font-family: ${SOLEIL.FONT_STACK};
-  color: ${COLORS.FOUR_BLACK};
+  color: ${({ theme: { primaryBGText } }) =>
+    primaryBGText ? primaryBGText : COLORS.FOUR_BLACK};
   cursor: pointer;
   position: relative;
+  span {
+    color: ${({ theme: { primaryBGText } }) =>
+      primaryBGText ? primaryBGText : COLORS.FOUR_BLACK};
+  }
   .withIcon {
     display: grid;
     align-items: center;
@@ -25,6 +32,8 @@ const StyledMenuItem = styled.li`
       svg {
         height: 24px;
         path {
+          stroke: ${({ theme: { primaryBGText } }) =>
+            primaryBGText ? primaryBGText : COLORS.FOUR_BLACK};
           stroke-width: 1.5px;
         }
       }
@@ -46,6 +55,9 @@ const StyledMenuItem = styled.li`
         justify-self: end;
         svg {
           transition: transform 0.3s ease;
+          path {
+            stroke: ${COLORS.FOUR_BLACK};
+          }
         }
       }
     }
@@ -83,7 +95,8 @@ const NestedMenu = styled.ul`
   top: 24px;
   left: 0;
   width: max-content;
-  background: #ffffff;
+  background-color: ${({ theme: { primaryBackground } }) =>
+    primaryBackground ? primaryBackground : COLORS.WHITE};
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   .nest-icon svg {
@@ -101,7 +114,8 @@ const NestedMenu = styled.ul`
   ${StyledMenuItem}:hover > a > & {
     visibility: unset;
     li:hover {
-      background: ${COLORS.FLOAT_PURPS};
+      background-color: ${({ theme: { primaryBGHover } }) =>
+        primaryBGHover ? primaryBGHover : COLORS.FLOAT_PURPS};
     }
   }
   @media (max-width: 768px) {
@@ -248,6 +262,7 @@ const MenuItem = (props) => {
 
 const HeaderSliceHandler = (slice, props) => {
   const { index } = props;
+  const { lang } = useContext(MBContext);
   switch (slice.slice_type) {
     case 'navigation':
       return <Navigation key={index} slices={slice.slices} />;
@@ -278,7 +293,7 @@ const HeaderSliceHandler = (slice, props) => {
             slice.action();
           }}
         >
-          Group Tickets
+          {labels[lang].GROUP_TICKETS}
         </StyledMenuItem>
       );
   }

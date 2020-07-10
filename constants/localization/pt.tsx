@@ -24,6 +24,7 @@ const pt = {
   READ_MORE_TEXT: 'Leia Mais',
   SHOW_LESS_TEXT: 'Ver Menos',
   NEXT_AVAILABLE: 'Próxima Disponível',
+  SAVE_UPTO: 'Economize até',
   AVAILABLE: 'Disponível',
   EARLIEST_AVAILABILITY: 'Seguinte Disponível',
   TODAY: 'Hoje',
@@ -56,17 +57,17 @@ const pt = {
   SAFE_EXPERIENCE: {
     HEADING: 'Melhores medidas de segurança',
     SHORT_HEADING: 'As melhores medidas de segurança em vigor',
-    MOBILE_HEADING: 'Experiências seguras da Headout',
+    MOBILE_HEADING: 'Experiências seguras',
     GENERAL_DESCRIPTION:
-      'Headout apresenta Experiências Seguras. Qualquer experiência com este selo foi verificada e segue as melhores medidas de segurança de acordo com as diretrizes da OMS.',
+      'apresenta Experiências Seguras. Qualquer experiência com este selo foi verificada e segue as melhores medidas de segurança de acordo com as diretrizes da OMS.',
     CTA_TEXT: 'Detalhes das medidas',
     EXPERIENCE_DESCRIPTION:
       'Esta experiência foi verificada para seguir as melhores medidas de segurança de acordo com os regulamentos locais e a OMS',
     FLAG_TEXT: 'Experiência segura',
     MODAL: {
-      HEADING: 'Experiências seguras da Headout',
+      HEADING: 'Experiências seguras da',
       SUB_HEADING:
-        'A Headout está trabalhando com nossos parceiros em todo o mundo para implementar as melhores medidas de segurança de acordo com as diretrizes da OMS. Todas as medidas tomadas foram verificadas e aqui apresentadas. Está na hora de explorar novamente o mundo à nossa volta.',
+        'está trabalhando com nossos parceiros em todo o mundo para implementar as melhores medidas de segurança de acordo com as diretrizes da OMS. Todas as medidas tomadas foram verificadas e aqui apresentadas. Está na hora de explorar novamente o mundo à nossa volta.',
       DETAILS: {
         SAFETY_MASK_DEFAULT: {
           HEADING: 'Todos devem usar máscara para sua segurança',
@@ -160,7 +161,7 @@ const pt = {
         },
       },
       BADGE_DESCRIPTION:
-        'O selo em uma experiência confirma que as medidas de segurança foram verificadas pela Headout.',
+        'O selo em uma experiência confirma que as medidas de segurança foram verificadas pela',
     },
   },
   DISCOUNTED_FUTURES: {

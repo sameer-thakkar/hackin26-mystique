@@ -8,9 +8,9 @@ import HorizontalLine from './slices/HorizontalLine';
 import Button from 'UI/Button';
 import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from 'utils/shortCodes';
-import { ANALYTICS_EVENTS } from 'constants/index';
+import { ANALYTICS_EVENTS, THEMES } from 'constants/index';
 import { COLORS, SOLEIL } from 'constants/ui-constants';
-import { CALENDAR, BrownTicket, Shield } from 'assets/SvgIcons';
+import { CALENDAR, BrownTicket, Shield, BackArrow } from 'assets/SvgIcons';
 import 'utils/dayjsLocale';
 import Split, { StlyedSplit } from 'UI/Split';
 import IconCTA from 'UI/IconCTA';
@@ -21,34 +21,51 @@ import DiscountedFutureSidebar from './DiscountedFutureSidebar';
 import SafeExperiencesPitch from 'UI/SafeExperiencesPitch';
 import PriceBlock from 'UI/PriceBlock';
 import Conditional from './common/Conditional';
+import Chevron from 'UI/Chevron';
 
 const isLengthyArray = (item) => Array.isArray(item) && item.length;
 
+const Container = styled.div`
+  max-width: 1200px;
+  margin: auto;
+  width: 100%;
+`;
+
 const StyledProductCard = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
-  padding: 32px 24px;
-  border: 1px solid ${COLORS.GREY_G6};
+  padding: ${({ theme }) => theme.productCards.padding.desktop};
+  border: ${({ theme }) => theme.productCards.border};
   border-radius: 4px;
   display: grid;
   grid-row-gap: 24px;
+  grid-template-columns: auto 280px;
+  grid-template-areas: ${({ layout }) => layout.map((row) => `'${row}'`)};
   ${StlyedSplit} {
     margin: 0;
     max-width: unset;
     padding: 0;
   }
+  ${HorizontalLine} {
+    grid-area: line;
+    margin: 8px;
+  }
   .more-details {
     font-weight: ${SOLEIL.MEDIUM};
     font-size: 14px;
     line-height: 15px;
-    color: ${COLORS.MED_SLATE_BLUE};
     margin-left: 1em;
     margin-top: 16px;
     cursor: pointer;
     outline: none;
+    ${({ theme }) => theme.productCards.moreDetailsStyle}
   }
   @media (max-width: 768px) {
     grid-row-gap: 16px;
-    padding: 24px 16px;
+    padding: ${({ theme }) => theme.productCards.padding.mobile};
+    margin: 0
+      ${({ theme: { theme } }) => (theme === THEMES.DEFAULT ? '16px' : '24px')};
+    width: auto;
+    grid-template-columns: auto;
     .more-details {
       margin-top: 0;
       margin-left: 0;
@@ -58,95 +75,95 @@ const StyledProductCard = styled.div`
 `;
 const ProductHeader = styled.div`
   display: grid;
-  grid-template-columns: 1fr auto;
-  .header-left,
-  .header-right {
-    display: grid;
-    align-content: start;
-    grid-gap: 16px;
+  grid-gap: 16px;
+  display: contents;
+  @media (max-width: 768px) {
   }
-  .tour-title {
-    font-size: 24px;
-    line-height: 32px;
-    font-weight: ${SOLEIL.MEDIUM};
-    margin: 0;
+`;
+
+const TourTitle = styled.h2`
+  grid-area: title;
+  font-weight: ${SOLEIL.MEDIUM};
+  margin: 0;
+  max-width: 768px;
+  ${({ theme }) => theme.productCards.titleFontSettings.desktop};
+  @media (max-width: 768px) {
+    ${({ theme }) => theme.productCards.titleFontSettings.mobile};
   }
-  .tour-tags {
-    font-size: 14px;
-    font-weight: ${SOLEIL.MEDIUM};
-    display: grid;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: start;
-    margin-bottom: -8px;
-    color: ${COLORS.GREY_G3};
-  }
+`;
+
+const TourTags = styled.div`
+  grid-area: tags;
+  font-size: 14px;
+  font-weight: ${SOLEIL.MEDIUM};
+  display: grid;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  margin-bottom: -8px;
+  color: ${COLORS.GREY_G3};
   .tour-tag {
     display: grid;
     margin-bottom: 8px;
     grid-auto-flow: column;
     grid-column-gap: 8px;
     margin-right: 8px;
+    font-size: 14px;
+    line-height: 20px;
   }
+
   @media (max-width: 768px) {
-    grid-template-columns: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: start;
+    font-size: 12px;
+    line-height: 13px;
+    .tour-tag {
+      margin-bottom: 8px;
+    }
+  }
+`;
+
+const CTAContainer = styled.div`
+  grid-area: cta-combo;
+  display: grid;
+  grid-gap: 16px;
+  align-content: start;
+  ${({ theme }) =>
+    theme.theme === THEMES.MIN_BLUE
+      ? `
+    button.tour-book-now-cta {
+      width: 100%;
+    }
+  `
+      : ``}
+  @media (max-width: 768px) {
     display: contents;
-    .tour-title {
-      font-size: 18px;
-      line-height: 24px;
-    }
-    .header-left,
-    .header-right {
-      display: contents;
-    }
-    .tour-tags {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: start;
-      font-size: 12px;
-      line-height: 13px;
-      .tour-tag {
-        margin-bottom: 8px;
-      }
-    }
   }
 `;
 
 const PriceContainer = styled.div`
   justify-self: center;
   display: grid;
+  grid-auto-flow: column;
+  align-items: end;
+  grid-column-gap: 8px;
   justify-items: left;
   grid-row-gap: 4px;
   .tour-scratch-price {
     display: grid;
     grid-template-columns: auto auto;
+    justify-content: left;
     grid-column-gap: 4px;
-    font-weight: ${SOLEIL.REGULAR};
-    color: ${COLORS.GREY_G4};
-    font-size: 11px;
-    line-height: 12px;
-    span {
-      text-decoration: line-through;
-      display: block;
-    }
   }
   .tour-price {
-    font-size: 25px;
-    line-height: 32px;
     display: flex;
-    font-weight: ${SOLEIL.MEDIUM};
-    color: ${COLORS.FOUR_BLACK};
   }
+  ${({ theme }) => theme.productCards.priceFontSettings.desktop}
   @media (max-width: 768px) {
     justify-self: left;
-    .tour-scratch-price {
-      font-size: 11px;
-      line-height: 12px;
-    }
-    .tour-price {
-      font-size: 20px;
-      line-height: 24px;
-    }
+    grid-area: price-block;
+    ${({ theme }) => theme.productCards.priceFontSettings.mobile}
   }
 `;
 const CTABlock = styled.div`
@@ -154,69 +171,93 @@ const CTABlock = styled.div`
     text-decoration: none;
   }
   .tour-book-now-cta {
-    width: 100%;
+    margin: auto;
     min-width: 230px;
+    display: block;
+    line-height: 1;
+    svg {
+      vertical-align: middle;
+      margin-left: 24px;
+      transform: rotate(180deg);
+      path {
+        stroke: ${({ theme }) => theme.primaryBGText};
+        stroke-width: 1.5px;
+      }
+    }
   }
   @media (max-width: 768px) {
-    grid-row: ${({ showEarliestAvail, hasOffer, hasIconBoosters }) =>
-      (showEarliestAvail && hasOffer ? 7 : 6) + (hasIconBoosters ? 1 : 0)};
+    grid-area: cta-block;
+    ${({ isSticky, shouldOffset }) =>
+      isSticky
+        ? `
+      position: sticky;
+      bottom: 0;
+      padding-bottom: 16px;
+      ${shouldOffset ? 'transform: translateY(32px);' : ''}
+      background: ${COLORS.WHITE};
+      z-index: 2;
+    `
+        : ``}
     .tour-book-now-cta {
       justify-content: center;
+      width: 100%;
     }
   }
 `;
 
 const ProductBody = styled.div`
+  grid-area: body;
   display: grid;
   .tour-description {
-    font-family: ${SOLEIL.FONT_STACK};
-    font-size: 16px;
-    line-height: 24px;
-    font-weight: ${SOLEIL.REGULAR};
-    color: ${COLORS.FOUR_BLACK};
-    opacity: 0.99;
-    display: grid;
-    grid-gap: 12px;
-    ul {
-      padding: 0;
-      padding-left: 1em;
-      display: grid;
-      grid-gap: 12px;
-      ${({ collapsed }) =>
-        collapsed
-          ? `
-      li:nth-of-type(n + 3) {
-        display: none;
-      }
-      `
-          : ''}
-    }
     p {
       margin: 0;
       font-weight: ${SOLEIL.MEDIUM};
     }
+    font-family: ${SOLEIL.FONT_STACK};
+    ${({ theme }) => theme.productCards.regularFontSettings.desktop}
+    color: ${COLORS.FOUR_BLACK};
+    opacity: 0.99;
+    display: grid;
+    grid-gap: 0;
+    ${({ collapsed }) =>
+      collapsed
+        ? `
+    *:nth-child(n + 4),
+    ul li:nth-child(n + 3) {
+      display: none;
+    }
+    `
+        : ''}
+    ul {
+      padding: 0;
+      padding-left: 1.2em;
+      display: grid;
+      grid-gap: 12px;
+    }
   }
   @media (max-width: 768px) {
     .tour-description {
-      p {
-        display: none;
-      }
+      ${({ theme }) => theme.productCards.regularFontSettings.mobile}
     }
-    ul {
-      ${({ collapsed }) =>
-        collapsed
-          ? `
-      li:nth-of-type(n + 2) {
-        display: none;
-      }
-      `
-          : ''}
-    }
+    ${({ collapsed }) =>
+      collapsed
+        ? `
+        p:nth-child(1) {
+          display: none;
+        }
+        ul {
+          li:nth-child(n + 2) {
+            display: none;
+          }
+        }
+    `
+        : ''}
   }
 `;
 
 const NextAvailableBlock = styled.div`
   font-size: 14px;
+  margin-top: 16px;
   font-weight: ${SOLEIL.MEDIUM};
   color: ${COLORS.FOUR_BLACK};
   line-height: 15px;
@@ -229,35 +270,38 @@ const NextAvailableBlock = styled.div`
     display: flex;
   }
   @media (max-width: 768px) {
-    grid-row: ${({ hasOffer, hasIconBoosters }) =>
-      (hasOffer ? 8 : 7) + (hasIconBoosters ? 1 : 0)};
   }
 `;
 const ProductOfferBlock = styled.div`
+  grid-area: offer;
   font-size: 15px;
   line-height: 15px;
   font-family: ${SOLEIL.FONT_STACK};
   font-weight: ${SOLEIL.MEDIUM};
   cursor: pointer;
-  color: ${COLORS.MED_SLATE_BLUE};
+  color: ${({ theme: { primaryAccent } }) =>
+    primaryAccent ? primaryAccent : COLORS.MED_SLATE_BLUE};
   p {
     margin: 0;
-    color: ${COLORS.MED_SLATE_BLUE};
+    color: ${({ theme: { primaryAccent } }) =>
+      primaryAccent ? primaryAccent : COLORS.MED_SLATE_BLUE};
   }
 `;
 const V1BoosterBlock = styled.div`
+  grid-area: booster;
   font-family: ${SOLEIL.FONT_STACK};
   font-weight: 400;
   line-height: 1.31;
   text-align: left;
-  color: ${COLORS.CORAL};
-  margin: 0.8em 0;
+  color: ${({ theme: { primaryAccent } }) =>
+    primaryAccent ? primaryAccent : COLORS.CORAL};
   font-size: 1em;
   display: inline-block;
 
   p {
     margin: 0;
-    color: ${COLORS.MED_SLATE_BLUE};
+    color: ${({ theme: { primaryAccent } }) =>
+      primaryAccent ? primaryAccent : COLORS.MED_SLATE_BLUE};
     strong {
       font-weight: unset;
     }
@@ -292,7 +336,23 @@ const V1BoosterBlock = styled.div`
   }
 `;
 
+const SavedTag = styled.div`
+  padding: 4px 8px;
+  text-transform: uppercase;
+  background: ${({ theme }) =>
+    theme.theme === THEMES.DEFAULT ? 'transparent' : '#dbfddb'};
+  color: ${({ theme }) =>
+    theme.theme === THEMES.DEFAULT ? theme.primaryText : '#34a853'};
+  color: ${({ theme }) => theme.primaryText};
+  font-size: 12px;
+  line-height: 16px;
+  font-style: normal;
+  font-weight: normal;
+  border-radius: 3px;
+`;
+
 const IconBoosters = styled.div`
+  grid-area: icon-booster;
   margin-left: 16px;
   ${StlyedSplit} {
     grid-column-gap: 30px;
@@ -309,14 +369,21 @@ const IconBoosters = styled.div`
 
 const Product = (props) => {
   const moreDetailsRef = useRef();
-  const { analytics, tgid, position, currentLanguage, togglePopup } = props;
+  const {
+    analytics,
+    tgid,
+    position,
+    currentLanguage,
+    togglePopup,
+    defaultOpen,
+  } = props;
   const {
     title,
     descriptors,
     highlights,
     tourPrices,
     uid,
-    hasOffer,
+    hasOffer: isOfferEnabled,
     productOffer,
     offerId,
     isMobile,
@@ -329,7 +396,10 @@ const Product = (props) => {
     booster,
   } = props;
 
-  const [isContentOpen, toggleContentOpen] = useState(false);
+  const { mbTheme } = useContext(MBContext);
+  const [isContentOpen, toggleContentOpen] = useState(
+    defaultOpen && mbTheme === THEMES.MIN_BLUE
+  );
 
   const handlePopup = () => {
     togglePopup();
@@ -376,8 +446,7 @@ const Product = (props) => {
     ? tourPrices[tgid]
     : { listingPrice: null };
   const { allTags, dfListingPrice } = scorpioData;
-  if (isFetched && !tourPrices[tgid]?.price && dfListingPrice === null)
-    return null;
+  if (!listingPrice && !dfListingPrice) return null;
   const hasSafetyFlag = isSafetyIncluded(allTags);
   const isDFProduct = isDiscountedFuture(allTags);
   const isDFOnlyProduct = listingPrice === null && dfListingPrice !== null;
@@ -388,6 +457,11 @@ const Product = (props) => {
       children: <DiscountedFutureSidebar product={tourPrices[tgid]} />,
     });
   };
+  const finalPrice = listingPrice || dfListingPrice;
+  const savings =
+    ((finalPrice.originalPrice - finalPrice.finalPrice) /
+      finalPrice.originalPrice) *
+    100;
   const openSafeSidebar = () => {
     addToAside({
       width: '41.06vw',
@@ -400,12 +474,70 @@ const Product = (props) => {
       sidePadding: isMobile ? 0 : 40,
     });
   };
+  const hasV1Booster = booster && RichText.asText(booster).trim().length > 0;
+  const hasOffer = isOfferEnabled && offerId;
+
+  const layout = {
+    desktop: [
+      'title cta-combo',
+      mbTheme === THEMES.DEFAULT && 'tags cta-combo',
+      (hasSafetyFlag || isDFProduct) && 'icon-booster cta-combo',
+      hasOffer && 'offer cta-combo',
+      hasV1Booster && 'booster cta-combo',
+      'line line',
+      mbTheme === THEMES.MIN_BLUE && 'tags tags',
+      'body body',
+    ],
+    mobile: [
+      'title',
+      'tags',
+      'price-block',
+      (hasSafetyFlag || isDFProduct) && 'icon-booster',
+      hasOffer && 'offer',
+      hasV1Booster && 'booster ',
+      'body',
+      'cta-block',
+    ],
+  };
+  const LAYOUT = layout[isMobile ? 'mobile' : 'desktop'];
+
+  const getMoreDetailsButton = () => {
+    const innerContent =
+      mbTheme === THEMES.DEFAULT ? (
+        ` ${
+          isContentOpen
+            ? '- ' + labels[currentLanguage].SHOW_LESS_TEXT
+            : '+ ' + labels[currentLanguage].MORE_DETAILS
+        }`
+      ) : (
+        <>
+          {isContentOpen
+            ? labels[currentLanguage].SHOW_LESS_TEXT
+            : labels[currentLanguage].MORE_DETAILS}{' '}
+          <Chevron isActive={isContentOpen} className={'chevron'} />{' '}
+        </>
+      );
+    return (
+      <div
+        ref={moreDetailsRef}
+        data-open="0"
+        onClick={() => toggleContentOpen(!isContentOpen)}
+        className="more-details"
+        onKeyDown={() => toggleContentOpen(!isContentOpen)}
+        role="button"
+        tabIndex={0}
+      >
+        {innerContent}
+      </div>
+    );
+  };
+
   return (
-    <StyledProductCard>
-      <ProductHeader>
-        <div className="header-left">
-          <h2 className="tour-title">{cardTitle}</h2>
-          <div className="tour-tags">
+    <Container>
+      <StyledProductCard layout={LAYOUT.filter((t) => t)}>
+        <ProductHeader>
+          <TourTitle>{cardTitle}</TourTitle>
+          <TourTags>
             {descriptorsList.reduce((acc, item, index) => {
               const descriptor = item.trim();
               if (descriptor) {
@@ -418,7 +550,7 @@ const Product = (props) => {
               }
               return acc;
             }, [])}
-          </div>
+          </TourTags>
           <Conditional if={hasSafetyFlag || isDFProduct}>
             <IconBoosters>
               <Split count={2} autoWidth={true}>
@@ -441,7 +573,7 @@ const Product = (props) => {
               </Split>
             </IconBoosters>
           </Conditional>
-          {booster && RichText.asText(booster).trim().length > 0 ? (
+          {hasV1Booster ? (
             <V1BoosterBlock boosterHasIcon={boosterHasIcon}>
               <RichText render={booster} htmlSerializer={shortCodeSerializer} />
             </V1BoosterBlock>
@@ -465,95 +597,85 @@ const Product = (props) => {
                 );
               }
             })}
-        </div>
-        <div className="header-right">
-          <PriceContainer>
-            <PriceBlock
-              showScratchPrice={showScratchPrice}
-              price={listingPrice || dfListingPrice}
-              lang={currentLanguage}
-            />
-          </PriceContainer>
-          <CTABlock
-            showEarliestAvail={earliestAvailability}
-            hasOffer={hasOffer && offerId}
-            hasIconBoosters={hasSafetyFlag || isDFProduct}
-          >
-            <a
-              target={isFetched && isMobile ? null : '_blank'}
-              href={`http://book.${bookingUrl}${
-                currentLanguage === 'en' ? '' : `/${currentLanguage}`
-              }/book/${tgid}${ctaUrlSuffix}${
-                isDFOnlyProduct ? '?discountedFuture=true' : ''
-              }`}
+          <CTAContainer>
+            <PriceContainer>
+              <PriceBlock
+                showScratchPrice={showScratchPrice}
+                price={finalPrice}
+                lang={currentLanguage}
+              />
+              <Conditional if={savings > 0 && showScratchPrice}>
+                <SavedTag>
+                  {labels[currentLanguage].SAVE_UPTO} {savings.toFixed(0)}%
+                </SavedTag>
+              </Conditional>
+            </PriceContainer>
+            <CTABlock
+              isSticky={isContentOpen}
+              shouldOffset={earliestAvailability}
             >
-              <Button
-                className={`tour-book-now-cta`}
-                paddingSides={isMobile ? '16px' : '8px'}
-                type="fill"
-                onClick={(e) => {
-                  sendBookNowEvent();
-                  if (isDFProduct && !isDFOnlyProduct) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    openDFSidebar();
-                    return false;
-                  }
-                }}
-                onKeyDown={sendBookNowEvent}
-                role="button"
-                tabIndex={0}
+              <a
+                target={isFetched && isMobile ? null : '_blank'}
+                href={`http://book.${bookingUrl}${
+                  currentLanguage === 'en' ? '' : `/${currentLanguage}`
+                }/book/${tgid}${ctaUrlSuffix}${
+                  isDFOnlyProduct ? '?isDiscountedFutures=true' : ''
+                }`}
               >
-                {isDFOnlyProduct
-                  ? labels[currentLanguage].DISCOUNTED_FUTURES.FLAG_TEXT
-                  : labels[currentLanguage].BOOK_NOW_CTA}
-              </Button>
-            </a>
-          </CTABlock>
-
-          {earliestAvailability && (
-            <NextAvailableBlock
-              hasOffer={hasOffer && offerId}
-              hasIconBoosters={hasSafetyFlag || isDFProduct}
-            >
-              <div className="icon">{CALENDAR}</div>
-              <div className="available-text">
-                {`${labels[currentLanguage].NEXT_AVAILABLE}`},{' '}
-                {getDate(earliestAvailability, currentLanguage)}
-              </div>
-            </NextAvailableBlock>
-          )}
-        </div>
-      </ProductHeader>
-      {!isMobile && <HorizontalLine color={COLORS.GREY_G6} />}
-      <ProductBody collapsed={!isContentOpen}>
-        <div className="tour-description">
-          {isHighlightsFromPrismic ? (
-            <RichText
-              render={highlights}
-              htmlSerializer={shortCodeSerializer}
-            />
-          ) : (
-            <ReactMarkdown source={scorpioData.highlights} escapeHtml={false} />
-          )}
-        </div>
-        <div
-          ref={moreDetailsRef}
-          data-open="0"
-          onClick={() => toggleContentOpen(!isContentOpen)}
-          className="more-details"
-          onKeyDown={() => toggleContentOpen(!isContentOpen)}
-          role="button"
-          tabIndex={0}
-        >
-          {` ${
-            isContentOpen
-              ? '- ' + labels[currentLanguage].SHOW_LESS_TEXT
-              : '+ ' + labels[currentLanguage].MORE_DETAILS
-          }`}
-        </div>
-      </ProductBody>
-    </StyledProductCard>
+                <Button
+                  className={`tour-book-now-cta`}
+                  paddingSides={isMobile ? '16px' : '8px'}
+                  type="fill"
+                  onClick={(e) => {
+                    sendBookNowEvent();
+                    if (isDFProduct && !isDFOnlyProduct) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      openDFSidebar();
+                      return false;
+                    }
+                  }}
+                  onKeyDown={sendBookNowEvent}
+                  role="button"
+                  tabIndex={0}
+                >
+                  {isDFOnlyProduct
+                    ? labels[currentLanguage].DISCOUNTED_FUTURES.FLAG_TEXT
+                    : labels[currentLanguage].BOOK_NOW_CTA}
+                  {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
+                </Button>
+              </a>
+              {earliestAvailability && (
+                <NextAvailableBlock>
+                  <div className="icon">{CALENDAR}</div>
+                  <div className="available-text">
+                    {`${labels[currentLanguage].NEXT_AVAILABLE}`},{' '}
+                    {getDate(earliestAvailability, currentLanguage)}
+                  </div>
+                </NextAvailableBlock>
+              )}
+            </CTABlock>
+          </CTAContainer>
+        </ProductHeader>
+        {!isMobile && <HorizontalLine color={COLORS.GREY_G6} />}
+        <ProductBody collapsed={!isContentOpen}>
+          <div className="tour-description">
+            {isHighlightsFromPrismic ? (
+              <RichText
+                render={highlights}
+                htmlSerializer={shortCodeSerializer}
+              />
+            ) : (
+              <ReactMarkdown
+                source={scorpioData.highlights}
+                escapeHtml={false}
+              />
+            )}
+          </div>
+          {getMoreDetailsButton()}
+        </ProductBody>
+      </StyledProductCard>
+    </Container>
   );
 };
 

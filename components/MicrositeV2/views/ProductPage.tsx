@@ -229,7 +229,7 @@ export const MobileProductPage = (props) => {
           rel="noopener noreferrer"
           href={`https://book.${bookingUrl}${
             currentLanguage === 'en' ? '' : `/${currentLanguage}`
-          }/book/${tgid}${isDFOnlyProduct ? '?discountedFuture=true' : ''}`}
+          }/book/${tgid}${isDFOnlyProduct ? '?isDiscountedFutures=true' : ''}`}
           onClick={(e) => {
             if (isDFProduct && !isDFOnlyProduct) {
               e.preventDefault();

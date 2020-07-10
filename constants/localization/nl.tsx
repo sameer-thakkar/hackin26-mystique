@@ -24,6 +24,7 @@ const nl = {
   READ_MORE_TEXT: 'Lees Meer',
   SHOW_LESS_TEXT: 'Toon Less',
   NEXT_AVAILABLE: 'Volgende Beschikbaar',
+  SAVE_UPTO: 'Spaar tot a',
   AVAILABLE: 'Beschikbaar',
   EARLIEST_AVAILABILITY: 'Vroegste Beschikbaarheid',
   TODAY: 'Vandaag',

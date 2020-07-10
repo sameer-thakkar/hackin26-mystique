@@ -56,7 +56,7 @@ const SafeDFBannerWrapper = ({
 
         <Conditional if={dfExpiryDate}>
           <InfoBanner
-            cta={labels[lang].SAFE_EXPERIENCE.BANNER_CTA}
+            cta={labels[lang].LISTICLES.KNOW_MORE}
             title={labels[lang].DISCOUNTED_FUTURES.HEADING}
             description={labels[lang].DISCOUNTED_FUTURES.DESCRIPTION.replace(
               '<date>',

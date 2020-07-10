@@ -14,6 +14,7 @@ import {
   MICROSITE_ARRAY_KEYS,
   LINKED_MICROSITE_PROPS,
   COMMON_DATA_PROPS_FOR_LISTICLE,
+  THEMES,
 } from '../constants';
 import { redirectTo, getPrismicProps, reflect } from '../utils';
 import { uncategorizedToursListParser } from '../utils/dataParsers';
@@ -275,7 +276,14 @@ export default class Page extends React.Component<any, any> {
               const poweredByHeadout =
                 completeMicrosite.data.data?.enable_powered_by_headout_logo ||
                 baseLangData.data?.enable_powered_by_headout_logo;
-
+              delete completeMicrosite.data.data
+                ?.enable_powered_by_headout_logo;
+              delete baseLangData.data?.enable_powered_by_headout_logo;
+              if (commonFooter?.data) {
+                commonFooter.data.powered_by_superbrand =
+                  commonFooter.data.powered_by_headout;
+                delete commonFooter.data.powered_by_headout;
+              }
               const micrositeData = {
                 ...completeMicrosite,
                 data: {
@@ -299,7 +307,7 @@ export default class Page extends React.Component<any, any> {
                       : baseLangData.data.logo_redirection_url,
                     enable_earliest_availability:
                       baseLangData.data.enable_earliest_availability,
-                    enable_powered_by_headout_logo:
+                    enable_powered_by_superbrand_logo:
                       typeof poweredByHeadout === 'string'
                         ? poweredByHeadout === 'Yes'
                         : poweredByHeadout,
@@ -362,6 +370,11 @@ export default class Page extends React.Component<any, any> {
                       ],
                       req
                     );
+                    if (commonFooter?.data) {
+                      commonFooter.data.powered_by_superbrand =
+                        commonFooter.data.powered_by_headout;
+                      delete commonFooter.data.powered_by_headout;
+                    }
                     return {
                       CMSContent: {
                         ...listicleResponse,
@@ -417,12 +430,26 @@ export default class Page extends React.Component<any, any> {
                   (ref) => ref.type === CUSTOM_TYPES.MICROSITE
                 )[0];
 
+                const filteredCommonHeader = {
+                  ...commonHeader,
+                  data: {
+                    ...commonHeader.data,
+                    enable_powered_by_superbrand_logo:
+                      commonHeader.data.enable_powered_by_headout,
+                  },
+                };
+                if (commonFooter?.data) {
+                  commonFooter.data.powered_by_superbrand =
+                    commonFooter.data.powered_by_headout;
+                  delete commonFooter.data.powered_by_headout;
+                }
+
                 let completePage = {
                   ...page,
                   data: {
                     ...page.data,
                     footer_ref: commonFooter,
-                    header_ref: commonHeader,
+                    header_ref: filteredCommonHeader,
                     content_framework: contentFramework,
                     microsite: micrositeData,
                   },
@@ -488,6 +515,7 @@ export default class Page extends React.Component<any, any> {
 
       if (ContentType === CUSTOM_TYPES.MICROSITE) {
         const MBDesign = CMSContent.data.data.design || '';
+        const mbTheme = CMSContent.data.data.theme || THEMES.DEFAULT;
         const toursTabFirstSlice = CMSContent.data.data.body1[0];
         const primsicTours = toursTabFirstSlice
           ? await toursTabSliceHandler(toursTabFirstSlice)
@@ -536,6 +564,7 @@ export default class Page extends React.Component<any, any> {
           MBDesign,
           isDev,
           tgidToScroll,
+          mbTheme,
         };
       }
 
@@ -609,6 +638,7 @@ export default class Page extends React.Component<any, any> {
       uid,
       toursList,
       isMobile,
+      mbTheme = THEMES.DEFAULT,
     } = this.props;
 
     if (statusCode) {
@@ -647,6 +677,7 @@ export default class Page extends React.Component<any, any> {
             tgidToScroll={tgidToScroll}
             serverRequestStartTimestamp={serverRequestStartTimestamp}
             isMobile={isMobile}
+            mbTheme={mbTheme}
           />
         );
         microsite = CMSContent.data?.data;
@@ -688,13 +719,14 @@ export default class Page extends React.Component<any, any> {
             windowUrl,
           }}
         >
-          <ThemeProvider theme={theme}>
+          <ThemeProvider theme={theme[mbTheme]}>
             <MBContextProvider
               host={host}
               uid={uid}
               lang={lang}
               microsite={microsite}
               design={MBDesign || DESIGN.V1}
+              mbTheme={mbTheme}
             >
               {Component}
             </MBContextProvider>

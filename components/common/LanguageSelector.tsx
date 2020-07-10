@@ -4,8 +4,9 @@ import Router from 'next/router';
 import styled from 'styled-components';
 import { withoutTrailingSlash } from 'utils/helper';
 import { GLOBE } from 'assets/SvgIcons';
-import { FULL_LANGUAGE_MAP } from 'constants/index';
+import { FULL_LANGUAGE_MAP, THEMES } from 'constants/index';
 import { COLORS, SOLEIL } from 'constants/ui-constants';
+import Chevron from 'UI/Chevron';
 
 const StyledLanguageContainer = styled.div`
   margin-left: 32px;
@@ -18,17 +19,22 @@ const StyledLanguageContainer = styled.div`
     display: none;
     position: absolute;
     left: -25px;
-    top: 20px;
+    top: 50px;
   }
   .language {
     display: flex;
     align-items: center;
     border-bottom: 0.5px dotted #d8d8d8;
-    background-color: rgba(255, 255, 255, 0.99);
+    background-color: ${({ theme }) => theme.primaryBackground};
+    background-color: #fff;
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
     font-family: ${SOLEIL.FONT_STACK};
-    font-size: 18px;
+    font-size: 16px;
     padding: 10px 25px;
     cursor: pointer;
+  }
+  .language-dropdown span {
+    color: ${COLORS.FOUR_BLACK};
   }
   .language:hover {
     color: #ec1943;
@@ -48,14 +54,12 @@ const StyledMobileSelect = styled.div`
   position: relative;
   margin: 0;
   span {
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: translate(-50%, -50%);
     text-transform: uppercase;
+    padding: 4px; /* increase trigger area */
+    display: block;
     font-family: ${SOLEIL.FONT_STACK};
     font-size: 14px;
-    color: #545454;
+    color: ${({ theme }) => theme.primaryBGText};
   }
   select {
     width: 20px;
@@ -77,6 +81,23 @@ const StyledLanguage = styled.span`
     margin-right: 6px;
     margin-bottom: -2px;
   }
+  ${({ theme }) =>
+    theme.theme === THEMES.MIN_BLUE
+      ? `
+      display: grid;
+      grid-template-columns: auto auto;
+      grid-column-gap: 4px;
+      align-items: center;
+      .chevron {
+        transform: scale(0.7);
+      }
+      .chevron::before,
+      .chevron::after {
+        background-color: ${theme.primaryBGText};
+        width: 
+      }
+    `
+      : ``}
 `;
 
 class LanguageSelector extends Component<any, any> {
@@ -112,11 +133,17 @@ class LanguageSelector extends Component<any, any> {
   };
 
   render() {
-    const { currentLanguage, host, uid, isMobile, languages } = this.props;
+    const {
+      currentLanguage,
+      host,
+      uid,
+      isMobile,
+      languages,
+      mbTheme,
+    } = this.props;
     const availableLanguages = languages.reduce((acc, item) => {
       const language = item.language.split('-')[1].toLowerCase();
-      if (currentLanguage !== language) return [...acc, language];
-      return acc;
+      return [...acc, language];
     }, []);
     const { pathname } = this.state;
     const langCodeRegex = /^(\/){0,1}(en|fr|de|it|nl|pt|es)(\/){0,1}/;
@@ -150,8 +177,11 @@ class LanguageSelector extends Component<any, any> {
     return (
       <StyledLanguageContainer onClick={this.handleClick}>
         <StyledLanguage>
-          {GLOBE}
+          {mbTheme === THEMES.DEFAULT ? GLOBE : null}
           {FULL_LANGUAGE_MAP[currentLanguage].language}
+          {mbTheme === THEMES.MIN_BLUE ? (
+            <Chevron className="chevron" isActive={this.state.showDropdown} />
+          ) : null}
         </StyledLanguage>
         <div
           className={`language-dropdown ${
