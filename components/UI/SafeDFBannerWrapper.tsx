@@ -38,7 +38,7 @@ const SafeDFBannerWrapper = ({
       <Split mobileLayout={'scroll'} count={hasSafe && !!dfExpiryDate ? 2 : 1}>
         <Conditional if={hasSafe}>
           <InfoBanner
-            cta={labels[lang].SAFE_EXPERIENCE.BANNER_CTA}
+            cta={labels[lang].LISTICLES.KNOW_MORE}
             title={labels[lang].SAFE_EXPERIENCE.HEADING}
             description={labels[lang].SAFE_EXPERIENCE.GENERAL_DESCRIPTION}
             ctaOnClick={() => {
