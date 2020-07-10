@@ -448,7 +448,7 @@ const Product = (props) => {
   const { allTags, dfListingPrice } = scorpioData;
   if (!listingPrice && !dfListingPrice) return null;
   const hasSafetyFlag = isSafetyIncluded(allTags);
-  const isDFProduct = isDiscountedFuture(allTags);
+  const isDFProduct = isDiscountedFuture(allTags) && dfListingPrice;
   const isDFOnlyProduct = listingPrice === null && dfListingPrice !== null;
   const openDFSidebar = () => {
     addToAside({

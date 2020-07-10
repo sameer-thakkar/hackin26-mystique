@@ -320,7 +320,7 @@ const DetailedProductCard = (props) => {
 
   const { allTags = [], listingPrice, dfListingPrice } = activeTour;
   const hasSafetyFlag = isSafetyIncluded(allTags);
-  const isDFProduct = isDiscountedFuture(allTags);
+  const isDFProduct = isDiscountedFuture(allTags) && dfListingPrice;
   const isDFOnlyProduct = listingPrice === null && dfListingPrice !== null;
   const {
     sidebarModal: { addToAside },
