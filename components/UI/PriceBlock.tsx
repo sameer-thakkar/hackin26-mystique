@@ -2,18 +2,23 @@ import * as labels from 'constants/localization/labels';
 import LocalisedPrice from './LPrice';
 import { SOLEIL, COLORS } from 'constants/ui-constants';
 import styled from 'styled-components';
-import { CURRENCY_SYMBOL_MAP } from 'constants/index';
+import { CURRENCY_SYMBOL_MAP, THEMES } from 'constants/index';
+import Conditional from 'components/common/Conditional';
 
-const StyledPriceBlock = styled.div`
+export const StyledPriceBlock = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
   font-style: normal;
   font-weight: ${SOLEIL.SEMIBOLD};
   font-size: 24px;
   line-height: 30px;
   display: grid;
+  grid-template-columns: auto auto;
   grid-row-gap: 4px;
+  grid-column-gap: 8px;
+  align-items: end;
   text-transform: uppercase;
   .tour-scratch-price {
+    grid-column: 1 / 3;
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
@@ -28,20 +33,41 @@ const StyledPriceBlock = styled.div`
   }
 `;
 
+const SavedTag = styled.div`
+  padding: 4px 8px;
+  text-transform: uppercase;
+  background: ${({ theme }) =>
+    theme.theme === THEMES.DEFAULT ? 'transparent' : '#dbfddb'};
+  color: ${({ theme }) =>
+    theme.theme === THEMES.DEFAULT ? theme.primaryText : '#34a853'};
+  color: ${({ theme }) => theme.primaryText};
+  font-size: 12px;
+  line-height: 16px;
+  font-style: normal;
+  font-weight: normal;
+  border-radius: 3px;
+`;
+
 const PriceBlock = ({
   price,
   lang,
   showScratchPrice = true,
   prefix = true,
+  showSavings = false,
 }: {
   showScratchPrice?: boolean;
   lang: string;
   price: any;
   prefix?: boolean;
+  showSavings?: boolean;
 }) => {
   if (!price) return null;
   const { originalPrice, finalPrice, currencyCode } = price;
   const currencySymbol = CURRENCY_SYMBOL_MAP[currencyCode];
+  const savings =
+    price && showSavings
+      ? ((price.originalPrice - price.finalPrice) / price.originalPrice) * 100
+      : -1;
   return (
     <StyledPriceBlock>
       {originalPrice > finalPrice && showScratchPrice ? (
@@ -60,6 +86,11 @@ const PriceBlock = ({
         price={finalPrice}
         lang={lang}
       />
+      <Conditional if={savings > 0 && showScratchPrice}>
+        <SavedTag>
+          {labels[lang].SAVE_UPTO} {savings.toFixed(0)}%
+        </SavedTag>
+      </Conditional>
     </StyledPriceBlock>
   );
 };

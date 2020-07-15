@@ -16,6 +16,7 @@ const StyledUncategorizedContainer = styled.div`
     width: 100%;
     @media (max-width: 768px) {
       margin: 0 16px 24px 16px;
+      width: auto;
     }
   }
 `;

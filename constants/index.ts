@@ -180,7 +180,7 @@ export const SLACK_USER_MAP = {
 };
 
 export const CURRENCY_SYMBOL_MAP = {
-  AED: 'AED',
+  AED: 'AED ',
   SGD: 'S$',
   USD: '$',
   EUR: '€',

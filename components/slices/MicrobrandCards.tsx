@@ -7,7 +7,7 @@ import { tourListApiParser } from 'utils/dataParsers';
 import { SOLEIL, COLORS } from 'constants/ui-constants';
 import { THEMES } from 'constants/index';
 import Conditional from 'components/common/Conditional';
-import PriceBlock from 'UI/PriceBlock';
+import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
 import { MBContext } from 'contexts/MBContext';
 
 const StyledMBCards = styled.div`
@@ -37,10 +37,22 @@ const StyledMBCards = styled.div`
 const MicrobrandCard = styled.div`
   color: #444444;
   display: grid;
-  grid-template-rows: 170px auto 1fr;
+  grid-template-rows: 170px auto;
   transition: all ease 0.2s;
   grid-row-gap: 8px;
+  align-items: start;
   border-radius: 5px;
+
+  ${StyledPriceBlock} {
+    grid-column: 2 / 3;
+    align-items: center;
+    font-size: 16px;
+    line-height: 1.2;
+    justify-content: right;
+    .tour-scratch-price {
+      grid-column: 1 / 2;
+    }
+  }
 
   .card-bottom .card-price {
     font-size: 16px;
@@ -49,7 +61,7 @@ const MicrobrandCard = styled.div`
 
   .card-bottom {
     padding: 10px;
-    align-items: center;
+    align-items: start;
     display: grid;
     grid-gap: 5px;
   }

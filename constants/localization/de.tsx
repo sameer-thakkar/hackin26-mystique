@@ -59,15 +59,16 @@ const de = {
     SHORT_HEADING: 'Beste Sicherheitsstandards vor Ort',
     MOBILE_HEADING: 'Sichere Erlebnisse',
     GENERAL_DESCRIPTION:
-      'hat Sichere Erlebnisse eingeführt. Erlebnisse mit diesem Abzeichen entsprechen nachweislich den besten Sicherheitsstandards gemäß den WHO-Richtlinien.',
-    CTA_TEXT: 'Weitere Sicherheitsangaben',
+      'Mehr als 500 Kunden haben die Attraktion besucht und die Sicherheitsmaßnahmen gutgeheißen. Alle Sicherheitsvorkehrungen vor Ort finden Sie hier.',
+    CTA_TEXT: 'Sicherheitsvorkehrungen',
+    BANNER_CTA: 'Weitere Infos',
     EXPERIENCE_DESCRIPTION:
       'Dieses Erlebnis entspricht nachweislich den besten Sicherheitsstandards in Übereinstimmung mit den örtlichen Vorschriften und der WHO.',
     FLAG_TEXT: 'Sicheres Erlebnis',
     MODAL: {
-      HEADING: 'Sichere Erlebnisse von',
+      HEADING: 'Sichere Erlebnisse',
       SUB_HEADING:
-        'arbeitet mit Partnern auf der ganzen Welt an der Umsetzung der besten Sicherheitsstandards gemäß den WHO-Richtlinien. Alle vor Ort getroffenen Maßnahmen wurden überprüft und werden hier angezeigt. Es ist an der Zeit, dass wir unsere Welt wieder genießen.',
+        'Headout arbeitet mit Partnern auf der ganzen Welt an der Umsetzung der besten Sicherheitsstandards gemäß den WHO-Richtlinien. Alle vor Ort getroffenen Maßnahmen wurden überprüft und werden hier angezeigt. Es ist an der Zeit, dass wir unsere Welt wieder genießen.',
       DETAILS: {
         SAFETY_MASK_DEFAULT: {
           HEADING: 'Maskenpflicht zu Ihrer Sicherheit',
@@ -82,42 +83,42 @@ const de = {
         SAFETY_MASK_GUEST: {
           HEADING: 'Maskenpflicht zu Ihrer Sicherheit',
           DESCRIPTION:
-            'Alle Gäste müssen bei diesem Erlebnis eine Maske tragen. So wird versichert, dass jeder das Erlebnis mit höchster Sicherheit genießen kann.',
+            'Alle Gäste müssen bei diesem Erlebnis eine Maske tragen. Auf diese Weise kann jeder das Erlebnis mit höchster Sicherheit genießen.',
         },
         SAFETY_MASK_BOTH: {
           HEADING: 'Maskenpflicht zu Ihrer Sicherheit',
           DESCRIPTION:
-            'Alle Gäste und Mitarbeiter müssen bei diesem Erlebnis eine Maske tragen. So wird versichert, dass jeder das Erlebnis mit höchster Sicherheit genießen kann.',
+            'Alle Gäste und Mitarbeiter müssen bei diesem Erlebnis eine Maske tragen. Auf diese Weise kann jeder das Erlebnis mit höchster Sicherheit genießen.',
         },
         SAFETY_TEMPERATURE_STAFF: {
-          HEADING: 'Fiebermessungen vor Ort',
+          HEADING: 'Fiebermessung vor Ort',
           DESCRIPTION:
             'Fiebermessungen werden mehrfach bei allen Mitarbeitern durchgeführt. Mitarbeiter mit einer Temperatur über dem vorgeschriebenen Grenzwert haben keinen Zutritt und werden gebeten, sich zu Hause auszukurieren.',
         },
         SAFETY_TEMPERATURE_GUEST: {
-          HEADING: 'Fiebermessungen vor Ort',
+          HEADING: 'Fiebermessung vor Ort',
           DESCRIPTION:
-            'Um die Sicherheit für alle zu gewährleisten, werden bei allen Gästen zu Beginn des Erlebnisses Fiebermessungen durchgeführt. ',
+            'Um die Sicherheit für alle zu gewährleisten, wird bei jedem Gast zu Beginn des Erlebnisses Fieber gemessen. ',
         },
         SAFETY_TEMPERATURE_DEFAULT: {
-          HEADING: 'Fiebermessungen vor Ort',
+          HEADING: 'Fiebermessung vor Ort',
           DESCRIPTION:
-            'Um die Sicherheit für alle zu gewährleisten, werden bei allen Gästen zu Beginn des Erlebnissen Fiebermessungen durchgeführt. Darüber hinaus wird bei allen Mitarbeitern mehrmals täglich Fieber gemessen.',
+            'Um die Sicherheit für alle zu gewährleisten, wird bei jedem Gast zu Beginn des Erlebnisses Fieber gemessen. Darüber hinaus wird auch bei allen Mitarbeitern mehrmals täglich Fieber gemessen.',
         },
         SAFETY_HANDWASH: {
           HEADING: 'Sanitäreinrichtungen und Handwaschbecken überall verfügbar',
           DESCRIPTION:
-            'Als sicheres Erlebnis haben Sie die ganze Zeit über Zugang zu Handwasch- und Sanitärstationen. Für Ihre Sicherheit ist gesorgt. ',
+            'Bei Sicheren Erlebnissen haben Sie die ganze Zeit über Zugang zu Handwasch- und Sanitärstationen. Für Ihre Sicherheit ist gesorgt. ',
         },
         SAFETY_CLEANED_EQUIPMENTS: {
-          HEADING: 'Zubehör und Oberflächen werden desinfiziert',
+          HEADING: 'Zubehör- und Oberflächendesinfizierung',
           DESCRIPTION:
-            'Jegliches Ausrüstungszubehör, das Ihnen bei Ihrem Erlebnis zur Verfügung steht, wird nach jeder Nutzung gründlich desinfiziert. Immer und jedes Mal.',
+            'Jegliches Ausrüstungszubehör, das Ihnen bei Ihrem Erlebnis zur Verfügung steht, wird nach jeder Nutzung gründlich desinfiziert – immer und jedes Mal.',
         },
         SAFETY_CLEANED_VEHICLES: {
           HEADING: 'Alle Fahrzeuge werden desinfiziert',
           DESCRIPTION:
-            'Alle Fahrzeuge, die Ihnen bei Ihrem Erlebnis zur Verfügung stehen, werden nach jedem Einsatz gründlich desinfiziert. Immer und jedes Mal.',
+            'Alle Fahrzeuge, die Ihnen bei Ihrem Erlebnis zur Verfügung stehen, werden nach jedem Einsatz gründlich desinfiziert. Immer und jedes Mal',
         },
         SAFETY_CLEANED_DEFAULT: {
           HEADING: 'Zubehör und Oberflächen werden desinfiziert',
@@ -132,7 +133,7 @@ const de = {
         SAFETY_SOCIAL_DISTANCING_DEFAULT: {
           HEADING: 'Abstandsregelungen werden befolgt',
           DESCRIPTION:
-            'Die Abstandsregelungen werden bei diesem Erlebnis jederzeit eingehalten. Zur Umsetzung der Abstandsregelungen können Kapazitäts- und Gruppenbeschränkungen in Kraft treten. Hier können Sie aufatmen.',
+            'Die Abstandsregelungen werden bei diesem Erlebnis jederzeit eingehalten. Zur Einhaltung können Kapazitäten und Gruppengrößen beschränkt werden. Hier können Sie aufatmen.',
         },
         SAFETY_SOCIAL_DISTANCING: {
           HEADING: 'Abstandsregelungen werden befolgt',
@@ -142,7 +143,7 @@ const de = {
         SAFETY_RESTRICTED_CAPACITY: {
           HEADING: 'Abstandsregelungen werden befolgt',
           DESCRIPTION:
-            'Die Abstandsregelungen werden während des gesamten Erlebnisses eingehalten. Zur Einhaltung der Abstandsregelungen ist die Besucherkapazität beschränkt.',
+            'Die Abstandsregelungen werden während des gesamten Erlebnisses eingehalten. Zur Einhaltung des Sicherheitsabstandes ist die Besucherkapazität beschränkt.',
         },
         SAFETY_SOCIAL_DISTANCING_NO_GROUPS: {
           HEADING: 'Abstandsregelungen werden befolgt',
@@ -152,16 +153,16 @@ const de = {
         SAFETY_RESTRICTED_CAPACITY_NO_GROUPS: {
           HEADING: 'Abstandsregelungen werden befolgt',
           DESCRIPTION:
-            'Die Abstandsregelungen werden während des gesamten Erlebnisses eingehalten. Zur Einhaltung der Abstandsregelungen ist die Besucherkapazität beschränkt und der Eintritt ist für größere Gruppen untersagt.',
+            'Die Abstandsregelungen werden während des gesamten Erlebnisses eingehalten. Zur Einhaltung des Sicherheitsabstandes ist die Besucherkapazität beschränkt und der Eintritt für größere Gruppen untersagt.',
         },
         SAFETY_CONTACTLESS: {
-          HEADING: 'Kontaktloser, unproblematischer Einlass',
+          HEADING: 'Kontaktloser und unproblematischer Einlass ',
           DESCRIPTION:
             'Es ist das Jahr 2020: Sie können Ihr Erlebnis genießen, ohne etwas oder jemanden berühren zu müssen.',
         },
       },
       BADGE_DESCRIPTION:
-        'Erlebnisse mit diesem Abzeichen entsprechen nachweislich den von geprüften Sicherheitsstandards.',
+        'Erlebnisse mit diesem Abzeichen entsprechen nachweislich den von Headout geprüften Sicherheitsstandards.',
     },
   },
   DISCOUNTED_FUTURES: {

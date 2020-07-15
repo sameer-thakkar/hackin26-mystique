@@ -59,21 +59,22 @@ const es = {
     SHORT_HEADING: 'Los mejores estándares de seguridad en vigor',
     MOBILE_HEADING: 'Experiencias Seguras',
     GENERAL_DESCRIPTION:
-      'lanzado la campaña Experiencias Seguras. Nos hemos dado a la tarea de verificar que las experiencias con esta insignia siguen los estándares de seguridad más estrictos, según las directrices de la OMS.',
+      'Más de 500 clientes han visitado esta atracción y han aprobado las medidas de seguridad implementadas. Todo el equipo de seguridad e higiene necesarios están disponibles en el sitio.',
     CTA_TEXT: 'Estándares de Seguridad',
+    BANNER_CTA: 'Leer Más',
     EXPERIENCE_DESCRIPTION:
       'Se ha verificado que esta experiencia cumple con los estándares de seguridad más estrictos, conforme a las regulaciones locales y de la OMS.',
     FLAG_TEXT: 'Experiencia Segura',
     MODAL: {
-      HEADING: 'Experiencias Seguras en',
+      HEADING: 'Experiencias Seguras',
       SUB_HEADING:
-        'En estamos trabajando de cerca con nuestros socios locales en todo el mundo para cumplir con los mejores estándares de seguridad, según las directrices de la OMS. Todas las medidas implementadas durante tu visita han sido verificadas y a continuación las podrás encontrar. Es hora de volver a disfrutar del mundo que nos rodea.',
+        'Trabajamos de cerca con nuestros socios locales para cumplir con los mejores estándares de higiene y seguridad, según las directrices de la OMS. Todas las medidas implementadas durante tu visita han sido verificadas y a continuación te las presentamos. Es hora de volver a disfrutar del mundo que nos rodea.',
       DETAILS: {
         SAFETY_MASK_DEFAULT: {
           HEADING:
-            'Todos los participantes deben usar mascarillas por seguridad, ',
+            'Por seguridad, todos los participantes deben usar mascarillas',
           DESCRIPTION:
-            'Nuestros socios verificados con la insignia "Experiencia Segura" siguen las regulaciones locales sobre el uso de mascarillas. Si es obligatorio, todos los participantes y personal deberán llevar mascarilla. Tomarán todas las medidas posibles para asegurar tu comodidad y seguridad.',
+            'Nuestros socios verificados con la insignia "Experiencia Segura" siguen las regulaciones locales sobre el uso de mascarillas. En caso de ser obligatorio, todos los participantes y personal deberán llevar mascarilla. Se tomarán todas las medidas posibles para asegurar tu comodidad y seguridad.',
         },
         SAFETY_MASK_STAFF: {
           HEADING: 'Todo el personal debe usar mascarillas por seguridad',
@@ -82,12 +83,12 @@ const es = {
         },
         SAFETY_MASK_GUEST: {
           HEADING:
-            'Todos los participantes deben usar mascarillas por seguridad',
+            'Por seguridad, todos los participantes deben usar mascarillas',
           DESCRIPTION:
             'El uso de mascarillas es obligatorio para todos los participantes en esta experiencia. Esto ayuda a que todos se diviertan con la máxima seguridad.',
         },
         SAFETY_MASK_BOTH: {
-          HEADING: 'Todos deben usar mascarillas por seguridad',
+          HEADING: 'Por seguridad, todos deben usar mascarillas',
           DESCRIPTION:
             'El uso de mascarillas es obligatorio tanto para los participantes como para el personal encargado de esta experiencia. Esto ayuda a que todos se diviertan, con la máxima seguridad y protección.',
         },
@@ -107,8 +108,7 @@ const es = {
             'A todos los participantes se les revisará la temperatura corporal al comienzo de la experiencia para garantizar la seguridad de todos. A todos el personal se les revisa la temperatura varias veces al día.',
         },
         SAFETY_HANDWASH: {
-          HEADING:
-            'Instalaciones sanitarias y estaciones de aseo disponibles en sitio',
+          HEADING: 'Instalaciones sanitarias y estaciones de aseo disponibles',
           DESCRIPTION:
             'Al ser verificada como Experiencia Segura, tendrás acceso a estaciones de aseo y saneamiento durante todo el tiempo de tu visita. No te preocupes, tu seguridad es primero. ',
         },
@@ -131,15 +131,15 @@ const es = {
         },
         SAFETY_TRAINED_STAFF: {
           HEADING:
-            'El personal está capacitado según las directrices de la OMS',
+            'El personal está capacitado conforme a las directrices de la OMS',
           DESCRIPTION:
-            'El personal encargado de tu experiencia está capacitado según las directrices de la OMS y equipado para hacer frente a cualquier emergencia que se presente.',
+            'El personal encargado de tu experiencia está capacitado conforme a las directrices de la OMS y equipado para hacer frente a cualquier emergencia que se presente.',
         },
         SAFETY_SOCIAL_DISTANCING_DEFAULT: {
           HEADING:
             'Las pautas de distanciamiento social se siguen en todo momento',
           DESCRIPTION:
-            'Las pautas de distanciamiento social se cumplen en todo momento durante esta experiencia. Para aplicar estas reglas, puede haber restricciones de capacidad y límites de grupo en el sitio. Relájate y disfruta de tu visita.',
+            'Las pautas de distanciamiento social se cumplen en todo momento durante esta experiencia. Por lo tanto, puede haber restricciones de capacidad y límites de grupo en el sitio. Relájate y disfruta de tu visita.',
         },
         SAFETY_SOCIAL_DISTANCING: {
           HEADING:
@@ -171,8 +171,8 @@ const es = {
             'Estamos en el 2020 y deberías poder disfrutar de tu experiencia sin tener que tocar nada ni a nadie. Con esta experiencia puedes hacerlo.',
         },
       },
-      BADGE_DESCRIPTION:
-        'Cualquier experiencia con esta insignia confirma que los estándares de seguridad han sido verificados.',
+      BATCH_DESCRIPTION:
+        'Cualquier experiencia con esta insignia confirma que se han verificado los estándares de higiene y seguridad.',
     },
   },
   DISCOUNTED_FUTURES: {
@@ -240,37 +240,37 @@ const es = {
         SUB_TEXT:
           'Con estos vales, tienes el control total y puedes reservar en Headout cuando planees tu viaje.',
       },
-      PITCH: {
-        GO_ANYTIME: {
-          HEADING: 'Viaja cuando así lo decidas',
-          SUB_TEXT:
-            'Sabemos que es difícil planear unas vacaciones en este momento, por esa razón hemos creado estos vales que podrás usar en cualquier momento hasta el <date>.',
-        },
-        SAVE_MONEY: {
-          HEADING: 'Ahorra dinero, te lo mereces',
-          SUB_TEXT:
-            'Estos grandes descuentos han sido diseñados para ayudarte a ahorrar dinero y darte más razones para viajar pronto.',
-        },
-        BUCKET_LIST: {
-          HEADING: 'Descubre los lugares que siempre has soñado',
-          SUB_TEXT:
-            'Todos tenemos un lugar al que siempre hemos soñado ir. En Headout estamos seguros que los próximos años serán el mejor momento para que esto suceda, ¡así que hagámoslo realidad!',
-        },
+    },
+    PITCH: {
+      GO_ANYTIME: {
+        HEADING: 'Viaja cuando así lo decidas',
+        SUB_TEXT:
+          'Sabemos que es difícil planear unas vacaciones en este momento, por esa razón hemos creado estos vales que podrás usar en cualquier momento hasta el <date>.',
       },
-      IMAGES_SECTION: {
-        HEADING: 'El mundo nos espera - salgamos a explorarlo',
+      SAVE_MONEY: {
+        HEADING: 'Ahorra dinero, te lo mereces',
+        SUB_TEXT:
+          'Estos grandes descuentos han sido diseñados para ayudarte a ahorrar dinero y darte más razones para viajar pronto.',
       },
-      BOOKING_MODAL: {
-        BOOK_NOW_PITCH:
-          'Selecciona una fecha para hacer tu reserva. No podrás cambiar las fechas de tu reserva más tarde.',
-        SELECT_DATE: 'Seleccionar una fecha',
-        GO_LATER_HEADING:
-          'Reserva ahora, viaja en cualquier momento y ahorra siempre',
-        GO_LATER_PITCH:
-          'Book this experience at a discount & get the freedom to pick your exact slot later. Applies for any slot after <stDate>. Voucher is valid until <edDate>.',
-        GET_THIS: 'Get This',
-        LEARN_MORE: 'Conoce más',
+      BUCKET_LIST: {
+        HEADING: 'Descubre los lugares que siempre has soñado',
+        SUB_TEXT:
+          'Todos tenemos un lugar al que siempre hemos soñado ir. En Headout estamos seguros que los próximos años serán el mejor momento para que esto suceda, ¡así que hagámoslo realidad!',
       },
+    },
+    IMAGES_SECTION: {
+      HEADING: 'El mundo nos espera - salgamos a explorarlo',
+    },
+    BOOKING_MODAL: {
+      BOOK_NOW_PITCH:
+        'Selecciona una fecha para hacer tu reserva. No podrás cambiar las fechas de tu reserva más tarde.',
+      SELECT_DATE: 'Seleccionar una fecha',
+      GO_LATER_HEADING:
+        'Reserva ahora, viaja en cualquier momento y ahorra siempre',
+      GO_LATER_PITCH:
+        'Book this experience at a discount & get the freedom to pick your exact slot later. Applies for any slot after <stDate>. Voucher is valid until <edDate>.',
+      GET_THIS: 'Get This',
+      LEARN_MORE: 'Conoce más',
     },
   },
 };

@@ -57,20 +57,21 @@ const fr = {
     SHORT_HEADING: 'Les normes de sécurité et sanitaires en vigueur',
     MOBILE_HEADING: 'Expériences classées sans risque',
     GENERAL_DESCRIPTION:
-      " dressé une liste d'expériences sans risque. Toute expérience marquée de ce badge a été vérifiée et est conforme aux normes de sécurité et sanitaires selon les directives de l'OMS.",
+      'Plus de 500 clients ont visité ce lieu et approuvé les mesures de sécurité qui y sont appliquées. Tous les équipements de sécurité sont fournis sur place.',
     CTA_TEXT: 'Détails des mesures de sécurité et sanitaires',
+    BANNER_CTA: 'En savoir plus',
     EXPERIENCE_DESCRIPTION:
-      "Cette expérience a été vérifiée et respecte les normes de sécurité et sanitaires, conformément aux réglementations locales et à l'OMS",
+      "Cette expérience a été vérifiée et respecte les normes de sécurité et sanitaires, conformément aux réglementations locales et à l'OMS.",
     FLAG_TEXT: 'Expérience sans risque',
     MODAL: {
       HEADING: 'Expériences classées sans risque',
       SUB_HEADING:
-        "collabore avec ses partenaires dans le monde entier pour appliquer les normes de sécurité et sanitaires conformément aux directives de l'OMS. Toutes les mesures prises sur le terrain ont été vérifiées et sont indiquées ici. Il est grand temps de profiter à nouveau du monde qui nous entoure.",
+        "Headout collabore avec ses partenaires dans le monde entier pour appliquer les normes de sécurité et sanitaires conformément aux directives de l'OMS. Toutes les mesures prises sur le terrain ont été vérifiées et sont indiquées ici. Il est grand temps de profiter à nouveau du monde qui nous entoure.",
       DETAILS: {
         SAFETY_MASK_DEFAULT: {
           HEADING: 'Pour votre sécurité, tout le monde porte un masque',
           DESCRIPTION:
-            "Nos partenaires qui ont été certifiés en tant qu'expérience sans risque appliquent les réglementations locales en vigueur concernant le port du masque facial. Si le port du masque est obligatoire, tous les visiteurs et les membres du personnel en porteront un. Nos partenaires prennent toutes les mesures possibles pour assurer votre confort et votre sécurité.",
+            "Nos partenaires qui ont été certifiés en tant qu'expérience sans risque appliquent les réglementations locales en vigueur concernant le port du masque. Si le port du masque est obligatoire, tous les visiteurs et les membres du personnel en porteront un. Nos partenaires prennent toutes les mesures possibles pour assurer votre confort et votre sécurité.",
         },
         SAFETY_MASK_STAFF: {
           HEADING: 'Pour votre sécurité, tout le monde porte un masque',
@@ -114,7 +115,7 @@ const fr = {
             'Tous les équipements mis à votre disposition au cours de votre visite sont soigneusement nettoyés après chaque utilisation.',
         },
         SAFETY_CLEANED_VEHICLES: {
-          HEADING: 'Tous les véhicules sont désinfectés.',
+          HEADING: 'Tous les véhicules sont désinfectés',
           DESCRIPTION:
             'Tous les véhicules mis à votre disposition pendant votre séjour sont soigneusement nettoyés après chaque utilisation.',
         },
@@ -131,17 +132,17 @@ const fr = {
         SAFETY_SOCIAL_DISTANCING_DEFAULT: {
           HEADING: 'La distance sociale est respectée',
           DESCRIPTION:
-            "Cette expérience respecte en tout temps les lignes directrices en matière de distance sociale. Afin de faire respecter ces directives, il se peut que la capacité du lieu soit restreinte et que des limites de groupe soient mises en place. Nous faisons en sorte que vous vous sentiez à l'aise.",
+            "Les expériences classées sans risque respectent en tout temps les lignes directrices en matière de distance sociale. Afin de faire respecter ces directives, il se peut que la capacité du lieu soit restreinte et que des limites de groupe soient mises en place. Nous faisons en sorte que vous vous sentiez à l'aise.",
         },
-        HEADING: 'La distance sociale est respectée',
         SAFETY_SOCIAL_DISTANCING: {
+          HEADING: 'La distance sociale est respectée',
           DESCRIPTION:
             'Tout au long de votre visite, les lignes directrices en matière de distance sociale sont respectées.',
         },
         SAFETY_RESTRICTED_CAPACITY: {
           HEADING: 'La distance sociale est respectée',
           DESCRIPTION:
-            'Cette expérience respecte en tout temps les lignes directrices en matière de distance sociale. Afin de faire respecter ces directives, il se peut que la capacité du lieu soit restreinte et que des limites de groupe soient mises en place.',
+            'Les expériences classées sans risque respectent en tout temps les lignes directrices en matière de distance sociale. Afin de faire respecter ces directives, il se peut que la capacité du lieu soit restreinte et que des limites de groupe soient mises en place.',
         },
         SAFETY_SOCIAL_DISTANCING_NO_GROUPS: {
           HEADING: 'La distance sociale est respectée',
@@ -151,7 +152,7 @@ const fr = {
         SAFETY_RESTRICTED_CAPACITY_NO_GROUPS: {
           HEADING: 'La distance sociale est respectée',
           DESCRIPTION:
-            'Cette expérience respecte en tout temps les lignes directrices en matière de distance sociale. Afin de faire respecter ces directives, il se peut que la capacité du lieu soit restreinte et que des limites de groupe soient mises en place. Par ailleurs, les grands groupes ne sont pas autorisés.',
+            'Les expériences classées sans risque respectent en tout temps les lignes directrices en matière de distance sociale. Afin de faire respecter ces directives, il se peut que la capacité du lieu soit restreinte et que des limites de groupe soient mises en place. Par ailleurs, les grands groupes ne sont pas autorisés.',
         },
         SAFETY_CONTACTLESS: {
           HEADING: 'Une entrée sans contact et sans tracas',
@@ -160,7 +161,7 @@ const fr = {
         },
       },
       BADGE_DESCRIPTION:
-        'Ce badge atteste que les normes de sécurité et sanitaires ont été vérifiées pour cette expérience.',
+        'Ce badge atteste que les normes de sécurité et sanitaires ont été vérifiées par Headout pour cette expérience.',
     },
   },
   DISCOUNTED_FUTURES: {

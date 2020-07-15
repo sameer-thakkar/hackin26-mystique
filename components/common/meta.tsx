@@ -111,7 +111,10 @@ const PopulateHead = (data) => {
 
   const isNonProd = isDev || originalHost.startsWith('stage.');
 
-  const amplitude_key = 'b85ab528e443294e83c98f9f1915c23b';
+  const amplitude_key =
+    mbTheme === THEMES.MIN_BLUE
+      ? '93459bf7775fad2952497b5da071ad85'
+      : 'b85ab528e443294e83c98f9f1915c23b';
 
   const GTM_CONTAINER_ID =
     mbTheme === THEMES.MIN_BLUE ? 'GTM-TS3V4HK' : 'GTM-5LJWNW3';

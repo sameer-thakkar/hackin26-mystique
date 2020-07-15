@@ -576,29 +576,42 @@ export default class Page extends React.Component<any, any> {
       ).then((r) => r.json());
 
       const tourGroupData = tourGroupAPIResponses?.tourGroups?.reduce(
-        (accum: {}, tour: any) => ({
-          ...accum,
-          [tour['id']]: {
-            title: tour.name,
-            highlights: tour.microBrandsHighlight,
-            descriptors: tour.microBrandsDescriptor,
-            productHighlights: tour.highlights,
-            productTitle: tour.name,
-            images: [
-              { url: tour.imageUrl },
-              ...(tour.media?.productImages || []),
-            ],
-            averageRating: tour.averageRating,
-            reviewCount: tour.reviewCount,
-            ctaBooster: tour.callToAction,
-            available:
-              !(tour.listingPrice === null) ||
-              !(tour.discountedFuturesListingPrice === null),
-            allTags: tour.allTags || [],
-            dfListingPrice: tour.discountedFuturesListingPrice,
-            safetyImages: tour.media?.safetyImages || [],
-          },
-        }),
+        (accum: {}, tour: any) => {
+          const { hide_df, hide_safe } = AllData['CMSContent']?.data?.data || {
+            hide_df: false,
+            hide_safe: false,
+          };
+          let allTags = tour.allTags || [];
+          if (hide_df) {
+            allTags = allTags.filter((t) => !t.includes('DF-'));
+          }
+          if (hide_safe) {
+            allTags = allTags.filter((t) => !t.includes('SAFE'));
+          }
+          return {
+            ...accum,
+            [tour['id']]: {
+              title: tour.name,
+              highlights: tour.microBrandsHighlight,
+              descriptors: tour.microBrandsDescriptor,
+              productHighlights: tour.highlights,
+              productTitle: tour.name,
+              images: [
+                ...(tour.media?.productImages || []),
+                { url: tour.imageUrl },
+              ],
+              averageRating: tour.averageRating,
+              reviewCount: tour.reviewCount,
+              ctaBooster: tour.callToAction,
+              available:
+                !(tour.listingPrice === null) ||
+                !(tour.discountedFuturesListingPrice === null),
+              allTags,
+              dfListingPrice: tour.discountedFuturesListingPrice,
+              safetyImages: tour.media?.safetyImages || [],
+            },
+          };
+        },
         {}
       );
 

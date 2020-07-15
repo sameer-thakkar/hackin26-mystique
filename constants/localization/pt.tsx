@@ -59,15 +59,16 @@ const pt = {
     SHORT_HEADING: 'As melhores medidas de segurança em vigor',
     MOBILE_HEADING: 'Experiências seguras',
     GENERAL_DESCRIPTION:
-      'apresenta Experiências Seguras. Qualquer experiência com este selo foi verificada e segue as melhores medidas de segurança de acordo com as diretrizes da OMS.',
+      'Mais de 500 clientes já visitaram e aprovaram as medidas de segurança. Todos os equipamentos de segurança são fornecidos no local da experiência.',
     CTA_TEXT: 'Detalhes das medidas',
+    BANNER_CTA: 'Saiba mais',
     EXPERIENCE_DESCRIPTION:
       'Esta experiência foi verificada para seguir as melhores medidas de segurança de acordo com os regulamentos locais e a OMS',
     FLAG_TEXT: 'Experiência segura',
     MODAL: {
-      HEADING: 'Experiências seguras da',
+      HEADING: 'Experiências seguras',
       SUB_HEADING:
-        'está trabalhando com nossos parceiros em todo o mundo para implementar as melhores medidas de segurança de acordo com as diretrizes da OMS. Todas as medidas tomadas foram verificadas e aqui apresentadas. Está na hora de explorar novamente o mundo à nossa volta.',
+        'Estamos trabalhando com nossos parceiros em todo o mundo para implementar as melhores medidas de segurança de acordo com as diretrizes da OMS. Todas as medidas tomadas foram verificadas e aqui apresentadas. Está na hora de explorar novamente o mundo à nossa volta!',
       DETAILS: {
         SAFETY_MASK_DEFAULT: {
           HEADING: 'Todos devem usar máscara para sua segurança',
@@ -82,12 +83,12 @@ const pt = {
         SAFETY_MASK_GUEST: {
           HEADING: 'Todos devem usar máscara para sua segurança',
           DESCRIPTION:
-            'As máscaras são obrigatórias para todos os visitantes desta experiência, oferecendo a todos diversão com a máxima segurança.',
+            'As máscaras são obrigatórias para todos os visitantes desta experiência, oferecendo diversão com segurança máxima.',
         },
         SAFETY_MASK_BOTH: {
           HEADING: 'Todos devem usar máscara para sua segurança',
           DESCRIPTION:
-            'As máscaras são obrigatórias para todos os visitantes e membros do pessoal desta experiência, oferecendo a todos diversão com a máxima segurança.',
+            'As máscaras são obrigatórias para todos os visitantes e membros do pessoal desta experiência, oferecendo diversão com segurança máxima.',
         },
         SAFETY_TEMPERATURE_STAFF: {
           HEADING: 'Verificações de temperatura no local',
@@ -107,7 +108,7 @@ const pt = {
         SAFETY_HANDWASH: {
           HEADING: 'Instalações disponíveis para lavagem das mãos e saneamento',
           DESCRIPTION:
-            'Como uma experiência segura, você terá acesso a estações para lavar as mãos e de saneamento durante todo o seu tempo de visita. Oferecemos todo o necessário. ',
+            'Como uma experiência segura, você terá acesso a estações para lavar as mãos e de saneamento durante o tempo de visita. Oferecemos todo o necessário. ',
         },
         SAFETY_CLEANED_EQUIPMENTS: {
           HEADING: 'Todos os equipamentos e superfícies são higienizados',
@@ -160,8 +161,8 @@ const pt = {
             'Estamos em 2020 e você deve poder desfrutar de sua experiência sem ter que tocar em nada ou em ninguém. Com esta experiência, é possível.',
         },
       },
-      BADGE_DESCRIPTION:
-        'O selo em uma experiência confirma que as medidas de segurança foram verificadas pela',
+      BATCH_DESCRIPTION:
+        'O selo em uma experiência confirma que as medidas de segurança foram verificadas por nós.',
     },
   },
   DISCOUNTED_FUTURES: {

@@ -427,6 +427,7 @@ export default class MicrositeV1 extends Component<any, any> {
               blockedDays={blockedDays || ''}
               isMobile={this.state.isMobile}
               disclaimer={groupBookingDisclaimer}
+              theme={mbTheme}
             />
           )}
           {populateHead({

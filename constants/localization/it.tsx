@@ -57,17 +57,18 @@ const it = {
   SAFE_EXPERIENCE: {
     HEADING: 'I Più Alti Standard di Sicurezza',
     SHORT_HEADING: 'I migliori standard di sicurezza in vigore',
-    MOBILE_HEADING: 'Le Esperienze Sicure',
+    MOBILE_HEADING: 'Esperienze Sicure',
     GENERAL_DESCRIPTION:
-      "ha inaugurato l'iniziativa Esperienze Sicure . Ogni esperienza contrassegnata da questo stemma è stata certificata per seguire i migliori standard di sicurezza in accordo con le linee guida dell'OMS.",
-    CTA_TEXT: 'Dettagli sulle misure di sicurezza',
+      "Oltre 500 clienti hanno approvato le misure di sicurezza di questa attività. Tutte le attrezzature di sicurezza vengono fornite alla sede dell'esperienza.",
+    CTA_TEXT: 'Dettagli Sulla Sicurezza',
+    BANNER_CTA: 'Leggi tutto',
     EXPERIENCE_DESCRIPTION:
-      "Questa esperienza è stata certificata per seguire i migliori standard di sicurezza in accordo con le linee guida dell'OMS",
-    FLAG_TEXT: 'Massima Sicurezza',
+      "Questa esperienza è stata certificata per l'implementazione dei migliori standard di sicurezza in accordo con le linee guida dell'OMS",
+    FLAG_TEXT: 'Esperienza Sicura',
     MODAL: {
-      HEADING: 'Le Esperienze Sicure',
+      HEADING: 'Esperienze Sicure',
       SUB_HEADING:
-        "sta lavorando con i nostri partner in tutto il mondo per implementare i migliori standard di sicurezza in accordo con le linee guida dell'OMS. Tutte le misure adottate sul campo sono state verificate: le puoi vedere elencate in questa sezione. È tempo di godersi di nuovo il mondo che ci circonda.",
+        "Headout sta lavorando con i nostri partner in tutto il mondo per implementare i migliori standard di sicurezza in accordo con le linee guida dell'OMS. Tutte le misure adottate sul campo sono state verificate: le puoi vedere elencate in questa sezione. È tempo di godersi di nuovo il mondo che ci circonda.",
       DETAILS: {
         SAFETY_MASK_DEFAULT: {
           HEADING: 'Tutti indossano maschere per garantire la tua sicurezza',
@@ -92,12 +93,12 @@ const it = {
         SAFETY_TEMPERATURE_STAFF: {
           HEADING: 'Controlli della temperatura corporea alle attrazioni',
           DESCRIPTION:
-            'Tutti i membri del personale vengono controllati più volte per verificare la presenza di temperature corporee elevate. I membri dello staff che superano la soglia di sicurezza per la temperatura corporea vengono immediatamente invitati a stare a casa per rimettersi in salute.',
+            'Tutti i membri del personale vengono controllati più volte per verificare la presenza di temperature corporee elevate. I membri dello staff che superano la soglia di sicurezza per la temperatura corporea vengono immediatamente obbligati a stare a casa per rimettersi in salute.',
         },
         SAFETY_TEMPERATURE_GUEST: {
           HEADING: 'Controlli della temperatura corporea alle attrazioni',
           DESCRIPTION:
-            "La temperatura corporea di tutti gli ospiti verrà controllata all'inizio dell'esperienza per garantire la sicurezza di tutti. ",
+            "La temperatura corporea di tutti gli ospiti verrà controllata all'inizio dell'esperienza per garantire la sicurezza di tutti.",
         },
         SAFETY_TEMPERATURE_DEFAULT: {
           HEADING: 'Controlli della temperatura corporea alle attrazioni',
@@ -117,7 +118,7 @@ const it = {
             'Tutte le attrezzature disponibili durante la tua esperienza vengono accuratamente igienizzate dopo ogni singolo utilizzo. Sempre.',
         },
         SAFETY_CLEANED_VEHICLES: {
-          HEADING: 'Tutti i veicoli vengono disinfettati regolarmente.',
+          HEADING: 'Tutti i veicoli vengono disinfettati regolarmente',
           DESCRIPTION:
             'Tutti i veicoli disponibili durante la tua esperienza vengono accuratamente igienizzati dopo ogni singolo utilizzo. Sempre.',
         },
@@ -137,19 +138,19 @@ const it = {
           HEADING:
             'Le linee guida per il distanziamento sociale vengono osservate alla lettera',
           DESCRIPTION:
-            "Le linee guida per il distanziamento sociale devono venire rispettate per tutta la durata di questa esperienza. Per rispettare questi standard di sicurezza, potrebbero sussistere delle restrizioni al numero di persone in grado di partecipare e alle dimensioni dei gruppi di turisti che hanno accesso all'attività.",
+            "Le linee guida per il distanziamento sociale vengono imposte e rispettate per tutta la durata di questa esperienza. Per far rispettare queste norme potrebbero esserci delle restrizioni al numero di partecipanti e alla dimensione dei gruppi che hanno accesso all'attività.",
         },
         SAFETY_SOCIAL_DISTANCING: {
           HEADING:
             'Le linee guida per il distanziamento sociale vengono osservate alla lettera',
           DESCRIPTION:
-            'Le linee guida per il distanziamento sociale vengono imposte e rispettate per tutta la durata di questa esperienza.',
+            'Le linee guida per il distanziamento sociale vengono imposte e rispettate per tutta la durata di questa esperienza. Potrai Visitare in tutta sicurezza.',
         },
         SAFETY_RESTRICTED_CAPACITY: {
           HEADING:
             'Le linee guida per il distanziamento sociale vengono osservate alla lettera',
           DESCRIPTION:
-            "Le linee guida per il distanziamento sociale vengono imposte e rispettate per tutta la durata di questa esperienza. Sono inoltre in vigore restrizioni al numero di persone che hanno accesso all'esperienza per garantire un distanziamento sociale efficace.",
+            'Le linee guida per il distanziamento sociale vengono imposte e rispettate per tutta la durata di questa esperienza. Sono in vigore restrizioni al numero di turisti presenti nello stesso tempo per permettere un efficace distanziamento sociale.',
         },
         SAFETY_SOCIAL_DISTANCING_NO_GROUPS: {
           HEADING:
@@ -165,13 +166,13 @@ const it = {
         },
         SAFETY_CONTACTLESS: {
           HEADING:
-            "L'ingresso senza nessun contatto fisico con altre persone annulla ogni tipo di rischio ",
+            'Ingresso privo di intoppi e senza contatto diretto con le folle',
           DESCRIPTION:
-            'Siamo nel 2020 ed è nostra opinione che dovresti essere in grado di goderti la tua esperienza senza dover toccare nulla o nessuno. Le nostre misure di sciurezza hanno come obbiettivo proprio questo servizio.',
+            'Siamo nel 2020 ed è nostra opinione che dovresti essere in grado di goderti la tua esperienza senza dover toccare nulla o nessuno. Ora lo puoi fare.',
         },
       },
       BADGE_DESCRIPTION:
-        "Questo stemma applicato a un'esperienza conferma che i suoi standard di sicurezza sono stati verificati",
+        "Questo stemma applicato a un'esperienza conferma che i suoi standard di sicurezza sono stati verificati da noi",
     },
   },
   DISCOUNTED_FUTURES: {
@@ -231,7 +232,7 @@ const it = {
       VOUCHER: {
         HEADING: 'Acquista il tuo voucher',
         SUB_TEXT:
-          "Tutte le esperienze dell'offerta 'Prenota per il Futuro' possono essere acquistate con un forte sconto come voucher flessibili da riscattare in qualsiasi momento prima del seguente termine: <stDate>.",
+          "Tutte le esperienze dell'offerta 'Prenota per il Futuro' possono essere acquistate con un forte sconto come voucher flessibili da riscattare in qualsiasi momento prima del seguente termine: <date>.",
       },
       REDEEM: {
         HEADING: 'Riscatta e prenota quando vuoi',
@@ -243,7 +244,7 @@ const it = {
       GO_ANYTIME: {
         HEADING: "Puoi recarti all'esperienza quando vuoi",
         SUB_TEXT:
-          'Sappiamo bene quanto sia difficile in questi mesi pianificare con precisione le proprie vacanze ed è per questo che potrai usare i voucher in qualsiasi momento entro il seguente termine: <stDate>.',
+          'Sappiamo bene quanto sia difficile in questi mesi pianificare con precisione le proprie vacanze ed è per questo che potrai usare i voucher in qualsiasi momento entro il seguente termine: <date>.',
       },
       SAVE_MONEY: {
         HEADING: 'Risparmia denaro perché te lo meriti',

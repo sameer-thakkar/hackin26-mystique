@@ -13,6 +13,7 @@ import {
   GROUP_TOUR_PREFERED_TIME,
   GROUP_TOUR_PREFERED_LANG,
   GROUP_BOOKING_URL,
+  THEMES,
 } from './../constants';
 import {
   isMobileDevice,
@@ -27,6 +28,7 @@ import {
 import { MODAL_STYLE, SOLEIL } from '../constants/ui-constants';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-phone-input-2/lib/style.css';
+import Conditional from './common/Conditional';
 
 dayjs.extend(isSameOrBefore);
 
@@ -693,6 +695,7 @@ export default class GroupBooking extends Component<any, any> {
       blockedDays,
       disclaimer,
       isMobile,
+      mbTheme,
     } = this.props;
     const blackoutDateRange = this.getDatesInRange(
       blackoutStartDate,
@@ -720,9 +723,11 @@ export default class GroupBooking extends Component<any, any> {
               <small className="hide-mobi">
                 {' '}
                 and best prices for each of our Tours.
-                <br />
-                Call us on <a href="tel:+1 347-897-0100"> +1 347-897-0100</a>,
-                Available 24*7
+                <Conditional if={mbTheme === THEMES.DEFAULT}>
+                  <br />
+                  Call us on <a href="tel:+1 347-897-0100"> +1 347-897-0100</a>,
+                  Available 24*7
+                </Conditional>
               </small>
               <br />
               {disclaimer && (
@@ -745,7 +750,7 @@ export default class GroupBooking extends Component<any, any> {
             <div className="hide-desk group-text">
               <span>
                 Regardless of the size of group, we offer an exceptional level
-                of service and best prices for each of our Tours at Vatican.
+                of service and best prices for each of our Tours.
               </span>
               <span>Call us on +1 347-897-0100</span>
               <span>Available 24*7</span>

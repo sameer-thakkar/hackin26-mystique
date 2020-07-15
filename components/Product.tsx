@@ -39,7 +39,8 @@ const StyledProductCard = styled.div`
   display: grid;
   grid-row-gap: 24px;
   grid-template-columns: auto 280px;
-  grid-template-areas: ${({ layout }) => layout.map((row) => `'${row}'`)};
+  grid-template-areas: ${({ layout }) =>
+    layout.desktop.map((row) => `'${row}'`)};
   ${StlyedSplit} {
     margin: 0;
     max-width: unset;
@@ -64,6 +65,8 @@ const StyledProductCard = styled.div`
     padding: ${({ theme }) => theme.productCards.padding.mobile};
     margin: 0
       ${({ theme: { theme } }) => (theme === THEMES.DEFAULT ? '16px' : '24px')};
+    grid-template-areas: ${({ layout }) =>
+      layout.mobile.map((row) => `'${row}'`)};
     width: auto;
     grid-template-columns: auto;
     .more-details {
@@ -336,21 +339,6 @@ const V1BoosterBlock = styled.div`
   }
 `;
 
-const SavedTag = styled.div`
-  padding: 4px 8px;
-  text-transform: uppercase;
-  background: ${({ theme }) =>
-    theme.theme === THEMES.DEFAULT ? 'transparent' : '#dbfddb'};
-  color: ${({ theme }) =>
-    theme.theme === THEMES.DEFAULT ? theme.primaryText : '#34a853'};
-  color: ${({ theme }) => theme.primaryText};
-  font-size: 12px;
-  line-height: 16px;
-  font-style: normal;
-  font-weight: normal;
-  border-radius: 3px;
-`;
-
 const IconBoosters = styled.div`
   grid-area: icon-booster;
   margin-left: 16px;
@@ -446,7 +434,7 @@ const Product = (props) => {
     ? tourPrices[tgid]
     : { listingPrice: null };
   const { allTags, dfListingPrice } = scorpioData;
-  if (!listingPrice && !dfListingPrice) return null;
+  if (isFetched && !listingPrice && !dfListingPrice) return null;
   const hasSafetyFlag = isSafetyIncluded(allTags);
   const isDFProduct = isDiscountedFuture(allTags) && dfListingPrice;
   const isDFOnlyProduct = listingPrice === null && dfListingPrice !== null;
@@ -458,10 +446,6 @@ const Product = (props) => {
     });
   };
   const finalPrice = listingPrice || dfListingPrice;
-  const savings =
-    ((finalPrice.originalPrice - finalPrice.finalPrice) /
-      finalPrice.originalPrice) *
-    100;
   const openSafeSidebar = () => {
     addToAside({
       width: '41.06vw',
@@ -487,7 +471,7 @@ const Product = (props) => {
       'line line',
       mbTheme === THEMES.MIN_BLUE && 'tags tags',
       'body body',
-    ],
+    ].filter((row) => row),
     mobile: [
       'title',
       'tags',
@@ -497,9 +481,8 @@ const Product = (props) => {
       hasV1Booster && 'booster ',
       'body',
       'cta-block',
-    ],
+    ].filter((row) => row),
   };
-  const LAYOUT = layout[isMobile ? 'mobile' : 'desktop'];
 
   const getMoreDetailsButton = () => {
     const innerContent =
@@ -534,7 +517,7 @@ const Product = (props) => {
 
   return (
     <Container>
-      <StyledProductCard layout={LAYOUT.filter((t) => t)}>
+      <StyledProductCard layout={layout}>
         <ProductHeader>
           <TourTitle>{cardTitle}</TourTitle>
           <TourTags>
@@ -603,12 +586,8 @@ const Product = (props) => {
                 showScratchPrice={showScratchPrice}
                 price={finalPrice}
                 lang={currentLanguage}
+                showSavings={true}
               />
-              <Conditional if={savings > 0 && showScratchPrice}>
-                <SavedTag>
-                  {labels[currentLanguage].SAVE_UPTO} {savings.toFixed(0)}%
-                </SavedTag>
-              </Conditional>
             </PriceContainer>
             <CTABlock
               isSticky={isContentOpen}
