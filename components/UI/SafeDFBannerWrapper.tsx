@@ -10,8 +10,12 @@ import { MBContext } from 'contexts/MBContext';
 import Conditional from 'components/common/Conditional';
 import useWindowSize from 'hooks/useWindowSize';
 import styled from 'styled-components';
+import { SIZES } from 'constants/ui-constants';
 
 const Wrapper = styled.div`
+  max-width: ${SIZES.MAX_WIDTH};
+  margin: auto;
+  width: 100%;
   ${StlyedSplit} {
     margin-top: ${({ marginTop }) => (marginTop ? marginTop : 0)}px;
   }
@@ -34,7 +38,7 @@ const SafeDFBannerWrapper = ({
   const isMobile = width < 768;
   if (!(hasSafe || dfExpiryDate)) return null;
   return (
-    <Wrapper className="main-wrapper v2-long-form" marginTop={marginTop}>
+    <Wrapper marginTop={marginTop}>
       <Split mobileLayout={'scroll'} count={hasSafe && !!dfExpiryDate ? 2 : 1}>
         <Conditional if={hasSafe}>
           <InfoBanner

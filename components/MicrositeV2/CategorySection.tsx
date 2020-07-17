@@ -5,6 +5,7 @@ import ProductsContext from '../../contexts/Products';
 import InteractionContext from '../../contexts/Interaction';
 import { DONT_AUTO_SCROLL, DONT_HOIST } from '../../constants';
 import styled from 'styled-components';
+import useWindowSize from 'hooks/useWindowSize';
 
 const StyledCategorySection = styled.div`
   display: grid;
@@ -75,7 +76,6 @@ const CategorySection = (props) => {
     description,
     changePage,
     isFirstTourOpen = false,
-    isMobile,
   } = props;
   const toursContext = useContext(ProductsContext);
   const interactionContext = useContext(InteractionContext);
@@ -84,7 +84,8 @@ const CategorySection = (props) => {
     (tgid) => allTours[tgid] && allTours[tgid].available
   );
   const elementId = heading?.trim().replace(/\s/g, '-').toLowerCase();
-
+  const { width } = useWindowSize();
+  const isMobile = width < 768;
   useEffect(() => {
     setTimeout(() => {
       if (isFirstTourOpen && filteredTgids[0] && !isMobile)

@@ -146,7 +146,7 @@ class LanguageSelector extends Component<any, any> {
       return [...acc, language];
     }, []);
     const { pathname } = this.state;
-    const langCodeRegex = /^(\/){0,1}(en|fr|de|it|nl|pt|es)(\/){0,1}/;
+    const langCodeRegex = /^(\/)?(en|fr|de|it|nl|pt|es)(\/)?/;
     const removeLangFromPathname = pathname.replace(langCodeRegex, '');
     const slugWithoutLeadingSlash = (slug) =>
       slug.charAt(slug[0]) === '/' ? slug.substr(1, slug.length) : slug;

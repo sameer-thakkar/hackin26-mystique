@@ -24,6 +24,12 @@ const StyledHeaderLinksWrapper = styled.div`
       margin-right: 0px;
     }
   }
+  .group-booking-cta {
+    padding: 12px 16px;
+    border: 1px solid;
+    border-radius: 4px;
+    line-height: 16px;
+  }
   @media (max-width: 768px) {
     display: ${(props) => {
       if (!props.show) {
@@ -45,6 +51,10 @@ const StyledHeaderLinksWrapper = styled.div`
       border-bottom: 0.5px dotted #d8d8d8;
       font-family: ${SOLEIL.FONT_STACK};
     }
+    .group-booking-cta {
+      padding: 0;
+      border: none;
+    }
   }
 `;
 
@@ -63,7 +73,12 @@ const HeaderLinks: React.FC<any> = ({
         </LinkResolver>
       ))}
       {showGroupBooking && (
-        <div onClick={openGroupBookingModal} role="button" tabIndex={0}>
+        <div
+          className="group-booking-cta"
+          onClick={openGroupBookingModal}
+          role="button"
+          tabIndex={0}
+        >
           {labels[lang].GROUP_TICKETS}
         </div>
       )}

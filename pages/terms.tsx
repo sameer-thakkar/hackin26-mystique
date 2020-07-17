@@ -191,7 +191,7 @@ export default class TermsPage extends Component<any, any> {
               A “Provider” is a Member of our Website that is a business
               offering tours, activities, attractions and other travel-related
               goods and services to the general public and has registered with
-              Headout to offer their goods/services.
+              us to offer their goods/services.
               <br />
               A “Profile” is an online collection of information provided by a
               Member about their business if a Provider, or generally about

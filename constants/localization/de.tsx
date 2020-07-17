@@ -31,7 +31,7 @@ const de = {
   TOMORROW: 'Morgen',
   LISTICLES: {
     SEATING_CHART: 'Saalplan',
-    KNOW_MORE: 'Wissenswertes',
+    KNOW_MORE: 'Weitere Infos',
     WHY_BOOK_FROM_US: 'Unsere Vorteile?',
   },
   PRICES_STARTING: 'Preise ab',
@@ -64,7 +64,7 @@ const de = {
     BANNER_CTA: 'Weitere Infos',
     EXPERIENCE_DESCRIPTION:
       'Dieses Erlebnis entspricht nachweislich den besten Sicherheitsstandards in Übereinstimmung mit den örtlichen Vorschriften und der WHO.',
-    FLAG_TEXT: 'Sicheres Erlebnis',
+    FLAG_TEXT: 'Nachweislich sicher',
     MODAL: {
       HEADING: 'Sichere Erlebnisse',
       SUB_HEADING:

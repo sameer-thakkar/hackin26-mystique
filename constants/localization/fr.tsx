@@ -53,25 +53,25 @@ const fr = {
   THEATRE: 'Théâtre',
   TIMINGS: 'Horaires',
   SAFE_EXPERIENCE: {
-    HEADING: 'Les normes de sécurité et sanitaires',
-    SHORT_HEADING: 'Les normes de sécurité et sanitaires en vigueur',
-    MOBILE_HEADING: 'Expériences classées sans risque',
+    HEADING: 'Normes de sécurité et sanitaires en vigueur',
+    SHORT_HEADING: 'Toutes les normes de sécurité et sanitaires en vigueur',
+    MOBILE_HEADING: 'Expériences conformes aux normes sanitaires',
     GENERAL_DESCRIPTION:
       'Plus de 500 clients ont visité ce lieu et approuvé les mesures de sécurité qui y sont appliquées. Tous les équipements de sécurité sont fournis sur place.',
     CTA_TEXT: 'Détails des mesures de sécurité et sanitaires',
     BANNER_CTA: 'En savoir plus',
     EXPERIENCE_DESCRIPTION:
-      "Cette expérience a été vérifiée et respecte les normes de sécurité et sanitaires, conformément aux réglementations locales et à l'OMS.",
-    FLAG_TEXT: 'Expérience sans risque',
+      "Cette expérience a été vérifiée et respecte les normes de sécurité et sanitaires, conformément aux réglementations locales et aux directives de l'OMS.",
+    FLAG_TEXT: 'Protection renforcée',
     MODAL: {
-      HEADING: 'Expériences classées sans risque',
+      HEADING: 'Expériences conformes aux normes sanitaires',
       SUB_HEADING:
         "Headout collabore avec ses partenaires dans le monde entier pour appliquer les normes de sécurité et sanitaires conformément aux directives de l'OMS. Toutes les mesures prises sur le terrain ont été vérifiées et sont indiquées ici. Il est grand temps de profiter à nouveau du monde qui nous entoure.",
       DETAILS: {
         SAFETY_MASK_DEFAULT: {
           HEADING: 'Pour votre sécurité, tout le monde porte un masque',
           DESCRIPTION:
-            "Nos partenaires qui ont été certifiés en tant qu'expérience sans risque appliquent les réglementations locales en vigueur concernant le port du masque. Si le port du masque est obligatoire, tous les visiteurs et les membres du personnel en porteront un. Nos partenaires prennent toutes les mesures possibles pour assurer votre confort et votre sécurité.",
+            "Nos partenaires qui ont été vérifiés en tant qu'expérience conforme aux normes sanitaires appliquent les réglementations locales en vigueur concernant le port du masque. Si le port du masque est obligatoire, tous les visiteurs et membres du personnel en porteront un. Nos partenaires prennent toutes les mesures possibles pour assurer votre confort et votre sécurité.",
         },
         SAFETY_MASK_STAFF: {
           HEADING: 'Pour votre sécurité, tout le monde porte un masque',
@@ -96,18 +96,18 @@ const fr = {
         SAFETY_TEMPERATURE_GUEST: {
           HEADING: 'Contrôles de température en vigueur',
           DESCRIPTION:
-            "Tous les visiteurs se feront contrôler leur température au début de l'expérience afin de garantir la sécurité de tous.",
+            "La température de tous les visiteurs sera prise au début de l'expérience afin de garantir la sécurité de tous.",
         },
         SAFETY_TEMPERATURE_DEFAULT: {
           HEADING: 'Contrôles de température en vigueur',
           DESCRIPTION:
-            "Tous les visiteurs se feront contrôler leur température au début de l'expérience afin de garantir la sécurité de tous. Tous les membres du personnel sont examinés à plusieurs reprises pour vérifier si leur température est élevée.",
+            "La température de tous les visiteurs sera prise au début de l'expérience afin de garantir la sécurité de tous. Tous les membres du personnel sont examinés à plusieurs reprises pour vérifier si leur température est élevée.",
         },
         SAFETY_HANDWASH: {
           HEADING:
             'Des installations sanitaires et pour se laver les mains sont disponibles partout',
           DESCRIPTION:
-            'Pour toute expérience sans risque, vous aurez accès à des installations sanitaires et à des points pour vous laver les mains tout au long de votre visite. Nous avons tout prévu.',
+            "Pour toute expérience conforme aux normes sanitaires, vous aurez accès à des installations sanitaires et à des points d'eau pour vous laver les mains tout au long de votre visite. Nous avons tout prévu.",
         },
         SAFETY_CLEANED_EQUIPMENTS: {
           HEADING: 'Tous les équipements et espaces sont désinfectés',
@@ -125,7 +125,7 @@ const fr = {
             'Tous les équipements, les véhicules et les espaces à forte fréquentation sont nettoyés après chaque utilisation. Détendez-vous et profitez de votre séjour et visite.',
         },
         SAFETY_TRAINED_STAFF: {
-          HEADING: "Le personnel est informé des directives de l'OMS",
+          HEADING: "Le personnel est formé aux directives de l'OMS",
           DESCRIPTION:
             "Le personnel présent tout au long de votre visite est formé aux directives de l'OMS et équipé pour faire face à toute situation d'urgence éventuelle.",
         },
@@ -142,7 +142,7 @@ const fr = {
         SAFETY_RESTRICTED_CAPACITY: {
           HEADING: 'La distance sociale est respectée',
           DESCRIPTION:
-            'Les expériences classées sans risque respectent en tout temps les lignes directrices en matière de distance sociale. Afin de faire respecter ces directives, il se peut que la capacité du lieu soit restreinte et que des limites de groupe soient mises en place.',
+            'Les expériences conformes aux normes sanitaires respectent en tout temps les lignes directrices en matière de distance sociale. Afin de faire respecter ces directives, il se peut que la capacité du lieu soit restreinte et que des limites de groupe soient mises en place.',
         },
         SAFETY_SOCIAL_DISTANCING_NO_GROUPS: {
           HEADING: 'La distance sociale est respectée',
@@ -152,7 +152,7 @@ const fr = {
         SAFETY_RESTRICTED_CAPACITY_NO_GROUPS: {
           HEADING: 'La distance sociale est respectée',
           DESCRIPTION:
-            'Les expériences classées sans risque respectent en tout temps les lignes directrices en matière de distance sociale. Afin de faire respecter ces directives, il se peut que la capacité du lieu soit restreinte et que des limites de groupe soient mises en place. Par ailleurs, les grands groupes ne sont pas autorisés.',
+            'Les expériences conformes aux normes sanitaires respectent en tout temps les lignes directrices en matière de distance sociale. Afin de faire respecter ces directives, il se peut que la capacité du lieu soit restreinte et que des limites de groupe soient mises en place. Par ailleurs, les grands groupes ne sont pas autorisés.',
         },
         SAFETY_CONTACTLESS: {
           HEADING: 'Une entrée sans contact et sans tracas',

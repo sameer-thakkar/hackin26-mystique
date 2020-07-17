@@ -64,7 +64,7 @@ const es = {
     BANNER_CTA: 'Leer Más',
     EXPERIENCE_DESCRIPTION:
       'Se ha verificado que esta experiencia cumple con los estándares de seguridad más estrictos, conforme a las regulaciones locales y de la OMS.',
-    FLAG_TEXT: 'Experiencia Segura',
+    FLAG_TEXT: 'Seguridad Verificada',
     MODAL: {
       HEADING: 'Experiencias Seguras',
       SUB_HEADING:
@@ -171,7 +171,7 @@ const es = {
             'Estamos en el 2020 y deberías poder disfrutar de tu experiencia sin tener que tocar nada ni a nadie. Con esta experiencia puedes hacerlo.',
         },
       },
-      BATCH_DESCRIPTION:
+      BADGE_DESCRIPTION:
         'Cualquier experiencia con esta insignia confirma que se han verificado los estándares de higiene y seguridad.',
     },
   },

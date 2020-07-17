@@ -64,7 +64,7 @@ const pt = {
     BANNER_CTA: 'Saiba mais',
     EXPERIENCE_DESCRIPTION:
       'Esta experiência foi verificada para seguir as melhores medidas de segurança de acordo com os regulamentos locais e a OMS',
-    FLAG_TEXT: 'Experiência segura',
+    FLAG_TEXT: 'Segurança verificada',
     MODAL: {
       HEADING: 'Experiências seguras',
       SUB_HEADING:
@@ -161,7 +161,7 @@ const pt = {
             'Estamos em 2020 e você deve poder desfrutar de sua experiência sem ter que tocar em nada ou em ninguém. Com esta experiência, é possível.',
         },
       },
-      BATCH_DESCRIPTION:
+      BADGE_DESCRIPTION:
         'O selo em uma experiência confirma que as medidas de segurança foram verificadas por nós.',
     },
   },

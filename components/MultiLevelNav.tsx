@@ -20,6 +20,12 @@ const StyledMenuItem = styled.li`
     color: ${({ theme: { primaryBGText } }) =>
       primaryBGText ? primaryBGText : COLORS.FOUR_BLACK};
   }
+  &.group-booking-cta {
+    padding: 12px 16px;
+    border: 1px solid;
+    border-radius: 4px;
+    line-height: 16px;
+  }
   .withIcon {
     display: grid;
     align-items: center;
@@ -50,6 +56,9 @@ const StyledMenuItem = styled.li`
   }
   @media (max-width: 768px) {
     padding: 16px;
+    &.group-booking-cta {
+      border: none;
+    }
     .withIcon {
       .nest-icon {
         justify-self: end;
@@ -140,6 +149,7 @@ const NestedMenu = styled.ul`
 const Nav = styled.nav`
   display: grid;
   grid-auto-flow: column;
+  align-items: center;
   grid-column-gap: 33px;
   & > li {
     padding: 0;
@@ -288,6 +298,7 @@ const HeaderSliceHandler = (slice, props) => {
       return (
         <StyledMenuItem
           key={index}
+          className={'group-booking-cta'}
           onClick={() => {
             props.isMobile && slice.toggleMenu();
             slice.action();

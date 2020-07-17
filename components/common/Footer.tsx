@@ -215,21 +215,21 @@ const Footer: React.FC<FooterProps> = ({
   const { mbTheme = THEMES.DEFAULT } = useContext(MBContext);
   const { width } = useWindowSize();
   const isMobile = width < 768;
-  const override =
-    themeOverride === THEMES.INHERIT ? theme[mbTheme] : theme[themeOverride];
+  const finalThemeName =
+    themeOverride === THEMES.INHERIT ? mbTheme : themeOverride;
   return (
-    <ThemeProvider theme={override}>
+    <ThemeProvider theme={theme[finalThemeName]}>
       <StyledFooter>
         {slices.length !== 0 ? (
           <FooterLinksWrapper>
             <Container>
-              {mbTheme === THEMES.DEFAULT ? (
+              {finalThemeName === THEMES.DEFAULT ? (
                 <div className="quick-links-title">
                   {linksTitle || 'Quick Links'}
                 </div>
               ) : null}
               <div className="quick-links">
-                <Conditional if={mbTheme === THEMES.MIN_BLUE}>
+                <Conditional if={finalThemeName === THEMES.MIN_BLUE}>
                   <div className={`quick-links-heading`}>
                     <div className="quick-links-title">
                       {linksTitle || 'Quick Links'}
@@ -253,12 +253,12 @@ const Footer: React.FC<FooterProps> = ({
               <div className="logo-disclaimer">
                 <div className="logo-wrapper">
                   <Image url={logoURL} alt={logoAlt} />
-                  {hasPoweredByHeadoutLogo && mbTheme === THEMES.DEFAULT
+                  {hasPoweredByHeadoutLogo && finalThemeName === THEMES.DEFAULT
                     ? POWERED_BY_HEADOUT
                     : null}
                 </div>
                 {(microbrandType === 'C1' || showDisclaimer) &&
-                mbTheme === THEMES.DEFAULT ? (
+                finalThemeName === THEMES.DEFAULT ? (
                   <div className="disclaimer-text">
                     {disclaimerText
                       ? disclaimerText
@@ -268,7 +268,9 @@ const Footer: React.FC<FooterProps> = ({
                         )}
                   </div>
                 ) : null}
-                <Conditional if={mbTheme === THEMES.MIN_BLUE && !isMobile}>
+                <Conditional
+                  if={finalThemeName === THEMES.MIN_BLUE && !isMobile}
+                >
                   <div className={'disclaimer-text copyright'}>
                     {`© Copyright ${new Date().getFullYear()}`}
                   </div>
@@ -278,7 +280,7 @@ const Footer: React.FC<FooterProps> = ({
                 <LinksHeader>
                   {labels[currentLanguage].FOOTER.GET_HELP}
                 </LinksHeader>
-                <Conditional if={mbTheme === THEMES.DEFAULT}>
+                <Conditional if={finalThemeName === THEMES.DEFAULT}>
                   <Link
                     href="https://secure.livechatinc.com/licence/8339531/v2/open_chat.cgi?groups=0"
                     target="_blank"
@@ -288,7 +290,7 @@ const Footer: React.FC<FooterProps> = ({
                 </Conditional>
                 <Link
                   href={`tel:${
-                    mbTheme === THEMES.DEFAULT
+                    finalThemeName === THEMES.DEFAULT
                       ? '+1 347 897 0100'
                       : '+1 952 856 3128'
                   }`}
@@ -298,7 +300,7 @@ const Footer: React.FC<FooterProps> = ({
                 </Link>
                 <Link
                   href={`mailto:${
-                    mbTheme === THEMES.DEFAULT
+                    finalThemeName === THEMES.DEFAULT
                       ? 'support@headout.com'
                       : 'support@online-tickets.co'
                   }`}
@@ -318,13 +320,13 @@ const Footer: React.FC<FooterProps> = ({
                 <Link href="/privacy-policy" target="_blank">
                   {labels[currentLanguage].FOOTER.PRIVACY_POLICY}
                 </Link>
-                <Conditional if={mbTheme === THEMES.DEFAULT}>
+                <Conditional if={finalThemeName === THEMES.DEFAULT}>
                   <Link href="/company-details" target="_blank">
                     {labels[currentLanguage].FOOTER.COMPANY_DETAILS}
                   </Link>
                 </Conditional>
               </div>
-              <Conditional if={mbTheme === THEMES.MIN_BLUE && isMobile}>
+              <Conditional if={finalThemeName === THEMES.MIN_BLUE && isMobile}>
                 <div className="chin" style={{ marginTop: '-64px' }}>
                   <div className={'disclaimer-text copyright'}>
                     {`© Copyright ${new Date().getFullYear()}`}
@@ -332,7 +334,7 @@ const Footer: React.FC<FooterProps> = ({
                 </div>
               </Conditional>
             </FooterLegal>
-            <Conditional if={mbTheme === THEMES.DEFAULT}>
+            <Conditional if={finalThemeName === THEMES.DEFAULT}>
               <div className="footer-chin">
                 <div className="white-line" />
                 <div className="super-brand-logo">

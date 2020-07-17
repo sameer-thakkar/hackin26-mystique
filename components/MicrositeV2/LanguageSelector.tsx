@@ -38,15 +38,8 @@ const LanguageSelector = (props) => {
   if (availableLanguages.length < 1) {
     return null;
   }
-
-  const slug = pathname
-    .replace('en/', '')
-    .replace('fr/', '')
-    .replace('de/', '')
-    .replace('it/', '')
-    .replace('nl/', '')
-    .replace('pt/', '')
-    .replace('es/', '');
+  const langCodeRegex = /^(\/)?(en|fr|de|it|nl|pt|es)(\/)?/;
+  const slug = pathname.replace(langCodeRegex, '');
 
   const isDev = host.includes('localhost');
 

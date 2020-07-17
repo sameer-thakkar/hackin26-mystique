@@ -64,7 +64,7 @@ const it = {
     BANNER_CTA: 'Leggi tutto',
     EXPERIENCE_DESCRIPTION:
       "Questa esperienza è stata certificata per l'implementazione dei migliori standard di sicurezza in accordo con le linee guida dell'OMS",
-    FLAG_TEXT: 'Esperienza Sicura',
+    FLAG_TEXT: 'Sicurezza Verificata',
     MODAL: {
       HEADING: 'Esperienze Sicure',
       SUB_HEADING:
