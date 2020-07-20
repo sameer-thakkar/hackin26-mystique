@@ -4,7 +4,11 @@ import Router from 'next/router';
 import styled from 'styled-components';
 import { withoutTrailingSlash } from 'utils/helper';
 import { GLOBE } from 'assets/SvgIcons';
-import { FULL_LANGUAGE_MAP, THEMES } from 'constants/index';
+import {
+  FULL_LANGUAGE_MAP,
+  THEMES,
+  LANGUAGE_PARAMS_REGEX,
+} from 'constants/index';
 import { COLORS, SOLEIL } from 'constants/ui-constants';
 import Chevron from 'UI/Chevron';
 
@@ -146,8 +150,7 @@ class LanguageSelector extends Component<any, any> {
       return [...acc, language];
     }, []);
     const { pathname } = this.state;
-    const langCodeRegex = /^(\/)?(en|fr|de|it|nl|pt|es)(\/)?/;
-    const removeLangFromPathname = pathname.replace(langCodeRegex, '');
+    const removeLangFromPathname = pathname.replace(LANGUAGE_PARAMS_REGEX, '');
     const slugWithoutLeadingSlash = (slug) =>
       slug.charAt(slug[0]) === '/' ? slug.substr(1, slug.length) : slug;
     const slug = slugWithoutLeadingSlash(removeLangFromPathname);

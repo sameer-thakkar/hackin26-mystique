@@ -20,7 +20,7 @@ const en = {
   BOOK_NOW_CTA: 'Book Now',
   READ_MORE_TEXT: 'Read More',
   SHOW_LESS_TEXT: 'Show Less',
-  NEXT_AVAILABLE: 'Next Available',
+  NEXT_AVAILABLE: 'Next Available, ',
   SAVE_UPTO: 'Save upto',
   AVAILABLE: 'Available',
   EARLIEST_AVAILABILITY: 'Earliest Availability',

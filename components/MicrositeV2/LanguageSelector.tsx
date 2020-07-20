@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import { SOLEIL } from 'constants/ui-constants';
-import { FULL_LANGUAGE_MAP } from 'constants/index';
+import { FULL_LANGUAGE_MAP, LANGUAGE_PARAMS_REGEX } from 'constants/index';
 
 const LanguageSelector = (props) => {
   const [pathname, setPathname] = useState('');
@@ -38,8 +38,7 @@ const LanguageSelector = (props) => {
   if (availableLanguages.length < 1) {
     return null;
   }
-  const langCodeRegex = /^(\/)?(en|fr|de|it|nl|pt|es)(\/)?/;
-  const slug = pathname.replace(langCodeRegex, '');
+  const slug = pathname.replace(LANGUAGE_PARAMS_REGEX, '');
 
   const isDev = host.includes('localhost');
 

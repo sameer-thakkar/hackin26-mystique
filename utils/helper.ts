@@ -1,5 +1,6 @@
 import parse from 'url-parse';
 import { parsePhoneNumberFromString as parseMobile } from 'libphonenumber-js/mobile';
+import { FULL_LANGUAGE_MAP } from 'constants/index';
 
 export const withoutTrailingSlash = (url) =>
   url.charAt(url.length - 1) === '/' ? url.substr(0, url.length - 1) : url;
@@ -327,3 +328,9 @@ export const uaIsMobile = (userAgentString) =>
   /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile|Kindle|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/.test(
     userAgentString
   );
+
+export const getLangObject = (prismicParam) => {
+  return Object.values(FULL_LANGUAGE_MAP).find(
+    (lang: any) => lang.paramLang === prismicParam
+  );
+};

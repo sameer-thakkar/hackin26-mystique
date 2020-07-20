@@ -6,7 +6,7 @@ import { MobileProductPage } from './views/ProductPage';
 import { withRouter } from 'next/router';
 import populateHead from '../common/meta';
 import { InteractionContextProvider } from '../../contexts/Interaction';
-import { docCookies, genManualSlice } from '../../utils/helper';
+import { docCookies, genManualSlice, getLangObject } from '../../utils/helper';
 import allToursParser from '../../utils/allToursParser';
 import { tourListApiParser } from '../../utils/dataParsers';
 class MicrositeV2 extends Component<any, any> {
@@ -110,7 +110,7 @@ class MicrositeV2 extends Component<any, any> {
     } = this.props;
     const { uid: currentDomain, data: CMSData } = CMSContent;
     const { localization: languages } = CMSData;
-    const currentLanguage = CMSContent.lang.substring(0, 2);
+    const currentLanguage = getLangObject(CMSContent.lang).short;
     const { isMobile } = this.state;
     const languageProps = {
       currentDomain,

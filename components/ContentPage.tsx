@@ -15,7 +15,7 @@ import {
   FULL_WIDTH_SLICES,
   ALLOW_IMMEDIEATE_NESTING,
 } from '../constants';
-import { groupSlices } from '../utils/helper';
+import { groupSlices, getLangObject } from '../utils/helper';
 import allToursParser from '../utils/allToursParser';
 import { ProductsContextProvider } from '../contexts/Products';
 import { InteractionContextProvider } from '../contexts/Interaction';
@@ -25,10 +25,7 @@ import { COLORS, SOLEIL } from '../constants/ui-constants';
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 
 const ContentWrapper = styled.main`
-  margin-top: 80px;
-  @media (max-width: 768px) {
-    margin-top: 56px;
-  }
+  margin-top: 0;
 `;
 
 const StyledContentPage = styled.div`
@@ -419,8 +416,7 @@ export default class ContentPage extends Component<any, any> {
       commonHeader.data.enable_powered_by_superbrand_logo ||
       microsite_document_ref.data.enable_powered_by_superbrand_logo;
     const showGroupBooking = enableGroupBooking === 'Yes';
-    const currentLanguage = lang.split('-')[0];
-
+    const currentLanguage = getLangObject(lang).short;
     return (
       <div className="page-wrapper">
         {this.state.showGroupBookingModal && groupBookingTourTitles && (

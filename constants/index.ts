@@ -12,7 +12,18 @@ export const PREFERRED_COUNTRIES_CODES = [
   'th',
 ];
 
-export const SUPPORTED_LANGUAGES = ['en', 'es', 'it', 'fr', 'pt', 'de', 'nl'];
+export const SUPPORTED_LANGUAGES = [
+  'en',
+  'es',
+  'it',
+  'fr',
+  'pt',
+  'de',
+  'nl',
+  'jp',
+  'tw',
+  'cn',
+];
 
 export const SUPPORTED_LANGUAGES_MAP = {
   en: 'en-us',
@@ -22,7 +33,78 @@ export const SUPPORTED_LANGUAGES_MAP = {
   pt: 'pt-pt',
   nl: 'nl-nl',
   de: 'de-de',
+  jp: 'ja-jp',
+  cn: 'zh-cn',
+  tw: 'zh-tw',
 };
+
+export const FULL_LANGUAGE_MAP = {
+  en: {
+    language: 'English',
+    paramLang: 'en-us',
+    short: 'en',
+  },
+  it: {
+    language: 'Italiano',
+    paramLang: 'it-it',
+    short: 'it',
+  },
+  es: {
+    language: 'Español',
+    paramLang: 'es-es',
+    short: 'es',
+  },
+  fr: {
+    language: 'Français',
+    paramLang: 'fr-fr',
+    short: 'fr',
+  },
+  de: {
+    language: 'Deutsch',
+    paramLang: 'de-de',
+    short: 'de',
+  },
+  nl: {
+    language: 'Nederlands',
+    paramLang: 'nl-nl',
+    short: 'nl',
+  },
+  pt: {
+    language: 'Português',
+    paramLang: 'pt-pt',
+    short: 'pt',
+  },
+  cn: {
+    language: '简体中文',
+    paramLang: 'zh-cn',
+    short: 'cn',
+  },
+  tw: {
+    language: '繁體中文 ',
+    paramLang: 'zh-tw',
+    short: 'tw',
+  },
+  jp: {
+    language: 'Japanese',
+    paramLang: 'ja-jp',
+    short: 'jp',
+  },
+};
+
+export const PRISMIC_LANG_TO_ROUTE_PARAM = {
+  'en-us': 'en',
+  'it-it': 'it',
+  'es-es': 'es',
+  'fr-fr': 'fr',
+  'de-de': 'de',
+  'nl-nl': 'nl',
+  'pt-pt': 'pt',
+  'zh-cn': 'cn',
+  'zh-tw': 'tw',
+  'ja-jp': 'jp',
+};
+
+export const LANGUAGE_PARAMS_REGEX = /^(\/)?(en|fr|de|it|nl|pt|es|jp|tw|cn)(\/)?/;
 
 export const GROUP_TOUR_PREFERED_TOUR = [
   {
@@ -309,37 +391,6 @@ export const DISCOUNTED_FUTURE_IMAGES_SECTION = {
     'https://cdn-s3.headout.com/assets/images/discounted-futures/experience.png',
   ADVENTURE:
     'https://cdn-s3.headout.com/assets/images/discounted-futures/adventure.png',
-};
-
-export const FULL_LANGUAGE_MAP = {
-  en: {
-    language: 'English',
-    paramLang: 'en-us',
-  },
-  it: {
-    language: 'Italiano',
-    paramLang: 'it-it',
-  },
-  es: {
-    language: 'Español',
-    paramLang: 'es-es',
-  },
-  fr: {
-    language: 'Français',
-    paramLang: 'fr-fr',
-  },
-  de: {
-    language: 'Deutsch',
-    paramLang: 'de-de',
-  },
-  nl: {
-    language: 'Nederlands',
-    paramLang: 'nl-nl',
-  },
-  pt: {
-    language: 'Português',
-    paramLang: 'pt-pt',
-  },
 };
 
 export const THEMES = {

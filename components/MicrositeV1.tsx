@@ -14,7 +14,7 @@ import Alert from './UI/Alert';
 import * as labels from '../constants/localization/labels';
 import DismissAlert from './UI/DismissAlert';
 import { InteractionContextProvider } from '../contexts/Interaction';
-import { docCookies, csvTgidToArray } from '../utils/helper';
+import { docCookies, csvTgidToArray, getLangObject } from '../utils/helper';
 import {
   DROPDOWN_ELEMENT,
   ANALYTICS_EVENTS,
@@ -66,7 +66,7 @@ export default class MicrositeV1 extends Component<any, any> {
     const { tgidToScroll, toursList } = this.props;
     const uncategorizedTours = data.body1;
     const { baseLangPageTitle } = this.props.data.data;
-    const currentLanguage = lang.substring(0, 2);
+    const currentLanguage = getLangObject(lang).short;
     const allTourTgids = this.props.data.data.all_tours.reduce((acc, tour) => {
       return [...acc, parseInt(tour.primary.tgid)];
     }, []);
@@ -247,7 +247,7 @@ export default class MicrositeV1 extends Component<any, any> {
     } = this.props.data.data;
     const languages = localization.filter((lang) => lang.language);
     const { uid } = this.props.data;
-    const currentLanguage = this.props.data.lang.substring(0, 2);
+    const currentLanguage = getLangObject(this.props.data.lang).short;
     const uncategorizedTours = this.props.data.data.body1;
     const tourRanking = uncategorizedTours[0]?.primary?.ranking;
     const checkIfToursAvailable = toursList.length > 0;

@@ -6,13 +6,13 @@ import EnvironmentContext from '../../contexts/environmentContext';
 import ProductsContext from '../../contexts/Products';
 import Button from '../UI/Button';
 import * as labels from '../../constants/localization/labels';
-import LocalisedPrice from '../UI/LPrice';
 import { RichText } from 'prismic-reactjs';
 import { SOLEIL, COLORS } from '../../constants/ui-constants';
 import { shortCodeSerializerWithParentProps } from '../../utils/shortCodes';
 import { MBContext } from '../../contexts/MBContext';
 import { CHEVRON_DOWN } from '../../assets/SvgIcons';
 import { TOUR_COMPARISION_DESIGN } from '../../constants';
+import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
 
 const StyledTourComparisionTable = styled.div`
   width: auto;
@@ -111,25 +111,27 @@ const StyledTourComparisionTable = styled.div`
     grid-row: 1;
     text-decoration: line-through;
   }
-  .current-price {
-    font-size: 16px;
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.SEMIBOLD};
-    color: ${COLORS.FOUR_BLACK};
-    line-height: 20px;
+  ${StyledPriceBlock} {
+    .tour-price {
+      font-size: 16px;
+      font-family: ${SOLEIL.FONT_STACK};
+      font-weight: ${SOLEIL.SEMIBOLD};
+      color: ${COLORS.FOUR_BLACK};
+      line-height: 20px;
+    }
+    .tour-price {
+      font-family: ${SOLEIL.FONT_STACK};
+      font-weight: ${SOLEIL.SEMIBOLD};
+      color: ${COLORS.FOUR_BLACK};
+    }
+    .tour-scratch-price {
+      font-size: 14px;
+      font-family: ${SOLEIL.FONT_STACK};
+      margin-left: 0;
+      color: ${COLORS.FOUR_BLACK};
+    }
   }
-  .flat-price-block .current-price {
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.SEMIBOLD};
-    color: ${COLORS.FOUR_BLACK};
-  }
-
-  .flat-price-block .old-price {
-    font-size: 16px;
-    font-family: ${SOLEIL.FONT_STACK};
-    margin-left: 8px;
-    color: ${COLORS.FOUR_BLACK};
-  }
+  
 
   .row.sticky {
     position: sticky;
@@ -291,17 +293,13 @@ const StyledTourComparisionTable = styled.div`
     .row .column:not(:first-child) .block-label {
       visibility: initial;
     }
-    .flat-price-block .current-price {
-    ${({ designType }) =>
-      designType == TOUR_COMPARISION_DESIGN.TYPE_2
-        ? ``
-        : `
-      font-size: 15px;
-    `}
-      
-    }
-    .flat-price-block .old-price {
-      font-size: 12px;
+    ${StyledPriceBlock} {
+      .tour-price {
+        font-size: 15px;
+      }
+      .tour-scratch-price {
+        font-size: 12px;
+      }
     }
     .tour-title {
       font-size: 14px;
@@ -424,7 +422,6 @@ const TourComparisonTable = (props) => {
     showImage = true,
   } = props;
   const [isExpanded, setExpand] = useState(false);
-  const NB_SPACE = '\u00A0';
   const envContext = useContext(EnvironmentContext);
   const toursContext = useContext(ProductsContext);
   const mbContext = useContext(MBContext);
@@ -554,23 +551,12 @@ const TourComparisonTable = (props) => {
                       <div className="block-label">Prices Starting</div>
                     ) : null}
                     <div className="block-content">
-                      <span className="current-price">
-                        <LocalisedPrice
-                          price={tour.price}
-                          currencySymbol={tour.currencySymbol}
-                          lang={lang}
-                        />
-                      </span>
-                      {NB_SPACE}
-                      {tour.scratchPrice > tour.price ? (
-                        <span className="old-price">
-                          <LocalisedPrice
-                            price={tour.scratchPrice}
-                            currencySymbol={tour.currencySymbol}
-                            lang={lang}
-                          />
-                        </span>
-                      ) : null}
+                      <PriceBlock
+                        lang={lang}
+                        price={tour.listingPrice}
+                        showScratchPrice={true}
+                        prefix={false}
+                      />
                     </div>
                   </div>
                 </div>
@@ -615,23 +601,11 @@ const TourComparisonTable = (props) => {
                     <div className="content-block">
                       <div className="block-label">Prices Starting</div>
                       <div className="block-content">
-                        <span className="current-price">
-                          <LocalisedPrice
-                            price={tour.price}
-                            currencySymbol={tour.currencySymbol}
-                            lang={lang}
-                          />
-                        </span>
-                        {NB_SPACE}
-                        {tour.scratchPrice > tour.price ? (
-                          <span className="old-price">
-                            <LocalisedPrice
-                              price={tour.scratchPrice}
-                              currencySymbol={tour.currencySymbol}
-                              lang={lang}
-                            />
-                          </span>
-                        ) : null}
+                        <PriceBlock
+                          lang={lang}
+                          price={tour.listingPrice}
+                          showScratchPrice={true}
+                        />
                       </div>
                     </div>
                   </div>

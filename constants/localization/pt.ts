@@ -23,7 +23,7 @@ const pt = {
   BOOK_NOW_CTA: 'Compre agora',
   READ_MORE_TEXT: 'Leia Mais',
   SHOW_LESS_TEXT: 'Ver Menos',
-  NEXT_AVAILABLE: 'Próxima Disponível',
+  NEXT_AVAILABLE: 'Próxima Disponível, ',
   SAVE_UPTO: 'Economize até',
   AVAILABLE: 'Disponível',
   EARLIEST_AVAILABILITY: 'Seguinte Disponível',

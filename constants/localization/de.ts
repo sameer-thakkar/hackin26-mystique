@@ -23,7 +23,7 @@ const de = {
   BOOK_NOW_CTA: 'Jetzt buchen',
   READ_MORE_TEXT: 'Mehr anzeigen',
   SHOW_LESS_TEXT: 'Weniger anzeigen',
-  NEXT_AVAILABLE: 'Verfügbar ab',
+  NEXT_AVAILABLE: 'Verfügbar ab: ',
   SAVE_UPTO: 'Spare',
   AVAILABLE: 'Verfügbar am',
   EARLIEST_AVAILABILITY: 'Früheste verfügbare',
