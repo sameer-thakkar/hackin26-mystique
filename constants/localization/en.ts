@@ -57,7 +57,7 @@ const en = {
     SHORT_HEADING: 'Best safety standards in place',
     MOBILE_HEADING: 'Safe Experiences',
     GENERAL_DESCRIPTION:
-      '500+ customers have visited and approved of the safety measures. All the safety equipments provided at the venue.',
+      "Any experience with this badge has been verified to follow the best safety standards as per the local government's health guidelines.",
     CTA_TEXT: 'Safety Details',
     BANNER_CTA: 'Know More',
     EXPERIENCE_DESCRIPTION:

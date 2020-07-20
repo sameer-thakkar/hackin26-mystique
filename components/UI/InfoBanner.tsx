@@ -9,6 +9,7 @@ export const StyledInfoBanner = styled.div`
   border-radius: 8px;
   justify-content: left;
   align-items: start;
+  ${({ clickable }) => (clickable ? `cursor: pointer;` : ``)}
   background: ${({ colorScheme: cs }) => cs.background};
   * {
     color: ${({ colorScheme: cs }) => cs.color};
@@ -57,11 +58,16 @@ const InfoBanner = ({
   description,
   cta,
   icon,
-  ctaOnClick,
+  ctaOnClick = null,
+  bannerOnClick = null,
   colorScheme,
 }) => {
   return (
-    <StyledInfoBanner colorScheme={colorScheme}>
+    <StyledInfoBanner
+      onClick={bannerOnClick}
+      clickable={bannerOnClick}
+      colorScheme={colorScheme}
+    >
       <Icon>{icon}</Icon>
       <Content>
         <Title>{title}</Title>

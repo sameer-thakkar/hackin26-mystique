@@ -404,7 +404,7 @@ export default class MicrositeV1 extends Component<any, any> {
     }
 
     const coverSlices = this.props.data.data.body4;
-    const tours = scorpioData;
+    const tours = scorpioData || {};
     const hasSafe = Object.values(tours).some((tour: any) =>
       isSafetyIncluded(tour.allTags)
     );

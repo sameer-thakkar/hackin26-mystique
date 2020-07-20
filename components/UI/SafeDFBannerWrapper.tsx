@@ -45,7 +45,7 @@ const SafeDFBannerWrapper = ({
             cta={labels[lang].LISTICLES.KNOW_MORE}
             title={labels[lang].SAFE_EXPERIENCE.HEADING}
             description={labels[lang].SAFE_EXPERIENCE.GENERAL_DESCRIPTION}
-            ctaOnClick={() => {
+            bannerOnClick={() => {
               addToAside({
                 width: '41.06vw',
                 children: [<SafeExperiencesPitch generic={true} key={0} />],
@@ -66,7 +66,7 @@ const SafeDFBannerWrapper = ({
               '<date>',
               dfExpiryDate?.format('DD-MMM-YY')
             )}
-            ctaOnClick={() => {
+            bannerOnClick={() => {
               addToAside({
                 width: '27.5vw',
                 children: [

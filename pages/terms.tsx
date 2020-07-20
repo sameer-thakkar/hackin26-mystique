@@ -119,7 +119,8 @@ export default class TermsPage extends Component<any, any> {
       response?.data?.footer_logo_alt ||
       response?.data?.footer_logo?.alt;
 
-    const themeOverride = footerTheme || THEMES.INHERIT;
+    const themeOverride =
+      footerTheme === THEMES.INHERIT ? mbTheme : footerTheme;
     const nakedDomain = useDomain ? getNakedDomain(host) : 'headout.com';
     return (
       <ThemeProvider theme={theme[mbTheme || THEMES.DEFAULT]}>

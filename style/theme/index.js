@@ -38,9 +38,29 @@ export default {
           font-weight: ${SOLEIL.REGULAR};
           font-size: 16px;
           line-height: 24px;
+          & p {
+            font-weight: ${SOLEIL.REGULAR};
+          }
+          ul {
+            margin-top: 0;
+          }
+          strong,
+          b {
+            font-size: 16px;
+            line-height: 24px;
+            display: block;
+            margin-bottom: 8px;
+            margin-top: 32px;
+          }
         `,
         mobile: `
-          line-height: 22px;
+          font-weight: ${SOLEIL.REGULAR};
+          font-size: 14px;
+          line-height: 20px;
+          strong,
+          b {
+            margin-top: 24px;
+          }
         `,
       },
       priceFontSettings: {

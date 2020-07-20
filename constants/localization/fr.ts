@@ -57,7 +57,7 @@ const fr = {
     SHORT_HEADING: 'Toutes les normes de sécurité et sanitaires en vigueur',
     MOBILE_HEADING: 'Expériences conformes aux normes sanitaires',
     GENERAL_DESCRIPTION:
-      'Plus de 500 clients ont visité ce lieu et approuvé les mesures de sécurité qui y sont appliquées. Tous les équipements de sécurité sont fournis sur place.',
+      "Any experience with this badge has been verified to follow the best safety standards as per the local government's health guidelines.",
     CTA_TEXT: 'Détails des mesures de sécurité et sanitaires',
     BANNER_CTA: 'En savoir plus',
     EXPERIENCE_DESCRIPTION:

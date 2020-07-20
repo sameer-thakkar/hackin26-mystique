@@ -31,6 +31,7 @@ const indexDomains = [
   'aerobus.barcelonatickets.co',
   'versailles-palace.paris-tickets.co',
   'www.alhambra-granada-tickets.com',
+  'www.alcazar-seville-tickets.com',
 ];
 
 export default class RobotsTxt extends Component {

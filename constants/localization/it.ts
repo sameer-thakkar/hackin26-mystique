@@ -59,7 +59,7 @@ const it = {
     SHORT_HEADING: 'I migliori standard di sicurezza in vigore',
     MOBILE_HEADING: 'Esperienze Sicure',
     GENERAL_DESCRIPTION:
-      "Oltre 500 clienti hanno approvato le misure di sicurezza di questa attività. Tutte le attrezzature di sicurezza vengono fornite alla sede dell'esperienza.",
+      "Any experience with this badge has been verified to follow the best safety standards as per the local government's health guidelines.",
     CTA_TEXT: 'Dettagli Sulla Sicurezza',
     BANNER_CTA: 'Leggi tutto',
     EXPERIENCE_DESCRIPTION:

@@ -133,7 +133,7 @@ export default class privacy extends Component<any, any> {
       'Headout';
 
     const themeOverride =
-      footerTheme === THEMES.INHERIT ? footerTheme : THEMES.DEFAULT;
+      footerTheme === THEMES.INHERIT ? mbTheme : footerTheme;
     const nakedDomain = useDomain ? getNakedDomain(host) : 'headout.com';
 
     return (

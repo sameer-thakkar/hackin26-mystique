@@ -1,11 +1,16 @@
 import styled from 'styled-components';
 import { COLORS, SIZES } from 'constants/ui-constants';
+import Conditional from './common/Conditional';
 
 const Banner = styled.div`
   padding: 40px 0;
   background: ${({ theme: { primaryBackground } }) =>
     primaryBackground ? primaryBackground : COLORS.WHITE};
   margin-bottom: 48px;
+  &:empty {
+    padding: 0;
+    background: none;
+  }
   h1 {
     color: ${({ theme: { primaryBGColor } }) =>
       primaryBGColor ? primaryBGColor : COLORS.WHITE};
@@ -31,9 +36,11 @@ const Wrapper = styled.div`
 const TextBanner = ({ bannerHeading }) => {
   return (
     <Banner>
-      <Wrapper>
-        <h1>{bannerHeading}</h1>
-      </Wrapper>
+      <Conditional if={!!bannerHeading}>
+        <Wrapper>
+          <h1>{bannerHeading}</h1>
+        </Wrapper>
+      </Conditional>
     </Banner>
   );
 };
