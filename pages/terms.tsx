@@ -127,7 +127,7 @@ export default class TermsPage extends Component<any, any> {
         <MBContextProvider
           host={host}
           uid={uid}
-          lang={'en'}
+          lang={'en-us'}
           microsite={{}}
           design={DESIGN.V1}
           mbTheme={mbTheme}

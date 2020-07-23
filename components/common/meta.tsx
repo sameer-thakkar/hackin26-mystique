@@ -3,7 +3,6 @@ import ReactHtmlParser from 'react-html-parser';
 import Head from 'next/head';
 import parse from 'url-parse';
 import { withoutTrailingSlash } from '../../utils/helper';
-import { THEMES } from 'constants/index';
 
 const withTrailingSlash = (url) =>
   url.charAt(url.length - 1) !== '/' ? `${url}/` : url;
@@ -106,27 +105,26 @@ const PopulateHead = (data) => {
     currentLanguage,
     originalHost,
     serverRequestStartTimestamp,
-    mbTheme,
   } = data;
 
   const isNonProd = isDev || originalHost.startsWith('stage.');
+  const isOnlineTicketsDomain = originalHost.includes('online-tickets.co');
 
-  const amplitude_key =
-    mbTheme === THEMES.MIN_BLUE
-      ? '93459bf7775fad2952497b5da071ad85'
-      : 'b85ab528e443294e83c98f9f1915c23b';
+  const amplitude_key = isOnlineTicketsDomain
+    ? '93459bf7775fad2952497b5da071ad85'
+    : 'b85ab528e443294e83c98f9f1915c23b';
 
-  const GTM_CONTAINER_ID =
-    mbTheme === THEMES.MIN_BLUE ? 'GTM-TS3V4HK' : 'GTM-5LJWNW3';
+  const GTM_CONTAINER_ID = isOnlineTicketsDomain
+    ? 'GTM-TS3V4HK'
+    : 'GTM-5LJWNW3';
   let GTM_AUTH = isNonProd
     ? 'psi3hURmBLey31qAhn7cPA'
     : 'ueaj9d1HgXEpkUp-zbbP0Q';
   let GTM_ENV = isNonProd ? 'env-27' : 'env-1';
-  GTM_AUTH = mbTheme === THEMES.MIN_BLUE ? null : `&gtm_auth=${GTM_AUTH}`;
-  GTM_ENV =
-    mbTheme === THEMES.MIN_BLUE
-      ? null
-      : `&gtm_preview=${GTM_ENV}&gtm_cookies_win=x`;
+  GTM_AUTH = isOnlineTicketsDomain ? null : `&gtm_auth=${GTM_AUTH}`;
+  GTM_ENV = isOnlineTicketsDomain
+    ? null
+    : `&gtm_preview=${GTM_ENV}&gtm_cookies_win=x`;
 
   const robotsContent = [];
   if (nofollow === 'True') {

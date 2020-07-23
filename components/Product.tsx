@@ -38,7 +38,7 @@ const StyledProductCard = styled.div`
   border-radius: 4px;
   display: grid;
   grid-row-gap: 24px;
-  grid-template-columns: auto 280px;
+  grid-template-columns: 1fr auto;
   grid-template-areas: ${({ layout }) =>
     layout.desktop.map((row) => `'${row}'`)};
   ${StlyedSplit} {
@@ -176,6 +176,7 @@ const CTABlock = styled.div`
   .tour-book-now-cta {
     margin: auto;
     min-width: 230px;
+    width: 100%;
     display: block;
     line-height: 1;
     svg {
@@ -436,8 +437,10 @@ const Product = (props) => {
   const { allTags, dfListingPrice } = scorpioData;
   if (isFetched && !listingPrice && !dfListingPrice) return null;
   const hasSafetyFlag = isSafetyIncluded(allTags);
-  const isDFProduct = isDiscountedFuture(allTags) && dfListingPrice;
-  const isDFOnlyProduct = listingPrice === null && dfListingPrice !== null;
+  const isDFProduct =
+    isFetched && isDiscountedFuture(allTags) && dfListingPrice;
+  const isDFOnlyProduct =
+    isFetched && listingPrice === null && dfListingPrice !== null;
   const openDFSidebar = () => {
     addToAside({
       width: '27.5vw',

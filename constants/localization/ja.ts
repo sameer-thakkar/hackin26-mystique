@@ -1,7 +1,7 @@
 import en from './en';
 
-const jp = {
+const ja = {
   ...en,
 };
 
-export default jp;
+export default ja;

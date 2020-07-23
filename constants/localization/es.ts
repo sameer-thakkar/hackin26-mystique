@@ -59,7 +59,7 @@ const es = {
     SHORT_HEADING: 'Los mejores estándares de seguridad en vigor',
     MOBILE_HEADING: 'Experiencias Seguras',
     GENERAL_DESCRIPTION:
-      "Any experience with this badge has been verified to follow the best safety standards as per the local government's health guidelines.",
+      'Cualquier experiencia con esta insignia ha sido verificada y cumple con los más estrictos estándares de seguridad impuestos por las autoridades sanitarias locales.',
     CTA_TEXT: 'Estándares de Seguridad',
     BANNER_CTA: 'Leer Más',
     EXPERIENCE_DESCRIPTION:

@@ -1,5 +1,6 @@
 import React, { createContext, useState } from 'react';
 import AsideModal from 'UI/AsideModal';
+import { getLangObject } from 'utils/helper';
 
 export const MBContext = createContext({
   uid: null,
@@ -49,7 +50,7 @@ export const MBContextProvider = (props) => {
     <MBContext.Provider
       value={{
         uid,
-        lang: lang.split('-')[0],
+        lang: getLangObject(lang).short,
         language_full: lang,
         nakedDomain,
         buttons: buttons,

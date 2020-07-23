@@ -59,7 +59,7 @@ const pt = {
     SHORT_HEADING: 'As melhores medidas de segurança em vigor',
     MOBILE_HEADING: 'Experiências seguras',
     GENERAL_DESCRIPTION:
-      "Any experience with this badge has been verified to follow the best safety standards as per the local government's health guidelines.",
+      'Qualquer experiência com este selo foi verificada e segue as melhores medidas de segurança de acordo com as diretrizes de saúde dos governos locais.',
     CTA_TEXT: 'Detalhes das medidas',
     BANNER_CTA: 'Saiba mais',
     EXPERIENCE_DESCRIPTION:

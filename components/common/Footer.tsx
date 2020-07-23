@@ -133,10 +133,8 @@ const FooterLegal = styled.div`
       img {
         height: 40px;
         max-width: 100%;
-        ${({ invertLogoColor, theme }) =>
-          invertLogoColor && theme === THEMES.DEFAULT
-            ? `filter: invert(1);`
-            : ''}
+        ${({ invertLogoColor }) =>
+          invertLogoColor ? `filter: invert(1);` : ''}
       }
       svg {
         height: 40px;
@@ -249,7 +247,11 @@ const Footer: React.FC<FooterProps> = ({
         ) : null}
         <FooterLegalWrapper>
           <Container>
-            <FooterLegal invertLogoColor={invertLogoColor}>
+            <FooterLegal
+              invertLogoColor={
+                invertLogoColor && finalThemeName === THEMES.DEFAULT
+              }
+            >
               <div className="logo-disclaimer">
                 <div className="logo-wrapper">
                   <Image url={logoURL} alt={logoAlt} />

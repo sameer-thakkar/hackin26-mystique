@@ -20,7 +20,7 @@ export const SUPPORTED_LANGUAGES = [
   'pt',
   'de',
   'nl',
-  'jp',
+  'ja',
   'tw',
   'cn',
 ];
@@ -33,7 +33,7 @@ export const SUPPORTED_LANGUAGES_MAP = {
   pt: 'pt-pt',
   nl: 'nl-nl',
   de: 'de-de',
-  jp: 'ja-jp',
+  ja: 'ja-jp',
   cn: 'zh-cn',
   tw: 'zh-tw',
 };
@@ -84,10 +84,10 @@ export const FULL_LANGUAGE_MAP = {
     paramLang: 'zh-tw',
     short: 'tw',
   },
-  jp: {
+  ja: {
     language: 'Japanese',
     paramLang: 'ja-jp',
-    short: 'jp',
+    short: 'ja',
   },
 };
 
@@ -101,10 +101,10 @@ export const PRISMIC_LANG_TO_ROUTE_PARAM = {
   'pt-pt': 'pt',
   'zh-cn': 'cn',
   'zh-tw': 'tw',
-  'ja-jp': 'jp',
+  'ja-jp': 'ja',
 };
 
-export const LANGUAGE_PARAMS_REGEX = /^(\/)?(en|fr|de|it|nl|pt|es|jp|tw|cn)(\/)?/;
+export const LANGUAGE_PARAMS_REGEX = /^(\/)?(en|fr|de|it|nl|pt|es|ja|tw|cn)(\/)?/;
 
 export const GROUP_TOUR_PREFERED_TOUR = [
   {
@@ -274,11 +274,12 @@ export const CURRENCY_SYMBOL_MAP = {
   CAD: 'CA$',
   NZD: 'NZ$',
   KRW: '₩',
-  CHF: 'CHF',
+  CHF: 'CHF ',
   JPY: '¥',
   THB: '฿',
   IDR: 'Rp',
   CNY: 'NT$',
+  TWD: 'NT$',
 };
 
 export const ALLOW_IMMEDIEATE_NESTING = true;

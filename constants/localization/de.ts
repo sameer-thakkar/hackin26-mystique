@@ -59,7 +59,7 @@ const de = {
     SHORT_HEADING: 'Beste Sicherheitsstandards vor Ort',
     MOBILE_HEADING: 'Sichere Erlebnisse',
     GENERAL_DESCRIPTION:
-      "Any experience with this badge has been verified to follow the best safety standards as per the local government's health guidelines.",
+      'Erlebnisse mit diesem Abzeichen halten nachweislich die besten Sicherheitsstandards gemäß den Gesundheitsrichtlinien der örtlichen Regierung ein.',
     CTA_TEXT: 'Sicherheitsvorkehrungen',
     BANNER_CTA: 'Weitere Infos',
     EXPERIENCE_DESCRIPTION:

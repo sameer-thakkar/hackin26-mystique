@@ -5,6 +5,8 @@ import fr from './fr';
 import it from './it';
 import nl from './nl';
 import pt from './pt';
-import jp from './jp';
+import ja from './ja';
+import cn from './cn';
+import tw from './tw';
 
-export { en, fr, de, it, nl, pt, es, jp };
+export { en, fr, de, it, nl, pt, es, ja, cn, tw };

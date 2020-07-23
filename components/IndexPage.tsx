@@ -249,9 +249,7 @@ export default class Page extends React.Component<any, any> {
                 baseLangData.data.footer_ref.id ||
                 '';
               const contentSectionId =
-                completeMicrosite.data.data.content_framework.id ||
-                baseLangData.data.content_framework.id ||
-                '';
+                completeMicrosite.data.data.content_framework.id || '';
               const commonHeaderId =
                 completeMicrosite.data.data.common_header_ref?.id ||
                 baseLangData.data.common_header_ref?.id ||
@@ -430,18 +428,20 @@ export default class Page extends React.Component<any, any> {
                   (ref) => ref.type === CUSTOM_TYPES.MICROSITE
                 )[0];
 
-                const filteredCommonHeader = {
-                  ...commonHeader,
-                  data: {
-                    ...commonHeader.data,
-                    enable_powered_by_superbrand_logo:
-                      commonHeader.data.enable_powered_by_headout,
-                  },
-                };
                 if (commonFooter?.data) {
                   commonFooter.data.powered_by_superbrand =
                     commonFooter.data.powered_by_headout;
                   delete commonFooter.data.powered_by_headout;
+                }
+                if (commonHeader?.data) {
+                  commonHeader.data.enable_powered_by_superbrand_logo =
+                    commonHeader.data.enable_powered_by_headout_logo;
+                  delete commonHeader.data.enable_powered_by_headout_logo;
+                }
+                if (micrositeData?.data) {
+                  micrositeData.data.enable_powered_by_superbrand_logo =
+                    micrositeData.data.enable_powered_by_headout_logo;
+                  delete micrositeData.data.enable_powered_by_headout_logo;
                 }
 
                 let completePage = {
@@ -449,7 +449,7 @@ export default class Page extends React.Component<any, any> {
                   data: {
                     ...page.data,
                     footer_ref: commonFooter,
-                    header_ref: filteredCommonHeader,
+                    header_ref: commonHeader,
                     content_framework: contentFramework,
                     microsite: micrositeData,
                   },

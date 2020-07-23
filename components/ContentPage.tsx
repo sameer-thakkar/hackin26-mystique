@@ -414,7 +414,7 @@ export default class ContentPage extends Component<any, any> {
 
     const hasPoweredByHeadoutLogo =
       commonHeader.data.enable_powered_by_superbrand_logo ||
-      microsite_document_ref.data.enable_powered_by_superbrand_logo;
+      microsite.data.enable_powered_by_superbrand_logo;
     const showGroupBooking = enableGroupBooking === 'Yes';
     const currentLanguage = getLangObject(lang).short;
     return (
