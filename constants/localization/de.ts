@@ -29,6 +29,7 @@ const de = {
   EARLIEST_AVAILABILITY: 'Früheste verfügbare',
   TODAY: 'Heute',
   TOMORROW: 'Morgen',
+  TICKETS: 'Tickets',
   LISTICLES: {
     SEATING_CHART: 'Saalplan',
     KNOW_MORE: 'Weitere Infos',

@@ -387,6 +387,8 @@ export default class ContentPage extends Component<any, any> {
       logo,
       logo_alt_text: logoAltText,
       header_links: headerLinks,
+      show_ticket_menu: showTicketMenu,
+      hide_locales_content_page: hideLangugageDropdown,
     } = commonHeader.data;
 
     const {
@@ -447,6 +449,8 @@ export default class ContentPage extends Component<any, any> {
         <Header
           languages={localization}
           headerLinks={headerLinks}
+          showTicketMenu={showTicketMenu}
+          hideLangugageDropdown={hideLangugageDropdown}
           currentLanguage={currentLanguage}
           logoUrl={logo.url}
           logoAltText={logoAltText || logo.alt || ''}

@@ -29,6 +29,7 @@ const es = {
   EARLIEST_AVAILABILITY: 'Siguiente Disponible',
   TODAY: 'Hoy',
   TOMORROW: 'Mañana',
+  TICKETS: 'Entradas',
   LISTICLES: {
     SEATING_CHART: 'Plano de Asientos',
     KNOW_MORE: 'Leer Más',

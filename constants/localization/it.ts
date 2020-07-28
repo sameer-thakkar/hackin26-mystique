@@ -29,6 +29,7 @@ const it = {
   EARLIEST_AVAILABILITY: 'Prima Disponibilità',
   TODAY: 'Oggi',
   TOMORROW: 'Domani',
+  TICKETS: 'Biglietti',
   LISTICLES: {
     SEATING_CHART: 'Mappa dei Posti a Sedere',
     KNOW_MORE: 'Altre Informazioni',

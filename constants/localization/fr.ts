@@ -28,6 +28,7 @@ const fr = {
   EARLIEST_AVAILABILITY: 'Disponibilité la Plus Tôt',
   TODAY: "Aujourd'hui",
   TOMORROW: 'Demain',
+  TICKETS: 'Billets',
   LISTICLES: {
     SEATING_CHART: 'Plan de la salle',
     KNOW_MORE: 'En savoir plus',

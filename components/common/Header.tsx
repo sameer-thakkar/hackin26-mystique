@@ -11,6 +11,7 @@ import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import { POWERED_BY_HEADOUT } from 'assets/SvgIcons';
 import { SOLEIL, COLORS } from 'constants/ui-constants';
 import { MBContext } from 'contexts/MBContext';
+import Conditional from './Conditional';
 
 const StyledHeader = styled.header`
   height: 80px;
@@ -104,7 +105,18 @@ const StyledBuyTickets = styled.div`
   margin-left: 32px;
   font-size: 16px;
   font-family: ${SOLEIL.FONT_STACK};
-  color: ${COLORS.RHAPSODY};
+  color: ${({ color }) => color || COLORS.RHAPSODY};
+  text-decoration: none;
+  cursor: pointer;
+  @media (max-width: 768px) {
+    margin-left: 16px;
+  }
+`;
+const StyledMenuItem = styled.div`
+  margin-left: 32px;
+  font-size: 16px;
+  font-family: ${SOLEIL.FONT_STACK};
+  color: ${({ theme }) => theme.primaryBGText || COLORS.FOUR_BLACK};
   text-decoration: none;
   cursor: pointer;
   @media (max-width: 768px) {
@@ -130,6 +142,8 @@ const Header: React.FC<any> = (props) => {
     hasPoweredByHeadoutLogo,
     openGroupBookingModal,
     slices = [],
+    showTicketMenu,
+    hideLangugageDropdown,
   } = props;
   const hamburgerIconCheck =
     showGroupBooking || !!headerLinks?.length || slices.length;
@@ -230,7 +244,12 @@ const Header: React.FC<any> = (props) => {
               {labels[currentLanguage].BANNER_CTA}
             </StyledBuyTickets>
           ) : null}
-          {hasLanguageSelector === 'Yes' ? (
+          <Conditional if={showTicketMenu}>
+            <StyledMenuItem as="a" href={logoRedirectionURL}>
+              {labels[currentLanguage].TICKETS}
+            </StyledMenuItem>
+          </Conditional>
+          {hasLanguageSelector === 'Yes' && !hideLangugageDropdown ? (
             <LanguageSelector
               languages={languages}
               currentLanguage={currentLanguage}

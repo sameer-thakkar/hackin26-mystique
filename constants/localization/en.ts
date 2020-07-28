@@ -27,6 +27,7 @@ const en = {
   TODAY: 'Today',
   TOMORROW: 'Tomorrow',
   MORE_FROM: 'More from',
+  TICKETS: 'Tickets',
   LISTICLES: {
     SEATING_CHART: 'Seating Chart',
     KNOW_MORE: 'Know More',
