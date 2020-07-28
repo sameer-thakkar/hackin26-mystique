@@ -137,7 +137,7 @@ export default class privacy extends Component<any, any> {
     const nakedDomain = useDomain ? getNakedDomain(host) : 'headout.com';
 
     return (
-      <ThemeProvider theme={theme[mbTheme]}>
+      <ThemeProvider theme={theme[mbTheme || THEMES.DEFAULT]}>
         <MBContextProvider
           host={host}
           uid={uid}
@@ -487,7 +487,7 @@ export default class privacy extends Component<any, any> {
             showDisclaimer={commonFooter?.data?.show_disclaimer}
             disclaimerText={commonFooter?.data?.disclaimer_text}
             slices={[]}
-            themeOverride={themeOverride}
+            themeOverride={themeOverride || THEMES.DEFAULT}
           />
         </MBContextProvider>
       </ThemeProvider>

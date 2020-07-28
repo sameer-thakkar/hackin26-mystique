@@ -52,7 +52,7 @@ const Controls = styled.div`
     transform: translateY(-50%);
     left: -20px;
     cursor: pointer;
-    z-index: 5;
+    z-index: 2;
     svg {
       fill: #fff;
       circle {

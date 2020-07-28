@@ -65,15 +65,6 @@ const StyledTourComparisionTable = styled.div`
         : ``}
     grid-column-gap: 8px;
   }
-  .cta-table-wrap .row {
-    background: ${COLORS.WHITE};
-    padding-top: 32px;
-    padding-bottom: 32px;
-    margin-bottom: -32px; /* This allows the Sticky Header to end early. without crossing over the CTA button. */
-    position: sticky;
-    bottom: 0;
-    z-index: 15;
-  }
   .row {
     display: grid;
     grid-auto-flow: column;
@@ -94,6 +85,15 @@ const StyledTourComparisionTable = styled.div`
     `
         : ``}
   }
+  .cta-table-wrap .row {
+    background: ${COLORS.WHITE};
+    padding-top: 32px;
+    padding-bottom: 32px;
+    margin-bottom: -32px; /* This allows the Sticky Header to end early. without crossing over the CTA button. */
+    position: sticky;
+    bottom: 0;
+    z-index: 15;
+  }
   .tour-booster {
     align-self: end;
     justify-self: end;
@@ -112,6 +112,7 @@ const StyledTourComparisionTable = styled.div`
     text-decoration: line-through;
   }
   ${StyledPriceBlock} {
+    justify-content: left;
     .tour-price {
       font-size: 16px;
       font-family: ${SOLEIL.FONT_STACK};
@@ -129,6 +130,7 @@ const StyledTourComparisionTable = styled.div`
       font-family: ${SOLEIL.FONT_STACK};
       margin-left: 0;
       color: ${COLORS.FOUR_BLACK};
+      grid-column: unset;
     }
   }
   

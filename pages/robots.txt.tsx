@@ -29,7 +29,6 @@ const indexDomains = [
   'parkguell.barcelonatickets.co',
   'camp-nou.barcelonatickets.co',
   'aerobus.barcelonatickets.co',
-  'versailles-palace.paris-tickets.co',
   'www.alhambra-granada-tickets.com',
   'www.alcazar-seville-tickets.com',
 ];

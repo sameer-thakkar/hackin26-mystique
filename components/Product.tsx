@@ -61,7 +61,6 @@ const StyledProductCard = styled.div`
     ${({ theme }) => theme.productCards.moreDetailsStyle}
   }
   @media (max-width: 768px) {
-    grid-row-gap: 16px;
     padding: ${({ theme }) => theme.productCards.padding.mobile};
     margin: 0
       ${({ theme: { theme } }) => (theme === THEMES.DEFAULT ? '16px' : '24px')};
@@ -98,6 +97,7 @@ const TourTitle = styled.h2`
 const TourTags = styled.div`
   grid-area: tags;
   font-size: 14px;
+  margin-top: -8px;
   font-weight: ${SOLEIL.MEDIUM};
   display: grid;
   display: flex;
@@ -191,6 +191,7 @@ const CTABlock = styled.div`
   }
   @media (max-width: 768px) {
     grid-area: cta-block;
+    margin-top: 8px;
     ${({ isSticky, shouldOffset }) =>
       isSticky
         ? `
@@ -248,6 +249,9 @@ const ProductBody = styled.div`
         ? `
         p:nth-child(1) {
           display: none;
+        }
+        strong {
+          margin-top: 0 !important;
         }
         ul {
           li:nth-child(n + 2) {

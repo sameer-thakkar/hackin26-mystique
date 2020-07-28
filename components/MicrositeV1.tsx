@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import dayjs from 'dayjs';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { scroller } from 'react-scroll';
@@ -28,6 +29,8 @@ import SafeDFBannerWrapper from 'UI/SafeDFBannerWrapper';
 import { isSafetyIncluded, getDFValidityFromTags } from 'utils';
 import TextBanner from './TextBanner';
 import Conditional from './common/Conditional';
+import { ResponsiveSelector } from './MicrositeV2/ResponsiveSelector';
+import { LOCATION } from 'assets/SvgIcons';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
@@ -236,7 +239,6 @@ export default class MicrositeV1 extends Component<any, any> {
     const { contentFramework } = refs;
     const {
       localization,
-      header_links: headerLinks,
       images: bannerImages,
       heading: bannerHeading,
       cta_text: bannerCtaText,
@@ -296,9 +298,20 @@ export default class MicrositeV1 extends Component<any, any> {
       group_form_blocked_days: blockedDays,
       group_booking_disclaimer: groupBookingDisclaimer,
       body: headerSlices,
+      header_links: headerLinks,
+      enable_dropdown: enableDropdownLinks,
+      dropdown_menu,
     } = withCommonHeaderOverrides;
     const { url: logoUrl } = linkedLogo;
     const { url: uploadedLogoUrl, alt: altText } = uploadedLogo;
+    const dropdownLinks =
+      dropdown_menu?.reduce((acc, item) => {
+        if (item.link)
+          return [...acc, { value: item.link.url, label: item.link_text }];
+        else return acc;
+      }, []) || [];
+    const hasDropdownLinks =
+      enableDropdownLinks === 'Yes' && dropdownLinks.length;
 
     const showGroupBooking = enableGroupBooking === 'Yes';
     const { results: productOffer } = this.props.offerData
@@ -409,9 +422,10 @@ export default class MicrositeV1 extends Component<any, any> {
       isSafetyIncluded(tour.allTags)
     );
     const [dfExpiryDate, ..._others] = Object.values(tours)
+      .filter((tour: any) => tour && tour.dfListingPrice)
       .map((tour: any) => getDFValidityFromTags(tour.allTags))
-      .sort()
-      .filter((d) => d);
+      .filter((d) => d)
+      .sort((a, b) => (dayjs(a).isAfter(b) ? -1 : 1));
     return (
       <div>
         <div className="microsite-container">
@@ -460,6 +474,8 @@ export default class MicrositeV1 extends Component<any, any> {
             host={host}
             hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo}
             slices={groupSlices(headerSlices || [], ALLOW_IMMEDIEATE_NESTING)}
+            dropdownLinks={dropdownLinks}
+            hasDropdownLinks={hasDropdownLinks}
           />
           {showCovid19Alert && this.state.covid19AlertOpen ? (
             <DismissAlert
@@ -469,6 +485,22 @@ export default class MicrositeV1 extends Component<any, any> {
               text={labels[currentLanguage].COVID19_ALERT.TEXT}
               handleClose={this.handleClose}
             />
+          ) : null}
+          {this.state.isMobile && hasDropdownLinks ? (
+            <div className="main-wrapper city-selector">
+              <ResponsiveSelector
+                options={dropdownLinks}
+                host={host}
+                isMobile={this.state.isMobile}
+                onChange={(option) => {
+                  window.location.href = option.value;
+                }}
+                iconPosition={'left'}
+                icon={LOCATION}
+                addPadding={true}
+                toggleIcon={false}
+              />
+            </div>
           ) : null}
           <Conditional if={mbTheme === THEMES.DEFAULT}>
             <Banner

@@ -35,12 +35,12 @@ export const StyledPriceBlock = styled.div`
 
 const SavedTag = styled.div`
   padding: 4px 8px;
-  text-transform: uppercase;
+  text-transform: ${({ theme }) =>
+    theme.theme === THEMES.DEFAULT ? 'uppercase' : 'initial'};
   background: ${({ theme }) =>
     theme.theme === THEMES.DEFAULT ? 'transparent' : '#dbfddb'};
   color: ${({ theme }) =>
     theme.theme === THEMES.DEFAULT ? theme.primaryText : '#34a853'};
-  color: ${({ theme }) => theme.primaryText};
   font-size: 12px;
   line-height: 16px;
   font-style: normal;

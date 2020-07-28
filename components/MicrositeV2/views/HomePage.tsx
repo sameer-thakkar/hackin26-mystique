@@ -20,6 +20,7 @@ import Conditional from 'components/common/Conditional';
 import TextBanner from 'components/TextBanner';
 import { MBContext } from 'contexts/MBContext';
 import { THEMES } from 'constants/index';
+import dayjs from 'dayjs';
 
 const V2MicrositeWrapper = styled.div`
   .alert-wrapper {
@@ -96,9 +97,10 @@ export const HomePage = (props) => {
     isSafetyIncluded(tour.allTags)
   );
   const [dfExpiryDate, ..._others] = Object.values(allTours)
+    .filter((tour: any) => tour && tour.dfListingPrice)
     .map((tour: any) => getDFValidityFromTags(tour.allTags))
-    .sort()
-    .filter((d) => d);
+    .filter((d) => d)
+    .sort((a, b) => (dayjs(a).isAfter(b) ? -1 : 1));
   return (
     <V2MicrositeWrapper>
       <Header

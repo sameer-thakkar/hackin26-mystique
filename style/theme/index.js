@@ -6,10 +6,11 @@ export default {
     theme: THEMES.DEFAULT,
     primaryColor: COLORS.RHAPSODY,
     primaryBackground: COLORS.WHITE,
+    primaryBGText: COLORS.FOUR_BLACK,
     cardAccent: COLORS.TEAL,
     productCards: {
       padding: {
-        desktop: '32px 24px',
+        desktop: '24px',
         mobile: ' 24px 16px',
       },
       overlayBoosterStyles: `
@@ -103,7 +104,7 @@ export default {
     footer: {
       background: COLORS.BLACK,
       color: COLORS.WHITE,
-      headingColor: COLORS.FOUR_BLACK,
+      headingColor: COLORS.WHITE,
       secondaryBackground: COLORS.WHITE,
       secondaryColor: COLORS.BEACH,
     },

@@ -11,6 +11,7 @@ import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import { POWERED_BY_HEADOUT } from 'assets/SvgIcons';
 import { SOLEIL, COLORS } from 'constants/ui-constants';
 import { MBContext } from 'contexts/MBContext';
+import { ResponsiveSelector } from 'components/MicrositeV2/ResponsiveSelector';
 import Conditional from './Conditional';
 
 const StyledHeader = styled.header`
@@ -39,10 +40,25 @@ const StyledHeaderContainer = styled.div`
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: auto;
+  ${({ hasDropdownLinks }) =>
+    hasDropdownLinks
+      ? ` 
+      grid-template-columns: auto auto 1fr;
+      grid-column-gap: 24px;
+    `
+      : ``}
   width: 100%;
   max-width: 1200px;
   margin: auto;
   align-items: center;
+  .header-city-selector {
+    min-width: 180px;
+  }
+  .header-city-selector .current-selection {
+    border-radius: 4px;
+    padding: 12px 15px;
+    border: 1px solid ${({ theme }) => theme.primaryBGColor || COLORS.DADDY};
+  }
   @media (max-width: 768px) {
     height: 56px;
   }
@@ -142,6 +158,8 @@ const Header: React.FC<any> = (props) => {
     hasPoweredByHeadoutLogo,
     openGroupBookingModal,
     slices = [],
+    hasDropdownLinks,
+    dropdownLinks,
     showTicketMenu,
     hideLangugageDropdown,
   } = props;
@@ -189,13 +207,22 @@ const Header: React.FC<any> = (props) => {
   }, [scrollPos]);
   return (
     <StyledHeader hasShadow={scrollPos > 60}>
-      <StyledHeaderContainer>
+      <StyledHeaderContainer hasDropdownLinks={!isMobile && hasDropdownLinks}>
         <a href={logoRedirectionURL}>
           <StyledLogo>
             <Image url={logoUrl} alt={logoAltText} dontLazyLoad={true} />
             {hasPoweredByHeadoutLogo ? POWERED_BY_HEADOUT : null}
           </StyledLogo>
         </a>
+        {!isMobile && hasDropdownLinks ? (
+          <div className="header-links">
+            <ResponsiveSelector
+              options={dropdownLinks}
+              onChange={(option) => (window.location.href = option.value)}
+              customClassName="header-city-selector"
+            />
+          </div>
+        ) : null}
         <StyledHeaderElements active={hamburgerIconCheck}>
           <div ref={hamburgerRef}>
             {isMobile && hamburgerIconCheck ? (

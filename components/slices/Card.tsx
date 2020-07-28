@@ -110,17 +110,19 @@ width: max-content;
 `;
 
 const CTALink = styled.a`
-  color: ${COLORS.RHAPSODY} !important;
+  color: ${({ theme }) => theme.primaryColor} !important;
   font-weight: ${SOLEIL.SEMIBOLD};
   font-family: ${SOLEIL.FONT_STACK};
   display: block;
   margin 24px 0 16px 0 !important;
   svg {
-    opacity: 0.5;
+    margin-left: 4px;
     transform: rotate(180deg);
-    height: 10px;
+    height: 11px;
+    width: 11px;
     path {
-      stroke-width: 5px;
+      stroke-width: 4px;
+      stroke: ${({ theme }) => theme.primaryColor};
     }
   }
   @media (max-width: 768px) {

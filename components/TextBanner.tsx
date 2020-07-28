@@ -16,7 +16,7 @@ const Banner = styled.div`
       primaryBGColor ? primaryBGColor : COLORS.WHITE};
     margin: 0;
     font-size: 24px;
-    width: 320px;
+    max-width: 420px;
   }
   @media (max-width: 768px) {
     padding: 40px 16px;

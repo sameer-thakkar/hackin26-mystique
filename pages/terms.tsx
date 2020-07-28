@@ -461,7 +461,7 @@ export default class TermsPage extends Component<any, any> {
             showDisclaimer={commonFooter?.data?.show_disclaimer}
             disclaimerText={commonFooter?.data?.disclaimer_text}
             slices={[]}
-            themeOverride={themeOverride}
+            themeOverride={themeOverride || THEMES.DEFAULT}
           />
         </MBContextProvider>
       </ThemeProvider>
