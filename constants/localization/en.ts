@@ -174,13 +174,13 @@ const en = {
       WORKING: {
         QUESTION: 'What is the “Book Now, Go whenever” option?',
         ANSWER:
-          'Headout now allows you the comfort of booking your favourite experiences, attractions, entertainment tickets without committing to the date and time. You can now buy the eligible products on Headout.com and choose to visit or consume the experience at any future date till 31st December 2021 as per your convenience. All products under this option are at special discounts. Once you are ready to travel and experience the products purchased - you can "Exercise" the booking by choosing a specific date & time slot for the same via Headout.com.',
+          '<mbName> now allows you the comfort of booking your favourite experiences, attractions, entertainment tickets without committing to the date and time. You can now buy the eligible products on <domain> and choose to visit or consume the experience at any future date till 31st December 2021 as per your convenience. All products under this option are at special discounts. Once you are ready to travel and experience the products purchased - you can "Exercise" the booking by choosing a specific date & time slot for the same via <domain>.',
       },
       DATE_TIME: {
         QUESTION:
-          'How can I buy or use the “Book Now, Go whenever” option on Headout.com? Which products are eligible under this option?',
+          'How can I buy or use the “Book Now, Go whenever” option on <domain>? Which products are eligible under this option?',
         ANSWER:
-          "For eligible products on Headout.com, you can choose the option of “Book Now, Go whenever” on the website. You don't have to select the date & time of visit right away, you can choose any time & date as per your convenience at a later date.",
+          "For eligible products on <domain>, you can choose the option of “Book Now, Go whenever” on the website. You don't have to select the date & time of visit right away, you can choose any time & date as per your convenience at a later date.",
       },
       USAGE: {
         QUESTION:
@@ -198,7 +198,7 @@ const en = {
           'Are there any restrictions or limits on purchase or use of the futures? ',
         ANSWER: [
           'Any discount coupon/ code will not be applicable for “futures” purchases.',
-          'Cashback or headout credits in your Headout wallet can not be used to book/ purchase any experience under Futures/ Reserve for later scheme. ',
+          'Cashback or <mbName> credits in your <mbName> wallet can not be used to book/ purchase any experience under Futures/ Reserve for later scheme. ',
           'Once you exercise the futures booking by choosing a date & time for such booking, you can not amend or cancel the booking. Exercised futures will not be eligible for any refund as well.',
         ],
       },
@@ -207,7 +207,7 @@ const en = {
           'Are there any restrictions or limits on purchase or use of the “Book Now, Go whenever” bookings?',
         ANSWER: [
           'Any discount coupon/ code will not be applicable for “Book Now, Go whenever” purchases.',
-          'Cashback or headout credits in your Headout wallet can not be used to book/ purchase any experience under the “Book Now, Go whenever” option.',
+          'Cashback or <mbName> credits in your <mbName> wallet can not be used to book/ purchase any experience under the “Book Now, Go whenever” option.',
           'Once you exercise this booking by choosing a date & time for such booking, you can not amend or cancel the booking. Exercised bookings will not be eligible for any refund as well.',
         ],
       },
@@ -234,7 +234,7 @@ const en = {
       REDEEM: {
         HEADING: 'Redeem and reserve whenever you are ready',
         SUB_TEXT:
-          'You are in complete control and can reserve your slot on Headout when your plans are firm.',
+          'You are in complete control and can reserve your slot on <mbName> when your plans are firm.',
       },
     },
     PITCH: {

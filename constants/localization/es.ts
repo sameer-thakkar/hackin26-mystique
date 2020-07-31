@@ -186,13 +186,13 @@ const es = {
       WORKING: {
         QUESTION: '¿Qué significa la opción "Reserva Flexible"?',
         ANSWER:
-          'En Headout te brindamos la posibilidad de reservar tus experiencias, atracciones y entradas para tus espectáculos favoritos sin tener que preocuparte por fijar una fecha y una hora. Ahora puedes comprar los productos elegibles en Headout.com y decidir si quieres visitar o disfrutar de la experiencia en cualquier fecha futura hasta el 31 de diciembre de 2021, según te resulte más conveniente. Además, todos los productos incluidos en esta opción tienen descuentos especiales. Una vez que estés listo para viajar y disfrutar de los productos que hayas comprado, puedes "usar" tu reserva eligiendo una fecha y hora específica a través de Headout.com.',
+          'En <mbName> te brindamos la posibilidad de reservar tus experiencias, atracciones y entradas para tus espectáculos favoritos sin tener que preocuparte por fijar una fecha y una hora. Ahora puedes comprar los productos elegibles en <domain> y decidir si quieres visitar o disfrutar de la experiencia en cualquier fecha futura hasta el 31 de diciembre de 2021, según te resulte más conveniente. Además, todos los productos incluidos en esta opción tienen descuentos especiales. Una vez que estés listo para viajar y disfrutar de los productos que hayas comprado, puedes "usar" tu reserva eligiendo una fecha y hora específica a través de <domain>.',
       },
       DATE_TIME: {
         QUESTION:
-          '¿Cómo puedo comprar o usar la opción de "Reserva Flexible" en Headout.com? ¿Qué productos son elegibles para una "Reserva Flexible"? ',
+          '¿Cómo puedo comprar o usar la opción de "Reserva Flexible" en <domain>? ¿Qué productos son elegibles para una "Reserva Flexible"? ',
         ANSWER:
-          'Para aquellos productos elegibles en Headout.com, puedes seleccionar la opción de "Reserva Flexible" directamente en el sitio web. No tienes que seleccionar la fecha y hora de la visita de inmediato, puedes elegir cualquier fecha y hora según tu conveniencia.',
+          'Para aquellos productos elegibles en <domain>, puedes seleccionar la opción de "Reserva Flexible" directamente en el sitio web. No tienes que seleccionar la fecha y hora de la visita de inmediato, puedes elegir cualquier fecha y hora según tu conveniencia.',
       },
       USAGE: {
         QUESTION:
@@ -211,7 +211,7 @@ const es = {
           '¿Hay alguna restricción o límite en la compra o uso de la opción "Reserva Flexible"? ',
         ANSWER: [
           'Cualquier cupón/código de descuento no será aplicable para las compras mediante la opción "Reserva Flexible".',
-          'Los créditos Headout bonificados en tu cartera Headout no pueden ser usados para reservar/comprar ninguna experiencia mediante la opción "Reserva Flexible".',
+          'Los créditos <mbName> bonificados en tu cartera <mbName> no pueden ser usados para reservar/comprar ninguna experiencia mediante la opción "Reserva Flexible".',
           'Una vez que "uses" esta reserva, esto es, cuando elijas la fecha y hora para dicha reserva, no podrás modificar o cancelar la reserva. Las reservas ejercidas no serán elegibles para reembolso.',
         ],
       },
@@ -229,7 +229,7 @@ const es = {
       PICK: {
         HEADING: 'Elige la experiencia que siempre has deseado',
         SUB_TEXT:
-          'Todos tenemos un lugar al que siempre hemos soñado ir. En Headout estamos seguros que los próximos años serán el mejor momento para que esto suceda, ¡así que hagámoslo realidad!',
+          'Todos tenemos un lugar al que siempre hemos soñado ir. En <mbName> estamos seguros que los próximos años serán el mejor momento para que esto suceda, ¡así que hagámoslo realidad!',
       },
       VOUCHER: {
         HEADING: 'Compra tu vale',
@@ -239,7 +239,7 @@ const es = {
       REDEEM: {
         HEADING: 'Canjea el vale y reserva la experiencia cuando estés listo',
         SUB_TEXT:
-          'Con estos vales, tienes el control total y puedes reservar en Headout cuando planees tu viaje.',
+          'Con estos vales, tienes el control total y puedes reservar en <mbName> cuando planees tu viaje.',
       },
     },
     PITCH: {
@@ -256,7 +256,7 @@ const es = {
       BUCKET_LIST: {
         HEADING: 'Descubre los lugares que siempre has soñado',
         SUB_TEXT:
-          'Todos tenemos un lugar al que siempre hemos soñado ir. En Headout estamos seguros que los próximos años serán el mejor momento para que esto suceda, ¡así que hagámoslo realidad!',
+          'Todos tenemos un lugar al que siempre hemos soñado ir. En <mbName> estamos seguros que los próximos años serán el mejor momento para que esto suceda, ¡así que hagámoslo realidad!',
       },
     },
     IMAGES_SECTION: {

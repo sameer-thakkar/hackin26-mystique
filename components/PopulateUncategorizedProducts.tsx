@@ -81,7 +81,6 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
     const {
       uncategorizedTours: tours,
       tourPrices,
-      currencySymbol,
       uid,
       currentLanguage,
       bookNowText,
@@ -135,7 +134,6 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
                 highlights={tour.tour_description_override}
                 scorpioData={scorpioData[tour.tgid]}
                 tourPrices={tourPrices}
-                currencySymbol={currencySymbol}
                 uid={uid}
                 currentLanguage={currentLanguage}
                 bookNowText={bookNowText}

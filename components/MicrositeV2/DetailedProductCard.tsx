@@ -3,7 +3,7 @@ import Image from 'UI/Image';
 import * as labels from 'constants/localization/labels';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
-import { CLOSE_WHITE, BrownTicket, BorderedShield } from 'assets/SvgIcons';
+import { CLOSE_WHITE, BrownTicket, Shield } from 'assets/SvgIcons';
 import { SOLEIL, COLORS } from 'constants/ui-constants';
 import {
   shortCodeSerializerWithParentProps,
@@ -15,8 +15,13 @@ import { brownScheme, greenScheme } from 'style/theme';
 import Split, { StlyedSplit } from 'UI/Split';
 import DiscountedFutureSidebar from 'components/DiscountedFutureSidebar';
 import SafeExperiencesPitch from 'UI/SafeExperiencesPitch';
-import { isSafetyIncluded, isDiscountedFuture } from 'utils';
+import {
+  isSafetyIncluded,
+  isDiscountedFuture,
+  getDFValidityFromTags,
+} from 'utils';
 import PriceBlock from 'UI/PriceBlock';
+import DiscountedFuturesPitch from 'UI/DiscountedFuturesPitch';
 
 const DetailedDescriptionCard = styled.div`
   grid-column: 1 / 5;
@@ -332,6 +337,17 @@ const DetailedProductCard = (props) => {
       children: <DiscountedFutureSidebar product={activeTour} />,
     });
   };
+  const openDFPitchSidebar = () => {
+    addToAside({
+      width: '27.5vw',
+      children: (
+        <DiscountedFuturesPitch
+          dfExpiryDate={getDFValidityFromTags(allTags).format('DD-MMM-YY')}
+        />
+      ),
+      sidePadding: 40,
+    });
+  };
   const openSafeSidebar = () => {
     addToAside({
       width: '41.06vw',
@@ -358,14 +374,14 @@ const DetailedProductCard = (props) => {
                   text={labels[lang].SAFE_EXPERIENCE.FLAG_TEXT}
                   colorScheme={greenScheme}
                   ctaOnClick={openSafeSidebar}
-                  icon={BorderedShield}
+                  icon={Shield}
                 />
               ) : null}
               {isDFProduct ? (
                 <IconCTA
                   text={labels[lang].DISCOUNTED_FUTURES.FLAG_TEXT}
                   colorScheme={brownScheme}
-                  ctaOnClick={openDFSidebar}
+                  ctaOnClick={openDFPitchSidebar}
                   icon={BrownTicket}
                 />
               ) : null}

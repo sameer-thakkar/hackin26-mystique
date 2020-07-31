@@ -153,7 +153,8 @@ const CategorySlider = (props) => {
   };
 
   const cardPosition = filteredTgids.indexOf(tgidClicked) + 1;
-  const elementId = heading?.trim().replace(/\s/g, '-').toLowerCase();
+  const elementId =
+    heading?.trim().replace(/\s/g, '-').toLowerCase() || filteredTgids[0];
 
   useEffect(() => {
     if (!window) return;

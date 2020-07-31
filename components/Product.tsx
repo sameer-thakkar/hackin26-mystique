@@ -15,13 +15,18 @@ import 'utils/dayjsLocale';
 import Split, { StlyedSplit } from 'UI/Split';
 import IconCTA from 'UI/IconCTA';
 import { brownScheme, greenScheme } from 'style/theme';
-import { isDiscountedFuture, isSafetyIncluded } from 'utils';
+import {
+  isDiscountedFuture,
+  isSafetyIncluded,
+  getDFValidityFromTags,
+} from 'utils';
 import { MBContext } from 'contexts/MBContext';
 import DiscountedFutureSidebar from './DiscountedFutureSidebar';
 import SafeExperiencesPitch from 'UI/SafeExperiencesPitch';
 import PriceBlock from 'UI/PriceBlock';
 import Conditional from './common/Conditional';
 import Chevron from 'UI/Chevron';
+import DiscountedFuturesPitch from 'UI/DiscountedFuturesPitch';
 
 const isLengthyArray = (item) => Array.isArray(item) && item.length;
 
@@ -213,6 +218,7 @@ const CTABlock = styled.div`
 const ProductBody = styled.div`
   grid-area: body;
   display: grid;
+  overflow-anchor: none;
   .tour-description {
     p {
       margin: 0;
@@ -465,6 +471,16 @@ const Product = (props) => {
       sidePadding: isMobile ? 0 : 40,
     });
   };
+  const openDFPitchSidebar = () => {
+    addToAside({
+      width: '27.5vw',
+      children: (
+        <DiscountedFuturesPitch
+          dfExpiryDate={getDFValidityFromTags(allTags).format('DD-MMM-YY')}
+        />
+      ),
+    });
+  };
   const hasV1Booster = booster && RichText.asText(booster).trim().length > 0;
   const hasOffer = isOfferEnabled && offerId;
 
@@ -475,6 +491,7 @@ const Product = (props) => {
       (hasSafetyFlag || isDFProduct) && 'icon-booster cta-combo',
       hasOffer && 'offer cta-combo',
       hasV1Booster && 'booster cta-combo',
+      (!hasOffer || !hasV1Booster) && '. cta-combo',
       'line line',
       mbTheme === THEMES.MIN_BLUE && 'tags tags',
       'body body',
@@ -556,7 +573,7 @@ const Product = (props) => {
                   <IconCTA
                     text={labels[currentLanguage].DISCOUNTED_FUTURES.FLAG_TEXT}
                     colorScheme={brownScheme}
-                    ctaOnClick={openDFSidebar}
+                    ctaOnClick={openDFPitchSidebar}
                     icon={BrownTicket}
                   />
                 ) : null}

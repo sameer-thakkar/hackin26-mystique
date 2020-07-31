@@ -58,7 +58,7 @@ const fr = {
     SHORT_HEADING: 'Toutes les normes de sécurité et sanitaires en vigueur',
     MOBILE_HEADING: 'Expériences conformes aux normes sanitaires',
     GENERAL_DESCRIPTION:
-      "Any experience with this badge has been verified to follow the best safety standards as per the local government's health guidelines.",
+      'Toute expérience affichant ce badge a été vérifiée et est conforme aux normes de sécurité établies par les autorités locales en matière de santé',
     CTA_TEXT: 'Détails des mesures de sécurité et sanitaires',
     BANNER_CTA: 'En savoir plus',
     EXPERIENCE_DESCRIPTION:
@@ -67,7 +67,7 @@ const fr = {
     MODAL: {
       HEADING: 'Expériences conformes aux normes sanitaires',
       SUB_HEADING:
-        "Headout collabore avec ses partenaires dans le monde entier pour appliquer les normes de sécurité et sanitaires conformément aux directives de l'OMS. Toutes les mesures prises sur le terrain ont été vérifiées et sont indiquées ici. Il est grand temps de profiter à nouveau du monde qui nous entoure.",
+        "collabore avec ses partenaires dans le monde entier pour appliquer les normes de sécurité et sanitaires conformément aux directives de l'OMS. Toutes les mesures prises sur le terrain ont été vérifiées et sont indiquées ici. Il est grand temps de profiter à nouveau du monde qui nous entoure.",
       DETAILS: {
         SAFETY_MASK_DEFAULT: {
           HEADING: 'Pour votre sécurité, tout le monde porte un masque',
@@ -162,7 +162,7 @@ const fr = {
         },
       },
       BADGE_DESCRIPTION:
-        'Ce badge atteste que les normes de sécurité et sanitaires ont été vérifiées par Headout pour cette expérience.',
+        'Ce badge atteste que les normes de sécurité et sanitaires ont été vérifiées par <mbName> pour cette expérience.',
     },
   },
   DISCOUNTED_FUTURES: {
@@ -176,13 +176,13 @@ const fr = {
       WORKING: {
         QUESTION: "Qu'est-ce que l'option « Réserver pour plus tard » ?",
         ANSWER:
-          "Headout vous permet désormais de réserver vos expériences, attractions et billets de spectacles préférés sans avoir à vous soucier de la date et de l'heure de réservation. Vous pouvez à présent acheter les produits proposés sur Headout.com et choisir de visiter ou de profiter de l'expérience à n'importe quelle date jusqu'au 31 décembre 2021, comme bon vous semble. Tous les produits proposés dans le cadre de cette action sont accompagnés de réductions spéciales. Dès que vous êtes prêt(e) à voyager et à profiter pleinement de vos produits, vous pouvez « confirmer » la réservation en choisissant une date et un créneau horaire spécifiques pour ces produits via notre site Headout.com.",
+          "<mbName> vous permet désormais de réserver vos expériences, attractions et billets de spectacles préférés sans avoir à vous soucier de la date et de l'heure de réservation. Vous pouvez à présent acheter les produits proposés sur <domain> et choisir de visiter ou de profiter de l'expérience à n'importe quelle date jusqu'au 31 décembre 2021, comme bon vous semble. Tous les produits proposés dans le cadre de cette action sont accompagnés de réductions spéciales. Dès que vous êtes prêt(e) à voyager et à profiter pleinement de vos produits, vous pouvez « confirmer » la réservation en choisissant une date et un créneau horaire spécifiques pour ces produits via notre site <domain>.",
       },
       DATE_TIME: {
         QUESTION:
-          "Comment puis-je acheter des produits ou utiliser l'option « Réserver pour plus tard » sur Headout.com ? Quels sont les produits concernés par l'action « Réserver pour plus tard » ?",
+          "Comment puis-je acheter des produits ou utiliser l'option « Réserver pour plus tard » sur <domain> ? Quels sont les produits concernés par l'action « Réserver pour plus tard » ?",
         ANSWER:
-          "Pour des produits proposés sur Headout.com, vous pouvez choisir l'option « Réserver pour plus tard » directement sur le site. Vous n'êtes pas obligé(e) de sélectionner la date et l'heure de votre visite pour le moment, vous pouvez choisir n'importe quelle date et heure selon votre préférence à une date ultérieure.",
+          "Pour des produits proposés sur <domain>, vous pouvez choisir l'option « Réserver pour plus tard » directement sur le site. Vous n'êtes pas obligé(e) de sélectionner la date et l'heure de votre visite pour le moment, vous pouvez choisir n'importe quelle date et heure selon votre préférence à une date ultérieure.",
       },
       USAGE: {
         QUESTION:
@@ -201,7 +201,7 @@ const fr = {
           "Y a-t-il des conditions ou des limites à l'achat ou à l'utilisation des réservations faites avec l'option « Réserver pour plus tard » ?",
         ANSWER: [
           "Tout coupon ou code de réduction ne peut être utilisé pour les achats effectués avec l'option « Réserver pour plus tard ».",
-          "Les remboursements sous forme de crédits ou les crédits Headout figurant dans votre portefeuille Headout ne peuvent pas être utilisés pour réserver ou acheter une expérience dans le cadre de l'option « Réserver pour plus tard ».",
+          "Les remboursements sous forme de crédits ou les crédits <mbName> figurant dans votre portefeuille <mbName> ne peuvent pas être utilisés pour réserver ou acheter une expérience dans le cadre de l'option « Réserver pour plus tard ».",
           "Une fois que vous confirmez votre réservation en choisissant une date et une heure pour cette réservation, vous ne pouvez plus la modifier ou l'annuler. Les réservations confirmées ne pourront pas non plus faire l'objet d'un remboursement.",
         ],
       },
@@ -229,7 +229,7 @@ const fr = {
       REDEEM: {
         HEADING: 'Échangez et réservez dès que vous êtes prêt(e)',
         SUB_TEXT:
-          'Vous maîtrisez parfaitement la situation et pouvez réserver sur Headout lorsque vos projets de voyage se concrétisent.',
+          'Vous maîtrisez parfaitement la situation et pouvez réserver sur <mbName> lorsque vos projets de voyage se concrétisent.',
       },
     },
     PITCH: {

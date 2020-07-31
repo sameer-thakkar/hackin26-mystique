@@ -69,7 +69,7 @@ const de = {
     MODAL: {
       HEADING: 'Sichere Erlebnisse',
       SUB_HEADING:
-        'Headout arbeitet mit Partnern auf der ganzen Welt an der Umsetzung der besten Sicherheitsstandards gemäß den WHO-Richtlinien. Alle vor Ort getroffenen Maßnahmen wurden überprüft und werden hier angezeigt. Es ist an der Zeit, dass wir unsere Welt wieder genießen.',
+        'arbeitet mit Partnern auf der ganzen Welt an der Umsetzung der besten Sicherheitsstandards gemäß den WHO-Richtlinien. Alle vor Ort getroffenen Maßnahmen wurden überprüft und werden hier angezeigt. Es ist an der Zeit, dass wir unsere Welt wieder genießen.',
       DETAILS: {
         SAFETY_MASK_DEFAULT: {
           HEADING: 'Maskenpflicht zu Ihrer Sicherheit',
@@ -163,7 +163,7 @@ const de = {
         },
       },
       BADGE_DESCRIPTION:
-        'Erlebnisse mit diesem Abzeichen entsprechen nachweislich den von Headout geprüften Sicherheitsstandards.',
+        'Erlebnisse mit diesem Abzeichen entsprechen nachweislich den von <mbName> geprüften Sicherheitsstandards.',
     },
   },
   DISCOUNTED_FUTURES: {
@@ -176,13 +176,13 @@ const de = {
       WORKING: {
         QUESTION: 'Wie funktioniert die Option „Für später reservieren“?',
         ANSWER:
-          'Mit Headout können Sie jetzt bequem Tickets für Erlebnisse, Attraktionen und Events buchen, ohne sich auf ein Datum und eine Uhrzeit festlegen zu müssen. Sie können die entsprechenden Produkte jetzt auf Headout.com kaufen und das Erlebnis zu einem beliebigen Zeitpunkt bis zum 31. Dezember 2021 buchen. Alle Produkte dieser Option werden zu einem Sonderrabatt angeboten. Sobald Sie reisebereit sind und die gebuchten Produkte einlösen möchten, können Sie die Buchung „ausführen“, indem Sie die gewünschte Erlebniszeit auf Headout.com auswählen.',
+          'Mit <mbName> können Sie jetzt bequem Tickets für Erlebnisse, Attraktionen und Events buchen, ohne sich auf ein Datum und eine Uhrzeit festlegen zu müssen. Sie können die entsprechenden Produkte jetzt auf <domain> kaufen und das Erlebnis zu einem beliebigen Zeitpunkt bis zum 31. Dezember 2021 buchen. Alle Produkte dieser Option werden zu einem Sonderrabatt angeboten. Sobald Sie reisebereit sind und die gebuchten Produkte einlösen möchten, können Sie die Buchung „ausführen“, indem Sie die gewünschte Erlebniszeit auf <domain> auswählen.',
       },
       DATE_TIME: {
         QUESTION:
-          'Wie kann ich die Option „Für später reservieren“ auf Headout.com kaufen bzw. nutzen? Welche Produkte stehen zur Auswahl? ',
+          'Wie kann ich die Option „Für später reservieren“ auf <domain> kaufen bzw. nutzen? Welche Produkte stehen zur Auswahl? ',
         ANSWER:
-          'Welche Produkte auf Headout.com zur Auswahl stehen, können Sie auf der Website unter der Option „Für später reservieren“ einsehen. Sie müssen das Datum und die Uhrzeit Ihres Besuchs nicht sofort festlegen, sondern können sich später für eine Erlebniszeit entscheiden. ',
+          'Welche Produkte auf <domain> zur Auswahl stehen, können Sie auf der Website unter der Option „Für später reservieren“ einsehen. Sie müssen das Datum und die Uhrzeit Ihres Besuchs nicht sofort festlegen, sondern können sich später für eine Erlebniszeit entscheiden. ',
       },
       USAGE: {
         QUESTION:
@@ -200,7 +200,7 @@ const de = {
           'Gibt es irgendwelche Beschränkungen oder Begrenzungen für den Kauf oder die Nutzung der Option „Für später reservieren“? ',
         ANSWER: [
           'Rabattgutscheine/-codes können nicht für die Option „Für später reservieren“ verwendet werden.',
-          'Cashback oder Headout Credits aus Ihrem Headout Guthaben können nicht für die Buchung/Nutzung eines Erlebnisses der Option „Für später reservieren“ verwendet werden. ',
+          'Cashback oder <mbName> Credits aus Ihrem <mbName> Guthaben können nicht für die Buchung/Nutzung eines Erlebnisses der Option „Für später reservieren“ verwendet werden. ',
           'Sobald Sie die Buchung ausführen, d. h., sobald Sie ein Datum und eine Uhrzeit für Ihr Erlebnis wählen, können Sie die Buchung nicht mehr ändern oder stornieren. Ausgeführte Buchungen der Option „Für später reservieren“ können auch nicht erstattet werden.',
         ],
       },
@@ -229,7 +229,7 @@ const de = {
       REDEEM: {
         HEADING: 'Lösen Sie Ihren Gutschein zu einem beliebigen Zeitpunkt ein',
         SUB_TEXT:
-          'Sie können das Datum Ihres Erlebnisses frei wählen und Ihr gewünschtes Zeitfenster auf Headout reservieren, sobald Ihre Reisepläne feststehen.',
+          'Sie können das Datum Ihres Erlebnisses frei wählen und Ihr gewünschtes Zeitfenster auf <mbName> reservieren, sobald Ihre Reisepläne feststehen.',
       },
     },
     PITCH: {

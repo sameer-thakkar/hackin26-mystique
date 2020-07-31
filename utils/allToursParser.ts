@@ -1,13 +1,13 @@
 import { RichText } from 'prismic-reactjs';
+import { CURRENCY_SYMBOL_MAP } from 'constants/index';
 
 type ToursData = {
   cardPrices: object;
-  currencySymbol: string;
   isFetched: boolean;
 };
 
 const allToursParser = (CMSData, scorpioData, pricingData: ToursData) => {
-  const { cardPrices, currencySymbol, isFetched } = pricingData;
+  const { cardPrices, isFetched } = pricingData;
   const labelIDMap = CMSData?.labels?.reduce((accum, label) => {
     return { ...accum, [label.id]: label.data.label_name };
   }, {});
@@ -74,6 +74,11 @@ const allToursParser = (CMSData, scorpioData, pricingData: ToursData) => {
     if (theatreBlock) {
       tourData.theater_contentblock = RichText.asText(theatreBlock.content);
     }
+    const currencySymbol =
+      isFetched &&
+      CURRENCY_SYMBOL_MAP[
+        cardPrices[tourData.tgid]?.listingPrice?.currencyCode
+      ];
     return {
       ...accum,
       [tourData.tgid]: {

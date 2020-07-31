@@ -176,13 +176,13 @@ const pt = {
       WORKING: {
         QUESTION: 'O que é a opção "Reservar pra depois"?',
         ANSWER:
-          'Headout agora permite a você o conforto de reservar suas experiências favoritas, atrações, ingressos de entretenimento sem se comprometer com a data e hora. Você pode adquirir os produtos elegíveis no site Headout.com e optar por fazer a visita ou realizar a experiência em qualquer data futura até 31 de dezembro de 2021, conforme sua conveniência. Todos os produtos sob esta opção estão com descontos especiais. Quando estiver pronto para viajar e experimentar os produtos adquiridos, você pode usar a reserva escolhendo uma data e horário específicos para a mesma através do site Headout.com.',
+          '<mbName> agora permite a você o conforto de reservar suas experiências favoritas, atrações, ingressos de entretenimento sem se comprometer com a data e hora. Você pode adquirir os produtos elegíveis no site <domain> e optar por fazer a visita ou realizar a experiência em qualquer data futura até 31 de dezembro de 2021, conforme sua conveniência. Todos os produtos sob esta opção estão com descontos especiais. Quando estiver pronto para viajar e experimentar os produtos adquiridos, você pode usar a reserva escolhendo uma data e horário específicos para a mesma através do site <domain>.',
       },
       DATE_TIME: {
         QUESTION:
-          'Como posso adquirir ou usar a opção "Reservar pra depois" no site Headout.com? Quais produtos estão elegíveis para essa opção? ',
+          'Como posso adquirir ou usar a opção "Reservar pra depois" no site <domain>? Quais produtos estão elegíveis para essa opção? ',
         ANSWER:
-          'Para produtos elegíveis no Headout.com, você pode escolher a opção de "Reservar para depois". Não é necessário selecionar a data e hora da visita imediatamente, você pode escolher qualquer hora e data de acordo com sua conveniência em uma data futura.',
+          'Para produtos elegíveis no <domain>, você pode escolher a opção de "Reservar para depois". Não é necessário selecionar a data e hora da visita imediatamente, você pode escolher qualquer hora e data de acordo com sua conveniência em uma data futura.',
       },
       USAGE: {
         QUESTION: 'Quando posso usar a reserva adquirida?',
@@ -199,7 +199,7 @@ const pt = {
           'Há restrições ou limitações na compra e uso dessas reservas? ',
         ANSWER: [
           'Descontos e cupons não podem ser utilizados para reservas com essa opção.',
-          'Cashback ou créditos Headout em sua carteira Headout não podem ser usados para reservar/adquirir qualquer experiência com essa opção. ',
+          'Cashback ou créditos <mbName> em sua carteira <mbName> não podem ser usados para reservar/adquirir qualquer experiência com essa opção. ',
           'Ao usar sua reserva, escolhendo a data e hora, você não poderá alterá-la ou cancelá-la. As reservas também não poderão ser reembolsadas.',
         ],
       },
@@ -227,7 +227,7 @@ const pt = {
       REDEEM: {
         HEADING: 'Resgate o valor e use sua reserva quando quiser',
         SUB_TEXT:
-          'Você tem controle total e pode usar sua reserva na Headout quando confirmar seus planos.',
+          'Você tem controle total e pode usar sua reserva na <mbName> quando confirmar seus planos.',
       },
     },
     PITCH: {

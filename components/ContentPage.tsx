@@ -298,7 +298,7 @@ export default class ContentPage extends Component<any, any> {
   };
 
   render() {
-    const { groupBookingTourTitles, currency, tourAPIData } = this.state;
+    const { groupBookingTourTitles, tourAPIData } = this.state;
     const {
       data,
       first_publication_date: datePublished,
@@ -322,7 +322,6 @@ export default class ContentPage extends Component<any, any> {
     const apiReady = tourAPIData !== null;
     const allTours = allToursParser(microsite?.data, scorpioData, {
       cardPrices: tourAPIData,
-      currencySymbol: currency,
       isFetched: apiReady,
     });
     const CFWBody = contentFramework?.data?.body;

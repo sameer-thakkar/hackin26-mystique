@@ -29,7 +29,7 @@ export default {
         desktop: `
           font-weight: ${SOLEIL.MEDIUM};
           font-size: 24px;
-          line-height: 41px;
+          line-height: 32px;
         `,
         mobile: `
         `,

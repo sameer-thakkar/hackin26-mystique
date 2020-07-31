@@ -45,7 +45,6 @@ export default class MicrositeV1 extends Component<any, any> {
     super(props);
     this.state = {
       tourPrices: [],
-      currencySymbol: '',
       dropdown: {
         lang: false,
         hamburger: false,
@@ -106,9 +105,6 @@ export default class MicrositeV1 extends Component<any, any> {
         ...fetchVariantPrices,
       ]).then((res) => res);
       const [tourGroup, ...variants] = response;
-      const currencySymbol = tourGroup.currencies.length
-        ? tourGroup.currencies[0].localSymbol
-        : variants[0].currency.localSymbol;
       const tourGroupPrices = tourListApiParser(tourGroup);
 
       const mapVariantPrices = variants.map((tourVariant: any, index) => {
@@ -157,7 +153,6 @@ export default class MicrositeV1 extends Component<any, any> {
       }
       this.setState({
         tourPrices: tourPrices,
-        currencySymbol: currencySymbol,
         isFetched: true,
         showEarliestAvailability,
       });
@@ -386,7 +381,6 @@ export default class MicrositeV1 extends Component<any, any> {
     const pricingData = {
       isFetched: this.state.isFetched,
       cardPrices: this.state.tourPrices,
-      currencySymbol: this.state.currencySymbol,
     };
     const showCovid19Alert = this.props.data?.data?.show_covid19_alert;
     const scorpioData = this.props.scorpioData;
@@ -534,7 +528,6 @@ export default class MicrositeV1 extends Component<any, any> {
               scorpioData={this.props.scorpioData}
               uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
               tourPrices={this.state.tourPrices}
-              currencySymbol={this.state.currencySymbol}
               uid={uid}
               currentLanguage={currentLanguage}
               bookNowText={bookNowText}

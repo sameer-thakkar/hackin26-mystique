@@ -126,25 +126,35 @@ const FAQGrid = styled.div`
     padding-left: 1em;
   }
 `;
-const getDFFAQs = (lang) => {
+const replaceSuperBrand = (text, name, domain) =>
+  text?.replace(/<mbName>/g, name).replace(/<domain>/g, domain) || '';
+
+const getDFFAQs = (lang, name, domain) => {
   return Object.values(labels[lang].DISCOUNTED_FUTURES.FAQ_QUESTIONS).map(
     ({ QUESTION, ANSWER }, i) => {
       const finalAnswer =
         typeof ANSWER === 'string' ? (
-          ANSWER
+          replaceSuperBrand(ANSWER, name, domain)
         ) : (
           <ul>
             {ANSWER.map((answerLi, j) => (
-              <li key={j}>{answerLi}</li>
+              <li key={j}>{replaceSuperBrand(answerLi, name, domain)}</li>
             ))}
           </ul>
         );
-      return <Accordion key={i} heading={QUESTION} content={finalAnswer} />;
+      return (
+        <Accordion
+          key={i}
+          heading={replaceSuperBrand(QUESTION, name, domain)}
+          content={finalAnswer}
+        />
+      );
     }
   );
 };
 const DiscountedFuturesPitch = ({ dfExpiryDate = '' }) => {
-  const { lang } = useContext(MBContext);
+  const { lang, nakedDomain } = useContext(MBContext);
+  const [name, ..._tld] = nakedDomain.split('.');
 
   return (
     <PitchGrid>
@@ -198,7 +208,13 @@ const DiscountedFuturesPitch = ({ dfExpiryDate = '' }) => {
               return (
                 <NumberCard key={index}>
                   <EmphasizedText>{HEADING}</EmphasizedText>
-                  <Text>{SUB_TEXT.replace('<date>', dfExpiryDate)}</Text>
+                  <Text>
+                    {replaceSuperBrand(
+                      SUB_TEXT.replace('<date>', dfExpiryDate),
+                      name,
+                      nakedDomain
+                    )}
+                  </Text>
                 </NumberCard>
               );
             }
@@ -217,7 +233,7 @@ const DiscountedFuturesPitch = ({ dfExpiryDate = '' }) => {
       </Section>
       <Section>
         <Heading>{"FAQ's"}</Heading>
-        <FAQGrid>{getDFFAQs(lang)}</FAQGrid>
+        <FAQGrid>{getDFFAQs(lang, name, nakedDomain)}</FAQGrid>
       </Section>
     </PitchGrid>
   );

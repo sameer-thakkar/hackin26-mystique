@@ -85,7 +85,7 @@ export const FULL_LANGUAGE_MAP = {
     short: 'tw',
   },
   ja: {
-    language: 'Japanese',
+    language: '日本語',
     paramLang: 'ja-jp',
     short: 'ja',
   },

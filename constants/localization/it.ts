@@ -69,7 +69,7 @@ const it = {
     MODAL: {
       HEADING: 'Esperienze Sicure',
       SUB_HEADING:
-        "Headout sta lavorando con i nostri partner in tutto il mondo per implementare i migliori standard di sicurezza in accordo con le linee guida dell'OMS. Tutte le misure adottate sul campo sono state verificate: le puoi vedere elencate in questa sezione. È tempo di godersi di nuovo il mondo che ci circonda.",
+        "<mbName> sta lavorando con i nostri partner in tutto il mondo per implementare i migliori standard di sicurezza in accordo con le linee guida dell'OMS. Tutte le misure adottate sul campo sono state verificate: le puoi vedere elencate in questa sezione. È tempo di godersi di nuovo il mondo che ci circonda.",
       DETAILS: {
         SAFETY_MASK_DEFAULT: {
           HEADING: 'Tutti indossano maschere per garantire la tua sicurezza',
@@ -186,13 +186,13 @@ const it = {
       WORKING: {
         QUESTION: 'Cosa è l\'opzione "Prenota per il Futuro?"',
         ANSWER:
-          "Headout ti offre ora la comodità di prenotare le tue esperienze preferite, le visite alle attrazioni e i biglietti per gli spettacoli senza doverti preoccupare di fissare una data e un'ora definitiva. Da oggi è possibile acquistare una serie di prodotti selezionati su Headout.com e scegliere di usufruire dell'esperienza in qualsiasi data entro il 31 dicembre 2021, a seconda delle tue esigenze. Tutti i prodotti che includono questa opzione offrono sconti speciali. Una volta che hai deciso di partire per usufruire dell'attività prescelta, potrai \"attivare\" la tua prenotazione scegliendo una data specifica e una fascia oraria usando il sito Headout.com.",
+          "<mbName> ti offre ora la comodità di prenotare le tue esperienze preferite, le visite alle attrazioni e i biglietti per gli spettacoli senza doverti preoccupare di fissare una data e un'ora definitiva. Da oggi è possibile acquistare una serie di prodotti selezionati su <domain> e scegliere di usufruire dell'esperienza in qualsiasi data entro il 31 dicembre 2021, a seconda delle tue esigenze. Tutti i prodotti che includono questa opzione offrono sconti speciali. Una volta che hai deciso di partire per usufruire dell'attività prescelta, potrai \"attivare\" la tua prenotazione scegliendo una data specifica e una fascia oraria usando il sito <domain>.",
       },
       DATE_TIME: {
         QUESTION:
-          'Come faccio a comprare o utilizzare l\'opzione "Prenota per il Futuro" sul sito web Headout.com? Quali prodotti permettono l\'utilizzo dell\'opzione "Prenota per il Futuro"?',
+          'Come faccio a comprare o utilizzare l\'opzione "Prenota per il Futuro" sul sito web <domain>? Quali prodotti permettono l\'utilizzo dell\'opzione "Prenota per il Futuro"?',
         ANSWER:
-          'I prodotti selezionati inclusi nel servizio "Prenota per il Futuro" sul sito web Headout.com sono quelli che mostrano l\'opzione selezionabile “Prenota per il Futuro”. Non è necessario selezionare subito la data e l\'ora della visita, è possibile scegliere qualsiasi ora e data in un secondo momento.',
+          'I prodotti selezionati inclusi nel servizio "Prenota per il Futuro" sul sito web <domain> sono quelli che mostrano l\'opzione selezionabile “Prenota per il Futuro”. Non è necessario selezionare subito la data e l\'ora della visita, è possibile scegliere qualsiasi ora e data in un secondo momento.',
       },
       USAGE: {
         QUESTION:
@@ -210,7 +210,7 @@ const it = {
           'Ci sono restrizioni relative all\'acquisto o all\'utilizzo delle "Prenotazioni per il Futuro"?',
         ANSWER: [
           'I codici sconto e i buoni sconto non sono utilizzabili per gli acquisti delle “Prenotazioni per il Futuro”.',
-          'I Crediti Headout e i Cashback accumulati nel tuo Headout Wallet non possono essere utilizzati per prenotare/acquistare qualsiasi esperienza inclusa nell\'offerta "Prenotazioni per il Futuro".',
+          'I Crediti <mbName> e i Cashback accumulati nel tuo <mbName> Wallet non possono essere utilizzati per prenotare/acquistare qualsiasi esperienza inclusa nell\'offerta "Prenotazioni per il Futuro".',
           'Una volta che avrai esercitato il tuo diritto a una "Prenotazione per il Futuro" scegliendo una data e un\'ora, non sarà più possibile modificare o cancellare tale prenotazione. Inoltre, si prega di notare che le "Prenotazioni per il Futuro" già esercitate con selezione ultimata di data e ora non potranno beneficiare di alcun rimborso.',
         ],
       },
@@ -238,7 +238,7 @@ const it = {
       REDEEM: {
         HEADING: 'Riscatta e prenota quando vuoi',
         SUB_TEXT:
-          'Hai il controllo completo sulla tua esperienza e puoi prenotare il momento della tua visita tramite Headout dopo aver finalizzato i tuoi programmi.',
+          'Hai il controllo completo sulla tua esperienza e puoi prenotare il momento della tua visita tramite <mbName> dopo aver finalizzato i tuoi programmi.',
       },
     },
     PITCH: {

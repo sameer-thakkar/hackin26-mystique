@@ -38,7 +38,7 @@ const FooterLinksWrapper = styled.div`
   .quick-links {
     display: grid;
     justify-content: space-between;
-    grid-template-columns: minmax(400px, max-content) 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     @media (max-width: 768px) {
       grid-template-columns: 1fr;
       grid-row-gap: 32px;

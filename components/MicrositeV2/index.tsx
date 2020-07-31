@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { HomePage } from './views/HomePage';
 import { SearchPage } from './views/SearchPage';
-import { PAGETYPE, CURRENCY_SYMBOL_MAP, THEMES } from '../../constants';
+import { PAGETYPE, THEMES } from '../../constants';
 import { MobileProductPage } from './views/ProductPage';
 import { withRouter } from 'next/router';
 import populateHead from '../common/meta';
@@ -15,7 +15,6 @@ class MicrositeV2 extends Component<any, any> {
     this.state = {
       isMobile: props.isMobile,
       cardPrices: {},
-      currencySymbol: '',
       isFetched: false,
       directTgid: null,
       page: {
@@ -45,11 +44,8 @@ class MicrositeV2 extends Component<any, any> {
       })
       .then((jsonTours) => {
         const cardPrices = tourListApiParser(jsonTours);
-        const currencySymbol =
-          CURRENCY_SYMBOL_MAP[jsonTours.tourGroups[0]?.listingPrice?.currency];
         this.setState({
           cardPrices: cardPrices,
-          currencySymbol: currencySymbol,
           isFetched: true,
         });
       });
@@ -169,10 +165,9 @@ class MicrositeV2 extends Component<any, any> {
       bannerHeading: CMSData.heading,
     };
 
-    const { cardPrices, currencySymbol, isFetched, ready } = this.state;
+    const { cardPrices, isFetched, ready } = this.state;
     const pricingData = {
       cardPrices,
-      currencySymbol,
       isFetched,
     };
     const allTours = allToursParser(CMSData, scorpioData, pricingData);

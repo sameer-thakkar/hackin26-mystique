@@ -1,7 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import { SOLEIL } from 'constants/ui-constants';
-import { FULL_LANGUAGE_MAP, LANGUAGE_PARAMS_REGEX } from 'constants/index';
+import {
+  FULL_LANGUAGE_MAP,
+  LANGUAGE_PARAMS_REGEX,
+  THEMES,
+} from 'constants/index';
+import { GLOBE } from 'assets/SvgIcons';
+import { MBContext } from 'contexts/MBContext';
 
 const LanguageSelector = (props) => {
   const [pathname, setPathname] = useState('');
@@ -23,6 +29,8 @@ const LanguageSelector = (props) => {
     isMobile,
     languages,
   } = props;
+
+  const { mbTheme } = useContext(MBContext);
 
   const selectorRef = useRef(null);
   const parentRef = useRef(null);
@@ -58,6 +66,7 @@ const LanguageSelector = (props) => {
     >
       <div className="current-langauge">
         <span className="current-language-toggle">
+          {mbTheme === THEMES.DEFAULT && !isMobile ? GLOBE : null}
           {isMobile
             ? currentLanguage.slice(0, 2)
             : FULL_LANGUAGE_MAP[currentLanguage].language}
@@ -136,6 +145,10 @@ const LanguageSelector = (props) => {
             line-height: 1;
           }
           .current-language-toggle {
+            display: grid;
+            grid-column-gap: 8px;
+            grid-auto-flow: column;
+            align-items: center;
             font-family: ${SOLEIL.FONT_STACK};
             font-size: 16px;
             text-transform: capitalize;
