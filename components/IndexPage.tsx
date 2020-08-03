@@ -57,7 +57,7 @@ export default class Page extends React.Component<any, any> {
         redirectUID = window.location.host;
       }
     }
-    redirectUID = redirectUID.replace('stage.', '');
+    redirectUID = redirectUID.replace('stage-', '');
 
     /**
      * Asynchronously check if a redirect exists for the request
@@ -103,7 +103,7 @@ export default class Page extends React.Component<any, any> {
       }
       if (
         req &&
-        req.headers.host.startsWith('stage.') &&
+        req.headers.host.startsWith('stage-') &&
         process.env.GIT_BRANCH
       ) {
         res.setHeader('x-git-branch', process.env.GIT_BRANCH);
@@ -178,7 +178,7 @@ export default class Page extends React.Component<any, any> {
               let url = completeMicrosite.data.data?.page_url;
               if (host.slice(0, 5) === 'stage') {
                 url = url.split('//');
-                url = url.join('//stage.');
+                url = url.join('//stage-');
               }
               redirectTo({
                 res: serverResponse,
@@ -330,7 +330,7 @@ export default class Page extends React.Component<any, any> {
                     let url = page.data?.page_url;
                     if (host.slice(0, 5) === 'stage') {
                       url = url.split('//');
-                      url = url.join('//stage.');
+                      url = url.join('//stage-');
                     }
                     redirectTo({
                       res: serverResponse,

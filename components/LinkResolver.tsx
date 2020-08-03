@@ -1,12 +1,12 @@
-import React from "react";
-import EnvironmentContext from "../contexts/environmentContext";
-import parse from "url-parse";
-import { getUID } from "../utils/helper";
+import React from 'react';
+import EnvironmentContext from '../contexts/environmentContext';
+import parse from 'url-parse';
+import { getUID } from '../utils/helper';
 
-const qs = obj =>
+const qs = (obj) =>
   Object.keys(obj)
-    .map(key => `${key}=${obj[key]}`)
-    .join("&");
+    .map((key) => `${key}=${obj[key]}`)
+    .join('&');
 
 const resolveLink: any = (url, ctx) => {
   const { isDev, windowUrl } = ctx;
@@ -20,27 +20,27 @@ const resolveLink: any = (url, ctx) => {
   if (isDev) {
     const updatedQuery = {
       ...query,
-      mystique_uid: getUID(linkHref)
+      mystique_uid: getUID(linkHref),
     };
     return `${protocol}//${host}?${qs(updatedQuery)}`;
   }
 
-  const normalizedHost = host.replace("stage.", "");
+  const normalizedHost = host.replace('stage-', '');
   if (normalizedHost !== linkHost) {
     return url;
   }
 
-  if (host.startsWith("stage.")) {
-    return `https://stage.${linkHost}${linkPathname}`;
+  if (host.startsWith('stage-')) {
+    return `https://stage-${linkHost}${linkPathname}`;
   }
 
   return url;
 };
 
-export default ({ url, children, ...props }) => {
+const LinkResolver = ({ url, children, ...props }) => {
   return (
     <EnvironmentContext.Consumer>
-      {ctx => (
+      {(ctx) => (
         <a href={resolveLink(url, ctx)} {...props}>
           {children}
         </a>
@@ -48,3 +48,5 @@ export default ({ url, children, ...props }) => {
     </EnvironmentContext.Consumer>
   );
 };
+
+export default LinkResolver;

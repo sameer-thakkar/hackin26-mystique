@@ -19,17 +19,14 @@ export default function handle(req, res) {
         res.end();
         return;
       }
-
       const protocol = req.headers['x-forwarded-proto'];
-      const host = req.headers['x-forwarded-host'];
-
+      const host = req.headers['host'];
       const redirectUrl =
         !response || host.startsWith('localhost:')
           ? `${protocol}://${host}?mystique_uid=${uid}&lang=${lang}`
-          : host.startsWith('stage.')
-          ? response.data.page_url.replace('://', '://stage.')
+          : host.startsWith('stage-')
+          ? response.data.page_url.replace('://', '://stage-')
           : response.data.page_url;
-
       res.writeHead(302, {
         Location: redirectUrl,
       });

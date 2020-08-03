@@ -46,7 +46,7 @@ export default class TermsPage extends Component<any, any> {
         ? query.mystique_uid
         : window.location.search.includes('mystique_uid');
     } else {
-      uid = host.replace('stage.', '');
+      uid = host.replace('stage-', '');
     }
     const lang = 'en-us';
     const response = await Client(req).getByUID(CUSTOM_TYPES.MICROSITE, uid, {

@@ -63,7 +63,7 @@ export const MobileProductPage = (props) => {
   const isDev = url.includes('localhost');
   const currentHost = !isDev ? url : parse(uid, true).pathname;
   const hostName = currentHost.includes('stage')
-    ? currentHost.replace('stage.', '')
+    ? currentHost.replace('stage-', '')
     : currentHost;
   let hostSplit = hostName.split('.');
   hostSplit.shift();

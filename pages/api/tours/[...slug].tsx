@@ -2,7 +2,7 @@ import { serialize } from 'cookie';
 
 const ToursAPI = async (req, res) => {
   const nakedDomain = req.headers.host
-    .replace('stage.', '')
+    .replace('stage-', '')
     .split('.')
     .slice(1)
     .join('.');

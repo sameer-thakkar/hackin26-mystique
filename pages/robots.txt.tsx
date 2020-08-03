@@ -36,7 +36,7 @@ const indexDomains = [
 export default class RobotsTxt extends Component {
   static async getInitialProps({ res, req }) {
     const domain = fullDomain(req);
-    let content = domain.includes('stage.')
+    let content = domain.includes('stage-')
       ? robotsContentForStage()
       : robotsContent(domain);
     tempDomains.forEach((item) => {
@@ -46,7 +46,7 @@ export default class RobotsTxt extends Component {
     });
     indexDomains.forEach((item) => {
       if (domain.includes(item)) {
-        content = domain.includes('stage.')
+        content = domain.includes('stage-')
           ? robotsContentForStage()
           : robotsContent(domain);
       }

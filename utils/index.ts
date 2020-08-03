@@ -20,7 +20,7 @@ export const getPrismicProps = ({ host, pathname }) => {
   }
 
   const uid = `${withoutTrailingSlash(`${host}/${pathnameSlugs.join('/')}`)}`
-    .replace('stage.', '')
+    .replace('stage-', '')
     .replace(/\//g, '.');
 
   return {
@@ -83,6 +83,6 @@ export const createBookingURL = ({ lang, nakedDomain, tgid, df = false }) => {
 
 export const getNakedDomain = (host) => {
   return !host.includes('localhost')
-    ? host.replace('stage.', '').split('.').slice(1).join('.')
+    ? host.replace('stage-', '').split('.').slice(1).join('.')
     : 'headout.com';
 };

@@ -40,7 +40,7 @@ export default class companyDetails extends Component<any, any> {
         : window.location.search.includes('mystique_uid');
     } else {
       const { host } = req ? req.headers : window.location;
-      superHost = host.replace('stage.', '');
+      superHost = host.replace('stage-', '');
     }
 
     const lang = 'en-us';

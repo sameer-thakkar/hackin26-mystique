@@ -107,7 +107,7 @@ const PopulateHead = (data) => {
     serverRequestStartTimestamp,
   } = data;
 
-  const isNonProd = isDev || originalHost.startsWith('stage.');
+  const isNonProd = isDev || originalHost.startsWith('stage-');
   const isOnlineTicketsDomain = originalHost.includes('online-tickets.co');
 
   const amplitude_key = isOnlineTicketsDomain

@@ -432,7 +432,7 @@ const TourComparisonTable = (props) => {
   const lang = mbContext.lang || 'en';
   const currentHost = !envContext.isDev ? url : parse(uid, true).pathname;
   const hostName = currentHost.includes('stage')
-    ? currentHost.replace('stage.', '')
+    ? currentHost.replace('stage-', '')
     : currentHost;
   let hostSplit = hostName.split('.');
   hostSplit.shift();
