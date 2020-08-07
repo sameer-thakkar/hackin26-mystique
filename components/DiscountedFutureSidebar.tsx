@@ -10,19 +10,36 @@ import DiscountedFuturesPitch from 'UI/DiscountedFuturesPitch';
 import useWindowSize from 'hooks/useWindowSize';
 import Conditional from './common/Conditional';
 import dayjs from 'dayjs';
+import Tags, { Tag, StyledTags } from 'UI/Tags';
 
 const DFSidebar = styled.div`
   display: grid;
   grid-row-gap: 24px;
   margin-bottom: 32px;
+  margin-top: 16px;
 `;
 const BookingOptionCard = styled.div`
-  padding: 16px;
+  padding: 24px 16px;
   border: 1px solid ${COLORS.GREY_G6};
   display: grid;
   grid-row-gap: 18px;
+  position: relative;
+  border-radius: 4px;
+  ${StyledTags} {
+    position: absolute;
+    top: -12px;
+    left: 16px;
+  }
+  ${Tag} {
+    border: none;
+    font-weight: ${SOLEIL.SEMIBOLD};
+  }
   .tour-book-now-cta-filled {
     border-radius: 2px;
+  }
+  .tour-book-now-cta,
+  .tour-book-now-cta-filled {
+    font-weight: ${SOLEIL.SEMIBOLD};
   }
 `;
 const Heading = styled.div`
@@ -94,31 +111,6 @@ const DiscountedFutureSidebar = ({
 
   return (
     <DFSidebar>
-      <Conditional if={listingPrice}>
-        <BookingOptionCard>
-          <Heading>{labels[lang].BOOK_NOW_CTA}</Heading>
-          <PriceContainer>
-            <PriceBlock price={listingPrice} lang={lang} />
-
-            {saveLabel ? <SaveLabel>Save {saveLabel}%</SaveLabel> : null}
-          </PriceContainer>
-          <Text color={COLORS.GREY_G3}>
-            {labels[lang].DISCOUNTED_FUTURES.BOOKING_MODAL.BOOK_NOW_PITCH}
-          </Text>
-          <Button
-            className={`tour-book-now-cta-filled`}
-            paddingSides="77px"
-            type="fill"
-            role="button"
-            tabIndex={0}
-            as={'a'}
-            href={bookURL}
-            target={isMobile ? '' : '_blank'}
-          >
-            {labels[lang].BOOK_NOW_CTA}
-          </Button>
-        </BookingOptionCard>
-      </Conditional>
       <BookingOptionCard>
         <Heading>
           {labels[lang].DISCOUNTED_FUTURES.BOOKING_MODAL.GO_LATER_HEADING}
@@ -132,12 +124,12 @@ const DiscountedFutureSidebar = ({
           {labels[lang].DISCOUNTED_FUTURES.BOOKING_MODAL.GO_LATER_PITCH.replace(
             '<stDate>',
             startDate
-          ).replace('<edDate>', expiry)}
+          ).replace('<edDate>', '31-Dec-2021')}
         </Text>
         <Button
           className={`tour-book-now-cta`}
           paddingSides="77px"
-          type="redBordered"
+          type="fill"
           role="button"
           tabIndex={0}
           as={'a'}
@@ -156,7 +148,39 @@ const DiscountedFutureSidebar = ({
         >
           {labels[lang].DISCOUNTED_FUTURES.BOOKING_MODAL.LEARN_MORE}
         </LeanMore>
+        <Tags
+          tags={[labels[lang].DISCOUNTED_FUTURES.BOOKING_MODAL.LIMITED]}
+          color={COLORS.PEACH_ORANGE}
+          backgroundColor={COLORS.PALE_ORANGE}
+        />
       </BookingOptionCard>
+      <Conditional if={listingPrice}>
+        <BookingOptionCard>
+          <Heading>
+            {labels[lang].DISCOUNTED_FUTURES.BOOKING_MODAL.BOOK_NOW_HEADING}
+          </Heading>
+          <PriceContainer>
+            <PriceBlock price={listingPrice} lang={lang} />
+
+            {saveLabel ? <SaveLabel>Save {saveLabel}%</SaveLabel> : null}
+          </PriceContainer>
+          <Text color={COLORS.GREY_G3}>
+            {labels[lang].DISCOUNTED_FUTURES.BOOKING_MODAL.BOOK_NOW_PITCH}
+          </Text>
+          <Button
+            className={`tour-book-now-cta-filled`}
+            paddingSides="77px"
+            type="fill"
+            role="button"
+            tabIndex={0}
+            as={'a'}
+            href={bookURL}
+            target={isMobile ? '' : '_blank'}
+          >
+            {labels[lang].DISCOUNTED_FUTURES.BOOKING_MODAL.BOOK_NOW}
+          </Button>
+        </BookingOptionCard>
+      </Conditional>
     </DFSidebar>
   );
 };

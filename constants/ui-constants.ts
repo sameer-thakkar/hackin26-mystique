@@ -44,6 +44,8 @@ export const COLORS = {
   LIGHTER_LINK_BLUE: '#114CD6',
   OKAY_GREEN: '#088943',
   BFF_BLUE: '#FAFBFF',
+  PEACH_ORANGE: '#A4563B',
+  PALE_ORANGE: '#FFF8EF',
 };
 
 export const SIZES = {

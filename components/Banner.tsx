@@ -5,7 +5,11 @@ import * as labels from '../constants/localization/labels';
 import Button from './UI/Button';
 import Image from './UI/Image';
 import styled from 'styled-components';
-import { SOLEIL } from '../constants/ui-constants';
+import { SOLEIL, COLORS } from '../constants/ui-constants';
+import Tags, { Tag } from 'UI/Tags';
+import { MBContext } from 'contexts/MBContext';
+import DiscountedFuturesPitch from 'UI/DiscountedFuturesPitch';
+import Conditional from './common/Conditional';
 
 const StyledBanner = styled.div`
   display: grid;
@@ -101,9 +105,9 @@ const StyledBanner = styled.div`
   }
 
   .mb-captions .caption h1 {
-    font-size: 22px;
+    font-size: 24px;
     color: #fff;
-    line-height: 1.5;
+    line-height: 1.2;
   }
 
   .mb-captions,
@@ -114,11 +118,45 @@ const StyledBanner = styled.div`
   }
 
   .mb-captions .mb-caption {
+    opacity: 0;
+    grid-row: 1;
+    grid-column: 1 / 2;
     display: grid;
+    align-self: center;
     grid-gap: 14px;
     justify-items: center;
+    transition: opacity 0.3s ease-in-out;
+    .tag {
+      justify-self: center;
+    }
+    ${Tag} {
+      font-size: 11px;
+      line-height: 11px;
+      border-radius: 2px;
+      font-weight: ${SOLEIL.SEMIBOLD};
+    }
+  }
+  .mb-captions .df-caption {
+    grid-row-gap: 12px;
+    h1 {
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+    p {
+      color: ${COLORS.WHITE};
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 20px;
+      margin-top: 0;
+      margin-bottom: 12px;
+    }
   }
 
+  .mb-captions .mb-caption.active {
+    opacity: 1;
+    z-index: 1;
+  }
   .mb-captions .mb-cta {
     background-color: rgba(0, 0, 0, 0.35);
     border: solid white 1px;
@@ -151,6 +189,7 @@ const StyledBanner = styled.div`
     }
     .mb-captions.with-indicators .mb-caption {
       margin-bottom: 56px;
+      align-self: end;
     }
 
     .mb-captions {
@@ -158,13 +197,23 @@ const StyledBanner = styled.div`
       text-align: left;
       align-items: end;
       background: unset;
+      .caption h1 {
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 120%;
+        margin: 0;
+      }
     }
-
-    .caption h1 {
-      font-weight: 500;
-      font-size: 20px;
-      line-height: 120%;
-      margin: 0;
+    .mb-captions .df-caption {
+      .tag {
+        justify-self: left;
+      }
+      h1 {
+        margin-bottom: 12px;
+      }
+      p {
+        margin: 0;
+      }
     }
 
     .mb-captions::after {
@@ -172,11 +221,11 @@ const StyledBanner = styled.div`
       position: absolute;
       bottom: 0;
       left: 0;
-      height: 200px;
+      height: 100%;
       width: 100%;
-      background: linear-gradient(180deg, rgba(34, 34, 34, 0) 0%, #222222 100%);
+      background: ${COLORS.TWO_BLACK};
       z-index: 0;
-      opacity: 0.6;
+      opacity: 0.4;
     }
 
     .indicators {
@@ -210,9 +259,6 @@ const BANNER_PARAMS = {
 };
 
 const ButtonWrapper = styled.div`
-  button {
-    font-size: 18px;
-  }
   @media (max-width: 768px) {
     button {
       font-size: 14px;
@@ -232,7 +278,7 @@ export default class Banner extends Component<any, any> {
     super(props);
     this.hasIndicators = true;
     this.MAX_SLIDES = this.props.bannerImages.length;
-    this.SLIDE_CHANGE_INTERVAL = 3500;
+    this.SLIDE_CHANGE_INTERVAL = 5000;
     this.prevSlideIndex = this.activeSlideIndex = 0;
     this.state = {
       counter: 0,
@@ -318,8 +364,27 @@ export default class Banner extends Component<any, any> {
       bannerImages,
       currentLanguage,
       hideCTA,
+      cooldownDate,
+      maxDfDiscount = 0,
+      dfExpiryDate,
     } = this.props;
     const { isClient } = this.state;
+    const {
+      sidebarModal: { addToAside },
+    } = this.context;
+    const toggleDFPitch = () => {
+      addToAside({
+        width: '27.5vw',
+        children: [
+          <DiscountedFuturesPitch
+            dfExpiryDate={dfExpiryDate?.format('DD-MMM-YY')}
+            key={0}
+          />,
+        ],
+        title: '',
+      });
+    };
+
     return (
       <StyledBanner>
         {bannerImages.map((banner, index) => {
@@ -348,18 +413,75 @@ export default class Banner extends Component<any, any> {
             bannerImages.length > 1 ? 'with-indicators' : ''
           }`}
         >
-          <div className="mb-caption">
+          <div
+            className={`mb-caption ${
+              dfExpiryDate ? this.activeSlideIndex !== 1 && 'active' : 'active'
+            }`}
+          >
             <div className="caption">
               <h1>{bannerHeading}</h1>
             </div>
-            {hideCTA ? null : (
+            <Conditional if={!hideCTA}>
               <ButtonWrapper>
                 <Button type="whiteBordered" onClick={this.scrollTicketSection}>
                   {labels[currentLanguage].BANNER_CTA}
                 </Button>
               </ButtonWrapper>
-            )}
+            </Conditional>
           </div>
+          <Conditional if={dfExpiryDate}>
+            <div
+              className={`mb-caption df-caption ${
+                this.activeSlideIndex === 1 && 'active'
+              }`}
+            >
+              <div className={'tag'}>
+                <Tags
+                  tags={[
+                    labels[currentLanguage].DISCOUNTED_FUTURES.BOOKING_MODAL
+                      .LIMITED,
+                  ]}
+                  color={COLORS.PEACH_ORANGE}
+                  backgroundColor={COLORS.PALE_ORANGE}
+                />
+              </div>
+              <div className="caption">
+                <h1>
+                  {
+                    labels[currentLanguage].DISCOUNTED_FUTURES.BANNER
+                      .HEADING_LINE1
+                  }
+                  <br />
+                  {labels[
+                    currentLanguage
+                  ].DISCOUNTED_FUTURES.BANNER.HEADING_LINE2.replace(
+                    '<percent>',
+                    maxDfDiscount?.toFixed(0) + '%'
+                  )}
+                </h1>
+                <p>
+                  {
+                    labels[currentLanguage].DISCOUNTED_FUTURES.BANNER
+                      .DESCRIPTION_LINE1
+                  }{' '}
+                  {labels[
+                    currentLanguage
+                  ].DISCOUNTED_FUTURES.BANNER.DESCRIPTION_LINE2.replace(
+                    '<cooldownDate>',
+                    cooldownDate?.format('DD-MMM-YY')
+                  )}
+                </p>
+              </div>
+              <ButtonWrapper>
+                <Button type="whiteBordered" onClick={toggleDFPitch}>
+                  {
+                    labels[currentLanguage].DISCOUNTED_FUTURES.BOOKING_MODAL
+                      .LEARN_MORE
+                  }
+                </Button>
+              </ButtonWrapper>
+            </div>
+          </Conditional>
         </div>
         {this.hasIndicators && bannerImages.length > 1 ? (
           <div className="indicators">
@@ -382,3 +504,5 @@ export default class Banner extends Component<any, any> {
     );
   }
 }
+
+Banner.contextType = MBContext;

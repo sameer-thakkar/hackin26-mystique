@@ -167,84 +167,101 @@ const pt = {
     },
   },
   DISCOUNTED_FUTURES: {
-    HEADING: 'Reserve agora, viaje quando quiser e economize sempre',
+    HEADING: 'Reserve agora, economize e viaje quando quiser',
     DESCRIPTION:
+      'Por um período limitado, você pode adquirir uma **reserva aberta** para suas experiências favoritas válida até o dia 31-dez-2021, economizando e garantindo flexibilidade para planejar suas férias e aproveitar ao máximo!',
+    SHORT_DESCRIPTION:
       'Compre vouchers com desconto e faça sua visita quando preferir até <date>. Economize e apoie a indústria do turismo!',
     FLAG_TEXT: 'Reservar pra depois',
     HEADING_WORKS: 'Como funciona?',
+    BANNER: {
+      HEADING_LINE1: 'Não sabe ainda quando vai viajar?',
+      HEADING_LINE2:
+        'Reserve com data em aberto para uma maior economia e flexibilidade!',
+      DESCRIPTION_LINE1: 'Economize até 50%.',
+      DESCRIPTION_LINE2:
+        'Válida para ser usada a qualquer momento entre <cooldownDate> e 31-dez-2021.',
+    },
     FAQ_QUESTIONS: {
       WORKING: {
-        QUESTION: 'O que é a opção "Reservar pra depois"?',
+        QUESTION: 'O que é a opção "Reserve agora, vá depois"?',
         ANSWER:
-          '<mbName> agora permite a você o conforto de reservar suas experiências favoritas, atrações, ingressos de entretenimento sem se comprometer com a data e hora. Você pode adquirir os produtos elegíveis no site <domain> e optar por fazer a visita ou realizar a experiência em qualquer data futura até 31 de dezembro de 2021, conforme sua conveniência. Todos os produtos sob esta opção estão com descontos especiais. Quando estiver pronto para viajar e experimentar os produtos adquiridos, você pode usar a reserva escolhendo uma data e horário específicos para a mesma através do site <domain>.',
+          'Oferecemos agora o conforto de reservar suas experiências favoritas, atrações e ingressos sem se comprometer com a data e a hora. Você pode reservar os produtos elegíveis com data em aberto e usá-los em qualquer data futura até 31 de dezembro de 2021. Todos os produtos sob esta opção estão com descontos especiais. Quando estiver pronto para viajar e usar as experiências adquiridas, você pode escolher uma data e hora específica para a reserva.',
       },
       DATE_TIME: {
         QUESTION:
-          'Como posso adquirir ou usar a opção "Reservar pra depois" no site <domain>? Quais produtos estão elegíveis para essa opção? ',
+          'Como posso reservar pela opção “Reserve agora, vá depois” na Headout?',
         ANSWER:
-          'Para produtos elegíveis no <domain>, você pode escolher a opção de "Reservar para depois". Não é necessário selecionar a data e hora da visita imediatamente, você pode escolher qualquer hora e data de acordo com sua conveniência em uma data futura.',
+          'Os produtos elegíveis sob a promoção “Reserve agora, vá depois” estão marcados com o selo apropriado e você terá a opção de adquirir uma reserva aberta para essas experiências. Ao reservar, não é necessário selecionar a data e a hora imediatamente. Você pode usar sua reserva em aberto em uma data posterior, de acordo com sua conveniência.',
       },
-      USAGE: {
-        QUESTION: 'Quando posso usar a reserva adquirida?',
+      WHEN: {
+        QUESTION:
+          'Quando posso usar minhas reservas com a opção “Reserve agora, vá depois”?',
         ANSWER:
-          'Você pode usar a reserva escolhendo a data e hora da sua visita a qualquer momento após 30 dias da data de compra, considerando também a data de reabertura do local.',
+          'Você pode escolher a data da sua reserva aberta a qualquer momento após completá-la. A data da experiência não deve ser anterior a 30 dias após a data da compra e não deve ser posterior a 31-dez-2021.',
       },
       CANCEL: {
-        QUESTION: 'Qual é a política de cancelamento para essas reservas?',
+        QUESTION: 'Qual é a política de cancelamento dessas reservas?',
         ANSWER:
-          'Não é possível alterar ou cancelar as reservas feitas com essa opção.',
+          'Se ainda não escolheu a data da sua reserva aberta, você pode cancelar a qualquer momento antes de 31-dez-2021 e receber reembolso completo. Se já escolheu a data para sua reserva aberta, não será possível alterá-la ou cancelá-la.',
       },
       LIMITS: {
         QUESTION:
-          'Há restrições ou limitações na compra e uso dessas reservas? ',
+          'Há restrições ou limitações na compra de reservas em aberto? ',
         ANSWER: [
-          'Descontos e cupons não podem ser utilizados para reservas com essa opção.',
-          'Cashback ou créditos <mbName> em sua carteira <mbName> não podem ser usados para reservar/adquirir qualquer experiência com essa opção. ',
-          'Ao usar sua reserva, escolhendo a data e hora, você não poderá alterá-la ou cancelá-la. As reservas também não poderão ser reembolsadas.',
+          'Descontos ou cupons não são aplicáveis ao adquirir uma reserva aberta.',
+          'Cashback ou créditos em sua carteira <mbName> não podem ser usados para adquirir uma reserva aberta.',
+          'Ao escolher uma data para a experiência, não é possível alterar ou cancelar a reserva.',
+          'Um máximo de 2 reservas por pessoa por experiência é permitido durante o período da promoção.',
         ],
       },
       EXERCISE: {
-        QUESTION: 'como usar essas reservas?',
+        QUESTION: 'Como faço para usar essas reservas?',
         ANSWER: [
-          'Você receberá um recibo e um comprovante de sua reserva futura para o produto selecionado após a conclusão do pagamento.',
-          'Quando o local ou o produto selecionado abrir para visitas, você receberá um link da reserva por e-mail. Usando este link, você poderá selecionar a data e hora de sua preferência para a reserva, ou seja, utilizá-la. ',
-          'Uma vez selecionada a data e hora preferidas, você receberá por e-mail um comprovante de confirmação e um ingresso da experiência. ',
-          'Visite o local na data e horário selecionados e aproveite a experiência que você escolheu.',
+          'Ao concluir sua reserva, você receberá um recibo da mesma e um voucher da experiência selecionada em seu e-mail.',
+          'Você também receberá um link da reserva por e-mail que poderá usar para escolher sua data e hora preferidas. Caso a atração ou operador de sua experiência selecionada ainda não tenha reiniciado seus serviços, você receberá este link de reserva quando eles o fizerem. Esta etapa pode ser completada a qualquer momento durante a validade do voucher, ou seja, 31-dez-2021.',
+          'Ao escolher a data para a reserva, você receberá uma confirmação para a experiência na data e hora selecionadas via e-mail',
+          'Vá ao local na data e horário selecionados e aproveite a experiência que você escolheu.',
         ],
+      },
+      ELIGIBLE: {
+        QUESTION: 'Que produtos estão disponíveis para essa opção?',
+        ANSWER:
+          'Os produtos disponíveis para esta promoção estão marcados com um selo ***Reserve agora, vá depois***.',
       },
     },
     HOW_IT_WORKS: {
       PICK: {
-        HEADING: 'Escolha a experiência que sempre quis viver',
+        HEADING: 'Escolha a experiência que sempre quis realizar',
         SUB_TEXT:
-          'Estamos sempre planejando viajar pelo mundo e os próximos anos serão a melhor época para fazer acontecer - vamos lá!',
+          "Todas as experiências com o selo 'Reserve agora, vá depois' podem ser adquiridas como reservas abertas com desconto. Vá em frente, escolha uma experiência que sempre quis realizar e adquira uma reserva em aberto.",
       },
       VOUCHER: {
-        HEADING: 'Compre seu voucher',
+        HEADING: 'Use sua reserva quando estiver preparado(a)',
         SUB_TEXT:
-          "Todas as experiências sinalizadas com 'Compre agora, vá depois' podem ser adquiridas como um voucher flexível com descontos incríveis e resgatadas a qualquer momento antes de <date>.",
+          'Quando seus planos de viagem forem confirmados, use sua reserva em aberto escolhendo a data e a hora para realizar sua experiência. Sua reserva é válida para viagens de <cooldownDate> até 31-dez-2021.',
       },
       REDEEM: {
-        HEADING: 'Resgate o valor e use sua reserva quando quiser',
+        HEADING: 'Aproveite ao máximo!',
         SUB_TEXT:
-          'Você tem controle total e pode usar sua reserva na <mbName> quando confirmar seus planos.',
+          'Tudo confirmado. Viaje e divirta-se ao máximo em suas férias!',
       },
     },
     PITCH: {
       GO_ANYTIME: {
-        HEADING: 'Escolha quando ir',
+        HEADING: 'Viaje quando quiser',
         SUB_TEXT:
-          'Sabemos que é difícil planejar no momento, por isso você pode usar os vouchers em qualquer momento até <date>',
+          'Sabemos que é difícil definir planos agora e é por isso que você pode usar estas reservas a qualquer momento até <date>, dando-lhe tempo para planejar com calma as próximas férias.',
       },
       SAVE_MONEY: {
-        HEADING: 'Economize dinheiro, afinal você merece',
+        HEADING: 'Economize',
         SUB_TEXT:
-          'Oferecemos descontos incríveis que ajudam não apenas a economizar dinheiro, mas são também motivos para você querer viajar em breve',
+          'Descontos significativos são oferecidos para ajudar a economizar em sua próxima viagem, caso você esteja procurando outro motivo para viajar em breve.',
       },
       BUCKET_LIST: {
-        HEADING: 'Risque da sua lista de desejos',
+        HEADING: 'Cancelamento flexível',
         SUB_TEXT:
-          'Estamos sempre planejando viajar pelo mundo e os próximos anos serão a melhor época para fazer acontecer - vamos lá!',
+          'Se você não escolheu a data da sua experiência, pode cancelar a reserva a qualquer momento e obter um reembolso total. Sabemos que mudanças nos planos podem ser estressantes e é menos uma coisa para se preocupar.',
       },
     },
     IMAGES_SECTION: {
@@ -252,12 +269,16 @@ const pt = {
     },
     BOOKING_MODAL: {
       BOOK_NOW_PITCH:
-        'Selecione uma data para sua reserva. Não será possível alterar a data da reserva mais tarde.',
-      GO_LATER_HEADING: 'Reserve agora, viaje quando quiser e economize sempre',
+        'Selecione a data ou horário para confirmar sua experiência.',
+      SELECT_DATE: 'Selecione a data',
+      GO_LATER_HEADING: 'Reserva aberta',
+      BOOK_NOW_HEADING: 'Reserva marcada',
       GO_LATER_PITCH:
-        'Book this experience at a discount & get the freedom to pick your exact slot later. Applies for any slot after <stDate>. Voucher is valid until <edDate>.',
-      GET_THIS: 'Get This',
+        'Reserve esta experiência com desconto e tenha a flexibilidade de escolher a data de visita mais tarde. A experiência pode ser confirmada para qualquer data entre <stDate> até <edDate>.',
+      GET_THIS: 'Reserve agora',
       LEARN_MORE: 'Saiba mais',
+      BOOK_NOW: 'Reserve agora',
+      LIMITED: 'Oferta por período limitado',
     },
   },
 };

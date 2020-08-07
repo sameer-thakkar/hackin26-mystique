@@ -18,7 +18,7 @@ const StyledReviews = styled.div`
     if (type === 'testimonial') {
       return `
         .custom-pagination {
-          top: 80%;
+          bottom: 40px;
           right: 64px;
           z-index: 1;
         }
@@ -212,6 +212,7 @@ const Reviews: React.FC<{
         sliderOptions={{
           shouldSwiperUpdate: true,
           slidesPerView: 1,
+          autoHeight: true,
         }}
         paginationClass="custom-pagination"
       >

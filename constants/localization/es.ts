@@ -180,8 +180,18 @@ const es = {
     HEADING: 'Reserva ahora, viaja en cualquier momento y ahorra siempre',
     DESCRIPTION:
       'Compra vales de descuento y viaja en cualquier momento hasta el <date>. ¡Ahorra dinero mientras apoyas el turismo!',
+    SHORT_DESCRIPTION:
+      'Compra vales de descuento y viaja en cualquier momento hasta el <date>. ¡Ahorra dinero mientras apoyas el turismo!',
     FLAG_TEXT: 'Reserva Flexible',
     HEADING_WORKS: '¿Cómo funciona?',
+    BANNER: {
+      HEADING_LINE1: 'Not sure when you’re traveling next?',
+      HEADING_LINE2:
+        'Book an open ticket for big flexibility and bigger savings!',
+      DESCRIPTION_LINE1: 'Save upto 50%.',
+      DESCRIPTION_LINE2:
+        'Valid for visit anytime between <cooldownDate> and 31-Dec-21.',
+    },
     FAQ_QUESTIONS: {
       WORKING: {
         QUESTION: '¿Qué significa la opción "Reserva Flexible"?',
@@ -272,6 +282,7 @@ const es = {
         'Book this experience at a discount & get the freedom to pick your exact slot later. Applies for any slot after <stDate>. Voucher is valid until <edDate>.',
       GET_THIS: 'Get This',
       LEARN_MORE: 'Conoce más',
+      LIMITED: 'Limited Period Offer',
     },
   },
 };

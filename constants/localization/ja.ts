@@ -175,6 +175,14 @@ const ja = {
       '割引クーポンを購入して、<日付>までいつでもア訪問しましょう。お金を節約して旅行業界をサポートしましょう!',
     FLAG_TEXT: '今予約、後で訪問',
     HEADING_WORKS: 'もっと知りたい?',
+    BANNER: {
+      HEADING_LINE1: 'Not sure when you’re traveling next?',
+      HEADING_LINE2:
+        'Book an open ticket for big flexibility and bigger savings!',
+      DESCRIPTION_LINE1: 'Save upto 50%.',
+      DESCRIPTION_LINE2:
+        'Valid for visit anytime between <cooldownDate> and 31-Dec-21.',
+    },
     FAQ_QUESTIONS: {
       WORKING: {
         QUESTION: "今予約、後で訪問'とは何ですか?",
@@ -267,6 +275,7 @@ const ja = {
         'この体験を割引で予約し、後で自由に出発時間を選択できるよ。<stDate>以降のいつでも適用されます。バウチャーは<edDate>まで有効です.',
       GET_THIS: 'これを入手',
       LEARN_MORE: '詳細',
+      LIMITED: 'Limited Period Offer',
     },
   },
 };

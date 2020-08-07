@@ -21,7 +21,7 @@ const Icon = styled.div`
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.07);
   background: ${COLORS.WHITE};
   justify-self: left;
-  margin-bottom: -12px;
+  margin-bottom: -20px;
   img {
     height: 32px;
     width: 32px;
@@ -31,6 +31,7 @@ const Icon = styled.div`
 const Content = styled.div`
   display: grid;
   grid-row-gap: 8px;
+  padding-top: 24px;
 `;
 
 const Title = styled.div`

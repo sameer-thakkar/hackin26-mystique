@@ -86,3 +86,8 @@ export const getNakedDomain = (host) => {
     ? host.replace('stage-', '').split('.').slice(1).join('.')
     : 'headout.com';
 };
+
+export const getSavingsPercent = (listingPriceObject) =>
+  ((listingPriceObject.originalPrice - listingPriceObject.finalPrice) /
+    listingPriceObject.originalPrice) *
+  100;

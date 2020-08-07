@@ -58,8 +58,18 @@ const nl = {
     HEADING: 'Book now, save money & go whenever',
     DESCRIPTION:
       'Buy discounted vouchers and visit anytime until <date>. Save money & support travel industry!',
+    SHORT_DESCRIPTION:
+      'Buy discounted vouchers and visit anytime until <date>. Save money & support travel industry!',
     FLAG_TEXT: 'Book Now, Go Whenever',
     HEADING_WORKS: 'How it works?',
+    BANNER: {
+      HEADING_LINE1: 'Not sure when you’re traveling next?',
+      HEADING_LINE2:
+        'Book an open ticket for big flexibility and bigger savings!',
+      DESCRIPTION_LINE1: 'Save upto 50%.',
+      DESCRIPTION_LINE2:
+        'Valid for visit anytime between <cooldownDate> and 31-Dec-21.',
+    },
     FAQ_QUESTIONS: {
       WORKING: {
         QUESTION: 'What is the “Book Now, Go whenever” option?',
@@ -155,6 +165,7 @@ const nl = {
         'Book this experience at a discount & get the freedom to pick your exact slot later. Applies for any slot after <stDate>. Voucher is valid until <edDate>.',
       GET_THIS: 'Get This',
       LEARN_MORE: 'Learn More',
+      LIMITED: 'Limited Period Offer',
     },
   },
 };

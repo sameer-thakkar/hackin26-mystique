@@ -167,86 +167,100 @@ const de = {
     },
   },
   DISCOUNTED_FUTURES: {
-    HEADING: 'Jetzt reservieren, später reisen, immer sparen',
+    HEADING: 'Jetzt buchen, Geld sparen und später reisen',
     DESCRIPTION:
+      'Für einen begrenzten Zeitraum können Sie **offene Tickets** für einige Ihrer Lieblingsaktivitäten reservieren. Diese Tickets sind jederzeit bis zum 31. Dezember 2021 einlösbar und bieten erstaunliche Rabatte, mehr Flexibilität sowie ein garantiert unvergessliches Erlebnis.',
+    SHORT_DESCRIPTION:
       'Kaufen Sie ermäßigte Gutscheine, die bis zum <date> gültig sind, um Geld zu sparen und die Reiseindustrie zu unterstützen.',
     FLAG_TEXT: 'Jetzt buchen, später erleben',
     HEADING_WORKS: 'So funktionierts:',
+    BANNER: {
+      HEADING_LINE1: 'Steht die nächste Reise noch in den Sternen?',
+      HEADING_LINE2:
+        'Buchen Sie ein offenes Ticket für mehr Flexibilität und umso größere Ersparnisse!',
+      DESCRIPTION_LINE1: 'Sparen Sie bis zu 50 %.',
+      DESCRIPTION_LINE2: 'Jederzeit vom <cooldownDate> bis 31.12.21 einlösbar.',
+    },
     FAQ_QUESTIONS: {
       WORKING: {
-        QUESTION: 'Wie funktioniert die Option „Für später reservieren“?',
+        QUESTION: 'Was ist die Aktion „Jetzt buchen, später reisen“?',
         ANSWER:
-          'Mit <mbName> können Sie jetzt bequem Tickets für Erlebnisse, Attraktionen und Events buchen, ohne sich auf ein Datum und eine Uhrzeit festlegen zu müssen. Sie können die entsprechenden Produkte jetzt auf <domain> kaufen und das Erlebnis zu einem beliebigen Zeitpunkt bis zum 31. Dezember 2021 buchen. Alle Produkte dieser Option werden zu einem Sonderrabatt angeboten. Sobald Sie reisebereit sind und die gebuchten Produkte einlösen möchten, können Sie die Buchung „ausführen“, indem Sie die gewünschte Erlebniszeit auf <domain> auswählen.',
+          'Sie können jetzt Ihre Lieblingserlebnisse und -attraktionen reservieren, ohne sich auf ein Datum festzulegen. Die geeigneten Erlebnisse können als offene Tickets gebucht und bis zum 31.12.21 an einem beliebigen Datum eingelöst werden. Alle Erlebnisse dieser Aktion sind zum ermäßigten Preis erhältlich. Sobald Sie wieder reisen und Ihr Erlebnis nutzen möchten, können Sie das offene Ticket einlösen. Wählen Sie dafür einfach das gewünschte Erlebnisdatum aus.',
       },
       DATE_TIME: {
         QUESTION:
-          'Wie kann ich die Option „Für später reservieren“ auf <domain> kaufen bzw. nutzen? Welche Produkte stehen zur Auswahl? ',
+          'Wie kann ich die Aktion „Jetzt buchen, später reisen“ auf Headout buchen?',
         ANSWER:
-          'Welche Produkte auf <domain> zur Auswahl stehen, können Sie auf der Website unter der Option „Für später reservieren“ einsehen. Sie müssen das Datum und die Uhrzeit Ihres Besuchs nicht sofort festlegen, sondern können sich später für eine Erlebniszeit entscheiden. ',
+          'Geeignete Erlebnisse der Aktion „Jetzt buchen, später reisen“ sind mit dem entsprechenden Abzeichen gekennzeichnet, d. h., für diese Erlebnisse können offene Tickets gebucht werden. Mit einem offenen Ticket müssen Sie das Erlebnisdatum nicht sofort festlegen, sondern können das Ticket später an Ihrem gewünschten Erlebnisdatum einlösen.',
       },
-      USAGE: {
+      WHEN: {
         QUESTION:
-          'Wann kann ich Buchungen der Option „Für später reservieren“ ausführen bzw. nutzen?',
+          'Wann kann ich meine „Jetzt buchen, später reisen“-Reservierung einlösen?',
         ANSWER:
-          'Wählen Sie nach dem Öffnungsdatum des Veranstaltungsortes bzw. 30 Tage nach dem Kaufdatum (je nachdem, welches Ereignis später eintritt) das gewünschte Datum und die Uhrzeit Ihres Besuchs aus, um die Buchung auszuführen.',
+          'Sie können Ihr offenes Ticket jederzeit nach Abschluss der Reservierung einlösen. Das Erlebnisdatum muss mindestens 30 Tage nach der Reservierung und vor dem 31.12.21 liegen.',
       },
       CANCEL: {
-        QUESTION: 'Welche Stornierungsbedingungen gelten für diese Buchungen?',
+        QUESTION:
+          'Wie lauten die Stornierungsbedingungen für diese Reservierungen?',
         ANSWER:
-          'Buchungen, die unter der Option „Für später reservieren“ vorgenommen werden, können weder geändert noch storniert werden.',
+          'Wenn Sie Ihr offenes Ticket nicht eingelöst haben, können Sie Ihre Reservierung jederzeit vor dem 31.12.21 stornieren und erhalten eine vollständige Rückerstattung. Wenn Sie mit Ihrem offenen Ticket bereits ein Erlebnis an einem bestimmten Datum gebucht haben, kann Ihre Buchung nicht mehr geändert oder storniert werden.',
       },
       LIMITS: {
         QUESTION:
-          'Gibt es irgendwelche Beschränkungen oder Begrenzungen für den Kauf oder die Nutzung der Option „Für später reservieren“? ',
+          'Gibt es beim Kauf von offenen Tickets irgendwelche Einschränkungen oder Begrenzungen? ',
         ANSWER: [
-          'Rabattgutscheine/-codes können nicht für die Option „Für später reservieren“ verwendet werden.',
-          'Cashback oder <mbName> Credits aus Ihrem <mbName> Guthaben können nicht für die Buchung/Nutzung eines Erlebnisses der Option „Für später reservieren“ verwendet werden. ',
-          'Sobald Sie die Buchung ausführen, d. h., sobald Sie ein Datum und eine Uhrzeit für Ihr Erlebnis wählen, können Sie die Buchung nicht mehr ändern oder stornieren. Ausgeführte Buchungen der Option „Für später reservieren“ können auch nicht erstattet werden.',
+          'Rabatt- oder Couponcodes können beim Kauf von offenen Tickets nicht eingelöst werden.',
+          'Cashback oder Credits aus Ihrer <mbName>-Wallet können für den Kauf von offenen Tickets nicht verwendet werden.',
+          'Sobald Sie das offene Ticket eingelöst haben, d. h., ein Erlebnisdatum gebucht haben, können Sie die Buchung nicht mehr ändern oder stornieren.',
+          'Im Rahmen dieser Aktion können höchstens 2 Reservierungen pro Person und pro Erlebnis vorgenommen werden.',
         ],
       },
       EXERCISE: {
-        QUESTION:
-          'Wie führe ich Buchungen der Option „Für später reservieren“ aus?',
+        QUESTION: 'Wie führe ich die Buchung aus?',
         ANSWER: [
-          'Nachdem der Zahlungsvorgang erfolgreich abgeschlossen wurde, erhalten Sie einen Buchungsbeleg und einen Gutschein für das ausgewählte Produkt.',
-          'Sobald der Veranstaltungsort oder das ausgewählte Produkt für Besucher geöffnet wird, erhalten Sie per E-Mail einen Buchungslink. Mit diesem Link können Sie Ihr gewünschtes Datum und Ihre gewünschte Uhrzeit für das Erlebnis auswählen, um die Buchung auszuführen. ',
-          'Sobald Sie die gewünschte Erlebniszeit ausgewählt und damit die Buchung ausgeführt haben, erhalten Sie per E-Mail einen Bestätigungsgutschein und ein Ticket für die Buchung. ',
-          'Gehen Sie zum gewünschten Zeitpunkt zum Veranstaltungsort und genießen Sie Ihr gewähltes Erlebnis.',
+          'Nachdem Sie Ihre Reservierung abgeschlossen haben, erhalten Sie eine E-Mail mit Ihrer Reservierungsbestätigung und Ihrem Ticket für das ausgewählte Erlebnis.',
+          'Sie erhalten auch einen Buchungslink per E-Mail, um Ihr Ticket an Ihrem gewünschten Datum einzulösen. Sollte die Attraktion oder der Betreiber des von Ihnen gewählten Erlebnisses den Betrieb noch nicht wieder aufgenommen haben, erhalten Sie den Buchungslink, sobald das Erlebnis wieder angeboten wird. Sie können die Buchung jederzeit vor dem 31.12.21 ausführen.',
+          'Sobald Sie das Ticket eingelöst haben, erhalten Sie eine E-Mail mit einem bestätigten Ticket für das Erlebnis an dem von Ihnen gewählten Datum.',
+          'Besuchen Sie den Veranstaltungsort an dem von Ihnen gewählten Datum und genießen Sie Ihr Erlebnis.',
         ],
+      },
+      ELIGIBLE: {
+        QUESTION: 'Welche Erlebnisse werden im Rahmen dieser Aktion angeboten?',
+        ANSWER:
+          'Die geeigneten Erlebnisse dieser Aktion sind mit dem Abzeichen „Jetzt buchen, später reisen“ gekennzeichnet.',
       },
     },
     HOW_IT_WORKS: {
       PICK: {
-        HEADING: 'Wählen Sie Ihr gewünschtes Erlebnis',
+        HEADING: 'Gewünschtes Erlebnis auswählen',
         SUB_TEXT:
-          'Wir wollten alle schon immer die Welt bereisen und die nächsten Jahre bieten die perfekte Gelegenheit dafür – auf gehts!',
+          'Alle Erlebnisse der Aktion „Jetzt buchen, später reisen“ können als offenes Ticket mit großen Ermäßigungen gekauft werden. Wählen Sie einfach Ihr gewünschtes Erlebnis aus und reservieren Sie Ihr offenes Ticket.',
       },
       VOUCHER: {
-        HEADING: 'Kaufen Sie Ihren Gutschein',
+        HEADING: 'Ticket jederzeit einlösen und Erlebnis buchen',
         SUB_TEXT:
-          'Alle Erlebnisse unter der Option „Für später reservieren“ sind in Form eines flexiblen Gutscheins zum ermäßigten Preis erhältlich. Die Gutscheine können jederzeit bis zum <date> eingelöst werden.',
+          'Wenn Ihre Reisepläne feststehen, lösen Sie Ihr offenes Ticket ein, indem Sie das gewünschte Erlebnisdatum buchen. Ihr Ticket ist vom <cooldownDate> bis zum 31.12.2021 gültig.',
       },
       REDEEM: {
-        HEADING: 'Lösen Sie Ihren Gutschein zu einem beliebigen Zeitpunkt ein',
-        SUB_TEXT:
-          'Sie können das Datum Ihres Erlebnisses frei wählen und Ihr gewünschtes Zeitfenster auf <mbName> reservieren, sobald Ihre Reisepläne feststehen.',
+        HEADING: 'Erlebnis genießen',
+        SUB_TEXT: 'Jetzt kann die Reise losgehen: Genießen Sie Ihren Urlaub.',
       },
     },
     PITCH: {
       GO_ANYTIME: {
         HEADING: 'Flexibles Reisen',
         SUB_TEXT:
-          'Weil es momentan schwierig ist, feste Reisepläne zu machen, sind diese Gutscheine jederzeit bis zum <date> einlösbar.',
+          'Weil es momentan schwierig ist, feste Reisepläne zu machen, sind diese Tickets jederzeit bis zum <date> einlösbar. So können Sie Ihre nächste Reise in aller Ruhe planen.',
       },
       SAVE_MONEY: {
-        HEADING: 'Sofortige Ersparnisse',
+        HEADING: 'Große Ersparnisse',
         SUB_TEXT:
-          'Mit unseren hohen Rabatten profitieren Sie schon jetzt von den Ersparnissen Ihrer nächste Reise.',
+          'Mit diesen erheblichen Ermäßigungen genießen Sie bei Ihrer nächsten Reise tolle Ersparnisse – falls Sie noch einen Grund zum Reisen brauchen.',
       },
       BUCKET_LIST: {
-        HEADING: 'Erfüllte Reiseträume',
+        HEADING: 'Problemlose Stornierung',
         SUB_TEXT:
-          'Wir wollten alle schon immer die Welt bereisen und die nächsten Jahre bieten die perfekte Gelegenheit dafür – auf gehts!',
+          'Wenn Sie Ihr offenes Ticket nicht eingelöst haben, können Sie Ihre Reservierung jederzeit stornieren und erhalten eine vollständige Rückerstattung. Wir wissen, dass es stressig sein kann, Reisepläne zu ändern. Deswegen nehmen wir Ihnen diese Sorge schon im Voraus ab.',
       },
     },
     IMAGES_SECTION: {
@@ -254,12 +268,16 @@ const de = {
     },
     BOOKING_MODAL: {
       BOOK_NOW_PITCH:
-        'Wählen Sie ein Datum, um Ihre Buchung abzuschließen. Das gewählte Datum Ihrer Buchung kann später nicht mehr geändert werden.',
-      GO_LATER_HEADING: 'Jetzt reservieren, später reisen, immer sparen',
+        'Wählen Sie ein Datum und Zeitfenster aus, um Ihr Erlebnis zu buchen.',
+      SELECT_DATE: 'Datum auswählen',
+      GO_LATER_HEADING: 'Offenes Ticket',
+      BOOK_NOW_HEADING: 'Zeitticket',
       GO_LATER_PITCH:
-        'Book this experience at a discount & get the freedom to pick your exact slot later. Applies for any slot after <stDate>. Voucher is valid until <edDate>.',
-      GET_THIS: 'Get This',
+        'Reservieren Sie dieses ermäßigte Erlebnis und wählen Sie Ihr Erlebnisdatum später aus. Das Ticket kann jederzeit vom <stDate> bis zum <edDate> eingelöst werden.',
+      GET_THIS: 'Jetzt buchen',
       LEARN_MORE: 'Weitere Infos',
+      BOOK_NOW: 'Jetzt buchen',
+      LIMITED: 'Zeitweilige Aktion',
     },
   },
 };

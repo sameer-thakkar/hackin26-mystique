@@ -282,6 +282,11 @@ export default class Page extends React.Component<any, any> {
                   commonFooter.data.powered_by_headout;
                 delete commonFooter.data.powered_by_headout;
               }
+              if (commonHeader?.data) {
+                commonHeader.data.enable_powered_by_superbrand_logo =
+                  commonHeader.data.enable_powered_by_headout_logo;
+                delete commonHeader.data.enable_powered_by_headout_logo;
+              }
               const micrositeData = {
                 ...completeMicrosite,
                 data: {

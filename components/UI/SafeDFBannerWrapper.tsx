@@ -62,7 +62,9 @@ const SafeDFBannerWrapper = ({
           <InfoBanner
             cta={labels[lang].LISTICLES.KNOW_MORE}
             title={labels[lang].DISCOUNTED_FUTURES.HEADING}
-            description={labels[lang].DISCOUNTED_FUTURES.DESCRIPTION.replace(
+            description={labels[
+              lang
+            ].DISCOUNTED_FUTURES.SHORT_DESCRIPTION.replace(
               '<date>',
               dfExpiryDate?.format('DD-MMM-YY')
             )}

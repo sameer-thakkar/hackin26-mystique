@@ -5,8 +5,10 @@ import Image from './Image';
 import * as labels from 'constants/localization/labels';
 import { SOLEIL, COLORS } from 'constants/ui-constants';
 import { DISCOUNTED_FUTURE_IMAGES_SECTION } from 'constants/index';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { MBContext } from 'contexts/MBContext';
+import dayjs from 'dayjs';
+import ReactMarkdown from 'react-markdown/with-html';
 
 const PitchGrid = styled.div`
   display: grid;
@@ -50,7 +52,7 @@ const Pitch = styled.div`
   display: grid;
   grid-row-gap: 12px;
   background-image: url('https://cdn-imgix-open.headout.com/sites/assets/travellers.svg');
-  background-size: contain;
+  background-size: auto;
   background-repeat: no-repeat;
   background-position: right;
   ${Heading}, ${Text} {
@@ -154,6 +156,7 @@ const getDFFAQs = (lang, name, domain) => {
 };
 const DiscountedFuturesPitch = ({ dfExpiryDate = '' }) => {
   const { lang, nakedDomain } = useContext(MBContext);
+  const startDate = dayjs().add(30, 'day').format('DD-MMM-YYYY');
   const [name, ..._tld] = nakedDomain.split('.');
 
   return (
@@ -164,10 +167,14 @@ const DiscountedFuturesPitch = ({ dfExpiryDate = '' }) => {
             {labels[lang].DISCOUNTED_FUTURES.HEADING}
           </Heading>
           <Text>
-            {labels[lang].DISCOUNTED_FUTURES.DESCRIPTION.replace(
-              '<date>',
-              dfExpiryDate
-            )}
+            <ReactMarkdown
+              source={labels[lang].DISCOUNTED_FUTURES.DESCRIPTION.replace(
+                '<date>',
+                dfExpiryDate
+              )}
+              renderers={{ paragraph: React.Fragment }}
+              escapeHtml={false}
+            />
           </Text>
         </Pitch>
       </Section>
@@ -210,7 +217,10 @@ const DiscountedFuturesPitch = ({ dfExpiryDate = '' }) => {
                   <EmphasizedText>{HEADING}</EmphasizedText>
                   <Text>
                     {replaceSuperBrand(
-                      SUB_TEXT.replace('<date>', dfExpiryDate),
+                      SUB_TEXT.replace('<date>', dfExpiryDate).replace(
+                        '<cooldownDate>',
+                        startDate
+                      ),
                       name,
                       nakedDomain
                     )}

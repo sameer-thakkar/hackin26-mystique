@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Tag = styled.div`
+export const Tag = styled.div`
   ${({ bordered }) => (bordered ? `border: 1px solid #ebebeb;` : ``)}
   border-radius: 4px;
   padding: 5px 8px;
@@ -13,7 +13,7 @@ const Tag = styled.div`
     backgroundColor ? `background: ${backgroundColor};` : ``}
 `;
 
-const StyledTags = styled.div`
+export const StyledTags = styled.div`
   height: max-content;
   width: 100%;
   display: flex;

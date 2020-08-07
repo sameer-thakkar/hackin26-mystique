@@ -1,7 +1,9 @@
 import Chevron from '../UI/Chevron';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { SOLEIL, COLORS } from '../../constants/ui-constants';
+import ReactMarkdown from 'react-markdown/with-html';
+import Conditional from 'components/common/Conditional';
 
 const StyledAccordion = styled.div`
   padding: 16px 0;
@@ -83,7 +85,14 @@ const Accordion = ({
         </div>
       </Title>
       <ContentBlock className={'answer'} isOpen={isOpen}>
-        {content}
+        <Conditional if={typeof content === 'string'}>
+          <ReactMarkdown
+            renderers={{ root: React.Fragment }}
+            source={content}
+            escapeHtml={false}
+          />
+        </Conditional>
+        <Conditional if={typeof content !== 'string'}>{content}</Conditional>
       </ContentBlock>
     </StyledAccordion>
   );

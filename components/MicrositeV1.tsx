@@ -415,11 +415,14 @@ export default class MicrositeV1 extends Component<any, any> {
     const hasSafe = Object.values(tours).some((tour: any) =>
       isSafetyIncluded(tour.allTags)
     );
-    const [dfExpiryDate, ..._others] = Object.values(tours)
-      .filter((tour: any) => tour && tour.dfListingPrice)
+    const dfTours = Object.values(tours).filter(
+      (tour: any) => tour && tour.dfListingPrice
+    );
+    const [dfExpiryDate, ..._otherValidity] = dfTours
       .map((tour: any) => getDFValidityFromTags(tour.allTags))
       .filter((d) => d)
       .sort((a, b) => (dayjs(a).isAfter(b) ? -1 : 1));
+
     return (
       <div>
         <div className="microsite-container">
@@ -505,6 +508,8 @@ export default class MicrositeV1 extends Component<any, any> {
               isMobile={this.state.isMobile}
               boxed={true}
               hideCTA={hideBannerCTA}
+              dfExpiryDate={dfExpiryDate || null}
+              cooldownDate={dayjs().add(30, 'day')}
             />
           </Conditional>
           <Conditional if={mbTheme === THEMES.MIN_BLUE}>

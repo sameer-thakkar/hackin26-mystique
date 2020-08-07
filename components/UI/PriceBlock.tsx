@@ -4,6 +4,7 @@ import { SOLEIL, COLORS } from 'constants/ui-constants';
 import styled from 'styled-components';
 import { CURRENCY_SYMBOL_MAP, THEMES } from 'constants/index';
 import Conditional from 'components/common/Conditional';
+import { getSavingsPercent } from 'utils';
 
 export const StyledPriceBlock = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
@@ -64,10 +65,7 @@ const PriceBlock = ({
   if (!price) return null;
   const { originalPrice, finalPrice, currencyCode } = price;
   const currencySymbol = CURRENCY_SYMBOL_MAP[currencyCode];
-  const savings =
-    price && showSavings
-      ? ((price.originalPrice - price.finalPrice) / price.originalPrice) * 100
-      : -1;
+  const savings = price && showSavings ? getSavingsPercent(price) : -1;
   return (
     <StyledPriceBlock>
       {originalPrice > finalPrice && showScratchPrice ? (

@@ -177,85 +177,111 @@ const it = {
     },
   },
   DISCOUNTED_FUTURES: {
-    HEADING: 'Prenota Adesso, Viaggia Quando Vuoi, Risparmia Sempre',
+    HEADING: 'Prenota ora, risparmia denaro & viaggia quando vuoi',
     DESCRIPTION:
+      "Per un periodo di tempo limitato è ora possibile prenotare un **biglietto aperto** per una selezione delle tue attività preferite. Il biglietto sarà valido per usufruire dell'esperienza in qualsiasi momento fino al 31-dic-2021, permettendoti così di risparmiare alla grande, di pianificare in maniera superflessibile la tua prossima vacanza e di partecipare ad attività superdivertenti!",
+    SHORT_DESCRIPTION:
       'Acquista i tuoi voucher scontati e goditi la tua esperienza prima del seguente termine: <date>. Così facendo, risparmi denaro e aiuti il settore turistico!',
     FLAG_TEXT: 'Prenota per il Futuro',
     HEADING_WORKS: 'Come funziona?',
+    BANNER: {
+      HEADING_LINE1: 'Non hai ancora deciso la data del tuo prossimo viaggio?',
+      HEADING_LINE2:
+        'Prenota un biglietto aperto per risparmiare denaro e approfittare di date di prenotazione flessibili!',
+      DESCRIPTION_LINE1: 'Risparmia fino al 50%.',
+      DESCRIPTION_LINE2:
+        'Valido per una visita in qualsiasi momento tra <cooldownDate> e il 31-Dec-21.',
+    },
     FAQ_QUESTIONS: {
       WORKING: {
-        QUESTION: 'Cosa è l\'opzione "Prenota per il Futuro?"',
+        QUESTION: "Cosa è l'opzione “Prenota ora, Vai quando vuoi”?",
         ANSWER:
-          "<mbName> ti offre ora la comodità di prenotare le tue esperienze preferite, le visite alle attrazioni e i biglietti per gli spettacoli senza doverti preoccupare di fissare una data e un'ora definitiva. Da oggi è possibile acquistare una serie di prodotti selezionati su <domain> e scegliere di usufruire dell'esperienza in qualsiasi data entro il 31 dicembre 2021, a seconda delle tue esigenze. Tutti i prodotti che includono questa opzione offrono sconti speciali. Una volta che hai deciso di partire per usufruire dell'attività prescelta, potrai \"attivare\" la tua prenotazione scegliendo una data specifica e una fascia oraria usando il sito <domain>.",
+          "Da questo momento ti offriamo la comodità di prenotare le tue esperienze preferite per visite turistiche e spettacoli di intrattenimento senza doverti preoccupare della data e dell'ora. Ora è possibile acquistare i prodotti inclusi nell'offerta come \"biglietti aperti\" che ti permettono di usufruire dell'esperienza in qualsiasi data futura fino al 31 dicembre 2021. Tutti i prodotti che rientrano in questa offerta propongono sconti speciali. Una volta che hai deciso di metterti in viaggio e di usufruire dei prodotti acquistati, potrai riscattare il biglietto aperto scegliendo una data e un'ora specifiche per la tua visita.",
       },
       DATE_TIME: {
         QUESTION:
-          'Come faccio a comprare o utilizzare l\'opzione "Prenota per il Futuro" sul sito web <domain>? Quali prodotti permettono l\'utilizzo dell\'opzione "Prenota per il Futuro"?',
+          "Come posso prenotare esperienze incluse nell'offerta “Prenota ora, Vai quando vuoi” con Headout?",
         ANSWER:
-          'I prodotti selezionati inclusi nel servizio "Prenota per il Futuro" sul sito web <domain> sono quelli che mostrano l\'opzione selezionabile “Prenota per il Futuro”. Non è necessario selezionare subito la data e l\'ora della visita, è possibile scegliere qualsiasi ora e data in un secondo momento.',
+          "I prodotti inclusi nella promozione ‘Prenota ora, Vai quando vuoi’ saranno contrassegnati da uno stemma che garantisce la possibilità di scegliere l'opzione biglietto aperto. Quando si prenota un biglietto aperto, non è necessario selezionare subito la data e l'ora della visita. Potrai riscattare il tuo biglietto aperto per una data e un orario specifici in un secondo momento, a seconda delle tue esigenze.",
       },
-      USAGE: {
+      WHEN: {
         QUESTION:
-          'In quale momento posso rendere operativa la mia "Prenotazione per il Futuro"?',
+          'Quando posso riscattare le me prenotazioni “Prenota ora, Vai quando vuoi”?',
         ANSWER:
-          "Puoi esercitare queste prenotazioni finalizzando la data e l'ora della tua visita in qualsiasi momento dopo 30 giorni dalla data di acquisto o dalla data di riapertura della sede dell'esperienza.",
+          'Puoi riscattare il tuo biglietto aperto in qualsiasi momento dopo aver completato la prenotazione. La data della visita non deve essere antecedente a 30 giorni dalla data di prenotazione e non può essere fissata per un termine oltre il 31-Dec-2021.',
       },
       CANCEL: {
         QUESTION: 'Qual è la polizza di cancellazione per queste prenotazioni?',
         ANSWER:
-          'Non è possibile modificare o cancellare le prenotazioni effettuate nell\'ambito dell\'offerta "Prenota per il Futuro".',
+          'Se non hai riscattato il tuo biglietto aperto, puoi cancellare la tua prenotazione in qualsiasi momento prima del 31-Dec-2021 e ottenere un rimborso completo. Se hai usato il tuo biglietto aperto per prenotare biglietti per una data specifica, non puoi più modificare o cancellare la tua prenotazione.',
       },
       LIMITS: {
         QUESTION:
-          'Ci sono restrizioni relative all\'acquisto o all\'utilizzo delle "Prenotazioni per il Futuro"?',
+          "Ci sono restrizioni o limiti all'acquisto di biglietti aperti?",
         ANSWER: [
-          'I codici sconto e i buoni sconto non sono utilizzabili per gli acquisti delle “Prenotazioni per il Futuro”.',
-          'I Crediti <mbName> e i Cashback accumulati nel tuo <mbName> Wallet non possono essere utilizzati per prenotare/acquistare qualsiasi esperienza inclusa nell\'offerta "Prenotazioni per il Futuro".',
-          'Una volta che avrai esercitato il tuo diritto a una "Prenotazione per il Futuro" scegliendo una data e un\'ora, non sarà più possibile modificare o cancellare tale prenotazione. Inoltre, si prega di notare che le "Prenotazioni per il Futuro" già esercitate con selezione ultimata di data e ora non potranno beneficiare di alcun rimborso.',
+          "I codici sconto e i codici coupon non sono applicabili all'acquisto di biglietti aperti.",
+          'I Cashback e i crediti nel tuo <mbName> Wallet non possono essere utilizzati per prenotare un biglietto aperto.',
+          "Una volta riscattato il biglietto aperto e scelta la data dell'esperienza, non è possibile modificare o cancellare la prenotazione.",
+          'Per la durata di questa promozione è consentito un massimo di 2 prenotazioni a persona per ogni esperienza.',
+        ],
+      },
+      RESTRICTIONS: {
+        QUESTION:
+          "Ci sono restrizioni o limiti all'acquisto o all'utilizzo delle prenotazioni “Prenota ora, Vai quando vuoi”?",
+        ANSWER: [
+          'I codici sconto o codici coupon non saranno applicabili ai biglietti aperti.',
+          'I Cashback e i crediti accumulati nel tuo Wallet non possono essere utilizzati per prenotare un biglietto aperto.',
+          "Una volta riscattato il biglietto scegliendo una data per l'attività, non è possibile modificare o cancellare la prenotazione.",
+          'È consentito un massimo di 2 prenotazioni per persona per ogni esperienza.',
         ],
       },
       EXERCISE: {
-        QUESTION: 'Come posso attivare la mia "Prenotazione per il Futuro"?',
+        QUESTION: 'Come posso usufruire di queste prenotazioni?',
         ANSWER: [
-          'Riceverai una ricevuta e un voucher della tua "Prenotazione per il Futuro" per il prodotto selezionato dopo aver completato con successo il processo di pagamento.',
-          "Una volta che la sede dell'esperienza selezionata avrà riaperto l'accesso ai visitatori, riceverai un link di prenotazione via e-mail. Utilizzando questo link è possibile selezionare la data e l'ora preferita per la prenotazione: così facendo eserciterai il tuo diritto a eseguire una \"Prenotazione per il Futuro\".",
-          'Dopo aver selezionato la data e l\'ora preferita esercitando il tuo diritto a una "Prenotazione per il Futuro", riceverai via e-mail un voucher di conferma e il biglietto per l\'esperienza. ',
-          "Visita la sede dell'attività alla data e all'ora prenotate e goditi l'esperienza prescelta.",
+          "Una volta completata la prenotazione, riceverai nella tua e-mail una ricevuta della prenotazione e un voucher per l'esperienza selezionata.",
+          "Riceverai via e-mail anche un link di prenotazione che potrai utilizzare per riscattare il tuo voucher per la data e l'ora di prenotazione che preferisci. Nel caso in cui l'attrazione o l'operatore dell'esperienza selezionata non abbia ancora riaperto l'accesso all'attività che ti interessa, riceverai questo link di prenotazione non appena l'attività verrà riaperta al pubblico. È possibile completare questa fase di prenotazione in qualsiasi momento durante la validità del voucher, vale a dire fino al 31-Dec-2021.",
+          "Una volta riscattato il voucher, riceverai via e-mail un biglietto per l'esperienza confermato per la data e l'ora da te scelta.",
+          "Visita la sede dell'esperienza alla data e all'ora prescelta e goditi l'attività prenotata.",
         ],
+      },
+      ELIGIBLE: {
+        QUESTION:
+          "Quali prodotti possono essere acquistati all'interno di questa promozione?",
+        ANSWER:
+          'I prodotti acquistabili che fanno parte di questa promozione saranno contrassegnati dallo stemma ***Prenota ora, Parti quando vuoi***.',
       },
     },
     HOW_IT_WORKS: {
       PICK: {
         HEADING: "Scegli l'esperienza che hai sempre desiderato",
         SUB_TEXT:
-          'Chi non sogna da mesi di lanciarsi alla scoperta dei quattro angoli del globo? I prossimi due anni sono il momento migliore per farlo - partiamo subito!',
+          "Tutte le esperienze dell'offerta 'Prenota ora, Parti quando vuoi' possono essere acquistate come biglietto aperto con un forte sconto. Scegli pure l'esperienza che preferisci e prenota il tuo biglietto aperto.",
       },
       VOUCHER: {
-        HEADING: 'Acquista il tuo voucher',
+        HEADING: 'Riscatta e prenota quando decidi di partire',
         SUB_TEXT:
-          "Tutte le esperienze dell'offerta 'Prenota per il Futuro' possono essere acquistate con un forte sconto come voucher flessibili da riscattare in qualsiasi momento prima del seguente termine: <date>.",
+          "Quando i tuoi piani di viaggio sono confermati, riscatta il tuo biglietto aperto prenotando la data e l'ora in cui vuoi usufruire dell'esperienza. Il tuo biglietto è valido a partire da <cooldownDate> fino al 31-Dec-2021.",
       },
       REDEEM: {
-        HEADING: 'Riscatta e prenota quando vuoi',
-        SUB_TEXT:
-          'Hai il controllo completo sulla tua esperienza e puoi prenotare il momento della tua visita tramite <mbName> dopo aver finalizzato i tuoi programmi.',
+        HEADING: 'Buon divertimento!',
+        SUB_TEXT: 'È tutto pronto. Parti e goditi la tua esperienza!',
       },
     },
     PITCH: {
       GO_ANYTIME: {
-        HEADING: "Puoi recarti all'esperienza quando vuoi",
+        HEADING: 'Viaggia quando vuoi',
         SUB_TEXT:
-          'Sappiamo bene quanto sia difficile in questi mesi pianificare con precisione le proprie vacanze ed è per questo che potrai usare i voucher in qualsiasi momento entro il seguente termine: <date>.',
+          'Sappiamo che è difficile pianificare con certezza qualsiasi tipo di vacanza al momento ed è per questo che potrai utilizzare questi voucher in qualsiasi momento fino alla data <date>, così avrai tutto il tempo necessario per organizzare il tuo prossimo viaggio.',
       },
       SAVE_MONEY: {
-        HEADING: 'Risparmia denaro perché te lo meriti',
+        HEADING: 'Risparmia denaro',
         SUB_TEXT:
-          'I grandi sconti elencati in questa sezione sono pensati per aiutarti a risparmiare e darti tutte le ragioni per ricominciare a viaggiare al più presto.',
+          'I forti sconti che puoi vedere qui sono stati pensati per aiutarti a risparmiare sul tuo prossimo viaggio, casomai tu stessi cercando un altro motivo per rimetterti in viaggio il più presto possibile.',
       },
       BUCKET_LIST: {
-        HEADING: 'Visita i luoghi dei tuoi sogni',
+        HEADING: 'Cancellazione flessibile',
         SUB_TEXT:
-          'Chi non sogna da mesi di lanciarsi alla scoperta dei quattro angoli del globo? I prossimi due anni sono il momento migliore per farlo - partiamo subito!',
+          'Se non hai riscattato il tuo voucher, puoi cancellare la tua prenotazione in qualsiasi momento e ottenere un rimborso completo. Sappiamo bene quanto sia stressante dover cambiare i piani di viaggio: approfittando della nostra offerta avrai una cosa in meno di cui preoccuparti.',
       },
     },
     IMAGES_SECTION: {
@@ -264,12 +290,16 @@ const it = {
     },
     BOOKING_MODAL: {
       BOOK_NOW_PITCH:
-        'Seleziona una data per effettuare la prenotazione. Non potrai cambiare le date per le tue prenotazioni in seguito.',
-      GO_LATER_HEADING: 'Prenota Adesso, Viaggia Quando Vuoi, Risparmia Sempre',
+        'Seleziona una data o una fascia oraria per prenotare la tua esperienza.',
+      SELECT_DATE: 'Seleziona una data',
+      GO_LATER_HEADING: 'Biglietto Aperto',
+      BOOK_NOW_HEADING: 'Biglietto a Tempo',
       GO_LATER_PITCH:
-        'Book this experience at a discount & get the freedom to pick your exact slot later. Applies for any slot after <stDate>. Voucher is valid until <edDate>.',
-      GET_THIS: 'Get This',
+        "Prenota questa esperienza con uno sconto e avrai la libertà di scegliere la data della tua visita più tardi. L'esperienza può essere riscattata per qualsiasi data di viaggio tra <stDate> e <edDate>.",
+      GET_THIS: 'Prenota Ora',
       LEARN_MORE: 'Leggi tutto',
+      BOOK_NOW: 'Prenota Ora',
+      LIMITED: 'Offerta a durata limitata',
     },
   },
 };
