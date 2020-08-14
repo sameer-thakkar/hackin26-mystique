@@ -15,6 +15,7 @@ import {
   LINKED_MICROSITE_PROPS,
   COMMON_DATA_PROPS_FOR_LISTICLE,
   THEMES,
+  MICROSITE_LINK_KEYS,
   FULL_LANGUAGE_MAP,
   PRISMIC_LANG_TO_ROUTE_PARAM,
 } from '../constants';
@@ -219,6 +220,17 @@ export default class Page extends React.Component<any, any> {
                 {}
               );
 
+              const linkValues = MICROSITE_LINK_KEYS.reduce(
+                (acc, elem) => ({
+                  ...acc,
+                  [elem]:
+                    Object.keys(completeMicrosite.data.data[elem]).length > 1
+                      ? completeMicrosite.data.data[elem]
+                      : baseLangData.data[elem],
+                }),
+                {}
+              );
+
               const arrValues = MICROSITE_ARRAY_KEYS.reduce(
                 (acc, elem) => ({
                   ...acc,
@@ -305,6 +317,7 @@ export default class Page extends React.Component<any, any> {
                     ...strValues,
                     ...objValues,
                     ...arrValues,
+                    ...linkValues,
                     canonical_link:
                       completeMicrosite.data.data.canonical_link ||
                       completeMicrosite.data.data.page_url,

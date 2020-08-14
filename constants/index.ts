@@ -253,7 +253,10 @@ export const MICROSITE_OBJECT_KEYS: string[] = [
   'favicon',
   'other_meta_tags',
   'logo',
+  'footer_logo',
 ];
+
+export const MICROSITE_LINK_KEYS: string[] = ['footer_logo_link'];
 
 export const MICROSITE_ARRAY_KEYS: string[] = ['images'];
 

@@ -101,7 +101,7 @@ const StyledBanner = styled.div`
     display: grid;
     place-content: center;
     text-align: center;
-    background: #0000004a;
+    background: #22222299;
   }
 
   .mb-captions .caption h1 {
