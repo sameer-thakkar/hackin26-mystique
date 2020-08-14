@@ -40,6 +40,7 @@ const fr = {
   FOOTER: {
     DISCLAIMER: `Ce site n'est pas le site officiel <attraction>. Il est géré par Headout et travaille en collaboration avec des attractions et des tour-opérateurs pour vous offrir des expériences incroyables en un clic !`,
     GET_HELP: 'Aide',
+    QUICK_LINKS: 'Quick Links',
     CHAT_WITH_US: 'Chattez avec nous',
     CALL_US: 'Appelez-nous',
     EMAIL_US: 'Contactez-nous',

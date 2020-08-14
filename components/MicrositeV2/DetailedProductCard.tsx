@@ -19,6 +19,7 @@ import {
   isSafetyIncluded,
   isDiscountedFuture,
   getDFValidityFromTags,
+  createBookingURL,
 } from 'utils';
 import PriceBlock from 'UI/PriceBlock';
 import DiscountedFuturesPitch from 'UI/DiscountedFuturesPitch';
@@ -468,11 +469,12 @@ const DetailedProductCard = (props) => {
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href={`https://book.${nakedDomain}${
-                  lang === 'en' ? '' : `/${lang}`
-                }/book/${tgidClicked}${
-                  isDFOnlyProduct ? '?isDiscountedFutures=true' : ''
-                }`}
+                href={createBookingURL({
+                  nakedDomain,
+                  lang,
+                  tgid: tgidClicked,
+                  df: isDFOnlyProduct,
+                })}
                 onClick={(e) => {
                   if (isDFProduct && !isDFOnlyProduct) {
                     e.preventDefault();

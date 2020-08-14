@@ -19,6 +19,7 @@ import {
   isDiscountedFuture,
   isSafetyIncluded,
   getDFValidityFromTags,
+  createBookingURL,
 } from 'utils';
 import { MBContext } from 'contexts/MBContext';
 import DiscountedFutureSidebar from './DiscountedFutureSidebar';
@@ -444,7 +445,7 @@ const Product = (props) => {
   const { listingPrice } = isFetched
     ? tourPrices[tgid]
     : { listingPrice: null };
-  const { allTags, dfListingPrice } = scorpioData;
+  const { allTags = [], dfListingPrice } = scorpioData || {};
   if (isFetched && !listingPrice && !dfListingPrice) return null;
   const hasSafetyFlag = isSafetyIncluded(allTags);
   const isDFProduct =
@@ -619,11 +620,14 @@ const Product = (props) => {
             >
               <a
                 target={isFetched && isMobile ? null : '_blank'}
-                href={`http://book.${bookingUrl}${
-                  currentLanguage === 'en' ? '' : `/${currentLanguage}`
-                }/book/${tgid}${ctaUrlSuffix}${
-                  isDFOnlyProduct ? '?isDiscountedFutures=true' : ''
-                }`}
+                href={
+                  createBookingURL({
+                    nakedDomain: bookingUrl,
+                    lang: currentLanguage,
+                    tgid,
+                    df: isDFOnlyProduct,
+                  }) + (ctaUrlSuffix || '')
+                }
               >
                 <Button
                   className={`tour-book-now-cta`}

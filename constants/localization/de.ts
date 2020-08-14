@@ -42,6 +42,7 @@ const de = {
     DISCLAIMER:
       'Diese Website ist nicht die offizielle Website <attraction>. Die Website wird vom Unternehmen Headout betrieben, das mit Veranstaltern für Attraktionen und Touren zusammenarbeitet, um unglaubliche Erlebnisse auf Knopfdruck anzubieten.',
     GET_HELP: 'Hilfe',
+    QUICK_LINKS: 'Quick Links',
     CHAT_WITH_US: 'Live-Chat',
     CALL_US: 'Telefon',
     EMAIL_US: 'E-Mail',

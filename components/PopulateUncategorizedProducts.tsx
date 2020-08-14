@@ -132,7 +132,7 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
                 title={tour.tour_title_override}
                 descriptors={tour.marketing_highlights_override}
                 highlights={tour.tour_description_override}
-                scorpioData={scorpioData[tour.tgid]}
+                scorpioData={scorpioData?.[tour.tgid]}
                 tourPrices={tourPrices}
                 uid={uid}
                 currentLanguage={currentLanguage}

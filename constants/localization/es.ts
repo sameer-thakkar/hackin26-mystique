@@ -42,6 +42,7 @@ const es = {
     DISCLAIMER:
       'Este sitio no es el sitio web oficial <attraction>. Este sitio es operado por Headout quien trabaja de la mano con operadores turísticos para ofrecer experiencias increíbles en un sólo clic.',
     GET_HELP: 'Ayuda',
+    QUICK_LINKS: 'Enlaces Directos',
     CHAT_WITH_US: 'Chat en Vivo',
     CALL_US: 'Teléfono',
     EMAIL_US: 'Correo Electrónico',

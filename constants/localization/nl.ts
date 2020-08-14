@@ -41,6 +41,7 @@ const nl = {
     DISCLAIMER:
       'Deze website is niet de officiële website van de <attraction>. Het wordt gerund door Headout en werkt samen met attracties en touroperators om ongelooflijke ervaringen te bieden met één druk op de knop.',
     GET_HELP: 'Krijg hulp',
+    QUICK_LINKS: 'Quick Links',
     CHAT_WITH_US: 'Chat with Us',
     CALL_US: 'Chat met ons',
     EMAIL_US: 'Email ons',

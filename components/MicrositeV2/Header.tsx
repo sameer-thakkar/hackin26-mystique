@@ -268,7 +268,7 @@ const Header = (props) => {
       },
     },
   }));
-  const hamburgerIconCheck = !!headerLinks?.length || headerSlices.length;
+  const hamburgerIconCheck = !!(headerLinks?.length || headerSlices.length);
   return (
     <StyledHeader overlayActive={languageDropdown || navActive}>
       <div className="fixed-offset"></div>

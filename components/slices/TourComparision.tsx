@@ -13,6 +13,7 @@ import { MBContext } from '../../contexts/MBContext';
 import { CHEVRON_DOWN } from '../../assets/SvgIcons';
 import { TOUR_COMPARISION_DESIGN } from '../../constants';
 import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
+import { createBookingURL } from 'utils';
 
 const StyledTourComparisionTable = styled.div`
   width: auto;
@@ -525,9 +526,11 @@ const TourComparisonTable = (props) => {
               {content_normalized_tours.map((tour, index) => {
                 const ctaProps = {
                   link: {
-                    url: `https://book.${nakedDomain}/${
-                      lang == 'en' ? '' : lang + '/'
-                    }book/${tour.tgid}`,
+                    url: createBookingURL({
+                      nakedDomain,
+                      lang,
+                      tgid: tour.tgid,
+                    }),
                   },
                 };
                 return (
@@ -550,7 +553,9 @@ const TourComparisonTable = (props) => {
                 <div className="column flat-price-block" key={index}>
                   <div className="content-block">
                     {designType == TOUR_COMPARISION_DESIGN.TYPE_1 ? (
-                      <div className="block-label">Prices Starting</div>
+                      <div className="block-label">
+                        {labels[lang].PRICES_STARTING}
+                      </div>
                     ) : null}
                     <div className="block-content">
                       <PriceBlock
@@ -601,7 +606,9 @@ const TourComparisonTable = (props) => {
                 return (
                   <div className="column flat-price-block" key={index}>
                     <div className="content-block">
-                      <div className="block-label">Prices Starting</div>
+                      <div className="block-label">
+                        {labels[lang].PRICES_STARTING}
+                      </div>
                       <div className="block-content">
                         <PriceBlock
                           lang={lang}
@@ -621,9 +628,7 @@ const TourComparisonTable = (props) => {
             {content_normalized_tours.map((tour, index) => {
               const ctaProps = {
                 link: {
-                  url: `https://book.${nakedDomain}/${
-                    lang == 'en' ? '' : lang + '/'
-                  }book/${tour.tgid}`,
+                  url: createBookingURL({ nakedDomain, lang, tgid: tour.tgid }),
                 },
               };
               return (

@@ -47,6 +47,7 @@ const en = {
     TERMS_AND_CONDITIONS: 'Terms & Conditions',
     PRIVACY_POLICY: 'Privacy Policy',
     COMPANY_DETAILS: 'Company Details',
+    QUICK_LINKS: 'Quick Links',
   },
   COMPARE_ALL_DETAILS: 'Compare All Details',
   WHY_TAKE_THIS_DAY_TRIP: 'Why Take this Day Trip?',

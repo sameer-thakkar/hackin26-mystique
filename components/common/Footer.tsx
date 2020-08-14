@@ -223,14 +223,14 @@ const Footer: React.FC<FooterProps> = ({
             <Container>
               {finalThemeName === THEMES.DEFAULT ? (
                 <div className="quick-links-title">
-                  {linksTitle || 'Quick Links'}
+                  {linksTitle || labels[currentLanguage].FOOTER.QUICK_LINKS}
                 </div>
               ) : null}
               <div className="quick-links">
                 <Conditional if={finalThemeName === THEMES.MIN_BLUE}>
                   <div className={`quick-links-heading`}>
                     <div className="quick-links-title">
-                      {linksTitle || 'Quick Links'}
+                      {linksTitle || labels[currentLanguage].FOOTER.QUICK_LINKS}
                     </div>
                   </div>
                 </Conditional>

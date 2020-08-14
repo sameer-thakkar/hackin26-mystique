@@ -42,6 +42,7 @@ const it = {
     DISCLAIMER:
       'Questo non è il sito internet ufficiale della seguente attrazione: <attraction>. Questo sito è gestito da Headout e lavora con attrazioni e tour operator per fornire esperienze incredibili al tocco di un pulsante.',
     GET_HELP: 'Aiuto',
+    QUICK_LINKS: 'Link diretti',
     CHAT_WITH_US: 'Chatta con Noi',
     CALL_US: 'Chiamaci',
     EMAIL_US: 'Contattaci Via E-mail',

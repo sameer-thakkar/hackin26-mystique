@@ -42,6 +42,7 @@ const pt = {
     DISCLAIMER:
       'O site não é a página oficial da atração <attraction>. O site é mantido pela Headout, que trabalha em colaboração com atrações e operadores locais para oferecer experiências incríveis com apenas um clique!',
     GET_HELP: 'Ajuda',
+    QUICK_LINKS: 'Links diretos',
     CHAT_WITH_US: 'Chat',
     CALL_US: 'Telefone',
     EMAIL_US: 'E-mail',

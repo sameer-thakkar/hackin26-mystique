@@ -15,7 +15,7 @@ import Split, { StlyedSplit } from 'UI/Split';
 import IconCTA from 'UI/IconCTA';
 import { greenScheme, brownScheme } from 'style/theme';
 import styled from 'styled-components';
-import { isSafetyIncluded, isDiscountedFuture } from 'utils';
+import { isSafetyIncluded, isDiscountedFuture, createBookingURL } from 'utils';
 
 const IconBoosters = styled.div`
   margin-left: 12px;
@@ -227,9 +227,12 @@ export const MobileProductPage = (props) => {
         <a
           target="_blank"
           rel="noopener noreferrer"
-          href={`https://book.${bookingUrl}${
-            currentLanguage === 'en' ? '' : `/${currentLanguage}`
-          }/book/${tgid}${isDFOnlyProduct ? '?isDiscountedFutures=true' : ''}`}
+          href={createBookingURL({
+            nakedDomain: bookingUrl,
+            lang: currentLanguage,
+            tgid,
+            df: isDFOnlyProduct,
+          })}
           onClick={(e) => {
             if (isDFProduct && !isDFOnlyProduct) {
               e.preventDefault();

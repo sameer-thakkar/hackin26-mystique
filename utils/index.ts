@@ -1,7 +1,11 @@
 import Router from 'next/router';
 import { withoutTrailingSlash } from '../utils/helper';
 import dayjs from 'dayjs';
-import { SUPPORTED_LANGUAGES, SUPPORTED_LANGUAGES_MAP } from '../constants';
+import {
+  SUPPORTED_LANGUAGES,
+  SUPPORTED_LANGUAGES_MAP,
+  FULL_LANGUAGE_MAP,
+} from '../constants';
 
 // Gets the UID and Language by the host and pathname
 export const getPrismicProps = ({ host, pathname }) => {
@@ -72,7 +76,7 @@ export const createBookingURL = ({ lang, nakedDomain, tgid, df = false }) => {
     [
       'https://',
       `book.${nakedDomain}`,
-      lang && lang !== 'en' ? lang : null,
+      lang && lang !== 'en' ? FULL_LANGUAGE_MAP[lang].bookingFlow : null,
       'book',
       tgid,
     ]

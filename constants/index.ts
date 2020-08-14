@@ -43,51 +43,61 @@ export const FULL_LANGUAGE_MAP = {
     language: 'English',
     paramLang: 'en-us',
     short: 'en',
+    bookingFlow: 'en',
   },
   it: {
     language: 'Italiano',
     paramLang: 'it-it',
     short: 'it',
+    bookingFlow: 'it',
   },
   es: {
     language: 'Español',
     paramLang: 'es-es',
     short: 'es',
+    bookingFlow: 'es',
   },
   fr: {
     language: 'Français',
     paramLang: 'fr-fr',
     short: 'fr',
+    bookingFlow: 'fr',
   },
   de: {
     language: 'Deutsch',
     paramLang: 'de-de',
     short: 'de',
+    bookingFlow: 'de',
   },
   nl: {
     language: 'Nederlands',
     paramLang: 'nl-nl',
     short: 'nl',
+    bookingFlow: 'nl',
   },
   pt: {
     language: 'Português',
     paramLang: 'pt-pt',
     short: 'pt',
+    bookingFlow: 'pt',
   },
   cn: {
     language: '简体中文',
     paramLang: 'zh-cn',
     short: 'cn',
+    bookingFlow: 'zh-hans',
   },
   tw: {
     language: '繁體中文 ',
     paramLang: 'zh-tw',
     short: 'tw',
+    bookingFlow: 'zh-hant',
   },
   ja: {
     language: '日本語',
     paramLang: 'ja-jp',
     short: 'ja',
+    bookingFlow: 'ja',
   },
 };
 

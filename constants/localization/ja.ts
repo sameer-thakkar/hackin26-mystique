@@ -42,6 +42,7 @@ const ja = {
     DISCLAIMER:
       'これは<観光地>の公式サイトではなく。ヘッドアウトが運営するサイトです。世界の各事業者と協力して、クリックするだけで最高の旅行体験ができます.',
     GET_HELP: 'へルプ',
+    QUICK_LINKS: 'Quick Links',
     CHAT_WITH_US: 'メッセージ',
     CALL_US: 'ホットライン',
     EMAIL_US: 'メール',

@@ -15,6 +15,8 @@ import {
   LINKED_MICROSITE_PROPS,
   COMMON_DATA_PROPS_FOR_LISTICLE,
   THEMES,
+  FULL_LANGUAGE_MAP,
+  PRISMIC_LANG_TO_ROUTE_PARAM,
 } from '../constants';
 import { redirectTo, getPrismicProps, reflect } from '../utils';
 import { uncategorizedToursListParser } from '../utils/dataParsers';
@@ -140,7 +142,9 @@ export default class Page extends React.Component<any, any> {
         if (isDev) {
           const { mystique_uid: queryParamUID, lang: queryParamLang } = query;
           uid = queryParamUID;
-          lang = queryParamLang;
+          lang =
+            FULL_LANGUAGE_MAP[PRISMIC_LANG_TO_ROUTE_PARAM[queryParamLang]]
+              .paramLang;
         } else {
           const { uid: reqUID, lang: reqLang } = getPrismicProps({
             host,

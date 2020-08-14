@@ -12,6 +12,7 @@ import {
   CURRENCY_SYMBOL_MAP,
   HEADOUT_API_ENDPOINT,
 } from '../../constants';
+import { createBookingURL } from 'utils';
 
 const Tour = styled.a`
   display: grid;
@@ -130,8 +131,7 @@ const CustomLinkedTours = ({
   }, [tgids]);
 
   const { lang, design, nakedDomain } = useContext(MBContext);
-  const defaultURL = (tgid) =>
-    `https://book.${nakedDomain}/${lang !== 'en/' ? lang : ''}book/${tgid}`;
+  const defaultURL = (tgid) => createBookingURL({ nakedDomain, lang, tgid });
   return (
     <StyledCustomLinkedTours design={design}>
       <RichContent render={content} />
