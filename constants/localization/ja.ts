@@ -174,6 +174,8 @@ const ja = {
     HEADING: '今すぐ予約して、お金を節約していつでも行きましょ',
     DESCRIPTION:
       '割引クーポンを購入して、<日付>までいつでもア訪問しましょう。お金を節約して旅行業界をサポートしましょう!',
+    SHORT_DESCRIPTION:
+      'Buy an open ticket for big flexibility & savings. Valid for visits anytime until 31-Dec-21.',
     FLAG_TEXT: '今予約、後で訪問',
     HEADING_WORKS: 'もっと知りたい?',
     BANNER: {

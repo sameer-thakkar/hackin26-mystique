@@ -178,96 +178,103 @@ const es = {
     },
   },
   DISCOUNTED_FUTURES: {
-    HEADING: 'Reserva ahora, viaja en cualquier momento y ahorra siempre',
+    HEADING: 'Reserva ahora, ahorra dinero y viaja cuando quieras',
     DESCRIPTION:
-      'Compra vales de descuento y viaja en cualquier momento hasta el <date>. ¡Ahorra dinero mientras apoyas el turismo!',
+      'Por tiempo limitado, ahora puedes reservar una **entrada abierta** para una gran selección de actividades. Estas entradas son válidas para disfrutar de la experiencia en cualquier momento hasta el 31-dic-2021, lo que te permite ahorrar a lo grande, planificar tus próximas vacaciones con mucha flexibilidad, ¡y vivir una experiencia inolvidable!',
     SHORT_DESCRIPTION:
       'Compra vales de descuento y viaja en cualquier momento hasta el <date>. ¡Ahorra dinero mientras apoyas el turismo!',
     FLAG_TEXT: 'Reserva Flexible',
     HEADING_WORKS: '¿Cómo funciona?',
     BANNER: {
-      HEADING_LINE1: 'Not sure when you’re traveling next?',
+      HEADING_LINE1: '¿Todavía no decides una fecha para tu próximo viaje?',
       HEADING_LINE2:
-        'Book an open ticket for big flexibility and bigger savings!',
-      DESCRIPTION_LINE1: 'Save upto 50%.',
+        '¡Reserva un entrada abierta, ahorra en grande y aprovecha la flexibilidad de estas entradas!',
+      DESCRIPTION_LINE1: 'Ahorra hasta un 50%.',
       DESCRIPTION_LINE2:
-        'Valid for visit anytime between <cooldownDate> and 31-Dec-21.',
+        'Válido para visitar en cualquier momento entre el <cooldownDate> y el 31-dic-21.',
     },
     FAQ_QUESTIONS: {
       WORKING: {
-        QUESTION: '¿Qué significa la opción "Reserva Flexible"?',
+        QUESTION: '¿Qué es la opción "Reserva ahora, viaja más tarde"?',
         ANSWER:
-          'En <mbName> te brindamos la posibilidad de reservar tus experiencias, atracciones y entradas para tus espectáculos favoritos sin tener que preocuparte por fijar una fecha y una hora. Ahora puedes comprar los productos elegibles en <domain> y decidir si quieres visitar o disfrutar de la experiencia en cualquier fecha futura hasta el 31 de diciembre de 2021, según te resulte más conveniente. Además, todos los productos incluidos en esta opción tienen descuentos especiales. Una vez que estés listo para viajar y disfrutar de los productos que hayas comprado, puedes "usar" tu reserva eligiendo una fecha y hora específica a través de <domain>.',
+          'A partir de ahora te ofrecemos la comodidad de reservar tus experiencias favoritas, ya sea para atracciones o espectáculos, sin preocuparte por reservar una fecha y hora específica. Ahora puedes comprar cualquiera de nuestras experiencias seleccionadas con la insignia "entrada abierta" y disfrutar de la experiencia en cualquier fecha hasta el 31 de diciembre de 2021. Todos los productos seleccionado en esta oferta tienen descuentos especiales. Una vez que decidas viajar y aprovechar la experiencia que compraste, puedes canjear la entrada abierta eligiendo una fecha y hora específica.',
       },
       DATE_TIME: {
         QUESTION:
-          '¿Cómo puedo comprar o usar la opción de "Reserva Flexible" en <domain>? ¿Qué productos son elegibles para una "Reserva Flexible"? ',
+          '¿Cómo puedo seleccionar la opción "reserva ahora, viaja más tarde" en Headout?',
         ANSWER:
-          'Para aquellos productos elegibles en <domain>, puedes seleccionar la opción de "Reserva Flexible" directamente en el sitio web. No tienes que seleccionar la fecha y hora de la visita de inmediato, puedes elegir cualquier fecha y hora según tu conveniencia.',
+          'Los productos seleccionados en la promoción "reserva ahora, viaja más tarde" están identificados con la insignia correspondiente y tendrás la opción de reservar una entrada abierta para estas experiencias. Al reservar una entrada abierta, no tienes que seleccionar la fecha y hora para tu visita inmediatamente. Puedes canjear tu entrada abierta para una hora y fecha específica posteriormente, según tu conveniencia.',
       },
-      USAGE: {
+      WHEN: {
         QUESTION:
-          '¿Cuándo puedo usar la reserva que compré mediante la opción "Reserva Flexible"?',
+          '¿Cuándo puedo canjear mis entradas reservadas con la opción "reserva ahora, viaja más tarde"?',
         ANSWER:
-          'Puedes usar tu reserva para cualquier fecha y hora después de 30 días contados a partir de la fecha de compra o después de la fecha de apertura del lugar, lo que suceda más tarde.',
+          'Puedes canjear tus entradas abiertas en cualquier momento después de completar tu reserva. La fecha seleccionada para tu visita debe ser cualquier fecha después de 30 días de haber reservado tus entradas y antes del 31-dic-2021.',
       },
       CANCEL: {
-        QUESTION:
-          '¿Cuál es la política de cancelación de estas Reservas Flexibles?',
+        QUESTION: '¿Cuál es la política de cancelación de estas reservas?',
         ANSWER:
-          'Las reservas realizadas mediante la opción "Reserva Flexible" no pueden ser modificadas ni canceladas.',
+          'Si no has canjeado tus entradas abiertas, puedes cancelar tu reserva en cualquier momento antes del 31-dic-2021 y obtener un reembolso total. Si ya has reservado una fecha específica para utilizar tus entradas abiertas, ya no podrás modificar o cancelar tu reserva.',
       },
       LIMITS: {
         QUESTION:
-          '¿Hay alguna restricción o límite en la compra o uso de la opción "Reserva Flexible"? ',
+          '¿Existe alguna restricción o limitación en la compra de entradas abiertas?',
         ANSWER: [
-          'Cualquier cupón/código de descuento no será aplicable para las compras mediante la opción "Reserva Flexible".',
-          'Los créditos <mbName> bonificados en tu cartera <mbName> no pueden ser usados para reservar/comprar ninguna experiencia mediante la opción "Reserva Flexible".',
-          'Una vez que "uses" esta reserva, esto es, cuando elijas la fecha y hora para dicha reserva, no podrás modificar o cancelar la reserva. Las reservas ejercidas no serán elegibles para reembolso.',
+          'Los descuentos o cupones promocionales no serán aplicables al comprar una entrada abierta.',
+          'En caso de tener Créditos Headout en tu billetera <mbName>, éstos no podrán ser utilizados para reservar una entrada abierta.',
+          'Una vez que canjees tus entradas abiertas y elijas una fecha para tu experiencia, no podrás modificar o cancelar la reserva.',
+          'Durante el periodo de vigencia de esta promoción, únicamente se permite un máximo de 2 reservas por persona y por experiencia.',
         ],
       },
       EXERCISE: {
-        QUESTION: '¿Cómo puedo usar estas reservas?',
+        QUESTION:
+          '¿Cómo puedo canjear las entradas reservadas con esta promoción?',
         ANSWER: [
-          'Recibirás un comprobante de pago y un vale con tu reserva para la experiencia seleccionada una vez completado el pago con éxito.',
-          'Una vez que el lugar o la experiencia seleccionada abra al público, recibirás un link por correo electrónico. Debes dar clic este link para seleccionar la fecha y hora preferida para tu experiencia, es decir, usar la reserva que compraste mediante la opción "Reserva Flexible". ',
-          'Una vez que selecciones la fecha y la hora de tu preferencia y, por lo tanto, "uses" tu reserva, recibirás un voucher de confirmación con tus entradas por correo electrónico.',
-          'Visita el lugar en la fecha y hora seleccionadas, ¡y disfruta de la experiencia que hayas elegido!',
+          'Al completar tu reserva, recibirás por correo electrónico el comprobante de tu reserva y un voucher para la experiencia seleccionada.',
+          'Asimismo, recibirás un enlace por correo electrónico que podrás utilizar para canjear tu voucher para la fecha y hora que elijas posteriormente. En caso de que la experiencia que hayas seleccionado aún no haya reabierto sus puertas al público, recibirás este enlace cuando esto suceda. Puedes completar este paso en cualquier momento durante la validez del voucher, es decir, antes del 31-dic-2021.',
+          'Una vez que decidas canjear tu voucher, recibirás una entrada confirmada por correo electrónico, para la fecha y hora que hayas elegido.',
+          'Visita el lugar de la experiencia en la fecha y hora elegidas y disfruta de la actividad reservada.',
         ],
+      },
+      ELIGIBLE: {
+        QUESTION:
+          '¿Qué experiencias se pueden reservar dentro de esta promoción?',
+        ANSWER:
+          'Todas las experiencias elegibles dentro de esta promoción serán marcadas con la insignia ***reserva ahora, viaja más tarde***.',
       },
     },
     HOW_IT_WORKS: {
       PICK: {
-        HEADING: 'Elige la experiencia que siempre has deseado',
+        HEADING: 'Elige la experiencia que siempre has soñado',
         SUB_TEXT:
-          'Todos tenemos un lugar al que siempre hemos soñado ir. En <mbName> estamos seguros que los próximos años serán el mejor momento para que esto suceda, ¡así que hagámoslo realidad!',
+          'Todas las experiencias bajo la opción "reserva ahora, viaja más tarde" pueden ser reservadas como "entrada abierta" con grandes descuentos. Así que sólo elige la experiencia que desees visitar y reserva tu entrada abierta.',
       },
       VOUCHER: {
-        HEADING: 'Compra tu vale',
+        HEADING: 'Canjea tu entrada y reserva una fecha cuando así lo decidas',
         SUB_TEXT:
-          "Todas las experiencias que incluyen la leyenda 'Reserva Flexible' pueden ser compradas mediante un vale flexible, con grandes descuentos y pueden ser canjeados en cualquier momento antes del <date>.",
+          'Cuando confirmes tus planes de viaje, podrás canjear tu entrada abierta al reservar la fecha y la hora específica que desees. Tu entrada es válida desde el <cooldownDate> hasta el 31-dic-2021.',
       },
       REDEEM: {
-        HEADING: 'Canjea el vale y reserva la experiencia cuando estés listo',
+        HEADING: '¡Viaja y diviértete en grande!',
         SUB_TEXT:
-          'Con estos vales, tienes el control total y puedes reservar en <mbName> cuando planees tu viaje.',
+          'Todo listo. ¡Sólo disfruta de tus vacaciones y pásalo en grande!',
       },
     },
     PITCH: {
       GO_ANYTIME: {
         HEADING: 'Viaja cuando así lo decidas',
         SUB_TEXT:
-          'Sabemos que es difícil planear unas vacaciones en este momento, por esa razón hemos creado estos vales que podrás usar en cualquier momento hasta el <date>.',
+          'Sabemos que es difícil planear unas vacaciones con certeza en este momento. Por esta razón, hemos creado estos vouchers que podrás utilizar en cualquier momento hasta el <date>, lo que te permite planear tus próximas vacaciones con mucha flexibilidad.',
       },
       SAVE_MONEY: {
-        HEADING: 'Ahorra dinero, te lo mereces',
+        HEADING: 'Ahorra en grande',
         SUB_TEXT:
-          'Estos grandes descuentos han sido diseñados para ayudarte a ahorrar dinero y darte más razones para viajar pronto.',
+          'Estos grandes descuentos han sido diseñados para ayudarte a ahorrar dinero en tu próximo viaje y darte más razones para viajar pronto.',
       },
       BUCKET_LIST: {
-        HEADING: 'Descubre los lugares que siempre has soñado',
+        HEADING: 'Cancelación flexible',
         SUB_TEXT:
-          'Todos tenemos un lugar al que siempre hemos soñado ir. En <mbName> estamos seguros que los próximos años serán el mejor momento para que esto suceda, ¡así que hagámoslo realidad!',
+          'Si aún no has canjeado tu voucher, puedes cancelar tu reserva en cualquier momento y obtener un reembolso total. Sabemos que cambiar los planes de viaje puede ser estresante, con estas entradas abiertas tendrás una cosa menos de que preocuparte.',
       },
     },
     IMAGES_SECTION: {
@@ -275,15 +282,16 @@ const es = {
     },
     BOOKING_MODAL: {
       BOOK_NOW_PITCH:
-        'Selecciona una fecha para hacer tu reserva. No podrás cambiar las fechas de tu reserva más tarde.',
-      SELECT_DATE: 'Seleccionar una fecha',
-      GO_LATER_HEADING:
-        'Reserva ahora, viaja en cualquier momento y ahorra siempre',
+        'Selecciona una fecha y un horario para reservar tu experiencia.',
+      SELECT_DATE: 'Selecciona una fecha',
+      GO_LATER_HEADING: 'Entrada abierta',
+      BOOK_NOW_HEADING: 'Entrada cronometrada',
       GO_LATER_PITCH:
-        'Book this experience at a discount & get the freedom to pick your exact slot later. Applies for any slot after <stDate>. Voucher is valid until <edDate>.',
-      GET_THIS: 'Get This',
-      LEARN_MORE: 'Conoce más',
-      LIMITED: 'Limited Period Offer',
+        'Reserva esta experiencia con grandes descuentos y tendrás la libertad de elegir la fecha para tu visita más tarde. Estas entradas pueden canjearse para cualquier fecha entre el <stDate> y el <edDate>.',
+      GET_THIS: 'Reserva ahora',
+      LEARN_MORE: 'Leer más',
+      BOOK_NOW: 'Reserva ahora',
+      LIMITED: 'Oferta de tiempo limitado',
     },
   },
 };
