@@ -550,12 +550,17 @@ export default class MicrositeV1 extends Component<any, any> {
               mbTheme={mbTheme}
             />
           ) : null}
-          {isClient ? (
+          <Conditional
+            if={
+              isClient &&
+              microbrandCards?.filter((mbCard) => mbCard.title)?.length
+            }
+          >
             <MicrobrandList
               microbrandCards={microbrandCards}
               microbrandCardsHeading={microbrandCardsHeading}
             />
-          ) : null}
+          </Conditional>
           <ProductsContextProvider
             allTours={allTours}
             ready={this.state.isFetched}

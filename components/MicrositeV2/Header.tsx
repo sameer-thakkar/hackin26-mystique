@@ -249,11 +249,12 @@ const Header = (props) => {
     hasPoweredByHeadoutLogo,
     headerSlices = [],
     headerLinks,
+    hasLanguageSelector,
   } = props;
   const allToursArray = Object.values(allTours);
   const hasDropdownLinks = enableDropdownLinks && dropdownLinks.length;
   const hasLanguageDropdown =
-    languageProps.languages.length > 1 && languageProps.languageDropdown;
+    languageProps.languages.length > 1 && hasLanguageSelector;
   const groupedHeaderSlices = groupSlices(
     headerSlices,
     ALLOW_IMMEDIEATE_NESTING
@@ -268,7 +269,9 @@ const Header = (props) => {
       },
     },
   }));
-  const hamburgerIconCheck = !!(headerLinks?.length || headerSlices.length);
+  const hamburgerIconCheck = !!(
+    headerLinks?.filter((link) => link.link_url)?.length || headerSlices.length
+  );
   return (
     <StyledHeader overlayActive={languageDropdown || navActive}>
       <div className="fixed-offset"></div>
@@ -364,6 +367,7 @@ const Header = (props) => {
               {...languageProps}
               languageDropdown={languageDropdown}
               toggleDropdown={toggleLanguageDropdown}
+              hasLanguageDropdown={hasLanguageSelector}
               host={host}
               isMobile={isMobile}
             />

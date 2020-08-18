@@ -112,7 +112,6 @@ class MicrositeV2 extends Component<any, any> {
       currentDomain,
       currentLanguage,
       languages,
-      languageDropdown: CMSContent.data.enable_localization_menu === 'Yes',
     };
 
     const dropdownLinksArray = CMSData.dropdown_menu.reduce((acc, item) => {
@@ -182,7 +181,10 @@ class MicrositeV2 extends Component<any, any> {
     };
     const tgidsOrderByPrice: any = isFetched
       ? Object.values(allTours)
-          .sort((a: any, b: any) => a.price - b.price)
+          .sort(
+            (a: any, b: any) =>
+              a.listingPrice?.finalPrice - b.listingPrice?.finalPrice
+          )
           .reduce((acc: any, tour: any) => {
             return [...acc, tour.tgid];
           }, [])

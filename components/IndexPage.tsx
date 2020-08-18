@@ -39,10 +39,11 @@ export default class Page extends React.Component<any, any> {
     const pathname =
       req?.url.split('?')[0].split('#')[0] || window.location.pathname;
     const isMobile = uaIsMobile(req.headers['user-agent']);
-    // Checking is mystique is running in dev
+    // Checking is mystique is running in dev or is a preview
     const isDev = req
-      ? !!query.mystique_uid
-      : window.location.search.includes('mystique_uid');
+      ? !!query.mystique_uid || !!query.previewSession
+      : window.location.search.includes('mystique_uid') ||
+        window.location.search.includes('previewSession');
 
     // Logic to get the redirect uid
     let redirectUID;

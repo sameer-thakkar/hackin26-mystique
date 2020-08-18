@@ -164,7 +164,9 @@ const Header: React.FC<any> = (props) => {
     hideLangugageDropdown,
   } = props;
   const hamburgerIconCheck =
-    showGroupBooking || !!headerLinks?.length || slices.length;
+    showGroupBooking ||
+    !!headerLinks?.filter((link) => link.link_url)?.length ||
+    slices.length;
   const hamburgerRef = useRef(null);
   const multiNavRef = useRef(null);
   const [scrollPos, setScrollPos] = useState(0);

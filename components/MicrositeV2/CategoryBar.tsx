@@ -9,6 +9,7 @@ const CategoryBar = (props) => {
   const category_bar = useRef(null);
   const scroll_div = useRef(null);
   const [activeCategory, setActiveCategory] = useState(0);
+  const [activeOrder, setActiveOrder] = useState('popularity');
   const [filterDropdownActive, setFilterDropdownActive] = useState(false);
   const [indicatorStyles, setIndicatorStyles] = useState({
     width: null,
@@ -23,16 +24,13 @@ const CategoryBar = (props) => {
   const changeCategory = (index) => {
     let { categories } = props;
 
-    interactionCtx.changeCategory(categories[index].ranking.popularity);
+    interactionCtx.changeCategory(categories[index].ranking[activeOrder]);
     setActiveCategory(index);
   };
 
   const changeOrder = (orderKey) => {
-    let { categories, changeCategory } = props;
-    changeCategory({
-      tgidArray: categories[activeCategory].ranking[orderKey],
-      index: activeCategory,
-    });
+    let { categories } = props;
+    setActiveOrder(orderKey);
 
     interactionCtx.changeCategory(categories[activeCategory].ranking[orderKey]);
   };
