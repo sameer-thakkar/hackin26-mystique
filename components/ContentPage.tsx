@@ -5,7 +5,7 @@ import Header from './common/Header';
 import sliceHandler from './Slices';
 import Footer from './common/Footer';
 import Masthead from './Masthead';
-import populateHead from './common/meta';
+import PopulateHead from './common/meta';
 import Alert from './UI/Alert';
 import DismissAlert from './UI/DismissAlert';
 import * as labels from '../constants/localization/labels';
@@ -434,17 +434,19 @@ export default class ContentPage extends Component<any, any> {
             disclaimer={groupBookingDisclaimer}
           />
         )}
-        {populateHead({
-          ...headProps,
-          datePublished,
-          dateModified,
-          lang,
-          isDev,
-          originalHost: host,
-          serverRequestStartTimestamp,
-          localization,
-          currentLanguage,
-        })}
+        <PopulateHead
+          {...{
+            ...headProps,
+            datePublished,
+            dateModified,
+            lang,
+            isDev,
+            originalHost: host,
+            serverRequestStartTimestamp,
+            localization,
+            currentLanguage,
+          }}
+        />
         <Header
           languages={localization}
           headerLinks={headerLinks}

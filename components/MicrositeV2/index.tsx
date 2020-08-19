@@ -4,7 +4,7 @@ import { SearchPage } from './views/SearchPage';
 import { PAGETYPE, THEMES } from '../../constants';
 import { MobileProductPage } from './views/ProductPage';
 import { withRouter } from 'next/router';
-import populateHead from '../common/meta';
+import PopulateHead from '../common/meta';
 import { InteractionContextProvider } from '../../contexts/Interaction';
 import { docCookies, genManualSlice, getLangObject } from '../../utils/helper';
 import allToursParser from '../../utils/allToursParser';
@@ -294,17 +294,19 @@ class MicrositeV2 extends Component<any, any> {
 
     return (
       <InteractionContextProvider {...categoryProps}>
-        {populateHead({
-          ...this.props.data.data,
-          first_publication_date: datePublished,
-          last_publication_date: dateModified,
-          lang,
-          originalHost: host,
-          isDev,
-          pathname,
-          currentLanguage,
-          serverRequestStartTimestamp,
-        })}
+        <PopulateHead
+          {...{
+            ...this.props.data.data,
+            first_publication_date: datePublished,
+            last_publication_date: dateModified,
+            lang,
+            originalHost: host,
+            isDev,
+            pathname,
+            currentLanguage,
+            serverRequestStartTimestamp,
+          }}
+        />
         <div
           style={{
             display: activePage == PAGETYPE.HOMEPAGE ? 'block' : 'none',

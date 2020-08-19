@@ -41,9 +41,11 @@ export default class Page extends React.Component<any, any> {
     const isMobile = uaIsMobile(req.headers['user-agent']);
     // Checking is mystique is running in dev or is a preview
     const isDev = req
-      ? !!query.mystique_uid || !!query.previewSession
-      : window.location.search.includes('mystique_uid') ||
-        window.location.search.includes('previewSession');
+      ? !!query.mystique_uid
+      : window.location.search.includes('mystique_uid');
+    const isPreview = req
+      ? !!query.previewSession
+      : window.location.search.includes('previewSession');
 
     // Logic to get the redirect uid
     let redirectUID;
@@ -121,6 +123,7 @@ export default class Page extends React.Component<any, any> {
           ? `${req.headers['x-forwarded-proto']}://${req.headers['x-forwarded-host']}${req.url}`
           : window.location.href,
         isMobile: isMobile,
+        isPreview,
       };
     } catch (e) {
       console.log(e);
@@ -675,6 +678,7 @@ export default class Page extends React.Component<any, any> {
       toursList,
       isMobile,
       mbTheme = THEMES.DEFAULT,
+      isPreview,
     } = this.props;
 
     if (statusCode) {
@@ -763,6 +767,7 @@ export default class Page extends React.Component<any, any> {
               microsite={microsite}
               design={MBDesign || DESIGN.V1}
               mbTheme={mbTheme}
+              isPreview={isPreview}
             >
               {Component}
             </MBContextProvider>

@@ -6,7 +6,7 @@ import { scroller } from 'react-scroll';
 import Header from './common/Header';
 import Banner from './Banner';
 import LongForm from './common/LongForm';
-import populateHead from './common/meta';
+import PopulateHead from './common/meta';
 import Footer from './common/Footer';
 import PopulateUncategorizedProducts from './PopulateUncategorizedProducts';
 import Analytics from '../utils/analytics';
@@ -441,18 +441,20 @@ export default class MicrositeV1 extends Component<any, any> {
               theme={mbTheme}
             />
           )}
-          {populateHead({
-            ...this.props.data.data,
-            localization: languages,
-            datePublished,
-            dateModified,
-            lang,
-            isDev,
-            originalHost: host,
-            currentLanguage,
-            serverRequestStartTimestamp,
-            mbTheme,
-          })}
+          <PopulateHead
+            {...{
+              ...this.props.data.data,
+              localization: languages,
+              datePublished,
+              dateModified,
+              lang,
+              isDev,
+              originalHost: host,
+              currentLanguage,
+              serverRequestStartTimestamp,
+              mbTheme,
+            }}
+          />
           <Header
             languages={languages ? languages : null}
             headerLinks={headerLinks ? headerLinks : null}

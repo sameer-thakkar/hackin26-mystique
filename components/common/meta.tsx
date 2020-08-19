@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import Head from 'next/head';
 import parse from 'url-parse';
 import { withoutTrailingSlash } from '../../utils/helper';
+import { MBContext } from 'contexts/MBContext';
 
 const withTrailingSlash = (url) =>
   url.charAt(url.length - 1) !== '/' ? `${url}/` : url;
@@ -107,7 +108,9 @@ const PopulateHead = (data) => {
     serverRequestStartTimestamp,
   } = data;
 
-  const isNonProd = isDev || originalHost.startsWith('stage-');
+  const { isPreview } = useContext(MBContext);
+
+  const isNonProd = isDev || isPreview || originalHost.startsWith('stage-');
   const isOnlineTicketsDomain = originalHost.includes('online-tickets.co');
 
   const amplitude_key = isOnlineTicketsDomain
