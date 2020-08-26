@@ -23,6 +23,7 @@ export const SUPPORTED_LANGUAGES = [
   'ja',
   'tw',
   'cn',
+  'ko',
 ];
 
 export const SUPPORTED_LANGUAGES_MAP = {
@@ -36,6 +37,7 @@ export const SUPPORTED_LANGUAGES_MAP = {
   ja: 'ja-jp',
   cn: 'zh-cn',
   tw: 'zh-tw',
+  ko: 'ko-kr',
 };
 
 export const FULL_LANGUAGE_MAP = {
@@ -99,6 +101,12 @@ export const FULL_LANGUAGE_MAP = {
     short: 'ja',
     bookingFlow: 'ja',
   },
+  ko: {
+    language: 'Korean',
+    paramLang: 'ko-kr',
+    short: 'ko',
+    bookingFlow: 'ko',
+  },
 };
 
 export const PRISMIC_LANG_TO_ROUTE_PARAM = {
@@ -112,9 +120,10 @@ export const PRISMIC_LANG_TO_ROUTE_PARAM = {
   'zh-cn': 'cn',
   'zh-tw': 'tw',
   'ja-jp': 'ja',
+  'ko-kr': 'ko',
 };
 
-export const LANGUAGE_PARAMS_REGEX = /^(\/)?(en|fr|de|it|nl|pt|es|ja|tw|cn)(\/)?/;
+export const LANGUAGE_PARAMS_REGEX = /^(\/)?(en|fr|de|it|nl|pt|es|ja|tw|cn|ko)(\/)?/;
 
 export const GROUP_TOUR_PREFERED_TOUR = [
   {

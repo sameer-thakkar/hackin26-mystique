@@ -145,10 +145,12 @@ class LanguageSelector extends Component<any, any> {
       languages,
       mbTheme,
     } = this.props;
-    const availableLanguages = languages.reduce((acc, item) => {
-      const language = item.language.split('-')[1].toLowerCase();
-      return [...acc, language];
-    }, []);
+    const availableLanguages = languages
+      .filter(({ language }) => language?.length)
+      .reduce((acc, item) => {
+        const language = item.language.split('-')[1].toLowerCase();
+        return [...acc, language];
+      }, []);
     const { pathname } = this.state;
     const removeLangFromPathname = pathname.replace(LANGUAGE_PARAMS_REGEX, '');
     const slugWithoutLeadingSlash = (slug) =>

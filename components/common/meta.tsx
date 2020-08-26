@@ -313,18 +313,19 @@ const PopulateHead = (data) => {
     }${getPathName()}`;
   };
 
-  const hrefLangs = languages.map(({ language }, idx) => {
-    let langCode = language.split('-')[1].toLowerCase();
-
-    return (
-      <link
-        key={`altlang_${idx}`}
-        rel="alternate"
-        hrefLang={langCode}
-        href={getHref(langCode)}
-      />
-    );
-  });
+  const hrefLangs = languages
+    .filter(({ language }) => language?.length)
+    .map(({ language }, idx) => {
+      let langCode = language.split('-')[1].toLowerCase();
+      return (
+        <link
+          key={`altlang_${idx}`}
+          rel="alternate"
+          hrefLang={langCode}
+          href={getHref(langCode)}
+        />
+      );
+    });
   return (
     <Head>
       {dynamicMeta}

@@ -104,7 +104,8 @@ const StyledBanner = styled.div`
     background: #22222299;
   }
 
-  .mb-captions .caption h1 {
+  .mb-captions .caption h1,
+  .mb-captions .caption .h1 {
     font-size: 24px;
     color: #fff;
     line-height: 1.2;
@@ -138,7 +139,8 @@ const StyledBanner = styled.div`
   }
   .mb-captions .df-caption {
     grid-row-gap: 12px;
-    h1 {
+    h1,
+    .h1 {
       margin-top: 0;
       margin-bottom: 16px;
     }
@@ -197,7 +199,8 @@ const StyledBanner = styled.div`
       text-align: left;
       align-items: end;
       background: unset;
-      .caption h1 {
+      .caption h1,
+      .caption .h1 {
         font-weight: 500;
         font-size: 20px;
         line-height: 120%;
@@ -208,7 +211,8 @@ const StyledBanner = styled.div`
       .tag {
         justify-self: left;
       }
-      h1 {
+      h1,
+      .h1 {
         margin-bottom: 12px;
       }
       p {
@@ -446,7 +450,7 @@ export default class Banner extends Component<any, any> {
                 />
               </div>
               <div className="caption">
-                <h1>
+                <div className="h1">
                   {
                     labels[currentLanguage].DISCOUNTED_FUTURES.BANNER
                       .HEADING_LINE1
@@ -458,7 +462,7 @@ export default class Banner extends Component<any, any> {
                     '<percent>',
                     maxDfDiscount?.toFixed(0) + '%'
                   )}
-                </h1>
+                </div>
                 <p>
                   {
                     labels[currentLanguage].DISCOUNTED_FUTURES.BANNER
