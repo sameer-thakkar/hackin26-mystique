@@ -385,10 +385,7 @@ export default class MicrositeV1 extends Component<any, any> {
     const showCovid19Alert = this.props.data?.data?.show_covid19_alert;
     const scorpioData = this.props.scorpioData;
     const CMSData = this.props.data.data;
-    const allTours =
-      (this.state.isFetched &&
-        allToursParser(CMSData, scorpioData, pricingData)) ||
-      {};
+    const allTours = allToursParser(CMSData, scorpioData, pricingData);
 
     let finalBannerImages = bannerImages.map((banner) => {
       return {
@@ -555,7 +552,8 @@ export default class MicrositeV1 extends Component<any, any> {
           <Conditional
             if={
               isClient &&
-              microbrandCards?.filter((mbCard) => mbCard.title)?.length
+              microbrandCards?.filter((mbCard) => mbCard.microbrand_link)
+                ?.length
             }
           >
             <MicrobrandList

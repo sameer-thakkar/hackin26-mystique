@@ -115,7 +115,7 @@ const PopulateHead = (data) => {
 
   const amplitude_key = isOnlineTicketsDomain
     ? '93459bf7775fad2952497b5da071ad85'
-    : 'b85ab528e443294e83c98f9f1915c23b';
+    : '0d0bf3b04d91a9a79926398eca5cac45';
 
   const GTM_CONTAINER_ID = isOnlineTicketsDomain
     ? 'GTM-TS3V4HK'

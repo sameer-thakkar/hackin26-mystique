@@ -19,7 +19,7 @@ import {
   FULL_LANGUAGE_MAP,
   PRISMIC_LANG_TO_ROUTE_PARAM,
 } from '../constants';
-import { redirectTo, getPrismicProps, reflect } from '../utils';
+import { redirectTo, getPrismicProps, reflect, isNakedDomain } from '../utils';
 import { uncategorizedToursListParser } from '../utils/dataParsers';
 import { MBContextProvider } from '../contexts/MBContext';
 import { toursTabSliceHandler } from '../components/Slices';
@@ -46,6 +46,14 @@ export default class Page extends React.Component<any, any> {
     const isPreview = req
       ? !!query.previewSession
       : window.location.search.includes('previewSession');
+
+    // Naked Domain to WWW Redirect.
+    if (!isDev && req) {
+      const host = req.headers.host;
+      if (isNakedDomain(host)) {
+        redirectTo({ res, url: `https://www.${host}`, type: 301 });
+      }
+    }
 
     // Logic to get the redirect uid
     let redirectUID;

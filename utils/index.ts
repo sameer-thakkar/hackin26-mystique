@@ -95,3 +95,17 @@ export const getSavingsPercent = (listingPriceObject) =>
   ((listingPriceObject.originalPrice - listingPriceObject.finalPrice) /
     listingPriceObject.originalPrice) *
   100;
+
+const SPECIAL_TLDS = ['co.uk'];
+
+const getMatchingNakedDomainPartsLength = (domain) => {
+  const [tld, ..._other] =
+    new RegExp('(' + SPECIAL_TLDS.join('|') + ')', 'g').exec(domain) || [];
+  const tldPartsLength = tld ? tld.split('.').length : 1;
+  return tldPartsLength + 1; // +1, to account for domain name.
+};
+
+export const isNakedDomain = (host) => {
+  const parts = host.split('.');
+  return parts.length === getMatchingNakedDomainPartsLength(host);
+};

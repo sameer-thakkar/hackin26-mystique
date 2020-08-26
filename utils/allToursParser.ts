@@ -117,7 +117,7 @@ const allToursParser = (CMSData, scorpioData, pricingData: ToursData) => {
         overlayBooster: tourData.overlay_booster,
         vendor: tourData.vendor_name,
         allTags: scorpioData[tourData.tgid]?.allTags || [],
-        dfListingPrice: scorpioData[tourData.tgid]?.dfListingPrice || {},
+        dfListingPrice: scorpioData[tourData.tgid]?.dfListingPrice,
         listingPrice: isFetched ? cardPrices[tourData.tgid]?.listingPrice : {},
         safetyImages: scorpioData[tourData.tgid].safetyImages,
       },

@@ -39,7 +39,6 @@ const MicrobrandCard = styled.div`
   display: grid;
   grid-template-rows: 170px auto;
   transition: all ease 0.2s;
-  grid-row-gap: 8px;
   align-items: start;
   border-radius: 5px;
 
@@ -71,7 +70,9 @@ const MicrobrandCard = styled.div`
     -webkit-perspective: 1000;
     -webkit-transform: translate3d(0, -6px, 0);
   }
-
+  .card-image {
+    height: 100%;
+  }
   .card-image img {
     object-fit: cover;
     height: 100%;

@@ -205,8 +205,8 @@ const Product = (props) => {
   const { listingPrice, dfListingPrice, ...tour } = allTours[tgid];
   const priceObj = listingPrice || dfListingPrice;
   const price = priceObj?.finalPrice;
-  const scratchPrice = priceObj.originalPrice;
-  const currencySymbol = CURRENCY_SYMBOL_MAP[priceObj.currencyCode];
+  const scratchPrice = priceObj?.originalPrice;
+  const currencySymbol = CURRENCY_SYMBOL_MAP[priceObj?.currencyCode];
   return (
     <ProductCard
       onClick={handleProductClick}

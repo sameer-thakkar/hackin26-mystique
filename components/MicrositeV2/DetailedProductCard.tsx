@@ -473,7 +473,7 @@ const DetailedProductCard = (props) => {
                   nakedDomain,
                   lang,
                   tgid: tgidClicked,
-                  df: isDFOnlyProduct,
+                  df: isDFProduct,
                 })}
                 onClick={(e) => {
                   if (isDFProduct && !isDFOnlyProduct) {
