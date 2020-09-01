@@ -17,10 +17,20 @@ export const MBContext = createContext({
   },
   mbTheme: null,
   isPreview: false,
+  currencySymbolMap: {},
 });
 
 export const MBContextProvider = (props) => {
-  const { uid, lang, microsite, host, design, mbTheme, isPreview } = props;
+  const {
+    uid,
+    lang,
+    microsite,
+    host,
+    design,
+    mbTheme,
+    isPreview,
+    currencySymbolMap,
+  } = props;
   const [sidebarModalStack, setSidebarModalStack] = useState([]);
 
   const addToAside = ({
@@ -64,6 +74,7 @@ export const MBContextProvider = (props) => {
         },
         mbTheme,
         isPreview,
+        currencySymbolMap,
       }}
     >
       {props.children}

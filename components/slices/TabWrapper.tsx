@@ -5,6 +5,7 @@ import RichContent from '../UI/RichContent';
 import TitleTextCombo from '../UI/TitleTextCombo';
 import { SOLEIL } from '../../constants/ui-constants';
 import { stringIdfy } from '../../utils/helper';
+import Conditional from 'components/common/Conditional';
 
 const StyledTabWrapper = styled.div`
   display: grid;
@@ -105,7 +106,9 @@ const TabWrapper = (props: TabWrapperProps) => {
   return (
     <StyledTabWrapper>
       <TitleTextCombo noMargin={true}>
-        <h2>{heading}</h2>
+        <Conditional if={heading?.length}>
+          <h2>{heading}</h2>
+        </Conditional>
         {description ? <RichContent render={description} /> : null}
       </TitleTextCombo>
       <div className="tabs">

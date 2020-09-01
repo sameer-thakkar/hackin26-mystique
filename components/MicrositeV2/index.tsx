@@ -190,6 +190,8 @@ class MicrositeV2 extends Component<any, any> {
           }, [])
       : null;
     const raw_category = (CMSData.body[0] && CMSData.body[0].items) || [];
+    const hideSortBySelector =
+      CMSData?.body[0]?.primary?.disable_sort_selector || false;
     let categories = raw_category.reduce((accum, category) => {
       let tgid_ranking = category.ranking
         .split(',')
@@ -247,6 +249,7 @@ class MicrositeV2 extends Component<any, any> {
     const categoryProps = {
       categories,
       active: 0,
+      hideSortBySelector,
     };
 
     const {
@@ -254,6 +257,7 @@ class MicrositeV2 extends Component<any, any> {
       footer_logo_link,
       footer_logo,
       theme_override,
+      powered_by_superbrand,
     } = this.props.data.data;
     const heroSectionSlice = [...this.props.data.data.body4, hightlightSlice];
     const commonFooterProps = commonFooter ? commonFooter.data : null;
@@ -268,6 +272,8 @@ class MicrositeV2 extends Component<any, any> {
         logo: footer_logo.url ? footer_logo : footer_logo_link,
         themeOverride: themeOverride || THEMES.INHERIT,
         ...commonFooterProps,
+        powered_by_superbrand:
+          powered_by_superbrand || commonFooter?.data?.powered_by_superbrand,
       },
       isMobile,
       host,

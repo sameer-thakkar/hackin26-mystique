@@ -7,11 +7,7 @@ import { tourListApiParser } from '../../utils/dataParsers';
 import RichContent from '../UI/RichContent';
 import { MBContext } from '../../contexts/MBContext';
 import { SOLEIL, COLORS } from '../../constants/ui-constants';
-import {
-  DESIGN,
-  CURRENCY_SYMBOL_MAP,
-  HEADOUT_API_ENDPOINT,
-} from '../../constants';
+import { DESIGN, HEADOUT_API_ENDPOINT } from '../../constants';
 import { createBookingURL } from 'utils';
 
 const Tour = styled.a`
@@ -130,7 +126,9 @@ const CustomLinkedTours = ({
       });
   }, [tgids]);
 
-  const { lang, design, nakedDomain } = useContext(MBContext);
+  const { lang, design, nakedDomain, currencySymbolMap } = useContext(
+    MBContext
+  );
   const defaultURL = (tgid) => createBookingURL({ nakedDomain, lang, tgid });
   return (
     <StyledCustomLinkedTours design={design}>
@@ -155,7 +153,9 @@ const CustomLinkedTours = ({
                 <TitlePriceCombo>
                   <Title>{tour.title}</Title>
                   <LocalisedPrice
-                    currencySymbol={CURRENCY_SYMBOL_MAP[tour.currency]}
+                    currencySymbol={
+                      currencySymbolMap[tour.currency]?.localSymbol
+                    }
                     price={tour.price}
                     lang={lang}
                   />

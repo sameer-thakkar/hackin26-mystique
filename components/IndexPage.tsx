@@ -649,9 +649,18 @@ export default class Page extends React.Component<any, any> {
         {}
       );
 
+      const currencySymbolMap = tourGroupAPIResponses?.currencies?.reduce(
+        (acc, currency) => ({
+          ...acc,
+          [currency.code]: { ...currency },
+        }),
+        {}
+      );
+
       return {
         ...AllData,
         tourGroupData,
+        currencySymbolMap,
       };
     } catch (error) {
       console.log(error);
@@ -687,6 +696,7 @@ export default class Page extends React.Component<any, any> {
       isMobile,
       mbTheme = THEMES.DEFAULT,
       isPreview,
+      currencySymbolMap,
     } = this.props;
 
     if (statusCode) {
@@ -776,6 +786,7 @@ export default class Page extends React.Component<any, any> {
               design={MBDesign || DESIGN.V1}
               mbTheme={mbTheme}
               isPreview={isPreview}
+              currencySymbolMap={currencySymbolMap}
             >
               {Component}
             </MBContextProvider>

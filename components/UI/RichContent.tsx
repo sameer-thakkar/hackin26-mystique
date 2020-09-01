@@ -10,6 +10,12 @@ const StyledRichContent = styled.div`
 `;
 
 const RichContent = ({ render, disableShortcodes = false }) => {
+  if (
+    typeof render === 'object' &&
+    RichText.asText(render).trim().length === 0
+  ) {
+    return null;
+  }
   return (
     <StyledRichContent>
       <RichText

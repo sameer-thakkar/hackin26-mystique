@@ -2,9 +2,11 @@ import * as labels from 'constants/localization/labels';
 import LocalisedPrice from './LPrice';
 import { SOLEIL, COLORS } from 'constants/ui-constants';
 import styled from 'styled-components';
-import { CURRENCY_SYMBOL_MAP, THEMES } from 'constants/index';
+import { THEMES } from 'constants/index';
 import Conditional from 'components/common/Conditional';
 import { getSavingsPercent } from 'utils';
+import { useContext } from 'react';
+import { MBContext } from 'contexts/MBContext';
 
 export const StyledPriceBlock = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
@@ -62,9 +64,10 @@ const PriceBlock = ({
   prefix?: boolean;
   showSavings?: boolean;
 }) => {
+  const { currencySymbolMap } = useContext(MBContext);
   if (!price) return null;
   const { originalPrice, finalPrice, currencyCode } = price;
-  const currencySymbol = CURRENCY_SYMBOL_MAP[currencyCode];
+  const currencySymbol = currencySymbolMap[currencyCode]?.localSymbol;
   const savings = price && showSavings ? getSavingsPercent(price) : -1;
   return (
     <StyledPriceBlock>

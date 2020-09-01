@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { RichText } from 'prismic-reactjs';
 import Image from 'UI/Image';
 import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
@@ -6,6 +6,7 @@ import { truncate } from 'utils/helper';
 import { SOLEIL, COLORS } from 'constants/ui-constants';
 import { CURRENCY_SYMBOL_MAP } from 'constants/index';
 import styled from 'styled-components';
+import { MBContext } from 'contexts/MBContext';
 
 const ProductCard = styled.div`
   width: 100%;
@@ -201,12 +202,15 @@ const Product = (props) => {
     props.productClick(props.tgid, props.cardIdPrefix);
   };
   const { allTours, tgid, cardIdPrefix, isMobile } = props;
+  const { currencySymbolMap } = useContext(MBContext);
   if (!allTours[tgid]) return null;
   const { listingPrice, dfListingPrice, ...tour } = allTours[tgid];
   const priceObj = listingPrice || dfListingPrice;
   const price = priceObj?.finalPrice;
   const scratchPrice = priceObj?.originalPrice;
-  const currencySymbol = CURRENCY_SYMBOL_MAP[priceObj?.currencyCode];
+  const currencySymbol =
+    currencySymbolMap[priceObj?.currencyCode]?.localSymbol ||
+    CURRENCY_SYMBOL_MAP[priceObj?.currencyCode];
   return (
     <ProductCard
       onClick={handleProductClick}

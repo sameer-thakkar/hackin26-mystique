@@ -30,6 +30,9 @@ const V2MicrositeWrapper = styled.div`
     margin-bottom: 24px;
     margin-top: 56px;
   }
+  .hero-slice-section:empty {
+    margin: 0;
+  }
   .city-selector {
     margin-bottom: 24px;
   }
@@ -156,11 +159,13 @@ export const HomePage = (props) => {
       {heroSectionSlice.length ? (
         <ProductsContextProvider allTours={allTours} ready={ready}>
           <div className="main-wrapper hero-slice-section">
-            {heroSectionSlice.map((slice, index) => (
-              <div key={index} className={`slice-block ${slice.slice_type}`}>
-                {sliceHandler(slice, { isMobile })}
-              </div>
-            ))}
+            {heroSectionSlice
+              .filter((slice) => slice?.slice_type)
+              .map((slice, index) => (
+                <div key={index} className={`slice-block ${slice.slice_type}`}>
+                  {sliceHandler(slice, { isMobile })}
+                </div>
+              ))}
           </div>
         </ProductsContextProvider>
       ) : null}

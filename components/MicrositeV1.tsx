@@ -257,6 +257,10 @@ export default class MicrositeV1 extends Component<any, any> {
       this.props.data.refs?.commonFooter?.data?.logo?.url ||
       this.props.data.data.footer_logo.url ||
       this.props.data.data.footer_logo_link?.url;
+    const footerPoweredByHeadout =
+      this.props.data.data.powered_by_superbrand ||
+      this.props.data.refs?.commonFooter?.data?.powered_by_superbrand ||
+      false;
 
     const footerLogoAlt =
       this.props.data.refs?.commonFooter?.data?.logo?.alt ||
@@ -579,9 +583,7 @@ export default class MicrositeV1 extends Component<any, any> {
             attraction={commonFooter?.data?.attraction || 'attraction'}
             logoURL={footerLogoURL}
             logoAlt={footerLogoAlt}
-            hasPoweredByHeadoutLogo={
-              commonFooter?.data?.powered_by_superbrand || false
-            }
+            hasPoweredByHeadoutLogo={footerPoweredByHeadout}
             showDisclaimer={commonFooter?.data?.show_disclaimer}
             disclaimerText={commonFooter?.data?.disclaimer_text}
             microbrandType={commonFooter?.data?.microbrand_type}

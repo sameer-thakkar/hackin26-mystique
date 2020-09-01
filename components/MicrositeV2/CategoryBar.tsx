@@ -2,6 +2,7 @@ import React, { useState, useContext, useRef, useEffect } from 'react';
 import { SortSelector } from './SortSelector';
 import InteractionContext from '../../contexts/Interaction';
 import { SOLEIL, SIZES } from '../../constants/ui-constants';
+import Conditional from 'components/common/Conditional';
 
 const CategoryBar = (props) => {
   const interactionCtx = useContext(InteractionContext);
@@ -15,7 +16,7 @@ const CategoryBar = (props) => {
     width: null,
     left: null,
   });
-  const { categories, isMobile } = props;
+  const { categories, isMobile, hideSortBySelector } = props;
 
   const toggleFilterDropdown = () => {
     setFilterDropdownActive((oldState) => !oldState);
@@ -98,7 +99,7 @@ const CategoryBar = (props) => {
               style={{ ...indicatorStyles }}
             ></div>
           </div>
-          {!isMobile ? (
+          <Conditional if={!isMobile && !hideSortBySelector}>
             <div className="filter-wrapper">
               <SortSelector
                 isFilterDropdownActive={filterDropdownActive}
@@ -106,7 +107,7 @@ const CategoryBar = (props) => {
                 changeOrder={changeOrder}
               />
             </div>
-          ) : null}
+          </Conditional>
         </div>
         <style jsx>
           {`

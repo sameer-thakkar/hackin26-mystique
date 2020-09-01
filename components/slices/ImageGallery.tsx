@@ -427,7 +427,7 @@ const ImageGallery = (props) => {
           <Image
             url={
               images[initialSlide].uploaded_image?.url ||
-              images[initialSlide].linked_image
+              images[initialSlide].linked_image?.url
             }
             dontLazyLoad={true}
             aspectRatio={'16:10'}
@@ -457,7 +457,7 @@ const ImageGallery = (props) => {
                   onClick={() => openInLightbox(index)}
                 >
                   <Image
-                    url={image.uploaded_image?.url || image.linked_image}
+                    url={image.uploaded_image?.url || image.linked_image?.url}
                     width={180}
                     height={112}
                     alt={caption}
@@ -500,7 +500,9 @@ const ImageGallery = (props) => {
                   <LightboxImage key={index} title={caption}>
                     <div className={'swiper-zoom-container'}>
                       <Image
-                        url={image.uploaded_image?.url || image.linked_image}
+                        url={
+                          image.uploaded_image?.url || image.linked_image?.url
+                        }
                         dontLazyLoad={true}
                         className={`swiper-zoom-target`}
                         alt={caption}
