@@ -179,6 +179,7 @@ export const LinkCards = (props) => {
                           price={cardPrices[card.tgid].listingPrice}
                           showScratchPrice={true}
                           prefix={false}
+                          currencySymbolOverride={currencySymbol}
                         />
                       </Conditional>
                       <Conditional if={!cardPrices[card.tgid].listingPrice}>

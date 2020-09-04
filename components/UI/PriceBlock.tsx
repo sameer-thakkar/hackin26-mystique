@@ -57,17 +57,20 @@ const PriceBlock = ({
   showScratchPrice = true,
   prefix = true,
   showSavings = false,
+  currencySymbolOverride = '',
 }: {
   showScratchPrice?: boolean;
   lang: string;
   price: any;
   prefix?: boolean;
   showSavings?: boolean;
+  currencySymbolOverride?: string;
 }) => {
   const { currencySymbolMap } = useContext(MBContext);
   if (!price) return null;
   const { originalPrice, finalPrice, currencyCode } = price;
-  const currencySymbol = currencySymbolMap[currencyCode]?.localSymbol;
+  const currencySymbol =
+    currencySymbolOverride || currencySymbolMap[currencyCode]?.localSymbol;
   const savings = price && showSavings ? getSavingsPercent(price) : -1;
   return (
     <StyledPriceBlock>

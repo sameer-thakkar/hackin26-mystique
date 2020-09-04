@@ -112,23 +112,16 @@ const PopulateHead = (data) => {
   const { isPreview, noTrack } = useContext(MBContext);
 
   const isNonProd = isDev || isPreview || originalHost.startsWith('stage-');
-  const isOnlineTicketsDomain = originalHost.includes('online-tickets.co');
 
-  const amplitude_key = isOnlineTicketsDomain
-    ? '93459bf7775fad2952497b5da071ad85'
-    : '0d0bf3b04d91a9a79926398eca5cac45';
+  const amplitude_key = '0d0bf3b04d91a9a79926398eca5cac45';
 
-  const GTM_CONTAINER_ID = isOnlineTicketsDomain
-    ? 'GTM-TS3V4HK'
-    : 'GTM-5LJWNW3';
+  const GTM_CONTAINER_ID = 'GTM-5LJWNW3';
   let GTM_AUTH = isNonProd
     ? 'psi3hURmBLey31qAhn7cPA'
     : 'ueaj9d1HgXEpkUp-zbbP0Q';
   let GTM_ENV = isNonProd ? 'env-27' : 'env-1';
-  GTM_AUTH = isOnlineTicketsDomain ? null : `&gtm_auth=${GTM_AUTH}`;
-  GTM_ENV = isOnlineTicketsDomain
-    ? null
-    : `&gtm_preview=${GTM_ENV}&gtm_cookies_win=x`;
+  GTM_AUTH = `&gtm_auth=${GTM_AUTH}`;
+  GTM_ENV = `&gtm_preview=${GTM_ENV}&gtm_cookies_win=x`;
 
   const robotsContent = [];
   if (nofollow === 'True') {

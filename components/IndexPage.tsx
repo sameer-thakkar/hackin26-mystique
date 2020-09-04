@@ -148,6 +148,7 @@ export default class Page extends React.Component<any, any> {
   }) {
     const { host } = req.headers || window.location;
     const pathname = reqPathname || window.location.pathname;
+    const isStage = host.includes('stage-');
     try {
       let uid, lang;
       if (req) {
@@ -615,7 +616,9 @@ export default class Page extends React.Component<any, any> {
 
       tgidsArray = [...tgidsArray, ...all_tours_tab_tgids];
       const tourGroupAPIResponses = await fetch(
-        `${'http'}://${host}/api/tours/v5/tour-group/list?ids[]=${tgidsArray}&language=${
+        `https://${
+          isStage ? 'stage-' : ''
+        }microbrands.headout.com/api/tours/v5/tour-group/list?ids[]=${tgidsArray}&language=${
           lang.split('-')[0]
         }`
       ).then((r) => r.json());
