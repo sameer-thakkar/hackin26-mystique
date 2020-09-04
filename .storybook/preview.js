@@ -6,9 +6,10 @@ import theme from '../style/theme';
 import 'lazysizes';
 import 'lazysizes/plugins/attrchange/ls.attrchange';
 import '!style-loader!css-loader!../style/global.css';
+import { THEMES } from '../constants';
 
 addDecorator((storyFn) => (
-  <ThemeProvider theme={theme}>{storyFn()}</ThemeProvider>
+  <ThemeProvider theme={theme[THEMES.DEFAULT]}>{storyFn()}</ThemeProvider>
 ));
 
 addParameters({

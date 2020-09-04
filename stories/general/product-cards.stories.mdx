@@ -1,0 +1,69 @@
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+
+<Meta title="General/POI Product Cards" />
+
+# POI Product Cards
+
+## Default Interim
+
+To start using Interim theme on MB, Select the `Default Interim` Option in theme selection dropdown on the Main Tab of the Microsite Document on Prismic.<br/>
+Requirements: <br/>
+✔️ Ensure Marketing Highlights are formatted with H6 for headings, read details below (ideally subsequent content after H6 should be a list.)<br/>
+✔️ Add Appropriate Icons to Descriptors. read details below <br/>
+✔️ Add L1 Booster. (_optional_)<br/><br/>
+
+![Interim Theme Product Card](http://cdn-imgix-open.headout.com/docs/purps-card.svg 'Interim Product Card')
+find info specific to `Interim` theme by spotting 🚩.
+
+### Fields
+
+find these on Uncategorised Tours Tab, in Tour List Slice.
+
+- **Tour Group ID** Headout TGID (_required_) is used to get data from the APIs<br/>
+
+* **Tour Variant ID** Headout TID / Variant ID. Used when you require Next Availability to be shown. (currently this data is accessible at TID level.)<br/>
+
+- **Tour Title Override** If you wish to use a custom experience name on MB, fill in this field to override Headout experience name with this field value.<br/>
+
+* **Marketing Descriptors** Comma Separated Values of Experience Descriptors.<br/>
+  [🚩] Icons are mandatory in the Interim theme, descriptors without icons will be automatically hidden.
+  ##### Showing Icons
+  - [🚩] **In Interim theme** You can have icons prefixed to a descriptor. ( **[Icons List](#descriptor-icons)**)
+  - [🚩] You need to follow this syntax to do so, `{iconName} Desciptor 1, {iconName} Descriptor`
+  - **Example:** <br/>
+    `{mobile} Mobile Tickets, {user} Guided Tour` will result in, (<img align="left" style={{verticalAlign: 'middle'}} src="http://cdn-imgix-open.headout.com/docs/descriptors.png"/>)<br/><br/>
+
+- **L1 Booster** [🚩] Sets text for (![L1 Booster](http://cdn-imgix-open.headout.com/docs/l1.png)) booster. Appears on top of the Experience card.
+
+* **Product Booster** Special Purpose Booster, used to highlight offers and discounts.
+
+- **Short Summary** Quick one liner text, that describes the experience.
+
+* **Marketing Highlights Override** If you wish to use custom marketing content, as opposed to one coming from Scorpio. You can set the content here.<br/>
+  ##### Creating Tabs
+  - [🚩] **In Interim theme** Tabs are Generated using H6 as Markers,
+  - [🚩] All Tab Headings will be marked by setting them as H6 (**Scorpio users** set an H6 using markdown [documentation here](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers))
+  - [🚩] Any Subsquent List/Paragraph after an H6 will be grouped into that tab.
+
+- **Show Scratch Price** Set this to Yes, to show full price block (including Old Price, Current Price & Saved %.)
+
+- **CTA URL Suffix** Any Text added here will be used as a suffix for the booking link, can be used to add **bi link** or specific tracking query params.<br/><br/><br/>
+
+#### Descriptor Icons
+
+If you haven't read how to add icons alongside the text, [read this first](#showing-icons)
+
+| Icon Code    | Resulting Icon                                                            |
+| ------------ | ------------------------------------------------------------------------- |
+| {mobile}     | ![L1 Booster](https://cdn-imgix-open.headout.com/mb-icons/phone.svg)      |
+| {user}       | ![L1 Booster](https://cdn-imgix-open.headout.com/mb-icons/user.svg)       |
+| {headphones} | ![L1 Booster](https://cdn-imgix-open.headout.com/mb-icons/headphones.svg) |
+| {map}        | ![L1 Booster](https://cdn-imgix-open.headout.com/mb-icons/map.svg)        |
+| {cancel}     | ![L1 Booster](https://cdn-imgix-open.headout.com/mb-icons/cancel.svg)     |
+| {clock}      | ![L1 Booster](https://cdn-imgix-open.headout.com/mb-icons/clock.svg)      |
+| {food}       | ![L1 Booster](https://cdn-imgix-open.headout.com/mb-icons/food.svg)       |
+| {group}      | ![L1 Booster](https://cdn-imgix-open.headout.com/mb-icons/group.svg)      |
+| {quick}      | ![L1 Booster](https://cdn-imgix-open.headout.com/mb-icons/quick.svg)      |
+| {skip}       | ![L1 Booster](https://cdn-imgix-open.headout.com/mb-icons/skip.svg)       |
+| {transfers}  | ![L1 Booster](https://cdn-imgix-open.headout.com/mb-icons/transfers.svg)  |
+| {wallet}     | ![L1 Booster](https://cdn-imgix-open.headout.com/mb-icons/wallet.svg)     |
