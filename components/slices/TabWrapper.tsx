@@ -126,8 +126,8 @@ const TabWrapper = (props: TabWrapperProps) => {
         })}
       </div>
       <div className="tab-content-wrap">
-        {slices.map((slice) => {
-          return sliceHandler(slice, sliceProps);
+        {slices.map((slice, keyIndex) => {
+          return sliceHandler(slice, { ...sliceProps, keyIndex });
         })}
       </div>
     </StyledTabWrapper>

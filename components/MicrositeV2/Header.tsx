@@ -13,6 +13,7 @@ import MultiLevelNav from '../MultiLevelNav';
 import { groupSlices } from '../../utils/helper';
 import Hamburger from '../UI/Hamburger';
 import HeaderLinks from '../HeaderLinks';
+import Conditional from 'components/common/Conditional';
 
 const StyledHeader = styled.span`
   header {
@@ -108,7 +109,8 @@ const HeaderRight = styled.div`
     grid-template-columns: ${({
       hasLanguageDropdown: col1,
       hasHamburger: col2,
-    }) => `repeat(${Number(col1) + Number(col2)}, auto)`};
+      hasSearch: col3,
+    }) => `repeat(${Number(col1) + Number(col2) + Number(col3)}, auto)`};
     align-items: center;
     .buy-tickets {
       display: none;
@@ -324,6 +326,7 @@ const Header = (props) => {
           <HeaderRight
             hasLanguageDropdown={hasLanguageDropdown}
             hasHamburger={isMobile && hamburgerIconCheck}
+            hasSearch={enableSearch}
           >
             {!groupedHeaderSlices.length && headerLinks ? (
               <HeaderLinks
@@ -363,14 +366,16 @@ const Header = (props) => {
                 {SEARCH_ICON}
               </div>
             )}
-            <LanguageSelector
-              {...languageProps}
-              languageDropdown={languageDropdown}
-              toggleDropdown={toggleLanguageDropdown}
-              hasLanguageDropdown={hasLanguageSelector}
-              host={host}
-              isMobile={isMobile}
-            />
+            <Conditional if={hasLanguageDropdown}>
+              <LanguageSelector
+                {...languageProps}
+                languageDropdown={languageDropdown}
+                toggleDropdown={toggleLanguageDropdown}
+                hasLanguageDropdown={hasLanguageSelector}
+                host={host}
+                isMobile={isMobile}
+              />
+            </Conditional>
             {isMobile && hamburgerIconCheck ? (
               <Hamburger
                 className={'hamburger'}

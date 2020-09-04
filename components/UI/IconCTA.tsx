@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { CHEVRON_LEFT } from 'assets/SvgIcons';
+import { THEMES } from 'constants/index';
 
 export const StyledIconCTA = styled.div`
   padding: 8px;
@@ -15,9 +16,14 @@ export const StyledIconCTA = styled.div`
   color: ${({ colorScheme: cs }) => cs.color};
   width: max-content;
   cursor: ${({ onClick }) => (onClick ? 'pointer' : '')};
+  @media (max-width: 768px) {
+    border: 1px solid
+      ${({ colorScheme: cs, theme }) =>
+        theme.theme === THEMES.DEF_INTERIM ? cs.accent : 'none'};
+  }
 `;
 
-const Chevron = styled.div`
+export const Chevron = styled.div`
   display: flex;
   svg {
     height: 12px;
@@ -30,7 +36,7 @@ const Chevron = styled.div`
   }
 `;
 
-const Icon = styled.div`
+export const Icon = styled.div`
   display: flex;
   align-items: center;
   position: absolute;
@@ -44,7 +50,7 @@ const Icon = styled.div`
   }
 `;
 
-const Content = styled.div`
+export const Content = styled.div`
   display: grid;
   grid-row-gap: 8px;
   color: ${({ colorScheme: cs }) => cs.color};
@@ -58,10 +64,14 @@ const Content = styled.div`
 const IconCTA = ({ text, icon, ctaOnClick = null, colorScheme }) => {
   return (
     <StyledIconCTA onClick={ctaOnClick} colorScheme={colorScheme}>
-      <Icon>{icon}</Icon>
-      <Content colorScheme={colorScheme}>{text}</Content>
+      <Icon className="icon">{icon}</Icon>
+      <Content className="text" colorScheme={colorScheme}>
+        {text}
+      </Content>
       {ctaOnClick ? (
-        <Chevron colorScheme={colorScheme}>{CHEVRON_LEFT}</Chevron>
+        <Chevron className="chevron" colorScheme={colorScheme}>
+          {CHEVRON_LEFT}
+        </Chevron>
       ) : null}
     </StyledIconCTA>
   );

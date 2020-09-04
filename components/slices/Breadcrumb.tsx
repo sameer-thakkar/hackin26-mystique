@@ -41,12 +41,16 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ orderedLinks: links }) => (
   <BreadcrumbContainer>
     {links.map((crumb, index) => {
       return (
-        <>
-          <StyledBreadcrumb href={crumb.link?.url} target={crumb.link?.target}>
+        <React.Fragment key={index}>
+          <StyledBreadcrumb
+            key={index}
+            href={crumb.link?.url}
+            target={crumb.link?.target}
+          >
             {crumb.text}
           </StyledBreadcrumb>
           {links.length - 1 !== index ? ' / ' : null}
-        </>
+        </React.Fragment>
       );
     })}
   </BreadcrumbContainer>

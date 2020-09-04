@@ -1,6 +1,7 @@
 import React, { createContext, useState } from 'react';
 import AsideModal from 'UI/AsideModal';
 import { getLangObject } from 'utils/helper';
+import { SIDEBAR_TYPES } from 'constants/index';
 
 export const MBContext = createContext({
   uid: null,
@@ -18,6 +19,7 @@ export const MBContext = createContext({
   mbTheme: null,
   isPreview: false,
   currencySymbolMap: {},
+  noTrack: false,
 });
 
 export const MBContextProvider = (props) => {
@@ -30,6 +32,7 @@ export const MBContextProvider = (props) => {
     mbTheme,
     isPreview,
     currencySymbolMap,
+    noTrack,
   } = props;
   const [sidebarModalStack, setSidebarModalStack] = useState([]);
 
@@ -38,9 +41,10 @@ export const MBContextProvider = (props) => {
     title = '',
     width = '',
     sidePadding = 0,
+    type = SIDEBAR_TYPES.DEFAULT,
   }) => {
     const tempStack = [...sidebarModalStack];
-    tempStack.push({ children, title, width, sidePadding });
+    tempStack.push({ children, title, width, sidePadding, type });
     setSidebarModalStack(tempStack);
   };
 
@@ -75,6 +79,7 @@ export const MBContextProvider = (props) => {
         mbTheme,
         isPreview,
         currencySymbolMap,
+        noTrack,
       }}
     >
       {props.children}
@@ -87,6 +92,7 @@ export const MBContextProvider = (props) => {
           stack={sidebarModalStack}
           title={getActiveAside()?.title}
           closeModal={closeAside}
+          type={getActiveAside()?.type}
         >
           {getActiveAside()?.children}
         </AsideModal>

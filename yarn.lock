@@ -2774,6 +2774,15 @@
   dependencies:
     eslint-visitor-keys "^1.1.0"
 
+"@ueno/markdown-to-prismic-richtext@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@ueno/markdown-to-prismic-richtext/-/markdown-to-prismic-richtext-1.2.0.tgz#fb91e67253e724d31217c36c709611f8ea52dcf1"
+  integrity sha512-zGAd6OHsJCl9VviSihL3KxBLGQwtxJzwgEtr0e88ySdE1+/FLeSfdlAVG5D5mAnGfwLs/QUJJxAxxBoS0KNPIw==
+  dependencies:
+    lodash "^4.17.11"
+    prismic-richtext "^1.0.1"
+    remark-parse "^6.0.3"
+
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.9.0.tgz#bd850604b4042459a5a41cd7d338cbed695ed964"
@@ -10254,7 +10263,7 @@ prismic-reactjs@^1.0.1:
     prismic-richtext "^1.0.3"
     prop-types "^15.7.2"
 
-prismic-richtext@^1.0.3:
+prismic-richtext@^1.0.1, prismic-richtext@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/prismic-richtext/-/prismic-richtext-1.0.3.tgz#ce8c8c18d65b01f1036f222b993ad2de700199fe"
   integrity sha512-ZM45dVPL713+oDpt8ysWRY2pw3esBxRrqBlUO+q/T0WK0SNVSq29tQYhVdIALd8hRfF7X1lfpW0Q0YymEdh0AA==
@@ -11298,6 +11307,27 @@ remark-parse@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/remark-parse/-/remark-parse-5.0.0.tgz#4c077f9e499044d1d5c13f80d7a98cf7b9285d95"
   integrity sha512-b3iXszZLH1TLoyUzrATcTQUZrwNl1rE70rVdSruJFlDaJ9z5aMkhrG43Pp68OgfHndL/ADz6V69Zow8cTQu+JA==
+  dependencies:
+    collapse-white-space "^1.0.2"
+    is-alphabetical "^1.0.0"
+    is-decimal "^1.0.0"
+    is-whitespace-character "^1.0.0"
+    is-word-character "^1.0.0"
+    markdown-escapes "^1.0.0"
+    parse-entities "^1.1.0"
+    repeat-string "^1.5.4"
+    state-toggle "^1.0.0"
+    trim "0.0.1"
+    trim-trailing-lines "^1.0.0"
+    unherit "^1.0.4"
+    unist-util-remove-position "^1.0.0"
+    vfile-location "^2.0.0"
+    xtend "^4.0.1"
+
+remark-parse@^6.0.3:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/remark-parse/-/remark-parse-6.0.3.tgz#c99131052809da482108413f87b0ee7f52180a3a"
+  integrity sha512-QbDXWN4HfKTUC0hHa4teU463KclLAnwpn/FBn87j9cKYJWWawbiLgMfP2Q4XwhxxuuuOxHlw+pSN0OKuJwyVvg==
   dependencies:
     collapse-white-space "^1.0.2"
     is-alphabetical "^1.0.0"

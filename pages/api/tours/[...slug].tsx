@@ -1,5 +1,5 @@
 import { serialize } from 'cookie';
-
+const markdownToRichtext = require('@ueno/markdown-to-prismic-richtext');
 const ToursAPI = async (req, res) => {
   const nakedDomain = req.headers.host
     .replace('stage-', '')
@@ -20,6 +20,7 @@ const ToursAPI = async (req, res) => {
       return r.json();
     })
     .then((r) => {
+      let data = r;
       res.setHeader('Content-type', 'application/json');
       if (!req.cookies['h-sid'])
         res.setHeader(
@@ -30,7 +31,15 @@ const ToursAPI = async (req, res) => {
             expires: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
           })
         );
-      res.write(JSON.stringify(r));
+      if (data?.tourGroups?.length) {
+        data.tourGroups = data.tourGroups.map((tour) => ({
+          ...tour,
+          microBrandsHighlight: markdownToRichtext(
+            tour.microBrandsHighlight || ''
+          )?.map((highlight) => ({ ...highlight, ...highlight.content })),
+        }));
+      }
+      res.write(JSON.stringify(data));
       res.end();
     });
 };

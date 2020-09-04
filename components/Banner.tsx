@@ -10,6 +10,7 @@ import Tags, { Tag } from 'UI/Tags';
 import { MBContext } from 'contexts/MBContext';
 import DiscountedFuturesPitch from 'UI/DiscountedFuturesPitch';
 import Conditional from './common/Conditional';
+import { THEMES } from 'constants/index';
 
 const StyledBanner = styled.div`
   display: grid;
@@ -18,7 +19,8 @@ const StyledBanner = styled.div`
   position: relative;
   box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.16);
   font-family: ${SOLEIL.FONT_STACK};
-  margin-bottom: 40px;
+  margin-bottom: ${({ theme }) =>
+    theme.theme === THEMES.DEF_INTERIM ? '24px' : '40px'};
 
   .mb-slide {
     display: none;
@@ -338,7 +340,7 @@ export default class Banner extends Component<any, any> {
   };
 
   renderBanners = (image) => {
-    const { url, alt } = image;
+    const { url, alt, mobileUrl } = image;
     const { isMobile } = this.state;
     const { ASPECT_RATIO, WIDTH } = isMobile
       ? BANNER_PARAMS.MOBILE
@@ -349,6 +351,7 @@ export default class Banner extends Component<any, any> {
         width={WIDTH}
         aspectRatio={ASPECT_RATIO}
         url={url}
+        mobileUrl={mobileUrl}
         alt={alt || 'banner'}
       />
     );
@@ -405,9 +408,7 @@ export default class Banner extends Component<any, any> {
                 }
               )}
             >
-              {isClient
-                ? this.renderBanners({ url: banner.url, alt: banner.alt })
-                : null}
+              {isClient ? this.renderBanners(banner) : null}
             </div>
           );
         })}

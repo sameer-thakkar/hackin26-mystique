@@ -395,6 +395,8 @@ export default class MicrositeV1 extends Component<any, any> {
       return {
         url: banner.image_src.url || banner.uploaded_image.url,
         alt: banner.image_alt || banner.uploaded_image.alt,
+        mobileUrl:
+          banner.mobile_banner_url.url || banner.mobile_banner_uploaded.url,
       };
     });
     if (autoBanner) {
@@ -502,7 +504,7 @@ export default class MicrositeV1 extends Component<any, any> {
               />
             </div>
           ) : null}
-          <Conditional if={mbTheme === THEMES.DEFAULT}>
+          <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
             <Banner
               bannerImages={finalBannerImages ? finalBannerImages : null}
               bannerHeading={bannerHeading ? bannerHeading : null}
@@ -551,6 +553,7 @@ export default class MicrositeV1 extends Component<any, any> {
               analytics={analytics}
               ranking={tourRanking}
               mbTheme={mbTheme}
+              allToursTabContent={allTours}
             />
           ) : null}
           <Conditional

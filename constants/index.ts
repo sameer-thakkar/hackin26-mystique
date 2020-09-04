@@ -418,6 +418,12 @@ export const DISCOUNTED_FUTURE_IMAGES_SECTION = {
 
 export const THEMES = {
   DEFAULT: 'Default',
-  MIN_BLUE: 'Minimal Blue',
   INHERIT: 'Inherit',
+  MIN_BLUE: 'Minimal Blue',
+  DEF_INTERIM: 'Default Interim',
+};
+
+export const SIDEBAR_TYPES = {
+  DEFAULT: 'default',
+  FIXED: 'fixed',
 };

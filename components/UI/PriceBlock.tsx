@@ -36,7 +36,7 @@ export const StyledPriceBlock = styled.div`
   }
 `;
 
-const SavedTag = styled.div`
+export const SavedTag = styled.div`
   padding: 4px 8px;
   text-transform: ${({ theme }) =>
     theme.theme === THEMES.DEFAULT ? 'uppercase' : 'initial'};
@@ -89,7 +89,7 @@ const PriceBlock = ({
       />
       <Conditional if={savings > 0 && showScratchPrice}>
         <SavedTag>
-          {labels[lang].SAVE_UPTO} {savings.toFixed(0)}%
+          {labels[lang].SAVE} {savings.toFixed(0)}%
         </SavedTag>
       </Conditional>
     </StyledPriceBlock>

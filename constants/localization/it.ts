@@ -25,6 +25,7 @@ const it = {
   SHOW_LESS_TEXT: 'Mostra meno',
   NEXT_AVAILABLE: 'Prossimo Disponibile, ',
   SAVE_UPTO: 'Risparmia fino a',
+  SAVE: 'Risparmia',
   AVAILABLE: 'Disponibile',
   EARLIEST_AVAILABILITY: 'Prima Disponibilità',
   TODAY: 'Oggi',

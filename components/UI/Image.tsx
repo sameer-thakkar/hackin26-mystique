@@ -17,6 +17,7 @@ type ImageProps = {
   imageId?: string;
   dontLazyLoad?: boolean;
   alt?: string;
+  mobileUrl?: string;
 };
 
 const Image: React.FC<ImageProps> = ({
@@ -25,13 +26,14 @@ const Image: React.FC<ImageProps> = ({
   height,
   quality = 75,
   aspectRatio,
-  format = 'pjgp',
+  format = 'pjpg',
   imageId = '',
   dontLazyLoad = false,
   alt = '',
   className = '',
+  mobileUrl = '',
 }) => {
-  const makeImageUrl = (fm: string): string => {
+  const makeImageUrl = (fm: string, url): string => {
     if (!url) {
       return null;
     }
@@ -51,14 +53,24 @@ const Image: React.FC<ImageProps> = ({
   };
 
   if (dontLazyLoad) {
-    return <img className={className} src={makeImageUrl(format)} alt={alt} />;
+    return (
+      <img className={className} src={makeImageUrl(format, url)} alt={alt} />
+    );
   } else {
     return (
       <Picture className={className}>
-        <source type="image/webp" data-srcset={makeImageUrl('webp')} />
+        <source
+          type="image/webp"
+          data-srcset={`${
+            mobileUrl ? makeImageUrl('webp', mobileUrl) + ' 768w,' : ''
+          }${makeImageUrl('webp', url)}`}
+        />
         <img
           className={`lazyload ${imageId}`}
-          data-src={makeImageUrl(format)}
+          data-srcset={`${
+            mobileUrl ? makeImageUrl(format, mobileUrl) + ' 768w,' : ''
+          }${makeImageUrl(format, url)}`}
+          data-src={makeImageUrl(format, url)}
           alt={alt}
         />
       </Picture>

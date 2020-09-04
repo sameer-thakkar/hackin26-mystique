@@ -22,6 +22,7 @@ const en = {
   SHOW_LESS_TEXT: 'Show Less',
   NEXT_AVAILABLE: 'Next Available, ',
   SAVE_UPTO: 'Save upto',
+  SAVE: 'Save',
   AVAILABLE: 'Available',
   EARLIEST_AVAILABILITY: 'Earliest Availability',
   TODAY: 'Today',
@@ -34,7 +35,7 @@ const en = {
     WHY_BOOK_FROM_US: 'Why Book From Us?',
   },
   PRICES_STARTING: 'Prices Starting',
-  FROM: 'from',
+  FROM: 'From',
   MORE_DETAILS: 'More Details',
   FOOTER: {
     DISCLAIMER:

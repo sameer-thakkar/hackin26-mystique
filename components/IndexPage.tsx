@@ -579,15 +579,25 @@ export default class Page extends React.Component<any, any> {
           return [...acc, tour.tgid];
         }, []);
 
-        const tgidToScroll = (function getScrollTgid() {
-          const pathname = req ? req.url : window.location.pathname;
-          const doesTgidExist = pathname.includes('tgid');
-          if (doesTgidExist) {
-            const tgidToScroll = pathname.split('=').pop();
-            return tgidToScroll;
+        const { tgidToScroll, noTrack } = (function getScrollTgid() {
+          try {
+            const href = req
+              ? `http://${host}${req.url}`
+              : window.location.href;
+            const url = new URL(href);
+            if (url) {
+              return {
+                tgidToScroll: url.searchParams.get('tgid'),
+                noTrack: typeof url.searchParams.get('no-track') === 'string',
+              };
+            }
+            return {};
+          } catch (e) {
+            console.log(e);
+            return {};
           }
-          return null;
         })();
+
         AllData = {
           CMSContent,
           toursList,
@@ -599,12 +609,13 @@ export default class Page extends React.Component<any, any> {
           isDev,
           tgidToScroll,
           mbTheme,
+          noTrack,
         };
       }
 
       tgidsArray = [...tgidsArray, ...all_tours_tab_tgids];
       const tourGroupAPIResponses = await fetch(
-        `https://api.headout.com/api/v5/tour-group/list?ids[]=${tgidsArray}&language=${
+        `${'http'}://${host}/api/tours/v5/tour-group/list?ids[]=${tgidsArray}&language=${
           lang.split('-')[0]
         }`
       ).then((r) => r.json());
@@ -697,6 +708,7 @@ export default class Page extends React.Component<any, any> {
       mbTheme = THEMES.DEFAULT,
       isPreview,
       currencySymbolMap,
+      noTrack,
     } = this.props;
 
     if (statusCode) {
@@ -787,6 +799,7 @@ export default class Page extends React.Component<any, any> {
               mbTheme={mbTheme}
               isPreview={isPreview}
               currencySymbolMap={currencySymbolMap}
+              noTrack={!!noTrack || isDev}
             >
               {Component}
             </MBContextProvider>

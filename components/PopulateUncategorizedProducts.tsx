@@ -24,7 +24,8 @@ const StyledUncategorizedContainer = styled.div`
 const ProductContainer = styled.div`
   display: grid;
   grid-row-gap: ${({ theme }) => theme.productCards.gap};
-  margin-top: 48px;
+  margin-top: ${({ theme }) =>
+    theme.theme === THEMES.DEF_INTERIM ? '24px' : '48px'};
   margin-bottom: 48px;
   & > ${HorizontalLine} {
     border-bottom-style: dashed;
@@ -98,6 +99,7 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
       analytics,
       ranking,
       mbTheme,
+      allToursTabContent,
     } = this.props;
     const orderedTGIDRanking = csvTgidToArray(ranking);
     const orderedTours = orderedTGIDRanking
@@ -154,6 +156,9 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
                 position={index + 1}
                 booster={tour.product_booster}
                 defaultOpen={orderedTours.length === 1}
+                allToursTabContent={allToursTabContent?.[tour.tgid] || {}}
+                shortSummary={tour.short_summary}
+                boosterTag={tour.tag_booster}
               />
               <Conditional if={mbTheme === THEMES.MIN_BLUE}>
                 <HorizontalLine color={COLORS.GREY_G6} />

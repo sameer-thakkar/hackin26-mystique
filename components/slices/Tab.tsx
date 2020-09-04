@@ -24,9 +24,9 @@ const StyledTabContent = styled.div`
 
 const Tab = (props) => {
   const { slices, title, sliceProps } = props;
-  const { activeTabId } = sliceProps;
+  const { activeTabId, keyIndex } = sliceProps;
   return (
-    <StyledTabPanel>
+    <StyledTabPanel key={keyIndex}>
       {slices.map((slice, index) => {
         return (
           <StyledTabContent

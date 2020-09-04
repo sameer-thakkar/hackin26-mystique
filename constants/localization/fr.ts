@@ -24,6 +24,7 @@ const fr = {
   SHOW_LESS_TEXT: 'Voir Moins',
   NEXT_AVAILABLE: 'Bientôt Disponible, ',
   SAVE_UPTO: "Économisez jusqu'à",
+  SAVE: 'Économisez',
   AVAILABLE: 'Disponible',
   EARLIEST_AVAILABILITY: 'Disponibilité la Plus Tôt',
   TODAY: "Aujourd'hui",

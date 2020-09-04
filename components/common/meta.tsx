@@ -4,6 +4,7 @@ import Head from 'next/head';
 import parse from 'url-parse';
 import { withoutTrailingSlash } from '../../utils/helper';
 import { MBContext } from 'contexts/MBContext';
+import Conditional from './Conditional';
 
 const withTrailingSlash = (url) =>
   url.charAt(url.length - 1) !== '/' ? `${url}/` : url;
@@ -108,7 +109,7 @@ const PopulateHead = (data) => {
     serverRequestStartTimestamp,
   } = data;
 
-  const { isPreview } = useContext(MBContext);
+  const { isPreview, noTrack } = useContext(MBContext);
 
   const isNonProd = isDev || isPreview || originalHost.startsWith('stage-');
   const isOnlineTicketsDomain = originalHost.includes('online-tickets.co');
@@ -186,6 +187,8 @@ const PopulateHead = (data) => {
       ) : null}
 
       <script
+        defer
+        async
         dangerouslySetInnerHTML={{
           __html: `
             var mystiquePerf = {
@@ -205,32 +208,40 @@ const PopulateHead = (data) => {
           `,
         }}
       />
+      <Conditional if={!noTrack}>
+        <script
+          defer
+          async
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(getSchemaJson(data)),
+          }}
+        />
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(getSchemaJson(data)),
-        }}
-      />
-
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `//<![CDATA[
+        <script
+          defer
+          async
+          dangerouslySetInnerHTML={{
+            __html: `//<![CDATA[
             var dataLayer = dataLayer || [];
           //]]>
           `,
-        }}
-      ></script>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `//<![CDATA[
+          }}
+        ></script>
+        <script
+          defer
+          async
+          dangerouslySetInnerHTML={{
+            __html: `//<![CDATA[
             var dataLayer_content = [];
             dataLayer.push( dataLayer_content );//]]>`,
-        }}
-      ></script>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `//<![CDATA[
+          }}
+        ></script>
+        <script
+          defer
+          async
+          dangerouslySetInnerHTML={{
+            __html: `//<![CDATA[
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -238,12 +249,14 @@ const PopulateHead = (data) => {
               GTM_AUTH || ''
             }${GTM_ENV || ''}';f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','${GTM_CONTAINER_ID}');//]]>`,
-        }}
-      ></script>
-      {amplitude_key ? (
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(e,t){var n=e.amplitude||{_q:[],_iq:{}};var r=t.createElement("script")
+          }}
+        ></script>
+        {amplitude_key ? (
+          <script
+            defer
+            async
+            dangerouslySetInnerHTML={{
+              __html: `(function(e,t){var n=e.amplitude||{_q:[],_iq:{}};var r=t.createElement("script")
             ;r.type="text/javascript"
             ;r.integrity="sha384-a+mq7tiLwde/00Oc7avFHLn/ttGfdAq1rtZc7u97SEzIiyYoT2IsOKWCkAThwdEu"
             ;r.crossOrigin="anonymous";r.defer=true
@@ -276,9 +289,10 @@ const PopulateHead = (data) => {
               saveParamsReferrerOncePerSession: false,
               unsetParamsReferrerOnNewSession: true
             });`,
-          }}
-        ></script>
-      ) : null}
+            }}
+          ></script>
+        ) : null}
+      </Conditional>
     </React.Fragment>
   );
 

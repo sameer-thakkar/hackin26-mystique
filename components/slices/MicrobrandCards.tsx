@@ -154,12 +154,12 @@ export const LinkCards = (props) => {
   const { lang } = useContext(MBContext);
 
   return (
-    <StyledMBCards gridAutoCol={gridAutoCol} as={as}>
+    <StyledMBCards {...(as !== React.Fragment ? { gridAutoCol } : {})} as={as}>
       {cards.map((card, index) => {
         return (
           <div key={index} className={cardClassName || ''}>
             <a target="_blank" rel="noopener noreferrer" href={card.link}>
-              <MicrobrandCard div className="microbrand-card">
+              <MicrobrandCard className="microbrand-card">
                 <div className="card-image">
                   <Image
                     width={600}
