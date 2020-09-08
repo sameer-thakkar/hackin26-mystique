@@ -940,9 +940,7 @@ const Product = (props) => {
             <HighlightTabs hasRegularHighlights={hasHighlights} tabs={tabs} />
           </Conditional>
         </div>
-        <Conditional if={highlights?.length > 4 || tabs.length}>
-          {getMoreDetailsButton()}
-        </Conditional>
+        {getMoreDetailsButton()}
       </ProductBody>
     </StyledProductCard>
   );
