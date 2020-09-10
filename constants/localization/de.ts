@@ -25,7 +25,7 @@ const de = {
   SHOW_LESS_TEXT: 'Weniger anzeigen',
   NEXT_AVAILABLE: 'Verfügbar ab: ',
   SAVE_UPTO: 'Spare',
-  SAVE: 'Spare',
+  SAVE: '<val> Rabatt',
   AVAILABLE: 'Verfügbar am',
   EARLIEST_AVAILABILITY: 'Früheste verfügbare',
   TODAY: 'Heute',

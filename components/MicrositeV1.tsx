@@ -242,7 +242,6 @@ export default class MicrositeV1 extends Component<any, any> {
       hide_banner_cta: hideBannerCTA,
       banner_limit: bannerLimit,
     } = this.props.data.data;
-    const languages = localization.filter((lang) => lang.language);
     const { uid } = this.props.data;
     const currentLanguage = getLangObject(this.props.data.lang).short;
     const uncategorizedTours = this.props.data.data.body1;
@@ -311,6 +310,9 @@ export default class MicrositeV1 extends Component<any, any> {
       }, []) || [];
     const hasDropdownLinks =
       enableDropdownLinks === 'Yes' && dropdownLinks.length;
+    const languages = hasLanguageSelector
+      ? localization.filter((lang) => lang.language)
+      : [];
 
     const showGroupBooking = enableGroupBooking === 'Yes';
     const { results: productOffer } = this.props.offerData

@@ -18,7 +18,7 @@ const StyledAccordion = styled.div`
   @media (max-width: 768px) {
     grid-row-gap: 16px;
     margin-right: 0;
-    padding: 16px;
+    padding: 16px 0;
   }
 `;
 

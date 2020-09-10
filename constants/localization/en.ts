@@ -22,7 +22,7 @@ const en = {
   SHOW_LESS_TEXT: 'Show Less',
   NEXT_AVAILABLE: 'Next Available, ',
   SAVE_UPTO: 'Save upto',
-  SAVE: 'Save',
+  SAVE: 'Save <val>',
   AVAILABLE: 'Available',
   EARLIEST_AVAILABILITY: 'Earliest Availability',
   TODAY: 'Today',

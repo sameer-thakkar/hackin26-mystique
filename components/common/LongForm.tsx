@@ -28,14 +28,6 @@ export const StyledLongForm = styled.div`
     font-size: 30px;
     font-weight: ${SOLEIL.SEMIBOLD};
   }
-  h2::after {
-    content: '';
-    width: 75px;
-    display: block;
-    height: 3px;
-    background: #ec1943;
-    margin-top: 20px;
-  }
   h3 {
     font-size: 1.4rem;
     font-weight: 500;
@@ -86,11 +78,6 @@ export const StyledLongForm = styled.div`
     }
     h6 {
       font-size: 0.6rem;
-    }
-
-    p,
-    ul {
-      font-size: 0.8rem;
     }
   }
 `;

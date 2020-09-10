@@ -26,6 +26,7 @@ export const getProductCardLayout = ({
   hasOffer,
   hasV1Booster,
   hasShortSummary,
+  hasNextAvailable,
 }) => {
   let layout = { desktop: [], mobile: [] };
   const hasIconBoosters = hasSafetyFlag || isDFProduct;
@@ -51,7 +52,7 @@ export const getProductCardLayout = ({
           hasV1Booster && 'booster ',
           'body',
           'cta-block',
-          'next-available',
+          hasNextAvailable && 'next-available',
         ],
       };
       break;
@@ -69,7 +70,7 @@ export const getProductCardLayout = ({
         ],
         mobile: [
           'title title',
-          'next-available next-available',
+          hasNextAvailable && 'next-available next-available',
           `price-block ${hasIconBoosters ? 'icon-booster' : 'price-block'}`,
           hasOffer && 'offer offer',
           'summary summary',
@@ -101,7 +102,7 @@ export const getProductCardLayout = ({
           hasV1Booster && 'booster ',
           'body',
           'cta-block',
-          'next-available',
+          hasNextAvailable && 'next-available',
         ],
       };
   }

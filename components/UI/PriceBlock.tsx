@@ -92,7 +92,7 @@ const PriceBlock = ({
       />
       <Conditional if={savings > 0 && showScratchPrice}>
         <SavedTag>
-          {labels[lang].SAVE} {savings.toFixed(0)}%
+          {labels[lang].SAVE.replace('<val>', `${savings.toFixed(0)}%`)}
         </SavedTag>
       </Conditional>
     </StyledPriceBlock>

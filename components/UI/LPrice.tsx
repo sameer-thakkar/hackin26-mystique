@@ -7,7 +7,7 @@ const LocalisedPrice = ({ price, currencySymbol, lang, className = '' }) => {
   return (
     <span className={className}>
       {reveresedList.includes(lang)
-        ? lPrice.reverse().join('')
+        ? lPrice.reverse().join(' ')
         : lPrice.join('')}
     </span>
   );

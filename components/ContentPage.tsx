@@ -55,18 +55,7 @@ const StyledContentPage = styled.div`
   }
 
   .slice-block > h2 {
-    margin-bottom: 40px;
-  }
-
-  .slice-block > h2::after {
-    color: #ec1943;
-    width: 75px;
-    border-top: solid 3px;
-    margin: 0;
-    position: absolute;
-    bottom: -20px;
-    left: 0;
-    content: '';
+    margin-bottom: 20px;
   }
 
   .slice-block p {
@@ -129,9 +118,9 @@ const StyledContentPage = styled.div`
 
   @media (max-width: 768px) {
     grid-row-gap: 52px;
+    margin-top: 52px;
     .slice-block h2 {
       font-size: 20px;
-      margin: 40px 0;
     }
     .product .product-left {
       width: 100%;

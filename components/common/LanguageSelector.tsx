@@ -22,8 +22,23 @@ const StyledLanguageContainer = styled.div`
   .language-dropdown {
     display: none;
     position: absolute;
-    left: -25px;
+    left: 50%;
+    transform: translateX(-50%);
     top: 50px;
+  }
+  &:after {
+    // this adds white space below the active text,
+    // increasing the hover area
+    content: '';
+    display: block;
+    height: 30px;
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+    width: 100%;
+  }
+  &:hover .language-dropdown {
+    display: block;
   }
   .language {
     display: flex;
@@ -60,6 +75,7 @@ const StyledMobileSelect = styled.div`
   span {
     text-transform: uppercase;
     padding: 4px; /* increase trigger area */
+    padding-left: 12px;
     display: block;
     font-family: ${SOLEIL.FONT_STACK};
     font-size: 14px;

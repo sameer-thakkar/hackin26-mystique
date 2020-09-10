@@ -8,13 +8,13 @@ const Tabs = styled.div`
   display: grid;
   grid-column-gap: 40px;
   grid-auto-flow: column;
-  justify-content: space-between;
+  justify-content: left;
   margin: auto;
   border-bottom: 1px solid #ebebeb;
   justify-content: ${({ align }) => {
     switch (align) {
       case 'center':
-        return 'space-around';
+        return 'flex-start';
       case 'left':
         return 'flex-start';
       case 'right':
@@ -24,11 +24,12 @@ const Tabs = styled.div`
     }
   }};
   .navigation-tab {
-    font-weight: 600;
+    font-weight: 500;
     font-family: ${SOLEIL.FONT_STACK};
     color: #444444;
-    font-size: 18px;
-    padding: 20px;
+    font-size: 22px;
+    line-height: 1.3;
+    padding-bottom: 16px;
   }
 
   .selected-nav-tab {
@@ -37,18 +38,20 @@ const Tabs = styled.div`
     color: #ec1943;
   }
   @media (max-width: 768px) {
-    flex-direction: column;
+    overflow: scroll;
+    margin: 0 -16px;
+    padding-left: 16px;
+    width: calc(100vw - 16px);
+    grid-column-gap: 24px;
+    grid-auto-columns: max-content;
     align-items: center;
-    border: none;
 
     a {
       width: 100% !important;
       text-align: center;
     }
     .navigation-tab {
-      border-bottom: 1px solid #ebebeb;
       font-size: 16px;
-      padding: 15px;
     }
     .selected-nav-tab {
       border-bottom: 2px solid #ec1943;

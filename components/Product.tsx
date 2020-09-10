@@ -719,6 +719,7 @@ const Product = (props) => {
     isDFProduct,
     mbTheme,
     hasShortSummary,
+    hasNextAvailable: earliestAvailability,
   });
 
   const getMoreDetailsButton = () => {
