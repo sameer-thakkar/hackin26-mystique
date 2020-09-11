@@ -167,6 +167,10 @@ body.scroll-lock {
   margin-top: -144px;
 }
 
+.slice-wrapper:empty {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .main-wrapper,
   .slice-wrapper {

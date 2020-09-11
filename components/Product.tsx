@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from 'react';
+import React, { useRef, useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import parse from 'url-parse';
 import dayjs from 'dayjs';
@@ -536,8 +536,13 @@ const TabPanel = styled.div`
   display: ${({ isActive }) => (isActive ? 'block' : 'none')};
 `;
 
-const HighlightTabs = ({ tabs, hasRegularHighlights = false }) => {
+const HighlightTabs = ({ tabs, hasRegularHighlights = false, onTabChange }) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
+
+  useEffect(() => {
+    onTabChange(tabs[activeTabIndex]);
+  }, [activeTabIndex, onTabChange, tabs]);
+
   return (
     <HighlightTabsWrapper hasRegularHighlights={hasRegularHighlights}>
       <TabsWrapper>
@@ -627,6 +632,11 @@ const Product = (props) => {
   const [isContentOpen, toggleContentOpen] = useState(
     defaultOpen && mbTheme === THEMES.MIN_BLUE
   );
+  const [showMoreDetailsInTabs, setShowMoreDetails] = useState(false);
+
+  const onTabChange = (tab) => {
+    setShowMoreDetails(tab.contents.length >= 3);
+  };
 
   const handlePopup = () => {
     togglePopup();
@@ -805,7 +815,7 @@ const Product = (props) => {
     <StyledProductCard layout={layout}>
       <ProductHeader>
         <TitleWrapper>
-          <Conditional if={boosterTag}>
+          <Conditional if={boosterTag && mbTheme === THEMES.DEF_INTERIM}>
             <BoosterTag>{boosterTag}</BoosterTag>
           </Conditional>
           <TourTitle>{cardTitle}</TourTitle>
@@ -938,10 +948,18 @@ const Product = (props) => {
             />
           </Conditional>
           <Conditional if={tabs.length}>
-            <HighlightTabs hasRegularHighlights={hasHighlights} tabs={tabs} />
+            <HighlightTabs
+              onTabChange={onTabChange}
+              hasRegularHighlights={hasHighlights}
+              tabs={tabs}
+            />
           </Conditional>
         </div>
-        {getMoreDetailsButton()}
+        <Conditional
+          if={highlights.flat()?.length >= 3 || showMoreDetailsInTabs}
+        >
+          {getMoreDetailsButton()}
+        </Conditional>
       </ProductBody>
     </StyledProductCard>
   );

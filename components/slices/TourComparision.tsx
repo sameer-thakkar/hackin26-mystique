@@ -474,8 +474,8 @@ const TourComparisonTable = (props) => {
     .filter((tgid) => allTours[tgid]?.available);
   const content_normalized_tours = getContentNormalizedTours(tgidArray);
 
-  // Return null if no tgids given
-  if (tgidArray.length === 0) return null;
+  // Return null if no / only one tgid given/available
+  if (tgidArray.length <= 1) return null;
 
   return (
     <StyledTourComparisionTable
