@@ -60,6 +60,7 @@ const StyledLanguageContainer = styled.div`
   }
   .lang {
     transform: translateY(-2px);
+    white-space: nowrap;
   }
   .selected-tab {
     color: ${COLORS.RHAPSODY};

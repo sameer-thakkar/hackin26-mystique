@@ -5,6 +5,7 @@ import {
   SUPPORTED_LANGUAGES,
   SUPPORTED_LANGUAGES_MAP,
   FULL_LANGUAGE_MAP,
+  PRISMIC_LANG_TO_ROUTE_PARAM,
 } from '../constants';
 
 // Gets the UID and Language by the host and pathname
@@ -108,4 +109,11 @@ const getMatchingNakedDomainPartsLength = (domain) => {
 export const isNakedDomain = (host) => {
   const parts = host.split('.');
   return parts.length === getMatchingNakedDomainPartsLength(host);
+};
+
+export const getHeadoutLanguagecode = (prismicLangCode) => {
+  return (
+    FULL_LANGUAGE_MAP[PRISMIC_LANG_TO_ROUTE_PARAM?.[prismicLangCode]]
+      ?.bookingFlow || 'en'
+  );
 };

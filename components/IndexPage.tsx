@@ -19,7 +19,13 @@ import {
   FULL_LANGUAGE_MAP,
   PRISMIC_LANG_TO_ROUTE_PARAM,
 } from '../constants';
-import { redirectTo, getPrismicProps, reflect, isNakedDomain } from '../utils';
+import {
+  redirectTo,
+  getPrismicProps,
+  reflect,
+  isNakedDomain,
+  getHeadoutLanguagecode,
+} from '../utils';
 import { uncategorizedToursListParser } from '../utils/dataParsers';
 import { MBContextProvider } from '../contexts/MBContext';
 import { toursTabSliceHandler } from '../components/Slices';
@@ -618,9 +624,9 @@ export default class Page extends React.Component<any, any> {
       const tourGroupAPIResponses = await fetch(
         `https://${
           isStage ? 'stage-' : ''
-        }microbrands.headout.com/api/tours/v5/tour-group/list?ids[]=${tgidsArray}&language=${
-          lang.split('-')[0]
-        }`
+        }microbrands.headout.com/api/tours/v5/tour-group/list?ids[]=${tgidsArray}&language=${getHeadoutLanguagecode(
+          lang
+        )}`
       ).then((r) => r.json());
 
       const tourGroupData = tourGroupAPIResponses?.tourGroups?.reduce(

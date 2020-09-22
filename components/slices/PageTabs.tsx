@@ -14,7 +14,7 @@ const Tabs = styled.div`
   justify-content: ${({ align }) => {
     switch (align) {
       case 'center':
-        return 'flex-start';
+        return 'space-around';
       case 'left':
         return 'flex-start';
       case 'right':

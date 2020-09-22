@@ -182,7 +182,12 @@ export const LinkCards = (props) => {
                           currencySymbolOverride={currencySymbol}
                         />
                       </Conditional>
-                      <Conditional if={!cardPrices[card.tgid].listingPrice}>
+                      <Conditional
+                        if={
+                          !cardPrices[card.tgid].listingPrice &&
+                          cardPrices[card.tgid].price
+                        }
+                      >
                         <span className="card-price">
                           {currencySymbol}
                           {cardPrices[card.tgid].price}
@@ -205,6 +210,11 @@ export const LinkCards = (props) => {
 const StyledMicrobandCards = styled.div`
   max-width: 1200px;
   margin: auto;
+  .microbrand-cards-content {
+    h2 {
+      margin: 24px 0;
+    }
+  }
   @media (max-width: 768px) {
     margin: auto 25px;
   }
@@ -256,6 +266,7 @@ const MicrobrandCards: React.FC<MicrobrandCardsProps> = (props) => {
       fetch(`/api/tours/v5/tour-group/list?ids[]=${tgidsExist}`)
         .then((res) => res.json())
         .then((json) => {
+          if (json.error) return;
           const cardPrices = tourListApiParser(json);
           const currencySymbol = json.currencies[0]?.localSymbol;
           setState({

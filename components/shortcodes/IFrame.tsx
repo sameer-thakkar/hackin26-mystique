@@ -7,11 +7,13 @@ type IFrameProps = {
   frameborder?: number | string;
   allow?: string;
   allowfullscreen?: string;
+  height?: string;
 };
 
 const IFrameContainer = styled.div`
   position: relative;
-  padding-bottom: 56.25%;
+  padding-bottom: ${({ paddingBottom }) =>
+    paddingBottom ? paddingBottom : '56.25%'};
   padding-top: 35px;
   height: 0;
   overflow: hidden;
@@ -22,7 +24,7 @@ const StyledIFrame = styled.iframe`
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: ${({ height }) => (height ? height : '100%')};
 `;
 
 /**
@@ -44,19 +46,21 @@ const IFrame: React.FC<IFrameProps> = ({
   frameborder = 0,
   allow = '',
   allowfullscreen = 'false',
+  ...otherProps
 }) => {
   const allowFullScreen = allowfullscreen === 'false' ? false : true;
   if (!src) {
     return null;
   }
   return (
-    <IFrameContainer>
+    <IFrameContainer {...{ paddingBottom: otherProps.height, ...otherProps }}>
       <StyledIFrame
         {...(name && { name })}
         src={src}
         frameBorder={Number(frameborder)}
         allow={allow}
         allowFullScreen={allowFullScreen}
+        {...otherProps}
       />
     </IFrameContainer>
   );

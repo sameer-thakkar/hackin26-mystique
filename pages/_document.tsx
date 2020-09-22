@@ -43,18 +43,10 @@ class MystiqueDocument extends Document {
           <NextScript />
           <script
             async
-            dangerouslySetInnerHTML={{
-              __html: `
-  window.prismic = {
-    endpoint: 'https://mystique.cdn.prismic.io/api/v2'
-  };`,
-            }}
-          />
-          <script
-            async
+            defer
             type="text/javascript"
-            src="https://static.cdn.prismic.io/prismic.min.js?new=true"
-          />
+            src="https://static.cdn.prismic.io/prismic.js?repo=mystique&amp;new=true"
+          ></script>
         </body>
       </Html>
     );
