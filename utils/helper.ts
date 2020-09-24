@@ -69,7 +69,7 @@ export const fetchUserGeoLocation = (url) =>
   fetch(url)
     .then((response) => response.json())
     .then((json) => {
-      return json.country;
+      return json?.currentCountry?.code || '';
     })
     .catch((err) => {
       return err;

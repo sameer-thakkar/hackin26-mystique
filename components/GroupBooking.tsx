@@ -8,7 +8,6 @@ import styled from 'styled-components';
 import PhoneInput from 'react-phone-input-2';
 import { RichText } from 'prismic-reactjs';
 import {
-  IP_INFO_TOKEN,
   PREFERRED_COUNTRIES_CODES,
   GROUP_TOUR_PREFERED_TIME,
   GROUP_TOUR_PREFERED_LANG,
@@ -458,7 +457,7 @@ export default class GroupBooking extends Component<any, any> {
 
   getUserGeoLocation = async () => {
     if (this.state.isFetchingGeolocation) return;
-    const url = `https://ipinfo.io/json?token=${IP_INFO_TOKEN}`;
+    const url = `https://api.headout.com/api/v2/geolocate/city`;
     this.setState({ isFetchingGeolocation: true });
     const country = await fetchUserGeoLocation(url);
     if (country !== null) {

@@ -236,6 +236,7 @@ export default class MicrositeV1 extends Component<any, any> {
       localization,
       images: bannerImages,
       heading: bannerHeading,
+      banner_subtext: bannerSubtext,
       cta_text: bannerCtaText,
       page_url: pageUrl,
       auto_banner: autoBanner,
@@ -510,6 +511,7 @@ export default class MicrositeV1 extends Component<any, any> {
             <Banner
               bannerImages={finalBannerImages ? finalBannerImages : null}
               bannerHeading={bannerHeading ? bannerHeading : null}
+              bannerSubtext={bannerSubtext}
               bannerCtaText={bannerCtaText ? bannerCtaText : null}
               currentLanguage={currentLanguage ? currentLanguage : null}
               isMobile={this.state.isMobile}

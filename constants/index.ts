@@ -267,7 +267,7 @@ export const MICROSITE_OBJECT_KEYS: string[] = [
 
 export const MICROSITE_LINK_KEYS: string[] = ['footer_logo_link'];
 
-export const MICROSITE_ARRAY_KEYS: string[] = ['images'];
+export const MICROSITE_ARRAY_KEYS: string[] = ['images', 'body1'];
 
 export const FULL_WIDTH_SLICES = ['background', 'card_carousel'];
 

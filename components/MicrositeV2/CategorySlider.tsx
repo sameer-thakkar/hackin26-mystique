@@ -98,7 +98,7 @@ const CategorySlider = (props) => {
   } = props;
   let autoScroll = !isFirstTourOpen;
 
-  const carouselId = heading.replace(/\s/g, '-').toLowerCase();
+  const carouselId = heading?.replace(/\s/g, '-').toLowerCase() || '';
   const [swiper, updateSwiper] = useState(null);
   const [currentIndex, updateCurrentIndex] = useState(0);
   const productsContext = useContext(ProductsContext);

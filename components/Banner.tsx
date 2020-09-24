@@ -138,14 +138,6 @@ const StyledBanner = styled.div`
       border-radius: 2px;
       font-weight: ${SOLEIL.SEMIBOLD};
     }
-  }
-  .mb-captions .df-caption {
-    grid-row-gap: 12px;
-    h1,
-    .h1 {
-      margin-top: 0;
-      margin-bottom: 16px;
-    }
     p {
       color: ${COLORS.WHITE};
       font-style: normal;
@@ -154,6 +146,14 @@ const StyledBanner = styled.div`
       line-height: 20px;
       margin-top: 0;
       margin-bottom: 12px;
+    }
+  }
+  .mb-captions .df-caption {
+    grid-row-gap: 12px;
+    h1,
+    .h1 {
+      margin-top: 0;
+      margin-bottom: 16px;
     }
   }
 
@@ -369,6 +369,7 @@ export default class Banner extends Component<any, any> {
     const {
       bannerHeading,
       bannerImages,
+      bannerSubtext,
       currentLanguage,
       hideCTA,
       cooldownDate,
@@ -425,6 +426,9 @@ export default class Banner extends Component<any, any> {
           >
             <div className="caption">
               <h1>{bannerHeading}</h1>
+              <Conditional if={bannerSubtext}>
+                <p>{bannerSubtext}</p>
+              </Conditional>
             </div>
             <Conditional if={!hideCTA}>
               <ButtonWrapper>
