@@ -155,54 +155,56 @@ export const LinkCards = (props) => {
 
   return (
     <StyledMBCards {...(as !== React.Fragment ? { gridAutoCol } : {})} as={as}>
-      {cards.map((card, index) => {
-        return (
-          <div key={index} className={cardClassName || ''}>
-            <a target="_blank" rel="noopener noreferrer" href={card.link}>
-              <MicrobrandCard className="microbrand-card">
-                <div className="card-image">
-                  <Image
-                    width={600}
-                    height={300}
-                    aspectRatio="16:10"
-                    url={card.image.url}
-                    alt={card.image.alt}
-                  />
-                </div>
-                <div className="card-bottom">
-                  <span className="card-title">{card.title}</span>
-                  {isFetched && card.tgid ? (
-                    <>
-                      <Conditional if={cardPrices[card.tgid].listingPrice}>
-                        <PriceBlock
-                          lang={lang}
-                          price={cardPrices[card.tgid].listingPrice}
-                          showScratchPrice={true}
-                          prefix={false}
-                          currencySymbolOverride={currencySymbol}
-                        />
-                      </Conditional>
-                      <Conditional
-                        if={
-                          !cardPrices[card.tgid].listingPrice &&
-                          cardPrices[card.tgid].price
-                        }
-                      >
-                        <span className="card-price">
-                          {currencySymbol}
-                          {cardPrices[card.tgid].price}
-                        </span>
-                      </Conditional>
-                    </>
-                  ) : (
-                    ''
-                  )}
-                </div>
-              </MicrobrandCard>
-            </a>
-          </div>
-        );
-      })}
+      {cards
+        .filter((card) => !!cardPrices[card.tgid])
+        .map((card, index) => {
+          return (
+            <div key={index} className={cardClassName || ''}>
+              <a target="_blank" rel="noopener noreferrer" href={card.link}>
+                <MicrobrandCard className="microbrand-card">
+                  <div className="card-image">
+                    <Image
+                      width={600}
+                      height={300}
+                      aspectRatio="16:10"
+                      url={card.image.url}
+                      alt={card.image.alt}
+                    />
+                  </div>
+                  <div className="card-bottom">
+                    <span className="card-title">{card.title}</span>
+                    {isFetched && card.tgid ? (
+                      <>
+                        <Conditional if={cardPrices[card.tgid].listingPrice}>
+                          <PriceBlock
+                            lang={lang}
+                            price={cardPrices[card.tgid].listingPrice}
+                            showScratchPrice={true}
+                            prefix={false}
+                            currencySymbolOverride={currencySymbol}
+                          />
+                        </Conditional>
+                        <Conditional
+                          if={
+                            !cardPrices[card.tgid].listingPrice &&
+                            cardPrices[card.tgid].price
+                          }
+                        >
+                          <span className="card-price">
+                            {currencySymbol}
+                            {cardPrices[card.tgid].price}
+                          </span>
+                        </Conditional>
+                      </>
+                    ) : (
+                      ''
+                    )}
+                  </div>
+                </MicrobrandCard>
+              </a>
+            </div>
+          );
+        })}
     </StyledMBCards>
   );
 };
