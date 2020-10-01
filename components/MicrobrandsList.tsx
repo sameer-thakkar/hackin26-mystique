@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import { tourListApiParser } from '../utils/dataParsers';
-import { LinkCards } from './slices/MicrobrandCards';
+import React from 'react';
+import MicrobrandCards from './slices/MicrobrandCards';
 import styled from 'styled-components';
 import { SOLEIL } from '../constants/ui-constants';
 
@@ -25,60 +24,20 @@ const StyledMBList = styled.div`
   }
 `;
 
-export default class MicrobrandList extends Component<any, any> {
-  state = {
-    cardPrices: {},
-    currencySymbol: '',
-    isFetched: false,
-  };
+const MicrobrandList = (props) => {
+  const { microbrandCards, microbrandCardsHeading } = props;
+  return (
+    <StyledMBList className="microbrands-list">
+      {microbrandCardsHeading && (
+        <div className="microbrands-list-heading">{microbrandCardsHeading}</div>
+      )}
+      {microbrandCards.length ? <br /> : null}
+      <MicrobrandCards
+        cards={microbrandCards.filter((card) => card?.microbrand_link?.url)}
+        cardsContent={{}}
+      />
+    </StyledMBList>
+  );
+};
 
-  async componentDidMount() {
-    const { microbrandCards } = this.props;
-    const tgids = microbrandCards.map((card) => card.tgid);
-    const tgidsExist = tgids.filter((tgid) => tgid);
-    if (tgidsExist.length) {
-      const fetchPrice = await fetch(
-        `/api/tours/v5/tour-group/list?ids[]=${tgidsExist}`
-      ).then((res) => res.json());
-      const cardPrices = tourListApiParser(fetchPrice);
-      const currencySymbol = fetchPrice.currencies[0].localSymbol;
-      this.setState({
-        cardPrices: cardPrices,
-        currencySymbol: currencySymbol,
-        isFetched: true,
-      });
-    }
-  }
-
-  render() {
-    const { microbrandCards, microbrandCardsHeading } = this.props;
-    const { isFetched, currencySymbol, cardPrices } = this.state;
-    const finalCards = microbrandCards.map((card) => {
-      return {
-        image: {
-          url: card.image_source.url || card.image_url.url,
-          alt: card.card_title,
-        },
-        title: card.card_title,
-        tgid: card.tgid,
-        link: card.microbrand_link.url,
-      };
-    });
-    return (
-      <StyledMBList className="microbrands-list">
-        {microbrandCardsHeading && (
-          <div className="microbrands-list-heading">
-            {microbrandCardsHeading}
-          </div>
-        )}
-        {microbrandCards.length ? <br /> : null}
-        <LinkCards
-          isFetched={isFetched}
-          cards={finalCards}
-          cardPrices={cardPrices}
-          currencySymbol={currencySymbol}
-        />
-      </StyledMBList>
-    );
-  }
-}
+export default MicrobrandList;

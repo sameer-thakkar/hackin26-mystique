@@ -40,6 +40,7 @@ const Tabs = styled.div`
   @media (max-width: 768px) {
     overflow: scroll;
     margin: 0 -16px;
+    justify-content: left;
     padding-left: 16px;
     width: calc(100vw - 16px);
     grid-column-gap: 24px;
@@ -52,6 +53,9 @@ const Tabs = styled.div`
     }
     .navigation-tab {
       font-size: 16px;
+    }
+    .navigation-tab:last-child {
+      margin-right: 16px;
     }
     .selected-nav-tab {
       border-bottom: 2px solid #ec1943;

@@ -5,7 +5,7 @@ import { SOLEIL, COLORS } from '../../constants/ui-constants';
 import ReactMarkdown from 'react-markdown/with-html';
 import Conditional from 'components/common/Conditional';
 
-const StyledAccordion = styled.div`
+export const StyledAccordion = styled.div`
   padding: 16px 0;
   margin-right: 24px;
   border-bottom: 1px solid ${COLORS.CHALK};
@@ -55,6 +55,7 @@ type AccordionProps = {
   isOpenOverride?: Boolean;
   heading: string;
   content: any;
+  useSchema?: Boolean;
 };
 
 const Accordion = ({
@@ -62,6 +63,7 @@ const Accordion = ({
   content,
   isOpenOverride = false,
   clickHandler = null,
+  useSchema = false,
 }: AccordionProps) => {
   const [isOpen, setOpen] = useState(false || isOpenOverride);
 
@@ -70,7 +72,14 @@ const Accordion = ({
   }, [isOpenOverride]);
 
   return (
-    <StyledAccordion isOpen={isOpen}>
+    <StyledAccordion
+      isOpen={isOpen}
+      {...(useSchema && {
+        itemProp: 'mainEntity',
+        itemType: 'https://schema.org/Question',
+        itemScope: true,
+      })}
+    >
       <Title
         role="button"
         tabIndex={0}
@@ -79,21 +88,43 @@ const Accordion = ({
           clickHandler ? clickHandler() : setOpen(!isOpen);
         }}
       >
-        <div className="question-text">{heading}</div>
+        <div
+          className="question-text"
+          {...(useSchema && {
+            itemProp: 'name',
+          })}
+        >
+          {heading}
+        </div>
         <div className="state-icon">
           <Chevron isActive={isOpen} activeCursor={false} />
         </div>
       </Title>
-      <ContentBlock className={'answer'} isOpen={isOpen}>
-        <Conditional if={typeof content === 'string'}>
-          <ReactMarkdown
-            renderers={{ root: React.Fragment }}
-            source={content}
-            escapeHtml={false}
-          />
-        </Conditional>
-        <Conditional if={typeof content !== 'string'}>{content}</Conditional>
-      </ContentBlock>
+      <div
+        className="accordion-content-wrap"
+        {...(useSchema && {
+          itemProp: 'acceptedAnswer',
+          itemType: 'https://schema.org/Answer',
+          itemScope: true,
+        })}
+      >
+        <ContentBlock
+          className={'answer'}
+          isOpen={isOpen}
+          {...(useSchema && {
+            itemProp: 'text',
+          })}
+        >
+          <Conditional if={typeof content === 'string'}>
+            <ReactMarkdown
+              renderers={{ root: React.Fragment }}
+              source={content}
+              escapeHtml={false}
+            />
+          </Conditional>
+          <Conditional if={typeof content !== 'string'}>{content}</Conditional>
+        </ContentBlock>
+      </div>
     </StyledAccordion>
   );
 };

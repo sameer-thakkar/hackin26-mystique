@@ -24,9 +24,15 @@ const AccordionGroup: React.FC<{
     heading: string;
   }[];
   heading: string;
-}> = ({ accordions, heading }) => {
+  useSchema: Boolean;
+}> = ({ accordions, heading, useSchema }) => {
   return (
-    <>
+    <div
+      {...(useSchema && {
+        itemType: 'https://schema.org/FAQPage',
+        itemScope: true,
+      })}
+    >
       <TitleTextCombo>{heading ? <h2>{heading}</h2> : null}</TitleTextCombo>
       {accordions.map((accordion, index) => {
         const content = <RichContent render={accordion.content} />;
@@ -36,10 +42,11 @@ const AccordionGroup: React.FC<{
             content={content}
             isOpenOverride={index == 0}
             heading={accordion.heading}
+            useSchema={useSchema}
           />
         );
       })}
-    </>
+    </div>
   );
 };
 

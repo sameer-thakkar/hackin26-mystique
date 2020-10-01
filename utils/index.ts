@@ -71,19 +71,13 @@ export const discountOf = ({ originalPrice: a, finalPrice: b }) =>
   a > b ? (((a - b) / a) * 100).toFixed(0) : 0;
 
 export const createBookingURL = ({ lang, nakedDomain, tgid, df = false }) => {
-  let query = '';
-  query += df ? '?isDiscountedFutures=1' : '';
-  return (
-    [
-      'https://',
-      `book.${nakedDomain}`,
-      lang && lang !== 'en' ? FULL_LANGUAGE_MAP[lang].bookingFlow : null,
-      'book',
-      tgid,
-    ]
-      .filter((k) => k)
-      .join('/') + query
+  const langRouteParam =
+    lang && lang !== 'en' ? '/' + FULL_LANGUAGE_MAP[lang].bookingFlow : '';
+  const urlObject = new URL(
+    `https://book.${nakedDomain}${langRouteParam}/book/${tgid}`
   );
+  if (df) urlObject.searchParams.set('isDiscountedFutures', 'true');
+  return urlObject.toString();
 };
 
 export const getNakedDomain = (host) => {

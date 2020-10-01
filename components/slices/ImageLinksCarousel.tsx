@@ -121,7 +121,7 @@ const StyledSlide = styled.div`
   }
   img {
     height: 175px;
-    width: 290px !important;
+    width: 280px !important;
     border-radius: 4px;
   }
   div {
@@ -172,7 +172,13 @@ const Slide = (props) => (
       target={props.link.target}
       onClick={(e) => desktopInteraction(e, props)}
     >
-      <Image url={props.image.url} alt={props.image.alt} />
+      <Image
+        url={props.image.url}
+        alt={props.image.alt}
+        width={400}
+        height={250}
+        aspectRatio="1.7"
+      />
       <div>{props.card_title}</div>
     </a>
   </StyledSlide>

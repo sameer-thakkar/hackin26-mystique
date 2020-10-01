@@ -4,7 +4,7 @@ import { RichText } from 'prismic-reactjs';
 import Slider from '../UI/Slider';
 import Image from '../UI/Image';
 import { shortCodeSerializer } from '../../utils/shortCodes';
-import Accordion from './Accordion';
+import Accordion, { StyledAccordion } from './Accordion';
 
 const StyledSliderAccordion = styled.div`
   display: grid;
@@ -16,6 +16,9 @@ const StyledSliderAccordion = styled.div`
   height: max-content;
   width: 100%;
   line-height: 1.4;
+  ${StyledAccordion} {
+    padding: 16px;
+  }
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }

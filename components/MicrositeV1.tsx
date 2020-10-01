@@ -329,7 +329,7 @@ export default class MicrositeV1 extends Component<any, any> {
     const microbrandCardsHeading = this.props.data.data.microbrand_cards_heading
       ? this.props.data.data.microbrand_cards_heading
       : null;
-    const { isClient, showEarliestAvailability } = this.state;
+    const { showEarliestAvailability } = this.state;
     let groupBookingTourTitles = [];
 
     const { tgidToScroll, mbTheme } = this.props;
@@ -562,7 +562,6 @@ export default class MicrositeV1 extends Component<any, any> {
           ) : null}
           <Conditional
             if={
-              isClient &&
               microbrandCards?.filter((mbCard) => mbCard.microbrand_link)
                 ?.length
             }
