@@ -16,7 +16,7 @@ type ImageGridProps = {
 const StyledImageGrid = styled.div`
   display: grid;
   grid-gap: 1.5em;
-  grid-template-columns: repeat(${({ cols }) => cols}, 1fr);
+  grid-template-columns: repeat(${({ colsProp }) => colsProp}, 1fr);
   max-width: 100%;
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -66,7 +66,7 @@ const StyledImageBox = styled.div`
 
 const ImageGrid: React.FC<ImageGridProps> = ({ images, cols }) => {
   return (
-    <StyledImageGrid cols={cols}>
+    <StyledImageGrid colsProp={cols}>
       {images.map((image, index) => (
         <StyledImageBox key={index}>
           <Image

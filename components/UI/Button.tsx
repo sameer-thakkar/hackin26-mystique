@@ -61,7 +61,7 @@ const Button = styled.button((props) => {
   }
   return `
   ${styles}
-  ${props.width ? `width: ${props.width};` : ''}
+  ${props.widthProp ? `width: ${props.widthProp};` : ''}
   border-radius: ${props.theme.button.borderRadius};
   font-family: ${props.theme.button.fontFamily};
   font-size: ${props.fontSize || props.theme.button.fontSize};

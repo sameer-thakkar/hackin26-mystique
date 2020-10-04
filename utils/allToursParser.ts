@@ -6,7 +6,12 @@ type ToursData = {
   isFetched: boolean;
 };
 
-const allToursParser = (CMSData, scorpioData, pricingData: ToursData) => {
+const allToursParser = (
+  CMSData,
+  scorpioData,
+  pricingData: ToursData,
+  isAmp
+) => {
   const { cardPrices, isFetched } = pricingData;
   const labelIDMap = CMSData?.labels?.reduce((accum, label) => {
     return { ...accum, [label.id]: label.data.label_name };
@@ -79,6 +84,10 @@ const allToursParser = (CMSData, scorpioData, pricingData: ToursData) => {
       CURRENCY_SYMBOL_MAP[
         cardPrices[tourData.tgid]?.listingPrice?.currencyCode
       ];
+    let listingPrice = isFetched ? cardPrices[tourData.tgid]?.listingPrice : {};
+    listingPrice = isAmp
+      ? scorpioData[tourData.tgid].listingPrice
+      : listingPrice;
     return {
       ...accum,
       [tourData.tgid]: {
@@ -118,7 +127,7 @@ const allToursParser = (CMSData, scorpioData, pricingData: ToursData) => {
         vendor: tourData.vendor_name,
         allTags: scorpioData[tourData.tgid]?.allTags || [],
         dfListingPrice: scorpioData[tourData.tgid]?.dfListingPrice,
-        listingPrice: isFetched ? cardPrices[tourData.tgid]?.listingPrice : {},
+        listingPrice: listingPrice,
         safetyImages: scorpioData[tourData.tgid].safetyImages,
       },
     };

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useAmp } from 'next/amp';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import { SOLEIL, COLORS } from '../../constants/ui-constants';
@@ -41,6 +42,24 @@ const StyledTab = styled.div(({ active }) => {
   }
 });
 
+const AmpSelectorContainer = styled.div`
+  amp-selector [role='tab'][selected] {
+    color: #ec1943;
+    border-bottom: 2px solid;
+    padding-bottom: 8px;
+    outline: none;
+  }
+
+  amp-selector [role='tabpanel'] {
+    display: none;
+  }
+
+  amp-selector [role='tabpanel'][selected] {
+    outline: none;
+    display: block;
+  }
+`;
+
 const StyledContent = styled.div`
   p {
     margin: 0;
@@ -80,8 +99,49 @@ const ContentTabs: React.FC<ContentTabsProps> = ({ tabsArr, contentArr }) => {
   const defaultTab = contentArr.find((tab) => tab.default_tab == 'Yes');
   const defaultTabName = defaultTab ? defaultTab.tab_name : '';
   const [activeTabName, setActiveTab] = useState(defaultTabName);
-
-  return (
+  const isAmp = useAmp();
+  return isAmp ? (
+    <AmpSelectorContainer>
+      <amp-selector
+        className="tabs-with-selector"
+        role="tablist"
+        on="select:contentTabPanel.toggle(index=event.targetOption, value=true)"
+        keyboard-select-mode="focus"
+      >
+        <StyledContentTabs>
+          {tabsArr.map((tab, index) => {
+            return (
+              <div
+                key={index}
+                role="tab"
+                className="tab-heading"
+                // @ts-ignore
+                option={`${index}`}
+                selected={index === 0}
+              >
+                {tab}
+              </div>
+            );
+          })}
+        </StyledContentTabs>
+      </amp-selector>
+      <amp-selector id="contentTabPanel">
+        {contentArr.map((content, index) => {
+          return (
+            <div
+              key={index}
+              role="tabpanel"
+              // @ts-ignore
+              option={`${index}`}
+              selected={index === 0}
+            >
+              <RichText render={content.tab_content} />
+            </div>
+          );
+        })}
+      </amp-selector>
+    </AmpSelectorContainer>
+  ) : (
     <StyledContentTabsWrapper>
       <StyledContentTabs>
         {tabsArr.map((tab, index) => {

@@ -1,3 +1,4 @@
+import React from 'react';
 import LinkResolver from './LinkResolver';
 import styled from 'styled-components';
 import * as labels from 'constants/localization/labels';
@@ -159,38 +160,40 @@ const Nav = styled.nav`
   }
   @media (max-width: 768px) {
     display: none;
-    ${({ navOpen }) =>
-      navOpen
-        ? `
-        display: grid;
-        position: fixed;
-        top: 56px;
-        left: 0;
-        height: 100%;
-        align-content: flex-start;
-        background: ${COLORS.WHITE};
-        width: 100%;
-        grid-auto-flow: row;
-        overflow: scroll;
-        grid-gap: 0;
-        & > li {
-          padding: 16px;
-        }
-        & > li > a > .withIcon {
-          padding-bottom: 16px;
-          border-bottom: 1px solid ${COLORS.GREY_G6};
-        }
-      `
-        : ''}
+    &.navigation-nav-open {
+      display: grid;
+      position: fixed;
+      top: 56px;
+      left: 0;
+      height: 100%;
+      align-content: flex-start;
+      background: ${COLORS.WHITE};
+      width: 100%;
+      grid-auto-flow: row;
+      overflow: scroll;
+      grid-gap: 0;
+      z-index: 999999;
+      & > li {
+        padding: 16px;
+      }
+      & > li > a > .withIcon {
+        padding-bottom: 16px;
+        border-bottom: 1px solid ${COLORS.GREY_G6};
+      }
+    }
   }
 `;
 
 const Navigation = (props) => {
-  const { slices, isMobile } = props;
+  const { slices, isMobile, navOpen, id } = props;
   return (
-    <Nav {...props}>
+    <Nav
+      className={navOpen ? 'navigation-nav-open' : ''}
+      id={id ? id : 'navigation-menu-mobile'}
+      {...props}
+    >
       {slices.map((slice, index) =>
-        HeaderSliceHandler(slice, { index, isMobile })
+        HeaderSliceHandler(slice, { index, isMobile, navOpen })
       )}
     </Nav>
   );
@@ -271,11 +274,18 @@ const MenuItem = (props) => {
 };
 
 const HeaderSliceHandler = (slice, props) => {
-  const { index } = props;
+  const { index, navOpen } = props;
   const { lang } = useContext(MBContext);
   switch (slice.slice_type) {
     case 'navigation':
-      return <Navigation key={index} slices={slice.slices} />;
+      return (
+        <Navigation
+          key={index}
+          slices={slice.slices}
+          navOpen={navOpen}
+          id={`navigation-menu-mobile_${index}`}
+        />
+      );
     case 'menu_item':
       return (
         <MenuItem
@@ -377,7 +387,6 @@ const HeaderSliceHandler = (slice, props) => {
 const MultiLevelNav = ({ slice, oldMenuItems = [], isMobile, isActive }) => {
   const [firstSlice, ..._ignored_only_one_nav_bar] = slice;
   const withOldMenu = [...(firstSlice?.slices || []), ...(oldMenuItems || [])];
-
   return (
     <Navigation navOpen={isActive} isMobile={isMobile} slices={withOldMenu} />
   );

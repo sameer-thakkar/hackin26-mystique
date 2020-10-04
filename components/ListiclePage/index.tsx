@@ -53,6 +53,7 @@ const Title = styled.div`
   line-height: 35px;
   font-weight: ${SOLEIL.SEMIBOLD};
   color: black;
+
   margin-bottom: 16px;
 `;
 
@@ -103,6 +104,7 @@ const Category = styled.div`
   font-size: 20px;
   width: max-content;
   text-decoration: none;
+
   color: ${({ active }) =>
     active ? `${COLORS.RHAPSODY}` : `${COLORS.DAVY_GREY}`};
 `;
@@ -133,7 +135,9 @@ const DropdownTrigger = styled.div`
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.15);
   border-radius: 2px;
   padding: 11px;
+
   color: #a4a4a4;
+
   font-size: 8px;
   line-height: 15px;
   div {

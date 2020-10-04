@@ -10,7 +10,9 @@ import useWindowSize from 'hooks/useWindowSize';
 const StyledCategorySection = styled.div`
   display: grid;
   grid-row-gap: 8px;
+
   color: ${COLORS.DAVY_GREY};
+
   .category-heading {
     margin: 0;
     font-size: 24px;

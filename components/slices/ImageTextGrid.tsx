@@ -13,7 +13,7 @@ type ImageTextProps = {
 const StyledWrapper = styled.div`
   display: grid;
   grid-gap: 1.5em;
-  grid-template-columns: repeat(${(props) => props.cols}, 1fr);
+  grid-template-columns: repeat(${(props) => props.colsProps}, 1fr);
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
@@ -77,7 +77,7 @@ const StyledComboCard = styled.div`
  */
 
 const ImageTextGrid: React.FC<ImageTextProps> = ({ cards, cols }) => (
-  <StyledWrapper cols={cols}>
+  <StyledWrapper colsProps={cols}>
     {cards.map((card, index) => (
       <StyledComboCard key={index}>
         <h2 className="title">{card.card_title}</h2>

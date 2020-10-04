@@ -2,7 +2,7 @@ import { RichText } from 'prismic-reactjs';
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { COLORS, SOLEIL } from 'constants/ui-constants';
-import { CHEVRON_LEFT_CIRCLE, CLOSE_WHITE } from 'assets/SvgIcons';
+import { CLOSE_WHITE } from 'assets/SvgIcons';
 import { stringIdfy } from 'utils/helper';
 import Swiper from 'components/Swiper';
 import Image from 'UI/Image';
@@ -372,20 +372,6 @@ const ImageGallery = (props) => {
     navigation: {
       nextEl: '.btn-right',
       prevEl: '.btn-left',
-    },
-    renderNextButton: function nextButton() {
-      return (
-        <div role="button" tabIndex={0} className="btn btn-right next-slide">
-          {CHEVRON_LEFT_CIRCLE}
-        </div>
-      );
-    },
-    renderPrevButton: function prevButton() {
-      return (
-        <div tabIndex={0} role="button" className="btn btn-left prev-slide">
-          {CHEVRON_LEFT_CIRCLE}
-        </div>
-      );
     },
   };
 

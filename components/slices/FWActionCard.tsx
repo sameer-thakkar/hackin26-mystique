@@ -46,6 +46,7 @@ const StyledProductCardHeading = styled.div`
   font-weight: 600;
   line-height: 1.4;
   color: #545454;
+
   margin: 0;
 `;
 

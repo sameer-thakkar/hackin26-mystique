@@ -47,9 +47,11 @@ const SafeDFBannerWrapper = ({
   hasSafe = false,
   dfExpiryDate,
   marginTop = null,
+  isAmp = false,
 }: {
   dfExpiryDate: any;
   hasSafe: boolean;
+  isAmp?: boolean;
   marginTop?: number;
 }) => {
   const {
@@ -94,6 +96,7 @@ const SafeDFBannerWrapper = ({
               description={labels[lang].SAFE_EXPERIENCE.GENERAL_DESCRIPTION}
               bannerOnClick={openSafeSidebar}
               icon={Shield}
+              isAmp={isAmp}
               colorScheme={greenScheme}
             />
           </Conditional>
@@ -110,6 +113,7 @@ const SafeDFBannerWrapper = ({
               )}
               bannerOnClick={openDFPitchSidebar}
               icon={BrownTicket}
+              isAmp={isAmp}
               colorScheme={brownScheme}
             />
           </Conditional>

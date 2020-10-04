@@ -1,5 +1,7 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import { getNonAmpUrl } from '../../utils/urlUtils';
 
 export const StyledInfoBanner = styled.div`
   padding: 24px 32px;
@@ -53,6 +55,18 @@ const CTA = styled.div`
   }
 `;
 
+const AmpCTA = styled.a`
+  font-size: 14px;
+  display: inline-block;
+  text-decoration: underline;
+  line-height: 140%;
+  cursor: pointer;
+  @media (max-width: 768px) {
+    display: block;
+    margin-top: 8px;
+  }
+`;
+
 const InfoBanner = ({
   title,
   description,
@@ -61,7 +75,10 @@ const InfoBanner = ({
   ctaOnClick = null,
   bannerOnClick = null,
   colorScheme,
+  isAmp,
 }) => {
+  const router = useRouter();
+  const nonAmpPageUrl = getNonAmpUrl(router.asPath);
   return (
     <StyledInfoBanner
       onClick={bannerOnClick}
@@ -71,9 +88,15 @@ const InfoBanner = ({
       <Icon>{icon}</Icon>
       <Content>
         <Title>{title}</Title>
-        <Description>
-          {description} <CTA onClick={ctaOnClick}>{cta}</CTA>
-        </Description>
+        {isAmp ? (
+          <Description>
+            {description} <AmpCTA href={nonAmpPageUrl}> {cta}</AmpCTA>
+          </Description>
+        ) : (
+          <Description>
+            {description} <CTA onClick={ctaOnClick}>{cta}</CTA>
+          </Description>
+        )}
       </Content>
     </StyledInfoBanner>
   );

@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import { SOLEIL } from 'constants/ui-constants';
+import Image from 'UI/Image';
 
 const StyledInternalContentCard = styled.div`
   .more-reads-section {
@@ -66,21 +67,21 @@ export default class InternalContentCard extends PureComponent<any, any> {
         <div className="divider-1"></div>
         <div className="more-reads-section">
           {cards.map((card, index) => {
+            const { heading, image_link, image_source, subtext } = card;
             return (
               <a key={index} href={card.card_cta.url}>
                 <div className="more-reads">
                   <div className="more-reads-image">
-                    <img
-                      data-src={card.image_link.url || card.image_source.url}
-                      alt={card.heading}
-                      className="lazyload"
+                    <Image
+                      width={'500'}
+                      height={'250'}
+                      url={image_link.url || image_source.url}
+                      alt={heading}
                     />
                   </div>
                   <div className="more-reads-text">
-                    <span className="more-reads-text-heading">
-                      {card.heading}
-                    </span>
-                    <span className="more-reads-text-text">{card.subtext}</span>
+                    <span className="more-reads-text-heading">{heading}</span>
+                    <span className="more-reads-text-text">{subtext}</span>
                   </div>
                 </div>
               </a>

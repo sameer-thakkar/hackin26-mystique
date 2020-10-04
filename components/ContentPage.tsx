@@ -21,6 +21,7 @@ import { ProductsContextProvider } from '../contexts/Products';
 import { InteractionContextProvider } from '../contexts/Interaction';
 import { tourListApiParser } from '../utils/dataParsers';
 import { COLORS, SOLEIL } from '../constants/ui-constants';
+import { withAmp } from './common/withAmp';
 
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 
@@ -145,7 +146,7 @@ const StyledContentPage = styled.div`
   }
 `;
 
-export default class ContentPage extends Component<any, any> {
+class ContentPage extends Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
@@ -298,8 +299,8 @@ export default class ContentPage extends Component<any, any> {
       uid,
       host,
       scorpioData,
+      isAmp,
     } = this.props;
-
     const {
       footer_ref: commonFooter,
       header_ref: commonHeader,
@@ -309,10 +310,15 @@ export default class ContentPage extends Component<any, any> {
       microsite_document_ref,
     } = data;
     const apiReady = tourAPIData !== null;
-    const allTours = allToursParser(microsite?.data, scorpioData, {
-      cardPrices: tourAPIData,
-      isFetched: apiReady,
-    });
+    const allTours = allToursParser(
+      microsite?.data,
+      scorpioData,
+      {
+        cardPrices: tourAPIData,
+        isFetched: apiReady,
+      },
+      isAmp
+    );
     const CFWBody = contentFramework?.data?.body;
     const contentFWSlices = groupSlices(CFWBody || []);
 
@@ -520,3 +526,5 @@ export default class ContentPage extends Component<any, any> {
     );
   }
 }
+
+export default withAmp(ContentPage);

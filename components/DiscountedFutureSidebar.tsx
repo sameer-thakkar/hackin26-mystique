@@ -52,7 +52,7 @@ const Heading = styled.div`
 
 const Text = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
-  color: ${({ color }) => (color ? color : COLORS.FOUR_BLACK)};
+  color: ${({ colorProp }) => (colorProp ? colorProp : COLORS.FOUR_BLACK)};
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -120,7 +120,7 @@ const DiscountedFutureSidebar = ({
           <PriceBlock price={dfListingPrice} lang={lang} />
           {dfSaveLabel ? <SaveLabel>Save {dfSaveLabel}%</SaveLabel> : null}
         </PriceContainer>
-        <Text color={COLORS.GREY_G3}>
+        <Text colorProp={COLORS.GREY_G3}>
           {labels[lang].DISCOUNTED_FUTURES.BOOKING_MODAL.GO_LATER_PITCH.replace(
             '<stDate>',
             startDate
@@ -164,7 +164,7 @@ const DiscountedFutureSidebar = ({
 
             {saveLabel ? <SaveLabel>Save {saveLabel}%</SaveLabel> : null}
           </PriceContainer>
-          <Text color={COLORS.GREY_G3}>
+          <Text colorProp={COLORS.GREY_G3}>
             {labels[lang].DISCOUNTED_FUTURES.BOOKING_MODAL.BOOK_NOW_PITCH}
           </Text>
           <Button

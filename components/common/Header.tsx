@@ -30,7 +30,7 @@ const StyledHeader = styled.header`
       ? `
     box-shadow: 0 1px 1em 0 rgba(0,0,0,.1);
   `
-      : ''}
+      : ''};
   @media (max-width: 768px) {
     height: 56px;
   }
@@ -46,7 +46,7 @@ const StyledHeaderContainer = styled.div`
       grid-template-columns: auto auto 1fr;
       grid-column-gap: 24px;
     `
-      : ``}
+      : ``};
   width: 100%;
   max-width: 1200px;
   margin: auto;
@@ -109,7 +109,7 @@ const StyledHeaderElements = styled.div`
         margin-right: 55px;
         `;
     }
-  }}
+  }};
   @media (max-width: 768px) {
     * {
       color: ${COLORS.FOUR_BLACK};
@@ -162,6 +162,7 @@ const Header: React.FC<any> = (props) => {
     dropdownLinks,
     showTicketMenu,
     hideLangugageDropdown,
+    isAmp,
   } = props;
   const hamburgerIconCheck =
     showGroupBooking ||
@@ -210,9 +211,9 @@ const Header: React.FC<any> = (props) => {
   return (
     <StyledHeader hasShadow={scrollPos > 60}>
       <StyledHeaderContainer hasDropdownLinks={!isMobile && hasDropdownLinks}>
-        <a href={logoRedirectionURL}>
+        <a href={logoRedirectionURL || '/'}>
           <StyledLogo>
-            <Image url={logoUrl} alt={logoAltText} dontLazyLoad={true} />
+            <Image url={logoUrl} alt={logoAltText} dontLazyLoad isLogo />
             {hasPoweredByHeadoutLogo ? POWERED_BY_HEADOUT : null}
           </StyledLogo>
         </a>
@@ -232,8 +233,8 @@ const Header: React.FC<any> = (props) => {
                 onClick={() => {
                   setHamburgerOpen((c) => !c);
                 }}
-                role="button"
                 tabIndex={0}
+                role="button"
               >
                 <Hamburger isActive={hamburgerOpen} />
               </div>
@@ -286,6 +287,7 @@ const Header: React.FC<any> = (props) => {
               host={host}
               isMobile={isMobile}
               mbTheme={mbTheme}
+              isAmp={isAmp}
             />
           ) : null}
         </StyledHeaderElements>

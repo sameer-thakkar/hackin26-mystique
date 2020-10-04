@@ -7,6 +7,7 @@ const StyledLongform = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
   line-height: 1.6;
   color: #545454;
+
   border-top: 1px solid ${COLORS.DADDY};
   padding-top: 64px;
   margin-top: 48px;

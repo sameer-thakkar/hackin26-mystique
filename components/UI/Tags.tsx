@@ -8,7 +8,7 @@ export const Tag = styled.div`
   font-size: 12px;
   line-height: 12px;
   margin-right: 8px;
-  ${({ color }) => (color ? `color: ${color};` : ``)}
+  ${({ colorProp }) => (colorProp ? `color: ${colorProp};` : ``)}
   ${({ backgroundColor }) =>
     backgroundColor ? `background: ${backgroundColor};` : ``}
 `;
@@ -29,7 +29,7 @@ const Tags: React.FC<{
     <StyledTags>
       {tags.map((tag, index) => (
         <Tag
-          color={color}
+          colorProp={color}
           backgroundColor={backgroundColor}
           bordered={bordered}
           key={index}

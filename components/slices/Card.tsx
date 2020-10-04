@@ -34,7 +34,7 @@ const variantStyles = {
 const StyledCard = styled.div((props) => {
   const styles = props.isMobile
     ? variantStyles.small
-    : variantStyles[props.type];
+    : variantStyles[props.cardType];
   return `
   display: grid;
   align-content: start;
@@ -42,7 +42,6 @@ const StyledCard = styled.div((props) => {
   background: ${COLORS.WHITE};
   border: 1px solid ${COLORS.CHALK};
   grid-template-columns: ${styles.gridTemplateColumns};
-  color: ${COLORS.DAVY_GREY};
   height: calc(100% - 2px);
   text-decoration: none;
   ${props.link && `cursor: pointer;`}
@@ -85,7 +84,7 @@ const StyledCard = styled.div((props) => {
 `;
 });
 
-const Title = styled.div`
+const Title = styled.h1`
   font-family: ${SOLEIL.FONT_STACK};
   font-weight: ${SOLEIL.BOLD};
   font-size: 20px;
@@ -102,8 +101,8 @@ const SwiperWrapper = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
-margin 24px 0 16px 0 !important;
-width: max-content;
+  margin: 24px 0 16px 0 !important;
+  width: max-content;
   @media (max-width: 768px) {
     margin-top: 16px;
   }
@@ -114,7 +113,7 @@ const CTALink = styled.a`
   font-weight: ${SOLEIL.SEMIBOLD};
   font-family: ${SOLEIL.FONT_STACK};
   display: block;
-  margin 24px 0 16px 0 !important;
+  margin: 24px 0 16px 0 !important;
   svg {
     margin-left: 4px;
     transform: rotate(180deg);
@@ -240,6 +239,7 @@ const Card: React.FC<CardProps> = ({
           url={images[0].url}
           alt={images[0].alt}
           height={variantStyles[type].img.height}
+          isCardSlices
         />
       );
       break;
@@ -307,7 +307,7 @@ const Card: React.FC<CardProps> = ({
         link: true,
       })}
       isMobile={isMobile}
-      type={type}
+      cardType={type}
     >
       {imageView}
       {hasTextContent ? (

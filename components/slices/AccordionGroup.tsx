@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAmp } from 'next/amp';
 import Accordion from './Accordion';
 import RichContent from '../UI/RichContent';
 import TitleTextCombo from '../UI/TitleTextCombo';
@@ -19,35 +20,55 @@ import TitleTextCombo from '../UI/TitleTextCombo';
  */
 
 const AccordionGroup: React.FC<{
-  accordions: {
-    content: any;
-    heading: string;
-  }[];
-  heading: string;
-  useSchema: Boolean;
+	accordions: {
+		content: any;
+		heading: string;
+	}[];
+	heading: string;
+	useSchema: Boolean;
 }> = ({ accordions, heading, useSchema }) => {
-  return (
-    <div
-      {...(useSchema && {
-        itemType: 'https://schema.org/FAQPage',
-        itemScope: true,
-      })}
-    >
-      <TitleTextCombo>{heading ? <h2>{heading}</h2> : null}</TitleTextCombo>
-      {accordions.map((accordion, index) => {
-        const content = <RichContent render={accordion.content} />;
-        return (
-          <Accordion
-            key={index}
-            content={content}
-            isOpenOverride={index == 0}
-            heading={accordion.heading}
-            useSchema={useSchema}
-          />
-        );
-      })}
-    </div>
-  );
+	const isAmp = useAmp();
+	return (
+		<div
+			{...(useSchema && {
+				itemType: 'https://schema.org/FAQPage',
+				itemScope: true,
+			})}
+		>
+			<TitleTextCombo>{heading ? <h2>{heading}</h2> : null}</TitleTextCombo>
+			{isAmp ? (
+				<amp-accordion animate="">
+					{accordions.map((accordion, index) => {
+						const content = <RichContent render={accordion.content} />;
+						return (
+							<Accordion
+								key={index}
+								content={content}
+								heading={accordion.heading}
+								useSchema={useSchema}
+								isAmp
+							/>
+						);
+					})}
+				</amp-accordion>
+			) : (
+				<>
+					{accordions.map((accordion, index) => {
+						const content = <RichContent render={accordion.content} />;
+						return (
+							<Accordion
+								key={index}
+								content={content}
+								isOpenOverride={index == 0}
+								heading={accordion.heading}
+								useSchema={useSchema}
+							/>
+						);
+					})}
+				</>
+			)}
+		</div>
+	);
 };
 
 export default AccordionGroup;

@@ -82,8 +82,8 @@ const MobileCardTitleSection = styled.div`
 const CardTitle = styled.div`
   font-weight: bold;
   font-size: 20px;
-  line-height: 27px;
   color: ${COLORS.DAVY_GREY};
+
   @media (max-width: 768px) {
     display: flex;
     align-items: center;
@@ -95,6 +95,7 @@ const CardTitle = styled.div`
 const Pricing = styled.div`
   div {
     color: #939393;
+
     font-size: 14px;
     line-height: 16px;
     display: flex;

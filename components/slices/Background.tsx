@@ -6,12 +6,11 @@ import { FULL_WIDTH_SLICES } from '../../constants';
 
 const StyledBackground = styled.div`
   padding: 40px 0;
-  background: ${({ color }) => color};
+  background: ${({ colorProp }) => colorProp};
   text-align: ${({ textCenter }) => (textCenter ? 'center' : 'initial')};
   font-family: ${SOLEIL.FONT_STACK};
   font-size: 18px;
   line-height: 26px;
-  color: ${COLORS.DAVY_GREY};
 `;
 
 /**
@@ -44,7 +43,7 @@ const Background = (props) => {
   };
   return (
     <StyledBackground
-      color={colorMap[color] || '#fff'}
+      colorProp={colorMap[color] || '#fff'}
       gridCenter={gridCenter}
       textCenter={textCenter}
     >

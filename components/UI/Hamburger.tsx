@@ -22,6 +22,19 @@ const StyledHamburger = styled.div`
     transition: all 0.2s ease-in-out;
   }
 
+  &.close {
+    &:before {
+      transform: translateY(7px) rotate(135deg);
+    }
+
+    &:after {
+      transform: translateY(-7px) rotate(-135deg);
+    }
+    & div {
+      transform: scale(0);
+    }
+  }
+
   ${({ isActive }) => {
     return (
       isActive &&
@@ -38,7 +51,7 @@ const StyledHamburger = styled.div`
       }
     `
     );
-  }}
+  }};
 
   @media (max-width: 768px) {
     display: block;
@@ -55,8 +68,17 @@ const Hamburger: React.FC<any> = ({
       isActive={isActive}
       onClick={onClickFn}
       className={className}
+      id="hamburger"
+      role="button"
+      tabIndex={0}
+      on="
+        tap:hamburger.toggleClass(class='close'),
+        nav-menu.toggleClass(class='now-active'),
+        navigation-menu-mobile.toggleClass(class='navigation-nav-open'),
+        navigation-menu-mobile_0.toggleClass(class='navigation-nav-open')
+      "
     >
-      <div />
+      <div role="button" tabIndex={0} />
     </StyledHamburger>
   );
 };

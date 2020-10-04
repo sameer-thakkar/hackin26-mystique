@@ -9,6 +9,7 @@ import { InteractionContextProvider } from '../../contexts/Interaction';
 import { docCookies, genManualSlice, getLangObject } from '../../utils/helper';
 import allToursParser from '../../utils/allToursParser';
 import { tourListApiParser } from '../../utils/dataParsers';
+import { withAmp } from 'components/common/withAmp';
 class MicrositeV2 extends Component<any, any> {
   constructor(props) {
     super(props);
@@ -90,7 +91,7 @@ class MicrositeV2 extends Component<any, any> {
   }
 
   render() {
-    const { data: CMSContent, host, scorpioData } = this.props;
+    const { data: CMSContent, host, scorpioData, isAmp } = this.props;
     const {
       commonFooter,
       contentFramework,
@@ -169,7 +170,7 @@ class MicrositeV2 extends Component<any, any> {
       cardPrices,
       isFetched,
     };
-    const allTours = allToursParser(CMSData, scorpioData, pricingData);
+    const allTours = allToursParser(CMSData, scorpioData, pricingData, isAmp);
 
     const groupBooking = {
       hasGroupBooking: CMSData.enable_group_booking == 'Yes',
@@ -360,4 +361,4 @@ class MicrositeV2 extends Component<any, any> {
   }
 }
 
-export default withRouter(MicrositeV2);
+export default withAmp(withRouter(MicrositeV2));

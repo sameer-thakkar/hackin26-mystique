@@ -254,7 +254,7 @@ const Footer: React.FC<FooterProps> = ({
             >
               <div className="logo-disclaimer">
                 <div className="logo-wrapper">
-                  <Image url={logoURL} alt={logoAlt} />
+                  <Image url={logoURL} alt={logoAlt} isFooterLogo />
                   {hasPoweredByHeadoutLogo && finalThemeName === THEMES.DEFAULT
                     ? POWERED_BY_HEADOUT
                     : null}
