@@ -1,6 +1,6 @@
 root = true
 
-# Show indentation with 4 tabs
+# Show indentation with 2 spaces
 [*.{less,css,scss,sass,html,js,jsx,ts,tsx}]
-indent_style = tab
+indent_style = space
 indent_size = 2

@@ -85,50 +85,41 @@ const allToursParser = (
         cardPrices[tourData.tgid]?.listingPrice?.currencyCode
       ];
     let listingPrice = isFetched ? cardPrices[tourData.tgid]?.listingPrice : {};
-    listingPrice = isAmp
-      ? scorpioData[tourData.tgid].listingPrice
-      : listingPrice;
+    const scorpioTour = scorpioData[tourData.tgid] || {};
+    listingPrice = isAmp ? scorpioTour?.listingPrice : listingPrice;
     return {
       ...accum,
       [tourData.tgid]: {
-        title:
-          tourData.tour_title_override ||
-          scorpioData[tourData.tgid].title ||
-          '',
-        highlights: scorpioData[tourData.tgid].highlights,
-        descriptors:
-          tourData.descriptors || scorpioData[tourData.tgid].descriptors || '',
-        productHighlights: scorpioData[tourData.tgid].productHighlights || '',
+        title: tourData.tour_title_override || scorpioTour?.title || '',
+        highlights: scorpioTour?.highlights,
+        descriptors: tourData.descriptors || scorpioTour?.descriptors || '',
+        productHighlights: scorpioTour?.productHighlights || '',
         cardFooter: tourData.card_tags,
         theater: tourData.theater_name,
         content_theater: tourData.theater_contentblock,
         contentBlocks: orderedBlocks,
         productImage:
           tourData.product_image_override.url ||
-          (scorpioData[tourData.tgid].images[0]
-            ? scorpioData[tourData.tgid].images[0].url
-            : ''),
+          (scorpioTour?.images?.[0] ? scorpioTour?.images?.[0].url : ''),
         descriptionImage:
           tourData.description_image_override.url ||
-          (scorpioData[tourData.tgid].images[1]
-            ? scorpioData[tourData.tgid].images[1].url
-            : ''),
+          (scorpioTour?.images?.[1] ? scorpioTour?.images?.[1].url : ''),
         price: isFetched ? cardPrices[tourData.tgid]?.price : '',
         scratchPrice: isFetched ? cardPrices[tourData.tgid]?.scratchPrice : '',
         currencySymbol: isFetched ? currencySymbol : '',
         tgid: parseInt(tourData.tgid),
-        images: scorpioData[tourData.tgid].images,
-        averageRating: scorpioData[tourData.tgid].averageRating,
-        reviewCount: scorpioData[tourData.tgid].reviewCount,
-        ctaBooster: scorpioData[tourData.tgid].ctaBooster,
+        images: scorpioTour?.images,
+        averageRating: scorpioTour?.averageRating,
+        reviewCount: scorpioTour?.reviewCount,
+        ctaBooster: scorpioTour?.ctaBooster,
         description: tourData.full_description,
-        available: scorpioData[tourData.tgid].available,
+        available: scorpioTour?.available,
         overlayBooster: tourData.overlay_booster,
         vendor: tourData.vendor_name,
-        allTags: scorpioData[tourData.tgid]?.allTags || [],
-        dfListingPrice: scorpioData[tourData.tgid]?.dfListingPrice,
+        allTags: scorpioTour?.allTags || [],
+        dfListingPrice: scorpioTour?.dfListingPrice,
         listingPrice: listingPrice,
-        safetyImages: scorpioData[tourData.tgid].safetyImages,
+        safetyImages: scorpioTour?.safetyImages,
       },
     };
   }, {});

@@ -368,17 +368,13 @@ export default {
             line-height: 24px;
             display: block;
             margin-bottom: 8px;
-            margin-top: 32px;
+            margin-top: 0;
           }
         `,
         mobile: `
           font-weight: ${SOLEIL.REGULAR};
           font-size: 14px;
           line-height: 20px;
-          strong,
-          b {
-            margin-top: 24px;
-          }
           h6:first-child {
             margin-top: 0;
           }
