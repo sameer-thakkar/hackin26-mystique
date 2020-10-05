@@ -111,7 +111,6 @@ const PopulateHead = (data) => {
 		isAmp,
 		enable_amp,
 	} = data;
-
 	const modifiedCanonicalLink = canonicalLinkForAMP || canonicalLink;
 	const { isPreview, noTrack } = useContext(MBContext);
 
@@ -178,7 +177,11 @@ const PopulateHead = (data) => {
 				/>
 			) : null}
 
-			{enable_amp ? <link rel="amphtml" href={`/?amp=1`} /> : null}
+			{enable_amp && !isAmp ? (
+				<link rel="amphtml" href={`/?amp=1`} />
+			) : (
+				<link rel="amphtml" />
+			)}
 
 			{robotsContent.length ? (
 				<meta name="robots" content={robotsContent.join(', ')} />
