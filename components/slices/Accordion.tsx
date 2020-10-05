@@ -145,25 +145,24 @@ const Accordion = ({
 					/>
 				</div>
 			</Title>
-			<div
-				className="accordion-content-wrap"
+			<ContentBlock
+				className="answer"
+				isOpen={isOpen}
 				{...(useSchema && {
 					itemProp: 'acceptedAnswer',
 					itemType: 'https://schema.org/Answer',
 					itemScope: true,
 				})}
 			>
-				<ContentBlock className={'answer'} isOpen={isOpen}>
-					<Conditional if={typeof content === 'string'}>
-						<ReactMarkdown
-							renderers={{ root: React.Fragment }}
-							source={content}
-							escapeHtml={false}
-						/>
-					</Conditional>
-					<Conditional if={typeof content !== 'string'}>{content}</Conditional>
-				</ContentBlock>
-			</div>
+				<Conditional if={typeof content === 'string'}>
+					<ReactMarkdown
+						renderers={{ root: React.Fragment }}
+						source={content}
+						escapeHtml={false}
+					/>
+				</Conditional>
+				<Conditional if={typeof content !== 'string'}>{content}</Conditional>
+			</ContentBlock>
 		</StyledAccordion>
 	);
 };

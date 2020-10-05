@@ -337,10 +337,10 @@ const PopulateHead = (data) => {
 		return pathnameWithTrailingSlash.replace('/', '');
 	};
 
-	const getHref = (langCode) => {
+	const getHref = (langCode, isAmp) => {
 		return `https://${host}/${
 			langCode === 'en' ? '' : `${langCode}/`
-		}${getPathName()}`;
+		}${getPathName()}${isAmp ? '?amp=1' : ''}`;
 	};
 
 	const hrefLangs = languages
@@ -352,10 +352,11 @@ const PopulateHead = (data) => {
 					key={`altlang_${idx}`}
 					rel="alternate"
 					hrefLang={langCode}
-					href={getHref(langCode)}
+					href={getHref(langCode, isAmp)}
 				/>
 			);
 		});
+
 	return (
 		<Head>
 			{dynamicMeta}
