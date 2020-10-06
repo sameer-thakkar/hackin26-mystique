@@ -179,7 +179,7 @@ const PopulateHead = (data) => {
 
 			{enable_amp && !isAmp ? (
 				<link rel="amphtml" href={`/?amp=1`} />
-			) : (
+			) : isAmp ? null : (
 				<link rel="amphtml" />
 			)}
 
