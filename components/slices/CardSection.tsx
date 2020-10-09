@@ -11,13 +11,7 @@ import { SIZES } from 'constants/ui-constants';
 
 const CardGrid = styled.div(({ cardsInARow }) => {
   let gridTemplateColumns = `100%`;
-  if (cardsInARow === 2) {
-    gridTemplateColumns = `50% 50%`;
-  } else if (cardsInARow > 2) {
-    gridTemplateColumns = `repeat(${cardsInARow}, calc(${
-      100 / cardsInARow
-    }% - 15px))`;
-  }
+  gridTemplateColumns = `repeat(${cardsInARow}, 1fr)`;
   return `
     display: grid;
     grid-template-columns: ${gridTemplateColumns};

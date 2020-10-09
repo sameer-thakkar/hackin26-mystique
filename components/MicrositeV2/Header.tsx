@@ -23,7 +23,6 @@ const StyledHeader = styled.span`
     align-items: center;
     padding-top: 14px;
     padding-bottom: 14px;
-    z-index: ${({ overlayActive: check }) => (check ? 100 : 15)};
     user-select: none;
   }
   .fixed-wrap {
@@ -33,7 +32,8 @@ const StyledHeader = styled.span`
     min-height: 80px;
     background-color: ${({ theme: { primaryBackground } }) =>
       primaryBackground ? primaryBackground : '#fff'};
-    z-index: ${({ overlayActive: check }) => (check ? 100 : 15)};
+    z-index: ${({ overlayActive: check, headerHover }) =>
+      check || headerHover ? 100 : 15};
   }
   .fixed-offset::after {
     content: '';
@@ -213,6 +213,7 @@ const Header = (props) => {
   const [results, setResults] = useState([]);
   const [resultClicked, setResultClicked] = useState(false);
   const [navActive, toggleNav] = useState(false);
+  const [headerHover, setHeaderHover] = useState(false);
 
   const toggleLanguageDropdown = () => {
     setLanguageDropdown(!languageDropdown);
@@ -275,11 +276,18 @@ const Header = (props) => {
     headerLinks?.filter((link) => link.link_url)?.length || headerSlices.length
   );
   return (
-    <StyledHeader overlayActive={languageDropdown || navActive}>
+    <StyledHeader
+      overlayActive={languageDropdown || navActive}
+      headerHover={headerHover}
+    >
       <div className="fixed-offset"></div>
       <div className="fixed-wrap">
         <header className="main-wrapper">
-          <HeaderLeft hasDropdownLinks={hasDropdownLinks}>
+          <HeaderLeft
+            hasDropdownLinks={hasDropdownLinks}
+            onMouseEnter={() => setHeaderHover(true)}
+            onMouseLeave={() => setHeaderHover(false)}
+          >
             <a href={logoRedirectionURL || '/'}>
               <div className="header-logo">
                 <Image url={logoUrl} alt={logoAltText} dontLazyLoad={true} />
@@ -327,6 +335,8 @@ const Header = (props) => {
             hasLanguageDropdown={hasLanguageDropdown}
             hasHamburger={isMobile && hamburgerIconCheck}
             hasSearch={enableSearch}
+            onMouseEnter={() => setHeaderHover(true)}
+            onMouseLeave={() => setHeaderHover(false)}
           >
             {!groupedHeaderSlices.length && headerLinks ? (
               <HeaderLinks

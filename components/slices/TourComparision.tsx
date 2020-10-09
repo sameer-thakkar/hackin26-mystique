@@ -22,6 +22,10 @@ const StyledTourComparisionTable = styled.div`
   line-height: 1.3;
   font-family: ${SOLEIL.FONT_STACK};
   .comparision-heading {
+    max-width: 1200px;
+    margin: auto;
+    width: 100%;
+    text-align: left;
     font-size: 24px;
     margin-bottom: 8px;
     font-weight: ${SOLEIL.MEDIUM};
@@ -61,22 +65,27 @@ const StyledTourComparisionTable = styled.div`
     grid-auto-rows: max-content;
     grid-row-gap: 32px;
     ${({ designType }) =>
-			designType == TOUR_COMPARISION_DESIGN.TYPE_2
-				? `
+      designType == TOUR_COMPARISION_DESIGN.TYPE_2
+        ? `
       grid-row-gap: 16px;
     `
-				: ``}
+        : ``}
     grid-column-gap: 8px;
   }
   .row {
+    max-width: 1200px;
+    margin: auto;
+    // to line up correctly with other slices/elements. 
+    // 5.46 is the padding added to other elements on page.
+    width: calc(100% - (5.46vw * 2)); 
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: repeat(4, 1fr) ${({ isMobile }) =>
-			isMobile ? '16px' : ''};
+      isMobile ? '16px' : ''};
     grid-column-gap: 24px;
     ${({ designType, showImage }) =>
-			designType == TOUR_COMPARISION_DESIGN.TYPE_2
-				? `
+      designType == TOUR_COMPARISION_DESIGN.TYPE_2
+        ? `
       border-bottom: 1px solid ${COLORS.GREY_G6};
       padding-bottom: 16px;
       &:nth-of-type(0n+1),
@@ -86,7 +95,7 @@ const StyledTourComparisionTable = styled.div`
         padding-bottom: 0;
       }
     `
-				: ``}
+        : ``}
   }
   .cta-table-wrap .row {
     background: ${COLORS.WHITE};
@@ -138,18 +147,23 @@ const StyledTourComparisionTable = styled.div`
   }
   
 
-  .row.sticky {
+  .row.sticky,
+  .sticky.wrapper {
     position: sticky;
     top: 12px;
     background: ${COLORS.WHITE};
     z-index: 15;
     padding-bottom: 8px;
     ${({ designType }) =>
-			designType == TOUR_COMPARISION_DESIGN.TYPE_2
-				? `
+      designType == TOUR_COMPARISION_DESIGN.TYPE_2
+        ? `
       margin-bottom: -8px;
     `
-				: ``}
+        : ``}
+  }
+  .sticky.wrapper {
+    width: 100%;
+    max-width: unset;
   }
 
   .column p {
@@ -162,11 +176,11 @@ const StyledTourComparisionTable = styled.div`
   .tour-image {
     margin-bottom: -32px;
     ${({ designType }) =>
-			designType == TOUR_COMPARISION_DESIGN.TYPE_2
-				? `
+      designType == TOUR_COMPARISION_DESIGN.TYPE_2
+        ? `
       margin-bottom: -8px;
   `
-				: ``}
+        : ``}
   }
   .column .tour-image img {
     width: 100%;
@@ -187,13 +201,13 @@ const StyledTourComparisionTable = styled.div`
     letter-spacing: 0.5px;
     color: ${COLORS.GREY_G4};
     ${({ designType }) =>
-			designType == TOUR_COMPARISION_DESIGN.TYPE_2
-				? `
+      designType == TOUR_COMPARISION_DESIGN.TYPE_2
+        ? `
       color: ${COLORS.GREY_6D};
       font-size: 14px;
       line-height: 22px;
     `
-				: ``}
+        : ``}
   }
   
   .block-content {
@@ -203,12 +217,12 @@ const StyledTourComparisionTable = styled.div`
     font-weight: ${SOLEIL.REGULAR};
     color: ${COLORS.FOUR_BLACK};
     ${({ designType }) =>
-			designType == TOUR_COMPARISION_DESIGN.TYPE_2
-				? `
+      designType == TOUR_COMPARISION_DESIGN.TYPE_2
+        ? `
       font-size: 14px;
       line-height: 22px;
     `
-				: ``}
+        : ``}
     img {
       height: 20px;
       width: 20px;
@@ -241,13 +255,13 @@ const StyledTourComparisionTable = styled.div`
   font-size: 14px;
   line-height: 22px;
   ${({ designType }) =>
-		designType == TOUR_COMPARISION_DESIGN.TYPE_2
-			? `
+    designType == TOUR_COMPARISION_DESIGN.TYPE_2
+      ? `
     a {
       color: ${COLORS.HEADOUT_CANDY};
     }
     `
-			: ``}
+      : ``}
   @media (max-width: 768px) {
   
     .full-width-wrap {
@@ -269,13 +283,13 @@ const StyledTourComparisionTable = styled.div`
     .row {
       grid-column-gap: 12px;
       ${({ designType }) =>
-				designType == TOUR_COMPARISION_DESIGN.TYPE_2
-					? `
+        designType == TOUR_COMPARISION_DESIGN.TYPE_2
+          ? `
       grid-column-gap: 16px;
       `
-					: ``}
+          : ``}
       grid-template-columns: 4px repeat(${({ tourCount }) =>
-				tourCount}, 164px) 4px;
+        tourCount}, 164px) 4px;
       position: relative;
     }
     .row::before {
@@ -298,6 +312,13 @@ const StyledTourComparisionTable = styled.div`
     }
     .row .column:not(:first-child) .block-label {
       visibility: initial;
+    }
+    .row,
+    .comparision-heading,
+    #compare-all-details-button {
+      max-width: unset;
+      margin: 0 16px;
+      width: calc(100% - 32px); 
     }
     ${StyledPriceBlock} {
       .tour-price {
@@ -328,9 +349,9 @@ const StyledTourComparisionTable = styled.div`
     }
     .block-label {
       ${({ designType }) =>
-				designType == TOUR_COMPARISION_DESIGN.TYPE_2
-					? ``
-					: `
+        designType == TOUR_COMPARISION_DESIGN.TYPE_2
+          ? ``
+          : `
         font-size: 12px;
         line-height: 12px;
       `}
@@ -340,9 +361,9 @@ const StyledTourComparisionTable = styled.div`
     }
     .block-content {
     ${({ designType }) =>
-			designType == TOUR_COMPARISION_DESIGN.TYPE_2
-				? ``
-				: `
+      designType == TOUR_COMPARISION_DESIGN.TYPE_2
+        ? ``
+        : `
       font-size: 15px;
     `}
     }
@@ -426,276 +447,281 @@ const StyledTourComparisionTable = styled.div`
  */
 
 const TourComparisonTable = (props) => {
-	const {
-		heading,
-		description,
-		tgidsCSV,
-		isMobile,
-		orderedLabels,
-		vendors,
-		vendorLinks,
-		designType = 'Type-1',
-		showImage = true,
-	} = props;
-	const [isExpanded, setExpand] = useState(false);
-	const envContext = useContext(EnvironmentContext);
-	const toursContext = useContext(ProductsContext);
-	const mbContext = useContext(MBContext);
-	const isAmp = useAmp();
-	const url = envContext.windowUrl;
-	const { uid, nakedDomain } = mbContext;
-	const lang = mbContext.lang || 'en';
-	const currentHost = !envContext.isDev ? url : parse(uid, true).pathname;
-	const hostName = currentHost.includes('stage')
-		? currentHost.replace('stage-', '')
-		: currentHost;
-	let hostSplit = hostName.split('.');
-	hostSplit.shift();
-	const { allTours } = toursContext;
-	const getContentNormalizedTours = (tgidArray) => {
-		let toursArr = tgidArray.map((tgid) => allTours[tgid]);
-		toursArr = toursArr.reduce((acc, tour, index) => {
-			let content = [
-				...tour.contentBlocks.left,
-				...tour.contentBlocks.right,
-				...tour.contentBlocks.hidden,
-			];
-			content = content.reduce((accum, block) => {
-				return {
-					...accum,
-					[block.labelId]: {
-						label: block.label,
-						content: block.content,
-						id: block.labelId,
-					},
-				};
-			}, {});
-			return [
-				...acc,
-				{
-					...tour,
-					contentBlocks: content,
-					vendor: vendors && vendors[index],
-					vendorLink: vendorLinks && vendorLinks[index],
-				},
-			];
-		}, []);
-		return toursArr;
-	};
-	const tgidArray = tgidsCSV
-		.split(',')
-		.map((tgid) => parseInt(tgid))
-		.filter((tgid) => allTours[tgid]?.available);
-	const content_normalized_tours = getContentNormalizedTours(tgidArray);
+  const {
+    heading,
+    description,
+    tgidsCSV,
+    isMobile,
+    orderedLabels,
+    vendors,
+    vendorLinks,
+    designType = 'Type-1',
+    showImage = true,
+  } = props;
+  const [isExpanded, setExpand] = useState(false);
+  const envContext = useContext(EnvironmentContext);
+  const toursContext = useContext(ProductsContext);
+  const mbContext = useContext(MBContext);
+  const isAmp = useAmp();
+  const url = envContext.windowUrl;
+  const { uid, nakedDomain } = mbContext;
+  const lang = mbContext.lang || 'en';
+  const currentHost = !envContext.isDev ? url : parse(uid, true).pathname;
+  const hostName = currentHost.includes('stage')
+    ? currentHost.replace('stage-', '')
+    : currentHost;
+  let hostSplit = hostName.split('.');
+  hostSplit.shift();
+  const { allTours } = toursContext;
+  const getContentNormalizedTours = (tgidArray) => {
+    let toursArr = tgidArray.map((tgid) => allTours[tgid]);
+    toursArr = toursArr.reduce((acc, tour, index) => {
+      let content = [
+        ...tour.contentBlocks.left,
+        ...tour.contentBlocks.right,
+        ...tour.contentBlocks.hidden,
+      ];
+      content = content.reduce((accum, block) => {
+        return {
+          ...accum,
+          [block.labelId]: {
+            label: block.label,
+            content: block.content,
+            id: block.labelId,
+          },
+        };
+      }, {});
+      return [
+        ...acc,
+        {
+          ...tour,
+          contentBlocks: content,
+          vendor: vendors && vendors[index],
+          vendorLink: vendorLinks && vendorLinks[index],
+        },
+      ];
+    }, []);
+    return toursArr;
+  };
+  const tgidArray = tgidsCSV
+    .split(',')
+    .map((tgid) => parseInt(tgid))
+    .filter((tgid) => allTours[tgid]?.available);
+  const content_normalized_tours = getContentNormalizedTours(tgidArray);
 
-	// Return null if no / only one tgid given/available
-	if (tgidArray.length <= 1) return null;
-	// @ts-ignore
-	const compareTableOnClickForAMP = Array(...Array(orderedLabels.length).keys())
-		.map(
-			(el) => `comparison-list-details-${el}.toggleClass(class='no-display')`
-		)
-		.join(',');
-	return (
-		<StyledTourComparisionTable
-			isExpanded={isExpanded || isAmp}
-			isMobile={isMobile}
-			tourCount={tgidArray.length}
-			designType={designType}
-			showImage={showImage}
-		>
-			<div className="comparision-heading">{heading}</div>
-			<div className="comparision-description">{description}</div>
-			<div className="full-width-wrap">
-				<div className="table">
-					{showImage ? (
-						<div className="row max-content" style={{ zIndex: -1 }}>
-							{content_normalized_tours.map((tour, index) => {
-								return (
-									<div className="column" key={index}>
-										<div className="tour-image">
-											<Image url={tour.productImage} height={176} width={282} />
-										</div>
-									</div>
-								);
-							})}
-						</div>
-					) : null}
-					<div className="row sticky">
-						{content_normalized_tours.map((tour, index) => {
-							return (
-								<div className="column" key={index}>
-									<div className="tour-chin">
-										<div className="tour-title">{tour.title}</div>
-										<div className="tour-booster">
-											<RichText
-												render={tour.cardFooter}
-												htmlSerializer={(...defaultArgs: any) =>
-													shortCodeSerializerWithParentProps(defaultArgs, tour)
-												}
-											/>
-										</div>
-									</div>
-								</div>
-							);
-						})}
-					</div>
-					{isExpanded || isAmp ? (
-						<div
-							className={`row ${isAmp ? 'no-display' : ''}`}
-							id="expanded-details-section"
-							style={{ marginTop: -8 }}
-						>
-							{content_normalized_tours.map((tour, index) => {
-								const ctaProps = {
-									link: {
-										url: createBookingURL({
-											nakedDomain,
-											lang,
-											tgid: tour.tgid,
-										}),
-									},
-								};
-								return (
-									<div className="column" key={index}>
-										<div className="tour-cta">
-											<a href={ctaProps.link.url}>
-												<Button widthProp="100%">
-													{labels[lang]['BOOK_NOW_CTA']}
-												</Button>
-											</a>
-										</div>
-									</div>
-								);
-							})}
-						</div>
-					) : null}
-					<div className="row max-content">
-						{content_normalized_tours.map((tour, index) => {
-							return (
-								<div className="column flat-price-block" key={index}>
-									<div className="content-block">
-										{designType == TOUR_COMPARISION_DESIGN.TYPE_1 ? (
-											<div className="block-label">
-												{labels[lang].PRICES_STARTING}
-											</div>
-										) : null}
-										<div className="block-content">
-											<PriceBlock
-												lang={lang}
-												price={tour.listingPrice}
-												showScratchPrice={true}
-												prefix={false}
-											/>
-										</div>
-									</div>
-								</div>
-							);
-						})}
-					</div>
-					{orderedLabels
-						.filter((label, index) =>
-							isMobile && !isExpanded && !isAmp ? index < 2 : true
-						)
-						.map((label, rowIndex) => {
-							return (
-								<div
-									className={`row ${
-										rowIndex >= 2 && isAmp ? 'no-display' : ''
-									} `}
-									id={`comparison-list-details-${rowIndex}`}
-									key={rowIndex}
-								>
-									{content_normalized_tours.map((tour, colIndex) => {
-										return (
-											<div className="column content-block" key={colIndex}>
-												<div className="block-label">
-													{tour.contentBlocks[label.labelId]?.label}
-												</div>
-												<div className="block-content">
-													<RichText
-														render={tour.contentBlocks[label.labelId]?.content}
-														htmlSerializer={(...defaultArgs: any) =>
-															shortCodeSerializerWithParentProps(
-																defaultArgs,
-																tour
-															)
-														}
-													/>
-												</div>
-											</div>
-										);
-									})}
-								</div>
-							);
-						})}
-					{(isMobile && isExpanded) || !isMobile || isAmp ? (
-						<div
-							className={`row max-content ${isAmp ? 'no-display' : ''}`}
-							id="expanded-details-column"
-						>
-							{content_normalized_tours.map((tour, index) => {
-								return (
-									<div className="column flat-price-block" key={index}>
-										<div className="content-block">
-											<div className="block-label">
-												{labels[lang].PRICES_STARTING}
-											</div>
-											<div className="block-content">
-												<PriceBlock
-													lang={lang}
-													price={tour.listingPrice}
-													showScratchPrice={true}
-												/>
-											</div>
-										</div>
-									</div>
-								);
-							})}
-						</div>
-					) : null}
-				</div>
-				<div className="table cta-table-wrap">
-					<div className="row">
-						{content_normalized_tours.map((tour, index) => {
-							const ctaProps = {
-								link: {
-									url: createBookingURL({ nakedDomain, lang, tgid: tour.tgid }),
-								},
-							};
-							return (
-								<div className="column" key={index}>
-									<div className="tour-cta">
-										<a href={ctaProps.link.url}>
-											<Button type="fill" widthProp="100%">
-												{labels[lang]['BOOK_NOW_CTA']}
-											</Button>
-										</a>
-									</div>
-								</div>
-							);
-						})}
-					</div>
-				</div>
-			</div>
-			{isMobile && !isExpanded ? (
-				<Button
-					onClick={() => setExpand(true)}
-					id="compare-all-details-button"
-					on={`
+  // Return null if no / only one tgid given/available
+  if (tgidArray.length <= 1) return null;
+  // @ts-ignore
+  const compareTableOnClickForAMP = Array(...Array(orderedLabels.length).keys())
+    .map(
+      (el) => `comparison-list-details-${el}.toggleClass(class='no-display')`
+    )
+    .join(',');
+  return (
+    <StyledTourComparisionTable
+      isExpanded={isExpanded || isAmp}
+      isMobile={isMobile}
+      tourCount={tgidArray.length}
+      designType={designType}
+      showImage={showImage}
+    >
+      <div className="comparision-heading">{heading}</div>
+      <div className="comparision-description">{description}</div>
+      <div className="full-width-wrap">
+        <div className="table">
+          {showImage ? (
+            <div className="row max-content" style={{ zIndex: -1 }}>
+              {content_normalized_tours.map((tour, index) => {
+                return (
+                  <div className="column" key={index}>
+                    <div className="tour-image">
+                      <Image url={tour.productImage} height={176} width={282} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : null}
+          <div className="sticky wrapper">
+            <div className="row wrapper">
+              {content_normalized_tours.map((tour, index) => {
+                return (
+                  <div className="column" key={index}>
+                    <div className="tour-chin">
+                      <div className="tour-title">{tour.title}</div>
+                      <div className="tour-booster">
+                        <RichText
+                          render={tour.cardFooter}
+                          htmlSerializer={(...defaultArgs: any) =>
+                            shortCodeSerializerWithParentProps(
+                              defaultArgs,
+                              tour
+                            )
+                          }
+                        />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          {isExpanded || isAmp ? (
+            <div
+              className={`row ${isAmp ? 'no-display' : ''}`}
+              id="expanded-details-section"
+              style={{ marginTop: -8 }}
+            >
+              {content_normalized_tours.map((tour, index) => {
+                const ctaProps = {
+                  link: {
+                    url: createBookingURL({
+                      nakedDomain,
+                      lang,
+                      tgid: tour.tgid,
+                    }),
+                  },
+                };
+                return (
+                  <div className="column" key={index}>
+                    <div className="tour-cta">
+                      <a href={ctaProps.link.url}>
+                        <Button widthProp="100%">
+                          {labels[lang]['BOOK_NOW_CTA']}
+                        </Button>
+                      </a>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : null}
+          <div className="row max-content">
+            {content_normalized_tours.map((tour, index) => {
+              return (
+                <div className="column flat-price-block" key={index}>
+                  <div className="content-block">
+                    {designType == TOUR_COMPARISION_DESIGN.TYPE_1 ? (
+                      <div className="block-label">
+                        {labels[lang].PRICES_STARTING}
+                      </div>
+                    ) : null}
+                    <div className="block-content">
+                      <PriceBlock
+                        lang={lang}
+                        price={tour.listingPrice}
+                        showScratchPrice={true}
+                        prefix={false}
+                      />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          {orderedLabels
+            .filter((label, index) =>
+              isMobile && !isExpanded && !isAmp ? index < 2 : true
+            )
+            .map((label, rowIndex) => {
+              return (
+                <div
+                  className={`row ${
+                    rowIndex >= 2 && isAmp ? 'no-display' : ''
+                  } `}
+                  id={`comparison-list-details-${rowIndex}`}
+                  key={rowIndex}
+                >
+                  {content_normalized_tours.map((tour, colIndex) => {
+                    return (
+                      <div className="column content-block" key={colIndex}>
+                        <div className="block-label">
+                          {tour.contentBlocks[label.labelId]?.label}
+                        </div>
+                        <div className="block-content">
+                          <RichText
+                            render={tour.contentBlocks[label.labelId]?.content}
+                            htmlSerializer={(...defaultArgs: any) =>
+                              shortCodeSerializerWithParentProps(
+                                defaultArgs,
+                                tour
+                              )
+                            }
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })}
+          {(isMobile && isExpanded) || !isMobile || isAmp ? (
+            <div
+              className={`row max-content ${isAmp ? 'no-display' : ''}`}
+              id="expanded-details-column"
+            >
+              {content_normalized_tours.map((tour, index) => {
+                return (
+                  <div className="column flat-price-block" key={index}>
+                    <div className="content-block">
+                      <div className="block-label">
+                        {labels[lang].PRICES_STARTING}
+                      </div>
+                      <div className="block-content">
+                        <PriceBlock
+                          lang={lang}
+                          price={tour.listingPrice}
+                          showScratchPrice={true}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : null}
+        </div>
+        <div className="table cta-table-wrap">
+          <div className="row">
+            {content_normalized_tours.map((tour, index) => {
+              const ctaProps = {
+                link: {
+                  url: createBookingURL({ nakedDomain, lang, tgid: tour.tgid }),
+                },
+              };
+              return (
+                <div className="column" key={index}>
+                  <div className="tour-cta">
+                    <a href={ctaProps.link.url}>
+                      <Button type="fill" widthProp="100%">
+                        {labels[lang]['BOOK_NOW_CTA']}
+                      </Button>
+                    </a>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+      {isMobile && !isExpanded ? (
+        <Button
+          onClick={() => setExpand(true)}
+          id="compare-all-details-button"
+          on={`
             tap:expanded-details-section.toggleClass(class='no-display'),
             expanded-details-column.toggleClass(class='no-display'),
             compare-all-details-button.toggleClass(class='no-display', force=true),
             ${compareTableOnClickForAMP}
           `}
-				>
-					<div className="start-compare-icon">
-						{labels[lang].COMPARE_ALL_DETAILS} {CHEVRON_DOWN}
-					</div>
-				</Button>
-			) : null}
-		</StyledTourComparisionTable>
-	);
+        >
+          <div className="start-compare-icon">
+            {labels[lang].COMPARE_ALL_DETAILS} {CHEVRON_DOWN}
+          </div>
+        </Button>
+      ) : null}
+    </StyledTourComparisionTable>
+  );
 };
 
 export default TourComparisonTable;

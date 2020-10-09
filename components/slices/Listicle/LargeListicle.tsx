@@ -44,6 +44,7 @@ const ImageWrapper = styled.div`
   margin-bottom: 16px;
   img {
     width: 100%;
+    height: 100%;
     object-fit: cover;
   }
   @media (max-width: 768px) {

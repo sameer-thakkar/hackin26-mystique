@@ -84,7 +84,7 @@ const StyledCard = styled.div((props) => {
 `;
 });
 
-const Title = styled.h1`
+const Title = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
   font-weight: ${SOLEIL.BOLD};
   font-size: 20px;
