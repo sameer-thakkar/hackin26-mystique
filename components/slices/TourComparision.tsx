@@ -266,7 +266,9 @@ const StyledTourComparisionTable = styled.div`
   
     .full-width-wrap {
       margin: 0 -16px;
+      padding-right: 16px;
       max-width: 768px;
+      width: 100%;
       overflow-y: hidden;
       overflow-x: scroll;
       overscroll-behavior-x: contain;
@@ -380,7 +382,7 @@ const StyledTourComparisionTable = styled.div`
       padding-bottom: 24px;
       width: 100%;
     }
-    .row.sticky {
+    .wrapper.sticky {
       z-index: unset;
     }
     .cta-table-wrap .row {
