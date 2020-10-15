@@ -14,6 +14,10 @@ const StyledInternalContentCard = styled.div`
     text-decoration: none;
   }
 
+  .more-reads-image {
+    position: relative;
+  }
+
   .more-reads-image img {
     height: 250px;
     object-fit: cover;
@@ -76,6 +80,7 @@ export default class InternalContentCard extends PureComponent<any, any> {
                       width={'500'}
                       height={'250'}
                       url={image_link.url || image_source.url}
+                      attribution={image_source?.copyright}
                       alt={heading}
                     />
                   </div>

@@ -238,6 +238,7 @@ const Card: React.FC<CardProps> = ({
         <Image
           url={images[0].url}
           alt={images[0].alt}
+          attribution={images[0]?.copyright}
           height={variantStyles[type].img.height}
           isCardSlices
         />
@@ -253,6 +254,7 @@ const Card: React.FC<CardProps> = ({
                   className="swiper-slide"
                   key={index}
                   url={image.url}
+                  attribution={image?.copyright}
                   alt={image.alt}
                   height={variantStyles[type].img.height}
                 />

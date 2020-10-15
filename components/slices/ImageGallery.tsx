@@ -251,12 +251,15 @@ const LightboxImage = styled.div`
 
 const FullImage = styled.div`
   display: grid;
-  img {
+  .image-wrap {
     grid-row: 1;
     grid-column: 1;
-    width: 100%;
-    height: 600px;
-    object-fit: cover;
+    display: flex;
+    img {
+      width: 100%;
+      height: 600px;
+      object-fit: cover;
+    }
   }
   &:after {
     content: '';
@@ -265,6 +268,7 @@ const FullImage = styled.div`
       rgba(61, 56, 56, 0) 0%,
       rgba(0, 0, 0, 0.64) 57.29%
     );
+    z-index: 0;
     height: 222px;
     grid-row: 1;
     grid-column: 1;

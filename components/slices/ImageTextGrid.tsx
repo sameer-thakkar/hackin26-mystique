@@ -86,6 +86,7 @@ const ImageTextGrid: React.FC<ImageTextProps> = ({ cards, cols }) => (
           height={300}
           format="pjpg"
           url={card.image_url.url || card.image_source.url}
+          attribution={card.image_source?.copyright}
           alt={card.image_alt || card.image_source.alt}
         />
         <div>
