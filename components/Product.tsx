@@ -826,11 +826,10 @@ const Product = (props) => {
       <TourTags>
         {descriptorArray.reduce((acc, item, index) => {
           const { icon, descriptor } = parseDescriptorIcon(item.trim());
-          if (mbTheme === THEMES.DEF_INTERIM && !icon) return;
           if (descriptor) {
             acc.push(
               <div key={index} className="tour-tag">
-                <Conditional if={icon && mbTheme === THEMES.DEF_INTERIM}>
+                <Conditional if={mbTheme === THEMES.DEF_INTERIM}>
                   <Image url={icon} />
                 </Conditional>
                 <Conditional if={index !== 0 && mbTheme !== THEMES.DEF_INTERIM}>
