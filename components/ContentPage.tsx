@@ -308,6 +308,7 @@ class ContentPage extends Component<any, any> {
       microsite,
       body,
       microsite_document_ref,
+      secondaryFooter,
     } = data;
     const apiReady = tourAPIData !== null;
     const allTours = allToursParser(
@@ -521,6 +522,7 @@ class ContentPage extends Component<any, any> {
           microbrandType={commonFooter?.data?.microbrand_type}
           slices={commonFooter?.data?.body || []}
           invertLogoColor={commonFooter?.data?.invert_logo_color}
+          secondarySlices={secondaryFooter?.data?.body || []}
         />
       </div>
     );

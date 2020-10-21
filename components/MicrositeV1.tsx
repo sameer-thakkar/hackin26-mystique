@@ -273,6 +273,8 @@ class MicrositeV1 extends Component<any, any> {
     footerThemeOverride = this.props.data.data.theme_override || THEMES.INHERIT;
 
     const { commonHeader } = this.props.data.refs;
+    const isHeaderInherited =
+      commonHeader.lang !== getLangObject(currentLanguage).paramLang;
     const withCommonHeaderOverrides = {
       ...this.props.data.data,
       ...commonHeader?.data,
@@ -325,7 +327,7 @@ class MicrositeV1 extends Component<any, any> {
     const {
       group_booking_excluded_tgids: groupBookingExcludedTgids,
     } = this.props.data.data;
-    const { commonFooter } = this.props.data.refs;
+    const { commonFooter, secondaryFooter } = this.props.data.refs;
     const microbrandCards = this.props.data.data.microbrand_cards;
     const microbrandCardsHeading = this.props.data.data.microbrand_cards_heading
       ? this.props.data.data.microbrand_cards_heading
@@ -436,6 +438,12 @@ class MicrositeV1 extends Component<any, any> {
       .filter((d) => d)
       .sort((a, b) => (dayjs(a).isAfter(b) ? -1 : 1));
 
+    const finalHeaderSlices = !isHeaderInherited
+      ? groupSlices(headerSlices || [], ALLOW_IMMEDIEATE_NESTING)
+      : [];
+    const finalHeaderLinks =
+      headerLinks && !isHeaderInherited ? headerLinks : null;
+
     return (
       <div>
         <div className="microsite-container">
@@ -471,7 +479,7 @@ class MicrositeV1 extends Component<any, any> {
           />
           <Header
             languages={languages ? languages : null}
-            headerLinks={headerLinks ? headerLinks : null}
+            headerLinks={finalHeaderLinks}
             logoUrl={logoUrl || uploadedLogoUrl || null}
             logoAltText={altText || logoAltText}
             currentLanguage={currentLanguage ? currentLanguage : null}
@@ -486,9 +494,9 @@ class MicrositeV1 extends Component<any, any> {
             logoRedirectionURL={logoRedirectionURL?.url || pageUrl}
             host={host}
             hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo}
-            slices={groupSlices(headerSlices || [], ALLOW_IMMEDIEATE_NESTING)}
-            dropdownLinks={dropdownLinks}
-            hasDropdownLinks={hasDropdownLinks}
+            slices={finalHeaderSlices}
+            dropdownLinks={!isHeaderInherited ? dropdownLinks : null}
+            hasDropdownLinks={!isHeaderInherited ? hasDropdownLinks : null}
             isAmp={isAmp}
           />
           {showCovid19Alert && this.state.covid19AlertOpen ? (
@@ -614,6 +622,7 @@ class MicrositeV1 extends Component<any, any> {
             slices={commonFooter?.data?.body || []}
             invertLogoColor={commonFooter?.data?.invert_logo_color}
             themeOverride={footerThemeOverride}
+            secondarySlices={secondaryFooter?.data?.body || []}
           />
           {hasOffer && (
             <FreeTourPopup

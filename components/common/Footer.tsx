@@ -20,12 +20,11 @@ const StyledFooter = styled.footer`
   font-family: ${SOLEIL.FONT_STACK};
   font-size: 14px;
   margin-top: 40px;
+  border-top: 1px solid ${COLORS.GREY.G8};
 `;
 
 const FooterLinksWrapper = styled.div`
   padding-top: 32px;
-  border-top: 1px solid ${COLORS.GREY.G8};
-  border-bottom: 1px solid ${COLORS.GREY.G8};
   background: ${({ theme }) => theme.footer.secondaryBackground};
   padding-bottom: 32px;
   margin-bottom: 40px;
@@ -181,6 +180,11 @@ const Link = styled.a`
   }
 `;
 
+const LinkSlicesWrapper = styled.div`
+  display: grid;
+  grid-row-gap: 24px;
+`;
+
 type FooterProps = {
   linksTitle?: string;
   currentLanguage?: string;
@@ -194,7 +198,36 @@ type FooterProps = {
   invertLogoColor?: boolean;
   slices?: Array<any>;
   themeOverride?: string;
+  secondarySlices?: Array<any>;
 };
+
+const LinkSlices = ({ linksTitle, slices, theme, language }) => (
+  <FooterLinksWrapper>
+    <Container>
+      {theme === THEMES.DEFAULT ? (
+        <div className="quick-links-title">
+          {linksTitle || labels[language].FOOTER.QUICK_LINKS}
+        </div>
+      ) : null}
+      <div className="quick-links">
+        <Conditional if={theme === THEMES.MIN_BLUE}>
+          <div className={`quick-links-heading`}>
+            <div className="quick-links-title">
+              {linksTitle || labels[language].FOOTER.QUICK_LINKS}
+            </div>
+          </div>
+        </Conditional>
+        {slices.map((slice, index) => {
+          return (
+            <div className={`${slice.slice_type}`} key={index}>
+              {sliceHandler(slice)}
+            </div>
+          );
+        })}
+      </div>
+    </Container>
+  </FooterLinksWrapper>
+);
 
 const Footer: React.FC<FooterProps> = ({
   linksTitle,
@@ -209,6 +242,7 @@ const Footer: React.FC<FooterProps> = ({
   invertLogoColor = false,
   slices = [],
   themeOverride = THEMES.DEFAULT,
+  secondarySlices = [],
 }) => {
   const { mbTheme = THEMES.DEFAULT } = useContext(MBContext);
   const { width } = useWindowSize();
@@ -218,33 +252,24 @@ const Footer: React.FC<FooterProps> = ({
   return (
     <ThemeProvider theme={theme[finalThemeName]}>
       <StyledFooter>
-        {slices.length !== 0 ? (
-          <FooterLinksWrapper>
-            <Container>
-              {finalThemeName === THEMES.DEFAULT ? (
-                <div className="quick-links-title">
-                  {linksTitle || labels[currentLanguage].FOOTER.QUICK_LINKS}
-                </div>
-              ) : null}
-              <div className="quick-links">
-                <Conditional if={finalThemeName === THEMES.MIN_BLUE}>
-                  <div className={`quick-links-heading`}>
-                    <div className="quick-links-title">
-                      {linksTitle || labels[currentLanguage].FOOTER.QUICK_LINKS}
-                    </div>
-                  </div>
-                </Conditional>
-                {slices.map((slice, index) => {
-                  return (
-                    <div className={`${slice.slice_type}`} key={index}>
-                      {sliceHandler(slice)}
-                    </div>
-                  );
-                })}
-              </div>
-            </Container>
-          </FooterLinksWrapper>
-        ) : null}
+        <LinkSlicesWrapper>
+          <Conditional if={slices?.length}>
+            <LinkSlices
+              language={currentLanguage}
+              linksTitle={linksTitle}
+              slices={slices}
+              theme={finalThemeName}
+            />
+          </Conditional>
+          <Conditional if={secondarySlices?.length}>
+            <LinkSlices
+              language={currentLanguage}
+              linksTitle={linksTitle}
+              slices={secondarySlices}
+              theme={finalThemeName}
+            />
+          </Conditional>
+        </LinkSlicesWrapper>
         <FooterLegalWrapper>
           <Container>
             <FooterLegal

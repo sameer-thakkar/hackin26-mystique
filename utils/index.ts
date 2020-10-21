@@ -6,6 +6,7 @@ import {
   SUPPORTED_LANGUAGES_MAP,
   FULL_LANGUAGE_MAP,
   PRISMIC_LANG_TO_ROUTE_PARAM,
+  CUSTOM_TYPES,
 } from '../constants';
 
 // Gets the UID and Language by the host and pathname
@@ -114,3 +115,45 @@ export const getHeadoutLanguagecode = (prismicLangCode) => {
 
 export const genUniqueId = () =>
   `${Math.random().toString().slice(2)}-${Math.random().toString().slice(2)}`;
+
+export const refsArrayToObject = (refArray) => {
+  const [commonFooter, secondaryFooter] = refArray
+    .filter((ref) => ref.type === CUSTOM_TYPES.FOOTER)
+    .sort((a, b) => {
+      if (a.data?.is_secondary_footer) return -1;
+      if (b.data?.is_secondary_footer) return 1;
+    });
+  const [contentFramework] = refArray.filter(
+    (ref) => ref.type === CUSTOM_TYPES.CONTENT_FRAMEWORK
+  );
+  const [commonHeader] = refArray.filter(
+    (ref) => ref.type === CUSTOM_TYPES.HEADER
+  );
+  const [microsite] = refArray.filter(
+    (ref) => ref.type === CUSTOM_TYPES.MICROSITE
+  );
+
+  if (commonFooter?.data) {
+    commonFooter.data.powered_by_superbrand =
+      commonFooter.data.powered_by_headout;
+    delete commonFooter.data.powered_by_headout;
+  }
+  if (commonHeader?.data) {
+    commonHeader.data.enable_powered_by_superbrand_logo =
+      commonHeader.data.enable_powered_by_headout_logo;
+    delete commonHeader.data.enable_powered_by_headout_logo;
+  }
+  if (microsite?.data) {
+    microsite.data.enable_powered_by_superbrand_logo =
+      microsite.data.enable_powered_by_headout_logo;
+    delete microsite.data.enable_powered_by_headout_logo;
+  }
+
+  return {
+    commonFooter,
+    commonHeader,
+    contentFramework,
+    secondaryFooter,
+    microsite,
+  };
+};
