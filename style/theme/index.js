@@ -21,7 +21,10 @@ export default {
       `,
       border: `1px solid ${COLORS.GREY_G6}`,
       tittleColor: COLORS.FOUR_BLACK,
-      gap: '24px',
+      gap: {
+        desktop: '24px',
+        mobile: '24px',
+      },
       accentColor: COLORS.MED_SLATE_BLUE,
       accentBackground: COLORS.WHITE,
       moreDetailsStyle: `
@@ -163,7 +166,10 @@ export default {
         mobile: '0',
       },
       border: `none`,
-      gap: '54px',
+      gap: {
+        desktop: '54px',
+        mobile: '24px',
+      },
       titleFontSettings: {
         desktop: `
           color: ${COLORS.LINK_BLUE};
@@ -270,6 +276,10 @@ export default {
         `,
         mobile: `
         grid-column-gap: unset;
+        .more-details {
+          margin: -10px 0;
+          padding: 10px 0;
+        }
         `,
       },
       nextAvailable: {
@@ -296,6 +306,7 @@ export default {
       lineStyles: `
         border: none;
         border-left: 1px dashed ${COLORS.GREY_G6}; 
+        margin: 0;
         margin-left: 12px;
         height: 100%;
       `,
@@ -322,7 +333,7 @@ export default {
             display: inline-block;
             transform: scale(0.6855) rotate(-90deg);
             transform-origin: center;
-            margin-left: 10px;
+            margin-left: 8px;
           }
           .chevron::before,
           .chevron::after {
@@ -336,7 +347,10 @@ export default {
         mobile: ' 22px 16px',
       },
       border: `1px solid ${COLORS.GREY_G6}`,
-      gap: '54px',
+      gap: {
+        desktop: '54px',
+        mobile: '24px',
+      },
       titleFontSettings: {
         desktop: `
           color: ${COLORS.GREY.G2};

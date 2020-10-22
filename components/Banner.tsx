@@ -24,6 +24,9 @@ const StyledBanner = styled.div`
 
   .mb-slide {
     display: none;
+    .image-wrap {
+      display: block;
+    }
   }
 
   .mb-slide.active-mb-slide,

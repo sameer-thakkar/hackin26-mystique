@@ -267,7 +267,7 @@ const StyledTourComparisionTable = styled.div`
     .full-width-wrap {
       margin: 0 -16px;
       padding-right: 16px;
-      max-width: 768px;
+      max-width: unset;
       width: 100%;
       overflow-y: hidden;
       overflow-x: scroll;
@@ -283,6 +283,7 @@ const StyledTourComparisionTable = styled.div`
       position: relative;
     }
     .row {
+      max-width: 100vw;
       grid-column-gap: 12px;
       ${({ designType }) =>
         designType == TOUR_COMPARISION_DESIGN.TYPE_2
@@ -290,7 +291,7 @@ const StyledTourComparisionTable = styled.div`
       grid-column-gap: 16px;
       `
           : ``}
-      grid-template-columns: 4px repeat(${({ tourCount }) =>
+      grid-template-columns: 0px repeat(${({ tourCount }) =>
         tourCount}, 164px) 4px;
       position: relative;
     }
@@ -413,6 +414,14 @@ const StyledTourComparisionTable = styled.div`
        display:grid;
     }
   }
+
+  // CSS Target Safari. (double @media intentional)
+  @media not all and (min-resolution:.001dpcm){ 
+    @supports (-webkit-appearance:none) {
+      .full-width-wrap {
+        max-width: 100vw;
+      }
+  }}
 `;
 
 /**

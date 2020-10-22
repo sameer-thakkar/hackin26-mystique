@@ -28,6 +28,10 @@ const FooterLinksWrapper = styled.div`
   background: ${({ theme }) => theme.footer.secondaryBackground};
   padding-bottom: 32px;
   margin-bottom: 40px;
+  &.secondary-footer {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
   .quick-links-title {
     font-size: 22px;
     font-family: ${SOLEIL.FONT_STACK};
@@ -129,6 +133,9 @@ const FooterLegal = styled.div`
     grid-area: logo-disclaimer;
     .logo-wrapper {
       display: flex;
+      .image-wrap {
+        width: auto;
+      }
       img {
         height: 40px;
         max-width: 100%;
@@ -201,8 +208,14 @@ type FooterProps = {
   secondarySlices?: Array<any>;
 };
 
-const LinkSlices = ({ linksTitle, slices, theme, language }) => (
-  <FooterLinksWrapper>
+const LinkSlices = ({
+  linksTitle,
+  slices,
+  theme,
+  language,
+  className = '',
+}) => (
+  <FooterLinksWrapper className={className}>
     <Container>
       {theme === THEMES.DEFAULT ? (
         <div className="quick-links-title">
@@ -253,6 +266,15 @@ const Footer: React.FC<FooterProps> = ({
     <ThemeProvider theme={theme[finalThemeName]}>
       <StyledFooter>
         <LinkSlicesWrapper>
+          <Conditional if={secondarySlices?.length}>
+            <LinkSlices
+              className={'secondary-footer'}
+              linksTitle={linksTitle}
+              language={currentLanguage}
+              slices={secondarySlices}
+              theme={finalThemeName}
+            />
+          </Conditional>
           <Conditional if={slices?.length}>
             <LinkSlices
               language={currentLanguage}
@@ -261,20 +283,12 @@ const Footer: React.FC<FooterProps> = ({
               theme={finalThemeName}
             />
           </Conditional>
-          <Conditional if={secondarySlices?.length}>
-            <LinkSlices
-              language={currentLanguage}
-              linksTitle={linksTitle}
-              slices={secondarySlices}
-              theme={finalThemeName}
-            />
-          </Conditional>
         </LinkSlicesWrapper>
         <FooterLegalWrapper>
           <Container>
             <FooterLegal
               invertLogoColor={
-                invertLogoColor && finalThemeName === THEMES.DEFAULT
+                invertLogoColor && finalThemeName !== THEMES.MIN_BLUE
               }
             >
               <div className="logo-disclaimer">

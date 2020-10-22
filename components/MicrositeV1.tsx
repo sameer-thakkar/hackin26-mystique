@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import dayjs from 'dayjs';
+import { RichText } from 'prismic-reactjs';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { scroller } from 'react-scroll';
@@ -274,7 +275,7 @@ class MicrositeV1 extends Component<any, any> {
 
     const { commonHeader } = this.props.data.refs;
     const isHeaderInherited =
-      commonHeader.lang !== getLangObject(currentLanguage).paramLang;
+      commonHeader?.lang !== getLangObject(currentLanguage).paramLang;
     const withCommonHeaderOverrides = {
       ...this.props.data.data,
       ...commonHeader?.data,
@@ -328,6 +329,9 @@ class MicrositeV1 extends Component<any, any> {
       group_booking_excluded_tgids: groupBookingExcludedTgids,
     } = this.props.data.data;
     const { commonFooter, secondaryFooter } = this.props.data.refs;
+    const disclaimerText =
+      RichText.asText(this.props.data.data.disclaimer) ||
+      commonFooter?.data?.disclaimer_text;
     const microbrandCards = this.props.data.data.microbrand_cards;
     const microbrandCardsHeading = this.props.data.data.microbrand_cards_heading
       ? this.props.data.data.microbrand_cards_heading
@@ -354,10 +358,10 @@ class MicrositeV1 extends Component<any, any> {
           groupBookingTourTitles.push({
             value:
               (tour.tour_title_override ||
-                this.props.scorpioData[tour.tgid].title) + ` [${tour.tgid}]`,
+                this.props.scorpioData[tour.tgid]?.title) + ` [${tour.tgid}]`,
             label:
               tour.tour_title_override ||
-              this.props.scorpioData[tour.tgid].title,
+              this.props.scorpioData[tour.tgid]?.title,
           });
         });
     }
@@ -616,8 +620,10 @@ class MicrositeV1 extends Component<any, any> {
             logoURL={footerLogoURL}
             logoAlt={footerLogoAlt}
             hasPoweredByHeadoutLogo={footerPoweredByHeadout}
-            showDisclaimer={commonFooter?.data?.show_disclaimer}
-            disclaimerText={commonFooter?.data?.disclaimer_text}
+            showDisclaimer={
+              commonFooter?.data?.show_disclaimer || !!disclaimerText
+            }
+            disclaimerText={disclaimerText}
             microbrandType={commonFooter?.data?.microbrand_type}
             slices={commonFooter?.data?.body || []}
             invertLogoColor={commonFooter?.data?.invert_logo_color}

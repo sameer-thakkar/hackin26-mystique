@@ -57,9 +57,10 @@ export default class Page extends React.Component<any, any> {
 
     // Naked Domain to WWW Redirect.
     if (!isDev && req) {
-      const host = req.headers.host;
+      const { host } = req.headers;
       if (isNakedDomain(host)) {
-        redirectTo({ res, url: `https://www.${host}`, type: 301 });
+        const redirectURL = `https://www.${host}${pathname}`;
+        redirectTo({ res, url: redirectURL, type: 301 });
       }
     }
 
@@ -304,7 +305,6 @@ export default class Page extends React.Component<any, any> {
               linkedRefIDs.push(contentSectionId);
               linkedRefIDs.push(commonHeaderId);
               linkedRefIDs.push(secondaryFooterId);
-
               const refArray = await this.getRefsArrayByIds(linkedRefIDs, req);
               const {
                 commonFooter,

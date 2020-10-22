@@ -430,6 +430,7 @@ export const THEMES = {
 export const SIDEBAR_TYPES = {
   DEFAULT: 'default',
   FIXED: 'fixed',
+  PRODUCT_CARD: 'product-card',
 };
 
 export const GTM_AMP_URL = 'https://www.googletagmanager.com/amp.json';

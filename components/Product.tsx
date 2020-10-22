@@ -33,6 +33,7 @@ import {
   parseDescriptorIcon,
 } from 'utils/productUtils';
 import Image from 'UI/Image';
+import { truncate } from 'utils/helper';
 
 const isLengthyArray = (item) => Array.isArray(item) && item.length;
 
@@ -166,10 +167,14 @@ const TourTags = styled.div`
     margin-top: 8px;
     font-weight: ${SOLEIL.REGULAR};
     .tour-tag {
+      max-width: 230px;
       line-height: 22px;
       justify-content: left;
       align-items: center;
       margin-bottom: 0;
+      .image-wrap {
+        align-items: center;
+      }
       img {
         height: 16px;
         width: 16px;
@@ -295,6 +300,8 @@ const ProductBody = styled.div`
   grid-row-gap: 8px;
   overflow-anchor: none;
   .tour-description {
+    ${({ theme }) =>
+      theme.theme === THEMES.DEF_INTERIM ? `cursor: pointer;` : ``}
     p {
       margin: 0;
       font-weight: ${SOLEIL.MEDIUM};
@@ -305,11 +312,11 @@ const ProductBody = styled.div`
     opacity: 0.99;
     display: grid;
     grid-gap: 0;
-    ${({ collapsed }) =>
+    ${({ collapsed, offsetToShow }) =>
       collapsed
         ? `
     *:not(div):nth-child(n + 4),
-    ul li:nth-child(n + 3) {
+    ul li:nth-child(n + ${Math.max(3, 3 + offsetToShow)}) {
       display: none;
     }
     `
@@ -475,6 +482,7 @@ const IconBoosters = styled.div`
       theme.theme === THEMES.DEF_INTERIM &&
       `
       justify-self: right;
+      margin-top: -8px;
       .text,
       .chevron {
         display: none;
@@ -581,11 +589,16 @@ const HighlightTabs = ({ tabs, hasRegularHighlights = false, onTabChange }) => {
 
 const ModalCardContainer = styled.div`
   @media (max-width: 768px) {
+    background: #fff;
+    border-radius: 10px 10px 0 0;
     ${StyledProductCard} {
       margin: 0;
-      margin-top: 24px;
       border: none;
-      padding: 0;
+      padding: 0 24px;
+      padding-top: 24px;
+    }
+    ${TitleWrapper} {
+      max-width: calc(100% - 24px);
     }
     ${ProductBody} {
       .tour-description {
@@ -610,6 +623,30 @@ const ModalCardContainer = styled.div`
     }
   }
 `;
+
+const Descriptors = ({ descriptorArray, mbTheme }) => {
+  return (
+    <TourTags>
+      {descriptorArray.reduce((acc, item, index) => {
+        const { icon, descriptor } = parseDescriptorIcon(item.trim());
+        if (descriptor) {
+          acc.push(
+            <div key={index} className="tour-tag">
+              <Conditional if={mbTheme === THEMES.DEF_INTERIM}>
+                <Image url={icon} />
+              </Conditional>
+              <Conditional if={index !== 0 && mbTheme !== THEMES.DEF_INTERIM}>
+                <div className="bullet">•</div>
+              </Conditional>
+              {descriptor.replace(/['"]+/g, '')}
+            </div>
+          );
+        }
+        return acc;
+      }, [])}
+    </TourTags>
+  );
+};
 
 const Product = (props) => {
   const moreDetailsRef = useRef();
@@ -687,7 +724,24 @@ const Product = (props) => {
   hostSplit.shift();
   const bookingUrl = hostSplit.join('.');
   const showScratchPrice = isFetched && isScratchPriceEnabled;
-  const hasShortSummary = shortSummary?.length > 0;
+  const finalHighlights = RichText.asText(tempHighlights)?.trim()?.length
+    ? tempHighlights
+    : scorpioData.highlights;
+  let mobileFallbackShortSummary = finalHighlights.slice(0, 1);
+  mobileFallbackShortSummary = mobileFallbackShortSummary.map((content) => ({
+    spans: [],
+    text: truncate(content.text, 80),
+    type: 'paragraph',
+  }));
+  let hasShortSummary = shortSummary?.length > 0;
+  hasShortSummary =
+    !hasShortSummary && isMobile
+      ? mobileFallbackShortSummary.length > 0
+      : hasShortSummary;
+  const finalShortSummary =
+    isMobile && shortSummary?.length <= 0
+      ? mobileFallbackShortSummary
+      : shortSummary;
   const {
     sidebarModal: { addToAside },
   } = useContext(MBContext);
@@ -739,7 +793,7 @@ const Product = (props) => {
     hasV1Booster,
     isDFProduct,
     mbTheme,
-    hasShortSummary,
+    hasShortSummary: hasShortSummary,
     hasNextAvailable: earliestAvailability,
   });
   const getMoreDetailsButton = () => {
@@ -771,7 +825,7 @@ const Product = (props) => {
                   {getProductCardElements(true)}
                 </ModalCardContainer>
               ),
-              type: SIDEBAR_TYPES.FIXED,
+              type: SIDEBAR_TYPES.PRODUCT_CARD,
             });
           } else {
             toggleContentOpen(!isContentOpen);
@@ -811,39 +865,12 @@ const Product = (props) => {
       </div>
     );
   };
-  const finalHighlights = RichText.asText(tempHighlights)?.trim()?.length
-    ? tempHighlights
-    : scorpioData.highlights;
   const { highlights, tabs } =
     isMobile || mbTheme !== THEMES.DEF_INTERIM
       ? { highlights: finalHighlights, tabs: [] }
       : extractTabsFromHighlights(finalHighlights);
   const hasHighlights =
     isLengthyArray(highlights) && highlights.filter((item) => item.text).length;
-
-  const Descriptors = ({ descriptorArray }) => {
-    return (
-      <TourTags>
-        {descriptorArray.reduce((acc, item, index) => {
-          const { icon, descriptor } = parseDescriptorIcon(item.trim());
-          if (descriptor) {
-            acc.push(
-              <div key={index} className="tour-tag">
-                <Conditional if={mbTheme === THEMES.DEF_INTERIM}>
-                  <Image url={icon} />
-                </Conditional>
-                <Conditional if={index !== 0 && mbTheme !== THEMES.DEF_INTERIM}>
-                  <div className="bullet">•</div>
-                </Conditional>
-                {descriptor.replace(/['"]+/g, '')}
-              </div>
-            );
-          }
-          return acc;
-        }, [])}
-      </TourTags>
-    );
-  };
 
   const getProductCardElements = (expandContent) => (
     <StyledProductCard layout={layout}>
@@ -854,13 +881,19 @@ const Product = (props) => {
           </Conditional>
           <TourTitle>{cardTitle}</TourTitle>
         </TitleWrapper>
-        <Conditional if={hasShortSummary}>
+        <Conditional
+          if={
+            mbTheme === THEMES.DEF_INTERIM &&
+            hasShortSummary &&
+            (!expandContent || !isMobile)
+          }
+        >
           <ShortSummary>
-            <RichText render={shortSummary} />
+            <RichText render={finalShortSummary} />
           </ShortSummary>
         </Conditional>
         <Conditional if={mbTheme !== THEMES.DEF_INTERIM}>
-          <Descriptors descriptorArray={descriptorsList} />
+          <Descriptors mbTheme={mbTheme} descriptorArray={descriptorsList} />
         </Conditional>
         <Conditional if={hasSafetyFlag || isDFProduct}>
           <IconBoosters>
@@ -968,13 +1001,20 @@ const Product = (props) => {
             </NextAvailableBlock>
           </Conditional>
           <Conditional if={mbTheme === THEMES.DEF_INTERIM}>
-            <Descriptors descriptorArray={descriptorsList} />
+            <Descriptors mbTheme={mbTheme} descriptorArray={descriptorsList} />
           </Conditional>
         </CTAContainer>
       </ProductHeader>
       {!isMobile && <HorizontalLine colorProp={COLORS.GREY_G6} />}
-      <ProductBody collapsed={!expandContent}>
-        <div className="tour-description" id={`tour-description-${position}`}>
+      <ProductBody
+        collapsed={!expandContent}
+        offsetToShow={descriptorsList.length - 3}
+      >
+        <div
+          className="tour-description"
+          id={`tour-description-${position}`}
+          onClick={!isMobile ? () => toggleContentOpen(!isContentOpen) : null}
+        >
           <Conditional if={hasHighlights}>
             <RichText
               render={highlights || []}

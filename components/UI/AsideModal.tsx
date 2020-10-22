@@ -4,7 +4,7 @@ import { CLOSE_WHITE, BackArrow } from 'assets/SvgIcons';
 import { useState, useEffect } from 'react';
 import { COLORS } from 'constants/ui-constants';
 import { SIDEBAR_TYPES } from 'constants/index';
-import { useWindowWidth } from '@react-hook/window-size';
+import useWindowSize from 'hooks/useWindowSize';
 
 const StyledAsideModal = styled.div`
   position: fixed;
@@ -25,30 +25,54 @@ const StyledAsideModal = styled.div`
   background: ${COLORS.WHITE};
   z-index: 100;
   @media (max-width: 768px) {
-    position: unset; // Check global css to find respective styles.
-    height: auto;
-    overflow-y: unset;
+    position: absolute;
+    height: 100vh;
+    overflow-y: scroll;
     max-width: unset;
     width: unset;
+    ${({ sidebarType }) =>
+      sidebarType === SIDEBAR_TYPES.PRODUCT_CARD
+        ? `
+      height: auto;
+      padding: 0;
+      background: unset;
+      top: 0;
+      overflow-y: unset;
+      max-width: unset;
+    `
+        : ``}
   }
 `;
 
 const Header = styled.div`
   display: grid;
   grid-template-columns: auto auto;
+  padding-top: 20px;
+  padding-bottom: 24px;
   position: ${({ type }) =>
-    type === SIDEBAR_TYPES.FIXED ? 'fixed' : 'sticky'};
-  ${({ type, sidePadding }) =>
-    type === SIDEBAR_TYPES.FIXED
+    type === SIDEBAR_TYPES.PRODUCT_CARD ? 'unset' : 'sticky'};
+  ${({ type }) =>
+    type === SIDEBAR_TYPES.PRODUCT_CARD
       ? `
-      width: calc(100% - ${(sidePadding || 24) * 2}px);
+      width: calc(100% - 32px);
+      padding: 0 16px;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      .close-icon {
+        display: flex;
+        padding: 6px;
+        border-radius: 100%;
+        background: ${COLORS.WHITE};
+        svg {
+          height: 10px;
+          width: 10px;
+        }
+      }
     `
       : ''};
   top: 0;
   background: ${({ addBg }) => (addBg ? COLORS.WHITE : 'transparent')};
-  padding-top: 20px;
-  padding-bottom: 24px;
-  z-index: 2;
+  z-index: 12;
   @media (max-width: 768px) {
     &:before,
     &:after {
@@ -73,7 +97,7 @@ const CloseIcon = styled.div`
   cursor: pointer;
   path {
     stroke: #545454;
-    stroke-width: 1.5px;
+    stroke-width: 1.8px;
   }
 `;
 
@@ -102,6 +126,17 @@ const Mask = styled.div`
   }
 `;
 
+const ModalContent = styled.div`
+  ${({ sidebarType, windowHeight }) =>
+    sidebarType === SIDEBAR_TYPES.PRODUCT_CARD
+      ? `
+  overflow-x: scroll;
+  height: calc( ${windowHeight}px - 46px);
+  border-radius: 10px 10px 0 0;
+  `
+      : ``}
+`;
+
 const AsideModal = ({
   active,
   title,
@@ -115,7 +150,7 @@ const AsideModal = ({
 }) => {
   const [container, setContainer] = useState(null);
   const [scrollY, setScrollY] = useState(0);
-  const windowWidth = useWindowWidth();
+  const { width: windowWidth, height: windowHeight } = useWindowSize();
   const isMobile = windowWidth < 768;
   const hasBack = stack.length > 1;
 
@@ -148,16 +183,30 @@ const AsideModal = ({
     ? createPortal(
         <>
           <Mask onClick={onCloseAll} />
-          <StyledAsideModal width={width} sidePadding={sidePadding}>
-            <Header addBg={!!title} type={type} sidePadding={sidePadding}>
+          <StyledAsideModal
+            windowHeight={windowHeight}
+            sidebarType={type}
+            width={width}
+            sidePadding={sidePadding}
+          >
+            <Header
+              onClick={type === SIDEBAR_TYPES.PRODUCT_CARD ? onClose : null}
+              addBg={!!title}
+              type={type}
+              sidePadding={sidePadding}
+            >
               <Title>{title}</Title>
               {hasBack ? (
                 <BackIcon onClick={onClose}>{BackArrow}</BackIcon>
               ) : (
-                <CloseIcon onClick={onClose}>{CLOSE_WHITE}</CloseIcon>
+                <CloseIcon className={'close-icon'} onClick={onClose}>
+                  {CLOSE_WHITE}
+                </CloseIcon>
               )}
             </Header>
-            {children}
+            <ModalContent windowHeight={windowHeight} sidebarType={type}>
+              {children}
+            </ModalContent>
           </StyledAsideModal>
         </>,
         container

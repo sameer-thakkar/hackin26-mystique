@@ -23,7 +23,7 @@ const StyledUncategorizedContainer = styled.div`
 
 const ProductContainer = styled.div`
   display: grid;
-  grid-row-gap: ${({ theme }) => theme.productCards.gap};
+  grid-row-gap: ${({ theme }) => theme.productCards.gap.desktop};
   margin-top: 48px;
   margin-bottom: 48px;
   & > ${HorizontalLine} {
@@ -34,6 +34,7 @@ const ProductContainer = styled.div`
   }
   @media (max-width: 768px) {
     margin-bottom: 60px;
+    grid-row-gap: ${({ theme }) => theme.productCards.gap.mobile};
   }
 `;
 

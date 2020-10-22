@@ -13,6 +13,7 @@ const Picture = styled.picture`
 const Wrapper = styled.div`
   position: relative;
   display: grid;
+  height: 100%;
   width: 100%;
   .tooltip {
     position: absolute;

@@ -185,16 +185,17 @@ const Header: React.FC<any> = (props) => {
     [multiNavRef]
   );
 
-  const convertedRegularMenuItems = headerLinks?.map((link) => ({
-    slice_type: 'menu_item',
-    primary: {
-      label: link.link_heading,
-      url: {
-        url: link.link_url.url,
-        target: link.link_url.target,
+  const convertedRegularMenuItems =
+    headerLinks?.map((link) => ({
+      slice_type: 'menu_item',
+      primary: {
+        label: link.link_heading,
+        url: {
+          url: link.link_url.url,
+          target: link.link_url.target,
+        },
       },
-    },
-  }));
+    })) || [];
 
   if (showGroupBooking)
     convertedRegularMenuItems.push({
