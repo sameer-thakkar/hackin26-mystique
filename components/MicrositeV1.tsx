@@ -275,6 +275,7 @@ class MicrositeV1 extends Component<any, any> {
 
     const { commonHeader } = this.props.data.refs;
     const isHeaderInherited =
+      commonHeader &&
       commonHeader?.lang !== getLangObject(currentLanguage).paramLang;
     const withCommonHeaderOverrides = {
       ...this.props.data.data,

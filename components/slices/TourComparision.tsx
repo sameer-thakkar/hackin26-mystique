@@ -21,10 +21,12 @@ const StyledTourComparisionTable = styled.div`
   display: grid;
   line-height: 1.3;
   font-family: ${SOLEIL.FONT_STACK};
-  .comparision-heading {
+  .heading-wrapper {
     max-width: 1200px;
     margin: auto;
     width: 100%;
+  }
+  .comparision-heading {
     text-align: left;
     font-size: 24px;
     margin-bottom: 8px;
@@ -35,7 +37,7 @@ const StyledTourComparisionTable = styled.div`
   }
   .comparision-description {
     padding-bottom: 32px;
-    width: 60%;
+    max-width: 60%;
     font-size: 16px;
     font-family: ${SOLEIL.FONT_STACK};
     font-weight: ${SOLEIL.REGULAR};
@@ -536,8 +538,10 @@ const TourComparisonTable = (props) => {
       designType={designType}
       showImage={showImage}
     >
-      <div className="comparision-heading">{heading}</div>
-      <div className="comparision-description">{description}</div>
+      <div className="heading-wrapper">
+        <div className="comparision-heading">{heading}</div>
+        <div className="comparision-description">{description}</div>
+      </div>
       <div className="full-width-wrap">
         <div className="table">
           {showImage ? (
