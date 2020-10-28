@@ -323,17 +323,26 @@ export default {
         line-height: 20px;
         margin: 0;
         margin-left: 1.2em;
+        display: flex;
+        align-items: center;
         .chevron {
-          display: none;
+          vertical-align: middle;
+          margin-left: 6px;
+          transform-origin: center;
+          transform: scale(0.7);
+          align-self: flex-end;
+        }
+        .chevron::before,
+        .chevron::after {
+          height: 0.13em;
+          background: ${COLORS.RHAPSODY};
         }
         @media(max-width: 768px) {
-          display: flex;
-          align-items: center;
           .chevron {
             display: inline-block;
             transform: scale(0.6855) rotate(-90deg);
-            transform-origin: center;
             margin-left: 8px;
+            align-self: unset;
           }
           .chevron::before,
           .chevron::after {

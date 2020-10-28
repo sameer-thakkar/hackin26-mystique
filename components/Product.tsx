@@ -110,6 +110,20 @@ const TourTitle = styled.h2`
 
 const TitleWrapper = styled.div`
   grid-area: title;
+  ${({ hasBorderedTitle, theme }) =>
+    theme.theme === THEMES.DEF_INTERIM
+      ? `
+        ${
+          hasBorderedTitle
+            ? `
+            border-bottom: 1px solid ${COLORS.GREY_G6};
+            padding-bottom: 16px;
+            margin-bottom: -8px;
+          `
+            : ''
+        } 
+    `
+      : ``}
 `;
 
 const BoosterTag = styled.div`
@@ -786,6 +800,8 @@ const Product = (props) => {
   };
   const hasV1Booster = booster && RichText.asText(booster).trim().length > 0;
   const hasOffer = isOfferEnabled && offerId;
+  const hasBorderedTitle =
+    !hasOffer && !hasV1Booster && !hasSafetyFlag && !isDFProduct;
 
   const layout = getProductCardLayout({
     hasOffer,
@@ -875,7 +891,7 @@ const Product = (props) => {
   const getProductCardElements = (expandContent) => (
     <StyledProductCard layout={layout}>
       <ProductHeader>
-        <TitleWrapper>
+        <TitleWrapper hasBorderedTitle={hasBorderedTitle}>
           <Conditional if={boosterTag && mbTheme === THEMES.DEF_INTERIM}>
             <BoosterTag>{boosterTag}</BoosterTag>
           </Conditional>

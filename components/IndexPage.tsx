@@ -40,10 +40,17 @@ const ContentPage = dynamic(() => import('../components/ContentPage'));
 const MicrositeV2 = dynamic(() => import('../components/MicrositeV2'));
 const Listicle = dynamic(() => import('../components/ListiclePage'));
 
+const getValidUrlParams = (query) =>
+  Object.entries(query)
+    .filter(([key]) => key !== 'slug')
+    .map(([key, val]) => `${key}=${val}`)
+    .join('&')
+    .trim();
 export default class Page extends React.Component<any, any> {
   static async getInitialProps(ctx) {
     const { req, query, res } = ctx;
     const serverRequestStartTimestamp = Math.floor(new Date().getTime());
+    const queryParamsString = getValidUrlParams(query);
     const pathname =
       req?.url.split('?')[0].split('#')[0] || window.location.pathname;
     const isMobile = uaIsMobile(req.headers['user-agent']);
@@ -59,7 +66,9 @@ export default class Page extends React.Component<any, any> {
     if (!isDev && req) {
       const { host } = req.headers;
       if (isNakedDomain(host)) {
-        const redirectURL = `https://www.${host}${pathname}`;
+        const redirectURL = `https://www.${host}${pathname}${
+          queryParamsString ? `?${queryParamsString}` : ''
+        }`;
         redirectTo({ res, url: redirectURL, type: 301 });
       }
     }
@@ -97,7 +106,9 @@ export default class Page extends React.Component<any, any> {
                 redirectURL = redirectURL.slice(0, -1);
               redirectTo({
                 res,
-                url: `${redirectURL}${pathname !== '/index' ? pathname : ''}`,
+                url: `${redirectURL}${pathname !== '/index' ? pathname : ''}${
+                  queryParamsString ? `?${queryParamsString}` : ''
+                }`,
                 type: r.data?.redirect_type,
               });
             }
@@ -113,8 +124,9 @@ export default class Page extends React.Component<any, any> {
     );
 
     try {
-      const url = props?.CMSContent?.data?.data?.redirect_url?.url;
+      let url = props?.CMSContent?.data?.data?.redirect_url?.url;
       if (url) {
+        url = `${url}${queryParamsString ? `?${queryParamsString}` : ''}`;
         redirectTo({ res, url });
       }
 
@@ -161,6 +173,7 @@ export default class Page extends React.Component<any, any> {
     const { host } = req.headers || window.location;
     const pathname = reqPathname || window.location.pathname;
     const isStage = host.includes('stage-');
+    const queryParamsString = getValidUrlParams(query);
     try {
       let uid, lang;
       if (req) {
@@ -212,7 +225,9 @@ export default class Page extends React.Component<any, any> {
               }
               redirectTo({
                 res: serverResponse,
-                url,
+                url: `${url}${
+                  queryParamsString ? `?${queryParamsString}` : ''
+                }`,
                 type: completeMicrosite.data.data.redirect_type,
               });
             } else {
@@ -374,7 +389,9 @@ export default class Page extends React.Component<any, any> {
                     }
                     redirectTo({
                       res: serverResponse,
-                      url,
+                      url: `${url}${
+                        queryParamsString ? `?${queryParamsString}` : ''
+                      }`,
                       type: 301,
                     });
                   }
@@ -430,7 +447,12 @@ export default class Page extends React.Component<any, any> {
                 const url =
                   page.data.microsite_document_ref?.data.redirect_url?.url;
                 if (url) {
-                  redirectTo({ res: serverResponse, url });
+                  redirectTo({
+                    res: serverResponse,
+                    url: `${url}${
+                      queryParamsString ? `?${queryParamsString}` : ''
+                    }`,
+                  });
                 }
 
                 /**
