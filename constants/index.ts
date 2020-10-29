@@ -436,3 +436,66 @@ export const SIDEBAR_TYPES = {
 export const GTM_AMP_URL = 'https://www.googletagmanager.com/amp.json';
 
 export const GTM_AMP_KEY_PROD = 'GTM-5HMPHR2';
+
+export const DATE_FORMAT_TYPES = {
+  FULL: 'FULL',
+  SHORT: 'SHORT',
+};
+
+export const LOCALISED_DATE_FORMATS = {
+  en: {
+    SHORT: 'DD-MMM-YY',
+    FULL: 'DD-MMMM-YYYY',
+    DATE_MONTH: 'MMM Do',
+  },
+  es: {
+    SHORT: 'DD-MMM-YY',
+    FULL: 'DD-MMMM-YYYY',
+    DATE_MONTH: 'D MMM',
+  },
+  de: {
+    SHORT: 'DD-MMMM-YYYY',
+    FULL: 'DD-MMMM-YYYY',
+    DATE_MONTH: 'D MMM',
+  },
+  nl: {
+    SHORT: 'DD-MMMM-YYYY',
+    FULL: 'DD-MMMM-YYYY',
+    DATE_MONTH: 'MMM D',
+  },
+  pt: {
+    SHORT: 'DD MMM YYYY',
+    FULL: 'DD MMMM YYYY',
+    DATE_MONTH: 'MMM D',
+  },
+  fr: {
+    SHORT: 'DD/MMM/YY',
+    FULL: 'DD/MMMM/YYYY',
+    DATE_MONTH: 'MMM D',
+  },
+  it: {
+    SHORT: 'DD MMM YYYY',
+    FULL: 'DD MMMM YYYY',
+    DATE_MONTH: 'MMM D',
+  },
+  tw: {
+    SHORT: 'DD-MMMM-YYYY',
+    FULL: 'DD-MMMM-YYYY',
+    DATE_MONTH: 'MMM D',
+  },
+  cn: {
+    SHORT: 'DD-MMM-YY',
+    FULL: 'DD-MMMM-YYYY',
+    DATE_MONTH: 'MMM Do',
+  },
+  ko: {
+    SHORT: 'DD-MMM-YY',
+    FULL: 'DD-MMMM-YYYY',
+    DATE_MONTH: 'MMM D',
+  },
+  ja: {
+    SHORT: 'DD-MMM-YY',
+    FULL: 'DD-MMMM-YYYY',
+    DATE_MONTH: 'MMM D',
+  },
+};

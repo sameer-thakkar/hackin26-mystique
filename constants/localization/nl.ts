@@ -2,7 +2,7 @@ import en from './en';
 
 const nl = {
   ...en,
-  TOUR_LIST_HEADING: 'Kies je Ervaring',
+  TOUR_LIST_HEADING: 'Kies je ervaring',
   GROUP_TICKETS: 'Groepskaartjes',
   TOUR_LIST_SUB_HEADING:
     'Kies uit meerdere kaartjes, tours en combo-opties van geverifieerde operators',
@@ -19,22 +19,22 @@ const nl = {
       'https://medium.com/headout/coronavirus-outbreak-cancellation-policy-8fe8e1104b83',
   },
   READ_MORE: 'Meer Info',
-  BANNER_CTA: 'Koop Kaartjes',
-  BOOK_NOW_CTA: 'Reserveer Nu',
+  BANNER_CTA: 'Koop kaartjes',
+  BOOK_NOW_CTA: 'Reserveer nu',
   READ_MORE_TEXT: 'Meer Info',
-  SHOW_LESS_TEXT: 'Toon Minder',
-  NEXT_AVAILABLE: 'Weer Beschikbaar, ',
+  SHOW_LESS_TEXT: 'Toon ninder',
+  NEXT_AVAILABLE: 'Weer beschikbaar, ',
   SAVE_UPTO: 'Bespaar tot',
-  SAVE: 'Bespaar <val>',
+  SAVE: 'Bespaar <val>%',
   AVAILABLE: 'Beschikbaar',
-  EARLIEST_AVAILABILITY: 'Vroegste Beschikbaarheid',
+  EARLIEST_AVAILABILITY: 'Vroegste beschikbaarheid',
   TODAY: 'Vandaag',
   TOMORROW: 'Morgen',
   MORE_FROM: 'Meer van',
   TICKETS: 'Kaartjes',
   LISTICLES: {
-    SEATING_CHART: 'Plekkenschema',
-    KNOW_MORE: 'Lees Meer',
+    SEATING_CHART: 'Stoelenschema',
+    KNOW_MORE: 'Lees meer',
     WHY_BOOK_FROM_US: 'Waarom bij ons reserveren?',
   },
   PRICES_STARTING: 'Prijzen',
@@ -43,41 +43,41 @@ const nl = {
   FOOTER: {
     DISCLAIMER:
       'Deze website is niet de officiële website van <attraction>. Hij wordt gerund door Headout dat samenwerkt met attracties en touroperators om met één druk op de knop ongelooflijke ervaringen aan te bieden.',
-    GET_HELP: 'Krijg Hulp',
-    CHAT_WITH_US: 'Chat met Ons',
-    CALL_US: 'Bel Ons',
-    EMAIL_US: 'Email Ons',
+    GET_HELP: 'Krijg hulp',
+    CHAT_WITH_US: 'Chat met ons',
+    CALL_US: 'Bel ons',
+    EMAIL_US: 'Email ons',
     LEGAL: 'Wettelijk',
-    TERMS_AND_CONDITIONS: 'Algemene Voorwaarden',
+    TERMS_AND_CONDITIONS: 'Algemene voorwaarden',
     PRIVACY_POLICY: 'Privacybeleid',
     COMPANY_DETAILS: 'Bedrijfsgegevens',
-    QUICK_LINKS: 'Snelle Links',
+    QUICK_LINKS: 'Snelle links',
   },
-  COMPARE_ALL_DETAILS: 'Vergelijk Alle Details',
-  WHY_TAKE_THIS_DAY_TRIP: 'Waarom kiezen voor dit Uitstapje?',
+  COMPARE_ALL_DETAILS: 'Vergelijk Alle details',
+  WHY_TAKE_THIS_DAY_TRIP: 'Waarom kiezen voor dit uitje?',
   DURATION: 'Looptijd',
   THEATRE: 'Theater',
   TIMINGS: 'Tijdstippen',
   SAFE_EXPERIENCE: {
-    HEADING: 'Beste Veiligheidsnormen',
+    HEADING: 'Beste veiligheidsnormen',
     SHORT_HEADING: 'Beste veiligheidsnormen',
-    MOBILE_HEADING: 'Veilige Ervaringen',
+    MOBILE_HEADING: 'Veilige ervaringen',
     GENERAL_DESCRIPTION:
       'Elke ervaring met deze badge is geverifieerd om te voldoen aan de beste veiligheidsnormen volgens de gezondheidsrichtlijnen van de lokale overheid.',
-    CTA_TEXT: 'Details omtrent Veiligheid',
-    BANNER_CTA: 'Lees Meer',
+    CTA_TEXT: 'Details omtrent veiligheid',
+    BANNER_CTA: 'Lees meer',
     EXPERIENCE_DESCRIPTION:
       'Deze ervaring is geverifieerd om te voldoen aan de beste veiligheidsnormen in overeenstemming met lokale voorschriften en de WHO',
-    FLAG_TEXT: 'Beste Veiligheid',
+    FLAG_TEXT: 'Beste veiligheid',
     MODAL: {
-      HEADING: 'Veilige Ervaringen',
+      HEADING: 'Veilige ervaringen',
       SUB_HEADING:
         'We werken samen met onze partners over de hele wereld om de beste veiligheidsnormen te implementeren volgens de WHO-richtlijnen. Alle huidige maatregelen zijn geverifieerd en hier weergegeven. Het is tijd om weer te genieten van de wereld om ons heen.',
       DETAILS: {
         SAFETY_MASK_DEFAULT: {
           HEADING: 'Iedereen draagt mondkapjes voor jouw veiligheid.',
           DESCRIPTION:
-            'Partners die zijn geverifieerd als "Veilige Ervaring" volgen de lokale voorschriften met betrekking tot mondkapjes. Indien verplicht, dragen alle gasten en personeelsleden mondkapjes. Ze doen er alles aan om jouw comfort en veiligheid te garanderen.',
+            'Partners die zijn geverifieerd als "Veilige ervaring" volgen de lokale voorschriften met betrekking tot mondkapjes. Indien verplicht, dragen alle gasten en personeelsleden mondkapjes. Ze doen er alles aan om jouw comfort en veiligheid te garanderen.',
         },
         SAFETY_MASK_STAFF: {
           HEADING: 'Iedereen draagt mondkapjes voor jouw veiligheid.',
@@ -167,7 +167,7 @@ const nl = {
         },
       },
       BADGE_DESCRIPTION:
-        'Deze badge bij een ervaring bevestigt dat de veiligheidsnormen zijn geverifieerd door Ons',
+        'Deze badge bij een ervaring bevestigt dat de veiligheidsnormen zijn geverifieerd door ons',
     },
   },
   DISCOUNTED_FUTURES: {
@@ -274,15 +274,15 @@ const nl = {
     },
     BOOKING_MODAL: {
       BOOK_NOW_PITCH: 'Kies een datum of tijd om je ervaring te reserveren.',
-      SELECT_DATE: 'Kies een Datum',
-      GO_LATER_HEADING: 'Open Kaartje',
-      BOOK_NOW_HEADING: 'Vast Kaartje',
+      SELECT_DATE: 'Kies een datum',
+      GO_LATER_HEADING: 'Open kaartje',
+      BOOK_NOW_HEADING: 'Vast kaartje',
       GO_LATER_PITCH:
         'Reserveer deze ervaring met korting en krijg de vrijheid om je bezoekdatum later te kiezen. Kan worden ingewisseld voor elke datum tussen <stDate> en <edDate>.',
-      GET_THIS: 'Reserveer Nu',
-      LEARN_MORE: 'Meer Info',
-      BOOK_NOW: 'Reserveer Nu',
-      LIMITED: 'Aanbieding voor een Beperkte Periode',
+      GET_THIS: 'Reserveer nu',
+      LEARN_MORE: 'Meer unfo',
+      BOOK_NOW: 'Reserveer nu',
+      LIMITED: 'Aanbieding voor een beperkte periode',
     },
   },
 };

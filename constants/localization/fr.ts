@@ -2,33 +2,33 @@ import en from './en';
 
 const fr = {
   ...en,
-  TOUR_LIST_HEADING: 'Sélectionnez Votre Activité',
-  GROUP_TICKETS: 'Billets de Groupe',
+  TOUR_LIST_HEADING: `Sélectionnez l'offre qui vous plaît`,
+  GROUP_TICKETS: 'Billets de groupe',
   TOUR_LIST_SUB_HEADING:
-    'Choisissez parmi plusieurs excursions, offres combo et billets proposés par des agences vérifiées',
+    'Choisissez parmi une multitude de billets, visites guidées et offres combo proposés par des agences de tourisme.',
   SANITARY_ALERT: {
-    KEY_TEXT: 'Your safety is our priority',
+    KEY_TEXT: 'Votre sécurité est notre priorité.',
     TEXT:
-      "We've taken significant steps to improve cleanliness using disinfectants with comprehensive and frequent surface cleaning. Crowds are also being controlled to prevent congestion.",
+      "Nous avons pris des mesures importantes pour améliorer la propreté des lieux au moyen de désinfectants et de nettoyages approfondis et fréquents des surfaces. Nous contrôlons également la fréquentation afin d'éviter tout encombrement.",
   },
   COVID19_ALERT: {
-    KEY_TEXT: 'Mise à jour concernant le COVID-19',
+    KEY_TEXT: 'Mise à jour concernant la COVID-19',
     TEXT: `Vous êtes notre priorité. Veuillez consulter notre page d'assistance pour connaître les dernières mises à jour de nos politiques d'annulation flexibles.`,
     LINK:
       'https://medium.com/headout/%C3%A9pid%C3%A9mie-de-coronavirus-politique-dannulation-595a47a8bb50',
   },
   READ_MORE: 'En savoir plus',
-  BANNER_CTA: 'Acheter des billets',
-  BOOK_NOW_CTA: 'Réservez Maintenant',
+  BANNER_CTA: 'Voir nos offres',
+  BOOK_NOW_CTA: 'Réserver',
   READ_MORE_TEXT: 'En Savoir Plus',
-  SHOW_LESS_TEXT: 'Voir Moins',
-  NEXT_AVAILABLE: 'Bientôt Disponible, ',
+  SHOW_LESS_TEXT: 'Voir moins',
+  NEXT_AVAILABLE: 'Prochaine disponibilité: ',
   SAVE_UPTO: "Économisez jusqu'à",
-  SAVE: 'Économisez  <val>',
+  SAVE: 'Économisez - <val> %',
   AVAILABLE: 'Disponible',
-  EARLIEST_AVAILABILITY: 'Disponibilité la Plus Tôt',
-  TODAY: "Aujourd'hui",
-  TOMORROW: 'Demain',
+  EARLIEST_AVAILABILITY: 'Prochaine disponibilité : ',
+  TODAY: "aujourd'hui",
+  TOMORROW: 'demain',
   TICKETS: 'Billets',
   LISTICLES: {
     SEATING_CHART: 'Plan de la salle',
@@ -37,11 +37,11 @@ const fr = {
   },
   PRICES_STARTING: 'À partir de',
   FROM: 'à partir de',
-  MORE_DETAILS: `Plus d'informations`,
+  MORE_DETAILS: `En savoir plus`,
   FOOTER: {
     DISCLAIMER: `Ce site n'est pas le site officiel <attraction>. Il est géré par Headout et travaille en collaboration avec des attractions et des tour-opérateurs pour vous offrir des expériences incroyables en un clic !`,
     GET_HELP: 'Aide',
-    QUICK_LINKS: 'Quick Links',
+    QUICK_LINKS: 'Raccourcis',
     CHAT_WITH_US: 'Chattez avec nous',
     CALL_US: 'Appelez-nous',
     EMAIL_US: 'Contactez-nous',
@@ -60,7 +60,7 @@ const fr = {
     SHORT_HEADING: 'Toutes les normes de sécurité et sanitaires en vigueur',
     MOBILE_HEADING: 'Expériences conformes aux normes sanitaires',
     GENERAL_DESCRIPTION:
-      'Toute expérience affichant ce badge a été vérifiée et est conforme aux normes de sécurité établies par les autorités locales en matière de santé',
+      'Toute expérience affichant ce badge a été vérifiée et est conforme aux normes de sécurité établies par les autorités locales en matière de santé.',
     CTA_TEXT: 'Détails des mesures de sécurité et sanitaires',
     BANNER_CTA: 'En savoir plus',
     EXPERIENCE_DESCRIPTION:
@@ -164,7 +164,7 @@ const fr = {
         },
       },
       BADGE_DESCRIPTION:
-        'Ce badge atteste que les normes de sécurité et sanitaires ont été vérifiées par <mbName> pour cette expérience.',
+        'Ce badge atteste que les normes de sécurité et sanitaires ont été vérifiées par pour cette expérience.',
     },
   },
   DISCOUNTED_FUTURES: {
@@ -187,20 +187,19 @@ const fr = {
     HEADING_WORKS: 'Comment ça marche ?',
     FAQ_QUESTIONS: {
       WORKING: {
-        QUESTION:
-          "Qu'est-ce que c'est l'option « Réservez et partez plus tard » ?",
+        QUESTION: "Qu'est-ce que c'est l'option « Réserver pour plus tard » ?",
         ANSWER:
           "Nous vous offrons désormais la possibilité de réserver vos expériences, attractions et billets de spectacles préférés sans vous engager quant à la date et à l'heure. Vous pouvez désormais réserver les expériences concernées sous la forme d'un billet non daté et en profiter à n'importe quelle date jusqu'au 31 décembre 2021. Toutes les expériences faisant partie de cette action sont assorties de réductions avantageuses. Une fois que vous êtes prêt(e) à voyager et à profiter de votre expérience achetée, vous pouvez échanger votre billet non daté en sélectionnant une date et une heure de visite précises.",
       },
       DATE_TIME: {
         QUESTION:
-          "Comment est-ce que je peux réserver un billet avec l'option « Réservez et partez plus tard » sur Headout ?",
+          "Comment est-ce que je peux réserver un billet avec l'option « Réserver pour plus tard » sur Headout ?",
         ANSWER:
-          "Les expériences concernées par l'action « Réservez et partez plus tard » seront marquées d'une étiquette spéciale et vous aurez la possibilité de choisir un billet non daté pour ces expériences. Lorsque vous réservez un billet non daté, vous n'avez pas besoin de sélectionner la date et l'heure de votre visite tout de suite. Vous pouvez échanger votre billet non daté pour une date et une heure précises ultérieures, quand bon vous semble.",
+          "Les expériences concernées par l'action « Réserver pour plus tard » seront marquées d'une étiquette spéciale et vous aurez la possibilité de choisir un billet non daté pour ces expériences. Lorsque vous réservez un billet non daté, vous n'avez pas besoin de sélectionner la date et l'heure de votre visite tout de suite. Vous pouvez échanger votre billet non daté pour une date et une heure précises ultérieures, quand bon vous semble",
       },
       WHEN: {
         QUESTION:
-          'Quand est-ce que je peux échanger ma réservation « Réservez et partez plus tard » ?',
+          'Quand est-ce que je peux échanger ma réservation « Réserver pour plus tard » ?',
         ANSWER:
           'Vous pouvez échanger votre billet non daté à tout moment après avoir effectué votre réservation. Vous devez choisir une date de visite au plus tôt 30 jours après la date de réservation et au plus tard le 31 décembre 2021.',
       },
@@ -208,7 +207,7 @@ const fr = {
         QUESTION:
           "Quelle est la politique d'annulation concernant ces réservations ?",
         ANSWER:
-          "Si vous n'avez pas échangé votre billet non daté, vous pouvez annuler votre réservation à tout moment avant le 31 décembre 2021 et être remboursé en intégralité. Une fois que vous avez utilisé votre billet non daté pour réserver des billets pour une date précise, vous ne pouvez plus modifier ou annuler votre réservation.",
+          "Si vous n'avez pas échangé votre billet non daté, vous pouvez annuler votre réservation à tout moment avant le 31 décembre 2021 et être remboursé(e) en intégralité. Une fois que vous avez utilisé votre billet non daté pour réserver des billets pour une date précise, vous ne pouvez plus modifier ou annuler votre réservation.",
       },
       LIMITS: {
         QUESTION:
@@ -226,20 +225,20 @@ const fr = {
           "Lorsque vous terminez votre réservation, vous recevez par e-mail un reçu pour votre réservation et un bon pour l'expérience choisie.",
           "Vous recevrez également par e-mail un lien de réservation que vous pourrez utiliser pour échanger votre bon et choisir la date et à l'heure de votre réservation. Si l'attraction ou l'opérateur de l'expérience que vous avez choisie n'a pas encore redémarré son activité, vous recevrez ce lien de réservation au moment où l'attraction sera à nouveau en service. Vous pouvez effectuer cette étape à tout moment pendant la durée de validité du bon, soit jusqu'au 31 décembre 2021.",
           "Une fois le bon échangé, vous recevrez par e-mail un billet de confirmation pour l'expérience pour la date et à l'heure que vous aurez choisies.",
-          "Rendez-vous sur place à la date et à l'heure sélectionnées et profitez de l'expérience que vous avez choisie !.",
+          "Rendez-vous sur place à la date et à l'heure sélectionnées et profitez de l'expérience que vous avez choisie !",
         ],
       },
       ELIGIBLE: {
         QUESTION: 'Quelles sont les expériences concernées par cette option ?',
         ANSWER:
-          "Les expériences couvertes par cette promotion seront marquées d'une étiquette ***Réservez et partez plus tard***.",
+          "Les expériences couvertes par cette promotion seront marquées d'une étiquette ***Réserver pour plus tard***.",
       },
     },
     HOW_IT_WORKS: {
       PICK: {
         HEADING: "Choisissez l'expérience dont vous avez toujours rêvé",
         SUB_TEXT:
-          "Toutes les expériences proposées dans le cadre de l'action « Réservez et partez plus tard » peuvent être achetées sous la forme d'un billet non daté à un prix très avantageux, alors n'hésitez pas à choisir l'expérience de vos rêves et à réserver votre billet non daté !",
+          "Toutes les expériences proposées dans le cadre de l'action « Réserver pour plus tard » peuvent être achetées sous la forme d'un billet non daté à un prix très avantageux, alors n'hésitez pas à choisir l'expérience de vos rêves et à réserver votre billet non daté !",
       },
       VOUCHER: {
         HEADING: 'Échangez votre billet et réservez quand bon vous semble',

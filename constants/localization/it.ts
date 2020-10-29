@@ -2,14 +2,14 @@ import en from './en';
 
 const it = {
   ...en,
-  TOUR_LIST_HEADING: 'Seleziona La Tua Esperienza',
-  GROUP_TICKETS: 'Biglietti di Gruppo',
+  TOUR_LIST_HEADING: 'Seleziona la tua esperienza',
+  GROUP_TICKETS: 'Biglietti di gruppo',
   TOUR_LIST_SUB_HEADING:
     'Scegli tra una varietà di biglietti, tour e opzioni combinate fornite da operatori verificati',
   SANITARY_ALERT: {
-    KEY_TEXT: 'Your safety is our priority',
+    KEY_TEXT: 'La tua sicurezza è la nostra priorità',
     TEXT:
-      "We've taken significant steps to improve cleanliness using disinfectants with comprehensive and frequent surface cleaning. Crowds are also being controlled to prevent congestion.",
+      'Abbiamo implementato misure di sicurezza per migliorare la pulizia degli ambienti utilizzando disinfettanti tramite pulizie frequenti di tutye le superfici che entrano in contatto col pubblico. Inoltre, il numero di accessi giornaliero è ora regolamentato per evitare assembramenti.',
   },
   COVID19_ALERT: {
     KEY_TEXT: 'Aggiornamento riguardo COVID-19',
@@ -18,47 +18,47 @@ const it = {
     LINK:
       'https://medium.com/headout/epidemia-coronavirus-polizza-di-cancellazione-e7abdfb20451',
   },
-  READ_MORE: 'Leggi Tutto',
-  BANNER_CTA: 'Acquista i Biglietti',
+  READ_MORE: 'Leggi tutto',
+  BANNER_CTA: 'Scopri le nostre offerte',
   BOOK_NOW_CTA: 'Prenota ora',
-  READ_MORE_TEXT: 'Leggi di più',
+  READ_MORE_TEXT: 'Leggi tutto',
   SHOW_LESS_TEXT: 'Mostra meno',
-  NEXT_AVAILABLE: 'Prossimo Disponibile, ',
-  SAVE_UPTO: 'Risparmia fino a',
-  SAVE: 'Risparmia  <val>',
+  NEXT_AVAILABLE: 'Prossimo disponibile: ',
+  SAVE_UPTO: 'Risparmi fino al',
+  SAVE: 'Risparmi il  <val>%',
   AVAILABLE: 'Disponibile',
-  EARLIEST_AVAILABILITY: 'Prima Disponibilità',
-  TODAY: 'Oggi',
-  TOMORROW: 'Domani',
+  EARLIEST_AVAILABILITY: 'Prima disponibilità',
+  TODAY: 'oggi',
+  TOMORROW: 'domani',
   TICKETS: 'Biglietti',
   LISTICLES: {
-    SEATING_CHART: 'Mappa dei Posti a Sedere',
-    KNOW_MORE: 'Altre Informazioni',
-    WHY_BOOK_FROM_US: 'Perché Prenotare Con Noi?',
+    SEATING_CHART: 'Mappa dei posti a sedere',
+    KNOW_MORE: 'Altre informazioni',
+    WHY_BOOK_FROM_US: 'Perché vale la pena prenotare con noi?',
   },
-  PRICES_STARTING: 'Prezzi A Partire Da',
-  FROM: 'a Partire Da',
-  MORE_DETAILS: 'Altri Dettagli',
+  PRICES_STARTING: 'Prezzi a partire da',
+  FROM: 'A partire da',
+  MORE_DETAILS: 'Altri dettagli',
   FOOTER: {
     DISCLAIMER:
       'Questo non è il sito internet ufficiale della seguente attrazione: <attraction>. Questo sito è gestito da Headout e lavora con attrazioni e tour operator per fornire esperienze incredibili al tocco di un pulsante.',
     GET_HELP: 'Aiuto',
     QUICK_LINKS: 'Link diretti',
-    CHAT_WITH_US: 'Chatta con Noi',
+    CHAT_WITH_US: 'Chatta con noi',
     CALL_US: 'Chiamaci',
-    EMAIL_US: 'Contattaci Via E-mail',
-    LEGAL: 'Informazioni Legali',
-    TERMS_AND_CONDITIONS: `Termini e Condizioni d'uso`,
-    PRIVACY_POLICY: 'Informativa sulla Privacy',
-    COMPANY_DETAILS: 'Dettagli sulla Società',
+    EMAIL_US: 'Contattaci via E-mail',
+    LEGAL: 'Informazioni legali',
+    TERMS_AND_CONDITIONS: `Termini e condizioni d'uso`,
+    PRIVACY_POLICY: 'Informativa sulla privacy',
+    COMPANY_DETAILS: 'Dettagli sulla società',
   },
-  COMPARE_ALL_DETAILS: 'Confronta Tutti i Dettagli',
+  COMPARE_ALL_DETAILS: 'Confronta tutti i dettagli',
   WHY_TAKE_THIS_DAY_TRIP: 'Perché vale la pena partecipare a questa gita?',
   DURATION: 'Durata',
   THEATRE: 'Teatro',
   TIMINGS: 'Orari',
   SAFE_EXPERIENCE: {
-    HEADING: 'I Più Alti Standard di Sicurezza',
+    HEADING: 'I più alti standard di sicurezza',
     SHORT_HEADING: 'I migliori standard di sicurezza in vigore',
     MOBILE_HEADING: 'Esperienze Sicure',
     GENERAL_DESCRIPTION:
@@ -71,7 +71,7 @@ const it = {
     MODAL: {
       HEADING: 'Esperienze Sicure',
       SUB_HEADING:
-        "<mbName> sta lavorando con i nostri partner in tutto il mondo per implementare i migliori standard di sicurezza in accordo con le linee guida dell'OMS. Tutte le misure adottate sul campo sono state verificate: le puoi vedere elencate in questa sezione. È tempo di godersi di nuovo il mondo che ci circonda.",
+        "sta lavorando con i nostri partner in tutto il mondo per implementare i migliori standard di sicurezza in accordo con le linee guida dell'OMS. Tutte le misure adottate sul campo sono state verificate: le puoi vedere elencate in questa sezione. È tempo di godersi di nuovo il mondo che ci circonda.",
       DETAILS: {
         SAFETY_MASK_DEFAULT: {
           HEADING: 'Tutti indossano maschere per garantire la tua sicurezza',

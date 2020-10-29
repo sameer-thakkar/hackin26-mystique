@@ -4,11 +4,15 @@ import Accordion from 'components/slices/Accordion';
 import Image from './Image';
 import * as labels from 'constants/localization/labels';
 import { SOLEIL, COLORS } from 'constants/ui-constants';
-import { DISCOUNTED_FUTURE_IMAGES_SECTION } from 'constants/index';
+import {
+  DATE_FORMAT_TYPES,
+  DISCOUNTED_FUTURE_IMAGES_SECTION,
+} from 'constants/index';
 import React, { useContext } from 'react';
 import { MBContext } from 'contexts/MBContext';
 import dayjs from 'dayjs';
 import ReactMarkdown from 'react-markdown/with-html';
+import useLocalisedDate from 'hooks/useLocalisedDate';
 
 const PitchGrid = styled.div`
   display: grid;
@@ -156,8 +160,11 @@ const getDFFAQs = (lang, name, domain) => {
 };
 const DiscountedFuturesPitch = ({ dfExpiryDate = '' }) => {
   const { lang, nakedDomain } = useContext(MBContext);
-  const startDate = dayjs().add(30, 'day').format('DD-MMM-YYYY');
-  const [name, ..._tld] = nakedDomain.split('.');
+  const startDate = useLocalisedDate(
+    dayjs().add(30, 'day'),
+    DATE_FORMAT_TYPES.FULL
+  );
+  const [name, ..._tld] = nakedDomain.replace(/-/g, ' ').split('.');
 
   return (
     <PitchGrid>

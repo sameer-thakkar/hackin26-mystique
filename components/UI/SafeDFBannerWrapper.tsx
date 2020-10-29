@@ -10,9 +10,10 @@ import { MBContext } from 'contexts/MBContext';
 import Conditional from 'components/common/Conditional';
 import styled from 'styled-components';
 import { SIZES } from 'constants/ui-constants';
-import { THEMES } from 'constants/index';
+import { DATE_FORMAT_TYPES, THEMES } from 'constants/index';
 import IconCTA, { StyledIconCTA } from './IconCTA';
 import { useWindowWidth } from '@react-hook/window-size';
+import useLocalisedDate from 'hooks/useLocalisedDate';
 
 const Wrapper = styled.div`
   max-width: ${SIZES.MAX_WIDTH};
@@ -64,6 +65,10 @@ const SafeDFBannerWrapper = ({
   useEffect(() => {
     setIsMobile(width < 768);
   }, [width]);
+  const finalDFExpiryDate = useLocalisedDate(
+    dfExpiryDate,
+    DATE_FORMAT_TYPES.SHORT
+  );
   if (!(hasSafe || dfExpiryDate)) return null;
   const openSafeSidebar = () => {
     addToAside({
@@ -77,10 +82,7 @@ const SafeDFBannerWrapper = ({
     addToAside({
       width: '27.5vw',
       children: [
-        <DiscountedFuturesPitch
-          dfExpiryDate={dfExpiryDate?.format('DD-MMM-YY')}
-          key={0}
-        />,
+        <DiscountedFuturesPitch dfExpiryDate={finalDFExpiryDate} key={0} />,
       ],
       title: '',
     });
@@ -109,7 +111,7 @@ const SafeDFBannerWrapper = ({
                 lang
               ].DISCOUNTED_FUTURES.SHORT_DESCRIPTION.replace(
                 '<date>',
-                dfExpiryDate?.format('DD-MMM-YY')
+                finalDFExpiryDate
               )}
               bannerOnClick={openDFPitchSidebar}
               icon={BrownTicket}

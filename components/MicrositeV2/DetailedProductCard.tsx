@@ -23,6 +23,8 @@ import {
 } from 'utils';
 import PriceBlock from 'UI/PriceBlock';
 import DiscountedFuturesPitch from 'UI/DiscountedFuturesPitch';
+import { DATE_FORMAT_TYPES } from 'constants/index';
+import useLocalisedDate from 'hooks/useLocalisedDate';
 
 const DetailedDescriptionCard = styled.div`
   grid-column: 1 / 5;
@@ -338,14 +340,14 @@ const DetailedProductCard = (props) => {
       children: <DiscountedFutureSidebar product={activeTour} />,
     });
   };
+  const dfExpiryDate = useLocalisedDate(
+    getDFValidityFromTags(allTags),
+    DATE_FORMAT_TYPES.SHORT
+  );
   const openDFPitchSidebar = () => {
     addToAside({
       width: '27.5vw',
-      children: (
-        <DiscountedFuturesPitch
-          dfExpiryDate={getDFValidityFromTags(allTags).format('DD-MMM-YY')}
-        />
-      ),
+      children: <DiscountedFuturesPitch dfExpiryDate={dfExpiryDate} />,
       sidePadding: 40,
     });
   };

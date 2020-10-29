@@ -7,7 +7,13 @@ import HorizontalLine from './slices/HorizontalLine';
 import Button from 'UI/Button';
 import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from 'utils/shortCodes';
-import { ANALYTICS_EVENTS, THEMES, SIDEBAR_TYPES } from 'constants/index';
+import {
+  ANALYTICS_EVENTS,
+  THEMES,
+  SIDEBAR_TYPES,
+  DATE_FORMAT_TYPES,
+  LOCALISED_DATE_FORMATS,
+} from 'constants/index';
 import { COLORS, SOLEIL } from 'constants/ui-constants';
 import { CALENDAR, BrownTicket, Shield, BackArrow } from 'assets/SvgIcons';
 import 'utils/dayjsLocale';
@@ -33,6 +39,7 @@ import {
   parseDescriptorIcon,
 } from 'utils/productUtils';
 import Image from 'UI/Image';
+import useLocalisedDate from 'hooks/useLocalisedDate';
 import { truncate } from 'utils/helper';
 
 const isLengthyArray = (item) => Array.isArray(item) && item.length;
@@ -719,7 +726,9 @@ const Product = (props) => {
     const tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');
     if (date === today) return labels[currentLanguage].TODAY;
     if (date === tomorrow) return labels[currentLanguage].TOMORROW;
-    return dayjs(date).locale(currentLanguage).format('MMM Do');
+    return dayjs(date)
+      .locale(currentLanguage)
+      .format(LOCALISED_DATE_FORMATS[currentLanguage].DATE_MONTH);
   };
 
   const boosterHasIcon = booster?.filter((i) => i.type === 'image').length > 0;
@@ -762,6 +771,10 @@ const Product = (props) => {
   let { listingPrice } = isFetched ? tourPrices[tgid] : { listingPrice: null };
   listingPrice = isAmp ? scorpioData.listingPrice : listingPrice;
   const { allTags = [], dfListingPrice } = scorpioData || {};
+  const dfExpiryDate = useLocalisedDate(
+    getDFValidityFromTags(allTags),
+    DATE_FORMAT_TYPES.SHORT
+  );
   if (isFetched && !listingPrice && !dfListingPrice) return null;
   const hasSafetyFlag = isSafetyIncluded(allTags);
   const isDFProduct =
@@ -791,11 +804,7 @@ const Product = (props) => {
   const openDFPitchSidebar = () => {
     addToAside({
       width: '27.5vw',
-      children: (
-        <DiscountedFuturesPitch
-          dfExpiryDate={getDFValidityFromTags(allTags).format('DD-MMM-YY')}
-        />
-      ),
+      children: <DiscountedFuturesPitch dfExpiryDate={dfExpiryDate} />,
     });
   };
   const hasV1Booster = booster && RichText.asText(booster).trim().length > 0;

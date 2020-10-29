@@ -38,8 +38,6 @@ export const StyledPriceBlock = styled.div`
 
 export const SavedTag = styled.div`
   padding: 4px 8px;
-  text-transform: ${({ theme }) =>
-    theme.theme === THEMES.DEFAULT ? 'uppercase' : 'initial'};
   background: ${({ theme }) =>
     theme.theme === THEMES.DEFAULT ? 'transparent' : '#dbfddb'};
   color: ${({ theme }) =>
@@ -68,7 +66,7 @@ const PriceBlock = ({
 }) => {
   const { currencySymbolMap } = useContext(MBContext);
   if (!price) return null;
-  const { originalPrice, finalPrice, currencyCode } = price;
+  const { originalPrice, finalPrice, currencyCode, precision } = price;
   const currencySymbol =
     currencySymbolOverride || currencySymbolMap[currencyCode]?.localSymbol;
   const savings = price && showSavings ? getSavingsPercent(price) : -1;
@@ -81,6 +79,7 @@ const PriceBlock = ({
             currencySymbol={currencySymbol}
             price={originalPrice}
             lang={lang}
+            precision={precision}
           />
         </span>
       ) : null}
@@ -89,10 +88,11 @@ const PriceBlock = ({
         currencySymbol={currencySymbol}
         price={finalPrice}
         lang={lang}
+        precision={precision}
       />
       <Conditional if={savings > 0 && showScratchPrice}>
         <SavedTag>
-          {labels[lang].SAVE.replace('<val>', `${savings.toFixed(0)}%`)}
+          {labels[lang].SAVE.replace('<val>', `${savings.toFixed(0)}`)}
         </SavedTag>
       </Conditional>
     </StyledPriceBlock>

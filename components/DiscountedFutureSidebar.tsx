@@ -10,7 +10,10 @@ import DiscountedFuturesPitch from 'UI/DiscountedFuturesPitch';
 import useWindowSize from 'hooks/useWindowSize';
 import Conditional from './common/Conditional';
 import dayjs from 'dayjs';
+import 'utils/dayjsLocale';
 import Tags, { Tag, StyledTags } from 'UI/Tags';
+import { DATE_FORMAT_TYPES } from 'constants/index';
+import useLocalisedDate from 'hooks/useLocalisedDate';
 
 const DFSidebar = styled.div`
   display: grid;
@@ -106,8 +109,14 @@ const DiscountedFutureSidebar = ({
   const isMobile = width < 768;
   const bookURL = createBookingURL({ nakedDomain, lang, tgid });
   const dfBookURL = createBookingURL({ nakedDomain, lang, tgid, df: true });
-  const expiry = getDFValidityFromTags(allTags)?.format('DD-MMM-YYYY');
-  const startDate = dayjs().add(30, 'day').format('DD-MMM-YYYY');
+  const expiry = useLocalisedDate(
+    getDFValidityFromTags(allTags),
+    DATE_FORMAT_TYPES.SHORT
+  );
+  const startDate = useLocalisedDate(
+    dayjs().add(30, 'day'),
+    DATE_FORMAT_TYPES.SHORT
+  );
 
   return (
     <DFSidebar>

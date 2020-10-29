@@ -2,55 +2,55 @@ import en from './en';
 
 const es = {
   ...en,
-  TOUR_LIST_HEADING: 'Selecciona Tu Experiencia',
-  GROUP_TICKETS: 'Billets de Groupe',
+  TOUR_LIST_HEADING: 'Selecciona tu experiencia',
+  GROUP_TICKETS: 'Visita en grupo',
   TOUR_LIST_SUB_HEADING:
-    'Elige entre una gran variedad de entradas, tours y combos de operadores verificados',
+    'Elige entre una gran variedad de entradas, tours y ofertas de agencias turísticas verificadas',
   SANITARY_ALERT: {
-    KEY_TEXT: 'Your safety is our priority',
+    KEY_TEXT: 'Tu seguridad es nuestra prioridad',
     TEXT:
-      "We've taken significant steps to improve cleanliness using disinfectants with comprehensive and frequent surface cleaning. Crowds are also being controlled to prevent congestion.",
+      'Hemos tomado las medidas de higiene necesarias para limpiar con frecuencia el lugar mediante el uso de desinfectantes y productos de limpieza profesional. Se han implementado medidas para controlar el ingreso de visitantes y evitar aglomeraciones.',
   },
   COVID19_ALERT: {
-    KEY_TEXT: 'Información actualizada sobre COVID-19',
+    KEY_TEXT: 'Aviso COVID-19',
     TEXT:
-      'Tú eres nuestra prioridad. Por favor, consulta nuestra página de ayuda para encontrar las últimas actualizaciones en nuestras políticas de cancelación flexibles.',
+      'Tú eres nuestra prioridad. Por favor, consulta nuestra página de ayuda para conocer las últimas actualizaciones sobre las políticas de cancelación.',
     LINK:
       'https://medium.com/headout/epidemia-de-coronavirus-pol%C3%ADtica-de-cancelaci%C3%B3n-e577f63d5553',
   },
-  READ_MORE: 'Leer Más',
-  BANNER_CTA: 'Comprar Entradas',
+  READ_MORE: 'Leer más',
+  BANNER_CTA: 'Comprar entradas',
   BOOK_NOW_CTA: 'Reserva ahora',
   READ_MORE_TEXT: 'Leer más',
   SHOW_LESS_TEXT: 'Mostrar menos',
   NEXT_AVAILABLE: 'Próxima Disponible, ',
   SAVE_UPTO: 'Ahorra hasta un',
-  SAVE: 'Ahorra <val>',
+  SAVE: 'Ahorra <val>%',
   AVAILABLE: 'Disponible',
   EARLIEST_AVAILABILITY: 'Siguiente Disponible',
-  TODAY: 'Hoy',
-  TOMORROW: 'Mañana',
+  TODAY: 'hoy',
+  TOMORROW: 'mañana',
   TICKETS: 'Entradas',
   LISTICLES: {
-    SEATING_CHART: 'Plano de Asientos',
-    KNOW_MORE: 'Leer Más',
-    WHY_BOOK_FROM_US: '¿Por qué reservar con nosotros?',
+    SEATING_CHART: 'Mapa de asientos',
+    KNOW_MORE: 'Leer más',
+    WHY_BOOK_FROM_US: '¿Por qué reservar con Headout?',
   },
   PRICES_STARTING: 'Precios desde',
   FROM: 'a partir de',
-  MORE_DETAILS: 'Más Detalles',
+  MORE_DETAILS: 'Más detalles',
   FOOTER: {
     DISCLAIMER:
       'Este sitio no es el sitio web oficial <attraction>. Este sitio es operado por Headout quien trabaja de la mano con operadores turísticos para ofrecer experiencias increíbles en un sólo clic.',
     GET_HELP: 'Ayuda',
-    QUICK_LINKS: 'Enlaces Directos',
-    CHAT_WITH_US: 'Chat en Vivo',
+    QUICK_LINKS: 'Enlaces directos',
+    CHAT_WITH_US: 'Chat en vivo',
     CALL_US: 'Teléfono',
-    EMAIL_US: 'Correo Electrónico',
-    LEGAL: 'Información Legal',
-    TERMS_AND_CONDITIONS: 'Términos y Condiciones',
-    PRIVACY_POLICY: 'Política de Privacidad',
-    COMPANY_DETAILS: 'Sobre la Empresa',
+    EMAIL_US: 'Correo electrónico',
+    LEGAL: 'Información legal',
+    TERMS_AND_CONDITIONS: 'Términos y condiciones',
+    PRIVACY_POLICY: 'Política de privacidad',
+    COMPANY_DETAILS: 'Sobre la empresa',
   },
   COMPARE_ALL_DETAILS: 'Compara los detalles',
   WHY_TAKE_THIS_DAY_TRIP: '¿Por qué vale la pena hacer este viaje de 1 día?',
@@ -64,7 +64,7 @@ const es = {
     GENERAL_DESCRIPTION:
       'Cualquier experiencia con esta insignia ha sido verificada y cumple con los más estrictos estándares de seguridad impuestos por las autoridades sanitarias locales.',
     CTA_TEXT: 'Estándares de Seguridad',
-    BANNER_CTA: 'Leer Más',
+    BANNER_CTA: 'Leer más',
     EXPERIENCE_DESCRIPTION:
       'Se ha verificado que esta experiencia cumple con los estándares de seguridad más estrictos, conforme a las regulaciones locales y de la OMS.',
     FLAG_TEXT: 'Seguridad Verificada',
@@ -77,7 +77,7 @@ const es = {
           HEADING:
             'Por seguridad, todos los participantes deben usar mascarillas',
           DESCRIPTION:
-            'Nuestros socios verificados con la insignia "Experiencia Segura" siguen las regulaciones locales sobre el uso de mascarillas. En caso de ser obligatorio, todos los participantes y personal deberán llevar mascarilla. Se tomarán todas las medidas posibles para asegurar tu comodidad y seguridad.',
+            'Nuestros socios verificados con la insignia "Seguridad Verificada" siguen las regulaciones locales sobre el uso de mascarillas. En caso de ser obligatorio, todos los participantes y personal deberán llevar mascarilla. Se tomarán todas las medidas posibles para asegurar tu comodidad y seguridad',
         },
         SAFETY_MASK_STAFF: {
           HEADING: 'Todo el personal debe usar mascarillas por seguridad',
@@ -113,7 +113,7 @@ const es = {
         SAFETY_HANDWASH: {
           HEADING: 'Instalaciones sanitarias y estaciones de aseo disponibles',
           DESCRIPTION:
-            'Al ser verificada como Experiencia Segura, tendrás acceso a estaciones de aseo y saneamiento durante todo el tiempo de tu visita. No te preocupes, tu seguridad es primero. ',
+            'Esta experiencia ha sido clasificada con la insignia Seguridad Verificada, por lo que tendrás acceso a estaciones de aseo y saneamiento durante todo el tiempo de tu visita. No te preocupes, tu seguridad es primero.',
         },
         SAFETY_CLEANED_EQUIPMENTS: {
           HEADING:

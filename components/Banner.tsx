@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { scroller } from 'react-scroll';
 import * as labels from '../constants/localization/labels';
 import Button from './UI/Button';
+import 'utils/dayjsLocale';
 import Image from './UI/Image';
 import styled from 'styled-components';
 import { SOLEIL, COLORS } from '../constants/ui-constants';
@@ -477,7 +478,9 @@ export default class Banner extends Component<any, any> {
         width: '27.5vw',
         children: [
           <DiscountedFuturesPitch
-            dfExpiryDate={dfExpiryDate?.format('DD-MMM-YY')}
+            dfExpiryDate={dfExpiryDate
+              ?.locale(currentLanguage)
+              .format('DD-MMM-YY')}
             key={0}
           />,
         ],
@@ -568,7 +571,7 @@ export default class Banner extends Component<any, any> {
                     currentLanguage
                   ].DISCOUNTED_FUTURES.BANNER.DESCRIPTION_LINE2.replace(
                     '<cooldownDate>',
-                    cooldownDate?.format('DD-MMM-YY')
+                    cooldownDate?.locale(currentLanguage).format('DD-MMMM-YY')
                   )}
                 </p>
               </div>

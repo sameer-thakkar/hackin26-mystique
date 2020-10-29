@@ -5,14 +5,14 @@ const de = {
   TOUR_LIST_HEADING: 'Wählen Sie Ihr Erlebnis',
   GROUP_TICKETS: 'Gruppentickets',
   TOUR_LIST_SUB_HEADING:
-    'Finden Sie zahlreiche Tickets, Touren und Kombinationen von geprüften Anbietern',
+    'Hier finden Sie zahlreiche Tickets, Touren und Kombinationen von geprüften Anbietern:',
   SANITARY_ALERT: {
     KEY_TEXT: 'Your safety is our priority',
     TEXT:
       "We've taken significant steps to improve cleanliness using disinfectants with comprehensive and frequent surface cleaning. Crowds are also being controlled to prevent congestion.",
   },
   COVID19_ALERT: {
-    KEY_TEXT: 'Update Covid-19',
+    KEY_TEXT: 'Corona-Update',
     TEXT:
       'Ihr Wohlergehen ist unsere Priorität. Weitere Informationen zu unseren flexiblen Stornierungsbedingungen finden Sie auf der Seite „Hilfe & FAQs“.',
     LINK:
@@ -25,11 +25,11 @@ const de = {
   SHOW_LESS_TEXT: 'Weniger anzeigen',
   NEXT_AVAILABLE: 'Verfügbar ab: ',
   SAVE_UPTO: 'Spare',
-  SAVE: '<val> Rabatt',
+  SAVE: '<val> % Rabatt',
   AVAILABLE: 'Verfügbar am',
   EARLIEST_AVAILABILITY: 'Früheste verfügbare',
-  TODAY: 'Heute',
-  TOMORROW: 'Morgen',
+  TODAY: 'heute',
+  TOMORROW: 'morgen',
   TICKETS: 'Tickets',
   LISTICLES: {
     SEATING_CHART: 'Saalplan',
@@ -38,7 +38,7 @@ const de = {
   },
   PRICES_STARTING: 'Preise ab',
   FROM: 'ab',
-  MORE_DETAILS: 'Weitere Informationen',
+  MORE_DETAILS: 'Mehr anzeigen',
   FOOTER: {
     DISCLAIMER:
       'Diese Website ist nicht die offizielle Website <attraction>. Die Website wird vom Unternehmen Headout betrieben, das mit Veranstaltern für Attraktionen und Touren zusammenarbeitet, um unglaubliche Erlebnisse auf Knopfdruck anzubieten.',
@@ -165,11 +165,11 @@ const de = {
         },
       },
       BADGE_DESCRIPTION:
-        'Erlebnisse mit diesem Abzeichen entsprechen nachweislich den von <mbName> geprüften Sicherheitsstandards.',
+        'Erlebnisse mit diesem Abzeichen entsprechen nachweislich den von der Attraktion geprüften Sicherheitsstandards.',
     },
   },
   DISCOUNTED_FUTURES: {
-    HEADING: 'Jetzt buchen, Geld sparen und später reisen',
+    HEADING: 'Jetzt buchen, später reisen',
     DESCRIPTION:
       'Für einen begrenzten Zeitraum können Sie **offene Tickets** für einige Ihrer Lieblingsaktivitäten reservieren. Diese Tickets sind jederzeit bis zum 31. Dezember 2021 einlösbar und bieten erstaunliche Rabatte, mehr Flexibilität sowie ein garantiert unvergessliches Erlebnis.',
     SHORT_DESCRIPTION:
