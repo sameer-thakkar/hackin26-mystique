@@ -234,7 +234,7 @@ class MicrositeV1 extends Component<any, any> {
   render() {
     const { toursList, isAmp, data } = this.props;
     const { refs, data: prismicData, uid } = data;
-    const { contentFramework } = refs;
+    const { contentFramework, commonFooter, secondaryFooter } = refs;
     const {
       localization,
       images: bannerImages,
@@ -277,6 +277,9 @@ class MicrositeV1 extends Component<any, any> {
     const isHeaderInherited =
       commonHeader &&
       commonHeader?.lang !== getLangObject(currentLanguage).paramLang;
+    const isFooterInherited =
+      commonFooter &&
+      commonFooter?.lang !== getLangObject(currentLanguage).paramLang;
     const withCommonHeaderOverrides = {
       ...this.props.data.data,
       ...commonHeader?.data,
@@ -329,10 +332,16 @@ class MicrositeV1 extends Component<any, any> {
     const {
       group_booking_excluded_tgids: groupBookingExcludedTgids,
     } = this.props.data.data;
-    const { commonFooter, secondaryFooter } = this.props.data.refs;
     const disclaimerText =
       RichText.asText(this.props.data.data.disclaimer) ||
       commonFooter?.data?.disclaimer_text;
+    const microbrandType =
+      this.props.data.data.microbrand_type ||
+      commonFooter?.data?.microbrand_type;
+    const showDisclaimer =
+      this.props.data.data.show_disclaimer ||
+      commonFooter?.data?.show_disclaimer ||
+      !!disclaimerText;
     const microbrandCards = this.props.data.data.microbrand_cards;
     const microbrandCardsHeading = this.props.data.data.microbrand_cards_heading
       ? this.props.data.data.microbrand_cards_heading
@@ -621,15 +630,15 @@ class MicrositeV1 extends Component<any, any> {
             logoURL={footerLogoURL}
             logoAlt={footerLogoAlt}
             hasPoweredByHeadoutLogo={footerPoweredByHeadout}
-            showDisclaimer={
-              commonFooter?.data?.show_disclaimer || !!disclaimerText
-            }
+            showDisclaimer={showDisclaimer}
             disclaimerText={disclaimerText}
-            microbrandType={commonFooter?.data?.microbrand_type}
-            slices={commonFooter?.data?.body || []}
+            microbrandType={microbrandType}
+            slices={!isFooterInherited ? commonFooter?.data?.body || [] : []}
             invertLogoColor={commonFooter?.data?.invert_logo_color}
             themeOverride={footerThemeOverride}
-            secondarySlices={secondaryFooter?.data?.body || []}
+            secondarySlices={
+              !isFooterInherited ? secondaryFooter?.data?.body || [] : []
+            }
           />
           {hasOffer && (
             <FreeTourPopup

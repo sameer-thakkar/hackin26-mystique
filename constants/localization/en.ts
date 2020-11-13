@@ -16,6 +16,7 @@ const en = {
       'https://medium.com/headout/coronavirus-outbreak-cancellation-policy-8fe8e1104b83',
   },
   READ_MORE: 'Read More',
+  VIEW_MORE: 'View More',
   BANNER_CTA: 'Buy Tickets',
   BOOK_NOW_CTA: 'Book Now',
   READ_MORE_TEXT: 'Read More',

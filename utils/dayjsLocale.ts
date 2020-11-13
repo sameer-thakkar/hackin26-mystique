@@ -5,3 +5,4 @@ import 'dayjs/locale/es';
 import 'dayjs/locale/pt';
 import 'dayjs/locale/fr';
 import 'dayjs/locale/it';
+import 'dayjs/locale/ko';

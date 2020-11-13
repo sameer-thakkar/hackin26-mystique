@@ -1,6 +1,7 @@
 const ko = {
   TOUR_LIST_HEADING: '원하는 체험을 검색하세요',
   GROUP_TICKETS: '그룹 티켓',
+  SAVE: 'Save <vale>',
   TOUR_LIST_SUB_HEADING:
     '각 분야의 검증된 회사들이 뽑은 다양한 티켓, 투어, 콤보 상품을 만나보세요',
   SANITARY_ALERT: {
@@ -169,6 +170,14 @@ const ko = {
       '할인 바우처 구매 시 <date>까지 언제든 사용 가능합니다. 절약과 동시에 여행업에 기여할 수 있습니다!',
     FLAG_TEXT: '지금 예약하고 어디든 떠나보세요',
     HEADING_WORKS: '어떻게 사용하나요?',
+    BANNER: {
+      HEADING_LINE1: 'Not sure when you’re traveling next?',
+      HEADING_LINE2:
+        'Book an open ticket for big flexibility and bigger savings!',
+      DESCRIPTION_LINE1: 'Save upto 50%.',
+      DESCRIPTION_LINE2:
+        'Valid for visit anytime between <cooldownDate> and 31-Dec-21.',
+    },
     FAQ_QUESTIONS: {
       WORKING: {
         QUESTION: '"지금 예약하고 어디든 떠나보세요" 옵션이 무엇인가요?',

@@ -21,6 +21,7 @@ const de = {
   READ_MORE: 'Weiterlesen',
   BANNER_CTA: 'Tickets kaufen',
   BOOK_NOW_CTA: 'Jetzt buchen',
+  VIEW_MORE: 'Mehr anzeigen',
   READ_MORE_TEXT: 'Mehr anzeigen',
   SHOW_LESS_TEXT: 'Weniger anzeigen',
   NEXT_AVAILABLE: 'Verfügbar ab: ',

@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import * as labels from 'constants/localization/labels';
 import { RowComponent } from './RowComponent';
 import InteractionContext from '../../contexts/Interaction';
 import { MBContext } from '../../contexts/MBContext';
@@ -9,7 +10,6 @@ const PopulateProducts = (props) => {
     propTgids,
     allTours,
     changePage,
-    currentLanguage,
     host,
     uid,
     showAll,
@@ -19,6 +19,7 @@ const PopulateProducts = (props) => {
 
   const interactionContext = useContext(InteractionContext);
   const mbContext = useContext(MBContext);
+  const { lang: currentLanguage } = mbContext;
   const firstView = rowsToShow || 4;
 
   const [rowsInView, setRowsInView] = useState(firstView);
@@ -77,7 +78,7 @@ const PopulateProducts = (props) => {
           role="button"
           tabIndex={0}
         >
-          {mbContext.buttons.see_more_text || 'View more'}
+          {mbContext.buttons.see_more_text || labels[currentLanguage].VIEW_MORE}
         </div>
       ) : null}
       <style jsx>{`

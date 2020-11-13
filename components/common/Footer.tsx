@@ -163,6 +163,7 @@ const FooterLegal = styled.div`
     margin-top: 32px;
     font-family: ${SOLEIL.FONT_STACK};
     line-height: 19px;
+    max-width: 500px;
   }
   @media (max-width: 768px) {
     grid-template-areas: 'logo-disclaimer logo-disclaimer' 'help legal';
@@ -299,7 +300,7 @@ const Footer: React.FC<FooterProps> = ({
                     : null}
                 </div>
                 {(microbrandType === 'C1' || showDisclaimer) &&
-                finalThemeName === THEMES.DEFAULT ? (
+                finalThemeName !== THEMES.MIN_BLUE ? (
                   <div className="disclaimer-text">
                     {disclaimerText
                       ? disclaimerText

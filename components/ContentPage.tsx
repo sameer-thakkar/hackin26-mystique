@@ -36,7 +36,8 @@ const StyledContentPage = styled.div`
   margin-bottom: 72px;
 
   .slice-block h2 {
-    font-size: 30px;
+    font-size: 24px;
+    margin: 0.2em 0;
     color: #080808;
     font-family: ${SOLEIL.FONT_STACK};
     font-weight: ${SOLEIL.SEMIBOLD};
@@ -46,7 +47,7 @@ const StyledContentPage = styled.div`
   }
   .slice-block h3 {
     font-weight: 500;
-    font-size: 26px;
+    font-size: 22px;
     color: #080808;
     font-family: ${SOLEIL.FONT_STACK};
     font-weight: ${SOLEIL.SEMIBOLD};
