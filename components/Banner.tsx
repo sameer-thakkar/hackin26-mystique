@@ -11,7 +11,6 @@ import Tags, { Tag } from 'UI/Tags';
 import { MBContext } from 'contexts/MBContext';
 import DiscountedFuturesPitch from 'UI/DiscountedFuturesPitch';
 import Conditional from './common/Conditional';
-import { THEMES } from 'constants/index';
 
 const StyledBanner = styled.div`
   display: grid;
@@ -20,8 +19,7 @@ const StyledBanner = styled.div`
   position: relative;
   box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.16);
   font-family: ${SOLEIL.FONT_STACK};
-  margin-bottom: ${({ theme }) =>
-    theme.theme === THEMES.DEF_INTERIM ? '24px' : '40px'};
+  margin-bottom: 24px;
 
   .mb-slide {
     display: none;

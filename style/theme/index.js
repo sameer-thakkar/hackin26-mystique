@@ -4,116 +4,6 @@ import { SavedTag } from 'UI/PriceBlock';
 import { CTAContainer } from 'components/Product';
 
 export default {
-  [THEMES.DEFAULT]: {
-    theme: THEMES.DEFAULT,
-    primaryColor: COLORS.RHAPSODY,
-    primaryBackground: COLORS.WHITE,
-    primaryBGText: COLORS.FOUR_BLACK,
-    cardAccent: COLORS.TEAL,
-    productCards: {
-      padding: {
-        desktop: '24px',
-        mobile: ' 24px 16px',
-      },
-      overlayBoosterStyles: `
-        color: ${COLORS.WHITE};
-        background: ${COLORS.ETHER};
-      `,
-      border: `1px solid ${COLORS.GREY_G6}`,
-      tittleColor: COLORS.FOUR_BLACK,
-      gap: {
-        desktop: '24px',
-        mobile: '24px',
-      },
-      accentColor: COLORS.MED_SLATE_BLUE,
-      accentBackground: COLORS.WHITE,
-      moreDetailsStyle: `
-        color: ${COLORS.MED_SLATE_BLUE};
-      `,
-      titleFontSettings: {
-        desktop: `
-          font-weight: ${SOLEIL.MEDIUM};
-          font-size: 24px;
-          line-height: 32px;
-        `,
-        mobile: `
-        `,
-      },
-      regularFontSettings: {
-        desktop: `
-          font-weight: ${SOLEIL.REGULAR};
-          font-size: 16px;
-          line-height: 24px;
-          & p {
-            font-weight: ${SOLEIL.REGULAR};
-          }
-          ul {
-            margin-top: 0;
-          }
-          strong,
-          b {
-            font-size: 16px;
-            line-height: 24px;
-            display: block;
-            margin-bottom: 8px;
-            margin-top: 32px;
-          }
-        `,
-        mobile: `
-          font-weight: ${SOLEIL.REGULAR};
-          font-size: 14px;
-          line-height: 20px;
-          strong,
-          b {
-            margin-top: 24px;
-          }
-        `,
-      },
-      priceFontSettings: {
-        desktop: `
-          .tour-scratch-price {
-            font-weight: ${SOLEIL.REGULAR};
-            color: ${COLORS.GREY_G4};
-            font-size: 11px;
-            line-height: 12px;
-            span {
-              text-decoration: line-through;
-              display: block;
-            }
-          }
-          .tour-price {
-            font-size: 25px;
-            line-height: 32px;
-            font-weight: ${SOLEIL.MEDIUM};
-            color: ${COLORS.FOUR_BLACK};
-          }
-        `,
-        mobile: `
-          .tour-scratch-price {
-            font-size: 11px;
-            line-height: 12px;
-          }
-          .tour-price {
-            font-size: 20px;
-            line-height: 24px;
-          }
-        `,
-      },
-    },
-    button: {
-      borderRadius: '4px',
-      fontSize: '16px',
-      fontFamily: SOLEIL.FONT_STACK,
-      fontWeight: SOLEIL.BOLD,
-    },
-    footer: {
-      background: COLORS.BLACK,
-      color: COLORS.WHITE,
-      headingColor: COLORS.WHITE,
-      secondaryBackground: COLORS.WHITE,
-      secondaryColor: COLORS.BEACH,
-    },
-  },
   [THEMES.MIN_BLUE]: {
     theme: THEMES.MIN_BLUE,
     primaryColor: COLORS.LINK_BLUE,
@@ -463,6 +353,12 @@ export default {
       secondaryBackground: COLORS.WHITE,
       secondaryColor: COLORS.BEACH,
     },
+  },
+  get [THEMES.DEFAULT]() {
+    return this[THEMES.DEF_INTERIM];
+  },
+  get [undefined]() {
+    return this[THEMES.DEF_INTERIM];
   },
 };
 

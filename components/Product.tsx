@@ -117,20 +117,14 @@ const TourTitle = styled.h2`
 
 const TitleWrapper = styled.div`
   grid-area: title;
-  ${({ hasBorderedTitle, theme }) =>
-    theme.theme === THEMES.DEF_INTERIM
+  ${({ hasBorderedTitle }) =>
+    hasBorderedTitle
       ? `
-        ${
-          hasBorderedTitle
-            ? `
             border-bottom: 1px solid ${COLORS.GREY_G6};
             padding-bottom: 16px;
             margin-bottom: -8px;
           `
-            : ''
-        } 
-    `
-      : ``}
+      : ''}
 `;
 
 const BoosterTag = styled.div`
@@ -162,72 +156,47 @@ const ShortSummary = styled.div`
 
 const TourTags = styled.div`
   font-size: 14px;
-  margin: -8px 0;
-  font-weight: ${SOLEIL.MEDIUM};
+  font-weight: ${SOLEIL.REGULAR};
   display: grid;
-  display: flex;
-  flex-wrap: wrap;
+  grid-row-gap: 12px;
   align-items: start;
+  align-content: start;
+  margin: 0;
+  margin-top: 8px;
   color: ${COLORS.GREY_G3};
   .tour-tag {
     display: grid;
-    margin-bottom: 8px;
     grid-auto-flow: column;
     grid-column-gap: 8px;
     margin-right: 8px;
     font-size: 14px;
-    line-height: 20px;
-  }
-  ${({ theme }) =>
-    theme.theme === THEMES.DEF_INTERIM
-      ? `
-    display: grid;
-    grid-row-gap: 12px;
-    align-content: start;
-    margin: 0;
-    margin-top: 8px;
-    font-weight: ${SOLEIL.REGULAR};
-    .tour-tag {
-      max-width: 230px;
-      line-height: 22px;
-      justify-content: left;
+    max-width: 230px;
+    line-height: 22px;
+    justify-content: left;
+    align-items: center;
+    margin-bottom: 0;
+    .image-wrap {
       align-items: center;
-      margin-bottom: 0;
-      .image-wrap {
-        align-items: center;
-      }
-      img {
-        height: 16px;
-        width: 16px;
-        object-fit: cover;
-      }
     }
-  `
-      : `
-      `}
+    img {
+      height: 16px;
+      width: 16px;
+      object-fit: cover;
+    }
+  }
   @media (max-width: 768px) {
     grid-area: tags;
-    display: flex;
-    flex-wrap: wrap;
     align-items: start;
+    display: grid;
+    grid-template-columns: auto auto;
     font-size: 12px;
     line-height: 13px;
+    margin-top: -8px;
+    grid-column-gap: 8px;
+    grid-row-gap: 12px;
     .tour-tag {
-      margin-bottom: 8px;
+      margin: 0;
     }
-    ${({ theme }) =>
-      theme.theme === THEMES.DEF_INTERIM
-        ? `
-        margin-top: -8px;
-        .tour-tag {
-          margin: 0;
-        }
-      display: grid;
-      grid-template-columns: auto auto;
-      grid-column-gap: 8px;
-      grid-row-gap: 12px;
-    `
-        : ``}
   }
 `;
 
@@ -295,9 +264,7 @@ const CTABlock = styled.div`
   }
   @media (max-width: 768px) {
     grid-area: cta-block;
-    margin-top: 8px;
-    ${({ theme }) =>
-      theme.theme === THEMES.DEF_INTERIM ? `margin-top: 0;` : ``}
+    margin-top: 0;
     ${({ isSticky, shouldOffset }) =>
       isSticky
         ? `
@@ -322,8 +289,7 @@ const ProductBody = styled.div`
   grid-row-gap: 8px;
   overflow-anchor: none;
   .tour-description {
-    ${({ theme }) =>
-      theme.theme === THEMES.DEF_INTERIM ? `cursor: pointer;` : ``}
+    cursor: pointer;
     p {
       margin: 0;
       font-weight: ${SOLEIL.MEDIUM};
@@ -368,35 +334,17 @@ const ProductBody = styled.div`
     .tour-description {
       ${({ theme }) => theme.productCards.regularFontSettings.mobile}
     }
-    ${({ collapsed, theme }) =>
+    ${({ collapsed }) =>
       collapsed
         ? `
-        ${
-          theme.theme === THEMES.DEF_INTERIM
-            ? `
-          .tour-description {
-            display: none;
-          }
-        `
-            : `
-            p:nth-child(1) {
-              display: none;
-            }
-            strong {
-              margin-top: 0 !important;
-            }
-            ul {
-              li:nth-child(n + 2) {
-                display: none;
-              }
-            }
-            `
+        .tour-description {
+          display: none;
         }
     `
         : ''}
   }
   .display-none{
-  display: none;
+    display: none;
   }
 `;
 
@@ -494,42 +442,32 @@ const IconBoosters = styled.div`
   }
   @media (max-width: 768px) {
     margin-left: 0;
-    ${StlyedSplit} {
-      padding-left: 12px;
-      grid-template-columns: auto auto 8px;
-      grid-column-gap: 30px;
-      border: none;
-    }
-    ${({ theme }) =>
-      theme.theme === THEMES.DEF_INTERIM &&
-      `
+    justify-self: right;
+    margin-top: -8px;
+    ${StyledIconCTA} {
       justify-self: right;
-      margin-top: -8px;
-      .text,
-      .chevron {
-        display: none;
+      grid-template-columns: auto;
+      border-radius: 50%;
+      .icon {
+        position: unset;
+        transform: unset;
+        left: unset;
+        top: unset;
+        height: 20px;
+        width: 20px;
       }
-      ${StyledIconCTA} {
-        justify-self: right;
-        grid-template-columns: auto;
-        border-radius: 50%;
-        .icon {
-          position: unset;
-          transform: unset;
-          left: unset;
-          top: unset;
-          height: 20px;
-          width: 20px;
-        }
-        padding: 4px;
-      }
-      ${StlyedSplit} {
-        grid-auto-flow: column;
-        grid-template-columns: unset;
-        grid-column-gap: 24px;
-        padding-left: 0;
-      }
-    `}
+      padding: 4px;
+    }
+    ${StlyedSplit} {
+      border: none;
+      grid-auto-flow: column;
+      grid-column-gap: 24px;
+      padding-left: 0;
+    }
+    .text,
+    .chevron {
+      display: none;
+    }
   }
 `;
 
@@ -646,7 +584,7 @@ const ModalCardContainer = styled.div`
   }
 `;
 
-const Descriptors = ({ descriptorArray, mbTheme }) => {
+const Descriptors = ({ descriptorArray }) => {
   return (
     <TourTags>
       {descriptorArray.reduce((acc, item, index) => {
@@ -654,12 +592,7 @@ const Descriptors = ({ descriptorArray, mbTheme }) => {
         if (descriptor) {
           acc.push(
             <div key={index} className="tour-tag">
-              <Conditional if={mbTheme === THEMES.DEF_INTERIM}>
-                <Image url={icon} />
-              </Conditional>
-              <Conditional if={index !== 0 && mbTheme !== THEMES.DEF_INTERIM}>
-                <div className="bullet">•</div>
-              </Conditional>
+              <Image url={icon} />
               {descriptor.replace(/['"]+/g, '')}
             </div>
           );
@@ -844,7 +777,7 @@ const Product = (props) => {
         ref={moreDetailsRef}
         data-open="0"
         onClick={() => {
-          if (mbTheme === THEMES.DEF_INTERIM && isMobile) {
+          if (mbTheme !== THEMES.MIN_BLUE && isMobile) {
             addToAside({
               width: '100vw',
               children: (
@@ -892,10 +825,9 @@ const Product = (props) => {
       </div>
     );
   };
-  const { highlights, tabs } =
-    isMobile || mbTheme !== THEMES.DEF_INTERIM
-      ? { highlights: finalHighlights, tabs: [] }
-      : extractTabsFromHighlights(finalHighlights);
+  const { highlights, tabs } = isMobile
+    ? { highlights: finalHighlights, tabs: [] }
+    : extractTabsFromHighlights(finalHighlights);
   const hasHighlights =
     isLengthyArray(highlights) && highlights.filter((item) => item.text).length;
   const productBookingUrl =
@@ -913,14 +845,14 @@ const Product = (props) => {
     <StyledProductCard layout={layout}>
       <ProductHeader>
         <TitleWrapper hasBorderedTitle={hasBorderedTitle}>
-          <Conditional if={boosterTag && mbTheme === THEMES.DEF_INTERIM}>
+          <Conditional if={boosterTag && mbTheme !== THEMES.MIN_BLUE}>
             <BoosterTag>{boosterTag}</BoosterTag>
           </Conditional>
           <TourTitle>{cardTitle}</TourTitle>
         </TitleWrapper>
         <Conditional
           if={
-            mbTheme === THEMES.DEF_INTERIM &&
+            mbTheme !== THEMES.MIN_BLUE &&
             hasShortSummary &&
             (!expandContent || !isMobile)
           }
@@ -929,8 +861,8 @@ const Product = (props) => {
             <RichText render={finalShortSummary} />
           </ShortSummary>
         </Conditional>
-        <Conditional if={mbTheme !== THEMES.DEF_INTERIM}>
-          <Descriptors mbTheme={mbTheme} descriptorArray={descriptorsList} />
+        <Conditional if={mbTheme === THEMES.MIN_BLUE}>
+          <Descriptors descriptorArray={descriptorsList} />
         </Conditional>
         <Conditional if={hasSafetyFlag || isDFProduct}>
           <IconBoosters>
@@ -989,9 +921,7 @@ const Product = (props) => {
           </PriceContainer>
           <CTABlock
             isSticky={expandContent}
-            shouldOffset={
-              earliestAvailability?.startDate && mbTheme !== THEMES.DEF_INTERIM
-            }
+            shouldOffset={earliestAvailability && mbTheme === THEMES.MIN_BLUE}
           >
             <a
               target={isFetched && isMobile ? null : '_blank'}
@@ -1030,8 +960,8 @@ const Product = (props) => {
               </div>
             </NextAvailableBlock>
           </Conditional>
-          <Conditional if={mbTheme === THEMES.DEF_INTERIM}>
-            <Descriptors mbTheme={mbTheme} descriptorArray={descriptorsList} />
+          <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
+            <Descriptors descriptorArray={descriptorsList} />
           </Conditional>
         </CTAContainer>
       </ProductHeader>

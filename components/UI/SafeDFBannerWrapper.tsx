@@ -23,7 +23,7 @@ const Wrapper = styled.div`
     margin-top: ${({ marginTop }) => (marginTop ? marginTop : 0)}px;
   }
   ${({ theme }) =>
-    theme.theme === THEMES.DEF_INTERIM
+    theme.theme === THEMES.DEFAULT
       ? `
     @media (max-width: 768px) {
       margin-bottom: 0;
@@ -90,7 +90,7 @@ const SafeDFBannerWrapper = ({
   return (
     <Wrapper marginTop={marginTop}>
       <Split mobileLayout={'scroll'} count={hasSafe && !!dfExpiryDate ? 2 : 1}>
-        <Conditional if={mbTheme !== THEMES.DEF_INTERIM || !isMobile}>
+        <Conditional if={mbTheme !== THEMES.DEFAULT || !isMobile}>
           <Conditional if={hasSafe}>
             <InfoBanner
               cta={labels[lang].LISTICLES.KNOW_MORE}
@@ -120,7 +120,7 @@ const SafeDFBannerWrapper = ({
             />
           </Conditional>
         </Conditional>
-        <Conditional if={mbTheme === THEMES.DEF_INTERIM && isMobile}>
+        <Conditional if={mbTheme !== THEMES.MIN_BLUE && isMobile}>
           <Conditional if={hasSafe}>
             <IconCTA
               text={labels[lang].SAFE_EXPERIENCE.FLAG_TEXT}

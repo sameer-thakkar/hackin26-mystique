@@ -57,6 +57,8 @@ export const getProductCardLayout = ({
       };
       break;
     case THEMES.DEF_INTERIM:
+    case THEMES.DEFAULT:
+    default:
       layout = layout = {
         desktop: [
           'title line cta-combo',
@@ -81,30 +83,6 @@ export const getProductCardLayout = ({
         ],
       };
       break;
-    case THEMES.DEFAULT:
-    default:
-      layout = {
-        desktop: [
-          'title cta-combo',
-          'tags cta-combo',
-          hasIconBoosters && 'icon-booster cta-combo',
-          hasOffer && 'offer cta-combo',
-          hasV1Booster && 'booster cta-combo',
-          'line line',
-          'body body',
-        ],
-        mobile: [
-          'title',
-          'tags',
-          'price-block',
-          hasIconBoosters && 'icon-booster',
-          hasOffer && 'offer',
-          hasV1Booster && 'booster ',
-          'body',
-          'cta-block',
-          hasNextAvailable && 'next-available',
-        ],
-      };
   }
   layout = {
     mobile: layout.mobile.filter((row) => row),

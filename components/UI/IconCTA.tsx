@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { CHEVRON_LEFT } from 'assets/SvgIcons';
-import { THEMES } from 'constants/index';
 
 export const StyledIconCTA = styled.div`
   padding: 8px;
@@ -17,9 +16,7 @@ export const StyledIconCTA = styled.div`
   width: max-content;
   cursor: ${({ onClick }) => (onClick ? 'pointer' : '')};
   @media (max-width: 768px) {
-    border: 1px solid
-      ${({ colorScheme: cs, theme }) =>
-        theme.theme === THEMES.DEF_INTERIM ? cs.accent : 'none'};
+    border: 1px solid ${({ colorScheme: cs }) => cs.accent};
   }
 `;
 
