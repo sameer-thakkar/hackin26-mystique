@@ -104,11 +104,18 @@ const DiscountedFutureSidebar = ({
     lang,
     sidebarModal: { addToAside },
     nakedDomain,
+    biLink,
   } = useContext(MBContext);
   const { width } = useWindowSize();
   const isMobile = width < 768;
-  const bookURL = createBookingURL({ nakedDomain, lang, tgid });
-  const dfBookURL = createBookingURL({ nakedDomain, lang, tgid, df: true });
+  const bookURL = createBookingURL({ nakedDomain, lang, tgid, biLink });
+  const dfBookURL = createBookingURL({
+    nakedDomain,
+    lang,
+    tgid,
+    df: true,
+    biLink,
+  });
   const expiry = useLocalisedDate(
     getDFValidityFromTags(allTags),
     DATE_FORMAT_TYPES.SHORT

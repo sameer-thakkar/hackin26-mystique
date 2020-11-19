@@ -20,6 +20,7 @@ export const MBContext = createContext({
   isPreview: false,
   currencySymbolMap: {},
   noTrack: false,
+  biLink: '',
 });
 
 export const MBContextProvider = (props) => {
@@ -33,6 +34,7 @@ export const MBContextProvider = (props) => {
     isPreview,
     currencySymbolMap,
     noTrack,
+    biLink,
   } = props;
   const [sidebarModalStack, setSidebarModalStack] = useState([]);
 
@@ -80,6 +82,7 @@ export const MBContextProvider = (props) => {
         isPreview,
         currencySymbolMap,
         noTrack,
+        biLink,
       }}
     >
       {props.children}

@@ -76,6 +76,7 @@ export const MobileProductPage = (props) => {
 
   const {
     sidebarModal: { addToAside },
+    biLink,
   } = useContext(MBContext);
   const openDFSidebar = () => {
     addToAside({
@@ -232,6 +233,7 @@ export const MobileProductPage = (props) => {
             lang: currentLanguage,
             tgid,
             df: isDFOnlyProduct,
+            biLink,
           })}
           onClick={(e) => {
             if (isDFProduct && !isDFOnlyProduct) {

@@ -317,7 +317,7 @@ const DetailedProductCard = (props) => {
     props.closeDescription();
   };
   const mbContext = useContext(MBContext);
-  const { lang, nakedDomain } = mbContext;
+  const { lang, nakedDomain, biLink } = mbContext;
   const { allTours, tgidClicked, cardPosition } = props;
   const activeTour = allTours[tgidClicked];
   const rightBlocksCount = activeTour.contentBlocks.right.length;
@@ -476,6 +476,7 @@ const DetailedProductCard = (props) => {
                   lang,
                   tgid: tgidClicked,
                   df: isDFProduct,
+                  biLink,
                 })}
                 onClick={(e) => {
                   if (isDFProduct && !isDFOnlyProduct) {

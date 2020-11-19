@@ -698,12 +698,11 @@ const Product = (props) => {
     isMobile,
     isAmp,
   } = props;
-  const { mbTheme } = useContext(MBContext);
+  const { mbTheme, biLink } = useContext(MBContext);
   const [isContentOpen, toggleContentOpen] = useState(
     defaultOpen && mbTheme === THEMES.MIN_BLUE
   );
   const [showMoreDetailsInTabs, setShowMoreDetails] = useState(false);
-
   const onTabChange = (tab) => {
     setShowMoreDetails(tab.contents.length >= 3);
   };
@@ -896,7 +895,14 @@ const Product = (props) => {
       : extractTabsFromHighlights(finalHighlights);
   const hasHighlights =
     isLengthyArray(highlights) && highlights.filter((item) => item.text).length;
-
+  const productBookingUrl =
+    createBookingURL({
+      nakedDomain: bookingUrl,
+      lang: currentLanguage,
+      tgid,
+      df: isDFOnlyProduct,
+      biLink,
+    }) + (ctaUrlSuffix || '');
   const getProductCardElements = (expandContent) => (
     <StyledProductCard layout={layout}>
       <ProductHeader>
@@ -983,14 +989,7 @@ const Product = (props) => {
           >
             <a
               target={isFetched && isMobile ? null : '_blank'}
-              href={
-                createBookingURL({
-                  nakedDomain: bookingUrl,
-                  lang: currentLanguage,
-                  tgid,
-                  df: isDFOnlyProduct,
-                }) + (ctaUrlSuffix || '')
-              }
+              href={productBookingUrl}
             >
               <Button
                 className={`tour-book-now-cta`}

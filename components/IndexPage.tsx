@@ -31,7 +31,7 @@ import { uncategorizedToursListParser } from '../utils/dataParsers';
 import { MBContextProvider } from '../contexts/MBContext';
 import { toursTabSliceHandler } from './Slices';
 import { uaIsMobile } from '../utils/helper';
-import { isAmpUrl } from '../utils/urlUtils';
+import { isAmpUrl, removePageQuery } from '../utils/urlUtils';
 import 'lazysizes';
 import 'lazysizes/plugins/attrchange/ls.attrchange';
 import '../style/global.css';
@@ -48,7 +48,7 @@ const getValidUrlParams = (query) =>
     .trim();
 export default class Page extends React.Component<any, any> {
   static async getInitialProps(ctx) {
-    const { req, query, res } = ctx;
+    const { req, query, res, asPath } = ctx;
     const serverRequestStartTimestamp = Math.floor(new Date().getTime());
     const queryParamsString = getValidUrlParams(query);
     const pathname =
@@ -61,7 +61,7 @@ export default class Page extends React.Component<any, any> {
     const isPreview = req
       ? !!query.previewSession
       : window.location.search.includes('previewSession');
-
+    const { bi: biLink } = query;
     // Naked Domain to WWW Redirect.
     if (!isDev && req) {
       const { host } = req.headers;
@@ -156,6 +156,9 @@ export default class Page extends React.Component<any, any> {
           : window.location.href,
         isMobile,
         isPreview,
+        query,
+        asPath,
+        biLink,
       };
     } catch (e) {
       console.log(e);
@@ -697,6 +700,18 @@ export default class Page extends React.Component<any, any> {
     });
   }
 
+  constructor(props) {
+    super(props);
+    const { query, asPath } = props;
+    const { bi } = query;
+    if (typeof window != 'undefined') {
+      if (bi) {
+        sessionStorage.setItem('biLink', bi);
+        removePageQuery(query, 'bi', asPath);
+      }
+    }
+  }
+
   render() {
     const {
       CMSContent,
@@ -718,6 +733,7 @@ export default class Page extends React.Component<any, any> {
       isPreview,
       currencySymbolMap,
       noTrack,
+      biLink,
     } = this.props;
 
     if (statusCode) {
@@ -809,6 +825,7 @@ export default class Page extends React.Component<any, any> {
               isPreview={isPreview}
               currencySymbolMap={currencySymbolMap}
               noTrack={!!noTrack || isDev}
+              biLink={biLink}
             >
               {Component}
             </MBContextProvider>

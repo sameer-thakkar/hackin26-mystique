@@ -29,6 +29,7 @@
     "next": "^9.0.4",
     "prismic-javascript": "^3.0.0",
     "prismic-reactjs": "^1.0.1",
+    "query-string": "^6.13.6",
     "react": "^16.9.0",
     "react-copy-to-clipboard": "^5.0.1",
     "react-datepicker": "^3.0.0",

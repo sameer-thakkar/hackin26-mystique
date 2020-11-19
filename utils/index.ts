@@ -71,13 +71,20 @@ export const getDFValidityFromTags = (tags) => {
 export const discountOf = ({ originalPrice: a, finalPrice: b }) =>
   a > b ? (((a - b) / a) * 100).toFixed(0) : 0;
 
-export const createBookingURL = ({ lang, nakedDomain, tgid, df = false }) => {
+export const createBookingURL = ({
+  lang,
+  nakedDomain,
+  tgid,
+  df = false,
+  biLink,
+}) => {
   const langRouteParam =
     lang && lang !== 'en' ? '/' + FULL_LANGUAGE_MAP[lang].bookingFlow : '';
   const urlObject = new URL(
     `https://book.${nakedDomain}${langRouteParam}/book/${tgid}`
   );
   if (df) urlObject.searchParams.set('isDiscountedFutures', 'true');
+  if (biLink) urlObject.searchParams.set('bi', biLink);
   return urlObject.toString();
 };
 

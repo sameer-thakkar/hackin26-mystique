@@ -477,7 +477,7 @@ const TourComparisonTable = (props) => {
   const mbContext = useContext(MBContext);
   const isAmp = useAmp();
   const url = envContext.windowUrl;
-  const { uid, nakedDomain } = mbContext;
+  const { uid, nakedDomain, biLink } = mbContext;
   const lang = mbContext.lang || 'en';
   const currentHost = !envContext.isDev ? url : parse(uid, true).pathname;
   const hostName = currentHost.includes('stage')
@@ -594,6 +594,7 @@ const TourComparisonTable = (props) => {
                       nakedDomain,
                       lang,
                       tgid: tour.tgid,
+                      biLink,
                     }),
                   },
                 };
@@ -701,7 +702,12 @@ const TourComparisonTable = (props) => {
             {content_normalized_tours.map((tour, index) => {
               const ctaProps = {
                 link: {
-                  url: createBookingURL({ nakedDomain, lang, tgid: tour.tgid }),
+                  url: createBookingURL({
+                    nakedDomain,
+                    lang,
+                    tgid: tour.tgid,
+                    biLink,
+                  }),
                 },
               };
               return (

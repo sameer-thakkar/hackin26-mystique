@@ -126,10 +126,11 @@ const CustomLinkedTours = ({
       });
   }, [tgids]);
 
-  const { lang, design, nakedDomain, currencySymbolMap } = useContext(
+  const { lang, design, nakedDomain, currencySymbolMap, biLink } = useContext(
     MBContext
   );
-  const defaultURL = (tgid) => createBookingURL({ nakedDomain, lang, tgid });
+  const defaultURL = (tgid) =>
+    createBookingURL({ nakedDomain, lang, tgid, biLink });
   return (
     <StyledCustomLinkedTours design={design}>
       <RichContent render={content} />
