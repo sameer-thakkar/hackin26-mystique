@@ -76,14 +76,21 @@ export const createBookingURL = ({
   nakedDomain,
   tgid,
   df = false,
+  date = null,
+  tourId = null,
   biLink,
 }) => {
   const langRouteParam =
     lang && lang !== 'en' ? '/' + FULL_LANGUAGE_MAP[lang].bookingFlow : '';
   const urlObject = new URL(
-    `https://book.${nakedDomain}${langRouteParam}/book/${tgid}`
+    `https://book.${nakedDomain}${langRouteParam}/book/${tgid}${
+      date ? '/checkout' : ''
+    }`
   );
   if (df) urlObject.searchParams.set('isDiscountedFutures', 'true');
+  if (date?.startDate) urlObject.searchParams.set('date', date?.startDate);
+  if (date?.startDate) urlObject.searchParams.set('variantId', tourId);
+  if (date?.startDate) urlObject.searchParams.set('time', date?.startTime);
   if (biLink) urlObject.searchParams.set('bi', biLink);
   return urlObject.toString();
 };

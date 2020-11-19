@@ -133,10 +133,11 @@ class MicrositeV1 extends Component<any, any> {
 
       const {
         enable_earliest_availability: enableEarliestAvailability,
+        instant_checkout: instantCheckout,
       } = this.props.data.data;
       const showEarliestAvailability = enableEarliestAvailability === 'Yes';
 
-      if (showEarliestAvailability) {
+      if (showEarliestAvailability || instantCheckout) {
         const requestQueue = uncategorizedTours[0].items.map((tour) =>
           fetch(`/api/tours/v5/tour-group/inventory/get/${tour.tgid}`)
             .then((res) => res.json())
@@ -147,7 +148,10 @@ class MicrositeV1 extends Component<any, any> {
             const tgid = uncategorizedTours[0].items[index].tgid;
             return {
               ...acc,
-              [tgid]: tour?.inventoryList?.[0]?.startDate || '',
+              [tgid]: {
+                startDate: tour?.inventoryList?.[0]?.startDate || '',
+                startTime: tour?.inventoryList?.[0]?.startTime || '',
+              },
             };
           }, {})
         );
@@ -409,6 +413,7 @@ class MicrositeV1 extends Component<any, any> {
     const showCovid19Alert = this.props.data?.data?.show_covid19_alert;
     const scorpioData = this.props.scorpioData;
     const CMSData = this.props.data.data;
+    const { instant_checkout: instantCheckout = false } = CMSData;
     const allTours = allToursParser(CMSData, scorpioData, pricingData, isAmp);
 
     let finalBannerImages = bannerImages.map((banner) => {
@@ -598,6 +603,7 @@ class MicrositeV1 extends Component<any, any> {
               ranking={tourRanking}
               mbTheme={mbTheme}
               allToursTabContent={allTours}
+              instantCheckout={instantCheckout}
             />
           ) : null}
           <Conditional

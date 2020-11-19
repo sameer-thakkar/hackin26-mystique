@@ -101,6 +101,7 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
       mbTheme,
       allToursTabContent,
       isAmp,
+      instantCheckout,
     } = this.props;
     const orderedTGIDRanking = csvTgidToArray(ranking);
     const orderedTours = orderedTGIDRanking
@@ -163,6 +164,7 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
                   shortSummary={tour.short_summary}
                   boosterTag={tour.tag_booster}
                   numberOfTours={orderedTours.length}
+                  instantCheckout={instantCheckout}
                 />
                 <Conditional if={mbTheme === THEMES.MIN_BLUE}>
                   <HorizontalLine colorProp={COLORS.GREY_G6} />

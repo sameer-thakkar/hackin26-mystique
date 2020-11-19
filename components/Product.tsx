@@ -228,6 +228,7 @@ const TourTags = styled.div`
       grid-row-gap: 12px;
     `
         : ``}
+  }
 `;
 
 export const CTAContainer = styled.div`
@@ -689,7 +690,7 @@ const Product = (props) => {
     isFetched,
     scorpioData,
     host,
-    earliestAvailability,
+    earliestAvailability = {},
     ctaUrlSuffix,
     isScratchPriceEnabled,
     booster,
@@ -697,6 +698,7 @@ const Product = (props) => {
     boosterTag,
     isMobile,
     isAmp,
+    instantCheckout,
   } = props;
   const { mbTheme, biLink } = useContext(MBContext);
   const [isContentOpen, toggleContentOpen] = useState(
@@ -788,6 +790,7 @@ const Product = (props) => {
     });
   };
   const finalPrice = listingPrice || dfListingPrice;
+  const { tourId } = finalPrice || {};
   const openSafeSidebar = () => {
     addToAside({
       width: '41.06vw',
@@ -818,7 +821,7 @@ const Product = (props) => {
     isDFProduct,
     mbTheme,
     hasShortSummary: hasShortSummary,
-    hasNextAvailable: earliestAvailability,
+    hasNextAvailable: earliestAvailability?.startDate,
   });
   const getMoreDetailsButton = () => {
     const innerContent =
@@ -900,8 +903,11 @@ const Product = (props) => {
       nakedDomain: bookingUrl,
       lang: currentLanguage,
       tgid,
+      tourId,
       df: isDFOnlyProduct,
       biLink,
+      date:
+        instantCheckout && earliestAvailability ? earliestAvailability : null,
     }) + (ctaUrlSuffix || '');
   const getProductCardElements = (expandContent) => (
     <StyledProductCard layout={layout}>
@@ -984,7 +990,7 @@ const Product = (props) => {
           <CTABlock
             isSticky={expandContent}
             shouldOffset={
-              earliestAvailability && mbTheme !== THEMES.DEF_INTERIM
+              earliestAvailability?.startDate && mbTheme !== THEMES.DEF_INTERIM
             }
           >
             <a
@@ -1015,12 +1021,12 @@ const Product = (props) => {
               </Button>
             </a>
           </CTABlock>
-          <Conditional if={earliestAvailability}>
+          <Conditional if={earliestAvailability?.startDate}>
             <NextAvailableBlock>
               <div className="icon">{CALENDAR}</div>
               <div className="available-text">
                 {`${labels[currentLanguage].NEXT_AVAILABLE}`}
-                {getDate(earliestAvailability, currentLanguage)}
+                {getDate(earliestAvailability?.startDate, currentLanguage)}
               </div>
             </NextAvailableBlock>
           </Conditional>
