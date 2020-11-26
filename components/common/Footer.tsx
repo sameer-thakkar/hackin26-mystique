@@ -252,7 +252,6 @@ const Footer: React.FC<FooterProps> = ({
   showDisclaimer = false,
   disclaimerText = '',
   hasPoweredByHeadoutLogo = false,
-  microbrandType = '',
   invertLogoColor = false,
   slices = [],
   themeOverride = THEMES.DEFAULT,
@@ -299,8 +298,7 @@ const Footer: React.FC<FooterProps> = ({
                     ? POWERED_BY_HEADOUT
                     : null}
                 </div>
-                {(microbrandType === 'C1' || showDisclaimer) &&
-                finalThemeName !== THEMES.MIN_BLUE ? (
+                {showDisclaimer && finalThemeName !== THEMES.MIN_BLUE ? (
                   <div className="disclaimer-text">
                     {disclaimerText
                       ? disclaimerText

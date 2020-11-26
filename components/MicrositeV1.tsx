@@ -244,7 +244,7 @@ class MicrositeV1 extends Component<any, any> {
       images: bannerImages,
       heading: bannerHeading,
       banner_subtext: bannerSubtext,
-      cta_text: bannerCtaText,
+      banner_cta_text: bannerCtaText,
       page_url: pageUrl,
       auto_banner: autoBanner,
       hide_banner_cta: hideBannerCTA,
@@ -344,8 +344,7 @@ class MicrositeV1 extends Component<any, any> {
       commonFooter?.data?.microbrand_type;
     const showDisclaimer =
       this.props.data.data.show_disclaimer ||
-      commonFooter?.data?.show_disclaimer ||
-      !!disclaimerText;
+      commonFooter?.data?.show_disclaimer;
     const microbrandCards = this.props.data.data.microbrand_cards;
     const microbrandCardsHeading = this.props.data.data.microbrand_cards_heading
       ? this.props.data.data.microbrand_cards_heading

@@ -112,6 +112,7 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
           );
         })
       : tours;
+    const finalToursList = orderedTours.filter((t) => !!scorpioData[t.tgid]);
     return (
       <StyledUncategorizedContainer>
         <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
@@ -125,52 +126,50 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
           </div>
         </Conditional>
         <ProductContainer>
-          {orderedTours
-            .filter((t) => !!scorpioData[t.tgid])
-            .map((tour, index) => (
-              <>
-                <Product
-                  key={index}
-                  tgid={tour.tgid}
-                  earliestAvailability={tour.earliestAvailability}
-                  tid={tour.tour_variant_id}
-                  title={tour.tour_title_override}
-                  descriptors={tour.marketing_highlights_override}
-                  highlights={tour.tour_description_override}
-                  scorpioData={scorpioData?.[tour.tgid]}
-                  tourPrices={tourPrices}
-                  uid={uid}
-                  currentLanguage={currentLanguage}
-                  bookNowText={bookNowText}
-                  showLessText={showLessText}
-                  readMoreText={readMoreText}
-                  productOffer={productOffer}
-                  hasOffer={hasOffer}
-                  togglePopup={togglePopup}
-                  offerId={tour.offer__free_tour?.id}
-                  popupState={popupState}
-                  isMobile={isMobile}
-                  isFetched={isFetched}
-                  isAmp={isAmp}
-                  pageUrl={pageUrl}
-                  host={host}
-                  ctaUrlSuffix={tour.cta_url_suffix || ''}
-                  isScratchPriceEnabled={tour.show_scratch_price === 'Yes'}
-                  analytics={analytics}
-                  position={index + 1}
-                  booster={tour.product_booster}
-                  defaultOpen={orderedTours.length === 1}
-                  allToursTabContent={allToursTabContent?.[tour.tgid] || {}}
-                  shortSummary={tour.short_summary}
-                  boosterTag={tour.tag_booster}
-                  numberOfTours={orderedTours.length}
-                  instantCheckout={instantCheckout}
-                />
-                <Conditional if={mbTheme === THEMES.MIN_BLUE}>
-                  <HorizontalLine colorProp={COLORS.GREY_G6} />
-                </Conditional>
-              </>
-            ))}
+          {finalToursList.map((tour, index) => (
+            <>
+              <Product
+                key={index}
+                tgid={tour.tgid}
+                earliestAvailability={tour.earliestAvailability}
+                tid={tour.tour_variant_id}
+                title={tour.tour_title_override}
+                descriptors={tour.marketing_highlights_override}
+                highlights={tour.tour_description_override}
+                scorpioData={scorpioData?.[tour.tgid]}
+                tourPrices={tourPrices}
+                uid={uid}
+                currentLanguage={currentLanguage}
+                bookNowText={bookNowText}
+                showLessText={showLessText}
+                readMoreText={readMoreText}
+                productOffer={productOffer}
+                hasOffer={hasOffer}
+                togglePopup={togglePopup}
+                offerId={tour.offer__free_tour?.id}
+                popupState={popupState}
+                isMobile={isMobile}
+                isFetched={isFetched}
+                isAmp={isAmp}
+                pageUrl={pageUrl}
+                host={host}
+                ctaUrlSuffix={tour.cta_url_suffix || ''}
+                isScratchPriceEnabled={tour.show_scratch_price === 'Yes'}
+                analytics={analytics}
+                position={index + 1}
+                booster={tour.product_booster}
+                defaultOpen={finalToursList.length === 1}
+                allToursTabContent={allToursTabContent?.[tour.tgid] || {}}
+                shortSummary={tour.short_summary}
+                boosterTag={tour.tag_booster}
+                numberOfTours={orderedTours.length}
+                instantCheckout={instantCheckout}
+              />
+              <Conditional if={mbTheme === THEMES.MIN_BLUE}>
+                <HorizontalLine colorProp={COLORS.GREY_G6} />
+              </Conditional>
+            </>
+          ))}
         </ProductContainer>
       </StyledUncategorizedContainer>
     );

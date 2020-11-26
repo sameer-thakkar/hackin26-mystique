@@ -429,6 +429,7 @@ export default class Banner extends Component<any, any> {
       maxDfDiscount = 0,
       dfExpiryDate,
       bannerSubtext,
+      bannerCtaText = '',
     } = this.props;
     const { isClient } = this.state;
     const captions = (
@@ -453,7 +454,7 @@ export default class Banner extends Component<any, any> {
                 onClick={this.scrollTicketSection}
                 on="tap:tour-list-heading.scrollTo(duration='1200', position='top')"
               >
-                {labels[currentLanguage].BANNER_CTA}
+                {bannerCtaText || labels[currentLanguage].BANNER_CTA}
               </Button>
             </ButtonWrapper>
           )}

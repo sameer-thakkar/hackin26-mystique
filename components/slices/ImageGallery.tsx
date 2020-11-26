@@ -2,7 +2,7 @@ import { RichText } from 'prismic-reactjs';
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { COLORS, SOLEIL } from 'constants/ui-constants';
-import { CLOSE_WHITE } from 'assets/SvgIcons';
+import { CHEVRON_LEFT_CIRCLE, CLOSE_WHITE } from 'assets/SvgIcons';
 import { stringIdfy } from 'utils/helper';
 import Swiper from 'components/Swiper';
 import Image from 'UI/Image';
@@ -47,7 +47,21 @@ const StyledImageGallery = styled.div`
       width: 32px;
     }
   }
-  .btn-right {
+  .button-right,
+  .button-left {
+    position: absolute;
+    top: 50%;
+    display: flex;
+    cursor: pointer;
+    left: -16px;
+    transform: translateY(-50%);
+  }
+  .swiper-button-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  .btn-right,
+  .button-right {
     left: unset;
     right: -16px;
     transform: translateY(-50%) rotate(180deg);
@@ -244,7 +258,7 @@ const LightboxImage = styled.div`
       height: 100%;
     }
     ${Content} {
-      padding: 20px 16px;z
+      padding: 20px 16px;
     }
   }
 `;
@@ -345,12 +359,9 @@ const ImageGallery = (props) => {
     [lightboxSwiper]
   );
 
-  const updateZoom = useCallback(
-    (scale) => {
-      setZoomed(scale != 1);
-    },
-    [lightboxSwiper]
-  );
+  const updateZoom = useCallback((scale) => {
+    setZoomed(scale != 1);
+  }, []);
 
   useEffect(() => {
     if (lightboxSwiper !== null) {
@@ -364,7 +375,7 @@ const ImageGallery = (props) => {
         lightboxSwiper.off('zoomChange', updateZoom);
       }
     };
-  }, [lightboxSwiper, updateIndex, getSwiper]);
+  }, [lightboxSwiper, updateIndex, getSwiper, updateZoom]);
 
   const swiperOpts = {
     slidesPerView: isMobile ? 2.1 : 4,
@@ -373,10 +384,6 @@ const ImageGallery = (props) => {
     freeMode: isMobile ? true : false,
     shouldSwiperUpdate: true,
     freeModeMomentum: 2,
-    navigation: {
-      nextEl: '.btn-right',
-      prevEl: '.btn-left',
-    },
   };
 
   const swiperLightBoxOpts = {
@@ -406,6 +413,11 @@ const ImageGallery = (props) => {
 
   const activeImage = images[initialSlide];
   const fullImageHeading = RichText.asText(activeImage.heading);
+
+  const galleryOpts = {
+    nextEl: '.button-right',
+    prevEl: '.button-left',
+  };
 
   return (
     <StyledImageGallery>
@@ -437,7 +449,16 @@ const ImageGallery = (props) => {
       ) : null}
       <GallerySwiper>
         <div className="swiper">
-          <Swiper {...swiperOpts}>
+          <Swiper
+            {...galleryOpts}
+            renderPrevButton={() => (
+              <div className="button-right">{CHEVRON_LEFT_CIRCLE}</div>
+            )}
+            renderNextButton={() => (
+              <div className="button-left">{CHEVRON_LEFT_CIRCLE}</div>
+            )}
+            {...swiperOpts}
+          >
             {images.map((image, index) => {
               const caption = RichText.asText(image.heading);
               return (

@@ -303,7 +303,7 @@ const ProductBody = styled.div`
     ${({ collapsed, offsetToShow }) =>
       collapsed
         ? `
-    *:not(div):nth-child(n + 4),
+    *:not(div):nth-child(n + ${Math.max(3, 3 + offsetToShow)}),
     ul li:nth-child(n + ${Math.max(3, 3 + offsetToShow)}) {
       display: none;
     }
@@ -324,12 +324,12 @@ const ProductBody = styled.div`
     .show-more-information{
       p:nth-child(1) {
               display: block;
-            }
-            ul {
-              li:nth-child(n + 2) {
-                display: list-item;
-              }
-            }
+      }
+      ul {
+        li:nth-child(n + 2) {
+          display: list-item;
+        }
+      }
     }
     .tour-description {
       ${({ theme }) => theme.productCards.regularFontSettings.mobile}
@@ -634,9 +634,7 @@ const Product = (props) => {
     instantCheckout,
   } = props;
   const { mbTheme, biLink } = useContext(MBContext);
-  const [isContentOpen, toggleContentOpen] = useState(
-    defaultOpen && mbTheme === THEMES.MIN_BLUE
-  );
+  const [isContentOpen, toggleContentOpen] = useState(defaultOpen);
   const [showMoreDetailsInTabs, setShowMoreDetails] = useState(false);
   const onTabChange = (tab) => {
     setShowMoreDetails(tab.contents.length >= 3);

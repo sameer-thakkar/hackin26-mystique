@@ -9,8 +9,6 @@ const StyledBackground = styled.div`
   background: ${({ colorProp }) => colorProp};
   text-align: ${({ textCenter }) => (textCenter ? 'center' : 'initial')};
   font-family: ${SOLEIL.FONT_STACK};
-  font-size: 18px;
-  line-height: 26px;
 `;
 
 /**

@@ -267,11 +267,14 @@ class MicrositeV2 extends Component<any, any> {
       themeOverride === THEMES.INHERIT
         ? commonFooterProps?.theme_override
         : themeOverride;
+    const { disclaimer, show_disclaimer } = this.props.data.data;
     const MBData = {
       footer: {
         favicon,
         logo: footer_logo.url ? footer_logo : footer_logo_link,
         themeOverride: themeOverride || THEMES.INHERIT,
+        show_disclaimer,
+        disclaimer,
         ...commonFooterProps,
         powered_by_superbrand:
           powered_by_superbrand || commonFooter?.data?.powered_by_superbrand,

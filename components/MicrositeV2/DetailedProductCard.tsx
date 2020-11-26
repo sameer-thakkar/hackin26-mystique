@@ -144,42 +144,15 @@ const DetailedDescriptionCard = styled.div`
     grid-column: 1 / 3;
   }
 
-  .desc-price {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-  }
-
-  .desc-final-price,
-  .from-text {
-    font-family: ${SOLEIL.FONT_STACK};
-    font-size: 20px;
-    line-height: 20px;
-    color: ${COLORS.TWO_BLACK};
-    font-weight: ${SOLEIL.SEMIBOLD};
-  }
-  .price-wrapper {
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-column-gap: 8px;
-    align-items: end;
-  }
-
-  .from-text {
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 4px;
-    line-height: 18px;
-    text-transform: lowercase;
-  }
-
-  .desc-scratch-price {
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.REGULAR};
-    font-size: 14px;
-    line-height: 20px;
-    text-decoration-line: line-through;
-    color: ${COLORS.FOUR_BLACK};
+  .desc-cta-price {
+    .tour-scratch-price {
+      font-size: 14px;
+      line-height: 18px;
+    }
+    .tour-price {
+      font-size: 20px;
+      line-height: 20px;
+    }
   }
 
   .desc-book-now-cta {
@@ -188,7 +161,7 @@ const DetailedDescriptionCard = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    min-width: 180px;
+    min-width: 150px;
     padding: 16px;
   }
 
@@ -457,17 +430,12 @@ const DetailedProductCard = (props) => {
               );
             })}
             <div className="desc-cta-price">
-              <div className="desc-price">
-                <span className="from-text">{labels[lang].FROM}</span>
-                <div className="price-wrapper">
-                  <PriceBlock
-                    prefix={false}
-                    showScratchPrice={true}
-                    lang={lang}
-                    price={listingPrice || dfListingPrice}
-                  />
-                </div>
-              </div>
+              <PriceBlock
+                prefix={true}
+                showScratchPrice={true}
+                lang={lang}
+                price={listingPrice || dfListingPrice}
+              />
               <a
                 target="_blank"
                 rel="noopener noreferrer"
