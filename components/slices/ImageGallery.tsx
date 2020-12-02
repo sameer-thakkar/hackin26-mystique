@@ -415,8 +415,10 @@ const ImageGallery = (props) => {
   const fullImageHeading = RichText.asText(activeImage.heading);
 
   const galleryOpts = {
-    nextEl: '.button-right',
-    prevEl: '.button-left',
+    navigation: {
+      nextEl: '.button-right',
+      prevEl: '.button-left',
+    },
   };
 
   return (
@@ -450,7 +452,6 @@ const ImageGallery = (props) => {
       <GallerySwiper>
         <div className="swiper">
           <Swiper
-            {...galleryOpts}
             renderPrevButton={() => (
               <div className="button-right">{CHEVRON_LEFT_CIRCLE}</div>
             )}
@@ -458,6 +459,7 @@ const ImageGallery = (props) => {
               <div className="button-left">{CHEVRON_LEFT_CIRCLE}</div>
             )}
             {...swiperOpts}
+            {...galleryOpts}
           >
             {images.map((image, index) => {
               const caption = RichText.asText(image.heading);

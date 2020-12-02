@@ -299,13 +299,9 @@ const Card: React.FC<CardProps> = ({
   return (
     <StyledCard
       {...(linkType === 'Full Card' && {
-        onClick: () => {
-          if (link?.target === '_blank') {
-            window.open(link?.url, '_blank');
-          } else {
-            window.location.href = link?.url;
-          }
-        },
+        target: link?.target,
+        href: link?.url,
+        as: 'a',
         link: true,
       })}
       isMobile={isMobile}

@@ -123,6 +123,9 @@ const TitleWrapper = styled.div`
             border-bottom: 1px solid ${COLORS.GREY_G6};
             padding-bottom: 16px;
             margin-bottom: -8px;
+            @media(max-width: 768px) {
+              border: none;
+            }
           `
       : ''}
 `;
@@ -300,8 +303,8 @@ const ProductBody = styled.div`
     opacity: 0.99;
     display: grid;
     grid-gap: 0;
-    ${({ collapsed, offsetToShow }) =>
-      collapsed
+    ${({ collapsed, offsetToShow, defaultOpen }) =>
+      collapsed && !defaultOpen
         ? `
     *:not(div):nth-child(n + ${Math.max(3, 3 + offsetToShow)}),
     ul li:nth-child(n + ${Math.max(3, 3 + offsetToShow)}) {
@@ -334,8 +337,8 @@ const ProductBody = styled.div`
     .tour-description {
       ${({ theme }) => theme.productCards.regularFontSettings.mobile}
     }
-    ${({ collapsed }) =>
-      collapsed
+    ${({ collapsed, defaultOpen }) =>
+      collapsed && !defaultOpen
         ? `
         .tour-description {
           display: none;
@@ -634,8 +637,10 @@ const Product = (props) => {
     instantCheckout,
   } = props;
   const { mbTheme, biLink } = useContext(MBContext);
-  const [isContentOpen, toggleContentOpen] = useState(defaultOpen);
-  const [showMoreDetailsInTabs, setShowMoreDetails] = useState(false);
+  const [isContentOpen, toggleContentOpen] = useState(defaultOpen && !isMobile);
+  const [showMoreDetailsInTabs, setShowMoreDetails] = useState(
+    defaultOpen || false
+  );
   const onTabChange = (tab) => {
     setShowMoreDetails(tab.contents.length >= 3);
   };
@@ -967,11 +972,16 @@ const Product = (props) => {
       <ProductBody
         collapsed={!expandContent}
         offsetToShow={descriptorsList.length - 3}
+        defaultOpen={defaultOpen}
       >
         <div
           className="tour-description"
           id={`tour-description-${position}`}
-          onClick={!isMobile ? () => toggleContentOpen(!isContentOpen) : null}
+          onClick={
+            !isMobile && !defaultOpen
+              ? () => toggleContentOpen(!isContentOpen)
+              : null
+          }
         >
           <Conditional if={hasHighlights}>
             <RichText
@@ -988,7 +998,10 @@ const Product = (props) => {
           </Conditional>
         </div>
         <Conditional
-          if={highlights.flat()?.length >= 3 || showMoreDetailsInTabs}
+          if={
+            (highlights.flat()?.length >= 3 || showMoreDetailsInTabs) &&
+            !defaultOpen
+          }
         >
           {isAmp ? getMoreDetailsButtonForAMP() : getMoreDetailsButton()}
         </Conditional>

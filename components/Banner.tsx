@@ -526,7 +526,7 @@ export default class Banner extends Component<any, any> {
             <Conditional if={!hideCTA}>
               <ButtonWrapper>
                 <Button type="whiteBordered" onClick={this.scrollTicketSection}>
-                  {labels[currentLanguage].BANNER_CTA}
+                  {bannerCtaText || labels[currentLanguage].BANNER_CTA}
                 </Button>
               </ButtonWrapper>
             </Conditional>
