@@ -606,6 +606,7 @@ class MicrositeV1 extends Component<any, any> {
               mbTheme={mbTheme}
               allToursTabContent={allTours}
               instantCheckout={instantCheckout}
+              showEarliestAvailability={showEarliestAvailability}
             />
           ) : null}
           <Conditional

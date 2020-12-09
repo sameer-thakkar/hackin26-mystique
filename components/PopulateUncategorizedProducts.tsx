@@ -102,6 +102,7 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
       allToursTabContent,
       isAmp,
       instantCheckout,
+      showEarliestAvailability,
     } = this.props;
     const orderedTGIDRanking = csvTgidToArray(ranking);
     const orderedTours = orderedTGIDRanking
@@ -132,6 +133,7 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
                 key={index}
                 tgid={tour.tgid}
                 earliestAvailability={tour.earliestAvailability}
+                showEarliestAvailability={showEarliestAvailability}
                 tid={tour.tour_variant_id}
                 title={tour.tour_title_override}
                 descriptors={tour.marketing_highlights_override}
