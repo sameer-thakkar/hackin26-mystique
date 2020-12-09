@@ -101,7 +101,6 @@ const StyledHeaderElements = styled.div`
   justify-self: right;
   display: flex;
   align-items: center;
-  margin-right: 20px;
   * {
     color: ${({ theme: { primaryBGText } }) =>
       primaryBGText ? primaryBGText : COLORS.FOUR_BLACK};

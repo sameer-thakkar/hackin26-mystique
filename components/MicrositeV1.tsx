@@ -315,6 +315,8 @@ class MicrositeV1 extends Component<any, any> {
     } = withCommonHeaderOverrides;
     const { url: logoUrl } = linkedLogo;
     const { url: uploadedLogoUrl, alt: altText } = uploadedLogo;
+    const CMSData = this.props.data.data;
+    const { instant_checkout: instantCheckout = false } = CMSData;
     const dropdownLinks =
       dropdown_menu?.reduce((acc, item) => {
         if (item.link)
@@ -379,12 +381,15 @@ class MicrositeV1 extends Component<any, any> {
         });
     }
 
-    const uncategorizedToursData = showEarliestAvailability
-      ? uncategorizedToursList.map((tour) => ({
-          ...tour,
-          earliestAvailability: this.state.earliestAvailabilityQueue[tour.tgid],
-        }))
-      : uncategorizedToursList;
+    const uncategorizedToursData =
+      showEarliestAvailability || instantCheckout
+        ? uncategorizedToursList.map((tour) => ({
+            ...tour,
+            earliestAvailability: this.state.earliestAvailabilityQueue[
+              tour.tgid
+            ],
+          }))
+        : uncategorizedToursList;
 
     const orderedUncategorizedTours = tgidToScroll
       ? uncategorizedToursData.reduce((accum = [], item) => {
@@ -411,8 +416,6 @@ class MicrositeV1 extends Component<any, any> {
     };
     const showCovid19Alert = this.props.data?.data?.show_covid19_alert;
     const scorpioData = this.props.scorpioData;
-    const CMSData = this.props.data.data;
-    const { instant_checkout: instantCheckout = false } = CMSData;
     const allTours = allToursParser(CMSData, scorpioData, pricingData, isAmp);
 
     let finalBannerImages = bannerImages.map((banner) => {

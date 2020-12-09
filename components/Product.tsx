@@ -292,7 +292,7 @@ const ProductBody = styled.div`
   grid-row-gap: 8px;
   overflow-anchor: none;
   .tour-description {
-    cursor: pointer;
+    cursor: ${({ hasReadMore }) => (hasReadMore ? 'pointer' : '')};
     p {
       margin: 0;
       font-weight: ${SOLEIL.MEDIUM};
@@ -635,6 +635,7 @@ const Product = (props) => {
     isMobile,
     isAmp,
     instantCheckout,
+    showEarliestAvailability,
   } = props;
   const { mbTheme, biLink } = useContext(MBContext);
   const [isContentOpen, toggleContentOpen] = useState(defaultOpen && !isMobile);
@@ -844,6 +845,8 @@ const Product = (props) => {
       date:
         instantCheckout && earliestAvailability ? earliestAvailability : null,
     }) + (ctaUrlSuffix || '');
+  const hasReadMore =
+    (highlights.flat()?.length >= 3 || showMoreDetailsInTabs) && !defaultOpen;
   const getProductCardElements = (expandContent) => (
     <StyledProductCard layout={layout}>
       <ProductHeader>
@@ -929,6 +932,7 @@ const Product = (props) => {
             <a
               target={isFetched && isMobile ? null : '_blank'}
               href={productBookingUrl}
+              rel="nofollow"
             >
               <Button
                 className={`tour-book-now-cta`}
@@ -954,7 +958,9 @@ const Product = (props) => {
               </Button>
             </a>
           </CTABlock>
-          <Conditional if={earliestAvailability?.startDate}>
+          <Conditional
+            if={showEarliestAvailability && earliestAvailability?.startDate}
+          >
             <NextAvailableBlock>
               <div className="icon">{CALENDAR}</div>
               <div className="available-text">
@@ -970,6 +976,7 @@ const Product = (props) => {
       </ProductHeader>
       {!isMobile && <HorizontalLine colorProp={COLORS.GREY_G6} />}
       <ProductBody
+        hasReadMore={hasReadMore}
         collapsed={!expandContent}
         offsetToShow={descriptorsList.length - 3}
         defaultOpen={defaultOpen}
@@ -997,12 +1004,7 @@ const Product = (props) => {
             />
           </Conditional>
         </div>
-        <Conditional
-          if={
-            (highlights.flat()?.length >= 3 || showMoreDetailsInTabs) &&
-            !defaultOpen
-          }
-        >
+        <Conditional if={hasReadMore}>
           {isAmp ? getMoreDetailsButtonForAMP() : getMoreDetailsButton()}
         </Conditional>
       </ProductBody>
