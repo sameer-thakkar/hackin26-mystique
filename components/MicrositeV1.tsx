@@ -264,8 +264,8 @@ class MicrositeV1 extends Component<any, any> {
       this.props.data.data.footer_logo.url ||
       this.props.data.data.footer_logo_link?.url;
     const footerPoweredByHeadout =
-      this.props.data.data.powered_by_superbrand ||
       this.props.data.refs?.commonFooter?.data?.powered_by_superbrand ||
+      this.props.data.data.powered_by_superbrand ||
       false;
 
     const footerLogoAlt =
@@ -339,14 +339,14 @@ class MicrositeV1 extends Component<any, any> {
       group_booking_excluded_tgids: groupBookingExcludedTgids,
     } = this.props.data.data;
     const disclaimerText =
-      RichText.asText(this.props.data.data.disclaimer) ||
-      commonFooter?.data?.disclaimer_text;
+      commonFooter?.data?.disclaimer_text ||
+      RichText.asText(this.props.data.data.disclaimer);
     const microbrandType =
-      this.props.data.data.microbrand_type ||
-      commonFooter?.data?.microbrand_type;
+      commonFooter?.data?.microbrand_type ||
+      this.props.data.data.microbrand_type;
     const showDisclaimer =
-      this.props.data.data.show_disclaimer ||
-      commonFooter?.data?.show_disclaimer;
+      commonFooter?.data?.show_disclaimer ||
+      this.props.data.data.show_disclaimer;
     const microbrandCards = this.props.data.data.microbrand_cards;
     const microbrandCardsHeading = this.props.data.data.microbrand_cards_heading
       ? this.props.data.data.microbrand_cards_heading

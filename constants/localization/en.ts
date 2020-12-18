@@ -21,6 +21,7 @@ const en = {
   BOOK_NOW_CTA: 'Book Now',
   READ_MORE_TEXT: 'Read More',
   SHOW_LESS_TEXT: 'Show Less',
+  SELECT_CITY: 'Select City',
   NEXT_AVAILABLE: 'Next Available, ',
   SAVE_UPTO: 'Save upto',
   SAVE: 'SAVE <val>%',

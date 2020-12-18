@@ -1,9 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
+import * as labels from 'constants/localization/labels';
 import Image from 'UI/Image';
 import { COLORS, SOLEIL } from 'constants/ui-constants';
 import { CHEVRON_DOWN } from 'assets/SvgIcons';
 import styled from 'styled-components';
+import { MBContext } from 'contexts/MBContext';
 
 const ResponsiveSelectWrapper = styled.div`
   margin: 0;
@@ -178,6 +180,7 @@ export const ResponsiveSelector = (props) => {
 
   const [toggleActive, setToggleActive] = useState(false);
   const [current, setCurrent] = useState(currentSelectionIndex || 0);
+  const { lang: currentLanguage } = useContext(MBContext);
 
   const selectionChangeHandler = (index) => {
     setCurrent(index);
@@ -193,6 +196,16 @@ export const ResponsiveSelector = (props) => {
   const parentRef = useRef(null);
   const exceptionElementRefs = [parentRef];
   useCaptureClickOutside(selectorRef, handleMenuToggle, exceptionElementRefs);
+
+  useEffect(() => {
+    if (window) {
+      const currentSelectionIndex = options.findIndex((option) =>
+        window.location.href.includes(option.value)
+      );
+      setCurrent(currentSelectionIndex);
+    }
+  }, [options]);
+
   return options.length ? (
     <ResponsiveSelectWrapper
       ref={parentRef}
@@ -209,7 +222,9 @@ export const ResponsiveSelector = (props) => {
         onClick={handleMenuToggle}
       >
         <span className="current-selection-toggle">
-          {options[current].label}
+          {current > -1
+            ? options[current].label
+            : labels[currentLanguage].SELECT_CITY}
         </span>
         {icon ? (
           <span className="field-icon">
