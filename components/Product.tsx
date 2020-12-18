@@ -844,25 +844,20 @@ const Product = (props) => {
       biLink,
       date:
         instantCheckout && earliestAvailability ? earliestAvailability : null,
+      isMobile,
     }) + (ctaUrlSuffix || '');
   const hasReadMore =
     (highlights.flat()?.length >= 3 || showMoreDetailsInTabs) && !defaultOpen;
   const getProductCardElements = (expandContent) => (
     <StyledProductCard layout={layout}>
       <ProductHeader>
-        <TitleWrapper hasBorderedTitle={hasBorderedTitle}>
+        <TitleWrapper hasBorderedTitle={hasBorderedTitle && !tabs.length}>
           <Conditional if={boosterTag && mbTheme !== THEMES.MIN_BLUE}>
             <BoosterTag>{boosterTag}</BoosterTag>
           </Conditional>
           <TourTitle>{cardTitle}</TourTitle>
         </TitleWrapper>
-        <Conditional
-          if={
-            mbTheme !== THEMES.MIN_BLUE &&
-            hasShortSummary &&
-            (!expandContent || !isMobile)
-          }
-        >
+        <Conditional if={mbTheme !== THEMES.MIN_BLUE && hasShortSummary}>
           <ShortSummary>
             <RichText render={finalShortSummary} />
           </ShortSummary>

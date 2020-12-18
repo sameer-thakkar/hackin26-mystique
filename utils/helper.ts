@@ -252,41 +252,46 @@ const autoClose = (slices, allowImmediateNesting) => {
 
 export const groupSlices = (slices, allowImmediateNesting = false) => {
   const groups = { slices: [] };
-  let ref: any = groups;
-  const autoClosedSlices = autoClose(slices, allowImmediateNesting);
-  let repeatables: any = {
-    items: [],
-  };
-  autoClosedSlices.forEach((slice) => {
-    if (/___repeatable$/.exec(slice.slice_type)) {
-      repeatables.slice_type = slice.slice_type.replace(/___repeatable$/, '');
-      repeatables.items = [...repeatables.items, { ...slice }];
-      return;
-    }
-    if (/___start$/.exec(slice.slice_type)) {
-      ref.slices.push({
-        slices: [],
-        slice_type: slice.slice_type.replace(/___start$/, ''),
-        primary: slice.primary,
-        items: slice.items,
-        parent: ref,
-      });
-      ref = ref.slices[ref.slices.length - 1];
-    } else if (/___end$/.exec(slice.slice_type)) {
-      if (repeatables.slice_type !== undefined) {
-        ref.slices.push({ ...repeatables });
-        delete repeatables.slice_type;
-        repeatables.items = [];
+  try {
+    let ref: any = groups;
+    const autoClosedSlices = autoClose(slices, allowImmediateNesting);
+    let repeatables: any = {
+      items: [],
+    };
+    autoClosedSlices.forEach((slice) => {
+      if (/___repeatable$/.exec(slice.slice_type)) {
+        repeatables.slice_type = slice.slice_type.replace(/___repeatable$/, '');
+        repeatables.items = [...repeatables.items, { ...slice }];
+        return;
       }
-      const temp = ref.parent;
-      delete ref.parent;
-      ref = temp;
-      if (ref.parent) ref.slices = ref.slices.sort(slicesSorter);
-    } else {
-      ref.slices.push(slice);
-    }
-  });
-  return groups.slices;
+      if (/___start$/.exec(slice.slice_type)) {
+        ref.slices.push({
+          slices: [],
+          slice_type: slice.slice_type.replace(/___start$/, ''),
+          primary: slice.primary,
+          items: slice.items,
+          parent: ref,
+        });
+        ref = ref.slices[ref.slices.length - 1];
+      } else if (/___end$/.exec(slice.slice_type)) {
+        if (repeatables.slice_type !== undefined) {
+          ref.slices.push({ ...repeatables });
+          delete repeatables.slice_type;
+          repeatables.items = [];
+        }
+        const temp = ref.parent;
+        delete ref.parent;
+        ref = temp;
+        if (ref.parent) ref.slices = ref.slices.sort(slicesSorter);
+      } else {
+        ref.slices.push(slice);
+      }
+    });
+    return groups.slices;
+  } catch (error) {
+    console.error({ error });
+    return groups.slices;
+  }
 };
 
 export const attachQueryParam = (

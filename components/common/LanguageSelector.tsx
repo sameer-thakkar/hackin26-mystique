@@ -223,7 +223,7 @@ class LanguageSelector extends Component<any, any> {
     return (
       <StyledLanguageContainer onClick={this.handleClick}>
         <StyledLanguage>
-          {mbTheme === THEMES.DEFAULT ? GLOBE : null}
+          {mbTheme !== THEMES.MIN_BLUE ? GLOBE : null}
           {FULL_LANGUAGE_MAP[currentLanguage].language}
           {mbTheme === THEMES.MIN_BLUE ? (
             <Chevron className="chevron" isActive={this.state.showDropdown} />

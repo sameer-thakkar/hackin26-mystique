@@ -79,13 +79,17 @@ export const createBookingURL = ({
   date = null,
   tourId = null,
   biLink,
+  isMobile = false,
 }) => {
   const langRouteParam =
     lang && lang !== 'en' ? '/' + FULL_LANGUAGE_MAP[lang].bookingFlow : '';
+
+  // date is passed when we directly land user on Checkout Page, skipping date selection
+  let bookingStageSuffix = date ? '/checkout/' : '';
+  // on Mobile, we have intermediate Pax Selection step.
+  bookingStageSuffix = isMobile && date ? '/select/pax/' : '';
   const urlObject = new URL(
-    `https://book.${nakedDomain}${langRouteParam}/book/${tgid}${
-      date ? '/checkout' : ''
-    }`
+    `https://book.${nakedDomain}${langRouteParam}/book/${tgid}${bookingStageSuffix}`
   );
   if (df) urlObject.searchParams.set('isDiscountedFutures', 'true');
   if (date?.startDate) urlObject.searchParams.set('date', date?.startDate);
