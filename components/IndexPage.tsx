@@ -2,6 +2,7 @@ import React from 'react';
 import ErrorPage from 'next/error';
 import dynamic from 'next/dynamic';
 import fetch from 'isomorphic-unfetch';
+import Cookies from 'js-cookie';
 import { ThemeProvider } from 'styled-components';
 import theme from '../style/theme';
 import EnvironmentContext from '../contexts/environmentContext';
@@ -702,7 +703,7 @@ export default class Page extends React.Component<any, any> {
 
   constructor(props) {
     super(props);
-    const { query, asPath } = props;
+    const { query = {}, asPath } = props;
     const { bi } = query;
     if (typeof window != 'undefined') {
       if (bi) {
@@ -710,6 +711,38 @@ export default class Page extends React.Component<any, any> {
         removePageQuery(query, 'bi', asPath);
       }
     }
+  }
+
+  componentDidMount() {
+    window.addEventListener(
+      'message',
+      (e) => {
+        const { origin, data } = e;
+        if (origin !== process.env.NEXT_PUBLIC_HEADOUT_DOMAIN) {
+          return;
+        }
+
+        const { hsid } = JSON.parse(data);
+        try {
+          if (hsid) {
+            const nakedDomain = window.location.hostname
+              .replace('stage-', '')
+              .split('.')
+              .slice(1)
+              .join('.');
+
+            Cookies.set('h-sid', hsid, {
+              domain: nakedDomain,
+              path: '/',
+              maxAge: 365 * 24 * 60 * 60,
+            });
+          }
+        } catch (e) {
+          //
+        }
+      },
+      true
+    );
   }
 
   render() {
@@ -831,7 +864,29 @@ export default class Page extends React.Component<any, any> {
             </MBContextProvider>
           </ThemeProvider>
         </EnvironmentContext.Provider>
+        {typeof window !== 'undefined' ? (
+          <HeadoutSessionIdSetterComponent />
+        ) : null}
       </div>
     );
   }
 }
+
+const HSID_VAR = 'h-sid';
+const HeadoutSessionIdSetterComponent = () => {
+  const validHsidFromCookie = Cookies.get(HSID_VAR);
+  if (validHsidFromCookie) {
+    return null;
+  }
+
+  return (
+    <iframe
+      width="0"
+      height="0"
+      tabIndex={-1}
+      title="empty"
+      className="hidden"
+      src={`${process.env.NEXT_PUBLIC_HEADOUT_DOMAIN}/hsid-provider/`}
+    ></iframe>
+  );
+};
