@@ -734,7 +734,9 @@ export default class Page extends React.Component<any, any> {
             Cookies.set('h-sid', hsid, {
               domain: nakedDomain,
               path: '/',
-              maxAge: 365 * 24 * 60 * 60,
+              expires: new Date(
+                new Date().getTime() + 365 * 24 * 60 * 60 * 1000
+              ),
             });
           }
         } catch (e) {
