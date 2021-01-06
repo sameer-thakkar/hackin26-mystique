@@ -123,6 +123,9 @@ const StyledSlide = styled.div`
     width: 280px !important;
     border-radius: 4px;
   }
+  .image-wrap {
+    height: max-content;
+  }
   div {
     font-family: ${SOLEIL.FONT_STACK};
     font-size: 16px;

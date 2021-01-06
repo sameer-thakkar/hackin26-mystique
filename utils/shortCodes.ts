@@ -2,6 +2,7 @@ import React from 'react';
 import InlinePrice from '../components/InlinePrice';
 import NextAvailable from '../components/shortcodes/NextAvailable';
 import InlineInvPrice from '../components/InlineInvPrice';
+import DynamicDate from 'components/shortcodes/DynamicDate';
 import CTA from '../components/shortcodes/CTA';
 import Booster from '../components/Booster';
 import RatingBoosterCombo from '../components/shortcodes/RatingBoosterCombo';
@@ -10,10 +11,13 @@ import IFrame from '../components/shortcodes/IFrame';
 import { WrapInLazyComponent } from '../components/common/LazyComponent';
 import Cross from '../components/shortcodes/Cross';
 import Check from '../components/shortcodes/Check';
+import { SHORT_CODE_TYPES } from 'constants/index';
 
 interface ShortCodeDictionary {
   [key: string]: {
-    component: React.ComponentClass | React.FunctionComponent;
+    component?: React.ComponentClass | React.FunctionComponent;
+    function?: Function;
+    type?: string;
   };
 }
 
@@ -47,6 +51,10 @@ const shortCodesDict: ShortCodeDictionary = {
   },
   check: {
     component: Check,
+  },
+  date: {
+    function: DynamicDate,
+    type: SHORT_CODE_TYPES.FUNCTION,
   },
 };
 
@@ -134,7 +142,7 @@ const getShortcodesList = (stringToSearch) => {
   return matches;
 };
 
-const renderShortCodes = (CMSString, props = {}) => {
+export const renderShortCodes = (CMSString, props = {}) => {
   let shortCodesList = getShortcodesList(CMSString);
   let fullLength = CMSString.length;
   let renderedRichList = [];
@@ -143,13 +151,22 @@ const renderShortCodes = (CMSString, props = {}) => {
     renderedRichList.push(
       CMSString.slice(cursor + 1, shortCodeObj.indices.start)
     );
-    renderedRichList.push(
-      React.createElement(shortCodesDict[shortCodeObj.name].component, {
+    let shortcodeElement = null;
+    if (shortCodesDict[shortCodeObj.name].type === SHORT_CODE_TYPES.FUNCTION) {
+      shortcodeElement = shortCodesDict[shortCodeObj.name].function({
         ...shortCodeObj.attributes.named,
-        key: index,
-        parentProps: props,
-      })
-    );
+      });
+    } else {
+      shortcodeElement = React.createElement(
+        shortCodesDict[shortCodeObj.name].component,
+        {
+          ...shortCodeObj.attributes.named,
+          key: index,
+          parentProps: props,
+        }
+      );
+    }
+    renderedRichList.push(shortcodeElement);
     cursor = shortCodeObj.indices.end;
   });
   renderedRichList.push(CMSString.slice(cursor + 1, fullLength));

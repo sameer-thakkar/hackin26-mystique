@@ -90,6 +90,7 @@ export const HomePage = (props) => {
   const longFormSlices = [...contentFWSlices, ...longFormContent];
   const { currentLanguage } = props.header.languageProps;
   const hasToursSection = categoryProps.categories.length > 0;
+  const { secondaryFooter } = footer;
   const footerLogoURL = footer.logo.url;
   const footerLogoAlt = footer.footer_logo_alt || footer.footer_logo?.alt;
   const themeOverride = footer.themeOverride;
@@ -211,6 +212,7 @@ export const HomePage = (props) => {
         slices={footer.body || []}
         invertLogoColor={footer.invert_logo_color}
         themeOverride={themeOverride}
+        secondarySlices={secondaryFooter?.data?.body}
       />
     </V2MicrositeWrapper>
   );

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Image from './UI/Image';
+import { withShortcodes } from 'utils/helper';
 import { SOLEIL } from '../constants/ui-constants';
 
 const StyledMasthead = styled.div`
@@ -54,7 +55,7 @@ const Masthead: React.FC<{
         width={isMobile ? 800 : 1200}
         height={isMobile ? 300 : 400}
       />
-      <Title>{title}</Title>
+      <Title>{withShortcodes(title)}</Title>
     </StyledMasthead>
   );
 };

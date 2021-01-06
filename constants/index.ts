@@ -499,3 +499,8 @@ export const LOCALISED_DATE_FORMATS = {
     DATE_MONTH: 'MMM D',
   },
 };
+
+export const SHORT_CODE_TYPES = {
+  FUNCTION: 'FUNCTION',
+  COMPONENT: 'COMPONENT',
+};

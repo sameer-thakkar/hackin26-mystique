@@ -96,6 +96,7 @@ class MicrositeV2 extends Component<any, any> {
       commonFooter,
       contentFramework,
       commonHeader,
+      secondaryFooter,
     } = this.props.data.refs;
     const {
       first_publication_date: datePublished,
@@ -278,6 +279,7 @@ class MicrositeV2 extends Component<any, any> {
         ...commonFooterProps,
         powered_by_superbrand:
           powered_by_superbrand || commonFooter?.data?.powered_by_superbrand,
+        secondaryFooter,
       },
       isMobile,
       host,

@@ -1,6 +1,7 @@
 import parse from 'url-parse';
 import { parsePhoneNumberFromString as parseMobile } from 'libphonenumber-js/mobile';
 import { FULL_LANGUAGE_MAP } from 'constants/index';
+import renderShortCodes from './shortCodes';
 
 export const withoutTrailingSlash = (url) =>
   url.charAt(url.length - 1) === '/' ? url.substr(0, url.length - 1) : url;
@@ -338,4 +339,9 @@ export const getLangObject = (language) => {
   return Object.values(FULL_LANGUAGE_MAP).find(
     (lang: any) => lang.paramLang === language || lang.short === language
   );
+};
+
+export const withShortcodes = (text: string) => {
+  if (!text) return;
+  return renderShortCodes(text);
 };

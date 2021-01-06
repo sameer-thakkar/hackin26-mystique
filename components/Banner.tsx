@@ -11,6 +11,7 @@ import Tags, { Tag } from 'UI/Tags';
 import { MBContext } from 'contexts/MBContext';
 import DiscountedFuturesPitch from 'UI/DiscountedFuturesPitch';
 import Conditional from './common/Conditional';
+import { withShortcodes } from 'utils/helper';
 
 const StyledBanner = styled.div`
   display: grid;
@@ -518,9 +519,9 @@ export default class Banner extends Component<any, any> {
             }`}
           >
             <div className="caption">
-              <h1>{bannerHeading}</h1>
+              <h1>{withShortcodes(bannerHeading)}</h1>
               <Conditional if={bannerSubtext}>
-                <p>{bannerSubtext}</p>
+                <p>{withShortcodes(bannerSubtext)}</p>
               </Conditional>
             </div>
             <Conditional if={!hideCTA}>

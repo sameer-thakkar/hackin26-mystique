@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import Head from 'next/head';
 import parse from 'url-parse';
-import { withoutTrailingSlash } from '../../utils/helper';
+import { withoutTrailingSlash, withShortcodes } from '../../utils/helper';
 import { MBContext } from 'contexts/MBContext';
 
 const withTrailingSlash = (url) =>
@@ -87,8 +87,8 @@ function getSchemaJson(data) {
 
 const PopulateHead = (data) => {
   const {
-    title,
-    description,
+    title: rawTitle,
+    description: rawDescription,
     favicon,
     image,
     nofollow,
@@ -112,6 +112,8 @@ const PopulateHead = (data) => {
   } = data;
   const modifiedCanonicalLink = canonicalLinkForAMP || canonicalLink;
   const { isPreview, noTrack } = useContext(MBContext);
+  const title = withShortcodes(rawTitle).join('');
+  const description = withShortcodes(rawDescription).join('');
 
   const isNonProd = isDev || isPreview || originalHost.startsWith('stage-');
 

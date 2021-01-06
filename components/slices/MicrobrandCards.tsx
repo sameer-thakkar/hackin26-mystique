@@ -51,6 +51,9 @@ const MicrobrandCard = styled.div`
     .tour-scratch-price {
       grid-column: 1 / 2;
     }
+    .tour-price {
+      grid-column: 2 / 3;
+    }
   }
 
   .card-bottom .card-price {
@@ -62,6 +65,7 @@ const MicrobrandCard = styled.div`
     padding: 10px;
     align-items: start;
     display: grid;
+    justify-content: space-between;
     grid-gap: 5px;
   }
 

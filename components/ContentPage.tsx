@@ -22,6 +22,7 @@ import { InteractionContextProvider } from '../contexts/Interaction';
 import { tourListApiParser } from '../utils/dataParsers';
 import { COLORS, SOLEIL } from '../constants/ui-constants';
 import { withAmp } from './common/withAmp';
+import { legacyBooleanCheck } from 'utils';
 
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 
@@ -196,7 +197,7 @@ class ContentPage extends Component<any, any> {
       });
     }
 
-    if (enableGroupBooking === 'Yes') {
+    if (legacyBooleanCheck(enableGroupBooking)) {
       let groupBookingTourTitles = [];
       let res = await Client().getByIDs([
         this.props.data.microsite_document_ref.id,
@@ -413,8 +414,11 @@ class ContentPage extends Component<any, any> {
     const hasPoweredByHeadoutLogo =
       commonHeader.data.enable_powered_by_superbrand_logo ||
       microsite.data.enable_powered_by_superbrand_logo;
-    const showGroupBooking = enableGroupBooking === 'Yes';
+    const showGroupBooking = legacyBooleanCheck(enableGroupBooking);
     const currentLanguage = getLangObject(lang).short;
+    const languages = legacyBooleanCheck(enable_localization_menu)
+      ? localization
+      : [];
     return (
       <div className="page-wrapper">
         {this.state.showGroupBookingModal && groupBookingTourTitles && (
@@ -440,12 +444,12 @@ class ContentPage extends Component<any, any> {
             isDev,
             originalHost: host,
             serverRequestStartTimestamp,
-            localization,
+            localization: languages,
             currentLanguage,
           }}
         />
         <Header
-          languages={localization}
+          languages={languages}
           headerLinks={headerLinks}
           showTicketMenu={showTicketMenu}
           hideLangugageDropdown={hideLangugageDropdown}

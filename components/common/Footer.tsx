@@ -27,8 +27,7 @@ const FooterLinksWrapper = styled.div`
   padding-top: 32px;
   background: ${({ theme }) => theme.footer.secondaryBackground};
   padding-bottom: 32px;
-  margin-bottom: 40px;
-  &.secondary-footer {
+  &.primary-footer {
     margin-bottom: 0;
     padding-bottom: 0;
   }
@@ -38,6 +37,13 @@ const FooterLinksWrapper = styled.div`
     margin-bottom: 32px;
     color: ${COLORS.DAVY_GREY};
   }
+  &.primary-footer + .secondary-footer .quick-links-title {
+    display: none;
+  }
+  &.primary-footer + .secondary-footer .quick-links-title.has-custom-title {
+    display: block;
+  }
+
   .quick-links {
     display: grid;
     justify-content: space-between;
@@ -191,6 +197,7 @@ const Link = styled.a`
 const LinkSlicesWrapper = styled.div`
   display: grid;
   grid-row-gap: 24px;
+  margin-bottom: 40px;
 `;
 
 type FooterProps = {
@@ -207,6 +214,8 @@ type FooterProps = {
   slices?: Array<any>;
   themeOverride?: string;
   secondarySlices?: Array<any>;
+  secondaryHeading?: string;
+  primaryHeading?: string;
 };
 
 const LinkSlices = ({
@@ -218,8 +227,12 @@ const LinkSlices = ({
 }) => (
   <FooterLinksWrapper className={className}>
     <Container>
-      {theme === THEMES.DEFAULT ? (
-        <div className="quick-links-title">
+      {theme !== THEMES.MIN_BLUE ? (
+        <div
+          className={`quick-links-title ${
+            linksTitle ? 'has-custom-title' : ''
+          }`}
+        >
           {linksTitle || labels[language].FOOTER.QUICK_LINKS}
         </div>
       ) : null}
@@ -244,7 +257,6 @@ const LinkSlices = ({
 );
 
 const Footer: React.FC<FooterProps> = ({
-  linksTitle,
   currentLanguage,
   attraction = '',
   logoURL,
@@ -256,6 +268,8 @@ const Footer: React.FC<FooterProps> = ({
   slices = [],
   themeOverride = THEMES.DEFAULT,
   secondarySlices = [],
+  secondaryHeading = '',
+  primaryHeading = '',
 }) => {
   const { mbTheme = THEMES.DEFAULT } = useContext(MBContext);
   const { width } = useWindowSize();
@@ -266,20 +280,21 @@ const Footer: React.FC<FooterProps> = ({
     <ThemeProvider theme={theme[finalThemeName]}>
       <StyledFooter>
         <LinkSlicesWrapper>
-          <Conditional if={secondarySlices?.length}>
+          <Conditional if={slices?.length}>
             <LinkSlices
-              className={'secondary-footer'}
-              linksTitle={linksTitle}
+              className={'primary-footer'}
               language={currentLanguage}
-              slices={secondarySlices}
+              linksTitle={primaryHeading}
+              slices={slices}
               theme={finalThemeName}
             />
           </Conditional>
-          <Conditional if={slices?.length}>
+          <Conditional if={secondarySlices?.length}>
             <LinkSlices
+              className={'secondary-footer'}
+              linksTitle={secondaryHeading}
               language={currentLanguage}
-              linksTitle={linksTitle}
-              slices={slices}
+              slices={secondarySlices}
               theme={finalThemeName}
             />
           </Conditional>

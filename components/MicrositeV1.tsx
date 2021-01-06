@@ -27,7 +27,11 @@ import { groupSlices } from '../utils/helper';
 import { ProductsContextProvider } from '../contexts/Products';
 import { tourListApiParser } from '../utils/dataParsers';
 import SafeDFBannerWrapper from 'UI/SafeDFBannerWrapper';
-import { isSafetyIncluded, getDFValidityFromTags } from 'utils';
+import {
+  isSafetyIncluded,
+  getDFValidityFromTags,
+  legacyBooleanCheck,
+} from 'utils';
 import TextBanner from './TextBanner';
 import Conditional from './common/Conditional';
 import { ResponsiveSelector } from './MicrositeV2/ResponsiveSelector';
@@ -135,7 +139,9 @@ class MicrositeV1 extends Component<any, any> {
         enable_earliest_availability: enableEarliestAvailability,
         instant_checkout: instantCheckout,
       } = this.props.data.data;
-      const showEarliestAvailability = enableEarliestAvailability === 'Yes';
+      const showEarliestAvailability = legacyBooleanCheck(
+        enableEarliestAvailability
+      );
 
       if (showEarliestAvailability || instantCheckout) {
         const requestQueue = uncategorizedTours[0].items.map((tour) =>
@@ -324,12 +330,12 @@ class MicrositeV1 extends Component<any, any> {
         else return acc;
       }, []) || [];
     const hasDropdownLinks =
-      enableDropdownLinks === 'Yes' && dropdownLinks.length;
-    const languages = hasLanguageSelector
+      legacyBooleanCheck(enableDropdownLinks) && dropdownLinks.length;
+    const languages = legacyBooleanCheck(hasLanguageSelector)
       ? localization.filter((lang) => lang.language)
       : [];
 
-    const showGroupBooking = enableGroupBooking === 'Yes';
+    const showGroupBooking = legacyBooleanCheck(enableGroupBooking);
     const { results: productOffer } = this.props.offerData
       ? this.props.offerData
       : { results: [] };
@@ -645,6 +651,8 @@ class MicrositeV1 extends Component<any, any> {
             slices={!isFooterInherited ? commonFooter?.data?.body || [] : []}
             invertLogoColor={commonFooter?.data?.invert_logo_color}
             themeOverride={footerThemeOverride}
+            secondaryHeading={secondaryFooter?.data?.footer_heading}
+            primaryHeading={commonFooter?.data?.footer_heading}
             secondarySlices={
               !isFooterInherited ? secondaryFooter?.data?.body || [] : []
             }
