@@ -365,7 +365,7 @@ const PopulateHead = (data) => {
 
   return (
     <>
-      {!noTrack ? trackingScripts : null}
+      {!noTrack && !isAmp ? trackingScripts : null}
       {isAmp ? AMPImports : null}
       {pageMeta}
       {ImageMeta}
