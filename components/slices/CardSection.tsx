@@ -6,8 +6,9 @@ import Swiper from '../Swiper';
 import OverflowScroll from 'UI/OverflowScroll';
 import RichContent from 'UI/RichContent';
 import TitleTextCombo from 'UI/TitleTextCombo';
-import { CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
+import { CHEVRON_LEFT, CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
 import { SIZES } from 'constants/ui-constants';
+import { useAmp } from 'next/amp';
 
 const CardGrid = styled.div(({ cardsInARow }) => {
   let gridTemplateColumns = `100%`;
@@ -119,7 +120,7 @@ const CardSection: React.FC<CardSectionProps> = ({
 }) => {
   const width = useWindowWidth();
   const [isMobile, setIsMobile] = React.useState(false);
-
+  const isAmp = useAmp();
   // Title and Text combo for the starting of the Card Section
   const EntrySection = (
     <TitleTextCombo>
@@ -221,7 +222,7 @@ const CardSection: React.FC<CardSectionProps> = ({
                 tabIndex={0}
                 onClick={goPrev}
               >
-                {CHEVRON_LEFT_CIRCLE}
+                {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
               </div>
             ) : null}
             {!swiper?.isEnd ? (
@@ -231,7 +232,7 @@ const CardSection: React.FC<CardSectionProps> = ({
                 tabIndex={0}
                 onClick={goNext}
               >
-                {CHEVRON_LEFT_CIRCLE}
+                {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
               </div>
             ) : null}
           </Controls>

@@ -2,11 +2,16 @@ import { RichText } from 'prismic-reactjs';
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { COLORS, SOLEIL } from 'constants/ui-constants';
-import { CHEVRON_LEFT_CIRCLE, CLOSE_WHITE } from 'assets/SvgIcons';
+import {
+  CHEVRON_LEFT,
+  CHEVRON_LEFT_CIRCLE,
+  CLOSE_WHITE,
+} from 'assets/SvgIcons';
 import { stringIdfy } from 'utils/helper';
 import Swiper from 'components/Swiper';
 import Image from 'UI/Image';
 import RichContent from 'UI/RichContent';
+import { useAmp } from 'next/amp';
 
 const StyledImageGallery = styled.div`
   display: grid;
@@ -353,6 +358,7 @@ const ImageGallery = (props) => {
   const [lightboxIndex, setCurrentLightboxIndex] = useState(0);
   const [isZoomed, setZoomed] = useState(false);
   const toggleLightbox = () => setLightbox(!ligtboxOpen);
+  const isAmp = useAmp();
 
   const updateIndex = useCallback(
     () => setCurrentLightboxIndex(lightboxSwiper.realIndex),
@@ -453,10 +459,14 @@ const ImageGallery = (props) => {
         <div className="swiper">
           <Swiper
             renderPrevButton={() => (
-              <div className="button-right">{CHEVRON_LEFT_CIRCLE}</div>
+              <div className="button-right">
+                {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
+              </div>
             )}
             renderNextButton={() => (
-              <div className="button-left">{CHEVRON_LEFT_CIRCLE}</div>
+              <div className="button-left">
+                {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
+              </div>
             )}
             {...swiperOpts}
             {...galleryOpts}
