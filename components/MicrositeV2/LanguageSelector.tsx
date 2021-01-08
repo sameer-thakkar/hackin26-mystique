@@ -66,7 +66,7 @@ const LanguageSelector = (props) => {
     >
       <div className="current-langauge">
         <span className="current-language-toggle">
-          {mbTheme === THEMES.DEFAULT && !isMobile ? GLOBE : null}
+          {mbTheme !== THEMES.MIN_BLUE && !isMobile ? GLOBE : null}
           {isMobile
             ? currentLanguage.slice(0, 2)
             : FULL_LANGUAGE_MAP[currentLanguage].language}

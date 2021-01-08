@@ -213,6 +213,8 @@ export const HomePage = (props) => {
         invertLogoColor={footer.invert_logo_color}
         themeOverride={themeOverride}
         secondarySlices={secondaryFooter?.data?.body}
+        secondaryHeading={secondaryFooter?.data?.footer_heading}
+        primaryHeading={footer?.footer_heading}
       />
     </V2MicrositeWrapper>
   );

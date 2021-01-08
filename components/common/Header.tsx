@@ -120,22 +120,11 @@ const StyledHeaderElements = styled.div`
   }
 `;
 
-const StyledBuyTickets = styled.div`
-  margin-left: 32px;
+const StyledMenuItem = styled.div`
+  margin-left: 24px;
   font-size: 16px;
   font-family: ${SOLEIL.FONT_STACK};
   color: ${({ color }) => color || COLORS.RHAPSODY};
-  text-decoration: none;
-  cursor: pointer;
-  @media (max-width: 768px) {
-    margin-left: 16px;
-  }
-`;
-const StyledMenuItem = styled.div`
-  margin-left: 32px;
-  font-size: 16px;
-  font-family: ${SOLEIL.FONT_STACK};
-  color: ${({ theme }) => theme.primaryBGText || COLORS.FOUR_BLACK};
   text-decoration: none;
   cursor: pointer;
   @media (max-width: 768px) {
@@ -266,7 +255,7 @@ const Header: React.FC<any> = (props) => {
             </span>
           ) : null}
           {enableBuyTickets === 'Yes' ? (
-            <StyledBuyTickets
+            <StyledMenuItem
               onClick={() => {
                 scroller.scrollTo('tour-list-heading', {
                   duration: 1200,
@@ -276,7 +265,7 @@ const Header: React.FC<any> = (props) => {
               }}
             >
               {labels[currentLanguage].BANNER_CTA}
-            </StyledBuyTickets>
+            </StyledMenuItem>
           ) : null}
           <Conditional if={showTicketMenu}>
             <StyledMenuItem as="a" href={logoRedirectionURL}>
