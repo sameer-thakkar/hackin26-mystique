@@ -420,7 +420,7 @@ const sliceHandler = (slice, props: any = {}) => {
         <AccordionGroup
           accordions={slice.items}
           heading={slice.primary.heading}
-          useSchema={slice.primary.use_faq_schema || true}
+          useSchema={slice.primary.use_faq_schema || false}
         />
       );
     case 'unspace':
