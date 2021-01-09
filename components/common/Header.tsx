@@ -78,6 +78,7 @@ const StyledLogo = styled.div`
   img {
     height: 44px;
     max-width: 160px;
+    object-fit: contain;
   }
   svg {
     height: 44px;
