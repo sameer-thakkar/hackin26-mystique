@@ -107,7 +107,6 @@ const Accordion = ({
   useEffect(() => {
     setOpen(isOpenOverride);
   }, [isOpenOverride]);
-  console.log({ useSchema, heading });
 
   return (
     <StyledAccordion
