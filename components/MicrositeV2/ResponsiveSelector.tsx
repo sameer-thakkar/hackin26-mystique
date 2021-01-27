@@ -6,6 +6,7 @@ import { COLORS, SOLEIL } from 'constants/ui-constants';
 import { CHEVRON_DOWN } from 'assets/SvgIcons';
 import styled from 'styled-components';
 import { MBContext } from 'contexts/MBContext';
+import { isSameURL } from 'utils/helper';
 
 const ResponsiveSelectWrapper = styled.div`
   margin: 0;
@@ -199,8 +200,9 @@ export const ResponsiveSelector = (props) => {
 
   useEffect(() => {
     if (window) {
+      const currentUrl = window.location.href;
       const currentSelectionIndex = options.findIndex((option) =>
-        window.location.href.includes(option.value)
+        isSameURL(currentUrl, option.value)
       );
       setCurrent(currentSelectionIndex);
     }

@@ -273,6 +273,9 @@ class MicrositeV1 extends Component<any, any> {
       this.props.data.refs?.commonFooter?.data?.powered_by_superbrand ||
       this.props.data.data.powered_by_superbrand ||
       false;
+    const invertFooterLogoColor =
+      this.props.data.refs?.commonFooter?.data?.invert_logo_color ||
+      this.props.data.data.invert_footer_logo_color;
 
     const footerLogoAlt =
       this.props.data.refs?.commonFooter?.data?.logo?.alt ||
@@ -649,7 +652,7 @@ class MicrositeV1 extends Component<any, any> {
             disclaimerText={disclaimerText}
             microbrandType={microbrandType}
             slices={!isFooterInherited ? commonFooter?.data?.body || [] : []}
-            invertLogoColor={commonFooter?.data?.invert_logo_color}
+            invertLogoColor={invertFooterLogoColor}
             themeOverride={footerThemeOverride}
             secondaryHeading={secondaryFooter?.data?.footer_heading}
             primaryHeading={commonFooter?.data?.footer_heading}

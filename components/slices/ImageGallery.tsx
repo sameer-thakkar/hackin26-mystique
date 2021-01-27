@@ -260,7 +260,8 @@ const LightboxImage = styled.div`
     img {
       padding: 0;
       width: 100%;
-      height: 100%;
+      height: calc(100vh - 60px);
+      object-fit: contain;
     }
     ${Content} {
       padding: 20px 16px;

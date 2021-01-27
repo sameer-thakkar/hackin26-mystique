@@ -341,7 +341,13 @@ export const getLangObject = (language) => {
   );
 };
 
-export const withShortcodes = (text: string) => {
-  if (!text) return;
+export const withShortcodes = (text: string = '') => {
+  if (!text) return [];
   return renderShortCodes(text);
 };
+
+export const normaliseURL = (url = '') =>
+  withoutTrailingSlash(url.replace(/http[s]?:\/\//g, ''));
+
+export const isSameURL = (urlA = '', urlB = '') =>
+  normaliseURL(urlA) === normaliseURL(urlB);

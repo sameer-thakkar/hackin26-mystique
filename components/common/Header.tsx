@@ -75,9 +75,10 @@ const StyledLogo = styled.div`
   align-items: center;
   justify-self: left;
   justify-content: left;
+  max-width: 350px;
   img {
     height: 44px;
-    max-width: 160px;
+    max-width: 100%;
     object-fit: contain;
   }
   svg {
@@ -175,16 +176,18 @@ const Header: React.FC<any> = (props) => {
   );
 
   const convertedRegularMenuItems =
-    headerLinks?.map((link) => ({
-      slice_type: 'menu_item',
-      primary: {
-        label: link.link_heading,
-        url: {
-          url: link.link_url.url,
-          target: link.link_url.target,
+    headerLinks
+      ?.filter((link) => link.link_url?.url)
+      ?.map((link) => ({
+        slice_type: 'menu_item',
+        primary: {
+          label: link.link_heading,
+          url: {
+            url: link.link_url.url,
+            target: link.link_url.target,
+          },
         },
-      },
-    })) || [];
+      })) || [];
 
   if (showGroupBooking)
     convertedRegularMenuItems.push({

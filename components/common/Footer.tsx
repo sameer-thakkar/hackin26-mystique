@@ -120,7 +120,7 @@ const FooterLegal = styled.div`
   align-items: start;
   justify-content: space-between;
   ${({ theme }) => {
-    return theme.theme === THEMES.DEFAULT
+    return theme.theme !== THEMES.MIN_BLUE
       ? `
         grid-template-areas: 'logo-disclaimer help legal';
         grid-template-columns: minmax(400px, max-content) max-content max-content;
@@ -146,7 +146,7 @@ const FooterLegal = styled.div`
         height: 40px;
         max-width: 100%;
         ${({ invertLogoColor }) =>
-          invertLogoColor ? `filter: invert(1);` : ''}
+          invertLogoColor ? `filter: brightness(0) invert(1);` : ''}
       }
       svg {
         height: 40px;
@@ -335,7 +335,7 @@ const Footer: React.FC<FooterProps> = ({
                 <LinksHeader>
                   {labels[currentLanguage].FOOTER.GET_HELP}
                 </LinksHeader>
-                <Conditional if={finalThemeName === THEMES.DEFAULT}>
+                <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
                   <Link
                     href="https://secure.livechatinc.com/licence/8339531/v2/open_chat.cgi?groups=0"
                     target="_blank"
@@ -343,19 +343,13 @@ const Footer: React.FC<FooterProps> = ({
                     {labels[currentLanguage].FOOTER.CHAT_WITH_US}
                   </Link>
                 </Conditional>
-                <Link
-                  href={`tel:${
-                    finalThemeName === THEMES.DEFAULT
-                      ? '+1 347 897 0100'
-                      : '+1 952 856 3128'
-                  }`}
-                >
-                  {' '}
-                  {labels[currentLanguage].FOOTER.CALL_US}
+                <Link href={`tel:${'+1 347 897 0100'}`}>
+                  {labels[currentLanguage].FOOTER.CALL_US}{' '}
+                  {!isMobile ? '+1 347 897 0100' : ''}
                 </Link>
                 <Link
                   href={`mailto:${
-                    finalThemeName === THEMES.DEFAULT
+                    finalThemeName !== THEMES.MIN_BLUE
                       ? 'support@headout.com'
                       : 'support@online-tickets.co'
                   }`}
@@ -375,7 +369,7 @@ const Footer: React.FC<FooterProps> = ({
                 <Link href="/privacy-policy" target="_blank">
                   {labels[currentLanguage].FOOTER.PRIVACY_POLICY}
                 </Link>
-                <Conditional if={finalThemeName === THEMES.DEFAULT}>
+                <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
                   <Link href="/company-details" target="_blank">
                     {labels[currentLanguage].FOOTER.COMPANY_DETAILS}
                   </Link>
@@ -389,7 +383,7 @@ const Footer: React.FC<FooterProps> = ({
                 </div>
               </Conditional>
             </FooterLegal>
-            <Conditional if={finalThemeName === THEMES.DEFAULT}>
+            <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
               <div className="footer-chin">
                 <div className="white-line" />
                 <div className="super-brand-logo">

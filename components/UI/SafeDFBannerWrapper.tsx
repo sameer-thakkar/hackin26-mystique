@@ -56,7 +56,6 @@ const SafeDFBannerWrapper = ({
   marginTop?: number;
 }) => {
   const {
-    mbTheme,
     sidebarModal: { addToAside },
     lang,
   } = useContext(MBContext);
@@ -90,7 +89,7 @@ const SafeDFBannerWrapper = ({
   return (
     <Wrapper marginTop={marginTop}>
       <Split mobileLayout={'scroll'} count={hasSafe && !!dfExpiryDate ? 2 : 1}>
-        <Conditional if={mbTheme !== THEMES.DEFAULT || !isMobile}>
+        <Conditional if={!isMobile}>
           <Conditional if={hasSafe}>
             <InfoBanner
               cta={labels[lang].LISTICLES.KNOW_MORE}
@@ -120,7 +119,7 @@ const SafeDFBannerWrapper = ({
             />
           </Conditional>
         </Conditional>
-        <Conditional if={mbTheme !== THEMES.MIN_BLUE && isMobile}>
+        <Conditional if={isMobile}>
           <Conditional if={hasSafe}>
             <IconCTA
               text={labels[lang].SAFE_EXPERIENCE.FLAG_TEXT}
