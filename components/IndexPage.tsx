@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import fetch from 'isomorphic-unfetch';
 import Cookies from 'js-cookie';
 import { ThemeProvider } from 'styled-components';
+import { RecoilRoot } from 'recoil';
 import theme from '../style/theme';
 import EnvironmentContext from '../contexts/environmentContext';
 import { Client } from '../config/prismic-config';
@@ -680,11 +681,13 @@ export default class Page extends React.Component<any, any> {
         }),
         {}
       );
+      const activeCurrency = tourGroupAPIResponses?.currencies?.[0];
 
       return {
         ...AllData,
         tourGroupData,
         currencySymbolMap,
+        activeCurrency,
       };
     } catch (error) {
       console.log(error);
@@ -767,6 +770,7 @@ export default class Page extends React.Component<any, any> {
       mbTheme = THEMES.DEFAULT,
       isPreview,
       currencySymbolMap,
+      activeCurrency,
       noTrack,
       biLink,
     } = this.props;
@@ -798,6 +802,7 @@ export default class Page extends React.Component<any, any> {
         Component = (
           <Microsite
             data={CMSContent.data}
+            activeCurrency={activeCurrency}
             scorpioData={tourGroupData}
             offerData={CMSContent.offerData}
             host={host}
@@ -850,20 +855,22 @@ export default class Page extends React.Component<any, any> {
           }}
         >
           <ThemeProvider theme={theme[mbTheme]}>
-            <MBContextProvider
-              host={host}
-              uid={uid}
-              lang={lang}
-              microsite={microsite}
-              design={MBDesign || DESIGN.V1}
-              mbTheme={mbTheme}
-              isPreview={isPreview}
-              currencySymbolMap={currencySymbolMap}
-              noTrack={!!noTrack || isDev}
-              biLink={biLink}
-            >
-              {Component}
-            </MBContextProvider>
+            <RecoilRoot>
+              <MBContextProvider
+                host={host}
+                uid={uid}
+                lang={lang}
+                microsite={microsite}
+                design={MBDesign || DESIGN.V1}
+                mbTheme={mbTheme}
+                isPreview={isPreview}
+                currencySymbolMap={currencySymbolMap}
+                noTrack={!!noTrack || isDev}
+                biLink={biLink}
+              >
+                {Component}
+              </MBContextProvider>
+            </RecoilRoot>
           </ThemeProvider>
         </EnvironmentContext.Provider>
         {typeof window !== 'undefined' ? (

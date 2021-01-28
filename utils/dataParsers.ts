@@ -13,7 +13,21 @@ export const uncategorizedToursListParser = (
 };
 
 export const tourListApiParser = (apiResponse) => {
+  const currencySymbolMap = apiResponse?.currencies?.reduce(
+    (acc, currency) => ({
+      ...acc,
+      [currency.code]: { ...currency },
+    }),
+    {}
+  );
+
   return apiResponse?.tourGroups?.reduce((acc, tour) => {
+    const listingPrice = tour.listingPrice
+      ? {
+          ...tour.listingPrice,
+          ...currencySymbolMap[tour.listingPrice?.currencyCode],
+        }
+      : null;
     return {
       ...acc,
       [tour.id]: {
@@ -33,7 +47,7 @@ export const tourListApiParser = (apiResponse) => {
           'SAFETY_RESTRICTED_CAPACITY',
         ],
         dfListingPrice: tour.discountedFuturesListingPrice,
-        listingPrice: tour.listingPrice,
+        listingPrice,
         tgid: tour.id,
       },
     };

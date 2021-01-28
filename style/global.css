@@ -228,3 +228,7 @@ span.swiper-pagination-bullet-active {
     grid-template-columns: 1fr;
   }
 }
+
+.hidden {
+  display: none;
+}

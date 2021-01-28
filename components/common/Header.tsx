@@ -13,6 +13,7 @@ import { SOLEIL, COLORS } from 'constants/ui-constants';
 import { MBContext } from 'contexts/MBContext';
 import { ResponsiveSelector } from 'components/MicrositeV2/ResponsiveSelector';
 import Conditional from './Conditional';
+import CurrencySelector from './CurrencySelector';
 
 const StyledHeader = styled.header`
   height: 80px;
@@ -157,6 +158,8 @@ const Header: React.FC<any> = (props) => {
     showTicketMenu,
     hideLangugageDropdown,
     isAmp,
+    headerCurrencies,
+    currentCurrency,
   } = props;
   const hamburgerIconCheck =
     showGroupBooking ||
@@ -287,6 +290,13 @@ const Header: React.FC<any> = (props) => {
               isAmp={isAmp}
             />
           ) : null}
+          <Conditional if={headerCurrencies?.length}>
+            <CurrencySelector
+              currentCurrency={currentCurrency}
+              currencies={headerCurrencies}
+              isMobile={isMobile}
+            />
+          </Conditional>
         </StyledHeaderElements>
       </StyledHeaderContainer>
     </StyledHeader>

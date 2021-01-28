@@ -145,7 +145,8 @@ class LanguageSelector extends Component<any, any> {
     const { uid, host } = this.props;
     const langCodeRegex = /^(\/){0,1}(en|fr|de|it|nl|pt|es)(\/){0,1}/;
     const removeLangFromPathname = pathname.replace(langCodeRegex, '');
-    const slug = withoutTrailingSlash(removeLangFromPathname);
+    let slug = withoutTrailingSlash(removeLangFromPathname);
+    slug = slug[0] === '/' ? slug.slice(1) : slug;
     const isDev = host.includes('localhost');
     if (isDev) {
       window.location.href = `http://${host}/?mystique_uid=${uid}&lang=${

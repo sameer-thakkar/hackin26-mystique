@@ -44,6 +44,7 @@
     "react-scroll": "^1.7.14",
     "react-select": "^3.0.4",
     "react-zoom-pan-pinch": "^1.6.1",
+    "recoil": "^0.1.2",
     "signale": "^1.4.0",
     "slack-webhook": "^1.0.0",
     "styled-components": "^5.0.1",

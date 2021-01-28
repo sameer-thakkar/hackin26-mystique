@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "UI/*": ["components/UI/*"],
-      "hooks/*": ["components/hooks/*"]
+      "hooks/*": ["components/hooks/*"],
+      "atoms/*": ["store/atoms"]
     }
   },
   "exclude": ["node_modules", ".storybook", "stories"],
