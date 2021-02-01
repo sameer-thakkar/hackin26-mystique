@@ -310,9 +310,7 @@ export default class Page extends React.Component<any, any> {
                 baseLangData.data.footer_ref.id ||
                 '';
               const secondaryFooterId =
-                completeMicrosite.data.data.secondary_footer?.id ||
-                baseLangData.data.secondary_footer?.id ||
-                '';
+                completeMicrosite.data.data.secondary_footer?.id || '';
               const contentSectionId =
                 completeMicrosite.data.data.content_framework.id || '';
               const commonHeaderId =
@@ -467,6 +465,7 @@ export default class Page extends React.Component<any, any> {
                  */
                 const footerID = page.data.footer_ref.id || '';
                 const headerID = page.data.header_ref.id || '';
+                const secondaryFooterID = page.data.secondary_footer?.id || '';
                 const contentFrameworkID =
                   page.data.content_framework?.id || '';
                 const micrositeId = page.data.microsite_document_ref.id || '';
@@ -476,6 +475,7 @@ export default class Page extends React.Component<any, any> {
                 linkedRefIDs.push(headerID);
                 linkedRefIDs.push(micrositeId);
                 linkedRefIDs.push(contentFrameworkID);
+                linkedRefIDs.push(secondaryFooterID);
                 const refArray = await this.getRefsArrayByIds(
                   linkedRefIDs,
                   req

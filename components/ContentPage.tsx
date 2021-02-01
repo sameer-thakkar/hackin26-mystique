@@ -528,6 +528,8 @@ class ContentPage extends Component<any, any> {
           slices={commonFooter?.data?.body || []}
           invertLogoColor={commonFooter?.data?.invert_logo_color}
           secondarySlices={secondaryFooter?.data?.body || []}
+          primaryHeading={commonFooter?.data?.footer_heading}
+          secondaryHeading={secondaryFooter?.data?.footer_heading}
         />
       </div>
     );
