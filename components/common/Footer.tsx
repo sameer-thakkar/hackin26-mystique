@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import Image from '../UI/Image';
 import SocialLinks from '../UI/SocialLinks';
@@ -10,7 +10,7 @@ import { MBContext } from 'contexts/MBContext';
 import { THEMES } from 'constants/index';
 import Conditional from './Conditional';
 import theme from 'style/theme';
-import useWindowSize from 'hooks/useWindowSize';
+import { useWindowWidth } from '@react-hook/window-size';
 
 const StyledFooter = styled.footer`
   width: 100%;
@@ -48,6 +48,7 @@ const FooterLinksWrapper = styled.div`
     display: grid;
     justify-content: space-between;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-row-gap: 32px;
     @media (max-width: 768px) {
       grid-template-columns: 1fr;
       grid-row-gap: 32px;
@@ -272,10 +273,14 @@ const Footer: React.FC<FooterProps> = ({
   primaryHeading = '',
 }) => {
   const { mbTheme = THEMES.DEFAULT } = useContext(MBContext);
-  const { width } = useWindowSize();
-  const isMobile = width < 768;
+  const width = useWindowWidth();
+  const [isMobile, setIsMobile] = useState(width < 768);
   const finalThemeName =
     themeOverride === THEMES.INHERIT ? mbTheme : themeOverride;
+
+  useEffect(() => {
+    setIsMobile(width < 768);
+  }, [width]);
   return (
     <ThemeProvider theme={theme[finalThemeName]}>
       <StyledFooter>

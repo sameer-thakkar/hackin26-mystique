@@ -1,7 +1,9 @@
 import React, { createContext, useState } from 'react';
-import AsideModal from 'UI/AsideModal';
+import dynamic from 'next/dynamic';
 import { getLangObject } from 'utils/helper';
 import { SIDEBAR_TYPES } from 'constants/index';
+
+const AsideModal = dynamic(() => import('UI/AsideModal'), { ssr: false });
 
 export const MBContext = createContext({
   uid: null,

@@ -1,7 +1,11 @@
+import dynamic from 'next/dynamic';
 import { COLORS, SOLEIL } from '../../constants/ui-constants';
 import { THEMES } from 'constants/index';
 import { SavedTag } from 'UI/PriceBlock';
-import { CTAContainer } from 'components/Product';
+
+const CTAContainer = dynamic(() =>
+  import('components/Product').then((mod) => mod.CTAContainer)
+);
 
 export default {
   [THEMES.MIN_BLUE]: {

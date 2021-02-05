@@ -13,9 +13,7 @@ import Footer from './common/Footer';
 import PopulateUncategorizedProducts from './PopulateUncategorizedProducts';
 import Analytics from '../utils/analytics';
 import allToursParser from '../utils/allToursParser';
-import Alert from './UI/Alert';
 import * as labels from '../constants/localization/labels';
-import DismissAlert from './UI/DismissAlert';
 import { InteractionContextProvider } from '../contexts/Interaction';
 import { docCookies, csvTgidToArray, getLangObject } from '../utils/helper';
 import {
@@ -44,6 +42,8 @@ import { useWindowWidth } from '@react-hook/window-size';
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 const MicrobrandList = dynamic(() => import('./MicrobrandsList'));
+const Alert = dynamic(() => import('UI/Alert'), { ssr: false });
+const DismissAlert = dynamic(() => import('UI/DismissAlert'), { ssr: false });
 
 const CoverSlicesWrapper = styled.div`
   margin-bottom: 32px;

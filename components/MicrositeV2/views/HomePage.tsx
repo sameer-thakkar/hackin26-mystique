@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
+import dynamic from 'next/dynamic';
 import Header from '../Header';
 import LongForm from '../LongForm';
 import sliceHandler from '../../Slices';
 import Banner from '../Banner';
 import DismissAlert from 'UI/DismissAlert';
-import Alert from 'UI/Alert';
 import Footer from '../../common/Footer';
 import * as labels from 'constants/localization/labels';
 import { ProductsContextProvider } from 'contexts/Products';
@@ -21,6 +21,8 @@ import TextBanner from 'components/TextBanner';
 import { MBContext } from 'contexts/MBContext';
 import { THEMES } from 'constants/index';
 import dayjs from 'dayjs';
+
+const Alert = dynamic(() => import('UI/Alert'), { ssr: false });
 
 const V2MicrositeWrapper = styled.div`
   .alert-wrapper {

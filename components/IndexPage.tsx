@@ -28,12 +28,12 @@ import {
   isNakedDomain,
   getHeadoutLanguagecode,
   refsArrayToObject,
-} from '../utils';
-import { uncategorizedToursListParser } from '../utils/dataParsers';
+} from 'utils';
+import { uncategorizedToursListParser } from 'utils/dataParsers';
+import { uaIsMobile } from 'utils/helper';
+import { isAmpUrl, removePageQuery } from 'utils/urlUtils';
 import { MBContextProvider } from '../contexts/MBContext';
 import { toursTabSliceHandler } from './Slices';
-import { uaIsMobile } from '../utils/helper';
-import { isAmpUrl, removePageQuery } from '../utils/urlUtils';
 import 'lazysizes';
 import 'lazysizes/plugins/attrchange/ls.attrchange';
 import '../style/global.css';
