@@ -80,6 +80,7 @@ export const createBookingURL = ({
   tourId = null,
   biLink,
   isMobile = false,
+  currency = '',
 }) => {
   const langRouteParam =
     lang && lang !== 'en' ? '/' + FULL_LANGUAGE_MAP[lang].bookingFlow : '';
@@ -95,6 +96,7 @@ export const createBookingURL = ({
   if (date?.startDate) urlObject.searchParams.set('date', date?.startDate);
   if (date?.startDate) urlObject.searchParams.set('variantId', tourId);
   if (date?.startDate) urlObject.searchParams.set('time', date?.startTime);
+  if (currency) urlObject.searchParams.set('currencyCode', currency);
   if (biLink) urlObject.searchParams.set('bi', biLink);
   return urlObject.toString();
 };

@@ -139,10 +139,13 @@ const CurrencySelector = (props) => {
     }),
     {}
   );
-  const getDisplayCurrencyString = ({ currencyObj, full = false }) =>
-    full
-      ? `${currencyObj?.currencyName} (${currencyObj?.localSymbol}${currencyObj?.code})`
-      : `${currencyObj?.localSymbol} ${currencyObj?.code}`;
+  const getDisplayCurrencyString = ({ currencyObj, full = false }) => {
+    const { currencyName, localSymbol, code } = currencyObj;
+    const finalLocalSymbol = localSymbol === code ? '' : localSymbol;
+    return full
+      ? `${currencyName} (${finalLocalSymbol}${code})`
+      : `${finalLocalSymbol} ${code}`;
+  };
   const finalActiveCurrency = activeCurrency || currentCurrency?.code;
   const activeCurrencyObj = currencySymbolMap[finalActiveCurrency];
   const displayCurrency = getDisplayCurrencyString({

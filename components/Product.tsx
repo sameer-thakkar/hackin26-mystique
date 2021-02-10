@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import * as labels from 'constants/localization/labels';
 import HorizontalLine from './slices/HorizontalLine';
 import Button from 'UI/Button';
+import { useRecoilValue } from 'recoil';
 import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import {
@@ -41,6 +42,7 @@ import {
 import Image from 'UI/Image';
 import useLocalisedDate from 'hooks/useLocalisedDate';
 import { truncate } from 'utils/helper';
+import { currencyAtom } from 'store/atoms/currency';
 
 const isLengthyArray = (item) => Array.isArray(item) && item.length;
 
@@ -638,6 +640,7 @@ const Product = (props) => {
     showEarliestAvailability,
   } = props;
   const { mbTheme, biLink } = useContext(MBContext);
+  const currency = useRecoilValue(currencyAtom);
   const [isContentOpen, toggleContentOpen] = useState(defaultOpen && !isMobile);
   const [showMoreDetailsInTabs, setShowMoreDetails] = useState(
     defaultOpen || false
@@ -838,6 +841,7 @@ const Product = (props) => {
     createBookingURL({
       nakedDomain: bookingUrl,
       lang: currentLanguage,
+      currency,
       tgid,
       tourId,
       df: isDFOnlyProduct,
