@@ -446,6 +446,7 @@ class ContentPage extends Component<any, any> {
             serverRequestStartTimestamp,
             localization: languages,
             currentLanguage,
+            isMobile: this.state.isMobile,
           }}
         />
         <Header

@@ -109,8 +109,11 @@ const PopulateHead = (data) => {
     serverRequestStartTimestamp,
     isAmp,
     enable_amp,
+    isMobile = false,
   } = data;
-  const modifiedCanonicalLink = canonicalLinkForAMP || canonicalLink;
+  const modifiedCanonicalLink = isMobile
+    ? canonicalLinkForAMP || canonicalLink
+    : canonicalLink;
   const { isPreview, noTrack } = useContext(MBContext);
   const title = withShortcodes(rawTitle).join('');
   const description = withShortcodes(rawDescription).join('');

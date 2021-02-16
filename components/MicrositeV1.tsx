@@ -487,6 +487,7 @@ const MicrositeV1 = (props) => {
             serverRequestStartTimestamp,
             mbTheme,
             isAmp,
+            isMobile,
           }}
         />
         <Header

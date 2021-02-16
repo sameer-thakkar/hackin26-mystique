@@ -317,6 +317,7 @@ class MicrositeV2 extends Component<any, any> {
             pathname,
             currentLanguage,
             serverRequestStartTimestamp,
+            isMobile,
           }}
         />
         <div
