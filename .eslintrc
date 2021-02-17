@@ -11,7 +11,8 @@
     "prettier",
     "react",
     "react-hooks",
-    "jsx-a11y"
+    "jsx-a11y",
+		"import"
   ],
   "rules": {
     "@typescript-eslint/no-unused-vars": [
@@ -23,7 +24,29 @@
     "jsx-a11y/click-events-have-key-events": "off",
     "no-unused-vars": "off",
     "no-case-declarations": "off",
-    "prettier/prettier": "off"
+    "prettier/prettier": "off",
+    "import/order": [
+			"warn",
+			{
+				"newlines-between": "always",
+				"groups": [
+					"builtin",
+					"external",
+					"internal",
+					["sibling", "parent", "index"]
+				],
+				"pathGroups": [{
+					"pattern": "atoms/**",
+					"group": "internal",
+					"position": "after"
+				},{
+					"pattern": "selectors/**",
+					"group": "internal",
+					"position": "after"
+				}
+				]
+			}
+		]
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {

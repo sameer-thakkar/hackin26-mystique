@@ -1,7 +1,4 @@
-import en from './en';
-
 const ja = {
-  ...en,
   TOUR_LIST_HEADING: '体験を選択してください',
   GROUP_TICKETS: '団体チケット',
   TOUR_LIST_SUB_HEADING:

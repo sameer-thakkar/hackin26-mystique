@@ -5,6 +5,18 @@ import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { scroller } from 'react-scroll';
 import { useRecoilValue } from 'recoil';
+import { strings } from 'const/strings';
+import SafeDFBannerWrapper from 'UI/SafeDFBannerWrapper';
+import {
+  isSafetyIncluded,
+  getDFValidityFromTags,
+  legacyBooleanCheck,
+} from 'utils';
+import { LOCATION } from 'assets/SvgIcons';
+import { fetchInventory, fetchTourList } from 'utils/apiUtils';
+import { currencyAtom } from 'store/atoms/currency';
+import { useWindowWidth } from '@react-hook/window-size';
+
 import Header from './common/Header';
 import Banner from './Banner';
 import LongForm from './common/LongForm';
@@ -13,7 +25,6 @@ import Footer from './common/Footer';
 import PopulateUncategorizedProducts from './PopulateUncategorizedProducts';
 import Analytics from '../utils/analytics';
 import allToursParser from '../utils/allToursParser';
-import * as labels from '../constants/localization/labels';
 import { InteractionContextProvider } from '../contexts/Interaction';
 import { docCookies, csvTgidToArray, getLangObject } from '../utils/helper';
 import {
@@ -24,20 +35,10 @@ import {
 import { groupSlices } from '../utils/helper';
 import { ProductsContextProvider } from '../contexts/Products';
 import { tourListApiParser } from '../utils/dataParsers';
-import SafeDFBannerWrapper from 'UI/SafeDFBannerWrapper';
-import {
-  isSafetyIncluded,
-  getDFValidityFromTags,
-  legacyBooleanCheck,
-} from 'utils';
 import TextBanner from './TextBanner';
 import Conditional from './common/Conditional';
 import { ResponsiveSelector } from './MicrositeV2/ResponsiveSelector';
-import { LOCATION } from 'assets/SvgIcons';
 import { withAmp } from './common/withAmp';
-import { fetchInventory, fetchTourList } from 'utils/apiUtils';
-import { currencyAtom } from 'store/atoms/currency';
-import { useWindowWidth } from '@react-hook/window-size';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
@@ -514,10 +515,10 @@ const MicrositeV1 = (props) => {
         />
         {showCovid19Alert && covidAlertActive ? (
           <DismissAlert
-            readMoreLink={labels[currentLanguage].COVID19_ALERT.LINK}
-            readMore={labels[currentLanguage].READ_MORE}
-            keyText={labels[currentLanguage].COVID19_ALERT.KEY_TEXT}
-            text={labels[currentLanguage].COVID19_ALERT.TEXT}
+            readMoreLink={strings.COVID19_ALERT.LINK}
+            readMore={strings.READ_MORE}
+            keyText={strings.COVID19_ALERT.KEY_TEXT}
+            text={strings.COVID19_ALERT.TEXT}
             handleClose={onCovidAlertClose}
           />
         ) : null}

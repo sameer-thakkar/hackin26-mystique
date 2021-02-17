@@ -1,11 +1,12 @@
+import { SOLEIL, COLORS } from 'constants/ui-constants';
+
 import React, { useContext } from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'UI/Image';
-import * as labels from 'constants/localization/labels';
+import { strings } from 'const/strings';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import { CLOSE_WHITE, Shield } from 'assets/SvgIcons';
-import { SOLEIL, COLORS } from 'constants/ui-constants';
 import {
   shortCodeSerializerWithParentProps,
   shortCodeSerializer,
@@ -322,7 +323,7 @@ const DetailedProductCard = (props) => {
             <Split count={2} autoWidth={true} mobileLayout={'scroll'}>
               {hasSafetyFlag ? (
                 <IconCTA
-                  text={labels[lang].SAFE_EXPERIENCE.FLAG_TEXT}
+                  text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
                   colorScheme={greenScheme}
                   ctaOnClick={openSafeSidebar}
                   icon={Shield}
@@ -415,7 +416,7 @@ const DetailedProductCard = (props) => {
               >
                 <div className="desc-book-now-cta">
                   <span className="desc-book-now-text">
-                    {labels[lang].BOOK_NOW_CTA}
+                    {strings.BOOK_NOW_CTA}
                   </span>
                 </div>
               </a>

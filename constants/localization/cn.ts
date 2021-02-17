@@ -1,7 +1,4 @@
-import en from './en';
-
 const cn = {
-  ...en,
   TOUR_LIST_HEADING: '选择您的活动体验',
   GROUP_TICKETS: '团体门票',
   TOUR_LIST_SUB_HEADING:

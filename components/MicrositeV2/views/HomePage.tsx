@@ -1,26 +1,28 @@
+import { SIZES, SOLEIL } from 'constants/ui-constants';
+import { THEMES } from 'constants/index';
+
 import React, { useState, useContext } from 'react';
 import dynamic from 'next/dynamic';
-import Header from '../Header';
-import LongForm from '../LongForm';
-import sliceHandler from '../../Slices';
-import Banner from '../Banner';
 import DismissAlert from 'UI/DismissAlert';
-import Footer from '../../common/Footer';
-import * as labels from 'constants/localization/labels';
+import { strings } from 'const/strings';
 import { ProductsContextProvider } from 'contexts/Products';
-import { ProductsWrapper } from '../ProductsWrapper';
-import { ResponsiveSelector } from '../ResponsiveSelector';
 import { LOCATION } from 'assets/SvgIcons';
 import { groupSlices } from 'utils/helper';
 import styled from 'styled-components';
-import { SIZES, SOLEIL } from 'constants/ui-constants';
 import SafeDFBannerWrapper from 'UI/SafeDFBannerWrapper';
 import { isSafetyIncluded, getDFValidityFromTags } from 'utils';
 import Conditional from 'components/common/Conditional';
 import TextBanner from 'components/TextBanner';
 import { MBContext } from 'contexts/MBContext';
-import { THEMES } from 'constants/index';
 import dayjs from 'dayjs';
+
+import { ResponsiveSelector } from '../ResponsiveSelector';
+import { ProductsWrapper } from '../ProductsWrapper';
+import Footer from '../../common/Footer';
+import Banner from '../Banner';
+import sliceHandler from '../../Slices';
+import LongForm from '../LongForm';
+import Header from '../Header';
 
 const Alert = dynamic(() => import('UI/Alert'), { ssr: false });
 
@@ -131,10 +133,10 @@ export const HomePage = (props) => {
       ) : null}
       {showCovid19Alert && covid19AlertOpen ? (
         <DismissAlert
-          readMoreLink={labels[currentLanguage].COVID19_ALERT.LINK}
-          readMore={labels[currentLanguage].READ_MORE}
-          keyText={labels[currentLanguage].COVID19_ALERT.KEY_TEXT}
-          text={labels[currentLanguage].COVID19_ALERT.TEXT}
+          readMoreLink={strings.COVID19_ALERT.LINK}
+          readMore={strings.READ_MORE}
+          keyText={strings.COVID19_ALERT.KEY_TEXT}
+          text={strings.COVID19_ALERT.TEXT}
           handleClose={() => {
             setCovid19AlertOpen(false);
           }}

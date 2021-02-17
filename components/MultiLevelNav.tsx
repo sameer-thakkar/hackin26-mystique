@@ -1,12 +1,12 @@
 import React from 'react';
-import LinkResolver from './LinkResolver';
 import styled from 'styled-components';
-import * as labels from 'constants/localization/labels';
+import { strings } from 'const/strings';
+import { useState, useRef, useEffect } from 'react';
+import { useWindowWidth } from '@react-hook/window-size';
+
 import { COLORS, SOLEIL } from '../constants/ui-constants';
 import { CHEVRON_DOWN } from '../assets/SvgIcons';
-import { useState, useRef, useEffect, useContext } from 'react';
-import { useWindowWidth } from '@react-hook/window-size';
-import { MBContext } from 'contexts/MBContext';
+import LinkResolver from './LinkResolver';
 
 const StyledMenuItem = styled.li`
   font-size: 16px;
@@ -275,7 +275,6 @@ const MenuItem = (props) => {
 
 const HeaderSliceHandler = (slice, props) => {
   const { index, navOpen } = props;
-  const { lang } = useContext(MBContext);
   switch (slice.slice_type) {
     case 'navigation':
       return (
@@ -314,7 +313,7 @@ const HeaderSliceHandler = (slice, props) => {
             slice.action();
           }}
         >
-          {labels[lang].GROUP_TICKETS}
+          {strings.GROUP_TICKETS}
         </StyledMenuItem>
       );
   }

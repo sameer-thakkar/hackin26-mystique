@@ -1,16 +1,18 @@
+import { THEMES } from 'constants/index';
+
 import React, { useContext, useEffect, useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
+import { strings } from 'const/strings';
+import { MBContext } from 'contexts/MBContext';
+import theme from 'style/theme';
+import { useWindowWidth } from '@react-hook/window-size';
+
 import Image from '../UI/Image';
 import SocialLinks from '../UI/SocialLinks';
 import sliceHandler from '../Slices';
-import * as labels from '../../constants/localization/labels';
 import { POWERED_BY_HEADOUT, WHITE_BLIP } from '../../assets/SvgIcons';
 import { COLORS, SOLEIL } from '../../constants/ui-constants';
-import { MBContext } from 'contexts/MBContext';
-import { THEMES } from 'constants/index';
 import Conditional from './Conditional';
-import theme from 'style/theme';
-import { useWindowWidth } from '@react-hook/window-size';
 
 const StyledFooter = styled.footer`
   width: 100%;
@@ -219,13 +221,7 @@ type FooterProps = {
   primaryHeading?: string;
 };
 
-const LinkSlices = ({
-  linksTitle,
-  slices,
-  theme,
-  language,
-  className = '',
-}) => (
+const LinkSlices = ({ linksTitle, slices, theme, className = '' }) => (
   <FooterLinksWrapper className={className}>
     <Container>
       {theme !== THEMES.MIN_BLUE ? (
@@ -234,14 +230,14 @@ const LinkSlices = ({
             linksTitle ? 'has-custom-title' : ''
           }`}
         >
-          {linksTitle || labels[language].FOOTER.QUICK_LINKS}
+          {linksTitle || strings.FOOTER.QUICK_LINKS}
         </div>
       ) : null}
       <div className="quick-links">
         <Conditional if={theme === THEMES.MIN_BLUE}>
           <div className={`quick-links-heading`}>
             <div className="quick-links-title">
-              {linksTitle || labels[language].FOOTER.QUICK_LINKS}
+              {linksTitle || strings.FOOTER.QUICK_LINKS}
             </div>
           </div>
         </Conditional>
@@ -258,7 +254,6 @@ const LinkSlices = ({
 );
 
 const Footer: React.FC<FooterProps> = ({
-  currentLanguage,
   attraction = '',
   logoURL,
   logoAlt,
@@ -288,7 +283,6 @@ const Footer: React.FC<FooterProps> = ({
           <Conditional if={slices?.length}>
             <LinkSlices
               className={'primary-footer'}
-              language={currentLanguage}
               linksTitle={primaryHeading}
               slices={slices}
               theme={finalThemeName}
@@ -298,7 +292,6 @@ const Footer: React.FC<FooterProps> = ({
             <LinkSlices
               className={'secondary-footer'}
               linksTitle={secondaryHeading}
-              language={currentLanguage}
               slices={secondarySlices}
               theme={finalThemeName}
             />
@@ -322,7 +315,7 @@ const Footer: React.FC<FooterProps> = ({
                   <div className="disclaimer-text">
                     {disclaimerText
                       ? disclaimerText
-                      : labels[currentLanguage].FOOTER.DISCLAIMER.replace(
+                      : strings.FOOTER.DISCLAIMER.replace(
                           '<attraction>',
                           attraction
                         )}
@@ -337,20 +330,17 @@ const Footer: React.FC<FooterProps> = ({
                 </Conditional>
               </div>
               <div className="help">
-                <LinksHeader>
-                  {labels[currentLanguage].FOOTER.GET_HELP}
-                </LinksHeader>
+                <LinksHeader>{strings.FOOTER.GET_HELP}</LinksHeader>
                 <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
                   <Link
                     href="https://secure.livechatinc.com/licence/8339531/v2/open_chat.cgi?groups=0"
                     target="_blank"
                   >
-                    {labels[currentLanguage].FOOTER.CHAT_WITH_US}
+                    {strings.FOOTER.CHAT_WITH_US}
                   </Link>
                 </Conditional>
                 <Link href={`tel:${'+1 347 897 0100'}`}>
-                  {labels[currentLanguage].FOOTER.CALL_US}{' '}
-                  {!isMobile ? '+1 347 897 0100' : ''}
+                  {strings.FOOTER.CALL_US} {!isMobile ? '+1 347 897 0100' : ''}
                 </Link>
                 <Link
                   href={`mailto:${
@@ -360,23 +350,20 @@ const Footer: React.FC<FooterProps> = ({
                   }`}
                   target="_blank"
                 >
-                  {labels[currentLanguage].FOOTER.EMAIL_US}
+                  {strings.FOOTER.EMAIL_US}
                 </Link>
               </div>
               <div className="legal">
-                <LinksHeader>
-                  {' '}
-                  {labels[currentLanguage].FOOTER.LEGAL}
-                </LinksHeader>
+                <LinksHeader> {strings.FOOTER.LEGAL}</LinksHeader>
                 <Link href="/terms" target="_blank">
-                  {labels[currentLanguage].FOOTER.TERMS_AND_CONDITIONS}
+                  {strings.FOOTER.TERMS_AND_CONDITIONS}
                 </Link>
                 <Link href="/privacy-policy" target="_blank">
-                  {labels[currentLanguage].FOOTER.PRIVACY_POLICY}
+                  {strings.FOOTER.PRIVACY_POLICY}
                 </Link>
                 <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
                   <Link href="/company-details" target="_blank">
-                    {labels[currentLanguage].FOOTER.COMPANY_DETAILS}
+                    {strings.FOOTER.COMPANY_DETAILS}
                   </Link>
                 </Conditional>
               </div>

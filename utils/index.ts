@@ -1,6 +1,7 @@
 import Router from 'next/router';
-import { withoutTrailingSlash } from '../utils/helper';
 import dayjs from 'dayjs';
+
+import { withoutTrailingSlash } from '../utils/helper';
 import {
   SUPPORTED_LANGUAGES,
   SUPPORTED_LANGUAGES_MAP,
@@ -8,6 +9,32 @@ import {
   PRISMIC_LANG_TO_ROUTE_PARAM,
   CUSTOM_TYPES,
 } from '../constants';
+
+export const getLanguageFromPathname = ({
+  pathname,
+  query = {},
+}: {
+  pathname: string;
+  query?: any;
+}) => {
+  const pathnameSlugs = withoutTrailingSlash(pathname)
+    .split('/')
+    .filter((item) => item);
+
+  let requestedLang = pathnameSlugs[0];
+  if (query?.lang) {
+    requestedLang = PRISMIC_LANG_TO_ROUTE_PARAM[query?.lang];
+  }
+
+  const isLangValid = SUPPORTED_LANGUAGES.includes(requestedLang);
+  if (isLangValid) {
+    pathnameSlugs.shift();
+  } else {
+    requestedLang = 'en';
+  }
+
+  return requestedLang;
+};
 
 // Gets the UID and Language by the host and pathname
 export const getPrismicProps = ({ host, pathname }) => {

@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
-import { useCaptureClickOutside } from 'hooks/ClickOutside';
-import * as labels from 'constants/localization/labels';
-import Image from 'UI/Image';
 import { COLORS, SOLEIL } from 'constants/ui-constants';
+
+import React, { useState, useRef, useEffect } from 'react';
+import { useCaptureClickOutside } from 'hooks/ClickOutside';
+import { strings } from 'const/strings';
+import Image from 'UI/Image';
 import { CHEVRON_DOWN } from 'assets/SvgIcons';
 import styled from 'styled-components';
-import { MBContext } from 'contexts/MBContext';
 import { isSameURL } from 'utils/helper';
 
 const ResponsiveSelectWrapper = styled.div`
@@ -181,7 +181,6 @@ export const ResponsiveSelector = (props) => {
 
   const [toggleActive, setToggleActive] = useState(false);
   const [current, setCurrent] = useState(currentSelectionIndex || 0);
-  const { lang: currentLanguage } = useContext(MBContext);
 
   const selectionChangeHandler = (index) => {
     setCurrent(index);
@@ -224,9 +223,7 @@ export const ResponsiveSelector = (props) => {
         onClick={handleMenuToggle}
       >
         <span className="current-selection-toggle">
-          {current > -1
-            ? options[current].label
-            : labels[currentLanguage].SELECT_CITY}
+          {current > -1 ? options[current].label : strings.SELECT_CITY}
         </span>
         {icon ? (
           <span className="field-icon">

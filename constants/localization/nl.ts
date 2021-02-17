@@ -1,7 +1,4 @@
-import en from './en';
-
 const nl = {
-  ...en,
   TOUR_LIST_HEADING: 'Kies je ervaring',
   GROUP_TICKETS: 'Groepskaartjes',
   TOUR_LIST_SUB_HEADING:

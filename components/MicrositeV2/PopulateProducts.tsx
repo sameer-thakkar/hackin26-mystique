@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
-import * as labels from 'constants/localization/labels';
+import { strings } from 'const/strings';
+
 import { RowComponent } from './RowComponent';
 import InteractionContext from '../../contexts/Interaction';
 import { MBContext } from '../../contexts/MBContext';
@@ -78,7 +79,7 @@ const PopulateProducts = (props) => {
           role="button"
           tabIndex={0}
         >
-          {mbContext.buttons.see_more_text || labels[currentLanguage].VIEW_MORE}
+          {mbContext.buttons.see_more_text || strings.VIEW_MORE}
         </div>
       ) : null}
       <style jsx>{`

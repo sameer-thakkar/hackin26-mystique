@@ -1,15 +1,24 @@
-import React, { Component } from 'react';
-import { HomePage } from './views/HomePage';
-import { SearchPage } from './views/SearchPage';
-import { PAGETYPE, THEMES } from '../../constants';
-import { MobileProductPage } from './views/ProductPage';
+import dynamic from 'next/dynamic';
+import React, { Component, ComponentType } from 'react';
 import { withRouter } from 'next/router';
+import { withAmp } from 'components/common/withAmp';
+
+import { PAGETYPE, THEMES } from '../../constants';
 import PopulateHead from '../common/meta';
 import { InteractionContextProvider } from '../../contexts/Interaction';
 import { docCookies, genManualSlice, getLangObject } from '../../utils/helper';
 import allToursParser from '../../utils/allToursParser';
 import { tourListApiParser } from '../../utils/dataParsers';
-import { withAmp } from 'components/common/withAmp';
+
+const HomePage: ComponentType<any> = dynamic(() =>
+  import('./views/HomePage').then((mod) => mod.HomePage)
+);
+const SearchPage: ComponentType<any> = dynamic(() =>
+  import('./views/SearchPage').then((mod) => mod.SearchPage)
+);
+const MobileProductPage: ComponentType<any> = dynamic(() =>
+  import('./views/ProductPage').then((mod) => mod.MobileProductPage)
+);
 class MicrositeV2 extends Component<any, any> {
   constructor(props) {
     super(props);

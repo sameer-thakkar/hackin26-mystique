@@ -1,14 +1,5 @@
-import React, { useRef, useState, useContext, useEffect } from 'react';
-import styled from 'styled-components';
-import parse from 'url-parse';
-import dayjs from 'dayjs';
-import dynamic from 'next/dynamic';
-import * as labels from 'constants/localization/labels';
 import HorizontalLine from './slices/HorizontalLine';
-import Button from 'UI/Button';
-import { useRecoilValue } from 'recoil';
-import { RichText } from 'prismic-reactjs';
-import { shortCodeSerializer } from 'utils/shortCodes';
+
 import {
   ANALYTICS_EVENTS,
   THEMES,
@@ -16,6 +7,16 @@ import {
   LOCALISED_DATE_FORMATS,
 } from 'constants/index';
 import { COLORS, SOLEIL } from 'constants/ui-constants';
+import { shortCodeSerializer } from 'utils/shortCodes';
+import { RichText } from 'prismic-reactjs';
+import { useRecoilValue } from 'recoil';
+import Button from 'UI/Button';
+import { strings } from 'const/strings';
+import dynamic from 'next/dynamic';
+import dayjs from 'dayjs';
+import parse from 'url-parse';
+import styled from 'styled-components';
+import React, { useRef, useState, useContext, useEffect } from 'react';
 import { CALENDAR, Shield, BackArrow } from 'assets/SvgIcons';
 import 'utils/dayjsLocale';
 import Split, { StlyedSplit } from 'UI/Split';
@@ -24,7 +25,6 @@ import { greenScheme } from 'style/theme';
 import { isSafetyIncluded, createBookingURL } from 'utils';
 import { MBContext } from 'contexts/MBContext';
 import PriceBlock from 'UI/PriceBlock';
-import Conditional from './common/Conditional';
 import Chevron from 'UI/Chevron';
 import {
   extractTabsFromHighlights,
@@ -34,6 +34,8 @@ import {
 import Image from 'UI/Image';
 import { truncate } from 'utils/helper';
 import { currencyAtom } from 'store/atoms/currency';
+
+import Conditional from './common/Conditional';
 
 const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
   ssr: false,
@@ -660,8 +662,8 @@ const Product = (props) => {
   const getDate = (date, currentLanguage) => {
     const today = dayjs().format('YYYY-MM-DD');
     const tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');
-    if (date === today) return labels[currentLanguage].TODAY;
-    if (date === tomorrow) return labels[currentLanguage].TOMORROW;
+    if (date === today) return strings.TODAY;
+    if (date === tomorrow) return strings.TOMORROW;
     return dayjs(date)
       .locale(currentLanguage)
       .format(LOCALISED_DATE_FORMATS[currentLanguage].DATE_MONTH);
@@ -740,14 +742,12 @@ const Product = (props) => {
       mbTheme === THEMES.DEFAULT ? (
         ` ${
           isContentOpen
-            ? '- ' + labels[currentLanguage].SHOW_LESS_TEXT
-            : '+ ' + labels[currentLanguage].MORE_DETAILS
+            ? '- ' + strings.SHOW_LESS_TEXT
+            : '+ ' + strings.MORE_DETAILS
         }`
       ) : (
         <>
-          {isContentOpen
-            ? labels[currentLanguage].SHOW_LESS_TEXT
-            : labels[currentLanguage].MORE_DETAILS}{' '}
+          {isContentOpen ? strings.SHOW_LESS_TEXT : strings.MORE_DETAILS}{' '}
           <Chevron isActive={isContentOpen} className={'chevron'} />{' '}
         </>
       );
@@ -793,13 +793,13 @@ const Product = (props) => {
           className="more-details"
           id={`tour-description-more-text-${position}`}
         >
-          {'+ ' + labels[currentLanguage].MORE_DETAILS}
+          {'+ ' + strings.MORE_DETAILS}
         </span>
         <span
           className="more-details display-none"
           id={`tour-description-less-text-${position}`}
         >
-          {'- ' + labels[currentLanguage].SHOW_LESS_TEXT}
+          {'- ' + strings.SHOW_LESS_TEXT}
         </span>
       </div>
     );
@@ -845,7 +845,7 @@ const Product = (props) => {
             <Split count={2} autoWidth={true}>
               <Conditional if={hasSafetyFlag}>
                 <IconCTA
-                  text={labels[currentLanguage].SAFE_EXPERIENCE.FLAG_TEXT}
+                  text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
                   colorScheme={greenScheme}
                   ctaOnClick={openSafeSidebar}
                   icon={Shield}
@@ -905,7 +905,7 @@ const Product = (props) => {
                 role="button"
                 tabIndex={0}
               >
-                {labels[currentLanguage].BOOK_NOW_CTA}
+                {strings.BOOK_NOW_CTA}
                 {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
               </Button>
             </a>
@@ -916,7 +916,7 @@ const Product = (props) => {
             <NextAvailableBlock>
               <div className="icon">{CALENDAR}</div>
               <div className="available-text">
-                {`${labels[currentLanguage].NEXT_AVAILABLE}`}
+                {`${strings.NEXT_AVAILABLE}`}
                 {getDate(earliestAvailability?.startDate, currentLanguage)}
               </div>
             </NextAvailableBlock>

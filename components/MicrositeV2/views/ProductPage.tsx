@@ -1,14 +1,15 @@
+import { PAGETYPE } from 'constants/index';
+import { SOLEIL, COLORS } from 'constants/ui-constants';
+
 import React, { useEffect, useContext } from 'react';
 import dynamic from 'next/dynamic';
-import * as labels from 'constants/localization/labels';
+import { strings } from 'const/strings';
 import Image from 'UI/Image';
 import { RichText } from 'prismic-reactjs';
 import { CHEVRON_LEFT, BorderedShield } from 'assets/SvgIcons';
 import { shortCodeSerializer } from 'utils/shortCodes';
-import { PAGETYPE } from 'constants/index';
 import parse from 'url-parse';
 import Swiper from 'react-id-swiper';
-import { SOLEIL, COLORS } from 'constants/ui-constants';
 import { MBContext } from 'contexts/MBContext';
 import Split, { StlyedSplit } from 'UI/Split';
 import IconCTA from 'UI/IconCTA';
@@ -152,7 +153,7 @@ export const MobileProductPage = (props) => {
             <Split count={2} autoWidth={true} mobileLayout={'scroll'}>
               {hasSafetyFlag ? (
                 <IconCTA
-                  text={labels[currentLanguage].SAFE_EXPERIENCE.FLAG_TEXT}
+                  text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
                   colorScheme={greenScheme}
                   ctaOnClick={openSafeSidebar}
                   icon={BorderedShield}
@@ -221,7 +222,7 @@ export const MobileProductPage = (props) => {
             biLink,
           })}
         >
-          <div className="cta-text">{labels[currentLanguage].BOOK_NOW_CTA}</div>
+          <div className="cta-text">{strings.BOOK_NOW_CTA}</div>
         </a>
       </div>
       <style jsx>

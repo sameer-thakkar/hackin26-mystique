@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import { useWindowWidth } from '@react-hook/window-size';
 import { RichText } from 'prismic-reactjs';
+
 import PopulateHead from '../common/meta';
 import Header from '../common/Header';
 import Banner from '../MicrositeV2/Banner';
@@ -540,10 +541,7 @@ const Listicle = (props) => {
           )}
         </Content>
         {isMobile || whyBookFromUsData.length === 0 ? null : (
-          <WhyBookFromUs
-            data={whyBookFromUsData}
-            currentLanguage={currentLanguage}
-          />
+          <WhyBookFromUs data={whyBookFromUsData} />
         )}
       </Wrapper>
       {contentFrameworkSlices ? (

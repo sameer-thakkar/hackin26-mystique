@@ -17,7 +17,8 @@
     "paths": {
       "UI/*": ["components/UI/*"],
       "hooks/*": ["components/hooks/*"],
-      "atoms/*": ["store/atoms"]
+      "atoms/*": ["store/atoms"],
+      "const/*": ["constants/*"]
     }
   },
   "exclude": ["node_modules", ".storybook", "stories"],

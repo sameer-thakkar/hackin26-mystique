@@ -1,7 +1,4 @@
-import en from './en';
-
 const tw = {
-  ...en,
   TOUR_LIST_HEADING: '選擇您的活動體驗',
   GROUP_TICKETS: '團體門票',
   TOUR_LIST_SUB_HEADING:

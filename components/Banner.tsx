@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import { scroller } from 'react-scroll';
-import * as labels from '../constants/localization/labels';
+import { strings } from 'const/strings';
+import { withShortcodes } from 'utils/helper';
+import { MBContext } from 'contexts/MBContext';
+
 import Button from './UI/Button';
 import 'utils/dayjsLocale';
 import Image from './UI/Image';
+
 import styled from 'styled-components';
+
 import { SOLEIL, COLORS } from '../constants/ui-constants';
-import { MBContext } from 'contexts/MBContext';
 import Conditional from './common/Conditional';
-import { withShortcodes } from 'utils/helper';
 
 const StyledBanner = styled.div`
   display: grid;
@@ -415,7 +418,6 @@ export default class Banner extends Component<any, any> {
     const {
       bannerHeading,
       bannerImages,
-      currentLanguage,
       hideCTA,
       isAmp,
       dfExpiryDate,
@@ -445,7 +447,7 @@ export default class Banner extends Component<any, any> {
                 onClick={this.scrollTicketSection}
                 on="tap:tour-list-heading.scrollTo(duration='1200', position='top')"
               >
-                {bannerCtaText || labels[currentLanguage].BANNER_CTA}
+                {bannerCtaText || strings.BANNER_CTA}
               </Button>
             </ButtonWrapper>
           )}
@@ -499,7 +501,7 @@ export default class Banner extends Component<any, any> {
             <Conditional if={!hideCTA}>
               <ButtonWrapper>
                 <Button type="whiteBordered" onClick={this.scrollTicketSection}>
-                  {bannerCtaText || labels[currentLanguage].BANNER_CTA}
+                  {bannerCtaText || strings.BANNER_CTA}
                 </Button>
               </ButtonWrapper>
             </Conditional>

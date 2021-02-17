@@ -1,8 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
-import * as labels from 'constants/localization/labels';
 import { COLORS, SOLEIL } from 'constants/ui-constants';
 import { CURRENCY_SYMBOL_MAP } from 'constants/index';
+
+import React from 'react';
+import styled from 'styled-components';
+import { strings } from 'const/strings';
 
 const StyledPricing = styled.div`
   width: max-content;
@@ -31,20 +32,19 @@ const Price = styled.span`
 type PricingProps = {
   floatRight?: boolean;
   listingPrice: any;
-  currentLanguage: string;
+  currentLanguage?: string;
 };
 
 const Pricing: React.FC<PricingProps> = ({
   floatRight = false,
   listingPrice,
-  currentLanguage,
 }) => {
   const currencySymbol = CURRENCY_SYMBOL_MAP[listingPrice.currencyCode];
   return (
     <StyledPricing>
       {listingPrice.originalPrice > listingPrice.finalPrice ? (
         <div>
-          {labels[currentLanguage].FROM}{' '}
+          {strings.FROM}{' '}
           <span>
             {currencySymbol}
             {listingPrice.originalPrice}

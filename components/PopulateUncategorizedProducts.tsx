@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
-import Product from './Product';
-import * as labels from 'constants/localization/labels';
-import styled from 'styled-components';
 import { COLORS, SOLEIL } from 'constants/ui-constants';
-import { csvTgidToArray } from 'utils/helper';
-import Conditional from './common/Conditional';
 import { THEMES } from 'constants/index';
+
+import React, { Component } from 'react';
+import { strings } from 'const/strings';
+import styled from 'styled-components';
+import { csvTgidToArray } from 'utils/helper';
+
+import Product from './Product';
+import Conditional from './common/Conditional';
 import HorizontalLine from './slices/HorizontalLine';
 
 const StyledUncategorizedContainer = styled.div`
@@ -119,10 +121,10 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
         <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
           <div id="tour-list-heading">
             <StyledTourListHeading>
-              {labels[currentLanguage].TOUR_LIST_HEADING}
+              {strings.TOUR_LIST_HEADING}
             </StyledTourListHeading>
             <StyledTourListSubHeading>
-              {labels[currentLanguage].TOUR_LIST_SUB_HEADING}
+              {strings.TOUR_LIST_SUB_HEADING}
             </StyledTourListSubHeading>
           </div>
         </Conditional>

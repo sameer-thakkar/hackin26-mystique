@@ -1,17 +1,19 @@
-import * as labels from 'constants/localization/labels';
+import { SOLEIL, COLORS } from 'constants/ui-constants';
+
+import { strings } from 'const/strings';
 import React, { useRef, useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { scroller } from 'react-scroll';
-import LanguageSelector from './LanguageSelector';
-import HeaderLinks from '../HeaderLinks';
 import Hamburger from 'UI/Hamburger';
 import Image from 'UI/Image';
-import MultiLevelNav from '../MultiLevelNav';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import { POWERED_BY_HEADOUT } from 'assets/SvgIcons';
-import { SOLEIL, COLORS } from 'constants/ui-constants';
 import { MBContext } from 'contexts/MBContext';
 import { ResponsiveSelector } from 'components/MicrositeV2/ResponsiveSelector';
+
+import MultiLevelNav from '../MultiLevelNav';
+import HeaderLinks from '../HeaderLinks';
+import LanguageSelector from './LanguageSelector';
 import Conditional from './Conditional';
 import CurrencySelector from './CurrencySelector';
 
@@ -271,12 +273,12 @@ const Header: React.FC<any> = (props) => {
                 });
               }}
             >
-              {labels[currentLanguage].BANNER_CTA}
+              {strings.BANNER_CTA}
             </StyledMenuItem>
           ) : null}
           <Conditional if={showTicketMenu}>
             <StyledMenuItem as="a" href={logoRedirectionURL}>
-              {labels[currentLanguage].TICKETS}
+              {strings.TICKETS}
             </StyledMenuItem>
           </Conditional>
           {hasLanguageSelector === 'Yes' && !hideLangugageDropdown ? (
