@@ -1,5 +1,4 @@
-import { COLORS, SOLEIL } from 'constants/ui-constants';
-
+import { COLORS, SOLEIL } from 'const/ui-constants';
 import React from 'react';
 import styled from 'styled-components';
 import Image from 'UI/Image';
@@ -19,7 +18,7 @@ const StyledSmallListicle = styled.div`
 
 const ProductImage = styled.div`
   grid-area: image;
-  width: 131px; !important
+  width: 131px !important;
   height: 82px;
   img {
     width: 100%;

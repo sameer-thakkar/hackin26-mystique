@@ -1,6 +1,5 @@
-import { COLORS, SOLEIL } from 'constants/ui-constants';
-import { THEMES } from 'constants/index';
-
+import { COLORS, SOLEIL } from 'const/ui-constants';
+import { THEMES } from 'const/index';
 import React, { Component } from 'react';
 import { strings } from 'const/strings';
 import styled from 'styled-components';

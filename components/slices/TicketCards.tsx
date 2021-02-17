@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { COLORS, SOLEIL } from 'const/ui-constants';
+
 import Button from '../UI/Button';
 import { CURRENCY_SYMBOL_MAP } from '../../constants';
-import { COLORS, SOLEIL } from '../../constants/ui-constants';
 
 const TicketCardsWrapper = styled.div`
   font-family: ${SOLEIL.FONT_STACK};

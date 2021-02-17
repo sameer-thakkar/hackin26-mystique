@@ -5,7 +5,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import Rating from 'UI/Rating';
 import Slider from 'UI/Slider';
 import Image from 'UI/Image';
-import { COLORS } from 'constants/ui-constants';
+import { COLORS } from 'const/ui-constants';
 import { QUOTES } from 'assets/SvgIcons';
 
 dayjs.extend(relativeTime);

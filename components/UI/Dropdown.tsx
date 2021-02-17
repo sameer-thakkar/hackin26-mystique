@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
-import { useCaptureClickOutside } from '../hooks/ClickOutside';
-import { COLORS } from '../../constants/ui-constants';
+import { COLORS } from 'const/ui-constants';
 import styled from 'styled-components';
+
+import { useCaptureClickOutside } from '../hooks/ClickOutside';
 
 const TriggerElement = styled.div`
   cursor: pointer;

@@ -1,5 +1,4 @@
-import { SOLEIL, COLORS } from 'constants/ui-constants';
-
+import { SOLEIL, COLORS } from 'const/ui-constants';
 import React, { useContext } from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'UI/Image';

@@ -1,8 +1,9 @@
 import React from 'react';
+import { SIZES } from 'const/ui-constants';
+import { scroller } from 'react-scroll';
+
 import Image from '../UI/Image';
 import Swiper from '../Swiper';
-import { SIZES } from '../../constants/ui-constants';
-import { scroller } from 'react-scroll';
 import { stringIdfy } from '../../utils/helper';
 
 const Banner = (props) => {

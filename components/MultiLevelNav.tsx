@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { strings } from 'const/strings';
 import { useState, useRef, useEffect } from 'react';
 import { useWindowWidth } from '@react-hook/window-size';
+import { COLORS, SOLEIL } from 'const/ui-constants';
 
-import { COLORS, SOLEIL } from '../constants/ui-constants';
 import { CHEVRON_DOWN } from '../assets/SvgIcons';
 import LinkResolver from './LinkResolver';
 

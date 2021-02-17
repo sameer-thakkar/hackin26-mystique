@@ -1,6 +1,5 @@
-import { SIZES } from 'constants/ui-constants';
-import { THEMES } from 'constants/index';
-
+import { SIZES } from 'const/ui-constants';
+import { THEMES } from 'const/index';
 import { useContext, useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';

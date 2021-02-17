@@ -1,6 +1,5 @@
-import { SOLEIL } from 'constants/ui-constants';
-import { CUSTOM_TYPES } from 'constants/index';
-
+import { SOLEIL } from 'const/ui-constants';
+import { CUSTOM_TYPES } from 'const/index';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';

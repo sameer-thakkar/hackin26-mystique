@@ -6,12 +6,12 @@ import { strings } from 'const/strings';
 import { RichText } from 'prismic-reactjs';
 import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
 import { createBookingURL } from 'utils';
+import { SOLEIL, COLORS } from 'const/ui-constants';
 
 import Image from '../UI/Image';
 import EnvironmentContext from '../../contexts/environmentContext';
 import ProductsContext from '../../contexts/Products';
 import Button from '../UI/Button';
-import { SOLEIL, COLORS } from '../../constants/ui-constants';
 import { shortCodeSerializerWithParentProps } from '../../utils/shortCodes';
 import { MBContext } from '../../contexts/MBContext';
 import { CHEVRON_DOWN } from '../../assets/SvgIcons';

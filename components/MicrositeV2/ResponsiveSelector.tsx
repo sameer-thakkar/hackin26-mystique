@@ -1,5 +1,4 @@
-import { COLORS, SOLEIL } from 'constants/ui-constants';
-
+import { COLORS, SOLEIL } from 'const/ui-constants';
 import React, { useState, useRef, useEffect } from 'react';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import { strings } from 'const/strings';

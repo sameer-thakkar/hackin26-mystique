@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { useWindowWidth } from '@react-hook/window-size';
 import { RichText } from 'prismic-reactjs';
 import { strings } from 'const/strings';
+import { COLORS, SOLEIL } from 'const/ui-constants';
 
 import Swiper from '../Swiper';
 import Image from '../UI/Image';
 import Button from '../UI/Button';
-import { COLORS, SOLEIL } from '../../constants/ui-constants';
 import { CHEVRON_LEFT } from '../../assets/SvgIcons';
 
 const variantStyles = {

@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import Header from '../components/common/Header';
-import Footer from '../components/common/Footer';
-import ContentContainer from '../components/UI/ContentContainer';
-import Paragraph from '../components/UI/Paragraph';
-import { TopHeading, SubHeading } from '../components/UI/Headings';
-import { Client } from '../config/prismic-config';
-import { DROPDOWN_ELEMENT, CUSTOM_TYPES, THEMES, DESIGN } from '../constants';
-import { MinimalHelmet } from '../components/common/meta';
+import Header from 'components/common/Header';
+import Footer from 'components/common/Footer';
+import ContentContainer from 'components/UI/ContentContainer';
+import Paragraph from 'components/UI/Paragraph';
+import { TopHeading, SubHeading } from 'components/UI/Headings';
+import { MinimalHelmet } from 'components/common/meta';
 import { ThemeProvider } from 'styled-components';
 import { MBContextProvider } from 'contexts/MBContext';
 import 'lazysizes';
@@ -16,6 +14,9 @@ import Conditional from 'components/common/Conditional';
 import RichContent from 'UI/RichContent';
 import { getNakedDomain } from 'utils';
 import theme from 'style/theme';
+
+import { DROPDOWN_ELEMENT, CUSTOM_TYPES, THEMES, DESIGN } from '../constants';
+import { Client } from '../config/prismic-config';
 
 const Title = styled.div`
   margin: 10px 0px;

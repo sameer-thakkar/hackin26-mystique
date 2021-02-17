@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
-import { COLORS, SOLEIL } from '../../constants/ui-constants';
-import { THEMES } from 'constants/index';
+import { COLORS, SOLEIL } from 'const/ui-constants';
+import { THEMES } from 'const/index';
 import { SavedTag } from 'UI/PriceBlock';
 
 const CTAContainer = dynamic(() =>

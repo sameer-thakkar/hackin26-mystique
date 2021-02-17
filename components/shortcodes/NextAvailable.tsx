@@ -4,9 +4,9 @@ import dayjs from 'dayjs';
 import calendar from 'dayjs/plugin/calendar';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import { strings } from 'const/strings';
+import { SOLEIL } from 'const/ui-constants';
 
 import { HEADOUT_API_ENDPOINT } from '../../constants';
-import { SOLEIL } from '../../constants/ui-constants';
 
 dayjs.extend(calendar);
 dayjs.extend(advancedFormat);

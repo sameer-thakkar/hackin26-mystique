@@ -1,6 +1,5 @@
-import { SOLEIL, COLORS } from 'constants/ui-constants';
-import { THEMES } from 'constants/index';
-
+import { SOLEIL, COLORS } from 'const/ui-constants';
+import { THEMES } from 'const/index';
 import styled from 'styled-components';
 import { strings } from 'const/strings';
 import Conditional from 'components/common/Conditional';

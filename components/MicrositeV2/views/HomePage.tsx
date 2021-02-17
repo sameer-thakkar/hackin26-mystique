@@ -1,6 +1,5 @@
-import { SIZES, SOLEIL } from 'constants/ui-constants';
-import { THEMES } from 'constants/index';
-
+import { SIZES, SOLEIL } from 'const/ui-constants';
+import { THEMES } from 'const/index';
 import React, { useState, useContext } from 'react';
 import dynamic from 'next/dynamic';
 import DismissAlert from 'UI/DismissAlert';

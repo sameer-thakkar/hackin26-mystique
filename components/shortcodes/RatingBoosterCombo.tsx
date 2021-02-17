@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { SOLEIL, COLORS } from 'const/ui-constants';
+
 import { STAR } from '../../assets/SvgIcons';
-import { SOLEIL, COLORS } from '../../constants/ui-constants';
 import { HEADOUT_API_ENDPOINT } from '../../constants';
 
 const RatingBoosterCombo = (props) => {

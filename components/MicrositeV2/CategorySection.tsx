@@ -1,11 +1,12 @@
-import PopulateProducts from './PopulateProducts';
-import { SOLEIL, COLORS } from '../../constants/ui-constants';
+import { SOLEIL, COLORS } from 'const/ui-constants';
 import { useContext, useEffect } from 'react';
+import styled from 'styled-components';
+import useWindowSize from 'hooks/useWindowSize';
+
+import PopulateProducts from './PopulateProducts';
 import ProductsContext from '../../contexts/Products';
 import InteractionContext from '../../contexts/Interaction';
 import { DONT_AUTO_SCROLL, DONT_HOIST } from '../../constants';
-import styled from 'styled-components';
-import useWindowSize from 'hooks/useWindowSize';
 
 const StyledCategorySection = styled.div`
   display: grid;

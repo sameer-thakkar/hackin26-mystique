@@ -1,7 +1,7 @@
 import { RichText } from 'prismic-reactjs';
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { COLORS, SOLEIL } from 'constants/ui-constants';
+import { COLORS, SOLEIL } from 'const/ui-constants';
 import {
   CHEVRON_LEFT,
   CHEVRON_LEFT_CIRCLE,

@@ -5,8 +5,21 @@ import fetch from 'isomorphic-unfetch';
 import Cookies from 'js-cookie';
 import { ThemeProvider } from 'styled-components';
 import { RecoilRoot } from 'recoil';
+
 import 'lazysizes';
 import 'lazysizes/plugins/attrchange/ls.attrchange';
+import {
+  redirectTo,
+  getPrismicProps,
+  reflect,
+  isNakedDomain,
+  getHeadoutLanguagecode,
+  refsArrayToObject,
+} from 'utils';
+import { uncategorizedToursListParser } from 'utils/dataParsers';
+import { uaIsMobile } from 'utils/helper';
+import { isAmpUrl, removePageQuery } from 'utils/urlUtils';
+
 import theme from '../style/theme';
 import EnvironmentContext from '../contexts/environmentContext';
 import { Client } from '../config/prismic-config';
@@ -23,24 +36,13 @@ import {
   FULL_LANGUAGE_MAP,
   PRISMIC_LANG_TO_ROUTE_PARAM,
 } from '../constants';
-import {
-  redirectTo,
-  getPrismicProps,
-  reflect,
-  isNakedDomain,
-  getHeadoutLanguagecode,
-  refsArrayToObject,
-} from 'utils';
-import { uncategorizedToursListParser } from 'utils/dataParsers';
-import { uaIsMobile } from 'utils/helper';
-import { isAmpUrl, removePageQuery } from 'utils/urlUtils';
 import { MBContextProvider } from '../contexts/MBContext';
 import { toursTabSliceHandler } from './Slices';
 import '../style/global.css';
-const Microsite = dynamic(() => import('../components/MicrositeV1'));
-const ContentPage = dynamic(() => import('../components/ContentPage'));
-const MicrositeV2 = dynamic(() => import('../components/MicrositeV2'));
-const Listicle = dynamic(() => import('../components/ListiclePage'));
+const Microsite = dynamic(() => import('components/MicrositeV1'));
+const ContentPage = dynamic(() => import('components/ContentPage'));
+const MicrositeV2 = dynamic(() => import('components/MicrositeV2'));
+const Listicle = dynamic(() => import('components/ListiclePage'));
 
 const getValidUrlParams = (query) =>
   Object.entries(query)

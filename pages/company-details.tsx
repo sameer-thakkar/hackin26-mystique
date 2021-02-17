@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import Header from '../components/common/Header';
-import Footer from '../components/common/Footer';
-import ContentContainer from '../components/UI/ContentContainer';
-import Paragraph from '../components/UI/Paragraph';
-import { TopHeading } from '../components/UI/Headings';
+import Header from 'components/common/Header';
+import Footer from 'components/common/Footer';
+import ContentContainer from 'components/UI/ContentContainer';
+import Paragraph from 'components/UI/Paragraph';
+import { TopHeading } from 'components/UI/Headings';
+import { MinimalHelmet } from 'components/common/meta';
+
 import { Client } from '../config/prismic-config';
 import { DROPDOWN_ELEMENT } from '../constants';
-import { MinimalHelmet } from '../components/common/meta';
 import 'lazysizes';
 import '../style/global.css';
 

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { COLORS, SOLEIL } from 'const/ui-constants';
+
 import sliceHandler from '../Slices';
 import { FULL_WIDTH_SLICES } from '../../constants';
-import { COLORS, SOLEIL } from '../../constants/ui-constants';
 
 export const StyledLongForm = styled.div`
   font-family: ${SOLEIL.FONT_STACK};

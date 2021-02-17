@@ -1,4 +1,8 @@
 import React, { useContext, useState } from 'react';
+import { COLORS, SOLEIL } from 'const/ui-constants';
+import styled from 'styled-components';
+import Conditional from 'components/common/Conditional';
+
 import LanguageSelector from './LanguageSelector';
 import InteractionContext from '../../contexts/Interaction';
 import Image from '../UI/Image';
@@ -6,14 +10,11 @@ import { SearchBox } from './SearchBox';
 import { PAGETYPE, ALLOW_IMMEDIEATE_NESTING, THEMES } from '../../constants';
 import { SEARCH_ICON, POWERED_BY_HEADOUT } from '../../assets/SvgIcons';
 import { SearchItem } from './SearchItem';
-import { COLORS, SOLEIL } from '../../constants/ui-constants';
 import { ResponsiveSelector } from './ResponsiveSelector';
-import styled from 'styled-components';
 import MultiLevelNav from '../MultiLevelNav';
 import { groupSlices } from '../../utils/helper';
 import Hamburger from '../UI/Hamburger';
 import HeaderLinks from '../HeaderLinks';
-import Conditional from 'components/common/Conditional';
 
 const StyledHeader = styled.span`
   header {

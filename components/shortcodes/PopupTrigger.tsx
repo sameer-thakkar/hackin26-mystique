@@ -1,6 +1,5 @@
-import { CUSTOM_TYPES } from 'constants/index';
-import { COLORS } from 'constants/ui-constants';
-
+import { CUSTOM_TYPES } from 'const/index';
+import { COLORS } from 'const/ui-constants';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';

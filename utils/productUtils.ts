@@ -1,5 +1,5 @@
 import { RichText } from 'prismic-reactjs';
-import { THEMES } from 'constants/index';
+import { THEMES } from 'const/index';
 export const extractTabsFromHighlights = (highlights) => {
   let tabs = [];
   const nonTabHighlights = highlights.reduce((acc, highlight) => {

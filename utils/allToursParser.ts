@@ -1,5 +1,5 @@
 import { RichText } from 'prismic-reactjs';
-import { CURRENCY_SYMBOL_MAP } from 'constants/index';
+import { CURRENCY_SYMBOL_MAP } from 'const/index';
 
 type ToursData = {
   cardPrices: object;

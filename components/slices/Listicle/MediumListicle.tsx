@@ -1,5 +1,4 @@
-import { COLORS, SOLEIL } from 'constants/ui-constants';
-
+import { COLORS, SOLEIL } from 'const/ui-constants';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';

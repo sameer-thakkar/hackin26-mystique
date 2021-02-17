@@ -1,14 +1,15 @@
 import styled from 'styled-components';
+import { useEffect, useState, useContext } from 'react';
+import { SOLEIL, COLORS } from 'const/ui-constants';
+import { createBookingURL } from 'utils';
+
 import Image from '../UI/Image';
 import LocalisedPrice from '../UI/LPrice';
 import { STAR_FULL } from '../../assets/SvgIcons';
-import { useEffect, useState, useContext } from 'react';
 import { tourListApiParser } from '../../utils/dataParsers';
 import RichContent from '../UI/RichContent';
 import { MBContext } from '../../contexts/MBContext';
-import { SOLEIL, COLORS } from '../../constants/ui-constants';
 import { DESIGN, HEADOUT_API_ENDPOINT } from '../../constants';
-import { createBookingURL } from 'utils';
 
 const Tour = styled.a`
   display: grid;

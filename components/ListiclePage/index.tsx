@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import { useWindowWidth } from '@react-hook/window-size';
 import { RichText } from 'prismic-reactjs';
+import { SOLEIL, COLORS } from 'const/ui-constants';
 
 import PopulateHead from '../common/meta';
 import Header from '../common/Header';
@@ -19,7 +20,6 @@ import Footer from '../common/Footer';
 import WhyBookFromUs from './WhyBookFromUs';
 import { groupSlices } from '../../utils/helper';
 import { Client } from '../../config/prismic-config';
-import { SOLEIL, COLORS } from '../../constants/ui-constants';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 import { CHEVRON_LEFT_CIRCLE } from '../../assets/SvgIcons';
 import { HEADOUT_API_ENDPOINT } from '../../constants';

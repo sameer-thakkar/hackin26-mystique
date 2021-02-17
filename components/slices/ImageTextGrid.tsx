@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
+import { SOLEIL } from 'const/ui-constants';
+
 import Image from '../UI/Image';
 import { shortCodeSerializer } from '../../utils/shortCodes';
-import { SOLEIL } from '../../constants/ui-constants';
 
 type ImageTextProps = {
   cols: number;

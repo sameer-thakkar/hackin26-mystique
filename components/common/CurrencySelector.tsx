@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { THEMES } from 'constants/index';
-import { COLORS, SOLEIL } from 'constants/ui-constants';
+import { THEMES } from 'const/index';
+import { COLORS, SOLEIL } from 'const/ui-constants';
 import { useRecoilState } from 'recoil';
 import { currencyAtom } from 'store/atoms/currency';
 

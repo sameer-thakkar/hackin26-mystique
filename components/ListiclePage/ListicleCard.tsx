@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
 import { strings } from 'const/strings';
+import { COLORS, SOLEIL } from 'const/ui-constants';
 
 import Rating from '../UI/Rating';
 import Tags from '../UI/Tags';
@@ -10,7 +11,6 @@ import Chevron from '../UI/Chevron';
 import Button from '../UI/Button';
 import { Client } from '../../config/prismic-config';
 import { CUSTOM_TYPES } from '../../constants';
-import { COLORS, SOLEIL } from '../../constants/ui-constants';
 import { PIN } from '../../assets/SvgIcons';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 

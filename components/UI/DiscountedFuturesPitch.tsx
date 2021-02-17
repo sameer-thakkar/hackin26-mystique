@@ -1,9 +1,8 @@
-import { SOLEIL, COLORS } from 'constants/ui-constants';
+import { SOLEIL, COLORS } from 'const/ui-constants';
 import {
   DATE_FORMAT_TYPES,
   DISCOUNTED_FUTURE_IMAGES_SECTION,
-} from 'constants/index';
-
+} from 'const/index';
 import { strings } from 'const/strings';
 import Accordion from 'components/slices/Accordion';
 import styled from 'styled-components';

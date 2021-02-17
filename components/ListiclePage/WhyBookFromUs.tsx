@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { strings } from 'const/strings';
+import { SOLEIL } from 'const/ui-constants';
 
-import { SOLEIL } from '../../constants/ui-constants';
 import { CIRCLE_TICK } from '../../assets/SvgIcons';
 
 const WhyBookFromUsWrapper = styled.div`

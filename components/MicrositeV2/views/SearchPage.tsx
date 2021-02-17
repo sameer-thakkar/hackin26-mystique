@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { SearchBox } from '../SearchBox';
-import { PAGETYPE } from 'constants/index';
+import { PAGETYPE } from 'const/index';
 import { CLOSE_WHITE } from 'assets/SvgIcons';
+import { SOLEIL } from 'const/ui-constants';
+
+import { SearchBox } from '../SearchBox';
 import { SearchItem } from '../SearchItem';
 import PopulateProducts from '../PopulateProducts';
-import { SOLEIL } from 'constants/ui-constants';
 
 export const SearchPage = (props) => {
   const [results, setResults] = useState([]);

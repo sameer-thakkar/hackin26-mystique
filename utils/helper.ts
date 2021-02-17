@@ -1,6 +1,7 @@
 import parse from 'url-parse';
 import { parsePhoneNumberFromString as parseMobile } from 'libphonenumber-js/mobile';
-import { FULL_LANGUAGE_MAP } from 'constants/index';
+import { FULL_LANGUAGE_MAP } from 'const/index';
+
 import renderShortCodes from './shortCodes';
 
 export const withoutTrailingSlash = (url) =>

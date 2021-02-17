@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
+import { SOLEIL, COLORS } from 'const/ui-constants';
+import { scroller } from 'react-scroll';
+
 import Swiper from '../Swiper';
 import Image from '../UI/Image';
 import { CHEVRON_LEFT } from '../../assets/SvgIcons';
 import { shortCodeSerializer } from '../../utils/shortCodes';
-import { SOLEIL, COLORS } from '../../constants/ui-constants';
-import { scroller } from 'react-scroll';
 import { stringIdfy } from '../../utils/helper';
 import { MBContext } from '../../contexts/MBContext';
 import { DESIGN } from '../../constants';

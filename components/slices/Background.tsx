@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { COLORS, SOLEIL } from 'const/ui-constants';
+
 import sliceHandler from '../Slices';
-import { COLORS, SOLEIL } from '../../constants/ui-constants';
 import { FULL_WIDTH_SLICES } from '../../constants';
 
 const StyledBackground = styled.div`

@@ -1,10 +1,9 @@
-import { SOLEIL, COLORS } from 'constants/ui-constants';
+import { SOLEIL, COLORS } from 'const/ui-constants';
 import {
   SAFETY_DETAILS_IMAGES,
   SAFETY_DETAILS_TYPE,
   CLUBBED_SAFETY_TAGS,
-} from 'constants/index';
-
+} from 'const/index';
 import styled from 'styled-components';
 import useWindowSize from 'hooks/useWindowSize';
 import Conditional from 'components/common/Conditional';

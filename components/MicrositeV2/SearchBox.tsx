@@ -6,8 +6,9 @@ import React, {
   useRef,
 } from 'react';
 import Fuse from 'fuse.js';
+import { SOLEIL, COLORS } from 'const/ui-constants';
+
 import { SEARCH_ICON, CLOSE_WHITE } from '../../assets/SvgIcons';
-import { SOLEIL, COLORS } from '../../constants/ui-constants';
 import InteractionContext from '../../contexts/Interaction';
 
 export const SearchBox = (props) => {

@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { SOLEIL, COLORS } from 'const/ui-constants';
+
 import LinkResolver from '../LinkResolver';
-import { SOLEIL, COLORS } from '../../constants/ui-constants';
 
 type FooterColumnProps = {
   title: string;

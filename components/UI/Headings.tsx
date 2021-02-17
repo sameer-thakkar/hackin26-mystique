@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { SOLEIL } from 'constants/ui-constants';
+import { SOLEIL } from 'const/ui-constants';
 
 export const StyledTopHeading = styled.div`
   font-size: 35px;

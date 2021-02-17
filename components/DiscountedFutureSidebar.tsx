@@ -1,5 +1,4 @@
-import { SOLEIL, COLORS } from 'constants/ui-constants';
-
+import { SOLEIL, COLORS } from 'const/ui-constants';
 import styled from 'styled-components';
 import Button from 'UI/Button';
 import PriceBlock from 'UI/PriceBlock';
@@ -15,9 +14,7 @@ import Conditional from './common/Conditional';
 
 import 'utils/dayjsLocale';
 import Tags, { Tag, StyledTags } from 'UI/Tags';
-
-import { DATE_FORMAT_TYPES } from 'constants/index';
-
+import { DATE_FORMAT_TYPES } from 'const/index';
 import useLocalisedDate from 'hooks/useLocalisedDate';
 
 const DFSidebar = styled.div`

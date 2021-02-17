@@ -1,8 +1,9 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import styled from 'styled-components';
-import Swiper from '../Swiper';
-import { COLORS } from 'constants/ui-constants';
+import { COLORS } from 'const/ui-constants';
 import { useAmp } from 'next/amp';
+
+import Swiper from '../Swiper';
 import { CHEVRON_LEFT } from '../../assets/SvgIcons';
 
 const StyledSlider = styled.div`

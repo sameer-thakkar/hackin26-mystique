@@ -1,17 +1,16 @@
-import { THEMES } from 'constants/index';
-
+import { THEMES } from 'const/index';
 import React, { useContext, useEffect, useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { strings } from 'const/strings';
 import { MBContext } from 'contexts/MBContext';
 import theme from 'style/theme';
 import { useWindowWidth } from '@react-hook/window-size';
+import { COLORS, SOLEIL } from 'const/ui-constants';
 
 import Image from '../UI/Image';
 import SocialLinks from '../UI/SocialLinks';
 import sliceHandler from '../Slices';
 import { POWERED_BY_HEADOUT, WHITE_BLIP } from '../../assets/SvgIcons';
-import { COLORS, SOLEIL } from '../../constants/ui-constants';
 import Conditional from './Conditional';
 
 const StyledFooter = styled.footer`

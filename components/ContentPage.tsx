@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 import { strings } from 'const/strings';
 import { legacyBooleanCheck } from 'utils';
+import { COLORS, SOLEIL } from 'const/ui-constants';
 
 import Header from './common/Header';
 import sliceHandler from './Slices';
@@ -22,7 +23,6 @@ import allToursParser from '../utils/allToursParser';
 import { ProductsContextProvider } from '../contexts/Products';
 import { InteractionContextProvider } from '../contexts/Interaction';
 import { tourListApiParser } from '../utils/dataParsers';
-import { COLORS, SOLEIL } from '../constants/ui-constants';
 import { withAmp } from './common/withAmp';
 
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });

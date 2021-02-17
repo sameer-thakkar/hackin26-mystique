@@ -1,6 +1,5 @@
-import { PAGETYPE } from 'constants/index';
-import { SOLEIL, COLORS } from 'constants/ui-constants';
-
+import { PAGETYPE } from 'const/index';
+import { SOLEIL, COLORS } from 'const/ui-constants';
 import React, { useEffect, useContext } from 'react';
 import dynamic from 'next/dynamic';
 import { strings } from 'const/strings';

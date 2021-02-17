@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { strings } from 'const/strings';
+import { COLORS, SOLEIL } from 'const/ui-constants';
 
 import LinkResolver from './LinkResolver';
-import { COLORS, SOLEIL } from '../constants/ui-constants';
 
 const StyledHeaderLinksWrapper = styled.div`
   display: flex;

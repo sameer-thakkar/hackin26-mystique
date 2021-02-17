@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { COLORS, SOLEIL } from '../../constants/ui-constants';
+import { COLORS, SOLEIL } from 'const/ui-constants';
 
 type BreadcrumbProps = {
   orderedLinks: any[];

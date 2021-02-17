@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
+import { SOLEIL } from 'const/ui-constants';
+
 import Swiper from '../Swiper';
-import { SOLEIL } from '../../constants/ui-constants';
 
 const StyledWrapper = styled.div`
   display: grid;

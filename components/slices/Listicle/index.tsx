@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { HEADOUT_API_ENDPOINT } from 'const/index';
+import { MBContext } from 'contexts/MBContext';
+
 import SmallListicle from './SmallListicle';
 import MediumListicle from './MediumListicle';
 import LargeListicle from './LargeListicle';
-import { HEADOUT_API_ENDPOINT } from 'constants/index';
-import { MBContext } from 'contexts/MBContext';
 
 type ListicleProps = {
   type: 'small' | 'medium' | 'large';

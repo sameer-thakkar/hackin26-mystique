@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { SOLEIL } from 'constants/ui-constants';
+import { SOLEIL } from 'const/ui-constants';
 
 const ContentContainer = styled.div`
   margin: 10px;

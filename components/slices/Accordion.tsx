@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import styled from 'styled-components';
-import Chevron from '../UI/Chevron';
-import { SOLEIL, COLORS } from '../../constants/ui-constants';
+import { SOLEIL, COLORS } from 'const/ui-constants';
 import Conditional from 'components/common/Conditional';
+
+import Chevron from '../UI/Chevron';
 
 export const StyledAccordion = styled.div`
   padding: 16px 0;

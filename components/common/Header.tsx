@@ -1,5 +1,4 @@
-import { SOLEIL, COLORS } from 'constants/ui-constants';
-
+import { SOLEIL, COLORS } from 'const/ui-constants';
 import { strings } from 'const/strings';
 import React, { useRef, useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';

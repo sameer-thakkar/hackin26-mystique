@@ -4,14 +4,12 @@ import { scroller } from 'react-scroll';
 import { strings } from 'const/strings';
 import { withShortcodes } from 'utils/helper';
 import { MBContext } from 'contexts/MBContext';
+import { SOLEIL, COLORS } from 'const/ui-constants';
+import styled from 'styled-components';
 
 import Button from './UI/Button';
 import 'utils/dayjsLocale';
 import Image from './UI/Image';
-
-import styled from 'styled-components';
-
-import { SOLEIL, COLORS } from '../constants/ui-constants';
 import Conditional from './common/Conditional';
 
 const StyledBanner = styled.div`

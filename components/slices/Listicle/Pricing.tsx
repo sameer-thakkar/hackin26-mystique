@@ -1,6 +1,5 @@
-import { COLORS, SOLEIL } from 'constants/ui-constants';
-import { CURRENCY_SYMBOL_MAP } from 'constants/index';
-
+import { COLORS, SOLEIL } from 'const/ui-constants';
+import { CURRENCY_SYMBOL_MAP } from 'const/index';
 import React from 'react';
 import styled from 'styled-components';
 import { strings } from 'const/strings';

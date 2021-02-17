@@ -5,8 +5,8 @@ import {
   THEMES,
   SIDEBAR_TYPES,
   LOCALISED_DATE_FORMATS,
-} from 'constants/index';
-import { COLORS, SOLEIL } from 'constants/ui-constants';
+} from 'const/index';
+import { COLORS, SOLEIL } from 'const/ui-constants';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { RichText } from 'prismic-reactjs';
 import { useRecoilValue } from 'recoil';
