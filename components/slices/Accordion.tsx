@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import styled from 'styled-components';
-import ReactMarkdown from 'react-markdown/with-html';
+import ReactMarkdown from 'react-markdown';
 import Chevron from '../UI/Chevron';
 import { SOLEIL, COLORS } from '../../constants/ui-constants';
 import Conditional from 'components/common/Conditional';
