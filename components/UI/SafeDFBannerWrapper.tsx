@@ -49,17 +49,19 @@ const SafeDFBannerWrapper = ({
   dfExpiryDate,
   marginTop = null,
   isAmp = false,
+  isMobile: isMobileCloudfront = false,
 }: {
   dfExpiryDate: any;
   hasSafe: boolean;
   isAmp?: boolean;
   marginTop?: number;
+  isMobile?: boolean;
 }) => {
   const {
     sidebarModal: { addToAside },
     lang,
   } = useContext(MBContext);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(isMobileCloudfront);
   const width = useWindowWidth();
   useEffect(() => {
     setIsMobile(width < 768);

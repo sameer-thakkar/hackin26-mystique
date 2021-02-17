@@ -561,6 +561,8 @@ export const MobileProductPage = (props) => {
   );
 };
 
+export default MobileProductPage;
+
 MobileProductPage.defaultProps = {
   carouselOptions: {
     direction: 'horizontal',

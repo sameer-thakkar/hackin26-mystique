@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { HomePage } from './views/HomePage';
-import { SearchPage } from './views/SearchPage';
+import dynamic from 'next/dynamic';
 import { PAGETYPE, THEMES } from '../../constants';
-import { MobileProductPage } from './views/ProductPage';
 import { withRouter } from 'next/router';
 import PopulateHead from '../common/meta';
 import { InteractionContextProvider } from '../../contexts/Interaction';
@@ -10,6 +8,9 @@ import { docCookies, genManualSlice, getLangObject } from '../../utils/helper';
 import allToursParser from '../../utils/allToursParser';
 import { tourListApiParser } from '../../utils/dataParsers';
 import { withAmp } from 'components/common/withAmp';
+const MobileProductPage = dynamic(() => import('./views/ProductPage'));
+const SearchPage = dynamic(() => import('./views/SearchPage'));
+const HomePage = dynamic(() => import('./views/HomePage'));
 class MicrositeV2 extends Component<any, any> {
   constructor(props) {
     super(props);

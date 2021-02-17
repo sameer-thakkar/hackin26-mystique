@@ -52,7 +52,7 @@ const CoverSlicesWrapper = styled.div`
 const apiCache = {}; // replace with swr.
 const MicrositeV1 = (props) => {
   const analytics = new Analytics();
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(props?.isMobile);
   const windowWidth = useWindowWidth();
 
   const [earliestAvailabilityQueue, setEarliestAvailabilityQueue] = useState(
@@ -567,6 +567,7 @@ const MicrositeV1 = (props) => {
           hasSafe={hasSafe}
           dfExpiryDate={dfExpiryDate}
           isAmp={isAmp}
+          isMobile={isMobile}
         />
         {checkIfToursAvailable ? (
           <PopulateUncategorizedProducts

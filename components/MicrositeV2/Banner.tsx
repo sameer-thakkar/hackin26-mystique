@@ -120,6 +120,7 @@ const Banner = (props) => {
           @media (max-width: 768px) {
             .banner-wrapper img {
               border-radius: 4px;
+              display: flex;
             }
           }
         `}

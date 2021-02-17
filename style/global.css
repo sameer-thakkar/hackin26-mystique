@@ -124,8 +124,6 @@ h6 {
   padding: 0 5.46vw;
   margin: auto;
   width: calc(100% - (5.46vw * 2));
-  content-visibility: auto;
-  contain-intrinsic-size: 0 500px;
 }
 
 .content-wrapper {

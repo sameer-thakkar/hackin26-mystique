@@ -120,3 +120,5 @@ export const SearchPage = (props) => {
     </div>
   );
 };
+
+export default SearchPage;

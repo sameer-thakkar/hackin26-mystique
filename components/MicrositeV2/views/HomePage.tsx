@@ -165,7 +165,10 @@ export const HomePage = (props) => {
             {heroSectionSlice
               .filter((slice) => slice?.slice_type)
               .map((slice, index) => (
-                <div key={index} className={`slice-block ${slice.slice_type}`}>
+                <div
+                  key={`${slice?.slice_type}-${index}`}
+                  className={`slice-block ${slice.slice_type}`}
+                >
                   {sliceHandler(slice, { isMobile })}
                 </div>
               ))}
@@ -221,3 +224,5 @@ export const HomePage = (props) => {
     </V2MicrositeWrapper>
   );
 };
+
+export default HomePage;

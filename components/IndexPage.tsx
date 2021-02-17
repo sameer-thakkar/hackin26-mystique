@@ -30,7 +30,6 @@ import {
   refsArrayToObject,
 } from 'utils';
 import { uncategorizedToursListParser } from 'utils/dataParsers';
-import { uaIsMobile } from 'utils/helper';
 import { isAmpUrl, removePageQuery } from 'utils/urlUtils';
 import { MBContextProvider } from '../contexts/MBContext';
 import { toursTabSliceHandler } from './Slices';
@@ -55,8 +54,8 @@ export default class Page extends React.Component<any, any> {
     const queryParamsString = getValidUrlParams(query);
     const pathname =
       req?.url.split('?')[0].split('#')[0] || window.location.pathname;
-    const isMobile = uaIsMobile(req.headers['user-agent']);
-    // Checking is mystique is running in dev or is a preview
+    const isMobile = req.headers['cloudfront-is-mobile-viewer'] === 'true';
+    // Checking if mystique is running in dev or is a preview
     const isDev = req
       ? !!query.mystique_uid
       : window.location.search.includes('mystique_uid');
@@ -895,7 +894,7 @@ const HeadoutSessionIdSetterComponent = () => {
       tabIndex={-1}
       title="empty"
       className="hidden"
-      src={`${process.env.NEXT_PUBLIC_HEADOUT_DOMAIN}/hsid-provider/`}
+      src={`${process.env.NEXT_PUBLIC_HEADOUT_DOMAIN}/hsid-provider.html`}
     ></iframe>
   );
 };
