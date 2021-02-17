@@ -9,13 +9,11 @@ import { discountOf, createBookingURL, getDFValidityFromTags } from 'utils';
 import DiscountedFuturesPitch from 'UI/DiscountedFuturesPitch';
 import useWindowSize from 'hooks/useWindowSize';
 import dayjs from 'dayjs';
-
-import Conditional from './common/Conditional';
-
-import 'utils/dayjsLocale';
 import Tags, { Tag, StyledTags } from 'UI/Tags';
 import { DATE_FORMAT_TYPES } from 'const/index';
 import useLocalisedDate from 'hooks/useLocalisedDate';
+
+import Conditional from './common/Conditional';
 
 const DFSidebar = styled.div`
   display: grid;

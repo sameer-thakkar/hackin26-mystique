@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import dayjs from 'dayjs';
 import { RichText } from 'prismic-reactjs';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
@@ -7,11 +6,7 @@ import { scroller } from 'react-scroll';
 import { useRecoilValue } from 'recoil';
 import { strings } from 'const/strings';
 import SafeDFBannerWrapper from 'UI/SafeDFBannerWrapper';
-import {
-  isSafetyIncluded,
-  getDFValidityFromTags,
-  legacyBooleanCheck,
-} from 'utils';
+import { isSafetyIncluded, legacyBooleanCheck } from 'utils';
 import { LOCATION } from 'assets/SvgIcons';
 import { fetchInventory, fetchTourList } from 'utils/apiUtils';
 import { currencyAtom } from 'store/atoms/currency';
@@ -284,19 +279,6 @@ const MicrositeV1 = (props) => {
   const hasSafe = Object.values(tours).some((tour: any) =>
     isSafetyIncluded(tour.allTags)
   );
-  const filterDFTours = ([, tour]: [any, any]) => tour && tour.dfListingPrice;
-  const filterMainTourSectionTGIDs = ([tgid]: [any, any]) =>
-    orderedUncategorizedTours.findIndex((t) => t.tgid == tgid) > -1;
-
-  const dfTours = Object.entries(tours)
-    .filter(filterDFTours)
-    .filter(filterMainTourSectionTGIDs)
-    .map(([, tours]) => tours);
-
-  const [dfExpiryDate, ..._otherValidity] = dfTours
-    .map((tour: any) => getDFValidityFromTags(tour.allTags))
-    .filter((d) => d)
-    .sort((a, b) => (dayjs(a).isAfter(b) ? -1 : 1));
 
   const finalHeaderSlices = !isHeaderInherited
     ? groupSlices(headerSlices || [], ALLOW_IMMEDIEATE_NESTING)
@@ -549,8 +531,6 @@ const MicrositeV1 = (props) => {
             boxed={true}
             hideCTA={hideBannerCTA}
             isAmp={isAmp}
-            dfExpiryDate={dfExpiryDate || null}
-            cooldownDate={dayjs().add(30, 'day')}
           />
         </Conditional>
         <Conditional if={mbTheme === THEMES.MIN_BLUE}>
@@ -566,7 +546,6 @@ const MicrositeV1 = (props) => {
         ) : null}
         <SafeDFBannerWrapper
           hasSafe={hasSafe}
-          dfExpiryDate={dfExpiryDate}
           isAmp={isAmp}
           isMobile={isMobile}
         />

@@ -9,19 +9,17 @@ import { LOCATION } from 'assets/SvgIcons';
 import { groupSlices } from 'utils/helper';
 import styled from 'styled-components';
 import SafeDFBannerWrapper from 'UI/SafeDFBannerWrapper';
-import { isSafetyIncluded, getDFValidityFromTags } from 'utils';
+import { isSafetyIncluded } from 'utils';
 import Conditional from 'components/common/Conditional';
 import TextBanner from 'components/TextBanner';
 import { MBContext } from 'contexts/MBContext';
-import dayjs from 'dayjs';
-
-import { ResponsiveSelector } from '../ResponsiveSelector';
-import { ProductsWrapper } from '../ProductsWrapper';
-import Footer from '../../common/Footer';
-import Banner from '../Banner';
-import sliceHandler from '../../Slices';
-import LongForm from '../LongForm';
-import Header from '../Header';
+import { ResponsiveSelector } from 'components/MicrositeV2/ResponsiveSelector';
+import { ProductsWrapper } from 'components/MicrositeV2/ProductsWrapper';
+import Footer from 'components/common/Footer';
+import Banner from 'components/MicrositeV2/Banner';
+import sliceHandler from 'components/Slices';
+import LongForm from 'components/MicrositeV2/LongForm';
+import Header from 'components/MicrositeV2/Header';
 
 const Alert = dynamic(() => import('UI/Alert'), { ssr: false });
 
@@ -103,11 +101,7 @@ export const HomePage = (props) => {
   const hasSafe = Object.values(allTours).some((tour: any) =>
     isSafetyIncluded(tour.allTags)
   );
-  const [dfExpiryDate, ..._others] = Object.values(allTours)
-    .filter((tour: any) => tour && tour.dfListingPrice)
-    .map((tour: any) => getDFValidityFromTags(tour.allTags))
-    .filter((d) => d)
-    .sort((a, b) => (dayjs(a).isAfter(b) ? -1 : 1));
+
   return (
     <V2MicrositeWrapper>
       <Header
@@ -154,11 +148,7 @@ export const HomePage = (props) => {
         </div>
       ) : null}
 
-      <SafeDFBannerWrapper
-        hasSafe={hasSafe}
-        dfExpiryDate={dfExpiryDate}
-        marginTop={40}
-      />
+      <SafeDFBannerWrapper hasSafe={hasSafe} marginTop={40} />
 
       {heroSectionSlice.length ? (
         <ProductsContextProvider allTours={allTours} ready={ready}>

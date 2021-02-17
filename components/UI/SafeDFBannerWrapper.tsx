@@ -49,12 +49,10 @@ const Wrapper = styled.div`
 
 const SafeDFBannerWrapper = ({
   hasSafe = false,
-  dfExpiryDate,
   marginTop = null,
   isAmp = false,
   isMobile: isMobileCloudfront = false,
 }: {
-  dfExpiryDate: any;
   hasSafe: boolean;
   isAmp?: boolean;
   marginTop?: number;
@@ -68,7 +66,7 @@ const SafeDFBannerWrapper = ({
   useEffect(() => {
     setIsMobile(width < 768);
   }, [width]);
-  if (!(hasSafe || dfExpiryDate)) return null;
+  if (!hasSafe) return null;
   const openSafeSidebar = () => {
     addToAside({
       width: '41.06vw',
@@ -79,7 +77,7 @@ const SafeDFBannerWrapper = ({
   };
   return (
     <Wrapper marginTop={marginTop}>
-      <Split mobileLayout={'scroll'} count={hasSafe && !!dfExpiryDate ? 2 : 1}>
+      <Split mobileLayout={'scroll'} count={1}>
         <Conditional if={!isMobile}>
           <Conditional if={hasSafe}>
             <InfoBanner

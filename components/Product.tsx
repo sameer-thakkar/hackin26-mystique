@@ -1,13 +1,3 @@
-import HorizontalLine from './slices/HorizontalLine';
-
-import {
-  ANALYTICS_EVENTS,
-  THEMES,
-  SIDEBAR_TYPES,
-  LOCALISED_DATE_FORMATS,
-} from 'const/index';
-import { COLORS, SOLEIL } from 'const/ui-constants';
-import { shortCodeSerializer } from 'utils/shortCodes';
 import { RichText } from 'prismic-reactjs';
 import { useRecoilValue } from 'recoil';
 import Button from 'UI/Button';
@@ -17,8 +7,16 @@ import dayjs from 'dayjs';
 import parse from 'url-parse';
 import styled from 'styled-components';
 import React, { useRef, useState, useContext, useEffect } from 'react';
+import HorizontalLine from 'components/slices/HorizontalLine';
+import {
+  ANALYTICS_EVENTS,
+  THEMES,
+  SIDEBAR_TYPES,
+  LOCALISED_DATE_FORMATS,
+} from 'const/index';
+import { COLORS, SOLEIL } from 'const/ui-constants';
+import { shortCodeSerializer } from 'utils/shortCodes';
 import { CALENDAR, Shield, BackArrow } from 'assets/SvgIcons';
-import 'utils/dayjsLocale';
 import Split, { StlyedSplit } from 'UI/Split';
 import IconCTA, { StyledIconCTA } from 'UI/IconCTA';
 import { greenScheme } from 'style/theme';

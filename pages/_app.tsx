@@ -1,5 +1,8 @@
 import { useEffect } from 'react';
-import { getLocalizationLabels } from 'utils/localizationUtils';
+import {
+  getLocalizationLabels,
+  initDayJSLocale,
+} from 'utils/localizationUtils';
 import { strings } from 'const/strings';
 import { getLanguageFromPathname } from 'utils';
 
@@ -8,6 +11,7 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
     strings.setContent({
       default: localizedStrings,
     });
+    initDayJSLocale(lang);
   }, [localizedStrings, lang]);
   return <Component {...pageProps} />;
 };

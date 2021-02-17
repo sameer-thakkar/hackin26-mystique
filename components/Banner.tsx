@@ -8,7 +8,6 @@ import { SOLEIL, COLORS } from 'const/ui-constants';
 import styled from 'styled-components';
 
 import Button from './UI/Button';
-import 'utils/dayjsLocale';
 import Image from './UI/Image';
 import Conditional from './common/Conditional';
 
