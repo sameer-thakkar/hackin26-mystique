@@ -137,6 +137,8 @@ class LanguageSelector extends Component<any, any> {
   };
 
   handleChange = (e) => {
+    const selectedLang = e.target?.value;
+    if (!selectedLang) return;
     const { pathname } = this.state;
     const { uid, host } = this.props;
     const langCodeRegex = /^(\/){0,1}(en|fr|de|it|nl|pt|es)(\/){0,1}/;
@@ -145,11 +147,9 @@ class LanguageSelector extends Component<any, any> {
     slug = slug[0] === '/' ? slug.slice(1) : slug;
     const isDev = host.includes('localhost');
     if (isDev) {
-      window.location.href = `http://${host}/?mystique_uid=${uid}&lang=${
-        FULL_LANGUAGE_MAP[e.target.value].paramLang
-      }`;
+      window.location.href = `http://${host}/?mystique_uid=${uid}&lang=${FULL_LANGUAGE_MAP[selectedLang].paramLang}`;
     } else {
-      Router.push(`/${e.target.value}/${slug}`);
+      Router.push(`/${selectedLang}/${slug}`);
     }
   };
 
@@ -182,7 +182,6 @@ class LanguageSelector extends Component<any, any> {
           <span>{currentLanguage}</span>
           {isAmp ? (
             <select
-              value={currentLanguage}
               onChange={(e) => e.target.blur()}
               onBlur={this.handleChange}
               // @ts-ignore
@@ -190,6 +189,9 @@ class LanguageSelector extends Component<any, any> {
               role="button"
               tabIndex={0}
             >
+              <option disabled selected>
+                {FULL_LANGUAGE_MAP[currentLanguage].language}
+              </option>
               {availableLanguages.map((language, index) => {
                 return (
                   <option value={`http://${host}/${language}`} key={index}>
@@ -200,10 +202,12 @@ class LanguageSelector extends Component<any, any> {
             </select>
           ) : (
             <select
-              value={currentLanguage}
               onChange={(e) => e.target.blur()}
               onBlur={this.handleChange}
             >
+              <option disabled selected>
+                {FULL_LANGUAGE_MAP[currentLanguage].language}
+              </option>
               {availableLanguages.map((language, index) => {
                 return (
                   <option value={language} key={index}>

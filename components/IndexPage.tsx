@@ -3,9 +3,8 @@ import ErrorPage from 'next/error';
 import dynamic from 'next/dynamic';
 import fetch from 'isomorphic-unfetch';
 import Cookies from 'js-cookie';
-import { ThemeProvider } from 'styled-components';
 import { RecoilRoot } from 'recoil';
-
+import { ThemeProvider } from 'styled-components';
 import 'lazysizes';
 import 'lazysizes/plugins/attrchange/ls.attrchange';
 import {
@@ -17,7 +16,6 @@ import {
   refsArrayToObject,
 } from 'utils';
 import { uncategorizedToursListParser } from 'utils/dataParsers';
-import { uaIsMobile } from 'utils/helper';
 import { isAmpUrl, removePageQuery } from 'utils/urlUtils';
 
 import theme from '../style/theme';
@@ -57,8 +55,8 @@ export default class Page extends React.Component<any, any> {
     const queryParamsString = getValidUrlParams(query);
     const pathname =
       req?.url.split('?')[0].split('#')[0] || window.location.pathname;
-    const isMobile = uaIsMobile(req.headers['user-agent']);
-    // Checking is mystique is running in dev or is a preview
+    const isMobile = req.headers['cloudfront-is-mobile-viewer'] === 'true';
+    // Checking if mystique is running in dev or is a preview
     const isDev = req
       ? !!query.mystique_uid
       : window.location.search.includes('mystique_uid');
@@ -897,7 +895,7 @@ const HeadoutSessionIdSetterComponent = () => {
       tabIndex={-1}
       title="empty"
       className="hidden"
-      src={`${process.env.NEXT_PUBLIC_HEADOUT_DOMAIN}/hsid-provider/`}
+      src={`${process.env.NEXT_PUBLIC_HEADOUT_DOMAIN}/hsid-provider.html`}
     ></iframe>
   );
 };

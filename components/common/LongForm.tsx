@@ -96,7 +96,7 @@ export default class LongForm extends Component<any, any> {
       <StyledLongForm>
         {content.map((slice, index) => (
           <div
-            key={index}
+            key={`long-form-${slice?.slice_type}-${index}`}
             className={`${
               !FULL_WIDTH_SLICES.includes(slice.slice_type)
                 ? 'slice-wrapper'

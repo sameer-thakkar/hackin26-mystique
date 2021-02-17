@@ -54,7 +54,8 @@ const StyledTrustBoosters = styled.div`
 `;
 
 const TrustBoosters = (props) => {
-  const { boosters } = props;
+  const { boosters, isMobile } = props;
+  if (isMobile) return null;
   return (
     <StyledTrustBoosters className="trust-boosters">
       {boosters.map((booster, index) => {

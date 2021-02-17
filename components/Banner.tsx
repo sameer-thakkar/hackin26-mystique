@@ -414,14 +414,16 @@ export default class Banner extends Component<any, any> {
 
   render() {
     const {
-      bannerHeading,
+      bannerHeading: tempBannerHeading,
       bannerImages,
       hideCTA,
       isAmp,
       dfExpiryDate,
-      bannerSubtext,
+      bannerSubtext: tempBannerSubtext,
       bannerCtaText = '',
     } = this.props;
+    const bannerHeading = withShortcodes(tempBannerHeading);
+    const bannerSubtext = withShortcodes(tempBannerSubtext);
     const { isClient } = this.state;
     const captions = (
       <div
@@ -491,9 +493,9 @@ export default class Banner extends Component<any, any> {
             }`}
           >
             <div className="caption">
-              <h1>{withShortcodes(bannerHeading)}</h1>
+              <h1>{bannerHeading}</h1>
               <Conditional if={bannerSubtext}>
-                <p>{withShortcodes(bannerSubtext)}</p>
+                <p>{bannerSubtext}</p>
               </Conditional>
             </div>
             <Conditional if={!hideCTA}>
