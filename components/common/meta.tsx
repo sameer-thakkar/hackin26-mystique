@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import ReactHtmlParser from 'react-html-parser';
 import Head from 'next/head';
 import parse from 'url-parse';
 import { withoutTrailingSlash, withShortcodes } from '../../utils/helper';
@@ -95,7 +94,6 @@ const PopulateHead = (data) => {
     noindex,
     canonical_link: canonicalLink,
     canonical_link_amp: canonicalLinkForAMP,
-    other_meta_tags: otherMetaTags = [],
     header_scripts: headerScripts = [],
     seo_keywords: seoKeywords,
     google_site_verification: googleSiteVerification,
@@ -321,7 +319,6 @@ const PopulateHead = (data) => {
     </Head>
   );
 
-  const metaTags = otherMetaTags.map((meta) => ReactHtmlParser(meta.meta_tag));
   const scriptTags = headerScripts
     .map((script) => script.script_tag)
     .filter((str) => str)
@@ -373,7 +370,6 @@ const PopulateHead = (data) => {
       {pageMeta}
       {ImageMeta}
       <Head>
-        {metaTags}
         {hrefLangs}
         {!isAmp ? scriptTags : null}
       </Head>
