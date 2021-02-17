@@ -11,7 +11,7 @@ import {
 import React, { useContext } from 'react';
 import { MBContext } from 'contexts/MBContext';
 import dayjs from 'dayjs';
-import ReactMarkdown from 'react-markdown/with-html';
+import ReactMarkdown from 'react-markdown';
 import useLocalisedDate from 'hooks/useLocalisedDate';
 
 const PitchGrid = styled.div`

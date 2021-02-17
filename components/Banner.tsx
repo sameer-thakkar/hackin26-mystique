@@ -7,9 +7,7 @@ import 'utils/dayjsLocale';
 import Image from './UI/Image';
 import styled from 'styled-components';
 import { SOLEIL, COLORS } from '../constants/ui-constants';
-import Tags, { Tag } from 'UI/Tags';
 import { MBContext } from 'contexts/MBContext';
-import DiscountedFuturesPitch from 'UI/DiscountedFuturesPitch';
 import Conditional from './common/Conditional';
 import { withShortcodes } from 'utils/helper';
 
@@ -138,12 +136,6 @@ const StyledBanner = styled.div`
     transition: opacity 0.3s ease-in-out;
     .tag {
       justify-self: center;
-    }
-    ${Tag} {
-      font-size: 11px;
-      line-height: 11px;
-      border-radius: 2px;
-      font-weight: ${SOLEIL.SEMIBOLD};
     }
   }
   p {
@@ -426,8 +418,6 @@ export default class Banner extends Component<any, any> {
       currentLanguage,
       hideCTA,
       isAmp,
-      cooldownDate,
-      maxDfDiscount = 0,
       dfExpiryDate,
       bannerSubtext,
       bannerCtaText = '',
@@ -469,24 +459,6 @@ export default class Banner extends Component<any, any> {
           {captions}
         </StyledBanner>
       );
-
-    const {
-      sidebarModal: { addToAside },
-    } = this.context;
-    const toggleDFPitch = () => {
-      addToAside({
-        width: '27.5vw',
-        children: [
-          <DiscountedFuturesPitch
-            dfExpiryDate={dfExpiryDate
-              ?.locale(currentLanguage)
-              .format('DD-MMM-YY')}
-            key={0}
-          />,
-        ],
-        title: '',
-      });
-    };
 
     return (
       <StyledBanner>
@@ -532,59 +504,6 @@ export default class Banner extends Component<any, any> {
               </ButtonWrapper>
             </Conditional>
           </div>
-          <Conditional if={dfExpiryDate}>
-            <div
-              className={`mb-caption df-caption ${
-                this.activeSlideIndex === 1 && 'active'
-              }`}
-            >
-              <div className={'tag'}>
-                <Tags
-                  tags={[
-                    labels[currentLanguage].DISCOUNTED_FUTURES.BOOKING_MODAL
-                      .LIMITED,
-                  ]}
-                  color={COLORS.PEACH_ORANGE}
-                  backgroundColor={COLORS.PALE_ORANGE}
-                />
-              </div>
-              <div className="caption">
-                <div className="h1">
-                  {
-                    labels[currentLanguage].DISCOUNTED_FUTURES.BANNER
-                      .HEADING_LINE1
-                  }
-                  <br />
-                  {labels[
-                    currentLanguage
-                  ].DISCOUNTED_FUTURES.BANNER.HEADING_LINE2.replace(
-                    '<percent>',
-                    maxDfDiscount?.toFixed(0) + '%'
-                  )}
-                </div>
-                <p>
-                  {
-                    labels[currentLanguage].DISCOUNTED_FUTURES.BANNER
-                      .DESCRIPTION_LINE1
-                  }{' '}
-                  {labels[
-                    currentLanguage
-                  ].DISCOUNTED_FUTURES.BANNER.DESCRIPTION_LINE2.replace(
-                    '<cooldownDate>',
-                    cooldownDate?.locale(currentLanguage).format('DD-MMMM-YY')
-                  )}
-                </p>
-              </div>
-              <ButtonWrapper>
-                <Button type="whiteBordered" onClick={toggleDFPitch}>
-                  {
-                    labels[currentLanguage].DISCOUNTED_FUTURES.BOOKING_MODAL
-                      .LEARN_MORE
-                  }
-                </Button>
-              </ButtonWrapper>
-            </div>
-          </Conditional>
         </div>
         {this.hasIndicators && bannerImages.length > 1 ? (
           <div className="indicators">

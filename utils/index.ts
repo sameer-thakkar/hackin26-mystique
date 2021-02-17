@@ -75,7 +75,6 @@ export const createBookingURL = ({
   lang,
   nakedDomain,
   tgid,
-  df = false,
   date = null,
   tourId = null,
   biLink,
@@ -92,7 +91,6 @@ export const createBookingURL = ({
   const urlObject = new URL(
     `https://book.${nakedDomain}${langRouteParam}/book/${tgid}${bookingStageSuffix}`
   );
-  if (df) urlObject.searchParams.set('isDiscountedFutures', 'true');
   if (date?.startDate) urlObject.searchParams.set('date', date?.startDate);
   if (date?.startDate) urlObject.searchParams.set('variantId', tourId);
   if (date?.startDate) urlObject.searchParams.set('time', date?.startTime);

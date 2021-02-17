@@ -47,7 +47,7 @@ const BookingOptionCard = styled.div`
 `;
 const Heading = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
-  ont-style: normal;
+  font-style: normal;
   font-weight: 600;
   font-size: 18px;
   line-height: 20px;
@@ -113,7 +113,6 @@ const DiscountedFutureSidebar = ({
     nakedDomain,
     lang,
     tgid,
-    df: true,
     biLink,
   });
   const expiry = useLocalisedDate(
