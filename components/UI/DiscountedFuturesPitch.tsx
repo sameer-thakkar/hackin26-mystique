@@ -11,7 +11,6 @@ import {
 import React, { useContext } from 'react';
 import { MBContext } from 'contexts/MBContext';
 import dayjs from 'dayjs';
-import ReactMarkdown from 'react-markdown';
 import useLocalisedDate from 'hooks/useLocalisedDate';
 
 const PitchGrid = styled.div`
@@ -174,14 +173,14 @@ const DiscountedFuturesPitch = ({ dfExpiryDate = '' }) => {
             {labels[lang].DISCOUNTED_FUTURES.HEADING}
           </Heading>
           <Text>
-            <ReactMarkdown
+            {/* <ReactMarkdown
               source={labels[lang].DISCOUNTED_FUTURES.DESCRIPTION.replace(
                 '<date>',
                 dfExpiryDate
               )}
               renderers={{ paragraph: React.Fragment }}
               escapeHtml={false}
-            />
+            /> */}
           </Text>
         </Pitch>
       </Section>

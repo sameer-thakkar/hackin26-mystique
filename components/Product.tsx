@@ -2,6 +2,7 @@ import React, { useRef, useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import parse from 'url-parse';
 import dayjs from 'dayjs';
+import dynamic from 'next/dynamic';
 import * as labels from 'constants/localization/labels';
 import HorizontalLine from './slices/HorizontalLine';
 import Button from 'UI/Button';
@@ -22,7 +23,6 @@ import IconCTA, { StyledIconCTA } from 'UI/IconCTA';
 import { greenScheme } from 'style/theme';
 import { isSafetyIncluded, createBookingURL } from 'utils';
 import { MBContext } from 'contexts/MBContext';
-import SafeExperiencesPitch from 'UI/SafeExperiencesPitch';
 import PriceBlock from 'UI/PriceBlock';
 import Conditional from './common/Conditional';
 import Chevron from 'UI/Chevron';
@@ -34,6 +34,10 @@ import {
 import Image from 'UI/Image';
 import { truncate } from 'utils/helper';
 import { currencyAtom } from 'store/atoms/currency';
+
+const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
+  ssr: false,
+});
 
 const isLengthyArray = (item) => Array.isArray(item) && item.length;
 

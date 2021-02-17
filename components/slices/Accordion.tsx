@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import styled from 'styled-components';
-import ReactMarkdown from 'react-markdown';
 import Chevron from '../UI/Chevron';
 import { SOLEIL, COLORS } from '../../constants/ui-constants';
 import Conditional from 'components/common/Conditional';
@@ -159,13 +158,6 @@ const Accordion = ({
             itemprop: 'text',
           })}
         >
-          <Conditional if={typeof content === 'string'}>
-            <ReactMarkdown
-              renderers={{ root: React.Fragment }}
-              source={content}
-              escapeHtml={false}
-            />
-          </Conditional>
           <Conditional if={typeof content !== 'string'}>{content}</Conditional>
         </div>
       </ContentBlock>

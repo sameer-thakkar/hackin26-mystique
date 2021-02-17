@@ -1,19 +1,23 @@
+import { useContext, useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
+import styled from 'styled-components';
+import { useWindowWidth } from '@react-hook/window-size';
 import * as labels from 'constants/localization/labels';
 import Split, { StlyedSplit } from './Split';
 import InfoBanner from './InfoBanner';
 import { BrownTicket, Shield } from 'assets/SvgIcons';
 import { brownScheme, greenScheme } from 'style/theme';
 import DiscountedFuturesPitch from './DiscountedFuturesPitch';
-import SafeExperiencesPitch from './SafeExperiencesPitch';
-import { useContext, useState, useEffect } from 'react';
 import { MBContext } from 'contexts/MBContext';
 import Conditional from 'components/common/Conditional';
-import styled from 'styled-components';
 import { SIZES } from 'constants/ui-constants';
 import { DATE_FORMAT_TYPES, THEMES } from 'constants/index';
 import IconCTA, { StyledIconCTA } from './IconCTA';
-import { useWindowWidth } from '@react-hook/window-size';
 import useLocalisedDate from 'hooks/useLocalisedDate';
+
+const SafeExperiencesPitch = dynamic(() => import('./SafeExperiencesPitch'), {
+  ssr: false,
+});
 
 const Wrapper = styled.div`
   max-width: ${SIZES.MAX_WIDTH};

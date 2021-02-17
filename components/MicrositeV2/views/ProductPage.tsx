@@ -1,4 +1,5 @@
 import React, { useEffect, useContext } from 'react';
+import dynamic from 'next/dynamic';
 import * as labels from 'constants/localization/labels';
 import Image from 'UI/Image';
 import { RichText } from 'prismic-reactjs';
@@ -9,12 +10,15 @@ import parse from 'url-parse';
 import Swiper from 'react-id-swiper';
 import { SOLEIL, COLORS } from 'constants/ui-constants';
 import { MBContext } from 'contexts/MBContext';
-import SafeExperiencesPitch from 'UI/SafeExperiencesPitch';
 import Split, { StlyedSplit } from 'UI/Split';
 import IconCTA from 'UI/IconCTA';
 import { greenScheme } from 'style/theme';
 import styled from 'styled-components';
 import { isSafetyIncluded, createBookingURL } from 'utils';
+
+const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
+  ssr: false,
+});
 
 const IconBoosters = styled.div`
   margin-left: 12px;

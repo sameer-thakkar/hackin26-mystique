@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import dynamic from 'next/dynamic';
 import Image from 'UI/Image';
 import * as labels from 'constants/localization/labels';
 import styled from 'styled-components';
@@ -13,9 +14,12 @@ import { MBContext } from 'contexts/MBContext';
 import IconCTA from 'UI/IconCTA';
 import { greenScheme } from 'style/theme';
 import Split, { StlyedSplit } from 'UI/Split';
-import SafeExperiencesPitch from 'UI/SafeExperiencesPitch';
 import { isSafetyIncluded, createBookingURL } from 'utils';
 import PriceBlock from 'UI/PriceBlock';
+
+const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
+  ssr: false,
+});
 
 const DetailedDescriptionCard = styled.div`
   grid-column: 1 / 5;
