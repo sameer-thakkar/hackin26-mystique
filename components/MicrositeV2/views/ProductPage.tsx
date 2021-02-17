@@ -8,7 +8,6 @@ import { RichText } from 'prismic-reactjs';
 import { CHEVRON_LEFT, BorderedShield } from 'assets/SvgIcons';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import parse from 'url-parse';
-import Swiper from 'react-id-swiper';
 import { MBContext } from 'contexts/MBContext';
 import Split, { StlyedSplit } from 'UI/Split';
 import IconCTA from 'UI/IconCTA';
@@ -16,6 +15,7 @@ import { greenScheme } from 'style/theme';
 import styled from 'styled-components';
 import { isSafetyIncluded, createBookingURL } from 'utils';
 
+const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
   ssr: false,
 });

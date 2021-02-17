@@ -1,14 +1,15 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useWindowWidth } from '@react-hook/window-size';
 import { RichText } from 'prismic-reactjs';
 import { strings } from 'const/strings';
 import { COLORS, SOLEIL } from 'const/ui-constants';
+import Image from 'UI/Image';
+import Button from 'UI/Button';
+import { CHEVRON_LEFT } from 'assets/SvgIcons';
 
-import Swiper from '../Swiper';
-import Image from '../UI/Image';
-import Button from '../UI/Button';
-import { CHEVRON_LEFT } from '../../assets/SvgIcons';
+const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
 const variantStyles = {
   'full-width': {

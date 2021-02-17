@@ -3,14 +3,15 @@ import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import { SOLEIL, COLORS } from 'const/ui-constants';
 import { scroller } from 'react-scroll';
+import dynamic from 'next/dynamic';
+import Image from 'UI/Image';
+import { CHEVRON_LEFT } from 'assets/SvgIcons';
+import { shortCodeSerializer } from 'utils/shortCodes';
+import { stringIdfy } from 'utils/helper';
+import { MBContext } from 'contexts/MBContext';
+import { DESIGN } from 'const/index';
 
-import Swiper from '../Swiper';
-import Image from '../UI/Image';
-import { CHEVRON_LEFT } from '../../assets/SvgIcons';
-import { shortCodeSerializer } from '../../utils/shortCodes';
-import { stringIdfy } from '../../utils/helper';
-import { MBContext } from '../../contexts/MBContext';
-import { DESIGN } from '../../constants';
+const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
 const StyledWrapper = styled.div`
   display: grid;

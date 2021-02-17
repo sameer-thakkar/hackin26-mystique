@@ -1,4 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
+import { useAmp } from 'next/amp';
 import styled from 'styled-components';
 import { useWindowWidth } from '@react-hook/window-size';
 import OverflowScroll from 'UI/OverflowScroll';
@@ -6,10 +8,9 @@ import RichContent from 'UI/RichContent';
 import TitleTextCombo from 'UI/TitleTextCombo';
 import { CHEVRON_LEFT, CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
 import { SIZES } from 'const/ui-constants';
-import { useAmp } from 'next/amp';
+import sliceHandler from 'components/Slices';
 
-import Swiper from '../Swiper';
-import sliceHandler from '../Slices';
+const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
 const CardGrid = styled.div(({ cardsInARow }) => {
   let gridTemplateColumns = `100%`;

@@ -1,10 +1,12 @@
 import React, { useEffect, useCallback, useState } from 'react';
+import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { COLORS } from 'const/ui-constants';
 import { useAmp } from 'next/amp';
 
-import Swiper from '../Swiper';
 import { CHEVRON_LEFT } from '../../assets/SvgIcons';
+
+const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
 const StyledSlider = styled.div`
   display: flex;
