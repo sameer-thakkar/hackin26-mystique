@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
+import Image from 'UI/Image';
+import { isMobile } from 'utils/helper';
+
 import InlinePrice from './InlinePrice';
 import Swiper from './Swiper';
-import Image from './UI/Image';
-import { isMobile } from '../utils/helper';
-import styled from 'styled-components';
 
 const StyledFTPopup = styled.div`
   .popupv2-wrap.pixel-fix * {

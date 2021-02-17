@@ -9,12 +9,13 @@ import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import { POWERED_BY_HEADOUT } from 'assets/SvgIcons';
 import { MBContext } from 'contexts/MBContext';
 import { ResponsiveSelector } from 'components/MicrositeV2/ResponsiveSelector';
+import HeaderLinks from 'components/HeaderLinks';
+import LanguageSelector from 'components/common/LanguageSelector';
+import Conditional from 'components/common/Conditional';
+import CurrencySelector from 'components/common/CurrencySelector';
+import dynamic from 'next/dynamic';
 
-import MultiLevelNav from '../MultiLevelNav';
-import HeaderLinks from '../HeaderLinks';
-import LanguageSelector from './LanguageSelector';
-import Conditional from './Conditional';
-import CurrencySelector from './CurrencySelector';
+const MultiLevelNav = dynamic(() => import('components/MultiLevelNav'));
 
 const StyledHeader = styled.header`
   height: 80px;
