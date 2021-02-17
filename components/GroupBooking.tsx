@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import styled from 'styled-components';
 import PhoneInput from 'react-phone-input-2';
+import { parsePhoneNumberFromString as parseMobile } from 'libphonenumber-js/mobile';
 import { RichText } from 'prismic-reactjs';
 import { MODAL_STYLE, SOLEIL } from 'const/ui-constants';
 
@@ -21,7 +22,6 @@ import {
   validateEmail,
   validateFullName,
   isGroupValid,
-  checkPhoneNumberValidity,
   isFeildSelected,
   fetchUserGeoLocation,
   createGroupBooking,
@@ -471,6 +471,33 @@ export default class GroupBooking extends Component<any, any> {
     }
   };
 
+  checkPhoneNumberValidity = (phoneWithCountryCode, country) => {
+    const { phone, countryDialCode } = phoneWithCountryCode;
+    if (phone === countryDialCode || !countryDialCode || !phone) {
+      return false;
+    }
+    if (phone.length >= 18 || phone.length <= countryDialCode.length) {
+      return false;
+    }
+    // Indian Exception for number starting with 6
+    if (phone.replace(/\D+/g, '').startsWith('916')) {
+      return true;
+    }
+    if (
+      phone &&
+      parseMobile(
+        `${phone.substring(countryDialCode.length, phone.length)}`,
+        country.toUpperCase()
+      )
+    ) {
+      return parseMobile(
+        `${phone.substring(countryDialCode.length, phone.length)}`,
+        country.toUpperCase()
+      ).isValid();
+    }
+    return false;
+  };
+
   handleReactSelectChange = (value, state) => this.setState({ [state]: value });
 
   handleInputChange = (e) => {
@@ -521,7 +548,7 @@ export default class GroupBooking extends Component<any, any> {
     const { minimumPax, maximumPax } = this.props;
     error.isFullNameValid = !validateFullName(fname);
     error.isEmailValid = !validateEmail(email);
-    error.isPhoneValid = !checkPhoneNumberValidity(
+    error.isPhoneValid = !this.checkPhoneNumberValidity(
       phoneWithCountryCode,
       this.state.userCountry
     );
@@ -588,7 +615,7 @@ export default class GroupBooking extends Component<any, any> {
         this.setState({ error });
         return;
       case 'PHONE':
-        hasError = !checkPhoneNumberValidity(
+        hasError = !this.checkPhoneNumberValidity(
           phoneWithCountryCode,
           this.state.userCountry
         );
