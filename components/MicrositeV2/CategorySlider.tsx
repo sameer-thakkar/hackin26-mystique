@@ -5,13 +5,13 @@ import { SOLEIL } from 'const/ui-constants';
 import dynamic from 'next/dynamic';
 
 import ProductsContext from '../../contexts/Products';
-import Product from './Product';
 import { CHEVRON_LEFT } from '../../assets/SvgIcons';
 
 const DetailedProductCard = dynamic(() => import('./DetailedProductCard'), {
   ssr: false,
 });
 const Swiper = dynamic(() => import('components/Swiper'));
+const Product = dynamic(() => import('components/MicrositeV2/Product'));
 
 const StyledCategorySlider = styled.div`
   display: grid;
@@ -115,6 +115,7 @@ const CategorySlider = (props) => {
       allTours[tgid].available &&
       arr.slice(0, index).indexOf(tgid) == -1
   );
+
   const [tgidClicked, setTgidClicked] = useState(
     !isMobile && isFirstTourOpen ? filteredTgids[0] : null
   );
@@ -172,6 +173,8 @@ const CategorySlider = (props) => {
       });
     autoScroll = true;
   }, [tgidClicked]);
+
+  if (!filteredTgids?.legth) return null;
 
   return (
     <StyledCategorySlider id={elementId}>

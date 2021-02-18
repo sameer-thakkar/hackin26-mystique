@@ -1,21 +1,23 @@
+import { useContext } from 'react';
+import dynamic from 'next/dynamic';
+import styled from 'styled-components';
 import { SOLEIL, COLORS } from 'const/ui-constants';
 import {
   SAFETY_DETAILS_IMAGES,
   SAFETY_DETAILS_TYPE,
   CLUBBED_SAFETY_TAGS,
 } from 'const/index';
-import styled from 'styled-components';
 import useWindowSize from 'hooks/useWindowSize';
 import Conditional from 'components/common/Conditional';
 import { strings } from 'const/strings';
 import { CHEVRON_LEFT_CIRCLE, Shield } from 'assets/SvgIcons';
 import { greenScheme } from 'style/theme';
-import { useContext } from 'react';
 import { MBContext } from 'contexts/MBContext';
 
 import IconCTA, { StyledIconCTA } from './IconCTA';
-import Slider from './Slider';
 import Image from './Image';
+
+const Slider = dynamic(() => import('./Slider'));
 
 const PitchGrid = styled.div`
   display: grid;

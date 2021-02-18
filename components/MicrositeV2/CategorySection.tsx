@@ -2,11 +2,14 @@ import { SOLEIL, COLORS } from 'const/ui-constants';
 import { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import useWindowSize from 'hooks/useWindowSize';
+import dynamic from 'next/dynamic';
+import Conditional from 'components/common/Conditional';
 
-import PopulateProducts from './PopulateProducts';
 import ProductsContext from '../../contexts/Products';
 import InteractionContext from '../../contexts/Interaction';
 import { DONT_AUTO_SCROLL, DONT_HOIST } from '../../constants';
+
+const PopulateProducts = dynamic(() => import('./PopulateProducts'));
 
 const StyledCategorySection = styled.div`
   display: grid;
@@ -108,16 +111,18 @@ const CategorySection = (props) => {
       {description ? (
         <p className="category-description">{description}</p>
       ) : null}
-      <PopulateProducts
-        rowsToShow={2}
-        propTgids={filteredTgids}
-        isMobile={isMobile}
-        changePage={changePage}
-        allTours={allTours}
-        host={host}
-        uid={uid}
-        sectionId={elementId}
-      />
+      <Conditional if={filteredTgids?.length}>
+        <PopulateProducts
+          rowsToShow={2}
+          propTgids={filteredTgids}
+          isMobile={isMobile}
+          changePage={changePage}
+          allTours={allTours}
+          host={host}
+          uid={uid}
+          sectionId={elementId}
+        />
+      </Conditional>
     </StyledCategorySection>
   );
 };

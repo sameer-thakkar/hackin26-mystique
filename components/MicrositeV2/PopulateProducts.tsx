@@ -1,9 +1,13 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, ComponentType } from 'react';
 import { strings } from 'const/strings';
+import dynamic from 'next/dynamic';
 
-import { RowComponent } from './RowComponent';
 import InteractionContext from '../../contexts/Interaction';
 import { MBContext } from '../../contexts/MBContext';
+
+const RowComponent: ComponentType<any> = dynamic(() =>
+  import('./RowComponent').then((mod) => mod.RowComponent)
+);
 
 const PopulateProducts = (props) => {
   const {

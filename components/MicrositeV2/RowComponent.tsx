@@ -3,13 +3,13 @@ import { scroller } from 'react-scroll';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 
-import Product from './Product';
 import { PAGETYPE } from '../../constants';
 import InteractionContext from '../../contexts/Interaction';
 
 const DetailedProductCard = dynamic(() => import('./DetailedProductCard'), {
   ssr: false,
 });
+const Product = dynamic(() => import('./Product'));
 
 const ProductsRow = styled.div`
   display: grid;
