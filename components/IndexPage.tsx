@@ -779,72 +779,67 @@ export default class Page extends React.Component<any, any> {
       return <ErrorPage statusCode={statusCode} />;
     }
 
-    const PAGETYPE = ContentType + (MBDesign || '');
-    let Component, microsite;
+    const microsite = CMSContent.data?.microsite?.data || CMSContent.data?.data;
 
-    switch (PAGETYPE) {
-      case CUSTOM_TYPES.MICROSITE + DESIGN.V2:
-        Component = (
-          <MicrositeV2
-            data={CMSContent.data}
-            lang={lang}
-            host={host}
-            isDev={isDev}
-            scorpioData={tourGroupData}
-            serverRequestStartTimestamp={serverRequestStartTimestamp}
-            isMobile={isMobile}
-          />
-        );
-        microsite = CMSContent.data?.data;
-        break;
-      case CUSTOM_TYPES.MICROSITE:
-      case CUSTOM_TYPES.MICROSITE + DESIGN.V1:
-        Component = (
-          <Microsite
-            data={CMSContent.data}
-            activeCurrency={activeCurrency}
-            scorpioData={tourGroupData}
-            offerData={CMSContent.offerData}
-            host={host}
-            toursList={toursList}
-            pathname={pathname}
-            isDev={isDev}
-            tgidToScroll={tgidToScroll}
-            serverRequestStartTimestamp={serverRequestStartTimestamp}
-            isMobile={isMobile}
-            mbTheme={mbTheme}
-          />
-        );
-        microsite = CMSContent.data?.data;
-        break;
-      case CUSTOM_TYPES.CONTENT_PAGE:
-        Component = (
-          <ContentPage
-            {...CMSContent}
-            scorpioData={tourGroupData}
-            isDev={isDev}
-            host={host}
-            serverRequestStartTimestamp={serverRequestStartTimestamp}
-            isMobile={isMobile}
-          />
-        );
-        microsite = CMSContent.data?.microsite?.data;
-        break;
-      case CUSTOM_TYPES.LISTICLE:
-        Component = (
-          <Listicle
-            {...CMSContent}
-            isDev={isDev}
-            host={host}
-            serverRequestStartTimestamp={serverRequestStartTimestamp}
-          />
-        );
-        microsite = {};
-        break;
-      default:
-        Component = <ErrorPage statusCode={500} />;
-        break;
+    function getPageComponent(pageType) {
+      switch (pageType) {
+        case CUSTOM_TYPES.MICROSITE + DESIGN.V2:
+          return (
+            <MicrositeV2
+              data={CMSContent.data}
+              lang={lang}
+              host={host}
+              isDev={isDev}
+              scorpioData={tourGroupData}
+              serverRequestStartTimestamp={serverRequestStartTimestamp}
+              isMobile={isMobile}
+            />
+          );
+        case CUSTOM_TYPES.MICROSITE:
+        case CUSTOM_TYPES.MICROSITE + DESIGN.V1:
+          return (
+            <Microsite
+              data={CMSContent.data}
+              activeCurrency={activeCurrency}
+              scorpioData={tourGroupData}
+              offerData={CMSContent.offerData}
+              host={host}
+              toursList={toursList}
+              pathname={pathname}
+              isDev={isDev}
+              tgidToScroll={tgidToScroll}
+              serverRequestStartTimestamp={serverRequestStartTimestamp}
+              isMobile={isMobile}
+              mbTheme={mbTheme}
+            />
+          );
+        case CUSTOM_TYPES.CONTENT_PAGE:
+          return (
+            <ContentPage
+              {...CMSContent}
+              scorpioData={tourGroupData}
+              isDev={isDev}
+              host={host}
+              serverRequestStartTimestamp={serverRequestStartTimestamp}
+              isMobile={isMobile}
+            />
+          );
+        case CUSTOM_TYPES.LISTICLE:
+          return (
+            <Listicle
+              {...CMSContent}
+              isDev={isDev}
+              host={host}
+              serverRequestStartTimestamp={serverRequestStartTimestamp}
+            />
+          );
+        default:
+          return <ErrorPage statusCode={500} />;
+      }
     }
+
+    const pageType = ContentType + (MBDesign || '');
+    const Component = getPageComponent(pageType);
 
     return (
       <div id="body-wrap">
