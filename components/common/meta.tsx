@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import Head from 'next/head';
 import parse from 'url-parse';
-import { withoutTrailingSlash, withShortcodes } from '../../utils/helper';
 import { MBContext } from 'contexts/MBContext';
+import { withoutTrailingSlash, withShortcodes } from 'utils/helper';
 
 const withTrailingSlash = (url) =>
   url.charAt(url.length - 1) !== '/' ? `${url}/` : url;
