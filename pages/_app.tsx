@@ -11,7 +11,7 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
     strings.setContent({
       default: localizedStrings,
     });
-    initDayJSLocale(lang);
+    if (lang !== 'en') initDayJSLocale(lang);
   }, [localizedStrings, lang]);
   return <Component {...pageProps} />;
 };
