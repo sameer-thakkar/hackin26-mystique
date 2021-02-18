@@ -1,12 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { ComponentType, useContext, useState } from 'react';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
+import dynamic from 'next/dynamic';
 
 import LanguageSelector from './LanguageSelector';
 import InteractionContext from '../../contexts/Interaction';
 import Image from '../UI/Image';
-import { SearchBox } from './SearchBox';
 import { PAGETYPE, ALLOW_IMMEDIEATE_NESTING, THEMES } from '../../constants';
 import { SEARCH_ICON, POWERED_BY_HEADOUT } from '../../assets/SvgIcons';
 import { SearchItem } from './SearchItem';
@@ -15,6 +15,11 @@ import MultiLevelNav from '../MultiLevelNav';
 import { groupSlices } from '../../utils/helper';
 import Hamburger from '../UI/Hamburger';
 import HeaderLinks from '../HeaderLinks';
+
+const SearchBox: ComponentType<any> = dynamic(
+  () => import('./SearchBox').then((mod) => mod.SearchBox),
+  { ssr: false }
+);
 
 const StyledHeader = styled.span`
   header {

@@ -1,9 +1,9 @@
-const withCSS = require('./next-css');
-
 const withPurgeCss = require('next-purgecss');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
+
+const withCSS = require('./next-css');
 
 module.exports = withBundleAnalyzer(
   withCSS(
