@@ -1,10 +1,12 @@
+import dynamic from 'next/dynamic';
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Image from 'UI/Image';
 import { isMobile } from 'utils/helper';
 
 import InlinePrice from './InlinePrice';
-import Swiper from './Swiper';
+
+const Swiper = dynamic(() => import('components/Swiper'));
 
 const StyledFTPopup = styled.div`
   .popupv2-wrap.pixel-fix * {

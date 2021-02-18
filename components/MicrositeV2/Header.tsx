@@ -10,7 +10,6 @@ import Image from '../UI/Image';
 import { PAGETYPE, ALLOW_IMMEDIEATE_NESTING, THEMES } from '../../constants';
 import { SEARCH_ICON, POWERED_BY_HEADOUT } from '../../assets/SvgIcons';
 import { SearchItem } from './SearchItem';
-import { ResponsiveSelector } from './ResponsiveSelector';
 import MultiLevelNav from '../MultiLevelNav';
 import { groupSlices } from '../../utils/helper';
 import Hamburger from '../UI/Hamburger';
@@ -18,6 +17,13 @@ import HeaderLinks from '../HeaderLinks';
 
 const SearchBox: ComponentType<any> = dynamic(
   () => import('./SearchBox').then((mod) => mod.SearchBox),
+  { ssr: false }
+);
+const ResponsiveSelector: ComponentType<any> = dynamic(
+  () =>
+    import('components/MicrositeV2/ResponsiveSelector').then(
+      (m) => m.ResponsiveSelector
+    ),
   { ssr: false }
 );
 

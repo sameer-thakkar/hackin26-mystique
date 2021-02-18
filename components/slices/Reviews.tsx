@@ -1,13 +1,14 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import Rating from 'UI/Rating';
-import Slider from 'UI/Slider';
 import Image from 'UI/Image';
 import { COLORS } from 'const/ui-constants';
 import { QUOTES } from 'assets/SvgIcons';
 
+const Slider = dynamic(() => import('UI/Slider'));
 dayjs.extend(relativeTime);
 
 const StyledReviews = styled.div`

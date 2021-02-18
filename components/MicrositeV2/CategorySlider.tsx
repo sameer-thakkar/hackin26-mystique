@@ -2,12 +2,16 @@ import React, { useState, useContext, useEffect, useCallback } from 'react';
 import { scroller } from 'react-scroll';
 import styled from 'styled-components';
 import { SOLEIL } from 'const/ui-constants';
+import dynamic from 'next/dynamic';
 
-import Swiper from '../Swiper';
 import ProductsContext from '../../contexts/Products';
 import Product from './Product';
-import DetailedProductCard from './DetailedProductCard';
 import { CHEVRON_LEFT } from '../../assets/SvgIcons';
+
+const DetailedProductCard = dynamic(() => import('./DetailedProductCard'), {
+  ssr: false,
+});
+const Swiper = dynamic(() => import('components/Swiper'));
 
 const StyledCategorySlider = styled.div`
   display: grid;

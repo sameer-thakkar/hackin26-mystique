@@ -1,10 +1,11 @@
+import dynamic from 'next/dynamic';
 import React from 'react';
 import { SIZES } from 'const/ui-constants';
 import { scroller } from 'react-scroll';
+import Image from 'UI/Image';
+import { stringIdfy } from 'utils/helper';
 
-import Image from '../UI/Image';
-import Swiper from '../Swiper';
-import { stringIdfy } from '../../utils/helper';
+const Swiper = dynamic(() => import('components/Swiper'));
 
 const Banner = (props) => {
   const { banners, isMobile, carouselOptions, ready } = props;

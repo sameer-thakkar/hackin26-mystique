@@ -1,6 +1,6 @@
 import { SIZES, SOLEIL } from 'const/ui-constants';
 import { THEMES } from 'const/index';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, ComponentType } from 'react';
 import dynamic from 'next/dynamic';
 import DismissAlert from 'UI/DismissAlert';
 import { strings } from 'const/strings';
@@ -13,7 +13,6 @@ import { isSafetyIncluded } from 'utils';
 import Conditional from 'components/common/Conditional';
 import TextBanner from 'components/TextBanner';
 import { MBContext } from 'contexts/MBContext';
-import { ResponsiveSelector } from 'components/MicrositeV2/ResponsiveSelector';
 import { ProductsWrapper } from 'components/MicrositeV2/ProductsWrapper';
 import Footer from 'components/common/Footer';
 import Banner from 'components/MicrositeV2/Banner';
@@ -22,6 +21,13 @@ import LongForm from 'components/MicrositeV2/LongForm';
 import Header from 'components/MicrositeV2/Header';
 
 const Alert = dynamic(() => import('UI/Alert'), { ssr: false });
+const ResponsiveSelector: ComponentType<any> = dynamic(
+  () =>
+    import('components/MicrositeV2/ResponsiveSelector').then(
+      (m) => m.ResponsiveSelector
+    ),
+  { ssr: false }
+);
 
 const V2MicrositeWrapper = styled.div`
   .alert-wrapper {

@@ -8,10 +8,12 @@ import {
   CLOSE_WHITE,
 } from 'assets/SvgIcons';
 import { stringIdfy } from 'utils/helper';
-import Swiper from 'components/Swiper';
 import Image from 'UI/Image';
 import RichContent from 'UI/RichContent';
 import { useAmp } from 'next/amp';
+import dynamic from 'next/dynamic';
+
+const Swiper = dynamic(() => import('components/Swiper'));
 
 const StyledImageGallery = styled.div`
   display: grid;

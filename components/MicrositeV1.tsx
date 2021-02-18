@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ComponentType, useEffect, useState } from 'react';
 import { RichText } from 'prismic-reactjs';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
@@ -32,7 +32,6 @@ import { ProductsContextProvider } from '../contexts/Products';
 import { tourListApiParser } from '../utils/dataParsers';
 import TextBanner from './TextBanner';
 import Conditional from './common/Conditional';
-import { ResponsiveSelector } from './MicrositeV2/ResponsiveSelector';
 import { withAmp } from './common/withAmp';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
@@ -40,6 +39,13 @@ const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 const MicrobrandList = dynamic(() => import('./MicrobrandsList'));
 const Alert = dynamic(() => import('UI/Alert'), { ssr: false });
 const DismissAlert = dynamic(() => import('UI/DismissAlert'), { ssr: false });
+const ResponsiveSelector: ComponentType<any> = dynamic(
+  () =>
+    import('components/MicrositeV2/ResponsiveSelector').then(
+      (m) => m.ResponsiveSelector
+    ),
+  { ssr: false }
+);
 
 const CoverSlicesWrapper = styled.div`
   margin-bottom: 32px;

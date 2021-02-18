@@ -1,6 +1,12 @@
 import { SOLEIL, COLORS } from 'const/ui-constants';
 import { strings } from 'const/strings';
-import React, { useRef, useState, useEffect, useContext } from 'react';
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  useContext,
+  ComponentType,
+} from 'react';
 import styled from 'styled-components';
 import { scroller } from 'react-scroll';
 import Hamburger from 'UI/Hamburger';
@@ -8,7 +14,6 @@ import Image from 'UI/Image';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import { POWERED_BY_HEADOUT } from 'assets/SvgIcons';
 import { MBContext } from 'contexts/MBContext';
-import { ResponsiveSelector } from 'components/MicrositeV2/ResponsiveSelector';
 import HeaderLinks from 'components/HeaderLinks';
 import LanguageSelector from 'components/common/LanguageSelector';
 import Conditional from 'components/common/Conditional';
@@ -16,6 +21,13 @@ import CurrencySelector from 'components/common/CurrencySelector';
 import dynamic from 'next/dynamic';
 
 const MultiLevelNav = dynamic(() => import('components/MultiLevelNav'));
+const ResponsiveSelector: ComponentType<any> = dynamic(
+  () =>
+    import('components/MicrositeV2/ResponsiveSelector').then(
+      (m) => m.ResponsiveSelector
+    ),
+  { ssr: false }
+);
 
 const StyledHeader = styled.header`
   height: 80px;

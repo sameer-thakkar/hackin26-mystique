@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { RichText } from 'prismic-reactjs';
 import { SOLEIL, COLORS } from 'const/ui-constants';
+import dynamic from 'next/dynamic';
 
-import Slider from '../UI/Slider';
 import Image from '../UI/Image';
 import { CHEVRON_DOWN } from '../../assets/SvgIcons';
+
+const Slider = dynamic(() => import('UI/Slider'));
 
 const Question = (props) => {
   const {
