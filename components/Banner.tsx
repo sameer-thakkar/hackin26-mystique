@@ -316,7 +316,9 @@ export default class Banner extends Component<any, any> {
       isMobile: mobileCheck,
       isClient: true,
     });
-    if (this.props.bannerImages.length > 1) this.autoSlide();
+    if (this.props.bannerImages.length > 1) {
+      setTimeout(this.autoSlide, 2500);
+    }
   }
 
   nextSlide = () => {
@@ -356,7 +358,7 @@ export default class Banner extends Component<any, any> {
     this.autoSlide();
   };
 
-  renderBanners = (image) => {
+  renderBanners = (image, index) => {
     const { isAmp } = this.props;
     const { url, alt, mobileUrl } = image;
     const { isMobile } = this.state;
@@ -368,6 +370,7 @@ export default class Banner extends Component<any, any> {
         width={WIDTH}
         aspectRatio={ASPECT_RATIO}
         url={url}
+        dontLazyLoad={index === 0}
         mobileUrl={mobileUrl}
         alt={alt || 'banner'}
       />
@@ -423,7 +426,6 @@ export default class Banner extends Component<any, any> {
     } = this.props;
     const bannerHeading = withShortcodes(tempBannerHeading);
     const bannerSubtext = withShortcodes(tempBannerSubtext);
-    const { isClient } = this.state;
     const captions = (
       <div
         className={`mb-captions ${
@@ -477,7 +479,7 @@ export default class Banner extends Component<any, any> {
                 }
               )}
             >
-              {isClient ? this.renderBanners(banner) : null}
+              {this.renderBanners(banner, index)}
             </div>
           );
         })}
