@@ -4,6 +4,7 @@ import { THEMES } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { useRecoilState } from 'recoil';
 import { currencyAtom } from 'store/atoms/currency';
+import { useRouter } from 'next/router';
 
 const StyledCurrencySelector = styled.div`
   margin-left: 32px;
@@ -127,7 +128,10 @@ const CurrencySelector = (props) => {
     isAmp,
     currencies: tempCurrencies,
     isMobile,
+    host,
   } = props;
+
+  const { pathname, query } = useRouter();
 
   const [isActive, toggleActive] = useState(false);
   const [activeCurrency, setCurrency] = useRecoilState(currencyAtom);
@@ -175,8 +179,15 @@ const CurrencySelector = (props) => {
             tabIndex={0}
           >
             {currencies.map((currency, index) => {
+              let url = new URL(`https://${host}${pathname}`);
+              const urlQuery = new URLSearchParams(query as any);
+              urlQuery.set('currencyCode', currency?.code);
+              const queryString =
+                Array.from(urlQuery?.values()).length > 0
+                  ? `?${urlQuery.toString()}`
+                  : '';
               return (
-                <option value={currency.code} key={index}>
+                <option value={`${url?.toString()}${queryString}`} key={index}>
                   {getDisplayCurrencyString({
                     currencyObj: currency,
                     full: true,

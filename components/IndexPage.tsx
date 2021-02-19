@@ -3,7 +3,7 @@ import ErrorPage from 'next/error';
 import dynamic from 'next/dynamic';
 import fetch from 'isomorphic-unfetch';
 import Cookies from 'js-cookie';
-import { RecoilRoot } from 'recoil';
+import { MutableSnapshot, RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components';
 import 'lazysizes';
 import 'lazysizes/plugins/attrchange/ls.attrchange';
@@ -36,7 +36,9 @@ import {
 } from '../constants';
 import { MBContextProvider } from '../contexts/MBContext';
 import { toursTabSliceHandler } from './Slices';
+
 import '../style/global.css';
+import { currencyAtom } from 'store/atoms/currency';
 const Microsite = dynamic(() => import('components/MicrositeV1'));
 const ContentPage = dynamic(() => import('components/ContentPage'));
 const MicrositeV2 = dynamic(() => import('components/MicrositeV2'));
@@ -590,7 +592,7 @@ export default class Page extends React.Component<any, any> {
           return [...acc, tour.tgid];
         }, []);
 
-        const { tgidToScroll, noTrack } = (function getScrollTgid() {
+        const queryParams = (function getScrollTgid() {
           try {
             const href = req
               ? `http://${host}${req.url}`
@@ -600,6 +602,7 @@ export default class Page extends React.Component<any, any> {
               return {
                 tgidToScroll: url.searchParams.get('tgid'),
                 noTrack: typeof url.searchParams.get('no-track') === 'string',
+                currencyCode: url.searchParams.get('currencyCode'),
               };
             }
             return {};
@@ -618,19 +621,21 @@ export default class Page extends React.Component<any, any> {
           host,
           MBDesign,
           isDev,
-          tgidToScroll,
+          queryParams,
           mbTheme,
-          noTrack,
         };
       }
 
       tgidsArray = [...tgidsArray, ...all_tours_tab_tgids];
+      const currency = AllData?.['queryParams']?.currencyCode
+        ? `&currency=${AllData?.['queryParams']?.currencyCode}`
+        : '';
       const tourGroupAPIResponses = await fetch(
         `https://${
           isStage ? 'stage-' : ''
         }microbrands.headout.com/api/tours/v5/tour-group/list?ids[]=${tgidsArray}&language=${getHeadoutLanguagecode(
           lang
-        )}`
+        )}${currency}`
       ).then((r) => r.json());
 
       const tourGroupData = tourGroupAPIResponses?.tourGroups?.reduce(
@@ -761,7 +766,6 @@ export default class Page extends React.Component<any, any> {
       isDev,
       windowUrl,
       pathname,
-      tgidToScroll,
       serverRequestStartTimestamp,
       lang,
       uid,
@@ -771,9 +775,11 @@ export default class Page extends React.Component<any, any> {
       isPreview,
       currencySymbolMap,
       activeCurrency,
-      noTrack,
+      queryParams = {},
       biLink,
     } = this.props;
+
+    const { noTrack, tgidToScroll, currencyCode } = queryParams;
 
     if (statusCode) {
       return <ErrorPage statusCode={statusCode} />;
@@ -841,6 +847,12 @@ export default class Page extends React.Component<any, any> {
     const pageType = ContentType + (MBDesign || '');
     const Component = getPageComponent(pageType);
 
+    const initRecoil = ({ set }: MutableSnapshot) => {
+      if (currencyCode?.length) {
+        set(currencyAtom, currencyCode);
+      }
+    };
+
     return (
       <div id="body-wrap">
         <EnvironmentContext.Provider
@@ -850,7 +862,7 @@ export default class Page extends React.Component<any, any> {
           }}
         >
           <ThemeProvider theme={theme[mbTheme]}>
-            <RecoilRoot>
+            <RecoilRoot initializeState={initRecoil}>
               <MBContextProvider
                 host={host}
                 uid={uid}

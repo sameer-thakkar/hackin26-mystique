@@ -1,5 +1,3 @@
-import { SOLEIL, COLORS } from 'const/ui-constants';
-import { strings } from 'const/strings';
 import React, {
   useRef,
   useState,
@@ -9,6 +7,9 @@ import React, {
 } from 'react';
 import styled from 'styled-components';
 import { scroller } from 'react-scroll';
+import dynamic from 'next/dynamic';
+import { SOLEIL, COLORS } from 'const/ui-constants';
+import { strings } from 'const/strings';
 import Hamburger from 'UI/Hamburger';
 import Image from 'UI/Image';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
@@ -18,7 +19,6 @@ import HeaderLinks from 'components/HeaderLinks';
 import LanguageSelector from 'components/common/LanguageSelector';
 import Conditional from 'components/common/Conditional';
 import CurrencySelector from 'components/common/CurrencySelector';
-import dynamic from 'next/dynamic';
 
 const MultiLevelNav = dynamic(() => import('components/MultiLevelNav'));
 const ResponsiveSelector: ComponentType<any> = dynamic(
@@ -309,6 +309,8 @@ const Header: React.FC<any> = (props) => {
               currentCurrency={currentCurrency}
               currencies={headerCurrencies}
               isMobile={isMobile}
+              isAmp={isAmp}
+              host={host}
             />
           </Conditional>
         </StyledHeaderElements>
