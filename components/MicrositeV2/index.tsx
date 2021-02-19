@@ -12,11 +12,13 @@ import { tourListApiParser } from 'utils/dataParsers';
 const HomePage: ComponentType<any> = dynamic(() =>
   import('./views/HomePage').then((mod) => mod.HomePage)
 );
-const SearchPage: ComponentType<any> = dynamic(() =>
-  import('./views/SearchPage').then((mod) => mod.SearchPage)
+const SearchPage: ComponentType<any> = dynamic(
+  () => import('./views/SearchPage').then((mod) => mod.SearchPage),
+  { ssr: false }
 );
-const MobileProductPage: ComponentType<any> = dynamic(() =>
-  import('./views/ProductPage').then((mod) => mod.MobileProductPage)
+const MobileProductPage: ComponentType<any> = dynamic(
+  () => import('./views/ProductPage').then((mod) => mod.MobileProductPage),
+  { ssr: false }
 );
 class MicrositeV2 extends Component<any, any> {
   constructor(props) {
