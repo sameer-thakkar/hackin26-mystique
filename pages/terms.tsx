@@ -3,7 +3,7 @@ import Header from 'components/common/Header';
 import Footer from 'components/common/Footer';
 import ContentContainer from 'components/UI/ContentContainer';
 import Paragraph from 'components/UI/Paragraph';
-import theme from 'style/theme';
+import { getAppTheme } from 'style/theme';
 import { TopHeading, SubHeading } from 'components/UI/Headings';
 import { MinimalHelmet } from 'components/common/meta';
 import { ThemeProvider } from 'styled-components';
@@ -124,7 +124,7 @@ export default class TermsPage extends Component<any, any> {
       footerTheme === THEMES.INHERIT ? mbTheme : footerTheme;
     const nakedDomain = useDomain ? getNakedDomain(host) : 'headout.com';
     return (
-      <ThemeProvider theme={theme[mbTheme || THEMES.DEFAULT]}>
+      <ThemeProvider theme={getAppTheme(mbTheme || THEMES.DEFAULT)}>
         <MBContextProvider
           host={host}
           uid={uid}

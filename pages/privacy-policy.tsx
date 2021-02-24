@@ -13,7 +13,7 @@ import '../style/global.css';
 import Conditional from 'components/common/Conditional';
 import RichContent from 'UI/RichContent';
 import { getNakedDomain } from 'utils';
-import theme from 'style/theme';
+import { getAppTheme } from 'style/theme';
 
 import { DROPDOWN_ELEMENT, CUSTOM_TYPES, THEMES, DESIGN } from '../constants';
 import { Client } from '../config/prismic-config';
@@ -138,7 +138,7 @@ export default class privacy extends Component<any, any> {
     const nakedDomain = useDomain ? getNakedDomain(host) : 'headout.com';
 
     return (
-      <ThemeProvider theme={theme[mbTheme || THEMES.DEFAULT]}>
+      <ThemeProvider theme={getAppTheme(mbTheme || THEMES.DEFAULT)}>
         <MBContextProvider
           host={host}
           uid={uid}

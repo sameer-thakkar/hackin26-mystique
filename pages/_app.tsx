@@ -17,8 +17,8 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
 };
 
 App.getInitialProps = async ({ Component, ctx }) => {
-  const { pathname, query } = ctx;
-  const lang = getLanguageFromPathname({ pathname, query }) || 'en';
+  const { asPath, query } = ctx;
+  const lang = getLanguageFromPathname({ pathname: asPath, query }) || 'en';
   const localizedStrings = await getLocalizationLabels({ lang });
   const pageProps = Component.getInitialProps
     ? await Component.getInitialProps(ctx)

@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { strings } from 'const/strings';
 import { MBContext } from 'contexts/MBContext';
-import theme from 'style/theme';
+import { getAppTheme } from 'style/theme';
 import { useWindowWidth } from '@react-hook/window-size';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 
@@ -276,7 +276,7 @@ const Footer: React.FC<FooterProps> = ({
     setIsMobile(width < 768);
   }, [width]);
   return (
-    <ThemeProvider theme={theme[finalThemeName]}>
+    <ThemeProvider theme={getAppTheme(finalThemeName)}>
       <StyledFooter>
         <LinkSlicesWrapper>
           <Conditional if={slices?.length}>

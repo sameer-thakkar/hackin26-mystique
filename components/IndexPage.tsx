@@ -17,8 +17,9 @@ import {
 } from 'utils';
 import { uncategorizedToursListParser } from 'utils/dataParsers';
 import { isAmpUrl, removePageQuery } from 'utils/urlUtils';
+import { currencyAtom } from 'store/atoms/currency';
 
-import theme from '../style/theme';
+import { getAppTheme } from '../style/theme';
 import EnvironmentContext from '../contexts/environmentContext';
 import { Client } from '../config/prismic-config';
 import {
@@ -36,9 +37,8 @@ import {
 } from '../constants';
 import { MBContextProvider } from '../contexts/MBContext';
 import { toursTabSliceHandler } from './Slices';
-
 import '../style/global.css';
-import { currencyAtom } from 'store/atoms/currency';
+
 const Microsite = dynamic(() => import('components/MicrositeV1'));
 const ContentPage = dynamic(() => import('components/ContentPage'));
 const MicrositeV2 = dynamic(() => import('components/MicrositeV2'));
@@ -861,7 +861,7 @@ export default class Page extends React.Component<any, any> {
             windowUrl,
           }}
         >
-          <ThemeProvider theme={theme[mbTheme]}>
+          <ThemeProvider theme={getAppTheme(mbTheme)}>
             <RecoilRoot initializeState={initRecoil}>
               <MBContextProvider
                 host={host}
