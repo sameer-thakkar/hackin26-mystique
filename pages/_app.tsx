@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import {
   getLocalizationLabels,
   initDayJSLocale,
@@ -7,12 +6,11 @@ import { strings } from 'const/strings';
 import { getLanguageFromPathname } from 'utils';
 
 const App = ({ Component, pageProps, localizedStrings, lang }) => {
-  useEffect(() => {
-    strings.setContent({
-      default: localizedStrings,
-    });
-    if (lang !== 'en') initDayJSLocale(lang);
-  }, [localizedStrings, lang]);
+  strings.setContent({
+    default: localizedStrings,
+  });
+  if (lang !== 'en') initDayJSLocale(lang);
+
   return <Component {...pageProps} />;
 };
 
