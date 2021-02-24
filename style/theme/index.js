@@ -359,14 +359,15 @@ const themes = {
     },
   }),
   get [THEMES.DEFAULT]() {
-    return this[THEMES.DEF_INTERIM]();
+    return () => this[THEMES.DEF_INTERIM]();
   },
   get [undefined]() {
-    return this[THEMES.DEF_INTERIM]();
+    return () => this[THEMES.DEF_INTERIM]();
   },
 };
 
 export const getAppTheme = (theme = THEMES.DEFAULT) => {
+  console.log({ theme });
   return themes[theme]();
 };
 
