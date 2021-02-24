@@ -3,9 +3,23 @@ import ErrorPage from 'next/error';
 import dynamic from 'next/dynamic';
 import fetch from 'isomorphic-unfetch';
 import Cookies from 'js-cookie';
+import { MutableSnapshot, RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components';
-import { RecoilRoot } from 'recoil';
-import theme from '../style/theme';
+import 'lazysizes';
+import 'lazysizes/plugins/attrchange/ls.attrchange';
+import {
+  redirectTo,
+  getPrismicProps,
+  reflect,
+  isNakedDomain,
+  getHeadoutLanguagecode,
+  refsArrayToObject,
+} from 'utils';
+import { uncategorizedToursListParser } from 'utils/dataParsers';
+import { isAmpUrl, removePageQuery } from 'utils/urlUtils';
+import { currencyAtom } from 'store/atoms/currency';
+
+import { getAppTheme } from '../style/theme';
 import EnvironmentContext from '../contexts/environmentContext';
 import { Client } from '../config/prismic-config';
 import {
@@ -21,25 +35,14 @@ import {
   FULL_LANGUAGE_MAP,
   PRISMIC_LANG_TO_ROUTE_PARAM,
 } from '../constants';
-import {
-  redirectTo,
-  getPrismicProps,
-  reflect,
-  isNakedDomain,
-  getHeadoutLanguagecode,
-  refsArrayToObject,
-} from 'utils';
-import { uncategorizedToursListParser } from 'utils/dataParsers';
-import { isAmpUrl, removePageQuery } from 'utils/urlUtils';
 import { MBContextProvider } from '../contexts/MBContext';
 import { toursTabSliceHandler } from './Slices';
-import 'lazysizes';
-import 'lazysizes/plugins/attrchange/ls.attrchange';
 import '../style/global.css';
-const Microsite = dynamic(() => import('../components/MicrositeV1'));
-const ContentPage = dynamic(() => import('../components/ContentPage'));
-const MicrositeV2 = dynamic(() => import('../components/MicrositeV2'));
-const Listicle = dynamic(() => import('../components/ListiclePage'));
+
+const Microsite = dynamic(() => import('components/MicrositeV1'));
+const ContentPage = dynamic(() => import('components/ContentPage'));
+const MicrositeV2 = dynamic(() => import('components/MicrositeV2'));
+const Listicle = dynamic(() => import('components/ListiclePage'));
 
 const getValidUrlParams = (query) =>
   Object.entries(query)
@@ -589,7 +592,7 @@ export default class Page extends React.Component<any, any> {
           return [...acc, tour.tgid];
         }, []);
 
-        const { tgidToScroll, noTrack } = (function getScrollTgid() {
+        const queryParams = (function getScrollTgid() {
           try {
             const href = req
               ? `http://${host}${req.url}`
@@ -599,6 +602,7 @@ export default class Page extends React.Component<any, any> {
               return {
                 tgidToScroll: url.searchParams.get('tgid'),
                 noTrack: typeof url.searchParams.get('no-track') === 'string',
+                currencyCode: url.searchParams.get('currencyCode'),
               };
             }
             return {};
@@ -617,19 +621,21 @@ export default class Page extends React.Component<any, any> {
           host,
           MBDesign,
           isDev,
-          tgidToScroll,
+          queryParams,
           mbTheme,
-          noTrack,
         };
       }
 
       tgidsArray = [...tgidsArray, ...all_tours_tab_tgids];
+      const currency = AllData?.['queryParams']?.currencyCode
+        ? `&currency=${AllData?.['queryParams']?.currencyCode}`
+        : '';
       const tourGroupAPIResponses = await fetch(
         `https://${
           isStage ? 'stage-' : ''
         }microbrands.headout.com/api/tours/v5/tour-group/list?ids[]=${tgidsArray}&language=${getHeadoutLanguagecode(
           lang
-        )}`
+        )}${currency}`
       ).then((r) => r.json());
 
       const tourGroupData = tourGroupAPIResponses?.tourGroups?.reduce(
@@ -760,7 +766,6 @@ export default class Page extends React.Component<any, any> {
       isDev,
       windowUrl,
       pathname,
-      tgidToScroll,
       serverRequestStartTimestamp,
       lang,
       uid,
@@ -770,80 +775,83 @@ export default class Page extends React.Component<any, any> {
       isPreview,
       currencySymbolMap,
       activeCurrency,
-      noTrack,
+      queryParams = {},
       biLink,
     } = this.props;
+
+    const { noTrack, tgidToScroll, currencyCode } = queryParams;
 
     if (statusCode) {
       return <ErrorPage statusCode={statusCode} />;
     }
 
-    const PAGETYPE = ContentType + (MBDesign || '');
-    let Component, microsite;
+    const microsite = CMSContent.data?.microsite?.data || CMSContent.data?.data;
 
-    switch (PAGETYPE) {
-      case CUSTOM_TYPES.MICROSITE + DESIGN.V2:
-        Component = (
-          <MicrositeV2
-            data={CMSContent.data}
-            lang={lang}
-            host={host}
-            isDev={isDev}
-            scorpioData={tourGroupData}
-            serverRequestStartTimestamp={serverRequestStartTimestamp}
-            isMobile={isMobile}
-          />
-        );
-        microsite = CMSContent.data?.data;
-        break;
-      case CUSTOM_TYPES.MICROSITE:
-      case CUSTOM_TYPES.MICROSITE + DESIGN.V1:
-        Component = (
-          <Microsite
-            data={CMSContent.data}
-            activeCurrency={activeCurrency}
-            scorpioData={tourGroupData}
-            offerData={CMSContent.offerData}
-            host={host}
-            toursList={toursList}
-            pathname={pathname}
-            isDev={isDev}
-            tgidToScroll={tgidToScroll}
-            serverRequestStartTimestamp={serverRequestStartTimestamp}
-            isMobile={isMobile}
-            mbTheme={mbTheme}
-          />
-        );
-        microsite = CMSContent.data?.data;
-        break;
-      case CUSTOM_TYPES.CONTENT_PAGE:
-        Component = (
-          <ContentPage
-            {...CMSContent}
-            scorpioData={tourGroupData}
-            isDev={isDev}
-            host={host}
-            serverRequestStartTimestamp={serverRequestStartTimestamp}
-            isMobile={isMobile}
-          />
-        );
-        microsite = CMSContent.data?.microsite?.data;
-        break;
-      case CUSTOM_TYPES.LISTICLE:
-        Component = (
-          <Listicle
-            {...CMSContent}
-            isDev={isDev}
-            host={host}
-            serverRequestStartTimestamp={serverRequestStartTimestamp}
-          />
-        );
-        microsite = {};
-        break;
-      default:
-        Component = <ErrorPage statusCode={500} />;
-        break;
+    function getPageComponent(pageType) {
+      switch (pageType) {
+        case CUSTOM_TYPES.MICROSITE + DESIGN.V2:
+          return (
+            <MicrositeV2
+              data={CMSContent.data}
+              lang={lang}
+              host={host}
+              isDev={isDev}
+              scorpioData={tourGroupData}
+              serverRequestStartTimestamp={serverRequestStartTimestamp}
+              isMobile={isMobile}
+            />
+          );
+        case CUSTOM_TYPES.MICROSITE:
+        case CUSTOM_TYPES.MICROSITE + DESIGN.V1:
+          return (
+            <Microsite
+              data={CMSContent.data}
+              activeCurrency={activeCurrency}
+              scorpioData={tourGroupData}
+              offerData={CMSContent.offerData}
+              host={host}
+              toursList={toursList}
+              pathname={pathname}
+              isDev={isDev}
+              tgidToScroll={tgidToScroll}
+              serverRequestStartTimestamp={serverRequestStartTimestamp}
+              isMobile={isMobile}
+              mbTheme={mbTheme}
+            />
+          );
+        case CUSTOM_TYPES.CONTENT_PAGE:
+          return (
+            <ContentPage
+              {...CMSContent}
+              scorpioData={tourGroupData}
+              isDev={isDev}
+              host={host}
+              serverRequestStartTimestamp={serverRequestStartTimestamp}
+              isMobile={isMobile}
+            />
+          );
+        case CUSTOM_TYPES.LISTICLE:
+          return (
+            <Listicle
+              {...CMSContent}
+              isDev={isDev}
+              host={host}
+              serverRequestStartTimestamp={serverRequestStartTimestamp}
+            />
+          );
+        default:
+          return <ErrorPage statusCode={500} />;
+      }
     }
+
+    const pageType = ContentType + (MBDesign || '');
+    const Component = getPageComponent(pageType);
+
+    const initRecoil = ({ set }: MutableSnapshot) => {
+      if (currencyCode?.length) {
+        set(currencyAtom, currencyCode);
+      }
+    };
 
     return (
       <div id="body-wrap">
@@ -853,8 +861,8 @@ export default class Page extends React.Component<any, any> {
             windowUrl,
           }}
         >
-          <ThemeProvider theme={theme[mbTheme]}>
-            <RecoilRoot>
+          <ThemeProvider theme={getAppTheme(mbTheme)}>
+            <RecoilRoot initializeState={initRecoil}>
               <MBContextProvider
                 host={host}
                 uid={uid}

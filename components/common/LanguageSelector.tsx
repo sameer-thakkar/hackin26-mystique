@@ -4,12 +4,8 @@ import Router from 'next/router';
 import styled from 'styled-components';
 import { withoutTrailingSlash } from 'utils/helper';
 import { GLOBE } from 'assets/SvgIcons';
-import {
-  FULL_LANGUAGE_MAP,
-  THEMES,
-  LANGUAGE_PARAMS_REGEX,
-} from 'constants/index';
-import { COLORS, SOLEIL } from 'constants/ui-constants';
+import { FULL_LANGUAGE_MAP, THEMES, LANGUAGE_PARAMS_REGEX } from 'const/index';
+import { COLORS, SOLEIL } from 'const/ui-constants';
 import Chevron from 'UI/Chevron';
 
 const StyledLanguageContainer = styled.div`

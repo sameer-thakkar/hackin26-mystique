@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 import calendar from 'dayjs/plugin/calendar';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
-import * as labels from '../../constants/localization/labels';
-import { MBContext } from '../../contexts/MBContext';
+import { strings } from 'const/strings';
+import { SOLEIL } from 'const/ui-constants';
+
 import { HEADOUT_API_ENDPOINT } from '../../constants';
-import { SOLEIL } from '../../constants/ui-constants';
 
 dayjs.extend(calendar);
 dayjs.extend(advancedFormat);
@@ -65,10 +65,10 @@ class NextAvailable extends React.Component<
     };
   };
 
-  getFormattedDate = (date, currentLanguage) => {
+  getFormattedDate = (date) => {
     const dayjsDate = dayjs(date).calendar(
       null,
-      this.dayjsFormat(labels[currentLanguage].NEXT_AVAILABLE)
+      this.dayjsFormat(strings.NEXT_AVAILABLE)
     );
     return dayjsDate.replace(/\s (\d)(st|nd|rd|th)/g, '$1<sup>$2</sup>');
   };
@@ -103,14 +103,7 @@ class NextAvailable extends React.Component<
     } else {
       return nextAvailable ? (
         <Text className="inline-availability">
-          <MBContext.Consumer>
-            {({ lang }) => {
-              return this.getFormattedDate(
-                nextAvailable.startDateTime,
-                lang || 'en'
-              );
-            }}
-          </MBContext.Consumer>
+          {this.getFormattedDate(nextAvailable.startDateTime)}
         </Text>
       ) : (
         ''

@@ -1,6 +1,6 @@
 import parse from 'url-parse';
-import { parsePhoneNumberFromString as parseMobile } from 'libphonenumber-js/mobile';
-import { FULL_LANGUAGE_MAP } from 'constants/index';
+import { FULL_LANGUAGE_MAP } from 'const/index';
+
 import renderShortCodes from './shortCodes';
 
 export const withoutTrailingSlash = (url) =>
@@ -37,33 +37,6 @@ export const isGroupValid = (adults, children, minPax, maxPax) => {
     : +adults + +children > +maxPax
     ? `* Maximum group size is ${maxPax} (adult + children)`
     : '';
-};
-
-export const checkPhoneNumberValidity = (phoneWithCountryCode, country) => {
-  const { phone, countryDialCode } = phoneWithCountryCode;
-  if (phone === countryDialCode || !countryDialCode || !phone) {
-    return false;
-  }
-  if (phone.length >= 18 || phone.length <= countryDialCode.length) {
-    return false;
-  }
-  // Indian Exception for number starting with 6
-  if (phone.replace(/\D+/g, '').startsWith('916')) {
-    return true;
-  }
-  if (
-    phone &&
-    parseMobile(
-      `${phone.substring(countryDialCode.length, phone.length)}`,
-      country.toUpperCase()
-    )
-  ) {
-    return parseMobile(
-      `${phone.substring(countryDialCode.length, phone.length)}`,
-      country.toUpperCase()
-    ).isValid();
-  }
-  return false;
 };
 
 export const fetchUserGeoLocation = (url) =>

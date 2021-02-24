@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
+import { COLORS, SOLEIL } from 'const/ui-constants';
+
 import sliceHandler from '../Slices';
 import { BLACK_CLOSE } from '../../assets/SvgIcons';
-import { COLORS, SOLEIL } from '../../constants/ui-constants';
 
 const Popup = (props) => {
   const { data, togglePopup, children } = props;

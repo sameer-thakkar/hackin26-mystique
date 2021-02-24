@@ -1,8 +1,10 @@
 import React, { useContext, useEffect } from 'react';
-import PopulateProducts from './PopulateProducts';
-import CategoryBar from './CategoryBar';
-import InteractionContext from '../../contexts/Interaction';
-import { DONT_AUTO_SCROLL } from '../../constants';
+import dynamic from 'next/dynamic';
+import CategoryBar from 'components/MicrositeV2/CategoryBar';
+import InteractionContext from 'contexts/Interaction';
+import { DONT_AUTO_SCROLL } from 'const/index';
+
+const PopulateProducts = dynamic(() => import('./PopulateProducts'));
 
 export const ProductsWrapper = (props) => {
   const interactionContext = useContext(InteractionContext);
@@ -35,6 +37,8 @@ export const ProductsWrapper = (props) => {
   } = props;
 
   const { activeCategoryTgids } = interactionContext;
+
+  if (!activeCategoryTgids?.length) return null;
 
   return (
     <div className="main-wrapper relative-position">

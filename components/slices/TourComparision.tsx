@@ -2,19 +2,20 @@ import React, { useContext, useState } from 'react';
 import { useAmp } from 'next/amp';
 import styled from 'styled-components';
 import parse from 'url-parse';
+import { strings } from 'const/strings';
+import { RichText } from 'prismic-reactjs';
+import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
+import { createBookingURL } from 'utils';
+import { SOLEIL, COLORS } from 'const/ui-constants';
+
 import Image from '../UI/Image';
 import EnvironmentContext from '../../contexts/environmentContext';
 import ProductsContext from '../../contexts/Products';
 import Button from '../UI/Button';
-import * as labels from '../../constants/localization/labels';
-import { RichText } from 'prismic-reactjs';
-import { SOLEIL, COLORS } from '../../constants/ui-constants';
 import { shortCodeSerializerWithParentProps } from '../../utils/shortCodes';
 import { MBContext } from '../../contexts/MBContext';
 import { CHEVRON_DOWN } from '../../assets/SvgIcons';
 import { TOUR_COMPARISION_DESIGN } from '../../constants';
-import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
-import { createBookingURL } from 'utils';
 
 const StyledTourComparisionTable = styled.div`
   width: auto;
@@ -602,9 +603,7 @@ const TourComparisonTable = (props) => {
                   <div className="column" key={index}>
                     <div className="tour-cta">
                       <a href={ctaProps.link.url}>
-                        <Button widthProp="100%">
-                          {labels[lang]['BOOK_NOW_CTA']}
-                        </Button>
+                        <Button widthProp="100%">{strings.BOOK_NOW_CTA}</Button>
                       </a>
                     </div>
                   </div>
@@ -619,7 +618,7 @@ const TourComparisonTable = (props) => {
                   <div className="content-block">
                     {designType == TOUR_COMPARISION_DESIGN.TYPE_1 ? (
                       <div className="block-label">
-                        {labels[lang].PRICES_STARTING}
+                        {strings.PRICES_STARTING}
                       </div>
                     ) : null}
                     <div className="block-content">
@@ -681,7 +680,7 @@ const TourComparisonTable = (props) => {
                   <div className="column flat-price-block" key={index}>
                     <div className="content-block">
                       <div className="block-label">
-                        {labels[lang].PRICES_STARTING}
+                        {strings.PRICES_STARTING}
                       </div>
                       <div className="block-content">
                         <PriceBlock
@@ -715,7 +714,7 @@ const TourComparisonTable = (props) => {
                   <div className="tour-cta">
                     <a href={ctaProps.link.url}>
                       <Button type="fill" widthProp="100%">
-                        {labels[lang]['BOOK_NOW_CTA']}
+                        {strings.BOOK_NOW_CTA}
                       </Button>
                     </a>
                   </div>
@@ -737,7 +736,7 @@ const TourComparisonTable = (props) => {
           `}
         >
           <div className="start-compare-icon">
-            {labels[lang].COMPARE_ALL_DETAILS} {CHEVRON_DOWN}
+            {strings.COMPARE_ALL_DETAILS} {CHEVRON_DOWN}
           </div>
         </Button>
       ) : null}

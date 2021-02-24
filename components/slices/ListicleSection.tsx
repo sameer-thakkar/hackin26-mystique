@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { SOLEIL } from 'const/ui-constants';
+
 import sliceHandler from '../Slices';
-import { SOLEIL } from 'constants/ui-constants';
 
 const StyledListicleSection = styled.div`
   width: 690px;

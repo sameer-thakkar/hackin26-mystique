@@ -1,11 +1,14 @@
+import { SOLEIL } from 'const/ui-constants';
+import { CUSTOM_TYPES } from 'const/index';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Popup from '../common/Popup';
-import * as labels from 'constants/localization/labels';
+import dynamic from 'next/dynamic';
+import { strings } from 'const/strings';
 import { SHIELD } from 'assets/SvgIcons';
-import { SOLEIL } from 'constants/ui-constants';
+
 import { Client } from '../../config/prismic-config';
-import { CUSTOM_TYPES } from 'constants/index';
+
+const Popup = dynamic(() => import('../common/Popup'), { ssr: false });
 
 const StyledAlert = styled.div`
   background: #d6f8ff;
@@ -54,10 +57,10 @@ const StyledReadMore = styled.div`
 
 type AlertProps = {
   popupUID: string;
-  currentLanguage: string;
+  currentLanguage?: string;
 };
 
-const Alert: React.FC<AlertProps> = ({ popupUID, currentLanguage }) => {
+const Alert: React.FC<AlertProps> = ({ popupUID }) => {
   const [active, setActive] = useState(false);
   const [data, setData] = useState(null);
 
@@ -78,19 +81,17 @@ const Alert: React.FC<AlertProps> = ({ popupUID, currentLanguage }) => {
       {active ? <Popup togglePopup={setActive} data={data} alert /> : null}
       <StyledShield>{SHIELD}</StyledShield>
       <StyledTitle>
-        {data?.body[0]?.primary.alert_title ||
-          labels[currentLanguage].SANITARY_ALERT.KEY_TEXT}
+        {data?.body[0]?.primary.alert_title || strings.SANITARY_ALERT.KEY_TEXT}
       </StyledTitle>
       <StyledContent>
-        {data?.body[0]?.primary.alert_message ||
-          labels[currentLanguage].SANITARY_ALERT.TEXT}
+        {data?.body[0]?.primary.alert_message || strings.SANITARY_ALERT.TEXT}
       </StyledContent>
       <StyledReadMore
         onClick={() => {
           setActive(true);
         }}
       >
-        {data ? labels[currentLanguage].READ_MORE : null}
+        {data ? strings.READ_MORE : null}
       </StyledReadMore>
     </StyledAlert>
   );

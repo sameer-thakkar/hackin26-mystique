@@ -3,8 +3,8 @@ import { RichText } from 'prismic-reactjs';
 import Image from 'UI/Image';
 import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import { truncate } from 'utils/helper';
-import { SOLEIL, COLORS } from 'constants/ui-constants';
-import { CURRENCY_SYMBOL_MAP } from 'constants/index';
+import { SOLEIL, COLORS } from 'const/ui-constants';
+import { CURRENCY_SYMBOL_MAP } from 'const/index';
 import styled from 'styled-components';
 import { MBContext } from 'contexts/MBContext';
 

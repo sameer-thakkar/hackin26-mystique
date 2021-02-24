@@ -1,17 +1,25 @@
 import React from 'react';
-import InlinePrice from '../components/InlinePrice';
-import NextAvailable from '../components/shortcodes/NextAvailable';
-import InlineInvPrice from '../components/InlineInvPrice';
+import dynamic from 'next/dynamic';
+import { SHORT_CODE_TYPES } from 'const/index';
+import { WrapInLazyComponent } from 'components/common/LazyComponent';
 import DynamicDate from 'components/shortcodes/DynamicDate';
-import CTA from '../components/shortcodes/CTA';
-import Booster from '../components/Booster';
-import RatingBoosterCombo from '../components/shortcodes/RatingBoosterCombo';
-import PopupTrigger from '../components/shortcodes/PopupTrigger';
-import IFrame from '../components/shortcodes/IFrame';
-import { WrapInLazyComponent } from '../components/common/LazyComponent';
-import Cross from '../components/shortcodes/Cross';
-import Check from '../components/shortcodes/Check';
-import { SHORT_CODE_TYPES } from 'constants/index';
+
+const InlinePrice = dynamic(() => import('components/InlinePrice'));
+const NextAvailable = dynamic(() =>
+  import('components/shortcodes/NextAvailable')
+);
+const InlineInvPrice = dynamic(() => import('components/InlineInvPrice'));
+const CTA = dynamic(() => import('components/shortcodes/CTA'));
+const Booster = dynamic(() => import('components/Booster'));
+const RatingBoosterCombo = dynamic(() =>
+  import('components/shortcodes/RatingBoosterCombo')
+);
+const PopupTrigger = dynamic(() =>
+  import('components/shortcodes/PopupTrigger')
+);
+const IFrame = dynamic(() => import('components/shortcodes/IFrame'));
+const Cross = dynamic(() => import('components/shortcodes/Cross'));
+const Check = dynamic(() => import('components/shortcodes/Check'));
 
 interface ShortCodeDictionary {
   [key: string]: {

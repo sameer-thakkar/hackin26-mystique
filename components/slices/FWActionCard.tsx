@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import Button from 'UI/Button';
-import { SOLEIL } from 'constants/ui-constants';
+import { SOLEIL } from 'const/ui-constants';
 
 type FWActionCardProps = {
   title: string;

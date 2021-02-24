@@ -1,7 +1,4 @@
-import en from './en';
-
 const nl = {
-  ...en,
   TOUR_LIST_HEADING: 'Kies je ervaring',
   GROUP_TICKETS: 'Groepskaartjes',
   TOUR_LIST_SUB_HEADING:
@@ -23,7 +20,7 @@ const nl = {
   BOOK_NOW_CTA: 'Reserveer nu',
   READ_MORE_TEXT: 'Meer Info',
   SHOW_LESS_TEXT: 'Toon ninder',
-  NEXT_AVAILABLE: 'Weer beschikbaar, ',
+  NEXT_AVAILABLE: 'Weer beschikbaar: ',
   SAVE_UPTO: 'Bespaar tot',
   SAVE: 'Bespaar <val>%',
   AVAILABLE: 'Beschikbaar',

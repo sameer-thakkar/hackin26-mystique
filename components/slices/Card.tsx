@@ -1,14 +1,15 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useWindowWidth } from '@react-hook/window-size';
 import { RichText } from 'prismic-reactjs';
-import Swiper from '../Swiper';
-import Image from '../UI/Image';
-import Button from '../UI/Button';
-import { MBContext } from '../../contexts/MBContext';
-import * as labels from '../../constants/localization/labels';
-import { COLORS, SOLEIL } from '../../constants/ui-constants';
-import { CHEVRON_LEFT } from '../../assets/SvgIcons';
+import { strings } from 'const/strings';
+import { COLORS, SOLEIL } from 'const/ui-constants';
+import Image from 'UI/Image';
+import Button from 'UI/Button';
+import { CHEVRON_LEFT } from 'assets/SvgIcons';
+
+const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
 const variantStyles = {
   'full-width': {
@@ -59,12 +60,12 @@ const StyledCard = styled.div((props) => {
       margin-top: 0;
     }
     p, li {
-      font-size: 16px !important;
-      line-height: 160% !important;
+      font-size: 16px;
+      line-height: 160%;
       font-family: ${SOLEIL.FONT_STACK};
     }
     p {
-      margin-bottom: 16px !important;
+      margin-bottom: 16px;
     }
     a {
       color: ${COLORS.MED_SLATE_BLUE};
@@ -199,9 +200,6 @@ const Card: React.FC<CardProps> = ({
 }) => {
   const width = useWindowWidth();
   const [isMobile, setIsMobile] = React.useState(false);
-  const mbContext = useContext(MBContext);
-
-  const lang = mbContext.lang || 'en';
 
   React.useEffect(() => {
     switch (type) {
@@ -276,7 +274,7 @@ const Card: React.FC<CardProps> = ({
             target={cta.link.target}
             onClick={(e) => e.stopPropagation()}
           >
-            <Button>{cta.text || labels[lang]['BOOK_NOW_CTA']}</Button>
+            <Button>{cta.text || strings}</Button>
           </a>
         </ButtonWrapper>
       );
@@ -288,7 +286,7 @@ const Card: React.FC<CardProps> = ({
           target={cta.link.target}
           onClick={(e) => e.stopPropagation()}
         >
-          {cta.text || labels[lang]['READ_MORE_TEXT']}
+          {cta.text || strings}
           {CHEVRON_LEFT}
         </CTALink>
       );

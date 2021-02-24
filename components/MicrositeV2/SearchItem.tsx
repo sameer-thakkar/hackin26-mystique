@@ -1,7 +1,8 @@
 import { RichText } from 'prismic-reactjs';
+import { SOLEIL, COLORS } from 'const/ui-constants';
+
 import { shortCodeSerializer } from '../../utils/shortCodes';
 import Image from '../UI/Image';
-import { SOLEIL, COLORS } from '../../constants/ui-constants';
 
 export const SearchItem = (props) => {
   const {

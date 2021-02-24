@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { SOLEIL } from 'constants/ui-constants';
+import { SOLEIL } from 'const/ui-constants';
 
 const Paragraph = styled.p`
   font-family: ${SOLEIL.FONT_STACK};

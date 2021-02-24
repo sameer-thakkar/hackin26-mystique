@@ -1,11 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
-import { SOLEIL } from 'constants/ui-constants';
-import {
-  FULL_LANGUAGE_MAP,
-  LANGUAGE_PARAMS_REGEX,
-  THEMES,
-} from 'constants/index';
+import { SOLEIL } from 'const/ui-constants';
+import { FULL_LANGUAGE_MAP, LANGUAGE_PARAMS_REGEX, THEMES } from 'const/index';
 import { GLOBE } from 'assets/SvgIcons';
 import { MBContext } from 'contexts/MBContext';
 

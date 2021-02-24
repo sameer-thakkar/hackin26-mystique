@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { COLORS, SIZES } from 'constants/ui-constants';
+import { COLORS, SIZES } from 'const/ui-constants';
+
 import Conditional from './common/Conditional';
 
 const Banner = styled.div`

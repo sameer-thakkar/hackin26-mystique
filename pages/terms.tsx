@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import Header from '../components/common/Header';
-import Footer from '../components/common/Footer';
-import ContentContainer from '../components/UI/ContentContainer';
-import Paragraph from '../components/UI/Paragraph';
-import { DROPDOWN_ELEMENT, CUSTOM_TYPES, DESIGN, THEMES } from '../constants';
-import theme from 'style/theme';
-import { Client } from '../config/prismic-config';
-import { TopHeading, SubHeading } from '../components/UI/Headings';
-import { MinimalHelmet } from '../components/common/meta';
+import Header from 'components/common/Header';
+import Footer from 'components/common/Footer';
+import ContentContainer from 'components/UI/ContentContainer';
+import Paragraph from 'components/UI/Paragraph';
+import { getAppTheme } from 'style/theme';
+import { TopHeading, SubHeading } from 'components/UI/Headings';
+import { MinimalHelmet } from 'components/common/meta';
 import { ThemeProvider } from 'styled-components';
 import 'lazysizes';
 import '../style/global.css';
@@ -15,6 +13,9 @@ import { MBContextProvider } from 'contexts/MBContext';
 import { getNakedDomain } from 'utils';
 import RichContent from 'UI/RichContent';
 import Conditional from 'components/common/Conditional';
+
+import { Client } from '../config/prismic-config';
+import { DROPDOWN_ELEMENT, CUSTOM_TYPES, DESIGN, THEMES } from '../constants';
 
 export default class TermsPage extends Component<any, any> {
   state = {
@@ -123,7 +124,7 @@ export default class TermsPage extends Component<any, any> {
       footerTheme === THEMES.INHERIT ? mbTheme : footerTheme;
     const nakedDomain = useDomain ? getNakedDomain(host) : 'headout.com';
     return (
-      <ThemeProvider theme={theme[mbTheme || THEMES.DEFAULT]}>
+      <ThemeProvider theme={getAppTheme(mbTheme || THEMES.DEFAULT)}>
         <MBContextProvider
           host={host}
           uid={uid}

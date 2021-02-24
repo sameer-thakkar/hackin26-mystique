@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import RichContent from '../UI/RichContent';
 import { RichText } from 'prismic-reactjs';
+import { COLORS, SOLEIL } from 'const/ui-constants';
+
+import RichContent from '../UI/RichContent';
 import { shortCodeSerializer } from '../../utils/shortCodes';
-import { COLORS, SOLEIL } from '../../constants/ui-constants';
 import { stringIdfy } from '../../utils/helper';
 import TitleTextCombo from '../UI/TitleTextCombo';
 

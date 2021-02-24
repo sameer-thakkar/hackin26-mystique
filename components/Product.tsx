@@ -1,48 +1,43 @@
-import React, { useRef, useState, useContext, useEffect } from 'react';
-import styled from 'styled-components';
-import parse from 'url-parse';
-import dayjs from 'dayjs';
-import * as labels from 'constants/localization/labels';
-import HorizontalLine from './slices/HorizontalLine';
-import Button from 'UI/Button';
-import { useRecoilValue } from 'recoil';
 import { RichText } from 'prismic-reactjs';
-import { shortCodeSerializer } from 'utils/shortCodes';
+import { useRecoilValue } from 'recoil';
+import Button from 'UI/Button';
+import { strings } from 'const/strings';
+import dynamic from 'next/dynamic';
+import dayjs from 'dayjs';
+import parse from 'url-parse';
+import styled from 'styled-components';
+import React, { useRef, useState, useContext, useEffect } from 'react';
+import HorizontalLine from 'components/slices/HorizontalLine';
 import {
   ANALYTICS_EVENTS,
   THEMES,
   SIDEBAR_TYPES,
-  DATE_FORMAT_TYPES,
   LOCALISED_DATE_FORMATS,
-} from 'constants/index';
-import { COLORS, SOLEIL } from 'constants/ui-constants';
-import { CALENDAR, BrownTicket, Shield, BackArrow } from 'assets/SvgIcons';
-import 'utils/dayjsLocale';
+} from 'const/index';
+import { COLORS, SOLEIL } from 'const/ui-constants';
+import { shortCodeSerializer } from 'utils/shortCodes';
+import { CALENDAR, Shield, BackArrow } from 'assets/SvgIcons';
 import Split, { StlyedSplit } from 'UI/Split';
 import IconCTA, { StyledIconCTA } from 'UI/IconCTA';
-import { brownScheme, greenScheme } from 'style/theme';
-import {
-  isDiscountedFuture,
-  isSafetyIncluded,
-  getDFValidityFromTags,
-  createBookingURL,
-} from 'utils';
+import { greenScheme } from 'style/theme';
+import { isSafetyIncluded, createBookingURL } from 'utils';
 import { MBContext } from 'contexts/MBContext';
-import DiscountedFutureSidebar from './DiscountedFutureSidebar';
-import SafeExperiencesPitch from 'UI/SafeExperiencesPitch';
 import PriceBlock from 'UI/PriceBlock';
-import Conditional from './common/Conditional';
 import Chevron from 'UI/Chevron';
-import DiscountedFuturesPitch from 'UI/DiscountedFuturesPitch';
 import {
   extractTabsFromHighlights,
   getProductCardLayout,
   parseDescriptorIcon,
 } from 'utils/productUtils';
 import Image from 'UI/Image';
-import useLocalisedDate from 'hooks/useLocalisedDate';
 import { truncate } from 'utils/helper';
 import { currencyAtom } from 'store/atoms/currency';
+
+import Conditional from './common/Conditional';
+
+const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
+  ssr: false,
+});
 
 const isLengthyArray = (item) => Array.isArray(item) && item.length;
 
@@ -675,8 +670,8 @@ const Product = (props) => {
   const getDate = (date, currentLanguage) => {
     const today = dayjs().format('YYYY-MM-DD');
     const tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');
-    if (date === today) return labels[currentLanguage].TODAY;
-    if (date === tomorrow) return labels[currentLanguage].TOMORROW;
+    if (date === today) return strings.TODAY;
+    if (date === tomorrow) return strings.TOMORROW;
     return dayjs(date)
       .locale(currentLanguage)
       .format(LOCALISED_DATE_FORMATS[currentLanguage].DATE_MONTH);
@@ -721,25 +716,10 @@ const Product = (props) => {
   } = useContext(MBContext);
   let { listingPrice } = isFetched ? tourPrices[tgid] : { listingPrice: null };
   listingPrice = isAmp ? scorpioData.listingPrice : listingPrice;
-  const { allTags = [], dfListingPrice } = scorpioData || {};
-  const dfExpiryDate = useLocalisedDate(
-    getDFValidityFromTags(allTags),
-    DATE_FORMAT_TYPES.SHORT
-  );
-  if (isFetched && !listingPrice && !dfListingPrice) return null;
+  const { allTags = [] } = scorpioData || {};
+  if (isFetched && !listingPrice) return null;
   const hasSafetyFlag = isSafetyIncluded(allTags);
-  const isDFProduct =
-    isFetched && isDiscountedFuture(allTags) && dfListingPrice;
-  const isDFOnlyProduct =
-    isFetched && listingPrice === null && dfListingPrice !== null;
-  const openDFSidebar = () => {
-    addToAside({
-      width: '27.5vw',
-      title: cardTitle,
-      children: <DiscountedFutureSidebar product={tourPrices[tgid]} />,
-    });
-  };
-  const finalPrice = listingPrice || dfListingPrice;
+  const finalPrice = listingPrice;
   const { tourId } = finalPrice || {};
   const openSafeSidebar = () => {
     addToAside({
@@ -753,22 +733,14 @@ const Product = (props) => {
       sidePadding: isMobile ? 0 : 40,
     });
   };
-  const openDFPitchSidebar = () => {
-    addToAside({
-      width: '27.5vw',
-      children: <DiscountedFuturesPitch dfExpiryDate={dfExpiryDate} />,
-    });
-  };
   const hasV1Booster = booster && RichText.asText(booster).trim().length > 0;
   const hasOffer = isOfferEnabled && offerId;
-  const hasBorderedTitle =
-    !hasOffer && !hasV1Booster && !hasSafetyFlag && !isDFProduct;
+  const hasBorderedTitle = !hasOffer && !hasV1Booster && !hasSafetyFlag;
 
   const layout = getProductCardLayout({
     hasOffer,
     hasSafetyFlag,
     hasV1Booster,
-    isDFProduct,
     mbTheme,
     hasShortSummary: hasShortSummary,
     hasNextAvailable: earliestAvailability?.startDate,
@@ -778,14 +750,12 @@ const Product = (props) => {
       mbTheme === THEMES.DEFAULT ? (
         ` ${
           isContentOpen
-            ? '- ' + labels[currentLanguage].SHOW_LESS_TEXT
-            : '+ ' + labels[currentLanguage].MORE_DETAILS
+            ? '- ' + strings.SHOW_LESS_TEXT
+            : '+ ' + strings.MORE_DETAILS
         }`
       ) : (
         <>
-          {isContentOpen
-            ? labels[currentLanguage].SHOW_LESS_TEXT
-            : labels[currentLanguage].MORE_DETAILS}{' '}
+          {isContentOpen ? strings.SHOW_LESS_TEXT : strings.MORE_DETAILS}{' '}
           <Chevron isActive={isContentOpen} className={'chevron'} />{' '}
         </>
       );
@@ -831,13 +801,13 @@ const Product = (props) => {
           className="more-details"
           id={`tour-description-more-text-${position}`}
         >
-          {'+ ' + labels[currentLanguage].MORE_DETAILS}
+          {'+ ' + strings.MORE_DETAILS}
         </span>
         <span
           className="more-details display-none"
           id={`tour-description-less-text-${position}`}
         >
-          {'- ' + labels[currentLanguage].SHOW_LESS_TEXT}
+          {'- ' + strings.SHOW_LESS_TEXT}
         </span>
       </div>
     );
@@ -854,7 +824,6 @@ const Product = (props) => {
       currency,
       tgid,
       tourId,
-      df: isDFOnlyProduct,
       biLink,
       date:
         instantCheckout && earliestAvailability ? earliestAvailability : null,
@@ -879,23 +848,15 @@ const Product = (props) => {
         <Conditional if={mbTheme === THEMES.MIN_BLUE}>
           <Descriptors descriptorArray={descriptorsList} />
         </Conditional>
-        <Conditional if={hasSafetyFlag || isDFProduct}>
+        <Conditional if={hasSafetyFlag}>
           <IconBoosters>
             <Split count={2} autoWidth={true}>
               <Conditional if={hasSafetyFlag}>
                 <IconCTA
-                  text={labels[currentLanguage].SAFE_EXPERIENCE.FLAG_TEXT}
+                  text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
                   colorScheme={greenScheme}
                   ctaOnClick={openSafeSidebar}
                   icon={Shield}
-                />
-              </Conditional>
-              <Conditional if={isDFProduct}>
-                <IconCTA
-                  text={labels[currentLanguage].DISCOUNTED_FUTURES.FLAG_TEXT}
-                  colorScheme={brownScheme}
-                  ctaOnClick={openDFPitchSidebar}
-                  icon={BrownTicket}
                 />
               </Conditional>
             </Split>
@@ -947,22 +908,12 @@ const Product = (props) => {
                 className={`tour-book-now-cta`}
                 paddingSides={isMobile ? '16px' : '8px'}
                 type="fill"
-                onClick={(e) => {
-                  sendBookNowEvent();
-                  if (isDFProduct && !isDFOnlyProduct) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    openDFSidebar();
-                    return false;
-                  }
-                }}
+                onClick={sendBookNowEvent}
                 onKeyDown={sendBookNowEvent}
                 role="button"
                 tabIndex={0}
               >
-                {isDFOnlyProduct
-                  ? labels[currentLanguage].DISCOUNTED_FUTURES.FLAG_TEXT
-                  : labels[currentLanguage].BOOK_NOW_CTA}
+                {strings.BOOK_NOW_CTA}
                 {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
               </Button>
             </a>
@@ -973,7 +924,7 @@ const Product = (props) => {
             <NextAvailableBlock>
               <div className="icon">{CALENDAR}</div>
               <div className="available-text">
-                {`${labels[currentLanguage].NEXT_AVAILABLE}`}
+                {`${strings.NEXT_AVAILABLE}`}
                 {getDate(earliestAvailability?.startDate, currentLanguage)}
               </div>
             </NextAvailableBlock>

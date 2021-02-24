@@ -1,7 +1,4 @@
-import en from './en';
-
 const cn = {
-  ...en,
   TOUR_LIST_HEADING: '选择您的活动体验',
   GROUP_TICKETS: '团体门票',
   TOUR_LIST_SUB_HEADING:
@@ -23,7 +20,7 @@ const cn = {
   BOOK_NOW_CTA: '现在预订',
   READ_MORE_TEXT: '了解更多',
   SHOW_LESS_TEXT: '收起',
-  NEXT_AVAILABLE: '下一个可预订, ',
+  NEXT_AVAILABLE: '下一个可预订: ',
   SAVE_UPTO: '节省',
   AVAILABLE: '接受预订',
   EARLIEST_AVAILABILITY: '最早可预定日期',

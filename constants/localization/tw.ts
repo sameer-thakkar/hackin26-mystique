@@ -1,7 +1,4 @@
-import en from './en';
-
 const tw = {
-  ...en,
   TOUR_LIST_HEADING: '選擇您的活動體驗',
   GROUP_TICKETS: '團體門票',
   TOUR_LIST_SUB_HEADING:
@@ -23,7 +20,7 @@ const tw = {
   BOOK_NOW_CTA: '現在預訂',
   READ_MORE_TEXT: '了解更多',
   SHOW_LESS_TEXT: '收起',
-  NEXT_AVAILABLE: '下一個可預訂, ',
+  NEXT_AVAILABLE: '下一個可預訂: ',
   SAVE_UPTO: '節省',
   AVAILABLE: '接受預訂',
   EARLIEST_AVAILABILITY: '最早可預定日期',

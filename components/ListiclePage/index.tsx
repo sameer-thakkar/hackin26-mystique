@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import Prismic from 'prismic-javascript';
 import styled from 'styled-components';
+import dynamic from 'next/dynamic';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import { useWindowWidth } from '@react-hook/window-size';
 import { RichText } from 'prismic-reactjs';
+import { SOLEIL, COLORS } from 'const/ui-constants';
+
 import PopulateHead from '../common/meta';
 import Header from '../common/Header';
 import Banner from '../MicrositeV2/Banner';
-import Slider from '../UI/Slider';
 import OverflowScroll from '../UI/OverflowScroll';
 import Dropdown, { DropdownItem } from '../UI/Dropdown';
 import Spinner from '../UI/Spinner';
@@ -18,10 +20,11 @@ import Footer from '../common/Footer';
 import WhyBookFromUs from './WhyBookFromUs';
 import { groupSlices } from '../../utils/helper';
 import { Client } from '../../config/prismic-config';
-import { SOLEIL, COLORS } from '../../constants/ui-constants';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 import { CHEVRON_LEFT_CIRCLE } from '../../assets/SvgIcons';
 import { HEADOUT_API_ENDPOINT } from '../../constants';
+
+const Slider = dynamic(() => import('UI/Slider'));
 
 dayjs.extend(isBetween);
 
@@ -540,10 +543,7 @@ const Listicle = (props) => {
           )}
         </Content>
         {isMobile || whyBookFromUsData.length === 0 ? null : (
-          <WhyBookFromUs
-            data={whyBookFromUsData}
-            currentLanguage={currentLanguage}
-          />
+          <WhyBookFromUs data={whyBookFromUsData} />
         )}
       </Wrapper>
       {contentFrameworkSlices ? (

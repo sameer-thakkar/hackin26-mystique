@@ -1,7 +1,8 @@
 import React from 'react';
-import Image from '../UI/Image';
-import { SOLEIL, COLORS } from '../../constants/ui-constants';
+import { SOLEIL, COLORS } from 'const/ui-constants';
 import styled from 'styled-components';
+
+import Image from '../UI/Image';
 
 const StyledTrustBoosters = styled.div`
   display: grid;

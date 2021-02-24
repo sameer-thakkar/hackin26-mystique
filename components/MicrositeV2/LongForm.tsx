@@ -1,7 +1,8 @@
-import sliceHandler from '../Slices';
-import { COLORS, SOLEIL } from '../../constants/ui-constants';
-import { FULL_WIDTH_SLICES } from '../../constants';
+import { COLORS, SOLEIL } from 'const/ui-constants';
 import styled from 'styled-components';
+
+import sliceHandler from '../Slices';
+import { FULL_WIDTH_SLICES } from '../../constants';
 
 const StyledLongform = styled.div`
   font-family: ${SOLEIL.FONT_STACK};

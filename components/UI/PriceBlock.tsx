@@ -1,12 +1,13 @@
-import * as labels from 'constants/localization/labels';
-import LocalisedPrice from './LPrice';
-import { SOLEIL, COLORS } from 'constants/ui-constants';
+import { SOLEIL, COLORS } from 'const/ui-constants';
+import { THEMES } from 'const/index';
 import styled from 'styled-components';
-import { THEMES } from 'constants/index';
+import { strings } from 'const/strings';
 import Conditional from 'components/common/Conditional';
 import { getSavingsPercent } from 'utils';
 import { useContext } from 'react';
 import { MBContext } from 'contexts/MBContext';
+
+import LocalisedPrice from './LPrice';
 
 export const StyledPriceBlock = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
@@ -84,7 +85,7 @@ const PriceBlock = ({
     <StyledPriceBlock>
       {originalPrice > finalPrice && showScratchPrice ? (
         <span className="tour-scratch-price">
-          {prefix ? labels[lang].FROM + ' ' : ''}
+          {prefix ? strings.FROM + ' ' : ''}
           <LocalisedPrice
             currencySymbol={currencySymbol}
             price={originalPrice}
@@ -102,7 +103,7 @@ const PriceBlock = ({
       />
       <Conditional if={savings > 0 && showScratchPrice}>
         <SavedTag>
-          {labels[lang].SAVE.replace('<val>', `${savings.toFixed(0)}`)}
+          {strings.SAVE.replace('<val>', `${savings.toFixed(0)}`)}
         </SavedTag>
       </Conditional>
     </StyledPriceBlock>

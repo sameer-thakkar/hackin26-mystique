@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import Image from './UI/Image';
 import { withShortcodes } from 'utils/helper';
-import { SOLEIL } from '../constants/ui-constants';
+import { SOLEIL } from 'const/ui-constants';
+
+import Image from './UI/Image';
 
 const StyledMasthead = styled.div`
   width: 100%;

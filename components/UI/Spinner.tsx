@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS, SOLEIL } from '../../constants/ui-constants';
+import { COLORS, SOLEIL } from 'const/ui-constants';
 
 const Wrapper = styled.div`
   width: max-content;

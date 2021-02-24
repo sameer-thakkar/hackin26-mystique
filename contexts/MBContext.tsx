@@ -1,7 +1,7 @@
 import React, { createContext, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { getLangObject } from 'utils/helper';
-import { SIDEBAR_TYPES } from 'constants/index';
+import { SIDEBAR_TYPES } from 'const/index';
 
 const AsideModal = dynamic(() => import('UI/AsideModal'), { ssr: false });
 

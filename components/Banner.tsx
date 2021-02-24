@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import { scroller } from 'react-scroll';
-import * as labels from '../constants/localization/labels';
-import Button from './UI/Button';
-import 'utils/dayjsLocale';
-import Image from './UI/Image';
-import styled from 'styled-components';
-import { SOLEIL, COLORS } from '../constants/ui-constants';
-import Tags, { Tag } from 'UI/Tags';
-import { MBContext } from 'contexts/MBContext';
-import DiscountedFuturesPitch from 'UI/DiscountedFuturesPitch';
-import Conditional from './common/Conditional';
+import { strings } from 'const/strings';
 import { withShortcodes } from 'utils/helper';
+import { MBContext } from 'contexts/MBContext';
+import { SOLEIL, COLORS } from 'const/ui-constants';
+import styled from 'styled-components';
+
+import Button from './UI/Button';
+import Image from './UI/Image';
+import Conditional from './common/Conditional';
 
 const StyledBanner = styled.div`
   display: grid;
@@ -138,12 +136,6 @@ const StyledBanner = styled.div`
     transition: opacity 0.3s ease-in-out;
     .tag {
       justify-self: center;
-    }
-    ${Tag} {
-      font-size: 11px;
-      line-height: 11px;
-      border-radius: 2px;
-      font-weight: ${SOLEIL.SEMIBOLD};
     }
   }
   p {
@@ -324,7 +316,9 @@ export default class Banner extends Component<any, any> {
       isMobile: mobileCheck,
       isClient: true,
     });
-    if (this.props.bannerImages.length > 1) this.autoSlide();
+    if (this.props.bannerImages.length > 1) {
+      setTimeout(this.autoSlide, 2500);
+    }
   }
 
   nextSlide = () => {
@@ -364,7 +358,7 @@ export default class Banner extends Component<any, any> {
     this.autoSlide();
   };
 
-  renderBanners = (image) => {
+  renderBanners = (image, index) => {
     const { isAmp } = this.props;
     const { url, alt, mobileUrl } = image;
     const { isMobile } = this.state;
@@ -376,6 +370,7 @@ export default class Banner extends Component<any, any> {
         width={WIDTH}
         aspectRatio={ASPECT_RATIO}
         url={url}
+        dontLazyLoad={index === 0}
         mobileUrl={mobileUrl}
         alt={alt || 'banner'}
       />
@@ -423,18 +418,14 @@ export default class Banner extends Component<any, any> {
     const {
       bannerHeading: tempBannerHeading,
       bannerImages,
-      currentLanguage,
       hideCTA,
       isAmp,
-      cooldownDate,
-      maxDfDiscount = 0,
       dfExpiryDate,
       bannerSubtext: tempBannerSubtext,
       bannerCtaText = '',
     } = this.props;
     const bannerHeading = withShortcodes(tempBannerHeading);
     const bannerSubtext = withShortcodes(tempBannerSubtext);
-    const { isClient } = this.state;
     const captions = (
       <div
         className={`mb-captions ${
@@ -457,7 +448,7 @@ export default class Banner extends Component<any, any> {
                 onClick={this.scrollTicketSection}
                 on="tap:tour-list-heading.scrollTo(duration='1200', position='top')"
               >
-                {bannerCtaText || labels[currentLanguage].BANNER_CTA}
+                {bannerCtaText || strings.BANNER_CTA}
               </Button>
             </ButtonWrapper>
           )}
@@ -471,24 +462,6 @@ export default class Banner extends Component<any, any> {
           {captions}
         </StyledBanner>
       );
-
-    const {
-      sidebarModal: { addToAside },
-    } = this.context;
-    const toggleDFPitch = () => {
-      addToAside({
-        width: '27.5vw',
-        children: [
-          <DiscountedFuturesPitch
-            dfExpiryDate={dfExpiryDate
-              ?.locale(currentLanguage)
-              .format('DD-MMM-YY')}
-            key={0}
-          />,
-        ],
-        title: '',
-      });
-    };
 
     return (
       <StyledBanner>
@@ -506,7 +479,7 @@ export default class Banner extends Component<any, any> {
                 }
               )}
             >
-              {isClient ? this.renderBanners(banner) : null}
+              {this.renderBanners(banner, index)}
             </div>
           );
         })}
@@ -529,64 +502,11 @@ export default class Banner extends Component<any, any> {
             <Conditional if={!hideCTA}>
               <ButtonWrapper>
                 <Button type="whiteBordered" onClick={this.scrollTicketSection}>
-                  {bannerCtaText || labels[currentLanguage].BANNER_CTA}
+                  {bannerCtaText || strings.BANNER_CTA}
                 </Button>
               </ButtonWrapper>
             </Conditional>
           </div>
-          <Conditional if={dfExpiryDate}>
-            <div
-              className={`mb-caption df-caption ${
-                this.activeSlideIndex === 1 && 'active'
-              }`}
-            >
-              <div className={'tag'}>
-                <Tags
-                  tags={[
-                    labels[currentLanguage].DISCOUNTED_FUTURES.BOOKING_MODAL
-                      .LIMITED,
-                  ]}
-                  color={COLORS.PEACH_ORANGE}
-                  backgroundColor={COLORS.PALE_ORANGE}
-                />
-              </div>
-              <div className="caption">
-                <div className="h1">
-                  {
-                    labels[currentLanguage].DISCOUNTED_FUTURES.BANNER
-                      .HEADING_LINE1
-                  }
-                  <br />
-                  {labels[
-                    currentLanguage
-                  ].DISCOUNTED_FUTURES.BANNER.HEADING_LINE2.replace(
-                    '<percent>',
-                    maxDfDiscount?.toFixed(0) + '%'
-                  )}
-                </div>
-                <p>
-                  {
-                    labels[currentLanguage].DISCOUNTED_FUTURES.BANNER
-                      .DESCRIPTION_LINE1
-                  }{' '}
-                  {labels[
-                    currentLanguage
-                  ].DISCOUNTED_FUTURES.BANNER.DESCRIPTION_LINE2.replace(
-                    '<cooldownDate>',
-                    cooldownDate?.locale(currentLanguage).format('DD-MMMM-YY')
-                  )}
-                </p>
-              </div>
-              <ButtonWrapper>
-                <Button type="whiteBordered" onClick={toggleDFPitch}>
-                  {
-                    labels[currentLanguage].DISCOUNTED_FUTURES.BOOKING_MODAL
-                      .LEARN_MORE
-                  }
-                </Button>
-              </ButtonWrapper>
-            </div>
-          </Conditional>
         </div>
         {this.hasIndicators && bannerImages.length > 1 ? (
           <div className="indicators">

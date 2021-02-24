@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { SOLEIL } from '../../constants/ui-constants';
+import { SOLEIL } from 'const/ui-constants';
+
 import { YELLOW_CLOSE } from '../../assets/SvgIcons';
 
 const StyledAlert = styled.div`

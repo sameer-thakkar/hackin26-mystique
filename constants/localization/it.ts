@@ -1,7 +1,4 @@
-import en from './en';
-
 const it = {
-  ...en,
   TOUR_LIST_HEADING: 'Seleziona la tua esperienza',
   GROUP_TICKETS: 'Biglietti di gruppo',
   TOUR_LIST_SUB_HEADING:

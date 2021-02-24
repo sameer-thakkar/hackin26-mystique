@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { SIZES } from 'constants/ui-constants';
+import { SIZES } from 'const/ui-constants';
 export const StlyedSplit = styled.div`
   display: grid;
   max-width: ${SIZES.MAX_WIDTH};

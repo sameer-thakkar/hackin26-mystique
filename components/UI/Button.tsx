@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS } from '../../constants/ui-constants';
+import { COLORS } from 'const/ui-constants';
 
 const Button = styled.button((props) => {
   let styles = `

@@ -1,8 +1,13 @@
-import React, { useState, useContext, useEffect } from 'react';
-import * as labels from 'constants/localization/labels';
-import { RowComponent } from './RowComponent';
+import React, { useState, useContext, useEffect, ComponentType } from 'react';
+import { strings } from 'const/strings';
+import dynamic from 'next/dynamic';
+
 import InteractionContext from '../../contexts/Interaction';
 import { MBContext } from '../../contexts/MBContext';
+
+const RowComponent: ComponentType<any> = dynamic(() =>
+  import('./RowComponent').then((mod) => mod.RowComponent)
+);
 
 const PopulateProducts = (props) => {
   const {
@@ -78,7 +83,7 @@ const PopulateProducts = (props) => {
           role="button"
           tabIndex={0}
         >
-          {mbContext.buttons.see_more_text || labels[currentLanguage].VIEW_MORE}
+          {mbContext.buttons.see_more_text || strings.VIEW_MORE}
         </div>
       ) : null}
       <style jsx>{`

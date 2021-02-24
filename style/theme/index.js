@@ -1,14 +1,14 @@
 import dynamic from 'next/dynamic';
-import { COLORS, SOLEIL } from '../../constants/ui-constants';
-import { THEMES } from 'constants/index';
+import { COLORS, SOLEIL } from 'const/ui-constants';
+import { THEMES } from 'const/index';
 import { SavedTag } from 'UI/PriceBlock';
 
 const CTAContainer = dynamic(() =>
   import('components/Product').then((mod) => mod.CTAContainer)
 );
 
-export default {
-  [THEMES.MIN_BLUE]: {
+const themes = {
+  [THEMES.MIN_BLUE]: () => ({
     theme: THEMES.MIN_BLUE,
     primaryColor: COLORS.LINK_BLUE,
     secondaryColor: COLORS.LIGHTER_LINK_BLUE,
@@ -143,8 +143,8 @@ export default {
       secondaryBackground: COLORS.GREY.G8,
       secondaryColor: COLORS.RHAPSODY,
     },
-  },
-  [THEMES.DEF_INTERIM]: {
+  }),
+  [THEMES.DEF_INTERIM]: () => ({
     theme: THEMES.DEF_INTERIM,
     primaryColor: COLORS.RHAPSODY,
     secondaryColor: COLORS.LIGHTER_LINK_BLUE,
@@ -357,13 +357,17 @@ export default {
       secondaryBackground: COLORS.WHITE,
       secondaryColor: COLORS.BEACH,
     },
-  },
+  }),
   get [THEMES.DEFAULT]() {
-    return this[THEMES.DEF_INTERIM];
+    return () => this[THEMES.DEF_INTERIM]();
   },
   get [undefined]() {
-    return this[THEMES.DEF_INTERIM];
+    return () => this[THEMES.DEF_INTERIM]();
   },
+};
+
+export const getAppTheme = (theme = THEMES.DEFAULT) => {
+  return themes[theme]();
 };
 
 export const greenScheme = {
