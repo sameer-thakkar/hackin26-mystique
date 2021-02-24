@@ -20,7 +20,7 @@ const nl = {
   BOOK_NOW_CTA: 'Reserveer nu',
   READ_MORE_TEXT: 'Meer Info',
   SHOW_LESS_TEXT: 'Toon ninder',
-  NEXT_AVAILABLE: 'Weer beschikbaar, ',
+  NEXT_AVAILABLE: 'Weer beschikbaar: ',
   SAVE_UPTO: 'Bespaar tot',
   SAVE: 'Bespaar <val>%',
   AVAILABLE: 'Beschikbaar',

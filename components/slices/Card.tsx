@@ -60,12 +60,12 @@ const StyledCard = styled.div((props) => {
       margin-top: 0;
     }
     p, li {
-      font-size: 16px !important;
-      line-height: 160% !important;
+      font-size: 16px;
+      line-height: 160%;
       font-family: ${SOLEIL.FONT_STACK};
     }
     p {
-      margin-bottom: 16px !important;
+      margin-bottom: 16px;
     }
     a {
       color: ${COLORS.MED_SLATE_BLUE};

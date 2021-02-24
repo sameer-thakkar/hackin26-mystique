@@ -367,7 +367,6 @@ const themes = {
 };
 
 export const getAppTheme = (theme = THEMES.DEFAULT) => {
-  console.log({ theme });
   return themes[theme]();
 };
 

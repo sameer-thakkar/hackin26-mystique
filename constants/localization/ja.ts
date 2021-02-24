@@ -20,7 +20,7 @@ const ja = {
   BOOK_NOW_CTA: '今すぐ予約',
   READ_MORE_TEXT: 'もっと見る',
   SHOW_LESS_TEXT: '戻る',
-  NEXT_AVAILABLE: '次に利用可能, ',
+  NEXT_AVAILABLE: '次に利用可能: ',
   SAVE_UPTO: '最大 節約',
   AVAILABLE: '予約可能',
   EARLIEST_AVAILABILITY: '最も早い予約可能日',

@@ -110,6 +110,7 @@ const Heading = styled.div`
   }
   @media (max-width: 768px) {
     font-size: 20px;
+    z-index: 1;
     line-height: 25px;
   }
 `;
@@ -122,12 +123,11 @@ const Description = styled.div`
     font-weight: normal;
     font-size: 16px;
     line-height: 24px;
-    color: ${COLORS.WHITE};
-    margin: 0;
   }
   @media (max-width: 768px) {
     font-size: 14px;
     line-height: 20px;
+    z-index: 1;
   }
 `;
 
@@ -135,6 +135,37 @@ const Content = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
   display: grid;
   grid-row-gap: 16px;
+  ${Heading}${Heading} {
+    * {
+      color: ${COLORS.WHITE};
+      margin-bottom: 0
+    }
+  }
+  ${Description}${Description} {
+    * {
+      margin-bottom: 0;
+      margin-top: 0;
+      color: ${COLORS.WHITE};
+    }
+  }
+  @media(max-width: 768px) {
+    position: absolute;
+    bottom: 0;
+    :after {
+      content: '';
+      background: linear-gradient(
+        180deg,
+        rgba(61, 56, 56, 0) 0%,
+        rgba(0, 0, 0, 0.64) 57.29%
+      );
+      z-index: 0;
+      height: 222px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+    }
+  }
 `;
 
 const StyledImage = styled.div`
@@ -142,7 +173,7 @@ const StyledImage = styled.div`
   cursor: pointer;
   img {
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: cover;
   }
   @media (max-width: 768px) {
@@ -364,7 +395,7 @@ const ImageGallery = (props) => {
   const isAmp = useAmp();
 
   const updateIndex = useCallback(
-    () => setCurrentLightboxIndex(lightboxSwiper.realIndex),
+    () => setCurrentLightboxIndex(lightboxSwiper?.realIndex),
     [lightboxSwiper]
   );
 
@@ -374,14 +405,14 @@ const ImageGallery = (props) => {
 
   useEffect(() => {
     if (lightboxSwiper !== null) {
-      lightboxSwiper.on('slideChange', updateIndex);
-      lightboxSwiper.on('zoomChange', updateZoom);
+      lightboxSwiper?.on('slideChange', updateIndex);
+      lightboxSwiper?.on('zoomChange', updateZoom);
     }
 
     return () => {
       if (lightboxSwiper !== null) {
-        lightboxSwiper.off('slideChange', updateIndex);
-        lightboxSwiper.off('zoomChange', updateZoom);
+        lightboxSwiper?.off('slideChange', updateIndex);
+        lightboxSwiper?.off('zoomChange', updateZoom);
       }
     };
   }, [lightboxSwiper, updateIndex, getSwiper, updateZoom]);
@@ -424,6 +455,7 @@ const ImageGallery = (props) => {
   const fullImageHeading = RichText.asText(activeImage.heading);
 
   const galleryOpts = {
+    rebuildOnUpdate: true,
     navigation: {
       nextEl: '.button-right',
       prevEl: '.button-left',
