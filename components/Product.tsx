@@ -516,6 +516,16 @@ const TabPanel = styled.div`
   display: ${({ isActive }) => (isActive ? 'block' : 'none')};
 `;
 
+const richtextElements = {
+  hyperlink: function Anchor({ children, data }) {
+    return (
+      <a href={data?.url} rel="nofollow noreferrer" target="_blank">
+        {children}
+      </a>
+    );
+  },
+};
+
 const HighlightTabs = ({ tabs, hasRegularHighlights = false, onTabChange }) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
@@ -539,7 +549,7 @@ const HighlightTabs = ({ tabs, hasRegularHighlights = false, onTabChange }) => {
       <TabPanelWrapper>
         {tabs.map((tab, index) => (
           <TabPanel isActive={activeTabIndex == index} key={index}>
-            <RichText render={tab.contents} />
+            <RichText render={tab.contents} elements={richtextElements} />
           </TabPanel>
         ))}
       </TabPanelWrapper>
@@ -944,6 +954,7 @@ const Product = (props) => {
             <RichText
               render={highlights || []}
               htmlSerializer={shortCodeSerializer}
+              elements={richtextElements}
             />
           </Conditional>
           <Conditional if={tabs.length}>
