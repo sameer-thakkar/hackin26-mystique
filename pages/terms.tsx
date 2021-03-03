@@ -8,7 +8,6 @@ import { TopHeading, SubHeading } from 'components/UI/Headings';
 import { MinimalHelmet } from 'components/common/meta';
 import { ThemeProvider } from 'styled-components';
 import 'lazysizes';
-import '../style/global.css';
 import { MBContextProvider } from 'contexts/MBContext';
 import { getNakedDomain } from 'utils';
 import RichContent from 'UI/RichContent';

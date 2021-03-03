@@ -9,7 +9,6 @@ import { MinimalHelmet } from 'components/common/meta';
 import { ThemeProvider } from 'styled-components';
 import { MBContextProvider } from 'contexts/MBContext';
 import 'lazysizes';
-import '../style/global.css';
 import Conditional from 'components/common/Conditional';
 import RichContent from 'UI/RichContent';
 import { getNakedDomain } from 'utils';

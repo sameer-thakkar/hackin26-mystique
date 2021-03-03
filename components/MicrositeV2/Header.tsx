@@ -9,7 +9,6 @@ import InteractionContext from '../../contexts/Interaction';
 import Image from '../UI/Image';
 import { PAGETYPE, ALLOW_IMMEDIEATE_NESTING, THEMES } from '../../constants';
 import { SEARCH_ICON, POWERED_BY_HEADOUT } from '../../assets/SvgIcons';
-import { SearchItem } from './SearchItem';
 import MultiLevelNav from '../MultiLevelNav';
 import { groupSlices } from '../../utils/helper';
 import Hamburger from '../UI/Hamburger';
@@ -17,6 +16,10 @@ import HeaderLinks from '../HeaderLinks';
 
 const SearchBox: ComponentType<any> = dynamic(
   () => import('./SearchBox').then((mod) => mod.SearchBox),
+  { ssr: false }
+);
+const SearchItem: ComponentType<any> = dynamic(
+  () => import('./SearchItem').then((mod) => mod.SearchItem),
   { ssr: false }
 );
 const ResponsiveSelector: ComponentType<any> = dynamic(

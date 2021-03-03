@@ -4,6 +4,7 @@ import {
 } from 'utils/localizationUtils';
 import { strings } from 'const/strings';
 import { getLanguageFromPathname } from 'utils';
+import 'public/global.css';
 
 const App = ({ Component, pageProps, localizedStrings, lang }) => {
   strings.setContent({

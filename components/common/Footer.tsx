@@ -305,7 +305,13 @@ const Footer: React.FC<FooterProps> = ({
             >
               <div className="logo-disclaimer">
                 <div className="logo-wrapper">
-                  <Image url={logoURL} alt={logoAlt} isFooterLogo />
+                  <Image
+                    url={logoURL}
+                    alt={logoAlt}
+                    isFooterLogo
+                    height="44"
+                    width="144"
+                  />
                   {hasPoweredByHeadoutLogo && finalThemeName !== THEMES.MIN_BLUE
                     ? POWERED_BY_HEADOUT
                     : null}

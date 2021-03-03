@@ -3,6 +3,7 @@ import Head from 'next/head';
 import parse from 'url-parse';
 import { MBContext } from 'contexts/MBContext';
 import { withoutTrailingSlash, withShortcodes } from 'utils/helper';
+import { BANNER_PARAMS } from 'components/Banner';
 
 const withTrailingSlash = (url) =>
   url.charAt(url.length - 1) !== '/' ? `${url}/` : url;
@@ -108,6 +109,7 @@ const PopulateHead = (data) => {
     isAmp,
     enable_amp,
     isMobile = false,
+    finalBannerImages = [],
   } = data;
   const modifiedCanonicalLink = isMobile
     ? canonicalLinkForAMP || canonicalLink
@@ -141,6 +143,18 @@ const PopulateHead = (data) => {
       <meta property="og:image" content={imageUrl} />
       <meta name="twitter:image" content={imageUrl} />
     </Head>
+  ) : null;
+  const { ASPECT_RATIO, WIDTH } =
+    isMobile || isAmp ? BANNER_PARAMS.MOBILE : BANNER_PARAMS.DESKTOP;
+  const imageQuery = `?auto=compress,format&fm=pjpg&w=${
+    parseInt(WIDTH) * 1.5
+  }&q=75&ar=${ASPECT_RATIO}&fit=crop&crop=faces`;
+  const preloadBannerImage = finalBannerImages?.length ? (
+    <link
+      rel="preload"
+      as="image"
+      href={`${finalBannerImages[0]?.url}${imageQuery}`}
+    />
   ) : null;
   const trackingScripts = (
     <Head>
@@ -205,6 +219,7 @@ const PopulateHead = (data) => {
       <meta property="og:type" content="website" />
 
       {seoKeywords ? <meta name="keywords" content={seoKeywords} /> : null}
+      {preloadBannerImage}
       {googleSiteVerification ? (
         <meta
           name="google-site-verification"

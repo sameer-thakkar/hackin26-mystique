@@ -13,11 +13,8 @@ import { isSafetyIncluded } from 'utils';
 import Conditional from 'components/common/Conditional';
 import TextBanner from 'components/TextBanner';
 import { MBContext } from 'contexts/MBContext';
-import { ProductsWrapper } from 'components/MicrositeV2/ProductsWrapper';
 import Footer from 'components/common/Footer';
-import Banner from 'components/MicrositeV2/Banner';
 import sliceHandler from 'components/Slices';
-import LongForm from 'components/MicrositeV2/LongForm';
 import Header from 'components/MicrositeV2/Header';
 
 const Alert = dynamic(() => import('UI/Alert'), { ssr: false });
@@ -27,6 +24,17 @@ const ResponsiveSelector: ComponentType<any> = dynamic(
       (m) => m.ResponsiveSelector
     ),
   { ssr: false }
+);
+const ProductsWrapper: ComponentType<any> = dynamic(() =>
+  import('components/MicrositeV2/ProductsWrapper').then(
+    (mod) => mod.ProductsWrapper
+  )
+);
+const Banner: ComponentType<any> = dynamic(() =>
+  import('components/MicrositeV2/Banner')
+);
+const LongForm: ComponentType<any> = dynamic(() =>
+  import('components/MicrositeV2/LongForm')
 );
 
 const V2MicrositeWrapper = styled.div`

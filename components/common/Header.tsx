@@ -94,6 +94,7 @@ const StyledLogo = styled.div`
   img {
     height: 44px;
     max-width: 100%;
+    width: unset;
     object-fit: contain;
   }
   svg {
@@ -227,7 +228,14 @@ const Header: React.FC<any> = (props) => {
       <StyledHeaderContainer hasDropdownLinks={!isMobile && hasDropdownLinks}>
         <a href={logoRedirectionURL || '/'}>
           <StyledLogo>
-            <Image url={logoUrl} alt={logoAltText} dontLazyLoad isLogo />
+            <Image
+              url={logoUrl}
+              alt={logoAltText}
+              dontLazyLoad
+              isLogo
+              height="44"
+              width="144"
+            />
             {hasPoweredByHeadoutLogo ? POWERED_BY_HEADOUT : null}
           </StyledLogo>
         </a>

@@ -270,7 +270,7 @@ const StyledBanner = styled.div`
   }
 `;
 
-const BANNER_PARAMS = {
+export const BANNER_PARAMS = {
   DESKTOP: {
     ASPECT_RATIO: '4.5:1',
     WIDTH: '1200',

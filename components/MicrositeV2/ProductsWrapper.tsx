@@ -1,10 +1,17 @@
 import React, { useContext, useEffect } from 'react';
 import dynamic from 'next/dynamic';
+import styled from 'styled-components';
 import CategoryBar from 'components/MicrositeV2/CategoryBar';
 import InteractionContext from 'contexts/Interaction';
 import { DONT_AUTO_SCROLL } from 'const/index';
 
 const PopulateProducts = dynamic(() => import('./PopulateProducts'));
+
+const StyledProductWrapper = styled.div`
+  &.relative-position {
+    position: relative;
+  }
+`;
 
 export const ProductsWrapper = (props) => {
   const interactionContext = useContext(InteractionContext);
@@ -41,7 +48,7 @@ export const ProductsWrapper = (props) => {
   if (!activeCategoryTgids?.length) return null;
 
   return (
-    <div className="main-wrapper relative-position">
+    <StyledProductWrapper className="main-wrapper relative-position">
       <CategoryBar
         {...categoryProps}
         availableTGIDs={Object.keys(allTours)}
@@ -57,11 +64,6 @@ export const ProductsWrapper = (props) => {
         uid={uid}
         sectionId={'main'}
       />
-      <style jsx>{`
-        .relative-position {
-          position: relative;
-        }
-      `}</style>
-    </div>
+    </StyledProductWrapper>
   );
 };

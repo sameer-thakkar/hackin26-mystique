@@ -157,7 +157,11 @@ const CardSection: React.FC<CardSectionProps> = ({
   }
 
   let cards = slices.map((slice, index) => {
-    return sliceHandler(slice, { cardType: finalCardType, index });
+    return sliceHandler(slice, {
+      cardType: finalCardType,
+      index,
+      cardsInARow: cardsInARow,
+    });
   });
 
   const [swiper, updateSwiper] = useState(null);

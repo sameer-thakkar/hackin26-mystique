@@ -32,6 +32,13 @@ const variantStyles = {
   },
 };
 
+const cardImageAspectRatio = {
+  4: '14:11',
+  3: '7:4',
+  2: '14:9',
+  1: '16:9',
+};
+
 const StyledCard = styled.div((props) => {
   const styles = props.isMobile
     ? variantStyles.small
@@ -145,6 +152,7 @@ type CardProps = {
   type?: string;
   link?: any;
   linkType?: string;
+  cardsInARow?: number;
 };
 
 /**
@@ -197,6 +205,7 @@ const Card: React.FC<CardProps> = ({
   type = 'full-width',
   link = '',
   linkType = '',
+  cardsInARow = 1,
 }) => {
   const width = useWindowWidth();
   const [isMobile, setIsMobile] = React.useState(false);
@@ -226,6 +235,7 @@ const Card: React.FC<CardProps> = ({
     shouldSwiperUpdate: true,
   };
 
+  const aspectRatio = cardImageAspectRatio[cardsInARow > 4 ? 4 : cardsInARow];
   let imageView;
   switch (images.length) {
     case 0:
@@ -239,6 +249,7 @@ const Card: React.FC<CardProps> = ({
           attribution={images[0]?.copyright}
           height={variantStyles[type].img.height}
           isCardSlices
+          aspectRatio={aspectRatio}
         />
       );
       break;
@@ -255,6 +266,7 @@ const Card: React.FC<CardProps> = ({
                   attribution={image?.copyright}
                   alt={image.alt}
                   height={variantStyles[type].img.height}
+                  aspectRatio={aspectRatio}
                 />
               );
             })}

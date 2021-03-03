@@ -10,7 +10,6 @@ import { SOLEIL, COLORS } from 'const/ui-constants';
 
 import PopulateHead from '../common/meta';
 import Header from '../common/Header';
-import Banner from '../MicrositeV2/Banner';
 import OverflowScroll from '../UI/OverflowScroll';
 import Dropdown, { DropdownItem } from '../UI/Dropdown';
 import Spinner from '../UI/Spinner';
@@ -25,6 +24,7 @@ import { CHEVRON_LEFT_CIRCLE } from '../../assets/SvgIcons';
 import { HEADOUT_API_ENDPOINT } from '../../constants';
 
 const Slider = dynamic(() => import('UI/Slider'));
+const Banner = dynamic(() => import('components/MicrositeV2/Banner'));
 
 dayjs.extend(isBetween);
 

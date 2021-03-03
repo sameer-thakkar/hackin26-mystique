@@ -4,6 +4,7 @@ import Button from 'UI/Button';
 import { strings } from 'const/strings';
 import dynamic from 'next/dynamic';
 import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
 import parse from 'url-parse';
 import styled from 'styled-components';
 import React, { useRef, useState, useContext, useEffect } from 'react';
@@ -38,6 +39,8 @@ import Conditional from './common/Conditional';
 const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
   ssr: false,
 });
+
+dayjs.extend(advancedFormat);
 
 const isLengthyArray = (item) => Array.isArray(item) && item.length;
 

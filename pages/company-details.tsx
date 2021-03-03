@@ -9,7 +9,6 @@ import { MinimalHelmet } from 'components/common/meta';
 import { Client } from '../config/prismic-config';
 import { DROPDOWN_ELEMENT } from '../constants';
 import 'lazysizes';
-import '../style/global.css';
 
 export default class companyDetails extends Component<any, any> {
   state = {

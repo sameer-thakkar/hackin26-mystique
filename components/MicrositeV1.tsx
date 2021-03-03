@@ -477,6 +477,7 @@ const MicrositeV1 = (props) => {
             mbTheme,
             isAmp,
             isMobile,
+            finalBannerImages,
           }}
         />
         <Header

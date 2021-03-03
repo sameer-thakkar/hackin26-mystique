@@ -5,7 +5,7 @@ import { DocsPage } from '@storybook/addon-docs/blocks';
 import { getAppTheme } from '../style/theme';
 import 'lazysizes';
 import 'lazysizes/plugins/attrchange/ls.attrchange';
-import '!style-loader!css-loader!../style/global.css';
+import '!style-loader!css-loader!../public/global.css';
 import { THEMES } from '../constants';
 
 addDecorator((storyFn) => (

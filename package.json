@@ -13,10 +13,10 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "deploy-storybook": "storybook-to-ghpages",
-    "lint": "lint-staged"
+    "lint": "lint-staged",
+    "analyse": "ANALYZE=true next build"
   },
   "dependencies": {
-    "@next/bundle-analyzer": "^10.0.7",
     "@react-hook/window-size": "^3.0.6",
     "@sentry/node": "^5.11.1",
     "@ueno/markdown-to-prismic-richtext": "^1.2.0",
@@ -28,11 +28,11 @@
     "js-cookie": "^2.2.1",
     "lazysizes": "^5.1.1",
     "libphonenumber-js": "^1.7.22",
-    "next": "^9.0.4",
+    "next": "^10.0.7",
     "prismic-javascript": "^3.0.0",
     "prismic-reactjs": "^1.0.1",
     "query-string": "^6.13.6",
-    "react": "^16.9.0",
+    "react": "^17.0.0",
     "react-copy-to-clipboard": "^5.0.1",
     "react-datepicker": "^3.0.0",
     "react-dom": "^16.9.0",
@@ -53,6 +53,7 @@
     "xmlbuilder": "^15.0.0"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^10.0.7",
     "@babel/core": "^7.8.4",
     "@commitlint/cli": "^9.0.1",
     "@commitlint/config-conventional": "^9.0.1",
@@ -76,11 +77,11 @@
     "dotenv": "^8.2.0",
     "eslint": "^7.0.0",
     "eslint-config-prettier": "^6.11.0",
+    "eslint-import-resolver-typescript": "^2.3.0",
+    "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.19.0",
-    "eslint-import-resolver-typescript": "^2.3.0",
-    "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-react-hooks": "^4.0.0",
     "extract-css-chunks-webpack-plugin": "^4.7.4",
     "find-up": "^4.1.0",
