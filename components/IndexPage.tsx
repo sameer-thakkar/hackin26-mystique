@@ -16,7 +16,7 @@ import {
   refsArrayToObject,
 } from 'utils';
 import { uncategorizedToursListParser } from 'utils/dataParsers';
-import { isAmpUrl, removePageQuery } from 'utils/urlUtils';
+import { isAmpUrl, removePageQuery, sanitizeURL } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 
 import { getAppTheme } from '../style/theme';
@@ -240,15 +240,15 @@ export default class Page extends React.Component<any, any> {
               });
             } else {
               const baseLangData =
-                lang !== 'en'
+                lang !== 'en-us'
                   ? await Client(req)
                       .getByUID(CUSTOM_TYPES.MICROSITE, uid, {
                         lang: 'en-us',
                       })
                       .then((res) => res)
-                  : {};
+                  : completeMicrosite.data;
 
-              const strValues = MICROSITE_STRING_KEYS.reduce(
+              const strValues: any = MICROSITE_STRING_KEYS.reduce(
                 (acc, elem) => ({
                   ...acc,
                   [elem]:
@@ -341,6 +341,17 @@ export default class Page extends React.Component<any, any> {
                 ?.enable_powered_by_headout_logo;
               delete baseLangData.data?.enable_powered_by_headout_logo;
 
+              let canonicalLink = strValues?.canonical_link;
+              try {
+                if (lang !== 'en-us' && canonicalLink) {
+                  canonicalLink = new URL(sanitizeURL(canonicalLink));
+                  canonicalLink.pathname = `/${PRISMIC_LANG_TO_ROUTE_PARAM[lang]}${canonicalLink.pathname}`;
+                  canonicalLink = canonicalLink.toString();
+                }
+              } catch (e) {
+                // invalid url entered
+              }
+
               const micrositeData = {
                 ...completeMicrosite,
                 data: {
@@ -358,8 +369,7 @@ export default class Page extends React.Component<any, any> {
                     ...arrValues,
                     ...linkValues,
                     canonical_link:
-                      completeMicrosite.data.data.canonical_link ||
-                      completeMicrosite.data.data.page_url,
+                      canonicalLink || completeMicrosite.data.data.page_url,
                     logo_redirection_url: completeMicrosite.data.data
                       .logo_redirection_url.url
                       ? completeMicrosite.data.data.logo_redirection_url

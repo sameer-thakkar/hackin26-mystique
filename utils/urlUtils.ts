@@ -28,3 +28,6 @@ export const replacePageQuery = (query, asPath) => {
     `${locationPathName}${queryString ? `?${queryString}` : ''}`
   );
 };
+
+export const sanitizeURL = (url) =>
+  `https://${url.replace(/(http)?[s]?(:)?(\/\/)?/i, '')}`;
