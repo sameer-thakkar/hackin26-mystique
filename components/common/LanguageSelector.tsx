@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Link from 'next/link';
+// import Link from 'next/link';
 import Router from 'next/router';
 import styled from 'styled-components';
 import { withoutTrailingSlash } from 'utils/helper';
@@ -255,20 +255,21 @@ class LanguageSelector extends Component<any, any> {
               })
             : availableLanguages.map((language, index) => {
                 return (
-                  <Link key={index} href={`/${language}/${slug}`}>
-                    <a
-                      className={
-                        currentLanguage == language ? 'selected-tab' : ''
-                      }
-                      href={`/${language}/${slug}`}
-                    >
-                      <div className="language">
-                        <span className="lang">
-                          {FULL_LANGUAGE_MAP[language].language}
-                        </span>
-                      </div>
-                    </a>
-                  </Link>
+                  // <Link key={index} href={`/${language}/${slug}`}>
+                  <a
+                    key={index}
+                    className={
+                      currentLanguage == language ? 'selected-tab' : ''
+                    }
+                    href={`/${language}/${slug}`}
+                  >
+                    <div className="language">
+                      <span className="lang">
+                        {FULL_LANGUAGE_MAP[language].language}
+                      </span>
+                    </div>
+                  </a>
+                  // </Link>
                 );
               })}
         </div>

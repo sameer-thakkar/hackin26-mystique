@@ -56,7 +56,9 @@ export default class Page extends React.Component<any, any> {
     const queryParamsString = getValidUrlParams(query);
     const pathname =
       req?.url.split('?')[0].split('#')[0] || window.location.pathname;
-    const isMobile = req.headers['cloudfront-is-mobile-viewer'] === 'true';
+    const isMobile = req
+      ? req?.headers?.['cloudfront-is-mobile-viewer'] === 'true'
+      : window?.outerWidth < 768;
     // Checking if mystique is running in dev or is a preview
     const isDev = req
       ? !!query.mystique_uid
