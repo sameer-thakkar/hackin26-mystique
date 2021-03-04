@@ -165,6 +165,8 @@ export const truncate = (string, length) => {
   return string;
 };
 
+export const wordCount = (string = '') => string?.split(' ')?.length;
+
 const slicesSorter = (a, b) => {
   if (a.slices && b.slices) return 0;
   else if (a.slices) {

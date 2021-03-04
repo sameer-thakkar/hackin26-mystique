@@ -31,7 +31,7 @@ import {
   parseDescriptorIcon,
 } from 'utils/productUtils';
 import Image from 'UI/Image';
-import { truncate } from 'utils/helper';
+import { truncate, wordCount } from 'utils/helper';
 import { currencyAtom } from 'store/atoms/currency';
 
 import Conditional from './common/Conditional';
@@ -699,7 +699,9 @@ const Product = (props) => {
   const finalHighlights = RichText.asText(tempHighlights)?.trim()?.length
     ? tempHighlights
     : scorpioData.highlights;
-  let mobileFallbackShortSummary = finalHighlights.slice(0, 1);
+  let mobileFallbackShortSummary = finalHighlights
+    .filter((line) => wordCount(line?.text) > 5)
+    .slice(0, 1);
   mobileFallbackShortSummary = mobileFallbackShortSummary.map((content) => ({
     spans: [],
     text: truncate(content.text, 80),

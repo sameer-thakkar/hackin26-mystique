@@ -371,6 +371,7 @@ export const MinimalHelmet: React.FC<any> = ({
       <meta name="twitter:description" content={description} />
       <meta property="og:locale" content="en_US" />
       <meta property="og:type" content="website" />
+      <meta name="robots" content="nofollow, noindex" />
     </Head>
   );
 };

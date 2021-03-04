@@ -178,7 +178,7 @@ const Header: React.FC<any> = (props) => {
   } = props;
   const hamburgerIconCheck =
     showGroupBooking ||
-    !!headerLinks?.filter((link) => link.link_url)?.length ||
+    !!headerLinks?.filter((link) => link.link_url?.url)?.length ||
     slices.length;
   const hamburgerRef = useRef(null);
   const multiNavRef = useRef(null);

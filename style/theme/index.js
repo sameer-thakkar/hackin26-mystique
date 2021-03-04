@@ -154,7 +154,7 @@ const themes = {
     borders: COLORS.GREY_G6,
     primaryBackground: COLORS.WHITE,
     secondaryBackground: COLORS.BFF_BLUE,
-    primaryBGHover: COLORS.WHITE,
+    primaryBGHover: COLORS.FLOAT_PURPS,
     primaryBGText: COLORS.GREY_G3,
     primaryText: COLORS.GREY_G3,
     secondaryBGText: COLORS.LINK_BLUE,

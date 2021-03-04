@@ -355,6 +355,9 @@ export default class Page extends React.Component<any, any> {
                     ...objValues,
                     ...arrValues,
                     ...linkValues,
+                    canonical_link:
+                      completeMicrosite.data.data.canonical_link ||
+                      completeMicrosite.data.data.page_url,
                     logo_redirection_url: completeMicrosite.data.data
                       .logo_redirection_url.url
                       ? completeMicrosite.data.data.logo_redirection_url
