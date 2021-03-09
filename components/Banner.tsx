@@ -317,7 +317,7 @@ export default class Banner extends Component<any, any> {
       isClient: true,
     });
     if (this.props.bannerImages.length > 1) {
-      setTimeout(this.autoSlide, 2500);
+      setTimeout(this.autoSlide, this.SLIDE_CHANGE_INTERVAL + 2000);
     }
   }
 

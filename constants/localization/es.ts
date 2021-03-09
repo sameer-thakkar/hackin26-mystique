@@ -54,6 +54,9 @@ const es = {
   DURATION: 'Duración',
   THEATRE: 'Teatro',
   TIMINGS: 'Horarios',
+  DESCRIPTORS: {
+    VALIDITY: 'Validez ampliada',
+  },
   SAFE_EXPERIENCE: {
     HEADING: 'Estándares de Seguridad',
     SHORT_HEADING: 'Los mejores estándares de seguridad en vigor',

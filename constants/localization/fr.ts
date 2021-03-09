@@ -52,6 +52,9 @@ const fr = {
   DURATION: 'Durée',
   THEATRE: 'Théâtre',
   TIMINGS: 'Horaires',
+  DESCRIPTORS: {
+    VALIDITY: 'Extended Validity',
+  },
   SAFE_EXPERIENCE: {
     HEADING: 'Normes de sécurité et sanitaires en vigueur',
     SHORT_HEADING: 'Toutes les normes de sécurité et sanitaires en vigueur',

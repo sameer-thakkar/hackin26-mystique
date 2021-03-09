@@ -27,6 +27,7 @@ import PriceBlock from 'UI/PriceBlock';
 import Chevron from 'UI/Chevron';
 import {
   extractTabsFromHighlights,
+  getDescriptorIconURL,
   getProductCardLayout,
   parseDescriptorIcon,
 } from 'utils/productUtils';
@@ -597,9 +598,15 @@ const ModalCardContainer = styled.div`
   }
 `;
 
-const Descriptors = ({ descriptorArray }) => {
+const Descriptors = ({ descriptorArray, hasValidity = false }) => {
   return (
     <TourTags>
+      <Conditional if={hasValidity}>
+        <div key={'validity'} className="tour-tag">
+          <Image url={getDescriptorIconURL('validity')} />
+          {strings.DESCRIPTORS.VALIDITY}
+        </div>
+      </Conditional>
       {descriptorArray.reduce((acc, item, index) => {
         const { icon, descriptor } = parseDescriptorIcon(item.trim());
         if (descriptor) {
@@ -653,6 +660,8 @@ const Product = (props) => {
   const [showMoreDetailsInTabs, setShowMoreDetails] = useState(
     defaultOpen || false
   );
+  const { validity } = scorpioData;
+
   const onTabChange = (tab) => {
     setShowMoreDetails(tab.contents.length >= 3);
   };
@@ -851,7 +860,10 @@ const Product = (props) => {
           </ShortSummary>
         </Conditional>
         <Conditional if={mbTheme === THEMES.MIN_BLUE}>
-          <Descriptors descriptorArray={descriptorsList} />
+          <Descriptors
+            descriptorArray={descriptorsList}
+            hasValidity={!!validity}
+          />
         </Conditional>
         <Conditional if={hasSafetyFlag}>
           <IconBoosters>
@@ -935,7 +947,10 @@ const Product = (props) => {
             </NextAvailableBlock>
           </Conditional>
           <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
-            <Descriptors descriptorArray={descriptorsList} />
+            <Descriptors
+              hasValidity={!!validity}
+              descriptorArray={descriptorsList}
+            />
           </Conditional>
         </CTAContainer>
       </ProductHeader>

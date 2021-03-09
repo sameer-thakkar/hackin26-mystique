@@ -55,6 +55,9 @@ const nl = {
   DURATION: 'Looptijd',
   THEATRE: 'Theater',
   TIMINGS: 'Tijdstippen',
+  DESCRIPTORS: {
+    VALIDITY: 'Extended Validity',
+  },
   SAFE_EXPERIENCE: {
     HEADING: 'Beste veiligheidsnormen',
     SHORT_HEADING: 'Beste veiligheidsnormen',

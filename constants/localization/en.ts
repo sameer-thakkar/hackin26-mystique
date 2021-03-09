@@ -57,6 +57,9 @@ const en = {
   DURATION: 'Duration',
   THEATRE: 'Theatre',
   TIMINGS: 'Timings',
+  DESCRIPTORS: {
+    VALIDITY: 'Extended Validity',
+  },
   SAFE_EXPERIENCE: {
     HEADING: 'Best Safety Standards',
     SHORT_HEADING: 'Best safety standards in place',

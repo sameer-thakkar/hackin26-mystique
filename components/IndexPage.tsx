@@ -343,7 +343,11 @@ export default class Page extends React.Component<any, any> {
 
               let canonicalLink = strValues?.canonical_link;
               try {
-                if (lang !== 'en-us' && canonicalLink) {
+                if (
+                  lang !== 'en-us' &&
+                  canonicalLink &&
+                  !completeMicrosite.data.data.canonical_link
+                ) {
                   canonicalLink = new URL(sanitizeURL(canonicalLink));
                   canonicalLink.pathname = `/${PRISMIC_LANG_TO_ROUTE_PARAM[lang]}${canonicalLink.pathname}`;
                   canonicalLink = canonicalLink.toString();
@@ -683,6 +687,7 @@ export default class Page extends React.Component<any, any> {
               allTags,
               dfListingPrice: tour.discountedFuturesListingPrice,
               safetyImages: tour.media?.safetyImages || [],
+              validity: tour?.validity,
               ...(isAmpUrl(query) && { listingPrice: tour.listingPrice }),
             },
           };
