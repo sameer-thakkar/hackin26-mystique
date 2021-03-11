@@ -13,8 +13,6 @@ const ResponsiveSelectWrapper = styled.div`
   user-select: none;
   position: relative;
   .responsive-dropdown {
-    overflow-y: scroll;
-    max-height: 77vh;
     z-index: 10;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.08);
     border: 1px solid ${COLORS.DADDY};
@@ -37,6 +35,8 @@ const ResponsiveSelectWrapper = styled.div`
     border-radius: 4px;
     display: grid;
     top: 50px;
+    overflow-y: scroll;
+    max-height: 85vh;
   }
 
   .responsive-option,
@@ -86,7 +86,7 @@ const ResponsiveSelectWrapper = styled.div`
   .responsive-option.active {
     color: ${COLORS.RHAPSODY};
   }
-  @media only screen and (max-width: 768px) {
+  @media (max-width: 768px) {
     position: unset !important;
     .current-selection {
       justify-content: left;
@@ -104,12 +104,10 @@ const ResponsiveSelectWrapper = styled.div`
       color: ${COLORS.DAVY_GREY};
     }
     .responsive-dropdown {
-      overflow-y: scroll;
-      height: 90vh;
+      position:fixed;
       z-index: 999;
-      position: relative;
       bottom: -2px;
-      top: 5%;
+      top: unset;
       left: 50%;
       transform: translateX(-50%);
       width: 95%;
