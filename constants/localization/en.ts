@@ -22,7 +22,7 @@ const en = {
   READ_MORE_TEXT: 'Read More',
   SHOW_LESS_TEXT: 'Show Less',
   SELECT_CITY: 'Select City',
-  NEXT_AVAILABLE: 'Next Available, ',
+  NEXT_AVAILABLE: 'Next Available: ',
   SAVE_UPTO: 'Save upto',
   SAVE: 'SAVE <val>%',
   AVAILABLE: 'Available',
@@ -57,6 +57,9 @@ const en = {
   DURATION: 'Duration',
   THEATRE: 'Theatre',
   TIMINGS: 'Timings',
+  DESCRIPTORS: {
+    VALIDITY: 'Extended Validity',
+  },
   SAFE_EXPERIENCE: {
     HEADING: 'Best Safety Standards',
     SHORT_HEADING: 'Best safety standards in place',

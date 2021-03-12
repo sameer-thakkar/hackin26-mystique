@@ -2,8 +2,8 @@ import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 import { CLOSE_WHITE, BackArrow } from 'assets/SvgIcons';
 import { useState, useEffect } from 'react';
-import { COLORS } from 'constants/ui-constants';
-import { SIDEBAR_TYPES } from 'constants/index';
+import { COLORS } from 'const/ui-constants';
+import { SIDEBAR_TYPES } from 'const/index';
 import useWindowSize from 'hooks/useWindowSize';
 
 const StyledAsideModal = styled.div`

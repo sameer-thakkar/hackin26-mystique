@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { CHEVRON_DOWN } from 'assets/SvgIcons';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
-import { COLORS, SOLEIL } from 'constants/ui-constants';
+import { COLORS, SOLEIL } from 'const/ui-constants';
 
 export const SortSelector = (props) => {
   let filters = [

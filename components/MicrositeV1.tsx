@@ -1,10 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import dayjs from 'dayjs';
+import React, { ComponentType, useEffect, useState } from 'react';
 import { RichText } from 'prismic-reactjs';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { scroller } from 'react-scroll';
 import { useRecoilValue } from 'recoil';
+import { strings } from 'const/strings';
+import SafeDFBannerWrapper from 'UI/SafeDFBannerWrapper';
+import { isSafetyIncluded, legacyBooleanCheck } from 'utils';
+import { LOCATION } from 'assets/SvgIcons';
+import { fetchInventory, fetchTourList } from 'utils/apiUtils';
+import { currencyAtom } from 'store/atoms/currency';
+import { useWindowWidth } from '@react-hook/window-size';
+
 import Header from './common/Header';
 import Banner from './Banner';
 import LongForm from './common/LongForm';
@@ -13,7 +20,6 @@ import Footer from './common/Footer';
 import PopulateUncategorizedProducts from './PopulateUncategorizedProducts';
 import Analytics from '../utils/analytics';
 import allToursParser from '../utils/allToursParser';
-import * as labels from '../constants/localization/labels';
 import { InteractionContextProvider } from '../contexts/Interaction';
 import { docCookies, csvTgidToArray, getLangObject } from '../utils/helper';
 import {
@@ -24,26 +30,22 @@ import {
 import { groupSlices } from '../utils/helper';
 import { ProductsContextProvider } from '../contexts/Products';
 import { tourListApiParser } from '../utils/dataParsers';
-import SafeDFBannerWrapper from 'UI/SafeDFBannerWrapper';
-import {
-  isSafetyIncluded,
-  getDFValidityFromTags,
-  legacyBooleanCheck,
-} from 'utils';
 import TextBanner from './TextBanner';
 import Conditional from './common/Conditional';
-import { ResponsiveSelector } from './MicrositeV2/ResponsiveSelector';
-import { LOCATION } from 'assets/SvgIcons';
 import { withAmp } from './common/withAmp';
-import { fetchInventory, fetchTourList } from 'utils/apiUtils';
-import { currencyAtom } from 'store/atoms/currency';
-import { useWindowWidth } from '@react-hook/window-size';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 const MicrobrandList = dynamic(() => import('./MicrobrandsList'));
 const Alert = dynamic(() => import('UI/Alert'), { ssr: false });
 const DismissAlert = dynamic(() => import('UI/DismissAlert'), { ssr: false });
+const ResponsiveSelector: ComponentType<any> = dynamic(
+  () =>
+    import('components/MicrositeV2/ResponsiveSelector').then(
+      (m) => m.ResponsiveSelector
+    ),
+  { ssr: false }
+);
 
 const CoverSlicesWrapper = styled.div`
   margin-bottom: 32px;
@@ -52,7 +54,7 @@ const CoverSlicesWrapper = styled.div`
 const apiCache = {}; // replace with swr.
 const MicrositeV1 = (props) => {
   const analytics = new Analytics();
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(props?.isMobile);
   const windowWidth = useWindowWidth();
 
   const [earliestAvailabilityQueue, setEarliestAvailabilityQueue] = useState(
@@ -283,19 +285,6 @@ const MicrositeV1 = (props) => {
   const hasSafe = Object.values(tours).some((tour: any) =>
     isSafetyIncluded(tour.allTags)
   );
-  const filterDFTours = ([, tour]: [any, any]) => tour && tour.dfListingPrice;
-  const filterMainTourSectionTGIDs = ([tgid]: [any, any]) =>
-    orderedUncategorizedTours.findIndex((t) => t.tgid == tgid) > -1;
-
-  const dfTours = Object.entries(tours)
-    .filter(filterDFTours)
-    .filter(filterMainTourSectionTGIDs)
-    .map(([, tours]) => tours);
-
-  const [dfExpiryDate, ..._otherValidity] = dfTours
-    .map((tour: any) => getDFValidityFromTags(tour.allTags))
-    .filter((d) => d)
-    .sort((a, b) => (dayjs(a).isAfter(b) ? -1 : 1));
 
   const finalHeaderSlices = !isHeaderInherited
     ? groupSlices(headerSlices || [], ALLOW_IMMEDIEATE_NESTING)
@@ -487,6 +476,8 @@ const MicrositeV1 = (props) => {
             serverRequestStartTimestamp,
             mbTheme,
             isAmp,
+            isMobile,
+            finalBannerImages,
           }}
         />
         <Header
@@ -513,10 +504,10 @@ const MicrositeV1 = (props) => {
         />
         {showCovid19Alert && covidAlertActive ? (
           <DismissAlert
-            readMoreLink={labels[currentLanguage].COVID19_ALERT.LINK}
-            readMore={labels[currentLanguage].READ_MORE}
-            keyText={labels[currentLanguage].COVID19_ALERT.KEY_TEXT}
-            text={labels[currentLanguage].COVID19_ALERT.TEXT}
+            readMoreLink={strings.COVID19_ALERT.LINK}
+            readMore={strings.READ_MORE}
+            keyText={strings.COVID19_ALERT.KEY_TEXT}
+            text={strings.COVID19_ALERT.TEXT}
             handleClose={onCovidAlertClose}
           />
         ) : null}
@@ -547,8 +538,6 @@ const MicrositeV1 = (props) => {
             boxed={true}
             hideCTA={hideBannerCTA}
             isAmp={isAmp}
-            dfExpiryDate={dfExpiryDate || null}
-            cooldownDate={dayjs().add(30, 'day')}
           />
         </Conditional>
         <Conditional if={mbTheme === THEMES.MIN_BLUE}>
@@ -564,8 +553,8 @@ const MicrositeV1 = (props) => {
         ) : null}
         <SafeDFBannerWrapper
           hasSafe={hasSafe}
-          dfExpiryDate={dfExpiryDate}
           isAmp={isAmp}
+          isMobile={isMobile}
         />
         {checkIfToursAvailable ? (
           <PopulateUncategorizedProducts

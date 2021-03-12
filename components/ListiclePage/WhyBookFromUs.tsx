@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import * as labels from '../../constants/localization/labels';
-import { SOLEIL } from '../../constants/ui-constants';
+import { strings } from 'const/strings';
+import { SOLEIL } from 'const/ui-constants';
+
 import { CIRCLE_TICK } from '../../assets/SvgIcons';
 
 const WhyBookFromUsWrapper = styled.div`
@@ -36,12 +37,11 @@ const TextLine = styled.div`
 `;
 
 const WhyBookFromUs: React.FC<{
-  currentLanguage: string;
   data: { text_line: string }[];
-}> = ({ currentLanguage, data }) => {
+}> = ({ data }) => {
   return (
     <WhyBookFromUsWrapper>
-      <Heading>{labels[currentLanguage].LISTICLES.WHY_BOOK_FROM_US}</Heading>
+      <Heading>{strings.LISTICLES.WHY_BOOK_FROM_US}</Heading>
       {data.map(({ text_line: textLine }, index) => {
         return (
           <TextLine key={index}>

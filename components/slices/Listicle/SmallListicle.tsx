@@ -1,8 +1,8 @@
+import { COLORS, SOLEIL } from 'const/ui-constants';
 import React from 'react';
 import styled from 'styled-components';
 import Image from 'UI/Image';
-import * as labels from 'constants/localization/labels';
-import { COLORS, SOLEIL } from 'constants/ui-constants';
+import { strings } from 'const/strings';
 
 const StyledSmallListicle = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
@@ -18,7 +18,7 @@ const StyledSmallListicle = styled.div`
 
 const ProductImage = styled.div`
   grid-area: image;
-  width: 131px; !important
+  width: 131px !important;
   height: 82px;
   img {
     width: 100%;
@@ -71,14 +71,13 @@ const Links = styled.div`
 type SmallListicleProps = {
   primary: any;
   items: any[];
-  currentLanguage: string;
+  currentLanguage?: string;
   tourData: any;
 };
 
 const SmallListicle: React.FC<SmallListicleProps> = ({
   primary,
   items,
-  currentLanguage,
   tourData,
 }) => {
   const {
@@ -131,7 +130,7 @@ const SmallListicle: React.FC<SmallListicleProps> = ({
               rel="noopener noreferrer"
               target="_blank"
             >
-              {labels[currentLanguage].LISTICLES.SEATING_CHART}
+              {strings.LISTICLES.SEATING_CHART}
             </a>
           ) : null}
           <br />
@@ -141,7 +140,7 @@ const SmallListicle: React.FC<SmallListicleProps> = ({
               rel="noopener noreferrer"
               target="_blank"
             >
-              {labels[currentLanguage].BOOK_NOW_CTA}
+              {strings.BOOK_NOW_CTA}
             </a>
           ) : null}
         </Links>

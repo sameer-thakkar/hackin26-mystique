@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAmp } from 'next/amp';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
-import { SOLEIL, COLORS } from '../../constants/ui-constants';
+import { SOLEIL, COLORS } from 'const/ui-constants';
 
 type ContentTabsProps = {
   tabsArr: any[];

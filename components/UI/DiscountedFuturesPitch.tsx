@@ -1,18 +1,18 @@
-import IconCard from './IconCard';
-import styled from 'styled-components';
-import Accordion from 'components/slices/Accordion';
-import Image from './Image';
-import * as labels from 'constants/localization/labels';
-import { SOLEIL, COLORS } from 'constants/ui-constants';
+import { SOLEIL, COLORS } from 'const/ui-constants';
 import {
   DATE_FORMAT_TYPES,
   DISCOUNTED_FUTURE_IMAGES_SECTION,
-} from 'constants/index';
+} from 'const/index';
+import { strings } from 'const/strings';
+import Accordion from 'components/slices/Accordion';
+import styled from 'styled-components';
 import React, { useContext } from 'react';
 import { MBContext } from 'contexts/MBContext';
 import dayjs from 'dayjs';
-import ReactMarkdown from 'react-markdown/with-html';
 import useLocalisedDate from 'hooks/useLocalisedDate';
+
+import Image from './Image';
+import IconCard from './IconCard';
 
 const PitchGrid = styled.div`
   display: grid;
@@ -97,7 +97,7 @@ const NumberCard = styled.div`
 `;
 
 const EmphasizedText = styled.div`
-  font-family: ${SOLEIL.FONT_STACK}
+  font-family: ${SOLEIL.FONT_STACK};
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
@@ -136,7 +136,7 @@ const replaceSuperBrand = (text, name, domain) =>
   text?.replace(/<mbName>/g, name).replace(/<domain>/g, domain) || '';
 
 const getDFFAQs = (lang, name, domain) => {
-  return Object.values(labels[lang].DISCOUNTED_FUTURES.FAQ_QUESTIONS).map(
+  return Object.values(strings.DISCOUNTED_FUTURES.FAQ_QUESTIONS).map(
     ({ QUESTION, ANSWER }, i) => {
       const finalAnswer =
         typeof ANSWER === 'string' ? (
@@ -171,53 +171,47 @@ const DiscountedFuturesPitch = ({ dfExpiryDate = '' }) => {
       <Section>
         <Pitch>
           <Heading className={'main-heading'}>
-            {labels[lang].DISCOUNTED_FUTURES.HEADING}
+            {strings.DISCOUNTED_FUTURES.HEADING}
           </Heading>
           <Text>
-            <ReactMarkdown
-              source={labels[lang].DISCOUNTED_FUTURES.DESCRIPTION.replace(
+            {/* <ReactMarkdown
+              source={strings.DISCOUNTED_FUTURES.DESCRIPTION.replace(
                 '<date>',
                 dfExpiryDate
               )}
               renderers={{ paragraph: React.Fragment }}
               escapeHtml={false}
-            />
+            /> */}
           </Text>
         </Pitch>
       </Section>
       <Section>
         <IconCard
-          title={labels[lang].DISCOUNTED_FUTURES.PITCH.GO_ANYTIME.HEADING}
+          title={strings.DISCOUNTED_FUTURES.PITCH.GO_ANYTIME.HEADING}
           colorScheme={{ background: '#FFF8EF', color: COLORS.FOUR_BLACK }}
-          description={labels[
-            lang
-          ].DISCOUNTED_FUTURES.PITCH.GO_ANYTIME.SUB_TEXT.replace(
+          description={strings.DISCOUNTED_FUTURES.PITCH.GO_ANYTIME.SUB_TEXT.replace(
             '<date>',
             dfExpiryDate
           )}
           icon={'https://cdn-imgix-open.headout.com/emails/assets/rocket.gif'}
         />
         <IconCard
-          title={labels[lang].DISCOUNTED_FUTURES.PITCH.SAVE_MONEY.HEADING}
+          title={strings.DISCOUNTED_FUTURES.PITCH.SAVE_MONEY.HEADING}
           colorScheme={{ background: '#F2FDEB', color: COLORS.FOUR_BLACK }}
-          description={
-            labels[lang].DISCOUNTED_FUTURES.PITCH.SAVE_MONEY.SUB_TEXT
-          }
+          description={strings.DISCOUNTED_FUTURES.PITCH.SAVE_MONEY.SUB_TEXT}
           icon={'https://cdn-imgix-open.headout.com/emails/assets/money.gif'}
         />
         <IconCard
-          title={labels[lang].DISCOUNTED_FUTURES.PITCH.BUCKET_LIST.HEADING}
+          title={strings.DISCOUNTED_FUTURES.PITCH.BUCKET_LIST.HEADING}
           colorScheme={{ background: '#F8F6FF', color: COLORS.FOUR_BLACK }}
-          description={
-            labels[lang].DISCOUNTED_FUTURES.PITCH.BUCKET_LIST.SUB_TEXT
-          }
+          description={strings.DISCOUNTED_FUTURES.PITCH.BUCKET_LIST.SUB_TEXT}
           icon={'https://cdn-imgix-open.headout.com/emails/assets/check.gif'}
         />
       </Section>
       <Section>
-        <Heading>{labels[lang].DISCOUNTED_FUTURES.HEADING_WORKS}</Heading>
+        <Heading>{strings.DISCOUNTED_FUTURES.HEADING_WORKS}</Heading>
         <NumberCardWrap>
-          {Object.values(labels[lang].DISCOUNTED_FUTURES.HOW_IT_WORKS).map(
+          {Object.values(strings.DISCOUNTED_FUTURES.HOW_IT_WORKS).map(
             ({ HEADING, SUB_TEXT }, index) => {
               return (
                 <NumberCard key={index}>
@@ -239,9 +233,7 @@ const DiscountedFuturesPitch = ({ dfExpiryDate = '' }) => {
         </NumberCardWrap>
       </Section>
       <Section>
-        <Heading>
-          {labels[lang].DISCOUNTED_FUTURES.IMAGES_SECTION.HEADING}
-        </Heading>
+        <Heading>{strings.DISCOUNTED_FUTURES.IMAGES_SECTION.HEADING}</Heading>
         <ImageGrid>
           {Object.values(DISCOUNTED_FUTURE_IMAGES_SECTION).map((url, i) => (
             <Image key={i} url={url} aspectRatio={'0.8'} />

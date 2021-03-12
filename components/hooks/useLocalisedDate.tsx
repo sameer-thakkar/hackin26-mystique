@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import dayjs from 'dayjs';
 import { MBContext } from 'contexts/MBContext';
-import { DATE_FORMAT_TYPES, LOCALISED_DATE_FORMATS } from 'constants/index';
+import { DATE_FORMAT_TYPES, LOCALISED_DATE_FORMATS } from 'const/index';
 
 const useLocalisedDate = (date, formatType = DATE_FORMAT_TYPES.SHORT) => {
   const { lang } = useContext(MBContext);

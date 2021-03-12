@@ -1,12 +1,13 @@
+import { COLORS, SOLEIL } from 'const/ui-constants';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import Image from 'UI/Image';
 import Button from 'UI/Button';
-import Pricing from './Pricing';
-import * as labels from 'constants/localization/labels';
-import { COLORS, SOLEIL } from 'constants/ui-constants';
+import { strings } from 'const/strings';
 import { shortCodeSerializer } from 'utils/shortCodes';
+
+import Pricing from './Pricing';
 
 const StyledLargeListicle = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
@@ -217,7 +218,7 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
           })}
           {timingsList.length > 0 ? (
             <div>
-              <InfoTitle>{labels[currentLanguage].TIMINGS}</InfoTitle>
+              <InfoTitle>{strings.TIMINGS}</InfoTitle>
               <InfoTimings>
                 {timingsList.map((timing, index) => {
                   return (
@@ -235,7 +236,7 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
       ) : null}
       {RichText.asText(why_summary).length > 0 ? (
         <WTTDTSection>
-          <div>{labels[currentLanguage].WHY_TAKE_THIS_DAY_TRIP}</div>
+          <div>{strings.WHY_TAKE_THIS_DAY_TRIP}</div>
           <WTTDTSectionRichText collapsed={WTTDTCollapsed}>
             <RichText
               render={why_summary}
@@ -248,9 +249,7 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
             tabIndex={0}
           >
             {` ${
-              WTTDTCollapsed
-                ? labels[currentLanguage].MORE_DETAILS
-                : labels[currentLanguage].SHOW_LESS_TEXT
+              WTTDTCollapsed ? strings.MORE_DETAILS : strings.SHOW_LESS_TEXT
             }`}
           </WTTDTToggle>
         </WTTDTSection>
@@ -272,7 +271,7 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
               target="_blank"
             >
               <ReadMore fullWidth={!book_now_link?.url} paddingSides="0px">
-                {labels[currentLanguage].READ_MORE}
+                {strings.READ_MORE}
               </ReadMore>
             </a>
           ) : null}
@@ -287,7 +286,7 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
                 type="fillGradient"
                 paddingSides="0px"
               >
-                {labels[currentLanguage].BOOK_NOW_CTA}
+                {strings.BOOK_NOW_CTA}
               </BookNow>
             </a>
           ) : null}

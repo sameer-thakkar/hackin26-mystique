@@ -1,30 +1,25 @@
+import { SOLEIL, COLORS } from 'const/ui-constants';
 import React, { useContext } from 'react';
+import dynamic from 'next/dynamic';
 import Image from 'UI/Image';
-import * as labels from 'constants/localization/labels';
+import { strings } from 'const/strings';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
-import { CLOSE_WHITE, BrownTicket, Shield } from 'assets/SvgIcons';
-import { SOLEIL, COLORS } from 'constants/ui-constants';
+import { CLOSE_WHITE, Shield } from 'assets/SvgIcons';
 import {
   shortCodeSerializerWithParentProps,
   shortCodeSerializer,
 } from 'utils/shortCodes';
 import { MBContext } from 'contexts/MBContext';
 import IconCTA from 'UI/IconCTA';
-import { brownScheme, greenScheme } from 'style/theme';
+import { greenScheme } from 'style/theme';
 import Split, { StlyedSplit } from 'UI/Split';
-import DiscountedFutureSidebar from 'components/DiscountedFutureSidebar';
-import SafeExperiencesPitch from 'UI/SafeExperiencesPitch';
-import {
-  isSafetyIncluded,
-  isDiscountedFuture,
-  getDFValidityFromTags,
-  createBookingURL,
-} from 'utils';
+import { isSafetyIncluded, createBookingURL } from 'utils';
 import PriceBlock from 'UI/PriceBlock';
-import DiscountedFuturesPitch from 'UI/DiscountedFuturesPitch';
-import { DATE_FORMAT_TYPES } from 'constants/index';
-import useLocalisedDate from 'hooks/useLocalisedDate';
+
+const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
+  ssr: false,
+});
 
 const DetailedDescriptionCard = styled.div`
   grid-column: 1 / 5;
@@ -299,31 +294,11 @@ const DetailedProductCard = (props) => {
     .filter((d) => d.length)
     .map((d) => d.trim());
 
-  const { allTags = [], listingPrice, dfListingPrice } = activeTour;
+  const { allTags = [], listingPrice } = activeTour;
   const hasSafetyFlag = isSafetyIncluded(allTags);
-  const isDFProduct = isDiscountedFuture(allTags) && dfListingPrice;
-  const isDFOnlyProduct = listingPrice === null && dfListingPrice !== null;
   const {
     sidebarModal: { addToAside },
   } = useContext(MBContext);
-  const openDFSidebar = () => {
-    addToAside({
-      width: '27.5vw',
-      title: activeTour.title,
-      children: <DiscountedFutureSidebar product={activeTour} />,
-    });
-  };
-  const dfExpiryDate = useLocalisedDate(
-    getDFValidityFromTags(allTags),
-    DATE_FORMAT_TYPES.SHORT
-  );
-  const openDFPitchSidebar = () => {
-    addToAside({
-      width: '27.5vw',
-      children: <DiscountedFuturesPitch dfExpiryDate={dfExpiryDate} />,
-      sidePadding: 40,
-    });
-  };
   const openSafeSidebar = () => {
     addToAside({
       width: '41.06vw',
@@ -347,18 +322,10 @@ const DetailedProductCard = (props) => {
             <Split count={2} autoWidth={true} mobileLayout={'scroll'}>
               {hasSafetyFlag ? (
                 <IconCTA
-                  text={labels[lang].SAFE_EXPERIENCE.FLAG_TEXT}
+                  text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
                   colorScheme={greenScheme}
                   ctaOnClick={openSafeSidebar}
                   icon={Shield}
-                />
-              ) : null}
-              {isDFProduct ? (
-                <IconCTA
-                  text={labels[lang].DISCOUNTED_FUTURES.FLAG_TEXT}
-                  colorScheme={brownScheme}
-                  ctaOnClick={openDFPitchSidebar}
-                  icon={BrownTicket}
                 />
               ) : null}
             </Split>
@@ -434,7 +401,7 @@ const DetailedProductCard = (props) => {
                 prefix={true}
                 showScratchPrice={true}
                 lang={lang}
-                price={listingPrice || dfListingPrice}
+                price={listingPrice}
               />
               <a
                 target="_blank"
@@ -443,23 +410,12 @@ const DetailedProductCard = (props) => {
                   nakedDomain,
                   lang,
                   tgid: tgidClicked,
-                  df: isDFProduct,
                   biLink,
                 })}
-                onClick={(e) => {
-                  if (isDFProduct && !isDFOnlyProduct) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    openDFSidebar();
-                    return false;
-                  }
-                }}
               >
                 <div className="desc-book-now-cta">
                   <span className="desc-book-now-text">
-                    {isDFOnlyProduct
-                      ? labels[lang].DISCOUNTED_FUTURES.FLAG_TEXT
-                      : labels[lang].BOOK_NOW_CTA}
+                    {strings.BOOK_NOW_CTA}
                   </span>
                 </div>
               </a>

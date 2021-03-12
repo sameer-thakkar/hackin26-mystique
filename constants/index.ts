@@ -254,6 +254,7 @@ export const MICROSITE_STRING_KEYS: string[] = [
   'cta_url_suffix',
   'block_n_days_group_booking',
   'show_covid19_alert',
+  'canonical_link',
 ];
 
 export const MICROSITE_OBJECT_KEYS: string[] = [

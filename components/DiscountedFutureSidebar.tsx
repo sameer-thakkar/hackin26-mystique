@@ -1,19 +1,19 @@
+import { SOLEIL, COLORS } from 'const/ui-constants';
 import styled from 'styled-components';
-import { SOLEIL, COLORS } from 'constants/ui-constants';
 import Button from 'UI/Button';
 import PriceBlock from 'UI/PriceBlock';
-import * as labels from 'constants/localization/labels';
+import { strings } from 'const/strings';
 import { useContext } from 'react';
 import { MBContext } from 'contexts/MBContext';
 import { discountOf, createBookingURL, getDFValidityFromTags } from 'utils';
 import DiscountedFuturesPitch from 'UI/DiscountedFuturesPitch';
 import useWindowSize from 'hooks/useWindowSize';
-import Conditional from './common/Conditional';
 import dayjs from 'dayjs';
-import 'utils/dayjsLocale';
 import Tags, { Tag, StyledTags } from 'UI/Tags';
-import { DATE_FORMAT_TYPES } from 'constants/index';
+import { DATE_FORMAT_TYPES } from 'const/index';
 import useLocalisedDate from 'hooks/useLocalisedDate';
+
+import Conditional from './common/Conditional';
 
 const DFSidebar = styled.div`
   display: grid;
@@ -47,7 +47,7 @@ const BookingOptionCard = styled.div`
 `;
 const Heading = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
-  ont-style: normal;
+  font-style: normal;
   font-weight: 600;
   font-size: 18px;
   line-height: 20px;
@@ -113,7 +113,6 @@ const DiscountedFutureSidebar = ({
     nakedDomain,
     lang,
     tgid,
-    df: true,
     biLink,
   });
   const expiry = useLocalisedDate(
@@ -129,7 +128,7 @@ const DiscountedFutureSidebar = ({
     <DFSidebar>
       <BookingOptionCard>
         <Heading>
-          {labels[lang].DISCOUNTED_FUTURES.BOOKING_MODAL.GO_LATER_HEADING}
+          {strings.DISCOUNTED_FUTURES.BOOKING_MODAL.GO_LATER_HEADING}
         </Heading>
 
         <PriceContainer>
@@ -137,7 +136,7 @@ const DiscountedFutureSidebar = ({
           {dfSaveLabel ? <SaveLabel>Save {dfSaveLabel}%</SaveLabel> : null}
         </PriceContainer>
         <Text colorProp={COLORS.GREY_G3}>
-          {labels[lang].DISCOUNTED_FUTURES.BOOKING_MODAL.GO_LATER_PITCH.replace(
+          {strings.DISCOUNTED_FUTURES.BOOKING_MODAL.GO_LATER_PITCH.replace(
             '<stDate>',
             startDate
           ).replace('<edDate>', '31-Dec-2021')}
@@ -152,7 +151,7 @@ const DiscountedFutureSidebar = ({
           target={isMobile ? '' : '_blank'}
           href={dfBookURL}
         >
-          {labels[lang].DISCOUNTED_FUTURES.BOOKING_MODAL.GET_THIS}
+          {strings.DISCOUNTED_FUTURES.BOOKING_MODAL.GET_THIS}
         </Button>
         <LeanMore
           onClick={() =>
@@ -162,10 +161,10 @@ const DiscountedFutureSidebar = ({
             })
           }
         >
-          {labels[lang].DISCOUNTED_FUTURES.BOOKING_MODAL.LEARN_MORE}
+          {strings.DISCOUNTED_FUTURES.BOOKING_MODAL.LEARN_MORE}
         </LeanMore>
         <Tags
-          tags={[labels[lang].DISCOUNTED_FUTURES.BOOKING_MODAL.LIMITED]}
+          tags={[strings.DISCOUNTED_FUTURES.BOOKING_MODAL.LIMITED]}
           color={COLORS.PEACH_ORANGE}
           backgroundColor={COLORS.PALE_ORANGE}
         />
@@ -173,7 +172,7 @@ const DiscountedFutureSidebar = ({
       <Conditional if={listingPrice}>
         <BookingOptionCard>
           <Heading>
-            {labels[lang].DISCOUNTED_FUTURES.BOOKING_MODAL.BOOK_NOW_HEADING}
+            {strings.DISCOUNTED_FUTURES.BOOKING_MODAL.BOOK_NOW_HEADING}
           </Heading>
           <PriceContainer>
             <PriceBlock price={listingPrice} lang={lang} />
@@ -181,7 +180,7 @@ const DiscountedFutureSidebar = ({
             {saveLabel ? <SaveLabel>Save {saveLabel}%</SaveLabel> : null}
           </PriceContainer>
           <Text colorProp={COLORS.GREY_G3}>
-            {labels[lang].DISCOUNTED_FUTURES.BOOKING_MODAL.BOOK_NOW_PITCH}
+            {strings.DISCOUNTED_FUTURES.BOOKING_MODAL.BOOK_NOW_PITCH}
           </Text>
           <Button
             className={`tour-book-now-cta-filled`}
@@ -193,7 +192,7 @@ const DiscountedFutureSidebar = ({
             href={bookURL}
             target={isMobile ? '' : '_blank'}
           >
-            {labels[lang].DISCOUNTED_FUTURES.BOOKING_MODAL.BOOK_NOW}
+            {strings.DISCOUNTED_FUTURES.BOOKING_MODAL.BOOK_NOW}
           </Button>
         </BookingOptionCard>
       </Conditional>

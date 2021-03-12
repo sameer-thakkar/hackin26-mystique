@@ -21,7 +21,7 @@ const ko = {
   BOOK_NOW_CTA: '지금 예약하기',
   READ_MORE_TEXT: '더 알아보기',
   SHOW_LESS_TEXT: '접어보기',
-  NEXT_AVAILABLE: '다음 가능 일정, ',
+  NEXT_AVAILABLE: '다음 가능 일정: ',
   SAVE_UPTO: '최고 할인',
   AVAILABLE: '유효',
   EARLIEST_AVAILABILITY: '가장 빠른 가능일',

@@ -1,10 +1,20 @@
-import React, { useState } from 'react';
-import { SearchBox } from '../SearchBox';
-import { PAGETYPE } from 'constants/index';
+import React, { ComponentType, useState } from 'react';
+import { PAGETYPE } from 'const/index';
 import { CLOSE_WHITE } from 'assets/SvgIcons';
-import { SearchItem } from '../SearchItem';
+import { SOLEIL } from 'const/ui-constants';
+import dynamic from 'next/dynamic';
+
 import PopulateProducts from '../PopulateProducts';
-import { SOLEIL } from 'constants/ui-constants';
+
+const SearchBox: ComponentType<any> = dynamic(
+  () => import('components/MicrositeV2/SearchBox').then((mod) => mod.SearchBox),
+  { ssr: false }
+);
+const SearchItem: ComponentType<any> = dynamic(
+  () =>
+    import('components/MicrositeV2/SearchItem').then((mod) => mod.SearchItem),
+  { ssr: false }
+);
 
 export const SearchPage = (props) => {
   const [results, setResults] = useState([]);
@@ -120,3 +130,5 @@ export const SearchPage = (props) => {
     </div>
   );
 };
+
+export default SearchPage;

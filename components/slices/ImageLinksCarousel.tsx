@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
-import Swiper from '../Swiper';
-import Image from '../UI/Image';
-import { CHEVRON_LEFT } from '../../assets/SvgIcons';
-import { shortCodeSerializer } from '../../utils/shortCodes';
-import { SOLEIL, COLORS } from '../../constants/ui-constants';
+import { SOLEIL, COLORS } from 'const/ui-constants';
 import { scroller } from 'react-scroll';
-import { stringIdfy } from '../../utils/helper';
-import { MBContext } from '../../contexts/MBContext';
-import { DESIGN } from '../../constants';
+import dynamic from 'next/dynamic';
+import Image from 'UI/Image';
+import { CHEVRON_LEFT } from 'assets/SvgIcons';
+import { shortCodeSerializer } from 'utils/shortCodes';
+import { stringIdfy } from 'utils/helper';
+import { MBContext } from 'contexts/MBContext';
+import { DESIGN } from 'const/index';
+
+const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
 const StyledWrapper = styled.div`
   display: grid;

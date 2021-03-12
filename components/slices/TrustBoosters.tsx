@@ -1,7 +1,8 @@
 import React from 'react';
-import Image from '../UI/Image';
-import { SOLEIL, COLORS } from '../../constants/ui-constants';
+import { SOLEIL, COLORS } from 'const/ui-constants';
 import styled from 'styled-components';
+
+import Image from '../UI/Image';
 
 const StyledTrustBoosters = styled.div`
   display: grid;
@@ -53,7 +54,8 @@ const StyledTrustBoosters = styled.div`
 `;
 
 const TrustBoosters = (props) => {
-  const { boosters } = props;
+  const { boosters, isMobile } = props;
+  if (isMobile) return null;
   return (
     <StyledTrustBoosters className="trust-boosters">
       {boosters.map((booster, index) => {

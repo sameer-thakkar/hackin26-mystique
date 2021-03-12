@@ -1,20 +1,23 @@
+import { useContext } from 'react';
+import dynamic from 'next/dynamic';
 import styled from 'styled-components';
-import Image from './Image';
-import Slider from './Slider';
-import useWindowSize from 'hooks/useWindowSize';
-import Conditional from 'components/common/Conditional';
-import IconCTA, { StyledIconCTA } from './IconCTA';
-import * as labels from 'constants/localization/labels';
-import { CHEVRON_LEFT_CIRCLE, Shield } from 'assets/SvgIcons';
-import { SOLEIL, COLORS } from 'constants/ui-constants';
-import { greenScheme } from 'style/theme';
+import { SOLEIL, COLORS } from 'const/ui-constants';
 import {
   SAFETY_DETAILS_IMAGES,
   SAFETY_DETAILS_TYPE,
   CLUBBED_SAFETY_TAGS,
-} from 'constants/index';
-import { useContext } from 'react';
+} from 'const/index';
+import useWindowSize from 'hooks/useWindowSize';
+import Conditional from 'components/common/Conditional';
+import { strings } from 'const/strings';
+import { CHEVRON_LEFT_CIRCLE, Shield } from 'assets/SvgIcons';
+import { greenScheme } from 'style/theme';
 import { MBContext } from 'contexts/MBContext';
+
+import IconCTA, { StyledIconCTA } from './IconCTA';
+import Image from './Image';
+
+const Slider = dynamic(() => import('./Slider'));
 
 const PitchGrid = styled.div`
   display: grid;
@@ -196,7 +199,7 @@ const SafetyCard = styled.div`
 `;
 
 const renderSafetyDetailsSection = (tags, lang, isMobile) =>
-  Object.entries(labels[lang].SAFE_EXPERIENCE.MODAL.DETAILS).map(
+  Object.entries(strings.SAFE_EXPERIENCE.MODAL.DETAILS).map(
     ([key, { HEADING, DESCRIPTION }]: any) => (
       <Conditional key={key} if={tags.includes(key)}>
         <ImageTextGrid>
@@ -226,7 +229,7 @@ const SafeExperiencesPitch = ({
   const isMobile = width < 768;
   let tags = allTags;
   if (generic) {
-    tags = Object.keys(labels[lang].SAFE_EXPERIENCE.MODAL.DETAILS).filter(
+    tags = Object.keys(strings.SAFE_EXPERIENCE.MODAL.DETAILS).filter(
       (k) => k.indexOf('DEFAULT') > -1
     );
   }
@@ -251,19 +254,19 @@ const SafeExperiencesPitch = ({
     <PitchGrid>
       <Section>
         <Pitch>
-          <Heading>{labels[lang].SAFE_EXPERIENCE.MODAL.HEADING}</Heading>
-          <Text>{labels[lang].SAFE_EXPERIENCE.MODAL.SUB_HEADING}</Text>
+          <Heading>{strings.SAFE_EXPERIENCE.MODAL.HEADING}</Heading>
+          <Text>{strings.SAFE_EXPERIENCE.MODAL.SUB_HEADING}</Text>
         </Pitch>
       </Section>
 
       {generic ? (
         <SafetyCard>
           <IconCTA
-            text={labels[lang].SAFE_EXPERIENCE.FLAG_TEXT}
+            text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
             colorScheme={greenScheme}
             icon={Shield}
           />
-          <Text>{labels[lang].SAFE_EXPERIENCE.MODAL.BADGE_DESCRIPTION}</Text>
+          <Text>{strings.SAFE_EXPERIENCE.MODAL.BADGE_DESCRIPTION}</Text>
         </SafetyCard>
       ) : null}
 

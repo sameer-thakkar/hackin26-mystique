@@ -1,7 +1,4 @@
-import en from './en';
-
 const it = {
-  ...en,
   TOUR_LIST_HEADING: 'Seleziona la tua esperienza',
   GROUP_TICKETS: 'Biglietti di gruppo',
   TOUR_LIST_SUB_HEADING:
@@ -57,6 +54,9 @@ const it = {
   DURATION: 'Durata',
   THEATRE: 'Teatro',
   TIMINGS: 'Orari',
+  DESCRIPTORS: {
+    VALIDITY: 'Validità estesa',
+  },
   SAFE_EXPERIENCE: {
     HEADING: 'I più alti standard di sicurezza',
     SHORT_HEADING: 'I migliori standard di sicurezza in vigore',

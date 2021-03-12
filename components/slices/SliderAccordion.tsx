@@ -2,64 +2,66 @@ import React, { useState } from 'react';
 import { useAmp } from 'next/amp';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
-import Slider from '../UI/Slider';
-import Image from '../UI/Image';
-import { shortCodeSerializer } from '../../utils/shortCodes';
-import Accordion, { StyledAccordion } from './Accordion';
+import dynamic from 'next/dynamic';
+import Image from 'UI/Image';
+import { shortCodeSerializer } from 'utils/shortCodes';
+import Accordion, { StyledAccordion } from 'components/slices/Accordion';
+
+const Slider = dynamic(() => import('UI/Slider'));
 
 const StyledSliderAccordion = styled.div`
-	display: grid;
-	grid-template-columns: 1fr ${({ hasImageComponent }) =>
-			hasImageComponent ? ` 1fr` : ``};
-	grid-gap: 24px;
-	border: 1px solid #ebebeb;
-	border-radius: 2px;
-	height: max-content;
-	width: 100%;
-	line-height: 1.4;
-	${StyledAccordion} {
-		padding: 16px;
-	}
-	@media (max-width: 768px) {
-		grid-template-columns: 1fr;
-	}
+  display: grid;
+  grid-template-columns: 1fr ${({ hasImageComponent }) =>
+      hasImageComponent ? ` 1fr` : ``};
+  grid-gap: 24px;
+  border: 1px solid #ebebeb;
+  border-radius: 2px;
+  height: max-content;
+  width: 100%;
+  line-height: 1.4;
+  ${StyledAccordion} {
+    padding: 16px;
+  }
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const SliderWrapper = styled.div`
-	display: grid;
-	overflow: hidden;
-	max-height: 368px;
-	width: auto;
-	display: grid;
-	.swiper-slide img {
-		width: 100%;
-		height: auto;
-		display: flex;
-		object-fit: cover;
-	}
-	@media (max-width: 768px) {
-		max-height: 195px;
-		.swiper-slide img {
-			height: 195px;
-		}
-	}
+  display: grid;
+  overflow: hidden;
+  max-height: 368px;
+  width: auto;
+  display: grid;
+  .swiper-slide img {
+    width: 100%;
+    height: auto;
+    display: flex;
+    object-fit: cover;
+  }
+  @media (max-width: 768px) {
+    max-height: 195px;
+    .swiper-slide img {
+      height: 195px;
+    }
+  }
 `;
 
 const AccordionsWrap = styled.div``;
 
 const SingleImage = styled.div`
-	width: auto;
-	display: grid;
-	img {
-		width: 100%;
-		height: auto;
-		display: flex;
-		object-fit: cover;
-	}
-	@media (max-width: 768px) {
-		max-height: 195px;
-		margin-bottom: 16px;
-	}
+  width: auto;
+  display: grid;
+  img {
+    width: 100%;
+    height: auto;
+    display: flex;
+    object-fit: cover;
+  }
+  @media (max-width: 768px) {
+    max-height: 195px;
+    margin-bottom: 16px;
+  }
 `;
 
 /**
@@ -103,110 +105,110 @@ const SingleImage = styled.div`
  */
 
 const SliderAccordion = (props) => {
-	const { faqs: accordions, sliceProps } = props;
-	const { isMobile } = sliceProps;
-	const isAmp = useAmp();
-	const [activeAccordionIndex, setActiveAccordionIndex] = useState(0);
-	const activeAccordionImages = accordions[activeAccordionIndex].images.filter(
-		(i) => i.url
-	);
-	const sliderOptions = {
-		direction: 'horizontal',
-		speed: 650,
-		pagination: {
-			el: '.slider-pagination',
-			type: 'bullets',
-			clickable: true,
-			bulletClass: 'slider-bullet',
-		},
-	};
+  const { faqs: accordions, sliceProps } = props;
+  const { isMobile } = sliceProps;
+  const isAmp = useAmp();
+  const [activeAccordionIndex, setActiveAccordionIndex] = useState(0);
+  const activeAccordionImages = accordions[activeAccordionIndex].images.filter(
+    (i) => i.url
+  );
+  const sliderOptions = {
+    direction: 'horizontal',
+    speed: 650,
+    pagination: {
+      el: '.slider-pagination',
+      type: 'bullets',
+      clickable: true,
+      bulletClass: 'slider-bullet',
+    },
+  };
 
-	const SliderComponent = (
-		<SliderWrapper>
-			{activeAccordionImages.length > 1 ? (
-				<Slider sliderOptions={sliderOptions} parentOverflowHidden>
-					{activeAccordionImages.map((image, index) => {
-						return (
-							<Image
-								key={index}
-								height={isMobile ? 195 : 375}
-								aspectRatio={'16:10'}
-								url={image?.url}
-								alt={image.alt}
-							/>
-						);
-					})}
-				</Slider>
-			) : (
-				<SingleImage>
-					<Image
-						height={500}
-						aspectRatio={'16:10'}
-						imageId={activeAccordionImages[0]?.alt}
-						url={activeAccordionImages[0]?.url}
-						alt={activeAccordionImages[0]?.alt}
-					/>
-				</SingleImage>
-			)}
-		</SliderWrapper>
-	);
+  const SliderComponent = (
+    <SliderWrapper>
+      {activeAccordionImages.length > 1 ? (
+        <Slider sliderOptions={sliderOptions} parentOverflowHidden>
+          {activeAccordionImages.map((image, index) => {
+            return (
+              <Image
+                key={index}
+                height={isMobile ? 195 : 375}
+                aspectRatio={'16:10'}
+                url={image?.url}
+                alt={image.alt}
+              />
+            );
+          })}
+        </Slider>
+      ) : (
+        <SingleImage>
+          <Image
+            height={500}
+            aspectRatio={'16:10'}
+            imageId={activeAccordionImages[0]?.alt}
+            url={activeAccordionImages[0]?.url}
+            alt={activeAccordionImages[0]?.alt}
+          />
+        </SingleImage>
+      )}
+    </SliderWrapper>
+  );
 
-	return (
-		<StyledSliderAccordion hasImageComponent={activeAccordionImages.length}>
-			{!isMobile && activeAccordionIndex >= 0 ? SliderComponent : null}
-			{isAmp ? (
-				<amp-accordion animate="">
-					{accordions.map((accordion, index) => {
-						const content = (
-							<>
-								{isMobile ? SliderComponent : null}
-								<div className="answer-content">
-									<RichText
-										render={accordion.answer}
-										htmlSerializer={shortCodeSerializer}
-									/>
-								</div>
-							</>
-						);
-						return (
-							<Accordion
-								key={index}
-								content={content}
-								heading={accordion.question}
-								isAmp
-							/>
-						);
-					})}
-				</amp-accordion>
-			) : (
-				<AccordionsWrap>
-					{accordions.map((accordion, index) => {
-						const isOpen = index == activeAccordionIndex;
-						const content = (
-							<>
-								{isMobile ? SliderComponent : null}
-								<div className="answer-content">
-									<RichText
-										render={accordion.answer}
-										htmlSerializer={shortCodeSerializer}
-									/>
-								</div>
-							</>
-						);
-						return (
-							<Accordion
-								content={content}
-								isOpenOverride={isOpen}
-								heading={accordion.question}
-								clickHandler={() => setActiveAccordionIndex(index)}
-								key={index}
-							/>
-						);
-					})}
-				</AccordionsWrap>
-			)}
-		</StyledSliderAccordion>
-	);
+  return (
+    <StyledSliderAccordion hasImageComponent={activeAccordionImages.length}>
+      {!isMobile && activeAccordionIndex >= 0 ? SliderComponent : null}
+      {isAmp ? (
+        <amp-accordion animate="">
+          {accordions.map((accordion, index) => {
+            const content = (
+              <>
+                {isMobile ? SliderComponent : null}
+                <div className="answer-content">
+                  <RichText
+                    render={accordion.answer}
+                    htmlSerializer={shortCodeSerializer}
+                  />
+                </div>
+              </>
+            );
+            return (
+              <Accordion
+                key={index}
+                content={content}
+                heading={accordion.question}
+                isAmp
+              />
+            );
+          })}
+        </amp-accordion>
+      ) : (
+        <AccordionsWrap>
+          {accordions.map((accordion, index) => {
+            const isOpen = index == activeAccordionIndex;
+            const content = (
+              <>
+                {isMobile ? SliderComponent : null}
+                <div className="answer-content">
+                  <RichText
+                    render={accordion.answer}
+                    htmlSerializer={shortCodeSerializer}
+                  />
+                </div>
+              </>
+            );
+            return (
+              <Accordion
+                content={content}
+                isOpenOverride={isOpen}
+                heading={accordion.question}
+                clickHandler={() => setActiveAccordionIndex(index)}
+                key={index}
+              />
+            );
+          })}
+        </AccordionsWrap>
+      )}
+    </StyledSliderAccordion>
+  );
 };
 
 export default SliderAccordion;

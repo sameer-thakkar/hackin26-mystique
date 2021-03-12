@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
-import { SOLEIL } from 'constants/ui-constants';
+import { SOLEIL } from 'const/ui-constants';
 import Image from 'UI/Image';
 
 const StyledInternalContentCard = styled.div`

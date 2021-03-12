@@ -1,19 +1,33 @@
-import * as labels from 'constants/localization/labels';
-import React, { useRef, useState, useEffect, useContext } from 'react';
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  useContext,
+  ComponentType,
+} from 'react';
 import styled from 'styled-components';
 import { scroller } from 'react-scroll';
-import LanguageSelector from './LanguageSelector';
-import HeaderLinks from '../HeaderLinks';
+import dynamic from 'next/dynamic';
+import { SOLEIL, COLORS } from 'const/ui-constants';
+import { strings } from 'const/strings';
 import Hamburger from 'UI/Hamburger';
 import Image from 'UI/Image';
-import MultiLevelNav from '../MultiLevelNav';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import { POWERED_BY_HEADOUT } from 'assets/SvgIcons';
-import { SOLEIL, COLORS } from 'constants/ui-constants';
 import { MBContext } from 'contexts/MBContext';
-import { ResponsiveSelector } from 'components/MicrositeV2/ResponsiveSelector';
-import Conditional from './Conditional';
-import CurrencySelector from './CurrencySelector';
+import HeaderLinks from 'components/HeaderLinks';
+import LanguageSelector from 'components/common/LanguageSelector';
+import Conditional from 'components/common/Conditional';
+import CurrencySelector from 'components/common/CurrencySelector';
+
+const MultiLevelNav = dynamic(() => import('components/MultiLevelNav'));
+const ResponsiveSelector: ComponentType<any> = dynamic(
+  () =>
+    import('components/MicrositeV2/ResponsiveSelector').then(
+      (m) => m.ResponsiveSelector
+    ),
+  { ssr: false }
+);
 
 const StyledHeader = styled.header`
   height: 80px;
@@ -80,6 +94,7 @@ const StyledLogo = styled.div`
   img {
     height: 44px;
     max-width: 100%;
+    width: unset;
     object-fit: contain;
   }
   svg {
@@ -163,7 +178,7 @@ const Header: React.FC<any> = (props) => {
   } = props;
   const hamburgerIconCheck =
     showGroupBooking ||
-    !!headerLinks?.filter((link) => link.link_url)?.length ||
+    !!headerLinks?.filter((link) => link.link_url?.url)?.length ||
     slices.length;
   const hamburgerRef = useRef(null);
   const multiNavRef = useRef(null);
@@ -213,7 +228,14 @@ const Header: React.FC<any> = (props) => {
       <StyledHeaderContainer hasDropdownLinks={!isMobile && hasDropdownLinks}>
         <a href={logoRedirectionURL || '/'}>
           <StyledLogo>
-            <Image url={logoUrl} alt={logoAltText} dontLazyLoad isLogo />
+            <Image
+              url={logoUrl}
+              alt={logoAltText}
+              dontLazyLoad
+              isLogo
+              height="44"
+              width="144"
+            />
             {hasPoweredByHeadoutLogo ? POWERED_BY_HEADOUT : null}
           </StyledLogo>
         </a>
@@ -271,12 +293,12 @@ const Header: React.FC<any> = (props) => {
                 });
               }}
             >
-              {labels[currentLanguage].BANNER_CTA}
+              {strings.BANNER_CTA}
             </StyledMenuItem>
           ) : null}
           <Conditional if={showTicketMenu}>
             <StyledMenuItem as="a" href={logoRedirectionURL}>
-              {labels[currentLanguage].TICKETS}
+              {strings.TICKETS}
             </StyledMenuItem>
           </Conditional>
           {hasLanguageSelector === 'Yes' && !hideLangugageDropdown ? (
@@ -295,6 +317,8 @@ const Header: React.FC<any> = (props) => {
               currentCurrency={currentCurrency}
               currencies={headerCurrencies}
               isMobile={isMobile}
+              isAmp={isAmp}
+              host={host}
             />
           </Conditional>
         </StyledHeaderElements>

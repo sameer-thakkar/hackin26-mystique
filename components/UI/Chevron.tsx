@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { COLORS } from '../../constants/ui-constants';
+import { COLORS } from 'const/ui-constants';
 
 const StyledChevron = styled.div`
   width: 1.25em;

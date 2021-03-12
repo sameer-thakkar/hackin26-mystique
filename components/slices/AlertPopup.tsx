@@ -1,8 +1,10 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
-import Swiper from '../Swiper';
-import { SOLEIL } from '../../constants/ui-constants';
+import { SOLEIL } from 'const/ui-constants';
+
+const Swiper = dynamic(() => import('components/Swiper'));
 
 const StyledWrapper = styled.div`
   display: grid;

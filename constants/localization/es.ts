@@ -1,7 +1,4 @@
-import en from './en';
-
 const es = {
-  ...en,
   TOUR_LIST_HEADING: 'Selecciona tu experiencia',
   GROUP_TICKETS: 'Visita en grupo',
   TOUR_LIST_SUB_HEADING:
@@ -23,7 +20,7 @@ const es = {
   BOOK_NOW_CTA: 'Reserva ahora',
   READ_MORE_TEXT: 'Leer más',
   SHOW_LESS_TEXT: 'Mostrar menos',
-  NEXT_AVAILABLE: 'Próxima Disponible, ',
+  NEXT_AVAILABLE: 'Próxima Disponible: ',
   SAVE_UPTO: 'Ahorra hasta un',
   SAVE: 'Ahorra <val>%',
   AVAILABLE: 'Disponible',
@@ -57,6 +54,9 @@ const es = {
   DURATION: 'Duración',
   THEATRE: 'Teatro',
   TIMINGS: 'Horarios',
+  DESCRIPTORS: {
+    VALIDITY: 'Validez ampliada',
+  },
   SAFE_EXPERIENCE: {
     HEADING: 'Estándares de Seguridad',
     SHORT_HEADING: 'Los mejores estándares de seguridad en vigor',

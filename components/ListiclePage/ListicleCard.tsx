@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
+import { strings } from 'const/strings';
+import { COLORS, SOLEIL } from 'const/ui-constants';
+
 import Rating from '../UI/Rating';
 import Tags from '../UI/Tags';
 import Chevron from '../UI/Chevron';
 import Button from '../UI/Button';
-import Popup from '../common/Popup';
-import * as labels from '../../constants/localization/labels';
 import { Client } from '../../config/prismic-config';
 import { CUSTOM_TYPES } from '../../constants';
-import { COLORS, SOLEIL } from '../../constants/ui-constants';
 import { PIN } from '../../assets/SvgIcons';
 import { shortCodeSerializer } from '../../utils/shortCodes';
+
+const Popup = dynamic(() => import('components/common/Popup'), { ssr: false });
 
 const CardWrapper = styled.div`
   border: 1px solid #ebebeb;
@@ -222,7 +225,6 @@ const ListicleCard: React.FC<ListicleCardProps> = ({
   isOpen: cardOpen = false,
   isMobile,
   tour,
-  currentLanguage,
 }) => {
   const [isOpen, setIsOpen] = useState(cardOpen || false);
   const [popupOpen, setPopupOpen] = useState(false);
@@ -287,7 +289,7 @@ const ListicleCard: React.FC<ListicleCardProps> = ({
             <MobileCardTitleSection>
               <CardTitle>{tourName}</CardTitle>
               <Pricing>
-                <div>{labels[currentLanguage].FROM}</div>
+                <div>{strings.FROM}</div>
                 {price}
               </Pricing>
             </MobileCardTitleSection>
@@ -307,7 +309,7 @@ const ListicleCard: React.FC<ListicleCardProps> = ({
             <div className="price-section">
               {listingPrice ? (
                 <Pricing>
-                  <div>{labels[currentLanguage].FROM}</div>
+                  <div>{strings.FROM}</div>
                   {price}
                 </Pricing>
               ) : null}
@@ -342,7 +344,7 @@ const ListicleCard: React.FC<ListicleCardProps> = ({
                     tabIndex={0}
                     onClick={() => setPopupOpen(true)}
                   >
-                    {labels[currentLanguage].LISTICLES.SEATING_CHART}
+                    {strings.LISTICLES.SEATING_CHART}
                   </div>
                 ) : null}
               </div>
@@ -357,7 +359,7 @@ const ListicleCard: React.FC<ListicleCardProps> = ({
                 target={isMobile ? '' : '_blank'}
               >
                 <Button type="fillGradient" paddingSides="41px">
-                  {labels[currentLanguage].BOOK_NOW_CTA}
+                  {strings.BOOK_NOW_CTA}
                 </Button>
               </a>
             </div>

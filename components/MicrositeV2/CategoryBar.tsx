@@ -1,8 +1,9 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
+import { SOLEIL, SIZES } from 'const/ui-constants';
+import Conditional from 'components/common/Conditional';
+
 import { SortSelector } from './SortSelector';
 import InteractionContext from '../../contexts/Interaction';
-import { SOLEIL, SIZES } from '../../constants/ui-constants';
-import Conditional from 'components/common/Conditional';
 
 const CategoryBar = (props) => {
   const interactionCtx = useContext(InteractionContext);

@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
+import { COLORS, SOLEIL } from 'const/ui-constants';
+
 import { CHEVRON_LEFT } from '../../assets/SvgIcons';
-import { COLORS, SOLEIL } from '../../constants/ui-constants';
 import Image from '../UI/Image';
 
 const FeedContainer = styled.div`

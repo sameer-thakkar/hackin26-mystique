@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { attachQueryParam } from '../../utils/helper';
 import { useAmp } from 'next/amp';
 import Conditional from 'components/common/Conditional';
 import { INFO_ICON } from 'assets/SvgIcons';
+
+import { attachQueryParam } from '../../utils/helper';
 import Tooltip from './Tooltip';
 
 const Picture = styled.picture`
@@ -85,8 +86,8 @@ const Image: React.FC<ImageProps> = ({
     if (format === 'gif') return url;
     return attachQueryParam(
       url,
-      `auto=compress,format&fm=${fm}${w}${h}${q}${ar}&crop=faces&${
-        extractedRect || ''
+      `auto=compress,format${w}${h}${q}${ar}&crop=faces${
+        extractedRect ? `&${extractedRect}` : ''
       }`,
       true
     );
@@ -94,16 +95,15 @@ const Image: React.FC<ImageProps> = ({
   let calculatedWidth = width;
   let calculatedHeight = height;
   let ImageComponent = null;
+
+  if (aspectRatio) {
+    const [widthRatio, heightRatio] = aspectRatio.split(':').map(Number);
+    if (width && !height)
+      calculatedHeight = Number(width) * (heightRatio / widthRatio);
+    if (height && !width)
+      calculatedWidth = Number(height) * (widthRatio / heightRatio);
+  }
   if (isAmp) {
-    if (aspectRatio) {
-      const [widthRatio, heightRatio] = aspectRatio.split(':');
-      if (width && !height)
-        calculatedHeight =
-          Number(width) * (Number(heightRatio) / Number(widthRatio));
-      if (height && !width)
-        calculatedWidth =
-          Number(height) * (Number(widthRatio) / Number(heightRatio));
-    }
     if (isCardSlices) {
       calculatedWidth = 377;
     }
@@ -126,7 +126,24 @@ const Image: React.FC<ImageProps> = ({
     );
   } else if (dontLazyLoad) {
     ImageComponent = (
-      <img className={className} src={makeImageUrl(format, url)} alt={alt} />
+      <Picture>
+        <source
+          type="image/webp"
+          data-srcset={`${
+            mobileUrl ? makeImageUrl('webp', mobileUrl) + ' 768w,' : ''
+          }${makeImageUrl('webp', url)}`}
+        />
+        <img
+          className={`image- ${imageId}`}
+          data-srcset={`${
+            mobileUrl ? makeImageUrl(format, mobileUrl) + ' 768w,' : ''
+          }${makeImageUrl(format, url)}`}
+          src={makeImageUrl(format, url)}
+          alt={alt}
+          height={calculatedHeight + 'px'}
+          width={calculatedWidth + 'px'}
+        />
+      </Picture>
     );
   } else {
     ImageComponent = (
@@ -144,6 +161,8 @@ const Image: React.FC<ImageProps> = ({
           }${makeImageUrl(format, url)}`}
           data-src={makeImageUrl(format, url)}
           alt={alt}
+          height={calculatedHeight + 'px'}
+          width={calculatedWidth + 'px'}
         />
       </Picture>
     );

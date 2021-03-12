@@ -1,28 +1,41 @@
-import React, { useState, useContext } from 'react';
+import { SIZES, SOLEIL } from 'const/ui-constants';
+import { THEMES } from 'const/index';
+import React, { useState, useContext, ComponentType } from 'react';
 import dynamic from 'next/dynamic';
-import Header from '../Header';
-import LongForm from '../LongForm';
-import sliceHandler from '../../Slices';
-import Banner from '../Banner';
 import DismissAlert from 'UI/DismissAlert';
-import Footer from '../../common/Footer';
-import * as labels from 'constants/localization/labels';
+import { strings } from 'const/strings';
 import { ProductsContextProvider } from 'contexts/Products';
-import { ProductsWrapper } from '../ProductsWrapper';
-import { ResponsiveSelector } from '../ResponsiveSelector';
 import { LOCATION } from 'assets/SvgIcons';
 import { groupSlices } from 'utils/helper';
 import styled from 'styled-components';
-import { SIZES, SOLEIL } from 'constants/ui-constants';
 import SafeDFBannerWrapper from 'UI/SafeDFBannerWrapper';
-import { isSafetyIncluded, getDFValidityFromTags } from 'utils';
+import { isSafetyIncluded } from 'utils';
 import Conditional from 'components/common/Conditional';
 import TextBanner from 'components/TextBanner';
 import { MBContext } from 'contexts/MBContext';
-import { THEMES } from 'constants/index';
-import dayjs from 'dayjs';
+import Footer from 'components/common/Footer';
+import sliceHandler from 'components/Slices';
+import Header from 'components/MicrositeV2/Header';
 
 const Alert = dynamic(() => import('UI/Alert'), { ssr: false });
+const ResponsiveSelector: ComponentType<any> = dynamic(
+  () =>
+    import('components/MicrositeV2/ResponsiveSelector').then(
+      (m) => m.ResponsiveSelector
+    ),
+  { ssr: false }
+);
+const ProductsWrapper: ComponentType<any> = dynamic(() =>
+  import('components/MicrositeV2/ProductsWrapper').then(
+    (mod) => mod.ProductsWrapper
+  )
+);
+const Banner: ComponentType<any> = dynamic(() =>
+  import('components/MicrositeV2/Banner')
+);
+const LongForm: ComponentType<any> = dynamic(() =>
+  import('components/MicrositeV2/LongForm')
+);
 
 const V2MicrositeWrapper = styled.div`
   .alert-wrapper {
@@ -102,11 +115,7 @@ export const HomePage = (props) => {
   const hasSafe = Object.values(allTours).some((tour: any) =>
     isSafetyIncluded(tour.allTags)
   );
-  const [dfExpiryDate, ..._others] = Object.values(allTours)
-    .filter((tour: any) => tour && tour.dfListingPrice)
-    .map((tour: any) => getDFValidityFromTags(tour.allTags))
-    .filter((d) => d)
-    .sort((a, b) => (dayjs(a).isAfter(b) ? -1 : 1));
+
   return (
     <V2MicrositeWrapper>
       <Header
@@ -131,10 +140,10 @@ export const HomePage = (props) => {
       ) : null}
       {showCovid19Alert && covid19AlertOpen ? (
         <DismissAlert
-          readMoreLink={labels[currentLanguage].COVID19_ALERT.LINK}
-          readMore={labels[currentLanguage].READ_MORE}
-          keyText={labels[currentLanguage].COVID19_ALERT.KEY_TEXT}
-          text={labels[currentLanguage].COVID19_ALERT.TEXT}
+          readMoreLink={strings.COVID19_ALERT.LINK}
+          readMore={strings.READ_MORE}
+          keyText={strings.COVID19_ALERT.KEY_TEXT}
+          text={strings.COVID19_ALERT.TEXT}
           handleClose={() => {
             setCovid19AlertOpen(false);
           }}
@@ -153,11 +162,7 @@ export const HomePage = (props) => {
         </div>
       ) : null}
 
-      <SafeDFBannerWrapper
-        hasSafe={hasSafe}
-        dfExpiryDate={dfExpiryDate}
-        marginTop={40}
-      />
+      <SafeDFBannerWrapper hasSafe={hasSafe} marginTop={40} />
 
       {heroSectionSlice.length ? (
         <ProductsContextProvider allTours={allTours} ready={ready}>
@@ -165,7 +170,10 @@ export const HomePage = (props) => {
             {heroSectionSlice
               .filter((slice) => slice?.slice_type)
               .map((slice, index) => (
-                <div key={index} className={`slice-block ${slice.slice_type}`}>
+                <div
+                  key={`${slice?.slice_type}-${index}`}
+                  className={`slice-block ${slice.slice_type}`}
+                >
                   {sliceHandler(slice, { isMobile })}
                 </div>
               ))}
@@ -221,3 +229,5 @@ export const HomePage = (props) => {
     </V2MicrositeWrapper>
   );
 };
+
+export default HomePage;

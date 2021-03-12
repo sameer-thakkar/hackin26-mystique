@@ -1,8 +1,8 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
-import { shortCodeSerializer } from '../utils/shortCodes';
-import { csvTgidToArray } from '../utils/helper';
+import { shortCodeSerializer } from 'utils/shortCodes';
+import { csvTgidToArray } from 'utils/helper';
 
 // Non-dynamic imports
 import HorizontalLine from './slices/HorizontalLine';
@@ -335,6 +335,7 @@ const sliceHandler = (slice, props: any = {}) => {
           description={card_description}
           cta={{ text: cta_text, link: cta_link, type: cta_type ?? 'Button' }}
           type={props.cardType}
+          cardsInARow={props.cardsInARow}
           link={card_link}
           linkType={card_link_type}
         />

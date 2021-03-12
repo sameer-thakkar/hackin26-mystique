@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import ReactHtmlParser from 'react-html-parser';
 import Head from 'next/head';
 import parse from 'url-parse';
-import { withoutTrailingSlash, withShortcodes } from '../../utils/helper';
 import { MBContext } from 'contexts/MBContext';
+import { withoutTrailingSlash, withShortcodes } from 'utils/helper';
+import { BANNER_PARAMS } from 'components/Banner';
 
 const withTrailingSlash = (url) =>
   url.charAt(url.length - 1) !== '/' ? `${url}/` : url;
@@ -95,7 +95,6 @@ const PopulateHead = (data) => {
     noindex,
     canonical_link: canonicalLink,
     canonical_link_amp: canonicalLinkForAMP,
-    other_meta_tags: otherMetaTags = [],
     header_scripts: headerScripts = [],
     seo_keywords: seoKeywords,
     google_site_verification: googleSiteVerification,
@@ -109,15 +108,17 @@ const PopulateHead = (data) => {
     serverRequestStartTimestamp,
     isAmp,
     enable_amp,
+    isMobile = false,
+    finalBannerImages = [],
   } = data;
-  const modifiedCanonicalLink = canonicalLinkForAMP || canonicalLink;
+  const modifiedCanonicalLink = isMobile
+    ? canonicalLinkForAMP || canonicalLink
+    : canonicalLink;
   const { isPreview, noTrack } = useContext(MBContext);
   const title = withShortcodes(rawTitle).join('');
   const description = withShortcodes(rawDescription).join('');
 
   const isNonProd = isDev || isPreview || originalHost.startsWith('stage-');
-
-  const amplitude_key = '0d0bf3b04d91a9a79926398eca5cac45';
 
   const GTM_CONTAINER_ID = 'GTM-5LJWNW3';
   let GTM_AUTH = isNonProd
@@ -142,6 +143,18 @@ const PopulateHead = (data) => {
       <meta property="og:image" content={imageUrl} />
       <meta name="twitter:image" content={imageUrl} />
     </Head>
+  ) : null;
+  const { ASPECT_RATIO, WIDTH } =
+    isMobile || isAmp ? BANNER_PARAMS.MOBILE : BANNER_PARAMS.DESKTOP;
+  const imageQuery = `?auto=compress,format&fm=pjpg&w=${
+    parseInt(WIDTH) * 1.5
+  }&q=75&ar=${ASPECT_RATIO}&fit=crop&crop=faces`;
+  const preloadBannerImage = finalBannerImages?.length ? (
+    <link
+      rel="preload"
+      as="image"
+      href={`${finalBannerImages[0]?.url}${imageQuery}`}
+    />
   ) : null;
   const trackingScripts = (
     <Head>
@@ -187,44 +200,6 @@ const PopulateHead = (data) => {
 				})(window,document,'script','dataLayer','${GTM_CONTAINER_ID}');//]]>`,
         }}
       ></script>
-      <script
-        defer
-        async
-        dangerouslySetInnerHTML={{
-          __html: `(function(e,t){var n=e.amplitude||{_q:[],_iq:{}};var r=t.createElement("script")
-              ;r.type="text/javascript"
-              ;r.integrity="sha384-a+mq7tiLwde/00Oc7avFHLn/ttGfdAq1rtZc7u97SEzIiyYoT2IsOKWCkAThwdEu"
-              ;r.crossOrigin="anonymous";r.defer=true
-              ;r.src="https://cdn.amplitude.com/libs/amplitude-5.3.0-min.gz.js"
-              ;r.onload=function(){if(!e.amplitude.runQueuedFunctions){
-              console.log("[Amplitude] Error: could not load SDK")}}
-              ;var i=t.getElementsByTagName("script")[0];i.parentNode.insertBefore(r,i)
-              ;function s(e,t){e.prototype[t]=function(){
-              this._q.push([t].concat(Array.prototype.slice.call(arguments,0)));return this}}
-              var o=function(){this._q=[];return this}
-              ;var a=["add","append","clearAll","prepend","set","setOnce","unset"]
-              ;for(var u=0;u<a.length;u++){s(o,a[u])}n.Identify=o;var c=function(){this._q=[]
-              ;return this}
-              ;var l=["setProductId","setQuantity","setPrice","setRevenueType","setEventProperties"]
-              ;for(var p=0;p<l.length;p++){s(c,l[p])}n.Revenue=c
-              ;var d=["init","logEvent","logRevenue","setUserId","setUserProperties","setOptOut","setVersionName","setDomain","setDeviceId","setGlobalUserProperties","identify","clearUserProperties","setGroup","logRevenueV2","regenerateDeviceId","groupIdentify","onInit","logEventWithTimestamp","logEventWithGroups","setSessionId","resetSessionId"]
-              ;function v(e){function t(t){e[t]=function(){
-              e._q.push([t].concat(Array.prototype.slice.call(arguments,0)))}}
-              for(var n=0;n<d.length;n++){t(d[n])}}v(n);n.getInstance=function(e){
-              e=(!e||e.length===0?"$default_instance":e).toLowerCase()
-              ;if(!n._iq.hasOwnProperty(e)){n._iq[e]={_q:[]};v(n._iq[e])}return n._iq[e]}
-              ;e.amplitude=n})(window,document);
-              amplitude.getInstance().init('${amplitude_key}', null, { 
-                // optional configuration options 
-                includeGclid : true, 
-                includeReferrer: true, 
-                includeUtm: true, 
-                includeReferrer: true,
-                saveParamsReferrerOncePerSession: false,
-                unsetParamsReferrerOnNewSession: true
-              });`,
-        }}
-      ></script>
     </Head>
   );
   const pageMeta = (
@@ -244,6 +219,7 @@ const PopulateHead = (data) => {
       <meta property="og:type" content="website" />
 
       {seoKeywords ? <meta name="keywords" content={seoKeywords} /> : null}
+      {preloadBannerImage}
       {googleSiteVerification ? (
         <meta
           name="google-site-verification"
@@ -318,7 +294,6 @@ const PopulateHead = (data) => {
     </Head>
   );
 
-  const metaTags = otherMetaTags.map((meta) => ReactHtmlParser(meta.meta_tag));
   const scriptTags = headerScripts
     .map((script) => script.script_tag)
     .filter((str) => str)
@@ -370,7 +345,6 @@ const PopulateHead = (data) => {
       {pageMeta}
       {ImageMeta}
       <Head>
-        {metaTags}
         {hrefLangs}
         {!isAmp ? scriptTags : null}
       </Head>
@@ -397,6 +371,7 @@ export const MinimalHelmet: React.FC<any> = ({
       <meta name="twitter:description" content={description} />
       <meta property="og:locale" content="en_US" />
       <meta property="og:type" content="website" />
+      <meta name="robots" content="nofollow, noindex" />
     </Head>
   );
 };

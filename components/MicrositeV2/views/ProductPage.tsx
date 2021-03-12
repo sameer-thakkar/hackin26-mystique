@@ -1,21 +1,24 @@
+import { PAGETYPE } from 'const/index';
+import { SOLEIL, COLORS } from 'const/ui-constants';
 import React, { useEffect, useContext } from 'react';
-import * as labels from 'constants/localization/labels';
+import dynamic from 'next/dynamic';
+import { strings } from 'const/strings';
 import Image from 'UI/Image';
 import { RichText } from 'prismic-reactjs';
-import { CHEVRON_LEFT, BorderedShield, BrownTicket } from 'assets/SvgIcons';
+import { CHEVRON_LEFT, BorderedShield } from 'assets/SvgIcons';
 import { shortCodeSerializer } from 'utils/shortCodes';
-import { PAGETYPE } from 'constants/index';
 import parse from 'url-parse';
-import Swiper from 'react-id-swiper';
-import { SOLEIL, COLORS } from 'constants/ui-constants';
 import { MBContext } from 'contexts/MBContext';
-import DiscountedFutureSidebar from 'components/DiscountedFutureSidebar';
-import SafeExperiencesPitch from 'UI/SafeExperiencesPitch';
 import Split, { StlyedSplit } from 'UI/Split';
 import IconCTA from 'UI/IconCTA';
-import { greenScheme, brownScheme } from 'style/theme';
+import { greenScheme } from 'style/theme';
 import styled from 'styled-components';
-import { isSafetyIncluded, isDiscountedFuture, createBookingURL } from 'utils';
+import { isSafetyIncluded, createBookingURL } from 'utils';
+
+const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
+const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
+  ssr: false,
+});
 
 const IconBoosters = styled.div`
   margin-left: 12px;
@@ -69,22 +72,13 @@ export const MobileProductPage = (props) => {
   hostSplit.shift();
   const bookingUrl = hostSplit.join('.');
   const descriptors = tour.descriptors.split(',').filter((desc) => desc.length);
-  const { allTags = [], listingPrice, dfListingPrice } = tour;
+  const { allTags = [] } = tour;
   const hasSafetyFlag = isSafetyIncluded(allTags);
-  const isDFProduct = isDiscountedFuture(allTags);
-  const isDFOnlyProduct = listingPrice === null && dfListingPrice !== null;
 
   const {
     sidebarModal: { addToAside },
     biLink,
   } = useContext(MBContext);
-  const openDFSidebar = () => {
-    addToAside({
-      width: '27.5vw',
-      title: tour.title,
-      children: <DiscountedFutureSidebar product={tour} />,
-    });
-  };
   const openSafeSidebar = () => {
     addToAside({
       width: '41.06vw',
@@ -158,18 +152,10 @@ export const MobileProductPage = (props) => {
             <Split count={2} autoWidth={true} mobileLayout={'scroll'}>
               {hasSafetyFlag ? (
                 <IconCTA
-                  text={labels[currentLanguage].SAFE_EXPERIENCE.FLAG_TEXT}
+                  text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
                   colorScheme={greenScheme}
                   ctaOnClick={openSafeSidebar}
                   icon={BorderedShield}
-                />
-              ) : null}
-              {isDFProduct ? (
-                <IconCTA
-                  text={labels[currentLanguage].DISCOUNTED_FUTURES.FLAG_TEXT}
-                  colorScheme={brownScheme}
-                  ctaOnClick={openDFSidebar}
-                  icon={BrownTicket}
                 />
               ) : null}
             </Split>
@@ -232,23 +218,10 @@ export const MobileProductPage = (props) => {
             nakedDomain: bookingUrl,
             lang: currentLanguage,
             tgid,
-            df: isDFOnlyProduct,
             biLink,
           })}
-          onClick={(e) => {
-            if (isDFProduct && !isDFOnlyProduct) {
-              e.preventDefault();
-              e.stopPropagation();
-              openDFSidebar();
-              return false;
-            }
-          }}
         >
-          <div className="cta-text">
-            {isDFOnlyProduct
-              ? labels[currentLanguage].DISCOUNTED_FUTURES.FLAG_TEXT
-              : labels[currentLanguage].BOOK_NOW_CTA}
-          </div>
+          <div className="cta-text">{strings.BOOK_NOW_CTA}</div>
         </a>
       </div>
       <style jsx>
@@ -560,6 +533,8 @@ export const MobileProductPage = (props) => {
     </div>
   );
 };
+
+export default MobileProductPage;
 
 MobileProductPage.defaultProps = {
   carouselOptions: {

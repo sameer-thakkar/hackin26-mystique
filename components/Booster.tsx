@@ -1,5 +1,5 @@
 import React from 'react';
-import { COLORS } from '../constants/ui-constants';
+import { COLORS } from 'const/ui-constants';
 
 const Booster = (props) => {
   const { color, text } = props;

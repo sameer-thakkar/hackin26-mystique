@@ -1,3 +1,4 @@
+import { COLORS, SOLEIL } from 'const/ui-constants';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
@@ -5,12 +6,12 @@ import { useWindowWidth } from '@react-hook/window-size';
 import Tags from 'UI/Tags';
 import Chevron from 'UI/Chevron';
 import Button from 'UI/Button';
-import * as labels from 'constants/localization/labels';
-import Pricing from './Pricing';
-import { COLORS, SOLEIL } from 'constants/ui-constants';
+import { strings } from 'const/strings';
 import { CANDY_STAR } from 'assets/SvgIcons';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import Image from 'UI/Image';
+
+import Pricing from './Pricing';
 
 const CardWrapper = styled.div`
   border: 1px solid ${COLORS.GREY_G6};
@@ -287,13 +288,13 @@ const MediumListicle: React.FC<MediumListicleProps> = ({
             </div>
             {duration ? (
               <DurationInfo>
-                <div>{labels[currentLanguage].DURATION}</div>
+                <div>{strings.DURATION}</div>
                 {duration}
               </DurationInfo>
             ) : null}
             {theatre_name ? (
               <TheatreInfo>
-                <div>{labels[currentLanguage].THEATRE}</div>
+                <div>{strings.THEATRE}</div>
                 {theatre_name}
                 <br />
                 {seating_chart_link?.url ? (
@@ -321,7 +322,7 @@ const MediumListicle: React.FC<MediumListicleProps> = ({
                   target="_blank"
                 >
                   <ReadMore fullWidth={!book_now_link?.url} paddingSides="0px">
-                    {labels[currentLanguage].READ_MORE}
+                    {strings.READ_MORE}
                   </ReadMore>
                 </a>
               ) : null}
@@ -336,7 +337,7 @@ const MediumListicle: React.FC<MediumListicleProps> = ({
                     type="fillGradient"
                     paddingSides="0px"
                   >
-                    {labels[currentLanguage].BOOK_NOW_CTA}
+                    {strings.BOOK_NOW_CTA}
                   </BookNow>
                 </a>
               ) : null}

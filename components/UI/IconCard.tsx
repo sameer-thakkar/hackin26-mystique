@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { COLORS } from 'const/ui-constants';
+
 import Image from './Image';
-import { COLORS } from 'constants/ui-constants';
 
 export const StyledIconCard = styled.div`
   padding: 16px;

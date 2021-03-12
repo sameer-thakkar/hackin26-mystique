@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
+import { strings } from 'const/strings';
+import { legacyBooleanCheck } from 'utils';
+import { COLORS, SOLEIL } from 'const/ui-constants';
+
 import Header from './common/Header';
 import sliceHandler from './Slices';
 import Footer from './common/Footer';
@@ -8,7 +12,6 @@ import Masthead from './Masthead';
 import PopulateHead from './common/meta';
 import Alert from './UI/Alert';
 import DismissAlert from './UI/DismissAlert';
-import * as labels from '../constants/localization/labels';
 import { Client } from '../config/prismic-config';
 import {
   DROPDOWN_ELEMENT,
@@ -20,9 +23,7 @@ import allToursParser from '../utils/allToursParser';
 import { ProductsContextProvider } from '../contexts/Products';
 import { InteractionContextProvider } from '../contexts/Interaction';
 import { tourListApiParser } from '../utils/dataParsers';
-import { COLORS, SOLEIL } from '../constants/ui-constants';
 import { withAmp } from './common/withAmp';
-import { legacyBooleanCheck } from 'utils';
 
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 
@@ -39,7 +40,6 @@ const StyledContentPage = styled.div`
   .slice-block h2 {
     font-size: 24px;
     margin: 0.2em 0;
-    color: #080808;
     font-family: ${SOLEIL.FONT_STACK};
     font-weight: ${SOLEIL.SEMIBOLD};
     position: relative;
@@ -49,7 +49,6 @@ const StyledContentPage = styled.div`
   .slice-block h3 {
     font-weight: 500;
     font-size: 22px;
-    color: #080808;
     font-family: ${SOLEIL.FONT_STACK};
     font-weight: ${SOLEIL.SEMIBOLD};
     position: relative;
@@ -446,6 +445,7 @@ class ContentPage extends Component<any, any> {
             serverRequestStartTimestamp,
             localization: languages,
             currentLanguage,
+            isMobile: this.state.isMobile,
           }}
         />
         <Header
@@ -473,10 +473,10 @@ class ContentPage extends Component<any, any> {
         />
         {showCovid19Alert && this.state.covid19AlertOpen ? (
           <DismissAlert
-            readMoreLink={labels[currentLanguage].COVID19_ALERT.LINK}
-            readMore={labels[currentLanguage].READ_MORE}
-            keyText={labels[currentLanguage].COVID19_ALERT.KEY_TEXT}
-            text={labels[currentLanguage].COVID19_ALERT.TEXT}
+            readMoreLink={strings.COVID19_ALERT.LINK}
+            readMore={strings.READ_MORE}
+            keyText={strings.COVID19_ALERT.KEY_TEXT}
+            text={strings.COVID19_ALERT.TEXT}
             handleClose={this.handleClose}
           />
         ) : null}

@@ -1,14 +1,15 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useWindowWidth } from '@react-hook/window-size';
 import { RichText } from 'prismic-reactjs';
-import Swiper from '../Swiper';
-import Image from '../UI/Image';
-import Button from '../UI/Button';
-import { MBContext } from '../../contexts/MBContext';
-import * as labels from '../../constants/localization/labels';
-import { COLORS, SOLEIL } from '../../constants/ui-constants';
-import { CHEVRON_LEFT } from '../../assets/SvgIcons';
+import { strings } from 'const/strings';
+import { COLORS, SOLEIL } from 'const/ui-constants';
+import Image from 'UI/Image';
+import Button from 'UI/Button';
+import { CHEVRON_LEFT } from 'assets/SvgIcons';
+
+const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
 const variantStyles = {
   'full-width': {
@@ -29,6 +30,13 @@ const variantStyles = {
       height: '223',
     },
   },
+};
+
+const cardImageAspectRatio = {
+  4: '14:11',
+  3: '7:4',
+  2: '14:9',
+  1: '16:9',
 };
 
 const StyledCard = styled.div((props) => {
@@ -59,12 +67,12 @@ const StyledCard = styled.div((props) => {
       margin-top: 0;
     }
     p, li {
-      font-size: 16px !important;
-      line-height: 160% !important;
+      font-size: 16px;
+      line-height: 160%;
       font-family: ${SOLEIL.FONT_STACK};
     }
     p {
-      margin-bottom: 16px !important;
+      margin-bottom: 16px;
     }
     a {
       color: ${COLORS.MED_SLATE_BLUE};
@@ -144,6 +152,7 @@ type CardProps = {
   type?: string;
   link?: any;
   linkType?: string;
+  cardsInARow?: number;
 };
 
 /**
@@ -196,12 +205,10 @@ const Card: React.FC<CardProps> = ({
   type = 'full-width',
   link = '',
   linkType = '',
+  cardsInARow = 1,
 }) => {
   const width = useWindowWidth();
   const [isMobile, setIsMobile] = React.useState(false);
-  const mbContext = useContext(MBContext);
-
-  const lang = mbContext.lang || 'en';
 
   React.useEffect(() => {
     switch (type) {
@@ -228,6 +235,7 @@ const Card: React.FC<CardProps> = ({
     shouldSwiperUpdate: true,
   };
 
+  const aspectRatio = cardImageAspectRatio[cardsInARow > 4 ? 4 : cardsInARow];
   let imageView;
   switch (images.length) {
     case 0:
@@ -241,6 +249,7 @@ const Card: React.FC<CardProps> = ({
           attribution={images[0]?.copyright}
           height={variantStyles[type].img.height}
           isCardSlices
+          aspectRatio={aspectRatio}
         />
       );
       break;
@@ -257,6 +266,7 @@ const Card: React.FC<CardProps> = ({
                   attribution={image?.copyright}
                   alt={image.alt}
                   height={variantStyles[type].img.height}
+                  aspectRatio={aspectRatio}
                 />
               );
             })}
@@ -276,7 +286,7 @@ const Card: React.FC<CardProps> = ({
             target={cta.link.target}
             onClick={(e) => e.stopPropagation()}
           >
-            <Button>{cta.text || labels[lang]['BOOK_NOW_CTA']}</Button>
+            <Button>{cta.text || strings}</Button>
           </a>
         </ButtonWrapper>
       );
@@ -288,7 +298,7 @@ const Card: React.FC<CardProps> = ({
           target={cta.link.target}
           onClick={(e) => e.stopPropagation()}
         >
-          {cta.text || labels[lang]['READ_MORE_TEXT']}
+          {cta.text || strings}
           {CHEVRON_LEFT}
         </CTALink>
       );
