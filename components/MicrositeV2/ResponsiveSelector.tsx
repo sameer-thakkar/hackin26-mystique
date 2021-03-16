@@ -34,6 +34,8 @@ const ResponsiveSelectWrapper = styled.div`
     border-radius: 4px;
     display: grid;
     top: 50px;
+    overflow-y: scroll;
+    max-height: 85vh;
   }
 
   .responsive-option,
@@ -101,12 +103,12 @@ const ResponsiveSelectWrapper = styled.div`
       color: ${COLORS.DAVY_GREY};
     }
     .responsive-dropdown {
-      position: fixed;
+      position:fixed;
+      z-index: 999;
       bottom: -2px;
       top: unset;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 999;
       width: 95%;
       text-align: center;
       grid-gap: 0;
