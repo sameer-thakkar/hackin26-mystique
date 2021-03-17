@@ -8,7 +8,7 @@ ENV NODE_ENV=$APP_ENV \
     NEXT_PUBLIC_HEADOUT_DOMAIN=${NEXT_PUBLIC_HEADOUT_DOMAIN} \
     NEXT_PUBLIC_HEADOUT_API_DOMAIN=${NEXT_PUBLIC_HEADOUT_API_DOMAIN}
 RUN apt-get update && apt-get install -y curl
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash
+RUN curl -sL https://deb.nodesource.com/setup_15.x | bash
 RUN apt-get install -y nodejs
 ADD ./ /mystique/
 EXPOSE 3000

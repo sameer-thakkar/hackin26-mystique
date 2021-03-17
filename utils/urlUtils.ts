@@ -1,4 +1,7 @@
+import { PRISMIC_LANG_TO_ROUTE_PARAM } from 'const/index';
+import { FULL_LANGUAGE_MAP } from 'const/index';
 import queryParser from 'query-string';
+import { getPrismicProps } from 'utils';
 import { fromEntries } from 'utils/gen';
 
 export const isAmpUrl = (query) => {
@@ -31,3 +34,52 @@ export const replacePageQuery = (query, asPath) => {
 
 export const sanitizeURL = (url) =>
   `https://${url.replace(/(http)?[s]?(:)?(\/\/)?/i, '')}`;
+
+export const getLangUID = (req, query) => {
+  let uid, lang;
+  const { host } = req?.headers || window?.location;
+  const pathname =
+    req?.url?.split('?')?.[0]?.split('#')?.[0] || window.location.pathname;
+  const isDev = req
+    ? !!query.mystique_uid
+    : window.location.search.includes('mystique_uid');
+  if (req) {
+    // Server side rendering
+    if (isDev) {
+      const { mystique_uid: queryParamUID, lang: queryParamLang } = query;
+      uid = queryParamUID;
+      lang =
+        FULL_LANGUAGE_MAP[PRISMIC_LANG_TO_ROUTE_PARAM[queryParamLang]]
+          .paramLang;
+    } else {
+      const { uid: reqUID, lang: reqLang } = getPrismicProps({
+        host,
+        pathname,
+      });
+      uid = reqUID;
+      lang = reqLang;
+    }
+  } else {
+    // Client side rendering
+    if (isDev) {
+      const urlParams = new URLSearchParams(window.location.search);
+      uid = urlParams.get('mystique_uid');
+      lang = urlParams.get('lang');
+    } else {
+      const { uid: reqUID, lang: reqLang } = getPrismicProps({
+        host,
+        pathname,
+      });
+      uid = reqUID;
+      lang = reqLang;
+    }
+  }
+  return { uid, lang };
+};
+
+export const getValidUrlParams = (query) =>
+  Object.entries(query)
+    .filter(([key]) => key !== 'slug')
+    .map(([key, val]) => `${key}=${val}`)
+    .join('&')
+    .trim();

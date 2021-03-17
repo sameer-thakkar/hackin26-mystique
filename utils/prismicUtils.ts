@@ -1,0 +1,366 @@
+import { Client } from 'config/prismic-config';
+import {
+  CUSTOM_TYPES,
+  LINKED_MICROSITE_PROPS,
+  MICROSITE_ARRAY_KEYS,
+  MICROSITE_LINK_KEYS,
+  MICROSITE_OBJECT_KEYS,
+  MICROSITE_STRING_KEYS,
+  PRISMIC_LANG_TO_ROUTE_PARAM,
+} from 'const/index';
+import { COMMON_DATA_PROPS_FOR_LISTICLE } from 'const/index';
+import { redirectTo, refsArrayToObject } from 'utils';
+import { getLangUID, getValidUrlParams, sanitizeURL } from 'utils/urlUtils';
+
+export const getListicleDocument = async ({ req, uid, lang }) => {
+  const listicleResponse = await Client(req).getByUID(
+    CUSTOM_TYPES.LISTICLE,
+    uid,
+    {
+      fetchLinks: [...COMMON_DATA_PROPS_FOR_LISTICLE],
+      lang,
+    }
+  );
+  if (listicleResponse) {
+    const {
+      common_footer,
+      common_header,
+      content_framework,
+    } = listicleResponse.data;
+
+    const refArray = await getRefsArrayByIds(
+      [common_footer.id, common_header.id, content_framework.id],
+      req
+    );
+    const {
+      commonFooter,
+      commonHeader,
+      contentFramework,
+      secondaryFooter,
+    } = refsArrayToObject(refArray);
+    return {
+      CMSContent: {
+        ...listicleResponse,
+        commonFooter,
+        commonHeader,
+        contentFramework,
+        secondaryFooter,
+      },
+      ContentType: CUSTOM_TYPES.LISTICLE,
+    };
+  }
+  return Promise.reject();
+};
+
+export const getContentPageDocument = async ({
+  req,
+  uid,
+  lang,
+  queryParamsString,
+  serverResponse,
+  host,
+}) => {
+  return await Client(req)
+    .getByUID(CUSTOM_TYPES.CONTENT_PAGE, uid, {
+      fetchLinks: [...LINKED_MICROSITE_PROPS],
+      lang,
+    })
+    .then(async (page) => {
+      if (page) {
+        if (page.uid !== uid) {
+          let url = page.data?.page_url;
+          if (host.slice(0, 5) === 'stage') {
+            url = url.split('//');
+            url = url.join('//stage-');
+          }
+          redirectTo({
+            res: serverResponse,
+            url: `${url}${queryParamsString ? `?${queryParamsString}` : ''}`,
+            type: 301,
+          });
+        }
+      }
+      // Listicle Page Logic
+      if (!(page && page.data)) {
+        return Promise.reject();
+      }
+
+      // Redirect logic (if redirect exists on content page)
+      const url = page.data.microsite_document_ref?.data.redirect_url?.url;
+      if (url) {
+        redirectTo({
+          res: serverResponse,
+          url: `${url}${queryParamsString ? `?${queryParamsString}` : ''}`,
+        });
+      }
+
+      /**
+       *  Fetching data of referenced custom types which cannot be
+       * fetched using the fetchLink method due to prismic constraints
+       * Currently includes: Common Footer, Content Framework
+       */
+      const footerID = page.data.footer_ref.id || '';
+      const headerID = page.data.header_ref.id || '';
+      const secondaryFooterID = page.data.secondary_footer?.id || '';
+      const contentFrameworkID = page.data.content_framework?.id || '';
+      const micrositeId = page.data.microsite_document_ref.id || '';
+
+      const linkedRefIDs = [];
+      linkedRefIDs.push(footerID);
+      linkedRefIDs.push(headerID);
+      linkedRefIDs.push(micrositeId);
+      linkedRefIDs.push(contentFrameworkID);
+      linkedRefIDs.push(secondaryFooterID);
+      const refArray = await getRefsArrayByIds(linkedRefIDs, req);
+      const {
+        commonFooter,
+        commonHeader,
+        contentFramework,
+        secondaryFooter,
+        microsite: micrositeData,
+      } = refsArrayToObject(refArray);
+
+      let completePage = {
+        ...page,
+        data: {
+          ...page.data,
+          footer_ref: commonFooter,
+          header_ref: commonHeader,
+          content_framework: contentFramework,
+          microsite: micrositeData,
+          secondaryFooter,
+        },
+      };
+      return {
+        CMSContent: completePage,
+        ContentType: CUSTOM_TYPES.CONTENT_PAGE,
+      };
+    });
+};
+
+export const getMicrositeDocument = async ({
+  req,
+  uid,
+  serverResponse,
+  queryParamsString,
+  lang,
+  host,
+}): Promise<any> => {
+  return await Client(req)
+    .getByUID(CUSTOM_TYPES.MICROSITE, uid, {
+      lang,
+    })
+    .then(async (res) => {
+      let completeMicrosite = { data: res };
+      if (completeMicrosite.data) {
+        if (completeMicrosite.data.uid !== uid) {
+          let url = completeMicrosite.data.data?.page_url;
+          if (host.slice(0, 5) === 'stage') {
+            url = url.split('//');
+            url = url.join('//stage-');
+          }
+          redirectTo({
+            res: serverResponse,
+            url: `${url}${queryParamsString ? `?${queryParamsString}` : ''}`,
+            type: completeMicrosite.data.data.redirect_type,
+          });
+        } else {
+          const baseLangData =
+            lang !== 'en-us'
+              ? await Client(req)
+                  .getByUID(CUSTOM_TYPES.MICROSITE, uid, {
+                    lang: 'en-us',
+                  })
+                  .then((res) => res)
+              : completeMicrosite.data;
+
+          const strValues: any = MICROSITE_STRING_KEYS.reduce(
+            (acc, elem) => ({
+              ...acc,
+              [elem]:
+                completeMicrosite.data.data[elem] || baseLangData.data[elem],
+            }),
+            {}
+          );
+
+          const objValues = MICROSITE_OBJECT_KEYS.reduce(
+            (acc, elem) => ({
+              ...acc,
+              [elem]: Object.keys(completeMicrosite.data.data[elem]).length
+                ? completeMicrosite.data.data[elem]
+                : baseLangData.data[elem],
+            }),
+            {}
+          );
+
+          const linkValues = MICROSITE_LINK_KEYS.reduce(
+            (acc, elem) => ({
+              ...acc,
+              [elem]:
+                Object.keys(completeMicrosite.data.data[elem]).length > 1
+                  ? completeMicrosite.data.data[elem]
+                  : baseLangData.data[elem],
+            }),
+            {}
+          );
+
+          const arrValues = MICROSITE_ARRAY_KEYS.reduce(
+            (acc, elem) => ({
+              ...acc,
+              [elem]: completeMicrosite.data.data[elem].length
+                ? completeMicrosite.data.data[elem]
+                : baseLangData.data[elem],
+            }),
+            {}
+          );
+
+          // Base lang Fallback for Tour Ranking.
+          const tourTabSlice = completeMicrosite.data.data.body1[0];
+          if (tourTabSlice?.primary && !tourTabSlice.primary.ranking) {
+            tourTabSlice.primary.ranking =
+              baseLangData?.data?.body1[0]?.primary?.ranking;
+          }
+
+          if (
+            Object.keys(completeMicrosite.data.data['alert_popup']).length === 1
+          ) {
+            completeMicrosite.data.data['alert_popup'] =
+              baseLangData.data['alert_popup'];
+          }
+          /**
+           * References Handler;
+           * The final case empty string was added
+           * to handle promise resolve more neatly.
+           */
+          const footerID =
+            completeMicrosite.data.data.footer_ref.id ||
+            baseLangData.data.footer_ref.id ||
+            '';
+          const secondaryFooterId =
+            completeMicrosite.data.data.secondary_footer?.id || '';
+          const contentSectionId =
+            completeMicrosite.data.data.content_framework.id || '';
+          const commonHeaderId =
+            completeMicrosite.data.data.common_header_ref?.id ||
+            baseLangData.data.common_header_ref?.id ||
+            '';
+
+          const linkedRefIDs = [];
+          linkedRefIDs.push(footerID);
+          linkedRefIDs.push(contentSectionId);
+          linkedRefIDs.push(commonHeaderId);
+          linkedRefIDs.push(secondaryFooterId);
+          const refArray = await getRefsArrayByIds(linkedRefIDs, req);
+          const {
+            commonFooter,
+            commonHeader,
+            contentFramework,
+            secondaryFooter,
+          } = refsArrayToObject(refArray);
+
+          const poweredByHeadout =
+            completeMicrosite.data.data?.enable_powered_by_headout_logo ||
+            baseLangData.data?.enable_powered_by_headout_logo;
+          delete completeMicrosite.data.data?.enable_powered_by_headout_logo;
+          delete baseLangData.data?.enable_powered_by_headout_logo;
+
+          let canonicalLink = strValues?.canonical_link;
+          try {
+            if (
+              lang !== 'en-us' &&
+              canonicalLink &&
+              !completeMicrosite.data.data.canonical_link
+            ) {
+              canonicalLink = new URL(sanitizeURL(canonicalLink));
+              canonicalLink.pathname = `/${PRISMIC_LANG_TO_ROUTE_PARAM[lang]}${canonicalLink.pathname}`;
+              canonicalLink = canonicalLink.toString();
+            }
+          } catch (e) {
+            // invalid url entered
+          }
+
+          const micrositeData = {
+            ...completeMicrosite,
+            data: {
+              ...completeMicrosite.data,
+              refs: {
+                commonFooter,
+                contentFramework,
+                commonHeader,
+                secondaryFooter,
+              },
+              data: {
+                ...completeMicrosite.data.data,
+                ...strValues,
+                ...objValues,
+                ...arrValues,
+                ...linkValues,
+                canonical_link:
+                  canonicalLink || completeMicrosite.data.data.page_url,
+                logo_redirection_url: completeMicrosite.data.data
+                  .logo_redirection_url.url
+                  ? completeMicrosite.data.data.logo_redirection_url
+                  : baseLangData.data.logo_redirection_url,
+                enable_earliest_availability:
+                  baseLangData.data.enable_earliest_availability,
+                enable_powered_by_superbrand_logo:
+                  typeof poweredByHeadout === 'string'
+                    ? poweredByHeadout === 'Yes'
+                    : poweredByHeadout,
+                baseLangPageTitle: baseLangData.data.title,
+              },
+            },
+          };
+          return {
+            CMSContent: micrositeData,
+            ContentType: CUSTOM_TYPES.MICROSITE,
+          };
+        }
+      } else {
+        return Promise.reject();
+      }
+    });
+};
+
+const getRefsArrayByIds = async (ref_ids: Array<String>, req: Request) => {
+  const linkedRefsPromise = Client(req).getByIDs(ref_ids.filter((id) => id));
+  return await Promise.resolve(linkedRefsPromise).then((res: any) => {
+    return res.results;
+  });
+};
+
+export const getPrismicDocument = async ({
+  req,
+  serverResponse,
+  query,
+}): Promise<{
+  ContentType?: string;
+  CMSContent?: any;
+  statusCode?: number;
+}> => {
+  const { host } = req.headers || window.location;
+  const { uid, lang } = getLangUID(req, query);
+  const queryParamsString = getValidUrlParams(query);
+
+  return await Promise.any([
+    getMicrositeDocument({
+      req,
+      serverResponse,
+      host,
+      lang,
+      queryParamsString,
+      uid,
+    }),
+    getContentPageDocument({
+      req,
+      serverResponse,
+      host,
+      lang,
+      queryParamsString,
+      uid,
+    }),
+    getListicleDocument({ req, lang, uid }),
+  ]).catch(() => ({
+    statusCode: 404,
+  }));
+};

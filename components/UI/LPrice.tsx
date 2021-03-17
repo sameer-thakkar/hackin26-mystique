@@ -1,4 +1,5 @@
 import React from 'react';
+import { isAlphabeticString } from 'utils/stringUtils';
 
 const LocalisedPrice = ({
   price,
@@ -15,11 +16,12 @@ const LocalisedPrice = ({
     ? finalPrice.toString().replace('.', ',')
     : finalPrice;
   const lPrice = [currencySymbol, finalPrice];
+  const space = isAlphabeticString(currencySymbol) ? ' ' : '';
   return (
     <span className={className}>
       {reveresedList.includes(lang)
         ? lPrice.reverse().join(' ')
-        : lPrice.join('')}
+        : lPrice.join(space)}
     </span>
   );
 };
