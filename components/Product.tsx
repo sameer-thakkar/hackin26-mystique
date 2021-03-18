@@ -14,6 +14,7 @@ import {
   THEMES,
   SIDEBAR_TYPES,
   LOCALISED_DATE_FORMATS,
+  NOS_OF_HIGHLIGHTS_TO_SHOW,
 } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { shortCodeSerializer } from 'utils/shortCodes';
@@ -304,11 +305,11 @@ const ProductBody = styled.div`
     opacity: 0.99;
     display: grid;
     grid-gap: 0;
-    ${({ collapsed, offsetToShow, defaultOpen }) =>
+    ${({ collapsed, noOfListItemToShow, defaultOpen }) =>
       collapsed && !defaultOpen
         ? `
-    *:not(div):nth-child(n + ${Math.max(3, 3 + offsetToShow)}),
-    ul li:nth-child(n + ${Math.max(3, 3 + offsetToShow)}) {
+    *:not(div):nth-child(n + ${noOfListItemToShow}),
+    ul li:nth-child(n + ${noOfListItemToShow}) {
       display: none;
     }
     `
@@ -661,9 +662,17 @@ const Product = (props) => {
     defaultOpen || false
   );
   const { validity } = scorpioData;
+  const descriptorsCsv = descriptors || scorpioData.descriptors;
+  const descriptorsList = descriptorsCsv
+    ? descriptorsCsv.match(/(("|').*?("|')|[^",]+)(?=\s*,|\s*$)/g)
+    : [];
+  const noOfListItemToShow = Math.max(
+    NOS_OF_HIGHLIGHTS_TO_SHOW,
+    descriptorsList.length
+  );
 
   const onTabChange = (tab) => {
-    setShowMoreDetails(tab.contents.length >= 3);
+    setShowMoreDetails(tab.contents.length >= noOfListItemToShow);
   };
 
   const handlePopup = () => {
@@ -690,11 +699,7 @@ const Product = (props) => {
   };
 
   const boosterHasIcon = booster?.filter((i) => i.type === 'image').length > 0;
-  const descriptorsCsv = descriptors || scorpioData.descriptors;
   const cardTitle = title || scorpioData.title;
-  const descriptorsList = descriptorsCsv
-    ? descriptorsCsv.match(/(("|').*?("|')|[^",]+)(?=\s*,|\s*$)/g)
-    : [];
   let url = host || window.location.host;
   const isDev = url.includes('localhost');
   const currentHost = !isDev ? url : parse(uid, true).pathname;
@@ -958,7 +963,7 @@ const Product = (props) => {
       <ProductBody
         hasReadMore={hasReadMore}
         collapsed={!expandContent}
-        offsetToShow={descriptorsList.length - 3}
+        noOfListItemToShow={noOfListItemToShow}
         defaultOpen={defaultOpen}
       >
         <div

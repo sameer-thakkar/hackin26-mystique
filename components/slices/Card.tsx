@@ -286,7 +286,7 @@ const Card: React.FC<CardProps> = ({
             target={cta.link.target}
             onClick={(e) => e.stopPropagation()}
           >
-            <Button>{cta.text || strings}</Button>
+            <Button>{cta.text || strings.BOOK_NOW_CTA}</Button>
           </a>
         </ButtonWrapper>
       );
@@ -298,7 +298,7 @@ const Card: React.FC<CardProps> = ({
           target={cta.link.target}
           onClick={(e) => e.stopPropagation()}
         >
-          {cta.text || strings}
+          {cta.text || strings.BOOK_NOW_CTA}
           {CHEVRON_LEFT}
         </CTALink>
       );

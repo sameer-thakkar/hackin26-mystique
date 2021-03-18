@@ -2,11 +2,11 @@ const axios = require('axios');
 const signale = require('signale');
 
 const domains = [
-  'https://frame.tickets-dubai.org',
-  'https://www.tickets-amsterdam.com',
-  'https://bateaux-parisiens.seine-river-cruises.com',
-  'https://www.alcazar-seville-tickets.com',
-  'https://www.alhambra-granada-tickets.com',
+  'https://www.thevaticantickets.com',
+  'https://www.versailles-palace-tickets.com',
+  'https://www.parkguell-tickets.com',
+  'https://www.colosseum-rome-tickets.com',
+  'https://art-in-paradise.bangkok-tickets.com',
 ];
 
 const BENCHMARK_PERF = {
@@ -70,7 +70,7 @@ const aggregateInsights = (insights) =>
 module.exports = (env, trackInsights = false) => {
   const pagespeedFetchers = domains
     .map((domain) =>
-      env === 'stage' ? domain.replace('https://', 'https://stage.') : domain
+      env === 'stage' ? domain.replace('https://', 'https://stage-') : domain
     )
     .map((domain) =>
       ['mobile', 'desktop'].map(

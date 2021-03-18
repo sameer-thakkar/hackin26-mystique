@@ -505,3 +505,5 @@ export const SHORT_CODE_TYPES = {
   FUNCTION: 'FUNCTION',
   COMPONENT: 'COMPONENT',
 };
+
+export const NOS_OF_HIGHLIGHTS_TO_SHOW = 4;

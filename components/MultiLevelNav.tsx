@@ -158,6 +158,10 @@ const Nav = styled.nav`
   li {
     list-style: none;
   }
+  ul.off-screen {
+    left: unset;
+    right: 0;
+  }
   @media (max-width: 768px) {
     display: none;
     &.navigation-nav-open {
