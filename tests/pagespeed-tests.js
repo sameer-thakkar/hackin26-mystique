@@ -23,7 +23,7 @@ const parseResponse = (pagespeedResponse) => {
     si: audits['speed-index'].numericValue,
     fcp: audits['first-contentful-paint'].numericValue,
     fmp: audits['first-meaningful-paint'].numericValue,
-    ttfb: audits['time-to-first-byte'].numericValue,
+    ttfb: audits['server-response-time'].numericValue,
     tti: audits['interactive'].numericValue,
     perf_score_out_of_100: categories.performance.score * 100,
   };
@@ -172,6 +172,7 @@ module.exports = (env, trackInsights = false) => {
       process.exit(0);
     })
     .catch((e) => {
+      console.trace(e);
       signale.fatal(e.response.data.error);
       process.exit(1);
     });
