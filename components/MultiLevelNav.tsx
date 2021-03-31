@@ -123,6 +123,7 @@ const NestedMenu = styled.ul`
 
   ${StyledMenuItem}:hover > a > & {
     visibility: unset;
+    z-index: 1;
     li:hover {
       background-color: ${({ theme: { primaryBGHover } }) =>
         primaryBGHover ? primaryBGHover : COLORS.FLOAT_PURPS};
@@ -158,7 +159,7 @@ const Nav = styled.nav`
   li {
     list-style: none;
   }
-  ul.off-screen {
+  & > li > a > ul.off-screen {
     left: unset;
     right: 0;
   }

@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// import Link from 'next/link';
-import Router from 'next/router';
 import styled from 'styled-components';
 import { withoutTrailingSlash } from 'utils/helper';
 import { GLOBE } from 'assets/SvgIcons';
@@ -149,7 +147,7 @@ class LanguageSelector extends Component<any, any> {
     if (isDev) {
       window.location.href = `http://${host}/?mystique_uid=${uid}&lang=${FULL_LANGUAGE_MAP[selectedLang].paramLang}`;
     } else {
-      Router.push(`/${selectedLang}/${slug}`);
+      window.location.href = `https://${host}/${selectedLang}/${slug}`;
     }
   };
 
