@@ -48,8 +48,8 @@ const Listicle = dynamic(() => import('./slices/Listicle'));
 const Reviews = dynamic(() => import('./slices/Reviews'));
 
 const sliceHandler = (slice, props: any = {}) => {
-  if(slice.primary.hide_slice)
-  return null;
+  if (slice?.primary?.hide_slice) return null;
+
   switch (slice.slice_type) {
     case 'rich_text':
     case 'rich_text_only':
@@ -450,12 +450,10 @@ const sliceHandler = (slice, props: any = {}) => {
           type={slice.primary.type}
           reviews={slice.items}
         />
-      ); 
+      );
     case 'tours_list':
-        return(
-          props.tourListSection
-        )
-    
+      return props.tourListSection;
+
     default:
     // ToDo: Add to Error Logs (Slice)
   }
