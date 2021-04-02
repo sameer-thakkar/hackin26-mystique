@@ -106,12 +106,19 @@ const SingleImage = styled.div`
 
 const SliderAccordion = (props) => {
   const { faqs: accordions, sliceProps } = props;
+
+  accordions.forEach((accordian) => {
+    if (accordian.images.length == 0)
+      accordian.images[0] = accordions[0].images[0];
+  });
+
   const { isMobile } = sliceProps;
   const isAmp = useAmp();
   const [activeAccordionIndex, setActiveAccordionIndex] = useState(0);
   const activeAccordionImages = accordions[activeAccordionIndex].images.filter(
     (i) => i.url
   );
+
   const sliderOptions = {
     direction: 'horizontal',
     speed: 650,
