@@ -116,7 +116,7 @@ const SliderAccordion = (props) => {
   const isAmp = useAmp();
   const [activeAccordionIndex, setActiveAccordionIndex] = useState(0);
   const activeAccordionImages = accordions[activeAccordionIndex].images.filter(
-    (i) => i.url
+    (i) => i?.url
   );
 
   const sliderOptions = {
