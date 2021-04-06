@@ -108,3 +108,68 @@ export const parseDescriptorIcon = (str) => {
     descriptor,
   };
 };
+
+export const getContentBlocksMidIndex = (array) => {
+  let totalWordCount = 0;
+  let resultIndex = array.length / 2;
+  array.forEach((element) => {
+    totalWordCount += RichText.asText(element.contents).length;
+  });
+
+  let leftWordCount = 0;
+  let flag = true;
+  array.forEach((element, index) => {
+    leftWordCount += RichText.asText(element.contents).length;
+    if (leftWordCount >= totalWordCount / 2 && flag) {
+      resultIndex = index;
+      flag = false;
+    }
+  });
+  return resultIndex + 1;
+};
+
+export const extractContentForProductCard = (markdownBlocks, contentBlocks) => {
+  const tabsMarkdown = markdownBlocks
+    ? extractTabsFromHighlights(markdownBlocks).tabs
+    : [];
+
+  let leftContent = [];
+  let rightContent = [];
+
+  if (tabsMarkdown.length > 0) {
+    const sliceValue = getContentBlocksMidIndex(tabsMarkdown);
+    const [tabsMarkdownLeft, tabsMarkdownRight] = [
+      tabsMarkdown.slice(0, sliceValue),
+      tabsMarkdown.slice(sliceValue, tabsMarkdown.length),
+    ];
+
+    tabsMarkdownLeft.forEach((highlight) => {
+      leftContent.push({
+        heading: highlight.heading,
+        contents: highlight.contents,
+      });
+    });
+
+    tabsMarkdownRight.forEach((highlight) => {
+      rightContent.push({
+        heading: highlight.heading,
+        contents: highlight.contents,
+      });
+    });
+  } else {
+    contentBlocks.left.forEach((highlight) => {
+      leftContent.push({
+        heading: highlight.label,
+        contents: highlight.content,
+      });
+    });
+
+    contentBlocks.right.forEach((highlight) => {
+      rightContent.push({
+        heading: highlight.label,
+        contents: highlight.content,
+      });
+    });
+  }
+  return { left: leftContent, right: rightContent };
+};
