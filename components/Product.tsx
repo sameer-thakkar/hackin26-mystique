@@ -316,7 +316,7 @@ const ProductBody = styled.div`
         : ''}
     ul {
       padding: 0;
-      padding-left: 1.2em;
+      padding-left: 1.0em;
       display: grid;
       grid-gap: 12px;
     }
@@ -657,7 +657,7 @@ const Product = (props) => {
   } = props;
   const { mbTheme, biLink } = useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
-  const [isContentOpen, toggleContentOpen] = useState(defaultOpen && !isMobile);
+  const [isContentOpen, toggleContentOpen] = useState(defaultOpen || isAmp);
   const [showMoreDetailsInTabs, setShowMoreDetails] = useState(
     defaultOpen || false
   );
