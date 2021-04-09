@@ -857,7 +857,7 @@ const Product = (props) => {
           <Conditional if={boosterTag && mbTheme !== THEMES.MIN_BLUE}>
             <BoosterTag>{boosterTag}</BoosterTag>
           </Conditional>
-          <TourTitle>{cardTitle}</TourTitle>
+          <TourTitle isPopup={isContentOpen}>{cardTitle}</TourTitle>
         </TitleWrapper>
         <Conditional if={mbTheme !== THEMES.MIN_BLUE && hasShortSummary}>
           <ShortSummary>

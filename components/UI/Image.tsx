@@ -53,6 +53,7 @@ type ImageProps = {
   mobileUrl?: string;
   layout?: string;
   attribution?: string;
+  autoCrop?: boolean;
 };
 
 const Image: React.FC<ImageProps> = ({
@@ -72,21 +73,32 @@ const Image: React.FC<ImageProps> = ({
   isFooterLogo,
   layout,
   attribution = '',
+  autoCrop = true,
 }) => {
   const isAmp = useAmp();
   const makeImageUrl = (fm: string, url): string => {
     if (!url) {
       return null;
     }
-    const w = width ? `&w=${Number(width) * 1.5}` : '';
-    const h = height ? `&h=${Number(height) * 1.5}` : '';
-    const q = quality ? `&q=${Number(quality)}` : '';
-    const ar = aspectRatio ? `&ar=${aspectRatio}&fit=crop` : '&fit=min';
+    const imigxOptionsQueryParams = new URLSearchParams();
+    if (width) imigxOptionsQueryParams.set('w', `${Number(width) * 1.5}`);
+    if (height) imigxOptionsQueryParams.set('h', `${Number(height) * 1.5}`);
+    if (quality) imigxOptionsQueryParams.set('q', `${Number(quality)}`);
+    imigxOptionsQueryParams.set('fit', 'fit');
+    if (aspectRatio) {
+      imigxOptionsQueryParams.set('ar', `${Number(aspectRatio)}`);
+      imigxOptionsQueryParams.set('fit', 'crop');
+    }
+    if (autoCrop) {
+      imigxOptionsQueryParams.set('crop', 'faces');
+      imigxOptionsQueryParams.delete('fit');
+    }
+
     const extractedRect = /rect=[\d,.]*/.exec(url);
     if (format === 'gif') return url;
     return attachQueryParam(
       url,
-      `auto=compress,format${w}${h}${q}${ar}&crop=faces${
+      `auto=compress,format&${imigxOptionsQueryParams.toString()}${
         extractedRect ? `&${extractedRect}` : ''
       }`,
       true

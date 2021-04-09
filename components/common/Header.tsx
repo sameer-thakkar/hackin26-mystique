@@ -235,6 +235,7 @@ const Header: React.FC<any> = (props) => {
               isLogo
               height="44"
               width="144"
+              autoCrop={false}
             />
             {hasPoweredByHeadoutLogo ? POWERED_BY_HEADOUT : null}
           </StyledLogo>

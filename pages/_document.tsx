@@ -68,34 +68,7 @@ class MystiqueDocument extends Document {
     return (
       <Html>
         <Head>
-          <link
-            rel="preload"
-            as="font"
-            href="https://use.typekit.net/af/1f781f/00000000000000003b9aef83/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3"
-            type="font/woff2"
-            crossOrigin="anonymous"
-          />
-          <link
-            rel="preload"
-            as="font"
-            href="https://use.typekit.net/af/273d01/00000000000000003b9aef81/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3"
-            type="font/woff2"
-            crossOrigin="anonymous"
-          />
-          <link
-            rel="preload"
-            as="font"
-            href="https://use.typekit.net/af/f445d5/00000000000000003b9aef7d/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3"
-            type="font/woff2"
-            crossOrigin="anonymous"
-          />
-          <link
-            rel="preload"
-            as="font"
-            href="https://use.typekit.net/af/2e4bb3/00000000000000003b9aef7e/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3"
-            type="font/woff2"
-            crossOrigin="anonymous"
-          />
+          <link rel="stylesheet" href="https://use.typekit.net/bqt0pit.css" />
         </Head>
         <body>
           <AMPAnalytics asPath={asPath} query={query} />
