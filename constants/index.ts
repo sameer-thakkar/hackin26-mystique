@@ -170,6 +170,10 @@ export const CUSTOM_TYPES = {
   COMMON_DATA: 'common_data',
   LISTICLE: 'page',
   CONTENT_FRAMEWORK: 'content_framework',
+  GLOBAL_CITY: 'global_city',
+  GLOBAL_COLLECTION: 'global_collection',
+  GLOBAL_COUNTRY: 'global_country',
+  GLOBAL_EXPERIENCE: 'global_experience',
 };
 
 export const DESIGN = {
@@ -321,6 +325,9 @@ export const TOUR_COMPARISION_DESIGN = {
   TYPE_1: 'Type-1',
   TYPE_2: 'Type-2',
 };
+
+export const FALLBACK_IMAGE =
+  'https://cdn-imgix-open.headout.com/blog/media/images/Blog.png';
 
 export const SAFETY_DETAILS_IMAGES = {
   SAFETY_MASK_STAFF: 'https://cdn-imgix-open.headout.com/sites/safe/mask.jpg',

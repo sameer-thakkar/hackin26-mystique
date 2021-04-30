@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useAmp } from 'next/amp';
-import { SOLEIL } from 'const/ui-constants';
+import { COLORS, SIZES, SOLEIL } from 'const/ui-constants';
 import Conditional from 'components/common/Conditional';
+import { useWindowWidth } from '@react-hook/window-size';
+import { CHEVRON_LEFT, CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
 
+import { stringIdfy } from '../../utils/helper';
 import sliceHandler from '../Slices';
 import RichContent from '../UI/RichContent';
 import TitleTextCombo from '../UI/TitleTextCombo';
-import { stringIdfy } from '../../utils/helper';
+
+const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
 const StyledTabWrapper = styled.div`
   display: grid;
@@ -18,17 +23,25 @@ const StyledTabWrapper = styled.div`
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: auto;
-    font-size: 18px;
-    grid-column-gap: 32px;
+    font-size: ${({ isGlobalMb }) => (isGlobalMb ? '16px' : '18px')};
+    grid-column-gap: ${({ isGlobalMb }) => (isGlobalMb ? '48px' : '32px')};
     border-bottom: 1px solid #ebebeb;
     justify-content: left;
     &::-webkit-scrollbar {
       display: none;
     }
+    ${({ isGlobalMb }) =>
+      isGlobalMb &&
+      `
+      line-height: 20px;
+      `}
   }
+
   .tab-content-wrap {
     display: grid;
+    ${({ isGlobalMb }) => isGlobalMb && `margin-top: 8px;`}
   }
+
   h1,
   h2,
   h3,
@@ -38,10 +51,15 @@ const StyledTabWrapper = styled.div`
     margin: 0;
     margin-bottom: 8px;
   }
+
+  h2 {
+    ${({ isGlobalMb }) => isGlobalMb && `margin-bottom: 0 !important;`}
+  }
   @media (max-width: 768px) {
     .tabs {
       overflow-x: scroll;
       grid-auto-columns: max-content;
+      ${({ isGlobalMb }) => isGlobalMb && `grid-column-gap: 32px;`}
     }
   }
 `;
@@ -49,7 +67,6 @@ const StyledTabWrapper = styled.div`
 const StyledTab = styled.div`
   cursor: pointer;
   padding-bottom: 8px;
-  display: block;
   width: 100%;
   ${({ isActive }) => {
     return (
@@ -93,6 +110,59 @@ const AmpSelectorContainer = styled.div`
   }
 `;
 
+const TabCarousel = styled.div`
+  position: relative;
+  padding: 12px 0 24px 0;
+`;
+
+const StyledSwiper = styled.div`
+  overflow: hidden;
+  display: flex;
+  position: relative;
+  max-width: ${SIZES.MAX_WIDTH};
+  .tabs-section-wrapper {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    border-bottom: 1px solid ${COLORS.GREY_G6};
+  }
+  .swiper-container {
+    width: 100%;
+    height: 100%;
+  }
+  .swiper-slide {
+    width: auto;
+  }
+`;
+
+const Controls = styled.div`
+  .prev-slide,
+  .next-slide {
+    position: absolute;
+    top: 6px;
+    left: -20px;
+    cursor: pointer;
+    z-index: 2;
+    svg {
+      fill: #fff;
+      circle {
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+      }
+      border-radius: 100%;
+      box-shadow: path {
+        stroke-width: 2px;
+      }
+    }
+  }
+  .next-slide {
+    left: unset;
+    right: -20px;
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+`;
+
 type TabWrapperProps = {
   heading: String;
   slices: Array<any>;
@@ -130,7 +200,7 @@ type TabWrapperProps = {
 const TabWrapper = (props: TabWrapperProps) => {
   const { heading, slices, sliceProps: parentSliceProps, description } = props;
   // @ts-ignore
-  const { sliceIndex } = parentSliceProps;
+  const { sliceIndex, isGlobalMb } = parentSliceProps;
   const default_from_prismic = slices.filter(
     (slice) => slice.primary.is_default == 'Yes'
   );
@@ -147,8 +217,122 @@ const TabWrapper = (props: TabWrapperProps) => {
     ...parentSliceProps,
   };
 
+  // Tab Carousel
+  const width = useWindowWidth();
+  const [isMobile, setIsMobile] = useState(false);
+  const [swiper, updateSwiper] = useState(null);
+  const [_currentIndex, updateCurrentIndex] = useState(0);
+  const updateIndex = useCallback(() => updateCurrentIndex(swiper.realIndex), [
+    swiper,
+  ]);
+  const [isEnd, updateEnd] = useState(false);
+  const [isBeginning, updateBeginning] = useState(true);
+
+  // isMobile effect
+  useEffect(() => {
+    setIsMobile(width <= 768);
+  }, [width, setIsMobile]);
+
+  useEffect(() => {
+    if (isMobile) return;
+    updateBeginning(swiper?.isBeginning);
+    updateEnd(swiper?.isEnd);
+    if (swiper !== null) {
+      swiper.on('slideChange', updateIndex);
+    }
+
+    return () => {
+      if (swiper !== null) {
+        swiper.off('slideChange', updateIndex);
+      }
+    };
+  }, [isMobile, swiper, updateIndex]);
+
+  if (isGlobalMb && !isMobile) {
+    const goNext = () => {
+      if (swiper !== null) {
+        swiper?.slideNext();
+        updateEnd(swiper?.isEnd);
+        updateBeginning(swiper?.isBeginning);
+      }
+    };
+
+    const goPrev = () => {
+      if (swiper !== null) {
+        swiper.slidePrev();
+        updateEnd(swiper?.isEnd);
+        updateBeginning(swiper?.isBeginning);
+      }
+    };
+    const swiperParams = {
+      slidesPerView: 'auto',
+      wrapperClass: 'tabs-section-wrapper',
+      spaceBetween: 48,
+      shouldSwiperUpdate: true,
+      getSwiper: updateSwiper,
+    };
+
+    return (
+      <>
+        <TitleTextCombo noMargin={true}>
+          <Conditional if={heading?.length}>
+            <h2>{heading}</h2>
+          </Conditional>
+          {description ? <RichContent render={description} /> : null}
+        </TitleTextCombo>
+        <TabCarousel>
+          <StyledSwiper>
+            <Swiper {...swiperParams}>
+              {slices.map((slice, index) => {
+                const tabId = stringIdfy(slice.primary.title);
+                return (
+                  <div key={index} className="swiper-slide">
+                    <StyledTab
+                      key={index}
+                      isActive={activeTabId == tabId}
+                      onClick={() => setActiveTab(tabId)}
+                    >
+                      {slice.primary.title}
+                    </StyledTab>
+                  </div>
+                );
+              })}
+            </Swiper>
+          </StyledSwiper>
+          <Controls>
+            {!isBeginning ? (
+              <div
+                className="prev-slide"
+                role="button"
+                tabIndex={0}
+                onClick={goPrev}
+              >
+                {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
+              </div>
+            ) : null}
+            {!isEnd ? (
+              <div
+                className="next-slide"
+                role="button"
+                tabIndex={0}
+                onClick={goNext}
+              >
+                {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
+              </div>
+            ) : null}
+          </Controls>
+        </TabCarousel>
+        <div className="tab-content-wrap">
+          {slices.map((slice, keyIndex) => {
+            return sliceHandler(slice, { ...sliceProps, keyIndex });
+          })}
+        </div>
+      </>
+    );
+  }
+
   return (
-    <StyledTabWrapper>
+    <StyledTabWrapper isGlobalMb={isGlobalMb}>
       <TitleTextCombo noMargin={true}>
         <Conditional if={heading?.length}>
           <h2>{heading}</h2>

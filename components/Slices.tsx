@@ -46,6 +46,9 @@ const AccordionGroup = dynamic(() => import('./slices/AccordionGroup'));
 const ListicleSection = dynamic(() => import('./slices/ListicleSection'));
 const Listicle = dynamic(() => import('./slices/Listicle'));
 const Reviews = dynamic(() => import('./slices/Reviews'));
+const ExperienceCarousel = dynamic(() =>
+  import('./GlobalMbs/ExperienceCarousel')
+);
 
 const sliceHandler = (slice, props: any = {}) => {
   switch (slice.slice_type) {
@@ -234,6 +237,7 @@ const sliceHandler = (slice, props: any = {}) => {
     case 'tab':
       return (
         <Tab
+          key={props.index}
           slices={slice.slices}
           title={slice.primary.title}
           isDefault={slice.primary.is_default == 'Yes'}
@@ -261,6 +265,7 @@ const sliceHandler = (slice, props: any = {}) => {
       }, []);
       return (
         <SliderAccordion
+          key={props.index}
           isMobile={props.isMobile}
           faqs={faqs}
           sliceProps={props}
@@ -305,6 +310,7 @@ const sliceHandler = (slice, props: any = {}) => {
           cardsInARow={Number(cards_in_a_row) || 1}
           description={description}
           exitDescription={exit_description}
+          {...props}
         />
       );
     case 'card':
@@ -338,6 +344,7 @@ const sliceHandler = (slice, props: any = {}) => {
           cardsInARow={props.cardsInARow}
           link={card_link}
           linkType={card_link_type}
+          isGlobalMb={props.isGlobalMb}
         />
       );
     case 'horizontal_line':
@@ -422,6 +429,7 @@ const sliceHandler = (slice, props: any = {}) => {
           accordions={slice.items}
           heading={slice.primary.heading}
           useSchema={slice.primary.use_faq_schema || false}
+          sliceProps={props}
         />
       );
     case 'unspace':
@@ -447,6 +455,17 @@ const sliceHandler = (slice, props: any = {}) => {
           title={slice.primary.title}
           type={slice.primary.type}
           reviews={slice.items}
+        />
+      );
+    case 'global_experiences':
+      return (
+        <ExperienceCarousel
+          cardsInARow={slice?.primary?.cards_in_a_row}
+          experienceType={slice?.primary?.experience_type}
+          mbType={slice?.primary?.mb_type}
+          showSeeAll={slice?.primary?.show_see_all}
+          title={slice?.primary?.title}
+          {...props}
         />
       );
     default:

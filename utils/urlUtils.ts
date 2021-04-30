@@ -77,9 +77,44 @@ export const getLangUID = (req, query) => {
   return { uid, lang };
 };
 
+export function getValidUrl(url) {
+  if (url) {
+    if (url.startsWith('http://')) {
+      return url.replace('http://', 'https://');
+    }
+    if (url.startsWith('//')) {
+      return `https:${url}`;
+    }
+    if (url.startsWith('www')) {
+      return `https://${url}`;
+    }
+  }
+  return url;
+}
+
 export const getValidUrlParams = (query) =>
   Object.entries(query)
     .filter(([key]) => key !== 'slug')
     .map(([key, val]) => `${key}=${val}`)
     .join('&')
     .trim();
+
+export const convertUidToUrl = (uid) => {
+  if (uid) {
+    let url;
+    const regex = /www\.[a-zA-z0-9-]+((\.[a-z]{1,2}\.[a-z]{1,2})|(\.[a-z]{2,3}))/g;
+    const domain = uid.match(regex);
+    const pathName = uid.split(domain)?.filter((string) => string.length);
+    if (domain?.length) {
+      url = `https://${domain[0]}`;
+      if (pathName.length) {
+        pathName.forEach((name) => {
+          url += name.replace('.', '/');
+        });
+      }
+    }
+    return url;
+  } else {
+    return null;
+  }
+};

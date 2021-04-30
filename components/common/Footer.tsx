@@ -344,7 +344,7 @@ const Footer: React.FC<FooterProps> = ({
                     {strings.FOOTER.CHAT_WITH_US}
                   </Link>
                 </Conditional>
-                <Link href={`tel:${'+1 347 897 0100'}`}>
+                <Link href={`tel: +1 347 897 0100`}>
                   {strings.FOOTER.CALL_US} {!isMobile ? '+1 347 897 0100' : ''}
                 </Link>
                 <Link

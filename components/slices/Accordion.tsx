@@ -8,7 +8,7 @@ import Chevron from '../UI/Chevron';
 
 export const StyledAccordion = styled.div`
   padding: 16px 0;
-  margin-right: 24px;
+  margin-right: ${({ isGlobalMb }) => (isGlobalMb ? '0' : '24px')};
   border-bottom: 1px solid ${COLORS.CHALK};
   display: grid;
   grid-template-rows: max-content max-content;
@@ -20,6 +20,11 @@ export const StyledAccordion = styled.div`
     grid-row-gap: 16px;
     margin-right: 0;
     padding: 16px 0;
+
+    &:first-child {
+      border-top: ${({ isGlobalMb }) =>
+        isGlobalMb && `1px solid ${COLORS.CHALK}`};
+    }
     &.accordion-container[expanded] header .chevron-icon {
       &::before {
         -webkit-transform: rotate(-45deg);
@@ -40,7 +45,7 @@ const Title = styled.div`
   line-height: 20px;
   font-weight: ${SOLEIL.SEMIBOLD};
   font-family: ${SOLEIL.FONT_STACK};
-
+  ${({ isGlobalMb }) => isGlobalMb && `font-size: 16px;`}
   .question-text {
     cursor: pointer;
   }
@@ -69,6 +74,7 @@ const ContentBlock = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
   p {
     margin: 0;
+    ${({ isGlobalMb }) => isGlobalMb && `font-size: 14px; line-height: 20px;`}
   }
   a {
     color: ${COLORS.MED_SLATE_BLUE};
@@ -83,8 +89,9 @@ type AccordionProps = {
   isOpenOverride?: Boolean;
   heading: string;
   content: any;
-  isAmp?: boolean;
+  isAmp?: Boolean;
   useSchema?: Boolean;
+  isGlobalMb?: Boolean;
 };
 
 const Accordion = ({
@@ -94,6 +101,7 @@ const Accordion = ({
   clickHandler = null,
   isAmp = false,
   useSchema = false,
+  isGlobalMb,
 }: AccordionProps) => {
   const [isOpen, setOpen] = useState(false || isOpenOverride);
   const chevronContainerClass = classNames({
@@ -107,12 +115,12 @@ const Accordion = ({
   useEffect(() => {
     setOpen(isOpenOverride);
   }, [isOpenOverride]);
-
   return (
     <StyledAccordion
       isOpen={isOpen}
       as={isAmp ? 'section' : 'div'}
       className={accordionContainerClass}
+      isGlobalMb={isGlobalMb}
       {...(useSchema && {
         itemProp: 'mainEntity',
         itemType: 'https://schema.org/Question',
@@ -128,6 +136,7 @@ const Accordion = ({
         onClick={() => {
           clickHandler ? clickHandler() : setOpen(!isOpen);
         }}
+        isGlobalMb={isGlobalMb}
       >
         <div
           className="question-text"
@@ -148,6 +157,7 @@ const Accordion = ({
       <ContentBlock
         className="answer"
         isOpen={isOpen}
+        isGlobalMb={isGlobalMb}
         {...(useSchema && {
           itemProp: 'acceptedAnswer',
           itemType: 'https://schema.org/Answer',
@@ -156,7 +166,7 @@ const Accordion = ({
       >
         <div
           {...(useSchema && {
-            itemprop: 'text',
+            itemProp: 'text',
           })}
         >
           <Conditional if={typeof content !== 'string'}>{content}</Conditional>

@@ -4,7 +4,7 @@ import { shortCodeSerializer } from 'utils/shortCodes';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 
 const StyledRichContent = styled.div`
-  font-family: ${SOLEIL.FONT_STACK}
+  font-family: ${SOLEIL.FONT_STACK};
   line-height: 1.6;
   color: ${COLORS.FOUR_BLACK};
 `;

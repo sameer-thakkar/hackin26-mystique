@@ -69,9 +69,10 @@ const Header = styled.div`
         }
       }
     `
-      : ''};
+      : ''}
   top: 0;
-  background: ${({ addBg }) => (addBg ? COLORS.WHITE : 'transparent')};
+  background: ${({ addBg, isGlobalMb }) =>
+    addBg ? COLORS.WHITE : isGlobalMb ? COLORS.WHITE : 'transparent'};
   z-index: 12;
   @media (max-width: 768px) {
     &:before,
@@ -99,6 +100,7 @@ const CloseIcon = styled.div`
     stroke: #545454;
     stroke-width: 1.8px;
   }
+  z-index: 999;
 `;
 
 const Title = styled.div`
@@ -131,7 +133,7 @@ const ModalContent = styled.div`
     sidebarType === SIDEBAR_TYPES.PRODUCT_CARD
       ? `
   overflow-x: scroll;
-  height: calc( ${windowHeight}px - 46px);
+  height: ${windowHeight - 46}px;
   border-radius: 10px 10px 0 0;
   `
       : ``}
@@ -147,11 +149,12 @@ const AsideModal = ({
   resetAside,
   sidePadding = 0,
   type,
+  isGlobalMb = false,
 }) => {
   const [container, setContainer] = useState(null);
   const [scrollY, setScrollY] = useState(0);
   const { width: windowWidth, height: windowHeight } = useWindowSize();
-  const isMobile = windowWidth < 768;
+  const isMobile = isGlobalMb ? windowWidth <= 768 : windowWidth < 768;
   const hasBack = stack.length > 1;
 
   useEffect(() => {
@@ -194,6 +197,7 @@ const AsideModal = ({
               addBg={!!title}
               type={type}
               sidePadding={sidePadding}
+              isGlobalMb={isGlobalMb}
             >
               <Title>{title}</Title>
               {hasBack ? (

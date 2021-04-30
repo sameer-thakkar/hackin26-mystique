@@ -1,4 +1,5 @@
 import { Client } from 'config/prismic-config';
+import Prismic from 'prismic-javascript';
 import {
   CUSTOM_TYPES,
   LINKED_MICROSITE_PROPS,
@@ -322,6 +323,196 @@ export const getMicrositeDocument = async ({
     });
 };
 
+export const getGlobalExperience = async ({ req, uid, lang }) => {
+  const response = await Client(req).getByUID(
+    CUSTOM_TYPES.GLOBAL_EXPERIENCE,
+    uid,
+    {
+      lang,
+    }
+  );
+  if (response) {
+    const { common_footer, content_framework } = response.data;
+
+    const refArray = await getRefsArrayByIds(
+      [common_footer.id, content_framework.id],
+      req
+    );
+    const { commonFooter, contentFramework } = refsArrayToObject(refArray);
+    return {
+      CMSContent: {
+        ...response,
+        commonFooter,
+        contentFramework,
+      },
+      ContentType: CUSTOM_TYPES.GLOBAL_EXPERIENCE,
+    };
+  }
+  return Promise.reject();
+};
+export const getGlobalCollection = async ({ req, uid, lang }) => {
+  const response = await Client(req).getByUID(
+    CUSTOM_TYPES.GLOBAL_COLLECTION,
+    uid,
+    {
+      lang,
+    }
+  );
+  const client = Client();
+  if (response) {
+    const { id: docID } = response;
+    const {
+      common_footer,
+      content_framework,
+      country: { id: countryDocID },
+      city: { id: cityDocID },
+    } = response.data;
+    const cityCollections = await client.query(
+      [
+        Prismic.Predicates.at('document.type', CUSTOM_TYPES.GLOBAL_COLLECTION),
+        Prismic.Predicates.at(
+          `my.${CUSTOM_TYPES.GLOBAL_COLLECTION}.city`,
+          cityDocID
+        ),
+      ],
+      { pageSize: 100 }
+    );
+    const countryCollections = await client.query(
+      [
+        Prismic.Predicates.at('document.type', CUSTOM_TYPES.GLOBAL_COLLECTION),
+        Prismic.Predicates.at(
+          `my.${CUSTOM_TYPES.GLOBAL_COLLECTION}.country`,
+          countryDocID
+        ),
+      ],
+      { pageSize: 100 }
+    );
+    const subPages = await client.query(
+      [
+        Prismic.Predicates.at('document.type', CUSTOM_TYPES.GLOBAL_EXPERIENCE),
+        Prismic.Predicates.at(
+          `my.${CUSTOM_TYPES.GLOBAL_EXPERIENCE}.collection`,
+          docID
+        ),
+      ],
+      { pageSize: 100 }
+    );
+
+    let ticketsPage, attractionsPage;
+    if (subPages?.results?.length) {
+      ticketsPage = subPages?.results
+        ?.filter((page) => page.data.page_type === 'Tickets')
+        ?.reduce((acc, curr) => acc + curr);
+      attractionsPage = subPages?.results
+        ?.filter((page) => page.data.page_type === 'Attractions')
+        ?.reduce((acc, curr) => acc + curr);
+    }
+
+    const refArray = await getRefsArrayByIds(
+      [common_footer.id, content_framework.id],
+      req
+    );
+    const { commonFooter, contentFramework } = refsArrayToObject(refArray);
+    return {
+      CMSContent: {
+        ...response,
+        ticketsPage,
+        attractionsPage,
+        cityCollections,
+        countryCollections,
+        commonFooter,
+        contentFramework,
+      },
+      ContentType: CUSTOM_TYPES.GLOBAL_COLLECTION,
+    };
+  }
+  return Promise.reject();
+};
+export const getGlobalCity = async ({ req, uid, lang }) => {
+  const cityResponse = await Client(req).getByUID(
+    CUSTOM_TYPES.GLOBAL_CITY,
+    uid,
+    {
+      lang,
+    }
+  );
+  if (cityResponse) {
+    const { id: cityDocId } = cityResponse;
+    const { common_footer, content_framework } = cityResponse.data;
+
+    const client = Client();
+    const cityCollections = await client.query(
+      [
+        Prismic.Predicates.at('document.type', CUSTOM_TYPES.GLOBAL_COLLECTION),
+        Prismic.Predicates.at(
+          `my.${CUSTOM_TYPES.GLOBAL_COLLECTION}.city`,
+          cityDocId
+        ),
+      ],
+      { pageSize: 100 }
+    );
+
+    const refArray = await getRefsArrayByIds(
+      [common_footer.id, content_framework.id],
+      req
+    );
+    const { commonFooter, contentFramework } = refsArrayToObject(refArray);
+    return {
+      CMSContent: {
+        ...cityResponse,
+        cityCollections,
+        commonFooter,
+        contentFramework,
+      },
+      ContentType: CUSTOM_TYPES.GLOBAL_CITY,
+    };
+  }
+  return Promise.reject();
+};
+export const getGlobalCountry = async ({ req, uid, lang }) => {
+  const countryResponse = await Client(req).getByUID(
+    CUSTOM_TYPES.GLOBAL_COUNTRY,
+    uid,
+    {
+      lang,
+    }
+  );
+  if (countryResponse) {
+    const { id: countryDocID } = countryResponse;
+    const { common_footer, content_framework } = countryResponse.data;
+
+    const client = Client();
+    const getAllCollections = await client.query(
+      [
+        Prismic.Predicates.at('document.type', CUSTOM_TYPES.GLOBAL_COLLECTION),
+        Prismic.Predicates.at(
+          `my.${CUSTOM_TYPES.GLOBAL_COLLECTION}.country`,
+          countryDocID
+        ),
+      ],
+      { pageSize: 100 }
+    );
+
+    const refArray = await getRefsArrayByIds(
+      [common_footer.id, content_framework.id],
+      req
+    );
+    const { commonFooter, contentFramework } = refsArrayToObject(refArray);
+    return {
+      CMSContent: {
+        ...countryResponse,
+        collections: {
+          ...getAllCollections,
+        },
+        commonFooter,
+        contentFramework,
+      },
+      ContentType: CUSTOM_TYPES.GLOBAL_COUNTRY,
+    };
+  }
+  return Promise.reject();
+};
+
 const getRefsArrayByIds = async (ref_ids: Array<String>, req: Request) => {
   const linkedRefsPromise = Client(req).getByIDs(ref_ids.filter((id) => id));
   return await Promise.resolve(linkedRefsPromise).then((res: any) => {
@@ -360,6 +551,10 @@ export const getPrismicDocument = async ({
       uid,
     }),
     getListicleDocument({ req, lang, uid }),
+    getGlobalExperience({ req, lang, uid }),
+    getGlobalCollection({ req, lang, uid }),
+    getGlobalCity({ req, lang, uid }),
+    getGlobalCountry({ req, lang, uid }),
   ]).catch(() => ({
     statusCode: 404,
   }));
