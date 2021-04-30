@@ -20,7 +20,7 @@ export const StyledPriceBlock = styled.div`
   grid-row-gap: 4px;
   grid-column-gap: 8px;
   align-items: end;
-  text-transform: uppercase;
+  text-transform: camelcase;
   width: max-content;
   .tour-scratch-price {
     grid-column: 1 / 3;

@@ -262,9 +262,10 @@ const themes = {
           font-weight: ${SOLEIL.REGULAR};
         `,
         mobile: `
-            font-weight: ${SOLEIL.SEMIBOLD};
-            font-size: 16px;
-            line-height: 22px;
+            font-weight: ${({ isPopup }) =>
+              isPopup ? SOLEIL.REGULAR : SOLEIL.SEMIBOLD};
+            font-size: ${({ isPopup }) => (isPopup ? '21px' : '16px')};
+            line-height: ${({ isPopup }) => (isPopup ? '27px' : '22px')};
         `,
       },
       regularFontSettings: {
@@ -321,7 +322,7 @@ const themes = {
             font-size: 24px;
             line-height: 24px;
             font-weight: ${SOLEIL.SEMIBOLD};	
-            color: ${COLORS.GREY_G3};
+            color: ${COLORS.GREY_G2};
           }
         `,
         mobile: `
@@ -333,7 +334,6 @@ const themes = {
           .tour-price {
             font-size: 18px;
             line-height: 16px;
-            font-weight: ${SOLEIL.REGULAR};
           }
           ${SavedTag} {
             padding: 0 4px;

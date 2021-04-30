@@ -316,7 +316,7 @@ const ProductBody = styled.div`
         : ''}
     ul {
       padding: 0;
-      padding-left: 1.2em;
+      padding-left: 1.0em;
       display: grid;
       grid-gap: 12px;
     }
@@ -657,7 +657,7 @@ const Product = (props) => {
   } = props;
   const { mbTheme, biLink } = useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
-  const [isContentOpen, toggleContentOpen] = useState(defaultOpen && !isMobile);
+  const [isContentOpen, toggleContentOpen] = useState(defaultOpen || isAmp);
   const [showMoreDetailsInTabs, setShowMoreDetails] = useState(
     defaultOpen || false
   );
@@ -857,7 +857,7 @@ const Product = (props) => {
           <Conditional if={boosterTag && mbTheme !== THEMES.MIN_BLUE}>
             <BoosterTag>{boosterTag}</BoosterTag>
           </Conditional>
-          <TourTitle>{cardTitle}</TourTitle>
+          <TourTitle isPopup={isContentOpen}>{cardTitle}</TourTitle>
         </TitleWrapper>
         <Conditional if={mbTheme !== THEMES.MIN_BLUE && hasShortSummary}>
           <ShortSummary>

@@ -258,6 +258,7 @@ const StyledBanner = styled.div`
     }
 
     .indicator.active {
+      left: 17px;
       transform: scale(1.3);
     }
     .banner-image {

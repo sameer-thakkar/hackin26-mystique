@@ -17,6 +17,8 @@ import Split, { StlyedSplit } from 'UI/Split';
 import { isSafetyIncluded, createBookingURL } from 'utils';
 import PriceBlock from 'UI/PriceBlock';
 
+import { extractContentForProductCard } from './../../utils/productUtils';
+
 const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
   ssr: false,
 });
@@ -299,6 +301,12 @@ const DetailedProductCard = (props) => {
   const {
     sidebarModal: { addToAside },
   } = useContext(MBContext);
+
+  const productCardContent = extractContentForProductCard(
+    activeTour.highlights,
+    activeTour.contentBlocks
+  );
+
   const openSafeSidebar = () => {
     addToAside({
       width: '41.06vw',
@@ -353,18 +361,13 @@ const DetailedProductCard = (props) => {
         </div>
         <div className="v2-desc-columns">
           <div className="v2-desc-left">
-            {activeTour.contentBlocks.left.map((block, index) => {
+            {productCardContent.left.map((block, index) => {
               return (
-                <div
-                  className={`description-content-block ${block.align
-                    .toLowerCase()
-                    .replace(/\s/g, '-')}`}
-                  key={index}
-                >
-                  <span className="description-label">{block.label} </span>
+                <div className="description-content-block" key={index}>
+                  <span className="description-label">{block.heading} </span>
                   <span className="description-content">
                     <RichText
-                      render={block.content}
+                      render={block.contents}
                       htmlSerializer={(...defaultArgs: any) =>
                         shortCodeSerializerWithParentProps(
                           defaultArgs,
@@ -378,13 +381,13 @@ const DetailedProductCard = (props) => {
             })}
           </div>
           <div className="v2-desc-right">
-            {activeTour.contentBlocks.right.map((block, index) => {
+            {productCardContent.right.map((block, index) => {
               return (
                 <div className="description-content-block right" key={index}>
-                  <span className="description-label">{block.label} </span>
+                  <span className="description-label">{block.heading} </span>
                   <span className="description-content">
                     <RichText
-                      render={block.content}
+                      render={block.contents}
                       htmlSerializer={(...defaultArgs: any) =>
                         shortCodeSerializerWithParentProps(
                           defaultArgs,

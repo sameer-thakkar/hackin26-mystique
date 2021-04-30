@@ -253,6 +253,11 @@ const MicrositeV1 = (props) => {
   } = props;
   const slices = contentFramework?.data?.body;
   const contentFWSlices = (slices && groupSlices(slices)) || [];
+
+  const hasTourList: boolean = !!contentFWSlices.find(
+    (slice) => slice.slice_type === 'tours_list'
+  );
+
   const pricingData = {
     isFetched: isFetched,
     cardPrices: tourPrices,
@@ -444,6 +449,33 @@ const MicrositeV1 = (props) => {
   };
 
   const closeGroupBookingModal = () => toggleGroupBookingModal(false);
+  const tourListSection = (
+    <PopulateUncategorizedProducts
+      uncategorizedTours={orderedUncategorizedTours}
+      scorpioData={scorpioData}
+      uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
+      tourPrices={tourPrices}
+      uid={uid}
+      isAmp={isAmp}
+      currentLanguage={currentLanguage}
+      bookNowText={bookNowText}
+      readMoreText={readMoreText}
+      showLessText={showLessText}
+      productOffer={productOffer}
+      hasOffer={hasOffer}
+      isFetched={isFetched}
+      togglePopup={onTogglePopup}
+      pageUrl={pageUrl}
+      isMobile={isAmp || isMobile}
+      host={host}
+      analytics={analytics}
+      ranking={tourRanking}
+      mbTheme={mbTheme}
+      allToursTabContent={allTours}
+      instantCheckout={instantCheckout}
+      showEarliestAvailability={showEarliestAvailability}
+    />
+  );
 
   return (
     <div>
@@ -556,33 +588,11 @@ const MicrositeV1 = (props) => {
           isAmp={isAmp}
           isMobile={isMobile}
         />
-        {checkIfToursAvailable ? (
-          <PopulateUncategorizedProducts
-            uncategorizedTours={orderedUncategorizedTours}
-            scorpioData={scorpioData}
-            uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
-            tourPrices={tourPrices}
-            uid={uid}
-            isAmp={isAmp}
-            currentLanguage={currentLanguage}
-            bookNowText={bookNowText}
-            readMoreText={readMoreText}
-            showLessText={showLessText}
-            productOffer={productOffer}
-            hasOffer={hasOffer}
-            isFetched={isFetched}
-            togglePopup={onTogglePopup}
-            pageUrl={pageUrl}
-            isMobile={isAmp || isMobile}
-            host={host}
-            analytics={analytics}
-            ranking={tourRanking}
-            mbTheme={mbTheme}
-            allToursTabContent={allTours}
-            instantCheckout={instantCheckout}
-            showEarliestAvailability={showEarliestAvailability}
-          />
-        ) : null}
+
+        <Conditional if={checkIfToursAvailable && hasTourList === false}>
+          {tourListSection}
+        </Conditional>
+
         <Conditional
           if={
             microbrandCards?.filter((mbCard) => mbCard.microbrand_link)?.length
@@ -597,6 +607,7 @@ const MicrositeV1 = (props) => {
           <InteractionContextProvider>
             {longFormContent ? (
               <LongForm
+                tourListSection={tourListSection}
                 content={[...longFormContent, ...contentFWSlices]}
                 isMobile={isAmp || isMobile}
               />
