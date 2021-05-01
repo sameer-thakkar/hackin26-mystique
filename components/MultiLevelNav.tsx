@@ -13,13 +13,21 @@ const StyledMenuItem = styled.li`
   line-height: 24px;
   padding: 12px 16px;
   font-family: ${SOLEIL.FONT_STACK};
-  color: ${({ theme: { primaryBGText } }) =>
-    primaryBGText ? primaryBGText : COLORS.FOUR_BLACK};
+  color: ${({ theme: { primaryBGText }, isGlobalMb }) =>
+    isGlobalMb
+      ? COLORS.GREY.G2
+      : primaryBGText
+      ? primaryBGText
+      : COLORS.FOUR_BLACK};
   cursor: pointer;
   position: relative;
   span {
-    color: ${({ theme: { primaryBGText } }) =>
-      primaryBGText ? primaryBGText : COLORS.FOUR_BLACK};
+    color: ${({ theme: { primaryBGText }, isGlobalMb }) =>
+      isGlobalMb
+        ? COLORS.GREY.G2
+        : primaryBGText
+        ? primaryBGText
+        : COLORS.FOUR_BLACK};
   }
   &.group-booking-cta {
     padding: 12px 16px;
@@ -39,8 +47,12 @@ const StyledMenuItem = styled.li`
       svg {
         height: 24px;
         path {
-          stroke: ${({ theme: { primaryBGText } }) =>
-            primaryBGText ? primaryBGText : COLORS.FOUR_BLACK};
+          stroke: ${({ theme: { primaryBGText }, isGlobalMb }) =>
+            isGlobalMb
+              ? COLORS.GREY.G2
+              : primaryBGText
+              ? primaryBGText
+              : COLORS.FOUR_BLACK};
           stroke-width: 1.5px;
         }
       }
@@ -190,7 +202,7 @@ const Nav = styled.nav`
 `;
 
 const Navigation = (props) => {
-  const { slices, isMobile, navOpen, id } = props;
+  const { slices, isMobile, navOpen, id, isGlobalMb = false } = props;
   return (
     <Nav
       className={navOpen ? 'navigation-nav-open' : ''}
@@ -198,13 +210,13 @@ const Navigation = (props) => {
       {...props}
     >
       {slices.map((slice, index) =>
-        HeaderSliceHandler(slice, { index, isMobile, navOpen })
+        HeaderSliceHandler(slice, { index, isMobile, navOpen, isGlobalMb })
       )}
     </Nav>
   );
 };
 
-const Menu = ({ label, url, slices, isMobile }) => {
+const Menu = ({ label, url, slices, isMobile, isGlobalMb = false }) => {
   const [active, setActive] = useState(false);
   const nestedMobileInteraction = (event, clickedLabel) => {
     if (!isMobile) return;
@@ -235,13 +247,14 @@ const Menu = ({ label, url, slices, isMobile }) => {
         onClick={(e) => nestedMobileInteraction(e, label)}
         nestOpen={active}
         className={`${active ? 'nest-open' : 'nest-close'}`}
+        isGlobalMb={isGlobalMb}
       >
         <NestedMenu
           ref={nestedMenuRef}
           className={`nested-menu ${isOffScreen ? 'off-screen' : ''}`}
         >
           {slices.map((slice, index) =>
-            HeaderSliceHandler(slice, { index, isMobile })
+            HeaderSliceHandler(slice, { index, isMobile, isGlobalMb })
           )}
         </NestedMenu>
       </MenuItem>
@@ -258,10 +271,15 @@ const MenuItem = (props) => {
     onClick,
     nestOpen,
     className,
+    isGlobalMb = false,
   } = props;
 
   return (
-    <StyledMenuItem nestOpen={nestOpen} className={`${className}`}>
+    <StyledMenuItem
+      nestOpen={nestOpen}
+      className={`${className}`}
+      isGlobalMb={isGlobalMb}
+    >
       <LinkResolver target={url?.target} url={url?.url}>
         <div
           className={isNested ? 'withIcon' : ''}
@@ -279,7 +297,7 @@ const MenuItem = (props) => {
 };
 
 const HeaderSliceHandler = (slice, props) => {
-  const { index, navOpen } = props;
+  const { index, navOpen, isGlobalMb = false } = props;
   switch (slice.slice_type) {
     case 'navigation':
       return (
@@ -288,6 +306,7 @@ const HeaderSliceHandler = (slice, props) => {
           slices={slice.slices}
           navOpen={navOpen}
           id={`navigation-menu-mobile_${index}`}
+          isGlobalMb={isGlobalMb}
         />
       );
     case 'menu_item':
@@ -296,6 +315,7 @@ const HeaderSliceHandler = (slice, props) => {
           key={index}
           label={slice.primary.label}
           url={slice.primary.url}
+          isGlobalMb={isGlobalMb}
         />
       );
     case 'nested_menu':
@@ -306,6 +326,7 @@ const HeaderSliceHandler = (slice, props) => {
           slices={slice.slices}
           url={slice.primary.url}
           label={slice.primary.label}
+          isGlobalMb={isGlobalMb}
         />
       );
     case 'group_booking':
@@ -317,6 +338,7 @@ const HeaderSliceHandler = (slice, props) => {
             props.isMobile && slice.toggleMenu();
             slice.action();
           }}
+          isGlobalMb={isGlobalMb}
         >
           {strings.GROUP_TICKETS}
         </StyledMenuItem>
@@ -388,11 +410,22 @@ const HeaderSliceHandler = (slice, props) => {
  *
  */
 
-const MultiLevelNav = ({ slice, oldMenuItems = [], isMobile, isActive }) => {
+const MultiLevelNav = ({
+  slice,
+  oldMenuItems = [],
+  isMobile,
+  isActive,
+  isGlobalMb = false,
+}) => {
   const [firstSlice, ..._ignored_only_one_nav_bar] = slice;
   const withOldMenu = [...(firstSlice?.slices || []), ...(oldMenuItems || [])];
   return (
-    <Navigation navOpen={isActive} isMobile={isMobile} slices={withOldMenu} />
+    <Navigation
+      navOpen={isActive}
+      isMobile={isMobile}
+      slices={withOldMenu}
+      isGlobalMb={isGlobalMb}
+    />
   );
 };
 

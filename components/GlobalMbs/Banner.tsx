@@ -56,6 +56,7 @@ const StyledBanner = styled.div((props) => {
   line-height: 150%;
   font-weight: 400;
   ${props.link && `cursor: pointer;`};
+  margin-top: 16px;
 
   img {
     height: ${styles.img.height}px;
@@ -147,7 +148,7 @@ const StyledBanner = styled.div((props) => {
     top: unset;
     display: block;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     grid-template-columns: unset;
     column-gap: unset;
     grid-template-rows: repeat(2, max-content);
@@ -155,7 +156,6 @@ const StyledBanner = styled.div((props) => {
     font-size: 14px;
     line-height: 143%;
     margin: 0 auto 48px auto;
-
     img {
       height: 382px;
       border-radius: 0;
@@ -165,8 +165,9 @@ const StyledBanner = styled.div((props) => {
 
     .card-content-section {
       padding: 0 16px;
+      width: 100%;
+      box-sizing: border-box;
       grid-row: 2;
-      width: calc(100% - (5.46vw * 2));
       margin: 0 auto;
       .title {
         font-size: 32px;

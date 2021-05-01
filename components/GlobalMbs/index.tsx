@@ -5,9 +5,10 @@ import Footer from 'components/common/Footer';
 import Conditional from 'components/common/Conditional';
 import { groupSlices } from 'utils/helper';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
+import Header from 'components/MicrositeV2/Header';
 
 import Tags from './Tags';
-import Header from './Header';
+
 const CountryPage = dynamic(() => import('./views/CountryPage'));
 const CityPage: ComponentType<any> = dynamic(() => import('./views/CityPage'));
 const CollectionPage: ComponentType<any> = dynamic(() =>
@@ -19,6 +20,7 @@ const ExperiencePage: ComponentType<any> = dynamic(() =>
 const LongForm: ComponentType<any> = dynamic(() =>
   import('components/MicrositeV2/LongForm')
 );
+
 const GlobalMB = (props) => {
   let attractions,
     rides = [];
@@ -36,6 +38,7 @@ const GlobalMB = (props) => {
     serverRequestStartTimestamp,
     type,
   } = props;
+
   const logo = props?.data?.logo?.url || props?.data?.logo_url;
   const logoAltText = props?.data?.logo?.alt || props?.data?.logo_alt_text;
   const ticketsPage = props?.ticketsPage;
@@ -48,10 +51,13 @@ const GlobalMB = (props) => {
     : getValidUrl(props?.data?.official_website?.trim());
   const city = CMSContent?.city_name;
   const cityCollections = props?.cityCollections;
+  const currencies = props?.allCurrencies;
   const cityPageProps = {
     ...CMSContent,
+    currencies,
     cityCollections: cityCollections?.results,
   };
+
   const country = CMSContent?.country_name;
   const countryCollections = props?.countryCollections;
   const currentLanguage = lang.split('-')[0];
@@ -81,18 +87,32 @@ const GlobalMB = (props) => {
 
   const collectionLinks = cityCollections?.results
     ?.filter((collection) => collection?.uid !== uid)
-    ?.map((data) => {
-      return {
-        link: convertUidToUrl(data?.uid),
+    ?.map((data) => ({
+      slice_type: 'menu_item',
+      primary: {
         label: data?.data?.collection_name,
-      };
-    });
+        url: {
+          url: convertUidToUrl(data?.uid),
+          target: '_blank',
+        },
+      },
+    }));
+
   const headerLinks = showHeaderlinks
     ? [
         {
-          link: '/',
-          label: `Themeparks in ${city}`,
-          multiLevel: collectionLinks,
+          slice_type: 'navigation',
+          primary: {},
+          slices: [
+            {
+              slice_type: 'nested_menu',
+              primary: {
+                label: `Themeparks in ${city}`,
+                url: {},
+              },
+              slices: collectionLinks,
+            },
+          ],
         },
       ]
     : [];
@@ -139,11 +159,21 @@ const GlobalMB = (props) => {
           }}
         />
         <Header
+          isMobile={isMobile}
+          allTours={[]}
+          host={host}
+          enableDropdownLinks={showHeaderlinks}
+          dropdownLinks={[]}
           logoUrl={logo}
           logoAltText={logoAltText}
-          headerLinks={headerLinks}
-          showTicketsCta={showTicketsCta}
-          ticketsCtaLink={ticketLink}
+          enableSearch={false}
+          enableBuyTickets={showTicketsCta}
+          hasPoweredByHeadoutLogo={false}
+          headerSlices={headerLinks}
+          hasLanguageSelector={false}
+          languageProps={null}
+          isGlobalMb={true}
+          buyTicketsLink={ticketLink}
         />
         <Conditional if={type === 'global_country'}>
           <CountryPage {...CMSContent} uid={uid} />

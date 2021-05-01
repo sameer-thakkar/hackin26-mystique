@@ -49,7 +49,7 @@ const RowComponent: FunctionComponent<RowComponentProps> = ({
   const updateActiveCard = (e, activeCard) => {
     setActiveCard(activeCard);
     const price = getPrice(activeCard?.data.headout_category_id);
-    setActiveCardPrice(price?.startingPrice);
+    setActiveCardPrice(price);
   };
   const closeActiveCard = () => {
     setActiveCard(null);
@@ -71,6 +71,7 @@ const RowComponent: FunctionComponent<RowComponentProps> = ({
         clickHandler={updateActiveCard}
         isMobile={isMobile}
         price={price?.startingPrice}
+        currency={price?.currency?.localSymbol}
       />
     );
   });
@@ -84,7 +85,8 @@ const RowComponent: FunctionComponent<RowComponentProps> = ({
           data={activeCard}
           clickHandler={closeActiveCard}
           isMobile={isMobile}
-          price={activeCardPrice}
+          price={activeCardPrice?.startingPrice}
+          currency={activeCardPrice?.currency?.localSymbol}
         />
       </Conditional>
     </>

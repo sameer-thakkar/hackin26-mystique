@@ -12,6 +12,8 @@ const TabWrapper = styled.div`
   width: calc(100% - (5.46vw * 2));
   @media (max-width: 768px) {
     overflow: hidden;
+    padding: 0 16px;
+    width: unset;
   }
 `;
 

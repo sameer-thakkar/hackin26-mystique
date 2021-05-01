@@ -42,6 +42,7 @@ const CityPage = (props) => {
       <CollectionTabs
         collections={cityCollections}
         title={bannerSlice?.primary?.banner_title}
+        currencies={props?.currencies}
       />
     </div>
   );

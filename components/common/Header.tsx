@@ -62,11 +62,9 @@ const StyledHeaderContainer = styled.div`
       grid-column-gap: 24px;
     `
       : ``};
-  // to line up correctly with other slices/elements.
-  // 5.46 is the padding added to other elements on page.
-  width: calc(100% - (5.46vw * 2));tolineupcorrectlywithotherslices/elements.5.46isthepaddingaddedtootherelementsonpage.widthtolineupcorrectlywithotherslices/elements.5.46isthepaddingaddedtootherelementsonpage.widthtolineupcorrectlywithotherslices/elements.5.46isthepaddingaddedtootherelementsonpage.width
-  margin: auto;marginmargin
-  max-width: 1200px;max-width
+  width: calc(100% - (5.46vw * 2));
+  margin: auto;
+  max-width: 1200px;
   margin: auto;
   align-items: center;
   .header-city-selector {
@@ -207,7 +205,6 @@ const Header: React.FC<any> = (props) => {
         },
       })) || [];
 
-  console.log(slices);
   if (showGroupBooking)
     convertedRegularMenuItems.push({
       slice_type: 'group_booking',

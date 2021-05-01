@@ -227,10 +227,11 @@ type DetailedCollectionCardProps = {
   clickHandler?: (e: any) => void;
   ref?: Ref<HTMLDivElement>;
   price?: string;
+  currency?: string;
 };
 
 const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = forwardRef(
-  ({ data, isMobile, clickHandler, price }, ref) => {
+  ({ data, isMobile, clickHandler, price, currency }, ref) => {
     const uid = data?.uid;
     const microbrand = data?.data?.microbrand_url?.trim();
 
@@ -255,12 +256,15 @@ const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = f
         <Conditional if={data?.data?.headout_category_id}>
           <div className="price-wrapper">
             <div className="text">Tickets start from</div>
-            <div className="price">€{price}</div>
+            <div className="price">
+              {currency} {price}
+            </div>
           </div>
         </Conditional>
 
         <div className="cta-wrapper">
-          <Conditional if={!microbrand}>
+          {/* TODO: Change the below condition once ticket page is live */}
+          <Conditional if={false}>
             <a href={ticketLink} className="cta primary">
               Buy Tickets
             </a>

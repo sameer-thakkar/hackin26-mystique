@@ -93,6 +93,7 @@ type CardProps = {
   clickHandler: (e: React.MouseEvent<HTMLButtonElement>, index: number) => void;
   isMobile: boolean;
   price?: string;
+  currency?: string;
 };
 
 const Card: FunctionComponent<CardProps> = ({
@@ -100,6 +101,7 @@ const Card: FunctionComponent<CardProps> = ({
   clickHandler,
   isMobile,
   price,
+  currency,
 }) => {
   const imageUrl = card?.data?.images[0]?.image_url || FALLBACK_IMAGE;
 
@@ -122,6 +124,7 @@ const Card: FunctionComponent<CardProps> = ({
             data={card}
             isMobile={isMobile}
             price={price}
+            currency={currency}
           />
         ),
         type: SIDEBAR_TYPES.PRODUCT_CARD,
@@ -147,7 +150,9 @@ const Card: FunctionComponent<CardProps> = ({
       <Conditional if={card?.data?.headout_category_id}>
         <div className="price-wrapper">
           <div className="text">Tickets start from</div>
-          <div className="price">€{price}</div>
+          <div className="price">
+            {currency} {price}
+          </div>
         </div>
       </Conditional>
     </StyledCard>

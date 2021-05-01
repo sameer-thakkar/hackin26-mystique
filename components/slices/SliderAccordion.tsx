@@ -13,7 +13,7 @@ const StyledSliderAccordion = styled.div`
   display: grid;
   grid-template-columns: ${({ isGlobalMb }) => (isGlobalMb ? '528px' : '1fr')} ${({
       hasImageComponent,
-    }) => (hasImageComponent ? ` 1fr` : ``)};
+    }) => (hasImageComponent ? `1fr` : ``)};
   grid-gap: 24px;
   border: 1px solid #ebebeb;
   border-radius: 2px;
@@ -24,9 +24,6 @@ const StyledSliderAccordion = styled.div`
     isGlobalMb &&
     `border: none;
     grid-gap: 84px;
-    @media (max-width: 768px) {
-      grid-gap: 16px;
-    }
     `}
   ${StyledAccordion} {
     padding: 16px;
@@ -34,6 +31,7 @@ const StyledSliderAccordion = styled.div`
   }
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
+    ${({ isGlobalMb }) => isGlobalMb && `p grid-gap: 16px;`}
   }
 `;
 
@@ -164,7 +162,7 @@ const SliderAccordion = (props) => {
       ) : (
         <SingleImage isGlobalMb={isGlobalMb}>
           <Image
-            height={500}
+            height={isMobile ? 195 : 375}
             aspectRatio={'16:10'}
             imageId={activeAccordionImages[0]?.alt}
             url={activeAccordionImages[0]?.url}

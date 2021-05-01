@@ -13,6 +13,10 @@ const TitleWrapper = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   width: calc(100% - (5.46vw * 2));
+  @media (max-width: 768px) {
+    width: unset;
+    padding: 0 16px;
+  }
 `;
 
 const Title = styled.div`
@@ -23,11 +27,16 @@ const Title = styled.div`
   line-height: 28px;
 `;
 
-type CollectionCardProps = { collections: any[]; title: string };
+type CollectionCardProps = {
+  collections: any[];
+  title: string;
+  currencies?: any[];
+};
 
 const CollectionCard: FunctionComponent<CollectionCardProps> = ({
   collections,
   title,
+  currencies,
 }) => {
   const tabs = [];
   const tabTitles = collections
@@ -49,21 +58,31 @@ const CollectionCard: FunctionComponent<CollectionCardProps> = ({
         .then((responses) =>
           Promise.all(responses?.map((response) => response.json()))
         )
-        .then((data) => {
-          const formattedData = data?.map((cat) => {
-            const startingPrice = Math.min(
-              ...cat?.products?.map(
-                (ticket) => ticket?.listingPrice?.finalPrice
-              )
-            );
+        .then(async (data) => {
+          if (data?.length) {
+            const currencyCode =
+              data[0]?.products[0]?.listingPrice?.currencyCode;
 
-            return {
-              catId: cat?.categories[0]?.id,
-              startingPrice,
-            };
-          });
+            const currency = currencies
+              ?.filter((currency) => currency.code === currencyCode)
+              ?.reduce((acc, curr) => acc + curr);
 
-          setCategoryData(formattedData);
+            const formattedData = data?.map((cat) => {
+              const startingPrice = Math.min(
+                ...cat?.products?.map(
+                  (ticket) => ticket?.listingPrice?.finalPrice
+                )
+              );
+
+              return {
+                catId: cat?.categories[0]?.id,
+                startingPrice,
+                currency,
+              };
+            });
+
+            setCategoryData(formattedData);
+          }
         });
     }
   }, []);

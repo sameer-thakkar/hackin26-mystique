@@ -17,7 +17,7 @@ import { uncategorizedToursListParser } from 'utils/dataParsers';
 import { getLangUID, isAmpUrl, removePageQuery } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { getPrismicDocument } from 'utils/prismicUtils';
-import { fetchCategory } from 'utils/globalMbUtils';
+import { fetchCategory, fetchCurrencyList } from 'utils/apiUtils';
 
 import { getAppTheme } from '../style/theme';
 import EnvironmentContext from '../contexts/environmentContext';
@@ -198,7 +198,7 @@ export default class Page extends React.Component<any, any> {
         let ticketsData, startingPrice, currencyCode, currencySymbol;
         const categoryId = CMSContent?.data?.headout_category_id;
         if (categoryId) {
-          ticketsData = await fetchCategory(categoryId, lang);
+          ticketsData = await fetchCategory(categoryId);
         }
         if (ticketsData?.products?.length) {
           currencyCode = ticketsData?.products
@@ -216,11 +216,8 @@ export default class Page extends React.Component<any, any> {
         }
 
         if (currencyCode) {
-          const res = await fetch(
-            'https://api.headout.com/api/v1/currency/list'
-          );
-          const data = await res.json();
-          currencySymbol = data
+          const allCurrencies = await fetchCurrencyList();
+          currencySymbol = allCurrencies
             ?.filter((d) => d.code === currencyCode)
             ?.reduce((acc, cur) => acc + cur);
         }
@@ -242,9 +239,23 @@ export default class Page extends React.Component<any, any> {
         };
       }
 
+      if (ContentType === CUSTOM_TYPES.GLOBAL_CITY) {
+        const allCurrencies = await fetchCurrencyList();
+        return {
+          CMSContent: {
+            ...CMSContent,
+            allCurrencies,
+          },
+          ContentType,
+          uid,
+          lang,
+          isDev,
+          host,
+        };
+      }
+
       if (
         ContentType === CUSTOM_TYPES.GLOBAL_COUNTRY ||
-        ContentType === CUSTOM_TYPES.GLOBAL_CITY ||
         ContentType === CUSTOM_TYPES.GLOBAL_EXPERIENCE ||
         ContentType === CUSTOM_TYPES.LISTICLE
       ) {
