@@ -1,10 +1,9 @@
-import { SOLEIL } from 'const/ui-constants';
 import { FunctionComponent, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import Tabs from 'components/GlobalMbs/Tabs';
+import RowComponent from 'components/GlobalMbs/collectionTabs/rowComponent';
+import { SOLEIL } from 'const/ui-constants';
 import { chunkArray } from 'utils/arrayUtils';
-
-import Tabs from '../Tabs';
-import RowComponent from './rowComponent';
 
 const TitleWrapper = styled.div`
   display: flex;
@@ -27,11 +26,11 @@ const Title = styled.div`
   line-height: 28px;
 `;
 
-type CollectionCardProps = {
+interface CollectionCardProps {
   collections: any[];
   title: string;
   currencies?: any[];
-};
+}
 
 const CollectionCard: FunctionComponent<CollectionCardProps> = ({
   collections,
@@ -88,11 +87,11 @@ const CollectionCard: FunctionComponent<CollectionCardProps> = ({
   }, []);
 
   if (collections?.length) {
-    const defaultTitle = 'All';
+    const DEFAULT_TITLE = 'All';
     const allCollections = chunkArray([...collections], 4);
 
     const defaultTab = {
-      header: defaultTitle,
+      header: DEFAULT_TITLE,
       body: allCollections?.map((collection, index) => (
         <RowComponent
           key={index}

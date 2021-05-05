@@ -1,13 +1,13 @@
-import { FLAME } from 'assets/SvgIcons';
-import Conditional from 'components/common/Conditional';
-import { FALLBACK_IMAGE, SIDEBAR_TYPES } from 'const/index';
-import { COLORS, SOLEIL } from 'const/ui-constants';
-import { MBContext } from 'contexts/MBContext';
 import { FunctionComponent, useContext } from 'react';
 import styled from 'styled-components';
+import { MBContext } from 'contexts/MBContext';
 import Image from 'UI/Image';
+import Conditional from 'components/common/Conditional';
+import DetailedCollectionCard from 'components/GlobalMbs/collectionTabs/detailedProductCard';
+import { FLAME } from 'assets/SvgIcons';
+import { FALLBACK_IMAGE, SIDEBAR_TYPES } from 'const/index';
+import { COLORS, SOLEIL } from 'const/ui-constants';
 
-import DetailedCollectionCard from './detailedProductCard';
 const StyledCard = styled.div`
   display: grid;
   grid-auto-flow: row;
@@ -88,13 +88,13 @@ const StyledCard = styled.div`
   }
 `;
 
-type CardProps = {
+interface CardProps {
   card: any;
   clickHandler: (e: React.MouseEvent<HTMLButtonElement>, index: number) => void;
   isMobile: boolean;
   price?: string;
   currency?: string;
-};
+}
 
 const Card: FunctionComponent<CardProps> = ({
   card,
@@ -103,12 +103,19 @@ const Card: FunctionComponent<CardProps> = ({
   price,
   currency,
 }) => {
-  const imageUrl = card?.data?.images[0]?.image_url || FALLBACK_IMAGE;
+  const {
+    data: {
+      images,
+      other_filters: otherFilters,
+      primary_category: primaryCategory,
+      collection_name: collectionName,
+      headout_category_id: categoryId,
+    },
+  } = card;
+  const imageUrl = images[0]?.image_url || FALLBACK_IMAGE;
 
-  const hasBestSeller = card?.data?.other_filters?.length
-    ? card?.data?.other_filters?.some(
-        (tag) => tag?.filter_name === 'Bestseller'
-      )
+  const hasBestSeller = otherFilters?.length
+    ? otherFilters?.some((tag) => tag?.filter_name === 'Bestseller')
     : false;
 
   const {
@@ -144,10 +151,10 @@ const Card: FunctionComponent<CardProps> = ({
         <Image url={imageUrl} />
       </div>
       <div className="l2-booter-wrapper">
-        <div className="category">{card?.data?.primary_category}</div>
+        <div className="category">{primaryCategory}</div>
       </div>
-      <div className="name">{card?.data?.collection_name}</div>
-      <Conditional if={card?.data?.headout_category_id}>
+      <div className="name">{collectionName}</div>
+      <Conditional if={categoryId}>
         <div className="price-wrapper">
           <div className="text">Tickets start from</div>
           <div className="price">

@@ -1,6 +1,6 @@
-import { COLORS, SOLEIL } from 'const/ui-constants';
 import { FunctionComponent } from 'react';
 import styled from 'styled-components';
+import { COLORS, SOLEIL } from 'const/ui-constants';
 import { getValidUrl } from 'utils/urlUtils';
 
 const TagSection = styled.div`
@@ -38,12 +38,11 @@ const Tag = styled.a`
   line-height: 16px;
   color: ${COLORS.GREY.G3};
 `;
-
-type TagsProps = {
+interface TagsProps {
   collections: any[];
   uid: string;
   title: string;
-};
+}
 
 const Tags: FunctionComponent<TagsProps> = ({ collections, uid, title }) => {
   const finalCollection = collections.filter(

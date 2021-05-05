@@ -24,9 +24,13 @@ const CollectionPage = (props) => {
     suggested_duration: duration,
     headout_category_id: categoryID,
     supply,
+    tickets: {
+      startingPrice,
+      currencySymbol: { localSymbol: currencySymbol },
+    },
   } = props;
 
-  const startingPrice = `${props?.tickets?.currencySymbol?.localSymbol} ${props?.tickets?.startingPrice}`;
+  const price = `${currencySymbol} ${startingPrice}`;
 
   const rank =
     props?.cityCollectionRanks?.length > 2
@@ -61,7 +65,7 @@ const CollectionPage = (props) => {
         cardType={type}
         breadcrumbs={breadcrumbs}
         collection={collectionInfo}
-        startingPrice={startingPrice}
+        startingPrice={price}
       />
     </>
   );

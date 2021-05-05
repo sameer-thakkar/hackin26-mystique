@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAmp } from 'next/amp';
+import Conditional from 'components/common/Conditional';
 
 import Accordion from './Accordion';
 import RichContent from '../UI/RichContent';
@@ -38,7 +39,11 @@ const AccordionGroup: React.FC<{
         itemScope: true,
       })}
     >
-      <TitleTextCombo>{heading ? <h2>{heading}</h2> : null}</TitleTextCombo>
+      <TitleTextCombo>
+        <Conditional if={heading}>
+          <h2>{heading}</h2>
+        </Conditional>
+      </TitleTextCombo>
       {isAmp ? (
         <amp-accordion animate="">
           {accordions.map((accordion, index) => {

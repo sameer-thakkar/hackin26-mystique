@@ -1,15 +1,15 @@
 import { RichText } from 'prismic-reactjs';
-
-import Banner from '../Banner';
-import CollectionTabs from '../collectionTabs';
+import Banner from 'components/GlobalMbs/Banner';
+import CollectionTabs from 'components/GlobalMbs/collectionTabs';
+import Conditional from 'components/common/Conditional';
 
 const CityPage = (props) => {
-  const type = 'full-width';
+  const CARD_TYPE = 'full-width';
   const breadcrumbs = [];
-
+  const { cityCollections, currencies, body: slices } = props || {};
   // Banner
-  const bannerSlice = props?.body?.length
-    ? props?.body
+  const bannerSlice = slices?.length
+    ? slices
         ?.filter((slice) => slice?.slice_type === 'banner')
         ?.reduce((acc, curr) => acc + curr)
     : [];
@@ -22,28 +22,29 @@ const CityPage = (props) => {
       })
     : [];
 
-  const bannerSubText = bannerSlice?.primary?.banner_sub_text
-    ? RichText?.asText(bannerSlice?.primary?.banner_sub_text)
-    : '';
+  const { primary } = bannerSlice || {};
+  const { banner_sub_text: subText, banner_title: title } = primary || {};
+
+  const bannerSubText = subText ? RichText?.asText(subText) : '';
 
   // Cards
-
-  const cityCollections = props?.cityCollections;
 
   return (
     <div>
       <Banner
-        title={bannerSlice?.primary?.banner_title}
+        title={title}
         images={bannerImages}
         subText={bannerSubText}
-        cardType={type}
+        cardType={CARD_TYPE}
         breadcrumbs={breadcrumbs}
       />
-      <CollectionTabs
-        collections={cityCollections}
-        title={bannerSlice?.primary?.banner_title}
-        currencies={props?.currencies}
-      />
+      <Conditional if={cityCollections?.length}>
+        <CollectionTabs
+          collections={cityCollections}
+          title={title}
+          currencies={currencies}
+        />
+      </Conditional>
     </div>
   );
 };

@@ -2,12 +2,13 @@ import { FunctionComponent, useCallback, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useWindowWidth } from '@react-hook/window-size';
-import { COLORS, SIZES, SOLEIL } from 'const/ui-constants';
-import { CHEVRON_LEFT, CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
 import Image from 'UI/Image';
 import OverflowScroll from 'UI/OverflowScroll';
-import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import Conditional from 'components/common/Conditional';
+import { COLORS, SIZES, SOLEIL } from 'const/ui-constants';
+import { CHEVRON_LEFT, CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
+import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
+
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
 const Carousel = styled.div`
@@ -155,7 +156,7 @@ const StyledCard = styled.div`
   }
 `;
 
-type ExperienceProps = {
+interface ExperienceProps {
   cardsInARow: number;
   experienceType: string;
   mbType?: string;
@@ -165,7 +166,7 @@ type ExperienceProps = {
   attractions?: any[];
   rides?: any[];
   tickets?: any;
-};
+}
 
 const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
   cardsInARow = 4,
@@ -231,32 +232,37 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
 
   if (experienceType === 'Attractions' || experienceType === 'Rides') {
     ridesAttractionMarkup = cards?.map((card, index) => {
-      const ageGroupTag = card?.age_group ? card?.age_group?.split(',') : null;
-      const experienceTag = card?.experience_tags
-        ? card?.experience_tags?.split(',')
-        : null;
+      const {
+        age_group: ageGroup,
+        experience_tags: experienceTags,
+        experience_image: { url: imageUrl },
+        image_alt_text: altText,
+        name,
+      } = card;
+      const ageGroupTag = ageGroup ? ageGroup?.split(',') : null;
+      const experienceTag = experienceTags ? experienceTags?.split(',') : null;
+      const experienceTagMarkup = experienceTag?.map((tag, index) => (
+        <div key={`exp-${index}`} className="tag">
+          {tag}
+        </div>
+      ));
+      const ageGroupMarkup = ageGroupTag?.map((tag, index) => (
+        <div key={`age-${index}`} className="tag">
+          {tag}
+        </div>
+      ));
       return (
         <div key={index} className="swiper-slide">
           <StyledCard key={index}>
-            <Image
-              url={card?.experience_image?.url}
-              className="image"
-              alt={card?.image_alt_text}
-            />
-            <div className="title">{card?.name}</div>
+            <Image url={imageUrl} className="image" alt={altText} />
+            <div className="title">{name}</div>
             <div className="tag-wrapper">
-              {experienceTag?.length &&
-                experienceTag?.map((tag, index) => (
-                  <div key={`exp-${index}`} className="tag">
-                    {tag}
-                  </div>
-                ))}
-              {ageGroupTag?.length &&
-                ageGroupTag?.map((tag, index) => (
-                  <div key={`age-${index}`} className="tag">
-                    {tag}
-                  </div>
-                ))}
+              <Conditional if={experienceTag?.length}>
+                {experienceTagMarkup}
+              </Conditional>
+              <Conditional if={ageGroupTag?.length}>
+                {ageGroupMarkup}
+              </Conditional>
             </div>
           </StyledCard>
         </div>
@@ -264,42 +270,48 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
     });
   }
   if (experienceType === 'Tickets') {
-    ticketsMarkup = cards?.map((card, index) => (
-      <div key={index} className="swiper-slide">
-        <StyledCard>
-          <Image
-            url={getValidUrl(card?.imageUrl)}
-            className="image"
-            alt={card?.image_alt_text}
-          />
-          <div className="title">{card?.name}</div>
-          {card?.listingPrice && (
-            <div className="price-wrapper">
-              {card?.listingPrice?.originalPrice >
-                card?.listingPrice?.finalPrice && (
-                <div className="from-price">
-                  from{' '}
-                  <span>
-                    {currencySymbol}
-                    {card?.listingPrice?.originalPrice}
-                  </span>
+    ticketsMarkup = cards?.map((card, index) => {
+      const {
+        name,
+        imageUrl,
+        image_alt_text: altText,
+        listingPrice: { originalPrice, finalPrice, bestDiscount, cashbackType },
+      } = card;
+      return (
+        <div key={index} className="swiper-slide">
+          <StyledCard>
+            <Image
+              url={getValidUrl(imageUrl)}
+              className="image"
+              alt={altText}
+            />
+            <div className="title">{name}</div>
+            <Conditional if={card?.listingPrice}>
+              <div className="price-wrapper">
+                <Conditional if={originalPrice > finalPrice}>
+                  <div className="from-price">
+                    from{' '}
+                    <span>
+                      {currencySymbol}
+                      {originalPrice}
+                    </span>
+                  </div>
+                </Conditional>
+                <div className="final-price">
+                  {currencySymbol} {finalPrice}
+                  {bestDiscount > 0 && (
+                    <span className="discount">
+                      {bestDiscount}
+                      {cashbackType === 'PERCENTAGE' && '%'}
+                    </span>
+                  )}
                 </div>
-              )}
-
-              <div className="final-price">
-                {currencySymbol} {card?.listingPrice?.finalPrice}
-                {card?.listingPrice?.bestDiscount > 0 && (
-                  <span className="discount">
-                    {card?.listingPrice?.bestDiscount}
-                    {card?.listingPrice?.cashbackType === 'PERCENTAGE' && '%'}
-                  </span>
-                )}
               </div>
-            </div>
-          )}
-        </StyledCard>
-      </div>
-    ));
+            </Conditional>
+          </StyledCard>
+        </div>
+      );
+    });
   }
 
   if (!isMobile) {
@@ -339,7 +351,7 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
               </Swiper>
             </StyledSwiper>
             <Controls>
-              {!swiper?.isBeginning ? (
+              <Conditional if={!swiper?.isBeginning}>
                 <div
                   className="prev-slide"
                   role="button"
@@ -348,8 +360,8 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
                 >
                   {CHEVRON_LEFT_CIRCLE}
                 </div>
-              ) : null}
-              {!swiper?.isEnd ? (
+              </Conditional>
+              <Conditional if={!swiper?.isEnd}>
                 <div
                   className="next-slide"
                   role="button"
@@ -358,7 +370,7 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
                 >
                   {CHEVRON_LEFT_CIRCLE}
                 </div>
-              ) : null}
+              </Conditional>
             </Controls>
           </Carousel>
         </Conditional>

@@ -39,14 +39,17 @@ const StyledChevron = styled.div`
 const Breadcrumb = ({ links }) => {
   return (
     <BreadcrumbContainer>
-      {links.map((link, index) => (
-        <StyledBreadcrumb key={index}>
-          <StyledLink href={link?.url}>{link?.text}</StyledLink>
-          {links.length - 1 !== index && (
-            <StyledChevron>{CHEVRON_LEFT}</StyledChevron>
-          )}
-        </StyledBreadcrumb>
-      ))}
+      {links.map((link, index) => {
+        const { url, text } = link;
+        return (
+          <StyledBreadcrumb key={index}>
+            <StyledLink href={url}>{text}</StyledLink>
+            {links.length - 1 !== index && (
+              <StyledChevron>{CHEVRON_LEFT}</StyledChevron>
+            )}
+          </StyledBreadcrumb>
+        );
+      })}
     </BreadcrumbContainer>
   );
 };

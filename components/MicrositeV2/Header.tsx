@@ -5,20 +5,19 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { COLORS, SOLEIL } from 'const/ui-constants';
 import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
 import dynamic from 'next/dynamic';
-
-import LanguageSelector from './LanguageSelector';
-import InteractionContext from '../../contexts/Interaction';
-import Image from '../UI/Image';
-import { PAGETYPE, ALLOW_IMMEDIEATE_NESTING, THEMES } from '../../constants';
-import { SEARCH_ICON, POWERED_BY_HEADOUT } from '../../assets/SvgIcons';
-import MultiLevelNav from '../MultiLevelNav';
-import { groupSlices } from '../../utils/helper';
-import Hamburger from '../UI/Hamburger';
-import HeaderLinks from '../HeaderLinks';
+import InteractionContext from 'contexts/Interaction';
+import LanguageSelector from 'components/MicrositeV2/LanguageSelector';
+import Image from 'components/UI/Image';
+import MultiLevelNav from 'components/MultiLevelNav';
+import { groupSlices } from 'utils/helper';
+import Hamburger from 'components/UI/Hamburger';
+import HeaderLinks from 'components/HeaderLinks';
+import { SEARCH_ICON, POWERED_BY_HEADOUT } from 'assets/SvgIcons';
+import { COLORS, SOLEIL } from 'const/ui-constants';
+import { PAGETYPE, ALLOW_IMMEDIEATE_NESTING, THEMES } from 'const/index';
 
 const SearchBox: ComponentType<any> = dynamic(
   () => import('./SearchBox').then((mod) => mod.SearchBox),

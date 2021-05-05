@@ -17,8 +17,6 @@ const TabWrapper = styled.div`
   }
 `;
 
-const TabPanels = styled.div``;
-
 const SubHeadingLarge = styled.div`
   width: max-content;
   font-size: 16px;
@@ -52,10 +50,10 @@ const Panel = styled.div`
   display: ${({ active }) => (active ? 'block' : 'none')};
 `;
 
-type TabProps = {
+interface TabProps {
   tabs: Array<{ header: any; body: any }>;
   defaultActiveIndex?: number;
-};
+}
 
 const Tabs: FunctionComponent<TabProps> = ({
   tabs,
@@ -75,13 +73,13 @@ const Tabs: FunctionComponent<TabProps> = ({
           </Tab>
         ))}
       </TabControl>
-      <TabPanels>
+      <div>
         {tabs.map((tab, index) => (
           <Panel active={index === activeTab} key={index}>
             {tab.body}
           </Panel>
         ))}
-      </TabPanels>
+      </div>
     </TabWrapper>
   );
 };

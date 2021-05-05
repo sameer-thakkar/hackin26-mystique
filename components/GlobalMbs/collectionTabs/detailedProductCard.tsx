@@ -1,12 +1,12 @@
 import { forwardRef, FunctionComponent, Ref } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
-import { COLORS, SOLEIL } from 'const/ui-constants';
 import Image from 'UI/Image';
-import { CLOSE_WHITE } from 'assets/SvgIcons';
 import Conditional from 'components/common/Conditional';
-import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
+import { COLORS, SOLEIL } from 'const/ui-constants';
+import { CLOSE_WHITE } from 'assets/SvgIcons';
 import { FALLBACK_IMAGE } from 'const/index';
+import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 
 const Wrapper = styled.div`
   display: grid;
@@ -221,39 +221,48 @@ const Modal = styled.div`
   }
 `;
 
-type DetailedCollectionCardProps = {
+interface DetailedCollectionCardProps {
   data: any;
   isMobile: boolean;
   clickHandler?: (e: any) => void;
   ref?: Ref<HTMLDivElement>;
   price?: string;
   currency?: string;
-};
+}
 
 const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = forwardRef(
   ({ data, isMobile, clickHandler, price, currency }, ref) => {
-    const uid = data?.uid;
-    const microbrand = data?.data?.microbrand_url?.trim();
+    const {
+      data: {
+        uid,
+        microbrand_url: microbrand,
+        images,
+        descriptors,
+        supply,
+        headout_category_id: categoryId,
+        official_website: officialWebsite,
+        collection_name: name,
+        collection_overview: overview,
+        location,
+        suggested_duration: duration,
+        timings,
+      },
+    } = data || {};
 
-    const imageUrl = data?.data?.images[0]?.image_url || FALLBACK_IMAGE;
-    const descriptorMarkup = data?.data?.descriptors?.map(
-      (descriptor, index) => (
-        <div className="descriptor" key={index}>
-          {descriptor?.tag}
-        </div>
-      )
-    );
+    const imageUrl = images[0]?.image_url || FALLBACK_IMAGE;
+    const descriptorMarkup = descriptors?.map((descriptor, index) => (
+      <div className="descriptor" key={index}>
+        {descriptor?.tag}
+      </div>
+    ));
 
-    const hasTicketsPage =
-      data?.data?.supply === 'Direct' && data?.data?.headout_category_id;
+    const hasTicketsPage = supply === 'Direct' && categoryId;
 
-    const ticketLink = hasTicketsPage
-      ? ''
-      : getValidUrl(data?.data?.official_website);
+    const ticketLink = hasTicketsPage ? '' : getValidUrl(officialWebsite);
 
     const TicketsMarkup = (
       <TicketsWrapper>
-        <Conditional if={data?.data?.headout_category_id}>
+        <Conditional if={categoryId}>
           <div className="price-wrapper">
             <div className="text">Tickets start from</div>
             <div className="price">
@@ -272,7 +281,7 @@ const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = f
           <a
             href={
               microbrand
-                ? getValidUrl(microbrand)
+                ? getValidUrl(microbrand?.trim())
                 : uid
                 ? convertUidToUrl(uid)
                 : ''
@@ -294,42 +303,38 @@ const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = f
         </Conditional>
         <div className="content-wrapper">
           <div className="title-wrapper">
-            <div className="title">{data?.data?.collection_name}</div>
-            <Conditional if={data?.data?.descriptors?.length}>
+            <div className="title">{name}</div>
+            <Conditional if={descriptors?.length}>
               <DescriptorWrapper>{descriptorMarkup}</DescriptorWrapper>
             </Conditional>
           </div>
-          <Conditional if={data?.data?.collection_overview}>
+          <Conditional if={overview}>
             <div className="description">
-              {data?.data?.collection_overview
-                ? RichText?.asText(data?.data?.collection_overview)
-                : ''}
+              {overview ? RichText?.asText(overview) : ''}
             </div>
           </Conditional>
           <div className="info">
             <div className="column">
-              <Conditional if={data?.data?.location}>
+              <Conditional if={location}>
                 <div>
                   <strong>Address: </strong>
-                  {data?.data?.location
-                    ? RichText?.asText(data?.data?.location)
-                    : ''}
+                  {location ? RichText?.asText(location) : ''}
                 </div>
               </Conditional>
-              <Conditional if={data?.data?.suggested_duration}>
+              <Conditional if={duration}>
                 <div>
                   <strong>Duration: </strong>
-                  {data?.data?.suggested_duration}
+                  {duration}
                 </div>
               </Conditional>
             </div>
             <div className="column">
-              <Conditional if={data?.data?.timings}>
+              <Conditional if={timings}>
                 <div>
                   <strong>Timings: </strong>
                 </div>
                 <div>
-                  <RichText render={data?.data?.timings} />
+                  <RichText render={timings} />
                 </div>
               </Conditional>
             </div>

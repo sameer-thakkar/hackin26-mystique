@@ -1,12 +1,13 @@
+import { FunctionComponent } from 'react';
 import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
 import Image from 'UI/Image';
+import Conditional from 'components/common/Conditional';
+import { FALLBACK_IMAGE } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
-import Conditional from 'components/common/Conditional';
-import { FunctionComponent } from 'react';
-import { FALLBACK_IMAGE } from 'const/index';
+
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 const Breadcrumb = dynamic(() => import('components/GlobalMbs/Breadcrumb'));
 
@@ -203,7 +204,7 @@ const StyledBanner = styled.div((props) => {
 `;
 });
 
-type BannerProps = {
+interface BannerProps {
   title: string;
   subText?: string;
   images: any[];
@@ -211,7 +212,7 @@ type BannerProps = {
   breadcrumbs: Array<{ url: string; text: string }>;
   collection?: any;
   startingPrice?: string;
-};
+}
 
 const Banner: FunctionComponent<BannerProps> = ({
   title,
@@ -222,13 +223,25 @@ const Banner: FunctionComponent<BannerProps> = ({
   collection = {},
   startingPrice = null,
 }) => {
-  const hasTicketPage =
-    collection?.categoryID && collection?.supply === 'Direct';
+  const {
+    categoryID,
+    ticketsPageLink,
+    supply,
+    officialWebsite,
+    totalCityCollections,
+    primaryCategory,
+    rank,
+    location,
+    duration,
+    timings,
+    city,
+  } = collection;
+  const hasTicketPage = categoryID && supply === 'Direct';
   const ticketLink = hasTicketPage
-    ? collection?.ticketsPageLink
-      ? convertUidToUrl(collection?.ticketsPageLink)
-      : getValidUrl(collection?.officialWebsite?.trim())
-    : getValidUrl(collection?.officialWebsite?.trim());
+    ? ticketsPageLink
+      ? convertUidToUrl(ticketsPageLink)
+      : getValidUrl(officialWebsite?.trim())
+    : getValidUrl(officialWebsite?.trim());
   const swiperParams = {
     pagination: {
       el: '.swiper-pagination',
@@ -240,7 +253,7 @@ const Banner: FunctionComponent<BannerProps> = ({
 
   let imageView;
 
-  switch (images.length) {
+  switch (images?.length) {
     case 0:
       imageView = (
         <Image
@@ -274,11 +287,11 @@ const Banner: FunctionComponent<BannerProps> = ({
                 <Image
                   className="swiper-slide"
                   key={index}
-                  url={image.url || FALLBACK_IMAGE}
+                  url={image?.url || FALLBACK_IMAGE}
                   attribution={image?.copyright}
                   alt={image?.altText}
                   width="650"
-                  height={variantStyles[cardType].img.height}
+                  height={variantStyles[cardType]?.img?.height}
                 />
               );
             })}
@@ -301,28 +314,27 @@ const Banner: FunctionComponent<BannerProps> = ({
           </Conditional>
           <Conditional if={Object.keys(collection)?.length}>
             <div className="rank-wrapper">
-              <Conditional if={collection?.totalCityCollections > 2}>
+              <Conditional if={totalCityCollections > 2}>
                 <div className="rank">
-                  {`#${collection?.rank}`} of {collection?.totalCityCollections}{' '}
-                  things to do in {collection?.city}
+                  {`#${rank}`} of {totalCityCollections} things to do in {city}
                 </div>
               </Conditional>
               <div className="tag-wrapper">
-                <div className="tag">{collection?.primaryCategory}</div>
+                <div className="tag">{primaryCategory}</div>
               </div>
             </div>
             <div className="info">
               <div>
                 <span className="bold">Address: </span>
-                {collection?.location && RichText.asText(collection?.location)}
+                {location && RichText.asText(location)}
               </div>
               <div className="">
                 <span className="bold">Duration: </span>
-                {collection?.duration}
+                {duration}
               </div>
               <div className="">
                 <span className="bold">Timings: </span>{' '}
-                <RichText render={collection?.timings} />
+                <RichText render={timings} />
               </div>
             </div>
             <div className="tickets">

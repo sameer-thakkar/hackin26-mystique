@@ -1,13 +1,12 @@
 import { ComponentType } from 'react';
 import dynamic from 'next/dynamic';
 import PopulateHead from 'components/common/meta';
-import Footer from 'components/common/Footer';
+import Header from 'components/MicrositeV2/Header';
 import Conditional from 'components/common/Conditional';
+import Tags from 'components/GlobalMbs/Tags';
+import Footer from 'components/common/Footer';
 import { groupSlices } from 'utils/helper';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
-import Header from 'components/MicrositeV2/Header';
-
-import Tags from './Tags';
 
 const CountryPage = dynamic(() => import('./views/CountryPage'));
 const CityPage: ComponentType<any> = dynamic(() => import('./views/CityPage'));
@@ -98,24 +97,25 @@ const GlobalMB = (props) => {
       },
     }));
 
-  const headerLinks = showHeaderlinks
-    ? [
-        {
-          slice_type: 'navigation',
-          primary: {},
-          slices: [
-            {
-              slice_type: 'nested_menu',
-              primary: {
-                label: `Themeparks in ${city}`,
-                url: {},
+  const headerLinks =
+    showHeaderlinks && collectionLinks?.length
+      ? [
+          {
+            slice_type: 'navigation',
+            primary: {},
+            slices: [
+              {
+                slice_type: 'menu_item',
+                primary: {
+                  label: `Themeparks in ${city}`,
+                  url: {},
+                },
+                slices: collectionLinks,
               },
-              slices: collectionLinks,
-            },
-          ],
-        },
-      ]
-    : [];
+            ],
+          },
+        ]
+      : [];
 
   const filterByExperienceType = (arr: any[], experienceType: string) => {
     const data = arr?.filter((d) => d?.experience_type === experienceType);

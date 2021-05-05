@@ -1,11 +1,10 @@
 import { FunctionComponent, useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import Conditional from 'components/common/Conditional';
-import { useWindowWidth } from '@react-hook/window-size';
 import { scroller } from 'react-scroll';
-
-import Card from './collectionCard';
-import DetailedCollectionCard from './detailedProductCard';
+import { useWindowWidth } from '@react-hook/window-size';
+import Conditional from 'components/common/Conditional';
+import Card from 'components/GlobalMbs/collectionTabs/collectionCard';
+import DetailedCollectionCard from 'components/GlobalMbs/collectionTabs/detailedProductCard';
 
 const RowWrapper = styled.div`
   display: grid;
@@ -18,10 +17,10 @@ const RowWrapper = styled.div`
   }
 `;
 
-type RowComponentProps = {
+interface RowComponentProps {
   cards: any[];
   categoryData: any[];
-};
+}
 const RowComponent: FunctionComponent<RowComponentProps> = ({
   cards,
   categoryData,

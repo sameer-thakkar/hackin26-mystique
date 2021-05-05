@@ -253,7 +253,7 @@ const Menu = ({ label, url, slices, isMobile, isGlobalMb = false }) => {
           ref={nestedMenuRef}
           className={`nested-menu ${isOffScreen ? 'off-screen' : ''}`}
         >
-          {slices.map((slice, index) =>
+          {slices?.map((slice, index) =>
             HeaderSliceHandler(slice, { index, isMobile, isGlobalMb })
           )}
         </NestedMenu>
