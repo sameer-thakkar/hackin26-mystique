@@ -165,8 +165,8 @@ const StyledBanner = styled.div((props) => {
     }
 
     .card-content-section {
-      padding: 0 16px;
-      width: 100%;
+      padding: 0;
+      width: calc(100vw - (5.6vw * 2));
       box-sizing: border-box;
       grid-row: 2;
       margin: 0 auto;

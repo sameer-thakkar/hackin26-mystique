@@ -383,6 +383,7 @@ export const getGlobalCollection = async ({ req, uid, lang }) => {
           { pageSize: 100 }
         )
       : null;
+
     const countryCollections = countryDocID
       ? await client.query(
           [
@@ -398,6 +399,7 @@ export const getGlobalCollection = async ({ req, uid, lang }) => {
           { pageSize: 100 }
         )
       : null;
+
     const subPages = await client.query(
       [
         Prismic.Predicates.at('document.type', CUSTOM_TYPES.GLOBAL_EXPERIENCE),
@@ -429,8 +431,8 @@ export const getGlobalCollection = async ({ req, uid, lang }) => {
         ...response,
         ticketsPage,
         attractionsPage,
-        ...(cityCollections && cityCollections),
-        ...(countryCollections && countryCollections),
+        ...(cityCollections && { cityCollections }),
+        ...(countryCollections && { countryCollections }),
         commonFooter,
         contentFramework,
       },

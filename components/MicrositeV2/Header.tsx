@@ -35,10 +35,10 @@ const ResponsiveSelector: ComponentType<any> = dynamic(
   { ssr: false }
 );
 
-const StyledHeader = styled.span`
+const StyledHeader = styled.div`
   header {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: repeat(2, auto);
     justify-content: space-between;
     align-items: center;
     padding-top: 14px;
@@ -47,7 +47,7 @@ const StyledHeader = styled.span`
   }
   .fixed-wrap {
     position: fixed;
-    width: 100%;
+    width: 100vw;
     top: 0;
     min-height: ${({ isGlobalMb }) => (isGlobalMb ? '64px' : '80px')};
     ${({ isGlobalMb }) =>
@@ -110,6 +110,7 @@ const HeaderRight = styled.div`
   display: grid;
   grid-gap: 22px;
   grid-auto-flow: column;
+  grid-auto-columns: max-content;
   align-items: center;
   .buy-tickets {
     font-size: 16px;
@@ -331,20 +332,27 @@ const Header: FunctionComponent<HeaderProps> = ({
   const hamburgerIconCheck = !!(
     headerLinks?.filter((link) => link?.link_url)?.length || headerSlices.length
   );
-  const [scrollPos, setScrollPos] = useState(0);
+
+  const [showBuyTickets, setShowBuyTickets] = useState(false);
   const [isMobileDevice, setIsMobileDevice] = useState(isMobile);
 
   useEffect(() => {
-    const isMobile = window.innerWidth <= 768;
-    setIsMobileDevice(isMobile);
-  }, []);
-  useEffect(() => {
     if (!window) return;
-    const scrollHandler = () => {
-      setScrollPos(window.pageYOffset);
-    };
-    window.addEventListener('scroll', scrollHandler, { passive: true });
-  }, [scrollPos]);
+    const isMobile = window.innerWidth <= 800;
+    setIsMobileDevice(isMobile);
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (window.pageYOffset > 450) {
+          setShowBuyTickets(true);
+        } else {
+          setShowBuyTickets(false);
+        }
+      },
+      { passive: true }
+    );
+  }, []);
+
   return (
     <StyledHeader
       overlayActive={languageDropdown || navActive}
@@ -429,7 +437,7 @@ const Header: FunctionComponent<HeaderProps> = ({
             ) : null}
             {enableBuyTickets ? (
               <>
-                <Conditional if={isGlobalMb && scrollPos > 450}>
+                <Conditional if={isGlobalMb && showBuyTickets}>
                   <a href={buyTicketsLink} className="buy-tickets global-mb">
                     Buy Tickets
                   </a>

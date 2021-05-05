@@ -36,40 +36,67 @@ const GlobalMB = (props) => {
     isDev,
     serverRequestStartTimestamp,
     type,
-  } = props;
+    ticketsPage,
+    tickets,
+    experiencesPage,
+    currencies,
+    cityCollections,
+    countryCollections = [],
+  } = props || {};
 
-  const logo = props?.data?.logo?.url || props?.data?.logo_url;
-  const logoAltText = props?.data?.logo?.alt || props?.data?.logo_alt_text;
-  const ticketsPage = props?.ticketsPage;
-  const tickets = props?.tickets;
-  const experiencesPage = props?.attractionsPage;
-  const hasTicketsPage =
-    props?.data?.supply === 'Direct' && props?.data?.headout_category_id;
+  const {
+    attraction: footerAttraction,
+    footer_heading: footerHeading,
+    microbrand_type: footerMbType,
+    theme_override: footerThemeOverride,
+    invert_logo_color: invertLogoColor,
+    show_disclaimer: showDisclaimer,
+    disclaimer_text: disclaimerText,
+    body: footerSlices,
+    powered_by_superbrand: poweredBy,
+  } = footer || {};
+
+  const {
+    title,
+    description,
+    image,
+    logo,
+    logo_url: logoUrl,
+    logo_alt_text: logoAltText,
+    supply,
+    headout_category_id: categoryId,
+    official_website: officialWebsite,
+    country_name: countryName,
+    city_name: cityName,
+    microbrand_url: microbrandUrl,
+  } = CMSContent || {};
+
+  const { results: cityCollectionsData } = cityCollections || {};
+  const { results: countryCollectionsData } = countryCollections || {};
+
+  const hasTicketsPage = supply === 'Direct' && categoryId;
   const ticketLink = hasTicketsPage
     ? convertUidToUrl(ticketsPage?.uid)
-    : getValidUrl(props?.data?.official_website?.trim());
-  const city = CMSContent?.city_name;
-  const cityCollections = props?.cityCollections;
-  const currencies = props?.allCurrencies;
+    : getValidUrl(officialWebsite?.trim());
   const cityPageProps = {
     ...CMSContent,
     currencies,
-    cityCollections: cityCollections?.results,
+    cityCollections: cityCollectionsData,
   };
 
-  const country = CMSContent?.country_name;
-  const countryCollections = props?.countryCollections;
   const currentLanguage = lang.split('-')[0];
   const footerLogoURL = footer?.logo?.url;
   const footerLogoAlt = footer?.footer_logo_alt || footer?.footer_logo?.alt;
-  const slices = contentFramework?.data?.body;
+  const { data: contentFrameworkData } = contentFramework || {};
+  const { body: slices } = contentFrameworkData || {};
+
   const contentFWSlices = (slices && groupSlices(slices)) || [];
 
-  const cityCollectionRanks = cityCollections?.results
+  const cityCollectionRanks = cityCollectionsData
     ?.map((collection) => collection?.data?.rank)
     ?.sort();
 
-  const totalCityCollections = cityCollections?.results?.length;
+  const totalCityCollections = cityCollectionsData?.length;
 
   const collectionPageProps = {
     ...CMSContent,
@@ -84,7 +111,7 @@ const GlobalMB = (props) => {
   const showHeaderlinks =
     type === 'global_collection' || type === 'global_experience';
 
-  const collectionLinks = cityCollections?.results
+  const collectionLinks = cityCollectionsData
     ?.filter((collection) => collection?.uid !== uid)
     ?.map((data) => ({
       slice_type: 'menu_item',
@@ -97,6 +124,9 @@ const GlobalMB = (props) => {
       },
     }));
 
+  const CITY_TAGS_TITLE = 'Themeparks in';
+  const COUNTRY_TAGS_TITLE = 'All Themeparks in';
+
   const headerLinks =
     showHeaderlinks && collectionLinks?.length
       ? [
@@ -105,9 +135,9 @@ const GlobalMB = (props) => {
             primary: {},
             slices: [
               {
-                slice_type: 'menu_item',
+                slice_type: 'nested_menu',
                 primary: {
-                  label: `Themeparks in ${city}`,
+                  label: `${CITY_TAGS_TITLE} ${cityName}`,
                   url: {},
                 },
                 slices: collectionLinks,
@@ -136,16 +166,31 @@ const GlobalMB = (props) => {
     }
   }
 
-  const hasMicrobrand = CMSContent?.microbrand_url;
+  let pageMarkup;
+
+  switch (type) {
+    case 'global_country':
+      pageMarkup = <CountryPage {...CMSContent} uid={uid} />;
+      break;
+    case 'global_city':
+      pageMarkup = <CityPage {...cityPageProps} uid={uid} />;
+      break;
+    case 'global_collection':
+      pageMarkup = <CollectionPage {...collectionPageProps} />;
+      break;
+    case 'global_experience':
+      pageMarkup = <ExperiencePage {...CMSContent} uid={uid} />;
+      break;
+  }
 
   return (
     <>
-      <Conditional if={!hasMicrobrand}>
+      <Conditional if={!microbrandUrl}>
         <PopulateHead
           {...{
-            title: CMSContent?.title,
-            description: CMSContent?.description,
-            image: CMSContent?.image,
+            title,
+            description,
+            image,
             favicon: '',
             faq_schema: [],
             first_publication_date: datePublished,
@@ -164,8 +209,8 @@ const GlobalMB = (props) => {
           host={host}
           enableDropdownLinks={showHeaderlinks}
           dropdownLinks={[]}
-          logoUrl={logo}
-          logoAltText={logoAltText}
+          logoUrl={logo?.url || logoUrl}
+          logoAltText={logo?.alt || logoAltText}
           enableSearch={false}
           enableBuyTickets={showTicketsCta}
           hasPoweredByHeadoutLogo={false}
@@ -175,18 +220,7 @@ const GlobalMB = (props) => {
           isGlobalMb={true}
           buyTicketsLink={ticketLink}
         />
-        <Conditional if={type === 'global_country'}>
-          <CountryPage {...CMSContent} uid={uid} />
-        </Conditional>
-        <Conditional if={type === 'global_city'}>
-          <CityPage {...cityPageProps} uid={uid} />
-        </Conditional>
-        <Conditional if={type === 'global_collection'}>
-          <CollectionPage {...collectionPageProps} />
-        </Conditional>
-        <Conditional if={type === 'global_experience'}>
-          <ExperiencePage {...CMSContent} uid={uid} />
-        </Conditional>
+        {pageMarkup}
         <Conditional if={contentFWSlices.length}>
           <LongForm
             slicesArray={contentFWSlices}
@@ -212,33 +246,33 @@ const GlobalMB = (props) => {
             hasToursSection={false}
           />
         </Conditional>
-        <Conditional if={cityCollections?.results?.length}>
+        <Conditional if={cityCollectionsData?.length}>
           <Tags
-            collections={cityCollections?.results}
+            collections={cityCollectionsData}
             uid={uid}
-            title={`Themeparks in ${city}`}
+            title={`${CITY_TAGS_TITLE} ${cityName}`}
           />
         </Conditional>
-        <Conditional if={countryCollections?.results?.length}>
+        <Conditional if={countryCollectionsData?.length}>
           <Tags
-            collections={countryCollections?.results}
+            collections={countryCollectionsData}
             uid={uid}
-            title={`All Themeparks in ${country}`}
+            title={`${COUNTRY_TAGS_TITLE} ${countryName}`}
           />
         </Conditional>
         <Footer
           currentLanguage={currentLanguage}
-          attraction={footer.attraction || 'attraction'}
-          primaryHeading={footer?.footer_heading}
-          microbrandType={footer.microbrand_type || ''}
-          themeOverride={footer.theme_override}
-          invertLogoColor={footer.invert_logo_color}
-          showDisclaimer={footer.show_disclaimer}
-          disclaimerText={footer.disclaimer_text}
+          attraction={footerAttraction || 'attraction'}
+          primaryHeading={footerHeading}
+          microbrandType={footerMbType || ''}
+          themeOverride={footerThemeOverride}
+          invertLogoColor={invertLogoColor}
+          showDisclaimer={showDisclaimer}
+          disclaimerText={disclaimerText}
           logoURL={footerLogoURL}
           logoAlt={footerLogoAlt}
-          slices={footer.body || []}
-          hasPoweredByHeadoutLogo={footer.powered_by_superbrand || false}
+          slices={footerSlices || []}
+          hasPoweredByHeadoutLogo={poweredBy || false}
         />
       </Conditional>
     </>

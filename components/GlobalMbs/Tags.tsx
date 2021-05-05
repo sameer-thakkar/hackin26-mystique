@@ -7,6 +7,7 @@ const TagSection = styled.div`
   max-width: 1200px;
   margin: 0 auto 57px auto;
   font-family: ${SOLEIL.FONT_STACK};
+  width: calc(100vw - (5.46vw * 2));
   h2 {
     font-weight: ${SOLEIL.SEMIBOLD};
     font-size: 24px;

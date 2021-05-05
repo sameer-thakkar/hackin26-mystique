@@ -32,8 +32,7 @@ const StyledLongform = styled.div`
     line-height: 1.4;
   }
   .slice-wrapper {
-    width: ${({ isGlobalMb }) =>
-      isGlobalMb ? '' : 'calc(100vw - (5.46vw * 2))'};
+    ${({ isGlobalMb }) => isGlobalMb && `width: calc(100vw - (5.46vw * 2));`}
   }
 
   h2 {
