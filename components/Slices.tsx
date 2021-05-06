@@ -47,7 +47,10 @@ const ListicleSection = dynamic(() => import('./slices/ListicleSection'));
 const Listicle = dynamic(() => import('./slices/Listicle'));
 const Reviews = dynamic(() => import('./slices/Reviews'));
 const ExperienceCarousel = dynamic(() =>
-  import('./GlobalMbs/ExperienceCarousel')
+  import('./GlobalMbs/Carousels/ExperienceCarousel')
+);
+const CollectionCarousel = dynamic(() =>
+  import('./GlobalMbs/Carousels/CollectionCarousel')
 );
 
 const sliceHandler = (slice, props: any = {}) => {
@@ -467,6 +470,16 @@ const sliceHandler = (slice, props: any = {}) => {
           mbType={slice?.primary?.mb_type}
           showSeeAll={slice?.primary?.show_see_all}
           title={slice?.primary?.title}
+          {...props}
+        />
+      );
+    case 'collection_carousel':
+      return (
+        <CollectionCarousel
+          title={slice?.primary?.carousel_title}
+          subtext={slice?.primary?.carousel_subtext}
+          carouselType={slice?.primary?.carousel_type}
+          showSeeAll={slice?.primary?.show_see_all}
           {...props}
         />
       );

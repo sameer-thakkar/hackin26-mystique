@@ -204,12 +204,18 @@ const StyledBanner = styled.div((props) => {
 `;
 });
 
+export enum BannerLayout {
+  fullWidth = 'full-width',
+  large = 'large',
+  small = 'small',
+}
+
 interface BannerProps {
   title: string;
   subText?: string;
   images: any[];
-  cardType: string;
-  breadcrumbs: Array<{ url: string; text: string }>;
+  cardType: BannerLayout;
+  breadcrumbs?: Array<{ url: string; text: string }>;
   collection?: any;
   startingPrice?: string;
 }

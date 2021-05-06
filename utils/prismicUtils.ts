@@ -323,16 +323,45 @@ export const getMicrositeDocument = async ({
     });
 };
 
-export const getGlobalExperience = async ({ req, uid, lang }) => {
+export const getGlobalHomepage = async ({ req, uid, lang }) => {
   const response = await Client(req).getByUID(
-    CUSTOM_TYPES.GLOBAL_EXPERIENCE,
+    CUSTOM_TYPES.GLOBAL_HOMEPAGE,
     uid,
     {
       lang,
     }
   );
   if (response) {
-    const { common_footer, content_framework } = response.data;
+    const { common_footer, content_framework, mb_type } = response.data;
+
+    const client = Client();
+    const cityCollections = mb_type
+      ? await client.query(
+          [
+            Prismic.Predicates.at('document.type', CUSTOM_TYPES.GLOBAL_CITY),
+            Prismic.Predicates.at(
+              `my.${CUSTOM_TYPES.GLOBAL_CITY}.mb_type`,
+              mb_type
+            ),
+          ],
+          { pageSize: 100 }
+        )
+      : null;
+    const collections = mb_type
+      ? await client.query(
+          [
+            Prismic.Predicates.at(
+              'document.type',
+              CUSTOM_TYPES.GLOBAL_COLLECTION
+            ),
+            Prismic.Predicates.at(
+              `my.${CUSTOM_TYPES.GLOBAL_COLLECTION}.mb_type`,
+              mb_type
+            ),
+          ],
+          { pageSize: 100 }
+        )
+      : null;
 
     const refArray = await getRefsArrayByIds(
       [common_footer.id, content_framework.id],
@@ -342,14 +371,17 @@ export const getGlobalExperience = async ({ req, uid, lang }) => {
     return {
       CMSContent: {
         ...response,
+        ...(collections && { collections }),
+        ...(cityCollections && { cityCollections }),
         commonFooter,
         contentFramework,
       },
-      ContentType: CUSTOM_TYPES.GLOBAL_EXPERIENCE,
+      ContentType: CUSTOM_TYPES.GLOBAL_HOMEPAGE,
     };
   }
   return Promise.reject();
 };
+
 export const getGlobalCollection = async ({ req, uid, lang }) => {
   const response = await Client(req).getByUID(
     CUSTOM_TYPES.GLOBAL_COLLECTION,
@@ -441,6 +473,7 @@ export const getGlobalCollection = async ({ req, uid, lang }) => {
   }
   return Promise.reject();
 };
+
 export const getGlobalCity = async ({ req, uid, lang }) => {
   const cityResponse = await Client(req).getByUID(
     CUSTOM_TYPES.GLOBAL_CITY,
@@ -482,6 +515,7 @@ export const getGlobalCity = async ({ req, uid, lang }) => {
   }
   return Promise.reject();
 };
+
 export const getGlobalCountry = async ({ req, uid, lang }) => {
   const countryResponse = await Client(req).getByUID(
     CUSTOM_TYPES.GLOBAL_COUNTRY,
@@ -526,6 +560,34 @@ export const getGlobalCountry = async ({ req, uid, lang }) => {
   return Promise.reject();
 };
 
+export const getGlobalExperience = async ({ req, uid, lang }) => {
+  const response = await Client(req).getByUID(
+    CUSTOM_TYPES.GLOBAL_EXPERIENCE,
+    uid,
+    {
+      lang,
+    }
+  );
+  if (response) {
+    const { common_footer, content_framework } = response.data;
+
+    const refArray = await getRefsArrayByIds(
+      [common_footer.id, content_framework.id],
+      req
+    );
+    const { commonFooter, contentFramework } = refsArrayToObject(refArray);
+    return {
+      CMSContent: {
+        ...response,
+        commonFooter,
+        contentFramework,
+      },
+      ContentType: CUSTOM_TYPES.GLOBAL_EXPERIENCE,
+    };
+  }
+  return Promise.reject();
+};
+
 const getRefsArrayByIds = async (ref_ids: Array<String>, req: Request) => {
   const linkedRefsPromise = Client(req).getByIDs(ref_ids.filter((id) => id));
   return await Promise.resolve(linkedRefsPromise).then((res: any) => {
@@ -564,6 +626,7 @@ export const getPrismicDocument = async ({
       uid,
     }),
     getListicleDocument({ req, lang, uid }),
+    getGlobalHomepage({ req, lang, uid }),
     getGlobalExperience({ req, lang, uid }),
     getGlobalCollection({ req, lang, uid }),
     getGlobalCity({ req, lang, uid }),

@@ -255,6 +255,7 @@ export default class Page extends React.Component<any, any> {
       }
 
       if (
+        ContentType === CUSTOM_TYPES.GLOBAL_HOMEPAGE ||
         ContentType === CUSTOM_TYPES.GLOBAL_COUNTRY ||
         ContentType === CUSTOM_TYPES.GLOBAL_EXPERIENCE ||
         ContentType === CUSTOM_TYPES.LISTICLE
@@ -517,6 +518,7 @@ export default class Page extends React.Component<any, any> {
 
     const microsite = CMSContent.data?.microsite?.data || CMSContent.data?.data;
     const isGlobalMb =
+      ContentType === CUSTOM_TYPES.GLOBAL_HOMEPAGE ||
       ContentType === CUSTOM_TYPES.GLOBAL_CITY ||
       ContentType === CUSTOM_TYPES.GLOBAL_COUNTRY ||
       ContentType === CUSTOM_TYPES.GLOBAL_COLLECTION ||
@@ -578,6 +580,7 @@ export default class Page extends React.Component<any, any> {
         case CUSTOM_TYPES.GLOBAL_COUNTRY:
         case CUSTOM_TYPES.GLOBAL_COLLECTION:
         case CUSTOM_TYPES.GLOBAL_EXPERIENCE:
+        case CUSTOM_TYPES.GLOBAL_HOMEPAGE:
           return (
             <GlobalMB
               {...CMSContent}

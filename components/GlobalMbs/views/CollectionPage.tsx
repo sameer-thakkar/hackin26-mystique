@@ -1,4 +1,4 @@
-import Banner from 'components/GlobalMbs/Banner';
+import Banner, { BannerLayout } from 'components/GlobalMbs/Banners/Banner';
 import { convertUidToUrl } from 'utils/urlUtils';
 
 const CollectionPage = (props) => {
@@ -55,17 +55,16 @@ const CollectionPage = (props) => {
     { url: convertUidToUrl(countryUID), text: country },
     { url: convertUidToUrl(cityUID), text: city },
   ];
-  const type = 'full-width';
 
   return (
     <>
       <Banner
         title={collectionName}
         images={bannerImages}
-        cardType={type}
         breadcrumbs={breadcrumbs}
         collection={collectionInfo}
         startingPrice={price}
+        cardType={BannerLayout.fullWidth}
       />
     </>
   );

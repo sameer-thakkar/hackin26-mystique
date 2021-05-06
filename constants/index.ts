@@ -170,6 +170,7 @@ export const CUSTOM_TYPES = {
   COMMON_DATA: 'common_data',
   LISTICLE: 'page',
   CONTENT_FRAMEWORK: 'content_framework',
+  GLOBAL_HOMEPAGE: 'global_homepage',
   GLOBAL_CITY: 'global_city',
   GLOBAL_COLLECTION: 'global_collection',
   GLOBAL_COUNTRY: 'global_country',

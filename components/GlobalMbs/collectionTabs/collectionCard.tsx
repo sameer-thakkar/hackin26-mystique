@@ -32,7 +32,7 @@ const StyledCard = styled.div`
     width: max-content;
     padding: 4px 8px;
     border-radius: 2px;
-    z-index: 50;
+    z-index: 20;
     font-size: 12px;
     font-style: normal;
     font-weight: ${SOLEIL.REGULAR};
@@ -114,8 +114,10 @@ const Card: FunctionComponent<CardProps> = ({
   } = card;
   const imageUrl = images[0]?.image_url || FALLBACK_IMAGE;
 
+  const BEST_SELLER = 'Bestseller';
+
   const hasBestSeller = otherFilters?.length
-    ? otherFilters?.some((tag) => tag?.filter_name === 'Bestseller')
+    ? otherFilters?.some((tag) => tag?.filter_name === BEST_SELLER)
     : false;
 
   const {
@@ -146,7 +148,9 @@ const Card: FunctionComponent<CardProps> = ({
     <StyledCard onClick={handleClick}>
       <div className="image-wrapper">
         <Conditional if={hasBestSeller}>
-          <div className="l1-booster">{FLAME} Bestseller</div>
+          <div className="l1-booster">
+            {FLAME} {BEST_SELLER}
+          </div>
         </Conditional>
         <Image url={imageUrl} />
       </div>

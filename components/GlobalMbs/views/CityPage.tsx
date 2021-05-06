@@ -1,10 +1,9 @@
 import { RichText } from 'prismic-reactjs';
-import Banner from 'components/GlobalMbs/Banner';
+import Banner, { BannerLayout } from 'components/GlobalMbs/Banners/Banner';
 import CollectionTabs from 'components/GlobalMbs/collectionTabs';
 import Conditional from 'components/common/Conditional';
 
 const CityPage = (props) => {
-  const CARD_TYPE = 'full-width';
   const breadcrumbs = [];
   const { cityCollections, currencies, body: slices } = props || {};
   // Banner
@@ -35,7 +34,7 @@ const CityPage = (props) => {
         title={title}
         images={bannerImages}
         subText={bannerSubText}
-        cardType={CARD_TYPE}
+        cardType={BannerLayout.fullWidth}
         breadcrumbs={breadcrumbs}
       />
       <Conditional if={cityCollections?.length}>

@@ -16,6 +16,7 @@ const CollectionPage: ComponentType<any> = dynamic(() =>
 const ExperiencePage: ComponentType<any> = dynamic(() =>
   import('./views/ExperiencePage')
 );
+const HomePage: ComponentType<any> = dynamic(() => import('./views/HomePage'));
 const LongForm: ComponentType<any> = dynamic(() =>
   import('components/MicrositeV2/LongForm')
 );
@@ -39,9 +40,10 @@ const GlobalMB = (props) => {
     ticketsPage,
     tickets,
     experiencesPage,
-    currencies,
+    allCurrencies: currencies,
     cityCollections,
     countryCollections = [],
+    collections,
   } = props || {};
 
   const {
@@ -71,18 +73,20 @@ const GlobalMB = (props) => {
     microbrand_url: microbrandUrl,
   } = CMSContent || {};
 
+  const { results: collectionsData } = collections || {};
   const { results: cityCollectionsData } = cityCollections || {};
   const { results: countryCollectionsData } = countryCollections || {};
 
-  const hasTicketsPage = supply === 'Direct' && categoryId;
-  const ticketLink = hasTicketsPage
-    ? convertUidToUrl(ticketsPage?.uid)
-    : getValidUrl(officialWebsite?.trim());
   const cityPageProps = {
     ...CMSContent,
     currencies,
     cityCollections: cityCollectionsData,
   };
+
+  const hasTicketsPage = supply === 'Direct' && categoryId;
+  const ticketLink = hasTicketsPage
+    ? convertUidToUrl(ticketsPage?.uid)
+    : getValidUrl(officialWebsite?.trim());
 
   const currentLanguage = lang.split('-')[0];
   const footerLogoURL = footer?.logo?.url;
@@ -96,20 +100,28 @@ const GlobalMB = (props) => {
     ?.map((collection) => collection?.data?.rank)
     ?.sort();
 
-  const totalCityCollections = cityCollectionsData?.length;
+  const homePageProps = {
+    ...CMSContent,
+    collections: collectionsData,
+    cityCollections: cityCollectionsData,
+  };
 
   const collectionPageProps = {
     ...CMSContent,
     tickets,
     uid,
     ticketsPage,
-    totalCityCollections,
+    totalCityCollections: cityCollectionsData?.length,
     cityCollectionRanks,
   };
 
-  const showTicketsCta = type === 'global_collection' || props?.ticketsPage;
-  const showHeaderlinks =
-    type === 'global_collection' || type === 'global_experience';
+  const isGlobalHomepage = type === 'global_homepage';
+  const isGlobalCollection = type === 'global_collection';
+  const isGlobalExperience = type === 'global_experience';
+  const isGlobalCountry = type === 'global_country';
+
+  const showTicketsCta = isGlobalCollection || props?.ticketsPage;
+  const showHeaderlinks = isGlobalCollection || isGlobalExperience;
 
   const collectionLinks = cityCollectionsData
     ?.filter((collection) => collection?.uid !== uid)
@@ -126,6 +138,7 @@ const GlobalMB = (props) => {
 
   const CITY_TAGS_TITLE = 'Themeparks in';
   const COUNTRY_TAGS_TITLE = 'All Themeparks in';
+  const HOMEPAGE_TAGS_TITLE = 'More Themeparks';
 
   const headerLinks =
     showHeaderlinks && collectionLinks?.length
@@ -152,7 +165,7 @@ const GlobalMB = (props) => {
     return data;
   };
 
-  if (type === 'global_collection' && experiencesPage) {
+  if (isGlobalCollection && experiencesPage) {
     const hasExperiences = Object.keys(experiencesPage)?.length;
     if (hasExperiences) {
       const experiencesData = experiencesPage?.data?.body
@@ -181,6 +194,8 @@ const GlobalMB = (props) => {
     case 'global_experience':
       pageMarkup = <ExperiencePage {...CMSContent} uid={uid} />;
       break;
+    default:
+      pageMarkup = <HomePage {...homePageProps} uid={uid} />;
   }
 
   return (
@@ -246,18 +261,29 @@ const GlobalMB = (props) => {
             hasToursSection={false}
           />
         </Conditional>
-        <Conditional if={cityCollectionsData?.length}>
+        <Conditional
+          if={
+            cityCollectionsData?.length && !isGlobalHomepage && !isGlobalCountry
+          }
+        >
           <Tags
             collections={cityCollectionsData}
             uid={uid}
             title={`${CITY_TAGS_TITLE} ${cityName}`}
           />
         </Conditional>
-        <Conditional if={countryCollectionsData?.length}>
+        <Conditional if={countryCollectionsData?.length && !isGlobalHomepage}>
           <Tags
             collections={countryCollectionsData}
             uid={uid}
             title={`${COUNTRY_TAGS_TITLE} ${countryName}`}
+          />
+        </Conditional>
+        <Conditional if={collectionsData?.length && isGlobalHomepage}>
+          <Tags
+            collections={collectionsData}
+            uid={uid}
+            title={`${HOMEPAGE_TAGS_TITLE}`}
           />
         </Conditional>
         <Footer

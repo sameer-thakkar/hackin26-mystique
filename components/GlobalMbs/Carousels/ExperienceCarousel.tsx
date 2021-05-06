@@ -1,91 +1,11 @@
-import { FunctionComponent, useCallback, useEffect, useState } from 'react';
-import dynamic from 'next/dynamic';
+import { FunctionComponent } from 'react';
 import styled from 'styled-components';
-import { useWindowWidth } from '@react-hook/window-size';
 import Image from 'UI/Image';
-import OverflowScroll from 'UI/OverflowScroll';
 import Conditional from 'components/common/Conditional';
-import { COLORS, SIZES, SOLEIL } from 'const/ui-constants';
-import { CHEVRON_LEFT, CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
+import { COLORS, SOLEIL } from 'const/ui-constants';
+import { CHEVRON_LEFT } from 'assets/SvgIcons';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
-
-const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
-
-const Carousel = styled.div`
-  position: relative;
-`;
-
-const StyledSwiper = styled.div`
-  overflow: hidden;
-  display: flex;
-  position: relative;
-  max-width: ${SIZES.MAX_WIDTH};
-  .cards-section-wrapper {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: max-content;
-    margin-bottom: 24px;
-  }
-`;
-
-const Controls = styled.div`
-  .prev-slide,
-  .next-slide {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: -20px;
-    cursor: pointer;
-    z-index: 2;
-    svg {
-      fill: #fff;
-      circle {
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-      }
-      border-radius: 100%;
-      box-shadow: path {
-        stroke-width: 2px;
-      }
-    }
-  }
-  .next-slide {
-    left: unset;
-    right: -20px;
-    svg {
-      transform: rotate(180deg);
-    }
-  }
-`;
-
-const HeadingWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 32px;
-  font-family: ${SOLEIL.FONT_STACK};
-  @media (max-width: 500px) {
-    margin-bottom: 24px;
-  }
-  h2 {
-    font-size: 24px;
-    font-weight: ${SOLEIL.SEMIBOLD};
-    line-height: 28px;
-    color: ${COLORS.GREY.G2};
-    margin: 0;
-  }
-  a {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    line-height: 16px;
-    letter-spacing: 0.2px;
-    color: ${COLORS.GREY.G2};
-  }
-  svg {
-    height: 10px;
-    transform: rotate(180deg);
-  }
-`;
+import Carousel from 'components/GlobalMbs/Carousels/Carousel';
 
 const StyledCard = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
@@ -156,6 +76,35 @@ const StyledCard = styled.div`
   }
 `;
 
+const HeaderWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: ${SOLEIL.FONT_STACK};
+  @media (max-width: 500px) {
+    margin-bottom: 24px;
+  }
+  h2 {
+    font-size: 24px;
+    font-weight: ${SOLEIL.SEMIBOLD};
+    line-height: 28px;
+    color: ${COLORS.GREY.G2};
+    margin: 0;
+  }
+  a {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 0.2px;
+    color: ${COLORS.GREY.G2};
+  }
+  svg {
+    height: 10px;
+    transform: rotate(180deg);
+  }
+`;
+
 interface ExperienceProps {
   cardsInARow: number;
   experienceType: string;
@@ -178,33 +127,16 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
   rides,
   tickets,
 }) => {
-  const width = useWindowWidth();
-  const [isMobile, setIsMobile] = useState(false);
-  const [swiper, updateSwiper] = useState(null);
-  const [_currentIndex, updateCurrentIndex] = useState(0);
-  const updateIndex = useCallback(() => updateCurrentIndex(swiper.realIndex), [
-    swiper,
-  ]);
-
   const currencySymbol = tickets?.currencySymbol?.localSymbol;
 
-  // isMobile effect
-  useEffect(() => {
-    setIsMobile(width <= 768);
-  }, [width, setIsMobile]);
-
-  useEffect(() => {
-    if (isMobile) return;
-    if (swiper !== null) {
-      swiper.on('slideChange', updateIndex);
-    }
-
-    return () => {
-      if (swiper !== null) {
-        swiper.off('slideChange', updateIndex);
-      }
-    };
-  }, [isMobile, swiper, updateIndex]);
+  const entrySection = (
+    <HeaderWrapper>
+      <h2>{title}</h2>
+      {showSeeAll && (
+        <a href={convertUidToUrl(experiencePageUid)}>See All {CHEVRON_LEFT}</a>
+      )}
+    </HeaderWrapper>
+  );
 
   let cards;
 
@@ -218,15 +150,6 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
     case 'Tickets':
       cards = [...tickets?.data?.products];
   }
-
-  const entrySection = (
-    <HeadingWrapper>
-      <h2>{title}</h2>
-      {showSeeAll && (
-        <a href={convertUidToUrl(experiencePageUid)}>See All {CHEVRON_LEFT}</a>
-      )}
-    </HeadingWrapper>
-  );
 
   let ridesAttractionMarkup, ticketsMarkup;
 
@@ -314,84 +237,20 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
     });
   }
 
-  if (!isMobile) {
-    const goNext = () => {
-      if (swiper !== null) {
-        swiper.slideNext();
-      }
-    };
-
-    const goPrev = () => {
-      if (swiper !== null) {
-        swiper.slidePrev();
-      }
-    };
-
-    const swiperParams = {
-      slidesPerView: cardsInARow,
-      wrapperClass: 'cards-section-wrapper',
-      spaceBetween: 24,
-      shouldSwiperUpdate: true,
-      getSwiper: updateSwiper,
-    };
-
-    return (
-      <>
-        <Conditional
-          if={attractions?.length || rides?.length || tickets?.length}
-        >
-          {entrySection}
-          <Carousel>
-            <StyledSwiper>
-              <Swiper {...swiperParams}>
-                <Conditional if={ridesAttractionMarkup}>
-                  {ridesAttractionMarkup}
-                </Conditional>
-                <Conditional if={ticketsMarkup}>{ticketsMarkup}</Conditional>
-              </Swiper>
-            </StyledSwiper>
-            <Controls>
-              <Conditional if={!swiper?.isBeginning}>
-                <div
-                  className="prev-slide"
-                  role="button"
-                  tabIndex={0}
-                  onClick={goPrev}
-                >
-                  {CHEVRON_LEFT_CIRCLE}
-                </div>
-              </Conditional>
-              <Conditional if={!swiper?.isEnd}>
-                <div
-                  className="next-slide"
-                  role="button"
-                  tabIndex={0}
-                  onClick={goNext}
-                >
-                  {CHEVRON_LEFT_CIRCLE}
-                </div>
-              </Conditional>
-            </Controls>
-          </Carousel>
-        </Conditional>
-      </>
-    );
-  }
-
-  if (isMobile) {
-    return (
-      <>
-        <Conditional
-          if={attractions?.length || rides?.length || tickets?.length}
-        >
-          {entrySection}
-          <OverflowScroll minWidthChild="calc(100vw - 93px)" marginBottom={0}>
-            {ridesAttractionMarkup || ticketsMarkup}
-          </OverflowScroll>
-        </Conditional>
-      </>
-    );
-  }
+  return (
+    <>
+      <Conditional if={ticketsMarkup}>
+        <Carousel cardsInARow={cardsInARow} entrySection={entrySection}>
+          {ticketsMarkup}
+        </Carousel>
+      </Conditional>
+      <Conditional if={ridesAttractionMarkup}>
+        <Carousel cardsInARow={cardsInARow} entrySection={entrySection}>
+          {ridesAttractionMarkup}
+        </Carousel>
+      </Conditional>
+    </>
+  );
 };
 
 export default ExperienceCarousel;
