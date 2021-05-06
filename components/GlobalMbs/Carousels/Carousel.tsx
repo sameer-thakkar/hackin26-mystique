@@ -1,11 +1,11 @@
+import { FunctionComponent, useCallback, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
-import Conditional from 'components/common/Conditional';
-import { CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
-import { SIZES, SOLEIL } from 'const/ui-constants';
-import { FunctionComponent, useCallback, useEffect, useState } from 'react';
 import { useWindowWidth } from '@react-hook/window-size';
+import Conditional from 'components/common/Conditional';
 import OverflowScroll from 'UI/OverflowScroll';
+import { SIZES, SOLEIL } from 'const/ui-constants';
+import { CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 

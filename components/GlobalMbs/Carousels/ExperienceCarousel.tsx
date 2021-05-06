@@ -2,10 +2,10 @@ import { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import Image from 'UI/Image';
 import Conditional from 'components/common/Conditional';
+import Carousel from 'components/GlobalMbs/Carousels/Carousel';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { CHEVRON_LEFT } from 'assets/SvgIcons';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
-import Carousel from 'components/GlobalMbs/Carousels/Carousel';
 
 const StyledCard = styled.div`
   font-family: ${SOLEIL.FONT_STACK};

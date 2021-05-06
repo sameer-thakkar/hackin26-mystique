@@ -1,12 +1,12 @@
 import { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
-import { FALLBACK_IMAGE } from 'const/index';
 import Image from 'UI/Image';
-import { convertUidToUrl } from 'utils/urlUtils';
 import Carousel from 'components/GlobalMbs/Carousels/Carousel';
 import Conditional from 'components/common/Conditional';
+import { FALLBACK_IMAGE } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
+import { convertUidToUrl } from 'utils/urlUtils';
 
 const Wrapper = styled.div`
   max-width: 1200px;

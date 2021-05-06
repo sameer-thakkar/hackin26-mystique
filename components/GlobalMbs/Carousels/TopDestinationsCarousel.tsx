@@ -2,8 +2,8 @@ import { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import Carousel from 'components/GlobalMbs/Carousels/Carousel';
 import Image from 'UI/Image';
-import { COLORS, SOLEIL } from 'const/ui-constants';
 import TitleTextCombo from 'UI/TitleTextCombo';
+import { COLORS, SOLEIL } from 'const/ui-constants';
 import { convertUidToUrl } from 'utils/urlUtils';
 
 const Wrapper = styled.div`
