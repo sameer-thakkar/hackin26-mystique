@@ -16,7 +16,6 @@ const HomePage = (props) => {
     url: image?.image_url?.url,
     altText: image?.alt_text,
   }));
-  console.log(collections);
   return (
     <>
       <Banner images={images} title={bannerTitle} subText={bannerSubText} />
