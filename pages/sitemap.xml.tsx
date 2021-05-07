@@ -1,8 +1,10 @@
+import { CUSTOM_TYPES } from 'constants/index';
+
+import { Component } from 'react';
 import Prismic from 'prismic-javascript';
 import builder from 'xmlbuilder';
-import { apiEndpoint } from '../config/prismic-config';
-import { CUSTOM_TYPES } from '../constants';
-import { Component } from 'react';
+import { apiEndpoint } from 'config/prismic-config';
+import { convertUidToUrl } from 'utils/urlUtils';
 
 const withHttps = (url) =>
   (url.startsWith('http') ? url : `https://${url}`).replace('http:', 'https:');
@@ -22,7 +24,15 @@ function getPage(api, uid, documents) {
 }
 
 const createLoc = (doc) => {
-  const pageUrl = doc.data.page_url;
+  let pageUrl;
+
+  if (
+    doc.type === CUSTOM_TYPES.MICROSITE ||
+    doc.type === CUSTOM_TYPES.CONTENT_PAGE
+  ) {
+    pageUrl = doc.data.page_url;
+  }
+  pageUrl = convertUidToUrl(doc.uid);
   return pageUrl;
 };
 
@@ -67,9 +77,15 @@ export default class SitemapXml extends Component {
       .then((documents) => {
         documents
           .filter((doc) =>
-            [CUSTOM_TYPES.MICROSITE, CUSTOM_TYPES.CONTENT_PAGE].includes(
-              doc.type
-            )
+            [
+              CUSTOM_TYPES.MICROSITE,
+              CUSTOM_TYPES.CONTENT_PAGE,
+              CUSTOM_TYPES.GLOBAL_CITY,
+              CUSTOM_TYPES.GLOBAL_COUNTRY,
+              CUSTOM_TYPES.GLOBAL_HOMEPAGE,
+              CUSTOM_TYPES.GLOBAL_COLLECTION,
+              CUSTOM_TYPES.GLOBAL_EXPERIENCE,
+            ].includes(doc.type)
           )
           .reduce(
             (accum, item) => {
