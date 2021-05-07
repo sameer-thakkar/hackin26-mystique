@@ -42,8 +42,9 @@ class MicrositeV2 extends Component<any, any> {
       (window as any).dataLayer.push(JSONObject);
     }
   };
+
   componentDidMount() {
-    const isMobile = window.innerWidth < 768;
+    const isMobile = window.innerWidth <= 768;
     const { all_tours: allTours } = this.props.data.data;
     const allTgids = allTours.map((tour) => tour.primary.tgid);
 
@@ -131,6 +132,7 @@ class MicrositeV2 extends Component<any, any> {
         return [...acc, { value: item.link.url, label: item.link_text }];
       else return acc;
     }, []);
+
     const headerLinks = CMSData.header_links.length
       ? CMSData.header_links
       : commonHeader?.data?.header_links || [];

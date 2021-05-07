@@ -17,6 +17,7 @@ import { uncategorizedToursListParser } from 'utils/dataParsers';
 import { getLangUID, isAmpUrl, removePageQuery } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { getPrismicDocument } from 'utils/prismicUtils';
+import { fetchCategory, fetchCurrencyList } from 'utils/apiUtils';
 
 import { getAppTheme } from '../style/theme';
 import EnvironmentContext from '../contexts/environmentContext';
@@ -29,6 +30,7 @@ const Microsite = dynamic(() => import('components/MicrositeV1'));
 const ContentPage = dynamic(() => import('components/ContentPage'));
 const MicrositeV2 = dynamic(() => import('components/MicrositeV2'));
 const Listicle = dynamic(() => import('components/ListiclePage'));
+const GlobalMB = dynamic(() => import('components/GlobalMbs'));
 
 const getValidUrlParams = (query) =>
   Object.entries(query)
@@ -121,9 +123,9 @@ export default class Page extends React.Component<any, any> {
         redirectTo({ res, url });
       }
 
-      if (process.browser) (window as any).prismic.setupEditButton();
+      if (process?.browser) (window as any).prismic.setupEditButton();
       if (res) {
-        if (props.statusCode) {
+        if (props?.statusCode) {
           res.statusCode = props.statusCode;
         }
       }
@@ -191,9 +193,76 @@ export default class Page extends React.Component<any, any> {
           host,
         };
       }
-      if (ContentType === CUSTOM_TYPES.LISTICLE) {
+
+      if (ContentType === CUSTOM_TYPES.GLOBAL_COLLECTION) {
+        let ticketsData, startingPrice, currencyCode, currencySymbol;
+        const categoryId = CMSContent?.data?.headout_category_id;
+        if (categoryId) {
+          ticketsData = await fetchCategory(categoryId);
+        }
+        if (ticketsData?.products?.length) {
+          currencyCode = ticketsData?.products
+            ?.map((ticket) => ticket?.listingPrice?.currencyCode)
+            ?.filter(
+              (currency, index, self) => self.indexOf(currency) === index
+            )
+            ?.reduce((acc, cur) => acc + cur);
+
+          startingPrice = Math.min(
+            ...ticketsData?.products?.map(
+              (ticket) => ticket?.listingPrice?.finalPrice
+            )
+          );
+        }
+
+        if (currencyCode) {
+          const allCurrencies = await fetchCurrencyList();
+          currencySymbol = allCurrencies
+            ?.filter((d) => d.code === currencyCode)
+            ?.reduce((acc, cur) => acc + cur);
+        }
+
+        return {
+          CMSContent: {
+            ...CMSContent,
+            tickets: {
+              data: ticketsData,
+              startingPrice,
+              currencySymbol,
+            },
+          },
+          ContentType,
+          uid,
+          lang,
+          isDev,
+          host,
+        };
+      }
+
+      if (ContentType === CUSTOM_TYPES.GLOBAL_CITY) {
+        const allCurrencies = await fetchCurrencyList();
+        return {
+          CMSContent: {
+            ...CMSContent,
+            allCurrencies,
+          },
+          ContentType,
+          uid,
+          lang,
+          isDev,
+          host,
+        };
+      }
+
+      if (
+        ContentType === CUSTOM_TYPES.GLOBAL_HOMEPAGE ||
+        ContentType === CUSTOM_TYPES.GLOBAL_COUNTRY ||
+        ContentType === CUSTOM_TYPES.GLOBAL_EXPERIENCE ||
+        ContentType === CUSTOM_TYPES.LISTICLE
+      ) {
         return { CMSContent, ContentType, uid, lang, isDev, host };
       }
+
       /**
        * Setting a Common Microsite Reference for Content Page & Regular Microsite
        * Added to make tour data available on Content Pages.
@@ -350,7 +419,6 @@ export default class Page extends React.Component<any, any> {
         {}
       );
       const activeCurrency = tourGroupAPIResponses?.currencies?.[0];
-
       return {
         ...AllData,
         tourGroupData,
@@ -449,6 +517,12 @@ export default class Page extends React.Component<any, any> {
     }
 
     const microsite = CMSContent.data?.microsite?.data || CMSContent.data?.data;
+    const isGlobalMb =
+      ContentType === CUSTOM_TYPES.GLOBAL_HOMEPAGE ||
+      ContentType === CUSTOM_TYPES.GLOBAL_CITY ||
+      ContentType === CUSTOM_TYPES.GLOBAL_COUNTRY ||
+      ContentType === CUSTOM_TYPES.GLOBAL_COLLECTION ||
+      ContentType === CUSTOM_TYPES.GLOBAL_EXPERIENCE;
 
     function getPageComponent(pageType) {
       switch (pageType) {
@@ -502,6 +576,20 @@ export default class Page extends React.Component<any, any> {
               serverRequestStartTimestamp={serverRequestStartTimestamp}
             />
           );
+        case CUSTOM_TYPES.GLOBAL_CITY:
+        case CUSTOM_TYPES.GLOBAL_COUNTRY:
+        case CUSTOM_TYPES.GLOBAL_COLLECTION:
+        case CUSTOM_TYPES.GLOBAL_EXPERIENCE:
+        case CUSTOM_TYPES.GLOBAL_HOMEPAGE:
+          return (
+            <GlobalMB
+              {...CMSContent}
+              isDev={isDev}
+              isMobile={isMobile}
+              host={host}
+              serverRequestStartTimestamp={serverRequestStartTimestamp}
+            />
+          );
         default:
           return <ErrorPage statusCode={500} />;
       }
@@ -537,6 +625,7 @@ export default class Page extends React.Component<any, any> {
                 currencySymbolMap={currencySymbolMap}
                 noTrack={!!noTrack || isDev}
                 biLink={biLink}
+                isGlobalMb={isGlobalMb}
               >
                 {Component}
               </MBContextProvider>
@@ -550,7 +639,6 @@ export default class Page extends React.Component<any, any> {
     );
   }
 }
-
 const HSID_VAR = 'h-sid';
 const HeadoutSessionIdSetterComponent = () => {
   const validHsidFromCookie = Cookies.get(HSID_VAR);

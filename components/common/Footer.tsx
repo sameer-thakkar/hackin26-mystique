@@ -1,17 +1,16 @@
-import { THEMES } from 'const/index';
 import React, { useContext, useEffect, useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
-import { strings } from 'const/strings';
 import { MBContext } from 'contexts/MBContext';
 import { getAppTheme } from 'style/theme';
 import { useWindowWidth } from '@react-hook/window-size';
+import Image from 'components/UI/Image';
+import SocialLinks from 'components/UI/SocialLinks';
+import sliceHandler from 'components/Slices';
+import Conditional from 'components/common/Conditional';
+import { POWERED_BY_HEADOUT, WHITE_BLIP } from 'assets/SvgIcons';
+import { THEMES } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
-
-import Image from '../UI/Image';
-import SocialLinks from '../UI/SocialLinks';
-import sliceHandler from '../Slices';
-import { POWERED_BY_HEADOUT, WHITE_BLIP } from '../../assets/SvgIcons';
-import Conditional from './Conditional';
+import { strings } from 'const/strings';
 
 const StyledFooter = styled.footer`
   width: 100%;
@@ -111,6 +110,7 @@ const FooterLegalWrapper = styled.div`
 const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
+  width: calc(100vw - 5.6vw * 2);
   @media (max-width: 768px) {
     width: auto;
     padding: 0 16px;
@@ -172,6 +172,9 @@ const FooterLegal = styled.div`
     font-family: ${SOLEIL.FONT_STACK};
     line-height: 19px;
     max-width: 500px;
+  }
+  @media (min-width: 800px) and (max-width: 1200px) {
+    grid-column-gap: 64px;
   }
   @media (max-width: 768px) {
     grid-template-areas: 'logo-disclaimer logo-disclaimer' 'help legal';
@@ -344,7 +347,7 @@ const Footer: React.FC<FooterProps> = ({
                     {strings.FOOTER.CHAT_WITH_US}
                   </Link>
                 </Conditional>
-                <Link href={`tel:${'+1 347 897 0100'}`}>
+                <Link href={`tel: +1 347 897 0100`}>
                   {strings.FOOTER.CALL_US} {!isMobile ? '+1 347 897 0100' : ''}
                 </Link>
                 <Link

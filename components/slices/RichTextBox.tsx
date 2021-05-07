@@ -1,7 +1,8 @@
 import React from 'react';
-import { RichText } from 'prismic-reactjs';
-import { shortCodeSerializer } from '../../utils/shortCodes';
 import styled from 'styled-components';
+import { RichText } from 'prismic-reactjs';
+
+import { shortCodeSerializer } from '../../utils/shortCodes';
 
 const StyledRichTextBox = styled.div`
   display: grid;

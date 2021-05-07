@@ -1,3 +1,4 @@
+import { COLORS } from 'const/ui-constants';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -13,7 +14,8 @@ const StyledHamburger = styled.div`
   &:after,
   &:before,
   & div {
-    background-color: ${({ theme }) => theme.primaryBGText || '#333'};
+    background-color: ${({ isGlobalMb, theme }) =>
+      isGlobalMb ? COLORS.GREY.G2 : theme.primaryBGText || '#333'};
     border-radius: 3px;
     content: '';
     display: block;
@@ -62,6 +64,7 @@ const Hamburger: React.FC<any> = ({
   isActive = false,
   onClickFn = null,
   className = '',
+  isGlobalMb = false,
 }) => {
   return (
     <StyledHamburger
@@ -77,6 +80,7 @@ const Hamburger: React.FC<any> = ({
         navigation-menu-mobile.toggleClass(class='navigation-nav-open'),
         navigation-menu-mobile_0.toggleClass(class='navigation-nav-open')
       "
+      isGlobalMb={isGlobalMb}
     >
       <div role="button" tabIndex={0} />
     </StyledHamburger>

@@ -11,38 +11,47 @@ const Slider = dynamic(() => import('UI/Slider'));
 
 const StyledSliderAccordion = styled.div`
   display: grid;
-  grid-template-columns: 1fr ${({ hasImageComponent }) =>
-      hasImageComponent ? ` 1fr` : ``};
+  grid-template-columns: ${({ isGlobalMb }) => (isGlobalMb ? '528px' : '1fr')} ${({
+      hasImageComponent,
+    }) => (hasImageComponent ? `1fr` : ``)};
   grid-gap: 24px;
   border: 1px solid #ebebeb;
   border-radius: 2px;
   height: max-content;
   width: 100%;
   line-height: 1.4;
+  ${({ isGlobalMb }) =>
+    isGlobalMb &&
+    `border: none;
+    grid-gap: 84px;
+    `}
   ${StyledAccordion} {
     padding: 16px;
+    ${({ isGlobalMb }) => isGlobalMb && `padding: 16px 0; margin-right: 0;`}
   }
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
+    ${({ isGlobalMb }) => isGlobalMb && `p grid-gap: 16px;`}
   }
 `;
 
 const SliderWrapper = styled.div`
   display: grid;
   overflow: hidden;
-  max-height: 368px;
+  max-height: ${({ isGlobalMb }) => (isGlobalMb ? '326px' : '368px')};
   width: auto;
   display: grid;
   .swiper-slide img {
     width: 100%;
-    height: auto;
+    height: ${({ isGlobalMb }) => (isGlobalMb ? `326px` : 'auto')};
     display: flex;
     object-fit: cover;
+    ${({ isGlobalMb }) => isGlobalMb && `border-radius: 4px;`}
   }
   @media (max-width: 768px) {
-    max-height: 195px;
+    max-height: ${({ isGlobalMb }) => (isGlobalMb ? '212px' : '195px')};
     .swiper-slide img {
-      height: 195px;
+      height: ${({ isGlobalMb }) => (isGlobalMb ? '212px' : '195px')};
     }
   }
 `;
@@ -54,13 +63,17 @@ const SingleImage = styled.div`
   display: grid;
   img {
     width: 100%;
-    height: auto;
+    height: ${({ isGlobalMb }) => (isGlobalMb ? `326px` : 'auto')};
     display: flex;
     object-fit: cover;
+    ${({ isGlobalMb }) => isGlobalMb && `border-radius: 4px;`}
   }
   @media (max-width: 768px) {
-    max-height: 195px;
-    margin-bottom: 16px;
+    max-height: ${({ isGlobalMb }) => (isGlobalMb ? '212px' : '195px')};
+    margin-bottom: ${({ isGlobalMb }) => (isGlobalMb ? '0' : '16px')};
+    img {
+      height: ${({ isGlobalMb }) => (isGlobalMb ? '212px' : '195px')};
+    }
   }
 `;
 
@@ -106,13 +119,13 @@ const SingleImage = styled.div`
 
 const SliderAccordion = (props) => {
   const { faqs: accordions, sliceProps } = props;
+  const { isMobile, isGlobalMb } = sliceProps;
 
   accordions.forEach((accordian) => {
     if (accordian.images.length == 0)
       accordian.images[0] = accordions[0].images[0];
   });
 
-  const { isMobile } = sliceProps;
   const isAmp = useAmp();
   const [activeAccordionIndex, setActiveAccordionIndex] = useState(0);
   const activeAccordionImages = accordions[activeAccordionIndex].images.filter(
@@ -131,7 +144,7 @@ const SliderAccordion = (props) => {
   };
 
   const SliderComponent = (
-    <SliderWrapper>
+    <SliderWrapper isGlobalMb={isGlobalMb}>
       {activeAccordionImages.length > 1 ? (
         <Slider sliderOptions={sliderOptions} parentOverflowHidden>
           {activeAccordionImages.map((image, index) => {
@@ -147,9 +160,9 @@ const SliderAccordion = (props) => {
           })}
         </Slider>
       ) : (
-        <SingleImage>
+        <SingleImage isGlobalMb={isGlobalMb}>
           <Image
-            height={500}
+            height={isMobile ? 195 : 375}
             aspectRatio={'16:10'}
             imageId={activeAccordionImages[0]?.alt}
             url={activeAccordionImages[0]?.url}
@@ -161,7 +174,10 @@ const SliderAccordion = (props) => {
   );
 
   return (
-    <StyledSliderAccordion hasImageComponent={activeAccordionImages.length}>
+    <StyledSliderAccordion
+      hasImageComponent={activeAccordionImages.length}
+      isGlobalMb={isGlobalMb}
+    >
       {!isMobile && activeAccordionIndex >= 0 ? SliderComponent : null}
       {isAmp ? (
         <amp-accordion animate="">
@@ -209,6 +225,7 @@ const SliderAccordion = (props) => {
                 heading={accordion.question}
                 clickHandler={() => setActiveAccordionIndex(index)}
                 key={index}
+                isGlobalMb={isGlobalMb}
               />
             );
           })}

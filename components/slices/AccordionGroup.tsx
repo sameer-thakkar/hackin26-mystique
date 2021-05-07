@@ -1,5 +1,7 @@
 import React from 'react';
 import { useAmp } from 'next/amp';
+import Conditional from 'components/common/Conditional';
+
 import Accordion from './Accordion';
 import RichContent from '../UI/RichContent';
 import TitleTextCombo from '../UI/TitleTextCombo';
@@ -20,55 +22,62 @@ import TitleTextCombo from '../UI/TitleTextCombo';
  */
 
 const AccordionGroup: React.FC<{
-	accordions: {
-		content: any;
-		heading: string;
-	}[];
-	heading: string;
-	useSchema: Boolean;
-}> = ({ accordions, heading, useSchema }) => {
-	const isAmp = useAmp();
-	return (
-		<div
-			{...(useSchema && {
-				itemType: 'https://schema.org/FAQPage',
-				itemScope: true,
-			})}
-		>
-			<TitleTextCombo>{heading ? <h2>{heading}</h2> : null}</TitleTextCombo>
-			{isAmp ? (
-				<amp-accordion animate="">
-					{accordions.map((accordion, index) => {
-						const content = <RichContent render={accordion.content} />;
-						return (
-							<Accordion
-								key={index}
-								content={content}
-								heading={accordion.heading}
-								useSchema={useSchema}
-								isAmp
-							/>
-						);
-					})}
-				</amp-accordion>
-			) : (
-				<>
-					{accordions.map((accordion, index) => {
-						const content = <RichContent render={accordion.content} />;
-						return (
-							<Accordion
-								key={index}
-								content={content}
-								isOpenOverride={index == 0}
-								heading={accordion.heading}
-								useSchema={useSchema}
-							/>
-						);
-					})}
-				</>
-			)}
-		</div>
-	);
+  accordions: {
+    content: any;
+    heading: string;
+  }[];
+  heading: string;
+  useSchema: Boolean;
+  sliceProps?: any;
+}> = ({ accordions, heading, useSchema, sliceProps }) => {
+  const isGlobalMb = sliceProps?.isGlobalMb;
+  const isAmp = useAmp();
+  return (
+    <div
+      {...(useSchema && {
+        itemType: 'https://schema.org/FAQPage',
+        itemScope: true,
+      })}
+    >
+      <TitleTextCombo>
+        <Conditional if={heading}>
+          <h2>{heading}</h2>
+        </Conditional>
+      </TitleTextCombo>
+      {isAmp ? (
+        <amp-accordion animate="">
+          {accordions.map((accordion, index) => {
+            const content = <RichContent render={accordion.content} />;
+            return (
+              <Accordion
+                key={index}
+                content={content}
+                heading={accordion.heading}
+                useSchema={useSchema}
+                isAmp
+              />
+            );
+          })}
+        </amp-accordion>
+      ) : (
+        <>
+          {accordions.map((accordion, index) => {
+            const content = <RichContent render={accordion.content} />;
+            return (
+              <Accordion
+                key={index}
+                content={content}
+                isOpenOverride={index == 0}
+                heading={accordion.heading}
+                useSchema={useSchema}
+                isGlobalMb={isGlobalMb}
+              />
+            );
+          })}
+        </>
+      )}
+    </div>
+  );
 };
 
 export default AccordionGroup;

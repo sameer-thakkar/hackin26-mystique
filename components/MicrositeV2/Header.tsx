@@ -1,18 +1,23 @@
-import React, { ComponentType, useContext, useState } from 'react';
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import React, {
+  ComponentType,
+  FunctionComponent,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
 import dynamic from 'next/dynamic';
-
-import LanguageSelector from './LanguageSelector';
-import InteractionContext from '../../contexts/Interaction';
-import Image from '../UI/Image';
-import { PAGETYPE, ALLOW_IMMEDIEATE_NESTING, THEMES } from '../../constants';
-import { SEARCH_ICON, POWERED_BY_HEADOUT } from '../../assets/SvgIcons';
-import MultiLevelNav from '../MultiLevelNav';
-import { groupSlices } from '../../utils/helper';
-import Hamburger from '../UI/Hamburger';
-import HeaderLinks from '../HeaderLinks';
+import InteractionContext from 'contexts/Interaction';
+import LanguageSelector from 'components/MicrositeV2/LanguageSelector';
+import Image from 'components/UI/Image';
+import MultiLevelNav from 'components/MultiLevelNav';
+import { groupSlices } from 'utils/helper';
+import Hamburger from 'components/UI/Hamburger';
+import HeaderLinks from 'components/HeaderLinks';
+import { SEARCH_ICON, POWERED_BY_HEADOUT } from 'assets/SvgIcons';
+import { COLORS, SOLEIL } from 'const/ui-constants';
+import { PAGETYPE, ALLOW_IMMEDIEATE_NESTING, THEMES } from 'const/index';
 
 const SearchBox: ComponentType<any> = dynamic(
   () => import('./SearchBox').then((mod) => mod.SearchBox),
@@ -30,10 +35,10 @@ const ResponsiveSelector: ComponentType<any> = dynamic(
   { ssr: false }
 );
 
-const StyledHeader = styled.span`
+const StyledHeader = styled.div`
   header {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: repeat(2, auto);
     justify-content: space-between;
     align-items: center;
     padding-top: 14px;
@@ -42,9 +47,12 @@ const StyledHeader = styled.span`
   }
   .fixed-wrap {
     position: fixed;
-    width: 100%;
+    width: 100vw;
     top: 0;
-    min-height: 80px;
+    min-height: ${({ isGlobalMb }) => (isGlobalMb ? '64px' : '80px')};
+    ${({ isGlobalMb }) =>
+      isGlobalMb && `box-shadow: inset 0px -1px 0px ${COLORS.GREY_D7};`}
+
     background-color: ${({ theme: { primaryBackground } }) =>
       primaryBackground ? primaryBackground : '#fff'};
     z-index: ${({ overlayActive: check, headerHover }) =>
@@ -78,14 +86,14 @@ const StyledHeader = styled.span`
       width: calc(100% - (16px * 2));
     }
     .fixed-wrap {
-      min-height: 56px;
+      min-height: ${({ isGlobalMb }) => (isGlobalMb ? '48px' : '56px')};
     }
     .fixed-offset::after {
       content: '';
       display: block;
       height: ${({ theme: { theme } }) =>
         theme === THEMES.DEFAULT ? '57px' : '32px'};
-      margin-bottom: 24px;
+      margin-bottom: ${({ isGlobalMb }) => (isGlobalMb ? '0' : '24px')};
     }
     .header-links {
       display: none;
@@ -102,6 +110,7 @@ const HeaderRight = styled.div`
   display: grid;
   grid-gap: 22px;
   grid-auto-flow: column;
+  grid-auto-columns: max-content;
   align-items: center;
   .buy-tickets {
     font-size: 16px;
@@ -110,6 +119,17 @@ const HeaderRight = styled.div`
     font-weight: ${SOLEIL.REGULAR};
     color: ${({ theme: { primaryBGText } }) =>
       primaryBGText ? primaryBGText : COLORS.FOUR_BLACK};
+  }
+
+  .buy-tickets.global-mb {
+    background: ${COLORS.RHAPSODY};
+    color: ${COLORS.WHITE};
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: ${SOLEIL.REGULAR};
+    line-height: 24px;
   }
   .current-language-toggle {
     color: ${({ theme: { primaryBGText } }) =>
@@ -154,7 +174,7 @@ const HeaderLeft = styled.div`
     display: grid;
     grid-auto-flow: column;
     grid-column-gap: 10px;
-    padding: 8px;
+    padding: ${({ isGlobalMb }) => (isGlobalMb ? '0' : '8px')};
     margin-right: 16px;
     img {
       height: 36px;
@@ -170,9 +190,9 @@ const HeaderLeft = styled.div`
 
   @media (max-width: 768px) {
     .header-logo {
-      padding: 4px;
+      padding: ${({ isGlobalMb }) => (isGlobalMb ? '0' : '4px')};
       img {
-        height: 24px;
+        height: ${({ isGlobalMb }) => (isGlobalMb ? '36px' : '24px')};
       }
     }
     .poweredBy svg {
@@ -222,14 +242,53 @@ const SearchWrapper = styled.div`
   }
 `;
 
-const Header = (props) => {
+interface HeaderProps {
+  languageProps: any;
+  isMobile: boolean;
+  allTours: any[];
+  host: string;
+  enableDropdownLinks: boolean;
+  dropdownLinks: any;
+  logoRedirectionURL?: string;
+  logoUrl: string;
+  logoAltText: string;
+  enableSearch: boolean;
+  enableBuyTickets: boolean;
+  hasPoweredByHeadoutLogo: boolean;
+  headerSlices?: any[];
+  headerLinks?: any[];
+  hasLanguageSelector: boolean;
+  changePage?: any;
+  isGlobalMb?: boolean;
+  buyTicketsLink?: string;
+}
+
+const Header: FunctionComponent<HeaderProps> = ({
+  languageProps,
+  isMobile,
+  allTours,
+  host,
+  enableDropdownLinks,
+  dropdownLinks,
+  logoRedirectionURL,
+  logoUrl,
+  logoAltText,
+  enableSearch,
+  enableBuyTickets,
+  hasPoweredByHeadoutLogo,
+  headerSlices = [],
+  headerLinks,
+  hasLanguageSelector,
+  changePage,
+  isGlobalMb = false,
+  buyTicketsLink = '',
+}) => {
   const interactionContext = useContext(InteractionContext);
   const [languageDropdown, setLanguageDropdown] = useState(false);
   const [results, setResults] = useState([]);
   const [resultClicked, setResultClicked] = useState(false);
   const [navActive, toggleNav] = useState(false);
   const [headerHover, setHeaderHover] = useState(false);
-
   const toggleLanguageDropdown = () => {
     setLanguageDropdown(!languageDropdown);
   };
@@ -238,7 +297,7 @@ const Header = (props) => {
     setResultClicked(false);
   };
   const loadSearchPage = () => {
-    props.changePage({ name: PAGETYPE.SEARCH });
+    changePage({ name: PAGETYPE.SEARCH });
   };
   const onSearchResultClick = (tgid) => {
     const { clickTour } = interactionContext;
@@ -252,27 +311,10 @@ const Header = (props) => {
     });
   };
 
-  const {
-    languageProps,
-    isMobile,
-    allTours,
-    host,
-    enableDropdownLinks,
-    dropdownLinks,
-    logoRedirectionURL,
-    logoUrl,
-    logoAltText,
-    enableSearch,
-    enableBuyTickets,
-    hasPoweredByHeadoutLogo,
-    headerSlices = [],
-    headerLinks,
-    hasLanguageSelector,
-  } = props;
-  const allToursArray = Object.values(allTours);
+  const allToursArray = Object?.values(allTours);
   const hasDropdownLinks = enableDropdownLinks && dropdownLinks.length;
   const hasLanguageDropdown =
-    languageProps.languages.length >= 1 && hasLanguageSelector;
+    languageProps?.languages?.length >= 1 && hasLanguageSelector;
   const groupedHeaderSlices = groupSlices(
     headerSlices,
     ALLOW_IMMEDIEATE_NESTING
@@ -288,12 +330,34 @@ const Header = (props) => {
     },
   }));
   const hamburgerIconCheck = !!(
-    headerLinks?.filter((link) => link.link_url)?.length || headerSlices.length
+    headerLinks?.filter((link) => link?.link_url)?.length || headerSlices.length
   );
+
+  const [showBuyTickets, setShowBuyTickets] = useState(false);
+  const [isMobileDevice, setIsMobileDevice] = useState(isMobile);
+
+  useEffect(() => {
+    if (!window) return;
+    const isMobile = window.innerWidth <= 800;
+    setIsMobileDevice(isMobile);
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (window.pageYOffset > 450) {
+          setShowBuyTickets(true);
+        } else {
+          setShowBuyTickets(false);
+        }
+      },
+      { passive: true }
+    );
+  }, []);
+
   return (
     <StyledHeader
       overlayActive={languageDropdown || navActive}
       headerHover={headerHover}
+      isGlobalMb={isGlobalMb}
     >
       <div className="fixed-offset"></div>
       <div className="fixed-wrap">
@@ -302,6 +366,7 @@ const Header = (props) => {
             hasDropdownLinks={hasDropdownLinks}
             onMouseEnter={() => setHeaderHover(true)}
             onMouseLeave={() => setHeaderHover(false)}
+            isGlobalMb={isGlobalMb}
           >
             <a href={logoRedirectionURL || '/'}>
               <div className="header-logo">
@@ -311,7 +376,7 @@ const Header = (props) => {
                 ) : null}
               </div>
             </a>
-            {!props.isMobile && hasDropdownLinks ? (
+            {!isMobileDevice && hasDropdownLinks ? (
               <div className="header-links">
                 <ResponsiveSelector
                   options={dropdownLinks}
@@ -320,10 +385,10 @@ const Header = (props) => {
                 />
               </div>
             ) : null}
-            {!isMobile && enableSearch && (
+            {!isMobileDevice && enableSearch && (
               <SearchWrapper>
                 <SearchBox
-                  isMobile={isMobile}
+                  isMobile={isMobileDevice}
                   handleResults={handleResults}
                   allToursArray={allToursArray}
                   clearSearch={resultClicked}
@@ -348,7 +413,7 @@ const Header = (props) => {
           </HeaderLeft>
           <HeaderRight
             hasLanguageDropdown={hasLanguageDropdown}
-            hasHamburger={isMobile && hamburgerIconCheck}
+            hasHamburger={isMobileDevice && hamburgerIconCheck}
             hasSearch={enableSearch}
             onMouseEnter={() => setHeaderHover(true)}
             onMouseLeave={() => setHeaderHover(false)}
@@ -356,7 +421,7 @@ const Header = (props) => {
             {!groupedHeaderSlices.length && headerLinks ? (
               <HeaderLinks
                 headerLinks={headerLinks}
-                isMobile={isMobile}
+                isMobile={isMobileDevice}
                 hiddenMobile={navActive}
               />
             ) : null}
@@ -364,22 +429,32 @@ const Header = (props) => {
             {groupedHeaderSlices.length ? (
               <MultiLevelNav
                 isActive={navActive}
-                isMobile={isMobile}
+                isMobile={isMobileDevice}
                 slice={groupedHeaderSlices || []}
                 oldMenuItems={convertedRegularMenuItems}
+                isGlobalMb={isGlobalMb}
               />
             ) : null}
             {enableBuyTickets ? (
-              <div
-                className="buy-tickets"
-                tabIndex={0}
-                role="button"
-                onClick={buyTicketHandler}
-              >
-                Buy Tickets
-              </div>
+              <>
+                <Conditional if={isGlobalMb && showBuyTickets}>
+                  <a href={buyTicketsLink} className="buy-tickets global-mb">
+                    Buy Tickets
+                  </a>
+                </Conditional>
+                <Conditional if={!isGlobalMb}>
+                  <div
+                    className="buy-tickets"
+                    tabIndex={0}
+                    role="button"
+                    onClick={buyTicketHandler}
+                  >
+                    Buy Tickets
+                  </div>
+                </Conditional>
+              </>
             ) : null}
-            {isMobile && enableSearch && (
+            {isMobileDevice && enableSearch && (
               <div
                 className="mobi-search-trigger"
                 role="button"
@@ -398,16 +473,17 @@ const Header = (props) => {
                 toggleDropdown={toggleLanguageDropdown}
                 hasLanguageDropdown={hasLanguageSelector}
                 host={host}
-                isMobile={isMobile}
+                isMobile={isMobileDevice}
               />
             </Conditional>
-            {isMobile && hamburgerIconCheck ? (
+            <Conditional if={isMobileDevice && hamburgerIconCheck}>
               <Hamburger
                 className={'hamburger'}
                 isActive={navActive}
                 onClickFn={() => toggleNav(!navActive)}
+                isGlobalMb={isGlobalMb}
               />
-            ) : null}
+            </Conditional>
           </HeaderRight>
         </header>
       </div>

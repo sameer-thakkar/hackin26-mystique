@@ -22,7 +22,7 @@ const OverflowScroll: React.FC<{
 }> = ({ children, minWidthChild = null, marginBottom = 0 }) => {
   return (
     <Wrapper>
-      {children.map((child, index) => (
+      {children?.map((child, index) => (
         <Child key={index} minWidth={minWidthChild} marginBottom={marginBottom}>
           {child}
         </Child>

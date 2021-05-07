@@ -23,6 +23,7 @@ export const MBContext = createContext({
   currencySymbolMap: {},
   noTrack: false,
   biLink: '',
+  isGlobalMb: false,
 });
 
 export const MBContextProvider = (props) => {
@@ -37,6 +38,7 @@ export const MBContextProvider = (props) => {
     currencySymbolMap,
     noTrack,
     biLink,
+    isGlobalMb,
   } = props;
   const [sidebarModalStack, setSidebarModalStack] = useState([]);
 
@@ -85,6 +87,7 @@ export const MBContextProvider = (props) => {
         currencySymbolMap,
         noTrack,
         biLink,
+        isGlobalMb,
       }}
     >
       {props.children}
@@ -98,6 +101,7 @@ export const MBContextProvider = (props) => {
           title={getActiveAside()?.title}
           closeModal={closeAside}
           type={getActiveAside()?.type}
+          isGlobalMb={isGlobalMb}
         >
           {getActiveAside()?.children}
         </AsideModal>

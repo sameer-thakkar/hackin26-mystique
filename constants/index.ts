@@ -170,6 +170,11 @@ export const CUSTOM_TYPES = {
   COMMON_DATA: 'common_data',
   LISTICLE: 'page',
   CONTENT_FRAMEWORK: 'content_framework',
+  GLOBAL_HOMEPAGE: 'global_homepage',
+  GLOBAL_CITY: 'global_city',
+  GLOBAL_COLLECTION: 'global_collection',
+  GLOBAL_COUNTRY: 'global_country',
+  GLOBAL_EXPERIENCE: 'global_experience',
 };
 
 export const DESIGN = {
@@ -320,6 +325,22 @@ export const HEADOUT_API_ENDPOINT = 'https://api.headout.com/api';
 export const TOUR_COMPARISION_DESIGN = {
   TYPE_1: 'Type-1',
   TYPE_2: 'Type-2',
+};
+
+export const FALLBACK_IMAGE =
+  'https://cdn-imgix-open.headout.com/blog/media/images/Blog.png';
+
+export const FALLBACK_IMAGES = {
+  DINING: 'https://cdn-imgix-open.headout.com/MB/fallback-images/dining.png',
+  HOTELS: 'https://cdn-imgix-open.headout.com/MB/fallback-images/hotels.png',
+  RIDES_AND_ATTRACTIONS:
+    'https://cdn-imgix-open.headout.com/MB/fallback-images/rides-and-attractions.png',
+  SHOWS: 'https://cdn-imgix-open.headout.com/MB/fallback-images/shows.png',
+  SHOPPING:
+    'https://cdn-imgix-open.headout.com/MB/fallback-images/shopping.png',
+  TICKETS: 'https://cdn-imgix-open.headout.com/MB/fallback-images/tickets.png',
+  THEMEPARKS:
+    'https://cdn-imgix-open.headout.com/MB/fallback-images/themeparks.png',
 };
 
 export const SAFETY_DETAILS_IMAGES = {

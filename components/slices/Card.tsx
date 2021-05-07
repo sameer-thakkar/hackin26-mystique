@@ -8,6 +8,7 @@ import { COLORS, SOLEIL } from 'const/ui-constants';
 import Image from 'UI/Image';
 import Button from 'UI/Button';
 import { CHEVRON_LEFT } from 'assets/SvgIcons';
+import { FALLBACK_IMAGE, FALLBACK_IMAGES } from 'const/index';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -43,12 +44,13 @@ const StyledCard = styled.div((props) => {
   const styles = props.isMobile
     ? variantStyles.small
     : variantStyles[props.cardType];
+  const { isGlobalMb } = props;
   return `
   display: grid;
   align-content: start;
-  box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.07);
   background: ${COLORS.WHITE};
-  border: 1px solid ${COLORS.CHALK};
+  box-shadow: ${isGlobalMb ? 'unset' : '0px 12px 20px rgba(0, 0, 0, 0.07)'};
+  border: ${isGlobalMb ? 'unset' : `1px solid ${COLORS.CHALK}`};
   grid-template-columns: ${styles.gridTemplateColumns};
   height: calc(100% - 2px);
   text-decoration: none;
@@ -57,22 +59,29 @@ const StyledCard = styled.div((props) => {
     display: flex;
   }
   img {
-    height: ${styles.img.height}px;
+    height:${
+      isGlobalMb
+        ? props.cardsInARow === 4
+          ? '180px'
+          : '245px'
+        : `${styles.img.height}px`
+    };
     object-fit: cover;
     width: 100%;
+    ${isGlobalMb && `border-radius: 4px;`}
   }
   .card-content-section {
-    padding: 16px 16px 0 16px;
+    padding: ${isGlobalMb ? '16px 0 0 0' : '16px 16px 0 16px'};
     * {
       margin-top: 0;
     }
     p, li {
-      font-size: 16px;
-      line-height: 160%;
+      font-size: ${isGlobalMb ? '14px' : '16px'};
+      line-height: ${isGlobalMb ? '20px' : '160%'};
       font-family: ${SOLEIL.FONT_STACK};
     }
     p {
-      margin-bottom: 16px;
+      margin-bottom: ${isGlobalMb ? 0 : '16px'};
     }
     a {
       color: ${COLORS.MED_SLATE_BLUE};
@@ -86,7 +95,7 @@ const StyledCard = styled.div((props) => {
   @media(max-width: 768px){
     grid-template-columns: auto;
     img{
-      height: 223px;
+      height: ${isGlobalMb ? '186px' : '223px'};
     }
   }
 `;
@@ -94,11 +103,13 @@ const StyledCard = styled.div((props) => {
 
 const Title = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
-  font-weight: ${SOLEIL.BOLD};
-  font-size: 20px;
+  font-weight: ${(isGlobalMb) =>
+    isGlobalMb ? `${SOLEIL.SEMIBOLD}` : `${SOLEIL.BOLD}`};
+  font-size: ${(isGlobalMb) => (isGlobalMb ? '14px' : '20px')};
+  line-height: ${(isGlobalMb) => (isGlobalMb ? '20px' : '27px')};
   text-decoration: none;
-  line-height: 27px;
-  color: ${COLORS.DAVY_GREY} !important;
+  color: ${(isGlobalMb) =>
+    isGlobalMb ? `${COLORS.GREY.G2}` : `${COLORS.DAVY_GREY}`} !important;
   margin-bottom: 8px;
 `;
 
@@ -153,6 +164,7 @@ type CardProps = {
   link?: any;
   linkType?: string;
   cardsInARow?: number;
+  isGlobalMb?: boolean;
 };
 
 /**
@@ -206,6 +218,7 @@ const Card: React.FC<CardProps> = ({
   link = '',
   linkType = '',
   cardsInARow = 1,
+  isGlobalMb,
 }) => {
   const width = useWindowWidth();
   const [isMobile, setIsMobile] = React.useState(false);
@@ -235,16 +248,29 @@ const Card: React.FC<CardProps> = ({
     shouldSwiperUpdate: true,
   };
 
-  const aspectRatio = cardImageAspectRatio[cardsInARow > 4 ? 4 : cardsInARow];
+  const aspectRatio =
+    cardImageAspectRatio[cardsInARow > 4 ? (isGlobalMb ? 5 : 4) : cardsInARow];
+  const fallbackImage = isGlobalMb
+    ? FALLBACK_IMAGES.THEMEPARKS
+    : FALLBACK_IMAGE;
   let imageView;
   switch (images.length) {
     case 0:
-      imageView = null;
+      imageView = (
+        <Image
+          url={fallbackImage}
+          alt=""
+          attribution=""
+          height={variantStyles[type].img.height}
+          isCardSlices
+          aspectRatio={aspectRatio}
+        />
+      );
       break;
     case 1:
       imageView = (
         <Image
-          url={images[0].url}
+          url={images[0].url || fallbackImage}
           alt={images[0].alt}
           attribution={images[0]?.copyright}
           height={variantStyles[type].img.height}
@@ -262,7 +288,7 @@ const Card: React.FC<CardProps> = ({
                 <Image
                   className="swiper-slide"
                   key={index}
-                  url={image.url}
+                  url={image.url || fallbackImage}
                   attribution={image?.copyright}
                   alt={image.alt}
                   height={variantStyles[type].img.height}
@@ -316,6 +342,8 @@ const Card: React.FC<CardProps> = ({
       })}
       isMobile={isMobile}
       cardType={type}
+      isGlobalMb={isGlobalMb}
+      cardsInARow={cardsInARow}
     >
       {imageView}
       {hasTextContent ? (

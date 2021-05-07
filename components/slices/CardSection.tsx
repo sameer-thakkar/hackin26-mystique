@@ -37,7 +37,7 @@ const StyledSwiper = styled.div`
   .cards-section-wrapper {
     display: grid;
     grid-auto-flow: column;
-    padding: 25px 0;
+    padding: ${(isGlobalMb) => (isGlobalMb ? '12px 0 24px 0' : '25px 0')};
   }
 `;
 
@@ -81,6 +81,7 @@ type CardSectionProps = {
   title?: string;
   description?: any[];
   exitDescription?: any[];
+  isGlobalMb?: boolean;
 };
 
 /**
@@ -119,6 +120,7 @@ const CardSection: React.FC<CardSectionProps> = ({
   title,
   description,
   exitDescription,
+  isGlobalMb = false,
 }) => {
   const width = useWindowWidth();
   const [isMobile, setIsMobile] = React.useState(false);
@@ -161,6 +163,7 @@ const CardSection: React.FC<CardSectionProps> = ({
       cardType: finalCardType,
       index,
       cardsInARow: cardsInARow,
+      isGlobalMb,
     });
   });
 
@@ -200,7 +203,7 @@ const CardSection: React.FC<CardSectionProps> = ({
     const swiperParams = {
       slidesPerView: cardsInARow,
       wrapperClass: 'cards-section-wrapper',
-      spaceBetween: 20,
+      spaceBetween: isGlobalMb ? 24 : 20,
       shouldSwiperUpdate: true,
       getSwiper: updateSwiper,
     };
@@ -252,7 +255,12 @@ const CardSection: React.FC<CardSectionProps> = ({
     return (
       <>
         {EntrySection}
-        <OverflowScroll minWidthChild="calc(100vw - 32px)" marginBottom={30}>
+        <OverflowScroll
+          minWidthChild={
+            isGlobalMb ? 'calc(100vw - 93px)' : 'calc(100vw - 32px)'
+          }
+          marginBottom={isGlobalMb ? 0 : 30}
+        >
           {cards}
         </OverflowScroll>
         {ExitSection}

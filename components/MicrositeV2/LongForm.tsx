@@ -18,32 +18,61 @@ const StyledLongform = styled.div`
   margin-bottom: 112px;
   ${({ noBorder }) =>
     noBorder &&
-    `
-  border-top: unset;
-  padding-top: 0;
-  margin-top: 24px;
-`}
+    `border-top: unset;
+    padding-top: 0;
+    margin-top: 24px;`}
 
   h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     color: #333;
     line-height: 1.4;
   }
   .slice-wrapper {
-    width: calc(100% - (5.46vw * 2));
+    ${({ isGlobalMb }) => isGlobalMb && `width: calc(100vw - (5.46vw * 2));`}
   }
 
   h2 {
     font-weight: 500;
+    ${({ isGlobalMb }) =>
+      isGlobalMb &&
+      `color:${COLORS.FOUR_BLACK};
+      font-weight: ${SOLEIL.SEMIBOLD};
+      line-height: 28px`}
   }
-  p {
+  .rich_text h2 {
+    ${({ isGlobalMb }) => isGlobalMb && `margin: 0 0 32px 0;`}
+  }
+  .card_section h2,
+  .tab_wrapper h2 {
+    ${({ isGlobalMb }) => isGlobalMb && `margin: 0 0 12px 0 !important;`}
+  }
+  p, li {
     font-size: 16px;
-    line-height: 1.6;
+    ${({ isGlobalMb }) => isGlobalMb && `margin: 0;`}
+    line-height: ${({ isGlobalMb }) => (isGlobalMb ? '24px' : 1.6)};
     color: ${COLORS.FOUR_BLACK};
+  }
+  li:not(:last-child) {
+    ${({ isGlobalMb }) => isGlobalMb && `margin-bottom: 16px;`}
+  }
+  ul {
+    ${({ isGlobalMb }) =>
+      isGlobalMb &&
+      `margin: 24px 0 0 0;
+      @media (max-width: 768px) {
+        padding-inline-start: 25px;
+      }
+    `}
+  }
+  .tab_wrapper ul, .tab_wrapper ol {
+    margin: 0;
+  }
+  .tab_wrapper p {
+    margin-bottom: 12px;
   }
   @media (max-width: 768px) {
     border: none;
@@ -52,18 +81,18 @@ h6 {
     margin-top: 52px;
     margin-bottom: 52px;
 
-    ${({ noBorder }) =>
-      noBorder &&
-      `
-    margin-top: 32px;
-  `}
+    ${({ noBorder }) => noBorder && `margin-top: 32px;`}
   }
 `;
+
 const LongForm = (props) => {
   const { slicesArray, props: sliceProps, hasToursSection } = props;
 
   return (
-    <StyledLongform noBorder={!hasToursSection}>
+    <StyledLongform
+      noBorder={!hasToursSection}
+      isGlobalMb={sliceProps?.isGlobalMb}
+    >
       {slicesArray.map((slice, index) => (
         <div
           key={index}
