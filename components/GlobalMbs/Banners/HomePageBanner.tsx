@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import Image from 'UI/Image';
 import Conditional from 'components/common/Conditional';
-import { FALLBACK_IMAGE } from 'const/index';
+import { FALLBACK_IMAGE, FALLBACK_IMAGES } from 'const/index';
 import { SOLEIL } from 'const/ui-constants';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
@@ -83,15 +83,14 @@ interface BannerProps {
   title: string;
   subText?: string;
   images: any[];
-  breadcrumbs?: Array<{ url: string; text: string }>;
-  collection?: any;
-  startingPrice?: string;
+  mbType: string;
 }
 
 const Banner: FunctionComponent<BannerProps> = ({
   title,
   subText = '',
   images,
+  mbType,
 }) => {
   const swiperParams = {
     slidesPerView: 1.196065,
@@ -122,12 +121,14 @@ const Banner: FunctionComponent<BannerProps> = ({
   let imageView;
 
   const IMAGE_HEIGHT = 400;
+  const fallbackImage =
+    mbType === 'Themeparks' ? FALLBACK_IMAGES.THEMEPARKS : FALLBACK_IMAGE;
   switch (images?.length) {
     case 0:
       imageView = (
         <Image
           className="swiper-slide"
-          url={FALLBACK_IMAGE}
+          url={fallbackImage}
           attribution=""
           alt="Placeholder Image"
           dontLazyLoad={true}
@@ -139,7 +140,7 @@ const Banner: FunctionComponent<BannerProps> = ({
       imageView = (
         <Image
           className="swiper-slide"
-          url={images[0]?.url || FALLBACK_IMAGE}
+          url={images[0]?.url || fallbackImage}
           alt={images[0]?.altText}
           dontLazyLoad={true}
           height={IMAGE_HEIGHT}
@@ -155,7 +156,7 @@ const Banner: FunctionComponent<BannerProps> = ({
                 <Image
                   className="swiper-slide"
                   key={index}
-                  url={image?.url || FALLBACK_IMAGE}
+                  url={image?.url || fallbackImage}
                   alt={image?.altText}
                   dontLazyLoad={true}
                   height={IMAGE_HEIGHT}

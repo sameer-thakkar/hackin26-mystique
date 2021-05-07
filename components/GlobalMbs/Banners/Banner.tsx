@@ -4,7 +4,7 @@ import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
 import Image from 'UI/Image';
 import Conditional from 'components/common/Conditional';
-import { FALLBACK_IMAGE } from 'const/index';
+import { FALLBACK_IMAGES } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 
@@ -264,7 +264,7 @@ const Banner: FunctionComponent<BannerProps> = ({
       imageView = (
         <Image
           className="swiper-slide"
-          url={FALLBACK_IMAGE}
+          url={FALLBACK_IMAGES.THEMEPARKS}
           attribution=""
           alt="Placeholder Image"
           width="650"
@@ -276,7 +276,7 @@ const Banner: FunctionComponent<BannerProps> = ({
       imageView = (
         <Image
           className="swiper-slide"
-          url={images[0]?.url || FALLBACK_IMAGE}
+          url={images[0]?.url || FALLBACK_IMAGES.THEMEPARKS}
           attribution={images[0]?.copyright}
           alt={images[0]?.altText}
           width="650"
@@ -293,7 +293,7 @@ const Banner: FunctionComponent<BannerProps> = ({
                 <Image
                   className="swiper-slide"
                   key={index}
-                  url={image?.url || FALLBACK_IMAGE}
+                  url={image?.url || FALLBACK_IMAGES.THEMEPARKS}
                   attribution={image?.copyright}
                   alt={image?.altText}
                   width="650"

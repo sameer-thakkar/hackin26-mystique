@@ -8,7 +8,7 @@ import { COLORS, SOLEIL } from 'const/ui-constants';
 import Image from 'UI/Image';
 import Button from 'UI/Button';
 import { CHEVRON_LEFT } from 'assets/SvgIcons';
-import { FALLBACK_IMAGE } from 'const/index';
+import { FALLBACK_IMAGE, FALLBACK_IMAGES } from 'const/index';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -250,12 +250,15 @@ const Card: React.FC<CardProps> = ({
 
   const aspectRatio =
     cardImageAspectRatio[cardsInARow > 4 ? (isGlobalMb ? 5 : 4) : cardsInARow];
+  const fallbackImage = isGlobalMb
+    ? FALLBACK_IMAGES.THEMEPARKS
+    : FALLBACK_IMAGE;
   let imageView;
   switch (images.length) {
     case 0:
       imageView = (
         <Image
-          url={FALLBACK_IMAGE}
+          url={fallbackImage}
           alt=""
           attribution=""
           height={variantStyles[type].img.height}
@@ -267,7 +270,7 @@ const Card: React.FC<CardProps> = ({
     case 1:
       imageView = (
         <Image
-          url={images[0].url || FALLBACK_IMAGE}
+          url={images[0].url || fallbackImage}
           alt={images[0].alt}
           attribution={images[0]?.copyright}
           height={variantStyles[type].img.height}
@@ -285,7 +288,7 @@ const Card: React.FC<CardProps> = ({
                 <Image
                   className="swiper-slide"
                   key={index}
-                  url={image.url}
+                  url={image.url || fallbackImage}
                   attribution={image?.copyright}
                   alt={image.alt}
                   height={variantStyles[type].img.height}

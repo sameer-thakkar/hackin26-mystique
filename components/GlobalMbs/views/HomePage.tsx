@@ -10,6 +10,7 @@ const HomePage = (props) => {
     cityCollections,
     collections,
     body: slices,
+    mb_type,
   } = props || {};
 
   const images = bannerImages?.map((image) => ({
@@ -18,7 +19,12 @@ const HomePage = (props) => {
   }));
   return (
     <>
-      <Banner images={images} title={bannerTitle} subText={bannerSubText} />
+      <Banner
+        images={images}
+        title={bannerTitle}
+        subText={bannerSubText}
+        mbType={mb_type}
+      />
       <TopDestinationsCarousel destinations={cityCollections} />
       {slices?.map((slice) => sliceHandler(slice, { collections }))}
     </>

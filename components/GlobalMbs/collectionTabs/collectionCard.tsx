@@ -4,8 +4,7 @@ import { MBContext } from 'contexts/MBContext';
 import Image from 'UI/Image';
 import Conditional from 'components/common/Conditional';
 import DetailedCollectionCard from 'components/GlobalMbs/collectionTabs/detailedProductCard';
-import { FLAME } from 'assets/SvgIcons';
-import { FALLBACK_IMAGE, SIDEBAR_TYPES } from 'const/index';
+import { FALLBACK_IMAGES, SIDEBAR_TYPES } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 
 const StyledCard = styled.div`
@@ -112,7 +111,7 @@ const Card: FunctionComponent<CardProps> = ({
       headout_category_id: categoryId,
     },
   } = card;
-  const imageUrl = images[0]?.image_url || FALLBACK_IMAGE;
+  const imageUrl = images[0]?.image_url || FALLBACK_IMAGES.THEMEPARKS;
 
   const BEST_SELLER = 'Bestseller';
 
@@ -149,7 +148,10 @@ const Card: FunctionComponent<CardProps> = ({
       <div className="image-wrapper">
         <Conditional if={hasBestSeller}>
           <div className="l1-booster">
-            {FLAME} {BEST_SELLER}
+            <span role="img" aria-label="Hot">
+              🔥
+            </span>{' '}
+            {BEST_SELLER}
           </div>
         </Conditional>
         <Image url={imageUrl} />

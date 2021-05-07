@@ -4,7 +4,7 @@ import { RichText } from 'prismic-reactjs';
 import Image from 'UI/Image';
 import Carousel from 'components/GlobalMbs/Carousels/Carousel';
 import Conditional from 'components/common/Conditional';
-import { FALLBACK_IMAGE } from 'const/index';
+import { FALLBACK_IMAGE, FALLBACK_IMAGES } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { convertUidToUrl } from 'utils/urlUtils';
 
@@ -171,12 +171,14 @@ const CollectionCarousel: FunctionComponent<CollectionCarouselProps> = ({
   }
   const collectionCards = topCollections?.map((collection, index) => {
     const { data, uid } = collection || {};
-    const { collection_name, city_name, images } = data || {};
+    const { collection_name, city_name, images, mb_type } = data || {};
+    const fallbackImage =
+      mb_type === 'Themeparks' ? FALLBACK_IMAGES.THEMEPARKS : FALLBACK_IMAGE;
     const imageUrl = images?.length
       ? images[0]?.image_url
         ? images[0]?.image_url
-        : FALLBACK_IMAGE
-      : FALLBACK_IMAGE;
+        : fallbackImage
+      : fallbackImage;
     const altText = images?.length ? images[0]?.alt_text : '';
     return (
       <StyledCard href={convertUidToUrl(uid)} key={index}>

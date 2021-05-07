@@ -330,6 +330,19 @@ export const TOUR_COMPARISION_DESIGN = {
 export const FALLBACK_IMAGE =
   'https://cdn-imgix-open.headout.com/blog/media/images/Blog.png';
 
+export const FALLBACK_IMAGES = {
+  DINING: 'https://cdn-imgix-open.headout.com/MB/fallback-images/dining.png',
+  HOTELS: 'https://cdn-imgix-open.headout.com/MB/fallback-images/hotels.png',
+  RIDES_AND_ATTRACTIONS:
+    'https://cdn-imgix-open.headout.com/MB/fallback-images/rides-and-attractions.png',
+  SHOWS: 'https://cdn-imgix-open.headout.com/MB/fallback-images/shows.png',
+  SHOPPING:
+    'https://cdn-imgix-open.headout.com/MB/fallback-images/shopping.png',
+  TICKETS: 'https://cdn-imgix-open.headout.com/MB/fallback-images/tickets.png',
+  THEMEPARKS:
+    'https://cdn-imgix-open.headout.com/MB/fallback-images/themeparks.png',
+};
+
 export const SAFETY_DETAILS_IMAGES = {
   SAFETY_MASK_STAFF: 'https://cdn-imgix-open.headout.com/sites/safe/mask.jpg',
   SAFETY_MASK_GUEST: 'https://cdn-imgix-open.headout.com/sites/safe/mask.jpg',
