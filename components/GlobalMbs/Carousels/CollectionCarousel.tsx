@@ -169,31 +169,33 @@ const CollectionCarousel: FunctionComponent<CollectionCarouselProps> = ({
       topCollections = filterByCategory(collections, FILTER_TYPE.WATERPARK);
       break;
   }
-  const collectionCards = topCollections?.map((collection, index) => {
-    const { data, uid } = collection || {};
-    const { collection_name, city_name, images, mb_type } = data || {};
-    const fallbackImage =
-      mb_type === 'Themeparks' ? FALLBACK_IMAGES.THEMEPARKS : FALLBACK_IMAGE;
-    const imageUrl = images?.length
-      ? images[0]?.image_url
+  const collectionCards = topCollections
+    ?.slice(0, 9)
+    ?.map((collection, index) => {
+      const { data, uid } = collection || {};
+      const { collection_name, city_name, images, mb_type } = data || {};
+      const fallbackImage =
+        mb_type === 'Themeparks' ? FALLBACK_IMAGES.THEMEPARKS : FALLBACK_IMAGE;
+      const imageUrl = images?.length
         ? images[0]?.image_url
-        : fallbackImage
-      : fallbackImage;
-    const altText = images?.length ? images[0]?.alt_text : '';
-    return (
-      <StyledCard href={convertUidToUrl(uid)} key={index}>
-        <Image url={imageUrl} alt={altText} />
-        <div className="card-info">
-          <div className="info">
-            <div className="boosters">
-              <div className="city">{city_name}</div>
+          ? images[0]?.image_url
+          : fallbackImage
+        : fallbackImage;
+      const altText = images?.length ? images[0]?.alt_text : '';
+      return (
+        <StyledCard href={convertUidToUrl(uid)} key={index}>
+          <Image url={imageUrl} alt={altText} />
+          <div className="card-info">
+            <div className="info">
+              <div className="boosters">
+                <div className="city">{city_name}</div>
+              </div>
+              <div className="collection-name">{collection_name}</div>
             </div>
-            <div className="collection-name">{collection_name}</div>
           </div>
-        </div>
-      </StyledCard>
-    );
-  });
+        </StyledCard>
+      );
+    });
 
   const entrySection = (
     <HeaderWrapper>
