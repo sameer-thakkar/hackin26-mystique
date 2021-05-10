@@ -113,7 +113,10 @@ const TourTitle = styled.h2`
   max-width: 768px;
   ${({ theme }) => theme.productCards.titleFontSettings.desktop};
   @media (max-width: 768px) {
-    ${({ theme }) => theme.productCards.titleFontSettings.mobile};
+    ${({ isPopup, theme }) =>
+      isPopup
+        ? theme.productCards.titleFontSettings.popupMobile
+        : theme.productCards.titleFontSettings.mobile};
   }
 `;
 

@@ -262,10 +262,14 @@ const themes = {
           font-weight: ${SOLEIL.REGULAR};
         `,
         mobile: `
-            font-weight: ${({ isPopup }) =>
-              isPopup ? SOLEIL.REGULAR : SOLEIL.SEMIBOLD};
-            font-size: ${({ isPopup }) => (isPopup ? '21px' : '16px')};
-            line-height: ${({ isPopup }) => (isPopup ? '27px' : '22px')};
+            font-weight: ${SOLEIL.SEMIBOLD};
+            font-size: 16px;
+            line-height: 22px;
+        `,
+        popupMobile: `
+          font-weight: ${SOLEIL.REGULAR};
+          font-size: 21px;
+          line-height: 27px;
         `,
       },
       regularFontSettings: {
