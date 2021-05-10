@@ -38,6 +38,13 @@ const StyledSwiper = styled.div`
     display: grid;
     grid-auto-flow: column;
     padding: ${(isGlobalMb) => (isGlobalMb ? '12px 0 24px 0' : '25px 0')};
+
+    ${({ hasLessCards }) =>
+      hasLessCards &&
+      `
+    display:flex;
+    grid-auto-flow: unset;
+    `}
   }
 `;
 
@@ -122,6 +129,7 @@ const CardSection: React.FC<CardSectionProps> = ({
   exitDescription,
   isGlobalMb = false,
 }) => {
+  const hasLessCards = slices?.length < cardsInARow;
   const width = useWindowWidth();
   const [isMobile, setIsMobile] = React.useState(false);
   const isAmp = useAmp();
@@ -212,7 +220,7 @@ const CardSection: React.FC<CardSectionProps> = ({
       <>
         {EntrySection}
         <CardCarousel>
-          <StyledSwiper>
+          <StyledSwiper hasLessCards={hasLessCards}>
             <Swiper {...swiperParams}>
               {cards.map((card, index) => {
                 return (

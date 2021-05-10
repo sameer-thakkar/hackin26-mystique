@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { COLORS, SOLEIL } from 'const/ui-constants';
-import { getValidUrl } from 'utils/urlUtils';
+import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 
 const TagSection = styled.div`
   max-width: 1200px;
@@ -52,7 +52,10 @@ const Tags: FunctionComponent<TagsProps> = ({ collections, uid, title }) => {
 
   const tagsMarkup = finalCollection.map((collection) => {
     return (
-      <Tag key={collection?.id} href={getValidUrl(collection?.uid)}>
+      <Tag
+        key={collection?.id}
+        href={getValidUrl(convertUidToUrl(collection?.uid))}
+      >
         {collection?.data?.collection_name}
       </Tag>
     );

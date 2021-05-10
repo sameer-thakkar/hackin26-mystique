@@ -5,6 +5,7 @@ import Image from 'UI/Image';
 import TitleTextCombo from 'UI/TitleTextCombo';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { convertUidToUrl } from 'utils/urlUtils';
+import { FALLBACK_IMAGES } from 'const/index';
 
 const Wrapper = styled.div`
   max-width: 1200px;
@@ -82,7 +83,7 @@ const TopDestinationsCarousel: FunctionComponent<TopDestinationsCarouselProps> =
         target="_blank"
         rel="noopener noreferrer"
       >
-        <Image url={image} alt={altText} />
+        <Image url={image || FALLBACK_IMAGES.THEMEPARKS} alt={altText} />
         <TextWrapper>
           <div className="city">{city_name}</div>
           <div className="country">{country_name}</div>

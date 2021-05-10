@@ -332,7 +332,12 @@ export const getGlobalHomepage = async ({ req, uid, lang }) => {
     }
   );
   if (response) {
-    const { common_footer, content_framework, mb_type } = response.data;
+    const {
+      common_header,
+      common_footer,
+      content_framework,
+      mb_type,
+    } = response.data;
 
     const client = Client();
     const cityCollections = mb_type
@@ -364,16 +369,19 @@ export const getGlobalHomepage = async ({ req, uid, lang }) => {
       : null;
 
     const refArray = await getRefsArrayByIds(
-      [common_footer.id, content_framework.id],
+      [common_header.id, common_footer.id, content_framework.id],
       req
     );
-    const { commonFooter, contentFramework } = refsArrayToObject(refArray);
+    const { commonHeader, commonFooter, contentFramework } = refsArrayToObject(
+      refArray
+    );
     return {
       CMSContent: {
         ...response,
         ...(collections && { collections }),
         ...(cityCollections && { cityCollections }),
         commonFooter,
+        commonHeader,
         contentFramework,
       },
       ContentType: CUSTOM_TYPES.GLOBAL_HOMEPAGE,
@@ -394,6 +402,7 @@ export const getGlobalCollection = async ({ req, uid, lang }) => {
   if (response) {
     const { id: docID } = response;
     const {
+      common_header,
       common_footer,
       content_framework,
       country: { id: countryDocID },
@@ -454,10 +463,12 @@ export const getGlobalCollection = async ({ req, uid, lang }) => {
     }
 
     const refArray = await getRefsArrayByIds(
-      [common_footer.id, content_framework.id],
+      [common_header.id, common_footer.id, content_framework.id],
       req
     );
-    const { commonFooter, contentFramework } = refsArrayToObject(refArray);
+    const { commonHeader, commonFooter, contentFramework } = refsArrayToObject(
+      refArray
+    );
     return {
       CMSContent: {
         ...response,
@@ -465,6 +476,7 @@ export const getGlobalCollection = async ({ req, uid, lang }) => {
         attractionsPage,
         ...(cityCollections && { cityCollections }),
         ...(countryCollections && { countryCollections }),
+        commonHeader,
         commonFooter,
         contentFramework,
       },
@@ -484,7 +496,11 @@ export const getGlobalCity = async ({ req, uid, lang }) => {
   );
   if (cityResponse) {
     const { id: cityDocId } = cityResponse;
-    const { common_footer, content_framework } = cityResponse.data;
+    const {
+      common_header,
+      common_footer,
+      content_framework,
+    } = cityResponse.data;
 
     const client = Client();
     const cityCollections = await client.query(
@@ -499,14 +515,17 @@ export const getGlobalCity = async ({ req, uid, lang }) => {
     );
 
     const refArray = await getRefsArrayByIds(
-      [common_footer.id, content_framework.id],
+      [common_header.id, common_footer.id, content_framework.id],
       req
     );
-    const { commonFooter, contentFramework } = refsArrayToObject(refArray);
+    const { commonHeader, commonFooter, contentFramework } = refsArrayToObject(
+      refArray
+    );
     return {
       CMSContent: {
         ...cityResponse,
         cityCollections,
+        commonHeader,
         commonFooter,
         contentFramework,
       },
@@ -526,7 +545,11 @@ export const getGlobalCountry = async ({ req, uid, lang }) => {
   );
   if (countryResponse) {
     const { id: countryDocID } = countryResponse;
-    const { common_footer, content_framework } = countryResponse.data;
+    const {
+      common_header,
+      common_footer,
+      content_framework,
+    } = countryResponse.data;
 
     const client = Client();
     const getAllCollections = await client.query(
@@ -541,16 +564,19 @@ export const getGlobalCountry = async ({ req, uid, lang }) => {
     );
 
     const refArray = await getRefsArrayByIds(
-      [common_footer.id, content_framework.id],
+      [common_header.id, common_footer.id, content_framework.id],
       req
     );
-    const { commonFooter, contentFramework } = refsArrayToObject(refArray);
+    const { commonHeader, commonFooter, contentFramework } = refsArrayToObject(
+      refArray
+    );
     return {
       CMSContent: {
         ...countryResponse,
         collections: {
           ...getAllCollections,
         },
+        commonHeader,
         commonFooter,
         contentFramework,
       },
@@ -569,16 +595,19 @@ export const getGlobalExperience = async ({ req, uid, lang }) => {
     }
   );
   if (response) {
-    const { common_footer, content_framework } = response.data;
+    const { common_header, common_footer, content_framework } = response.data;
 
     const refArray = await getRefsArrayByIds(
-      [common_footer.id, content_framework.id],
+      [common_header.id, common_footer.id, content_framework.id],
       req
     );
-    const { commonFooter, contentFramework } = refsArrayToObject(refArray);
+    const { commonHeader, commonFooter, contentFramework } = refsArrayToObject(
+      refArray
+    );
     return {
       CMSContent: {
         ...response,
+        commonHeader,
         commonFooter,
         contentFramework,
       },

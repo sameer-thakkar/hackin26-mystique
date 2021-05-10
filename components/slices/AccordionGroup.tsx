@@ -30,7 +30,7 @@ const AccordionGroup: React.FC<{
   useSchema: Boolean;
   sliceProps?: any;
 }> = ({ accordions, heading, useSchema, sliceProps }) => {
-  const isGlobalMb = sliceProps?.isGlobalMb;
+  const isGlobalMb = sliceProps?.isGlobalMb ? sliceProps?.isGlobalMb : false;
   const isAmp = useAmp();
   return (
     <div

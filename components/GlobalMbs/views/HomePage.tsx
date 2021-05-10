@@ -1,3 +1,4 @@
+import Conditional from 'components/common/Conditional';
 import Banner from 'components/GlobalMbs/Banners/HomePageBanner';
 import TopDestinationsCarousel from 'components/GlobalMbs/Carousels/TopDestinationsCarousel';
 import sliceHandler from 'components/Slices';
@@ -25,7 +26,9 @@ const HomePage = (props) => {
         subText={bannerSubText}
         mbType={mb_type}
       />
-      <TopDestinationsCarousel destinations={cityCollections} />
+      <Conditional if={cityCollections?.length}>
+        <TopDestinationsCarousel destinations={cityCollections} />
+      </Conditional>
       {slices?.map((slice) => sliceHandler(slice, { collections }))}
     </>
   );

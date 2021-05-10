@@ -32,7 +32,8 @@ const GlobalMB = (props) => {
     first_publication_date: datePublished,
     last_publication_date: dateModified,
     data: CMSContent,
-    commonFooter: { data: footer },
+    commonHeader,
+    commonFooter,
     contentFramework,
     isDev,
     serverRequestStartTimestamp,
@@ -45,6 +46,9 @@ const GlobalMB = (props) => {
     countryCollections = [],
     collections,
   } = props || {};
+
+  const { data: header } = commonHeader || {};
+  const { data: footer } = commonFooter || {};
 
   const {
     attraction: footerAttraction,
@@ -62,16 +66,17 @@ const GlobalMB = (props) => {
     title,
     description,
     image,
-    logo,
-    logo_url: logoUrl,
-    logo_alt_text: logoAltText,
     supply,
     headout_category_id: categoryId,
     official_website: officialWebsite,
     country_name: countryName,
     city_name: cityName,
     microbrand_url: microbrandUrl,
+    favicon,
   } = CMSContent || {};
+
+  const { logo } = header || {};
+  const { url: logoUrl, alt: logoAltText } = logo || {};
 
   const { results: collectionsData } = collections || {};
   const { results: cityCollectionsData } = cityCollections || {};
@@ -206,7 +211,9 @@ const GlobalMB = (props) => {
             title,
             description,
             image,
-            favicon: '',
+            favicon: {
+              url: favicon,
+            },
             faq_schema: [],
             first_publication_date: datePublished,
             last_publication_date: dateModified,
@@ -224,8 +231,8 @@ const GlobalMB = (props) => {
           host={host}
           enableDropdownLinks={showHeaderlinks}
           dropdownLinks={[]}
-          logoUrl={logo?.url || logoUrl}
-          logoAltText={logo?.alt || logoAltText}
+          logoUrl={logoUrl}
+          logoAltText={logoAltText}
           enableSearch={false}
           enableBuyTickets={showTicketsCta}
           hasPoweredByHeadoutLogo={false}

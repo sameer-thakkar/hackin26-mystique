@@ -103,12 +103,12 @@ const StyledCard = styled.div((props) => {
 
 const Title = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
-  font-weight: ${(isGlobalMb) =>
+  font-weight: ${({ isGlobalMb }) =>
     isGlobalMb ? `${SOLEIL.SEMIBOLD}` : `${SOLEIL.BOLD}`};
-  font-size: ${(isGlobalMb) => (isGlobalMb ? '14px' : '20px')};
-  line-height: ${(isGlobalMb) => (isGlobalMb ? '20px' : '27px')};
+  font-size: ${({ isGlobalMb }) => (isGlobalMb ? '14px' : '20px')};
+  line-height: ${({ isGlobalMb }) => (isGlobalMb ? '20px' : '27px')};
   text-decoration: none;
-  color: ${(isGlobalMb) =>
+  color: ${({ isGlobalMb }) =>
     isGlobalMb ? `${COLORS.GREY.G2}` : `${COLORS.DAVY_GREY}`} !important;
   margin-bottom: 8px;
 `;
@@ -354,6 +354,7 @@ const Card: React.FC<CardProps> = ({
               href: link.url,
               target: link.target,
             })}
+            isGlobalMb={isGlobalMb}
           >
             {title}
           </Title>

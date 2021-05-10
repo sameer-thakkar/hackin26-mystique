@@ -10,8 +10,8 @@ import { CHEVRON_LEFT } from '../../assets/SvgIcons';
 const DetailedProductCard = dynamic(() => import('./DetailedProductCard'), {
   ssr: false,
 });
-const Swiper = dynamic(() => import('components/Swiper'));
-const Product = dynamic(() => import('components/MicrositeV2/Product'));
+const Swiper = dynamic(() => import('../Swiper'));
+const Product = dynamic(() => import('../Product'));
 
 const StyledCategorySlider = styled.div`
   display: grid;
