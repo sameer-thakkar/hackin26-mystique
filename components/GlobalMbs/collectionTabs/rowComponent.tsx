@@ -4,7 +4,7 @@ import { scroller } from 'react-scroll';
 import { useWindowWidth } from '@react-hook/window-size';
 import Conditional from 'components/common/Conditional';
 import Card from 'components/GlobalMbs/collectionTabs/collectionCard';
-import DetailedCollectionCard from 'components/GlobalMbs/collectionTabs/detailedProductCard';
+import DetailedCollectionCard from 'components/GlobalMbs/collectionTabs/detailedCollectionCard';
 
 const RowWrapper = styled.div`
   display: grid;

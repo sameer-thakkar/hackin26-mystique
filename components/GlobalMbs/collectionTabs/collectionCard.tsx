@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { MBContext } from 'contexts/MBContext';
 import Image from 'UI/Image';
 import Conditional from 'components/common/Conditional';
-import DetailedCollectionCard from 'components/GlobalMbs/collectionTabs/detailedProductCard';
+import DetailedCollectionCard from 'components/GlobalMbs/collectionTabs/detailedCollectionCard';
 import { FALLBACK_IMAGES, SIDEBAR_TYPES } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 

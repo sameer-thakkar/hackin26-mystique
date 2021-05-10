@@ -24,13 +24,14 @@ const CollectionPage = (props) => {
     suggested_duration: duration,
     headout_category_id: categoryID,
     supply,
-    tickets: {
-      startingPrice,
-      currencySymbol: { localSymbol: currencySymbol },
-    },
+    tickets,
   } = props;
 
-  const price = `${currencySymbol} ${startingPrice}`;
+  const { startingPrice, currencySymbol } = tickets || {};
+
+  const { localSymbol: currency } = currencySymbol || {};
+
+  const price = startingPrice && currency ? `${currency} ${startingPrice}` : '';
 
   const rank =
     props?.cityCollectionRanks?.length > 2

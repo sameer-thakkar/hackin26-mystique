@@ -88,11 +88,10 @@ const StyledLongform = styled.div`
 const LongForm = (props) => {
   const { slicesArray, props: sliceProps, hasToursSection } = props;
 
+  const isGlobalMb = sliceProps?.isGlobalMb ? sliceProps?.isGlobalMb : false;
+
   return (
-    <StyledLongform
-      noBorder={!hasToursSection}
-      isGlobalMb={sliceProps?.isGlobalMb}
-    >
+    <StyledLongform noBorder={!hasToursSection} isGlobalMb={isGlobalMb}>
       {slicesArray.map((slice, index) => (
         <div
           key={index}

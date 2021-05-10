@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
@@ -7,6 +7,8 @@ import Conditional from 'components/common/Conditional';
 import { FALLBACK_IMAGES } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
+import { CHEVRON_DOWN } from 'assets/SvgIcons';
+import { shortCodeSerializer } from 'utils/shortCodes';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 const Breadcrumb = dynamic(() => import('components/GlobalMbs/Breadcrumb'));
@@ -111,7 +113,7 @@ const StyledBanner = styled.div((props) => {
       .cta {
         display: flex;
         align-items: center;
-        padding: 0 70px;
+        padding: 8px 70px;
         border-radius: 2px;
         background-color: ${COLORS.RHAPSODY};
         color: ${COLORS.WHITE};
@@ -136,6 +138,13 @@ const StyledBanner = styled.div((props) => {
     }
     .bold {
       font-weight: 600;
+    }
+    .toggle-timings {
+      cursor: pointer;
+      svg {
+        width: 12px;
+        height: 12px;
+      }
     }
     p {
       margin-bottom: 16px;
@@ -189,7 +198,7 @@ const StyledBanner = styled.div((props) => {
           margin-bottom: 24px;
         }
         .cta {
-          padding: 12px 0;
+          padding: 8px 0;
           width: 100%;
           justify-content: center;
         }
@@ -307,6 +316,12 @@ const Banner: FunctionComponent<BannerProps> = ({
       break;
   }
 
+  const [toggleTimings, setToggleTimings] = useState(false);
+
+  const showTimingsHandler = () => {
+    setToggleTimings((prevState) => !prevState);
+  };
+
   return (
     <StyledBanner cardType={cardType}>
       <div className="card-content-section">
@@ -340,7 +355,20 @@ const Banner: FunctionComponent<BannerProps> = ({
               </div>
               <div className="">
                 <span className="bold">Timings: </span>{' '}
-                <RichText render={timings} />
+                <span
+                  className="toggle-timings"
+                  onClick={showTimingsHandler}
+                  role="button"
+                  tabIndex={0}
+                >
+                  See all hours {CHEVRON_DOWN}
+                </span>
+                <Conditional if={toggleTimings}>
+                  <RichText
+                    render={timings}
+                    htmlserialize={shortCodeSerializer}
+                  />
+                </Conditional>
               </div>
             </div>
             <div className="tickets">

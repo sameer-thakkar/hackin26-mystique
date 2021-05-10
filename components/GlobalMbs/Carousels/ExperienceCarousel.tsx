@@ -239,12 +239,12 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
 
   return (
     <>
-      <Conditional if={ticketsMarkup}>
+      <Conditional if={ticketsMarkup?.length}>
         <Carousel cardsInARow={cardsInARow} entrySection={entrySection}>
           {ticketsMarkup}
         </Carousel>
       </Conditional>
-      <Conditional if={ridesAttractionMarkup}>
+      <Conditional if={ridesAttractionMarkup?.length}>
         <Carousel cardsInARow={cardsInARow} entrySection={entrySection}>
           {ridesAttractionMarkup}
         </Carousel>
