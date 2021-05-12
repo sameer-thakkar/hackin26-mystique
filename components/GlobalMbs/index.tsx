@@ -77,7 +77,6 @@ const GlobalMB = (props) => {
 
   const { logo } = header || {};
   const { url: logoUrl, alt: logoAltText } = logo || {};
-
   const { results: collectionsData } = collections || {};
   const { results: cityCollectionsData } = cityCollections || {};
   const { results: countryCollectionsData } = countryCollections || {};
@@ -90,7 +89,9 @@ const GlobalMB = (props) => {
 
   const hasTicketsPage = supply === 'Direct' && categoryId;
   const ticketLink = hasTicketsPage
-    ? convertUidToUrl(ticketsPage?.uid)
+    ? ticketsPage?.uid
+      ? convertUidToUrl(ticketsPage?.uid)
+      : getValidUrl(officialWebsite?.trim())
     : getValidUrl(officialWebsite?.trim());
 
   const currentLanguage = lang.split('-')[0];
@@ -102,7 +103,8 @@ const GlobalMB = (props) => {
   const contentFWSlices = (slices && groupSlices(slices)) || [];
 
   const cityCollectionRanks = cityCollectionsData
-    ?.map((collection) => collection?.data?.rank)
+    ?.filter((collection) => collection?.data?.rank)
+    ?.map((data) => data?.data?.rank)
     ?.sort();
 
   const homePageProps = {
@@ -135,7 +137,9 @@ const GlobalMB = (props) => {
       primary: {
         label: data?.data?.collection_name,
         url: {
-          url: convertUidToUrl(data?.uid),
+          url: data?.data?.microbrand_url
+            ? getValidUrl(data?.data?.microbrand_url?.trim())
+            : convertUidToUrl(data?.uid),
           target: '_blank',
         },
       },
