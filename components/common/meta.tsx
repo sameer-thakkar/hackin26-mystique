@@ -324,10 +324,20 @@ const PopulateHead = (data) => {
     }${getPathName()}${isAmp ? '?amp=1' : ''}`;
   };
 
-  const hrefLangs = languages
+  let allLanguages = [];
+
+  if (languages?.length) {
+    allLanguages.push({ language: currentLanguage });
+    allLanguages = allLanguages.concat(languages);
+  }
+
+  const hrefLangs = allLanguages
     .filter(({ language }) => language?.length)
     .map(({ language }, idx) => {
-      let langCode = language.split('-')[1].toLowerCase();
+      let langCode =
+        language?.split('-')?.length > 1
+          ? language?.split('-')[1]?.toLowerCase()
+          : language;
       return (
         <link
           key={`altlang_${idx}`}

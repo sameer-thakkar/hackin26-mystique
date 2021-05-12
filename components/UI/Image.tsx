@@ -98,7 +98,7 @@ const Image: React.FC<ImageProps> = ({
     if (format === 'gif') return url;
     return attachQueryParam(
       url,
-      `auto=compress,format&${imigxOptionsQueryParams.toString()}${
+      `auto=compress&${imigxOptionsQueryParams.toString()}${
         extractedRect ? `&${extractedRect}` : ''
       }`,
       true
