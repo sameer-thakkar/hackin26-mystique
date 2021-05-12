@@ -36,6 +36,9 @@ const StyledCard = styled.div`
     font-style: normal;
     font-weight: ${SOLEIL.REGULAR};
     line-height: 14px;
+    span {
+      margin-right: 4px;
+    }
   }
   img {
     width: 100%;
@@ -48,7 +51,7 @@ const StyledCard = styled.div`
       height: 218px;
     }
   }
-  .l2-booter-wrapper {
+  .l2-booster-wrapper {
     display: flex;
     justify-content: space-between;
     margin-bottom: 3px;
@@ -142,7 +145,6 @@ const Card: FunctionComponent<CardProps> = ({
       clickHandler(e, card);
     }
   };
-
   return (
     <StyledCard onClick={handleClick}>
       <div className="image-wrapper">
@@ -150,17 +152,17 @@ const Card: FunctionComponent<CardProps> = ({
           <div className="l1-booster">
             <span role="img" aria-label="Hot">
               🔥
-            </span>{' '}
+            </span>
             {BEST_SELLER}
           </div>
         </Conditional>
         <Image url={imageUrl} />
       </div>
-      <div className="l2-booter-wrapper">
+      <div className="l2-booster-wrapper">
         <div className="category">{primaryCategory}</div>
       </div>
       <div className="name">{collectionName}</div>
-      <Conditional if={categoryId}>
+      <Conditional if={categoryId && price}>
         <div className="price-wrapper">
           <div className="text">Tickets start from</div>
           <div className="price">

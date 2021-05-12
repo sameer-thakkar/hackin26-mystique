@@ -15,6 +15,9 @@ const RowWrapper = styled.div`
     grid-auto-flow: row;
     grid-auto-rows: max-content;
   }
+  &:not(:last-child) {
+    margin-bottom: 24px;
+  }
 `;
 
 interface RowComponentProps {
@@ -40,9 +43,10 @@ const RowComponent: FunctionComponent<RowComponentProps> = ({
 
   const detailedCardRef = useRef<HTMLDivElement | null>(null);
   const getPrice = (currentCardCatId) => {
-    return categoryData
-      ?.filter((data) => data?.catId === currentCardCatId)
-      ?.reduce((acc, curr) => acc + curr);
+    const data = categoryData?.filter(
+      (data) => data?.catId === currentCardCatId
+    );
+    return data?.length ? data?.reduce((acc, curr) => acc + curr) : {};
   };
 
   const updateActiveCard = (e, activeCard) => {

@@ -7,12 +7,13 @@ import { COLORS, SOLEIL } from 'const/ui-constants';
 import { CLOSE_WHITE } from 'assets/SvgIcons';
 import { FALLBACK_IMAGE } from 'const/index';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
+import { shortCodeSerializer } from 'utils/shortCodes';
 
 const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 24px;
-  margin-top: 16px;
+  margin: 24px 0;
   border-top: 1px solid ${COLORS.GREY_G6};
   border-bottom: 1px solid ${COLORS.GREY_G6};
   img {
@@ -98,11 +99,12 @@ const DescriptorWrapper = styled.div`
 `;
 
 const TicketsWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-areas: 'price ctas';
   box-sizing: border-box;
   height: max-content;
   .price-wrapper {
+    grid-area: price;
     display: grid;
     grid-template-rows: repeat(2, max-content);
     row-gap: 12px;
@@ -122,6 +124,7 @@ const TicketsWrapper = styled.div`
     }
   }
   .cta-wrapper {
+    grid-area: ctas;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     column-gap: 24px;
@@ -150,6 +153,9 @@ const TicketsWrapper = styled.div`
   }
   @media (max-width: 768px) {
     flex-direction: column;
+    grid-template-areas:
+      'price'
+      'ctas';
     .price-wrapper {
       margin-bottom: 16px;
     }
@@ -181,7 +187,7 @@ const Modal = styled.div`
   }
   .modal-container {
     display: grid;
-    grid-template-rows: auto 184px;
+    grid-template-rows: max-content max-content;
     position: relative;
   }
   background-color: ${COLORS.WHITE};
@@ -262,7 +268,7 @@ const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = f
 
     const TicketsMarkup = (
       <TicketsWrapper>
-        <Conditional if={categoryId}>
+        <Conditional if={categoryId && price}>
           <div className="price-wrapper">
             <div className="text">Tickets start from</div>
             <div className="price">
@@ -334,7 +340,10 @@ const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = f
                   <strong>Timings: </strong>
                 </div>
                 <div>
-                  <RichText render={timings} />
+                  <RichText
+                    render={timings}
+                    htmlSerializer={shortCodeSerializer}
+                  />
                 </div>
               </Conditional>
             </div>

@@ -100,8 +100,8 @@ const CollectionCard: FunctionComponent<CollectionCardProps> = ({
         />
       )),
     };
-    tabs?.push(defaultTab);
 
+    tabs?.push(defaultTab);
     tabTitles?.forEach((title) => {
       const data = collections?.filter(
         (collection) => collection?.data?.primary_category === title
@@ -123,12 +123,14 @@ const CollectionCard: FunctionComponent<CollectionCardProps> = ({
       }
     });
   }
+  console.log(tabs);
+
   return (
     <>
       <TitleWrapper>
         <Title>{title}</Title>
       </TitleWrapper>
-      <Tabs tabs={tabs} defaultActiveIndex={0} />
+      <Tabs tabs={tabs} defaultActiveIndex={0} isCollectionCard={true} />
     </>
   );
 };
