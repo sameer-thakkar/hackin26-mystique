@@ -120,6 +120,7 @@ const Banner: FunctionComponent<BannerProps> = ({
 
   let imageView;
 
+  const ASPECT_RATIO = '16:10';
   const IMAGE_HEIGHT = 400;
   const fallbackImage =
     mbType === 'Themeparks' ? FALLBACK_IMAGES.THEMEPARKS : FALLBACK_IMAGE;
@@ -131,8 +132,10 @@ const Banner: FunctionComponent<BannerProps> = ({
           url={fallbackImage}
           attribution=""
           alt="Placeholder Image"
-          dontLazyLoad={true}
+          dontLazyLoad
           height={IMAGE_HEIGHT}
+          aspectRatio={ASPECT_RATIO}
+          autoCrop={false}
         />
       );
       break;
@@ -142,8 +145,10 @@ const Banner: FunctionComponent<BannerProps> = ({
           className="swiper-slide"
           url={images[0]?.url || fallbackImage}
           alt={images[0]?.altText}
-          dontLazyLoad={true}
+          dontLazyLoad
           height={IMAGE_HEIGHT}
+          aspectRatio={ASPECT_RATIO}
+          autoCrop={false}
         />
       );
       break;
@@ -158,8 +163,10 @@ const Banner: FunctionComponent<BannerProps> = ({
                   key={index}
                   url={image?.url || fallbackImage}
                   alt={image?.altText}
-                  dontLazyLoad={true}
+                  dontLazyLoad
                   height={IMAGE_HEIGHT}
+                  aspectRatio={ASPECT_RATIO}
+                  autoCrop={false}
                 />
               );
             })}

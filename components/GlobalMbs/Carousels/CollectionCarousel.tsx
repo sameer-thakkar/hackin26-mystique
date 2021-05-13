@@ -169,6 +169,7 @@ const CollectionCarousel: FunctionComponent<CollectionCarouselProps> = ({
       topCollections = filterByCategory(collections, FILTER_TYPE.WATERPARK);
       break;
   }
+  const ASPECT_RATIO = '16:10';
   const collectionCards = topCollections
     ?.slice(0, 9)
     ?.map((collection, index) => {
@@ -184,7 +185,12 @@ const CollectionCarousel: FunctionComponent<CollectionCarouselProps> = ({
       const altText = images?.length ? images[0]?.alt_text : '';
       return (
         <StyledCard href={convertUidToUrl(uid)} key={index}>
-          <Image url={imageUrl} alt={altText} />
+          <Image
+            url={imageUrl}
+            alt={altText}
+            aspectRatio={ASPECT_RATIO}
+            autoCrop={false}
+          />
           <div className="card-info">
             <div className="info">
               <div className="boosters">

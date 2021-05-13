@@ -145,6 +145,7 @@ const Card: FunctionComponent<CardProps> = ({
       clickHandler(e, card);
     }
   };
+  const ASPECT_RATIO = '16:10';
   return (
     <StyledCard onClick={handleClick}>
       <div className="image-wrapper">
@@ -156,7 +157,13 @@ const Card: FunctionComponent<CardProps> = ({
             {BEST_SELLER}
           </div>
         </Conditional>
-        <Image url={imageUrl} />
+        <Image
+          url={imageUrl}
+          aspectRatio={ASPECT_RATIO}
+          autoCrop={false}
+          width={800}
+          height={400}
+        />
       </div>
       <div className="l2-booster-wrapper">
         <div className="category">{primaryCategory}</div>

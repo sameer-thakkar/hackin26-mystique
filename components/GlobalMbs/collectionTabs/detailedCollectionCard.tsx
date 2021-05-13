@@ -300,11 +300,19 @@ const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = f
       </TicketsWrapper>
     );
 
+    const ASPECT_RATIO = '16:10';
+
     const cardMarkup = (
       <Wrapper isMobile={isMobile} id="collection-card-details" ref={ref}>
         <Conditional if={isMobile}>
           <div className="image-wrapper">
-            <Image url={imageUrl} />
+            <Image
+              url={imageUrl}
+              aspectRatio={ASPECT_RATIO}
+              autoCrop={false}
+              width={800}
+              height={400}
+            />
           </div>
         </Conditional>
         <div className="content-wrapper">
@@ -352,7 +360,13 @@ const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = f
         </div>
         <Conditional if={!isMobile}>
           <div className="image-wrapper">
-            <Image url={imageUrl} />
+            <Image
+              url={imageUrl}
+              aspectRatio={ASPECT_RATIO}
+              autoCrop={false}
+              width={800}
+              height={400}
+            />
             <Conditional if={!isMobile}>
               <CloseButton onClick={(e) => clickHandler(e)}>
                 {CLOSE_WHITE}

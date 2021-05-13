@@ -279,6 +279,7 @@ const Card: React.FC<CardProps> = ({
           height={variantStyles[type].img.height}
           isCardSlices
           aspectRatio={aspectRatio}
+          autoCrop={false}
         />
       );
       break;
@@ -291,6 +292,7 @@ const Card: React.FC<CardProps> = ({
           height={variantStyles[type].img.height}
           isCardSlices
           aspectRatio={aspectRatio}
+          autoCrop={false}
         />
       );
       break;
@@ -308,6 +310,7 @@ const Card: React.FC<CardProps> = ({
                   alt={image.alt}
                   height={variantStyles[type].img.height}
                   aspectRatio={aspectRatio}
+                  autoCrop={false}
                 />
               );
             })}

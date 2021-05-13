@@ -21,13 +21,11 @@ const StyledTabPanel = styled.div`
 
 const StyledTabContent = styled.div`
   display: ${({ isActive }) => (isActive ? 'block' : 'none')};
-  ${({ isGlobalMb }) => isGlobalMb && `border-bottom: 1px solid #e2e2e2`}
 `;
 
 const Tab = (props) => {
   const { slices, title, sliceProps } = props;
   const { activeTabId, keyIndex } = sliceProps || {};
-  const isGlobalMb = sliceProps?.isGlobalMb;
   return (
     <StyledTabPanel key={keyIndex}>
       {slices.map((slice, index) => {
@@ -36,7 +34,6 @@ const Tab = (props) => {
             key={index}
             className="tab-item-amp"
             isActive={activeTabId == stringIdfy(title)}
-            isGlobalMb={isGlobalMb}
           >
             {sliceHandler(slice, {
               index,
