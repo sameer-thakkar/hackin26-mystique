@@ -51,11 +51,11 @@ const Tags: FunctionComponent<TagsProps> = ({ collections, uid, title }) => {
   );
 
   const tagsMarkup = finalCollection.map((collection) => {
+    const url = collection?.data?.microbrand_url
+      ? getValidUrl(collection?.data?.microbrand_url?.trim())
+      : getValidUrl(convertUidToUrl(collection?.uid));
     return (
-      <Tag
-        key={collection?.id}
-        href={getValidUrl(convertUidToUrl(collection?.uid))}
-      >
+      <Tag key={collection?.id} href={url}>
         {collection?.data?.collection_name}
       </Tag>
     );

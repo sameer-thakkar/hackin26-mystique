@@ -9,6 +9,7 @@ import Image from 'UI/Image';
 import Button from 'UI/Button';
 import { CHEVRON_LEFT } from 'assets/SvgIcons';
 import { FALLBACK_IMAGE, FALLBACK_IMAGES } from 'const/index';
+import Conditional from 'components/common/Conditional';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -34,6 +35,7 @@ const variantStyles = {
 };
 
 const cardImageAspectRatio = {
+  5: '16:10',
   4: '14:11',
   3: '7:4',
   2: '14:9',
@@ -41,10 +43,16 @@ const cardImageAspectRatio = {
 };
 
 const StyledCard = styled.div((props) => {
+  const { isGlobalMb } = props || {};
   const styles = props.isMobile
     ? variantStyles.small
     : variantStyles[props.cardType];
-  const { isGlobalMb } = props;
+  const hasSingleCard = props.cardsInARow === 1;
+  const cardImgHeight = hasSingleCard
+    ? '326px'
+    : props.cardsInARow === 4
+    ? '180px'
+    : '245px';
   return `
   display: grid;
   align-content: start;
@@ -59,21 +67,24 @@ const StyledCard = styled.div((props) => {
     display: flex;
   }
   img {
-    height:${
-      isGlobalMb
-        ? props.cardsInARow === 4
-          ? '180px'
-          : '245px'
-        : `${styles.img.height}px`
-    };
+    height:${isGlobalMb ? cardImgHeight : `${styles.img.height}px`};
+    width: ${isGlobalMb ? (hasSingleCard ? '528px' : '100%') : '100%'};
     object-fit: cover;
-    width: 100%;
     ${isGlobalMb && `border-radius: 4px;`}
   }
   .card-content-section {
-    padding: ${isGlobalMb ? '16px 0 0 0' : '16px 16px 0 16px'};
+    padding: ${
+      isGlobalMb
+        ? hasSingleCard
+          ? '0 0 0 14px'
+          : '16px 0 0 0'
+        : '16px 16px 0 16px'
+    };
     * {
       margin-top: 0;
+    }
+    ul, ol {
+      padding-inline-start: 20px;
     }
     p, li {
       font-size: ${isGlobalMb ? '14px' : '16px'};
@@ -95,7 +106,11 @@ const StyledCard = styled.div((props) => {
   @media(max-width: 768px){
     grid-template-columns: auto;
     img{
-      height: ${isGlobalMb ? '186px' : '223px'};
+      height: ${isGlobalMb ? (hasSingleCard ? '220px' : '186px') : '223px'};
+      width: 100%;
+    }
+    .card-content-section {
+      ${isGlobalMb && `padding: 16px 0 0 0;`}
     }
   }
 `;
@@ -249,14 +264,14 @@ const Card: React.FC<CardProps> = ({
   };
 
   const aspectRatio =
-    cardImageAspectRatio[cardsInARow > 4 ? (isGlobalMb ? 5 : 4) : cardsInARow];
+    cardImageAspectRatio[isGlobalMb ? 5 : cardsInARow > 4 ? 4 : cardsInARow];
   const fallbackImage = isGlobalMb
     ? FALLBACK_IMAGES.THEMEPARKS
     : FALLBACK_IMAGE;
   let imageView;
   switch (images.length) {
     case 0:
-      imageView = (
+      imageView = isGlobalMb ? (
         <Image
           url={fallbackImage}
           alt=""
@@ -264,8 +279,9 @@ const Card: React.FC<CardProps> = ({
           height={variantStyles[type].img.height}
           isCardSlices
           aspectRatio={aspectRatio}
+          autoCrop={false}
         />
-      );
+      ) : null;
       break;
     case 1:
       imageView = (
@@ -276,6 +292,7 @@ const Card: React.FC<CardProps> = ({
           height={variantStyles[type].img.height}
           isCardSlices
           aspectRatio={aspectRatio}
+          autoCrop={false}
         />
       );
       break;
@@ -293,6 +310,7 @@ const Card: React.FC<CardProps> = ({
                   alt={image.alt}
                   height={variantStyles[type].img.height}
                   aspectRatio={aspectRatio}
+                  autoCrop={false}
                 />
               );
             })}
@@ -348,16 +366,18 @@ const Card: React.FC<CardProps> = ({
       {imageView}
       {hasTextContent ? (
         <div className="card-content-section">
-          <Title
-            {...(linkType === 'Title' && {
-              as: 'a',
-              href: link.url,
-              target: link.target,
-            })}
-            isGlobalMb={isGlobalMb}
-          >
-            {title}
-          </Title>
+          <Conditional if={title}>
+            <Title
+              {...(linkType === 'Title' && {
+                as: 'a',
+                href: link.url,
+                target: link.target,
+              })}
+              isGlobalMb={isGlobalMb}
+            >
+              {title}
+            </Title>
+          </Conditional>
           <RichText
             elements={{
               hyperlink: HyperLink,

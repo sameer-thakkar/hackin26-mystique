@@ -7,7 +7,7 @@ import OverflowScroll from 'UI/OverflowScroll';
 import RichContent from 'UI/RichContent';
 import TitleTextCombo from 'UI/TitleTextCombo';
 import { CHEVRON_LEFT, CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
-import { SIZES } from 'const/ui-constants';
+import { COLORS, SIZES } from 'const/ui-constants';
 import sliceHandler from 'components/Slices';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
@@ -79,6 +79,10 @@ const Controls = styled.div`
 
 const ExitDescription = styled.div`
   margin-top: 32px;
+  ${({ isGlobalMb, cardsInARow }) =>
+    isGlobalMb &&
+    cardsInARow === 1 &&
+    `border-bottom: 1px solid ${COLORS.GREY_G6};`};
 `;
 
 type CardSectionProps = {
@@ -143,7 +147,7 @@ const CardSection: React.FC<CardSectionProps> = ({
 
   // Rich Text for ending of the Card Section
   const ExitSection = exitDescription ? (
-    <ExitDescription>
+    <ExitDescription isGlobalMb={isGlobalMb} cardsInARow={cardsInARow}>
       <RichContent render={exitDescription} />
     </ExitDescription>
   ) : null;

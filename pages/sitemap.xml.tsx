@@ -99,11 +99,13 @@ export default class SitemapXml extends Component {
           .reduce((accum, item) => [...accum, ...item])
           .filter((doc) => doc.data.is_excluded_from_sitemap !== 'Yes')
           .forEach((doc) => {
-            xmlDoc.urlset.url.push({
-              loc: withTrailingSlash(withHttps(createLoc(doc))),
-              lastmod: new Date(doc.last_publication_date).toISOString(),
-              ...createImg(doc),
-            });
+            if (!doc?.data?.microbrand_url) {
+              xmlDoc.urlset.url.push({
+                loc: withTrailingSlash(withHttps(createLoc(doc))),
+                lastmod: new Date(doc.last_publication_date).toISOString(),
+                ...createImg(doc),
+              });
+            }
           });
         const xml = builder.create(xmlDoc, { encoding: 'utf-8' });
         const xmlStr = xml.end();

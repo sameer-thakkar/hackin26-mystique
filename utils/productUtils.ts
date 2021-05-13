@@ -138,9 +138,23 @@ export const extractContentForProductCard = (markdownBlocks, contentBlocks) => {
 
   if (tabsMarkdown.length > 0) {
     const sliceValue = getContentBlocksMidIndex(tabsMarkdown);
+    const filteredMarkdown = tabsMarkdown?.filter((md) => {
+      const values = [
+        'Theatre Name',
+        'My Ticket',
+        'Your Ticket',
+        'Show Timings',
+        'Duration',
+        'Cancellation Policy',
+        'Age Limit',
+      ];
+      if (values.indexOf(md.heading) !== -1) {
+        return md;
+      }
+    });
     const [tabsMarkdownLeft, tabsMarkdownRight] = [
-      tabsMarkdown.slice(0, sliceValue),
-      tabsMarkdown.slice(sliceValue, tabsMarkdown.length),
+      filteredMarkdown.slice(0, sliceValue),
+      filteredMarkdown.slice(sliceValue, tabsMarkdown.length),
     ];
 
     tabsMarkdownLeft.forEach((highlight) => {

@@ -251,6 +251,7 @@ const Banner: FunctionComponent<BannerProps> = ({
     timings,
     city,
   } = collection;
+  const ASPECT_RATIO = '16:10';
   const hasTicketPage = categoryID && supply === 'Direct';
   const ticketLink = hasTicketPage
     ? ticketsPageLink
@@ -276,8 +277,10 @@ const Banner: FunctionComponent<BannerProps> = ({
           url={FALLBACK_IMAGES.THEMEPARKS}
           attribution=""
           alt="Placeholder Image"
-          width="650"
           height={variantStyles[cardType].img.height}
+          aspectRatio={ASPECT_RATIO}
+          dontLazyLoad
+          autoCrop={false}
         />
       );
       break;
@@ -290,6 +293,9 @@ const Banner: FunctionComponent<BannerProps> = ({
           alt={images[0]?.altText}
           width="650"
           height={variantStyles[cardType].img.height}
+          aspectRatio={ASPECT_RATIO}
+          dontLazyLoad
+          autoCrop={false}
         />
       );
       break;
@@ -307,6 +313,9 @@ const Banner: FunctionComponent<BannerProps> = ({
                   alt={image?.altText}
                   width="650"
                   height={variantStyles[cardType]?.img?.height}
+                  aspectRatio={ASPECT_RATIO}
+                  dontLazyLoad
+                  autoCrop={false}
                 />
               );
             })}

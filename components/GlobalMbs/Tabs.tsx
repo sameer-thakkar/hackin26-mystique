@@ -53,11 +53,13 @@ const Panel = styled.div`
 interface TabProps {
   tabs: Array<{ header: any; body: any }>;
   defaultActiveIndex?: number;
+  isCollectionCard?: boolean;
 }
 
 const Tabs: FunctionComponent<TabProps> = ({
   tabs,
   defaultActiveIndex = 0,
+  isCollectionCard = false,
 }) => {
   const [activeTab, setTab] = useState(defaultActiveIndex);
   return (
@@ -75,7 +77,11 @@ const Tabs: FunctionComponent<TabProps> = ({
       </TabControl>
       <div>
         {tabs.map((tab, index) => (
-          <Panel active={index === activeTab} key={index}>
+          <Panel
+            active={index === activeTab}
+            key={index}
+            isCollectionCard={isCollectionCard}
+          >
             {tab.body}
           </Panel>
         ))}
