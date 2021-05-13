@@ -138,8 +138,19 @@ export const extractContentForProductCard = (markdownBlocks, contentBlocks) => {
 
   if (tabsMarkdown.length > 0) {
     const sliceValue = getContentBlocksMidIndex(tabsMarkdown);
-    // Removed CTA temporarily
-    const filteredMarkdown = tabsMarkdown?.filter((md) => md.heading !== 'CTA');
+    const filteredMarkdown = tabsMarkdown?.filter((md) => {
+      const values = [
+        'Theatre Name',
+        'Your Ticket',
+        'Show Timings',
+        'Duration',
+        'Cancellation Policy',
+        'Age Limit',
+      ];
+      if (values.indexOf(md.heading) !== -1) {
+        return md;
+      }
+    });
     const [tabsMarkdownLeft, tabsMarkdownRight] = [
       filteredMarkdown.slice(0, sliceValue),
       filteredMarkdown.slice(sliceValue, tabsMarkdown.length),
