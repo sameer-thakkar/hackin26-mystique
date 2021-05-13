@@ -271,7 +271,7 @@ const Card: React.FC<CardProps> = ({
   let imageView;
   switch (images.length) {
     case 0:
-      imageView = (
+      imageView = isGlobalMb ? (
         <Image
           url={fallbackImage}
           alt=""
@@ -281,7 +281,7 @@ const Card: React.FC<CardProps> = ({
           aspectRatio={aspectRatio}
           autoCrop={false}
         />
-      );
+      ) : null;
       break;
     case 1:
       imageView = (

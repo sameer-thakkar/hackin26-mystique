@@ -141,6 +141,7 @@ export const extractContentForProductCard = (markdownBlocks, contentBlocks) => {
     const filteredMarkdown = tabsMarkdown?.filter((md) => {
       const values = [
         'Theatre Name',
+        'My Ticket',
         'Your Ticket',
         'Show Timings',
         'Duration',
