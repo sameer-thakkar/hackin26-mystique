@@ -152,6 +152,7 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
   }
 
   let ridesAttractionMarkup, ticketsMarkup;
+  const ASPECT_RATIO = '16:10';
 
   if (experienceType === 'Attractions' || experienceType === 'Rides') {
     ridesAttractionMarkup = cards?.map((card, index) => {
@@ -177,7 +178,13 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
       return (
         <div key={index} className="swiper-slide">
           <StyledCard key={index}>
-            <Image url={imageUrl} className="image" alt={altText} />
+            <Image
+              url={imageUrl}
+              className="image"
+              alt={altText}
+              aspectRatio={ASPECT_RATIO}
+              autoCrop={false}
+            />
             <div className="title">{name}</div>
             <div className="tag-wrapper">
               <Conditional if={experienceTag?.length}>
@@ -207,6 +214,8 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
               url={getValidUrl(imageUrl)}
               className="image"
               alt={altText}
+              aspectRatio={ASPECT_RATIO}
+              autoCrop={false}
             />
             <div className="title">{name}</div>
             <Conditional if={card?.listingPrice}>

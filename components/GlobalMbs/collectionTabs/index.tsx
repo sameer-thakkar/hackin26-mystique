@@ -123,7 +123,6 @@ const CollectionCard: FunctionComponent<CollectionCardProps> = ({
       }
     });
   }
-  console.log(tabs);
 
   return (
     <>

@@ -138,9 +138,11 @@ export const extractContentForProductCard = (markdownBlocks, contentBlocks) => {
 
   if (tabsMarkdown.length > 0) {
     const sliceValue = getContentBlocksMidIndex(tabsMarkdown);
+    // Removed CTA temporarily
+    const filteredMarkdown = tabsMarkdown?.filter((md) => md.heading !== 'CTA');
     const [tabsMarkdownLeft, tabsMarkdownRight] = [
-      tabsMarkdown.slice(0, sliceValue),
-      tabsMarkdown.slice(sliceValue, tabsMarkdown.length),
+      filteredMarkdown.slice(0, sliceValue),
+      filteredMarkdown.slice(sliceValue, tabsMarkdown.length),
     ];
 
     tabsMarkdownLeft.forEach((highlight) => {

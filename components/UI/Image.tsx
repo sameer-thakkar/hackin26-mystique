@@ -13,7 +13,6 @@ const Picture = styled.picture`
 
 const Wrapper = styled.div`
   position: relative;
-  display: grid;
   height: 100%;
   width: 100%;
   .tooltip {
@@ -86,7 +85,7 @@ const Image: React.FC<ImageProps> = ({
     if (quality) imigxOptionsQueryParams.set('q', `${Number(quality)}`);
     imigxOptionsQueryParams.set('fit', 'fit');
     if (aspectRatio) {
-      imigxOptionsQueryParams.set('ar', `${Number(aspectRatio)}`);
+      imigxOptionsQueryParams.set('ar', `${aspectRatio}`);
       imigxOptionsQueryParams.set('fit', 'crop');
     }
     if (autoCrop) {
