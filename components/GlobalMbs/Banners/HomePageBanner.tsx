@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import Image from 'UI/Image';
 import Conditional from 'components/common/Conditional';
-import { FALLBACK_IMAGE, FALLBACK_IMAGES } from 'const/index';
+import { ASPECT_RATIO, FALLBACK_IMAGE, FALLBACK_IMAGES } from 'const/index';
 import { SOLEIL } from 'const/ui-constants';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
@@ -120,7 +120,7 @@ const Banner: FunctionComponent<BannerProps> = ({
 
   let imageView;
 
-  const ASPECT_RATIO = '16:10';
+  const { GLOBAL_MB: globalMbAR } = ASPECT_RATIO;
   const IMAGE_HEIGHT = 400;
   const fallbackImage =
     mbType === 'Themeparks' ? FALLBACK_IMAGES.THEMEPARKS : FALLBACK_IMAGE;
@@ -134,7 +134,7 @@ const Banner: FunctionComponent<BannerProps> = ({
           alt="Placeholder Image"
           dontLazyLoad
           height={IMAGE_HEIGHT}
-          aspectRatio={ASPECT_RATIO}
+          aspectRatio={globalMbAR}
           autoCrop={false}
         />
       );
@@ -147,7 +147,7 @@ const Banner: FunctionComponent<BannerProps> = ({
           alt={images[0]?.altText}
           dontLazyLoad
           height={IMAGE_HEIGHT}
-          aspectRatio={ASPECT_RATIO}
+          aspectRatio={globalMbAR}
           autoCrop={false}
         />
       );
@@ -165,7 +165,7 @@ const Banner: FunctionComponent<BannerProps> = ({
                   alt={image?.altText}
                   dontLazyLoad
                   height={IMAGE_HEIGHT}
-                  aspectRatio={ASPECT_RATIO}
+                  aspectRatio={globalMbAR}
                   autoCrop={false}
                 />
               );

@@ -5,7 +5,7 @@ import Image from 'UI/Image';
 import Conditional from 'components/common/Conditional';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { CLOSE_WHITE } from 'assets/SvgIcons';
-import { FALLBACK_IMAGE } from 'const/index';
+import { ASPECT_RATIO, FALLBACK_IMAGE } from 'const/index';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import { shortCodeSerializer } from 'utils/shortCodes';
 
@@ -300,15 +300,14 @@ const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = f
       </TicketsWrapper>
     );
 
-    const ASPECT_RATIO = '16:10';
-
+    const { GLOBAL_MB: globalMbAR } = ASPECT_RATIO;
     const cardMarkup = (
       <Wrapper isMobile={isMobile} id="collection-card-details" ref={ref}>
         <Conditional if={isMobile}>
           <div className="image-wrapper">
             <Image
               url={imageUrl}
-              aspectRatio={ASPECT_RATIO}
+              aspectRatio={globalMbAR}
               autoCrop={false}
               width={800}
               height={400}
@@ -362,7 +361,7 @@ const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = f
           <div className="image-wrapper">
             <Image
               url={imageUrl}
-              aspectRatio={ASPECT_RATIO}
+              aspectRatio={globalMbAR}
               autoCrop={false}
               width={800}
               height={400}

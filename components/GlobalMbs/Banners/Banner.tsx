@@ -4,7 +4,7 @@ import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
 import Image from 'UI/Image';
 import Conditional from 'components/common/Conditional';
-import { FALLBACK_IMAGES } from 'const/index';
+import { ASPECT_RATIO, FALLBACK_IMAGES } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import { CHEVRON_DOWN } from 'assets/SvgIcons';
@@ -251,7 +251,7 @@ const Banner: FunctionComponent<BannerProps> = ({
     timings,
     city,
   } = collection;
-  const ASPECT_RATIO = '16:10';
+  const { GLOBAL_MB: globalMbAR } = ASPECT_RATIO;
   const hasTicketPage = categoryID && supply === 'Direct';
   const ticketLink = hasTicketPage
     ? ticketsPageLink
@@ -278,7 +278,7 @@ const Banner: FunctionComponent<BannerProps> = ({
           attribution=""
           alt="Placeholder Image"
           height={variantStyles[cardType].img.height}
-          aspectRatio={ASPECT_RATIO}
+          aspectRatio={globalMbAR}
           dontLazyLoad
           autoCrop={false}
         />
@@ -293,7 +293,7 @@ const Banner: FunctionComponent<BannerProps> = ({
           alt={images[0]?.altText}
           width="650"
           height={variantStyles[cardType].img.height}
-          aspectRatio={ASPECT_RATIO}
+          aspectRatio={globalMbAR}
           dontLazyLoad
           autoCrop={false}
         />
@@ -313,7 +313,7 @@ const Banner: FunctionComponent<BannerProps> = ({
                   alt={image?.altText}
                   width="650"
                   height={variantStyles[cardType]?.img?.height}
-                  aspectRatio={ASPECT_RATIO}
+                  aspectRatio={globalMbAR}
                   dontLazyLoad
                   autoCrop={false}
                 />

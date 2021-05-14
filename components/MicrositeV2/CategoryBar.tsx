@@ -23,7 +23,6 @@ const CategoryBar = (props) => {
     left: null,
   });
   const { categories, isMobile, hideSortBySelector } = props;
-  console.log(categories);
   const toggleFilterDropdown = () => {
     setFilterDropdownActive((oldState) => !oldState);
   };
