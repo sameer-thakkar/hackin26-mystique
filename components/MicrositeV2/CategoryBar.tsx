@@ -1,9 +1,8 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { SOLEIL, SIZES } from 'const/ui-constants';
 import Conditional from 'components/common/Conditional';
-
-import { SortSelector } from './SortSelector';
-import InteractionContext from '../../contexts/Interaction';
+import { SortSelector } from 'components/MicrositeV2/SortSelector';
+import InteractionContext from 'contexts/Interaction';
 
 const CategoryBar = (props) => {
   const interactionCtx = useContext(InteractionContext);
@@ -18,14 +17,12 @@ const CategoryBar = (props) => {
     left: null,
   });
   const { categories, isMobile, hideSortBySelector } = props;
-
   const toggleFilterDropdown = () => {
     setFilterDropdownActive((oldState) => !oldState);
   };
 
   const changeCategory = (index) => {
     let { categories } = props;
-
     interactionCtx.changeCategory(categories[index].ranking[activeOrder]);
     setActiveCategory(index);
   };
@@ -80,19 +77,24 @@ const CategoryBar = (props) => {
         <div className="category-bar-wrapper" ref={parent}>
           <div className="tabs-wrap">
             {categories.map((category, index) => {
+              const { ranking, name } = category || {};
+              const { popularity } = ranking || {};
               return (
-                <div
-                  key={index}
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => {
-                    changeCategory(index);
-                  }}
-                  className={'tab ' + (activeCategory == index ? 'active' : '')}
-                  data-tgid={category.ranking.popularity}
-                >
-                  {category.name}
-                </div>
+                <Conditional if={popularity?.length} key={index}>
+                  <div
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => {
+                      changeCategory(index);
+                    }}
+                    className={
+                      'tab ' + (activeCategory == index ? 'active' : '')
+                    }
+                    data-tgid={popularity}
+                  >
+                    {name}
+                  </div>
+                </Conditional>
               );
             })}
             <div

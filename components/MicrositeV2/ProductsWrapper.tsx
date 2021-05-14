@@ -35,6 +35,7 @@ export const ProductsWrapper = (props) => {
 
   const {
     isMobile,
+    isEntertainmentMb,
     categoryProps,
     changePage,
     allTours,
@@ -46,7 +47,6 @@ export const ProductsWrapper = (props) => {
   const { activeCategoryTgids } = interactionContext;
 
   if (!activeCategoryTgids?.length) return null;
-
   return (
     <StyledProductWrapper className="main-wrapper relative-position">
       <CategoryBar
@@ -58,6 +58,7 @@ export const ProductsWrapper = (props) => {
         tgids={activeCategoryTgids}
         allTours={allTours}
         isMobile={isMobile}
+        isEntertainmentMb={isEntertainmentMb}
         changePage={changePage}
         currentLanguage={currentLanguage}
         host={host}

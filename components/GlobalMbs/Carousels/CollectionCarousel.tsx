@@ -4,7 +4,7 @@ import { RichText } from 'prismic-reactjs';
 import Image from 'UI/Image';
 import Carousel from 'components/GlobalMbs/Carousels/Carousel';
 import Conditional from 'components/common/Conditional';
-import { FALLBACK_IMAGE, FALLBACK_IMAGES } from 'const/index';
+import { ASPECT_RATIO, FALLBACK_IMAGE, FALLBACK_IMAGES } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { convertUidToUrl } from 'utils/urlUtils';
 
@@ -169,7 +169,7 @@ const CollectionCarousel: FunctionComponent<CollectionCarouselProps> = ({
       topCollections = filterByCategory(collections, FILTER_TYPE.WATERPARK);
       break;
   }
-  const ASPECT_RATIO = '16:10';
+  const { GLOBAL_MB: globalMbAR } = ASPECT_RATIO;
   const collectionCards = topCollections
     ?.slice(0, 9)
     ?.map((collection, index) => {
@@ -188,7 +188,7 @@ const CollectionCarousel: FunctionComponent<CollectionCarouselProps> = ({
           <Image
             url={imageUrl}
             alt={altText}
-            aspectRatio={ASPECT_RATIO}
+            aspectRatio={globalMbAR}
             autoCrop={false}
           />
           <div className="card-info">

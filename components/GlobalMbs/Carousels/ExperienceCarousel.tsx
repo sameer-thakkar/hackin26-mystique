@@ -6,6 +6,7 @@ import Carousel from 'components/GlobalMbs/Carousels/Carousel';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { CHEVRON_LEFT } from 'assets/SvgIcons';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
+import { ASPECT_RATIO } from 'const/index';
 
 const StyledCard = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
@@ -152,7 +153,7 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
   }
 
   let ridesAttractionMarkup, ticketsMarkup;
-  const ASPECT_RATIO = '16:10';
+  const { GLOBAL_MB: globalMbAR } = ASPECT_RATIO;
 
   if (experienceType === 'Attractions' || experienceType === 'Rides') {
     ridesAttractionMarkup = cards?.map((card, index) => {
@@ -182,7 +183,7 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
               url={imageUrl}
               className="image"
               alt={altText}
-              aspectRatio={ASPECT_RATIO}
+              aspectRatio={globalMbAR}
               autoCrop={false}
             />
             <div className="title">{name}</div>
@@ -214,7 +215,7 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
               url={getValidUrl(imageUrl)}
               className="image"
               alt={altText}
-              aspectRatio={ASPECT_RATIO}
+              aspectRatio={globalMbAR}
               autoCrop={false}
             />
             <div className="title">{name}</div>

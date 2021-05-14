@@ -142,10 +142,12 @@ export const extractContentForProductCard = (markdownBlocks, contentBlocks) => {
       const values = [
         'Theatre Name',
         'My Ticket',
+        'Your Tickets',
         'Your Ticket',
         'Show Timings',
         'Duration',
         'Cancellation Policy',
+        'Cancellation',
         'Age Limit',
       ];
       if (values.indexOf(md.heading) !== -1) {

@@ -51,12 +51,15 @@ const Tags: FunctionComponent<TagsProps> = ({ collections, uid, title }) => {
   );
 
   const tagsMarkup = finalCollection.map((collection) => {
-    const url = collection?.data?.microbrand_url
-      ? getValidUrl(collection?.data?.microbrand_url?.trim())
-      : getValidUrl(convertUidToUrl(collection?.uid));
+    const { data, id, uid } = collection || {};
+    const { microbrand_url: microbrandUrl, collection_name: collectionName } =
+      data || {};
+    const url = microbrandUrl
+      ? getValidUrl(microbrandUrl?.trim())
+      : getValidUrl(convertUidToUrl(uid));
     return (
-      <Tag key={collection?.id} href={url}>
-        {collection?.data?.collection_name}
+      <Tag key={id} href={url}>
+        {collectionName}
       </Tag>
     );
   });

@@ -4,7 +4,7 @@ import { MBContext } from 'contexts/MBContext';
 import Image from 'UI/Image';
 import Conditional from 'components/common/Conditional';
 import DetailedCollectionCard from 'components/GlobalMbs/collectionTabs/detailedCollectionCard';
-import { FALLBACK_IMAGES, SIDEBAR_TYPES } from 'const/index';
+import { ASPECT_RATIO, FALLBACK_IMAGES, SIDEBAR_TYPES } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 
 const StyledCard = styled.div`
@@ -145,7 +145,7 @@ const Card: FunctionComponent<CardProps> = ({
       clickHandler(e, card);
     }
   };
-  const ASPECT_RATIO = '16:10';
+  const { GLOBAL_MB: globalMbAR } = ASPECT_RATIO;
   return (
     <StyledCard onClick={handleClick}>
       <div className="image-wrapper">
@@ -159,7 +159,7 @@ const Card: FunctionComponent<CardProps> = ({
         </Conditional>
         <Image
           url={imageUrl}
-          aspectRatio={ASPECT_RATIO}
+          aspectRatio={globalMbAR}
           autoCrop={false}
           width={800}
           height={400}

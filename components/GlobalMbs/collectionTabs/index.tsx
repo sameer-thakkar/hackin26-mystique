@@ -129,7 +129,7 @@ const CollectionCard: FunctionComponent<CollectionCardProps> = ({
       <TitleWrapper>
         <Title>{title}</Title>
       </TitleWrapper>
-      <Tabs tabs={tabs} defaultActiveIndex={0} isCollectionCard={true} />
+      <Tabs tabs={tabs} defaultActiveIndex={0} isCollectionCard />
     </>
   );
 };

@@ -12,6 +12,10 @@ export const PREFERRED_COUNTRIES_CODES = [
   'th',
 ];
 
+export const ASPECT_RATIO = {
+  GLOBAL_MB: '16:10',
+};
+
 export const SUPPORTED_LANGUAGES = [
   'en',
   'es',
