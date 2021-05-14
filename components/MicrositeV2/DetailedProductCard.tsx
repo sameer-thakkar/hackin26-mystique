@@ -1,23 +1,23 @@
-import { SOLEIL, COLORS } from 'const/ui-constants';
 import React, { useContext } from 'react';
 import dynamic from 'next/dynamic';
-import Image from 'UI/Image';
-import { strings } from 'const/strings';
-import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
+import styled from 'styled-components';
+import { MBContext } from 'contexts/MBContext';
+import Image from 'UI/Image';
 import { CLOSE_WHITE, Shield } from 'assets/SvgIcons';
+import IconCTA from 'UI/IconCTA';
+import Split, { StlyedSplit } from 'UI/Split';
+import PriceBlock from 'UI/PriceBlock';
+import Conditional from 'components/common/Conditional';
+import { greenScheme } from 'style/theme';
+import { strings } from 'const/strings';
+import { SOLEIL, COLORS } from 'const/ui-constants';
 import {
   shortCodeSerializerWithParentProps,
   shortCodeSerializer,
 } from 'utils/shortCodes';
-import { MBContext } from 'contexts/MBContext';
-import IconCTA from 'UI/IconCTA';
-import { greenScheme } from 'style/theme';
-import Split, { StlyedSplit } from 'UI/Split';
 import { isSafetyIncluded, createBookingURL } from 'utils';
-import PriceBlock from 'UI/PriceBlock';
-
-import { extractContentForProductCard } from './../../utils/productUtils';
+import { extractContentForProductCard } from 'utils/productUtils';
 
 const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
   ssr: false,
@@ -288,7 +288,7 @@ const DetailedProductCard = (props) => {
   };
   const mbContext = useContext(MBContext);
   const { lang, nakedDomain, biLink } = mbContext;
-  const { allTours, tgidClicked, cardPosition } = props;
+  const { allTours, tgidClicked, cardPosition, isEntertainmentMb } = props;
   const activeTour = allTours[tgidClicked];
   const rightBlocksCount = activeTour.contentBlocks.right.length;
   const descriptors = activeTour.descriptors
@@ -302,10 +302,12 @@ const DetailedProductCard = (props) => {
     sidebarModal: { addToAside },
   } = useContext(MBContext);
 
-  const productCardContent = extractContentForProductCard(
-    activeTour.highlights,
-    activeTour.contentBlocks
-  );
+  const productCardContent = isEntertainmentMb
+    ? activeTour.contentBlocks
+    : extractContentForProductCard(
+        activeTour.highlights,
+        activeTour.contentBlocks
+      );
 
   const openSafeSidebar = () => {
     addToAside({
@@ -338,8 +340,7 @@ const DetailedProductCard = (props) => {
               ) : null}
             </Split>
           </IconBoosters>
-
-          {descriptors.length > 0 ? (
+          <Conditional if={descriptors?.length && !isEntertainmentMb}>
             <div className="v2-descriptors">
               {descriptors.map((descriptor, index) => {
                 return (
@@ -349,7 +350,7 @@ const DetailedProductCard = (props) => {
                 );
               })}
             </div>
-          ) : null}
+          </Conditional>
           {activeTour.description && activeTour.description.length ? (
             <div className="content-block tour-description">
               <RichText
@@ -362,12 +363,13 @@ const DetailedProductCard = (props) => {
         <div className="v2-desc-columns">
           <div className="v2-desc-left">
             {productCardContent.left.map((block, index) => {
+              const { heading, label, contents, content } = block;
               return (
                 <div className="description-content-block" key={index}>
-                  <span className="description-label">{block.heading} </span>
+                  <span className="description-label">{heading || label}</span>
                   <span className="description-content">
                     <RichText
-                      render={block.contents}
+                      render={contents || content}
                       htmlSerializer={(...defaultArgs: any) =>
                         shortCodeSerializerWithParentProps(
                           defaultArgs,
@@ -382,12 +384,13 @@ const DetailedProductCard = (props) => {
           </div>
           <div className="v2-desc-right">
             {productCardContent.right.map((block, index) => {
+              const { heading, label, contents, content } = block;
               return (
                 <div className="description-content-block right" key={index}>
-                  <span className="description-label">{block.heading} </span>
+                  <span className="description-label">{heading || label}</span>
                   <span className="description-content">
                     <RichText
-                      render={block.contents}
+                      render={contents || content}
                       htmlSerializer={(...defaultArgs: any) =>
                         shortCodeSerializerWithParentProps(
                           defaultArgs,

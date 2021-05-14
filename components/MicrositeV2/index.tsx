@@ -272,6 +272,7 @@ class MicrositeV2 extends Component<any, any> {
       footer_logo,
       theme_override,
       powered_by_superbrand,
+      is_entertainment_mb: isEntertainmentMb,
     } = this.props.data.data;
     const heroSectionSlice = [...this.props.data.data.body4, hightlightSlice];
     const commonFooterProps = commonFooter ? commonFooter.data : null;
@@ -294,6 +295,7 @@ class MicrositeV2 extends Component<any, any> {
         secondaryFooter,
       },
       isMobile,
+      isEntertainmentMb,
       host,
       header: {
         ...headerProps,

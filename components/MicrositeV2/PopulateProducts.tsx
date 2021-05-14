@@ -12,6 +12,7 @@ const RowComponent: ComponentType<any> = dynamic(() =>
 const PopulateProducts = (props) => {
   const {
     isMobile,
+    isEntertainmentMb,
     propTgids,
     allTours,
     changePage,
@@ -65,6 +66,7 @@ const PopulateProducts = (props) => {
               tgidsSubArr={row}
               allTours={allTours}
               isMobile={isMobile}
+              isEntertainmentMb={isEntertainmentMb}
               changePage={changePage}
               host={host}
               currentLanguage={currentLanguage}

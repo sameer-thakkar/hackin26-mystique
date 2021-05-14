@@ -60,6 +60,7 @@ export const RowComponent = (props) => {
     tgidsSubArr,
     allTours,
     isMobile,
+    isEntertainmentMb,
     currentLanguage,
     host,
     uid,
@@ -89,6 +90,7 @@ export const RowComponent = (props) => {
             tgidClicked={tgidClicked}
             allTours={allTours}
             isMobile={isMobile}
+            isEntertainmentMb={isEntertainmentMb}
             currentLanguage={currentLanguage}
             host={host}
             uid={uid}

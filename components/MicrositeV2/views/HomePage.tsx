@@ -82,6 +82,7 @@ export const HomePage = (props) => {
     footer,
     host,
     isMobile,
+    isEntertainmentMb,
     allTours,
     longFormContent,
     categoryProps,
@@ -186,6 +187,7 @@ export const HomePage = (props) => {
           directTgid={parseInt(directTgid)}
           allTours={allTours}
           isMobile={isMobile}
+          isEntertainmentMb={isEntertainmentMb}
           currentLanguage={currentLanguage}
           categoryProps={categoryProps}
           changePage={changePage}
