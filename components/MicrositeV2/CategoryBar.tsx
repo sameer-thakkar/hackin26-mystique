@@ -1,10 +1,4 @@
-import React, {
-  Fragment,
-  useState,
-  useContext,
-  useRef,
-  useEffect,
-} from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import { SOLEIL, SIZES } from 'const/ui-constants';
 import Conditional from 'components/common/Conditional';
 import { SortSelector } from 'components/MicrositeV2/SortSelector';
@@ -86,23 +80,21 @@ const CategoryBar = (props) => {
               const { ranking, name } = category || {};
               const { popularity } = ranking || {};
               return (
-                <Fragment key={index}>
-                  <Conditional if={popularity?.length}>
-                    <div
-                      role="button"
-                      tabIndex={0}
-                      onClick={() => {
-                        changeCategory(index);
-                      }}
-                      className={
-                        'tab ' + (activeCategory == index ? 'active' : '')
-                      }
-                      data-tgid={popularity}
-                    >
-                      {name}
-                    </div>
-                  </Conditional>
-                </Fragment>
+                <Conditional if={popularity?.length} key={index}>
+                  <div
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => {
+                      changeCategory(index);
+                    }}
+                    className={
+                      'tab ' + (activeCategory == index ? 'active' : '')
+                    }
+                    data-tgid={popularity}
+                  >
+                    {name}
+                  </div>
+                </Conditional>
               );
             })}
             <div
