@@ -19,6 +19,7 @@ import HeaderLinks from 'components/HeaderLinks';
 import LanguageSelector from 'components/common/LanguageSelector';
 import Conditional from 'components/common/Conditional';
 import CurrencySelector from 'components/common/CurrencySelector';
+import { withTrailingSlash } from 'utils/helper';
 
 const MultiLevelNav = dynamic(() => import('components/MultiLevelNav'));
 const ResponsiveSelector: ComponentType<any> = dynamic(
@@ -199,7 +200,7 @@ const Header: React.FC<any> = (props) => {
         primary: {
           label: link.link_heading,
           url: {
-            url: link.link_url.url,
+            url: withTrailingSlash(link?.link_url?.url),
             target: link.link_url.target,
           },
         },
