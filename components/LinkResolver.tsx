@@ -1,8 +1,8 @@
 import React from 'react';
-import EnvironmentContext from '../contexts/environmentContext';
 import parse from 'url-parse';
-import { withAmp } from './common/withAmp';
-import { getUID } from '../utils/helper';
+import EnvironmentContext from 'contexts/environmentContext';
+import { withAmp } from 'components/common/withAmp';
+import { getUID } from 'utils/helper';
 
 const qs = (obj) =>
   Object.keys(obj)

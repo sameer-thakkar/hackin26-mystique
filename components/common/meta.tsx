@@ -2,11 +2,13 @@ import React, { useContext } from 'react';
 import Head from 'next/head';
 import parse from 'url-parse';
 import { MBContext } from 'contexts/MBContext';
-import { withoutTrailingSlash, withShortcodes } from 'utils/helper';
+import {
+  withoutTrailingSlash,
+  withTrailingSlash,
+  withShortcodes,
+} from 'utils/helper';
 import { BANNER_PARAMS } from 'components/Banner';
-
-const withTrailingSlash = (url) =>
-  url.charAt(url.length - 1) !== '/' ? `${url}/` : url;
+import { getValidUrl } from 'utils/urlUtils';
 
 const withHttps = (url) =>
   (url.startsWith('http') ? url : `https://${url}`).replace('http:', 'https:');
@@ -302,7 +304,7 @@ const PopulateHead = (data) => {
       <script key={index} dangerouslySetInnerHTML={{ __html: item }} />
     ));
 
-  const { host, pathname } = parse(pageUrl);
+  const { host, pathname } = parse(getValidUrl(pageUrl));
 
   const pathnameWithTrailingSlash = pathname.endsWith('/')
     ? pathname
