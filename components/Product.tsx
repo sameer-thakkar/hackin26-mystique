@@ -768,6 +768,11 @@ const Product = (props) => {
     hasNextAvailable: earliestAvailability?.startDate,
   });
   const getMoreDetailsButton = () => {
+    const keyPressedOnReadMore = (event) =>{
+      if(event.keyCode == 13 && !isMobile){
+        toggleContentOpen(!isContentOpen)
+      }
+    };
     const innerContent =
       mbTheme === THEMES.DEFAULT ? (
         ` ${
@@ -801,7 +806,7 @@ const Product = (props) => {
           }
         }}
         className="more-details"
-        onKeyDown={() => toggleContentOpen(!isContentOpen)}
+        onKeyDown={keyPressedOnReadMore}
         role="button"
         tabIndex={0}
       >
