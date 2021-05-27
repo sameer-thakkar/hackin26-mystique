@@ -94,13 +94,13 @@ export const getProductCardLayout = ({
 export const getDescriptorIconURL = (icon, ext = 'svg') =>
   `${'https://cdn-imgix-open.headout.com/mb-icons/'}${icon}.${ext}`;
 
-export const parseDescriptorIcon = (str = '') => {
+export const parseDescriptorIcon = (str) => {
   const {
     icon = 'check',
     descriptor,
     ext = 'svg',
   } = /(\{(?<icon>[\S]*)((\s*)?ext=(['"])?(?<ext>[^"'\s]*)?\S*?)?(\s*)?\})?(\s*)(?<descriptor>.*)/g.exec(
-    str?.trim()
+    str
   )?.groups;
 
   return {
