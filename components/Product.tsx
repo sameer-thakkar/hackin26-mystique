@@ -603,6 +603,14 @@ const ModalCardContainer = styled.div`
 `;
 
 const Descriptors = ({ descriptorArray, hasValidity = false }) => {
+  const isFreeCancelDescriptor = (str) =>
+    str.icon?.includes('cancel') ||
+    /stornierung|annul|cancel/gi.test(str?.descriptor);
+  const finalDescriptorOrder = descriptorArray
+    .map(parseDescriptorIcon)
+    .sort((a, b) =>
+      isFreeCancelDescriptor(a) || isFreeCancelDescriptor(b) ? -1 : 1
+    );
   return (
     <TourTags>
       <Conditional if={hasValidity}>
@@ -611,15 +619,16 @@ const Descriptors = ({ descriptorArray, hasValidity = false }) => {
           {strings.DESCRIPTORS.VALIDITY}
         </div>
       </Conditional>
-      {descriptorArray.reduce((acc, item, index) => {
-        const { icon, descriptor } = parseDescriptorIcon(item.trim());
+      {finalDescriptorOrder.reduce((acc, item, index) => {
+        const { icon, descriptor } = item;
         if (descriptor) {
-          acc.push(
+          return [
+            ...acc,
             <div key={index} className="tour-tag">
               <Image url={icon} />
               {descriptor.replace(/['"]+/g, '')}
-            </div>
-          );
+            </div>,
+          ];
         }
         return acc;
       }, [])}
@@ -768,9 +777,9 @@ const Product = (props) => {
     hasNextAvailable: earliestAvailability?.startDate,
   });
   const getMoreDetailsButton = () => {
-    const keyPressedOnReadMore = (event) =>{
-      if(event.keyCode == 13 && !isMobile){
-        toggleContentOpen(!isContentOpen)
+    const keyPressedOnReadMore = (event) => {
+      if (event.keyCode == 13 && !isMobile) {
+        toggleContentOpen(!isContentOpen);
       }
     };
     const innerContent =
