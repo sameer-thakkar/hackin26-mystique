@@ -385,3 +385,9 @@ export const brownScheme = {
   color: '#A4563B',
   accent: '#EFE0C2',
 };
+
+export const blackScheme = {
+  background: '#111111',
+  color: '#E2E2E2',
+  accent: '#CDEFD9',
+};

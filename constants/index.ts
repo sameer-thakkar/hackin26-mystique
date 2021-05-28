@@ -174,6 +174,7 @@ export const CUSTOM_TYPES = {
   COMMON_DATA: 'common_data',
   LISTICLE: 'page',
   CONTENT_FRAMEWORK: 'content_framework',
+  SHOW_PAGE: 'showpage',
   GLOBAL_HOMEPAGE: 'global_homepage',
   GLOBAL_CITY: 'global_city',
   GLOBAL_COLLECTION: 'global_collection',
@@ -532,3 +533,47 @@ export const SHORT_CODE_TYPES = {
 };
 
 export const NOS_OF_HIGHLIGHTS_TO_SHOW = 4;
+
+export const TAB_ALLOWED_HIGHLIGHT = [
+  'Highlights',
+  'About Show',
+  'Show Details',
+  'Age Suitability',
+  'Tickets',
+  'Covid-19 Safety',
+];
+
+export const TAB_ALLOWED_INFO = [
+  'About Theatre',
+  'Getting There',
+  'Facilities',
+  'Additional Information',
+];
+
+export const DETAILS_ALLOWED_SHOWPAGES = [
+  'Opening Date',
+  'Theatre Name',
+  'Duration',
+  'Age Limit',
+];
+
+export const SAFETY_BANNER_STRING = 'Safety Banner';
+
+export const YES_STRING = 'YES';
+
+export const REOPENING_STRING = 'Reopening · Next Available: ';
+
+export const MONTH_ARRAY = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+];

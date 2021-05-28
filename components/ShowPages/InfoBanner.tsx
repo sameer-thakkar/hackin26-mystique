@@ -1,0 +1,155 @@
+import React from 'react';
+import styled from 'styled-components';
+
+export const StyledInfoBanner = styled.div`
+  padding: 24px 32px;
+  display: grid;
+  grid-template-columns: 10% 80% 10%;
+  grid-column-gap: 20px;
+  border-radius: 8px;
+  justify-content: left;
+  align-items: center;
+
+  ${({ clickable }) => (clickable ? `cursor: pointer;` : ``)}
+  background: ${({ colorScheme: cs }) => cs.background};
+  * {
+    color: ${({ colorScheme: cs }) => cs.color};
+  }
+
+  @media (max-width: 768px) {
+    padding: 24px 16px;
+    width: calc(100% - 32px);
+  }
+`;
+
+const StyledInfoBannerMobile = styled.div`
+  padding: 10px 16px 24px 16px;
+  grid-column-gap: 20px;
+  border-radius: 8px;
+  justify-content: left;
+  align-items: center;
+
+  ${({ clickable }) => (clickable ? `cursor: pointer;` : ``)}
+  background: ${({ colorScheme: cs }) => cs.background};
+  * {
+    color: ${({ colorScheme: cs }) => cs.color};
+  }
+
+  @media (max-width: 768px) {
+    padding: 10px 16px 24px 16px;
+    width: calc(100% - 32px);
+  }
+`;
+
+const Icon = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .desktop-icon svg{
+    width: 18px;
+    height: 18px;
+  }
+
+  @media (max-width: 768px) {
+    width: 50px;
+  }
+`;
+
+const Content = styled.div`
+  display: grid;
+  grid-row-gap: 8px;
+`;
+
+const Title = styled.div`
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+`;
+
+const TopWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 20% 70% 10%;
+  align-items: center;
+`;
+
+const Description = styled.div`
+  font-size: 14px;
+  line-height: 140%;
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+`;
+
+const CTA = styled.div`
+  font-size: 14px;
+  display: inline-block;
+  text-decoration: underline;
+  line-height: 140%;
+  cursor: pointer;
+  @media (max-width: 768px) {
+    display: block;
+    margin-top: 8px;
+  }
+`;
+
+const InfoBanner = ({
+  title,
+  description,
+  cta,
+  icon,
+  ctaOnClick = null,
+  bannerOnClick = null,
+  colorScheme,
+  isMobile,
+  rightIcon
+}) => {
+  return (
+    <>
+      {
+        isMobile
+          ?
+          <StyledInfoBannerMobile
+            onClick={bannerOnClick}
+            clickable={bannerOnClick}
+            colorScheme={colorScheme}
+          >
+            <TopWrapper>
+              <Icon>{icon}</Icon>
+              <Title>{title}</Title>
+              <Icon>{rightIcon}</Icon>
+            </TopWrapper>
+            <Content>
+              <Description>
+                {description} <CTA onClick={ctaOnClick}>{cta}</CTA>
+              </Description>
+            </Content>
+          </StyledInfoBannerMobile>
+          :
+          <StyledInfoBanner
+            onClick={bannerOnClick}
+            clickable={bannerOnClick}
+            colorScheme={colorScheme}
+          >
+            <Icon>{icon}</Icon>
+            <Content>
+              <Title>{title}</Title>
+              <Description>
+                {description} <CTA onClick={ctaOnClick}>{cta}</CTA>
+              </Description>
+            </Content>
+            <Icon>
+              <div className="desktop-icon">
+                {rightIcon}
+              </div>
+            </Icon>
+          </StyledInfoBanner>
+      }
+    </>
+  );
+};
+
+export default InfoBanner;

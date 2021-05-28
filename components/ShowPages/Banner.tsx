@@ -1,0 +1,349 @@
+import { PRODUCT_VIDEOS } from 'constants/ShowPageProductVideos';
+import {
+  REOPENING_STRING,
+  MONTH_ARRAY
+} from 'constants/index';
+
+import { strings } from 'const/strings';
+import React, { useState, useContext, useEffect } from 'react';
+import styled from 'styled-components';
+import { createBookingURL } from 'utils';
+import PriceBlock from 'UI/PriceBlock';
+
+import Image from '../UI/Image';
+import { MBContext } from '../../contexts/MBContext';
+import { PLAY_CIRCLE } from '../../assets/SvgIcons';
+import {
+  fetchInventoryAPI,
+} from '../../utils/apiUtils';
+
+const Banner = styled.div`
+  width: 100%;
+  height: 30em;
+  text-align: center;
+
+  img {
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    height: 15em;
+  }
+`;
+
+const VideoWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  .video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 1;
+    -webkit-transition: all 0.7s ease;
+  }
+
+  .video-container.is-active {
+    opacity: 1;
+    z-index: 2;
+  }
+
+  div {
+    height: 100% !important;
+  }
+`;
+
+const BannerImageWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+
+  .banner-image-container {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    -webkit-transition: all 0.7s ease;
+    overflow: hidden;
+  }
+
+  .is-active {
+    opacity: 1;
+    z-index: 2;
+  }
+
+  .play-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    cursor: pointer;
+  }
+`;
+
+const BannerContent = styled.div`
+  margin: -2em auto 0;
+  position: relative;
+  max-width: 1200px;
+  z-index: 2;
+  background: #ffffff;
+  padding: 10px 16px 0;
+  border-radius: 8px 8px 0px 0px;
+
+  .heading-wrapper {
+    border-bottom: 1px solid #e2e2e2;
+    padding-bottom: 20px;
+    display: grid;
+    grid-template-columns: 70% 30%;
+  }
+
+  .top-text-wrapper {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .tags-wrapper {
+    display: inline-block;
+    border: 1px solid #e2e2e2;
+    color: #666666;
+    padding: 6px 8px;
+    margin: 8px 8px 8px 0;
+    border-radius: 2px;
+    font-size: 12px;
+  }
+
+  .right-pricing {
+    text-align: right;
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+  }
+
+  .tour-price{
+    color: #444444;
+    font-weight: 600;
+    font-size: 21px;
+  }
+
+  .tour-scratch-price {
+    color: #888888;
+    font-size: 14px;
+    line-height: 16px;
+    text-align:left;
+  }
+
+  .buy-button {
+    padding: 12px 20px;
+    background: #ec1943;
+    border-radius: 8px;
+    margin: 0px 16px;
+    color: #ffffff;
+    border: none;
+    font-weight: 600;
+    font-size: 20px;
+    font-style: normal;
+    letter-spacing: 0.8px;
+  }
+
+  .details-container {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+  }
+
+  .details-container .key {
+    color: #666666;
+    font-size: 12px;
+  }
+
+  .details-container .value {
+    color: #444444;
+    font-size: 15px;
+  }
+
+  .individual-container {
+    padding: 10px;
+  }
+
+  @media (max-width: 768px) {
+    .heading-wrapper {
+      grid-template-columns: auto;
+    }
+
+    .right-pricing {
+      margin-top: 20px;
+      text-align: left;
+      grid-template-columns: auto auto;
+    }
+
+    .buy-button {
+      display: none;
+    }
+
+    .details-container {
+      grid-template-columns: auto auto;
+    }
+
+    h1 {
+      font-size: 21px;
+    }
+
+    .top-text-wrapper {
+      font-size: 12px;
+    }
+  }
+`;
+
+const ShowPageBanner = ({
+  detailsObjects,
+  tgid,
+  tourGroupData,
+  currentLanguage,
+  tagsArray,
+}) => {
+  const { listingPrice, currency, name, imageUploads } = tourGroupData;
+
+  const { localSymbol } = currency;
+
+  const [productImages] = imageUploads;
+
+  const { nakedDomain, biLink } = useContext(MBContext);
+
+  const bookingUrl = createBookingURL({
+    nakedDomain: nakedDomain,
+    lang: currentLanguage,
+    tgid: tgid,
+    biLink: biLink,
+  });
+
+  const [isVideo, setIsVideo] = useState(false);
+  const [nextAvailable, setNextAvailable] = useState("");
+
+  const videoCode = PRODUCT_VIDEOS[tgid] ? PRODUCT_VIDEOS[tgid] : null;
+  const videoAvailable = PRODUCT_VIDEOS[tgid] ? true : false;
+
+  const BannerChange = () => {
+    setIsVideo(!isVideo);
+  };
+
+  useEffect(() => {
+    const fetchReopeningDate = async () => {
+      const {
+        inventoryList
+      } = await fetchInventoryAPI(tgid);
+
+      const date = new Date().getTime();
+
+      inventoryList.every(({ startDate }) => {
+        if (date <= Date.parse(startDate)) {
+          const [year, month, date] = startDate.split("-");
+
+          setNextAvailable(date + " " + MONTH_ARRAY[month - 1] + " " + year);
+          return false;
+        }
+      });
+    };
+
+    fetchReopeningDate();
+  }, [tgid])
+
+  return (
+    <>
+      <Banner>
+        {isVideo && videoAvailable ? (
+          <VideoWrapper>
+            <div className="video-container is-active">
+              <div>
+                <iframe
+                  title="YouTube video player"
+                  src={`https://www.youtube.com/embed/${videoCode}?autoplay=1`}
+                  frameBorder="0"
+                  allowFullScreen
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  width="100%"
+                  height="100%"
+                >
+                  {' '}
+                </iframe>
+              </div>
+            </div>
+          </VideoWrapper>
+        ) : (
+          <BannerImageWrapper>
+            <div className="banner-image-container is-active">
+              <Image
+                url={productImages.url}
+                alt={productImages.alt || 'banner'}
+              />
+              {videoAvailable ? (
+                <>
+                  <div className="play-button" onClick={BannerChange} role="button" tabIndex={0}>
+                    {PLAY_CIRCLE}
+                  </div>
+                </>
+              ) : null}
+            </div>
+          </BannerImageWrapper>
+        )}
+      </Banner>
+      <BannerContent>
+        <div className="top-text-wrapper">
+          {REOPENING_STRING}{nextAvailable}
+        </div>
+        <div className="heading-wrapper">
+          <div>
+            <h1>{name}</h1>
+            {tagsArray.map((element, index) => {
+              return (
+                <div className="tags-wrapper" key={index}>
+                  {element}
+                </div>
+              );
+            })}
+          </div>
+          <div className="right-pricing">
+            <div>
+              <PriceBlock
+                price={listingPrice}
+                lang={currentLanguage}
+                showSavings={true}
+                showScratchPrice={true}
+                currencySymbolOverride={localSymbol}
+                prefix={true}
+              />
+            </div>
+            <div>
+              <a className="buy-button" href={bookingUrl} target="blank">
+                {strings.BANNER_CTA}
+              </a>
+            </div>
+          </div>
+        </div>
+        <div className="details-container">
+          {Object.entries(detailsObjects).map((element, index) => {
+            return (
+              <div className="individual-container" key={index}>
+                <div className="key">{element[0]}</div>
+                <div className="value">{element[1]}</div>
+              </div>
+            );
+          })}
+        </div>
+      </BannerContent>
+    </>
+  );
+};
+
+export default ShowPageBanner;

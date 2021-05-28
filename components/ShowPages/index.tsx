@@ -1,0 +1,229 @@
+import { strings } from 'const/strings';
+import React, { useEffect, useState } from 'react';
+import { useWindowWidth } from '@react-hook/window-size';
+import dynamic from 'next/dynamic';
+import styled from 'styled-components';
+import { legacyBooleanCheck } from 'utils';
+
+import {
+  fetchReviewsTourGroup,
+  fetchCategory,
+  fetchCurrencyList,
+} from '../../utils/apiUtils';
+import Footer from '../common/Footer';
+import Header from '../common/Header';
+import { parseShowPageData } from './parseShowPage';
+import ContentTabs from './ContentTabs';
+import ShowPageBanner from './Banner';
+import CustomerReview from './CustomerReview';
+import FeatureCard from './FeatureCard';
+import GoogleMap from './GoogleMap';
+import SafeDFBannerWrapper from './SafetyBanner';
+import Gallery from './Gallery';
+import CategorySlider from './CategorySlider';
+import SubHeading from './SubHeading';
+import PopulateHead from '../common/meta';
+
+const AccordionGroup = dynamic(() => import('../slices/AccordionGroup'));
+
+const Wrapper = styled.div`
+  max-width: 1200px;
+  margin: 64px auto 0;
+  padding: 0 16px;
+  @media (max-width: 768px) {
+    margin: 40px auto 0;
+  }
+
+  h2 {
+    margin-top: 40px !important;
+  }
+`;
+
+const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData }) => {
+  const [customerReviews, setCustomerReviews] = useState([]);
+  const [similarProductData, setSimilarProductData] = useState([]);
+  const [currencySymbol, setCurrencySymbol] = useState({});
+
+  const [isMobile, setIsMobile] = useState(false);
+  const width = useWindowWidth();
+
+  const {
+    microBrandsHighlight,
+    imageUploads,
+    categoriesFromRoot,
+    microBrandsDescriptor,
+    startLocation,
+  } = tourGroupData;
+
+  const { latitude, longitude } = startLocation;
+
+  const currentLanguage = lang.split('-')[0];
+  const categoryId = categoriesFromRoot[categoriesFromRoot.length - 1].id;
+  const categoryName =
+    categoriesFromRoot[categoriesFromRoot.length - 1].displayName;
+
+  const tagsArray = [categoryName, ...microBrandsDescriptor.split('\r\n')];
+
+  const { commonFooter, allShowPagesDocuments } = CMSContent;
+
+  const {
+    data: {
+      enable_group_booking: enableGroupBooking,
+      logo_redirection_url: logoRedirectionURL,
+      localization,
+      enable_localization_menu,
+      logo,
+      tgid,
+      logo_alt_text: logoAltText,
+      header_links: headerLinks,
+      favicon,
+      title,
+      description,
+    },
+  } = CMSContent;
+
+  useEffect(() => {
+    const fetchTourGroupPrices = async () => {
+      const categoryData = await fetchCategory(categoryId);
+
+      setSimilarProductData(
+        categoryData?.products.filter((element) => element.id != tgid)
+      );
+    };
+
+    fetchTourGroupPrices();
+  }, [categoryId, tgid]);
+
+  // isMobile effect
+  useEffect(() => {
+    setIsMobile(width <= 768);
+  }, [width]);
+
+  const {
+    faqHeading,
+    faqSchema,
+    tabSchemaHighlight,
+    tabSchemaInfo,
+    tabHeadingHighlight,
+    tabHeadingInfo,
+    detailsObjects,
+    tabSectionHeading,
+    isSafetyBanner,
+  } = parseShowPageData(microBrandsHighlight);
+
+  useEffect(() => {
+    const reviewTourGroup = async () => {
+      const tourGroupReviews = await fetchReviewsTourGroup(tgid, 5)
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          return data.items.map((element) => {
+            return { name: element.nonCustomerName, content: element.content };
+          });
+        });
+      setCustomerReviews(tourGroupReviews);
+    };
+
+    reviewTourGroup();
+  }, [tgid]);
+
+  useEffect(() => {
+    fetchCurrencyList().then((currencyData) => {
+      let currencySymbolObject = {};
+
+      currencyData.forEach(({ code, localSymbol }) => {
+        currencySymbolObject[code] = localSymbol;
+      });
+
+      setCurrencySymbol(currencySymbolObject);
+    });
+  }, []);
+
+  return (
+    <>
+      <PopulateHead
+        {...{
+          title,
+          description,
+          favicon: {
+            url: favicon,
+          },
+          faq_schema: [],
+          lang,
+          originalHost: host,
+          currentLanguage: lang,
+          isMobile,
+        }}
+      />
+      <Header
+        languages={localization}
+        headerLinks={headerLinks}
+        currentLanguage={currentLanguage}
+        logoUrl={logo.url}
+        logoAltText={logoAltText || logo.alt || ''}
+        uid={uid}
+        isMobile={isMobile}
+        showGroupBooking={legacyBooleanCheck(enableGroupBooking)}
+        hasLanguageSelector={enable_localization_menu}
+        logoRedirectionURL={logoRedirectionURL?.url || '/'}
+        host={host}
+        hasPoweredByHeadoutLogo={true}
+      />
+      <ShowPageBanner
+        tgid={tgid}
+        detailsObjects={detailsObjects}
+        tourGroupData={tourGroupData}
+        currentLanguage={currentLanguage}
+        tagsArray={tagsArray}
+      />
+      {isSafetyBanner ? (
+        <SafeDFBannerWrapper marginTop={40}></SafeDFBannerWrapper>
+      ) : null}
+      <Wrapper>
+        <ContentTabs
+          tabsArr={tabHeadingHighlight}
+          contentArr={tabSchemaHighlight}
+        />
+        <Gallery galleryArray={imageUploads} />
+        <SubHeading content={tabSectionHeading} />
+        <ContentTabs
+          tabsArr={tabHeadingInfo}
+          contentArr={tabSchemaInfo}
+        />
+        <GoogleMap latitude={latitude} longitude={longitude} />
+        <AccordionGroup
+          accordions={faqSchema}
+          heading={faqHeading}
+          useSchema={true}
+        />
+        <SubHeading content={strings.CUSTOMER_REVIEW_HEADING} />
+        <CustomerReview cards={customerReviews} isMobile={isMobile} />
+        <FeatureCard />
+        <SubHeading content={strings.CATEGORY_SLIDER_HEADING} />
+        <CategorySlider
+          cards={similarProductData}
+          isMobile={isMobile}
+          currencySymbol={currencySymbol}
+          allShowPagesDocuments={allShowPagesDocuments}
+          currentLanguage={currentLanguage}
+        />
+      </Wrapper>
+      <Footer
+        currentLanguage={currentLanguage}
+        logoURL={commonFooter?.data?.logo?.url}
+        logoAlt={commonFooter?.data?.logo?.alt}
+        hasPoweredByHeadoutLogo={
+          commonFooter?.data?.powered_by_superbrand || false
+        }
+        showDisclaimer={commonFooter?.data?.show_disclaimer}
+        disclaimerText={commonFooter?.data?.disclaimer_text}
+        microbrandType={commonFooter?.data?.microbrand_type}
+        slices={commonFooter?.data?.body || []}
+        invertLogoColor={commonFooter?.data?.invert_logo_color}
+      />
+    </>
+  );
+};
+
+export default ShowPage;

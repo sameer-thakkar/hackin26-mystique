@@ -18,6 +18,7 @@ import { getLangUID, isAmpUrl, removePageQuery } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { getPrismicDocument } from 'utils/prismicUtils';
 import { fetchCategory, fetchCurrencyList } from 'utils/apiUtils';
+import { getHostName } from 'utils/getHostName';
 
 import { getAppTheme } from '../style/theme';
 import EnvironmentContext from '../contexts/environmentContext';
@@ -25,11 +26,13 @@ import { Client } from '../config/prismic-config';
 import { CUSTOM_TYPES, DESIGN, THEMES } from '../constants';
 import { MBContextProvider } from '../contexts/MBContext';
 import { toursTabSliceHandler } from './Slices';
+import { fetchTourGroupData } from "../utils/apiUtils";
 
 const Microsite = dynamic(() => import('components/MicrositeV1'));
 const ContentPage = dynamic(() => import('components/ContentPage'));
 const MicrositeV2 = dynamic(() => import('components/MicrositeV2'));
 const Listicle = dynamic(() => import('components/ListiclePage'));
+const ShowPage = dynamic(() => import('components/ShowPages'));
 const GlobalMB = dynamic(() => import('components/GlobalMbs'));
 
 const getValidUrlParams = (query) =>
@@ -60,9 +63,8 @@ export default class Page extends React.Component<any, any> {
     if (!isDev && req) {
       const { host } = req.headers;
       if (isNakedDomain(host)) {
-        const redirectURL = `https://www.${host}${pathname}${
-          queryParamsString ? `?${queryParamsString}` : ''
-        }`;
+        const redirectURL = `https://www.${host}${pathname}${queryParamsString ? `?${queryParamsString}` : ''
+          }`;
         redirectTo({ res, url: redirectURL, type: 301 });
       }
     }
@@ -100,9 +102,8 @@ export default class Page extends React.Component<any, any> {
                 redirectURL = redirectURL.slice(0, -1);
               redirectTo({
                 res,
-                url: `${redirectURL}${pathname !== '/index' ? pathname : ''}${
-                  queryParamsString ? `?${queryParamsString}` : ''
-                }`,
+                url: `${redirectURL}${pathname !== '/index' ? pathname : ''}${queryParamsString ? `?${queryParamsString}` : ''
+                  }`,
                 type: r.data?.redirect_type,
               });
             }
@@ -262,7 +263,18 @@ export default class Page extends React.Component<any, any> {
       ) {
         return { CMSContent, ContentType, uid, lang, isDev, host };
       }
+      if (ContentType === CUSTOM_TYPES.SHOW_PAGE) {
+        try {
+          const hostName = getHostName(isStage, isDev);
+          const tgidData = await fetchTourGroupData(CMSContent.data?.tgid, hostName).then((res) => {
+            return res.json();
+          });
 
+          return { CMSContent, tourGroupData: tgidData, ContentType, uid, lang, isDev, host };
+        } catch (err) {
+          console.log(err);
+        }
+      }
       /**
        * Setting a Common Microsite Reference for Content Page & Regular Microsite
        * Added to make tour data available on Content Pages.
@@ -362,8 +374,7 @@ export default class Page extends React.Component<any, any> {
         ? `&currency=${AllData?.['queryParams']?.currencyCode}`
         : '';
       const tourGroupAPIResponses = await fetch(
-        `https://${
-          isStage ? 'stage-' : ''
+        `https://${isStage ? 'stage-' : ''
         }microbrands.headout.com/api/tours/v5/tour-group/list?ids[]=${tgidsArray}&language=${getHeadoutLanguagecode(
           lang
         )}${currency}`
@@ -574,6 +585,16 @@ export default class Page extends React.Component<any, any> {
               isDev={isDev}
               host={host}
               serverRequestStartTimestamp={serverRequestStartTimestamp}
+            />
+          );
+        case CUSTOM_TYPES.SHOW_PAGE:
+          return (
+            <ShowPage
+              CMSContent={CMSContent}
+              host={host}
+              uid={uid}
+              lang={lang}
+              tourGroupData={tourGroupData}
             />
           );
         case CUSTOM_TYPES.GLOBAL_CITY:

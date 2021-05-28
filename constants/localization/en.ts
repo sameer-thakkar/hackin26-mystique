@@ -171,6 +171,49 @@ const en = {
         'This badge on an experience confirms that safety standards have been verified by Us',
     },
   },
+  SAFE_EXPERIENCE_NEW: {
+    HEADING: 'Best Safety Standards',
+    SHORT_HEADING: 'Best safety standards in place',
+    MOBILE_HEADING: 'Safe Experiences',
+    GENERAL_DESCRIPTION:
+      'This venue is COVID SECURE and follows all safety measures recommended by the government to ensure that you enjoy a safe and socially-distanced theatre-going experience.',
+    CTA_TEXT: 'Safety Details',
+    BANNER_CTA: 'Know More',
+    EXPERIENCE_DESCRIPTION:
+      'This experience has been verified to follow best safety standards in compliance with local regulations and WHO',
+    FLAG_TEXT: 'Best Safety',
+    MODAL: {
+      HEADING: 'Safe Experiences',
+      SUB_HEADING:
+        'Wondering about all that’s being done to keep you safe? Find out more about the safety measures and COVID-safe protocols theatres have implemented to ensure your safety.',
+      DETAILS: {
+        SOCIAL_DISTANCING_MEASURES_DEFAULT: {
+          HEADING: 'Social Distancing Measures:',
+          DESCRIPTION: `<li>The venue has been redesigned to minimize contact among all viewers</li>
+            <li>Different groups will be seated separately</li>
+            <li>Pre-ordering of interval snacks will be facilitated wherever possible</li>
+            <li>Cashless and paperless transactions are recommended.</li>
+            <li>All viewers are requested to keep their belongings to a minimum since cloakroom facilities may be closed</li>
+            <li>Activities such as taking photographs with the artists or autograph signing may be restricted</li>
+            `,
+        },
+        PREVENTIVE_SAFETY_MEASURES_DEFAULT: {
+          HEADING: 'Preventive Safety Measures:',
+          DESCRIPTION: `<li>Protective gear such as masks are mandatory to enter the venue</li>
+            <li>All viewers will be subjected to temperature checks before entering the venue</li>`,
+        },
+        SANITIZATION_MEASURES_DEFAULT: {
+          HEADING: 'Sanitization Measures:',
+          DESCRIPTION: `<li>Protective gear such as masks are mandatory to enter the venue</li>
+            <li>All viewers will be subjected to temperature checks before entering the venue</li>`,
+        },
+        CONTACTLESS_MEASURES_DEFAULT: {
+          HEADING: 'Contactless E-Tickets:',
+          DESCRIPTION: `<li>Only print-at-home tickets and e-tickets will be accepted</li>`,
+        },
+      },
+    },
+  },
   DISCOUNTED_FUTURES: {
     HEADING: 'Book now, save money & travel when you want to',
     DESCRIPTION:
@@ -284,6 +327,19 @@ const en = {
       LIMITED: 'Limited Period Offer',
     },
   },
+  FEATURE_CARD_SHOW_PAGES: {
+    HEADING_CUSTOMER: '5 million +',
+    SUB_HEADING_CUSTOMER: 'Happy customers across 10,000+ experiences',
+    HEADING_RATING: '4.4/5',
+    SUB_HEADING_RATING: '5,000+ verified reviews with 90% excellent score',
+    HEADING_SAFE: '100% Safe',
+    SUB_HEADING_SAFE: 'All the outdoor activities are 100% safe and secure',
+    HEADING_SUPPORT: '24x7 Help Center',
+    SUB_HEADING_SUPPORT:
+      'Have a question? Live chat with local experts anywhere, amytime',
+  },
+  CUSTOMER_REVIEW_HEADING: 'Customer Reviews',
+  CATEGORY_SLIDER_HEADING: 'Customers Who Booked This Show Also Viewed',
 };
 
 export default en;
