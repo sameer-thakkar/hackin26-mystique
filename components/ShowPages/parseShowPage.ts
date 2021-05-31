@@ -6,6 +6,55 @@ import {
   TAB_ALLOWED_INFO,
 } from 'constants/index';
 
+export const getObject = (data, filterArray) => {
+  let detailsObjects = {},
+    showType = '',
+    detailObjectHeading,
+    isSafetyBanner = false,
+    currentObject;
+
+  data.forEach((element) => {
+    if (element.type == 'heading6') {
+      // detail object heading
+      detailObjectHeading = element.content.text;
+      currentObject = 'DETAIL';
+    } else if (
+      element.type == 'heading2' &&
+      element.content.text?.startsWith('FAQs')
+    ) {
+      currentObject = 'FAQ';
+    } else if (element.type == 'heading2') {
+      // tab heading
+      currentObject = 'TAB';
+    } else {
+      if (currentObject === 'DETAIL') {
+        // detail object content
+        if (detailObjectHeading == 'Show Type') {
+          showType = element.content.text;
+        }
+        if (
+          filterArray.find((x) => {
+            return x === detailObjectHeading;
+          })
+        ) {
+          detailsObjects[detailObjectHeading] = element.content.text;
+        } else if (
+          detailObjectHeading === SAFETY_BANNER_STRING &&
+          element.content.text === YES_STRING
+        ) {
+          isSafetyBanner = true;
+        }
+      }
+    }
+  });
+
+  return {
+    detailsObjects,
+    showType,
+    isSafetyBanner,
+  };
+};
+
 export const parseShowPageData = (data) => {
   let faqHeading,
     faqSchema = [],
@@ -15,6 +64,7 @@ export const parseShowPageData = (data) => {
     detailsObjects = {},
     DetailObjectHeading,
     tabSectionHeading,
+    showType = '',
     isSafetyBanner = false;
 
   data.forEach((element, idx) => {
@@ -66,6 +116,9 @@ export const parseShowPageData = (data) => {
     } else {
       if (currentObject === 'DETAIL') {
         // detail object content
+        if (DetailObjectHeading == 'Show Type') {
+          showType = element.content.text;
+        }
         if (
           DETAILS_ALLOWED_SHOWPAGES.find((x) => {
             return x === DetailObjectHeading;
@@ -120,6 +173,12 @@ export const parseShowPageData = (data) => {
         return x === element.tab_name;
       })
     ) {
+      element.tab_content.forEach((data) => {
+        if (data.type === 'heading3') {
+          data.type = 'heading2';
+        }
+      });
+
       tabSchemaHighlight.push(element);
       tabHeadingHighlight.push(tabHeading[index]);
     }
@@ -129,6 +188,12 @@ export const parseShowPageData = (data) => {
         return x === element.tab_name;
       })
     ) {
+      element.tab_content.forEach((data) => {
+        if (data.type === 'heading3') {
+          data.type = 'heading2';
+        }
+      });
+
       tabSchemaInfo.push(element);
       tabHeadingInfo.push(tabHeading[index]);
     }
@@ -144,5 +209,6 @@ export const parseShowPageData = (data) => {
     detailsObjects,
     tabSectionHeading,
     isSafetyBanner,
+    showType,
   };
 };
