@@ -211,6 +211,7 @@ const Product = (props) => {
   const currencySymbol =
     currencySymbolMap[priceObj?.currencyCode]?.localSymbol ||
     CURRENCY_SYMBOL_MAP[priceObj?.currencyCode];
+
   return (
     <ProductCard
       onClick={handleProductClick}

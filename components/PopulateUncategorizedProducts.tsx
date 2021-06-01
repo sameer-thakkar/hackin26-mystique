@@ -1,13 +1,11 @@
+import React, { Component } from 'react';
+import styled from 'styled-components';
+import Product from 'components/Product';
+import Conditional from 'components/common/Conditional';
+import HorizontalLine from 'components/slices/HorizontalLine';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { THEMES } from 'const/index';
-import React, { Component } from 'react';
 import { strings } from 'const/strings';
-import styled from 'styled-components';
-import { csvTgidToArray } from 'utils/helper';
-
-import Product from './Product';
-import Conditional from './common/Conditional';
-import HorizontalLine from './slices/HorizontalLine';
 
 const StyledUncategorizedContainer = styled.div`
   margin: 0 auto;
@@ -98,23 +96,13 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
       pageUrl,
       host,
       analytics,
-      ranking,
       mbTheme,
       allToursTabContent,
       isAmp,
       instantCheckout,
       showEarliestAvailability,
     } = this.props;
-    const orderedTGIDRanking = csvTgidToArray(ranking);
-    const orderedTours = orderedTGIDRanking
-      ? tours.sort((tourA, tourB) => {
-          return (
-            orderedTGIDRanking.indexOf(parseInt(tourA.tgid)) -
-            orderedTGIDRanking.indexOf(parseInt(tourB.tgid))
-          );
-        })
-      : tours;
-    const finalToursList = orderedTours.filter((t) => !!scorpioData[t.tgid]);
+    const finalToursList = tours?.filter((t) => !!scorpioData[t.tgid]);
     return (
       <StyledUncategorizedContainer>
         <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
@@ -165,7 +153,7 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
                 allToursTabContent={allToursTabContent?.[tour.tgid] || {}}
                 shortSummary={tour.short_summary}
                 boosterTag={tour.tag_booster}
-                numberOfTours={orderedTours.length}
+                numberOfTours={tours.length}
                 instantCheckout={instantCheckout}
               />
               <Conditional if={mbTheme === THEMES.MIN_BLUE}>

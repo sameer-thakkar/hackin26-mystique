@@ -244,6 +244,20 @@ const MicrositeV1 = (props) => {
         }
       }, [])
     : uncategorizedToursData;
+
+  const orderedTGIDRanking = csvTgidToArray(tourRanking);
+  const orderedTours = orderedTGIDRanking
+    ? orderedUncategorizedTours?.sort((tourA, tourB) => {
+        return (
+          orderedTGIDRanking?.indexOf(parseInt(tourA.tgid)) -
+          orderedTGIDRanking?.indexOf(parseInt(tourB.tgid))
+        );
+      })
+    : orderedUncategorizedTours;
+  const orderedTgids = orderedTours?.length
+    ? orderedTours?.map((tour) => tour.tgid)
+    : [];
+
   const {
     first_publication_date: datePublished,
     last_publication_date: dateModified,
@@ -430,6 +444,7 @@ const MicrositeV1 = (props) => {
     analytics.setVariableInDataLayer({
       event: ANALYTICS_EVENTS.COLLECTION_PAGE_VIEWED,
       'Collection Type': 'Microbrand',
+      content_ids: orderedTgids,
     });
   }, []);
 
@@ -451,7 +466,7 @@ const MicrositeV1 = (props) => {
   const closeGroupBookingModal = () => toggleGroupBookingModal(false);
   const tourListSection = (
     <PopulateUncategorizedProducts
-      uncategorizedTours={orderedUncategorizedTours}
+      uncategorizedTours={orderedTours}
       scorpioData={scorpioData}
       uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
       tourPrices={tourPrices}
@@ -469,7 +484,6 @@ const MicrositeV1 = (props) => {
       isMobile={isAmp || isMobile}
       host={host}
       analytics={analytics}
-      ranking={tourRanking}
       mbTheme={mbTheme}
       allToursTabContent={allTours}
       instantCheckout={instantCheckout}
