@@ -1,15 +1,14 @@
 import React, { useContext, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { scroller } from 'react-scroll';
 import styled from 'styled-components';
-import dynamic from 'next/dynamic';
-
-import { PAGETYPE } from '../../constants';
-import InteractionContext from '../../contexts/Interaction';
+import InteractionContext from 'contexts/Interaction';
+import { PAGETYPE } from 'const/index';
 
 const DetailedProductCard = dynamic(() => import('./DetailedProductCard'), {
   ssr: false,
 });
-const Product = dynamic(() => import('./Product'));
+const Product = dynamic(() => import('components/MicrositeV2/Product'));
 
 const ProductsRow = styled.div`
   display: grid;
