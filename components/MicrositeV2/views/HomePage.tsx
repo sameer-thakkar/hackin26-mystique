@@ -206,6 +206,7 @@ export const HomePage = (props) => {
                 changePage,
                 host,
                 uid,
+                isEntertainmentMb,
               }}
               hasToursSection={hasToursSection}
             />
