@@ -184,6 +184,7 @@ const TourTags = styled.div`
     align-items: center;
     margin-bottom: 0;
     .image-wrap {
+      display: flex;
       align-items: center;
     }
     img {
@@ -768,9 +769,9 @@ const Product = (props) => {
     hasNextAvailable: earliestAvailability?.startDate,
   });
   const getMoreDetailsButton = () => {
-    const keyPressedOnReadMore = (event) =>{
-      if(event.keyCode == 13 && !isMobile){
-        toggleContentOpen(!isContentOpen)
+    const keyPressedOnReadMore = (event) => {
+      if (event.keyCode == 13 && !isMobile) {
+        toggleContentOpen(!isContentOpen);
       }
     };
     const innerContent =
