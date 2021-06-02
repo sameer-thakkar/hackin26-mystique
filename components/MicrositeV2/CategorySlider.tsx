@@ -102,6 +102,7 @@ const CategorySlider = (props) => {
     heading = '',
     description,
     isFirstTourOpen = false,
+    isEntertainmentMb,
   } = props;
   let autoScroll = !isFirstTourOpen;
 
@@ -117,8 +118,6 @@ const CategorySlider = (props) => {
       allTours[tgid].available &&
       arr.slice(0, index).indexOf(tgid) == -1
   );
-
-  console.log({ filteredTgids });
 
   const [tgidClicked, setTgidClicked] = useState(
     !isMobile && isFirstTourOpen ? filteredTgids[0] : null
@@ -241,6 +240,7 @@ const CategorySlider = (props) => {
             key={carouselId}
             allTours={allTours}
             isMobile={isMobile}
+            isEntertainmentMb={isEntertainmentMb}
             currentLanguage={currentLanguage}
             host={host}
             uid={uid}
