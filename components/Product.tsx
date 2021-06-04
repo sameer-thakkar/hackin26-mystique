@@ -668,7 +668,9 @@ const Product = (props) => {
   const { validity } = scorpioData;
   const descriptorsCsv = descriptors || scorpioData.descriptors;
   const descriptorsList = descriptorsCsv
-    ? descriptorsCsv.match(/(("|').*?("|')|[^",]+)(?=\s*,|\s*$)/g)
+    ? descriptorsCsv
+        .match(/(("|').*?("|')|[^",]+)(?=\s*,|\s*$)/g)
+        .map((descriptor) => descriptor.replace(/^["']+|['"]+$/g, '')) // replace escaped dbl-quotes.
     : [];
   const noOfListItemToShow = Math.max(
     NOS_OF_HIGHLIGHTS_TO_SHOW,
