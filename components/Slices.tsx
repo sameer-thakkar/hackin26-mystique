@@ -133,6 +133,7 @@ const sliceHandler = (slice, props: any = {}) => {
       else
         return (
           <CategorySlider
+            {...props}
             tgidsArray={tgidArray}
             isFirstTourOpen={slice.primary.is_first_tour_open}
             description={slice.primary.carousel_description}
