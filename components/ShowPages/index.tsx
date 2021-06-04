@@ -33,13 +33,16 @@ const Wrapper = styled.div`
   @media (max-width: 768px) {
     margin: 40px auto 0;
   }
+`;
 
-  h2 {
-    margin-top: 40px !important;
+const ComponentWrapper = styled.div`
+  margin: 48px 0 32px;
+  h2{
+    font-size: 18px;
   }
 `;
 
-const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData }) => {
+const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData, isDev }) => {
   const [customerReviews, setCustomerReviews] = useState([]);
   const [similarProductData, setSimilarProductData] = useState([]);
   const [currencySymbol, setCurrencySymbol] = useState({});
@@ -52,15 +55,27 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData }) => {
     imageUploads,
     categoriesFromRoot,
     microBrandsDescriptor,
-    startLocation,
   } = tourGroupData;
 
-  const { latitude, longitude } = startLocation;
+  const {
+    faqHeading,
+    faqSchema,
+    tabSchemaHighlight,
+    tabSchemaInfo,
+    tabHeadingHighlight,
+    tabHeadingInfo,
+    detailsObjects,
+    tabSectionHeading,
+    isSafetyBanner,
+    showType,
+    mapURL,
+  } = parseShowPageData(microBrandsHighlight);
 
   const currentLanguage = lang.split('-')[0];
   const categoryId = categoriesFromRoot[categoriesFromRoot.length - 1].id;
-  const categoryName =
-    categoriesFromRoot[categoriesFromRoot.length - 1].displayName;
+  const categoryName = showType
+    ? showType
+    : categoriesFromRoot[categoriesFromRoot.length - 1].displayName;
 
   const tagsArray = [categoryName, ...microBrandsDescriptor.split('\r\n')];
 
@@ -98,18 +113,6 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData }) => {
   useEffect(() => {
     setIsMobile(width <= 768);
   }, [width]);
-
-  const {
-    faqHeading,
-    faqSchema,
-    tabSchemaHighlight,
-    tabSchemaInfo,
-    tabHeadingHighlight,
-    tabHeadingInfo,
-    detailsObjects,
-    tabSectionHeading,
-    isSafetyBanner,
-  } = parseShowPageData(microBrandsHighlight);
 
   useEffect(() => {
     const reviewTourGroup = async () => {
@@ -154,6 +157,7 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData }) => {
           originalHost: host,
           currentLanguage: lang,
           isMobile,
+          noindex: isDev ? 'True' : 'False',
         }}
       />
       <Header
@@ -172,6 +176,7 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData }) => {
       />
       <ShowPageBanner
         tgid={tgid}
+        isMobile={isMobile}
         detailsObjects={detailsObjects}
         tourGroupData={tourGroupData}
         currentLanguage={currentLanguage}
@@ -181,24 +186,57 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData }) => {
         <SafeDFBannerWrapper marginTop={40}></SafeDFBannerWrapper>
       ) : null}
       <Wrapper>
-        <ContentTabs
-          tabsArr={tabHeadingHighlight}
-          contentArr={tabSchemaHighlight}
-        />
-        <Gallery galleryArray={imageUploads} />
-        <SubHeading content={tabSectionHeading} />
-        <ContentTabs
-          tabsArr={tabHeadingInfo}
-          contentArr={tabSchemaInfo}
-        />
-        <GoogleMap latitude={latitude} longitude={longitude} />
+        {isMobile ?
+          <AccordionGroup
+            accordions={tabSchemaHighlight.map((element) => {
+              return {
+                "heading": element.tab_name,
+                "content": element.tab_content
+              }
+            })}
+            heading={""}
+            useSchema={true}
+          />
+          :
+          <>
+            <ContentTabs
+              tabsArr={tabHeadingHighlight}
+              contentArr={tabSchemaHighlight}
+            />
+          </>
+        }
+        <Gallery galleryArray={imageUploads} isMobile={isMobile} />
+        {isMobile ?
+          <ComponentWrapper>
+            <AccordionGroup
+              accordions={tabSchemaInfo.map((element) => {
+                return {
+                  "heading": element.tab_name,
+                  "content": element.tab_content
+                }
+              })}
+              heading={tabSectionHeading}
+              useSchema={true}
+            />
+          </ComponentWrapper>
+          :
+          <>
+            <SubHeading content={tabSectionHeading} />
+            <ContentTabs tabsArr={tabHeadingInfo} contentArr={tabSchemaInfo} />
+          </>
+        }
+        <GoogleMap mapURL={mapURL} />
         <AccordionGroup
           accordions={faqSchema}
           heading={faqHeading}
           useSchema={true}
         />
-        <SubHeading content={strings.CUSTOMER_REVIEW_HEADING} />
-        <CustomerReview cards={customerReviews} isMobile={isMobile} />
+        {customerReviews.length ? (
+          <>
+            <SubHeading content={strings.CUSTOMER_REVIEW_HEADING} />
+            <CustomerReview cards={customerReviews} isMobile={isMobile} />
+          </>
+        ) : null}
         <FeatureCard />
         <SubHeading content={strings.CATEGORY_SLIDER_HEADING} />
         <CategorySlider
@@ -207,6 +245,7 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData }) => {
           currencySymbol={currencySymbol}
           allShowPagesDocuments={allShowPagesDocuments}
           currentLanguage={currentLanguage}
+          categoryName={categoryName}
         />
       </Wrapper>
       <Footer

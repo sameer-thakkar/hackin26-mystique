@@ -26,7 +26,7 @@ import { Client } from '../config/prismic-config';
 import { CUSTOM_TYPES, DESIGN, THEMES } from '../constants';
 import { MBContextProvider } from '../contexts/MBContext';
 import { toursTabSliceHandler } from './Slices';
-import { fetchTourGroupData } from "../utils/apiUtils";
+import { fetchTourGroupData } from '../utils/apiUtils';
 
 const Microsite = dynamic(() => import('components/MicrositeV1'));
 const ContentPage = dynamic(() => import('components/ContentPage'));
@@ -266,11 +266,22 @@ export default class Page extends React.Component<any, any> {
       if (ContentType === CUSTOM_TYPES.SHOW_PAGE) {
         try {
           const hostName = getHostName(isStage, isDev);
-          const tgidData = await fetchTourGroupData(CMSContent.data?.tgid, hostName).then((res) => {
+          const tgidData = await fetchTourGroupData(
+            CMSContent.data?.tgid,
+            hostName
+          ).then((res) => {
             return res.json();
           });
 
-          return { CMSContent, tourGroupData: tgidData, ContentType, uid, lang, isDev, host };
+          return {
+            CMSContent,
+            tourGroupData: tgidData,
+            ContentType,
+            uid,
+            lang,
+            isDev,
+            host,
+          };
         } catch (err) {
           console.log(err);
         }
@@ -595,6 +606,7 @@ export default class Page extends React.Component<any, any> {
               uid={uid}
               lang={lang}
               tourGroupData={tourGroupData}
+              isDev={isDev}
             />
           );
         case CUSTOM_TYPES.GLOBAL_CITY:

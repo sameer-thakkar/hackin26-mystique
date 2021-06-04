@@ -1,21 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
-const GooglMapWrapper = styled.div` 
-    iframe{
-        width: 100%;
-        height: 400px;
-        border-radius: 8px;
+const GooglMapWrapper = styled.div`
+  margin-bottom: 40px;
+  iframe {
+    width: 100%;
+    height: 400px;
+    border-radius: 8px;
+  }
+  @media (max-width: 768px) {
+    iframe {
+      height: 343px;
     }
+  }
 `;
 
-const GoogleMap = ({ latitude, longitude }) => {
-
-  const mapURL = `https://maps.google.com/maps?q=${latitude},${longitude}&z=14&amp&output=embed`;
-
+const GoogleMap = ({ mapURL }) => {
   return (
-    <GooglMapWrapper>
-      <iframe title="Google Map" src={mapURL} frameBorder="0" allowFullScreen></iframe>
+    mapURL ? <GooglMapWrapper>
+      <iframe
+        title="Google Map"
+        src={mapURL}
+        frameBorder="0"
+        allowFullScreen
+      ></iframe>
     </GooglMapWrapper>
+      : null
   );
 };
 

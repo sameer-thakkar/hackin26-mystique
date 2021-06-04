@@ -25,7 +25,7 @@ const FeatureCardWrapper = styled.div`
   }
 
   h3 {
-    font-size: 14px;
+    font-size: 16px;
     margin: 15px 0;
   }
 

@@ -9,7 +9,7 @@ type ContentTabsProps = {
 };
 
 const StyledContentTabsWrapper = styled.div`
-    margin-bottom:20px;
+  margin-bottom: 20px;
   display: grid;
   grid-row-gap: 16px;
   font-family: ${SOLEIL.FONT_STACK};
@@ -47,9 +47,11 @@ const StyledContent = styled.div(({ active }) => {
   if (active) {
     return `
     display:block;
-    p {
-      margin: 0;
-      color: ${COLORS.DAVY_GREY};
+    font-size: 15px;
+    max-width: 776px;
+    h2{
+      margin: 16px 0px;
+      font-size: 16px;
     }
     img {
       width: 100%;
@@ -58,12 +60,14 @@ const StyledContent = styled.div(({ active }) => {
     a {
       color: #ec1943;
     }
-  `
-  }
-  else {
+    @media (max-width: 768px) {
+      width:100%;
+    }
+  `;
+  } else {
     return `
     display:none;
-    `
+    `;
   }
 });
 
@@ -82,28 +86,33 @@ const ContentTabs: React.FC<ContentTabsProps> = ({ tabsArr, contentArr }) => {
     }
   }, [tabsArr, contentArr]);
 
-  return <StyledContentTabsWrapper>
-    <StyledContentTabs>
-      {tabsArr.map((tab, index) => {
+  return (
+    <StyledContentTabsWrapper>
+      <StyledContentTabs>
+        {tabsArr.map((tab, index) => {
+          return (
+            <StyledTab
+              key={index}
+              {...(activeTabName === tab && { active: true })}
+              onClick={() => setActiveTab(tab)}
+            >
+              {tab}
+            </StyledTab>
+          );
+        })}
+      </StyledContentTabs>
+      {contentArr.map((content, index) => {
         return (
-          <StyledTab
+          <StyledContent
             key={index}
-            {...(activeTabName === tab && { active: true })}
-            onClick={() => setActiveTab(tab)}
+            {...(activeTabName === content.tab_name && { active: true })}
           >
-            {tab}
-          </StyledTab>
+            <RichText render={content.tab_content} />
+          </StyledContent>
         );
       })}
-    </StyledContentTabs>
-    {contentArr.map((content, index) => {
-      return (
-        <StyledContent key={index} {...(activeTabName === content.tab_name && { active: true })}>
-          <RichText render={content.tab_content} />
-        </StyledContent>
-      );
-    })}
-  </StyledContentTabsWrapper>
+    </StyledContentTabsWrapper>
+  );
 };
 
 export default ContentTabs;

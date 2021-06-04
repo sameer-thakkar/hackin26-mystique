@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
-import { convertUidToUrl } from 'utils/urlUtils';
-import PriceBlock, { SavedTag } from 'UI/PriceBlock';
+
+import CategoryCard from './CategoryCard';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -18,6 +18,7 @@ const CardCarouselContainer = styled.div`
     right: 0px;
     color: black;
     background: #ffffff;
+    z-index: 2;
     box-shadow: 0px 0px 1px rgb(0 0 0 / 10%), 0px 2px 8px rgb(0 0 0 / 10%);
     border-radius: 50%;
     width: 36px;
@@ -30,6 +31,7 @@ const CardCarouselContainer = styled.div`
     left: 0px;
     color: black;
     background: #ffffff;
+    z-index: 2;
     box-shadow: 0px 0px 1px rgb(0 0 0 / 10%), 0px 2px 8px rgb(0 0 0 / 10%);
     border-radius: 50%;
     width: 36px;
@@ -41,42 +43,23 @@ const CardCarouselContainer = styled.div`
   .carousel-slider {
     margin: 30px auto 0px;
     position: relative;
-    .swiper-slide {
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 4px;
-      }
-
-      .tour-scratch-price {
-        color: #888888;
-        font-size: 12px;
-      }
-
-      .tour-price {
-        color: #444444;
-        font-weight: 600;
-        font-size: 16px;
-      }
-
-      ${SavedTag}{
-        color: #088943;
-        background: #dbfddb;
-        padding: 2px 6px;
-        border-radius: 2px;
-        font-size: 11px;
-      }
-
-      p {
-        margin: 0;
-      }
-
-      h3 {
-        margin: 8px 0 12px;
-        font-size: 16px;
-      }
-    }
+  }
+  .carousel-slider .mobile-category-wrapper {
+    display: grid;
+    grid-gap: 15px;
+    grid-template-columns: auto auto;
+  }
+  .carousel-slider .see-more {
+    font-weight: 600;
+    font-size: 16px;
+    color: #444444;
+    width: 100%;
+    padding: 12px 24px;
+    border: 1px solid #444444;
+    box-sizing: border-box;
+    border-radius: 4px;
+    background: #ffffff;
+    margin-top: 20px;
   }
   .carousel-slider .swiper-container {
     overflow: hidden;
@@ -145,6 +128,7 @@ type CardCarouselProps = {
   currencySymbol: any;
   allShowPagesDocuments: PagesDocuments[];
   currentLanguage: string;
+  categoryName: string;
 };
 
 export default class CategorySlider extends Component<CardCarouselProps> {
@@ -153,6 +137,7 @@ export default class CategorySlider extends Component<CardCarouselProps> {
     cardPrices: {},
     currencySymbol: '',
     isFetched: false,
+    numberOfCard: 6,
   };
 
   static defaultProps = {
@@ -167,6 +152,7 @@ export default class CategorySlider extends Component<CardCarouselProps> {
       currencySymbol,
       allShowPagesDocuments,
       currentLanguage,
+      categoryName,
     } = this.props;
 
     const slidesPerView = isMobile ? 1.05 : 4.05;
@@ -187,49 +173,54 @@ export default class CategorySlider extends Component<CardCarouselProps> {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
         },
-      pagination: {
-        el: '.swiper-pagination',
-        type: 'bullets',
-        clickable: true,
-      },
     };
 
     return (
-      <Swiper {...params}>
-        {cards.map((element, index) => {
-          const { listingPrice, name, imageUrl, id, tourGroupUrl } = element;
-
-          const {
-            currencyCode,
-          } = listingPrice;
-
-          let cardDocument = allShowPagesDocuments.filter(
-            (element) => element.data.tgid === id
-          );
-          const redirectURL = cardDocument.length
-            ? convertUidToUrl(cardDocument[0].uid)
-            : `https://www.headout.com${tourGroupUrl}`;
-
-          return (
-            <div key={index} className="swiper-slide">
-              <a href={redirectURL} target="blank">
-                <img src={imageUrl} alt={name} />
-                <h3>{name}</h3>
-                <div>
-                  <PriceBlock
-                    price={listingPrice}
-                    lang={currentLanguage}
-                    showSavings={true}
-                    showScratchPrice={true}
-                    currencySymbolOverride={currencySymbol[currencyCode]}
-                    prefix={true}
-                  />
-                </div>
-              </a>
+      <>
+        {isMobile ? (
+          <>
+            <div className="mobile-category-wrapper">
+              {cards.map((element, index) => {
+                return index < this.state.numberOfCard ? (
+                  <div key={index}>
+                    <CategoryCard
+                      allShowPagesDocuments={allShowPagesDocuments}
+                      element={element}
+                      currentLanguage={currentLanguage}
+                      currencySymbol={currencySymbol}
+                      categoryName={categoryName}
+                    ></CategoryCard>
+                  </div>
+                ) : null;
+              })}
             </div>
-          );
-        })}
-      </Swiper>
+            {this.state.numberOfCard != cards.length ? (
+              <button
+                className="see-more"
+                onClick={() => this.setState({ numberOfCard: cards.length })}
+              >
+                See More Shows
+              </button>
+            ) : null}
+          </>
+        ) : (
+          <Swiper {...params}>
+            {cards.map((element, index) => {
+              return (
+                <div key={index} className="swiper-slide">
+                  <CategoryCard
+                    allShowPagesDocuments={allShowPagesDocuments}
+                    element={element}
+                    currentLanguage={currentLanguage}
+                    currencySymbol={currencySymbol}
+                    categoryName={categoryName}
+                  ></CategoryCard>
+                </div>
+              );
+            })}
+          </Swiper>
+        )}
+      </>
     );
   };
 

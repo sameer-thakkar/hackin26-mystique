@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 
-import { PINK_QUOTES } from '../../assets/SvgIcons';
+import { BLUE_QUOTES } from '../../assets/SvgIcons';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -10,17 +10,18 @@ const CardCarouselContainer = styled.div`
   max-width: 1200px;
   margin: auto;
 
-  .swiper-pagination{
-    z-index:2;
+  .swiper-pagination {
+    z-index: 2;
   }
 
   .swiper-button-next {
     right: 0px;
     color: black;
-    background: #FFFFFF;
+    background: #ffffff;
     box-shadow: 0px 0px 1px rgb(0 0 0 / 10%), 0px 2px 8px rgb(0 0 0 / 10%);
     border-radius: 50%;
     width: 36px;
+    z-index: 2;
     height: 36px;
     :after {
       font-size: 12px;
@@ -30,9 +31,10 @@ const CardCarouselContainer = styled.div`
   .swiper-button-prev {
     left: 0px;
     color: black;
-    background: #FFFFFF;
+    background: #ffffff;
     box-shadow: 0px 0px 1px rgb(0 0 0 / 10%), 0px 2px 8px rgb(0 0 0 / 10%);
     border-radius: 50%;
+    z-index: 2;
     width: 36px;
     height: 36px;
     :after {
@@ -43,7 +45,7 @@ const CardCarouselContainer = styled.div`
     margin: 30px auto 100px;
     position: relative;
     .swiper-slide {
-      border: 1px solid #E2E2E2;
+      border: 1px solid #e2e2e2;
       border-radius: 8px;
 
       img {
@@ -52,28 +54,29 @@ const CardCarouselContainer = styled.div`
         object-fit: cover;
       }
 
-      .content-wrapper-review{
+      .content-wrapper-review {
         padding: 20px;
       }
 
-      .quote-wrapper{
+      .quote-wrapper {
         position: absolute;
+        z-index: -2;
       }
 
-      .review-content{
+      .review-content {
         padding: 20px;
 
-        .review{
+        .review {
           color: #666666;
           font-size: 15px;
           font-weight: 400;
         }
-  
-        .reviewer-name{
+
+        .reviewer-name {
           color: #444444;
           font-size: 15px;
-          font-weight: 400;
           margin-top: 20px;
+          font-weight: bold;
         }
       }
     }
@@ -129,6 +132,15 @@ const CardCarouselContainer = styled.div`
         margin-bottom: 10px;
       }
     }
+    .review-content {
+      .review {
+        font-size: 14px;
+      }
+
+      .reviewer-name {
+        font-size: 14px;
+      }
+    }
   }
 `;
 
@@ -180,25 +192,19 @@ export default class CustomerReview extends Component<CardCarouselProps> {
 
     return (
       <Swiper {...params}>
-        {
-          cards.map((element, index) => {
-            return <div key={index} className="swiper-slide">
+        {cards.map((element, index) => {
+          return (
+            <div key={index} className="swiper-slide">
               <div className="content-wrapper-review">
-                <div className="quote-wrapper">
-                  {PINK_QUOTES}
-                </div>
+                <div className="quote-wrapper">{BLUE_QUOTES}</div>
                 <div className="review-content">
-                  <div className="review">
-                    {element.content}
-                  </div>
-                  <div className="reviewer-name">
-                    {element.name}
-                  </div>
+                  <div className="review">{element.content}</div>
+                  <div className="reviewer-name">{element.name}</div>
                 </div>
               </div>
-            </div>;
-          })
-        }
+            </div>
+          );
+        })}
       </Swiper>
     );
   };
@@ -206,9 +212,7 @@ export default class CustomerReview extends Component<CardCarouselProps> {
   render() {
     return (
       <CardCarouselContainer>
-        <div className="carousel-slider">
-          {this.renderCardsSlider()}
-        </div>
+        <div className="carousel-slider">{this.renderCardsSlider()}</div>
       </CardCarouselContainer>
     );
   }

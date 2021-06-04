@@ -188,7 +188,7 @@ const en = {
         'Wondering about all that’s being done to keep you safe? Find out more about the safety measures and COVID-safe protocols theatres have implemented to ensure your safety.',
       DETAILS: {
         SOCIAL_DISTANCING_MEASURES_DEFAULT: {
-          HEADING: 'Social Distancing Measures:',
+          HEADING: 'Social Distancing Measures',
           DESCRIPTION: `<li>The venue has been redesigned to minimize contact among all viewers</li>
             <li>Different groups will be seated separately</li>
             <li>Pre-ordering of interval snacks will be facilitated wherever possible</li>
@@ -198,17 +198,17 @@ const en = {
             `,
         },
         PREVENTIVE_SAFETY_MEASURES_DEFAULT: {
-          HEADING: 'Preventive Safety Measures:',
+          HEADING: 'Preventive Safety Measures',
           DESCRIPTION: `<li>Protective gear such as masks are mandatory to enter the venue</li>
             <li>All viewers will be subjected to temperature checks before entering the venue</li>`,
         },
         SANITIZATION_MEASURES_DEFAULT: {
-          HEADING: 'Sanitization Measures:',
+          HEADING: 'Sanitization Measures',
           DESCRIPTION: `<li>Protective gear such as masks are mandatory to enter the venue</li>
             <li>All viewers will be subjected to temperature checks before entering the venue</li>`,
         },
         CONTACTLESS_MEASURES_DEFAULT: {
-          HEADING: 'Contactless E-Tickets:',
+          HEADING: 'Contactless E-Tickets',
           DESCRIPTION: `<li>Only print-at-home tickets and e-tickets will be accepted</li>`,
         },
       },

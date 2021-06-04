@@ -65,7 +65,8 @@ export const parseShowPageData = (data) => {
     DetailObjectHeading,
     tabSectionHeading,
     showType = '',
-    isSafetyBanner = false;
+    isSafetyBanner = false,
+    mapURL;
 
   data.forEach((element, idx) => {
     if (element.type == 'heading6') {
@@ -119,6 +120,9 @@ export const parseShowPageData = (data) => {
         if (DetailObjectHeading == 'Show Type') {
           showType = element.content.text;
         }
+        if (DetailObjectHeading === 'Google Map') {
+          mapURL = element.content.text;
+        }
         if (
           DETAILS_ALLOWED_SHOWPAGES.find((x) => {
             return x === DetailObjectHeading;
@@ -143,13 +147,10 @@ export const parseShowPageData = (data) => {
 
           faqSchema.push(
             JSON.parse(`
-                        {
-                            "heading": "${element.content.text
-                .replace('Q-', '')
-                .trim()}",
-                            "content": []
-                        }
-                        `)
+                {
+                "heading": "${element.content.text.replace('Q-', '').trim()}",
+                    "content": []
+                }`)
           );
         } else {
           // Answer
@@ -210,5 +211,6 @@ export const parseShowPageData = (data) => {
     tabSectionHeading,
     isSafetyBanner,
     showType,
+    mapURL,
   };
 };

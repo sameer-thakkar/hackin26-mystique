@@ -1,21 +1,20 @@
 import { PRODUCT_VIDEOS } from 'constants/ShowPageProductVideos';
-import {
-  REOPENING_STRING,
-  MONTH_ARRAY
-} from 'constants/index';
+import { REOPENING_STRING } from 'constants/index';
 
+import dayjs from 'dayjs';
 import { strings } from 'const/strings';
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { createBookingURL } from 'utils';
 import PriceBlock from 'UI/PriceBlock';
 
+import { dateToString } from '../../utils/dateToString';
 import Image from '../UI/Image';
 import { MBContext } from '../../contexts/MBContext';
 import { PLAY_CIRCLE } from '../../assets/SvgIcons';
-import {
-  fetchInventoryAPI,
-} from '../../utils/apiUtils';
+import { fetchInventoryAPI } from '../../utils/apiUtils';
+import StickyHeader from './stickyHeader';
+import StickyFooter from './stickyFooter';
 
 const Banner = styled.div`
   width: 100%;
@@ -117,8 +116,8 @@ const BannerContent = styled.div`
 
   .tags-wrapper {
     display: inline-block;
-    border: 1px solid #e2e2e2;
     color: #666666;
+    background: #f0f0f0;
     padding: 6px 8px;
     margin: 8px 8px 8px 0;
     border-radius: 2px;
@@ -132,7 +131,7 @@ const BannerContent = styled.div`
     align-items: center;
   }
 
-  .tour-price{
+  .tour-price {
     color: #444444;
     font-weight: 600;
     font-size: 21px;
@@ -142,7 +141,7 @@ const BannerContent = styled.div`
     color: #888888;
     font-size: 14px;
     line-height: 16px;
-    text-align:left;
+    text-align: left;
   }
 
   .buy-button {
@@ -153,9 +152,12 @@ const BannerContent = styled.div`
     color: #ffffff;
     border: none;
     font-weight: 600;
-    font-size: 20px;
+    font-size: 16px;
     font-style: normal;
     letter-spacing: 0.8px;
+    width: 160px;
+    display: block;
+    text-align: center;
   }
 
   .details-container {
@@ -203,12 +205,25 @@ const BannerContent = styled.div`
     .top-text-wrapper {
       font-size: 12px;
     }
+
+    .tour-price {
+      font-size: 17px;
+    }
+
+    .tour-scratch-price {
+      font-size: 12px;
+    }
+
+    .details-container .value {
+      font-size: 14px;
+    }
   }
 `;
 
 const ShowPageBanner = ({
   detailsObjects,
   tgid,
+  isMobile,
   tourGroupData,
   currentLanguage,
   tagsArray,
@@ -229,10 +244,12 @@ const ShowPageBanner = ({
   });
 
   const [isVideo, setIsVideo] = useState(false);
-  const [nextAvailable, setNextAvailable] = useState("");
+  const [showStickyNav, setShowStickyNav] = useState(false);
+  const [nextAvailable, setNextAvailable] = useState('');
 
   const videoCode = PRODUCT_VIDEOS[tgid] ? PRODUCT_VIDEOS[tgid] : null;
   const videoAvailable = PRODUCT_VIDEOS[tgid] ? true : false;
+  const ref = useRef(null);
 
   const BannerChange = () => {
     setIsVideo(!isVideo);
@@ -240,27 +257,54 @@ const ShowPageBanner = ({
 
   useEffect(() => {
     const fetchReopeningDate = async () => {
-      const {
-        inventoryList
-      } = await fetchInventoryAPI(tgid);
-
-      const date = new Date().getTime();
+      const { inventoryList } = await fetchInventoryAPI(tgid);
+      const today = dayjs().format('YYYY-MM-DD');
 
       inventoryList.every(({ startDate }) => {
-        if (date <= Date.parse(startDate)) {
-          const [year, month, date] = startDate.split("-");
+        if (today <= startDate) {
+          setNextAvailable(dateToString(startDate));
 
-          setNextAvailable(date + " " + MONTH_ARRAY[month - 1] + " " + year);
           return false;
         }
       });
     };
 
     fetchReopeningDate();
-  }, [tgid])
+  }, [tgid]);
+
+  const handleScroll = () => {
+    const top = window.pageYOffset;
+    const { clientHeight, offsetTop } = ref?.current;
+
+    if (clientHeight + offsetTop >= top) {
+      setShowStickyNav(false);
+    } else {
+      setShowStickyNav(true);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <>
+      <StickyHeader
+        tgid={tgid}
+        tourGroupData={tourGroupData}
+        currentLanguage={currentLanguage}
+        nextAvailable={nextAvailable}
+        showComponent={!isMobile && showStickyNav}
+      />
+
+      {isMobile ? (
+        <StickyFooter
+          tgid={tgid}
+          currentLanguage={currentLanguage}
+        ></StickyFooter>
+      ) : null}
+
       <Banner>
         {isVideo && videoAvailable ? (
           <VideoWrapper>
@@ -289,7 +333,12 @@ const ShowPageBanner = ({
               />
               {videoAvailable ? (
                 <>
-                  <div className="play-button" onClick={BannerChange} role="button" tabIndex={0}>
+                  <div
+                    className="play-button"
+                    onClick={BannerChange}
+                    role="button"
+                    tabIndex={0}
+                  >
                     {PLAY_CIRCLE}
                   </div>
                 </>
@@ -298,9 +347,10 @@ const ShowPageBanner = ({
           </BannerImageWrapper>
         )}
       </Banner>
-      <BannerContent>
+      <BannerContent ref={ref}>
         <div className="top-text-wrapper">
-          {REOPENING_STRING}{nextAvailable}
+          {REOPENING_STRING}
+          {nextAvailable}
         </div>
         <div className="heading-wrapper">
           <div>
@@ -336,7 +386,11 @@ const ShowPageBanner = ({
             return (
               <div className="individual-container" key={index}>
                 <div className="key">{element[0]}</div>
-                <div className="value">{element[1]}</div>
+                <div className="value">
+                  {element[0] == 'Opening Date'
+                    ? dateToString(element[1])
+                    : element[1]}
+                </div>
               </div>
             );
           })}

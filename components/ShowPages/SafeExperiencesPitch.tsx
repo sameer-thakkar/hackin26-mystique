@@ -1,10 +1,7 @@
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { SOLEIL, COLORS } from 'const/ui-constants';
-import {
-  SAFETY_DETAILS_TYPE,
-  CLUBBED_SAFETY_TAGS,
-} from 'const/index';
+import { SAFETY_DETAILS_TYPE, CLUBBED_SAFETY_TAGS } from 'const/index';
 import Conditional from 'components/common/Conditional';
 import { strings } from 'const/strings';
 import { CHEVRON_LEFT_CIRCLE, SEE_SAFETY } from 'assets/SvgIcons';
@@ -15,7 +12,7 @@ const Slider = dynamic(() => import('../UI/Slider'));
 
 const PitchGrid = styled.div`
   display: grid;
-  grid-row-gap: 48px;
+  grid-row-gap: 32px;
   padding-bottom: 48px;
 `;
 
@@ -104,8 +101,13 @@ const Text = styled.div`
   color: ${COLORS.FOUR_BLACK};
   font-style: normal;
   font-weight: normal;
-  font-size: 12px;
-  line-height: 19px;
+  font-size: 15px;
+  line-height: 24px;
+  li {
+    list-style-position: inside;
+    padding-left: 15px;
+    text-indent: -1.5em;
+  }
 `;
 
 const Pitch = styled.div`
@@ -144,9 +146,7 @@ const ImageTextGrid = styled.div`
   }
 `;
 
-const Icon = styled.div`
-    
-`;
+const Icon = styled.div``;
 
 const renderSafetyDetailsSection = (tags) =>
   Object.entries(strings.SAFE_EXPERIENCE_NEW.MODAL.DETAILS).map(
@@ -155,7 +155,9 @@ const renderSafetyDetailsSection = (tags) =>
         <ImageTextGrid>
           <Content>
             <EmphasizedText>{HEADING}</EmphasizedText>
-            <Text><div dangerouslySetInnerHTML={{ __html: `${DESCRIPTION}` }}></div></Text>
+            <Text>
+              <div dangerouslySetInnerHTML={{ __html: `${DESCRIPTION}` }}></div>
+            </Text>
           </Content>
         </ImageTextGrid>
       </Conditional>
@@ -192,9 +194,7 @@ const SafeExperiencesPitch = ({
 
   return (
     <PitchGrid>
-      <Icon>
-        {SEE_SAFETY}
-      </Icon>
+      <Icon>{SEE_SAFETY}</Icon>
       <Section>
         <Pitch>
           <Heading>{strings.SAFE_EXPERIENCE_NEW.MODAL.HEADING}</Heading>

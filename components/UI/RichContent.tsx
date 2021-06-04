@@ -7,6 +7,11 @@ const StyledRichContent = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
   line-height: 1.6;
   color: ${COLORS.FOUR_BLACK};
+  @media (max-width: 768px) {
+    h2{
+      font-size: 16px;
+    }
+  }
 `;
 
 const RichContent = ({ render, disableShortcodes = false }) => {
