@@ -184,6 +184,7 @@ const TourTags = styled.div`
     align-items: center;
     margin-bottom: 0;
     .image-wrap {
+      display: flex;
       align-items: center;
     }
     img {
@@ -667,7 +668,9 @@ const Product = (props) => {
   const { validity } = scorpioData;
   const descriptorsCsv = descriptors || scorpioData.descriptors;
   const descriptorsList = descriptorsCsv
-    ? descriptorsCsv.match(/(("|').*?("|')|[^",]+)(?=\s*,|\s*$)/g)
+    ? descriptorsCsv
+        .match(/(("|').*?("|')|[^",]+)(?=\s*,|\s*$)/g)
+        .map((descriptor) => descriptor.replace(/^["']+|['"]+$/g, '')) // replace escaped dbl-quotes.
     : [];
   const noOfListItemToShow = Math.max(
     NOS_OF_HIGHLIGHTS_TO_SHOW,
@@ -768,9 +771,9 @@ const Product = (props) => {
     hasNextAvailable: earliestAvailability?.startDate,
   });
   const getMoreDetailsButton = () => {
-    const keyPressedOnReadMore = (event) =>{
-      if(event.keyCode == 13 && !isMobile){
-        toggleContentOpen(!isContentOpen)
+    const keyPressedOnReadMore = (event) => {
+      if (event.keyCode == 13 && !isMobile) {
+        toggleContentOpen(!isContentOpen);
       }
     };
     const innerContent =
