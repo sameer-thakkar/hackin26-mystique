@@ -647,18 +647,20 @@ export const getShowPage = async ({ req, lang, uid }) => {
   if (response) {
     const {
       common_footer,
+      common_header,
     } = response.data;
 
     const refArray = await getRefsArrayByIds(
-      [common_footer.id],
+      [common_header.id, common_footer.id],
       req
     );
 
-    const { commonFooter } = refsArrayToObject(refArray);
+    const { commonHeader, commonFooter } = refsArrayToObject(refArray);
     return {
       CMSContent: {
         ...response,
         commonFooter,
+        commonHeader,
         allShowPagesDocuments: collections?.results
       },
       ContentType: CUSTOM_TYPES.SHOW_PAGE,

@@ -26,12 +26,13 @@ const FeatureCardWrapper = styled.div`
 
   h3 {
     font-size: 16px;
-    margin: 15px 0;
+    margin: 20px 0 8px 0;
   }
 
   p {
-    font-size: 14px;
     margin: 0;
+    font-size: 14px;
+    line-height: 20px;
   }
 
   @media (max-width: 768px) {

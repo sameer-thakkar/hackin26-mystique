@@ -8,6 +8,7 @@ import { BLACK_CROSS, ALL_PHOTOS } from '../../assets/SvgIcons';
 
 const GalleryWrapper = styled.div`
   display: grid;
+  margin-top: 48px;
   position: relative;
   grid-template-columns: calc(70% - 10px) 30%;
   grid-gap: 10px;
@@ -30,6 +31,8 @@ const GalleryWrapper = styled.div`
   }
 
   @media (max-width: 768px) {
+    margin-top: 32px;
+
     .left-image-wrapper {
       height: 140px;
     }
@@ -50,8 +53,7 @@ const GalleryPopUpWrapper = styled.div(({ isVisibleGalleryPopUp }) => {
     left: 0;
     top: 0;
     text-align:center;
-    padding: 30px 10px;
-    width: calc(100% - 20px);
+    width: 100%;
     height: 100%;
     overflow: auto;
     background-color: #F8F8F8;
@@ -98,6 +100,7 @@ const GalleryPopUpWrapper = styled.div(({ isVisibleGalleryPopUp }) => {
     
     .carousel-slider .swiper-container {
       overflow: hidden;
+      padding-top: 16px;
     }
     .carousel-slider .swiper-pagination-bullet-active {
       background: #666666 !important;
@@ -129,7 +132,6 @@ const GalleryPopUpWrapper = styled.div(({ isVisibleGalleryPopUp }) => {
     }
     @media (max-width: 768px) {
       max-width: 100vw;
-      padding: 150px 10px;
 
       .carousel-slider .swiper-container {
         margin: 0;
@@ -163,14 +165,17 @@ const ActiveImageWrapper = styled.div(
   ({ active }) => `
   ${active ? `display:block;` : `display:none;`}
   img{
-    max-height: 522px;
-    width: 100%;
+    height: 622px;
+    width: 996px;
+    border-radius: 4px;
     cursor: pointer;
     transition: 0.3s ease;
+    max-width: 100%;
   }
   @media (max-width: 768px) {
     img{
-      max-height: 234px;
+      width: 375px;
+      height: 234px;
       cursor: pointer;
     }
   }
@@ -181,12 +186,12 @@ const ImageWrapper = styled.div(
   ({ active }) =>
     `
   img{
+    width: 186px;
     height: 115.73px;
     cursor: pointer;
     ${active && `border: 2px solid #EC1943;`}
     box-sizing: border-box;
     border-radius: 4px;
-    width: 100%;
   }
   @media (max-width: 768px) {
     img{
@@ -209,6 +214,10 @@ const GalleryPopUpContentWrapper = styled.div`
   max-width: 1000px;
   text-align: center;
   margin: auto;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
 `;
 
 const AllPhotoWrapper = styled.div`
@@ -232,7 +241,7 @@ const Gallery = ({ galleryArray, isMobile }) => {
     shouldSwiperUpdate: true,
     lazy: true,
     initialSlide: 1,
-    spaceBetween: 10,
+    spaceBetween: 16,
     slidesPerGroup: slidesPerGroup,
     centeredSlides: isMobile,
     navigation: isMobile

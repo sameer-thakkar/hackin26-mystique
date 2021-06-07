@@ -9,7 +9,6 @@ type ContentTabsProps = {
 };
 
 const StyledContentTabsWrapper = styled.div`
-  margin-bottom: 20px;
   display: grid;
   grid-row-gap: 16px;
   font-family: ${SOLEIL.FONT_STACK};
@@ -49,6 +48,7 @@ const StyledContent = styled.div(({ active }) => {
     display:block;
     font-size: 15px;
     max-width: 776px;
+    line-height: 24px;
     h2{
       margin: 16px 0px;
       font-size: 16px;

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { convertUidToUrl } from 'utils/urlUtils';
 import PriceBlock, { SavedTag } from 'UI/PriceBlock';
+import { SEE_SAFETY } from 'assets/SvgIcons';
 
 const CategoryCardWrapper = styled.div`
   img {
@@ -56,6 +57,18 @@ const CategoryCardWrapper = styled.div`
   }
 `;
 
+const SeeSafetyWrapper = styled.div`
+  position: absolute;
+  filter: drop-shadow(0px -1px 2px rgba(0, 0, 0, 0.08)), drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.12));
+  margin: 8px 0 0 8px;
+  max-height: 32px;
+  max-width: 52px;
+  svg{
+    width: 100%;
+    height: 100%;
+  }
+`;
+
 const CategoryCard = ({
   allShowPagesDocuments,
   element,
@@ -74,9 +87,16 @@ const CategoryCard = ({
     ? convertUidToUrl(cardDocument[0].uid)
     : `https://www.headout.com${tourGroupUrl}`;
 
+  const isSafe = element.microBrandsHighlight.search("###### Safety Banner\r\nYES") >= 0;
+
   return (
     <CategoryCardWrapper>
       <a href={redirectURL} target="blank">
+        {isSafe ?
+          <SeeSafetyWrapper>
+            {SEE_SAFETY}
+          </SeeSafetyWrapper>
+          : null}
         <img src={imageUrl} alt={name} />
         <div className="category-name">{categoryName}</div>
         <h3>{name}</h3>

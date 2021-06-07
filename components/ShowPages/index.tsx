@@ -4,6 +4,7 @@ import { useWindowWidth } from '@react-hook/window-size';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { legacyBooleanCheck } from 'utils';
+import { RichText } from 'prismic-reactjs';
 
 import {
   fetchReviewsTourGroup,
@@ -42,6 +43,31 @@ const ComponentWrapper = styled.div`
   }
 `;
 
+const HighlightsSectionWrapper = styled.div`
+  margin: 0 0 70px;
+  font-size: 15px;
+  max-width: 776px;
+  line-height: 24px;
+  h2{
+    font-size: 24px;
+    margin: 0 0 24px;
+  }
+  li{
+    margin-bottom: 12px;
+  }
+  @media (max-width: 768px) {
+    width:100%;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 0 0 48px;
+    
+    h2{
+      font-size: 18px;
+      margin: 0 0 16px;
+    }
+  }
+`;
+
 const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData, isDev }) => {
   const [customerReviews, setCustomerReviews] = useState([]);
   const [similarProductData, setSimilarProductData] = useState([]);
@@ -69,6 +95,7 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData, isDev }) => {
     isSafetyBanner,
     showType,
     mapURL,
+    highlightsSection
   } = parseShowPageData(microBrandsHighlight);
 
   const currentLanguage = lang.split('-')[0];
@@ -87,15 +114,19 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData, isDev }) => {
       logo_redirection_url: logoRedirectionURL,
       localization,
       enable_localization_menu,
-      logo,
       tgid,
-      logo_alt_text: logoAltText,
       header_links: headerLinks,
       favicon,
       title,
       description,
+      canonical_link,
     },
   } = CMSContent;
+
+  const { commonHeader } = CMSContent
+  const { data: header } = commonHeader || {};
+  const { logo } = header || {};
+  const { url: logoUrl, alt: logoAltText } = logo || {};
 
   useEffect(() => {
     const fetchTourGroupPrices = async () => {
@@ -157,6 +188,7 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData, isDev }) => {
           originalHost: host,
           currentLanguage: lang,
           isMobile,
+          canonical_link,
           noindex: isDev ? 'True' : 'False',
         }}
       />
@@ -164,8 +196,8 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData, isDev }) => {
         languages={localization}
         headerLinks={headerLinks}
         currentLanguage={currentLanguage}
-        logoUrl={logo.url}
-        logoAltText={logoAltText || logo.alt || ''}
+        logoUrl={logoUrl}
+        logoAltText={logoAltText || ''}
         uid={uid}
         isMobile={isMobile}
         showGroupBooking={legacyBooleanCheck(enableGroupBooking)}
@@ -186,6 +218,9 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData, isDev }) => {
         <SafeDFBannerWrapper marginTop={40}></SafeDFBannerWrapper>
       ) : null}
       <Wrapper>
+        <HighlightsSectionWrapper>
+          <RichText render={highlightsSection.tab_content} />
+        </HighlightsSectionWrapper>
         {isMobile ?
           <AccordionGroup
             accordions={tabSchemaHighlight.map((element) => {

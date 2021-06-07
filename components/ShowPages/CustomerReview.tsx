@@ -70,12 +70,14 @@ const CardCarouselContainer = styled.div`
           color: #666666;
           font-size: 15px;
           font-weight: 400;
+          line-height: 24px;
         }
 
         .reviewer-name {
           color: #444444;
           font-size: 15px;
-          margin-top: 20px;
+          margin-top: 32px;
+          line-height: 20px;
           font-weight: bold;
         }
       }
@@ -132,15 +134,24 @@ const CardCarouselContainer = styled.div`
         margin-bottom: 10px;
       }
     }
-    .review-content {
-      .review {
-        font-size: 14px;
-      }
+    
+    .carousel-slider{
+      margin: 24px auto 70px;
 
-      .reviewer-name {
-        font-size: 14px;
+      .swiper-slide{
+        .review-content {
+          .review {
+            font-size: 14px;
+            line-height: 20px;
+          }
+    
+          .reviewer-name {
+            font-size: 14px;
+            margin-top: 24px;
+          }
+        }
       }
-    }
+    }  
   }
 `;
 

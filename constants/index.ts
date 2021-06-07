@@ -535,7 +535,6 @@ export const SHORT_CODE_TYPES = {
 export const NOS_OF_HIGHLIGHTS_TO_SHOW = 4;
 
 export const TAB_ALLOWED_HIGHLIGHT = [
-  'Highlights',
   'About Show',
   'Show Details',
   'Age Suitability',
@@ -546,7 +545,7 @@ export const TAB_ALLOWED_HIGHLIGHT = [
 export const TAB_ALLOWED_INFO = [
   'About Theatre',
   'Getting There',
-  'Facilities',
+  'Facilities & Accessibilities',
   'Additional Information',
 ];
 
@@ -564,16 +563,16 @@ export const YES_STRING = 'YES';
 export const REOPENING_STRING = 'Reopening · Next Available: ';
 
 export const MONTH_ARRAY = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December"
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
 ];

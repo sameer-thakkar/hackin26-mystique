@@ -88,7 +88,7 @@ const StyledProductCard = styled.div`
     margin: 0
       ${({ theme: { theme } }) => (theme !== THEMES.MIN_BLUE ? '16px' : '24px')};
     grid-template-areas: ${({ layout }) =>
-      layout.mobile.map((row) => `'${row}'`)};
+    layout.mobile.map((row) => `'${row}'`)};
     width: auto;
     grid-template-columns: auto;
     .more-details {
@@ -114,9 +114,9 @@ const TourTitle = styled.h2`
   ${({ theme }) => theme.productCards.titleFontSettings.desktop};
   @media (max-width: 768px) {
     ${({ isPopup, theme }) =>
-      isPopup
-        ? theme.productCards.titleFontSettings.popupMobile
-        : theme.productCards.titleFontSettings.mobile};
+    isPopup
+      ? theme.productCards.titleFontSettings.popupMobile
+      : theme.productCards.titleFontSettings.mobile};
   }
 `;
 
@@ -275,8 +275,8 @@ const CTABlock = styled.div`
     grid-area: cta-block;
     margin-top: 0;
     ${({ isSticky, shouldOffset }) =>
-      isSticky
-        ? `
+    isSticky
+      ? `
       position: sticky;
       bottom: 0;
       padding-bottom: 16px;
@@ -284,7 +284,7 @@ const CTABlock = styled.div`
       background: ${COLORS.WHITE};
       z-index: 2;
     `
-        : ``}
+      : ``}
     .tour-book-now-cta {
       justify-content: center;
       width: 100%;
@@ -310,14 +310,14 @@ const ProductBody = styled.div`
     display: grid;
     grid-gap: 0;
     ${({ collapsed, noOfListItemToShow, defaultOpen }) =>
-      collapsed && !defaultOpen
-        ? `
+    collapsed && !defaultOpen
+      ? `
     *:not(div):nth-child(n + ${noOfListItemToShow}),
     ul li:nth-child(n + ${noOfListItemToShow}) {
       display: none;
     }
     `
-        : ''}
+      : ''}
     ul {
       padding: 0;
       padding-left: 1.0em;
@@ -344,13 +344,13 @@ const ProductBody = styled.div`
       ${({ theme }) => theme.productCards.regularFontSettings.mobile}
     }
     ${({ collapsed, defaultOpen }) =>
-      collapsed && !defaultOpen
-        ? `
+    collapsed && !defaultOpen
+      ? `
         .tour-description {
           display: none;
         }
     `
-        : ''}
+      : ''}
   }
   .display-none{
     display: none;
@@ -389,7 +389,7 @@ const ProductOfferBlock = styled.div`
   p {
     margin: 0;
     color: ${({ theme: { primaryAccent } }) =>
-      primaryAccent ? primaryAccent : COLORS.MED_SLATE_BLUE};
+    primaryAccent ? primaryAccent : COLORS.MED_SLATE_BLUE};
   }
   @media (max-width: 768px) {
     font-size: 14px;
@@ -408,7 +408,7 @@ const V1BoosterBlock = styled.div`
   p {
     margin: 0;
     color: ${({ theme: { primaryAccent } }) =>
-      primaryAccent ? primaryAccent : COLORS.MED_SLATE_BLUE};
+    primaryAccent ? primaryAccent : COLORS.MED_SLATE_BLUE};
     strong {
       font-weight: unset;
     }
@@ -669,8 +669,8 @@ const Product = (props) => {
   const descriptorsCsv = descriptors || scorpioData.descriptors;
   const descriptorsList = descriptorsCsv
     ? descriptorsCsv
-        .match(/(("|').*?("|')|[^",]+)(?=\s*,|\s*$)/g)
-        .map((descriptor) => descriptor.replace(/^["']+|['"]+$/g, '')) // replace escaped dbl-quotes.
+      .match(/(("|').*?("|')|[^",]+)(?=\s*,|\s*$)/g)
+      .map((descriptor) => descriptor.replace(/^["']+|['"]+$/g, '')) // replace escaped dbl-quotes.
     : [];
   const noOfListItemToShow = Math.max(
     NOS_OF_HIGHLIGHTS_TO_SHOW,
@@ -678,7 +678,7 @@ const Product = (props) => {
   );
 
   const onTabChange = (tab) => {
-    setShowMoreDetails(tab.contents.length >= noOfListItemToShow);
+    setShowMoreDetails(tab.contents.length > noOfListItemToShow);
   };
 
   const handlePopup = () => {
@@ -778,10 +778,9 @@ const Product = (props) => {
     };
     const innerContent =
       mbTheme === THEMES.DEFAULT ? (
-        ` ${
-          isContentOpen
-            ? '- ' + strings.SHOW_LESS_TEXT
-            : '+ ' + strings.MORE_DETAILS
+        ` ${isContentOpen
+          ? '- ' + strings.SHOW_LESS_TEXT
+          : '+ ' + strings.MORE_DETAILS
         }`
       ) : (
         <>

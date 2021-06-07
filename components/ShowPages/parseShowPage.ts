@@ -79,7 +79,7 @@ export const parseShowPageData = (data) => {
     ) {
       // faq heading
 
-      faqHeading = element.content.text.replace('FAQs |', '').trim();
+      faqHeading = element.content.text.trim();
       currentObject = 'FAQ';
     } else if (element.type == 'heading2') {
       // tab heading
@@ -167,6 +167,7 @@ export const parseShowPageData = (data) => {
   let tabSchemaInfo = [];
   let tabHeadingHighlight = [];
   let tabHeadingInfo = [];
+  let highlightsSection;
 
   tabSchema.forEach((element, index) => {
     if (
@@ -182,6 +183,15 @@ export const parseShowPageData = (data) => {
 
       tabSchemaHighlight.push(element);
       tabHeadingHighlight.push(tabHeading[index]);
+    }
+
+    if (element.tab_name === "Highlights") {
+      element.tab_content.forEach((data) => {
+        if (data.type === 'heading3') {
+          data.type = 'heading2';
+        }
+      });
+      highlightsSection = element
     }
 
     if (
@@ -212,5 +222,6 @@ export const parseShowPageData = (data) => {
     isSafetyBanner,
     showType,
     mapURL,
+    highlightsSection,
   };
 };

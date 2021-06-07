@@ -18,7 +18,7 @@ import StickyFooter from './stickyFooter';
 
 const Banner = styled.div`
   width: 100%;
-  height: 30em;
+  height: 560px;
   text-align: center;
 
   img {
@@ -26,7 +26,7 @@ const Banner = styled.div`
   }
 
   @media (max-width: 768px) {
-    height: 15em;
+    height: 234px;
   }
 `;
 
@@ -96,12 +96,12 @@ const BannerContent = styled.div`
   max-width: 1200px;
   z-index: 2;
   background: #ffffff;
-  padding: 10px 16px 0;
+  padding: 32px 16px 0;
   border-radius: 8px 8px 0px 0px;
 
   .heading-wrapper {
     border-bottom: 1px solid #e2e2e2;
-    padding-bottom: 20px;
+    padding-bottom: 32px;
     display: grid;
     grid-template-columns: 70% 30%;
   }
@@ -112,6 +112,7 @@ const BannerContent = styled.div`
 
   h1 {
     font-size: 24px;
+    margin: 6px 0 12px;
   }
 
   .tags-wrapper {
@@ -119,7 +120,7 @@ const BannerContent = styled.div`
     color: #666666;
     background: #f0f0f0;
     padding: 6px 8px;
-    margin: 8px 8px 8px 0;
+    margin: 6px 8px 0 0;
     border-radius: 2px;
     font-size: 12px;
   }
@@ -129,6 +130,12 @@ const BannerContent = styled.div`
     display: grid;
     grid-template-columns: auto auto;
     align-items: center;
+  }
+
+  .priceBlockWrapper {
+    justify-content: flex-end;
+    display: flex;
+    border-right: 1px solid #E2E2E2;
   }
 
   .tour-price {
@@ -163,6 +170,7 @@ const BannerContent = styled.div`
   .details-container {
     display: grid;
     grid-template-columns: auto auto auto auto;
+    margin-top: 32px;
   }
 
   .details-container .key {
@@ -175,13 +183,16 @@ const BannerContent = styled.div`
     font-size: 15px;
   }
 
-  .individual-container {
-    padding: 10px;
-  }
-
   @media (max-width: 768px) {
+    padding: 24px 16px 0;
+
     .heading-wrapper {
       grid-template-columns: auto;
+      padding-bottom: 24px;
+    }
+
+    .individual-container {
+      padding: 10px;
     }
 
     .right-pricing {
@@ -196,10 +207,12 @@ const BannerContent = styled.div`
 
     .details-container {
       grid-template-columns: auto auto;
+      margin-top: 24px;
     }
 
     h1 {
       font-size: 21px;
+      margin: 8px 0 16px;
     }
 
     .top-text-wrapper {
@@ -216,6 +229,14 @@ const BannerContent = styled.div`
 
     .details-container .value {
       font-size: 14px;
+    }
+
+    .priceBlockWrapper{
+      justify-content: flex-start;
+      border: 0;
+      padding-bottom: 24px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid #E2E2E2;
     }
   }
 `;
@@ -354,7 +375,20 @@ const ShowPageBanner = ({
         </div>
         <div className="heading-wrapper">
           <div>
-            <h1>{name}</h1>
+            <h1>{name} - {strings.TICKETS}</h1>
+            {
+              isMobile ? <div className="priceBlockWrapper">
+                <PriceBlock
+                  price={listingPrice}
+                  lang={currentLanguage}
+                  showSavings={true}
+                  showScratchPrice={true}
+                  currencySymbolOverride={localSymbol}
+                  prefix={true}
+                />
+              </div>
+                : null
+            }
             {tagsArray.map((element, index) => {
               return (
                 <div className="tags-wrapper" key={index}>
@@ -363,23 +397,27 @@ const ShowPageBanner = ({
               );
             })}
           </div>
-          <div className="right-pricing">
-            <div>
-              <PriceBlock
-                price={listingPrice}
-                lang={currentLanguage}
-                showSavings={true}
-                showScratchPrice={true}
-                currencySymbolOverride={localSymbol}
-                prefix={true}
-              />
-            </div>
-            <div>
-              <a className="buy-button" href={bookingUrl} target="blank">
-                {strings.BANNER_CTA}
-              </a>
-            </div>
-          </div>
+          {
+            !isMobile ?
+              <div className="right-pricing">
+                <div className="priceBlockWrapper">
+                  <PriceBlock
+                    price={listingPrice}
+                    lang={currentLanguage}
+                    showSavings={true}
+                    showScratchPrice={true}
+                    currencySymbolOverride={localSymbol}
+                    prefix={true}
+                  />
+                </div>
+                <div>
+                  <a className="buy-button" href={bookingUrl} target="blank">
+                    {strings.BANNER_CTA}
+                  </a>
+                </div>
+              </div>
+              : null
+          }
         </div>
         <div className="details-container">
           {Object.entries(detailsObjects).map((element, index) => {

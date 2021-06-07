@@ -17,7 +17,7 @@ const BannerContent = styled.div(
   position: -webkit-sticky;
 
   ${showComponent ? `position: sticky;` : `display: none;`}
-  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1), 0px 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 2px 8px rgb(0 0 0 / 10%);
 
   .heading-wrapper {
     display: grid;
@@ -41,6 +41,12 @@ const BannerContent = styled.div(
     margin: 8px 8px 8px 0;
     border-radius: 2px;
     font-size: 12px;
+  }
+
+  .priceBlockWrapper {
+    justify-content: flex-end;
+    display: flex;
+    border-right: 1px solid #E2E2E2;
   }
 
   .right-pricing {
@@ -165,7 +171,7 @@ const StickyHeader = ({
               <div className="heading">{name}</div>
             </div>
             <div className="right-pricing">
-              <div>
+              <div className="priceBlockWrapper">
                 <PriceBlock
                   price={listingPrice}
                   lang={currentLanguage}
