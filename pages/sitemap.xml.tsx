@@ -31,8 +31,9 @@ const createLoc = (doc) => {
     doc.type === CUSTOM_TYPES.CONTENT_PAGE
   ) {
     pageUrl = doc.data.page_url;
+  } else {
+    pageUrl = convertUidToUrl(doc.uid);
   }
-  pageUrl = convertUidToUrl(doc.uid);
   return pageUrl;
 };
 

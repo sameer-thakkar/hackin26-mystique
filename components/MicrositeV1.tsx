@@ -88,7 +88,9 @@ const MicrositeV1 = (props) => {
     commonHeader,
   } = refs;
   const { data: micrositeData } = data;
+  console.log({ micrositeData });
   const {
+    attraction,
     localization,
     images: bannerImages,
     heading: bannerHeading,
@@ -118,6 +120,8 @@ const MicrositeV1 = (props) => {
     commonFooter?.data?.logo?.url ||
     micrositeData.footer_logo.url ||
     micrositeData.footer_logo_link?.url;
+  const footerAttractionName =
+    commonFooter?.data?.attraction || attraction || 'attraction';
   const footerPoweredByHeadout =
     commonFooter?.data?.powered_by_superbrand ||
     micrositeData.powered_by_superbrand ||
@@ -630,7 +634,7 @@ const MicrositeV1 = (props) => {
         </ProductsContextProvider>
         <Footer
           currentLanguage={currentLanguage}
-          attraction={commonFooter?.data?.attraction || 'attraction'}
+          attraction={footerAttractionName}
           logoURL={footerLogoURL}
           logoAlt={footerLogoAlt}
           hasPoweredByHeadoutLogo={footerPoweredByHeadout}
