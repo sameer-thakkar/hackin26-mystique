@@ -88,7 +88,6 @@ const MicrositeV1 = (props) => {
     commonHeader,
   } = refs;
   const { data: micrositeData } = data;
-  console.log({ micrositeData });
   const {
     attraction,
     localization,
