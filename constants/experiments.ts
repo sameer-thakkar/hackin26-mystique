@@ -1,0 +1,18 @@
+import Experiment from 'utils/experiments/experiment';
+
+export const VARIANTS = {
+  HIDE_FLEXI_CANCELLATION: 'HIDE',
+  SHOW_FLEXI_CANCELLATION: 'SHOW',
+};
+
+export const EXPERIMENT_NAMES = {
+  FLEXI_CANCELLATION_EXPERIMENT: 'FLEXI_CANCELLATION_EXPERIMENT',
+};
+
+export const EXPERIMENTS = {
+  [EXPERIMENT_NAMES.FLEXI_CANCELLATION_EXPERIMENT]: new Experiment(
+    'Flexible Cancellation Experiment',
+    [VARIANTS.HIDE_FLEXI_CANCELLATION, VARIANTS.SHOW_FLEXI_CANCELLATION],
+    [50, 50]
+  ),
+};

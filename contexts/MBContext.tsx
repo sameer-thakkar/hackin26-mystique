@@ -24,6 +24,7 @@ export const MBContext = createContext({
   noTrack: false,
   biLink: '',
   isGlobalMb: false,
+  hsid: null,
 });
 
 export const MBContextProvider = (props) => {
@@ -39,6 +40,7 @@ export const MBContextProvider = (props) => {
     noTrack,
     biLink,
     isGlobalMb,
+    hsid,
   } = props;
   const [sidebarModalStack, setSidebarModalStack] = useState([]);
 
@@ -88,6 +90,7 @@ export const MBContextProvider = (props) => {
         noTrack,
         biLink,
         isGlobalMb,
+        hsid,
       }}
     >
       {props.children}

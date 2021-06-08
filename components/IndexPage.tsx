@@ -63,8 +63,9 @@ export default class Page extends React.Component<any, any> {
     if (!isDev && req) {
       const { host } = req.headers;
       if (isNakedDomain(host)) {
-        const redirectURL = `https://www.${host}${pathname}${queryParamsString ? `?${queryParamsString}` : ''
-          }`;
+        const redirectURL = `https://www.${host}${pathname}${
+          queryParamsString ? `?${queryParamsString}` : ''
+        }`;
         redirectTo({ res, url: redirectURL, type: 301 });
       }
     }
@@ -102,8 +103,9 @@ export default class Page extends React.Component<any, any> {
                 redirectURL = redirectURL.slice(0, -1);
               redirectTo({
                 res,
-                url: `${redirectURL}${pathname !== '/index' ? pathname : ''}${queryParamsString ? `?${queryParamsString}` : ''
-                  }`,
+                url: `${redirectURL}${pathname !== '/index' ? pathname : ''}${
+                  queryParamsString ? `?${queryParamsString}` : ''
+                }`,
                 type: r.data?.redirect_type,
               });
             }
@@ -385,7 +387,8 @@ export default class Page extends React.Component<any, any> {
         ? `&currency=${AllData?.['queryParams']?.currencyCode}`
         : '';
       const tourGroupAPIResponses = await fetch(
-        `https://${isStage ? 'stage-' : ''
+        `https://${
+          isStage ? 'stage-' : ''
         }microbrands.headout.com/api/tours/v5/tour-group/list?ids[]=${tgidsArray}&language=${getHeadoutLanguagecode(
           lang
         )}${currency}`
@@ -649,6 +652,7 @@ export default class Page extends React.Component<any, any> {
             <RecoilRoot initializeState={initRecoil}>
               <MBContextProvider
                 host={host}
+                hsid={Cookies.get('h-sid')}
                 uid={uid}
                 lang={lang}
                 microsite={microsite}

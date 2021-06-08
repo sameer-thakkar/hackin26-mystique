@@ -295,6 +295,7 @@ const es = {
       LIMITED: 'Oferta de tiempo limitado',
     },
   },
+  FLEXI_CANCELLATION_NON_CANCELLABLE: 'No se admiten cambios ni cancelaciones.',
 };
 
 export default es;

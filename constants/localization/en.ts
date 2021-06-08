@@ -340,6 +340,11 @@ const en = {
   },
   CUSTOMER_REVIEW_HEADING: 'Customer Reviews',
   CATEGORY_SLIDER_HEADING: 'Customers Who Booked This Show Also Viewed',
+
+  CANCELLATION_POLICY: 'Cancellation Policy',
+  FLEXI_CANCELLATION_NON_CANCELLABLE:
+    'Cannot be canceled, amended or rescheduled',
+  FREE_CANCELLATION: 'Free Cancellation',
 };
 
 export default en;

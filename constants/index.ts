@@ -576,3 +576,5 @@ export const MONTH_ARRAY = [
   'November',
   'December',
 ];
+
+export const FLEXI_CANCELLATION_TAG = 'FLEXI_CANCEL';
