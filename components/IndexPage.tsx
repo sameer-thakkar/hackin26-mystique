@@ -489,15 +489,17 @@ export default class Page extends React.Component<any, any> {
 
         const { hsid } = JSON.parse(data);
         try {
+          if (hsid === null)
+            console.warn(
+              '[localStorage] hsid-ensurer failure, Unsupported Browser'
+            );
           if (hsid) {
             const nakedDomain = window.location.hostname
               .replace('stage-', '')
               .split('.')
               .slice(1)
               .join('.');
-            const analytics = new Analytics();
-            analytics.sendHsidToDataLayer({ 'h-sid': hsid });
-
+            this.pushSandboxIDtoDataLayer(hsid);
             Cookies.set('h-sid', hsid, {
               domain: nakedDomain,
               path: '/',
@@ -512,6 +514,11 @@ export default class Page extends React.Component<any, any> {
       },
       true
     );
+  }
+
+  pushSandboxIDtoDataLayer(hsid) {
+    const analytics = new Analytics();
+    analytics.sendHsidToDataLayer({ 'h-sid': hsid });
   }
 
   render() {
@@ -673,16 +680,19 @@ export default class Page extends React.Component<any, any> {
           </ThemeProvider>
         </EnvironmentContext.Provider>
         {typeof window !== 'undefined' ? (
-          <HeadoutSessionIdSetterComponent />
+          <HeadoutSessionIdSetterComponent
+            pushSandboxIDtoDataLayer={this.pushSandboxIDtoDataLayer}
+          />
         ) : null}
       </div>
     );
   }
 }
 const HSID_VAR = 'h-sid';
-const HeadoutSessionIdSetterComponent = () => {
+const HeadoutSessionIdSetterComponent = ({ pushSandboxIDtoDataLayer }) => {
   const validHsidFromCookie = Cookies.get(HSID_VAR);
   if (validHsidFromCookie) {
+    pushSandboxIDtoDataLayer(validHsidFromCookie);
     return null;
   }
 
