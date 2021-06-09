@@ -19,6 +19,7 @@ import { currencyAtom } from 'store/atoms/currency';
 import { getPrismicDocument } from 'utils/prismicUtils';
 import { fetchCategory, fetchCurrencyList } from 'utils/apiUtils';
 import { getHostName } from 'utils/getHostName';
+import Analytics from 'utils/analytics';
 
 import { getAppTheme } from '../style/theme';
 import EnvironmentContext from '../contexts/environmentContext';
@@ -494,6 +495,8 @@ export default class Page extends React.Component<any, any> {
               .split('.')
               .slice(1)
               .join('.');
+            const analytics = new Analytics();
+            analytics.sendHsidToDataLayer({ 'h-sid': hsid });
 
             Cookies.set('h-sid', hsid, {
               domain: nakedDomain,

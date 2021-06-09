@@ -76,7 +76,7 @@ class Experiment {
   getBucket(uniqueId) {
     let bucket = this.bucketName[0];
     if (uniqueId !== null) {
-      const hsidString = btoa(uniqueId);
+      const hsidString = atob(uniqueId);
       const hsidHash = hashCode(hsidString);
       const numberOfSetBits = numberOfSetBitsfromIntegerUtils(
         hashCode(this.experimentName)

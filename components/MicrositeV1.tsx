@@ -21,7 +21,7 @@ import PopulateUncategorizedProducts from './PopulateUncategorizedProducts';
 import Analytics from '../utils/analytics';
 import allToursParser from '../utils/allToursParser';
 import { InteractionContextProvider } from '../contexts/Interaction';
-import { docCookies, csvTgidToArray, getLangObject } from '../utils/helper';
+import { csvTgidToArray, getLangObject } from '../utils/helper';
 import {
   ANALYTICS_EVENTS,
   ALLOW_IMMEDIEATE_NESTING,
@@ -330,8 +330,6 @@ const MicrositeV1 = (props) => {
         tgids: finalTgids,
         currency,
       }).then((res) => {
-        const HSID = docCookies.getItem('h-sid');
-        analytics.sendHsidToDataLayer({ 'h-sid': HSID });
         return res.json();
       });
 
