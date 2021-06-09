@@ -23,7 +23,7 @@ export const getABTestingVariant = (
   if (!noTrack && !isServer()) {
     const analytics = new Analytics();
     analytics.setVariableInDataLayer({
-      eventName: 'Experiment Viewed',
+      event: 'Experiment Viewed',
       'Experiment Name': experiment.experimentName,
       'Experiment Variant': variant,
     });
