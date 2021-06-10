@@ -1,5 +1,6 @@
 import { RichText } from 'prismic-reactjs';
 import { useRecoilValue } from 'recoil';
+import Cookies from 'js-cookie';
 import Button from 'UI/Button';
 import { strings } from 'const/strings';
 import dynamic from 'next/dynamic';
@@ -7,7 +8,7 @@ import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import parse from 'url-parse';
 import styled from 'styled-components';
-import React, { useRef, useState, useContext, useEffect } from 'react';
+import React, { useRef, useState, useContext, useEffect, useMemo } from 'react';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import {
   ANALYTICS_EVENTS,
@@ -15,6 +16,7 @@ import {
   SIDEBAR_TYPES,
   LOCALISED_DATE_FORMATS,
   NOS_OF_HIGHLIGHTS_TO_SHOW,
+  FLEXI_CANCELLATION_TAG,
 } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { shortCodeSerializer } from 'utils/shortCodes';
@@ -30,11 +32,14 @@ import {
   extractTabsFromHighlights,
   getDescriptorIconURL,
   getProductCardLayout,
+  overWriteCancellationIfFlexiCancellation,
   parseDescriptorIcon,
 } from 'utils/productUtils';
 import Image from 'UI/Image';
 import { truncate, wordCount } from 'utils/helper';
 import { currencyAtom } from 'store/atoms/currency';
+import { getABTestingVariant } from 'utils/experiments/experimentUtils';
+import { EXPERIMENT_NAMES } from 'const/experiments';
 
 import Conditional from './common/Conditional';
 
@@ -659,19 +664,62 @@ const Product = (props) => {
     instantCheckout,
     showEarliestAvailability,
   } = props;
-  const { mbTheme, biLink } = useContext(MBContext);
+  const { mbTheme, biLink, hsid } = useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
   const [isContentOpen, toggleContentOpen] = useState(defaultOpen || isAmp);
   const [showMoreDetailsInTabs, setShowMoreDetails] = useState(
     defaultOpen || false
   );
+
   const { validity } = scorpioData;
   const descriptorsCsv = descriptors || scorpioData.descriptors;
-  const descriptorsList = descriptorsCsv
+
+  let descriptorsList = descriptorsCsv
     ? descriptorsCsv
       .match(/(("|').*?("|')|[^",]+)(?=\s*,|\s*$)/g)
       .map((descriptor) => descriptor.replace(/^["']+|['"]+$/g, '')) // replace escaped dbl-quotes.
     : [];
+
+  const { allTags = [] } = scorpioData || {};
+
+  // Flexi Cancellation AB Experiment - Descriptors
+
+  const finalHsid = hsid ?? Cookies.get('h-sid');
+
+  descriptorsList = useMemo(() => {
+    if (isAmp) return descriptorsList;
+
+    const isFlexiCancellationProduct = allTags.includes(FLEXI_CANCELLATION_TAG);
+
+    if (finalHsid && isFlexiCancellationProduct) {
+      const showFreeCancellationFirst =
+        getABTestingVariant(
+          EXPERIMENT_NAMES.FLEXI_CANCELLATION_EXPERIMENT,
+          finalHsid
+        ) === 'SHOW';
+
+      const freeCancellationDescriptorIndex = descriptorsList.findIndex((val) =>
+        RegExp(strings.FREE_CANCELLATION).test(val)
+      );
+
+      if (freeCancellationDescriptorIndex) {
+        const descriptors = [...descriptorsList];
+        const freeCancellationDescriptor = descriptors.splice(
+          freeCancellationDescriptorIndex,
+          1
+        );
+
+        if (showFreeCancellationFirst) {
+          descriptors.unshift(freeCancellationDescriptor[0]);
+        }
+        return descriptors;
+      }
+      return descriptorsList;
+    }
+    return descriptorsList;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [finalHsid, descriptorsList.length]);
+
   const noOfListItemToShow = Math.max(
     NOS_OF_HIGHLIGHTS_TO_SHOW,
     descriptorsList.length
@@ -739,9 +787,22 @@ const Product = (props) => {
   const {
     sidebarModal: { addToAside },
   } = useContext(MBContext);
+
+  const { highlights, tabs } = useMemo(() => {
+    overWriteCancellationIfFlexiCancellation(
+      finalHsid,
+      allTags,
+      isAmp,
+      finalHighlights
+    );
+    return isMobile
+      ? { highlights: finalHighlights, tabs: [] }
+      : extractTabsFromHighlights(finalHighlights);
+  }, [finalHsid, allTags, isAmp, finalHighlights, isMobile]);
+
   let { listingPrice } = isFetched ? tourPrices[tgid] : { listingPrice: null };
   listingPrice = isAmp ? scorpioData.listingPrice : listingPrice;
-  const { allTags = [] } = scorpioData || {};
+
   if (isFetched && !listingPrice) return null;
   const hasSafetyFlag = isSafetyIncluded(allTags);
   const finalPrice = listingPrice;
@@ -841,9 +902,7 @@ const Product = (props) => {
       </div>
     );
   };
-  const { highlights, tabs } = isMobile
-    ? { highlights: finalHighlights, tabs: [] }
-    : extractTabsFromHighlights(finalHighlights);
+
   const hasHighlights =
     isLengthyArray(highlights) && highlights.filter((item) => item.text).length;
   const productBookingUrl =
@@ -858,6 +917,7 @@ const Product = (props) => {
         instantCheckout && earliestAvailability ? earliestAvailability : null,
       isMobile,
     }) + (ctaUrlSuffix || '');
+
   const hasReadMore =
     (highlights.flat()?.length >= 3 || showMoreDetailsInTabs) && !defaultOpen;
   const getProductCardElements = (expandContent) => (

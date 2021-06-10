@@ -284,6 +284,8 @@ const fr = {
       LIMITED: 'Offre à durée limitée',
     },
   },
+  FLEXI_CANCELLATION_NON_CANCELLABLE:
+    'Ces billets ne peuvent pas être annulés, modifiés ou reportés.',
 };
 
 export default fr;

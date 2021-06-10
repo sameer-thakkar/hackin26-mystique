@@ -19,6 +19,7 @@ import { currencyAtom } from 'store/atoms/currency';
 import { getPrismicDocument } from 'utils/prismicUtils';
 import { fetchCategory, fetchCurrencyList } from 'utils/apiUtils';
 import { getHostName } from 'utils/getHostName';
+import Analytics from 'utils/analytics';
 
 import { getAppTheme } from '../style/theme';
 import EnvironmentContext from '../contexts/environmentContext';
@@ -63,8 +64,9 @@ export default class Page extends React.Component<any, any> {
     if (!isDev && req) {
       const { host } = req.headers;
       if (isNakedDomain(host)) {
-        const redirectURL = `https://www.${host}${pathname}${queryParamsString ? `?${queryParamsString}` : ''
-          }`;
+        const redirectURL = `https://www.${host}${pathname}${
+          queryParamsString ? `?${queryParamsString}` : ''
+        }`;
         redirectTo({ res, url: redirectURL, type: 301 });
       }
     }
@@ -102,8 +104,9 @@ export default class Page extends React.Component<any, any> {
                 redirectURL = redirectURL.slice(0, -1);
               redirectTo({
                 res,
-                url: `${redirectURL}${pathname !== '/index' ? pathname : ''}${queryParamsString ? `?${queryParamsString}` : ''
-                  }`,
+                url: `${redirectURL}${pathname !== '/index' ? pathname : ''}${
+                  queryParamsString ? `?${queryParamsString}` : ''
+                }`,
                 type: r.data?.redirect_type,
               });
             }
@@ -385,7 +388,8 @@ export default class Page extends React.Component<any, any> {
         ? `&currency=${AllData?.['queryParams']?.currencyCode}`
         : '';
       const tourGroupAPIResponses = await fetch(
-        `https://${isStage ? 'stage-' : ''
+        `https://${
+          isStage ? 'stage-' : ''
         }microbrands.headout.com/api/tours/v5/tour-group/list?ids[]=${tgidsArray}&language=${getHeadoutLanguagecode(
           lang
         )}${currency}`
@@ -485,13 +489,17 @@ export default class Page extends React.Component<any, any> {
 
         const { hsid } = JSON.parse(data);
         try {
+          if (hsid === null)
+            console.warn(
+              '[localStorage] hsid-ensurer failure, Unsupported Browser'
+            );
           if (hsid) {
             const nakedDomain = window.location.hostname
               .replace('stage-', '')
               .split('.')
               .slice(1)
               .join('.');
-
+            this.pushSandboxIDtoDataLayer(hsid);
             Cookies.set('h-sid', hsid, {
               domain: nakedDomain,
               path: '/',
@@ -506,6 +514,11 @@ export default class Page extends React.Component<any, any> {
       },
       true
     );
+  }
+
+  pushSandboxIDtoDataLayer(hsid) {
+    const analytics = new Analytics();
+    analytics.sendHsidToDataLayer({ 'h-sid': hsid });
   }
 
   render() {
@@ -649,6 +662,7 @@ export default class Page extends React.Component<any, any> {
             <RecoilRoot initializeState={initRecoil}>
               <MBContextProvider
                 host={host}
+                hsid={Cookies.get('h-sid')}
                 uid={uid}
                 lang={lang}
                 microsite={microsite}
@@ -666,16 +680,19 @@ export default class Page extends React.Component<any, any> {
           </ThemeProvider>
         </EnvironmentContext.Provider>
         {typeof window !== 'undefined' ? (
-          <HeadoutSessionIdSetterComponent />
+          <HeadoutSessionIdSetterComponent
+            pushSandboxIDtoDataLayer={this.pushSandboxIDtoDataLayer}
+          />
         ) : null}
       </div>
     );
   }
 }
 const HSID_VAR = 'h-sid';
-const HeadoutSessionIdSetterComponent = () => {
+const HeadoutSessionIdSetterComponent = ({ pushSandboxIDtoDataLayer }) => {
   const validHsidFromCookie = Cookies.get(HSID_VAR);
   if (validHsidFromCookie) {
+    pushSandboxIDtoDataLayer(validHsidFromCookie);
     return null;
   }
 
