@@ -475,8 +475,6 @@ const MicrositeV1 = (props) => {
     }
   });
 
-  console.log({ tourPrices });
-
   const closeGroupBookingModal = () => toggleGroupBookingModal(false);
   const tourListSection = (
     <PopulateUncategorizedProducts

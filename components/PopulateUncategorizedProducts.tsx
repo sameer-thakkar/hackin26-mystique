@@ -103,7 +103,6 @@ export default class PopulateUncategorizedProducts extends Component<any, any> {
       showEarliestAvailability,
     } = this.props;
     const finalToursList = tours?.filter((t) => !!scorpioData[t.tgid]);
-    console.log({ finalToursList });
     return (
       <StyledUncategorizedContainer>
         <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
