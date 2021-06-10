@@ -464,14 +464,9 @@ const MicrositeV1 = (props) => {
     toggleGroupBookingModal(true);
   };
 
-  const availableTours = orderedTours?.filter((tour) => {
-    for (const property in scorpioData) {
-      const { available } = scorpioData[property];
-      if (tour?.tgid === property && available) {
-        return tour;
-      }
-    }
-  });
+  const availableTours = orderedTours?.filter(
+    (tour) => scorpioData?.[tour?.tgid]?.available
+  );
 
   const closeGroupBookingModal = () => toggleGroupBookingModal(false);
   const tourListSection = (
