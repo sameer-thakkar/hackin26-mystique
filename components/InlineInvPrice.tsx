@@ -1,4 +1,6 @@
+import { MBContext } from 'contexts/MBContext';
 import React, { Component } from 'react';
+import LocalisedPrice from 'UI/LPrice';
 
 export default class InlineInvPrice extends Component<any, any> {
   state = {
@@ -8,6 +10,8 @@ export default class InlineInvPrice extends Component<any, any> {
     showScratchPrice: '',
     isFetched: false,
   };
+
+  static contextType = MBContext;
 
   async componentDidMount() {
     if (this.props.tgid && this.props.tid) {
@@ -50,10 +54,11 @@ export default class InlineInvPrice extends Component<any, any> {
         {isFetched ? (
           <>
             {price ? (
-              <span className="inv-price">
-                {currencySymbol}
-                {price}
-              </span>
+              <LocalisedPrice
+                price={price}
+                currencySymbol={currencySymbol}
+                lang={this.context.lang}
+              />
             ) : (
               ''
             )}

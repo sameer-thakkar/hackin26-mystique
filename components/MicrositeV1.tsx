@@ -466,6 +466,17 @@ const MicrositeV1 = (props) => {
     toggleGroupBookingModal(true);
   };
 
+  const availableTours = orderedTours?.filter((tour) => {
+    for (const property in scorpioData) {
+      const { available } = scorpioData[property];
+      if (tour?.tgid === property && available) {
+        return tour;
+      }
+    }
+  });
+
+  console.log({ tourPrices });
+
   const closeGroupBookingModal = () => toggleGroupBookingModal(false);
   const tourListSection = (
     <PopulateUncategorizedProducts
@@ -540,7 +551,7 @@ const MicrositeV1 = (props) => {
           isMobile={isAmp || isMobile}
           hasLanguageSelector={hasLanguageSelector}
           showGroupBooking={showGroupBooking}
-          enableBuyTickets={enableBuyTickets}
+          enableBuyTickets={availableTours?.length ? enableBuyTickets : false}
           logoRedirectionURL={logoRedirectionURL?.url || pageUrl}
           host={host}
           hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo}
@@ -585,7 +596,7 @@ const MicrositeV1 = (props) => {
             currentLanguage={currentLanguage ? currentLanguage : null}
             isMobile={isAmp || isMobile}
             boxed={true}
-            hideCTA={hideBannerCTA}
+            hideCTA={availableTours?.length ? hideBannerCTA : true}
             isAmp={isAmp}
           />
         </Conditional>
@@ -606,7 +617,13 @@ const MicrositeV1 = (props) => {
           isMobile={isMobile}
         />
 
-        <Conditional if={checkIfToursAvailable && hasTourList === false}>
+        <Conditional
+          if={
+            checkIfToursAvailable &&
+            hasTourList === false &&
+            availableTours?.length
+          }
+        >
           {tourListSection}
         </Conditional>
 
