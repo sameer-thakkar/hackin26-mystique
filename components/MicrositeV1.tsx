@@ -89,6 +89,7 @@ const MicrositeV1 = (props) => {
   } = refs;
   const { data: micrositeData } = data;
   const {
+    attraction,
     localization,
     images: bannerImages,
     heading: bannerHeading,
@@ -118,6 +119,8 @@ const MicrositeV1 = (props) => {
     commonFooter?.data?.logo?.url ||
     micrositeData.footer_logo.url ||
     micrositeData.footer_logo_link?.url;
+  const footerAttractionName =
+    commonFooter?.data?.attraction || attraction || 'attraction';
   const footerPoweredByHeadout =
     commonFooter?.data?.powered_by_superbrand ||
     micrositeData.powered_by_superbrand ||
@@ -461,6 +464,10 @@ const MicrositeV1 = (props) => {
     toggleGroupBookingModal(true);
   };
 
+  const availableTours = orderedTours?.filter(
+    (tour) => scorpioData?.[tour?.tgid]?.available
+  );
+
   const closeGroupBookingModal = () => toggleGroupBookingModal(false);
   const tourListSection = (
     <PopulateUncategorizedProducts
@@ -535,7 +542,7 @@ const MicrositeV1 = (props) => {
           isMobile={isAmp || isMobile}
           hasLanguageSelector={hasLanguageSelector}
           showGroupBooking={showGroupBooking}
-          enableBuyTickets={enableBuyTickets}
+          enableBuyTickets={availableTours?.length ? enableBuyTickets : false}
           logoRedirectionURL={logoRedirectionURL?.url || pageUrl}
           host={host}
           hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo}
@@ -580,7 +587,7 @@ const MicrositeV1 = (props) => {
             currentLanguage={currentLanguage ? currentLanguage : null}
             isMobile={isAmp || isMobile}
             boxed={true}
-            hideCTA={hideBannerCTA}
+            hideCTA={availableTours?.length ? hideBannerCTA : true}
             isAmp={isAmp}
           />
         </Conditional>
@@ -601,7 +608,13 @@ const MicrositeV1 = (props) => {
           isMobile={isMobile}
         />
 
-        <Conditional if={checkIfToursAvailable && hasTourList === false}>
+        <Conditional
+          if={
+            checkIfToursAvailable &&
+            hasTourList === false &&
+            availableTours?.length
+          }
+        >
           {tourListSection}
         </Conditional>
 
@@ -628,7 +641,7 @@ const MicrositeV1 = (props) => {
         </ProductsContextProvider>
         <Footer
           currentLanguage={currentLanguage}
-          attraction={commonFooter?.data?.attraction || 'attraction'}
+          attraction={footerAttractionName}
           logoURL={footerLogoURL}
           logoAlt={footerLogoAlt}
           hasPoweredByHeadoutLogo={footerPoweredByHeadout}

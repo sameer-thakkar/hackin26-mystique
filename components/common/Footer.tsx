@@ -147,6 +147,7 @@ const FooterLegal = styled.div`
       img {
         height: 40px;
         max-width: 100%;
+        width: unset;
         ${({ invertLogoColor }) =>
           invertLogoColor ? `filter: brightness(0) invert(1);` : ''}
       }
