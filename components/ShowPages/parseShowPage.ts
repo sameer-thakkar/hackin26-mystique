@@ -66,13 +66,23 @@ export const parseShowPageData = (data) => {
     tabSectionHeading,
     showType = '',
     isSafetyBanner = false,
-    mapURL;
+    mapURL,
+    listicleSchema = [],
+    listicleHeading;
 
   data.forEach((element, idx) => {
     if (element.type == 'heading6') {
       // detail object heading
       DetailObjectHeading = element.content.text;
       currentObject = 'DETAIL';
+    } else if (
+      element.type == 'heading5' &&
+      element.content.text?.startsWith('Listicle')
+    ) {
+      // listicle
+
+      listicleHeading = element.content.text;
+      currentObject = 'LISTICLE';
     } else if (
       element.type == 'heading2' &&
       element.content.text?.startsWith('FAQs')
@@ -140,6 +150,15 @@ export const parseShowPageData = (data) => {
 
         element.content.type = element.type;
         tabSchema[tabSchema.length - 1].tab_content.push(element.content);
+      } else if (currentObject == 'LISTICLE') {
+        // listicle content
+
+        listicleSchema.push(
+          JSON.parse(`{
+          "heading": "${listicleHeading}",
+          "text": ${JSON.stringify(element)}
+        }`)
+        );
       } else {
         // faq content
         if (element.content.text.startsWith('Q-')) {
@@ -156,7 +175,10 @@ export const parseShowPageData = (data) => {
           // Answer
           element.content.text = element.content.text.replace('A-', '').trim();
           element.content.type = element.type;
-
+          for (let i = 0; i < element.content.spans.length; i++) {
+            element.content.spans[i].start = element.content.spans[i].start - 3;
+            element.content.spans[i].end = element.content.spans[i].end - 3;
+          }
           faqSchema[faqSchema.length - 1]?.content.push(element.content);
         }
       }
@@ -179,19 +201,25 @@ export const parseShowPageData = (data) => {
         if (data.type === 'heading3') {
           data.type = 'heading2';
         }
+        if (data.type === 'heading4') {
+          data.type = 'heading2';
+        }
       });
 
       tabSchemaHighlight.push(element);
       tabHeadingHighlight.push(tabHeading[index]);
     }
 
-    if (element.tab_name === "Highlights") {
+    if (element.tab_name === 'Highlights') {
       element.tab_content.forEach((data) => {
         if (data.type === 'heading3') {
           data.type = 'heading2';
         }
+        if (data.type === 'heading4') {
+          data.type = 'heading2';
+        }
       });
-      highlightsSection = element
+      highlightsSection = element;
     }
 
     if (
@@ -223,5 +251,6 @@ export const parseShowPageData = (data) => {
     showType,
     mapURL,
     highlightsSection,
+    listicleSchema,
   };
 };
