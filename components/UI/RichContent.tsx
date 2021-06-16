@@ -3,12 +3,12 @@ import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 
-const StyledRichContent = styled.div`
+export const StyledRichContent = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
   line-height: 1.6;
   color: ${COLORS.FOUR_BLACK};
   @media (max-width: 768px) {
-    h2{
+    h2 {
       font-size: 16px;
     }
   }

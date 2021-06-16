@@ -1,5 +1,9 @@
 import { PRODUCT_VIDEOS } from 'constants/ShowPageProductVideos';
-import { REOPENING_STRING } from 'constants/index';
+import {
+  REOPENING_STRING,
+  REOPENING_DATE,
+  OPENING_DATE,
+} from 'constants/index';
 
 import dayjs from 'dayjs';
 import { strings } from 'const/strings';
@@ -135,7 +139,7 @@ const BannerContent = styled.div`
   .priceBlockWrapper {
     justify-content: flex-end;
     display: flex;
-    border-right: 1px solid #E2E2E2;
+    border-right: 1px solid #e2e2e2;
   }
 
   .tour-price {
@@ -231,12 +235,12 @@ const BannerContent = styled.div`
       font-size: 14px;
     }
 
-    .priceBlockWrapper{
+    .priceBlockWrapper {
       justify-content: flex-start;
       border: 0;
       padding-bottom: 24px;
       margin-bottom: 24px;
-      border-bottom: 1px solid #E2E2E2;
+      border-bottom: 1px solid #e2e2e2;
     }
   }
 `;
@@ -248,6 +252,7 @@ const ShowPageBanner = ({
   tourGroupData,
   currentLanguage,
   tagsArray,
+  isReopening,
 }) => {
   const { listingPrice, currency, name, imageUploads } = tourGroupData;
 
@@ -375,9 +380,11 @@ const ShowPageBanner = ({
         </div>
         <div className="heading-wrapper">
           <div>
-            <h1>{name} - {strings.TICKETS}</h1>
-            {
-              isMobile ? <div className="priceBlockWrapper">
+            <h1>
+              {name} - {strings.TICKETS}
+            </h1>
+            {isMobile ? (
+              <div className="priceBlockWrapper">
                 <PriceBlock
                   price={listingPrice}
                   lang={currentLanguage}
@@ -387,45 +394,48 @@ const ShowPageBanner = ({
                   prefix={true}
                 />
               </div>
-                : null
-            }
+            ) : null}
             {tagsArray.map((element, index) => {
-              return (
-                <div className="tags-wrapper" key={index}>
-                  {element}
-                </div>
-              );
+              if (element) {
+                return (
+                  <div className="tags-wrapper" key={index}>
+                    {element}
+                  </div>
+                );
+              }
             })}
           </div>
-          {
-            !isMobile ?
-              <div className="right-pricing">
-                <div className="priceBlockWrapper">
-                  <PriceBlock
-                    price={listingPrice}
-                    lang={currentLanguage}
-                    showSavings={true}
-                    showScratchPrice={true}
-                    currencySymbolOverride={localSymbol}
-                    prefix={true}
-                  />
-                </div>
-                <div>
-                  <a className="buy-button" href={bookingUrl} target="blank">
-                    {strings.BANNER_CTA}
-                  </a>
-                </div>
+          {!isMobile ? (
+            <div className="right-pricing">
+              <div className="priceBlockWrapper">
+                <PriceBlock
+                  price={listingPrice}
+                  lang={currentLanguage}
+                  showSavings={true}
+                  showScratchPrice={true}
+                  currencySymbolOverride={localSymbol}
+                  prefix={true}
+                />
               </div>
-              : null
-          }
+              <div>
+                <a className="buy-button" href={bookingUrl} target="blank">
+                  {strings.BANNER_CTA}
+                </a>
+              </div>
+            </div>
+          ) : null}
         </div>
         <div className="details-container">
           {Object.entries(detailsObjects).map((element, index) => {
             return (
               <div className="individual-container" key={index}>
-                <div className="key">{element[0]}</div>
+                <div className="key">
+                  {isReopening && element[0] === OPENING_DATE
+                    ? REOPENING_DATE
+                    : element[0]}
+                </div>
                 <div className="value">
-                  {element[0] == 'Opening Date'
+                  {element[0] === OPENING_DATE
                     ? dateToString(element[1])
                     : element[1]}
                 </div>

@@ -29,7 +29,14 @@ const AccordionGroup: React.FC<{
   heading: string;
   useSchema: Boolean;
   sliceProps?: any;
-}> = ({ accordions, heading, useSchema, sliceProps }) => {
+  isOpenOverride?: Boolean;
+}> = ({
+  accordions,
+  heading,
+  useSchema,
+  sliceProps,
+  isOpenOverride = true,
+}) => {
   const isGlobalMb = sliceProps?.isGlobalMb ? sliceProps?.isGlobalMb : false;
   const isAmp = useAmp();
   return (
@@ -67,7 +74,7 @@ const AccordionGroup: React.FC<{
               <Accordion
                 key={index}
                 content={content}
-                isOpenOverride={index == 0}
+                isOpenOverride={index == 0 && isOpenOverride}
                 heading={accordion.heading}
                 useSchema={useSchema}
                 isGlobalMb={isGlobalMb}

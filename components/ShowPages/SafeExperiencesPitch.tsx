@@ -1,10 +1,19 @@
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { SOLEIL, COLORS } from 'const/ui-constants';
-import { SAFETY_DETAILS_TYPE, CLUBBED_SAFETY_TAGS } from 'const/index';
+import {
+  SAFETY_DETAILS_TYPE,
+  CLUBBED_SAFETY_TAGS,
+  SAFETY_MEASURE_REDIRECT_PAGE_LINK,
+  SAFETY_MEASURE_CTA_TEXT,
+} from 'const/index';
 import Conditional from 'components/common/Conditional';
 import { strings } from 'const/strings';
-import { CHEVRON_LEFT_CIRCLE, SEE_SAFETY } from 'assets/SvgIcons';
+import {
+  CHEVRON_LEFT_CIRCLE,
+  SEE_SAFETY,
+  RED_RIGHT_ARROW,
+} from 'assets/SvgIcons';
 
 import Image from '../UI/Image';
 
@@ -14,6 +23,9 @@ const PitchGrid = styled.div`
   display: grid;
   grid-row-gap: 32px;
   padding-bottom: 48px;
+  a {
+    color: red;
+  }
 `;
 
 const Section = styled.div`
@@ -224,6 +236,13 @@ const SafeExperiencesPitch = ({
         </SliderSection>
       </Conditional>
       <Section>{renderSafetyDetailsSection(tags)}</Section>
+      <a
+        href={SAFETY_MEASURE_REDIRECT_PAGE_LINK}
+        rel="noreferrer"
+        target="_blank"
+      >
+        {SAFETY_MEASURE_CTA_TEXT} {RED_RIGHT_ARROW}
+      </a>
     </PitchGrid>
   );
 };

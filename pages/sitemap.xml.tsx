@@ -86,6 +86,7 @@ export default class SitemapXml extends Component {
               CUSTOM_TYPES.GLOBAL_HOMEPAGE,
               CUSTOM_TYPES.GLOBAL_COLLECTION,
               CUSTOM_TYPES.GLOBAL_EXPERIENCE,
+              CUSTOM_TYPES.SHOW_PAGE,
             ].includes(doc.type)
           )
           .reduce(

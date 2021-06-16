@@ -1,3 +1,5 @@
+import { REOPENING_TAG } from 'constants/index';
+
 import { strings } from 'const/strings';
 import React, { useEffect, useState } from 'react';
 import { useWindowWidth } from '@react-hook/window-size';
@@ -5,7 +7,9 @@ import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { legacyBooleanCheck } from 'utils';
 import { RichText } from 'prismic-reactjs';
+import { StyledRichContent } from 'UI/RichContent';
 
+import { groupSlices } from '../../utils/helper';
 import {
   fetchReviewsTourGroup,
   fetchCategory,
@@ -24,6 +28,7 @@ import Gallery from './Gallery';
 import CategorySlider from './CategorySlider';
 import SubHeading from './SubHeading';
 import PopulateHead from '../common/meta';
+import { ALLOW_IMMEDIEATE_NESTING } from '../../constants';
 
 const AccordionGroup = dynamic(() => import('../slices/AccordionGroup'));
 
@@ -33,12 +38,18 @@ const Wrapper = styled.div`
   padding: 0 16px;
   @media (max-width: 768px) {
     margin: 40px auto 0;
+    ${StyledRichContent} {
+      font-size: 14px !important;
+      p {
+        margin-bottom: 10px;
+      }
+    }
   }
 `;
 
 const ComponentWrapper = styled.div`
   margin: 48px 0 32px;
-  h2{
+  h2 {
     font-size: 18px;
   }
 `;
@@ -48,20 +59,20 @@ const HighlightsSectionWrapper = styled.div`
   font-size: 15px;
   max-width: 776px;
   line-height: 24px;
-  h2{
+  h2 {
     font-size: 24px;
     margin: 0 0 24px;
   }
-  li{
+  li {
     margin-bottom: 12px;
   }
   @media (max-width: 768px) {
-    width:100%;
+    width: 100%;
     font-size: 14px;
     line-height: 20px;
     margin: 0 0 48px;
-    
-    h2{
+
+    h2 {
       font-size: 18px;
       margin: 0 0 16px;
     }
@@ -72,6 +83,7 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData, isDev }) => {
   const [customerReviews, setCustomerReviews] = useState([]);
   const [similarProductData, setSimilarProductData] = useState([]);
   const [currencySymbol, setCurrencySymbol] = useState({});
+  let isReopening = false;
 
   const [isMobile, setIsMobile] = useState(false);
   const width = useWindowWidth();
@@ -81,7 +93,14 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData, isDev }) => {
     imageUploads,
     categoriesFromRoot,
     microBrandsDescriptor,
+    allTags,
   } = tourGroupData;
+
+  allTags.forEach((element) => {
+    if (element === REOPENING_TAG) {
+      isReopening = true;
+    }
+  });
 
   const {
     faqHeading,
@@ -95,7 +114,7 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData, isDev }) => {
     isSafetyBanner,
     showType,
     mapURL,
-    highlightsSection
+    highlightsSection,
   } = parseShowPageData(microBrandsHighlight);
 
   const currentLanguage = lang.split('-')[0];
@@ -108,25 +127,38 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData, isDev }) => {
 
   const { commonFooter, allShowPagesDocuments } = CMSContent;
 
-  const {
-    data: {
-      enable_group_booking: enableGroupBooking,
-      logo_redirection_url: logoRedirectionURL,
-      localization,
-      enable_localization_menu,
-      tgid,
-      header_links: headerLinks,
-      favicon,
-      title,
-      description,
-      canonical_link,
-    },
-  } = CMSContent;
+  const { data: CMSData } = CMSContent;
 
-  const { commonHeader } = CMSContent
-  const { data: header } = commonHeader || {};
-  const { logo } = header || {};
+  const {
+    enable_group_booking: enableGroupBooking,
+    logo_redirection_url: logoRedirectionURL,
+    localization,
+    enable_localization_menu,
+    tgid,
+    favicon,
+    title,
+    description,
+    canonical_link,
+  } = CMSData;
+
+  const { commonHeader } = CMSContent;
+  const headerLinks = commonHeader?.data?.header_links || [];
+  const dropdownLinksArray = commonHeader?.data?.dropdown_menu?.reduce(
+    (acc, item) => {
+      if (item.link)
+        return [...acc, { value: item.link.url, label: item.link_text }];
+      else return acc;
+    },
+    []
+  );
+
+  const { logo, body: headerSlices } = commonHeader?.data || {};
   const { url: logoUrl, alt: logoAltText } = logo || {};
+
+  const finalHeaderSlices = groupSlices(
+    headerSlices || [],
+    ALLOW_IMMEDIEATE_NESTING
+  );
 
   useEffect(() => {
     const fetchTourGroupPrices = async () => {
@@ -195,6 +227,7 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData, isDev }) => {
       <Header
         languages={localization}
         headerLinks={headerLinks}
+        dropdownLinks={dropdownLinksArray}
         currentLanguage={currentLanguage}
         logoUrl={logoUrl}
         logoAltText={logoAltText || ''}
@@ -205,6 +238,7 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData, isDev }) => {
         logoRedirectionURL={logoRedirectionURL?.url || '/'}
         host={host}
         hasPoweredByHeadoutLogo={true}
+        slices={finalHeaderSlices}
       />
       <ShowPageBanner
         tgid={tgid}
@@ -213,53 +247,56 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData, isDev }) => {
         tourGroupData={tourGroupData}
         currentLanguage={currentLanguage}
         tagsArray={tagsArray}
+        isReopening={isReopening}
       />
       {isSafetyBanner ? (
         <SafeDFBannerWrapper marginTop={40}></SafeDFBannerWrapper>
       ) : null}
       <Wrapper>
         <HighlightsSectionWrapper>
-          <RichText render={highlightsSection.tab_content} />
+          <RichText render={highlightsSection?.tab_content} />
         </HighlightsSectionWrapper>
-        {isMobile ?
+        {isMobile ? (
           <AccordionGroup
             accordions={tabSchemaHighlight.map((element) => {
               return {
-                "heading": element.tab_name,
-                "content": element.tab_content
-              }
+                heading: element.tab_name,
+                content: element.tab_content,
+              };
             })}
-            heading={""}
+            heading={''}
             useSchema={true}
+            isOpenOverride={false}
           />
-          :
+        ) : (
           <>
             <ContentTabs
               tabsArr={tabHeadingHighlight}
               contentArr={tabSchemaHighlight}
             />
           </>
-        }
+        )}
         <Gallery galleryArray={imageUploads} isMobile={isMobile} />
-        {isMobile ?
+        {isMobile ? (
           <ComponentWrapper>
             <AccordionGroup
               accordions={tabSchemaInfo.map((element) => {
                 return {
-                  "heading": element.tab_name,
-                  "content": element.tab_content
-                }
+                  heading: element.tab_name,
+                  content: element.tab_content,
+                };
               })}
               heading={tabSectionHeading}
               useSchema={true}
+              isOpenOverride={false}
             />
           </ComponentWrapper>
-          :
+        ) : (
           <>
             <SubHeading content={tabSectionHeading} />
             <ContentTabs tabsArr={tabHeadingInfo} contentArr={tabSchemaInfo} />
           </>
-        }
+        )}
         <GoogleMap mapURL={mapURL} />
         <AccordionGroup
           accordions={faqSchema}
@@ -295,6 +332,8 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData, isDev }) => {
         microbrandType={commonFooter?.data?.microbrand_type}
         slices={commonFooter?.data?.body || []}
         invertLogoColor={commonFooter?.data?.invert_logo_color}
+        attraction={commonFooter?.data?.attraction || 'attraction'}
+        primaryHeading={commonFooter?.data?.footer_heading}
       />
     </>
   );

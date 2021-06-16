@@ -27,19 +27,18 @@ const StyledContentTabs = styled.div`
   }
 `;
 
-const StyledTab = styled.div(({ active }) => {
-  if (active) {
-    return `
-  color: #ec1943;
+const StyledTab = styled.h3(({ active }) => {
+  return `
+  ${active ? `color: #ec1943;` : ``}
   cursor: pointer;
-  border-bottom: 2px solid;
+  ${active ? `border-bottom: 2px solid;` : ``}
   padding-bottom: 8px;
+  font-size: 18px;
+  line-height: 24px;
+  height: min-content;
+  margin: 0;
+  font-weight: 600;
   `;
-  } else {
-    return `
-    cursor: pointer;
-    `;
-  }
 });
 
 const StyledContent = styled.div(({ active }) => {
