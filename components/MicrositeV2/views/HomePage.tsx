@@ -16,6 +16,8 @@ import { MBContext } from 'contexts/MBContext';
 import Footer from 'components/common/Footer';
 import sliceHandler from 'components/Slices';
 import Header from 'components/MicrositeV2/Header';
+import LttSafetyBanner from 'components/ShowPages/SafetyBanner';
+import LttFeatureCard from 'components/ShowPages/FeatureCard';
 
 const Alert = dynamic(() => import('UI/Alert'), { ssr: false });
 const ResponsiveSelector: ComponentType<any> = dynamic(
@@ -63,6 +65,7 @@ const V2MicrositeWrapper = styled.div`
     margin-right: auto;
     font-family: ${SOLEIL.FONT_STACK};
   }
+
   @media (max-width: 768px) {
     .hero-slice-section {
       margin-top: 48px;
@@ -118,7 +121,7 @@ export const HomePage = (props) => {
   );
 
   return (
-    <V2MicrositeWrapper>
+    <V2MicrositeWrapper isEntertainmentMb={isEntertainmentMb}>
       <Header
         {...header}
         host={host}
@@ -126,7 +129,7 @@ export const HomePage = (props) => {
         isMobile={isMobile}
         allTours={allTours}
       />
-      {isMobile && hasDropdownLinks ? (
+      <Conditional if={isMobile && hasDropdownLinks}>
         <div className="main-wrapper city-selector">
           <ResponsiveSelector
             options={dropdownLinks}
@@ -138,8 +141,10 @@ export const HomePage = (props) => {
             toggleIcon={false}
           />
         </div>
-      ) : null}
-      {showCovid19Alert && covid19AlertOpen ? (
+      </Conditional>
+      <Conditional
+        if={showCovid19Alert && covid19AlertOpen && !isEntertainmentMb}
+      >
         <DismissAlert
           readMoreLink={strings.COVID19_ALERT.LINK}
           readMore={strings.READ_MORE}
@@ -149,23 +154,28 @@ export const HomePage = (props) => {
             setCovid19AlertOpen(false);
           }}
         />
-      ) : null}
+      </Conditional>
       <Conditional if={mbTheme === THEMES.DEFAULT && heroProps.banners.length}>
-        <Banner {...heroProps} isMobile={isMobile} ready={true} />
+        <Banner
+          {...heroProps}
+          isMobile={isMobile}
+          ready={true}
+          isEntertainmentMb={isEntertainmentMb}
+        />
       </Conditional>
       <Conditional if={mbTheme === THEMES.MIN_BLUE}>
         <TextBanner bannerHeading={bannerHeading ? bannerHeading : null} />
       </Conditional>
 
-      {alertPopup?.uid ? (
+      <Conditional if={alertPopup?.uid}>
         <div className="alert-wrapper">
           <Alert popupUID={alertPopup?.uid} currentLanguage={currentLanguage} />
         </div>
-      ) : null}
+      </Conditional>
 
       <SafeDFBannerWrapper hasSafe={hasSafe} marginTop={40} />
 
-      {heroSectionSlice.length ? (
+      <Conditional if={heroSectionSlice.length}>
         <ProductsContextProvider allTours={allTours} ready={ready}>
           <div className="main-wrapper hero-slice-section">
             {heroSectionSlice
@@ -180,8 +190,13 @@ export const HomePage = (props) => {
               ))}
           </div>
         </ProductsContextProvider>
-      ) : null}
-      {hasToursSection ? (
+      </Conditional>
+
+      <Conditional if={isEntertainmentMb}>
+        <LttSafetyBanner />
+      </Conditional>
+
+      <Conditional if={hasToursSection}>
         <ProductsWrapper
           availableTGIDs={Object.keys(allTours)}
           directTgid={parseInt(directTgid)}
@@ -194,10 +209,15 @@ export const HomePage = (props) => {
           host={host}
           uid={uid}
         />
-      ) : null}
+      </Conditional>
+      <Conditional if={isEntertainmentMb}>
+        <div className="main-wrapper">
+          <LttFeatureCard />
+        </div>
+      </Conditional>
       <ProductsContextProvider allTours={allTours} ready={ready}>
         <div className="main-wrapper v2-long-form">
-          {longFormContent ? (
+          <Conditional if={longFormContent}>
             <LongForm
               slicesArray={longFormSlices}
               props={{
@@ -210,7 +230,7 @@ export const HomePage = (props) => {
               }}
               hasToursSection={hasToursSection}
             />
-          ) : null}
+          </Conditional>
         </div>
       </ProductsContextProvider>
       <Footer

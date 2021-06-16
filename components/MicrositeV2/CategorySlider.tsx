@@ -87,6 +87,11 @@ const StyledCategorySlider = styled.div`
     grid-auto-flow: column;
     justify-content: left;
   }
+  @media (min-width: 768px) {
+    .content {
+      max-width: 588px;
+    }
+  }
   @media (max-width: 768px) {
     grid-row-gap: 8px;
   }
@@ -204,6 +209,7 @@ const CategorySlider = (props) => {
                     isMobile={isMobile}
                     imageId={tgid}
                     cardIdPrefix={carouselId}
+                    isEntertainmentMb={isEntertainmentMb}
                   />
                 </div>
               );

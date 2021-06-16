@@ -55,6 +55,7 @@ export const COLORS = {
   PALE_YELLOW: '#FFF2CC',
   DARKER_BROWN: '#EFE0C2',
   DARKER_GREEEN: '#CDEFD9',
+  JOY_MUSTARD: '#FFBC00',
 };
 
 export const SIZES = {

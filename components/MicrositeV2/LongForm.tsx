@@ -8,7 +8,6 @@ const StyledLongform = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
   line-height: 1.6;
   color: #545454;
-
   border-top: 1px solid ${COLORS.DADDY};
   padding-top: 64px;
   margin-top: 48px;
@@ -21,6 +20,13 @@ const StyledLongform = styled.div`
     `border-top: unset;
     padding-top: 0;
     margin-top: 24px;`}
+
+  ${({ isEntertainmentMb }) =>
+    isEntertainmentMb &&
+    `
+    border-top: unset;
+    margin-top: 0;
+    `}
 
   h1,
   h2,
@@ -88,10 +94,16 @@ const StyledLongform = styled.div`
 const LongForm = (props) => {
   const { slicesArray, props: sliceProps, hasToursSection } = props;
 
-  const isGlobalMb = sliceProps?.isGlobalMb ? sliceProps?.isGlobalMb : false;
+  const { isGlobalMb, isEntertainmentMb } = sliceProps || {};
+
+  // const isGlobalMb = sliceProps?.isGlobalMb ? sliceProps?.isGlobalMb : false;
 
   return (
-    <StyledLongform noBorder={!hasToursSection} isGlobalMb={isGlobalMb}>
+    <StyledLongform
+      noBorder={!hasToursSection}
+      isGlobalMb={isGlobalMb}
+      isEntertainmentMb={isEntertainmentMb}
+    >
       {slicesArray.map((slice, index) => (
         <div
           key={index}
