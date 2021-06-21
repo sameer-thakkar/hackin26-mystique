@@ -288,13 +288,21 @@ const DetailedProductCard = (props) => {
   };
   const mbContext = useContext(MBContext);
   const { lang, nakedDomain, biLink } = mbContext;
-  const { allTours, tgidClicked, cardPosition, isEntertainmentMb } = props;
+  const {
+    allTours,
+    tgidClicked,
+    cardPosition,
+    isEntertainmentMb,
+    hasCategoryTourList,
+  } = props;
   const activeTour = allTours[tgidClicked];
-  const rightBlocksCount = activeTour.contentBlocks.right.length;
-  const descriptors = activeTour.descriptors
-    .split(',')
-    .filter((d) => d.length)
-    .map((d) => d.trim());
+  const rightBlocksCount = activeTour.contentBlocks?.right?.length;
+  const descriptors = hasCategoryTourList
+    ? activeTour?.descriptors
+    : activeTour?.descriptors
+        ?.split(',')
+        ?.filter((d) => d.length)
+        ?.map((d) => d.trim());
 
   const { allTags = [], listingPrice } = activeTour;
   const hasSafetyFlag = isSafetyIncluded(allTags);
@@ -302,12 +310,10 @@ const DetailedProductCard = (props) => {
     sidebarModal: { addToAside },
   } = useContext(MBContext);
 
-  const productCardContent = isEntertainmentMb
-    ? activeTour.contentBlocks
-    : extractContentForProductCard(
-        activeTour.highlights,
-        activeTour.contentBlocks
-      );
+  const productCardContent = extractContentForProductCard(
+    activeTour.highlights,
+    activeTour.contentBlocks
+  );
 
   const openSafeSidebar = () => {
     addToAside({
@@ -323,7 +329,10 @@ const DetailedProductCard = (props) => {
   };
 
   return (
-    <DetailedDescriptionCard {...{ cardPosition, rightBlocksCount }}>
+    <DetailedDescriptionCard
+      {...{ cardPosition, rightBlocksCount }}
+      isEntertainmentMb={isEntertainmentMb}
+    >
       <div className="indicator-triangle"></div>
       <div className="product-v2-description-left">
         <div className="full-width-section">
@@ -340,7 +349,7 @@ const DetailedProductCard = (props) => {
               ) : null}
             </Split>
           </IconBoosters>
-          <Conditional if={descriptors?.length && !isEntertainmentMb}>
+          <Conditional if={descriptors?.length}>
             <div className="v2-descriptors">
               {descriptors.map((descriptor, index) => {
                 return (
@@ -368,15 +377,19 @@ const DetailedProductCard = (props) => {
                 <div className="description-content-block" key={index}>
                   <span className="description-label">{heading || label}</span>
                   <span className="description-content">
-                    <RichText
-                      render={contents || content}
-                      htmlSerializer={(...defaultArgs: any) =>
-                        shortCodeSerializerWithParentProps(
-                          defaultArgs,
-                          activeTour
-                        )
-                      }
-                    />
+                    {isEntertainmentMb && hasCategoryTourList ? (
+                      <p>{contents || content}</p>
+                    ) : (
+                      <RichText
+                        render={contents || content}
+                        htmlSerializer={(...defaultArgs: any) =>
+                          shortCodeSerializerWithParentProps(
+                            defaultArgs,
+                            activeTour
+                          )
+                        }
+                      />
+                    )}
                   </span>
                 </div>
               );
@@ -389,15 +402,19 @@ const DetailedProductCard = (props) => {
                 <div className="description-content-block right" key={index}>
                   <span className="description-label">{heading || label}</span>
                   <span className="description-content">
-                    <RichText
-                      render={contents || content}
-                      htmlSerializer={(...defaultArgs: any) =>
-                        shortCodeSerializerWithParentProps(
-                          defaultArgs,
-                          activeTour
-                        )
-                      }
-                    />
+                    {isEntertainmentMb && hasCategoryTourList ? (
+                      <p>{contents || content}</p>
+                    ) : (
+                      <RichText
+                        render={contents || content}
+                        htmlSerializer={(...defaultArgs: any) =>
+                          shortCodeSerializerWithParentProps(
+                            defaultArgs,
+                            activeTour
+                          )
+                        }
+                      />
+                    )}
                   </span>
                 </div>
               );

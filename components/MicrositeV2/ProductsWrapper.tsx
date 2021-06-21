@@ -41,6 +41,8 @@ export const ProductsWrapper = (props) => {
     categoryProps,
     changePage,
     allTours,
+    hasCategoryTourList,
+    categoryTourListData,
     currentLanguage,
     host,
     uid,
@@ -56,12 +58,14 @@ export const ProductsWrapper = (props) => {
     >
       <CategoryBar
         {...categoryProps}
-        availableTGIDs={Object.keys(allTours)}
+        availableTGIDs={allTours}
         isMobile={isMobile}
       />
       <PopulateProducts
         tgids={activeCategoryTgids}
         allTours={allTours}
+        categoryTourListData={categoryTourListData}
+        hasCategoryTourList={hasCategoryTourList}
         isMobile={isMobile}
         isEntertainmentMb={isEntertainmentMb}
         changePage={changePage}

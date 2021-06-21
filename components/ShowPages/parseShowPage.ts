@@ -7,7 +7,7 @@ import {
 } from 'constants/index';
 
 export const getObject = (data, filterArray) => {
-  let detailsObjects = {},
+  let detailsObjects: { [key: string]: string } = {},
     showType = '',
     detailObjectHeading,
     isSafetyBanner = false,

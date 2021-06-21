@@ -1,34 +1,32 @@
-import { REOPENING_TAG } from 'constants/index';
-
-import { strings } from 'const/strings';
 import React, { useEffect, useState } from 'react';
 import { useWindowWidth } from '@react-hook/window-size';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
-import { legacyBooleanCheck } from 'utils';
 import { RichText } from 'prismic-reactjs';
 import { StyledRichContent } from 'UI/RichContent';
-
-import { groupSlices } from '../../utils/helper';
+import Footer from 'components/common/Footer';
+import Header from 'components/common/Header';
+import { parseShowPageData } from 'components/ShowPages/parseShowPage';
+import ContentTabs from 'components/ShowPages/ContentTabs';
+import ShowPageBanner from 'components/ShowPages/Banner';
+import CustomerReview from 'components/ShowPages/CustomerReview';
+import FeatureCard from 'components/ShowPages/FeatureCard';
+import GoogleMap from 'components/ShowPages/GoogleMap';
+import SafeDFBannerWrapper from 'components/ShowPages/SafetyBanner';
+import Gallery from 'components/ShowPages/Gallery';
+import CategorySlider from 'components/ShowPages/CategorySlider';
+import SubHeading from 'components/ShowPages/SubHeading';
+import PopulateHead from 'components/common/meta';
+import { ALLOW_IMMEDIEATE_NESTING, REOPENING_TAG } from 'const/index';
+import { strings } from 'const/strings';
+import { legacyBooleanCheck } from 'utils';
+import { getHostName } from 'utils/getHostName';
+import { groupSlices } from 'utils/helper';
 import {
   fetchReviewsTourGroup,
   fetchCategory,
   fetchCurrencyList,
-} from '../../utils/apiUtils';
-import Footer from '../common/Footer';
-import Header from '../common/Header';
-import { parseShowPageData } from './parseShowPage';
-import ContentTabs from './ContentTabs';
-import ShowPageBanner from './Banner';
-import CustomerReview from './CustomerReview';
-import FeatureCard from './FeatureCard';
-import GoogleMap from './GoogleMap';
-import SafeDFBannerWrapper from './SafetyBanner';
-import Gallery from './Gallery';
-import CategorySlider from './CategorySlider';
-import SubHeading from './SubHeading';
-import PopulateHead from '../common/meta';
-import { ALLOW_IMMEDIEATE_NESTING } from '../../constants';
+} from 'utils/apiUtils';
 
 const AccordionGroup = dynamic(() => import('../slices/AccordionGroup'));
 
@@ -84,6 +82,8 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData, isDev }) => {
   const [similarProductData, setSimilarProductData] = useState([]);
   const [currencySymbol, setCurrencySymbol] = useState({});
   let isReopening = false;
+  const isStage = host.includes('stage-');
+  const hostname = getHostName(isStage, isDev);
 
   const [isMobile, setIsMobile] = useState(false);
   const width = useWindowWidth();
@@ -162,7 +162,7 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData, isDev }) => {
 
   useEffect(() => {
     const fetchTourGroupPrices = async () => {
-      const categoryData = await fetchCategory(categoryId);
+      const categoryData = await fetchCategory(categoryId, hostname);
 
       setSimilarProductData(
         categoryData?.products.filter((element) => element.id != tgid)

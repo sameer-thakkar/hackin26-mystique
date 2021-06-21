@@ -79,6 +79,11 @@ const V2MicrositeWrapper = styled.div`
   }
 `;
 
+/*
+TODO: Content Tabs with Category
+TODO: Category with TGID and Category
+*/
+
 export const HomePage = (props) => {
   const {
     header,
@@ -89,6 +94,8 @@ export const HomePage = (props) => {
     allTours,
     longFormContent,
     categoryProps,
+    hasCategoryTourList,
+    categoryTourListData,
     heroProps,
     changePage,
     uid,
@@ -166,15 +173,12 @@ export const HomePage = (props) => {
       <Conditional if={mbTheme === THEMES.MIN_BLUE}>
         <TextBanner bannerHeading={bannerHeading ? bannerHeading : null} />
       </Conditional>
-
       <Conditional if={alertPopup?.uid}>
         <div className="alert-wrapper">
           <Alert popupUID={alertPopup?.uid} currentLanguage={currentLanguage} />
         </div>
       </Conditional>
-
       <SafeDFBannerWrapper hasSafe={hasSafe} marginTop={40} />
-
       <Conditional if={heroSectionSlice.length}>
         <ProductsContextProvider allTours={allTours} ready={ready}>
           <div className="main-wrapper hero-slice-section">
@@ -191,14 +195,14 @@ export const HomePage = (props) => {
           </div>
         </ProductsContextProvider>
       </Conditional>
-
       <Conditional if={isEntertainmentMb}>
         <LttSafetyBanner />
       </Conditional>
-
       <Conditional if={hasToursSection}>
         <ProductsWrapper
           availableTGIDs={Object.keys(allTours)}
+          hasCategoryTourList={hasCategoryTourList}
+          categoryTourListData={categoryTourListData}
           directTgid={parseInt(directTgid)}
           allTours={allTours}
           isMobile={isMobile}
@@ -223,6 +227,7 @@ export const HomePage = (props) => {
               props={{
                 allTours,
                 isMobile,
+                hasCategoryTourList,
                 changePage,
                 host,
                 uid,

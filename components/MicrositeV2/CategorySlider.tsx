@@ -108,6 +108,7 @@ const CategorySlider = (props) => {
     description,
     isFirstTourOpen = false,
     isEntertainmentMb,
+    hasCategoryTourList = false,
   } = props;
   let autoScroll = !isFirstTourOpen;
 
@@ -244,6 +245,7 @@ const CategorySlider = (props) => {
           <DetailedProductCard
             tgidClicked={tgidClicked}
             key={carouselId}
+            hasCategoryTourList={hasCategoryTourList}
             allTours={allTours}
             isMobile={isMobile}
             isEntertainmentMb={isEntertainmentMb}

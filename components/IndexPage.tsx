@@ -13,7 +13,10 @@ import {
   isNakedDomain,
   getHeadoutLanguagecode,
 } from 'utils';
-import { uncategorizedToursListParser } from 'utils/dataParsers';
+import {
+  categoryTourListParser,
+  uncategorizedToursListParser,
+} from 'utils/dataParsers';
 import { getLangUID, isAmpUrl, removePageQuery } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { getPrismicDocument } from 'utils/prismicUtils';
@@ -167,6 +170,7 @@ export default class Page extends React.Component<any, any> {
     const { host } = req.headers || window.location;
     const isStage = host.includes('stage-');
     const { uid, lang } = getLangUID(req, query);
+    const hostname = getHostName(isStage, isDev);
     try {
       let initial_tgids = [];
 
@@ -202,7 +206,7 @@ export default class Page extends React.Component<any, any> {
         let ticketsData, startingPrice, currencyCode, currencySymbol;
         const categoryId = CMSContent?.data?.headout_category_id;
         if (categoryId) {
-          ticketsData = await fetchCategory(categoryId);
+          ticketsData = await fetchCategory(categoryId, hostname);
         }
         if (ticketsData?.products?.length) {
           currencyCode = ticketsData?.products
@@ -268,10 +272,9 @@ export default class Page extends React.Component<any, any> {
       }
       if (ContentType === CUSTOM_TYPES.SHOW_PAGE) {
         try {
-          const hostName = getHostName(isStage, isDev);
           const tgidData = await fetchTourGroupData(
             CMSContent.data?.tgid,
-            hostName
+            hostname
           ).then((res) => {
             return res.json();
           });
@@ -321,6 +324,21 @@ export default class Page extends React.Component<any, any> {
         const MBDesign = CMSContent.data.data.design || '';
         const mbTheme = CMSContent.data.data.theme || THEMES.DEFAULT;
         const toursTabFirstSlice = CMSContent.data.data.body1[0];
+        const categorizedTourList = CMSContent.data.data.body;
+
+        const categoryTourList = categorizedTourList?.length
+          ? categorizedTourList
+              ?.filter(
+                (category) => category.slice_type === 'tour_list_category'
+              )
+              ?.reduce((acc, curr) => acc + curr)
+          : [];
+
+        const categoryTourListData = await categoryTourListParser(
+          categoryTourList,
+          hostname
+        );
+
         const primsicTours = toursTabFirstSlice
           ? await toursTabSliceHandler(toursTabFirstSlice)
           : [];
@@ -372,6 +390,7 @@ export default class Page extends React.Component<any, any> {
         AllData = {
           CMSContent,
           toursList,
+          categoryTourListData,
           ContentType,
           uid,
           lang,
@@ -536,6 +555,7 @@ export default class Page extends React.Component<any, any> {
       lang,
       uid,
       toursList,
+      categoryTourListData = {},
       isMobile,
       mbTheme = THEMES.DEFAULT,
       isPreview,
@@ -569,6 +589,7 @@ export default class Page extends React.Component<any, any> {
               host={host}
               isDev={isDev}
               scorpioData={tourGroupData}
+              categoryTourListData={categoryTourListData}
               serverRequestStartTimestamp={serverRequestStartTimestamp}
               isMobile={isMobile}
             />

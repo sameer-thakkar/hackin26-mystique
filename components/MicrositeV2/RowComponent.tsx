@@ -23,10 +23,21 @@ const ProductsRow = styled.div`
 `;
 
 export const RowComponent = (props) => {
+  const {
+    isMobile,
+    tgidsSubArr,
+    allTours,
+    hasCategoryTourList,
+    categoryTourList,
+    isEntertainmentMb,
+    currentLanguage,
+    host,
+    uid,
+    sectionId,
+  } = props;
   const interactionContext = useContext(InteractionContext);
 
   const handleProductClicked = (productTgid, section) => {
-    const { isMobile } = props;
     if (isMobile) {
       props.changePage({
         name: PAGETYPE.MOBILE_PRODUCT_PAGE,
@@ -55,16 +66,6 @@ export const RowComponent = (props) => {
       });
   }, [interactionContext]);
 
-  const {
-    tgidsSubArr,
-    allTours,
-    isMobile,
-    isEntertainmentMb,
-    currentLanguage,
-    host,
-    uid,
-    sectionId,
-  } = props;
   const { activeTour } = interactionContext;
   const tgidClicked = activeTour.tgid;
   const cardPosition = tgidsSubArr.indexOf(activeTour.tgid);
@@ -77,6 +78,8 @@ export const RowComponent = (props) => {
             tgid={tgid}
             productClick={handleProductClicked}
             allTours={allTours}
+            hasCategoryTourList={hasCategoryTourList}
+            categoryTourList={categoryTourList}
             isMobile={isMobile}
             key={index}
             cardIdPrefix={sectionId}
@@ -88,6 +91,8 @@ export const RowComponent = (props) => {
           <DetailedProductCard
             tgidClicked={tgidClicked}
             allTours={allTours}
+            hasCategoryTourList={hasCategoryTourList}
+            categoryTourList={categoryTourList}
             isMobile={isMobile}
             isEntertainmentMb={isEntertainmentMb}
             currentLanguage={currentLanguage}
