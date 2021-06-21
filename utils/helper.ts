@@ -329,3 +329,9 @@ export const normaliseURL = (url = '') =>
 
 export const isSameURL = (urlA = '', urlB = '') =>
   normaliseURL(urlA) === normaliseURL(urlB);
+
+export const getHostName = (isStage, isDev) => {
+  return isDev
+    ? `http://localhost:3001`
+    : `https://${isStage ? 'stage-' : ''}microbrands.headout.com`;
+};

@@ -46,11 +46,11 @@ const AccordionGroup: React.FC<{
         itemScope: true,
       })}
     >
-      <TitleTextCombo>
-        <Conditional if={heading}>
+      <Conditional if={heading}>
+        <TitleTextCombo>
           <h2>{heading}</h2>
-        </Conditional>
-      </TitleTextCombo>
+        </TitleTextCombo>
+      </Conditional>
       {isAmp ? (
         <amp-accordion animate="">
           {accordions.map((accordion, index) => {

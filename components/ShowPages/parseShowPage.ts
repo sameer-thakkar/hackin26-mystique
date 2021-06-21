@@ -167,17 +167,17 @@ export const parseShowPageData = (data) => {
           faqSchema.push(
             JSON.parse(`
                 {
-                "heading": "${element.content.text.replace('Q-', '').trim()}",
+                "heading": "${element.content.text.replace('Q-', '')}",
                     "content": []
                 }`)
           );
         } else {
           // Answer
-          element.content.text = element.content.text.replace('A-', '').trim();
+          element.content.text = element.content.text.replace('A-', '');
           element.content.type = element.type;
           for (let i = 0; i < element.content.spans.length; i++) {
-            element.content.spans[i].start = element.content.spans[i].start - 3;
-            element.content.spans[i].end = element.content.spans[i].end - 3;
+            element.content.spans[i].start = element.content.spans[i].start - 2;
+            element.content.spans[i].end = element.content.spans[i].end - 2;
           }
           faqSchema[faqSchema.length - 1]?.content.push(element.content);
         }
@@ -190,8 +190,21 @@ export const parseShowPageData = (data) => {
   let tabHeadingHighlight = [];
   let tabHeadingInfo = [];
   let highlightsSection;
+  let aboutTheatreSection;
 
   tabSchema.forEach((element, index) => {
+    if (element.tab_name === 'About Theatre') {
+      element.tab_content.forEach((data) => {
+        if (data.type === 'heading3') {
+          data.type = 'heading2';
+        }
+        if (data.type === 'heading4') {
+          data.type = 'heading2';
+        }
+      });
+      aboutTheatreSection = element;
+    }
+
     if (
       TAB_ALLOWED_HIGHLIGHT.find((x) => {
         return x === element.tab_name;
@@ -252,5 +265,6 @@ export const parseShowPageData = (data) => {
     mapURL,
     highlightsSection,
     listicleSchema,
+    aboutTheatreSection,
   };
 };

@@ -21,7 +21,7 @@ import { getLangUID, isAmpUrl, removePageQuery } from 'utils/urlUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { getPrismicDocument } from 'utils/prismicUtils';
 import { fetchCategory, fetchCurrencyList } from 'utils/apiUtils';
-import { getHostName } from 'utils/getHostName';
+import { getHostName } from 'utils/helper';
 import Analytics from 'utils/analytics';
 
 import { getAppTheme } from '../style/theme';

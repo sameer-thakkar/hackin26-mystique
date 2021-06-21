@@ -34,6 +34,7 @@ const ToursAPI = async (req, res) => {
           data?.microBrandsHighlight || ''
         );
       }
+
       res.write(JSON.stringify(data));
       res.end();
     });

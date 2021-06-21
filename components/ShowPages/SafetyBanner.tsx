@@ -1,5 +1,4 @@
 import { SIZES } from 'const/ui-constants';
-import { THEMES } from 'const/index';
 import { useContext, useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
@@ -23,23 +22,11 @@ const Wrapper = styled.div`
   ${StlyedSplit} {
     margin-top: ${({ marginTop }) => (marginTop ? marginTop : 0)}px;
   }
-  ${({ theme }) =>
-    theme.theme === THEMES.DEFAULT
-      ? `
-    @media (max-width: 768px) {
-      margin-bottom: 0;
-      ${StlyedSplit} {
-        grid-template-columns: auto auto;
-        padding: 0 16px;
-        padding-left: 32px;
-        &:after {
-          display: none;
-        }
-        grid-column-gap: 24px;
-      }
+  @media (max-width: 768px) {
+    ${StlyedSplit} {
+      margin-bottom: 48px;
     }
-  `
-      : ``}
+  }
 `;
 
 const SafeDFBannerWrapper = ({

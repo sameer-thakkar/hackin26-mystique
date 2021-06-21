@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 
-import Image from '../UI/Image';
+import Image, { Wrapper } from '../UI/Image';
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 import { BLACK_CROSS, ALL_PHOTOS } from '../../assets/SvgIcons';
 
@@ -10,17 +10,22 @@ const GalleryWrapper = styled.div`
   display: grid;
   margin-top: 48px;
   position: relative;
-  grid-template-columns: calc(70% - 10px) 30%;
-  grid-gap: 10px;
+  grid-gap: 16px;
+  grid-template-columns: min-content min-content;
+  justify-content: center;
 
   .left-image-wrapper {
     height: 490px;
-    padding: 5px 0;
+    width: 792px;
   }
 
   .right-image-wrapper {
-    height: 240px;
-    padding: 5px 0;
+    height: 237px;
+    width: 392px;
+  }
+
+  .right-image-bottom {
+    padding-top: 16px;
   }
 
   img {
@@ -32,15 +37,21 @@ const GalleryWrapper = styled.div`
 
   @media (max-width: 768px) {
     margin-top: 32px;
+    grid-gap: 6px;
 
     .left-image-wrapper {
       height: 140px;
+      width: 223px;
     }
     .right-image-wrapper {
-      height: 65px;
+      height: 67px;
+      width: 114px;
     }
     img {
       border-radius: 5px;
+    }
+    .right-image-bottom {
+      padding-top: 6px;
     }
   }
 `;
@@ -58,6 +69,10 @@ const GalleryPopUpWrapper = styled.div(({ isVisibleGalleryPopUp }) => {
     overflow: auto;
     background-color: #F8F8F8;
   
+    ${Wrapper}{
+      height: auto;
+    }
+
     .swiper-pagination {
       z-index: 2;
     }
@@ -124,10 +139,7 @@ const GalleryPopUpWrapper = styled.div(({ isVisibleGalleryPopUp }) => {
       justify-content: center;
       bottom: -30px;
     }
-    .carousel-slider .swiper-button-next.swiper-button-disabled {
-      opacity: 0;
-    }
-    .carousel-slider .swiper-button-prev.swiper-button-disabled {
+    .swiper-button-disabled {
       opacity: 0;
     }
     @media (max-width: 768px) {
@@ -163,7 +175,11 @@ const GalleryPopUpWrapper = styled.div(({ isVisibleGalleryPopUp }) => {
 
 const ActiveImageWrapper = styled.div(
   ({ active }) => `
-  ${active ? `display:block;` : `display:none;`}
+  ${active ? `display:flex;` : `display:none;`}
+  height: 100%;
+  margin-bottom: 0;
+  align-items: flex-end;
+
   img{
     height: 622px;
     width: 996px;
@@ -196,6 +212,7 @@ const ImageWrapper = styled.div(
   @media (max-width: 768px) {
     img{
       max-height: 100px;
+      width: 163px;
       cursor: pointer;
     }
   }
@@ -204,10 +221,25 @@ const ImageWrapper = styled.div(
 
 const CrossWrapper = styled.div`
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 32px;
+  right: 32px;
   width: 40px;
+  height: 40px;
   cursor: pointer;
+  svg {
+    width: 40px;
+    height: 40px;
+  }
+  @media (max-width: 768px) {
+    width: 32px;
+    height: 32px;
+    top: 16px;
+    right: 16px;
+    svg {
+      width: 32px;
+      height: 32px;
+    }
+  }
 `;
 
 const GalleryPopUpContentWrapper = styled.div`
@@ -215,9 +247,14 @@ const GalleryPopUpContentWrapper = styled.div`
   text-align: center;
   margin: auto;
   display: grid;
-  align-items: center;
   justify-content: center;
   min-height: 100%;
+  grid-gap: 16px;
+  align-items: baseline;
+
+  @media (max-width: 768px) {
+    grid-gap: 24px;
+  }
 `;
 
 const AllPhotoWrapper = styled.div`
@@ -225,6 +262,10 @@ const AllPhotoWrapper = styled.div`
   right: 12px;
   top: 15px;
   cursor: pointer;
+  @media (max-width: 768px) {
+    right: 4px;
+    top: 4px;
+  }
 `;
 
 const Gallery = ({ galleryArray, isMobile }) => {
@@ -241,15 +282,15 @@ const Gallery = ({ galleryArray, isMobile }) => {
     shouldSwiperUpdate: true,
     lazy: true,
     initialSlide: 1,
-    spaceBetween: 16,
+    spaceBetween: isMobile ? 8 : 16,
     slidesPerGroup: slidesPerGroup,
     centeredSlides: isMobile,
     navigation: isMobile
       ? false
       : {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
   };
 
   return (
@@ -313,7 +354,7 @@ const Gallery = ({ galleryArray, isMobile }) => {
               <Image url={second.url} alt={second.alt || 'Gallery Image'} />
             </div>
             <div
-              className="right-image-wrapper"
+              className="right-image-wrapper right-image-bottom"
               onClick={() => {
                 setIsVisibleGalleryPopUp(true);
                 setActiveIndexGalleryPopUp(2);

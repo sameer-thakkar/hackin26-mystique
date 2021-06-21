@@ -16,7 +16,7 @@ const StickyFooterContentWrapper = styled.div`
   .buy-button {
     padding: 12px 24px;
     background: #ec1943;
-    border-radius: 8px;
+    border-radius: 4px;
     margin: 16px auto;
     color: #ffffff;
     border: none;

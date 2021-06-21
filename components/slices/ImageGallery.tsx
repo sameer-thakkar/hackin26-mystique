@@ -308,10 +308,13 @@ const FullImage = styled.div`
     grid-row: 1;
     grid-column: 1;
     display: flex;
-    img {
+    picture {
       width: 100%;
-      height: 600px;
-      object-fit: cover;
+      img {
+        width: 100%;
+        height: 600px;
+        object-fit: cover;
+      }
     }
   }
   &:after {
@@ -351,13 +354,20 @@ const GallerySwiper = styled.div`
       line-height: 22px;
     }
   }
+  picture {
+    display: flex;
+  }
   img {
     border-radius: 4px;
+    height: 190px;
   }
   @media (max-width: 768px) {
     ${StyledImage} {
       p {
         font-size: 14px;
+      }
+      img {
+        height: 104px;
       }
     }
   }
@@ -493,16 +503,24 @@ const ImageGallery = (props) => {
       <GallerySwiper>
         <div className="swiper">
           <Swiper
-            renderPrevButton={() => (
-              <div className="button-right">
-                {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
-              </div>
-            )}
-            renderNextButton={() => (
-              <div className="button-left">
-                {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
-              </div>
-            )}
+            renderPrevButton={
+              isMobile
+                ? null
+                : () => (
+                    <div className="button-right">
+                      {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
+                    </div>
+                  )
+            }
+            renderNextButton={
+              isMobile
+                ? null
+                : () => (
+                    <div className="button-left">
+                      {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
+                    </div>
+                  )
+            }
             {...swiperOpts}
             {...galleryOpts}
           >
@@ -561,9 +579,9 @@ const ImageGallery = (props) => {
                         url={
                           image.uploaded_image?.url || image.linked_image?.url
                         }
-                        dontLazyLoad={true}
                         className={`swiper-zoom-target`}
                         alt={caption}
+                        dontLazyLoad
                       />
                     </div>
                     <Content>

@@ -117,7 +117,7 @@ const Text = styled.div`
   line-height: 24px;
   li {
     list-style-position: inside;
-    padding-left: 15px;
+    padding-left: 1.5rem;
     text-indent: -1.5em;
   }
 `;

@@ -20,6 +20,10 @@ const PopupTrigger = dynamic(() =>
 const IFrame = dynamic(() => import('components/shortcodes/IFrame'));
 const Cross = dynamic(() => import('components/shortcodes/Cross'));
 const Check = dynamic(() => import('components/shortcodes/Check'));
+const SpotifyPlayer = dynamic(() =>
+  import('components/shortcodes/SpotifyPlayer')
+);
+const Notes = dynamic(() => import('components/shortcodes/Notes'));
 
 interface ShortCodeDictionary {
   [key: string]: {
@@ -63,6 +67,14 @@ const shortCodesDict: ShortCodeDictionary = {
   date: {
     function: DynamicDate,
     type: SHORT_CODE_TYPES.FUNCTION,
+  },
+  'spotify-player': {
+    component: SpotifyPlayer,
+    type: SHORT_CODE_TYPES.COMPONENT,
+  },
+  notes: {
+    component: Notes,
+    type: SHORT_CODE_TYPES.COMPONENT,
   },
 };
 

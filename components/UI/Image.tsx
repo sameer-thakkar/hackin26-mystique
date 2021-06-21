@@ -11,7 +11,7 @@ const Picture = styled.picture`
   line-height: 0;
 `;
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   position: relative;
   height: 100%;
   width: 100%;

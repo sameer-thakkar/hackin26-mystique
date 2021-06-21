@@ -204,4 +204,6 @@ export const refsArrayToObject = (refArray) => {
 };
 
 export const legacyBooleanCheck = (field): boolean =>
-  typeof field === 'string' ? field?.toLowerCase() === 'yes' : field;
+  typeof field === 'string'
+    ? field?.toLowerCase() === 'yes' || field?.toLowerCase() === 'true'
+    : field;
