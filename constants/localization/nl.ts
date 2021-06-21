@@ -28,6 +28,7 @@ const nl = {
   TODAY: 'Vandaag',
   TOMORROW: 'Morgen',
   MORE_FROM: 'Meer van',
+  OFF: 'Off',
   TICKETS: 'Kaartjes',
   LISTICLES: {
     SEATING_CHART: 'Stoelenschema',

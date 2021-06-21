@@ -4,6 +4,7 @@ import { scroller } from 'react-scroll';
 import styled from 'styled-components';
 import InteractionContext from 'contexts/Interaction';
 import { PAGETYPE } from 'const/index';
+import Conditional from 'components/common/Conditional';
 
 const DetailedProductCard = dynamic(() => import('./DetailedProductCard'), {
   ssr: false,
@@ -77,6 +78,7 @@ export const RowComponent = (props) => {
           <Product
             tgid={tgid}
             productClick={handleProductClicked}
+            isEntertainmentMb={isEntertainmentMb}
             allTours={allTours}
             hasCategoryTourList={hasCategoryTourList}
             categoryTourList={categoryTourList}
@@ -87,7 +89,7 @@ export const RowComponent = (props) => {
         );
       })}
       <React.Fragment>
-        {showDescription ? (
+        <Conditional if={showDescription}>
           <DetailedProductCard
             tgidClicked={tgidClicked}
             allTours={allTours}
@@ -102,7 +104,7 @@ export const RowComponent = (props) => {
             cardPosition={cardPosition + 1}
             closeDescription={closeDescription}
           />
-        ) : null}
+        </Conditional>
       </React.Fragment>
     </ProductsRow>
   );

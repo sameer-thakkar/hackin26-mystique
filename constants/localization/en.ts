@@ -30,6 +30,7 @@ const en = {
   TODAY: 'Today',
   TOMORROW: 'Tomorrow',
   MORE_FROM: 'More from',
+  OFF: 'Off',
   TICKETS: 'Tickets',
   LISTICLES: {
     SEATING_CHART: 'Seating Chart',

@@ -42,6 +42,7 @@ export const categoryTourListParser = async (sliceObj, hostname) => {
             id,
             averageRating,
             reviewCount,
+            primaryCategory,
           } = product;
           const { finalPrice, originalPrice, currencyCode } =
             listingPrice || {};
@@ -56,23 +57,26 @@ export const categoryTourListParser = async (sliceObj, hostname) => {
             'Cancellation Policy',
             'Age Limit',
           ];
-          const highlights = getObject(microBrandsHighlight, filterHighlights);
+          const { detailsObjects: highlights, isSafetyBanner: hasBestSafety } =
+            getObject(microBrandsHighlight, filterHighlights) || {};
+          const { detailsObjects: reopeningDate } =
+            getObject(microBrandsHighlight, ['Opening Date']) || {};
 
-          const { detailsObjects } = highlights || {};
           const contentBlocks = {
             hidden: [],
             left: [],
             right: [],
           };
-          for (const [key, value] of Object.entries(detailsObjects)) {
+          for (const key of filterHighlights) {
             const isLeftBlock = [
               'Theatre Name',
               'Show Timings',
               'Duration',
             ].includes(key);
+            const value = highlights[key];
             const block = {
-              label: key,
-              content: value,
+              label: value ? key : null,
+              content: value ? value : null,
               align: isLeftBlock ? 'left' : 'right',
               len: value?.length,
               labelId: key?.toLowerCase()?.split(' ')?.join('-'),
@@ -80,6 +84,24 @@ export const categoryTourListParser = async (sliceObj, hostname) => {
             isLeftBlock
               ? contentBlocks?.left?.push(block)
               : contentBlocks?.right?.push(block);
+          }
+
+          let category;
+
+          const categoryName = primaryCategory?.displayName;
+
+          switch (categoryName) {
+            case 'London Musicals':
+              category = 'Musical';
+              break;
+            case 'London Plays':
+              category = 'Plays';
+              break;
+            case 'London Ballet Tickets':
+              category = 'Ballets';
+              break;
+            default:
+              category = categoryName;
           }
 
           return {
@@ -102,11 +124,14 @@ export const categoryTourListParser = async (sliceObj, hostname) => {
             reviewCount,
             ctaBooster: null,
             description: null,
-            available: listingPrice ? true : false,
+            available: listingPrice?.finalPrice ? true : false,
             overlayBooster: null,
             vendor: null,
             allTags,
             dfListingPrice: null,
+            reopeningDate: reopeningDate['Opening Date'],
+            hasBestSafety,
+            category,
             microBrandsHighlight: highlights,
             listingPrice,
             safetyImages: null,

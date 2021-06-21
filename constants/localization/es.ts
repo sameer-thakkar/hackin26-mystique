@@ -36,6 +36,7 @@ const es = {
   PRICES_STARTING: 'Precios desde',
   FROM: 'a partir de',
   MORE_DETAILS: 'Más detalles',
+  OFF: 'Off',
   FOOTER: {
     DISCLAIMER:
       'Este sitio no es el sitio web oficial <attraction>. Este sitio es operado por Headout quien trabaja de la mano con operadores turísticos para ofrecer experiencias increíbles en un sólo clic.',

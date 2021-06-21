@@ -37,6 +37,7 @@ const de = {
   PRICES_STARTING: 'Preise ab',
   FROM: 'ab',
   MORE_DETAILS: 'Mehr anzeigen',
+  OFF: 'Off',
   FOOTER: {
     DISCLAIMER:
       'Diese Website ist nicht die offizielle Website <attraction>. Die Website wird vom Unternehmen Headout betrieben, das mit Veranstaltern für Attraktionen und Touren zusammenarbeitet, um unglaubliche Erlebnisse auf Knopfdruck anzubieten.',

@@ -17,15 +17,17 @@ import Gallery from 'components/ShowPages/Gallery';
 import CategorySlider from 'components/ShowPages/CategorySlider';
 import SubHeading from 'components/ShowPages/SubHeading';
 import PopulateHead from 'components/common/meta';
-import { ALLOW_IMMEDIEATE_NESTING, REOPENING_TAG } from 'const/index';
+import {
+  ALLOW_IMMEDIEATE_NESTING,
+  REOPENING_TAG,
+  FAVICON_LONDON_THEATRE_TICKETS,
+} from 'const/index';
 import { strings } from 'const/strings';
 import { legacyBooleanCheck } from 'utils';
-import { getHostName } from 'utils/getHostName';
-import { groupSlices } from 'utils/helper';
+import { groupSlices, getHostName } from 'utils/helper';
 import cloneDeep from 'lodash.clonedeep';
 import { StyledAccordion } from 'components/slices/Accordion';
 import { convertUidToUrl } from 'utils/urlUtils';
-
 import {
   fetchReviewsTourGroup,
   fetchCategory,

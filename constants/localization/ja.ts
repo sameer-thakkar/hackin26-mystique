@@ -35,6 +35,7 @@ const ja = {
   PRICES_STARTING: '価格開始',
   FROM: 'から',
   MORE_DETAILS: '詳細を見る',
+  OFF: 'Off',
   FOOTER: {
     DISCLAIMER:
       'これは<観光地>の公式サイトではなく。ヘッドアウトが運営するサイトです。世界の各事業者と協力して、クリックするだけで最高の旅行体験ができます.',

@@ -11,6 +11,7 @@ import Conditional from 'components/common/Conditional';
 import LocalisedPrice from 'UI/LPrice';
 import { SEE_SAFETY, STAR } from 'assets/SvgIcons';
 import { strings } from 'const/strings';
+import { dateToString } from 'utils/dateToString';
 
 const ProductCard = styled.div`
   width: 100%;
@@ -125,7 +126,7 @@ const ProductCard = styled.div`
   }
 
   .discount {
-    background-color: #dbfddb;
+    background-color: ${COLORS.SOOTHING_GREEN};
     color: ${COLORS.OKAY_GREEN};
     padding: 2px 4px;
     border-radius: 2px;
@@ -280,9 +281,20 @@ const Product = (props) => {
   const { allTours, tgid, cardIdPrefix, isMobile, isEntertainmentMb } = props;
   const { currencySymbolMap, lang } = useContext(MBContext);
   if (!allTours[tgid]) return null;
-  const { listingPrice, dfListingPrice, ...tour } = allTours[tgid];
-  const { productImage, title, overlayBooster, vendor, cardFooter } =
-    tour || {};
+  const { listingPrice, dfListingPrice, ...tour } = allTours[tgid] || {};
+  const {
+    productImage,
+    title,
+    overlayBooster,
+    vendor,
+    cardFooter,
+    hasBestSafety,
+    category,
+    reopeningDate,
+    averageRating,
+    reviewCount,
+  } = tour || {};
+
   const {
     finalPrice: price,
     originalPrice: scratchPrice,
@@ -296,6 +308,8 @@ const Product = (props) => {
   const handleProductClick = () => {
     props.productClick(props.tgid, props.cardIdPrefix);
   };
+
+  const openingDate = dateToString(reopeningDate, lang, 'DD MMM, YYYY');
   return (
     <ProductCard
       onClick={handleProductClick}
@@ -318,7 +332,7 @@ const Product = (props) => {
         <Conditional if={overlayBooster}>
           <div className="overlay-booster">{overlayBooster}</div>
         </Conditional>
-        <Conditional if={isEntertainmentMb}>
+        <Conditional if={isEntertainmentMb && hasBestSafety}>
           <div className="emb-safety">{SEE_SAFETY}</div>
         </Conditional>
       </div>
@@ -328,16 +342,28 @@ const Product = (props) => {
         </Conditional>
         <Conditional if={isEntertainmentMb}>
           <div className="l1-booster-wrapper">
-            <div className="l1-booster">Category</div>
-            <div className="rating">
-              <span className="avg-rating">4.7 {STAR(COLORS.JOY_MUSTARD)}</span>
-              <span className="total-rating">(2.7k)</span>
-            </div>
+            <div className="l1-booster">{category}</div>
+            <Conditional if={reviewCount}>
+              <div className="rating">
+                <span className="avg-rating">
+                  {averageRating} {STAR(COLORS.JOY_MUSTARD)}
+                </span>
+                <span className="total-rating">
+                  (
+                  {reviewCount > 999
+                    ? `${(reviewCount / 1000).toFixed(1)}k`
+                    : reviewCount}
+                  )
+                </span>
+              </div>
+            </Conditional>
           </div>
         </Conditional>
         <div className="title-wrap">
           <div className="product-v2-title">{truncate(title, 70)}</div>
-          <div className="reopening">Reopening on 2 Jan, 2021</div>
+          <Conditional if={isEntertainmentMb && openingDate !== 'Invalid Date'}>
+            <div className="reopening">Reopening on {openingDate}</div>
+          </Conditional>
         </div>
         <div className="product-v2-bottom-left">
           <div className="product-v2-price">
@@ -347,7 +373,9 @@ const Product = (props) => {
               lang={lang}
             />
             <Conditional if={isEntertainmentMb && bestDiscount}>
-              <span className="discount">{bestDiscount}% off</span>
+              <span className="discount">
+                {bestDiscount}% {strings.OFF}
+              </span>
             </Conditional>
           </div>
           <Conditional if={scratchPrice > price}>

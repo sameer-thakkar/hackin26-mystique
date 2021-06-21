@@ -35,6 +35,7 @@ const cn = {
   PRICES_STARTING: '价格',
   FROM: '从',
   MORE_DETAILS: '更多详情',
+  OFF: 'Off',
   FOOTER: {
     DISCLAIMER:
       '这并不是<attraction>的官方网站。这是一个由Headout运营的平台，我们与世界各国的运营商合作，轻轻点击就能得到最好的旅行体验。 ',

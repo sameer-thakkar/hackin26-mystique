@@ -36,6 +36,7 @@ const pt = {
   PRICES_STARTING: 'Preços a partir de',
   FROM: 'a partir de',
   MORE_DETAILS: 'Mais detalhes',
+  OFF: 'Off',
   FOOTER: {
     DISCLAIMER:
       'O site não é a página oficial da atração <attraction>. O site é mantido pela Headout, que trabalha em colaboração com atrações e operadores locais para oferecer experiências incríveis com apenas um clique!',
