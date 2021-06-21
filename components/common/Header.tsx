@@ -82,7 +82,8 @@ const StyledHeaderContainer = styled.div`
   }
 `;
 
-const StyledLogo = styled.div`
+const StyledLogo = styled.div(
+  ({ isEntertainmentMB }) => `
   display: grid;
   grid-auto-flow: column;
   grid-column-gap: 10px;
@@ -91,13 +92,13 @@ const StyledLogo = styled.div`
   justify-content: left;
   max-width: 350px;
   img {
-    height: 44px;
+    height: ${isEntertainmentMB ? `36px` : `44px`};
     max-width: 100%;
     width: unset;
     object-fit: contain;
   }
   svg {
-    height: 44px;
+    height: ${isEntertainmentMB ? `36px` : `44px`};
     width: 113px;
   }
   @media (max-width: 768px) {
@@ -105,14 +106,15 @@ const StyledLogo = styled.div`
     grid-auto-flow: column;
     margin-left: 15px;
     img {
-      height: 26px;
+      height: ${isEntertainmentMB ? `20px` : `26px`};
     }
     svg {
-      height: 26px;
+      height: ${isEntertainmentMB ? `20px` : `26px`};
       width: 67px;
     }
   }
-`;
+`
+);
 
 const StyledHeaderElements = styled.div`
   justify-self: right;
@@ -174,6 +176,7 @@ const Header: React.FC<any> = (props) => {
     isAmp,
     headerCurrencies,
     currentCurrency,
+    isEntertainmentMB = false,
   } = props;
   const hamburgerIconCheck =
     showGroupBooking ||
@@ -226,7 +229,7 @@ const Header: React.FC<any> = (props) => {
     <StyledHeader hasShadow={scrollPos > 60}>
       <StyledHeaderContainer hasDropdownLinks={!isMobile && hasDropdownLinks}>
         <a href={logoRedirectionURL || '/'}>
-          <StyledLogo>
+          <StyledLogo isEntertainmentMB={isEntertainmentMB}>
             <Image
               url={logoUrl}
               alt={logoAltText}

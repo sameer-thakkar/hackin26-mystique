@@ -47,7 +47,7 @@ const CardCarouselContainer = styled.div`
   .carousel-slider .mobile-category-wrapper {
     display: grid;
     grid-gap: 15px;
-    grid-template-columns: auto auto;
+    grid-template-columns: 50% 50%;
   }
   .carousel-slider .see-more {
     font-weight: 600;
@@ -170,9 +170,9 @@ export default class CategorySlider extends Component<CardCarouselProps> {
       navigation: isMobile
         ? false
         : {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
     };
 
     return (
@@ -194,7 +194,7 @@ export default class CategorySlider extends Component<CardCarouselProps> {
                 ) : null;
               })}
             </div>
-            {this.state.numberOfCard != cards.length ? (
+            {this.state.numberOfCard < cards.length ? (
               <button
                 className="see-more"
                 onClick={() => this.setState({ numberOfCard: cards.length })}

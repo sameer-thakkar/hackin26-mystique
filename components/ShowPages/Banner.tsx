@@ -10,7 +10,7 @@ import { strings } from 'const/strings';
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { createBookingURL } from 'utils';
-import PriceBlock from 'UI/PriceBlock';
+import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
 
 import { dateToString } from '../../utils/dateToString';
 import Image from '../UI/Image';
@@ -31,6 +31,8 @@ const Banner = styled.div`
 
   @media (max-width: 768px) {
     height: 234px;
+  }
+  ${StyledPriceBlock} {
   }
 `;
 
@@ -100,7 +102,7 @@ const BannerContent = styled.div`
   max-width: 1200px;
   z-index: 2;
   background: #ffffff;
-  padding: 32px 16px 0;
+  padding: 32px 30px 0;
   border-radius: 8px 8px 0px 0px;
 
   .heading-wrapper {
@@ -112,11 +114,14 @@ const BannerContent = styled.div`
 
   .top-text-wrapper {
     font-size: 14px;
+    line-height: 16px;
+    font-weight: normal;
   }
 
   h1 {
     font-size: 24px;
     margin: 6px 0 12px;
+    line-height: 28px;
   }
 
   .tags-wrapper {
@@ -124,9 +129,10 @@ const BannerContent = styled.div`
     color: #666666;
     background: #f0f0f0;
     padding: 6px 8px;
-    margin: 6px 8px 0 0;
+    margin: 0 8px 0 0;
     border-radius: 2px;
     font-size: 12px;
+    line-height: 16px;
   }
 
   .right-pricing {
@@ -140,12 +146,14 @@ const BannerContent = styled.div`
     justify-content: flex-end;
     display: flex;
     border-right: 1px solid #e2e2e2;
+    padding-right: 16px;
   }
 
   .tour-price {
     color: #444444;
     font-weight: 600;
     font-size: 21px;
+    line-height: 28px;
   }
 
   .tour-scratch-price {
@@ -158,7 +166,7 @@ const BannerContent = styled.div`
   .buy-button {
     padding: 12px 20px;
     background: #ec1943;
-    border-radius: 8px;
+    border-radius: 4px;
     margin: 0px 16px;
     color: #ffffff;
     border: none;
@@ -178,13 +186,17 @@ const BannerContent = styled.div`
   }
 
   .details-container .key {
-    color: #666666;
+    font-weight: normal;
     font-size: 12px;
+    line-height: 16px;
+    color: #888888;
+    padding-bottom: 4px;
   }
 
   .details-container .value {
     color: #444444;
     font-size: 15px;
+    line-height: 20px;
   }
 
   @media (max-width: 768px) {
@@ -196,7 +208,7 @@ const BannerContent = styled.div`
     }
 
     .individual-container {
-      padding: 10px;
+      padding-bottom: 32px;
     }
 
     .right-pricing {
@@ -225,6 +237,7 @@ const BannerContent = styled.div`
 
     .tour-price {
       font-size: 17px;
+      line-height: 20px;
     }
 
     .tour-scratch-price {
@@ -233,6 +246,7 @@ const BannerContent = styled.div`
 
     .details-container .value {
       font-size: 14px;
+      line-height: 16px;
     }
 
     .priceBlockWrapper {
@@ -241,6 +255,9 @@ const BannerContent = styled.div`
       padding-bottom: 24px;
       margin-bottom: 24px;
       border-bottom: 1px solid #e2e2e2;
+    }
+    .tags-wrapper {
+      margin: 4px 4px 0 0;
     }
   }
 `;
@@ -258,7 +275,7 @@ const ShowPageBanner = ({
 
   const { localSymbol } = currency;
 
-  const [productImages] = imageUploads;
+  const productImage = imageUploads?.[1];
 
   const { nakedDomain, biLink } = useContext(MBContext);
 
@@ -354,8 +371,8 @@ const ShowPageBanner = ({
           <BannerImageWrapper>
             <div className="banner-image-container is-active">
               <Image
-                url={productImages.url}
-                alt={productImages.alt || 'banner'}
+                url={productImage.url}
+                alt={productImage.alt || 'banner'}
               />
               {videoAvailable ? (
                 <>

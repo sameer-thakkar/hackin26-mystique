@@ -2,10 +2,10 @@ const objectToQuery = (query) => {
   const params = Object.entries(query);
   return params.length
     ? '?' +
-    Object.entries(query)
-      .filter(([, val]) => !!val)
-      .map(([key, val]) => `${key}=${val}`)
-      .join('&')
+        Object.entries(query)
+          .filter(([, val]) => !!val)
+          .map(([key, val]) => `${key}=${val}`)
+          .join('&')
     : '';
 };
 
@@ -23,7 +23,8 @@ export const fetchTourList = ({ tgids, ...query }) =>
     })}`
   );
 
-export const fetchTourGroupData = (tgid, hostName) => fetch(`${hostName}/api/tours/v5/tour-group/get/${tgid}`);
+export const fetchTourGroupData = (tgid, hostName) =>
+  fetch(`${hostName}/api/tours/v5/tour-group/get/${tgid}`);
 
 export const fetchCurrencyList = async () => {
   try {
@@ -47,7 +48,10 @@ export const fetchCategory = async (categoryId: string) => {
   }
 };
 
-export const fetchReviewsTourGroup = (tgid, limit) => fetch(`https://api.headout.com/api/v2/review/tour-group/id/${tgid}?&limit=${limit}`);
+export const fetchReviewsTourGroup = (tgid, limit) =>
+  fetch(
+    `https://api.headout.com/api/v2/review/tour-group/id/${tgid}?&limit=${limit}`
+  );
 
 export const fetchInventoryAPI = async (tgid: string) => {
   try {

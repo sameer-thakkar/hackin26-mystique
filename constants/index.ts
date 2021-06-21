@@ -538,12 +538,12 @@ export const TAB_ALLOWED_HIGHLIGHT = [
   'About Show',
   'Show Details',
   'Age Suitability',
+  'Top Songs',
   'Tickets',
   'Covid-19 Safety',
 ];
 
 export const TAB_ALLOWED_INFO = [
-  'About Theatre',
   'Getting There',
   'Facilities & Accessibilities',
   'Additional Information',
@@ -586,3 +586,5 @@ export const SAFETY_MEASURE_CTA_TEXT = 'More Details';
 export const OPENING_DATE = 'Opening Date';
 export const REOPENING_DATE = 'Reopening Date';
 export const REOPENING_TAG = 'REOPENING';
+export const FAVICON_LONDON_THEATRE_TICKETS =
+  'https://images.prismic.io/mystique/43d0bf7f-2955-413b-a266-8fc62dd9c933_shows-favicon.png?auto=compress,format';

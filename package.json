@@ -28,6 +28,7 @@
     "js-cookie": "^2.2.1",
     "lazysizes": "^5.1.1",
     "libphonenumber-js": "^1.7.22",
+    "lodash.clonedeep": "^4.5.0",
     "next": "^10.0.7",
     "prismic-javascript": "^3.0.0",
     "prismic-reactjs": "^1.0.1",
@@ -53,10 +54,10 @@
     "xmlbuilder": "^15.0.0"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^10.0.7",
     "@babel/core": "^7.8.4",
     "@commitlint/cli": "^9.0.1",
     "@commitlint/config-conventional": "^9.0.1",
+    "@next/bundle-analyzer": "^10.0.7",
     "@storybook/addon-docs": "^5.3.13",
     "@storybook/addon-knobs": "^5.3.13",
     "@storybook/addon-links": "^5.3.12",

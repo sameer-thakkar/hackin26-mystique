@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import { SOLEIL, COLORS } from 'const/ui-constants';
+import { shortCodeSerializer } from 'utils/shortCodes';
 
 type ContentTabsProps = {
   tabsArr: any[];
@@ -10,7 +11,8 @@ type ContentTabsProps = {
 
 const StyledContentTabsWrapper = styled.div`
   display: grid;
-  grid-row-gap: 16px;
+  grid-row-gap: 10px;
+  margin-bottom: 48px;
   font-family: ${SOLEIL.FONT_STACK};
 `;
 
@@ -19,9 +21,10 @@ const StyledContentTabs = styled.div`
   color: ${COLORS.DAVY_GREY};
   grid-auto-flow: column;
   font-size: 18px;
-  grid-column-gap: 32px;
+  grid-column-gap: 40px;
   border-bottom: 1px solid #ebebeb;
   justify-content: left;
+
   @media (max-width: 768px) {
     overflow-x: scroll;
   }
@@ -48,9 +51,15 @@ const StyledContent = styled.div(({ active }) => {
     font-size: 15px;
     max-width: 776px;
     line-height: 24px;
+
     h2{
-      margin: 16px 0px;
+      margin: 32px 0px 16px;
       font-size: 16px;
+      line-height: 20px;
+      color: #666666;
+    }
+    p{
+      margin: 16px 0 0;
     }
     img {
       width: 100%;
@@ -58,6 +67,14 @@ const StyledContent = styled.div(({ active }) => {
     }
     a {
       color: #ec1943;
+    }
+    ul{
+      padding: 0;
+    }
+    li {
+      list-style-position: inside;
+      padding-left: 1.5rem;
+      text-indent: -1.5em;
     }
     @media (max-width: 768px) {
       width:100%;
@@ -106,7 +123,10 @@ const ContentTabs: React.FC<ContentTabsProps> = ({ tabsArr, contentArr }) => {
             key={index}
             {...(activeTabName === content.tab_name && { active: true })}
           >
-            <RichText render={content.tab_content} />
+            <RichText
+              render={content.tab_content}
+              htmlSerializer={shortCodeSerializer}
+            />
           </StyledContent>
         );
       })}

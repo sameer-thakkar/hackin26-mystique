@@ -8,6 +8,9 @@ import styled from 'styled-components';
 import { legacyBooleanCheck } from 'utils';
 import { RichText } from 'prismic-reactjs';
 import { StyledRichContent } from 'UI/RichContent';
+import cloneDeep from 'lodash.clonedeep';
+import { StyledAccordion } from 'components/slices/Accordion';
+import { convertUidToUrl } from 'utils/urlUtils';
 
 import { groupSlices } from '../../utils/helper';
 import {
@@ -28,7 +31,10 @@ import Gallery from './Gallery';
 import CategorySlider from './CategorySlider';
 import SubHeading from './SubHeading';
 import PopulateHead from '../common/meta';
-import { ALLOW_IMMEDIEATE_NESTING } from '../../constants';
+import {
+  ALLOW_IMMEDIEATE_NESTING,
+  FAVICON_LONDON_THEATRE_TICKETS,
+} from '../../constants';
 
 const AccordionGroup = dynamic(() => import('../slices/AccordionGroup'));
 
@@ -40,10 +46,24 @@ const Wrapper = styled.div`
     margin: 40px auto 0;
     ${StyledRichContent} {
       font-size: 14px !important;
+      ul {
+        padding-inline-start: 0;
+        list-style-position: inside;
+      }
+      li {
+        font-weight: normal;
+        padding-left: 1.5rem;
+        text-indent: -1.5em;
+      }
       p {
         margin-bottom: 10px;
       }
     }
+  }
+  ${StyledAccordion} {
+    padding: 24px 0;
+    border-bottom: 1px solid #e2e2e2 !important;
+    grid-row-gap: 0px;
   }
 `;
 
@@ -52,25 +72,74 @@ const ComponentWrapper = styled.div`
   h2 {
     font-size: 18px;
   }
+  @media (max-width: 768px) {
+    margin: 24px 0 32px;
+  }
 `;
 
 const HighlightsSectionWrapper = styled.div`
-  margin: 0 0 70px;
+  margin: 0 0 64px;
   font-size: 15px;
-  max-width: 776px;
+  max-width: 792px;
   line-height: 24px;
+  font-weight: normal;
+
   h2 {
     font-size: 24px;
     margin: 0 0 24px;
+    line-height: 28px;
+  }
+  ul {
+    padding-inline-start: 0;
+    list-style-position: inside;
   }
   li {
     margin-bottom: 12px;
+    font-weight: normal;
+    padding-left: 1.5rem;
+    text-indent: -1.5em;
   }
   @media (max-width: 768px) {
     width: 100%;
     font-size: 14px;
     line-height: 20px;
-    margin: 0 0 48px;
+    margin: 0 0 24px;
+
+    h2 {
+      font-size: 18px;
+      margin: 0 0 16px;
+      line-height: 24px;
+    }
+  }
+`;
+
+const AboutTheatreSectionWrapper = styled.div`
+  margin: 0 0 64px;
+  font-size: 15px;
+  max-width: 792px;
+  line-height: 24px;
+  font-weight: normal;
+
+  h2 {
+    font-size: 24px;
+    margin: 0 0 24px;
+    line-height: 28px;
+  }
+  ul {
+    padding-inline-start: 0;
+    list-style-position: inside;
+  }
+  li {
+    margin-bottom: 12px;
+    font-weight: normal;
+    padding-left: 1.5rem;
+    text-indent: -1.5em;
+  }
+  @media (max-width: 768px) {
+    width: 100%;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 0 0 24px;
 
     h2 {
       font-size: 18px;
@@ -79,7 +148,15 @@ const HighlightsSectionWrapper = styled.div`
   }
 `;
 
-const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData, isDev }) => {
+const ShowPage = ({
+  CMSContent,
+  host,
+  uid,
+  lang,
+  tourGroupData: tempTourGroupData,
+  isDev,
+}) => {
+  const tourGroupData = cloneDeep(tempTourGroupData);
   const [customerReviews, setCustomerReviews] = useState([]);
   const [similarProductData, setSimilarProductData] = useState([]);
   const [currencySymbol, setCurrencySymbol] = useState({});
@@ -115,6 +192,7 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData, isDev }) => {
     showType,
     mapURL,
     highlightsSection,
+    aboutTheatreSection,
   } = parseShowPageData(microBrandsHighlight);
 
   const currentLanguage = lang.split('-')[0];
@@ -213,14 +291,14 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData, isDev }) => {
           title,
           description,
           favicon: {
-            url: favicon,
+            url: favicon || FAVICON_LONDON_THEATRE_TICKETS,
           },
           faq_schema: [],
           lang,
           originalHost: host,
           currentLanguage: lang,
           isMobile,
-          canonical_link,
+          canonical_link: canonical_link || convertUidToUrl(uid),
           noindex: isDev ? 'True' : 'False',
         }}
       />
@@ -239,6 +317,7 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData, isDev }) => {
         host={host}
         hasPoweredByHeadoutLogo={true}
         slices={finalHeaderSlices}
+        isEntertainmentMB={true}
       />
       <ShowPageBanner
         tgid={tgid}
@@ -250,7 +329,9 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData, isDev }) => {
         isReopening={isReopening}
       />
       {isSafetyBanner ? (
-        <SafeDFBannerWrapper marginTop={40}></SafeDFBannerWrapper>
+        <SafeDFBannerWrapper
+          marginTop={isMobile ? 0 : 40}
+        ></SafeDFBannerWrapper>
       ) : null}
       <Wrapper>
         <HighlightsSectionWrapper>
@@ -276,7 +357,13 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData, isDev }) => {
             />
           </>
         )}
-        <Gallery galleryArray={imageUploads} isMobile={isMobile} />
+        {imageUploads.length >= 5 ? (
+          <Gallery galleryArray={imageUploads.slice(2)} isMobile={isMobile} />
+        ) : null}
+        <SubHeading content={tabSectionHeading} />
+        <AboutTheatreSectionWrapper>
+          <RichText render={aboutTheatreSection?.tab_content} />
+        </AboutTheatreSectionWrapper>
         {isMobile ? (
           <ComponentWrapper>
             <AccordionGroup
@@ -286,14 +373,13 @@ const ShowPage = ({ CMSContent, host, uid, lang, tourGroupData, isDev }) => {
                   content: element.tab_content,
                 };
               })}
-              heading={tabSectionHeading}
+              heading={''}
               useSchema={true}
               isOpenOverride={false}
             />
           </ComponentWrapper>
         ) : (
           <>
-            <SubHeading content={tabSectionHeading} />
             <ContentTabs tabsArr={tabHeadingInfo} contentArr={tabSchemaInfo} />
           </>
         )}

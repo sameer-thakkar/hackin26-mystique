@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 export const StyledInfoBanner = styled.div`
-  padding: 24px 32px;
+  padding: 24px 40px;
   display: grid;
   grid-template-columns: 10% 80% 10%;
   grid-column-gap: 20px;
@@ -36,7 +36,7 @@ const StyledInfoBannerMobile = styled.div`
   }
 
   @media (max-width: 768px) {
-    padding: 10px 16px 24px 16px;
+    padding: 16px 20px 20px 20px;
     width: calc(100% - 32px);
   }
 `;
@@ -46,7 +46,7 @@ const Icon = styled.div`
   justify-content: center;
   align-items: center;
 
-  .desktop-icon svg{
+  .desktop-icon svg {
     width: 18px;
     height: 18px;
   }
@@ -65,6 +65,8 @@ const Title = styled.div`
   font-weight: 600;
   font-size: 16px;
   line-height: 20px;
+  color: #f8f8f8;
+
   @media (max-width: 768px) {
     font-size: 12px;
   }
@@ -78,7 +80,10 @@ const TopWrapper = styled.div`
 
 const Description = styled.div`
   font-size: 14px;
-  line-height: 140%;
+  font-weight: normal;
+  line-height: 20px;
+  color: #f0f0f0;
+
   @media (max-width: 768px) {
     font-size: 12px;
   }
@@ -105,49 +110,45 @@ const InfoBanner = ({
   bannerOnClick = null,
   colorScheme,
   isMobile,
-  rightIcon
+  rightIcon,
 }) => {
   return (
     <>
-      {
-        isMobile
-          ?
-          <StyledInfoBannerMobile
-            onClick={bannerOnClick}
-            clickable={bannerOnClick}
-            colorScheme={colorScheme}
-          >
-            <TopWrapper>
-              <Icon>{icon}</Icon>
-              <Title>{title}</Title>
-              <Icon>{rightIcon}</Icon>
-            </TopWrapper>
-            <Content>
-              <Description>
-                {description} <CTA onClick={ctaOnClick}>{cta}</CTA>
-              </Description>
-            </Content>
-          </StyledInfoBannerMobile>
-          :
-          <StyledInfoBanner
-            onClick={bannerOnClick}
-            clickable={bannerOnClick}
-            colorScheme={colorScheme}
-          >
+      {isMobile ? (
+        <StyledInfoBannerMobile
+          onClick={bannerOnClick}
+          clickable={bannerOnClick}
+          colorScheme={colorScheme}
+        >
+          <TopWrapper>
             <Icon>{icon}</Icon>
-            <Content>
-              <Title>{title}</Title>
-              <Description>
-                {description} <CTA onClick={ctaOnClick}>{cta}</CTA>
-              </Description>
-            </Content>
-            <Icon>
-              <div className="desktop-icon">
-                {rightIcon}
-              </div>
-            </Icon>
-          </StyledInfoBanner>
-      }
+            <Title>{title}</Title>
+            <Icon>{rightIcon}</Icon>
+          </TopWrapper>
+          <Content>
+            <Description>
+              {description} <CTA onClick={ctaOnClick}>{cta}</CTA>
+            </Description>
+          </Content>
+        </StyledInfoBannerMobile>
+      ) : (
+        <StyledInfoBanner
+          onClick={bannerOnClick}
+          clickable={bannerOnClick}
+          colorScheme={colorScheme}
+        >
+          <Icon>{icon}</Icon>
+          <Content>
+            <Title>{title}</Title>
+            <Description>
+              {description} <CTA onClick={ctaOnClick}>{cta}</CTA>
+            </Description>
+          </Content>
+          <Icon>
+            <div className="desktop-icon">{rightIcon}</div>
+          </Icon>
+        </StyledInfoBanner>
+      )}
     </>
   );
 };
