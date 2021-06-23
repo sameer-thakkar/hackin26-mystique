@@ -60,6 +60,7 @@ export const ProductsWrapper = (props) => {
         {...categoryProps}
         availableTGIDs={allTours}
         isMobile={isMobile}
+        isEntertainmentMb={isEntertainmentMb}
       />
       <PopulateProducts
         tgids={activeCategoryTgids}

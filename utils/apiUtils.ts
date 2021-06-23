@@ -23,7 +23,7 @@ export const fetchTourList = ({ tgids, ...query }) =>
     })}`
   );
 
-export const fetchTourGroupData = (tgid, hostName) =>
+export const fetchTourGroup = (tgid, hostName) =>
   fetch(`${hostName}/api/tours/v5/tour-group/get/${tgid}`);
 
 export const fetchCurrencyList = async () => {

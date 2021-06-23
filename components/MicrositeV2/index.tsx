@@ -1,13 +1,14 @@
 import dynamic from 'next/dynamic';
 import React, { Component, ComponentType } from 'react';
 import { withRouter } from 'next/router';
-import PopulateHead from 'components/common/meta';
-import allToursParser from 'utils/allToursParser';
-import { withAmp } from 'components/common/withAmp';
-import { docCookies, genManualSlice, getLangObject } from 'utils/helper';
 import { InteractionContextProvider } from 'contexts/Interaction';
+import PopulateHead from 'components/common/meta';
+import { withAmp } from 'components/common/withAmp';
+import Conditional from 'components/common/Conditional';
 import { PAGETYPE, THEMES } from 'const/index';
+import allToursParser from 'utils/allToursParser';
 import { tourListApiParser } from 'utils/dataParsers';
+import { docCookies, genManualSlice, getLangObject } from 'utils/helper';
 
 const HomePage: ComponentType<any> = dynamic(() =>
   import('./views/HomePage').then((mod) => mod.HomePage)
@@ -198,7 +199,6 @@ class MicrositeV2 extends Component<any, any> {
       cardPrices,
       isFetched,
     };
-    const allTours = allToursParser(CMSData, scorpioData, pricingData, isAmp);
 
     const groupBooking = {
       hasGroupBooking: enable_group_booking == 'Yes',
@@ -208,16 +208,6 @@ class MicrositeV2 extends Component<any, any> {
           return [...acc, tour.tgid];
         }, []),
     };
-    const tgidsOrderByPrice: any = isFetched
-      ? Object.values(allTours)
-          .sort(
-            (a: any, b: any) =>
-              a.listingPrice?.finalPrice - b.listingPrice?.finalPrice
-          )
-          .reduce((acc: any, tour: any) => {
-            return [...acc, tour.tgid];
-          }, [])
-      : null;
 
     const hasCategoryTourList = categoryTourListData
       ? Object.keys(categoryTourListData)?.length > 0
@@ -226,6 +216,8 @@ class MicrositeV2 extends Component<any, any> {
     let tourListCategorySortBy,
       tourListCategories,
       tourListCategoryAllTours = {};
+
+    // Categour Tour List carousel
     if (hasCategoryTourList) {
       const tourListSlice = CMSBody?.filter(
         (body) => body.slice_type === 'tour_list_category'
@@ -265,6 +257,21 @@ class MicrositeV2 extends Component<any, any> {
       });
     }
 
+    const allTours = hasCategoryTourList
+      ? tourListCategoryAllTours
+      : allToursParser(CMSData, scorpioData, pricingData, isAmp);
+
+    const tgidsOrderByPrice: any = isFetched
+      ? Object.values(allTours)
+          .sort(
+            (a: any, b: any) =>
+              a.listingPrice?.finalPrice - b.listingPrice?.finalPrice
+          )
+          .reduce((acc: any, tour: any) => {
+            return [...acc, tour.tgid];
+          }, [])
+      : null;
+
     const rawCategory = CMSBody?.filter(
       (body) => body.slice_type === 'csv_ranking'
     )?.reduce((acc, curr) => acc + curr);
@@ -295,6 +302,7 @@ class MicrositeV2 extends Component<any, any> {
         },
       ];
     }, []);
+
     const directCategory = this.props.router.query.cat;
     if (directCategory) {
       const catRegex = new RegExp(directCategory, 'gi');
@@ -374,8 +382,7 @@ class MicrositeV2 extends Component<any, any> {
       },
       heroProps,
       categoryProps,
-      allTours: hasCategoryTourList ? tourListCategoryAllTours : allTours,
-      // allTours: allTours,
+      allTours: allTours,
       groupBooking,
       hasCategoryTourList,
       categoryTourListData,
@@ -425,7 +432,7 @@ class MicrositeV2 extends Component<any, any> {
             ready={ready}
           />
         </div>
-        {activePage == PAGETYPE.MOBILE_PRODUCT_PAGE ? (
+        <Conditional if={activePage == PAGETYPE.MOBILE_PRODUCT_PAGE}>
           <MobileProductPage
             changePage={this.changePage}
             tour={allTours[this.state.page.tgid]}
@@ -433,16 +440,17 @@ class MicrositeV2 extends Component<any, any> {
             uid={currentDomain}
             currentLanguage={currentLanguage}
             tgid={this.state.page.tgid}
+            isEntertainmentMb={isEntertainmentMb}
           />
-        ) : null}
-        {activePage == PAGETYPE.SEARCH ? (
+        </Conditional>
+        <Conditional if={activePage == PAGETYPE.SEARCH}>
           <SearchPage
             allTours={allTours}
             headerProps={headerProps}
             isMobile={isMobile}
             changePage={this.changePage}
           />
-        ) : null}
+        </Conditional>
         <style global jsx>{`
           * {
             text-rendering: optimizeLegibility;

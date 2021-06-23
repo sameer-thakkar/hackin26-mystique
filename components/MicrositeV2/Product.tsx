@@ -190,7 +190,8 @@ const ProductCard = styled.div`
       font-weight: ${SOLEIL.SEMIBOLD};
     }
     .product-v2-bottom {
-      grid-template-columns: auto;
+      grid-template-columns: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '1fr' : 'auto'};
       grid-row-gap: 12px;
     }
     .product-v2-bottom-left {

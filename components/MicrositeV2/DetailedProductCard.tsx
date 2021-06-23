@@ -19,6 +19,7 @@ import {
   shortCodeSerializer,
 } from 'utils/shortCodes';
 import { extractContentForProductCard } from 'utils/productUtils';
+import { convertUidToUrl } from 'utils/urlUtils';
 
 const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
   ssr: false,
@@ -372,15 +373,29 @@ const DetailedProductCard = (props) => {
     hasCategoryTourList,
   } = props;
   const activeTour = allTours[tgidClicked];
-  const rightBlocksCount = activeTour.contentBlocks?.right?.length;
+  const {
+    allTags = [],
+    listingPrice,
+    highlights,
+    contentBlocks,
+    descriptors: productDescriptors,
+    description,
+    descriptionImage,
+    productImage,
+    safetyImages,
+    title,
+    showPageUid,
+  } = activeTour || {};
+  const showPageUrl = showPageUid ? convertUidToUrl(showPageUid) : null;
+
+  const rightBlocksCount = contentBlocks?.right?.length;
   const descriptors = hasCategoryTourList
-    ? activeTour?.descriptors
-    : activeTour?.descriptors
+    ? productDescriptors
+    : productDescriptors
         ?.split(',')
         ?.filter((d) => d.length)
         ?.map((d) => d.trim());
 
-  const { allTags = [], listingPrice } = activeTour;
   const { finalPrice, bestDiscount, originalPrice, currencyCode } =
     listingPrice || {};
   const currencySymbol = CURRENCY_SYMBOL_MAP[currencyCode];
@@ -390,18 +405,15 @@ const DetailedProductCard = (props) => {
   } = useContext(MBContext);
 
   const productCardContent = extractContentForProductCard(
-    activeTour.highlights,
-    activeTour.contentBlocks
+    highlights,
+    contentBlocks
   );
 
   const openSafeSidebar = () => {
     addToAside({
       width: '41.06vw',
       children: (
-        <SafeExperiencesPitch
-          allTags={allTags}
-          images={activeTour.safetyImages}
-        />
+        <SafeExperiencesPitch allTags={allTags} images={safetyImages} />
       ),
       sidePadding: 40,
     });
@@ -464,12 +476,12 @@ const DetailedProductCard = (props) => {
       </div>
 
       <div className="desc-cta-wrapper">
-        <Conditional if={isEntertainmentMb}>
+        <Conditional if={isEntertainmentMb && showPageUrl}>
           <a
             className="cta secondary"
             target="_blank"
             rel="noopener noreferrer"
-            href="/"
+            href={showPageUrl}
           >
             <span className="cta-text">{strings.MORE_DETAILS}</span>
           </a>
@@ -499,7 +511,7 @@ const DetailedProductCard = (props) => {
       <div className="indicator-triangle"></div>
       <div className="product-v2-description-left">
         <div className="full-width-section">
-          <div className="v2-desc-title">{activeTour.title}</div>
+          <div className="v2-desc-title">{title}</div>
           <Conditional if={hasSafetyFlag}>
             <IconBoosters>
               <Split count={2} autoWidth={true} mobileLayout={'scroll'}>
@@ -526,12 +538,10 @@ const DetailedProductCard = (props) => {
               })}
             </div>
           </Conditional>
-          <Conditional
-            if={activeTour.description && activeTour.description.length}
-          >
+          <Conditional if={description && description.length}>
             <div className="content-block tour-description">
               <RichText
-                render={activeTour.description}
+                render={description}
                 htmlSerializer={shortCodeSerializer}
               />
             </div>
@@ -578,9 +588,9 @@ const DetailedProductCard = (props) => {
         </Conditional>
       </div>
       <div className="product-v2-description-right">
-        {/* <Image url={activeTour.descriptionImage} width={1200} height={750} format="pjpg" /> */}
+        {/* <Image url={descriptionImage} width={1200} height={750} format="pjpg" /> */}
         <Image
-          url={`${activeTour.descriptionImage || activeTour.productImage}`}
+          url={`${descriptionImage || productImage}`}
           width={1200}
           height={750}
           format="pjpg"

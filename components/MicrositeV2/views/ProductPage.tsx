@@ -14,6 +14,7 @@ import IconCTA from 'UI/IconCTA';
 import { greenScheme } from 'style/theme';
 import styled from 'styled-components';
 import { isSafetyIncluded, createBookingURL } from 'utils';
+import Conditional from 'components/common/Conditional';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
@@ -44,24 +45,34 @@ export const MobileProductPage = (props) => {
     window.scrollTo(0, 0);
   });
 
-  const { tour, host, uid, currentLanguage, tgid, carouselOptions } = props;
+  const {
+    tour,
+    host,
+    uid,
+    currentLanguage,
+    tgid,
+    carouselOptions,
+    isEntertainmentMb,
+  } = props;
   let extendedSwiperOptions;
-  if (tour.images.length <= 1) {
+  if (tour?.images?.length <= 1) {
     extendedSwiperOptions = {
       autoplay: false,
       loop: false,
       noSwiping: true,
     };
   }
-  let allContent = [...tour.contentBlocks.left, ...tour.contentBlocks.right];
-  allContent = allContent.sort((a, b) => {
-    let aLen = a.len;
-    let bLen = b.len;
-    // TODO: (unHack) Push Cancellation Policy to the end
-    if (/cancel/.exec(a.label.toLowerCase())) aLen += 500000;
-    if (/cancel/.exec(b.label.toLowerCase())) bLen += 500000;
-    return aLen - bLen;
-  });
+  let allContent = [...tour?.contentBlocks.left, ...tour?.contentBlocks.right];
+  if (!isEntertainmentMb) {
+    allContent = allContent.sort((a, b) => {
+      let aLen = a.len;
+      let bLen = b.len;
+      // TODO: (unHack) Push Cancellation Policy to the end
+      if (/cancel/.exec(a.label.toLowerCase())) aLen += 500000;
+      if (/cancel/.exec(b.label.toLowerCase())) bLen += 500000;
+      return aLen - bLen;
+    });
+  }
   let url = host || window.location.host;
   const isDev = url.includes('localhost');
   const currentHost = !isDev ? url : parse(uid, true).pathname;
@@ -71,7 +82,9 @@ export const MobileProductPage = (props) => {
   let hostSplit = hostName.split('.');
   hostSplit.shift();
   const bookingUrl = hostSplit.join('.');
-  const descriptors = tour.descriptors.split(',').filter((desc) => desc.length);
+  const descriptors = isEntertainmentMb
+    ? tour?.descriptors
+    : tour?.descriptors?.split(',')?.filter((desc) => desc.length);
   const { allTags = [] } = tour;
   const hasSafetyFlag = isSafetyIncluded(allTags);
 
@@ -105,9 +118,9 @@ export const MobileProductPage = (props) => {
       <div className="prod-image">
         {/* <img src={tour.descriptionImage} alt="" /> */}
         {/* <Banner  isMobile={true} carouselOptions/> */}
-        {tour.images.length > 1 ? (
+        {tour?.images?.length > 1 ? (
           <Swiper {...carouselOptions} {...extendedSwiperOptions}>
-            {tour.images.map((image, index) => {
+            {tour?.images?.map((image, index) => {
               return (
                 <div key={index} className="swiper-slide">
                   <Image url={image.url} dontLazyLoad={index == 0} />
@@ -117,15 +130,15 @@ export const MobileProductPage = (props) => {
           </Swiper>
         ) : (
           <div className="single-image">
-            <Image url={tour.images[0]?.url} dontLazyLoad={true} />
+            <Image url={tour?.images[0]?.url} dontLazyLoad={true} />
           </div>
         )}
       </div>
       <div className="prod-content">
         <div className="head">
-          {tour.vendor?.length ? (
+          <Conditional if={tour?.vendor?.length}>
             <div className="vendor-name">{tour.vendor}</div>
-          ) : null}
+          </Conditional>
           <div className="title">{tour.title}</div>
           <div className="price">
             <span className="from-text">from</span>
@@ -133,34 +146,34 @@ export const MobileProductPage = (props) => {
               {tour.currencySymbol}
               {tour.price}
             </div>
-            {tour.price < tour.scratchPrice ? (
+            <Conditional if={tour.price < tour.scratchPrice}>
               <div className="scratched-price">
                 {tour.currencySymbol}
                 {tour.scratchPrice}
               </div>
-            ) : null}
+            </Conditional>
           </div>
-          {tour.cardFooter.length ? (
+          <Conditional if={tour?.cardFooter?.length}>
             <div className="boosters">
               <RichText
                 render={tour.cardFooter}
                 htmlSerializer={shortCodeSerializer}
               />
             </div>
-          ) : null}
+          </Conditional>
           <IconBoosters>
             <Split count={2} autoWidth={true} mobileLayout={'scroll'}>
-              {hasSafetyFlag ? (
+              <Conditional if={hasSafetyFlag}>
                 <IconCTA
                   text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
                   colorScheme={greenScheme}
                   ctaOnClick={openSafeSidebar}
                   icon={BorderedShield}
                 />
-              ) : null}
+              </Conditional>
             </Split>
           </IconBoosters>
-          {descriptors.length > 0 ? (
+          <Conditional if={descriptors?.length}>
             <div className="descriptors">
               {descriptors.map((descriptor, index) => {
                 return (
@@ -170,27 +183,27 @@ export const MobileProductPage = (props) => {
                 );
               })}
             </div>
-          ) : null}
+          </Conditional>
         </div>
 
         <div className="content-blocks">
-          {tour.description && tour.description.length ? (
+          <Conditional if={tour.description && tour.description.length}>
             <div className="content-block full-block tour-description">
               <RichText
                 render={tour.description}
                 htmlSerializer={shortCodeSerializer}
               />
             </div>
-          ) : null}
+          </Conditional>
           <div className="hr-line full-block "></div>
-          {tour.theater ? (
+          <Conditional if={tour.theater}>
             <div className="content-block full-block ">
               <RichText
                 render={tour.theater}
                 htmlSerializer={shortCodeSerializer}
               />
             </div>
-          ) : null}
+          </Conditional>
           {allContent.map((block, index) => {
             const isShortBlock = block.len < 50;
             return (
@@ -201,10 +214,15 @@ export const MobileProductPage = (props) => {
                 key={index}
               >
                 <span className="label-title">{block.label} </span>
-                <RichText
-                  render={block.content}
-                  htmlSerializer={shortCodeSerializer}
-                />
+                <Conditional if={isEntertainmentMb}>
+                  <p>{block.content}</p>
+                </Conditional>
+                <Conditional if={!isEntertainmentMb}>
+                  <RichText
+                    render={block.content}
+                    htmlSerializer={shortCodeSerializer}
+                  />
+                </Conditional>
               </div>
             );
           })}
