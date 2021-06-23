@@ -3,10 +3,7 @@ import styled from 'styled-components';
 
 const SpotifyContainer = styled.div`
   position: relative;
-  padding-bottom: ${({ paddingBottom }) =>
-    paddingBottom ? paddingBottom : '56.25%'};
-  padding-top: 35px;
-  height: 0;
+  height: 300px;
   overflow: hidden;
   margin: 16px 0;
 `;
@@ -45,10 +42,13 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
   height,
   ...otherProps
 }) => {
+  const isPlaylist = otherProps['isplaylist'];
   return (
     <SpotifyContainer {...{ paddingBottom: height || '150px', ...otherProps }}>
       <StyledIFrame
-        src={`https://open.spotify.com/embed/album/${albumid}`}
+        src={`https://open.spotify.com/embed/${
+          isPlaylist === '1' ? `playlist` : `album`
+        }/${albumid}`}
         border="0"
         {...otherProps}
       />

@@ -275,7 +275,9 @@ const ShowPageBanner = ({
 
   const { localSymbol } = currency;
 
-  const productImage = imageUploads?.[1];
+  const productImage = imageUploads.length
+    ? imageUploads[1] || imageUploads[0]
+    : null;
 
   const { nakedDomain, biLink } = useContext(MBContext);
 
@@ -370,10 +372,12 @@ const ShowPageBanner = ({
         ) : (
           <BannerImageWrapper>
             <div className="banner-image-container is-active">
-              <Image
-                url={productImage.url}
-                alt={productImage.alt || 'banner'}
-              />
+              {productImage ? (
+                <Image
+                  url={productImage.url}
+                  alt={productImage.alt || 'banner'}
+                />
+              ) : null}
               {videoAvailable ? (
                 <>
                   <div
