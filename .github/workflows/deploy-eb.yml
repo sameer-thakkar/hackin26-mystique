@@ -125,9 +125,10 @@ jobs:
           zip -r mystique-${DOCKER_IMAGE_TAG}.zip Dockerrun.aws.json .ebextensions/
 
           IMAGE_LABEL=$APP_ENV-${GITHUB_REF#refs/*/}-${GITHUB_SHA::8}-$(date -u +%s)
+          TRIM_DESCRIPTION="$(echo $LONG_DESCRIPTION | tr '\n' ' ' | tr '\r' ' ')"
           echo "VERSION_LABEL=$IMAGE_LABEL" >> $GITHUB_ENV
           echo "VERSION_FILE=mystique-${DOCKER_IMAGE_TAG}.zip" >> $GITHUB_ENV
-          echo "VERSION_DESCRIPTION=${LONG_DESCRIPTION:0:199}" >> $GITHUB_ENV
+          echo "VERSION_DESCRIPTION=${TRIM_DESCRIPTION:0:199}" >> $GITHUB_ENV
       - name: Upload package to S3 bucket
         run: |
           cat $HOME/.docker/config.json | jq -M '.auths' > .dockercfg
