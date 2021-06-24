@@ -1,23 +1,23 @@
-import { SIZES, SOLEIL } from 'const/ui-constants';
-import { THEMES } from 'const/index';
 import React, { useState, useContext, ComponentType } from 'react';
 import dynamic from 'next/dynamic';
-import DismissAlert from 'UI/DismissAlert';
-import { strings } from 'const/strings';
-import { ProductsContextProvider } from 'contexts/Products';
-import { LOCATION } from 'assets/SvgIcons';
-import { groupSlices } from 'utils/helper';
 import styled from 'styled-components';
-import SafeDFBannerWrapper from 'UI/SafeDFBannerWrapper';
-import { isSafetyIncluded } from 'utils';
-import Conditional from 'components/common/Conditional';
-import TextBanner from 'components/TextBanner';
+import { ProductsContextProvider } from 'contexts/Products';
 import { MBContext } from 'contexts/MBContext';
 import Footer from 'components/common/Footer';
 import sliceHandler from 'components/Slices';
 import Header from 'components/MicrositeV2/Header';
 import LttSafetyBanner from 'components/ShowPages/SafetyBanner';
 import LttFeatureCard from 'components/ShowPages/FeatureCard';
+import Conditional from 'components/common/Conditional';
+import TextBanner from 'components/TextBanner';
+import DismissAlert from 'UI/DismissAlert';
+import SafeDFBannerWrapper from 'UI/SafeDFBannerWrapper';
+import { LOCATION } from 'assets/SvgIcons';
+import { THEMES } from 'const/index';
+import { strings } from 'const/strings';
+import { SIZES, SOLEIL } from 'const/ui-constants';
+import { isSafetyIncluded } from 'utils';
+import { groupSlices } from 'utils/helper';
 
 const Alert = dynamic(() => import('UI/Alert'), { ssr: false });
 const ResponsiveSelector: ComponentType<any> = dynamic(
@@ -135,6 +135,7 @@ export const HomePage = (props) => {
         changePage={changePage}
         isMobile={isMobile}
         allTours={allTours}
+        isEntertainmentMb={isEntertainmentMb}
       />
       <Conditional if={isMobile && hasDropdownLinks}>
         <div className="main-wrapper city-selector">
@@ -202,7 +203,6 @@ export const HomePage = (props) => {
         <ProductsWrapper
           availableTGIDs={Object.keys(allTours)}
           hasCategoryTourList={hasCategoryTourList}
-          categoryTourListData={categoryTourListData}
           directTgid={parseInt(directTgid)}
           allTours={allTours}
           isMobile={isMobile}
@@ -228,6 +228,7 @@ export const HomePage = (props) => {
                 allTours,
                 isMobile,
                 hasCategoryTourList,
+                categoryTourListData,
                 changePage,
                 host,
                 uid,

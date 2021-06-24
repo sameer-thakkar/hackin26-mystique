@@ -5,6 +5,7 @@ import InteractionContext from 'contexts/Interaction';
 import { MBContext } from 'contexts/MBContext';
 import Conditional from 'components/common/Conditional';
 import { strings } from 'const/strings';
+import { COLORS, SOLEIL } from 'const/ui-constants';
 
 const RowComponent: ComponentType<any> = dynamic(() =>
   import('./RowComponent').then((mod) => mod.RowComponent)
@@ -16,18 +17,24 @@ const StyledProductWrapper = styled.div`
   grid-row-gap: 32px;
   .view-more {
     display: grid;
-    font-family: SOLEIL;
-    color: #ec1943;
+    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? SOLEIL.SEMIBOLD : SOLEIL.REGULAR};
+    font-size: 16px;
+    line-height: ${({ isEntertainmentMb }) => (isEntertainmentMb ? '20px' : 1)};
+    color: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? COLORS.GREY.G2 : COLORS.RHAPSODY};
     border: 1px solid;
     border-radius: 4px;
     margin: auto;
     width: max-content;
     padding: 16px 32px;
-    line-height: 1;
     cursor: pointer;
+    ${({ isEntertainmentMb }) => isEntertainmentMb && 'letter-spacing: 0.6px;'}
   }
   @media (max-width: 768px) {
     margin-top: 24px;
+    ${({ isEntertainmentMb }) => isEntertainmentMb && 'grid-row-gap: 24px;'}
     .view-more {
       width: calc(100% - 32px);
       padding: 16px;
@@ -87,7 +94,7 @@ const PopulateProducts = (props) => {
   const tgidsSubArr = subArrays(tgids);
 
   return (
-    <StyledProductWrapper>
+    <StyledProductWrapper isEntertainmentMb={isEntertainmentMb}>
       {tgidsSubArr.map((row, index) => {
         if (showAll || index < rowsInView)
           return (

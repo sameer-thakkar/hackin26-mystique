@@ -42,7 +42,6 @@ export const ProductsWrapper = (props) => {
     changePage,
     allTours,
     hasCategoryTourList,
-    categoryTourListData,
     currentLanguage,
     host,
     uid,
@@ -65,7 +64,6 @@ export const ProductsWrapper = (props) => {
       <PopulateProducts
         tgids={activeCategoryTgids}
         allTours={allTours}
-        categoryTourListData={categoryTourListData}
         hasCategoryTourList={hasCategoryTourList}
         isMobile={isMobile}
         isEntertainmentMb={isEntertainmentMb}

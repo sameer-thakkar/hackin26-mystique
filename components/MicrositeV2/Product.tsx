@@ -77,6 +77,7 @@ const ProductCard = styled.div`
     display: grid;
     grid-gap: 4px;
     height: max-content;
+    ${({ isEntertainmentMb }) => isEntertainmentMb && `margin-top: 4px;`}
   }
   .product-v2-bottom {
     display: grid;
@@ -122,7 +123,9 @@ const ProductCard = styled.div`
       isEntertainmentMb ? 'left' : 'right'};
     text-decoration-line: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? 'unset' : 'line-through'};
-    color: ${COLORS.GREY_G4};
+    span {
+      color: ${COLORS.GREY_G4};
+    }
   }
 
   .discount {
@@ -178,6 +181,7 @@ const ProductCard = styled.div`
     grid-template-rows: 102px auto;
     transform: unset;
     transition: unset;
+    ${({ isEntertainmentMb }) => isEntertainmentMb && 'grid-row-gap: 10px;'}
     &:hover {
       transform: unset;
     }
@@ -186,16 +190,20 @@ const ProductCard = styled.div`
     }
     .product-v2-title {
       font-size: 14px;
-      line-height: 1.3;
+      line-height: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '20px' : '1.3'};
       font-weight: ${SOLEIL.SEMIBOLD};
     }
     .product-v2-bottom {
       grid-template-columns: ${({ isEntertainmentMb }) =>
         isEntertainmentMb ? '1fr' : 'auto'};
-      grid-row-gap: 12px;
+      grid-row-gap: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '4px;' : '12px'};
     }
     .product-v2-bottom-left {
       width: 100%;
+      ${({ isEntertainmentMb }) =>
+        isEntertainmentMb && ` grid-gap: 2px;margin-top: 10px;`}
     }
     .title-wrap {
       grid-column: 1 / 2;
@@ -212,7 +220,8 @@ const ProductCard = styled.div`
       text-align: left;
       font-weight: ${SOLEIL.SEMIBOLD};
       font-size: 14px;
-      line-height: 1;
+      line-height: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '20px;' : '1'};
       font-family: ${SOLEIL.FONT_STACK};
     }
     .product-v2-scratch-price {
@@ -221,6 +230,14 @@ const ProductCard = styled.div`
       line-height: 1.2;
       font-weight: ${SOLEIL.REGULAR};
       font-family: ${SOLEIL.FONT_STACK};
+    }
+    .l1-booster-wrapper {
+      ${({ isEntertainmentMb }) =>
+        isEntertainmentMb && `font-size: 10px;line-height: 12px;`}
+    }
+    .avg-rating svg {
+      ${({ isEntertainmentMb }) =>
+        isEntertainmentMb && `width:8px;height: 8px;`}
     }
   }
   .product-v2-image img {
@@ -270,7 +287,8 @@ const ProductCard = styled.div`
   @media (max-width: 768px) {
     .product-v2-image img {
       height: 102px;
-      border-radius: 2px;
+      border-radius: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '4px' : '2px'};
     }
     .product-v2-boosters {
       font-size: 12px;

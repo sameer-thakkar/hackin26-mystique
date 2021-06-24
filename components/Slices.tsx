@@ -55,7 +55,6 @@ const CollectionCarousel = dynamic(() =>
 
 const sliceHandler = (slice, props: any = {}) => {
   if (slice?.primary?.hide_slice) return null;
-
   switch (slice.slice_type) {
     case 'rich_text':
     case 'rich_text_only':
@@ -118,7 +117,7 @@ const sliceHandler = (slice, props: any = {}) => {
         );
       break;
     case 'category_carousel':
-      const tgidArray = slice.primary.csv_tgids
+      const tgidArray = slice?.primary?.csv_tgids
         .split(',')
         .map((tgid) => parseInt(tgid.trim()));
       if (props.isMobile)
@@ -126,8 +125,10 @@ const sliceHandler = (slice, props: any = {}) => {
           <CategorySection
             {...props}
             tgidsArray={tgidArray}
-            description={slice.primary.carousel_description}
-            heading={slice.primary.carousel_heading}
+            description={slice?.primary?.carousel_description}
+            heading={slice?.primary?.carousel_heading}
+            category={slice?.primary?.category_id}
+            excludedTgids={slice?.primary?.exclude_tgids}
           />
         );
       else
@@ -135,9 +136,11 @@ const sliceHandler = (slice, props: any = {}) => {
           <CategorySlider
             {...props}
             tgidsArray={tgidArray}
-            isFirstTourOpen={slice.primary.is_first_tour_open}
-            description={slice.primary.carousel_description}
-            heading={slice.primary.carousel_heading}
+            isFirstTourOpen={slice?.primary?.is_first_tour_open}
+            description={slice?.primary?.carousel_description}
+            heading={slice?.primary?.carousel_heading}
+            category={slice?.primary?.category_id}
+            excludedTgids={slice?.primary?.exclude_tgids}
           />
         );
     case 'trust_boosters':

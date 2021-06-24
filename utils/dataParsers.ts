@@ -19,11 +19,18 @@ export const uncategorizedToursListParser = (
 export const categoryTourListParser = async (
   sliceObj: any,
   hostname: string,
-  showpages: any = {}
+  showpages: any = {},
+  categoryCarouselObj: any = {}
 ) => {
-  const categoryIds = sliceObj.items?.length
-    ? sliceObj?.items?.map((c) => c.category)
-    : [];
+  const categoryIds = [];
+
+  if (sliceObj.items?.length) {
+    sliceObj?.items?.forEach((c) => categoryIds?.push(c.category));
+  }
+  if (categoryCarouselObj.primary?.category_id) {
+    categoryIds.push(categoryCarouselObj.primary?.category_id);
+  }
+
   const { results: showPagesResults } = showpages || {};
   let showpageData = {},
     data;

@@ -3,8 +3,9 @@ import dynamic from 'next/dynamic';
 import { scroller } from 'react-scroll';
 import styled from 'styled-components';
 import ProductsContext from 'contexts/Products';
-import { SOLEIL } from 'const/ui-constants';
+import { COLORS, SOLEIL } from 'const/ui-constants';
 import { CHEVRON_LEFT } from 'assets/SvgIcons';
+import Conditional from 'components/common/Conditional';
 
 const DetailedProductCard = dynamic(
   () => import('components/MicrositeV2/DetailedProductCard'),
@@ -69,7 +70,7 @@ const StyledCategorySlider = styled.div`
   .availability p {
     font-size: 12px !important;
     line-height: 12px !important;
-    color: #24a1b2 !important;
+    color: ${COLORS.TEAL} !important;
     text-align: left !important;
     font-family: ${SOLEIL.FONT_STACK} !important;
   }
@@ -108,7 +109,10 @@ const CategorySlider = (props) => {
     description,
     isFirstTourOpen = false,
     isEntertainmentMb,
+    category,
+    excludedTgids,
     hasCategoryTourList = false,
+    categoryTourListData = {},
   } = props;
   let autoScroll = !isFirstTourOpen;
 
@@ -118,12 +122,44 @@ const CategorySlider = (props) => {
   const productsContext = useContext(ProductsContext);
   const { allTours, isMobile } = productsContext;
 
-  let filteredTgids = tgidsArray.filter(
-    (tgid, index, arr) =>
-      allTours[tgid] &&
-      allTours[tgid].available &&
-      arr.slice(0, index).indexOf(tgid) == -1
-  );
+  let filteredTgids;
+  const categoryDataObj = {};
+
+  const categoryDataArray = Object.keys(categoryTourListData)?.length
+    ? categoryTourListData[category]
+    : [];
+
+  if (categoryDataArray?.length) {
+    categoryDataArray?.forEach((c) => {
+      categoryDataObj[c?.tgid] = c;
+    });
+  }
+  const categoryTours =
+    hasCategoryTourList && categoryDataArray?.length
+      ? categoryDataObj
+      : allTours;
+
+  if (hasCategoryTourList) {
+    const re = /\s*(?:,)\s*/g;
+    const excludedTours = excludedTgids
+      ? excludedTgids?.split(re)?.map((tgid) => +tgid)
+      : [];
+    const allTgids = categoryDataArray?.map((c) => c?.tgid);
+    filteredTgids = allTgids?.filter((tgid) => {
+      return (
+        categoryDataObj[tgid] &&
+        categoryDataObj[tgid]?.available &&
+        !excludedTours.includes(tgid)
+      );
+    });
+  } else {
+    filteredTgids = tgidsArray.filter(
+      (tgid, index, arr) =>
+        allTours[tgid] &&
+        allTours[tgid].available &&
+        arr.slice(0, index).indexOf(tgid) == -1
+    );
+  }
 
   const [tgidClicked, setTgidClicked] = useState(
     !isMobile && isFirstTourOpen ? filteredTgids[0] : null
@@ -187,12 +223,16 @@ const CategorySlider = (props) => {
 
   return (
     <StyledCategorySlider id={elementId}>
-      {heading || description ? (
+      <Conditional if={heading || description}>
         <div className="content">
-          {heading ? <h2>{heading}</h2> : null}
-          {description ? <p>{description}</p> : null}
+          <Conditional if={heading}>
+            <h2>{heading}</h2>
+          </Conditional>
+          <Conditional if={description}>
+            <p>{description}</p>
+          </Conditional>
         </div>
-      ) : null}
+      </Conditional>
       <div className="slider-wrap">
         <div className="slider-container">
           <Swiper
@@ -206,7 +246,7 @@ const CategorySlider = (props) => {
                   <Product
                     tgid={tgid}
                     productClick={handleProductClicked}
-                    allTours={allTours}
+                    allTours={categoryTours}
                     isMobile={isMobile}
                     imageId={tgid}
                     cardIdPrefix={carouselId}
@@ -241,12 +281,12 @@ const CategorySlider = (props) => {
         </div>
       </div>
       <div className="slider-product-description">
-        {tgidClicked ? (
+        <Conditional if={tgidClicked}>
           <DetailedProductCard
             tgidClicked={tgidClicked}
             key={carouselId}
             hasCategoryTourList={hasCategoryTourList}
-            allTours={allTours}
+            allTours={categoryTours}
             isMobile={isMobile}
             isEntertainmentMb={isEntertainmentMb}
             currentLanguage={currentLanguage}
@@ -255,7 +295,7 @@ const CategorySlider = (props) => {
             cardPosition={cardPosition - currentIndex}
             closeDescription={closeDescription}
           />
-        ) : null}
+        </Conditional>
       </div>
     </StyledCategorySlider>
   );

@@ -35,7 +35,8 @@ const BannerWrapper = styled.div`
   }
 
   img {
-    border-radius: 10px;
+    border-radius: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '8px' : '10px'};
     height: 100%;
     width: 100%;
     object-fit: cover;
@@ -43,19 +44,20 @@ const BannerWrapper = styled.div`
 
   @media (max-width: 768px) {
     img {
-      border-radius: 4px;
+      border-radius: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '8px' : '4px'};
       display: flex;
+      ${({ isEntertainmentMb }) => isEntertainmentMb && `height: 100%;`};
     }
     .swiper-wrapper {
-      height: 204px;
+      height: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '214px' : '204px'};
     }
     .swiper-container {
       width: 100%;
     }
     .content-wrap {
       padding: 0 20px;
-    }
-    .swiper-wrapper img {
     }
   }
 `;

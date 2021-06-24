@@ -519,7 +519,7 @@ export const MobileProductPage = (props) => {
             object-fit: cover;
           }
           .boosters .inline-availability {
-            color: #24a1b2;
+            color: ${COLORS.TEAL};
           }
           .boosters p {
             margin: 0;

@@ -1,13 +1,12 @@
-import { SOLEIL, COLORS } from 'const/ui-constants';
+import dynamic from 'next/dynamic';
 import { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import useWindowSize from 'hooks/useWindowSize';
-import dynamic from 'next/dynamic';
+import ProductsContext from 'contexts/Products';
+import InteractionContext from 'contexts/Interaction';
 import Conditional from 'components/common/Conditional';
-
-import ProductsContext from '../../contexts/Products';
-import InteractionContext from '../../contexts/Interaction';
-import { DONT_AUTO_SCROLL, DONT_HOIST } from '../../constants';
+import { SOLEIL, COLORS } from 'const/ui-constants';
+import { DONT_AUTO_SCROLL, DONT_HOIST } from 'const/index';
 
 const PopulateProducts = dynamic(() => import('./PopulateProducts'));
 
@@ -82,13 +81,52 @@ const CategorySection = (props) => {
     description,
     changePage,
     isFirstTourOpen = false,
+    isEntertainmentMb,
+    category,
+    excludedTgids,
+    hasCategoryTourList = false,
+    categoryTourListData = {},
   } = props;
   const toursContext = useContext(ProductsContext);
   const interactionContext = useContext(InteractionContext);
   const allTours = toursContext.allTours;
-  let filteredTgids = tgidsArray.filter(
-    (tgid) => allTours[tgid] && allTours[tgid].available
-  );
+
+  let filteredTgids;
+  const categoryDataObj = {};
+
+  const categoryDataArray = Object.keys(categoryTourListData)?.length
+    ? categoryTourListData[category]
+    : [];
+
+  if (categoryDataArray?.length) {
+    categoryDataArray?.forEach((c) => {
+      categoryDataObj[c?.tgid] = c;
+    });
+  }
+  const categoryTours =
+    hasCategoryTourList && categoryDataArray?.length
+      ? categoryDataObj
+      : allTours;
+
+  if (hasCategoryTourList) {
+    const re = /\s*(?:,)\s*/g;
+    const excludedTours = excludedTgids
+      ? excludedTgids?.split(re)?.map((tgid) => +tgid)
+      : [];
+    const allTgids = categoryDataArray?.map((c) => c?.tgid);
+    filteredTgids = allTgids?.filter((tgid) => {
+      return (
+        categoryDataObj[tgid] &&
+        categoryDataObj[tgid]?.available &&
+        !excludedTours.includes(tgid)
+      );
+    });
+  } else {
+    filteredTgids = tgidsArray.filter(
+      (tgid) => allTours[tgid] && allTours[tgid].available
+    );
+  }
+
   const elementId =
     heading?.trim().replace(/\s/g, '-').toLowerCase() || filteredTgids[0];
   const { width } = useWindowSize();
@@ -106,21 +144,24 @@ const CategorySection = (props) => {
   }, []);
 
   return (
-    <StyledCategorySection id={elementId}>
-      {heading ? <h2 className="category-heading">{heading}</h2> : null}
-      {description ? (
+    <StyledCategorySection id={elementId} isEntertainmentMb={isEntertainmentMb}>
+      <Conditional if={heading}>
+        <h2 className="category-heading">{heading}</h2>
+      </Conditional>
+      <Conditional if={description}>
         <p className="category-description">{description}</p>
-      ) : null}
+      </Conditional>
       <Conditional if={filteredTgids?.length}>
         <PopulateProducts
           rowsToShow={2}
           propTgids={filteredTgids}
           isMobile={isMobile}
           changePage={changePage}
-          allTours={allTours}
+          allTours={categoryTours}
           host={host}
           uid={uid}
           sectionId={elementId}
+          isEntertainmentMb={isEntertainmentMb}
         />
       </Conditional>
     </StyledCategorySection>

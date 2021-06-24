@@ -324,8 +324,15 @@ export default class Page extends React.Component<any, any> {
       let tgidsArray = [];
 
       if (ContentType === CUSTOM_TYPES.MICROSITE) {
-        const { design, theme, body, body1, allShowPages } =
-          CMSContent?.data?.data || {};
+        const { data } = CMSContent || {};
+        const { refs, data: CMSData } = data || {
+          refs: { data: {} },
+          data: {},
+        };
+        const {
+          contentFramework: { data: contentFrameworkData },
+        } = refs || { contentFramework: {} };
+        const { design, theme, body, body1, allShowPages } = CMSData || {};
         const MBDesign = design || '';
         const mbTheme = theme || THEMES.DEFAULT;
         const toursTabFirstSlice = body1[0];
@@ -339,10 +346,17 @@ export default class Page extends React.Component<any, any> {
               ?.reduce((acc, curr) => acc + curr)
           : [];
 
+        const categoryCarouselCF = contentFrameworkData?.body?.length
+          ? contentFrameworkData?.body
+              ?.filter((slice) => slice.slice_type === 'category_carousel')
+              ?.reduce((acc, curr) => acc + curr)
+          : [];
+
         const categoryTourListData = await categoryTourListParser(
           categoryTourList,
           hostname,
-          allShowPages
+          allShowPages,
+          categoryCarouselCF
         );
 
         const primsicTours = toursTabFirstSlice
