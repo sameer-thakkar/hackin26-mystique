@@ -1,16 +1,16 @@
 import React, { useContext } from 'react';
-import { RichText } from 'prismic-reactjs';
-import Image from 'UI/Image';
-import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
-import { truncate } from 'utils/helper';
-import { SOLEIL, COLORS } from 'const/ui-constants';
-import { CURRENCY_SYMBOL_MAP } from 'const/index';
 import styled from 'styled-components';
+import { RichText } from 'prismic-reactjs';
 import { MBContext } from 'contexts/MBContext';
 import Conditional from 'components/common/Conditional';
+import Image from 'UI/Image';
 import LocalisedPrice from 'UI/LPrice';
 import { SEE_SAFETY, STAR } from 'assets/SvgIcons';
+import { CURRENCY_SYMBOL_MAP } from 'const/index';
 import { strings } from 'const/strings';
+import { SOLEIL, COLORS } from 'const/ui-constants';
+import { truncate } from 'utils/helper';
+import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import { dateToString } from 'utils/dateToString';
 
 const ProductCard = styled.div`
@@ -297,7 +297,14 @@ const ProductCard = styled.div`
 `;
 
 const Product = (props) => {
-  const { allTours, tgid, cardIdPrefix, isMobile, isEntertainmentMb } = props;
+  const {
+    allTours,
+    tgid,
+    cardIdPrefix,
+    isMobile,
+    isEntertainmentMb,
+    productClick,
+  } = props;
   const { currencySymbolMap, lang } = useContext(MBContext);
   if (!allTours[tgid]) return null;
   const { listingPrice, dfListingPrice, ...tour } = allTours[tgid] || {};
@@ -325,7 +332,7 @@ const Product = (props) => {
     CURRENCY_SYMBOL_MAP[currencyCode];
 
   const handleProductClick = () => {
-    props.productClick(props.tgid, props.cardIdPrefix);
+    productClick(tgid, cardIdPrefix);
   };
 
   const openingDate = dateToString(reopeningDate, lang, 'DD MMM, YYYY');

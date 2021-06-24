@@ -364,7 +364,12 @@ const DetailedProductCard = (props) => {
     props.closeDescription();
   };
   const mbContext = useContext(MBContext);
-  const { lang, nakedDomain, biLink } = mbContext;
+  const {
+    lang,
+    nakedDomain,
+    biLink,
+    sidebarModal: { addToAside },
+  } = mbContext;
   const {
     allTours,
     tgidClicked,
@@ -400,10 +405,6 @@ const DetailedProductCard = (props) => {
     listingPrice || {};
   const currencySymbol = CURRENCY_SYMBOL_MAP[currencyCode];
   const hasSafetyFlag = isSafetyIncluded(allTags);
-  const {
-    sidebarModal: { addToAside },
-  } = useContext(MBContext);
-
   const productCardContent = extractContentForProductCard(
     highlights,
     contentBlocks
@@ -456,7 +457,7 @@ const DetailedProductCard = (props) => {
               className="l-price"
               price={originalPrice}
               currencySymbol={currencySymbol}
-              lang="en"
+              lang={lang}
             />
           </div>
         </Conditional>
@@ -465,7 +466,7 @@ const DetailedProductCard = (props) => {
             className="l-price"
             price={finalPrice}
             currencySymbol={currencySymbol}
-            lang="en"
+            lang={lang}
           />
           <Conditional if={bestDiscount && bestDiscount > 0}>
             <span className="discount">

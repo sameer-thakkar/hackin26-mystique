@@ -441,6 +441,7 @@ class MicrositeV2 extends Component<any, any> {
             currentLanguage={currentLanguage}
             tgid={this.state.page.tgid}
             isEntertainmentMb={isEntertainmentMb}
+            hasCategoryTourList={hasCategoryTourList}
           />
         </Conditional>
         <Conditional if={activePage == PAGETYPE.SEARCH}>

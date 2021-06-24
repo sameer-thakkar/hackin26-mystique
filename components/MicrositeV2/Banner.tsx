@@ -143,7 +143,7 @@ Banner.defaultProps = {
     speed: 650,
     slidesPerView: 'auto',
     loop: true,
-    centered: true,
+    centeredSlides: true,
     spaceBetween: 24,
     autoplay: {
       delay: 2500,

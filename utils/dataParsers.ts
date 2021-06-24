@@ -16,14 +16,24 @@ export const uncategorizedToursListParser = (
   );
 };
 
+interface categoryTourListParserProps {
+  tourListCategory: any[];
+  hostname: string;
+  showpages: any;
+  categoryCarousel?: any[];
+}
 export const categoryTourListParser = async (
-  sliceObj: any,
-  hostname: string,
-  showpages: any = {},
-  categoryCarouselObj: any = {}
+  obj: categoryTourListParserProps
 ) => {
   const categoryIds = [];
+  const { tourListCategory, hostname, showpages, categoryCarousel } = obj || {};
 
+  const sliceObj = tourListCategory?.length
+    ? tourListCategory?.reduce((acc, curr) => acc + curr)
+    : {};
+  const categoryCarouselObj = categoryCarousel?.length
+    ? categoryCarousel?.reduce((acc, curr) => acc + curr)
+    : {};
   if (sliceObj.items?.length) {
     sliceObj?.items?.forEach((c) => categoryIds?.push(c.category));
   }

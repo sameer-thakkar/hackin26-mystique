@@ -88,24 +88,22 @@ export const RowComponent = (props) => {
           />
         );
       })}
-      <React.Fragment>
-        <Conditional if={showDescription}>
-          <DetailedProductCard
-            tgidClicked={tgidClicked}
-            allTours={allTours}
-            hasCategoryTourList={hasCategoryTourList}
-            categoryTourList={categoryTourList}
-            isMobile={isMobile}
-            isEntertainmentMb={isEntertainmentMb}
-            currentLanguage={currentLanguage}
-            host={host}
-            uid={uid}
-            key={tgidClicked}
-            cardPosition={cardPosition + 1}
-            closeDescription={closeDescription}
-          />
-        </Conditional>
-      </React.Fragment>
+      <Conditional if={showDescription}>
+        <DetailedProductCard
+          tgidClicked={tgidClicked}
+          allTours={allTours}
+          hasCategoryTourList={hasCategoryTourList}
+          categoryTourList={categoryTourList}
+          isMobile={isMobile}
+          isEntertainmentMb={isEntertainmentMb}
+          currentLanguage={currentLanguage}
+          host={host}
+          uid={uid}
+          key={tgidClicked}
+          cardPosition={cardPosition + 1}
+          closeDescription={closeDescription}
+        />
+      </Conditional>
     </ProductsRow>
   );
 };

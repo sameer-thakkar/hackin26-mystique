@@ -276,7 +276,7 @@ export default class Page extends React.Component<any, any> {
       if (ContentType === CUSTOM_TYPES.SHOW_PAGE) {
         try {
           const tgidData = await fetchTourGroup(
-            CMSContent.data?.tgid,
+            CMSContent?.data?.tgid,
             hostname
           ).then((res) => {
             return res.json();
@@ -325,13 +325,10 @@ export default class Page extends React.Component<any, any> {
 
       if (ContentType === CUSTOM_TYPES.MICROSITE) {
         const { data } = CMSContent || {};
-        const { refs, data: CMSData } = data || {
-          refs: { data: {} },
-          data: {},
-        };
-        const {
-          contentFramework: { data: contentFrameworkData },
-        } = refs || { contentFramework: {} };
+        const { refs, data: CMSData } = data || {};
+
+        const { contentFramework } = refs || {};
+        const { data: contentFrameworkData } = contentFramework || {};
         const { design, theme, body, body1, allShowPages } = CMSData || {};
         const MBDesign = design || '';
         const mbTheme = theme || THEMES.DEFAULT;
@@ -339,32 +336,36 @@ export default class Page extends React.Component<any, any> {
         const categorizedTourList = body;
 
         const categoryTourList = categorizedTourList?.length
-          ? categorizedTourList
-              ?.filter(
-                (category) => category.slice_type === 'tour_list_category'
-              )
-              ?.reduce((acc, curr) => acc + curr)
+          ? categorizedTourList?.filter(
+              (category) => category.slice_type === 'tour_list_category'
+            )
           : [];
 
         const categoryCarouselCF = contentFrameworkData?.body?.length
-          ? contentFrameworkData?.body
-              ?.filter((slice) => slice.slice_type === 'category_carousel')
-              ?.reduce((acc, curr) => acc + curr)
+          ? contentFrameworkData?.body?.filter(
+              (slice) => slice.slice_type === 'category_carousel'
+            )
           : [];
 
-        const categoryTourListData = await categoryTourListParser(
-          categoryTourList,
-          hostname,
-          allShowPages,
-          categoryCarouselCF
-        );
+        let categoryTourListData;
+        const hasCategoryTourList =
+          Object.keys(categoryTourList)?.length ||
+          Object.keys(categoryCarouselCF)?.length;
+        if (hasCategoryTourList) {
+          categoryTourListData = await categoryTourListParser({
+            tourListCategory: categoryTourList,
+            hostname,
+            showpages: allShowPages,
+            categoryCarousel: categoryCarouselCF,
+          });
+        }
 
         const primsicTours = toursTabFirstSlice
           ? await toursTabSliceHandler(toursTabFirstSlice)
           : [];
         const offers = primsicTours
-          .filter((tour) => tour.offer__free_tour?.id)
-          .map((tour) => tour.offer__free_tour?.id);
+          ?.filter((tour) => tour.offer__free_tour?.id)
+          ?.map((tour) => tour.offer__free_tour?.id);
         const uniqueOfferIds = offers.filter(
           (id, index) => offers.indexOf(id) === index
         );
@@ -383,7 +384,8 @@ export default class Page extends React.Component<any, any> {
           primsicTours,
           initial_tgids
         );
-        tgidsArray = toursList.reduce((acc, tour) => {
+
+        tgidsArray = toursList?.reduce((acc, tour) => {
           return [...acc, tour.tgid];
         }, []);
 
@@ -440,12 +442,12 @@ export default class Page extends React.Component<any, any> {
             hide_df: false,
             hide_safe: false,
           };
-          let allTags = tour.allTags || [];
+          let allTags = tour?.allTags || [];
           if (hide_df) {
-            allTags = allTags.filter((t) => !t.includes('DF-'));
+            allTags = allTags?.filter((t) => !t.includes('DF-'));
           }
           if (hide_safe) {
-            allTags = allTags.filter((t) => !t.includes('SAFE'));
+            allTags = allTags?.filter((t) => !t.includes('SAFE'));
           }
           return {
             ...accum,
@@ -591,7 +593,8 @@ export default class Page extends React.Component<any, any> {
       return <ErrorPage statusCode={statusCode} />;
     }
 
-    const microsite = CMSContent.data?.microsite?.data || CMSContent.data?.data;
+    const microsite =
+      CMSContent?.data?.microsite?.data || CMSContent?.data?.data;
     const isGlobalMb =
       ContentType === CUSTOM_TYPES.GLOBAL_HOMEPAGE ||
       ContentType === CUSTOM_TYPES.GLOBAL_CITY ||
