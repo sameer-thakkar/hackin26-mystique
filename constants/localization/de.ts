@@ -283,8 +283,6 @@ const de = {
       LIMITED: 'Zeitweilige Aktion',
     },
   },
-  FLEXI_CANCELLATION_NON_CANCELLABLE:
-    'Diese Tickets können nicht storniert, geändert oder verschoben werden.',
 };
 
 export default de;

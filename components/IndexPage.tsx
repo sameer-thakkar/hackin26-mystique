@@ -662,7 +662,6 @@ export default class Page extends React.Component<any, any> {
             <RecoilRoot initializeState={initRecoil}>
               <MBContextProvider
                 host={host}
-                hsid={Cookies.get('h-sid')}
                 uid={uid}
                 lang={lang}
                 microsite={microsite}

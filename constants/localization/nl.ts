@@ -285,8 +285,6 @@ const nl = {
       LIMITED: 'Aanbieding voor een beperkte periode',
     },
   },
-  FLEXI_CANCELLATION_NON_CANCELLABLE:
-    'Deze tickets kunnen niet worden geannuleerd, gewijzigd of herschikt',
 };
 
 export default nl;

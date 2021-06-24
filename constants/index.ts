@@ -577,8 +577,6 @@ export const MONTH_ARRAY = [
   'December',
 ];
 
-export const FLEXI_CANCELLATION_TAG = 'FLEXI_CANCEL';
-
 export const SAFETY_MEASURE_REDIRECT_PAGE_LINK =
   'https://www.london-theater-tickets.com/reopening-london-theatres-safety-measures/';
 

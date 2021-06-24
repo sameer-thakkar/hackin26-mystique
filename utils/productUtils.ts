@@ -1,9 +1,5 @@
+import { THEMES } from 'const/index';
 import { RichText } from 'prismic-reactjs';
-import { FLEXI_CANCELLATION_TAG, THEMES } from 'const/index';
-import { EXPERIMENT_NAMES } from 'const/experiments';
-import { strings } from 'const/strings';
-
-import { getABTestingVariant } from './experiments/experimentUtils';
 
 export const extractTabsFromHighlights = (highlights) => {
   let tabs = [];
@@ -194,38 +190,4 @@ export const extractContentForProductCard = (markdownBlocks, contentBlocks) => {
     });
   }
   return { left: leftContent, right: rightContent };
-};
-
-// Flexi Cancellation experiment
-
-export const overWriteCancellationIfFlexiCancellation = (
-  hsid,
-  allTags = [],
-  isAmp,
-  finalHighlights
-) => {
-  if (isAmp || !hsid) return;
-
-  const isFlexiCancellationProduct = allTags.includes(FLEXI_CANCELLATION_TAG);
-
-  if (isFlexiCancellationProduct) {
-    const showFlexiCancellation =
-      getABTestingVariant(
-        EXPERIMENT_NAMES.FLEXI_CANCELLATION_EXPERIMENT,
-        hsid
-      ) === 'SHOW';
-
-    if (!showFlexiCancellation) {
-      return finalHighlights.forEach((highlight, i) => {
-        if (
-          highlight.text
-            .toLowerCase()
-            .includes(strings.CANCELLATION_POLICY.toLowerCase())
-        ) {
-          finalHighlights[i + 1].text =
-            strings.FLEXI_CANCELLATION_NON_CANCELLABLE;
-        }
-      });
-    }
-  }
 };
