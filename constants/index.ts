@@ -545,7 +545,7 @@ export const TAB_ALLOWED_HIGHLIGHT = [
 
 export const TAB_ALLOWED_INFO = [
   'Getting There',
-  'Facilities & Accessibilities',
+  'Facilities & Accessibility',
   'Additional Information',
 ];
 
