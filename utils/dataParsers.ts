@@ -55,7 +55,9 @@ export const categoryTourListParser = async (
     });
   }
   if (categoryIds?.length) {
-    const allPromises = categoryIds?.map(
+    const categorySet = new Set(categoryIds);
+    const ids = Array.from(categorySet);
+    const allPromises = ids?.map(
       async (catId) => await fetchCategory(catId, hostname)
     );
     const allCategories = await Promise.all(allPromises);
