@@ -618,7 +618,9 @@ export const MobileProductPage = (props) => {
             </Conditional>
             <Conditional if={isEntertainmentMb}>
               <div className="l1-booster-wrapper">
-                <div className="l1-booster">Reopening on {openingDate}</div>
+                <div className="l1-booster">
+                  {strings.REOPENING_ON} {openingDate}
+                </div>
                 <Conditional if={reviewCount}>
                   <div className="rating">
                     <span className="avg-rating">

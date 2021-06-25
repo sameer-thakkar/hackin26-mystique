@@ -32,6 +32,9 @@ const en = {
   MORE_FROM: 'More from',
   OFF: 'Off',
   TICKETS: 'Tickets',
+  REOPENING_ON: 'Reopening on',
+  REOPENED_ON: 'Reopened on',
+  NEW: 'New',
   LISTICLES: {
     SEATING_CHART: 'Seating Chart',
     KNOW_MORE: 'Know More',

@@ -27,6 +27,9 @@ const tw = {
   TODAY: '今天',
   TOMORROW: '明天',
   MORE_FROM: '更多從',
+  REOPENING_ON: 'Reopening on',
+  REOPENED_ON: 'Reopened on',
+  NEW: 'New',
   LISTICLES: {
     SEATING_CHART: '座位圖',
     KNOW_MORE: '了解更多',

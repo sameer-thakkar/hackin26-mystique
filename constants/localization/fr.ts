@@ -27,6 +27,9 @@ const fr = {
   TODAY: "aujourd'hui",
   TOMORROW: 'demain',
   TICKETS: 'Billets',
+  REOPENING_ON: 'Reopening on',
+  REOPENED_ON: 'Reopened on',
+  NEW: 'New',
   LISTICLES: {
     SEATING_CHART: 'Plan de la salle',
     KNOW_MORE: 'En savoir plus',

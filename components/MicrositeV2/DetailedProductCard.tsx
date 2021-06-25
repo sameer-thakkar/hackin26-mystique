@@ -30,9 +30,8 @@ const DetailedDescriptionCard = styled.div`
   display: grid;
   grid-template-columns: 1fr 0.9fr;
   grid-column-gap: 24px;
-  border: 1px solid
-    ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? COLORS.GREY_G6 : '#757575'};
+  border: ${({ isEntertainmentMb }) =>
+    isEntertainmentMb ? 'none' : `1px solid ${COLORS.GREY_75}`};
   color: ${COLORS.FOUR_BLACK};
   border-left: none;
   border-right: none;
@@ -40,8 +39,22 @@ const DetailedDescriptionCard = styled.div`
   ${({ isEntertainmentMb }) =>
     isEntertainmentMb &&
     `
-      background-color: ${COLORS.GREY.G8}
-      `};
+      background-color: ${COLORS.GREY.G8};
+      &::before {
+        content: '';
+        position: absolute;
+        background: ${COLORS.GREY.G8};
+        border: 1px solid ${COLORS.GREY_G6};
+        width: 100vw;
+        height: 100%;
+        top: 0;
+        left: calc((1200px - 100vw) / 2);
+      }
+      .product-v2-description-left,
+      .product-v2-description-right {
+        z-index: 3;
+      }
+    `}
   ${StlyedSplit} {
     margin: 0;
     max-width: unset;

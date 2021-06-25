@@ -29,6 +29,9 @@ const ko = {
   TOMORROW: '내일',
   MORE_FROM: '이후',
   OFF: 'Off',
+  REOPENING_ON: 'Reopening on',
+  REOPENED_ON: 'Reopened on',
+  NEW: 'New',
   LISTICLES: {
     SEATING_CHART: '좌석 배치도',
     KNOW_MORE: '더 알아보기',

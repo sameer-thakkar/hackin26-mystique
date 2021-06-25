@@ -28,6 +28,9 @@ const pt = {
   TODAY: 'hoje',
   TOMORROW: 'amanhã',
   TICKETS: 'Ingressos',
+  REOPENING_ON: 'Reopening on',
+  REOPENED_ON: 'Reopened on',
+  NEW: 'New',
   LISTICLES: {
     SEATING_CHART: 'Mapa de assentos',
     KNOW_MORE: 'Saiba mais',

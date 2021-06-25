@@ -27,6 +27,9 @@ const ja = {
   TODAY: '今日',
   TOMORROW: '明日',
   MORE_FROM: 'More from',
+  REOPENING_ON: 'Reopening on',
+  REOPENED_ON: 'Reopened on',
+  NEW: 'New',
   LISTICLES: {
     SEATING_CHART: '座席図',
     KNOW_MORE: 'もっと読む',

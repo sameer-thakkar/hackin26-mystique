@@ -369,11 +369,16 @@ const Product = (props) => {
         <Conditional if={isEntertainmentMb}>
           <div className="l1-booster-wrapper">
             <div className="l1-booster">{category}</div>
-            <Conditional if={reviewCount}>
-              <div className="rating">
+            <div className="rating">
+              <Conditional if={averageRating}>
                 <span className="avg-rating">
                   {averageRating} {STAR(COLORS.JOY_MUSTARD)}
                 </span>
+              </Conditional>
+              <Conditional if={!averageRating && !reviewCount}>
+                <span className="avg-rating">NEW</span>
+              </Conditional>
+              <Conditional if={reviewCount}>
                 <span className="total-rating">
                   (
                   {reviewCount > 999
@@ -381,14 +386,16 @@ const Product = (props) => {
                     : reviewCount}
                   )
                 </span>
-              </div>
-            </Conditional>
+              </Conditional>
+            </div>
           </div>
         </Conditional>
         <div className="title-wrap">
           <div className="product-v2-title">{truncate(title, 70)}</div>
           <Conditional if={isEntertainmentMb && openingDate !== 'Invalid Date'}>
-            <div className="reopening">Reopening on {openingDate}</div>
+            <div className="reopening">
+              {strings.REOPENING_ON} {openingDate}
+            </div>
           </Conditional>
         </div>
         <div className="product-v2-bottom-left">

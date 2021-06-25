@@ -29,6 +29,9 @@ const de = {
   TODAY: 'heute',
   TOMORROW: 'morgen',
   TICKETS: 'Tickets',
+  REOPENING_ON: 'Reopening on',
+  REOPENED_ON: 'Reopened on',
+  NEW: 'New',
   LISTICLES: {
     SEATING_CHART: 'Saalplan',
     KNOW_MORE: 'Weitere Infos',
