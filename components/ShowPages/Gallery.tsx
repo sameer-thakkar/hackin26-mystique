@@ -140,7 +140,7 @@ const GalleryPopUpWrapper = styled.div(({ isVisibleGalleryPopUp }) => {
       bottom: -30px;
     }
     .swiper-button-disabled {
-      opacity: 0;
+      opacity: 0 !important;
     }
     @media (max-width: 768px) {
       max-width: 100vw;

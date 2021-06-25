@@ -19,7 +19,6 @@ const StyledBanner = styled.div`
   box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.16);
   font-family: ${SOLEIL.FONT_STACK};
   margin-bottom: 24px;
-
   .mb-slide {
     display: none;
     .image-wrap {

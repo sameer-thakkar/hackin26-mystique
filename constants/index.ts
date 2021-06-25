@@ -545,7 +545,7 @@ export const TAB_ALLOWED_HIGHLIGHT = [
 
 export const TAB_ALLOWED_INFO = [
   'Getting There',
-  'Facilities & Accessibilities',
+  'Facilities & Accessibility',
   'Additional Information',
 ];
 
@@ -576,8 +576,6 @@ export const MONTH_ARRAY = [
   'November',
   'December',
 ];
-
-export const FLEXI_CANCELLATION_TAG = 'FLEXI_CANCEL';
 
 export const SAFETY_MEASURE_REDIRECT_PAGE_LINK =
   'https://www.london-theater-tickets.com/reopening-london-theatres-safety-measures/';

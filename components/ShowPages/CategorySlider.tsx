@@ -15,27 +15,23 @@ const CardCarouselContainer = styled.div`
   }
 
   .swiper-button-next {
-    right: 0px;
+    right: -23px;
     color: black;
-    background: #ffffff;
     z-index: 2;
-    box-shadow: 0px 0px 1px rgb(0 0 0 / 10%), 0px 2px 8px rgb(0 0 0 / 10%);
     border-radius: 50%;
-    width: 36px;
-    height: 36px;
+    width: 10px;
+    height: 20px;
     :after {
       font-size: 12px;
     }
   }
   .swiper-button-prev {
-    left: 0px;
+    left: -23px;
     color: black;
-    background: #ffffff;
     z-index: 2;
-    box-shadow: 0px 0px 1px rgb(0 0 0 / 10%), 0px 2px 8px rgb(0 0 0 / 10%);
     border-radius: 50%;
-    width: 36px;
-    height: 36px;
+    width: 10px;
+    height: 20px;
     :after {
       font-size: 12px;
     }
@@ -155,7 +151,7 @@ export default class CategorySlider extends Component<CardCarouselProps> {
       categoryName,
     } = this.props;
 
-    const slidesPerView = isMobile ? 1.05 : 4.05;
+    const slidesPerView = isMobile ? 1 : 4;
     const slidesPerGroup = isMobile ? 1 : 2;
     let params = {
       direction: 'horizontal',

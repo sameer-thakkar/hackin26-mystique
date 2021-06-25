@@ -287,9 +287,6 @@ const pt = {
       LIMITED: 'Oferta por período limitado',
     },
   },
-  CANCELLATION_POLICY: 'cancelamento',
-  FLEXI_CANCELLATION_NON_CANCELLABLE:
-    'Estes ingressos não podem ser cancelados, alterados ou reagendados.',
 };
 
 export default pt;

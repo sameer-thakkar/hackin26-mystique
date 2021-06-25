@@ -308,9 +308,6 @@ const it = {
       LIMITED: 'Offerta a durata limitata',
     },
   },
-  CANCELLATION_POLICY: 'cancellazione',
-  FLEXI_CANCELLATION_NON_CANCELLABLE:
-    'Questi biglietti non possono essere cancellati, modificati o riprogrammati.',
 };
 
 export default it;

@@ -134,24 +134,24 @@ const CardCarouselContainer = styled.div`
         margin-bottom: 10px;
       }
     }
-    
-    .carousel-slider{
+
+    .carousel-slider {
       margin: 24px auto 70px;
 
-      .swiper-slide{
+      .swiper-slide {
         .review-content {
           .review {
             font-size: 14px;
             line-height: 20px;
           }
-    
+
           .reviewer-name {
             font-size: 14px;
             margin-top: 24px;
           }
         }
       }
-    }  
+    }
   }
 `;
 
@@ -176,8 +176,8 @@ export default class CustomerReview extends Component<CardCarouselProps> {
   renderCardsSlider = () => {
     const { cards, isMobile } = this.props;
 
-    const slidesPerView = isMobile ? 1.05 : 2.05;
-    const slidesPerGroup = isMobile ? 1 : 2;
+    const slidesPerView = isMobile ? 1 : 2;
+    const slidesPerGroup = 1;
     let params = {
       direction: 'horizontal',
       speed: 650,
@@ -191,9 +191,9 @@ export default class CustomerReview extends Component<CardCarouselProps> {
       navigation: isMobile
         ? false
         : {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
       pagination: {
         el: '.swiper-pagination',
         type: 'bullets',
