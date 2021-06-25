@@ -90,6 +90,8 @@ const StyledMobileProductPage = styled.div`
     display: grid;
     grid-auto-flow: row;
     grid-auto-rows: max-content;
+    grid-gap: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? 'unset' : '24px'};
   }
   .prod-image {
     max-width: ${({ isEntertainmentMb }) =>
@@ -237,7 +239,6 @@ const StyledMobileProductPage = styled.div`
             }
           }
           .scratched-price {
-            
             grid-row: 1;
             text-decoration: none;
             .from-text {

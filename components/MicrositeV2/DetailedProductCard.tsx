@@ -465,7 +465,9 @@ const DetailedProductCard = (props) => {
       <div className="desc-price-wrapper">
         <Conditional if={originalPrice > finalPrice}>
           <div className="scratch-price">
-            <span>{strings.FROM}</span>{' '}
+            <span>
+              {isEntertainmentMb ? strings.FROM : strings.FROM?.toLowerCase()}
+            </span>{' '}
             <LocalisedPrice
               className="l-price"
               price={originalPrice}
@@ -481,7 +483,9 @@ const DetailedProductCard = (props) => {
             currencySymbol={currencySymbol}
             lang={lang}
           />
-          <Conditional if={bestDiscount && bestDiscount > 0}>
+          <Conditional
+            if={isEntertainmentMb && bestDiscount && bestDiscount > 0}
+          >
             <span className="discount">
               {bestDiscount}% {strings.OFF}
             </span>
