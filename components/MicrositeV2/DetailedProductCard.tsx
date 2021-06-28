@@ -446,7 +446,7 @@ const DetailedProductCard = (props) => {
       >
         <span className="description-label">{heading}</span>
         <span className="description-content">
-          <Conditional if={isEntertainmentMb && hasCategoryTourList}>
+          <Conditional if={hasCategoryTourList}>
             <p>{content}</p>
           </Conditional>
           <Conditional if={!isEntertainmentMb && !hasCategoryTourList}>
