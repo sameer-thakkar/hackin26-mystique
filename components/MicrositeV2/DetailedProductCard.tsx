@@ -44,11 +44,13 @@ const DetailedDescriptionCard = styled.div`
         content: '';
         position: absolute;
         background: ${COLORS.GREY.G8};
-        border: 1px solid ${COLORS.GREY_G6};
+        border-top: 1px solid ${COLORS.GREY_G6};
+        border-bottom: 1px solid ${COLORS.GREY_G6};
         width: 100vw;
         height: 100%;
         top: 0;
         left: calc((1200px - 100vw) / 2);
+        overflow: hidden;
       }
       .product-v2-description-left,
       .product-v2-description-right {

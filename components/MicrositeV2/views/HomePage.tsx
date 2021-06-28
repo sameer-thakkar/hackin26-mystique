@@ -115,12 +115,12 @@ export const HomePage = (props) => {
   const contentFWSlices = (slices && groupSlices(slices)) || [];
   const longFormSlices = [...contentFWSlices, ...longFormContent];
   const { currentLanguage } = props.header.languageProps;
-  const hasToursSection = categoryProps.categories.length > 0;
+  const hasToursSection = categoryProps?.categories?.length > 0;
   const { secondaryFooter } = footer;
-  const footerLogoURL = footer.logo.url;
-  const footerLogoAlt = footer.footer_logo_alt || footer.footer_logo?.alt;
-  const themeOverride = footer.themeOverride;
-  const hasDropdownLinks = enableDropdownLinks && dropdownLinks.length;
+  const footerLogoURL = footer?.logo?.url;
+  const footerLogoAlt = footer?.footer_logo_alt || footer.footer_logo?.alt;
+  const themeOverride = footer?.themeOverride;
+  const hasDropdownLinks = enableDropdownLinks && dropdownLinks?.length;
   const { mbTheme } = useContext(MBContext);
   const { bannerHeading } = heroProps;
   const hasSafe = Object.values(allTours).some((tour: any) =>

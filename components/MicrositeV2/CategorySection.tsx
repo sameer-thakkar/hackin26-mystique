@@ -103,10 +103,7 @@ const CategorySection = (props) => {
       categoryDataObj[c?.tgid] = c;
     });
   }
-  const categoryTours =
-    hasCategoryTourList && categoryDataArray?.length
-      ? categoryDataObj
-      : allTours;
+  const categoryTours = categoryDataArray?.length ? categoryDataObj : allTours;
 
   if (hasCategoryTourList) {
     const re = /\s*(?:,)\s*/g;
