@@ -28,12 +28,12 @@ export const hrefResolver = (doc) => {
 // Avoids reinitializing an API connection for every query, handling instead with a Client object
 let frontClient;
 
-export const Client = (req = null) => {
+export const Client = (req = null, parentOptions = {}) => {
   if (!req && frontClient) return frontClient; // Prevents generating new instances for client side since we don't need the refreshed request object.
 
   // Reinitializes Client only if there's a req object present, which is used for Previews
   const options = Object.assign(
-    {},
+    parentOptions,
     req ? { req } : {},
     accessToken ? { accessToken } : {}
   );
