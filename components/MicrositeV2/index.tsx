@@ -272,9 +272,13 @@ class MicrositeV2 extends Component<any, any> {
           }, [])
       : null;
 
-    const rawCategory = CMSBody?.filter(
+    const uncategorizedTours = CMSBody?.filter(
       (body) => body.slice_type === 'csv_ranking'
-    )?.reduce((acc, curr) => acc + curr);
+    );
+
+    const rawCategory = uncategorizedTours?.length
+      ? uncategorizedTours?.reduce((acc, curr) => acc + curr)
+      : {};
 
     const raw_category = (rawCategory && rawCategory?.items) || [];
     const hideSortBySelector =
