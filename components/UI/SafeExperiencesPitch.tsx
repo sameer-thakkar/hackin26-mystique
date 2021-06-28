@@ -126,7 +126,7 @@ const Pitch = styled.div`
 `;
 
 const EmphasizedText = styled.div`
-  font-family: ${SOLEIL.FONT_STACK}
+  font-family: ${SOLEIL.FONT_STACK};
   font-style: normal;
   font-weight: 600;
   font-size: 16px;

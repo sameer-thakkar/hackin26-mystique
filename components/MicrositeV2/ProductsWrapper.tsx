@@ -8,6 +8,8 @@ import { DONT_AUTO_SCROLL } from 'const/index';
 const PopulateProducts = dynamic(() => import('./PopulateProducts'));
 
 const StyledProductWrapper = styled.div`
+  margin-bottom: ${({ isEntertainmentMb }) =>
+    isEntertainmentMb ? '64px' : '0'};
   &.relative-position {
     position: relative;
   }
@@ -39,6 +41,7 @@ export const ProductsWrapper = (props) => {
     categoryProps,
     changePage,
     allTours,
+    hasCategoryTourList,
     currentLanguage,
     host,
     uid,
@@ -48,15 +51,20 @@ export const ProductsWrapper = (props) => {
 
   if (!activeCategoryTgids?.length) return null;
   return (
-    <StyledProductWrapper className="main-wrapper relative-position">
+    <StyledProductWrapper
+      className="main-wrapper relative-position"
+      isEntertainmentMb={isEntertainmentMb}
+    >
       <CategoryBar
         {...categoryProps}
-        availableTGIDs={Object.keys(allTours)}
+        availableTGIDs={allTours}
         isMobile={isMobile}
+        isEntertainmentMb={isEntertainmentMb}
       />
       <PopulateProducts
         tgids={activeCategoryTgids}
         allTours={allTours}
+        hasCategoryTourList={hasCategoryTourList}
         isMobile={isMobile}
         isEntertainmentMb={isEntertainmentMb}
         changePage={changePage}

@@ -36,13 +36,12 @@ const ResponsiveSelector: ComponentType<any> = dynamic(
 );
 
 const StyledHeader = styled.div`
-  header {
+  .main-wrapper {
     display: grid;
     grid-template-columns: repeat(2, auto);
     justify-content: space-between;
     align-items: center;
-    padding-top: 14px;
-    padding-bottom: 14px;
+    padding: 14px 0;
     user-select: none;
   }
   .fixed-wrap {
@@ -64,7 +63,7 @@ const StyledHeader = styled.div`
     height: ${({ theme: { theme } }) =>
       theme === THEMES.DEFAULT ? '88px' : '80px'};
   }
-  header .header-city-selector {
+  .main-wrapper .header-city-selector {
     min-width: 180px;
     font-family: ${SOLEIL.FONT_STACK};
   }
@@ -78,15 +77,17 @@ const StyledHeader = styled.div`
   }
 
   @media (max-width: 768px) {
-    header {
-      padding: 12px;
-    }
     .main-wrapper {
       margin: unset;
       width: calc(100% - (16px * 2));
+      padding: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '16px' : '12px 16px'} ;
+      border-bottom: ${({ theme: { theme } }) =>
+        theme === THEMES.DEFAULT ? '1px solid #dadada' : 'none'};
     }
     .fixed-wrap {
       min-height: ${({ isGlobalMb }) => (isGlobalMb ? '48px' : '56px')};
+      height: ${({ isGlobalMb }) => (isGlobalMb ? '48px' : '56px')};
     }
     .fixed-offset::after {
       content: '';
@@ -97,11 +98,6 @@ const StyledHeader = styled.div`
     }
     .header-links {
       display: none;
-    }
-    header {
-      padding: 12px 16px;
-      border-bottom: ${({ theme: { theme } }) =>
-        theme === THEMES.DEFAULT ? '1px solid #dadada' : 'none'};
     }
   }
 `;
@@ -190,7 +186,8 @@ const HeaderLeft = styled.div`
 
   @media (max-width: 768px) {
     .header-logo {
-      padding: ${({ isGlobalMb }) => (isGlobalMb ? '0' : '4px')};
+      padding: ${({ isGlobalMb, isEntertainmentMb }) =>
+        isGlobalMb || isEntertainmentMb ? '0' : '4px'};
       img {
         height: ${({ isGlobalMb }) => (isGlobalMb ? '36px' : '24px')};
       }
@@ -234,7 +231,7 @@ const SearchWrapper = styled.div`
       font-family: ${SOLEIL.FONT_STACK};
     }
     .inline-availability {
-      color: #24a1b2;
+      color: ${COLORS.TEAL};
     }
   }
   @media (max-width: 768px) {
@@ -261,6 +258,7 @@ interface HeaderProps {
   changePage?: any;
   isGlobalMb?: boolean;
   buyTicketsLink?: string;
+  isEntertainmentMb?: boolean;
 }
 
 const Header: FunctionComponent<HeaderProps> = ({
@@ -282,6 +280,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   changePage,
   isGlobalMb = false,
   buyTicketsLink = '',
+  isEntertainmentMb = false,
 }) => {
   const interactionContext = useContext(InteractionContext);
   const [languageDropdown, setLanguageDropdown] = useState(false);
@@ -358,6 +357,7 @@ const Header: FunctionComponent<HeaderProps> = ({
       overlayActive={languageDropdown || navActive}
       headerHover={headerHover}
       isGlobalMb={isGlobalMb}
+      isEntertainmentMb={isEntertainmentMb}
     >
       <div className="fixed-offset"></div>
       <div className="fixed-wrap">
@@ -367,16 +367,17 @@ const Header: FunctionComponent<HeaderProps> = ({
             onMouseEnter={() => setHeaderHover(true)}
             onMouseLeave={() => setHeaderHover(false)}
             isGlobalMb={isGlobalMb}
+            isEntertainmentMb={isEntertainmentMb}
           >
             <a href={logoRedirectionURL || '/'}>
               <div className="header-logo">
                 <Image url={logoUrl} alt={logoAltText} dontLazyLoad={true} />
-                {hasPoweredByHeadoutLogo ? (
+                <Conditional if={hasPoweredByHeadoutLogo}>
                   <span className="poweredBy">{POWERED_BY_HEADOUT}</span>
-                ) : null}
+                </Conditional>
               </div>
             </a>
-            {!isMobileDevice && hasDropdownLinks ? (
+            <Conditional if={!isMobileDevice && hasDropdownLinks}>
               <div className="header-links">
                 <ResponsiveSelector
                   options={dropdownLinks}
@@ -384,8 +385,8 @@ const Header: FunctionComponent<HeaderProps> = ({
                   customClassName="header-city-selector"
                 />
               </div>
-            ) : null}
-            {!isMobileDevice && enableSearch && (
+            </Conditional>
+            <Conditional if={!isMobileDevice && enableSearch}>
               <SearchWrapper>
                 <SearchBox
                   isMobile={isMobileDevice}
@@ -393,7 +394,7 @@ const Header: FunctionComponent<HeaderProps> = ({
                   allToursArray={allToursArray}
                   clearSearch={resultClicked}
                 />
-                {results.length ? (
+                <Conditional if={results.length}>
                   <div>
                     <div className="results">
                       {results.map(({ item }, index) => {
@@ -407,36 +408,36 @@ const Header: FunctionComponent<HeaderProps> = ({
                       })}
                     </div>
                   </div>
-                ) : null}
+                </Conditional>
               </SearchWrapper>
-            )}
+            </Conditional>
           </HeaderLeft>
-          <HeaderRight
-            hasLanguageDropdown={hasLanguageDropdown}
-            hasHamburger={isMobileDevice && hamburgerIconCheck}
-            hasSearch={enableSearch}
-            onMouseEnter={() => setHeaderHover(true)}
-            onMouseLeave={() => setHeaderHover(false)}
-          >
-            {!groupedHeaderSlices.length && headerLinks ? (
-              <HeaderLinks
-                headerLinks={headerLinks}
-                isMobile={isMobileDevice}
-                hiddenMobile={navActive}
-              />
-            ) : null}
+          <Conditional if={!isEntertainmentMb}>
+            <HeaderRight
+              hasLanguageDropdown={hasLanguageDropdown}
+              hasHamburger={isMobileDevice && hamburgerIconCheck}
+              hasSearch={enableSearch}
+              onMouseEnter={() => setHeaderHover(true)}
+              onMouseLeave={() => setHeaderHover(false)}
+            >
+              <Conditional if={!groupedHeaderSlices.length && headerLinks}>
+                <HeaderLinks
+                  headerLinks={headerLinks}
+                  isMobile={isMobileDevice}
+                  hiddenMobile={navActive}
+                />
+              </Conditional>
 
-            {groupedHeaderSlices.length ? (
-              <MultiLevelNav
-                isActive={navActive}
-                isMobile={isMobileDevice}
-                slice={groupedHeaderSlices || []}
-                oldMenuItems={convertedRegularMenuItems}
-                isGlobalMb={isGlobalMb}
-              />
-            ) : null}
-            {enableBuyTickets ? (
-              <>
+              <Conditional if={groupedHeaderSlices.length}>
+                <MultiLevelNav
+                  isActive={navActive}
+                  isMobile={isMobileDevice}
+                  slice={groupedHeaderSlices || []}
+                  oldMenuItems={convertedRegularMenuItems}
+                  isGlobalMb={isGlobalMb}
+                />
+              </Conditional>
+              <Conditional if={enableBuyTickets}>
                 <Conditional if={isGlobalMb && showBuyTickets}>
                   <a href={buyTicketsLink} className="buy-tickets global-mb">
                     Buy Tickets
@@ -452,39 +453,39 @@ const Header: FunctionComponent<HeaderProps> = ({
                     Buy Tickets
                   </div>
                 </Conditional>
-              </>
-            ) : null}
-            {isMobileDevice && enableSearch && (
-              <div
-                className="mobi-search-trigger"
-                role="button"
-                tabIndex={0}
-                onClick={() => {
-                  loadSearchPage();
-                }}
-              >
-                {SEARCH_ICON}
-              </div>
-            )}
-            <Conditional if={hasLanguageDropdown}>
-              <LanguageSelector
-                {...languageProps}
-                languageDropdown={languageDropdown}
-                toggleDropdown={toggleLanguageDropdown}
-                hasLanguageDropdown={hasLanguageSelector}
-                host={host}
-                isMobile={isMobileDevice}
-              />
-            </Conditional>
-            <Conditional if={isMobileDevice && hamburgerIconCheck}>
-              <Hamburger
-                className={'hamburger'}
-                isActive={navActive}
-                onClickFn={() => toggleNav(!navActive)}
-                isGlobalMb={isGlobalMb}
-              />
-            </Conditional>
-          </HeaderRight>
+              </Conditional>
+              <Conditional if={isMobileDevice && enableSearch}>
+                <div
+                  className="mobi-search-trigger"
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => {
+                    loadSearchPage();
+                  }}
+                >
+                  {SEARCH_ICON}
+                </div>
+              </Conditional>
+              <Conditional if={hasLanguageDropdown}>
+                <LanguageSelector
+                  {...languageProps}
+                  languageDropdown={languageDropdown}
+                  toggleDropdown={toggleLanguageDropdown}
+                  hasLanguageDropdown={hasLanguageSelector}
+                  host={host}
+                  isMobile={isMobileDevice}
+                />
+              </Conditional>
+              <Conditional if={isMobileDevice && hamburgerIconCheck}>
+                <Hamburger
+                  className={'hamburger'}
+                  isActive={navActive}
+                  onClickFn={() => toggleNav(!navActive)}
+                  isGlobalMb={isGlobalMb}
+                />
+              </Conditional>
+            </HeaderRight>
+          </Conditional>
         </header>
       </div>
     </StyledHeader>

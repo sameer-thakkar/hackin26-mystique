@@ -1,9 +1,117 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
-import { SOLEIL, SIZES } from 'const/ui-constants';
+import styled from 'styled-components';
+import InteractionContext from 'contexts/Interaction';
 import Conditional from 'components/common/Conditional';
 import { SortSelector } from 'components/MicrositeV2/SortSelector';
-import InteractionContext from 'contexts/Interaction';
+import { SOLEIL, SIZES, COLORS } from 'const/ui-constants';
 
+const StyledCategoryBar = styled.div`
+  position: sticky;
+  background: ${COLORS.WHITE};
+  top: 0;
+  z-index: 20;
+
+  .swiper-container {
+    overflow: unset;
+  }
+  .carousel img {
+    border-radius: 10px;
+  }
+  @media (max-width: 768px) {
+    margin-left: -16px;
+    margin-right: -16px;
+  }
+`;
+
+const CategoryBarWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  border-bottom: ${({ isEntertainmentMb }) =>
+    isEntertainmentMb
+      ? `1px solid ${COLORS.GREY_G6}`
+      : `1px solid ${COLORS.CHALK}`};
+  grid-gap: 8px;
+  padding-top: 36px;
+  padding-bottom: 14px;
+
+  .tabs-wrap {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: left;
+    grid-column-gap: 30px;
+    position: relative;
+  }
+  .tab {
+    font-family: ${SOLEIL.FONT_STACK};
+    font-size: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '21px' : '22px'};
+    line-height: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '28px' : '1.3'};
+    color: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? COLORS.GREY.G2 : COLORS.DAVY_GREY};
+    font-weight: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? SOLEIL.SEMIBOLD : SOLEIL.MEDIUM};
+    text-align: center;
+    cursor: pointer;
+  }
+  .tab.active {
+    color: ${COLORS.RHAPSODY};
+  }
+  .active-indicator {
+    position: absolute;
+    bottom: -16px;
+    left: 0;
+    width: 100px;
+    height: 2px;
+    background: ${COLORS.RHAPSODY};
+    z-index: 8;
+    transition: width 0.5s ease, left 0.5s ease;
+  }
+  .carousel {
+    max-width: ${SIZES.MAX_WIDTH};
+    padding: 0 5.46vw;
+    margin: 0 auto;
+  }
+  .filter-wrapper {
+    display: grid;
+    align-items: center;
+    grid-column-gap: 8px;
+    grid-template-columns: auto auto;
+  }
+  .filter-wrapper span {
+    font-family: ${SOLEIL.FONT_STACK};
+  }
+
+  @media (max-width: 768px) {
+    overflow-y: hidden;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    padding-top: 19px;
+    margin-top: 24px;
+    .tabs-wrap {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+    .tabs-wrap {
+      width: max-content;
+    }
+    .active-indicator {
+      bottom: -14px;
+    }
+    .tab {
+      font-size: 18px;
+      font-family: ${SOLEIL.FONT_STACK};
+      font-weight: ${SOLEIL.MEDIUM};
+    }
+    .filter-wrapper {
+      display: none;
+    }
+  }
+`;
 const CategoryBar = (props) => {
   const interactionCtx = useContext(InteractionContext);
   const parent = useRef(null);
@@ -16,7 +124,7 @@ const CategoryBar = (props) => {
     width: null,
     left: null,
   });
-  const { categories, isMobile, hideSortBySelector } = props;
+  const { categories, isMobile, hideSortBySelector, isEntertainmentMb } = props;
   const toggleFilterDropdown = () => {
     setFilterDropdownActive((oldState) => !oldState);
   };
@@ -73,8 +181,8 @@ const CategoryBar = (props) => {
   return (
     <>
       <div className="scroll-reference" ref={scroll_div}></div>
-      <div className={`category-bar `} ref={category_bar}>
-        <div className="category-bar-wrapper" ref={parent}>
+      <StyledCategoryBar ref={category_bar}>
+        <CategoryBarWrapper ref={parent} isEntertainmentMb={isEntertainmentMb}>
           <div className="tabs-wrap">
             {categories.map((category, index) => {
               const { ranking, name } = category || {};
@@ -108,141 +216,12 @@ const CategoryBar = (props) => {
                 isFilterDropdownActive={filterDropdownActive}
                 toggleFilterDropdown={toggleFilterDropdown}
                 changeOrder={changeOrder}
+                isEntertainmentMb={isEntertainmentMb}
               />
             </div>
           </Conditional>
-        </div>
-        <style jsx>
-          {`
-            .category-bar-wrapper {
-              display: grid;
-              grid-template-columns: 1fr auto;
-              align-items: center;
-              border-bottom: 1px solid #ebebeb;
-              grid-gap: 8px;
-              padding-top: 36px;
-              padding-bottom: 14px;
-            }
-            .category-bar {
-              position: sticky;
-              background: #fff;
-              top: 0;
-              z-index: 20;
-            }
-
-            .tabs-wrap {
-              margin: 0;
-              padding: 0;
-              list-style: none;
-              display: grid;
-              grid-auto-flow: column;
-              justify-content: left;
-              grid-column-gap: 30px;
-              position: relative;
-            }
-
-            .tab {
-              font-family: ${SOLEIL.FONT_STACK};
-              font-size: 22px;
-              line-height: 1.3;
-              color: #545454;
-              font-weight: ${SOLEIL.MEDIUM};
-              text-align: center;
-              cursor: pointer;
-            }
-            .tab.active {
-              color: #ec1943;
-            }
-            .active-indicator {
-              position: absolute;
-              bottom: -14px;
-              left: 0;
-              width: 100px;
-              height: 2px;
-              background: #ec1943;
-              z-index: 8;
-              transition: width 0.5s ease, left 0.5s ease;
-            }
-            .carousel {
-              max-width: ${SIZES.MAX_WIDTH};
-              padding: 0 5.46vw;
-              margin: 0 auto;
-            }
-            .filter-wrapper {
-              display: grid;
-              align-items: center;
-              grid-column-gap: 8px;
-              grid-template-columns: auto auto;
-            }
-            .filter-wrapper span {
-              font-family: SOLEIL;
-            }
-
-            @media (max-width: 768px) {
-              .category-bar {
-                margin-left: -16px;
-                margin-right: -16px;
-              }
-              .category-bar .tabs-wrap {
-                padding-left: 16px;
-                padding-right: 16px;
-              }
-              .tabs-wrap {
-                width: max-content;
-              }
-              .category-bar-wrapper {
-                overflow-y: hidden;
-                overflow-x: scroll;
-                -webkit-overflow-scrolling: touch;
-                padding-top: 19px;
-                margin-top: 24px;
-              }
-              .tab {
-                font-size: 18px;
-                font-family: ${SOLEIL.FONT_STACK};
-                font-weight: ${SOLEIL.MEDIUM};
-              }
-              .filter-wrapper {
-                display: none;
-              }
-            }
-          `}
-        </style>
-        <style jsx global>
-          {`
-            .swiper-container {
-              overflow: unset;
-            }
-            .carousel img {
-              border-radius: 10px;
-            }
-            .category-bar.sticky .category-bar-wrapper {
-              position: fixed;
-              background: #fff;
-              max-width: ${SIZES.MAX_WIDTH};
-              margin: auto;
-              top: 0;
-              left: 50%;
-              transform: translatex(-50%);
-              z-index: 999;
-              width: 100%;
-            }
-            .category-bar.sticky::before {
-              content: '';
-              height: 80px;
-              display: block;
-            }
-            .category-bar.sticky .active-indicator {
-              bottom: -16px;
-            }
-            @media (max-width: 768px) {
-              .category-bar.sticky .active-indicator {
-                bottom: -14px;
-              }
-            }
-          `}
-        </style>
-      </div>
+        </CategoryBarWrapper>
+      </StyledCategoryBar>
     </>
   );
 };

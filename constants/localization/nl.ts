@@ -28,7 +28,11 @@ const nl = {
   TODAY: 'Vandaag',
   TOMORROW: 'Morgen',
   MORE_FROM: 'Meer van',
+  OFF: 'Off',
   TICKETS: 'Kaartjes',
+  REOPENING_ON: 'Reopening on',
+  REOPENED_ON: 'Reopened on',
+  NEW: 'New',
   LISTICLES: {
     SEATING_CHART: 'Stoelenschema',
     KNOW_MORE: 'Lees meer',

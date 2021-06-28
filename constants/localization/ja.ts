@@ -27,6 +27,9 @@ const ja = {
   TODAY: '今日',
   TOMORROW: '明日',
   MORE_FROM: 'More from',
+  REOPENING_ON: 'Reopening on',
+  REOPENED_ON: 'Reopened on',
+  NEW: 'New',
   LISTICLES: {
     SEATING_CHART: '座席図',
     KNOW_MORE: 'もっと読む',
@@ -35,6 +38,7 @@ const ja = {
   PRICES_STARTING: '価格開始',
   FROM: 'から',
   MORE_DETAILS: '詳細を見る',
+  OFF: 'Off',
   FOOTER: {
     DISCLAIMER:
       'これは<観光地>の公式サイトではなく。ヘッドアウトが運営するサイトです。世界の各事業者と協力して、クリックするだけで最高の旅行体験ができます.',

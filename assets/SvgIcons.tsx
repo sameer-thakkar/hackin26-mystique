@@ -355,7 +355,7 @@ export const SHIELD = (
   </svg>
 );
 
-export const BLACK_CLOSE = (
+export const CLOSE_BLACK = (
   <svg
     width="24"
     height="24"
@@ -379,7 +379,7 @@ export const BLACK_CLOSE = (
   </svg>
 );
 
-export const YELLOW_CLOSE = (
+export const CLOSE_YELLOW = (
   <svg
     width="16"
     height="16"

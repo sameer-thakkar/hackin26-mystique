@@ -331,7 +331,13 @@ export const isSameURL = (urlA = '', urlB = '') =>
   normaliseURL(urlA) === normaliseURL(urlB);
 
 export const getHostName = (isStage, isDev) => {
-  return isDev
-    ? `http://localhost:3001`
-    : `https://${isStage ? 'stage-' : ''}microbrands.headout.com`;
+  const headoutDomain = `microbrands.headout.com`;
+  switch (true) {
+    case isStage:
+      return `https://stage-${headoutDomain}`;
+    case isDev:
+      return `http://localhost:3001`;
+    default:
+      return `https://${headoutDomain}`;
+  }
 };

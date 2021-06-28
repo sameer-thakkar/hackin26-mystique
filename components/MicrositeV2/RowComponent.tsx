@@ -4,6 +4,7 @@ import { scroller } from 'react-scroll';
 import styled from 'styled-components';
 import InteractionContext from 'contexts/Interaction';
 import { PAGETYPE } from 'const/index';
+import Conditional from 'components/common/Conditional';
 
 const DetailedProductCard = dynamic(() => import('./DetailedProductCard'), {
   ssr: false,
@@ -23,10 +24,21 @@ const ProductsRow = styled.div`
 `;
 
 export const RowComponent = (props) => {
+  const {
+    isMobile,
+    tgidsSubArr,
+    allTours,
+    hasCategoryTourList,
+    categoryTourList,
+    isEntertainmentMb,
+    currentLanguage,
+    host,
+    uid,
+    sectionId,
+  } = props;
   const interactionContext = useContext(InteractionContext);
 
   const handleProductClicked = (productTgid, section) => {
-    const { isMobile } = props;
     if (isMobile) {
       props.changePage({
         name: PAGETYPE.MOBILE_PRODUCT_PAGE,
@@ -55,16 +67,6 @@ export const RowComponent = (props) => {
       });
   }, [interactionContext]);
 
-  const {
-    tgidsSubArr,
-    allTours,
-    isMobile,
-    isEntertainmentMb,
-    currentLanguage,
-    host,
-    uid,
-    sectionId,
-  } = props;
   const { activeTour } = interactionContext;
   const tgidClicked = activeTour.tgid;
   const cardPosition = tgidsSubArr.indexOf(activeTour.tgid);
@@ -76,29 +78,32 @@ export const RowComponent = (props) => {
           <Product
             tgid={tgid}
             productClick={handleProductClicked}
+            isEntertainmentMb={isEntertainmentMb}
             allTours={allTours}
+            hasCategoryTourList={hasCategoryTourList}
+            categoryTourList={categoryTourList}
             isMobile={isMobile}
             key={index}
             cardIdPrefix={sectionId}
           />
         );
       })}
-      <React.Fragment>
-        {showDescription ? (
-          <DetailedProductCard
-            tgidClicked={tgidClicked}
-            allTours={allTours}
-            isMobile={isMobile}
-            isEntertainmentMb={isEntertainmentMb}
-            currentLanguage={currentLanguage}
-            host={host}
-            uid={uid}
-            key={tgidClicked}
-            cardPosition={cardPosition + 1}
-            closeDescription={closeDescription}
-          />
-        ) : null}
-      </React.Fragment>
+      <Conditional if={showDescription}>
+        <DetailedProductCard
+          tgidClicked={tgidClicked}
+          allTours={allTours}
+          hasCategoryTourList={hasCategoryTourList}
+          categoryTourList={categoryTourList}
+          isMobile={isMobile}
+          isEntertainmentMb={isEntertainmentMb}
+          currentLanguage={currentLanguage}
+          host={host}
+          uid={uid}
+          key={tgidClicked}
+          cardPosition={cardPosition + 1}
+          closeDescription={closeDescription}
+        />
+      </Conditional>
     </ProductsRow>
   );
 };

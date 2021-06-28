@@ -28,6 +28,9 @@ const it = {
   TODAY: 'oggi',
   TOMORROW: 'domani',
   TICKETS: 'Biglietti',
+  REOPENING_ON: 'Reopening on',
+  REOPENED_ON: 'Reopened on',
+  NEW: 'New',
   LISTICLES: {
     SEATING_CHART: 'Mappa dei posti a sedere',
     KNOW_MORE: 'Altre informazioni',
@@ -36,6 +39,7 @@ const it = {
   PRICES_STARTING: 'Prezzi a partire da',
   FROM: 'A partire da',
   MORE_DETAILS: 'Altri dettagli',
+  OFF: 'Off',
   FOOTER: {
     DISCLAIMER:
       'Questo non è il sito internet ufficiale della seguente attrazione: <attraction>. Questo sito è gestito da Headout e lavora con attrazioni e tour operator per fornire esperienze incredibili al tocco di un pulsante.',

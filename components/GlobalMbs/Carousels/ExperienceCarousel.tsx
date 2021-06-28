@@ -65,7 +65,7 @@ const StyledCard = styled.div`
   }
   .final-price .discount {
     color: ${COLORS.OKAY_GREEN};
-    background-color: ${COLORS.LIGHTER_GREEN};
+    background-color: ${COLORS.SOOTHING_GREEN};
     border-radius: 2px;
     font-size: 11px;
     line-height: 12px;

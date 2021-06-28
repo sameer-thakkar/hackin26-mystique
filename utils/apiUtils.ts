@@ -23,7 +23,7 @@ export const fetchTourList = ({ tgids, ...query }) =>
     })}`
   );
 
-export const fetchTourGroupData = (tgid, hostName) =>
+export const fetchTourGroup = (tgid, hostName) =>
   fetch(`${hostName}/api/tours/v5/tour-group/get/${tgid}`);
 
 export const fetchCurrencyList = async () => {
@@ -36,10 +36,13 @@ export const fetchCurrencyList = async () => {
   }
 };
 
-export const fetchCategory = async (categoryId: string) => {
+export const fetchCategory = async (
+  categoryId: string | number,
+  hostname: string
+) => {
   try {
     const response = await fetch(
-      `https://api.headout.com/api/v1/feed/category/get/${categoryId}`
+      `${hostname}/api/tours/v1/feed/category/get/${categoryId}`
     );
     const data = await response.json();
     return data;

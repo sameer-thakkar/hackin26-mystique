@@ -1,14 +1,75 @@
 import dynamic from 'next/dynamic';
 import React from 'react';
-import { SIZES } from 'const/ui-constants';
 import { scroller } from 'react-scroll';
+import styled from 'styled-components';
 import Image from 'UI/Image';
+import { SIZES } from 'const/ui-constants';
 import { stringIdfy } from 'utils/helper';
 
 const Swiper = dynamic(() => import('components/Swiper'));
 
+const BannerWrapper = styled.div`
+  max-width: 100%;
+  margin: ${({ isEntertainmentMb }) =>
+    isEntertainmentMb ? 'auto auto 32px auto' : 'auto'};
+  overflow: hidden;
+
+  .swiper-container {
+    overflow: unset;
+  }
+  .swiper-wrapper {
+    height: 400px;
+  }
+  .carousel {
+    max-width: ${SIZES.MAX_WIDTH};
+    margin: 0 auto;
+  }
+
+  .swiper-slide {
+    -webkit-transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .pointer {
+    cursor: pointer;
+  }
+
+  img {
+    border-radius: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '8px' : '10px'};
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 768px) {
+    img {
+      border-radius: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '8px' : '4px'};
+      display: flex;
+      ${({ isEntertainmentMb }) => isEntertainmentMb && `height: 100%;`};
+    }
+    .swiper-wrapper {
+      height: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '214px' : '204px'};
+    }
+    .swiper-container {
+      width: 100%;
+    }
+    .content-wrap {
+      padding: 0 20px;
+    }
+  }
+`;
+
 const Banner = (props) => {
-  const { banners, isMobile, carouselOptions, ready } = props;
+  const {
+    banners,
+    isMobile,
+    carouselOptions,
+    ready,
+    isEntertainmentMb,
+  } = props;
 
   if (isMobile) {
     carouselOptions.spaceBetween = 8;
@@ -32,7 +93,7 @@ const Banner = (props) => {
     }
   };
   return (
-    <div className="banner-wrapper">
+    <BannerWrapper isEntertainmentMb={isEntertainmentMb}>
       <div className="main-wrapper">
         <div className="swiper-container">
           <div className="swiper-wrapper">
@@ -70,64 +131,7 @@ const Banner = (props) => {
           <div className="swiper-pagination"></div>
         </div>
       </div>
-      <style jsx>
-        {`
-          .banner-wrapper {
-            max-width: 100%;
-            margin: auto;
-            overflow: hidden;
-          }
-          .swiper-wrapper {
-            height: 400px;
-          }
-          .carousel {
-            max-width: ${SIZES.MAX_WIDTH};
-            margin: 0 auto;
-          }
-
-          .swiper-slide {
-            -webkit-transform-style: preserve-3d;
-            -webkit-backface-visibility: hidden;
-          }
-
-          @media (max-width: 768px) {
-            .swiper-wrapper {
-              height: 204px;
-            }
-            .swiper-container {
-              width: 100%;
-            }
-            .content-wrap {
-              padding: 0 20px;
-            }
-            .swiper-wrapper img {
-            }
-          }
-        `}
-      </style>
-      <style jsx global>
-        {`
-          .banner-wrapper .swiper-container {
-            overflow: unset;
-          }
-          .pointer {
-            cursor: pointer;
-          }
-          .banner-wrapper img {
-            border-radius: 10px;
-            height: 100%;
-            width: 100%;
-            object-fit: cover;
-          }
-          @media (max-width: 768px) {
-            .banner-wrapper img {
-              border-radius: 4px;
-              display: flex;
-            }
-          }
-        `}
-      </style>
-    </div>
+    </BannerWrapper>
   );
 };
 
@@ -139,7 +143,7 @@ Banner.defaultProps = {
     speed: 650,
     slidesPerView: 'auto',
     loop: true,
-    centered: true,
+    centeredSlides: true,
     spaceBetween: 24,
     autoplay: {
       delay: 2500,

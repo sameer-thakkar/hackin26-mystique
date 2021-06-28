@@ -1,21 +1,23 @@
-import { SIZES, SOLEIL } from 'const/ui-constants';
-import { THEMES } from 'const/index';
 import React, { useState, useContext, ComponentType } from 'react';
 import dynamic from 'next/dynamic';
-import DismissAlert from 'UI/DismissAlert';
-import { strings } from 'const/strings';
-import { ProductsContextProvider } from 'contexts/Products';
-import { LOCATION } from 'assets/SvgIcons';
-import { groupSlices } from 'utils/helper';
 import styled from 'styled-components';
-import SafeDFBannerWrapper from 'UI/SafeDFBannerWrapper';
-import { isSafetyIncluded } from 'utils';
-import Conditional from 'components/common/Conditional';
-import TextBanner from 'components/TextBanner';
+import { ProductsContextProvider } from 'contexts/Products';
 import { MBContext } from 'contexts/MBContext';
 import Footer from 'components/common/Footer';
 import sliceHandler from 'components/Slices';
 import Header from 'components/MicrositeV2/Header';
+import LttSafetyBanner from 'components/ShowPages/SafetyBanner';
+import LttFeatureCard from 'components/ShowPages/FeatureCard';
+import Conditional from 'components/common/Conditional';
+import TextBanner from 'components/TextBanner';
+import DismissAlert from 'UI/DismissAlert';
+import SafeDFBannerWrapper from 'UI/SafeDFBannerWrapper';
+import { LOCATION } from 'assets/SvgIcons';
+import { THEMES } from 'const/index';
+import { strings } from 'const/strings';
+import { SIZES, SOLEIL } from 'const/ui-constants';
+import { isSafetyIncluded } from 'utils';
+import { groupSlices } from 'utils/helper';
 
 const Alert = dynamic(() => import('UI/Alert'), { ssr: false });
 const ResponsiveSelector: ComponentType<any> = dynamic(
@@ -63,6 +65,7 @@ const V2MicrositeWrapper = styled.div`
     margin-right: auto;
     font-family: ${SOLEIL.FONT_STACK};
   }
+
   @media (max-width: 768px) {
     .hero-slice-section {
       margin-top: 48px;
@@ -76,6 +79,11 @@ const V2MicrositeWrapper = styled.div`
   }
 `;
 
+/*
+TODO: Content Tabs with Category
+TODO: Category with TGID and Category
+*/
+
 export const HomePage = (props) => {
   const {
     header,
@@ -86,6 +94,8 @@ export const HomePage = (props) => {
     allTours,
     longFormContent,
     categoryProps,
+    hasCategoryTourList,
+    categoryTourListData,
     heroProps,
     changePage,
     uid,
@@ -105,12 +115,12 @@ export const HomePage = (props) => {
   const contentFWSlices = (slices && groupSlices(slices)) || [];
   const longFormSlices = [...contentFWSlices, ...longFormContent];
   const { currentLanguage } = props.header.languageProps;
-  const hasToursSection = categoryProps.categories.length > 0;
+  const hasToursSection = categoryProps?.categories?.length > 0;
   const { secondaryFooter } = footer;
-  const footerLogoURL = footer.logo.url;
-  const footerLogoAlt = footer.footer_logo_alt || footer.footer_logo?.alt;
-  const themeOverride = footer.themeOverride;
-  const hasDropdownLinks = enableDropdownLinks && dropdownLinks.length;
+  const footerLogoURL = footer?.logo?.url;
+  const footerLogoAlt = footer?.footer_logo_alt || footer.footer_logo?.alt;
+  const themeOverride = footer?.themeOverride;
+  const hasDropdownLinks = enableDropdownLinks && dropdownLinks?.length;
   const { mbTheme } = useContext(MBContext);
   const { bannerHeading } = heroProps;
   const hasSafe = Object.values(allTours).some((tour: any) =>
@@ -118,15 +128,16 @@ export const HomePage = (props) => {
   );
 
   return (
-    <V2MicrositeWrapper>
+    <V2MicrositeWrapper isEntertainmentMb={isEntertainmentMb}>
       <Header
         {...header}
         host={host}
         changePage={changePage}
         isMobile={isMobile}
         allTours={allTours}
+        isEntertainmentMb={isEntertainmentMb}
       />
-      {isMobile && hasDropdownLinks ? (
+      <Conditional if={isMobile && hasDropdownLinks}>
         <div className="main-wrapper city-selector">
           <ResponsiveSelector
             options={dropdownLinks}
@@ -138,8 +149,10 @@ export const HomePage = (props) => {
             toggleIcon={false}
           />
         </div>
-      ) : null}
-      {showCovid19Alert && covid19AlertOpen ? (
+      </Conditional>
+      <Conditional
+        if={showCovid19Alert && covid19AlertOpen && !isEntertainmentMb}
+      >
         <DismissAlert
           readMoreLink={strings.COVID19_ALERT.LINK}
           readMore={strings.READ_MORE}
@@ -149,23 +162,25 @@ export const HomePage = (props) => {
             setCovid19AlertOpen(false);
           }}
         />
-      ) : null}
+      </Conditional>
       <Conditional if={mbTheme === THEMES.DEFAULT && heroProps.banners.length}>
-        <Banner {...heroProps} isMobile={isMobile} ready={true} />
+        <Banner
+          {...heroProps}
+          isMobile={isMobile}
+          ready={true}
+          isEntertainmentMb={isEntertainmentMb}
+        />
       </Conditional>
       <Conditional if={mbTheme === THEMES.MIN_BLUE}>
         <TextBanner bannerHeading={bannerHeading ? bannerHeading : null} />
       </Conditional>
-
-      {alertPopup?.uid ? (
+      <Conditional if={alertPopup?.uid}>
         <div className="alert-wrapper">
           <Alert popupUID={alertPopup?.uid} currentLanguage={currentLanguage} />
         </div>
-      ) : null}
-
+      </Conditional>
       <SafeDFBannerWrapper hasSafe={hasSafe} marginTop={40} />
-
-      {heroSectionSlice.length ? (
+      <Conditional if={heroSectionSlice.length}>
         <ProductsContextProvider allTours={allTours} ready={ready}>
           <div className="main-wrapper hero-slice-section">
             {heroSectionSlice
@@ -180,10 +195,14 @@ export const HomePage = (props) => {
               ))}
           </div>
         </ProductsContextProvider>
-      ) : null}
-      {hasToursSection ? (
+      </Conditional>
+      <Conditional if={isEntertainmentMb}>
+        <LttSafetyBanner />
+      </Conditional>
+      <Conditional if={hasToursSection}>
         <ProductsWrapper
           availableTGIDs={Object.keys(allTours)}
+          hasCategoryTourList={hasCategoryTourList}
           directTgid={parseInt(directTgid)}
           allTours={allTours}
           isMobile={isMobile}
@@ -194,15 +213,22 @@ export const HomePage = (props) => {
           host={host}
           uid={uid}
         />
-      ) : null}
+      </Conditional>
+      <Conditional if={isEntertainmentMb}>
+        <div className="main-wrapper">
+          <LttFeatureCard />
+        </div>
+      </Conditional>
       <ProductsContextProvider allTours={allTours} ready={ready}>
         <div className="main-wrapper v2-long-form">
-          {longFormContent ? (
+          <Conditional if={longFormContent}>
             <LongForm
               slicesArray={longFormSlices}
               props={{
                 allTours,
                 isMobile,
+                hasCategoryTourList,
+                categoryTourListData,
                 changePage,
                 host,
                 uid,
@@ -210,7 +236,7 @@ export const HomePage = (props) => {
               }}
               hasToursSection={hasToursSection}
             />
-          ) : null}
+          </Conditional>
         </div>
       </ProductsContextProvider>
       <Footer

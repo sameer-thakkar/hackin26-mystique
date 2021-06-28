@@ -7,27 +7,32 @@ import { MutableSnapshot, RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components';
 import 'lazysizes';
 import 'lazysizes/plugins/attrchange/ls.attrchange';
+import EnvironmentContext from 'contexts/environmentContext';
+import { MBContextProvider } from 'contexts/MBContext';
+import { getAppTheme } from 'style/theme';
+import { Client } from 'config/prismic-config';
+import { toursTabSliceHandler } from 'components/Slices';
+import { currencyAtom } from 'store/atoms/currency';
+import { CUSTOM_TYPES, DESIGN, THEMES } from 'const/index';
 import {
   redirectTo,
   reflect,
   isNakedDomain,
   getHeadoutLanguagecode,
 } from 'utils';
-import { uncategorizedToursListParser } from 'utils/dataParsers';
-import { getLangUID, isAmpUrl, removePageQuery } from 'utils/urlUtils';
-import { currencyAtom } from 'store/atoms/currency';
 import { getPrismicDocument } from 'utils/prismicUtils';
-import { fetchCategory, fetchCurrencyList } from 'utils/apiUtils';
+import {
+  fetchCategory,
+  fetchCurrencyList,
+  fetchTourGroup,
+} from 'utils/apiUtils';
+import {
+  categoryTourListParser,
+  uncategorizedToursListParser,
+} from 'utils/dataParsers';
+import { getLangUID, isAmpUrl, removePageQuery } from 'utils/urlUtils';
 import { getHostName } from 'utils/helper';
 import Analytics from 'utils/analytics';
-
-import { getAppTheme } from '../style/theme';
-import EnvironmentContext from '../contexts/environmentContext';
-import { Client } from '../config/prismic-config';
-import { CUSTOM_TYPES, DESIGN, THEMES } from '../constants';
-import { MBContextProvider } from '../contexts/MBContext';
-import { toursTabSliceHandler } from './Slices';
-import { fetchTourGroupData } from '../utils/apiUtils';
 
 const Microsite = dynamic(() => import('components/MicrositeV1'));
 const ContentPage = dynamic(() => import('components/ContentPage'));
@@ -167,6 +172,8 @@ export default class Page extends React.Component<any, any> {
     const { host } = req.headers || window.location;
     const isStage = host.includes('stage-');
     const { uid, lang } = getLangUID(req, query);
+    const hostname = getHostName(isStage, isDev);
+
     try {
       let initial_tgids = [];
 
@@ -202,7 +209,7 @@ export default class Page extends React.Component<any, any> {
         let ticketsData, startingPrice, currencyCode, currencySymbol;
         const categoryId = CMSContent?.data?.headout_category_id;
         if (categoryId) {
-          ticketsData = await fetchCategory(categoryId);
+          ticketsData = await fetchCategory(categoryId, hostname);
         }
         if (ticketsData?.products?.length) {
           currencyCode = ticketsData?.products
@@ -268,10 +275,9 @@ export default class Page extends React.Component<any, any> {
       }
       if (ContentType === CUSTOM_TYPES.SHOW_PAGE) {
         try {
-          const hostName = getHostName(isStage, isDev);
-          const tgidData = await fetchTourGroupData(
-            CMSContent.data?.tgid,
-            hostName
+          const tgidData = await fetchTourGroup(
+            CMSContent?.data?.tgid,
+            hostname
           ).then((res) => {
             return res.json();
           });
@@ -318,15 +324,48 @@ export default class Page extends React.Component<any, any> {
       let tgidsArray = [];
 
       if (ContentType === CUSTOM_TYPES.MICROSITE) {
-        const MBDesign = CMSContent.data.data.design || '';
-        const mbTheme = CMSContent.data.data.theme || THEMES.DEFAULT;
-        const toursTabFirstSlice = CMSContent.data.data.body1[0];
+        const { data } = CMSContent || {};
+        const { refs, data: CMSData } = data || {};
+
+        const { contentFramework } = refs || {};
+        const { data: contentFrameworkData } = contentFramework || {};
+        const { design, theme, body, body1, allShowPages } = CMSData || {};
+        const MBDesign = design || '';
+        const mbTheme = theme || THEMES.DEFAULT;
+        const toursTabFirstSlice = body1[0];
+        const categorizedTourList = body;
+
+        const categoryTourList = categorizedTourList?.length
+          ? categorizedTourList?.filter(
+              (category) => category.slice_type === 'tour_list_category'
+            )
+          : [];
+
+        const categoryCarouselCF = contentFrameworkData?.body?.length
+          ? contentFrameworkData?.body?.filter(
+              (slice) => slice.slice_type === 'category_carousel'
+            )
+          : [];
+
+        let categoryTourListData;
+        const hasCategoryTourList =
+          Object.keys(categoryTourList)?.length ||
+          Object.keys(categoryCarouselCF)?.length;
+        if (hasCategoryTourList) {
+          categoryTourListData = await categoryTourListParser({
+            tourListCategory: categoryTourList,
+            hostname,
+            showpages: allShowPages,
+            categoryCarousel: categoryCarouselCF,
+          });
+        }
+
         const primsicTours = toursTabFirstSlice
           ? await toursTabSliceHandler(toursTabFirstSlice)
           : [];
         const offers = primsicTours
-          .filter((tour) => tour.offer__free_tour?.id)
-          .map((tour) => tour.offer__free_tour?.id);
+          ?.filter((tour) => tour.offer__free_tour?.id)
+          ?.map((tour) => tour.offer__free_tour?.id);
         const uniqueOfferIds = offers.filter(
           (id, index) => offers.indexOf(id) === index
         );
@@ -345,7 +384,8 @@ export default class Page extends React.Component<any, any> {
           primsicTours,
           initial_tgids
         );
-        tgidsArray = toursList.reduce((acc, tour) => {
+
+        tgidsArray = toursList?.reduce((acc, tour) => {
           return [...acc, tour.tgid];
         }, []);
 
@@ -372,6 +412,7 @@ export default class Page extends React.Component<any, any> {
         AllData = {
           CMSContent,
           toursList,
+          categoryTourListData,
           ContentType,
           uid,
           lang,
@@ -401,12 +442,12 @@ export default class Page extends React.Component<any, any> {
             hide_df: false,
             hide_safe: false,
           };
-          let allTags = tour.allTags || [];
+          let allTags = tour?.allTags || [];
           if (hide_df) {
-            allTags = allTags.filter((t) => !t.includes('DF-'));
+            allTags = allTags?.filter((t) => !t.includes('DF-'));
           }
           if (hide_safe) {
-            allTags = allTags.filter((t) => !t.includes('SAFE'));
+            allTags = allTags?.filter((t) => !t.includes('SAFE'));
           }
           return {
             ...accum,
@@ -536,6 +577,7 @@ export default class Page extends React.Component<any, any> {
       lang,
       uid,
       toursList,
+      categoryTourListData = {},
       isMobile,
       mbTheme = THEMES.DEFAULT,
       isPreview,
@@ -551,7 +593,8 @@ export default class Page extends React.Component<any, any> {
       return <ErrorPage statusCode={statusCode} />;
     }
 
-    const microsite = CMSContent.data?.microsite?.data || CMSContent.data?.data;
+    const microsite =
+      CMSContent?.data?.microsite?.data || CMSContent?.data?.data;
     const isGlobalMb =
       ContentType === CUSTOM_TYPES.GLOBAL_HOMEPAGE ||
       ContentType === CUSTOM_TYPES.GLOBAL_CITY ||
@@ -569,6 +612,7 @@ export default class Page extends React.Component<any, any> {
               host={host}
               isDev={isDev}
               scorpioData={tourGroupData}
+              categoryTourListData={categoryTourListData}
               serverRequestStartTimestamp={serverRequestStartTimestamp}
               isMobile={isMobile}
             />

@@ -1,13 +1,14 @@
 import dynamic from 'next/dynamic';
 import React, { Component, ComponentType } from 'react';
 import { withRouter } from 'next/router';
-import PopulateHead from 'components/common/meta';
-import allToursParser from 'utils/allToursParser';
-import { withAmp } from 'components/common/withAmp';
-import { docCookies, genManualSlice, getLangObject } from 'utils/helper';
 import { InteractionContextProvider } from 'contexts/Interaction';
+import PopulateHead from 'components/common/meta';
+import { withAmp } from 'components/common/withAmp';
+import Conditional from 'components/common/Conditional';
 import { PAGETYPE, THEMES } from 'const/index';
+import allToursParser from 'utils/allToursParser';
 import { tourListApiParser } from 'utils/dataParsers';
+import { docCookies, genManualSlice, getLangObject } from 'utils/helper';
 
 const HomePage: ComponentType<any> = dynamic(() =>
   import('./views/HomePage').then((mod) => mod.HomePage)
@@ -102,7 +103,13 @@ class MicrositeV2 extends Component<any, any> {
   }
 
   render() {
-    const { data: CMSContent, host, scorpioData, isAmp } = this.props;
+    const {
+      data: CMSContent,
+      host,
+      scorpioData,
+      categoryTourListData,
+      isAmp,
+    } = this.props;
     const {
       commonFooter,
       contentFramework,
@@ -118,7 +125,16 @@ class MicrositeV2 extends Component<any, any> {
       serverRequestStartTimestamp,
     } = this.props;
     const { uid: currentDomain, data: CMSData } = CMSContent;
-    const { localization: languages } = CMSData;
+    const {
+      localization: languages,
+      dropdown_menu: dropdownMenu,
+      header_links,
+      images: CMSImages,
+      heading: CMSHeading,
+      enable_group_booking,
+      group_booking_excluded_tgids,
+      body: CMSBody,
+    } = CMSData || {};
     const currentLanguage = getLangObject(CMSContent.lang).short;
     const { isMobile } = this.state;
     const languageProps = {
@@ -127,14 +143,14 @@ class MicrositeV2 extends Component<any, any> {
       languages,
     };
 
-    const dropdownLinksArray = CMSData.dropdown_menu.reduce((acc, item) => {
+    const dropdownLinksArray = dropdownMenu.reduce((acc, item) => {
       if (item.link)
         return [...acc, { value: item.link.url, label: item.link_text }];
       else return acc;
     }, []);
 
-    const headerLinks = CMSData.header_links.length
-      ? CMSData.header_links
+    const headerLinks = header_links?.length
+      ? header_links
       : commonHeader?.data?.header_links || [];
     const overriddenHeaderData = { ...CMSData, ...commonHeader?.data };
     const headerProps = {
@@ -163,7 +179,7 @@ class MicrositeV2 extends Component<any, any> {
     };
     // TODO: Add Interaction Field on Primic and Map it to Each Banner
     const heroProps = {
-      banners: CMSData.images.reduce((accum, image) => {
+      banners: CMSImages.reduce((accum, image) => {
         return [
           ...accum,
           {
@@ -175,7 +191,7 @@ class MicrositeV2 extends Component<any, any> {
           },
         ];
       }, []),
-      bannerHeading: CMSData.heading,
+      bannerHeading: CMSHeading,
     };
 
     const { cardPrices, isFetched, ready } = this.state;
@@ -183,16 +199,68 @@ class MicrositeV2 extends Component<any, any> {
       cardPrices,
       isFetched,
     };
-    const allTours = allToursParser(CMSData, scorpioData, pricingData, isAmp);
 
     const groupBooking = {
-      hasGroupBooking: CMSData.enable_group_booking == 'Yes',
-      excludedTourIds: CMSData.group_booking_excluded_tgids
+      hasGroupBooking: enable_group_booking == 'Yes',
+      excludedTourIds: group_booking_excluded_tgids
         .filter((ele) => ele.tgid)
         .reduce((acc, tour) => {
           return [...acc, tour.tgid];
         }, []),
     };
+
+    const hasCategoryTourList = categoryTourListData
+      ? Object.keys(categoryTourListData)?.length > 0
+      : false;
+
+    let tourListCategorySortBy,
+      tourListCategories,
+      tourListCategoryAllTours = {};
+
+    // Categour Tour List carousel
+    if (hasCategoryTourList) {
+      const tourListSlice = CMSBody?.filter(
+        (body) => body.slice_type === 'tour_list_category'
+      )?.reduce((acc, curr) => acc + curr);
+      tourListCategorySortBy = tourListSlice?.primary?.disable_sort_selector;
+      tourListCategories = tourListSlice?.items?.map((item) => {
+        const { category, exclude_tgids, category_name } = item || {};
+        const re = /\s*(?:,)\s*/g;
+        const excludedTgids = exclude_tgids ? exclude_tgids?.split(re) : [];
+        const tgidData = categoryTourListData[category];
+        const filteredData = tgidData?.filter(
+          (p) => !excludedTgids.includes(`${p.tgid}`)
+        );
+        let tgids, prices;
+        if (filteredData?.length) {
+          tgids = filteredData?.map((d) => d?.tgid);
+          prices = filteredData
+            ?.sort((a, b) => {
+              return a?.listingPrice?.finalPrice - b?.listingPrice?.finalPrice;
+            })
+            ?.map((data) => data?.tgid);
+        }
+
+        tgidData?.forEach((data) => {
+          const { tgid } = data;
+          tourListCategoryAllTours[tgid] = data;
+        });
+        return {
+          name: category_name,
+          image: category?.category_image?.url,
+          rank: 0,
+          ranking: {
+            popularity: tgids?.length ? tgids : [],
+            price: prices?.length ? prices : [],
+          },
+        };
+      });
+    }
+
+    const allTours = hasCategoryTourList
+      ? tourListCategoryAllTours
+      : allToursParser(CMSData, scorpioData, pricingData, isAmp);
+
     const tgidsOrderByPrice: any = isFetched
       ? Object.values(allTours)
           .sort(
@@ -203,14 +271,23 @@ class MicrositeV2 extends Component<any, any> {
             return [...acc, tour.tgid];
           }, [])
       : null;
-    const raw_category = (CMSData.body[0] && CMSData.body[0].items) || [];
+
+    const uncategorizedTours = CMSBody?.filter(
+      (body) => body.slice_type === 'csv_ranking'
+    );
+
+    const rawCategory = uncategorizedTours?.length
+      ? uncategorizedTours?.reduce((acc, curr) => acc + curr)
+      : {};
+
+    const raw_category = (rawCategory && rawCategory?.items) || [];
     const hideSortBySelector =
-      CMSData?.body[0]?.primary?.disable_sort_selector || false;
-    let categories = raw_category.reduce((accum, category) => {
+      rawCategory.primary?.disable_sort_selector || false;
+    let categories = raw_category?.reduce((accum, category) => {
       let tgid_ranking = category.ranking
-        .split(',')
-        .map((tgid) => parseInt(tgid))
-        .filter((tgid) => allTours[tgid] && allTours[tgid].available);
+        ?.split(',')
+        ?.map((tgid) => parseInt(tgid))
+        ?.filter((tgid) => allTours[tgid] && allTours[tgid].available);
 
       return [
         ...accum,
@@ -218,15 +295,18 @@ class MicrositeV2 extends Component<any, any> {
           ranking: {
             popularity: tgid_ranking,
             price: isFetched
-              ? tgidsOrderByPrice.filter((tgid) => tgid_ranking.includes(tgid))
+              ? tgidsOrderByPrice?.filter((tgid) =>
+                  tgid_ranking?.includes(tgid)
+                )
               : null,
           },
-          name: category.category_name,
-          image: category.category_image.url,
+          name: category?.category_name,
+          image: category?.category_image?.url,
           rank: 0,
         },
       ];
     }, []);
+
     const directCategory = this.props.router.query.cat;
     if (directCategory) {
       const catRegex = new RegExp(directCategory, 'gi');
@@ -261,9 +341,11 @@ class MicrositeV2 extends Component<any, any> {
     }
 
     const categoryProps = {
-      categories,
+      categories: hasCategoryTourList ? tourListCategories : categories,
       active: 0,
-      hideSortBySelector,
+      hideSortBySelector: hasCategoryTourList
+        ? tourListCategorySortBy
+        : hideSortBySelector,
     };
 
     const {
@@ -304,8 +386,10 @@ class MicrositeV2 extends Component<any, any> {
       },
       heroProps,
       categoryProps,
-      allTours,
+      allTours: allTours,
       groupBooking,
+      hasCategoryTourList,
+      categoryTourListData,
       scorpioData,
       heroSectionSlice,
       contentFramework: contentFramework?.data,
@@ -352,7 +436,7 @@ class MicrositeV2 extends Component<any, any> {
             ready={ready}
           />
         </div>
-        {activePage == PAGETYPE.MOBILE_PRODUCT_PAGE ? (
+        <Conditional if={activePage == PAGETYPE.MOBILE_PRODUCT_PAGE}>
           <MobileProductPage
             changePage={this.changePage}
             tour={allTours[this.state.page.tgid]}
@@ -360,16 +444,18 @@ class MicrositeV2 extends Component<any, any> {
             uid={currentDomain}
             currentLanguage={currentLanguage}
             tgid={this.state.page.tgid}
+            isEntertainmentMb={isEntertainmentMb}
+            hasCategoryTourList={hasCategoryTourList}
           />
-        ) : null}
-        {activePage == PAGETYPE.SEARCH ? (
+        </Conditional>
+        <Conditional if={activePage == PAGETYPE.SEARCH}>
           <SearchPage
             allTours={allTours}
             headerProps={headerProps}
             isMobile={isMobile}
             changePage={this.changePage}
           />
-        ) : null}
+        </Conditional>
         <style global jsx>{`
           * {
             text-rendering: optimizeLegibility;

@@ -1,12 +1,17 @@
 import React, { useContext } from 'react';
-import { RichText } from 'prismic-reactjs';
-import Image from 'UI/Image';
-import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
-import { truncate } from 'utils/helper';
-import { SOLEIL, COLORS } from 'const/ui-constants';
-import { CURRENCY_SYMBOL_MAP } from 'const/index';
 import styled from 'styled-components';
+import { RichText } from 'prismic-reactjs';
 import { MBContext } from 'contexts/MBContext';
+import Conditional from 'components/common/Conditional';
+import Image from 'UI/Image';
+import LocalisedPrice from 'UI/LPrice';
+import { SEE_SAFETY, STAR } from 'assets/SvgIcons';
+import { CURRENCY_SYMBOL_MAP } from 'const/index';
+import { strings } from 'const/strings';
+import { SOLEIL, COLORS } from 'const/ui-constants';
+import { truncate } from 'utils/helper';
+import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
+import { dateToString } from 'utils/dateToString';
 
 const ProductCard = styled.div`
   width: 100%;
@@ -24,13 +29,34 @@ const ProductCard = styled.div`
   .product-v2-title {
     font-family: ${SOLEIL.FONT_STACK};
     font-size: 16px;
-    line-height: 24px;
-    color: ${COLORS.TWO_BLACK};
-    font-weight: 800;
+    line-height: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '20px' : '24px'};
+    color: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? COLORS.GREY.G2 : COLORS.TWO_BLACK};
+    font-weight: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? SOLEIL.SEMIBOLD : 800};
+  }
+  .reopening {
+    font-family: ${SOLEIL.FONT_STACK};
+    font-size: 12px;
+    font-style: normal;
+    font-weight: ${SOLEIL.REGULAR};
+    line-height: 16px;
+    margin-top: 4px;
+    color: ${COLORS.BEACH};
   }
   .product-v2-image {
     display: block;
     position: relative;
+  }
+  .emb-safety {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+  }
+  .emb-safety svg {
+    width: 52px;
+    height: 32px;
   }
   .overlay-booster {
     position: absolute;
@@ -51,6 +77,7 @@ const ProductCard = styled.div`
     display: grid;
     grid-gap: 4px;
     height: max-content;
+    ${({ isEntertainmentMb }) => isEntertainmentMb && `margin-top: 4px;`}
   }
   .product-v2-bottom {
     display: grid;
@@ -59,6 +86,10 @@ const ProductCard = styled.div`
     grid-template-columns: 1fr auto;
     grid-gap: 8px;
     height: max-content;
+    ${({ isEntertainmentMb }) =>
+      isEntertainmentMb &&
+      `grid-template-columns: 1fr;
+    `}
   }
   .product-v2-bottom-right {
     display: grid;
@@ -68,20 +99,46 @@ const ProductCard = styled.div`
   .product-v2-price {
     font-family: ${SOLEIL.FONT_STACK};
     font-size: 16px;
-    line-height: 20px;
-    text-align: right;
-    color: ${COLORS.TWO_BLACK};
     font-weight: ${SOLEIL.SEMIBOLD};
+    line-height: 20px;
+    text-align: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? 'left' : 'right'};
+    color: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? COLORS.GREY.G3 : COLORS.TWO_BLACK};
+    ${({ isEntertainmentMb }) =>
+      isEntertainmentMb &&
+      `grid-row: 2;
+      display: flex;
+    align-items: center;`}
   }
   .product-v2-scratch-price {
     font-family: ${SOLEIL.FONT_STACK};
     font-weight: ${SOLEIL.REGULAR};
-    font-size: 14px;
-    line-height: 14px;
+    font-size: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '12px' : '14px'};
+    line-height: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '16px' : '14px'};
     letter-spacing: 0.5px;
-    text-align: right;
-    text-decoration-line: line-through;
-    color: ${COLORS.GREY_G4};
+    text-align: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? 'left' : 'right'};
+    text-decoration-line: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? 'unset' : 'line-through'};
+    span {
+      color: ${COLORS.GREY_G4};
+    }
+  }
+
+  .discount {
+    background-color: ${COLORS.SOOTHING_GREEN};
+    color: ${COLORS.OKAY_GREEN};
+    padding: 2px 4px;
+    border-radius: 2px;
+    font-family: ${SOLEIL.FONT_STACK};
+    font-size: 10px;
+    font-style: normal;
+    font-weight: ${SOLEIL.REGULAR};
+    line-height: 12px;
+    margin-left: 6px;
   }
 
   .vendor-name {
@@ -94,10 +151,37 @@ const ProductCard = styled.div`
     color: ${COLORS.GREY_G4};
   }
 
+  .l1-booster-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    justify-content: space-between;
+    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: ${SOLEIL.MEDIUM};
+    font-style: normal;
+    line-height: 16px;
+    font-size: 12px;
+  }
+  .l1-booster-wrapper * {
+    color: ${COLORS.GREY.G4};
+  }
+  .rating {
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    column-gap: 4px;
+  }
+  .avg-rating {
+    color: ${COLORS.JOY_MUSTARD};
+  }
+  .avg-rating svg {
+    width: 10.52px;
+    height: 10px;
+  }
+
   @media (max-width: 768px) {
     grid-template-rows: 102px auto;
     transform: unset;
     transition: unset;
+    ${({ isEntertainmentMb }) => isEntertainmentMb && 'grid-row-gap: 10px;'}
     &:hover {
       transform: unset;
     }
@@ -106,15 +190,20 @@ const ProductCard = styled.div`
     }
     .product-v2-title {
       font-size: 14px;
-      line-height: 1.3;
+      line-height: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '20px' : '1.3'};
       font-weight: ${SOLEIL.SEMIBOLD};
     }
     .product-v2-bottom {
-      grid-template-columns: auto;
-      grid-row-gap: 12px;
+      grid-template-columns: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '1fr' : 'auto'};
+      grid-row-gap: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '4px;' : '12px'};
     }
     .product-v2-bottom-left {
       width: 100%;
+      ${({ isEntertainmentMb }) =>
+        isEntertainmentMb && ` grid-gap: 2px;margin-top: 10px;`}
     }
     .title-wrap {
       grid-column: 1 / 2;
@@ -131,7 +220,8 @@ const ProductCard = styled.div`
       text-align: left;
       font-weight: ${SOLEIL.SEMIBOLD};
       font-size: 14px;
-      line-height: 1;
+      line-height: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '20px;' : '1'};
       font-family: ${SOLEIL.FONT_STACK};
     }
     .product-v2-scratch-price {
@@ -140,6 +230,14 @@ const ProductCard = styled.div`
       line-height: 1.2;
       font-weight: ${SOLEIL.REGULAR};
       font-family: ${SOLEIL.FONT_STACK};
+    }
+    .l1-booster-wrapper {
+      ${({ isEntertainmentMb }) =>
+        isEntertainmentMb && `font-size: 10px;line-height: 12px;`}
+    }
+    .avg-rating svg {
+      ${({ isEntertainmentMb }) =>
+        isEntertainmentMb && `width:8px;height: 8px;`}
     }
   }
   .product-v2-image img {
@@ -189,7 +287,8 @@ const ProductCard = styled.div`
   @media (max-width: 768px) {
     .product-v2-image img {
       height: 102px;
-      border-radius: 2px;
+      border-radius: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '4px' : '2px'};
     }
     .product-v2-boosters {
       font-size: 12px;
@@ -198,20 +297,45 @@ const ProductCard = styled.div`
 `;
 
 const Product = (props) => {
-  const handleProductClick = () => {
-    props.productClick(props.tgid, props.cardIdPrefix);
-  };
-  const { allTours, tgid, cardIdPrefix, isMobile } = props;
-  const { currencySymbolMap } = useContext(MBContext);
+  const {
+    allTours,
+    tgid,
+    cardIdPrefix,
+    isMobile,
+    isEntertainmentMb,
+    productClick,
+  } = props;
+  const { currencySymbolMap, lang } = useContext(MBContext);
   if (!allTours[tgid]) return null;
-  const { listingPrice, dfListingPrice, ...tour } = allTours[tgid];
-  const priceObj = listingPrice || dfListingPrice;
-  const price = priceObj?.finalPrice;
-  const scratchPrice = priceObj?.originalPrice;
-  const currencySymbol =
-    currencySymbolMap[priceObj?.currencyCode]?.localSymbol ||
-    CURRENCY_SYMBOL_MAP[priceObj?.currencyCode];
+  const { listingPrice, dfListingPrice, ...tour } = allTours[tgid] || {};
+  const {
+    productImage,
+    title,
+    overlayBooster,
+    vendor,
+    cardFooter,
+    hasBestSafety,
+    category,
+    reopeningDate,
+    averageRating,
+    reviewCount,
+  } = tour || {};
 
+  const {
+    finalPrice: price,
+    originalPrice: scratchPrice,
+    currencyCode,
+    bestDiscount,
+  } = listingPrice || dfListingPrice || {};
+  const currencySymbol =
+    currencySymbolMap[currencyCode]?.localSymbol ||
+    CURRENCY_SYMBOL_MAP[currencyCode];
+
+  const handleProductClick = () => {
+    productClick(tgid, cardIdPrefix);
+  };
+
+  const openingDate = dateToString(reopeningDate, lang, 'DD MMM, YYYY');
   return (
     <ProductCard
       onClick={handleProductClick}
@@ -220,54 +344,98 @@ const Product = (props) => {
       onKeyDown={handleProductClick}
       role="button"
       tabIndex={0}
+      isEntertainmentMb={isEntertainmentMb}
     >
       <div className="product-v2-image">
         <Image
-          url={tour.productImage}
+          url={productImage}
           format="pjpg"
           width={800}
           imageId={tgid}
           height={500}
-          alt={tour.title}
+          alt={title}
         />
-        {tour.overlayBooster ? (
-          <div className="overlay-booster">{tour.overlayBooster}</div>
-        ) : null}
+        <Conditional if={overlayBooster}>
+          <div className="overlay-booster">{overlayBooster}</div>
+        </Conditional>
+        <Conditional if={isEntertainmentMb && hasBestSafety}>
+          <div className="emb-safety">{SEE_SAFETY}</div>
+        </Conditional>
       </div>
       <div className="product-v2-bottom">
-        {tour.vendor?.length && isMobile ? (
-          <div className="vendor-name">{tour.vendor}</div>
-        ) : null}
+        <Conditional if={vendor?.length && isMobile}>
+          <div className="vendor-name">{vendor}</div>
+        </Conditional>
+        <Conditional if={isEntertainmentMb}>
+          <div className="l1-booster-wrapper">
+            <div className="l1-booster">{category}</div>
+            <div className="rating">
+              <Conditional if={averageRating}>
+                <span className="avg-rating">
+                  {averageRating} {STAR(COLORS.JOY_MUSTARD)}
+                </span>
+              </Conditional>
+              <Conditional if={!averageRating && !reviewCount}>
+                <span className="avg-rating">NEW</span>
+              </Conditional>
+              <Conditional if={reviewCount}>
+                <span className="total-rating">
+                  (
+                  {reviewCount > 999
+                    ? `${(reviewCount / 1000).toFixed(1)}k`
+                    : reviewCount}
+                  )
+                </span>
+              </Conditional>
+            </div>
+          </div>
+        </Conditional>
         <div className="title-wrap">
-          <div className="product-v2-title">{truncate(tour.title, 70)}</div>
+          <div className="product-v2-title">{truncate(title, 70)}</div>
+          <Conditional if={isEntertainmentMb && openingDate !== 'Invalid Date'}>
+            <div className="reopening">
+              {strings.REOPENING_ON} {openingDate}
+            </div>
+          </Conditional>
         </div>
         <div className="product-v2-bottom-left">
           <div className="product-v2-price">
-            {currencySymbol}
-            {price}
+            <LocalisedPrice
+              price={price}
+              currencySymbol={currencySymbol}
+              lang={lang}
+            />
+            <Conditional if={isEntertainmentMb && bestDiscount}>
+              <span className="discount">
+                {bestDiscount}% {strings.OFF}
+              </span>
+            </Conditional>
           </div>
-          {scratchPrice > price ? (
+          <Conditional if={scratchPrice > price}>
             <div className="product-v2-scratch-price">
-              {currencySymbol}
-              {scratchPrice}
+              <Conditional if={isEntertainmentMb}>
+                <span>{strings.FROM} </span>
+              </Conditional>
+              <LocalisedPrice
+                price={scratchPrice}
+                currencySymbol={currencySymbol}
+                lang={lang}
+              />
             </div>
-          ) : null}
+          </Conditional>
         </div>
-        <div className="product-v2-bottom-right">
-          {tour.cardFooter.length ? (
-            <div
-              className="product-v2-boosters"
-              data-cont={tour.cardFooter.length}
-            >
+        <Conditional if={cardFooter?.length && !isEntertainmentMb}>
+          <div className="product-v2-bottom-right">
+            <div className="product-v2-boosters" data-cont={cardFooter?.length}>
               <RichText
-                render={tour.cardFooter}
+                render={cardFooter}
                 htmlSerializer={(...defaultArgs: any) =>
                   shortCodeSerializerWithParentProps(defaultArgs, tour)
                 }
               />
             </div>
-          ) : null}
-        </div>
+          </div>
+        </Conditional>
       </div>
     </ProductCard>
   );

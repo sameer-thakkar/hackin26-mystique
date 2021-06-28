@@ -27,6 +27,9 @@ const fr = {
   TODAY: "aujourd'hui",
   TOMORROW: 'demain',
   TICKETS: 'Billets',
+  REOPENING_ON: 'Reopening on',
+  REOPENED_ON: 'Reopened on',
+  NEW: 'New',
   LISTICLES: {
     SEATING_CHART: 'Plan de la salle',
     KNOW_MORE: 'En savoir plus',
@@ -35,6 +38,7 @@ const fr = {
   PRICES_STARTING: 'À partir de',
   FROM: 'à partir de',
   MORE_DETAILS: `En savoir plus`,
+  OFF: 'Off',
   FOOTER: {
     DISCLAIMER: `Ce site n'est pas le site officiel <attraction>. Il est géré par Headout et travaille en collaboration avec des attractions et des tour-opérateurs pour vous offrir des expériences incroyables en un clic !`,
     GET_HELP: 'Aide',

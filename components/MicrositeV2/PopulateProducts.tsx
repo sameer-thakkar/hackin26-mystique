@@ -1,13 +1,47 @@
 import React, { useState, useContext, useEffect, ComponentType } from 'react';
-import { strings } from 'const/strings';
 import dynamic from 'next/dynamic';
-
-import InteractionContext from '../../contexts/Interaction';
-import { MBContext } from '../../contexts/MBContext';
+import styled from 'styled-components';
+import InteractionContext from 'contexts/Interaction';
+import { MBContext } from 'contexts/MBContext';
+import Conditional from 'components/common/Conditional';
+import { strings } from 'const/strings';
+import { COLORS, SOLEIL } from 'const/ui-constants';
 
 const RowComponent: ComponentType<any> = dynamic(() =>
   import('./RowComponent').then((mod) => mod.RowComponent)
 );
+
+const StyledProductWrapper = styled.div`
+  margin-top: 32px;
+  display: grid;
+  grid-row-gap: 32px;
+  .view-more {
+    display: grid;
+    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? SOLEIL.SEMIBOLD : SOLEIL.REGULAR};
+    font-size: 16px;
+    line-height: ${({ isEntertainmentMb }) => (isEntertainmentMb ? '20px' : 1)};
+    color: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? COLORS.GREY.G2 : COLORS.RHAPSODY};
+    border: 1px solid;
+    border-radius: 4px;
+    margin: auto;
+    width: max-content;
+    padding: 16px 32px;
+    cursor: pointer;
+    ${({ isEntertainmentMb }) => isEntertainmentMb && 'letter-spacing: 0.6px;'}
+  }
+  @media (max-width: 768px) {
+    margin-top: 24px;
+    ${({ isEntertainmentMb }) => isEntertainmentMb && 'grid-row-gap: 24px;'}
+    .view-more {
+      width: calc(100% - 32px);
+      padding: 16px;
+      text-align: center;
+    }
+  }
+`;
 
 const PopulateProducts = (props) => {
   const {
@@ -15,6 +49,8 @@ const PopulateProducts = (props) => {
     isEntertainmentMb,
     propTgids,
     allTours,
+    hasCategoryTourList,
+    categoryTourList,
     changePage,
     host,
     uid,
@@ -32,7 +68,7 @@ const PopulateProducts = (props) => {
 
   useEffect(() => {
     setRowsInView(firstView);
-  }, [interactionContext.activeCategoryTgids]);
+  }, [interactionContext.activeCategoryTgids, firstView]);
 
   const subArrays = (tgidsArr) => {
     const { isMobile } = props;
@@ -58,7 +94,7 @@ const PopulateProducts = (props) => {
   const tgidsSubArr = subArrays(tgids);
 
   return (
-    <div className="product-wrapper">
+    <StyledProductWrapper isEntertainmentMb={isEntertainmentMb}>
       {tgidsSubArr.map((row, index) => {
         if (showAll || index < rowsInView)
           return (
@@ -66,6 +102,8 @@ const PopulateProducts = (props) => {
               tgidsSubArr={row}
               allTours={allTours}
               isMobile={isMobile}
+              hasCategoryTourList={hasCategoryTourList}
+              categoryTourList={categoryTourList}
               isEntertainmentMb={isEntertainmentMb}
               changePage={changePage}
               host={host}
@@ -78,7 +116,7 @@ const PopulateProducts = (props) => {
           );
       })}
 
-      {tgidsSubArr.length > rowsInView && !showAll ? (
+      <Conditional if={tgidsSubArr.length > rowsInView && !showAll}>
         <div
           className="view-more"
           onClick={viewMore}
@@ -87,37 +125,8 @@ const PopulateProducts = (props) => {
         >
           {mbContext.buttons.see_more_text || strings.VIEW_MORE}
         </div>
-      ) : null}
-      <style jsx>{`
-        .product-wrapper {
-          margin-top: 32px;
-          display: grid;
-          grid-row-gap: 32px;
-        }
-        .view-more {
-          display: grid;
-          font-family: SOLEIL;
-          color: #ec1943;
-          border: 1px solid;
-          border-radius: 4px;
-          margin: auto;
-          width: max-content;
-          padding: 16px 32px;
-          line-height: 1;
-          cursor: pointer;
-        }
-        @media (max-width: 768px) {
-          .view-more {
-            width: calc(100% - 32px);
-            padding: 16px;
-            text-align: center;
-          }
-          .product-wrapper {
-            margin-top: 24px;
-          }
-        }
-      `}</style>
-    </div>
+      </Conditional>
+    </StyledProductWrapper>
   );
 };
 

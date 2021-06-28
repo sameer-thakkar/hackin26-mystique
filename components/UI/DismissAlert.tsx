@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { SOLEIL } from 'const/ui-constants';
 
-import { YELLOW_CLOSE } from '../../assets/SvgIcons';
+import { CLOSE_YELLOW } from '../../assets/SvgIcons';
 
 const StyledAlert = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
@@ -86,7 +86,7 @@ const DismissAlert: React.FC<{
           {readMore}
         </StyledReadMore>
         <div className="close" role="button" tabIndex={0} onClick={handleClose}>
-          {YELLOW_CLOSE}
+          {CLOSE_YELLOW}
         </div>
       </StyledContent>
     </StyledAlert>

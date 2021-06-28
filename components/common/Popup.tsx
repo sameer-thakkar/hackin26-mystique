@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 
 import sliceHandler from '../Slices';
-import { BLACK_CLOSE } from '../../assets/SvgIcons';
+import { CLOSE_BLACK } from '../../assets/SvgIcons';
 
 const Popup = (props) => {
   const { data, togglePopup, children } = props;
@@ -33,7 +33,7 @@ const Popup = (props) => {
               togglePopup(false);
             }}
           >
-            {BLACK_CLOSE}
+            {CLOSE_BLACK}
           </div>
         </div>
         <div className="popup-slices">

@@ -21,6 +21,14 @@ const ToursAPI = async (req, res) => {
           )?.map((highlight) => ({ ...highlight, ...highlight.content })),
         }));
       }
+      if (data?.products?.length) {
+        data.products = data.products.map((tour) => ({
+          ...tour,
+          microBrandsHighlight: markdownToRichtext(
+            tour.microBrandsHighlight || ''
+          )?.map((highlight) => ({ ...highlight, ...highlight.content })),
+        }));
+      }
       if (data?.microBrandsHighlight) {
         data.microBrandsHighlight = markdownToRichtext(
           data?.microBrandsHighlight || ''

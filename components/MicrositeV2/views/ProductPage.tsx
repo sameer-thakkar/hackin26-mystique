@@ -1,19 +1,28 @@
-import { PAGETYPE } from 'const/index';
-import { SOLEIL, COLORS } from 'const/ui-constants';
 import React, { useEffect, useContext } from 'react';
 import dynamic from 'next/dynamic';
-import { strings } from 'const/strings';
-import Image from 'UI/Image';
-import { RichText } from 'prismic-reactjs';
-import { CHEVRON_LEFT, BorderedShield } from 'assets/SvgIcons';
-import { shortCodeSerializer } from 'utils/shortCodes';
-import parse from 'url-parse';
-import { MBContext } from 'contexts/MBContext';
-import Split, { StlyedSplit } from 'UI/Split';
-import IconCTA from 'UI/IconCTA';
-import { greenScheme } from 'style/theme';
 import styled from 'styled-components';
+import parse from 'url-parse';
+import { greenScheme } from 'style/theme';
+import { RichText } from 'prismic-reactjs';
+import { MBContext } from 'contexts/MBContext';
+import Conditional from 'components/common/Conditional';
+import Image from 'UI/Image';
+import IconCTA from 'UI/IconCTA';
+import LocalisedPrice from 'UI/LPrice';
+import Split, { StlyedSplit } from 'UI/Split';
+import {
+  CHEVRON_LEFT,
+  BorderedShield,
+  CLOSE_WHITE,
+  STAR,
+} from 'assets/SvgIcons';
+import { PAGETYPE } from 'const/index';
+import { strings } from 'const/strings';
+import { SOLEIL, COLORS } from 'const/ui-constants';
 import { isSafetyIncluded, createBookingURL } from 'utils';
+import { shortCodeSerializer } from 'utils/shortCodes';
+import { convertUidToUrl } from 'utils/urlUtils';
+import { dateToString } from 'utils/dateToString';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
@@ -35,33 +44,464 @@ const IconBoosters = styled.div`
     }
   }
 `;
+
+const StyledMobileProductPage = styled.div`
+  display: grid;
+  grid-row-gap: ${({ isEntertainmentMb }) =>
+    isEntertainmentMb ? '0' : '24px'};
+  grid-template-rows: 56px 1fr;
+  overflow: hidden;
+  font-family: ${SOLEIL.FONT_STACK};
+  position: relative;
+  &::before {
+    content: '';
+    display: block;
+  }
+  .full-block {
+    grid-column: 1 / 3;
+  }
+  .hr-line {
+    margin-top: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '0' : '-8px'};
+    border-top: 1px solid ${COLORS.CHALK};
+  }
+  .header {
+    display: grid;
+    align-items: center;
+    padding: 18px 16px;
+    box-sizing: border-box;
+    border-bottom: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? 'none' : `1px solid ${COLORS.DADDY}`};
+    position: fixed;
+    width: 100%;
+    z-index: 99;
+    background: ${COLORS.WHITE};
+    .back {
+      display: flex;
+      ${({ isEntertainmentMb }) =>
+        isEntertainmentMb && `justify-content: flex-end;`}
+      path {
+        ${({ isEntertainmentMb }) =>
+          isEntertainmentMb && `stroke: ${COLORS.GREY.G2};stroke-width: 1px;`}
+      }
+    }
+  }
+  .content {
+    display: grid;
+    grid-auto-flow: row;
+    grid-auto-rows: max-content;
+    grid-gap: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? 'unset' : '24px'};
+  }
+  .prod-image {
+    max-width: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '100vh' : 'calc(100% - 32px)'};
+    margin: auto auto 16px auto;
+    max-height: 100%;
+    height: 100%;
+    .swiper-container {
+      overflow: unset;
+      width: auto;
+      height: 100%;
+    }
+    .single-image {
+      width: 100%;
+      height: 100%;
+    }
+    img {
+      height: 100%;
+      width: 100%;
+      border-radius: 4px;
+      object-fit: cover;
+    }
+
+    .close {
+      background: ${COLORS.BLACK};
+      padding: 15px;
+      display: flex;
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 999;
+    }
+  }
+  .prod-content {
+    background: ${COLORS.WHITE};
+    padding: 0 16px;
+    margin-bottom: 80px;
+    z-index: 9;
+    display: grid;
+    grid-row-gap: 24px;
+  }
+  .title {
+    font-size: 18px;
+    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: ${SOLEIL.SEMIBOLD};
+    color: ${COLORS.TWO_BLACK};
+    line-height: 24px;
+    text-transform: unset;
+    margin-bottom: 0;
+  }
+
+  .head {
+    display: grid;
+    grid-template-columns: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? 'unset' : '1fr auto'};
+    grid-row-gap: 8px;
+    ${({ isEntertainmentMb }) =>
+      isEntertainmentMb &&
+      `
+    grid-auto-flow: row;
+    grid-auto-rows: max-content;
+      .l1-booster-wrapper {
+        display:grid;
+        grid-template-columns: repeat(2, 1fr);
+        font-size: 12px;
+        line-height: 16px;
+        .rating {
+          justify-self: end;
+          display:grid;
+          grid-template-columns: repeat(2, 1fr);
+          column-gap: 4px;
+          justify-content: center;
+          align-items: center;
+          .avg-rating {
+            font-weight: ${SOLEIL.SEMIBOLD};
+            color: ${COLORS.JOY_MUSTARD};
+            svg {
+              width: 8px;
+              height: 8px;
+            }
+          }
+          .total-rating {
+            font-size: 10px;
+            line-height: 12px;
+            color: ${COLORS.GREY.G4}
+          }
+        }
+        .l1-booster {
+          color: ${COLORS.BEACH};
+        }
+      }
+    `}
+    .price {
+      font-family: ${SOLEIL.FONT_STACK};
+      font-weight: ${SOLEIL.SEMIBOLD};
+      margin-left: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '0' : '16px'};
+      margin-bottom: 0px;
+      .scratched-price {
+        font-weight: ${SOLEIL.MEDIUM};
+        font-size: 12px;
+        text-decoration: line-through;
+        color: ${COLORS.FOUR_BLACK};
+      }
+      .current-price,
+      .from-text {
+        color: ${COLORS.TWO_BLACK};
+      }
+      .current-price {
+        font-size: 18px;
+        line-height: 24px;
+        font-weight: ${SOLEIL.SEMIBOLD};
+      }
+      .from-text {
+        font-size: 14px;
+        line-height: 1;
+        font-weight: ${SOLEIL.MEDIUM};
+        margin-bottom: 4px;
+      }
+      ${({ isEntertainmentMb }) =>
+        isEntertainmentMb &&
+        `
+          display: grid;
+          grid-template-rows: repeat(2, max-content);
+          row-gap: 4px;
+          .current-price {
+            grid-row: 2;
+            display: flex;
+            align-items: center;
+            span {
+              font-size: 17px;
+              line-height: 20px;
+              font-weight: ${SOLEIL.SEMIBOLD};
+            }
+            .discount {
+              background-color: ${COLORS.SOOTHING_GREEN};
+              color: ${COLORS.OKAY_GREEN};
+              padding: 4px 6px;
+              border-radius: 2px;
+              font-size: 10px;
+              font-style: normal;
+              font-weight: ${SOLEIL.REGULAR};
+              line-height: 12px;
+              margin-left: 6px;
+            }
+          }
+          .scratched-price {
+            grid-row: 1;
+            text-decoration: none;
+            .from-text {
+              margin-right: 2px;
+            }
+            span {
+              color: ${COLORS.GREY.G4};
+              font-size: 12px;
+              line-height: 16px;
+            }
+          }
+      `}
+    }
+  }
+
+  .tags {
+    color: ${COLORS.RHAPSODY};
+    border: 1px solid;
+    border-radius: 2px;
+    padding: 5px 4px;
+    font-size: 12px;
+    font-weight: 400;
+    text-transform: capitalize;
+    display: inline-block;
+    margin-top: 8px;
+    p {
+      margin: 0;
+    }
+  }
+  .content-blocks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-row-gap: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '24px' : '32px'};
+    ${({ isEntertainmentMb }) => isEntertainmentMb && `padding-bottom: 48px;`}
+  }
+  .content-block {
+    font-size: 14px;
+    line-height: 1.57;
+    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: ${SOLEIL.REGULAR};
+    color: ${COLORS.DAVY_GREY};
+    display: grid;
+    grid-row-gap: 4px;
+    .label-title {
+      font-size: 16px;
+      font-weight: ${SOLEIL.SEMIBOLD};
+      font-family: ${SOLEIL.FONT_STACK};
+      line-height: 1.12;
+      color: ${COLORS.TWO_BLACK};
+    }
+    p {
+      margin: 0;
+      line-height: 1.57;
+    }
+    ul {
+      margin: 0;
+      padding-left: 1em;
+      display: grid;
+      grid-row-gap: 6px;
+    }
+  }
+
+  .boosters {
+    grid-column: 1 / 3;
+    min-height: 1em;
+    .inline-availability {
+      color: ${COLORS.TEAL};
+    }
+    p {
+      margin: 0;
+      font-size: 12px;
+    }
+  }
+
+  .auto-boosters-box {
+    font-size: 12px;
+    display: grid;
+    grid-column: 1 / 3;
+    align-items: center;
+    color: ${COLORS.FOUR_BLACK};
+    grid-auto-flow: column;
+    justify-content: left;
+    grid-gap: 8px;
+    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: ${SOLEIL.REGULAR};
+    .rating {
+      display: grid;
+      align-items: center;
+      grid-auto-flow: column;
+      justify-content: left;
+      grid-gap: 4px;
+    }
+  }
+  .divider-line {
+    width: 1px;
+    height: 85%;
+    background: ${COLORS.DADDY};
+  }
+
+  .vendor-name {
+    grid-column: 1 / 3;
+    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: ${SOLEIL.MEDIUM};
+    text-transform: uppercase;
+    font-size: 11px;
+    line-height: 11px;
+    letter-spacing: 0.5px;
+    color: ${COLORS.GREY_G4};
+    display: none;
+  }
+  @media (max-width: 768px) {
+    .vendor-name {
+      display: initial;
+    }
+    .prod-image {
+      .swiper-wrapper {
+        grid-template-columns: unset;
+      }
+      img {
+        ${({ isEntertainmentMb }) =>
+          isEntertainmentMb && `height: 214px;border-radius: 8px;`}
+      }
+    }
+  }
+`;
+
+const Descriptors = styled.div`
+  grid-column: 1 / 3;
+  font-size: 12px;
+  font-weight: ${SOLEIL.REGULAR};
+  max-width: calc(100vw - 32px);
+  display: flex;
+  flex-wrap: wrap;
+  &::after {
+    content: '';
+    margin-right: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '0' : '32px'};
+    display: block;
+  }
+  &::-webkit-scrollbar {
+    width: 0 !important;
+  }
+  .descriptor {
+    padding: 7px 12px;
+    background: ${COLORS.GREY_FO};
+    border-radius: 2px;
+    color: ${COLORS.TWO_BLACK};
+    margin-right: 8px;
+    margin-bottom: 8px;
+    &.mr-0 {
+      margin-right: 0;
+    }
+  }
+`;
+
+const CTABlock = styled.div`
+  color: ${COLORS.WHITE};
+  width: 100%;
+  background: ${COLORS.WHITE};
+  z-index: 10;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  display: grid;
+  justify-items: center;
+  ${({ isEntertainmentMb }) =>
+    isEntertainmentMb &&
+    `
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 16px;
+    padding: 16px;
+    box-sizing: border-box;
+    border-top: 1px solid ${COLORS.GREY_G6};
+  `}
+  .cta {
+    text-decoration: none;
+    display: block;
+    width: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '100%' : 'calc(100% - 32px)'};
+    margin-bottom: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '0' : '16px'};
+    border-radius: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '4px' : '2px'};
+    .cta-text {
+      padding: 16px;
+      font-family: ${SOLEIL.FONT_STACK};
+      font-size: 16px;
+      font-weight: ${SOLEIL.SEMIBOLD};
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1;
+      letter-spacing: normal;
+      text-align: center;
+    }
+    &.primary {
+      background: ${COLORS.RHAPSODY};
+      .cta-text {
+        color: ${COLORS.WHITE};
+      }
+    }
+    &.secondary {
+      color: ${COLORS.GREY.G2};
+      background: ${COLORS.WHITE};
+      border: 1px solid;
+      .cta-text {
+        color: ${COLORS.GREY.G2};
+      }
+    }
+  }
+`;
+
 export const MobileProductPage = (props) => {
+  const {
+    tour,
+    host,
+    uid,
+    currentLanguage,
+    tgid,
+    carouselOptions,
+    isEntertainmentMb,
+    hasCategoryTourList,
+  } = props;
+  const {
+    title,
+    description,
+    theater,
+    images,
+    safetyImages,
+    contentBlocks,
+    descriptors: tourDescriptors,
+    cardFooter,
+    vendor,
+    price,
+    scratchPrice,
+    currencySymbol,
+    showPageUid = null,
+    reviewCount,
+    category,
+    averageRating,
+    reopeningDate,
+    listingPrice,
+  } = tour || {};
+  let allContent = [...contentBlocks.left, ...contentBlocks.right];
+  if (!hasCategoryTourList) {
+    allContent = allContent.sort((a, b) => {
+      let aLen = a.len;
+      let bLen = b.len;
+      // TODO: (unHack) Push Cancellation Policy to the end
+      if (/cancel/.exec(a.label.toLowerCase())) aLen += 500000;
+      if (/cancel/.exec(b.label.toLowerCase())) bLen += 500000;
+      return aLen - bLen;
+    });
+  }
+  const {
+    sidebarModal: { addToAside },
+    biLink,
+    lang,
+  } = useContext(MBContext);
   const closeProductCard = () => {
     props.changePage({ name: PAGETYPE.HOMEPAGE });
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  });
-
-  const { tour, host, uid, currentLanguage, tgid, carouselOptions } = props;
-  let extendedSwiperOptions;
-  if (tour.images.length <= 1) {
-    extendedSwiperOptions = {
-      autoplay: false,
-      loop: false,
-      noSwiping: true,
-    };
-  }
-  let allContent = [...tour.contentBlocks.left, ...tour.contentBlocks.right];
-  allContent = allContent.sort((a, b) => {
-    let aLen = a.len;
-    let bLen = b.len;
-    // TODO: (unHack) Push Cancellation Policy to the end
-    if (/cancel/.exec(a.label.toLowerCase())) aLen += 500000;
-    if (/cancel/.exec(b.label.toLowerCase())) bLen += 500000;
-    return aLen - bLen;
-  });
   let url = host || window.location.host;
   const isDev = url.includes('localhost');
   const currentHost = !isDev ? url : parse(uid, true).pathname;
@@ -71,27 +511,76 @@ export const MobileProductPage = (props) => {
   let hostSplit = hostName.split('.');
   hostSplit.shift();
   const bookingUrl = hostSplit.join('.');
-  const descriptors = tour.descriptors.split(',').filter((desc) => desc.length);
+  const descriptors = hasCategoryTourList
+    ? [category, ...tourDescriptors]
+    : tourDescriptors?.split(',')?.filter((desc) => desc?.length);
   const { allTags = [] } = tour;
   const hasSafetyFlag = isSafetyIncluded(allTags);
+  const showPageUrl = showPageUid ? convertUidToUrl(showPageUid) : null;
+  const openingDate = dateToString(reopeningDate, lang, 'DD MMM, YYYY');
 
-  const {
-    sidebarModal: { addToAside },
-    biLink,
-  } = useContext(MBContext);
   const openSafeSidebar = () => {
     addToAside({
       width: '41.06vw',
       children: (
-        <SafeExperiencesPitch images={tour.safetyImages} allTags={allTags} />
+        <SafeExperiencesPitch images={safetyImages} allTags={allTags} />
       ),
       sidePadding: 40,
     });
   };
 
+  const carouselProps = {
+    ...carouselOptions,
+    ...(isEntertainmentMb && {
+      // slidesPerView: 1.2,
+      spaceBetween: 16,
+      loop: true,
+      centeredSlides: true,
+      lazy: true,
+    }),
+    ...(images?.length <= 1 && {
+      autoplay: false,
+      loop: false,
+      noSwiping: true,
+    }),
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
+
+  console.log(tour);
+  const CTAMarkup = (
+    <CTABlock isEntertainmentMb={isEntertainmentMb}>
+      <Conditional if={isEntertainmentMb && showPageUrl}>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href={showPageUrl}
+          className="cta secondary"
+        >
+          <div className="cta-text">{strings.MORE_DETAILS}</div>
+        </a>
+      </Conditional>
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href={createBookingURL({
+          nakedDomain: bookingUrl,
+          lang: currentLanguage,
+          tgid,
+          biLink,
+        })}
+        className="cta primary"
+      >
+        <div className="cta-text">{strings.BOOK_NOW_CTA}</div>
+      </a>
+    </CTABlock>
+  );
+
   return (
-    <div className="mobile-product-wrap">
-      <div className="header">
+    <StyledMobileProductPage isEntertainmentMb={isEntertainmentMb}>
+      <header className="header">
         <div
           onClick={closeProductCard}
           className="back"
@@ -99,438 +588,188 @@ export const MobileProductPage = (props) => {
           role="button"
           tabIndex={0}
         >
-          {CHEVRON_LEFT}
+          {isEntertainmentMb ? CLOSE_WHITE : CHEVRON_LEFT}
         </div>
-      </div>
-      <div className="prod-image">
-        {/* <img src={tour.descriptionImage} alt="" /> */}
-        {/* <Banner  isMobile={true} carouselOptions/> */}
-        {tour.images.length > 1 ? (
-          <Swiper {...carouselOptions} {...extendedSwiperOptions}>
-            {tour.images.map((image, index) => {
-              return (
-                <div key={index} className="swiper-slide">
-                  <Image url={image.url} dontLazyLoad={index == 0} />
-                </div>
-              );
-            })}
-          </Swiper>
-        ) : (
-          <div className="single-image">
-            <Image url={tour.images[0]?.url} dontLazyLoad={true} />
-          </div>
-        )}
-      </div>
-      <div className="prod-content">
-        <div className="head">
-          {tour.vendor?.length ? (
-            <div className="vendor-name">{tour.vendor}</div>
-          ) : null}
-          <div className="title">{tour.title}</div>
-          <div className="price">
-            <span className="from-text">from</span>
-            <div className="current-price">
-              {tour.currencySymbol}
-              {tour.price}
+      </header>
+      <main className="content">
+        <div className="prod-image">
+          {/* <img src={descriptionImage} alt="" /> */}
+          {/* <Banner  isMobile={true} carouselOptions/> */}
+          <Conditional if={images?.length === 1}>
+            <div className="single-image">
+              <Image url={images[0]?.url} dontLazyLoad={true} />
             </div>
-            {tour.price < tour.scratchPrice ? (
-              <div className="scratched-price">
-                {tour.currencySymbol}
-                {tour.scratchPrice}
-              </div>
-            ) : null}
-          </div>
-          {tour.cardFooter.length ? (
-            <div className="boosters">
-              <RichText
-                render={tour.cardFooter}
-                htmlSerializer={shortCodeSerializer}
-              />
-            </div>
-          ) : null}
-          <IconBoosters>
-            <Split count={2} autoWidth={true} mobileLayout={'scroll'}>
-              {hasSafetyFlag ? (
-                <IconCTA
-                  text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
-                  colorScheme={greenScheme}
-                  ctaOnClick={openSafeSidebar}
-                  icon={BorderedShield}
-                />
-              ) : null}
-            </Split>
-          </IconBoosters>
-          {descriptors.length > 0 ? (
-            <div className="descriptors">
-              {descriptors.map((descriptor, index) => {
+          </Conditional>
+          <Conditional if={images?.length > 1}>
+            <Swiper {...carouselProps}>
+              {images?.map((image, index) => {
                 return (
-                  <div className="descriptor" key={index}>
-                    {descriptor.trim()}
+                  <div key={index} className="swiper-slide">
+                    <Image url={image.url} dontLazyLoad={index == 0} />
                   </div>
                 );
               })}
-            </div>
-          ) : null}
+            </Swiper>
+          </Conditional>
         </div>
+        <div className="prod-content">
+          <div className="head">
+            <Conditional if={vendor?.length}>
+              <div className="vendor-name">{vendor}</div>
+            </Conditional>
+            <Conditional if={isEntertainmentMb}>
+              <div className="l1-booster-wrapper">
+                <div className="l1-booster">
+                  {strings.REOPENING_ON} {openingDate}
+                </div>
+                <Conditional if={reviewCount}>
+                  <div className="rating">
+                    <span className="avg-rating">
+                      {averageRating} {STAR(COLORS.JOY_MUSTARD)}
+                    </span>
+                    <span className="total-rating">
+                      (
+                      {reviewCount > 999
+                        ? `${(reviewCount / 1000).toFixed(1)}k`
+                        : reviewCount}
+                      )
+                    </span>
+                  </div>
+                </Conditional>
+              </div>
+            </Conditional>
+            <div className="title">{title}</div>
 
-        <div className="content-blocks">
-          {tour.description && tour.description.length ? (
-            <div className="content-block full-block tour-description">
-              <RichText
-                render={tour.description}
-                htmlSerializer={shortCodeSerializer}
-              />
+            <div className="price">
+              <Conditional if={!isEntertainmentMb}>
+                <span className="from-text">{strings.FROM?.toLowerCase()}</span>
+              </Conditional>
+
+              <div className="current-price">
+                <LocalisedPrice
+                  price={price}
+                  currencySymbol={currencySymbol}
+                  lang={lang}
+                />
+                <Conditional
+                  if={isEntertainmentMb && listingPrice?.bestDiscount > 0}
+                >
+                  <span className="discount">
+                    {listingPrice?.bestDiscount}% {strings.OFF}
+                  </span>
+                </Conditional>
+              </div>
+              <Conditional if={price < scratchPrice}>
+                <div className="scratched-price">
+                  <Conditional if={isEntertainmentMb}>
+                    <span className="from-text">
+                      {strings.FROM?.toLowerCase()}
+                    </span>
+                  </Conditional>
+                  <LocalisedPrice
+                    price={scratchPrice}
+                    currencySymbol={currencySymbol}
+                    lang={lang}
+                  />
+                </div>
+              </Conditional>
             </div>
-          ) : null}
-          <div className="hr-line full-block "></div>
-          {tour.theater ? (
-            <div className="content-block full-block ">
-              <RichText
-                render={tour.theater}
-                htmlSerializer={shortCodeSerializer}
-              />
-            </div>
-          ) : null}
-          {allContent.map((block, index) => {
-            const isShortBlock = block.len < 50;
-            return (
-              <div
-                className={`content-block ${
-                  !isShortBlock ? 'full-block' : ''
-                } `}
-                key={index}
-              >
-                <span className="label-title">{block.label} </span>
+            <Conditional if={cardFooter?.length}>
+              <div className="boosters">
                 <RichText
-                  render={block.content}
+                  render={cardFooter}
                   htmlSerializer={shortCodeSerializer}
                 />
               </div>
-            );
-          })}
+            </Conditional>
+            <Conditional if={hasSafetyFlag}>
+              <IconBoosters>
+                <Split count={2} autoWidth={true} mobileLayout={'scroll'}>
+                  <Conditional if={hasSafetyFlag}>
+                    <IconCTA
+                      text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
+                      colorScheme={greenScheme}
+                      ctaOnClick={openSafeSidebar}
+                      icon={BorderedShield}
+                    />
+                  </Conditional>
+                </Split>
+              </IconBoosters>
+            </Conditional>
+          </div>
+          <Conditional if={descriptors?.length}>
+            <Conditional if={isEntertainmentMb}>
+              <div className="hr-line full-block"></div>
+            </Conditional>
+            <Descriptors>
+              {descriptors?.map((descriptor, index) => {
+                const lastItem = index === descriptors?.length - 1;
+                return (
+                  <div
+                    className={`${lastItem ? 'descriptor mr-0' : 'descriptor'}`}
+                    key={index}
+                  >
+                    {descriptor?.trim()}
+                  </div>
+                );
+              })}
+            </Descriptors>
+          </Conditional>
+          <div className="content-blocks">
+            <Conditional if={description && description?.length}>
+              <div className="content-block full-block tour-description">
+                <RichText
+                  render={description}
+                  htmlSerializer={shortCodeSerializer}
+                />
+              </div>
+            </Conditional>
+            <div className="hr-line full-block"></div>
+            <Conditional if={theater}>
+              <div className="content-block full-block ">
+                <RichText
+                  render={theater}
+                  htmlSerializer={shortCodeSerializer}
+                />
+              </div>
+            </Conditional>
+            {allContent.map((block, index) => {
+              const isShortBlock = block.len < 50;
+              const { label, content } = block || {};
+              if (label && content) {
+                return (
+                  <div
+                    className={`${
+                      isEntertainmentMb
+                        ? 'content-block full-block'
+                        : !isShortBlock
+                        ? 'content-block full-block'
+                        : 'content-block'
+                    }`}
+                    key={index}
+                  >
+                    <span className="label-title">{label} </span>
+                    <Conditional if={isEntertainmentMb || hasCategoryTourList}>
+                      <p>{content}</p>
+                    </Conditional>
+                    <Conditional if={!isEntertainmentMb}>
+                      <RichText
+                        render={content}
+                        htmlSerializer={shortCodeSerializer}
+                      />
+                    </Conditional>
+                  </div>
+                );
+              } else {
+                return null;
+              }
+            })}
+          </div>
         </div>
-      </div>
-      <div className="cta-wrap">
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href={createBookingURL({
-            nakedDomain: bookingUrl,
-            lang: currentLanguage,
-            tgid,
-            biLink,
-          })}
-        >
-          <div className="cta-text">{strings.BOOK_NOW_CTA}</div>
-        </a>
-      </div>
-      <style jsx>
-        {`
-          .mobile-product-wrap {
-            display: grid;
-            grid-row-gap: 24px;
-            grid-template-rows: 56px 214px auto;
-            overflow: hidden;
-          }
-          .mobile-product-wrap::before {
-            content: '';
-            display: block;
-          }
-          .mobile-product-wrap .prod-image {
-            position: relative;
-          }
-          .header {
-            display: grid;
-            align-items: center;
-            padding: 18px 16px;
-            border-bottom: 1px solid #dadada;
-          }
-          .mobile-product-wrap .prod-image .close {
-            background: #000;
-            padding: 15px;
-            display: flex;
-            position: fixed;
-            top: 0;
-            right: 0;
-            z-index: 999;
-          }
+      </main>
 
-          .mobile-product-wrap .prod-image {
-            max-width: calc(100% - 32px);
-            margin: auto;
-            max-height: 100%;
-            height: 100%;
-          }
-          .mobile-product-wrap .prod-content {
-            background: #fff;
-            padding: 0 16px;
-            margin-bottom: 80px;
-            background: #fff;
-            z-index: 9;
-            display: grid;
-            grid-row-gap: 24px;
-          }
-          .mobile-product-wrap .title {
-            font-size: 18px;
-            font-family: ${SOLEIL.FONT_STACK};
-            font-weight: ${SOLEIL.SEMIBOLD};
-            color: ${COLORS.TWO_BLACK};
-            line-height: 24px;
-            text-transform: unset;
-          }
-
-          .mobile-product-wrap .head {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            grid-row-gap: 8px;
-          }
-          .price {
-            font-family: ${SOLEIL.FONT_STACK};
-            font-weight: ${SOLEIL.SEMIBOLD};
-            margin-left: 16px;
-          }
-          .mobile-product-wrap .current-price,
-          .from-text {
-            font-size: 18px;
-            line-height: 24px;
-            font-weight: ${SOLEIL.SEMIBOLD};
-            color: ${COLORS.TWO_BLACK};
-          }
-          .from-text {
-            font-size: 14px;
-            line-height: 1;
-            font-weight: ${SOLEIL.MEDIUM};
-            margin-bottom: 4px;
-          }
-          .price .scratched-price {
-            font-weight: ${SOLEIL.MEDIUM};
-            font-size: 12px;
-            text-decoration: line-through;
-            color: ${COLORS.FOUR_BLACK};
-          }
-          .mobile-product-wrap .tags {
-            color: #ec1943;
-            border: 1px solid #ec1943;
-            border-radius: 2px;
-            padding: 5px 4px;
-            font-size: 12px;
-            font-weight: 400;
-            text-transform: capitalize;
-            display: inline-block;
-            margin-top: 8px;
-          }
-          .mobile-product-wrap .content-block {
-            font-size: 14px;
-            line-height: 1.57;
-            font-family: ${SOLEIL.FONT_STACK};
-            font-weight: ${SOLEIL.REGULAR};
-            color: #545454;
-            display: grid;
-            grid-row-gap: 4px;
-          }
-
-          .boosters {
-            grid-column: 1 / 3;
-            min-height: 1em;
-          }
-
-          .auto-boosters-box {
-            font-size: 12px;
-            display: grid;
-            grid-column: 1 / 3;
-            align-items: center;
-            color: ${COLORS.FOUR_BLACK};
-            grid-auto-flow: column;
-            justify-content: left;
-            grid-gap: 8px;
-            font-family: ${SOLEIL.FONT_STACK};
-            font-weight: ${SOLEIL.REGULAR};
-          }
-          .divider-line {
-            width: 1px;
-            height: 85%;
-            background: #dadada;
-          }
-          .auto-boosters-box .rating {
-            display: grid;
-            align-items: center;
-            grid-auto-flow: column;
-            justify-content: left;
-            grid-gap: 4px;
-          }
-
-          .mobile-product-wrap .content-block .label-title {
-            font-size: 16px;
-            font-weight: ${SOLEIL.SEMIBOLD};
-            font-family: ${SOLEIL.FONT_STACK};
-            color: ${COLORS.TWO_BLACK};
-          }
-
-          .cta-wrap {
-            color: #fff;
-            width: 100%;
-            background: #fff;
-            z-index: 10;
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            display: grid;
-            justify-items: center;
-          }
-
-          .cta-wrap a {
-            text-decoration: none;
-            display: block;
-            width: calc(100% - 32px);
-            margin-bottom: 16px;
-            border-radius: 2px;
-            background: #ec1943;
-          }
-
-          .cta-text {
-            padding: 16px;
-            font-family: ${SOLEIL.FONT_STACK};
-            font-size: 16px;
-            font-weight: ${SOLEIL.SEMIBOLD};
-            font-style: normal;
-            font-stretch: normal;
-            line-height: 1;
-            letter-spacing: normal;
-            text-align: center;
-            color: #fff;
-          }
-
-          .descriptors {
-            display: grid;
-            grid-auto-flow: column;
-            grid-auto-columns: max-content;
-            font-family: ${SOLEIL.FONT_STACK};
-            font-size: 12px;
-            font-weight: ${SOLEIL.REGULAR};
-            grid-gap: 8px;
-            grid-column: 1 / 3;
-            max-width: calc(100vw - 32px);
-            overflow-x: scroll;
-            overscroll-behavior-x: contain;
-            overflow: -moz-scrollbars-none;
-            -ms-overflow-style: none;
-            grid: unset;
-            display: flex;
-            flex-wrap: wrap;
-          }
-          .descriptors::-webkit-scrollbar {
-            width: 0 !important;
-          }
-          .descriptor {
-            padding: 7px 12px;
-            background: ${COLORS.GREY_FO};
-            border-radius: 2px;
-            color: ${COLORS.TWO_BLACK};
-            margin-right: 8px;
-            margin-bottom: 8px;
-          }
-          .vendor-name {
-            grid-column: 1 / 3;
-            font-family: ${SOLEIL.FONT_STACK};
-            font-weight: ${SOLEIL.MEDIUM};
-            text-transform: uppercase;
-            font-size: 11px;
-            line-height: 11px;
-            letter-spacing: 0.5px;
-            color: ${COLORS.GREY_G4};
-            display: none;
-          }
-          @media (max-width: 768px) {
-            .vendor-name {
-              display: initial;
-            }
-          }
-        `}
-      </style>
-      <style global jsx>
-        {`
-          .content-block .label-title {
-            font-weight: ${SOLEIL.SEMIBOLD};
-            font-family: ${SOLEIL.FONT_STACK};
-            line-height: 1.12;
-          }
-          .content-block p {
-            margin: 0;
-            line-height: 1.57;
-          }
-          .content-blocks {
-            display: grid;
-            grid-template-column: 1fr 1fr;
-            grid-row-gap: 32px;
-          }
-          .full-block {
-            grid-column: 1 / 3;
-          }
-          .hr-line {
-            margin-top: -8px;
-            border-top: 1px solid #ebebeb;
-          }
-          .mobile-product-wrap {
-            font-family: ${SOLEIL.FONT_STACK};
-          }
-          .mobile-product-wrap .tags p {
-            margin: 0px;
-          }
-          .price {
-            margin-bottom: 0px;
-          }
-          .title {
-            margin-bottom: 0px;
-          }
-          .prod-image .swiper-container {
-            overflow: unset;
-            width: auto;
-            height: 100%;
-          }
-          .mobile-product-wrap .prod-image img {
-            height: 100%;
-            width: 100%;
-          }
-          .single-image {
-            width: 100%;
-            height: 100%;
-          }
-          .prod-image .swiper-container img,
-          .single-image img {
-            border-radius: 4px;
-            object-fit: cover;
-          }
-          .boosters .inline-availability {
-            color: #24a1b2;
-          }
-          .boosters p {
-            margin: 0;
-            font-size: 12px;
-          }
-          .content-block ul {
-            margin: 0;
-            padding-left: 1em;
-            display: grid;
-            grid-row-gap: 6px;
-          }
-          .header {
-            position: fixed;
-            width: 100%;
-            z-index: 99;
-            background: #fff;
-          }
-
-          .header .back {
-            display: flex;
-          }
-          .descriptors::after {
-            content: '';
-            margin-right: 32px;
-            display: block;
-          }
-        `}
-      </style>
-    </div>
+      {CTAMarkup}
+    </StyledMobileProductPage>
   );
 };
 
@@ -542,7 +781,7 @@ MobileProductPage.defaultProps = {
     speed: 650,
     slidesPerView: 'auto',
     loop: false,
-    centered: true,
+    centeredSlides: false,
     spaceBetween: 8,
     autoplay: false,
     rebuildOnUpdate: true,

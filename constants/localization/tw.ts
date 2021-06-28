@@ -27,6 +27,9 @@ const tw = {
   TODAY: '今天',
   TOMORROW: '明天',
   MORE_FROM: '更多從',
+  REOPENING_ON: 'Reopening on',
+  REOPENED_ON: 'Reopened on',
+  NEW: 'New',
   LISTICLES: {
     SEATING_CHART: '座位圖',
     KNOW_MORE: '了解更多',
@@ -35,6 +38,7 @@ const tw = {
   PRICES_STARTING: '價格',
   FROM: '從',
   MORE_DETAILS: '更多詳情',
+  OFF: 'Off',
   FOOTER: {
     DISCLAIMER:
       '這並不是<attraction>的官方網站。這是一個由Headout運營的平台，我們與世界各國的運營商合作，輕輕點擊就能得到最好的旅行體驗。',
