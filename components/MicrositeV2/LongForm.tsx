@@ -96,8 +96,6 @@ const LongForm = (props) => {
 
   const { isGlobalMb, isEntertainmentMb } = sliceProps || {};
 
-  // const isGlobalMb = sliceProps?.isGlobalMb ? sliceProps?.isGlobalMb : false;
-
   return (
     <StyledLongform
       noBorder={!hasToursSection}
