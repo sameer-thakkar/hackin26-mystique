@@ -20,6 +20,7 @@ import {
 } from 'utils/shortCodes';
 import { extractContentForProductCard } from 'utils/productUtils';
 import { convertUidToUrl } from 'utils/urlUtils';
+import { parseV2ProductDescriptors } from 'utils/dataParsers';
 
 const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
   ssr: false,
@@ -409,12 +410,10 @@ const DetailedProductCard = (props) => {
   const showPageUrl = showPageUid ? convertUidToUrl(showPageUid) : null;
 
   const rightBlocksCount = contentBlocks?.right?.length;
-  const descriptors = hasCategoryTourList
-    ? productDescriptors
-    : productDescriptors
-        ?.split(',')
-        ?.filter((d) => d.length)
-        ?.map((d) => d.trim());
+  const descriptors = parseV2ProductDescriptors({
+    hasCategoryTourList,
+    descriptors: productDescriptors,
+  });
 
   const { finalPrice, bestDiscount, originalPrice, currencyCode } =
     listingPrice || {};

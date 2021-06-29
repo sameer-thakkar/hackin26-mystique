@@ -102,7 +102,12 @@ export const getValidUrlParams = (query) =>
 export const convertUidToUrl = (uid) => {
   if (uid) {
     let url;
-    const regex = /[a-zA-z0-9-]+\.[a-zA-z0-9-]+((\.[a-z]{1,3}\.[a-z]{1,3})|(\.[a-z]{2,3}))/g;
+    const regex = /[a-zA-z0-9-]+\.[a-zA-z0-9-]+((\.[a-z]{1,2}\.[a-z]{1,3})|(\.[a-z]{2,3}))/g;
+    /*
+     * matches .org, .com or 3 character top-level domain
+     * matches .co.uk
+     * doesn't match .org.uk
+     */
     const domain = uid.match(regex);
     const pathName = uid.split(domain)?.filter((string) => string.length);
     if (domain?.length) {
