@@ -178,8 +178,6 @@ export const extractContentForProductCard = (markdownBlocks, contentBlocks) => {
       }
     });
 
-    console.log(tabsMarkdownRight);
-
     tabsMarkdownRight.forEach((highlight) => {
       const isCancellation =
         highlight?.heading === 'Cancellation Policy' ||
