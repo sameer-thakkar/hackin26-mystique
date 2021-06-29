@@ -162,12 +162,22 @@ export const genUniqueId = () =>
   `${Math.random().toString().slice(2)}-${Math.random().toString().slice(2)}`;
 
 export const refsArrayToObject = (refArray) => {
-  const [commonFooter, secondaryFooter] = refArray
-    .filter((ref) => ref.type === CUSTOM_TYPES.FOOTER)
-    .sort((a, b) => {
-      if (a.data?.is_secondary_footer) return 1;
-      if (b.data?.is_secondary_footer) return -1;
-    });
+  const footers = refArray
+    ?.filter((ref) => ref.type === CUSTOM_TYPES.FOOTER)
+    .reduce((acc, curr) => {
+      if (curr?.data?.is_secondary_footer) {
+        return {
+          ...acc,
+          secondaryFooter: curr,
+        };
+      } else {
+        return {
+          ...acc,
+          commonFooter: curr,
+        };
+      }
+    }, {});
+  const { commonFooter, secondaryFooter } = footers || {};
   const [contentFramework] = refArray.filter(
     (ref) => ref.type === CUSTOM_TYPES.CONTENT_FRAMEWORK
   );

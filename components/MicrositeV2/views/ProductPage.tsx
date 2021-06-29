@@ -552,7 +552,6 @@ export const MobileProductPage = (props) => {
     window.scrollTo(0, 0);
   });
 
-  console.log(tour);
   const CTAMarkup = (
     <CTABlock isEntertainmentMb={isEntertainmentMb}>
       <Conditional if={isEntertainmentMb && showPageUrl}>
