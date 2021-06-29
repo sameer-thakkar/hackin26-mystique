@@ -34,6 +34,7 @@ import {
   fetchCurrencyList,
 } from 'utils/apiUtils';
 
+const Breadcrumb = dynamic(() => import('./BreadCrumb'));
 const AccordionGroup = dynamic(() => import('../slices/AccordionGroup'));
 
 const Wrapper = styled.div`
@@ -284,6 +285,16 @@ const ShowPage = ({
     });
   }, []);
 
+  const PageURL = convertUidToUrl(uid);
+  const { name } = tourGroupData;
+  const breadcrumbs = [
+    { url: '/', text: 'London Theatre Tickets' },
+    {
+      url: PageURL,
+      text: name,
+    },
+  ];
+
   return (
     <>
       <PopulateHead
@@ -298,7 +309,7 @@ const ShowPage = ({
           originalHost: host,
           currentLanguage: lang,
           isMobile,
-          canonical_link: canonical_link || convertUidToUrl(uid),
+          canonical_link: canonical_link || PageURL,
           noindex: isDev ? 'True' : 'False',
         }}
       />
@@ -405,6 +416,7 @@ const ShowPage = ({
           currentLanguage={currentLanguage}
           categoryName={categoryName}
         />
+        <Breadcrumb links={breadcrumbs} />
       </Wrapper>
       <Footer
         currentLanguage={currentLanguage}

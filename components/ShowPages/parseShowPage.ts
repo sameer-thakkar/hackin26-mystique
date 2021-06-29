@@ -55,6 +55,26 @@ export const getObject = (data, filterArray) => {
   };
 };
 
+export const safetyChecker = (data) => {
+  let isSafetyBanner = false;
+
+  data.forEach((element, index) => {
+    if (element.type == 'heading6' && element.text === SAFETY_BANNER_STRING) {
+      if (index + 1 < data.length) {
+        let nextElement = data[index + 1];
+        if (
+          nextElement.type == 'paragraph' &&
+          nextElement.text === YES_STRING
+        ) {
+          isSafetyBanner = true;
+        }
+      }
+    }
+  });
+
+  return isSafetyBanner;
+};
+
 export const parseShowPageData = (data) => {
   let faqHeading,
     faqSchema = [],
