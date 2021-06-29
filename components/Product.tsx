@@ -185,7 +185,8 @@ const TourTags = styled.div`
     margin-bottom: 0;
     .image-wrap {
       display: flex;
-      align-items: center;
+      align-items: top;
+      padding-top: calc(100% / 2);
     }
     img {
       height: 16px;

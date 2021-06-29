@@ -28,6 +28,7 @@ const StyledAsideModal = styled.div`
     position: absolute;
     height: 100vh;
     overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
     max-width: unset;
     width: unset;
     ${({ sidebarType }) =>
