@@ -239,3 +239,32 @@ export const tourListApiParser = (apiResponse) => {
     };
   }, {});
 };
+
+export const parseV2ProductDescriptors = ({
+  hasCategoryTourList = true,
+  descriptors,
+  category,
+}: {
+  hasCategoryTourList: boolean;
+  descriptors: any;
+  category?: string;
+}) => {
+  let finalDescriptors;
+  switch (true) {
+    case hasCategoryTourList:
+      finalDescriptors = category ? [category, ...descriptors] : descriptors;
+      break;
+    case descriptors?.includes('\r\n'):
+      finalDescriptors = descriptors?.split('\r\n');
+      break;
+    case descriptors?.includes('|'):
+      finalDescriptors = descriptors?.split('|');
+      break;
+    default:
+      finalDescriptors = descriptors?.split(',');
+  }
+  const data = finalDescriptors?.length
+    ? finalDescriptors?.filter((desc) => desc?.length)?.map((d) => d?.trim())
+    : [];
+  return data;
+};

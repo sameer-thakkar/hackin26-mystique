@@ -23,6 +23,7 @@ import { isSafetyIncluded, createBookingURL } from 'utils';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { dateToString } from 'utils/dateToString';
+import { parseV2ProductDescriptors } from 'utils/dataParsers';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
@@ -511,9 +512,11 @@ export const MobileProductPage = (props) => {
   let hostSplit = hostName.split('.');
   hostSplit.shift();
   const bookingUrl = hostSplit.join('.');
-  const descriptors = hasCategoryTourList
-    ? [category, ...tourDescriptors]
-    : tourDescriptors?.split(',')?.filter((desc) => desc?.length);
+  const descriptors = parseV2ProductDescriptors({
+    hasCategoryTourList,
+    descriptors: tourDescriptors,
+    category,
+  });
   const { allTags = [] } = tour;
   const hasSafetyFlag = isSafetyIncluded(allTags);
   const showPageUrl = showPageUid ? convertUidToUrl(showPageUid) : null;

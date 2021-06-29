@@ -139,7 +139,6 @@ export const extractContentForProductCard = (markdownBlocks, contentBlocks) => {
   let rightContent = [];
 
   if (tabsMarkdown.length > 0) {
-    const sliceValue = getContentBlocksMidIndex(tabsMarkdown);
     const filteredMarkdown = tabsMarkdown?.filter((md) => {
       const values = [
         'Theatre Name',
@@ -156,23 +155,47 @@ export const extractContentForProductCard = (markdownBlocks, contentBlocks) => {
         return md;
       }
     });
+    const sliceValue = Math.floor(filteredMarkdown?.length / 2);
     const [tabsMarkdownLeft, tabsMarkdownRight] = [
       filteredMarkdown.slice(0, sliceValue),
       filteredMarkdown.slice(sliceValue, tabsMarkdown.length),
     ];
 
+    const isLeftBlock = ['Theatre Name', 'Show Timings', 'Duration'];
+    const isRightBlock = [
+      'Your Tickets',
+      'Your Ticket',
+      'Cancellation Policy',
+      'Cancellation',
+      'Age Limit',
+    ];
     tabsMarkdownLeft.forEach((highlight) => {
-      leftContent.push({
-        heading: highlight.heading,
-        contents: highlight.contents,
-      });
+      if (isLeftBlock.includes(highlight?.heading)) {
+        leftContent.push({
+          heading: highlight.heading,
+          contents: highlight.contents,
+        });
+      }
     });
 
     tabsMarkdownRight.forEach((highlight) => {
-      rightContent.push({
-        heading: highlight.heading,
-        contents: highlight.contents,
-      });
+      const isCancellation =
+        highlight?.heading === 'Cancellation Policy' ||
+        highlight?.heading === 'Cancellation';
+
+      if (isRightBlock.includes(highlight?.heading)) {
+        if (isCancellation) {
+          rightContent.push({
+            heading: highlight.heading,
+            contents: highlight.contents?.slice(0, 1),
+          });
+        } else {
+          rightContent.push({
+            heading: highlight.heading,
+            contents: highlight.contents,
+          });
+        }
+      }
     });
   } else {
     contentBlocks.left.forEach((highlight) => {
