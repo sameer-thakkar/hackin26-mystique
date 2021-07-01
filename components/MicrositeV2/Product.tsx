@@ -6,7 +6,11 @@ import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
 import LocalisedPrice from 'UI/LPrice';
 import { SEE_SAFETY, STAR } from 'assets/SvgIcons';
-import { CURRENCY_SYMBOL_MAP } from 'const/index';
+import {
+  CURRENCY_SYMBOL_MAP,
+  NEW_ARRIVALS_CATEGORIES,
+  REOPENING_CATEGORIES,
+} from 'const/index';
 import { strings } from 'const/strings';
 import { SOLEIL, COLORS } from 'const/ui-constants';
 import { truncate } from 'utils/helper';
@@ -304,8 +308,10 @@ const Product = (props) => {
     isMobile,
     isEntertainmentMb,
     productClick,
+    activeCategoryId = null,
   } = props;
   const { currencySymbolMap, lang } = useContext(MBContext);
+
   if (!allTours[tgid]) return null;
   const { listingPrice, dfListingPrice, ...tour } = allTours[tgid] || {};
   const {
@@ -335,7 +341,14 @@ const Product = (props) => {
     productClick(tgid, cardIdPrefix);
   };
 
+  const isNew = NEW_ARRIVALS_CATEGORIES.includes(activeCategoryId);
+
+  const OPENING_ON = REOPENING_CATEGORIES.includes(activeCategoryId)
+    ? strings.REOPENING_ON
+    : strings.OPENING_ON;
+
   const openingDate = dateToString(reopeningDate, lang, 'DD MMM, YYYY');
+  const isBeforeToday = new Date().getTime() > new Date(openingDate)?.getTime();
   return (
     <ProductCard
       onClick={handleProductClick}
@@ -370,15 +383,15 @@ const Product = (props) => {
           <div className="l1-booster-wrapper">
             <div className="l1-booster">{category}</div>
             <div className="rating">
-              <Conditional if={averageRating}>
+              <Conditional if={isNew}>
+                <span className="avg-rating">NEW</span>
+              </Conditional>
+              <Conditional if={!isNew && averageRating}>
                 <span className="avg-rating">
                   {averageRating} {STAR(COLORS.JOY_MUSTARD)}
                 </span>
               </Conditional>
-              <Conditional if={!averageRating && !reviewCount}>
-                <span className="avg-rating">NEW</span>
-              </Conditional>
-              <Conditional if={reviewCount}>
+              <Conditional if={!isNew && reviewCount}>
                 <span className="total-rating">
                   (
                   {reviewCount > 999
@@ -392,9 +405,15 @@ const Product = (props) => {
         </Conditional>
         <div className="title-wrap">
           <div className="product-v2-title">{truncate(title, 70)}</div>
-          <Conditional if={isEntertainmentMb && openingDate !== 'Invalid Date'}>
+          <Conditional
+            if={
+              isEntertainmentMb &&
+              !isBeforeToday &&
+              openingDate !== 'Invalid Date'
+            }
+          >
             <div className="reopening">
-              {strings.REOPENING_ON} {openingDate}
+              {OPENING_ON} {openingDate}
             </div>
           </Conditional>
         </div>

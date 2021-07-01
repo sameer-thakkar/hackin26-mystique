@@ -58,8 +58,7 @@ const PopulateProducts = (props) => {
     rowsToShow,
     sectionId,
   } = props;
-
-  const interactionContext = useContext(InteractionContext);
+  const { activeCategoryTgids } = useContext(InteractionContext) || {};
   const mbContext = useContext(MBContext);
   const { lang: currentLanguage } = mbContext;
   const firstView = rowsToShow || 4;
@@ -68,7 +67,7 @@ const PopulateProducts = (props) => {
 
   useEffect(() => {
     setRowsInView(firstView);
-  }, [interactionContext.activeCategoryTgids, firstView]);
+  }, [activeCategoryTgids, firstView]);
 
   const subArrays = (tgidsArr) => {
     const { isMobile } = props;
@@ -90,7 +89,7 @@ const PopulateProducts = (props) => {
     setRowsInView(rowsInView + (isMobile ? 2 : 4));
   };
 
-  const tgids = propTgids || interactionContext.activeCategoryTgids;
+  const tgids = propTgids || activeCategoryTgids;
   const tgidsSubArr = subArrays(tgids);
 
   return (

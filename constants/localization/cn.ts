@@ -28,7 +28,7 @@ const cn = {
   TOMORROW: '明天',
   MORE_FROM: '更多从',
   REOPENING_ON: 'Reopening on',
-  REOPENED_ON: 'Reopened on',
+  OPENING_ON: 'Opening on',
   NEW: 'New',
   LISTICLES: {
     SEATING_CHART: '座位图',

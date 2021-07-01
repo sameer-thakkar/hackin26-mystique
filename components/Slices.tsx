@@ -118,8 +118,8 @@ const sliceHandler = (slice, props: any = {}) => {
       break;
     case 'category_carousel':
       const tgidArray = slice?.primary?.csv_tgids
-        .split(',')
-        .map((tgid) => parseInt(tgid.trim()));
+        ?.split(',')
+        ?.map((tgid) => parseInt(tgid.trim()));
       if (props.isMobile)
         return (
           <CategorySection

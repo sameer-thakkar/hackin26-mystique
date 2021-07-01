@@ -113,7 +113,8 @@ const CategoryBarWrapper = styled.div`
   }
 `;
 const CategoryBar = (props) => {
-  const interactionCtx = useContext(InteractionContext);
+  const { changeCategory: changeCategoryHandler } =
+    useContext(InteractionContext) || {};
   const parent = useRef(null);
   const category_bar = useRef(null);
   const scroll_div = useRef(null);
@@ -131,15 +132,18 @@ const CategoryBar = (props) => {
 
   const changeCategory = (index) => {
     let { categories } = props;
-    interactionCtx.changeCategory(categories[index].ranking[activeOrder]);
     setActiveCategory(index);
+    changeCategoryHandler(categories[index].ranking[activeOrder], index);
   };
 
   const changeOrder = (orderKey) => {
     let { categories } = props;
     setActiveOrder(orderKey);
 
-    interactionCtx.changeCategory(categories[activeCategory].ranking[orderKey]);
+    changeCategoryHandler(
+      categories[activeCategory].ranking[orderKey],
+      activeCategory
+    );
   };
 
   useEffect(() => {

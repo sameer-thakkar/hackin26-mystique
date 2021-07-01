@@ -29,7 +29,7 @@ const it = {
   TOMORROW: 'domani',
   TICKETS: 'Biglietti',
   REOPENING_ON: 'Reopening on',
-  REOPENED_ON: 'Reopened on',
+  OPENING_ON: 'Opening on',
   NEW: 'New',
   LISTICLES: {
     SEATING_CHART: 'Mappa dei posti a sedere',

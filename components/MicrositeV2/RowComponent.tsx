@@ -36,7 +36,10 @@ export const RowComponent = (props) => {
     uid,
     sectionId,
   } = props;
-  const interactionContext = useContext(InteractionContext);
+  const { activeCategoryId, activeTour, clickTour, closeTour } =
+    useContext(InteractionContext) || {};
+  const { tgid: activeTgid, section: activeSection, autoScroll } =
+    activeTour || {};
 
   const handleProductClicked = (productTgid, section) => {
     if (isMobile) {
@@ -45,32 +48,28 @@ export const RowComponent = (props) => {
         tgid: productTgid,
       });
     } else {
-      interactionContext.clickTour(productTgid, false, section);
+      clickTour(productTgid, false, section);
     }
   };
 
   const closeDescription = () => {
-    interactionContext.closeTour();
+    closeTour();
   };
 
   useEffect(() => {
     if (!window) return;
-    const {
-      activeTour: { tgid, section: activeSection, autoScroll },
-    } = interactionContext;
-    if (tgid && autoScroll)
-      scroller.scrollTo(`${activeSection}-${tgid}`, {
+    if (activeTgid && autoScroll)
+      scroller.scrollTo(`${activeSection}-${activeTgid}`, {
         duration: 750,
         delay: 100,
         smooth: 'easeInQuad',
         offset: 45,
       });
-  }, [interactionContext]);
+  }, []);
 
-  const { activeTour } = interactionContext;
-  const tgidClicked = activeTour.tgid;
-  const cardPosition = tgidsSubArr.indexOf(activeTour.tgid);
-  const showDescription = cardPosition > -1 && sectionId === activeTour.section;
+  const tgidClicked = activeTgid;
+  const cardPosition = tgidsSubArr.indexOf(activeTgid);
+  const showDescription = cardPosition > -1 && sectionId === activeSection;
   return (
     <ProductsRow>
       {tgidsSubArr.map((tgid, index) => {
@@ -85,6 +84,7 @@ export const RowComponent = (props) => {
             isMobile={isMobile}
             key={index}
             cardIdPrefix={sectionId}
+            activeCategoryId={activeCategoryId}
           />
         );
       })}
