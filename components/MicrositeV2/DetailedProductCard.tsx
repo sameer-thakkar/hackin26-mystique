@@ -545,7 +545,7 @@ const DetailedProductCard = (props) => {
           </Conditional>
           <Conditional if={descriptors?.length}>
             <div className="v2-descriptors">
-              {descriptors.map((descriptor, index) => {
+              {descriptors?.map((descriptor, index) => {
                 if (descriptor) {
                   return (
                     <div className="v2-descriptor" key={index}>

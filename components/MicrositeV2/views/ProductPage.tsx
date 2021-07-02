@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import parse from 'url-parse';
@@ -77,6 +77,18 @@ const StyledMobileProductPage = styled.div`
     width: 100%;
     z-index: 99;
     background: ${COLORS.WHITE};
+    .title {
+      font-size: 14px;
+      line-height: 20px;
+      display: none;
+    }
+    &.flex {
+      display: flex;
+      justify-content: space-between;
+      .title {
+        display: block;
+      }
+    }
     .back {
       display: flex;
       ${({ isEntertainmentMb }) =>
@@ -95,15 +107,19 @@ const StyledMobileProductPage = styled.div`
       isEntertainmentMb ? 'unset' : '24px'};
   }
   .prod-image {
-    max-width: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '100vh' : 'calc(100% - 32px)'};
+    max-width: calc(100% - 32px);
+    width: calc(100% - 32px);
     margin: auto auto 16px auto;
     max-height: 100%;
     height: 100%;
     .swiper-container {
       overflow: unset;
-      width: auto;
+      width: 100%;
       height: 100%;
+    }
+    .swiper-slide {
+      -webkit-transform-style: preserve-3d;
+      -webkit-backface-visibility: hidden;
     }
     .single-image {
       width: 100%;
@@ -357,11 +373,12 @@ const StyledMobileProductPage = styled.div`
     }
     .prod-image {
       .swiper-wrapper {
+        height: 214px;
         grid-template-columns: unset;
       }
       img {
         ${({ isEntertainmentMb }) =>
-          isEntertainmentMb && `height: 214px;border-radius: 8px;`}
+          isEntertainmentMb && `height: 214px; border-radius: 8px;`}
       }
     }
   }
@@ -535,11 +552,10 @@ export const MobileProductPage = (props) => {
   const carouselProps = {
     ...carouselOptions,
     ...(isEntertainmentMb && {
-      // slidesPerView: 1.2,
-      spaceBetween: 16,
+      init: true,
       loop: true,
-      centeredSlides: true,
       lazy: true,
+      centeredSlides: true,
     }),
     ...(images?.length <= 1 && {
       autoplay: false,
@@ -548,9 +564,17 @@ export const MobileProductPage = (props) => {
     }),
   };
 
+  const [showTitle, setShowTitle] = useState(false);
+
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+    const handleScroll = () =>
+      window.pageYOffset > 295 ? setShowTitle(true) : setShowTitle(false);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const CTAMarkup = (
     <CTABlock isEntertainmentMb={isEntertainmentMb}>
@@ -582,7 +606,14 @@ export const MobileProductPage = (props) => {
 
   return (
     <StyledMobileProductPage isEntertainmentMb={isEntertainmentMb}>
-      <header className="header">
+      <header
+        className={`${
+          isEntertainmentMb && showTitle ? 'header flex' : 'header'
+        }`}
+      >
+        <Conditional if={isEntertainmentMb}>
+          <div className="title">{title}</div>
+        </Conditional>
         <div
           onClick={closeProductCard}
           className="back"
@@ -606,8 +637,13 @@ export const MobileProductPage = (props) => {
             <Swiper {...carouselProps}>
               {images?.map((image, index) => {
                 return (
-                  <div key={index} className="swiper-slide">
-                    <Image url={image.url} dontLazyLoad={index == 0} />
+                  <div
+                    key={index}
+                    className="swiper-slide"
+                    role="button"
+                    tabIndex={0}
+                  >
+                    <Image url={image.url} height={214} width={686} />
                   </div>
                 );
               })}
