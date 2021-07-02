@@ -6,6 +6,8 @@ import { FULL_LANGUAGE_MAP, THEMES, LANGUAGE_PARAMS_REGEX } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import Chevron from 'UI/Chevron';
 
+import Conditional from './Conditional';
+
 const StyledLanguageContainer = styled.div`
   margin-left: 32px;
   position: relative;
@@ -21,8 +23,10 @@ const StyledLanguageContainer = styled.div`
     top: 50px;
   }
   &:after {
-    // this adds white space below the active text,
-    // increasing the hover area
+    /*
+      this adds white space below the active text,
+      increasing the hover area
+    */
     content: '';
     display: block;
     height: 30px;
@@ -139,8 +143,7 @@ class LanguageSelector extends Component<any, any> {
     if (!selectedLang) return;
     const { pathname } = this.state;
     const { uid, host } = this.props;
-    const langCodeRegex = /^(\/){0,1}(en|fr|de|it|nl|pt|es)(\/){0,1}/;
-    const removeLangFromPathname = pathname.replace(langCodeRegex, '');
+    const removeLangFromPathname = pathname.replace(LANGUAGE_PARAMS_REGEX, '');
     let slug = withoutTrailingSlash(removeLangFromPathname);
     slug = slug[0] === '/' ? slug.slice(1) : slug;
     const isDev = host.includes('localhost');
@@ -178,7 +181,7 @@ class LanguageSelector extends Component<any, any> {
       return (
         <StyledMobileSelect>
           <span>{currentLanguage}</span>
-          {isAmp ? (
+          <Conditional if={isAmp}>
             <select
               onChange={(e) => e.target.blur()}
               onBlur={this.handleChange}
@@ -198,7 +201,8 @@ class LanguageSelector extends Component<any, any> {
                 );
               })}
             </select>
-          ) : (
+          </Conditional>
+          <Conditional if={!isAmp}>
             <select
               onChange={(e) => e.target.blur()}
               onBlur={this.handleChange}
@@ -214,7 +218,7 @@ class LanguageSelector extends Component<any, any> {
                 );
               })}
             </select>
-          )}
+          </Conditional>
         </StyledMobileSelect>
       );
     }
@@ -224,9 +228,9 @@ class LanguageSelector extends Component<any, any> {
         <StyledLanguage>
           {mbTheme !== THEMES.MIN_BLUE ? GLOBE : null}
           {FULL_LANGUAGE_MAP[currentLanguage].language}
-          {mbTheme === THEMES.MIN_BLUE ? (
+          <Conditional if={mbTheme === THEMES.MIN_BLUE}>
             <Chevron className="chevron" isActive={this.state.showDropdown} />
-          ) : null}
+          </Conditional>
         </StyledLanguage>
         <div
           className={`language-dropdown ${

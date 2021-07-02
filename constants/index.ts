@@ -127,7 +127,7 @@ export const PRISMIC_LANG_TO_ROUTE_PARAM = {
   'ko-kr': 'ko',
 };
 
-export const LANGUAGE_PARAMS_REGEX = /^(\/)?(en|fr|de|it|nl|pt|es|ja|tw|cn|ko)(\/)?/;
+export const LANGUAGE_PARAMS_REGEX = /^(\/)?(en|fr|de|it|nl|pt|es|ja|tw|cn|ko){0,2}(\/)/;
 
 export const GROUP_TOUR_PREFERED_TOUR = [
   {

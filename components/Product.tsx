@@ -738,10 +738,10 @@ const Product = (props) => {
     !hasShortSummary && isMobile
       ? mobileFallbackShortSummary.length > 0
       : hasShortSummary;
-  const finalShortSummary =
-    isMobile && shortSummary?.length <= 0
-      ? mobileFallbackShortSummary
-      : shortSummary;
+  const isFallbackSummary = isMobile && shortSummary?.length <= 0;
+  const finalShortSummary = isFallbackSummary
+    ? mobileFallbackShortSummary
+    : shortSummary;
   const {
     sidebarModal: { addToAside },
   } = useContext(MBContext);
@@ -810,7 +810,7 @@ const Product = (props) => {
               width: '100vw',
               children: (
                 <ModalCardContainer>
-                  {getProductCardElements(true)}
+                  {getProductCardElements(true, isFallbackSummary)}
                 </ModalCardContainer>
               ),
               type: SIDEBAR_TYPES.PRODUCT_CARD,
@@ -871,7 +871,7 @@ const Product = (props) => {
 
   const hasReadMore =
     (highlights.flat()?.length >= 3 || showMoreDetailsInTabs) && !defaultOpen;
-  const getProductCardElements = (expandContent) => (
+  const getProductCardElements = (expandContent, isFallbackSummary = false) => (
     <StyledProductCard layout={layout}>
       <ProductHeader>
         <TitleWrapper hasBorderedTitle={hasBorderedTitle && !tabs.length}>
@@ -880,7 +880,11 @@ const Product = (props) => {
           </Conditional>
           <TourTitle isPopup={isContentOpen}>{cardTitle}</TourTitle>
         </TitleWrapper>
-        <Conditional if={mbTheme !== THEMES.MIN_BLUE && hasShortSummary}>
+        <Conditional
+          if={
+            mbTheme !== THEMES.MIN_BLUE && !isFallbackSummary && hasShortSummary
+          }
+        >
           <ShortSummary>
             <RichText render={finalShortSummary} />
           </ShortSummary>
@@ -910,7 +914,6 @@ const Product = (props) => {
             <RichText render={booster} htmlSerializer={shortCodeSerializer} />
           </V1BoosterBlock>
         </Conditional>
-
         {hasOffer &&
           offerId &&
           productOffer.map((offer, index) => {
@@ -980,7 +983,9 @@ const Product = (props) => {
           </Conditional>
         </CTAContainer>
       </ProductHeader>
-      {!isMobile && <HorizontalLine colorProp={COLORS.GREY_G6} />}
+      <Conditional if={!isMobile}>
+        <HorizontalLine colorProp={COLORS.GREY_G6} />
+      </Conditional>
       <ProductBody
         hasReadMore={hasReadMore}
         collapsed={!expandContent}
