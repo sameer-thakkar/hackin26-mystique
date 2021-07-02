@@ -59,7 +59,7 @@ export const fetchReviewsTourGroup = (tgid, limit) =>
 export const fetchInventoryAPI = async (tgid: string) => {
   try {
     const response = await fetch(
-      `https://api.headout.com/api/v5/tour-group/inventory/get/${tgid}`
+      `https://api.headout.com/api/v5/tour-group/inventory/get/${tgid}?use-seatmap-prices=true`
     );
     const data = await response.json();
     return data;
