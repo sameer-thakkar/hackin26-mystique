@@ -29,7 +29,7 @@ const fr = {
   TICKETS: 'Billets',
   REOPENING_ON: 'Reopening on',
   OPENING_ON: 'Opening on',
-  NEW: 'New',
+  NEW: 'NEW',
   LISTICLES: {
     SEATING_CHART: 'Plan de la salle',
     KNOW_MORE: 'En savoir plus',

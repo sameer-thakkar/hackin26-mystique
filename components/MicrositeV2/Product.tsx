@@ -393,7 +393,7 @@ const Product = (props) => {
             <div className="l1-booster">{category}</div>
             <div className="rating">
               <Conditional if={isNew}>
-                <span className="avg-rating">NEW</span>
+                <span className="avg-rating">{strings.NEW}</span>
               </Conditional>
               <Conditional if={!isNew && averageRating}>
                 <span className="avg-rating">

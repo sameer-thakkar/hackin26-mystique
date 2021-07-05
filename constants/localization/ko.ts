@@ -31,7 +31,7 @@ const ko = {
   OFF: 'Off',
   REOPENING_ON: 'Reopening on',
   OPENING_ON: 'Opening on',
-  NEW: 'New',
+  NEW: 'NEW',
   LISTICLES: {
     SEATING_CHART: '좌석 배치도',
     KNOW_MORE: '더 알아보기',

@@ -29,7 +29,7 @@ const ja = {
   MORE_FROM: 'More from',
   REOPENING_ON: 'Reopening on',
   OPENING_ON: 'Opening on',
-  NEW: 'New',
+  NEW: 'NEW',
   LISTICLES: {
     SEATING_CHART: '座席図',
     KNOW_MORE: 'もっと読む',

@@ -32,7 +32,7 @@ const nl = {
   TICKETS: 'Kaartjes',
   REOPENING_ON: 'Reopening on',
   OPENING_ON: 'Opening on',
-  NEW: 'New',
+  NEW: 'NEW',
   LISTICLES: {
     SEATING_CHART: 'Stoelenschema',
     KNOW_MORE: 'Lees meer',

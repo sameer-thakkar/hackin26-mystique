@@ -30,7 +30,7 @@ const pt = {
   TICKETS: 'Ingressos',
   REOPENING_ON: 'Reopening on',
   OPENING_ON: 'Opening on',
-  NEW: 'New',
+  NEW: 'NEW',
   LISTICLES: {
     SEATING_CHART: 'Mapa de assentos',
     KNOW_MORE: 'Saiba mais',

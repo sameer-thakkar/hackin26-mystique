@@ -29,7 +29,7 @@ const tw = {
   MORE_FROM: '更多從',
   REOPENING_ON: 'Reopening on',
   OPENING_ON: 'Opening on',
-  NEW: 'New',
+  NEW: 'NEW',
   LISTICLES: {
     SEATING_CHART: '座位圖',
     KNOW_MORE: '了解更多',
