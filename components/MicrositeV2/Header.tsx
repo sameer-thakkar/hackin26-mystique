@@ -41,7 +41,8 @@ const StyledHeader = styled.div`
     grid-template-columns: repeat(2, auto);
     justify-content: space-between;
     align-items: center;
-    padding: 14px 0;
+    padding: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '20px 0' : '14px 0'};
     user-select: none;
   }
   .fixed-wrap {
@@ -49,13 +50,12 @@ const StyledHeader = styled.div`
     width: 100vw;
     top: 0;
     min-height: ${({ isGlobalMb }) => (isGlobalMb ? '64px' : '80px')};
-    ${({ isGlobalMb }) =>
-      isGlobalMb && `box-shadow: inset 0px -1px 0px ${COLORS.GREY_D7};`}
-
     background-color: ${({ theme: { primaryBackground } }) =>
       primaryBackground ? primaryBackground : '#fff'};
     z-index: ${({ overlayActive: check, headerHover }) =>
       check || headerHover ? 100 : 15};
+    ${({ isGlobalMb }) =>
+      isGlobalMb && `box-shadow: inset 0px -1px 0px ${COLORS.GREY_D7};`}
   }
   .fixed-offset::after {
     content: '';
@@ -81,7 +81,7 @@ const StyledHeader = styled.div`
       margin: unset;
       width: calc(100% - (16px * 2));
       padding: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '16px' : '12px 16px'} ;
+        isEntertainmentMb ? '18px 16px' : '12px 16px'};
       border-bottom: ${({ theme: { theme } }) =>
         theme === THEMES.DEFAULT ? '1px solid #dadada' : 'none'};
     }
@@ -170,8 +170,10 @@ const HeaderLeft = styled.div`
     display: grid;
     grid-auto-flow: column;
     grid-column-gap: 10px;
-    padding: ${({ isGlobalMb }) => (isGlobalMb ? '0' : '8px')};
+    padding: ${({ isGlobalMb, isEntertainmentMb }) =>
+      isGlobalMb || isEntertainmentMb ? '0' : '8px'};
     margin-right: 16px;
+    ${({ isEntertainmentMb }) => isEntertainmentMb && `height: 36px;`}
     img {
       height: 36px;
       margin: 0;
@@ -188,8 +190,11 @@ const HeaderLeft = styled.div`
     .header-logo {
       padding: ${({ isGlobalMb, isEntertainmentMb }) =>
         isGlobalMb || isEntertainmentMb ? '0' : '4px'};
+      ${({ isEntertainmentMb }) => isEntertainmentMb && `height: 20px;`}
       img {
-        height: ${({ isGlobalMb }) => (isGlobalMb ? '36px' : '24px')};
+        height: ${({ isGlobalMb, isEntertainmentMb }) =>
+          isGlobalMb ? '36px' : isEntertainmentMb ? '20px' : '24px'};
+        ${({ isEntertainmentMb }) => isEntertainmentMb && `width: 87px;`}
       }
     }
     .poweredBy svg {
@@ -393,6 +398,7 @@ const Header: FunctionComponent<HeaderProps> = ({
                   handleResults={handleResults}
                   allToursArray={allToursArray}
                   clearSearch={resultClicked}
+                  isEntertainmentMb={isEntertainmentMb}
                 />
                 <Conditional if={results.length}>
                   <div>

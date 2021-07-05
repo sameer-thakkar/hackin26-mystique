@@ -166,7 +166,8 @@ export const categoryTourListParser = async (
           content_theater: null,
           contentBlocks,
           productImage: imageUrl,
-          descriptionImage: descriptionImage?.url,
+          descriptionImage:
+            productImages?.length > 1 ? descriptionImage?.url : imageUrl,
           price: finalPrice,
           scratchPrice: originalPrice,
           currencySymbol,

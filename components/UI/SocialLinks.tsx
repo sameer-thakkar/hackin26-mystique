@@ -1,5 +1,6 @@
-import { FACEBOOK, TWITTER, INSTAGRAM } from '../../assets/SvgIcons';
 import styled from 'styled-components';
+import { FACEBOOK, TWITTER, INSTAGRAM } from 'assets/SvgIcons';
+import { COLORS } from 'const/ui-constants';
 
 const StyledSocialLinks = styled.div`
   display: grid;
@@ -12,20 +13,25 @@ const StyledSocialLinks = styled.div`
 
 const SocialIcon = styled.div`
   display: flex;
+  align-self: center;
   a {
     display: flex;
   }
-  align-self: center;
   svg {
     height: 20px;
     width: 20px;
+    path {
+      fill: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? COLORS.GREY.G5 : COLORS.WHITE};
+    }
   }
 `;
 
 const SocialLinks = (props) => {
+  const { className, isEntertainmentMb } = props || {};
   return (
-    <StyledSocialLinks className={props.className}>
-      <SocialIcon>
+    <StyledSocialLinks className={className}>
+      <SocialIcon isEntertainmentMb={isEntertainmentMb}>
         <a
           href="http://www.facebook.com/headoutapp"
           target="_blank"
@@ -34,7 +40,7 @@ const SocialLinks = (props) => {
           {FACEBOOK}
         </a>
       </SocialIcon>
-      <SocialIcon>
+      <SocialIcon isEntertainmentMb={isEntertainmentMb}>
         <a
           href="http://www.twitter.com/headout"
           target="_blank"
@@ -43,7 +49,7 @@ const SocialLinks = (props) => {
           {TWITTER}
         </a>
       </SocialIcon>
-      <SocialIcon>
+      <SocialIcon isEntertainmentMb={isEntertainmentMb}>
         <a
           href="http://www.instagram.com/headoutapp"
           target="_blank"

@@ -10,8 +10,13 @@ const PopulateProducts = dynamic(() => import('./PopulateProducts'));
 const StyledProductWrapper = styled.div`
   margin-bottom: ${({ isEntertainmentMb }) =>
     isEntertainmentMb ? '64px' : '0'};
+
   &.relative-position {
     position: relative;
+  }
+  @media (max-width: 768px) {
+    margin-bottom: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '48px' : '0'};
   }
 `;
 

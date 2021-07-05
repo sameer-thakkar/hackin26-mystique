@@ -43,7 +43,7 @@ const StyledSortSelector = styled.div`
         isEntertainmentMb ? COLORS.RHAPSODY : COLORS.TEAL};
       ${({ isEntertainmentMb }) =>
         isEntertainmentMb &&
-        `font-weight: ${SOLEIL.REGULAR};line-height:20px;font-feature-settings: 'ss04' on;`}
+        `font-weight:${SOLEIL.REGULAR};font-size: 15px;line-height:20px;font-feature-settings: 'ss04' on;`}
     }
     .icon {
       display: flex;

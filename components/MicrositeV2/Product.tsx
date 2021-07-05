@@ -79,16 +79,16 @@ const ProductCard = styled.div`
   }
   .product-v2-bottom-left {
     display: grid;
-    grid-gap: 4px;
+    grid-gap: ${({ isEntertainmentMb }) => (isEntertainmentMb ? '0' : '4px')};
     height: max-content;
-    ${({ isEntertainmentMb }) => isEntertainmentMb && `margin-top: 4px;`}
+    ${({ isEntertainmentMb }) => isEntertainmentMb && `margin-top: 12px;`}
   }
   .product-v2-bottom {
     display: grid;
     align-items: baseline;
     justify-content: space-between;
     grid-template-columns: 1fr auto;
-    grid-gap: 8px;
+    grid-gap: ${({ isEntertainmentMb }) => (isEntertainmentMb ? '0;' : '8px')};
     height: max-content;
     ${({ isEntertainmentMb }) =>
       isEntertainmentMb &&
@@ -107,13 +107,30 @@ const ProductCard = styled.div`
     line-height: 20px;
     text-align: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? 'left' : 'right'};
-    color: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? COLORS.GREY.G3 : COLORS.TWO_BLACK};
     ${({ isEntertainmentMb }) =>
       isEntertainmentMb &&
       `grid-row: 2;
       display: flex;
     align-items: center;`}
+    span {
+      color: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? COLORS.GREY.G3 : COLORS.TWO_BLACK};
+    }
+    .mr-4 {
+      margin-right: 4px;
+    }
+    .discount {
+      background-color: ${COLORS.SOOTHING_GREEN};
+      color: ${COLORS.OKAY_GREEN};
+      padding: 2px 4px;
+      border-radius: 2px;
+      font-family: ${SOLEIL.FONT_STACK};
+      font-size: 10px;
+      font-style: normal;
+      font-weight: ${SOLEIL.REGULAR};
+      line-height: 12px;
+      margin-left: 6px;
+    }
   }
   .product-v2-scratch-price {
     font-family: ${SOLEIL.FONT_STACK};
@@ -132,19 +149,6 @@ const ProductCard = styled.div`
     }
   }
 
-  .discount {
-    background-color: ${COLORS.SOOTHING_GREEN};
-    color: ${COLORS.OKAY_GREEN};
-    padding: 2px 4px;
-    border-radius: 2px;
-    font-family: ${SOLEIL.FONT_STACK};
-    font-size: 10px;
-    font-style: normal;
-    font-weight: ${SOLEIL.REGULAR};
-    line-height: 12px;
-    margin-left: 6px;
-  }
-
   .vendor-name {
     font-family: ${SOLEIL.FONT_STACK};
     font-weight: ${SOLEIL.MEDIUM};
@@ -160,10 +164,11 @@ const ProductCard = styled.div`
     grid-template-columns: repeat(2, max-content);
     justify-content: space-between;
     font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.MEDIUM};
+    font-weight: ${SOLEIL.REGULAR};
     font-style: normal;
     line-height: 16px;
     font-size: 12px;
+    margin-bottom: 2px;
   }
   .l1-booster-wrapper * {
     color: ${COLORS.GREY.G4};
@@ -201,13 +206,11 @@ const ProductCard = styled.div`
     .product-v2-bottom {
       grid-template-columns: ${({ isEntertainmentMb }) =>
         isEntertainmentMb ? '1fr' : 'auto'};
-      grid-row-gap: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '4px;' : '12px'};
+      grid-gap: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '0;' : '12px'};
     }
     .product-v2-bottom-left {
       width: 100%;
-      ${({ isEntertainmentMb }) =>
-        isEntertainmentMb && ` grid-gap: 2px;margin-top: 10px;`}
     }
     .title-wrap {
       grid-column: 1 / 2;
@@ -237,11 +240,16 @@ const ProductCard = styled.div`
     }
     .l1-booster-wrapper {
       ${({ isEntertainmentMb }) =>
-        isEntertainmentMb && `font-size: 10px;line-height: 12px;`}
+        isEntertainmentMb &&
+        `font-size: 10px;line-height: 12px;margin-bottom:4px;`}
     }
     .avg-rating svg {
       ${({ isEntertainmentMb }) =>
         isEntertainmentMb && `width:8px;height: 8px;`}
+    }
+    .reopening {
+      font-size: 10px;
+      line-height: 12px;
     }
   }
   .product-v2-image img {
@@ -349,6 +357,7 @@ const Product = (props) => {
 
   const openingDate = dateToString(reopeningDate, lang, 'DD MMM, YYYY');
   const isBeforeToday = new Date().getTime() > new Date(openingDate)?.getTime();
+  const hasScratchPrice = scratchPrice > price;
   return (
     <ProductCard
       onClick={handleProductClick}
@@ -419,18 +428,23 @@ const Product = (props) => {
         </div>
         <div className="product-v2-bottom-left">
           <div className="product-v2-price">
+            <Conditional if={isEntertainmentMb && !hasScratchPrice}>
+              <span className="mr-4">{strings.FROM}</span>
+            </Conditional>
             <LocalisedPrice
               price={price}
               currencySymbol={currencySymbol}
               lang={lang}
             />
-            <Conditional if={isEntertainmentMb && bestDiscount}>
+            <Conditional
+              if={isEntertainmentMb && hasScratchPrice && bestDiscount}
+            >
               <span className="discount">
                 {bestDiscount}% {strings.OFF}
               </span>
             </Conditional>
           </div>
-          <Conditional if={scratchPrice > price}>
+          <Conditional if={hasScratchPrice}>
             <div className="product-v2-scratch-price">
               <Conditional if={isEntertainmentMb}>
                 <span>{strings.FROM} </span>
