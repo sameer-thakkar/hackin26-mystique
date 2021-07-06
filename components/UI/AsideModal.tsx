@@ -6,7 +6,7 @@ import { COLORS } from 'const/ui-constants';
 import { SIDEBAR_TYPES } from 'const/index';
 import useWindowSize from 'hooks/useWindowSize';
 
-const StyledAsideModal = styled.div`
+export const StyledAsideModal = styled.div`
   position: fixed;
   top: 0;
   right: 0;

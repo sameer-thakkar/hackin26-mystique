@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
+import { COLORS } from 'const/ui-constants';
 
 import { BLUE_QUOTES } from '../../assets/SvgIcons';
 
@@ -55,7 +56,13 @@ const CardCarouselContainer = styled.div`
       }
 
       .content-wrapper-review {
-        padding: 20px;
+        padding: 32px;
+        .quote-wrapper {
+          svg {
+            width: 41.41px;
+            height: 36.31px;
+          }
+        }
       }
 
       .quote-wrapper {
@@ -64,17 +71,17 @@ const CardCarouselContainer = styled.div`
       }
 
       .review-content {
-        padding: 20px;
+        padding: 28px 32px 24px;
 
         .review {
-          color: #666666;
+          color: ${COLORS.GREY.G2};
           font-size: 15px;
           font-weight: 400;
           line-height: 24px;
         }
 
         .reviewer-name {
-          color: #444444;
+          color: ${COLORS.GREY.G2};
           font-size: 15px;
           margin-top: 32px;
           line-height: 20px;
@@ -87,7 +94,7 @@ const CardCarouselContainer = styled.div`
     overflow: hidden;
   }
   .carousel-slider .swiper-pagination-bullet-active {
-    background: #666666 !important;
+    background: ${COLORS.GREY_G3} !important;
     opacity: 1 !important;
   }
   .carousel-slider .swiper-pagination-bullet {
@@ -95,7 +102,7 @@ const CardCarouselContainer = styled.div`
     height: 8px;
     display: inline-block;
     border-radius: 100%;
-    background: #444444;
+    background: ${COLORS.GREY.G2};
     opacity: 0.1;
   }
   .carousel-slider .swiper-container {
@@ -139,14 +146,26 @@ const CardCarouselContainer = styled.div`
       margin: 24px auto 70px;
 
       .swiper-slide {
+        .content-wrapper-review {
+          padding: 16px;
+          .quote-wrapper {
+            svg {
+              width: 44.96px;
+              height: 36px;
+            }
+          }
+        }
         .review-content {
+          padding: 20px 16px 16px;
           .review {
             font-size: 14px;
             line-height: 20px;
+            font-weight: normal;
           }
 
           .reviewer-name {
             font-size: 14px;
+            line-height: 15px;
             margin-top: 24px;
           }
         }

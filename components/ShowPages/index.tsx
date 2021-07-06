@@ -33,14 +33,34 @@ import {
   fetchCategory,
   fetchCurrencyList,
 } from 'utils/apiUtils';
+import { StyledAsideModal } from 'components/UI/AsideModal';
+import TitleTextCombo from 'components/UI/TitleTextCombo';
+import Conditional from 'components/common/Conditional';
 
 const Breadcrumb = dynamic(() => import('./BreadCrumb'));
 const AccordionGroup = dynamic(() => import('../slices/AccordionGroup'));
+
+const ShowPageWrapper = styled.div`
+  ${StyledAsideModal} {
+    padding: 0 40px 70px;
+  }
+`;
 
 const Wrapper = styled.div`
   max-width: 1200px;
   margin: 64px auto 0;
   padding: 0 16px;
+  ${TitleTextCombo} {
+    margin-bottom: 0px;
+  }
+  ${StyledAccordion} {
+    padding: 24px 0;
+    border-bottom: 1px solid #e2e2e2 !important;
+    grid-row-gap: 12px;
+  }
+  ${StyledRichContent} {
+    max-width: 792px;
+  }
   @media (max-width: 768px) {
     margin: 40px auto 0;
     ${StyledRichContent} {
@@ -58,11 +78,6 @@ const Wrapper = styled.div`
         margin-bottom: 10px;
       }
     }
-  }
-  ${StyledAccordion} {
-    padding: 24px 0;
-    border-bottom: 1px solid #e2e2e2 !important;
-    grid-row-gap: 0px;
   }
 `;
 
@@ -91,6 +106,9 @@ const HighlightsSectionWrapper = styled.div`
   ul {
     padding-inline-start: 0;
     list-style-position: inside;
+  }
+  li::marker {
+    margin: 0;
   }
   li {
     margin-bottom: 12px;
@@ -133,6 +151,9 @@ const AboutTheatreSectionWrapper = styled.div`
     font-weight: normal;
     padding-left: 1.5rem;
     text-indent: -1.5em;
+  }
+  a {
+    color: #114cd6;
   }
   @media (max-width: 768px) {
     width: 100%;
@@ -291,12 +312,12 @@ const ShowPage = ({
     { url: '/', text: 'London Theatre Tickets' },
     {
       url: PageURL,
-      text: name,
+      text: name + ' - ' + strings.TICKETS,
     },
   ];
 
   return (
-    <>
+    <ShowPageWrapper>
       <PopulateHead
         {...{
           title,
@@ -339,11 +360,11 @@ const ShowPage = ({
         tagsArray={tagsArray}
         isReopening={isReopening}
       />
-      {isSafetyBanner ? (
+      <Conditional if={isSafetyBanner}>
         <SafeDFBannerWrapper
           marginTop={isMobile ? 0 : 40}
         ></SafeDFBannerWrapper>
-      ) : null}
+      </Conditional>
       <Wrapper>
         <HighlightsSectionWrapper>
           <RichText render={highlightsSection?.tab_content} />
@@ -368,9 +389,9 @@ const ShowPage = ({
             />
           </>
         )}
-        {imageUploads.length >= 5 ? (
+        <Conditional if={imageUploads.length >= 5}>
           <Gallery galleryArray={imageUploads.slice(2)} isMobile={isMobile} />
-        ) : null}
+        </Conditional>
         <SubHeading content={tabSectionHeading} />
         <AboutTheatreSectionWrapper>
           <RichText render={aboutTheatreSection?.tab_content} />
@@ -400,12 +421,12 @@ const ShowPage = ({
           heading={faqHeading}
           useSchema={true}
         />
-        {customerReviews.length ? (
+        <Conditional if={customerReviews.length}>
           <>
             <SubHeading content={strings.CUSTOMER_REVIEW_HEADING} />
             <CustomerReview cards={customerReviews} isMobile={isMobile} />
           </>
-        ) : null}
+        </Conditional>
         <FeatureCard />
         <SubHeading content={strings.CATEGORY_SLIDER_HEADING} />
         <CategorySlider
@@ -433,7 +454,7 @@ const ShowPage = ({
         attraction={commonFooter?.data?.attraction || 'attraction'}
         primaryHeading={commonFooter?.data?.footer_heading}
       />
-    </>
+    </ShowPageWrapper>
   );
 };
 

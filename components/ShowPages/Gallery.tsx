@@ -6,6 +6,8 @@ import Image, { Wrapper } from '../UI/Image';
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 import { BLACK_CROSS, ALL_PHOTOS } from '../../assets/SvgIcons';
 
+import Conditional from 'components/common/Conditional';
+
 const GalleryWrapper = styled.div`
   display: grid;
   margin-top: 48px;
@@ -107,10 +109,11 @@ const GalleryPopUpWrapper = styled.div(({ isVisibleGalleryPopUp }) => {
     .carousel-slider {
       margin: 30px auto 100px;
       position: relative;
-      .swiper-slide {
-        border: 1px solid #e2e2e2;
-        border-radius: 8px;
-      }
+    }
+    
+    .swiper-slide {
+      border-radius: 4px;
+      width: 186px !important;
     }
     
     .carousel-slider .swiper-container {
@@ -162,6 +165,9 @@ const GalleryPopUpWrapper = styled.div(({ isVisibleGalleryPopUp }) => {
           margin: 0;
           margin-bottom: 10px;
         }
+      }
+      .swiper-slide {
+        width: 163px !important;
       }
     }
   
@@ -336,11 +342,11 @@ const Gallery = ({ galleryArray, isMobile }) => {
           role="button"
           tabIndex={0}
         >
-          {first ? (
+          <Conditional if={first}>
             <Image url={first.url} alt={first.alt || 'Gallery Image'} />
-          ) : null}
+          </Conditional>
         </div>
-        {second && third ? (
+        <Conditional if={second && third}>
           <div>
             <div
               className="right-image-wrapper"
@@ -365,7 +371,7 @@ const Gallery = ({ galleryArray, isMobile }) => {
               <Image url={third.url} alt={third.alt || 'Gallery Image'} />
             </div>
           </div>
-        ) : null}
+        </Conditional>
         <AllPhotoWrapper
           onClick={() => {
             setIsVisibleGalleryPopUp(true);

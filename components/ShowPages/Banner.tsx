@@ -10,10 +10,10 @@ import { strings } from 'const/strings';
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { createBookingURL } from 'utils';
-import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
+import PriceBlock, { SavedTag } from 'UI/PriceBlock';
+import Conditional from 'components/common/Conditional';
 
 import { dateToString } from '../../utils/dateToString';
-import Image from '../UI/Image';
 import { MBContext } from '../../contexts/MBContext';
 import { PLAY_CIRCLE } from '../../assets/SvgIcons';
 import { fetchInventoryAPI } from '../../utils/apiUtils';
@@ -31,8 +31,6 @@ const Banner = styled.div`
 
   @media (max-width: 768px) {
     height: 234px;
-  }
-  ${StyledPriceBlock} {
   }
 `;
 
@@ -95,6 +93,17 @@ const BannerImageWrapper = styled.div`
     cursor: pointer;
   }
 `;
+
+const BannerImage = styled.div(({ url }) => {
+  return `
+    background-image: url(${url});
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+  `;
+});
 
 const BannerContent = styled.div`
   margin: -2em auto 0;
@@ -161,6 +170,7 @@ const BannerContent = styled.div`
     font-size: 14px;
     line-height: 16px;
     text-align: left;
+    font-weight: normal;
   }
 
   .buy-button {
@@ -177,6 +187,7 @@ const BannerContent = styled.div`
     width: 160px;
     display: block;
     text-align: center;
+    line-height: 20px;
   }
 
   .details-container {
@@ -258,6 +269,11 @@ const BannerContent = styled.div`
     }
     .tags-wrapper {
       margin: 4px 4px 0 0;
+    }
+    ${SavedTag} {
+      font-weight: normal;
+      font-size: 10px;
+      line-height: 12px;
     }
   }
 `;
@@ -343,12 +359,12 @@ const ShowPageBanner = ({
         showComponent={!isMobile && showStickyNav}
       />
 
-      {isMobile ? (
+      <Conditional if={isMobile}>
         <StickyFooter
           tgid={tgid}
           currentLanguage={currentLanguage}
         ></StickyFooter>
-      ) : null}
+      </Conditional>
 
       <Banner>
         {isVideo && videoAvailable ? (
@@ -372,12 +388,9 @@ const ShowPageBanner = ({
         ) : (
           <BannerImageWrapper>
             <div className="banner-image-container is-active">
-              {productImage ? (
-                <Image
-                  url={productImage.url}
-                  alt={productImage.alt || 'banner'}
-                />
-              ) : null}
+              <Conditional if={productImage}>
+                <BannerImage url={productImage.url} />
+              </Conditional>
               {videoAvailable ? (
                 <>
                   <div
@@ -404,7 +417,7 @@ const ShowPageBanner = ({
             <h1>
               {name} - {strings.TICKETS}
             </h1>
-            {isMobile ? (
+            <Conditional if={isMobile}>
               <div className="priceBlockWrapper">
                 <PriceBlock
                   price={listingPrice}
@@ -415,7 +428,7 @@ const ShowPageBanner = ({
                   prefix={true}
                 />
               </div>
-            ) : null}
+            </Conditional>
             {tagsArray.map((element, index) => {
               if (element) {
                 return (
@@ -426,7 +439,7 @@ const ShowPageBanner = ({
               }
             })}
           </div>
-          {!isMobile ? (
+          <Conditional if={!isMobile}>
             <div className="right-pricing">
               <div className="priceBlockWrapper">
                 <PriceBlock
@@ -444,7 +457,7 @@ const ShowPageBanner = ({
                 </a>
               </div>
             </div>
-          ) : null}
+          </Conditional>
         </div>
         <div className="details-container">
           {Object.entries(detailsObjects).map((element, index) => {

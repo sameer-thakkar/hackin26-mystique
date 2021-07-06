@@ -4,7 +4,7 @@ import { strings } from 'const/strings';
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { createBookingURL } from 'utils';
-import PriceBlock from 'UI/PriceBlock';
+import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
 
 import { MBContext } from '../../contexts/MBContext';
 
@@ -12,25 +12,35 @@ const BannerContent = styled.div(
   ({ showComponent }) => `
   z-index: 3;
   background: #ffffff;
-  padding: 10px 16px;
   top: 80px;
   position: -webkit-sticky;
 
   ${showComponent ? `position: sticky;` : `display: none;`}
-  box-shadow: 0px 2px 8px rgb(0 0 0 / 10%);
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1), 0px 2px 8px rgba(0, 0, 0, 0.1);
+  height: 78px;
 
   .heading-wrapper {
     display: grid;
-    grid-template-columns: 70% 30%;
+    height: 100%;
+    align-items: center;
+    grid-template-columns: auto auto;
   }
 
   .top-text-wrapper {
     font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 16px;
+    color: #666666;
+    margin-bottom: 8px;
   }
 
   .heading {
     font-size: 18px;
     font-weight: 600;
+    font-style: normal;
+    line-height: 24px;
+    color: #444444;
   }
 
   .tags-wrapper {
@@ -54,6 +64,7 @@ const BannerContent = styled.div(
     display: grid;
     grid-template-columns: auto auto;
     align-items: center;
+    justify-content: right;
   }
 
   .tour-price {
@@ -70,19 +81,21 @@ const BannerContent = styled.div(
   }
 
   .buy-button {
-    padding: 12px 20px;
     background: #ec1943;
-    border-radius: 8px;
     margin: 0px 16px;
     color: #ffffff;
     border: none;
+    font-style: normal;
     font-weight: 600;
     font-size: 16px;
-    font-style: normal;
-    letter-spacing: 0.8px;
-    width: 160px;
+    line-height: 20px;
+    letter-spacing: 0.6px;
     display: block;
     text-align: center;
+    background: #ec1943;
+    border-radius: 4px;
+    width: 180px;
+    padding: 12px 0;
   }
 
   .details-container {
@@ -102,6 +115,24 @@ const BannerContent = styled.div(
 
   .individual-container {
     padding: 10px;
+  }
+
+  ${StyledPriceBlock} {
+    margin-right: 16px;
+    .tour-price{
+      font-style: normal;
+      font-weight: 600;
+      font-size: 21px;
+      line-height: 28px;
+      color: #444444;
+    }
+    .tour-scratch-price{
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 16px;
+      color: #888888;
+    }
   }
 
   @media (max-width: 768px) {
@@ -136,6 +167,7 @@ const BannerContent = styled.div(
 
 const BannerContentWrapper = styled.div`
   margin: 0 120px;
+  height: 100%;
 `;
 
 const StickyHeader = ({

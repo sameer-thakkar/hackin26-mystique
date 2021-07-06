@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
+import Conditional from 'components/common/Conditional';
 
 import CategoryCard from './CategoryCard';
 
@@ -190,14 +191,14 @@ export default class CategorySlider extends Component<CardCarouselProps> {
                 ) : null;
               })}
             </div>
-            {this.state.numberOfCard < cards.length ? (
+            <Conditional if={this.state.numberOfCard < cards.length}>
               <button
                 className="see-more"
                 onClick={() => this.setState({ numberOfCard: cards.length })}
               >
                 See More Shows
               </button>
-            ) : null}
+            </Conditional>
           </>
         ) : (
           <Swiper {...params}>

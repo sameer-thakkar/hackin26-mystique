@@ -1,3 +1,4 @@
+import Conditional from 'components/common/Conditional';
 import React from 'react';
 import styled from 'styled-components';
 const GooglMapWrapper = styled.div`
@@ -21,15 +22,16 @@ const GooglMapWrapper = styled.div`
 
 const GoogleMap = ({ mapURL }) => {
   return (
-    mapURL ? <GooglMapWrapper>
-      <iframe
-        title="Google Map"
-        src={mapURL}
-        frameBorder="0"
-        allowFullScreen
-      ></iframe>
-    </GooglMapWrapper>
-      : null
+    <Conditional if={mapURL}>
+      <GooglMapWrapper>
+        <iframe
+          title="Google Map"
+          src={mapURL}
+          frameBorder="0"
+          allowFullScreen
+        ></iframe>
+      </GooglMapWrapper>
+    </Conditional>
   );
 };
 

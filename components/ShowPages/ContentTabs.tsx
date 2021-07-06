@@ -35,7 +35,7 @@ const StyledTab = styled.h3(({ active }) => {
   ${active ? `color: #ec1943;` : ``}
   cursor: pointer;
   ${active ? `border-bottom: 2px solid;` : ``}
-  padding-bottom: 8px;
+  padding-bottom: 12px;
   font-size: 18px;
   line-height: 24px;
   height: min-content;

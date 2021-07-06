@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 export const StyledInfoBanner = styled.div`
-  padding: 24px 40px;
+  padding: 20px 40px;
   display: grid;
   grid-template-columns: 10% 80% 10%;
   grid-column-gap: 20px;
@@ -46,9 +46,22 @@ const Icon = styled.div`
   justify-content: center;
   align-items: center;
 
+  .safety-icon{
+    width: 39px;
+    height: 24px;
+    svg{
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .desktop-icon{
+    width: 20px;
+    height: 20px;
+  }
   .desktop-icon svg {
-    width: 18px;
-    height: 18px;
+      width: 20px;
+      height: 20px;
+    }
   }
 
   @media (max-width: 768px) {
@@ -59,16 +72,20 @@ const Icon = styled.div`
 const Content = styled.div`
   display: grid;
   grid-row-gap: 8px;
+  @media (max-width: 768px) {
+    margin-top: 12px;
+  }
 `;
 
 const Title = styled.div`
   font-weight: 600;
   font-size: 16px;
   line-height: 20px;
-  color: #f8f8f8;
+  color: #f8f8f8 !important;
 
   @media (max-width: 768px) {
     font-size: 12px;
+    line-height: 16px;
   }
 `;
 
@@ -82,7 +99,7 @@ const Description = styled.div`
   font-size: 14px;
   font-weight: normal;
   line-height: 20px;
-  color: #f0f0f0;
+  color: #f0f0f0 !important;
 
   @media (max-width: 768px) {
     font-size: 12px;
@@ -121,7 +138,9 @@ const InfoBanner = ({
           colorScheme={colorScheme}
         >
           <TopWrapper>
-            <Icon>{icon}</Icon>
+            <Icon>
+              <div className="safety-icon">{icon}</div>
+            </Icon>
             <Title>{title}</Title>
             <Icon>{rightIcon}</Icon>
           </TopWrapper>
