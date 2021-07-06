@@ -47,6 +47,8 @@ jobs:
           NODE_ENV: ${{ env.APP_ENV }}
           DIST_URL_PATH: ${{ env.GIT_VERSION }}
           RELEASE_VERSION: ${{ env.GIT_VERSION }}
+          NEXT_PUBLIC_HEADOUT_DOMAIN: 'https://www.headout.com'
+          NEXT_PUBLIC_HEADOUT_API_DOMAIN: 'https://api.headout.com'
   deploy:
     name: 'CD (Deploy)'
     needs: build
@@ -57,8 +59,6 @@ jobs:
     env:
       AWS_EB_S3_BUCKET: ${{ secrets.AWS_EB_S3_BUCKET }}
       APP_ENV: ${{ matrix.env }}
-      NEXT_PUBLIC_HEADOUT_DOMAIN: 'https://www.headout.com'
-      NEXT_PUBLIC_HEADOUT_API_DOMAIN: 'https://api.headout.com'
       SLACK_GRP_BKNG_WEBHOOK: 'https://hooks.slack.com/services/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'
       ZENDESK_GRP_BKNG_TOKEN: ${{ secrets.ZENDESK_GRP_BKNG_TOKEN }}
     steps:
