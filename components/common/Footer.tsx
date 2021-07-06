@@ -200,17 +200,16 @@ const LinkSlicesWrapper = styled.div`
 const FooterLegal = styled.div`
   display: grid;
   align-items: start;
-  justify-content: space-between;
   ${({ theme }) => {
     return theme.theme !== THEMES.MIN_BLUE
       ? `
-        grid-template-areas: 'logo-disclaimer help legal';
-        grid-template-columns: minmax(400px, max-content) max-content max-content;
+        grid-template-areas: 'logo-disclaimer footer-links';
+        grid-template-columns: minmax(400px, max-content) max-content;
         grid-column-gap: 120px;
       `
       : `
-        grid-template-areas: 'logo-disclaimer . help legal';
-        grid-template-columns: minmax(400px, max-content) 1fr 1fr 1fr;
+        grid-template-areas: 'logo-disclaimer . footer-links';
+        grid-template-columns: minmax(400px, max-content) 1fr 1fr;
       `;
   }}
   margin: ${({ isEntertainmentMb }) =>
@@ -244,12 +243,15 @@ const FooterLegal = styled.div`
     }
   }
 
-  .help {
-    grid-area: help;
+  .footer-links {
+    grid-area: footer-links;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    column-gap:${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '48px' : '120px'};
   }
-  .legal {
-    grid-area: legal;
-  }
+
   .disclaimer-text {
     color: ${({ isEntertainmentMb, theme }) =>
       isEntertainmentMb ? COLORS.GREY_G6 : theme.footer.color};
@@ -265,7 +267,7 @@ const FooterLegal = styled.div`
     grid-column-gap: 64px;
   }
   @media (max-width: 768px) {
-    grid-template-areas: 'logo-disclaimer logo-disclaimer' 'help legal';
+    grid-template-areas: 'logo-disclaimer logo-disclaimer' 'footer-links footer-links';
     grid-template-columns: 1fr 1fr;
     grid-row-gap: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '48px' : '64px'};
@@ -274,7 +276,10 @@ const FooterLegal = styled.div`
       isEntertainmentMb ? '52px 0 48px 0' : '40px 0 64px 0'};
     padding-bottom: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '0' : '24px'};
-
+    .footer-links {
+        column-gap: 0;
+        grid-auto-columns: 1fr;
+      }
     .disclaimer-text {
       ${({ isEntertainmentMb }) =>
         isEntertainmentMb &&
@@ -425,63 +430,70 @@ const Footer: React.FC<FooterProps> = ({
                   </div>
                 </Conditional>
               </div>
-              <div className="help">
-                <LinksWrapper isEntertainmentMb={isEntertainmentMb}>
-                  <div className="header">{strings.FOOTER.GET_HELP}</div>
-                  <div className="links">
-                    <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
+              <div className="footer-links">
+                <div className="help">
+                  <LinksWrapper isEntertainmentMb={isEntertainmentMb}>
+                    <div className="header">{strings.FOOTER.GET_HELP}</div>
+                    <div className="links">
+                      <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
+                        <a
+                          href="https://secure.livechatinc.com/licence/8339531/v2/open_chat.cgi?groups=0"
+                          target="_blank"
+                          rel="noreferrer noopener"
+                        >
+                          {strings.FOOTER.CHAT_WITH_US}
+                        </a>
+                      </Conditional>
+                      <a href={`tel: +1 347 897 0100`}>
+                        {strings.FOOTER.CALL_US}{' '}
+                        {!isMobile ? '+1 347 897 0100' : ''}
+                      </a>
                       <a
-                        href="https://secure.livechatinc.com/licence/8339531/v2/open_chat.cgi?groups=0"
+                        href={`mailto:${
+                          finalThemeName !== THEMES.MIN_BLUE
+                            ? 'support@headout.com'
+                            : 'support@online-tickets.co'
+                        }`}
                         target="_blank"
                         rel="noreferrer noopener"
                       >
-                        {strings.FOOTER.CHAT_WITH_US}
+                        {strings.FOOTER.EMAIL_US}
                       </a>
-                    </Conditional>
-                    <a href={`tel: +1 347 897 0100`}>
-                      {strings.FOOTER.CALL_US}{' '}
-                      {!isMobile ? '+1 347 897 0100' : ''}
-                    </a>
-                    <a
-                      href={`mailto:${
-                        finalThemeName !== THEMES.MIN_BLUE
-                          ? 'support@headout.com'
-                          : 'support@online-tickets.co'
-                      }`}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                    >
-                      {strings.FOOTER.EMAIL_US}
-                    </a>
-                  </div>
-                </LinksWrapper>
-              </div>
-              <div className="legal">
-                <LinksWrapper isEntertainmentMb={isEntertainmentMb}>
-                  <div className="header">{strings.FOOTER.LEGAL}</div>
-                  <div className="links">
-                    <a href="/terms" target="_blank" rel="noreferrer noopener">
-                      {strings.FOOTER.TERMS_AND_CONDITIONS}
-                    </a>
-                    <a
-                      href="/privacy-policy"
-                      target="_blank"
-                      rel="noreferrer noopener"
-                    >
-                      {strings.FOOTER.PRIVACY_POLICY}
-                    </a>
-                    <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
+                    </div>
+                  </LinksWrapper>
+                </div>
+                <div className="legal">
+                  <LinksWrapper isEntertainmentMb={isEntertainmentMb}>
+                    <div className="header">{strings.FOOTER.LEGAL}</div>
+                    <div className="links">
                       <a
-                        href="/company-details"
+                        href="/terms"
                         target="_blank"
                         rel="noreferrer noopener"
                       >
-                        {strings.FOOTER.COMPANY_DETAILS}
+                        {strings.FOOTER.TERMS_AND_CONDITIONS}
                       </a>
-                    </Conditional>
-                  </div>
-                </LinksWrapper>
+                      <a
+                        href="/privacy-policy"
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        {strings.FOOTER.PRIVACY_POLICY}
+                      </a>
+                      <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
+                        <a
+                          href="/company-details"
+                          target="_blank"
+                          rel="noreferrer noopener"
+                        >
+                          {strings.FOOTER.COMPANY_DETAILS}
+                        </a>
+                      </Conditional>
+                    </div>
+                  </LinksWrapper>
+                </div>
               </div>
+
               <Conditional if={finalThemeName === THEMES.MIN_BLUE && isMobile}>
                 <div className="chin" style={{ marginTop: '-64px' }}>
                   <div className={'disclaimer-text copyright'}>
