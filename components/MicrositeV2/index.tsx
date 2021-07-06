@@ -246,6 +246,7 @@ class MicrositeV2 extends Component<any, any> {
           tourListCategoryAllTours[tgid] = data;
         });
         return {
+          id: category,
           name: category_name,
           image: category?.category_image?.url,
           rank: 0,

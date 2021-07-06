@@ -33,8 +33,8 @@ const en = {
   OFF: 'Off',
   TICKETS: 'Tickets',
   REOPENING_ON: 'Reopening on',
-  REOPENED_ON: 'Reopened on',
-  NEW: 'New',
+  OPENING_ON: 'Opening on',
+  NEW: 'NEW',
   LISTICLES: {
     SEATING_CHART: 'Seating Chart',
     KNOW_MORE: 'Know More',

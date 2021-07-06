@@ -101,9 +101,12 @@ const DetailedDescriptionCard = styled.div`
     grid-column: 2;
   }
   .description-label {
-    font-size: 16px;
-    line-height: 1.4;
-    color: ${COLORS.TWO_BLACK};
+    font-size: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '15px' : '16px'};
+    line-height: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '20px' : '1.4'};
+    color: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? COLORS.GREY.G2 : COLORS.TWO_BLACK};
     font-family: ${SOLEIL.FONT_STACK};
     font-weight: ${SOLEIL.SEMIBOLD};
   }
@@ -138,11 +141,27 @@ const DetailedDescriptionCard = styled.div`
   }
 
   .description-content {
-    font-size: 16px;
-    line-height: 1.37;
-    color: ${COLORS.FOUR_BLACK};
+    font-size: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '15px' : '16px'};
+    line-height: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '24px' : '1.37'};
+    color: ${COLORS.GREY.G2};
     font-family: ${SOLEIL.FONT_STACK};
     font-weight: ${SOLEIL.REGULAR};
+    li,
+    p {
+      line-height: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '24px' : '1.4'};
+    }
+    svg {
+      margin-top: 8px;
+    }
+    ul {
+      padding-left: 1em;
+    }
+    p {
+      margin: 0;
+    }
   }
 
   .desc-cta-price {
@@ -318,52 +337,16 @@ const DetailedDescriptionCard = styled.div`
     object-fit: cover;
     ${({ isEntertainmentMb }) => isEntertainmentMb && `border-radius: 4px`};
   }
-  .description-content p {
-    margin: 0;
-  }
   .tour-description p {
     margin: 0;
-  }
-  .description-content li,
-  .description-content p {
-    line-height: 1.37;
   }
 
   .tour-description svg {
     margin-top: 8px;
   }
 
-  .description-content ul {
-    padding-left: 1em;
-  }
-  .description-content p {
-    line-height: 1.4;
-  }
-  .description-content p {
-    margin: 0;
-  }
   .tour-description p {
     margin: 0;
-  }
-
-  .left,
-  .right {
-    .description-content {
-      li,
-      p {
-        line-height: 1.37;
-      }
-      svg {
-        margin-top: 8px;
-      }
-    }
-  }
-
-  .description-content ul {
-    padding-left: 1em;
-  }
-  .description-content p {
-    line-height: 1.4;
   }
 `;
 
@@ -545,7 +528,7 @@ const DetailedProductCard = (props) => {
           </Conditional>
           <Conditional if={descriptors?.length}>
             <div className="v2-descriptors">
-              {descriptors.map((descriptor, index) => {
+              {descriptors?.map((descriptor, index) => {
                 if (descriptor) {
                   return (
                     <div className="v2-descriptor" key={index}>

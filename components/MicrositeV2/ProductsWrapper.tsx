@@ -10,35 +10,28 @@ const PopulateProducts = dynamic(() => import('./PopulateProducts'));
 const StyledProductWrapper = styled.div`
   margin-bottom: ${({ isEntertainmentMb }) =>
     isEntertainmentMb ? '64px' : '0'};
+
   &.relative-position {
     position: relative;
+  }
+  @media (max-width: 768px) {
+    margin-bottom: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '48px' : '0'};
   }
 `;
 
 export const ProductsWrapper = (props) => {
   const interactionContext = useContext(InteractionContext);
 
-  useEffect(() => {
-    const { categoryProps, activeCategory, directTgid } = props;
-    const tgidArray =
-      categoryProps.categories[activeCategory || 0].ranking.popularity;
-    interactionContext.changeCategory(tgidArray);
-    setTimeout(() => {
-      if (directTgid) {
-        interactionContext.clickTour(
-          directTgid,
-          true,
-          'main',
-          DONT_AUTO_SCROLL
-        );
-      }
-    }, 1000);
-  }, []);
+  const { activeCategoryTgids, changeCategory, clickTour } =
+    interactionContext || {};
 
   const {
     isMobile,
     isEntertainmentMb,
     categoryProps,
+    activeCategory,
+    directTgid,
     changePage,
     allTours,
     hasCategoryTourList,
@@ -46,8 +39,16 @@ export const ProductsWrapper = (props) => {
     host,
     uid,
   } = props;
-
-  const { activeCategoryTgids } = interactionContext;
+  useEffect(() => {
+    const tgidArray =
+      categoryProps.categories[activeCategory || 0].ranking.popularity;
+    changeCategory(tgidArray, activeCategory || 0);
+    setTimeout(() => {
+      if (directTgid) {
+        clickTour(directTgid, true, 'main', DONT_AUTO_SCROLL);
+      }
+    }, 1000);
+  }, []);
 
   if (!activeCategoryTgids?.length) return null;
   return (

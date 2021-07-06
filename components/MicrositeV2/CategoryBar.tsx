@@ -33,7 +33,8 @@ const CategoryBarWrapper = styled.div`
       : `1px solid ${COLORS.CHALK}`};
   grid-gap: 8px;
   padding-top: 36px;
-  padding-bottom: 14px;
+  padding-bottom: ${({ isEntertainmentMb }) =>
+    isEntertainmentMb ? '12px' : '14px'};
 
   .tabs-wrap {
     margin: 0;
@@ -90,8 +91,12 @@ const CategoryBarWrapper = styled.div`
     overflow-y: hidden;
     overflow-x: scroll;
     -webkit-overflow-scrolling: touch;
-    padding-top: 19px;
-    margin-top: 24px;
+    padding-top: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '0' : '19px'};
+    padding-bottom: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '8px' : '14px'};
+    margin-top: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '40px' : '24px'};
     .tabs-wrap {
       padding-left: 16px;
       padding-right: 16px;
@@ -100,12 +105,17 @@ const CategoryBarWrapper = styled.div`
       width: max-content;
     }
     .active-indicator {
-      bottom: -14px;
+      bottom: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '-8px' : '-14px'};
     }
     .tab {
-      font-size: 18px;
+      font-size: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '15px' : '18px'};
       font-family: ${SOLEIL.FONT_STACK};
-      font-weight: ${SOLEIL.MEDIUM};
+      font-weight: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? SOLEIL.SEMIBOLD : SOLEIL.MEDIUM};
+      line-height: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '20px' : '1.3'};
     }
     .filter-wrapper {
       display: none;
@@ -113,7 +123,8 @@ const CategoryBarWrapper = styled.div`
   }
 `;
 const CategoryBar = (props) => {
-  const interactionCtx = useContext(InteractionContext);
+  const { changeCategory: changeCategoryHandler } =
+    useContext(InteractionContext) || {};
   const parent = useRef(null);
   const category_bar = useRef(null);
   const scroll_div = useRef(null);
@@ -131,15 +142,18 @@ const CategoryBar = (props) => {
 
   const changeCategory = (index) => {
     let { categories } = props;
-    interactionCtx.changeCategory(categories[index].ranking[activeOrder]);
     setActiveCategory(index);
+    changeCategoryHandler(categories[index].ranking[activeOrder], index);
   };
 
   const changeOrder = (orderKey) => {
     let { categories } = props;
     setActiveOrder(orderKey);
 
-    interactionCtx.changeCategory(categories[activeCategory].ranking[orderKey]);
+    changeCategoryHandler(
+      categories[activeCategory].ranking[orderKey],
+      activeCategory
+    );
   };
 
   useEffect(() => {

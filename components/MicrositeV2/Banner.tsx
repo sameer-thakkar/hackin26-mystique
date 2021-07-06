@@ -11,7 +11,7 @@ const Swiper = dynamic(() => import('components/Swiper'));
 const BannerWrapper = styled.div`
   max-width: 100%;
   margin: ${({ isEntertainmentMb }) =>
-    isEntertainmentMb ? 'auto auto 32px auto' : 'auto'};
+    isEntertainmentMb ? 'auto auto 24px auto' : 'auto'};
   overflow: hidden;
 
   .swiper-container {

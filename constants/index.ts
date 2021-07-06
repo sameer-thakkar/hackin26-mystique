@@ -127,7 +127,7 @@ export const PRISMIC_LANG_TO_ROUTE_PARAM = {
   'ko-kr': 'ko',
 };
 
-export const LANGUAGE_PARAMS_REGEX = /^(\/)?(en|fr|de|it|nl|pt|es|ja|tw|cn|ko)(\/)?/;
+export const LANGUAGE_PARAMS_REGEX = /^(\/)?(en|fr|de|it|nl|pt|es|ja|tw|cn|ko){0,2}(\/)/;
 
 export const GROUP_TOUR_PREFERED_TOUR = [
   {
@@ -586,3 +586,6 @@ export const REOPENING_DATE = 'Reopening Date';
 export const REOPENING_TAG = 'REOPENING';
 export const FAVICON_LONDON_THEATRE_TICKETS =
   'https://images.prismic.io/mystique/43d0bf7f-2955-413b-a266-8fc62dd9c933_shows-favicon.png?auto=compress,format';
+
+export const REOPENING_CATEGORIES: number[] = [3159];
+export const NEW_ARRIVALS_CATEGORIES: number[] = [1351];

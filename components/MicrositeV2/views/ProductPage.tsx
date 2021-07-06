@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import parse from 'url-parse';
@@ -16,7 +16,11 @@ import {
   CLOSE_WHITE,
   STAR,
 } from 'assets/SvgIcons';
-import { PAGETYPE } from 'const/index';
+import {
+  NEW_ARRIVALS_CATEGORIES,
+  PAGETYPE,
+  REOPENING_CATEGORIES,
+} from 'const/index';
 import { strings } from 'const/strings';
 import { SOLEIL, COLORS } from 'const/ui-constants';
 import { isSafetyIncluded, createBookingURL } from 'utils';
@@ -24,6 +28,7 @@ import { shortCodeSerializer } from 'utils/shortCodes';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { dateToString } from 'utils/dateToString';
 import { parseV2ProductDescriptors } from 'utils/dataParsers';
+import InteractionContext from 'contexts/Interaction';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
@@ -77,6 +82,18 @@ const StyledMobileProductPage = styled.div`
     width: 100%;
     z-index: 99;
     background: ${COLORS.WHITE};
+    .title {
+      font-size: 14px;
+      line-height: 20px;
+      display: none;
+    }
+    &.flex {
+      display: flex;
+      justify-content: space-between;
+      .title {
+        display: block;
+      }
+    }
     .back {
       display: flex;
       ${({ isEntertainmentMb }) =>
@@ -95,15 +112,19 @@ const StyledMobileProductPage = styled.div`
       isEntertainmentMb ? 'unset' : '24px'};
   }
   .prod-image {
-    max-width: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '100vh' : 'calc(100% - 32px)'};
+    max-width: calc(100% - 32px);
+    width: calc(100% - 32px);
     margin: auto auto 16px auto;
     max-height: 100%;
     height: 100%;
     .swiper-container {
       overflow: unset;
-      width: auto;
+      width: 100%;
       height: 100%;
+    }
+    .swiper-slide {
+      -webkit-transform-style: preserve-3d;
+      -webkit-backface-visibility: hidden;
     }
     .single-image {
       width: 100%;
@@ -138,7 +159,8 @@ const StyledMobileProductPage = styled.div`
     font-size: 18px;
     font-family: ${SOLEIL.FONT_STACK};
     font-weight: ${SOLEIL.SEMIBOLD};
-    color: ${COLORS.TWO_BLACK};
+    color: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? COLORS.GREY.G2 : COLORS.TWO_BLACK};
     line-height: 24px;
     text-transform: unset;
     margin-bottom: 0;
@@ -162,7 +184,8 @@ const StyledMobileProductPage = styled.div`
         .rating {
           justify-self: end;
           display:grid;
-          grid-template-columns: repeat(2, 1fr);
+          grid-auto-flow: column;
+          grid-auto-columns: max-content;
           column-gap: 4px;
           justify-content: center;
           align-items: center;
@@ -191,6 +214,7 @@ const StyledMobileProductPage = styled.div`
       margin-left: ${({ isEntertainmentMb }) =>
         isEntertainmentMb ? '0' : '16px'};
       margin-bottom: 0px;
+      ${({ isEntertainmentMb }) => isEntertainmentMb && `padding-top: 8px;`};
       .scratched-price {
         font-weight: ${SOLEIL.MEDIUM};
         font-size: 12px;
@@ -283,17 +307,22 @@ const StyledMobileProductPage = styled.div`
     font-weight: ${SOLEIL.REGULAR};
     color: ${COLORS.DAVY_GREY};
     display: grid;
-    grid-row-gap: 4px;
+    grid-row-gap: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '8px' : '4px'};
     .label-title {
-      font-size: 16px;
+      font-size: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '14px' : '16px'};
       font-weight: ${SOLEIL.SEMIBOLD};
       font-family: ${SOLEIL.FONT_STACK};
-      line-height: 1.12;
-      color: ${COLORS.TWO_BLACK};
+      line-height: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '20px' : '1.12'};
+      color: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? COLORS.GREY.G2 : COLORS.TWO_BLACK};
     }
     p {
       margin: 0;
-      line-height: 1.57;
+      line-height: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '20px' : '1.57'};
     }
     ul {
       margin: 0;
@@ -357,11 +386,12 @@ const StyledMobileProductPage = styled.div`
     }
     .prod-image {
       .swiper-wrapper {
+        height: 214px;
         grid-template-columns: unset;
       }
       img {
         ${({ isEntertainmentMb }) =>
-          isEntertainmentMb && `height: 214px;border-radius: 8px;`}
+          isEntertainmentMb && `height: 214px; border-radius: 8px;`}
       }
     }
   }
@@ -384,12 +414,14 @@ const Descriptors = styled.div`
     width: 0 !important;
   }
   .descriptor {
-    padding: 7px 12px;
+    padding: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '6px 8px' : '7px 12px'};
     background: ${COLORS.GREY_FO};
     border-radius: 2px;
-    color: ${COLORS.TWO_BLACK};
-    margin-right: 8px;
-    margin-bottom: 8px;
+    color: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? COLORS.GREY.G3 : COLORS.TWO_BLACK};
+    margin: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '0 4px 4px 0' : '0 8px 8px 0'};
     &.mr-0 {
       margin-right: 0;
     }
@@ -431,8 +463,10 @@ const CTABlock = styled.div`
       font-weight: ${SOLEIL.SEMIBOLD};
       font-style: normal;
       font-stretch: normal;
-      line-height: 1;
-      letter-spacing: normal;
+      line-height: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '20px' : '1'};
+      letter-spacing: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? '0.6px' : 'normal'};
       text-align: center;
     }
     &.primary {
@@ -503,6 +537,8 @@ export const MobileProductPage = (props) => {
     props.changePage({ name: PAGETYPE.HOMEPAGE });
   };
 
+  const { activeCategoryId } = useContext(InteractionContext) || {};
+
   let url = host || window.location.host;
   const isDev = url.includes('localhost');
   const currentHost = !isDev ? url : parse(uid, true).pathname;
@@ -535,11 +571,10 @@ export const MobileProductPage = (props) => {
   const carouselProps = {
     ...carouselOptions,
     ...(isEntertainmentMb && {
-      // slidesPerView: 1.2,
-      spaceBetween: 16,
+      init: true,
       loop: true,
-      centeredSlides: true,
       lazy: true,
+      centeredSlides: true,
     }),
     ...(images?.length <= 1 && {
       autoplay: false,
@@ -548,11 +583,24 @@ export const MobileProductPage = (props) => {
     }),
   };
 
+  const [showTitle, setShowTitle] = useState(false);
+
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+    const handleScroll = () =>
+      window.pageYOffset > 295 ? setShowTitle(true) : setShowTitle(false);
 
-  console.log(tour);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const OPENING_ON = REOPENING_CATEGORIES.includes(activeCategoryId)
+    ? strings.REOPENING_ON
+    : strings.OPENING_ON;
+
+  const isNew = NEW_ARRIVALS_CATEGORIES.includes(activeCategoryId);
+
   const CTAMarkup = (
     <CTABlock isEntertainmentMb={isEntertainmentMb}>
       <Conditional if={isEntertainmentMb && showPageUrl}>
@@ -583,7 +631,14 @@ export const MobileProductPage = (props) => {
 
   return (
     <StyledMobileProductPage isEntertainmentMb={isEntertainmentMb}>
-      <header className="header">
+      <header
+        className={`${
+          isEntertainmentMb && showTitle ? 'header flex' : 'header'
+        }`}
+      >
+        <Conditional if={isEntertainmentMb}>
+          <div className="title">{title}</div>
+        </Conditional>
         <div
           onClick={closeProductCard}
           className="back"
@@ -607,8 +662,13 @@ export const MobileProductPage = (props) => {
             <Swiper {...carouselProps}>
               {images?.map((image, index) => {
                 return (
-                  <div key={index} className="swiper-slide">
-                    <Image url={image.url} dontLazyLoad={index == 0} />
+                  <div
+                    key={index}
+                    className="swiper-slide"
+                    role="button"
+                    tabIndex={0}
+                  >
+                    <Image url={image.url} height={214} width={686} />
                   </div>
                 );
               })}
@@ -623,13 +683,18 @@ export const MobileProductPage = (props) => {
             <Conditional if={isEntertainmentMb}>
               <div className="l1-booster-wrapper">
                 <div className="l1-booster">
-                  {strings.REOPENING_ON} {openingDate}
+                  {OPENING_ON} {openingDate}
                 </div>
-                <Conditional if={reviewCount}>
-                  <div className="rating">
+                <div className="rating">
+                  <Conditional if={isNew}>
+                    <span className="avg-rating">{strings.NEW}</span>
+                  </Conditional>
+                  <Conditional if={!isNew && averageRating}>
                     <span className="avg-rating">
                       {averageRating} {STAR(COLORS.JOY_MUSTARD)}
                     </span>
+                  </Conditional>
+                  <Conditional if={!isNew && reviewCount}>
                     <span className="total-rating">
                       (
                       {reviewCount > 999
@@ -637,8 +702,8 @@ export const MobileProductPage = (props) => {
                         : reviewCount}
                       )
                     </span>
-                  </div>
-                </Conditional>
+                  </Conditional>
+                </div>
               </div>
             </Conditional>
             <div className="title">{title}</div>
@@ -704,7 +769,7 @@ export const MobileProductPage = (props) => {
             <Conditional if={isEntertainmentMb}>
               <div className="hr-line full-block"></div>
             </Conditional>
-            <Descriptors>
+            <Descriptors isEntertainmentMb={isEntertainmentMb}>
               {descriptors?.map((descriptor, index) => {
                 const lastItem = index === descriptors?.length - 1;
                 return (

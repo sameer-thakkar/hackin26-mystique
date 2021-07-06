@@ -42,7 +42,7 @@ export const fetchCategory = async (
 ) => {
   try {
     const response = await fetch(
-      `${hostname}/api/tours/v1/feed/category/get/${categoryId}`
+      `${hostname}/api/tours/v1/feed/category/get/${categoryId}?limit-products=50`
     );
     const data = await response.json();
     return data;

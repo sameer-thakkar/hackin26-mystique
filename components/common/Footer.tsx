@@ -63,17 +63,23 @@ const FooterLegalWrapper = styled.div`
   width: 100%;
   .footer-chin {
     display: grid;
-    font-size: 12px;
-    margin-bottom: 56px;
+    font-size: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '10px' : '12px'};
+    line-height: 12px;
+    margin-bottom: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '72px' : '56px'};
     grid-template-columns: auto auto;
     justify-content: space-between;
     grid-template-areas: 'white-line white-line' 'super-brand-logo social-links';
-    grid-row-gap: 24px;
+    grid-row-gap: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '18px' : '24px'};
     .white-line {
       grid-area: white-line;
       width: 100%;
       height: 0;
-      border: 0.5px solid white;
+      border: 0.5px solid
+        ${({ isEntertainmentMb }) =>
+          isEntertainmentMb ? COLORS.GREY.G4 : COLORS.WHITE};
     }
     .super-brand-logo {
       grid-area: super-brand-logo;
@@ -83,7 +89,8 @@ const FooterLegalWrapper = styled.div`
       align-items: center;
       justify-items: left;
       span {
-        color: ${({ theme }) => theme.footer.color};
+        color: ${({ theme, isEntertainmentMb }) =>
+          isEntertainmentMb ? COLORS.GREY.G4a : theme.footer.color};
       }
       svg {
         height: 16px;
@@ -100,9 +107,22 @@ const FooterLegalWrapper = styled.div`
           height: 12px;
         }
       }
-      grid-template-columns: 1fr;
-      grid-template-areas: 'social-links' 'white-line' 'super-brand-logo';
+      grid-template-columns: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? `1fr 1fr` : `1fr`};
+      grid-template-areas: ${({ isEntertainmentMb }) =>
+        isEntertainmentMb
+          ? `
+          'white-line white-line'
+          'super-brand-logo social-links'`
+          : `
+          'social-links'
+          'white-line'
+          'super-brand-logo'`};
       grid-row-gap: 24px;
+      .social-links {
+        ${({ isEntertainmentMb }) =>
+          isEntertainmentMb && `justify-content: end;`}
+      }
     }
   }
 `;
@@ -117,25 +137,85 @@ const Container = styled.div`
   }
 `;
 
+const LinksWrapper = styled.div`
+  display: grid;
+  grid-template-rows: repeat(2, max-content);
+  row-gap: 16px;
+  .header {
+    font-weight: ${SOLEIL.SEMIBOLD};
+    font-size: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '18px' : '14px'};
+    line-height: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '24px' : '20px'};
+    color: ${({ theme, isEntertainmentMb }) =>
+      isEntertainmentMb ? COLORS.GREY.G7 : theme.footer.headingColor};
+  }
+  .links {
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-rows: max-content;
+    row-gap: ${({ isEntertainmentMb }) => (isEntertainmentMb ? '8px' : '16px')};
+    a {
+      display: block;
+      text-decoration: none;
+      color: ${({ theme, isEntertainmentMb }) =>
+        isEntertainmentMb ? COLORS.GREY_G6 : theme.footer.color};
+      ${({ isEntertainmentMb }) =>
+        isEntertainmentMb &&
+        `
+        font-size: 15px;
+        line-height: 20px;
+        font-weight: ${SOLEIL.REGULAR};`}
+    }
+  }
+  @media (max-width: 768px) {
+    ${({ isEntertainmentMb }) => isEntertainmentMb && `row-gap: 20px;`}
+    .header {
+      ${({ isEntertainmentMb }) =>
+        isEntertainmentMb && `font-size:15px;line-height:20px;`};
+    }
+    .links {
+      ${({ isEntertainmentMb }) => isEntertainmentMb && `row-gap: 16px;`}
+      a {
+        ${({ isEntertainmentMb }) =>
+          isEntertainmentMb &&
+          `
+        font-size: 14px;
+        line-height: 16px;`}
+      }
+    }
+  }
+`;
+
+const LinkSlicesWrapper = styled.div`
+  display: grid;
+  grid-row-gap: 24px;
+  margin-bottom: ${({ isEntertainmentMb }) =>
+    isEntertainmentMb ? '80px' : '40px'};
+  @media (max-width: 768px) {
+    ${({ isEntertainmentMb }) => isEntertainmentMb && `margin-bottom: 48px;`}
+  }
+`;
+
 const FooterLegal = styled.div`
   display: grid;
   align-items: start;
-  justify-content: space-between;
   ${({ theme }) => {
     return theme.theme !== THEMES.MIN_BLUE
       ? `
-        grid-template-areas: 'logo-disclaimer help legal';
-        grid-template-columns: minmax(400px, max-content) max-content max-content;
+        grid-template-areas: 'logo-disclaimer footer-links';
+        grid-template-columns: minmax(400px, max-content) max-content;
         grid-column-gap: 120px;
       `
       : `
-        grid-template-areas: 'logo-disclaimer . help legal';
-        grid-template-columns: minmax(400px, max-content) 1fr 1fr 1fr;
+        grid-template-areas: 'logo-disclaimer . footer-links';
+        grid-template-columns: minmax(400px, max-content) 1fr 1fr;
       `;
   }}
-  margin: 40px 0;
-  margin-bottom: 64px;
-  padding-bottom: 40px;
+  margin: ${({ isEntertainmentMb }) =>
+    isEntertainmentMb ? '72px 0 56px 0' : '40px 0 64px 0'};
+  padding-bottom: ${({ isEntertainmentMb }) =>
+    isEntertainmentMb ? '0' : '40px'};
   line-height: 20px;
   .logo-disclaimer {
     grid-area: logo-disclaimer;
@@ -156,54 +236,56 @@ const FooterLegal = styled.div`
         margin-left: 10px;
         width: 100.5px;
         path {
-          fill: white;
+          fill: ${({ isEntertainmentMb }) =>
+            isEntertainmentMb ? COLORS.GREY.G5 : COLORS.WHITE};
         }
       }
     }
   }
-  .help {
-    grid-area: help;
+
+  .footer-links {
+    grid-area: footer-links;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    column-gap:${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '48px' : '120px'};
   }
-  .legal {
-    grid-area: legal;
-  }
+
   .disclaimer-text {
-    color: ${({ theme }) => theme.footer.color};
+    color: ${({ isEntertainmentMb, theme }) =>
+      isEntertainmentMb ? COLORS.GREY_G6 : theme.footer.color};
     margin-top: 32px;
     font-family: ${SOLEIL.FONT_STACK};
-    line-height: 19px;
+    font-size: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '12px' : '14px'};
+    line-height:${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '20px' : '19px'} ;
     max-width: 500px;
   }
   @media (min-width: 800px) and (max-width: 1200px) {
     grid-column-gap: 64px;
   }
   @media (max-width: 768px) {
-    grid-template-areas: 'logo-disclaimer logo-disclaimer' 'help legal';
+    grid-template-areas: 'logo-disclaimer logo-disclaimer' 'footer-links footer-links';
     grid-template-columns: 1fr 1fr;
-    grid-row-gap: 64px;
+    grid-row-gap: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '48px' : '64px'};
     grid-column-gap: unset;
+    margin: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '52px 0 48px 0' : '40px 0 64px 0'};
+    padding-bottom: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '0' : '24px'};
+    .footer-links {
+        column-gap: 0;
+        grid-auto-columns: 1fr;
+      }
+    .disclaimer-text {
+      ${({ isEntertainmentMb }) =>
+        isEntertainmentMb &&
+        `margin-top: 28px;font-size:10px;line-height:16px;`}
+    }
   }
-`;
-
-const LinksHeader = styled.div`
-  font-weight: ${SOLEIL.SEMIBOLD};
-  color: ${({ theme }) => theme.footer.headingColor};
-`;
-
-const Link = styled.a`
-  display: block;
-  text-decoration: none;
-  color: ${({ theme }) => theme.footer.color};
-  margin: 16px 0;
-  :last-child {
-    margin-bottom: 0;
-  }
-`;
-
-const LinkSlicesWrapper = styled.div`
-  display: grid;
-  grid-row-gap: 24px;
-  margin-bottom: 40px;
 `;
 
 type FooterProps = {
@@ -222,12 +304,13 @@ type FooterProps = {
   secondarySlices?: Array<any>;
   secondaryHeading?: string;
   primaryHeading?: string;
+  isEntertainmentMb?: boolean;
 };
 
 const LinkSlices = ({ linksTitle, slices, theme, className = '' }) => (
   <FooterLinksWrapper className={className}>
     <Container>
-      {theme !== THEMES.MIN_BLUE ? (
+      <Conditional if={theme !== THEMES.MIN_BLUE}>
         <div
           className={`quick-links-title ${
             linksTitle ? 'has-custom-title' : ''
@@ -235,7 +318,7 @@ const LinkSlices = ({ linksTitle, slices, theme, className = '' }) => (
         >
           {linksTitle || strings.FOOTER.QUICK_LINKS}
         </div>
-      ) : null}
+      </Conditional>
       <div className="quick-links">
         <Conditional if={theme === THEMES.MIN_BLUE}>
           <div className={`quick-links-heading`}>
@@ -269,6 +352,7 @@ const Footer: React.FC<FooterProps> = ({
   secondarySlices = [],
   secondaryHeading = '',
   primaryHeading = '',
+  isEntertainmentMb = false,
 }) => {
   const { mbTheme = THEMES.DEFAULT } = useContext(MBContext);
   const width = useWindowWidth();
@@ -281,8 +365,8 @@ const Footer: React.FC<FooterProps> = ({
   }, [width]);
   return (
     <ThemeProvider theme={getAppTheme(finalThemeName)}>
-      <StyledFooter>
-        <LinkSlicesWrapper>
+      <StyledFooter isEntertainmentMb={isEntertainmentMb}>
+        <LinkSlicesWrapper isEntertainmentMb={isEntertainmentMb}>
           <Conditional if={slices?.length}>
             <LinkSlices
               className={'primary-footer'}
@@ -300,12 +384,13 @@ const Footer: React.FC<FooterProps> = ({
             />
           </Conditional>
         </LinkSlicesWrapper>
-        <FooterLegalWrapper>
+        <FooterLegalWrapper isEntertainmentMb={isEntertainmentMb}>
           <Container>
             <FooterLegal
               invertLogoColor={
                 invertLogoColor && finalThemeName !== THEMES.MIN_BLUE
               }
+              isEntertainmentMb={isEntertainmentMb}
             >
               <div className="logo-disclaimer">
                 <div className="logo-wrapper">
@@ -316,11 +401,18 @@ const Footer: React.FC<FooterProps> = ({
                     height="44"
                     width="144"
                   />
-                  {hasPoweredByHeadoutLogo && finalThemeName !== THEMES.MIN_BLUE
-                    ? POWERED_BY_HEADOUT
-                    : null}
+                  <Conditional
+                    if={
+                      hasPoweredByHeadoutLogo &&
+                      finalThemeName !== THEMES.MIN_BLUE
+                    }
+                  >
+                    {POWERED_BY_HEADOUT}
+                  </Conditional>
                 </div>
-                {showDisclaimer && finalThemeName !== THEMES.MIN_BLUE ? (
+                <Conditional
+                  if={showDisclaimer && finalThemeName !== THEMES.MIN_BLUE}
+                >
                   <div className="disclaimer-text">
                     {disclaimerText
                       ? disclaimerText
@@ -329,7 +421,7 @@ const Footer: React.FC<FooterProps> = ({
                           attraction
                         )}
                   </div>
-                ) : null}
+                </Conditional>
                 <Conditional
                   if={finalThemeName === THEMES.MIN_BLUE && !isMobile}
                 >
@@ -338,44 +430,70 @@ const Footer: React.FC<FooterProps> = ({
                   </div>
                 </Conditional>
               </div>
-              <div className="help">
-                <LinksHeader>{strings.FOOTER.GET_HELP}</LinksHeader>
-                <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
-                  <Link
-                    href="https://secure.livechatinc.com/licence/8339531/v2/open_chat.cgi?groups=0"
-                    target="_blank"
-                  >
-                    {strings.FOOTER.CHAT_WITH_US}
-                  </Link>
-                </Conditional>
-                <Link href={`tel: +1 347 897 0100`}>
-                  {strings.FOOTER.CALL_US} {!isMobile ? '+1 347 897 0100' : ''}
-                </Link>
-                <Link
-                  href={`mailto:${
-                    finalThemeName !== THEMES.MIN_BLUE
-                      ? 'support@headout.com'
-                      : 'support@online-tickets.co'
-                  }`}
-                  target="_blank"
-                >
-                  {strings.FOOTER.EMAIL_US}
-                </Link>
+              <div className="footer-links">
+                <div className="help">
+                  <LinksWrapper isEntertainmentMb={isEntertainmentMb}>
+                    <div className="header">{strings.FOOTER.GET_HELP}</div>
+                    <div className="links">
+                      <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
+                        <a
+                          href="https://secure.livechatinc.com/licence/8339531/v2/open_chat.cgi?groups=0"
+                          target="_blank"
+                          rel="noreferrer noopener"
+                        >
+                          {strings.FOOTER.CHAT_WITH_US}
+                        </a>
+                      </Conditional>
+                      <a href={`tel: +1 347 897 0100`}>
+                        {strings.FOOTER.CALL_US}{' '}
+                        {!isMobile ? '+1 347 897 0100' : ''}
+                      </a>
+                      <a
+                        href={`mailto:${
+                          finalThemeName !== THEMES.MIN_BLUE
+                            ? 'support@headout.com'
+                            : 'support@online-tickets.co'
+                        }`}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        {strings.FOOTER.EMAIL_US}
+                      </a>
+                    </div>
+                  </LinksWrapper>
+                </div>
+                <div className="legal">
+                  <LinksWrapper isEntertainmentMb={isEntertainmentMb}>
+                    <div className="header">{strings.FOOTER.LEGAL}</div>
+                    <div className="links">
+                      <a
+                        href="/terms"
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        {strings.FOOTER.TERMS_AND_CONDITIONS}
+                      </a>
+                      <a
+                        href="/privacy-policy"
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        {strings.FOOTER.PRIVACY_POLICY}
+                      </a>
+                      <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
+                        <a
+                          href="/company-details"
+                          target="_blank"
+                          rel="noreferrer noopener"
+                        >
+                          {strings.FOOTER.COMPANY_DETAILS}
+                        </a>
+                      </Conditional>
+                    </div>
+                  </LinksWrapper>
+                </div>
               </div>
-              <div className="legal">
-                <LinksHeader> {strings.FOOTER.LEGAL}</LinksHeader>
-                <Link href="/terms" target="_blank">
-                  {strings.FOOTER.TERMS_AND_CONDITIONS}
-                </Link>
-                <Link href="/privacy-policy" target="_blank">
-                  {strings.FOOTER.PRIVACY_POLICY}
-                </Link>
-                <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
-                  <Link href="/company-details" target="_blank">
-                    {strings.FOOTER.COMPANY_DETAILS}
-                  </Link>
-                </Conditional>
-              </div>
+
               <Conditional if={finalThemeName === THEMES.MIN_BLUE && isMobile}>
                 <div className="chin" style={{ marginTop: '-64px' }}>
                   <div className={'disclaimer-text copyright'}>
@@ -388,10 +506,19 @@ const Footer: React.FC<FooterProps> = ({
               <div className="footer-chin">
                 <div className="white-line" />
                 <div className="super-brand-logo">
-                  {WHITE_BLIP}
-                  <span>{`© ${new Date().getFullYear()} Headout`}</span>
+                  <Conditional if={!isEntertainmentMb}>
+                    {WHITE_BLIP}
+                  </Conditional>
+                  <span>
+                    {isEntertainmentMb
+                      ? `© Headout ${new Date().getFullYear()}`
+                      : `© ${new Date().getFullYear()} Headout`}
+                  </span>
                 </div>
-                <SocialLinks className="social-links" />
+                <SocialLinks
+                  className="social-links"
+                  isEntertainmentMb={isEntertainmentMb}
+                />
               </div>
             </Conditional>
           </Container>

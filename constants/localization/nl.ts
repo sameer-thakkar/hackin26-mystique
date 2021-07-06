@@ -31,8 +31,8 @@ const nl = {
   OFF: 'Off',
   TICKETS: 'Kaartjes',
   REOPENING_ON: 'Reopening on',
-  REOPENED_ON: 'Reopened on',
-  NEW: 'New',
+  OPENING_ON: 'Opening on',
+  NEW: 'NEW',
   LISTICLES: {
     SEATING_CHART: 'Stoelenschema',
     KNOW_MORE: 'Lees meer',

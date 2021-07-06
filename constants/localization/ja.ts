@@ -28,8 +28,8 @@ const ja = {
   TOMORROW: '明日',
   MORE_FROM: 'More from',
   REOPENING_ON: 'Reopening on',
-  REOPENED_ON: 'Reopened on',
-  NEW: 'New',
+  OPENING_ON: 'Opening on',
+  NEW: 'NEW',
   LISTICLES: {
     SEATING_CHART: '座席図',
     KNOW_MORE: 'もっと読む',

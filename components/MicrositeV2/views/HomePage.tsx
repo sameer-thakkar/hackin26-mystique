@@ -67,6 +67,9 @@ const V2MicrositeWrapper = styled.div`
   }
 
   @media (max-width: 768px) {
+    ${LttSafetyBanner} {
+      ${({ isEntertainmentMb }) => isEntertainmentMb && `margin-bottom: 0;`}
+    }
     .hero-slice-section {
       margin-top: 48px;
       margin-bottom: 48px;
@@ -179,7 +182,9 @@ export const HomePage = (props) => {
           <Alert popupUID={alertPopup?.uid} currentLanguage={currentLanguage} />
         </div>
       </Conditional>
-      <SafeDFBannerWrapper hasSafe={hasSafe} marginTop={40} />
+      <Conditional if={!isEntertainmentMb}>
+        <SafeDFBannerWrapper hasSafe={hasSafe} marginTop={40} />
+      </Conditional>
       <Conditional if={heroSectionSlice.length}>
         <ProductsContextProvider allTours={allTours} ready={ready}>
           <div className="main-wrapper hero-slice-section">
@@ -254,6 +259,7 @@ export const HomePage = (props) => {
         secondarySlices={secondaryFooter?.data?.body}
         secondaryHeading={secondaryFooter?.data?.footer_heading}
         primaryHeading={footer?.footer_heading}
+        isEntertainmentMb={isEntertainmentMb}
       />
     </V2MicrositeWrapper>
   );

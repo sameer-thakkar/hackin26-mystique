@@ -11,7 +11,7 @@ const robotsContent = (domain) =>
 
 const tempRobotsContent = `User-agent: *\nDisallow: /`;
 
-const tempDomains = [
+const blackListNoIndex = [
   'rome-ticket.com',
   'madrid-ticket.com',
   'barcelonatickets.co',
@@ -23,6 +23,7 @@ const tempDomains = [
   'milan-tickets.co',
   'venice-tickets.co',
   'naples-tickets.co',
+  'tickets-london.co.uk',
 ];
 
 const indexDomains = [
@@ -39,7 +40,7 @@ export default class RobotsTxt extends Component {
     let content = domain.includes('stage-')
       ? robotsContentForStage()
       : robotsContent(domain);
-    tempDomains.forEach((item) => {
+    blackListNoIndex.forEach((item) => {
       if (domain.includes(item)) {
         content = tempRobotsContent;
       }

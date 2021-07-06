@@ -12,6 +12,7 @@ const StyledAsideModal = styled.div`
   right: 0;
   height: 100vh;
   overflow-y: scroll;
+  scroll-behavior: smooth;
   padding: 20px ${({ sidePadding }) => (sidePadding ? sidePadding : '24')}px;
   padding-top: 0;
   max-width: calc(
@@ -28,6 +29,7 @@ const StyledAsideModal = styled.div`
     position: absolute;
     height: 100vh;
     overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
     max-width: unset;
     width: unset;
     ${({ sidebarType }) =>

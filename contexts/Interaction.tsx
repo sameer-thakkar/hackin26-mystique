@@ -7,8 +7,13 @@ export const InteractionContextProvider = (props) => {
   const { categories } = props;
   const defaultCategory =
     (categories[0] && categories[0].ranking.popularity) || [];
+  const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
+  const [activeCategoryId, setActiveCategoryId] = useState(null);
+
   useEffect(() => {
-    changeCategory(defaultCategory);
+    const categoryId = categories?.[activeCategoryIndex]?.id;
+    setActiveCategoryId(categoryId);
+    changeCategory(defaultCategory, activeCategoryIndex);
   }, []);
 
   const [activeTour, setActiveTour] = useState({
@@ -50,13 +55,16 @@ export const InteractionContextProvider = (props) => {
       return self.indexOf(tgid) === index;
     });
 
-  const changeCategory = (tgidArray) => {
+  const changeCategory = (tgidArray: any[], categoryIndex: number) => {
+    const categoryId = categories?.[categoryIndex]?.id;
+    setActiveCategoryId(categoryId);
     setActiveTour({
       tgid: null,
       hoist: null,
       section: null,
       autoScroll: true,
     });
+    setActiveCategoryIndex(categoryIndex);
     setActiveCategory(uniqueTgids(tgidArray));
   };
 
@@ -64,10 +72,12 @@ export const InteractionContextProvider = (props) => {
     <InteractionContext.Provider
       value={{
         activeTour,
-        activeCategoryTgids: activeCategoryTgids,
-        clickTour: clickTour,
-        changeCategory: changeCategory,
-        closeTour: closeTour,
+        activeCategoryId,
+        activeCategoryIndex,
+        activeCategoryTgids,
+        clickTour,
+        changeCategory,
+        closeTour,
       }}
     >
       {props.children}

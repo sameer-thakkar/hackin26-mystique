@@ -304,7 +304,9 @@ const Header: React.FC<any> = (props) => {
               {strings.TICKETS}
             </StyledMenuItem>
           </Conditional>
-          {hasLanguageSelector === 'Yes' && !hideLangugageDropdown ? (
+          <Conditional
+            if={hasLanguageSelector === 'Yes' && !hideLangugageDropdown}
+          >
             <LanguageSelector
               languages={languages}
               currentLanguage={currentLanguage}
@@ -314,7 +316,7 @@ const Header: React.FC<any> = (props) => {
               mbTheme={mbTheme}
               isAmp={isAmp}
             />
-          ) : null}
+          </Conditional>
           <Conditional if={headerCurrencies?.length}>
             <CurrencySelector
               currentCurrency={currentCurrency}
