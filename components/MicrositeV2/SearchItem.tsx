@@ -38,7 +38,7 @@ export const SearchItem = (props) => {
       </div>
       <div className="right">
         <div className="search-title">{title}</div>
-        {RichText.asText(cardFooter) && (
+        {cardFooter && RichText.asText(cardFooter) && (
           <div className="booster">
             <RichText
               render={cardFooter}
