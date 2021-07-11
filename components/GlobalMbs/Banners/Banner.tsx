@@ -106,6 +106,10 @@ const StyledBanner = styled.div((props) => {
     }
     .info {
       margin-bottom: 34px;
+      line-height:200%;
+    }
+    .info p {
+      margin:6px 0;
     }
     .tickets {
       display: flex;
@@ -145,9 +149,6 @@ const StyledBanner = styled.div((props) => {
         width: 12px;
         height: 12px;
       }
-    }
-    p {
-      margin-bottom: 16px;
     }
     a {
       color: ${COLORS.MED_SLATE_BLUE};
@@ -338,7 +339,7 @@ const Banner: FunctionComponent<BannerProps> = ({
           <Breadcrumb links={breadcrumbs} />
         </Conditional>
         <div className="wrapper">
-          <div className="title">{title}</div>
+          <h1 className="title">{title}</h1>
           <Conditional if={subText}>
             <div className="subtext">{subText}</div>
           </Conditional>
