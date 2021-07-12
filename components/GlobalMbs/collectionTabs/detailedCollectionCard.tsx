@@ -240,7 +240,6 @@ const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = f
   ({ data, isMobile, clickHandler, price, currency }, ref) => {
     const {
       data: {
-        uid,
         microbrand_url: microbrand,
         images,
         descriptors,
@@ -286,10 +285,10 @@ const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = f
           </Conditional>
           <a
             href={
-              microbrand
+              data.uid
+                ? convertUidToUrl(data.uid)
+                : microbrand
                 ? getValidUrl(microbrand?.trim())
-                : uid
-                ? convertUidToUrl(uid)
                 : ''
             }
             className="cta secondary"
