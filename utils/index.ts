@@ -107,7 +107,14 @@ export const createBookingURL = ({
   biLink,
   isMobile = false,
   currency = '',
+  bookSubdomain = '',
 }) => {
+  const bookingFlowSubdomain =
+    bookSubdomain &&
+    typeof bookSubdomain === 'string' &&
+    bookSubdomain !== 'undefined'
+      ? bookSubdomain
+      : 'book';
   const langRouteParam =
     lang && lang !== 'en' ? '/' + FULL_LANGUAGE_MAP[lang].bookingFlow : '';
 
@@ -116,7 +123,7 @@ export const createBookingURL = ({
   // on Mobile, we have intermediate Pax Selection step.
   bookingStageSuffix = isMobile && date ? '/select/pax/' : '';
   const urlObject = new URL(
-    `https://book.${nakedDomain}${langRouteParam}/book/${tgid}${bookingStageSuffix}`
+    `https://${bookingFlowSubdomain}.${nakedDomain}${langRouteParam}/book/${tgid}${bookingStageSuffix}`
   );
   if (date?.startDate) urlObject.searchParams.set('date', date?.startDate);
   if (date?.startDate) urlObject.searchParams.set('variantId', tourId);

@@ -24,6 +24,10 @@ export const MBContext = createContext({
   noTrack: false,
   biLink: '',
   isGlobalMb: false,
+  hsid: null,
+  setHsid: null,
+  isStage: false,
+  bookSubdomain: 'book',
 });
 
 export const MBContextProvider = (props) => {
@@ -39,8 +43,11 @@ export const MBContextProvider = (props) => {
     noTrack,
     biLink,
     isGlobalMb,
+    isStage,
+    bookSubdomain,
   } = props;
   const [sidebarModalStack, setSidebarModalStack] = useState([]);
+  const [hsid, setHsid] = useState(null);
 
   const addToAside = ({
     children,
@@ -88,6 +95,10 @@ export const MBContextProvider = (props) => {
         noTrack,
         biLink,
         isGlobalMb,
+        hsid,
+        setHsid,
+        isStage,
+        bookSubdomain,
       }}
     >
       {props.children}

@@ -1,13 +1,17 @@
 const markdownToRichtext = require('@ueno/markdown-to-prismic-richtext');
 const ToursAPI = async (req, res) => {
+  const { useTest } = req?.query;
+  const blackListQueryParams = ['slug', 'useTest'];
   const queryParams = Object.entries(req.query)
-    .map(([key, value]) => (key !== 'slug' ? `${key}=${value}` : null))
+    .map(([key, value]) =>
+      !blackListQueryParams.includes(key) ? `${key}=${value}` : null
+    )
     .filter((q) => q);
 
   await fetch(
-    `https://api.headout.com/api/${req.query.slug.join('/')}?${queryParams.join(
-      '&'
-    )}`
+    `https://api.${
+      useTest === 'true' || useTest ? 'test-' : ''
+    }headout.com/api/${req.query.slug.join('/')}?${queryParams.join('&')}`
   )
     .then((r) => r.json())
     .then((r) => {

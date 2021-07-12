@@ -308,6 +308,10 @@ const it = {
       LIMITED: 'Offerta a durata limitata',
     },
   },
+  AUDIO_GUIDE: {
+    BANNER: 'Audio-guida gratuita',
+    PRODUCT_SUFFIX: 'con audio-guida',
+  },
 };
 
 export default it;

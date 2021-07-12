@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import ErrorPage from 'next/error';
 import dynamic from 'next/dynamic';
 import fetch from 'isomorphic-unfetch';
@@ -8,7 +8,7 @@ import { ThemeProvider } from 'styled-components';
 import 'lazysizes';
 import 'lazysizes/plugins/attrchange/ls.attrchange';
 import EnvironmentContext from 'contexts/environmentContext';
-import { MBContextProvider } from 'contexts/MBContext';
+import { MBContext, MBContextProvider } from 'contexts/MBContext';
 import { getAppTheme } from 'style/theme';
 import { Client } from 'config/prismic-config';
 import { toursTabSliceHandler } from 'components/Slices';
@@ -389,7 +389,7 @@ export default class Page extends React.Component<any, any> {
           return [...acc, tour.tgid];
         }, []);
 
-        const queryParams = (function getScrollTgid() {
+        const queryParams = (function getQueryparams() {
           try {
             const href = req
               ? `http://${host}${req.url}`
@@ -400,6 +400,8 @@ export default class Page extends React.Component<any, any> {
                 tgidToScroll: url.searchParams.get('tgid'),
                 noTrack: typeof url.searchParams.get('no-track') === 'string',
                 currencyCode: url.searchParams.get('currencyCode'),
+                bookSubdomain:
+                  url.searchParams.get('bookSubdomain') ?? undefined,
               };
             }
             return {};
@@ -421,19 +423,39 @@ export default class Page extends React.Component<any, any> {
           isDev,
           queryParams,
           mbTheme,
+          isStage,
         };
       }
-
+      let constructedTourgroupURL;
       tgidsArray = [...tgidsArray, ...all_tours_tab_tgids];
-      const currency = AllData?.['queryParams']?.currencyCode
-        ? `&currency=${AllData?.['queryParams']?.currencyCode}`
-        : '';
-      const tourGroupAPIResponses = await fetch(
-        `https://${
+      try {
+        const useTest = !!AllData?.['queryParams']?.bookSubdomain;
+        const tgEndpoint = new URL(
+          `https://${
+            isStage ? 'stage-' : ''
+          }microbrands.headout.com/api/tours/v5/tour-group/list`
+        );
+        tgEndpoint.searchParams.set('language', getHeadoutLanguagecode(lang));
+        tgEndpoint.searchParams.set('ids[]', tgidsArray.join(','));
+        if (AllData?.['queryParams']?.currency)
+          tgEndpoint.searchParams.set(
+            'currency',
+            AllData?.['queryParams']?.currency
+          );
+        if (useTest) {
+          tgEndpoint.searchParams.set('useTest', 'true');
+        }
+        constructedTourgroupURL = tgEndpoint.toString();
+      } catch (e) {
+        constructedTourgroupURL = `https://${
           isStage ? 'stage-' : ''
-        }microbrands.headout.com/api/tours/v5/tour-group/list?ids[]=${tgidsArray}&language=${getHeadoutLanguagecode(
+        }microbrands.headout.com/api/tours/v5/tour-group/list?ids[]=${tgidsArray}&lang=${getHeadoutLanguagecode(
           lang
-        )}${currency}`
+        )}`;
+      }
+
+      const tourGroupAPIResponses = await fetch(
+        constructedTourgroupURL.toString()
       ).then((r) => r.json());
 
       const tourGroupData = tourGroupAPIResponses?.tourGroups?.reduce(
@@ -485,6 +507,7 @@ export default class Page extends React.Component<any, any> {
         }),
         {}
       );
+
       const activeCurrency = tourGroupAPIResponses?.currencies?.[0];
       return {
         ...AllData,
@@ -519,49 +542,6 @@ export default class Page extends React.Component<any, any> {
     }
   }
 
-  componentDidMount() {
-    window.addEventListener(
-      'message',
-      (e) => {
-        const { origin, data } = e;
-        if (origin !== process.env.NEXT_PUBLIC_HEADOUT_DOMAIN) {
-          return;
-        }
-
-        const { hsid } = JSON.parse(data);
-        try {
-          if (hsid === null)
-            console.warn(
-              '[localStorage] hsid-ensurer failure, Unsupported Browser'
-            );
-          if (hsid) {
-            const nakedDomain = window.location.hostname
-              .replace('stage-', '')
-              .split('.')
-              .slice(1)
-              .join('.');
-            this.pushSandboxIDtoDataLayer(hsid);
-            Cookies.set('h-sid', hsid, {
-              domain: nakedDomain,
-              path: '/',
-              expires: new Date(
-                new Date().getTime() + 365 * 24 * 60 * 60 * 1000
-              ),
-            });
-          }
-        } catch (e) {
-          //
-        }
-      },
-      true
-    );
-  }
-
-  pushSandboxIDtoDataLayer(hsid) {
-    const analytics = new Analytics();
-    analytics.sendHsidToDataLayer({ 'h-sid': hsid });
-  }
-
   render() {
     const {
       CMSContent,
@@ -585,9 +565,10 @@ export default class Page extends React.Component<any, any> {
       activeCurrency,
       queryParams = {},
       biLink,
+      isStage,
     } = this.props;
 
-    const { noTrack, tgidToScroll, currencyCode } = queryParams;
+    const { noTrack, tgidToScroll, currencyCode, bookSubdomain } = queryParams;
 
     if (statusCode) {
       return <ErrorPage statusCode={statusCode} />;
@@ -716,24 +697,68 @@ export default class Page extends React.Component<any, any> {
                 noTrack={!!noTrack || isDev}
                 biLink={biLink}
                 isGlobalMb={isGlobalMb}
+                isStage={isStage}
+                bookSubdomain={bookSubdomain}
               >
                 {Component}
+                {typeof window !== 'undefined' ? (
+                  <HeadoutSessionIdSetterComponent />
+                ) : null}
               </MBContextProvider>
             </RecoilRoot>
           </ThemeProvider>
         </EnvironmentContext.Provider>
-        {typeof window !== 'undefined' ? (
-          <HeadoutSessionIdSetterComponent
-            pushSandboxIDtoDataLayer={this.pushSandboxIDtoDataLayer}
-          />
-        ) : null}
       </div>
     );
   }
 }
 const HSID_VAR = 'h-sid';
-const HeadoutSessionIdSetterComponent = ({ pushSandboxIDtoDataLayer }) => {
+const HeadoutSessionIdSetterComponent = () => {
   const validHsidFromCookie = Cookies.get(HSID_VAR);
+  const { setHsid } = useContext(MBContext);
+  const pushSandboxIDtoDataLayer = (hsid) => {
+    const analytics = new Analytics();
+    analytics.sendHsidToDataLayer({ 'h-sid': hsid });
+    setHsid(hsid);
+  };
+  useEffect(() => {
+    window.addEventListener(
+      'message',
+      (e) => {
+        const { origin, data } = e;
+        if (origin !== process.env.NEXT_PUBLIC_HEADOUT_DOMAIN) {
+          return;
+        }
+
+        const { hsid } = JSON.parse(data);
+        try {
+          if (hsid === null)
+            console.warn(
+              '[localStorage] hsid-ensurer failure, Unsupported Browser'
+            );
+          if (hsid) {
+            const nakedDomain = window.location.hostname
+              .replace('stage-', '')
+              .split('.')
+              .slice(1)
+              .join('.');
+            pushSandboxIDtoDataLayer(hsid);
+            Cookies.set('h-sid', hsid, {
+              domain: nakedDomain,
+              path: '/',
+              expires: new Date(
+                new Date().getTime() + 365 * 24 * 60 * 60 * 1000
+              ),
+            });
+          }
+        } catch (e) {
+          //
+        }
+      },
+      true
+    );
+  }, []);
+
   if (validHsidFromCookie) {
     pushSandboxIDtoDataLayer(validHsidFromCookie);
     return null;
