@@ -265,7 +265,17 @@ const Banner: FunctionComponent<BannerProps> = ({
       type: 'bullets',
       clickable: true,
     },
+    slidesPerView: 1,
+    speed: 600,
+    centeredSlides: true,
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
+    },
     shouldSwiperUpdate: true,
+    loop: true,
+    initialSlide: 1,
+    freeMode: true,
   };
 
   let imageView;
