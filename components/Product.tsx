@@ -929,7 +929,7 @@ const Product = (props) => {
             isAGVariant={isAGVariant}
           />
         </Conditional>
-        <Conditional if={hasSafetyFlag}>
+        <Conditional if={hasSafetyFlag || isAGVariant}>
           <IconBoosters>
             <Split count={2} autoWidth={true}>
               <Conditional if={hasSafetyFlag}>
