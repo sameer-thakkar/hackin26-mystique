@@ -688,8 +688,9 @@ const Product = (props) => {
 
   const isAGVariant = useMemo(() => {
     if (
-      !allTags.filter((tag) => AUDIOGUIDE_TAG_REGEX.test(tag)).length ||
-      !finalHsid
+      isFetched &&
+      (!allTags.filter((tag) => AUDIOGUIDE_TAG_REGEX.test(tag)).length ||
+        !finalHsid)
     )
       return;
 
@@ -697,7 +698,7 @@ const Product = (props) => {
       EXPERIMENT_NAMES.AUDIO_GUIDE_EXPERIMENT,
       finalHsid
     );
-  }, [finalHsid, allTags]);
+  }, [finalHsid, allTags, isFetched]);
 
   const { validity } = scorpioData;
   const descriptorsCsv = descriptors || scorpioData.descriptors;
@@ -801,11 +802,12 @@ const Product = (props) => {
   };
   const hasV1Booster = booster && RichText.asText(booster).trim().length > 0;
   const hasOffer = isOfferEnabled && offerId;
-  const hasBorderedTitle = !hasOffer && !hasV1Booster && !hasSafetyFlag;
+  const hasTags = hasSafetyFlag || isAGVariant;
+  const hasBorderedTitle = !hasOffer && !hasV1Booster && !hasTags;
 
   const layout = getProductCardLayout({
     hasOffer,
-    hasSafetyFlag,
+    hasTags,
     hasV1Booster,
     mbTheme,
     hasShortSummary: hasShortSummary,
@@ -938,13 +940,15 @@ const Product = (props) => {
                   colorScheme={greenScheme}
                   ctaOnClick={openSafeSidebar}
                   icon={Shield}
+                  key={'safety-tag'}
                 />
               </Conditional>
-              <Conditional if={hasSafetyFlag && isAGVariant}>
+              <Conditional if={isAGVariant}>
                 <IconCTA
                   text={strings.AUDIO_GUIDE.BANNER}
                   colorScheme={brownScheme}
                   icon={<AudioGuideIcon />}
+                  key={'audioguide-tag'}
                 />
               </Conditional>
             </Split>
@@ -980,6 +984,7 @@ const Product = (props) => {
               price={finalPrice}
               lang={currentLanguage}
               showSavings={true}
+              key={'price-block'}
             />
           </PriceContainer>
           <CTABlock
