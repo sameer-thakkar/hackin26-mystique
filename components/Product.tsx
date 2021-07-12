@@ -621,7 +621,7 @@ const Descriptors = ({
             imageId={'audioguide'}
             url={getDescriptorIconURL('headphones')}
           />
-          {strings.DESCRIPTORS.FREE_AUDIOGUDE}
+          {strings.AUDIO_GUIDE.BANNER}
         </div>
       </Conditional>
       <Conditional if={hasValidity}>
