@@ -12,14 +12,12 @@ const CityPage = (props) => {
         ?.filter((slice) => slice?.slice_type === 'banner')
         ?.reduce((acc, curr) => acc + curr)
     : [];
-  const bannerImages = Object.keys(bannerSlice)
-    ? bannerSlice?.items?.map((item) => {
-        return {
-          url: item?.banner_image,
-          altText: item?.alt_text,
-        };
-      })
-    : [];
+  const bannerImages = cityCollections?.slice(0, 5)?.map((item) => {
+    return {
+      url: item?.data?.images?.[0]?.image_url,
+      altText: item?.data?.images?.[0]?.alt_text,
+    };
+  });
 
   const { primary } = bannerSlice || {};
   const { banner_sub_text: subText, banner_title: title } = primary || {};
