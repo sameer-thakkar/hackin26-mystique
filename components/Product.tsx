@@ -692,11 +692,13 @@ const Product = (props) => {
       !allTags.filter((tag) => AUDIOGUIDE_TAG_REGEX.test(tag)).length &&
       !finalHsid
     )
-      return;
+      return false;
 
-    return getABTestingVariant(
-      EXPERIMENT_NAMES.AUDIO_GUIDE_EXPERIMENT,
-      finalHsid
+    return (
+      getABTestingVariant(
+        EXPERIMENT_NAMES.AUDIO_GUIDE_EXPERIMENT,
+        finalHsid
+      ) === 'SHOW'
     );
   }, [finalHsid, allTags, isFetched]);
 
