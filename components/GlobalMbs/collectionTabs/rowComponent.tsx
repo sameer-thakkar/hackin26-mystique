@@ -49,10 +49,14 @@ const RowComponent: FunctionComponent<RowComponentProps> = ({
     return data?.length ? data?.reduce((acc, curr) => acc + curr) : {};
   };
 
-  const updateActiveCard = (e, activeCard) => {
-    setActiveCard(activeCard);
-    const price = getPrice(activeCard?.data.headout_category_id);
-    setActiveCardPrice(price);
+  const updateActiveCard = (e, active_card) => {
+    if (active_card.id != activeCard?.id) {
+      setActiveCard(active_card);
+      const price = getPrice(active_card?.data.headout_category_id);
+      setActiveCardPrice(price);
+    } else {
+      closeActiveCard();
+    }
   };
   const closeActiveCard = () => {
     setActiveCard(null);
