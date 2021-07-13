@@ -687,10 +687,10 @@ const Product = (props) => {
   const { allTags = [] } = scorpioData || {};
 
   const isAGVariant = useMemo(() => {
+    if (!finalHsid) return false;
     if (
       isFetched &&
-      !allTags.filter((tag) => AUDIOGUIDE_TAG_REGEX.test(tag)).length &&
-      !finalHsid
+      !allTags.filter((tag) => AUDIOGUIDE_TAG_REGEX.test(tag)).length
     )
       return false;
 
