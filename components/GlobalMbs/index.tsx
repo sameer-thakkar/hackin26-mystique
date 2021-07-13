@@ -126,6 +126,7 @@ const GlobalMB = (props) => {
   const isGlobalCollection = type === 'global_collection';
   const isGlobalExperience = type === 'global_experience';
   const isGlobalCountry = type === 'global_country';
+  const isGlobalCity = type === 'global_city';
 
   const showTicketsCta = isGlobalCollection || props?.ticketsPage;
   const showHeaderlinks = isGlobalCollection || isGlobalExperience;
@@ -255,6 +256,8 @@ const GlobalMB = (props) => {
               host,
               uid,
               isGlobalMb: true,
+              isGlobalCity,
+              cityName,
               experiencePageUid: experiencesPage?.uid,
               ...(rides?.length && {
                 rides,

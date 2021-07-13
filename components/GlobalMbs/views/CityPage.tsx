@@ -24,6 +24,8 @@ const CityPage = (props) => {
 
   const bannerSubText = subText ? RichText?.asText(subText) : '';
 
+  const cityName = cityCollections?.[0]?.data?.city_name;
+  const collectionTabTitle = cityName ? `Themeparks in ${cityName}` : title;
   // Cards
 
   return (
@@ -38,7 +40,7 @@ const CityPage = (props) => {
       <Conditional if={cityCollections?.length}>
         <CollectionTabs
           collections={cityCollections}
-          title={title}
+          title={collectionTabTitle}
           currencies={currencies}
         />
       </Conditional>

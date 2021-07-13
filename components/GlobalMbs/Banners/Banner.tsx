@@ -73,7 +73,7 @@ const StyledBanner = styled.div((props) => {
     }
     .title {
       font-size: 48px;
-      line-height: 38px;
+      line-height: 54px;
       font-weight: 700;
       letter-spacing: -0.2px;
       margin-bottom: 16px;
