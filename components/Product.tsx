@@ -9,7 +9,6 @@ import parse from 'url-parse';
 import styled from 'styled-components';
 import React, { useRef, useState, useContext, useEffect, useMemo } from 'react';
 import HorizontalLine from 'components/slices/HorizontalLine';
-import Cookies from 'js-cookie';
 import {
   ANALYTICS_EVENTS,
   THEMES,
@@ -683,24 +682,18 @@ const Product = (props) => {
   const [showMoreDetailsInTabs, setShowMoreDetails] = useState(
     defaultOpen || false
   );
-  const finalHsid = hsid ?? Cookies.get('h-sid');
   const { allTags = [] } = scorpioData || {};
 
   const isAGVariant = useMemo(() => {
-    if (!finalHsid) return false;
-    if (
-      isFetched &&
-      !allTags.filter((tag) => AUDIOGUIDE_TAG_REGEX.test(tag)).length
-    )
+    if (!hsid || !isFetched) return false;
+    if (!allTags.filter((tag) => AUDIOGUIDE_TAG_REGEX.test(tag)).length)
       return false;
 
     return (
-      getABTestingVariant(
-        EXPERIMENT_NAMES.AUDIO_GUIDE_EXPERIMENT,
-        finalHsid
-      ) === 'SHOW'
+      getABTestingVariant(EXPERIMENT_NAMES.AUDIO_GUIDE_EXPERIMENT, hsid) ===
+      'SHOW'
     );
-  }, [finalHsid, allTags, isFetched]);
+  }, [hsid, allTags, isFetched]);
 
   const { validity } = scorpioData;
   const descriptorsCsv = descriptors || scorpioData.descriptors;
