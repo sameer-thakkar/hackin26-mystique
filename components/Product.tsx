@@ -689,8 +689,8 @@ const Product = (props) => {
   const isAGVariant = useMemo(() => {
     if (
       isFetched &&
-      (!allTags.filter((tag) => AUDIOGUIDE_TAG_REGEX.test(tag)).length ||
-        !finalHsid)
+      !allTags.filter((tag) => AUDIOGUIDE_TAG_REGEX.test(tag)).length &&
+      !finalHsid
     )
       return;
 
