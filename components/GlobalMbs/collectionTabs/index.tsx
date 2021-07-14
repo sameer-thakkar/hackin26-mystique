@@ -86,6 +86,7 @@ const CollectionCard: FunctionComponent<CollectionCardProps> = ({
     }
   }, []);
 
+  const [row, setRow] = useState();
   if (collections?.length) {
     const DEFAULT_TITLE = 'All';
     const allCollections = chunkArray([...collections], 4);
@@ -95,6 +96,9 @@ const CollectionCard: FunctionComponent<CollectionCardProps> = ({
       body: allCollections?.map((collection, index) => (
         <RowComponent
           key={index}
+          sectionIndex={index}
+          setSectionIndex={row}
+          setRow={setRow}
           cards={collection}
           categoryData={categoryData}
         />
@@ -114,6 +118,9 @@ const CollectionCard: FunctionComponent<CollectionCardProps> = ({
           body: collections?.map((collection, index) => (
             <RowComponent
               key={index}
+              sectionIndex={index}
+              setSectionIndex={row}
+              setRow={setRow}
               cards={collection}
               categoryData={categoryData}
             />

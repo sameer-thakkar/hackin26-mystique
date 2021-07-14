@@ -21,10 +21,16 @@ const RowWrapper = styled.div`
 `;
 
 interface RowComponentProps {
+  setRow: any;
+  setSectionIndex: any;
+  sectionIndex: any;
   cards: any[];
   categoryData: any[];
 }
 const RowComponent: FunctionComponent<RowComponentProps> = ({
+  setRow,
+  setSectionIndex,
+  sectionIndex,
   cards,
   categoryData,
 }) => {
@@ -50,7 +56,8 @@ const RowComponent: FunctionComponent<RowComponentProps> = ({
   };
 
   const updateActiveCard = (e, active_card) => {
-    if (active_card.id != activeCard?.id) {
+    setRow(sectionIndex);
+    if (activeCard?.id !== active_card?.id) {
       setActiveCard(active_card);
       const price = getPrice(active_card?.data.headout_category_id);
       setActiveCardPrice(price);
@@ -86,16 +93,18 @@ const RowComponent: FunctionComponent<RowComponentProps> = ({
   return (
     <>
       <RowWrapper>{cardMarkup}</RowWrapper>
-      <Conditional if={!isMobile && activeCard}>
-        <DetailedCollectionCard
-          ref={detailedCardRef}
-          data={activeCard}
-          clickHandler={closeActiveCard}
-          isMobile={isMobile}
-          price={activeCardPrice?.startingPrice}
-          currency={activeCardPrice?.currency?.localSymbol}
-        />
-      </Conditional>
+      {setSectionIndex === sectionIndex && (
+        <Conditional if={!isMobile && activeCard}>
+          <DetailedCollectionCard
+            ref={detailedCardRef}
+            data={activeCard}
+            clickHandler={closeActiveCard}
+            isMobile={isMobile}
+            price={activeCardPrice?.startingPrice}
+            currency={activeCardPrice?.currency?.localSymbol}
+          />
+        </Conditional>
+      )}
     </>
   );
 };
