@@ -1,7 +1,13 @@
 import parse from 'url-parse';
 import { FULL_LANGUAGE_MAP } from 'const/index';
+import dayjs from 'dayjs';
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 
 import renderShortCodes from './shortCodes';
+
+dayjs.extend(isSameOrAfter);
+dayjs.extend(isSameOrBefore);
 
 export const withoutTrailingSlash = (url) =>
   url?.charAt(url?.length - 1) === '/' ? url?.substr(0, url.length - 1) : url;
@@ -342,4 +348,25 @@ export const getHostName = (isStage, isDev) => {
     default:
       return `https://${headoutDomain}`;
   }
+};
+
+export const getTGIDListForMonth = (allTours, displayMonth) => {
+  const allToursArray = Object.values(allTours);
+
+  const startMonthDate = dayjs(`${displayMonth}-01`, 'MMMM-DD').year(
+    dayjs().year()
+  );
+  const endMonthDate = startMonthDate.add(startMonthDate.daysInMonth(), 'days');
+
+  return allToursArray.reduce((accumulator: any[], element) => {
+    const endTourDate = dayjs(element['closingDate'], 'MM-DD');
+    const startTourDate = dayjs(element['reopeningDate'], 'MM-DD');
+    if (
+      startTourDate.isSameOrBefore(startMonthDate, 'month') &&
+      endTourDate.isSameOrAfter(endMonthDate, 'month')
+    ) {
+      return [...accumulator, element['tgid']];
+    }
+    return accumulator;
+  }, []);
 };

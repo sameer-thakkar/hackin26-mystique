@@ -38,6 +38,7 @@ export const ProductsWrapper = (props) => {
     currentLanguage,
     host,
     uid,
+    isListicle,
   } = props;
   useEffect(() => {
     const tgidArray =
@@ -61,6 +62,7 @@ export const ProductsWrapper = (props) => {
         availableTGIDs={allTours}
         isMobile={isMobile}
         isEntertainmentMb={isEntertainmentMb}
+        isListicle={isListicle}
       />
       <PopulateProducts
         tgids={activeCategoryTgids}
@@ -73,6 +75,7 @@ export const ProductsWrapper = (props) => {
         host={host}
         uid={uid}
         sectionId={'main'}
+        isListicle={isListicle}
       />
     </StyledProductWrapper>
   );

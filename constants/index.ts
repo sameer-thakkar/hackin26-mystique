@@ -590,3 +590,4 @@ export const FAVICON_LONDON_THEATRE_TICKETS =
 export const AUDIOGUIDE_TAG_REGEX = /AUDIO_GUIDE_[0-9]+/g;
 export const REOPENING_CATEGORIES: number[] = [3159];
 export const NEW_ARRIVALS_CATEGORIES: number[] = [1351];
+export const WHY_WATCH_STRING = 'Why Watch';
