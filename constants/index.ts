@@ -276,6 +276,8 @@ export const MICROSITE_OBJECT_KEYS: string[] = [
   'footer_logo',
 ];
 
+export const MICROSITE_BOOL_KEYS: string[] = ['disable_amp'];
+
 export const MICROSITE_LINK_KEYS: string[] = ['footer_logo_link'];
 
 export const MICROSITE_ARRAY_KEYS: string[] = ['images', 'body1'];
