@@ -71,6 +71,7 @@ const GlobalMB = (props) => {
     official_website: officialWebsite,
     country_name: countryName,
     city_name: cityName,
+    collection_name: collectionName,
     microbrand_url: microbrandUrl,
     favicon,
   } = CMSContent || {};
@@ -258,6 +259,8 @@ const GlobalMB = (props) => {
               isGlobalMb: true,
               isGlobalCity,
               cityName,
+              isGlobalCollection,
+              collectionName,
               experiencePageUid: experiencesPage?.uid,
               ...(rides?.length && {
                 rides,
