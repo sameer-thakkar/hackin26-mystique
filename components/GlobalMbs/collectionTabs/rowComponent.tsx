@@ -93,7 +93,7 @@ const RowComponent: FunctionComponent<RowComponentProps> = ({
   return (
     <>
       <RowWrapper>{cardMarkup}</RowWrapper>
-      {setSectionIndex === sectionIndex && (
+      <Conditional if={setSectionIndex === sectionIndex}>
         <Conditional if={!isMobile && activeCard}>
           <DetailedCollectionCard
             ref={detailedCardRef}
@@ -104,7 +104,7 @@ const RowComponent: FunctionComponent<RowComponentProps> = ({
             currency={activeCardPrice?.currency?.localSymbol}
           />
         </Conditional>
-      )}
+      </Conditional>
     </>
   );
 };
