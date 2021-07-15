@@ -23,14 +23,14 @@ export const extractTabsFromHighlights = (highlights) => {
 
 export const getProductCardLayout = ({
   mbTheme,
-  hasSafetyFlag,
+  hasTags,
   hasOffer,
   hasV1Booster,
   hasShortSummary,
   hasNextAvailable,
 }) => {
   let layout = { desktop: [], mobile: [] };
-  const hasIconBoosters = hasSafetyFlag;
+  const hasIconBoosters = hasTags;
   switch (mbTheme) {
     case THEMES.MIN_BLUE:
       layout = {

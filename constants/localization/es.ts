@@ -299,6 +299,10 @@ const es = {
       LIMITED: 'Oferta de tiempo limitado',
     },
   },
+  AUDIO_GUIDE: {
+    BANNER: 'Audioguía gratuita',
+    PRODUCT_SUFFIX: 'con audioguía',
+  },
 };
 
 export default es;

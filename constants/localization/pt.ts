@@ -287,6 +287,10 @@ const pt = {
       LIMITED: 'Oferta por período limitado',
     },
   },
+  AUDIO_GUIDE: {
+    BANNER: 'Guia de áudio gratuito',
+    PRODUCT_SUFFIX: 'e Guia de Áudio',
+  },
 };
 
 export default pt;

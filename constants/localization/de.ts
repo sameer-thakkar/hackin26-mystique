@@ -287,6 +287,10 @@ const de = {
       LIMITED: 'Zeitweilige Aktion',
     },
   },
+  AUDIO_GUIDE: {
+    BANNER: 'Gratis Audioguide',
+    PRODUCT_SUFFIX: '+ Audioguide',
+  },
 };
 
 export default de;

@@ -56,7 +56,6 @@ const MicrositeV1 = (props) => {
   const analytics = new Analytics();
   const [isMobile, setIsMobile] = useState(props?.isMobile);
   const windowWidth = useWindowWidth();
-
   const [earliestAvailabilityQueue, setEarliestAvailabilityQueue] = useState(
     []
   );
@@ -239,7 +238,7 @@ const MicrositeV1 = (props) => {
       : uncategorizedToursList;
 
   const orderedUncategorizedTours = tgidToScroll
-    ? uncategorizedToursData.reduce((accum = [], item) => {
+    ? uncategorizedToursData?.reduce((accum = [], item) => {
         if (item.tgid === tgidToScroll) {
           return [item, ...accum];
         } else {
@@ -249,8 +248,10 @@ const MicrositeV1 = (props) => {
     : uncategorizedToursData;
 
   const orderedTGIDRanking = csvTgidToArray(tourRanking);
-  const orderedTours = orderedTGIDRanking
-    ? orderedUncategorizedTours?.sort((tourA, tourB) => {
+  const orderedTours = tgidToScroll
+    ? orderedUncategorizedTours
+    : orderedTGIDRanking?.length
+    ? [...orderedUncategorizedTours]?.sort((tourA, tourB) => {
         return (
           orderedTGIDRanking?.indexOf(parseInt(tourA.tgid)) -
           orderedTGIDRanking?.indexOf(parseInt(tourB.tgid))

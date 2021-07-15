@@ -1,3 +1,5 @@
+import { WHY_WATCH_STRING } from 'constants/index';
+
 import React, { useContext } from 'react';
 import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
@@ -78,8 +80,12 @@ const DetailedDescriptionCard = styled.div`
   .product-v2-description-left,
   .product-v2-description-right {
     display: grid;
-    grid-gap: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '32px' : '24px'};
+    grid-gap: ${({ isEntertainmentMb, isListicle }) =>
+      isListicle ? '16px' : isEntertainmentMb ? '32px' : '24px'};
+  }
+  .product-v2-description-left p,
+  .product-v2-description-left h3 {
+    ${({ isListicle }) => (isListicle ? 'margin: 0' : null)};
   }
   .product-v2-description-right {
     z-index: 1;
@@ -93,6 +99,7 @@ const DetailedDescriptionCard = styled.div`
     grid-gap: 24px;
     grid-auto-flow: row;
     grid-auto-rows: max-content;
+    ${({ isListicle }) => (isListicle ? 'margin-bottom:16px' : '')};
   }
   .v2-desc-blocks .left {
     grid-column: 1;
@@ -174,9 +181,12 @@ const DetailedDescriptionCard = styled.div`
   .v2-desc-right,
   .v2-desc-left {
     display: grid;
-    grid-gap: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '16px' : '24px'};
+    grid-gap: ${({ isEntertainmentMb, isListicle }) =>
+      isListicle ? '0px' : isEntertainmentMb ? '16px' : '24px'};
     align-items: start;
+  }
+  .show-summary-wrapper {
+    margin-top: 8px;
   }
 
   .v2-desc-left {
@@ -375,8 +385,10 @@ const DetailedProductCard = (props) => {
     cardPosition,
     isEntertainmentMb,
     hasCategoryTourList,
+    isListicle,
   } = props;
   const activeTour = allTours[tgidClicked];
+  const { listicleShowSummary, listicleWhyWatch } = activeTour;
   const {
     allTags = [],
     listingPrice,
@@ -406,6 +418,14 @@ const DetailedProductCard = (props) => {
     highlights,
     contentBlocks
   );
+  if (isListicle) {
+    productCardContent.left = contentBlocks?.left?.filter(
+      (item) => item.label === 'Theatre Name'
+    );
+    productCardContent.right = contentBlocks?.left?.filter(
+      (item) => item.label === 'Duration'
+    );
+  }
 
   const openSafeSidebar = () => {
     addToAside({
@@ -509,6 +529,7 @@ const DetailedProductCard = (props) => {
     <DetailedDescriptionCard
       {...{ cardPosition, rightBlocksCount }}
       isEntertainmentMb={isEntertainmentMb}
+      isListicle={isListicle}
     >
       <div className="indicator-triangle"></div>
       <div className="product-v2-description-left">
@@ -549,6 +570,17 @@ const DetailedProductCard = (props) => {
             </div>
           </Conditional>
         </div>
+        <Conditional if={isListicle}>
+          {listicleShowSummary && (
+            <div className="show-summary-wrapper">
+              <RichText render={[listicleShowSummary.text]} />
+            </div>
+          )}
+          <div>
+            <h3>{WHY_WATCH_STRING}</h3>
+            {listicleWhyWatch && <RichText render={[listicleWhyWatch.text]} />}
+          </div>
+        </Conditional>
         <div className="v2-desc-columns">
           <div className="v2-desc-left">
             {productCardContent.left.map((block, index) => {

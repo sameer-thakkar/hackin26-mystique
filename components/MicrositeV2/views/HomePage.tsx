@@ -17,7 +17,7 @@ import { THEMES } from 'const/index';
 import { strings } from 'const/strings';
 import { SIZES, SOLEIL } from 'const/ui-constants';
 import { isSafetyIncluded } from 'utils';
-import { groupSlices } from 'utils/helper';
+import { groupSlices, getTGIDListForMonth } from 'utils/helper';
 
 const Alert = dynamic(() => import('UI/Alert'), { ssr: false });
 const ResponsiveSelector: ComponentType<any> = dynamic(
@@ -82,6 +82,44 @@ const V2MicrositeWrapper = styled.div`
   }
 `;
 
+const BannerWrapper = styled.div`
+  width: 100%;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  p {
+    position: absolute;
+    margin-left: 120px;
+    z-index: 11;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 44px;
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.5px;
+    color: #ffffff;
+  }
+  @media (max-width: 768px) {
+    p {
+      margin-left: 16px;
+      font-size: 20px;
+    }
+  }
+`;
+
+const BannerImage = styled.div(({ url }) => {
+  return `
+    background-image: url(${url});
+    width: 100%;
+    height: 400px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  `;
+});
+
 /*
 TODO: Content Tabs with Category
 TODO: Category with TGID and Category
@@ -96,7 +134,6 @@ export const HomePage = (props) => {
     isEntertainmentMb,
     allTours,
     longFormContent,
-    categoryProps,
     hasCategoryTourList,
     categoryTourListData,
     heroProps,
@@ -108,7 +145,45 @@ export const HomePage = (props) => {
     ready,
     alertPopup,
     showCovid19Alert,
+    isListicle,
+    displayMonthsArray,
+    bannerImageForListicle,
+    bannerTextForListicle,
   } = props;
+
+  let { categoryProps } = props;
+
+  if (isListicle) {
+    let categoryListicle = displayMonthsArray?.map((month, index) => {
+      const allowedTourForMonth = getTGIDListForMonth(allTours, month);
+
+      return {
+        id: index + 1,
+        name: month,
+        rank: 0,
+        ranking: {
+          popularity: allowedTourForMonth,
+        },
+      };
+    });
+
+    let allTgids = Object.keys(allTours);
+    categoryListicle?.unshift({
+      id: 0,
+      name: 'All',
+      rank: 0,
+      ranking: {
+        popularity: allTgids,
+      },
+    });
+
+    categoryProps = {
+      active: 0,
+      categories: categoryListicle,
+      hideSortBySelector: false,
+    };
+  }
+
   const [covid19AlertOpen, setCovid19AlertOpen] = useState(true);
   const { dropdownLinks, enableDropdownLinks } = header;
   const selectorLinkChangeHandler = (option) => {
@@ -174,6 +249,12 @@ export const HomePage = (props) => {
           isEntertainmentMb={isEntertainmentMb}
         />
       </Conditional>
+      <Conditional if={isListicle}>
+        <BannerWrapper>
+          <p>{bannerTextForListicle}</p>
+          <BannerImage url={bannerImageForListicle}></BannerImage>
+        </BannerWrapper>
+      </Conditional>
       <Conditional if={mbTheme === THEMES.MIN_BLUE}>
         <TextBanner bannerHeading={bannerHeading ? bannerHeading : null} />
       </Conditional>
@@ -202,7 +283,7 @@ export const HomePage = (props) => {
         </ProductsContextProvider>
       </Conditional>
       <Conditional if={isEntertainmentMb}>
-        <LttSafetyBanner />
+        <LttSafetyBanner marginTop={isListicle ? 32 : 0} />
       </Conditional>
       <Conditional if={hasToursSection}>
         <ProductsWrapper
@@ -217,6 +298,7 @@ export const HomePage = (props) => {
           changePage={changePage}
           host={host}
           uid={uid}
+          isListicle={isListicle}
         />
       </Conditional>
       <Conditional if={isEntertainmentMb}>

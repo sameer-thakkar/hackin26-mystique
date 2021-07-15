@@ -134,6 +134,8 @@ class MicrositeV2 extends Component<any, any> {
       enable_group_booking,
       group_booking_excluded_tgids,
       body: CMSBody,
+      banner_image_for_listicle: bannerImageForListicle,
+      banner_text_for_listicle: bannerTextForListicle,
     } = CMSData || {};
     const currentLanguage = getLangObject(CMSContent.lang).short;
     const { isMobile } = this.state;
@@ -357,6 +359,18 @@ class MicrositeV2 extends Component<any, any> {
       powered_by_superbrand,
       is_entertainment_mb: isEntertainmentMb,
     } = this.props.data.data;
+
+    const [listicleContent] = this.props.data.data.body;
+    const {
+      primary: {
+        islisticle: isListicle,
+        csv_months_to_display_for_listicle: displayMonthsCSV,
+      },
+    } = listicleContent;
+
+    const displayMonthsArray = displayMonthsCSV
+      ?.split(',')
+      ?.map((item) => item.trim());
     const heroSectionSlice = [...this.props.data.data.body4, hightlightSlice];
     const commonFooterProps = commonFooter ? commonFooter.data : null;
     let themeOverride = theme_override || THEMES.INHERIT;
@@ -435,6 +449,10 @@ class MicrositeV2 extends Component<any, any> {
             uid={currentDomain}
             directTgid={directTgid}
             ready={ready}
+            isListicle={isListicle}
+            displayMonthsArray={displayMonthsArray}
+            bannerImageForListicle={bannerImageForListicle}
+            bannerTextForListicle={bannerTextForListicle}
           />
         </div>
         <Conditional if={activePage == PAGETYPE.MOBILE_PRODUCT_PAGE}>

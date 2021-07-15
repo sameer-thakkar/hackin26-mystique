@@ -137,7 +137,7 @@ const Image: React.FC<ImageProps> = ({
     );
   } else if (dontLazyLoad) {
     ImageComponent = (
-      <Picture>
+      <Picture key={imageId}>
         <source
           type="image/webp"
           data-srcset={`${
@@ -151,6 +151,7 @@ const Image: React.FC<ImageProps> = ({
           }${makeImageUrl(format, url)}`}
           src={makeImageUrl(format, url)}
           alt={alt}
+          key={imageId}
           height={calculatedHeight + 'px'}
           width={calculatedWidth + 'px'}
         />

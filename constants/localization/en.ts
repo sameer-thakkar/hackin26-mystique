@@ -63,6 +63,7 @@ const en = {
   TIMINGS: 'Timings',
   DESCRIPTORS: {
     VALIDITY: 'Extended Validity',
+    FREE_AUDIOGUDE: 'Free Audioguide',
   },
   SAFE_EXPERIENCE: {
     HEADING: 'Best Safety Standards',
@@ -344,6 +345,10 @@ const en = {
   },
   CUSTOMER_REVIEW_HEADING: 'Customer Reviews',
   CATEGORY_SLIDER_HEADING: 'Customers Who Booked This Show Also Viewed',
+  AUDIO_GUIDE: {
+    BANNER: 'Free Audio Guide',
+    PRODUCT_SUFFIX: 'with Audio Guide',
+  },
 };
 
 export default en;

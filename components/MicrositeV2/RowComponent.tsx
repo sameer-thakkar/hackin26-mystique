@@ -35,13 +35,18 @@ export const RowComponent = (props) => {
     host,
     uid,
     sectionId,
+    isListicle,
   } = props;
   const { activeCategoryId, activeTour, clickTour, closeTour } =
     useContext(InteractionContext) || {};
   const { tgid: activeTgid, section: activeSection, autoScroll } =
     activeTour || {};
 
-  const handleProductClicked = (productTgid, section) => {
+  const handleProductClicked = (productTgid, section, event) => {
+    if (event.type === 'keydown') {
+      event.target.blur();
+      return;
+    }
     if (isMobile) {
       props.changePage({
         name: PAGETYPE.MOBILE_PRODUCT_PAGE,
@@ -102,6 +107,7 @@ export const RowComponent = (props) => {
           key={tgidClicked}
           cardPosition={cardPosition + 1}
           closeDescription={closeDescription}
+          isListicle={isListicle}
         />
       </Conditional>
     </ProductsRow>

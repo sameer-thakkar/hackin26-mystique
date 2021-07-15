@@ -276,6 +276,8 @@ export const MICROSITE_OBJECT_KEYS: string[] = [
   'footer_logo',
 ];
 
+export const MICROSITE_BOOL_KEYS: string[] = ['disable_amp'];
+
 export const MICROSITE_LINK_KEYS: string[] = ['footer_logo_link'];
 
 export const MICROSITE_ARRAY_KEYS: string[] = ['images', 'body1'];
@@ -587,5 +589,7 @@ export const REOPENING_TAG = 'REOPENING';
 export const FAVICON_LONDON_THEATRE_TICKETS =
   'https://images.prismic.io/mystique/43d0bf7f-2955-413b-a266-8fc62dd9c933_shows-favicon.png?auto=compress,format';
 
+export const AUDIOGUIDE_TAG_REGEX = /AUDIO_GUIDE_[0-9]+/g;
 export const REOPENING_CATEGORIES: number[] = [3159];
 export const NEW_ARRIVALS_CATEGORIES: number[] = [1351];
+export const WHY_WATCH_STRING = 'Why Watch';

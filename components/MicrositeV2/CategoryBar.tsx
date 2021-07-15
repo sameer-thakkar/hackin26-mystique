@@ -135,7 +135,13 @@ const CategoryBar = (props) => {
     width: null,
     left: null,
   });
-  const { categories, isMobile, hideSortBySelector, isEntertainmentMb } = props;
+  const {
+    categories,
+    isMobile,
+    hideSortBySelector,
+    isEntertainmentMb,
+    isListicle,
+  } = props;
   const toggleFilterDropdown = () => {
     setFilterDropdownActive((oldState) => !oldState);
   };
@@ -224,7 +230,7 @@ const CategoryBar = (props) => {
               style={{ ...indicatorStyles }}
             ></div>
           </div>
-          <Conditional if={!isMobile && !hideSortBySelector}>
+          <Conditional if={!isMobile && !hideSortBySelector && !isListicle}>
             <div className="filter-wrapper">
               <SortSelector
                 isFilterDropdownActive={filterDropdownActive}

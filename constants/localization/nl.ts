@@ -289,6 +289,10 @@ const nl = {
       LIMITED: 'Aanbieding voor een beperkte periode',
     },
   },
+  AUDIO_GUIDE: {
+    BANNER: 'Gratis audiotour',
+    PRODUCT_SUFFIX: 'met Audiotour',
+  },
 };
 
 export default nl;

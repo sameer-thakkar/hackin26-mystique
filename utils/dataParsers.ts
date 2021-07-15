@@ -1,4 +1,7 @@
-import { getObject } from 'components/ShowPages/parseShowPage';
+import {
+  getObject,
+  parseShowPageData,
+} from 'components/ShowPages/parseShowPage';
 import { CURRENCY_SYMBOL_MAP } from 'const/index';
 import { fetchCategory } from 'utils/apiUtils';
 
@@ -109,10 +112,24 @@ export const categoryTourListParser = async (
           'Cancellation Policy',
           'Age Limit',
         ];
+        const { listicleSchema } = parseShowPageData(microBrandsHighlight);
+        let listicleShowSummary, listicleWhyWatch;
+
+        for (let item of listicleSchema) {
+          const heading = item['heading'];
+          if (heading === 'Listicle Show Why Watch') {
+            listicleWhyWatch = item;
+          }
+          if (heading === 'Listicle Show Summary') {
+            listicleShowSummary = item;
+          }
+        }
+
         const { detailsObjects: highlights, isSafetyBanner: hasBestSafety } =
           getObject(microBrandsHighlight, filterHighlights) || {};
         const { detailsObjects: reopeningDate } =
-          getObject(microBrandsHighlight, ['Opening Date']) || {};
+          getObject(microBrandsHighlight, ['Opening Date', 'Closing Date']) ||
+          {};
 
         const contentBlocks = {
           hidden: [],
@@ -183,12 +200,15 @@ export const categoryTourListParser = async (
           allTags,
           dfListingPrice: null,
           reopeningDate: reopeningDate['Opening Date'],
+          closingDate: reopeningDate['Closing Date'],
           hasBestSafety,
           category,
           microBrandsHighlight: highlights,
           listingPrice,
           safetyImages: null,
           showPageUid: hasShowPageData ? showpageData[id] : null,
+          listicleShowSummary,
+          listicleWhyWatch,
         };
       });
       const categoryId = categories?.length ? categories[0]?.id : null;
