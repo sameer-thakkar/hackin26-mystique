@@ -353,14 +353,15 @@ export const getHostName = (isStage, isDev) => {
 export const getTGIDListForMonth = (allTours, displayMonth) => {
   const allToursArray = Object.values(allTours);
 
-  const startMonthDate = dayjs(`${displayMonth}-01`, 'MMMM-DD').year(
-    dayjs().year()
+  const startMonthDate = dayjs(
+    `${displayMonth}/01/${dayjs().year()}`,
+    'MMMM/DD/YYYY'
   );
   const endMonthDate = startMonthDate.add(startMonthDate.daysInMonth(), 'days');
 
   return allToursArray.reduce((accumulator: any[], element) => {
-    const endTourDate = dayjs(element['closingDate'], 'MM-DD');
-    const startTourDate = dayjs(element['reopeningDate'], 'MM-DD');
+    const endTourDate = dayjs(element['closingDate'], 'YYYY-MM-DD');
+    const startTourDate = dayjs(element['reopeningDate'], 'YYYY-MM-DD');
     if (
       startTourDate.isSameOrBefore(startMonthDate, 'month') &&
       endTourDate.isSameOrAfter(endMonthDate, 'month')

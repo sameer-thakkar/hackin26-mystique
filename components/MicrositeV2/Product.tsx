@@ -345,8 +345,8 @@ const Product = (props) => {
     currencySymbolMap[currencyCode]?.localSymbol ||
     CURRENCY_SYMBOL_MAP[currencyCode];
 
-  const handleProductClick = () => {
-    productClick(tgid, cardIdPrefix);
+  const handleProductClick = (event) => {
+    productClick(tgid, cardIdPrefix, event);
   };
 
   const isNew = NEW_ARRIVALS_CATEGORIES.includes(activeCategoryId);
