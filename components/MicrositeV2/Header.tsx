@@ -418,80 +418,78 @@ const Header: FunctionComponent<HeaderProps> = ({
               </SearchWrapper>
             </Conditional>
           </HeaderLeft>
-          <Conditional if={!isEntertainmentMb}>
-            <HeaderRight
-              hasLanguageDropdown={hasLanguageDropdown}
-              hasHamburger={isMobileDevice && hamburgerIconCheck}
-              hasSearch={enableSearch}
-              onMouseEnter={() => setHeaderHover(true)}
-              onMouseLeave={() => setHeaderHover(false)}
-            >
-              <Conditional if={!groupedHeaderSlices.length && headerLinks}>
-                <HeaderLinks
-                  headerLinks={headerLinks}
-                  isMobile={isMobileDevice}
-                  hiddenMobile={navActive}
-                />
-              </Conditional>
+          <HeaderRight
+            hasLanguageDropdown={hasLanguageDropdown}
+            hasHamburger={isMobileDevice && hamburgerIconCheck}
+            hasSearch={enableSearch}
+            onMouseEnter={() => setHeaderHover(true)}
+            onMouseLeave={() => setHeaderHover(false)}
+          >
+            <Conditional if={!groupedHeaderSlices.length && headerLinks}>
+              <HeaderLinks
+                headerLinks={headerLinks}
+                isMobile={isMobileDevice}
+                hiddenMobile={navActive}
+              />
+            </Conditional>
 
-              <Conditional if={groupedHeaderSlices.length}>
-                <MultiLevelNav
-                  isActive={navActive}
-                  isMobile={isMobileDevice}
-                  slice={groupedHeaderSlices || []}
-                  oldMenuItems={convertedRegularMenuItems}
-                  isGlobalMb={isGlobalMb}
-                />
+            <Conditional if={groupedHeaderSlices.length}>
+              <MultiLevelNav
+                isActive={navActive}
+                isMobile={isMobileDevice}
+                slice={groupedHeaderSlices || []}
+                oldMenuItems={convertedRegularMenuItems}
+                isGlobalMb={isGlobalMb}
+              />
+            </Conditional>
+            <Conditional if={enableBuyTickets}>
+              <Conditional if={isGlobalMb && showBuyTickets}>
+                <a href={buyTicketsLink} className="buy-tickets global-mb">
+                  Buy Tickets
+                </a>
               </Conditional>
-              <Conditional if={enableBuyTickets}>
-                <Conditional if={isGlobalMb && showBuyTickets}>
-                  <a href={buyTicketsLink} className="buy-tickets global-mb">
-                    Buy Tickets
-                  </a>
-                </Conditional>
-                <Conditional if={!isGlobalMb}>
-                  <div
-                    className="buy-tickets"
-                    tabIndex={0}
-                    role="button"
-                    onClick={buyTicketHandler}
-                  >
-                    Buy Tickets
-                  </div>
-                </Conditional>
-              </Conditional>
-              <Conditional if={isMobileDevice && enableSearch}>
+              <Conditional if={!isGlobalMb}>
                 <div
-                  className="mobi-search-trigger"
-                  role="button"
+                  className="buy-tickets"
                   tabIndex={0}
-                  onClick={() => {
-                    loadSearchPage();
-                  }}
+                  role="button"
+                  onClick={buyTicketHandler}
                 >
-                  {SEARCH_ICON}
+                  Buy Tickets
                 </div>
               </Conditional>
-              <Conditional if={hasLanguageDropdown}>
-                <LanguageSelector
-                  {...languageProps}
-                  languageDropdown={languageDropdown}
-                  toggleDropdown={toggleLanguageDropdown}
-                  hasLanguageDropdown={hasLanguageSelector}
-                  host={host}
-                  isMobile={isMobileDevice}
-                />
-              </Conditional>
-              <Conditional if={isMobileDevice && hamburgerIconCheck}>
-                <Hamburger
-                  className={'hamburger'}
-                  isActive={navActive}
-                  onClickFn={() => toggleNav(!navActive)}
-                  isGlobalMb={isGlobalMb}
-                />
-              </Conditional>
-            </HeaderRight>
-          </Conditional>
+            </Conditional>
+            <Conditional if={isMobileDevice && enableSearch}>
+              <div
+                className="mobi-search-trigger"
+                role="button"
+                tabIndex={0}
+                onClick={() => {
+                  loadSearchPage();
+                }}
+              >
+                {SEARCH_ICON}
+              </div>
+            </Conditional>
+            <Conditional if={hasLanguageDropdown}>
+              <LanguageSelector
+                {...languageProps}
+                languageDropdown={languageDropdown}
+                toggleDropdown={toggleLanguageDropdown}
+                hasLanguageDropdown={hasLanguageSelector}
+                host={host}
+                isMobile={isMobileDevice}
+              />
+            </Conditional>
+            <Conditional if={isMobileDevice && hamburgerIconCheck}>
+              <Hamburger
+                className={'hamburger'}
+                isActive={navActive}
+                onClickFn={() => toggleNav(!navActive)}
+                isGlobalMb={isGlobalMb}
+              />
+            </Conditional>
+          </HeaderRight>
         </header>
       </div>
     </StyledHeader>
