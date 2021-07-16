@@ -15,9 +15,6 @@ export const StyledIconCTA = styled.div`
   color: ${({ colorScheme: cs }) => cs.color};
   width: max-content;
   cursor: ${({ onClick }) => (onClick ? 'pointer' : '')};
-  @media (max-width: 768px) {
-    border: 1px solid ${({ colorScheme: cs }) => cs.accent};
-  }
 `;
 
 export const Chevron = styled.div`

@@ -65,6 +65,10 @@ const it = {
     HEADING: 'I più alti standard di sicurezza',
     SHORT_HEADING: 'I migliori standard di sicurezza in vigore',
     MOBILE_HEADING: 'Esperienze Sicure',
+    EU_HEADING: "Certificato COVID dell'UE richiesto",
+    EU_PREFIX: 'Nota bene: ',
+    EU_DESCRIPTION:
+      "a partire dal 21 luglio tutti i visitatori sopra gli 11 anni di età devono presentare un Certificato COVID dell'UE.",
     GENERAL_DESCRIPTION:
       'Ogni esperienza contrassegnata da questo stemma è conforme ai migliori standard di sicurezza imposti dalle direttive sanitarie del governo locale.',
     CTA_TEXT: 'Dettagli Sulla Sicurezza',

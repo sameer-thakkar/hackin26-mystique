@@ -28,6 +28,7 @@ export const MBContext = createContext({
   setHsid: null,
   isStage: false,
   bookSubdomain: 'book',
+  primaryCountry: null,
 });
 
 export const MBContextProvider = (props) => {
@@ -45,6 +46,7 @@ export const MBContextProvider = (props) => {
     isGlobalMb,
     isStage,
     bookSubdomain,
+    primaryCountry,
   } = props;
   const [sidebarModalStack, setSidebarModalStack] = useState([]);
   const [hsid, setHsid] = useState(null);
@@ -99,6 +101,7 @@ export const MBContextProvider = (props) => {
         setHsid,
         isStage,
         bookSubdomain,
+        primaryCountry,
       }}
     >
       {props.children}

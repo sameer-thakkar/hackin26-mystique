@@ -65,6 +65,10 @@ const es = {
     HEADING: 'Estándares de Seguridad',
     SHORT_HEADING: 'Los mejores estándares de seguridad en vigor',
     MOBILE_HEADING: 'Experiencias Seguras',
+    EU_HEADING: 'Se requiere el certificado COVID de la UE',
+    EU_PREFIX: 'Atención: ',
+    EU_DESCRIPTION:
+      'A partir del 21 de julio, todos los visitantes mayores de 11 años deben presentar un certificado COVID de la UE',
     GENERAL_DESCRIPTION:
       'Cualquier experiencia con esta insignia ha sido verificada y cumple con los más estrictos estándares de seguridad impuestos por las autoridades sanitarias locales.',
     CTA_TEXT: 'Estándares de Seguridad',
