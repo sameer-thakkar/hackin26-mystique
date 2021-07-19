@@ -361,12 +361,12 @@ class MicrositeV2 extends Component<any, any> {
     } = this.props.data.data;
 
     const [listicleContent] = this.props.data.data.body;
+    const { primary } = listicleContent || {};
+
     const {
-      primary: {
-        islisticle: isListicle,
-        csv_months_to_display_for_listicle: displayMonthsCSV,
-      },
-    } = listicleContent;
+      islisticle: isListicle,
+      csv_months_to_display_for_listicle: displayMonthsCSV,
+    } = primary || {};
 
     const displayMonthsArray = displayMonthsCSV
       ?.split(',')
