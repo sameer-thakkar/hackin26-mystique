@@ -110,8 +110,15 @@ const Text = styled.div`
   color: ${COLORS.FOUR_BLACK};
   font-style: normal;
   font-weight: normal;
-  font-size: 12px;
-  line-height: 19px;
+  font-size: 15px;
+  line-height: 24px;
+  /* or 160% */
+  font-feature-settings: 'ss04' on;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    line-height: 20px;
+  }
 `;
 
 const Pitch = styled.div`
@@ -130,7 +137,7 @@ const EmphasizedText = styled.div`
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
-  line-height: 24px;
+  line-height: 20px;
 `;
 
 const Content = styled.div`
@@ -180,6 +187,7 @@ const SafetyCard = styled.div`
   border: 1px solid #e2e2e2;
   border-radius: 4px;
   grid-template-columns: auto auto;
+  align-items: center;
   ${StyledIconCTA} {
     margin-left: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.08);
@@ -187,7 +195,6 @@ const SafetyCard = styled.div`
     padding-left: 18px;
     background: ${COLORS.WHITE};
     grid-template-columns: auto;
-    align-self: start;
     svg {
       transform: scale(1.1);
     }
@@ -195,7 +202,26 @@ const SafetyCard = styled.div`
   @media (max-width: 768px) {
     grid-template-columns: auto;
     grid-row-gap: 8px;
+
+    ${Text} {
+      font-size: 12px;
+      line-height: 20px;
+    }
   }
+`;
+
+const AttentionStrip = styled.div`
+  font-family: ${SOLEIL.FONT_STACK};
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  padding: 12px 16px;
+  border-radius: 4px;
+  background-color: ${COLORS.GENERAL_WARNING_BG};
+  color: ${COLORS.GENERAL_WARNING_FG};
+  margin-top: -8px;
+  margin-bottom: 8px;
 `;
 
 const renderSafetyDetailsSection = (tags, lang, isMobile) =>
@@ -224,7 +250,7 @@ const SafeExperiencesPitch = ({
   generic = false,
   images = [],
 }) => {
-  const { lang } = useContext(MBContext);
+  const { lang, primaryCountry } = useContext(MBContext);
   const { width } = useWindowSize();
   const isMobile = width < 768;
   let tags = allTags;
@@ -255,7 +281,17 @@ const SafeExperiencesPitch = ({
       <Section>
         <Pitch>
           <Heading>{strings.SAFE_EXPERIENCE.MODAL.HEADING}</Heading>
-          <Text>{strings.SAFE_EXPERIENCE.MODAL.SUB_HEADING}</Text>
+          <Conditional if={primaryCountry?.code === 'FR'}>
+            <Section>
+              <AttentionStrip>
+                {strings.SAFE_EXPERIENCE.EU_PREFIX}
+                {strings.SAFE_EXPERIENCE.EU_DESCRIPTION}
+              </AttentionStrip>
+            </Section>
+          </Conditional>
+          <Text style={{ maxWidth: isMobile ? 'auto' : '82%' }}>
+            {strings.SAFE_EXPERIENCE.MODAL.SUB_HEADING}
+          </Text>
         </Pitch>
       </Section>
 

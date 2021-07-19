@@ -1,6 +1,9 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import Conditional from 'components/common/Conditional';
+import { COLORS, SOLEIL } from 'const/ui-constants';
+
 import { getNonAmpUrl } from '../../utils/urlUtils';
 
 export const StyledInfoBanner = styled.div`
@@ -18,8 +21,9 @@ export const StyledInfoBanner = styled.div`
   }
 
   @media (max-width: 768px) {
-    padding: 24px 16px;
+    padding: 16px;
     width: calc(100% - 32px);
+    grid-template-columns: auto;
   }
 `;
 
@@ -33,25 +37,40 @@ const Content = styled.div`
 `;
 
 const Title = styled.div`
+  font-family: ${SOLEIL.FONT_STACK};
   font-weight: 600;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 20px;
+
+  @media (max-width: 768px) {
+    color: ${COLORS.OKAY_GREEN_DARK};
+    svg {
+      height: 24px;
+      width: 24px;
+    }
+    display: grid;
+    grid-column-gap: 8px;
+    justify-content: left;
+    align-items: center;
+    grid-template-columns: auto auto;
+  }
 `;
 
 const Description = styled.div`
-  font-size: 14px;
-  line-height: 140%;
+  font-size: 12px;
+  line-height: 20px;
 `;
 
 const CTA = styled.div`
-  font-size: 14px;
+  font-size: 12px;
+  line-height: 16px;
   display: inline-block;
   text-decoration: underline;
-  line-height: 140%;
   cursor: pointer;
+  color: ${COLORS.OKAY_GREEN_DARK};
   @media (max-width: 768px) {
     display: block;
-    margin-top: 8px;
+    margin-top: 4px;
   }
 `;
 
@@ -76,6 +95,7 @@ const InfoBanner = ({
   bannerOnClick = null,
   colorScheme,
   isAmp,
+  isMobile = false,
 }) => {
   const router = useRouter();
   const nonAmpPageUrl = getNonAmpUrl(router.asPath);
@@ -85,9 +105,16 @@ const InfoBanner = ({
       clickable={bannerOnClick}
       colorScheme={colorScheme}
     >
-      <Icon>{icon}</Icon>
+      <Conditional if={!isMobile}>
+        <Icon>{icon}</Icon>
+      </Conditional>
       <Content>
-        <Title>{title}</Title>
+        <Title>
+          <Conditional if={isMobile}>
+            <Icon>{icon}</Icon>
+          </Conditional>
+          {title}
+        </Title>
         {isAmp ? (
           <Description>
             {description} <AmpCTA href={nonAmpPageUrl}> {cta}</AmpCTA>

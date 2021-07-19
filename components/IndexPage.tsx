@@ -500,6 +500,8 @@ export default class Page extends React.Component<any, any> {
         {}
       );
 
+      const primaryCountry = tourGroupAPIResponses?.cities?.[0]?.country;
+
       const currencySymbolMap = tourGroupAPIResponses?.currencies?.reduce(
         (acc, currency) => ({
           ...acc,
@@ -514,6 +516,7 @@ export default class Page extends React.Component<any, any> {
         tourGroupData,
         currencySymbolMap,
         activeCurrency,
+        primaryCountry,
       };
     } catch (error) {
       console.log(error);
@@ -566,6 +569,7 @@ export default class Page extends React.Component<any, any> {
       queryParams = {},
       biLink,
       isStage,
+      primaryCountry,
     } = this.props;
 
     const { noTrack, tgidToScroll, currencyCode, bookSubdomain } = queryParams;
@@ -699,6 +703,7 @@ export default class Page extends React.Component<any, any> {
                 isGlobalMb={isGlobalMb}
                 isStage={isStage}
                 bookSubdomain={bookSubdomain}
+                primaryCountry={primaryCountry}
               >
                 {Component}
                 {typeof window !== 'undefined' ? (
