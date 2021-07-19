@@ -6,6 +6,7 @@ import Conditional from 'components/common/Conditional';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { CLOSE_WHITE } from 'assets/SvgIcons';
 import { ASPECT_RATIO, FALLBACK_IMAGE } from 'const/index';
+import { strings } from 'const/strings';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import { shortCodeSerializer } from 'utils/shortCodes';
 
@@ -281,7 +282,7 @@ const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = f
           {/* TODO: Change the below condition once ticket page is live */}
           <Conditional if={false}>
             <a href={ticketLink} className="cta primary">
-              Buy Tickets
+              {strings.BANNER_CTA}
             </a>
           </Conditional>
           <a

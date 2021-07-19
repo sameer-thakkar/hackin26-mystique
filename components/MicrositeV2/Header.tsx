@@ -18,6 +18,7 @@ import HeaderLinks from 'components/HeaderLinks';
 import { SEARCH_ICON, POWERED_BY_HEADOUT } from 'assets/SvgIcons';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { PAGETYPE, ALLOW_IMMEDIEATE_NESTING, THEMES } from 'const/index';
+import { strings } from 'const/strings';
 
 const SearchBox: ComponentType<any> = dynamic(
   () => import('./SearchBox').then((mod) => mod.SearchBox),
@@ -445,7 +446,7 @@ const Header: FunctionComponent<HeaderProps> = ({
             <Conditional if={enableBuyTickets}>
               <Conditional if={isGlobalMb && showBuyTickets}>
                 <a href={buyTicketsLink} className="buy-tickets global-mb">
-                  Buy Tickets
+                  {strings.BANNER_CTA}
                 </a>
               </Conditional>
               <Conditional if={!isGlobalMb}>
@@ -455,7 +456,7 @@ const Header: FunctionComponent<HeaderProps> = ({
                   role="button"
                   onClick={buyTicketHandler}
                 >
-                  Buy Tickets
+                  {strings.BANNER_CTA}
                 </div>
               </Conditional>
             </Conditional>
