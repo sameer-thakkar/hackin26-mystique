@@ -636,6 +636,7 @@ const MicrositeV1 = (props) => {
                 tourListSection={tourListSection}
                 content={[...longFormContent, ...contentFWSlices]}
                 isMobile={isAmp || isMobile}
+                isAmp={isAmp}
               />
             ) : null}
           </InteractionContextProvider>

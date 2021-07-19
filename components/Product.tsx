@@ -38,6 +38,7 @@ import { truncate, wordCount } from 'utils/helper';
 import { currencyAtom } from 'store/atoms/currency';
 import { EXPERIMENT_NAMES } from 'const/experiments';
 import { getABTestingVariant } from 'utils/experiments/experimentUtils';
+import { useAmp } from 'next/amp';
 
 import Conditional from './common/Conditional';
 
@@ -612,6 +613,7 @@ const Descriptors = ({
   hasValidity = false,
   isAGVariant = false,
 }) => {
+  const isAmp = useAmp();
   return (
     <TourTags>
       <Conditional if={isAGVariant}>
@@ -635,7 +637,11 @@ const Descriptors = ({
 
         const descEl = descriptor ? (
           <div key={`descriptor-${index}`} className="tour-tag">
-            <Image url={icon} />
+            {isAmp ? (
+              <amp-img src={icon} height="16px" width="16px"></amp-img>
+            ) : (
+              <Image url={icon} />
+            )}
             {descriptor.replace(/['"]+/g, '')}
           </div>
         ) : null;
