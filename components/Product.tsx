@@ -360,6 +360,9 @@ const ProductBody = styled.div`
   .display-none{
     display: none;
   }
+  .display-expand{
+    display:grid;
+  }
 `;
 
 const NextAvailableBlock = styled.div`
@@ -684,7 +687,7 @@ const Product = (props) => {
   } = props;
   const { mbTheme, biLink, hsid, bookSubdomain } = useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
-  const [isContentOpen, toggleContentOpen] = useState(defaultOpen || isAmp);
+  const [isContentOpen, toggleContentOpen] = useState(defaultOpen);
   const [showMoreDetailsInTabs, setShowMoreDetails] = useState(
     defaultOpen || false
   );
@@ -869,7 +872,7 @@ const Product = (props) => {
         role="button"
         tabIndex={0}
         // @ts-ignore
-        on={`tap:tour-description-${position}.toggleClass(class='show-more-information'),tour-description-less-text-${position}.toggleClass(class='display-none'),tour-description-more-text-${position}.toggleClass(class='display-none')`}
+        on={`tap:tour-description-more-text-${position}.toggleClass(class='display-none'),tour-description-less-text-${position}.toggleClass(class='display-none'),tour-description-${position}.toggleClass(class='display-expand')`}
       >
         <span
           className="more-details"
