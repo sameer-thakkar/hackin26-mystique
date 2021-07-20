@@ -330,6 +330,17 @@ const ProductBody = styled.div`
       grid-gap: 12px;
     }
   }
+  .amp-tour-description{
+    ${({ collapsed, noOfListItemToShow, defaultOpen }) =>
+      collapsed && !defaultOpen
+        ? `
+  *:not(div):nth-child(n + ${noOfListItemToShow}),
+  ul li:nth-child(n + ${noOfListItemToShow}) {
+    display: grid;
+  }
+  `
+        : ''}
+  }
   ul:last-child {
     margin-bottom: 0;
   }
@@ -1044,7 +1055,9 @@ const Product = (props) => {
         defaultOpen={defaultOpen}
       >
         <div
-          className="tour-description"
+          className={`${
+            isAmp ? 'amp-tour-description tour-description' : 'tour-description'
+          }`}
           id={`tour-description-${position}`}
           onClick={
             !isMobile && !defaultOpen
