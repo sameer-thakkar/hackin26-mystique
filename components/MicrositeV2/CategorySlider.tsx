@@ -153,7 +153,7 @@ const CategorySlider = (props) => {
       );
     });
   } else {
-    filteredTgids = tgidsArray.filter(
+    filteredTgids = tgidsArray?.filter(
       (tgid, index, arr) =>
         allTours[tgid] &&
         allTours[tgid].available &&
