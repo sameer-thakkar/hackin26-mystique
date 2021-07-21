@@ -92,7 +92,6 @@ export const StyledLongForm = styled.div`
 export default class LongForm extends Component<any, any> {
   render() {
     const { content, ...props } = this.props;
-    console.log(props, content);
     return (
       <StyledLongForm>
         {content.map((slice, index) => (
