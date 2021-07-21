@@ -4,6 +4,7 @@ import { strings } from 'const/strings';
 import { useState, useRef, useEffect } from 'react';
 import { useWindowWidth } from '@react-hook/window-size';
 import { COLORS, SOLEIL } from 'const/ui-constants';
+import { useAmp } from 'next/amp';
 
 import { CHEVRON_DOWN } from '../assets/SvgIcons';
 import LinkResolver from './LinkResolver';
@@ -67,10 +68,27 @@ const StyledMenuItem = styled.li`
       width: 10px;
     }
   }
+
   @media (max-width: 768px) {
     padding: 16px;
     &.group-booking-cta {
       border: none;
+    }
+    .withAmp {
+      grid-template-rows: auto auto;
+      grid-template-columns: auto;
+      grid-row-gap: 25px;
+      a {
+        display: grid;
+        grid-template-columns: auto auto;
+      }
+      div {
+        padding-left: 10px;
+      }
+    }
+    .withAmp > a {
+      padding-bottom: 10px;
+      border-bottom: 1px solid ${COLORS.GREY.G5};
     }
     .withIcon {
       .nest-icon {
@@ -273,26 +291,71 @@ const MenuItem = (props) => {
     className,
     isGlobalMb = false,
   } = props;
-
+  const isAmp = useAmp();
   return (
-    <StyledMenuItem
-      nestOpen={nestOpen}
-      className={`${className}`}
-      isGlobalMb={isGlobalMb}
-    >
-      <LinkResolver target={url?.target} url={url?.url}>
-        <div
-          className={isNested ? 'withIcon' : ''}
-          onClick={onClick}
-          role="button"
-          tabIndex={0}
+    <>
+      {!isAmp ? (
+        <StyledMenuItem
+          nestOpen={nestOpen}
+          className={`${className}`}
+          isGlobalMb={isGlobalMb}
+          isAmp={isAmp}
         >
-          <span className="label">{label}</span>
-          {isNested ? <span className="nest-icon">{CHEVRON_DOWN}</span> : null}
-        </div>
-        {children}
-      </LinkResolver>
-    </StyledMenuItem>
+          <LinkResolver target={url?.target} url={url?.url}>
+            <div
+              className={isNested ? 'withIcon' : ''}
+              onClick={onClick}
+              role="button"
+              tabIndex={0}
+            >
+              <span className="label">{label}</span>
+              {isNested ? (
+                <span className="nest-icon">{CHEVRON_DOWN}</span>
+              ) : null}
+            </div>
+            {children}
+          </LinkResolver>
+        </StyledMenuItem>
+      ) : (
+        <StyledMenuItem
+          nestOpen={nestOpen}
+          className={`${className}`}
+          isGlobalMb={isGlobalMb}
+          isAmp={isAmp}
+        >
+          <LinkResolver target={url?.target} url={url?.url}>
+            <div className={isNested ? 'withIcon withAmp' : 'withAmp'}>
+              <span className="label">{label}</span>
+              {isNested ? (
+                <span className="nest-icon">{CHEVRON_DOWN}</span>
+              ) : null}
+
+              {children?.props?.children?.map((child, index) => (
+                <div key={index}>
+                  <LinkResolver
+                    target={child?.props?.target}
+                    url={child?.props?.url?.url}
+                  >
+                    <div
+                      className={child?.isNested ? 'withIcon' : ''}
+                      onClick={onClick}
+                      role="button"
+                      tabIndex={0}
+                    >
+                      <span className="label">{child?.props?.label}</span>
+
+                      {child?.isNested ? (
+                        <span className="nest-icon">{CHEVRON_DOWN}</span>
+                      ) : null}
+                    </div>
+                  </LinkResolver>
+                </div>
+              ))}
+            </div>
+          </LinkResolver>
+        </StyledMenuItem>
+      )}
+    </>
   );
 };
 
