@@ -74,22 +74,6 @@ const StyledMenuItem = styled.li`
     &.group-booking-cta {
       border: none;
     }
-    .withAmp {
-      grid-template-rows: auto auto;
-      grid-template-columns: auto;
-      grid-row-gap: 25px;
-      a {
-        display: grid;
-        grid-template-columns: auto auto;
-      }
-      div {
-        padding-left: 10px;
-      }
-    }
-    .withAmp > a {
-      padding-bottom: 10px;
-      border-bottom: 1px solid ${COLORS.GREY.G5};
-    }
     .withIcon {
       .nest-icon {
         justify-self: end;
@@ -219,6 +203,11 @@ const Nav = styled.nav`
   }
 `;
 
+const HeadingMenu = styled(StyledMenuItem)`
+  font-weight: bold;
+  border-bottom: 1px solid ${COLORS.CHALK};
+`;
+
 const Navigation = (props) => {
   const { slices, isMobile, navOpen, id, isGlobalMb = false } = props;
   return (
@@ -291,71 +280,25 @@ const MenuItem = (props) => {
     className,
     isGlobalMb = false,
   } = props;
-  const isAmp = useAmp();
   return (
-    <>
-      {!isAmp ? (
-        <StyledMenuItem
-          nestOpen={nestOpen}
-          className={`${className}`}
-          isGlobalMb={isGlobalMb}
-          isAmp={isAmp}
+    <StyledMenuItem
+      nestOpen={nestOpen}
+      className={`${className}`}
+      isGlobalMb={isGlobalMb}
+    >
+      <LinkResolver target={url?.target} url={url?.url}>
+        <div
+          className={isNested ? 'withIcon' : ''}
+          onClick={onClick}
+          role="button"
+          tabIndex={0}
         >
-          <LinkResolver target={url?.target} url={url?.url}>
-            <div
-              className={isNested ? 'withIcon' : ''}
-              onClick={onClick}
-              role="button"
-              tabIndex={0}
-            >
-              <span className="label">{label}</span>
-              {isNested ? (
-                <span className="nest-icon">{CHEVRON_DOWN}</span>
-              ) : null}
-            </div>
-            {children}
-          </LinkResolver>
-        </StyledMenuItem>
-      ) : (
-        <StyledMenuItem
-          nestOpen={nestOpen}
-          className={`${className}`}
-          isGlobalMb={isGlobalMb}
-          isAmp={isAmp}
-        >
-          <LinkResolver target={url?.target} url={url?.url}>
-            <div className={isNested ? 'withIcon withAmp' : 'withAmp'}>
-              <span className="label">{label}</span>
-              {isNested ? (
-                <span className="nest-icon">{CHEVRON_DOWN}</span>
-              ) : null}
-
-              {children?.props?.children?.map((child, index) => (
-                <div key={index}>
-                  <LinkResolver
-                    target={child?.props?.target}
-                    url={child?.props?.url?.url}
-                  >
-                    <div
-                      className={child?.isNested ? 'withIcon' : ''}
-                      onClick={onClick}
-                      role="button"
-                      tabIndex={0}
-                    >
-                      <span className="label">{child?.props?.label}</span>
-
-                      {child?.isNested ? (
-                        <span className="nest-icon">{CHEVRON_DOWN}</span>
-                      ) : null}
-                    </div>
-                  </LinkResolver>
-                </div>
-              ))}
-            </div>
-          </LinkResolver>
-        </StyledMenuItem>
-      )}
-    </>
+          <span className="label">{label}</span>
+          {isNested ? <span className="nest-icon">{CHEVRON_DOWN}</span> : null}
+        </div>
+        {children}
+      </LinkResolver>
+    </StyledMenuItem>
   );
 };
 
@@ -405,6 +348,12 @@ const HeaderSliceHandler = (slice, props) => {
         >
           {strings.GROUP_TICKETS}
         </StyledMenuItem>
+      );
+    case 'heading_menu_item':
+      return (
+        <HeadingMenu as="a" href={slice?.url?.url} target={slice?.url?.target}>
+          {slice.label}
+        </HeadingMenu>
       );
   }
 };
@@ -473,6 +422,25 @@ const HeaderSliceHandler = (slice, props) => {
  *
  */
 
+const flattenMenu = (slices) => {
+  return slices.reduce((acc, slice) => {
+    if (slice.slice_type === 'nested_menu') {
+      // change all nested_menu slices to same level slice by spreading the childrenSlices.
+      const childrenSlices = slice.slices;
+      return [
+        ...acc,
+        {
+          slice_type: 'heading_menu_item',
+          label: slice.primary.label,
+          url: slice.primary.url,
+        },
+        ...childrenSlices,
+      ];
+    }
+    return [...acc, slice];
+  }, []);
+};
+
 const MultiLevelNav = ({
   slice,
   oldMenuItems = [],
@@ -481,12 +449,14 @@ const MultiLevelNav = ({
   isGlobalMb = false,
 }) => {
   const [firstSlice, ..._ignored_only_one_nav_bar] = slice;
+  const isAmp = useAmp();
   const withOldMenu = [...(firstSlice?.slices || []), ...(oldMenuItems || [])];
+  const finalSlices = isAmp ? flattenMenu(withOldMenu) : withOldMenu;
   return (
     <Navigation
       navOpen={isActive}
       isMobile={isMobile}
-      slices={withOldMenu}
+      slices={finalSlices}
       isGlobalMb={isGlobalMb}
     />
   );
