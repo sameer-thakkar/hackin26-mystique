@@ -226,13 +226,46 @@ class MicrositeV2 extends Component<any, any> {
       )?.reduce((acc, curr) => acc + curr);
       tourListCategorySortBy = tourListSlice?.primary?.disable_sort_selector;
       tourListCategories = tourListSlice?.items?.map((item) => {
-        const { category, exclude_tgids, category_name } = item || {};
+        const {
+          collection,
+          category,
+          sub_category,
+          exclude_tgids,
+          category_name,
+        } = item || {};
         const re = /\s*(?:,)\s*/g;
         const excludedTgids = exclude_tgids ? exclude_tgids?.split(re) : [];
-        const tgidData = categoryTourListData[category];
-        const filteredData = tgidData?.filter(
-          (p) => !excludedTgids.includes(`${p.tgid}`)
-        );
+        const tgidData =
+          categoryTourListData[collection] ||
+          categoryTourListData[category] ||
+          categoryTourListData[sub_category];
+
+        const filteredData = tgidData?.filter((product) => {
+          const { tgid, primaryCategory, primarySubCategory } = product || {};
+
+          if (collection) {
+            if (category) {
+              return (
+                !excludedTgids.includes(`${tgid}`) &&
+                primaryCategory?.id === category
+              );
+            } else if (sub_category) {
+              return (
+                !excludedTgids.includes(`${tgid}`) &&
+                primarySubCategory?.id === sub_category
+              );
+            } else {
+              return !excludedTgids.includes(`${tgid}`);
+            }
+          } else if (category && sub_category) {
+            return (
+              !excludedTgids.includes(`${tgid}`) &&
+              primarySubCategory?.id === sub_category
+            );
+          } else {
+            return !excludedTgids.includes(`${tgid}`);
+          }
+        });
         let tgids, prices;
         if (filteredData?.length) {
           tgids = filteredData?.map((d) => d?.tgid);
@@ -248,13 +281,18 @@ class MicrositeV2 extends Component<any, any> {
           tourListCategoryAllTours[tgid] = data;
         });
         return {
-          id: category,
+          id: collection || category || sub_category,
           name: category_name,
           image: category?.category_image?.url,
           rank: 0,
           ranking: {
             popularity: tgids?.length ? tgids : [],
             price: prices?.length ? prices : [],
+          },
+          sliceData: {
+            collectionId: collection,
+            primaryCatId: category,
+            primarySubCatId: sub_category,
           },
         };
       });

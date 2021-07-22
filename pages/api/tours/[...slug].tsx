@@ -38,6 +38,31 @@ const ToursAPI = async (req, res) => {
           data?.microBrandsHighlight || ''
         );
       }
+      if (data?.pageData?.items?.length) {
+        data.pageData.items = data?.pageData?.items.map((tour) => ({
+          ...tour,
+          microBrandsHighlight: markdownToRichtext(
+            tour.microBrandsHighlight || ''
+          )?.map((highlight) => ({ ...highlight, ...highlight.content })),
+        }));
+      }
+      if (data?.sections?.length) {
+        data.sections = data?.sections?.map((section) => {
+          const { type, tourGroups } = section || {};
+          return {
+            type,
+            tourGroups: {
+              ...tourGroups,
+              items: tourGroups?.items.map((tour) => ({
+                ...tour,
+                microBrandsHighlight: markdownToRichtext(
+                  tour.microBrandsHighlight || ''
+                )?.map((highlight) => ({ ...highlight, ...highlight.content })),
+              })),
+            },
+          };
+        });
+      }
 
       res.write(JSON.stringify(data));
       res.end();

@@ -51,6 +51,57 @@ export const fetchCategory = async (
   }
 };
 
+interface fetchTGIDsByCategoryV2Obj {
+  categoryId: string | number;
+  hostname: string;
+  isSubCategory: boolean;
+  city?: string;
+  lang?: string;
+}
+
+export const fetchTGIDsByCategoryV2 = async ({
+  categoryId,
+  hostname,
+  isSubCategory = false,
+  city = '',
+  lang = 'EN',
+}: fetchTGIDsByCategoryV2Obj) => {
+  const url = isSubCategory
+    ? `${hostname}/api/tours/v6/tour-groups/list-by/sub-category/${categoryId}`
+    : `${hostname}/api/tours/v6/tour-groups/list-by/category/${categoryId}`;
+
+  try {
+    const response = await fetch(
+      `${url}?language=${lang}&limit=100${city ? `&city=${city}` : ''}`
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('[fetchTGIDsByCategoryV2Obj]', error);
+  }
+};
+
+interface fetchCollection {
+  collectionId: string | number;
+  hostname: string;
+  lang?: string;
+}
+export const fetchCollection = async ({
+  collectionId,
+  hostname,
+  lang = 'EN',
+}: fetchCollection) => {
+  const url = `${hostname}/api/tours/v1/collection/${collectionId}/sections?limit=100&language=${lang}`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('[fetchCollection]', error);
+  }
+};
+
 export const fetchReviewsTourGroup = (tgid, limit) =>
   fetch(
     `https://api.headout.com/api/v2/review/tour-group/id/${tgid}?&limit=${limit}`

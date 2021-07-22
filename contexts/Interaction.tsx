@@ -5,15 +5,18 @@ export default InteractionContext;
 
 export const InteractionContextProvider = (props) => {
   const { categories } = props;
+  const { sliceData: currentSlice } = categories || {};
   const defaultCategory =
     (categories[0] && categories[0].ranking.popularity) || [];
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
   const [activeCategoryId, setActiveCategoryId] = useState(null);
+  const [sliceData, setSliceData] = useState(null);
 
   useEffect(() => {
     const categoryId = categories?.[activeCategoryIndex]?.id;
     setActiveCategoryId(categoryId);
     changeCategory(defaultCategory, activeCategoryIndex);
+    setSliceData(currentSlice);
   }, []);
 
   const [activeTour, setActiveTour] = useState({
@@ -57,6 +60,7 @@ export const InteractionContextProvider = (props) => {
 
   const changeCategory = (tgidArray: any[], categoryIndex: number) => {
     const categoryId = categories?.[categoryIndex]?.id;
+    const sliceData = categories?.[categoryIndex]?.sliceData;
     setActiveCategoryId(categoryId);
     setActiveTour({
       tgid: null,
@@ -66,6 +70,7 @@ export const InteractionContextProvider = (props) => {
     });
     setActiveCategoryIndex(categoryIndex);
     setActiveCategory(uniqueTgids(tgidArray));
+    setSliceData(sliceData);
   };
 
   return (
@@ -75,6 +80,7 @@ export const InteractionContextProvider = (props) => {
         activeCategoryId,
         activeCategoryIndex,
         activeCategoryTgids,
+        sliceData,
         clickTour,
         changeCategory,
         closeTour,

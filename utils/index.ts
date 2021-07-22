@@ -9,6 +9,7 @@ import {
   PRISMIC_LANG_TO_ROUTE_PARAM,
   CUSTOM_TYPES,
 } from '../constants';
+import { fetchCollection, fetchTGIDsByCategoryV2 } from './apiUtils';
 
 export const getLanguageFromPathname = ({
   pathname,
@@ -224,3 +225,45 @@ export const legacyBooleanCheck = (field): boolean =>
   typeof field === 'string'
     ? field?.toLowerCase() === 'yes' || field?.toLowerCase() === 'true'
     : field;
+
+export const generatePromiseForCategoryTours = ({
+  arr = [],
+  hostname,
+  city,
+  isCollection = false,
+  isCategory = false,
+  isSubCategory = false,
+}: {
+  arr: any[];
+  hostname: string;
+  city: string;
+  isCollection?: boolean;
+  isCategory?: boolean;
+  isSubCategory?: boolean;
+}) => {
+  const set = new Set(arr);
+  const ids = Array.from(set);
+
+  const allPromises = ids?.map(async (catId) => {
+    let promise;
+    switch (true) {
+      case isCollection:
+        promise = await fetchCollection({
+          collectionId: catId,
+          hostname,
+        });
+        break;
+      case isCategory:
+      case isSubCategory:
+        promise = await fetchTGIDsByCategoryV2({
+          categoryId: catId,
+          isSubCategory,
+          hostname,
+          city,
+        });
+        break;
+    }
+    return promise;
+  });
+  return allPromises;
+};
