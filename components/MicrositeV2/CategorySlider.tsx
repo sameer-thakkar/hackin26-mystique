@@ -153,7 +153,7 @@ const CategorySlider = (props) => {
       );
     });
   } else {
-    filteredTgids = tgidsArray.filter(
+    filteredTgids = tgidsArray?.filter(
       (tgid, index, arr) =>
         allTours[tgid] &&
         allTours[tgid].available &&
@@ -203,7 +203,7 @@ const CategorySlider = (props) => {
     setTgidClicked(null);
   };
 
-  const cardPosition = filteredTgids.indexOf(tgidClicked) + 1;
+  const cardPosition = filteredTgids?.indexOf(tgidClicked) + 1;
   const elementId =
     heading?.trim().replace(/\s/g, '-').toLowerCase() || filteredTgids[0];
 

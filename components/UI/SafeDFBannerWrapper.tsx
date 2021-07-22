@@ -60,6 +60,7 @@ const SafeDFBannerWrapper = ({
 }) => {
   const {
     sidebarModal: { addToAside },
+    primaryCountry,
   } = useContext(MBContext);
   const [isMobile, setIsMobile] = useState(isMobileCloudfront);
   const width = useWindowWidth();
@@ -75,23 +76,33 @@ const SafeDFBannerWrapper = ({
       sidePadding: isMobile ? 0 : 40,
     });
   };
+  const finalDescription =
+    primaryCountry?.code === 'FR'
+      ? strings.SAFE_EXPERIENCE.EU_DESCRIPTION
+      : strings.SAFE_EXPERIENCE.GENERAL_DESCRIPTION;
+  const finalHeading =
+    primaryCountry?.code === 'FR'
+      ? strings.SAFE_EXPERIENCE.EU_HEADING
+      : strings.SAFE_EXPERIENCE.HEADING;
+  const showFullBanner = primaryCountry?.code === 'FR' || !isMobile;
   return (
     <Wrapper marginTop={marginTop}>
       <Split mobileLayout={'scroll'} count={1}>
-        <Conditional if={!isMobile}>
+        <Conditional if={showFullBanner}>
           <Conditional if={hasSafe}>
             <InfoBanner
               cta={strings.LISTICLES.KNOW_MORE}
-              title={strings.SAFE_EXPERIENCE.HEADING}
-              description={strings.SAFE_EXPERIENCE.GENERAL_DESCRIPTION}
+              title={finalHeading}
+              description={finalDescription}
               bannerOnClick={openSafeSidebar}
               icon={Shield}
               isAmp={isAmp}
               colorScheme={greenScheme}
+              isMobile={isMobile}
             />
           </Conditional>
         </Conditional>
-        <Conditional if={isMobile}>
+        <Conditional if={!showFullBanner}>
           <Conditional if={hasSafe}>
             <IconCTA
               text={strings.SAFE_EXPERIENCE.FLAG_TEXT}

@@ -66,6 +66,10 @@ const nl = {
     HEADING: 'Beste veiligheidsnormen',
     SHORT_HEADING: 'Beste veiligheidsnormen',
     MOBILE_HEADING: 'Veilige ervaringen',
+    EU_HEADING: 'EU Covid-certificaat vereist',
+    EU_PREFIX: 'Opmerking: ',
+    EU_DESCRIPTION:
+      'Vanaf 21 juli moeten alle bezoekers ouder dan 11 jaar een EU COVID-certificaat kunnen tonen.',
     GENERAL_DESCRIPTION:
       'Elke ervaring met deze badge is geverifieerd om te voldoen aan de beste veiligheidsnormen volgens de gezondheidsrichtlijnen van de lokale overheid.',
     CTA_TEXT: 'Details omtrent veiligheid',

@@ -88,7 +88,7 @@ const BannerWrapper = styled.div`
   display: flex;
   align-items: center;
   overflow: hidden;
-  p {
+  h1 {
     position: absolute;
     margin-left: 120px;
     z-index: 11;
@@ -102,7 +102,7 @@ const BannerWrapper = styled.div`
     color: #ffffff;
   }
   @media (max-width: 768px) {
-    p {
+    h1 {
       margin-left: 16px;
       font-size: 20px;
     }
@@ -251,7 +251,7 @@ export const HomePage = (props) => {
       </Conditional>
       <Conditional if={isListicle}>
         <BannerWrapper>
-          <p>{bannerTextForListicle}</p>
+          <h1>{bannerTextForListicle}</h1>
           <BannerImage url={bannerImageForListicle}></BannerImage>
         </BannerWrapper>
       </Conditional>

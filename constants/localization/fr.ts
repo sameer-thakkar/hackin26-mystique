@@ -63,6 +63,10 @@ const fr = {
     HEADING: 'Normes de sécurité et sanitaires en vigueur',
     SHORT_HEADING: 'Toutes les normes de sécurité et sanitaires en vigueur',
     MOBILE_HEADING: 'Expériences conformes aux normes sanitaires',
+    EU_HEADING: "Certificat Covid de l'UE requis",
+    EU_PREFIX: 'Attention : ',
+    EU_DESCRIPTION:
+      "À partir du 21 juillet, tous les visiteurs de plus de 11 ans doivent présenter un certificat COVID de l'UE.",
     GENERAL_DESCRIPTION:
       'Toute expérience affichant ce badge a été vérifiée et est conforme aux normes de sécurité établies par les autorités locales en matière de santé.',
     CTA_TEXT: 'Détails des mesures de sécurité et sanitaires',
@@ -73,7 +77,7 @@ const fr = {
     MODAL: {
       HEADING: 'Expériences conformes aux normes sanitaires',
       SUB_HEADING:
-        "collabore avec ses partenaires dans le monde entier pour appliquer les normes de sécurité et sanitaires conformément aux directives de l'OMS. Toutes les mesures prises sur le terrain ont été vérifiées et sont indiquées ici. Il est grand temps de profiter à nouveau du monde qui nous entoure.",
+        "Headout collabore avec ses partenaires dans le monde entier pour appliquer les normes de sécurité et sanitaires conformément aux directives de l'OMS. Toutes les mesures prises sur le terrain ont été vérifiées et sont indiquées ici. Il est grand temps de profiter à nouveau du monde qui nous entoure.",
       DETAILS: {
         SAFETY_MASK_DEFAULT: {
           HEADING: 'Pour votre sécurité, tout le monde porte un masque',

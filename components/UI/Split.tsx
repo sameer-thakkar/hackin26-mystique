@@ -15,7 +15,9 @@ export const StlyedSplit = styled.div`
         mobileLayout === 'scroll'
           ? `
             overflow-x: scroll;
-            grid-template-columns: repeat(${count}, calc(100% - 8px)) 8px;
+            grid-template-columns: repeat(${count}, calc(100% - ${
+              count > 1 ? '8px' : '0px'
+            })) ${count > 1 ? '8px' : ''};
             grid-gap: 8px;
             &:after{
               content: '';
