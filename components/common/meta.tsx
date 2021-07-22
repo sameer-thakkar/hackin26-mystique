@@ -109,11 +109,10 @@ const PopulateHead = (data) => {
     originalHost,
     serverRequestStartTimestamp,
     isAmp,
-    disable_amp,
+    enable_amp,
     isMobile = false,
     finalBannerImages = [],
   } = data;
-
   const modifiedCanonicalLink = isMobile
     ? canonicalLinkForAMP || canonicalLink
     : canonicalLink;
@@ -240,7 +239,7 @@ const PopulateHead = (data) => {
         />
       ) : null}
 
-      {!disable_amp && !isAmp ? (
+      {enable_amp && !isAmp ? (
         <link rel="amphtml" href={`/?amp=1`} />
       ) : isAmp ? null : (
         <link rel="amphtml" />

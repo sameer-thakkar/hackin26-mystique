@@ -16,6 +16,7 @@ import { SOLEIL, COLORS } from 'const/ui-constants';
 import { truncate } from 'utils/helper';
 import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import { dateToString } from 'utils/dateToString';
+import InteractionContext from 'contexts/Interaction';
 
 const ProductCard = styled.div`
   width: 100%;
@@ -320,6 +321,8 @@ const Product = (props) => {
   } = props;
   const { currencySymbolMap, lang } = useContext(MBContext);
 
+  const { sliceData } = useContext(InteractionContext) || {};
+  const { collectionId, primaryCatId, primarySubCatId } = sliceData || {};
   if (!allTours[tgid]) return null;
   const { listingPrice, dfListingPrice, ...tour } = allTours[tgid] || {};
   const {
@@ -334,6 +337,27 @@ const Product = (props) => {
     averageRating,
     reviewCount,
   } = tour || {};
+
+  const { collectionName, primaryCategoryName, primarySubCategoryName } =
+    category || {};
+  let categoryName = '';
+  if (collectionId) {
+    if (primaryCatId) {
+      categoryName = primaryCategoryName;
+    } else if (primarySubCatId) {
+      categoryName = primarySubCategoryName;
+    } else {
+      categoryName = collectionName;
+    }
+  } else if (primaryCatId) {
+    if (primarySubCatId) {
+      categoryName = primarySubCategoryName;
+    } else {
+      categoryName = primaryCategoryName;
+    }
+  } else {
+    categoryName = primarySubCategoryName;
+  }
 
   const {
     finalPrice: price,
@@ -390,7 +414,7 @@ const Product = (props) => {
         </Conditional>
         <Conditional if={isEntertainmentMb}>
           <div className="l1-booster-wrapper">
-            <div className="l1-booster">{category}</div>
+            <div className="l1-booster">{categoryName}</div>
             <div className="rating">
               <Conditional if={isNew}>
                 <span className="avg-rating">{strings.NEW}</span>

@@ -4,7 +4,6 @@ import {
   CUSTOM_TYPES,
   LINKED_MICROSITE_PROPS,
   MICROSITE_ARRAY_KEYS,
-  MICROSITE_BOOL_KEYS,
   MICROSITE_LINK_KEYS,
   MICROSITE_OBJECT_KEYS,
   MICROSITE_STRING_KEYS,
@@ -228,14 +227,6 @@ export const getMicrositeDocument = async ({
             {}
           );
 
-          const boolValues: any = MICROSITE_BOOL_KEYS.reduce(
-            (acc, elem) => ({
-              ...acc,
-              [elem]: baseLangData.data[elem],
-            }),
-            {}
-          );
-
           // Base lang Fallback for Tour Ranking.
           const tourTabSlice = completeMicrosite.data.data.body1[0];
           if (tourTabSlice?.primary && !tourTabSlice.primary.ranking) {
@@ -317,7 +308,6 @@ export const getMicrositeDocument = async ({
                 ...objValues,
                 ...arrValues,
                 ...linkValues,
-                ...boolValues,
                 canonical_link:
                   canonicalLink || completeMicrosite.data.data.page_url,
                 logo_redirection_url: completeMicrosite.data.data
