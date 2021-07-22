@@ -87,10 +87,10 @@ export const categoryTourListParser = async (
     finalObj = {};
 
   if (collectionIds?.length) {
-    const idSet = new Set(collectionIds);
-    const ids = Array.from(idSet);
+    const collectionSet = new Set(collectionIds);
+    const collections = Array.from(collectionSet);
     allPromises = generatePromiseForCategoryTours({
-      arr: ids,
+      arr: collections,
       hostname,
       city,
       isCollection: true,
@@ -118,10 +118,10 @@ export const categoryTourListParser = async (
     }
   }
   if (categoryIds?.length) {
-    const idSet = new Set(categoryIds);
-    const ids = Array.from(idSet);
+    const categorySet = new Set(categoryIds);
+    const categories = Array.from(categorySet);
     allPromises = generatePromiseForCategoryTours({
-      arr: ids,
+      arr: categories,
       hostname,
       city,
       isCategory: true,
@@ -146,10 +146,10 @@ export const categoryTourListParser = async (
     }
   }
   if (subCategoryIds?.length) {
-    const idSet = new Set(subCategoryIds);
-    const ids = Array.from(idSet);
+    const subCategorySet = new Set(subCategoryIds);
+    const subCategories = Array.from(subCategorySet);
     allPromises = generatePromiseForCategoryTours({
-      arr: ids,
+      arr: subCategories,
       hostname,
       city,
       isSubCategory: true,

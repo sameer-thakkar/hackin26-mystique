@@ -246,24 +246,24 @@ class MicrositeV2 extends Component<any, any> {
           if (collection) {
             if (category) {
               return (
-                !excludedTgids.includes(`${tgid}`) &&
+                !excludedTgids.includes(tgid) &&
                 primaryCategory?.id === category
               );
             } else if (sub_category) {
               return (
-                !excludedTgids.includes(`${tgid}`) &&
+                !excludedTgids.includes(tgid) &&
                 primarySubCategory?.id === sub_category
               );
             } else {
-              return !excludedTgids.includes(`${tgid}`);
+              return !excludedTgids.includes(tgid);
             }
           } else if (category && sub_category) {
             return (
-              !excludedTgids.includes(`${tgid}`) &&
+              !excludedTgids.includes(tgid) &&
               primarySubCategory?.id === sub_category
             );
           } else {
-            return !excludedTgids.includes(`${tgid}`);
+            return !excludedTgids.includes(tgid);
           }
         });
         let tgids, prices;

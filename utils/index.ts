@@ -241,10 +241,10 @@ export const generatePromiseForCategoryTours = ({
   isCategory?: boolean;
   isSubCategory?: boolean;
 }) => {
-  const set = new Set(arr);
-  const ids = Array.from(set);
+  const idSet = new Set(arr);
+  const allIds = Array.from(idSet);
 
-  const allPromises = ids?.map(async (catId) => {
+  const allPromises = allIds?.map(async (catId) => {
     let promise;
     switch (true) {
       case isCollection:
