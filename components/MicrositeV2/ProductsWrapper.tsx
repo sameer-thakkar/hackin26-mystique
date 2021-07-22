@@ -22,7 +22,6 @@ const StyledProductWrapper = styled.div`
 
 export const ProductsWrapper = (props) => {
   const interactionContext = useContext(InteractionContext);
-
   const { activeCategoryTgids, changeCategory, clickTour } =
     interactionContext || {};
 
