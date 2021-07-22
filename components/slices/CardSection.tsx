@@ -52,7 +52,7 @@ const Controls = styled.div`
   .prev-slide,
   .next-slide {
     position: absolute;
-    top: 50%;
+    top: ${(isGlobalMb) => (isGlobalMb ? 'calc(20% + 10px)' : '50%')};
     transform: translateY(-50%);
     left: -20px;
     cursor: pointer;

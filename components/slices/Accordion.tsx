@@ -149,7 +149,7 @@ const Accordion = ({
         <div className={chevronContainerClass}>
           <Chevron
             isActive={isOpen}
-            activeCursor={false}
+            activeCursor={true}
             className={'chevron-icon'}
           />
         </div>

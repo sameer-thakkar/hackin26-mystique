@@ -71,6 +71,7 @@ const GlobalMB = (props) => {
     official_website: officialWebsite,
     country_name: countryName,
     city_name: cityName,
+    collection_name: collectionName,
     microbrand_url: microbrandUrl,
     favicon,
   } = CMSContent || {};
@@ -126,6 +127,7 @@ const GlobalMB = (props) => {
   const isGlobalCollection = type === 'global_collection';
   const isGlobalExperience = type === 'global_experience';
   const isGlobalCountry = type === 'global_country';
+  const isGlobalCity = type === 'global_city';
 
   const showTicketsCta = isGlobalCollection || props?.ticketsPage;
   const showHeaderlinks = isGlobalCollection || isGlobalExperience;
@@ -255,6 +257,10 @@ const GlobalMB = (props) => {
               host,
               uid,
               isGlobalMb: true,
+              isGlobalCity,
+              cityName,
+              isGlobalCollection,
+              collectionName,
               experiencePageUid: experiencesPage?.uid,
               ...(rides?.length && {
                 rides,

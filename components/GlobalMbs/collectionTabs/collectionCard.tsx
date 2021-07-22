@@ -31,7 +31,7 @@ const StyledCard = styled.div`
     width: max-content;
     padding: 4px 8px;
     border-radius: 2px;
-    z-index: 20;
+    z-index: 10;
     font-size: 12px;
     font-style: normal;
     font-weight: ${SOLEIL.REGULAR};
