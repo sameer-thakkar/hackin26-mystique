@@ -189,8 +189,10 @@ const TourTags = styled.div`
     .image-wrap {
       display: flex;
       align-items: top;
+      padding-top: calc(100% / 2);
     }
-    .img {
+    img,
+    amp-img {
       height: 16px;
       width: 16px;
       object-fit: cover;
@@ -648,7 +650,7 @@ const Descriptors = ({
 
         const descEl = descriptor ? (
           <div key={`descriptor-${index}`} className="tour-tag">
-            <Image className="img" url={icon} />
+            <Image url={icon} />
             {descriptor.replace(/['"]+/g, '')}
           </div>
         ) : null;
