@@ -93,6 +93,7 @@ const StyledCard = styled.div((props) => {
     }
     p {
       margin-bottom: ${isGlobalMb ? 0 : '16px'};
+      color:  ${isGlobalMb ? COLORS.GREY_G3 : 'inherit'};
     }
     a {
       color: ${COLORS.MED_SLATE_BLUE};
@@ -120,7 +121,7 @@ const Title = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
   font-weight: ${({ isGlobalMb }) =>
     isGlobalMb ? `${SOLEIL.SEMIBOLD}` : `${SOLEIL.BOLD}`};
-  font-size: ${({ isGlobalMb }) => (isGlobalMb ? '14px' : '20px')};
+  font-size: ${({ isGlobalMb }) => (isGlobalMb ? '16px' : '20px')};
   line-height: ${({ isGlobalMb }) => (isGlobalMb ? '20px' : '27px')};
   text-decoration: none;
   color: ${({ isGlobalMb }) =>

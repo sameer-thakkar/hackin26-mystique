@@ -216,6 +216,11 @@ const TabWrapper = (props: TabWrapperProps) => {
     activeTabId,
     ...parentSliceProps,
   };
+  const cityName = sliceProps?.cityName;
+  const tabSectionHeading =
+    cityName && sliceProps?.isGlobalCity
+      ? `${heading} ${cityName} Themeparks`
+      : heading;
 
   // Tab Carousel
   const width = useWindowWidth();
@@ -276,7 +281,7 @@ const TabWrapper = (props: TabWrapperProps) => {
       <>
         <TitleTextCombo noMargin={true}>
           <Conditional if={heading?.length}>
-            <h2>{heading}</h2>
+            <h2>{tabSectionHeading}</h2>
           </Conditional>
           {description ? <RichContent render={description} /> : null}
         </TitleTextCombo>

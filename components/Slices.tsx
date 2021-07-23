@@ -311,10 +311,17 @@ const sliceHandler = (slice, props: any = {}) => {
         exit_description,
       } = slice.primary;
 
+      const cardSectionTitle =
+        props?.isGlobalCollection &&
+        (card_section_title?.trim() === 'Explore' ||
+          card_section_title?.trim() === 'Things To Do')
+          ? `${card_section_title} ${props?.collectionName}`
+          : card_section_title;
+
       return (
         <CardSection
           slices={slice.slices}
-          title={card_section_title}
+          title={cardSectionTitle}
           sectionType={card_section_type}
           cardsInARow={Number(cards_in_a_row) || 1}
           description={description}
@@ -467,13 +474,18 @@ const sliceHandler = (slice, props: any = {}) => {
         />
       );
     case 'global_experiences':
+      const experienceCarouselTitle =
+        props?.isGlobalCollection &&
+        slice?.primary?.experience_type === 'Tickets'
+          ? `${props?.collectionName} ${slice?.primary?.title}`
+          : slice?.primary?.title;
       return (
         <ExperienceCarousel
           cardsInARow={slice?.primary?.cards_in_a_row}
           experienceType={slice?.primary?.experience_type}
           mbType={slice?.primary?.mb_type}
           showSeeAll={slice?.primary?.show_see_all}
-          title={slice?.primary?.title}
+          title={experienceCarouselTitle}
           {...props}
         />
       );

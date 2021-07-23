@@ -73,7 +73,7 @@ const StyledBanner = styled.div((props) => {
     }
     .title {
       font-size: 48px;
-      line-height: 38px;
+      line-height: 54px;
       font-weight: 700;
       letter-spacing: -0.2px;
       margin-bottom: 16px;
@@ -106,6 +106,10 @@ const StyledBanner = styled.div((props) => {
     }
     .info {
       margin-bottom: 34px;
+      line-height:200%;
+    }
+    .info p {
+      margin:6px 0;
     }
     .tickets {
       display: flex;
@@ -145,9 +149,6 @@ const StyledBanner = styled.div((props) => {
         width: 12px;
         height: 12px;
       }
-    }
-    p {
-      margin-bottom: 16px;
     }
     a {
       color: ${COLORS.MED_SLATE_BLUE};
@@ -264,7 +265,17 @@ const Banner: FunctionComponent<BannerProps> = ({
       type: 'bullets',
       clickable: true,
     },
+    slidesPerView: 1,
+    speed: 600,
+    centeredSlides: true,
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
+    },
     shouldSwiperUpdate: true,
+    loop: true,
+    initialSlide: 1,
+    freeMode: true,
   };
 
   let imageView;
@@ -338,7 +349,7 @@ const Banner: FunctionComponent<BannerProps> = ({
           <Breadcrumb links={breadcrumbs} />
         </Conditional>
         <div className="wrapper">
-          <div className="title">{title}</div>
+          <h1 className="title">{title}</h1>
           <Conditional if={subText}>
             <div className="subtext">{subText}</div>
           </Conditional>
