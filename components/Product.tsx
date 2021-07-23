@@ -191,7 +191,8 @@ const TourTags = styled.div`
       align-items: top;
       padding-top: calc(100% / 2);
     }
-    img {
+    img,
+    amp-img {
       height: 16px;
       width: 16px;
       object-fit: cover;
@@ -329,6 +330,17 @@ const ProductBody = styled.div`
       grid-gap: 12px;
     }
   }
+  .amp-tour-description{
+    ${({ collapsed, noOfListItemToShow, defaultOpen }) =>
+      collapsed && !defaultOpen
+        ? `
+  *:not(div):nth-child(n + ${noOfListItemToShow}),
+  ul li:nth-child(n + ${noOfListItemToShow}) {
+    display: grid;
+  }
+  `
+        : ''}
+  }
   ul:last-child {
     margin-bottom: 0;
   }
@@ -358,6 +370,9 @@ const ProductBody = styled.div`
   }
   .display-none{
     display: none;
+  }
+  .display-expand{
+    display:grid;
   }
 `;
 
@@ -678,7 +693,7 @@ const Product = (props) => {
   } = props;
   const { mbTheme, biLink, hsid, bookSubdomain } = useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
-  const [isContentOpen, toggleContentOpen] = useState(defaultOpen || isAmp);
+  const [isContentOpen, toggleContentOpen] = useState(defaultOpen);
   const [showMoreDetailsInTabs, setShowMoreDetails] = useState(
     defaultOpen || false
   );
@@ -863,7 +878,7 @@ const Product = (props) => {
         role="button"
         tabIndex={0}
         // @ts-ignore
-        on={`tap:tour-description-${position}.toggleClass(class='show-more-information'),tour-description-less-text-${position}.toggleClass(class='display-none'),tour-description-more-text-${position}.toggleClass(class='display-none')`}
+        on={`tap:tour-description-more-text-${position}.toggleClass(class='display-none'),tour-description-less-text-${position}.toggleClass(class='display-none'),tour-description-${position}.toggleClass(class='display-expand')`}
       >
         <span
           className="more-details"
@@ -1035,7 +1050,9 @@ const Product = (props) => {
         defaultOpen={defaultOpen}
       >
         <div
-          className="tour-description"
+          className={`${
+            isAmp ? 'amp-tour-description tour-description' : 'tour-description'
+          }`}
           id={`tour-description-${position}`}
           onClick={
             !isMobile && !defaultOpen

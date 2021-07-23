@@ -235,7 +235,7 @@ const Header: React.FC<any> = (props) => {
               alt={logoAltText}
               dontLazyLoad
               isLogo
-              height="44"
+              height={isAmp ? '32' : '44'}
               width="144"
               autoCrop={false}
             />

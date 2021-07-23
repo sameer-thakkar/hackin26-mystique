@@ -1,31 +1,39 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { withAmp } from '../common/withAmp';
+
 type IFrameProps = {
-	name?: string;
-	src: string;
-	frameborder?: number | string;
-	allow?: string;
-	allowfullscreen?: string;
-	height?: string;
+  name?: string;
+  src: string;
+  frameborder?: number | string;
+  allow?: string;
+  allowfullscreen?: string;
+  height?: string;
+  isAmp?: boolean;
 };
 
 const IFrameContainer = styled.div`
-	position: relative;
-	padding-bottom: ${({ paddingBottom }) =>
-		paddingBottom ? paddingBottom : '56.25%'};
-	padding-top: 35px;
-	height: 0;
-	overflow: hidden;
+  position: relative;
+  padding-bottom: ${({ paddingBottom }) =>
+    paddingBottom ? paddingBottom : '56.25%'};
+  padding-top: ${({ isAmp }) => (isAmp ? '0' : '35px')};
+  height: 0;
+  overflow: hidden;
 `;
 
 const StyledIFrame = styled.iframe`
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: ${({ height }) => (height ? height : '100%')};
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: ${({ height }) => (height ? height : '100%')};
 `;
+
+const getVideoIdFromUrl = (url) => {
+  url = url.split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
+  return url[2] !== undefined ? url[2].split(/[^0-9a-z_-]/i)[0] : url[0];
+};
 
 /**
  *
@@ -41,29 +49,48 @@ const StyledIFrame = styled.iframe`
  */
 
 const IFrame: React.FC<IFrameProps> = ({
-	name,
-	src,
-	frameborder = 0,
-	allow = '',
-	allowfullscreen = 'false',
-	...otherProps
+  name,
+  src,
+  frameborder = 0,
+  allow = '',
+  allowfullscreen = 'false',
+  isAmp,
+  ...otherProps
 }) => {
-	const allowFullScreen = allowfullscreen === 'false' ? false : true;
-	if (!src) {
-		return null;
-	}
-	return (
-		<IFrameContainer {...{ paddingBottom: otherProps.height, ...otherProps }}>
-			<StyledIFrame
-				{...(name && { name })}
-				src={src}
-				frameBorder={Number(frameborder)}
-				allow={allow}
-				allowFullScreen={allowFullScreen}
-				{...otherProps}
-			/>
-		</IFrameContainer>
-	);
+  const allowFullScreen = allowfullscreen === 'false' ? false : true;
+  if (!src) {
+    return null;
+  }
+  const videoId = getVideoIdFromUrl(src);
+  return (
+    <>
+      {isAmp ? (
+        <IFrameContainer
+          {...{ paddingBottom: otherProps.height, isAmp, ...otherProps }}
+        >
+          <amp-youtube
+            width="1600"
+            height="900"
+            layout="responsive"
+            data-videoid={videoId}
+          ></amp-youtube>
+        </IFrameContainer>
+      ) : (
+        <IFrameContainer
+          {...{ paddingBottom: otherProps.height, isAmp, ...otherProps }}
+        >
+          <StyledIFrame
+            {...(name && { name })}
+            src={src}
+            frameBorder={Number(frameborder)}
+            allow={allow}
+            allowFullScreen={allowFullScreen}
+            {...otherProps}
+          />
+        </IFrameContainer>
+      )}
+    </>
+  );
 };
 
-export default IFrame;
+export default withAmp(IFrame);

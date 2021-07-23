@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import handleViewport from 'react-in-viewport';
+import { useAmp } from 'next/amp';
 
-const LazyWrapper = props => {
+const LazyWrapper = (props) => {
   const { inViewport, forwardedRef } = props;
   const [loaded, setLoaded] = useState(false);
-
   useEffect(() => {
     if (inViewport && !loaded) {
       setLoaded(true);
@@ -21,6 +21,7 @@ const LazyComponent = handleViewport(
 );
 
 export default LazyComponent;
-export const WrapInLazyComponent = children => {
-  return <LazyComponent>{children}</LazyComponent>;
+export const WrapInLazyComponent = (children) => {
+  const isAmp = useAmp();
+  return <>{isAmp ? children : <LazyComponent>{children}</LazyComponent>}</>;
 };

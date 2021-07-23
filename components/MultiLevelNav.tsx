@@ -4,6 +4,7 @@ import { strings } from 'const/strings';
 import { useState, useRef, useEffect } from 'react';
 import { useWindowWidth } from '@react-hook/window-size';
 import { COLORS, SOLEIL } from 'const/ui-constants';
+import { useAmp } from 'next/amp';
 
 import { CHEVRON_DOWN } from '../assets/SvgIcons';
 import LinkResolver from './LinkResolver';
@@ -67,6 +68,7 @@ const StyledMenuItem = styled.li`
       width: 10px;
     }
   }
+
   @media (max-width: 768px) {
     padding: 16px;
     &.group-booking-cta {
@@ -201,6 +203,11 @@ const Nav = styled.nav`
   }
 `;
 
+const HeadingMenu = styled(StyledMenuItem)`
+  font-weight: bold;
+  border-bottom: 1px solid ${COLORS.CHALK};
+`;
+
 const Navigation = (props) => {
   const { slices, isMobile, navOpen, id, isGlobalMb = false } = props;
   return (
@@ -273,7 +280,6 @@ const MenuItem = (props) => {
     className,
     isGlobalMb = false,
   } = props;
-
   return (
     <StyledMenuItem
       nestOpen={nestOpen}
@@ -343,6 +349,12 @@ const HeaderSliceHandler = (slice, props) => {
           {strings.GROUP_TICKETS}
         </StyledMenuItem>
       );
+    case 'heading_menu_item':
+      return (
+        <HeadingMenu as="a" href={slice?.url?.url} target={slice?.url?.target}>
+          {slice.label}
+        </HeadingMenu>
+      );
   }
 };
 
@@ -410,6 +422,25 @@ const HeaderSliceHandler = (slice, props) => {
  *
  */
 
+const flattenMenu = (slices) => {
+  return slices.reduce((acc, slice) => {
+    if (slice.slice_type === 'nested_menu') {
+      // change all nested_menu slices to same level slice by spreading the childrenSlices.
+      const childrenSlices = slice.slices;
+      return [
+        ...acc,
+        {
+          slice_type: 'heading_menu_item',
+          label: slice.primary.label,
+          url: slice.primary.url,
+        },
+        ...childrenSlices,
+      ];
+    }
+    return [...acc, slice];
+  }, []);
+};
+
 const MultiLevelNav = ({
   slice,
   oldMenuItems = [],
@@ -418,12 +449,14 @@ const MultiLevelNav = ({
   isGlobalMb = false,
 }) => {
   const [firstSlice, ..._ignored_only_one_nav_bar] = slice;
+  const isAmp = useAmp();
   const withOldMenu = [...(firstSlice?.slices || []), ...(oldMenuItems || [])];
+  const finalSlices = isAmp ? flattenMenu(withOldMenu) : withOldMenu;
   return (
     <Navigation
       navOpen={isActive}
       isMobile={isMobile}
-      slices={withOldMenu}
+      slices={finalSlices}
       isGlobalMb={isGlobalMb}
     />
   );
