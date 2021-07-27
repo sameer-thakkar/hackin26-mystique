@@ -69,7 +69,7 @@ const nl = {
     EU_HEADING: 'EU Covid-certificaat vereist',
     EU_PREFIX: 'Opmerking: ',
     EU_DESCRIPTION:
-      'Vanaf 21 juli moeten alle bezoekers ouder dan 11 jaar een EU COVID-certificaat kunnen tonen.',
+      'Vanaf 21 juli moeten alle bezoekers ouder dan 18 jaar een EU COVID-certificaat kunnen tonen.',
     GENERAL_DESCRIPTION:
       'Elke ervaring met deze badge is geverifieerd om te voldoen aan de beste veiligheidsnormen volgens de gezondheidsrichtlijnen van de lokale overheid.',
     CTA_TEXT: 'Details omtrent veiligheid',

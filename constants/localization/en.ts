@@ -72,7 +72,7 @@ const en = {
     EU_HEADING: 'EU Covid Certificate Required',
     EU_PREFIX: 'Note: ',
     EU_DESCRIPTION:
-      'From July 21st, all visitors over 11 must present a EU COVID Certificate',
+      'From July 21st, all visitors over 18 must present a EU COVID Certificate',
     GENERAL_DESCRIPTION:
       "Any experience with this badge has been verified to follow the best safety standards as per the local government's health guidelines.",
     CTA_TEXT: 'Safety Details',

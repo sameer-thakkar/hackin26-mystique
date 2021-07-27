@@ -68,7 +68,7 @@ const pt = {
     EU_HEADING: 'Certificado Covid da UE necessário',
     EU_PREFIX: 'Atenção: ',
     EU_DESCRIPTION:
-      'A partir de 21 de julho, todos os visitantes acima de 11 anos devem apresentar um Certificado COVID da UE.',
+      'A partir de 21 de julho, todos os visitantes acima de 18 anos devem apresentar um Certificado COVID da UE.',
     GENERAL_DESCRIPTION:
       'Qualquer experiência com este selo foi verificada e segue as melhores medidas de segurança de acordo com as diretrizes de saúde dos governos locais.',
     CTA_TEXT: 'Detalhes das medidas',

@@ -69,7 +69,7 @@ const de = {
     EU_HEADING: 'COVID-Zertifikat der EU erforderlich',
     EU_PREFIX: 'Hinweis: ',
     EU_DESCRIPTION:
-      'Ab dem 21. Juli müssen alle Besucher ab 11 Jahren ein COVID-Zertifikat der EU vorlegen.',
+      'Ab dem 21. Juli müssen alle Besucher ab 18 Jahren ein COVID-Zertifikat der EU vorlegen.',
     GENERAL_DESCRIPTION:
       'Erlebnisse mit diesem Abzeichen halten nachweislich die besten Sicherheitsstandards gemäß den Gesundheitsrichtlinien der örtlichen Regierung ein.',
     CTA_TEXT: 'Sicherheitsvorkehrungen',
