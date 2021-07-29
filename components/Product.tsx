@@ -838,8 +838,8 @@ const Product = (props) => {
         }`
       ) : (
         <>
-          {isContentOpen ? strings.SHOW_LESS_TEXT : strings.MORE_DETAILS}{' '}
-          <Chevron isActive={isContentOpen} className={'chevron'} />{' '}
+          {isContentOpen ? strings.SHOW_LESS_TEXT : strings.MORE_DETAILS}
+          <Chevron isActive={isContentOpen} className={'chevron'} />
         </>
       );
     return (

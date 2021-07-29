@@ -10,6 +10,11 @@ import { CHEVRON_DOWN } from '../assets/SvgIcons';
 import LinkResolver from './LinkResolver';
 
 const StyledMenuItem = styled.li`
+  ${({ isAmp }) =>
+    isAmp &&
+    `
+    display:none;
+  `}
   font-size: 16px;
   line-height: 24px;
   padding: 12px 16px;
@@ -200,16 +205,32 @@ const Nav = styled.nav`
         border-bottom: 1px solid ${COLORS.GREY_G6};
       }
     }
+    .expandMenuItems {
+      display: grid;
+      margin: 0 16px;
+    }
   }
 `;
 
 const HeadingMenu = styled(StyledMenuItem)`
-  font-weight: bold;
+  font-weight: 500;
   border-bottom: 1px solid ${COLORS.CHALK};
+  display: grid;
+  margin: 12px 14px 0;
+  align-items: center;
+  grid-template-columns: auto auto;
+  .nest-icon {
+    display: flex;
+    justify-self: right;
+    transition: transform 0.3s ease;
+  }
+  .chevronUp {
+    transform: rotate(180deg);
+  }
 `;
 
 const Navigation = (props) => {
-  const { slices, isMobile, navOpen, id, isGlobalMb = false } = props;
+  const { slices, isMobile, navOpen, id, isGlobalMb = false, isAmp } = props;
   return (
     <Nav
       className={navOpen ? 'navigation-nav-open' : ''}
@@ -217,7 +238,13 @@ const Navigation = (props) => {
       {...props}
     >
       {slices.map((slice, index) =>
-        HeaderSliceHandler(slice, { index, isMobile, navOpen, isGlobalMb })
+        HeaderSliceHandler(slice, {
+          index,
+          isMobile,
+          navOpen,
+          isGlobalMb,
+          isAmp,
+        })
       )}
     </Nav>
   );
@@ -278,13 +305,17 @@ const MenuItem = (props) => {
     onClick,
     nestOpen,
     className,
+    index,
     isGlobalMb = false,
+    isAmp,
   } = props;
   return (
     <StyledMenuItem
       nestOpen={nestOpen}
       className={`${className}`}
       isGlobalMb={isGlobalMb}
+      isAmp={isAmp}
+      id={`menu-item-${index}`}
     >
       <LinkResolver target={url?.target} url={url?.url}>
         <div
@@ -303,7 +334,7 @@ const MenuItem = (props) => {
 };
 
 const HeaderSliceHandler = (slice, props) => {
-  const { index, navOpen, isGlobalMb = false } = props;
+  const { index, navOpen, isGlobalMb = false, isAmp } = props;
   switch (slice.slice_type) {
     case 'navigation':
       return (
@@ -322,6 +353,8 @@ const HeaderSliceHandler = (slice, props) => {
           label={slice.primary.label}
           url={slice.primary.url}
           isGlobalMb={isGlobalMb}
+          index={index}
+          isAmp={isAmp}
         />
       );
     case 'nested_menu':
@@ -350,9 +383,31 @@ const HeaderSliceHandler = (slice, props) => {
         </StyledMenuItem>
       );
     case 'heading_menu_item':
+      const expandMenu = () => {
+        const noOfChildren = slice.noOfchildren;
+        let ampFunc = 'tap:';
+        for (let i = index + 1; i <= index + noOfChildren; i++) {
+          ampFunc += `menu-item-${i}.toggleClass(class='expandMenuItems'),`;
+        }
+        ampFunc += `nest-icon-${index}.toggleClass(class='chevronUp')`;
+        return ampFunc;
+      };
       return (
-        <HeadingMenu as="a" href={slice?.url?.url} target={slice?.url?.target}>
+        <HeadingMenu
+          key={index}
+          className="withIcon"
+          as="a"
+          href={slice?.url?.url}
+          target={slice?.url?.target}
+          role="button"
+          tabIndex={0}
+          // @ts-ignore
+          on={expandMenu()}
+        >
           {slice.label}
+          <span className="nest-icon" id={`nest-icon-${index}`}>
+            {CHEVRON_DOWN}
+          </span>
         </HeadingMenu>
       );
   }
@@ -433,6 +488,7 @@ const flattenMenu = (slices) => {
           slice_type: 'heading_menu_item',
           label: slice.primary.label,
           url: slice.primary.url,
+          noOfchildren: childrenSlices.length,
         },
         ...childrenSlices,
       ];
@@ -458,6 +514,7 @@ const MultiLevelNav = ({
       isMobile={isMobile}
       slices={finalSlices}
       isGlobalMb={isGlobalMb}
+      isAmp={isAmp}
     />
   );
 };
