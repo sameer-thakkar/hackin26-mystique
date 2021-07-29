@@ -222,6 +222,10 @@ const HeadingMenu = styled(StyledMenuItem)`
   .nest-icon {
     display: flex;
     justify-self: right;
+    transition: transform 0.3s ease;
+  }
+  .chevronUp {
+    transform: rotate(180deg);
   }
 `;
 
@@ -385,7 +389,7 @@ const HeaderSliceHandler = (slice, props) => {
         for (let i = index + 1; i <= index + noOfChildren; i++) {
           ampFunc += `menu-item-${i}.toggleClass(class='expandMenuItems'),`;
         }
-        ampFunc = ampFunc.slice(0, -1);
+        ampFunc += `nest-icon-${index}.toggleClass(class='chevronUp')`;
         return ampFunc;
       };
       return (
@@ -401,7 +405,9 @@ const HeaderSliceHandler = (slice, props) => {
           on={expandMenu()}
         >
           {slice.label}
-          <span className="nest-icon">{CHEVRON_DOWN}</span>
+          <span className="nest-icon" id={`nest-icon-${index}`}>
+            {CHEVRON_DOWN}
+          </span>
         </HeadingMenu>
       );
   }
