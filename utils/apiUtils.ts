@@ -15,13 +15,14 @@ export const fetchInventory = ({ tgid, ...query }) => {
   ).then((res) => res.json());
 };
 
-export const fetchTourList = ({ tgids, ...query }) =>
-  fetch(
-    `/api/tours/v5/tour-group/list${objectToQuery({
+export const fetchTourList = ({ tgids, host = '', ...query }) => {
+  return fetch(
+    `${host ? host : ''}/api/tours/v5/tour-group/list${objectToQuery({
       'ids[]': tgids,
       ...query,
     })}`
   );
+};
 
 export const fetchTourGroup = (tgid, hostName) =>
   fetch(`${hostName}/api/tours/v5/tour-group/get/${tgid}`);

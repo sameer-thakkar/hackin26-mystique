@@ -63,7 +63,7 @@ const fr = {
     HEADING: 'Normes de sécurité et sanitaires en vigueur',
     SHORT_HEADING: 'Toutes les normes de sécurité et sanitaires en vigueur',
     MOBILE_HEADING: 'Expériences conformes aux normes sanitaires',
-    EU_HEADING: "Certificat Covid de l'UE requis",
+    EU_HEADING: 'Certificat COVID numérique UE requis',
     EU_PREFIX: 'Attention : ',
     EU_DESCRIPTION:
       "À partir du 21 juillet, tous les visiteurs de plus de 18 ans doivent présenter un certificat COVID de l'UE.",

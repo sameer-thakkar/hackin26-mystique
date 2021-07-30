@@ -28,15 +28,18 @@ export const hrefResolver = (doc) => {
 // Avoids reinitializing an API connection for every query, handling instead with a Client object
 let frontClient;
 
-export const Client = (req = null, parentOptions = {}) => {
+export const Client = (req = null, parentOptions: any = {}) => {
   if (!req && frontClient) return frontClient; // Prevents generating new instances for client side since we don't need the refreshed request object.
-
+  const { ref } = parentOptions;
   // Reinitializes Client only if there's a req object present, which is used for Previews
   const options = Object.assign(
     parentOptions,
     req ? { req } : {},
     accessToken ? { accessToken } : {}
   );
+  const apiEndpointURL = new URL(apiEndpoint);
+  if (ref) apiEndpointURL.searchParams.set('ref', ref);
+
   // Connects to the given repository to facilitate data queries
-  return Prismic.client(apiEndpoint, options);
+  return Prismic.client(apiEndpointURL.toString(), options);
 };

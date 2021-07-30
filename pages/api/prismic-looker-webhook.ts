@@ -2,39 +2,63 @@ import { Client } from 'config/prismic-config';
 import { CUSTOM_TYPES, LANGUAGE_PARAMS_REGEX } from 'const/index';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { legacyBooleanCheck } from 'utils';
+import { fetchTourList } from 'utils/apiUtils';
 import { convertUidToUrl } from 'utils/urlUtils';
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const { documents: updatedDocumentIds = [], masterRef = '' } =
-    req?.body || {};
-
-  if (!updatedDocumentIds?.length)
-    return res.status(204).json({
-      status: 'Nothing to update',
-      body: req?.body,
-      query: req?.query,
-    });
-
+const getUpdatedDocuments = async ({ documentIds, masterRef, req }) => {
   const linkedRefsPromise = Client(req, { ref: masterRef }).getByIDs(
-    updatedDocumentIds.filter((id) => id)
-  );
-
-  const documents = await Promise.resolve(linkedRefsPromise).then(
-    (res: any) => {
-      return res.results;
+    documentIds.filter((id) => id),
+    {
+      fetchLinks: 'microsite.body1',
     }
   );
 
+  return await Promise.resolve(linkedRefsPromise).then((res: any) => {
+    return res.results;
+  });
+};
+
+const getTgidFromDocument = (page) => {
+  if (page.type === CUSTOM_TYPES.MICROSITE)
+    return page.data?.body1?.[0]?.items?.[0]?.tgid;
+
+  return page.data?.microsite_document_ref?.data?.body1?.[0]?.items?.[0]?.tgid;
+};
+
+const parseDocuments = async (documents) => {
   const microsites = documents.filter((d) => d.type === CUSTOM_TYPES.MICROSITE);
-  const contentPages = documents.filter(
+  let contentPages = documents.filter(
     (d) => d.type === CUSTOM_TYPES.CONTENT_PAGE
   );
+
+  const tgidsToFetch = documents
+    .map((page) => {
+      return getTgidFromDocument(page);
+    }, [])
+    .filter((tgid) => tgid);
+  let tgidData = {};
+
+  if (tgidsToFetch?.length)
+    tgidData = await fetchTourList({
+      tgids: tgidsToFetch,
+      host: 'https://microbrands.headout.com',
+    })
+      .then((res) => res.json())
+      .then((data) =>
+        data?.tourGroups.reduce((acc, tour) => {
+          return {
+            ...acc,
+            [tour.id]: {
+              ...tour,
+              city: data.cities.find((city) => city.cityCode === tour.cityCode),
+            },
+          };
+        }, {})
+      );
 
   const finalDocs = [...microsites, ...contentPages].map((doc) => {
     const { uid, data, type, alternate_languages, tags, lang } = doc;
     const {
-      category_id,
-      city_name,
       page_url,
       redirect_url,
       enable_amp,
@@ -97,6 +121,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       pageUrl = null;
     }
 
+    let inferredCity = null,
+      inferredCategoryId = null;
+    const tgid = getTgidFromDocument(doc);
+    inferredCity = tgid ? tgidData?.[tgid]?.city?.cityCode : null;
+    inferredCategoryId = tgid ? tgidData?.[tgid]?.primaryCategory?.id : null;
+
     const metaData = {
       uid,
       structure: getStructure(pageUrl),
@@ -113,8 +143,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       title,
       description,
       url: page_url,
-      category_id: category_id,
-      city: city_name,
+      category_id: inferredCategoryId,
+      city: inferredCity,
       canonical_link,
       redirect_url: redirect_url?.url,
       available_languages: alternate_languages
@@ -132,16 +162,37 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     );
   });
 
+  return { finalDocs, tgidsToFetch };
+};
+
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+  const { documents: updatedDocumentIds = [], masterRef = null } =
+    req?.body || {};
+
+  if (!updatedDocumentIds?.length)
+    return res.status(204).json({
+      status: 'Nothing to update',
+      body: req?.body,
+      query: req?.query,
+    });
+
+  const documents = await getUpdatedDocuments({
+    documentIds: updatedDocumentIds,
+    masterRef,
+    req,
+  });
+
+  const { finalDocs, tgidsToFetch } = await parseDocuments(documents);
+
   if (finalDocs.length === 0)
     return res.status(204).json({
       status: 'Nothing to update',
       documents,
       finalDocs,
-      microsites,
-      contentPages,
     });
 
   let response = {};
+
   response['stitch'] = await fetch(
     'https://hooks.stitchdata.com/v1/clients/121892/token/b74d3528aa553a34e84a67d4215b606d3d6ab7a6ce963001431704ab23cc7522',
     {
@@ -154,7 +205,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   ).then(async (r) => {
     return { json: await r.json(), r };
   });
-  response['payload'] = { finalDocs, documents };
+  response['payload'] = { finalDocs, documents, tgidsToFetch };
 
   res.status(200).json({ response });
 };
