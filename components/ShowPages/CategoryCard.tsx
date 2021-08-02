@@ -6,6 +6,8 @@ import { SEE_SAFETY } from 'assets/SvgIcons';
 import { safetyChecker } from 'components/ShowPages/parseShowPage';
 import Conditional from 'components/common/Conditional';
 
+import Image from '../UI/Image';
+
 const CategoryCardWrapper = styled.div`
   img {
     width: 100%;
@@ -98,7 +100,7 @@ const CategoryCard = ({
         <Conditional if={isSafe}>
           <SeeSafetyWrapper>{SEE_SAFETY}</SeeSafetyWrapper>
         </Conditional>
-        <img src={imageUrl} alt={name} />
+        <Image url={imageUrl} alt={name} />
         <div className="category-name">{categoryName}</div>
         <h3>{name}</h3>
         <div>
