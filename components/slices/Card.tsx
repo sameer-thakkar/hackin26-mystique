@@ -117,7 +117,7 @@ const StyledCard = styled.div((props) => {
 `;
 });
 
-const Title = styled.div`
+const Title = styled.h3`
   font-family: ${SOLEIL.FONT_STACK};
   font-weight: ${({ isGlobalMb }) =>
     isGlobalMb ? `${SOLEIL.SEMIBOLD}` : `${SOLEIL.BOLD}`};
