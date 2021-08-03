@@ -289,13 +289,20 @@ const SafeExperiencesPitch = ({
               </AttentionStrip>
             </Section>
           </Conditional>
+          <Conditional if={primaryCountry?.code === 'IT'}>
+            <Section>
+              <AttentionStrip>
+                {strings.SAFE_EXPERIENCE.IT_PREFIX}
+                {strings.SAFE_EXPERIENCE.IT_DESCRIPTION}
+              </AttentionStrip>
+            </Section>
+          </Conditional>
           <Text style={{ maxWidth: isMobile ? 'auto' : '82%' }}>
             {strings.SAFE_EXPERIENCE.MODAL.SUB_HEADING}
           </Text>
         </Pitch>
       </Section>
-
-      {generic ? (
+      <Conditional if={generic}>
         <SafetyCard>
           <IconCTA
             text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
@@ -304,7 +311,7 @@ const SafeExperiencesPitch = ({
           />
           <Text>{strings.SAFE_EXPERIENCE.MODAL.BADGE_DESCRIPTION}</Text>
         </SafetyCard>
-      ) : null}
+      </Conditional>
 
       <Conditional if={images.length}>
         <SliderSection>

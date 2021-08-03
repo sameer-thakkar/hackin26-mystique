@@ -67,6 +67,9 @@ const it = {
     MOBILE_HEADING: 'Esperienze Sicure',
     EU_HEADING: "Certificato COVID dell'UE richiesto",
     EU_PREFIX: 'Nota bene: ',
+    IT_PREFIX: 'Avviso : ',
+    IT_DESCRIPTION:
+      "A partire dal 6 agosto, l'accesso ai musei sarà possibile solo previa presentazione di un Green Pass o di un Certificato europeo COVID",
     EU_DESCRIPTION:
       "a partire dal 21 luglio tutti i visitatori sopra gli 18 anni di età devono presentare un Certificato COVID dell'UE.",
     GENERAL_DESCRIPTION:

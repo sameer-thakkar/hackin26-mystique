@@ -68,6 +68,9 @@ const de = {
     MOBILE_HEADING: 'Sichere Erlebnisse',
     EU_HEADING: 'COVID-Zertifikat der EU erforderlich',
     EU_PREFIX: 'Hinweis: ',
+    IT_PREFIX: 'Hinweis: ',
+    IT_DESCRIPTION:
+      'Ab dem 6. August müssen alle Besucher über 11 Jahren einen Grünen Pass oder ein COVID-Zertifikat der EU vorlegen',
     EU_DESCRIPTION:
       'Ab dem 21. Juli müssen alle Besucher ab 18 Jahren ein COVID-Zertifikat der EU vorlegen.',
     GENERAL_DESCRIPTION:

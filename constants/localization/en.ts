@@ -71,6 +71,9 @@ const en = {
     MOBILE_HEADING: 'Safe Experiences',
     EU_HEADING: 'EU Covid Certificate Required',
     EU_PREFIX: 'Note: ',
+    IT_PREFIX: 'Note: ',
+    IT_DESCRIPTION:
+      'From 6th August, all visitors over 11 must present a Green Pass or EU COVID Certificate',
     EU_DESCRIPTION:
       'From July 21st, all visitors over 18 must present a EU COVID Certificate',
     GENERAL_DESCRIPTION:
