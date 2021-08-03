@@ -67,6 +67,9 @@ const pt = {
     MOBILE_HEADING: 'Experiências seguras',
     EU_HEADING: 'Certificado Covid da UE necessário',
     EU_PREFIX: 'Atenção: ',
+    IT_PREFIX: 'Atenção: ',
+    IT_DESCRIPTION:
+      'A partir de 6 de agosto, todos os visitantes com mais de 11 anos devem apresentar um Passe Verde ou um Certificado de COVID da UE.',
     EU_DESCRIPTION:
       'A partir de 21 de julho, todos os visitantes acima de 18 anos devem apresentar um Certificado COVID da UE.',
     GENERAL_DESCRIPTION:

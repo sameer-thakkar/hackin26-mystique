@@ -76,10 +76,18 @@ const SafeDFBannerWrapper = ({
       sidePadding: isMobile ? 0 : 40,
     });
   };
-  const finalDescription =
-    primaryCountry?.code === 'FR'
-      ? strings.SAFE_EXPERIENCE.EU_DESCRIPTION
-      : strings.SAFE_EXPERIENCE.GENERAL_DESCRIPTION;
+
+  let finalDescription;
+  switch (primaryCountry?.code) {
+    case 'IT':
+      finalDescription = strings.SAFE_EXPERIENCE.IT_DESCRIPTION;
+      break;
+    case 'FR':
+      finalDescription = strings.SAFE_EXPERIENCE.EU_DESCRIPTION;
+      break;
+    default:
+      finalDescription = strings.SAFE_EXPERIENCE.GENERAL_DESCRIPTION;
+  }
   const finalHeading =
     primaryCountry?.code === 'FR'
       ? strings.SAFE_EXPERIENCE.EU_HEADING

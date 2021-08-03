@@ -68,6 +68,9 @@ const nl = {
     MOBILE_HEADING: 'Veilige ervaringen',
     EU_HEADING: 'EU Covid-certificaat vereist',
     EU_PREFIX: 'Opmerking: ',
+    IT_PREFIX: 'Opmerking: ',
+    IT_DESCRIPTION:
+      'Vanaf 6 augustus moeten alle bezoekers ouder dan 11 jaar een Groene Pas of een EU COVID Certificaat tonen.',
     EU_DESCRIPTION:
       'Vanaf 21 juli moeten alle bezoekers ouder dan 18 jaar een EU COVID-certificaat kunnen tonen.',
     GENERAL_DESCRIPTION:
