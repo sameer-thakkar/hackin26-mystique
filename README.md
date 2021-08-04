@@ -11,7 +11,7 @@ Mystique is the tech that powers over 100 different microbrands at Headout.
 
 ### Requirements
 
-- [Nodejs](https://nodejs.org/) (v10 and above)
+- [Nodejs](https://nodejs.org/) (v15 and above)
 - [Yarn](https://legacy.yarnpkg.com/) (package manager)
 - [Git](https://git-scm.com/) (🧐)
 
@@ -41,7 +41,7 @@ Mystique is the tech that powers over 100 different microbrands at Headout.
   Example:
 
   ```
-  http://localhost:3000?mystique_uid=www.vaticantickets.org&lang=en-us
+  http://localhost:3001/?mystique_uid=www.thevaticantickets.com&lang=en-us
   ```
 
 ### Production
