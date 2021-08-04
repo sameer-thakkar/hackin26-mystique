@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import CategoryBar from 'components/MicrositeV2/CategoryBar';
 import InteractionContext from 'contexts/Interaction';
 import { DONT_AUTO_SCROLL } from 'const/index';
+import Conditional from 'components/common/Conditional';
 
 const PopulateProducts = dynamic(() => import('./PopulateProducts'));
 
@@ -56,13 +57,15 @@ export const ProductsWrapper = (props) => {
       className="main-wrapper relative-position"
       isEntertainmentMb={isEntertainmentMb}
     >
-      <CategoryBar
-        {...categoryProps}
-        availableTGIDs={allTours}
-        isMobile={isMobile}
-        isEntertainmentMb={isEntertainmentMb}
-        isListicle={isListicle}
-      />
+      <Conditional if={!isListicle}>
+        <CategoryBar
+          {...categoryProps}
+          availableTGIDs={allTours}
+          isMobile={isMobile}
+          isEntertainmentMb={isEntertainmentMb}
+          isListicle={isListicle}
+        />
+      </Conditional>
       <PopulateProducts
         tgids={activeCategoryTgids}
         allTours={allTours}
@@ -75,6 +78,7 @@ export const ProductsWrapper = (props) => {
         uid={uid}
         sectionId={'main'}
         isListicle={isListicle}
+        categoryProps={categoryProps}
       />
     </StyledProductWrapper>
   );

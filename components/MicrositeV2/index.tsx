@@ -403,12 +403,9 @@ class MicrositeV2 extends Component<any, any> {
 
     const {
       islisticle: isListicle,
-      csv_months_to_display_for_listicle: displayMonthsCSV,
+      csv_months_to_display_for_listicle: displayMonths,
     } = primary || {};
 
-    const displayMonthsArray = displayMonthsCSV
-      ?.split(',')
-      ?.map((item) => item.trim());
     const heroSectionSlice = [...this.props.data.data.body4, hightlightSlice];
     const commonFooterProps = commonFooter ? commonFooter.data : null;
     let themeOverride = theme_override || THEMES.INHERIT;
@@ -488,7 +485,7 @@ class MicrositeV2 extends Component<any, any> {
             directTgid={directTgid}
             ready={ready}
             isListicle={isListicle}
-            displayMonthsArray={displayMonthsArray}
+            displayMonths={displayMonths}
             bannerImageForListicle={bannerImageForListicle}
             bannerTextForListicle={bannerTextForListicle}
           />

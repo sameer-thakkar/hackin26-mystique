@@ -58,6 +58,7 @@ const PopulateProducts = (props) => {
     rowsToShow,
     sectionId,
     isListicle,
+    categoryProps,
   } = props;
   const { activeCategoryTgids } = useContext(InteractionContext) || {};
   const mbContext = useContext(MBContext);
@@ -90,7 +91,10 @@ const PopulateProducts = (props) => {
     setRowsInView(rowsInView + (isMobile ? 2 : 4));
   };
 
-  const tgids = propTgids || activeCategoryTgids;
+  const tgids = isListicle
+    ? categoryProps?.categories[0]?.ranking.popularity
+    : propTgids || activeCategoryTgids;
+
   const tgidsSubArr = subArrays(tgids);
 
   return (

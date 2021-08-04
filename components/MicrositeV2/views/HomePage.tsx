@@ -146,7 +146,7 @@ export const HomePage = (props) => {
     alertPopup,
     showCovid19Alert,
     isListicle,
-    displayMonthsArray,
+    displayMonths,
     bannerImageForListicle,
     bannerTextForListicle,
   } = props;
@@ -154,28 +154,32 @@ export const HomePage = (props) => {
   let { categoryProps } = props;
 
   if (isListicle) {
-    let categoryListicle = displayMonthsArray?.map((month, index) => {
-      const allowedTourForMonth = getTGIDListForMonth(allTours, month);
+    let categoryListicle = [];
 
-      return {
-        id: index + 1,
-        name: month,
-        rank: 0,
-        ranking: {
-          popularity: allowedTourForMonth,
+    if (displayMonths === 'ALL') {
+      categoryListicle = [
+        {
+          id: 1,
+          name: displayMonths,
+          rank: 0,
+          ranking: {
+            popularity: Object.keys(allTours),
+          },
         },
-      };
-    });
-
-    let allTgids = Object.keys(allTours);
-    categoryListicle?.unshift({
-      id: 0,
-      name: 'All',
-      rank: 0,
-      ranking: {
-        popularity: allTgids,
-      },
-    });
+      ];
+    } else {
+      const allowedTours = getTGIDListForMonth(allTours, displayMonths);
+      categoryListicle = [
+        {
+          id: 1,
+          name: displayMonths,
+          rank: 0,
+          ranking: {
+            popularity: allowedTours,
+          },
+        },
+      ];
+    }
 
     categoryProps = {
       active: 0,
@@ -266,6 +270,9 @@ export const HomePage = (props) => {
       <Conditional if={!isEntertainmentMb}>
         <SafeDFBannerWrapper hasSafe={hasSafe} marginTop={40} />
       </Conditional>
+      <Conditional if={isEntertainmentMb}>
+        <LttSafetyBanner marginTop={isListicle ? 32 : 0} />
+      </Conditional>
       <Conditional if={heroSectionSlice.length}>
         <ProductsContextProvider allTours={allTours} ready={ready}>
           <div className="main-wrapper hero-slice-section">
@@ -281,9 +288,6 @@ export const HomePage = (props) => {
               ))}
           </div>
         </ProductsContextProvider>
-      </Conditional>
-      <Conditional if={isEntertainmentMb}>
-        <LttSafetyBanner marginTop={isListicle ? 32 : 0} />
       </Conditional>
       <Conditional if={hasToursSection}>
         <ProductsWrapper
