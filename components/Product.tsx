@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import parse from 'url-parse';
 import styled from 'styled-components';
-import React, { useRef, useState, useContext, useEffect, useMemo } from 'react';
+import React, { useRef, useState, useContext, useEffect } from 'react';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import {
   ANALYTICS_EVENTS,
@@ -15,14 +15,13 @@ import {
   SIDEBAR_TYPES,
   LOCALISED_DATE_FORMATS,
   NOS_OF_HIGHLIGHTS_TO_SHOW,
-  AUDIOGUIDE_TAG_REGEX,
 } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { shortCodeSerializer } from 'utils/shortCodes';
-import { CALENDAR, Shield, BackArrow, AudioGuideIcon } from 'assets/SvgIcons';
+import { CALENDAR, Shield, BackArrow } from 'assets/SvgIcons';
 import Split, { StlyedSplit } from 'UI/Split';
 import IconCTA, { StyledIconCTA } from 'UI/IconCTA';
-import { brownScheme, greenScheme } from 'style/theme';
+import { greenScheme } from 'style/theme';
 import { isSafetyIncluded, createBookingURL } from 'utils';
 import { MBContext } from 'contexts/MBContext';
 import PriceBlock from 'UI/PriceBlock';
@@ -36,8 +35,6 @@ import {
 import Image from 'UI/Image';
 import { truncate, wordCount } from 'utils/helper';
 import { currencyAtom } from 'store/atoms/currency';
-import { EXPERIMENT_NAMES } from 'const/experiments';
-import { getABTestingVariant } from 'utils/experiments/experimentUtils';
 
 import Conditional from './common/Conditional';
 
@@ -622,22 +619,9 @@ const ModalCardContainer = styled.div`
   }
 `;
 
-const Descriptors = ({
-  descriptorArray,
-  hasValidity = false,
-  isAGVariant = false,
-}) => {
+const Descriptors = ({ descriptorArray, hasValidity = false }) => {
   return (
     <TourTags>
-      <Conditional if={isAGVariant}>
-        <div key={'audioguide'} className="tour-tag">
-          <Image
-            imageId={'audioguide'}
-            url={getDescriptorIconURL('headphones')}
-          />
-          {strings.AUDIO_GUIDE.BANNER}
-        </div>
-      </Conditional>
       <Conditional if={hasValidity}>
         <div key={'validity'} className="tour-tag">
           <Image imageId={'validity'} url={getDescriptorIconURL('validity')} />
@@ -646,7 +630,6 @@ const Descriptors = ({
       </Conditional>
       {descriptorArray.reduce((acc, item, index) => {
         const { icon, descriptor } = parseDescriptorIcon(item.trim());
-        if (icon.includes('headphones') && isAGVariant) return acc;
 
         const descEl = descriptor ? (
           <div key={`descriptor-${index}`} className="tour-tag">
@@ -691,24 +674,13 @@ const Product = (props) => {
     instantCheckout,
     showEarliestAvailability,
   } = props;
-  const { mbTheme, biLink, hsid, bookSubdomain } = useContext(MBContext);
+  const { mbTheme, biLink, bookSubdomain } = useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
   const [isContentOpen, toggleContentOpen] = useState(defaultOpen);
   const [showMoreDetailsInTabs, setShowMoreDetails] = useState(
     defaultOpen || false
   );
   const { allTags = [] } = scorpioData || {};
-
-  const isAGVariant = useMemo(() => {
-    if (!hsid || !isFetched) return false;
-    if (!allTags.filter((tag) => AUDIOGUIDE_TAG_REGEX.test(tag)).length)
-      return false;
-
-    return (
-      getABTestingVariant(EXPERIMENT_NAMES.AUDIO_GUIDE_EXPERIMENT, hsid) ===
-      'SHOW'
-    );
-  }, [hsid, allTags, isFetched]);
 
   const { validity } = scorpioData;
   const descriptorsCsv = descriptors || scorpioData.descriptors;
@@ -812,7 +784,7 @@ const Product = (props) => {
   };
   const hasV1Booster = booster && RichText.asText(booster).trim().length > 0;
   const hasOffer = isOfferEnabled && offerId;
-  const hasTags = hasSafetyFlag || isAGVariant;
+  const hasTags = hasSafetyFlag;
   const hasBorderedTitle = !hasOffer && !hasV1Booster && !hasTags;
 
   const layout = getProductCardLayout({
@@ -921,9 +893,7 @@ const Product = (props) => {
           <Conditional if={boosterTag && mbTheme !== THEMES.MIN_BLUE}>
             <BoosterTag>{boosterTag}</BoosterTag>
           </Conditional>
-          <TourTitle isPopup={isContentOpen}>
-            {cardTitle} {isAGVariant ? strings.AUDIO_GUIDE.PRODUCT_SUFFIX : ''}
-          </TourTitle>
+          <TourTitle isPopup={isContentOpen}>{cardTitle}</TourTitle>
         </TitleWrapper>
         <Conditional
           if={
@@ -938,12 +908,11 @@ const Product = (props) => {
           <Descriptors
             descriptorArray={descriptorsList}
             hasValidity={!!validity}
-            isAGVariant={isAGVariant}
           />
         </Conditional>
-        <Conditional if={hasSafetyFlag || isAGVariant}>
+        <Conditional if={hasSafetyFlag}>
           <IconBoosters>
-            <Split count={2} autoWidth={true}>
+            <Split count={2} autoWidth>
               <Conditional if={hasSafetyFlag}>
                 <IconCTA
                   text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
@@ -951,14 +920,6 @@ const Product = (props) => {
                   ctaOnClick={openSafeSidebar}
                   icon={Shield}
                   key={'safety-tag'}
-                />
-              </Conditional>
-              <Conditional if={isAGVariant}>
-                <IconCTA
-                  text={strings.AUDIO_GUIDE.BANNER}
-                  colorScheme={brownScheme}
-                  icon={<AudioGuideIcon />}
-                  key={'audioguide-tag'}
                 />
               </Conditional>
             </Split>
@@ -1035,7 +996,6 @@ const Product = (props) => {
             <Descriptors
               hasValidity={!!validity}
               descriptorArray={descriptorsList}
-              isAGVariant={isAGVariant}
             />
           </Conditional>
         </CTAContainer>
