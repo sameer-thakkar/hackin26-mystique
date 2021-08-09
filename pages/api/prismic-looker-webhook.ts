@@ -61,7 +61,7 @@ const parseDocuments = async (documents) => {
     const {
       page_url,
       redirect_url,
-      enable_amp,
+      disable_amp,
       noindex,
       nofollow,
       title,
@@ -139,7 +139,7 @@ const parseDocuments = async (documents) => {
           : '',
       has_noindex: legacyBooleanCheck(noindex),
       has_nofollow: legacyBooleanCheck(nofollow),
-      has_amp: enable_amp || false,
+      has_amp: !disable_amp || false,
       title,
       description,
       url: page_url,
