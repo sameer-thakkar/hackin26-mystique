@@ -12,6 +12,7 @@ import styled from 'styled-components';
 import { createBookingURL } from 'utils';
 import PriceBlock, { SavedTag } from 'UI/PriceBlock';
 import Conditional from 'components/common/Conditional';
+import Image from 'UI/Image';
 
 import { dateToString } from '../../utils/dateToString';
 import { MBContext } from '../../contexts/MBContext';
@@ -94,16 +95,10 @@ const BannerImageWrapper = styled.div`
   }
 `;
 
-const BannerImage = styled.div(({ url }) => {
-  return `
-    background-image: url(${url});
-    width: 100%;
-    height: 100%;
-    background-position: center;
-    background-size: 100%;
-    background-repeat: no-repeat;
-  `;
-});
+const BannerImage = styled.div`
+  width: 100%;
+  height: 100%;
+`;
 
 const BannerContent = styled.div`
   margin: -2em auto 0;
@@ -389,7 +384,9 @@ const ShowPageBanner = ({
           <BannerImageWrapper>
             <div className="banner-image-container is-active">
               <Conditional if={productImage}>
-                <BannerImage url={productImage.url} />
+                <BannerImage>
+                  <Image url={productImage.url} alt={name} objectFit="cover" />
+                </BannerImage>
               </Conditional>
               {videoAvailable ? (
                 <>

@@ -6,6 +6,7 @@ const SpotifyContainer = styled.div`
   height: 300px;
   overflow: hidden;
   margin: 16px 0;
+  border-radius: 8px;
 `;
 
 const StyledIFrame = styled.iframe`
@@ -13,6 +14,7 @@ const StyledIFrame = styled.iframe`
   top: 0;
   left: 0;
   width: 100%;
+  border: none;
   height: ${({ height }) => (height ? height : '100%')};
 `;
 
