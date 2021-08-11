@@ -43,7 +43,7 @@ const CardCarouselContainer = styled.div`
     }
   }
   .carousel-slider {
-    margin: 30px auto 100px;
+    margin: 30px auto 0px;
     position: relative;
     .swiper-slide {
       border: 1px solid #e2e2e2;

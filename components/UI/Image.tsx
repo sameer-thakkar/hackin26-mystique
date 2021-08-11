@@ -9,6 +9,11 @@ import Tooltip from './Tooltip';
 
 const Picture = styled.picture`
   line-height: 0;
+  img {
+    object-fit: ${({ objectFit }) => (objectFit ? objectFit : 'fill')};
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 export const Wrapper = styled.div`
@@ -53,6 +58,7 @@ type ImageProps = {
   layout?: string;
   attribution?: string;
   autoCrop?: boolean;
+  objectFit?: string;
 };
 
 const Image: React.FC<ImageProps> = ({
@@ -73,12 +79,14 @@ const Image: React.FC<ImageProps> = ({
   layout,
   attribution = '',
   autoCrop = true,
+  objectFit,
 }) => {
   const isAmp = useAmp();
   const makeImageUrl = (fm: string, url): string => {
     if (!url) {
       return null;
     }
+    if (format === 'gif') return url;
     const imigxOptionsQueryParams = new URLSearchParams();
     if (width) imigxOptionsQueryParams.set('w', `${Number(width) * 1.5}`);
     if (height) imigxOptionsQueryParams.set('h', `${Number(height) * 1.5}`);
@@ -92,16 +100,12 @@ const Image: React.FC<ImageProps> = ({
       imigxOptionsQueryParams.set('crop', 'faces');
       imigxOptionsQueryParams.delete('fit');
     }
+    imigxOptionsQueryParams.set('fm', format);
+    imigxOptionsQueryParams.set('auto', 'compress');
 
-    const extractedRect = /rect=[\d,.]*/.exec(url);
-    if (format === 'gif') return url;
-    return attachQueryParam(
-      url,
-      `auto=compress&${imigxOptionsQueryParams.toString()}${
-        extractedRect ? `&${extractedRect}` : ''
-      }`,
-      true
-    );
+    const extractedRect = /rect=(\[[\d,.]*\])/.exec(url);
+    if (extractedRect) imigxOptionsQueryParams.set('rect', extractedRect[1]);
+    return attachQueryParam(url, imigxOptionsQueryParams.toString(), true);
   };
   let calculatedWidth = width;
   let calculatedHeight = height;
@@ -159,7 +163,7 @@ const Image: React.FC<ImageProps> = ({
     );
   } else {
     ImageComponent = (
-      <Picture>
+      <Picture objectFit={objectFit}>
         <source
           type="image/webp"
           data-srcset={`${

@@ -47,6 +47,9 @@ const ShowPageWrapper = styled.div`
 `;
 
 const Wrapper = styled.div`
+  body {
+    overflow: hidden;
+  }
   max-width: 1200px;
   margin: 64px auto 0;
   padding: 0 16px;
@@ -453,6 +456,7 @@ const ShowPage = ({
         invertLogoColor={commonFooter?.data?.invert_logo_color}
         attraction={commonFooter?.data?.attraction || 'attraction'}
         primaryHeading={commonFooter?.data?.footer_heading}
+        isEntertainmentMb={true}
       />
     </ShowPageWrapper>
   );

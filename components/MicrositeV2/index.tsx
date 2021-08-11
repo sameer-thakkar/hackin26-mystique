@@ -134,8 +134,6 @@ class MicrositeV2 extends Component<any, any> {
       enable_group_booking,
       group_booking_excluded_tgids,
       body: CMSBody,
-      banner_image_for_listicle: bannerImageForListicle,
-      banner_text_for_listicle: bannerTextForListicle,
     } = CMSData || {};
     const currentLanguage = getLangObject(CMSContent.lang).short;
     const { isMobile } = this.state;
@@ -486,8 +484,6 @@ class MicrositeV2 extends Component<any, any> {
             ready={ready}
             isListicle={isListicle}
             displayMonths={displayMonths}
-            bannerImageForListicle={bannerImageForListicle}
-            bannerTextForListicle={bannerTextForListicle}
           />
         </div>
         <Conditional if={activePage == PAGETYPE.MOBILE_PRODUCT_PAGE}>

@@ -18,6 +18,7 @@ import { strings } from 'const/strings';
 import { SIZES, SOLEIL } from 'const/ui-constants';
 import { isSafetyIncluded } from 'utils';
 import { groupSlices, getTGIDListForMonth } from 'utils/helper';
+import Image from 'UI/Image';
 
 const Alert = dynamic(() => import('UI/Alert'), { ssr: false });
 const ResponsiveSelector: ComponentType<any> = dynamic(
@@ -109,16 +110,10 @@ const BannerWrapper = styled.div`
   }
 `;
 
-const BannerImage = styled.div(({ url }) => {
-  return `
-    background-image: url(${url});
-    width: 100%;
-    height: 400px;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-  `;
-});
+const BannerImage = styled.div`
+  width: 100%;
+  height: 400px;
+`;
 
 /*
 TODO: Content Tabs with Category
@@ -147,8 +142,6 @@ export const HomePage = (props) => {
     showCovid19Alert,
     isListicle,
     displayMonths,
-    bannerImageForListicle,
-    bannerTextForListicle,
   } = props;
 
   let { categoryProps } = props;
@@ -245,7 +238,11 @@ export const HomePage = (props) => {
           }}
         />
       </Conditional>
-      <Conditional if={mbTheme === THEMES.DEFAULT && heroProps.banners.length}>
+      <Conditional
+        if={
+          mbTheme === THEMES.DEFAULT && heroProps.banners.length && !isListicle
+        }
+      >
         <Banner
           {...heroProps}
           isMobile={isMobile}
@@ -253,10 +250,16 @@ export const HomePage = (props) => {
           isEntertainmentMb={isEntertainmentMb}
         />
       </Conditional>
-      <Conditional if={isListicle}>
+      <Conditional if={isListicle && heroProps.banners.length}>
         <BannerWrapper>
-          <h1>{bannerTextForListicle}</h1>
-          <BannerImage url={bannerImageForListicle}></BannerImage>
+          <h1>{bannerHeading}</h1>
+          <BannerImage>
+            <Image
+              url={heroProps.banners[0]?.url}
+              alt={heroProps.banners[0]?.alt}
+              objectFit="cover"
+            />
+          </BannerImage>
         </BannerWrapper>
       </Conditional>
       <Conditional if={mbTheme === THEMES.MIN_BLUE}>

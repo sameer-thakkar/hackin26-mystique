@@ -15,6 +15,7 @@ const FeatureCardWrapper = styled.div`
   border: 1px solid #e2e2e2;
   border-radius: 8px;
   padding: 40px 0px;
+  margin-top: 100px;
 
   div {
     align-items: center;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { convertUidToUrl } from 'utils/urlUtils';
-import PriceBlock, { SavedTag } from 'UI/PriceBlock';
+import PriceBlock, { SavedTag, StyledPriceBlock } from 'UI/PriceBlock';
 import { SEE_SAFETY } from 'assets/SvgIcons';
 import { safetyChecker } from 'components/ShowPages/parseShowPage';
 import Conditional from 'components/common/Conditional';
@@ -9,6 +9,11 @@ import Conditional from 'components/common/Conditional';
 import Image from '../UI/Image';
 
 const CategoryCardWrapper = styled.div`
+  ${StyledPriceBlock} {
+    grid-row-gap: 2px;
+    grid-column-gap: 6px;
+  }
+
   img {
     width: 100%;
     height: 100%;
@@ -18,13 +23,18 @@ const CategoryCardWrapper = styled.div`
 
   .tour-scratch-price {
     color: #888888;
+    font-style: normal;
+    font-weight: normal;
     font-size: 12px;
+    line-height: 16px;
   }
 
   .tour-price {
     color: #444444;
+    font-style: normal;
     font-weight: 600;
     font-size: 16px;
+    line-height: 20px;
   }
 
   ${SavedTag} {
@@ -32,7 +42,10 @@ const CategoryCardWrapper = styled.div`
     background: #dbfddb;
     padding: 2px 6px;
     border-radius: 2px;
-    font-size: 11px;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 12px;
   }
 
   p {
@@ -41,12 +54,24 @@ const CategoryCardWrapper = styled.div`
 
   h3 {
     margin: 0;
+    font-style: normal;
+    font-weight: 600;
     font-size: 16px;
+    line-height: 20px;
+    margin-top: 2px;
+  }
+
+  .priceBlockWrapper {
+    margin-top: 12px;
   }
 
   .category-name {
     font-size: 12px;
     color: #888888;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 16px;
+    margin-top: 8px;
   }
 
   @media (max-width: 768px) {
@@ -103,7 +128,7 @@ const CategoryCard = ({
         <Image url={imageUrl} alt={name} />
         <div className="category-name">{categoryName}</div>
         <h3>{name}</h3>
-        <div>
+        <div className="priceBlockWrapper">
           <PriceBlock
             price={listingPrice}
             lang={currentLanguage}

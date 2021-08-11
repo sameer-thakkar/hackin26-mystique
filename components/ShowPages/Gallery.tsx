@@ -299,6 +299,16 @@ const Gallery = ({ galleryArray, isMobile }) => {
         },
   };
 
+  const popupOpener = (index) => {
+    setIsVisibleGalleryPopUp(true);
+    setActiveIndexGalleryPopUp(index);
+    document.body.style.overflow = 'hidden';
+  };
+  const popupCloser = () => {
+    setIsVisibleGalleryPopUp(false);
+    document.body.style.overflow = 'auto';
+  };
+
   return (
     <>
       <GalleryPopUpWrapper isVisibleGalleryPopUp={isVisibleGalleryPopUp}>
@@ -326,7 +336,7 @@ const Gallery = ({ galleryArray, isMobile }) => {
               );
             })}
           </Swiper>
-          <CrossWrapper onClick={() => setIsVisibleGalleryPopUp(false)}>
+          <CrossWrapper onClick={() => popupCloser()}>
             {BLACK_CROSS}
           </CrossWrapper>
         </GalleryPopUpContentWrapper>
@@ -335,10 +345,7 @@ const Gallery = ({ galleryArray, isMobile }) => {
       <GalleryWrapper>
         <div
           className="left-image-wrapper"
-          onClick={() => {
-            setIsVisibleGalleryPopUp(true);
-            setActiveIndexGalleryPopUp(0);
-          }}
+          onClick={() => popupOpener(0)}
           role="button"
           tabIndex={0}
         >
@@ -350,10 +357,7 @@ const Gallery = ({ galleryArray, isMobile }) => {
           <div>
             <div
               className="right-image-wrapper"
-              onClick={() => {
-                setIsVisibleGalleryPopUp(true);
-                setActiveIndexGalleryPopUp(1);
-              }}
+              onClick={() => popupOpener(1)}
               role="button"
               tabIndex={0}
             >
@@ -361,10 +365,7 @@ const Gallery = ({ galleryArray, isMobile }) => {
             </div>
             <div
               className="right-image-wrapper right-image-bottom"
-              onClick={() => {
-                setIsVisibleGalleryPopUp(true);
-                setActiveIndexGalleryPopUp(2);
-              }}
+              onClick={() => popupOpener(2)}
               role="button"
               tabIndex={0}
             >
