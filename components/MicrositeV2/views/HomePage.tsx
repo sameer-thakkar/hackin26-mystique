@@ -255,8 +255,8 @@ export const HomePage = (props) => {
           <h1>{bannerHeading}</h1>
           <BannerImage>
             <Image
-              url={heroProps.banners[0].url}
-              alt={heroProps.banners[0].alt}
+              url={heroProps.banners[0]?.url}
+              alt={heroProps.banners[0]?.alt}
               objectFit="cover"
             />
           </BannerImage>
