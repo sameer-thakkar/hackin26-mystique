@@ -74,6 +74,8 @@ const GlobalMB = (props) => {
     collection_name: collectionName,
     microbrand_url: microbrandUrl,
     favicon,
+    google_site_verification,
+    bing_site_verification,
   } = CMSContent || {};
 
   const { logo } = header || {};
@@ -229,6 +231,8 @@ const GlobalMB = (props) => {
             currentLanguage: lang,
             serverRequestStartTimestamp,
             isMobile,
+            google_site_verification,
+            bing_site_verification,
           }}
         />
         <Header
