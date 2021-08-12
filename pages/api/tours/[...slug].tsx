@@ -7,12 +7,10 @@ const ToursAPI = async (req, res) => {
       !blackListQueryParams.includes(key) ? `${key}=${value}` : null
     )
     .filter((q) => q);
-
-  await fetch(
-    `https://api.${
-      useTest === 'true' || useTest ? 'test-' : ''
-    }headout.com/api/${req.query.slug.join('/')}?${queryParams.join('&')}`
-  )
+  const url = `https://api.${
+    useTest === 'true' || useTest ? 'test-' : ''
+  }headout.com/api/${req.query.slug.join('/')}/?${queryParams.join('&')}`;
+  await fetch(url)
     .then((r) => r.json())
     .then((r) => {
       let data = r;

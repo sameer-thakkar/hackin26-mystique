@@ -433,7 +433,7 @@ export default class Page extends React.Component<any, any> {
         const tgEndpoint = new URL(
           `https://${
             isStage ? 'stage-' : ''
-          }microbrands.headout.com/api/tours/v5/tour-group/list`
+          }microbrands.headout.com/api/tours/v6/tour-groups/`
         );
         tgEndpoint.searchParams.set('language', getHeadoutLanguagecode(lang));
         tgEndpoint.searchParams.set('ids[]', tgidsArray.join(','));
@@ -449,7 +449,7 @@ export default class Page extends React.Component<any, any> {
       } catch (e) {
         constructedTourgroupURL = `https://${
           isStage ? 'stage-' : ''
-        }microbrands.headout.com/api/tours/v5/tour-group/list?ids[]=${tgidsArray}&lang=${getHeadoutLanguagecode(
+        }microbrands.headout.com/api/tours/v6/tour-groups/?ids[]=${tgidsArray}&lang=${getHeadoutLanguagecode(
           lang
         )}`;
       }

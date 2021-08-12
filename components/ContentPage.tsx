@@ -181,7 +181,7 @@ class ContentPage extends Component<any, any> {
     });
     if (allTourTgids.length > 0) {
       const toursData = await fetch(
-        `/api/tours/v5/tour-group/list?ids[]=${[...allTourTgids]}`
+        `/api/tours/v6/tour-groups/?ids[]=${[...allTourTgids]}`
       ).then((res) => {
         return res.json();
       });
@@ -212,7 +212,7 @@ class ContentPage extends Component<any, any> {
         });
       });
       const toursData = await fetch(
-        `/api/tours/v5/tour-group/list?ids[]=${[
+        `/api/tours/v6/tour-groups/?ids[]=${[
           ...filteredTours.map((t) => t.tgid),
         ]}`
       ).then((res) => {

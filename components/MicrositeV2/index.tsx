@@ -49,7 +49,7 @@ class MicrositeV2 extends Component<any, any> {
     const { all_tours: allTours } = this.props.data.data;
     const allTgids = allTours.map((tour) => tour.primary.tgid);
 
-    fetch(`/api/tours/v5/tour-group/list?ids[]=${allTgids}`)
+    fetch(`/api/tours/v6/tour-groups/?ids[]=${allTgids}`)
       .then((res) => {
         const HSID = docCookies.getItem('h-sid');
         this.sendVariableToDataLayer({ 'h-sid': HSID });

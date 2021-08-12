@@ -24,7 +24,7 @@ class InlinePrice extends React.Component<IPriceProps, IPriceState> {
       this.props['scratch-price'] !== undefined
         ? this.props['scratch-price']
         : false;
-    fetch(`/api/tours/v5/tour-group/get/${this.props.tgid}`)
+    fetch(`/api/tours/v6/tour-groups/${this.props.tgid}`)
       .then((res) => res.json())
       .then(
         (data) => {
