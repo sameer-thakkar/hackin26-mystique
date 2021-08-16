@@ -103,9 +103,14 @@ const Image: React.FC<ImageProps> = ({
     imigxOptionsQueryParams.set('fm', format);
     imigxOptionsQueryParams.set('auto', 'compress');
 
-    const extractedRect = /rect=(\[[\d,.]*\])/.exec(url);
-    if (extractedRect) imigxOptionsQueryParams.set('rect', extractedRect[1]);
-    return attachQueryParam(url, imigxOptionsQueryParams.toString(), true);
+    const extractedRect = /rect=[\d,.]*/.exec(url);
+    return attachQueryParam(
+      url,
+      `${imigxOptionsQueryParams.toString()}${
+        extractedRect ? `&${extractedRect}` : ''
+      }`,
+      true
+    );
   };
   let calculatedWidth = width;
   let calculatedHeight = height;
