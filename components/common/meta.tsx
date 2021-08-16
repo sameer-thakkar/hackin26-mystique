@@ -117,7 +117,7 @@ const PopulateHead = (data) => {
   const modifiedCanonicalLink = isMobile
     ? canonicalLinkForAMP || canonicalLink
     : canonicalLink;
-  const { isPreview, noTrack } = useContext(MBContext);
+  const { isPreview, noTrack, lang } = useContext(MBContext);
   const title = withShortcodes(rawTitle).join('');
   const description = withShortcodes(rawDescription).join('');
 
@@ -241,7 +241,10 @@ const PopulateHead = (data) => {
       ) : null}
 
       {!disable_amp && !isAmp ? (
-        <link rel="amphtml" href={`/?amp=1`} />
+        <link
+          rel="amphtml"
+          href={`/${lang !== 'en' ? `${lang}/` : ''}?amp=1`}
+        />
       ) : isAmp ? null : (
         <link rel="amphtml" />
       )}
