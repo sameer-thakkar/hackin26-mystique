@@ -162,16 +162,12 @@ const PopulateHead = (data) => {
   const trackingScripts = (
     <Head>
       <script
-        defer
-        async
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(getSchemaJson(data)),
         }}
       />
       <script
-        defer
-        async
         dangerouslySetInnerHTML={{
           __html: `//<![CDATA[
 				var dataLayer = dataLayer || [];
@@ -181,8 +177,6 @@ const PopulateHead = (data) => {
       ></script>
       <script
         key={2}
-        defer
-        async
         dangerouslySetInnerHTML={{
           __html: `//<![CDATA[
 				var dataLayer_content = [];
@@ -190,8 +184,6 @@ const PopulateHead = (data) => {
         }}
       ></script>
       <script
-        defer
-        async
         dangerouslySetInnerHTML={{
           __html: `//<![CDATA[
 				(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -252,8 +244,6 @@ const PopulateHead = (data) => {
 
       {!isAmp ? (
         <script
-          defer
-          async
           dangerouslySetInnerHTML={{
             __html: `
               var mystiquePerf = {
