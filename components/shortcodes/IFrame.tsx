@@ -62,16 +62,10 @@ const IFrame: React.FC<IFrameProps> = ({
     return null;
   }
   const videoId = getVideoIdFromUrl(src);
-
-  const paddingBottom = otherProps.height;
-  delete otherProps['height'];
-
   return (
     <>
       {isAmp ? (
-        <IFrameContainer
-          {...{ paddingBottom: paddingBottom, isAmp, ...otherProps }}
-        >
+        <IFrameContainer {...{ paddingBottom: otherProps.height, isAmp }}>
           <amp-youtube
             width="1600"
             height="900"
@@ -80,9 +74,7 @@ const IFrame: React.FC<IFrameProps> = ({
           ></amp-youtube>
         </IFrameContainer>
       ) : (
-        <IFrameContainer
-          {...{ paddingBottom: paddingBottom, isAmp, ...otherProps }}
-        >
+        <IFrameContainer {...{ paddingBottom: otherProps.height, isAmp }}>
           <StyledIFrame
             {...(name && { name })}
             src={src}
