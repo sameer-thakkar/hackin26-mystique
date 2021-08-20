@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { scroller } from 'react-scroll';
 import { useRecoilValue } from 'recoil';
 import { strings } from 'const/strings';
-import SafeDFBannerWrapper from 'UI/SafeDFBannerWrapper';
+import MultiBannerWrapper from 'UI/MultiBannerWrapper';
 import { isSafetyIncluded, legacyBooleanCheck } from 'utils';
 import { LOCATION } from 'assets/SvgIcons';
 import { fetchInventory, fetchTourList } from 'utils/apiUtils';
@@ -17,7 +17,7 @@ import Banner from './Banner';
 import LongForm from './common/LongForm';
 import PopulateHead from './common/meta';
 import Footer from './common/Footer';
-import PopulateUncategorizedProducts from './PopulateUncategorizedProducts';
+import PopulateProducts from './PopulateProducts';
 import Analytics from '../utils/analytics';
 import allToursParser from '../utils/allToursParser';
 import { InteractionContextProvider } from '../contexts/Interaction';
@@ -69,9 +69,10 @@ const MicrositeV1 = (props) => {
   const [covidAlertActive, toggleCovidAlert] = useState(false);
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
 
-  const { toursList, data: prismicData, tgidToScroll } = props;
-
   const {
+    toursList,
+    data: prismicData,
+    tgidToScroll,
     isAmp,
     data,
     offerData,
@@ -79,14 +80,14 @@ const MicrositeV1 = (props) => {
     scorpioData,
     activeCurrency,
   } = props;
-  const { refs, uid, lang } = data;
+
+  const { refs, uid, lang, data: micrositeData } = data;
   const {
     contentFramework,
     commonFooter,
     secondaryFooter,
     commonHeader,
   } = refs;
-  const { data: micrositeData } = data;
   const {
     attraction,
     localization,
@@ -471,7 +472,7 @@ const MicrositeV1 = (props) => {
 
   const closeGroupBookingModal = () => toggleGroupBookingModal(false);
   const tourListSection = (
-    <PopulateUncategorizedProducts
+    <PopulateProducts
       uncategorizedTours={orderedTours}
       scorpioData={scorpioData}
       uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
@@ -500,7 +501,7 @@ const MicrositeV1 = (props) => {
   return (
     <div>
       <div className="microsite-container">
-        {groupBookingModalActive && (
+        <Conditional if={groupBookingModalActive}>
           <GroupBooking
             closeGroupBookingModal={() => closeGroupBookingModal}
             groupBookingTourTitles={groupBookingTourTitles}
@@ -514,7 +515,7 @@ const MicrositeV1 = (props) => {
             disclaimer={groupBookingDisclaimer}
             theme={mbTheme}
           />
-        )}
+        </Conditional>
         <PopulateHead
           {...{
             ...micrositeData,
@@ -554,7 +555,7 @@ const MicrositeV1 = (props) => {
           headerCurrencies={headerCurrencies}
           currentCurrency={activeCurrency}
         />
-        {showCovid19Alert && covidAlertActive ? (
+        <Conditional if={showCovid19Alert && covidAlertActive}>
           <DismissAlert
             readMoreLink={strings.COVID19_ALERT.LINK}
             readMore={strings.READ_MORE}
@@ -562,8 +563,8 @@ const MicrositeV1 = (props) => {
             text={strings.COVID19_ALERT.TEXT}
             handleClose={onCovidAlertClose}
           />
-        ) : null}
-        {isMobile && hasDropdownLinks ? (
+        </Conditional>
+        <Conditional if={isMobile && hasDropdownLinks}>
           <div className="main-wrapper city-selector">
             <ResponsiveSelector
               options={dropdownLinks}
@@ -578,7 +579,7 @@ const MicrositeV1 = (props) => {
               toggleIcon={false}
             />
           </div>
-        ) : null}
+        </Conditional>
         <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
           <Banner
             bannerImages={finalBannerImages ? finalBannerImages : null}
@@ -595,15 +596,15 @@ const MicrositeV1 = (props) => {
         <Conditional if={mbTheme === THEMES.MIN_BLUE}>
           <TextBanner bannerHeading={bannerHeading ? bannerHeading : null} />
         </Conditional>
-        {alertPopup ? (
-          <Alert popupUID={alertPopup.uid} currentLanguage={currentLanguage} />
-        ) : null}
-        {coverSlices.length ? (
+        <Conditional if={alertPopup}>
+          <Alert popupUID={alertPopup?.uid} currentLanguage={currentLanguage} />
+        </Conditional>
+        <Conditional if={coverSlices?.length}>
           <CoverSlicesWrapper>
             <LongForm content={coverSlices} isMobile={isAmp || isMobile} />
           </CoverSlicesWrapper>
-        ) : null}
-        <SafeDFBannerWrapper
+        </Conditional>
+        <MultiBannerWrapper
           hasSafe={hasSafe}
           isAmp={isAmp}
           isMobile={isMobile}
@@ -631,14 +632,14 @@ const MicrositeV1 = (props) => {
         </Conditional>
         <ProductsContextProvider allTours={allTours} ready={isFetched}>
           <InteractionContextProvider>
-            {longFormContent ? (
+            <Conditional if={longFormContent}>
               <LongForm
                 tourListSection={tourListSection}
                 content={[...longFormContent, ...contentFWSlices]}
                 isMobile={isAmp || isMobile}
                 isAmp={isAmp}
               />
-            ) : null}
+            </Conditional>
           </InteractionContextProvider>
         </ProductsContextProvider>
         <Footer
@@ -659,7 +660,7 @@ const MicrositeV1 = (props) => {
             !isFooterInherited ? secondaryFooter?.data?.body || [] : []
           }
         />
-        {hasOffer && (
+        <Conditional if={hasOffer}>
           <FreeTourPopup
             popupState={freeTourPopupOpen}
             togglePopup={onTogglePopup}
@@ -667,7 +668,7 @@ const MicrositeV1 = (props) => {
             scorpioData={scorpioData}
             isMobile={isAmp || isMobile}
           />
-        )}
+        </Conditional>
       </div>
     </div>
   );

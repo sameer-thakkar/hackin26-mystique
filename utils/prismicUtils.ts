@@ -243,6 +243,8 @@ export const getMicrositeDocument = async ({
               baseLangData?.data?.body1[0]?.primary?.ranking;
           }
 
+          // TODO: fallback for catToursV1
+
           if (
             Object.keys(completeMicrosite.data.data['alert_popup']).length === 1
           ) {

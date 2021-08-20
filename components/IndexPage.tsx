@@ -27,7 +27,8 @@ import {
   fetchTourGroup,
 } from 'utils/apiUtils';
 import {
-  categoryTourListParser,
+  categoryTourListParserV1,
+  categoryTourListParserV2,
   uncategorizedToursListParser,
 } from 'utils/dataParsers';
 import { getLangUID, isAmpUrl, removePageQuery } from 'utils/urlUtils';
@@ -333,11 +334,16 @@ export default class Page extends React.Component<any, any> {
         const MBDesign = design || '';
         const mbTheme = theme || THEMES.DEFAULT;
         const toursTabFirstSlice = body1[0];
-        const categorizedTourList = body;
+        const categorizedTours = body;
 
-        const categoryTourList = categorizedTourList?.length
-          ? categorizedTourList?.filter(
+        const categoryTourList = categorizedTours?.length
+          ? categorizedTours?.filter(
               (category) => category.slice_type === 'tour_list_category'
+            )
+          : [];
+        const categoryTourListV1 = categorizedTours?.length
+          ? categorizedTours?.filter(
+              (category) => category.slice_type === 'tour_list_category_v1'
             )
           : [];
 
@@ -348,16 +354,27 @@ export default class Page extends React.Component<any, any> {
           : [];
 
         let categoryTourListData;
+        const hasCategoryTourListV1 = Object.keys(categoryTourListV1)?.length;
+        const hasCategoryTourListV2 = Object.keys(categoryTourList)?.length;
         const hasCategoryTourList =
-          Object.keys(categoryTourList)?.length ||
+          hasCategoryTourListV2 ||
+          hasCategoryTourListV1 ||
           Object.keys(categoryCarouselCF)?.length;
         if (hasCategoryTourList) {
-          categoryTourListData = await categoryTourListParser({
-            tourListCategory: categoryTourList,
-            hostname,
-            showpages: allShowPages,
-            categoryCarousel: categoryCarouselCF,
-          });
+          if (hasCategoryTourListV1) {
+            categoryTourListData = await categoryTourListParserV1({
+              tourListCategoryV1: categoryTourListV1,
+              hostname,
+              lang,
+            });
+          } else {
+            categoryTourListData = await categoryTourListParserV2({
+              tourListCategory: categoryTourList,
+              hostname,
+              showpages: allShowPages,
+              categoryCarousel: categoryCarouselCF,
+            });
+          }
         }
 
         const primsicTours = toursTabFirstSlice
@@ -609,6 +626,7 @@ export default class Page extends React.Component<any, any> {
               data={CMSContent.data}
               activeCurrency={activeCurrency}
               scorpioData={tourGroupData}
+              categoryTourListData={categoryTourListData}
               offerData={CMSContent.offerData}
               host={host}
               toursList={toursList}

@@ -281,6 +281,7 @@ const ShowPageBanner = ({
   currentLanguage,
   tagsArray,
   isReopening,
+  hostname,
 }) => {
   const { listingPrice, currency, name, imageUploads } = tourGroupData;
 
@@ -313,7 +314,10 @@ const ShowPageBanner = ({
 
   useEffect(() => {
     const fetchReopeningDate = async () => {
-      const { inventoryList } = await fetchInventoryAPI(tgid);
+      const { inventoryList } = await fetchInventoryAPI({
+        tgid,
+        hostName: hostname,
+      });
       const today = dayjs().format('YYYY-MM-DD');
 
       inventoryList.every(({ startDate }) => {

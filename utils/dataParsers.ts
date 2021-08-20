@@ -3,7 +3,9 @@ import {
   parseShowPageData,
 } from 'components/ShowPages/parseShowPage';
 import { CURRENCY_SYMBOL_MAP } from 'const/index';
-import { generatePromiseForCategoryTours } from 'utils';
+import { generatePromiseForCategoryTours, getHeadoutLanguagecode } from 'utils';
+
+import { fetchCollection, fetchTGIDsByCategoryV2 } from './apiUtils';
 
 export const uncategorizedToursListParser = (
   uncategorizedToursList,
@@ -34,7 +36,97 @@ const extractTgidsFromCategories = (arr) => {
   }
 };
 
-export const categoryTourListParser = async (
+export const categoryTourListParserV1 = async ({
+  tourListCategoryV1,
+  hostname,
+  lang,
+}: {
+  tourListCategoryV1: any[];
+  hostname: string;
+  lang: string;
+}) => {
+  let tourData = [],
+    currencySymbol;
+  const sliceObj = tourListCategoryV1?.length
+    ? tourListCategoryV1?.reduce((acc, curr) => acc + curr)
+    : {};
+  const { primary } = sliceObj || {};
+  const { collection, category, sub_category, city } = primary || {};
+  const { cityCode } = city || {};
+  const language = getHeadoutLanguagecode(lang);
+  if (collection) {
+    const collectionData = await fetchCollection({
+      collectionId: collection,
+      hostname,
+      lang: language,
+    });
+    currencySymbol = collectionData?.city?.country?.currency?.localSymbol;
+    const genericSection = collectionData?.sections
+      ?.filter((section) => {
+        if (section?.type === 'GENERIC') {
+          return section?.tourGroups?.items;
+        }
+      })
+      ?.reduce((acc, curr) => curr + acc);
+    tourData.push(...genericSection?.tourGroups?.items);
+  } else if (category) {
+    const categoryData = await fetchTGIDsByCategoryV2({
+      categoryId: category,
+      hostname,
+      isSubCategory: false,
+      city: cityCode,
+      lang: language,
+    });
+    currencySymbol = categoryData?.currency?.localSymbol;
+    tourData.push(...categoryData?.pageData?.items);
+  } else if (sub_category) {
+    const subCategoryData = await fetchTGIDsByCategoryV2({
+      categoryId: sub_category,
+      hostname,
+      isSubCategory: true,
+      city: cityCode,
+      lang: language,
+    });
+    currencySymbol = subCategoryData?.currency?.localSymbol;
+    tourData.push(...subCategoryData?.pageData?.items);
+  }
+  if (tourData?.length) {
+    const formattedData = tourData?.map((tour) => {
+      const {
+        allTags,
+        averageRating,
+        callToAction,
+        highlights,
+        listingPrice,
+        media,
+        microBrandsDescriptor,
+        microBrandsHighlight,
+        name,
+        reviewCount,
+      } = tour || {};
+      const { productImages, safetyImages } = media || {};
+      return {
+        allTags,
+        available: listingPrice?.finalPrice ? true : false,
+        averageRating,
+        ctaBooster: callToAction,
+        currencySymbol,
+        descriptors: microBrandsDescriptor,
+        highlights: microBrandsHighlight,
+        images: productImages,
+        listingPrice,
+        productHighlights: highlights,
+        productTitle: name,
+        reviewCount,
+        safetyImages: safetyImages,
+        title: name,
+      };
+    });
+    return formattedData;
+  }
+};
+
+export const categoryTourListParserV2 = async (
   obj: categoryTourListParserProps
 ) => {
   const categoryIds = [];
@@ -108,7 +200,6 @@ export const categoryTourListParser = async (
         items: filteredData?.tourGroups?.items,
       };
     });
-
     if (collectionData?.length) {
       categoriesWithProducts.push(collectionData);
       const tgids = extractTgidsFromCategories(collectionData);

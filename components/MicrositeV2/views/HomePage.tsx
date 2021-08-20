@@ -11,7 +11,7 @@ import LttFeatureCard from 'components/ShowPages/FeatureCard';
 import Conditional from 'components/common/Conditional';
 import TextBanner from 'components/TextBanner';
 import DismissAlert from 'UI/DismissAlert';
-import SafeDFBannerWrapper from 'UI/SafeDFBannerWrapper';
+import MultiBannerWrapper from 'UI/MultiBannerWrapper';
 import { LOCATION } from 'assets/SvgIcons';
 import { THEMES } from 'const/index';
 import { strings } from 'const/strings';
@@ -271,7 +271,7 @@ export const HomePage = (props) => {
         </div>
       </Conditional>
       <Conditional if={!isEntertainmentMb}>
-        <SafeDFBannerWrapper hasSafe={hasSafe} marginTop={40} />
+        <MultiBannerWrapper hasSafe={hasSafe} marginTop={40} />
       </Conditional>
       <Conditional if={isEntertainmentMb}>
         <LttSafetyBanner marginTop={isListicle ? 32 : 0} />

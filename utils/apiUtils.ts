@@ -25,7 +25,7 @@ export const fetchTourList = ({ tgids, host = '', ...query }) => {
 };
 
 export const fetchTourGroup = (tgid, hostName) =>
-  fetch(`${hostName}/api/tours/v5/tour-group/get/${tgid}`);
+  fetch(`${hostName}/api/tours/v6/tour-groups/${tgid}`);
 
 export const fetchCurrencyList = async () => {
   try {
@@ -103,15 +103,27 @@ export const fetchCollection = async ({
   }
 };
 
-export const fetchReviewsTourGroup = (tgid, limit) =>
-  fetch(
-    `https://api.headout.com/api/v2/review/tour-group/id/${tgid}?&limit=${limit}`
-  );
+export const fetchReviewsTourGroup = ({
+  tgid,
+  hostName,
+  limit,
+}: {
+  tgid: string | number;
+  hostName: string;
+  limit?: string | number;
+}) =>
+  fetch(`${hostName}/api/tours/v2/review/tour-group/id/${tgid}?limit=${limit}`);
 
-export const fetchInventoryAPI = async (tgid: string) => {
+export const fetchInventoryAPI = async ({
+  tgid,
+  hostName,
+}: {
+  tgid: string | number;
+  hostName: string;
+}) => {
   try {
     const response = await fetch(
-      `https://api.headout.com/api/v5/tour-group/inventory/get/${tgid}?use-seatmap-prices=true`
+      `${hostName}/api/v5/tour-group/inventory/get/${tgid}?use-seatmap-prices=true`
     );
     const data = await response.json();
     return data;
