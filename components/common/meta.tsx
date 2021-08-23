@@ -117,7 +117,7 @@ const PopulateHead = (data) => {
   const modifiedCanonicalLink = isMobile
     ? canonicalLinkForAMP || canonicalLink
     : canonicalLink;
-  const { isPreview, noTrack, lang } = useContext(MBContext);
+  const { isPreview, noTrack } = useContext(MBContext);
   const title = withShortcodes(rawTitle).join('');
   const description = withShortcodes(rawDescription).join('');
 
@@ -162,16 +162,12 @@ const PopulateHead = (data) => {
   const trackingScripts = (
     <Head>
       <script
-        defer
-        async
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(getSchemaJson(data)),
         }}
       />
       <script
-        defer
-        async
         dangerouslySetInnerHTML={{
           __html: `//<![CDATA[
 				var dataLayer = dataLayer || [];
@@ -181,8 +177,6 @@ const PopulateHead = (data) => {
       ></script>
       <script
         key={2}
-        defer
-        async
         dangerouslySetInnerHTML={{
           __html: `//<![CDATA[
 				var dataLayer_content = [];
@@ -190,8 +184,6 @@ const PopulateHead = (data) => {
         }}
       ></script>
       <script
-        defer
-        async
         dangerouslySetInnerHTML={{
           __html: `//<![CDATA[
 				(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -240,14 +232,7 @@ const PopulateHead = (data) => {
         />
       ) : null}
 
-      {!disable_amp && !isAmp ? (
-        <link
-          rel="amphtml"
-          href={`/${lang !== 'en' ? `${lang}/` : ''}?amp=1`}
-        />
-      ) : isAmp ? null : (
-        <link rel="amphtml" />
-      )}
+      {!disable_amp && !isAmp ? <link rel="amphtml" href="?amp=1" /> : null}
 
       {robotsContent.length ? (
         <meta name="robots" content={robotsContent.join(', ')} />
@@ -255,8 +240,6 @@ const PopulateHead = (data) => {
 
       {!isAmp ? (
         <script
-          defer
-          async
           dangerouslySetInnerHTML={{
             __html: `
               var mystiquePerf = {

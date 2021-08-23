@@ -105,6 +105,7 @@ const CategoryCard = ({
   currentLanguage,
   currencySymbol,
   categoryName,
+  isMobile,
 }) => {
   const { listingPrice, name, imageUrl, id, tourGroupUrl } = element;
 
@@ -125,7 +126,12 @@ const CategoryCard = ({
         <Conditional if={isSafe}>
           <SeeSafetyWrapper>{SEE_SAFETY}</SeeSafetyWrapper>
         </Conditional>
-        <Image url={imageUrl} alt={name} />
+        <Image
+          url={imageUrl}
+          alt={name}
+          width={isMobile ? 164 : 282}
+          height={isMobile ? 102 : 176}
+        />
         <div className="category-name">{categoryName}</div>
         <h3>{name}</h3>
         <div className="priceBlockWrapper">

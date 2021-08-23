@@ -414,10 +414,13 @@ const DetailedProductCard = (props) => {
     listingPrice || {};
   const currencySymbol = CURRENCY_SYMBOL_MAP[currencyCode];
   const hasSafetyFlag = isSafetyIncluded(allTags);
-  const productCardContent = extractContentForProductCard(
+  const contentBlockForLTT = extractContentForProductCard(
     highlights,
     contentBlocks
   );
+  const productCardContent = isEntertainmentMb
+    ? contentBlockForLTT
+    : activeTour.contentBlocks;
   if (isListicle) {
     productCardContent.left = contentBlocks?.left?.filter(
       (item) => item.label === 'Theatre Name'

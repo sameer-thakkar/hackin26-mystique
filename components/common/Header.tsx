@@ -165,6 +165,7 @@ const Header: React.FC<any> = (props) => {
     hasLanguageSelector = 'No',
     enableBuyTickets = 'No',
     logoRedirectionURL,
+    showTicketRedirectionURL,
     host,
     hasPoweredByHeadoutLogo,
     openGroupBookingModal,
@@ -300,7 +301,7 @@ const Header: React.FC<any> = (props) => {
             </StyledMenuItem>
           ) : null}
           <Conditional if={showTicketMenu}>
-            <StyledMenuItem as="a" href={logoRedirectionURL}>
+            <StyledMenuItem as="a" href={showTicketRedirectionURL}>
               {strings.TICKETS}
             </StyledMenuItem>
           </Conditional>

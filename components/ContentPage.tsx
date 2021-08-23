@@ -377,6 +377,7 @@ class ContentPage extends Component<any, any> {
     const {
       enable_group_booking: enableGroupBooking,
       logo_redirection_url: logoRedirectionURL,
+      show_ticket_option_url: showTicketRedirectionURL,
       group_booking_disclaimer: groupBookingDisclaimer,
       localization,
       enable_localization_menu,
@@ -446,6 +447,7 @@ class ContentPage extends Component<any, any> {
             localization: languages,
             currentLanguage,
             isMobile: this.state.isMobile,
+            isAmp,
           }}
         />
         <Header
@@ -463,6 +465,9 @@ class ContentPage extends Component<any, any> {
           showGroupBooking={showGroupBooking}
           hasLanguageSelector={enable_localization_menu}
           logoRedirectionURL={logoRedirectionURL?.url || pageUrl}
+          showTicketRedirectionURL={
+            showTicketRedirectionURL?.url || logoRedirectionURL?.url || pageUrl
+          }
           host={host}
           hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo}
           openGroupBookingModal={this.openGroupBookingModal}
