@@ -232,11 +232,7 @@ const PopulateHead = (data) => {
         />
       ) : null}
 
-      {!disable_amp && !isAmp ? (
-        <link rel="amphtml" href={`${pageUrl}?amp=1`} />
-      ) : isAmp ? null : (
-        <link rel="amphtml" />
-      )}
+      {!disable_amp && !isAmp ? <link rel="amphtml" href="?amp=1" /> : null}
 
       {robotsContent.length ? (
         <meta name="robots" content={robotsContent.join(', ')} />
