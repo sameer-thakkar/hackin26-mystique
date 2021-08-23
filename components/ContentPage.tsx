@@ -447,6 +447,7 @@ class ContentPage extends Component<any, any> {
             localization: languages,
             currentLanguage,
             isMobile: this.state.isMobile,
+            isAmp,
           }}
         />
         <Header

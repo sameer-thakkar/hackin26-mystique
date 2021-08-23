@@ -464,6 +464,7 @@ class MicrositeV2 extends Component<any, any> {
             currentLanguage,
             serverRequestStartTimestamp,
             isMobile,
+            isAmp,
           }}
         />
         <div
