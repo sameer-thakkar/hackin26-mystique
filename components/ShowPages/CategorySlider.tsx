@@ -186,6 +186,7 @@ export default class CategorySlider extends Component<CardCarouselProps> {
                       currentLanguage={currentLanguage}
                       currencySymbol={currencySymbol}
                       categoryName={categoryName}
+                      isMobile={isMobile}
                     ></CategoryCard>
                   </div>
                 ) : null;
@@ -211,6 +212,7 @@ export default class CategorySlider extends Component<CardCarouselProps> {
                     currentLanguage={currentLanguage}
                     currencySymbol={currencySymbol}
                     categoryName={categoryName}
+                    isMobile={isMobile}
                   ></CategoryCard>
                 </div>
               );
