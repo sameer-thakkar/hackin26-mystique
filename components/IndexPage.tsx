@@ -31,7 +31,7 @@ import {
   categoryTourListParserV2,
   uncategorizedToursListParser,
 } from 'utils/dataParsers';
-import { getLangUID, isAmpUrl, removePageQuery } from 'utils/urlUtils';
+import { getLangUID, removePageQuery } from 'utils/urlUtils';
 import { getHostName } from 'utils/helper';
 import Analytics from 'utils/analytics';
 
@@ -475,13 +475,36 @@ export default class Page extends React.Component<any, any> {
         constructedTourgroupURL.toString()
       ).then((r) => r.json());
 
+      const currencySymbolMap = tourGroupAPIResponses?.currencies?.reduce(
+        (acc, currency) => ({
+          ...acc,
+          [currency.code]: { ...currency },
+        }),
+        {}
+      );
+
       const tourGroupData = tourGroupAPIResponses?.tourGroups?.reduce(
         (accum: {}, tour: any) => {
           const { hide_df, hide_safe } = AllData['CMSContent']?.data?.data || {
             hide_df: false,
             hide_safe: false,
           };
-          let allTags = tour?.allTags || [];
+          const {
+            name,
+            microBrandsHighlight,
+            microBrandsDescriptor,
+            highlights,
+            media,
+            imageUrl,
+            averageRating,
+            reviewCount,
+            callToAction,
+            listingPrice,
+            validity,
+            allTags: allTagsTour,
+          } = tour || {};
+          const { productImages, safetyImages } = media || {};
+          let allTags = allTagsTour || [];
           if (hide_df) {
             allTags = allTags?.filter((t) => !t.includes('DF-'));
           }
@@ -491,26 +514,23 @@ export default class Page extends React.Component<any, any> {
           return {
             ...accum,
             [tour['id']]: {
-              title: tour.name,
-              highlights: tour.microBrandsHighlight,
-              descriptors: tour.microBrandsDescriptor,
-              productHighlights: tour.highlights,
-              productTitle: tour.name,
-              images: [
-                ...(tour.media?.productImages || []),
-                { url: tour.imageUrl },
-              ],
-              averageRating: tour.averageRating,
-              reviewCount: tour.reviewCount,
-              ctaBooster: tour.callToAction,
-              available:
-                !(tour.listingPrice === null) ||
-                !(tour.discountedFuturesListingPrice === null),
+              title: name,
+              highlights: microBrandsHighlight,
+              descriptors: microBrandsDescriptor,
+              productHighlights: highlights,
+              productTitle: name,
+              images: [...(productImages || []), { url: imageUrl }],
+              averageRating,
+              reviewCount,
+              ctaBooster: callToAction,
+              available: !(listingPrice === null),
               allTags,
-              dfListingPrice: tour.discountedFuturesListingPrice,
-              safetyImages: tour.media?.safetyImages || [],
-              validity: tour?.validity,
-              ...(isAmpUrl(query) && { listingPrice: tour.listingPrice }),
+              safetyImages: safetyImages || [],
+              validity,
+              listingPrice: {
+                ...listingPrice,
+                ...currencySymbolMap[listingPrice?.currencyCode],
+              },
             },
           };
         },
@@ -518,14 +538,6 @@ export default class Page extends React.Component<any, any> {
       );
 
       const primaryCountry = tourGroupAPIResponses?.cities?.[0]?.country;
-
-      const currencySymbolMap = tourGroupAPIResponses?.currencies?.reduce(
-        (acc, currency) => ({
-          ...acc,
-          [currency.code]: { ...currency },
-        }),
-        {}
-      );
 
       const activeCurrency = tourGroupAPIResponses?.currencies?.[0];
       return {

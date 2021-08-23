@@ -369,9 +369,7 @@ const ShowPage = ({
         hostname={hostname}
       />
       <Conditional if={isSafetyBanner}>
-        <SafeDFBannerWrapper
-          marginTop={isMobile ? 0 : 40}
-        ></SafeDFBannerWrapper>
+        <SafeDFBannerWrapper marginTop={isMobile ? 0 : 40} />
       </Conditional>
       <Wrapper>
         <HighlightsSectionWrapper>

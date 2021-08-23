@@ -106,7 +106,6 @@ const PopulateProducts = (props) => {
     host,
     analytics,
     mbTheme,
-    allToursTabContent,
     isAmp,
     instantCheckout,
     showEarliestAvailability,
@@ -162,7 +161,6 @@ const PopulateProducts = (props) => {
               position={index + 1}
               booster={tour.product_booster}
               defaultOpen={finalToursList.length === 1}
-              allToursTabContent={allToursTabContent?.[tour.tgid] || {}}
               shortSummary={tour.short_summary}
               boosterTag={tour.tag_booster}
               numberOfTours={tours.length}

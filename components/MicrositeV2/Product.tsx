@@ -324,7 +324,7 @@ const Product = (props) => {
   const { sliceData } = useContext(InteractionContext) || {};
   const { collectionId, primaryCatId, primarySubCatId } = sliceData || {};
   if (!allTours[tgid]) return null;
-  const { listingPrice, dfListingPrice, ...tour } = allTours[tgid] || {};
+  const { listingPrice, ...tour } = allTours[tgid] || {};
   const {
     productImage,
     title,
@@ -364,7 +364,7 @@ const Product = (props) => {
     originalPrice: scratchPrice,
     currencyCode,
     bestDiscount,
-  } = listingPrice || dfListingPrice || {};
+  } = listingPrice || {};
   const currencySymbol =
     currencySymbolMap[currencyCode]?.localSymbol ||
     CURRENCY_SYMBOL_MAP[currencyCode];

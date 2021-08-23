@@ -4,35 +4,33 @@ import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { scroller } from 'react-scroll';
 import { useRecoilValue } from 'recoil';
-import { strings } from 'const/strings';
-import MultiBannerWrapper from 'UI/MultiBannerWrapper';
-import { isSafetyIncluded, legacyBooleanCheck } from 'utils';
-import { LOCATION } from 'assets/SvgIcons';
-import { fetchInventory, fetchTourList } from 'utils/apiUtils';
 import { currencyAtom } from 'store/atoms/currency';
 import { useWindowWidth } from '@react-hook/window-size';
-
-import Header from './common/Header';
-import Banner from './Banner';
-import LongForm from './common/LongForm';
-import PopulateHead from './common/meta';
-import Footer from './common/Footer';
-import PopulateProducts from './PopulateProducts';
-import Analytics from '../utils/analytics';
-import allToursParser from '../utils/allToursParser';
-import { InteractionContextProvider } from '../contexts/Interaction';
-import { csvTgidToArray, getLangObject } from '../utils/helper';
+import { InteractionContextProvider } from 'contexts/Interaction';
+import { ProductsContextProvider } from 'contexts/Products';
+import Banner from 'components/Banner';
+import Footer from 'components/common/Footer';
+import Header from 'components/common/Header';
+import LongForm from 'components/common/LongForm';
+import PopulateHead from 'components/common/meta';
+import PopulateProducts from 'components/PopulateProducts';
+import TextBanner from 'components/TextBanner';
+import Conditional from 'components/common/Conditional';
+import { withAmp } from 'components/common/withAmp';
+import MultiBannerWrapper from 'UI/MultiBannerWrapper';
+import { isSafetyIncluded, legacyBooleanCheck } from 'utils';
+import { fetchInventory, fetchTourList } from 'utils/apiUtils';
+import Analytics from 'utils/analytics';
+import allToursParser from 'utils/allToursParser';
+import { csvTgidToArray, getLangObject, groupSlices } from 'utils/helper';
+import { tourListApiParser } from 'utils/dataParsers';
+import { LOCATION } from 'assets/SvgIcons';
 import {
   ANALYTICS_EVENTS,
   ALLOW_IMMEDIEATE_NESTING,
   THEMES,
-} from '../constants';
-import { groupSlices } from '../utils/helper';
-import { ProductsContextProvider } from '../contexts/Products';
-import { tourListApiParser } from '../utils/dataParsers';
-import TextBanner from './TextBanner';
-import Conditional from './common/Conditional';
-import { withAmp } from './common/withAmp';
+} from 'const/index';
+import { strings } from 'const/strings';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
@@ -53,22 +51,6 @@ const CoverSlicesWrapper = styled.div`
 
 const apiCache = {}; // replace with swr.
 const MicrositeV1 = (props) => {
-  const analytics = new Analytics();
-  const [isMobile, setIsMobile] = useState(props?.isMobile);
-  const windowWidth = useWindowWidth();
-  const [earliestAvailabilityQueue, setEarliestAvailabilityQueue] = useState(
-    []
-  );
-  const currency = useRecoilValue(currencyAtom);
-  const [tourPrices, setTourPrices] = useState(null);
-  const [isFetched, setIsFetched] = useState(false);
-  const [showEarliestAvailability, setShowEarliestAvailability] = useState(
-    null
-  );
-  const [freeTourPopupOpen, toggleFreeTourPopup] = useState(false);
-  const [covidAlertActive, toggleCovidAlert] = useState(false);
-  const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
-
   const {
     toursList,
     data: prismicData,
@@ -79,7 +61,27 @@ const MicrositeV1 = (props) => {
     mbTheme,
     scorpioData,
     activeCurrency,
+    first_publication_date: datePublished,
+    last_publication_date: dateModified,
+    host,
+    isDev,
+    serverRequestStartTimestamp,
   } = props;
+  const analytics = new Analytics();
+  const [isMobile, setIsMobile] = useState(props?.isMobile);
+  const windowWidth = useWindowWidth();
+  const [earliestAvailabilityQueue, setEarliestAvailabilityQueue] = useState(
+    []
+  );
+  const currency = useRecoilValue(currencyAtom);
+  const [tourPrices, setTourPrices] = useState(scorpioData);
+  const [isFetched, setIsFetched] = useState(false);
+  const [showEarliestAvailability, setShowEarliestAvailability] = useState(
+    null
+  );
+  const [freeTourPopupOpen, toggleFreeTourPopup] = useState(false);
+  const [covidAlertActive, toggleCovidAlert] = useState(false);
+  const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
 
   const { refs, uid, lang, data: micrositeData } = data;
   const {
@@ -89,7 +91,7 @@ const MicrositeV1 = (props) => {
     commonHeader,
   } = refs;
   const {
-    attraction,
+    attraction: attractionCMS,
     localization,
     images: bannerImages,
     heading: bannerHeading,
@@ -103,39 +105,60 @@ const MicrositeV1 = (props) => {
     show_covid19_alert: showCovid19Alert,
     body4: coverSlices,
     currencies_list,
-  } = micrositeData;
+    group_booking_excluded_tgids: groupBookingExcludedTgids,
+    microbrand_type: microbrandTypeCMS,
+    microbrand_cards: microbrandCards,
+    microbrand_cards_heading: microbrandCardsHeadingCMS,
+    alert_popup: alertPopupCMS,
+    disclaimer: disclaimerCMS,
+    show_disclaimer: showDisclaimerCMS,
+    footer_logo: footerLogoCMS,
+    footer_logo_link: footerLogoLinkCMS,
+    footer_logo_alt: footerLogoAltCMS,
+    invert_footer_logo_color: invertFooterLogoColorCMS,
+    powered_by_superbrand: poweredBySuperbrandCMS,
+    theme_override: themeOverrideCMS,
+    instant_checkout: instantCheckout = false,
+  } = micrositeData || {};
+
+  const { data: commonFooterData } = commonFooter || {};
+  const { data: secondaryFooterData } = secondaryFooter || {};
+  const {
+    attraction: attractionCFoot,
+    body: slicesCFoot,
+    logo: logoCFoot,
+    powered_by_superbrand: poweredBySuperbrandCFoot,
+    footer_heading: footerHeadingCFoot,
+    invert_logo_color: invertLogoColorCFoot,
+    theme_override: themeOverrideCFoot,
+    disclaimer_text: disclaimerTextCFoot,
+    show_disclaimer: showDisclaimerCFoot,
+    microbrand_type: microbrandTypeCFoot,
+  } = commonFooterData || {};
+  const { footer_heading: footerHeadingSFoot, body: slicesSFoot } =
+    secondaryFooterData || {};
 
   const headerCurrencies = currencies_list.filter((c) => c?.currency);
 
   const currentLanguage = getLangObject(lang).short;
   const tourRanking = uncategorizedTours[0]?.primary?.ranking;
-  const checkIfToursAvailable = toursList.length > 0;
+  const hasTours = toursList.length > 0;
   const uncategorizedToursList = toursList;
-  const uncategorizedToursHeading = checkIfToursAvailable
+  const uncategorizedToursHeading = hasTours
     ? uncategorizedTours[0].primary
     : '';
 
   const footerLogoURL =
-    commonFooter?.data?.logo?.url ||
-    micrositeData.footer_logo.url ||
-    micrositeData.footer_logo_link?.url;
-  const footerAttractionName =
-    commonFooter?.data?.attraction || attraction || 'attraction';
+    logoCFoot?.url || footerLogoCMS?.url || footerLogoLinkCMS?.url;
+  const footerAttractionName = attractionCFoot || attractionCMS || 'attraction';
   const footerPoweredByHeadout =
-    commonFooter?.data?.powered_by_superbrand ||
-    micrositeData.powered_by_superbrand ||
-    false;
+    poweredBySuperbrandCFoot || poweredBySuperbrandCMS || false;
   const invertFooterLogoColor =
-    commonFooter?.data?.invert_logo_color ||
-    micrositeData.invert_footer_logo_color;
+    invertLogoColorCFoot || invertFooterLogoColorCMS;
 
-  const footerLogoAlt =
-    commonFooter?.data?.logo?.alt ||
-    micrositeData.footer_logo.alt ||
-    micrositeData?.footer_logo_alt;
-  let footerThemeOverride =
-    commonFooter?.data?.theme_override || THEMES.INHERIT;
-  footerThemeOverride = micrositeData.theme_override || THEMES.INHERIT;
+  const footerLogoAlt = logoCFoot?.alt || footerLogoCMS.alt || footerLogoAltCMS;
+  let footerThemeOverride = themeOverrideCFoot || THEMES.INHERIT;
+  footerThemeOverride = themeOverrideCMS || THEMES.INHERIT;
 
   const isHeaderInherited =
     commonHeader &&
@@ -174,8 +197,7 @@ const MicrositeV1 = (props) => {
   } = withCommonHeaderOverrides;
   const { url: logoUrl } = linkedLogo;
   const { url: uploadedLogoUrl, alt: altText } = uploadedLogo;
-  const CMSData = micrositeData;
-  const { instant_checkout: instantCheckout = false } = CMSData;
+
   const dropdownLinks =
     dropdown_menu?.reduce((acc, item) => {
       if (item.link)
@@ -192,25 +214,17 @@ const MicrositeV1 = (props) => {
   const { results: productOffer } = offerData ? offerData : { results: [] };
   const hasOffer = productOffer.length > 0;
   const offerPopup = hasOffer ? productOffer[0] : null;
-  const {
-    group_booking_excluded_tgids: groupBookingExcludedTgids,
-  } = micrositeData;
-  const disclaimerText =
-    commonFooter?.data?.disclaimer_text ||
-    RichText.asText(micrositeData.disclaimer);
-  const microbrandType =
-    commonFooter?.data?.microbrand_type || micrositeData.microbrand_type;
-  const showDisclaimer =
-    commonFooter?.data?.show_disclaimer || micrositeData.show_disclaimer;
-  const microbrandCards = micrositeData.microbrand_cards;
-  const microbrandCardsHeading = micrositeData.microbrand_cards_heading
-    ? micrositeData.microbrand_cards_heading
+  const disclaimerText = disclaimerTextCFoot || RichText.asText(disclaimerCMS);
+  const microbrandType = microbrandTypeCFoot || microbrandTypeCMS;
+  const showDisclaimer = showDisclaimerCFoot || showDisclaimerCMS;
+  const microbrandCardsHeading = microbrandCardsHeadingCMS
+    ? microbrandCardsHeadingCMS
     : null;
   let groupBookingTourTitles = [];
 
   let alertPopup = null;
-  if (micrositeData?.alert_popup?.id) {
-    alertPopup = micrositeData.alert_popup;
+  if (alertPopupCMS?.id) {
+    alertPopup = alertPopupCMS;
   }
 
   if (showGroupBooking) {
@@ -263,17 +277,10 @@ const MicrositeV1 = (props) => {
     ? orderedTours?.map((tour) => tour.tgid)
     : [];
 
-  const {
-    first_publication_date: datePublished,
-    last_publication_date: dateModified,
-    host,
-    isDev,
-    serverRequestStartTimestamp,
-  } = props;
   const slices = contentFramework?.data?.body;
   const contentFWSlices = (slices && groupSlices(slices)) || [];
 
-  const hasTourList: boolean = !!contentFWSlices.find(
+  const hasTourListContentFW: boolean = !!contentFWSlices.find(
     (slice) => slice.slice_type === 'tours_list'
   );
 
@@ -281,7 +288,12 @@ const MicrositeV1 = (props) => {
     isFetched: isFetched,
     cardPrices: tourPrices,
   };
-  const allTours = allToursParser(CMSData, scorpioData, pricingData, isAmp);
+  const allTours = allToursParser(
+    micrositeData,
+    scorpioData,
+    pricingData,
+    isAmp
+  );
 
   let finalBannerImages = bannerImages.map((banner) => {
     return {
@@ -348,9 +360,9 @@ const MicrositeV1 = (props) => {
       ]);
       const tourGroupPrices = tourListApiParser(tourGroup);
       const mapVariantPrices = variants.map((tourVariant: any, index) => {
-        const inv = tourVariant.inventoryList.find(
-          (inventoryList) => inventoryList.tourId == variantTgids[index].tid
-        );
+        const inv = tourVariant?.inventoryList.find((inventoryList) => {
+          return inventoryList.tourId == variantTgids[index].tid;
+        });
         return {
           tgid: variantTgids[index].tgid,
           tid: variantTgids[index].tid,
@@ -367,9 +379,16 @@ const MicrositeV1 = (props) => {
         }),
         {}
       );
-      const finalTourPrices = Object.assign(tourGroupPrices, variantPrices);
-      apiCache[currency] = finalTourPrices;
-      setTourPrices(finalTourPrices);
+
+      const tourPrices = scorpioData || tourGroupPrices;
+
+      for (const tour in variantPrices) {
+        tourPrices[tour]['price'] = variantPrices[tour]?.price;
+      }
+
+      const finalTourPrices = Object.assign(tourGroupPrices);
+      apiCache[currency] = { ...scorpioData, ...finalTourPrices };
+      setTourPrices((prevState) => ({ ...prevState, finalTourPrices }));
       setIsFetched(true);
     };
     const { data } = prismicData;
@@ -377,24 +396,23 @@ const MicrositeV1 = (props) => {
     const allTourTgids = all_tours.reduce((acc, tour) => {
       return [...acc, parseInt(tour.primary.tgid)];
     }, []);
-    const checkIfToursAvailable = toursList.length > 0;
     const hasAllTours = allTourTgids.length > 0;
 
     const variantTgids = toursList
       .filter((t) => t.tgid && t.tid)
       .map((t) => ({ tgid: t.tgid, tid: t.tid }));
-    const tourGroupTgids = toursList
-      .filter((t) => t.tgid && !t.tid)
-      .map((t) => t.tgid);
 
-    const finalTgids = [...tourGroupTgids, ...allTourTgids];
-    if (checkIfToursAvailable || hasAllTours) {
+    const finalTgids = [...allTourTgids];
+    if (hasTours || hasAllTours) {
       fetchTourGroupPrices({ finalTgids, variantTgids, currency });
     }
   }, [currency]);
 
   useEffect(() => {
-    const fetchEarlistAvailability = async ({ toursList, currency = null }) => {
+    const fetchEarliestAvailability = async ({
+      toursList,
+      currency = null,
+    }) => {
       const requestQueue = toursList.map(({ tgid }) =>
         fetchInventory({ tgid, currency })
       );
@@ -427,7 +445,7 @@ const MicrositeV1 = (props) => {
     );
 
     if (showEarliestAvailability || instantCheckout) {
-      fetchEarlistAvailability({
+      fetchEarliestAvailability({
         toursList,
       });
     }
@@ -470,6 +488,7 @@ const MicrositeV1 = (props) => {
     (tour) => scorpioData?.[tour?.tgid]?.available
   );
 
+  const isToursAvailable = availableTours?.length;
   const closeGroupBookingModal = () => toggleGroupBookingModal(false);
   const tourListSection = (
     <PopulateProducts
@@ -485,14 +504,13 @@ const MicrositeV1 = (props) => {
       showLessText={showLessText}
       productOffer={productOffer}
       hasOffer={hasOffer}
-      isFetched={isFetched}
+      isFetched={true}
       togglePopup={onTogglePopup}
       pageUrl={pageUrl}
       isMobile={isAmp || isMobile}
       host={host}
       analytics={analytics}
       mbTheme={mbTheme}
-      allToursTabContent={allTours}
       instantCheckout={instantCheckout}
       showEarliestAvailability={showEarliestAvailability}
     />
@@ -544,7 +562,7 @@ const MicrositeV1 = (props) => {
           isMobile={isAmp || isMobile}
           hasLanguageSelector={hasLanguageSelector}
           showGroupBooking={showGroupBooking}
-          enableBuyTickets={availableTours?.length ? enableBuyTickets : false}
+          enableBuyTickets={isToursAvailable ? enableBuyTickets : false}
           logoRedirectionURL={logoRedirectionURL?.url || pageUrl}
           host={host}
           hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo}
@@ -589,7 +607,7 @@ const MicrositeV1 = (props) => {
             currentLanguage={currentLanguage ? currentLanguage : null}
             isMobile={isAmp || isMobile}
             boxed={true}
-            hideCTA={availableTours?.length ? hideBannerCTA : true}
+            hideCTA={isToursAvailable ? hideBannerCTA : true}
             isAmp={isAmp}
           />
         </Conditional>
@@ -610,13 +628,7 @@ const MicrositeV1 = (props) => {
           isMobile={isMobile}
         />
 
-        <Conditional
-          if={
-            checkIfToursAvailable &&
-            hasTourList === false &&
-            availableTours?.length
-          }
-        >
+        <Conditional if={hasTours && !hasTourListContentFW && isToursAvailable}>
           {tourListSection}
         </Conditional>
 
@@ -651,14 +663,12 @@ const MicrositeV1 = (props) => {
           showDisclaimer={showDisclaimer}
           disclaimerText={disclaimerText}
           microbrandType={microbrandType}
-          slices={!isFooterInherited ? commonFooter?.data?.body || [] : []}
+          slices={!isFooterInherited ? slicesCFoot || [] : []}
           invertLogoColor={invertFooterLogoColor}
           themeOverride={footerThemeOverride}
-          secondaryHeading={secondaryFooter?.data?.footer_heading}
-          primaryHeading={commonFooter?.data?.footer_heading}
-          secondarySlices={
-            !isFooterInherited ? secondaryFooter?.data?.body || [] : []
-          }
+          secondaryHeading={footerHeadingSFoot}
+          primaryHeading={footerHeadingCFoot}
+          secondarySlices={!isFooterInherited ? slicesSFoot || [] : []}
         />
         <Conditional if={hasOffer}>
           <FreeTourPopup
