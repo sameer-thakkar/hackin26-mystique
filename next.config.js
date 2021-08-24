@@ -4,4 +4,17 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 module.exports = withBundleAnalyzer({
   trailingSlash: true,
+  headers: async () => {
+    return [
+      {
+        source: '/((?!api).*)',
+        headers: [
+          {
+            key: 'Vary',
+            value: 'User-Agent',
+          },
+        ],
+      },
+    ];
+  },
 });
