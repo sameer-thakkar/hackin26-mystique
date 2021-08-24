@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Product from 'components/Product';
 import Conditional from 'components/common/Conditional';
@@ -6,6 +6,8 @@ import HorizontalLine from 'components/slices/HorizontalLine';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { THEMES } from 'const/index';
 import { strings } from 'const/strings';
+import { fetchInventory } from 'utils/apiUtils';
+import { legacyBooleanCheck } from 'utils';
 
 const StyledProductsWrapper = styled.div`
   margin: 0 auto;
@@ -74,7 +76,6 @@ type PopulateProductsType = {
   hasOffer;
   togglePopup;
   popupState;
-  isFetched;
   isMobile;
   scorpioData;
   pageUrl;
@@ -89,8 +90,8 @@ type PopulateProductsType = {
 const PopulateProducts = (props) => {
   const {
     uncategorizedTours: tours,
-    tourPrices,
     uid,
+    currency,
     currentLanguage,
     bookNowText,
     showLessText,
@@ -99,7 +100,6 @@ const PopulateProducts = (props) => {
     hasOffer,
     togglePopup,
     popupState,
-    isFetched,
     isMobile,
     scorpioData,
     pageUrl,
@@ -108,12 +108,109 @@ const PopulateProducts = (props) => {
     mbTheme,
     isAmp,
     instantCheckout,
-    showEarliestAvailability,
+    enableEarliestAvailability,
   } = props;
-  const finalToursList = tours?.filter((t) => !!scorpioData[t.tgid]);
-  const availableToursList = tours?.filter(
+
+  const [tourPrices, setTourPrices] = useState(scorpioData);
+  const [earliestAvailabilityQueue, setEarliestAvailabilityQueue] = useState(
+    []
+  );
+  const [showEarliestAvailability, setShowEarliestAvailability] = useState(
+    null
+  );
+
+  useEffect(() => {
+    const fetchEarliestAvailability = async ({
+      uncategorizedToursList,
+      currency = null,
+    }) => {
+      const requestQueue = uncategorizedToursList.map(({ tgid }) =>
+        fetchInventory({ tgid, currency })
+      );
+      const response: Array<any> = await Promise.all(requestQueue).then(
+        (res): any =>
+          res.reduce((acc: any, tour: any, index) => {
+            const tgid = uncategorizedToursList[index].tgid;
+            return {
+              ...acc,
+              [tgid]: {
+                startDate: tour?.inventoryList?.[0]?.startDate || '',
+                startTime: tour?.inventoryList?.[0]?.startTime || '',
+              },
+            };
+          }, {})
+      );
+      setEarliestAvailabilityQueue(response);
+      setShowEarliestAvailability(true);
+    };
+    const showEarliestAvailability = legacyBooleanCheck(
+      enableEarliestAvailability
+    );
+
+    if (showEarliestAvailability || instantCheckout) {
+      fetchEarliestAvailability({
+        uncategorizedToursList: tours,
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchVariantPrices = async ({ variantTgids, currency }) => {
+      const fetchVariantPrices: Promise<any>[] = variantTgids.map(({ tgid }) =>
+        fetchInventory({ tgid, 'for-days': 2, currency })
+      );
+
+      const variants: Array<any> = await Promise.all([...fetchVariantPrices]);
+      const mapVariantPrices = variants.map((tourVariant: any, index) => {
+        const inv = tourVariant?.inventoryList.find((inventoryList) => {
+          return inventoryList.tourId == variantTgids[index].tid;
+        });
+        return {
+          tgid: variantTgids[index].tgid,
+          tid: variantTgids[index].tid,
+          price: inv ? inv.finalPriceProfile.persons[0].price : '',
+        };
+      });
+
+      const variantPrices = mapVariantPrices.reduce(
+        (accum, res, index) => ({
+          ...accum,
+          [mapVariantPrices[index].tgid]: {
+            price: res.price || '',
+          },
+        }),
+        {}
+      );
+      const finalPrices = { ...tourPrices };
+      for (const tour in variantPrices) {
+        finalPrices[tour]['price'] = variantPrices[tour]?.price;
+      }
+      setTourPrices(finalPrices);
+    };
+    const variantTgids = tours
+      .filter((t) => t.tgid && t.tid)
+      .map((t) => ({ tgid: t.tgid, tid: t.tid }));
+
+    if (variantTgids?.length) {
+      fetchVariantPrices({ variantTgids, currency });
+    }
+  }, [currency]);
+
+  const uncategorizedTours =
+    showEarliestAvailability || instantCheckout
+      ? tours.map((tour) => ({
+          ...tour,
+          earliestAvailability: earliestAvailabilityQueue[tour.tgid],
+        }))
+      : tours;
+
+  const finalToursList = uncategorizedTours?.filter(
+    (t) => !!scorpioData[t.tgid]
+  );
+  const availableToursList = uncategorizedTours?.filter(
     (tour) => !!scorpioData[tour.tgid]?.available
   );
+
   return (
     <StyledProductsWrapper>
       <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
@@ -151,7 +248,6 @@ const PopulateProducts = (props) => {
               offerId={tour.offer__free_tour?.id}
               popupState={popupState}
               isMobile={isMobile}
-              isFetched={isFetched}
               isAmp={isAmp}
               pageUrl={pageUrl}
               host={host}

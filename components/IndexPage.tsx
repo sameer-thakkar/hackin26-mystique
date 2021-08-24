@@ -25,10 +25,12 @@ import {
   fetchCategory,
   fetchCurrencyList,
   fetchTourGroup,
+  fetchTourList,
 } from 'utils/apiUtils';
 import {
   categoryTourListParserV1,
   categoryTourListParserV2,
+  tourListApiParser,
   uncategorizedToursListParser,
 } from 'utils/dataParsers';
 import { getLangUID, removePageQuery } from 'utils/urlUtils';
@@ -308,7 +310,7 @@ export default class Page extends React.Component<any, any> {
 
       const all_tours_tab_tgids =
         microsite.data.all_tours.reduce((accum, tour) => {
-          return [...accum, tour.primary.tgid];
+          return [...accum, parseInt(tour.primary.tgid)];
         }, []) || [];
 
       let labelIds;
@@ -377,10 +379,10 @@ export default class Page extends React.Component<any, any> {
           }
         }
 
-        const primsicTours = toursTabFirstSlice
+        const prismicTours = toursTabFirstSlice
           ? await toursTabSliceHandler(toursTabFirstSlice)
           : [];
-        const offers = primsicTours
+        const offers = prismicTours
           ?.filter((tour) => tour.offer__free_tour?.id)
           ?.map((tour) => tour.offer__free_tour?.id);
         const uniqueOfferIds = offers.filter(
@@ -397,8 +399,21 @@ export default class Page extends React.Component<any, any> {
               return offerData;
             });
 
+        let finalTours = [...prismicTours];
+
+        if (all_tours_tab_tgids.length) {
+          const allToursRes = await fetchTourList({
+            tgids: all_tours_tab_tgids,
+            host: hostname,
+          });
+          const allToursData = await allToursRes.json();
+          const allTours = await tourListApiParser(allToursData);
+          if (allTours.length) {
+            finalTours = [...finalTours, ...allTours];
+          }
+        }
         const toursList = uncategorizedToursListParser(
-          primsicTours,
+          finalTours,
           initial_tgids
         );
 

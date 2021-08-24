@@ -19,11 +19,9 @@ import Conditional from 'components/common/Conditional';
 import { withAmp } from 'components/common/withAmp';
 import MultiBannerWrapper from 'UI/MultiBannerWrapper';
 import { isSafetyIncluded, legacyBooleanCheck } from 'utils';
-import { fetchInventory, fetchTourList } from 'utils/apiUtils';
 import Analytics from 'utils/analytics';
 import allToursParser from 'utils/allToursParser';
 import { csvTgidToArray, getLangObject, groupSlices } from 'utils/helper';
-import { tourListApiParser } from 'utils/dataParsers';
 import { LOCATION } from 'assets/SvgIcons';
 import {
   ANALYTICS_EVENTS,
@@ -49,11 +47,9 @@ const CoverSlicesWrapper = styled.div`
   margin-bottom: 32px;
 `;
 
-const apiCache = {}; // replace with swr.
 const MicrositeV1 = (props) => {
   const {
-    toursList,
-    data: prismicData,
+    toursList: uncategorizedToursList,
     tgidToScroll,
     isAmp,
     data,
@@ -70,15 +66,8 @@ const MicrositeV1 = (props) => {
   const analytics = new Analytics();
   const [isMobile, setIsMobile] = useState(props?.isMobile);
   const windowWidth = useWindowWidth();
-  const [earliestAvailabilityQueue, setEarliestAvailabilityQueue] = useState(
-    []
-  );
+
   const currency = useRecoilValue(currencyAtom);
-  const [tourPrices, setTourPrices] = useState(scorpioData);
-  const [isFetched, setIsFetched] = useState(false);
-  const [showEarliestAvailability, setShowEarliestAvailability] = useState(
-    null
-  );
   const [freeTourPopupOpen, toggleFreeTourPopup] = useState(false);
   const [covidAlertActive, toggleCovidAlert] = useState(false);
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
@@ -119,6 +108,8 @@ const MicrositeV1 = (props) => {
     powered_by_superbrand: poweredBySuperbrandCMS,
     theme_override: themeOverrideCMS,
     instant_checkout: instantCheckout = false,
+    enable_earliest_availability: enableEarliestAvailability,
+    baseLangPageTitle,
   } = micrositeData || {};
 
   const { data: commonFooterData } = commonFooter || {};
@@ -142,8 +133,7 @@ const MicrositeV1 = (props) => {
 
   const currentLanguage = getLangObject(lang).short;
   const tourRanking = uncategorizedTours[0]?.primary?.ranking;
-  const hasTours = toursList.length > 0;
-  const uncategorizedToursList = toursList;
+  const hasTours = uncategorizedToursList.length > 0;
   const uncategorizedToursHeading = hasTours
     ? uncategorizedTours[0].primary
     : '';
@@ -244,25 +234,17 @@ const MicrositeV1 = (props) => {
       });
   }
 
-  const uncategorizedToursData =
-    showEarliestAvailability || instantCheckout
-      ? uncategorizedToursList.map((tour) => ({
-          ...tour,
-          earliestAvailability: earliestAvailabilityQueue[tour.tgid],
-        }))
-      : uncategorizedToursList;
-
+  const orderedTGIDRanking = csvTgidToArray(tourRanking);
   const orderedUncategorizedTours = tgidToScroll
-    ? uncategorizedToursData?.reduce((accum = [], item) => {
+    ? uncategorizedToursList?.reduce((accum = [], item) => {
         if (item.tgid === tgidToScroll) {
           return [item, ...accum];
         } else {
           return [...accum, item];
         }
       }, [])
-    : uncategorizedToursData;
+    : uncategorizedToursList;
 
-  const orderedTGIDRanking = csvTgidToArray(tourRanking);
   const orderedTours = tgidToScroll
     ? orderedUncategorizedTours
     : orderedTGIDRanking?.length
@@ -273,6 +255,7 @@ const MicrositeV1 = (props) => {
         );
       })
     : orderedUncategorizedTours;
+
   const orderedTgids = orderedTours?.length
     ? orderedTours?.map((tour) => tour.tgid)
     : [];
@@ -284,9 +267,10 @@ const MicrositeV1 = (props) => {
     (slice) => slice.slice_type === 'tours_list'
   );
 
+  const isReady = Object.values(scorpioData || {})?.length > 0;
   const pricingData = {
-    isFetched: isFetched,
-    cardPrices: tourPrices,
+    isFetched: isReady,
+    cardPrices: scorpioData,
   };
   const allTours = allToursParser(
     micrositeData,
@@ -333,123 +317,6 @@ const MicrositeV1 = (props) => {
   }, [windowWidth]);
 
   useEffect(() => {
-    const fetchTourGroupPrices = async ({
-      finalTgids,
-      variantTgids,
-      currency,
-    }) => {
-      if (apiCache[currency]) {
-        setTourPrices(apiCache[currency]);
-        setIsFetched(true);
-        return;
-      }
-      const tourGroupPricePromise = fetchTourList({
-        tgids: finalTgids,
-        currency,
-      }).then((res) => {
-        return res.json();
-      });
-
-      const fetchVariantPrices = variantTgids.map(({ tgid }) =>
-        fetchInventory({ tgid, 'for-days': 2, currency })
-      );
-
-      const [tourGroup, ...variants] = await Promise.all([
-        tourGroupPricePromise,
-        ...fetchVariantPrices,
-      ]);
-      const tourGroupPrices = tourListApiParser(tourGroup);
-      const mapVariantPrices = variants.map((tourVariant: any, index) => {
-        const inv = tourVariant?.inventoryList.find((inventoryList) => {
-          return inventoryList.tourId == variantTgids[index].tid;
-        });
-        return {
-          tgid: variantTgids[index].tgid,
-          tid: variantTgids[index].tid,
-          price: inv ? inv.finalPriceProfile.persons[0].price : '',
-        };
-      });
-
-      const variantPrices = mapVariantPrices.reduce(
-        (accum, res, index) => ({
-          ...accum,
-          [mapVariantPrices[index].tgid]: {
-            price: res.price || '',
-          },
-        }),
-        {}
-      );
-
-      const tourPrices = scorpioData || tourGroupPrices;
-
-      for (const tour in variantPrices) {
-        tourPrices[tour]['price'] = variantPrices[tour]?.price;
-      }
-
-      const finalTourPrices = Object.assign(tourGroupPrices);
-      apiCache[currency] = { ...scorpioData, ...finalTourPrices };
-      setTourPrices((prevState) => ({ ...prevState, finalTourPrices }));
-      setIsFetched(true);
-    };
-    const { data } = prismicData;
-    const { all_tours } = data;
-    const allTourTgids = all_tours.reduce((acc, tour) => {
-      return [...acc, parseInt(tour.primary.tgid)];
-    }, []);
-    const hasAllTours = allTourTgids.length > 0;
-
-    const variantTgids = toursList
-      .filter((t) => t.tgid && t.tid)
-      .map((t) => ({ tgid: t.tgid, tid: t.tid }));
-
-    const finalTgids = [...allTourTgids];
-    if (hasTours || hasAllTours) {
-      fetchTourGroupPrices({ finalTgids, variantTgids, currency });
-    }
-  }, [currency]);
-
-  useEffect(() => {
-    const fetchEarliestAvailability = async ({
-      toursList,
-      currency = null,
-    }) => {
-      const requestQueue = toursList.map(({ tgid }) =>
-        fetchInventory({ tgid, currency })
-      );
-      const response: Array<any> = await Promise.all(requestQueue).then(
-        (res): any =>
-          res.reduce((acc: any, tour: any, index) => {
-            const tgid = toursList[index].tgid;
-            return {
-              ...acc,
-              [tgid]: {
-                startDate: tour?.inventoryList?.[0]?.startDate || '',
-                startTime: tour?.inventoryList?.[0]?.startTime || '',
-              },
-            };
-          }, {})
-      );
-      setEarliestAvailabilityQueue(response);
-      setShowEarliestAvailability(true);
-    };
-    const { data, lang } = prismicData;
-    const { baseLangPageTitle } = data;
-    const currentLanguage = getLangObject(lang).short;
-
-    const {
-      enable_earliest_availability: enableEarliestAvailability,
-      instant_checkout: instantCheckout,
-    } = data;
-    const showEarliestAvailability = legacyBooleanCheck(
-      enableEarliestAvailability
-    );
-
-    if (showEarliestAvailability || instantCheckout) {
-      fetchEarliestAvailability({
-        toursList,
-      });
-    }
-
     if (tgidToScroll) {
       scroller.scrollTo(tgidToScroll, {
         duration: 1500,
@@ -489,13 +356,14 @@ const MicrositeV1 = (props) => {
   );
 
   const isToursAvailable = availableTours?.length;
+
   const closeGroupBookingModal = () => toggleGroupBookingModal(false);
   const tourListSection = (
     <PopulateProducts
+      currency={currency}
       uncategorizedTours={orderedTours}
       scorpioData={scorpioData}
       uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
-      tourPrices={tourPrices}
       uid={uid}
       isAmp={isAmp}
       currentLanguage={currentLanguage}
@@ -504,7 +372,6 @@ const MicrositeV1 = (props) => {
       showLessText={showLessText}
       productOffer={productOffer}
       hasOffer={hasOffer}
-      isFetched={true}
       togglePopup={onTogglePopup}
       pageUrl={pageUrl}
       isMobile={isAmp || isMobile}
@@ -512,7 +379,7 @@ const MicrositeV1 = (props) => {
       analytics={analytics}
       mbTheme={mbTheme}
       instantCheckout={instantCheckout}
-      showEarliestAvailability={showEarliestAvailability}
+      enableEarliestAvailability={enableEarliestAvailability}
     />
   );
 
@@ -642,7 +509,7 @@ const MicrositeV1 = (props) => {
             microbrandCardsHeading={microbrandCardsHeading}
           />
         </Conditional>
-        <ProductsContextProvider allTours={allTours} ready={isFetched}>
+        <ProductsContextProvider allTours={allTours} ready={isReady}>
           <InteractionContextProvider>
             <Conditional if={longFormContent}>
               <LongForm
