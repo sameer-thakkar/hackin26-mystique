@@ -350,6 +350,18 @@ export const getHostName = (isStage, isDev) => {
   }
 };
 
+const compareDates = (
+  startMonthDate,
+  endMonthDate,
+  startTourDate,
+  endTourDate
+) => {
+  return (
+    startTourDate.isSameOrBefore(startMonthDate, 'month') &&
+    endTourDate.isSameOrAfter(endMonthDate, 'month')
+  );
+};
+
 export const getTGIDListForMonth = (allTours, displayMonth) => {
   const allToursArray = Object.values(allTours);
 
@@ -357,14 +369,24 @@ export const getTGIDListForMonth = (allTours, displayMonth) => {
     `${displayMonth}/01/${dayjs().year()}`,
     'MMMM/DD/YYYY'
   );
-  const endMonthDate = startMonthDate.add(startMonthDate.daysInMonth(), 'days');
+  const endMonthDate = startMonthDate.add(
+    startMonthDate.daysInMonth() - 1,
+    'days'
+  );
+  const startMonthNextYearDate = startMonthDate.add(1, 'years');
+  const endMonthNextYearDate = endMonthDate.add(1, 'years');
 
   return allToursArray.reduce((accumulator: any[], element) => {
     const endTourDate = dayjs(element['closingDate'], 'YYYY-MM-DD');
     const startTourDate = dayjs(element['reopeningDate'], 'YYYY-MM-DD');
     if (
-      startTourDate.isSameOrBefore(startMonthDate, 'month') &&
-      endTourDate.isSameOrAfter(endMonthDate, 'month')
+      compareDates(startMonthDate, endMonthDate, startTourDate, endTourDate) ||
+      compareDates(
+        startMonthNextYearDate,
+        endMonthNextYearDate,
+        startTourDate,
+        endTourDate
+      )
     ) {
       return [...accumulator, element['tgid']];
     }
