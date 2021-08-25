@@ -76,9 +76,6 @@ const MicrobrandCard = styled.div`
   }
   .card-image {
     height: 100%;
-    .image-wrap {
-      display: flex;
-    }
   }
   .card-image img {
     object-fit: cover;
