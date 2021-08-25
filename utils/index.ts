@@ -267,3 +267,24 @@ export const generatePromiseForCategoryTours = ({
   });
   return allPromises;
 };
+
+export const extractSinglePrismicSlice = ({
+  sliceName,
+  slices,
+}: {
+  sliceName: string;
+  slices: any[];
+}) => {
+  if (slices?.length) {
+    const filteredData = slices?.filter(
+      (slice) => slice.slice_type === sliceName
+    );
+    if (filteredData?.length) {
+      return filteredData?.reduce((acc, curr) => acc + curr);
+    } else {
+      return {};
+    }
+  } else {
+    return {};
+  }
+};

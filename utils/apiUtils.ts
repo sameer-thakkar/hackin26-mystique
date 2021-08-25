@@ -1,3 +1,5 @@
+import { addQueryParams } from './urlUtils';
+
 const objectToQuery = (query) => {
   const params = Object.entries(query);
   return params.length
@@ -58,6 +60,7 @@ interface fetchTGIDsByCategoryV2Obj {
   isSubCategory: boolean;
   city?: string;
   lang?: string;
+  limit?: string;
 }
 
 export const fetchTGIDsByCategoryV2 = async ({
@@ -66,15 +69,19 @@ export const fetchTGIDsByCategoryV2 = async ({
   isSubCategory = false,
   city = '',
   lang = 'EN',
+  limit,
 }: fetchTGIDsByCategoryV2Obj) => {
   const url = isSubCategory
     ? `${hostname}/api/tours/v6/tour-groups/list-by/sub-category/${categoryId}`
     : `${hostname}/api/tours/v6/tour-groups/list-by/category/${categoryId}`;
-
+  const params = {
+    language: lang,
+    ...(city && { city }),
+    ...(limit && { limit }),
+  };
+  const finalUrl = addQueryParams(url, params);
   try {
-    const response = await fetch(
-      `${url}?language=${lang}&limit=100${city ? `&city=${city}` : ''}`
-    );
+    const response = await fetch(finalUrl);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -86,16 +93,22 @@ interface fetchCollection {
   collectionId: string | number;
   hostname: string;
   lang?: string;
+  limit?: string;
 }
 export const fetchCollection = async ({
   collectionId,
   hostname,
   lang = 'EN',
+  limit,
 }: fetchCollection) => {
-  const url = `${hostname}/api/tours/v1/collection/${collectionId}/sections?limit=100&language=${lang}`;
-
+  const params = {
+    language: lang,
+    ...(limit && { limit }),
+  };
+  const url = `${hostname}/api/tours/v1/collection/${collectionId}/sections`;
+  const finalUrl = addQueryParams(url, params);
   try {
-    const response = await fetch(url);
+    const response = await fetch(finalUrl);
     const data = await response.json();
     return data;
   } catch (error) {

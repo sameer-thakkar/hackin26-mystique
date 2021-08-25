@@ -180,6 +180,7 @@ export const CUSTOM_TYPES = {
   GLOBAL_COLLECTION: 'global_collection',
   GLOBAL_COUNTRY: 'global_country',
   GLOBAL_EXPERIENCE: 'global_experience',
+  PRODUCT_CARDS: 'product_cards',
 };
 
 export const DESIGN = {

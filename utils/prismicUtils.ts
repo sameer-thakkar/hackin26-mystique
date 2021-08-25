@@ -680,7 +680,6 @@ export const getShowPage = async ({ req, lang, uid }) => {
   }
   return Promise.reject();
 };
-
 export const getPrismicDocument = async ({
   req,
   serverResponse,

@@ -55,13 +55,14 @@ const MicrositeV1 = (props) => {
     data,
     offerData,
     mbTheme,
-    scorpioData,
+    scorpioData: scorpioDataUncategorised,
     activeCurrency,
     first_publication_date: datePublished,
     last_publication_date: dateModified,
     host,
     isDev,
     serverRequestStartTimestamp,
+    categoryTourListData,
   } = props;
   const analytics = new Analytics();
   const [isMobile, setIsMobile] = useState(props?.isMobile);
@@ -132,11 +133,23 @@ const MicrositeV1 = (props) => {
   const headerCurrencies = currencies_list.filter((c) => c?.currency);
 
   const currentLanguage = getLangObject(lang).short;
+  const isCategorisedTours = Object.keys(categoryTourListData)?.length > 0;
+  const {
+    scorpioData: scorpioDataCategorised,
+    orderedTours: categorizedToursList,
+  } = categoryTourListData || {};
   const tourRanking = uncategorizedTours[0]?.primary?.ranking;
-  const hasTours = uncategorizedToursList.length > 0;
+  const hasTours = isCategorisedTours
+    ? categorizedToursList
+    : uncategorizedToursList.length > 0;
   const uncategorizedToursHeading = hasTours
-    ? uncategorizedTours[0].primary
+    ? isCategorisedTours
+      ? ''
+      : uncategorizedTours[0].primary
     : '';
+  const scorpioData = isCategorisedTours
+    ? scorpioDataCategorised
+    : scorpioDataUncategorised;
 
   const footerLogoURL =
     logoCFoot?.url || footerLogoCMS?.url || footerLogoLinkCMS?.url;
@@ -234,27 +247,36 @@ const MicrositeV1 = (props) => {
       });
   }
 
-  const orderedTGIDRanking = csvTgidToArray(tourRanking);
-  const orderedUncategorizedTours = tgidToScroll
-    ? uncategorizedToursList?.reduce((accum = [], item) => {
-        if (item.tgid === tgidToScroll) {
+  const sortTours = (tgidToScroll, toursArray, isCategorisedTours) => {
+    if (!tgidToScroll) return toursArray;
+    if (tgidToScroll) {
+      return toursArray?.reduce((accum = [], item) => {
+        const tgid = isCategorisedTours ? +tgidToScroll : tgidToScroll;
+        if (item.tgid === tgid) {
           return [item, ...accum];
         } else {
           return [...accum, item];
         }
-      }, [])
-    : uncategorizedToursList;
+      }, []);
+    }
+  };
 
-  const orderedTours = tgidToScroll
-    ? orderedUncategorizedTours
-    : orderedTGIDRanking?.length
-    ? [...orderedUncategorizedTours]?.sort((tourA, tourB) => {
-        return (
-          orderedTGIDRanking?.indexOf(parseInt(tourA.tgid)) -
-          orderedTGIDRanking?.indexOf(parseInt(tourB.tgid))
-        );
-      })
-    : orderedUncategorizedTours;
+  const orderedTGIDRanking = csvTgidToArray(tourRanking);
+  const orderedUncategorizedTours = isCategorisedTours
+    ? sortTours(tgidToScroll, categorizedToursList, isCategorisedTours)
+    : sortTours(tgidToScroll, uncategorizedToursList, isCategorisedTours);
+
+  const orderedTours =
+    isCategorisedTours || tgidToScroll
+      ? orderedUncategorizedTours
+      : orderedTGIDRanking?.length
+      ? [...orderedUncategorizedTours]?.sort((tourA, tourB) => {
+          return (
+            orderedTGIDRanking?.indexOf(parseInt(tourA.tgid)) -
+            orderedTGIDRanking?.indexOf(parseInt(tourB.tgid))
+          );
+        })
+      : orderedUncategorizedTours;
 
   const orderedTgids = orderedTours?.length
     ? orderedTours?.map((tour) => tour.tgid)
@@ -301,8 +323,7 @@ const MicrositeV1 = (props) => {
       .slice(0, bannerLimit || orderedUncategorizedTours.length);
   }
 
-  const tours = scorpioData || {};
-  const hasSafe = Object.values(tours).some((tour: any) =>
+  const hasSafe = Object.values(scorpioData || {}).some((tour: any) =>
     isSafetyIncluded(tour.allTags)
   );
 

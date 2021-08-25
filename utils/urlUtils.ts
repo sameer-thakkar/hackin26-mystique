@@ -119,3 +119,20 @@ export const convertUidToUrl = (uid) => {
     return null;
   }
 };
+
+export const addQueryParams = (
+  url: string,
+  params: { [key: string]: string }
+) => {
+  if (url) {
+    let theURL = new URL(url);
+    if (Object.keys(params).length > 0) {
+      for (const property in params) {
+        const key = property;
+        const value = params[property];
+        theURL.searchParams.set(key, value);
+      }
+    }
+    return theURL.toString();
+  }
+};

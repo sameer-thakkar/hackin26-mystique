@@ -19,6 +19,7 @@ import {
   reflect,
   isNakedDomain,
   getHeadoutLanguagecode,
+  extractSinglePrismicSlice,
 } from 'utils';
 import { getPrismicDocument } from 'utils/prismicUtils';
 import {
@@ -338,25 +339,34 @@ export default class Page extends React.Component<any, any> {
         const toursTabFirstSlice = body1[0];
         const categorizedTours = body;
 
-        const categoryTourList = categorizedTours?.length
-          ? categorizedTours?.filter(
-              (category) => category.slice_type === 'tour_list_category'
-            )
-          : [];
-        const categoryTourListV1 = categorizedTours?.length
-          ? categorizedTours?.filter(
-              (category) => category.slice_type === 'tour_list_category_v1'
-            )
-          : [];
+        const categoryTourListV1 = extractSinglePrismicSlice({
+          sliceName: 'tour_list_category_v1',
+          slices: categorizedTours,
+        });
+        const hasCategoryTourListV1 = Object.keys(categoryTourListV1)?.length;
+        let productCard;
+        if (hasCategoryTourListV1) {
+          const { primary } = categoryTourListV1;
+          const { product_cards } = primary || {};
+          const { id: productCardsId } = product_cards || {};
+          const { data } =
+            (await Client(req).getByID(productCardsId, {
+              lang: 'en-us',
+            })) || {};
+          productCard = data;
+        }
 
-        const categoryCarouselCF = contentFrameworkData?.body?.length
-          ? contentFrameworkData?.body?.filter(
-              (slice) => slice.slice_type === 'category_carousel'
-            )
-          : [];
+        const categoryTourList = extractSinglePrismicSlice({
+          sliceName: 'tour_list_category',
+          slices: categorizedTours,
+        });
+
+        const categoryCarouselCF = extractSinglePrismicSlice({
+          sliceName: 'category_carousel',
+          slices: contentFrameworkData?.body,
+        });
 
         let categoryTourListData;
-        const hasCategoryTourListV1 = Object.keys(categoryTourListV1)?.length;
         const hasCategoryTourListV2 = Object.keys(categoryTourList)?.length;
         const hasCategoryTourList =
           hasCategoryTourListV2 ||
@@ -365,7 +375,8 @@ export default class Page extends React.Component<any, any> {
         if (hasCategoryTourList) {
           if (hasCategoryTourListV1) {
             categoryTourListData = await categoryTourListParserV1({
-              tourListCategoryV1: categoryTourListV1,
+              productCard,
+              sliceObj: categoryTourListV1,
               hostname,
               lang,
             });

@@ -5,7 +5,12 @@ import {
 import { CURRENCY_SYMBOL_MAP } from 'const/index';
 import { generatePromiseForCategoryTours, getHeadoutLanguagecode } from 'utils';
 
-import { fetchCollection, fetchTGIDsByCategoryV2 } from './apiUtils';
+import {
+  fetchCollection,
+  fetchTGIDsByCategoryV2,
+  fetchTourList,
+} from './apiUtils';
+import { csvTgidToArray } from './helper';
 
 export const uncategorizedToursListParser = (
   uncategorizedToursList,
@@ -21,13 +26,6 @@ export const uncategorizedToursListParser = (
   );
 };
 
-interface categoryTourListParserProps {
-  tourListCategory: any[];
-  hostname: string;
-  showpages: any;
-  categoryCarousel?: any[];
-}
-
 const extractTgidsFromCategories = (arr) => {
   if (arr?.length > 0) {
     return arr
@@ -37,30 +35,49 @@ const extractTgidsFromCategories = (arr) => {
 };
 
 export const categoryTourListParserV1 = async ({
-  tourListCategoryV1,
+  productCard,
+  sliceObj,
   hostname,
   lang,
 }: {
-  tourListCategoryV1: any[];
+  productCard: { [key: string]: any };
+  sliceObj: { [key: string]: any };
   hostname: string;
   lang: string;
 }) => {
   let tourData = [],
-    currencySymbol;
-  const sliceObj = tourListCategoryV1?.length
-    ? tourListCategoryV1?.reduce((acc, curr) => acc + curr)
-    : {};
-  const { primary } = sliceObj || {};
-  const { collection, category, sub_category, city } = primary || {};
+    currency;
+  const { primary, items } = sliceObj || {};
+  const { locale_ranking, locale_exclusions } = primary || {};
+  const {
+    collection,
+    category,
+    sub_category,
+    city,
+    limit,
+    ranking,
+    exclusions,
+  } = productCard || {};
   const { cityCode } = city || {};
+  const localeRanking = csvTgidToArray(locale_ranking);
+  const commonRanking = csvTgidToArray(ranking);
+  const localeExclusions = csvTgidToArray(locale_exclusions);
+  const commonExclusions = csvTgidToArray(exclusions);
+  const finalRanking = localeRanking?.length ? localeRanking : commonRanking;
+  const finalExclusions = localeExclusions?.length
+    ? localeExclusions
+    : commonExclusions;
+
   const language = getHeadoutLanguagecode(lang);
+
   if (collection) {
     const collectionData = await fetchCollection({
       collectionId: collection,
       hostname,
       lang: language,
+      limit,
     });
-    currencySymbol = collectionData?.city?.country?.currency?.localSymbol;
+    currency = collectionData?.city?.country?.currency;
     const genericSection = collectionData?.sections
       ?.filter((section) => {
         if (section?.type === 'GENERIC') {
@@ -76,8 +93,9 @@ export const categoryTourListParserV1 = async ({
       isSubCategory: false,
       city: cityCode,
       lang: language,
+      limit,
     });
-    currencySymbol = categoryData?.currency?.localSymbol;
+    currency = categoryData?.currency;
     tourData.push(...categoryData?.pageData?.items);
   } else if (sub_category) {
     const subCategoryData = await fetchTGIDsByCategoryV2({
@@ -86,13 +104,68 @@ export const categoryTourListParserV1 = async ({
       isSubCategory: true,
       city: cityCode,
       lang: language,
+      limit,
     });
-    currencySymbol = subCategoryData?.currency?.localSymbol;
+    currency = subCategoryData?.currency;
     tourData.push(...subCategoryData?.pageData?.items);
   }
   if (tourData?.length) {
-    const formattedData = tourData?.map((tour) => {
+    let allTours = [...tourData];
+    const intialTgids = tourData?.map((tour) => tour.id);
+    const tgidsToFetch = finalRanking?.filter(
+      (tgid) => !intialTgids.includes(tgid)
+    );
+    if (tgidsToFetch?.length) {
+      const additionalTours = await fetchTourList({
+        tgids: tgidsToFetch,
+        host: hostname,
+      });
+      const additionalToursData = await additionalTours.json();
+      if (additionalToursData?.tourGroups?.length) {
+        allTours = [...tourData, ...additionalToursData?.tourGroups];
+      }
+    }
+    const tgidsWithHORanking = allTours
+      ?.map((tour) => tour.id)
+      ?.filter((tgid) => !finalRanking?.includes(tgid));
+    let orderedTGIDRanking;
+    if (finalRanking?.length && tgidsWithHORanking?.length) {
+      orderedTGIDRanking = [...finalRanking, ...tgidsWithHORanking];
+    } else {
+      orderedTGIDRanking = [...tgidsWithHORanking];
+    }
+
+    const orderedTours = allTours?.sort((tourA, tourB) => {
+      return (
+        orderedTGIDRanking?.indexOf(parseInt(tourA.id)) -
+        orderedTGIDRanking?.indexOf(parseInt(tourB.id))
+      );
+    });
+    const finalTours = orderedTours?.filter(
+      (tour) => !finalExclusions.includes(tour.id)
+    );
+    const repeatableObj = finalTours?.reduce((acc, tour) => {
+      const { id } = tour || {};
+      const tourObj = items.find((item) => item.tgid === id);
+      acc.push({
+        tgid: id,
+        cta_url_suffix: null,
+        marketing_highlights_override: null,
+        offer__free_tour: { link_type: 'Document' },
+        product_booster: [],
+        short_summary: [],
+        show_scratch_price: 'No',
+        tag_booster: null,
+        tid: null,
+        tour_description_override: [],
+        tour_title_override: null,
+        ...tourObj,
+      });
+      return acc;
+    }, []);
+    const scorpioData = finalTours?.reduce((acc, tour) => {
       const {
+        id,
         allTags,
         averageRating,
         callToAction,
@@ -106,25 +179,41 @@ export const categoryTourListParserV1 = async ({
       } = tour || {};
       const { productImages, safetyImages } = media || {};
       return {
-        allTags,
-        available: listingPrice?.finalPrice ? true : false,
-        averageRating,
-        ctaBooster: callToAction,
-        currencySymbol,
-        descriptors: microBrandsDescriptor,
-        highlights: microBrandsHighlight,
-        images: productImages,
-        listingPrice,
-        productHighlights: highlights,
-        productTitle: name,
-        reviewCount,
-        safetyImages: safetyImages,
-        title: name,
+        ...acc,
+        [id]: {
+          allTags,
+          available: listingPrice?.finalPrice ? true : false,
+          averageRating,
+          ctaBooster: callToAction,
+          descriptors: microBrandsDescriptor,
+          highlights: microBrandsHighlight,
+          images: productImages,
+          listingPrice: {
+            ...listingPrice,
+            ...currency,
+          },
+          productHighlights: highlights,
+          productTitle: name,
+          reviewCount,
+          safetyImages: safetyImages,
+          title: name,
+        },
       };
-    });
-    return formattedData;
+    }, {});
+
+    return {
+      scorpioData,
+      orderedTours: repeatableObj,
+    };
   }
 };
+
+interface categoryTourListParserProps {
+  tourListCategory: { [key: string]: any };
+  hostname: string;
+  showpages: any;
+  categoryCarousel?: { [key: string]: any };
+}
 
 export const categoryTourListParserV2 = async (
   obj: categoryTourListParserProps
@@ -134,14 +223,8 @@ export const categoryTourListParserV2 = async (
   const collectionIds = [];
   const { tourListCategory, hostname, showpages, categoryCarousel } = obj || {};
 
-  const sliceObj = tourListCategory?.length
-    ? tourListCategory?.reduce((acc, curr) => acc + curr)
-    : {};
-  const { primary, items: slices } = sliceObj || {};
+  const { primary, items: slices } = tourListCategory || {};
   const city = primary?.city?.cityCode;
-  const categoryCarouselObj = categoryCarousel?.length
-    ? categoryCarousel?.reduce((acc, curr) => acc + curr)
-    : {};
   if (slices?.length) {
     slices?.forEach((c) => {
       const { collection, category, sub_category } = c || {};
@@ -156,8 +239,8 @@ export const categoryTourListParserV2 = async (
       }
     });
   }
-  if (categoryCarouselObj.primary?.category_id) {
-    categoryIds.push(categoryCarouselObj.primary?.category_id);
+  if (categoryCarousel.primary?.category_id) {
+    categoryIds.push(categoryCarousel.primary?.category_id);
   }
 
   const { results: showPagesResults } = showpages || {};
