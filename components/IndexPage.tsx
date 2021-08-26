@@ -492,7 +492,7 @@ export default class Page extends React.Component<any, any> {
       } catch (e) {
         constructedTourgroupURL = `https://${
           isStage ? 'stage-' : ''
-        }microbrands.headout.com/api/tours/v6/tour-groups/?ids[]=${tgidsArray}&lang=${getHeadoutLanguagecode(
+        }microbrands.headout.com/api/tours/v6/tour-groups/?ids[]=${tgidsArray}&language=${getHeadoutLanguagecode(
           lang
         )}`;
       }
@@ -528,6 +528,7 @@ export default class Page extends React.Component<any, any> {
             listingPrice,
             validity,
             allTags: allTagsTour,
+            id,
           } = tour || {};
           const { productImages, safetyImages } = media || {};
           let allTags = allTagsTour || [];
@@ -539,7 +540,7 @@ export default class Page extends React.Component<any, any> {
           }
           return {
             ...accum,
-            [tour['id']]: {
+            [id]: {
               title: name,
               highlights: microBrandsHighlight,
               descriptors: microBrandsDescriptor,

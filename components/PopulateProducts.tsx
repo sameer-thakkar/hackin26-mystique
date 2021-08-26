@@ -110,7 +110,6 @@ const PopulateProducts = (props) => {
     instantCheckout,
     enableEarliestAvailability,
   } = props;
-
   const [tourPrices, setTourPrices] = useState(scorpioData);
   const [earliestAvailabilityQueue, setEarliestAvailabilityQueue] = useState(
     []
@@ -154,6 +153,8 @@ const PopulateProducts = (props) => {
     }
   }, []);
 
+  useEffect(() => setTourPrices(scorpioData), [scorpioData]);
+
   useEffect(() => {
     const fetchVariantPrices = async ({ variantTgids, currency }) => {
       const fetchVariantPrices: Promise<any>[] = variantTgids.map(({ tgid }) =>
@@ -195,7 +196,6 @@ const PopulateProducts = (props) => {
       fetchVariantPrices({ variantTgids, currency });
     }
   }, [currency]);
-
   const uncategorizedTours =
     showEarliestAvailability || instantCheckout
       ? tours.map((tour) => ({

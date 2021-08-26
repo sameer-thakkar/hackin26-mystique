@@ -29,6 +29,8 @@ import {
   THEMES,
 } from 'const/index';
 import { strings } from 'const/strings';
+import { fetchTourList } from 'utils/apiUtils';
+import { tourListApiParser } from 'utils/dataParsers';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
@@ -69,6 +71,7 @@ const MicrositeV1 = (props) => {
   const windowWidth = useWindowWidth();
 
   const currency = useRecoilValue(currencyAtom);
+  const [initialCurrency] = useState(currency);
   const [freeTourPopupOpen, toggleFreeTourPopup] = useState(false);
   const [covidAlertActive, toggleCovidAlert] = useState(false);
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
@@ -147,9 +150,10 @@ const MicrositeV1 = (props) => {
       ? ''
       : uncategorizedTours[0].primary
     : '';
-  const scorpioData = isCategorisedTours
+  const initialScorpioData = isCategorisedTours
     ? scorpioDataCategorised
     : scorpioDataUncategorised;
+  const [scorpioData, setScorpioData] = useState(initialScorpioData);
 
   const footerLogoURL =
     logoCFoot?.url || footerLogoCMS?.url || footerLogoLinkCMS?.url;
@@ -332,6 +336,21 @@ const MicrositeV1 = (props) => {
     : [];
   const finalHeaderLinks =
     headerLinks && !isHeaderInherited ? headerLinks : null;
+  useEffect(() => {
+    if (initialCurrency !== currency || currentLanguage) {
+      fetchTourList({
+        tgids: orderedTgids,
+        host: isDev ? `http://${host}` : host,
+        language: currentLanguage,
+        currency,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          const formattedData = tourListApiParser(data);
+          setScorpioData(formattedData);
+        });
+    }
+  }, [currency, currentLanguage]);
 
   useEffect(() => {
     setIsMobile(windowWidth < 768);
@@ -376,7 +395,7 @@ const MicrositeV1 = (props) => {
     (tour) => scorpioData?.[tour?.tgid]?.available
   );
 
-  const isToursAvailable = availableTours?.length;
+  const isToursAvailable = availableTours?.length > 0;
 
   const closeGroupBookingModal = () => toggleGroupBookingModal(false);
   const tourListSection = (

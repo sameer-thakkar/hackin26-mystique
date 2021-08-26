@@ -182,7 +182,7 @@ export const categoryTourListParserV1 = async ({
         ...acc,
         [id]: {
           allTags,
-          available: listingPrice?.finalPrice ? true : false,
+          available: !(listingPrice === null),
           averageRating,
           ctaBooster: callToAction,
           descriptors: microBrandsDescriptor,
@@ -195,7 +195,7 @@ export const categoryTourListParserV1 = async ({
           productHighlights: highlights,
           productTitle: name,
           reviewCount,
-          safetyImages: safetyImages,
+          safetyImages,
           title: name,
         },
       };
@@ -510,32 +510,47 @@ export const tourListApiParser = (apiResponse) => {
   );
 
   return apiResponse?.tourGroups?.reduce((acc, tour) => {
-    const listingPrice = tour.listingPrice
-      ? {
-          ...tour.listingPrice,
-          ...currencySymbolMap[tour.listingPrice?.currencyCode],
-        }
-      : null;
+    const {
+      id,
+      allTags,
+      averageRating,
+      callToAction,
+      highlights,
+      listingPrice,
+      media,
+      imageUrl,
+      microBrandsDescriptor,
+      microBrandsHighlight,
+      name,
+      reviewCount,
+    } = tour || {};
+    const { productImages, safetyImages } = media || {};
+
     return {
       ...acc,
-      [tour.id]: {
-        title: tour.name,
-        price: tour.listingPrice?.finalPrice,
-        scratchPrice: tour.listingPrice?.originalPrice,
-        currency: tour.listingPrice?.currencyCode,
-        image: tour.imageUrl,
-        reviewCount: tour.reviewCount,
-        averageRating: tour.averageRating,
-        callToAction: tour.callToAction,
-        allTags: [
-          ...tour.allTags,
-          'SAFETY_MASK_STAFF',
-          'SAFETY_TEMPERATURE_GUEST',
-          'SAFETY_CLEANED_EQUIPMENTS',
-          'SAFETY_RESTRICTED_CAPACITY',
-        ],
-        listingPrice,
-        tgid: tour.id,
+      [id]: {
+        allTags,
+        available: !(listingPrice === null),
+        averageRating,
+        callToAction,
+        ctaBooster: callToAction,
+        currency: listingPrice?.currencyCode,
+        descriptors: microBrandsDescriptor,
+        highlights: microBrandsHighlight,
+        image: imageUrl,
+        images: productImages,
+        listingPrice: {
+          ...listingPrice,
+          ...currencySymbolMap[listingPrice?.currencyCode],
+        },
+        productHighlights: highlights,
+        productTitle: name,
+        price: listingPrice?.finalPrice,
+        reviewCount,
+        safetyImages,
+        scratchPrice: listingPrice?.originalPrice,
+        title: name,
+        tgid: id,
       },
     };
   }, {});
