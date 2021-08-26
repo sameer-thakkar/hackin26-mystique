@@ -32,10 +32,11 @@ const Wrapper = styled.div`
 const SafeDFBannerWrapper = ({
   marginTop = null,
   isMobile: isMobileCloudfront = false,
+  isShowPage = false,
 }: {
-  isAmp?: boolean;
   marginTop?: number;
   isMobile?: boolean;
+  isShowPage?: boolean;
 }) => {
   const {
     sidebarModal: { addToAside },
@@ -59,7 +60,11 @@ const SafeDFBannerWrapper = ({
         <InfoBanner
           cta={strings.LISTICLES.KNOW_MORE}
           title={strings.SAFE_EXPERIENCE_NEW.HEADING}
-          description={strings.SAFE_EXPERIENCE_NEW.GENERAL_DESCRIPTION}
+          description={
+            isShowPage
+              ? strings.SAFE_EXPERIENCE_NEW.GENERAL_DESCRIPTION
+              : strings.SAFE_EXPERIENCE_NEW.GENERAL_DESCRIPTION_V2
+          }
           bannerOnClick={openSafeSidebar}
           icon={SEE_SAFETY}
           colorScheme={blackScheme}

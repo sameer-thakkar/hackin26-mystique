@@ -335,6 +335,7 @@ const ShowPage = ({
           isMobile,
           canonical_link: canonical_link || PageURL,
           noindex: isDev ? 'True' : 'False',
+          disable_amp: true,
         }}
       />
       <Header
@@ -364,9 +365,7 @@ const ShowPage = ({
         isReopening={isReopening}
       />
       <Conditional if={isSafetyBanner}>
-        <SafeDFBannerWrapper
-          marginTop={isMobile ? 0 : 40}
-        ></SafeDFBannerWrapper>
+        <SafeDFBannerWrapper marginTop={isMobile ? 0 : 40} isShowPage={true} />
       </Conditional>
       <Wrapper>
         <HighlightsSectionWrapper>
