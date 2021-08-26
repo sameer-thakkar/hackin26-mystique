@@ -189,6 +189,8 @@ const en = {
     MOBILE_HEADING: 'Safe Experiences',
     GENERAL_DESCRIPTION:
       'This venue is COVID SECURE and follows all safety measures recommended by the government to ensure that you enjoy a safe and socially-distanced theatre-going experience.',
+    GENERAL_DESCRIPTION_V2:
+      '‘See it Safely’ mark is granted to an approved theatre that is COVID SECURE and follows all safety measures recommended by the government to ensure that you enjoy a safe and socially-distanced theatre-going experience.',
     CTA_TEXT: 'Safety Details',
     BANNER_CTA: 'Know More',
     EXPERIENCE_DESCRIPTION:
