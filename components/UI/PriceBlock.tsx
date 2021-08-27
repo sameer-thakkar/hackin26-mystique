@@ -3,7 +3,6 @@ import { THEMES } from 'const/index';
 import styled from 'styled-components';
 import { strings } from 'const/strings';
 import Conditional from 'components/common/Conditional';
-// import { getSavingsPercent } from 'utils';
 import { useContext } from 'react';
 import { MBContext } from 'contexts/MBContext';
 
@@ -81,7 +80,6 @@ const PriceBlock = ({
     currencySymbolOverride ||
     currencySymbolMap[currencyCode]?.localSymbol ||
     currencyCode;
-  // const savings = price && showSavings ? getSavingsPercent(price) : -1;
   return (
     <StyledPriceBlock>
       {originalPrice > finalPrice && showScratchPrice ? (
