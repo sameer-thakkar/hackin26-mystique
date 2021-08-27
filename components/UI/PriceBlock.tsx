@@ -3,7 +3,7 @@ import { THEMES } from 'const/index';
 import styled from 'styled-components';
 import { strings } from 'const/strings';
 import Conditional from 'components/common/Conditional';
-import { getSavingsPercent } from 'utils';
+// import { getSavingsPercent } from 'utils';
 import { useContext } from 'react';
 import { MBContext } from 'contexts/MBContext';
 
@@ -74,13 +74,14 @@ const PriceBlock = ({
     currencyCode,
     precision,
     localSymbol,
+    bestDiscount,
   } = price;
   const currencySymbol =
     localSymbol ||
     currencySymbolOverride ||
     currencySymbolMap[currencyCode]?.localSymbol ||
     currencyCode;
-  const savings = price && showSavings ? getSavingsPercent(price) : -1;
+  // const savings = price && showSavings ? getSavingsPercent(price) : -1;
   return (
     <StyledPriceBlock>
       {originalPrice > finalPrice && showScratchPrice ? (
@@ -101,10 +102,8 @@ const PriceBlock = ({
         lang={lang}
         precision={precision}
       />
-      <Conditional if={savings > 0 && showScratchPrice}>
-        <SavedTag>
-          {strings.SAVE.replace('<val>', `${savings.toFixed(0)}`)}
-        </SavedTag>
+      <Conditional if={showSavings && showScratchPrice && bestDiscount > 0}>
+        <SavedTag>{strings.SAVE.replace('<val>', `${bestDiscount}`)}</SavedTag>
       </Conditional>
     </StyledPriceBlock>
   );
