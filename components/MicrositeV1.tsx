@@ -337,7 +337,7 @@ const MicrositeV1 = (props) => {
   const finalHeaderLinks =
     headerLinks && !isHeaderInherited ? headerLinks : null;
   useEffect(() => {
-    if (initialCurrency !== currency || currentLanguage) {
+    if (initialCurrency !== currency) {
       fetchTourList({
         tgids: orderedTgids,
         host: isDev ? `http://${host}` : host,
@@ -350,7 +350,7 @@ const MicrositeV1 = (props) => {
           setScorpioData(formattedData);
         });
     }
-  }, [currency, currentLanguage]);
+  }, [currency]);
 
   useEffect(() => {
     setIsMobile(windowWidth < 768);
