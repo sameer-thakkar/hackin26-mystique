@@ -36,7 +36,6 @@ const StyledBanner = styled.div`
     display: grid;
     place-content: center;
     text-align: center;
-    background: #22222299;
   }
   .swiper-pagination.swiper-pagination-bullets {
     top: unset;
@@ -45,6 +44,11 @@ const StyledBanner = styled.div`
   .swiper-pagination-bullet {
     width: 10px;
     height: 10px;
+    background: transparent;
+    border: 2px solid #fff;
+  }
+  .swiper-pagination-bullet-active {
+    background: #fff;
   }
 
   .absolute-position {
@@ -127,14 +131,12 @@ const StyledBanner = styled.div`
     text-decoration: none;
   }
 
-  .overlay {
+  .overlay-container {
+    z-index: 1;
+    pointer-events: none;
     position: absolute;
-    bottom: 0;
-    background: rgba(34, 34, 34, 0);
     width: 100%;
     height: 100%;
-    pointer-events: none;
-    z-index: 2;
   }
 
   @media (max-width: 768px) {
@@ -175,42 +177,28 @@ const StyledBanner = styled.div`
         margin: 0;
       }
     }
-    .overlay {
-      background: rgba(34, 34, 34, 0.3);
+
+    .swiper-pagination.swiper-pagination-bullets {
+      grid-template-columns: repeat(auto-fill, 7px);
+      display: grid;
+      bottom: 24px;
+      margin-left: 16px;
     }
-    .mb-captions::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      background: ${COLORS.TWO_BLACK};
-      z-index: 0;
-      opacity: 0.4;
+    .swiper-pagination-bullet {
+      width: 6px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.35);
+      border: unset;
+    }
+    .swiper-pagination-bullet-active {
+      background: rgba(255, 255, 255);
+      transform: scale(1.3);
     }
 
     .mb-captions .non-opaque {
       opacity: 1;
     }
 
-    .indicators {
-      left: 16px;
-      transform: unset;
-      bottom: 24px;
-    }
-
-    .indicator {
-      height: 6px;
-      width: 6px;
-      border: unset;
-      background: rgba(255, 255, 255, 0.35);
-    }
-
-    .indicator.active {
-      left: 17px;
-      transform: scale(1.3);
-    }
     .banner-image {
       object-fit: cover;
       img {
@@ -295,6 +283,7 @@ export default class Banner extends Component<any, any> {
         alt={alt || 'banner'}
         layout={'fill'}
         className="banner-image"
+        addDarkOverlay
       />
     );
   };
@@ -401,6 +390,7 @@ export default class Banner extends Component<any, any> {
                   dontLazyLoad
                   mobileUrl={image?.mobileUrl}
                   alt={image?.alt || 'banner'}
+                  addDarkOverlay
                 />
               );
             })}
@@ -412,7 +402,7 @@ export default class Banner extends Component<any, any> {
     return (
       <StyledBanner>
         {imageView}
-        <div className="overlay">
+        <div className="overlay-container">
           <div
             className={`mb-captions ${
               bannerImages.length > 1 ? 'with-indicators' : ''
