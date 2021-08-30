@@ -2,15 +2,15 @@ import {
   getObject,
   parseShowPageData,
 } from 'components/ShowPages/parseShowPage';
-import { CURRENCY_SYMBOL_MAP } from 'const/index';
 import { generatePromiseForCategoryTours, getHeadoutLanguagecode } from 'utils';
-
 import {
   fetchCollection,
   fetchTGIDsByCategoryV2,
   fetchTourList,
-} from './apiUtils';
-import { csvTgidToArray } from './helper';
+} from 'utils/apiUtils';
+import { csvTgidToArray } from 'utils/helper';
+import { addCashbackValueToDescriptor } from 'utils/productUtils';
+import { CURRENCY_SYMBOL_MAP } from 'const/index';
 
 export const uncategorizedToursListParser = (
   uncategorizedToursList,
@@ -178,6 +178,11 @@ export const categoryTourListParserV1 = async ({
         reviewCount,
       } = tour || {};
       const { productImages, safetyImages } = media || {};
+      const { cashbackValue } = listingPrice || {};
+      const updatedDescriptors = addCashbackValueToDescriptor({
+        descriptor: microBrandsDescriptor,
+        cashbackValue,
+      });
       return {
         ...acc,
         [id]: {
@@ -185,7 +190,7 @@ export const categoryTourListParserV1 = async ({
           available: !(listingPrice === null),
           averageRating,
           ctaBooster: callToAction,
-          descriptors: microBrandsDescriptor,
+          descriptors: updatedDescriptors,
           highlights: microBrandsHighlight,
           images: productImages,
           listingPrice: {
@@ -525,6 +530,11 @@ export const tourListApiParser = (apiResponse) => {
       reviewCount,
     } = tour || {};
     const { productImages, safetyImages } = media || {};
+    const { cashbackValue } = listingPrice || {};
+    const updatedDescriptors = addCashbackValueToDescriptor({
+      descriptor: microBrandsDescriptor,
+      cashbackValue,
+    });
 
     return {
       ...acc,
@@ -535,7 +545,7 @@ export const tourListApiParser = (apiResponse) => {
         callToAction,
         ctaBooster: callToAction,
         currency: listingPrice?.currencyCode,
-        descriptors: microBrandsDescriptor,
+        descriptors: updatedDescriptors,
         highlights: microBrandsHighlight,
         image: imageUrl,
         images: productImages,

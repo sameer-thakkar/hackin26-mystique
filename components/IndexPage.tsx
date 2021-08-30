@@ -27,14 +27,15 @@ import {
   fetchCurrencyList,
   fetchTourGroup,
 } from 'utils/apiUtils';
+import Analytics from 'utils/analytics';
 import {
   categoryTourListParserV1,
   categoryTourListParserV2,
   uncategorizedToursListParser,
 } from 'utils/dataParsers';
-import { getLangUID, removePageQuery } from 'utils/urlUtils';
 import { getHostName } from 'utils/helper';
-import Analytics from 'utils/analytics';
+import { addCashbackValueToDescriptor } from 'utils/productUtils';
+import { getLangUID, removePageQuery } from 'utils/urlUtils';
 
 const Microsite = dynamic(() => import('components/MicrositeV1'));
 const ContentPage = dynamic(() => import('components/ContentPage'));
@@ -505,6 +506,12 @@ export default class Page extends React.Component<any, any> {
             id,
           } = tour || {};
           const { productImages, safetyImages } = media || {};
+          const { cashbackValue } = listingPrice || {};
+          const updatedDescriptors = addCashbackValueToDescriptor({
+            descriptor: microBrandsDescriptor,
+            cashbackValue,
+          });
+
           let allTags = allTagsTour || [];
           if (hide_df) {
             allTags = allTags?.filter((t) => !t.includes('DF-'));
@@ -517,7 +524,7 @@ export default class Page extends React.Component<any, any> {
             [id]: {
               title: name,
               highlights: microBrandsHighlight,
-              descriptors: microBrandsDescriptor,
+              descriptors: updatedDescriptors,
               productHighlights: highlights,
               productTitle: name,
               images: [...(productImages || []), { url: imageUrl }],
