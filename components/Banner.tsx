@@ -29,6 +29,9 @@ const StyledBanner = styled.div`
     object-position: 20% 10%;
   }
 
+  .single-slide {
+    height: 400px;
+  }
   .mb-captions {
     z-index: 0;
     height: 100%;
@@ -367,12 +370,14 @@ export default class Banner extends Component<any, any> {
       case 1:
         imageView = (
           <Image
+            className="mb-slide single-slide"
             width={WIDTH}
             aspectRatio={ASPECT_RATIO}
             url={bannerImages[0]?.url}
             dontLazyLoad
             mobileUrl={bannerImages[0]?.mobileUrl}
             alt={bannerImages[0]?.alt || 'banner'}
+            addDarkOverlay
           />
         );
         break;
