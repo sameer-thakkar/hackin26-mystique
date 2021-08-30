@@ -396,7 +396,6 @@ const MicrositeV1 = (props) => {
   );
 
   const isToursAvailable = availableTours?.length > 0;
-
   const closeGroupBookingModal = () => toggleGroupBookingModal(false);
   const tourListSection = (
     <PopulateProducts

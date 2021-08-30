@@ -11,7 +11,11 @@ import {
   PRISMIC_LANG_TO_ROUTE_PARAM,
 } from 'const/index';
 import { COMMON_DATA_PROPS_FOR_LISTICLE } from 'const/index';
-import { redirectTo, refsArrayToObject } from 'utils';
+import {
+  extractSinglePrismicSlice,
+  redirectTo,
+  refsArrayToObject,
+} from 'utils';
 import { getLangUID, getValidUrlParams, sanitizeURL } from 'utils/urlUtils';
 
 export const getListicleDocument = async ({ req, uid, lang }) => {
@@ -178,15 +182,34 @@ export const getMicrositeDocument = async ({
 
           const {
             data: {
-              data: { is_entertainment_mb: isEntertainmentMb },
+              data: {
+                is_entertainment_mb: isEntertainmentMb,
+                body: categorizedTours,
+              },
             },
           } = completeMicrosite || baseLangData || { data: { data: {} } };
-          let allShowPages;
+          let allShowPages, productCardData;
           if (isEntertainmentMb) {
             allShowPages = await Client().query(
               [Prismic.Predicates.at('document.type', CUSTOM_TYPES.SHOW_PAGE)],
               { pageSize: 100 }
             );
+          }
+
+          const categoryTourListV1 = extractSinglePrismicSlice({
+            sliceName: 'tour_list_category_v1',
+            slices: categorizedTours,
+          });
+          const hasCategoryTourListV1 = Object.keys(categoryTourListV1)?.length;
+          if (hasCategoryTourListV1) {
+            const { primary } = categoryTourListV1;
+            const { product_cards } = primary || {};
+            const { id: productCardsId } = product_cards || {};
+            const { data } =
+              (await Client(req).getByID(productCardsId, {
+                lang: 'en-us',
+              })) || {};
+            productCardData = data;
           }
           const strValues: any = MICROSITE_STRING_KEYS.reduce(
             (acc, elem) => ({
@@ -312,6 +335,7 @@ export const getMicrositeDocument = async ({
                 contentFramework,
                 commonHeader,
                 secondaryFooter,
+                productCardData,
               },
               data: {
                 ...completeMicrosite.data.data,

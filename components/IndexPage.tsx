@@ -26,12 +26,10 @@ import {
   fetchCategory,
   fetchCurrencyList,
   fetchTourGroup,
-  fetchTourList,
 } from 'utils/apiUtils';
 import {
   categoryTourListParserV1,
   categoryTourListParserV2,
-  tourListApiParser,
   uncategorizedToursListParser,
 } from 'utils/dataParsers';
 import { getLangUID, removePageQuery } from 'utils/urlUtils';
@@ -331,7 +329,7 @@ export default class Page extends React.Component<any, any> {
         const { data } = CMSContent || {};
         const { refs, data: CMSData } = data || {};
 
-        const { contentFramework } = refs || {};
+        const { contentFramework, productCardData } = refs || {};
         const { data: contentFrameworkData } = contentFramework || {};
         const { design, theme, body, body1, allShowPages } = CMSData || {};
         const MBDesign = design || '';
@@ -343,18 +341,6 @@ export default class Page extends React.Component<any, any> {
           sliceName: 'tour_list_category_v1',
           slices: categorizedTours,
         });
-        const hasCategoryTourListV1 = Object.keys(categoryTourListV1)?.length;
-        let productCard;
-        if (hasCategoryTourListV1) {
-          const { primary } = categoryTourListV1;
-          const { product_cards } = primary || {};
-          const { id: productCardsId } = product_cards || {};
-          const { data } =
-            (await Client(req).getByID(productCardsId, {
-              lang: 'en-us',
-            })) || {};
-          productCard = data;
-        }
 
         const categoryTourList = extractSinglePrismicSlice({
           sliceName: 'tour_list_category',
@@ -367,6 +353,7 @@ export default class Page extends React.Component<any, any> {
         });
 
         let categoryTourListData;
+        const hasCategoryTourListV1 = Object.keys(categoryTourListV1)?.length;
         const hasCategoryTourListV2 = Object.keys(categoryTourList)?.length;
         const hasCategoryTourList =
           hasCategoryTourListV2 ||
@@ -375,7 +362,7 @@ export default class Page extends React.Component<any, any> {
         if (hasCategoryTourList) {
           if (hasCategoryTourListV1) {
             categoryTourListData = await categoryTourListParserV1({
-              productCard,
+              productCard: productCardData,
               sliceObj: categoryTourListV1,
               hostname,
               lang,
@@ -410,21 +397,8 @@ export default class Page extends React.Component<any, any> {
               return offerData;
             });
 
-        let finalTours = [...prismicTours];
-
-        if (all_tours_tab_tgids.length) {
-          const allToursRes = await fetchTourList({
-            tgids: all_tours_tab_tgids,
-            host: hostname,
-          });
-          const allToursData = await allToursRes.json();
-          const allTours = await tourListApiParser(allToursData);
-          if (allTours.length) {
-            finalTours = [...finalTours, ...allTours];
-          }
-        }
         const toursList = uncategorizedToursListParser(
-          finalTours,
+          prismicTours,
           initial_tgids
         );
 
