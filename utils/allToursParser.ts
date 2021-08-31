@@ -117,7 +117,6 @@ const allToursParser = (
         overlayBooster: tourData.overlay_booster,
         vendor: tourData.vendor_name,
         allTags: scorpioTour?.allTags || [],
-        dfListingPrice: scorpioTour?.dfListingPrice,
         listingPrice: listingPrice,
         safetyImages: scorpioTour?.safetyImages,
       },

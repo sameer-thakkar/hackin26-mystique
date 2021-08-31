@@ -2,20 +2,20 @@ import React, { useContext, useState } from 'react';
 import { useAmp } from 'next/amp';
 import styled from 'styled-components';
 import parse from 'url-parse';
-import { strings } from 'const/strings';
 import { RichText } from 'prismic-reactjs';
 import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
+import EnvironmentContext from 'contexts/environmentContext';
+import ProductsContext from 'contexts/Products';
+import { MBContext } from 'contexts/MBContext';
+import Image from 'components/UI/Image';
+import Button from 'components/UI/Button';
 import { createBookingURL } from 'utils';
+import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
+import { CHEVRON_DOWN } from 'assets/SvgIcons';
+import { TOUR_COMPARISION_DESIGN } from 'const/index';
+import { strings } from 'const/strings';
 import { SOLEIL, COLORS } from 'const/ui-constants';
-
-import Image from '../UI/Image';
-import EnvironmentContext from '../../contexts/environmentContext';
-import ProductsContext from '../../contexts/Products';
-import Button from '../UI/Button';
-import { shortCodeSerializerWithParentProps } from '../../utils/shortCodes';
-import { MBContext } from '../../contexts/MBContext';
-import { CHEVRON_DOWN } from '../../assets/SvgIcons';
-import { TOUR_COMPARISION_DESIGN } from '../../constants';
+import Conditional from 'components/common/Conditional';
 
 const StyledTourComparisionTable = styled.div`
   width: auto;
@@ -78,9 +78,9 @@ const StyledTourComparisionTable = styled.div`
   .row {
     max-width: 1200px;
     margin: auto;
-    // to line up correctly with other slices/elements. 
-    // 5.46 is the padding added to other elements on page.
-    width: calc(100% - (5.46vw * 2)); 
+    /* to line up correctly with other slices/elements.  */
+    /* 5.46 is the padding added to other elements on page. */
+    width: calc(100% - (5.46vw * 2));
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: repeat(4, 1fr) ${({ isMobile }) =>
@@ -148,7 +148,6 @@ const StyledTourComparisionTable = styled.div`
       grid-column: unset;
     }
   }
-  
 
   .row.sticky,
   .sticky.wrapper {
@@ -212,7 +211,7 @@ const StyledTourComparisionTable = styled.div`
     `
         : ``}
   }
-  
+
   .block-content {
     font-size: 15px;
     line-height: 20px;
@@ -266,7 +265,7 @@ const StyledTourComparisionTable = styled.div`
     `
       : ``}
   @media (max-width: 768px) {
-  
+
     .full-width-wrap {
       margin: 0 -16px;
       padding-right: 16px;
@@ -409,16 +408,15 @@ const StyledTourComparisionTable = styled.div`
     .no-display{
       display: none;
     }
-    
     .show-two-children:nth-child(0){
       display:grid;
     }
     .show-two-children:nth-child(0){
-       display:grid;
+      display:grid;
     }
   }
 
-  // CSS Target Safari. (double @media intentional)
+  /* CSS Target Safari. (double @media intentional) */
   @media not all and (min-resolution:.001dpcm){ 
     @supports (-webkit-appearance:none) {
       .full-width-wrap {
@@ -545,7 +543,7 @@ const TourComparisonTable = (props) => {
       </div>
       <div className="full-width-wrap">
         <div className="table">
-          {showImage ? (
+          <Conditional if={showImage}>
             <div className="row max-content" style={{ zIndex: -1 }}>
               {content_normalized_tours.map((tour, index) => {
                 return (
@@ -557,7 +555,7 @@ const TourComparisonTable = (props) => {
                 );
               })}
             </div>
-          ) : null}
+          </Conditional>
           <div className="sticky wrapper">
             <div className="row wrapper">
               {content_normalized_tours.map((tour, index) => {
@@ -582,7 +580,7 @@ const TourComparisonTable = (props) => {
               })}
             </div>
           </div>
-          {isExpanded || isAmp ? (
+          <Conditional if={isExpanded || isAmp}>
             <div
               className={`row ${isAmp ? 'no-display' : ''}`}
               id="expanded-details-section"
@@ -610,17 +608,19 @@ const TourComparisonTable = (props) => {
                 );
               })}
             </div>
-          ) : null}
+          </Conditional>
           <div className="row max-content">
             {content_normalized_tours.map((tour, index) => {
               return (
                 <div className="column flat-price-block" key={index}>
                   <div className="content-block">
-                    {designType == TOUR_COMPARISION_DESIGN.TYPE_1 ? (
+                    <Conditional
+                      if={designType == TOUR_COMPARISION_DESIGN.TYPE_1}
+                    >
                       <div className="block-label">
                         {strings.PRICES_STARTING}
                       </div>
-                    ) : null}
+                    </Conditional>
                     <div className="block-content">
                       <PriceBlock
                         lang={lang}
@@ -670,7 +670,7 @@ const TourComparisonTable = (props) => {
                 </div>
               );
             })}
-          {(isMobile && isExpanded) || !isMobile || isAmp ? (
+          <Conditional if={(isMobile && isExpanded) || !isMobile || isAmp}>
             <div
               className={`row max-content ${isAmp ? 'no-display' : ''}`}
               id="expanded-details-column"
@@ -694,7 +694,7 @@ const TourComparisonTable = (props) => {
                 );
               })}
             </div>
-          ) : null}
+          </Conditional>
         </div>
         <div className="table cta-table-wrap">
           <div className="row">
@@ -724,22 +724,22 @@ const TourComparisonTable = (props) => {
           </div>
         </div>
       </div>
-      {isMobile && !isExpanded ? (
+      <Conditional if={isMobile && !isExpanded}>
         <Button
           onClick={() => setExpand(true)}
           id="compare-all-details-button"
           on={`
-            tap:expanded-details-section.toggleClass(class='no-display'),
-            expanded-details-column.toggleClass(class='no-display'),
-            compare-all-details-button.toggleClass(class='no-display', force=true),
-            ${compareTableOnClickForAMP}
-          `}
+              tap:expanded-details-section.toggleClass(class='no-display'),
+              expanded-details-column.toggleClass(class='no-display'),
+              compare-all-details-button.toggleClass(class='no-display', force=true),
+              ${compareTableOnClickForAMP}
+            `}
         >
           <div className="start-compare-icon">
             {strings.COMPARE_ALL_DETAILS} {CHEVRON_DOWN}
           </div>
         </Button>
-      ) : null}
+      </Conditional>
     </StyledTourComparisionTable>
   );
 };

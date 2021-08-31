@@ -282,7 +282,11 @@ const ShowPage = ({
 
   useEffect(() => {
     const reviewTourGroup = async () => {
-      const tourGroupReviews = await fetchReviewsTourGroup(tgid, 5)
+      const tourGroupReviews = await fetchReviewsTourGroup({
+        tgid,
+        hostName: hostname,
+        limit: 5,
+      })
         .then((res) => {
           return res.json();
         })
@@ -363,6 +367,7 @@ const ShowPage = ({
         currentLanguage={currentLanguage}
         tagsArray={tagsArray}
         isReopening={isReopening}
+        hostname={hostname}
       />
       <Conditional if={isSafetyBanner}>
         <SafeDFBannerWrapper marginTop={isMobile ? 0 : 40} isShowPage={true} />

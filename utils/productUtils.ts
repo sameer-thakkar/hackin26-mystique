@@ -1,5 +1,5 @@
-import { THEMES } from 'const/index';
 import { RichText } from 'prismic-reactjs';
+import { THEMES } from 'const/index';
 
 export const extractTabsFromHighlights = (highlights) => {
   let tabs = [];
@@ -213,4 +213,29 @@ export const extractContentForProductCard = (markdownBlocks, contentBlocks) => {
     });
   }
   return { left: leftContent, right: rightContent };
+};
+
+export const addCashbackValueToDescriptor = ({
+  descriptor,
+  cashbackValue,
+}: {
+  descriptor: string;
+  cashbackValue: number;
+}) => {
+  if (!descriptor) return '';
+  const regex = /({wallet}\s\w+)/g;
+  const hasCashbackDescriptor = regex.test(descriptor);
+  if (hasCashbackDescriptor) {
+    if (cashbackValue) {
+      const [cashbackDescriptor] = descriptor.match(regex) || [];
+      const updatedDescriptor = `${cashbackDescriptor}: ${cashbackValue}%`;
+      const finalString = descriptor.replace(regex, updatedDescriptor);
+      return finalString;
+    } else {
+      const finalString = descriptor.replace(regex, '');
+      return finalString;
+    }
+  } else {
+    return descriptor;
+  }
 };

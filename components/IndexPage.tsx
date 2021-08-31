@@ -19,6 +19,7 @@ import {
   reflect,
   isNakedDomain,
   getHeadoutLanguagecode,
+  extractSinglePrismicSlice,
 } from 'utils';
 import { getPrismicDocument } from 'utils/prismicUtils';
 import {
@@ -26,13 +27,15 @@ import {
   fetchCurrencyList,
   fetchTourGroup,
 } from 'utils/apiUtils';
+import Analytics from 'utils/analytics';
 import {
-  categoryTourListParser,
+  categoryTourListParserV1,
+  categoryTourListParserV2,
   uncategorizedToursListParser,
 } from 'utils/dataParsers';
-import { getLangUID, isAmpUrl, removePageQuery } from 'utils/urlUtils';
 import { getHostName } from 'utils/helper';
-import Analytics from 'utils/analytics';
+import { addCashbackValueToDescriptor } from 'utils/productUtils';
+import { getLangUID, removePageQuery } from 'utils/urlUtils';
 
 const Microsite = dynamic(() => import('components/MicrositeV1'));
 const ContentPage = dynamic(() => import('components/ContentPage'));
@@ -304,10 +307,9 @@ export default class Page extends React.Component<any, any> {
         ContentType === CUSTOM_TYPES.CONTENT_PAGE
           ? CMSContent.data.microsite
           : CMSContent.data;
-
       const all_tours_tab_tgids =
         microsite.data.all_tours.reduce((accum, tour) => {
-          return [...accum, tour.primary.tgid];
+          return [...accum, parseInt(tour.primary.tgid)];
         }, []) || [];
 
       let labelIds;
@@ -326,44 +328,58 @@ export default class Page extends React.Component<any, any> {
       if (ContentType === CUSTOM_TYPES.MICROSITE) {
         const { data } = CMSContent || {};
         const { refs, data: CMSData } = data || {};
-
-        const { contentFramework } = refs || {};
+        const { contentFramework, productCardData } = refs || {};
         const { data: contentFrameworkData } = contentFramework || {};
         const { design, theme, body, body1, allShowPages } = CMSData || {};
         const MBDesign = design || '';
         const mbTheme = theme || THEMES.DEFAULT;
         const toursTabFirstSlice = body1[0];
-        const categorizedTourList = body;
+        const categorizedTours = body;
 
-        const categoryTourList = categorizedTourList?.length
-          ? categorizedTourList?.filter(
-              (category) => category.slice_type === 'tour_list_category'
-            )
-          : [];
+        const categoryTourListV1 = extractSinglePrismicSlice({
+          sliceName: 'tour_list_category_v1',
+          slices: categorizedTours,
+        });
 
-        const categoryCarouselCF = contentFrameworkData?.body?.length
-          ? contentFrameworkData?.body?.filter(
-              (slice) => slice.slice_type === 'category_carousel'
-            )
-          : [];
+        const categoryTourList = extractSinglePrismicSlice({
+          sliceName: 'tour_list_category',
+          slices: categorizedTours,
+        });
+
+        const categoryCarouselCF = extractSinglePrismicSlice({
+          sliceName: 'category_carousel',
+          slices: contentFrameworkData?.body,
+        });
 
         let categoryTourListData;
+        const hasCategoryTourListV1 = Object.keys(categoryTourListV1)?.length;
+        const hasCategoryTourListV2 = Object.keys(categoryTourList)?.length;
         const hasCategoryTourList =
-          Object.keys(categoryTourList)?.length ||
+          hasCategoryTourListV2 ||
+          hasCategoryTourListV1 ||
           Object.keys(categoryCarouselCF)?.length;
         if (hasCategoryTourList) {
-          categoryTourListData = await categoryTourListParser({
-            tourListCategory: categoryTourList,
-            hostname,
-            showpages: allShowPages,
-            categoryCarousel: categoryCarouselCF,
-          });
+          if (hasCategoryTourListV1) {
+            categoryTourListData = await categoryTourListParserV1({
+              productCard: productCardData,
+              sliceObj: categoryTourListV1,
+              hostname,
+              lang,
+            });
+          } else {
+            categoryTourListData = await categoryTourListParserV2({
+              tourListCategory: categoryTourList,
+              hostname,
+              showpages: allShowPages,
+              categoryCarousel: categoryCarouselCF,
+            });
+          }
         }
 
-        const primsicTours = toursTabFirstSlice
+        const prismicTours = toursTabFirstSlice
           ? await toursTabSliceHandler(toursTabFirstSlice)
           : [];
-        const offers = primsicTours
+        const offers = prismicTours
           ?.filter((tour) => tour.offer__free_tour?.id)
           ?.map((tour) => tour.offer__free_tour?.id);
         const uniqueOfferIds = offers.filter(
@@ -381,7 +397,7 @@ export default class Page extends React.Component<any, any> {
             });
 
         const toursList = uncategorizedToursListParser(
-          primsicTours,
+          prismicTours,
           initial_tgids
         );
 
@@ -449,7 +465,7 @@ export default class Page extends React.Component<any, any> {
       } catch (e) {
         constructedTourgroupURL = `https://${
           isStage ? 'stage-' : ''
-        }microbrands.headout.com/api/tours/v6/tour-groups/?ids[]=${tgidsArray}&lang=${getHeadoutLanguagecode(
+        }microbrands.headout.com/api/tours/v6/tour-groups/?ids[]=${tgidsArray}&language=${getHeadoutLanguagecode(
           lang
         )}`;
       }
@@ -458,13 +474,43 @@ export default class Page extends React.Component<any, any> {
         constructedTourgroupURL.toString()
       ).then((r) => r.json());
 
+      const currencySymbolMap = tourGroupAPIResponses?.currencies?.reduce(
+        (acc, currency) => ({
+          ...acc,
+          [currency.code]: { ...currency },
+        }),
+        {}
+      );
+
       const tourGroupData = tourGroupAPIResponses?.tourGroups?.reduce(
         (accum: {}, tour: any) => {
           const { hide_df, hide_safe } = AllData['CMSContent']?.data?.data || {
             hide_df: false,
             hide_safe: false,
           };
-          let allTags = tour?.allTags || [];
+          const {
+            name,
+            microBrandsHighlight,
+            microBrandsDescriptor,
+            highlights,
+            media,
+            imageUrl,
+            averageRating,
+            reviewCount,
+            callToAction,
+            listingPrice,
+            validity,
+            allTags: allTagsTour,
+            id,
+          } = tour || {};
+          const { productImages, safetyImages } = media || {};
+          const { cashbackValue } = listingPrice || {};
+          const updatedDescriptors = addCashbackValueToDescriptor({
+            descriptor: microBrandsDescriptor,
+            cashbackValue,
+          });
+
+          let allTags = allTagsTour || [];
           if (hide_df) {
             allTags = allTags?.filter((t) => !t.includes('DF-'));
           }
@@ -473,27 +519,24 @@ export default class Page extends React.Component<any, any> {
           }
           return {
             ...accum,
-            [tour['id']]: {
-              title: tour.name,
-              highlights: tour.microBrandsHighlight,
-              descriptors: tour.microBrandsDescriptor,
-              productHighlights: tour.highlights,
-              productTitle: tour.name,
-              images: [
-                ...(tour.media?.productImages || []),
-                { url: tour.imageUrl },
-              ],
-              averageRating: tour.averageRating,
-              reviewCount: tour.reviewCount,
-              ctaBooster: tour.callToAction,
-              available:
-                !(tour.listingPrice === null) ||
-                !(tour.discountedFuturesListingPrice === null),
+            [id]: {
+              title: name,
+              highlights: microBrandsHighlight,
+              descriptors: updatedDescriptors,
+              productHighlights: highlights,
+              productTitle: name,
+              images: [...(productImages || []), { url: imageUrl }],
+              averageRating,
+              reviewCount,
+              ctaBooster: callToAction,
+              available: !(listingPrice === null),
               allTags,
-              dfListingPrice: tour.discountedFuturesListingPrice,
-              safetyImages: tour.media?.safetyImages || [],
-              validity: tour?.validity,
-              ...(isAmpUrl(query) && { listingPrice: tour.listingPrice }),
+              safetyImages: safetyImages || [],
+              validity,
+              listingPrice: {
+                ...listingPrice,
+                ...currencySymbolMap[listingPrice?.currencyCode],
+              },
             },
           };
         },
@@ -501,14 +544,6 @@ export default class Page extends React.Component<any, any> {
       );
 
       const primaryCountry = tourGroupAPIResponses?.cities?.[0]?.country;
-
-      const currencySymbolMap = tourGroupAPIResponses?.currencies?.reduce(
-        (acc, currency) => ({
-          ...acc,
-          [currency.code]: { ...currency },
-        }),
-        {}
-      );
 
       const activeCurrency = tourGroupAPIResponses?.currencies?.[0];
       return {
@@ -609,6 +644,7 @@ export default class Page extends React.Component<any, any> {
               data={CMSContent.data}
               activeCurrency={activeCurrency}
               scorpioData={tourGroupData}
+              categoryTourListData={categoryTourListData}
               offerData={CMSContent.offerData}
               host={host}
               toursList={toursList}

@@ -104,11 +104,6 @@ export const convertUidToUrl = (uid) => {
     let url;
     const modUid = `${uid}.`; // add trailing . to identify end of UID
     const regex = /[a-zA-z0-9-]+\.[a-zA-z0-9-]+((\.[a-z]{1,3}\.[a-z]{1,3}\.)|(\.[a-z]{2,3}\.))/g;
-    /*
-     * matches .org, .com or 3 character top-level domain
-     * matches .co.uk
-     * doesn't match .org.uk
-     */
     const domain = modUid.match(regex)?.[0]?.slice(0, -1);
     const pathName = uid.split(domain)?.filter((string) => string.length);
     if (domain?.length) {
@@ -122,5 +117,22 @@ export const convertUidToUrl = (uid) => {
     return url;
   } else {
     return null;
+  }
+};
+
+export const addQueryParams = (
+  url: string,
+  params: { [key: string]: string }
+) => {
+  if (url) {
+    let theURL = new URL(url);
+    if (Object.keys(params).length > 0) {
+      for (const property in params) {
+        const key = property;
+        const value = params[property];
+        theURL.searchParams.set(key, value);
+      }
+    }
+    return theURL.toString();
   }
 };

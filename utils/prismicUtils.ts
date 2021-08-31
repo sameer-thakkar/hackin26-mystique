@@ -11,7 +11,11 @@ import {
   PRISMIC_LANG_TO_ROUTE_PARAM,
 } from 'const/index';
 import { COMMON_DATA_PROPS_FOR_LISTICLE } from 'const/index';
-import { redirectTo, refsArrayToObject } from 'utils';
+import {
+  extractSinglePrismicSlice,
+  redirectTo,
+  refsArrayToObject,
+} from 'utils';
 import { getLangUID, getValidUrlParams, sanitizeURL } from 'utils/urlUtils';
 
 export const getListicleDocument = async ({ req, uid, lang }) => {
@@ -181,13 +185,14 @@ export const getMicrositeDocument = async ({
               data: { is_entertainment_mb: isEntertainmentMb },
             },
           } = completeMicrosite || baseLangData || { data: { data: {} } };
-          let allShowPages;
+          let allShowPages, productCardData;
           if (isEntertainmentMb) {
             allShowPages = await Client().query(
               [Prismic.Predicates.at('document.type', CUSTOM_TYPES.SHOW_PAGE)],
               { pageSize: 100 }
             );
           }
+
           const strValues: any = MICROSITE_STRING_KEYS.reduce(
             (acc, elem) => ({
               ...acc,
@@ -241,6 +246,31 @@ export const getMicrositeDocument = async ({
           if (tourTabSlice?.primary && !tourTabSlice.primary.ranking) {
             tourTabSlice.primary.ranking =
               baseLangData?.data?.body1[0]?.primary?.ranking;
+          }
+
+          // Base lang Fallback for CategorisedToursV1.
+
+          let categoryTourListV1 = extractSinglePrismicSlice({
+            sliceName: 'tour_list_category_v1',
+            slices: completeMicrosite.data.data.body,
+          });
+          if (!categoryTourListV1?.primary?.product_cards?.id) {
+            categoryTourListV1 = extractSinglePrismicSlice({
+              sliceName: 'tour_list_category_v1',
+              slices: baseLangData?.data?.body,
+            });
+          }
+
+          const hasCategoryTourListV1 = Object.keys(categoryTourListV1)?.length;
+          if (hasCategoryTourListV1) {
+            const { primary } = categoryTourListV1;
+            const { product_cards } = primary || {};
+            const { id: productCardsId } = product_cards || {};
+            const { data } =
+              (await Client(req).getByID(productCardsId, {
+                lang: 'en-us',
+              })) || {};
+            productCardData = data;
           }
 
           if (
@@ -310,6 +340,7 @@ export const getMicrositeDocument = async ({
                 contentFramework,
                 commonHeader,
                 secondaryFooter,
+                productCardData,
               },
               data: {
                 ...completeMicrosite.data.data,
@@ -678,7 +709,6 @@ export const getShowPage = async ({ req, lang, uid }) => {
   }
   return Promise.reject();
 };
-
 export const getPrismicDocument = async ({
   req,
   serverResponse,

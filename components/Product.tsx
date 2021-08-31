@@ -660,7 +660,6 @@ const Product = (props) => {
     hasOffer: isOfferEnabled,
     productOffer,
     offerId,
-    isFetched,
     scorpioData,
     host,
     earliestAvailability = {},
@@ -734,7 +733,7 @@ const Product = (props) => {
   let hostSplit = hostName.split('.');
   hostSplit.shift();
   const bookingUrl = hostSplit.join('.');
-  const showScratchPrice = isFetched && isScratchPriceEnabled;
+  const showScratchPrice = isScratchPriceEnabled;
   const finalHighlights = RichText.asText(tempHighlights)?.trim()?.length
     ? tempHighlights
     : scorpioData.highlights;
@@ -763,10 +762,9 @@ const Product = (props) => {
     ? { highlights: finalHighlights, tabs: [] }
     : extractTabsFromHighlights(finalHighlights);
 
-  let { listingPrice } = isFetched ? tourPrices[tgid] : { listingPrice: null };
-  listingPrice = isAmp ? scorpioData.listingPrice : listingPrice;
+  const { listingPrice } = tourPrices[tgid];
 
-  if (isFetched && !listingPrice) return null;
+  if (!listingPrice) return null;
   const hasSafetyFlag = isSafetyIncluded(allTags);
   const finalPrice = listingPrice;
   const { tourId } = finalPrice || {};
@@ -963,7 +961,7 @@ const Product = (props) => {
             shouldOffset={earliestAvailability && mbTheme === THEMES.MIN_BLUE}
           >
             <a
-              target={isFetched && isMobile ? null : '_blank'}
+              target={isMobile ? null : '_blank'}
               href={productBookingUrl}
               rel="nofollow"
             >
