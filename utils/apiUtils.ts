@@ -137,7 +137,7 @@ export const fetchInventoryAPI = async ({
 }) => {
   try {
     const response = await fetch(
-      `${hostName}/api/v5/tour-group/inventory/get/${tgid}?use-seatmap-prices=true`
+      `${hostName}/api/tours/v5/tour-group/inventory/get/${tgid}?use-seatmap-prices=true`
     );
     const data = await response.json();
     return data;
