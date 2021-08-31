@@ -340,7 +340,6 @@ const MicrositeV1 = (props) => {
     if (initialCurrency !== currency) {
       fetchTourList({
         tgids: orderedTgids,
-        host: isDev ? `http://${host}` : host,
         language: currentLanguage,
         currency,
       })
