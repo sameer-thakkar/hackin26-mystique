@@ -60,7 +60,7 @@ interface fetchTGIDsByCategoryV2Obj {
   hostname: string;
   isSubCategory: boolean;
   city?: string;
-  lang?: string;
+  language?: string;
   limit?: string;
 }
 
@@ -69,14 +69,14 @@ export const fetchTGIDsByCategoryV2 = async ({
   hostname,
   isSubCategory = false,
   city = '',
-  lang = 'EN',
+  language = 'en',
   limit,
 }: fetchTGIDsByCategoryV2Obj) => {
   const url = isSubCategory
     ? `${hostname}/api/tours/v6/tour-groups/list-by/sub-category/${categoryId}`
     : `${hostname}/api/tours/v6/tour-groups/list-by/category/${categoryId}`;
   const params = {
-    language: lang,
+    language,
     ...(city && { city }),
     ...(limit && { limit }),
   };
@@ -93,17 +93,17 @@ export const fetchTGIDsByCategoryV2 = async ({
 interface fetchCollection {
   collectionId: string | number;
   hostname: string;
-  lang?: string;
+  language?: string;
   limit?: string;
 }
 export const fetchCollection = async ({
   collectionId,
   hostname,
-  lang = 'EN',
+  language = 'en',
   limit,
 }: fetchCollection) => {
   const params = {
-    language: lang,
+    language,
     ...(limit && { limit }),
   };
   const url = `${hostname}/api/tours/v1/collection/${collectionId}/sections`;

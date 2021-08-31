@@ -307,7 +307,6 @@ export default class Page extends React.Component<any, any> {
         ContentType === CUSTOM_TYPES.CONTENT_PAGE
           ? CMSContent.data.microsite
           : CMSContent.data;
-
       const all_tours_tab_tgids =
         microsite.data.all_tours.reduce((accum, tour) => {
           return [...accum, parseInt(tour.primary.tgid)];
@@ -329,7 +328,6 @@ export default class Page extends React.Component<any, any> {
       if (ContentType === CUSTOM_TYPES.MICROSITE) {
         const { data } = CMSContent || {};
         const { refs, data: CMSData } = data || {};
-
         const { contentFramework, productCardData } = refs || {};
         const { data: contentFrameworkData } = contentFramework || {};
         const { design, theme, body, body1, allShowPages } = CMSData || {};

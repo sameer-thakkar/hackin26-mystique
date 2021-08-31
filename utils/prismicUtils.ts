@@ -182,10 +182,7 @@ export const getMicrositeDocument = async ({
 
           const {
             data: {
-              data: {
-                is_entertainment_mb: isEntertainmentMb,
-                body: categorizedTours,
-              },
+              data: { is_entertainment_mb: isEntertainmentMb },
             },
           } = completeMicrosite || baseLangData || { data: { data: {} } };
           let allShowPages, productCardData;
@@ -196,21 +193,6 @@ export const getMicrositeDocument = async ({
             );
           }
 
-          const categoryTourListV1 = extractSinglePrismicSlice({
-            sliceName: 'tour_list_category_v1',
-            slices: categorizedTours,
-          });
-          const hasCategoryTourListV1 = Object.keys(categoryTourListV1)?.length;
-          if (hasCategoryTourListV1) {
-            const { primary } = categoryTourListV1;
-            const { product_cards } = primary || {};
-            const { id: productCardsId } = product_cards || {};
-            const { data } =
-              (await Client(req).getByID(productCardsId, {
-                lang: 'en-us',
-              })) || {};
-            productCardData = data;
-          }
           const strValues: any = MICROSITE_STRING_KEYS.reduce(
             (acc, elem) => ({
               ...acc,
@@ -266,7 +248,30 @@ export const getMicrositeDocument = async ({
               baseLangData?.data?.body1[0]?.primary?.ranking;
           }
 
-          // TODO: fallback for catToursV1
+          // Base lang Fallback for CategorisedToursV1.
+
+          let categoryTourListV1 = extractSinglePrismicSlice({
+            sliceName: 'tour_list_category_v1',
+            slices: completeMicrosite.data.data.body,
+          });
+          if (!categoryTourListV1?.primary?.product_cards?.id) {
+            categoryTourListV1 = extractSinglePrismicSlice({
+              sliceName: 'tour_list_category_v1',
+              slices: baseLangData?.data?.body,
+            });
+          }
+
+          const hasCategoryTourListV1 = Object.keys(categoryTourListV1)?.length;
+          if (hasCategoryTourListV1) {
+            const { primary } = categoryTourListV1;
+            const { product_cards } = primary || {};
+            const { id: productCardsId } = product_cards || {};
+            const { data } =
+              (await Client(req).getByID(productCardsId, {
+                lang: 'en-us',
+              })) || {};
+            productCardData = data;
+          }
 
           if (
             Object.keys(completeMicrosite.data.data['alert_popup']).length === 1

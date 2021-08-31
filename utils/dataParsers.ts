@@ -74,7 +74,7 @@ export const categoryTourListParserV1 = async ({
     const collectionData = await fetchCollection({
       collectionId: collection,
       hostname,
-      lang: language,
+      language,
       limit,
     });
     currency = collectionData?.city?.country?.currency;
@@ -92,7 +92,7 @@ export const categoryTourListParserV1 = async ({
       hostname,
       isSubCategory: false,
       city: cityCode,
-      lang: language,
+      language,
       limit,
     });
     currency = categoryData?.currency;
@@ -103,7 +103,7 @@ export const categoryTourListParserV1 = async ({
       hostname,
       isSubCategory: true,
       city: cityCode,
-      lang: language,
+      language,
       limit,
     });
     currency = subCategoryData?.currency;
@@ -119,6 +119,7 @@ export const categoryTourListParserV1 = async ({
       const additionalTours = await fetchTourList({
         tgids: tgidsToFetch,
         host: hostname,
+        language,
       });
       const additionalToursData = await additionalTours.json();
       if (additionalToursData?.tourGroups?.length) {
