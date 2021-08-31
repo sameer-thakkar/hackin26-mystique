@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Product from 'components/Product';
 import Conditional from 'components/common/Conditional';
@@ -64,29 +64,6 @@ const StyledTourListSubHeading = styled.div`
   }
 `;
 
-type PopulateProductsType = {
-  uncategorizedTours;
-  tourPrices;
-  uid;
-  currentLanguage;
-  bookNowText;
-  showLessText;
-  readMoreText;
-  productOffer;
-  hasOffer;
-  togglePopup;
-  popupState;
-  isMobile;
-  scorpioData;
-  pageUrl;
-  host;
-  analytics;
-  mbTheme;
-  allToursTabContent;
-  isAmp;
-  instantCheckout;
-  showEarliestAvailability;
-};
 const PopulateProducts = (props) => {
   const {
     uncategorizedTours: tours,
@@ -117,6 +94,8 @@ const PopulateProducts = (props) => {
   const [showEarliestAvailability, setShowEarliestAvailability] = useState(
     null
   );
+
+  useEffect(() => setTourPrices(scorpioData), [scorpioData]);
 
   useEffect(() => {
     const fetchEarliestAvailability = async ({
@@ -152,8 +131,6 @@ const PopulateProducts = (props) => {
       });
     }
   }, []);
-
-  useEffect(() => setTourPrices(scorpioData), [scorpioData]);
 
   useEffect(() => {
     const fetchVariantPrices = async ({ variantTgids, currency }) => {
@@ -196,6 +173,7 @@ const PopulateProducts = (props) => {
       fetchVariantPrices({ variantTgids, currency });
     }
   }, [currency]);
+
   const uncategorizedTours =
     showEarliestAvailability || instantCheckout
       ? tours.map((tour) => ({
@@ -225,9 +203,8 @@ const PopulateProducts = (props) => {
       </Conditional>
       <ProductContainer>
         {availableToursList.map((tour, index) => (
-          <>
+          <Fragment key={tour.tgid}>
             <Product
-              key={index}
               tgid={tour.tgid}
               earliestAvailability={tour.earliestAvailability}
               showEarliestAvailability={showEarliestAvailability}
@@ -265,7 +242,7 @@ const PopulateProducts = (props) => {
             <Conditional if={mbTheme === THEMES.MIN_BLUE}>
               <HorizontalLine colorProp={COLORS.GREY_G6} />
             </Conditional>
-          </>
+          </Fragment>
         ))}
       </ProductContainer>
     </StyledProductsWrapper>
