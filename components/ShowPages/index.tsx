@@ -221,7 +221,7 @@ const ShowPage = ({
   } = parseShowPageData(microBrandsHighlight);
 
   const currentLanguage = lang.split('-')[0];
-  const categoryId = categoriesFromRoot[categoriesFromRoot.length - 1].id;
+  const categoryId = categoriesFromRoot?.[categoriesFromRoot.length - 1]?.id;
   const categoryName = showType
     ? showType
     : categoriesFromRoot[categoriesFromRoot.length - 1].displayName;
@@ -268,7 +268,7 @@ const ShowPage = ({
       const categoryData = await fetchCategory(categoryId, hostname);
 
       setSimilarProductData(
-        categoryData?.products.filter((element) => element.id != tgid)
+        categoryData?.products?.filter((element) => element.id != tgid)
       );
     };
 
