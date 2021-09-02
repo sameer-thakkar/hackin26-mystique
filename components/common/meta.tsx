@@ -232,7 +232,13 @@ const PopulateHead = (data) => {
         />
       ) : null}
 
-      {!disable_amp && !isAmp ? <link rel="amphtml" href="?amp=1" /> : null}
+      {!disable_amp &&
+      !isAmp &&
+      originalHost != 'www.london-theater-tickets.com' ? (
+        <link rel="amphtml" href="?amp=1" />
+      ) : (
+        <link rel="amphtml" />
+      )}
 
       {robotsContent.length ? (
         <meta name="robots" content={robotsContent.join(', ')} />
