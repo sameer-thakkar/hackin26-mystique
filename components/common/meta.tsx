@@ -236,7 +236,7 @@ const PopulateHead = (data) => {
       !isAmp &&
       originalHost != 'www.london-theater-tickets.com' ? (
         <link rel="amphtml" href="?amp=1" />
-      ) : (
+      ) : isAmp ? null : (
         <link rel="amphtml" />
       )}
 
