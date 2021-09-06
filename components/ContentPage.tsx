@@ -361,6 +361,11 @@ class ContentPage extends Component<any, any> {
       ...strValues,
       ...objValues,
     };
+    const {
+      header_ref: {
+        data: { disable_amp: disableAMP },
+      },
+    } = micrositeData;
     const headProps = {
       ...micrositeData,
       favicon: microsite_document_ref.data.favicon,
@@ -371,6 +376,7 @@ class ContentPage extends Component<any, any> {
         ? this.props.data.other_meta_tags
         : microsite_document_ref.other_meta_tags,
       faq_schema: this.props.data.faq_schema,
+      disable_amp: disableAMP,
     };
     // END Data extraction for populating head
 

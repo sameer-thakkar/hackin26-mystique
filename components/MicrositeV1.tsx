@@ -202,6 +202,9 @@ const MicrositeV1 = (props) => {
     enable_dropdown: enableDropdownLinks,
     dropdown_menu,
   } = withCommonHeaderOverrides;
+  let { disable_amp: disableAMP } = withCommonHeaderOverrides;
+
+  disableAMP = micrositeData?.disable_amp || disableAMP;
   const { url: logoUrl } = linkedLogo;
   const { url: uploadedLogoUrl, alt: altText } = uploadedLogo;
 
@@ -418,6 +421,7 @@ const MicrositeV1 = (props) => {
       mbTheme={mbTheme}
       instantCheckout={instantCheckout}
       enableEarliestAvailability={enableEarliestAvailability}
+      disable_amp={disableAMP}
     />
   );
 
