@@ -186,7 +186,9 @@ const PopulateProducts = (props) => {
     (t) => !!scorpioData[t.tgid]
   );
   const availableToursList = uncategorizedTours?.filter(
-    (tour) => !!scorpioData[tour.tgid]?.available
+    (tour) =>
+      !!scorpioData[tour.tgid]?.available &&
+      scorpioData[tour.tgid]?.highlights?.length
   );
 
   return (
