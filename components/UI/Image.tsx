@@ -88,6 +88,9 @@ const Image: React.FC<ImageProps> = ({
     if (!url) {
       return null;
     }
+    if (url?.includes('nocompress')) {
+      return url?.split('?')?.[0];
+    }
     if (format === 'gif') return url;
     const imigxOptionsQueryParams = new URLSearchParams();
     if (width) imigxOptionsQueryParams.set('w', `${Number(width) * 1.5}`);
