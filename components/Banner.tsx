@@ -19,6 +19,7 @@ const StyledBanner = styled.div`
   width: 100%;
   position: relative;
   box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.16);
+  background: rgba(34, 34, 34, 0.6);
   font-family: ${SOLEIL.FONT_STACK};
   margin-bottom: 24px;
 
@@ -227,7 +228,7 @@ const swiperParams = {
   },
   shouldSwiperUpdate: true,
   loop: true,
-  initialSlide: 1,
+  initialSlide: 0,
   freeMode: false,
   effect: 'fade',
 };
