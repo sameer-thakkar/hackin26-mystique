@@ -122,9 +122,8 @@ const CloseIconWrapper = styled.div`
 `;
 
 const WrapperProductCard = styled.div`
-  border-radius: 8px;
   border: ${({ theme }) => theme.productCards.border};
-  border-radius: 4px;
+  border-radius: 8px;
   display: grid;
   grid-template-columns: ${({ isMainCard, isMobile }) =>
     isMainCard || isMobile ? 'auto' : 'auto 40px'};

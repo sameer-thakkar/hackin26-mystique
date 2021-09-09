@@ -80,6 +80,11 @@ const StyledContentPage = styled.div`
     line-height: 40px;
   }
 
+  .ticket_card_shoulder_page ul li,
+  .ticket_card_shoulder_page ol li {
+    line-height: 22px;
+  }
+
   .product .product-left p {
     margin: 0;
   }

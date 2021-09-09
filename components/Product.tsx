@@ -54,7 +54,8 @@ const Container = styled.div`
 
 const StyledProductCard = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
-  padding: ${({ theme }) => theme.productCards.padding.desktop};
+  padding: ${({ isTicketCard, theme }) =>
+    isTicketCard ? `24px 37px 24px 40px` : theme.productCards.padding.desktop};
   ${({ isTicketCard, theme, isMobile }) =>
     (!isTicketCard || isMobile) &&
     `border: ${theme.productCards.border};
@@ -795,6 +796,7 @@ const Product = (props) => {
     mbTheme,
     hasShortSummary: hasShortSummary,
     hasNextAvailable: earliestAvailability?.startDate,
+    isTicketCard: isTicketCard,
   });
   const getMoreDetailsButton = () => {
     const keyPressedOnReadMore = (event) => {
