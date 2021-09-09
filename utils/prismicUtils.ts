@@ -126,6 +126,24 @@ export const getContentPageDocument = async ({
         microsite: micrositeData,
       } = refsArrayToObject(refArray);
 
+      let categoryTourListV1 = extractSinglePrismicSlice({
+        sliceName: 'ticket_card_shoulder_page',
+        slices: contentFramework?.data?.body,
+      });
+
+      let productCardData;
+      const hasCategoryTourListV1 = Object.keys(categoryTourListV1)?.length;
+      if (hasCategoryTourListV1) {
+        const { primary } = categoryTourListV1;
+        const { product_cards } = primary || {};
+        const { id: productCardsId } = product_cards || {};
+        const { data } =
+          (await Client(req).getByID(productCardsId, {
+            lang: 'en-us',
+          })) || {};
+        productCardData = data;
+      }
+
       let completePage = {
         ...page,
         data: {
@@ -135,6 +153,7 @@ export const getContentPageDocument = async ({
           content_framework: contentFramework,
           microsite: micrositeData,
           secondaryFooter,
+          productCardData,
         },
       };
       return {

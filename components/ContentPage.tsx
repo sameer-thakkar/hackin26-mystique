@@ -118,6 +118,11 @@ const StyledContentPage = styled.div`
     width: 100%;
   }
 
+  .ticket_card_shoulder_page {
+    margin: 0 auto;
+    padding: 0;
+  }
+
   @media (max-width: 768px) {
     grid-row-gap: 52px;
     margin-top: 52px;
@@ -505,22 +510,28 @@ class ContentPage extends Component<any, any> {
               currentLanguage={currentLanguage}
             />
           ) : null}
-
           <StyledContentPage>
             <ProductsContextProvider allTours={allTours} ready={apiReady}>
               <InteractionContextProvider>
-                {[...body, ...contentFWSlices].map((slice, index) => (
-                  <div
-                    key={index}
-                    className={`${
-                      !FULL_WIDTH_SLICES.includes(slice.slice_type)
-                        ? 'slice-wrapper'
-                        : ''
-                    } slice-block ${slice.slice_type}`}
-                  >
-                    {sliceHandler(slice, { isMobile: this.state.isMobile })}
-                  </div>
-                ))}
+                {[...body, ...contentFWSlices].map((slice, index) => {
+                  const sliceComponent = (
+                    <div
+                      key={index}
+                      className={`${
+                        !FULL_WIDTH_SLICES.includes(slice.slice_type)
+                          ? 'slice-wrapper'
+                          : ''
+                      } slice-block ${slice.slice_type}`}
+                    >
+                      {sliceHandler(slice, {
+                        isMobile: this.state.isMobile,
+                        ...this.props,
+                      })}
+                    </div>
+                  );
+
+                  return sliceComponent;
+                })}
               </InteractionContextProvider>
             </ProductsContextProvider>
           </StyledContentPage>

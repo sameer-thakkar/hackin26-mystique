@@ -8,6 +8,7 @@ import { THEMES } from 'const/index';
 import { strings } from 'const/strings';
 import { fetchInventory } from 'utils/apiUtils';
 import { legacyBooleanCheck } from 'utils';
+import TicketCard from 'components/slices/ContentPageTicketsCard';
 
 const StyledProductsWrapper = styled.div`
   margin: 0 auto;
@@ -86,6 +87,7 @@ const PopulateProducts = (props) => {
     isAmp,
     instantCheckout,
     enableEarliestAvailability,
+    isTicketCard = false,
   } = props;
   const [tourPrices, setTourPrices] = useState(scorpioData);
   const [earliestAvailabilityQueue, setEarliestAvailabilityQueue] = useState(
@@ -166,7 +168,7 @@ const PopulateProducts = (props) => {
       setTourPrices(finalPrices);
     };
     const variantTgids = tours
-      .filter((t) => t.tgid && t.tid)
+      ?.filter((t) => t.tgid && t.tid)
       .map((t) => ({ tgid: t.tgid, tid: t.tid }));
 
     if (variantTgids?.length) {
@@ -204,48 +206,57 @@ const PopulateProducts = (props) => {
         </div>
       </Conditional>
       <ProductContainer>
-        {availableToursList.map((tour, index) => (
-          <Fragment key={tour.tgid}>
-            <Product
-              tgid={tour.tgid}
-              earliestAvailability={tour.earliestAvailability}
-              showEarliestAvailability={showEarliestAvailability}
-              tid={tour.tour_variant_id}
-              title={tour.tour_title_override}
-              descriptors={tour.marketing_highlights_override}
-              highlights={tour.tour_description_override}
-              scorpioData={scorpioData?.[tour.tgid]}
-              tourPrices={tourPrices}
-              uid={uid}
-              currentLanguage={currentLanguage}
-              bookNowText={bookNowText}
-              showLessText={showLessText}
-              readMoreText={readMoreText}
-              productOffer={productOffer}
-              hasOffer={hasOffer}
-              togglePopup={togglePopup}
-              offerId={tour.offer__free_tour?.id}
-              popupState={popupState}
-              isMobile={isMobile}
-              isAmp={isAmp}
-              pageUrl={pageUrl}
-              host={host}
-              ctaUrlSuffix={tour.cta_url_suffix || ''}
-              isScratchPriceEnabled={tour.show_scratch_price === 'Yes'}
-              analytics={analytics}
-              position={index + 1}
-              booster={tour.product_booster}
-              defaultOpen={finalToursList.length === 1}
-              shortSummary={tour.short_summary}
-              boosterTag={tour.tag_booster}
-              numberOfTours={tours.length}
-              instantCheckout={instantCheckout}
-            />
-            <Conditional if={mbTheme === THEMES.MIN_BLUE}>
-              <HorizontalLine colorProp={COLORS.GREY_G6} />
-            </Conditional>
-          </Fragment>
-        ))}
+        {availableToursList &&
+          availableToursList.map((tour, index) => {
+            const childProps = {
+              tgid: tour.tgid,
+              earliestAvailability: tour.earliestAvailability,
+              showEarliestAvailability: showEarliestAvailability,
+              tid: tour.tour_variant_id,
+              title: tour.tour_title_override,
+              descriptors: tour.marketing_highlights_override,
+              highlights: tour.tour_description_override,
+              scorpioData: scorpioData?.[tour.tgid],
+              tourPrices: tourPrices,
+              uid: uid,
+              currentLanguage: currentLanguage,
+              bookNowText: bookNowText,
+              showLessText: showLessText,
+              readMoreText: readMoreText,
+              productOffer: productOffer,
+              hasOffer: hasOffer,
+              togglePopup: togglePopup,
+              offerId: tour.offer__free_tour?.id,
+              popupState: popupState,
+              isMobile: isMobile,
+              isAmp: isAmp,
+              pageUrl: pageUrl,
+              host: host,
+              ctaUrlSuffix: tour.cta_url_suffix || '',
+              isScratchPriceEnabled: tour.show_scratch_price === 'Yes',
+              analytics: analytics,
+              position: index + 1,
+              booster: tour.product_booster,
+              defaultOpen: finalToursList.length === 1,
+              shortSummary: tour.short_summary,
+              boosterTag: tour.tag_booster,
+              numberOfTours: tours.length,
+              instantCheckout: instantCheckout,
+            };
+
+            return (
+              <Fragment key={tour.tgid}>
+                {isTicketCard ? (
+                  <TicketCard {...childProps} />
+                ) : (
+                  <Product {...childProps} />
+                )}
+                <Conditional if={mbTheme === THEMES.MIN_BLUE}>
+                  <HorizontalLine colorProp={COLORS.GREY_G6} />
+                </Conditional>
+              </Fragment>
+            );
+          })}
       </ProductContainer>
     </StyledProductsWrapper>
   );

@@ -197,14 +197,81 @@ export default class Page extends React.Component<any, any> {
        * and finally gets returned with any other common data for CUSTOM_TYPE
        */
       let AllData = {};
+      let tgidsArray = [];
+      const queryParams = (function getQueryparams() {
+        try {
+          const href = req ? `http://${host}${req.url}` : window.location.href;
+          const url = new URL(href);
+          if (url) {
+            return {
+              tgidToScroll: url.searchParams.get('tgid'),
+              noTrack: typeof url.searchParams.get('no-track') === 'string',
+              currencyCode: url.searchParams.get('currencyCode'),
+              bookSubdomain: url.searchParams.get('bookSubdomain') ?? undefined,
+            };
+          }
+          return {};
+        } catch (e) {
+          console.log(e);
+          return {};
+        }
+      })();
+
       if (ContentType === CUSTOM_TYPES.CONTENT_PAGE) {
+        const { data } = CMSContent || {};
+        const {
+          productCardData,
+          content_framework: contentFramework,
+          data: CMSData,
+        } = data || {};
+        const { data: contentFrameworkData } = contentFramework || {};
+        const { design, theme, body1 } = CMSData || {};
+        const MBDesign = design || '';
+        const mbTheme = theme || THEMES.DEFAULT;
+        const toursTabFirstSlice = body1?.[0];
+
+        const categoryTourListV1 = extractSinglePrismicSlice({
+          sliceName: 'ticket_card_shoulder_page',
+          slices: contentFrameworkData?.body,
+        });
+        let categoryTourListData;
+        const hasCategoryTourListV1 = Object.keys(categoryTourListV1)?.length;
+
+        if (hasCategoryTourListV1) {
+          categoryTourListData = await categoryTourListParserV1({
+            productCard: productCardData,
+            sliceObj: categoryTourListV1,
+            hostname,
+            lang,
+          });
+        }
+
+        const prismicTours = toursTabFirstSlice
+          ? await toursTabSliceHandler(toursTabFirstSlice)
+          : [];
+
+        const toursList = uncategorizedToursListParser(
+          prismicTours,
+          initial_tgids
+        );
+
+        tgidsArray = toursList?.reduce((acc, tour) => {
+          return [...acc, tour.tgid];
+        }, []);
+
         AllData = {
           CMSContent,
+          toursList,
+          categoryTourListData,
           ContentType,
           uid,
           lang,
-          isDev,
           host,
+          MBDesign,
+          isDev,
+          queryParams,
+          mbTheme,
+          isStage,
         };
       }
 
@@ -323,7 +390,6 @@ export default class Page extends React.Component<any, any> {
             return res.results;
           });
       }
-      let tgidsArray = [];
 
       if (ContentType === CUSTOM_TYPES.MICROSITE) {
         const { data } = CMSContent || {};
@@ -404,28 +470,6 @@ export default class Page extends React.Component<any, any> {
         tgidsArray = toursList?.reduce((acc, tour) => {
           return [...acc, tour.tgid];
         }, []);
-
-        const queryParams = (function getQueryparams() {
-          try {
-            const href = req
-              ? `http://${host}${req.url}`
-              : window.location.href;
-            const url = new URL(href);
-            if (url) {
-              return {
-                tgidToScroll: url.searchParams.get('tgid'),
-                noTrack: typeof url.searchParams.get('no-track') === 'string',
-                currencyCode: url.searchParams.get('currencyCode'),
-                bookSubdomain:
-                  url.searchParams.get('bookSubdomain') ?? undefined,
-              };
-            }
-            return {};
-          } catch (e) {
-            console.log(e);
-            return {};
-          }
-        })();
 
         AllData = {
           CMSContent,
@@ -663,8 +707,15 @@ export default class Page extends React.Component<any, any> {
               scorpioData={tourGroupData}
               isDev={isDev}
               host={host}
+              categoryTourListData={categoryTourListData}
+              activeCurrency={activeCurrency}
               serverRequestStartTimestamp={serverRequestStartTimestamp}
               isMobile={isMobile}
+              offerData={CMSContent.offerData}
+              toursList={toursList}
+              pathname={pathname}
+              tgidToScroll={tgidToScroll}
+              mbTheme={mbTheme}
             />
           );
         case CUSTOM_TYPES.LISTICLE:

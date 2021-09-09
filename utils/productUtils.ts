@@ -28,6 +28,7 @@ export const getProductCardLayout = ({
   hasV1Booster,
   hasShortSummary,
   hasNextAvailable,
+  isTicketCard = false,
 }) => {
   let layout = { desktop: [], mobile: [] };
   const hasIconBoosters = hasTags;
@@ -69,6 +70,7 @@ export const getProductCardLayout = ({
           hasV1Booster && 'booster line cta-combo',
           'body line cta-combo',
           ((!hasV1Booster && !hasOffer) || !hasShortSummary) &&
+            !isTicketCard &&
             '. line cta-combo',
         ],
         mobile: [

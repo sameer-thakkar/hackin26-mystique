@@ -1,0 +1,158 @@
+import React, { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
+import { currencyAtom } from 'store/atoms/currency';
+import { getLangObject } from 'utils/helper';
+import { useWindowWidth } from '@react-hook/window-size';
+import PopulateProducts from 'components/PopulateProducts';
+import Analytics from 'utils/analytics';
+import { csvTgidToArray } from 'utils/helper';
+import { tourListApiParser } from 'utils/dataParsers';
+import { fetchTourList } from 'utils/apiUtils';
+
+const TicketCard = ({ props }) => {
+  const {
+    toursList: uncategorizedToursList,
+    categoryTourListData,
+    tgidToScroll,
+    data: micrositeData,
+    scorpioData: scorpioDataUncategorised,
+    isAmp,
+    offerData,
+    host,
+    mbTheme,
+    lang,
+    uid,
+  } = props;
+
+  const { body1: uncategorizedTours } = micrositeData || {};
+  const [freeTourPopupOpen, toggleFreeTourPopup] = useState(false);
+  const currency = useRecoilValue(currencyAtom);
+  const {
+    scorpioData: scorpioDataCategorised,
+    orderedTours: categorizedToursList,
+  } = categoryTourListData || {};
+
+  const isCategorisedTours = categoryTourListData
+    ? Object.keys(categoryTourListData)?.length > 0
+    : null;
+
+  const sortTours = (tgidToScroll, toursArray, isCategorisedTours) => {
+    if (!tgidToScroll) return toursArray;
+    if (tgidToScroll) {
+      return toursArray?.reduce((accum = [], item) => {
+        const tgid = isCategorisedTours ? +tgidToScroll : tgidToScroll;
+        if (item.tgid === tgid) {
+          return [item, ...accum];
+        } else {
+          return [...accum, item];
+        }
+      }, []);
+    }
+  };
+
+  const orderedUncategorizedTours = isCategorisedTours
+    ? sortTours(tgidToScroll, categorizedToursList, isCategorisedTours)
+    : sortTours(tgidToScroll, uncategorizedToursList, isCategorisedTours);
+
+  const tourRanking = uncategorizedTours?.[0]?.primary?.ranking;
+
+  const orderedTGIDRanking = csvTgidToArray(tourRanking);
+
+  const orderedTours =
+    isCategorisedTours || tgidToScroll
+      ? orderedUncategorizedTours
+      : orderedTGIDRanking?.length
+      ? [...orderedUncategorizedTours]?.sort((tourA, tourB) => {
+          return (
+            orderedTGIDRanking?.indexOf(parseInt(tourA.tgid)) -
+            orderedTGIDRanking?.indexOf(parseInt(tourB.tgid))
+          );
+        })
+      : orderedUncategorizedTours;
+  const initialScorpioData = isCategorisedTours
+    ? scorpioDataCategorised
+    : scorpioDataUncategorised;
+
+  const [scorpioData, setScorpioData] = useState(initialScorpioData);
+  const [initialCurrency] = useState(currency);
+  const orderedTgids = orderedTours?.length
+    ? orderedTours?.map((tour) => tour.tgid)
+    : [];
+
+  useEffect(() => {
+    if (initialCurrency !== currency) {
+      fetchTourList({
+        tgids: orderedTgids,
+        language: currentLanguage,
+        currency,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          const formattedData = tourListApiParser(data);
+          setScorpioData(formattedData);
+        });
+    }
+  }, [currency]);
+
+  const hasTours = isCategorisedTours
+    ? categorizedToursList
+    : uncategorizedToursList?.length > 0;
+  const uncategorizedToursHeading = hasTours
+    ? isCategorisedTours
+      ? ''
+      : uncategorizedTours[0].primary
+    : '';
+  const currentLanguage = lang ? getLangObject(lang).short : null;
+  const withCommonHeaderOverrides = {
+    ...micrositeData,
+  };
+  const {
+    book_now_text: bookNowText,
+    read_more_text: readMoreText,
+    show_less_text: showLessText,
+    page_url: pageUrl,
+    instant_checkout: instantCheckout = false,
+    enable_earliest_availability: enableEarliestAvailability,
+  } = withCommonHeaderOverrides;
+
+  const { results: productOffer } = offerData ? offerData : { results: [] };
+  const hasOffer = productOffer.length > 0;
+  const onTogglePopup = () => {
+    toggleFreeTourPopup(!freeTourPopupOpen);
+  };
+  const [isMobile, setIsMobile] = useState(props?.isMobile);
+  const windowWidth = useWindowWidth();
+
+  useEffect(() => {
+    setIsMobile(windowWidth < 768);
+  }, [windowWidth]);
+  const analytics = new Analytics();
+
+  return (
+    <PopulateProducts
+      currency={currency}
+      uncategorizedTours={orderedTours}
+      scorpioData={scorpioData}
+      uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
+      uid={uid}
+      isAmp={isAmp}
+      currentLanguage={currentLanguage}
+      bookNowText={bookNowText}
+      readMoreText={readMoreText}
+      showLessText={showLessText}
+      productOffer={productOffer}
+      hasOffer={hasOffer}
+      togglePopup={onTogglePopup}
+      pageUrl={pageUrl}
+      isMobile={isAmp || isMobile}
+      host={host}
+      analytics={analytics}
+      mbTheme={mbTheme}
+      instantCheckout={instantCheckout}
+      enableEarliestAvailability={enableEarliestAvailability}
+      isTicketCard
+    />
+  );
+};
+
+export default TicketCard;
