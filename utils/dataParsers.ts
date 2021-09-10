@@ -6,10 +6,14 @@ import { generatePromiseForCategoryTours, getHeadoutLanguagecode } from 'utils';
 import {
   fetchCollection,
   fetchTGIDsByCategoryV2,
+  fetchTourGroupV6,
   fetchTourList,
 } from 'utils/apiUtils';
 import { csvTgidToArray } from 'utils/helper';
-import { addCashbackValueToDescriptor } from 'utils/productUtils';
+import {
+  addCashbackValueToDescriptor,
+  getSingleAriesTag,
+} from 'utils/productUtils';
 import { CURRENCY_SYMBOL_MAP } from 'const/index';
 
 export const uncategorizedToursListParser = (
@@ -57,6 +61,8 @@ export const categoryTourListParserV1 = async ({
     limit,
     ranking,
     exclusions,
+    cta_url_suffix: commonCtaUrlSuffix,
+    show_scratch_price: commonScratchPrice,
   } = productCard || {};
   const { cityCode } = city || {};
   const localeRanking = csvTgidToArray(locale_ranking);
@@ -145,25 +151,49 @@ export const categoryTourListParserV1 = async ({
     const finalTours = orderedTours?.filter(
       (tour) => !finalExclusions.includes(tour.id)
     );
+
     const repeatableObj = finalTours?.reduce((acc, tour) => {
-      const { id } = tour || {};
+      const { id, allTags } = tour || {};
       const tourObj = items.find((item) => item.tgid === id);
+      const [variantId] =
+        getSingleAriesTag(allTags, 'DEFAULT_VARIANT')?.match(/\d+/) || [];
+      let ctaSuffix;
+      if (commonCtaUrlSuffix && variantId) {
+        ctaSuffix = `${commonCtaUrlSuffix}&variantId=${variantId}`;
+      } else if (commonCtaUrlSuffix) {
+        ctaSuffix = commonCtaUrlSuffix;
+      } else if (variantId) {
+        ctaSuffix = `?variantId=${variantId}`;
+      } else {
+        ctaSuffix = null;
+      }
       acc.push({
         tgid: id,
-        cta_url_suffix: null,
+        cta_url_suffix: ctaSuffix,
         marketing_highlights_override: null,
         offer__free_tour: { link_type: 'Document' },
         product_booster: [],
         short_summary: [],
-        show_scratch_price: 'No',
+        show_scratch_price: commonScratchPrice ? 'Yes' : 'No',
         tag_booster: null,
         tid: null,
         tour_description_override: [],
         tour_title_override: null,
+        variantId,
         ...tourObj,
       });
       return acc;
     }, []);
+    const allMultiVariantTgids = repeatableObj
+      .filter((tour) => tour.variantId)
+      .map((tour) => tour.tgid);
+
+    const tgidVariantData: any[] = await Promise.all(
+      allMultiVariantTgids?.map(async (tgid) =>
+        fetchTourGroupV6({ tgid, hostname, language })
+      )
+    );
+
     const scorpioData = finalTours?.reduce((acc, tour) => {
       const {
         id,
@@ -184,6 +214,15 @@ export const categoryTourListParserV1 = async ({
         descriptor: microBrandsDescriptor,
         cashbackValue,
       });
+      const { variants } =
+        tgidVariantData?.find((item: any) => item.id === id) || {};
+      const [variantId] =
+        getSingleAriesTag(allTags, 'DEFAULT_VARIANT')?.match(/\d+/) || [];
+      const { listingPrice: variantListingPrice } =
+        variants?.find((variant) => variant?.id === +variantId) || {};
+      const finalListingPrice = variantListingPrice
+        ? variantListingPrice
+        : listingPrice;
       return {
         ...acc,
         [id]: {
@@ -195,7 +234,7 @@ export const categoryTourListParserV1 = async ({
           highlights: microBrandsHighlight,
           images: productImages,
           listingPrice: {
-            ...listingPrice,
+            ...finalListingPrice,
             ...currency,
           },
           productHighlights: highlights,
@@ -224,9 +263,9 @@ interface categoryTourListParserProps {
 export const categoryTourListParserV2 = async (
   obj: categoryTourListParserProps
 ) => {
-  const categoryIds = [];
-  const subCategoryIds = [];
-  const collectionIds = [];
+  const categoryIds = [],
+    subCategoryIds = [],
+    collectionIds = [];
   const { tourListCategory, hostname, showpages, categoryCarousel } = obj || {};
 
   const { primary, items: slices } = tourListCategory || {};

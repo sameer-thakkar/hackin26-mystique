@@ -241,3 +241,6 @@ export const addCashbackValueToDescriptor = ({
     return descriptor;
   }
 };
+
+export const getSingleAriesTag = (arr, tag) =>
+  arr.find((ele) => ele.includes(tag));

@@ -251,6 +251,7 @@ export const generatePromiseForCategoryTours = ({
         promise = await fetchCollection({
           collectionId: catId,
           hostname,
+          limit: '100',
         });
         break;
       case isCategory:
@@ -260,6 +261,7 @@ export const generatePromiseForCategoryTours = ({
           isSubCategory,
           hostname,
           city,
+          limit: '100',
         });
         break;
     }

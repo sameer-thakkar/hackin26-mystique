@@ -139,10 +139,9 @@ const PopulateProducts = (props) => {
       const fetchVariantPrices: Promise<any>[] = variantTgids.map(({ tgid }) =>
         fetchInventory({ tgid, 'for-days': 2, currency })
       );
-
       const variants: Array<any> = await Promise.all([...fetchVariantPrices]);
       const mapVariantPrices = variants.map((tourVariant: any, index) => {
-        const inv = tourVariant?.inventoryList.find((inventoryList) => {
+        const inv = tourVariant?.inventoryList?.find((inventoryList) => {
           return inventoryList.tourId == variantTgids[index].tid;
         });
         return {
