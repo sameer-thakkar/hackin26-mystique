@@ -167,9 +167,11 @@ export const categoryTourListParserV1 = async ({
       } else {
         ctaSuffix = null;
       }
+      const ctaSuffixObj = new URLSearchParams(commonCtaUrlSuffix || '');
+      if (variantId) ctaSuffixObj.set('variantId', variantId);
       acc.push({
         tgid: id,
-        cta_url_suffix: ctaSuffix,
+        cta_url_suffix: ctaSuffix?.toString(),
         marketing_highlights_override: null,
         offer__free_tour: { link_type: 'Document' },
         product_booster: [],
@@ -219,7 +221,7 @@ export const categoryTourListParserV1 = async ({
       const [variantId] =
         getSingleAriesTag(allTags, 'DEFAULT_VARIANT')?.match(/\d+/) || [];
       const { listingPrice: variantListingPrice } =
-        variants?.find((variant) => variant?.id === +variantId) || {};
+        variants?.find((variant) => variant?.id === parseInt(variantId)) || {};
       const finalListingPrice = variantListingPrice
         ? variantListingPrice
         : listingPrice;
