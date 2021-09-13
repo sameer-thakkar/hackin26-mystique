@@ -157,18 +157,9 @@ export const categoryTourListParserV1 = async ({
       const tourObj = items.find((item) => item.tgid === id);
       const [variantId] =
         getSingleAriesTag(allTags, 'DEFAULT_VARIANT')?.match(/\d+/) || [];
-      let ctaSuffix;
-      if (commonCtaUrlSuffix && variantId) {
-        ctaSuffix = `${commonCtaUrlSuffix}&variantId=${variantId}`;
-      } else if (commonCtaUrlSuffix) {
-        ctaSuffix = commonCtaUrlSuffix;
-      } else if (variantId) {
-        ctaSuffix = `?variantId=${variantId}`;
-      } else {
-        ctaSuffix = null;
-      }
-      const ctaSuffixObj = new URLSearchParams(commonCtaUrlSuffix || '');
-      if (variantId) ctaSuffixObj.set('variantId', variantId);
+
+      const ctaSuffix = new URLSearchParams(commonCtaUrlSuffix || '');
+      if (variantId) ctaSuffix.set('variantId', variantId);
       acc.push({
         tgid: id,
         cta_url_suffix: ctaSuffix?.toString(),
