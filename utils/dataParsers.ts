@@ -162,7 +162,7 @@ export const categoryTourListParserV1 = async ({
       if (variantId) ctaSuffix.set('variantId', variantId);
       acc.push({
         tgid: id,
-        cta_url_suffix: ctaSuffix?.toString(),
+        cta_url_suffix: ctaSuffix ? `?${ctaSuffix?.toString()}` : null,
         marketing_highlights_override: null,
         offer__free_tour: { link_type: 'Document' },
         product_booster: [],
