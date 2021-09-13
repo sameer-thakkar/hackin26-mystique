@@ -30,6 +30,25 @@ export const fetchTourList = ({ tgids, host = '', ...query }) => {
 export const fetchTourGroup = (tgid, hostName) =>
   fetch(`${hostName}/api/tours/v5/tour-group/get/${tgid}`);
 
+export const fetchTourGroupV6 = async ({
+  tgid,
+  hostname,
+  language,
+}: {
+  tgid: string | number;
+  hostname: string;
+  language?: string;
+}) => {
+  const params = {
+    ...(language && { language }),
+  };
+  const url = addQueryParams(
+    `${hostname}/api/tours/v6/tour-groups/${tgid}`,
+    params
+  );
+  const res = await fetch(url);
+  return await res.json();
+};
 export const fetchCurrencyList = async () => {
   try {
     const res = await fetch('https://api.headout.com/api/v1/currency/list');

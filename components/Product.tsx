@@ -1018,32 +1018,36 @@ const Product = (props) => {
         noOfListItemToShow={noOfListItemToShow + 1}
         defaultOpen={defaultOpen}
       >
-        <div
-          className={`${
-            isAmp ? 'amp-tour-description tour-description' : 'tour-description'
-          }`}
-          id={`tour-description-${position}`}
-          onClick={
-            !isMobile && !defaultOpen
-              ? () => toggleContentOpen(!isContentOpen)
-              : null
-          }
-        >
-          <Conditional if={hasHighlights}>
-            <RichText
-              render={highlights || []}
-              htmlSerializer={shortCodeSerializer}
-              elements={richtextElements}
-            />
-          </Conditional>
-          <Conditional if={tabs.length}>
-            <HighlightTabs
-              onTabChange={onTabChange}
-              hasRegularHighlights={hasHighlights}
-              tabs={tabs}
-            />
-          </Conditional>
-        </div>
+        <Conditional if={!isTicketCard || isTicketCard & expandContent}>
+          <div
+            className={`${
+              isAmp
+                ? 'amp-tour-description tour-description'
+                : 'tour-description'
+            }`}
+            id={`tour-description-${position}`}
+            onClick={
+              !isMobile && !defaultOpen
+                ? () => toggleContentOpen(!isContentOpen)
+                : null
+            }
+          >
+            <Conditional if={hasHighlights}>
+              <RichText
+                render={highlights || []}
+                htmlSerializer={shortCodeSerializer}
+                elements={richtextElements}
+              />
+            </Conditional>
+            <Conditional if={tabs.length}>
+              <HighlightTabs
+                onTabChange={onTabChange}
+                hasRegularHighlights={hasHighlights}
+                tabs={tabs}
+              />
+            </Conditional>
+          </div>
+        </Conditional>
         <Conditional if={hasReadMore}>
           {isAmp ? getMoreDetailsButtonForAMP() : getMoreDetailsButton()}
         </Conditional>
