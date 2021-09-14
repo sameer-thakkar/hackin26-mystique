@@ -84,14 +84,24 @@ export const categoryTourListParserV1 = async ({
       limit,
     });
     currency = collectionData?.city?.country?.currency;
-    const genericSection = collectionData?.sections
-      ?.filter((section) => {
-        if (section?.type === 'GENERIC') {
-          return section?.tourGroups?.items;
-        }
-      })
-      ?.reduce((acc, curr) => curr + acc);
-    tourData.push(...genericSection?.tourGroups?.items);
+    const getCollectionSection = (collectionData, sectionType: string) => {
+      return collectionData?.sections
+        ?.filter((section) => {
+          if (section?.type === sectionType) {
+            return section?.tourGroups?.items;
+          }
+        })
+        ?.reduce((acc, curr) => curr + acc);
+    };
+    const genericSection = getCollectionSection(collectionData, 'GENERIC');
+    const headoutPicksSection = getCollectionSection(
+      collectionData,
+      'HEADOUT_PICKS'
+    );
+    const finalSection = genericSection?.tourGroups?.items?.length
+      ? genericSection?.tourGroups?.items
+      : headoutPicksSection?.tourGroups?.items;
+    tourData.push(...finalSection);
   } else if (category) {
     const categoryData = await fetchTGIDsByCategoryV2({
       categoryId: category,
@@ -150,6 +160,11 @@ export const categoryTourListParserV1 = async ({
     });
     const finalTours = orderedTours?.filter(
       (tour) => !finalExclusions.includes(tour.id)
+    );
+
+    finalTours?.slice(
+      0,
+      limit || finalTours.length >= 10 ? 10 : finalTours.length - 1
     );
 
     const repeatableObj = finalTours?.reduce((acc, tour) => {

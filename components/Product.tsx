@@ -1049,7 +1049,11 @@ const Product = (props) => {
           </div>
         </Conditional>
         <Conditional if={hasReadMore}>
-          {isAmp ? getMoreDetailsButtonForAMP() : getMoreDetailsButton()}
+          {isTicketCard && isAmp
+            ? null
+            : isAmp
+            ? getMoreDetailsButtonForAMP()
+            : getMoreDetailsButton()}
         </Conditional>
       </ProductBody>
     </StyledProductCard>
