@@ -21,7 +21,7 @@ const fr = {
   SHOW_LESS_TEXT: 'Voir moins',
   NEXT_AVAILABLE: 'Prochaine disponibilité: ',
   SAVE_UPTO: "Économisez jusqu'à",
-  SAVE: 'Économisez - <val> %',
+  SAVE: 'Économisez <val> %',
   AVAILABLE: 'Disponible',
   EARLIEST_AVAILABILITY: 'Prochaine disponibilité : ',
   TODAY: "aujourd'hui",
