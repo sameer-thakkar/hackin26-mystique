@@ -8,17 +8,17 @@ import React, {
 import styled from 'styled-components';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
-import { SOLEIL, COLORS } from 'const/ui-constants';
-import { strings } from 'const/strings';
-import Hamburger from 'UI/Hamburger';
-import Image from 'UI/Image';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
-import { POWERED_BY_HEADOUT } from 'assets/SvgIcons';
 import { MBContext } from 'contexts/MBContext';
 import HeaderLinks from 'components/HeaderLinks';
 import LanguageSelector from 'components/common/LanguageSelector';
 import Conditional from 'components/common/Conditional';
 import CurrencySelector from 'components/common/CurrencySelector';
+import Hamburger from 'UI/Hamburger';
+import Image from 'UI/Image';
+import { strings } from 'const/strings';
+import { SOLEIL, COLORS } from 'const/ui-constants';
+import { POWERED_BY_HEADOUT } from 'assets/SvgIcons';
 import { withTrailingSlash } from 'utils/helper';
 
 const MultiLevelNav = dynamic(() => import('components/MultiLevelNav'));
@@ -243,7 +243,7 @@ const Header: React.FC<any> = (props) => {
             {hasPoweredByHeadoutLogo ? POWERED_BY_HEADOUT : null}
           </StyledLogo>
         </a>
-        {!isMobile && hasDropdownLinks ? (
+        <Conditional if={!isMobile && hasDropdownLinks}>
           <div className="header-links">
             <ResponsiveSelector
               options={dropdownLinks}
@@ -251,10 +251,10 @@ const Header: React.FC<any> = (props) => {
               customClassName="header-city-selector"
             />
           </div>
-        ) : null}
+        </Conditional>
         <StyledHeaderElements active={hamburgerIconCheck}>
           <div ref={hamburgerRef}>
-            {isMobile && hamburgerIconCheck ? (
+            <Conditional if={isMobile && hamburgerIconCheck}>
               <div
                 onClick={() => {
                   setHamburgerOpen((c) => !c);
@@ -264,8 +264,8 @@ const Header: React.FC<any> = (props) => {
               >
                 <Hamburger isActive={hamburgerOpen} />
               </div>
-            ) : null}
-            {!slices && headerLinks ? (
+            </Conditional>
+            <Conditional if={!slices && headerLinks}>
               <HeaderLinks
                 headerLinks={headerLinks}
                 openGroupBookingModal={openGroupBookingModal}
@@ -273,9 +273,9 @@ const Header: React.FC<any> = (props) => {
                 showGroupBooking={showGroupBooking}
                 hiddenMobile={hamburgerOpen}
               />
-            ) : null}
+            </Conditional>
           </div>
-          {slices ? (
+          <Conditional if={slices}>
             <span ref={multiNavRef}>
               <MultiLevelNav
                 isMobile={isMobile}
@@ -286,8 +286,8 @@ const Header: React.FC<any> = (props) => {
                 oldMenuItems={convertedRegularMenuItems}
               />
             </span>
-          ) : null}
-          {enableBuyTickets === 'Yes' ? (
+          </Conditional>
+          <Conditional if={enableBuyTickets === 'Yes'}>
             <StyledMenuItem
               onClick={() => {
                 scroller.scrollTo('tour-list-heading', {
@@ -299,7 +299,7 @@ const Header: React.FC<any> = (props) => {
             >
               {strings.BANNER_CTA}
             </StyledMenuItem>
-          ) : null}
+          </Conditional>
           <Conditional if={showTicketMenu}>
             <StyledMenuItem as="a" href={showTicketRedirectionURL}>
               {strings.TICKETS}
