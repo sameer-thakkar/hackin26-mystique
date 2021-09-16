@@ -1018,7 +1018,13 @@ const Product = (props) => {
         noOfListItemToShow={noOfListItemToShow + 1}
         defaultOpen={defaultOpen}
       >
-        <Conditional if={!isTicketCard || isTicketCard & expandContent}>
+        <Conditional
+          if={
+            !isTicketCard ||
+            (isTicketCard && !isMobile) ||
+            (isTicketCard && expandContent)
+          }
+        >
           <div
             className={`${
               isAmp

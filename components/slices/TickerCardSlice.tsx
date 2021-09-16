@@ -9,7 +9,7 @@ import { csvTgidToArray } from 'utils/helper';
 import { tourListApiParser } from 'utils/dataParsers';
 import { fetchTourList } from 'utils/apiUtils';
 
-const TicketCard = ({ props }) => {
+const TicketCard = (props) => {
   const {
     toursList: uncategorizedToursList,
     categoryTourListData,
@@ -22,6 +22,8 @@ const TicketCard = ({ props }) => {
     mbTheme,
     lang,
     uid,
+    title,
+    subtext,
   } = props;
 
   const { body1: uncategorizedTours } = micrositeData || {};
@@ -151,6 +153,8 @@ const TicketCard = ({ props }) => {
       instantCheckout={instantCheckout}
       enableEarliestAvailability={enableEarliestAvailability}
       isTicketCard
+      sectionTitle={title}
+      sectionSubtext={subtext}
     />
   );
 };

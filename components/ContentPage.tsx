@@ -24,6 +24,7 @@ import { ProductsContextProvider } from '../contexts/Products';
 import { InteractionContextProvider } from '../contexts/Interaction';
 import { tourListApiParser } from '../utils/dataParsers';
 import { withAmp } from './common/withAmp';
+import Conditional from './common/Conditional';
 
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 
@@ -492,7 +493,7 @@ class ContentPage extends Component<any, any> {
             ALLOW_IMMEDIEATE_NESTING
           )}
         />
-        {showCovid19Alert && this.state.covid19AlertOpen ? (
+        <Conditional if={showCovid19Alert && this.state.covid19AlertOpen}>
           <DismissAlert
             readMoreLink={strings.COVID19_ALERT.LINK}
             readMore={strings.READ_MORE}
@@ -500,21 +501,21 @@ class ContentPage extends Component<any, any> {
             text={strings.COVID19_ALERT.TEXT}
             handleClose={this.handleClose}
           />
-        ) : null}
+        </Conditional>
         <ContentWrapper>
-          {featuredImage.url && (
+          <Conditional if={featuredImage?.url}>
             <Masthead
               title={featuredTitle}
               image={featuredImage}
               isMobile={this.state.isMobile}
             />
-          )}
-          {alertPopup ? (
+          </Conditional>
+          <Conditional if={alertPopup}>
             <Alert
               popupUID={alertPopup?.uid}
               currentLanguage={currentLanguage}
             />
-          ) : null}
+          </Conditional>
           <StyledContentPage>
             <ProductsContextProvider allTours={allTours} ready={apiReady}>
               <InteractionContextProvider>
