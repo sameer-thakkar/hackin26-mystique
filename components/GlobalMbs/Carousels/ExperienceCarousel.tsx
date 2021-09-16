@@ -116,6 +116,7 @@ interface ExperienceProps {
   attractions?: any[];
   rides?: any[];
   tickets?: any;
+  isDev: boolean;
 }
 
 const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
@@ -127,6 +128,7 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
   attractions,
   rides,
   tickets,
+  isDev,
 }) => {
   const currencySymbol = tickets?.currencySymbol?.localSymbol;
 
@@ -134,7 +136,9 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
     <HeaderWrapper>
       <h2>{title}</h2>
       {showSeeAll && (
-        <a href={convertUidToUrl(experiencePageUid)}>See All {CHEVRON_LEFT}</a>
+        <a href={convertUidToUrl({ uid: experiencePageUid, isDev })}>
+          See All {CHEVRON_LEFT}
+        </a>
       )}
     </HeaderWrapper>
   );

@@ -32,7 +32,7 @@ const createLoc = (doc) => {
   ) {
     pageUrl = doc.data.page_url;
   } else {
-    pageUrl = convertUidToUrl(doc.uid);
+    pageUrl = convertUidToUrl({ uid: doc.uid });
   }
   return pageUrl;
 };

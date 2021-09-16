@@ -36,6 +36,7 @@ export const RowComponent = (props) => {
     uid,
     sectionId,
     isListicle,
+    isDev,
   } = props;
   const { activeCategoryId, activeTour, clickTour, closeTour } =
     useContext(InteractionContext) || {};
@@ -108,6 +109,7 @@ export const RowComponent = (props) => {
           cardPosition={cardPosition + 1}
           closeDescription={closeDescription}
           isListicle={isListicle}
+          isDev={isDev}
         />
       </Conditional>
     </ProductsRow>

@@ -18,7 +18,11 @@ import TextBanner from 'components/TextBanner';
 import Conditional from 'components/common/Conditional';
 import { withAmp } from 'components/common/withAmp';
 import MultiBannerWrapper from 'UI/MultiBannerWrapper';
-import { isSafetyIncluded, legacyBooleanCheck } from 'utils';
+import {
+  getAlternateLanguages,
+  isSafetyIncluded,
+  legacyBooleanCheck,
+} from 'utils';
 import Analytics from 'utils/analytics';
 import allToursParser from 'utils/allToursParser';
 import { csvTgidToArray, getLangObject, groupSlices } from 'utils/helper';
@@ -76,7 +80,7 @@ const MicrositeV1 = (props) => {
   const [covidAlertActive, toggleCovidAlert] = useState(false);
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
 
-  const { refs, uid, lang, data: micrositeData } = data;
+  const { refs, uid, lang, data: micrositeData, alternate_languages } = data;
   const {
     contentFramework,
     commonFooter,
@@ -115,6 +119,8 @@ const MicrositeV1 = (props) => {
     enable_earliest_availability: enableEarliestAvailability,
     baseLangPageTitle,
   } = micrositeData || {};
+
+  const alternateLanguages = getAlternateLanguages(alternate_languages, isDev);
 
   const { data: commonFooterData } = commonFooter || {};
   const { data: secondaryFooterData } = secondaryFooter || {};
@@ -461,7 +467,7 @@ const MicrositeV1 = (props) => {
           }}
         />
         <Header
-          languages={languages ? languages : null}
+          languages={alternateLanguages}
           headerLinks={finalHeaderLinks}
           logoUrl={logoUrl || uploadedLogoUrl || null}
           logoAltText={altText || logoAltText}

@@ -59,6 +59,7 @@ const PopulateProducts = (props) => {
     sectionId,
     isListicle,
     categoryProps,
+    isDev,
   } = props;
   const { activeCategoryTgids } = useContext(InteractionContext) || {};
   const mbContext = useContext(MBContext);
@@ -117,6 +118,7 @@ const PopulateProducts = (props) => {
               key={index}
               sectionId={sectionId}
               isListicle={isListicle}
+              isDev={isDev}
             />
           );
       })}

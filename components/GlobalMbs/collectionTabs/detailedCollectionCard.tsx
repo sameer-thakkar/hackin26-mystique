@@ -235,10 +235,11 @@ interface DetailedCollectionCardProps {
   ref?: Ref<HTMLDivElement>;
   price?: string;
   currency?: string;
+  isDev: boolean;
 }
 
 const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = forwardRef(
-  ({ data, isMobile, clickHandler, price, currency }, ref) => {
+  ({ data, isMobile, clickHandler, price, currency, isDev }, ref) => {
     const {
       data: {
         microbrand_url: microbrand,
@@ -287,7 +288,7 @@ const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = f
           <a
             href={
               data.uid
-                ? convertUidToUrl(data.uid)
+                ? convertUidToUrl({ uid: data.uid, isDev })
                 : microbrand
                 ? getValidUrl(microbrand?.trim())
                 : ''

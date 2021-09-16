@@ -4,6 +4,8 @@ import queryParser from 'query-string';
 import { getPrismicProps } from 'utils';
 import { fromEntries } from 'utils/gen';
 
+import { getLangObject } from './helper';
+
 export const isAmpUrl = (query) => {
   return query.amp === '1';
 };
@@ -99,18 +101,31 @@ export const getValidUrlParams = (query) =>
     .join('&')
     .trim();
 
-export const convertUidToUrl = (uid) => {
+export const convertUidToUrl = ({
+  uid,
+  lang = 'en',
+  isDev,
+}: {
+  uid: string;
+  lang?: string;
+  isDev?: boolean;
+}) => {
+  if (isDev) {
+    return `http://localhost:3001/?mystique_uid=${uid}&lang=${
+      getLangObject(lang)?.paramLang
+    }`;
+  }
   if (uid) {
     let url;
     const modUid = `${uid}.`; // add trailing . to identify end of UID
-    const regex = /[a-zA-z0-9-]+\.[a-zA-z0-9-]+((\.[a-z]{1,3}\.[a-z]{1,3}\.)|(\.[a-z]{2,3}\.))/g;
+    const regex = /[\w\d-]+\.[\w\d-]+\.(([\w]{1,}\.[\w]{1,3}\.)|([\w]{2,}\.))/;
     const domain = modUid.match(regex)?.[0]?.slice(0, -1);
-    const pathName = uid.split(domain)?.filter((string) => string.length);
+    const pathName = modUid.split(domain)?.filter((string) => string.length);
     if (domain?.length) {
-      url = `https://${domain}`;
+      url = `https://${domain}${lang !== 'en' ? `/${lang}` : ''}`;
       if (pathName.length) {
         pathName.forEach((name) => {
-          url += name.replace('.', '/');
+          url += name.replaceAll('.', '/');
         });
       }
     }

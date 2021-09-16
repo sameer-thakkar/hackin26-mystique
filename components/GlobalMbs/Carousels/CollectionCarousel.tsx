@@ -101,6 +101,7 @@ interface CollectionCarouselProps {
   carouselType: string;
   showSeeAll?: boolean;
   collections: any[];
+  isDev: boolean;
 }
 
 const CollectionCarousel: FunctionComponent<CollectionCarouselProps> = ({
@@ -108,6 +109,7 @@ const CollectionCarousel: FunctionComponent<CollectionCarouselProps> = ({
   subtext,
   carouselType,
   collections,
+  isDev,
 }) => {
   const FILTER_TYPE = {
     ALL: 'All',
@@ -184,7 +186,7 @@ const CollectionCarousel: FunctionComponent<CollectionCarouselProps> = ({
         : fallbackImage;
       const altText = images?.length ? images[0]?.alt_text : '';
       return (
-        <StyledCard href={convertUidToUrl(uid)} key={index}>
+        <StyledCard href={convertUidToUrl({ uid, isDev })} key={index}>
           <Image
             url={imageUrl}
             alt={altText}

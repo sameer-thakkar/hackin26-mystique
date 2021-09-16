@@ -10,6 +10,7 @@ import {
   CUSTOM_TYPES,
 } from '../constants';
 import { fetchCollection, fetchTGIDsByCategoryV2 } from './apiUtils';
+import { convertUidToUrl } from './urlUtils';
 
 export const getLanguageFromPathname = ({
   pathname,
@@ -164,6 +165,24 @@ export const getHeadoutLanguagecode = (prismicLangCode) => {
     FULL_LANGUAGE_MAP[PRISMIC_LANG_TO_ROUTE_PARAM?.[prismicLangCode]]
       ?.bookingFlow || 'en'
   );
+};
+
+export const getAlternateLanguages = (
+  alternateLangsArray: any[],
+  isDev: boolean
+) => {
+  if (alternateLangsArray?.length) {
+    return alternateLangsArray.map((doc) => {
+      const { uid, lang: docLang } = doc || {};
+      const lang = getHeadoutLanguagecode(docLang);
+      return {
+        url: convertUidToUrl({ uid, lang, isDev }),
+        lang,
+      };
+    });
+  } else {
+    return [];
+  }
 };
 
 export const genUniqueId = () =>

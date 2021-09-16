@@ -116,7 +116,7 @@ const parseDocuments = async (documents) => {
     };
     let pageUrl;
     try {
-      pageUrl = new URL(convertUidToUrl(uid));
+      pageUrl = new URL(convertUidToUrl({ uid }));
     } catch (e) {
       pageUrl = null;
     }

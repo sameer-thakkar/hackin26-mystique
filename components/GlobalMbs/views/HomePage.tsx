@@ -12,6 +12,7 @@ const HomePage = (props) => {
     collections,
     body: slices,
     mb_type,
+    isDev,
   } = props || {};
 
   const images = bannerImages?.map((image) => ({
@@ -27,9 +28,9 @@ const HomePage = (props) => {
         mbType={mb_type}
       />
       <Conditional if={cityCollections?.length}>
-        <TopDestinationsCarousel destinations={cityCollections} />
+        <TopDestinationsCarousel destinations={cityCollections} isDev={isDev} />
       </Conditional>
-      {slices?.map((slice) => sliceHandler(slice, { collections }))}
+      {slices?.map((slice) => sliceHandler(slice, { collections, isDev }))}
     </>
   );
 };

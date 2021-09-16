@@ -485,6 +485,7 @@ class MicrositeV2 extends Component<any, any> {
             ready={ready}
             isListicle={isListicle}
             displayMonths={displayMonths}
+            isDev={isDev}
           />
         </div>
         <Conditional if={activePage == PAGETYPE.MOBILE_PRODUCT_PAGE}>

@@ -53,10 +53,12 @@ const TextWrapper = styled.div`
 
 interface TopDestinationsCarouselProps {
   destinations: any[];
+  isDev: boolean;
 }
 
 const TopDestinationsCarousel: FunctionComponent<TopDestinationsCarouselProps> = ({
   destinations,
+  isDev,
 }) => {
   const finalCities = destinations?.filter(
     (destination) =>
@@ -79,7 +81,7 @@ const TopDestinationsCarousel: FunctionComponent<TopDestinationsCarouselProps> =
     return (
       <StyledCard
         key={index}
-        href={convertUidToUrl(uid)}
+        href={convertUidToUrl({ uid, isDev })}
         target="_blank"
         rel="noopener noreferrer"
       >

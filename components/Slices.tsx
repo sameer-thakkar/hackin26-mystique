@@ -491,6 +491,7 @@ const sliceHandler = (slice, props: any = {}) => {
         />
       );
     case 'collection_carousel':
+      console.log({ props });
       return (
         <CollectionCarousel
           title={slice?.primary?.carousel_title}

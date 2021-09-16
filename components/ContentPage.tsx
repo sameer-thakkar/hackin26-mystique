@@ -1,30 +1,29 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
+import { withAmp } from 'components/common/withAmp';
+import DismissAlert from 'components/UI/DismissAlert';
+import { Client } from 'config/prismic-config';
+import Alert from 'components/UI/Alert';
+import PopulateHead from 'components/common/meta';
+import Masthead from 'components/Masthead';
+import Footer from 'components/common/Footer';
+import sliceHandler from 'components/Slices';
+import Header from 'components/common/Header';
+import Conditional from 'components/common/Conditional';
 import { strings } from 'const/strings';
-import { legacyBooleanCheck } from 'utils';
 import { COLORS, SOLEIL } from 'const/ui-constants';
-
-import Header from './common/Header';
-import sliceHandler from './Slices';
-import Footer from './common/Footer';
-import Masthead from './Masthead';
-import PopulateHead from './common/meta';
-import Alert from './UI/Alert';
-import DismissAlert from './UI/DismissAlert';
-import { Client } from '../config/prismic-config';
 import {
   DROPDOWN_ELEMENT,
   FULL_WIDTH_SLICES,
   ALLOW_IMMEDIEATE_NESTING,
-} from '../constants';
-import { groupSlices, getLangObject } from '../utils/helper';
-import allToursParser from '../utils/allToursParser';
-import { ProductsContextProvider } from '../contexts/Products';
-import { InteractionContextProvider } from '../contexts/Interaction';
-import { tourListApiParser } from '../utils/dataParsers';
-import { withAmp } from './common/withAmp';
-import Conditional from './common/Conditional';
+} from 'const/index';
+import { getAlternateLanguages, legacyBooleanCheck } from 'utils';
+import allToursParser from 'utils/allToursParser';
+import { tourListApiParser } from 'utils/dataParsers';
+import { groupSlices, getLangObject } from 'utils/helper';
+import { ProductsContextProvider } from 'contexts/Products';
+import { InteractionContextProvider } from 'contexts/Interaction';
 
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 
@@ -302,6 +301,7 @@ class ContentPage extends Component<any, any> {
   render() {
     const { groupBookingTourTitles, tourAPIData } = this.state;
     const {
+      alternate_languages,
       data,
       first_publication_date: datePublished,
       last_publication_date: dateModified,
@@ -334,6 +334,11 @@ class ContentPage extends Component<any, any> {
     );
     const CFWBody = contentFramework?.data?.body;
     const contentFWSlices = groupSlices(CFWBody || []);
+
+    const alternateLanguages = getAlternateLanguages(
+      alternate_languages,
+      isDev
+    );
 
     // START Data extraction for populating head
     const contentPageHasOtherMetaTags = data.other_meta_tags.filter(
@@ -468,7 +473,7 @@ class ContentPage extends Component<any, any> {
           }}
         />
         <Header
-          languages={languages}
+          languages={alternateLanguages}
           headerLinks={headerLinks}
           showTicketMenu={showTicketMenu}
           hideLangugageDropdown={hideLangugageDropdown}

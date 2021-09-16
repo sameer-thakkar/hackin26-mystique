@@ -30,12 +30,14 @@ interface CollectionCardProps {
   collections: any[];
   title: string;
   currencies?: any[];
+  isDev: boolean;
 }
 
 const CollectionCard: FunctionComponent<CollectionCardProps> = ({
   collections,
   title,
   currencies,
+  isDev,
 }) => {
   const tabs = [];
   const tabTitles = collections
@@ -101,6 +103,7 @@ const CollectionCard: FunctionComponent<CollectionCardProps> = ({
           setRow={setRow}
           cards={collection}
           categoryData={categoryData}
+          isDev={isDev}
         />
       )),
     };
@@ -123,6 +126,7 @@ const CollectionCard: FunctionComponent<CollectionCardProps> = ({
               setRow={setRow}
               cards={collection}
               categoryData={categoryData}
+              isDev={isDev}
             />
           )),
         };

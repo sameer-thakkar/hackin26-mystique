@@ -25,6 +25,7 @@ const CollectionPage = (props) => {
     headout_category_id: categoryID,
     supply,
     tickets,
+    isDev,
   } = props;
 
   const { startingPrice, currencySymbol } = tickets || {};
@@ -53,8 +54,8 @@ const CollectionPage = (props) => {
     }),
   };
   const breadcrumbs = [
-    { url: convertUidToUrl(countryUID), text: country },
-    { url: convertUidToUrl(cityUID), text: city },
+    { url: convertUidToUrl({ uid: countryUID, isDev }), text: country },
+    { url: convertUidToUrl({ uid: cityUID, isDev }), text: city },
   ];
 
   return (
@@ -66,6 +67,7 @@ const CollectionPage = (props) => {
         collection={collectionInfo}
         startingPrice={price}
         cardType={BannerLayout.fullWidth}
+        isDev={isDev}
       />
     </>
   );

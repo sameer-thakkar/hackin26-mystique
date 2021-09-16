@@ -386,6 +386,7 @@ const DetailedProductCard = (props) => {
     isEntertainmentMb,
     hasCategoryTourList,
     isListicle,
+    isDev = false,
   } = props;
   const activeTour = allTours[tgidClicked];
   const { listicleShowSummary, listicleWhyWatch } = activeTour;
@@ -402,7 +403,9 @@ const DetailedProductCard = (props) => {
     title,
     showPageUid,
   } = activeTour || {};
-  const showPageUrl = showPageUid ? convertUidToUrl(showPageUid) : null;
+  const showPageUrl = showPageUid
+    ? convertUidToUrl({ uid: showPageUid, isDev })
+    : null;
 
   const rightBlocksCount = contentBlocks?.right?.length;
   const descriptors = parseV2ProductDescriptors({

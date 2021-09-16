@@ -106,6 +106,7 @@ const CategoryCard = ({
   currencySymbol,
   categoryName,
   isMobile,
+  isDev,
 }) => {
   const { listingPrice, name, imageUrl, id, tourGroupUrl } = element;
 
@@ -115,7 +116,7 @@ const CategoryCard = ({
     (element) => element.data.tgid === id
   );
   const redirectURL = cardDocument.length
-    ? convertUidToUrl(cardDocument[0].uid)
+    ? convertUidToUrl({ uid: cardDocument[0].uid, isDev })
     : `https://www.headout.com${tourGroupUrl}`;
 
   const isSafe = safetyChecker(element.microBrandsHighlight);

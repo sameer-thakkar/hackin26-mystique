@@ -313,7 +313,7 @@ const ShowPage = ({
     });
   }, []);
 
-  const PageURL = convertUidToUrl(uid);
+  const PageURL = convertUidToUrl({ uid, lang, isDev });
   const { name } = tourGroupData;
   const breadcrumbs = [
     { url: '/', text: 'London Theatre Tickets' },
@@ -443,6 +443,7 @@ const ShowPage = ({
           allShowPagesDocuments={allShowPagesDocuments}
           currentLanguage={currentLanguage}
           categoryName={categoryName}
+          isDev={isDev}
         />
         <Breadcrumb links={breadcrumbs} />
       </Wrapper>

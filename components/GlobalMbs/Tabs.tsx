@@ -68,7 +68,7 @@ const Tabs: FunctionComponent<TabProps> = ({
         {tabs.map((tab, index) => (
           <Tab
             active={index === activeTab}
-            key={index}
+            key={`tab${index + 1}`}
             onClick={() => setTab(index)}
           >
             {tab.header}
