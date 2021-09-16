@@ -24,6 +24,7 @@ import { ProductsContextProvider } from '../contexts/Products';
 import { InteractionContextProvider } from '../contexts/Interaction';
 import { tourListApiParser } from '../utils/dataParsers';
 import { withAmp } from './common/withAmp';
+import Conditional from './common/Conditional';
 
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 
@@ -80,6 +81,11 @@ const StyledContentPage = styled.div`
     line-height: 40px;
   }
 
+  .ticket_card_shoulder_page ul li,
+  .ticket_card_shoulder_page ol li {
+    line-height: 22px;
+  }
+
   .product .product-left p {
     margin: 0;
   }
@@ -116,6 +122,11 @@ const StyledContentPage = styled.div`
 
   .slice-wrapper.slice-block {
     width: 100%;
+  }
+
+  .ticket_card_shoulder_page {
+    margin: 0 auto;
+    padding: 0;
   }
 
   @media (max-width: 768px) {
@@ -361,6 +372,11 @@ class ContentPage extends Component<any, any> {
       ...strValues,
       ...objValues,
     };
+    const {
+      header_ref: {
+        data: { disable_amp: disableAMP },
+      },
+    } = micrositeData;
     const headProps = {
       ...micrositeData,
       favicon: microsite_document_ref.data.favicon,
@@ -371,6 +387,7 @@ class ContentPage extends Component<any, any> {
         ? this.props.data.other_meta_tags
         : microsite_document_ref.other_meta_tags,
       faq_schema: this.props.data.faq_schema,
+      disable_amp: disableAMP,
     };
     // END Data extraction for populating head
 
@@ -476,7 +493,7 @@ class ContentPage extends Component<any, any> {
             ALLOW_IMMEDIEATE_NESTING
           )}
         />
-        {showCovid19Alert && this.state.covid19AlertOpen ? (
+        <Conditional if={showCovid19Alert && this.state.covid19AlertOpen}>
           <DismissAlert
             readMoreLink={strings.COVID19_ALERT.LINK}
             readMore={strings.READ_MORE}
@@ -484,37 +501,43 @@ class ContentPage extends Component<any, any> {
             text={strings.COVID19_ALERT.TEXT}
             handleClose={this.handleClose}
           />
-        ) : null}
+        </Conditional>
         <ContentWrapper>
-          {featuredImage.url && (
+          <Conditional if={featuredImage?.url}>
             <Masthead
               title={featuredTitle}
               image={featuredImage}
               isMobile={this.state.isMobile}
             />
-          )}
-          {alertPopup ? (
+          </Conditional>
+          <Conditional if={alertPopup}>
             <Alert
               popupUID={alertPopup?.uid}
               currentLanguage={currentLanguage}
             />
-          ) : null}
-
+          </Conditional>
           <StyledContentPage>
             <ProductsContextProvider allTours={allTours} ready={apiReady}>
               <InteractionContextProvider>
-                {[...body, ...contentFWSlices].map((slice, index) => (
-                  <div
-                    key={index}
-                    className={`${
-                      !FULL_WIDTH_SLICES.includes(slice.slice_type)
-                        ? 'slice-wrapper'
-                        : ''
-                    } slice-block ${slice.slice_type}`}
-                  >
-                    {sliceHandler(slice, { isMobile: this.state.isMobile })}
-                  </div>
-                ))}
+                {[...body, ...contentFWSlices].map((slice, index) => {
+                  const sliceComponent = (
+                    <div
+                      key={index}
+                      className={`${
+                        !FULL_WIDTH_SLICES.includes(slice.slice_type)
+                          ? 'slice-wrapper'
+                          : ''
+                      } slice-block ${slice.slice_type}`}
+                    >
+                      {sliceHandler(slice, {
+                        isMobile: this.state.isMobile,
+                        ...this.props,
+                      })}
+                    </div>
+                  );
+
+                  return sliceComponent;
+                })}
               </InteractionContextProvider>
             </ProductsContextProvider>
           </StyledContentPage>

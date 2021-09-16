@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import parse from 'url-parse';
 import styled from 'styled-components';
-import React, { useRef, useState, useContext, useEffect } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import {
   ANALYTICS_EVENTS,
@@ -35,16 +35,15 @@ import {
 import Image from 'UI/Image';
 import { truncate, wordCount } from 'utils/helper';
 import { currencyAtom } from 'store/atoms/currency';
-
-import Conditional from './common/Conditional';
+import { BLACK_COLOR_CLOSE } from 'assets/SvgIcons';
+import Conditional from 'components/common/Conditional';
+import Product from 'components/Product';
 
 const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
   ssr: false,
 });
 
 dayjs.extend(advancedFormat);
-
-const isLengthyArray = (item) => Array.isArray(item) && item.length;
 
 const Container = styled.div`
   max-width: 1200px;
@@ -54,12 +53,7 @@ const Container = styled.div`
 
 const StyledProductCard = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
-  padding: ${({ isTicketCard, theme }) =>
-    isTicketCard ? `24px 37px 24px 40px` : theme.productCards.padding.desktop};
-  ${({ isTicketCard, theme, isMobile }) =>
-    (!isTicketCard || isMobile) &&
-    `border: ${theme.productCards.border};
-    border-radius: 4px;`};
+  padding: ${({ isMainCard }) => (isMainCard ? '24px' : '24px 37px 24px 40px')};
   display: grid;
   grid-row-gap: 24px;
   grid-template-columns: 1fr auto;
@@ -88,8 +82,7 @@ const StyledProductCard = styled.div`
   ${({ theme }) => theme.productCards?.styles?.desktop}
   @media (max-width: 768px) {
     padding: ${({ theme }) => theme.productCards.padding.mobile};
-    margin: 0
-      ${({ theme: { theme } }) => (theme !== THEMES.MIN_BLUE ? '16px' : '24px')};
+    margin: 0;
     grid-template-areas: ${({ layout }) =>
       layout.mobile.map((row) => `'${row}'`)};
     width: auto;
@@ -102,6 +95,7 @@ const StyledProductCard = styled.div`
     ${({ theme }) => theme.productCards?.styles?.mobile}
   }
 `;
+
 const ProductHeader = styled.div`
   display: grid;
   grid-gap: 16px;
@@ -110,17 +104,86 @@ const ProductHeader = styled.div`
   }
 `;
 
+const CloseIconWrapper = styled.div`
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f8f8f8;
+  right: 0;
+  cursor: pointer;
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+  @media (max-width: 768px) {
+  }
+`;
+
+const WrapperProductCard = styled.div`
+  border: ${({ theme }) => theme.productCards.border};
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: ${({ isMainCard, isMobile }) =>
+    isMainCard || isMobile ? 'auto' : 'auto 40px'};
+  overflow: hidden;
+  background: white;
+  @media (max-width: 768px) {
+    ${({ isMobile }) => (!isMobile ? 'margin: 0 16px;' : 'border: 0;')};
+  }
+`;
+
 const TourTitle = styled.h2`
-  font-weight: ${SOLEIL.MEDIUM};
-  margin: 0;
-  max-width: 768px;
   ${({ theme }) => theme.productCards.titleFontSettings.desktop};
+  ${({ isOpened }) =>
+    isOpened
+      ? `
+  font-size: 24px !important;
+  font-style: normal !important;
+  line-height: 28px !important;
+  font-weight: normal !important;`
+      : `font-size: 21px !important;
+  font-style: normal !important;
+  line-height: 28px !important;
+  font-weight: ${SOLEIL.SEMIBOLD} !important;`};
+  margin: 0 !important;
+  max-width: 768px;
   @media (max-width: 768px) {
     ${({ isPopup, theme }) =>
       isPopup
         ? theme.productCards.titleFontSettings.popupMobile
         : theme.productCards.titleFontSettings.mobile};
   }
+`;
+
+const MoreDetailWrapper = styled.div`
+  color: #e5006e;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  cursor: pointer;
+  @media (max-width: 768px) {
+  }
+`;
+
+const PopupWrapper = styled.div`
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: rgb(17, 17, 17, 0.6);
+  top: 0;
+  left: 0;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+`;
+
+const PopupContentWrapper = styled.div`
+  width: 1200px !important;
+  margin: auto;
 `;
 
 const TitleWrapper = styled.div`
@@ -136,17 +199,6 @@ const TitleWrapper = styled.div`
             }
           `
       : ''}
-`;
-
-const BoosterTag = styled.div`
-  font-size: 11px;
-  line-height: 13px;
-  background: ${COLORS.PALE_YELLOW};
-  border-radius: 2px;
-  letter-spacing: 0.4px;
-  margin-bottom: 7px;
-  padding: 2px 4px;
-  display: inline-block;
 `;
 
 const ShortSummary = styled.div`
@@ -165,27 +217,33 @@ const ShortSummary = styled.div`
   }
 `;
 
-const TourTags = styled.div`
+const TourTags = styled.div(
+  ({ isMainCard, isOpened }) => `
   font-size: 14px;
   font-weight: ${SOLEIL.REGULAR};
-  display: grid;
+  display: ${isMainCard && !isOpened ? 'inline' : 'grid'};
   grid-row-gap: 12px;
   align-items: start;
   align-content: start;
   margin: 0;
-  margin-top: 8px;
+  margin-top: ${isOpened ? `0px` : '-8px'};
   color: ${COLORS.GREY_G3};
+  .tour-tag-wrapper{
+    ${!isOpened ? `display: inline !important;float: left;` : ''}
+  }
   .tour-tag {
     display: grid;
     grid-auto-flow: column;
     grid-column-gap: 8px;
-    margin-right: 8px;
+    margin-right: ${isMainCard ? '20px' : '8px'};
     font-size: 14px;
     max-width: 230px;
-    line-height: 22px;
     justify-content: left;
     align-items: center;
-    margin-bottom: 0;
+    font-style: normal;
+    font-weight: normal;
+    line-height: ${isMainCard ? `20px` : `16px`};
+    margin-bottom: ${isMainCard ? '5px' : '0'};
     .image-wrap {
       display: flex;
       align-items: top;
@@ -212,7 +270,8 @@ const TourTags = styled.div`
       margin: 0;
     }
   }
-`;
+`
+);
 
 export const CTAContainer = styled.div`
   grid-area: cta-combo;
@@ -227,8 +286,23 @@ export const CTAContainer = styled.div`
     }
   `
       : ``}
+  ${({ isMainCard }) =>
+    isMainCard
+      ? `
+    height: 100%;
+    align-items: center;
+    display: flex;
+`
+      : ``}
   @media (max-width: 768px) {
     display: contents;
+  }
+`;
+
+const CTAWrapper = styled.div`
+  grid-gap: 16px;
+  display: grid;
+  @media (max-width: 768px) {
   }
 `;
 
@@ -246,10 +320,14 @@ const PriceContainer = styled.div`
     justify-content: left;
     grid-column-gap: 4px;
   }
+  ${({ theme }) => theme.productCards.priceFontSettings.desktop}
   .tour-price {
     display: flex;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: ${({ isOpened }) => (!isOpened ? `28px` : `24px`)};
   }
-  ${({ theme }) => theme.productCards.priceFontSettings.desktop}
   @media (max-width: 768px) {
     justify-self: left;
     grid-area: price-block;
@@ -328,6 +406,13 @@ const ProductBody = styled.div`
       padding-left: 1.0em;
       display: grid;
       grid-gap: 12px;
+      li{
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 22px;
+        color: #545454;
+      }
     }
   }
   .amp-tour-description{
@@ -414,53 +499,6 @@ const ProductOfferBlock = styled.div`
     font-size: 14px;
   }
 `;
-const V1BoosterBlock = styled.div`
-  grid-area: booster;
-  font-family: ${SOLEIL.FONT_STACK};
-  font-weight: 400;
-  line-height: 1.31;
-  text-align: left;
-  color: ${({ theme: { primaryAccent } }) =>
-    primaryAccent ? primaryAccent : COLORS.CORAL};
-  font-size: 1em;
-  display: inline-block;
-  p {
-    margin: 0;
-    color: ${({ theme: { primaryAccent } }) =>
-      primaryAccent ? primaryAccent : COLORS.MED_SLATE_BLUE};
-    strong {
-      font-weight: unset;
-    }
-  }
-  br {
-    display: none;
-  }
-  .block-img img {
-    display: none;
-  }
-  @media (max-width: 768px) {
-    br {
-      display: initial;
-    }
-    .block-img img {
-      width: 100%;
-      display: inline;
-    }
-    p {
-      font-size: 12px;
-      strong {
-        font-weight: ${SOLEIL.MEDIUM};
-        line-height: 1.5;
-      }
-    }
-    font-size: 0.8em;
-    display: grid;
-    grid-template-columns: ${(props) => (props.boosterHasIcon ? '40px' : '')} auto;
-    grid-gap: 10px;
-    align-items: center;
-    margin: 0;
-  }
-`;
 
 const IconBoosters = styled.div`
   grid-area: icon-booster;
@@ -499,91 +537,23 @@ const IconBoosters = styled.div`
   }
 `;
 
-const HighlightTabsWrapper = styled.div`
-  display: grid;
-  grid-row-gap: 16px;
-  margin-top: ${({ hasRegularHighlights }) =>
-    hasRegularHighlights ? '16px' : 0};
+const Labels = styled.div`
+  padding: 0 24px;
+  margin-bottom: -11.5px;
 `;
 
-const TabsWrapper = styled.div`
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: auto;
-  font-weight: ${SOLEIL.SEMIBOLD};
-  font-size: 14px;
-  line-height: 20px;
-  grid-column-gap: 24px;
-  border-bottom: 1px solid #ebebeb;
-  justify-content: left;
+const Label = styled.div`
+  display: inline;
+  margin-right: 12px;
+  padding: 2px 4px;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 12px;
+  color: #444444;
+  border-radius: 2px;
+  background: ${COLORS.PALE_YELLOW};
 `;
-
-const TabPanelWrapper = styled.div``;
-
-const Tab = styled.div`
-  cursor: pointer;
-  padding-bottom: 8px;
-  display: block;
-  width: 100%;
-  border-bottom: 1px solid transparent;
-  transform: translateY(1px);
-  font-weight: ${SOLEIL.REGULAR};
-  ${({ isActive }) => {
-    return (
-      isActive &&
-      `
-      font-weight: ${SOLEIL.SEMIBOLD};
-      color: ${COLORS.RHAPSODY};
-      border-color: ${COLORS.RHAPSODY};
-    `
-    );
-  }}
-`;
-
-const TabPanel = styled.div`
-  display: ${({ isActive }) => (isActive ? 'block' : 'none')};
-`;
-
-const richtextElements = {
-  hyperlink: function Anchor({ children, data }) {
-    return (
-      <a href={data?.url} rel="nofollow noreferrer" target="_blank">
-        {children}
-      </a>
-    );
-  },
-};
-
-const HighlightTabs = ({ tabs, hasRegularHighlights = false, onTabChange }) => {
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
-
-  useEffect(() => {
-    onTabChange(tabs[activeTabIndex]);
-  }, [activeTabIndex, onTabChange, tabs]);
-
-  return (
-    <HighlightTabsWrapper hasRegularHighlights={hasRegularHighlights}>
-      <TabsWrapper>
-        {tabs.map((tab, index) => (
-          <Tab
-            isActive={activeTabIndex == index}
-            key={index}
-            onClick={() => setActiveTabIndex(index)}
-          >
-            {tab.heading}
-          </Tab>
-        ))}
-      </TabsWrapper>
-      <TabPanelWrapper>
-        {tabs.map((tab, index) => (
-          <TabPanel isActive={activeTabIndex == index} key={index}>
-            <RichText render={tab.contents} elements={richtextElements} />
-          </TabPanel>
-        ))}
-      </TabPanelWrapper>
-    </HighlightTabsWrapper>
-  );
-};
 
 const ModalCardContainer = styled.div`
   @media (max-width: 768px) {
@@ -622,9 +592,14 @@ const ModalCardContainer = styled.div`
   }
 `;
 
-const Descriptors = ({ descriptorArray, hasValidity = false }) => {
+const Descriptors = ({
+  descriptorArray,
+  hasValidity = false,
+  isMainCard = false,
+  isOpened = false,
+}) => {
   return (
-    <TourTags>
+    <TourTags isMainCard={isMainCard} isOpened={isOpened}>
       <Conditional if={hasValidity}>
         <div key={'validity'} className="tour-tag">
           <Image imageId={'validity'} url={getDescriptorIconURL('validity')} />
@@ -634,19 +609,24 @@ const Descriptors = ({ descriptorArray, hasValidity = false }) => {
       {descriptorArray.reduce((acc, item, index) => {
         const { icon, descriptor } = parseDescriptorIcon(item.trim());
 
-        const descEl = descriptor ? (
+        let descEl = descriptor ? (
           <div key={`descriptor-${index}`} className="tour-tag">
             <Image url={icon} />
             {descriptor.replace(/['"]+/g, '')}
           </div>
         ) : null;
+
+        descEl = isMainCard ? (
+          <div className="tour-tag-wrapper">{descEl}</div>
+        ) : null;
+
         return [...acc, descEl];
       }, [])}
     </TourTags>
   );
 };
 
-const Product = (props) => {
+const TicketCard = (props) => {
   const moreDetailsRef = useRef();
   const {
     analytics,
@@ -663,6 +643,7 @@ const Product = (props) => {
     hasOffer: isOfferEnabled,
     productOffer,
     offerId,
+    isFetched,
     scorpioData,
     host,
     earliestAvailability = {},
@@ -675,14 +656,11 @@ const Product = (props) => {
     isAmp,
     instantCheckout,
     showEarliestAvailability,
-    isTicketCard = false,
   } = props;
   const { mbTheme, biLink, bookSubdomain } = useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
   const [isContentOpen, toggleContentOpen] = useState(defaultOpen);
-  const [showMoreDetailsInTabs, setShowMoreDetails] = useState(
-    defaultOpen || false
-  );
+  const [isOpened, setIsOpened] = useState(false);
   const { allTags = [] } = scorpioData || {};
 
   const { validity } = scorpioData;
@@ -699,8 +677,14 @@ const Product = (props) => {
     descriptorsList.length
   );
 
-  const onTabChange = (tab) => {
-    setShowMoreDetails(tab.contents.length > noOfListItemToShow);
+  const popupOpener = () => {
+    setIsOpened(true);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const popupCloser = () => {
+    setIsOpened(false);
+    document.body.style.overflow = 'auto';
   };
 
   const handlePopup = () => {
@@ -726,7 +710,6 @@ const Product = (props) => {
       .format(LOCALISED_DATE_FORMATS[currentLanguage].DATE_MONTH);
   };
 
-  const boosterHasIcon = booster?.filter((i) => i.type === 'image').length > 0;
   const cardTitle = title || scorpioData.title;
   let url = host || window.location.host;
   const isDev = url.includes('localhost');
@@ -737,7 +720,7 @@ const Product = (props) => {
   let hostSplit = hostName.split('.');
   hostSplit.shift();
   const bookingUrl = hostSplit.join('.');
-  const showScratchPrice = isScratchPriceEnabled;
+  const showScratchPrice = isFetched && isScratchPriceEnabled;
   const finalHighlights = RichText.asText(tempHighlights)?.trim()?.length
     ? tempHighlights
     : scorpioData.highlights;
@@ -766,9 +749,10 @@ const Product = (props) => {
     ? { highlights: finalHighlights, tabs: [] }
     : extractTabsFromHighlights(finalHighlights);
 
-  const { listingPrice } = tourPrices[tgid];
+  let { listingPrice } = tourPrices[tgid];
+  listingPrice = isAmp ? scorpioData.listingPrice : listingPrice;
 
-  if (!listingPrice) return null;
+  if (isFetched && !listingPrice) return null;
   const hasSafetyFlag = isSafetyIncluded(allTags);
   const finalPrice = listingPrice;
   const { tourId } = finalPrice || {};
@@ -796,7 +780,7 @@ const Product = (props) => {
     mbTheme,
     hasShortSummary: hasShortSummary,
     hasNextAvailable: earliestAvailability?.startDate,
-    isTicketCard: isTicketCard,
+    isTicketCard: true,
   });
   const getMoreDetailsButton = () => {
     const keyPressedOnReadMore = (event) => {
@@ -827,7 +811,7 @@ const Product = (props) => {
               width: '100vw',
               children: (
                 <ModalCardContainer>
-                  {getProductCardElements(true, isFallbackSummary)}
+                  {getProductCardElements()}
                 </ModalCardContainer>
               ),
               type: SIDEBAR_TYPES.PRODUCT_CARD,
@@ -871,8 +855,6 @@ const Product = (props) => {
     );
   };
 
-  const hasHighlights =
-    isLengthyArray(highlights) && highlights.filter((item) => item.text).length;
   const productBookingUrl =
     createBookingURL({
       nakedDomain: bookingUrl,
@@ -887,185 +869,190 @@ const Product = (props) => {
       bookSubdomain,
     }) + (ctaUrlSuffix || '');
 
-  const hasReadMore =
-    (highlights.flat()?.length >= 3 || showMoreDetailsInTabs) && !defaultOpen;
-  const getProductCardElements = (expandContent, isFallbackSummary = false) => (
-    <StyledProductCard
-      layout={layout}
-      isTicketCard={isTicketCard}
-      isMobile={isMobile}
-    >
-      <ProductHeader>
-        <TitleWrapper hasBorderedTitle={hasBorderedTitle && !tabs.length}>
-          <Conditional if={boosterTag && mbTheme !== THEMES.MIN_BLUE}>
-            <BoosterTag>{boosterTag}</BoosterTag>
-          </Conditional>
-          <TourTitle isPopup={isContentOpen}>{cardTitle}</TourTitle>
-        </TitleWrapper>
-        <Conditional
-          if={
-            mbTheme !== THEMES.MIN_BLUE && !isFallbackSummary && hasShortSummary
-          }
-        >
-          <Conditional if={!isTicketCard}>
-            <ShortSummary>
-              <RichText render={finalShortSummary} />
-            </ShortSummary>
-          </Conditional>
-        </Conditional>
-        <Conditional if={mbTheme === THEMES.MIN_BLUE}>
-          <Descriptors
-            descriptorArray={descriptorsList}
-            hasValidity={!!validity}
-          />
-        </Conditional>
-        <Conditional if={hasSafetyFlag}>
-          <IconBoosters>
-            <Split count={2} autoWidth>
-              <Conditional if={hasSafetyFlag}>
-                <IconCTA
-                  text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
-                  colorScheme={greenScheme}
-                  ctaOnClick={openSafeSidebar}
-                  icon={Shield}
-                  key={'safety-tag'}
-                />
-              </Conditional>
-            </Split>
-          </IconBoosters>
-        </Conditional>
-        <Conditional if={hasV1Booster && !isAmp}>
-          <V1BoosterBlock boosterHasIcon={boosterHasIcon}>
-            <RichText render={booster} htmlSerializer={shortCodeSerializer} />
-          </V1BoosterBlock>
-        </Conditional>
-        {hasOffer &&
-          offerId &&
-          productOffer.map((offer, index) => {
-            if (offer.id === offerId) {
-              return (
-                <ProductOfferBlock
-                  key={index}
-                  onClick={handlePopup}
-                  className="tour-offer"
-                >
-                  <RichText
-                    render={offer.data.offer_title}
-                    htmlSerializer={shortCodeSerializer}
-                  />
-                </ProductOfferBlock>
-              );
-            }
-          })}
-        <CTAContainer>
-          <PriceContainer>
-            <PriceBlock
-              showScratchPrice={showScratchPrice}
-              price={finalPrice}
-              lang={currentLanguage}
-              showSavings={true}
-              key={'price-block'}
-            />
-          </PriceContainer>
-          <CTABlock
-            isSticky={expandContent}
-            shouldOffset={earliestAvailability && mbTheme === THEMES.MIN_BLUE}
-          >
-            <a
-              target={isMobile ? null : '_blank'}
-              href={productBookingUrl}
-              rel="nofollow"
-            >
-              <Button
-                className={`tour-book-now-cta`}
-                paddingSides={isMobile ? '16px' : '8px'}
-                type="fill"
-                onClick={sendBookNowEvent}
-                onKeyDown={sendBookNowEvent}
-                role="button"
-                tabIndex={0}
-              >
-                {strings.BOOK_NOW_CTA}
-                {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
-              </Button>
-            </a>
-          </CTABlock>
-          <Conditional
-            if={showEarliestAvailability && earliestAvailability?.startDate}
-          >
-            <NextAvailableBlock>
-              <div className="icon">{CALENDAR}</div>
-              <div className="available-text">
-                {`${strings.NEXT_AVAILABLE}`}
-                {getDate(earliestAvailability?.startDate, currentLanguage)}
-              </div>
-            </NextAvailableBlock>
-          </Conditional>
-          <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
-            <Descriptors
-              hasValidity={!!validity}
-              descriptorArray={descriptorsList}
-            />
-          </Conditional>
-        </CTAContainer>
-      </ProductHeader>
-      <Conditional if={!isMobile}>
-        <HorizontalLine colorProp={COLORS.GREY_G6} />
-      </Conditional>
-      <ProductBody
-        hasReadMore={hasReadMore}
-        collapsed={!expandContent}
-        noOfListItemToShow={noOfListItemToShow + 1}
-        defaultOpen={defaultOpen}
+  const hasReadMore = highlights.flat()?.length >= 3 && !defaultOpen;
+
+  const getCTABlock = (expandContent) => (
+    <>
+      <PriceContainer isOpened={isOpened}>
+        <PriceBlock
+          showScratchPrice={showScratchPrice}
+          price={finalPrice}
+          lang={currentLanguage}
+          showSavings={true}
+          key={'price-block'}
+        />
+      </PriceContainer>
+      <CTABlock
+        isSticky={expandContent}
+        shouldOffset={earliestAvailability && mbTheme === THEMES.MIN_BLUE}
       >
-        <Conditional
-          if={
-            !isTicketCard ||
-            (isTicketCard && !isMobile) ||
-            (isTicketCard && expandContent)
-          }
+        <a
+          target={isFetched && isMobile ? null : '_blank'}
+          href={productBookingUrl}
+          rel="nofollow"
         >
-          <div
-            className={`${
-              isAmp
-                ? 'amp-tour-description tour-description'
-                : 'tour-description'
-            }`}
-            id={`tour-description-${position}`}
-            onClick={
-              !isMobile && !defaultOpen
-                ? () => toggleContentOpen(!isContentOpen)
-                : null
-            }
+          <Button
+            className={`tour-book-now-cta`}
+            paddingSides={isMobile ? '16px' : '8px'}
+            type="fill"
+            onClick={sendBookNowEvent}
+            onKeyDown={sendBookNowEvent}
+            role="button"
+            tabIndex={0}
           >
-            <Conditional if={hasHighlights}>
-              <RichText
-                render={highlights || []}
-                htmlSerializer={shortCodeSerializer}
-                elements={richtextElements}
-              />
-            </Conditional>
-            <Conditional if={tabs.length}>
-              <HighlightTabs
-                onTabChange={onTabChange}
-                hasRegularHighlights={hasHighlights}
-                tabs={tabs}
-              />
-            </Conditional>
+            {strings.BOOK_NOW_CTA}
+            {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
+          </Button>
+        </a>
+      </CTABlock>
+      <Conditional
+        if={showEarliestAvailability && earliestAvailability?.startDate}
+      >
+        <NextAvailableBlock>
+          <div className="icon">{CALENDAR}</div>
+          <div className="available-text">
+            {`${strings.NEXT_AVAILABLE}`}
+            {getDate(earliestAvailability?.startDate, currentLanguage)}
           </div>
-        </Conditional>
-        <Conditional if={hasReadMore}>
-          {isTicketCard && isAmp
-            ? null
-            : isAmp
-            ? getMoreDetailsButtonForAMP()
-            : getMoreDetailsButton()}
-        </Conditional>
-      </ProductBody>
-    </StyledProductCard>
+        </NextAvailableBlock>
+      </Conditional>
+      <Conditional if={mbTheme !== THEMES.MIN_BLUE && (isMobile || isOpened)}>
+        <Descriptors
+          hasValidity={!!validity}
+          descriptorArray={descriptorsList}
+          isMainCard={true}
+          isOpened={isOpened}
+        />
+      </Conditional>
+    </>
   );
 
-  return <Container>{getProductCardElements(isContentOpen)}</Container>;
+  const getProductCardElements = () => (
+    <PopupWrapper>
+      <PopupContentWrapper>
+        <WrapperProductCard layout={layout} isMobile={isMobile}>
+          <Conditional if={!isMobile}>
+            <Product {...props} isTicketCard={true} />
+            <CloseIconWrapper onClick={() => popupCloser()}>
+              {BLACK_COLOR_CLOSE}
+            </CloseIconWrapper>
+          </Conditional>
+        </WrapperProductCard>
+      </PopupContentWrapper>
+    </PopupWrapper>
+  );
+
+  const getProductCard = (expandContent, isFallbackSummary = false) => (
+    <>
+      <Labels>{boosterTag && <Label>{boosterTag}</Label>}</Labels>
+      <WrapperProductCard layout={layout} isMainCard={true}>
+        <StyledProductCard layout={layout} isMainCard={true}>
+          <ProductHeader>
+            <TitleWrapper hasBorderedTitle={hasBorderedTitle && !tabs.length}>
+              <TourTitle isOpened={isOpened} isPopup={isContentOpen}>
+                {cardTitle}
+              </TourTitle>
+            </TitleWrapper>
+            <Conditional
+              if={
+                mbTheme !== THEMES.MIN_BLUE &&
+                !isFallbackSummary &&
+                hasShortSummary
+              }
+            >
+              <ShortSummary>
+                <RichText render={finalShortSummary} />
+              </ShortSummary>
+            </Conditional>
+            <Conditional if={mbTheme === THEMES.MIN_BLUE}>
+              <Descriptors
+                descriptorArray={descriptorsList}
+                hasValidity={!!validity}
+                isMainCard={true}
+              />
+            </Conditional>
+            <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
+              <Descriptors
+                hasValidity={!!validity}
+                descriptorArray={descriptorsList}
+                isMainCard={true}
+              />
+            </Conditional>
+            {!isMobile && (
+              <MoreDetailWrapper
+                onClick={() => {
+                  popupOpener();
+                }}
+              >
+                More Details +
+              </MoreDetailWrapper>
+            )}
+            <Conditional if={hasSafetyFlag && isOpened}>
+              <IconBoosters>
+                <Split count={2} autoWidth>
+                  <IconCTA
+                    text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
+                    colorScheme={greenScheme}
+                    ctaOnClick={openSafeSidebar}
+                    icon={Shield}
+                    key={'safety-tag'}
+                  />
+                </Split>
+              </IconBoosters>
+            </Conditional>
+            {hasOffer &&
+              offerId &&
+              productOffer.map((offer, index) => {
+                if (offer.id === offerId) {
+                  return (
+                    <ProductOfferBlock
+                      key={index}
+                      onClick={handlePopup}
+                      className="tour-offer"
+                    >
+                      <RichText
+                        render={offer.data.offer_title}
+                        htmlSerializer={shortCodeSerializer}
+                      />
+                    </ProductOfferBlock>
+                  );
+                }
+              })}
+            <CTAContainer isMainCard={true}>
+              <Conditional if={isMobile}>
+                {getCTABlock(expandContent)}
+              </Conditional>
+              <Conditional if={!isMobile}>
+                <CTAWrapper>{getCTABlock(expandContent)}</CTAWrapper>
+              </Conditional>
+            </CTAContainer>
+          </ProductHeader>
+          <Conditional if={!isMobile}>
+            <HorizontalLine colorProp={COLORS.GREY_G6} />
+          </Conditional>
+          <Conditional if={isMobile}>
+            <ProductBody
+              hasReadMore={hasReadMore}
+              collapsed={!expandContent}
+              noOfListItemToShow={noOfListItemToShow + 1}
+              defaultOpen={defaultOpen}
+            >
+              <Conditional if={hasReadMore}>
+                {isAmp ? getMoreDetailsButtonForAMP() : getMoreDetailsButton()}
+              </Conditional>
+            </ProductBody>
+          </Conditional>
+        </StyledProductCard>
+      </WrapperProductCard>
+      {isOpened && !isMobile && getProductCardElements()}
+    </>
+  );
+
+  return isMobile ? (
+    <Product {...props} isTicketCard={true} />
+  ) : (
+    <Container>{getProductCard(isContentOpen)}</Container>
+  );
 };
 
-export default Product;
+export default TicketCard;

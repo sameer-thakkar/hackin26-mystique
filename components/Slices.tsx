@@ -13,6 +13,7 @@ import Table from './slices/Table';
 import Breadcrumb from './slices/Breadcrumb';
 import Background from './slices/Background';
 import FooterColumn from './slices/FooterColumn';
+import TicketCard from './slices/TickerCardSlice';
 
 // Dynamic imports
 const CustomLinkedTours = dynamic(() => import('./slices/CustomLinkedTours'));
@@ -501,6 +502,14 @@ const sliceHandler = (slice, props: any = {}) => {
       );
     case 'tours_list':
       return props.tourListSection;
+    case 'ticket_card_shoulder_page':
+      return (
+        <TicketCard
+          title={slice?.primary?.title}
+          subtext={slice?.primary?.subtext}
+          {...props}
+        />
+      );
     default:
     // ToDo: Add to Error Logs (Slice)
   }

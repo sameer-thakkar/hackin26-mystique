@@ -47,7 +47,7 @@ const Wrapper = styled.div`
       : ``}
 `;
 
-const SafeDFBannerWrapper = ({
+const MultiBannerWrapper = ({
   hasSafe = false,
   marginTop = null,
   isAmp = false,
@@ -125,4 +125,4 @@ const SafeDFBannerWrapper = ({
   );
 };
 
-export default SafeDFBannerWrapper;
+export default MultiBannerWrapper;

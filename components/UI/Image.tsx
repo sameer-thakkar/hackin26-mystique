@@ -59,6 +59,7 @@ type ImageProps = {
   attribution?: string;
   autoCrop?: boolean;
   objectFit?: string;
+  addDarkOverlay?: boolean;
 };
 
 const Image: React.FC<ImageProps> = ({
@@ -80,11 +81,15 @@ const Image: React.FC<ImageProps> = ({
   attribution = '',
   autoCrop = true,
   objectFit,
+  addDarkOverlay,
 }) => {
   const isAmp = useAmp();
   const makeImageUrl = (fm: string, url): string => {
     if (!url) {
       return null;
+    }
+    if (url?.includes('nocompress')) {
+      return url?.split('?')?.[0];
     }
     if (format === 'gif') return url;
     const imigxOptionsQueryParams = new URLSearchParams();
@@ -102,7 +107,9 @@ const Image: React.FC<ImageProps> = ({
     }
     imigxOptionsQueryParams.set('fm', format);
     imigxOptionsQueryParams.set('auto', 'compress');
-
+    if (addDarkOverlay) {
+      imigxOptionsQueryParams.set('exp', '-10');
+    }
     const extractedRect = /rect=[\d,.]*/.exec(url);
     return attachQueryParam(
       url,

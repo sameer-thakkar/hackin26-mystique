@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import classNames from 'classnames';
+import dynamic from 'next/dynamic';
 import { scroller } from 'react-scroll';
 import { strings } from 'const/strings';
 import { withShortcodes } from 'utils/helper';
@@ -11,32 +11,17 @@ import Button from './UI/Button';
 import Image from './UI/Image';
 import Conditional from './common/Conditional';
 
+const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
+
 const StyledBanner = styled.div`
   display: grid;
   height: 400px;
   width: 100%;
   position: relative;
   box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.16);
+  background: rgba(34, 34, 34, 0.6);
   font-family: ${SOLEIL.FONT_STACK};
   margin-bottom: 24px;
-  .mb-slide {
-    display: none;
-    .image-wrap {
-      display: block;
-    }
-  }
-
-  .mb-slide.active-mb-slide,
-  .mb-slide.prev-slide {
-    display: block;
-    height: inherit;
-  }
-  .fade-in {
-    animation: fade 0.3s ease forwards;
-  }
-  .fade-out {
-    animation: fade 0.3s ease backwards;
-  }
 
   .mb-slide img {
     height: 100%;
@@ -45,57 +30,9 @@ const StyledBanner = styled.div`
     object-position: 20% 10%;
   }
 
-  @-webkit-keyframes fade {
-    0% {
-      opacity: 0;
-    }
-
-    50% {
-      opacity: 0.5;
-    }
-
-    100% {
-      opacity: 1;
-    }
+  .single-slide {
+    height: 400px;
   }
-
-  @keyframes fade {
-    0% {
-      opacity: 0;
-    }
-
-    50% {
-      opacity: 0.5;
-    }
-
-    100% {
-      opacity: 1;
-    }
-  }
-
-  .indicators {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: 1fr;
-    grid-gap: 10px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 20px;
-  }
-
-  .indicator {
-    height: 10px;
-    width: 10px;
-    border: 2px solid #fff;
-    border-radius: 100%;
-    cursor: pointer;
-  }
-
-  .indicator.active {
-    background: #fff;
-  }
-
   .mb-captions {
     z-index: 0;
     height: 100%;
@@ -103,7 +40,19 @@ const StyledBanner = styled.div`
     display: grid;
     place-content: center;
     text-align: center;
-    background: #22222299;
+  }
+  .swiper-pagination.swiper-pagination-bullets {
+    top: unset;
+    display: block;
+  }
+  .swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    background: transparent;
+    border: 2px solid #fff;
+  }
+  .swiper-pagination-bullet-active {
+    background: #fff;
   }
 
   .absolute-position {
@@ -117,9 +66,7 @@ const StyledBanner = styled.div`
     line-height: 1.2;
   }
 
-  .mb-captions,
-  .mb-slide.active-mb-slide,
-  .mb-slide.prev-slide {
+  .mb-captions {
     grid-column: 1 / 2;
     grid-row: 1 / 2;
   }
@@ -188,6 +135,14 @@ const StyledBanner = styled.div`
     text-decoration: none;
   }
 
+  .overlay-container {
+    z-index: 1;
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
   @media (max-width: 768px) {
     .mb-captions .mb-caption {
       justify-items: left;
@@ -227,39 +182,27 @@ const StyledBanner = styled.div`
       }
     }
 
-    .mb-captions::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      background: ${COLORS.TWO_BLACK};
-      z-index: 0;
-      opacity: 0.4;
+    .swiper-pagination.swiper-pagination-bullets {
+      grid-template-columns: repeat(auto-fill, 7px);
+      display: grid;
+      bottom: 24px;
+      margin-left: 16px;
+    }
+    .swiper-pagination-bullet {
+      width: 6px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.35);
+      border: unset;
+    }
+    .swiper-pagination-bullet-active {
+      background: rgba(255, 255, 255);
+      transform: scale(1.3);
     }
 
     .mb-captions .non-opaque {
       opacity: 1;
     }
 
-    .indicators {
-      left: 16px;
-      transform: unset;
-      bottom: 24px;
-    }
-
-    .indicator {
-      height: 6px;
-      width: 6px;
-      border: unset;
-      background: rgba(255, 255, 255, 0.35);
-    }
-
-    .indicator.active {
-      left: 17px;
-      transform: scale(1.3);
-    }
     .banner-image {
       object-fit: cover;
       img {
@@ -269,6 +212,26 @@ const StyledBanner = styled.div`
     }
   }
 `;
+
+const swiperParams = {
+  pagination: {
+    el: '.swiper-pagination',
+    type: 'bullets',
+    clickable: true,
+  },
+  slidesPerView: 1,
+  speed: 600,
+  centeredSlides: true,
+  autoplay: {
+    delay: 5000,
+    disableOnInteraction: false,
+  },
+  shouldSwiperUpdate: true,
+  loop: true,
+  initialSlide: 0,
+  freeMode: false,
+  effect: 'fade',
+};
 
 export const BANNER_PARAMS = {
   DESKTOP: {
@@ -282,6 +245,7 @@ export const BANNER_PARAMS = {
 };
 
 const ButtonWrapper = styled.div`
+  pointer-events: auto;
   @media (max-width: 768px) {
     button {
       font-size: 14px;
@@ -291,17 +255,12 @@ const ButtonWrapper = styled.div`
 `;
 export default class Banner extends Component<any, any> {
   hasIndicators: boolean;
-  MAX_SLIDES: number;
-  SLIDE_CHANGE_INTERVAL: number;
   activeSlideIndex: number;
   prevSlideIndex: number;
-  MB_CAROUSEL_INT: any;
 
   constructor(props) {
     super(props);
     this.hasIndicators = true;
-    this.MAX_SLIDES = this.props.bannerImages.length;
-    this.SLIDE_CHANGE_INTERVAL = 5000;
     this.prevSlideIndex = this.activeSlideIndex = 0;
     this.state = {
       counter: 0,
@@ -316,66 +275,7 @@ export default class Banner extends Component<any, any> {
       isMobile: mobileCheck,
       isClient: true,
     });
-    if (this.props.bannerImages.length > 1) {
-      setTimeout(this.autoSlide, this.SLIDE_CHANGE_INTERVAL + 2000);
-    }
   }
-
-  nextSlide = () => {
-    clearInterval(this.MB_CAROUSEL_INT);
-    this.changeSlide(1);
-    this.autoSlide();
-  };
-  prevSlide = () => {
-    clearInterval(this.MB_CAROUSEL_INT);
-    this.changeSlide(-1);
-    this.autoSlide();
-  };
-
-  getBoundedIndex = (index, dir) => {
-    index = index == 0 ? this.MAX_SLIDES : index;
-    index = (index + 1 * dir) % this.MAX_SLIDES;
-    return index;
-  };
-
-  changeSlide = (dir = 1) => {
-    this.prevSlideIndex = this.activeSlideIndex;
-    this.activeSlideIndex = this.getBoundedIndex(this.activeSlideIndex, dir);
-    this.setState({ counter: this.state.counter + 1 });
-  };
-
-  autoSlide = () => {
-    this.MB_CAROUSEL_INT = setInterval(
-      this.changeSlide,
-      this.SLIDE_CHANGE_INTERVAL
-    );
-  };
-
-  slideTo = (index = 0) => {
-    clearInterval(this.MB_CAROUSEL_INT);
-    this.activeSlideIndex = this.getBoundedIndex(index, -1);
-    this.changeSlide();
-    this.autoSlide();
-  };
-
-  renderBanners = (image, index) => {
-    const { isAmp } = this.props;
-    const { url, alt, mobileUrl } = image;
-    const { isMobile } = this.state;
-    const { ASPECT_RATIO, WIDTH } =
-      isMobile || isAmp ? BANNER_PARAMS.MOBILE : BANNER_PARAMS.DESKTOP;
-
-    return (
-      <Image
-        width={WIDTH}
-        aspectRatio={ASPECT_RATIO}
-        url={url}
-        dontLazyLoad={index === 0}
-        mobileUrl={mobileUrl}
-        alt={alt || 'banner'}
-      />
-    );
-  };
 
   renderAmpBanners = (image) => {
     const { url, alt } = image;
@@ -387,6 +287,7 @@ export default class Banner extends Component<any, any> {
         alt={alt || 'banner'}
         layout={'fill'}
         className="banner-image"
+        addDarkOverlay
       />
     );
   };
@@ -415,6 +316,7 @@ export default class Banner extends Component<any, any> {
   );
 
   render() {
+    let imageView;
     const {
       bannerHeading: tempBannerHeading,
       bannerImages,
@@ -462,69 +364,82 @@ export default class Banner extends Component<any, any> {
           {captions}
         </StyledBanner>
       );
+    const { isMobile } = this.state;
+    const { ASPECT_RATIO, WIDTH } =
+      isMobile || isAmp ? BANNER_PARAMS.MOBILE : BANNER_PARAMS.DESKTOP;
+    switch (bannerImages?.length) {
+      case 1:
+        imageView = (
+          <Image
+            className="mb-slide single-slide"
+            width={WIDTH}
+            aspectRatio={ASPECT_RATIO}
+            url={bannerImages[0]?.url}
+            dontLazyLoad
+            mobileUrl={bannerImages[0]?.mobileUrl}
+            alt={bannerImages[0]?.alt || 'banner'}
+            addDarkOverlay
+          />
+        );
+        break;
+      default:
+        imageView = (
+          <Swiper {...swiperParams}>
+            {bannerImages?.map((image, index) => {
+              return (
+                <Image
+                  className="swiper-slide mb-slide"
+                  key={index}
+                  width={WIDTH}
+                  aspectRatio={ASPECT_RATIO}
+                  url={image?.url}
+                  dontLazyLoad
+                  mobileUrl={image?.mobileUrl}
+                  alt={image?.alt || 'banner'}
+                  addDarkOverlay
+                />
+              );
+            })}
+          </Swiper>
+        );
+        break;
+    }
 
     return (
       <StyledBanner>
-        {bannerImages.map((banner, index) => {
-          return (
-            <div
-              key={index}
-              className={classNames(
-                'mb-slide',
-                {
-                  'active-mb-slide fade-in': this.activeSlideIndex == index,
-                },
-                {
-                  'prev-slide fade-out': this.prevSlideIndex == index,
-                }
-              )}
-            >
-              {this.renderBanners(banner, index)}
-            </div>
-          );
-        })}
-        <div
-          className={`mb-captions ${
-            bannerImages.length > 1 ? 'with-indicators' : ''
-          }`}
-        >
+        {imageView}
+        <div className="overlay-container">
           <div
-            className={`mb-caption ${
-              dfExpiryDate ? this.activeSlideIndex !== 1 && 'active' : 'active'
+            className={`mb-captions ${
+              bannerImages.length > 1 ? 'with-indicators' : ''
             }`}
           >
-            <div className="caption">
-              <h1>{bannerHeading}</h1>
-              <Conditional if={bannerSubtext}>
-                <p>{bannerSubtext}</p>
+            <div
+              className={`mb-caption ${
+                dfExpiryDate
+                  ? this.activeSlideIndex !== 1 && 'active'
+                  : 'active'
+              }`}
+            >
+              <div className="caption">
+                <h1>{bannerHeading}</h1>
+                <Conditional if={bannerSubtext}>
+                  <p>{bannerSubtext}</p>
+                </Conditional>
+              </div>
+              <Conditional if={!hideCTA}>
+                <ButtonWrapper>
+                  <Button
+                    type="whiteBordered"
+                    onClick={this.scrollTicketSection}
+                  >
+                    {bannerCtaText || strings.BANNER_CTA}
+                  </Button>
+                </ButtonWrapper>
               </Conditional>
             </div>
-            <Conditional if={!hideCTA}>
-              <ButtonWrapper>
-                <Button type="whiteBordered" onClick={this.scrollTicketSection}>
-                  {bannerCtaText || strings.BANNER_CTA}
-                </Button>
-              </ButtonWrapper>
-            </Conditional>
           </div>
         </div>
-        {this.hasIndicators && bannerImages.length > 1 ? (
-          <div className="indicators">
-            {bannerImages.map((_banner, index) => (
-              <div
-                key={index}
-                role="button"
-                tabIndex={0}
-                className={classNames('indicator', {
-                  active: this.activeSlideIndex == index,
-                })}
-                onClick={() => {
-                  this.slideTo(index);
-                }}
-              />
-            ))}
-          </div>
-        ) : null}
       </StyledBanner>
     );
   }

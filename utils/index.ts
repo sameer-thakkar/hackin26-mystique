@@ -251,6 +251,7 @@ export const generatePromiseForCategoryTours = ({
         promise = await fetchCollection({
           collectionId: catId,
           hostname,
+          limit: '100',
         });
         break;
       case isCategory:
@@ -260,10 +261,32 @@ export const generatePromiseForCategoryTours = ({
           isSubCategory,
           hostname,
           city,
+          limit: '100',
         });
         break;
     }
     return promise;
   });
   return allPromises;
+};
+
+export const extractSinglePrismicSlice = ({
+  sliceName,
+  slices,
+}: {
+  sliceName: string;
+  slices: any[];
+}) => {
+  if (slices?.length) {
+    const filteredData = slices?.filter(
+      (slice) => slice.slice_type === sliceName
+    );
+    if (filteredData?.length) {
+      return filteredData?.reduce((acc, curr) => acc + curr);
+    } else {
+      return {};
+    }
+  } else {
+    return {};
+  }
 };

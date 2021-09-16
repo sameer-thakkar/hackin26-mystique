@@ -221,7 +221,7 @@ const ShowPage = ({
   } = parseShowPageData(microBrandsHighlight);
 
   const currentLanguage = lang.split('-')[0];
-  const categoryId = categoriesFromRoot[categoriesFromRoot.length - 1].id;
+  const categoryId = categoriesFromRoot?.[categoriesFromRoot.length - 1]?.id;
   const categoryName = showType
     ? showType
     : categoriesFromRoot[categoriesFromRoot.length - 1].displayName;
@@ -268,7 +268,7 @@ const ShowPage = ({
       const categoryData = await fetchCategory(categoryId, hostname);
 
       setSimilarProductData(
-        categoryData?.products.filter((element) => element.id != tgid)
+        categoryData?.products?.filter((element) => element.id != tgid)
       );
     };
 
@@ -282,7 +282,11 @@ const ShowPage = ({
 
   useEffect(() => {
     const reviewTourGroup = async () => {
-      const tourGroupReviews = await fetchReviewsTourGroup(tgid, 5)
+      const tourGroupReviews = await fetchReviewsTourGroup({
+        tgid,
+        hostName: hostname,
+        limit: 5,
+      })
         .then((res) => {
           return res.json();
         })
@@ -335,6 +339,7 @@ const ShowPage = ({
           isMobile,
           canonical_link: canonical_link || PageURL,
           noindex: isDev ? 'True' : 'False',
+          disable_amp: true,
         }}
       />
       <Header
@@ -362,11 +367,10 @@ const ShowPage = ({
         currentLanguage={currentLanguage}
         tagsArray={tagsArray}
         isReopening={isReopening}
+        hostname={hostname}
       />
       <Conditional if={isSafetyBanner}>
-        <SafeDFBannerWrapper
-          marginTop={isMobile ? 0 : 40}
-        ></SafeDFBannerWrapper>
+        <SafeDFBannerWrapper marginTop={isMobile ? 0 : 40} isShowPage={true} />
       </Conditional>
       <Wrapper>
         <HighlightsSectionWrapper>

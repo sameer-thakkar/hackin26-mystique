@@ -1,3 +1,5 @@
+import { addQueryParams } from './urlUtils';
+
 const objectToQuery = (query) => {
   const params = Object.entries(query);
   return params.length
@@ -24,9 +26,29 @@ export const fetchTourList = ({ tgids, host = '', ...query }) => {
   );
 };
 
+// TODO: Please move this to v6. Please ensure showpage uses v6 logic
 export const fetchTourGroup = (tgid, hostName) =>
   fetch(`${hostName}/api/tours/v5/tour-group/get/${tgid}`);
 
+export const fetchTourGroupV6 = async ({
+  tgid,
+  hostname,
+  language,
+}: {
+  tgid: string | number;
+  hostname: string;
+  language?: string;
+}) => {
+  const params = {
+    ...(language && { language }),
+  };
+  const url = addQueryParams(
+    `${hostname}/api/tours/v6/tour-groups/${tgid}`,
+    params
+  );
+  const res = await fetch(url);
+  return await res.json();
+};
 export const fetchCurrencyList = async () => {
   try {
     const res = await fetch('https://api.headout.com/api/v1/currency/list');
@@ -57,7 +79,8 @@ interface fetchTGIDsByCategoryV2Obj {
   hostname: string;
   isSubCategory: boolean;
   city?: string;
-  lang?: string;
+  language?: string;
+  limit?: string;
 }
 
 export const fetchTGIDsByCategoryV2 = async ({
@@ -65,16 +88,20 @@ export const fetchTGIDsByCategoryV2 = async ({
   hostname,
   isSubCategory = false,
   city = '',
-  lang = 'EN',
+  language = 'en',
+  limit,
 }: fetchTGIDsByCategoryV2Obj) => {
   const url = isSubCategory
     ? `${hostname}/api/tours/v6/tour-groups/list-by/sub-category/${categoryId}`
     : `${hostname}/api/tours/v6/tour-groups/list-by/category/${categoryId}`;
-
+  const params = {
+    language,
+    ...(city && { city }),
+    ...(limit && { limit }),
+  };
+  const finalUrl = addQueryParams(url, params);
   try {
-    const response = await fetch(
-      `${url}?language=${lang}&limit=100${city ? `&city=${city}` : ''}`
-    );
+    const response = await fetch(finalUrl);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -85,17 +112,23 @@ export const fetchTGIDsByCategoryV2 = async ({
 interface fetchCollection {
   collectionId: string | number;
   hostname: string;
-  lang?: string;
+  language?: string;
+  limit?: string;
 }
 export const fetchCollection = async ({
   collectionId,
   hostname,
-  lang = 'EN',
+  language = 'en',
+  limit,
 }: fetchCollection) => {
-  const url = `${hostname}/api/tours/v1/collection/${collectionId}/sections?limit=100&language=${lang}`;
-
+  const params = {
+    language,
+    ...(limit && { limit }),
+  };
+  const url = `${hostname}/api/tours/v1/collection/${collectionId}/sections`;
+  const finalUrl = addQueryParams(url, params);
   try {
-    const response = await fetch(url);
+    const response = await fetch(finalUrl);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -103,15 +136,27 @@ export const fetchCollection = async ({
   }
 };
 
-export const fetchReviewsTourGroup = (tgid, limit) =>
-  fetch(
-    `https://api.headout.com/api/v2/review/tour-group/id/${tgid}?&limit=${limit}`
-  );
+export const fetchReviewsTourGroup = ({
+  tgid,
+  hostName,
+  limit,
+}: {
+  tgid: string | number;
+  hostName: string;
+  limit?: string | number;
+}) =>
+  fetch(`${hostName}/api/tours/v2/review/tour-group/id/${tgid}?limit=${limit}`);
 
-export const fetchInventoryAPI = async (tgid: string) => {
+export const fetchInventoryAPI = async ({
+  tgid,
+  hostName,
+}: {
+  tgid: string | number;
+  hostName: string;
+}) => {
   try {
     const response = await fetch(
-      `https://api.headout.com/api/v5/tour-group/inventory/get/${tgid}?use-seatmap-prices=true`
+      `${hostName}/api/tours/v5/tour-group/inventory/get/${tgid}?use-seatmap-prices=true`
     );
     const data = await response.json();
     return data;
