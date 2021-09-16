@@ -1022,7 +1022,7 @@ const Product = (props) => {
           if={
             !isTicketCard ||
             (isTicketCard && !isMobile) ||
-            isTicketCard & expandContent
+            (isTicketCard && expandContent)
           }
         >
           <div
