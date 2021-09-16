@@ -503,7 +503,13 @@ const sliceHandler = (slice, props: any = {}) => {
     case 'tours_list':
       return props.tourListSection;
     case 'ticket_card_shoulder_page':
-      return <TicketCard props={props} />;
+      return (
+        <TicketCard
+          title={slice?.primary?.title}
+          subtext={slice?.primary?.subtext}
+          {...props}
+        />
+      );
     default:
     // ToDo: Add to Error Logs (Slice)
   }

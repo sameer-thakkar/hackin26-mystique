@@ -88,6 +88,8 @@ const PopulateProducts = (props) => {
     instantCheckout,
     enableEarliestAvailability,
     isTicketCard = false,
+    sectionTitle = '',
+    sectionSubtext = '',
   } = props;
   const [tourPrices, setTourPrices] = useState(scorpioData);
   const [earliestAvailabilityQueue, setEarliestAvailabilityQueue] = useState(
@@ -196,12 +198,16 @@ const PopulateProducts = (props) => {
     <StyledProductsWrapper>
       <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
         <div id="tour-list-heading">
-          <StyledTourListHeading>
-            {strings.TOUR_LIST_HEADING}
-          </StyledTourListHeading>
-          <StyledTourListSubHeading>
-            {strings.TOUR_LIST_SUB_HEADING}
-          </StyledTourListSubHeading>
+          <Conditional if={sectionTitle || strings.TOUR_LIST_HEADING}>
+            <StyledTourListHeading>
+              {isTicketCard ? sectionTitle : strings.TOUR_LIST_HEADING}
+            </StyledTourListHeading>
+          </Conditional>
+          <Conditional if={sectionSubtext || strings.TOUR_LIST_SUB_HEADING}>
+            <StyledTourListSubHeading>
+              {isTicketCard ? sectionSubtext : strings.TOUR_LIST_SUB_HEADING}
+            </StyledTourListSubHeading>
+          </Conditional>
         </div>
       </Conditional>
       <ProductContainer>

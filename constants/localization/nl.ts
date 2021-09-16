@@ -19,7 +19,7 @@ const nl = {
   BANNER_CTA: 'Koop kaartjes',
   BOOK_NOW_CTA: 'Reserveer nu',
   READ_MORE_TEXT: 'Meer Info',
-  SHOW_LESS_TEXT: 'Toon ninder',
+  SHOW_LESS_TEXT: 'Toon minder',
   NEXT_AVAILABLE: 'Weer beschikbaar: ',
   SAVE_UPTO: 'Bespaar tot',
   SAVE: 'Bespaar <val>%',
