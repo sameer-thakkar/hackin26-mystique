@@ -4,8 +4,8 @@ import { ServerStyleSheet } from 'styled-components';
 import * as Sentry from '@sentry/node';
 import AMPAnalytics from 'components/common/AMPAnalytics';
 import Conditional from 'components/common/Conditional';
+import { isAmpUrl } from 'utils/urlUtils';
 
-import { isAmpUrl } from '../utils/urlUtils';
 import ampFonts from '../style/amp/ampFonts';
 
 Sentry.init({

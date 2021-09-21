@@ -105,15 +105,17 @@ export const convertUidToUrl = ({
   uid,
   lang = 'en',
   isDev,
+  isAmp,
 }: {
   uid: string;
   lang?: string;
   isDev?: boolean;
+  isAmp?: boolean;
 }) => {
   if (isDev) {
     return `http://localhost:3001/?mystique_uid=${uid}&lang=${
       getLangObject(lang)?.paramLang
-    }`;
+    }${isAmp ? `&amp=1` : ''}`;
   }
   if (uid) {
     let url;
@@ -128,6 +130,11 @@ export const convertUidToUrl = ({
           url += name.replaceAll('.', '/');
         });
       }
+    }
+    if (isAmp) {
+      const urlObject = new URLSearchParams(url);
+      urlObject.set('amp', '1');
+      return urlObject.toString();
     }
     return url;
   } else {

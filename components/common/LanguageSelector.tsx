@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Chevron from 'UI/Chevron';
 import Conditional from 'components/common/Conditional';
 import { GLOBE } from 'assets/SvgIcons';
-import { FULL_LANGUAGE_MAP, THEMES, LANGUAGE_PARAMS_REGEX } from 'const/index';
+import { FULL_LANGUAGE_MAP, THEMES } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
-import { withoutTrailingSlash } from 'utils/helper';
 
 const StyledLanguageContainer = styled.div`
   margin-left: 32px;
@@ -122,48 +121,23 @@ const StyledLanguage = styled.span`
 `;
 
 const LanguageSelector = (props) => {
-  const [pathname, setPathname] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
   const {
     currentLanguage,
-    host,
-    uid,
     isMobile,
-    languages,
+    languages: availableLanguages,
     mbTheme,
     isAmp,
   } = props;
-  useEffect(() => {
-    setPathname(window.location.pathname);
-  }, []);
   const handleClick = () => {
     setShowDropdown((prevState) => !prevState);
   };
   const handleChange = (e) => {
     const selectedLang = e.target?.value;
     if (!selectedLang) return;
-    const removeLangFromPathname = pathname.replace(LANGUAGE_PARAMS_REGEX, '');
-    let slug = withoutTrailingSlash(removeLangFromPathname);
-    slug = slug[0] === '/' ? slug.slice(1) : slug;
-    const isDev = host.includes('localhost');
-    if (isDev) {
-      window.location.href = `http://${host}/?mystique_uid=${uid}&lang=${FULL_LANGUAGE_MAP[selectedLang].paramLang}`;
-    } else {
-      window.location.href = `https://${host}/${selectedLang}/${slug}`;
-    }
+    window.location.href = selectedLang;
   };
 
-  const availableLanguages = languages
-    .filter(({ language }) => language?.length)
-    .reduce((acc, item) => {
-      const language = item.language.split('-')[1].toLowerCase();
-      return [...acc, language];
-    }, []);
-  const removeLangFromPathname = pathname.replace(LANGUAGE_PARAMS_REGEX, '');
-  const slugWithoutLeadingSlash = (slug) =>
-    slug.charAt(slug[0]) === '/' ? slug.substr(1, slug.length) : slug;
-  const slug = slugWithoutLeadingSlash(removeLangFromPathname);
-  const isDev = host.includes('localhost');
   if (isMobile) {
     return (
       <StyledMobileSelect>
@@ -180,10 +154,10 @@ const LanguageSelector = (props) => {
             <option disabled selected>
               {FULL_LANGUAGE_MAP[currentLanguage].language}
             </option>
-            {availableLanguages.map((language, index) => {
+            {availableLanguages.map((doc, index) => {
               return (
-                <option value={`http://${host}/${language}`} key={index}>
-                  {FULL_LANGUAGE_MAP[language].language}
+                <option value={doc.url} key={index}>
+                  {FULL_LANGUAGE_MAP[doc.lang].language}
                 </option>
               );
             })}
@@ -194,10 +168,10 @@ const LanguageSelector = (props) => {
             <option disabled selected>
               {FULL_LANGUAGE_MAP[currentLanguage].language}
             </option>
-            {availableLanguages.map((language, index) => {
+            {availableLanguages.map((doc, index) => {
               return (
-                <option value={language} key={index}>
-                  {FULL_LANGUAGE_MAP[language].language}
+                <option value={doc.url} key={index}>
+                  {FULL_LANGUAGE_MAP[doc.lang].language}
                 </option>
               );
             })}
@@ -220,39 +194,21 @@ const LanguageSelector = (props) => {
           showDropdown ? 'language-dropdown-active' : ''
         }`}
       >
-        {isDev
-          ? availableLanguages.map((language, index) => {
-              return (
-                <a
-                  className={currentLanguage == language ? 'selected-tab' : ''}
-                  key={index}
-                  href={`/?mystique_uid=${uid}&lang=${FULL_LANGUAGE_MAP[language].paramLang}`}
-                >
-                  <div className="language">
-                    <span className="lang">
-                      {FULL_LANGUAGE_MAP[language].language}
-                    </span>
-                  </div>
-                </a>
-              );
-            })
-          : availableLanguages.map((language, index) => {
-              return (
-                // <Link key={index} href={`/${language}/${slug}`}>
-                <a
-                  key={index}
-                  className={currentLanguage == language ? 'selected-tab' : ''}
-                  href={`/${language}/${slug}`}
-                >
-                  <div className="language">
-                    <span className="lang">
-                      {FULL_LANGUAGE_MAP[language].language}
-                    </span>
-                  </div>
-                </a>
-                // </Link>
-              );
-            })}
+        {availableLanguages.map((doc, index) => {
+          return (
+            <a
+              key={index}
+              className={currentLanguage == doc.lang ? 'selected-tab' : ''}
+              href={doc.url}
+            >
+              <div className="language">
+                <span className="lang">
+                  {FULL_LANGUAGE_MAP[doc.lang].language}
+                </span>
+              </div>
+            </a>
+          );
+        })}
       </div>
     </StyledLanguageContainer>
   );

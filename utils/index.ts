@@ -169,14 +169,15 @@ export const getHeadoutLanguagecode = (prismicLangCode) => {
 
 export const getAlternateLanguages = (
   alternateLangsArray: any[],
-  isDev: boolean
+  isDev: boolean,
+  isAmp: boolean
 ) => {
   if (alternateLangsArray?.length) {
     return alternateLangsArray.map((doc) => {
       const { uid, lang: docLang } = doc || {};
       const lang = getHeadoutLanguagecode(docLang);
       return {
-        url: convertUidToUrl({ uid, lang, isDev }),
+        url: convertUidToUrl({ uid, lang, isDev, isAmp }),
         lang,
       };
     });

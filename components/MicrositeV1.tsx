@@ -12,7 +12,6 @@ import Banner from 'components/Banner';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
 import LongForm from 'components/common/LongForm';
-import PopulateHead from 'components/common/meta';
 import PopulateProducts from 'components/PopulateProducts';
 import TextBanner from 'components/TextBanner';
 import Conditional from 'components/common/Conditional';
@@ -35,6 +34,7 @@ import {
 import { strings } from 'const/strings';
 import { fetchTourList } from 'utils/apiUtils';
 import { tourListApiParser } from 'utils/dataParsers';
+import PopulateMeta from 'components/common/NextSeoMeta';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
@@ -63,8 +63,7 @@ const MicrositeV1 = (props) => {
     mbTheme,
     scorpioData: scorpioDataUncategorised,
     activeCurrency,
-    first_publication_date: datePublished,
-    last_publication_date: dateModified,
+
     host,
     isDev,
     serverRequestStartTimestamp,
@@ -80,7 +79,15 @@ const MicrositeV1 = (props) => {
   const [covidAlertActive, toggleCovidAlert] = useState(false);
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
 
-  const { refs, uid, lang, data: micrositeData, alternate_languages } = data;
+  const {
+    refs,
+    uid,
+    lang,
+    first_publication_date: datePublished,
+    last_publication_date: dateModified,
+    data: micrositeData,
+    alternate_languages,
+  } = data;
   const {
     contentFramework,
     commonFooter,
@@ -89,7 +96,6 @@ const MicrositeV1 = (props) => {
   } = refs;
   const {
     attraction: attractionCMS,
-    localization,
     images: bannerImages,
     heading: bannerHeading,
     banner_subtext: bannerSubtext,
@@ -120,7 +126,11 @@ const MicrositeV1 = (props) => {
     baseLangPageTitle,
   } = micrositeData || {};
 
-  const alternateLanguages = getAlternateLanguages(alternate_languages, isDev);
+  const alternateLanguages = getAlternateLanguages(
+    alternate_languages,
+    isDev,
+    isAmp
+  );
 
   const { data: commonFooterData } = commonFooter || {};
   const { data: secondaryFooterData } = secondaryFooter || {};
@@ -222,9 +232,6 @@ const MicrositeV1 = (props) => {
     }, []) || [];
   const hasDropdownLinks =
     legacyBooleanCheck(enableDropdownLinks) && dropdownLinks.length;
-  const languages = legacyBooleanCheck(hasLanguageSelector)
-    ? localization.filter((lang) => lang.language)
-    : [];
 
   const showGroupBooking = legacyBooleanCheck(enableGroupBooking);
   const { results: productOffer } = offerData ? offerData : { results: [] };
@@ -449,22 +456,20 @@ const MicrositeV1 = (props) => {
             theme={mbTheme}
           />
         </Conditional>
-        <PopulateHead
-          {...{
-            ...micrositeData,
-            localization: languages,
-            datePublished,
-            dateModified,
-            lang,
-            isDev,
-            originalHost: host,
-            currentLanguage,
-            serverRequestStartTimestamp,
-            mbTheme,
-            isAmp,
-            isMobile,
-            finalBannerImages,
-          }}
+        <PopulateMeta
+          uid={uid}
+          micrositeData={micrositeData}
+          languages={alternateLanguages}
+          datePublished={datePublished}
+          dateModified={dateModified}
+          currentLanguage={lang}
+          serverRequestStartTimestamp={serverRequestStartTimestamp}
+          mbTheme={mbTheme}
+          isDev={isDev}
+          isAmp={isAmp}
+          isMobile={isMobile}
+          finalBannerImages={finalBannerImages}
+          originalHost={host}
         />
         <Header
           languages={alternateLanguages}
