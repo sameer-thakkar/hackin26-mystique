@@ -171,6 +171,7 @@ export const LinkCards = (props) => {
                     aspectRatio="16:10"
                     url={card.image.url}
                     alt={card.image.alt}
+                    dontLazyLoad={index < 8}
                   />
                 </div>
                 <div className="card-bottom">
