@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
+import { ProductsContextProvider } from 'contexts/Products';
+import { InteractionContextProvider } from 'contexts/Interaction';
 import { withAmp } from 'components/common/withAmp';
 import DismissAlert from 'components/UI/DismissAlert';
 import { Client } from 'config/prismic-config';
 import Alert from 'components/UI/Alert';
-import PopulateHead from 'components/common/meta';
+import PopulateMeta from 'components/common/NextSeoMeta';
 import Masthead from 'components/Masthead';
 import Footer from 'components/common/Footer';
 import sliceHandler from 'components/Slices';
@@ -22,8 +24,6 @@ import { getAlternateLanguages, legacyBooleanCheck } from 'utils';
 import allToursParser from 'utils/allToursParser';
 import { tourListApiParser } from 'utils/dataParsers';
 import { groupSlices, getLangObject } from 'utils/helper';
-import { ProductsContextProvider } from 'contexts/Products';
-import { InteractionContextProvider } from 'contexts/Interaction';
 
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 
@@ -402,7 +402,6 @@ class ContentPage extends Component<any, any> {
       logo_redirection_url: logoRedirectionURL,
       show_ticket_option_url: showTicketRedirectionURL,
       group_booking_disclaimer: groupBookingDisclaimer,
-      localization,
       enable_localization_menu,
       logo,
       logo_alt_text: logoAltText,
@@ -439,9 +438,6 @@ class ContentPage extends Component<any, any> {
       microsite.data.enable_powered_by_superbrand_logo;
     const showGroupBooking = legacyBooleanCheck(enableGroupBooking);
     const currentLanguage = getLangObject(lang).short;
-    const languages = legacyBooleanCheck(enable_localization_menu)
-      ? localization
-      : [];
     return (
       <div className="page-wrapper">
         {this.state.showGroupBookingModal && groupBookingTourTitles && (
@@ -458,21 +454,23 @@ class ContentPage extends Component<any, any> {
             disclaimer={groupBookingDisclaimer}
           />
         )}
-        <PopulateHead
+        <PopulateMeta
           {...{
-            ...headProps,
+            prismicData: headProps,
+            uid,
             datePublished,
             dateModified,
-            lang,
-            isDev,
             originalHost: host,
             serverRequestStartTimestamp,
-            localization: languages,
-            currentLanguage,
+            languages: alternateLanguages,
+            currentLanguage: lang,
+            isDev,
             isMobile: this.state.isMobile,
             isAmp,
+            bannerImages: [{ featuredImage }],
           }}
         />
+
         <Header
           languages={alternateLanguages}
           headerLinks={headerLinks}

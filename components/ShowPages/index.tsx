@@ -16,18 +16,21 @@ import SafeDFBannerWrapper from 'components/ShowPages/SafetyBanner';
 import Gallery from 'components/ShowPages/Gallery';
 import CategorySlider from 'components/ShowPages/CategorySlider';
 import SubHeading from 'components/ShowPages/SubHeading';
-import PopulateHead from 'components/common/meta';
 import {
   ALLOW_IMMEDIEATE_NESTING,
   REOPENING_TAG,
   FAVICON_LONDON_THEATRE_TICKETS,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { legacyBooleanCheck } from 'utils';
+import {
+  getAlternateLanguages,
+  getHeadoutLanguagecode,
+  legacyBooleanCheck,
+} from 'utils';
 import { groupSlices, getHostName } from 'utils/helper';
 import cloneDeep from 'lodash.clonedeep';
 import { StyledAccordion } from 'components/slices/Accordion';
-import { convertUidToUrl } from 'utils/urlUtils';
+import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import {
   fetchReviewsTourGroup,
   fetchCategory,
@@ -36,6 +39,7 @@ import {
 import { StyledAsideModal } from 'components/UI/AsideModal';
 import TitleTextCombo from 'components/UI/TitleTextCombo';
 import Conditional from 'components/common/Conditional';
+import PopulateMeta from 'components/common/NextSeoMeta';
 
 const Breadcrumb = dynamic(() => import('./BreadCrumb'));
 const AccordionGroup = dynamic(() => import('../slices/AccordionGroup'));
@@ -174,10 +178,9 @@ const AboutTheatreSectionWrapper = styled.div`
 const ShowPage = ({
   CMSContent,
   host,
-  uid,
-  lang,
   tourGroupData: tempTourGroupData,
   isDev,
+  serverRequestStartTimestamp,
 }) => {
   const tourGroupData = cloneDeep(tempTourGroupData);
   const [customerReviews, setCustomerReviews] = useState([]);
@@ -191,12 +194,13 @@ const ShowPage = ({
   const width = useWindowWidth();
 
   const {
+    name,
     microBrandsHighlight,
     imageUploads,
     categoriesFromRoot,
     microBrandsDescriptor,
     allTags,
-  } = tourGroupData;
+  } = tourGroupData || {};
 
   allTags.forEach((element) => {
     if (element === REOPENING_TAG) {
@@ -220,7 +224,18 @@ const ShowPage = ({
     aboutTheatreSection,
   } = parseShowPageData(microBrandsHighlight);
 
-  const currentLanguage = lang.split('-')[0];
+  const { commonFooter, allShowPagesDocuments } = CMSContent;
+
+  const {
+    uid,
+    first_publication_date: datePublished,
+    last_publication_date: dateModified,
+    data: CMSData,
+    alternate_languages,
+    lang,
+  } = CMSContent;
+
+  const currentLanguage = getHeadoutLanguagecode(lang);
   const categoryId = categoriesFromRoot?.[categoriesFromRoot.length - 1]?.id;
   const categoryName = showType
     ? showType
@@ -228,9 +243,11 @@ const ShowPage = ({
 
   const tagsArray = [categoryName, ...microBrandsDescriptor.split('\r\n')];
 
-  const { commonFooter, allShowPagesDocuments } = CMSContent;
-
-  const { data: CMSData } = CMSContent;
+  const alternateLanguages = getAlternateLanguages(
+    alternate_languages,
+    isDev,
+    false
+  );
 
   const {
     enable_group_booking: enableGroupBooking,
@@ -239,9 +256,6 @@ const ShowPage = ({
     enable_localization_menu,
     tgid,
     favicon,
-    title,
-    description,
-    canonical_link,
   } = CMSData;
 
   const { commonHeader } = CMSContent;
@@ -314,7 +328,7 @@ const ShowPage = ({
   }, []);
 
   const PageURL = convertUidToUrl({ uid, lang, isDev });
-  const { name } = tourGroupData;
+  const [bannerImageOne, bannerImageTwo] = imageUploads || [];
   const breadcrumbs = [
     { url: '/', text: 'London Theatre Tickets' },
     {
@@ -323,23 +337,38 @@ const ShowPage = ({
     },
   ];
 
+  const bannerImages = [
+    {
+      url: getValidUrl(bannerImageTwo?.url) || getValidUrl(bannerImageOne?.url),
+      alt: name,
+    },
+  ];
+
   return (
     <ShowPageWrapper>
-      <PopulateHead
+      <PopulateMeta
         {...{
-          title,
-          description,
-          favicon: {
-            url: favicon || FAVICON_LONDON_THEATRE_TICKETS,
+          prismicData: {
+            ...CMSData,
+            ...commonHeader?.data,
+            ...{
+              favicon: {
+                url: favicon || FAVICON_LONDON_THEATRE_TICKETS,
+              },
+            },
           },
-          faq_schema: [],
+          uid,
+          datePublished,
+          dateModified,
           lang,
           originalHost: host,
+          serverRequestStartTimestamp,
+          languages: alternateLanguages,
           currentLanguage: lang,
+          isDev,
           isMobile,
-          canonical_link: canonical_link || PageURL,
-          noindex: isDev ? 'True' : 'False',
-          disable_amp: true,
+          isAmp: false,
+          bannerImages,
         }}
       />
       <Header

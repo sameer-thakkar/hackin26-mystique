@@ -63,7 +63,6 @@ const MicrositeV1 = (props) => {
     mbTheme,
     scorpioData: scorpioDataUncategorised,
     activeCurrency,
-
     host,
     isDev,
     serverRequestStartTimestamp,
@@ -457,19 +456,20 @@ const MicrositeV1 = (props) => {
           />
         </Conditional>
         <PopulateMeta
-          uid={uid}
-          micrositeData={micrositeData}
-          languages={alternateLanguages}
-          datePublished={datePublished}
-          dateModified={dateModified}
-          currentLanguage={lang}
-          serverRequestStartTimestamp={serverRequestStartTimestamp}
-          mbTheme={mbTheme}
-          isDev={isDev}
-          isAmp={isAmp}
-          isMobile={isMobile}
-          finalBannerImages={finalBannerImages}
-          originalHost={host}
+          {...{
+            prismicData: micrositeData,
+            uid,
+            datePublished,
+            dateModified,
+            originalHost: host,
+            serverRequestStartTimestamp,
+            languages: alternateLanguages,
+            currentLanguage: lang,
+            isDev,
+            isMobile,
+            isAmp,
+            bannerImages: finalBannerImages,
+          }}
         />
         <Header
           languages={alternateLanguages}

@@ -17,23 +17,23 @@ import { withShortcodes } from 'utils/helper';
 import { addQueryParams, convertUidToUrl } from 'utils/urlUtils';
 
 type PopulateMetaProps = {
-  micrositeData: { [key: string]: any };
+  prismicData: { [key: string]: any };
   languages: { [key: string]: string }[];
   datePublished: string;
   dateModified: string;
   currentLanguage: string;
   serverRequestStartTimestamp: string;
-  mbTheme: string;
   uid: string;
   isDev: boolean;
   isAmp: boolean;
   isMobile: boolean;
-  finalBannerImages: any[];
+  bannerImages: { [key: string]: any }[];
   originalHost: string;
+  mbTheme?: string;
 };
 
 export default function PopulateMeta({
-  micrositeData,
+  prismicData,
   datePublished,
   dateModified,
   languages,
@@ -42,7 +42,7 @@ export default function PopulateMeta({
   isMobile,
   uid,
   currentLanguage,
-  finalBannerImages,
+  bannerImages,
   originalHost,
   serverRequestStartTimestamp,
 }: PopulateMetaProps) {
@@ -63,7 +63,7 @@ export default function PopulateMeta({
     title: rawTitle,
     disable_amp: disableAmp,
     enable_search,
-  } = micrositeData || {};
+  } = prismicData || {};
   const lang = PRISMIC_LANG_TO_ROUTE_PARAM[currentLanguage];
   const pageUrl = convertUidToUrl({
     uid,
@@ -71,7 +71,7 @@ export default function PopulateMeta({
     isDev,
   });
   const primaryDomainUrl = new URL(pageUrl).hostname;
-  const imageUrl = image?.url || logo.url;
+  const logoUrl = image?.url || logo.url;
   const title = withShortcodes(rawTitle).join('');
   const description = withShortcodes(rawDescription).join('');
   const modifiedCanonicalLink = isMobile
@@ -91,15 +91,15 @@ export default function PopulateMeta({
     crop: 'faces',
   };
 
-  const [preloadBannerImage] = finalBannerImages || [];
+  const [preloadBannerImage] = bannerImages || [];
   const bannerImage = addQueryParams(preloadBannerImage?.url, imageQueryParams);
   const hasSearchEnabled = legacyBooleanCheck(enable_search);
   const jsonLdProps = {
     uid,
     lang,
     title,
+    logo: logoUrl,
     favicon: favicon?.url,
-    logo: imageUrl,
     description,
     dateModified,
     datePublished,
@@ -139,13 +139,6 @@ export default function PopulateMeta({
 
   // Add meta tags
   const additionalMetaTags = [];
-  if (imageUrl)
-    additionalMetaTags.push(
-      createAdditionalMetaTag(
-        'image',
-        addQueryParams(imageUrl, imageQueryParams)
-      )
-    );
   if (googleSiteVerification)
     additionalMetaTags.push(
       createAdditionalMetaTag(
@@ -186,7 +179,6 @@ export default function PopulateMeta({
   }
 
   // Open Graph
-
   const openGraph: OpenGraph = {
     type: 'website',
     url: modifiedCanonicalLink,

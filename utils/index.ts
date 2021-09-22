@@ -290,7 +290,7 @@ export const generatePromiseForCategoryTours = ({
   return allPromises;
 };
 
-export const extractSinglePrismicSlice = ({
+export const getSinglePrismicSlice = ({
   sliceName,
   slices,
 }: {

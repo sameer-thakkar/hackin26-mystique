@@ -2,13 +2,14 @@ import dynamic from 'next/dynamic';
 import React, { Component, ComponentType } from 'react';
 import { withRouter } from 'next/router';
 import { InteractionContextProvider } from 'contexts/Interaction';
-import PopulateHead from 'components/common/meta';
 import { withAmp } from 'components/common/withAmp';
 import Conditional from 'components/common/Conditional';
 import { PAGETYPE, THEMES } from 'const/index';
 import allToursParser from 'utils/allToursParser';
 import { tourListApiParser } from 'utils/dataParsers';
 import { docCookies, genManualSlice, getLangObject } from 'utils/helper';
+import PopulateMeta from 'components/common/NextSeoMeta';
+import { getAlternateLanguages } from 'utils';
 
 const HomePage: ComponentType<any> = dynamic(() =>
   import('./views/HomePage').then((mod) => mod.HomePage)
@@ -116,15 +117,20 @@ class MicrositeV2 extends Component<any, any> {
       commonHeader,
       secondaryFooter,
     } = this.props.data.refs;
+    const { lang, isDev, serverRequestStartTimestamp } = this.props;
     const {
+      uid,
+      data: CMSData,
       first_publication_date: datePublished,
       last_publication_date: dateModified,
-      lang,
-      isDev,
-      pathname,
-      serverRequestStartTimestamp,
-    } = this.props;
-    const { uid: currentDomain, data: CMSData } = CMSContent;
+      alternate_languages,
+    } = CMSContent;
+
+    const alternateLanguages = getAlternateLanguages(
+      alternate_languages,
+      isAmp,
+      isAmp
+    );
     const {
       localization: languages,
       dropdown_menu: dropdownMenu,
@@ -138,7 +144,7 @@ class MicrositeV2 extends Component<any, any> {
     const currentLanguage = getLangObject(CMSContent.lang).short;
     const { isMobile } = this.state;
     const languageProps = {
-      currentDomain,
+      uid,
       currentLanguage,
       languages,
     };
@@ -449,24 +455,25 @@ class MicrositeV2 extends Component<any, any> {
 
     const longFormContent = this.props.data.data.body2;
     let activePage = this.state.page.name;
-
     return (
       <InteractionContextProvider {...categoryProps}>
-        <PopulateHead
+        <PopulateMeta
           {...{
-            ...this.props.data.data,
-            first_publication_date: datePublished,
-            last_publication_date: dateModified,
-            lang,
+            prismicData: CMSData,
+            uid,
+            datePublished,
+            dateModified,
             originalHost: host,
-            isDev,
-            pathname,
-            currentLanguage,
             serverRequestStartTimestamp,
-            isMobile,
+            languages: alternateLanguages,
+            currentLanguage: lang,
+            isDev,
+            isMobile: this.state.isMobile,
             isAmp,
+            bannerImages: heroProps?.banners,
           }}
         />
+
         <div
           style={{
             display: activePage == PAGETYPE.HOMEPAGE ? 'block' : 'none',
@@ -480,7 +487,7 @@ class MicrositeV2 extends Component<any, any> {
             longFormContent={longFormContent}
             isFetched={isFetched}
             host={host}
-            uid={currentDomain}
+            uid={uid}
             directTgid={directTgid}
             ready={ready}
             isListicle={isListicle}
@@ -493,7 +500,7 @@ class MicrositeV2 extends Component<any, any> {
             changePage={this.changePage}
             tour={allTours[this.state.page.tgid]}
             host={host}
-            uid={currentDomain}
+            uid={uid}
             currentLanguage={currentLanguage}
             tgid={this.state.page.tgid}
             isEntertainmentMb={isEntertainmentMb}

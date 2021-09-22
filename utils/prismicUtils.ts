@@ -11,11 +11,7 @@ import {
   PRISMIC_LANG_TO_ROUTE_PARAM,
 } from 'const/index';
 import { COMMON_DATA_PROPS_FOR_LISTICLE } from 'const/index';
-import {
-  extractSinglePrismicSlice,
-  redirectTo,
-  refsArrayToObject,
-} from 'utils';
+import { getSinglePrismicSlice, redirectTo, refsArrayToObject } from 'utils';
 import { getLangUID, getValidUrlParams, sanitizeURL } from 'utils/urlUtils';
 
 export const getListicleDocument = async ({ req, uid, lang }) => {
@@ -126,7 +122,7 @@ export const getContentPageDocument = async ({
         microsite: micrositeData,
       } = refsArrayToObject(refArray);
 
-      let categoryTourListV1 = extractSinglePrismicSlice({
+      let categoryTourListV1 = getSinglePrismicSlice({
         sliceName: 'ticket_card_shoulder_page',
         slices: contentFramework?.data?.body,
       });
@@ -269,12 +265,12 @@ export const getMicrositeDocument = async ({
 
           // Base lang Fallback for CategorisedToursV1.
 
-          let categoryTourListV1 = extractSinglePrismicSlice({
+          let categoryTourListV1 = getSinglePrismicSlice({
             sliceName: 'tour_list_category_v1',
             slices: completeMicrosite.data.data.body,
           });
           if (!categoryTourListV1?.primary?.product_cards?.id) {
-            categoryTourListV1 = extractSinglePrismicSlice({
+            categoryTourListV1 = getSinglePrismicSlice({
               sliceName: 'tour_list_category_v1',
               slices: baseLangData?.data?.body,
             });
