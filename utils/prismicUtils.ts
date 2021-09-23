@@ -201,9 +201,16 @@ export const getMicrositeDocument = async ({
 
           const {
             data: {
-              data: { is_entertainment_mb: isEntertainmentMb },
+              is_entertainment_mb: isEntertainmentMb,
+              body: categorisedTours,
             },
-          } = completeMicrosite || baseLangData || { data: { data: {} } };
+          } = baseLangData || { data: {} };
+
+          const categorisedToursV1 = extractSinglePrismicSlice({
+            sliceName: 'tour_list_category_v1',
+            slices: categorisedTours,
+          });
+
           let allShowPages, productCardData;
           if (isEntertainmentMb) {
             allShowPages = await Client().query(
@@ -381,6 +388,7 @@ export const getMicrositeDocument = async ({
                     ? poweredByHeadout === 'Yes'
                     : poweredByHeadout,
                 baseLangPageTitle: baseLangData.data.title,
+                categorisedToursV1,
                 ...(allShowPages && { allShowPages }),
               },
             },
@@ -741,31 +749,36 @@ export const getPrismicDocument = async ({
   const { uid, lang } = getLangUID(req, query);
   const queryParamsString = getValidUrlParams(query);
 
-  return await Promise.any([
-    getMicrositeDocument({
-      req,
-      serverResponse,
-      host,
-      lang,
-      queryParamsString,
-      uid,
-    }),
-    getContentPageDocument({
-      req,
-      serverResponse,
-      host,
-      lang,
-      queryParamsString,
-      uid,
-    }),
-    getListicleDocument({ req, lang, uid }),
-    getShowPage({ req, lang, uid }),
-    getGlobalHomepage({ req, lang, uid }),
-    getGlobalExperience({ req, lang, uid }),
-    getGlobalCollection({ req, lang, uid }),
-    getGlobalCity({ req, lang, uid }),
-    getGlobalCountry({ req, lang, uid }),
-  ]).catch(() => ({
-    statusCode: 404,
-  }));
+  try {
+    return Promise.any([
+      getMicrositeDocument({
+        req,
+        serverResponse,
+        host,
+        lang,
+        queryParamsString,
+        uid,
+      }),
+      getContentPageDocument({
+        req,
+        serverResponse,
+        host,
+        lang,
+        queryParamsString,
+        uid,
+      }),
+      getListicleDocument({ req, lang, uid }),
+      getShowPage({ req, lang, uid }),
+      getGlobalHomepage({ req, lang, uid }),
+      getGlobalExperience({ req, lang, uid }),
+      getGlobalCollection({ req, lang, uid }),
+      getGlobalCity({ req, lang, uid }),
+      getGlobalCountry({ req, lang, uid }),
+    ]);
+  } catch (error) {
+    console.log({ error, reqUrl: req?.url });
+    return {
+      statusCode: 404,
+    };
+  }
 };
