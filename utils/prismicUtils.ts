@@ -126,22 +126,42 @@ export const getContentPageDocument = async ({
         microsite: micrositeData,
       } = refsArrayToObject(refArray);
 
+      const baseLangData =
+        lang !== 'en-us'
+          ? await Client(req)
+              .getByUID(CUSTOM_TYPES.CONTENT_PAGE, uid, {
+                lang: 'en-us',
+              })
+              .then((res) => res)
+          : null;
+      const baseLangRefArray = await getRefsArrayByIds(
+        [baseLangData?.data?.content_framework?.id],
+        req
+      );
+      const { contentFramework: baseLangContentFramework } = refsArrayToObject(
+        baseLangRefArray
+      );
+
       let categoryTourListV1 = extractSinglePrismicSlice({
         sliceName: 'ticket_card_shoulder_page',
-        slices: contentFramework?.data?.body,
+        slices:
+          lang !== 'en-us'
+            ? baseLangContentFramework?.data?.body
+            : contentFramework?.data?.body,
       });
 
-      let productCardData;
+      let productCardData, baseLangExperienceLimit;
       const hasCategoryTourListV1 = Object.keys(categoryTourListV1)?.length;
       if (hasCategoryTourListV1) {
         const { primary } = categoryTourListV1;
-        const { product_cards } = primary || {};
+        const { product_cards, sp_experience_limit } = primary || {};
         const { id: productCardsId } = product_cards || {};
         const { data } =
           (await Client(req).getByID(productCardsId, {
             lang: 'en-us',
           })) || {};
         productCardData = data;
+        baseLangExperienceLimit = sp_experience_limit;
       }
 
       let completePage = {
@@ -154,6 +174,7 @@ export const getContentPageDocument = async ({
           microsite: micrositeData,
           secondaryFooter,
           productCardData,
+          baseLangExperienceLimit,
         },
       };
       return {

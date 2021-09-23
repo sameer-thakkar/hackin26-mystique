@@ -223,6 +223,7 @@ export default class Page extends React.Component<any, any> {
         const { data } = CMSContent || {};
         const {
           productCardData,
+          baseLangExperienceLimit,
           content_framework: contentFramework,
           data: CMSData,
         } = data || {};
@@ -240,12 +241,19 @@ export default class Page extends React.Component<any, any> {
         const hasCategoryTourListV1 = Object.keys(categoryTourListV1)?.length;
 
         if (hasCategoryTourListV1) {
+          const sliceObj = {
+            ...categoryTourListV1,
+            ...(baseLangExperienceLimit && {
+              primary: {
+                sp_experience_limit: baseLangExperienceLimit,
+              },
+            }),
+          };
           categoryTourListData = await categoryTourListParserV1({
             productCard: productCardData,
-            sliceObj: categoryTourListV1,
+            sliceObj,
             hostname,
             lang,
-            isShoulderPage: true,
           });
         }
 

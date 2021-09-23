@@ -43,25 +43,26 @@ export const categoryTourListParserV1 = async ({
   sliceObj,
   hostname,
   lang,
-  isShoulderPage = false,
 }: {
   productCard: { [key: string]: any };
   sliceObj: { [key: string]: any };
   hostname: string;
   lang: string;
-  isShoulderPage?: boolean;
 }) => {
   let tourData = [],
     currency;
   const { primary, items } = sliceObj || {};
-  const { locale_ranking, locale_exclusions } = primary || {};
+  const {
+    locale_ranking,
+    locale_exclusions,
+    sp_experience_limit: shoulderPageLimit,
+  } = primary || {};
   const {
     collection,
     category,
     sub_category,
     city,
     limit,
-    shoulder_page_limit: shoulderPageLimit,
     ranking,
     exclusions,
     cta_url_suffix: commonCtaUrlSuffix,
@@ -76,7 +77,7 @@ export const categoryTourListParserV1 = async ({
   const finalExclusions = localeExclusions?.length
     ? localeExclusions
     : commonExclusions;
-  const finalLimit = isShoulderPage ? shoulderPageLimit : limit;
+  const finalLimit = shoulderPageLimit || limit;
 
   const language = getHeadoutLanguagecode(lang);
 
