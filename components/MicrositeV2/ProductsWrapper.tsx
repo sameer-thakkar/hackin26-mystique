@@ -40,6 +40,7 @@ export const ProductsWrapper = (props) => {
     uid,
     isListicle,
     isDev,
+    isDiscountedPage,
   } = props;
   useEffect(() => {
     const tgidArray =
@@ -81,6 +82,7 @@ export const ProductsWrapper = (props) => {
         isListicle={isListicle}
         categoryProps={categoryProps}
         isDev={isDev}
+        isDiscountedPage={isDiscountedPage}
       />
     </StyledProductWrapper>
   );

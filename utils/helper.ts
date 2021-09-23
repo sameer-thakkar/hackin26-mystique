@@ -393,3 +393,29 @@ export const getTGIDListForMonth = (allTours, displayMonth) => {
     return accumulator;
   }, []);
 };
+
+export const getDiscountedProducts = (allTours) => {
+  return Object.values(allTours).reduce((acc: any[], product: any) => {
+    const { listingPrice, tgid } = product;
+    const { finalPrice, originalPrice } = listingPrice || {};
+    if (listingPrice && (finalPrice < originalPrice || finalPrice < 30)) {
+      acc.push(tgid);
+    }
+    return acc;
+  }, []);
+};
+
+export const getPriceSortedDiscountedProducts = (allTours) => {
+  return Object.values(allTours)
+    .sort((a: any, b: any) => {
+      return a?.listingPrice?.finalPrice - b?.listingPrice?.finalPrice;
+    })
+    .reduce((acc: any[], product: any) => {
+      const { listingPrice, tgid } = product;
+      const { finalPrice, originalPrice } = listingPrice || {};
+      if (listingPrice && (finalPrice < originalPrice || finalPrice < 30)) {
+        acc.push(tgid);
+      }
+      return acc;
+    }, []);
+};

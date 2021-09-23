@@ -17,7 +17,12 @@ import { THEMES } from 'const/index';
 import { strings } from 'const/strings';
 import { SIZES, SOLEIL } from 'const/ui-constants';
 import { isSafetyIncluded } from 'utils';
-import { groupSlices, getTGIDListForMonth } from 'utils/helper';
+import {
+  groupSlices,
+  getTGIDListForMonth,
+  getDiscountedProducts,
+  getPriceSortedDiscountedProducts,
+} from 'utils/helper';
 import Image from 'UI/Image';
 
 const Alert = dynamic(() => import('UI/Alert'), { ssr: false });
@@ -146,38 +151,36 @@ export const HomePage = (props) => {
   } = props;
 
   let { categoryProps } = props;
+  const isDiscountedPage = displayMonths === 'Discounted';
 
-  if (isListicle) {
-    let categoryListicle = [];
+  if (isListicle || isDiscountedPage) {
+    let singleCategory = [];
+    let allowedTours;
+    let priceSortTours;
 
     if (displayMonths === 'ALL') {
-      categoryListicle = [
-        {
-          id: 1,
-          name: displayMonths,
-          rank: 0,
-          ranking: {
-            popularity: Object.keys(allTours),
-          },
-        },
-      ];
+      allowedTours = Object.keys(allTours);
+    } else if (displayMonths === 'Discounted') {
+      allowedTours = getDiscountedProducts(allTours);
+      priceSortTours = getPriceSortedDiscountedProducts(allTours);
     } else {
-      const allowedTours = getTGIDListForMonth(allTours, displayMonths);
-      categoryListicle = [
-        {
-          id: 1,
-          name: displayMonths,
-          rank: 0,
-          ranking: {
-            popularity: allowedTours,
-          },
-        },
-      ];
+      allowedTours = getTGIDListForMonth(allTours, displayMonths);
     }
+    singleCategory = [
+      {
+        id: 1,
+        name: displayMonths,
+        rank: 0,
+        ranking: {
+          popularity: allowedTours?.length ? allowedTours : [],
+          price: priceSortTours?.length ? priceSortTours : [],
+        },
+      },
+    ];
 
     categoryProps = {
       active: 0,
-      categories: categoryListicle,
+      categories: singleCategory,
       hideSortBySelector: false,
     };
   }
@@ -308,6 +311,7 @@ export const HomePage = (props) => {
           uid={uid}
           isDev={isDev}
           isListicle={isListicle}
+          isDiscountedPage={isDiscountedPage}
         />
       </Conditional>
       <Conditional if={isEntertainmentMb}>
