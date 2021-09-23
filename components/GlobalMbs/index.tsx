@@ -233,6 +233,7 @@ const GlobalMB = (props) => {
             isMobile,
             google_site_verification,
             bing_site_verification,
+            disable_amp: true,
           }}
         />
         <Header
