@@ -18,7 +18,7 @@ const CityList = async (req: NextApiRequest, res: NextApiResponse) => {
     const citiesResult = cityData.slice(startIndex, endIndex);
     res.setHeader('Content-type', 'application/json');
     const response = {
-      results_size: citiesResult?.length,
+      results_size: totalCities,
       results: citiesResult?.map((c) => {
         const { cityCode, displayName: city, country } = c || {};
         const { code: countryCode, displayName: countryName, currency } =

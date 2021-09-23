@@ -52,7 +52,11 @@ export const categoryTourListParserV1 = async ({
   let tourData = [],
     currency;
   const { primary, items } = sliceObj || {};
-  const { locale_ranking, locale_exclusions } = primary || {};
+  const {
+    locale_ranking,
+    locale_exclusions,
+    sp_experience_limit: shoulderPageLimit,
+  } = primary || {};
   const {
     collection,
     category,
@@ -73,6 +77,7 @@ export const categoryTourListParserV1 = async ({
   const finalExclusions = localeExclusions?.length
     ? localeExclusions
     : commonExclusions;
+  const finalLimit = shoulderPageLimit || limit;
 
   const language = getHeadoutLanguagecode(lang);
 
@@ -81,7 +86,7 @@ export const categoryTourListParserV1 = async ({
       collectionId: collection,
       hostname,
       language,
-      limit,
+      limit: finalLimit,
     });
     currency = collectionData?.city?.country?.currency;
     const getCollectionSection = (collectionData, sectionType: string) => {
@@ -109,7 +114,7 @@ export const categoryTourListParserV1 = async ({
       isSubCategory: false,
       city: cityCode,
       language,
-      limit,
+      limit: finalLimit,
     });
     currency = categoryData?.currency;
     tourData.push(...categoryData?.pageData?.items);
@@ -120,7 +125,7 @@ export const categoryTourListParserV1 = async ({
       isSubCategory: true,
       city: cityCode,
       language,
-      limit,
+      limit: finalLimit,
     });
     currency = subCategoryData?.currency;
     tourData.push(...subCategoryData?.pageData?.items);
@@ -162,36 +167,39 @@ export const categoryTourListParserV1 = async ({
       (tour) => !finalExclusions.includes(tour.id)
     );
 
-    finalTours?.slice(
-      0,
-      limit || finalTours.length >= 10 ? 10 : finalTours.length - 1
-    );
+    const sliceIndex = finalLimit
+      ? finalLimit
+      : finalTours.length >= 10
+      ? 10
+      : finalTours.length - 1;
 
-    const repeatableObj = finalTours?.reduce((acc, tour) => {
-      const { id, allTags } = tour || {};
-      const tourObj = items.find((item) => item.tgid === id);
-      const [variantId] =
-        getSingleAriesTag(allTags, 'DEFAULT_VARIANT')?.match(/\d+/) || [];
+    const repeatableObj = finalTours
+      ?.slice(0, sliceIndex)
+      ?.reduce((acc, tour) => {
+        const { id, allTags } = tour || {};
+        const tourObj = items.find((item) => item.tgid === id);
+        const [variantId] =
+          getSingleAriesTag(allTags, 'DEFAULT_VARIANT')?.match(/\d+/) || [];
 
-      const ctaSuffix = new URLSearchParams(commonCtaUrlSuffix || '');
-      if (variantId) ctaSuffix.set('variantId', variantId);
-      acc.push({
-        tgid: id,
-        cta_url_suffix: ctaSuffix ? `?${ctaSuffix?.toString()}` : null,
-        marketing_highlights_override: null,
-        offer__free_tour: { link_type: 'Document' },
-        product_booster: [],
-        short_summary: [],
-        show_scratch_price: commonScratchPrice ? 'Yes' : 'No',
-        tag_booster: null,
-        tid: null,
-        tour_description_override: [],
-        tour_title_override: null,
-        variantId,
-        ...tourObj,
-      });
-      return acc;
-    }, []);
+        const ctaSuffix = new URLSearchParams(commonCtaUrlSuffix || '');
+        if (variantId) ctaSuffix.set('variantId', variantId);
+        acc.push({
+          tgid: id,
+          cta_url_suffix: ctaSuffix ? `?${ctaSuffix?.toString()}` : null,
+          marketing_highlights_override: null,
+          offer__free_tour: { link_type: 'Document' },
+          product_booster: [],
+          short_summary: [],
+          show_scratch_price: commonScratchPrice ? 'Yes' : 'No',
+          tag_booster: null,
+          tid: null,
+          tour_description_override: [],
+          tour_title_override: null,
+          variantId,
+          ...tourObj,
+        });
+        return acc;
+      }, []);
     const allMultiVariantTgids = repeatableObj
       .filter((tour) => tour.variantId)
       .map((tour) => tour.tgid);

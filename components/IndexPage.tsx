@@ -165,8 +165,8 @@ export default class Page extends React.Component<any, any> {
         asPath,
         biLink,
       };
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log({ error, reqUrl: req?.url });
       return {};
     }
   }
@@ -180,11 +180,13 @@ export default class Page extends React.Component<any, any> {
     try {
       let initial_tgids = [];
 
-      const { ContentType, CMSContent, statusCode } = await getPrismicDocument({
-        query,
-        req,
-        serverResponse,
-      });
+      const { ContentType, CMSContent, statusCode } = (await getPrismicDocument(
+        {
+          query,
+          req,
+          serverResponse,
+        }
+      )) || { statusCode: 404 };
 
       if (statusCode) {
         return {
@@ -211,8 +213,8 @@ export default class Page extends React.Component<any, any> {
             };
           }
           return {};
-        } catch (e) {
-          console.log(e);
+        } catch (error) {
+          console.log({ error, reqUrl: req?.url });
           return {};
         }
       })();
@@ -221,6 +223,7 @@ export default class Page extends React.Component<any, any> {
         const { data } = CMSContent || {};
         const {
           productCardData,
+          baseLangExperienceLimit,
           content_framework: contentFramework,
           data: CMSData,
         } = data || {};
@@ -238,9 +241,17 @@ export default class Page extends React.Component<any, any> {
         const hasCategoryTourListV1 = Object.keys(categoryTourListV1)?.length;
 
         if (hasCategoryTourListV1) {
+          const sliceObj = {
+            ...categoryTourListV1,
+            ...(baseLangExperienceLimit && {
+              primary: {
+                sp_experience_limit: baseLangExperienceLimit,
+              },
+            }),
+          };
           categoryTourListData = await categoryTourListParserV1({
             productCard: productCardData,
-            sliceObj: categoryTourListV1,
+            sliceObj,
             hostname,
             lang,
           });
@@ -361,8 +372,8 @@ export default class Page extends React.Component<any, any> {
             isDev,
             host,
           };
-        } catch (err) {
-          console.log(err);
+        } catch (error) {
+          console.log({ error, reqUrl: req?.url });
         }
       }
       /**
@@ -396,16 +407,18 @@ export default class Page extends React.Component<any, any> {
         const { refs, data: CMSData } = data || {};
         const { contentFramework, productCardData } = refs || {};
         const { data: contentFrameworkData } = contentFramework || {};
-        const { design, theme, body, body1, allShowPages } = CMSData || {};
+        const {
+          design,
+          theme,
+          body,
+          body1,
+          allShowPages,
+          categorisedToursV1: categoryTourListV1,
+        } = CMSData || {};
         const MBDesign = design || '';
         const mbTheme = theme || THEMES.DEFAULT;
         const toursTabFirstSlice = body1[0];
         const categorizedTours = body;
-
-        const categoryTourListV1 = extractSinglePrismicSlice({
-          sliceName: 'tour_list_category_v1',
-          slices: categorizedTours,
-        });
 
         const categoryTourList = extractSinglePrismicSlice({
           sliceName: 'tour_list_category',
@@ -598,7 +611,7 @@ export default class Page extends React.Component<any, any> {
         primaryCountry,
       };
     } catch (error) {
-      console.log(error);
+      console.log({ error, reqUrl: req?.url });
       return {
         statusCode: 500,
       };
