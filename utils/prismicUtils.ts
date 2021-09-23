@@ -223,7 +223,7 @@ export const getMicrositeDocument = async ({
             },
           } = baseLangData || { data: {} };
 
-          const categorisedToursV1 = extractSinglePrismicSlice({
+          const categorisedToursV1 = getSinglePrismicSlice({
             sliceName: 'tour_list_category_v1',
             slices: categorisedTours,
           });
