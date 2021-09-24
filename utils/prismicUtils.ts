@@ -771,7 +771,7 @@ export const getPrismicDocument = async ({
   const queryParamsString = getValidUrlParams(query);
 
   try {
-    return Promise.any([
+    return await Promise.any([
       getMicrositeDocument({
         req,
         serverResponse,
