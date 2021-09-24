@@ -171,7 +171,7 @@ export const categoryTourListParserV1 = async ({
       ? finalLimit
       : finalTours.length >= 10
       ? 10
-      : finalTours.length - 1;
+      : finalTours.length;
 
     const repeatableObj = finalTours
       ?.slice(0, sliceIndex)
