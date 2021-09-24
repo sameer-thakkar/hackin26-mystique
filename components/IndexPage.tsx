@@ -55,6 +55,7 @@ export default class Page extends React.Component<any, any> {
     const { req, query, res, asPath } = ctx;
     const serverRequestStartTimestamp = Math.floor(new Date().getTime());
     const queryParamsString = getValidUrlParams(query);
+    const { host } = req?.headers || window?.location;
     const pathname =
       req?.url.split('?')[0].split('#')[0] || window.location.pathname;
     const isMobile = req
@@ -70,7 +71,6 @@ export default class Page extends React.Component<any, any> {
     const { bi: biLink } = query;
     // Naked Domain to WWW Redirect.
     if (!isDev && req) {
-      const { host } = req.headers;
       if (isNakedDomain(host)) {
         const redirectURL = `https://www.${host}${pathname}${
           queryParamsString ? `?${queryParamsString}` : ''
@@ -166,7 +166,7 @@ export default class Page extends React.Component<any, any> {
         biLink,
       };
     } catch (error) {
-      console.log({ error, reqUrl: req?.url });
+      console.log({ error, reqUrl: `${req?.headers?.host}/${req?.url}` });
       return {};
     }
   }
@@ -214,7 +214,7 @@ export default class Page extends React.Component<any, any> {
           }
           return {};
         } catch (error) {
-          console.log({ error, reqUrl: req?.url });
+          console.log({ error, reqUrl: `${req?.headers?.host}/${req?.url}` });
           return {};
         }
       })();
@@ -373,7 +373,7 @@ export default class Page extends React.Component<any, any> {
             host,
           };
         } catch (error) {
-          console.log({ error, reqUrl: req?.url });
+          console.log({ error, reqUrl: `${req?.headers?.host}/${req?.url}` });
         }
       }
       /**
@@ -611,7 +611,7 @@ export default class Page extends React.Component<any, any> {
         primaryCountry,
       };
     } catch (error) {
-      console.log({ error, reqUrl: req?.url });
+      console.log({ error, reqUrl: `${req?.headers?.host}/${req?.url}` });
       return {
         statusCode: 500,
       };

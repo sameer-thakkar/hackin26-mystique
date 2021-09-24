@@ -797,7 +797,7 @@ export const getPrismicDocument = async ({
       getGlobalCountry({ req, lang, uid }),
     ]);
   } catch (error) {
-    console.log({ error, reqUrl: req?.url });
+    console.log({ error, reqUrl: `${req?.headers?.host}/${req?.url}` });
     return {
       statusCode: 404,
     };
