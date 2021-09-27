@@ -23,19 +23,7 @@ function getPage(api, uid, documents) {
     });
 }
 
-const createLoc = (doc) => {
-  let pageUrl;
-
-  if (
-    doc.type === CUSTOM_TYPES.MICROSITE ||
-    doc.type === CUSTOM_TYPES.CONTENT_PAGE
-  ) {
-    pageUrl = doc.data.page_url;
-  } else {
-    pageUrl = convertUidToUrl({ uid: doc.uid });
-  }
-  return pageUrl;
-};
+const createLoc = (doc) => convertUidToUrl({ uid: doc.uid });
 
 const createImg = (doc) => {
   if (doc.type === CUSTOM_TYPES.MICROSITE) {

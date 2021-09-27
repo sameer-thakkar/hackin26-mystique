@@ -128,11 +128,10 @@ class MicrositeV2 extends Component<any, any> {
 
     const alternateLanguages = getAlternateLanguages(
       alternate_languages,
-      isAmp,
+      isDev,
       isAmp
     );
     const {
-      localization: languages,
       dropdown_menu: dropdownMenu,
       header_links,
       images: CMSImages,
@@ -146,7 +145,7 @@ class MicrositeV2 extends Component<any, any> {
     const languageProps = {
       uid,
       currentLanguage,
-      languages,
+      languages: alternateLanguages,
     };
 
     const dropdownLinksArray = dropdownMenu.reduce((acc, item) => {
@@ -452,7 +451,6 @@ class MicrositeV2 extends Component<any, any> {
     };
 
     const directTgid = isMobile ? null : this.props.router.query.tgid;
-
     const longFormContent = this.props.data.data.body2;
     let activePage = this.state.page.name;
     return (

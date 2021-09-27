@@ -310,3 +310,15 @@ export const getSinglePrismicSlice = ({
     return {};
   }
 };
+
+export const getEnglishDocUid = (
+  prismicAlternateLanguages: { [key: string]: string }[]
+) => {
+  if (prismicAlternateLanguages?.length) {
+    const { uid } =
+      prismicAlternateLanguages?.find((doc) => doc.lang === 'en-us') || {};
+    return uid;
+  } else {
+    return null;
+  }
+};

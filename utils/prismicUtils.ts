@@ -11,7 +11,12 @@ import {
   PRISMIC_LANG_TO_ROUTE_PARAM,
 } from 'const/index';
 import { COMMON_DATA_PROPS_FOR_LISTICLE } from 'const/index';
-import { getSinglePrismicSlice, redirectTo, refsArrayToObject } from 'utils';
+import {
+  getEnglishDocUid,
+  getSinglePrismicSlice,
+  redirectTo,
+  refsArrayToObject,
+} from 'utils';
 import { getLangUID, getValidUrlParams, sanitizeURL } from 'utils/urlUtils';
 
 export const getListicleDocument = async ({ req, uid, lang }) => {
@@ -122,10 +127,11 @@ export const getContentPageDocument = async ({
         microsite: micrositeData,
       } = refsArrayToObject(refArray);
 
+      const baseLangUid = getEnglishDocUid(page?.alternate_languages);
       const baseLangData =
         lang !== 'en-us'
           ? await Client(req)
-              .getByUID(CUSTOM_TYPES.CONTENT_PAGE, uid, {
+              .getByUID(CUSTOM_TYPES.CONTENT_PAGE, baseLangUid, {
                 lang: 'en-us',
               })
               .then((res) => res)
@@ -207,10 +213,13 @@ export const getMicrositeDocument = async ({
             type: completeMicrosite.data.data.redirect_type,
           });
         } else {
+          const baseLangUid = getEnglishDocUid(
+            completeMicrosite?.data?.alternate_languages
+          );
           const baseLangData =
             lang !== 'en-us'
               ? await Client(req)
-                  .getByUID(CUSTOM_TYPES.MICROSITE, uid, {
+                  .getByUID(CUSTOM_TYPES.MICROSITE, baseLangUid, {
                     lang: 'en-us',
                   })
                   .then((res) => res)
