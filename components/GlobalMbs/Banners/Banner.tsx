@@ -229,6 +229,7 @@ interface BannerProps {
   collection?: any;
   startingPrice?: string;
   isDev: boolean;
+  host: string;
 }
 
 const Banner: FunctionComponent<BannerProps> = ({
@@ -240,6 +241,7 @@ const Banner: FunctionComponent<BannerProps> = ({
   collection = {},
   startingPrice = null,
   isDev,
+  host,
 }) => {
   const {
     categoryID,
@@ -258,7 +260,7 @@ const Banner: FunctionComponent<BannerProps> = ({
   const hasTicketPage = categoryID && supply === 'Direct';
   const ticketLink = hasTicketPage
     ? ticketsPageLink
-      ? convertUidToUrl({ uid: ticketsPageLink, isDev })
+      ? convertUidToUrl({ uid: ticketsPageLink, isDev, hostname: host })
       : getValidUrl(officialWebsite?.trim())
     : getValidUrl(officialWebsite?.trim());
   const swiperParams = {

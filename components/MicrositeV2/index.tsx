@@ -129,7 +129,9 @@ class MicrositeV2 extends Component<any, any> {
     const alternateLanguages = getAlternateLanguages(
       alternate_languages,
       isDev,
-      isAmp
+      isAmp,
+      host,
+      uid
     );
     const {
       dropdown_menu: dropdownMenu,

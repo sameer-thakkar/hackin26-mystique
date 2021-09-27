@@ -8,7 +8,11 @@ import Footer from 'components/common/Footer';
 import { groupSlices } from 'utils/helper';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import { CUSTOM_TYPES } from 'const/index';
-import { getSinglePrismicSlice, getAlternateLanguages } from 'utils';
+import {
+  getSinglePrismicSlice,
+  getAlternateLanguages,
+  getHeadoutLanguagecode,
+} from 'utils';
 
 const CountryPage = dynamic(() => import('./views/CountryPage'));
 const CityPage: ComponentType<any> = dynamic(() => import('./views/CityPage'));
@@ -53,7 +57,9 @@ const GlobalMB = (props) => {
   const alternateLanguages = getAlternateLanguages(
     alternate_languages,
     isDev,
-    false
+    false,
+    host,
+    uid
   );
 
   const isGlobalHomepage = type === CUSTOM_TYPES.GLOBAL_HOMEPAGE;
@@ -112,7 +118,12 @@ const GlobalMB = (props) => {
   const hasTicketsPage = supply === 'Direct' && categoryId;
   const ticketLink = hasTicketsPage
     ? ticketsPage?.uid
-      ? convertUidToUrl({ uid: ticketsPage?.uid, isDev })
+      ? convertUidToUrl({
+          uid: ticketsPage?.uid,
+          isDev,
+          hostname: host,
+          lang: getHeadoutLanguagecode(lang),
+        })
       : getValidUrl(officialWebsite?.trim())
     : getValidUrl(officialWebsite?.trim());
 
@@ -211,7 +222,12 @@ const GlobalMB = (props) => {
         url: {
           url: data?.data?.microbrand_url
             ? getValidUrl(data?.data?.microbrand_url?.trim())
-            : convertUidToUrl({ uid: data?.uid }),
+            : convertUidToUrl({
+                uid: data?.uid,
+                isDev,
+                hostname: host,
+                lang: getHeadoutLanguagecode(lang),
+              }),
           target: '_blank',
         },
       },
@@ -355,6 +371,7 @@ const GlobalMB = (props) => {
             uid={uid}
             title={`${CITY_TAGS_TITLE} ${cityName}`}
             isDev={isDev}
+            host={host}
           />
         </Conditional>
         <Conditional if={countryCollectionsData?.length && !isGlobalHomepage}>
@@ -363,6 +380,7 @@ const GlobalMB = (props) => {
             uid={uid}
             title={`${COUNTRY_TAGS_TITLE} ${countryName}`}
             isDev={isDev}
+            host={host}
           />
         </Conditional>
         <Conditional if={collectionsData?.length && isGlobalHomepage}>
@@ -371,6 +389,7 @@ const GlobalMB = (props) => {
             uid={uid}
             title={`${HOMEPAGE_TAGS_TITLE}`}
             isDev={isDev}
+            host={host}
           />
         </Conditional>
         <Footer

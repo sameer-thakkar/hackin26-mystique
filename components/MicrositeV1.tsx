@@ -128,7 +128,9 @@ const MicrositeV1 = (props) => {
   const alternateLanguages = getAlternateLanguages(
     alternate_languages,
     isDev,
-    isAmp
+    isAmp,
+    host,
+    uid
   );
 
   const { data: commonFooterData } = commonFooter || {};

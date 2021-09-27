@@ -101,36 +101,64 @@ export const getValidUrlParams = (query) =>
     .join('&')
     .trim();
 
+export const getDomainFromUid = (uid) => {
+  const modUid = `${uid}.`; // add trailing . to identify end of UID
+  const regex = /[\w\d-]+\.[\w\d-]+\.(([\w]{1,}\.[\w]{1,3}\.)|([\w]{2,}\.))/;
+  const domain = modUid.match(regex)?.[0]?.slice(0, -1);
+  return domain;
+};
+
 export const convertUidToUrl = ({
   uid,
   lang = 'en',
   isDev,
   isAmp,
+  hostname = '',
+  removeLangPath = false,
 }: {
   uid: string;
+  hostname?: string;
   lang?: string;
   isDev?: boolean;
   isAmp?: boolean;
+  removeLangPath?: boolean;
 }) => {
-  if (isDev) {
-    return `http://localhost:3001/?mystique_uid=${uid}&lang=${
-      getLangObject(lang)?.paramLang
-    }${isAmp ? `&amp=1` : ''}`;
-  }
-  if (uid) {
+  const getUrl = (uid: string, lang, isStage: boolean) => {
     let url;
     const modUid = `${uid}.`; // add trailing . to identify end of UID
-    const regex = /[\w\d-]+\.[\w\d-]+\.(([\w]{1,}\.[\w]{1,3}\.)|([\w]{2,}\.))/;
-    const domain = modUid.match(regex)?.[0]?.slice(0, -1);
+    const domain = getDomainFromUid(uid);
     const pathName = modUid.split(domain)?.filter((string) => string.length);
     if (domain?.length) {
-      url = `https://${domain}${lang !== 'en' ? `/${lang}` : ''}`;
+      url = `https://${isStage ? 'stage-' : ''}${domain}${
+        lang !== 'en' && !removeLangPath ? `/${lang}` : ''
+      }`;
       if (pathName.length) {
         pathName.forEach((name) => {
           url += name.replaceAll('.', '/');
         });
       }
     }
+    return url;
+  };
+  const isStage = hostname?.includes('stage-');
+  if (isStage) {
+    if (isDev) {
+      return `${hostname}/?mystique_uid=${uid}&lang=${
+        getLangObject(lang)?.paramLang
+      }${isAmp ? `&amp=1` : ''}`;
+    } else {
+      const url = getUrl(uid, lang, true);
+      return `${url}${isAmp ? `&amp=1` : ''}`;
+    }
+  }
+  if (isDev) {
+    return `http://localhost:3001/?mystique_uid=${uid}&lang=${
+      getLangObject(lang)?.paramLang
+    }${isAmp ? `&amp=1` : ''}`;
+  }
+
+  if (uid) {
+    let url = getUrl(uid, lang, false);
     if (isAmp) {
       const urlObject = new URLSearchParams(url);
       urlObject.set('amp', '1');

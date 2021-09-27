@@ -556,7 +556,7 @@ export const MobileProductPage = (props) => {
   const { allTags = [] } = tour;
   const hasSafetyFlag = isSafetyIncluded(allTags);
   const showPageUrl = showPageUid
-    ? convertUidToUrl({ uid: showPageUid, isDev })
+    ? convertUidToUrl({ uid: showPageUid, isDev, hostname: host })
     : null;
   const openingDate = dateToString(reopeningDate, lang, 'DD MMM, YYYY');
 

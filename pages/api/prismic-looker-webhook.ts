@@ -1,7 +1,7 @@
 import { Client } from 'config/prismic-config';
 import { CUSTOM_TYPES, LANGUAGE_PARAMS_REGEX } from 'const/index';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { legacyBooleanCheck } from 'utils';
+import { getHeadoutLanguagecode, legacyBooleanCheck } from 'utils';
 import { fetchTourList } from 'utils/apiUtils';
 import { convertUidToUrl } from 'utils/urlUtils';
 
@@ -116,7 +116,7 @@ const parseDocuments = async (documents) => {
     };
     let pageUrl;
     try {
-      pageUrl = new URL(convertUidToUrl({ uid }));
+      pageUrl = convertUidToUrl({ uid, lang: getHeadoutLanguagecode(lang) });
     } catch (e) {
       pageUrl = null;
     }

@@ -338,7 +338,9 @@ class ContentPage extends Component<any, any> {
     const alternateLanguages = getAlternateLanguages(
       alternate_languages,
       isDev,
-      isAmp
+      isAmp,
+      host,
+      uid
     );
 
     // START Data extraction for populating head

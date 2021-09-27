@@ -246,7 +246,9 @@ const ShowPage = ({
   const alternateLanguages = getAlternateLanguages(
     alternate_languages,
     isDev,
-    false
+    false,
+    host,
+    uid
   );
 
   const {
@@ -327,7 +329,7 @@ const ShowPage = ({
     });
   }, []);
 
-  const PageURL = convertUidToUrl({ uid, lang, isDev });
+  const PageURL = convertUidToUrl({ uid, lang, isDev, hostname: host });
   const [bannerImageOne, bannerImageTwo] = imageUploads || [];
   const breadcrumbs = [
     { url: '/', text: 'London Theatre Tickets' },
@@ -473,6 +475,7 @@ const ShowPage = ({
           currentLanguage={currentLanguage}
           categoryName={categoryName}
           isDev={isDev}
+          host={host}
         />
         <Breadcrumb links={breadcrumbs} />
       </Wrapper>

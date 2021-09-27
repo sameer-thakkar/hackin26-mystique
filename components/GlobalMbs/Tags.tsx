@@ -44,13 +44,17 @@ interface TagsProps {
   uid: string;
   title: string;
   isDev?: boolean;
+  host: string;
+  isAmp?: boolean;
 }
 
 const Tags: FunctionComponent<TagsProps> = ({
   collections,
   uid,
   title,
-  isDev,
+  isDev = false,
+  isAmp = false,
+  host,
 }) => {
   const finalCollection = collections.filter(
     (collection) => collection.uid !== uid
@@ -62,7 +66,7 @@ const Tags: FunctionComponent<TagsProps> = ({
       data || {};
     const url = microbrandUrl
       ? getValidUrl(microbrandUrl?.trim())
-      : convertUidToUrl({ uid, isDev });
+      : convertUidToUrl({ uid, isDev, hostname: host, isAmp });
     return (
       <Tag key={id} href={url}>
         {collectionName}

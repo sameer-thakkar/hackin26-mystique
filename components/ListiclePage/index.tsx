@@ -275,7 +275,9 @@ const Listicle = (props) => {
   const alternateLanguages = getAlternateLanguages(
     alternate_languages,
     isDev,
-    false
+    false,
+    host,
+    uid
   );
 
   const contentFrameworkSlices = groupSlices(

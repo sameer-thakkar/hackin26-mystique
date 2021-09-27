@@ -69,6 +69,7 @@ export default function PopulateMeta({
     uid,
     lang,
     isDev,
+    hostname: originalHost,
   });
   const primaryDomainUrl = new URL(pageUrl).hostname;
   const logoUrl = image?.url || logo.url;
@@ -174,6 +175,8 @@ export default function PopulateMeta({
   if (preloadBannerImage) {
     additionalLinkTags.push({
       rel: 'preload',
+      // @ts-ignore
+      as: 'image',
       href: bannerImage,
     });
   }

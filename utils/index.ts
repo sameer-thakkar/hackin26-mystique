@@ -10,7 +10,7 @@ import {
   CUSTOM_TYPES,
 } from '../constants';
 import { fetchCollection, fetchTGIDsByCategoryV2 } from './apiUtils';
-import { convertUidToUrl } from './urlUtils';
+import { convertUidToUrl, getDomainFromUid } from './urlUtils';
 
 export const getLanguageFromPathname = ({
   pathname,
@@ -170,14 +170,29 @@ export const getHeadoutLanguagecode = (prismicLangCode) => {
 export const getAlternateLanguages = (
   alternateLangsArray: any[],
   isDev: boolean,
-  isAmp: boolean
+  isAmp: boolean,
+  host,
+  currentDocUid = ''
 ) => {
   if (alternateLangsArray?.length) {
+    const englishDocUid =
+      getEnglishDocUid(alternateLangsArray) || currentDocUid;
+    const englishDomain = englishDocUid ? getDomainFromUid(englishDocUid) : '';
     return alternateLangsArray.map((doc) => {
       const { uid, lang: docLang } = doc || {};
+      const domain = getDomainFromUid(uid);
       const lang = getHeadoutLanguagecode(docLang);
       return {
-        url: convertUidToUrl({ uid, lang, isDev, isAmp }),
+        url: convertUidToUrl({
+          uid,
+          lang,
+          hostname: host,
+          isDev,
+          isAmp,
+          ...(domain !== englishDomain && {
+            removeLangPath: true,
+          }),
+        }),
         lang,
       };
     });
