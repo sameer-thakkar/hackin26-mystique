@@ -984,7 +984,7 @@ const TicketCard = (props) => {
                   popupOpener();
                 }}
               >
-                More Details +
+                {strings.MORE_DETAILS} +
               </MoreDetailWrapper>
             )}
             <Conditional if={hasSafetyFlag && isOpened}>
