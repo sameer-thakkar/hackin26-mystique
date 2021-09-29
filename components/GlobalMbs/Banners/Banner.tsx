@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useContext, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
@@ -9,6 +9,7 @@ import { COLORS, SOLEIL } from 'const/ui-constants';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import { CHEVRON_DOWN } from 'assets/SvgIcons';
 import { shortCodeSerializer } from 'utils/shortCodes';
+import { MBContext } from 'contexts/MBContext';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 const Breadcrumb = dynamic(() => import('components/GlobalMbs/Breadcrumb'));
@@ -228,8 +229,6 @@ interface BannerProps {
   breadcrumbs?: Array<{ url: string; text: string }>;
   collection?: any;
   startingPrice?: string;
-  isDev: boolean;
-  host: string;
 }
 
 const Banner: FunctionComponent<BannerProps> = ({
@@ -240,8 +239,6 @@ const Banner: FunctionComponent<BannerProps> = ({
   breadcrumbs,
   collection = {},
   startingPrice = null,
-  isDev,
-  host,
 }) => {
   const {
     categoryID,
@@ -256,6 +253,8 @@ const Banner: FunctionComponent<BannerProps> = ({
     timings,
     city,
   } = collection;
+
+  const { host, isDev } = useContext(MBContext);
   const { GLOBAL_MB: globalMbAR } = ASPECT_RATIO;
   const hasTicketPage = categoryID && supply === 'Direct';
   const ticketLink = hasTicketPage

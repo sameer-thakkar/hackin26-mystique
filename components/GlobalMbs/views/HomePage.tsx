@@ -28,7 +28,7 @@ const HomePage = (props) => {
         mbType={mb_type}
       />
       <Conditional if={cityCollections?.length}>
-        <TopDestinationsCarousel destinations={cityCollections} isDev={isDev} />
+        <TopDestinationsCarousel destinations={cityCollections} />
       </Conditional>
       {slices?.map((slice) => sliceHandler(slice, { collections, isDev }))}
     </>

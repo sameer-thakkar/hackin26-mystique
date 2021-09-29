@@ -96,7 +96,6 @@ interface CardProps {
   isMobile: boolean;
   price?: string;
   currency?: string;
-  isDev: boolean;
 }
 
 const Card: FunctionComponent<CardProps> = ({
@@ -105,7 +104,6 @@ const Card: FunctionComponent<CardProps> = ({
   isMobile,
   price,
   currency,
-  isDev,
 }) => {
   const {
     data: {
@@ -138,7 +136,6 @@ const Card: FunctionComponent<CardProps> = ({
             isMobile={isMobile}
             price={price}
             currency={currency}
-            isDev={isDev}
           />
         ),
         type: SIDEBAR_TYPES.PRODUCT_CARD,

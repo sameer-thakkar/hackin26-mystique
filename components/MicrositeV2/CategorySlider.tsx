@@ -103,7 +103,6 @@ const CategorySlider = (props) => {
     tgidsArray,
     carouselOptions,
     currentLanguage,
-    host,
     uid,
     heading = '',
     description,
@@ -290,7 +289,6 @@ const CategorySlider = (props) => {
             isMobile={isMobile}
             isEntertainmentMb={isEntertainmentMb}
             currentLanguage={currentLanguage}
-            host={host}
             uid={uid}
             cardPosition={cardPosition - currentIndex}
             closeDescription={closeDescription}

@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useContext } from 'react';
 import styled from 'styled-components';
 import Image from 'UI/Image';
 import Conditional from 'components/common/Conditional';
@@ -7,6 +7,7 @@ import { COLORS, SOLEIL } from 'const/ui-constants';
 import { CHEVRON_LEFT } from 'assets/SvgIcons';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import { ASPECT_RATIO } from 'const/index';
+import { MBContext } from 'contexts/MBContext';
 
 const StyledCard = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
@@ -116,7 +117,6 @@ interface ExperienceProps {
   attractions?: any[];
   rides?: any[];
   tickets?: any;
-  isDev: boolean;
 }
 
 const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
@@ -128,15 +128,21 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
   attractions,
   rides,
   tickets,
-  isDev,
 }) => {
+  const { isDev, host } = useContext(MBContext);
   const currencySymbol = tickets?.currencySymbol?.localSymbol;
 
   const entrySection = (
     <HeaderWrapper>
       <h2>{title}</h2>
       {showSeeAll && (
-        <a href={convertUidToUrl({ uid: experiencePageUid, isDev })}>
+        <a
+          href={convertUidToUrl({
+            uid: experiencePageUid,
+            isDev,
+            hostname: host,
+          })}
+        >
           See All {CHEVRON_LEFT}
         </a>
       )}

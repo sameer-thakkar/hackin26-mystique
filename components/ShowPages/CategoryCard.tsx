@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { convertUidToUrl } from 'utils/urlUtils';
 import PriceBlock, { SavedTag, StyledPriceBlock } from 'UI/PriceBlock';
 import { SEE_SAFETY } from 'assets/SvgIcons';
 import { safetyChecker } from 'components/ShowPages/parseShowPage';
 import Conditional from 'components/common/Conditional';
+import { MBContext } from 'contexts/MBContext';
 
 import Image from '../UI/Image';
 
@@ -106,10 +107,9 @@ const CategoryCard = ({
   currencySymbol,
   categoryName,
   isMobile,
-  isDev,
-  host,
 }) => {
   const { listingPrice, name, imageUrl, id, tourGroupUrl } = element;
+  const { isDev, host } = useContext(MBContext);
 
   const { currencyCode } = listingPrice;
 

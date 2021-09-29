@@ -26,7 +26,6 @@ interface RowComponentProps {
   sectionIndex: any;
   cards: any[];
   categoryData: any[];
-  isDev: boolean;
 }
 const RowComponent: FunctionComponent<RowComponentProps> = ({
   setRow,
@@ -34,7 +33,6 @@ const RowComponent: FunctionComponent<RowComponentProps> = ({
   sectionIndex,
   cards,
   categoryData,
-  isDev,
 }) => {
   const width = useWindowWidth();
   const isMobile = width <= 768;
@@ -88,7 +86,6 @@ const RowComponent: FunctionComponent<RowComponentProps> = ({
         isMobile={isMobile}
         price={price?.startingPrice}
         currency={price?.currency?.localSymbol}
-        isDev={isDev}
       />
     );
   });
@@ -105,7 +102,6 @@ const RowComponent: FunctionComponent<RowComponentProps> = ({
             isMobile={isMobile}
             price={activeCardPrice?.startingPrice}
             currency={activeCardPrice?.currency?.localSymbol}
-            isDev={isDev}
           />
         </Conditional>
       </Conditional>

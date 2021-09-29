@@ -1,4 +1,4 @@
-import { forwardRef, FunctionComponent, Ref } from 'react';
+import { forwardRef, FunctionComponent, Ref, useContext } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import Image from 'UI/Image';
@@ -9,6 +9,7 @@ import { ASPECT_RATIO, FALLBACK_IMAGE } from 'const/index';
 import { strings } from 'const/strings';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import { shortCodeSerializer } from 'utils/shortCodes';
+import { MBContext } from 'contexts/MBContext';
 
 const Wrapper = styled.div`
   display: grid;
@@ -235,11 +236,11 @@ interface DetailedCollectionCardProps {
   ref?: Ref<HTMLDivElement>;
   price?: string;
   currency?: string;
-  isDev: boolean;
 }
 
 const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = forwardRef(
-  ({ data, isMobile, clickHandler, price, currency, isDev }, ref) => {
+  ({ data, isMobile, clickHandler, price, currency }, ref) => {
+    const { isDev, host } = useContext(MBContext);
     const {
       data: {
         microbrand_url: microbrand,
@@ -288,7 +289,7 @@ const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = f
           <a
             href={
               data.uid
-                ? convertUidToUrl({ uid: data.uid, isDev })
+                ? convertUidToUrl({ uid: data.uid, isDev, hostname: host })
                 : microbrand
                 ? getValidUrl(microbrand?.trim())
                 : ''

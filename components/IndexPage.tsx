@@ -175,7 +175,7 @@ export default class Page extends React.Component<any, any> {
     const { host } = req.headers || window.location;
     const isStage = host.includes('stage-');
     const { uid, lang } = getLangUID(req, query);
-    const hostname = getHostName(isStage, isDev);
+    const hostname = getHostName(isStage, isDev, host);
 
     try {
       let initial_tgids = [];
@@ -800,6 +800,7 @@ export default class Page extends React.Component<any, any> {
                 noTrack={!!noTrack || isDev}
                 biLink={biLink}
                 isGlobalMb={isGlobalMb}
+                isDev={isDev}
                 isStage={isStage}
                 bookSubdomain={bookSubdomain}
                 primaryCountry={primaryCountry}

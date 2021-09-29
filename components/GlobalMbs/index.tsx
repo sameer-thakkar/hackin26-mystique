@@ -370,8 +370,6 @@ const GlobalMB = (props) => {
             collections={cityCollectionsData}
             uid={uid}
             title={`${CITY_TAGS_TITLE} ${cityName}`}
-            isDev={isDev}
-            host={host}
           />
         </Conditional>
         <Conditional if={countryCollectionsData?.length && !isGlobalHomepage}>
@@ -379,8 +377,6 @@ const GlobalMB = (props) => {
             collections={countryCollectionsData}
             uid={uid}
             title={`${COUNTRY_TAGS_TITLE} ${countryName}`}
-            isDev={isDev}
-            host={host}
           />
         </Conditional>
         <Conditional if={collectionsData?.length && isGlobalHomepage}>
@@ -388,8 +384,6 @@ const GlobalMB = (props) => {
             collections={collectionsData}
             uid={uid}
             title={`${HOMEPAGE_TAGS_TITLE}`}
-            isDev={isDev}
-            host={host}
           />
         </Conditional>
         <Footer

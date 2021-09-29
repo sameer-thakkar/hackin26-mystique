@@ -126,8 +126,6 @@ type CardCarouselProps = {
   allShowPagesDocuments: PagesDocuments[];
   currentLanguage: string;
   categoryName: string;
-  isDev: boolean;
-  host?: string;
 };
 
 export default class CategorySlider extends Component<CardCarouselProps> {
@@ -152,8 +150,6 @@ export default class CategorySlider extends Component<CardCarouselProps> {
       allShowPagesDocuments,
       currentLanguage,
       categoryName,
-      isDev,
-      host,
     } = this.props;
 
     const slidesPerView = isMobile ? 1 : 4;
@@ -191,8 +187,6 @@ export default class CategorySlider extends Component<CardCarouselProps> {
                       currencySymbol={currencySymbol}
                       categoryName={categoryName}
                       isMobile={isMobile}
-                      isDev={isDev}
-                      host={host}
                     />
                   </div>
                 ) : null;
@@ -219,8 +213,6 @@ export default class CategorySlider extends Component<CardCarouselProps> {
                     currencySymbol={currencySymbol}
                     categoryName={categoryName}
                     isMobile={isMobile}
-                    isDev={isDev}
-                    host={host}
                   />
                 </div>
               );

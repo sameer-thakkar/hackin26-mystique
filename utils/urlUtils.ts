@@ -140,21 +140,20 @@ export const convertUidToUrl = ({
     }
     return url;
   };
+  const devUrl = `http://${hostname}/?mystique_uid=${uid}&lang=${
+    getLangObject(lang)?.paramLang
+  }${isAmp ? `&amp=1` : ''}`;
   const isStage = hostname?.includes('stage-');
   if (isStage) {
     if (isDev) {
-      return `${hostname}/?mystique_uid=${uid}&lang=${
-        getLangObject(lang)?.paramLang
-      }${isAmp ? `&amp=1` : ''}`;
+      return devUrl;
     } else {
       const url = getUrl(uid, lang, true);
       return `${url}${isAmp ? `&amp=1` : ''}`;
     }
   }
   if (isDev) {
-    return `http://localhost:3001/?mystique_uid=${uid}&lang=${
-      getLangObject(lang)?.paramLang
-    }${isAmp ? `&amp=1` : ''}`;
+    return devUrl;
   }
 
   if (uid) {

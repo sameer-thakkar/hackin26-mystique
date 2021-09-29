@@ -1,7 +1,8 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useContext } from 'react';
 import styled from 'styled-components';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
+import { MBContext } from 'contexts/MBContext';
 
 const TagSection = styled.div`
   max-width: 1200px;
@@ -43,8 +44,6 @@ interface TagsProps {
   collections: any[];
   uid: string;
   title: string;
-  isDev?: boolean;
-  host: string;
   isAmp?: boolean;
 }
 
@@ -52,10 +51,10 @@ const Tags: FunctionComponent<TagsProps> = ({
   collections,
   uid,
   title,
-  isDev = false,
   isAmp = false,
-  host,
 }) => {
+  const { host, isDev } = useContext(MBContext);
+
   const finalCollection = collections.filter(
     (collection) => collection.uid !== uid
   );

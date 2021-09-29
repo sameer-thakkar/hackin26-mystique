@@ -336,7 +336,7 @@ export const normaliseURL = (url = '') =>
 export const isSameURL = (urlA = '', urlB = '') =>
   normaliseURL(urlA) === normaliseURL(urlB);
 
-export const getHostName = (isStage, isDev) => {
+export const getHostName = (isStage, isDev, host) => {
   const headoutDomain = `microbrands.headout.com`;
   switch (true) {
     case typeof window !== 'undefined':
@@ -344,7 +344,7 @@ export const getHostName = (isStage, isDev) => {
     case isStage:
       return `https://stage-${headoutDomain}`;
     case isDev:
-      return `http://localhost:3001`;
+      return `http://${host}`;
     default:
       return `https://${headoutDomain}`;
   }

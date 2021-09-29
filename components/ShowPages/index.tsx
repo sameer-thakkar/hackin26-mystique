@@ -188,7 +188,7 @@ const ShowPage = ({
   const [currencySymbol, setCurrencySymbol] = useState({});
   let isReopening = false;
   const isStage = host.includes('stage-');
-  const hostname = getHostName(isStage, isDev);
+  const hostname = getHostName(isStage, isDev, host);
 
   const [isMobile, setIsMobile] = useState(false);
   const width = useWindowWidth();
@@ -474,8 +474,6 @@ const ShowPage = ({
           allShowPagesDocuments={allShowPagesDocuments}
           currentLanguage={currentLanguage}
           categoryName={categoryName}
-          isDev={isDev}
-          host={host}
         />
         <Breadcrumb links={breadcrumbs} />
       </Wrapper>

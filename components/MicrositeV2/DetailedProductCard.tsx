@@ -378,6 +378,8 @@ const DetailedProductCard = (props) => {
     nakedDomain,
     biLink,
     sidebarModal: { addToAside },
+    host,
+    isDev,
   } = mbContext;
   const {
     allTours,
@@ -386,8 +388,6 @@ const DetailedProductCard = (props) => {
     isEntertainmentMb,
     hasCategoryTourList,
     isListicle,
-    isDev = false,
-    host,
   } = props;
   const activeTour = allTours[tgidClicked];
   const { listicleShowSummary, listicleWhyWatch } = activeTour;

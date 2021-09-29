@@ -74,8 +74,6 @@ const CollectionPage = (props) => {
         collection={collectionInfo}
         startingPrice={price}
         cardType={BannerLayout.fullWidth}
-        isDev={isDev}
-        host={host}
       />
     </>
   );
