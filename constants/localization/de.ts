@@ -32,6 +32,7 @@ const de = {
   REOPENING_ON: 'Reopening on',
   OPENING_ON: 'Opening on',
   NEW: 'NEW',
+  SEE_ALL: 'See All',
   LISTICLES: {
     SEATING_CHART: 'Saalplan',
     KNOW_MORE: 'Weitere Infos',

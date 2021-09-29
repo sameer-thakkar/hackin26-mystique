@@ -399,9 +399,8 @@ export const getDiscountedProducts = (allTours) => {
     const { listingPrice, tgid } = product;
     const { finalPrice, originalPrice } = listingPrice || {};
     if (listingPrice && (finalPrice < originalPrice || finalPrice < 30)) {
-      acc.push(tgid);
+      return [...acc, tgid];
     }
-    return acc;
   }, []);
 };
 
@@ -414,8 +413,7 @@ export const getPriceSortedDiscountedProducts = (allTours) => {
       const { listingPrice, tgid } = product;
       const { finalPrice, originalPrice } = listingPrice || {};
       if (listingPrice && (finalPrice < originalPrice || finalPrice < 30)) {
-        acc.push(tgid);
+        return [...acc, tgid];
       }
-      return acc;
     }, []);
 };

@@ -8,6 +8,7 @@ import { CHEVRON_LEFT } from 'assets/SvgIcons';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import { ASPECT_RATIO } from 'const/index';
 import { MBContext } from 'contexts/MBContext';
+import { strings } from 'const/strings';
 
 const StyledCard = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
@@ -129,6 +130,7 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
   rides,
   tickets,
 }) => {
+  strings.SEE_ALL;
   const { isDev, host } = useContext(MBContext);
   const currencySymbol = tickets?.currencySymbol?.localSymbol;
 
@@ -143,7 +145,7 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
             hostname: host,
           })}
         >
-          See All {CHEVRON_LEFT}
+          {strings.SEE_ALL} {CHEVRON_LEFT}
         </a>
       )}
     </HeaderWrapper>

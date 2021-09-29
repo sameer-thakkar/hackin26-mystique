@@ -163,9 +163,8 @@ const GlobalMB = (props) => {
   const homePageBannerImages = homePageBanner?.reduce((acc, image) => {
     const { image_url, alt_text } = image || {};
     if (Object.keys(image_url)?.length) {
-      acc.push({ url: image_url?.url, alt: alt_text });
+      return [...acc, { url: image_url?.url, alt: alt_text }];
     }
-    return acc;
   }, []);
   const { items } =
     getSinglePrismicSlice({
@@ -176,23 +175,27 @@ const GlobalMB = (props) => {
   const cityPageBanners = items?.reduce((acc, image) => {
     const { banner_image, alt_text } = image || {};
     if (banner_image) {
-      acc.push({
-        url: banner_image,
-        alt: alt_text,
-      });
+      return [
+        ...acc,
+        {
+          url: banner_image,
+          alt: alt_text,
+        },
+      ];
     }
-    return acc;
   }, []);
   const collectionPageBannerImages = collectionPageBanner?.reduce(
     (acc, image) => {
       const { image_url, alt_text } = image || {};
       if (image_url) {
-        acc.push({
-          url: image_url,
-          alt: alt_text,
-        });
+        return [
+          ...acc,
+          {
+            url: image_url,
+            alt: alt_text,
+          },
+        ];
       }
-      return acc;
     },
     []
   );

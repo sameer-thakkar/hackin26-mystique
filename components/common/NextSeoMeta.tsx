@@ -92,7 +92,6 @@ export default function PopulateMeta({
   };
 
   const [preloadBannerImage] = bannerImages || [];
-  console.log({ preloadBannerImage });
   const bannerImage = addQueryParams(preloadBannerImage?.url, imageQueryParams);
   const hasSearchEnabled = legacyBooleanCheck(enable_search);
   const jsonLdProps = {
@@ -120,20 +119,19 @@ export default function PopulateMeta({
     (acc, altLang) => {
       const { url, lang } = altLang;
       const hrefObj = createHrefLangObj({ lang, href: url });
+      const array = [
+        {
+          hrefLang: 'x-default',
+          href: url,
+        },
+        hrefObj,
+      ];
       // adding english as x-default
       if (lang === 'en') {
-        const array = [
-          {
-            hrefLang: 'x-default',
-            href: url,
-          },
-          hrefObj,
-        ];
-        acc.push(...array);
+        return [...acc, ...array];
       } else {
-        acc.push(hrefObj);
+        return [...acc, hrefObj];
       }
-      return acc;
     },
     []
   );
