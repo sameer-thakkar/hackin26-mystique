@@ -460,14 +460,10 @@ const MicrositeV1 = (props) => {
         <PopulateMeta
           {...{
             prismicData: micrositeData,
-            uid,
             datePublished,
             dateModified,
-            originalHost: host,
             serverRequestStartTimestamp,
             languages: alternateLanguages,
-            currentLanguage: lang,
-            isDev,
             isMobile,
             isAmp,
             bannerImages: finalBannerImages,

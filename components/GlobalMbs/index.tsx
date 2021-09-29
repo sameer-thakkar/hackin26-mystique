@@ -301,14 +301,10 @@ const GlobalMB = (props) => {
         <PopulateMeta
           {...{
             prismicData: { ...CMSContent, ...header },
-            uid,
             datePublished,
             dateModified,
-            originalHost: host,
             serverRequestStartTimestamp,
             languages: alternateLanguages,
-            currentLanguage: lang,
-            isDev,
             isMobile,
             isAmp: false,
             bannerImages: finalBannerImages,

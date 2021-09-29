@@ -10,7 +10,6 @@ import {
   MystiquePerfScript,
   TrackingScripts,
 } from 'components/common/Scripts';
-import { PRISMIC_LANG_TO_ROUTE_PARAM } from 'const/index';
 import { legacyBooleanCheck } from 'utils';
 import { createAdditionalMetaTag, createHrefLangObj } from 'utils/headUtils';
 import { withShortcodes } from 'utils/helper';
@@ -21,14 +20,10 @@ type PopulateMetaProps = {
   languages: { [key: string]: string }[];
   datePublished: string;
   dateModified: string;
-  currentLanguage: string;
   serverRequestStartTimestamp: string;
-  uid: string;
-  isDev: boolean;
   isAmp: boolean;
   isMobile: boolean;
   bannerImages: { [key: string]: any }[];
-  originalHost: string;
   mbTheme?: string;
 };
 
@@ -37,16 +32,21 @@ export default function PopulateMeta({
   datePublished,
   dateModified,
   languages,
-  isDev,
   isAmp,
   isMobile,
-  uid,
-  currentLanguage,
   bannerImages,
-  originalHost,
   serverRequestStartTimestamp,
 }: PopulateMetaProps) {
-  const { noTrack, isPreview } = useContext(MBContext);
+  const {
+    noTrack,
+    uid,
+    isDev,
+    isPreview,
+    isStage,
+    host,
+    lang,
+    language_full,
+  } = useContext(MBContext);
   const {
     bing_site_verification: bingSiteVerification,
     canonical_link: canonicalLink,
@@ -64,12 +64,11 @@ export default function PopulateMeta({
     disable_amp: disableAmp,
     enable_search,
   } = prismicData || {};
-  const lang = PRISMIC_LANG_TO_ROUTE_PARAM[currentLanguage];
   const pageUrl = convertUidToUrl({
     uid,
     lang,
     isDev,
-    hostname: originalHost,
+    hostname: host,
   });
   const primaryDomainUrl = new URL(pageUrl).hostname;
   const logoUrl = image?.url || logo.url;
@@ -93,6 +92,7 @@ export default function PopulateMeta({
   };
 
   const [preloadBannerImage] = bannerImages || [];
+  console.log({ preloadBannerImage });
   const bannerImage = addQueryParams(preloadBannerImage?.url, imageQueryParams);
   const hasSearchEnabled = legacyBooleanCheck(enable_search);
   const jsonLdProps = {
@@ -187,7 +187,7 @@ export default function PopulateMeta({
     url: modifiedCanonicalLink,
     title,
     description,
-    locale: currentLanguage,
+    locale: language_full,
     site_name: '',
     images: [
       {
@@ -205,8 +205,8 @@ export default function PopulateMeta({
   const metaProps: NextSeoProps = {
     title,
     description,
-    noindex: legacyBooleanCheck(noindex),
-    nofollow: legacyBooleanCheck(nofollow),
+    noindex: isStage || isDev ? true : legacyBooleanCheck(noindex),
+    nofollow: isStage || isDev ? true : legacyBooleanCheck(nofollow),
     ...((canonicalLink || canonicalLinkForAMP) && {
       canonical: modifiedCanonicalLink,
     }),
@@ -238,7 +238,7 @@ export default function PopulateMeta({
         <TrackingScripts
           isDev={isDev}
           isPreview={isPreview}
-          originalHost={originalHost}
+          originalHost={host}
         />
       </Conditional>
       <Conditional if={isAmp && !disableAmp}>

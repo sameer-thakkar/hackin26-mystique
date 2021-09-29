@@ -117,7 +117,7 @@ class MicrositeV2 extends Component<any, any> {
       commonHeader,
       secondaryFooter,
     } = this.props.data.refs;
-    const { lang, isDev, serverRequestStartTimestamp } = this.props;
+    const { isDev, serverRequestStartTimestamp } = this.props;
     const {
       uid,
       data: CMSData,
@@ -460,14 +460,10 @@ class MicrositeV2 extends Component<any, any> {
         <PopulateMeta
           {...{
             prismicData: CMSData,
-            uid,
             datePublished,
             dateModified,
-            originalHost: host,
             serverRequestStartTimestamp,
             languages: alternateLanguages,
-            currentLanguage: lang,
-            isDev,
             isMobile: this.state.isMobile,
             isAmp,
             bannerImages: heroProps?.banners,

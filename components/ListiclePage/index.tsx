@@ -438,14 +438,10 @@ const Listicle = (props) => {
       <PopulateMeta
         {...{
           prismicData: headProps,
-          uid,
           datePublished,
           dateModified,
-          originalHost: host,
           serverRequestStartTimestamp,
           languages: alternateLanguages,
-          currentLanguage: lang,
-          isDev,
           isMobile,
           isAmp: false,
           bannerImages: listicleBannerImages,

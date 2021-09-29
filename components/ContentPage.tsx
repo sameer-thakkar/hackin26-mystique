@@ -459,17 +459,13 @@ class ContentPage extends Component<any, any> {
         <PopulateMeta
           {...{
             prismicData: headProps,
-            uid,
             datePublished,
             dateModified,
-            originalHost: host,
             serverRequestStartTimestamp,
             languages: alternateLanguages,
-            currentLanguage: lang,
-            isDev,
             isMobile: this.state.isMobile,
             isAmp,
-            bannerImages: [{ featuredImage }],
+            bannerImages: [featuredImage],
           }}
         />
 
