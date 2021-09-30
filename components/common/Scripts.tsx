@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { LogoJsonLd, SiteLinksSearchBoxJsonLd } from 'next-seo';
 import Conditional from 'components/common/Conditional';
-import { convertUidToUrl } from 'utils/urlUtils';
+import { convertUidToUrl, getDomainFromUid } from 'utils/urlUtils';
 
 export const TrackingScripts = ({
   isDev,
@@ -131,6 +131,11 @@ export const JsonLD = ({
       ],
     },
   ];
+  const domainName = getDomainFromUid(uid);
+  // If no path then we assume it is the homepage. (interim solution)
+  const isHomepage =
+    uid.split(domainName)?.filter((string) => string.length)?.length === 0;
+
   return (
     <>
       <Head>
@@ -139,8 +144,10 @@ export const JsonLD = ({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(baseSchema) }}
         />
       </Head>
-      <LogoJsonLd logo={logo} url={microbrandUrl} />
-      <Conditional if={hasSearchEnabled}>
+      <Conditional if={isHomepage}>
+        <LogoJsonLd logo={logo} url={microbrandUrl} />
+      </Conditional>
+      <Conditional if={isHomepage && hasSearchEnabled}>
         <SiteLinksSearchBoxJsonLd
           url={microbrandUrl}
           potentialActions={[

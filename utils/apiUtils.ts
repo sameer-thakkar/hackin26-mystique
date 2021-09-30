@@ -26,10 +26,6 @@ export const fetchTourList = ({ tgids, host = '', ...query }) => {
   );
 };
 
-// TODO: Please move this to v6. Please ensure showpage uses v6 logic
-export const fetchTourGroup = (tgid, hostName) =>
-  fetch(`${hostName}/api/tours/v5/tour-group/get/${tgid}`);
-
 export const fetchTourGroupV6 = async ({
   tgid,
   hostname,
@@ -99,6 +95,7 @@ export const fetchTGIDsByCategoryV2 = async ({
     ...(city && { city }),
     ...(limit && { limit }),
   };
+  console.log(hostname, url);
   const finalUrl = addQueryParams(url, params);
   try {
     const response = await fetch(finalUrl);

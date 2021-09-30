@@ -25,7 +25,7 @@ import { getPrismicDocument } from 'utils/prismicUtils';
 import {
   fetchCategory,
   fetchCurrencyList,
-  fetchTourGroup,
+  fetchTourGroupV6,
 } from 'utils/apiUtils';
 import Analytics from 'utils/analytics';
 import {
@@ -356,11 +356,10 @@ export default class Page extends React.Component<any, any> {
       }
       if (ContentType === CUSTOM_TYPES.SHOW_PAGE) {
         try {
-          const tgidData = await fetchTourGroup(
-            CMSContent?.data?.tgid,
-            hostname
-          ).then((res) => {
-            return res.json();
+          const tgidData = await fetchTourGroupV6({
+            tgid: CMSContent?.data?.tgid,
+            hostname,
+            language: getHeadoutLanguagecode(lang),
           });
 
           return {

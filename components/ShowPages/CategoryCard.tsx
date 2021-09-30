@@ -142,9 +142,7 @@ const CategoryCard = ({
             lang={currentLanguage}
             showSavings={true}
             showScratchPrice={true}
-            currencySymbolOverride={
-              currencySymbol?.[currencyCode] || currencyCode
-            }
+            currencySymbolOverride={currencySymbol || currencyCode}
             prefix={true}
           />
         </div>
