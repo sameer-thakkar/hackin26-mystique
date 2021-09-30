@@ -394,6 +394,7 @@ class MicrositeV2 extends Component<any, any> {
       theme_override,
       powered_by_superbrand,
       is_entertainment_mb: isEntertainmentMb,
+      invert_footer_logo_color: invertFooterLogoColor,
     } = this.props.data.data;
 
     const [listicleContent] = this.props.data.data.body;
@@ -423,6 +424,7 @@ class MicrositeV2 extends Component<any, any> {
         powered_by_superbrand:
           powered_by_superbrand || commonFooter?.data?.powered_by_superbrand,
         secondaryFooter,
+        invertFooterLogoColor,
       },
       isMobile,
       isEntertainmentMb,
