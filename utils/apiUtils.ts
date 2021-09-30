@@ -95,7 +95,6 @@ export const fetchTGIDsByCategoryV2 = async ({
     ...(city && { city }),
     ...(limit && { limit }),
   };
-  console.log(hostname, url);
   const finalUrl = addQueryParams(url, params);
   try {
     const response = await fetch(finalUrl);
