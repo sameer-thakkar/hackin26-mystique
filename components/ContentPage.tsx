@@ -123,6 +123,10 @@ const StyledContentPage = styled.div`
     width: 100%;
   }
 
+  .slice-wrapper .block-img img {
+    max-width: 100%;
+  }
+
   .ticket_card_shoulder_page {
     margin: 0 auto;
     padding: 0;

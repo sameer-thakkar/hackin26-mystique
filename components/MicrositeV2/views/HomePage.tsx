@@ -349,7 +349,7 @@ export const HomePage = (props) => {
         disclaimerText={footer.disclaimer_text}
         microbrandType={footer.microbrand_type || ''}
         slices={footer.body || []}
-        invertLogoColor={footer.invert_logo_color}
+        invertLogoColor={footer?.invertFooterLogoColor}
         themeOverride={themeOverride}
         secondarySlices={secondaryFooter?.data?.body}
         secondaryHeading={secondaryFooter?.data?.footer_heading}
