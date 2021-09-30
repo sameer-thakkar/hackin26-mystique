@@ -42,10 +42,11 @@ const ProductContainer = styled.div`
 
 const StyledTourListHeading = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
-  font-weight: 800;
-  font-size: 32px;
-  line-height: 44px;
-  color: ${COLORS.DAVY_GREY};
+  font-weight: ${({ isTicketCard }) => (isTicketCard ? 600 : 800)};
+  font-size: ${({ isTicketCard }) => (isTicketCard ? '24px' : '32px')};
+  line-height: ${({ isTicketCard }) => (isTicketCard ? '1.4' : '44px')};
+  color: ${({ isTicketCard }) =>
+    isTicketCard ? COLORS.GREY.G2 : COLORS.DAVY_GREY};
   @media (max-width: 768px) {
     font-size: 22px;
     line-height: 30px;
@@ -199,7 +200,7 @@ const PopulateProducts = (props) => {
       <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
         <div id="tour-list-heading">
           <Conditional if={sectionTitle || strings.TOUR_LIST_HEADING}>
-            <StyledTourListHeading>
+            <StyledTourListHeading isTicketCard={isTicketCard}>
               {isTicketCard ? sectionTitle : strings.TOUR_LIST_HEADING}
             </StyledTourListHeading>
           </Conditional>
