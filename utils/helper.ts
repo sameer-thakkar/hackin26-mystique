@@ -336,17 +336,15 @@ export const normaliseURL = (url = '') =>
 export const isSameURL = (urlA = '', urlB = '') =>
   normaliseURL(urlA) === normaliseURL(urlB);
 
-export const getHostName = (isStage, isDev, host) => {
+export const getHostName = (isStage: boolean, isDev: boolean, host: string) => {
   const headoutDomain = `microbrands.headout.com`;
   switch (true) {
-    // case typeof window !== 'undefined':
-    //   return '';
     case isStage:
       return `https://stage-${headoutDomain}`;
     case isDev:
       return `http://${host}`;
     default:
-      return `https://${headoutDomain}`;
+      return `https://${host}`;
   }
 };
 
