@@ -153,13 +153,13 @@ export default function PopulateMeta({
     additionalMetaTags.push(createAdditionalMetaTag('keywords', seoKeywords));
 
   const ampLinkTag = {
-    ...(((!!disableAmp &&
-      !isAmp &&
-      !uid.includes('www.london-theater-tickets.com')) ||
-      isAmp) && {
-      href: '?amp=1',
-    }),
     rel: 'amphtml',
+    ...(!disableAmp &&
+      !isAmp &&
+      !uid.includes('www.london-theater-tickets.com') &&
+      !uid.includes('www.themeparkstickets.com') && {
+        href: '?amp=1',
+      }),
   };
 
   // Add link tags
