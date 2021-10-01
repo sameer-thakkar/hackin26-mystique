@@ -4,7 +4,7 @@ import Footer from 'components/common/Footer';
 import ContentContainer from 'components/UI/ContentContainer';
 import Paragraph from 'components/UI/Paragraph';
 import { TopHeading } from 'components/UI/Headings';
-import { MinimalHelmet } from 'components/common/meta';
+import { MinimalHelmet } from 'components/common/NextSeoMeta';
 
 import { Client } from '../config/prismic-config';
 import { DROPDOWN_ELEMENT } from '../constants';

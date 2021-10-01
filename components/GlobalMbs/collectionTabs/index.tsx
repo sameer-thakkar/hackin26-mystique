@@ -63,7 +63,7 @@ const CollectionCard: FunctionComponent<CollectionCardProps> = ({
               data[0]?.products[0]?.listingPrice?.currencyCode;
 
             const currency = currencies
-              ?.filter((currency) => currency.code === currencyCode)
+              ?.filter((currency) => currency?.code === currencyCode)
               ?.reduce((acc, curr) => acc + curr);
 
             const formattedData = data?.map((cat) => {

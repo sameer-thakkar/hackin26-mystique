@@ -12,7 +12,8 @@ import {
 } from 'const/index';
 import { COMMON_DATA_PROPS_FOR_LISTICLE } from 'const/index';
 import {
-  extractSinglePrismicSlice,
+  getEnglishDocUid,
+  getSinglePrismicSlice,
   redirectTo,
   refsArrayToObject,
 } from 'utils';
@@ -126,10 +127,11 @@ export const getContentPageDocument = async ({
         microsite: micrositeData,
       } = refsArrayToObject(refArray);
 
+      const baseLangUid = getEnglishDocUid(page?.alternate_languages);
       const baseLangData =
         lang !== 'en-us'
           ? await Client(req)
-              .getByUID(CUSTOM_TYPES.CONTENT_PAGE, uid, {
+              .getByUID(CUSTOM_TYPES.CONTENT_PAGE, baseLangUid, {
                 lang: 'en-us',
               })
               .then((res) => res)
@@ -142,7 +144,7 @@ export const getContentPageDocument = async ({
         baseLangRefArray
       );
 
-      let categoryTourListV1 = extractSinglePrismicSlice({
+      let categoryTourListV1 = getSinglePrismicSlice({
         sliceName: 'ticket_card_shoulder_page',
         slices:
           lang !== 'en-us'
@@ -211,10 +213,13 @@ export const getMicrositeDocument = async ({
             type: completeMicrosite.data.data.redirect_type,
           });
         } else {
+          const baseLangUid = getEnglishDocUid(
+            completeMicrosite?.data?.alternate_languages
+          );
           const baseLangData =
             lang !== 'en-us'
               ? await Client(req)
-                  .getByUID(CUSTOM_TYPES.MICROSITE, uid, {
+                  .getByUID(CUSTOM_TYPES.MICROSITE, baseLangUid, {
                     lang: 'en-us',
                   })
                   .then((res) => res)
@@ -227,7 +232,7 @@ export const getMicrositeDocument = async ({
             },
           } = baseLangData || { data: {} };
 
-          const categorisedToursV1 = extractSinglePrismicSlice({
+          const categorisedToursV1 = getSinglePrismicSlice({
             sliceName: 'tour_list_category_v1',
             slices: categorisedTours,
           });
@@ -297,12 +302,12 @@ export const getMicrositeDocument = async ({
 
           // Base lang Fallback for CategorisedToursV1.
 
-          let categoryTourListV1 = extractSinglePrismicSlice({
+          let categoryTourListV1 = getSinglePrismicSlice({
             sliceName: 'tour_list_category_v1',
             slices: completeMicrosite.data.data.body,
           });
           if (!categoryTourListV1?.primary?.product_cards?.id) {
-            categoryTourListV1 = extractSinglePrismicSlice({
+            categoryTourListV1 = getSinglePrismicSlice({
               sliceName: 'tour_list_category_v1',
               slices: baseLangData?.data?.body,
             });

@@ -4,6 +4,8 @@ import queryParser from 'query-string';
 import { getPrismicProps } from 'utils';
 import { fromEntries } from 'utils/gen';
 
+import { getLangObject } from './helper';
+
 export const isAmpUrl = (query) => {
   return query.amp === '1';
 };
@@ -99,20 +101,67 @@ export const getValidUrlParams = (query) =>
     .join('&')
     .trim();
 
-export const convertUidToUrl = (uid) => {
-  if (uid) {
+export const getDomainFromUid = (uid) => {
+  const modUid = `${uid}.`; // add trailing . to identify end of UID
+  const regex = /[\w\d-]+\.[\w\d-]+\.(([\w]{1,}\.[\w]{1,3}\.)|([\w]{2,}\.))/;
+  const domain = modUid.match(regex)?.[0]?.slice(0, -1);
+  return domain;
+};
+
+export const convertUidToUrl = ({
+  uid,
+  lang = 'en',
+  isDev,
+  isAmp,
+  hostname = '',
+  removeLangPath = false,
+}: {
+  uid: string;
+  hostname?: string;
+  lang?: string;
+  isDev?: boolean;
+  isAmp?: boolean;
+  removeLangPath?: boolean;
+}) => {
+  const getUrl = (uid: string, lang, isStage: boolean) => {
     let url;
     const modUid = `${uid}.`; // add trailing . to identify end of UID
-    const regex = /[a-zA-z0-9-]+\.[a-zA-z0-9-]+((\.[a-z]{1,3}\.[a-z]{1,3}\.)|(\.[a-z]{2,3}\.))/g;
-    const domain = modUid.match(regex)?.[0]?.slice(0, -1);
-    const pathName = uid.split(domain)?.filter((string) => string.length);
+    const domain = getDomainFromUid(uid);
+    const pathName = modUid.split(domain)?.filter((string) => string.length);
     if (domain?.length) {
-      url = `https://${domain}`;
+      url = `https://${isStage ? 'stage-' : ''}${domain}${
+        lang !== 'en' && !removeLangPath ? `/${lang}` : ''
+      }`;
       if (pathName.length) {
         pathName.forEach((name) => {
-          url += name.replace('.', '/');
+          url += name.replaceAll('.', '/');
         });
       }
+    }
+    return url;
+  };
+  const devUrl = `http://${hostname}/?mystique_uid=${uid}&lang=${
+    getLangObject(lang)?.paramLang
+  }${isAmp ? `&amp=1` : ''}`;
+  const isStage = hostname?.includes('stage-');
+  if (isStage) {
+    if (isDev) {
+      return devUrl;
+    } else {
+      const url = getUrl(uid, lang, true);
+      return `${url}${isAmp ? `&amp=1` : ''}`;
+    }
+  }
+  if (isDev) {
+    return devUrl;
+  }
+
+  if (uid) {
+    let url = getUrl(uid, lang, false);
+    if (isAmp) {
+      const urlObject = new URLSearchParams(url);
+      urlObject.set('amp', '1');
+      return urlObject.toString();
     }
     return url;
   } else {

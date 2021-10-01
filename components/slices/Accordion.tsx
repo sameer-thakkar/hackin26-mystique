@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import styled from 'styled-components';
-import { SOLEIL, COLORS } from 'const/ui-constants';
 import Conditional from 'components/common/Conditional';
-
-import Chevron from '../UI/Chevron';
+import Chevron from 'components/UI/Chevron';
+import { SOLEIL, COLORS } from 'const/ui-constants';
 
 export const StyledAccordion = styled.div`
   padding: 16px 0;
@@ -90,7 +89,6 @@ type AccordionProps = {
   heading: string;
   content: any;
   isAmp?: Boolean;
-  useSchema?: Boolean;
   isGlobalMb?: Boolean;
 };
 
@@ -100,7 +98,6 @@ const Accordion = ({
   isOpenOverride = false,
   clickHandler = null,
   isAmp = false,
-  useSchema = false,
   isGlobalMb,
 }: AccordionProps) => {
   const [isOpen, setOpen] = useState(false || isOpenOverride);
@@ -121,11 +118,6 @@ const Accordion = ({
       as={isAmp ? 'section' : 'div'}
       className={accordionContainerClass}
       isGlobalMb={isGlobalMb}
-      {...(useSchema && {
-        itemProp: 'mainEntity',
-        itemType: 'https://schema.org/Question',
-        itemScope: true,
-      })}
     >
       <Title
         role="button"
@@ -138,14 +130,7 @@ const Accordion = ({
         }}
         isGlobalMb={isGlobalMb}
       >
-        <div
-          className="question-text"
-          {...(useSchema && {
-            itemProp: 'name',
-          })}
-        >
-          {heading}
-        </div>
+        <div className="question-text">{heading}</div>
         <div className={chevronContainerClass}>
           <Chevron
             isActive={isOpen}
@@ -154,21 +139,8 @@ const Accordion = ({
           />
         </div>
       </Title>
-      <ContentBlock
-        className="answer"
-        isOpen={isOpen}
-        isGlobalMb={isGlobalMb}
-        {...(useSchema && {
-          itemProp: 'acceptedAnswer',
-          itemType: 'https://schema.org/Answer',
-          itemScope: true,
-        })}
-      >
-        <div
-          {...(useSchema && {
-            itemProp: 'text',
-          })}
-        >
+      <ContentBlock className="answer" isOpen={isOpen} isGlobalMb={isGlobalMb}>
+        <div>
           <Conditional if={typeof content !== 'string'}>{content}</Conditional>
         </div>
       </ContentBlock>

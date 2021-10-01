@@ -147,6 +147,7 @@ export const HomePage = (props) => {
     showCovid19Alert,
     isListicle,
     displayMonths,
+    isDev,
   } = props;
 
   let { categoryProps } = props;
@@ -308,6 +309,7 @@ export const HomePage = (props) => {
           changePage={changePage}
           host={host}
           uid={uid}
+          isDev={isDev}
           isListicle={isListicle}
           isDiscountedPage={isDiscountedPage}
         />

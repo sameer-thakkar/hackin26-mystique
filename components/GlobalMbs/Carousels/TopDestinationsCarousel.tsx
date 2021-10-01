@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useContext } from 'react';
 import styled from 'styled-components';
 import Carousel from 'components/GlobalMbs/Carousels/Carousel';
 import Image from 'UI/Image';
@@ -6,6 +6,7 @@ import TitleTextCombo from 'UI/TitleTextCombo';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { FALLBACK_IMAGES } from 'const/index';
+import { MBContext } from 'contexts/MBContext';
 
 const Wrapper = styled.div`
   max-width: 1200px;
@@ -58,6 +59,7 @@ interface TopDestinationsCarouselProps {
 const TopDestinationsCarousel: FunctionComponent<TopDestinationsCarouselProps> = ({
   destinations,
 }) => {
+  const { isDev, host } = useContext(MBContext);
   const finalCities = destinations?.filter(
     (destination) =>
       destination?.data?.city_name && destination?.data?.body?.length
@@ -79,7 +81,7 @@ const TopDestinationsCarousel: FunctionComponent<TopDestinationsCarouselProps> =
     return (
       <StyledCard
         key={index}
-        href={convertUidToUrl(uid)}
+        href={convertUidToUrl({ uid, isDev, hostname: host })}
         target="_blank"
         rel="noopener noreferrer"
       >

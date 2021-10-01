@@ -1,30 +1,17 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useRef, useContext } from 'react';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import { SOLEIL } from 'const/ui-constants';
-import { FULL_LANGUAGE_MAP, LANGUAGE_PARAMS_REGEX, THEMES } from 'const/index';
+import { FULL_LANGUAGE_MAP, THEMES } from 'const/index';
 import { GLOBE } from 'assets/SvgIcons';
 import { MBContext } from 'contexts/MBContext';
 
 const LanguageSelector = (props) => {
-  const [pathname, setPathname] = useState('');
-
-  useEffect(() => {
-    setPathname(window.location.pathname);
-  }, []);
-
   const handleClick = () => {
     const { toggleDropdown } = props;
     toggleDropdown();
   };
 
-  const {
-    currentLanguage,
-    languageDropdown,
-    host,
-    currentDomain,
-    isMobile,
-    languages,
-  } = props;
+  const { currentLanguage, languageDropdown, isMobile, languages } = props;
 
   const { mbTheme } = useContext(MBContext);
 
@@ -32,25 +19,6 @@ const LanguageSelector = (props) => {
   const parentRef = useRef(null);
   const exceptionElementRefs = [parentRef];
   useCaptureClickOutside(selectorRef, handleClick, exceptionElementRefs);
-
-  const availableLanguages = languages.reduce((acc, item) => {
-    const language = item.language.split('-')[1].toLowerCase();
-    if (currentLanguage !== language) return [...acc, language];
-    return acc;
-  }, []);
-
-  if (availableLanguages.length < 1) {
-    return null;
-  }
-  const slug = pathname.replace(LANGUAGE_PARAMS_REGEX, '');
-
-  const isDev = host.includes('localhost');
-
-  const getURL = (language, dev) => {
-    if (dev)
-      return `/?mystique_uid=${currentDomain}&lang=${FULL_LANGUAGE_MAP[language].paramLang}`;
-    else return `/${language}${slug}`;
-  };
 
   return (
     <div
@@ -75,18 +43,19 @@ const LanguageSelector = (props) => {
             languageDropdown ? 'language-dropdown-active' : ''
           }`}
         >
-          {availableLanguages.map((language, index) => {
+          {languages.map((doc, index) => {
+            const { url, lang } = doc || {};
             return (
               <a
-                className={currentLanguage == language ? 'active-tab' : ''}
+                className={currentLanguage == lang ? 'active-tab' : ''}
                 key={index}
-                href={getURL(language, isDev)}
+                href={url}
               >
                 <div className="language">
                   <span className="lang-option">
-                    {FULL_LANGUAGE_MAP[language].language}
+                    {FULL_LANGUAGE_MAP[lang].language}
                   </span>
-                  {currentLanguage == language ? (
+                  {currentLanguage == lang ? (
                     <img
                       className="check-mark"
                       alt="check"

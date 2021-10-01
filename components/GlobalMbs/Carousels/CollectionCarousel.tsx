@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useContext } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import Image from 'UI/Image';
@@ -7,6 +7,7 @@ import Conditional from 'components/common/Conditional';
 import { ASPECT_RATIO, FALLBACK_IMAGE, FALLBACK_IMAGES } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { convertUidToUrl } from 'utils/urlUtils';
+import { MBContext } from 'contexts/MBContext';
 
 const Wrapper = styled.div`
   max-width: 1200px;
@@ -109,6 +110,7 @@ const CollectionCarousel: FunctionComponent<CollectionCarouselProps> = ({
   carouselType,
   collections,
 }) => {
+  const { isDev, host } = useContext(MBContext);
   const FILTER_TYPE = {
     ALL: 'All',
     ASIA: 'Asia',
@@ -184,7 +186,10 @@ const CollectionCarousel: FunctionComponent<CollectionCarouselProps> = ({
         : fallbackImage;
       const altText = images?.length ? images[0]?.alt_text : '';
       return (
-        <StyledCard href={convertUidToUrl(uid)} key={index}>
+        <StyledCard
+          href={convertUidToUrl({ uid, isDev, hostname: host })}
+          key={index}
+        >
           <Image
             url={imageUrl}
             alt={altText}

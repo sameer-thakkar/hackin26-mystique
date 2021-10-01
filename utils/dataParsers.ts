@@ -183,7 +183,7 @@ export const categoryTourListParserV1 = async ({
 
         const ctaSuffix = new URLSearchParams(commonCtaUrlSuffix || '');
         if (variantId) ctaSuffix.set('variantId', variantId);
-        acc.push({
+        const finalObj = {
           tgid: id,
           cta_url_suffix: ctaSuffix ? `?${ctaSuffix?.toString()}` : null,
           marketing_highlights_override: null,
@@ -197,8 +197,8 @@ export const categoryTourListParserV1 = async ({
           tour_title_override: null,
           variantId,
           ...tourObj,
-        });
-        return acc;
+        };
+        return [...acc, finalObj];
       }, []);
     const allMultiVariantTgids = repeatableObj
       .filter((tour) => tour.variantId)

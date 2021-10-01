@@ -10,6 +10,7 @@ import {
   CUSTOM_TYPES,
 } from '../constants';
 import { fetchCollection, fetchTGIDsByCategoryV2 } from './apiUtils';
+import { convertUidToUrl, getDomainFromUid } from './urlUtils';
 
 export const getLanguageFromPathname = ({
   pathname,
@@ -166,6 +167,40 @@ export const getHeadoutLanguagecode = (prismicLangCode) => {
   );
 };
 
+export const getAlternateLanguages = (
+  alternateLangsArray: any[],
+  isDev: boolean,
+  isAmp: boolean,
+  host,
+  currentDocUid = ''
+) => {
+  if (alternateLangsArray?.length) {
+    const englishDocUid =
+      getEnglishDocUid(alternateLangsArray) || currentDocUid;
+    const englishDomain = englishDocUid ? getDomainFromUid(englishDocUid) : '';
+    return alternateLangsArray.map((doc) => {
+      const { uid, lang: docLang } = doc || {};
+      const domain = getDomainFromUid(uid);
+      const lang = getHeadoutLanguagecode(docLang);
+      return {
+        url: convertUidToUrl({
+          uid,
+          lang,
+          hostname: host,
+          isDev,
+          isAmp,
+          ...(domain !== englishDomain && {
+            removeLangPath: true,
+          }),
+        }),
+        lang,
+      };
+    });
+  } else {
+    return [];
+  }
+};
+
 export const genUniqueId = () =>
   `${Math.random().toString().slice(2)}-${Math.random().toString().slice(2)}`;
 
@@ -270,7 +305,7 @@ export const generatePromiseForCategoryTours = ({
   return allPromises;
 };
 
-export const extractSinglePrismicSlice = ({
+export const getSinglePrismicSlice = ({
   sliceName,
   slices,
 }: {
@@ -288,5 +323,17 @@ export const extractSinglePrismicSlice = ({
     }
   } else {
     return {};
+  }
+};
+
+export const getEnglishDocUid = (
+  prismicAlternateLanguages: { [key: string]: string }[]
+) => {
+  if (prismicAlternateLanguages?.length) {
+    const { uid } =
+      prismicAlternateLanguages?.find((doc) => doc.lang === 'en-us') || {};
+    return uid;
+  } else {
+    return null;
   }
 };

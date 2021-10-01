@@ -336,15 +336,15 @@ export const normaliseURL = (url = '') =>
 export const isSameURL = (urlA = '', urlB = '') =>
   normaliseURL(urlA) === normaliseURL(urlB);
 
-export const getHostName = (isStage, isDev) => {
+export const getHostName = (isStage, isDev, host) => {
   const headoutDomain = `microbrands.headout.com`;
   switch (true) {
-    case typeof window !== 'undefined':
-      return '';
+    // case typeof window !== 'undefined':
+    //   return '';
     case isStage:
       return `https://stage-${headoutDomain}`;
     case isDev:
-      return `http://localhost:3001`;
+      return `http://${host}`;
     default:
       return `https://${headoutDomain}`;
   }
@@ -399,9 +399,8 @@ export const getDiscountedProducts = (allTours) => {
     const { listingPrice, tgid } = product;
     const { finalPrice, originalPrice } = listingPrice || {};
     if (listingPrice && (finalPrice < originalPrice || finalPrice < 30)) {
-      acc.push(tgid);
+      return [...acc, tgid];
     }
-    return acc;
   }, []);
 };
 
@@ -414,8 +413,7 @@ export const getPriceSortedDiscountedProducts = (allTours) => {
       const { listingPrice, tgid } = product;
       const { finalPrice, originalPrice } = listingPrice || {};
       if (listingPrice && (finalPrice < originalPrice || finalPrice < 30)) {
-        acc.push(tgid);
+        return [...acc, tgid];
       }
-      return acc;
     }, []);
 };

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useWindowWidth } from '@react-hook/window-size';
 import dynamic from 'next/dynamic';
-import styled from 'styled-components';
+import { useWindowWidth } from '@react-hook/window-size';
 import { RichText } from 'prismic-reactjs';
+import styled from 'styled-components';
 import { StyledRichContent } from 'UI/RichContent';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
@@ -16,26 +16,28 @@ import SafeDFBannerWrapper from 'components/ShowPages/SafetyBanner';
 import Gallery from 'components/ShowPages/Gallery';
 import CategorySlider from 'components/ShowPages/CategorySlider';
 import SubHeading from 'components/ShowPages/SubHeading';
-import PopulateHead from 'components/common/meta';
 import {
   ALLOW_IMMEDIEATE_NESTING,
   REOPENING_TAG,
   FAVICON_LONDON_THEATRE_TICKETS,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { legacyBooleanCheck } from 'utils';
+import {
+  getAlternateLanguages,
+  getHeadoutLanguagecode,
+  legacyBooleanCheck,
+} from 'utils';
 import { groupSlices, getHostName } from 'utils/helper';
 import cloneDeep from 'lodash.clonedeep';
 import { StyledAccordion } from 'components/slices/Accordion';
-import { convertUidToUrl } from 'utils/urlUtils';
-import {
-  fetchReviewsTourGroup,
-  fetchCategory,
-  fetchCurrencyList,
-} from 'utils/apiUtils';
+import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
+import { fetchReviewsTourGroup, fetchTGIDsByCategoryV2 } from 'utils/apiUtils';
 import { StyledAsideModal } from 'components/UI/AsideModal';
 import TitleTextCombo from 'components/UI/TitleTextCombo';
 import Conditional from 'components/common/Conditional';
+import PopulateMeta from 'components/common/NextSeoMeta';
+import { ProductJsonLd } from 'next-seo';
+import { getProductSchema } from 'utils/schemaUtils';
 
 const Breadcrumb = dynamic(() => import('./BreadCrumb'));
 const AccordionGroup = dynamic(() => import('../slices/AccordionGroup'));
@@ -174,29 +176,39 @@ const AboutTheatreSectionWrapper = styled.div`
 const ShowPage = ({
   CMSContent,
   host,
-  uid,
-  lang,
   tourGroupData: tempTourGroupData,
   isDev,
+  serverRequestStartTimestamp,
 }) => {
   const tourGroupData = cloneDeep(tempTourGroupData);
   const [customerReviews, setCustomerReviews] = useState([]);
   const [similarProductData, setSimilarProductData] = useState([]);
-  const [currencySymbol, setCurrencySymbol] = useState({});
   let isReopening = false;
   const isStage = host.includes('stage-');
-  const hostname = getHostName(isStage, isDev);
+  const hostname = getHostName(isStage, isDev, host);
 
   const [isMobile, setIsMobile] = useState(false);
   const width = useWindowWidth();
 
   const {
+    name,
     microBrandsHighlight,
     imageUploads,
-    categoriesFromRoot,
     microBrandsDescriptor,
     allTags,
-  } = tourGroupData;
+    topReviews,
+    currency,
+    reviewsDetails,
+    listingPrice,
+    primarySubCategory,
+    city,
+  } = tourGroupData || {};
+
+  const { id: primarySubCategoryID, name: primarySubCategoryName } =
+    primarySubCategory || {};
+  const { code: cityCode } = city || {};
+
+  const { code: currencyCode, localSymbol: currencySymbol } = currency || {};
 
   allTags.forEach((element) => {
     if (element === REOPENING_TAG) {
@@ -220,17 +232,28 @@ const ShowPage = ({
     aboutTheatreSection,
   } = parseShowPageData(microBrandsHighlight);
 
-  const currentLanguage = lang.split('-')[0];
-  const categoryId = categoriesFromRoot?.[categoriesFromRoot.length - 1]?.id;
-  const categoryName = showType
-    ? showType
-    : categoriesFromRoot[categoriesFromRoot.length - 1].displayName;
-
-  const tagsArray = [categoryName, ...microBrandsDescriptor.split('\r\n')];
-
   const { commonFooter, allShowPagesDocuments } = CMSContent;
 
-  const { data: CMSData } = CMSContent;
+  const {
+    uid,
+    first_publication_date: datePublished,
+    last_publication_date: dateModified,
+    data: CMSData,
+    alternate_languages,
+    lang,
+  } = CMSContent;
+
+  const currentLanguage = getHeadoutLanguagecode(lang);
+  const categoryName = showType ? showType : primarySubCategoryName;
+
+  const tagsArray = [categoryName, ...microBrandsDescriptor.split('\r\n')];
+  const alternateLanguages = getAlternateLanguages(
+    alternate_languages,
+    isDev,
+    false,
+    host,
+    uid
+  );
 
   const {
     enable_group_booking: enableGroupBooking,
@@ -239,9 +262,6 @@ const ShowPage = ({
     enable_localization_menu,
     tgid,
     favicon,
-    title,
-    description,
-    canonical_link,
   } = CMSData;
 
   const { commonHeader } = CMSContent;
@@ -264,16 +284,23 @@ const ShowPage = ({
   );
 
   useEffect(() => {
-    const fetchTourGroupPrices = async () => {
-      const categoryData = await fetchCategory(categoryId, hostname);
-
-      setSimilarProductData(
-        categoryData?.products?.filter((element) => element.id != tgid)
+    fetchTGIDsByCategoryV2({
+      categoryId: primarySubCategoryID,
+      hostname,
+      isSubCategory: true,
+      city: cityCode,
+      language: currentLanguage,
+      limit: '100',
+    }).then((data) => {
+      const { pageData } = data || {};
+      const filteredData = pageData?.items?.filter(
+        (element) => element.id !== tgid
       );
-    };
-
-    fetchTourGroupPrices();
-  }, [categoryId, tgid]);
+      if (filteredData?.length) {
+        setSimilarProductData(filteredData);
+      }
+    });
+  }, []);
 
   // isMobile effect
   useEffect(() => {
@@ -301,20 +328,8 @@ const ShowPage = ({
     reviewTourGroup();
   }, [tgid]);
 
-  useEffect(() => {
-    fetchCurrencyList().then((currencyData) => {
-      let currencySymbolObject = {};
-
-      currencyData.forEach(({ code, localSymbol }) => {
-        currencySymbolObject[code] = localSymbol;
-      });
-
-      setCurrencySymbol(currencySymbolObject);
-    });
-  }, []);
-
-  const PageURL = convertUidToUrl(uid);
-  const { name } = tourGroupData;
+  const PageURL = convertUidToUrl({ uid, lang, isDev, hostname: host });
+  const [bannerImageOne, bannerImageTwo] = imageUploads || [];
   const breadcrumbs = [
     { url: '/', text: 'London Theatre Tickets' },
     {
@@ -323,90 +338,83 @@ const ShowPage = ({
     },
   ];
 
+  const bannerImages = [
+    {
+      url: getValidUrl(bannerImageTwo?.url) || getValidUrl(bannerImageOne?.url),
+      alt: name,
+    },
+  ];
+  const productSchema = getProductSchema({
+    productName: name,
+    price: listingPrice?.finalPrice,
+    currencySymbol: currencyCode,
+    images: imageUploads,
+    topReviews,
+    reviewsDetails,
+  });
   return (
-    <ShowPageWrapper>
-      <PopulateHead
-        {...{
-          title,
-          description,
-          favicon: {
-            url: favicon || FAVICON_LONDON_THEATRE_TICKETS,
-          },
-          faq_schema: [],
-          lang,
-          originalHost: host,
-          currentLanguage: lang,
-          isMobile,
-          canonical_link: canonical_link || PageURL,
-          noindex: isDev ? 'True' : 'False',
-          disable_amp: true,
-        }}
-      />
-      <Header
-        languages={localization}
-        headerLinks={headerLinks}
-        dropdownLinks={dropdownLinksArray}
-        currentLanguage={currentLanguage}
-        logoUrl={logoUrl}
-        logoAltText={logoAltText || ''}
-        uid={uid}
-        isMobile={isMobile}
-        showGroupBooking={legacyBooleanCheck(enableGroupBooking)}
-        hasLanguageSelector={enable_localization_menu}
-        logoRedirectionURL={logoRedirectionURL?.url || '/'}
-        host={host}
-        hasPoweredByHeadoutLogo={true}
-        slices={finalHeaderSlices}
-        isEntertainmentMB={true}
-      />
-      <ShowPageBanner
-        tgid={tgid}
-        isMobile={isMobile}
-        detailsObjects={detailsObjects}
-        tourGroupData={tourGroupData}
-        currentLanguage={currentLanguage}
-        tagsArray={tagsArray}
-        isReopening={isReopening}
-        hostname={hostname}
-      />
-      <Conditional if={isSafetyBanner}>
-        <SafeDFBannerWrapper marginTop={isMobile ? 0 : 40} isShowPage={true} />
-      </Conditional>
-      <Wrapper>
-        <HighlightsSectionWrapper>
-          <RichText render={highlightsSection?.tab_content} />
-        </HighlightsSectionWrapper>
-        {isMobile ? (
-          <AccordionGroup
-            accordions={tabSchemaHighlight.map((element) => {
-              return {
-                heading: element.tab_name,
-                content: element.tab_content,
-              };
-            })}
-            heading={''}
-            useSchema={true}
-            isOpenOverride={false}
+    <>
+      <ShowPageWrapper>
+        <PopulateMeta
+          {...{
+            prismicData: {
+              ...CMSData,
+              ...commonHeader?.data,
+              ...{
+                favicon: {
+                  url: favicon || FAVICON_LONDON_THEATRE_TICKETS,
+                },
+              },
+            },
+            datePublished,
+            dateModified,
+            serverRequestStartTimestamp,
+            languages: alternateLanguages,
+            isMobile,
+            isAmp: false,
+            bannerImages,
+          }}
+        />
+        <Header
+          languages={localization}
+          headerLinks={headerLinks}
+          dropdownLinks={dropdownLinksArray}
+          currentLanguage={currentLanguage}
+          logoUrl={logoUrl}
+          logoAltText={logoAltText || ''}
+          uid={uid}
+          isMobile={isMobile}
+          showGroupBooking={legacyBooleanCheck(enableGroupBooking)}
+          hasLanguageSelector={enable_localization_menu}
+          logoRedirectionURL={logoRedirectionURL?.url || '/'}
+          host={host}
+          hasPoweredByHeadoutLogo={true}
+          slices={finalHeaderSlices}
+          isEntertainmentMB={true}
+        />
+        <ShowPageBanner
+          tgid={tgid}
+          isMobile={isMobile}
+          detailsObjects={detailsObjects}
+          tourGroupData={tourGroupData}
+          currentLanguage={currentLanguage}
+          tagsArray={tagsArray}
+          isReopening={isReopening}
+          hostname={hostname}
+        />
+        <Conditional if={isSafetyBanner}>
+          <SafeDFBannerWrapper
+            marginTop={isMobile ? 0 : 40}
+            isShowPage={true}
           />
-        ) : (
-          <>
-            <ContentTabs
-              tabsArr={tabHeadingHighlight}
-              contentArr={tabSchemaHighlight}
-            />
-          </>
-        )}
-        <Conditional if={imageUploads.length >= 5}>
-          <Gallery galleryArray={imageUploads.slice(2)} isMobile={isMobile} />
         </Conditional>
-        <SubHeading content={tabSectionHeading} />
-        <AboutTheatreSectionWrapper>
-          <RichText render={aboutTheatreSection?.tab_content} />
-        </AboutTheatreSectionWrapper>
-        {isMobile ? (
-          <ComponentWrapper>
+        <Wrapper>
+          <HighlightsSectionWrapper>
+            <RichText render={highlightsSection?.tab_content} />
+          </HighlightsSectionWrapper>
+          {isMobile ? (
             <AccordionGroup
-              accordions={tabSchemaInfo.map((element) => {
+              accordions={tabSchemaHighlight.map((element) => {
                 return {
                   heading: element.tab_name,
                   content: element.tab_content,
@@ -416,53 +424,87 @@ const ShowPage = ({
               useSchema={true}
               isOpenOverride={false}
             />
-          </ComponentWrapper>
-        ) : (
-          <>
-            <ContentTabs tabsArr={tabHeadingInfo} contentArr={tabSchemaInfo} />
-          </>
-        )}
-        <GoogleMap mapURL={mapURL} />
-        <AccordionGroup
-          accordions={faqSchema}
-          heading={faqHeading}
-          useSchema={true}
-        />
-        <Conditional if={customerReviews.length}>
-          <>
-            <SubHeading content={strings.CUSTOMER_REVIEW_HEADING} />
-            <CustomerReview cards={customerReviews} isMobile={isMobile} />
-          </>
-        </Conditional>
-        <FeatureCard />
-        <SubHeading content={strings.CATEGORY_SLIDER_HEADING} />
-        <CategorySlider
-          cards={similarProductData}
-          isMobile={isMobile}
-          currencySymbol={currencySymbol}
-          allShowPagesDocuments={allShowPagesDocuments}
+          ) : (
+            <>
+              <ContentTabs
+                tabsArr={tabHeadingHighlight}
+                contentArr={tabSchemaHighlight}
+              />
+            </>
+          )}
+          <Conditional if={imageUploads.length >= 5}>
+            <Gallery galleryArray={imageUploads.slice(2)} isMobile={isMobile} />
+          </Conditional>
+          <SubHeading content={tabSectionHeading} />
+          <AboutTheatreSectionWrapper>
+            <RichText render={aboutTheatreSection?.tab_content} />
+          </AboutTheatreSectionWrapper>
+          {isMobile ? (
+            <ComponentWrapper>
+              <AccordionGroup
+                accordions={tabSchemaInfo.map((element) => {
+                  return {
+                    heading: element.tab_name,
+                    content: element.tab_content,
+                  };
+                })}
+                heading={''}
+                useSchema={true}
+                isOpenOverride={false}
+              />
+            </ComponentWrapper>
+          ) : (
+            <>
+              <ContentTabs
+                tabsArr={tabHeadingInfo}
+                contentArr={tabSchemaInfo}
+              />
+            </>
+          )}
+          <GoogleMap mapURL={mapURL} />
+          <AccordionGroup
+            accordions={faqSchema}
+            heading={faqHeading}
+            useSchema={true}
+          />
+          <Conditional if={customerReviews.length}>
+            <>
+              <SubHeading content={strings.CUSTOMER_REVIEW_HEADING} />
+              <CustomerReview cards={customerReviews} isMobile={isMobile} />
+            </>
+          </Conditional>
+          <FeatureCard />
+          <SubHeading content={strings.CATEGORY_SLIDER_HEADING} />
+          <CategorySlider
+            cards={similarProductData}
+            isMobile={isMobile}
+            currencySymbol={currencySymbol}
+            allShowPagesDocuments={allShowPagesDocuments}
+            currentLanguage={currentLanguage}
+            categoryName={categoryName}
+          />
+          <Breadcrumb links={breadcrumbs} />
+        </Wrapper>
+        <Footer
           currentLanguage={currentLanguage}
-          categoryName={categoryName}
+          logoURL={commonFooter?.data?.logo?.url}
+          logoAlt={commonFooter?.data?.logo?.alt}
+          hasPoweredByHeadoutLogo={
+            commonFooter?.data?.powered_by_superbrand || false
+          }
+          showDisclaimer={commonFooter?.data?.show_disclaimer}
+          disclaimerText={commonFooter?.data?.disclaimer_text}
+          microbrandType={commonFooter?.data?.microbrand_type}
+          slices={commonFooter?.data?.body || []}
+          invertLogoColor={commonFooter?.data?.invert_logo_color}
+          attraction={commonFooter?.data?.attraction || 'attraction'}
+          primaryHeading={commonFooter?.data?.footer_heading}
+          isEntertainmentMb={true}
         />
-        <Breadcrumb links={breadcrumbs} />
-      </Wrapper>
-      <Footer
-        currentLanguage={currentLanguage}
-        logoURL={commonFooter?.data?.logo?.url}
-        logoAlt={commonFooter?.data?.logo?.alt}
-        hasPoweredByHeadoutLogo={
-          commonFooter?.data?.powered_by_superbrand || false
-        }
-        showDisclaimer={commonFooter?.data?.show_disclaimer}
-        disclaimerText={commonFooter?.data?.disclaimer_text}
-        microbrandType={commonFooter?.data?.microbrand_type}
-        slices={commonFooter?.data?.body || []}
-        invertLogoColor={commonFooter?.data?.invert_logo_color}
-        attraction={commonFooter?.data?.attraction || 'attraction'}
-        primaryHeading={commonFooter?.data?.footer_heading}
-        isEntertainmentMb={true}
-      />
-    </ShowPageWrapper>
+      </ShowPageWrapper>
+      {/* @ts-ignore */}
+      <ProductJsonLd {...productSchema} />
+    </>
   );
 };
 

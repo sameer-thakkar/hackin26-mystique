@@ -1,7 +1,7 @@
 import { Client } from 'config/prismic-config';
 import { CUSTOM_TYPES, LANGUAGE_PARAMS_REGEX } from 'const/index';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { legacyBooleanCheck } from 'utils';
+import { getHeadoutLanguagecode, legacyBooleanCheck } from 'utils';
 import { fetchTourList } from 'utils/apiUtils';
 import { convertUidToUrl } from 'utils/urlUtils';
 
@@ -59,7 +59,6 @@ const parseDocuments = async (documents) => {
   const finalDocs = [...microsites, ...contentPages].map((doc) => {
     const { uid, data, type, alternate_languages, tags, lang } = doc;
     const {
-      page_url,
       redirect_url,
       disable_amp,
       noindex,
@@ -116,7 +115,7 @@ const parseDocuments = async (documents) => {
     };
     let pageUrl;
     try {
-      pageUrl = new URL(convertUidToUrl(uid));
+      pageUrl = convertUidToUrl({ uid, lang: getHeadoutLanguagecode(lang) });
     } catch (e) {
       pageUrl = null;
     }
@@ -142,7 +141,7 @@ const parseDocuments = async (documents) => {
       has_amp: !disable_amp || false,
       title,
       description,
-      url: page_url,
+      url: pageUrl,
       category_id: inferredCategoryId,
       city: inferredCity,
       canonical_link,

@@ -12,13 +12,16 @@ import Banner from 'components/Banner';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
 import LongForm from 'components/common/LongForm';
-import PopulateHead from 'components/common/meta';
 import PopulateProducts from 'components/PopulateProducts';
 import TextBanner from 'components/TextBanner';
 import Conditional from 'components/common/Conditional';
 import { withAmp } from 'components/common/withAmp';
 import MultiBannerWrapper from 'UI/MultiBannerWrapper';
-import { isSafetyIncluded, legacyBooleanCheck } from 'utils';
+import {
+  getAlternateLanguages,
+  isSafetyIncluded,
+  legacyBooleanCheck,
+} from 'utils';
 import Analytics from 'utils/analytics';
 import allToursParser from 'utils/allToursParser';
 import { csvTgidToArray, getLangObject, groupSlices } from 'utils/helper';
@@ -31,6 +34,7 @@ import {
 import { strings } from 'const/strings';
 import { fetchTourList } from 'utils/apiUtils';
 import { tourListApiParser } from 'utils/dataParsers';
+import PopulateMeta from 'components/common/NextSeoMeta';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
@@ -59,8 +63,6 @@ const MicrositeV1 = (props) => {
     mbTheme,
     scorpioData: scorpioDataUncategorised,
     activeCurrency,
-    first_publication_date: datePublished,
-    last_publication_date: dateModified,
     host,
     isDev,
     serverRequestStartTimestamp,
@@ -76,7 +78,15 @@ const MicrositeV1 = (props) => {
   const [covidAlertActive, toggleCovidAlert] = useState(false);
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
 
-  const { refs, uid, lang, data: micrositeData } = data;
+  const {
+    refs,
+    uid,
+    lang,
+    first_publication_date: datePublished,
+    last_publication_date: dateModified,
+    data: micrositeData,
+    alternate_languages,
+  } = data;
   const {
     contentFramework,
     commonFooter,
@@ -85,7 +95,6 @@ const MicrositeV1 = (props) => {
   } = refs;
   const {
     attraction: attractionCMS,
-    localization,
     images: bannerImages,
     heading: bannerHeading,
     banner_subtext: bannerSubtext,
@@ -115,6 +124,14 @@ const MicrositeV1 = (props) => {
     enable_earliest_availability: enableEarliestAvailability,
     baseLangPageTitle,
   } = micrositeData || {};
+
+  const alternateLanguages = getAlternateLanguages(
+    alternate_languages,
+    isDev,
+    isAmp,
+    host,
+    uid
+  );
 
   const { data: commonFooterData } = commonFooter || {};
   const { data: secondaryFooterData } = secondaryFooter || {};
@@ -216,9 +233,6 @@ const MicrositeV1 = (props) => {
     }, []) || [];
   const hasDropdownLinks =
     legacyBooleanCheck(enableDropdownLinks) && dropdownLinks.length;
-  const languages = legacyBooleanCheck(hasLanguageSelector)
-    ? localization.filter((lang) => lang.language)
-    : [];
 
   const showGroupBooking = legacyBooleanCheck(enableGroupBooking);
   const { results: productOffer } = offerData ? offerData : { results: [] };
@@ -443,25 +457,20 @@ const MicrositeV1 = (props) => {
             theme={mbTheme}
           />
         </Conditional>
-        <PopulateHead
+        <PopulateMeta
           {...{
-            ...micrositeData,
-            localization: languages,
+            prismicData: micrositeData,
             datePublished,
             dateModified,
-            lang,
-            isDev,
-            originalHost: host,
-            currentLanguage,
             serverRequestStartTimestamp,
-            mbTheme,
-            isAmp,
+            languages: alternateLanguages,
             isMobile,
-            finalBannerImages,
+            isAmp,
+            bannerImages: finalBannerImages,
           }}
         />
         <Header
-          languages={languages ? languages : null}
+          languages={alternateLanguages}
           headerLinks={finalHeaderLinks}
           logoUrl={logoUrl || uploadedLogoUrl || null}
           logoAltText={altText || logoAltText}

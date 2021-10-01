@@ -1,7 +1,8 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useContext } from 'react';
 import styled from 'styled-components';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
+import { MBContext } from 'contexts/MBContext';
 
 const TagSection = styled.div`
   max-width: 1200px;
@@ -43,9 +44,17 @@ interface TagsProps {
   collections: any[];
   uid: string;
   title: string;
+  isAmp?: boolean;
 }
 
-const Tags: FunctionComponent<TagsProps> = ({ collections, uid, title }) => {
+const Tags: FunctionComponent<TagsProps> = ({
+  collections,
+  uid,
+  title,
+  isAmp = false,
+}) => {
+  const { host, isDev } = useContext(MBContext);
+
   const finalCollection = collections.filter(
     (collection) => collection.uid !== uid
   );
@@ -56,7 +65,7 @@ const Tags: FunctionComponent<TagsProps> = ({ collections, uid, title }) => {
       data || {};
     const url = microbrandUrl
       ? getValidUrl(microbrandUrl?.trim())
-      : getValidUrl(convertUidToUrl(uid));
+      : convertUidToUrl({ uid, isDev, hostname: host, isAmp });
     return (
       <Tag key={id} href={url}>
         {collectionName}

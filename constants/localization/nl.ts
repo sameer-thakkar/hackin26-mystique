@@ -33,6 +33,7 @@ const nl = {
   REOPENING_ON: 'Reopening on',
   OPENING_ON: 'Opening on',
   NEW: 'NEW',
+  SEE_ALL: 'See All',
   LISTICLES: {
     SEATING_CHART: 'Stoelenschema',
     KNOW_MORE: 'Lees meer',

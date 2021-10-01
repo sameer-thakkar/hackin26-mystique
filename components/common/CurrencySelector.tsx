@@ -20,8 +20,9 @@ const StyledCurrencySelector = styled.div`
     top: 50px;
   }
   &:after {
-    // this adds white space below the active text,
-    // increasing the hover area
+    /* this adds white space below the active text,
+    increasing the hover area
+    */
     content: '';
     display: block;
     height: 30px;

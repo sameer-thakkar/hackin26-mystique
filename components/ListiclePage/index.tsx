@@ -7,8 +7,9 @@ import isBetween from 'dayjs/plugin/isBetween';
 import { useWindowWidth } from '@react-hook/window-size';
 import { RichText } from 'prismic-reactjs';
 import { SOLEIL, COLORS } from 'const/ui-constants';
+import PopulateMeta from 'components/common/NextSeoMeta';
+import { getAlternateLanguages } from 'utils';
 
-import PopulateHead from '../common/meta';
 import Header from '../common/Header';
 import OverflowScroll from '../UI/OverflowScroll';
 import Dropdown, { DropdownItem } from '../UI/Dropdown';
@@ -266,7 +267,18 @@ const Listicle = (props) => {
     commonHeader,
     commonFooter,
     contentFramework,
+    alternate_languages,
+    first_publication_date: datePublished,
+    last_publication_date: dateModified,
   } = props;
+
+  const alternateLanguages = getAlternateLanguages(
+    alternate_languages,
+    isDev,
+    false,
+    host,
+    uid
+  );
 
   const contentFrameworkSlices = groupSlices(
     contentFramework?.data?.body || []
@@ -285,7 +297,6 @@ const Listicle = (props) => {
     image,
     nofollow,
     noindex,
-    page_url,
   } = data;
 
   const currentLanguage = lang.split('-')[0];
@@ -341,7 +352,6 @@ const Listicle = (props) => {
       enable_group_booking: enableGroupBooking,
       logo_redirection_url: logoRedirectionURL,
       enable_powered_by_superbrand_logo: hasPoweredByHeadoutLogo,
-      localization,
       enable_localization_menu,
       logo,
       logo_alt_text: logoAltText,
@@ -378,13 +388,7 @@ const Listicle = (props) => {
     header_scripts,
     google_site_verification,
     bing_site_verification,
-    localization,
     logo,
-    page_url,
-    isDev,
-    currentLanguage,
-    originalHost: host,
-    serverRequestStartTimestamp,
   };
 
   const handleFilter = (month) => {
@@ -431,9 +435,20 @@ const Listicle = (props) => {
 
   return (
     <>
-      <PopulateHead {...headProps} />
+      <PopulateMeta
+        {...{
+          prismicData: headProps,
+          datePublished,
+          dateModified,
+          serverRequestStartTimestamp,
+          languages: alternateLanguages,
+          isMobile,
+          isAmp: false,
+          bannerImages: listicleBannerImages,
+        }}
+      />
       <Header
-        languages={localization}
+        languages={alternateLanguages}
         headerLinks={headerLinks}
         currentLanguage={currentLanguage}
         logoUrl={logo.url}

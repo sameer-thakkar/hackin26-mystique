@@ -1,10 +1,11 @@
 import React from 'react';
 import { useAmp } from 'next/amp';
+import { RichText } from 'prismic-reactjs';
+import { FAQPageJsonLd } from 'next-seo';
 import Conditional from 'components/common/Conditional';
-
-import Accordion from './Accordion';
-import RichContent from '../UI/RichContent';
-import TitleTextCombo from '../UI/TitleTextCombo';
+import Accordion from 'components/slices/Accordion';
+import RichContent from 'components/UI/RichContent';
+import TitleTextCombo from 'components/UI/TitleTextCombo';
 
 /**
  *
@@ -20,8 +21,7 @@ import TitleTextCombo from '../UI/TitleTextCombo';
  * **Content**: RichText field, is by default hidden (except for first) unless user clicks on the heading or the chevron icon.
  *
  */
-
-const AccordionGroup: React.FC<{
+type AccordionGroupProps = {
   accordions: {
     content: any;
     heading: string;
@@ -30,60 +30,67 @@ const AccordionGroup: React.FC<{
   useSchema: Boolean;
   sliceProps?: any;
   isOpenOverride?: Boolean;
-}> = ({
+};
+
+const AccordionGroup = ({
   accordions,
   heading,
   useSchema,
   sliceProps,
   isOpenOverride = true,
-}) => {
+}: AccordionGroupProps) => {
   const isGlobalMb = sliceProps?.isGlobalMb ? sliceProps?.isGlobalMb : false;
   const isAmp = useAmp();
+  const faqSchemaProps = accordions.map((acc) => {
+    const { heading, content } = acc || {};
+    return {
+      questionName: heading,
+      acceptedAnswerText: RichText.asText(content),
+    };
+  });
   return (
-    <div
-      {...(useSchema && {
-        itemType: 'https://schema.org/FAQPage',
-        itemScope: true,
-      })}
-    >
-      <Conditional if={heading}>
-        <TitleTextCombo>
-          <h2>{heading}</h2>
-        </TitleTextCombo>
+    <>
+      <div>
+        <Conditional if={heading}>
+          <TitleTextCombo>
+            <h2>{heading}</h2>
+          </TitleTextCombo>
+        </Conditional>
+        {isAmp ? (
+          <amp-accordion animate="">
+            {accordions.map((accordion, index) => {
+              const content = <RichContent render={accordion.content} />;
+              return (
+                <Accordion
+                  key={index}
+                  content={content}
+                  heading={accordion.heading}
+                  isAmp
+                />
+              );
+            })}
+          </amp-accordion>
+        ) : (
+          <>
+            {accordions.map((accordion, index) => {
+              const content = <RichContent render={accordion.content} />;
+              return (
+                <Accordion
+                  key={index}
+                  content={content}
+                  isOpenOverride={index == 0 && isOpenOverride}
+                  heading={accordion.heading}
+                  isGlobalMb={isGlobalMb}
+                />
+              );
+            })}
+          </>
+        )}
+      </div>
+      <Conditional if={useSchema}>
+        <FAQPageJsonLd mainEntity={faqSchemaProps} />
       </Conditional>
-      {isAmp ? (
-        <amp-accordion animate="">
-          {accordions.map((accordion, index) => {
-            const content = <RichContent render={accordion.content} />;
-            return (
-              <Accordion
-                key={index}
-                content={content}
-                heading={accordion.heading}
-                useSchema={useSchema}
-                isAmp
-              />
-            );
-          })}
-        </amp-accordion>
-      ) : (
-        <>
-          {accordions.map((accordion, index) => {
-            const content = <RichContent render={accordion.content} />;
-            return (
-              <Accordion
-                key={index}
-                content={content}
-                isOpenOverride={index == 0 && isOpenOverride}
-                heading={accordion.heading}
-                useSchema={useSchema}
-                isGlobalMb={isGlobalMb}
-              />
-            );
-          })}
-        </>
-      )}
-    </div>
+    </>
   );
 };
 

@@ -378,6 +378,8 @@ const DetailedProductCard = (props) => {
     nakedDomain,
     biLink,
     sidebarModal: { addToAside },
+    host,
+    isDev,
   } = mbContext;
   const {
     allTours,
@@ -402,7 +404,9 @@ const DetailedProductCard = (props) => {
     title,
     showPageUid,
   } = activeTour || {};
-  const showPageUrl = showPageUid ? convertUidToUrl(showPageUid) : null;
+  const showPageUrl = showPageUid
+    ? convertUidToUrl({ uid: showPageUid, isDev, hostname: host })
+    : null;
 
   const rightBlocksCount = contentBlocks?.right?.length;
   const descriptors = parseV2ProductDescriptors({

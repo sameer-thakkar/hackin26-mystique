@@ -1,12 +1,18 @@
 import { ComponentType } from 'react';
 import dynamic from 'next/dynamic';
-import PopulateHead from 'components/common/meta';
-import Header from 'components/MicrositeV2/Header';
 import Conditional from 'components/common/Conditional';
+import Header from 'components/MicrositeV2/Header';
+import PopulateMeta from 'components/common/NextSeoMeta';
 import Tags from 'components/GlobalMbs/Tags';
 import Footer from 'components/common/Footer';
 import { groupSlices } from 'utils/helper';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
+import { CUSTOM_TYPES } from 'const/index';
+import {
+  getSinglePrismicSlice,
+  getAlternateLanguages,
+  getHeadoutLanguagecode,
+} from 'utils';
 
 const CountryPage = dynamic(() => import('./views/CountryPage'));
 const CityPage: ComponentType<any> = dynamic(() => import('./views/CityPage'));
@@ -29,6 +35,7 @@ const GlobalMB = (props) => {
     uid,
     host,
     lang,
+    alternate_languages,
     first_publication_date: datePublished,
     last_publication_date: dateModified,
     data: CMSContent,
@@ -47,6 +54,29 @@ const GlobalMB = (props) => {
     collections,
   } = props || {};
 
+  const alternateLanguages = getAlternateLanguages(
+    alternate_languages,
+    isDev,
+    false,
+    host,
+    uid
+  );
+
+  const isGlobalHomepage = type === CUSTOM_TYPES.GLOBAL_HOMEPAGE;
+  const isGlobalCollection = type === CUSTOM_TYPES.GLOBAL_COLLECTION;
+  const isGlobalExperience = type === CUSTOM_TYPES.GLOBAL_EXPERIENCE;
+  const isGlobalCountry = type === CUSTOM_TYPES.GLOBAL_COUNTRY;
+  const isGlobalCity = type === CUSTOM_TYPES.GLOBAL_CITY;
+
+  const commonProps = {
+    uid,
+    isDev,
+    isMobile,
+    host,
+    lang,
+    type,
+  };
+
   const { data: header } = commonHeader || {};
   const { data: footer } = commonFooter || {};
 
@@ -63,9 +93,6 @@ const GlobalMB = (props) => {
   } = footer || {};
 
   const {
-    title,
-    description,
-    image,
     supply,
     headout_category_id: categoryId,
     official_website: officialWebsite,
@@ -73,9 +100,6 @@ const GlobalMB = (props) => {
     city_name: cityName,
     collection_name: collectionName,
     microbrand_url: microbrandUrl,
-    favicon,
-    google_site_verification,
-    bing_site_verification,
   } = CMSContent || {};
 
   const { logo } = header || {};
@@ -85,6 +109,7 @@ const GlobalMB = (props) => {
   const { results: countryCollectionsData } = countryCollections || {};
 
   const cityPageProps = {
+    ...commonProps,
     ...CMSContent,
     currencies,
     cityCollections: cityCollectionsData,
@@ -93,7 +118,12 @@ const GlobalMB = (props) => {
   const hasTicketsPage = supply === 'Direct' && categoryId;
   const ticketLink = hasTicketsPage
     ? ticketsPage?.uid
-      ? convertUidToUrl(ticketsPage?.uid)
+      ? convertUidToUrl({
+          uid: ticketsPage?.uid,
+          isDev,
+          hostname: host,
+          lang: getHeadoutLanguagecode(lang),
+        })
       : getValidUrl(officialWebsite?.trim())
     : getValidUrl(officialWebsite?.trim());
 
@@ -111,25 +141,77 @@ const GlobalMB = (props) => {
     ?.sort();
 
   const homePageProps = {
+    ...commonProps,
     ...CMSContent,
     collections: collectionsData,
     cityCollections: cityCollectionsData,
   };
 
   const collectionPageProps = {
+    ...commonProps,
     ...CMSContent,
     tickets,
-    uid,
     ticketsPage,
     totalCityCollections: cityCollectionsData?.length,
     cityCollectionRanks,
   };
+  const {
+    body: cityPageSlices,
+    images: collectionPageBanner,
+    banner_images: homePageBanner,
+  } = CMSContent || {};
+  const homePageBannerImages = homePageBanner?.reduce((acc, image) => {
+    const { image_url, alt_text } = image || {};
+    if (Object.keys(image_url)?.length) {
+      return [...acc, { url: image_url?.url, alt: alt_text }];
+    }
+  }, []);
+  const { items } =
+    getSinglePrismicSlice({
+      sliceName: 'banner',
+      slices: cityPageSlices,
+    }) || {};
 
-  const isGlobalHomepage = type === 'global_homepage';
-  const isGlobalCollection = type === 'global_collection';
-  const isGlobalExperience = type === 'global_experience';
-  const isGlobalCountry = type === 'global_country';
-  const isGlobalCity = type === 'global_city';
+  const cityPageBanners = items?.reduce((acc, image) => {
+    const { banner_image, alt_text } = image || {};
+    if (banner_image) {
+      return [
+        ...acc,
+        {
+          url: banner_image,
+          alt: alt_text,
+        },
+      ];
+    }
+  }, []);
+  const collectionPageBannerImages = collectionPageBanner?.reduce(
+    (acc, image) => {
+      const { image_url, alt_text } = image || {};
+      if (image_url) {
+        return [
+          ...acc,
+          {
+            url: image_url,
+            alt: alt_text,
+          },
+        ];
+      }
+    },
+    []
+  );
+
+  let finalBannerImages;
+  switch (true) {
+    case isGlobalHomepage:
+      finalBannerImages = homePageBannerImages;
+      break;
+    case isGlobalCity:
+      finalBannerImages = cityPageBanners;
+      break;
+    case isGlobalCollection:
+      finalBannerImages = collectionPageBannerImages;
+      break;
+  }
 
   const showTicketsCta = isGlobalCollection || props?.ticketsPage;
   const showHeaderlinks = isGlobalCollection || isGlobalExperience;
@@ -143,7 +225,12 @@ const GlobalMB = (props) => {
         url: {
           url: data?.data?.microbrand_url
             ? getValidUrl(data?.data?.microbrand_url?.trim())
-            : convertUidToUrl(data?.uid),
+            : convertUidToUrl({
+                uid: data?.uid,
+                isDev,
+                hostname: host,
+                lang: getHeadoutLanguagecode(lang),
+              }),
           target: '_blank',
         },
       },
@@ -196,44 +283,34 @@ const GlobalMB = (props) => {
 
   switch (type) {
     case 'global_country':
-      pageMarkup = <CountryPage {...CMSContent} uid={uid} />;
+      pageMarkup = <CountryPage {...CMSContent} {...commonProps} />;
       break;
     case 'global_city':
-      pageMarkup = <CityPage {...cityPageProps} uid={uid} />;
+      pageMarkup = <CityPage {...cityPageProps} />;
       break;
     case 'global_collection':
       pageMarkup = <CollectionPage {...collectionPageProps} />;
       break;
     case 'global_experience':
-      pageMarkup = <ExperiencePage {...CMSContent} uid={uid} />;
+      pageMarkup = <ExperiencePage {...CMSContent} {...commonProps} />;
       break;
     default:
-      pageMarkup = <HomePage {...homePageProps} uid={uid} />;
+      pageMarkup = <HomePage {...homePageProps} />;
   }
 
   return (
     <>
       <Conditional if={!microbrandUrl}>
-        <PopulateHead
+        <PopulateMeta
           {...{
-            title,
-            description,
-            image,
-            favicon: {
-              url: favicon,
-            },
-            faq_schema: [],
-            first_publication_date: datePublished,
-            last_publication_date: dateModified,
-            lang,
-            originalHost: host,
-            isDev,
-            currentLanguage: lang,
+            prismicData: { ...CMSContent, ...header },
+            datePublished,
+            dateModified,
             serverRequestStartTimestamp,
+            languages: alternateLanguages,
             isMobile,
-            google_site_verification,
-            bing_site_verification,
-            disable_amp: true,
+            isAmp: false,
+            bannerImages: finalBannerImages,
           }}
         />
         <Header

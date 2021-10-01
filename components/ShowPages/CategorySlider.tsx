@@ -187,7 +187,7 @@ export default class CategorySlider extends Component<CardCarouselProps> {
                       currencySymbol={currencySymbol}
                       categoryName={categoryName}
                       isMobile={isMobile}
-                    ></CategoryCard>
+                    />
                   </div>
                 ) : null;
               })}
@@ -213,7 +213,7 @@ export default class CategorySlider extends Component<CardCarouselProps> {
                     currencySymbol={currencySymbol}
                     categoryName={categoryName}
                     isMobile={isMobile}
-                  ></CategoryCard>
+                  />
                 </div>
               );
             })}

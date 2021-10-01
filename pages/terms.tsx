@@ -5,7 +5,7 @@ import ContentContainer from 'components/UI/ContentContainer';
 import Paragraph from 'components/UI/Paragraph';
 import { getAppTheme } from 'style/theme';
 import { TopHeading, SubHeading } from 'components/UI/Headings';
-import { MinimalHelmet } from 'components/common/meta';
+import { MinimalHelmet } from 'components/common/NextSeoMeta';
 import { ThemeProvider } from 'styled-components';
 import 'lazysizes';
 import { MBContextProvider } from 'contexts/MBContext';

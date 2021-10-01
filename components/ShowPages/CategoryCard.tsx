@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { convertUidToUrl } from 'utils/urlUtils';
 import PriceBlock, { SavedTag, StyledPriceBlock } from 'UI/PriceBlock';
 import { SEE_SAFETY } from 'assets/SvgIcons';
 import { safetyChecker } from 'components/ShowPages/parseShowPage';
 import Conditional from 'components/common/Conditional';
+import { MBContext } from 'contexts/MBContext';
 
 import Image from '../UI/Image';
 
@@ -108,6 +109,7 @@ const CategoryCard = ({
   isMobile,
 }) => {
   const { listingPrice, name, imageUrl, id, tourGroupUrl } = element;
+  const { isDev, host } = useContext(MBContext);
 
   const { currencyCode } = listingPrice;
 
@@ -115,7 +117,7 @@ const CategoryCard = ({
     (element) => element.data.tgid === id
   );
   const redirectURL = cardDocument.length
-    ? convertUidToUrl(cardDocument[0].uid)
+    ? convertUidToUrl({ uid: cardDocument[0].uid, isDev, hostname: host })
     : `https://www.headout.com${tourGroupUrl}`;
 
   const isSafe = safetyChecker(element.microBrandsHighlight);
@@ -140,9 +142,7 @@ const CategoryCard = ({
             lang={currentLanguage}
             showSavings={true}
             showScratchPrice={true}
-            currencySymbolOverride={
-              currencySymbol?.[currencyCode] || currencyCode
-            }
+            currencySymbolOverride={currencySymbol || currencyCode}
             prefix={true}
           />
         </div>

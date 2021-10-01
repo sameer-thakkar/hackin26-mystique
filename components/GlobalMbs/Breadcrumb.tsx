@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { CHEVRON_LEFT } from 'assets/SvgIcons';
 import { COLORS, SOLEIL } from 'const/ui-constants';
+import { BreadcrumbJsonLd } from 'next-seo';
 
 const BreadcrumbContainer = styled.div`
   display: grid;
@@ -37,20 +38,32 @@ const StyledChevron = styled.div`
 `;
 
 const Breadcrumb = ({ links }) => {
+  const itemListElements = links?.map((link, index) => {
+    const { url: item, text: name } = link;
+    const position = index + 1;
+    return {
+      position,
+      name,
+      item,
+    };
+  });
   return (
-    <BreadcrumbContainer>
-      {links.map((link, index) => {
-        const { url, text } = link;
-        return (
-          <StyledBreadcrumb key={index}>
-            <StyledLink href={url}>{text}</StyledLink>
-            {links.length - 1 !== index && (
-              <StyledChevron>{CHEVRON_LEFT}</StyledChevron>
-            )}
-          </StyledBreadcrumb>
-        );
-      })}
-    </BreadcrumbContainer>
+    <>
+      <BreadcrumbContainer>
+        {links.map((link, index) => {
+          const { url, text } = link;
+          return (
+            <StyledBreadcrumb key={index}>
+              <StyledLink href={url}>{text}</StyledLink>
+              {links.length - 1 !== index && (
+                <StyledChevron>{CHEVRON_LEFT}</StyledChevron>
+              )}
+            </StyledBreadcrumb>
+          );
+        })}
+      </BreadcrumbContainer>
+      <BreadcrumbJsonLd itemListElements={itemListElements} />
+    </>
   );
 };
 

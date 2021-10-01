@@ -2,13 +2,14 @@ import dynamic from 'next/dynamic';
 import React, { Component, ComponentType } from 'react';
 import { withRouter } from 'next/router';
 import { InteractionContextProvider } from 'contexts/Interaction';
-import PopulateHead from 'components/common/meta';
 import { withAmp } from 'components/common/withAmp';
 import Conditional from 'components/common/Conditional';
 import { PAGETYPE, THEMES } from 'const/index';
 import allToursParser from 'utils/allToursParser';
 import { tourListApiParser } from 'utils/dataParsers';
 import { docCookies, genManualSlice, getLangObject } from 'utils/helper';
+import PopulateMeta from 'components/common/NextSeoMeta';
+import { getAlternateLanguages } from 'utils';
 
 const HomePage: ComponentType<any> = dynamic(() =>
   import('./views/HomePage').then((mod) => mod.HomePage)
@@ -116,17 +117,23 @@ class MicrositeV2 extends Component<any, any> {
       commonHeader,
       secondaryFooter,
     } = this.props.data.refs;
+    const { isDev, serverRequestStartTimestamp } = this.props;
     const {
+      uid,
+      data: CMSData,
       first_publication_date: datePublished,
       last_publication_date: dateModified,
-      lang,
+      alternate_languages,
+    } = CMSContent;
+
+    const alternateLanguages = getAlternateLanguages(
+      alternate_languages,
       isDev,
-      pathname,
-      serverRequestStartTimestamp,
-    } = this.props;
-    const { uid: currentDomain, data: CMSData } = CMSContent;
+      isAmp,
+      host,
+      uid
+    );
     const {
-      localization: languages,
       dropdown_menu: dropdownMenu,
       header_links,
       images: CMSImages,
@@ -138,9 +145,9 @@ class MicrositeV2 extends Component<any, any> {
     const currentLanguage = getLangObject(CMSContent.lang).short;
     const { isMobile } = this.state;
     const languageProps = {
-      currentDomain,
+      uid,
       currentLanguage,
-      languages,
+      languages: alternateLanguages,
     };
 
     const dropdownLinksArray = dropdownMenu.reduce((acc, item) => {
@@ -448,27 +455,23 @@ class MicrositeV2 extends Component<any, any> {
     };
 
     const directTgid = isMobile ? null : this.props.router.query.tgid;
-
     const longFormContent = this.props.data.data.body2;
     let activePage = this.state.page.name;
-
     return (
       <InteractionContextProvider {...categoryProps}>
-        <PopulateHead
+        <PopulateMeta
           {...{
-            ...this.props.data.data,
-            first_publication_date: datePublished,
-            last_publication_date: dateModified,
-            lang,
-            originalHost: host,
-            isDev,
-            pathname,
-            currentLanguage,
+            prismicData: CMSData,
+            datePublished,
+            dateModified,
             serverRequestStartTimestamp,
-            isMobile,
+            languages: alternateLanguages,
+            isMobile: this.state.isMobile,
             isAmp,
+            bannerImages: heroProps?.banners,
           }}
         />
+
         <div
           style={{
             display: activePage == PAGETYPE.HOMEPAGE ? 'block' : 'none',
@@ -482,11 +485,12 @@ class MicrositeV2 extends Component<any, any> {
             longFormContent={longFormContent}
             isFetched={isFetched}
             host={host}
-            uid={currentDomain}
+            uid={uid}
             directTgid={directTgid}
             ready={ready}
             isListicle={isListicle}
             displayMonths={displayMonths}
+            isDev={isDev}
           />
         </div>
         <Conditional if={activePage == PAGETYPE.MOBILE_PRODUCT_PAGE}>
@@ -494,7 +498,7 @@ class MicrositeV2 extends Component<any, any> {
             changePage={this.changePage}
             tour={allTours[this.state.page.tgid]}
             host={host}
-            uid={currentDomain}
+            uid={uid}
             currentLanguage={currentLanguage}
             tgid={this.state.page.tgid}
             isEntertainmentMb={isEntertainmentMb}

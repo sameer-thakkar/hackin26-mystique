@@ -39,6 +39,7 @@ export const ProductsWrapper = (props) => {
     host,
     uid,
     isListicle,
+    isDev,
     isDiscountedPage,
   } = props;
   useEffect(() => {
@@ -80,6 +81,7 @@ export const ProductsWrapper = (props) => {
         sectionId={'main'}
         isListicle={isListicle}
         categoryProps={categoryProps}
+        isDev={isDev}
         isDiscountedPage={isDiscountedPage}
       />
     </StyledProductWrapper>

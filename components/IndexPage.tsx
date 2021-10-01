@@ -19,13 +19,13 @@ import {
   reflect,
   isNakedDomain,
   getHeadoutLanguagecode,
-  extractSinglePrismicSlice,
+  getSinglePrismicSlice,
 } from 'utils';
 import { getPrismicDocument } from 'utils/prismicUtils';
 import {
   fetchCategory,
   fetchCurrencyList,
-  fetchTourGroup,
+  fetchTourGroupV6,
 } from 'utils/apiUtils';
 import Analytics from 'utils/analytics';
 import {
@@ -175,7 +175,7 @@ export default class Page extends React.Component<any, any> {
     const { host } = req.headers || window.location;
     const isStage = host.includes('stage-');
     const { uid, lang } = getLangUID(req, query);
-    const hostname = getHostName(isStage, isDev);
+    const hostname = getHostName(isStage, isDev, host);
 
     try {
       let initial_tgids = [];
@@ -233,7 +233,7 @@ export default class Page extends React.Component<any, any> {
         const mbTheme = theme || THEMES.DEFAULT;
         const toursTabFirstSlice = body1?.[0];
 
-        const categoryTourListV1 = extractSinglePrismicSlice({
+        const categoryTourListV1 = getSinglePrismicSlice({
           sliceName: 'ticket_card_shoulder_page',
           slices: contentFrameworkData?.body,
         });
@@ -356,11 +356,10 @@ export default class Page extends React.Component<any, any> {
       }
       if (ContentType === CUSTOM_TYPES.SHOW_PAGE) {
         try {
-          const tgidData = await fetchTourGroup(
-            CMSContent?.data?.tgid,
-            hostname
-          ).then((res) => {
-            return res.json();
+          const tgidData = await fetchTourGroupV6({
+            tgid: CMSContent?.data?.tgid,
+            hostname,
+            language: getHeadoutLanguagecode(lang),
           });
 
           return {
@@ -420,12 +419,12 @@ export default class Page extends React.Component<any, any> {
         const toursTabFirstSlice = body1[0];
         const categorizedTours = body;
 
-        const categoryTourList = extractSinglePrismicSlice({
+        const categoryTourList = getSinglePrismicSlice({
           sliceName: 'tour_list_category',
           slices: categorizedTours,
         });
 
-        const categoryCarouselCF = extractSinglePrismicSlice({
+        const categoryCarouselCF = getSinglePrismicSlice({
           sliceName: 'category_carousel',
           slices: contentFrameworkData?.body,
         });
@@ -744,11 +743,10 @@ export default class Page extends React.Component<any, any> {
           return (
             <ShowPage
               CMSContent={CMSContent}
-              host={host}
-              uid={uid}
-              lang={lang}
               tourGroupData={tourGroupData}
               isDev={isDev}
+              host={host}
+              serverRequestStartTimestamp={serverRequestStartTimestamp}
             />
           );
         case CUSTOM_TYPES.GLOBAL_CITY:
@@ -801,6 +799,7 @@ export default class Page extends React.Component<any, any> {
                 noTrack={!!noTrack || isDev}
                 biLink={biLink}
                 isGlobalMb={isGlobalMb}
+                isDev={isDev}
                 isStage={isStage}
                 bookSubdomain={bookSubdomain}
                 primaryCountry={primaryCountry}
