@@ -59,7 +59,6 @@ const parseDocuments = async (documents) => {
   const finalDocs = [...microsites, ...contentPages].map((doc) => {
     const { uid, data, type, alternate_languages, tags, lang } = doc;
     const {
-      page_url,
       redirect_url,
       disable_amp,
       noindex,
@@ -142,7 +141,7 @@ const parseDocuments = async (documents) => {
       has_amp: !disable_amp || false,
       title,
       description,
-      url: page_url,
+      url: pageUrl,
       category_id: inferredCategoryId,
       city: inferredCity,
       canonical_link,
