@@ -8,7 +8,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "dev": "next -p 3001",
-    "start": "next start",
+    "start": "NODE_OPTIONS=--max-old-space-size=3072 next start",
     "build": "next build",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
