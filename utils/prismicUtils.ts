@@ -133,7 +133,7 @@ export const getContentPageDocument = async ({
       const baseLangData =
         lang !== 'en-us'
           ? await Client(req)
-              .getByUID(CUSTOM_TYPES.CONTENT_PAGE, baseLangUid, {
+              .getByUID(CUSTOM_TYPES.CONTENT_PAGE, baseLangUid || uid, {
                 lang: 'en-us',
               })
               .then((res) => res)
