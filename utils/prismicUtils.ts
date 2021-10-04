@@ -19,6 +19,8 @@ import {
 } from 'utils';
 import { getLangUID, getValidUrlParams, sanitizeURL } from 'utils/urlUtils';
 
+import { traceError } from './logutils';
+
 export const getListicleDocument = async ({ req, uid, lang }) => {
   const listicleResponse = await Client(req).getByUID(
     CUSTOM_TYPES.LISTICLE,
@@ -194,6 +196,7 @@ export const getMicrositeDocument = async ({
   lang,
   host,
 }): Promise<any> => {
+  console.log({ lang });
   return await Client(req)
     .getByUID(CUSTOM_TYPES.MICROSITE, uid, {
       lang,
@@ -219,7 +222,7 @@ export const getMicrositeDocument = async ({
           const baseLangData =
             lang !== 'en-us'
               ? await Client(req)
-                  .getByUID(CUSTOM_TYPES.MICROSITE, baseLangUid, {
+                  .getByUID(CUSTOM_TYPES.MICROSITE, baseLangUid || uid, {
                     lang: 'en-us',
                   })
                   .then((res) => res)
@@ -802,7 +805,12 @@ export const getPrismicDocument = async ({
       getGlobalCountry({ req, lang, uid }),
     ]);
   } catch (error) {
-    console.log({ error, reqUrl: `${req?.headers?.host}/${req?.url}` });
+    traceError({
+      error,
+      host: req?.headers?.host,
+      url: req?.url,
+      message: 'Prismic Doc Not Found',
+    });
     return {
       statusCode: 404,
     };

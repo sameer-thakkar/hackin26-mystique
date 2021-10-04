@@ -36,6 +36,7 @@ import {
 import { getHostName } from 'utils/helper';
 import { addCashbackValueToDescriptor } from 'utils/productUtils';
 import { getLangUID, removePageQuery } from 'utils/urlUtils';
+import { traceError } from 'utils/logutils';
 
 const Microsite = dynamic(() => import('components/MicrositeV1'));
 const ContentPage = dynamic(() => import('components/ContentPage'));
@@ -166,7 +167,7 @@ export default class Page extends React.Component<any, any> {
         biLink,
       };
     } catch (error) {
-      console.log({ error, reqUrl: `${req?.headers?.host}/${req?.url}` });
+      traceError({ error, host: req?.headers?.host, url: req?.url });
       return {};
     }
   }
@@ -214,7 +215,7 @@ export default class Page extends React.Component<any, any> {
           }
           return {};
         } catch (error) {
-          console.log({ error, reqUrl: `${req?.headers?.host}/${req?.url}` });
+          traceError({ error, host: req?.headers?.host, url: req?.url });
           return {};
         }
       })();
@@ -372,7 +373,7 @@ export default class Page extends React.Component<any, any> {
             host,
           };
         } catch (error) {
-          console.log({ error, reqUrl: `${req?.headers?.host}/${req?.url}` });
+          traceError({ error, host: req?.headers?.host, url: req?.url });
         }
       }
       /**
@@ -528,7 +529,19 @@ export default class Page extends React.Component<any, any> {
 
       const tourGroupAPIResponses = await fetch(
         constructedTourgroupURL.toString()
-      ).then((r) => r.json());
+      )
+        .then((r) => r.json())
+        .catch((error) => {
+          traceError({ error, host: req?.headers?.host, url: req?.url });
+
+          // if tourGroup API fails, assume all tours as unavailable and render rest of the page.
+          return {
+            tourGroups: tgidsArray.map((tgid) => ({
+              id: tgid,
+              listingPrice: null,
+            })),
+          };
+        });
 
       const currencySymbolMap = tourGroupAPIResponses?.currencies?.reduce(
         (acc, currency) => ({
@@ -610,7 +623,7 @@ export default class Page extends React.Component<any, any> {
         primaryCountry,
       };
     } catch (error) {
-      console.log({ error, reqUrl: `${req?.headers?.host}/${req?.url}` });
+      traceError({ error, host: req?.headers?.host, url: req?.url });
       return {
         statusCode: 500,
       };

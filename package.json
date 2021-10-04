@@ -33,6 +33,7 @@
     "next-seo": "^4.27.0",
     "prismic-javascript": "^3.0.0",
     "prismic-reactjs": "^1.0.1",
+    "prom-client": "^14.0.0",
     "query-string": "^6.13.6",
     "react": "^17.0.0",
     "react-copy-to-clipboard": "^5.0.1",
