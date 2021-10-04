@@ -70,7 +70,7 @@ const it = {
     EU_PREFIX: 'Nota bene: ',
     IT_PREFIX: 'Avviso : ',
     IT_DESCRIPTION:
-      "A partire dal 6 agosto, l'accesso ai musei sarà possibile solo previa presentazione di un Green Pass o di un Certificato europeo COVID",
+      "A partire dal 6 agosto, l'accesso ai musei sarà possibile solo previa presentazione di un Green Pass o di un Certificato europeo COVID.",
     EU_DESCRIPTION:
       "a partire dal 21 luglio tutti i visitatori sopra gli 18 anni di età devono presentare un Certificato COVID dell'UE.",
     GENERAL_DESCRIPTION:
@@ -83,7 +83,7 @@ const it = {
     MODAL: {
       HEADING: 'Esperienze Sicure',
       SUB_HEADING:
-        "sta lavorando con i nostri partner in tutto il mondo per implementare i migliori standard di sicurezza in accordo con le linee guida dell'OMS. Tutte le misure adottate sul campo sono state verificate: le puoi vedere elencate in questa sezione. È tempo di godersi di nuovo il mondo che ci circonda.",
+        "Stiamo lavorando con i nostri partner in tutto il mondo per implementare i migliori standard di sicurezza in accordo con le linee guida dell'OMS. Tutte le misure adottate sul campo sono state verificate: le puoi vedere elencate in questa sezione. È tempo di godersi di nuovo il mondo che ci circonda.",
       DETAILS: {
         SAFETY_MASK_DEFAULT: {
           HEADING: 'Tutti indossano maschere per garantire la tua sicurezza',
