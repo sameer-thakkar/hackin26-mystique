@@ -70,7 +70,7 @@ const es = {
     EU_PREFIX: 'Atención: ',
     IT_PREFIX: 'Importante : ',
     IT_DESCRIPTION:
-      'A partir del 6 de agosto, todos los visitantes deben presentar un certificado Covid válido (Green Pass italiano o certificado europeo)',
+      'A partir del 6 de agosto, todos los visitantes deben presentar un certificado Covid válido (Green Pass italiano o certificado europeo).',
     EU_DESCRIPTION:
       'A partir del 21 de julio, todos los visitantes mayores de 18 años deben presentar un certificado COVID de la UE',
     GENERAL_DESCRIPTION:

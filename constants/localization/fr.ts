@@ -68,7 +68,7 @@ const fr = {
     EU_PREFIX: 'Attention : ',
     IT_PREFIX: 'Important : ',
     IT_DESCRIPTION:
-      'Pour toute visite à partir du 6 août, les visiteurs, dès l’âge de 12 ans, devront présenter un pass sanitaire valable (italien ou européen)',
+      'Pour toute visite à partir du 6 août, les visiteurs, dès l’âge de 12 ans, devront présenter un pass sanitaire valable (italien ou européen).',
     EU_DESCRIPTION:
       "À partir du 21 juillet, tous les visiteurs de plus de 18 ans doivent présenter un certificat COVID de l'UE.",
     GENERAL_DESCRIPTION:
