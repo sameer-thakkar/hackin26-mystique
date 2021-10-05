@@ -393,12 +393,13 @@ export const getTGIDListForMonth = (allTours, displayMonth) => {
 };
 
 export const getDiscountedProducts = (allTours) => {
-  return Object.values(allTours).reduce((acc: any[], product: any) => {
+  return Object.values(allTours)?.reduce((acc: any[], product: any) => {
     const { listingPrice, tgid } = product;
     const { finalPrice, originalPrice } = listingPrice || {};
     if (listingPrice && (finalPrice < originalPrice || finalPrice < 30)) {
       return [...acc, tgid];
     }
+    return acc;
   }, []);
 };
 
@@ -413,5 +414,6 @@ export const getPriceSortedDiscountedProducts = (allTours) => {
       if (listingPrice && (finalPrice < originalPrice || finalPrice < 30)) {
         return [...acc, tgid];
       }
+      return acc;
     }, []);
 };
