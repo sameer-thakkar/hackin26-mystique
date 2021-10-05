@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { LogoJsonLd, SiteLinksSearchBoxJsonLd } from 'next-seo';
 import Conditional from 'components/common/Conditional';
-import { convertUidToUrl, getDomainFromUid } from 'utils/urlUtils';
+import { convertUidToUrl, getDomainFromUid, getValidUrl } from 'utils/urlUtils';
 
 export const TrackingScripts = ({
   isDev,
@@ -73,7 +73,7 @@ export const AMPImports = () => (
   </Head>
 );
 
-export const JsonLD = ({
+export const WebpageJsonLD = ({
   uid,
   lang,
   title,
@@ -95,7 +95,7 @@ export const JsonLD = ({
   hasSearchEnabled?: boolean;
 }) => {
   const contentPageUrl = convertUidToUrl({ uid, lang });
-  const microbrandUrl = new URL(contentPageUrl).hostname;
+  const microbrandUrl = getValidUrl(new URL(contentPageUrl).hostname);
   // NEXT-SEO doesn't have components for webpage/website. Migrate this once they release the same
   const baseSchema = [
     {
@@ -104,25 +104,25 @@ export const JsonLD = ({
         {
           '@type': 'WebSite',
           '@id': `${microbrandUrl}/#website`,
-          url: `${microbrandUrl}/`,
+          url: `${microbrandUrl}`,
           name: `${title}`,
         },
         {
           '@type': 'ImageObject',
-          '@id': `${contentPageUrl}/#primaryimage`,
+          '@id': `${contentPageUrl}#primaryimage`,
           url: `${favicon}`,
           width: 1727,
           height: 453,
         },
         {
           '@type': 'WebPage',
-          '@id': `${contentPageUrl}/#webpage`,
-          url: `${contentPageUrl}/`,
+          '@id': `${contentPageUrl}#webpage`,
+          url: `${contentPageUrl}`,
           inLanguage: `${lang}`,
           name: `${title}`,
           isPartOf: { '@id': `${microbrandUrl}/#website` },
           primaryImageOfPage: {
-            '@id': `${contentPageUrl}/#primaryimage`,
+            '@id': `${contentPageUrl}#primaryimage`,
           },
           description,
           datePublished,

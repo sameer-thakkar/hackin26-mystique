@@ -6,7 +6,7 @@ import { BANNER_PARAMS } from 'components/Banner';
 import Conditional from 'components/common/Conditional';
 import {
   AMPImports,
-  JsonLD,
+  WebpageJsonLD,
   MystiquePerfScript,
   TrackingScripts,
 } from 'components/common/Scripts';
@@ -242,7 +242,7 @@ export default function PopulateMeta({
       <Conditional if={isAmp && !disableAmp}>
         <AMPImports />
       </Conditional>
-      <JsonLD {...jsonLdProps} />
+      <WebpageJsonLD {...jsonLdProps} />
       <Conditional if={!isAmp}>
         <MystiquePerfScript
           serverRequestStartTimestamp={serverRequestStartTimestamp}
