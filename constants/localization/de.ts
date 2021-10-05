@@ -71,7 +71,7 @@ const de = {
     EU_PREFIX: 'Hinweis: ',
     IT_PREFIX: 'Hinweis: ',
     IT_DESCRIPTION:
-      'Ab dem 6. August müssen alle Besucher über 11 Jahren einen Grünen Pass oder ein COVID-Zertifikat der EU vorlegen',
+      'Ab dem 6. August müssen alle Besucher über 11 Jahren einen Grünen Pass oder ein COVID-Zertifikat der EU vorlegen.',
     EU_DESCRIPTION:
       'Ab dem 21. Juli müssen alle Besucher ab 18 Jahren ein COVID-Zertifikat der EU vorlegen.',
     GENERAL_DESCRIPTION:
@@ -84,7 +84,7 @@ const de = {
     MODAL: {
       HEADING: 'Sichere Erlebnisse',
       SUB_HEADING:
-        'arbeitet mit Partnern auf der ganzen Welt an der Umsetzung der besten Sicherheitsstandards gemäß den WHO-Richtlinien. Alle vor Ort getroffenen Maßnahmen wurden überprüft und werden hier angezeigt. Es ist an der Zeit, dass wir unsere Welt wieder genießen.',
+        'Wir arbeiten mit unseren Partnern auf der ganzen Welt zusammen, um die besten Sicherheitsstandards gemäß den WHO-Richtlinien umzusetzen. Alle vor Ort getroffenen Maßnahmen wurden überprüft und werden hier angezeigt. Es ist an der Zeit, dass wir unsere Welt wieder genießen.',
       DETAILS: {
         SAFETY_MASK_DEFAULT: {
           HEADING: 'Maskenpflicht zu Ihrer Sicherheit',
