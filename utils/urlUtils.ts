@@ -134,7 +134,7 @@ export const convertUidToUrl = ({
       }`;
       if (pathName.length) {
         pathName.forEach((name) => {
-          url += name.replaceAll('.', '/');
+          url += name.replace(/\./g, '/');
         });
       }
     }
