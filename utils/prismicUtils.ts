@@ -196,7 +196,6 @@ export const getMicrositeDocument = async ({
   lang,
   host,
 }): Promise<any> => {
-  console.log({ lang });
   return await Client(req)
     .getByUID(CUSTOM_TYPES.MICROSITE, uid, {
       lang,
