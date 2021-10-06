@@ -93,10 +93,13 @@ const PopulateProducts = (props) => {
     setRowsInView(rowsInView + (isMobile ? 2 : 4));
   };
 
-  const tgids =
-    isListicle || isDiscountedPage
-      ? categoryProps?.categories[0]?.ranking.popularity
-      : propTgids || activeCategoryTgids;
+  const categoryPropsPopularityRank =
+    categoryProps?.categories[0]?.ranking.popularity;
+  const tgids = isListicle
+    ? categoryPropsPopularityRank
+    : isDiscountedPage
+    ? activeCategoryTgids || categoryPropsPopularityRank
+    : propTgids || activeCategoryTgids;
 
   const tgidsSubArr = subArrays(tgids);
 

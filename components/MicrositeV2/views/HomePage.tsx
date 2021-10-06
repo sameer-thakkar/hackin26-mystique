@@ -160,7 +160,7 @@ export const HomePage = (props) => {
 
     if (displayMonths === 'ALL') {
       allowedTours = Object.keys(allTours);
-    } else if (displayMonths === 'Discounted') {
+    } else if (isDiscountedPage) {
       allowedTours = getDiscountedProducts(allTours);
       priceSortTours = getPriceSortedDiscountedProducts(allTours);
     } else {
@@ -169,7 +169,9 @@ export const HomePage = (props) => {
     singleCategory = [
       {
         id: 1,
-        name: displayMonths,
+        name: isDiscountedPage
+          ? categoryProps?.categories?.[0]?.name
+          : displayMonths,
         rank: 0,
         ranking: {
           popularity: allowedTours?.length ? allowedTours : [],
