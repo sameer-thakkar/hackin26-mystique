@@ -14,6 +14,7 @@ const ToursAPI = async (req, res) => {
     .then((r) => r.json())
     .then((r) => {
       let data = r;
+      res.setHeader('Access-Control-Allow-Origin', 'https://www.headout.com');
       res.setHeader('Content-type', 'application/json');
       if (data?.tourGroups?.length) {
         data.tourGroups = data.tourGroups.map((tour) => ({
