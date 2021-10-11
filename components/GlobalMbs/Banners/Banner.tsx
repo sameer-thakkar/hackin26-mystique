@@ -120,7 +120,7 @@ const StyledBanner = styled.div((props) => {
         align-items: center;
         padding: 8px 70px;
         border-radius: 2px;
-        background-color: ${COLORS.RHAPSODY};
+        background-color: ${COLORS.PURPS};
         color: ${COLORS.WHITE};
         font-size: 16px;
         line-height: 24px;
@@ -152,7 +152,7 @@ const StyledBanner = styled.div((props) => {
       }
     }
     a {
-      color: ${COLORS.MED_SLATE_BLUE};
+      color: ${COLORS.LIGHTER_LINK_BLUE};
       word-wrap: break-word;
     }
   }

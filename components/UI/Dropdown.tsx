@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { COLORS } from 'const/ui-constants';
 import styled from 'styled-components';
+import { PURPS_TICK_MARK } from 'assets/SvgIcons';
 
 import { useCaptureClickOutside } from '../hooks/ClickOutside';
 
@@ -30,7 +31,7 @@ const StyledDropdownItem = styled.div`
       display: grid;
       grid-auto-flow: column;
       grid-gap: 20px;
-      color: ${COLORS.RHAPSODY};
+      color: ${COLORS.PURPS};
       align-items: center;
     `
       : ``}
@@ -40,12 +41,7 @@ export const DropdownItem: React.FC<any> = ({ active, children, ...props }) => {
   return (
     <StyledDropdownItem active={active} {...props}>
       {children}
-      {active ? (
-        <img
-          src="https://cdn-imgix-open.headout.com/mystique/assets/tick.svg"
-          alt="tick"
-        />
-      ) : null}
+      {active ? PURPS_TICK_MARK : null}
     </StyledDropdownItem>
   );
 };

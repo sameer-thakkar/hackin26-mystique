@@ -158,7 +158,7 @@ const TourTitle = styled.h2`
 `;
 
 const MoreDetailWrapper = styled.div`
-  color: #e5006e;
+  color: ${COLORS.PURPS3};
   font-size: 14px;
   font-style: normal;
   font-weight: 400;

@@ -23,7 +23,7 @@ const StyledProductWrapper = styled.div`
     font-size: 16px;
     line-height: ${({ isEntertainmentMb }) => (isEntertainmentMb ? '20px' : 1)};
     color: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? COLORS.GREY.G2 : COLORS.RHAPSODY};
+      isEntertainmentMb ? COLORS.GREY.G2 : COLORS.PURPS};
     border: 1px solid;
     border-radius: 4px;
     margin: auto;

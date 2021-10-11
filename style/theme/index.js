@@ -13,7 +13,7 @@ const themes = {
     primaryColor: COLORS.LINK_BLUE,
     secondaryColor: COLORS.LIGHTER_LINK_BLUE,
     primaryAccent: COLORS.OKAY_GREEN,
-    secondaryAccent: COLORS.RHAPSODY,
+    secondaryAccent: COLORS.PURPS,
     cardAccent: COLORS.PURPS,
     borders: COLORS.GREY_G6,
     primaryBackground: COLORS.LINK_BLUE,
@@ -141,15 +141,15 @@ const themes = {
       color: COLORS.GREY_G3,
       headingColor: COLORS.FOUR_BLACK,
       secondaryBackground: COLORS.GREY.G8,
-      secondaryColor: COLORS.RHAPSODY,
+      secondaryColor: COLORS.PURPS,
     },
   }),
   [THEMES.DEF_INTERIM]: () => ({
     theme: THEMES.DEF_INTERIM,
-    primaryColor: COLORS.RHAPSODY,
+    primaryColor: COLORS.PURPS,
     secondaryColor: COLORS.LIGHTER_LINK_BLUE,
     primaryAccent: COLORS.LIGHTER_LINK_BLUE,
-    secondaryAccent: COLORS.RHAPSODY,
+    secondaryAccent: COLORS.PURPS,
     cardAccent: COLORS.PURPS,
     borders: COLORS.GREY_G6,
     primaryBackground: COLORS.WHITE,
@@ -211,7 +211,7 @@ const themes = {
         border-radius: 2px;
       `,
       moreDetailsStyle: `
-        color: ${COLORS.RHAPSODY};
+        color: ${COLORS.PURPS};
         font-weight: ${SOLEIL.REGULAR};
         font-size: 14px;
         line-height: 20px;
@@ -229,7 +229,7 @@ const themes = {
         .chevron::before,
         .chevron::after {
           height: 0.13em;
-          background: ${COLORS.RHAPSODY};
+          background: ${COLORS.PURPS};
         }
         @media(max-width: 768px) {
           .chevron {
@@ -241,7 +241,7 @@ const themes = {
           .chevron::before,
           .chevron::after {
             height: 0.13em;
-            background: ${COLORS.RHAPSODY};
+            background: ${COLORS.PURPS};
           }
         }
       `,

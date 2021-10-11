@@ -65,7 +65,7 @@ const IconLink = styled.a`
     width: 12px;
     height: 12px;
     path {
-      stroke: ${COLORS.MED_SLATE_BLUE};
+      stroke: ${COLORS.LIGHTER_LINK_BLUE};
       stroke-width: 3px;
     }
   }

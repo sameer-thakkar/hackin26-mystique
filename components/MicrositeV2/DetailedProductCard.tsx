@@ -232,7 +232,7 @@ const DetailedDescriptionCard = styled.div`
       isEntertainmentMb && `letter-spacing: 0.6px; width: max-content;`}
   }
   .cta.primary {
-    background: ${COLORS.RHAPSODY};
+    background: ${COLORS.PURPS};
   }
   .cta.secondary {
     background: ${COLORS.WHITE};

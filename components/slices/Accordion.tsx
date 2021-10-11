@@ -76,7 +76,7 @@ const ContentBlock = styled.div`
     ${({ isGlobalMb }) => isGlobalMb && `font-size: 14px; line-height: 20px;`}
   }
   a {
-    color: ${COLORS.MED_SLATE_BLUE};
+    color: ${COLORS.LIGHTER_LINK_BLUE};
   }
   img {
     width: 100%;

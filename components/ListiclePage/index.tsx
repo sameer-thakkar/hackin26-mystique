@@ -110,7 +110,7 @@ const Category = styled.div`
   text-decoration: none;
 
   color: ${({ active }) =>
-    active ? `${COLORS.RHAPSODY}` : `${COLORS.DAVY_GREY}`};
+    active ? `${COLORS.PURPS}` : `${COLORS.DAVY_GREY}`};
 `;
 
 const ListicleDescription = styled.div`

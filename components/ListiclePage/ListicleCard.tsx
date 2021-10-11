@@ -170,7 +170,7 @@ const CardBottomContent = styled.div`
     }
     .seatmap-chart {
       font-size: 14px;
-      color: ${COLORS.RHAPSODY};
+      color: ${COLORS.PURPS};
       cursor: pointer;
     }
   }

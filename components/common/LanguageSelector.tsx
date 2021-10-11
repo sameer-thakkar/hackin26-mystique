@@ -52,14 +52,14 @@ const StyledLanguageContainer = styled.div`
     color: ${COLORS.FOUR_BLACK};
   }
   .language:hover {
-    color: #ec1943;
+    color: ${COLORS.PURPS};
   }
   .lang {
     transform: translateY(-2px);
     white-space: nowrap;
   }
   .selected-tab {
-    color: ${COLORS.RHAPSODY};
+    color: ${COLORS.PURPS};
   }
   .language-dropdown-active {
     display: block;

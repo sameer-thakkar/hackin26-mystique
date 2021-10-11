@@ -280,7 +280,7 @@ const StyledMobileProductPage = styled.div`
   }
 
   .tags {
-    color: ${COLORS.RHAPSODY};
+    color: ${COLORS.PURPS};
     border: 1px solid;
     border-radius: 2px;
     padding: 5px 4px;
@@ -470,7 +470,7 @@ const CTABlock = styled.div`
       text-align: center;
     }
     &.primary {
-      background: ${COLORS.RHAPSODY};
+      background: ${COLORS.PURPS};
       .cta-text {
         color: ${COLORS.WHITE};
       }

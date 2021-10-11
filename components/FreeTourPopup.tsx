@@ -1,3 +1,4 @@
+import { COLORS } from 'const/ui-constants';
 import dynamic from 'next/dynamic';
 import React, { Component } from 'react';
 import styled from 'styled-components';
@@ -196,7 +197,7 @@ width: 80%; */
   }
 
   .popupv2-cta {
-    background-color: #ec1943;
+    background-color: ${COLORS.PURPS};
     font-family: SOLEIL;
     font-size: 16px;
     font-weight: 500;

@@ -1,8 +1,8 @@
 import React, { useRef, useContext } from 'react';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
-import { SOLEIL } from 'const/ui-constants';
+import { COLORS, SOLEIL } from 'const/ui-constants';
 import { FULL_LANGUAGE_MAP, THEMES } from 'const/index';
-import { GLOBE } from 'assets/SvgIcons';
+import { GLOBE, PURPS_TICK_MARK } from 'assets/SvgIcons';
 import { MBContext } from 'contexts/MBContext';
 
 const LanguageSelector = (props) => {
@@ -55,13 +55,7 @@ const LanguageSelector = (props) => {
                   <span className="lang-option">
                     {FULL_LANGUAGE_MAP[lang].language}
                   </span>
-                  {currentLanguage == lang ? (
-                    <img
-                      className="check-mark"
-                      alt="check"
-                      src="https://cdn-imgix-open.headout.com/mystique/assets/tick.svg"
-                    />
-                  ) : null}
+                  {currentLanguage == lang ? PURPS_TICK_MARK : null}
                 </div>
               </a>
             );
@@ -146,7 +140,7 @@ const LanguageSelector = (props) => {
             min-width: 150px;
           }
           .language-dropdown .active-tab {
-            color: #ec1943;
+            color: ${COLORS.PURPS};
           }
           .current-langauge {
             display: flex;
@@ -200,7 +194,7 @@ const LanguageSelector = (props) => {
               z-index: 500;
             }
             .close-btn {
-              color: #ec1943;
+              color: ${COLORS.PURPS};
             }
 
             @keyframes scroll-in {

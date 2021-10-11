@@ -240,7 +240,7 @@ const StyledTourComparisionTable = styled.div`
     font-weight: ${SOLEIL.MEDIUM};
   }
   .vendor-cta a {
-    color: ${COLORS.RHAPSODY};
+    color: ${COLORS.PURPS};
     text-decoration: underline;
   }
   .row .column:not(:first-child) .block-label {
@@ -400,7 +400,7 @@ const StyledTourComparisionTable = styled.div`
       justify-content: center;
       svg {
         path {
-          stroke: ${COLORS.RHAPSODY};
+          stroke: ${COLORS.PURPS};
           stroke-width: 1.5px;
         }
       }

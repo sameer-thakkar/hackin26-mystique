@@ -12,7 +12,7 @@ import { strings } from 'const/strings';
 import {
   CHEVRON_LEFT_CIRCLE,
   SEE_SAFETY,
-  RED_RIGHT_ARROW,
+  PURPS_RIGHT_ARROW,
 } from 'assets/SvgIcons';
 
 import Image from '../UI/Image';
@@ -24,7 +24,11 @@ const PitchGrid = styled.div`
   grid-row-gap: 32px;
   padding-bottom: 48px;
   a {
-    color: red;
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    column-gap: 7.5px;
+    align-items: center;
+    color: ${COLORS.PURPS3};
   }
 `;
 
@@ -241,7 +245,7 @@ const SafeExperiencesPitch = ({
         rel="noreferrer"
         target="_blank"
       >
-        {SAFETY_MEASURE_CTA_TEXT} {RED_RIGHT_ARROW}
+        {SAFETY_MEASURE_CTA_TEXT} {PURPS_RIGHT_ARROW}
       </a>
     </PitchGrid>
   );

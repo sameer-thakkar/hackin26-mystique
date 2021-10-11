@@ -119,7 +119,7 @@ const HeaderRight = styled.div`
   }
 
   .buy-tickets.global-mb {
-    background: ${COLORS.RHAPSODY};
+    background: ${COLORS.PURPS};
     color: ${COLORS.WHITE};
     padding: 8px 12px;
     border-radius: 4px;

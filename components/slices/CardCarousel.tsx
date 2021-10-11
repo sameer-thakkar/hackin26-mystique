@@ -2,6 +2,7 @@ import { RichText } from 'prismic-reactjs';
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
+import { COLORS } from 'const/ui-constants';
 
 import { LinkCards } from './MicrobrandCards';
 import { tourListApiParser } from '../../utils/dataParsers';
@@ -44,7 +45,7 @@ const CardCarouselContainer = styled.div`
     overflow: hidden;
   }
   .carousel-slider .swiper-pagination-bullet-active {
-    background: #ec1943 !important;
+    background: ${COLORS.PURPS} !important;
     opacity: 1 !important;
   }
   .carousel-slider .swiper-pagination-bullet {

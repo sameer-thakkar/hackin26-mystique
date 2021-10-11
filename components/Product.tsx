@@ -533,8 +533,8 @@ const Tab = styled.div`
       isActive &&
       `
       font-weight: ${SOLEIL.SEMIBOLD};
-      color: ${COLORS.RHAPSODY};
-      border-color: ${COLORS.RHAPSODY};
+      color: ${COLORS.PURPS3};
+      border-color: ${COLORS.PURPS3};
     `
     );
   }}

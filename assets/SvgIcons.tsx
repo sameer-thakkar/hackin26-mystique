@@ -1,3 +1,4 @@
+import { COLORS } from 'const/ui-constants';
 import React from 'react';
 
 export const CHEVRON_LEFT = (
@@ -460,14 +461,14 @@ export const PIN = (
   >
     <path
       d="M19 10.2466C19 17.2934 10 23.3335 10 23.3335C10 23.3335 1 17.2934 1 10.2466C1 7.84375 1.94821 5.53928 3.63604 3.84017C5.32387 2.14107 7.61305 1.18652 10 1.18652C12.3869 1.18652 14.6761 2.14107 16.364 3.84017C18.0518 5.53928 19 7.84375 19 10.2466Z"
-      stroke="#EC1943"
+      stroke={COLORS.PURPS}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <path
       d="M10 13.2666C11.6569 13.2666 13 11.9145 13 10.2466C13 8.57867 11.6569 7.22656 10 7.22656C8.34315 7.22656 7 8.57867 7 10.2466C7 11.9145 8.34315 13.2666 10 13.2666Z"
-      stroke="#EC1943"
+      stroke={COLORS.PURPS}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -1080,6 +1081,39 @@ export const RED_RIGHT_ARROW = (
     <path
       d="M0.5 11L5.5 6L0.5 1"
       stroke="#EC1943"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+export const PURPS_RIGHT_ARROW = (
+  <svg
+    width="6"
+    height="12"
+    viewBox="0 0 6 12"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M0.5 11L5.5 6L0.5 1"
+      stroke={COLORS.PURPS3}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+export const PURPS_TICK_MARK = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+  >
+    <path
+      d="M14 3.33337L5.75 12L2 8.06065"
+      stroke={COLORS.PURPS3}
       strokeLinecap="round"
       strokeLinejoin="round"
     />

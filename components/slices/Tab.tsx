@@ -12,7 +12,7 @@ const StyledTabPanel = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
   line-height: 1.5;
   a {
-    color: ${COLORS.MED_SLATE_BLUE};
+    color: ${COLORS.LIGHTER_LINK_BLUE};
   }
   p {
     margin: 0;

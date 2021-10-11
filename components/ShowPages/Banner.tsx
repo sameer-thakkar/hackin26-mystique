@@ -13,6 +13,7 @@ import { createBookingURL } from 'utils';
 import PriceBlock, { SavedTag } from 'UI/PriceBlock';
 import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
+import { COLORS } from 'const/ui-constants';
 
 import { dateToString } from '../../utils/dateToString';
 import { MBContext } from '../../contexts/MBContext';
@@ -170,7 +171,7 @@ const BannerContent = styled.div`
 
   .buy-button {
     padding: 12px 20px;
-    background: #ec1943;
+    background: ${COLORS.PURPS};
     border-radius: 4px;
     margin: 0px 16px;
     color: #ffffff;

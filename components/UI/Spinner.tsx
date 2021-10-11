@@ -9,7 +9,7 @@ const StyledSpinner = styled.div`
   margin: 0 auto;
   border: 6px solid #f3f3f3;
   border-radius: 50%;
-  border-top: 6px solid ${COLORS.RHAPSODY};
+  border-top: 6px solid ${COLORS.PURPS};
   width: 35px;
   height: 35px;
   -webkit-animation: spin 1s linear infinite; /* Safari */

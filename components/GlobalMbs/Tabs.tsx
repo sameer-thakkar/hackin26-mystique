@@ -24,7 +24,7 @@ const SubHeadingLarge = styled.div`
   font-weight: 400;
   line-height: 20px;
   ${({ active }) =>
-    active ? `color: ${COLORS.RHAPSODY};` : `${COLORS.GREY.G2}`};
+    active ? `color: ${COLORS.PURPS3};` : `${COLORS.GREY.G2}`};
 `;
 
 const TabControl = styled.div`
@@ -41,7 +41,7 @@ const TabControl = styled.div`
 const Tab = styled(SubHeadingLarge)`
   padding-bottom: 1rem;
   border-bottom: 2px solid transparent;
-  ${({ active }) => (active ? `border-color: ${COLORS.RHAPSODY};` : ``)};
+  ${({ active }) => (active ? `border-color: ${COLORS.PURPS3};` : ``)};
   transform: translateY(1px);
   cursor: pointer;
 `;

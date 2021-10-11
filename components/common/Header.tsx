@@ -143,7 +143,7 @@ const StyledMenuItem = styled.div`
   margin-left: 24px;
   font-size: 16px;
   font-family: ${SOLEIL.FONT_STACK};
-  color: ${({ color }) => color || COLORS.RHAPSODY};
+  color: ${({ color }) => color || COLORS.PURPS};
   text-decoration: none;
   cursor: pointer;
   @media (max-width: 768px) {
