@@ -39,8 +39,7 @@ const StyledSortSelector = styled.div`
         isEntertainmentMb && `color: ${COLORS.GREY.G4};`}
     }
     .current-filter {
-      color: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? COLORS.PURPS : COLORS.TEAL};
+      color: ${COLORS.PURPS};
       ${({ isEntertainmentMb }) =>
         isEntertainmentMb &&
         `font-weight:${SOLEIL.REGULAR};font-size: 15px;line-height:20px;font-feature-settings: 'ss04' on;`}

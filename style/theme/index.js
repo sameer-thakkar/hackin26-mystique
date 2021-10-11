@@ -141,7 +141,7 @@ const themes = {
       color: COLORS.GREY_G3,
       headingColor: COLORS.FOUR_BLACK,
       secondaryBackground: COLORS.GREY.G8,
-      secondaryColor: COLORS.PURPS,
+      secondaryColor: COLORS.LIGHTER_LINK_BLUE,
     },
   }),
   [THEMES.DEF_INTERIM]: () => ({
@@ -359,7 +359,7 @@ const themes = {
       color: COLORS.WHITE,
       headingColor: COLORS.WHITE,
       secondaryBackground: COLORS.WHITE,
-      secondaryColor: COLORS.BEACH,
+      secondaryColor: COLORS.LIGHTER_LINK_BLUE,
     },
   }),
   get [THEMES.DEFAULT]() {
