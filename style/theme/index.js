@@ -149,7 +149,7 @@ const themes = {
     primaryColor: COLORS.PURPS,
     secondaryColor: COLORS.LIGHTER_LINK_BLUE,
     primaryAccent: COLORS.LIGHTER_LINK_BLUE,
-    secondaryAccent: COLORS.PURPS,
+    secondaryAccent: COLORS.PURPS3,
     cardAccent: COLORS.PURPS,
     borders: COLORS.GREY_G6,
     primaryBackground: COLORS.WHITE,
@@ -211,7 +211,7 @@ const themes = {
         border-radius: 2px;
       `,
       moreDetailsStyle: `
-        color: ${COLORS.PURPS};
+        color: ${COLORS.PURPS3};
         font-weight: ${SOLEIL.REGULAR};
         font-size: 14px;
         line-height: 20px;
@@ -229,7 +229,7 @@ const themes = {
         .chevron::before,
         .chevron::after {
           height: 0.13em;
-          background: ${COLORS.PURPS};
+          background: ${COLORS.PURPS3};
         }
         @media(max-width: 768px) {
           .chevron {
@@ -241,7 +241,7 @@ const themes = {
           .chevron::before,
           .chevron::after {
             height: 0.13em;
-            background: ${COLORS.PURPS};
+            background: ${COLORS.PURPS3};
           }
         }
       `,
