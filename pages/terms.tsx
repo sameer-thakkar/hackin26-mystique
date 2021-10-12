@@ -101,7 +101,6 @@ export default class TermsPage extends Component<any, any> {
       logo: { url: uploadedLogoUrl, alt: altText },
       favicon,
       logo_alt_text: logoAltText,
-      localization: languages,
       logo_redirection_url: logoRedirectionURL,
       commonFooter,
       theme_override: footerTheme,
@@ -138,7 +137,6 @@ export default class TermsPage extends Component<any, any> {
             description={`Terms and Conditions page for ${host}`}
           />
           <Header
-            languages={languages ? languages : null}
             headerLinks={null}
             logoUrl={logoUrl || uploadedLogoUrl || null}
             currentLanguage={'en'}

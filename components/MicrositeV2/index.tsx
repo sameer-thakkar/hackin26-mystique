@@ -160,8 +160,6 @@ class MicrositeV2 extends Component<any, any> {
     const overriddenHeaderData = { ...CMSData, ...commonHeader?.data };
     const headerProps = {
       showGroupBooking: overriddenHeaderData.enable_group_booking === 'Yes',
-      hasLanguageSelector:
-        overriddenHeaderData.enable_localization_menu === 'Yes',
       headerLinks,
       logoUrl:
         overriddenHeaderData.logo.url || overriddenHeaderData.link_to_logo_file,

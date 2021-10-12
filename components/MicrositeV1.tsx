@@ -203,7 +203,6 @@ const MicrositeV1 = (props) => {
     read_more_text: readMoreText,
     show_less_text: showLessText,
     enable_powered_by_superbrand_logo: hasPoweredByHeadoutLogo,
-    enable_localization_menu: hasLanguageSelector,
     enable_group_booking: enableGroupBooking,
     enable_buy_tickets_shortcut: enableBuyTickets,
     logo_redirection_url: logoRedirectionURL,
@@ -478,7 +477,6 @@ const MicrositeV1 = (props) => {
           uid={uid}
           openGroupBookingModal={openGroupBookingModal}
           isMobile={isAmp || isMobile}
-          hasLanguageSelector={hasLanguageSelector}
           showGroupBooking={showGroupBooking}
           enableBuyTickets={isToursAvailable ? enableBuyTickets : false}
           logoRedirectionURL={logoRedirectionURL?.url || pageUrl}

@@ -258,8 +258,6 @@ const ShowPage = ({
   const {
     enable_group_booking: enableGroupBooking,
     logo_redirection_url: logoRedirectionURL,
-    localization,
-    enable_localization_menu,
     tgid,
     favicon,
   } = CMSData;
@@ -376,7 +374,7 @@ const ShowPage = ({
           }}
         />
         <Header
-          languages={localization}
+          languages={alternateLanguages}
           headerLinks={headerLinks}
           dropdownLinks={dropdownLinksArray}
           currentLanguage={currentLanguage}
@@ -385,7 +383,6 @@ const ShowPage = ({
           uid={uid}
           isMobile={isMobile}
           showGroupBooking={legacyBooleanCheck(enableGroupBooking)}
-          hasLanguageSelector={enable_localization_menu}
           logoRedirectionURL={logoRedirectionURL?.url || '/'}
           host={host}
           hasPoweredByHeadoutLogo={true}
