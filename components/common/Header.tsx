@@ -226,6 +226,8 @@ const Header: React.FC<any> = (props) => {
     };
     window.addEventListener('scroll', scrollHandler, { passive: true });
   }, [scrollPos]);
+
+  console.log(hasLanguageSelector, hideLangugageDropdown, languages.length);
   return (
     <StyledHeader hasShadow={scrollPos > 60}>
       <StyledHeaderContainer hasDropdownLinks={!isMobile && hasDropdownLinks}>
@@ -306,7 +308,11 @@ const Header: React.FC<any> = (props) => {
             </StyledMenuItem>
           </Conditional>
           <Conditional
-            if={hasLanguageSelector === 'Yes' && !hideLangugageDropdown}
+            if={
+              languages?.length &&
+              hasLanguageSelector === 'Yes' &&
+              !hideLangugageDropdown
+            }
           >
             <LanguageSelector
               languages={languages}

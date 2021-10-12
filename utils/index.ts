@@ -1,7 +1,7 @@
 import Router from 'next/router';
 import dayjs from 'dayjs';
 
-import { withoutTrailingSlash } from '../utils/helper';
+import { getLangObject, withoutTrailingSlash } from '../utils/helper';
 import {
   SUPPORTED_LANGUAGES,
   SUPPORTED_LANGUAGES_MAP,
@@ -181,12 +181,9 @@ export const getAlternateLanguages = (
     return alternateLangsArray.map((doc) => {
       const { uid, lang: docLang } = doc || {};
       const domain = getDomainFromUid(uid);
-      const lang =
-        docLang === 'zh-tw'
-          ? 'tw'
-          : docLang === 'zh-cn'
-          ? 'cn'
-          : getHeadoutLanguagecode(docLang);
+      // @ts-ignore
+      const { short: lang } = getLangObject(docLang) || {};
+
       return {
         url: convertUidToUrl({
           uid,
