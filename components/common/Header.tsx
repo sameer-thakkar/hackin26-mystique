@@ -162,7 +162,6 @@ const Header: React.FC<any> = (props) => {
     uid,
     isMobile,
     showGroupBooking = false,
-    hasLanguageSelector = 'No',
     enableBuyTickets = 'No',
     logoRedirectionURL,
     showTicketRedirectionURL,
@@ -173,7 +172,6 @@ const Header: React.FC<any> = (props) => {
     hasDropdownLinks,
     dropdownLinks,
     showTicketMenu,
-    hideLangugageDropdown,
     isAmp,
     headerCurrencies,
     currentCurrency,
@@ -227,7 +225,6 @@ const Header: React.FC<any> = (props) => {
     window.addEventListener('scroll', scrollHandler, { passive: true });
   }, [scrollPos]);
 
-  console.log(hasLanguageSelector, hideLangugageDropdown, languages.length);
   return (
     <StyledHeader hasShadow={scrollPos > 60}>
       <StyledHeaderContainer hasDropdownLinks={!isMobile && hasDropdownLinks}>
@@ -307,13 +304,7 @@ const Header: React.FC<any> = (props) => {
               {strings.TICKETS}
             </StyledMenuItem>
           </Conditional>
-          <Conditional
-            if={
-              languages?.length &&
-              hasLanguageSelector === 'Yes' &&
-              !hideLangugageDropdown
-            }
-          >
+          <Conditional if={languages?.length}>
             <LanguageSelector
               languages={languages}
               currentLanguage={currentLanguage}

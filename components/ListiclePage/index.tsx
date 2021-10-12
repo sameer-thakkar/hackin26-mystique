@@ -352,7 +352,6 @@ const Listicle = (props) => {
       enable_group_booking: enableGroupBooking,
       logo_redirection_url: logoRedirectionURL,
       enable_powered_by_superbrand_logo: hasPoweredByHeadoutLogo,
-      enable_localization_menu,
       logo,
       logo_alt_text: logoAltText,
       header_links: headerLinks,
@@ -456,7 +455,6 @@ const Listicle = (props) => {
         uid={uid}
         isMobile={isMobile}
         showGroupBooking={enableGroupBooking === 'Yes'}
-        hasLanguageSelector={enable_localization_menu}
         logoRedirectionURL={logoRedirectionURL?.url || '/'}
         host={''}
         hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo || false}

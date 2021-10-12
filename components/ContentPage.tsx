@@ -408,12 +408,10 @@ class ContentPage extends Component<any, any> {
       logo_redirection_url: logoRedirectionURL,
       show_ticket_option_url: showTicketRedirectionURL,
       group_booking_disclaimer: groupBookingDisclaimer,
-      enable_localization_menu,
       logo,
       logo_alt_text: logoAltText,
       header_links: headerLinks,
       show_ticket_menu: showTicketMenu,
-      hide_locales_content_page: hideLangugageDropdown,
     } = commonHeader.data;
 
     const {
@@ -477,7 +475,6 @@ class ContentPage extends Component<any, any> {
           languages={alternateLanguages}
           headerLinks={headerLinks}
           showTicketMenu={showTicketMenu}
-          hideLangugageDropdown={hideLangugageDropdown}
           currentLanguage={currentLanguage}
           logoUrl={logo.url}
           logoAltText={logoAltText || logo.alt || ''}
@@ -486,7 +483,6 @@ class ContentPage extends Component<any, any> {
           handleDropdownToggle={this.handleDropdownToggle}
           isMobile={this.state.isMobile}
           showGroupBooking={showGroupBooking}
-          hasLanguageSelector={enable_localization_menu}
           logoRedirectionURL={logoRedirectionURL?.url || pageUrl}
           showTicketRedirectionURL={
             showTicketRedirectionURL?.url || logoRedirectionURL?.url || pageUrl
