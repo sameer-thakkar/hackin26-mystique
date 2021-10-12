@@ -830,7 +830,7 @@ const Product = (props) => {
     const keyPressedOnReadMore = (event) => {
       if (event.keyCode == 13 && !isMobile) {
         toggleContentOpen(!isContentOpen);
-        trackedToggleContent(!isContentOpen);
+        trackedToggleContent(isContentOpen);
       }
     };
     const innerContent =
@@ -866,7 +866,7 @@ const Product = (props) => {
               onCloseCallback: () => trackedToggleContent(true),
             });
           } else {
-            trackedToggleContent(!isContentOpen);
+            trackedToggleContent(isContentOpen);
             toggleContentOpen(!isContentOpen);
           }
         }}
@@ -1069,7 +1069,7 @@ const Product = (props) => {
                 ? (e) => {
                     e.stopPropagation();
                     toggleContentOpen(!isContentOpen);
-                    trackedToggleContent(!isContentOpen);
+                    trackedToggleContent(isContentOpen);
                   }
                 : null
             }
