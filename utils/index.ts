@@ -181,7 +181,12 @@ export const getAlternateLanguages = (
     return alternateLangsArray.map((doc) => {
       const { uid, lang: docLang } = doc || {};
       const domain = getDomainFromUid(uid);
-      const lang = getHeadoutLanguagecode(docLang);
+      const lang =
+        docLang === 'zh-tw'
+          ? 'tw'
+          : docLang === 'zh-cn'
+          ? 'cn'
+          : getHeadoutLanguagecode(docLang);
       return {
         url: convertUidToUrl({
           uid,

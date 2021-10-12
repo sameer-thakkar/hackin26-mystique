@@ -153,10 +153,11 @@ export const categoryTourListParserV1 = async ({
     let orderedTGIDRanking;
     if (finalRanking?.length && tgidsWithHORanking?.length) {
       orderedTGIDRanking = [...finalRanking, ...tgidsWithHORanking];
-    } else {
+    } else if (tgidsWithHORanking?.length) {
       orderedTGIDRanking = [...tgidsWithHORanking];
+    } else {
+      orderedTGIDRanking = [...finalRanking];
     }
-
     const orderedTours = allTours?.sort((tourA, tourB) => {
       return (
         orderedTGIDRanking?.indexOf(parseInt(tourA.id)) -
