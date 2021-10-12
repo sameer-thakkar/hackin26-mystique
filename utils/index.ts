@@ -181,7 +181,6 @@ export const getAlternateLanguages = (
     return alternateLangsArray.map((doc) => {
       const { uid, lang: docLang } = doc || {};
       const domain = getDomainFromUid(uid);
-      // @ts-ignore
       const { short: lang } = getLangObject(docLang) || {};
 
       return {
