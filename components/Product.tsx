@@ -554,12 +554,27 @@ const richtextElements = {
   },
 };
 
-const HighlightTabs = ({ tabs, hasRegularHighlights = false, onTabChange }) => {
+const HighlightTabs = ({
+  tabs,
+  hasRegularHighlights = false,
+  onTabChange,
+  analytics,
+  tgid,
+}) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
   useEffect(() => {
     onTabChange(tabs[activeTabIndex]);
   }, [activeTabIndex, onTabChange, tabs]);
+
+  const trackedTabChange = (index) => {
+    setActiveTabIndex(index);
+    analytics.setVariableInDataLayer({
+      event: ANALYTICS_EVENTS.EXPERIENCE_INFO_TAB_CLICKED,
+      'Tour Group ID': tgid,
+      'Information Heading': tabs[index].heading,
+    });
+  };
 
   return (
     <HighlightTabsWrapper hasRegularHighlights={hasRegularHighlights}>
@@ -568,7 +583,10 @@ const HighlightTabs = ({ tabs, hasRegularHighlights = false, onTabChange }) => {
           <Tab
             isActive={activeTabIndex == index}
             key={index}
-            onClick={() => setActiveTabIndex(index)}
+            onClick={(e) => {
+              e.stopPropagation();
+              trackedTabChange(index);
+            }}
           >
             {tab.heading}
           </Tab>
@@ -766,6 +784,9 @@ const Product = (props) => {
     ? { highlights: finalHighlights, tabs: [] }
     : extractTabsFromHighlights(finalHighlights);
 
+  const hasReadMore =
+    (highlights.flat()?.length >= 3 || showMoreDetailsInTabs) && !defaultOpen;
+
   const { listingPrice } = tourPrices[tgid];
 
   if (!listingPrice) return null;
@@ -798,10 +819,18 @@ const Product = (props) => {
     hasNextAvailable: earliestAvailability?.startDate,
     isTicketCard: isTicketCard,
   });
+  const trackedToggleContent = (isOpen) => {
+    analytics.setVariableInDataLayer({
+      event: ANALYTICS_EVENTS.EXPERIENCE_MORE_DETAILS_VIEWED,
+      'Tour Group ID': tgid,
+      Action: isOpen ? 'Contract' : 'Expand',
+    });
+  };
   const getMoreDetailsButton = () => {
     const keyPressedOnReadMore = (event) => {
       if (event.keyCode == 13 && !isMobile) {
         toggleContentOpen(!isContentOpen);
+        trackedToggleContent(!isContentOpen);
       }
     };
     const innerContent =
@@ -821,8 +850,11 @@ const Product = (props) => {
       <div
         ref={moreDetailsRef}
         data-open="0"
-        onClick={() => {
+        onClick={(e) => {
+          e.stopPropagation();
           if (mbTheme !== THEMES.MIN_BLUE && isMobile) {
+            trackedToggleContent(false);
+            typeof window !== 'undefined' && window?.['dataLayer']?.push('UA');
             addToAside({
               width: '100vw',
               children: (
@@ -831,8 +863,10 @@ const Product = (props) => {
                 </ModalCardContainer>
               ),
               type: SIDEBAR_TYPES.PRODUCT_CARD,
+              onCloseCallback: () => trackedToggleContent(true),
             });
           } else {
+            trackedToggleContent(!isContentOpen);
             toggleContentOpen(!isContentOpen);
           }
         }}
@@ -887,8 +921,6 @@ const Product = (props) => {
       bookSubdomain,
     }) + (ctaUrlSuffix || '');
 
-  const hasReadMore =
-    (highlights.flat()?.length >= 3 || showMoreDetailsInTabs) && !defaultOpen;
   const getProductCardElements = (expandContent, isFallbackSummary = false) => (
     <StyledProductCard
       layout={layout}
@@ -1034,7 +1066,11 @@ const Product = (props) => {
             id={`tour-description-${position}`}
             onClick={
               !isMobile && !defaultOpen
-                ? () => toggleContentOpen(!isContentOpen)
+                ? (e) => {
+                    e.stopPropagation();
+                    toggleContentOpen(!isContentOpen);
+                    trackedToggleContent(!isContentOpen);
+                  }
                 : null
             }
           >
@@ -1050,6 +1086,8 @@ const Product = (props) => {
                 onTabChange={onTabChange}
                 hasRegularHighlights={hasHighlights}
                 tabs={tabs}
+                tgid={tgid}
+                analytics={analytics}
               />
             </Conditional>
           </div>
