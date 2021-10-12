@@ -60,9 +60,17 @@ export const MBContextProvider = (props) => {
     width = '',
     sidePadding = 0,
     type = SIDEBAR_TYPES.DEFAULT,
+    onCloseCallback,
   }) => {
     const tempStack = [...sidebarModalStack];
-    tempStack.push({ children, title, width, sidePadding, type });
+    tempStack.push({
+      children,
+      title,
+      width,
+      sidePadding,
+      type,
+      onCloseCallback,
+    });
     setSidebarModalStack(tempStack);
   };
 
@@ -120,6 +128,7 @@ export const MBContextProvider = (props) => {
           title={getActiveAside()?.title}
           closeModal={closeAside}
           type={getActiveAside()?.type}
+          onCloseCallback={getActiveAside()?.onCloseCallback}
           isGlobalMb={isGlobalMb}
         >
           {getActiveAside()?.children}

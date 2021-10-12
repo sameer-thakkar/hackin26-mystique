@@ -152,6 +152,7 @@ const AsideModal = ({
   sidePadding = 0,
   type,
   isGlobalMb = false,
+  onCloseCallback = null,
 }) => {
   const [container, setContainer] = useState(null);
   const [scrollY, setScrollY] = useState(0);
@@ -172,10 +173,12 @@ const AsideModal = ({
     setContainer(container);
   }, [active, isMobile]);
 
-  const onClose = () => {
+  const onClose = (e) => {
+    e.stopPropagation();
     container.classList.remove('scroll-lock');
     if (isMobile) window.scrollTo(0, scrollY);
     closeModal();
+    if (onCloseCallback) onCloseCallback();
   };
 
   const onCloseAll = () => {
@@ -203,7 +206,11 @@ const AsideModal = ({
             >
               <Title>{title}</Title>
               {hasBack ? (
-                <BackIcon onClick={onClose}>{BackArrow}</BackIcon>
+                <BackIcon
+                  onClick={type === SIDEBAR_TYPES.PRODUCT_CARD ? null : onClose}
+                >
+                  {BackArrow}
+                </BackIcon>
               ) : (
                 <CloseIcon className={'close-icon'} onClick={onClose}>
                   {CLOSE_WHITE}
