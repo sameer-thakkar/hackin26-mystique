@@ -10,6 +10,7 @@ import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import { CHEVRON_DOWN } from 'assets/SvgIcons';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { MBContext } from 'contexts/MBContext';
+import { strings } from 'const/strings';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 const Breadcrumb = dynamic(() => import('components/GlobalMbs/Breadcrumb'));
@@ -403,7 +404,7 @@ const Banner: FunctionComponent<BannerProps> = ({
               </Conditional>
               <Conditional if={ticketLink}>
                 <a href={ticketLink} className="cta">
-                  Check Tickets
+                  {strings.BANNER_CTA}
                 </a>
               </Conditional>
             </div>
