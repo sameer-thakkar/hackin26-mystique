@@ -4,7 +4,7 @@ import React, { useContext } from 'react';
 import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
-import { greenScheme } from 'style/theme';
+import { greyScheme } from 'style/theme';
 import { MBContext } from 'contexts/MBContext';
 import Image from 'UI/Image';
 import IconCTA from 'UI/IconCTA';
@@ -547,7 +547,7 @@ const DetailedProductCard = (props) => {
               <Split count={2} autoWidth={true} mobileLayout={'scroll'}>
                 <IconCTA
                   text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
-                  colorScheme={greenScheme}
+                  colorScheme={greyScheme}
                   ctaOnClick={openSafeSidebar}
                   icon={Shield}
                 />

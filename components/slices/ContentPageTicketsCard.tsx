@@ -21,7 +21,7 @@ import { shortCodeSerializer } from 'utils/shortCodes';
 import { CALENDAR, Shield, BackArrow } from 'assets/SvgIcons';
 import Split, { StlyedSplit } from 'UI/Split';
 import IconCTA, { StyledIconCTA } from 'UI/IconCTA';
-import { greenScheme } from 'style/theme';
+import { greyScheme } from 'style/theme';
 import { isSafetyIncluded, createBookingURL } from 'utils';
 import { MBContext } from 'contexts/MBContext';
 import PriceBlock from 'UI/PriceBlock';
@@ -992,7 +992,7 @@ const TicketCard = (props) => {
                 <Split count={2} autoWidth>
                   <IconCTA
                     text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
-                    colorScheme={greenScheme}
+                    colorScheme={greyScheme}
                     ctaOnClick={openSafeSidebar}
                     icon={Shield}
                     key={'safety-tag'}

@@ -391,3 +391,8 @@ export const blackScheme = {
   color: '#E2E2E2',
   accent: '#CDEFD9',
 };
+export const greyScheme = {
+  background: COLORS.GREY.G8,
+  color: COLORS.GREY.G2,
+  accent: '#CDEFD9',
+};

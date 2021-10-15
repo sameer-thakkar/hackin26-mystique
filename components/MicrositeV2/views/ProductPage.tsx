@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import parse from 'url-parse';
-import { greenScheme } from 'style/theme';
+import { greyScheme } from 'style/theme';
 import { RichText } from 'prismic-reactjs';
 import { MBContext } from 'contexts/MBContext';
 import Conditional from 'components/common/Conditional';
@@ -758,7 +758,7 @@ export const MobileProductPage = (props) => {
                   <Conditional if={hasSafetyFlag}>
                     <IconCTA
                       text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
-                      colorScheme={greenScheme}
+                      colorScheme={greyScheme}
                       ctaOnClick={openSafeSidebar}
                       icon={BorderedShield}
                     />
