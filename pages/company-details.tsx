@@ -95,7 +95,6 @@ export default class companyDetails extends Component<any, any> {
       logo: { url: uploadedLogoUrl, alt: altText },
       favicon,
       logo_alt_text: logoAltText,
-      localization: languages,
       logo_redirection_url: logoRedirectionURL,
       commonFooter,
     } = data;
@@ -116,7 +115,6 @@ export default class companyDetails extends Component<any, any> {
           description={`Company Details page for ${host}`}
         />
         <Header
-          languages={languages ? languages : null}
           headerLinks={null}
           logoUrl={logoUrl || uploadedLogoUrl || null}
           currentLanguage={'en'}

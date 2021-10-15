@@ -7,7 +7,7 @@ import Conditional from 'components/common/Conditional';
 import { PAGETYPE, THEMES } from 'const/index';
 import allToursParser from 'utils/allToursParser';
 import { tourListApiParser } from 'utils/dataParsers';
-import { docCookies, genManualSlice, getLangObject } from 'utils/helper';
+import { genManualSlice, getLangObject } from 'utils/helper';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import { getAlternateLanguages } from 'utils';
 
@@ -52,8 +52,6 @@ class MicrositeV2 extends Component<any, any> {
 
     fetch(`/api/tours/v6/tour-groups/?ids[]=${allTgids}`)
       .then((res) => {
-        const HSID = docCookies.getItem('h-sid');
-        this.sendVariableToDataLayer({ 'h-sid': HSID });
         return res.json();
       })
       .then((jsonTours) => {
@@ -162,8 +160,6 @@ class MicrositeV2 extends Component<any, any> {
     const overriddenHeaderData = { ...CMSData, ...commonHeader?.data };
     const headerProps = {
       showGroupBooking: overriddenHeaderData.enable_group_booking === 'Yes',
-      hasLanguageSelector:
-        overriddenHeaderData.enable_localization_menu === 'Yes',
       headerLinks,
       logoUrl:
         overriddenHeaderData.logo.url || overriddenHeaderData.link_to_logo_file,

@@ -839,47 +839,46 @@ const HeadoutSessionIdSetterComponent = () => {
     setHsid(hsid);
   };
   useEffect(() => {
-    window.addEventListener(
-      'message',
-      (e) => {
-        const { origin, data } = e;
-        if (origin !== process.env.NEXT_PUBLIC_HEADOUT_DOMAIN) {
-          return;
-        }
+    const onMessageReceieved = (e) => {
+      const { origin, data } = e;
+      if (origin !== process.env.NEXT_PUBLIC_HEADOUT_DOMAIN) {
+        return;
+      }
 
-        const { hsid } = JSON.parse(data);
-        try {
-          if (hsid === null)
-            console.warn(
-              '[localStorage] hsid-ensurer failure, Unsupported Browser'
-            );
-          if (hsid) {
-            const nakedDomain = window.location.hostname
-              .replace('stage-', '')
-              .split('.')
-              .slice(1)
-              .join('.');
-            pushSandboxIDtoDataLayer(hsid);
-            Cookies.set('h-sid', hsid, {
-              domain: nakedDomain,
-              path: '/',
-              expires: new Date(
-                new Date().getTime() + 365 * 24 * 60 * 60 * 1000
-              ),
-            });
-          }
-        } catch (e) {
-          //
+      const { hsid } = JSON.parse(data);
+      try {
+        if (hsid === null)
+          console.warn(
+            '[localStorage] hsid-ensurer failure, Unsupported Browser'
+          );
+        if (hsid) {
+          const nakedDomain = window.location.hostname
+            .replace('stage-', '')
+            .split('.')
+            .slice(1)
+            .join('.');
+          pushSandboxIDtoDataLayer(hsid);
+          Cookies.set('h-sid', hsid, {
+            domain: nakedDomain,
+            path: '/',
+            expires: new Date(new Date().getTime() + 365 * 24 * 60 * 60 * 1000),
+          });
         }
-      },
-      true
-    );
+      } catch (e) {
+        //
+      }
+    };
+    if (!validHsidFromCookie)
+      window.addEventListener('message', onMessageReceieved, true);
+
+    if (validHsidFromCookie) {
+      pushSandboxIDtoDataLayer(validHsidFromCookie);
+    }
+    return () =>
+      window.removeEventListener('message', onMessageReceieved, true);
   }, []);
 
-  if (validHsidFromCookie) {
-    pushSandboxIDtoDataLayer(validHsidFromCookie);
-    return null;
-  }
+  if (validHsidFromCookie) return null;
 
   return (
     <iframe

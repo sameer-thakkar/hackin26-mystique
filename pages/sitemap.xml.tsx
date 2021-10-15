@@ -12,14 +12,24 @@ const withHttps = (url) =>
 const withTrailingSlash = (url) =>
   url.charAt(url.length - 1) !== '/' ? `${url}/` : url;
 
-function getPage(api, uid, documents) {
-  return api
+async function getPage(api, uid, documents, page = 1) {
+  return await api
     .query(Prismic.Predicates.any('document.tags', [uid]), {
       lang: 'en-us',
       pageSize: 100,
+      page,
     })
-    .then((response) => {
-      return documents.concat(response.results);
+    .then(async (response) => {
+      if (response.page < response.total_pages) {
+        return await getPage(
+          api,
+          uid,
+          documents.concat(response.results),
+          response.page + 1
+        );
+      } else {
+        return documents.concat(response.results);
+      }
     });
 }
 

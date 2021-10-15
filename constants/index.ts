@@ -207,6 +207,8 @@ export const ANALYTICS_EVENTS = {
   COLLECTION_PAGE_VIEWED: 'Collection Page Viewed',
   EXPERIENCE_DETAILS_VIEWED: 'Experience Details Viewed',
   EXPERIENCE_CARD_CLICKED: 'Experience Card Clicked',
+  EXPERIENCE_MORE_DETAILS_VIEWED: 'More Details Viewed',
+  EXPERIENCE_INFO_TAB_CLICKED: 'Experience Information Tab Clicked',
 };
 export const PAGE_TYPE = {
   COLLECTION_PAGE: 'Collection Page',

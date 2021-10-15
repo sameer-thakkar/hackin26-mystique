@@ -9,6 +9,8 @@ const dayJsLocales = {
   fr: () => import(`dayjs/locale/fr`),
   it: () => import(`dayjs/locale/it`),
   ko: () => import(`dayjs/locale/ko`),
+  tw: () => import('dayjs/locale/zh-tw'),
+  cn: () => import('dayjs/locale/zh-cn'),
 };
 
 const langStrings = {
