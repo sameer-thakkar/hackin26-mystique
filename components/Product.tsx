@@ -417,17 +417,17 @@ const ProductOfferBlock = styled.div`
 const V1BoosterBlock = styled.div`
   grid-area: booster;
   font-family: ${SOLEIL.FONT_STACK};
-  font-weight: 400;
-  line-height: 1.31;
+  font-weight: ${SOLEIL.REGULAR};
+  font-size: 15px;
+  line-height: 21px;
   text-align: left;
-  color: ${({ theme: { primaryAccent } }) =>
-    primaryAccent ? primaryAccent : COLORS.CORAL};
+  color: ${COLORS.GREY.G4};
   font-size: 1em;
   display: inline-block;
   p {
     margin: 0;
-    color: ${({ theme: { primaryAccent } }) =>
-      primaryAccent ? primaryAccent : COLORS.MED_SLATE_BLUE};
+    color: ${COLORS.GREY.G4};
+    font-size: 15px;
     strong {
       font-weight: unset;
     }
