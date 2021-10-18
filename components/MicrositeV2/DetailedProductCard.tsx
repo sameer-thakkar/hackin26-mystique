@@ -4,7 +4,7 @@ import React, { useContext } from 'react';
 import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
-import { greenScheme } from 'style/theme';
+import { greyScheme } from 'style/theme';
 import { MBContext } from 'contexts/MBContext';
 import Image from 'UI/Image';
 import IconCTA from 'UI/IconCTA';
@@ -232,7 +232,7 @@ const DetailedDescriptionCard = styled.div`
       isEntertainmentMb && `letter-spacing: 0.6px; width: max-content;`}
   }
   .cta.primary {
-    background: ${COLORS.RHAPSODY};
+    background: ${COLORS.PURPS};
   }
   .cta.secondary {
     background: ${COLORS.WHITE};
@@ -547,7 +547,7 @@ const DetailedProductCard = (props) => {
               <Split count={2} autoWidth={true} mobileLayout={'scroll'}>
                 <IconCTA
                   text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
-                  colorScheme={greenScheme}
+                  colorScheme={greyScheme}
                   ctaOnClick={openSafeSidebar}
                   icon={Shield}
                 />

@@ -31,7 +31,7 @@ const Title = styled.div`
 `;
 
 const ShowText = styled.div`
-  color: ${COLORS.RHAPSODY};
+  color: ${COLORS.PURPS};
   font-size: 10px;
   line-height: 10px;
   letter-spacing: 0.8px;

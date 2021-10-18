@@ -51,7 +51,7 @@ export const StyledLongForm = styled.div`
   }
   & > p > a {
     text-decoration: none;
-    color: #ec1943;
+    color: ${COLORS.PURPS};
   }
 
   ul {

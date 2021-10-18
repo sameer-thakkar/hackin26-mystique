@@ -3,8 +3,7 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
 import { COLORS, SOLEIL } from 'const/ui-constants';
-
-import { getNonAmpUrl } from '../../utils/urlUtils';
+import { getNonAmpUrl } from 'utils/urlUtils';
 
 export const StyledInfoBanner = styled.div`
   padding: 24px 32px;
@@ -43,7 +42,7 @@ const Title = styled.div`
   line-height: 20px;
 
   @media (max-width: 768px) {
-    color: ${COLORS.OKAY_GREEN_DARK};
+    /* color: ${COLORS.OKAY_GREEN_DARK}; */
     svg {
       height: 24px;
       width: 24px;
@@ -67,7 +66,7 @@ const CTA = styled.div`
   display: inline-block;
   text-decoration: underline;
   cursor: pointer;
-  color: ${COLORS.OKAY_GREEN_DARK};
+  /* color: ${COLORS.OKAY_GREEN_DARK}; */
   @media (max-width: 768px) {
     display: block;
     margin-top: 4px;

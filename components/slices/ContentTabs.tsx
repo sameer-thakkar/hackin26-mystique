@@ -31,7 +31,7 @@ const StyledContentTabs = styled.div`
 const StyledTab = styled.div(({ active }) => {
   if (active) {
     return `
-  color: #ec1943;
+  color: ${COLORS.PURPS};
   border-bottom: 2px solid;
   padding-bottom: 8px;
   `;
@@ -44,7 +44,7 @@ const StyledTab = styled.div(({ active }) => {
 
 const AmpSelectorContainer = styled.div`
   amp-selector [role='tab'][selected] {
-    color: #ec1943;
+    color: ${COLORS.PURPS};
     border-bottom: 2px solid;
     padding-bottom: 8px;
     outline: none;
@@ -70,7 +70,7 @@ const StyledContent = styled.div`
     max-width: 100%;
   }
   a {
-    color: #ec1943;
+    color: ${COLORS.PURPS};
   }
 `;
 

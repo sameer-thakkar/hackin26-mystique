@@ -60,7 +60,7 @@ const CategoryBarWrapper = styled.div`
     cursor: pointer;
   }
   .tab.active {
-    color: ${COLORS.RHAPSODY};
+    color: ${COLORS.PURPS3};
   }
   .active-indicator {
     position: absolute;
@@ -68,7 +68,7 @@ const CategoryBarWrapper = styled.div`
     left: 0;
     width: 100px;
     height: 2px;
-    background: ${COLORS.RHAPSODY};
+    background: ${COLORS.PURPS3};
     z-index: 8;
     transition: width 0.5s ease, left 0.5s ease;
   }

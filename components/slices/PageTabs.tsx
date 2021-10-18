@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import classNames from 'classnames';
-import { SOLEIL } from 'const/ui-constants';
+import { SOLEIL, COLORS } from 'const/ui-constants';
 
 import LinkResolver from '../LinkResolver';
 
@@ -34,9 +34,9 @@ const Tabs = styled.div`
   }
 
   .selected-nav-tab {
-    border-bottom: 3px solid #ec1943;
+    border-bottom: 3px solid ${COLORS.PURPS3};
     border-radius: 1px;
-    color: #ec1943;
+    color: ${COLORS.PURPS3};
   }
   @media (max-width: 768px) {
     overflow: scroll;
@@ -59,7 +59,7 @@ const Tabs = styled.div`
       margin-right: 16px;
     }
     .selected-nav-tab {
-      border-bottom: 2px solid #ec1943;
+      border-bottom: 2px solid ${COLORS.PURPS3};
     }
     .content-container {
       margin-left: 15px !important;

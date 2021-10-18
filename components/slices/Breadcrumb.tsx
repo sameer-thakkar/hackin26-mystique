@@ -16,9 +16,10 @@ const BreadcrumbContainer = styled.div`
 `;
 
 const StyledBreadcrumb = styled.a`
+  color: ${COLORS.PURPS3} !important;
   text-decoration: none;
   &:last-child {
-    color: ${COLORS.GREY_7C};
+    color: ${COLORS.GREY.G3} !important;
   }
   font-family: ${SOLEIL.FONT_STACK};
   font-weight: ${SOLEIL.REGULAR};

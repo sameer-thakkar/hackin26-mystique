@@ -72,7 +72,7 @@ const StyledTab = styled.div`
     return (
       isActive &&
       `
-      color: #ec1943;
+      color: ${COLORS.PURPS3};
       border-bottom: 2px solid;
     `
     );
@@ -92,7 +92,7 @@ const AmpSelectorContainer = styled.div`
   }
 
   amp-selector [role='tab'][selected] {
-    color: #ec1943;
+    color: ${COLORS.PURPS};
     border-bottom: 2px solid;
     outline: none;
   }

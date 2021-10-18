@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import Conditional from 'components/common/Conditional';
-import { CHEVRON_DOWN } from 'assets/SvgIcons';
+import { CHEVRON_DOWN, PURPS_TICK_MARK } from 'assets/SvgIcons';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 
 const StyledSortSelector = styled.div`
@@ -13,7 +13,7 @@ const StyledSortSelector = styled.div`
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.08);
   }
   .selected-tab {
-    color: ${COLORS.RHAPSODY};
+    color: ${COLORS.PURPS};
   }
   .filter-selector {
     line-height: 1;
@@ -39,8 +39,7 @@ const StyledSortSelector = styled.div`
         isEntertainmentMb && `color: ${COLORS.GREY.G4};`}
     }
     .current-filter {
-      color: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? COLORS.RHAPSODY : COLORS.TEAL};
+      color: ${COLORS.PURPS};
       ${({ isEntertainmentMb }) =>
         isEntertainmentMb &&
         `font-weight:${SOLEIL.REGULAR};font-size: 15px;line-height:20px;font-feature-settings: 'ss04' on;`}
@@ -158,12 +157,7 @@ export const SortSelector = (props) => {
                 <div className="filter">
                   <span className="filter-name">
                     {filter.name}
-                    <Conditional if={isActive}>
-                      <img
-                        alt="check"
-                        src="https://cdn-imgix-open.headout.com/mystique/assets/tick.svg"
-                      />
-                    </Conditional>
+                    <Conditional if={isActive}>{PURPS_TICK_MARK}</Conditional>
                   </span>
                 </div>
               </div>

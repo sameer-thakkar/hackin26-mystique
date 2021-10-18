@@ -96,7 +96,7 @@ const StyledCard = styled.div((props) => {
       color:  ${isGlobalMb ? COLORS.GREY_G3 : 'inherit'};
     }
     a {
-      color: ${COLORS.MED_SLATE_BLUE};
+      color: ${COLORS.LIGHTER_LINK_BLUE};
       word-wrap: break-word;
     }
   }

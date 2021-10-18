@@ -47,14 +47,14 @@ const StyledCurrencySelector = styled.div`
     color: ${COLORS.FOUR_BLACK};
   }
   .currency-item:hover {
-    color: #ec1943;
+    color: ${COLORS.PURPS};
   }
   .curr {
     transform: translateY(-2px);
     white-space: nowrap;
   }
   .selected-tab {
-    color: ${COLORS.RHAPSODY};
+    color: ${COLORS.PURPS};
   }
   .currency-dropdown-active {
     display: block;

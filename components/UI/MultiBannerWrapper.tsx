@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { useWindowWidth } from '@react-hook/window-size';
 import { strings } from 'const/strings';
 import { Shield } from 'assets/SvgIcons';
-import { greenScheme } from 'style/theme';
+import { greyScheme } from 'style/theme';
 import { MBContext } from 'contexts/MBContext';
 import Conditional from 'components/common/Conditional';
 
@@ -105,7 +105,7 @@ const MultiBannerWrapper = ({
               bannerOnClick={openSafeSidebar}
               icon={Shield}
               isAmp={isAmp}
-              colorScheme={greenScheme}
+              colorScheme={greyScheme}
               isMobile={isMobile}
             />
           </Conditional>
@@ -114,7 +114,7 @@ const MultiBannerWrapper = ({
           <Conditional if={hasSafe}>
             <IconCTA
               text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
-              colorScheme={greenScheme}
+              colorScheme={greyScheme}
               ctaOnClick={openSafeSidebar}
               icon={Shield}
             />

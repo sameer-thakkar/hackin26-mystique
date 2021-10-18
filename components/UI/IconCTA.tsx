@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { CHEVRON_LEFT } from 'assets/SvgIcons';
+import { COLORS } from 'const/ui-constants';
 
 export const StyledIconCTA = styled.div`
   padding: 8px;
@@ -15,6 +16,9 @@ export const StyledIconCTA = styled.div`
   color: ${({ colorScheme: cs }) => cs.color};
   width: max-content;
   cursor: ${({ onClick }) => (onClick ? 'pointer' : '')};
+  @media (max-width: 768px) {
+    ${({ showBorder }) => showBorder && `border: 1px solid ${COLORS.GREY_G6}`}
+  }
 `;
 
 export const Chevron = styled.div`
@@ -55,9 +59,19 @@ export const Content = styled.div`
   }
 `;
 
-const IconCTA = ({ text, icon, ctaOnClick = null, colorScheme }) => {
+const IconCTA = ({
+  text,
+  icon,
+  ctaOnClick = null,
+  colorScheme,
+  showBorder = false,
+}) => {
   return (
-    <StyledIconCTA onClick={ctaOnClick} colorScheme={colorScheme}>
+    <StyledIconCTA
+      onClick={ctaOnClick}
+      colorScheme={colorScheme}
+      showBorder={showBorder}
+    >
       <Icon className="icon">{icon}</Icon>
       <Content className="text" colorScheme={colorScheme}>
         {text}

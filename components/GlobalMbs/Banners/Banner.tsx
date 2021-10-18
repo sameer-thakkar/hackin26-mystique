@@ -10,6 +10,7 @@ import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import { CHEVRON_DOWN } from 'assets/SvgIcons';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { MBContext } from 'contexts/MBContext';
+import { strings } from 'const/strings';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 const Breadcrumb = dynamic(() => import('components/GlobalMbs/Breadcrumb'));
@@ -120,7 +121,7 @@ const StyledBanner = styled.div((props) => {
         align-items: center;
         padding: 8px 70px;
         border-radius: 2px;
-        background-color: ${COLORS.RHAPSODY};
+        background-color: ${COLORS.PURPS};
         color: ${COLORS.WHITE};
         font-size: 16px;
         line-height: 24px;
@@ -152,7 +153,7 @@ const StyledBanner = styled.div((props) => {
       }
     }
     a {
-      color: ${COLORS.MED_SLATE_BLUE};
+      color: ${COLORS.LIGHTER_LINK_BLUE};
       word-wrap: break-word;
     }
   }
@@ -403,7 +404,7 @@ const Banner: FunctionComponent<BannerProps> = ({
               </Conditional>
               <Conditional if={ticketLink}>
                 <a href={ticketLink} className="cta">
-                  Check Tickets
+                  {strings.BANNER_CTA}
                 </a>
               </Conditional>
             </div>

@@ -143,7 +143,7 @@ const TicketsWrapper = styled.div`
     }
     .primary {
       grid-column: 1;
-      background-color: ${COLORS.RHAPSODY};
+      background-color: ${COLORS.PURPS};
       color: ${COLORS.WHITE};
     }
     .secondary {

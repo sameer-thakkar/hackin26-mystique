@@ -21,7 +21,7 @@ import { shortCodeSerializer } from 'utils/shortCodes';
 import { CALENDAR, Shield, BackArrow } from 'assets/SvgIcons';
 import Split, { StlyedSplit } from 'UI/Split';
 import IconCTA, { StyledIconCTA } from 'UI/IconCTA';
-import { greenScheme } from 'style/theme';
+import { greyScheme } from 'style/theme';
 import { isSafetyIncluded, createBookingURL } from 'utils';
 import { MBContext } from 'contexts/MBContext';
 import PriceBlock from 'UI/PriceBlock';
@@ -417,17 +417,17 @@ const ProductOfferBlock = styled.div`
 const V1BoosterBlock = styled.div`
   grid-area: booster;
   font-family: ${SOLEIL.FONT_STACK};
-  font-weight: 400;
-  line-height: 1.31;
+  font-weight: ${SOLEIL.REGULAR};
+  font-size: 15px;
+  line-height: 21px;
   text-align: left;
-  color: ${({ theme: { primaryAccent } }) =>
-    primaryAccent ? primaryAccent : COLORS.CORAL};
+  color: ${COLORS.GREY.G4};
   font-size: 1em;
   display: inline-block;
   p {
     margin: 0;
-    color: ${({ theme: { primaryAccent } }) =>
-      primaryAccent ? primaryAccent : COLORS.MED_SLATE_BLUE};
+    color: ${COLORS.GREY.G4};
+    font-size: 15px;
     strong {
       font-weight: unset;
     }
@@ -533,8 +533,8 @@ const Tab = styled.div`
       isActive &&
       `
       font-weight: ${SOLEIL.SEMIBOLD};
-      color: ${COLORS.RHAPSODY};
-      border-color: ${COLORS.RHAPSODY};
+      color: ${COLORS.PURPS3};
+      border-color: ${COLORS.PURPS3};
     `
     );
   }}
@@ -957,10 +957,11 @@ const Product = (props) => {
               <Conditional if={hasSafetyFlag}>
                 <IconCTA
                   text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
-                  colorScheme={greenScheme}
+                  colorScheme={greyScheme}
                   ctaOnClick={openSafeSidebar}
                   icon={Shield}
                   key={'safety-tag'}
+                  showBorder
                 />
               </Conditional>
             </Split>

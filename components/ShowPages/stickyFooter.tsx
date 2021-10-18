@@ -1,4 +1,5 @@
 import { strings } from 'const/strings';
+import { COLORS } from 'const/ui-constants';
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { createBookingURL } from 'utils';
@@ -15,7 +16,7 @@ const StickyFooterContentWrapper = styled.div`
 
   .buy-button {
     padding: 12px 24px;
-    background: #ec1943;
+    background: ${COLORS.PURPS};
     border-radius: 4px;
     margin: 16px auto;
     color: #ffffff;

@@ -18,7 +18,7 @@ const StyledHeaderLinksWrapper = styled.div`
     color: ${COLORS.DAVY_GREY};
     text-decoration: none;
     :hover {
-      color: #ec1943;
+      color: ${COLORS.PURPS};
     }
     :last-child {
       margin-right: 0px;

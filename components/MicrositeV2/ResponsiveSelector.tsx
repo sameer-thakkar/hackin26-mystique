@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import { strings } from 'const/strings';
 import Image from 'UI/Image';
-import { CHEVRON_DOWN } from 'assets/SvgIcons';
+import { CHEVRON_DOWN, PURPS_TICK_MARK } from 'assets/SvgIcons';
 import styled from 'styled-components';
 import { isSameURL } from 'utils/helper';
 
@@ -57,9 +57,9 @@ const ResponsiveSelectWrapper = styled.div`
   }
   .current-selection {
     display: grid;
-    grid-template-columns:
-      auto ${({ hasIcon }) => (hasIcon ? 'auto' : '')}
-      ${({ hasChevron }) => (hasChevron ? 'auto' : '')};
+    grid-template-columns: auto ${({ hasIcon }) => (hasIcon ? 'auto' : '')} ${({
+        hasChevron,
+      }) => (hasChevron ? 'auto' : '')};
     justify-content: space-between;
     align-items: center;
     grid-gap: 8px;
@@ -83,7 +83,7 @@ const ResponsiveSelectWrapper = styled.div`
     display: flex;
   }
   .responsive-option.active {
-    color: ${COLORS.RHAPSODY};
+    color: ${COLORS.PURPS};
   }
   @media (max-width: 768px) {
     position: unset !important;
@@ -146,7 +146,7 @@ const ResponsiveSelectWrapper = styled.div`
       z-index: 500;
     }
     .close-btn {
-      color: #ec1943;
+      color: ${COLORS.PURPS};
     }
 
     @keyframes scroll-in {
@@ -260,13 +260,7 @@ export const ResponsiveSelector = (props) => {
                 onClick={() => selectionChangeHandler(index)}
               >
                 <span>{option.label}</span>
-                {current == index ? (
-                  <img
-                    className="check-mark"
-                    src="https://cdn-imgix-open.headout.com/mystique/assets/tick.svg"
-                    alt=""
-                  />
-                ) : null}
+                {current == index ? PURPS_TICK_MARK : null}
               </div>
             );
           })}

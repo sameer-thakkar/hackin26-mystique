@@ -46,22 +46,21 @@ const Icon = styled.div`
   justify-content: center;
   align-items: center;
 
-  .safety-icon{
+  .safety-icon {
     width: 39px;
     height: 24px;
-    svg{
+    svg {
       width: 100%;
       height: 100%;
     }
   }
-  .desktop-icon{
+  .desktop-icon {
     width: 20px;
     height: 20px;
   }
   .desktop-icon svg {
-      width: 20px;
-      height: 20px;
-    }
+    width: 20px;
+    height: 20px;
   }
 
   @media (max-width: 768px) {

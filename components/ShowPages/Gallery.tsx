@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
-
-import Image, { Wrapper } from '../UI/Image';
-const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
-import { BLACK_CROSS, ALL_PHOTOS } from '../../assets/SvgIcons';
-
 import Conditional from 'components/common/Conditional';
+import { COLORS } from 'const/ui-constants';
+import Image, { Wrapper } from 'components/UI/Image';
+import { BLACK_CROSS, ALL_PHOTOS } from 'assets/SvgIcons';
+
+const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
 const GalleryWrapper = styled.div`
   display: grid;
@@ -211,7 +211,7 @@ const ImageWrapper = styled.div(
     width: 186px;
     height: 115.73px;
     cursor: pointer;
-    ${active && `border: 2px solid #EC1943;`}
+    ${active && `border: 2px solid ${COLORS.PURPS};`}
     box-sizing: border-box;
     border-radius: 4px;
   }

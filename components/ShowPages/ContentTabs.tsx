@@ -32,7 +32,7 @@ const StyledContentTabs = styled.div`
 
 const StyledTab = styled.h3(({ active }) => {
   return `
-  ${active ? `color: #ec1943;` : ``}
+  ${active ? `color: ${COLORS.PURPS3};` : ``}
   cursor: pointer;
   ${active ? `border-bottom: 2px solid;` : ``}
   padding-bottom: 12px;
@@ -66,7 +66,7 @@ const StyledContent = styled.div(({ active }) => {
       max-width: 100%;
     }
     a {
-      color: #ec1943;
+      color: ${COLORS.PURPS};
     }
     ul{
       padding: 0;

@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import PhoneInput from 'react-phone-input-2';
 import { parsePhoneNumberFromString as parseMobile } from 'libphonenumber-js/mobile';
 import { RichText } from 'prismic-reactjs';
-import { MODAL_STYLE, SOLEIL } from 'const/ui-constants';
+import { COLORS, MODAL_STYLE, SOLEIL } from 'const/ui-constants';
 
 import {
   PREFERRED_COUNTRIES_CODES,
@@ -412,7 +412,7 @@ const StyledGroupBooking = styled.div`
   .error {
     font-size: 0.625em;
     span {
-      color: #ec1943;
+      color: ${COLORS.RHAPSODY};
     }
     padding-top: 6px;
     font-family: ${SOLEIL.FONT_STACK};

@@ -11,7 +11,7 @@ import useWindowSize from 'hooks/useWindowSize';
 import Conditional from 'components/common/Conditional';
 import { strings } from 'const/strings';
 import { CHEVRON_LEFT_CIRCLE, Shield } from 'assets/SvgIcons';
-import { greenScheme } from 'style/theme';
+import { greyScheme } from 'style/theme';
 import { MBContext } from 'contexts/MBContext';
 
 import IconCTA, { StyledIconCTA } from './IconCTA';
@@ -306,7 +306,7 @@ const SafeExperiencesPitch = ({
         <SafetyCard>
           <IconCTA
             text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
-            colorScheme={greenScheme}
+            colorScheme={greyScheme}
             icon={Shield}
           />
           <Text>{strings.SAFE_EXPERIENCE.MODAL.BADGE_DESCRIPTION}</Text>

@@ -138,7 +138,7 @@ const Question = (props) => {
           object-fit: cover;
         }
         .answer a {
-          color: ${COLORS.MED_SLATE_BLUE};
+          color: ${COLORS.LIGHTER_LINK_BLUE};
         }
       `}</style>
     </div>

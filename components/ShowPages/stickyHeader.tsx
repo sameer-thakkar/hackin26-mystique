@@ -5,6 +5,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { createBookingURL } from 'utils';
 import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
+import { COLORS } from 'const/ui-constants';
 
 import { MBContext } from '../../contexts/MBContext';
 
@@ -81,7 +82,7 @@ const BannerContent = styled.div(
   }
 
   .buy-button {
-    background: #ec1943;
+    background: ${COLORS.PURPS};
     margin: 0px 16px;
     color: #ffffff;
     border: none;
@@ -92,7 +93,7 @@ const BannerContent = styled.div(
     letter-spacing: 0.6px;
     display: block;
     text-align: center;
-    background: #ec1943;
+    background: ${COLORS.PURPS};
     border-radius: 4px;
     width: 180px;
     padding: 12px 0;

@@ -96,7 +96,7 @@ const StyledContentPage = styled.div`
 
   a {
     text-decoration: none;
-    color: ${COLORS.MED_SLATE_BLUE};
+    color: ${COLORS.LIGHTER_LINK_BLUE};
   }
 
   .product {
