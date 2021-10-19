@@ -205,7 +205,6 @@ const MicrositeV1 = (props) => {
     enable_powered_by_superbrand_logo: hasPoweredByHeadoutLogo,
     enable_group_booking: enableGroupBooking,
     enable_buy_tickets_shortcut: enableBuyTickets,
-    logo_redirection_url: logoRedirectionURL,
     blackout_start_date: blackoutStartDate,
     blackout_end_date: blackoutEndDate,
     block_n_days_group_booking: blockNDaysGroupBooking,
@@ -218,6 +217,9 @@ const MicrositeV1 = (props) => {
     enable_dropdown: enableDropdownLinks,
     dropdown_menu,
   } = withCommonHeaderOverrides;
+  const logoRedirectionURL =
+    micrositeData.logo_redirection_url ||
+    commonHeader?.data?.logo_redirection_url;
   let { disable_amp: disableAMP } = withCommonHeaderOverrides;
 
   disableAMP = micrositeData?.disable_amp || disableAMP;
