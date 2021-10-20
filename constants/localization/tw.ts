@@ -30,6 +30,7 @@ const tw = {
   REOPENING_ON: 'Reopening on',
   OPENING_ON: 'Opening on',
   NEW: 'NEW',
+  CLOSE: '關閉',
   LISTICLES: {
     SEATING_CHART: '座位圖',
     KNOW_MORE: '了解更多',

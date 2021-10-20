@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { strings } from 'const/strings';
 import Chevron from 'UI/Chevron';
 import Conditional from 'components/common/Conditional';
 import { GLOBE } from 'assets/SvgIcons';
@@ -11,7 +12,7 @@ const StyledLanguageContainer = styled.div`
   position: relative;
   .language-dropdown a {
     text-decoration: none;
-    color: #444444;
+    color: ${COLORS.GREY.G2};
   }
   .language-dropdown {
     display: none;
@@ -41,7 +42,7 @@ const StyledLanguageContainer = styled.div`
     align-items: center;
     border-bottom: 0.5px dotted #d8d8d8;
     background-color: ${({ theme }) => theme.primaryBackground};
-    background-color: #fff;
+    background-color: ${COLORS.WHITE};
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
     font-family: ${SOLEIL.FONT_STACK};
     font-size: 16px;
@@ -85,13 +86,48 @@ const StyledMobileSelect = styled.div`
     left: 0;
     opacity: 0;
   }
+  .language-dropdown {
+    display: ${({ isAmp }) => (isAmp ? 'none' : '')};
+    background: ${COLORS.WHITE};
+    position: fixed;
+    bottom: -2px;
+    top: unset;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 30;
+    width: 100%;
+    text-align: center;
+    border-radius: 4px;
+  }
+  .language,
+  .close-btn {
+    border-bottom: 1px solid ${COLORS.DADDY};
+    padding: 16px 0;
+  }
+  .close-mask {
+    display: ${({ isAmp }) => (isAmp ? 'none' : '')};
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    background: ${COLORS.BLACK};
+    opacity: 0.5;
+    z-index: 25;
+  }
+  .close-btn {
+    color: ${COLORS.PURPS};
+  }
+  .show {
+    display: block;
+  }
 `;
 
 const StyledLanguage = styled.span`
   margin-top: 7px;
   font-family: ${SOLEIL.FONT_STACK};
   font-size: 16px;
-  color: #545454;
+  color: ${COLORS.DAVY_GREY};
   cursor: pointer;
   transform: translateY(-3px);
   svg {
@@ -132,51 +168,62 @@ const LanguageSelector = (props) => {
   const handleClick = () => {
     setShowDropdown((prevState) => !prevState);
   };
-  const handleChange = (e) => {
-    const selectedLang = e.target?.value;
-    if (!selectedLang) return;
-    window.location.href = selectedLang;
-  };
 
   if (isMobile) {
     return (
-      <StyledMobileSelect>
-        <span>{currentLanguage}</span>
-        <Conditional if={isAmp}>
-          <select
-            onChange={(e) => e.target.blur()}
-            onBlur={handleChange}
-            // @ts-ignore
-            on="change:AMP.navigateTo(url=event.value)"
+      <StyledMobileSelect isAmp={isAmp}>
+        <span
+          onClick={handleClick}
+          role="button"
+          tabIndex={0}
+          // @ts-ignore
+          on="tap:language-drop.toggleClass(class='show'), overlay.toggleClass(class='show')"
+        >
+          {currentLanguage}
+        </span>
+
+        {availableLanguages && (showDropdown || isAmp) ? (
+          <div
+            id="language-drop"
+            className={`language-dropdown ${
+              showDropdown ? 'language-dropdown-active' : ''
+            }`}
+          >
+            {availableLanguages.map((doc, index) => {
+              const { url, lang } = doc || {};
+              return (
+                <a key={index} href={url}>
+                  <div className="language">
+                    <span className="lang-option">
+                      {FULL_LANGUAGE_MAP[lang].language}
+                    </span>
+                  </div>
+                </a>
+              );
+            })}
+            <div
+              onClick={handleClick}
+              className="close-btn"
+              role="button"
+              tabIndex={0}
+              // @ts-ignore
+              on="tap:language-drop.toggleClass(class='show'), overlay.toggleClass(class='show')"
+            >
+              {strings.CLOSE}
+            </div>
+          </div>
+        ) : null}
+        {showDropdown || isAmp ? (
+          <div
+            onClick={handleClick}
+            id="overlay"
+            className="close-mask"
             role="button"
             tabIndex={0}
-          >
-            <option disabled selected>
-              {FULL_LANGUAGE_MAP[currentLanguage].language}
-            </option>
-            {availableLanguages.map((doc, index) => {
-              return (
-                <option value={doc.url} key={index}>
-                  {FULL_LANGUAGE_MAP[doc.lang].language}
-                </option>
-              );
-            })}
-          </select>
-        </Conditional>
-        <Conditional if={!isAmp}>
-          <select onChange={(e) => e.target.blur()} onBlur={handleChange}>
-            <option disabled selected>
-              {FULL_LANGUAGE_MAP[currentLanguage].language}
-            </option>
-            {availableLanguages.map((doc, index) => {
-              return (
-                <option value={doc.url} key={index}>
-                  {FULL_LANGUAGE_MAP[doc.lang].language}
-                </option>
-              );
-            })}
-          </select>
-        </Conditional>
+            // @ts-ignore
+            on="tap:language-drop.toggleClass(class='show'), overlay.toggleClass(class='show')"
+          ></div>
+        ) : null}
       </StyledMobileSelect>
     );
   }

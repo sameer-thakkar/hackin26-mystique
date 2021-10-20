@@ -32,6 +32,7 @@ const it = {
   OPENING_ON: 'Opening on',
   NEW: 'NEW',
   SEE_ALL: 'See All',
+  CLOSE: 'Chiudi',
   LISTICLES: {
     SEATING_CHART: 'Mappa dei posti a sedere',
     KNOW_MORE: 'Altre informazioni',
