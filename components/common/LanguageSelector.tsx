@@ -87,7 +87,6 @@ const StyledMobileSelect = styled.div`
     opacity: 0;
   }
   .language-dropdown {
-    display: ${({ isAmp }) => (isAmp ? 'none' : '')};
     background: ${COLORS.WHITE};
     position: fixed;
     bottom: -2px;
@@ -105,7 +104,6 @@ const StyledMobileSelect = styled.div`
     padding: 16px 0;
   }
   .close-mask {
-    display: ${({ isAmp }) => (isAmp ? 'none' : '')};
     position: fixed;
     top: 0;
     left: 0;
@@ -118,8 +116,8 @@ const StyledMobileSelect = styled.div`
   .close-btn {
     color: ${COLORS.PURPS};
   }
-  .show {
-    display: block;
+  .hide {
+    display: none;
   }
 `;
 
@@ -177,17 +175,14 @@ const LanguageSelector = (props) => {
           role="button"
           tabIndex={0}
           // @ts-ignore
-          on="tap:language-drop.toggleClass(class='show'), overlay.toggleClass(class='show')"
+          on="tap:language-drop.toggleClass(class='hide'), overlay.toggleClass(class='hide')"
         >
           {currentLanguage}
         </span>
-
-        {availableLanguages && (showDropdown || isAmp) ? (
+        <Conditional if={availableLanguages}>
           <div
             id="language-drop"
-            className={`language-dropdown ${
-              showDropdown ? 'language-dropdown-active' : ''
-            }`}
+            className={`language-dropdown ${showDropdown ? '' : 'hide'}`}
           >
             {availableLanguages.map((doc, index) => {
               const { url, lang } = doc || {};
@@ -207,23 +202,21 @@ const LanguageSelector = (props) => {
               role="button"
               tabIndex={0}
               // @ts-ignore
-              on="tap:language-drop.toggleClass(class='show'), overlay.toggleClass(class='show')"
+              on="tap:language-drop.toggleClass(class='hide'), overlay.toggleClass(class='hide')"
             >
               {strings.CLOSE}
             </div>
           </div>
-        ) : null}
-        {showDropdown || isAmp ? (
-          <div
-            onClick={handleClick}
-            id="overlay"
-            className="close-mask"
-            role="button"
-            tabIndex={0}
-            // @ts-ignore
-            on="tap:language-drop.toggleClass(class='show'), overlay.toggleClass(class='show')"
-          ></div>
-        ) : null}
+        </Conditional>
+        <div
+          onClick={handleClick}
+          id="overlay"
+          className={`close-mask ${showDropdown ? '' : 'hide'}`}
+          role="button"
+          tabIndex={0}
+          // @ts-ignore
+          on="tap:language-drop.toggleClass(class='hide'), overlay.toggleClass(class='hide')"
+        ></div>
       </StyledMobileSelect>
     );
   }
