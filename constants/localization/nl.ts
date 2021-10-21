@@ -34,6 +34,7 @@ const nl = {
   OPENING_ON: 'Opening on',
   NEW: 'NEW',
   SEE_ALL: 'See All',
+  CLOSE: 'Sluit',
   LISTICLES: {
     SEATING_CHART: 'Stoelenschema',
     KNOW_MORE: 'Lees meer',

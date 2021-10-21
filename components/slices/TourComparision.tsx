@@ -391,6 +391,7 @@ const StyledTourComparisionTable = styled.div`
     .cta-table-wrap .row {
       padding-bottom: 8px;
       margin-bottom: 0;
+      z-index: 2;
     }
     .start-compare-icon {
       display: grid;

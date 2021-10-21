@@ -32,6 +32,7 @@ const es = {
   OPENING_ON: 'Opening on',
   NEW: 'NEW',
   SEE_ALL: 'See All',
+  CLOSE: 'Cerrar',
   LISTICLES: {
     SEATING_CHART: 'Mapa de asientos',
     KNOW_MORE: 'Leer más',

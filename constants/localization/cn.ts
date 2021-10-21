@@ -30,6 +30,7 @@ const cn = {
   REOPENING_ON: 'Reopening on',
   OPENING_ON: 'Opening on',
   NEW: 'NEW',
+  CLOSE: '关闭',
   LISTICLES: {
     SEATING_CHART: '座位图',
     KNOW_MORE: '了解更多',

@@ -30,6 +30,7 @@ const ja = {
   REOPENING_ON: 'Reopening on',
   OPENING_ON: 'Opening on',
   NEW: 'NEW',
+  CLOSE: '閉じる',
   LISTICLES: {
     SEATING_CHART: '座席図',
     KNOW_MORE: 'もっと読む',

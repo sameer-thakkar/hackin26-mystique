@@ -36,6 +36,7 @@ const en = {
   OPENING_ON: 'Opening on',
   NEW: 'NEW',
   SEE_ALL: 'See All',
+  CLOSE: 'Close',
   LISTICLES: {
     SEATING_CHART: 'Seating Chart',
     KNOW_MORE: 'Know More',
