@@ -112,6 +112,7 @@ const CloseIconWrapper = styled.div`
   align-items: center;
   background: #f8f8f8;
   right: 0;
+  position: sticky;
   cursor: pointer;
   svg {
     width: 16px;
@@ -928,7 +929,7 @@ const TicketCard = (props) => {
   );
 
   const getProductCardElements = () => (
-    <PopupWrapper>
+    <PopupWrapper onClick={() => popupCloser()}>
       <PopupContentWrapper>
         <WrapperProductCard layout={layout} isMobile={isMobile}>
           <Conditional if={!isMobile}>

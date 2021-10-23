@@ -40,6 +40,7 @@ const en = {
     SELECT_CTA: 'Select',
     SELECT_OPTION: 'Select your option',
   },
+  CLOSE: 'Close',
   LISTICLES: {
     SEATING_CHART: 'Seating Chart',
     KNOW_MORE: 'Know More',

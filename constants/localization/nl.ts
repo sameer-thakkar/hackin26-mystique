@@ -38,6 +38,7 @@ const nl = {
     SELECT_CTA: 'Select',
     SELECT_OPTION: 'Select your option',
   },
+  CLOSE: 'Sluit',
   LISTICLES: {
     SEATING_CHART: 'Stoelenschema',
     KNOW_MORE: 'Lees meer',

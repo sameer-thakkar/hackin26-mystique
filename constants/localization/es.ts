@@ -36,6 +36,7 @@ const es = {
     SELECT_CTA: 'Select',
     SELECT_OPTION: 'Select your option',
   },
+  CLOSE: 'Cerrar',
   LISTICLES: {
     SEATING_CHART: 'Mapa de asientos',
     KNOW_MORE: 'Leer más',

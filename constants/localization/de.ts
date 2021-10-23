@@ -37,6 +37,7 @@ const de = {
     SELECT_CTA: 'Select',
     SELECT_OPTION: 'Select your option',
   },
+  CLOSE: 'Schließen',
   LISTICLES: {
     SEATING_CHART: 'Saalplan',
     KNOW_MORE: 'Weitere Infos',

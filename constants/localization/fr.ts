@@ -35,6 +35,7 @@ const fr = {
     SELECT_CTA: 'Select',
     SELECT_OPTION: 'Select your option',
   },
+  CLOSE: 'Fermer',
   LISTICLES: {
     SEATING_CHART: 'Plan de la salle',
     KNOW_MORE: 'En savoir plus',
