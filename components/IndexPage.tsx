@@ -3,7 +3,6 @@ import ErrorPage from 'next/error';
 import dynamic from 'next/dynamic';
 import fetch from 'isomorphic-unfetch';
 import Cookies from 'js-cookie';
-import { SWRConfig } from 'swr';
 import { MutableSnapshot, RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components';
 import 'lazysizes';
@@ -794,16 +793,6 @@ export default class Page extends React.Component<any, any> {
       }
     };
 
-    const swrFetcher = async (url) => {
-      const res = await fetch(url);
-      return res.json();
-    };
-
-    const swrOptions = {
-      revalidateOnMount: true,
-      fetcher: swrFetcher,
-    };
-
     return (
       <div id="body-wrap">
         <EnvironmentContext.Provider
@@ -831,12 +820,10 @@ export default class Page extends React.Component<any, any> {
                 bookSubdomain={bookSubdomain}
                 primaryCountry={primaryCountry}
               >
-                <SWRConfig value={swrOptions}>
-                  {Component}
-                  {typeof window !== 'undefined' ? (
-                    <HeadoutSessionIdSetterComponent />
-                  ) : null}
-                </SWRConfig>
+                {Component}
+                {typeof window !== 'undefined' ? (
+                  <HeadoutSessionIdSetterComponent />
+                ) : null}
               </MBContextProvider>
             </RecoilRoot>
           </ThemeProvider>

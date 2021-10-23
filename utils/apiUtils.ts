@@ -11,7 +11,10 @@ const objectToQuery = (query) => {
     : '';
 };
 
-export const swrFetcher = (url) => fetch(url).then((res) => res.json());
+export const swrFetcher = async (url) => {
+  const res = await fetch(url);
+  return res.json();
+};
 
 export enum HeadoutEndpoints {
   TourGroupInventoryV5,

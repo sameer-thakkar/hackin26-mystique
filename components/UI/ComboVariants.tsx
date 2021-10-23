@@ -9,7 +9,7 @@ import VariantCard from 'components/UI/VariantCard';
 import { BLACK_COLOR_CLOSE } from 'assets/SvgIcons';
 import { strings } from 'const/strings';
 import { COLORS, SOLEIL } from 'const/ui-constants';
-import { getHeadoutApiUrl, HeadoutEndpoints } from 'utils/apiUtils';
+import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 import { getHostName } from 'utils/helper';
 import { ANALYTICS_EVENTS } from 'const/index';
 
@@ -137,7 +137,7 @@ const ComboVariants = ({
     hostname,
     params,
   });
-  const { data, error } = useSWR(tourGroupEndpoint);
+  const { data, error } = useSWR(tourGroupEndpoint, { fetcher: swrFetcher });
   const { variants, currency, name } = data || {};
   const { localSymbol: currencySymbol } = currency || {};
   useEffect(() => {
