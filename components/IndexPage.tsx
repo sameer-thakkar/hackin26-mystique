@@ -3,6 +3,7 @@ import ErrorPage from 'next/error';
 import dynamic from 'next/dynamic';
 import fetch from 'isomorphic-unfetch';
 import Cookies from 'js-cookie';
+import { SWRConfig } from 'swr';
 import { MutableSnapshot, RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components';
 import 'lazysizes';
@@ -571,6 +572,7 @@ export default class Page extends React.Component<any, any> {
             validity,
             allTags: allTagsTour,
             id,
+            combo,
           } = tour || {};
           const { productImages, safetyImages } = media || {};
           const { cashbackValue } = listingPrice || {};
@@ -602,6 +604,7 @@ export default class Page extends React.Component<any, any> {
               allTags,
               safetyImages: safetyImages || [],
               validity,
+              combo,
               listingPrice: {
                 ...listingPrice,
                 ...currencySymbolMap[listingPrice?.currencyCode],
@@ -719,6 +722,7 @@ export default class Page extends React.Component<any, any> {
               toursList={toursList}
               pathname={pathname}
               isDev={isDev}
+              isStage={isStage}
               tgidToScroll={tgidToScroll}
               serverRequestStartTimestamp={serverRequestStartTimestamp}
               isMobile={isMobile}
@@ -790,6 +794,16 @@ export default class Page extends React.Component<any, any> {
       }
     };
 
+    const swrFetcher = async (url) => {
+      const res = await fetch(url);
+      return res.json();
+    };
+
+    const swrOptions = {
+      revalidateOnMount: true,
+      fetcher: swrFetcher,
+    };
+
     return (
       <div id="body-wrap">
         <EnvironmentContext.Provider
@@ -817,10 +831,12 @@ export default class Page extends React.Component<any, any> {
                 bookSubdomain={bookSubdomain}
                 primaryCountry={primaryCountry}
               >
-                {Component}
-                {typeof window !== 'undefined' ? (
-                  <HeadoutSessionIdSetterComponent />
-                ) : null}
+                <SWRConfig value={swrOptions}>
+                  {Component}
+                  {typeof window !== 'undefined' ? (
+                    <HeadoutSessionIdSetterComponent />
+                  ) : null}
+                </SWRConfig>
               </MBContextProvider>
             </RecoilRoot>
           </ThemeProvider>

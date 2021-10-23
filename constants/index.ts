@@ -209,6 +209,11 @@ export const ANALYTICS_EVENTS = {
   EXPERIENCE_CARD_CLICKED: 'Experience Card Clicked',
   EXPERIENCE_MORE_DETAILS_VIEWED: 'More Details Viewed',
   EXPERIENCE_INFO_TAB_CLICKED: 'Experience Information Tab Clicked',
+  COMBO_VARIANT: {
+    POPUP_VIEWED: 'Popup viewed',
+    VARIANT_CLICKED: 'Variant card clicked',
+    POPUP_CLOSED: 'Popup closed',
+  },
 };
 export const PAGE_TYPE = {
   COLLECTION_PAGE: 'Collection Page',

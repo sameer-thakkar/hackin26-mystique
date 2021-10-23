@@ -15,7 +15,7 @@ const themes = {
     primaryAccent: COLORS.OKAY_GREEN,
     secondaryAccent: COLORS.PURPS,
     cardAccent: COLORS.PURPS,
-    borders: COLORS.GREY_G6,
+    borders: COLORS.GREY.G6,
     primaryBackground: COLORS.LINK_BLUE,
     secondaryBackground: COLORS.BFF_BLUE,
     primaryBGHover: COLORS.LINK_BLUE_HOVER,
@@ -151,7 +151,7 @@ const themes = {
     primaryAccent: COLORS.LIGHTER_LINK_BLUE,
     secondaryAccent: COLORS.PURPS3,
     cardAccent: COLORS.PURPS,
-    borders: COLORS.GREY_G6,
+    borders: COLORS.GREY.G6,
     primaryBackground: COLORS.WHITE,
     secondaryBackground: COLORS.BFF_BLUE,
     primaryBGHover: COLORS.FLOAT_PURPS,
@@ -199,7 +199,7 @@ const themes = {
       },
       lineStyles: `
         border: none;
-        border-left: 1px dashed ${COLORS.GREY_G6}; 
+        border-left: 1px dashed ${COLORS.GREY.G6}; 
         margin: 0;
         margin-left: 12px;
         height: 100%;
@@ -249,7 +249,7 @@ const themes = {
         desktop: '24px',
         mobile: ' 22px 16px',
       },
-      border: `1px solid ${COLORS.GREY_G6}`,
+      border: `1px solid ${COLORS.GREY.G6}`,
       gap: {
         desktop: '54px',
         mobile: '24px',

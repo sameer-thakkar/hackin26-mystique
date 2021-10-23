@@ -12,7 +12,7 @@ import Pricing from './Pricing';
 const StyledLargeListicle = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
   padding: 24px;
-  border: 1px solid ${COLORS.GREY_G6};
+  border: 1px solid ${COLORS.GREY.G6};
   border-radius: 8px;
   @media (max-width: 768px) {
     padding: 16px;

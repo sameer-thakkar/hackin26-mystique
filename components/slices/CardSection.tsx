@@ -82,7 +82,7 @@ const ExitDescription = styled.div`
   ${({ isGlobalMb, cardsInARow }) =>
     isGlobalMb &&
     cardsInARow === 1 &&
-    `border-bottom: 1px solid ${COLORS.GREY_G6};`};
+    `border-bottom: 1px solid ${COLORS.GREY.G6};`};
 `;
 
 type CardSectionProps = {

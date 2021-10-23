@@ -11,6 +11,63 @@ const objectToQuery = (query) => {
     : '';
 };
 
+export const swrFetcher = (url) => fetch(url).then((res) => res.json());
+
+export enum HeadoutEndpoints {
+  TourGroupInventoryV5,
+  TourGroupsV6,
+  TourGroupListByCategoryV6,
+  TourGroupListBySubCategoryV6,
+  TourGroupReviewsV2,
+  TourGroupCollectionV1,
+  CurrencyList,
+}
+
+export const getHeadoutApiUrl = ({
+  endpoint,
+  hostname,
+  params,
+  id,
+}: {
+  endpoint: HeadoutEndpoints;
+  hostname: string;
+  params: { [key: string]: string };
+  id: string | number;
+}) => {
+  let endpointSlug;
+  switch (endpoint) {
+    case HeadoutEndpoints.TourGroupInventoryV5:
+      endpointSlug = `/api/tours/v5/tour-group/inventory/get/${id}`;
+      break;
+    case HeadoutEndpoints.TourGroupsV6:
+      endpointSlug = `/api/tours/v6/tour-groups/${id ? id : ''}`;
+      break;
+    case HeadoutEndpoints.TourGroupListByCategoryV6:
+      endpointSlug = `/api/tours/v6/tour-groups/list-by/category/${id}`;
+      break;
+    case HeadoutEndpoints.TourGroupListBySubCategoryV6:
+      endpointSlug = `/api/tours/v6/tour-groups/list-by/sub-category/${id}`;
+      break;
+    case HeadoutEndpoints.TourGroupReviewsV2:
+      endpointSlug = `/api/tours/v2/review/tour-group/id/${id}`;
+      break;
+    case HeadoutEndpoints.TourGroupCollectionV1:
+      endpointSlug = `/api/tours/v1/collection/${id}/sections`;
+      break;
+    case HeadoutEndpoints.CurrencyList:
+      endpointSlug = `'https://api.headout.com/api/v1/currency/list`;
+      break;
+  }
+
+  const url = `${hostname}${endpointSlug}`;
+  if (Object.keys(params).length) {
+    const finalUrl = addQueryParams(url, params);
+    return finalUrl;
+  } else {
+    return url;
+  }
+};
+
 export const fetchInventory = ({ tgid, ...query }) => {
   return fetch(
     `/api/tours/v5/tour-group/inventory/get/${tgid}${objectToQuery(query)}`
@@ -38,11 +95,15 @@ export const fetchTourGroupV6 = async ({
   const params = {
     ...(language && { language }),
   };
-  const url = addQueryParams(
-    `${hostname}/api/tours/v6/tour-groups/${tgid}`,
-    params
-  );
-  const res = await fetch(url);
+
+  const apiUrl = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.TourGroupsV6,
+    hostname,
+    params,
+    id: tgid,
+  });
+
+  const res = await fetch(apiUrl);
   return await res.json();
 };
 export const fetchCurrencyList = async () => {
@@ -121,8 +182,12 @@ export const fetchCollection = async ({
     language,
     ...(limit && { limit }),
   };
-  const url = `${hostname}/api/tours/v1/collection/${collectionId}/sections`;
-  const finalUrl = addQueryParams(url, params);
+  const finalUrl = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.TourGroupCollectionV1,
+    hostname,
+    params,
+    id: collectionId,
+  });
   try {
     const response = await fetch(finalUrl);
     const data = await response.json();

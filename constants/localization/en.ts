@@ -36,6 +36,10 @@ const en = {
   OPENING_ON: 'Opening on',
   NEW: 'NEW',
   SEE_ALL: 'See All',
+  COMBO_VARIANT: {
+    SELECT_CTA: 'Select',
+    SELECT_OPTION: 'Select your option',
+  },
   LISTICLES: {
     SEATING_CHART: 'Seating Chart',
     KNOW_MORE: 'Know More',

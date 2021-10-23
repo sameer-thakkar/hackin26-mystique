@@ -16,8 +16,8 @@ const Wrapper = styled.div`
   grid-template-columns: repeat(2, 1fr);
   gap: 24px;
   margin: 24px 0;
-  border-top: 1px solid ${COLORS.GREY_G6};
-  border-bottom: 1px solid ${COLORS.GREY_G6};
+  border-top: 1px solid ${COLORS.GREY.G6};
+  border-bottom: 1px solid ${COLORS.GREY.G6};
   img {
     width: 100%;
     height: 448px;
@@ -210,7 +210,7 @@ const Modal = styled.div`
   ${TicketsWrapper} {
     padding: 12px 16px;
     background: ${COLORS.WHITE};
-    border-top: 1px solid ${COLORS.GREY_G6};
+    border-top: 1px solid ${COLORS.GREY.G6};
     position: sticky;
     width: 100%;
     bottom: 0;

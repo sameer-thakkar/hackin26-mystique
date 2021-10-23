@@ -181,12 +181,9 @@ export const categoryTourListParserV1 = async ({
         const tourObj = items.find((item) => item.tgid === id);
         const [variantId] =
           getSingleAriesTag(allTags, 'DEFAULT_VARIANT')?.match(/\d+/) || [];
-
-        const ctaSuffix = new URLSearchParams(commonCtaUrlSuffix || '');
-        if (variantId) ctaSuffix.set('variantId', variantId);
         const finalObj = {
           tgid: id,
-          cta_url_suffix: ctaSuffix ? `?${ctaSuffix?.toString()}` : null,
+          cta_url_suffix: commonCtaUrlSuffix,
           marketing_highlights_override: null,
           offer__free_tour: { link_type: 'Document' },
           product_booster: [],
@@ -224,6 +221,7 @@ export const categoryTourListParserV1 = async ({
         microBrandsHighlight,
         name,
         reviewCount,
+        combo,
       } = tour || {};
       const { productImages, safetyImages } = media || {};
       const { cashbackValue } = listingPrice || {};
@@ -259,6 +257,7 @@ export const categoryTourListParserV1 = async ({
           reviewCount,
           safetyImages,
           title: name,
+          combo,
         },
       };
     }, {});

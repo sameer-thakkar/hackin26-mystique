@@ -445,7 +445,7 @@ const CTABlock = styled.div`
     column-gap: 16px;
     padding: 16px;
     box-sizing: border-box;
-    border-top: 1px solid ${COLORS.GREY_G6};
+    border-top: 1px solid ${COLORS.GREY.G6};
   `}
   .cta {
     text-decoration: none;

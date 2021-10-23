@@ -52,6 +52,7 @@
     "slack-webhook": "^1.0.0",
     "styled-components": "^5.0.1",
     "swiper": "^5.3.7",
+    "swr": "^1.0.1",
     "url-parse": "^1.4.7",
     "xmlbuilder": "^15.0.0"
   },

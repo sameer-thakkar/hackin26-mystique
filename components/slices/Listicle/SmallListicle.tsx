@@ -8,7 +8,7 @@ const StyledSmallListicle = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
   width: 305px !important;
   padding: 16px 16px 24px 16px;
-  border: 1px solid ${COLORS.GREY_G6};
+  border: 1px solid ${COLORS.GREY.G6};
   border-radius: 8px;
   display: grid;
   grid-column-gap: 16px;
