@@ -140,17 +140,25 @@ export default function PopulateMeta({
   const additionalMetaTags = [];
   if (googleSiteVerification)
     additionalMetaTags.push(
-      createAdditionalMetaTag(
-        'google-site-verification',
-        googleSiteVerification
-      )
+      createAdditionalMetaTag({
+        name: 'google-site-verification',
+        content: googleSiteVerification,
+      })
     );
   if (bingSiteVerification)
     additionalMetaTags.push(
-      createAdditionalMetaTag('msvalidate.01', bingSiteVerification)
+      createAdditionalMetaTag({
+        name: 'msvalidate.01',
+        content: bingSiteVerification,
+      })
     );
   if (seoKeywords)
-    additionalMetaTags.push(createAdditionalMetaTag('keywords', seoKeywords));
+    additionalMetaTags.push(
+      createAdditionalMetaTag({
+        name: 'keywords',
+        content: seoKeywords,
+      })
+    );
 
   const ampLinkTag = {
     rel: 'amphtml',
