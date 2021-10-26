@@ -307,12 +307,14 @@ export const getMicrositeDocument = async ({
             sliceName: 'tour_list_category_v1',
             slices: completeMicrosite.data.data.body,
           });
-          categorisedToursV1.primary.locale_ranking =
-            categoryTourListV1.primary.locale_ranking ||
-            categorisedToursV1.primary.locale_ranking;
-          categorisedToursV1.primary.locale_exclusions =
-            categoryTourListV1.primary.locale_exclusions ||
-            categorisedToursV1.primary.locale_exclusions;
+          if (Object.keys(categorisedToursV1)?.length) {
+            categorisedToursV1.primary.locale_ranking =
+              categoryTourListV1?.primary?.locale_ranking ||
+              categorisedToursV1?.primary?.locale_ranking;
+            categorisedToursV1.primary.locale_exclusions =
+              categoryTourListV1?.primary?.locale_exclusions ||
+              categorisedToursV1?.primary?.locale_exclusions;
+          }
           if (!categoryTourListV1?.primary?.product_cards?.id) {
             categoryTourListV1 = categorisedToursV1;
           }
