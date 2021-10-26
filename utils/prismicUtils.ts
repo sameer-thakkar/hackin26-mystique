@@ -234,11 +234,6 @@ export const getMicrositeDocument = async ({
             },
           } = baseLangData || { data: {} };
 
-          const categorisedToursV1 = getSinglePrismicSlice({
-            sliceName: 'tour_list_category_v1',
-            slices: categorisedTours,
-          });
-
           let allShowPages, productCardData;
           if (isEntertainmentMb) {
             allShowPages = await Client().query(
@@ -303,16 +298,23 @@ export const getMicrositeDocument = async ({
           }
 
           // Base lang Fallback for CategorisedToursV1.
+          let categorisedToursV1 = getSinglePrismicSlice({
+            sliceName: 'tour_list_category_v1',
+            slices: categorisedTours,
+          });
 
           let categoryTourListV1 = getSinglePrismicSlice({
             sliceName: 'tour_list_category_v1',
             slices: completeMicrosite.data.data.body,
           });
+          categorisedToursV1.primary.locale_ranking =
+            categoryTourListV1.primary.locale_ranking ||
+            categorisedToursV1.primary.locale_ranking;
+          categorisedToursV1.primary.locale_exclusions =
+            categoryTourListV1.primary.locale_exclusions ||
+            categorisedToursV1.primary.locale_exclusions;
           if (!categoryTourListV1?.primary?.product_cards?.id) {
-            categoryTourListV1 = getSinglePrismicSlice({
-              sliceName: 'tour_list_category_v1',
-              slices: baseLangData?.data?.body,
-            });
+            categoryTourListV1 = categorisedToursV1;
           }
 
           const hasCategoryTourListV1 = Object.keys(categoryTourListV1)?.length;
