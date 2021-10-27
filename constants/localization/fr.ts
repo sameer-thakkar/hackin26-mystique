@@ -71,7 +71,7 @@ const fr = {
     IT_DESCRIPTION:
       'Pour toute visite à partir du 6 août, les visiteurs, dès l’âge de 12 ans, devront présenter un pass sanitaire valable (italien ou européen).',
     EU_DESCRIPTION:
-      "À partir du 21 juillet, tous les visiteurs de plus de 18 ans doivent présenter un certificat COVID de l'UE.",
+      "À partir du 21 juillet, tous les visiteurs de plus de 12 ans doivent présenter un certificat COVID de l'UE.",
     GENERAL_DESCRIPTION:
       'Toute expérience affichant ce badge a été vérifiée et est conforme aux normes de sécurité établies par les autorités locales en matière de santé.',
     CTA_TEXT: 'Détails des mesures de sécurité et sanitaires',

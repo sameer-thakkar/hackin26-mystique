@@ -73,7 +73,7 @@ const pt = {
     IT_DESCRIPTION:
       'A partir de 6 de agosto, todos os visitantes com mais de 11 anos devem apresentar um Passe Verde ou um Certificado de COVID da UE.',
     EU_DESCRIPTION:
-      'A partir de 21 de julho, todos os visitantes acima de 18 anos devem apresentar um Certificado COVID da UE.',
+      'A partir de 21 de julho, todos os visitantes acima de 12 anos devem apresentar um Certificado COVID da UE.',
     GENERAL_DESCRIPTION:
       'Qualquer experiência com este selo foi verificada e segue as melhores medidas de segurança de acordo com as diretrizes de saúde dos governos locais.',
     CTA_TEXT: 'Detalhes das medidas',

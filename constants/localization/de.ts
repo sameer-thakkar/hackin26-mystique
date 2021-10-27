@@ -74,7 +74,7 @@ const de = {
     IT_DESCRIPTION:
       'Ab dem 6. August müssen alle Besucher über 11 Jahren einen Grünen Pass oder ein COVID-Zertifikat der EU vorlegen.',
     EU_DESCRIPTION:
-      'Ab dem 21. Juli müssen alle Besucher ab 18 Jahren ein COVID-Zertifikat der EU vorlegen.',
+      'Ab dem 21. Juli müssen alle Besucher ab 12 Jahren ein COVID-Zertifikat der EU vorlegen.',
     GENERAL_DESCRIPTION:
       'Erlebnisse mit diesem Abzeichen halten nachweislich die besten Sicherheitsstandards gemäß den Gesundheitsrichtlinien der örtlichen Regierung ein.',
     CTA_TEXT: 'Sicherheitsvorkehrungen',
