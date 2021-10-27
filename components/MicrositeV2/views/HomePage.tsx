@@ -188,14 +188,15 @@ export const HomePage = (props) => {
   }
 
   const [covid19AlertOpen, setCovid19AlertOpen] = useState(true);
-  const { dropdownLinks, enableDropdownLinks } = header;
+  const { dropdownLinks, enableDropdownLinks, languageProps } = header;
   const selectorLinkChangeHandler = (option) => {
     window.location.href = option.value;
   };
   const slices = contentFramework?.body;
   const contentFWSlices = (slices && groupSlices(slices)) || [];
   const longFormSlices = [...contentFWSlices, ...longFormContent];
-  const { currentLanguage } = props.header.languageProps;
+  const { currentLanguage, languages } = languageProps || {};
+  const hasLanguageSelector = languages?.length > 1;
   const hasToursSection = categoryProps?.categories?.length > 0;
   const { secondaryFooter } = footer;
   const footerLogoURL = footer?.logo?.url;
@@ -207,7 +208,6 @@ export const HomePage = (props) => {
   const hasSafe = Object.values(allTours).some((tour: any) =>
     isSafetyIncluded(tour.allTags)
   );
-
   return (
     <V2MicrositeWrapper isEntertainmentMb={isEntertainmentMb}>
       <Header
@@ -217,6 +217,7 @@ export const HomePage = (props) => {
         isMobile={isMobile}
         allTours={allTours}
         isEntertainmentMb={isEntertainmentMb}
+        hasLanguageSelector={hasLanguageSelector}
       />
       <Conditional if={isMobile && hasDropdownLinks}>
         <div className="main-wrapper city-selector">
