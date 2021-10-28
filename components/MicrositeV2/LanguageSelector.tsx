@@ -33,7 +33,7 @@ const LanguageSelector = (props) => {
           {mbTheme !== THEMES.MIN_BLUE && !isMobile ? GLOBE : null}
           {isMobile
             ? currentLanguage.slice(0, 2)
-            : FULL_LANGUAGE_MAP[currentLanguage].language}
+            : FULL_LANGUAGE_MAP[currentLanguage]?.language}
         </span>
       </div>
       {languageDropdown ? (
@@ -134,9 +134,6 @@ const LanguageSelector = (props) => {
             text-transform: capitalize;
             display: grid;
             padding: 0;
-            grid-template-columns: auto 16px;
-            grid-gap: 10px;
-            justify-items: space-between;
             min-width: 150px;
           }
           .language-dropdown .active-tab {
@@ -154,7 +151,7 @@ const LanguageSelector = (props) => {
               left: 50%;
               transform: translateX(-50%);
               z-index: 999;
-              width: 95%;
+              width: 100%;
               text-align: center;
               grid-gap: 0;
               padding: 0;
