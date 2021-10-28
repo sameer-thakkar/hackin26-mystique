@@ -68,7 +68,7 @@ export const categoryTourListParserV1 = async ({
     cta_url_suffix: commonCtaUrlSuffix,
     show_scratch_price: commonScratchPrice,
   } = productCard || {};
-  const { cityCode } = city || {};
+  const { cityCode, countryCode, country: countryName } = city || {};
   const localeRanking = csvTgidToArray(locale_ranking);
   const commonRanking = csvTgidToArray(ranking);
   const localeExclusions = csvTgidToArray(locale_exclusions);
@@ -265,6 +265,7 @@ export const categoryTourListParserV1 = async ({
 
     return {
       scorpioData,
+      primaryCountry: { code: countryCode, countryName },
       orderedTours: repeatableObj,
     };
   }
@@ -559,7 +560,12 @@ export const categoryTourListParserV2 = async (
     });
     data = finalObj;
   }
-  return data;
+  return {
+    ...data,
+    primaryCountry: {
+      ...(primary?.city?.country || {}),
+    },
+  };
 };
 
 export const tourListApiParser = (apiResponse) => {
