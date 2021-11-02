@@ -9,7 +9,7 @@ const TitleTextCombo = styled.div`
     font-size: 16px;
   }
   display: grid;
-  grid-row-gap: 20px;
+  grid-row-gap: 0px;
   margin-bottom: ${({ noMargin }) => (noMargin ? 0 : '20px')};
 `;
 

@@ -77,7 +77,7 @@ const it = {
     IT_DESCRIPTION:
       "A partire dal 6 agosto, l'accesso ai musei sarà possibile solo previa presentazione di un Green Pass o di un Certificato europeo COVID.",
     EU_DESCRIPTION:
-      "a partire dal 21 luglio tutti i visitatori sopra gli 18 anni di età devono presentare un Certificato COVID dell'UE.",
+      "a partire dal 21 luglio tutti i visitatori sopra gli 12 anni di età devono presentare un Certificato COVID dell'UE.",
     GENERAL_DESCRIPTION:
       'Ogni esperienza contrassegnata da questo stemma è conforme ai migliori standard di sicurezza imposti dalle direttive sanitarie del governo locale.',
     CTA_TEXT: 'Dettagli Sulla Sicurezza',

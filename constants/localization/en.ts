@@ -81,7 +81,11 @@ const en = {
     IT_DESCRIPTION:
       'From 6th August, all visitors over 11 must present a Green Pass or EU COVID Certificate.',
     EU_DESCRIPTION:
-      'From July 21st, all visitors over 18 must present a EU COVID Certificate',
+      'From July 21st, all visitors over 12 must present a EU COVID Certificate',
+    AU_DESCRIPTION:
+      'All guests over 16 must provide proof of COVID-19 vaccination or medical exemption documentation upon entry',
+    SG_DESCRIPTION:
+      'From 13th Oct 2021, only fully vaccinated people can enter in groups of 2. Operator will require you to show proof of vaccination status, a recent negative COVID-19 test result and/or any recovery documentation before entry',
     GENERAL_DESCRIPTION:
       "Any experience with this badge has been verified to follow the best safety standards as per the local government's health guidelines.",
     CTA_TEXT: 'Safety Details',

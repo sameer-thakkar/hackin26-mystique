@@ -106,7 +106,7 @@ const StyledHeader = styled.div`
 const HeaderRight = styled.div`
   display: grid;
   grid-gap: 22px;
-  grid-auto-flow: column;
+  grid-auto-flow: column !important;
   grid-auto-columns: max-content;
   align-items: center;
   .buy-tickets {
@@ -319,7 +319,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   const allToursArray = Object?.values(allTours);
   const hasDropdownLinks = enableDropdownLinks && dropdownLinks.length;
   const hasLanguageDropdown =
-    languageProps?.languages?.length >= 1 && hasLanguageSelector;
+    languageProps?.languages?.length > 1 && hasLanguageSelector;
   const groupedHeaderSlices = groupSlices(
     headerSlices,
     ALLOW_IMMEDIEATE_NESTING

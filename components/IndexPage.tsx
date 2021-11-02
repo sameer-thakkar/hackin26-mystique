@@ -199,7 +199,7 @@ export default class Page extends React.Component<any, any> {
        * AllData will yield different sets of Properties based on CUSTOM_TYPE,
        * and finally gets returned with any other common data for CUSTOM_TYPE
        */
-      let AllData = {};
+      let AllData: any = {};
       let tgidsArray = [];
       const queryParams = (function getQueryparams() {
         try {
@@ -614,7 +614,9 @@ export default class Page extends React.Component<any, any> {
         {}
       );
 
-      const primaryCountry = tourGroupAPIResponses?.cities?.[0]?.country;
+      const primaryCountry =
+        tourGroupAPIResponses?.cities?.[0]?.country ||
+        AllData?.categoryTourListData?.primaryCountry;
 
       const activeCurrency = tourGroupAPIResponses?.currencies?.[0];
       return {

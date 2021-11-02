@@ -78,7 +78,7 @@ const nl = {
     IT_DESCRIPTION:
       'Vanaf 6 augustus moeten alle bezoekers ouder dan 11 jaar een Groene Pas of een EU COVID Certificaat tonen.',
     EU_DESCRIPTION:
-      'Vanaf 21 juli moeten alle bezoekers ouder dan 18 jaar een EU COVID-certificaat kunnen tonen.',
+      'Vanaf 21 juli moeten alle bezoekers ouder dan 12 jaar een EU COVID-certificaat kunnen tonen.',
     GENERAL_DESCRIPTION:
       'Elke ervaring met deze badge is geverifieerd om te voldoen aan de beste veiligheidsnormen volgens de gezondheidsrichtlijnen van de lokale overheid.',
     CTA_TEXT: 'Details omtrent veiligheid',

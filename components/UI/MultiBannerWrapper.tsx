@@ -85,6 +85,12 @@ const MultiBannerWrapper = ({
     case 'FR':
       finalDescription = strings.SAFE_EXPERIENCE.EU_DESCRIPTION;
       break;
+    case 'AU':
+      finalDescription = strings.SAFE_EXPERIENCE.AU_DESCRIPTION;
+      break;
+    case 'SG':
+      finalDescription = strings.SAFE_EXPERIENCE.SG_DESCRIPTION;
+      break;
     default:
       finalDescription = strings.SAFE_EXPERIENCE.GENERAL_DESCRIPTION;
   }
