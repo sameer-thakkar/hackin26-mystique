@@ -1,7 +1,11 @@
 import { Client } from 'config/prismic-config';
 import { CUSTOM_TYPES, LANGUAGE_PARAMS_REGEX } from 'const/index';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getHeadoutLanguagecode, legacyBooleanCheck } from 'utils';
+import {
+  getHeadoutLanguagecode,
+  getSinglePrismicSlice,
+  legacyBooleanCheck,
+} from 'utils';
 import { fetchTourList } from 'utils/apiUtils';
 import { convertUidToUrl } from 'utils/urlUtils';
 
@@ -25,13 +29,21 @@ const getTgidFromDocument = (page) => {
   return page.data?.microsite_document_ref?.data?.body1?.[0]?.items?.[0]?.tgid;
 };
 
-const parseDocuments = async (documents) => {
+const parseDocuments = async ({ documents: docs, isStageMode }) => {
+  const documents = isStageMode
+    ? docs.filter((d) => d.tags.includes('[DEV]'))
+    : docs;
   const microsites = documents.filter((d) => d.type === CUSTOM_TYPES.MICROSITE);
   let contentPages = documents.filter(
     (d) => d.type === CUSTOM_TYPES.CONTENT_PAGE
   );
+  const productCardsList = documents.filter(
+    (d) => d.type === CUSTOM_TYPES.PRODUCT_CARDS
+  );
 
-  const tgidsToFetch = documents
+  const pagesList = [...microsites, ...contentPages];
+
+  const tgidsToFetch = pagesList
     .map((page) => {
       return getTgidFromDocument(page);
     }, [])
@@ -56,7 +68,7 @@ const parseDocuments = async (documents) => {
         }, {})
       );
 
-  const finalDocs = [...microsites, ...contentPages].map((doc) => {
+  const pageDocs = pagesList.map((doc) => {
     const { uid, data, type, alternate_languages, tags, lang } = doc;
     const {
       redirect_url,
@@ -68,6 +80,7 @@ const parseDocuments = async (documents) => {
       canonical_link,
       content_framework,
       body1,
+      body: categorisedTourTab,
       all_tours: allTours,
     } = data;
 
@@ -84,6 +97,13 @@ const parseDocuments = async (documents) => {
           ?.map((tour) => tour?.primary?.tgid) || []
       );
     }
+
+    const categorySlice = getSinglePrismicSlice({
+      sliceName: 'tour_list_category_v1',
+      slices: categorisedTourTab,
+    });
+
+    const productCardsListId = categorySlice?.primary?.product_cards?.id;
 
     const STRUCTURE_TYPES = {
       CHECK: 'check',
@@ -125,10 +145,9 @@ const parseDocuments = async (documents) => {
     const tgid = getTgidFromDocument(doc);
     inferredCity = tgid ? tgidData?.[tgid]?.city?.cityCode : null;
     inferredCategoryId = tgid ? tgidData?.[tgid]?.primaryCategory?.id : null;
-
     const metaData = {
       uid,
-      structure: getStructure(pageUrl),
+      structure: pageUrl ? getStructure(new URL(pageUrl)) : null,
       document_type: type,
       page_type:
         type === CUSTOM_TYPES.MICROSITE
@@ -153,6 +172,7 @@ const parseDocuments = async (documents) => {
       tgids,
       parent_domain: tags[0],
       language: lang?.split('-')[0].toUpperCase(),
+      productCardsListId,
     };
 
     return Object.entries(metaData).reduce(
@@ -161,13 +181,54 @@ const parseDocuments = async (documents) => {
     );
   });
 
-  return { finalDocs, tgidsToFetch };
+  const productCardDocs = productCardsList.map((doc) => {
+    const { id, data } = doc;
+    const {
+      city,
+      collection,
+      category,
+      sub_category,
+      ranking,
+      exclusions,
+      limit,
+    } = data;
+    return {
+      city: city?.cityCode,
+      collectionId: collection,
+      categoryId: category,
+      subCategoryId: sub_category,
+      commonRanks: ranking,
+      commonExclusions: exclusions,
+      experienceLimit: limit,
+      id,
+    };
+  });
+  const hasDataToPush = [...pageDocs, ...productCardDocs].length > 0;
+  return { pageDocs, productCardDocs, tgidsToFetch, hasDataToPush };
+};
+
+const createStitchPostRequest = ({
+  stitchEndpointToken,
+  jsonBody,
+  clientId = 121892,
+}) => {
+  return fetch(
+    `https://hooks.stitchdata.com/v1/clients/${clientId}/token/${stitchEndpointToken}`,
+    {
+      method: 'POST',
+      body: JSON.stringify(jsonBody),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  );
 };
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { documents: updatedDocumentIds = [], masterRef = null } =
     req?.body || {};
-
+  const { stageMode } = req.query;
+  const isStageMode = stageMode?.length > 0;
   if (!updatedDocumentIds?.length)
     return res.status(204).json({
       status: 'Nothing to update',
@@ -181,30 +242,49 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     req,
   });
 
-  const { finalDocs, tgidsToFetch } = await parseDocuments(documents);
+  const {
+    pageDocs,
+    productCardDocs,
+    tgidsToFetch,
+    hasDataToPush,
+  } = await parseDocuments({
+    documents,
+    isStageMode,
+  });
 
-  if (finalDocs.length === 0)
+  if (!hasDataToPush)
     return res.status(204).json({
       status: 'Nothing to update',
       documents,
-      finalDocs,
+      pageDocs,
     });
 
   let response = {};
+  const requests = [];
 
-  response['stitch'] = await fetch(
-    'https://hooks.stitchdata.com/v1/clients/121892/token/b74d3528aa553a34e84a67d4215b606d3d6ab7a6ce963001431704ab23cc7522',
-    {
-      method: 'POST',
-      body: JSON.stringify(finalDocs),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
-  ).then(async (r) => {
-    return { json: await r.json(), r };
-  });
-  response['payload'] = { finalDocs, documents, tgidsToFetch };
+  if (productCardDocs.length) {
+    requests.push(
+      createStitchPostRequest({
+        stitchEndpointToken:
+          '3db60546284f1eb6776e433e509d06bfdfb25cb6126816dff88cb5b156de8384',
+        jsonBody: productCardDocs,
+      })
+    );
+  }
+
+  if (pageDocs.length) {
+    requests.push(
+      createStitchPostRequest({
+        stitchEndpointToken:
+          'b74d3528aa553a34e84a67d4215b606d3d6ab7a6ce963001431704ab23cc7522',
+        jsonBody: pageDocs,
+      })
+    );
+  }
+  if (requests?.length) {
+    response['stitch'] = await Promise.all(requests);
+  }
+  response['payload'] = { pageDocs, documents, tgidsToFetch };
 
   res.status(200).json({ response });
 };
