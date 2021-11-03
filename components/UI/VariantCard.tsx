@@ -1,10 +1,12 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
+import Chevron from 'components/UI/Chevron';
 import LocalisedPrice from 'components/UI/LPrice';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { strings } from 'const/strings';
-import { addQueryParams } from 'utils/urlUtils';
 import { ANALYTICS_EVENTS } from 'const/index';
+import { addQueryParams } from 'utils/urlUtils';
 
 const VariantCardWrapper = styled.div`
   width: 100%;
@@ -23,10 +25,31 @@ const VariantCardWrapper = styled.div`
   a {
     text-decoration: none;
   }
+  .more-details {
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    column-gap: 4px;
+    align-items: center;
+    color: ${COLORS.PURPS3};
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: ${SOLEIL.REGULAR};
+    margin-top: 16px;
+  }
+  .chevron::after,
+  .chevron::before {
+    background-color: ${COLORS.PURPS3};
+  }
+  ul {
+    margin: 0;
+  }
 `;
 
 const Name = styled.div`
   margin-bottom: 20px;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: ${SOLEIL.SEMIBOLD};
 `;
 
 const PriceWrapper = styled.div`
@@ -51,20 +74,27 @@ const Price = styled.div`
     font-family: ${SOLEIL.FONT_STACK};
     font-size: 16px;
     line-height: 20px;
+    @media (max-width: 768px) {
+      font-size: 15px;
+    }
   }
 `;
 
 const Button = styled.div`
-  padding: 7px 12px 5px;
+  padding: 7px 12px 5px 12px;
   border: 1px solid ${COLORS.PURPS};
   border-radius: 4px;
-  height: 28px;
   width: 65px;
   text-align: center;
   background-color: ${COLORS.WHITE};
   color: ${COLORS.PURPS};
   cursor: pointer;
-
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.2px;
+  @media (max-width: 768px) {
+    padding: 8px 12px;
+  }
   &:hover {
     background-color: ${COLORS.PURPS};
     color: ${COLORS.WHITE};
@@ -117,6 +147,7 @@ const VariantCard = ({
   const bookUrl = addQueryParams(bookingUrl, {
     variantId,
   });
+  const [isContentOpen, toggleContentOpen] = useState(false);
   const trackVariantSelection = () => {
     analytics.setVariableInDataLayer({
       event: ANALYTICS_EVENTS.COMBO_VARIANT.VARIANT_CLICKED,
@@ -125,6 +156,31 @@ const VariantCard = ({
       TGID: tgid,
       Device: isMobile ? 'Mweb' : 'Desktop',
     });
+  };
+
+  const getMoreDetailsButton = () => {
+    const keyPressedOnReadMore = (event) => {
+      if (event.keyCode == 13 && !isMobile) {
+        toggleContentOpen(!isContentOpen);
+      }
+    };
+    const innerContent = (
+      <>
+        {isContentOpen ? strings.SHOW_LESS_TEXT : strings.MORE_DETAILS}
+        <Chevron isActive={isContentOpen} className={'chevron'} />
+      </>
+    );
+    return (
+      <div
+        onClick={() => toggleContentOpen(!isContentOpen)}
+        className="more-details"
+        onKeyDown={keyPressedOnReadMore}
+        role="button"
+        tabIndex={0}
+      >
+        {innerContent}
+      </div>
+    );
   };
   return (
     <VariantCardWrapper>
@@ -147,7 +203,12 @@ const VariantCard = ({
           </Button>
         </a>
       </PriceWrapper>
-      <Description>{formatDescription(variantInfo) || ''}</Description>
+      <Description>
+        <Conditional if={!isMobile || isContentOpen}>
+          {formatDescription(variantInfo) || ''}
+        </Conditional>
+        <Conditional if={isMobile}>{getMoreDetailsButton()}</Conditional>
+      </Description>
     </VariantCardWrapper>
   );
 };

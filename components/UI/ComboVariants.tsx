@@ -60,27 +60,31 @@ const CloseIconWrapper = styled.div`
     width: 16px;
     height: 16px;
   }
-  @media (max-width: 768px) {
-  }
 `;
 const ProductCard = styled.div`
   padding-top: 32px;
   padding-bottom: 72px;
   display: grid;
-  grid-template-rows: repeat(2, max-content);
+  grid-auto-flow: row;
+  grid-auto-rows: max-content;
   grid-template-columns: 1fr;
-
-  row-gap: 60px;
+  gap: 60px;
+  @media (max-width: 768px) {
+    gap: 48px;
+    padding-top: 0;
+  }
 `;
 const ProductInfo = styled.div`
   display: grid;
-  grid-template-rows: repeat(2, max-content);
-  row-gap: 16px;
+  grid-auto-flow: row;
+  grid-auto-rows: max-content;
+  gap: 16px;
 `;
 const ProductTitleWrapper = styled.div`
   display: grid;
-  grid-template-rows: repeat(2, max-content);
-  row-gap: 4px;
+  grid-auto-flow: row;
+  grid-auto-rows: max-content;
+  gap: 4px;
 `;
 
 const ProductTitle = styled.div`
@@ -89,6 +93,10 @@ const ProductTitle = styled.div`
   font-size: 24px;
   line-height: 28px;
   color: ${COLORS.GREY.G2};
+  @media (max-width: 768px) {
+    font-size: 18px;
+    line-height: 24px;
+  }
 `;
 const L1Booster = styled.div`
   text-transform: uppercase;
@@ -104,7 +112,7 @@ const L1Booster = styled.div`
 const StyledVariantsWrapper = styled.div`
   display: grid;
   grid-template-rows: repeat(2, max-content);
-  row-gap: 24px;
+  gap: 24px;
   h3 {
     font-family: ${SOLEIL.FONT_STACK};
     font-weight: ${SOLEIL.SEMIBOLD};
@@ -112,6 +120,10 @@ const StyledVariantsWrapper = styled.div`
     line-height: 28px;
     color: ${COLORS.GREY.G2};
     margin: 0;
+    @media (max-width: 768px) {
+      font-size: 16px;
+      line-height: 20px;
+    }
   }
 `;
 
@@ -147,6 +159,32 @@ const ComboVariants = ({
       TGID: tgid,
       Device: isMobile ? 'Mweb' : 'Desktop',
     });
+  }, []);
+
+  const variantMarkup = variants?.map((variant) => {
+    const { id: variantId, name: variantName, listingPrice, variantInfo } =
+      variant || {};
+    const { finalPrice: variantPrice } = listingPrice || {};
+    const props = {
+      variantId,
+      variantName,
+      variantPrice,
+      variantInfo,
+      currencySymbol,
+      language: lang,
+      bookingUrl,
+      analytics,
+      hostname,
+      tgid,
+      isMobile,
+    };
+    return (
+      <Conditional if={listingPrice} key={variantId}>
+        <div className="swiper-slide">
+          <VariantCard {...props} />
+        </div>
+      </Conditional>
+    );
   });
 
   return (
@@ -168,37 +206,11 @@ const ComboVariants = ({
             <h3>{strings.COMBO_VARIANT.SELECT_OPTION}</h3>
             <Conditional if={!isMobile && !error && variants?.length > 0}>
               <Carousel cardsInARow={4} columnGap={24}>
-                {variants?.map((variant) => {
-                  const {
-                    id: variantId,
-                    name: variantName,
-                    listingPrice,
-                    variantInfo,
-                  } = variant || {};
-                  const { finalPrice: variantPrice } = listingPrice || {};
-                  const props = {
-                    variantId,
-                    variantName,
-                    variantPrice,
-                    variantInfo,
-                    currencySymbol,
-                    language: lang,
-                    bookingUrl,
-                    analytics,
-                    hostname,
-                    tgid,
-                    isMobile,
-                  };
-                  return (
-                    <div key={variantId} className="swiper-slide">
-                      <VariantCard {...props} />
-                    </div>
-                  );
-                })}
+                {variantMarkup}
               </Carousel>
             </Conditional>
             <Conditional if={isMobile && !error && variants?.length > 0}>
-              <div>Mobile Variants</div>
+              {variantMarkup}
             </Conditional>
           </StyledVariantsWrapper>
         </ProductCard>

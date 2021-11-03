@@ -755,9 +755,11 @@ const Product = (props) => {
 
   const handleCloseComboPopup = () => {
     setShowComboVariant(false);
-    document.body.style.overflow = 'auto';
+    if (!isMobile) {
+      document.body.style.overflow = 'auto';
+    }
     analytics.setVariableInDataLayer({
-      event: ANALYTICS_EVENTS.COMBO_VARIANT.POPUP_VIEWED,
+      event: ANALYTICS_EVENTS.COMBO_VARIANT.POPUP_CLOSED,
       'MB name': hostname,
       TGID: tgid,
       Device: isMobile ? 'Mweb' : 'Desktop',
@@ -784,7 +786,8 @@ const Product = (props) => {
             analytics={analytics}
           />
         ),
-        type: SIDEBAR_TYPES.PRODUCT_CARD,
+        type: SIDEBAR_TYPES.COMBO_VARIANT,
+        onCloseCallback: () => handleCloseComboPopup(),
       });
     }
   };

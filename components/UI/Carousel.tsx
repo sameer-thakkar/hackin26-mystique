@@ -93,7 +93,6 @@ const Carousel = ({
     if (isMobile) return;
     if (swiper !== null) {
       swiper.on('slideChange', updateIndex);
-      console.log({ swiper });
     }
 
     return () => {
