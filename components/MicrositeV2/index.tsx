@@ -213,7 +213,7 @@ class MicrositeV2 extends Component<any, any> {
     };
 
     const hasCategoryTourList = categoryTourListData
-      ? Object.keys(categoryTourListData)?.length > 0
+      ? Object.keys(categoryTourListData)?.length > 1
       : false;
 
     let tourListCategorySortBy,
