@@ -215,12 +215,14 @@ const MicrositeV1 = (props) => {
     body: headerSlices,
     header_links: headerLinks,
     enable_dropdown: enableDropdownLinks,
+    disable_amp: disableAMP,
     dropdown_menu,
   } = withCommonHeaderOverrides;
-  const logoRedirectionURL =
-    micrositeData.logo_redirection_url ||
-    commonHeader?.data?.logo_redirection_url;
-  let { disable_amp: disableAMP } = withCommonHeaderOverrides;
+  const logoRedirectionURL = commonHeader
+    ? !isHeaderInherited
+      ? commonHeader?.data?.logo_redirection_url
+      : micrositeData.logo_redirection_url
+    : micrositeData.logo_redirection_url;
 
   disableAMP = micrositeData?.disable_amp || disableAMP;
   const { url: logoUrl } = linkedLogo;
