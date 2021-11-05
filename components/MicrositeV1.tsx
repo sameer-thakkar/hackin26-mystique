@@ -217,9 +217,11 @@ const MicrositeV1 = (props) => {
     enable_dropdown: enableDropdownLinks,
     dropdown_menu,
   } = withCommonHeaderOverrides;
-  const logoRedirectionURL =
-    micrositeData.logo_redirection_url ||
-    commonHeader?.data?.logo_redirection_url;
+  const logoRedirectionURL = commonHeader
+    ? !isHeaderInherited
+      ? commonHeader?.data?.logo_redirection_url
+      : micrositeData.logo_redirection_url
+    : micrositeData.logo_redirection_url;
   let { disable_amp: disableAMP } = withCommonHeaderOverrides;
 
   disableAMP = micrositeData?.disable_amp || disableAMP;
