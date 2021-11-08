@@ -5,7 +5,7 @@ import Header from 'components/MicrositeV2/Header';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import Tags from 'components/GlobalMbs/Tags';
 import Footer from 'components/common/Footer';
-import { groupSlices } from 'utils/helper';
+import { getBuyTicketsUrl, groupSlices } from 'utils/helper';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import { CUSTOM_TYPES } from 'const/index';
 import {
@@ -95,6 +95,7 @@ const GlobalMB = (props) => {
   const {
     supply,
     headout_category_id: categoryId,
+    headout_tgid: tgid,
     official_website: officialWebsite,
     country_name: countryName,
     city_name: cityName,
@@ -116,16 +117,16 @@ const GlobalMB = (props) => {
   };
 
   const hasTicketsPage = supply === 'Direct' && categoryId;
-  const ticketLink = hasTicketsPage
-    ? ticketsPage?.uid
-      ? convertUidToUrl({
-          uid: ticketsPage?.uid,
-          isDev,
-          hostname: host,
-          lang: getHeadoutLanguagecode(lang),
-        })
-      : getValidUrl(officialWebsite?.trim())
-    : getValidUrl(officialWebsite?.trim());
+  const ticketLink = getBuyTicketsUrl(
+    supply,
+    categoryId,
+    tgid,
+    ticketsPage?.uid,
+    isDev,
+    host,
+    officialWebsite,
+    getHeadoutLanguagecode(lang)
+  );
 
   const currentLanguage = lang.split('-')[0];
   const footerLogoURL = footer?.logo?.url;

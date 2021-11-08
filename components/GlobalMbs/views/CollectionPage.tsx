@@ -23,6 +23,7 @@ const CollectionPage = (props) => {
     timings,
     suggested_duration: duration,
     headout_category_id: categoryID,
+    headout_tgid: tgid,
     supply,
     tickets,
     isDev,
@@ -47,6 +48,7 @@ const CollectionPage = (props) => {
     timings,
     duration,
     categoryID,
+    tgid,
     supply,
     ticketsPageLink: props?.ticketsPage?.uid,
     ...(props?.cityCollectionRanks?.length && {

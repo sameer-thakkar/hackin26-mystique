@@ -6,11 +6,11 @@ import Image from 'UI/Image';
 import Conditional from 'components/common/Conditional';
 import { ASPECT_RATIO, FALLBACK_IMAGES } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
-import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import { CHEVRON_DOWN } from 'assets/SvgIcons';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { MBContext } from 'contexts/MBContext';
 import { strings } from 'const/strings';
+import { getBuyTicketsUrl } from 'utils/helper';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 const Breadcrumb = dynamic(() => import('components/GlobalMbs/Breadcrumb'));
@@ -62,7 +62,6 @@ const StyledBanner = styled.div((props) => {
   font-weight: 400;
   ${props.link && `cursor: pointer;`};
   margin-top: 16px;
-
   img {
     height: ${styles.img.height}px;
     object-fit: cover;
@@ -80,18 +79,15 @@ const StyledBanner = styled.div((props) => {
       letter-spacing: -0.2px;
       margin-bottom: 16px;
     }
-
     .subtext {
       margin-top: 32px;
       font-feature-settings: "ss04";
     }
-
     .rank-wrapper {
       display: grid;
       grid-template-rows: repeat(2, max-content);
       margin-bottom: 24px;
     }
-
     .rank {
       font-size: 17px;
       line-height: 29px;
@@ -175,7 +171,6 @@ const StyledBanner = styled.div((props) => {
       width: 100%;
       object-fit: cover;
     }
-
     .card-content-section {
       padding: 0;
       width: calc(100vw - (5.6vw * 2));
@@ -243,6 +238,7 @@ const Banner: FunctionComponent<BannerProps> = ({
 }) => {
   const {
     categoryID,
+    tgid,
     ticketsPageLink,
     supply,
     officialWebsite,
@@ -257,12 +253,15 @@ const Banner: FunctionComponent<BannerProps> = ({
 
   const { host, isDev } = useContext(MBContext);
   const { GLOBAL_MB: globalMbAR } = ASPECT_RATIO;
-  const hasTicketPage = categoryID && supply === 'Direct';
-  const ticketLink = hasTicketPage
-    ? ticketsPageLink
-      ? convertUidToUrl({ uid: ticketsPageLink, isDev, hostname: host })
-      : getValidUrl(officialWebsite?.trim())
-    : getValidUrl(officialWebsite?.trim());
+  const ticketLink = getBuyTicketsUrl(
+    supply,
+    categoryID,
+    tgid,
+    ticketsPageLink,
+    isDev,
+    host,
+    officialWebsite
+  );
   const swiperParams = {
     pagination: {
       el: '.swiper-pagination',
