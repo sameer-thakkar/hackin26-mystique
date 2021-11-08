@@ -509,7 +509,7 @@ export default class Page extends React.Component<any, any> {
           }microbrands.headout.com/api/tours/v6/tour-groups/`
         );
         tgEndpoint.searchParams.set('language', getHeadoutLanguagecode(lang));
-        tgEndpoint.searchParams.set('ids[]', tgidsArray.join(','));
+        tgEndpoint.searchParams.set('ids%5B%5D', tgidsArray.join(','));
         if (AllData?.['queryParams']?.currency)
           tgEndpoint.searchParams.set(
             'currency',
@@ -522,7 +522,7 @@ export default class Page extends React.Component<any, any> {
       } catch (e) {
         constructedTourgroupURL = `https://${
           isStage ? 'stage-' : ''
-        }microbrands.headout.com/api/tours/v6/tour-groups/?ids[]=${tgidsArray}&language=${getHeadoutLanguagecode(
+        }microbrands.headout.com/api/tours/v6/tour-groups/?ids%5B%5D=${tgidsArray}&language=${getHeadoutLanguagecode(
           lang
         )}`;
       }

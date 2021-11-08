@@ -50,7 +50,7 @@ class MicrositeV2 extends Component<any, any> {
     const { all_tours: allTours } = this.props.data.data;
     const allTgids = allTours.map((tour) => tour.primary.tgid);
 
-    fetch(`/api/tours/v6/tour-groups/?ids[]=${allTgids}`)
+    fetch(`/api/tours/v6/tour-groups/?ids%5B%5D=${allTgids}`)
       .then((res) => {
         return res.json();
       })

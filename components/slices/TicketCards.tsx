@@ -107,7 +107,7 @@ const TicketCards: React.FC<TicketCardsProps> = ({
       if (card.tgid) return [...acc, card.tgid];
       else return [...acc];
     }, []);
-    fetch(`/api/tours/v5/tour-group/list?ids[]=${tours.join(',')}`)
+    fetch(`/api/tours/v5/tour-group/list?ids%5B%5D=${tours.join(',')}`)
       .then((res) => res.json())
       .then((payload) => {
         let finalCards = cards.reduce((acc, card) => {
