@@ -130,7 +130,9 @@ export default class Page extends React.Component<any, any> {
     );
 
     try {
-      let url = props?.CMSContent?.data?.data?.redirect_url?.url;
+      let url =
+        props?.CMSContent?.data?.data?.redirect_url?.url ||
+        props?.CMSContent?.data?.redirect_url?.url;
       if (url) {
         url = `${url}${queryParamsString ? `?${queryParamsString}` : ''}`;
         redirectTo({ res, url });
