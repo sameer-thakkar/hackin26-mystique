@@ -458,12 +458,7 @@ const DetailedProductCard = (props) => {
           <Conditional if={hasCategoryTourList}>
             <p>{content}</p>
           </Conditional>
-          <Conditional
-            if={
-              (!isEntertainmentMb && !hasCategoryTourList) ||
-              (isEntertainmentMb && !hasCategoryTourList)
-            }
-          >
+          <Conditional if={!hasCategoryTourList}>
             <RichText
               render={content}
               htmlSerializer={(...defaultArgs: any) =>
