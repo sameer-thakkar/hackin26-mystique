@@ -5,7 +5,7 @@ import { MBContext } from 'contexts/MBContext';
 import Conditional from 'components/common/Conditional';
 import { Descriptors } from 'components/Product';
 import Carousel from 'components/UI/Carousel';
-import VariantCard from 'components/UI/VariantCard';
+import VariantCard, { VariantCardSkeleton } from 'components/UI/VariantCard';
 import { BLACK_COLOR_CLOSE } from 'assets/SvgIcons';
 import { strings } from 'const/strings';
 import { COLORS, SOLEIL } from 'const/ui-constants';
@@ -126,6 +126,18 @@ const StyledVariantsWrapper = styled.div`
     }
   }
 `;
+
+const VariantCardSkeletonWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  @media (max-width: 768px) {
+    grid-template-columns: unset;
+    column-gap: unset;
+    grid-template-rows: repeat(4, 1fr);
+  }
+`;
+
 type ComboVariantsProps = {
   productTitle: string;
   l1Booster: string;
@@ -172,13 +184,17 @@ const ComboVariants = ({
   }, []);
 
   const variantMarkup = variants?.map((variant) => {
-    const { id: variantId, name: variantName, listingPrice, variantInfo } =
-      variant || {};
-    const { finalPrice: variantPrice } = listingPrice || {};
+    const {
+      id: variantId,
+      name: variantName,
+      listingPrice: variantListingPrice,
+      variantInfo,
+    } = variant || {};
+    // const { finalPrice: variantPrice } = listingPrice || {};
     const props = {
       variantId,
       variantName,
-      variantPrice,
+      variantListingPrice,
       variantInfo,
       currencySymbol,
       language: lang,
@@ -189,7 +205,7 @@ const ComboVariants = ({
       isMobile,
     };
     return (
-      <Conditional if={listingPrice} key={variantId}>
+      <Conditional if={variantListingPrice} key={variantId}>
         <div className="swiper-slide">
           <VariantCard {...props} />
         </div>
@@ -214,13 +230,23 @@ const ComboVariants = ({
           </ProductInfo>
           <StyledVariantsWrapper>
             <h3>{strings.COMBO_VARIANT.SELECT_OPTION}</h3>
-            <Conditional if={!isMobile && !error && variants?.length > 0}>
-              <Carousel cardsInARow={4} columnGap={24}>
-                {variantMarkup}
-              </Carousel>
+            <Conditional if={!data}>
+              <VariantCardSkeletonWrapper>
+                <VariantCardSkeleton isMobile={isMobile} />
+                <VariantCardSkeleton isMobile={isMobile} />
+                <VariantCardSkeleton isMobile={isMobile} />
+                <VariantCardSkeleton isMobile={isMobile} />
+              </VariantCardSkeletonWrapper>
             </Conditional>
-            <Conditional if={isMobile && !error && variants?.length > 0}>
-              {variantMarkup}
+            <Conditional if={data}>
+              <Conditional if={!isMobile && !error && variants?.length > 0}>
+                <Carousel cardsInARow={4} columnGap={24}>
+                  {variantMarkup}
+                </Carousel>
+              </Conditional>
+              <Conditional if={isMobile && !error && variants?.length > 0}>
+                {variantMarkup}
+              </Conditional>
             </Conditional>
           </StyledVariantsWrapper>
         </ProductCard>

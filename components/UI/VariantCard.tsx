@@ -7,6 +7,9 @@ import { COLORS, SOLEIL } from 'const/ui-constants';
 import { strings } from 'const/strings';
 import { ANALYTICS_EVENTS } from 'const/index';
 import { addQueryParams } from 'utils/urlUtils';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const VariantCardWrapper = styled.div`
   width: 100%;
@@ -50,11 +53,13 @@ const Name = styled.div`
   font-size: 16px;
   line-height: 20px;
   font-weight: ${SOLEIL.SEMIBOLD};
+  ${({ isSkeleton }) => isSkeleton && `margin-bottom: 0;`}
 `;
 
 const PriceWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, max-content);
+  grid-template-columns: ${({ isSkeleton }) =>
+    isSkeleton ? `repeat(2, 1fr)` : `repeat(2, max-content)`};
   justify-content: space-between;
 `;
 
@@ -74,9 +79,20 @@ const Price = styled.div`
     font-family: ${SOLEIL.FONT_STACK};
     font-size: 16px;
     line-height: 20px;
+    margin-right: 8px;
     @media (max-width: 768px) {
       font-size: 15px;
     }
+  }
+  .discount {
+    color: ${COLORS.OKAY_GREEN};
+    background-color: ${COLORS.SOOTHING_GREEN};
+    font-size: 10px;
+    line-height: 12px;
+    letter-spacing: 0.2px;
+    font-weight: ${SOLEIL.REGULAR};
+    padding: 2px 4px;
+    border-radius: 2px;
   }
 `;
 
@@ -107,6 +123,13 @@ const Description = styled.div`
   border-radius: 0 0 7px 7px;
   padding-top: 16px;
   margin-top: 16px;
+  ${({ isSkeleton }) =>
+    isSkeleton &&
+    `
+    @media(min-width: 768px) {
+      padding-bottom: 112px;
+    }
+  `}
   .desc-list {
     list-style: initial;
     padding-left: 1.6rem;
@@ -117,6 +140,46 @@ const Description = styled.div`
     color: ${COLORS.GREY.G2};
   }
 `;
+
+export const VariantCardSkeleton = ({ isMobile }: { isMobile: boolean }) => {
+  return (
+    <SkeletonTheme
+      baseColor={COLORS.GREY.G6}
+      highlightColor={COLORS.GREY.G6}
+      borderRadius={0}
+      enableAnimation={false}
+      height="20px"
+    >
+      <VariantCardWrapper>
+        <Name isSkeleton>
+          <Skeleton />
+          <Conditional if={!isMobile}>
+            <Skeleton width="66.55%" />
+          </Conditional>
+        </Name>
+        <PriceWrapper isSkeleton>
+          <Price>
+            <Skeleton width="30%" />
+            <Skeleton width="80%" />
+          </Price>
+          <div style={{ alignSelf: 'end', textAlign: 'right' }}>
+            <Skeleton
+              width={isMobile ? '36%' : '52%'}
+              height={isMobile ? 32 : 28}
+            />
+          </div>
+        </PriceWrapper>
+
+        <Description isSkeleton>
+          <Skeleton width="75%" />
+          <Conditional if={!isMobile}>
+            <Skeleton width="66.55%" />
+          </Conditional>
+        </Description>
+      </VariantCardWrapper>
+    </SkeletonTheme>
+  );
+};
 
 const formatDescription = (desc) =>
   desc?.includes('- ') ? (
@@ -133,7 +196,7 @@ const formatDescription = (desc) =>
 
 const VariantCard = ({
   currencySymbol,
-  variantPrice,
+  variantListingPrice,
   variantId,
   variantName,
   variantInfo,
@@ -147,6 +210,7 @@ const VariantCard = ({
   const bookUrl = addQueryParams(bookingUrl, {
     variantId,
   });
+  const { finalPrice: variantPrice, bestDiscount } = variantListingPrice || {};
   const [isContentOpen, toggleContentOpen] = useState(false);
   const trackVariantSelection = () => {
     analytics.setVariableInDataLayer({
@@ -182,20 +246,28 @@ const VariantCard = ({
       </div>
     );
   };
+
   return (
     <VariantCardWrapper>
       <Name>{variantName}</Name>
       <PriceWrapper>
         <Price>
           <From>{strings.FROM}</From>
-          <LocalisedPrice
-            {...{
-              price: variantPrice,
-              currencySymbol,
-              lang: language,
-              className: 'variant-price',
-            }}
-          />
+          <div>
+            <LocalisedPrice
+              {...{
+                price: variantPrice,
+                currencySymbol,
+                lang: language,
+                className: 'variant-price',
+              }}
+            />
+            <Conditional if={isMobile && bestDiscount > 0}>
+              <span className="discount">
+                {strings.SAVE.replace('<val>', `${bestDiscount}`)}
+              </span>
+            </Conditional>
+          </div>
         </Price>
         <a href={bookUrl} target="_blank" rel="noopener noreferrer">
           <Button onClick={trackVariantSelection}>

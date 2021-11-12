@@ -778,7 +778,7 @@ const Product = (props) => {
         width: '100vw',
         children: (
           <ComboVariants
-            productTitle={'title'}
+            productTitle={cardTitle}
             l1Booster={boosterTag}
             tgid={tgid}
             isMobile={isMobile}
