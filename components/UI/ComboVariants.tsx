@@ -126,8 +126,18 @@ const StyledVariantsWrapper = styled.div`
     }
   }
 `;
-
+type ComboVariantsProps = {
+  productTitle: string;
+  l1Booster: string;
+  tgid: string | number;
+  isMobile: boolean;
+  closeHandler: () => void;
+  descriptors: string[];
+  bookingUrl: string;
+  analytics: { [key: string]: any };
+};
 const ComboVariants = ({
+  productTitle,
   l1Booster,
   tgid,
   isMobile,
@@ -135,7 +145,7 @@ const ComboVariants = ({
   descriptors,
   bookingUrl,
   analytics,
-}) => {
+}: ComboVariantsProps) => {
   const { lang, host, isDev, isStage } = useContext(MBContext);
   const hostname = getHostName(isStage, isDev, host);
   const params = {
@@ -150,7 +160,7 @@ const ComboVariants = ({
     params,
   });
   const { data, error } = useSWR(tourGroupEndpoint, { fetcher: swrFetcher });
-  const { variants, currency, name } = data || {};
+  const { variants, currency } = data || {};
   const { localSymbol: currencySymbol } = currency || {};
   useEffect(() => {
     analytics.setVariableInDataLayer({
@@ -196,7 +206,7 @@ const ComboVariants = ({
               <Conditional if={l1Booster}>
                 <L1Booster>{l1Booster}</L1Booster>
               </Conditional>
-              <ProductTitle>{name}</ProductTitle>
+              <ProductTitle>{productTitle}</ProductTitle>
             </ProductTitleWrapper>
             <Conditional if={!isMobile}>
               <Descriptors descriptorArray={descriptors} horizontal={true} />

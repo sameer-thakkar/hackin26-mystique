@@ -724,6 +724,7 @@ const Product = (props) => {
   const { allTags = [], validity, combo } = scorpioData || {};
 
   const descriptorsCsv = descriptors || scorpioData.descriptors;
+  const cardTitle = title || scorpioData.title;
 
   const descriptorsList = descriptorsCsv
     ? descriptorsCsv
@@ -777,6 +778,7 @@ const Product = (props) => {
         width: '100vw',
         children: (
           <ComboVariants
+            productTitle={'title'}
             l1Booster={boosterTag}
             tgid={tgid}
             isMobile={isMobile}
@@ -803,7 +805,6 @@ const Product = (props) => {
   };
 
   const boosterHasIcon = booster?.filter((i) => i.type === 'image').length > 0;
-  const cardTitle = title || scorpioData.title;
   let url = host || window.location.host;
   const currentHost = !isDev ? url : parse(uid, true).pathname;
   const hostName = currentHost.includes('stage')
@@ -1170,6 +1171,7 @@ const Product = (props) => {
       </StyledProductCard>
       {showComboVariant && !isMobile && (
         <ComboVariants
+          productTitle={cardTitle}
           l1Booster={boosterTag}
           tgid={tgid}
           isMobile={isMobile}
