@@ -119,10 +119,7 @@ const Button = styled.div`
 `;
 
 const Description = styled.div`
-  border-top: 1px solid ${COLORS.GREY.G7};
   border-radius: 0 0 7px 7px;
-  padding-top: 16px;
-  margin-top: 16px;
   ${({ isSkeleton }) =>
     isSkeleton &&
     `
@@ -130,6 +127,13 @@ const Description = styled.div`
       padding-bottom: 112px;
     }
   `}
+  ${({ hasVariantInfo }) =>
+    hasVariantInfo &&
+    `
+    border-top: 1px solid ${COLORS.GREY.G7};
+    padding-top: 16px;
+    margin-top: 16px;
+    `}
   .desc-list {
     list-style: initial;
     padding-left: 1.6rem;
@@ -145,9 +149,8 @@ export const VariantCardSkeleton = ({ isMobile }: { isMobile: boolean }) => {
   return (
     <SkeletonTheme
       baseColor={COLORS.GREY.G6}
-      highlightColor={COLORS.GREY.G6}
+      highlightColor={COLORS.GREY.G7}
       borderRadius={0}
-      enableAnimation={false}
       height="20px"
     >
       <VariantCardWrapper>
@@ -275,11 +278,13 @@ const VariantCard = ({
           </Button>
         </a>
       </PriceWrapper>
-      <Description>
+      <Description hasVariantInfo={variantInfo !== null}>
         <Conditional if={!isMobile || isContentOpen}>
           {formatDescription(variantInfo) || ''}
         </Conditional>
-        <Conditional if={isMobile}>{getMoreDetailsButton()}</Conditional>
+        <Conditional if={isMobile && variantInfo}>
+          {getMoreDetailsButton()}
+        </Conditional>
       </Description>
     </VariantCardWrapper>
   );

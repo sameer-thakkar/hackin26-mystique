@@ -90,7 +90,7 @@ const Header = styled.div`
       width: calc(100% - 32px);
       background: ${COLORS.WHITE};
       margin-top: 8px;
-      padding: 32px 16px 0 16px;
+      padding: 32px 16px 8px 16px;
       border-radius: 20px 20px 0 0;
       .close-icon {
         display: flex;

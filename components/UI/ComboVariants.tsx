@@ -190,7 +190,6 @@ const ComboVariants = ({
       listingPrice: variantListingPrice,
       variantInfo,
     } = variant || {};
-    // const { finalPrice: variantPrice } = listingPrice || {};
     const props = {
       variantId,
       variantName,

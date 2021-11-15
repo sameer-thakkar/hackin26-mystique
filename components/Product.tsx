@@ -273,6 +273,7 @@ const CTABlock = styled.div`
     width: 100%;
     display: block;
     line-height: 1;
+    border-radius: 8px;
     svg {
       vertical-align: middle;
       margin-left: 24px;
