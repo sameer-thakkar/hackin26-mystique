@@ -192,7 +192,7 @@ const TitleWrapper = styled.div`
   ${({ hasBorderedTitle }) =>
     hasBorderedTitle
       ? `
-            border-bottom: 1px solid ${COLORS.GREY_G6};
+            border-bottom: 1px solid ${COLORS.GREY.G6};
             padding-bottom: 16px;
             margin-bottom: -8px;
             @media(max-width: 768px) {
@@ -1029,7 +1029,7 @@ const TicketCard = (props) => {
             </CTAContainer>
           </ProductHeader>
           <Conditional if={!isMobile}>
-            <HorizontalLine colorProp={COLORS.GREY_G6} />
+            <HorizontalLine colorProp={COLORS.GREY.G6} />
           </Conditional>
           <Conditional if={isMobile}>
             <ProductBody

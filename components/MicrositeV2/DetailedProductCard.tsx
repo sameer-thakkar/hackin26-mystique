@@ -47,8 +47,8 @@ const DetailedDescriptionCard = styled.div`
         content: '';
         position: absolute;
         background: ${COLORS.GREY.G8};
-        border-top: 1px solid ${COLORS.GREY_G6};
-        border-bottom: 1px solid ${COLORS.GREY_G6};
+        border-top: 1px solid ${COLORS.GREY.G6};
+        border-bottom: 1px solid ${COLORS.GREY.G6};
         width: 100vw;
         height: 100%;
         top: 0;
@@ -131,7 +131,7 @@ const DetailedDescriptionCard = styled.div`
   }
   .v2-descriptor {
     background: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? COLORS.GREY_G6 : COLORS.GREY_FO};
+      isEntertainmentMb ? COLORS.GREY.G6 : COLORS.GREY_FO};
     border-radius: 2px;
     font-size: 12px;
     padding: ${({ isEntertainmentMb }) =>
@@ -316,7 +316,7 @@ const DetailedDescriptionCard = styled.div`
   .indicator-triangle::before {
     border-color: transparent transparent
       ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? COLORS.GREY_G6 : '#757575'}
+        isEntertainmentMb ? COLORS.GREY.G6 : '#757575'}
       transparent;
     border-style: solid;
     border-width: 13px;

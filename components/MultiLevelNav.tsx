@@ -202,7 +202,7 @@ const Nav = styled.nav`
       }
       & > li > a > .withIcon {
         padding-bottom: 16px;
-        border-bottom: 1px solid ${COLORS.GREY_G6};
+        border-bottom: 1px solid ${COLORS.GREY.G6};
       }
     }
     .expandMenuItems {

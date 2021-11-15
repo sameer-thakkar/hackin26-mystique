@@ -1,14 +1,25 @@
+import React, { useRef, useState, useContext, useEffect } from 'react';
 import { RichText } from 'prismic-reactjs';
 import { useRecoilValue } from 'recoil';
-import Button from 'UI/Button';
-import { strings } from 'const/strings';
 import dynamic from 'next/dynamic';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import parse from 'url-parse';
 import styled from 'styled-components';
-import React, { useRef, useState, useContext, useEffect } from 'react';
+import { greyScheme } from 'style/theme';
+import { MBContext } from 'contexts/MBContext';
 import HorizontalLine from 'components/slices/HorizontalLine';
+import Conditional from 'components/common/Conditional';
+import ComboVariants from 'components/UI/ComboVariants';
+import PriceBlock from 'UI/PriceBlock';
+import Chevron from 'UI/Chevron';
+import Split, { StlyedSplit } from 'UI/Split';
+import IconCTA, { StyledIconCTA } from 'UI/IconCTA';
+import Button from 'UI/Button';
+import Image from 'UI/Image';
+import { currencyAtom } from 'store/atoms/currency';
+import { CALENDAR, Shield, BackArrow } from 'assets/SvgIcons';
+import { strings } from 'const/strings';
 import {
   ANALYTICS_EVENTS,
   THEMES,
@@ -18,25 +29,14 @@ import {
 } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { shortCodeSerializer } from 'utils/shortCodes';
-import { CALENDAR, Shield, BackArrow } from 'assets/SvgIcons';
-import Split, { StlyedSplit } from 'UI/Split';
-import IconCTA, { StyledIconCTA } from 'UI/IconCTA';
-import { greyScheme } from 'style/theme';
-import { isSafetyIncluded, createBookingURL } from 'utils';
-import { MBContext } from 'contexts/MBContext';
-import PriceBlock from 'UI/PriceBlock';
-import Chevron from 'UI/Chevron';
 import {
   extractTabsFromHighlights,
   getDescriptorIconURL,
   getProductCardLayout,
   parseDescriptorIcon,
 } from 'utils/productUtils';
-import Image from 'UI/Image';
-import { truncate, wordCount } from 'utils/helper';
-import { currencyAtom } from 'store/atoms/currency';
-
-import Conditional from './common/Conditional';
+import { getHostName, truncate, wordCount } from 'utils/helper';
+import { isSafetyIncluded, createBookingURL } from 'utils';
 
 const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
   ssr: false,
@@ -128,7 +128,7 @@ const TitleWrapper = styled.div`
   ${({ hasBorderedTitle }) =>
     hasBorderedTitle
       ? `
-            border-bottom: 1px solid ${COLORS.GREY_G6};
+            border-bottom: 1px solid ${COLORS.GREY.G6};
             padding-bottom: 16px;
             margin-bottom: -8px;
             @media(max-width: 768px) {
@@ -175,6 +175,13 @@ const TourTags = styled.div`
   margin: 0;
   margin-top: 8px;
   color: ${COLORS.GREY_G3};
+  ${({ horizontal }) =>
+    horizontal &&
+    `
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    grid-column-gap: 16px;
+  `}
   .tour-tag {
     display: grid;
     grid-auto-flow: column;
@@ -266,6 +273,7 @@ const CTABlock = styled.div`
     width: 100%;
     display: block;
     line-height: 1;
+    border-radius: 8px;
     svg {
       vertical-align: middle;
       margin-left: 24px;
@@ -640,9 +648,13 @@ const ModalCardContainer = styled.div`
   }
 `;
 
-const Descriptors = ({ descriptorArray, hasValidity = false }) => {
+export const Descriptors = ({
+  descriptorArray,
+  hasValidity = false,
+  horizontal = false,
+}) => {
   return (
-    <TourTags>
+    <TourTags horizontal={horizontal}>
       <Conditional if={hasValidity}>
         <div key={'validity'} className="tour-tag">
           <Image imageId={'validity'} url={getDescriptorIconURL('validity')} />
@@ -695,16 +707,25 @@ const Product = (props) => {
     showEarliestAvailability,
     isTicketCard = false,
   } = props;
-  const { mbTheme, biLink, bookSubdomain } = useContext(MBContext);
+  const {
+    mbTheme,
+    biLink,
+    bookSubdomain,
+    isStage,
+    isDev,
+    sidebarModal: { addToAside },
+  } = useContext(MBContext);
+  const hostname = getHostName(isStage, isDev, host);
   const currency = useRecoilValue(currencyAtom);
   const [isContentOpen, toggleContentOpen] = useState(defaultOpen);
   const [showMoreDetailsInTabs, setShowMoreDetails] = useState(
     defaultOpen || false
   );
-  const { allTags = [] } = scorpioData || {};
+  const [showComboVariant, setShowComboVariant] = useState(false);
+  const { allTags = [], validity, combo } = scorpioData || {};
 
-  const { validity } = scorpioData;
   const descriptorsCsv = descriptors || scorpioData.descriptors;
+  const cardTitle = title || scorpioData.title;
 
   const descriptorsList = descriptorsCsv
     ? descriptorsCsv
@@ -734,6 +755,46 @@ const Product = (props) => {
     });
   };
 
+  const handleCloseComboPopup = () => {
+    setShowComboVariant(false);
+    if (!isMobile) {
+      document.body.style.overflow = 'auto';
+    }
+    analytics.setVariableInDataLayer({
+      event: ANALYTICS_EVENTS.COMBO_VARIANT.POPUP_CLOSED,
+      'MB name': hostname,
+      TGID: tgid,
+      Device: isMobile ? 'Mweb' : 'Desktop',
+    });
+  };
+
+  const handleShowComboPopup = () => {
+    setShowComboVariant(true);
+    sendBookNowEvent();
+    if (!isMobile) {
+      document.body.style.overflow = 'hidden';
+    }
+    if (isMobile) {
+      addToAside({
+        width: '100vw',
+        children: (
+          <ComboVariants
+            productTitle={cardTitle}
+            l1Booster={boosterTag}
+            tgid={tgid}
+            isMobile={isMobile}
+            closeHandler={handleCloseComboPopup}
+            descriptors={descriptorsList}
+            bookingUrl={productBookingUrl}
+            analytics={analytics}
+          />
+        ),
+        type: SIDEBAR_TYPES.COMBO_VARIANT,
+        onCloseCallback: () => handleCloseComboPopup(),
+      });
+    }
+  };
+
   const getDate = (date, currentLanguage) => {
     const today = dayjs().format('YYYY-MM-DD');
     const tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');
@@ -745,9 +806,7 @@ const Product = (props) => {
   };
 
   const boosterHasIcon = booster?.filter((i) => i.type === 'image').length > 0;
-  const cardTitle = title || scorpioData.title;
   let url = host || window.location.host;
-  const isDev = url.includes('localhost');
   const currentHost = !isDev ? url : parse(uid, true).pathname;
   const hostName = currentHost.includes('stage')
     ? currentHost.replace('stage-', '')
@@ -776,9 +835,6 @@ const Product = (props) => {
   const finalShortSummary = isFallbackSummary
     ? mobileFallbackShortSummary
     : shortSummary;
-  const {
-    sidebarModal: { addToAside },
-  } = useContext(MBContext);
 
   const { highlights, tabs } = isMobile
     ? { highlights: finalHighlights, tabs: [] }
@@ -921,187 +977,212 @@ const Product = (props) => {
       bookSubdomain,
     }) + (ctaUrlSuffix || '');
 
-  const getProductCardElements = (expandContent, isFallbackSummary = false) => (
-    <StyledProductCard
-      layout={layout}
-      isTicketCard={isTicketCard}
-      isMobile={isMobile}
+  const BookNowCta = ({ clickHandler }: { clickHandler: () => void }) => (
+    <Button
+      className={`tour-book-now-cta`}
+      paddingSides={isMobile ? '16px' : '8px'}
+      type="fill"
+      onClick={clickHandler}
+      onKeyDown={clickHandler}
+      role="button"
+      tabIndex={0}
     >
-      <ProductHeader>
-        <TitleWrapper hasBorderedTitle={hasBorderedTitle && !tabs.length}>
-          <Conditional if={boosterTag && mbTheme !== THEMES.MIN_BLUE}>
-            <BoosterTag>{boosterTag}</BoosterTag>
+      {strings.BOOK_NOW_CTA}
+      {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
+    </Button>
+  );
+
+  const getProductCardElements = (expandContent, isFallbackSummary = false) => (
+    <>
+      <StyledProductCard
+        layout={layout}
+        isTicketCard={isTicketCard}
+        isMobile={isMobile}
+      >
+        <ProductHeader>
+          <TitleWrapper hasBorderedTitle={hasBorderedTitle && !tabs.length}>
+            <Conditional if={boosterTag && mbTheme !== THEMES.MIN_BLUE}>
+              <BoosterTag>{boosterTag}</BoosterTag>
+            </Conditional>
+            <TourTitle isPopup={isContentOpen}>{cardTitle}</TourTitle>
+          </TitleWrapper>
+          <Conditional
+            if={
+              mbTheme !== THEMES.MIN_BLUE &&
+              !isFallbackSummary &&
+              hasShortSummary
+            }
+          >
+            <Conditional if={!isTicketCard}>
+              <ShortSummary>
+                <RichText render={finalShortSummary} />
+              </ShortSummary>
+            </Conditional>
           </Conditional>
-          <TourTitle isPopup={isContentOpen}>{cardTitle}</TourTitle>
-        </TitleWrapper>
-        <Conditional
-          if={
-            mbTheme !== THEMES.MIN_BLUE && !isFallbackSummary && hasShortSummary
-          }
+          <Conditional if={mbTheme === THEMES.MIN_BLUE}>
+            <Descriptors
+              descriptorArray={descriptorsList}
+              hasValidity={!!validity}
+            />
+          </Conditional>
+          <Conditional if={hasSafetyFlag}>
+            <IconBoosters>
+              <Split count={2} autoWidth>
+                <Conditional if={hasSafetyFlag}>
+                  <IconCTA
+                    text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
+                    colorScheme={greyScheme}
+                    ctaOnClick={openSafeSidebar}
+                    icon={Shield}
+                    key={'safety-tag'}
+                    showBorder
+                  />
+                </Conditional>
+              </Split>
+            </IconBoosters>
+          </Conditional>
+          <Conditional if={hasV1Booster && !isAmp}>
+            <V1BoosterBlock boosterHasIcon={boosterHasIcon}>
+              <RichText render={booster} htmlSerializer={shortCodeSerializer} />
+            </V1BoosterBlock>
+          </Conditional>
+          {hasOffer &&
+            offerId &&
+            productOffer.map((offer, index) => {
+              if (offer.id === offerId) {
+                return (
+                  <ProductOfferBlock
+                    key={index}
+                    onClick={handlePopup}
+                    className="tour-offer"
+                  >
+                    <RichText
+                      render={offer.data.offer_title}
+                      htmlSerializer={shortCodeSerializer}
+                    />
+                  </ProductOfferBlock>
+                );
+              }
+            })}
+          <CTAContainer>
+            <PriceContainer>
+              <PriceBlock
+                showScratchPrice={showScratchPrice}
+                price={finalPrice}
+                lang={currentLanguage}
+                showSavings={true}
+                key={'price-block'}
+              />
+            </PriceContainer>
+            <CTABlock
+              isSticky={expandContent}
+              shouldOffset={earliestAvailability && mbTheme === THEMES.MIN_BLUE}
+            >
+              <Conditional if={!combo}>
+                <a
+                  target={isMobile ? null : '_blank'}
+                  href={productBookingUrl}
+                  rel="nofollow"
+                >
+                  <BookNowCta clickHandler={sendBookNowEvent} />
+                </a>
+              </Conditional>
+              <Conditional if={combo}>
+                <BookNowCta clickHandler={handleShowComboPopup} />
+              </Conditional>
+            </CTABlock>
+            <Conditional
+              if={showEarliestAvailability && earliestAvailability?.startDate}
+            >
+              <NextAvailableBlock>
+                <div className="icon">{CALENDAR}</div>
+                <div className="available-text">
+                  {`${strings.NEXT_AVAILABLE}`}
+                  {getDate(earliestAvailability?.startDate, currentLanguage)}
+                </div>
+              </NextAvailableBlock>
+            </Conditional>
+            <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
+              <Descriptors
+                hasValidity={!!validity}
+                descriptorArray={descriptorsList}
+              />
+            </Conditional>
+          </CTAContainer>
+        </ProductHeader>
+        <Conditional if={!isMobile}>
+          <HorizontalLine colorProp={COLORS.GREY.G6} />
+        </Conditional>
+        <ProductBody
+          hasReadMore={hasReadMore}
+          collapsed={!expandContent}
+          noOfListItemToShow={noOfListItemToShow + 1}
+          defaultOpen={defaultOpen}
         >
-          <Conditional if={!isTicketCard}>
-            <ShortSummary>
-              <RichText render={finalShortSummary} />
-            </ShortSummary>
-          </Conditional>
-        </Conditional>
-        <Conditional if={mbTheme === THEMES.MIN_BLUE}>
-          <Descriptors
-            descriptorArray={descriptorsList}
-            hasValidity={!!validity}
-          />
-        </Conditional>
-        <Conditional if={hasSafetyFlag}>
-          <IconBoosters>
-            <Split count={2} autoWidth>
-              <Conditional if={hasSafetyFlag}>
-                <IconCTA
-                  text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
-                  colorScheme={greyScheme}
-                  ctaOnClick={openSafeSidebar}
-                  icon={Shield}
-                  key={'safety-tag'}
-                  showBorder
+          <Conditional
+            if={
+              !isTicketCard ||
+              (isTicketCard && !isMobile) ||
+              (isTicketCard && expandContent)
+            }
+          >
+            <div
+              className={`${
+                isAmp
+                  ? 'amp-tour-description tour-description'
+                  : 'tour-description'
+              }`}
+              id={`tour-description-${position}`}
+              onClick={
+                !isMobile && !defaultOpen
+                  ? (e) => {
+                      e.stopPropagation();
+                      toggleContentOpen(!isContentOpen);
+                      trackedToggleContent(isContentOpen);
+                    }
+                  : null
+              }
+            >
+              <Conditional if={hasHighlights}>
+                <RichText
+                  render={highlights || []}
+                  htmlSerializer={shortCodeSerializer}
+                  elements={richtextElements}
                 />
               </Conditional>
-            </Split>
-          </IconBoosters>
-        </Conditional>
-        <Conditional if={hasV1Booster && !isAmp}>
-          <V1BoosterBlock boosterHasIcon={boosterHasIcon}>
-            <RichText render={booster} htmlSerializer={shortCodeSerializer} />
-          </V1BoosterBlock>
-        </Conditional>
-        {hasOffer &&
-          offerId &&
-          productOffer.map((offer, index) => {
-            if (offer.id === offerId) {
-              return (
-                <ProductOfferBlock
-                  key={index}
-                  onClick={handlePopup}
-                  className="tour-offer"
-                >
-                  <RichText
-                    render={offer.data.offer_title}
-                    htmlSerializer={shortCodeSerializer}
-                  />
-                </ProductOfferBlock>
-              );
-            }
-          })}
-        <CTAContainer>
-          <PriceContainer>
-            <PriceBlock
-              showScratchPrice={showScratchPrice}
-              price={finalPrice}
-              lang={currentLanguage}
-              showSavings={true}
-              key={'price-block'}
-            />
-          </PriceContainer>
-          <CTABlock
-            isSticky={expandContent}
-            shouldOffset={earliestAvailability && mbTheme === THEMES.MIN_BLUE}
-          >
-            <a
-              target={isMobile ? null : '_blank'}
-              href={productBookingUrl}
-              rel="nofollow"
-            >
-              <Button
-                className={`tour-book-now-cta`}
-                paddingSides={isMobile ? '16px' : '8px'}
-                type="fill"
-                onClick={sendBookNowEvent}
-                onKeyDown={sendBookNowEvent}
-                role="button"
-                tabIndex={0}
-              >
-                {strings.BOOK_NOW_CTA}
-                {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
-              </Button>
-            </a>
-          </CTABlock>
-          <Conditional
-            if={showEarliestAvailability && earliestAvailability?.startDate}
-          >
-            <NextAvailableBlock>
-              <div className="icon">{CALENDAR}</div>
-              <div className="available-text">
-                {`${strings.NEXT_AVAILABLE}`}
-                {getDate(earliestAvailability?.startDate, currentLanguage)}
-              </div>
-            </NextAvailableBlock>
+              <Conditional if={tabs.length}>
+                <HighlightTabs
+                  onTabChange={onTabChange}
+                  hasRegularHighlights={hasHighlights}
+                  tabs={tabs}
+                  tgid={tgid}
+                  analytics={analytics}
+                />
+              </Conditional>
+            </div>
           </Conditional>
-          <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
-            <Descriptors
-              hasValidity={!!validity}
-              descriptorArray={descriptorsList}
-            />
+          <Conditional if={hasReadMore}>
+            {isTicketCard && isAmp
+              ? null
+              : isAmp
+              ? getMoreDetailsButtonForAMP()
+              : getMoreDetailsButton()}
           </Conditional>
-        </CTAContainer>
-      </ProductHeader>
-      <Conditional if={!isMobile}>
-        <HorizontalLine colorProp={COLORS.GREY_G6} />
-      </Conditional>
-      <ProductBody
-        hasReadMore={hasReadMore}
-        collapsed={!expandContent}
-        noOfListItemToShow={noOfListItemToShow + 1}
-        defaultOpen={defaultOpen}
-      >
-        <Conditional
-          if={
-            !isTicketCard ||
-            (isTicketCard && !isMobile) ||
-            (isTicketCard && expandContent)
-          }
-        >
-          <div
-            className={`${
-              isAmp
-                ? 'amp-tour-description tour-description'
-                : 'tour-description'
-            }`}
-            id={`tour-description-${position}`}
-            onClick={
-              !isMobile && !defaultOpen
-                ? (e) => {
-                    e.stopPropagation();
-                    toggleContentOpen(!isContentOpen);
-                    trackedToggleContent(isContentOpen);
-                  }
-                : null
-            }
-          >
-            <Conditional if={hasHighlights}>
-              <RichText
-                render={highlights || []}
-                htmlSerializer={shortCodeSerializer}
-                elements={richtextElements}
-              />
-            </Conditional>
-            <Conditional if={tabs.length}>
-              <HighlightTabs
-                onTabChange={onTabChange}
-                hasRegularHighlights={hasHighlights}
-                tabs={tabs}
-                tgid={tgid}
-                analytics={analytics}
-              />
-            </Conditional>
-          </div>
-        </Conditional>
-        <Conditional if={hasReadMore}>
-          {isTicketCard && isAmp
-            ? null
-            : isAmp
-            ? getMoreDetailsButtonForAMP()
-            : getMoreDetailsButton()}
-        </Conditional>
-      </ProductBody>
-    </StyledProductCard>
+        </ProductBody>
+      </StyledProductCard>
+      {showComboVariant && !isMobile && (
+        <ComboVariants
+          productTitle={cardTitle}
+          l1Booster={boosterTag}
+          tgid={tgid}
+          isMobile={isMobile}
+          closeHandler={handleCloseComboPopup}
+          descriptors={descriptorsList}
+          bookingUrl={productBookingUrl}
+          analytics={analytics}
+        />
+      )}
+    </>
   );
 
   return <Container>{getProductCardElements(isContentOpen)}</Container>;

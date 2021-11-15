@@ -214,51 +214,65 @@ const PopulateProducts = (props) => {
       <ProductContainer>
         {availableToursList &&
           availableToursList.map((tour, index) => {
+            const {
+              tgid,
+              earliestAvailability,
+              tour_variant_id,
+              tour_title_override,
+              marketing_highlights_override,
+              tour_description_override,
+              offer__free_tour,
+              cta_url_suffix,
+              show_scratch_price,
+              product_booster,
+              short_summary,
+              tag_booster,
+            } = tour || {};
             const childProps = {
-              tgid: tour.tgid,
-              earliestAvailability: tour.earliestAvailability,
-              showEarliestAvailability: showEarliestAvailability,
-              tid: tour.tour_variant_id,
-              title: tour.tour_title_override,
-              descriptors: tour.marketing_highlights_override,
-              highlights: tour.tour_description_override,
-              scorpioData: scorpioData?.[tour.tgid],
+              tgid,
+              earliestAvailability,
+              showEarliestAvailability,
+              tid: tour_variant_id,
+              title: tour_title_override,
+              descriptors: marketing_highlights_override,
+              highlights: tour_description_override,
+              scorpioData: scorpioData?.[tgid],
               tourPrices: tourPrices,
               uid: uid,
               currentLanguage: currentLanguage,
-              bookNowText: bookNowText,
-              showLessText: showLessText,
-              readMoreText: readMoreText,
-              productOffer: productOffer,
-              hasOffer: hasOffer,
-              togglePopup: togglePopup,
-              offerId: tour.offer__free_tour?.id,
-              popupState: popupState,
-              isMobile: isMobile,
-              isAmp: isAmp,
-              pageUrl: pageUrl,
-              host: host,
-              ctaUrlSuffix: tour.cta_url_suffix || '',
-              isScratchPriceEnabled: tour.show_scratch_price === 'Yes',
-              analytics: analytics,
+              bookNowText,
+              showLessText,
+              readMoreText,
+              productOffer,
+              hasOffer,
+              togglePopup,
+              offerId: offer__free_tour?.id,
+              popupState,
+              isMobile,
+              isAmp,
+              pageUrl,
+              host,
+              ctaUrlSuffix: cta_url_suffix || '',
+              isScratchPriceEnabled: show_scratch_price === 'Yes',
+              analytics,
               position: index + 1,
-              booster: tour.product_booster,
+              booster: product_booster,
               defaultOpen: finalToursList.length === 1,
-              shortSummary: tour.short_summary,
-              boosterTag: tour.tag_booster,
+              shortSummary: short_summary,
+              boosterTag: tag_booster,
               numberOfTours: tours.length,
-              instantCheckout: instantCheckout,
+              instantCheckout,
             };
 
             return (
-              <Fragment key={tour.tgid}>
+              <Fragment key={tgid}>
                 {isTicketCard ? (
                   <TicketCard {...childProps} />
                 ) : (
                   <Product {...childProps} />
                 )}
                 <Conditional if={mbTheme === THEMES.MIN_BLUE}>
-                  <HorizontalLine colorProp={COLORS.GREY_G6} />
+                  <HorizontalLine colorProp={COLORS.GREY.G6} />
                 </Conditional>
               </Fragment>
             );

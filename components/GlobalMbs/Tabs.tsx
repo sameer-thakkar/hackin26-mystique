@@ -32,7 +32,7 @@ const TabControl = styled.div`
   grid-auto-flow: column;
   justify-content: left;
   grid-column-gap: 4rem;
-  border-bottom: 1px solid ${COLORS.GREY_G6};
+  border-bottom: 1px solid ${COLORS.GREY.G6};
   @media (max-width: 768px) {
     overflow-x: scroll;
   }

@@ -32,6 +32,10 @@ const it = {
   OPENING_ON: 'Opening on',
   NEW: 'NEW',
   SEE_ALL: 'See All',
+  COMBO_VARIANT: {
+    SELECT_CTA: 'Select',
+    SELECT_OPTION: 'Select your option',
+  },
   CLOSE: 'Chiudi',
   LISTICLES: {
     SEATING_CHART: 'Mappa dei posti a sedere',

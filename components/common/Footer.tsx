@@ -159,7 +159,7 @@ const LinksWrapper = styled.div`
       display: block;
       text-decoration: none;
       color: ${({ theme, isEntertainmentMb }) =>
-        isEntertainmentMb ? COLORS.GREY_G6 : theme.footer.color};
+        isEntertainmentMb ? COLORS.GREY.G6 : theme.footer.color};
       ${({ isEntertainmentMb }) =>
         isEntertainmentMb &&
         `
@@ -254,7 +254,7 @@ const FooterLegal = styled.div`
 
   .disclaimer-text {
     color: ${({ isEntertainmentMb, theme }) =>
-      isEntertainmentMb ? COLORS.GREY_G6 : theme.footer.color};
+      isEntertainmentMb ? COLORS.GREY.G6 : theme.footer.color};
     margin-top: 32px;
     font-family: ${SOLEIL.FONT_STACK};
     font-size: ${({ isEntertainmentMb }) =>

@@ -14,7 +14,7 @@ import Image from 'UI/Image';
 import Pricing from './Pricing';
 
 const CardWrapper = styled.div`
-  border: 1px solid ${COLORS.GREY_G6};
+  border: 1px solid ${COLORS.GREY.G6};
   border-radius: 8px;
   display: grid;
   padding: 24px;
@@ -31,7 +31,7 @@ const CardTop = styled.div`
   cursor: pointer;
   ${({ isActive }) =>
     isActive
-      ? `  border-bottom: 1px solid ${COLORS.GREY_G6}; padding-bottom: 24px;`
+      ? `  border-bottom: 1px solid ${COLORS.GREY.G6}; padding-bottom: 24px;`
       : ``}
   img {
     width: 100%;
@@ -92,7 +92,7 @@ const CardBottom = styled.div`
   padding-top: 24px;
   @media (max-width: 768px) {
     padding: 0;
-    border-top: 1px solid ${COLORS.GREY_G6};
+    border-top: 1px solid ${COLORS.GREY.G6};
   }
 `;
 

@@ -32,6 +32,10 @@ const es = {
   OPENING_ON: 'Opening on',
   NEW: 'NEW',
   SEE_ALL: 'See All',
+  COMBO_VARIANT: {
+    SELECT_CTA: 'Select',
+    SELECT_OPTION: 'Select your option',
+  },
   CLOSE: 'Cerrar',
   LISTICLES: {
     SEATING_CHART: 'Mapa de asientos',

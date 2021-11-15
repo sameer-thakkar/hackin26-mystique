@@ -573,6 +573,7 @@ export default class Page extends React.Component<any, any> {
             validity,
             allTags: allTagsTour,
             id,
+            combo,
           } = tour || {};
           const { productImages, safetyImages } = media || {};
           const { cashbackValue } = listingPrice || {};
@@ -604,6 +605,7 @@ export default class Page extends React.Component<any, any> {
               allTags,
               safetyImages: safetyImages || [],
               validity,
+              combo,
               listingPrice: {
                 ...listingPrice,
                 ...currencySymbolMap[listingPrice?.currencyCode],
@@ -723,6 +725,7 @@ export default class Page extends React.Component<any, any> {
               toursList={toursList}
               pathname={pathname}
               isDev={isDev}
+              isStage={isStage}
               tgidToScroll={tgidToScroll}
               serverRequestStartTimestamp={serverRequestStartTimestamp}
               isMobile={isMobile}

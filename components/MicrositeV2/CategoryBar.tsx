@@ -29,7 +29,7 @@ const CategoryBarWrapper = styled.div`
   align-items: center;
   border-bottom: ${({ isEntertainmentMb }) =>
     isEntertainmentMb
-      ? `1px solid ${COLORS.GREY_G6}`
+      ? `1px solid ${COLORS.GREY.G6}`
       : `1px solid ${COLORS.CHALK}`};
   grid-gap: 8px;
   padding-top: 36px;

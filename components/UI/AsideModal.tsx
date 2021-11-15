@@ -42,6 +42,12 @@ export const StyledAsideModal = styled.div`
       overflow-y: unset;
       max-width: unset;
     `
+        : sidebarType === SIDEBAR_TYPES.COMBO_VARIANT
+        ? `
+      height: auto;
+      padding: 0;
+      background: ${COLORS.BLACK};
+    `
         : ``}
   }
 `;
@@ -73,9 +79,30 @@ const Header = styled.div`
     `
       : ''}
   top: 0;
+
   background: ${({ addBg, isGlobalMb }) =>
     addBg ? COLORS.WHITE : isGlobalMb ? COLORS.WHITE : 'transparent'};
   z-index: 12;
+
+  ${({ type }) =>
+    type === SIDEBAR_TYPES.COMBO_VARIANT
+      ? `
+      width: calc(100% - 32px);
+      background: ${COLORS.WHITE};
+      margin-top: 8px;
+      padding: 32px 16px 8px 16px;
+      border-radius: 20px 20px 0 0;
+      .close-icon {
+        display: flex;
+        padding: 6px;
+        background: ${COLORS.GREY.G8};
+        border-radius: 4px;
+        svg {
+          height: 10px;
+          width: 10px;
+        }
+      }`
+      : ''}
   @media (max-width: 768px) {
     &:before,
     &:after {
@@ -138,6 +165,10 @@ const ModalContent = styled.div`
   height: ${windowHeight - 46}px;
   border-radius: 10px 10px 0 0;
   `
+      : sidebarType === SIDEBAR_TYPES.COMBO_VARIANT
+      ? `
+  overflow-x: scroll;
+  height: ${windowHeight - 46}px;`
       : ``}
 `;
 

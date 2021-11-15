@@ -124,7 +124,7 @@ const StyledSwiper = styled.div`
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: max-content;
-    border-bottom: 1px solid ${COLORS.GREY_G6};
+    border-bottom: 1px solid ${COLORS.GREY.G6};
   }
   .swiper-container {
     width: 100%;

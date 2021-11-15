@@ -75,7 +75,7 @@ const Quotes = styled.div`
 `;
 
 const Review = styled.div`
-  border: 1px solid ${COLORS.GREY_G6};
+  border: 1px solid ${COLORS.GREY.G6};
   border-radius: 8px;
   min-height: 300px;
   @media (max-width: 768px) {

@@ -31,6 +31,10 @@ const fr = {
   OPENING_ON: 'Opening on',
   NEW: 'NEW',
   SEE_ALL: 'See All',
+  COMBO_VARIANT: {
+    SELECT_CTA: 'Select',
+    SELECT_OPTION: 'Select your option',
+  },
   CLOSE: 'Fermer',
   LISTICLES: {
     SEATING_CHART: 'Plan de la salle',

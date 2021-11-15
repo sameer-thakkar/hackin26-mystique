@@ -89,7 +89,7 @@ const StyledTourComparisionTable = styled.div`
     ${({ designType, showImage }) =>
       designType == TOUR_COMPARISION_DESIGN.TYPE_2
         ? `
-      border-bottom: 1px solid ${COLORS.GREY_G6};
+      border-bottom: 1px solid ${COLORS.GREY.G6};
       padding-bottom: 16px;
       &:nth-of-type(0n+1),
       &:last-child
