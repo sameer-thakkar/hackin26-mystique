@@ -10,7 +10,7 @@ const RatingBoosterCombo = (props) => {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    fetch(`${HEADOUT_API_ENDPOINT}/v5/tour-group/list?ids[]=${tgid}`)
+    fetch(`${HEADOUT_API_ENDPOINT}/v5/tour-group/list?ids%5B%5D=${tgid}`)
       .then((res) => res.json())
       .then((data) => {
         const tour = data?.tourGroups[0];

@@ -80,7 +80,7 @@ export const fetchInventory = ({ tgid, ...query }) => {
 export const fetchTourList = ({ tgids, host = '', ...query }) => {
   return fetch(
     `${host ? host : ''}/api/tours/v6/tour-groups/${objectToQuery({
-      'ids[]': tgids,
+      'ids%5B%5D': tgids,
       ...query,
     })}`
   );

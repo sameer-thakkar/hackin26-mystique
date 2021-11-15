@@ -268,7 +268,7 @@ const MicrobrandCards: React.FC<MicrobrandCardsProps> = (props) => {
   useEffect(() => {
     const tgidsExist = cards.map((card) => card.tgid).filter((tgid) => tgid);
     if (tgidsExist.length) {
-      fetch(`/api/tours/v5/tour-group/list?ids[]=${tgidsExist}`)
+      fetch(`/api/tours/v5/tour-group/list?ids%5B%5D=${tgidsExist}`)
         .then((res) => res.json())
         .then((json) => {
           if (json.error) return;

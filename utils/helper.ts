@@ -3,6 +3,7 @@ import { FULL_LANGUAGE_MAP } from 'const/index';
 import dayjs from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 
 import renderShortCodes from './shortCodes';
 
@@ -416,4 +417,31 @@ export const getPriceSortedDiscountedProducts = (allTours) => {
       }
       return acc;
     }, []);
+};
+
+export const getBuyTicketsUrl = (
+  supply,
+  categoryId,
+  tgid,
+  ticketsPageURL,
+  isDev,
+  host,
+  officialWebsite,
+  lang = 'en'
+) => {
+  const hasTicketsPage = supply === 'Direct' && categoryId;
+  return hasTicketsPage
+    ? ticketsPageURL
+      ? convertUidToUrl({
+          uid: ticketsPageURL,
+          isDev,
+          hostname: host,
+          lang: lang,
+        })
+      : categoryId
+      ? `https://headout.com/category/${categoryId}`
+      : tgid
+      ? `https://book.headout.com/tour/${tgid}`
+      : getValidUrl(officialWebsite?.trim())
+    : getValidUrl(officialWebsite?.trim());
 };

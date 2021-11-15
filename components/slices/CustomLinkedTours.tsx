@@ -119,7 +119,7 @@ const CustomLinkedTours = ({
   const [apiTours, setTours] = useState(null);
 
   useEffect(() => {
-    fetch(`${HEADOUT_API_ENDPOINT}/v5/tour-group/list?ids[]=${tgids}`)
+    fetch(`${HEADOUT_API_ENDPOINT}/v5/tour-group/list?ids%5B%5D=${tgids}`)
       .then((r) => r.json())
       .then((res) => {
         const apiTours = tourListApiParser(res);

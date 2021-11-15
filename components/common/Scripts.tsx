@@ -152,7 +152,7 @@ export const WebpageJsonLD = ({
           url={microbrandUrl}
           potentialActions={[
             {
-              target: `${microbrandUrl}/?s={search_term_string}`,
+              target: `${microbrandUrl}/?s`,
               queryInput: 'search_term_string',
             },
           ]}

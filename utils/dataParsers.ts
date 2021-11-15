@@ -416,7 +416,7 @@ export const categoryTourListParserV2 = async (
     const tgidSet = new Set(tgids);
     const finalTgids = Array.from(tgidSet)?.join(',');
     const allTourGroupData = await fetch(
-      `https://api.headout.com/api/v5/tour-group/list?ids[]=${finalTgids}`
+      `https://api.headout.com/api/v5/tour-group/list?ids%5B%5D=${finalTgids}`
     )
       .then((res) => res.json())
       .then((data) => {

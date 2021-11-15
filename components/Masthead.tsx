@@ -34,6 +34,8 @@ const Title = styled.h1`
   font-size: 2rem;
   transform: translateY(-50%);
   margin: 0;
+  max-width: 792px;
+  text-align: center;
   @media (max-width: 768px) {
     text-align: center;
     top: 42%;

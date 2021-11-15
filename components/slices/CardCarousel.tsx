@@ -151,7 +151,7 @@ export default class CardCarousel extends Component<CardCarouselProps> {
     const { cards } = this.props;
     const tgids = cards.map((card) => card.tgid);
     const fetchPrice = await fetch(
-      `/api/tours/v6/tour-groups/?ids[]=${tgids}`
+      `/api/tours/v6/tour-groups/?ids%5B%5D=${tgids}`
     ).then((res) => res.json());
     const cardPrices = tourListApiParser(fetchPrice);
     const currencySymbol = fetchPrice.currencies[0]?.localSymbol;
