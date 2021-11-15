@@ -234,7 +234,6 @@ const ComboVariants = ({
                 <VariantCardSkeleton isMobile={isMobile} />
                 <VariantCardSkeleton isMobile={isMobile} />
                 <VariantCardSkeleton isMobile={isMobile} />
-                <VariantCardSkeleton isMobile={isMobile} />
               </VariantCardSkeletonWrapper>
             </Conditional>
             <Conditional if={data}>
