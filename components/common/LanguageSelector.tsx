@@ -6,6 +6,7 @@ import Conditional from 'components/common/Conditional';
 import { GLOBE } from 'assets/SvgIcons';
 import { FULL_LANGUAGE_MAP, THEMES } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
+import LinkResolver from 'components/LinkResolver';
 
 const StyledLanguageContainer = styled.div`
   margin-left: 32px;
@@ -187,13 +188,13 @@ const LanguageSelector = (props) => {
             {availableLanguages.map((doc, index) => {
               const { url, lang } = doc || {};
               return (
-                <a key={index} href={url}>
+                <LinkResolver key={index} url={url} href={url}>
                   <div className="language">
                     <span className="lang-option">
                       {FULL_LANGUAGE_MAP[lang].language}
                     </span>
                   </div>
-                </a>
+                </LinkResolver>
               );
             })}
             <div
