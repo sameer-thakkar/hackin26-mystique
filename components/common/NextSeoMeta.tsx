@@ -71,7 +71,7 @@ export default function PopulateMeta({
     hostname: host,
   });
   const primaryDomainUrl = new URL(pageUrl).hostname;
-  const logoUrl = image?.url || logo.url;
+  const logoUrl = image?.url || logo?.url;
   const title = withShortcodes(rawTitle).join('');
   const description = withShortcodes(rawDescription).join('');
   const modifiedCanonicalLink = isMobile
