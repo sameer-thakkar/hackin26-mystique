@@ -94,8 +94,10 @@ export const getContentPageDocument = async ({
         return Promise.reject();
       }
 
-      // Redirect logic (if redirect exists on content page)
-      const url = page.data.microsite_document_ref?.data.redirect_url?.url;
+      // Redirect logic (content pages redirect else microsite redirect)
+      const url =
+        page.data?.redirect_url?.url ||
+        page.data.microsite_document_ref?.data.redirect_url?.url;
       if (url) {
         redirectTo({
           res: serverResponse,
