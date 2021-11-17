@@ -159,8 +159,8 @@ export const convertUidToUrl = ({
   if (uid) {
     let url = getUrl(uid, lang, false);
     if (isAmp) {
-      const urlObject = new URLSearchParams(url);
-      urlObject.set('amp', '1');
+      const urlObject = new URL(url);
+      urlObject.searchParams.set('amp', '1');
       return urlObject.toString();
     }
     return url;
