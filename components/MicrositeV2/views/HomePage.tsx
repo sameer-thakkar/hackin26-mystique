@@ -205,7 +205,7 @@ export const HomePage = (props) => {
   const themeOverride = footer?.themeOverride;
   const hasDropdownLinks = enableDropdownLinks && dropdownLinks?.length;
   const { mbTheme } = useContext(MBContext);
-  const bannerHeading = withShortcodes(heroProps?.bannerHeading) || {};
+  const bannerHeading = withShortcodes(heroProps?.bannerHeading);
   const hasSafe = Object.values(allTours).some((tour: any) =>
     isSafetyIncluded(tour.allTags)
   );
