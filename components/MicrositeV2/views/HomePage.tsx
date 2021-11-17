@@ -22,6 +22,7 @@ import {
   getTGIDListForMonth,
   getDiscountedProducts,
   getPriceSortedDiscountedProducts,
+  withShortcodes,
 } from 'utils/helper';
 import Image from 'UI/Image';
 
@@ -204,7 +205,7 @@ export const HomePage = (props) => {
   const themeOverride = footer?.themeOverride;
   const hasDropdownLinks = enableDropdownLinks && dropdownLinks?.length;
   const { mbTheme } = useContext(MBContext);
-  const { bannerHeading } = heroProps;
+  const bannerHeading = withShortcodes(heroProps?.bannerHeading) || {};
   const hasSafe = Object.values(allTours).some((tour: any) =>
     isSafetyIncluded(tour.allTags)
   );
