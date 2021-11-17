@@ -108,6 +108,7 @@ const Button = styled.div`
   font-size: 14px;
   line-height: 16px;
   letter-spacing: 0.2px;
+  word-wrap: break-word;
   @media (max-width: 768px) {
     padding: 8px 12px;
   }

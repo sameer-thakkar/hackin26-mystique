@@ -39,6 +39,7 @@ const en = {
   COMBO_VARIANT: {
     SELECT_CTA: 'Select',
     SELECT_OPTION: 'Select your option',
+    SELECT_TICKET: 'Select your ticket',
   },
   CLOSE: 'Close',
   LISTICLES: {
