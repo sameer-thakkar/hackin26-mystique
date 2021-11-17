@@ -228,7 +228,11 @@ const ComboVariants = ({
             </Conditional>
           </ProductInfo>
           <StyledVariantsWrapper>
-            <h3>{strings.COMBO_VARIANT.SELECT_OPTION}</h3>
+            <h3>
+              {variants?.length > 1
+                ? strings.COMBO_VARIANT.SELECT_OPTION
+                : strings.COMBO_VARIANT.SELECT_TICKET}
+            </h3>
             <Conditional if={!data}>
               <VariantCardSkeletonWrapper>
                 <VariantCardSkeleton isMobile={isMobile} />

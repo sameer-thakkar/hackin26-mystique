@@ -35,8 +35,9 @@ const nl = {
   NEW: 'NEW',
   SEE_ALL: 'See All',
   COMBO_VARIANT: {
-    SELECT_CTA: 'Select',
-    SELECT_OPTION: 'Select your option',
+    SELECT_CTA: 'Selecteer',
+    SELECT_OPTION: 'Selecteer de gewenste optie',
+    SELECT_TICKET: 'Selecteer je ticket',
   },
   CLOSE: 'Sluit',
   LISTICLES: {

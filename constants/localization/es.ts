@@ -33,8 +33,9 @@ const es = {
   NEW: 'NEW',
   SEE_ALL: 'See All',
   COMBO_VARIANT: {
-    SELECT_CTA: 'Select',
-    SELECT_OPTION: 'Select your option',
+    SELECT_CTA: 'Seleccionar',
+    SELECT_OPTION: 'Selecciona la opción deseada',
+    SELECT_TICKET: 'Selecciona tu entrada',
   },
   CLOSE: 'Cerrar',
   LISTICLES: {

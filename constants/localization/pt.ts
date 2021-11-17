@@ -33,8 +33,9 @@ const pt = {
   NEW: 'NEW',
   SEE_ALL: 'See All',
   COMBO_VARIANT: {
-    SELECT_CTA: 'Select',
-    SELECT_OPTION: 'Select your option',
+    SELECT_CTA: 'Selecionar',
+    SELECT_OPTION: 'Selecione a opção deseja',
+    SELECT_TICKET: 'Selecione seu bilhete',
   },
   CLOSE: 'Fechar',
   LISTICLES: {

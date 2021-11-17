@@ -34,8 +34,9 @@ const de = {
   NEW: 'NEW',
   SEE_ALL: 'See All',
   COMBO_VARIANT: {
-    SELECT_CTA: 'Select',
-    SELECT_OPTION: 'Select your option',
+    SELECT_CTA: 'Auswählen',
+    SELECT_OPTION: 'Gewünschte Ticketvariante wählen',
+    SELECT_TICKET: 'Ticket wählen',
   },
   CLOSE: 'Schließen',
   LISTICLES: {
