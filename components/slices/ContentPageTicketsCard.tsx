@@ -15,6 +15,7 @@ import {
   SIDEBAR_TYPES,
   LOCALISED_DATE_FORMATS,
   NOS_OF_HIGHLIGHTS_TO_SHOW,
+  ANALYTICS_PROPERTIES,
 } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { shortCodeSerializer } from 'utils/shortCodes';
@@ -38,6 +39,7 @@ import { currencyAtom } from 'store/atoms/currency';
 import { BLACK_COLOR_CLOSE } from 'assets/SvgIcons';
 import Conditional from 'components/common/Conditional';
 import Product from 'components/Product';
+import { trackEvent } from 'utils/analytics';
 
 const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
   ssr: false,
@@ -630,7 +632,6 @@ const Descriptors = ({
 const TicketCard = (props) => {
   const moreDetailsRef = useRef();
   const {
-    analytics,
     tgid,
     position,
     currentLanguage,
@@ -693,10 +694,10 @@ const TicketCard = (props) => {
   };
 
   const sendBookNowEvent = () => {
-    analytics.setVariableInDataLayer({
-      event: ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED,
-      'Tour Group Id': tgid,
-      Position: position,
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.POSITION]: position,
       'Div Type': 'product-list',
     });
   };

@@ -13,7 +13,12 @@ import { getAppTheme } from 'style/theme';
 import { Client } from 'config/prismic-config';
 import { toursTabSliceHandler } from 'components/Slices';
 import { currencyAtom } from 'store/atoms/currency';
-import { CUSTOM_TYPES, DESIGN, THEMES } from 'const/index';
+import {
+  ANALYTICS_PROPERTIES,
+  CUSTOM_TYPES,
+  DESIGN,
+  THEMES,
+} from 'const/index';
 import {
   redirectTo,
   reflect,
@@ -27,7 +32,7 @@ import {
   fetchCurrencyList,
   fetchTourGroupV6,
 } from 'utils/apiUtils';
-import Analytics from 'utils/analytics';
+import { sendVariableToDataLayer } from 'utils/analytics';
 import {
   categoryTourListParserV1,
   categoryTourListParserV2,
@@ -841,8 +846,10 @@ const HeadoutSessionIdSetterComponent = () => {
   const validHsidFromCookie = Cookies.get(HSID_VAR);
   const { setHsid } = useContext(MBContext);
   const pushSandboxIDtoDataLayer = (hsid) => {
-    const analytics = new Analytics();
-    analytics.sendHsidToDataLayer({ 'h-sid': hsid });
+    sendVariableToDataLayer({
+      name: ANALYTICS_PROPERTIES.HSID,
+      value: hsid,
+    });
     setHsid(hsid);
   };
   useEffect(() => {

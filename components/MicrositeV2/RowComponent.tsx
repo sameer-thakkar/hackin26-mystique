@@ -42,6 +42,9 @@ export const RowComponent = (props) => {
     useContext(InteractionContext) || {};
   const { tgid: activeTgid, section: activeSection, autoScroll } =
     activeTour || {};
+  const tgidClicked = activeTgid;
+  const cardPosition = tgidsSubArr.indexOf(activeTgid);
+  const showDescription = cardPosition > -1 && sectionId === activeSection;
 
   const handleProductClicked = (productTgid, section, event) => {
     if (event.type === 'keydown') {
@@ -73,9 +76,6 @@ export const RowComponent = (props) => {
       });
   }, []);
 
-  const tgidClicked = activeTgid;
-  const cardPosition = tgidsSubArr.indexOf(activeTgid);
-  const showDescription = cardPosition > -1 && sectionId === activeSection;
   return (
     <ProductsRow>
       {tgidsSubArr.map((tgid, index) => {

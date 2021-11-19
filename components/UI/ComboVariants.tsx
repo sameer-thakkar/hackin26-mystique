@@ -12,6 +12,7 @@ import { COLORS, SOLEIL } from 'const/ui-constants';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 import { getHostName } from 'utils/helper';
 import { ANALYTICS_EVENTS } from 'const/index';
+import { trackEvent } from 'utils/analytics';
 
 const PopupWrapper = styled.div`
   z-index: 10;
@@ -146,7 +147,6 @@ type ComboVariantsProps = {
   closeHandler: () => void;
   descriptors: string[];
   bookingUrl: string;
-  analytics: { [key: string]: any };
 };
 const ComboVariants = ({
   productTitle,
@@ -156,7 +156,6 @@ const ComboVariants = ({
   closeHandler,
   descriptors,
   bookingUrl,
-  analytics,
 }: ComboVariantsProps) => {
   const { lang, host, isDev, isStage } = useContext(MBContext);
   const hostname = getHostName(isStage, isDev, host);
@@ -175,8 +174,8 @@ const ComboVariants = ({
   const { variants, currency } = data || {};
   const { localSymbol: currencySymbol } = currency || {};
   useEffect(() => {
-    analytics.setVariableInDataLayer({
-      event: ANALYTICS_EVENTS.COMBO_VARIANT.POPUP_VIEWED,
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.COMBO_VARIANT.POPUP_VIEWED,
       'MB name': hostname,
       TGID: tgid,
       Device: isMobile ? 'Mweb' : 'Desktop',
@@ -198,7 +197,6 @@ const ComboVariants = ({
       currencySymbol,
       language: lang,
       bookingUrl,
-      analytics,
       hostname,
       tgid,
       isMobile,

@@ -6,6 +6,9 @@ import { COLORS, SIZES, SOLEIL } from 'const/ui-constants';
 import Conditional from 'components/common/Conditional';
 import { useWindowWidth } from '@react-hook/window-size';
 import { CHEVRON_LEFT, CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
+import { trackEvent } from 'utils/analytics';
+import { ANALYTICS_EVENTS } from 'const/index';
+import { ANALYTICS_PROPERTIES } from 'const/index';
 
 import { stringIdfy } from '../../utils/helper';
 import sliceHandler from '../Slices';
@@ -253,6 +256,17 @@ const TabWrapper = (props: TabWrapperProps) => {
     };
   }, [isMobile, swiper, updateIndex]);
 
+  const onTabClick = ({ tabId, index, heading }) => {
+    setActiveTab(tabId);
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.INFO_TAB_CLICKED,
+      [ANALYTICS_PROPERTIES.POSITION]: index + 1,
+      [ANALYTICS_PROPERTIES.INFO_HEADING]: heading,
+      [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Standalone',
+      [ANALYTICS_PROPERTIES.SECTION]: 'Longform Content',
+    });
+  };
+
   if (isGlobalMb && !isMobile) {
     const goNext = () => {
       if (swiper !== null) {
@@ -295,7 +309,13 @@ const TabWrapper = (props: TabWrapperProps) => {
                     <StyledTab
                       key={index}
                       isActive={activeTabId == tabId}
-                      onClick={() => setActiveTab(tabId)}
+                      onClick={() =>
+                        onTabClick({
+                          tabId,
+                          index,
+                          heading: slice.primary.title,
+                        })
+                      }
                     >
                       {slice.primary.title}
                     </StyledTab>
@@ -398,7 +418,9 @@ const TabWrapper = (props: TabWrapperProps) => {
                 <StyledTab
                   key={index}
                   isActive={activeTabId == tabId}
-                  onClick={() => setActiveTab(tabId)}
+                  onClick={() =>
+                    onTabClick({ tabId, heading: slice.primary.title, index })
+                  }
                 >
                   {slice.primary.title}
                 </StyledTab>

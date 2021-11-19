@@ -209,6 +209,18 @@ export const ANALYTICS_EVENTS = {
   EXPERIENCE_CARD_CLICKED: 'Experience Card Clicked',
   EXPERIENCE_MORE_DETAILS_VIEWED: 'More Details Viewed',
   EXPERIENCE_INFO_TAB_CLICKED: 'Experience Information Tab Clicked',
+  MICROSITE_PAGE_VIEWED: 'Microsite Page Viewed',
+  CONTENT_CARD_CLICKED: 'Content Card Clicked',
+  DROPDOWN_SHOWN: 'Header Dropdown Shown',
+  DROPDOWN_OPTION_SELECTED: 'Header Dropdown Option Clicked',
+  GROUP_FORM_VIEWED: 'Group Form Viewed',
+  EXPERIMENT_VIEWED: 'Experiment Viewed',
+  CONTENT_TAB_CLICKED: 'Longform Content Tab Clicked',
+  FAQ_ITEM_CLICKED: 'FAQ Item Clicked',
+  QUICK_LINKS_CLICKED: 'Footer Quick Link Clicked',
+  ACCORDION_TOGGLED: 'Accordion Item Toggled',
+  INFO_TAB_CLICKED: 'Information Tab Clicked',
+  EXPERIENCE_CARD_VISIBLE: 'Experience Card Visible',
   COMBO_VARIANT: {
     POPUP_VIEWED: 'Popup viewed',
     VARIANT_CLICKED: 'Variant card clicked',
@@ -602,3 +614,25 @@ export const AUDIOGUIDE_TAG_REGEX = /AUDIO_GUIDE_[0-9]+/g;
 export const REOPENING_CATEGORIES: number[] = [3159];
 export const NEW_ARRIVALS_CATEGORIES: number[] = [1351];
 export const WHY_WATCH_STRING = 'Why Watch';
+
+export const ANALYTICS_PROPERTIES = {
+  LANGUAGE: 'Language',
+  TGIDS: 'Tour Group IDs',
+  TGID: 'Tour Group Id',
+  PAGE_TYPE: 'Page Type',
+  HEADER: 'Header',
+  OPTION_TEXT: 'Option Text',
+  POSITION: 'Position',
+  INFO_HEADING: 'Information Heading',
+  ACTION: 'Action',
+  PAGE_TITLE: 'Page Title',
+  HSID: 'h-sid',
+  CARD_TYPE: 'Card Type',
+  IS_TRUNCATED: 'Is Truncated Text',
+  PAGE_HEADING: 'Page Heading',
+  SECTION: 'Section',
+};
+export const PAGE_TYPES = {
+  COLLECTION: 'Collection',
+  CONTENT_PAGE: 'Content Page',
+};

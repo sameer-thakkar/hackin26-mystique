@@ -19,7 +19,7 @@ import Image from 'UI/Image';
 import { strings } from 'const/strings';
 import { SOLEIL, COLORS } from 'const/ui-constants';
 import { POWERED_BY_HEADOUT } from 'assets/SvgIcons';
-import { withTrailingSlash } from 'utils/helper';
+import { throttle, withTrailingSlash } from 'utils/helper';
 
 const MultiLevelNav = dynamic(() => import('components/MultiLevelNav'));
 const ResponsiveSelector: ComponentType<any> = dynamic(
@@ -222,8 +222,14 @@ const Header: React.FC<any> = (props) => {
     const scrollHandler = () => {
       setScrollPos(window.pageYOffset);
     };
-    window.addEventListener('scroll', scrollHandler, { passive: true });
-  }, [scrollPos]);
+    const throttledScrollHandler = throttle(scrollHandler, 500);
+    window.addEventListener('scroll', throttledScrollHandler, {
+      passive: true,
+    });
+    return () => {
+      window.removeEventListener('scroll', throttledScrollHandler);
+    };
+  }, []);
 
   return (
     <StyledHeader hasShadow={scrollPos > 60}>

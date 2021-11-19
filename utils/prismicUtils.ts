@@ -181,6 +181,8 @@ export const getContentPageDocument = async ({
           secondaryFooter,
           productCardData,
           baseLangExperienceLimit,
+          baseLangPageTitle:
+            lang !== 'en-us' ? baseLangData?.data?.title : page.data.title,
         },
       };
       return {
@@ -421,7 +423,10 @@ export const getMicrositeDocument = async ({
                   typeof poweredByHeadout === 'string'
                     ? poweredByHeadout === 'Yes'
                     : poweredByHeadout,
-                baseLangPageTitle: baseLangData.data.title,
+                baseLangPageTitle:
+                  lang !== 'en-us'
+                    ? baseLangData?.data?.title
+                    : completeMicrosite.data.data.title,
                 categorisedToursV1,
                 ...(allShowPages && { allShowPages }),
               },

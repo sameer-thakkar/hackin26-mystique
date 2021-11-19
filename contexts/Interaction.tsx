@@ -1,4 +1,7 @@
+import { ANALYTICS_PROPERTIES } from 'const/index';
+import { ANALYTICS_EVENTS } from 'const/index';
 import React, { createContext, useState, useEffect } from 'react';
+import { trackEvent } from 'utils/analytics';
 
 const InteractionContext = createContext(null);
 export default InteractionContext;
@@ -31,17 +34,28 @@ export const InteractionContextProvider = (props) => {
   ]);
 
   const clickTour = (tgid, hoist, section = 'main', autoScroll = true) => {
+    let expand = false;
     if (activeTour.tgid != tgid) {
       if (hoist) {
         setActiveCategory(uniqueTgids([tgid, ...activeCategoryTgids]));
       }
+      expand = true;
       setActiveTour({
         tgid,
         hoist,
         section,
         autoScroll,
       });
-    } else closeTour();
+    } else {
+      closeTour();
+      expand = false;
+    }
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.EXPERIENCE_MORE_DETAILS_VIEWED,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.ACTION]: expand ? 'Expand' : 'Contract',
+    });
   };
 
   const closeTour = () => {

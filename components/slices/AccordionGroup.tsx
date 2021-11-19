@@ -81,6 +81,7 @@ const AccordionGroup = ({
                   isOpenOverride={index == 0 && isOpenOverride}
                   heading={accordion.heading}
                   isGlobalMb={isGlobalMb}
+                  useSchema={useSchema}
                 />
               );
             })}

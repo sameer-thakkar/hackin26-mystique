@@ -19,11 +19,16 @@ import {
   DROPDOWN_ELEMENT,
   FULL_WIDTH_SLICES,
   ALLOW_IMMEDIEATE_NESTING,
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  PAGE_TYPES,
 } from 'const/index';
 import { getAlternateLanguages, legacyBooleanCheck } from 'utils';
 import allToursParser from 'utils/allToursParser';
 import { tourListApiParser } from 'utils/dataParsers';
 import { groupSlices, getLangObject } from 'utils/helper';
+import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
+import renderShortCodes from 'utils/shortCodes';
 
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 
@@ -184,7 +189,7 @@ class ContentPage extends Component<any, any> {
     } = this.props.data.header_ref.data;
     const { data } = this.props;
 
-    const { microsite } = data;
+    const { microsite, baseLangPageTitle } = data;
     const { all_tours } = microsite?.data;
     const allTourTgids = all_tours
       .filter((tour_slice) => tour_slice?.primary?.tgid)
@@ -263,6 +268,18 @@ class ContentPage extends Component<any, any> {
         groupBookingTourTitles,
       });
     }
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.CONTENT_PAGE,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: this.props.lang,
+      [ANALYTICS_PROPERTIES.PAGE_TITLE]: baseLangPageTitle,
+    });
+
+    sendVariableToDataLayer({
+      name: ANALYTICS_PROPERTIES.PAGE_TITLE,
+      value: renderShortCodes(baseLangPageTitle)?.join?.(''),
+    });
   }
 
   openGroupBookingModal = () => this.setState({ showGroupBookingModal: true });

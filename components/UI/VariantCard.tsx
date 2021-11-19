@@ -10,6 +10,7 @@ import { addQueryParams } from 'utils/urlUtils';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
 import 'react-loading-skeleton/dist/skeleton.css';
+import { trackEvent } from 'utils/analytics';
 
 const VariantCardWrapper = styled.div`
   width: 100%;
@@ -206,7 +207,6 @@ const VariantCard = ({
   variantInfo,
   language,
   bookingUrl,
-  analytics,
   tgid,
   hostname,
   isMobile,
@@ -217,8 +217,8 @@ const VariantCard = ({
   const { finalPrice: variantPrice, bestDiscount } = variantListingPrice || {};
   const [isContentOpen, toggleContentOpen] = useState(false);
   const trackVariantSelection = () => {
-    analytics.setVariableInDataLayer({
-      event: ANALYTICS_EVENTS.COMBO_VARIANT.VARIANT_CLICKED,
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.COMBO_VARIANT.VARIANT_CLICKED,
       'MB name': hostname,
       'Variant ID': variantId,
       TGID: tgid,

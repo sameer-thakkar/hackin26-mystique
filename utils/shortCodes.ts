@@ -162,7 +162,7 @@ const getShortcodesList = (stringToSearch) => {
   return matches;
 };
 
-export const renderShortCodes = (CMSString, props = {}) => {
+export const renderShortCodes = (CMSString = '', props = {}) => {
   let shortCodesList = getShortcodesList(CMSString);
   let fullLength = CMSString.length;
   let renderedRichList = [];
