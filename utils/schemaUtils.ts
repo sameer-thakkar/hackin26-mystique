@@ -64,11 +64,15 @@ export const getProductSchema = ({
   return {
     productName,
     offers: [offerSchema],
-    aggregateRating: {
-      ratingValue: `${averageRating}`,
-      reviewCount: `${reviewsCount}`,
-      ratingCount: `${ratingsCount}`,
-    },
+    ...(ratingsCount &&
+      reviewsCount &&
+      averageRating && {
+        aggregateRating: {
+          ratingValue: `${averageRating}`,
+          reviewCount: `${reviewsCount}`,
+          ratingCount: `${ratingsCount}`,
+        },
+      }),
     ...(images &&
       images?.length && {
         images: getProductSchemaImages(images),
