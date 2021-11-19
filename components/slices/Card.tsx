@@ -8,8 +8,9 @@ import { COLORS, SOLEIL } from 'const/ui-constants';
 import Image from 'UI/Image';
 import Button from 'UI/Button';
 import { CHEVRON_LEFT } from 'assets/SvgIcons';
-import { FALLBACK_IMAGE, FALLBACK_IMAGES } from 'const/index';
+import { ANALYTICS_EVENTS, FALLBACK_IMAGE, FALLBACK_IMAGES } from 'const/index';
 import Conditional from 'components/common/Conditional';
+import { trackEvent } from 'utils/analytics';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -264,6 +265,12 @@ const Card: React.FC<CardProps> = ({
     shouldSwiperUpdate: true,
   };
 
+  const trackClickEvent = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.CONTENT_CARD_CLICKED,
+    });
+  };
+
   const aspectRatio =
     cardImageAspectRatio[isGlobalMb ? 5 : cardsInARow > 4 ? 4 : cardsInARow];
   const fallbackImage = isGlobalMb
@@ -363,6 +370,7 @@ const Card: React.FC<CardProps> = ({
       cardType={type}
       isGlobalMb={isGlobalMb}
       cardsInARow={cardsInARow}
+      onClick={trackClickEvent}
     >
       {imageView}
       {hasTextContent ? (

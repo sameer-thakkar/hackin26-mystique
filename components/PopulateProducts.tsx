@@ -1,14 +1,15 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Product from 'components/Product';
 import Conditional from 'components/common/Conditional';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import { COLORS, SOLEIL } from 'const/ui-constants';
-import { THEMES } from 'const/index';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, THEMES } from 'const/index';
 import { strings } from 'const/strings';
 import { fetchInventory } from 'utils/apiUtils';
 import { legacyBooleanCheck } from 'utils';
 import TicketCard from 'components/slices/ContentPageTicketsCard';
+import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 
 const StyledProductsWrapper = styled.div`
   margin: 0 auto;
@@ -66,6 +67,8 @@ const StyledTourListSubHeading = styled.div`
   }
 `;
 
+const ProductWrapper = styled.div``;
+
 const PopulateProducts = (props) => {
   const {
     uncategorizedTours: tours,
@@ -83,7 +86,6 @@ const PopulateProducts = (props) => {
     scorpioData,
     pageUrl,
     host,
-    analytics,
     mbTheme,
     isAmp,
     instantCheckout,
@@ -92,6 +94,7 @@ const PopulateProducts = (props) => {
     sectionTitle = '',
     sectionSubtext = '',
   } = props;
+  const productsWrapperRef = useRef(null);
   const [tourPrices, setTourPrices] = useState(scorpioData);
   const [earliestAvailabilityQueue, setEarliestAvailabilityQueue] = useState(
     []
@@ -99,8 +102,69 @@ const PopulateProducts = (props) => {
   const [showEarliestAvailability, setShowEarliestAvailability] = useState(
     null
   );
+  const productsRef = useRef([]);
+
+  const addToRef = (el) => {
+    productsRef.current.push(el);
+  };
+
+  useEffect(() => {
+    if (!productsRef.current) return;
+    try {
+      const observerCallback = (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            observer.unobserve(entry.target);
+            const { tgid: stringTgid } = entry.target?.dataset;
+            const tgid = parseInt(stringTgid);
+            if (tgid) {
+              trackEvent({
+                eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_VISIBLE,
+                [ANALYTICS_PROPERTIES.TGID]: tgid,
+                [ANALYTICS_PROPERTIES.POSITION]:
+                  availableToursList.findIndex((t) => t.tgid === tgid) + 1,
+                [ANALYTICS_PROPERTIES.IS_TRUNCATED]: !!entry.target?.querySelector?.(
+                  '.more-details'
+                ),
+              });
+            }
+          }
+        });
+      };
+      const observer = new IntersectionObserver(observerCallback, {
+        rootMargin: '0px',
+        threshold: 0.3,
+      });
+
+      productsRef.current.forEach((el) => {
+        observer.observe(el);
+      });
+
+      return () => {
+        observer.disconnect();
+      };
+    } catch (e) {
+      console.log();
+    }
+  }, [productsRef]);
 
   useEffect(() => setTourPrices(scorpioData), [scorpioData]);
+
+  useEffect(() => {
+    if (!productsWrapperRef?.current) return;
+    try {
+      const productsEl = productsWrapperRef.current;
+      const { height, top } = productsEl.getBoundingClientRect();
+      const documentHeight = window.document.body.scrollHeight;
+      const percentScrollHeight = ((height + top) / documentHeight) * 100;
+      sendVariableToDataLayer({
+        name: 'Products Container Height Percentage',
+        value: percentScrollHeight,
+      });
+    } catch (e) {
+      //
+    }
+  }, [productsWrapperRef]);
 
   useEffect(() => {
     const fetchEarliestAvailability = async ({
@@ -196,7 +260,7 @@ const PopulateProducts = (props) => {
   );
 
   return (
-    <StyledProductsWrapper>
+    <StyledProductsWrapper ref={productsWrapperRef}>
       <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
         <div id="tour-list-heading">
           <Conditional if={sectionTitle || strings.TOUR_LIST_HEADING}>
@@ -221,9 +285,6 @@ const PopulateProducts = (props) => {
               tour_title_override,
               marketing_highlights_override,
               tour_description_override,
-              offer__free_tour,
-              cta_url_suffix,
-              show_scratch_price,
               product_booster,
               short_summary,
               tag_booster,
@@ -237,24 +298,25 @@ const PopulateProducts = (props) => {
               descriptors: marketing_highlights_override,
               highlights: tour_description_override,
               scorpioData: scorpioData?.[tgid],
-              tourPrices: tourPrices,
-              uid: uid,
-              currentLanguage: currentLanguage,
+              tourPrices,
+              uid,
+              currentLanguage,
               bookNowText,
               showLessText,
               readMoreText,
               productOffer,
               hasOffer,
               togglePopup,
-              offerId: offer__free_tour?.id,
+              offerId: tour.offer__free_tour?.id,
               popupState,
               isMobile,
               isAmp,
               pageUrl,
               host,
-              ctaUrlSuffix: cta_url_suffix || '',
-              isScratchPriceEnabled: show_scratch_price === 'Yes',
-              analytics,
+              ctaUrlSuffix: tour.cta_url_suffix || '',
+              isScratchPriceEnabled: legacyBooleanCheck(
+                tour.show_scratch_price
+              ),
               position: index + 1,
               booster: product_booster,
               defaultOpen: finalToursList.length === 1,
@@ -262,10 +324,15 @@ const PopulateProducts = (props) => {
               boosterTag: tag_booster,
               numberOfTours: tours.length,
               instantCheckout,
+              indexPosition: index,
             };
 
             return (
-              <Fragment key={tgid}>
+              <ProductWrapper
+                ref={addToRef}
+                data-tgid={tour.tgid}
+                key={tour.tgid}
+              >
                 {isTicketCard ? (
                   <TicketCard {...childProps} />
                 ) : (
@@ -274,7 +341,7 @@ const PopulateProducts = (props) => {
                 <Conditional if={mbTheme === THEMES.MIN_BLUE}>
                   <HorizontalLine colorProp={COLORS.GREY.G6} />
                 </Conditional>
-              </Fragment>
+              </ProductWrapper>
             );
           })}
       </ProductContainer>

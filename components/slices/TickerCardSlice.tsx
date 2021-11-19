@@ -4,7 +4,6 @@ import { currencyAtom } from 'store/atoms/currency';
 import { getLangObject } from 'utils/helper';
 import { useWindowWidth } from '@react-hook/window-size';
 import PopulateProducts from 'components/PopulateProducts';
-import Analytics from 'utils/analytics';
 import { csvTgidToArray } from 'utils/helper';
 import { tourListApiParser } from 'utils/dataParsers';
 import { fetchTourList } from 'utils/apiUtils';
@@ -128,8 +127,6 @@ const TicketCard = (props) => {
   useEffect(() => {
     setIsMobile(windowWidth < 768);
   }, [windowWidth]);
-  const analytics = new Analytics();
-
   return (
     <PopulateProducts
       currency={currency}
@@ -148,7 +145,6 @@ const TicketCard = (props) => {
       pageUrl={pageUrl}
       isMobile={isAmp || isMobile}
       host={host}
-      analytics={analytics}
       mbTheme={mbTheme}
       instantCheckout={instantCheckout}
       enableEarliestAvailability={enableEarliestAvailability}

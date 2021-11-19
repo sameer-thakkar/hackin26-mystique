@@ -12,10 +12,15 @@ import Button from 'components/UI/Button';
 import { createBookingURL } from 'utils';
 import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import { CHEVRON_DOWN } from 'assets/SvgIcons';
-import { TOUR_COMPARISION_DESIGN } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  TOUR_COMPARISION_DESIGN,
+} from 'const/index';
 import { strings } from 'const/strings';
 import { SOLEIL, COLORS } from 'const/ui-constants';
 import Conditional from 'components/common/Conditional';
+import { trackEvent } from 'utils/analytics';
 
 const StyledTourComparisionTable = styled.div`
   width: auto;
@@ -530,6 +535,17 @@ const TourComparisonTable = (props) => {
       (el) => `comparison-list-details-${el}.toggleClass(class='no-display')`
     )
     .join(',');
+
+  const onBookNowClick = ({ tgid, position }) => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.POSITION]: position,
+      [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Comparision Card',
+      'Div Type': 'product-list',
+    });
+  };
+
   return (
     <StyledTourComparisionTable
       isExpanded={isExpanded || isAmp}
@@ -601,7 +617,15 @@ const TourComparisonTable = (props) => {
                 return (
                   <div className="column" key={index}>
                     <div className="tour-cta">
-                      <a href={ctaProps.link.url}>
+                      <a
+                        href={ctaProps.link.url}
+                        onClick={() =>
+                          onBookNowClick({
+                            tgid: tour.tgid,
+                            position: index + 1,
+                          })
+                        }
+                      >
                         <Button widthProp="100%">{strings.BOOK_NOW_CTA}</Button>
                       </a>
                     </div>
@@ -713,7 +737,12 @@ const TourComparisonTable = (props) => {
               return (
                 <div className="column" key={index}>
                   <div className="tour-cta">
-                    <a href={ctaProps.link.url}>
+                    <a
+                      href={ctaProps.link.url}
+                      onClick={() =>
+                        onBookNowClick({ tgid: tour.tgid, position: index + 1 })
+                      }
+                    >
                       <Button type="fill" widthProp="100%">
                         {strings.BOOK_NOW_CTA}
                       </Button>

@@ -5,9 +5,12 @@ import { useState, useRef, useEffect } from 'react';
 import { useWindowWidth } from '@react-hook/window-size';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { useAmp } from 'next/amp';
+import { trackEvent } from 'utils/analytics';
+import { ANALYTICS_PROPERTIES } from 'const/index';
+import { ANALYTICS_EVENTS } from 'const/index';
 
-import { CHEVRON_DOWN } from '../assets/SvgIcons';
 import LinkResolver from './LinkResolver';
+import { CHEVRON_DOWN } from '../assets/SvgIcons';
 
 const StyledMenuItem = styled.li`
   ${({ isAmp }) =>
@@ -250,7 +253,7 @@ const Navigation = (props) => {
   );
 };
 
-const Menu = ({ label, url, slices, isMobile, isGlobalMb = false }) => {
+const Menu = ({ label, url, slices, isMobile, isGlobalMb = false, index }) => {
   const [active, setActive] = useState(false);
   const nestedMobileInteraction = (event, clickedLabel) => {
     if (!isMobile) return;
@@ -258,6 +261,7 @@ const Menu = ({ label, url, slices, isMobile, isGlobalMb = false }) => {
     event.stopPropagation();
     if (clickedLabel === label) {
       setActive(!active);
+      trackHeaderItem();
     }
   };
   const nestedMenuRef = useRef(null);
@@ -272,6 +276,13 @@ const Menu = ({ label, url, slices, isMobile, isGlobalMb = false }) => {
     }
   }, [nestedMenuRef, windowWidth]);
 
+  const trackHeaderItem = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.DROPDOWN_SHOWN,
+      [ANALYTICS_PROPERTIES.HEADER]: label,
+    });
+  };
+
   return (
     <>
       <MenuItem
@@ -282,13 +293,20 @@ const Menu = ({ label, url, slices, isMobile, isGlobalMb = false }) => {
         nestOpen={active}
         className={`${active ? 'nest-open' : 'nest-close'}`}
         isGlobalMb={isGlobalMb}
+        onMouseEnter={trackHeaderItem}
+        index={index}
       >
         <NestedMenu
           ref={nestedMenuRef}
           className={`nested-menu ${isOffScreen ? 'off-screen' : ''}`}
         >
           {slices?.map((slice, index) =>
-            HeaderSliceHandler(slice, { index, isMobile, isGlobalMb })
+            HeaderSliceHandler(slice, {
+              index,
+              isMobile,
+              isGlobalMb,
+              headerLabel: label,
+            })
           )}
         </NestedMenu>
       </MenuItem>
@@ -308,7 +326,22 @@ const MenuItem = (props) => {
     index,
     isGlobalMb = false,
     isAmp,
+    onMouseEnter,
+    headerLabel,
   } = props;
+
+  const menuItemSelected = (e) => {
+    if (onClick) onClick(e);
+    e.stopPropagation();
+    const menuItemText = e.target.closest('.menu-item-text')?.innerText;
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.DROPDOWN_OPTION_SELECTED,
+      [ANALYTICS_PROPERTIES.OPTION_TEXT]: menuItemText,
+      [ANALYTICS_PROPERTIES.POSITION]: index + 1,
+      ...(headerLabel && { [ANALYTICS_PROPERTIES.HEADER]: headerLabel }),
+    });
+  };
+
   return (
     <StyledMenuItem
       nestOpen={nestOpen}
@@ -316,11 +349,12 @@ const MenuItem = (props) => {
       isGlobalMb={isGlobalMb}
       isAmp={isAmp}
       id={`menu-item-${index}`}
+      onMouseEnter={onMouseEnter ? onMouseEnter : null}
     >
       <LinkResolver target={url?.target} url={url?.url}>
         <div
-          className={isNested ? 'withIcon' : ''}
-          onClick={onClick}
+          className={`${isNested ? 'withIcon' : ''} menu-item-text`}
+          onClick={menuItemSelected}
           role="button"
           tabIndex={0}
         >
@@ -355,6 +389,7 @@ const HeaderSliceHandler = (slice, props) => {
           isGlobalMb={isGlobalMb}
           index={index}
           isAmp={isAmp}
+          headerLabel={props.headerLabel}
         />
       );
     case 'nested_menu':
@@ -366,6 +401,7 @@ const HeaderSliceHandler = (slice, props) => {
           url={slice.primary.url}
           label={slice.primary.label}
           isGlobalMb={isGlobalMb}
+          index={props.index}
         />
       );
     case 'group_booking':

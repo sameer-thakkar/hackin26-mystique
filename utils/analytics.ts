@@ -1,38 +1,38 @@
-import { isMobile } from './helper';
-import { PAGE_TYPE } from '../constants';
-
-export default function Analytics() {
-  this.isClient = function () {
-    return window && (window as any).dataLayer;
-  };
+declare global {
+  interface Window {
+    dataLayer: Array<any>;
+  }
 }
 
-Analytics.prototype.setVariableInDataLayer = function (labelProps) {
-  if (this.isClient()) {
-    this.pushToDataLayer(labelProps);
+export const trackEvent = ({ eventName, ...labelProps }) => {
+  if (typeof window === 'undefined') return;
+  if (!window.dataLayer) {
+    console.group('trackEvent failed!');
+    console.log({ eventName, labelProps });
+    console.groupEnd();
+    return;
   }
-};
-Analytics.prototype.sendHsidToDataLayer = function (hsidProp) {
-  if (this.isClient()) {
-    this.pushToDataLayer(hsidProp);
-  }
-};
-
-Analytics.prototype.sendGenericPageEvents = function (labelProps) {
-  if (this.isClient()) {
-    const { host, pathname } = window.location;
-    const allProps = {
-      Domain: host,
-      'Page Url': `https://${host}${pathname}`,
-      'Page Type': PAGE_TYPE.COLLECTION_PAGE,
-      'Platform Name': isMobile() ? 'Mobile' : 'Desktop',
-      'Collection Type': 'Microbrand',
-      ...labelProps,
-    };
-    this.pushToDataLayer(allProps);
-  }
+  const allProps = {
+    event: eventName,
+    ...labelProps,
+  };
+  window.dataLayer.push(allProps);
 };
 
-Analytics.prototype.pushToDataLayer = function (props) {
-  if (this.isClient()) (window as any).dataLayer.push(props);
+export const sendVariableToDataLayer = ({ name, value }) => {
+  if (typeof window === 'undefined') return;
+  const dLRef = typeof window !== 'undefined' ? window.dataLayer : [];
+  if (!dLRef) {
+    console.group('sendVariableToDataLayer failed!');
+    console.log({ name, value });
+    console.groupEnd();
+    return;
+  }
+  const lastVariableEntry =
+    dLRef[dLRef.map((prop) => Object.keys(prop)[0]).lastIndexOf(name)];
+  if (lastVariableEntry && Object.values(lastVariableEntry)[0] === value)
+    return;
+  dLRef.push({
+    [name]: value,
+  });
 };

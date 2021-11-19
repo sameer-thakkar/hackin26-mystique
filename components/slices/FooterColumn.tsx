@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { SOLEIL, COLORS } from 'const/ui-constants';
-
-import LinkResolver from '../LinkResolver';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { trackEvent } from 'utils/analytics';
+import LinkResolver from 'components/LinkResolver';
 
 type FooterColumnProps = {
   title: string;
@@ -41,6 +42,14 @@ const LinksList = styled.div`
 `;
 
 const FooterColumn: React.FC<FooterColumnProps> = ({ links, title }) => {
+  const onLinkClick = (e) => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.QUICK_LINKS_CLICKED,
+      [ANALYTICS_PROPERTIES.OPTION_TEXT]: e?.target?.innerText,
+      [ANALYTICS_PROPERTIES.HEADER]: title,
+    });
+  };
+
   return (
     <StyledFooterColumn>
       <Title>{title}</Title>
@@ -50,6 +59,7 @@ const FooterColumn: React.FC<FooterColumnProps> = ({ links, title }) => {
             key={index}
             className="link-item"
             url={link.link_type.url}
+            onClick={onLinkClick}
           >
             {link.link_text}
           </LinkResolver>

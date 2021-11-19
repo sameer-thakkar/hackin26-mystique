@@ -26,6 +26,7 @@ import {
   SIDEBAR_TYPES,
   LOCALISED_DATE_FORMATS,
   NOS_OF_HIGHLIGHTS_TO_SHOW,
+  ANALYTICS_PROPERTIES,
 } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { shortCodeSerializer } from 'utils/shortCodes';
@@ -35,6 +36,7 @@ import {
   getProductCardLayout,
   parseDescriptorIcon,
 } from 'utils/productUtils';
+import { trackEvent } from 'utils/analytics';
 import { getHostName, truncate, wordCount } from 'utils/helper';
 import { isSafetyIncluded, createBookingURL } from 'utils';
 
@@ -562,26 +564,16 @@ const richtextElements = {
   },
 };
 
-const HighlightTabs = ({
-  tabs,
-  hasRegularHighlights = false,
-  onTabChange,
-  analytics,
-  tgid,
-}) => {
+const HighlightTabs = ({ tabs, hasRegularHighlights = false, onTabChange }) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
   useEffect(() => {
-    onTabChange(tabs[activeTabIndex]);
-  }, [activeTabIndex, onTabChange, tabs]);
+    onTabChange({ tab: tabs[0], index: 0, defaultSelection: true });
+  }, []);
 
   const trackedTabChange = (index) => {
     setActiveTabIndex(index);
-    analytics.setVariableInDataLayer({
-      event: ANALYTICS_EVENTS.EXPERIENCE_INFO_TAB_CLICKED,
-      'Tour Group ID': tgid,
-      'Information Heading': tabs[index].heading,
-    });
+    onTabChange({ tab: tabs[index], index });
   };
 
   return (
@@ -679,7 +671,6 @@ export const Descriptors = ({
 const Product = (props) => {
   const moreDetailsRef = useRef();
   const {
-    analytics,
     tgid,
     position,
     currentLanguage,
@@ -706,6 +697,7 @@ const Product = (props) => {
     instantCheckout,
     showEarliestAvailability,
     isTicketCard = false,
+    indexPosition,
   } = props;
   const {
     mbTheme,
@@ -721,6 +713,7 @@ const Product = (props) => {
   const [showMoreDetailsInTabs, setShowMoreDetails] = useState(
     defaultOpen || false
   );
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [showComboVariant, setShowComboVariant] = useState(false);
   const { allTags = [], validity, combo } = scorpioData || {};
 
@@ -738,8 +731,19 @@ const Product = (props) => {
     descriptorsList.length
   );
 
-  const onTabChange = (tab) => {
-    setShowMoreDetails(tab.contents.length > noOfListItemToShow);
+  const onTabChange = ({ tab, index, defaultSelection }) => {
+    const isTruncated = tab.contents.length > noOfListItemToShow;
+    setShowMoreDetails(isTruncated);
+    setActiveTabIndex(index);
+    if (!defaultSelection)
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.INFO_TAB_CLICKED,
+        [ANALYTICS_PROPERTIES.TGID]: tgid,
+        [ANALYTICS_PROPERTIES.INFO_HEADING]: tab.heading,
+        [ANALYTICS_PROPERTIES.POSITION]: index + 1,
+        [ANALYTICS_PROPERTIES.IS_TRUNCATED]: isTruncated,
+        [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
+      });
   };
 
   const handlePopup = () => {
@@ -747,10 +751,11 @@ const Product = (props) => {
   };
 
   const sendBookNowEvent = () => {
-    analytics.setVariableInDataLayer({
-      event: ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED,
-      'Tour Group Id': tgid,
-      Position: position,
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.POSITION]: position,
+      [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
       'Div Type': 'product-list',
     });
   };
@@ -760,8 +765,8 @@ const Product = (props) => {
     if (!isMobile) {
       document.body.style.overflow = 'auto';
     }
-    analytics.setVariableInDataLayer({
-      event: ANALYTICS_EVENTS.COMBO_VARIANT.POPUP_CLOSED,
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.COMBO_VARIANT.POPUP_CLOSED,
       'MB name': hostname,
       TGID: tgid,
       Device: isMobile ? 'Mweb' : 'Desktop',
@@ -786,7 +791,6 @@ const Product = (props) => {
             closeHandler={handleCloseComboPopup}
             descriptors={descriptorsList}
             bookingUrl={productBookingUrl}
-            analytics={analytics}
           />
         ),
         type: SIDEBAR_TYPES.COMBO_VARIANT,
@@ -876,10 +880,14 @@ const Product = (props) => {
     isTicketCard: isTicketCard,
   });
   const trackedToggleContent = (isOpen) => {
-    analytics.setVariableInDataLayer({
-      event: ANALYTICS_EVENTS.EXPERIENCE_MORE_DETAILS_VIEWED,
-      'Tour Group ID': tgid,
-      Action: isOpen ? 'Contract' : 'Expand',
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.EXPERIENCE_MORE_DETAILS_VIEWED,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.ACTION]: isOpen ? 'Contract' : 'Expand',
+      [ANALYTICS_PROPERTIES.INFO_HEADING]: tabs[activeTabIndex].heading,
+      [ANALYTICS_PROPERTIES.POSITION]: indexPosition + 1,
+      [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
+      [ANALYTICS_PROPERTIES.SECTION]: 'Product List',
     });
   };
   const getMoreDetailsButton = () => {
@@ -910,7 +918,6 @@ const Product = (props) => {
           e.stopPropagation();
           if (mbTheme !== THEMES.MIN_BLUE && isMobile) {
             trackedToggleContent(false);
-            typeof window !== 'undefined' && window?.['dataLayer']?.push('UA');
             addToAside({
               width: '100vw',
               children: (
@@ -1155,8 +1162,6 @@ const Product = (props) => {
                   onTabChange={onTabChange}
                   hasRegularHighlights={hasHighlights}
                   tabs={tabs}
-                  tgid={tgid}
-                  analytics={analytics}
                 />
               </Conditional>
             </div>
@@ -1179,7 +1184,6 @@ const Product = (props) => {
           closeHandler={handleCloseComboPopup}
           descriptors={descriptorsList}
           bookingUrl={productBookingUrl}
-          analytics={analytics}
         />
       )}
     </>

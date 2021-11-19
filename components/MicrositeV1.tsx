@@ -22,7 +22,7 @@ import {
   isSafetyIncluded,
   legacyBooleanCheck,
 } from 'utils';
-import Analytics from 'utils/analytics';
+import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import allToursParser from 'utils/allToursParser';
 import { csvTgidToArray, getLangObject, groupSlices } from 'utils/helper';
 import { LOCATION } from 'assets/SvgIcons';
@@ -30,11 +30,14 @@ import {
   ANALYTICS_EVENTS,
   ALLOW_IMMEDIEATE_NESTING,
   THEMES,
+  PAGE_TYPES,
+  ANALYTICS_PROPERTIES,
 } from 'const/index';
 import { strings } from 'const/strings';
 import { fetchTourList } from 'utils/apiUtils';
 import { tourListApiParser } from 'utils/dataParsers';
 import PopulateMeta from 'components/common/NextSeoMeta';
+import renderShortCodes from 'utils/shortCodes';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
@@ -68,7 +71,6 @@ const MicrositeV1 = (props) => {
     serverRequestStartTimestamp,
     categoryTourListData,
   } = props;
-  const analytics = new Analytics();
   const [isMobile, setIsMobile] = useState(props?.isMobile);
   const windowWidth = useWindowWidth();
 
@@ -384,14 +386,27 @@ const MicrositeV1 = (props) => {
         smooth: 'easeInOutQuint',
       });
     }
-    analytics.sendGenericPageEvents({
-      Language: currentLanguage,
-      'Page Title': baseLangPageTitle,
+
+    const renderedBaseLangPageTitle = renderShortCodes(
+      baseLangPageTitle
+    )?.join?.('');
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.COLLECTION,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
+      [ANALYTICS_PROPERTIES.TGIDS]: orderedTgids,
+      [ANALYTICS_PROPERTIES.PAGE_TITLE]: renderedBaseLangPageTitle,
     });
-    analytics.setVariableInDataLayer({
-      event: ANALYTICS_EVENTS.COLLECTION_PAGE_VIEWED,
-      'Collection Type': 'Microbrand',
-      content_ids: orderedTgids,
+
+    sendVariableToDataLayer({
+      name: ANALYTICS_PROPERTIES.LANGUAGE,
+      value: currentLanguage,
+    });
+
+    sendVariableToDataLayer({
+      name: ANALYTICS_PROPERTIES.PAGE_TITLE,
+      value: renderedBaseLangPageTitle,
     });
   }, []);
 
@@ -404,9 +419,10 @@ const MicrositeV1 = (props) => {
   };
 
   const openGroupBookingModal = () => {
-    analytics.pushToDataLayer({
-      event: 'Group Form Viewed',
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.GROUP_FORM_VIEWED,
     });
+
     toggleGroupBookingModal(true);
   };
 
@@ -434,7 +450,6 @@ const MicrositeV1 = (props) => {
       pageUrl={pageUrl}
       isMobile={isAmp || isMobile}
       host={host}
-      analytics={analytics}
       mbTheme={mbTheme}
       instantCheckout={instantCheckout}
       enableEarliestAvailability={enableEarliestAvailability}

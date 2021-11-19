@@ -419,6 +419,23 @@ export const getPriceSortedDiscountedProducts = (allTours) => {
     }, []);
 };
 
+/**
+ *
+ * @param fn callback function
+ * @param thresholdTriggerMs time interval in milliseconds after which fn needs to be called.
+ * @returns
+ */
+export function throttle(callback, thresholdTriggerMs) {
+  let lastTime = 0;
+  return function () {
+    let now = new Date().getTime();
+    if (now - lastTime >= thresholdTriggerMs) {
+      callback.apply(this, arguments);
+      lastTime = now;
+    }
+  };
+}
+
 export const getBuyTicketsUrl = (
   supply,
   categoryId,

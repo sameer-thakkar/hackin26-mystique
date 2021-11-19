@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
 import Chevron from 'components/UI/Chevron';
 import { SOLEIL, COLORS } from 'const/ui-constants';
+import { trackEvent } from 'utils/analytics';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 
 export const StyledAccordion = styled.div`
   padding: 16px 0;
@@ -90,6 +92,7 @@ type AccordionProps = {
   content: any;
   isAmp?: Boolean;
   isGlobalMb?: Boolean;
+  useSchema?: Boolean;
 };
 
 const Accordion = ({
@@ -99,6 +102,7 @@ const Accordion = ({
   clickHandler = null,
   isAmp = false,
   isGlobalMb,
+  useSchema = false,
 }: AccordionProps) => {
   const [isOpen, setOpen] = useState(false || isOpenOverride);
   const chevronContainerClass = classNames({
@@ -112,6 +116,27 @@ const Accordion = ({
   useEffect(() => {
     setOpen(isOpenOverride);
   }, [isOpenOverride]);
+
+  const onAccordionToggle = () => {
+    if (clickHandler) clickHandler();
+    else setOpen(!isOpen);
+
+    console.log({ clickHandler, isOpen });
+    if (useSchema)
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.FAQ_ITEM_CLICKED,
+        [ANALYTICS_PROPERTIES.INFO_HEADING]: heading,
+      });
+    else
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.ACCORDION_TOGGLED,
+        [ANALYTICS_PROPERTIES.INFO_HEADING]: heading,
+        [ANALYTICS_PROPERTIES.ACTION]: !isOpen ? 'Expand' : 'Contract',
+        [ANALYTICS_PROPERTIES.TGID]: null,
+        [ANALYTICS_PROPERTIES.SECTION]: 'Longform Content',
+      });
+  };
+
   return (
     <StyledAccordion
       isOpen={isOpen}
@@ -125,9 +150,7 @@ const Accordion = ({
         className="question"
         as={isAmp ? 'header' : 'div'}
         isAmp={isAmp}
-        onClick={() => {
-          clickHandler ? clickHandler() : setOpen(!isOpen);
-        }}
+        onClick={onAccordionToggle}
         isGlobalMb={isGlobalMb}
       >
         <div className="question-text">{heading}</div>
