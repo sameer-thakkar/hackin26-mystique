@@ -209,6 +209,7 @@ export const HomePage = (props) => {
   const hasSafe = Object.values(allTours).some((tour: any) =>
     isSafetyIncluded(tour.allTags)
   );
+  const isLTT = uid.startsWith('www.london-theater-tickets.com');
   return (
     <V2MicrositeWrapper isEntertainmentMb={isEntertainmentMb}>
       <Header
@@ -349,7 +350,7 @@ export const HomePage = (props) => {
         logoURL={footerLogoURL}
         logoAlt={footerLogoAlt}
         hasPoweredByHeadoutLogo={footer.powered_by_superbrand || false}
-        showDisclaimer={footer.show_disclaimer}
+        showDisclaimer={!isLTT && footer.show_disclaimer}
         disclaimerText={footer.disclaimer_text}
         microbrandType={footer.microbrand_type || ''}
         slices={footer.body || []}

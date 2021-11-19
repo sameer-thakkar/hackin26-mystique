@@ -456,7 +456,6 @@ const MicrositeV1 = (props) => {
       disable_amp={disableAMP}
     />
   );
-
   return (
     <div>
       <div className="microsite-container">
