@@ -121,7 +121,6 @@ const Accordion = ({
     if (clickHandler) clickHandler();
     else setOpen(!isOpen);
 
-    console.log({ clickHandler, isOpen });
     if (useSchema)
       trackEvent({
         eventName: ANALYTICS_EVENTS.FAQ_ITEM_CLICKED,

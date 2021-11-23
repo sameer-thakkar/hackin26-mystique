@@ -884,7 +884,7 @@ const Product = (props) => {
       eventName: ANALYTICS_EVENTS.EXPERIENCE_MORE_DETAILS_VIEWED,
       [ANALYTICS_PROPERTIES.TGID]: tgid,
       [ANALYTICS_PROPERTIES.ACTION]: isOpen ? 'Contract' : 'Expand',
-      [ANALYTICS_PROPERTIES.INFO_HEADING]: tabs[activeTabIndex].heading,
+      [ANALYTICS_PROPERTIES.INFO_HEADING]: tabs[activeTabIndex]?.heading,
       [ANALYTICS_PROPERTIES.POSITION]: indexPosition + 1,
       [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
       [ANALYTICS_PROPERTIES.SECTION]: 'Product List',

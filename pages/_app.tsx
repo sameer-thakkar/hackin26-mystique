@@ -30,7 +30,6 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
           ? PAGE_TYPES.COLLECTION
           : PAGE_TYPES.CONTENT_PAGE,
     });
-    console.log({ v: pageProps });
     const pageHeading =
       customType === CUSTOM_TYPES.MICROSITE
         ? pageProps.CMSContent.data?.data?.heading
