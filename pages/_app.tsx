@@ -32,8 +32,8 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
     });
     const pageHeading =
       customType === CUSTOM_TYPES.MICROSITE
-        ? pageProps.CMSContent.data?.data?.heading
-        : pageProps.CMSContent.data?.featured_title;
+        ? pageProps.CMSContent?.data?.data?.heading
+        : pageProps.CMSContent?.data?.featured_title;
     sendVariableToDataLayer({
       name: ANALYTICS_PROPERTIES.PAGE_HEADING,
       value: withShortcodes(pageHeading).join(''),
