@@ -891,6 +891,7 @@ export const getPageData = async ({
       query,
       req,
       serverResponse,
+      isDev,
     })) || { statusCode: 404 };
 
     if (statusCode) {

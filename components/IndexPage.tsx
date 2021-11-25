@@ -50,16 +50,6 @@ const Page = (props) => {
     }
   }, []);
 
-
-      const { ContentType, CMSContent, statusCode } = (await getPrismicDocument(
-        {
-          query,
-          req,
-          serverResponse,
-          isDev,
-        }
-      )) || { statusCode: 404 };
-
   const {
     CMSContent,
     tourGroupData,
@@ -86,7 +76,6 @@ const Page = (props) => {
     primaryCountry,
   } = props;
   const [{ eventsReady }, setEventsReady] = useRecoilState(gtmAtom);
-
 
   useEffect(() => {
     // GTM Universal Properties
