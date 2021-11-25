@@ -246,6 +246,7 @@ const ShowPage = ({
   const currentLanguage = getHeadoutLanguagecode(lang);
   const categoryName = showType ? showType : primarySubCategoryName;
 
+  const selfCanonicalLink = convertUidToUrl({ uid });
   const tagsArray = [categoryName, ...microBrandsDescriptor.split('\r\n')];
   const alternateLanguages = getAlternateLanguages(
     alternate_languages,
@@ -260,6 +261,7 @@ const ShowPage = ({
     logo_redirection_url: logoRedirectionURL,
     tgid,
     favicon,
+    canonical_link,
   } = CMSData;
 
   const { commonHeader } = CMSContent;
@@ -362,6 +364,7 @@ const ShowPage = ({
                 favicon: {
                   url: favicon || FAVICON_LONDON_THEATRE_TICKETS,
                 },
+                canonical_link: canonical_link || selfCanonicalLink,
               },
             },
             datePublished,

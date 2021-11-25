@@ -269,16 +269,29 @@ class ContentPage extends Component<any, any> {
       });
     }
 
+    sendVariableToDataLayer({
+      name: ANALYTICS_PROPERTIES.PAGE_TITLE,
+      value: renderShortCodes(baseLangPageTitle)?.join?.(''),
+    });
+
     trackEvent({
       eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
       [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.CONTENT_PAGE,
       [ANALYTICS_PROPERTIES.LANGUAGE]: this.props.lang,
       [ANALYTICS_PROPERTIES.PAGE_TITLE]: baseLangPageTitle,
     });
+  }
 
-    sendVariableToDataLayer({
-      name: ANALYTICS_PROPERTIES.PAGE_TITLE,
-      value: renderShortCodes(baseLangPageTitle)?.join?.(''),
+  componentDidUpdate() {
+    const { data, eventsReady } = this.props;
+    const { baseLangPageTitle } = data;
+    if (!eventsReady) return;
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.CONTENT_PAGE,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: this.props.lang,
+      [ANALYTICS_PROPERTIES.PAGE_TITLE]: baseLangPageTitle,
     });
   }
 

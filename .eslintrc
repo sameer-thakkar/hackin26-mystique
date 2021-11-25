@@ -24,6 +24,7 @@
     "jsx-a11y/click-events-have-key-events": "off",
     "no-unused-vars": "off",
     "no-case-declarations": "off",
+    "no-console": "error",
     "prettier/prettier": "off",
     "import/order": [
       "warn",

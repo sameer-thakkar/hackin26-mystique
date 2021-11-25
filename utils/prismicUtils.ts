@@ -9,18 +9,29 @@ import {
   MICROSITE_OBJECT_KEYS,
   MICROSITE_STRING_KEYS,
   PRISMIC_LANG_TO_ROUTE_PARAM,
+  THEMES,
 } from 'const/index';
 import { COMMON_DATA_PROPS_FOR_LISTICLE } from 'const/index';
 import {
   documentUidUpdateRedirectHandler,
   getEnglishDocUid,
+  getHeadoutLanguagecode,
   getSinglePrismicSlice,
   redirectTo,
   refsArrayToObject,
 } from 'utils';
 import { getLangUID, getValidUrlParams, sanitizeURL } from 'utils/urlUtils';
+import { toursTabSliceHandler } from 'components/Slices';
 
 import { traceError } from './logutils';
+import { getHostName } from './helper';
+import {
+  categoryTourListParserV1,
+  categoryTourListParserV2,
+  uncategorizedToursListParser,
+} from './dataParsers';
+import { fetchCategory, fetchCurrencyList, fetchTourGroupV6 } from './apiUtils';
+import { addCashbackValueToDescriptor } from './productUtils';
 
 export const getListicleDocument = async ({ req, uid, lang }) => {
   const listicleResponse = await Client(req).getByUID(
@@ -395,6 +406,7 @@ export const getMicrositeDocument = async ({
           }
 
           const micrositeData = {
+            completeMicrosite: completeMicrosite,
             ...completeMicrosite,
             data: {
               ...completeMicrosite.data,
@@ -738,7 +750,10 @@ export const getGlobalExperience = async ({ req, uid, lang }) => {
   return Promise.reject();
 };
 
-const getRefsArrayByIds = async (ref_ids: Array<String>, req: Request) => {
+export const getRefsArrayByIds = async (
+  ref_ids: Array<String>,
+  req: Request
+) => {
   const linkedRefsPromise = Client(req).getByIDs(ref_ids.filter((id) => id));
   return await Promise.resolve(linkedRefsPromise).then((res: any) => {
     return res.results;
@@ -795,7 +810,8 @@ export const getShowPage = async ({
   }
   return Promise.reject();
 };
-export const getPrismicDocument = async ({
+
+const getPrismicDocument = async ({
   req,
   serverResponse,
   query,
@@ -853,6 +869,480 @@ export const getPrismicDocument = async ({
     });
     return {
       statusCode: 404,
+    };
+  }
+};
+
+export const getPageData = async ({
+  res: serverResponse,
+  req,
+  query,
+  isDev,
+}) => {
+  const { host } = req.headers || window.location;
+  const isStage = host.includes('stage-');
+  const { uid, lang } = getLangUID(req, query);
+  const hostname = getHostName(isStage, isDev, host);
+
+  try {
+    let initial_tgids = [];
+
+    const { ContentType, CMSContent, statusCode } = (await getPrismicDocument({
+      query,
+      req,
+      serverResponse,
+    })) || { statusCode: 404 };
+
+    if (statusCode) {
+      return {
+        statusCode,
+      };
+    }
+
+    /**
+     * AllData will yield different sets of Properties based on CUSTOM_TYPE,
+     * and finally gets returned with any other common data for CUSTOM_TYPE
+     */
+    let AllData: any = {};
+    let tgidsArray = [];
+    const queryParams = (function getQueryparams() {
+      try {
+        const href = req ? `http://${host}${req.url}` : window.location.href;
+        const url = new URL(href);
+        if (url) {
+          return {
+            tgidToScroll: url.searchParams.get('tgid'),
+            noTrack: typeof url.searchParams.get('no-track') === 'string',
+            currencyCode: url.searchParams.get('currencyCode'),
+            bookSubdomain: url.searchParams.get('bookSubdomain') ?? undefined,
+          };
+        }
+        return {};
+      } catch (error) {
+        traceError({ error, host: req?.headers?.host, url: req?.url });
+        return {};
+      }
+    })();
+
+    if (ContentType === CUSTOM_TYPES.CONTENT_PAGE) {
+      const { data } = CMSContent || {};
+      const {
+        productCardData,
+        baseLangExperienceLimit,
+        content_framework: contentFramework,
+        data: CMSData,
+      } = data || {};
+      const { data: contentFrameworkData } = contentFramework || {};
+      const { design, theme, body1 } = CMSData || {};
+      const MBDesign = design || '';
+      const mbTheme = theme || THEMES.DEFAULT;
+      const toursTabFirstSlice = body1?.[0];
+
+      const categoryTourListV1 = getSinglePrismicSlice({
+        sliceName: 'ticket_card_shoulder_page',
+        slices: contentFrameworkData?.body,
+      });
+      let categoryTourListData;
+      const hasCategoryTourListV1 = Object.keys(categoryTourListV1)?.length;
+
+      if (hasCategoryTourListV1) {
+        const sliceObj = {
+          ...categoryTourListV1,
+          ...(baseLangExperienceLimit && {
+            primary: {
+              sp_experience_limit: baseLangExperienceLimit,
+            },
+          }),
+        };
+        categoryTourListData = await categoryTourListParserV1({
+          productCard: productCardData,
+          sliceObj,
+          hostname,
+          lang,
+        });
+      }
+
+      const prismicTours = toursTabFirstSlice
+        ? await toursTabSliceHandler(toursTabFirstSlice)
+        : [];
+
+      const toursList = uncategorizedToursListParser(
+        prismicTours,
+        initial_tgids
+      );
+
+      tgidsArray = toursList?.reduce((acc, tour) => {
+        return [...acc, tour.tgid];
+      }, []);
+      const { activeCurrency } = categoryTourListData || {};
+
+      AllData = {
+        CMSContent,
+        toursList,
+        categoryTourListData,
+        ContentType,
+        uid,
+        lang,
+        host,
+        MBDesign,
+        isDev,
+        queryParams,
+        mbTheme,
+        isStage,
+        activeCurrency,
+      };
+    }
+
+    if (ContentType === CUSTOM_TYPES.GLOBAL_COLLECTION) {
+      let ticketsData, startingPrice, currencyCode, currencySymbol;
+      const categoryId = CMSContent?.data?.headout_category_id;
+      if (categoryId) {
+        ticketsData = await fetchCategory(categoryId, hostname);
+      }
+      if (ticketsData?.products?.length) {
+        currencyCode = ticketsData?.products
+          ?.map((ticket) => ticket?.listingPrice?.currencyCode)
+          ?.filter((currency, index, self) => self.indexOf(currency) === index)
+          ?.reduce((acc, cur) => acc + cur);
+
+        startingPrice = Math.min(
+          ...ticketsData?.products?.map(
+            (ticket) => ticket?.listingPrice?.finalPrice
+          )
+        );
+      }
+
+      if (currencyCode) {
+        const allCurrencies = await fetchCurrencyList();
+        currencySymbol = allCurrencies
+          ?.filter((d) => d.code === currencyCode)
+          ?.reduce((acc, cur) => acc + cur);
+      }
+
+      return {
+        CMSContent: {
+          ...CMSContent,
+          tickets: {
+            data: ticketsData,
+            startingPrice,
+            currencySymbol,
+          },
+        },
+        ContentType,
+        uid,
+        lang,
+        isDev,
+        host,
+      };
+    }
+
+    if (ContentType === CUSTOM_TYPES.GLOBAL_CITY) {
+      const allCurrencies = await fetchCurrencyList();
+      return {
+        CMSContent: {
+          ...CMSContent,
+          allCurrencies,
+        },
+        ContentType,
+        uid,
+        lang,
+        isDev,
+        host,
+      };
+    }
+
+    if (
+      ContentType === CUSTOM_TYPES.GLOBAL_HOMEPAGE ||
+      ContentType === CUSTOM_TYPES.GLOBAL_COUNTRY ||
+      ContentType === CUSTOM_TYPES.GLOBAL_EXPERIENCE ||
+      ContentType === CUSTOM_TYPES.LISTICLE
+    ) {
+      return { CMSContent, ContentType, uid, lang, isDev, host };
+    }
+    if (ContentType === CUSTOM_TYPES.SHOW_PAGE) {
+      try {
+        const tgidData = await fetchTourGroupV6({
+          tgid: CMSContent?.data?.tgid,
+          hostname,
+          language: getHeadoutLanguagecode(lang),
+        });
+
+        const primaryCountry = tgidData?.cities?.[0]?.country;
+
+        const activeCurrency = tgidData?.currencies?.[0];
+
+        return {
+          CMSContent,
+          tourGroupData: tgidData,
+          ContentType,
+          uid,
+          lang,
+          isDev,
+          host,
+          primaryCountry,
+          activeCurrency,
+        };
+      } catch (error) {
+        traceError({ error, host: req?.headers?.host, url: req?.url });
+      }
+    }
+    /**
+     * Setting a Common Microsite Reference for Content Page & Regular Microsite
+     * Added to make tour data available on Content Pages.
+     * i.e Content Page now contains all of the data from its related Microsite.
+     */
+    let microsite =
+      ContentType === CUSTOM_TYPES.CONTENT_PAGE
+        ? CMSContent.data.microsite
+        : CMSContent.data;
+    const all_tours_tab_tgids =
+      microsite.data.all_tours.reduce((accum, tour) => {
+        return [...accum, parseInt(tour.primary.tgid)];
+      }, []) || [];
+
+    let labelIds;
+    if (all_tours_tab_tgids.length) {
+      labelIds = microsite.data.content_order.reduce((accum, label) => {
+        return [...accum, label.label.id];
+      }, []);
+      microsite.data.labels = await Client(req)
+        .getByIDs(labelIds)
+        .then((res) => {
+          return res.results;
+        });
+    }
+
+    if (ContentType === CUSTOM_TYPES.MICROSITE) {
+      const { data } = CMSContent || {};
+      const { refs, data: CMSData } = data || {};
+      const { contentFramework, productCardData } = refs || {};
+      const { data: contentFrameworkData } = contentFramework || {};
+      const {
+        design,
+        theme,
+        body,
+        body1,
+        allShowPages,
+        categorisedToursV1: categoryTourListV1,
+      } = CMSData || {};
+      const MBDesign = design || '';
+      const mbTheme = theme || THEMES.DEFAULT;
+      const toursTabFirstSlice = body1[0];
+      const categorizedTours = body;
+
+      const categoryTourList = getSinglePrismicSlice({
+        sliceName: 'tour_list_category',
+        slices: categorizedTours,
+      });
+
+      const categoryCarouselCF = getSinglePrismicSlice({
+        sliceName: 'category_carousel',
+        slices: contentFrameworkData?.body,
+      });
+
+      let categoryTourListData;
+      const hasCategoryTourListV1 = Object.keys(categoryTourListV1)?.length;
+      const hasCategoryTourListV2 = Object.keys(categoryTourList)?.length;
+      const hasCategoryTourList =
+        hasCategoryTourListV2 ||
+        hasCategoryTourListV1 ||
+        Object.keys(categoryCarouselCF)?.length;
+      if (hasCategoryTourList) {
+        if (hasCategoryTourListV1) {
+          categoryTourListData = await categoryTourListParserV1({
+            productCard: productCardData,
+            sliceObj: categoryTourListV1,
+            hostname,
+            lang,
+          });
+        } else {
+          categoryTourListData = await categoryTourListParserV2({
+            tourListCategory: categoryTourList,
+            hostname,
+            showpages: allShowPages,
+            categoryCarousel: categoryCarouselCF,
+          });
+        }
+      }
+
+      const prismicTours = toursTabFirstSlice
+        ? await toursTabSliceHandler(toursTabFirstSlice)
+        : [];
+      const offers = prismicTours
+        ?.filter((tour) => tour.offer__free_tour?.id)
+        ?.map((tour) => tour.offer__free_tour?.id);
+      const uniqueOfferIds = offers.filter(
+        (id, index) => offers.indexOf(id) === index
+      );
+      if (uniqueOfferIds.length)
+        (CMSContent as any).offerData = await Client(req)
+          .getByIDs(uniqueOfferIds)
+          .then((offerData) => {
+            offerData.results.map((offer) => {
+              if (parseInt(offer.data.offer_tgid) > 0)
+                initial_tgids.push(offer.data.offer_tgid);
+            });
+            return offerData;
+          });
+
+      const toursList = uncategorizedToursListParser(
+        prismicTours,
+        initial_tgids
+      );
+
+      tgidsArray = toursList?.reduce((acc, tour) => {
+        return [...acc, tour.tgid];
+      }, []);
+
+      const activeCurrency = categoryTourListData?.activeCurrency;
+
+      AllData = {
+        CMSContent,
+        toursList,
+        categoryTourListData,
+        ContentType,
+        uid,
+        lang,
+        host,
+        MBDesign,
+        isDev,
+        queryParams,
+        mbTheme,
+        isStage,
+        activeCurrency,
+      };
+    }
+    let constructedTourgroupURL;
+    tgidsArray = [...tgidsArray, ...all_tours_tab_tgids];
+    try {
+      const useTest = !!AllData?.['queryParams']?.bookSubdomain;
+      const tgEndpoint = new URL(
+        `https://${
+          isStage ? 'stage-' : ''
+        }microbrands.headout.com/api/tours/v6/tour-groups/`
+      );
+      tgEndpoint.searchParams.set('language', getHeadoutLanguagecode(lang));
+      tgEndpoint.searchParams.set('ids%5B%5D', tgidsArray.join(','));
+      if (AllData?.['queryParams']?.currency)
+        tgEndpoint.searchParams.set(
+          'currency',
+          AllData?.['queryParams']?.currency
+        );
+      if (useTest) {
+        tgEndpoint.searchParams.set('useTest', 'true');
+      }
+      constructedTourgroupURL = tgEndpoint.toString();
+    } catch (e) {
+      constructedTourgroupURL = `https://${
+        isStage ? 'stage-' : ''
+      }microbrands.headout.com/api/tours/v6/tour-groups/?ids%5B%5D=${tgidsArray}&language=${getHeadoutLanguagecode(
+        lang
+      )}`;
+    }
+
+    const tourGroupAPIResponses = await fetch(
+      constructedTourgroupURL.toString()
+    )
+      .then((r) => r.json())
+      .catch((error) => {
+        traceError({ error, host: req?.headers?.host, url: req?.url });
+
+        // if tourGroup API fails, assume all tours as unavailable and render rest of the page.
+        return {
+          tourGroups: tgidsArray.map((tgid) => ({
+            id: tgid,
+            listingPrice: null,
+          })),
+        };
+      });
+
+    const currencySymbolMap = tourGroupAPIResponses?.currencies?.reduce(
+      (acc, currency) => ({
+        ...acc,
+        [currency.code]: { ...currency },
+      }),
+      {}
+    );
+
+    const tourGroupData = tourGroupAPIResponses?.tourGroups?.reduce(
+      (accum: {}, tour: any) => {
+        const { hide_df, hide_safe } = AllData['CMSContent']?.data?.data || {
+          hide_df: false,
+          hide_safe: false,
+        };
+        const {
+          name,
+          microBrandsHighlight,
+          microBrandsDescriptor,
+          highlights,
+          media,
+          imageUrl,
+          averageRating,
+          reviewCount,
+          callToAction,
+          listingPrice,
+          validity,
+          allTags: allTagsTour,
+          id,
+          combo,
+        } = tour || {};
+        const { productImages, safetyImages } = media || {};
+        const { cashbackValue } = listingPrice || {};
+        const updatedDescriptors = addCashbackValueToDescriptor({
+          descriptor: microBrandsDescriptor,
+          cashbackValue,
+        });
+
+        let allTags = allTagsTour || [];
+        if (hide_df) {
+          allTags = allTags?.filter((t) => !t.includes('DF-'));
+        }
+        if (hide_safe) {
+          allTags = allTags?.filter((t) => !t.includes('SAFE'));
+        }
+        return {
+          ...accum,
+          [id]: {
+            title: name,
+            highlights: microBrandsHighlight,
+            descriptors: updatedDescriptors,
+            productHighlights: highlights,
+            productTitle: name,
+            images: [...(productImages || []), { url: imageUrl }],
+            averageRating,
+            reviewCount,
+            ctaBooster: callToAction,
+            available: !(listingPrice === null),
+            allTags,
+            safetyImages: safetyImages || [],
+            validity,
+            combo,
+            listingPrice: {
+              ...listingPrice,
+              ...currencySymbolMap[listingPrice?.currencyCode],
+            },
+          },
+        };
+      },
+      {}
+    );
+
+    const primaryCountry =
+      tourGroupAPIResponses?.cities?.[0]?.country ||
+      AllData?.categoryTourListData?.primaryCountry;
+
+    const activeCurrency = tourGroupAPIResponses?.currencies?.[0];
+    return {
+      activeCurrency,
+      ...AllData,
+      tourGroupData,
+      currencySymbolMap,
+      primaryCountry,
+    };
+  } catch (error) {
+    traceError({ error, host: req?.headers?.host, url: req?.url });
+    return {
+      statusCode: 500,
     };
   }
 };
