@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import {
   getLocalizationLabels,
   initDayJSLocale,
@@ -6,9 +5,8 @@ import {
 import { strings } from 'const/strings';
 import { getLanguageFromPathname } from 'utils';
 import 'public/global.css';
-import { sendVariableToDataLayer } from 'utils/analytics';
-import { ANALYTICS_PROPERTIES, CUSTOM_TYPES, PAGE_TYPES } from 'const/index';
-import { withShortcodes } from 'utils/helper';
+import { MutableSnapshot, RecoilRoot } from 'recoil';
+import { currencyAtom } from 'store/atoms/currency';
 
 const App = ({ Component, pageProps, localizedStrings, lang }) => {
   strings.setContent({
@@ -16,31 +14,21 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
   });
   if (lang !== 'en') initDayJSLocale(lang);
 
-  useEffect(() => {
-    // GTM Universal Properties
-    sendVariableToDataLayer({
-      name: ANALYTICS_PROPERTIES.LANGUAGE,
-      value: lang,
-    });
-    const customType = pageProps.ContentType;
-    sendVariableToDataLayer({
-      name: ANALYTICS_PROPERTIES.PAGE_TYPE,
-      value:
-        customType !== CUSTOM_TYPES.CONTENT_PAGE
-          ? PAGE_TYPES.COLLECTION
-          : PAGE_TYPES.CONTENT_PAGE,
-    });
-    const pageHeading =
-      customType === CUSTOM_TYPES.MICROSITE
-        ? pageProps.CMSContent?.data?.data?.heading
-        : pageProps.CMSContent?.data?.featured_title;
-    sendVariableToDataLayer({
-      name: ANALYTICS_PROPERTIES.PAGE_HEADING,
-      value: withShortcodes(pageHeading).join(''),
-    });
-  }, []);
+  const initRecoil = ({ set }: MutableSnapshot) => {
+    if (!pageProps?.ContentType) return;
 
-  return <Component {...pageProps} />;
+    const { queryParams = {} } = pageProps;
+    const { currencyCode } = queryParams;
+    if (currencyCode?.length) {
+      set(currencyAtom, currencyCode);
+    }
+  };
+
+  return (
+    <RecoilRoot initializeState={initRecoil}>
+      <Component {...pageProps} />
+    </RecoilRoot>
+  );
 };
 
 App.getInitialProps = async ({ Component, ctx }) => {

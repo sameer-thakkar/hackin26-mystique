@@ -266,6 +266,7 @@ export const categoryTourListParserV1 = async ({
       scorpioData,
       primaryCountry: { code: countryCode, countryName },
       orderedTours: repeatableObj,
+      activeCurrency: currency,
     };
   }
 };
@@ -411,6 +412,7 @@ export const categoryTourListParserV2 = async (
   }
 
   const allData = categoriesWithProducts?.flat();
+  let currencyObject;
   if (allData?.length) {
     const tgids = allTgids?.flat();
     const tgidSet = new Set(tgids);
@@ -426,6 +428,7 @@ export const categoryTourListParserV2 = async (
         });
         return formattedData;
       });
+    currencyObject = (allTourGroupData as any)?.currencies?.[0];
     const hasShowPageData = Object.keys(showpageData)?.length ? true : false;
     allData?.forEach((c: any) => {
       const { collection, category, subCategory, items } = c || {};
@@ -557,7 +560,8 @@ export const categoryTourListParserV2 = async (
       });
       finalObj[categoryId] = allProducts;
     });
-    data = finalObj;
+
+    data = { ...finalObj, activeCurrency: currencyObject };
   }
   return {
     ...data,

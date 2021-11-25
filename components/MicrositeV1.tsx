@@ -38,6 +38,7 @@ import { fetchTourList } from 'utils/apiUtils';
 import { tourListApiParser } from 'utils/dataParsers';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import renderShortCodes from 'utils/shortCodes';
+import { gtmAtom } from 'store/atoms/gtm';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
@@ -75,6 +76,7 @@ const MicrositeV1 = (props) => {
   const windowWidth = useWindowWidth();
 
   const currency = useRecoilValue(currencyAtom);
+  const { eventsReady } = useRecoilValue(gtmAtom);
   const [initialCurrency] = useState(currency);
   const [freeTourPopupOpen, toggleFreeTourPopup] = useState(false);
   const [covidAlertActive, toggleCovidAlert] = useState(false);
@@ -391,14 +393,6 @@ const MicrositeV1 = (props) => {
       baseLangPageTitle
     )?.join?.('');
 
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
-      [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.COLLECTION,
-      [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
-      [ANALYTICS_PROPERTIES.TGIDS]: orderedTgids,
-      [ANALYTICS_PROPERTIES.PAGE_TITLE]: renderedBaseLangPageTitle,
-    });
-
     sendVariableToDataLayer({
       name: ANALYTICS_PROPERTIES.LANGUAGE,
       value: currentLanguage,
@@ -409,6 +403,21 @@ const MicrositeV1 = (props) => {
       value: renderedBaseLangPageTitle,
     });
   }, []);
+
+  useEffect(() => {
+    if (!eventsReady) return;
+
+    const renderedBaseLangPageTitle = renderShortCodes(
+      baseLangPageTitle
+    )?.join?.('');
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.COLLECTION,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
+      [ANALYTICS_PROPERTIES.TGIDS]: orderedTgids,
+      [ANALYTICS_PROPERTIES.PAGE_TITLE]: renderedBaseLangPageTitle,
+    });
+  }, [eventsReady]);
 
   const onTogglePopup = () => {
     toggleFreeTourPopup(!freeTourPopupOpen);
