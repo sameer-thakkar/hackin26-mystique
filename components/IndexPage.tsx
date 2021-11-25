@@ -193,6 +193,7 @@ export default class Page extends React.Component<any, any> {
           query,
           req,
           serverResponse,
+          isDev,
         }
       )) || { statusCode: 404 };
 

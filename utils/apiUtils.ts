@@ -115,6 +115,7 @@ export const fetchCurrencyList = async () => {
     const data = await res.json();
     return data;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('[fetchCurrencyList]', error);
   }
 };
@@ -130,6 +131,7 @@ export const fetchCategory = async (
     const data = await response.json();
     return data;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('[fetchCategory]', error);
   }
 };
@@ -165,6 +167,7 @@ export const fetchTGIDsByCategoryV2 = async ({
     const data = await response.json();
     return data;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('[fetchTGIDsByCategoryV2Obj]', error);
   }
 };
@@ -196,6 +199,7 @@ export const fetchCollection = async ({
     const data = await response.json();
     return data;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('[fetchCollection]', error);
   }
 };
@@ -225,6 +229,7 @@ export const fetchInventoryAPI = async ({
     const data = await response.json();
     return data;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('[fetchCategory]', error);
   }
 };
