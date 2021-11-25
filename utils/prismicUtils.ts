@@ -1164,7 +1164,7 @@ export const getPageData = async ({
         return [...acc, tour.tgid];
       }, []);
 
-      const { activeCurrency } = categoryTourListData;
+      const activeCurrency = categoryTourListData?.activeCurrency;
 
       AllData = {
         CMSContent,
