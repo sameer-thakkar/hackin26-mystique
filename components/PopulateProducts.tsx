@@ -144,7 +144,7 @@ const PopulateProducts = (props) => {
         observer.disconnect();
       };
     } catch (e) {
-      console.log();
+      //
     }
   }, [productsRef]);
 

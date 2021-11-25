@@ -944,7 +944,7 @@ export const getPageData = async ({
       tgidsArray = toursList?.reduce((acc, tour) => {
         return [...acc, tour.tgid];
       }, []);
-      const { activeCurrency } = categoryTourListData;
+      const { activeCurrency } = categoryTourListData || {};
 
       AllData = {
         CMSContent,
