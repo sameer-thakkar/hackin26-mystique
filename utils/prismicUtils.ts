@@ -29,7 +29,12 @@ import {
   categoryTourListParserV2,
   uncategorizedToursListParser,
 } from './dataParsers';
-import { fetchCategory, fetchCurrencyList, fetchTourGroupV6 } from './apiUtils';
+import {
+  fetchCategory,
+  fetchCurrencyList,
+  fetchInventory,
+  fetchTourGroupV6,
+} from './apiUtils';
 import { addCashbackValueToDescriptor } from './productUtils';
 
 export const getListicleDocument = async ({ req, uid, lang }) => {
@@ -1037,13 +1042,20 @@ export const getPageData = async ({
           language: getHeadoutLanguagecode(lang),
         });
 
-        const primaryCountry = tgidData?.cities?.[0]?.country;
+        const inventoryData = await fetchInventory({
+          tgid: CMSContent?.data?.tgid,
+          hostname,
+          forDays: 10,
+        });
 
-        const activeCurrency = tgidData?.currencies?.[0];
+        const primaryCountry = tgidData?.city?.country;
+
+        const activeCurrency = tgidData?.currency;
 
         return {
           CMSContent,
           tourGroupData: tgidData,
+          inventoryData,
           ContentType,
           uid,
           lang,

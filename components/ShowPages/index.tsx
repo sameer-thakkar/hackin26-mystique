@@ -31,12 +31,12 @@ import { groupSlices, getHostName } from 'utils/helper';
 import cloneDeep from 'lodash.clonedeep';
 import { StyledAccordion } from 'components/slices/Accordion';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
-import { fetchReviewsTourGroup, fetchTGIDsByCategoryV2 } from 'utils/apiUtils';
+import { fetchTourGroupReviews, fetchTGIDsByCategoryV2 } from 'utils/apiUtils';
 import { StyledAsideModal } from 'components/UI/AsideModal';
 import TitleTextCombo from 'components/UI/TitleTextCombo';
 import Conditional from 'components/common/Conditional';
 import PopulateMeta from 'components/common/NextSeoMeta';
-import { ProductJsonLd } from 'next-seo';
+import { EventJsonLd, ProductJsonLd } from 'next-seo';
 import { getProductSchema } from 'utils/schemaUtils';
 
 const Breadcrumb = dynamic(() => import('./BreadCrumb'));
@@ -177,6 +177,7 @@ const ShowPage = ({
   CMSContent,
   host,
   tourGroupData: tempTourGroupData,
+  inventoryData,
   isDev,
   serverRequestStartTimestamp,
 }) => {
@@ -202,7 +203,11 @@ const ShowPage = ({
     listingPrice,
     primarySubCategory,
     city,
+    startLocation,
+    endLocation,
   } = tourGroupData || {};
+
+  const { inventoryList } = inventoryData || {};
 
   const { id: primarySubCategoryID, name: primarySubCategoryName } =
     primarySubCategory || {};
@@ -309,19 +314,17 @@ const ShowPage = ({
 
   useEffect(() => {
     const reviewTourGroup = async () => {
-      const tourGroupReviews = await fetchReviewsTourGroup({
+      const data = await fetchTourGroupReviews({
         tgid,
-        hostName: hostname,
+        hostname,
         limit: 5,
-      })
-        .then((res) => {
-          return res.json();
-        })
-        .then((data) => {
-          return data.items.map((element) => {
-            return { name: element.nonCustomerName, content: element.content };
-          });
-        });
+      });
+
+      const tourGroupReviews = data?.items?.map((review) => ({
+        name: review?.nonCustomerName,
+        content: review?.content,
+      }));
+
       setCustomerReviews(tourGroupReviews);
     };
 
@@ -352,6 +355,11 @@ const ShowPage = ({
     topReviews,
     reviewsDetails,
   });
+
+  const { addressLine1, addressLine2, postalCode, cityName, state } =
+    startLocation || endLocation || {};
+  const productImages = imageUploads?.map((image) => image?.url);
+
   return (
     <>
       <ShowPageWrapper>
@@ -425,12 +433,10 @@ const ShowPage = ({
               isOpenOverride={false}
             />
           ) : (
-            <>
-              <ContentTabs
-                tabsArr={tabHeadingHighlight}
-                contentArr={tabSchemaHighlight}
-              />
-            </>
+            <ContentTabs
+              tabsArr={tabHeadingHighlight}
+              contentArr={tabSchemaHighlight}
+            />
           )}
           <Conditional if={imageUploads.length >= 5}>
             <Gallery galleryArray={imageUploads.slice(2)} isMobile={isMobile} />
@@ -504,6 +510,36 @@ const ShowPage = ({
       </ShowPageWrapper>
       {/* @ts-ignore */}
       <ProductJsonLd {...productSchema} />
+      <EventJsonLd
+        name={name}
+        startDate={`${inventoryList?.[0]?.startDate}T${inventoryList?.[0]?.startTime}.000Z`}
+        endDate={`${inventoryList?.[0]?.startDate}T${inventoryList?.[0]?.endTime}.000Z`}
+        location={{
+          name: addressLine1,
+          address: {
+            streetAddress: addressLine1,
+            addressLocality: addressLine2,
+            addressRegion: state ?? cityName,
+            postalCode,
+            addressCountry: city?.country?.code,
+          },
+        }}
+        url={PageURL}
+        images={productImages}
+        // description="My event @ my place"
+        offers={{
+          price: listingPrice?.finalPrice,
+          priceCurrency: currencyCode,
+          itemCondition: 'https://schema.org/NewCondition',
+          availability: listingPrice
+            ? 'https://schema.org/InStock'
+            : 'https://schema.org/SoldOut',
+          url: PageURL,
+          seller: {
+            name: '',
+          },
+        }}
+      />
     </>
   );
 };

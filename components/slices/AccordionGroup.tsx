@@ -6,6 +6,7 @@ import Conditional from 'components/common/Conditional';
 import Accordion from 'components/slices/Accordion';
 import RichContent from 'components/UI/RichContent';
 import TitleTextCombo from 'components/UI/TitleTextCombo';
+import { ESCAPE_REGEX, ESCAPE_REPLACER } from 'const/index';
 
 /**
  *
@@ -44,8 +45,11 @@ const AccordionGroup = ({
   const faqSchemaProps = accordions.map((acc) => {
     const { heading, content } = acc || {};
     return {
-      questionName: heading,
-      acceptedAnswerText: RichText.asText(content),
+      questionName: heading.replace(ESCAPE_REGEX, ESCAPE_REPLACER),
+      acceptedAnswerText: RichText.asText(content).replace(
+        ESCAPE_REGEX,
+        ESCAPE_REPLACER
+      ),
     };
   });
   return (

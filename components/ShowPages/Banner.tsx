@@ -1,26 +1,20 @@
-import { PRODUCT_VIDEOS } from 'constants/ShowPageProductVideos';
-import {
-  REOPENING_STRING,
-  REOPENING_DATE,
-  OPENING_DATE,
-} from 'constants/index';
-
-import dayjs from 'dayjs';
-import { strings } from 'const/strings';
 import React, { useState, useContext, useEffect, useRef } from 'react';
+import dayjs from 'dayjs';
 import styled from 'styled-components';
+import { MBContext } from 'contexts/MBContext';
+import StickyHeader from 'components/ShowPages/stickyHeader';
+import StickyFooter from 'components/ShowPages/stickyFooter';
 import { createBookingURL } from 'utils';
 import PriceBlock, { SavedTag } from 'UI/PriceBlock';
 import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
+import { PRODUCT_VIDEOS } from 'const/ShowPageProductVideos';
+import { REOPENING_STRING, REOPENING_DATE, OPENING_DATE } from 'const/index';
 import { COLORS } from 'const/ui-constants';
-
-import { dateToString } from '../../utils/dateToString';
-import { MBContext } from '../../contexts/MBContext';
-import { PLAY_CIRCLE } from '../../assets/SvgIcons';
-import { fetchInventoryAPI } from '../../utils/apiUtils';
-import StickyHeader from './stickyHeader';
-import StickyFooter from './stickyFooter';
+import { strings } from 'const/strings';
+import { dateToString } from 'utils/dateToString';
+import { PLAY_CIRCLE } from 'assets/SvgIcons';
+import { fetchInventory } from 'utils/apiUtils';
 
 const Banner = styled.div`
   width: 100%;
@@ -315,9 +309,10 @@ const ShowPageBanner = ({
   useEffect(() => {
     const fetchReopeningDate = async () => {
       const { inventoryList } =
-        (await fetchInventoryAPI({
+        (await fetchInventory({
           tgid,
-          hostName: hostname,
+          hostname,
+          useSeatmapPrices: true,
         })) || {};
       const today = dayjs().format('YYYY-MM-DD');
 

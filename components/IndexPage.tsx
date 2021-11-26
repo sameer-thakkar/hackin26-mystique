@@ -53,6 +53,7 @@ const Page = (props) => {
   const {
     CMSContent,
     tourGroupData,
+    inventoryData,
     ContentType,
     statusCode,
     host,
@@ -187,6 +188,7 @@ const Page = (props) => {
           <ShowPage
             CMSContent={CMSContent}
             tourGroupData={tourGroupData}
+            inventoryData={inventoryData}
             isDev={isDev}
             host={host}
             serverRequestStartTimestamp={serverRequestStartTimestamp}
