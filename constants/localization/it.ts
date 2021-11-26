@@ -75,10 +75,35 @@ const it = {
     EU_HEADING: "Certificato COVID dell'UE richiesto",
     EU_PREFIX: 'Nota bene: ',
     IT_PREFIX: 'Avviso : ',
-    IT_DESCRIPTION:
-      "A partire dal 6 agosto, l'accesso ai musei sarà possibile solo previa presentazione di un Green Pass o di un Certificato europeo COVID.",
-    EU_DESCRIPTION:
-      "a partire dal 21 luglio tutti i visitatori sopra gli 12 anni di età devono presentare un Certificato COVID dell'UE.",
+    DESCRIPTION_CTA: 'Per saperne di più.',
+    IT_DESCRIPTION: {
+      TEXT:
+        'Dal 6 agosto 2021, tutti i visitatori dagli 11 anni in su dovranno presentare un Green Pass o un certificato EU COVID.',
+    },
+    EU_DESCRIPTION: {
+      TEXT:
+        'Dal 21 luglio 2021 tutti i visitatori dai 12 anni in su devono presentare un certificato EU COVID.',
+    },
+    AU_DESCRIPTION: {
+      TEXT:
+        "I visitatori dai 16 anni in su devono mostrare una prova di avvenuta vaccinazione COVID-19 o un'esenzione medica.",
+    },
+    SG_DESCRIPTION: {
+      TEXT:
+        'Dal 13 ottobre 2021 solo i visitatori completamente vaccinati potranno entrare in gruppi di 2. Dovrai mostrare la prova dello stato di avvenuta vaccinazione, un risultato negativo recente del test antigenico COVID-19, e/o qualsiasi documentazione per lo stato di avvenuta guarigione prima di entrare.',
+    },
+    NL_DESCRIPTION: {
+      TEXT:
+        "I visitatori dai 13 anni in su devono presentarsi con un certificato COVID (copia digitale o stampata) che dimostri l'avvenuta vaccinazione oppure un risultato negativo del test antigenico o un documento che certifichi l'avvenuta guarigione da COVID-19. Indossare una maschera facciale è obbligatorio.",
+    },
+    BERLIN_DESCRIPTION: {
+      TEXT:
+        "Si applica il regolamento 2G: potranno accedere solo gli ospiti completamente vaccinati o guariti e dotati di certificato comprovante lo stato di guarigione o avvenuta vaccinazione. Gli ospiti sotto i 18 anni o coloro che non possono essere vaccinati per motivi medici devono presentare all'ingresso un risultato negativo del test per COVID. Coloro che non possono essere vaccinati per ragioni mediche devono dimostrare all'ingresso la loro impossibilità di essere vaccinati per mezzo di un certificato medico.",
+    },
+    AT_DESCRIPTION: {
+      TEXT:
+        "Si applicano i regolamenti 2G: l'accesso agli alloggi, alle istituzioni culturali, ai ristoranti/bar e altri ritrovi pubblici è possibile solo se si esibisce la prova di completata vaccinazione o di guarigione da infezione pregressa. Mostrare un test Covid-19 dall'esito negativo non è più sufficiente.",
+    },
     GENERAL_DESCRIPTION:
       'Ogni esperienza contrassegnata da questo stemma è conforme ai migliori standard di sicurezza imposti dalle direttive sanitarie del governo locale.',
     CTA_TEXT: 'Dettagli Sulla Sicurezza',

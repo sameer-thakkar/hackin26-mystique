@@ -75,10 +75,35 @@ const pt = {
     EU_HEADING: 'Certificado Covid da UE necessário',
     EU_PREFIX: 'Atenção: ',
     IT_PREFIX: 'Atenção: ',
-    IT_DESCRIPTION:
-      'A partir de 6 de agosto, todos os visitantes com mais de 11 anos devem apresentar um Passe Verde ou um Certificado de COVID da UE.',
-    EU_DESCRIPTION:
-      'A partir de 21 de julho, todos os visitantes acima de 12 anos devem apresentar um Certificado COVID da UE.',
+    DESCRIPTION_CTA: 'Saiba mais.',
+    IT_DESCRIPTION: {
+      TEXT:
+        'A partir de 6 de agosto de 2021, todos os visitantes com 11 anos ou mais devem apresentar um Passe Verde ou um Certificado de COVID da UE.',
+    },
+    EU_DESCRIPTION: {
+      TEXT:
+        'A partir de 21 de julho de 2021, todos os visitantes a partir de 12 anos de idade devem apresentar um Certificado de COVID da UE.',
+    },
+    AU_DESCRIPTION: {
+      TEXT:
+        'Visitantes com idade igual ou superior a 16 anos devem apresentar prova de vacinação da COVID-19 ou isenção médica.',
+    },
+    SG_DESCRIPTION: {
+      TEXT:
+        'A partir de 13 de outubro de 2021, somente visitantes totalmente vacinados poderão entrar em grupos de 2. Você terá que apresentar prova do status de vacinação, um resultado recente negativo de teste COVID-19 e/ou qualquer documentação de recuperação antes da entrada.',
+    },
+    NL_DESCRIPTION: {
+      TEXT:
+        'Visitantes com 13 anos ou mais devem ter (cópia digital ou impressa de) um Certificado COVID que confirme a vacinação, resultado negativo do teste, ou documento que comprove a recuperação da COVID-19. O uso de uma máscara facial é obrigatório.',
+    },
+    BERLIN_DESCRIPTION: {
+      TEXT:
+        'As normas 2G se aplicam: somente visitantes totalmente vacinados e recuperados com prova do mesmo terão acesso. Visitantes menores de 18 anos ou aqueles que não podem ser vacinados por razões médicas devem apresentar um resultado negativo de teste COVID na entrada. Aqueles que não podem ser vacinados por razões médicas também devem comprovar sua impossibilidade de serem vacinados por meio de um certificado médico na entrada.',
+    },
+    AT_DESCRIPTION: {
+      TEXT:
+        'As normas 2G se aplicam: o acesso a acomodações, instituições culturais e restaurantes/bares, entre outros, só é possível com prova de vacinação total ou de infecção nos últimos 6 meses. Um teste Covid-19 negativo não é mais suficiente.',
+    },
     GENERAL_DESCRIPTION:
       'Qualquer experiência com este selo foi verificada e segue as melhores medidas de segurança de acordo com as diretrizes de saúde dos governos locais.',
     CTA_TEXT: 'Detalhes das medidas',

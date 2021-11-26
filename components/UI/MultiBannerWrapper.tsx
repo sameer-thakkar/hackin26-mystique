@@ -13,6 +13,7 @@ import Conditional from 'components/common/Conditional';
 import InfoBanner from './InfoBanner';
 import Split, { StlyedSplit } from './Split';
 import IconCTA, { StyledIconCTA } from './IconCTA';
+import { getSafetyDescription } from './SafeExperiencesPitch';
 
 const SafeExperiencesPitch = dynamic(() => import('./SafeExperiencesPitch'), {
   ssr: false,
@@ -47,6 +48,23 @@ const Wrapper = styled.div`
       : ``}
 `;
 
+const Description = styled.div`
+  font-size: 12px;
+  line-height: 20px;
+`;
+
+const Link = styled.a`
+  font-size: 12px;
+  line-height: 16px;
+  display: inline-block;
+  text-decoration: underline;
+  cursor: pointer;
+  @media (max-width: 768px) {
+    display: block;
+    margin-top: 4px;
+  }
+`;
+
 const MultiBannerWrapper = ({
   hasSafe = false,
   marginTop = null,
@@ -77,28 +95,28 @@ const MultiBannerWrapper = ({
     });
   };
 
-  let finalDescription;
-  switch (primaryCountry?.code) {
-    case 'IT':
-      finalDescription = strings.SAFE_EXPERIENCE.IT_DESCRIPTION;
-      break;
-    case 'FR':
-      finalDescription = strings.SAFE_EXPERIENCE.EU_DESCRIPTION;
-      break;
-    case 'AU':
-      finalDescription = strings.SAFE_EXPERIENCE.AU_DESCRIPTION;
-      break;
-    case 'SG':
-      finalDescription = strings.SAFE_EXPERIENCE.SG_DESCRIPTION;
-      break;
-    default:
-      finalDescription = strings.SAFE_EXPERIENCE.GENERAL_DESCRIPTION;
-  }
+  const finalDescription = getSafetyDescription(primaryCountry?.code);
+
   const finalHeading =
     primaryCountry?.code === 'FR'
       ? strings.SAFE_EXPERIENCE.EU_HEADING
       : strings.SAFE_EXPERIENCE.HEADING;
   const showFullBanner = primaryCountry?.code === 'FR' || !isMobile;
+  const description = finalDescription.CTA_URL ? (
+    <Description>
+      {finalDescription.TEXT}{' '}
+      <Link
+        href={finalDescription.CTA_URL}
+        onClick={(e) => e.stopPropagation()}
+        target="_blank"
+      >
+        {strings.SAFE_EXPERIENCE.DESCRIPTION_CTA}
+      </Link>
+    </Description>
+  ) : (
+    finalDescription.TEXT
+  );
+
   return (
     <Wrapper marginTop={marginTop}>
       <Split mobileLayout={'scroll'} count={1}>
@@ -107,7 +125,7 @@ const MultiBannerWrapper = ({
             <InfoBanner
               cta={strings.LISTICLES.KNOW_MORE}
               title={finalHeading}
-              description={finalDescription}
+              description={description}
               bannerOnClick={openSafeSidebar}
               icon={Shield}
               isAmp={isAmp}
