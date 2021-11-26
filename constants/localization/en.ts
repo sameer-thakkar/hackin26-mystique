@@ -79,14 +79,47 @@ const en = {
     EU_HEADING: 'EU Covid Certificate Required',
     EU_PREFIX: 'Note: ',
     IT_PREFIX: 'Note: ',
-    IT_DESCRIPTION:
-      'From 6th August, all visitors over 11 must present a Green Pass or EU COVID Certificate.',
-    EU_DESCRIPTION:
-      'From July 21st, all visitors over 12 must present a EU COVID Certificate',
-    AU_DESCRIPTION:
-      'All guests over 16 must provide proof of COVID-19 vaccination or medical exemption documentation upon entry',
-    SG_DESCRIPTION:
-      'From 13th Oct 2021, only fully vaccinated people can enter in groups of 2. Operator will require you to show proof of vaccination status, a recent negative COVID-19 test result and/or any recovery documentation before entry',
+    DESCRIPTION_CTA: 'Know more.',
+    IT_DESCRIPTION: {
+      TEXT:
+        'From 6 August 2021, all visitors aged 11 and above must present a Green Pass or EU COVID Certificate. ',
+      CTA_URL: 'https://www.dgc.gov.it/web/per-cosa-serve.html#viaggi',
+    },
+    EU_DESCRIPTION: {
+      TEXT:
+        'From 21 July 2021, all visitors aged 12 and above must present an EU COVID Certificate. ',
+      CTA_URL:
+        'https://www.diplomatie.gouv.fr/en/coming-to-france/coronavirus-advice-for-foreign-nationals-in-france/coronavirus-statements/article/applying-for-a-covid-certificate-if-you-were-vaccinated-abroad-procedure-for',
+    },
+    AU_DESCRIPTION: {
+      TEXT:
+        'Visitors aged 16 and above must show proof of COVID-19 vaccination or medical exemption. ',
+      CTA_URL:
+        'https://www.smartraveller.gov.au/COVID-19/COVID-19-vaccinations',
+    },
+    SG_DESCRIPTION: {
+      TEXT:
+        'From 13 October 2021, only fully vaccinated visitors can enter in groups of 2. You will have to show proof of vaccination status, a recent negative COVID-19 test result, and/or any recovery documentation before entry. ',
+      CTA_URL: 'https://safetravel.ica.gov.sg/health/vtsg',
+    },
+    NL_DESCRIPTION: {
+      TEXT:
+        'Visitors aged 13 and above must have (digital or printed copy of) a COVID Certificate that shows that you have been vaccinated, received a negative test result, or have recently recovered from COVID-19. Wearing a face mask is mandatory. ',
+      CTA_URL:
+        'https://www.government.nl/topics/coronavirus-covid-19/covid-certificate',
+    },
+    BERLIN_DESCRIPTION: {
+      TEXT:
+        '2G regulations apply: only fully-vaccinated and recovered guests with proof of the same will be granted access. Guests under 18 or those who cannot be vaccinated for medical reasons must present a negative COVID test result at the entrance. Those who cannot be vaccinated for medical reasons should also prove their inability to be vaccinated by means of a medical certificate at the entrance.',
+      CTA_URL:
+        'https://www.berlin.de/en/news/coronavirus/7081102-6098215-berlin-introduces-extensive-2G-rule.en.html',
+    },
+    AT_DESCRIPTION: {
+      TEXT:
+        '2G regulations apply: access to accommodation, cultural institutions, and restaurants/bars, among others is only possible with proof of full vaccination or past infection. A negative Covid-19 test is no longer sufficient.',
+      CTA_URL:
+        'https://www.austria.info/en/service-and-facts/coronavirus-information/entry-regulations',
+    },
     GENERAL_DESCRIPTION:
       "Any experience with this badge has been verified to follow the best safety standards as per the local government's health guidelines.",
     CTA_TEXT: 'Safety Details',

@@ -224,6 +224,19 @@ const AttentionStrip = styled.div`
   margin-bottom: 8px;
 `;
 
+const Link = styled.a`
+  font-size: 12px;
+  line-height: 16px;
+  display: inline-block;
+  text-decoration: underline;
+  cursor: pointer;
+  color: ${COLORS.GENERAL_WARNING_FG};
+  @media (max-width: 768px) {
+    display: block;
+    margin-top: 4px;
+  }
+`;
+
 const renderSafetyDetailsSection = (tags, lang, isMobile) =>
   Object.entries(strings.SAFE_EXPERIENCE.MODAL.DETAILS).map(
     ([key, { HEADING, DESCRIPTION }]: any) => (
@@ -244,6 +257,29 @@ const renderSafetyDetailsSection = (tags, lang, isMobile) =>
       </Conditional>
     )
   );
+
+export const getSafetyDescription = (
+  countryCode
+): { TEXT: string; CTA_URL?: string } => {
+  switch (countryCode) {
+    case 'IT':
+      return strings.SAFE_EXPERIENCE.IT_DESCRIPTION;
+    case 'FR':
+      return strings.SAFE_EXPERIENCE.EU_DESCRIPTION;
+    case 'AU':
+      return strings.SAFE_EXPERIENCE.AU_DESCRIPTION;
+    case 'SG':
+      return strings.SAFE_EXPERIENCE.SG_DESCRIPTION;
+    case 'NL':
+      return strings.SAFE_EXPERIENCE.NL_DESCRIPTION;
+    case 'DE':
+      return strings.SAFE_EXPERIENCE.BERLIN_DESCRIPTION;
+    case 'AT':
+      return strings.SAFE_EXPERIENCE.AT_DESCRIPTION;
+    default:
+      return { TEXT: strings.SAFE_EXPERIENCE.GENERAL_DESCRIPTION };
+  }
+};
 
 const SafeExperiencesPitch = ({
   allTags = [],
@@ -276,24 +312,33 @@ const SafeExperiencesPitch = ({
     }
   });
 
+  const countryNotice = getSafetyDescription(primaryCountry?.code);
+
+  const finalCountryNotice = countryNotice.CTA_URL ? (
+    <>
+      {countryNotice.TEXT}{' '}
+      <Link
+        href={countryNotice.CTA_URL}
+        onClick={(e) => e.stopPropagation()}
+        target="_blank"
+      >
+        {strings.SAFE_EXPERIENCE.DESCRIPTION_CTA}
+      </Link>
+    </>
+  ) : (
+    countryNotice.TEXT
+  );
+
   return (
     <PitchGrid>
       <Section>
         <Pitch>
           <Heading>{strings.SAFE_EXPERIENCE.MODAL.HEADING}</Heading>
-          <Conditional if={primaryCountry?.code === 'FR'}>
+          <Conditional if={finalCountryNotice}>
             <Section>
               <AttentionStrip>
                 {strings.SAFE_EXPERIENCE.EU_PREFIX}
-                {strings.SAFE_EXPERIENCE.EU_DESCRIPTION}
-              </AttentionStrip>
-            </Section>
-          </Conditional>
-          <Conditional if={primaryCountry?.code === 'IT'}>
-            <Section>
-              <AttentionStrip>
-                {strings.SAFE_EXPERIENCE.IT_PREFIX}
-                {strings.SAFE_EXPERIENCE.IT_DESCRIPTION}
+                {finalCountryNotice}
               </AttentionStrip>
             </Section>
           </Conditional>

@@ -76,10 +76,35 @@ const de = {
     EU_HEADING: 'COVID-Zertifikat der EU erforderlich',
     EU_PREFIX: 'Hinweis: ',
     IT_PREFIX: 'Hinweis: ',
-    IT_DESCRIPTION:
-      'Ab dem 6. August müssen alle Besucher über 11 Jahren einen Grünen Pass oder ein COVID-Zertifikat der EU vorlegen.',
-    EU_DESCRIPTION:
-      'Ab dem 21. Juli müssen alle Besucher ab 12 Jahren ein COVID-Zertifikat der EU vorlegen.',
+    DESCRIPTION_CTA: 'Weitere Infos.',
+    IT_DESCRIPTION: {
+      TEXT:
+        'Ab dem 6. August müssen alle Besucher über 11 Jahren einen Grünen Pass oder ein COVID-Zertifikat der EU vorlegen',
+    },
+    EU_DESCRIPTION: {
+      TEXT:
+        'Ab dem 21. Juli müssen alle Besucher ab 12 Jahren ein COVID-Zertifikat der EU vorlegen.',
+    },
+    AU_DESCRIPTION: {
+      TEXT:
+        'Besucher ab 16 Jahren müssen eine COVID-19-Impfung oder eine medizinische Ausnahmegenehmigung vorweisen.',
+    },
+    SG_DESCRIPTION: {
+      TEXT:
+        'Seit dem 13. Oktober 2021 können nur noch vollständig geimpfte Besucher in 2er-Gruppen eintreten. Vor dem Einlass muss ein Impf- oder Genesungsnachweis bzw. ein negatives COVID-19-Testergebnis vorgelegt werden.',
+    },
+    NL_DESCRIPTION: {
+      TEXT:
+        'Besucher ab 13 Jahren müssen ein COVID-Zertifikat (in digitaler oder gedruckter Form) vorlegen, aus der hervorgeht, dass sie geimpft wurden, ein negatives Testergebnis erhalten haben oder genesen sind. Zudem gilt die Maskenpflicht.',
+    },
+    BERLIN_DESCRIPTION: {
+      TEXT:
+        'Es gilt die 2G-Regel: Nur vollständig geimpfte und genesene Besucher mit entsprechendem Nachweis haben Zutritt. Personen unter 18 Jahren oder solche, die aus medizinischen Gründen nicht geimpft werden können, müssen am Eingang ein negatives COVID-Testergebnis sowie einen medizinischen Nachweis über die Impfunfähigkeit vorlegen.',
+    },
+    AT_DESCRIPTION: {
+      TEXT:
+        'Es gilt die 2G-Regel: Der Zugang zu Unterkünften, Kultureinrichtungen, Restaurants, Bars usw. ist nur mit einem Impf- oder Genesungsnachweis möglich. Ein negativer Covid-19-Test ist nicht mehr ausreichend.',
+    },
     GENERAL_DESCRIPTION:
       'Erlebnisse mit diesem Abzeichen halten nachweislich die besten Sicherheitsstandards gemäß den Gesundheitsrichtlinien der örtlichen Regierung ein.',
     CTA_TEXT: 'Sicherheitsvorkehrungen',

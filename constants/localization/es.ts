@@ -75,10 +75,35 @@ const es = {
     EU_HEADING: 'Se requiere el certificado COVID de la UE',
     EU_PREFIX: 'Atención: ',
     IT_PREFIX: 'Importante : ',
-    IT_DESCRIPTION:
-      'A partir del 6 de agosto, todos los visitantes deben presentar un certificado Covid válido (Green Pass italiano o certificado europeo).',
-    EU_DESCRIPTION:
-      'A partir del 21 de julio, todos los visitantes mayores de 12 años deben presentar un certificado COVID de la UE',
+    DESCRIPTION_CTA: 'Más información.',
+    IT_DESCRIPTION: {
+      TEXT:
+        'A partir del 6 de agosto de 2021, todos los visitantes mayores de 11 años deben presentar un pase verde o un certificado COVID de la UE.',
+    },
+    EU_DESCRIPTION: {
+      TEXT:
+        'A partir del 21 de julio de 2021, todos los visitantes mayores de 12 años deben presentar un certificado COVID de la UE.',
+    },
+    AU_DESCRIPTION: {
+      TEXT:
+        'Los visitantes mayores de 16 años deben presentar una prueba de vacunación contra el COVID-19 o una exención médica.',
+    },
+    SG_DESCRIPTION: {
+      TEXT:
+        'A partir del 13 de octubre de 2021, solo podrán entrar visitantes totalmente vacunados en grupos de 2. Tendrás que mostrar una prueba de vacunación, un resultado negativo reciente de la prueba COVID-19 y/o certificado de recuperación antes de la entrada.',
+    },
+    NL_DESCRIPTION: {
+      TEXT:
+        'Los visitantes mayores de 13 años deben presentar un certificado COVID (digital o impreso) que demuestre que han sido vacunados, o bien una prueba con un resultado negativo o prueba de recuperación reciente de COVID-19. Es obligatorio llevar una mascarilla facial.',
+    },
+    BERLIN_DESCRIPTION: {
+      TEXT:
+        'Se aplican las normas "2G": solo se permitirá el acceso a los visitantes totalmente vacunados y a los visitantes con prueba de recuperación de la enfermedad. Las personas menores de 18 años o las que no puedan vacunarse por razones médicas deberán presentar a la entrada un resultado negativo de la prueba COVID. En el caso de las personas que no puedan vacunarse por motivos médicos, deberán también presentar a la entrada un certificado médico que demuestre su imposibilidad de vacunarse.',
+    },
+    AT_DESCRIPTION: {
+      TEXT:
+        'Se aplican las normas ""2G"": el acceso al alojamiento, a las instituciones culturales y a los restaurantes/bares, entre otros, solo es posible con una prueba de vacunación completa o prueba de recuperación de la enfermedad. Una prueba COVID-19 negativa ya no es suficiente.',
+    },
     GENERAL_DESCRIPTION:
       'Cualquier experiencia con esta insignia ha sido verificada y cumple con los más estrictos estándares de seguridad impuestos por las autoridades sanitarias locales.',
     CTA_TEXT: 'Estándares de Seguridad',

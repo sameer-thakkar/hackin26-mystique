@@ -76,10 +76,35 @@ const nl = {
     EU_HEADING: 'EU Covid-certificaat vereist',
     EU_PREFIX: 'Opmerking: ',
     IT_PREFIX: 'Opmerking: ',
-    IT_DESCRIPTION:
-      'Vanaf 6 augustus moeten alle bezoekers ouder dan 11 jaar een Groene Pas of een EU COVID Certificaat tonen.',
-    EU_DESCRIPTION:
-      'Vanaf 21 juli moeten alle bezoekers ouder dan 12 jaar een EU COVID-certificaat kunnen tonen.',
+    DESCRIPTION_CTA: 'Meer weten.',
+    IT_DESCRIPTION: {
+      TEXT:
+        'Vanaf 6 augustus 2021 moeten alle bezoekers van 11 jaar en ouder een Green Pass of EU COVID Certificaat kunnen tonen.',
+    },
+    EU_DESCRIPTION: {
+      TEXT:
+        'Vanaf 21 juli 2021 moeten alle bezoekers van 12 jaar en ouder een EU COVID Certificaat kunnen tonen.',
+    },
+    AU_DESCRIPTION: {
+      TEXT:
+        'Bezoekers van 16 jaar en ouder moeten een COVID-19 vaccinatiebewijs of medische vrijstelling kunnen tonen.',
+    },
+    SG_DESCRIPTION: {
+      TEXT:
+        'Vanaf 13 oktober 2021 mogen alleen volledig gevaccineerde bezoekers in groepen van 2 naar binnen. Je moet voor binnenkomst een bewijs van vaccinatiestatus, een recent negatief COVID-19 testresultaat, en/of een documenten ter bewijs van herstel laten zien.',
+    },
+    NL_DESCRIPTION: {
+      TEXT:
+        'Bezoekers van 13 jaar en ouder zijn verplicht een COVID Certificaat (digitaal of geprint) te tonen waaruit blijkt dat je gevaccineerd, negatief getest, of onlangs hersteld bent van COVID-19. Het dragen van een gezichtsmasker is verplicht.',
+    },
+    BERLIN_DESCRIPTION: {
+      TEXT:
+        'Het 2G-reglement is van toepassing: alleen volledig gevaccineerde en herstelde bezoekers met een bewijs van genezing krijgen toegang. Bezoekers jonger dan 18 jaar of zij die om medische redenen niet gevaccineerd kunnen worden, dienen bij de ingang een negatief resultaat van de COVID-test te overleggen. Personen die om medische redenen niet gevaccineerd kunnen worden, moeten bij de ingang tevens hun onmogelijkheid tot vaccinatie aantonen aan de hand van een medisch certificaat.',
+    },
+    AT_DESCRIPTION: {
+      TEXT:
+        'De 2G voorschriften zijn van toepassing: toegang tot accommodaties, culturele instellingen, restaurants/bars en andere plekken is alleen mogelijk met een bewijs van volledige vaccinatie of eerdere besmetting. Een negatieve Covid-19 test is niet langer voldoende.',
+    },
     GENERAL_DESCRIPTION:
       'Elke ervaring met deze badge is geverifieerd om te voldoen aan de beste veiligheidsnormen volgens de gezondheidsrichtlijnen van de lokale overheid.',
     CTA_TEXT: 'Details omtrent veiligheid',

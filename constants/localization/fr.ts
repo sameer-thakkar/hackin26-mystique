@@ -73,10 +73,35 @@ const fr = {
     EU_HEADING: 'Certificat COVID numérique UE requis',
     EU_PREFIX: 'Attention : ',
     IT_PREFIX: 'Important : ',
-    IT_DESCRIPTION:
-      'Pour toute visite à partir du 6 août, les visiteurs, dès l’âge de 12 ans, devront présenter un pass sanitaire valable (italien ou européen).',
-    EU_DESCRIPTION:
-      "À partir du 21 juillet, tous les visiteurs de plus de 12 ans doivent présenter un certificat COVID de l'UE.",
+    DESCRIPTION_CTA: 'En savoir plus.',
+    IT_DESCRIPTION: {
+      TEXT:
+        "À partir du 6 août 2021, tous les visiteurs et visiteuses âgé·es de 11 ans et plus devront présenter un pass sanitaire ou un certificat COVID de l'UE.",
+    },
+    EU_DESCRIPTION: {
+      TEXT:
+        "À partir du 21 juillet 2021, tous les visiteurs et visiteuses âgé·es de 12 ans et plus devront présenter un certificat COVID de l'UE.",
+    },
+    AU_DESCRIPTION: {
+      TEXT:
+        "Les visiteurs et visiteuses âgé·es de 16 ans et plus doivent présenter une preuve de vaccination contre la COVID-19 ou un certificat d'exemption médicale.",
+    },
+    SG_DESCRIPTION: {
+      TEXT:
+        "À partir du 13 octobre 2021, seul·es les visiteurs et visiteuses entièrement vacciné·es pourront entrer par groupes de 2. Vous devrez présenter une preuve de votre statut vaccinal, un résultat négatif récent du test COVID-19 et/ou tout document de rétablissement avant l'entrée.",
+    },
+    NL_DESCRIPTION: {
+      TEXT:
+        "Les visiteurs et visiteuses âgé·es de 13 ans et plus doivent être en possession d'un certificat COVID (copie numérique ou imprimée) attestant de leur vaccination, d'un résultat négatif au test ou de leur rétablissement récent de la COVID-19. Le port d'un masque est obligatoire.",
+    },
+    BERLIN_DESCRIPTION: {
+      TEXT:
+        "La règle 2G s'applique : seules les personnes complètement vaccinées et guéries, sur présentation d'un jpass sanitaire, auront accès à l'établissement. Les personnes de moins de 18 ans ou celles et ceux qui ne peuvent pas être vacciné·es pour des raisons médicales doivent présenter à l'entrée un résultat négatif à la test COVID-19. Les personnes qui ne peuvent pas être vaccinées pour des raisons médicales doivent également prouver leur incapacité à se faire vacciner au moyen d'un certificat médical à l'entrée.",
+    },
+    AT_DESCRIPTION: {
+      TEXT:
+        "La règle 2G s'applique : l'accès aux établissements d'hébergement, aux institutions culturelles et aux restaurants/bars, entre autres, n'est possible que sur présentation d'une preuve de vaccination complète ou d'une infection passée. Un test Covid-19 négatif n'est plus suffisant.",
+    },
     GENERAL_DESCRIPTION:
       'Toute expérience affichant ce badge a été vérifiée et est conforme aux normes de sécurité établies par les autorités locales en matière de santé.',
     CTA_TEXT: 'Détails des mesures de sécurité et sanitaires',

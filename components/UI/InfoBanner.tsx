@@ -114,15 +114,20 @@ const InfoBanner = ({
           </Conditional>
           {title}
         </Title>
-        {isAmp ? (
-          <Description>
-            {description} <AmpCTA href={nonAmpPageUrl}> {cta}</AmpCTA>
-          </Description>
-        ) : (
-          <Description>
-            {description} <CTA onClick={ctaOnClick}>{cta}</CTA>
-          </Description>
-        )}
+        <Conditional if={typeof description === 'string'}>
+          {isAmp ? (
+            <Description>
+              {description} <AmpCTA href={nonAmpPageUrl}> {cta}</AmpCTA>
+            </Description>
+          ) : (
+            <Description>
+              {description} <CTA onClick={ctaOnClick}>{cta}</CTA>
+            </Description>
+          )}
+        </Conditional>
+        <Conditional if={typeof description !== 'string'}>
+          {description}
+        </Conditional>
       </Content>
     </StyledInfoBanner>
   );
