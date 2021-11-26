@@ -13,6 +13,7 @@ import {
 } from 'const/index';
 import { COMMON_DATA_PROPS_FOR_LISTICLE } from 'const/index';
 import {
+  documentUidUpdateRedirectHandler,
   getEnglishDocUid,
   getHeadoutLanguagecode,
   getSinglePrismicSlice,
@@ -759,18 +760,37 @@ export const getRefsArrayByIds = async (
   });
 };
 
-export const getShowPage = async ({ req, lang, uid }) => {
-  const response = await Client(req).getByUID(CUSTOM_TYPES.SHOW_PAGE, uid, {
+export const getShowPage = async ({
+  req,
+  lang,
+  uid,
+  isDev,
+  serverResponse,
+  host,
+  queryParamsString,
+}) => {
+  const page = await Client(req).getByUID(CUSTOM_TYPES.SHOW_PAGE, uid, {
     lang,
   });
+
+  if (page.uid !== uid) {
+    documentUidUpdateRedirectHandler({
+      toUid: page.uid,
+      serverResponse,
+      isDev,
+      host,
+      queryParamsString,
+      lang,
+    });
+  }
 
   const collections = await Client().query(
     [Prismic.Predicates.at('document.type', CUSTOM_TYPES.SHOW_PAGE)],
     { pageSize: 100 }
   );
 
-  if (response) {
-    const { common_footer, common_header } = response.data;
+  if (page) {
+    const { common_footer, common_header } = page.data;
 
     const refArray = await getRefsArrayByIds(
       [common_header.id, common_footer.id],
@@ -780,7 +800,7 @@ export const getShowPage = async ({ req, lang, uid }) => {
     const { commonHeader, commonFooter } = refsArrayToObject(refArray);
     return {
       CMSContent: {
-        ...response,
+        ...page,
         commonFooter,
         commonHeader,
         allShowPagesDocuments: collections?.results,
@@ -795,10 +815,12 @@ const getPrismicDocument = async ({
   req,
   serverResponse,
   query,
+  isDev,
 }): Promise<{
   ContentType?: string;
   CMSContent?: any;
   statusCode?: number;
+  isDev?: boolean;
 }> => {
   const { host } = req.headers || window.location;
   const { uid, lang } = getLangUID(req, query);
@@ -823,7 +845,15 @@ const getPrismicDocument = async ({
         uid,
       }),
       getListicleDocument({ req, lang, uid }),
-      getShowPage({ req, lang, uid }),
+      getShowPage({
+        req,
+        lang,
+        uid,
+        isDev,
+        serverResponse,
+        host,
+        queryParamsString,
+      }),
       getGlobalHomepage({ req, lang, uid }),
       getGlobalExperience({ req, lang, uid }),
       getGlobalCollection({ req, lang, uid }),
@@ -861,6 +891,7 @@ export const getPageData = async ({
       query,
       req,
       serverResponse,
+      isDev,
     })) || { statusCode: 404 };
 
     if (statusCode) {

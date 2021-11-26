@@ -22,7 +22,7 @@ const resolveLink: any = (url, ctx) => {
       ...query,
       mystique_uid: getUID(linkHref),
     };
-    return `${protocol}//${host}?${qs(updatedQuery)}`;
+    return `${isDev ? 'http:' : protocol}//${host}?${qs(updatedQuery)}`;
   }
 
   const normalizedHost = host.replace('stage-', '');

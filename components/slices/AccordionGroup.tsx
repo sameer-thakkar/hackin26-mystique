@@ -45,9 +45,10 @@ const AccordionGroup = ({
     const { heading, content } = acc || {};
     return {
       questionName: heading,
-      acceptedAnswerText: RichText.asText(content),
+      acceptedAnswerText: RichText.asText(content).replaceAll('"', ''),
     };
   });
+
   return (
     <>
       <div>
