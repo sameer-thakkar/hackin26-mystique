@@ -52,6 +52,7 @@ const AccordionGroup = ({
       ),
     };
   });
+
   return (
     <>
       <div>

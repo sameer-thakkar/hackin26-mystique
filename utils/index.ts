@@ -77,6 +77,46 @@ export const redirectTo = ({ res, url, type = 302 }) => {
   }
 };
 
+export const documentUidUpdateRedirectHandler = ({
+  toUid,
+  isDev,
+  host,
+  lang,
+  queryParamsString,
+  serverResponse,
+  redirectType = 301,
+}: {
+  toUid: string;
+  isDev: boolean;
+  host: string;
+  lang: string;
+  queryParamsString: string;
+  serverResponse: any;
+  redirectType?: number;
+}) => {
+  const url = convertUidToUrl({
+    uid: toUid,
+    lang: getHeadoutLanguagecode(lang),
+    isDev,
+    hostname: host,
+  });
+
+  const existingParams = new URLSearchParams(queryParamsString);
+  const urlObject = new URL(url);
+  existingParams.forEach((value, key) => {
+    if (key !== 'mystique_uid' && key !== 'lang') {
+      urlObject.searchParams.set(key, value);
+    }
+  });
+
+  const finalUrl = urlObject.toString();
+  redirectTo({
+    res: serverResponse,
+    url: finalUrl,
+    type: redirectType,
+  });
+};
+
 // Reflects promises to avoid running into the catch block
 export const reflect = (promise) =>
   promise.then(
