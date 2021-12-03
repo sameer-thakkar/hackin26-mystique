@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { useWindowWidth } from '@react-hook/window-size';
+import Head from 'next/head';
 import { RichText } from 'prismic-reactjs';
+import { ProductJsonLd } from 'next-seo';
+import { useWindowWidth } from '@react-hook/window-size';
 import styled from 'styled-components';
 import { StyledRichContent } from 'UI/RichContent';
 import Footer from 'components/common/Footer';
@@ -36,7 +38,6 @@ import { StyledAsideModal } from 'components/UI/AsideModal';
 import TitleTextCombo from 'components/UI/TitleTextCombo';
 import Conditional from 'components/common/Conditional';
 import PopulateMeta from 'components/common/NextSeoMeta';
-import { EventJsonLd, ProductJsonLd } from 'next-seo';
 import { getProductSchema } from 'utils/schemaUtils';
 
 const Breadcrumb = dynamic(() => import('./BreadCrumb'));
@@ -177,7 +178,7 @@ const ShowPage = ({
   CMSContent,
   host,
   tourGroupData: tempTourGroupData,
-  inventoryData,
+  inventorySlotData,
   isDev,
   serverRequestStartTimestamp,
 }) => {
@@ -207,7 +208,7 @@ const ShowPage = ({
     endLocation,
   } = tourGroupData || {};
 
-  const { inventoryList } = inventoryData || {};
+  const { slots } = inventorySlotData || {};
 
   const { id: primarySubCategoryID, name: primarySubCategoryName } =
     primarySubCategory || {};
@@ -359,6 +360,45 @@ const ShowPage = ({
   const { addressLine1, addressLine2, postalCode, cityName, state } =
     startLocation || endLocation || {};
   const productImages = imageUploads?.map((image) => image?.url);
+  const eventSchemaMarkup = slots
+    ?.slice(0, 9)
+    ?.map((slot) => {
+      const { endTime, startTime, startDate } = slot || {};
+      return `
+      {
+        "@context": "https://schema.org",
+        "@type": "Event",
+        "name": "${name}",
+        "startDate": "${startDate}T${startTime}",
+        "endDate": "${startDate}T${endTime}",
+        "location": {
+          "@type": "Place",
+          "name": "${addressLine1}",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "${addressLine1}",
+            "addressLocality": "${addressLine2}",
+            "postalCode": "${postalCode}",
+            "addressRegion": "${state ?? cityName}",
+            "addressCountry": "${city?.country?.code}"
+          }
+        },
+        "image": [${productImages.map((image) => `"${image}"`)}],
+        "offers": {
+          "@type": "Offer",
+          "url": "${PageURL}",
+          "price": ${listingPrice?.finalPrice},
+          "priceCurrency": "${currencyCode}",
+          "availability": "${
+            listingPrice
+              ? 'https://schema.org/InStock'
+              : 'https://schema.org/SoldOut'
+          }",
+          "itemCondition": "http://schema.org/NewCondition"
+        }
+      }`;
+    })
+    ?.join(',');
 
   return (
     <>
@@ -384,6 +424,14 @@ const ShowPage = ({
             bannerImages,
           }}
         />
+        {/* @ts-ignore */}
+        <ProductJsonLd {...productSchema} />
+        <Head>
+          <script
+            dangerouslySetInnerHTML={{ __html: `[${eventSchemaMarkup}]` }}
+            type="application/ld+json"
+          />
+        </Head>
         <Header
           languages={alternateLanguages}
           headerLinks={headerLinks}
@@ -508,38 +556,6 @@ const ShowPage = ({
           isEntertainmentMb={true}
         />
       </ShowPageWrapper>
-      {/* @ts-ignore */}
-      <ProductJsonLd {...productSchema} />
-      <EventJsonLd
-        name={name}
-        startDate={`${inventoryList?.[0]?.startDate}T${inventoryList?.[0]?.startTime}.000Z`}
-        endDate={`${inventoryList?.[0]?.startDate}T${inventoryList?.[0]?.endTime}.000Z`}
-        location={{
-          name: addressLine1,
-          address: {
-            streetAddress: addressLine1,
-            addressLocality: addressLine2,
-            addressRegion: state ?? cityName,
-            postalCode,
-            addressCountry: city?.country?.code,
-          },
-        }}
-        url={PageURL}
-        images={productImages}
-        // description="My event @ my place"
-        offers={{
-          price: listingPrice?.finalPrice,
-          priceCurrency: currencyCode,
-          itemCondition: 'https://schema.org/NewCondition',
-          availability: listingPrice
-            ? 'https://schema.org/InStock'
-            : 'https://schema.org/SoldOut',
-          url: PageURL,
-          seller: {
-            name: '',
-          },
-        }}
-      />
     </>
   );
 };

@@ -19,6 +19,7 @@ export const swrFetcher = async (url) => {
 export enum HeadoutEndpoints {
   TourGroupsV6,
   TourGroupInventoriesV6,
+  TourGroupSlotsV6,
   TourGroupListByCategoryV6,
   TourGroupListBySubCategoryV6,
   TourGroupReviewsV2,
@@ -47,6 +48,9 @@ export const getHeadoutApiUrl = ({
       break;
     case HeadoutEndpoints.TourGroupInventoriesV6:
       endpointSlug = `/api/tours/v6/tour-groups/${id}/inventories/`;
+      break;
+    case HeadoutEndpoints.TourGroupSlotsV6:
+      endpointSlug = `/api/tours/v6/tour-groups/slots/get/${id}`;
       break;
     case HeadoutEndpoints.TourGroupListByCategoryV6:
       endpointSlug = `/api/tours/v6/tour-groups/list-by/category/${id}`;
@@ -84,13 +88,16 @@ export const fetchTourGroupV6 = async ({
   tgid,
   hostname,
   language,
+  currency,
 }: {
   tgid: string | number;
   hostname: string;
   language?: string;
+  currency?: string;
 }) => {
   const params = {
     ...(language && { language }),
+    ...(currency && { currency }),
   };
 
   const apiUrl = getHeadoutApiUrl({
@@ -103,6 +110,7 @@ export const fetchTourGroupV6 = async ({
   const res = await fetch(apiUrl);
   return await res.json();
 };
+
 export const fetchCurrencyList = async () => {
   try {
     const res = await fetch('https://api.headout.com/api/v1/currency/list');
@@ -278,6 +286,41 @@ export const fetchInventory = async ({
     return data;
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('[fetchCategory]', error);
+    console.error('[fetchInventory]', error);
+  }
+};
+
+export const fetchTourGroupSlots = async ({
+  tgid,
+  hostname,
+  forDays,
+  currency,
+}: {
+  tgid: string | number;
+  hostname: string;
+  forDays?: number;
+  currency?: string;
+}) => {
+  try {
+    const params = {
+      ...(forDays && {
+        'for-days': `${forDays}`,
+      }),
+      ...(currency && {
+        currency,
+      }),
+    };
+    const url = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.TourGroupSlotsV6,
+      id: tgid,
+      hostname,
+      params,
+    });
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[fetchTourGroupSlots]', error);
   }
 };

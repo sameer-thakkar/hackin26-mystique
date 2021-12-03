@@ -1,5 +1,6 @@
 import { Client } from 'config/prismic-config';
 import Prismic from 'prismic-javascript';
+import { toursTabSliceHandler } from 'components/Slices';
 import {
   CUSTOM_TYPES,
   LINKED_MICROSITE_PROPS,
@@ -20,23 +21,21 @@ import {
   redirectTo,
   refsArrayToObject,
 } from 'utils';
+import { addCashbackValueToDescriptor } from 'utils/productUtils';
+import { traceError } from 'utils/logutils';
+import { getHostName } from 'utils/helper';
 import { getLangUID, getValidUrlParams, sanitizeURL } from 'utils/urlUtils';
-import { toursTabSliceHandler } from 'components/Slices';
-
-import { traceError } from './logutils';
-import { getHostName } from './helper';
 import {
   categoryTourListParserV1,
   categoryTourListParserV2,
   uncategorizedToursListParser,
-} from './dataParsers';
+} from 'utils/dataParsers';
 import {
   fetchCategory,
   fetchCurrencyList,
-  fetchInventory,
   fetchTourGroupV6,
-} from './apiUtils';
-import { addCashbackValueToDescriptor } from './productUtils';
+  fetchTourGroupSlots,
+} from 'utils/apiUtils';
 
 export const getListicleDocument = async ({ req, uid, lang }) => {
   const listicleResponse = await Client(req).getByUID(
@@ -1073,7 +1072,7 @@ export const getPageData = async ({
           language: getHeadoutLanguagecode(lang),
         });
 
-        const inventoryData = await fetchInventory({
+        const inventorySlotData = await fetchTourGroupSlots({
           tgid: CMSContent?.data?.tgid,
           hostname,
           forDays: 10,
@@ -1086,7 +1085,7 @@ export const getPageData = async ({
         return {
           CMSContent,
           tourGroupData: tgidData,
-          inventoryData,
+          inventorySlotData,
           ContentType,
           uid,
           lang,
