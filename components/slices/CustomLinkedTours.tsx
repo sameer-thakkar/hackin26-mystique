@@ -1,15 +1,17 @@
-import styled from 'styled-components';
 import { useEffect, useState, useContext } from 'react';
-import { SOLEIL, COLORS } from 'const/ui-constants';
+import styled from 'styled-components';
+import { MBContext } from 'contexts/MBContext';
+import Conditional from 'components/common/Conditional';
+import Image from 'components/UI/Image';
+import LocalisedPrice from 'components/UI/LPrice';
+import { tourListApiParser } from 'utils/dataParsers';
+import RichContent from 'components/UI/RichContent';
 import { createBookingURL } from 'utils';
-
-import Image from '../UI/Image';
-import LocalisedPrice from '../UI/LPrice';
-import { STAR_FULL } from '../../assets/SvgIcons';
-import { tourListApiParser } from '../../utils/dataParsers';
-import RichContent from '../UI/RichContent';
-import { MBContext } from '../../contexts/MBContext';
-import { DESIGN, HEADOUT_API_ENDPOINT } from '../../constants';
+import { fetchTourList } from 'utils/apiUtils';
+import { getHostName } from 'utils/helper';
+import { STAR_FULL } from 'assets/SvgIcons';
+import { SOLEIL, COLORS } from 'const/ui-constants';
+import { DESIGN } from 'const/index';
 
 const Tour = styled.a`
   display: grid;
@@ -117,19 +119,32 @@ const CustomLinkedTours = ({
   commonLink,
 }) => {
   const [apiTours, setTours] = useState(null);
+  const {
+    isDev,
+    host,
+    isStage,
+    lang,
+    design,
+    nakedDomain,
+    currencySymbolMap,
+    biLink,
+  } = useContext(MBContext);
+  const [currency, setCurrency] = useState(null);
+
+  const hostname = getHostName(isStage, isDev, host);
 
   useEffect(() => {
-    fetch(`${HEADOUT_API_ENDPOINT}/v5/tour-group/list?ids%5B%5D=${tgids}`)
-      .then((r) => r.json())
-      .then((res) => {
-        const apiTours = tourListApiParser(res);
+    fetchTourList({ tgids, host: hostname })
+      .then((res) => res.json())
+      .then((data) => {
+        const apiTours = tourListApiParser(data);
+        const { currencies } = data || {};
+        const [currency] = currencies || [];
+        setCurrency(currency);
         setTours(apiTours);
       });
-  }, [tgids]);
+  }, [tgids, hostname]);
 
-  const { lang, design, nakedDomain, currencySymbolMap, biLink } = useContext(
-    MBContext
-  );
   const defaultURL = (tgid) =>
     createBookingURL({ nakedDomain, lang, tgid, biLink });
   return (
@@ -138,7 +153,14 @@ const CustomLinkedTours = ({
       <TourGrid>
         {apiTours &&
           tgids.map((tgid: any, index) => {
-            const tour = apiTours[tgid];
+            const {
+              title,
+              image,
+              currency: tourCurrency,
+              price,
+              averageRating,
+              reviewCount,
+            } = apiTours[tgid] || {};
             return (
               <Tour
                 key={index}
@@ -147,30 +169,27 @@ const CustomLinkedTours = ({
                 }
                 target={(basicTours[tgid] || commonLink).target}
               >
-                <Image
-                  url={tour.image}
-                  aspectRatio={'16:10'}
-                  alt={tour.title}
-                />
+                <Image url={image} aspectRatio={'16:10'} alt={title} />
                 <TitlePriceCombo>
-                  <Title>{tour.title}</Title>
+                  <Title>{title}</Title>
                   <LocalisedPrice
                     currencySymbol={
-                      currencySymbolMap[tour.currency]?.localSymbol
+                      currency?.localSymbol ??
+                      currencySymbolMap[tourCurrency]?.localSymbol
                     }
-                    price={tour.price}
+                    price={price}
                     lang={lang}
                   />
                 </TitlePriceCombo>
-                {tour.averageRating ? (
+                <Conditional if={averageRating}>
                   <Booster>
-                    {STAR_FULL}{' '}
+                    <STAR_FULL />{' '}
                     <span>
-                      {tour.averageRating}{' '}
-                      {tour.reviewCount ? `| ${tour.reviewCount} reviews` : ''}
+                      {averageRating}{' '}
+                      {reviewCount ? `| ${reviewCount} reviews` : ''}
                     </span>
                   </Booster>
-                ) : null}
+                </Conditional>
               </Tour>
             );
           })}
