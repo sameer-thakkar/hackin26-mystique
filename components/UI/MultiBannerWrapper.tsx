@@ -9,6 +9,7 @@ import { Shield } from 'assets/SvgIcons';
 import { greyScheme } from 'style/theme';
 import { MBContext } from 'contexts/MBContext';
 import Conditional from 'components/common/Conditional';
+import { RichText } from 'prismic-reactjs';
 
 import InfoBanner from './InfoBanner';
 import Split, { StlyedSplit } from './Split';
@@ -46,23 +47,25 @@ const Wrapper = styled.div`
     }
   `
       : ``}
+  p {
+    margin: 0;
+  }
+  a {
+    font-size: 12px;
+    line-height: 16px;
+    display: inline-block;
+    text-decoration: underline;
+    cursor: pointer;
+    @media (max-width: 768px) {
+      display: block;
+      margin-top: 4px;
+    }
+  }
 `;
 
 const Description = styled.div`
   font-size: 12px;
   line-height: 20px;
-`;
-
-const Link = styled.a`
-  font-size: 12px;
-  line-height: 16px;
-  display: inline-block;
-  text-decoration: underline;
-  cursor: pointer;
-  @media (max-width: 768px) {
-    display: block;
-    margin-top: 4px;
-  }
 `;
 
 const MultiBannerWrapper = ({
@@ -79,12 +82,34 @@ const MultiBannerWrapper = ({
   const {
     sidebarModal: { addToAside },
     primaryCountry,
+    primaryCity,
+    lang,
   } = useContext(MBContext);
+
+  const GENERAL_SAFETY_NOTE = {
+    description: [
+      {
+        spans: [],
+        type: 'paragraph',
+        text: strings.SAFE_EXPERIENCE.GENERAL_DESCRIPTION,
+      },
+    ],
+    heading: [
+      { spans: [], type: 'paragraph', text: strings.SAFE_EXPERIENCE.HEADING },
+    ],
+  };
   const [isMobile, setIsMobile] = useState(isMobileCloudfront);
+  const [safetyBannerData, setSafetyBannerData] = useState(GENERAL_SAFETY_NOTE);
   const width = useWindowWidth();
   useEffect(() => {
+    Promise.resolve(
+      getSafetyDescription(primaryCountry?.code, primaryCity, lang)
+    ).then((e) => {
+      e ? setSafetyBannerData(e) : setSafetyBannerData(GENERAL_SAFETY_NOTE);
+    });
     setIsMobile(width < 768);
   }, [width]);
+
   if (!hasSafe) return null;
   const openSafeSidebar = () => {
     addToAside({
@@ -95,26 +120,14 @@ const MultiBannerWrapper = ({
     });
   };
 
-  const finalDescription = getSafetyDescription(primaryCountry?.code);
-
-  const finalHeading =
-    primaryCountry?.code === 'FR'
-      ? strings.SAFE_EXPERIENCE.EU_HEADING
-      : strings.SAFE_EXPERIENCE.HEADING;
+  const finalHeading = <RichText render={safetyBannerData?.heading} />;
   const showFullBanner = primaryCountry?.code === 'FR' || !isMobile;
-  const description = finalDescription.CTA_URL ? (
+  const description = finalHeading ? (
     <Description>
-      {finalDescription.TEXT}{' '}
-      <Link
-        href={finalDescription.CTA_URL}
-        onClick={(e) => e.stopPropagation()}
-        target="_blank"
-      >
-        {strings.SAFE_EXPERIENCE.DESCRIPTION_CTA}
-      </Link>
+      <RichText render={safetyBannerData?.description} />
     </Description>
   ) : (
-    finalDescription.TEXT
+    <RichText render={safetyBannerData?.description} />
   );
 
   return (

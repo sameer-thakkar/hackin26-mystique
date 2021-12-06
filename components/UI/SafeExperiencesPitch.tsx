@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { SOLEIL, COLORS } from 'const/ui-constants';
@@ -6,6 +6,7 @@ import {
   SAFETY_DETAILS_IMAGES,
   SAFETY_DETAILS_TYPE,
   CLUBBED_SAFETY_TAGS,
+  FULL_LANGUAGE_MAP,
 } from 'const/index';
 import useWindowSize from 'hooks/useWindowSize';
 import Conditional from 'components/common/Conditional';
@@ -13,6 +14,8 @@ import { strings } from 'const/strings';
 import { CHEVRON_LEFT_CIRCLE, Shield } from 'assets/SvgIcons';
 import { greyScheme } from 'style/theme';
 import { MBContext } from 'contexts/MBContext';
+import { getSafetyBannerDocument } from 'utils/prismicUtils';
+import { RichText } from 'prismic-reactjs';
 
 import IconCTA, { StyledIconCTA } from './IconCTA';
 import Image from './Image';
@@ -22,7 +25,7 @@ const Slider = dynamic(() => import('./Slider'));
 const PitchGrid = styled.div`
   display: grid;
   grid-row-gap: 48px;
-  padding-bottom: 48px;
+  padding: 0 16px 48px;
 `;
 
 const Section = styled.div`
@@ -222,18 +225,21 @@ const AttentionStrip = styled.div`
   color: ${COLORS.GENERAL_WARNING_FG};
   margin-top: -8px;
   margin-bottom: 8px;
-`;
-
-const Link = styled.a`
-  font-size: 12px;
-  line-height: 16px;
-  display: inline-block;
-  text-decoration: underline;
-  cursor: pointer;
-  color: ${COLORS.GENERAL_WARNING_FG};
-  @media (max-width: 768px) {
-    display: block;
-    margin-top: 4px;
+  p {
+    display: inline;
+    color: inherit;
+  }
+  a {
+    font-size: 12px;
+    line-height: 16px;
+    display: inline-block;
+    text-decoration: underline;
+    cursor: pointer;
+    color: ${COLORS.GENERAL_WARNING_FG};
+    @media (max-width: 768px) {
+      display: block;
+      margin-top: 4px;
+    }
   }
 `;
 
@@ -258,27 +264,25 @@ const renderSafetyDetailsSection = (tags, lang, isMobile) =>
     )
   );
 
-export const getSafetyDescription = (
-  countryCode
-): { TEXT: string; CTA_URL?: string } => {
-  switch (countryCode) {
-    case 'IT':
-      return strings.SAFE_EXPERIENCE.IT_DESCRIPTION;
-    case 'FR':
-      return strings.SAFE_EXPERIENCE.EU_DESCRIPTION;
-    case 'AU':
-      return strings.SAFE_EXPERIENCE.AU_DESCRIPTION;
-    case 'SG':
-      return strings.SAFE_EXPERIENCE.SG_DESCRIPTION;
-    case 'NL':
-      return strings.SAFE_EXPERIENCE.NL_DESCRIPTION;
-    case 'DE':
-      return strings.SAFE_EXPERIENCE.BERLIN_DESCRIPTION;
-    case 'AT':
-      return strings.SAFE_EXPERIENCE.AT_DESCRIPTION;
-    default:
-      return { TEXT: strings.SAFE_EXPERIENCE.GENERAL_DESCRIPTION };
-  }
+export const getSafetyDescription = async (countryCode, cityCode, lang?) => {
+  const language = FULL_LANGUAGE_MAP[lang]?.paramLang;
+  const options = await Promise.resolve(
+    getSafetyBannerDocument({ lang: language })
+  );
+
+  const selectedSafetyPitch = options?.find((el) => {
+    const [, optcountryCode] = el?.country?.split('-');
+    if (el?.city?.cityCode === cityCode && optcountryCode === countryCode)
+      return true;
+    else if (
+      (!el?.city && optcountryCode === countryCode) ||
+      (el?.city?.cityCode !== cityCode && optcountryCode === countryCode)
+    )
+      return true;
+    return false;
+  });
+
+  return selectedSafetyPitch;
 };
 
 const SafeExperiencesPitch = ({
@@ -286,7 +290,28 @@ const SafeExperiencesPitch = ({
   generic = false,
   images = [],
 }) => {
-  const { lang, primaryCountry } = useContext(MBContext);
+  const GENERAL_SAFETY_NOTE = {
+    description: [
+      {
+        spans: [],
+        type: 'paragraph',
+        text: strings.SAFE_EXPERIENCE.GENERAL_DESCRIPTION,
+      },
+    ],
+    heading: [
+      { spans: [], type: 'paragraph', text: strings.SAFE_EXPERIENCE.HEADING },
+    ],
+  };
+  const { lang, primaryCountry, primaryCity } = useContext(MBContext);
+  const [safetyBannerData, setSafetyBannerData] = useState(GENERAL_SAFETY_NOTE);
+  useEffect(() => {
+    Promise.resolve(
+      getSafetyDescription(primaryCountry?.code, primaryCity, lang)
+    ).then((e) => {
+      e ? setSafetyBannerData(e) : setSafetyBannerData(GENERAL_SAFETY_NOTE);
+    });
+  }, []);
+
   const { width } = useWindowSize();
   const isMobile = width < 768;
   let tags = allTags;
@@ -312,36 +337,17 @@ const SafeExperiencesPitch = ({
     }
   });
 
-  const countryNotice = getSafetyDescription(primaryCountry?.code);
-
-  const finalCountryNotice = countryNotice.CTA_URL ? (
-    <>
-      {countryNotice.TEXT}{' '}
-      <Link
-        href={countryNotice.CTA_URL}
-        onClick={(e) => e.stopPropagation()}
-        target="_blank"
-      >
-        {strings.SAFE_EXPERIENCE.DESCRIPTION_CTA}
-      </Link>
-    </>
-  ) : (
-    countryNotice.TEXT
-  );
-
   return (
     <PitchGrid>
       <Section>
         <Pitch>
           <Heading>{strings.SAFE_EXPERIENCE.MODAL.HEADING}</Heading>
-          <Conditional if={finalCountryNotice}>
-            <Section>
-              <AttentionStrip>
-                {strings.SAFE_EXPERIENCE.EU_PREFIX}
-                {finalCountryNotice}
-              </AttentionStrip>
-            </Section>
-          </Conditional>
+          <Section>
+            <AttentionStrip>
+              {strings.SAFE_EXPERIENCE.EU_PREFIX}
+              <RichText render={safetyBannerData?.description} />
+            </AttentionStrip>
+          </Section>
           <Text style={{ maxWidth: isMobile ? 'auto' : '82%' }}>
             {strings.SAFE_EXPERIENCE.MODAL.SUB_HEADING}
           </Text>
