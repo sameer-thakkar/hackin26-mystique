@@ -303,13 +303,15 @@ const SafeExperiencesPitch = ({
     ],
   };
   const { lang, primaryCountry, primaryCity } = useContext(MBContext);
-  const [safetyBannerData, setSafetyBannerData] = useState(GENERAL_SAFETY_NOTE);
+  const [safetyBannerData, setSafetyBannerData] = useState(null);
   useEffect(() => {
-    Promise.resolve(
-      getSafetyDescription(primaryCountry?.code, primaryCity, lang)
-    ).then((e) => {
-      e ? setSafetyBannerData(e) : setSafetyBannerData(GENERAL_SAFETY_NOTE);
-    });
+    getSafetyDescription(primaryCountry?.code, primaryCity, lang).then(
+      (data) => {
+        data
+          ? setSafetyBannerData(data)
+          : setSafetyBannerData(GENERAL_SAFETY_NOTE);
+      }
+    );
   }, []);
 
   const { width } = useWindowSize();
@@ -342,12 +344,14 @@ const SafeExperiencesPitch = ({
       <Section>
         <Pitch>
           <Heading>{strings.SAFE_EXPERIENCE.MODAL.HEADING}</Heading>
-          <Section>
-            <AttentionStrip>
-              {strings.SAFE_EXPERIENCE.EU_PREFIX}
-              <RichText render={safetyBannerData?.description} />
-            </AttentionStrip>
-          </Section>
+          <Conditional if={safetyBannerData}>
+            <Section>
+              <AttentionStrip>
+                {strings.SAFE_EXPERIENCE.EU_PREFIX}
+                <RichText render={safetyBannerData?.description} />
+              </AttentionStrip>
+            </Section>
+          </Conditional>
           <Text style={{ maxWidth: isMobile ? 'auto' : '82%' }}>
             {strings.SAFE_EXPERIENCE.MODAL.SUB_HEADING}
           </Text>

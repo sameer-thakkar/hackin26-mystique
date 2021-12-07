@@ -99,14 +99,16 @@ const MultiBannerWrapper = ({
     ],
   };
   const [isMobile, setIsMobile] = useState(isMobileCloudfront);
-  const [safetyBannerData, setSafetyBannerData] = useState(GENERAL_SAFETY_NOTE);
+  const [safetyBannerData, setSafetyBannerData] = useState(null);
   const width = useWindowWidth();
   useEffect(() => {
-    Promise.resolve(
-      getSafetyDescription(primaryCountry?.code, primaryCity, lang)
-    ).then((e) => {
-      e ? setSafetyBannerData(e) : setSafetyBannerData(GENERAL_SAFETY_NOTE);
-    });
+    getSafetyDescription(primaryCountry?.code, primaryCity, lang).then(
+      (data) => {
+        data
+          ? setSafetyBannerData(data)
+          : setSafetyBannerData(GENERAL_SAFETY_NOTE);
+      }
+    );
     setIsMobile(width < 768);
   }, [width]);
 
@@ -134,7 +136,7 @@ const MultiBannerWrapper = ({
     <Wrapper marginTop={marginTop}>
       <Split mobileLayout={'scroll'} count={1}>
         <Conditional if={showFullBanner}>
-          <Conditional if={hasSafe}>
+          <Conditional if={hasSafe && safetyBannerData}>
             <InfoBanner
               cta={strings.LISTICLES.KNOW_MORE}
               title={finalHeading}
