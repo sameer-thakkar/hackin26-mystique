@@ -33,6 +33,19 @@ import {
 import { fetchCategory, fetchCurrencyList, fetchTourGroupV6 } from './apiUtils';
 import { addCashbackValueToDescriptor } from './productUtils';
 
+export const getSafetyBannerDocument = async ({ lang }) => {
+  const safetyBannerResponse = await Client().query(
+    Prismic.Predicates.at('document.type', CUSTOM_TYPES.SAFETY_BANNER),
+    { lang: lang }
+  );
+  if (safetyBannerResponse) {
+    const [data] = safetyBannerResponse?.results;
+    const { options } = data?.data;
+    return options;
+  }
+  return Promise.reject();
+};
+
 export const getListicleDocument = async ({ req, uid, lang }) => {
   const listicleResponse = await Client(req).getByUID(
     CUSTOM_TYPES.LISTICLE,
@@ -1069,6 +1082,7 @@ export const getPageData = async ({
         });
 
         const primaryCountry = tgidData?.cities?.[0]?.country;
+        const primaryCity = tgidData?.cities?.[0];
 
         const activeCurrency = tgidData?.currencies?.[0];
 
@@ -1081,6 +1095,7 @@ export const getPageData = async ({
           isDev,
           host,
           primaryCountry,
+          primaryCity,
           activeCurrency,
         };
       } catch (error) {
@@ -1332,6 +1347,8 @@ export const getPageData = async ({
       tourGroupAPIResponses?.cities?.[0]?.country ||
       AllData?.categoryTourListData?.primaryCountry;
 
+    const primaryCity = tourGroupAPIResponses?.cities?.[0];
+
     const activeCurrency = tourGroupAPIResponses?.currencies?.[0];
     return {
       activeCurrency,
@@ -1339,6 +1356,7 @@ export const getPageData = async ({
       tourGroupData,
       currencySymbolMap,
       primaryCountry,
+      primaryCity,
     };
   } catch (error) {
     traceError({ error, host: req?.headers?.host, url: req?.url });

@@ -74,6 +74,7 @@ const Page = (props) => {
     biLink,
     isStage,
     primaryCountry,
+    primaryCity,
   } = props;
   const [{ eventsReady }, setEventsReady] = useRecoilState(gtmAtom);
 
@@ -239,6 +240,7 @@ const Page = (props) => {
             isStage={isStage}
             bookSubdomain={bookSubdomain}
             primaryCountry={primaryCountry}
+            primaryCity={primaryCity}
           >
             {Component}
             {typeof window !== 'undefined' ? (

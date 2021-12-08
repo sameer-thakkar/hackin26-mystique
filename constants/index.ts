@@ -181,6 +181,7 @@ export const CUSTOM_TYPES = {
   GLOBAL_COUNTRY: 'global_country',
   GLOBAL_EXPERIENCE: 'global_experience',
   PRODUCT_CARDS: 'product_cards',
+  SAFETY_BANNER: 'safety_banner',
 };
 
 export const DESIGN = {
