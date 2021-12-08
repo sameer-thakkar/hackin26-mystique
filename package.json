@@ -109,8 +109,5 @@
       "pre-commit": "yarn lint && pretty-quick --staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
-  },
-  "optionalDependencies": {
-    "sharp": "^0.29.3"
   }
 }
