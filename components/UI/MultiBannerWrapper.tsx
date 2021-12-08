@@ -124,12 +124,10 @@ const MultiBannerWrapper = ({
 
   const finalHeading = <RichText render={safetyBannerData?.heading} />;
   const showFullBanner = primaryCountry?.code === 'FR' || !isMobile;
-  const description = finalHeading ? (
+  const description = (
     <Description>
       <RichText render={safetyBannerData?.description} />
     </Description>
-  ) : (
-    <RichText render={safetyBannerData?.description} />
   );
 
   return (

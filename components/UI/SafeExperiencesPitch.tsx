@@ -266,23 +266,25 @@ const renderSafetyDetailsSection = (tags, lang, isMobile) =>
 
 export const getSafetyDescription = async (countryCode, cityCode, lang?) => {
   const language = FULL_LANGUAGE_MAP[lang]?.paramLang;
-  const options = await Promise.resolve(
-    getSafetyBannerDocument({ lang: language })
-  );
+  try {
+    const options = await getSafetyBannerDocument({ lang: language });
+    const selectedSafetyPitch = options?.find((el) => {
+      const [, optcountryCode] = el?.country?.split('-');
+      if (el?.city?.cityCode === cityCode && optcountryCode === countryCode)
+        return true;
+      else if (
+        (!el?.city && optcountryCode === countryCode) ||
+        (el?.city?.cityCode !== cityCode && optcountryCode === countryCode)
+      )
+        return true;
+      return false;
+    });
 
-  const selectedSafetyPitch = options?.find((el) => {
-    const [, optcountryCode] = el?.country?.split('-');
-    if (el?.city?.cityCode === cityCode && optcountryCode === countryCode)
-      return true;
-    else if (
-      (!el?.city && optcountryCode === countryCode) ||
-      (el?.city?.cityCode !== cityCode && optcountryCode === countryCode)
-    )
-      return true;
-    return false;
-  });
-
-  return selectedSafetyPitch;
+    return selectedSafetyPitch;
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.log(err);
+  }
 };
 
 const SafeExperiencesPitch = ({
