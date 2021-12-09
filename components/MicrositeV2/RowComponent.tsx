@@ -70,11 +70,11 @@ export const RowComponent = (props) => {
     if (activeTgid && autoScroll)
       scroller.scrollTo(`${activeSection}-${activeTgid}`, {
         duration: 750,
-        delay: 100,
+        delay: 80,
         smooth: 'easeInQuad',
         offset: 45,
       });
-  }, []);
+  }, [activeTgid]);
 
   return (
     <ProductsRow>
