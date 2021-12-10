@@ -62,17 +62,31 @@ const IFrame: React.FC<IFrameProps> = ({
     return null;
   }
   const videoId = getVideoIdFromUrl(src);
+  const isMap = src.startsWith('https://www.google.com/maps/');
   return (
     <>
       {isAmp ? (
-        <IFrameContainer {...{ paddingBottom: otherProps.height, isAmp }}>
-          <amp-youtube
-            width="1600"
-            height="900"
-            layout="responsive"
-            data-videoid={videoId}
-          ></amp-youtube>
-        </IFrameContainer>
+        isMap ? (
+          <IFrameContainer {...{ paddingBottom: otherProps.height, isAmp }}>
+            <amp-iframe
+              width="1600"
+              height="900"
+              sandbox="allow-scripts allow-same-origin"
+              layout="responsive"
+              frameborder="0"
+              src={src}
+            ></amp-iframe>
+          </IFrameContainer>
+        ) : (
+          <IFrameContainer {...{ paddingBottom: otherProps.height, isAmp }}>
+            <amp-youtube
+              width="1600"
+              height="900"
+              layout="responsive"
+              data-videoid={videoId}
+            ></amp-youtube>
+          </IFrameContainer>
+        )
       ) : (
         <IFrameContainer {...{ paddingBottom: otherProps.height, isAmp }}>
           <StyledIFrame
