@@ -54,6 +54,7 @@ type ImageProps = {
   alt?: string;
   isCardSlices?: boolean;
   isFooterLogo?: boolean;
+  isHeaderLogo?: boolean;
   mobileUrl?: string;
   layout?: string;
   attribution?: string;
@@ -77,6 +78,7 @@ const Image: React.FC<ImageProps> = ({
   isCardSlices,
   mobileUrl,
   isFooterLogo,
+  isHeaderLogo,
   layout,
   attribution = '',
   autoCrop = true,
@@ -133,6 +135,10 @@ const Image: React.FC<ImageProps> = ({
   if (isAmp) {
     if (isCardSlices) {
       calculatedWidth = 377;
+    }
+    if (isHeaderLogo) {
+      calculatedHeight = '26';
+      calculatedWidth = '100';
     }
     if (isFooterLogo) {
       calculatedHeight = '40';
