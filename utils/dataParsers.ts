@@ -664,3 +664,156 @@ export const parseV2ProductDescriptors = ({
     return data;
   }
 };
+
+export const getToursGlobalCollection = async ({
+  collection,
+  sub_category,
+  tgid,
+  commonCtaUrlSuffix,
+  commonScratchPrice,
+  hostname,
+  cityName,
+}: {
+  collection?: number;
+  sub_category?: number;
+  tgid?: number;
+  commonCtaUrlSuffix?: string;
+  commonScratchPrice?: boolean;
+  hostname?: string;
+  cityName?: string;
+}) => {
+  let tourData = [],
+    currency;
+
+  if (collection) {
+    const collectionData = await fetchCollection({
+      collectionId: collection,
+      hostname,
+    });
+    currency = collectionData?.city?.country?.currency;
+    const getCollectionSection = (collectionData, sectionType: string) => {
+      return collectionData?.sections
+        ?.filter((section) => {
+          if (section?.type === sectionType) {
+            return section?.tourGroups?.items;
+          }
+        })
+        ?.reduce((acc, curr) => curr + acc);
+    };
+    const genericSection = getCollectionSection(collectionData, 'GENERIC');
+    const headoutPicksSection = getCollectionSection(
+      collectionData,
+      'HEADOUT_PICKS'
+    );
+    const finalSection = genericSection?.tourGroups?.items?.length
+      ? genericSection?.tourGroups?.items
+      : headoutPicksSection?.tourGroups?.items;
+    tourData.push(...finalSection);
+  } else if (sub_category) {
+    const subCategoryData = await fetchTGIDsByCategoryV2({
+      categoryId: sub_category,
+      hostname,
+      isSubCategory: true,
+      city: cityName,
+    });
+    currency = subCategoryData?.currency;
+    tourData.push(...subCategoryData?.pageData?.items);
+  } else if (tgid) {
+    const tgidData = await fetchTourGroupV6({
+      tgid,
+      hostname,
+    });
+    currency = tgidData?.currency;
+    tourData.push(tgidData);
+  }
+
+  const repeatableObj = tourData?.reduce((acc, tour) => {
+    const { id, allTags } = tour || {};
+    const [variantId] =
+      getSingleAriesTag(allTags, 'DEFAULT_VARIANT')?.match(/\d+/) || [];
+    const finalObj = {
+      tgid: id,
+      cta_url_suffix: commonCtaUrlSuffix,
+      marketing_highlights_override: null,
+      offer__free_tour: { link_type: 'Document' },
+      product_booster: [],
+      short_summary: [],
+      show_scratch_price: commonScratchPrice ? 'Yes' : 'No',
+      tag_booster: null,
+      tid: null,
+      tour_description_override: [],
+      tour_title_override: null,
+      variantId,
+    };
+    return [...acc, finalObj];
+  }, []);
+
+  const allMultiVariantTgids = repeatableObj
+    ?.filter((tour) => tour?.variantId)
+    ?.map((tour) => tour.tgid);
+
+  const tgidVariantData: any[] = await Promise.all(
+    allMultiVariantTgids?.map(async (tgid) =>
+      fetchTourGroupV6({ tgid, hostname })
+    )
+  );
+
+  const scorpioData = tourData?.reduce((acc, tour) => {
+    const {
+      id,
+      allTags,
+      averageRating,
+      callToAction,
+      highlights,
+      listingPrice,
+      media,
+      microBrandsDescriptor,
+      microBrandsHighlight,
+      name,
+      reviewCount,
+      combo,
+    } = tour || {};
+    const { productImages, safetyImages } = media || {};
+    const { cashbackValue } = listingPrice || {};
+    const updatedDescriptors = addCashbackValueToDescriptor({
+      descriptor: microBrandsDescriptor,
+      cashbackValue,
+    });
+    const { variants } =
+      tgidVariantData?.find((item: any) => item?.id === id) || {};
+    const [variantId] =
+      getSingleAriesTag(allTags, 'DEFAULT_VARIANT')?.match(/\d+/) || [];
+    const { listingPrice: variantListingPrice } =
+      variants?.find((variant) => variant?.id === parseInt(variantId)) || {};
+    const finalListingPrice = variantListingPrice
+      ? variantListingPrice
+      : listingPrice;
+    return {
+      ...acc,
+      [id]: {
+        allTags,
+        available: !(listingPrice === null),
+        averageRating,
+        ctaBooster: callToAction,
+        descriptors: updatedDescriptors,
+        highlights: microBrandsHighlight,
+        images: productImages,
+        listingPrice: {
+          ...finalListingPrice,
+          ...currency,
+        },
+        productHighlights: highlights,
+        productTitle: name,
+        reviewCount,
+        safetyImages,
+        title: name,
+        combo,
+      },
+    };
+  }, {});
+
+  return {
+    scorpioData,
+    orderedTours: repeatableObj,
+  };
+};

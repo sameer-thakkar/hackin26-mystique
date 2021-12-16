@@ -204,6 +204,7 @@ const Page = (props) => {
             isDev={isDev}
             isMobile={isMobile}
             host={host}
+            categoryTourListData={categoryTourListData}
             serverRequestStartTimestamp={serverRequestStartTimestamp}
           />
         );

@@ -265,6 +265,9 @@ export const refsArrayToObject = (refArray) => {
   const [contentFramework] = refArray.filter(
     (ref) => ref.type === CUSTOM_TYPES.CONTENT_FRAMEWORK
   );
+  const [globalCollection] = refArray.filter(
+    (ref) => ref.type === CUSTOM_TYPES.GLOBAL_COLLECTION
+  );
   const [commonHeader] = refArray.filter(
     (ref) => ref.type === CUSTOM_TYPES.HEADER
   );
@@ -294,6 +297,7 @@ export const refsArrayToObject = (refArray) => {
     contentFramework,
     secondaryFooter,
     microsite,
+    globalCollection,
   };
 };
 

@@ -42,6 +42,7 @@ const GlobalMB = (props) => {
     commonHeader,
     commonFooter,
     contentFramework,
+    globalCollection,
     isDev,
     serverRequestStartTimestamp,
     type,
@@ -52,6 +53,7 @@ const GlobalMB = (props) => {
     cityCollections,
     countryCollections = [],
     collections,
+    categoryTourListData,
   } = props || {};
 
   const alternateLanguages = getAlternateLanguages(
@@ -282,6 +284,11 @@ const GlobalMB = (props) => {
 
   let pageMarkup;
 
+  const globalExperienceProps = {
+    global_collection: globalCollection,
+    categoryTourListData,
+  };
+
   switch (type) {
     case 'global_country':
       pageMarkup = <CountryPage {...CMSContent} {...commonProps} />;
@@ -293,18 +300,29 @@ const GlobalMB = (props) => {
       pageMarkup = <CollectionPage {...collectionPageProps} />;
       break;
     case 'global_experience':
-      pageMarkup = <ExperiencePage {...CMSContent} {...commonProps} />;
+      pageMarkup = (
+        <ExperiencePage
+          {...CMSContent}
+          {...commonProps}
+          {...globalExperienceProps}
+        />
+      );
       break;
     default:
       pageMarkup = <HomePage {...homePageProps} />;
   }
 
+  const selfCanonicalLink = convertUidToUrl({ uid });
   return (
     <>
       <Conditional if={!microbrandUrl}>
         <PopulateMeta
           {...{
-            prismicData: { ...CMSContent, ...header },
+            prismicData: {
+              ...CMSContent,
+              ...header,
+              canonical_link: selfCanonicalLink,
+            },
             datePublished,
             dateModified,
             serverRequestStartTimestamp,

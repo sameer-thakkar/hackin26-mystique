@@ -29,6 +29,7 @@ import {
   categoryTourListParserV1,
   categoryTourListParserV2,
   uncategorizedToursListParser,
+  getToursGlobalCollection,
 } from './dataParsers';
 import { fetchCategory, fetchCurrencyList, fetchTourGroupV6 } from './apiUtils';
 import { addCashbackValueToDescriptor } from './productUtils';
@@ -741,21 +742,70 @@ export const getGlobalExperience = async ({ req, uid, lang }) => {
     }
   );
   if (response) {
-    const { common_header, common_footer, content_framework } = response.data;
+    const {
+      common_header,
+      common_footer,
+      content_framework,
+      collection,
+    } = response.data;
 
     const refArray = await getRefsArrayByIds(
-      [common_header.id, common_footer.id, content_framework.id],
+      [common_header.id, common_footer.id, content_framework.id, collection.id],
       req
     );
-    const { commonHeader, commonFooter, contentFramework } = refsArrayToObject(
-      refArray
-    );
+    const {
+      commonHeader,
+      commonFooter,
+      contentFramework,
+      globalCollection,
+    } = refsArrayToObject(refArray);
+    const {
+      country: { id: countryDocID },
+      city: { id: cityDocID },
+      city_name: cityName,
+    } = globalCollection?.data;
+    const client = Client();
+    const cityCollections = cityDocID
+      ? await client.query(
+          [
+            Prismic.Predicates.at(
+              'document.type',
+              CUSTOM_TYPES.GLOBAL_COLLECTION
+            ),
+            Prismic.Predicates.at(
+              `my.${CUSTOM_TYPES.GLOBAL_COLLECTION}.city`,
+              cityDocID
+            ),
+          ],
+          { pageSize: 100 }
+        )
+      : null;
+
+    const countryCollections = countryDocID
+      ? await client.query(
+          [
+            Prismic.Predicates.at(
+              'document.type',
+              CUSTOM_TYPES.GLOBAL_COLLECTION
+            ),
+            Prismic.Predicates.at(
+              `my.${CUSTOM_TYPES.GLOBAL_COLLECTION}.country`,
+              countryDocID
+            ),
+          ],
+          { pageSize: 100 }
+        )
+      : null;
     return {
       CMSContent: {
         ...response,
         commonHeader,
         commonFooter,
         contentFramework,
+        globalCollection,
+        ...(cityCollections && { cityCollections }),
+        ...(countryCollections && { countryCollections }),
+        cityName,
       },
       ContentType: CUSTOM_TYPES.GLOBAL_EXPERIENCE,
     };
@@ -1071,7 +1121,39 @@ export const getPageData = async ({
       ContentType === CUSTOM_TYPES.GLOBAL_EXPERIENCE ||
       ContentType === CUSTOM_TYPES.LISTICLE
     ) {
-      return { CMSContent, ContentType, uid, lang, isDev, host };
+      const { globalCollection } = CMSContent;
+
+      const {
+        data: {
+          headout_category_id: sub_category,
+          headout_collection_id: collection,
+          headout_tgid: tgid,
+        },
+      } = globalCollection;
+      const { cityName } = CMSContent;
+      const categoryTourListData = await getToursGlobalCollection({
+        collection,
+        sub_category,
+        tgid,
+        commonScratchPrice: true,
+        hostname,
+        cityName,
+      });
+      return {
+        CMSContent: {
+          ...CMSContent,
+          data: {
+            ...CMSContent.data,
+            city_name: cityName,
+          },
+        },
+        ContentType,
+        uid,
+        lang,
+        isDev,
+        host,
+        categoryTourListData,
+      };
     }
     if (ContentType === CUSTOM_TYPES.SHOW_PAGE) {
       try {

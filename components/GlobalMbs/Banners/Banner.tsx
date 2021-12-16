@@ -46,6 +46,7 @@ const StyledBanner = styled.div((props) => {
   const styles = props.isMobile
     ? variantStyles.small
     : variantStyles[props.cardType];
+  const isTicketPage = props.isTicketPage;
   return `
   display: grid;
   align-content: start;
@@ -73,14 +74,20 @@ const StyledBanner = styled.div((props) => {
       margin-top: 0;
     }
     .title {
-      font-size: 48px;
+      font-size: ${isTicketPage ? '46px' : '48px'};
       line-height: 54px;
-      font-weight: 700;
+      font-weight: ${isTicketPage ? '600' : '700'};
       letter-spacing: -0.2px;
-      margin-bottom: 16px;
+      margin-bottom: ${isTicketPage ? '8px' : '16px'};
+    }
+    .subheading {
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 28px;
+      color: #666666;
     }
     .subtext {
-      margin-top: 32px;
+      margin-top: ${isTicketPage ? '24px' : '32px'};
       font-feature-settings: "ss04";
     }
     .rank-wrapper {
@@ -225,6 +232,8 @@ interface BannerProps {
   breadcrumbs?: Array<{ url: string; text: string }>;
   collection?: any;
   startingPrice?: string;
+  isTicketPage?: boolean;
+  subHeading?: string;
 }
 
 const Banner: FunctionComponent<BannerProps> = ({
@@ -235,6 +244,8 @@ const Banner: FunctionComponent<BannerProps> = ({
   breadcrumbs,
   collection = {},
   startingPrice = null,
+  isTicketPage = false,
+  subHeading = '',
 }) => {
   const {
     categoryID,
@@ -346,17 +357,20 @@ const Banner: FunctionComponent<BannerProps> = ({
   };
 
   return (
-    <StyledBanner cardType={cardType}>
+    <StyledBanner cardType={cardType} isTicketPage={isTicketPage}>
       <div className="card-content-section">
         <Conditional if={breadcrumbs?.length}>
           <Breadcrumb links={breadcrumbs} />
         </Conditional>
         <div className="wrapper">
           <h1 className="title">{title}</h1>
+          <Conditional if={subHeading}>
+            <div className="subheading">{subHeading}</div>
+          </Conditional>
           <Conditional if={subText}>
             <div className="subtext">{subText}</div>
           </Conditional>
-          <Conditional if={Object.keys(collection)?.length}>
+          <Conditional if={Object.keys(collection)?.length && !isTicketPage}>
             <div className="rank-wrapper">
               <Conditional if={totalCityCollections > 2}>
                 <div className="rank">
