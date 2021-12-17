@@ -1118,9 +1118,12 @@ export const getPageData = async ({
     if (
       ContentType === CUSTOM_TYPES.GLOBAL_HOMEPAGE ||
       ContentType === CUSTOM_TYPES.GLOBAL_COUNTRY ||
-      ContentType === CUSTOM_TYPES.GLOBAL_EXPERIENCE ||
       ContentType === CUSTOM_TYPES.LISTICLE
     ) {
+      return { CMSContent, ContentType, uid, lang, isDev, host };
+    }
+
+    if (ContentType === CUSTOM_TYPES.GLOBAL_EXPERIENCE) {
       const { globalCollection } = CMSContent;
 
       const {
@@ -1143,7 +1146,7 @@ export const getPageData = async ({
         CMSContent: {
           ...CMSContent,
           data: {
-            ...CMSContent.data,
+            ...CMSContent?.data,
             city_name: cityName,
           },
         },
@@ -1155,6 +1158,7 @@ export const getPageData = async ({
         categoryTourListData,
       };
     }
+
     if (ContentType === CUSTOM_TYPES.SHOW_PAGE) {
       try {
         const tgidData = await fetchTourGroupV6({
