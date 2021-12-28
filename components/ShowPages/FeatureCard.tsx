@@ -1,13 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { strings } from 'const/strings';
-
-import {
-  HEADPHONE,
-  HAPPY_EMOJI,
-  VERIFIED,
-  GOLDEN_STAR,
-} from '../../assets/SvgIcons';
+import { HEADPHONE, HAPPY_EMOJI, VERIFIED, GOLDEN_STAR } from 'assets/SvgIcons';
 
 const FeatureCardWrapper = styled.div`
   display: grid;
@@ -46,27 +40,29 @@ const FeatureCardWrapper = styled.div`
 `;
 
 const FeatureCard = () => {
+  const { SHOWPAGE } = strings || {};
+  const { FEATURE_CARD } = SHOWPAGE || {};
   return (
     <FeatureCardWrapper>
       <div>
         <div>{HAPPY_EMOJI}</div>
-        <h3>{strings.FEATURE_CARD_SHOW_PAGES.HEADING_CUSTOMER}</h3>
-        <p>{strings.FEATURE_CARD_SHOW_PAGES.SUB_HEADING_CUSTOMER}</p>
+        <h3>{FEATURE_CARD.HEADING_CUSTOMER}</h3>
+        <p>{FEATURE_CARD.SUB_HEADING_CUSTOMER}</p>
       </div>
       <div>
         <div>{GOLDEN_STAR}</div>
-        <h3>{strings.FEATURE_CARD_SHOW_PAGES.HEADING_RATING}</h3>
-        <p>{strings.FEATURE_CARD_SHOW_PAGES.SUB_HEADING_RATING}</p>
+        <h3>{FEATURE_CARD.HEADING_RATING}</h3>
+        <p>{FEATURE_CARD.SUB_HEADING_RATING}</p>
       </div>
       <div>
         <div>{VERIFIED}</div>
-        <h3>{strings.FEATURE_CARD_SHOW_PAGES.HEADING_SAFE}</h3>
-        <p>{strings.FEATURE_CARD_SHOW_PAGES.SUB_HEADING_SAFE}</p>
+        <h3>{FEATURE_CARD.HEADING_SAFE}</h3>
+        <p>{FEATURE_CARD.SUB_HEADING_SAFE}</p>
       </div>
       <div>
         <div>{HEADPHONE}</div>
-        <h3>{strings.FEATURE_CARD_SHOW_PAGES.HEADING_SUPPORT}</h3>
-        <p>{strings.FEATURE_CARD_SHOW_PAGES.SUB_HEADING_SUPPORT}</p>
+        <h3>{FEATURE_CARD.HEADING_SUPPORT}</h3>
+        <p>{FEATURE_CARD.SUB_HEADING_SUPPORT}</p>
       </div>
     </FeatureCardWrapper>
   );

@@ -25,6 +25,7 @@ const es = {
   SAVE: 'Ahorra <val>%',
   AVAILABLE: 'Disponible',
   EARLIEST_AVAILABILITY: 'Siguiente Disponible',
+  UNAVAILABLE: 'No disponible',
   TODAY: 'hoy',
   TOMORROW: 'mañana',
   TICKETS: 'Entradas',

@@ -5,7 +5,6 @@ import {
   SAFETY_DETAILS_TYPE,
   CLUBBED_SAFETY_TAGS,
   SAFETY_MEASURE_REDIRECT_PAGE_LINK,
-  SAFETY_MEASURE_CTA_TEXT,
 } from 'const/index';
 import Conditional from 'components/common/Conditional';
 import { strings } from 'const/strings';
@@ -245,7 +244,7 @@ const SafeExperiencesPitch = ({
         rel="noreferrer"
         target="_blank"
       >
-        {SAFETY_MEASURE_CTA_TEXT} {PURPS_RIGHT_ARROW}
+        {strings.MORE_DETAILS} {PURPS_RIGHT_ARROW}
       </a>
     </PitchGrid>
   );

@@ -40,25 +40,25 @@ export const getHeadoutApiUrl = ({
   let endpointSlug;
   switch (endpoint) {
     case HeadoutEndpoints.TourGroupInventoryV5:
-      endpointSlug = `/api/tours/v5/tour-group/inventory/get/${id}`;
+      endpointSlug = `/api/tours/v5/tour-group/inventory/get/${id}/`;
       break;
     case HeadoutEndpoints.TourGroupsV6:
-      endpointSlug = `/api/tours/v6/tour-groups/${id ? id : ''}`;
+      endpointSlug = `/api/tours/v6/tour-groups/${id ? `${id}/` : ''}`;
       break;
     case HeadoutEndpoints.TourGroupListByCategoryV6:
-      endpointSlug = `/api/tours/v6/tour-groups/list-by/category/${id}`;
+      endpointSlug = `/api/tours/v6/tour-groups/list-by/category/${id}/`;
       break;
     case HeadoutEndpoints.TourGroupListBySubCategoryV6:
-      endpointSlug = `/api/tours/v6/tour-groups/list-by/sub-category/${id}`;
+      endpointSlug = `/api/tours/v6/tour-groups/list-by/sub-category/${id}/`;
       break;
     case HeadoutEndpoints.TourGroupReviewsV2:
-      endpointSlug = `/api/tours/v2/review/tour-group/id/${id}`;
+      endpointSlug = `/api/tours/v2/review/tour-group/id/${id}/`;
       break;
     case HeadoutEndpoints.TourGroupCollectionV1:
-      endpointSlug = `/api/tours/v1/collection/${id}/sections`;
+      endpointSlug = `/api/tours/v1/collection/${id}/sections/`;
       break;
     case HeadoutEndpoints.CurrencyList:
-      endpointSlug = `'https://api.headout.com/api/v1/currency/list`;
+      endpointSlug = `'https://api.headout.com/api/v1/currency/list/`;
       break;
   }
 
@@ -73,7 +73,7 @@ export const getHeadoutApiUrl = ({
 
 export const fetchInventory = ({ tgid, ...query }) => {
   return fetch(
-    `/api/tours/v5/tour-group/inventory/get/${tgid}${objectToQuery(query)}`
+    `/api/tours/v5/tour-group/inventory/get/${tgid}/${objectToQuery(query)}`
   ).then((res) => res.json());
 };
 
@@ -86,15 +86,48 @@ export const fetchTourList = ({ tgids, host = '', ...query }) => {
   );
 };
 
+interface CommonApiProps {
+  hostname: string;
+  language?: string;
+}
+
+interface TourListProps extends CommonApiProps {
+  tgids: string[] | number[];
+}
+
+export const fetchTourListV6 = async ({
+  hostname,
+  language,
+  tgids,
+}: TourListProps) => {
+  try {
+    const params = {
+      'ids[]': tgids?.join(','),
+      ...(language && { language }),
+    };
+    const apiUrl = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.TourGroupsV6,
+      hostname,
+      params,
+      id: null,
+    });
+    const res = await fetch(apiUrl);
+    return await res.json();
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[fetchTourListV6]', error);
+  }
+};
+
+interface TourGroupProps extends CommonApiProps {
+  tgid: string | number;
+}
+
 export const fetchTourGroupV6 = async ({
   tgid,
   hostname,
   language,
-}: {
-  tgid: string | number;
-  hostname: string;
-  language?: string;
-}) => {
+}: TourGroupProps) => {
   const params = {
     ...(language && { language }),
   };
@@ -109,6 +142,7 @@ export const fetchTourGroupV6 = async ({
   const res = await fetch(apiUrl);
   return await res.json();
 };
+
 export const fetchCurrencyList = async () => {
   try {
     const res = await fetch('https://api.headout.com/api/v1/currency/list');
@@ -126,7 +160,7 @@ export const fetchCategory = async (
 ) => {
   try {
     const response = await fetch(
-      `${hostname}/api/tours/v1/feed/category/get/${categoryId}?limit-products=50`
+      `${hostname}/api/tours/v1/feed/category/get/${categoryId}/?limit-products=50`
     );
     const data = await response.json();
     return data;
@@ -136,12 +170,10 @@ export const fetchCategory = async (
   }
 };
 
-interface fetchTGIDsByCategoryV2Obj {
+interface fetchTGIDsByCategoryV2Obj extends CommonApiProps {
   categoryId: string | number;
-  hostname: string;
   isSubCategory: boolean;
   city?: string;
-  language?: string;
   limit?: string;
 }
 
@@ -153,17 +185,26 @@ export const fetchTGIDsByCategoryV2 = async ({
   language = 'en',
   limit,
 }: fetchTGIDsByCategoryV2Obj) => {
-  const url = isSubCategory
-    ? `${hostname}/api/tours/v6/tour-groups/list-by/sub-category/${categoryId}`
-    : `${hostname}/api/tours/v6/tour-groups/list-by/category/${categoryId}`;
   const params = {
     language,
     ...(city && { city }),
     ...(limit && { limit }),
   };
-  const finalUrl = addQueryParams(url, params);
+  const url = isSubCategory
+    ? getHeadoutApiUrl({
+        endpoint: HeadoutEndpoints.TourGroupListBySubCategoryV6,
+        hostname,
+        id: categoryId,
+        params,
+      })
+    : getHeadoutApiUrl({
+        endpoint: HeadoutEndpoints.TourGroupListBySubCategoryV6,
+        hostname,
+        id: categoryId,
+        params,
+      });
   try {
-    const response = await fetch(finalUrl);
+    const response = await fetch(url);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -172,10 +213,8 @@ export const fetchTGIDsByCategoryV2 = async ({
   }
 };
 
-interface fetchCollection {
+interface FetchCollectionProps extends CommonApiProps {
   collectionId: string | number;
-  hostname: string;
-  language?: string;
   limit?: string;
 }
 export const fetchCollection = async ({
@@ -183,7 +222,7 @@ export const fetchCollection = async ({
   hostname,
   language = 'en',
   limit,
-}: fetchCollection) => {
+}: FetchCollectionProps) => {
   const params = {
     language,
     ...(limit && { limit }),
@@ -213,18 +252,20 @@ export const fetchReviewsTourGroup = ({
   hostName: string;
   limit?: string | number;
 }) =>
-  fetch(`${hostName}/api/tours/v2/review/tour-group/id/${tgid}?limit=${limit}`);
+  fetch(
+    `${hostName}/api/tours/v2/review/tour-group/id/${tgid}/?limit=${limit}`
+  );
 
 export const fetchInventoryAPI = async ({
   tgid,
-  hostName,
+  hostname,
 }: {
   tgid: string | number;
-  hostName: string;
+  hostname: string;
 }) => {
   try {
     const response = await fetch(
-      `${hostName}/api/tours/v5/tour-group/inventory/get/${tgid}?use-seatmap-prices=true`
+      `${hostname}/api/tours/v5/tour-group/inventory/get/${tgid}/?use-seatmap-prices=true`
     );
     const data = await response.json();
     return data;

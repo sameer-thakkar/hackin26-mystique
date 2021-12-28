@@ -51,7 +51,7 @@ const CollectionCard: FunctionComponent<CollectionCardProps> = ({
     const categoryIds = Array.from(new Set([...allCategoryIds]));
     if (categoryIds?.length) {
       const promises = categoryIds?.map((id) =>
-        fetch(`https://api.headout.com/api/v1/feed/category/get/${id}`)
+        fetch(`https://api.headout.com/api/v1/feed/category/get/${id}/`)
       );
       Promise.all(promises)
         .then((responses) =>
