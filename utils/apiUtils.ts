@@ -86,15 +86,48 @@ export const fetchTourList = ({ tgids, host = '', ...query }) => {
   );
 };
 
+interface CommonApiProps {
+  hostname: string;
+  language?: string;
+}
+
+interface TourListProps extends CommonApiProps {
+  tgids: string[] | number[];
+}
+
+export const fetchTourListV6 = async ({
+  hostname,
+  language,
+  tgids,
+}: TourListProps) => {
+  try {
+    const params = {
+      'ids[]': tgids?.join(','),
+      ...(language && { language }),
+    };
+    const apiUrl = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.TourGroupsV6,
+      hostname,
+      params,
+      id: null,
+    });
+    const res = await fetch(apiUrl);
+    return await res.json();
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[fetchTourListV6]', error);
+  }
+};
+
+interface TourGroupProps extends CommonApiProps {
+  tgid: string | number;
+}
+
 export const fetchTourGroupV6 = async ({
   tgid,
   hostname,
   language,
-}: {
-  tgid: string | number;
-  hostname: string;
-  language?: string;
-}) => {
+}: TourGroupProps) => {
   const params = {
     ...(language && { language }),
   };
@@ -109,6 +142,7 @@ export const fetchTourGroupV6 = async ({
   const res = await fetch(apiUrl);
   return await res.json();
 };
+
 export const fetchCurrencyList = async () => {
   try {
     const res = await fetch('https://api.headout.com/api/v1/currency/list');
@@ -136,12 +170,10 @@ export const fetchCategory = async (
   }
 };
 
-interface fetchTGIDsByCategoryV2Obj {
+interface fetchTGIDsByCategoryV2Obj extends CommonApiProps {
   categoryId: string | number;
-  hostname: string;
   isSubCategory: boolean;
   city?: string;
-  language?: string;
   limit?: string;
 }
 
@@ -153,17 +185,26 @@ export const fetchTGIDsByCategoryV2 = async ({
   language = 'en',
   limit,
 }: fetchTGIDsByCategoryV2Obj) => {
-  const url = isSubCategory
-    ? `${hostname}/api/tours/v6/tour-groups/list-by/sub-category/${categoryId}`
-    : `${hostname}/api/tours/v6/tour-groups/list-by/category/${categoryId}`;
   const params = {
     language,
     ...(city && { city }),
     ...(limit && { limit }),
   };
-  const finalUrl = addQueryParams(url, params);
+  const url = isSubCategory
+    ? getHeadoutApiUrl({
+        endpoint: HeadoutEndpoints.TourGroupListBySubCategoryV6,
+        hostname,
+        id: categoryId,
+        params,
+      })
+    : getHeadoutApiUrl({
+        endpoint: HeadoutEndpoints.TourGroupListBySubCategoryV6,
+        hostname,
+        id: categoryId,
+        params,
+      });
   try {
-    const response = await fetch(finalUrl);
+    const response = await fetch(url);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -172,10 +213,8 @@ export const fetchTGIDsByCategoryV2 = async ({
   }
 };
 
-interface fetchCollection {
+interface FetchCollectionProps extends CommonApiProps {
   collectionId: string | number;
-  hostname: string;
-  language?: string;
   limit?: string;
 }
 export const fetchCollection = async ({
@@ -183,7 +222,7 @@ export const fetchCollection = async ({
   hostname,
   language = 'en',
   limit,
-}: fetchCollection) => {
+}: FetchCollectionProps) => {
   const params = {
     language,
     ...(limit && { limit }),

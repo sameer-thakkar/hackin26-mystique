@@ -7,11 +7,12 @@ import LocalisedPrice from 'components/UI/LPrice';
 import { tourListApiParser } from 'utils/dataParsers';
 import RichContent from 'components/UI/RichContent';
 import { createBookingURL } from 'utils';
-import { fetchTourList } from 'utils/apiUtils';
+import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 import { getHostName } from 'utils/helper';
 import { STAR_FULL } from 'assets/SvgIcons';
 import { SOLEIL, COLORS } from 'const/ui-constants';
 import { DESIGN } from 'const/index';
+import useSWR from 'swr';
 
 const Tour = styled.a`
   display: grid;
@@ -132,18 +133,30 @@ const CustomLinkedTours = ({
   const [currency, setCurrency] = useState(null);
 
   const hostname = getHostName(isStage, isDev, host);
+  const tourListEndpoint = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.TourGroupsV6,
+    hostname,
+    params: {
+      'ids[]': tgids,
+      ...(lang && {
+        language: lang,
+      }),
+    },
+    id: null,
+  });
+  const { data: tourListData } = useSWR(tourListEndpoint, {
+    fetcher: swrFetcher,
+  });
 
   useEffect(() => {
-    fetchTourList({ tgids, host: hostname })
-      .then((res) => res.json())
-      .then((data) => {
-        const apiTours = tourListApiParser(data);
-        const { currencies } = data || {};
-        const [currency] = currencies || [];
-        setCurrency(currency);
-        setTours(apiTours);
-      });
-  }, [tgids, hostname]);
+    if (tourListData) {
+      const tours = tourListApiParser(tourListData);
+      const { currencies } = tourListData || {};
+      const [currency] = currencies || [];
+      setTours(tours);
+      setCurrency(currency);
+    }
+  }, [tourListData]);
 
   const defaultURL = (tgid) =>
     createBookingURL({ nakedDomain, lang, tgid, biLink });
