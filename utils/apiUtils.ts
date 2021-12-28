@@ -40,25 +40,25 @@ export const getHeadoutApiUrl = ({
   let endpointSlug;
   switch (endpoint) {
     case HeadoutEndpoints.TourGroupInventoryV5:
-      endpointSlug = `/api/tours/v5/tour-group/inventory/get/${id}`;
+      endpointSlug = `/api/tours/v5/tour-group/inventory/get/${id}/`;
       break;
     case HeadoutEndpoints.TourGroupsV6:
-      endpointSlug = `/api/tours/v6/tour-groups/${id ? id : ''}`;
+      endpointSlug = `/api/tours/v6/tour-groups/${id ? `${id}/` : ''}`;
       break;
     case HeadoutEndpoints.TourGroupListByCategoryV6:
-      endpointSlug = `/api/tours/v6/tour-groups/list-by/category/${id}`;
+      endpointSlug = `/api/tours/v6/tour-groups/list-by/category/${id}/`;
       break;
     case HeadoutEndpoints.TourGroupListBySubCategoryV6:
-      endpointSlug = `/api/tours/v6/tour-groups/list-by/sub-category/${id}`;
+      endpointSlug = `/api/tours/v6/tour-groups/list-by/sub-category/${id}/`;
       break;
     case HeadoutEndpoints.TourGroupReviewsV2:
-      endpointSlug = `/api/tours/v2/review/tour-group/id/${id}`;
+      endpointSlug = `/api/tours/v2/review/tour-group/id/${id}/`;
       break;
     case HeadoutEndpoints.TourGroupCollectionV1:
-      endpointSlug = `/api/tours/v1/collection/${id}/sections`;
+      endpointSlug = `/api/tours/v1/collection/${id}/sections/`;
       break;
     case HeadoutEndpoints.CurrencyList:
-      endpointSlug = `'https://api.headout.com/api/v1/currency/list`;
+      endpointSlug = `'https://api.headout.com/api/v1/currency/list/`;
       break;
   }
 
@@ -73,7 +73,7 @@ export const getHeadoutApiUrl = ({
 
 export const fetchInventory = ({ tgid, ...query }) => {
   return fetch(
-    `/api/tours/v5/tour-group/inventory/get/${tgid}${objectToQuery(query)}`
+    `/api/tours/v5/tour-group/inventory/get/${tgid}/${objectToQuery(query)}`
   ).then((res) => res.json());
 };
 
@@ -160,7 +160,7 @@ export const fetchCategory = async (
 ) => {
   try {
     const response = await fetch(
-      `${hostname}/api/tours/v1/feed/category/get/${categoryId}?limit-products=50`
+      `${hostname}/api/tours/v1/feed/category/get/${categoryId}/?limit-products=50`
     );
     const data = await response.json();
     return data;
@@ -252,7 +252,9 @@ export const fetchReviewsTourGroup = ({
   hostName: string;
   limit?: string | number;
 }) =>
-  fetch(`${hostName}/api/tours/v2/review/tour-group/id/${tgid}?limit=${limit}`);
+  fetch(
+    `${hostName}/api/tours/v2/review/tour-group/id/${tgid}/?limit=${limit}`
+  );
 
 export const fetchInventoryAPI = async ({
   tgid,
@@ -263,7 +265,7 @@ export const fetchInventoryAPI = async ({
 }) => {
   try {
     const response = await fetch(
-      `${hostName}/api/tours/v5/tour-group/inventory/get/${tgid}?use-seatmap-prices=true`
+      `${hostName}/api/tours/v5/tour-group/inventory/get/${tgid}/?use-seatmap-prices=true`
     );
     const data = await response.json();
     return data;
