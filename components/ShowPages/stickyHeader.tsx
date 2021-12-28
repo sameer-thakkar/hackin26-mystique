@@ -207,8 +207,9 @@ const StickyHeader = ({
           <div className="heading-wrapper">
             <div>
               <div className="top-text-wrapper">
-                {REOPENING_STRING}
-                {nextAvailable}
+                {isAvailable
+                  ? `${REOPENING_STRING} ${nextAvailable}`
+                  : strings.SHOWPAGE.SHOW_CLOSED}
               </div>
               <div className="heading">{name}</div>
             </div>

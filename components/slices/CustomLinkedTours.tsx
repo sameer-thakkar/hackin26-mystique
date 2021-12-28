@@ -1,5 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
+import useSWR from 'swr';
 import { MBContext } from 'contexts/MBContext';
 import Conditional from 'components/common/Conditional';
 import Image from 'components/UI/Image';
@@ -12,7 +13,6 @@ import { getHostName } from 'utils/helper';
 import { STAR_FULL } from 'assets/SvgIcons';
 import { SOLEIL, COLORS } from 'const/ui-constants';
 import { DESIGN } from 'const/index';
-import useSWR from 'swr';
 
 const Tour = styled.a`
   display: grid;
@@ -22,6 +22,7 @@ const Tour = styled.a`
     width: 100%;
     border-radius: 4px;
     object-fit: cover;
+    height: auto;
   }
   @media (max-width: 768px) {
     border-radius: 2px;
