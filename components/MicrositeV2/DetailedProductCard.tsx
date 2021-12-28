@@ -1,5 +1,3 @@
-import { WHY_WATCH_STRING } from 'constants/index';
-
 import React, { useContext } from 'react';
 import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
@@ -584,7 +582,7 @@ const DetailedProductCard = (props) => {
             </div>
           )}
           <div>
-            <h3>{WHY_WATCH_STRING}</h3>
+            <h3>{strings.SHOWPAGE.WHY_WATCH}</h3>
             {listicleWhyWatch && <RichText render={[listicleWhyWatch.text]} />}
           </div>
         </Conditional>

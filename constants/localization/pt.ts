@@ -25,6 +25,7 @@ const pt = {
   SAVE: 'Economize  <val>%',
   AVAILABLE: 'Disponível',
   EARLIEST_AVAILABILITY: 'Próxima disponível: ',
+  UNAVAILABLE: 'Indisponível',
   TODAY: 'hoje',
   TOMORROW: 'amanhã',
   TICKETS: 'Ingressos',

@@ -25,6 +25,7 @@ const nl = {
   SAVE: 'Bespaar <val>%',
   AVAILABLE: 'Beschikbaar',
   EARLIEST_AVAILABILITY: 'Vroegste beschikbaarheid',
+  UNAVAILABLE: 'Niet beschikbaar',
   TODAY: 'Vandaag',
   TOMORROW: 'Morgen',
   MORE_FROM: 'Meer van',

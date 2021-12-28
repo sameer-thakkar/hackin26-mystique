@@ -1,13 +1,11 @@
-import { REOPENING_STRING } from 'constants/index';
-
-import { strings } from 'const/strings';
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { createBookingURL } from 'utils';
+import { MBContext } from 'contexts/MBContext';
 import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
 import { COLORS } from 'const/ui-constants';
-
-import { MBContext } from '../../contexts/MBContext';
+import { strings } from 'const/strings';
+import { createBookingURL } from 'utils';
+import Conditional from 'components/common/Conditional';
 
 const BannerContent = styled.div(
   ({ showComponent }) => `
@@ -81,8 +79,8 @@ const BannerContent = styled.div(
     text-align: left;
   }
 
-  .buy-button {
-    background: ${COLORS.PURPS};
+  .buy-button,
+  .unavailable-button {
     margin: 0px 16px;
     color: #ffffff;
     border: none;
@@ -93,12 +91,20 @@ const BannerContent = styled.div(
     letter-spacing: 0.6px;
     display: block;
     text-align: center;
-    background: ${COLORS.PURPS};
     border-radius: 4px;
     width: 180px;
     padding: 12px 0;
+    display: block;
   }
 
+  .buy-button {
+    color: ${COLORS.WHITE};
+    background: ${COLORS.PURPS};
+  }
+  .unavailable-button {
+    background: ${COLORS.GREY.G5};
+    color: ${COLORS.WHITE};
+  }
   .details-container {
     display: grid;
     grid-template-columns: auto auto auto auto;
@@ -177,6 +183,7 @@ const StickyHeader = ({
   currentLanguage,
   nextAvailable,
   showComponent,
+  isAvailable,
 }) => {
   const { listingPrice, currency, name } = tourGroupData;
 
@@ -190,6 +197,8 @@ const StickyHeader = ({
     tgid: tgid,
     biLink: biLink,
   });
+  const { REOPENING, NEXT_AVAILABLE } = strings || {};
+  const REOPENING_STRING = `${REOPENING} · ${NEXT_AVAILABLE}`;
 
   return (
     <>
@@ -214,11 +223,16 @@ const StickyHeader = ({
                   prefix={true}
                 />
               </div>
-              <div>
+              <Conditional if={isAvailable}>
                 <a className="buy-button" href={bookingUrl} target="blank">
                   {strings.BANNER_CTA}
                 </a>
-              </div>
+              </Conditional>
+              <Conditional if={!isAvailable}>
+                <button className="unavailable-button" disabled>
+                  {strings.UNAVAILABLE}
+                </button>
+              </Conditional>
             </div>
           </div>
         </BannerContentWrapper>

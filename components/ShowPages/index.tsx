@@ -18,7 +18,6 @@ import CategorySlider from 'components/ShowPages/CategorySlider';
 import SubHeading from 'components/ShowPages/SubHeading';
 import {
   ALLOW_IMMEDIEATE_NESTING,
-  REOPENING_TAG,
   FAVICON_LONDON_THEATRE_TICKETS,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -211,7 +210,7 @@ const ShowPage = ({
   const { code: currencyCode, localSymbol: currencySymbol } = currency || {};
 
   allTags.forEach((element) => {
-    if (element === REOPENING_TAG) {
+    if (element === strings.REOPENING?.toUpperCase()) {
       isReopening = true;
     }
   });

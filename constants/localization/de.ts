@@ -26,6 +26,7 @@ const de = {
   SAVE: '<val> % Rabatt',
   AVAILABLE: 'Verfügbar am',
   EARLIEST_AVAILABILITY: 'Früheste verfügbare',
+  UNAVAILABLE: 'Nicht verfügbar',
   TODAY: 'heute',
   TOMORROW: 'morgen',
   TICKETS: 'Tickets',

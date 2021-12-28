@@ -24,6 +24,7 @@ const fr = {
   SAVE: 'Économisez <val> %',
   AVAILABLE: 'Disponible',
   EARLIEST_AVAILABILITY: 'Prochaine disponibilité : ',
+  UNAVAILABLE: 'Indisponible',
   TODAY: "aujourd'hui",
   TOMORROW: 'demain',
   TICKETS: 'Billets',
