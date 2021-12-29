@@ -331,6 +331,13 @@ const de = {
     BANNER: 'Gratis Audioguide',
     PRODUCT_SUFFIX: '+ Audioguide',
   },
+  TICKET_CANNOT_BE_CANCELED:
+    'Dieses Ticket kann nicht storniert, aber auf Anfrage verschoben werden.',
+  TICKET_CAN_BE_CANCELED:
+    'Dieses Ticket kann bis zu {hours} Stunden vor dem Erlebnis gegen eine volle Rückerstattung storniert werden.',
+  FLEXIBLE: 'Flexibel',
+  INCLUSIONS: 'Inklusive',
+  FREE_CANCELLATION: 'Kostenlose Stornierung',
 };
 
 export default de;

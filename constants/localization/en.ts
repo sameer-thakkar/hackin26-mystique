@@ -410,6 +410,13 @@ const en = {
     BANNER: 'Free Audio Guide',
     PRODUCT_SUFFIX: 'with Audio Guide',
   },
+  TICKET_CANNOT_BE_CANCELED:
+    'This ticket cannot be canceled but can be rescheduled upon request.',
+  TICKET_CAN_BE_CANCELED:
+    'You may cancel up to {hours} hours in advance for a full refund.',
+  FLEXIBLE: 'Flexible',
+  INCLUSIONS: 'Inclusions',
+  FREE_CANCELLATION: 'Free Cancellation',
 };
 
 export default en;

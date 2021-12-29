@@ -23,6 +23,9 @@ const ImageLinksCarousel = dynamic(() => import('./slices/ImageLinksCarousel'));
 const InteractiveImage = dynamic(() => import('./slices/InteractiveImage'));
 const TrustBoosters = dynamic(() => import('./slices/TrustBoosters'));
 const TourComparisonTable = dynamic(() => import('./slices/TourComparision'));
+const AutomatedComparisonTable = dynamic(() =>
+  import('./slices/AutomatedComparisonTable')
+);
 const ImageGrid = dynamic(() => import('./slices/ImageGrid'));
 const ImageTextGrid = dynamic(() => import('./slices/ImageTextGrid'));
 const InternalContentCard = dynamic(() =>
@@ -508,6 +511,15 @@ const sliceHandler = (slice, props: any = {}) => {
           title={slice?.primary?.title}
           subtext={slice?.primary?.subtext}
           {...props}
+        />
+      );
+    case 'automated_comparison_table':
+      return (
+        <AutomatedComparisonTable
+          isMobile={props.isMobile}
+          heading={slice?.primary?.section_title}
+          description={slice?.primary?.section_sub_heading}
+          collectionId={slice?.primary?.collection_id}
         />
       );
     default:

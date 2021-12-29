@@ -343,6 +343,13 @@ const es = {
     BANNER: 'Audioguía gratuita',
     PRODUCT_SUFFIX: 'con audioguía',
   },
+  TICKET_CANNOT_BE_CANCELED:
+    'Estas entradas no pueden ser canceladas, pero pueden ser reprogramadas si se solicita.',
+  TICKET_CAN_BE_CANCELED:
+    'Puedes cancelar hasta {hours} horas de antelación para obtener un reembolso total.',
+  FLEXIBLE: 'Flexible',
+  INCLUSIONS: 'Incluye',
+  FREE_CANCELLATION: 'Cancelación gratuita',
 };
 
 export default es;

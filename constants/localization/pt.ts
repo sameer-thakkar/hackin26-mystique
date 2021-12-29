@@ -331,6 +331,13 @@ const pt = {
     BANNER: 'Guia de áudio gratuito',
     PRODUCT_SUFFIX: 'e Guia de Áudio',
   },
+  TICKET_CANNOT_BE_CANCELED:
+    'Este ingresso não pode ser cancelado, mas pode ser reagendado mediante solicitação',
+  TICKET_CAN_BE_CANCELED:
+    'Você pode cancelar com até {hours} horas de antecedência da experiência para um reembolso completo.',
+  FLEXIBLE: 'Flexível',
+  INCLUSIONS: 'Inclusões',
+  FREE_CANCELLATION: 'Cancelamento gratuito',
 };
 
 export default pt;
