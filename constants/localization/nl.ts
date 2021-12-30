@@ -25,6 +25,7 @@ const nl = {
   SAVE: 'Bespaar <val>%',
   AVAILABLE: 'Beschikbaar',
   EARLIEST_AVAILABILITY: 'Vroegste beschikbaarheid',
+  UNAVAILABLE: 'Niet beschikbaar',
   TODAY: 'Vandaag',
   TOMORROW: 'Morgen',
   MORE_FROM: 'Meer van',
@@ -332,6 +333,13 @@ const nl = {
     BANNER: 'Gratis audiotour',
     PRODUCT_SUFFIX: 'met Audiotour',
   },
+  TICKET_CANNOT_BE_CANCELED:
+    'Dit ticket kan niet worden geannuleerd, maar kan op verzoek worden verplaatst',
+  TICKET_CAN_BE_CANCELED:
+    'Je kunt tot {hours} uur van tevoren annuleren voor een volledige terugbetaling.',
+  FLEXIBLE: 'Flexibel',
+  INCLUSIONS: 'Inclusief',
+  FREE_CANCELLATION: 'Gratis annuleren',
 };
 
 export default nl;

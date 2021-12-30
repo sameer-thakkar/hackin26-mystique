@@ -24,6 +24,7 @@ const fr = {
   SAVE: 'Économisez <val> %',
   AVAILABLE: 'Disponible',
   EARLIEST_AVAILABILITY: 'Prochaine disponibilité : ',
+  UNAVAILABLE: 'Indisponible',
   TODAY: "aujourd'hui",
   TOMORROW: 'demain',
   TICKETS: 'Billets',
@@ -331,6 +332,12 @@ const fr = {
     BANNER: 'Audioguide gratuit',
     PRODUCT_SUFFIX: 'avec audioguide',
   },
+  TICKET_CANNOT_BE_CANCELED:
+    'Ce billet ne peut être annulé mais peut être reporté sur demande.',
+  TICKET_CAN_BE_CANCELED: `Vous pouvez annuler jusqu'à {hours} heures à l'avance pour un remboursement complet.`,
+  FLEXIBLE: 'Flexible',
+  INCLUSIONS: 'Inclus',
+  FREE_CANCELLATION: 'Annulation gratuite',
 };
 
 export default fr;

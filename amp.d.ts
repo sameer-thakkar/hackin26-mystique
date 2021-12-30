@@ -11,6 +11,7 @@ declare global {
       'amp-accordion': any;
       'amp-analytics': any;
       'amp-youtube': any;
+      'amp-iframe': any;
     }
   }
 }

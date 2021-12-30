@@ -27,6 +27,7 @@ import {
   LOCALISED_DATE_FORMATS,
   NOS_OF_HIGHLIGHTS_TO_SHOW,
   ANALYTICS_PROPERTIES,
+  CUSTOM_TYPES,
 } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { shortCodeSerializer } from 'utils/shortCodes';
@@ -117,6 +118,8 @@ const TourTitle = styled.h2`
   margin: 0;
   max-width: 768px;
   ${({ theme }) => theme.productCards.titleFontSettings.desktop};
+  ${({ pageType }) =>
+    pageType === CUSTOM_TYPES.GLOBAL_EXPERIENCE ? 'font-weight: 600;' : ''}
   @media (max-width: 768px) {
     ${({ isPopup, theme }) =>
       isPopup
@@ -206,6 +209,10 @@ const TourTags = styled.div`
       width: 16px;
       object-fit: cover;
     }
+    ${({ pageType }) =>
+      pageType === CUSTOM_TYPES.GLOBAL_EXPERIENCE
+        ? 'line-height: 20px;color: #444444;'
+        : ''}
   }
   @media (max-width: 768px) {
     grid-area: tags;
@@ -236,6 +243,12 @@ export const CTAContainer = styled.div`
     }
   `
       : ``}
+  button.tour-book-now-cta {
+    ${({ pageType }) =>
+      pageType === CUSTOM_TYPES.GLOBAL_EXPERIENCE
+        ? 'border-radius: 2px;font-weight: 600;line-height: 22px;'
+        : ''}
+  }
   @media (max-width: 768px) {
     display: contents;
   }
@@ -254,9 +267,17 @@ const PriceContainer = styled.div`
     grid-template-columns: auto auto;
     justify-content: left;
     grid-column-gap: 4px;
+    ${({ pageType }) =>
+      pageType === CUSTOM_TYPES.GLOBAL_EXPERIENCE
+        ? 'font-size: 13px !important;line-height: 17px !important;'
+        : ''}
   }
   .tour-price {
     display: flex;
+    ${({ pageType }) =>
+      pageType === CUSTOM_TYPES.GLOBAL_EXPERIENCE
+        ? 'line-height: 28px !important; color: #666666;'
+        : ''}
   }
   ${({ theme }) => theme.productCards.priceFontSettings.desktop}
   @media (max-width: 768px) {
@@ -538,6 +559,10 @@ const Tab = styled.div`
   border-bottom: 1px solid transparent;
   transform: translateY(1px);
   font-weight: ${SOLEIL.REGULAR};
+  ${({ pageType }) =>
+    pageType === CUSTOM_TYPES.GLOBAL_EXPERIENCE
+      ? 'font-weight: 600;color: #444444;'
+      : ''}
   ${({ isActive }) => {
     return (
       isActive &&
@@ -552,6 +577,10 @@ const Tab = styled.div`
 
 const TabPanel = styled.div`
   display: ${({ isActive }) => (isActive ? 'block' : 'none')};
+  ${({ pageType }) =>
+    pageType === CUSTOM_TYPES.GLOBAL_EXPERIENCE
+      ? 'li{color: #666666 !important;}'
+      : ''}
 `;
 
 const richtextElements = {
@@ -564,7 +593,12 @@ const richtextElements = {
   },
 };
 
-const HighlightTabs = ({ tabs, hasRegularHighlights = false, onTabChange }) => {
+const HighlightTabs = ({
+  tabs,
+  hasRegularHighlights = false,
+  onTabChange,
+  pageType,
+}) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
   useEffect(() => {
@@ -587,6 +621,7 @@ const HighlightTabs = ({ tabs, hasRegularHighlights = false, onTabChange }) => {
               e.stopPropagation();
               trackedTabChange(index);
             }}
+            pageType={pageType}
           >
             {tab.heading}
           </Tab>
@@ -594,7 +629,11 @@ const HighlightTabs = ({ tabs, hasRegularHighlights = false, onTabChange }) => {
       </TabsWrapper>
       <TabPanelWrapper>
         {tabs.map((tab, index) => (
-          <TabPanel isActive={activeTabIndex == index} key={index}>
+          <TabPanel
+            isActive={activeTabIndex == index}
+            key={index}
+            pageType={pageType}
+          >
             <RichText render={tab.contents} elements={richtextElements} />
           </TabPanel>
         ))}
@@ -644,9 +683,10 @@ export const Descriptors = ({
   descriptorArray,
   hasValidity = false,
   horizontal = false,
+  pageType = '',
 }) => {
   return (
-    <TourTags horizontal={horizontal}>
+    <TourTags horizontal={horizontal} pageType={pageType}>
       <Conditional if={hasValidity}>
         <div key={'validity'} className="tour-tag">
           <Image imageId={'validity'} url={getDescriptorIconURL('validity')} />
@@ -698,6 +738,7 @@ const Product = (props) => {
     showEarliestAvailability,
     isTicketCard = false,
     indexPosition,
+    pageType = '',
   } = props;
   const {
     mbTheme,
@@ -898,12 +939,13 @@ const Product = (props) => {
       }
     };
     const innerContent =
-      mbTheme === THEMES.DEFAULT ? (
-        ` ${
-          isContentOpen
+      mbTheme === THEMES.DEFAULT &&
+      pageType != CUSTOM_TYPES.GLOBAL_EXPERIENCE ? (
+        <>
+          {isContentOpen
             ? '- ' + strings.SHOW_LESS_TEXT
-            : '+ ' + strings.MORE_DETAILS
-        }`
+            : '+ ' + strings.MORE_DETAILS}
+        </>
       ) : (
         <>
           {isContentOpen ? strings.SHOW_LESS_TEXT : strings.MORE_DETAILS}
@@ -1011,7 +1053,9 @@ const Product = (props) => {
             <Conditional if={boosterTag && mbTheme !== THEMES.MIN_BLUE}>
               <BoosterTag>{boosterTag}</BoosterTag>
             </Conditional>
-            <TourTitle isPopup={isContentOpen}>{cardTitle}</TourTitle>
+            <TourTitle isPopup={isContentOpen} pageType={pageType}>
+              {cardTitle}
+            </TourTitle>
           </TitleWrapper>
           <Conditional
             if={
@@ -1030,6 +1074,7 @@ const Product = (props) => {
             <Descriptors
               descriptorArray={descriptorsList}
               hasValidity={!!validity}
+              pageType={pageType}
             />
           </Conditional>
           <Conditional if={hasSafetyFlag}>
@@ -1071,8 +1116,8 @@ const Product = (props) => {
                 );
               }
             })}
-          <CTAContainer>
-            <PriceContainer>
+          <CTAContainer pageType={pageType}>
+            <PriceContainer pageType={pageType}>
               <PriceBlock
                 showScratchPrice={showScratchPrice}
                 price={finalPrice}
@@ -1113,6 +1158,7 @@ const Product = (props) => {
               <Descriptors
                 hasValidity={!!validity}
                 descriptorArray={descriptorsList}
+                pageType={pageType}
               />
             </Conditional>
           </CTAContainer>
@@ -1162,6 +1208,7 @@ const Product = (props) => {
                   onTabChange={onTabChange}
                   hasRegularHighlights={hasHighlights}
                   tabs={tabs}
+                  pageType={pageType}
                 />
               </Conditional>
             </div>

@@ -7,14 +7,18 @@ import StickyFooter from 'components/ShowPages/stickyFooter';
 import { createBookingURL } from 'utils';
 import PriceBlock, { SavedTag } from 'UI/PriceBlock';
 import Conditional from 'components/common/Conditional';
+import StickyHeader from 'components/ShowPages/stickyHeader';
+import StickyFooter from 'components/ShowPages/stickyFooter';
+import PriceBlock, { SavedTag } from 'UI/PriceBlock';
 import Image from 'UI/Image';
-import { PRODUCT_VIDEOS } from 'const/ShowPageProductVideos';
-import { REOPENING_STRING, REOPENING_DATE, OPENING_DATE } from 'const/index';
-import { COLORS } from 'const/ui-constants';
-import { strings } from 'const/strings';
-import { dateToString } from 'utils/dateToString';
 import { PLAY_CIRCLE } from 'assets/SvgIcons';
-import { fetchInventory } from 'utils/apiUtils';
+import { PRODUCT_VIDEOS } from 'const/ShowPageProductVideos';
+import { strings } from 'const/strings';
+import { COLORS } from 'const/ui-constants';
+import { createBookingURL } from 'utils';
+import { dateToString } from 'utils/dateToString';
+import { fetchInventoryAPI } from 'utils/apiUtils';
+
 
 const Banner = styled.div`
   width: 100%;
@@ -100,12 +104,12 @@ const BannerContent = styled.div`
   position: relative;
   max-width: 1200px;
   z-index: 2;
-  background: #ffffff;
+  background: ${COLORS.WHITE};
   padding: 32px 30px 0;
   border-radius: 8px 8px 0px 0px;
 
   .heading-wrapper {
-    border-bottom: 1px solid #e2e2e2;
+    border-bottom: 1px solid ${COLORS.GREY.G6};
     padding-bottom: 32px;
     display: grid;
     grid-template-columns: 70% 30%;
@@ -125,8 +129,8 @@ const BannerContent = styled.div`
 
   .tags-wrapper {
     display: inline-block;
-    color: #666666;
-    background: #f0f0f0;
+    color: ${COLORS.GREY.G3};
+    background: ${COLORS.GREY.G7};
     padding: 6px 8px;
     margin: 0 8px 0 0;
     border-radius: 2px;
@@ -137,47 +141,61 @@ const BannerContent = styled.div`
   .right-pricing {
     text-align: right;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-areas: 'price cta';
     align-items: center;
   }
 
   .priceBlockWrapper {
     justify-content: flex-end;
     display: flex;
-    border-right: 1px solid #e2e2e2;
+    border-right: 1px solid ${COLORS.GREY.G6};
     padding-right: 16px;
+    grid-area: 'price';
   }
 
   .tour-price {
-    color: #444444;
+    color: ${COLORS.GREY.G2};
     font-weight: 600;
     font-size: 21px;
     line-height: 28px;
   }
 
   .tour-scratch-price {
-    color: #888888;
+    color: ${COLORS.GREY.G4};
     font-size: 14px;
     line-height: 16px;
     text-align: left;
     font-weight: normal;
   }
 
-  .buy-button {
+  .buy-button,
+  .unavailable-button {
     padding: 12px 20px;
-    background: ${COLORS.PURPS};
     border-radius: 4px;
     margin: 0px 16px;
-    color: #ffffff;
     border: none;
     font-weight: 600;
     font-size: 16px;
     font-style: normal;
     letter-spacing: 0.8px;
-    width: 160px;
+    max-width: 160px;
+    width: 100%;
     display: block;
     text-align: center;
     line-height: 20px;
+    grid-area: cta;
+  }
+  .buy-button {
+    background: ${COLORS.PURPS};
+    color: ${COLORS.WHITE};
+    display: block;
+  }
+  .unavailable-button {
+    background: ${COLORS.GREY.G5};
+    color: ${COLORS.WHITE};
+    margin: 0;
+    align-items: unset;
+    justify-self: end;
   }
 
   .details-container {
@@ -190,12 +208,12 @@ const BannerContent = styled.div`
     font-weight: normal;
     font-size: 12px;
     line-height: 16px;
-    color: #888888;
+    color: ${COLORS.GREY.G4};
     padding-bottom: 4px;
   }
 
   .details-container .value {
-    color: #444444;
+    color: ${COLORS.GREY.G2};
     font-size: 15px;
     line-height: 20px;
   }
@@ -215,7 +233,6 @@ const BannerContent = styled.div`
     .right-pricing {
       margin-top: 20px;
       text-align: left;
-      grid-template-columns: auto auto;
     }
 
     .buy-button {
@@ -255,7 +272,7 @@ const BannerContent = styled.div`
       border: 0;
       padding-bottom: 24px;
       margin-bottom: 24px;
-      border-bottom: 1px solid #e2e2e2;
+      border-bottom: 1px solid ${COLORS.GREY.G6};
     }
     .tags-wrapper {
       margin: 4px 4px 0 0;
@@ -301,6 +318,7 @@ const ShowPageBanner = ({
 
   const videoCode = PRODUCT_VIDEOS[tgid] ? PRODUCT_VIDEOS[tgid] : null;
   const videoAvailable = PRODUCT_VIDEOS[tgid] ? true : false;
+  const isTourAvailable = listingPrice ? true : false;
   const ref = useRef(null);
 
   const BannerChange = () => {
@@ -324,9 +342,10 @@ const ShowPageBanner = ({
         }
       });
     };
-
-    fetchReopeningDate();
-  }, [tgid]);
+    if (isTourAvailable) {
+      fetchReopeningDate();
+    }
+  }, [tgid, isTourAvailable, hostname]);
 
   const handleScroll = () => {
     const top = window.pageYOffset;
@@ -344,6 +363,9 @@ const ShowPageBanner = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const { REOPENING, NEXT_AVAILABLE } = strings || {};
+  const REOPENING_STRING = `${REOPENING} · ${NEXT_AVAILABLE}`;
+
   return (
     <>
       <StickyHeader
@@ -352,13 +374,14 @@ const ShowPageBanner = ({
         currentLanguage={currentLanguage}
         nextAvailable={nextAvailable}
         showComponent={!isMobile && showStickyNav}
+        isAvailable={isTourAvailable}
       />
-
       <Conditional if={isMobile}>
         <StickyFooter
           tgid={tgid}
           currentLanguage={currentLanguage}
-        ></StickyFooter>
+          isAvailable={isTourAvailable}
+        />
       </Conditional>
 
       <Banner>
@@ -388,26 +411,25 @@ const ShowPageBanner = ({
                   <Image url={productImage.url} alt={name} objectFit="cover" />
                 </BannerImage>
               </Conditional>
-              {videoAvailable ? (
-                <>
-                  <div
-                    className="play-button"
-                    onClick={BannerChange}
-                    role="button"
-                    tabIndex={0}
-                  >
-                    {PLAY_CIRCLE}
-                  </div>
-                </>
-              ) : null}
+              <Conditional if={videoAvailable}>
+                <div
+                  className="play-button"
+                  onClick={BannerChange}
+                  role="button"
+                  tabIndex={0}
+                >
+                  {PLAY_CIRCLE}
+                </div>
+              </Conditional>
             </div>
           </BannerImageWrapper>
         )}
       </Banner>
       <BannerContent ref={ref}>
         <div className="top-text-wrapper">
-          {REOPENING_STRING}
-          {nextAvailable}
+          {isTourAvailable
+            ? `${REOPENING_STRING} ${nextAvailable}`
+            : strings.SHOWPAGE.SHOW_CLOSED}
         </div>
         <div className="heading-wrapper">
           <div>
@@ -438,21 +460,28 @@ const ShowPageBanner = ({
           </div>
           <Conditional if={!isMobile}>
             <div className="right-pricing">
-              <div className="priceBlockWrapper">
-                <PriceBlock
-                  price={listingPrice}
-                  lang={currentLanguage}
-                  showSavings={true}
-                  showScratchPrice={true}
-                  currencySymbolOverride={localSymbol}
-                  prefix={true}
-                />
-              </div>
-              <div>
+              <Conditional if={listingPrice}>
+                <div className="priceBlockWrapper">
+                  <PriceBlock
+                    price={listingPrice}
+                    lang={currentLanguage}
+                    showSavings={true}
+                    showScratchPrice={true}
+                    currencySymbolOverride={localSymbol}
+                    prefix={true}
+                  />
+                </div>
+              </Conditional>
+              <Conditional if={listingPrice}>
                 <a className="buy-button" href={bookingUrl} target="blank">
                   {strings.BANNER_CTA}
                 </a>
-              </div>
+              </Conditional>
+              <Conditional if={!listingPrice}>
+                <button className="unavailable-button" disabled>
+                  {strings.UNAVAILABLE}
+                </button>
+              </Conditional>
             </div>
           </Conditional>
         </div>
@@ -461,12 +490,12 @@ const ShowPageBanner = ({
             return (
               <div className="individual-container" key={index}>
                 <div className="key">
-                  {isReopening && element[0] === OPENING_DATE
-                    ? REOPENING_DATE
+                  {isReopening && element[0] === strings.OPENING_DATE
+                    ? strings.REOPENING_DATE
                     : element[0]}
                 </div>
                 <div className="value">
-                  {element[0] === OPENING_DATE
+                  {element[0] === strings.OPENING_DATE
                     ? dateToString(element[1])
                     : element[1]}
                 </div>

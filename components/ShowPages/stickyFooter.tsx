@@ -1,3 +1,4 @@
+import Conditional from 'components/common/Conditional';
 import { strings } from 'const/strings';
 import { COLORS } from 'const/ui-constants';
 import React, { useContext } from 'react';
@@ -14,12 +15,11 @@ const StickyFooterContentWrapper = styled.div`
   width: 100%;
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1), 0px 2px 8px rgba(0, 0, 0, 0.1);
 
-  .buy-button {
+  .buy-button,
+  .unavailable-button {
     padding: 12px 24px;
-    background: ${COLORS.PURPS};
     border-radius: 4px;
     margin: 16px auto;
-    color: #ffffff;
     border: none;
     font-weight: 600;
     font-size: 16px;
@@ -29,9 +29,25 @@ const StickyFooterContentWrapper = styled.div`
     text-align: center;
     max-width: 280px;
   }
+  .buy-button {
+    color: ${COLORS.WHITE};
+    background: ${COLORS.PURPS};
+  }
+  .unavailable-button {
+    background: ${COLORS.GREY.G5};
+    color: ${COLORS.WHITE};
+  }
 `;
 
-const StickyFooter = ({ tgid, currentLanguage }) => {
+const StickyFooter = ({
+  tgid,
+  currentLanguage,
+  isAvailable = true,
+}: {
+  tgid: string | number;
+  currentLanguage: string;
+  isAvailable?: boolean;
+}) => {
   const { nakedDomain, biLink } = useContext(MBContext);
 
   const bookingUrl = createBookingURL({
@@ -43,9 +59,16 @@ const StickyFooter = ({ tgid, currentLanguage }) => {
 
   return (
     <StickyFooterContentWrapper>
-      <a className="buy-button" href={bookingUrl} target="blank">
-        {strings.BANNER_CTA}
-      </a>
+      <Conditional if={isAvailable}>
+        <a className="buy-button" href={bookingUrl} target="blank">
+          {strings.BANNER_CTA}
+        </a>
+      </Conditional>
+      <Conditional if={!isAvailable}>
+        <button disabled className="unavailable-button">
+          {strings.UNAVAILABLE}
+        </button>
+      </Conditional>
     </StickyFooterContentWrapper>
   );
 };

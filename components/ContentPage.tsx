@@ -180,6 +180,7 @@ class ContentPage extends Component<any, any> {
       },
       isMobile: props.isMobile,
       covid19AlertOpen: true,
+      pageViewEventSet: false,
     };
   }
 
@@ -273,26 +274,23 @@ class ContentPage extends Component<any, any> {
       name: ANALYTICS_PROPERTIES.PAGE_TITLE,
       value: renderShortCodes(baseLangPageTitle)?.join?.(''),
     });
-
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
-      [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.CONTENT_PAGE,
-      [ANALYTICS_PROPERTIES.LANGUAGE]: this.props.lang,
-      [ANALYTICS_PROPERTIES.PAGE_TITLE]: baseLangPageTitle,
-    });
   }
 
   componentDidUpdate() {
     const { data, eventsReady } = this.props;
     const { baseLangPageTitle } = data;
+    const { pageViewEventSet } = this.state;
     if (!eventsReady) return;
 
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
-      [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.CONTENT_PAGE,
-      [ANALYTICS_PROPERTIES.LANGUAGE]: this.props.lang,
-      [ANALYTICS_PROPERTIES.PAGE_TITLE]: baseLangPageTitle,
-    });
+    if (!pageViewEventSet) {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
+        [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.CONTENT_PAGE,
+        [ANALYTICS_PROPERTIES.LANGUAGE]: this.props.lang,
+        [ANALYTICS_PROPERTIES.PAGE_TITLE]: baseLangPageTitle,
+      });
+      this.setState({ pageViewEventSet: true });
+    }
   }
 
   openGroupBookingModal = () => this.setState({ showGroupBookingModal: true });

@@ -584,8 +584,6 @@ export const SAFETY_BANNER_STRING = 'Safety Banner';
 
 export const YES_STRING = 'YES';
 
-export const REOPENING_STRING = 'Reopening · Next Available: ';
-
 export const MONTH_ARRAY = [
   'January',
   'February',
@@ -604,17 +602,12 @@ export const MONTH_ARRAY = [
 export const SAFETY_MEASURE_REDIRECT_PAGE_LINK =
   'https://www.london-theater-tickets.com/reopening-london-theatres-safety-measures/';
 
-export const SAFETY_MEASURE_CTA_TEXT = 'More Details';
-export const OPENING_DATE = 'Opening Date';
-export const REOPENING_DATE = 'Reopening Date';
-export const REOPENING_TAG = 'REOPENING';
 export const FAVICON_LONDON_THEATRE_TICKETS =
   'https://images.prismic.io/mystique/43d0bf7f-2955-413b-a266-8fc62dd9c933_shows-favicon.png?auto=compress,format';
 
 export const AUDIOGUIDE_TAG_REGEX = /AUDIO_GUIDE_[0-9]+/g;
 export const REOPENING_CATEGORIES: number[] = [3159];
 export const NEW_ARRIVALS_CATEGORIES: number[] = [1351];
-export const WHY_WATCH_STRING = 'Why Watch';
 
 export const ANALYTICS_PROPERTIES = {
   LANGUAGE: 'Language',

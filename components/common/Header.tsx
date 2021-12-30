@@ -105,7 +105,7 @@ const StyledLogo = styled.div(
     display: grid;
     grid-auto-flow: column;
     margin-left: 15px;
-    img {
+    img{
       height: ${isEntertainmentMB ? `20px` : `26px`};
     }
     svg {
@@ -241,9 +241,10 @@ const Header: React.FC<any> = (props) => {
               alt={logoAltText}
               dontLazyLoad
               isLogo
-              height={isAmp ? '32' : '44'}
+              height="44"
               width="144"
               autoCrop={false}
+              isHeaderLogo
             />
             {hasPoweredByHeadoutLogo ? POWERED_BY_HEADOUT : null}
           </StyledLogo>

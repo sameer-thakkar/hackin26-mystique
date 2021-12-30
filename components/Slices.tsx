@@ -23,6 +23,9 @@ const ImageLinksCarousel = dynamic(() => import('./slices/ImageLinksCarousel'));
 const InteractiveImage = dynamic(() => import('./slices/InteractiveImage'));
 const TrustBoosters = dynamic(() => import('./slices/TrustBoosters'));
 const TourComparisonTable = dynamic(() => import('./slices/TourComparision'));
+const AutomatedComparisonTable = dynamic(() =>
+  import('./slices/AutomatedComparisonTable')
+);
 const ImageGrid = dynamic(() => import('./slices/ImageGrid'));
 const ImageTextGrid = dynamic(() => import('./slices/ImageTextGrid'));
 const InternalContentCard = dynamic(() =>
@@ -510,6 +513,15 @@ const sliceHandler = (slice, props: any = {}) => {
           {...props}
         />
       );
+    case 'automated_comparison_table':
+      return (
+        <AutomatedComparisonTable
+          isMobile={props.isMobile}
+          heading={slice?.primary?.section_title}
+          description={slice?.primary?.section_sub_heading}
+          collectionId={slice?.primary?.collection_id}
+        />
+      );
     default:
     // ToDo: Add to Error Logs (Slice)
   }
@@ -536,7 +548,7 @@ export const toursTabSliceHandler = async (slice) => {
       };
       const excludedTgids = csvTgidToArray(slice.primary.excluded_tgids);
       const category: any = await fetch(
-        `/api/tours/v1/feed/category/get/${slice.primary.category_id}`
+        `/api/tours/v1/feed/category/get/${slice.primary.category_id}/`
       ).then((res) => res.json());
       const tours = category?.products.reduce((acc, tour) => {
         return [

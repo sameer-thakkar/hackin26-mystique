@@ -95,6 +95,7 @@ const PopulateProducts = (props) => {
     isTicketCard = false,
     sectionTitle = '',
     sectionSubtext = '',
+    pageType = '',
   } = props;
   const productsWrapperRef = useRef(null);
   const [tourPrices, setTourPrices] = useState(scorpioData);
@@ -345,6 +346,7 @@ const PopulateProducts = (props) => {
               numberOfTours: tours.length,
               instantCheckout,
               indexPosition: index,
+              pageType,
             };
 
             return (
