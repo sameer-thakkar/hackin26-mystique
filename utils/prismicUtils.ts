@@ -29,7 +29,7 @@ import {
   categoryTourListParserV1,
   categoryTourListParserV2,
   uncategorizedToursListParser,
-  getToursGlobalCollection
+  getToursGlobalCollection,
 } from 'utils/dataParsers';
 import {
   fetchCategory,
@@ -37,7 +37,6 @@ import {
   fetchTourGroupV6,
   fetchTourGroupSlots,
 } from 'utils/apiUtils';
-import { addCashbackValueToDescriptor } from './productUtils';
 
 export const getSafetyBannerDocument = async ({ lang }) => {
   const safetyBannerResponse = await Client().query(

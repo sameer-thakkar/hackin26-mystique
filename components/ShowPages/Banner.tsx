@@ -4,11 +4,7 @@ import styled from 'styled-components';
 import { MBContext } from 'contexts/MBContext';
 import StickyHeader from 'components/ShowPages/stickyHeader';
 import StickyFooter from 'components/ShowPages/stickyFooter';
-import { createBookingURL } from 'utils';
-import PriceBlock, { SavedTag } from 'UI/PriceBlock';
 import Conditional from 'components/common/Conditional';
-import StickyHeader from 'components/ShowPages/stickyHeader';
-import StickyFooter from 'components/ShowPages/stickyFooter';
 import PriceBlock, { SavedTag } from 'UI/PriceBlock';
 import Image from 'UI/Image';
 import { PLAY_CIRCLE } from 'assets/SvgIcons';
@@ -17,8 +13,7 @@ import { strings } from 'const/strings';
 import { COLORS } from 'const/ui-constants';
 import { createBookingURL } from 'utils';
 import { dateToString } from 'utils/dateToString';
-import { fetchInventoryAPI } from 'utils/apiUtils';
-
+import { fetchInventory } from 'utils/apiUtils';
 
 const Banner = styled.div`
   width: 100%;

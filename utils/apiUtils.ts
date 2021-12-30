@@ -17,6 +17,7 @@ export const swrFetcher = async (url) => {
 };
 
 export enum HeadoutEndpoints {
+  TourGroupInventoryV5,
   TourGroupsV6,
   TourGroupInventoriesV6,
   TourGroupSlotsV6,
@@ -40,7 +41,7 @@ export const getHeadoutApiUrl = ({
 }) => {
   let endpointSlug;
   switch (endpoint) {
-     case HeadoutEndpoints.TourGroupInventoryV5:
+    case HeadoutEndpoints.TourGroupInventoryV5:
       endpointSlug = `/api/tours/v5/tour-group/inventory/get/${id}/`;
       break;
     case HeadoutEndpoints.TourGroupsV6:
@@ -129,6 +130,7 @@ export const fetchTourGroupV6 = async ({
   tgid,
   hostname,
   language,
+  currency,
 }: TourGroupProps) => {
   const params = {
     ...(language && { language }),
@@ -329,7 +331,6 @@ export const fetchInventory = async ({
     console.error('[fetchInventory]', error);
   }
 };
-
 
 export const fetchTourGroupSlots = async ({
   tgid,
