@@ -203,7 +203,7 @@ export const fetchTGIDsByCategoryV2 = async ({
         params,
       })
     : getHeadoutApiUrl({
-        endpoint: HeadoutEndpoints.TourGroupListBySubCategoryV6,
+        endpoint: HeadoutEndpoints.TourGroupListByCategoryV6,
         hostname,
         id: categoryId,
         params,
