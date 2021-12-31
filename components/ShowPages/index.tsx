@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { useWindowWidth } from '@react-hook/window-size';
+import Head from 'next/head';
 import { RichText } from 'prismic-reactjs';
+import { ProductJsonLd } from 'next-seo';
+import { useWindowWidth } from '@react-hook/window-size';
 import styled from 'styled-components';
 import { StyledRichContent } from 'UI/RichContent';
 import Footer from 'components/common/Footer';
@@ -30,12 +32,11 @@ import { groupSlices, getHostName } from 'utils/helper';
 import cloneDeep from 'lodash.clonedeep';
 import { StyledAccordion } from 'components/slices/Accordion';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
-import { fetchReviewsTourGroup, fetchTGIDsByCategoryV2 } from 'utils/apiUtils';
+import { fetchTourGroupReviews, fetchTGIDsByCategoryV2 } from 'utils/apiUtils';
 import { StyledAsideModal } from 'components/UI/AsideModal';
 import TitleTextCombo from 'components/UI/TitleTextCombo';
 import Conditional from 'components/common/Conditional';
 import PopulateMeta from 'components/common/NextSeoMeta';
-import { ProductJsonLd } from 'next-seo';
 import { getProductSchema } from 'utils/schemaUtils';
 
 const Breadcrumb = dynamic(() => import('./BreadCrumb'));
@@ -176,6 +177,7 @@ const ShowPage = ({
   CMSContent,
   host,
   tourGroupData: tempTourGroupData,
+  inventorySlotData,
   isDev,
   serverRequestStartTimestamp,
 }) => {
@@ -201,7 +203,11 @@ const ShowPage = ({
     listingPrice,
     primarySubCategory,
     city,
+    startLocation,
+    endLocation,
   } = tourGroupData || {};
+
+  const { slots } = inventorySlotData || {};
 
   const { id: primarySubCategoryID, name: primarySubCategoryName } =
     primarySubCategory || {};
@@ -308,19 +314,17 @@ const ShowPage = ({
 
   useEffect(() => {
     const reviewTourGroup = async () => {
-      const tourGroupReviews = await fetchReviewsTourGroup({
+      const data = await fetchTourGroupReviews({
         tgid,
-        hostName: hostname,
+        hostname,
         limit: 5,
-      })
-        .then((res) => {
-          return res.json();
-        })
-        .then((data) => {
-          return data.items.map((element) => {
-            return { name: element.nonCustomerName, content: element.content };
-          });
-        });
+      });
+
+      const tourGroupReviews = data?.items?.map((review) => ({
+        name: review?.nonCustomerName,
+        content: review?.content,
+      }));
+
       setCustomerReviews(tourGroupReviews);
     };
 
@@ -351,6 +355,50 @@ const ShowPage = ({
     topReviews,
     reviewsDetails,
   });
+
+  const { addressLine1, addressLine2, postalCode, cityName, state } =
+    startLocation || endLocation || {};
+  const productImages = imageUploads?.map((image) => image?.url);
+  const eventSchemaMarkup = slots
+    ?.slice(0, 9)
+    ?.map((slot) => {
+      const { endTime, startTime, startDate } = slot || {};
+      return `
+      {
+        "@context": "https://schema.org",
+        "@type": "Event",
+        "name": "${name}",
+        "startDate": "${startDate}T${startTime}",
+        "endDate": "${startDate}T${endTime}",
+        "location": {
+          "@type": "Place",
+          "name": "${addressLine1}",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "${addressLine1}",
+            "addressLocality": "${addressLine2}",
+            "postalCode": "${postalCode}",
+            "addressRegion": "${state ?? cityName}",
+            "addressCountry": "${city?.country?.code}"
+          }
+        },
+        "image": [${productImages.map((image) => `"${image}"`)}],
+        "offers": {
+          "@type": "Offer",
+          "url": "${PageURL}",
+          "price": ${listingPrice?.finalPrice},
+          "priceCurrency": "${currencyCode}",
+          "availability": "${
+            listingPrice
+              ? 'https://schema.org/InStock'
+              : 'https://schema.org/SoldOut'
+          }",
+          "itemCondition": "http://schema.org/NewCondition"
+        }
+      }`;
+    })
+    ?.join(',');
+
   return (
     <>
       <ShowPageWrapper>
@@ -375,6 +423,14 @@ const ShowPage = ({
             bannerImages,
           }}
         />
+        {/* @ts-ignore */}
+        <ProductJsonLd {...productSchema} />
+        <Head>
+          <script
+            dangerouslySetInnerHTML={{ __html: `[${eventSchemaMarkup}]` }}
+            type="application/ld+json"
+          />
+        </Head>
         <Header
           languages={alternateLanguages}
           headerLinks={headerLinks}
@@ -424,12 +480,10 @@ const ShowPage = ({
               isOpenOverride={false}
             />
           ) : (
-            <>
-              <ContentTabs
-                tabsArr={tabHeadingHighlight}
-                contentArr={tabSchemaHighlight}
-              />
-            </>
+            <ContentTabs
+              tabsArr={tabHeadingHighlight}
+              contentArr={tabSchemaHighlight}
+            />
           )}
           <Conditional if={imageUploads.length >= 5}>
             <Gallery galleryArray={imageUploads.slice(2)} isMobile={isMobile} />
@@ -501,8 +555,6 @@ const ShowPage = ({
           isEntertainmentMb={true}
         />
       </ShowPageWrapper>
-      {/* @ts-ignore */}
-      <ProductJsonLd {...productSchema} />
     </>
   );
 };

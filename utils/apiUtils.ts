@@ -19,6 +19,8 @@ export const swrFetcher = async (url) => {
 export enum HeadoutEndpoints {
   TourGroupInventoryV5,
   TourGroupsV6,
+  TourGroupInventoriesV6,
+  TourGroupSlotsV6,
   TourGroupListByCategoryV6,
   TourGroupListBySubCategoryV6,
   TourGroupReviewsV2,
@@ -45,6 +47,12 @@ export const getHeadoutApiUrl = ({
     case HeadoutEndpoints.TourGroupsV6:
       endpointSlug = `/api/tours/v6/tour-groups/${id ? `${id}/` : ''}`;
       break;
+    case HeadoutEndpoints.TourGroupInventoriesV6:
+      endpointSlug = `/api/tours/v6/tour-groups/${id}/inventories/`;
+      break;
+    case HeadoutEndpoints.TourGroupSlotsV6:
+      endpointSlug = `/api/tours/v6/tour-groups/slots/get/${id}`;
+      break;
     case HeadoutEndpoints.TourGroupListByCategoryV6:
       endpointSlug = `/api/tours/v6/tour-groups/list-by/category/${id}/`;
       break;
@@ -69,12 +77,6 @@ export const getHeadoutApiUrl = ({
   } else {
     return url;
   }
-};
-
-export const fetchInventory = ({ tgid, ...query }) => {
-  return fetch(
-    `/api/tours/v5/tour-group/inventory/get/${tgid}/${objectToQuery(query)}`
-  ).then((res) => res.json());
 };
 
 export const fetchTourList = ({ tgids, host = '', ...query }) => {
@@ -121,15 +123,18 @@ export const fetchTourListV6 = async ({
 
 interface TourGroupProps extends CommonApiProps {
   tgid: string | number;
+  currency?: string;
 }
 
 export const fetchTourGroupV6 = async ({
   tgid,
   hostname,
   language,
+  currency,
 }: TourGroupProps) => {
   const params = {
     ...(language && { language }),
+    ...(currency && { currency }),
   };
 
   const apiUrl = getHeadoutApiUrl({
@@ -243,34 +248,121 @@ export const fetchCollection = async ({
   }
 };
 
-export const fetchReviewsTourGroup = ({
+export const fetchTourGroupReviews = async ({
   tgid,
-  hostName,
+  hostname,
   limit,
 }: {
   tgid: string | number;
-  hostName: string;
-  limit?: string | number;
-}) =>
-  fetch(
-    `${hostName}/api/tours/v2/review/tour-group/id/${tgid}/?limit=${limit}`
-  );
+  hostname: string;
+  limit?: number;
+}) => {
+  const params = {
+    ...(limit && {
+      limit: `${limit}`,
+    }),
+  };
+  const url = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.TourGroupReviewsV2,
+    id: tgid,
+    hostname,
+    params,
+  });
+  try {
+    const res = await fetch(url);
+    return await res.json();
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[fetchTourGroupReviews]', error);
+  }
+};
 
-export const fetchInventoryAPI = async ({
+export const fetchInventory = async ({
   tgid,
   hostname,
+  minPax,
+  forDays,
+  useSeatmapPrices,
+  language = 'en',
+  variantId,
+  currency,
 }: {
-  tgid: string | number;
+  tgid: number | string;
   hostname: string;
+  minPax?: number;
+  forDays?: number;
+  useSeatmapPrices?: boolean;
+  language?: string;
+  variantId?: number;
+  currency?: string | null;
 }) => {
   try {
-    const response = await fetch(
-      `${hostname}/api/tours/v5/tour-group/inventory/get/${tgid}/?use-seatmap-prices=true`
-    );
+    const params = {
+      ...(language && {
+        language,
+      }),
+      ...(minPax && {
+        'min-pax': `${minPax}`,
+      }),
+      ...(forDays && {
+        'for-days': `${forDays}`,
+      }),
+      ...(useSeatmapPrices && {
+        'use-seatmap-prices': `${useSeatmapPrices}`,
+      }),
+      ...(variantId && {
+        variantId: `${variantId}`,
+      }),
+      ...(currency && {
+        currency,
+      }),
+    };
+    const url = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.TourGroupInventoriesV6,
+      id: tgid,
+      hostname,
+      params,
+    });
+    const response = await fetch(url);
     const data = await response.json();
     return data;
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('[fetchCategory]', error);
+    console.error('[fetchInventory]', error);
+  }
+};
+
+export const fetchTourGroupSlots = async ({
+  tgid,
+  hostname,
+  forDays,
+  currency,
+}: {
+  tgid: string | number;
+  hostname: string;
+  forDays?: number;
+  currency?: string;
+}) => {
+  try {
+    const params = {
+      ...(forDays && {
+        'for-days': `${forDays}`,
+      }),
+      ...(currency && {
+        currency,
+      }),
+    };
+    const url = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.TourGroupSlotsV6,
+      id: tgid,
+      hostname,
+      params,
+    });
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[fetchTourGroupSlots]', error);
   }
 };

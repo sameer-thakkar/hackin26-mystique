@@ -1,5 +1,6 @@
 import { Client } from 'config/prismic-config';
 import Prismic from 'prismic-javascript';
+import { toursTabSliceHandler } from 'components/Slices';
 import {
   CUSTOM_TYPES,
   LINKED_MICROSITE_PROPS,
@@ -20,19 +21,22 @@ import {
   redirectTo,
   refsArrayToObject,
 } from 'utils';
+import { addCashbackValueToDescriptor } from 'utils/productUtils';
+import { traceError } from 'utils/logutils';
+import { getHostName } from 'utils/helper';
 import { getLangUID, getValidUrlParams, sanitizeURL } from 'utils/urlUtils';
-import { toursTabSliceHandler } from 'components/Slices';
-
-import { traceError } from './logutils';
-import { getHostName } from './helper';
 import {
   categoryTourListParserV1,
   categoryTourListParserV2,
   uncategorizedToursListParser,
   getToursGlobalCollection,
-} from './dataParsers';
-import { fetchCategory, fetchCurrencyList, fetchTourGroupV6 } from './apiUtils';
-import { addCashbackValueToDescriptor } from './productUtils';
+} from 'utils/dataParsers';
+import {
+  fetchCategory,
+  fetchCurrencyList,
+  fetchTourGroupV6,
+  fetchTourGroupSlots,
+} from 'utils/apiUtils';
 
 export const getSafetyBannerDocument = async ({ lang }) => {
   const safetyBannerResponse = await Client().query(
@@ -1167,14 +1171,21 @@ export const getPageData = async ({
           language: getHeadoutLanguagecode(lang),
         });
 
-        const primaryCountry = tgidData?.cities?.[0]?.country;
-        const primaryCity = tgidData?.cities?.[0];
+        const inventorySlotData = await fetchTourGroupSlots({
+          tgid: CMSContent?.data?.tgid,
+          hostname,
+          forDays: 10,
+        });
 
-        const activeCurrency = tgidData?.currencies?.[0];
+        const primaryCountry = tgidData?.city?.country;
+        const primaryCity = tgidData?.city;
+
+        const activeCurrency = tgidData?.currency;
 
         return {
           CMSContent,
           tourGroupData: tgidData,
+          inventorySlotData,
           ContentType,
           uid,
           lang,

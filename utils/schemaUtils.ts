@@ -25,6 +25,7 @@ type productSchemaType = {
   images?: imageArray[];
   topReviews?: reviewArray[];
 };
+
 export const getProductSchemaImages = (array: imageArray[]): string[] =>
   array?.map((image) => getValidUrl(image?.url));
 

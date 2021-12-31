@@ -630,3 +630,19 @@ export const PAGE_TYPES = {
   COLLECTION: 'Collection',
   CONTENT_PAGE: 'Content Page',
 };
+
+const ESCAPE_ENTITIES = Object.freeze({
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&apos;',
+});
+
+export const ESCAPE_REGEX = new RegExp(
+  `[${Object.keys(ESCAPE_ENTITIES).join('')}]`,
+  'g'
+);
+
+export const ESCAPE_REPLACER = (t: string): string =>
+  ESCAPE_ENTITIES[t as keyof typeof ESCAPE_ENTITIES];

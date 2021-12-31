@@ -1,15 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import styled from 'styled-components';
 import Product from 'components/Product';
 import Conditional from 'components/common/Conditional';
 import HorizontalLine from 'components/slices/HorizontalLine';
+import TicketCard from 'components/slices/ContentPageTicketsCard';
+import { MBContext } from 'contexts/MBContext';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, THEMES } from 'const/index';
 import { strings } from 'const/strings';
 import { fetchInventory } from 'utils/apiUtils';
 import { legacyBooleanCheck } from 'utils';
-import TicketCard from 'components/slices/ContentPageTicketsCard';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
+import { getHostName } from 'utils/helper';
 
 const StyledProductsWrapper = styled.div`
   margin: 0 auto;
@@ -109,6 +111,10 @@ const PopulateProducts = (props) => {
     productsRef.current.push(el);
   };
 
+  const { isStage, isDev } = useContext(MBContext);
+
+  const hostname = getHostName(isStage, isDev, host);
+
   useEffect(() => {
     if (!productsRef.current) return;
     try {
@@ -172,12 +178,18 @@ const PopulateProducts = (props) => {
       uncategorizedToursList,
       currency = null,
     }) => {
-      const requestQueue = uncategorizedToursList.map(({ tgid }) =>
-        fetchInventory({ tgid, currency })
-      );
+      const requestQueue = uncategorizedToursList.map(({ tgid }) => {
+        return fetchInventory({
+          tgid,
+          hostname,
+          ...(currency && {
+            currency: `${currency}`,
+          }),
+        });
+      });
       const response: Array<any> = await Promise.all(requestQueue).then(
-        (res): any =>
-          res.reduce((acc: any, tour: any, index) => {
+        (res): any => {
+          return res.reduce((acc: any, tour: any, index) => {
             const tgid = uncategorizedToursList[index].tgid;
             return {
               ...acc,
@@ -186,7 +198,8 @@ const PopulateProducts = (props) => {
                 startTime: tour?.inventoryList?.[0]?.startTime || '',
               },
             };
-          }, {})
+          }, {});
+        }
       );
       setEarliestAvailabilityQueue(response);
       setShowEarliestAvailability(true);
@@ -205,7 +218,14 @@ const PopulateProducts = (props) => {
   useEffect(() => {
     const fetchVariantPrices = async ({ variantTgids, currency }) => {
       const fetchVariantPrices: Promise<any>[] = variantTgids.map(({ tgid }) =>
-        fetchInventory({ tgid, 'for-days': 2, currency })
+        fetchInventory({
+          tgid,
+          forDays: 2,
+          ...(currency && {
+            currency: `${currency}`,
+          }),
+          hostname,
+        })
       );
       const variants: Array<any> = await Promise.all([...fetchVariantPrices]);
       const mapVariantPrices = variants.map((tourVariant: any, index) => {

@@ -13,6 +13,7 @@ import { getHostName } from 'utils/helper';
 import { STAR_FULL } from 'assets/SvgIcons';
 import { SOLEIL, COLORS } from 'const/ui-constants';
 import { DESIGN } from 'const/index';
+import TitleTextCombo from 'UI/TitleTextCombo';
 
 const Tour = styled.a`
   display: grid;
@@ -163,7 +164,9 @@ const CustomLinkedTours = ({
     createBookingURL({ nakedDomain, lang, tgid, biLink });
   return (
     <StyledCustomLinkedTours design={design}>
-      <RichContent render={content} />
+      <TitleTextCombo>
+        <RichContent render={content} />
+      </TitleTextCombo>
       <TourGrid>
         {apiTours &&
           tgids.map((tgid: any, index) => {
