@@ -3,15 +3,15 @@ import styled from 'styled-components';
 import Product from 'components/Product';
 import Conditional from 'components/common/Conditional';
 import HorizontalLine from 'components/slices/HorizontalLine';
+import TicketCard from 'components/slices/ContentPageTicketsCard';
+import { MBContext } from 'contexts/MBContext';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, THEMES } from 'const/index';
 import { strings } from 'const/strings';
 import { fetchInventory } from 'utils/apiUtils';
 import { legacyBooleanCheck } from 'utils';
-import TicketCard from 'components/slices/ContentPageTicketsCard';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import { getHostName } from 'utils/helper';
-import { MBContext } from 'contexts/MBContext';
 
 const StyledProductsWrapper = styled.div`
   margin: 0 auto;
