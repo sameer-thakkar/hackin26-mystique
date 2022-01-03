@@ -284,7 +284,12 @@ const PopulateProducts = (props) => {
     <StyledProductsWrapper ref={productsWrapperRef}>
       <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
         <div id="tour-list-heading">
-          <Conditional if={sectionTitle || strings.TOUR_LIST_HEADING}>
+          <Conditional
+            if={
+              availableToursList.length &&
+              (sectionTitle || strings.TOUR_LIST_HEADING)
+            }
+          >
             <StyledTourListHeading isTicketCard={isTicketCard}>
               {isTicketCard ? sectionTitle : strings.TOUR_LIST_HEADING}
             </StyledTourListHeading>
