@@ -45,8 +45,8 @@ const AccordionGroup = ({
   const faqSchemaProps = accordions.map((acc) => {
     const { heading, content } = acc || {};
     return {
-      questionName: heading.replace(ESCAPE_REGEX, ESCAPE_REPLACER),
-      acceptedAnswerText: RichText.asText(content).replace(
+      questionName: heading?.replace(ESCAPE_REGEX, ESCAPE_REPLACER),
+      acceptedAnswerText: RichText.asText(content)?.replace(
         ESCAPE_REGEX,
         ESCAPE_REPLACER
       ),
