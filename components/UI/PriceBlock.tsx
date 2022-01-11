@@ -78,7 +78,7 @@ const PriceBlock = ({
   const currencySymbol =
     localSymbol ||
     currencySymbolOverride ||
-    currencySymbolMap[currencyCode]?.localSymbol ||
+    currencySymbolMap?.[currencyCode]?.localSymbol ||
     currencyCode;
   return (
     <StyledPriceBlock>
