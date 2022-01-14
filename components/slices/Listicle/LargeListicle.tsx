@@ -146,12 +146,13 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
     title,
     summary,
     why_summary,
+    why_summary_heading,
+    timing_heading,
     show_price,
     read_more_link,
     book_now_link,
   } = primary;
   const [WTTDTCollapsed, setWTTDTCollapsed] = useState(true);
-
   const infoItems = items.reduce((acc, { info_title, info_description }) => {
     if (info_title) {
       return [
@@ -218,7 +219,7 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
           })}
           {timingsList.length > 0 ? (
             <div>
-              <InfoTitle>{strings.TIMINGS}</InfoTitle>
+              <InfoTitle>{timing_heading || strings.TIMINGS}</InfoTitle>
               <InfoTimings>
                 {timingsList.map((timing, index) => {
                   return (
@@ -236,7 +237,7 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
       ) : null}
       {RichText.asText(why_summary).length > 0 ? (
         <WTTDTSection>
-          <div>{strings.WHY_TAKE_THIS_DAY_TRIP}</div>
+          <div>{why_summary_heading || strings.WHY_TAKE_THIS_DAY_TRIP}</div>
           <WTTDTSectionRichText collapsed={WTTDTCollapsed}>
             <RichText
               render={why_summary}
