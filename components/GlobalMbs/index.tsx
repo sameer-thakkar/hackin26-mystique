@@ -97,6 +97,7 @@ const GlobalMB = (props) => {
   const {
     supply,
     headout_category_id: categoryId,
+    headout_collection_id: collectionId,
     headout_tgid: tgid,
     official_website: officialWebsite,
     country_name: countryName,
@@ -118,10 +119,10 @@ const GlobalMB = (props) => {
     cityCollections: cityCollectionsData,
   };
 
-  const hasTicketsPage = supply === 'Direct' && categoryId;
+  const hasTicketsPage = supply === 'Direct' && (categoryId || collectionId);
   const ticketLink = getBuyTicketsUrl(
     supply,
-    categoryId,
+    categoryId || collectionId,
     tgid,
     ticketsPage?.uid,
     isDev,

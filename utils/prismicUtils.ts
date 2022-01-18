@@ -605,12 +605,13 @@ export const getGlobalCollection = async ({ req, uid, lang }) => {
 
     let ticketsPage, attractionsPage;
     if (subPages?.results?.length) {
-      ticketsPage = subPages?.results
-        ?.filter((page) => page.data.page_type === 'Tickets')
-        ?.reduce((acc, curr) => acc + curr);
-      attractionsPage = subPages?.results
-        ?.filter((page) => page.data.page_type === 'Attractions')
-        ?.reduce((acc, curr) => acc + curr);
+      ticketsPage =
+        subPages?.results?.find((page) => page.data.page_type === 'Tickets') ||
+        {};
+      attractionsPage =
+        subPages?.results?.find(
+          (page) => page.data.page_type === 'Attractions'
+        ) || {};
     }
 
     const refArray = await getRefsArrayByIds(
