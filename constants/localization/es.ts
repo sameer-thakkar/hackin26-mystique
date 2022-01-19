@@ -350,6 +350,8 @@ const es = {
   FLEXIBLE: 'Flexible',
   INCLUSIONS: 'Incluye',
   FREE_CANCELLATION: 'Cancelación gratuita',
+  HOUR: 'h',
+  MINUTES: 'min',
 };
 
 export default es;

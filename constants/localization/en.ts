@@ -417,6 +417,8 @@ const en = {
   FLEXIBLE: 'Flexible',
   INCLUSIONS: 'Inclusions',
   FREE_CANCELLATION: 'Free Cancellation',
+  HOUR: 'hr',
+  MINUTES: 'mins',
 };
 
 export default en;

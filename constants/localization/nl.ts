@@ -340,6 +340,8 @@ const nl = {
   FLEXIBLE: 'Flexibel',
   INCLUSIONS: 'Inclusief',
   FREE_CANCELLATION: 'Gratis annuleren',
+  HOUR: 'uur',
+  MINUTES: 'min',
 };
 
 export default nl;

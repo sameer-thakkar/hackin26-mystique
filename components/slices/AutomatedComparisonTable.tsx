@@ -17,6 +17,10 @@ import { SOLEIL, COLORS } from 'const/ui-constants';
 import Conditional from 'components/common/Conditional';
 import { trackEvent } from 'utils/analytics';
 import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+
+dayjs.extend(duration);
 
 const StyledTourComparisionTable = styled.div`
   width: auto;
@@ -423,16 +427,13 @@ const AutomatedTourComparisonTable = ({
   const getLabelContent = (label, tour) => {
     if (label === 'maxDuration') {
       if (tour?.[label]) {
-        const totalMinutes = tour?.[label] / 60000;
-        const hours = Math.floor(totalMinutes / 60);
-        const minutes = totalMinutes % 60;
+        const duration = dayjs.duration(tour?.[label]);
+        const durationString = duration
+          .format(`HH [${strings.HOUR}] mm [${strings.MINUTES}]`)
+          .replace(new RegExp(`00 (${strings.HOUR}|${strings.MINUTES})`), '');
         return {
           title: strings.DURATION,
-          content: (
-            <p>
-              {hours ? hours + ' hr' : ''} {minutes ? minutes + ' mins' : ''}
-            </p>
-          ),
+          content: <p>{durationString}</p>,
         };
       } else {
         return {
