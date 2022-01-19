@@ -249,6 +249,7 @@ const Banner: FunctionComponent<BannerProps> = ({
 }) => {
   const {
     categoryID,
+    collectionID,
     tgid,
     ticketsPageLink,
     supply,
@@ -266,7 +267,7 @@ const Banner: FunctionComponent<BannerProps> = ({
   const { GLOBAL_MB: globalMbAR } = ASPECT_RATIO;
   const ticketLink = getBuyTicketsUrl(
     supply,
-    categoryID,
+    categoryID || collectionID,
     tgid,
     ticketsPageLink,
     isDev,

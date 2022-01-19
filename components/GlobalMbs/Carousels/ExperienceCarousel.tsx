@@ -161,7 +161,7 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
       cards = rides?.map((a) => a);
       break;
     case 'Tickets':
-      cards = tickets ? [...tickets?.data?.products] : [];
+      cards = tickets && tickets?.data ? [...tickets?.data?.products] : [];
   }
 
   let ridesAttractionMarkup, ticketsMarkup;
