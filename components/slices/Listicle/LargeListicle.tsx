@@ -2,6 +2,7 @@ import { COLORS, SOLEIL } from 'const/ui-constants';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
+import Tags from 'UI/Tags';
 import Image from 'UI/Image';
 import Button from 'UI/Button';
 import { strings } from 'const/strings';
@@ -144,6 +145,7 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
 }) => {
   const {
     title,
+    tags,
     summary,
     why_summary,
     why_summary_heading,
@@ -152,6 +154,7 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
     read_more_link,
     book_now_link,
   } = primary;
+  const finalTags = tags ? tags.split(',') : [];
   const [WTTDTCollapsed, setWTTDTCollapsed] = useState(true);
   const infoItems = items.reduce((acc, { info_title, info_description }) => {
     if (info_title) {
@@ -199,6 +202,11 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
           />
         </ImageWrapper>
       ) : null}
+      <Tags
+        tags={finalTags}
+        color={COLORS.GREY_G3}
+        backgroundColor={COLORS.GREY.G7}
+      />
       {RichText.asText(summary).length > 0 ? (
         <Paragraph>
           <RichText render={summary} htmlSerializer={shortCodeSerializer} />
