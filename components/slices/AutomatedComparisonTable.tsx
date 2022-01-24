@@ -515,11 +515,15 @@ const AutomatedTourComparisonTable = ({
     fetcher: swrFetcher,
   });
   useEffect(() => {
-    const headoutPicks = collectionData?.sections?.filter((section) => {
-      if (section?.type === 'HEADOUT_PICKS') {
-        return section?.tourGroups?.items;
-      }
-    })?.[0]?.tourGroups?.items;
+    const headoutPicks = collectionData?.sections
+      ?.filter((section) => {
+        if (section?.type === 'HEADOUT_PICKS') {
+          return section?.tourGroups?.items;
+        }
+      })?.[0]
+      ?.tourGroups?.items?.filter(
+        (item) => item.language.toLowerCase() === lang
+      );
     setItemArray(headoutPicks);
   }, [collectionData]);
 
