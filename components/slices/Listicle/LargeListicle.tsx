@@ -54,6 +54,12 @@ const ImageWrapper = styled.div`
   }
 `;
 
+const TagWrapper = styled.div`
+  margin-top: -34px;
+  position: absolute;
+  margin-left: 10px;
+`;
+
 const Paragraph = styled.div`
   font-size: 16px;
   line-height: 24px;
@@ -200,13 +206,15 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
             alt={image.alt || 'Product Image'}
             height={401}
           />
+          <TagWrapper>
+            <Tags
+              tags={finalTags}
+              color={COLORS.GREY_G3}
+              backgroundColor={COLORS.GREY.G7}
+            />
+          </TagWrapper>
         </ImageWrapper>
       ) : null}
-      <Tags
-        tags={finalTags}
-        color={COLORS.GREY_G3}
-        backgroundColor={COLORS.GREY.G7}
-      />
       {RichText.asText(summary).length > 0 ? (
         <Paragraph>
           <RichText render={summary} htmlSerializer={shortCodeSerializer} />
