@@ -108,7 +108,11 @@ const CollectionCard: FunctionComponent<CollectionCardProps> = ({
     tabs?.push(defaultTab);
     tabTitles?.forEach((title) => {
       const data = collections?.filter(
-        (collection) => collection?.data?.primary_category === title
+        (collection) =>
+          collection?.data?.primary_category === title ||
+          collection?.data?.secondary_categories?.filter(
+            (item) => item?.category == title
+          )?.length
       );
 
       if (data?.length) {

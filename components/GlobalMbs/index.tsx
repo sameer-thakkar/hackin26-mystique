@@ -314,6 +314,9 @@ const GlobalMB = (props) => {
   }
 
   const selfCanonicalLink = convertUidToUrl({ uid });
+  const favicon = {
+    url: CMSContent?.favicon?.url || CMSContent?.favicon,
+  };
   return (
     <>
       <Conditional if={!microbrandUrl}>
@@ -323,6 +326,7 @@ const GlobalMB = (props) => {
               ...CMSContent,
               ...header,
               canonical_link: selfCanonicalLink,
+              favicon: favicon,
             },
             datePublished,
             dateModified,
