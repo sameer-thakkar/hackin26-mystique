@@ -528,58 +528,163 @@ const AutomatedTourComparisonTable = ({
   }, [collectionData]);
 
   return (
-    <StyledTourComparisionTable
-      isExpanded={isExpanded || isAmp}
-      isMobile={isMobile}
-      tourCount={itemArray?.length}
-    >
-      <div className="heading-wrapper">
-        <div className="comparision-heading">{heading}</div>
-        <div className="comparision-description">{description}</div>
-      </div>
-      <div className="full-width-wrap">
-        <div className="table">
-          <div className="row max-content" style={{ zIndex: -1 }}>
-            {itemArray?.map((tour, index) => {
-              return (
-                <Column key={index}>
-                  <div className="tour-image">
-                    <Image url={tour.imageUrl} height={176} width={282} />
-                  </div>
-                </Column>
-              );
-            })}
-          </div>
-          <div className="sticky wrapper">
-            <div className="row wrapper">
+    <Conditional if={itemArray?.length}>
+      <StyledTourComparisionTable
+        isExpanded={isExpanded || isAmp}
+        isMobile={isMobile}
+        tourCount={itemArray?.length}
+      >
+        <div className="heading-wrapper">
+          <div className="comparision-heading">{heading}</div>
+          <div className="comparision-description">{description}</div>
+        </div>
+        <div className="full-width-wrap">
+          <div className="table">
+            <div className="row max-content" style={{ zIndex: -1 }}>
               {itemArray?.map((tour, index) => {
                 return (
                   <Column key={index}>
-                    <div className="tour-chin">
-                      <div className="tour-title">{tour.name}</div>
-                      <div className="tour-booster">
-                        <RichText
-                          render={tour.cardFooter}
-                          htmlSerializer={(...defaultArgs: any) =>
-                            shortCodeSerializerWithParentProps(
-                              defaultArgs,
-                              tour
-                            )
-                          }
-                        />
-                      </div>
+                    <div className="tour-image">
+                      <Image url={tour.imageUrl} height={176} width={282} />
                     </div>
                   </Column>
                 );
               })}
             </div>
+            <div className="sticky wrapper">
+              <div className="row wrapper">
+                {itemArray?.map((tour, index) => {
+                  return (
+                    <Column key={index}>
+                      <div className="tour-chin">
+                        <div className="tour-title">{tour.name}</div>
+                        <div className="tour-booster">
+                          <RichText
+                            render={tour.cardFooter}
+                            htmlSerializer={(...defaultArgs: any) =>
+                              shortCodeSerializerWithParentProps(
+                                defaultArgs,
+                                tour
+                              )
+                            }
+                          />
+                        </div>
+                      </div>
+                    </Column>
+                  );
+                })}
+              </div>
+            </div>
+            <Conditional if={isExpanded || isAmp}>
+              <div
+                className={`row ${isAmp ? 'no-display' : ''}`}
+                id="expanded-details-section"
+                style={{ marginTop: -8 }}
+              >
+                {itemArray?.map((tour, index) => {
+                  const ctaProps = {
+                    link: {
+                      url: createBookingURL({
+                        nakedDomain,
+                        lang,
+                        tgid: tour.id,
+                        biLink,
+                      }),
+                    },
+                  };
+                  return (
+                    <Column key={index}>
+                      <div className="tour-cta">
+                        <a
+                          href={ctaProps.link.url}
+                          onClick={() =>
+                            onBookNowClick({
+                              tgid: tour.tgid,
+                              position: index + 1,
+                            })
+                          }
+                        >
+                          <Button widthProp="100%">
+                            {strings.BOOK_NOW_CTA}
+                          </Button>
+                        </a>
+                      </div>
+                    </Column>
+                  );
+                })}
+              </div>
+            </Conditional>
+            <div className="row max-content">
+              {itemArray?.map((tour, index) => {
+                return (
+                  <div className="column flat-price-block" key={index}>
+                    <div className="content-block">
+                      <BlockContent>
+                        <PriceBlock
+                          lang={lang}
+                          price={tour.listingPrice}
+                          showScratchPrice={true}
+                          prefix={false}
+                        />
+                      </BlockContent>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            {orderedLabels
+              .filter((label, index) =>
+                isMobile && !isExpanded && !isAmp ? index < 2 : true
+              )
+              .map((label, rowIndex) => {
+                return (
+                  <div
+                    className={`row ${
+                      rowIndex >= 2 && isAmp ? 'no-display' : ''
+                    } `}
+                    id={`comparison-list-details-${rowIndex}`}
+                    key={rowIndex}
+                  >
+                    {itemArray?.map((tour, colIndex) => {
+                      const { title, content } = getLabelContent(label, tour);
+                      return (
+                        <Column key={colIndex}>
+                          <div className="content-block" key={colIndex}>
+                            <BlockLabel>{title}</BlockLabel>
+                            <BlockContent>{content}</BlockContent>
+                          </div>
+                        </Column>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            <Conditional if={(isMobile && isExpanded) || !isMobile || isAmp}>
+              <div
+                className={`row max-content ${isAmp ? 'no-display' : ''}`}
+                id="expanded-details-column"
+              >
+                {itemArray?.map((tour, index) => {
+                  return (
+                    <div className="column flat-price-block" key={index}>
+                      <div className="content-block">
+                        <BlockLabel>{strings.PRICES_STARTING}</BlockLabel>
+                        <BlockContent>
+                          <PriceBlock
+                            lang={lang}
+                            price={tour.listingPrice}
+                            showScratchPrice={true}
+                          />
+                        </BlockContent>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </Conditional>
           </div>
-          <Conditional if={isExpanded || isAmp}>
-            <div
-              className={`row ${isAmp ? 'no-display' : ''}`}
-              id="expanded-details-section"
-              style={{ marginTop: -8 }}
-            >
+          <div className="table cta-table-wrap">
+            <div className="row">
               {itemArray?.map((tour, index) => {
                 const ctaProps = {
                   link: {
@@ -603,133 +708,35 @@ const AutomatedTourComparisonTable = ({
                           })
                         }
                       >
-                        <Button widthProp="100%">{strings.BOOK_NOW_CTA}</Button>
+                        <Button type="fill" widthProp="100%">
+                          {strings.BOOK_NOW_CTA}
+                        </Button>
                       </a>
                     </div>
                   </Column>
                 );
               })}
             </div>
-          </Conditional>
-          <div className="row max-content">
-            {itemArray?.map((tour, index) => {
-              return (
-                <div className="column flat-price-block" key={index}>
-                  <div className="content-block">
-                    <BlockContent>
-                      <PriceBlock
-                        lang={lang}
-                        price={tour.listingPrice}
-                        showScratchPrice={true}
-                        prefix={false}
-                      />
-                    </BlockContent>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-          {orderedLabels
-            .filter((label, index) =>
-              isMobile && !isExpanded && !isAmp ? index < 2 : true
-            )
-            .map((label, rowIndex) => {
-              return (
-                <div
-                  className={`row ${
-                    rowIndex >= 2 && isAmp ? 'no-display' : ''
-                  } `}
-                  id={`comparison-list-details-${rowIndex}`}
-                  key={rowIndex}
-                >
-                  {itemArray?.map((tour, colIndex) => {
-                    const { title, content } = getLabelContent(label, tour);
-                    return (
-                      <Column key={colIndex}>
-                        <div className="content-block" key={colIndex}>
-                          <BlockLabel>{title}</BlockLabel>
-                          <BlockContent>{content}</BlockContent>
-                        </div>
-                      </Column>
-                    );
-                  })}
-                </div>
-              );
-            })}
-          <Conditional if={(isMobile && isExpanded) || !isMobile || isAmp}>
-            <div
-              className={`row max-content ${isAmp ? 'no-display' : ''}`}
-              id="expanded-details-column"
-            >
-              {itemArray?.map((tour, index) => {
-                return (
-                  <div className="column flat-price-block" key={index}>
-                    <div className="content-block">
-                      <BlockLabel>{strings.PRICES_STARTING}</BlockLabel>
-                      <BlockContent>
-                        <PriceBlock
-                          lang={lang}
-                          price={tour.listingPrice}
-                          showScratchPrice={true}
-                        />
-                      </BlockContent>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </Conditional>
-        </div>
-        <div className="table cta-table-wrap">
-          <div className="row">
-            {itemArray?.map((tour, index) => {
-              const ctaProps = {
-                link: {
-                  url: createBookingURL({
-                    nakedDomain,
-                    lang,
-                    tgid: tour.id,
-                    biLink,
-                  }),
-                },
-              };
-              return (
-                <Column key={index}>
-                  <div className="tour-cta">
-                    <a
-                      href={ctaProps.link.url}
-                      onClick={() =>
-                        onBookNowClick({ tgid: tour.tgid, position: index + 1 })
-                      }
-                    >
-                      <Button type="fill" widthProp="100%">
-                        {strings.BOOK_NOW_CTA}
-                      </Button>
-                    </a>
-                  </div>
-                </Column>
-              );
-            })}
           </div>
         </div>
-      </div>
-      <Conditional if={isMobile && !isExpanded}>
-        <Button
-          onClick={() => setExpand(true)}
-          id="compare-all-details-button"
-          on={`
+        <Conditional if={isMobile && !isExpanded}>
+          <Button
+            onClick={() => setExpand(true)}
+            id="compare-all-details-button"
+            on={`
               tap:expanded-details-section.toggleClass(class='no-display'),
               expanded-details-column.toggleClass(class='no-display'),
               compare-all-details-button.toggleClass(class='no-display', force=true),
               ${compareTableOnClickForAMP}
             `}
-        >
-          <div className="start-compare-icon">
-            {strings.COMPARE_ALL_DETAILS} {CHEVRON_DOWN}
-          </div>
-        </Button>
-      </Conditional>
-    </StyledTourComparisionTable>
+          >
+            <div className="start-compare-icon">
+              {strings.COMPARE_ALL_DETAILS} {CHEVRON_DOWN}
+            </div>
+          </Button>
+        </Conditional>
+      </StyledTourComparisionTable>
+    </Conditional>
   );
 };
 
