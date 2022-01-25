@@ -119,6 +119,7 @@ const Page = (props) => {
         EXPERIMENT_NAMES.NEW_TAB_EXPERIMENT,
         validHsidFromCookie
       );
+      console.log({ variant, hsid: validHsidFromCookie });
       setNewTabExpVariant(variant);
     }
   }, [setNewTabExpVariant]);
