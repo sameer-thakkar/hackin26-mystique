@@ -23,7 +23,10 @@ import { removePageQuery } from 'utils/urlUtils';
 import { traceError } from 'utils/logutils';
 import { useRecoilState } from 'recoil';
 import { gtmAtom } from 'store/atoms/gtm';
+import { newTabExpVariantAtom } from 'store/atoms/newTabExpVariant';
 import { withShortcodes } from 'utils/helper';
+import { getABTestingVariant } from 'utils/experiments/experimentUtils';
+import { EXPERIMENT_NAMES } from 'const/experiments';
 
 const Microsite = dynamic(() => import('components/MicrositeV1'));
 const ContentPage = dynamic(() => import('components/ContentPage'));
@@ -78,6 +81,7 @@ const Page = (props) => {
     primaryCity,
   } = props;
   const [{ eventsReady }, setEventsReady] = useRecoilState(gtmAtom);
+  const [, setNewTabExpVariant] = useRecoilState(newTabExpVariantAtom);
 
   useEffect(() => {
     // GTM Universal Properties
@@ -106,6 +110,18 @@ const Page = (props) => {
 
     setEventsReady({ eventsReady: true });
   }, []);
+
+  useEffect(() => {
+    const HSID_VAR = 'h-sid';
+    const validHsidFromCookie = Cookies.get(HSID_VAR);
+    if (validHsidFromCookie) {
+      const variant = getABTestingVariant(
+        EXPERIMENT_NAMES.NEW_TAB_EXPERIMENT,
+        validHsidFromCookie
+      );
+      setNewTabExpVariant(variant);
+    }
+  }, [setNewTabExpVariant]);
 
   const { noTrack, tgidToScroll, bookSubdomain } = queryParams;
 

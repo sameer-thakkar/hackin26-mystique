@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import { MBContext } from 'contexts/MBContext';
 import StickyHeader from 'components/ShowPages/stickyHeader';
 import StickyFooter from 'components/ShowPages/stickyFooter';
@@ -11,9 +12,11 @@ import { PLAY_CIRCLE } from 'assets/SvgIcons';
 import { PRODUCT_VIDEOS } from 'const/ShowPageProductVideos';
 import { strings } from 'const/strings';
 import { COLORS } from 'const/ui-constants';
+import { VARIANTS } from 'const/experiments';
 import { createBookingURL } from 'utils';
 import { dateToString } from 'utils/dateToString';
 import { fetchInventory } from 'utils/apiUtils';
+import { newTabExpVariantAtom } from 'store/atoms/newTabExpVariant';
 
 const Banner = styled.div`
   width: 100%;
@@ -299,6 +302,7 @@ const ShowPageBanner = ({
     : null;
 
   const { nakedDomain, biLink } = useContext(MBContext);
+  const newTabExpVariant = useRecoilValue(newTabExpVariantAtom);
 
   const bookingUrl = createBookingURL({
     nakedDomain: nakedDomain,
@@ -468,7 +472,16 @@ const ShowPageBanner = ({
                 </div>
               </Conditional>
               <Conditional if={listingPrice}>
-                <a className="buy-button" href={bookingUrl} target="blank">
+                <a
+                  className="buy-button"
+                  href={bookingUrl}
+                  target={
+                    newTabExpVariant === VARIANTS.OPEN_SELECT_PAGE_IN_SAME_TAB
+                      ? null
+                      : '_blank'
+                  }
+                  rel="noreferrer"
+                >
                   {strings.BANNER_CTA}
                 </a>
               </Conditional>
