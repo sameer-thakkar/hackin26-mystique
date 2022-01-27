@@ -119,7 +119,6 @@ const Page = (props) => {
         EXPERIMENT_NAMES.NEW_TAB_EXPERIMENT,
         hsid
       );
-      console.log({ variant, hsid });
       setNewTabExpVariant(variant);
     }
   }, [hsid, setNewTabExpVariant]);
