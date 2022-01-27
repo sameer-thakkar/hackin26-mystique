@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import ErrorPage from 'next/error';
 import dynamic from 'next/dynamic';
 import Cookies from 'js-cookie';
@@ -6,7 +6,7 @@ import { ThemeProvider } from 'styled-components';
 import 'lazysizes';
 import 'lazysizes/plugins/attrchange/ls.attrchange';
 import EnvironmentContext from 'contexts/environmentContext';
-import { MBContext, MBContextProvider } from 'contexts/MBContext';
+import { MBContextProvider } from 'contexts/MBContext';
 import { getAppTheme } from 'style/theme';
 import { Client } from 'config/prismic-config';
 import {
@@ -21,9 +21,13 @@ import { getPageData } from 'utils/prismicUtils';
 import { sendVariableToDataLayer } from 'utils/analytics';
 import { removePageQuery } from 'utils/urlUtils';
 import { traceError } from 'utils/logutils';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { gtmAtom } from 'store/atoms/gtm';
+import { newTabExpVariantAtom } from 'store/atoms/newTabExpVariant';
+import { hsidAtom } from 'store/atoms/hsid';
 import { withShortcodes } from 'utils/helper';
+import { getABTestingVariant } from 'utils/experiments/experimentUtils';
+import { EXPERIMENT_NAMES } from 'const/experiments';
 
 const Microsite = dynamic(() => import('components/MicrositeV1'));
 const ContentPage = dynamic(() => import('components/ContentPage'));
@@ -78,6 +82,8 @@ const Page = (props) => {
     primaryCity,
   } = props;
   const [{ eventsReady }, setEventsReady] = useRecoilState(gtmAtom);
+  const setNewTabExpVariant = useSetRecoilState(newTabExpVariantAtom);
+  const hsid = useRecoilValue(hsidAtom);
 
   useEffect(() => {
     // GTM Universal Properties
@@ -106,6 +112,16 @@ const Page = (props) => {
 
     setEventsReady({ eventsReady: true });
   }, []);
+
+  useEffect(() => {
+    if (hsid) {
+      const variant = getABTestingVariant(
+        EXPERIMENT_NAMES.NEW_TAB_EXPERIMENT,
+        hsid
+      );
+      setNewTabExpVariant(variant);
+    }
+  }, [hsid, setNewTabExpVariant]);
 
   const { noTrack, tgidToScroll, bookSubdomain } = queryParams;
 
@@ -378,10 +394,9 @@ Page.getInitialProps = async (ctx) => {
   }
 };
 
-const HSID_VAR = 'h-sid';
 const HeadoutSessionIdSetterComponent = () => {
-  const validHsidFromCookie = Cookies.get(HSID_VAR);
-  const { setHsid } = useContext(MBContext);
+  const validHsidFromCookie = Cookies.get(ANALYTICS_PROPERTIES.HSID);
+  const setHsid = useSetRecoilState(hsidAtom);
   const pushSandboxIDtoDataLayer = (hsid) => {
     sendVariableToDataLayer({
       name: ANALYTICS_PROPERTIES.HSID,

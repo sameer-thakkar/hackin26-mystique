@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import { greyScheme } from 'style/theme';
 import { MBContext } from 'contexts/MBContext';
 import Image from 'UI/Image';
@@ -13,6 +14,7 @@ import { strings } from 'const/strings';
 import { CLOSE_WHITE, Shield } from 'assets/SvgIcons';
 import { SOLEIL, COLORS } from 'const/ui-constants';
 import { CURRENCY_SYMBOL_MAP } from 'const/index';
+import { VARIANTS } from 'const/experiments';
 import { isSafetyIncluded, createBookingURL } from 'utils';
 import {
   shortCodeSerializerWithParentProps,
@@ -21,6 +23,7 @@ import {
 import { extractContentForProductCard } from 'utils/productUtils';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { parseV2ProductDescriptors } from 'utils/dataParsers';
+import { newTabExpVariantAtom } from 'store/atoms/newTabExpVariant';
 
 const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
   ssr: false,
@@ -387,6 +390,7 @@ const DetailedProductCard = (props) => {
     hasCategoryTourList,
     isListicle,
   } = props;
+  const newTabExpVariant = useRecoilValue(newTabExpVariantAtom);
   const activeTour = allTours[tgidClicked];
   const { listicleShowSummary, listicleWhyWatch } = activeTour;
   const {
@@ -515,7 +519,11 @@ const DetailedProductCard = (props) => {
         </Conditional>
         <a
           className="cta primary"
-          target="_blank"
+          target={
+            newTabExpVariant === VARIANTS.OPEN_SELECT_PAGE_IN_SAME_TAB
+              ? null
+              : '_blank'
+          }
           rel="noopener noreferrer"
           href={createBookingURL({
             nakedDomain,

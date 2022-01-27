@@ -2,9 +2,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import parse from 'url-parse';
+import { useRecoilValue } from 'recoil';
 import { greyScheme } from 'style/theme';
 import { RichText } from 'prismic-reactjs';
 import { MBContext } from 'contexts/MBContext';
+import { newTabExpVariantAtom } from 'store/atoms/newTabExpVariant';
 import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
 import IconCTA from 'UI/IconCTA';
@@ -23,6 +25,7 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import { SOLEIL, COLORS } from 'const/ui-constants';
+import { VARIANTS } from 'const/experiments';
 import { isSafetyIncluded, createBookingURL } from 'utils';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { convertUidToUrl } from 'utils/urlUtils';
@@ -533,6 +536,7 @@ export const MobileProductPage = (props) => {
     biLink,
     lang,
   } = useContext(MBContext);
+  const newTabExpVariant = useRecoilValue(newTabExpVariantAtom);
   const closeProductCard = () => {
     props.changePage({ name: PAGETYPE.HOMEPAGE });
   };
@@ -616,7 +620,11 @@ export const MobileProductPage = (props) => {
         </a>
       </Conditional>
       <a
-        target="_blank"
+        target={
+          newTabExpVariant === VARIANTS.OPEN_SELECT_PAGE_IN_SAME_TAB
+            ? null
+            : '_blank'
+        }
         rel="noopener noreferrer"
         href={createBookingURL({
           nakedDomain: bookingUrl,
