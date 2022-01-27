@@ -22,6 +22,7 @@ const SwiperWrapper = styled.div`
   display: flex;
   overflow: hidden;
   height: max-content;
+  max-height: 400px;
   img {
     object-fit: cover;
     border-radius: 8px;
