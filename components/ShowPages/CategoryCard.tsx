@@ -110,8 +110,7 @@ const CategoryCard = ({
 }) => {
   const { listingPrice, name, imageUrl, id, tourGroupUrl } = element;
   const { isDev, host } = useContext(MBContext);
-
-  const { currencyCode } = listingPrice;
+  const currencyCode = listingPrice?.currencyCode;
 
   let cardDocument = allShowPagesDocuments.filter(
     (element) => element.data.tgid === id
