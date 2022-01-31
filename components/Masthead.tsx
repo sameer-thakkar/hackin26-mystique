@@ -41,6 +41,7 @@ const Title = styled.h1`
     top: 42%;
     font-weight: 600;
     font-size: 1.5rem;
+    padding: 0px 16px;
   }
 `;
 

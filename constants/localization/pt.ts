@@ -339,6 +339,7 @@ const pt = {
   INCLUSIONS: 'Inclusões',
   FREE_CANCELLATION: 'Cancelamento gratuito',
   HOUR: 'h',
+  HOURS: 'h',
   MINUTES: 'min',
 };
 

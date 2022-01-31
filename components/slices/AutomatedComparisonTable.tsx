@@ -428,9 +428,21 @@ const AutomatedTourComparisonTable = ({
     if (label === 'maxDuration') {
       if (tour?.[label]) {
         const duration = dayjs.duration(tour?.[label]);
-        const durationString = duration
-          .format(`HH [${strings.HOUR}] mm [${strings.MINUTES}]`)
-          .replace(new RegExp(`00 (${strings.HOUR}|${strings.MINUTES})`), '');
+        const durationString =
+          duration.hours() == 1
+            ? duration
+                .format(`H[${strings.HOUR}] m[${strings.MINUTES}]`)
+                .replace(
+                  new RegExp(`0(${strings.HOUR}|${strings.MINUTES})`),
+                  ''
+                )
+            : duration
+                .format(`H[${strings.HOURS}] m[${strings.MINUTES}]`)
+                .replace(
+                  new RegExp(`0(${strings.HOURS}|${strings.MINUTES})`),
+                  ''
+                );
+
         return {
           title: strings.DURATION,
           content: <p>{durationString}</p>,
