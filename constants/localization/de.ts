@@ -338,8 +338,9 @@ const de = {
   FLEXIBLE: 'Flexibel',
   INCLUSIONS: 'Inklusive',
   FREE_CANCELLATION: 'Kostenlose Stornierung',
-  HOUR: 'Std.',
-  MINUTES: 'Min',
+  HOUR: ' Std.',
+  HOURS: ' Std.',
+  MINUTES: ' Min',
 };
 
 export default de;
