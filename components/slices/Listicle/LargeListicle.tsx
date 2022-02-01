@@ -21,12 +21,14 @@ const StyledLargeListicle = styled.div`
 `;
 
 const Title = styled.div`
-  display: flex;
+  display: grid;
   font-size: 21px;
   line-height: 22px;
   margin-bottom: 24px;
+  grid-template-columns: 24px auto;
   span {
     margin-left: 12px;
+    font-size: 18px;
   }
 `;
 
@@ -99,6 +101,9 @@ const WTTDTSection = styled.div`
   margin-bottom: 32px;
   div {
     margin-bottom: 8px;
+  }
+  @media (max-width: 768px) {
+    margin-bottom: 5px;
   }
 `;
 
