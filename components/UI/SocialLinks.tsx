@@ -51,7 +51,7 @@ const SocialLinks = (props) => {
       </SocialIcon>
       <SocialIcon isEntertainmentMb={isEntertainmentMb}>
         <a
-          href="http://www.instagram.com/headoutapp"
+          href="http://www.instagram.com/headout"
           target="_blank"
           rel="noreferrer noopener"
         >
