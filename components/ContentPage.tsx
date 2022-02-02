@@ -77,8 +77,8 @@ const StyledContentPage = styled.div`
     padding-left: 20px;
   }
 
-  .slice-block ul li,
-  .slice-block ol li {
+  .slice-block rich_text ul li,
+  .slice-block rich_text ol li {
     font-family: ${SOLEIL.FONT_STACK};
     font-size: 16px;
     color: #444444;
