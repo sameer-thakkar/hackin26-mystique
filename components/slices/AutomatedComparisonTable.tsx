@@ -516,6 +516,7 @@ const AutomatedTourComparisonTable = ({
   };
   const params = {
     language: lang,
+    'include-unavailable': 'true',
   };
   const collectionEndpoint = getHeadoutApiUrl({
     endpoint: HeadoutEndpoints.TourGroupCollectionV1,
