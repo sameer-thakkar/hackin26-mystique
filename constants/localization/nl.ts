@@ -18,6 +18,7 @@ const nl = {
   READ_MORE: 'Meer Info',
   BANNER_CTA: 'Koop kaartjes',
   BOOK_NOW_CTA: 'Reserveer nu',
+  CHECK_AVAIL: 'Controleer beschikbaarheid',
   READ_MORE_TEXT: 'Meer Info',
   SHOW_LESS_TEXT: 'Toon minder',
   NEXT_AVAILABLE: 'Weer beschikbaar: ',

@@ -18,6 +18,7 @@ const pt = {
   READ_MORE: 'Saiba mais',
   BANNER_CTA: 'Faça sua reserva',
   BOOK_NOW_CTA: 'Reserve agora',
+  CHECK_AVAIL: 'Verificar disponibilidade',
   READ_MORE_TEXT: 'Ver mais',
   SHOW_LESS_TEXT: 'Ver menos',
   NEXT_AVAILABLE: 'Próxima disponível: ',

@@ -18,6 +18,7 @@ const es = {
   READ_MORE: 'Leer más',
   BANNER_CTA: 'Comprar entradas',
   BOOK_NOW_CTA: 'Reserva ahora',
+  CHECK_AVAIL: 'Comprobar la disponibilidad',
   READ_MORE_TEXT: 'Leer más',
   SHOW_LESS_TEXT: 'Mostrar menos',
   NEXT_AVAILABLE: 'Próxima Disponible: ',

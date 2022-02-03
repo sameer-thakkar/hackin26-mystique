@@ -3,7 +3,7 @@ import { RichText } from 'prismic-reactjs';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { scroller } from 'react-scroll';
-import { useRecoilValue } from 'recoil';
+import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { currencyAtom } from 'store/atoms/currency';
 import { useWindowWidth } from '@react-hook/window-size';
 import { InteractionContextProvider } from 'contexts/Interaction';
@@ -34,11 +34,15 @@ import {
   ANALYTICS_PROPERTIES,
 } from 'const/index';
 import { strings } from 'const/strings';
+import { EXPERIMENT_NAMES } from 'const/experiments';
+import { getABTestingVariant } from 'utils/experiments/experimentUtils';
 import { fetchTourList } from 'utils/apiUtils';
 import { tourListApiParser } from 'utils/dataParsers';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import renderShortCodes from 'utils/shortCodes';
 import { gtmAtom } from 'store/atoms/gtm';
+import { ctaCopyExpVariantAtom } from 'store/atoms/ctaCopyExpVariant';
+import { hsidAtom } from 'store/atoms/hsid';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
@@ -77,6 +81,8 @@ const MicrositeV1 = (props) => {
 
   const currency = useRecoilValue(currencyAtom);
   const { eventsReady } = useRecoilValue(gtmAtom);
+  const hsid = useRecoilValue(hsidAtom);
+  const setCtaCopyExpVariant = useSetRecoilState(ctaCopyExpVariantAtom);
   const [initialCurrency] = useState(currency);
   const [freeTourPopupOpen, toggleFreeTourPopup] = useState(false);
   const [covidAlertActive, toggleCovidAlert] = useState(false);
@@ -418,6 +424,16 @@ const MicrositeV1 = (props) => {
       [ANALYTICS_PROPERTIES.PAGE_TITLE]: renderedBaseLangPageTitle,
     });
   }, [eventsReady]);
+
+  useEffect(() => {
+    if (hsid) {
+      const variant = getABTestingVariant(
+        EXPERIMENT_NAMES.CTA_COPY_EXPERIMENT,
+        hsid
+      );
+      setCtaCopyExpVariant(variant);
+    }
+  }, [hsid, setCtaCopyExpVariant]);
 
   const onTogglePopup = () => {
     toggleFreeTourPopup(!freeTourPopupOpen);

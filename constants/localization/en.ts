@@ -19,6 +19,7 @@ const en = {
   VIEW_MORE: 'View More',
   BANNER_CTA: 'Buy Tickets',
   BOOK_NOW_CTA: 'Book Now',
+  CHECK_AVAIL: 'Check Availability',
   READ_MORE_TEXT: 'Read More',
   SHOW_LESS_TEXT: 'Show Less',
   SELECT_CITY: 'Select City',

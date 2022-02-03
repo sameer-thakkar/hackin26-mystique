@@ -3,10 +3,14 @@ import Experiment from 'utils/experiments/experiment';
 export const VARIANTS = {
   OPEN_SELECT_PAGE_IN_SAME_TAB: 'Treatment',
   OPEN_SELECT_PAGE_IN_NEW_TAB: 'Control',
+  CTA_COPY_CHECK_AVAILABILITY: 'Treatment',
+  CTA_COPY_BOOK_NOW: 'Control',
+  CTA_COPY__BOOK_NOW: 'Normal',
 };
 
 export const EXPERIMENT_NAMES = {
   NEW_TAB_EXPERIMENT: 'NEW TAB EXPERIMENT',
+  CTA_COPY_EXPERIMENT: 'MB CTA Copy Experiment',
 };
 
 export const EXPERIMENTS = {
@@ -17,5 +21,14 @@ export const EXPERIMENTS = {
       VARIANTS.OPEN_SELECT_PAGE_IN_NEW_TAB,
     ],
     [50, 50]
+  ),
+  [EXPERIMENT_NAMES.CTA_COPY_EXPERIMENT]: new Experiment(
+    EXPERIMENT_NAMES.CTA_COPY_EXPERIMENT,
+    [
+      VARIANTS.CTA_COPY_CHECK_AVAILABILITY,
+      VARIANTS.CTA_COPY_BOOK_NOW,
+      VARIANTS.CTA_COPY__BOOK_NOW,
+    ],
+    [20, 20, 60]
   ),
 };

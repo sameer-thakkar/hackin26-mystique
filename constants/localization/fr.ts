@@ -17,6 +17,7 @@ const fr = {
   READ_MORE: 'En savoir plus',
   BANNER_CTA: 'Voir nos offres',
   BOOK_NOW_CTA: 'Réserver',
+  CHECK_AVAIL: 'Vérifier la disponibilité',
   READ_MORE_TEXT: 'En Savoir Plus',
   SHOW_LESS_TEXT: 'Voir moins',
   NEXT_AVAILABLE: 'Prochaine disponibilité: ',
