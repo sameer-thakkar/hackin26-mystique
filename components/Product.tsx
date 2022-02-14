@@ -1041,7 +1041,7 @@ const Product = (props) => {
       role="button"
       tabIndex={0}
     >
-      {ctaCopyExpVariant === VARIANTS.CTA_COPY_CHECK_AVAILABILITY
+      {ctaCopyExpVariant === VARIANTS.CTA_COPY_CHECK_AVAILABILITY || !isMobile
         ? strings.CHECK_AVAIL
         : strings.BOOK_NOW_CTA}
       {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}

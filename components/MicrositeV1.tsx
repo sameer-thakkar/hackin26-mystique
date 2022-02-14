@@ -426,14 +426,14 @@ const MicrositeV1 = (props) => {
   }, [eventsReady]);
 
   useEffect(() => {
-    if (hsid) {
+    if (hsid && isMobile) {
       const variant = getABTestingVariant(
         EXPERIMENT_NAMES.CTA_COPY_EXPERIMENT,
         hsid
       );
       setCtaCopyExpVariant(variant);
     }
-  }, [hsid, setCtaCopyExpVariant]);
+  }, [hsid, isMobile, setCtaCopyExpVariant]);
 
   const onTogglePopup = () => {
     toggleFreeTourPopup(!freeTourPopupOpen);
