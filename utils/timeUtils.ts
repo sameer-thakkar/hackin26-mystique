@@ -1,0 +1,112 @@
+const rtfUnitTypes = <const>[
+  'year',
+  'quarter',
+  'month',
+  'week',
+  'day',
+  'hour',
+  'minute',
+  'second',
+];
+const localeMatcherType = <const>['best fit', 'lookup'];
+const numericType = <const>['always', 'auto'];
+const styleType = <const>['long', 'short', 'narrow'];
+
+interface LocalisedRelativeTimeFormat {
+  locale: string;
+  value: number;
+  unit: typeof rtfUnitTypes[number];
+  localeMatcher?: typeof localeMatcherType[number];
+  numeric?: typeof numericType[number];
+  style?: typeof styleType[number];
+  formatToParts?: boolean;
+}
+
+export const localisedRelativeTimeFormat = ({
+  locale,
+  value,
+  unit,
+  formatToParts = false,
+  localeMatcher = 'lookup',
+  numeric = 'auto',
+  style = 'short',
+}: LocalisedRelativeTimeFormat) => {
+  const rtf = new Intl.RelativeTimeFormat(locale, {
+    localeMatcher,
+    numeric,
+    style,
+  });
+  return formatToParts
+    ? rtf.formatToParts(value, unit) || []
+    : rtf.format(value, unit);
+};
+
+export function convertMillisecondsToHours(milliseconds: number | null) {
+  if (!milliseconds) return {};
+  const hour = Math.floor(milliseconds / 1000 / 60 / 60);
+  const minute = Math.floor((milliseconds / 1000 / 60 / 60 - hour) * 60);
+  return {
+    hour,
+    minute,
+  };
+}
+
+const formatPartsToDuration = (arr) => {
+  if (arr.length === 3) {
+    const [, value, unit] = arr || [];
+    return `${value?.value}${unit?.value}`;
+  } else {
+    const [value, unit] = arr || [];
+    return `${value?.value}${unit?.value}`;
+  }
+};
+
+export const getDuration = ({
+  minDuration,
+  maxDuration,
+  lang = 'en',
+}: {
+  minDuration: number | null;
+  maxDuration: number | null;
+  lang?: string;
+}) => {
+  if (!minDuration && !maxDuration) return '';
+  const formatDurationToString = ({ hour, minute }) => {
+    let res = '';
+    if (hour) {
+      const hourParts = localisedRelativeTimeFormat({
+        locale: lang,
+        unit: 'hour',
+        value: hour,
+        formatToParts: true,
+      });
+      res += formatPartsToDuration(hourParts);
+    }
+    if (minute) {
+      const minuteParts = localisedRelativeTimeFormat({
+        locale: lang,
+        unit: 'minute',
+        value: minute,
+        formatToParts: true,
+      });
+      res += ` ${formatPartsToDuration(minuteParts)}`;
+    }
+    return res;
+  };
+
+  if (minDuration !== maxDuration) {
+    const { hour: minHour, minute: minMinute } = convertMillisecondsToHours(
+      minDuration
+    );
+    const { hour: maxHour, minute: maxMinute } = convertMillisecondsToHours(
+      maxDuration
+    );
+    return `${formatDurationToString({
+      hour: minHour,
+      minute: minMinute,
+    })} - ${formatDurationToString({ hour: maxHour, minute: maxMinute })}`;
+  } else {
+    const { hour, minute } = convertMillisecondsToHours(maxDuration);
+    return formatDurationToString({ hour, minute });
+  }
+};

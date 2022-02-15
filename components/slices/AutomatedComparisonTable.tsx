@@ -17,10 +17,7 @@ import { SOLEIL, COLORS } from 'const/ui-constants';
 import Conditional from 'components/common/Conditional';
 import { trackEvent } from 'utils/analytics';
 import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
-import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration';
-
-dayjs.extend(duration);
+import { getDuration } from 'utils/timeUtils';
 
 const StyledTourComparisionTable = styled.div`
   width: auto;
@@ -427,25 +424,14 @@ const AutomatedTourComparisonTable = ({
   const getLabelContent = (label, tour) => {
     if (label === 'maxDuration') {
       if (tour?.[label]) {
-        const duration = dayjs.duration(tour?.[label]);
-        const durationString =
-          duration.hours() == 1
-            ? duration
-                .format(`H[${strings.HOUR}] m[${strings.MINUTES}]`)
-                .replace(
-                  new RegExp(`0(${strings.HOUR}|${strings.MINUTES})`),
-                  ''
-                )
-            : duration
-                .format(`H[${strings.HOURS}] m[${strings.MINUTES}]`)
-                .replace(
-                  new RegExp(`0(${strings.HOURS}|${strings.MINUTES})`),
-                  ''
-                );
-
+        const duration = getDuration({
+          minDuration: tour?.[label],
+          maxDuration: tour?.[label],
+          lang,
+        });
         return {
           title: strings.DURATION,
-          content: <p>{durationString}</p>,
+          content: <p>{duration}</p>,
         };
       } else {
         return {
@@ -514,14 +500,14 @@ const AutomatedTourComparisonTable = ({
       'Div Type': 'product-list',
     });
   };
-  const params = {
+  const collectionEndpointParams = {
     language: lang,
     'include-unavailable': 'true',
   };
   const collectionEndpoint = getHeadoutApiUrl({
     endpoint: HeadoutEndpoints.TourGroupCollectionV1,
     hostname: hostName,
-    params,
+    params: collectionEndpointParams,
     id: collectionId,
   });
   const { data: collectionData } = useSWR(collectionEndpoint, {

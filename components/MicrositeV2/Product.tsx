@@ -15,7 +15,7 @@ import { strings } from 'const/strings';
 import { SOLEIL, COLORS } from 'const/ui-constants';
 import { truncate } from 'utils/helper';
 import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
-import { dateToString } from 'utils/dateToString';
+import { dateToString } from 'utils/dateUtils';
 import InteractionContext from 'contexts/Interaction';
 
 const ProductCard = styled.div`

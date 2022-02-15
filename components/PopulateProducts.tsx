@@ -97,6 +97,7 @@ const PopulateProducts = (props) => {
     sectionSubtext = '',
     pageType = '',
   } = props;
+  const isDubaiSafariPark = uid === 'www.dubai-safari-park.com';
   const productsWrapperRef = useRef(null);
   const [tourPrices, setTourPrices] = useState(scorpioData);
   const [earliestAvailabilityQueue, setEarliestAvailabilityQueue] = useState(
@@ -294,7 +295,12 @@ const PopulateProducts = (props) => {
               {isTicketCard ? sectionTitle : strings.TOUR_LIST_HEADING}
             </StyledTourListHeading>
           </Conditional>
-          <Conditional if={sectionSubtext || strings.TOUR_LIST_SUB_HEADING}>
+          <Conditional
+            if={
+              !isDubaiSafariPark &&
+              (sectionSubtext || strings.TOUR_LIST_SUB_HEADING)
+            }
+          >
             <StyledTourListSubHeading>
               {isTicketCard ? sectionSubtext : strings.TOUR_LIST_SUB_HEADING}
             </StyledTourListSubHeading>

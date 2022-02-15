@@ -359,9 +359,6 @@ const it = {
   FLEXIBLE: 'Flessibile',
   INCLUSIONS: 'Inclusioni',
   FREE_CANCELLATION: 'Cancellazione gratuita',
-  HOUR: ' h',
-  HOURS: ' h',
-  MINUTES: ' min',
 };
 
 export default it;

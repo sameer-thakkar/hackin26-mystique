@@ -29,7 +29,7 @@ import { VARIANTS } from 'const/experiments';
 import { isSafetyIncluded, createBookingURL } from 'utils';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { convertUidToUrl } from 'utils/urlUtils';
-import { dateToString } from 'utils/dateToString';
+import { dateToString } from 'utils/dateUtils';
 import { parseV2ProductDescriptors } from 'utils/dataParsers';
 import InteractionContext from 'contexts/Interaction';
 

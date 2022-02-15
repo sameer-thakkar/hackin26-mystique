@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from '../UI/Image';
+import Image from 'components/UI/Image';
 
 export const CategoryImageBar = (props) => {
   let tagsRef = {};
@@ -16,9 +16,6 @@ export const CategoryImageBar = (props) => {
               key={index}
               role="button"
               tabIndex={0}
-              onClick={() => {
-                this.openCategory(index);
-              }}
               ref={(ref) => {
                 tagsRef[index] = ref;
               }}

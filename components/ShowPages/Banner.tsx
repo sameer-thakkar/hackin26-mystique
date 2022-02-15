@@ -14,7 +14,7 @@ import { strings } from 'const/strings';
 import { COLORS } from 'const/ui-constants';
 import { VARIANTS } from 'const/experiments';
 import { createBookingURL } from 'utils';
-import { dateToString } from 'utils/dateToString';
+import { dateToString } from 'utils/dateUtils';
 import { fetchInventory } from 'utils/apiUtils';
 import { newTabExpVariantAtom } from 'store/atoms/newTabExpVariant';
 

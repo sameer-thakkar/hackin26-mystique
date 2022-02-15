@@ -339,9 +339,6 @@ const fr = {
   FLEXIBLE: 'Flexible',
   INCLUSIONS: 'Inclus',
   FREE_CANCELLATION: 'Annulation gratuite',
-  HOUR: ' heure',
-  HOURS: ' heures',
-  MINUTES: ' min',
 };
 
 export default fr;
