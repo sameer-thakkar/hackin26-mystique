@@ -418,6 +418,13 @@ const en = {
   FLEXIBLE: 'Flexible',
   INCLUSIONS: 'Inclusions',
   FREE_CANCELLATION: 'Free Cancellation',
+  HOUR: ' hr',
+  HOURS: ' hr',
+  MINUTES: ' mins',
+  REVIEW_COUNT: '{0} reviews',
+  REVIEWS: 'Reviews',
+  SHOW_MORE_REVIEWS: 'Show more reviews',
+  SHOW_LESS_REVIEWS: 'Show Less Reviews',
 };
 
 export default en;

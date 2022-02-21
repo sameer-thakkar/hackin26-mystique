@@ -339,6 +339,13 @@ const de = {
   FLEXIBLE: 'Flexibel',
   INCLUSIONS: 'Inklusive',
   FREE_CANCELLATION: 'Kostenlose Stornierung',
+  HOUR: ' Std.',
+  HOURS: ' Std.',
+  MINUTES: ' Min',
+  REVIEW_COUNT: '{0} Bewertungen',
+  REVIEWS: 'Bewertungen',
+  SHOW_MORE_REVIEWS: 'Mehr Berichte anzeigen',
+  SHOW_LESS_REVIEWS: 'Weniger Bewertungen anzeigen',
 };
 
 export default de;

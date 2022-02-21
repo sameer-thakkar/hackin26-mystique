@@ -351,6 +351,13 @@ const es = {
   FLEXIBLE: 'Flexible',
   INCLUSIONS: 'Incluye',
   FREE_CANCELLATION: 'Cancelación gratuita',
+  HOUR: ' h',
+  HOURS: ' h',
+  MINUTES: ' min',
+  REVIEW_COUNT: '{0} reseñas',
+  REVIEWS: 'Reseñas',
+  SHOW_MORE_REVIEWS: 'Mostrar más Reseñas',
+  SHOW_LESS_REVIEWS: 'Ver menos reseñas',
 };
 
 export default es;

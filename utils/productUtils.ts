@@ -1,7 +1,8 @@
 import { RichText } from 'prismic-reactjs';
 import { THEMES } from 'const/index';
+import { strings } from 'const/strings';
 
-export const extractTabsFromHighlights = (highlights) => {
+export const extractTabsFromHighlights = (highlights, hasReviews = 0) => {
   let tabs = [];
   const nonTabHighlights = highlights.reduce((acc, highlight) => {
     if (highlight.type === 'heading6') {
@@ -18,6 +19,15 @@ export const extractTabsFromHighlights = (highlights) => {
     } else return [...acc, highlight];
   }, []);
 
+  if (hasReviews) {
+    tabs.push({
+      type: 'tab',
+      heading: strings.REVIEWS,
+      contents: [],
+      isReview: true,
+    });
+  }
+
   return { highlights: nonTabHighlights, tabs };
 };
 
@@ -29,6 +39,7 @@ export const getProductCardLayout = ({
   hasShortSummary,
   hasNextAvailable,
   isTicketCard = false,
+  hasReviewAndRatings = false,
 }) => {
   let layout = { desktop: [], mobile: [] };
   const hasIconBoosters = hasTags;
@@ -61,10 +72,11 @@ export const getProductCardLayout = ({
     case THEMES.DEF_INTERIM:
     case THEMES.DEFAULT:
     default:
-      layout = layout = {
+      layout = {
         desktop: [
           'title line cta-combo',
           hasShortSummary && 'summary line cta-combo',
+          hasReviewAndRatings && 'ratings-wrapper line cta-combo',
           hasIconBoosters && 'icon-booster line cta-combo',
           hasOffer && 'offer line cta-combo',
           hasV1Booster && 'booster line cta-combo',
@@ -75,6 +87,7 @@ export const getProductCardLayout = ({
         ],
         mobile: [
           'title title',
+          hasReviewAndRatings && 'ratings-wrapper ratings-wrapper',
           hasNextAvailable && 'next-available next-available',
           `price-block ${hasIconBoosters ? 'icon-booster' : 'price-block'}`,
           hasOffer && 'offer offer',

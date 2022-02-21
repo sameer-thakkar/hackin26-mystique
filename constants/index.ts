@@ -227,6 +227,10 @@ export const ANALYTICS_EVENTS = {
     VARIANT_CLICKED: 'Variant card clicked',
     POPUP_CLOSED: 'Popup closed',
   },
+  REVIEWS_COMPONENT_CLICKED: 'Reviews Component Clicked',
+  SHOW_MORE_REVIEWS_CLICKED: 'Show More Reviews Clicked',
+  SHOW_LESS_REVIEWS_CLICKED: 'Show Less Reviews Clicked',
+  READ_MORE_REVIEWS_CLICKED: 'Read More Reviews Clicked',
 };
 export const PAGE_TYPE = {
   COLLECTION_PAGE: 'Collection Page',
@@ -625,6 +629,9 @@ export const ANALYTICS_PROPERTIES = {
   IS_TRUNCATED: 'Is Truncated Text',
   PAGE_HEADING: 'Page Heading',
   SECTION: 'Section',
+  RANKING: 'Ranking',
+  CLICK_COUNT: 'Click Count',
+  REVIEW_RANK: 'Review Rank',
 };
 export const PAGE_TYPES = {
   COLLECTION: 'Collection',
@@ -646,3 +653,5 @@ export const ESCAPE_REGEX = new RegExp(
 
 export const ESCAPE_REPLACER = (t: string): string =>
   ESCAPE_ENTITIES[t as keyof typeof ESCAPE_ENTITIES];
+
+export const UNIT_ABBREVIATIONS = ['k', 'm', 'b', 't'];

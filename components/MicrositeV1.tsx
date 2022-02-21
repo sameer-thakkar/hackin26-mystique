@@ -3,7 +3,7 @@ import { RichText } from 'prismic-reactjs';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { scroller } from 'react-scroll';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { currencyAtom } from 'store/atoms/currency';
 import { useWindowWidth } from '@react-hook/window-size';
 import { InteractionContextProvider } from 'contexts/Interaction';
@@ -34,11 +34,15 @@ import {
   ANALYTICS_PROPERTIES,
 } from 'const/index';
 import { strings } from 'const/strings';
+import { EXPERIMENT_NAMES } from 'const/experiments';
 import { fetchTourList } from 'utils/apiUtils';
 import { tourListApiParser } from 'utils/dataParsers';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import renderShortCodes from 'utils/shortCodes';
+import { getABTestingVariant } from 'utils/experiments/experimentUtils';
 import { gtmAtom } from 'store/atoms/gtm';
+import { hsidAtom } from 'store/atoms/hsid';
+import { reviewsExpVariantAtom } from 'store/atoms/reviewsExpVariant';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
@@ -252,6 +256,8 @@ const MicrositeV1 = (props) => {
     ? microbrandCardsHeadingCMS
     : null;
   let groupBookingTourTitles = [];
+  const hsid = useRecoilValue(hsidAtom);
+  const setReviewsExpVariant = useSetRecoilState(reviewsExpVariantAtom);
 
   let alertPopup = null;
   if (alertPopupCMS?.id) {
@@ -418,6 +424,16 @@ const MicrositeV1 = (props) => {
       [ANALYTICS_PROPERTIES.PAGE_TITLE]: renderedBaseLangPageTitle,
     });
   }, [eventsReady]);
+
+  useEffect(() => {
+    if (hsid) {
+      const variant = getABTestingVariant(
+        EXPERIMENT_NAMES.REVIEWS_AND_RATINGS_EXPERIMENT,
+        hsid
+      );
+      setReviewsExpVariant(variant);
+    }
+  }, [hsid, setReviewsExpVariant]);
 
   const onTogglePopup = () => {
     toggleFreeTourPopup(!freeTourPopupOpen);

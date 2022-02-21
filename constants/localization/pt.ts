@@ -339,6 +339,13 @@ const pt = {
   FLEXIBLE: 'Flexível',
   INCLUSIONS: 'Inclusões',
   FREE_CANCELLATION: 'Cancelamento gratuito',
+  HOUR: 'h',
+  HOURS: 'h',
+  MINUTES: 'min',
+  REVIEW_COUNT: '{0} comentários',
+  REVIEWS: 'Comentários',
+  SHOW_MORE_REVIEWS: 'Ver mais comentários',
+  SHOW_LESS_REVIEWS: 'Mostrar menos avaliações',
 };
 
 export default pt;

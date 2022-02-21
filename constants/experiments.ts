@@ -1,7 +1,18 @@
-// import Experiment from 'utils/experiments/experiment';
+import Experiment from 'utils/experiments/experiment';
 
-export const VARIANTS = {};
+export const VARIANTS = {
+  SHOW_REVIEWS_AND_RATINGS: 'Treatment',
+  HIDE_REVIEWS_AND_RATINGS: 'Control',
+};
 
-export const EXPERIMENT_NAMES = {};
+export const EXPERIMENT_NAMES = {
+  REVIEWS_AND_RATINGS_EXPERIMENT: 'MB REVIEWS AND RATINGS EXPERIMENT',
+};
 
-export const EXPERIMENTS = {};
+export const EXPERIMENTS = {
+  [EXPERIMENT_NAMES.REVIEWS_AND_RATINGS_EXPERIMENT]: new Experiment(
+    EXPERIMENT_NAMES.REVIEWS_AND_RATINGS_EXPERIMENT,
+    [VARIANTS.SHOW_REVIEWS_AND_RATINGS, VARIANTS.HIDE_REVIEWS_AND_RATINGS],
+    [50, 50]
+  ),
+};
