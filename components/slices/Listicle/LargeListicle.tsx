@@ -131,6 +131,10 @@ const PriceAndCTASection = styled.div`
   }
 `;
 
+const WhySummaryHeading = styled.div`
+  font-weight: 600;
+`;
+
 const ReadMore = styled(Button)`
   width: ${({ fullWidth }) => (fullWidth ? '100%;' : '42%; margin-right: 8px')};
 `;
@@ -164,6 +168,7 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
     show_price,
     read_more_link,
     book_now_link,
+    book_now_alt_text,
   } = primary;
   const finalTags = tags ? tags.split(',') : [];
   const [WTTDTCollapsed, setWTTDTCollapsed] = useState(true);
@@ -194,8 +199,14 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
   );
 
   const image = {
-    url: items[0]?.image?.url || tourData?.imageUploads[0]?.url,
-    alt: items[0]?.image?.alt || tourData?.imageUploads[0]?.alt,
+    url:
+      items[0]?.image?.url ||
+      items[0]?.image_url ||
+      tourData?.imageUploads[0]?.url,
+    alt:
+      items[0]?.image?.alt ||
+      items[0]?.image_alt ||
+      tourData?.imageUploads[0]?.alt,
   };
 
   return (
@@ -258,7 +269,9 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
       ) : null}
       {RichText.asText(why_summary).length > 0 ? (
         <WTTDTSection>
-          <div>{why_summary_heading || strings.WHY_TAKE_THIS_DAY_TRIP}</div>
+          <WhySummaryHeading>
+            {why_summary_heading || strings.WHY_TAKE_THIS_DAY_TRIP}
+          </WhySummaryHeading>
           <WTTDTSectionRichText collapsed={WTTDTCollapsed}>
             <RichText
               render={why_summary}
@@ -308,7 +321,7 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
                 type="fillGradient"
                 paddingSides="0px"
               >
-                {strings.BOOK_NOW_CTA}
+                {book_now_alt_text || strings.BOOK_NOW_CTA}
               </BookNow>
             </a>
           ) : null}
