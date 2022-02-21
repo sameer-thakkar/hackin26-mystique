@@ -18,8 +18,6 @@ import IconCTA, { StyledIconCTA } from 'UI/IconCTA';
 import Button from 'UI/Button';
 import Image from 'UI/Image';
 import { currencyAtom } from 'store/atoms/currency';
-import { newTabExpVariantAtom } from 'store/atoms/newTabExpVariant';
-import { ctaCopyExpVariantAtom } from 'store/atoms/ctaCopyExpVariant';
 import { CALENDAR, Shield, BackArrow } from 'assets/SvgIcons';
 import { strings } from 'const/strings';
 import {
@@ -32,7 +30,6 @@ import {
   CUSTOM_TYPES,
 } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
-import { VARIANTS } from 'const/experiments';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import {
   extractTabsFromHighlights,
@@ -713,8 +710,6 @@ export const Descriptors = ({
 
 const Product = (props) => {
   const moreDetailsRef = useRef();
-  const newTabExpVariant = useRecoilValue(newTabExpVariantAtom);
-  const ctaCopyExpVariant = useRecoilValue(ctaCopyExpVariantAtom);
   const {
     tgid,
     position,
@@ -1041,9 +1036,7 @@ const Product = (props) => {
       role="button"
       tabIndex={0}
     >
-      {ctaCopyExpVariant === VARIANTS.CTA_COPY_CHECK_AVAILABILITY || !isMobile
-        ? strings.CHECK_AVAIL
-        : strings.BOOK_NOW_CTA}
+      {strings.CHECK_AVAIL}
       {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
     </Button>
   );
@@ -1139,12 +1132,7 @@ const Product = (props) => {
             >
               <Conditional if={!combo}>
                 <a
-                  target={
-                    isMobile ||
-                    newTabExpVariant === VARIANTS.OPEN_SELECT_PAGE_IN_SAME_TAB
-                      ? null
-                      : '_blank'
-                  }
+                  target={isMobile ? null : '_blank'}
                   href={productBookingUrl}
                   rel="nofollow"
                 >

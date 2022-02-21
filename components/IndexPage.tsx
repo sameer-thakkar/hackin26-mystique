@@ -21,13 +21,10 @@ import { getPageData } from 'utils/prismicUtils';
 import { sendVariableToDataLayer } from 'utils/analytics';
 import { removePageQuery } from 'utils/urlUtils';
 import { traceError } from 'utils/logutils';
-import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { gtmAtom } from 'store/atoms/gtm';
-import { newTabExpVariantAtom } from 'store/atoms/newTabExpVariant';
 import { hsidAtom } from 'store/atoms/hsid';
 import { withShortcodes } from 'utils/helper';
-import { getABTestingVariant } from 'utils/experiments/experimentUtils';
-import { EXPERIMENT_NAMES } from 'const/experiments';
 
 const Microsite = dynamic(() => import('components/MicrositeV1'));
 const ContentPage = dynamic(() => import('components/ContentPage'));
@@ -82,8 +79,6 @@ const Page = (props) => {
     primaryCity,
   } = props;
   const [{ eventsReady }, setEventsReady] = useRecoilState(gtmAtom);
-  const setNewTabExpVariant = useSetRecoilState(newTabExpVariantAtom);
-  const hsid = useRecoilValue(hsidAtom);
 
   useEffect(() => {
     // GTM Universal Properties
@@ -112,16 +107,6 @@ const Page = (props) => {
 
     setEventsReady({ eventsReady: true });
   }, []);
-
-  useEffect(() => {
-    if (hsid) {
-      const variant = getABTestingVariant(
-        EXPERIMENT_NAMES.NEW_TAB_EXPERIMENT,
-        hsid
-      );
-      setNewTabExpVariant(variant);
-    }
-  }, [hsid, setNewTabExpVariant]);
 
   const { noTrack, tgidToScroll, bookSubdomain } = queryParams;
 

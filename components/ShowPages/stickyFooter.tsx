@@ -1,9 +1,6 @@
-import { useRecoilValue } from 'recoil';
-import { newTabExpVariantAtom } from 'store/atoms/newTabExpVariant';
 import Conditional from 'components/common/Conditional';
 import { strings } from 'const/strings';
 import { COLORS } from 'const/ui-constants';
-import { VARIANTS } from 'const/experiments';
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { createBookingURL } from 'utils';
@@ -52,7 +49,6 @@ const StickyFooter = ({
   isAvailable?: boolean;
 }) => {
   const { nakedDomain, biLink } = useContext(MBContext);
-  const newTabExpVariant = useRecoilValue(newTabExpVariantAtom);
 
   const bookingUrl = createBookingURL({
     nakedDomain: nakedDomain,
@@ -67,11 +63,7 @@ const StickyFooter = ({
         <a
           className="buy-button"
           href={bookingUrl}
-          target={
-            newTabExpVariant === VARIANTS.OPEN_SELECT_PAGE_IN_SAME_TAB
-              ? null
-              : '_blank'
-          }
+          target="_blank"
           rel="noreferrer"
         >
           {strings.BANNER_CTA}

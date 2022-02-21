@@ -1,12 +1,9 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
 import { MBContext } from 'contexts/MBContext';
-import { newTabExpVariantAtom } from 'store/atoms/newTabExpVariant';
 import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
 import { COLORS } from 'const/ui-constants';
 import { strings } from 'const/strings';
-import { VARIANTS } from 'const/experiments';
 import { createBookingURL } from 'utils';
 import Conditional from 'components/common/Conditional';
 
@@ -193,7 +190,6 @@ const StickyHeader = ({
   const { localSymbol } = currency;
 
   const { nakedDomain, biLink } = useContext(MBContext);
-  const newTabExpVariant = useRecoilValue(newTabExpVariantAtom);
 
   const bookingUrl = createBookingURL({
     nakedDomain: nakedDomain,
@@ -232,11 +228,7 @@ const StickyHeader = ({
                 <a
                   className="buy-button"
                   href={bookingUrl}
-                  target={
-                    newTabExpVariant === VARIANTS.OPEN_SELECT_PAGE_IN_SAME_TAB
-                      ? null
-                      : '_blank'
-                  }
+                  target="_blank"
                   rel="noreferrer"
                 >
                   {strings.BANNER_CTA}

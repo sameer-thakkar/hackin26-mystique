@@ -18,7 +18,6 @@ import {
   ANALYTICS_PROPERTIES,
 } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
-import { VARIANTS } from 'const/experiments';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { CALENDAR, Shield, BackArrow } from 'assets/SvgIcons';
 import Split, { StlyedSplit } from 'UI/Split';
@@ -37,7 +36,6 @@ import {
 import Image from 'UI/Image';
 import { truncate, wordCount } from 'utils/helper';
 import { currencyAtom } from 'store/atoms/currency';
-import { newTabExpVariantAtom } from 'store/atoms/newTabExpVariant';
 import { BLACK_COLOR_CLOSE } from 'assets/SvgIcons';
 import Conditional from 'components/common/Conditional';
 import Product from 'components/Product';
@@ -663,7 +661,6 @@ const TicketCard = (props) => {
   } = props;
   const { mbTheme, biLink, bookSubdomain } = useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
-  const newTabExpVariant = useRecoilValue(newTabExpVariantAtom);
   const [isContentOpen, toggleContentOpen] = useState(defaultOpen);
   const [isOpened, setIsOpened] = useState(false);
   const { allTags = [] } = scorpioData || {};
@@ -892,13 +889,7 @@ const TicketCard = (props) => {
         shouldOffset={earliestAvailability && mbTheme === THEMES.MIN_BLUE}
       >
         <a
-          target={
-            isFetched &&
-            (isMobile ||
-              newTabExpVariant === VARIANTS.OPEN_SELECT_PAGE_IN_SAME_TAB)
-              ? null
-              : '_blank'
-          }
+          target={isFetched && isMobile ? null : '_blank'}
           href={productBookingUrl}
           rel="nofollow"
         >
