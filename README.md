@@ -22,6 +22,7 @@ Mystique is the tech that powers over 100 different microbrands at Headout.
   ```bash
   SLACK_GRP_BKNG_WEBHOOK=#Slack webhook
   ZENDESK_GRP_BKNG_TOKEN=#Zendesk Group Booking Token
+  NEXT_PUBLIC_HEADOUT_DOMAIN=https://www.headout.com
   ```
 
 - Install dependencies by running:
