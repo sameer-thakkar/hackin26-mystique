@@ -48,8 +48,7 @@ const StyledTourListHeading = styled.div`
   font-weight: ${({ isTicketCard }) => (isTicketCard ? 600 : 800)};
   font-size: ${({ isTicketCard }) => (isTicketCard ? '24px' : '32px')};
   line-height: ${({ isTicketCard }) => (isTicketCard ? '1.4' : '44px')};
-  color: ${({ isTicketCard }) =>
-    isTicketCard ? COLORS.GREY.G2 : COLORS.DAVY_GREY};
+  color: ${COLORS.GREY.G2};
   @media (max-width: 768px) {
     font-size: 22px;
     line-height: 30px;
@@ -62,7 +61,7 @@ const StyledTourListSubHeading = styled.div`
   font-size: 18px;
   line-height: 1.33;
   text-align: left;
-  color: ${COLORS.DAVY_GREY};
+  color: ${COLORS.GREY.G2};
   @media (max-width: 768px) {
     font-size: 14px;
     margin-top: 4px;

@@ -275,6 +275,7 @@ export const groupSlices = (slices, allowImmediateNesting = false) => {
     });
     return groups.slices;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error({ error });
     return groups.slices;
   }

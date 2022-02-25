@@ -331,7 +331,12 @@ const ShowPage = ({
     reviewTourGroup();
   }, [tgid]);
 
-  const PageURL = convertUidToUrl({ uid, lang, isDev, hostname: host });
+  const PageURL = convertUidToUrl({
+    uid,
+    lang: currentLanguage,
+    isDev,
+    hostname: host,
+  });
   const [bannerImageOne, bannerImageTwo] = imageUploads || [];
   const breadcrumbs = [
     { url: '/', text: 'London Theatre Tickets' },

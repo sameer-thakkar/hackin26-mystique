@@ -170,7 +170,7 @@ const ShortSummary = styled.div`
   margin-top: -8px;
   grid-area: summary;
   p {
-    color: ${COLORS.GREY_G3};
+    color: ${COLORS.GREY.G2};
     font-size: 14px;
     line-height: 20px;
     margin: 0;
@@ -329,8 +329,8 @@ const CTABlock = styled.div`
       isSticky
         ? `
       position: sticky;
-      bottom: 0;
-      padding-bottom: 16px;
+      bottom: 16px;
+      bottom: calc(16px + env(safe-area-inset-bottom));
       ${shouldOffset ? 'transform: translateY(32px);' : ''}
       background: ${COLORS.WHITE};
       z-index: 2;
