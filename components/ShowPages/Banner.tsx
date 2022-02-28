@@ -14,6 +14,12 @@ import { COLORS } from 'const/ui-constants';
 import { createBookingURL } from 'utils';
 import { dateToString } from 'utils/dateUtils';
 import { fetchInventory } from 'utils/apiUtils';
+import { trackEvent } from 'utils/analytics';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  PAGE_TYPES,
+} from 'const/index';
 
 const Banner = styled.div`
   width: 100%;
@@ -316,9 +322,24 @@ const ShowPageBanner = ({
   const isTourAvailable = listingPrice ? true : false;
   const ref = useRef(null);
 
+  const { REOPENING, NEXT_AVAILABLE } = strings || {};
+  const REOPENING_STRING = `${REOPENING} · ${NEXT_AVAILABLE}`;
+  const BannerTitle = `${name} - ${strings.TICKETS}`;
+
   const BannerChange = () => {
     setIsVideo(!isVideo);
   };
+
+  ANALYTICS_PROPERTIES;
+  useEffect(() => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MB_BANNER.VISIBLE,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.COLLECTION,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
+      [ANALYTICS_PROPERTIES.TGIDS]: [tgid],
+      [ANALYTICS_PROPERTIES.MB_NAME]: BannerTitle,
+    });
+  }, []);
   useEffect(() => {
     const fetchReopeningDate = async () => {
       const { inventoryList } =
@@ -357,9 +378,6 @@ const ShowPageBanner = ({
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const { REOPENING, NEXT_AVAILABLE } = strings || {};
-  const REOPENING_STRING = `${REOPENING} · ${NEXT_AVAILABLE}`;
 
   return (
     <>
@@ -428,9 +446,7 @@ const ShowPageBanner = ({
         </div>
         <div className="heading-wrapper">
           <div>
-            <h1>
-              {name} - {strings.TICKETS}
-            </h1>
+            <h1>{BannerTitle}</h1>
             <Conditional if={isMobile}>
               <div className="priceBlockWrapper">
                 <PriceBlock

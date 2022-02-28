@@ -1,10 +1,19 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import Image from 'UI/Image';
 import Conditional from 'components/common/Conditional';
-import { ASPECT_RATIO, FALLBACK_IMAGE, FALLBACK_IMAGES } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  ASPECT_RATIO,
+  FALLBACK_IMAGE,
+  FALLBACK_IMAGES,
+  PAGE_TYPES,
+} from 'const/index';
 import { SOLEIL } from 'const/ui-constants';
+import { trackEvent } from 'utils/analytics';
+import { MBContext } from 'contexts/MBContext';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -93,6 +102,34 @@ const Banner: FunctionComponent<BannerProps> = ({
   images,
   mbType,
 }) => {
+  const [swiper, updateSwiper] = useState(null);
+  const { lang } = useContext(MBContext);
+  const analyticsParams = {
+    [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.COLLECTION,
+    [ANALYTICS_PROPERTIES.LANGUAGE]: lang,
+    [ANALYTICS_PROPERTIES.TGIDS]: [],
+    [ANALYTICS_PROPERTIES.MB_NAME]: title,
+  };
+
+  const isSwiperSet = swiper !== null && !swiper?.destroyed;
+
+  useEffect(() => {
+    if (!isSwiperSet) {
+      return;
+    }
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MB_BANNER.VISIBLE,
+      ...analyticsParams,
+    });
+    swiper?.on('touchEnd', () => {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MB_BANNER.BANNER_SCROLL,
+        ...analyticsParams,
+      });
+    });
+  }, [isSwiperSet]);
+
   const swiperParams = {
     slidesPerView: 1.196065,
     spaceBetween: 24,
@@ -117,6 +154,7 @@ const Banner: FunctionComponent<BannerProps> = ({
     loop: true,
     initialSlide: 1,
     freeMode: true,
+    getSwiper: updateSwiper,
   };
 
   let imageView;

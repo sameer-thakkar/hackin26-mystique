@@ -1,10 +1,17 @@
 import dynamic from 'next/dynamic';
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { scroller } from 'react-scroll';
 import styled from 'styled-components';
 import Image from 'UI/Image';
 import { SIZES } from 'const/ui-constants';
 import { stringIdfy } from 'utils/helper';
+import { trackEvent } from 'utils/analytics';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  PAGE_TYPES,
+} from 'const/index';
+import { MBContext } from 'contexts/MBContext';
 
 const Swiper = dynamic(() => import('components/Swiper'));
 
@@ -69,11 +76,46 @@ const Banner = (props) => {
     carouselOptions,
     ready,
     isEntertainmentMb,
+    availableTours,
   } = props;
+  const [swiper, updateSwiper] = useState(null);
+  const { lang } = useContext(MBContext);
 
-  if (isMobile) {
-    carouselOptions.spaceBetween = 8;
-  }
+  const swiperOptions = {
+    ...carouselOptions,
+    shouldSwiperUpdate: true,
+    getSwiper: updateSwiper,
+    ...(isMobile && {
+      spaceBetween: 8,
+    }),
+  };
+
+  const analyticsParams = {
+    [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.COLLECTION,
+    [ANALYTICS_PROPERTIES.LANGUAGE]: lang,
+    [ANALYTICS_PROPERTIES.TGIDS]: availableTours,
+    [ANALYTICS_PROPERTIES.MB_NAME]: '',
+  };
+
+  const isSwiperSet = swiper !== null && !swiper?.destroyed;
+
+  useEffect(() => {
+    if (!isSwiperSet) {
+      return;
+    }
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MB_BANNER.VISIBLE,
+      ...analyticsParams,
+    });
+    swiper?.on('touchEnd', () => {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MB_BANNER.BANNER_SCROLL,
+        ...analyticsParams,
+      });
+    });
+  }, [isSwiperSet]);
+
   const scrollToSection = (sectionId) => {
     scroller.scrollTo(sectionId, {
       duration: 1000,
@@ -97,7 +139,7 @@ const Banner = (props) => {
       <div className="main-wrapper">
         <div className="swiper-container">
           <div className="swiper-wrapper">
-            <Swiper {...carouselOptions}>
+            <Swiper {...swiperOptions}>
               {banners.map((image, index) => {
                 return (
                   <div
@@ -149,6 +191,5 @@ Banner.defaultProps = {
       delay: 2500,
       disableOnInteraction: false,
     },
-    rebuildOnUpdate: true,
   },
 };

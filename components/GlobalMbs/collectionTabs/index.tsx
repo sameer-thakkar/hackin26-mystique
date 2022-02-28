@@ -64,7 +64,7 @@ const CollectionCard: FunctionComponent<CollectionCardProps> = ({
 
             const currency = currencies
               ?.filter((currency) => currency?.code === currencyCode)
-              ?.reduce((acc, curr) => acc + curr);
+              ?.reduce((acc, curr) => acc + curr, {});
 
             const formattedData = data?.map((cat) => {
               const startingPrice = Math.min(

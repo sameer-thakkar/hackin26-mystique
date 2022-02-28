@@ -1,16 +1,23 @@
-import { FunctionComponent, useContext, useState } from 'react';
+import { FunctionComponent, useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
 import Image from 'UI/Image';
 import Conditional from 'components/common/Conditional';
-import { ASPECT_RATIO, FALLBACK_IMAGES } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ASPECT_RATIO,
+  FALLBACK_IMAGES,
+  ANALYTICS_PROPERTIES,
+  PAGE_TYPES,
+} from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { CHEVRON_DOWN } from 'assets/SvgIcons';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { MBContext } from 'contexts/MBContext';
 import { strings } from 'const/strings';
 import { getBuyTicketsUrl } from 'utils/helper';
+import { trackEvent } from 'utils/analytics';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 const Breadcrumb = dynamic(() => import('components/GlobalMbs/Breadcrumb'));
@@ -234,6 +241,7 @@ interface BannerProps {
   startingPrice?: string;
   isTicketPage?: boolean;
   subHeading?: string;
+  availableTours?: Array<number>;
 }
 
 const Banner: FunctionComponent<BannerProps> = ({
@@ -246,6 +254,7 @@ const Banner: FunctionComponent<BannerProps> = ({
   startingPrice = null,
   isTicketPage = false,
   subHeading = '',
+  availableTours,
 }) => {
   const {
     categoryID,
@@ -262,8 +271,8 @@ const Banner: FunctionComponent<BannerProps> = ({
     timings,
     city,
   } = collection;
-
-  const { host, isDev } = useContext(MBContext);
+  const [swiper, updateSwiper] = useState(null);
+  const { host, isDev, lang } = useContext(MBContext);
   const { GLOBAL_MB: globalMbAR } = ASPECT_RATIO;
   const ticketLink = getBuyTicketsUrl(
     supply,
@@ -291,7 +300,44 @@ const Banner: FunctionComponent<BannerProps> = ({
     loop: true,
     initialSlide: 1,
     freeMode: true,
+    getSwiper: updateSwiper,
   };
+  const analyticsParams = {
+    [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.COLLECTION,
+    [ANALYTICS_PROPERTIES.LANGUAGE]: lang,
+    [ANALYTICS_PROPERTIES.TGIDS]: availableTours || [],
+    [ANALYTICS_PROPERTIES.MB_NAME]: title,
+  };
+
+  const isSwiperSet = swiper !== null && !swiper?.destroyed;
+
+  useEffect(() => {
+    if (!isSwiperSet) {
+      return;
+    }
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MB_BANNER.VISIBLE,
+      ...analyticsParams,
+    });
+
+    swiper?.on('click', (e) => {
+      const isPaginationBullet = e.target.matches('.swiper-pagination-bullet');
+      if (isPaginationBullet) {
+        trackEvent({
+          eventName: ANALYTICS_EVENTS.MB_BANNER.BANNER_SCROLL,
+          ...analyticsParams,
+        });
+      }
+    });
+
+    swiper?.on('touchEnd', () => {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MB_BANNER.BANNER_SCROLL,
+        ...analyticsParams,
+      });
+    });
+  }, [isSwiperSet]);
 
   let imageView;
 

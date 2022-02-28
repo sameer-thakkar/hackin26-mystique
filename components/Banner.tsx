@@ -1,15 +1,19 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 import { scroller } from 'react-scroll';
+import Button from 'components/UI/Button';
+import Image from 'components/UI/Image';
+import Conditional from 'components/common/Conditional';
 import { strings } from 'const/strings';
-import { withShortcodes } from 'utils/helper';
-import { MBContext } from 'contexts/MBContext';
 import { SOLEIL, COLORS } from 'const/ui-constants';
-import styled from 'styled-components';
-
-import Button from './UI/Button';
-import Image from './UI/Image';
-import Conditional from './common/Conditional';
+import { withShortcodes } from 'utils/helper';
+import { trackEvent } from 'utils/analytics';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  PAGE_TYPES,
+} from 'const/index';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -213,26 +217,6 @@ const StyledBanner = styled.div`
   }
 `;
 
-const swiperParams = {
-  pagination: {
-    el: '.swiper-pagination',
-    type: 'bullets',
-    clickable: true,
-  },
-  slidesPerView: 1,
-  speed: 600,
-  centeredSlides: true,
-  autoplay: {
-    delay: 5000,
-    disableOnInteraction: false,
-  },
-  shouldSwiperUpdate: true,
-  loop: true,
-  initialSlide: 0,
-  freeMode: false,
-  effect: 'fade',
-};
-
 export const BANNER_PARAMS = {
   DESKTOP: {
     ASPECT_RATIO: '4.5:1',
@@ -253,31 +237,80 @@ const ButtonWrapper = styled.div`
     }
   }
 `;
-export default class Banner extends Component<any, any> {
-  hasIndicators: boolean;
-  activeSlideIndex: number;
-  prevSlideIndex: number;
 
-  constructor(props) {
-    super(props);
-    this.hasIndicators = true;
-    this.prevSlideIndex = this.activeSlideIndex = 0;
-    this.state = {
-      counter: 0,
-      isMobile: null,
-      isClient: false,
-    };
-  }
+const Banner = (props) => {
+  const [isMobile, setIsMobile] = useState(null);
+  const [swiper, updateSwiper] = useState(null);
 
-  componentDidMount() {
+  const {
+    currentLanguage,
+    orderedTgids,
+    bannerHeading: tempBannerHeading,
+    bannerImages,
+    hideCTA,
+    isAmp,
+    bannerSubtext: tempBannerSubtext,
+    bannerCtaText = '',
+  } = props;
+  const bannerHeading = withShortcodes(tempBannerHeading);
+  const bannerSubtext = withShortcodes(tempBannerSubtext);
+
+  const analyticsParams = {
+    [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.COLLECTION,
+    [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
+    [ANALYTICS_PROPERTIES.TGIDS]: orderedTgids,
+    [ANALYTICS_PROPERTIES.MB_NAME]: bannerHeading?.join(' '),
+  };
+  useEffect(() => {
     const mobileCheck = window.innerWidth < 768;
-    this.setState({
-      isMobile: mobileCheck,
-      isClient: true,
-    });
-  }
+    if (mobileCheck) {
+      setIsMobile(mobileCheck);
+    }
+  }, []);
 
-  renderAmpBanners = (image) => {
+  const isSwiperSet = swiper !== null && !swiper?.destroyed;
+
+  useEffect(() => {
+    if (!isSwiperSet) {
+      return;
+    }
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MB_BANNER.VISIBLE,
+      ...analyticsParams,
+    });
+
+    swiper?.on('click', (e) => {
+      const isPaginationBullet = e.target.matches('.swiper-pagination-bullet');
+      if (isPaginationBullet) {
+        trackEvent({
+          eventName: ANALYTICS_EVENTS.MB_BANNER.BANNER_SCROLL,
+          ...analyticsParams,
+        });
+      }
+    });
+
+    swiper?.on('touchEnd', () => {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MB_BANNER.BANNER_SCROLL,
+        ...analyticsParams,
+      });
+    });
+  }, [isSwiperSet]);
+
+  const scrollTicketSection = () => {
+    scroller.scrollTo('tour-list-heading', {
+      duration: 1200,
+      offset: isMobile ? -80 : -100,
+      smooth: 'easeInOutQuart',
+    });
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MB_BANNER.CTA_CLICKED,
+      ...analyticsParams,
+    });
+  };
+
+  const renderAmpBanners = (image) => {
     const { url, alt } = image;
     return (
       <Image
@@ -292,15 +325,7 @@ export default class Banner extends Component<any, any> {
     );
   };
 
-  scrollTicketSection = () => {
-    scroller.scrollTo('tour-list-heading', {
-      duration: 1200,
-      offset: this.state.isMobile ? -80 : -100,
-      smooth: 'easeInOutQuart',
-    });
-  };
-
-  getAmpBanner = (bannerImages) => (
+  const getAmpBanner = (bannerImages) => (
     <amp-carousel
       width="411"
       height="400"
@@ -309,140 +334,138 @@ export default class Banner extends Component<any, any> {
       autoplay=""
       delay="4000"
     >
-      {bannerImages.map((banner) =>
-        this.renderAmpBanners({ url: banner.url, alt: banner.alt })
+      {bannerImages?.map((banner) =>
+        renderAmpBanners({ url: banner.url, alt: banner.alt })
       )}
     </amp-carousel>
   );
 
-  render() {
-    let imageView;
-    const {
-      bannerHeading: tempBannerHeading,
-      bannerImages,
-      hideCTA,
-      isAmp,
-      dfExpiryDate,
-      bannerSubtext: tempBannerSubtext,
-      bannerCtaText = '',
-    } = this.props;
-    const bannerHeading = withShortcodes(tempBannerHeading);
-    const bannerSubtext = withShortcodes(tempBannerSubtext);
-    const captions = (
-      <div
-        className={`mb-captions ${
-          bannerImages.length > 1 ? 'with-indicators' : ''
-        }
+  let imageView;
+
+  const swiperParams = {
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'bullets',
+      clickable: true,
+    },
+    slidesPerView: 1,
+    speed: 600,
+    centeredSlides: true,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false,
+    },
+    shouldSwiperUpdate: true,
+    loop: true,
+    initialSlide: 0,
+    freeMode: false,
+    effect: 'fade',
+    getSwiper: updateSwiper,
+  };
+
+  const captions = (
+    <div
+      className={`mb-captions ${
+        bannerImages.length > 1 ? 'with-indicators' : ''
+      }
         ${isAmp ? 'absolute-position' : ''}
         `}
-      >
-        <div
-          className={`${isAmp ? 'non-opaque' : ''} mb-caption
+    >
+      <div
+        className={`${isAmp ? 'non-opaque' : ''} mb-caption
         `}
-        >
-          <div className="caption">
-            <h1>{bannerHeading}</h1>
-          </div>
-          {hideCTA ? null : (
-            <ButtonWrapper>
-              <Button
-                type="whiteBordered"
-                onClick={this.scrollTicketSection}
-                on="tap:tour-list-heading.scrollTo(duration='1200', position='top')"
-              >
-                {bannerCtaText || strings.BANNER_CTA}
-              </Button>
-            </ButtonWrapper>
-          )}
+      >
+        <div className="caption">
+          <h1>{bannerHeading}</h1>
         </div>
+        {hideCTA ? null : (
+          <ButtonWrapper>
+            <Button
+              type="whiteBordered"
+              onClick={scrollTicketSection}
+              on="tap:tour-list-heading.scrollTo(duration='1200', position='top')"
+            >
+              {bannerCtaText || strings.BANNER_CTA}
+            </Button>
+          </ButtonWrapper>
+        )}
       </div>
-    );
-    if (isAmp)
-      return (
-        <StyledBanner>
-          {this.getAmpBanner(bannerImages)}
-          {captions}
-        </StyledBanner>
-      );
-    const { isMobile } = this.state;
-    const { ASPECT_RATIO, WIDTH } =
-      isMobile || isAmp ? BANNER_PARAMS.MOBILE : BANNER_PARAMS.DESKTOP;
-    switch (bannerImages?.length) {
-      case 1:
-        imageView = (
-          <Image
-            className="mb-slide single-slide"
-            width={WIDTH}
-            aspectRatio={ASPECT_RATIO}
-            url={bannerImages[0]?.url}
-            dontLazyLoad
-            mobileUrl={bannerImages[0]?.mobileUrl}
-            alt={bannerImages[0]?.alt || 'banner'}
-            addDarkOverlay
-          />
-        );
-        break;
-      default:
-        imageView = (
-          <Swiper {...swiperParams}>
-            {bannerImages?.map((image, index) => {
-              return (
-                <Image
-                  className="swiper-slide mb-slide"
-                  key={index}
-                  width={WIDTH}
-                  aspectRatio={ASPECT_RATIO}
-                  url={image?.url}
-                  dontLazyLoad
-                  mobileUrl={image?.mobileUrl}
-                  alt={image?.alt || 'banner'}
-                  addDarkOverlay
-                />
-              );
-            })}
-          </Swiper>
-        );
-        break;
-    }
-
+    </div>
+  );
+  if (isAmp)
     return (
       <StyledBanner>
-        {imageView}
-        <div className="overlay-container">
-          <div
-            className={`mb-captions ${
-              bannerImages.length > 1 ? 'with-indicators' : ''
-            }`}
-          >
-            <div
-              className={`mb-caption ${
-                dfExpiryDate
-                  ? this.activeSlideIndex !== 1 && 'active'
-                  : 'active'
-              }`}
-            >
-              <div className="caption">
-                <h1>{bannerHeading}</h1>
-                <Conditional if={bannerSubtext}>
-                  <p>{bannerSubtext}</p>
-                </Conditional>
-              </div>
-              <Conditional if={!hideCTA}>
-                <ButtonWrapper>
-                  <Button
-                    type="whiteBordered"
-                    onClick={this.scrollTicketSection}
-                  >
-                    {bannerCtaText || strings.BANNER_CTA}
-                  </Button>
-                </ButtonWrapper>
-              </Conditional>
-            </div>
-          </div>
-        </div>
+        {getAmpBanner(bannerImages)}
+        {captions}
       </StyledBanner>
     );
+  const { ASPECT_RATIO, WIDTH } =
+    isMobile || isAmp ? BANNER_PARAMS.MOBILE : BANNER_PARAMS.DESKTOP;
+  switch (bannerImages?.length) {
+    case 1:
+      imageView = (
+        <Image
+          className="mb-slide single-slide"
+          width={WIDTH}
+          aspectRatio={ASPECT_RATIO}
+          url={bannerImages[0]?.url}
+          dontLazyLoad
+          mobileUrl={bannerImages[0]?.mobileUrl}
+          alt={bannerImages[0]?.alt || 'banner'}
+          addDarkOverlay
+        />
+      );
+      break;
+    default:
+      imageView = (
+        <Swiper {...swiperParams}>
+          {bannerImages?.map((image, index) => {
+            return (
+              <Image
+                className="swiper-slide mb-slide"
+                key={index}
+                width={WIDTH}
+                aspectRatio={ASPECT_RATIO}
+                url={image?.url}
+                dontLazyLoad
+                mobileUrl={image?.mobileUrl}
+                alt={image?.alt || 'banner'}
+                addDarkOverlay
+              />
+            );
+          })}
+        </Swiper>
+      );
+      break;
   }
-}
+  return (
+    <StyledBanner>
+      {imageView}
+      <div className="overlay-container">
+        <div
+          className={`mb-captions ${
+            bannerImages.length > 1 ? 'with-indicators' : ''
+          }`}
+        >
+          <div className={`mb-caption active`}>
+            <div className="caption">
+              <h1>{bannerHeading}</h1>
+              <Conditional if={bannerSubtext}>
+                <p>{bannerSubtext}</p>
+              </Conditional>
+            </div>
+            <Conditional if={!hideCTA}>
+              <ButtonWrapper>
+                <Button type="whiteBordered" onClick={scrollTicketSection}>
+                  {bannerCtaText || strings.BANNER_CTA}
+                </Button>
+              </ButtonWrapper>
+            </Conditional>
+          </div>
+        </div>
+      </div>
+    </StyledBanner>
+  );
+};
 
-Banner.contextType = MBContext;
+export default Banner;

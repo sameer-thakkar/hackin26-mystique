@@ -178,6 +178,7 @@ const MicrositeV1 = (props) => {
   const initialScorpioData = isCategorisedTours
     ? scorpioDataCategorised
     : scorpioDataUncategorised;
+
   const [scorpioData, setScorpioData] = useState(initialScorpioData);
 
   const footerLogoURL =
@@ -568,6 +569,7 @@ const MicrositeV1 = (props) => {
             boxed={true}
             hideCTA={isToursAvailable ? hideBannerCTA : true}
             isAmp={isAmp}
+            orderedTgids={orderedTgids}
           />
         </Conditional>
         <Conditional if={mbTheme === THEMES.MIN_BLUE}>

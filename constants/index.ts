@@ -227,6 +227,12 @@ export const ANALYTICS_EVENTS = {
     VARIANT_CLICKED: 'Variant card clicked',
     POPUP_CLOSED: 'Popup closed',
   },
+  MB_BANNER: {
+    VISIBLE: 'MB Banner Visible',
+    CTA_CLICKED: 'MB Banner CTA Clicked',
+    BANNER_SCROLL: 'MB Banner Scroll',
+  },
+
   REVIEWS_COMPONENT_CLICKED: 'Reviews Component Clicked',
   SHOW_MORE_REVIEWS_CLICKED: 'Show More Reviews Clicked',
   SHOW_LESS_REVIEWS_CLICKED: 'Show Less Reviews Clicked',
@@ -629,13 +635,18 @@ export const ANALYTICS_PROPERTIES = {
   IS_TRUNCATED: 'Is Truncated Text',
   PAGE_HEADING: 'Page Heading',
   SECTION: 'Section',
+
+  MB_NAME: 'MB Name',
+
   RANKING: 'Ranking',
   CLICK_COUNT: 'Click Count',
   REVIEW_RANK: 'Review Rank',
+
 };
 export const PAGE_TYPES = {
   COLLECTION: 'Collection',
   CONTENT_PAGE: 'Content Page',
+  SHOW_PAGE: 'Show Page',
 };
 
 const ESCAPE_ENTITIES = Object.freeze({

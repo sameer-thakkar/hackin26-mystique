@@ -14,6 +14,9 @@ const TicketPage = (props) => {
     host,
   } = props;
 
+  const availableTours = categoryTourListData?.orderedTours?.map(
+    (tour) => tour.tgid
+  );
   let bannerImages = [];
   Object.values(categoryTourListData?.scorpioData).forEach((element: any) => {
     if (element?.images) {
@@ -50,6 +53,7 @@ const TicketPage = (props) => {
         isTicketPage={true}
         subHeading={city + ', ' + country}
         subText={bannerSubtext}
+        availableTours={availableTours}
       />
       <ProductsSection {...props} />
     </>

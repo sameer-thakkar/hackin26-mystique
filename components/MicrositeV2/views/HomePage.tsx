@@ -209,6 +209,7 @@ export const HomePage = (props) => {
   const hasSafe = Object.values(allTours).some((tour: any) =>
     isSafetyIncluded(tour.allTags)
   );
+  const allTgids = Object.keys(allTours);
   const isLTT = uid.startsWith('www.london-theater-tickets.com');
   return (
     <V2MicrositeWrapper isEntertainmentMb={isEntertainmentMb}>
@@ -257,6 +258,7 @@ export const HomePage = (props) => {
           isMobile={isMobile}
           ready={true}
           isEntertainmentMb={isEntertainmentMb}
+          availableTours={allTgids}
         />
       </Conditional>
       <Conditional if={isListicle && heroProps.banners.length}>

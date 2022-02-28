@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
-import { withShortcodes } from 'utils/helper';
+import Image from 'components/UI/Image';
 import { SOLEIL } from 'const/ui-constants';
-
-import Image from './UI/Image';
+import { withShortcodes } from 'utils/helper';
+import { trackEvent } from 'utils/analytics';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  PAGE_TYPES,
+} from 'const/index';
+import { MBContext } from 'contexts/MBContext';
 
 const StyledMasthead = styled.div`
   width: 100%;
@@ -45,12 +51,26 @@ const Title = styled.h1`
   }
 `;
 
-const Masthead: React.FC<{
+const Masthead = ({
+  title,
+  image,
+  isMobile,
+}: {
   title: string;
   image: { url: string; alt: string };
   isMobile: boolean;
-}> = (props) => {
-  const { title, image, isMobile } = props;
+}) => {
+  const { lang } = useContext(MBContext);
+  const formattedTitle = withShortcodes(title);
+  useEffect(() => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MB_BANNER.VISIBLE,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.CONTENT_PAGE,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: lang,
+      [ANALYTICS_PROPERTIES.TGIDS]: null,
+      [ANALYTICS_PROPERTIES.MB_NAME]: formattedTitle?.join(''),
+    });
+  }, []);
   return (
     <StyledMasthead>
       <Image
@@ -59,7 +79,7 @@ const Masthead: React.FC<{
         width={isMobile ? 800 : 1200}
         height={isMobile ? 300 : 400}
       />
-      <Title>{withShortcodes(title)}</Title>
+      <Title>{formattedTitle}</Title>
     </StyledMasthead>
   );
 };
