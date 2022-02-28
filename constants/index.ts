@@ -232,11 +232,6 @@ export const ANALYTICS_EVENTS = {
     CTA_CLICKED: 'MB Banner CTA Clicked',
     BANNER_SCROLL: 'MB Banner Scroll',
   },
-
-  REVIEWS_COMPONENT_CLICKED: 'Reviews Component Clicked',
-  SHOW_MORE_REVIEWS_CLICKED: 'Show More Reviews Clicked',
-  SHOW_LESS_REVIEWS_CLICKED: 'Show Less Reviews Clicked',
-  READ_MORE_REVIEWS_CLICKED: 'Read More Reviews Clicked',
 };
 export const PAGE_TYPE = {
   COLLECTION_PAGE: 'Collection Page',
@@ -635,13 +630,7 @@ export const ANALYTICS_PROPERTIES = {
   IS_TRUNCATED: 'Is Truncated Text',
   PAGE_HEADING: 'Page Heading',
   SECTION: 'Section',
-
   MB_NAME: 'MB Name',
-
-  RANKING: 'Ranking',
-  CLICK_COUNT: 'Click Count',
-  REVIEW_RANK: 'Review Rank',
-
 };
 export const PAGE_TYPES = {
   COLLECTION: 'Collection',

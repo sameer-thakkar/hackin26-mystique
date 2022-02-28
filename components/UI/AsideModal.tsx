@@ -1,7 +1,7 @@
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 import { CLOSE_WHITE, BackArrow } from 'assets/SvgIcons';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { COLORS } from 'const/ui-constants';
 import { SIDEBAR_TYPES } from 'const/index';
 import useWindowSize from 'hooks/useWindowSize';
@@ -184,7 +184,6 @@ const AsideModal = ({
   type,
   isGlobalMb = false,
   onCloseCallback = null,
-  scrollToReviews,
 }) => {
   const [container, setContainer] = useState(null);
   const [scrollY, setScrollY] = useState(0);
@@ -204,20 +203,6 @@ const AsideModal = ({
     if (active) container.classList.add('scroll-lock');
     setContainer(container);
   }, [active, isMobile]);
-
-  const onModalContentRender = useCallback(
-    (node) => {
-      if (node !== null && scrollToReviews) {
-        const modalContainer = node;
-        // scroll to the end of the container to show reviews, should scroll to reviews ideally
-        modalContainer.scrollTo({
-          top: modalContainer.scrollHeight,
-          behavior: 'smooth',
-        });
-      }
-    },
-    [scrollToReviews]
-  );
 
   const onClose = (e) => {
     e.stopPropagation();
@@ -263,11 +248,7 @@ const AsideModal = ({
                 </CloseIcon>
               )}
             </Header>
-            <ModalContent
-              ref={onModalContentRender}
-              windowHeight={windowHeight}
-              sidebarType={type}
-            >
+            <ModalContent windowHeight={windowHeight} sidebarType={type}>
               {children}
             </ModalContent>
           </StyledAsideModal>

@@ -60,7 +60,6 @@ export const MBContextProvider = (props) => {
     sidePadding = 0,
     type = SIDEBAR_TYPES.DEFAULT,
     onCloseCallback,
-    scrollToReviews,
   }) => {
     const tempStack = [...sidebarModalStack];
     tempStack.push({
@@ -70,7 +69,6 @@ export const MBContextProvider = (props) => {
       sidePadding,
       type,
       onCloseCallback,
-      scrollToReviews,
     });
     setSidebarModalStack(tempStack);
   };
@@ -130,7 +128,6 @@ export const MBContextProvider = (props) => {
           type={getActiveAside()?.type}
           onCloseCallback={getActiveAside()?.onCloseCallback}
           isGlobalMb={isGlobalMb}
-          scrollToReviews={getActiveAside()?.scrollToReviews}
         >
           {getActiveAside()?.children}
         </AsideModal>

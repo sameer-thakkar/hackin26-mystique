@@ -1,10 +1,4 @@
-import React, {
-  useRef,
-  useState,
-  useContext,
-  useEffect,
-  useCallback,
-} from 'react';
+import React, { useRef, useState, useContext, useEffect } from 'react';
 import { RichText } from 'prismic-reactjs';
 import { useRecoilValue } from 'recoil';
 import dynamic from 'next/dynamic';
@@ -17,17 +11,14 @@ import { MBContext } from 'contexts/MBContext';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import Conditional from 'components/common/Conditional';
 import ComboVariants from 'components/UI/ComboVariants';
-import ReviewsList from 'components/ReviewsList';
 import PriceBlock from 'UI/PriceBlock';
 import Chevron from 'UI/Chevron';
 import Split, { StlyedSplit } from 'UI/Split';
 import IconCTA, { StyledIconCTA } from 'UI/IconCTA';
 import Button from 'UI/Button';
 import Image from 'UI/Image';
-import RatingStars from 'UI/RatingStars';
 import { currencyAtom } from 'store/atoms/currency';
-import { reviewsExpVariantAtom } from 'store/atoms/reviewsExpVariant';
-import { CALENDAR, Shield, BackArrow, CHEVRON_RIGHT } from 'assets/SvgIcons';
+import { CALENDAR, Shield, BackArrow } from 'assets/SvgIcons';
 import { strings } from 'const/strings';
 import {
   ANALYTICS_EVENTS,
@@ -39,7 +30,6 @@ import {
   CUSTOM_TYPES,
 } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
-import { VARIANTS } from 'const/experiments';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import {
   extractTabsFromHighlights,
@@ -50,8 +40,6 @@ import {
 import { trackEvent } from 'utils/analytics';
 import { getHostName, truncate, wordCount } from 'utils/helper';
 import { isSafetyIncluded, createBookingURL } from 'utils';
-import { truncateNumber } from 'utils/gen';
-import { fetchTourGroupReviews } from 'utils/apiUtils';
 
 const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
   ssr: false,
@@ -247,9 +235,6 @@ export const CTAContainer = styled.div`
   display: grid;
   grid-gap: 16px;
   align-content: start;
-  position: sticky;
-  top: 6rem;
-
   ${({ theme }) =>
     theme.theme === THEMES.MIN_BLUE
       ? `
@@ -363,7 +348,7 @@ const ProductBody = styled.div`
     ${({ collapsed, noOfListItemToShow, defaultOpen }) =>
       collapsed && !defaultOpen
         ? `
-    *:not(div, svg):nth-child(n + ${noOfListItemToShow}),
+    *:not(div):nth-child(n + ${noOfListItemToShow}),
     ul li:nth-child(n + ${noOfListItemToShow}) {
       display: none;
     }
@@ -508,45 +493,6 @@ const V1BoosterBlock = styled.div`
   }
 `;
 
-const RatingsWrapper = styled.div`
-  grid-area: ratings-wrapper;
-  display: flex;
-  align-items: center;
-  width: max-content;
-  margin-top: -0.75rem;
-  margin-bottom: -0.75rem;
-  cursor: ${({ hasReviews }) => (hasReviews ? 'pointer' : 'inherit')};
-
-  .average-rating,
-  .total-reviews {
-    font-size: 0.85rem;
-    line-height: 1.25rem;
-  }
-
-  .average-rating {
-    margin-right: 0.25rem;
-  }
-
-  .total-reviews {
-    margin-left: 0.25rem;
-
-    span {
-      text-transform: capitalize;
-    }
-  }
-
-  .chevron-right {
-    margin-left: 0.375rem;
-    position: relative;
-    top: 0.05rem;
-  }
-
-  @media (max-width: 768px) {
-    margin-top: -1rem;
-    margin-bottom: 0;
-  }
-`;
-
 const IconBoosters = styled.div`
   grid-area: icon-booster;
   margin-left: 16px;
@@ -653,8 +599,6 @@ const HighlightTabs = ({
   onTabChange,
   pageType,
   activeTabIndex,
-  reviews,
-  tgid,
 }) => {
   useEffect(() => {
     onTabChange({ tab: tabs[0], index: 0, defaultSelection: true });
@@ -688,11 +632,7 @@ const HighlightTabs = ({
             key={index}
             pageType={pageType}
           >
-            {tab?.isReview ? (
-              <ReviewsList reviews={reviews} tgid={tgid} />
-            ) : (
-              <RichText render={tab.contents} elements={richtextElements} />
-            )}
+            <RichText render={tab.contents} elements={richtextElements} />
           </TabPanel>
         ))}
       </TabPanelWrapper>
@@ -808,49 +748,16 @@ const Product = (props) => {
   } = useContext(MBContext);
   const hostname = getHostName(isStage, isDev, host);
   const currency = useRecoilValue(currencyAtom);
-  const reviewsExpVariant = useRecoilValue(reviewsExpVariantAtom);
   const [isContentOpen, toggleContentOpen] = useState(defaultOpen);
   const [showMoreDetailsInTabs, setShowMoreDetails] = useState(
     defaultOpen || false
   );
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [showComboVariant, setShowComboVariant] = useState(false);
-  const [reviews, setReviews] = useState([]);
   const { allTags = [], validity, combo } = scorpioData || {};
 
   const descriptorsCsv = descriptors || scorpioData.descriptors;
   const cardTitle = title || scorpioData.title;
-  const { averageRating, reviewCount } = scorpioData;
-
-  const getReviews = useCallback(
-    async (limit = 15) => {
-      const data = await fetchTourGroupReviews({
-        tgid,
-        hostname,
-        limit,
-      });
-
-      const tourGroupReviews = data?.items?.map((review) => {
-        const { id, reviewTime, nonCustomerName, content, rating } = review;
-        return {
-          id: id,
-          time: reviewTime,
-          name: nonCustomerName,
-          content: content,
-          rating: rating,
-        };
-      });
-
-      setReviews(tourGroupReviews);
-    },
-    [hostname, tgid]
-  );
-
-  useEffect(() => {
-    if (reviewsExpVariant === VARIANTS.SHOW_REVIEWS_AND_RATINGS) {
-      getReviews();
-    }
-  }, [getReviews, reviewsExpVariant]);
 
   const descriptorsList = descriptorsCsv
     ? descriptorsCsv
@@ -876,21 +783,6 @@ const Product = (props) => {
         [ANALYTICS_PROPERTIES.IS_TRUNCATED]: isTruncated,
         [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
       });
-  };
-
-  const openReviewsTab = () => {
-    if (isMobile) {
-      onMoreDetailsClick(null, true);
-    } else {
-      const tab = tabs.find((tab) => tab?.isReview);
-      const index = tabs.indexOf(tab);
-      onTabChange({ tab, index, defaultSelection: false });
-    }
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.REVIEWS_COMPONENT_CLICKED,
-      [ANALYTICS_PROPERTIES.TGID]: tgid,
-      [ANALYTICS_PROPERTIES.RANKING]: indexPosition,
-    });
   };
 
   const handlePopup = () => {
@@ -989,7 +881,7 @@ const Product = (props) => {
 
   const { highlights, tabs } = isMobile
     ? { highlights: finalHighlights, tabs: [] }
-    : extractTabsFromHighlights(finalHighlights, reviews.length);
+    : extractTabsFromHighlights(finalHighlights);
 
   const hasReadMore =
     (highlights.flat()?.length >= 3 || showMoreDetailsInTabs) && !defaultOpen;
@@ -1017,7 +909,7 @@ const Product = (props) => {
   const hasTags = hasSafetyFlag;
   const hasBorderedTitle = !hasOffer && !hasV1Booster && !hasTags;
 
-  const onMoreDetailsClick = (e, scrollToReviews = false) => {
+  const onMoreDetailsClick = (e) => {
     e?.stopPropagation();
     if (mbTheme !== THEMES.MIN_BLUE && isMobile) {
       trackedToggleContent(false);
@@ -1030,7 +922,6 @@ const Product = (props) => {
         ),
         type: SIDEBAR_TYPES.PRODUCT_CARD,
         onCloseCallback: () => trackedToggleContent(true),
-        scrollToReviews,
       });
     } else {
       trackedToggleContent(isContentOpen);
@@ -1046,10 +937,6 @@ const Product = (props) => {
     hasShortSummary: hasShortSummary,
     hasNextAvailable: earliestAvailability?.startDate,
     isTicketCard: isTicketCard,
-    hasReviewAndRatings:
-      reviewsExpVariant === VARIANTS.SHOW_REVIEWS_AND_RATINGS &&
-      averageRating &&
-      reviewCount,
   });
   const trackedToggleContent = (isOpen) => {
     trackEvent({
@@ -1170,36 +1057,6 @@ const Product = (props) => {
               {cardTitle}
             </TourTitle>
           </TitleWrapper>
-          <Conditional
-            if={
-              reviewsExpVariant === VARIANTS.SHOW_REVIEWS_AND_RATINGS &&
-              averageRating &&
-              reviewCount
-            }
-          >
-            <RatingsWrapper
-              hasReviews={reviews.length}
-              onClick={reviews.length ? openReviewsTab : () => {}}
-            >
-              <span className="average-rating">{averageRating}</span>
-              <RatingStars averageRating={averageRating} />
-              <div className="total-reviews">
-                <span>
-                  (
-                  {strings.formatString(
-                    strings.REVIEW_COUNT,
-                    truncateNumber(reviewCount)
-                  )}
-                  )
-                </span>
-                {reviews.length ? (
-                  <span className="chevron-right">
-                    <CHEVRON_RIGHT fillColor={COLORS.GREY.G2} />
-                  </span>
-                ) : null}
-              </div>
-            </RatingsWrapper>
-          </Conditional>
           <Conditional
             if={
               mbTheme !== THEMES.MIN_BLUE &&
@@ -1346,16 +1203,6 @@ const Product = (props) => {
                   elements={richtextElements}
                 />
               </Conditional>
-              <Conditional if={isMobile && reviews.length}>
-                <ReviewsList
-                  showHeading
-                  reviews={reviews}
-                  averageRating={averageRating}
-                  reviewCount={reviewCount}
-                  isMobile
-                  tgid={tgid}
-                />
-              </Conditional>
               <Conditional if={tabs.length}>
                 <HighlightTabs
                   onTabChange={onTabChange}
@@ -1363,8 +1210,6 @@ const Product = (props) => {
                   tabs={tabs}
                   pageType={pageType}
                   activeTabIndex={activeTabIndex}
-                  reviews={reviews}
-                  tgid={tgid}
                 />
               </Conditional>
             </div>

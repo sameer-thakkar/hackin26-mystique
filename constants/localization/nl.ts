@@ -344,10 +344,6 @@ const nl = {
   HOUR: ' uur',
   HOURS: ' uur',
   MINUTES: ' min',
-  REVIEW_COUNT: '{0} beoordelingen',
-  REVIEWS: 'Recensies',
-  SHOW_MORE_REVIEWS: 'Toon meer recensies',
-  SHOW_LESS_REVIEWS: 'Toon minder recensies',
 };
 
 export default nl;

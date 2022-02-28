@@ -342,10 +342,6 @@ const fr = {
   HOUR: ' heure',
   HOURS: ' heures',
   MINUTES: ' min',
-  REVIEW_COUNT: '{0} avis ',
-  REVIEWS: 'Avis',
-  SHOW_MORE_REVIEWS: "Voir plus d'avis",
-  SHOW_LESS_REVIEWS: "Voir moins d'avis",
 };
 
 export default fr;
