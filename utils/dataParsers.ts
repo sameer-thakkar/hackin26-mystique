@@ -336,14 +336,12 @@ export const categoryTourListParserV2 = async (
     const data = await Promise.all(allPromises);
     const collectionData: any = data?.map((c: any) => {
       const { collection, sections } = c || {};
-      const filteredData = sections.reduce((acc, curr) => {
-        if (curr?.type === 'GENERIC' && curr?.tourGroups?.items?.length) {
-          return curr;
-        }
-      }, {});
+      const filteredData = sections.filter((curr) => {
+        return curr?.type === 'GENERIC' && curr?.tourGroups?.items?.length;
+      });
       return {
         collection,
-        items: filteredData?.tourGroups?.items,
+        items: filteredData?.[0]?.tourGroups?.items,
       };
     });
     if (collectionData?.length) {
