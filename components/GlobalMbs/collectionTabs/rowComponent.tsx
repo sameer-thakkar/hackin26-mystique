@@ -26,6 +26,7 @@ interface RowComponentProps {
   sectionIndex: any;
   cards: any[];
   categoryData: any[];
+  ticketPages?: any[];
 }
 const RowComponent: FunctionComponent<RowComponentProps> = ({
   setRow,
@@ -33,11 +34,13 @@ const RowComponent: FunctionComponent<RowComponentProps> = ({
   sectionIndex,
   cards,
   categoryData,
+  ticketPages = [],
 }) => {
   const width = useWindowWidth();
   const isMobile = width <= 768;
   const [activeCard, setActiveCard] = useState(null);
   const [activeCardPrice, setActiveCardPrice] = useState(null);
+  const [ticketURL, setTicketURl] = useState('');
 
   const scrollToDetails = (id) => {
     scroller.scrollTo(id, {
@@ -59,6 +62,10 @@ const RowComponent: FunctionComponent<RowComponentProps> = ({
     setRow(sectionIndex);
     if (activeCard?.id !== active_card?.id) {
       setActiveCard(active_card);
+      const ticketURL = ticketPages?.filter(
+        (page) => page.data.collection.id === active_card?.id
+      )?.[0]?.uid;
+      setTicketURl(ticketURL);
       const price = getPrice(active_card?.data.headout_category_id);
       setActiveCardPrice(price);
     } else {
@@ -102,6 +109,7 @@ const RowComponent: FunctionComponent<RowComponentProps> = ({
             isMobile={isMobile}
             price={activeCardPrice?.startingPrice}
             currency={activeCardPrice?.currency?.localSymbol}
+            ticketURL={ticketURL}
           />
         </Conditional>
       </Conditional>

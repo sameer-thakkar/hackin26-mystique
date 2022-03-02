@@ -54,6 +54,7 @@ const GlobalMB = (props) => {
     countryCollections = [],
     collections,
     categoryTourListData,
+    ticketPages,
   } = props || {};
 
   const alternateLanguages = getAlternateLanguages(
@@ -117,6 +118,7 @@ const GlobalMB = (props) => {
     ...CMSContent,
     currencies,
     cityCollections: cityCollectionsData,
+    ticketPages: ticketPages?.results || [],
   };
 
   const hasTicketsPage = supply === 'Direct' && (categoryId || collectionId);
@@ -240,29 +242,66 @@ const GlobalMB = (props) => {
       },
     }));
 
+  const collectionCountryLinks = countryCollectionsData
+    ?.filter((collection) => collection?.uid !== uid)
+    ?.map((data) => ({
+      slice_type: 'menu_item',
+      primary: {
+        label: data?.data?.collection_name,
+        url: {
+          url: data?.data?.microbrand_url
+            ? getValidUrl(data?.data?.microbrand_url?.trim())
+            : convertUidToUrl({
+                uid: data?.uid,
+                isDev,
+                hostname: host,
+                lang: getHeadoutLanguagecode(lang),
+              }),
+          target: '_blank',
+        },
+      },
+    }));
+
   const CITY_TAGS_TITLE = 'Themeparks in';
   const COUNTRY_TAGS_TITLE = 'All Themeparks in';
   const HOMEPAGE_TAGS_TITLE = 'More Themeparks';
 
-  const headerLinks =
-    showHeaderlinks && collectionLinks?.length
-      ? [
+  let headerLinks = [];
+  if (showHeaderlinks) {
+    if (collectionCountryLinks?.length) {
+      headerLinks.push({
+        slice_type: 'navigation',
+        primary: {},
+        slices: [
           {
-            slice_type: 'navigation',
-            primary: {},
-            slices: [
-              {
-                slice_type: 'nested_menu',
-                primary: {
-                  label: `${CITY_TAGS_TITLE} ${cityName}`,
-                  url: {},
-                },
-                slices: collectionLinks,
-              },
-            ],
+            slice_type: 'nested_menu',
+            primary: {
+              label: `${CITY_TAGS_TITLE} ${countryName}`,
+              url: {},
+            },
+            slices: collectionCountryLinks,
           },
-        ]
-      : [];
+        ],
+      });
+    }
+
+    if (collectionLinks?.length) {
+      headerLinks.push({
+        slice_type: 'navigation',
+        primary: {},
+        slices: [
+          {
+            slice_type: 'nested_menu',
+            primary: {
+              label: `${CITY_TAGS_TITLE} ${cityName}`,
+              url: {},
+            },
+            slices: collectionLinks,
+          },
+        ],
+      });
+    }
+  }
 
   const filterByExperienceType = (arr: any[], experienceType: string) => {
     const data = arr?.filter((d) => d?.experience_type === experienceType);
@@ -290,9 +329,18 @@ const GlobalMB = (props) => {
     categoryTourListData,
   };
 
+  const { uid: parentUid } = globalCollection || {};
+
+  const countryPageProps = {
+    ...CMSContent,
+    collections: collectionsData,
+    cityCollections: cityCollectionsData,
+    ticketPages: ticketPages?.results || [],
+  };
+
   switch (type) {
     case 'global_country':
-      pageMarkup = <CountryPage {...CMSContent} {...commonProps} />;
+      pageMarkup = <CountryPage {...countryPageProps} />;
       break;
     case 'global_city':
       pageMarkup = <CityPage {...cityPageProps} />;
@@ -391,7 +439,7 @@ const GlobalMB = (props) => {
         >
           <Tags
             collections={cityCollectionsData}
-            uid={uid}
+            uid={isGlobalExperience ? parentUid : uid}
             title={`${CITY_TAGS_TITLE} ${cityName}`}
           />
         </Conditional>

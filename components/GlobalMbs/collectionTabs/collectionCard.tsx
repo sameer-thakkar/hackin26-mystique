@@ -114,7 +114,7 @@ const Card: FunctionComponent<CardProps> = ({
       headout_category_id: categoryId,
     },
   } = card;
-  const imageUrl = images[0]?.image_url || FALLBACK_IMAGES.THEMEPARKS;
+  const imageUrl = images?.[0]?.image_url || FALLBACK_IMAGES.THEMEPARKS;
 
   const BEST_SELLER = 'Bestseller';
 

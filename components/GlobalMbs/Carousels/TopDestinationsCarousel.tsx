@@ -7,6 +7,7 @@ import { COLORS, SOLEIL } from 'const/ui-constants';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { FALLBACK_IMAGES } from 'const/index';
 import { MBContext } from 'contexts/MBContext';
+import Conditional from 'components/common/Conditional';
 
 const Wrapper = styled.div`
   max-width: 1200px;
@@ -54,10 +55,12 @@ const TextWrapper = styled.div`
 
 interface TopDestinationsCarouselProps {
   destinations: any[];
+  showTitle?: boolean;
 }
 
 const TopDestinationsCarousel: FunctionComponent<TopDestinationsCarouselProps> = ({
   destinations,
+  showTitle = true,
 }) => {
   const { isDev, host } = useContext(MBContext);
   const finalCities = destinations?.filter(
@@ -65,10 +68,13 @@ const TopDestinationsCarousel: FunctionComponent<TopDestinationsCarouselProps> =
       destination?.data?.city_name && destination?.data?.body?.length
   );
   const entrySection = (
-    <TitleTextCombo>
-      <h2>Top Destinations</h2>
-    </TitleTextCombo>
+    <Conditional if={showTitle}>
+      <TitleTextCombo>
+        <h2>Top Destinations</h2>
+      </TitleTextCombo>
+    </Conditional>
   );
+
   const cardMarkup = finalCities?.map((city, index) => {
     const { data, uid } = city || {};
     const { city_name, country_name, body: slices } = data || {};

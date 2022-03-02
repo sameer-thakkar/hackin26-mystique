@@ -107,6 +107,9 @@ const StyledBanner = styled.div((props) => {
       line-height: 29px;
       margin-bottom: 8px;
     }
+    .tag-wrapper{
+      display: flex;
+    }
     .tag {
       padding: 4px 8px;
       width: max-content;
@@ -115,6 +118,8 @@ const StyledBanner = styled.div((props) => {
       font-size: 12px;
       line-height: 12px;
       border-radius: 2px;
+      margin-right: 5px;
+      margin-bottom: 5px;
     }
     .info {
       margin-bottom: 34px;
@@ -265,12 +270,17 @@ const Banner: FunctionComponent<BannerProps> = ({
     officialWebsite,
     totalCityCollections,
     primaryCategory,
+    secondaryCategories,
     rank,
     location,
     duration,
     timings,
     city,
   } = collection;
+  const finalSecondaryCategory = secondaryCategories?.map(
+    (item) => item.category
+  );
+
   const [swiper, updateSwiper] = useState(null);
   const { host, isDev, lang } = useContext(MBContext);
   const { GLOBAL_MB: globalMbAR } = ASPECT_RATIO;
@@ -426,6 +436,11 @@ const Banner: FunctionComponent<BannerProps> = ({
               </Conditional>
               <div className="tag-wrapper">
                 <div className="tag">{primaryCategory}</div>
+                {finalSecondaryCategory?.map((item, idx) => (
+                  <div className="tag" key={idx}>
+                    {item}
+                  </div>
+                ))}
               </div>
             </div>
             <div className="info">

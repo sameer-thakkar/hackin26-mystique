@@ -540,9 +540,18 @@ const MultiLevelNav = ({
   isActive,
   isGlobalMb = false,
 }) => {
-  const [firstSlice, ..._ignored_only_one_nav_bar] = slice;
+  const [firstSlice, secondSlice, ..._ignored_only_two_nav_bar] = slice;
+
+  let withOldMenu = firstSlice?.slices || [];
+
+  if (withOldMenu.length == 1 && secondSlice && isGlobalMb) {
+    withOldMenu.push(secondSlice);
+  }
+  if (!isGlobalMb) {
+    withOldMenu.push(...(oldMenuItems || []));
+  }
+
   const isAmp = useAmp();
-  const withOldMenu = [...(firstSlice?.slices || []), ...(oldMenuItems || [])];
   const finalSlices = isAmp ? flattenMenu(withOldMenu) : withOldMenu;
   return (
     <Navigation

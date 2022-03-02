@@ -236,10 +236,11 @@ interface DetailedCollectionCardProps {
   ref?: Ref<HTMLDivElement>;
   price?: string;
   currency?: string;
+  ticketURL?: string;
 }
 
 const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = forwardRef(
-  ({ data, isMobile, clickHandler, price, currency }, ref) => {
+  ({ data, isMobile, clickHandler, price, currency, ticketURL }, ref) => {
     const { isDev, host } = useContext(MBContext);
     const {
       data: {
@@ -248,7 +249,6 @@ const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = f
         descriptors,
         supply,
         headout_category_id: categoryId,
-        official_website: officialWebsite,
         collection_name: name,
         collection_overview: overview,
         location,
@@ -264,9 +264,8 @@ const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = f
       </div>
     ));
 
-    const hasTicketsPage = supply === 'Direct' && categoryId;
-
-    const ticketLink = hasTicketsPage ? '' : getValidUrl(officialWebsite);
+    const ticketLink = convertUidToUrl({ uid: ticketURL });
+    const hasTicketsPage = supply === 'Direct' && categoryId && ticketLink;
 
     const TicketsMarkup = (
       <TicketsWrapper>
@@ -280,8 +279,7 @@ const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = f
         </Conditional>
 
         <div className="cta-wrapper">
-          {/* TODO: Change the below condition once ticket page is live */}
-          <Conditional if={false}>
+          <Conditional if={hasTicketsPage}>
             <a href={ticketLink} className="cta primary">
               {strings.BANNER_CTA}
             </a>

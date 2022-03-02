@@ -666,6 +666,17 @@ export const getGlobalCity = async ({ req, uid, lang }) => {
       { pageSize: 100 }
     );
 
+    const ticketPages = await client.query(
+      [
+        Prismic.Predicates.at('document.type', CUSTOM_TYPES.GLOBAL_EXPERIENCE),
+        Prismic.Predicates.at(
+          `my.${CUSTOM_TYPES.GLOBAL_EXPERIENCE}.city`,
+          cityDocId
+        ),
+      ],
+      { pageSize: 100 }
+    );
+
     const refArray = await getRefsArrayByIds(
       [common_header.id, common_footer.id, content_framework.id],
       req
@@ -680,6 +691,7 @@ export const getGlobalCity = async ({ req, uid, lang }) => {
         commonHeader,
         commonFooter,
         contentFramework,
+        ticketPages,
       },
       ContentType: CUSTOM_TYPES.GLOBAL_CITY,
     };
@@ -715,6 +727,28 @@ export const getGlobalCountry = async ({ req, uid, lang }) => {
       { pageSize: 100 }
     );
 
+    const cityCollections = await client.query(
+      [
+        Prismic.Predicates.at('document.type', CUSTOM_TYPES.GLOBAL_CITY),
+        Prismic.Predicates.at(
+          `my.${CUSTOM_TYPES.GLOBAL_CITY}.country`,
+          countryDocID
+        ),
+      ],
+      { pageSize: 100 }
+    );
+
+    const ticketPages = await client.query(
+      [
+        Prismic.Predicates.at('document.type', CUSTOM_TYPES.GLOBAL_EXPERIENCE),
+        Prismic.Predicates.at(
+          `my.${CUSTOM_TYPES.GLOBAL_EXPERIENCE}.country`,
+          countryDocID
+        ),
+      ],
+      { pageSize: 100 }
+    );
+
     const refArray = await getRefsArrayByIds(
       [common_header.id, common_footer.id, content_framework.id],
       req
@@ -728,9 +762,11 @@ export const getGlobalCountry = async ({ req, uid, lang }) => {
         collections: {
           ...getAllCollections,
         },
+        cityCollections,
         commonHeader,
         commonFooter,
         contentFramework,
+        ticketPages,
       },
       ContentType: CUSTOM_TYPES.GLOBAL_COUNTRY,
     };
