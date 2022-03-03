@@ -88,6 +88,11 @@ const Banner = (props) => {
     ...(isMobile && {
       spaceBetween: 8,
     }),
+    ...(banners?.length <= 1 && {
+      autoplay: false,
+      loop: false,
+      noSwiping: true,
+    }),
   };
 
   const analyticsParams = {
