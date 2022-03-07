@@ -61,7 +61,7 @@ const themes = {
       },
       border: `none`,
       gap: {
-        desktop: '54px',
+        desktop: '2rem',
         mobile: '24px',
       },
       titleFontSettings: {
@@ -180,7 +180,7 @@ const themes = {
         desktop: `
           text-transform: uppercase;
           font-weight: 500;
-          font-size: 10px;
+          font-size: 12px;
           margin-top: 0;
           line-height: 10px;
           letter-spacing: 0.6px;
@@ -192,9 +192,6 @@ const themes = {
             display: none;
             letter-spacing: 0.8px;
           }
-        `,
-        mobile: `
-          margin-top: -16px;
         `,
       },
       lineStyles: `
@@ -330,14 +327,12 @@ const themes = {
           }
         `,
         mobile: `
-          margin-top: -8px;
           .tour-scratch-price {
             font-size: 11px;
             line-height: 14px;
           }
           .tour-price {
             font-size: 18px;
-            line-height: 16px;
           }
           ${SavedTag} {
             padding: 0 4px;

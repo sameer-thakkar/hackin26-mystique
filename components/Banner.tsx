@@ -14,6 +14,8 @@ import {
   ANALYTICS_PROPERTIES,
   PAGE_TYPES,
 } from 'const/index';
+import { VARIANTS } from 'const/experiments';
+
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -286,6 +288,7 @@ const Banner = (props) => {
         trackEvent({
           eventName: ANALYTICS_EVENTS.MB_BANNER.BANNER_SCROLL,
           ...analyticsParams,
+          Ranking: swiper.realIndex + 1,
         });
       }
     });
@@ -294,6 +297,7 @@ const Banner = (props) => {
       trackEvent({
         eventName: ANALYTICS_EVENTS.MB_BANNER.BANNER_SCROLL,
         ...analyticsParams,
+        Ranking: swiper.realIndex + 1,
       });
     });
   }, [isSwiperSet]);
@@ -307,6 +311,8 @@ const Banner = (props) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.MB_BANNER.CTA_CLICKED,
       ...analyticsParams,
+      'CTA Type': VARIANTS.DEFAULT_BANNER_CAROUSEL,
+      Ranking: swiper.realIndex + 1,
     });
   };
 

@@ -20,7 +20,7 @@ const StyledProductsWrapper = styled.div`
     margin: 0 auto;
     width: 100%;
     @media (max-width: 768px) {
-      margin: 0 16px 24px 16px;
+      margin: 0 1rem;
       width: auto;
     }
   }
@@ -29,8 +29,8 @@ const StyledProductsWrapper = styled.div`
 const ProductContainer = styled.div`
   display: grid;
   grid-row-gap: ${({ theme }) => theme.productCards.gap.desktop};
-  margin-top: 48px;
-  margin-bottom: 48px;
+  margin-top: 2.25rem;
+  margin-bottom: 2.25rem;
   & > ${HorizontalLine} {
     border-bottom-style: dashed;
   }
@@ -38,6 +38,7 @@ const ProductContainer = styled.div`
     display: none;
   }
   @media (max-width: 768px) {
+    margin-top: 1.5rem;
     margin-bottom: 60px;
     grid-row-gap: ${({ theme }) => theme.productCards.gap.mobile};
   }
@@ -95,6 +96,7 @@ const PopulateProducts = (props) => {
     sectionTitle = '',
     sectionSubtext = '',
     pageType = '',
+    growthExperiment7Variant,
   } = props;
   const isDubaiSafariPark = uid === 'www.dubai-safari-park.com';
   const productsWrapperRef = useRef(null);
@@ -368,7 +370,10 @@ const PopulateProducts = (props) => {
                 {isTicketCard ? (
                   <TicketCard {...childProps} />
                 ) : (
-                  <Product {...childProps} />
+                  <Product
+                    {...childProps}
+                    growthExperiment7Variant={growthExperiment7Variant}
+                  />
                 )}
                 <Conditional if={mbTheme === THEMES.MIN_BLUE}>
                   <HorizontalLine colorProp={COLORS.GREY.G6} />

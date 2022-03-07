@@ -630,7 +630,12 @@ export const ANALYTICS_PROPERTIES = {
   IS_TRUNCATED: 'Is Truncated Text',
   PAGE_HEADING: 'Page Heading',
   SECTION: 'Section',
+
   MB_NAME: 'MB Name',
+
+  RANKING: 'Ranking',
+  CLICK_COUNT: 'Click Count',
+  REVIEW_RANK: 'Review Rank',
 };
 export const PAGE_TYPES = {
   COLLECTION: 'Collection',

@@ -8,7 +8,6 @@ import { currencyAtom } from 'store/atoms/currency';
 import { useWindowWidth } from '@react-hook/window-size';
 import { InteractionContextProvider } from 'contexts/Interaction';
 import { ProductsContextProvider } from 'contexts/Products';
-import Banner from 'components/Banner';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
 import LongForm from 'components/common/LongForm';
@@ -39,6 +38,12 @@ import { tourListApiParser } from 'utils/dataParsers';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import renderShortCodes from 'utils/shortCodes';
 import { gtmAtom } from 'store/atoms/gtm';
+import useGrowthExperiment7Variant, {
+  getCaraouselTypeFromVariant,
+} from 'components/hooks/useGrowthExperiment7Variant';
+import { hsidAtom } from 'store/atoms/hsid';
+
+import GrowthExperiment7BannerCarousel from './GrowthExperiment7BannerCarousel';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
@@ -76,11 +81,14 @@ const MicrositeV1 = (props) => {
   const windowWidth = useWindowWidth();
 
   const currency = useRecoilValue(currencyAtom);
+
   const { eventsReady } = useRecoilValue(gtmAtom);
   const [initialCurrency] = useState(currency);
   const [freeTourPopupOpen, toggleFreeTourPopup] = useState(false);
   const [covidAlertActive, toggleCovidAlert] = useState(false);
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
+
+  const hsid = useRecoilValue(hsidAtom);
 
   const {
     refs,
@@ -405,20 +413,24 @@ const MicrositeV1 = (props) => {
     });
   }, []);
 
+  const growthExperiment7Variant = useGrowthExperiment7Variant(hsid);
+
   useEffect(() => {
-    if (!eventsReady) return;
+    if (!eventsReady || !growthExperiment7Variant) return;
 
     const renderedBaseLangPageTitle = renderShortCodes(
       baseLangPageTitle
     )?.join?.('');
+
     trackEvent({
       eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
       [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.COLLECTION,
       [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
       [ANALYTICS_PROPERTIES.TGIDS]: orderedTgids,
       [ANALYTICS_PROPERTIES.PAGE_TITLE]: renderedBaseLangPageTitle,
+      'Carousel Type': getCaraouselTypeFromVariant(growthExperiment7Variant),
     });
-  }, [eventsReady]);
+  }, [eventsReady, growthExperiment7Variant]);
 
   const onTogglePopup = () => {
     toggleFreeTourPopup(!freeTourPopupOpen);
@@ -464,6 +476,7 @@ const MicrositeV1 = (props) => {
       instantCheckout={instantCheckout}
       enableEarliestAvailability={enableEarliestAvailability}
       disable_amp={disableAMP}
+      growthExperiment7Variant={growthExperiment7Variant}
     />
   );
   return (
@@ -543,17 +556,19 @@ const MicrositeV1 = (props) => {
           </div>
         </Conditional>
         <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
-          <Banner
-            bannerImages={finalBannerImages ? finalBannerImages : null}
-            bannerHeading={bannerHeading ? bannerHeading : null}
-            bannerSubtext={bannerSubtext}
-            bannerCtaText={bannerCtaText ? bannerCtaText : null}
-            currentLanguage={currentLanguage ? currentLanguage : null}
-            isMobile={isAmp || isMobile}
-            boxed={true}
-            hideCTA={isToursAvailable ? hideBannerCTA : true}
-            isAmp={isAmp}
-            orderedTgids={orderedTgids}
+          <GrowthExperiment7BannerCarousel
+            bannerCarouselProps={{
+              bannerImages: finalBannerImages ? finalBannerImages : null,
+              bannerHeading: bannerHeading ? bannerHeading : null,
+              bannerSubtext: bannerSubtext,
+              bannerCtaText: bannerCtaText ? bannerCtaText : null,
+              isMobile: isAmp || isMobile,
+              boxed: true,
+              hideCTA: isToursAvailable ? hideBannerCTA : true,
+              isAmp: isAmp,
+              orderedTgids,
+            }}
+            variant={growthExperiment7Variant}
           />
         </Conditional>
         <Conditional if={mbTheme === THEMES.MIN_BLUE}>

@@ -381,7 +381,7 @@ const BlockContent = styled.div`
     width: 164px;
     div.block-content-wrapper,
     li {
-      width: 164px;
+      width: 100%;
     }
   }
 `;

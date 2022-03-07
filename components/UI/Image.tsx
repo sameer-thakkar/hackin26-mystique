@@ -61,6 +61,7 @@ type ImageProps = {
   autoCrop?: boolean;
   objectFit?: string;
   addDarkOverlay?: boolean;
+  onClick?: () => void;
 };
 
 const Image: React.FC<ImageProps> = ({
@@ -84,6 +85,7 @@ const Image: React.FC<ImageProps> = ({
   autoCrop = true,
   objectFit,
   addDarkOverlay,
+  onClick,
 }) => {
   const isAmp = useAmp();
   const makeImageUrl = (fm: string, url): string => {
@@ -203,7 +205,7 @@ const Image: React.FC<ImageProps> = ({
   }
 
   return (
-    <Wrapper className={`image-wrap ${className}`}>
+    <Wrapper className={`image-wrap ${className}`} onClick={onClick}>
       {ImageComponent}
       <Conditional if={!!attribution}>
         <Tooltip content={attribution} trigger={INFO_ICON} />

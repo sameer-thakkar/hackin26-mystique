@@ -40,6 +40,13 @@ import {
 import { trackEvent } from 'utils/analytics';
 import { getHostName, truncate, wordCount } from 'utils/helper';
 import { isSafetyIncluded, createBookingURL } from 'utils';
+import {
+  boosterStyles,
+  ctaBlockMobileStyles,
+  moreDetailsButtonStyles,
+  productCardImageSupportStyles,
+} from 'style/growthExperiment7';
+import { VARIANTS } from 'const/experiments';
 
 const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
   ssr: false,
@@ -66,8 +73,10 @@ const StyledProductCard = styled.div`
   display: grid;
   grid-row-gap: 24px;
   grid-template-columns: 1fr auto;
-  grid-template-areas: ${({ layout }) =>
-    layout.desktop.map((row) => `'${row}'`)};
+  grid-template-areas: ${({ layout, isAlternateDesign }) =>
+    layout.desktop.map(
+      (row) => `'${isAlternateDesign ? 'card-img' : ''} ${row}'`
+    )};
   ${StlyedSplit} {
     margin: 0;
     max-width: unset;
@@ -75,9 +84,11 @@ const StyledProductCard = styled.div`
   }
   ${HorizontalLine} {
     grid-area: line;
+
     margin: 8px 0;
     ${({ theme }) => theme.productCards.lineStyles || ''};
   }
+
   .more-details {
     font-weight: ${SOLEIL.MEDIUM};
     font-size: 14px;
@@ -89,20 +100,35 @@ const StyledProductCard = styled.div`
     ${({ theme }) => theme.productCards.moreDetailsStyle}
   }
   ${({ theme }) => theme.productCards?.styles?.desktop}
+
+  ${({ isAlternateDesign, isAmp }) =>
+    isAlternateDesign &&
+    productCardImageSupportStyles(isAmp)}
+  
   @media (max-width: 768px) {
     padding: ${({ theme }) => theme.productCards.padding.mobile};
     margin: 0
       ${({ theme: { theme } }) => (theme !== THEMES.MIN_BLUE ? '16px' : '24px')};
-    grid-template-areas: ${({ layout }) =>
-      layout.mobile.map((row) => `'${row}'`)};
+    grid-template-areas: ${({ layout, isAlternateDesign }) => {
+      if (isAlternateDesign) {
+        return ['card-img card-img']
+          .concat(layout.mobile)
+          .map((row) => `'${row}'`);
+      }
+      return layout.mobile.map((row) => `'${row}'`);
+    }};
     width: auto;
     grid-template-columns: auto;
+
+    ${({ theme }) => theme.productCards?.styles?.mobile}
+
     .more-details {
       margin-top: 0;
       margin-left: 0;
       margin-bottom: 0;
+      ${({ isAmp, isAlternateDesign }) =>
+        isAlternateDesign && moreDetailsButtonStyles(isAmp)}
     }
-    ${({ theme }) => theme.productCards?.styles?.mobile}
   }
 `;
 const ProductHeader = styled.div`
@@ -146,12 +172,16 @@ const TitleWrapper = styled.div`
 const BoosterTag = styled.div`
   font-size: 11px;
   line-height: 13px;
-  background: ${COLORS.PALE_YELLOW};
+  background: ${({ isAlternateDesign }) =>
+    isAlternateDesign ? COLORS.WHITE : COLORS.PALE_YELLOW};
+
   border-radius: 2px;
   letter-spacing: 0.4px;
   margin-bottom: 7px;
   padding: 2px 4px;
   display: inline-block;
+
+  ${({ isAlternateDesign }) => isAlternateDesign && boosterStyles}
 `;
 
 const ShortSummary = styled.div`
@@ -284,6 +314,9 @@ const PriceContainer = styled.div`
     justify-self: left;
     grid-area: price-block;
     ${({ theme }) => theme.productCards.priceFontSettings.mobile}
+    .tour-price {
+      font-size: 24px;
+    }
   }
 `;
 const CTABlock = styled.div`
@@ -310,6 +343,7 @@ const CTABlock = styled.div`
   @media (max-width: 768px) {
     grid-area: cta-block;
     margin-top: 0;
+
     ${({ isSticky, shouldOffset }) =>
       isSticky
         ? `
@@ -325,6 +359,8 @@ const CTABlock = styled.div`
       justify-content: center;
       width: 100%;
     }
+
+    ${({ isAlternateDesign }) => isAlternateDesign && ctaBlockMobileStyles}
   }
 `;
 
@@ -371,11 +407,13 @@ const ProductBody = styled.div`
   }
   `
         : ''}
+        margin-bottom: 0.5rem;
   }
   ul:last-child {
     margin-bottom: 0;
   }
   @media (max-width: 768px) {
+    position: relative;
     
     .show-more-information{
       p:nth-child(1) {
@@ -389,6 +427,7 @@ const ProductBody = styled.div`
     }
     .tour-description {
       ${({ theme }) => theme.productCards.regularFontSettings.mobile}
+      ${({ isAlternateDesign }) => isAlternateDesign && 'padding-bottom: 2rem;'}
     }
     ${({ collapsed, defaultOpen }) =>
       collapsed && !defaultOpen
@@ -502,7 +541,6 @@ const IconBoosters = styled.div`
   @media (max-width: 768px) {
     margin-left: 0;
     justify-self: right;
-    margin-top: -8px;
     ${StyledIconCTA} {
       justify-self: right;
       grid-template-columns: auto;
@@ -650,6 +688,14 @@ const ModalCardContainer = styled.div`
       padding: 0 24px;
       padding-top: 24px;
     }
+
+    .card-img {
+      width: calc(100% + 1.5rem);
+      margin: -1.5rem -1.5rem -0.5rem;
+      max-height: 175px;
+      /* display: none; */
+    }
+
     ${TitleWrapper} {
       max-width: calc(100% - 24px);
     }
@@ -670,6 +716,8 @@ const ModalCardContainer = styled.div`
       }
     }
     ${CTABlock} {
+      width: 100%;
+      grid-column: 1 / span 2;
       .tour-book-now-cta {
         border-radius: 8px;
       }
@@ -678,11 +726,16 @@ const ModalCardContainer = styled.div`
 `;
 
 export const Descriptors = ({
-  descriptorArray,
+  descriptorArray: descarr,
   hasValidity = false,
   horizontal = false,
   pageType = '',
+  shouldShowAllDescriptors = true,
 }) => {
+  const descriptorArray = shouldShowAllDescriptors
+    ? descarr
+    : descarr.slice(0, 4);
+
   return (
     <TourTags horizontal={horizontal} pageType={pageType}>
       <Conditional if={hasValidity}>
@@ -737,7 +790,9 @@ const Product = (props) => {
     isTicketCard = false,
     indexPosition,
     pageType = '',
+    growthExperiment7Variant,
   } = props;
+
   const {
     mbTheme,
     biLink,
@@ -756,6 +811,10 @@ const Product = (props) => {
   const [showComboVariant, setShowComboVariant] = useState(false);
   const { allTags = [], validity, combo } = scorpioData || {};
 
+  const shouldShowNewProductCardDesign =
+    growthExperiment7Variant !== VARIANTS.DEFAULT_BANNER_CAROUSEL &&
+    growthExperiment7Variant !== null;
+
   const descriptorsCsv = descriptors || scorpioData.descriptors;
   const cardTitle = title || scorpioData.title;
 
@@ -765,10 +824,9 @@ const Product = (props) => {
         .map((descriptor) => descriptor.replace(/^["']+|['"]+$/g, '')) // replace escaped dbl-quotes.
     : [];
 
-  const noOfListItemToShow = Math.max(
-    NOS_OF_HIGHLIGHTS_TO_SHOW,
-    descriptorsList.length
-  );
+  const noOfListItemToShow = shouldShowNewProductCardDesign
+    ? 2
+    : Math.min(NOS_OF_HIGHLIGHTS_TO_SHOW, descriptorsList.length);
 
   const onTabChange = ({ tab, index, defaultSelection }) => {
     const isTruncated = tab.contents.length > noOfListItemToShow;
@@ -885,6 +943,7 @@ const Product = (props) => {
 
   const hasReadMore =
     (highlights.flat()?.length >= 3 || showMoreDetailsInTabs) && !defaultOpen;
+  ``;
 
   const { listingPrice } = tourPrices[tgid];
 
@@ -912,6 +971,12 @@ const Product = (props) => {
   const onMoreDetailsClick = (e) => {
     e?.stopPropagation();
     if (mbTheme !== THEMES.MIN_BLUE && isMobile) {
+      if (shouldShowNewProductCardDesign) {
+        trackEvent({
+          eventName: 'More Details Button Clicked',
+          Ranking: indexPosition + 1,
+        });
+      }
       trackedToggleContent(false);
       addToAside({
         width: '100vw',
@@ -1029,7 +1094,7 @@ const Product = (props) => {
   const BookNowCta = ({ clickHandler }: { clickHandler: () => void }) => (
     <Button
       className={`tour-book-now-cta`}
-      paddingSides={isMobile ? '16px' : '8px'}
+      paddingSides={isMobile ? '14px' : '8px'}
       type="fill"
       onClick={clickHandler}
       onKeyDown={clickHandler}
@@ -1041,17 +1106,36 @@ const Product = (props) => {
     </Button>
   );
 
-  const getProductCardElements = (expandContent, isFallbackSummary = false) => (
+  const getProductCardElements = (
+    expandContent,
+    isFallbackSummary = false,
+    shouldShowAllDescriptors?: boolean
+  ) => (
     <>
       <StyledProductCard
+        isAmp={isAmp}
         layout={layout}
         isTicketCard={isTicketCard}
         isMobile={isMobile}
+        isAlternateDesign={shouldShowNewProductCardDesign}
       >
+        {shouldShowNewProductCardDesign ? (
+          <div className="card-img">
+            <Image
+              url={scorpioData.images[0].url}
+              imageId="card-img"
+              aspectRatio={isMobile ? '21:9' : '3:4'}
+              width={344}
+            />
+          </div>
+        ) : null}
+
         <ProductHeader>
           <TitleWrapper hasBorderedTitle={hasBorderedTitle && !tabs.length}>
             <Conditional if={boosterTag && mbTheme !== THEMES.MIN_BLUE}>
-              <BoosterTag>{boosterTag}</BoosterTag>
+              <BoosterTag isAlternateDesign={shouldShowNewProductCardDesign}>
+                {boosterTag}
+              </BoosterTag>
             </Conditional>
             <TourTitle isPopup={isContentOpen} pageType={pageType}>
               {cardTitle}
@@ -1129,6 +1213,7 @@ const Product = (props) => {
             <CTABlock
               isSticky={expandContent}
               shouldOffset={earliestAvailability && mbTheme === THEMES.MIN_BLUE}
+              isAlternateDesign={shouldShowNewProductCardDesign}
             >
               <Conditional if={!combo}>
                 <a
@@ -1159,6 +1244,7 @@ const Product = (props) => {
                 hasValidity={!!validity}
                 descriptorArray={descriptorsList}
                 pageType={pageType}
+                shouldShowAllDescriptors={shouldShowAllDescriptors}
               />
             </Conditional>
           </CTAContainer>
@@ -1171,6 +1257,7 @@ const Product = (props) => {
           collapsed={!expandContent}
           noOfListItemToShow={noOfListItemToShow + 1}
           defaultOpen={defaultOpen}
+          isAlternateDesign={shouldShowNewProductCardDesign}
         >
           <Conditional
             if={
@@ -1237,7 +1324,15 @@ const Product = (props) => {
     </>
   );
 
-  return <Container>{getProductCardElements(isContentOpen)}</Container>;
+  return (
+    <Container>
+      {getProductCardElements(
+        isContentOpen,
+        false,
+        !shouldShowNewProductCardDesign || isAmp
+      )}
+    </Container>
+  );
 };
 
 export default Product;

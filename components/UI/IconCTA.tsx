@@ -18,6 +18,7 @@ export const StyledIconCTA = styled.div`
   cursor: ${({ onClick }) => (onClick ? 'pointer' : '')};
   @media (max-width: 768px) {
     ${({ showBorder }) => showBorder && `border: 1px solid ${COLORS.GREY.G6}`}
+    margin: 0.5rem 1rem;
   }
 `;
 

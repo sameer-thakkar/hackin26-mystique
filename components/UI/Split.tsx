@@ -3,7 +3,7 @@ import { SIZES } from 'const/ui-constants';
 export const StlyedSplit = styled.div`
   display: grid;
   max-width: ${SIZES.MAX_WIDTH};
-  margin: 32px auto;
+  margin: 0.5rem auto;
   padding: 0;
   ${({ colGap, rowGap, count, autoWidth, mobileLayout }) => `
     grid-template-columns: repeat(${count}, ${autoWidth ? 'auto' : '1fr'});
