@@ -39,6 +39,7 @@ export const StyledAsideModal = styled.div`
       padding: 0;
       background: unset;
       top: 0;
+      bottom: 0;
       overflow-y: unset;
       max-width: unset;
     `

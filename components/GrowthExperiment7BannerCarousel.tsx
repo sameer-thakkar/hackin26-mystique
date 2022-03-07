@@ -498,7 +498,7 @@ const StyledBanner = styled.div`
       max-width: 85%;
       z-index: 1;
       margin-top: 2.5rem;
-      margin-left: 0.5rem;
+      margin-left: 1.125rem;
     }
 
     .mb-captions {
@@ -506,6 +506,7 @@ const StyledBanner = styled.div`
       align-items: end;
       background: unset;
       place-content: center;
+      width: max-content;
 
       .caption h1,
       .caption .h1 {
