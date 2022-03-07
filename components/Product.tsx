@@ -693,7 +693,6 @@ const ModalCardContainer = styled.div`
       width: calc(100% + 1.5rem);
       margin: -1.5rem -1.5rem -0.5rem;
       max-height: 175px;
-      /* display: none; */
     }
 
     ${TitleWrapper} {
@@ -1121,12 +1120,18 @@ const Product = (props) => {
       >
         {shouldShowNewProductCardDesign ? (
           <div className="card-img">
-            <Image
-              url={scorpioData.images[0].url}
-              imageId="card-img"
-              aspectRatio={isMobile ? '21:9' : '3:4'}
-              width={344}
-            />
+            <a
+              target={isMobile ? null : '_blank'}
+              href={productBookingUrl}
+              rel="nofollow"
+            >
+              <Image
+                url={scorpioData.images[0].url}
+                imageId="card-img"
+                aspectRatio={isMobile ? '21:9' : '3:4'}
+                width={344}
+              />
+            </a>
           </div>
         ) : null}
 
