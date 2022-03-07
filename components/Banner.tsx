@@ -16,7 +16,6 @@ import {
 } from 'const/index';
 import { VARIANTS } from 'const/experiments';
 
-
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
 const StyledBanner = styled.div`
@@ -253,6 +252,7 @@ const Banner = (props) => {
     isAmp,
     bannerSubtext: tempBannerSubtext,
     bannerCtaText = '',
+    variant = 'Default',
   } = props;
   const bannerHeading = withShortcodes(tempBannerHeading);
   const bannerSubtext = withShortcodes(tempBannerSubtext);
@@ -289,6 +289,7 @@ const Banner = (props) => {
           eventName: ANALYTICS_EVENTS.MB_BANNER.BANNER_SCROLL,
           ...analyticsParams,
           Ranking: swiper.realIndex + 1,
+          Variant: variant,
         });
       }
     });
@@ -298,6 +299,7 @@ const Banner = (props) => {
         eventName: ANALYTICS_EVENTS.MB_BANNER.BANNER_SCROLL,
         ...analyticsParams,
         Ranking: swiper.realIndex + 1,
+        Variant: variant,
       });
     });
   }, [isSwiperSet]);

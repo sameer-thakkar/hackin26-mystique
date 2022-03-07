@@ -47,14 +47,16 @@ function GrowthExperiment7BannerCarousel({
   if (!variant && !bannerCarouselProps.isAmp) return <StyledPlaceHolder />;
 
   if (variant === VARIANTS.NEW_BANNER_CAROUSEL_WITHOUT_CTA) {
-    return <BannerCarousel {...bannerCarouselProps} showTextCTA />;
+    return (
+      <BannerCarousel {...bannerCarouselProps} showTextCTA variant={variant} />
+    );
   }
 
   if (variant === VARIANTS.NEW_BANNER_CAROUSEL_WITH_CTA) {
-    return <BannerCarousel {...bannerCarouselProps} />;
+    return <BannerCarousel {...bannerCarouselProps} variant={variant} />;
   }
 
-  return <Banner {...bannerCarouselProps} />;
+  return <Banner {...bannerCarouselProps} variant={variant} />;
 }
 
 export default GrowthExperiment7BannerCarousel;
@@ -136,6 +138,7 @@ const BannerCarousel = (props) => {
     bannerSubtext: tempBannerSubtext,
     bannerCtaText = '',
     orderedTgids,
+    variant,
   } = props;
 
   const [isMobile, setIsMobile] = useState(null);
@@ -176,6 +179,7 @@ const BannerCarousel = (props) => {
         eventName: ANALYTICS_EVENTS.MB_BANNER.BANNER_SCROLL,
         ...analyticsParams,
         Ranking: swiper.realIndex + 1,
+        Variant: variant,
       });
     });
   }, [isSwiperSet]);

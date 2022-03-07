@@ -1013,6 +1013,16 @@ const Product = (props) => {
       [ANALYTICS_PROPERTIES.SECTION]: 'Product List',
     });
   };
+
+  const trackProductCardImageClick = () => {
+    trackEvent({
+      eventName: 'Product Card Image Clicked',
+      Ranking: indexPosition + 1,
+      TGID: tgid,
+      Variant: growthExperiment7Variant,
+    });
+  };
+
   const getMoreDetailsButton = () => {
     const keyPressedOnReadMore = (event) => {
       if (event.keyCode == 13 && !isMobile) {
@@ -1124,6 +1134,7 @@ const Product = (props) => {
               target={isMobile ? null : '_blank'}
               href={productBookingUrl}
               rel="nofollow"
+              onClick={trackProductCardImageClick}
             >
               <Image
                 url={scorpioData.images[0].url}
