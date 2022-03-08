@@ -505,7 +505,7 @@ const StyledBanner = styled.div`
       width: max-content;
 
       .caption h1,
-      .caption .h1 {
+      .caption p {
         font-weight: 600;
         font-size: 21px;
         line-height: 133%;
