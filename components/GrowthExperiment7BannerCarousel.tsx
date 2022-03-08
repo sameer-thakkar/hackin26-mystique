@@ -90,11 +90,11 @@ const swiperParams = {
 export const BANNER_PARAMS = {
   DESKTOP: {
     ASPECT_RATIO: '3:1',
-    WIDTH: '1200',
+    WIDTH: '900',
   },
   MOBILE: {
     ASPECT_RATIO: '16:9',
-    WIDTH: '500',
+    WIDTH: '400',
   },
 };
 
@@ -242,12 +242,12 @@ const BannerCarousel = (props) => {
   const { ASPECT_RATIO, WIDTH } =
     isMobile || isAmp ? BANNER_PARAMS.MOBILE : BANNER_PARAMS.DESKTOP;
 
-  const textOverLay = (
+  const textOverLay = (isFirst = false) => (
     <div className="overlay-container">
       <div className={`mb-captions`}>
         <div className={`mb-caption active`}>
           <div className="caption">
-            <h1>{bannerHeading}</h1>
+            {isFirst ? <h1>{bannerHeading}</h1> : <p>{bannerHeading}</p>}
           </div>
 
           <Conditional if={!hideCTA}>
@@ -273,54 +273,46 @@ const BannerCarousel = (props) => {
     </div>
   );
 
-  let imageView;
-
-  switch (bannerImages?.length) {
-    case 1:
-      imageView = (
-        <div className="mb-slide single-slide">
-          <Image
-            onClick={showTextCTA ? scrollTicketSection : undefined}
-            width={WIDTH}
-            aspectRatio={ASPECT_RATIO}
-            url={bannerImages[0]?.url}
-            dontLazyLoad
-            mobileUrl={bannerImages[0]?.mobileUrl}
-            alt={bannerImages[0]?.alt || 'banner'}
-            addDarkOverlay
-          />
-          {textOverLay}
-        </div>
-      );
-      break;
-    default:
-      imageView = (
-        <Swiper {...swiperParams} getSwiper={updateSwiper}>
-          {bannerImages?.map((image, index) => {
-            return (
-              <div key={index} className="swiper-slide mb-slide">
-                <Image
-                  onClick={showTextCTA ? scrollTicketSection : undefined}
-                  key={index}
-                  width={WIDTH}
-                  aspectRatio={ASPECT_RATIO}
-                  url={image?.url}
-                  mobileUrl={image?.mobileUrl}
-                  alt={image?.alt || 'banner'}
-                  addDarkOverlay
-                  dontLazyLoad={index === 0}
-                />
-                {textOverLay}
-              </div>
-            );
-          })}
-        </Swiper>
-      );
-      break;
-  }
   return (
     <div>
-      <StyledBanner>{imageView}</StyledBanner>
+      <StyledBanner>
+        {bannerImages?.length === 1 ? (
+          <div className="mb-slide single-slide">
+            <Image
+              onClick={showTextCTA ? scrollTicketSection : undefined}
+              width={WIDTH}
+              aspectRatio={ASPECT_RATIO}
+              url={bannerImages[0]?.url}
+              dontLazyLoad
+              mobileUrl={bannerImages[0]?.mobileUrl}
+              alt={bannerImages[0]?.alt || 'banner'}
+              addDarkOverlay
+            />
+            {textOverLay(true)}
+          </div>
+        ) : (
+          <Swiper {...swiperParams} getSwiper={updateSwiper}>
+            {bannerImages?.map((image, index) => {
+              return (
+                <div key={index} className="swiper-slide mb-slide">
+                  <Image
+                    onClick={showTextCTA ? scrollTicketSection : undefined}
+                    key={index}
+                    width={WIDTH}
+                    aspectRatio={ASPECT_RATIO}
+                    url={image?.url}
+                    mobileUrl={image?.mobileUrl}
+                    alt={image?.alt || 'banner'}
+                    addDarkOverlay
+                    dontLazyLoad={index === 0}
+                  />
+                  {textOverLay(swiper?.realIndex === index)}
+                </div>
+              );
+            })}
+          </Swiper>
+        )}
+      </StyledBanner>
 
       {bannerSubtext?.length ? (
         <BannerSubtext>{bannerSubtext}</BannerSubtext>
@@ -391,7 +383,7 @@ const StyledBanner = styled.div`
   }
 
   .mb-captions .caption h1,
-  .mb-captions .caption .h1 {
+  .mb-captions .caption p {
     font-size: 2.25rem;
     color: #fff;
     line-height: 122%;
