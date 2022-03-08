@@ -4,8 +4,8 @@ import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useWindowWidth } from '@react-hook/window-size';
 import { strings } from 'const/strings';
-import { SEE_SAFETY, RIGHT_ARROW } from 'assets/SvgIcons';
-import { blackScheme } from 'style/theme';
+import { SEE_SAFETY, BLACK_RIGHT_ARROW } from 'assets/SvgIcons';
+import { greyScheme } from 'style/theme';
 import { MBContext } from 'contexts/MBContext';
 
 import InfoBanner from './InfoBanner';
@@ -58,18 +58,17 @@ const SafeDFBannerWrapper = ({
     <Wrapper marginTop={marginTop}>
       <Split mobileLayout={'scroll'} count={1}>
         <InfoBanner
-          cta={strings.LISTICLES.KNOW_MORE}
           title={strings.SAFE_EXPERIENCE_NEW.HEADING}
           description={
             isShowPage
               ? strings.SAFE_EXPERIENCE_NEW.GENERAL_DESCRIPTION
               : strings.SAFE_EXPERIENCE_NEW.GENERAL_DESCRIPTION_V2
           }
-          bannerOnClick={openSafeSidebar}
+          rightArrowOnClick={openSafeSidebar}
           icon={SEE_SAFETY}
-          colorScheme={blackScheme}
+          colorScheme={greyScheme}
           isMobile={isMobile}
-          rightIcon={RIGHT_ARROW}
+          rightIcon={BLACK_RIGHT_ARROW}
         />
       </Split>
     </Wrapper>

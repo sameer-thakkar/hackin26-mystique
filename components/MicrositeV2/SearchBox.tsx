@@ -17,16 +17,16 @@ const StyledSearchBox = styled.div`
 
   input {
     padding: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '9px 0' : '12px 0'};
+      isEntertainmentMb ? '0.563rem 0' : '0.75rem 0'};
     outline: none;
-    padding-left: 40px;
-    border-radius: 4px;
+    padding-left: 2.5rem;
+    border-radius: 0.25rem;
     border: 1px solid ${COLORS.DADDY};
-    width: calc(100% - 40px);
-    min-width: 385px;
+    width: calc(100% - 2.5rem);
+    min-width: 17.5rem;
     font-family: ${SOLEIL.FONT_STACK};
     font-weight: ${SOLEIL.REGULAR};
-    font-size: 16px;
+    font-size: 1rem;
     ::placeholder {
       ${({ isEntertainmentMb }) =>
         isEntertainmentMb && `color: ${COLORS.GREY.G4};`}
@@ -34,13 +34,13 @@ const StyledSearchBox = styled.div`
     ${({ isEntertainmentMb }) =>
       isEntertainmentMb &&
       `
-        font-size: 15px;
-        line-height: 20px;
+        font-size: 0.938rem;
+        line-height: 1.25rem;
         `};
   }
   .input-icon {
     position: absolute;
-    left: 16px;
+    left: 1rem;
     top: 50%;
     transform: translate(0, -50%);
     display: flex;
@@ -48,9 +48,9 @@ const StyledSearchBox = styled.div`
     svg {
       stroke: ${COLORS.GREY_75};
       height: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '16px' : '18px'};
+        isEntertainmentMb ? '1rem' : '1.125rem'};
       height: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '16px' : '18px'};
+        isEntertainmentMb ? '1rem' : '1.125rem'};
     }
     path {
       stroke: ${COLORS.DAVY_GREY};
@@ -59,13 +59,13 @@ const StyledSearchBox = styled.div`
 
   .close-icon {
     position: absolute;
-    right: 18px;
+    right: 1.125rem;
     display: flex;
     top: 50%;
     transform: translate(0, -50%);
     cursor: pointer;
     svg {
-      height: 16px;
+      height: 1rem;
       width: auto;
     }
   }
@@ -73,19 +73,19 @@ const StyledSearchBox = styled.div`
   @media (max-width: 768px) {
     input {
       min-width: unset;
-      border-radius: 4px;
-      padding: 10px 0;
-      padding-left: 36px;
+      border-radius: 0.25rem;
+      padding: 0.625rem 0;
+      padding-left: 2.25rem;
       background: #4d4848;
       border: none;
     }
     .input-icon {
-      left: 10.5px;
+      left: 0.656rem;
     }
     .close-icon {
       display: none;
       svg {
-        height: 20px;
+        height: 1.25rem;
       }
     }
   }

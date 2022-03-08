@@ -233,20 +233,19 @@ const en = {
     },
   },
   SAFE_EXPERIENCE_NEW: {
-    HEADING: 'Best Safety Standards',
+    HEADING: 'See it Safely',
     SHORT_HEADING: 'Best safety standards in place',
     MOBILE_HEADING: 'Safe Experiences',
     GENERAL_DESCRIPTION:
       'This venue is COVID SECURE and follows all safety measures recommended by the government to ensure that you enjoy a safe and socially-distanced theatre-going experience.',
     GENERAL_DESCRIPTION_V2:
-      '‘See it Safely’ mark is granted to an approved theatre that is COVID SECURE and follows all safety measures recommended by the government to ensure that you enjoy a safe and socially-distanced theatre-going experience.',
+      'We’ve developed the industry-wide See it Safely mark, so that when theatres reopen, you can feel confident and safe knowing that the venue is COVID-secure and will be following the latest government and performing arts guidance.',
     CTA_TEXT: 'Safety Details',
-    BANNER_CTA: 'Know More',
     EXPERIENCE_DESCRIPTION:
       'This experience has been verified to follow best safety standards in compliance with local regulations and WHO',
     FLAG_TEXT: 'Best Safety',
     MODAL: {
-      HEADING: 'Safe Experiences',
+      HEADING: 'See it Safely',
       SUB_HEADING:
         'Wondering about all that’s being done to keep you safe? Find out more about the safety measures and COVID-safe protocols theatres have implemented to ensure your safety.',
       DETAILS: {

@@ -10,7 +10,6 @@ export const StyledInfoBanner = styled.div`
   justify-content: left;
   align-items: center;
 
-  ${({ clickable }) => (clickable ? `cursor: pointer;` : ``)}
   background: ${({ colorScheme: cs }) => cs.background};
   * {
     color: ${({ colorScheme: cs }) => cs.color};
@@ -46,6 +45,8 @@ const Icon = styled.div`
   justify-content: center;
   align-items: center;
 
+  ${({ clickable }) => (clickable ? `cursor: pointer;` : ``)}
+
   .safety-icon {
     width: 39px;
     height: 24px;
@@ -80,7 +81,6 @@ const Title = styled.div`
   font-weight: 600;
   font-size: 16px;
   line-height: 20px;
-  color: #f8f8f8 !important;
 
   @media (max-width: 768px) {
     font-size: 12px;
@@ -98,32 +98,17 @@ const Description = styled.div`
   font-size: 14px;
   font-weight: normal;
   line-height: 20px;
-  color: #f0f0f0 !important;
 
   @media (max-width: 768px) {
     font-size: 12px;
   }
 `;
 
-const CTA = styled.div`
-  font-size: 14px;
-  display: inline-block;
-  text-decoration: underline;
-  line-height: 140%;
-  cursor: pointer;
-  @media (max-width: 768px) {
-    display: block;
-    margin-top: 8px;
-  }
-`;
-
 const InfoBanner = ({
   title,
   description,
-  cta,
   icon,
-  ctaOnClick = null,
-  bannerOnClick = null,
+  rightArrowOnClick = null,
   colorScheme,
   isMobile,
   rightIcon,
@@ -131,38 +116,25 @@ const InfoBanner = ({
   return (
     <>
       {isMobile ? (
-        <StyledInfoBannerMobile
-          onClick={bannerOnClick}
-          clickable={bannerOnClick}
-          colorScheme={colorScheme}
-        >
+        <StyledInfoBannerMobile colorScheme={colorScheme}>
           <TopWrapper>
             <Icon>
               <div className="safety-icon">{icon}</div>
             </Icon>
             <Title>{title}</Title>
-            <Icon>{rightIcon}</Icon>
+            <Icon onClick={rightArrowOnClick} clickable={rightArrowOnClick}>
+              {rightIcon}
+            </Icon>
           </TopWrapper>
-          <Content>
-            <Description>
-              {description} <CTA onClick={ctaOnClick}>{cta}</CTA>
-            </Description>
-          </Content>
         </StyledInfoBannerMobile>
       ) : (
-        <StyledInfoBanner
-          onClick={bannerOnClick}
-          clickable={bannerOnClick}
-          colorScheme={colorScheme}
-        >
+        <StyledInfoBanner colorScheme={colorScheme}>
           <Icon>{icon}</Icon>
           <Content>
             <Title>{title}</Title>
-            <Description>
-              {description} <CTA onClick={ctaOnClick}>{cta}</CTA>
-            </Description>
+            <Description>{description}</Description>
           </Content>
-          <Icon>
+          <Icon onClick={rightArrowOnClick} clickable={rightArrowOnClick}>
             <div className="desktop-icon">{rightIcon}</div>
           </Icon>
         </StyledInfoBanner>

@@ -20,12 +20,12 @@ const Slider = dynamic(() => import('../UI/Slider'));
 
 const PitchGrid = styled.div`
   display: grid;
-  grid-row-gap: 32px;
-  padding-bottom: 48px;
+  grid-row-gap: 2rem;
+  padding-bottom: 3rem;
   a {
     display: grid;
     grid-template-columns: repeat(2, max-content);
-    column-gap: 7.5px;
+    column-gap: 0.469rem;
     align-items: center;
     color: ${COLORS.PURPS3};
   }
@@ -33,7 +33,7 @@ const PitchGrid = styled.div`
 
 const Section = styled.div`
   display: grid;
-  grid-row-gap: 32px;
+  grid-row-gap: 2rem;
 `;
 
 const SliderSection = styled.div`
@@ -41,38 +41,38 @@ const SliderSection = styled.div`
   position: relative;
   .swiper-container {
     overflow: hidden;
-    max-width: calc(${(1440 * 41.06) / 100}px - 80px);
+    max-width: calc(${(90 * 2.566) / 6.25}rem - 5rem);
   }
   .next-slide {
-    right: -16px;
+    right: -1rem;
   }
   .prev-slide {
-    left: -16px;
+    left: -1rem;
   }
   .slide {
     display: grid;
     img {
-      width: calc(${(1440 * 41.06) / 100}px - 80px);
-      height: 394px;
+      width: calc(${(90 * 2.566) / 6.25}rem - 5rem);
+      height: 24.625rem;
       object-fit: cover;
     }
   }
   .next-slide {
     left: unset;
-    right: -20px;
+    right: -1.25rem;
     svg {
       transform: rotate(180deg);
     }
   }
   .safe-pagination {
     display: none;
-    top: 380px;
+    top: 23.75rem;
     left: 50%;
     transform: translate(-50%, -50%);
   }
 
   @media (max-width: 768px) {
-    margin: 0 -24px;
+    margin: 0 -1.5rem;
     .swiper-container {
       overflow: hidden;
       max-width: 100vw;
@@ -84,7 +84,7 @@ const SliderSection = styled.div`
       display: grid;
       img {
         width: 100%;
-        height: 400px;
+        height: 25rem;
         object-fit: cover;
       }
     }
@@ -96,19 +96,19 @@ const SliderSection = styled.div`
 `;
 
 const Caption = styled.div`
-  font-size: 12px;
+  font-size: 0.75rem;
   color: ${COLORS.WHITE};
-  line-height: 19px;
+  line-height: 1.188rem;
   background: ${COLORS.BLACK};
-  padding: 8px 16px;
+  padding: 0.5rem 1rem;
 `;
 
 const Heading = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
   font-style: normal;
   font-weight: 500;
-  font-size: 20px;
-  line-height: 24px;
+  font-size: 1.25rem;
+  line-height: 1.5rem;
 `;
 
 const Text = styled.div`
@@ -116,23 +116,24 @@ const Text = styled.div`
   color: ${COLORS.FOUR_BLACK};
   font-style: normal;
   font-weight: normal;
-  font-size: 15px;
-  line-height: 24px;
+  font-size: 0.938rem;
+  line-height: 1.5rem;
   li {
     list-style-position: inside;
     padding-left: 1.5rem;
     text-indent: -1.5em;
+    line-height: 1.625rem;
   }
 `;
 
 const Pitch = styled.div`
   display: grid;
-  grid-row-gap: 24px;
+  grid-row-gap: 1.5rem;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: right;
   ${Heading} {
-    font-size: 24px;
+    font-size: 1.5rem;
   }
 `;
 
@@ -140,28 +141,38 @@ const EmphasizedText = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
   font-style: normal;
   font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 1rem;
+  margin-bottom: 0.313rem;
 `;
 
 const Content = styled.div`
   display: grid;
-  grid-row-gap: 8px;
+  grid-row-gap: 0.5rem;
   height: max-content;
 `;
 
 const ImageTextGrid = styled.div`
   display: grid;
-  grid-gap: 16px;
+  grid-gap: 1rem;
   grid-template-columns: auto auto;
-  grid-column-gap: 24px;
+  grid-column-gap: 1.5rem;
 
   @media (max-width: 768px) {
-    grid-column-gap: 16px;
+    grid-column-gap: 1rem;
   }
 `;
 
 const Icon = styled.div``;
+
+const HorizontalLine = styled.hr`
+  grid-column: 1;
+  color: ${COLORS.GREY.G6};
+  margin: 1.25rem 0rem;
+
+  @media (max-width: 768px) {
+    margin: 0.313rem 0rem;
+  }
+`;
 
 const renderSafetyDetailsSection = (tags) =>
   Object.entries(strings.SAFE_EXPERIENCE_NEW.MODAL.DETAILS).map(
@@ -212,8 +223,8 @@ const SafeExperiencesPitch = ({
       <Icon>{SEE_SAFETY}</Icon>
       <Section>
         <Pitch>
-          <Heading>{strings.SAFE_EXPERIENCE_NEW.MODAL.HEADING}</Heading>
           <Text>{strings.SAFE_EXPERIENCE_NEW.MODAL.SUB_HEADING}</Text>
+          <HorizontalLine />
         </Pitch>
       </Section>
       <Conditional if={images.length}>
