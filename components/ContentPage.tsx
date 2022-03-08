@@ -387,7 +387,6 @@ class ContentPage extends Component<any, any> {
       'google_site_verification',
       'bing_site_verification',
       'noindex',
-      'nofollow',
       'page_url',
     ];
     const objKeys = ['image', 'other_meta_tags'];

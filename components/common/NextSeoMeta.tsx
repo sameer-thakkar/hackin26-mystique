@@ -57,7 +57,6 @@ export default function PopulateMeta({
     header_scripts: headerScripts = [],
     logo,
     image,
-    nofollow,
     noindex,
     seo_keywords: seoKeywords,
     title: rawTitle,
@@ -212,7 +211,7 @@ export default function PopulateMeta({
     title,
     description,
     noindex: isStage || isDev ? true : legacyBooleanCheck(noindex),
-    nofollow: isStage || isDev ? true : legacyBooleanCheck(nofollow),
+    nofollow: isStage || isDev ? true : legacyBooleanCheck(noindex),
     ...((canonicalLink || canonicalLinkForAMP) && {
       canonical: modifiedCanonicalLink,
     }),

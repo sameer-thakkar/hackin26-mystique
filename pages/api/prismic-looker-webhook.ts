@@ -74,7 +74,6 @@ const parseDocuments = async ({ documents: docs, isStageMode }) => {
       redirect_url,
       disable_amp,
       noindex,
-      nofollow,
       title,
       description,
       canonical_link,
@@ -156,7 +155,7 @@ const parseDocuments = async ({ documents: docs, isStageMode }) => {
           ? 'shoulder'
           : '',
       has_noindex: legacyBooleanCheck(noindex),
-      has_nofollow: legacyBooleanCheck(nofollow),
+      has_nofollow: legacyBooleanCheck(noindex),
       has_amp: !disable_amp || false,
       title,
       description,

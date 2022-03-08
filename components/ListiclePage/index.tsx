@@ -295,7 +295,6 @@ const Listicle = (props) => {
     title,
     description,
     image,
-    nofollow,
     noindex,
   } = data;
 
@@ -381,7 +380,6 @@ const Listicle = (props) => {
     title,
     description,
     image,
-    nofollow,
     noindex,
     favicon,
     header_scripts,
