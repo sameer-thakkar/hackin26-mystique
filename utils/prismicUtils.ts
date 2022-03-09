@@ -38,6 +38,28 @@ import {
   fetchTourGroupSlots,
 } from 'utils/apiUtils';
 
+export const fetchAllMatchingDocs = async ({
+  query,
+  params = { pageSize: 100, page: 1 },
+  documents = [],
+}: {
+  query: string | string[];
+  params?: Record<string, any>;
+  page?: number;
+  documents?: any[];
+}) => {
+  const response = await Client().query(query, params);
+  if (response.page < response.total_pages) {
+    return await fetchAllMatchingDocs({
+      query,
+      params: { ...params, page: response.page + 1 },
+      documents: documents.concat(response?.results),
+    });
+  } else {
+    return documents.concat(response.results);
+  }
+};
+
 export const getSafetyBannerDocument = async ({ lang }) => {
   const safetyBannerResponse = await Client().query(
     Prismic.Predicates.at('document.type', CUSTOM_TYPES.SAFETY_BANNER),
@@ -270,10 +292,11 @@ export const getMicrositeDocument = async ({
 
           let allShowPages, productCardData;
           if (isEntertainmentMb) {
-            allShowPages = await Client().query(
-              [Prismic.Predicates.at('document.type', CUSTOM_TYPES.SHOW_PAGE)],
-              { pageSize: 100 }
-            );
+            allShowPages = await fetchAllMatchingDocs({
+              query: [
+                Prismic.Predicates.at(`document.type`, CUSTOM_TYPES.SHOW_PAGE),
+              ],
+            });
           }
 
           const strValues: any = MICROSITE_STRING_KEYS.reduce(

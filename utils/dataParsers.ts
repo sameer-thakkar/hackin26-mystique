@@ -306,12 +306,10 @@ export const categoryTourListParserV2 = async (
     categoryIds.push(categoryCarousel.primary?.category_id);
   }
 
-  const { results: showPagesResults } = showpages || {};
   let showpageData = {},
     data;
-
-  if (showPagesResults?.length) {
-    showPagesResults?.forEach((page) => {
+  if (showpages?.length) {
+    showpages?.forEach((page) => {
       const {
         uid,
         data: { tgid },

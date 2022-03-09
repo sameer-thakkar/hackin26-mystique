@@ -3,35 +3,14 @@ import { CUSTOM_TYPES } from 'constants/index';
 import { Component } from 'react';
 import Prismic from 'prismic-javascript';
 import builder from 'xmlbuilder';
-import { apiEndpoint } from 'config/prismic-config';
 import { convertUidToUrl } from 'utils/urlUtils';
+import { fetchAllMatchingDocs } from 'utils/prismicUtils';
 
 const withHttps = (url) =>
   (url.startsWith('http') ? url : `https://${url}`).replace('http:', 'https:');
 
 const withTrailingSlash = (url) =>
   url.charAt(url.length - 1) !== '/' ? `${url}/` : url;
-
-async function getPage(api, uid, documents, page = 1) {
-  return await api
-    .query(Prismic.Predicates.any('document.tags', [uid]), {
-      lang: 'en-us',
-      pageSize: 100,
-      page,
-    })
-    .then(async (response) => {
-      if (response.page < response.total_pages) {
-        return await getPage(
-          api,
-          uid,
-          documents.concat(response.results),
-          response.page + 1
-        );
-      } else {
-        return documents.concat(response.results);
-      }
-    });
-}
 
 const createLoc = (doc) => convertUidToUrl({ uid: doc.uid });
 
@@ -69,10 +48,14 @@ export default class SitemapXml extends Component {
       },
     };
 
-    return Prismic.getApi(apiEndpoint, { req })
-      .then((api) => {
-        return getPage(api, uid, []);
-      })
+    return fetchAllMatchingDocs({
+      query: [Prismic.Predicates.at('document.tags', [uid])],
+      params: {
+        pageSize: 100,
+        page: 1,
+        lang: 'en-US',
+      },
+    })
       .then((documents) => {
         documents
           .filter((doc) =>
