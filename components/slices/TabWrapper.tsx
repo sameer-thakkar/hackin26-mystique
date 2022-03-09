@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useAmp } from 'next/amp';
@@ -9,6 +9,7 @@ import { CHEVRON_LEFT, CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS } from 'const/index';
 import { ANALYTICS_PROPERTIES } from 'const/index';
+import { legacyBooleanCheck } from 'utils';
 
 import { stringIdfy } from '../../utils/helper';
 import sliceHandler from '../Slices';
@@ -166,6 +167,34 @@ const Controls = styled.div`
   }
 `;
 
+const SlideControls = styled.div`
+  display: flex;
+  align-items: center;
+  .prev-slide,
+  .next-slide {
+    position: absolute;
+    left: 0px;
+    cursor: pointer;
+    z-index: 2;
+    svg {
+      fill: ${COLORS.WHITE};
+      width: ${({ isMobile }) => (isMobile ? '32px' : 'auto')};
+      circle {
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+      }
+      border-radius: 100%;
+    }
+  }
+  .next-slide {
+    left: unset;
+    right: 0px;
+    margin-top: -5px;
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+`;
+
 type TabWrapperProps = {
   heading: String;
   slices: Array<any>;
@@ -204,17 +233,20 @@ const TabWrapper = (props: TabWrapperProps) => {
   const { heading, slices, sliceProps: parentSliceProps, description } = props;
   // @ts-ignore
   const { sliceIndex, isGlobalMb } = parentSliceProps;
-  const default_from_prismic = slices.filter(
+  const defaultFromPrismic = slices.filter(
     (slice) => slice.primary.is_default == 'Yes'
   );
   let modifiedSlices = slices.map((slice, index) => {
     return { ...slice, index };
   });
   const defaultTab = stringIdfy(
-    (default_from_prismic[0] || slices[0])?.primary?.title || ''
+    (defaultFromPrismic[0] || slices[0])?.primary?.title || ''
   );
   const isAmp = useAmp();
   const [activeTabId, setActiveTab] = useState(defaultTab);
+  const [activeTabIndex, setActiveTabIndex] = useState(
+    slices.indexOf((slice) => legacyBooleanCheck(slice.primary.is_default)) ?? 0
+  );
   let sliceProps: any = {
     activeTabId,
     ...parentSliceProps,
@@ -235,6 +267,24 @@ const TabWrapper = (props: TabWrapperProps) => {
   ]);
   const [isEnd, updateEnd] = useState(false);
   const [isBeginning, updateBeginning] = useState(true);
+  const tabsContanier = useRef(null);
+
+  const [isAtStart, setIsAtStart] = useState(true);
+  const [isAtEnd, setIsAtEnd] = useState(false);
+
+  useEffect(() => {
+    const setScrollPosition = () => {
+      const { scrollLeft, clientWidth, scrollWidth } =
+        tabsContanier?.current ?? {};
+      setIsAtStart(scrollLeft === 0);
+      setIsAtEnd(scrollLeft + clientWidth >= scrollWidth);
+    };
+
+    tabsContanier?.current?.addEventListener('scroll', setScrollPosition);
+
+    return () =>
+      tabsContanier?.current?.removeEventListener('scroll', setScrollPosition);
+  }, []);
 
   // isMobile effect
   useEffect(() => {
@@ -256,8 +306,23 @@ const TabWrapper = (props: TabWrapperProps) => {
     };
   }, [isMobile, swiper, updateIndex]);
 
-  const onTabClick = ({ tabId, index, heading }) => {
+  const onTabClick = ({
+    tabId,
+    index,
+    heading,
+    isScrollTab = false,
+    scrollTarget = null,
+  }) => {
     setActiveTab(tabId);
+    setActiveTabIndex(index);
+
+    if (isScrollTab && scrollTarget) {
+      tabsContanier?.current?.scrollTo({
+        left: scrollTarget.offsetLeft - scrollTarget.offsetWidth / 2,
+        behavior: 'smooth',
+      });
+    }
+
     trackEvent({
       eventName: ANALYTICS_EVENTS.INFO_TAB_CLICKED,
       [ANALYTICS_PROPERTIES.POSITION]: index + 1,
@@ -265,6 +330,23 @@ const TabWrapper = (props: TabWrapperProps) => {
       [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Standalone',
       [ANALYTICS_PROPERTIES.SECTION]: 'Longform Content',
     });
+  };
+
+  const scrollTab = (direction: 'left' | 'right') => {
+    let width = tabsContanier?.current?.scrollWidth;
+    let newTabIndex = activeTabIndex;
+    if (direction === 'left') {
+      width = width * -1;
+      if (activeTabIndex > 0) {
+        newTabIndex = activeTabIndex - 1;
+      }
+    } else if (direction === 'right' && activeTabIndex < slices.length - 1) {
+      newTabIndex = activeTabIndex + 1;
+    }
+
+    setActiveTabIndex(newTabIndex);
+    setActiveTab(stringIdfy(slices[newTabIndex]?.primary?.title));
+    tabsContanier?.current?.scrollBy({ left: width * 0.1, behavior: 'smooth' });
   };
 
   if (isGlobalMb && !isMobile) {
@@ -411,21 +493,51 @@ const TabWrapper = (props: TabWrapperProps) => {
         </AmpSelectorContainer>
       ) : (
         <>
-          <div className="tabs">
+          <div ref={tabsContanier} className="tabs">
             {slices.map((slice, index) => {
               const tabId = stringIdfy(slice.primary.title);
               return (
                 <StyledTab
                   key={index}
                   isActive={activeTabId == tabId}
-                  onClick={() =>
-                    onTabClick({ tabId, heading: slice.primary.title, index })
+                  onClick={(e) =>
+                    onTabClick({
+                      tabId,
+                      heading: slice.primary.title,
+                      index,
+                      isScrollTab: true,
+                      scrollTarget: e.target,
+                    })
                   }
                 >
                   {slice.primary.title}
                 </StyledTab>
               );
             })}
+            <Conditional if={isMobile}>
+              <SlideControls isMobile={isMobile}>
+                <Conditional if={!isAtStart}>
+                  <div
+                    className="prev-slide"
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => scrollTab('left')}
+                  >
+                    {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
+                  </div>
+                </Conditional>
+                <Conditional if={!isAtEnd}>
+                  <div
+                    className="next-slide"
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => scrollTab('right')}
+                  >
+                    {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
+                  </div>
+                </Conditional>
+              </SlideControls>
+            </Conditional>
           </div>
           <div className="tab-content-wrap">
             {slices.map((slice, keyIndex) => {
