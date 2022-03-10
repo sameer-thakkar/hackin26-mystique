@@ -2,12 +2,9 @@ import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 import { CLOSE_WHITE, BackArrow } from 'assets/SvgIcons';
 import { useState, useEffect } from 'react';
-import { SOLEIL, COLORS } from 'const/ui-constants';
+import { COLORS } from 'const/ui-constants';
 import { SIDEBAR_TYPES } from 'const/index';
 import useWindowSize from 'hooks/useWindowSize';
-import { pxToRem } from 'utils/cssUtils';
-import { strings } from 'const/strings';
-
 export const StyledAsideModal = styled.div`
   position: fixed;
   top: 0;
@@ -15,18 +12,15 @@ export const StyledAsideModal = styled.div`
   height: 100vh;
   overflow-y: scroll;
   scroll-behavior: smooth;
-  padding: 1.25rem
-    ${({ sidePadding }) => (sidePadding ? pxToRem(sidePadding) : '1.5')}rem;
+  padding: 20px ${({ sidePadding }) => (sidePadding ? sidePadding : '24')}px;
   padding-top: 0;
   max-width: calc(
-    ${({ width }) =>
-        width ? (90 * pxToRem(parseFloat(width))) / 6.25 : '37.875'}rem - 3rem
+    ${({ width }) => (width ? (1440 * parseFloat(width)) / 100 : '606')}px -
+      48px
   );
   width: calc(
     ${({ width, sidePadding }) =>
-      `${width ? pxToRem(width) : '27.5vw'} - ${
-        pxToRem(sidePadding) ? pxToRem(sidePadding) * 2 : '3'
-      }rem`}
+      `${width ? width : '27.5vw'} - ${sidePadding ? sidePadding * 2 : '48'}px`}
   );
   background: ${COLORS.WHITE};
   z-index: 100;
@@ -56,55 +50,52 @@ export const StyledAsideModal = styled.div`
         : ``}
   }
 `;
-
 const Header = styled.div`
   display: grid;
   grid-template-columns: auto auto;
-  padding-top: 1.25rem;
-  padding-bottom: 1.5rem;
+  padding-top: 20px;
+  padding-bottom: 24px;
   position: ${({ type }) =>
     type === SIDEBAR_TYPES.PRODUCT_CARD ? 'unset' : 'sticky'};
   ${({ type }) =>
     type === SIDEBAR_TYPES.PRODUCT_CARD
       ? `
-      width: calc(100% - 2rem);
-      padding: 0 1rem;
-      padding-top: 0.75rem;
-      padding-bottom: 0.75rem;
+      width: calc(100% - 32px);
+      padding: 0 16px;
+      padding-top: 12px;
+      padding-bottom: 12px;
       .close-icon {
         display: flex;
-        padding: 0.375rem;
+        padding: 6px;
         border-radius: 100%;
         background: ${COLORS.WHITE};
         svg {
-          height: 0.625rem;
-          width: 0.625rem;
+          height: 10px;
+          width: 10px;
         }
       }
     `
       : ''}
   top: 0;
-
   background: ${({ addBg, isGlobalMb }) =>
     addBg ? COLORS.WHITE : isGlobalMb ? COLORS.WHITE : 'transparent'};
   z-index: 12;
-
   ${({ type }) =>
     type === SIDEBAR_TYPES.COMBO_VARIANT
       ? `
-      width: calc(100% - 2rem);
+      width: calc(100% - 32px);
       background: ${COLORS.WHITE};
-      margin-top: 0.5rem;
-      padding: 2rem 1rem 0.5rem 1rem;
-      border-radius: 1.25rem 1.25rem 0 0;
+      margin-top: 8px;
+      padding: 32px 16px 8px 16px;
+      border-radius: 20px 20px 0 0;
       .close-icon {
         display: flex;
-        padding: 0.375rem;
+        padding: 6px;
         background: ${COLORS.GREY.G8};
-        border-radius: 0.25rem;
+        border-radius: 4px;
         svg {
-          height: 0.625rem;
-          width: 0.625rem;
+          height: 10px;
+          width: 10px;
         }
       }`
       : ''}
@@ -113,7 +104,7 @@ const Header = styled.div`
     &:after {
       ${({ addBg }) => (addBg ? `content: '';` : '')};
       display: block;
-      width: 1.5rem;
+      width: 24px;
       position: absolute;
       height: 100%;
       background: ${COLORS.WHITE};
@@ -126,30 +117,25 @@ const Header = styled.div`
     }
   }
 `;
-
 const CloseIcon = styled.div`
   justify-self: right;
-  grid-column: 2 / 2;
   cursor: pointer;
   path {
     stroke: #545454;
-    stroke-width: 0.113rem;
+    stroke-width: 1.8px;
   }
   z-index: 999;
 `;
-
 const Title = styled.div`
   font-style: normal;
   font-weight: normal;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: 14px;
+  line-height: 20px;
 `;
-
 const BackIcon = styled.div`
   grid-column: 1 / 2;
   cursor: pointer;
 `;
-
 const Mask = styled.div`
   width: 100vw;
   position: fixed;
@@ -162,36 +148,20 @@ const Mask = styled.div`
     display: none;
   }
 `;
-
 const ModalContent = styled.div`
   ${({ sidebarType, windowHeight }) =>
     sidebarType === SIDEBAR_TYPES.PRODUCT_CARD
       ? `
-overflow-x: scroll;
-height: ${pxToRem(windowHeight) - 2.875}rem;
-border-radius: 0.625rem 0.625rem 0 0;
-`
+  overflow-x: scroll;
+  height: ${windowHeight - 46}px;
+  border-radius: 10px 10px 0 0;
+  `
       : sidebarType === SIDEBAR_TYPES.COMBO_VARIANT
       ? `
-overflow-x: scroll;
-height: ${pxToRem(windowHeight) - 2.875}rem;`
+  overflow-x: scroll;
+  height: ${windowHeight - 46}px;`
       : ``}
 `;
-
-const MobileHeading = styled.div`
-  grid-column: 1 / 2;
-  font-family: ${SOLEIL.FONT_STACK};
-  font-style: normal;
-  font-weight: 600;
-  font-size: 0.875rem;
-`;
-
-const HorizontalLine = styled.hr`
-  grid-column: 1 / span 2;
-  color: ${COLORS.GREY.G6};
-  margin: 0.625rem 0rem;
-`;
-
 const AsideModal = ({
   active,
   title,
@@ -210,7 +180,6 @@ const AsideModal = ({
   const { width: windowWidth, height: windowHeight } = useWindowSize();
   const isMobile = isGlobalMb ? windowWidth <= 768 : windowWidth < 768;
   const hasBack = stack.length > 1;
-
   useEffect(() => {
     const container = window.document.body;
     if (isMobile) {
@@ -231,13 +200,11 @@ const AsideModal = ({
     closeModal();
     if (onCloseCallback) onCloseCallback();
   };
-
   const onCloseAll = () => {
     container.classList.remove('scroll-lock');
     if (isMobile) window.scrollTo(0, scrollY);
     resetAside();
   };
-
   return container && active
     ? createPortal(
         <>
@@ -250,7 +217,7 @@ const AsideModal = ({
           >
             <Header
               onClick={type === SIDEBAR_TYPES.PRODUCT_CARD ? onClose : null}
-              addBg={!!title || isMobile}
+              addBg={!!title}
               type={type}
               sidePadding={sidePadding}
               isGlobalMb={isGlobalMb}
@@ -263,23 +230,9 @@ const AsideModal = ({
                   {BackArrow}
                 </BackIcon>
               ) : (
-                <>
-                  {isMobile ? (
-                    <>
-                      <MobileHeading>
-                        {strings.SAFE_EXPERIENCE_NEW.MODAL.HEADING}
-                      </MobileHeading>
-                      <CloseIcon className={'close-icon'} onClick={onClose}>
-                        {CLOSE_WHITE}
-                      </CloseIcon>
-                      <HorizontalLine />
-                    </>
-                  ) : (
-                    <CloseIcon className={'close-icon'} onClick={onClose}>
-                      {CLOSE_WHITE}
-                    </CloseIcon>
-                  )}
-                </>
+                <CloseIcon className={'close-icon'} onClick={onClose}>
+                  {CLOSE_WHITE}
+                </CloseIcon>
               )}
             </Header>
             <ModalContent windowHeight={windowHeight} sidebarType={type}>
@@ -291,5 +244,4 @@ const AsideModal = ({
       )
     : null;
 };
-
 export default AsideModal;
