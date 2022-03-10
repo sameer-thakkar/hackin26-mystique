@@ -3,7 +3,6 @@ import dynamic from 'next/dynamic';
 import { useAmp } from 'next/amp';
 import styled from 'styled-components';
 import { useWindowWidth } from '@react-hook/window-size';
-import OverflowScroll from 'UI/OverflowScroll';
 import RichContent from 'UI/RichContent';
 import TitleTextCombo from 'UI/TitleTextCombo';
 import { CHEVRON_LEFT, CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
@@ -27,6 +26,9 @@ const CardGrid = styled.div(({ cardsInARow }) => {
 
 const CardCarousel = styled.div`
   position: relative;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const StyledSwiper = styled.div`
@@ -46,13 +48,16 @@ const StyledSwiper = styled.div`
     grid-auto-flow: unset;
     `}
   }
+  @media (max-width: 768px) {
+    max-width: calc(100vw - 32px);
+  }
 `;
 
 const Controls = styled.div`
   .prev-slide,
   .next-slide {
     position: absolute;
-    top: ${(isGlobalMb) => (isGlobalMb ? 'calc(20% + 10px)' : '50%')};
+    top: ${({ isGlobalMb }) => (isGlobalMb ? 'calc(100% - 20px)' : '125px')};
     transform: translateY(-50%);
     left: -20px;
     cursor: pointer;
@@ -67,12 +72,22 @@ const Controls = styled.div`
         stroke-width: 2px;
       }
     }
+    @media (max-width: 768px) {
+      left: -10px;
+      svg {
+        height: 24px;
+        width: 24px;
+      }
+    }
   }
   .next-slide {
     left: unset;
     right: -20px;
     svg {
       transform: rotate(180deg);
+    }
+    @media (max-width: 768px) {
+      right: -10px;
     }
   }
 `;
@@ -186,7 +201,6 @@ const CardSection: React.FC<CardSectionProps> = ({
   ]);
 
   useEffect(() => {
-    if (isMobile) return;
     if (swiper !== null) {
       swiper.on('slideChange', updateIndex);
     }
@@ -199,7 +213,7 @@ const CardSection: React.FC<CardSectionProps> = ({
   }, [isMobile, swiper, updateIndex]);
 
   // Carousel (and Overflow Scroll for mobile) Logic
-  if (sectionType === 'Carousel' && !isMobile) {
+  if (sectionType === 'Carousel') {
     const goNext = () => {
       if (swiper !== null) {
         swiper.slideNext();
@@ -213,7 +227,7 @@ const CardSection: React.FC<CardSectionProps> = ({
     };
 
     const swiperParams = {
-      slidesPerView: cardsInARow,
+      slidesPerView: isMobile ? 1 : cardsInARow,
       wrapperClass: 'cards-section-wrapper',
       spaceBetween: isGlobalMb ? 24 : 20,
       shouldSwiperUpdate: true,
@@ -258,23 +272,6 @@ const CardSection: React.FC<CardSectionProps> = ({
             ) : null}
           </Controls>
         </CardCarousel>
-        {ExitSection}
-      </>
-    );
-  }
-
-  if (sectionType === 'Carousel' && isMobile) {
-    return (
-      <>
-        {EntrySection}
-        <OverflowScroll
-          minWidthChild={
-            isGlobalMb ? 'calc(100vw - 93px)' : 'calc(100vw - 32px)'
-          }
-          marginBottom={isGlobalMb ? 0 : 30}
-        >
-          {cards}
-        </OverflowScroll>
         {ExitSection}
       </>
     );

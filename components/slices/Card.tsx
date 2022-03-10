@@ -61,7 +61,7 @@ const StyledCard = styled.div((props) => {
   box-shadow: ${isGlobalMb ? 'unset' : '0px 12px 20px rgba(0, 0, 0, 0.07)'};
   border: ${isGlobalMb ? 'unset' : `1px solid ${COLORS.CHALK}`};
   grid-template-columns: ${styles.gridTemplateColumns};
-  height: calc(100% - 2px);
+  height: calc(100% - 8px);
   text-decoration: none;
   ${props.link && `cursor: pointer;`}
   .flex{
