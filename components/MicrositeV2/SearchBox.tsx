@@ -27,10 +27,12 @@ const StyledSearchBox = styled.div`
     font-family: ${SOLEIL.FONT_STACK};
     font-weight: ${SOLEIL.REGULAR};
     font-size: 1rem;
+
     ::placeholder {
       ${({ isEntertainmentMb }) =>
         isEntertainmentMb && `color: ${COLORS.GREY.G4};`}
     }
+
     ${({ isEntertainmentMb }) =>
       isEntertainmentMb &&
       `
@@ -38,6 +40,7 @@ const StyledSearchBox = styled.div`
         line-height: 1.25rem;
         `};
   }
+
   .input-icon {
     position: absolute;
     left: 1rem;
@@ -45,6 +48,7 @@ const StyledSearchBox = styled.div`
     transform: translate(0, -50%);
     display: flex;
     align-items: center;
+
     svg {
       stroke: ${COLORS.GREY_75};
       height: ${({ isEntertainmentMb }) =>
@@ -52,6 +56,7 @@ const StyledSearchBox = styled.div`
       height: ${({ isEntertainmentMb }) =>
         isEntertainmentMb ? '1rem' : '1.125rem'};
     }
+
     path {
       stroke: ${COLORS.DAVY_GREY};
     }
@@ -64,9 +69,14 @@ const StyledSearchBox = styled.div`
     top: 50%;
     transform: translate(0, -50%);
     cursor: pointer;
+
     svg {
       height: 1rem;
       width: auto;
+
+      path {
+        stroke: ${COLORS.DAVY_GREY};
+      }
     }
   }
 
@@ -76,14 +86,15 @@ const StyledSearchBox = styled.div`
       border-radius: 0.25rem;
       padding: 0.625rem 0;
       padding-left: 2.25rem;
-      background: #4d4848;
-      border: none;
     }
+
     .input-icon {
       left: 0.656rem;
     }
+
     .close-icon {
       display: none;
+
       svg {
         height: 1.25rem;
       }

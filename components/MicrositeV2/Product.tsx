@@ -5,7 +5,7 @@ import { MBContext } from 'contexts/MBContext';
 import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
 import LocalisedPrice from 'UI/LPrice';
-import { SEE_SAFETY, STAR } from 'assets/SvgIcons';
+import { STAR } from 'assets/SvgIcons';
 import {
   CURRENCY_SYMBOL_MAP,
   NEW_ARRIVALS_CATEGORIES,
@@ -53,15 +53,6 @@ const ProductCard = styled.div`
   .product-v2-image {
     display: block;
     position: relative;
-  }
-  .emb-safety {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-  }
-  .emb-safety svg {
-    width: 52px;
-    height: 32px;
   }
   .overlay-booster {
     position: absolute;
@@ -331,7 +322,6 @@ const Product = (props) => {
     overlayBooster,
     vendor,
     cardFooter,
-    hasBestSafety,
     category,
     reopeningDate,
     averageRating,
@@ -396,16 +386,13 @@ const Product = (props) => {
         <Image
           url={productImage}
           format="pjpg"
-          width={800}
+          width={400}
           imageId={tgid}
-          height={500}
+          height={250}
           alt={title}
         />
         <Conditional if={overlayBooster}>
           <div className="overlay-booster">{overlayBooster}</div>
-        </Conditional>
-        <Conditional if={isEntertainmentMb && hasBestSafety}>
-          <div className="emb-safety">{SEE_SAFETY}</div>
         </Conditional>
       </div>
       <div className="product-v2-bottom">

@@ -95,7 +95,6 @@ export const SearchItem = (props) => {
 
           .search-item .old-price {
             font-size: 10px;
-            line-height: 12px;
             text-decoration: line-through;
             color: #757575;
             font-weight: ${SOLEIL.REGULAR};

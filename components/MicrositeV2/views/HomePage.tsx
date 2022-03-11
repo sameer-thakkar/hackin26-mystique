@@ -6,7 +6,6 @@ import { MBContext } from 'contexts/MBContext';
 import Footer from 'components/common/Footer';
 import sliceHandler from 'components/Slices';
 import Header from 'components/MicrositeV2/Header';
-import LttSafetyBanner from 'components/ShowPages/SafetyBanner';
 import LttFeatureCard from 'components/ShowPages/FeatureCard';
 import Conditional from 'components/common/Conditional';
 import TextBanner from 'components/TextBanner';
@@ -74,9 +73,6 @@ const V2MicrositeWrapper = styled.div`
   }
 
   @media (max-width: 768px) {
-    ${LttSafetyBanner} {
-      ${({ isEntertainmentMb }) => isEntertainmentMb && `margin-bottom: 0;`}
-    }
     .hero-slice-section {
       margin-top: 48px;
       margin-bottom: 48px;
@@ -283,9 +279,6 @@ export const HomePage = (props) => {
       </Conditional>
       <Conditional if={!isEntertainmentMb}>
         <MultiBannerWrapper hasSafe={hasSafe} marginTop={40} />
-      </Conditional>
-      <Conditional if={isEntertainmentMb}>
-        <LttSafetyBanner marginTop={isListicle ? 32 : 0} />
       </Conditional>
       <Conditional if={heroSectionSlice.length}>
         <ProductsContextProvider allTours={allTours} ready={ready}>

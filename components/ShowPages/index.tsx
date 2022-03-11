@@ -14,7 +14,6 @@ import ShowPageBanner from 'components/ShowPages/Banner';
 import CustomerReview from 'components/ShowPages/CustomerReview';
 import FeatureCard from 'components/ShowPages/FeatureCard';
 import GoogleMap from 'components/ShowPages/GoogleMap';
-import SafeDFBannerWrapper from 'components/ShowPages/SafetyBanner';
 import Gallery from 'components/ShowPages/Gallery';
 import CategorySlider from 'components/ShowPages/CategorySlider';
 import SubHeading from 'components/ShowPages/SubHeading';
@@ -230,7 +229,6 @@ const ShowPage = ({
     tabHeadingInfo,
     detailsObjects,
     tabSectionHeading,
-    isSafetyBanner,
     showType,
     mapURL,
     highlightsSection,
@@ -462,12 +460,6 @@ const ShowPage = ({
           isReopening={isReopening}
           hostname={hostname}
         />
-        <Conditional if={isSafetyBanner}>
-          <SafeDFBannerWrapper
-            marginTop={isMobile ? 0 : 40}
-            isShowPage={true}
-          />
-        </Conditional>
         <Wrapper>
           <HighlightsSectionWrapper>
             <RichText render={highlightsSection?.tab_content} />

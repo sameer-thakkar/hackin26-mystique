@@ -97,17 +97,21 @@ const CategoryBarWrapper = styled.div`
       isEntertainmentMb ? '8px' : '14px'};
     margin-top: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '40px' : '24px'};
+
     .tabs-wrap {
       padding-left: 16px;
       padding-right: 16px;
     }
+
     .tabs-wrap {
       width: max-content;
     }
+
     .active-indicator {
       bottom: ${({ isEntertainmentMb }) =>
         isEntertainmentMb ? '-8px' : '-14px'};
     }
+
     .tab {
       font-size: ${({ isEntertainmentMb }) =>
         isEntertainmentMb ? '15px' : '18px'};
@@ -117,8 +121,14 @@ const CategoryBarWrapper = styled.div`
       line-height: ${({ isEntertainmentMb }) =>
         isEntertainmentMb ? '20px' : '1.3'};
     }
+
     .filter-wrapper {
       display: none;
+    }
+
+    ::-webkit-scrollbar {
+      width: 0;
+      height: 0;
     }
   }
 `;
