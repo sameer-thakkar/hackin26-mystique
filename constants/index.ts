@@ -660,3 +660,4 @@ export const ESCAPE_REPLACER = (t: string): string =>
   ESCAPE_ENTITIES[t as keyof typeof ESCAPE_ENTITIES];
 
 export const UNIT_ABBREVIATIONS = ['k', 'm', 'b', 't'];
+

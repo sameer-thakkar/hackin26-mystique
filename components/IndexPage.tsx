@@ -23,7 +23,7 @@ import { removePageQuery } from 'utils/urlUtils';
 import { traceError } from 'utils/logutils';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { gtmAtom } from 'store/atoms/gtm';
-import { hsidAtom } from 'store/atoms/hsid';
+import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
 import { withShortcodes } from 'utils/helper';
 
 const Microsite = dynamic(() => import('components/MicrositeV1'));
@@ -382,6 +382,8 @@ Page.getInitialProps = async (ctx) => {
 const HeadoutSessionIdSetterComponent = () => {
   const validHsidFromCookie = Cookies.get(ANALYTICS_PROPERTIES.HSID);
   const setHsid = useSetRecoilState(hsidAtom);
+  const setHsidSetFail = useSetRecoilState(hsidSetFailAtom);
+
   const pushSandboxIDtoDataLayer = (hsid) => {
     sendVariableToDataLayer({
       name: ANALYTICS_PROPERTIES.HSID,
@@ -398,11 +400,17 @@ const HeadoutSessionIdSetterComponent = () => {
 
       const { hsid } = JSON.parse(data);
       try {
-        if (hsid === null)
+        if (hsid === null) {
           // eslint-disable-next-line no-console
           console.warn(
             '[localStorage] hsid-ensurer failure, Unsupported Browser'
           );
+          /**
+           * hsid will also be null when third-party cookie is blocked or api fails, use a global state for that
+           */
+          setHsidSetFail(true);
+        }
+
         if (hsid) {
           const nakedDomain = window.location.hostname
             .replace('stage-', '')

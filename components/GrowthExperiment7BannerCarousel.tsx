@@ -11,11 +11,14 @@ import { ANALYTICS_PROPERTIES } from 'const/index';
 import { PAGE_TYPES } from 'const/index';
 import { trackEvent } from 'utils/analytics';
 import Swiper from 'components/Swiper';
+import Cookies from 'js-cookie';
 
 import Conditional from './common/Conditional';
 import Banner from './Banner';
 import Button from './UI/Button';
 import Image from './UI/Image';
+import { useRecoilValue } from 'recoil';
+import { hsidSetFailAtom } from 'store/atoms/hsid';
 
 type TBannerCarouselProps = {
   bannerImages: {
@@ -44,6 +47,24 @@ function GrowthExperiment7BannerCarousel({
   bannerCarouselProps: TBannerCarouselProps;
   variant: string;
 }) {
+  const hasHsidSetFailed = useRecoilValue(hsidSetFailAtom);
+
+  useEffect(() => {
+    if (hasHsidSetFailed) {
+      const bannerHeading = withShortcodes(bannerCarouselProps?.bannerHeading);
+
+      trackEvent({
+        eventName: 'Third party cookie blocked',
+        [ANALYTICS_PROPERTIES.TGIDS]: bannerCarouselProps?.orderedTgids,
+        [ANALYTICS_PROPERTIES.MB_NAME]: bannerHeading?.join(' '),
+      });
+    }
+  }, [hasHsidSetFailed]);
+
+  if (hasHsidSetFailed) {
+    return <Banner {...bannerCarouselProps} />;
+  }
+
   if (!variant && !bannerCarouselProps.isAmp) return <StyledPlaceHolder />;
 
   if (variant === VARIANTS.NEW_BANNER_CAROUSEL_WITHOUT_CTA) {
