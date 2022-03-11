@@ -7,7 +7,6 @@ import { css } from 'styled-components';
 export const productCardImageSupportStyles = (isAmp: boolean) => css`
   .card-img {
     grid-area: card-img;
-    grid-row-end: span 3;
     width: 258px;
     height: 344px;
     border-radius: 0.5rem;

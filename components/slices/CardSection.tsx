@@ -75,8 +75,8 @@ const Controls = styled.div`
     @media (max-width: 768px) {
       left: -10px;
       svg {
-        height: 24px;
-        width: 24px;
+        height: 40px;
+        width: 32px;
       }
     }
   }
