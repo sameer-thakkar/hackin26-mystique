@@ -640,7 +640,7 @@ const HighlightTabs = ({
 }) => {
   useEffect(() => {
     onTabChange({ tab: tabs[0], index: 0, defaultSelection: true });
-  }, []);
+  }, [tabs]);
 
   const trackedTabChange = (index) => {
     onTabChange({ tab: tabs[index], index });
@@ -800,6 +800,7 @@ const Product = (props) => {
     isDev,
     sidebarModal: { addToAside },
   } = useContext(MBContext);
+
   const hostname = getHostName(isStage, isDev, host);
   const currency = useRecoilValue(currencyAtom);
   const [isContentOpen, toggleContentOpen] = useState(defaultOpen);
@@ -825,7 +826,7 @@ const Product = (props) => {
 
   const noOfListItemToShow = shouldShowNewProductCardDesign
     ? 2
-    : Math.min(NOS_OF_HIGHLIGHTS_TO_SHOW, descriptorsList.length);
+    : Math.max(NOS_OF_HIGHLIGHTS_TO_SHOW, descriptorsList.length);
 
   const onTabChange = ({ tab, index, defaultSelection }) => {
     const isTruncated = tab.contents.length > noOfListItemToShow;
@@ -942,7 +943,6 @@ const Product = (props) => {
 
   const hasReadMore =
     (highlights.flat()?.length >= 3 || showMoreDetailsInTabs) && !defaultOpen;
-  ``;
 
   const { listingPrice } = tourPrices[tgid];
 

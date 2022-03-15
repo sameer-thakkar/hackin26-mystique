@@ -34,7 +34,7 @@ export const productCardImageSupportStyles = (isAmp: boolean) => css`
     }
   }
 
-  grid-template-rows: min-content min-content 1fr;
+  grid-template-rows: min-content min-content min-content;
   grid-template-columns: auto 1fr auto;
   grid-auto-rows: min-content;
   column-gap: 1.5rem;
