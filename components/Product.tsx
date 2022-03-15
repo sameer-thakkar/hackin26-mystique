@@ -640,7 +640,7 @@ const HighlightTabs = ({
 }) => {
   useEffect(() => {
     onTabChange({ tab: tabs[0], index: 0, defaultSelection: true });
-  }, [tabs]);
+  }, []);
 
   const trackedTabChange = (index) => {
     onTabChange({ tab: tabs[index], index });
