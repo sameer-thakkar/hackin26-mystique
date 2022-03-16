@@ -944,6 +944,13 @@ const Product = (props) => {
   const hasReadMore =
     (highlights.flat()?.length >= 3 || showMoreDetailsInTabs) && !defaultOpen;
 
+  useEffect(() => {
+    if (shouldShowNewProductCardDesign) {
+      const isTruncated = tabs[0].contents.length > noOfListItemToShow;
+      setShowMoreDetails(isTruncated);
+    }
+  }, [noOfListItemToShow, tabs.length, shouldShowNewProductCardDesign]);
+
   const { listingPrice } = tourPrices[tgid];
 
   if (!listingPrice) return null;
