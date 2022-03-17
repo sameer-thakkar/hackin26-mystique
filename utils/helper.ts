@@ -341,6 +341,8 @@ export const isSameURL = (urlA = '', urlB = '') =>
 export const getHostName = (isStage: boolean, isDev: boolean, host: string) => {
   const headoutDomain = `microbrands.headout.com`;
   switch (true) {
+    case typeof window !== 'undefined':
+      return '';
     case isStage:
       return `https://stage-${headoutDomain}`;
     case isDev:

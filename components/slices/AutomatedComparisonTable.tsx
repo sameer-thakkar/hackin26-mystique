@@ -416,9 +416,6 @@ const AutomatedTourComparisonTable = ({
   const lang = mbContext.lang || 'en';
   const host = mbContext?.host;
   const currentHost = !envContext.isDev ? `https://${host}` : `http://${host}`;
-  const hostName = currentHost.includes('stage')
-    ? currentHost.replace('stage-', '')
-    : currentHost;
   const orderedLabels = ['maxDuration', 'inclusions', 'cancellationPolicy'];
 
   const getLabelContent = (label, tour) => {
@@ -506,7 +503,7 @@ const AutomatedTourComparisonTable = ({
   };
   const collectionEndpoint = getHeadoutApiUrl({
     endpoint: HeadoutEndpoints.TourGroupCollectionV1,
-    hostname: hostName,
+    hostname: currentHost,
     params: collectionEndpointParams,
     id: collectionId,
   });
