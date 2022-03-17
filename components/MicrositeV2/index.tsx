@@ -4,7 +4,7 @@ import { withRouter } from 'next/router';
 import { InteractionContextProvider } from 'contexts/Interaction';
 import { withAmp } from 'components/common/withAmp';
 import Conditional from 'components/common/Conditional';
-import { PAGETYPE, THEMES } from 'const/index';
+import { PAGETYPE, QUERY_PARAMS, THEMES } from 'const/index';
 import allToursParser from 'utils/allToursParser';
 import { tourListApiParser } from 'utils/dataParsers';
 import { genManualSlice, getLangObject } from 'utils/helper';
@@ -61,7 +61,7 @@ class MicrositeV2 extends Component<any, any> {
           isFetched: true,
         });
       });
-    // && (response.listingPrice.finalPrice > response.listingPrice.originalPrice)
+
     const directTgid = this.props.router.query.tgid;
     if (isMobile && directTgid) {
       this.setState({
@@ -94,6 +94,17 @@ class MicrositeV2 extends Component<any, any> {
     };
     this.changePage(page);
   };
+
+  shouldComponentUpdate(nextProps) {
+    // We have state in top-level component, any state update causes whole page to re-render
+    // need to refactor break-down the logic and move it all to their relevant components.
+    const { query } = this.props.router;
+    const { query: updatedQuery } = nextProps.router;
+    const { limit } = query;
+    const { limit: updatedLimit } = updatedQuery;
+    if (limit !== updatedLimit) return false;
+    return true;
+  }
 
   componentDidUpdate() {
     if (this.state.page.name == PAGETYPE.HOMEPAGE) {
@@ -131,6 +142,7 @@ class MicrositeV2 extends Component<any, any> {
       host,
       uid
     );
+    const isServer = typeof window === 'undefined';
     const {
       dropdown_menu: dropdownMenu,
       header_links,
@@ -325,32 +337,38 @@ class MicrositeV2 extends Component<any, any> {
     const raw_category = (rawCategory && rawCategory?.items) || [];
     const hideSortBySelector =
       rawCategory.primary?.disable_sort_selector || false;
-    let categories = raw_category?.reduce((accum, category) => {
-      let tgid_ranking = category.ranking
-        ?.split(',')
-        ?.map((tgid) => parseInt(tgid))
-        ?.filter((tgid) => allTours[tgid] && allTours[tgid].available);
+    let categories;
 
-      return [
-        ...accum,
-        {
-          ranking: {
-            popularity: tgid_ranking,
-            price: isFetched
-              ? tgidsOrderByPrice?.filter((tgid) =>
-                  tgid_ranking?.includes(tgid)
-                )
-              : null,
+    if (!hasCategoryTourList) {
+      categories = raw_category?.reduce((accum, category) => {
+        let tgid_ranking = category.ranking
+          ?.split(',')
+          ?.map((tgid) => parseInt(tgid))
+          ?.filter((tgid) => allTours[tgid] && allTours[tgid].available);
+
+        return [
+          ...accum,
+          {
+            ranking: {
+              popularity: tgid_ranking,
+              price: isFetched
+                ? tgidsOrderByPrice?.filter((tgid) =>
+                    tgid_ranking?.includes(tgid)
+                  )
+                : null,
+            },
+            name: category?.category_name,
+            image: category?.category_image?.url,
+            rank: 0,
           },
-          name: category?.category_name,
-          image: category?.category_image?.url,
-          rank: 0,
-        },
-      ];
-    }, []);
+        ];
+      }, []);
+    } else {
+      categories = tourListCategories;
+    }
 
-    const directCategory = this.props.router.query.cat;
-    if (directCategory) {
+    const directCategory = this.props.router.query[QUERY_PARAMS.CATEGORY];
+    if (isServer && directCategory) {
       const catRegex = new RegExp(directCategory, 'gi');
       const index = categories.findIndex((cat) => catRegex.test(cat.name));
       if (index > -1) {
@@ -360,15 +378,13 @@ class MicrositeV2 extends Component<any, any> {
     }
     const directTheater = this.props.router.query.theater;
     let hightlightSlice = {};
-    if (directTheater) {
+    if (isServer && directTheater) {
       const theaterNameRegex = new RegExp(directTheater, 'gi');
       const toursArray: any = Object.values(allTours);
       const tours = toursArray.filter((tour) =>
         theaterNameRegex.test(tour.content_theater)
       );
       if (tours.length) {
-        // description={slice.primary.carousel_description}
-        //     heading={slice.primary.carousel_heading}
         const slice = genManualSlice({
           type: 'category_carousel',
           primary: {
@@ -383,7 +399,7 @@ class MicrositeV2 extends Component<any, any> {
     }
 
     const categoryProps = {
-      categories: hasCategoryTourList ? tourListCategories : categories,
+      categories,
       active: 0,
       hideSortBySelector: hasCategoryTourList
         ? tourListCategorySortBy

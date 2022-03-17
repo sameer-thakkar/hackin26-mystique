@@ -6,6 +6,9 @@ import { MBContext } from 'contexts/MBContext';
 import Conditional from 'components/common/Conditional';
 import { strings } from 'const/strings';
 import { COLORS, SOLEIL } from 'const/ui-constants';
+import LinkResolver from 'components/LinkResolver';
+import { useRouter } from 'next/router';
+import { QUERY_PARAMS } from 'const/index';
 
 const RowComponent: ComponentType<any> = dynamic(() =>
   import('./RowComponent').then((mod) => mod.RowComponent)
@@ -43,6 +46,16 @@ const StyledProductWrapper = styled.div`
   }
 `;
 
+const NO_OF_CARDS_IN_ROW = {
+  DESKTOP: 4,
+  MOBILE: 2,
+};
+
+const NO_OF_ROWS_TO_SHOW = {
+  DESKTOP: 2,
+  MOBILE: 4,
+};
+
 const PopulateProducts = (props) => {
   const {
     isMobile,
@@ -62,10 +75,19 @@ const PopulateProducts = (props) => {
     isDev,
     isDiscountedPage,
   } = props;
-  const { activeCategoryTgids } = useContext(InteractionContext) || {};
+  const { activeCategoryTgids, activeCategoryIndex } =
+    useContext(InteractionContext) || {};
   const mbContext = useContext(MBContext);
   const { lang: currentLanguage } = mbContext;
-  const firstView = rowsToShow || 4;
+  const { query, asPath, push: routerPush } = useRouter();
+  const {
+    limit = String((rowsToShow || 4) * NO_OF_CARDS_IN_ROW.DESKTOP),
+    offset = '0',
+  }: { limit?: string; offset?: string } = query || {};
+  const queryRowsToShow =
+    parseInt(limit) /
+    (isMobile ? NO_OF_CARDS_IN_ROW.MOBILE : NO_OF_CARDS_IN_ROW.DESKTOP);
+  const firstView = queryRowsToShow || rowsToShow || 4;
 
   const [rowsInView, setRowsInView] = useState(firstView);
 
@@ -73,10 +95,12 @@ const PopulateProducts = (props) => {
     setRowsInView(firstView);
   }, [activeCategoryTgids, firstView]);
 
-  const subArrays = (tgidsArr) => {
+  const subArrays = (tgidsArr, offset = 0) => {
     const { isMobile } = props;
-    const perChunk = isMobile ? 2 : 4;
-    const result = tgidsArr.reduce((resultArray, item, index) => {
+    const perChunk = isMobile
+      ? NO_OF_CARDS_IN_ROW.MOBILE
+      : NO_OF_CARDS_IN_ROW.DESKTOP;
+    const result = tgidsArr.slice(offset).reduce((resultArray, item, index) => {
       const chunkIndex = Math.floor(index / perChunk);
       if (!resultArray[chunkIndex]) {
         resultArray[chunkIndex] = [];
@@ -89,8 +113,37 @@ const PopulateProducts = (props) => {
     return result;
   };
 
-  const viewMore = () => {
-    setRowsInView(rowsInView + (isMobile ? 2 : 4));
+  const getUpdatedQuery = () => {
+    const url = typeof window === 'undefined' ? asPath : location?.href;
+    const query = new URLSearchParams(url?.split('?')?.[1]);
+    const queryLimit = query.get(QUERY_PARAMS.LIMIT) || limit;
+
+    query.set(
+      QUERY_PARAMS.LIMIT,
+      String(
+        Number(queryLimit) +
+          (isMobile
+            ? NO_OF_CARDS_IN_ROW.MOBILE * NO_OF_ROWS_TO_SHOW.MOBILE
+            : NO_OF_CARDS_IN_ROW.DESKTOP * NO_OF_ROWS_TO_SHOW.DESKTOP)
+      )
+    );
+    query.set(QUERY_PARAMS.OFFSET, '0');
+    query.set(
+      QUERY_PARAMS.CATEGORY,
+      categoryProps?.categories[activeCategoryIndex].name.toLowerCase()
+    );
+    return query;
+  };
+
+  const viewMore = (e) => {
+    e.preventDefault();
+    setRowsInView(
+      rowsInView +
+        (isMobile ? NO_OF_ROWS_TO_SHOW.MOBILE : NO_OF_ROWS_TO_SHOW.DESKTOP)
+    );
+    routerPush(`/?${getUpdatedQuery()?.toString()}`, null, {
+      shallow: true,
+    });
   };
 
   const categoryPropsPopularityRank =
@@ -101,7 +154,11 @@ const PopulateProducts = (props) => {
     ? activeCategoryTgids || categoryPropsPopularityRank
     : propTgids || activeCategoryTgids;
 
-  const tgidsSubArr = subArrays(tgids);
+  const tgidsSubArr = subArrays(tgids, Number(offset));
+
+  const getViewMoreLink = () => {
+    return `/?${getUpdatedQuery().toString()}`;
+  };
 
   return (
     <StyledProductWrapper isEntertainmentMb={isEntertainmentMb}>
@@ -129,14 +186,13 @@ const PopulateProducts = (props) => {
       })}
 
       <Conditional if={tgidsSubArr.length > rowsInView && !showAll}>
-        <div
-          className="view-more"
+        <LinkResolver
+          href={getViewMoreLink()}
           onClick={viewMore}
-          role="button"
-          tabIndex={0}
+          className="view-more"
         >
           {mbContext.buttons.see_more_text || strings.VIEW_MORE}
-        </div>
+        </LinkResolver>
       </Conditional>
     </StyledProductWrapper>
   );

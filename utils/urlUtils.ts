@@ -26,7 +26,8 @@ export const removePageQuery = (query, queryParam, asPath) => {
 
 export const replacePageQuery = (query, asPath) => {
   const locationPathName = asPath.split('?')[0];
-  const queryString = getStringifiedQueryFromObject(query);
+  const queryString =
+    typeof query === 'string' ? query : getStringifiedQueryFromObject(query);
   history.replaceState(
     null,
     '',

@@ -661,3 +661,8 @@ export const ESCAPE_REPLACER = (t: string): string =>
 
 export const UNIT_ABBREVIATIONS = ['k', 'm', 'b', 't'];
 
+export const QUERY_PARAMS = {
+  CATEGORY: 'category',
+  LIMIT: 'limit',
+  OFFSET: 'offset',
+};

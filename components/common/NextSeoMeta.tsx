@@ -14,6 +14,8 @@ import { legacyBooleanCheck } from 'utils';
 import { createAdditionalMetaTag, createHrefLangObj } from 'utils/headUtils';
 import { withShortcodes } from 'utils/helper';
 import { addQueryParams, convertUidToUrl } from 'utils/urlUtils';
+import { useRouter } from 'next/router';
+import { QUERY_PARAMS } from 'const/index';
 
 type PopulateMetaProps = {
   prismicData: { [key: string]: any };
@@ -47,6 +49,13 @@ export default function PopulateMeta({
     lang,
     language_full,
   } = useContext(MBContext);
+  const { query } = useRouter();
+  const {
+    [QUERY_PARAMS.LIMIT]: limit,
+    [QUERY_PARAMS.OFFSET]: offset,
+    [QUERY_PARAMS.CATEGORY]: category,
+  } = query;
+
   const {
     bing_site_verification: bingSiteVerification,
     canonical_link: canonicalLink,
@@ -69,11 +78,14 @@ export default function PopulateMeta({
     isDev,
     hostname: host,
   });
+  let finalNoIndex = isStage || isDev ? true : legacyBooleanCheck(noindex);
+  let finalNoFollow = isStage || isDev ? true : legacyBooleanCheck(noindex);
+
   const primaryDomainUrl = new URL(pageUrl).hostname;
   const logoUrl = image?.url || logo?.url;
   const title = withShortcodes(rawTitle).join('');
   const description = withShortcodes(rawDescription).join('');
-  const modifiedCanonicalLink = isMobile
+  let modifiedCanonicalLink = isMobile
     ? canonicalLinkForAMP || canonicalLink
     : canonicalLink;
 
@@ -104,6 +116,13 @@ export default function PopulateMeta({
     datePublished,
     hasSearchEnabled,
   };
+
+  if (limit || category || offset) {
+    // Paginated routes are marked noindex,follow.
+    finalNoFollow = false;
+    finalNoIndex = true;
+    modifiedCanonicalLink = modifiedCanonicalLink?.split?.('?')?.[0] || pageUrl;
+  }
 
   // Hreflang
   const modifiedLanguageAlternates = [
@@ -210,9 +229,9 @@ export default function PopulateMeta({
   const metaProps: NextSeoProps = {
     title,
     description,
-    noindex: isStage || isDev ? true : legacyBooleanCheck(noindex),
-    nofollow: isStage || isDev ? true : legacyBooleanCheck(noindex),
-    ...((canonicalLink || canonicalLinkForAMP) && {
+    noindex: finalNoIndex,
+    nofollow: finalNoFollow,
+    ...(modifiedCanonicalLink && {
       canonical: modifiedCanonicalLink,
     }),
     ...(languages?.length > 0 && {
