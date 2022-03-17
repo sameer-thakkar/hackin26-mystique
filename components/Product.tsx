@@ -946,8 +946,10 @@ const Product = (props) => {
 
   useEffect(() => {
     if (shouldShowNewProductCardDesign) {
-      const isTruncated = tabs[0].contents.length > noOfListItemToShow;
-      setShowMoreDetails(isTruncated);
+      const isTruncated = tabs?.[0]?.contents?.length ?? 0 > noOfListItemToShow;
+      if (isTruncated) {
+        setShowMoreDetails(isTruncated);
+      }
     }
   }, [noOfListItemToShow, tabs.length, shouldShowNewProductCardDesign]);
 
