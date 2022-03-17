@@ -98,14 +98,22 @@ export const categoryTourListParserV1 = async ({
         })
         ?.reduce((acc, curr) => curr + acc);
     };
+    const pinnedCardsSection = getCollectionSection(
+      collectionData,
+      'PINNED_CARDS'
+    );
     const genericSection = getCollectionSection(collectionData, 'GENERIC');
     const headoutPicksSection = getCollectionSection(
       collectionData,
       'HEADOUT_PICKS'
     );
+
+    const pinnedCards = pinnedCardsSection?.tourGroups?.items?.length
+      ? pinnedCardsSection?.tourGroups?.items
+      : [];
     const finalSection = genericSection?.tourGroups?.items?.length
-      ? genericSection?.tourGroups?.items
-      : headoutPicksSection?.tourGroups?.items;
+      ? [...pinnedCards, ...genericSection?.tourGroups?.items]
+      : [...pinnedCards, ...headoutPicksSection?.tourGroups?.items];
     tourData.push(...finalSection);
   } else if (category) {
     const categoryData = await fetchTGIDsByCategoryV2({

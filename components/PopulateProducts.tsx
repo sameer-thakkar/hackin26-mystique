@@ -131,7 +131,7 @@ const PopulateProducts = (props) => {
                 eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_VISIBLE,
                 [ANALYTICS_PROPERTIES.TGID]: tgid,
                 [ANALYTICS_PROPERTIES.POSITION]:
-                  availableToursList.findIndex((t) => t.tgid === tgid) + 1,
+                  availableToursList?.findIndex((t) => t.tgid === tgid) + 1,
                 [ANALYTICS_PROPERTIES.IS_TRUNCATED]: !!entry.target?.querySelector?.(
                   '.more-details'
                 ),
@@ -288,7 +288,7 @@ const PopulateProducts = (props) => {
         <div id="tour-list-heading">
           <Conditional
             if={
-              availableToursList.length &&
+              availableToursList?.length &&
               (sectionTitle || strings.TOUR_LIST_HEADING)
             }
           >
