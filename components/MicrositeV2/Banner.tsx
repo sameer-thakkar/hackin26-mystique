@@ -1,6 +1,5 @@
 import dynamic from 'next/dynamic';
 import React, { useContext, useEffect, useState } from 'react';
-import { scroller } from 'react-scroll';
 import styled from 'styled-components';
 import Image from 'UI/Image';
 import { SIZES } from 'const/ui-constants';
@@ -121,24 +120,6 @@ const Banner = (props) => {
     });
   }, [isSwiperSet]);
 
-  const scrollToSection = (sectionId) => {
-    scroller.scrollTo(sectionId, {
-      duration: 1000,
-      delay: 4000,
-      smooth: 'easeInQuad',
-      offset: -75,
-    });
-  };
-
-  const handleInteraction = (interaction) => {
-    if (interaction) {
-      const [type, target] = interaction.split(':');
-      switch (type.toLowerCase().trim()) {
-        case 'section':
-          scrollToSection(stringIdfy(target));
-      }
-    }
-  };
   return (
     <BannerWrapper isEntertainmentMb={isEntertainmentMb}>
       <div className="main-wrapper">
@@ -154,21 +135,26 @@ const Banner = (props) => {
                     className={`swiper-slide ${
                       image.interaction ? 'pointer' : ''
                     }`}
-                    onClick={() => handleInteraction(image.interaction)}
                   >
-                    <Image
-                      url={
-                        ready &&
-                        (isMobile && image.mobile_url
-                          ? image.mobile_url
-                          : image.url)
-                      }
-                      height={isMobile ? 408 : 400}
-                      width={isMobile ? 686 : 1200}
-                      dontLazyLoad={true}
-                      alt={image.alt}
-                      imageId={stringIdfy(image.alt || '') + index}
-                    />
+                    <a
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={image.showPageUrl}
+                    >
+                      <Image
+                        url={
+                          ready &&
+                          (isMobile && image.mobile_url
+                            ? image.mobile_url
+                            : image.url)
+                        }
+                        height={isMobile ? 408 : 400}
+                        width={isMobile ? 686 : 1200}
+                        dontLazyLoad={true}
+                        alt={image.alt}
+                        imageId={stringIdfy(image.alt || '') + index}
+                      />
+                    </a>
                   </div>
                 );
               })}
