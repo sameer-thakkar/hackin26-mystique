@@ -443,7 +443,8 @@ class MicrositeV2 extends Component<any, any> {
         powered_by_superbrand:
           powered_by_superbrand || commonFooter?.data?.powered_by_superbrand,
         secondaryFooter,
-        invertFooterLogoColor,
+        invertFooterLogoColor:
+          invertFooterLogoColor || commonFooter?.data?.invert_logo_color,
       },
       isMobile,
       isEntertainmentMb,
