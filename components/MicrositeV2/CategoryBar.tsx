@@ -15,11 +15,11 @@ const StyledCategoryBar = styled.div`
     overflow: unset;
   }
   .carousel img {
-    border-radius: 10px;
+    border-radius: 0.625rem;
   }
   @media (max-width: 768px) {
-    margin-left: -16px;
-    margin-right: -16px;
+    margin-left: -1rem;
+    margin-right: -1rem;
   }
 `;
 
@@ -31,10 +31,10 @@ const CategoryBarWrapper = styled.div`
     isEntertainmentMb
       ? `1px solid ${COLORS.GREY.G6}`
       : `1px solid ${COLORS.CHALK}`};
-  grid-gap: 8px;
-  padding-top: 36px;
+  grid-gap: 0.5rem;
+  padding-top: 2.25rem;
   padding-bottom: ${({ isEntertainmentMb }) =>
-    isEntertainmentMb ? '12px' : '14px'};
+    isEntertainmentMb ? '0.75rem' : '0.875rem'};
 
   .tabs-wrap {
     margin: 0;
@@ -43,15 +43,15 @@ const CategoryBarWrapper = styled.div`
     display: grid;
     grid-auto-flow: column;
     justify-content: left;
-    grid-column-gap: 30px;
+    grid-column-gap: 1.875rem;
     position: relative;
   }
   .tab {
     font-family: ${SOLEIL.FONT_STACK};
     font-size: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '21px' : '22px'};
+      isEntertainmentMb ? '1.313rem' : '1.375rem'};
     line-height: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '28px' : '1.3'};
+      isEntertainmentMb ? '1.75rem' : '1.3'};
     color: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? COLORS.GREY.G2 : COLORS.DAVY_GREY};
     font-weight: ${({ isEntertainmentMb }) =>
@@ -64,10 +64,10 @@ const CategoryBarWrapper = styled.div`
   }
   .active-indicator {
     position: absolute;
-    bottom: -16px;
+    bottom: -1rem;
     left: 0;
-    width: 100px;
-    height: 2px;
+    width: 6.25rem;
+    height: 0.125rem;
     background: ${COLORS.PURPS3};
     z-index: 8;
     transition: width 0.5s ease, left 0.5s ease;
@@ -80,7 +80,7 @@ const CategoryBarWrapper = styled.div`
   .filter-wrapper {
     display: grid;
     align-items: center;
-    grid-column-gap: 8px;
+    grid-column-gap: 0.5rem;
     grid-template-columns: auto auto;
   }
   .filter-wrapper span {
@@ -92,15 +92,15 @@ const CategoryBarWrapper = styled.div`
     overflow-x: scroll;
     -webkit-overflow-scrolling: touch;
     padding-top: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '0' : '19px'};
+      isEntertainmentMb ? '1.125rem' : '1.188rem'};
     padding-bottom: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '8px' : '14px'};
+      isEntertainmentMb ? '0.5rem' : '0.875rem'};
     margin-top: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '40px' : '24px'};
+      isEntertainmentMb ? '2.5rem' : '1.5rem'};
 
     .tabs-wrap {
-      padding-left: 16px;
-      padding-right: 16px;
+      padding-left: 1rem;
+      padding-right: 1rem;
     }
 
     .tabs-wrap {
@@ -109,17 +109,17 @@ const CategoryBarWrapper = styled.div`
 
     .active-indicator {
       bottom: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '-8px' : '-14px'};
+        isEntertainmentMb ? '-0.5rem' : '-0.875rem'};
     }
 
     .tab {
       font-size: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '15px' : '18px'};
+        isEntertainmentMb ? '0.938rem' : '1.125rem'};
       font-family: ${SOLEIL.FONT_STACK};
       font-weight: ${({ isEntertainmentMb }) =>
         isEntertainmentMb ? SOLEIL.SEMIBOLD : SOLEIL.MEDIUM};
       line-height: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '20px' : '1.3'};
+        isEntertainmentMb ? '1.25rem' : '1.3'};
     }
 
     .filter-wrapper {
