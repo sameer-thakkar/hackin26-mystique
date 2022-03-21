@@ -61,7 +61,7 @@ function GrowthExperiment7BannerCarousel({
     }
   }, [hasHsidSetFailed]);
 
-  if (hasHsidSetFailed) {
+  if (hasHsidSetFailed && bannerCarouselProps.isMobile) {
     return <Banner {...bannerCarouselProps} />;
   }
 

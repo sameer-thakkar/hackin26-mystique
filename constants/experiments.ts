@@ -25,6 +25,6 @@ export const EXPERIMENTS = {
       VARIANTS.NEW_BANNER_CAROUSEL_WITHOUT_CTA,
       VARIANTS.NEW_BANNER_CAROUSEL_WITH_CTA,
     ],
-    [50, 25, 25]
+    [50, 0, 50]
   ),
 };
