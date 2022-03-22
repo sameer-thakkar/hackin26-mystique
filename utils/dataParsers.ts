@@ -108,13 +108,18 @@ export const categoryTourListParserV1 = async ({
       'HEADOUT_PICKS'
     );
 
-    const pinnedCards = pinnedCardsSection?.tourGroups?.items?.length
+    const pinnedProducts = pinnedCardsSection?.tourGroups?.items?.length
       ? pinnedCardsSection?.tourGroups?.items
       : [];
-    const finalSection = genericSection?.tourGroups?.items?.length
-      ? [...pinnedCards, ...genericSection?.tourGroups?.items]
-      : [...pinnedCards, ...headoutPicksSection?.tourGroups?.items];
-    tourData.push(...finalSection);
+    const finalSections = genericSection?.tourGroups?.items?.length
+      ? [...genericSection?.tourGroups?.items]
+      : [...headoutPicksSection?.tourGroups?.items];
+    const allProducts = pinnedProducts?.length
+      ? finalSections?.filter((product) =>
+          pinnedProducts?.some((p) => product?.id !== p?.id)
+        )
+      : finalSections;
+    tourData.push(...pinnedProducts, ...allProducts);
   } else if (category) {
     const categoryData = await fetchTGIDsByCategoryV2({
       categoryId: category,
