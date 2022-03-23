@@ -65,7 +65,9 @@ function GrowthExperiment7BannerCarousel({
     return <Banner {...bannerCarouselProps} />;
   }
 
-  if (!variant && !bannerCarouselProps.isAmp) return <StyledPlaceHolder />;
+  if (!variant && !bannerCarouselProps.isAmp) {
+    return <StyledPlaceHolder />;
+  }
 
   if (variant === VARIANTS.NEW_BANNER_CAROUSEL_WITHOUT_CTA) {
     return (
@@ -611,7 +613,10 @@ const StyledPlaceHolder = styled.div`
   height: 380px;
   margin: 1rem auto;
   background-color: rgba(0, 0, 0, 0.15);
+  max-width: 1200px;
+  border-radius: 0.5rem;
   @media (max-width: 768px) {
+    border-radius: initial;
     height: 200px;
   }
 `;
