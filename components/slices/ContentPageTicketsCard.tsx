@@ -896,7 +896,7 @@ const TicketCard = (props) => {
           <Button
             className={`tour-book-now-cta`}
             paddingSides={isMobile ? '16px' : '8px'}
-            type="fill"
+            fillType="fill"
             onClick={sendBookNowEvent}
             onKeyDown={sendBookNowEvent}
             role="button"

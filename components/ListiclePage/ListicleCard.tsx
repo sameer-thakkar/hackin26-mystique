@@ -358,7 +358,7 @@ const ListicleCard: React.FC<ListicleCardProps> = ({
                 rel="noopener noreferrer"
                 target={isMobile ? '' : '_blank'}
               >
-                <Button type="fillGradient" paddingSides="41px">
+                <Button fillType="fillGradient" paddingSides="41px">
                   {strings.BOOK_NOW_CTA}
                 </Button>
               </a>

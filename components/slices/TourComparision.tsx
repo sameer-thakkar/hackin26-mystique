@@ -743,7 +743,7 @@ const TourComparisonTable = (props) => {
                         onBookNowClick({ tgid: tour.tgid, position: index + 1 })
                       }
                     >
-                      <Button type="fill" widthProp="100%">
+                      <Button fillType="fill" widthProp="100%">
                         {strings.BOOK_NOW_CTA}
                       </Button>
                     </a>

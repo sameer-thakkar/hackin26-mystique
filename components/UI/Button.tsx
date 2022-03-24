@@ -11,7 +11,7 @@ const Button = styled.button((props) => {
     color: ${props.theme.primaryColor};
   }
   `;
-  switch (props.type) {
+  switch (props.fillType) {
     case 'fill':
       styles = `
       border: 0;

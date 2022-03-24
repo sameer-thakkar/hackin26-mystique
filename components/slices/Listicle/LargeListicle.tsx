@@ -318,7 +318,7 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
             >
               <BookNow
                 fullWidth={!read_more_link?.url}
-                type="fillGradient"
+                fillType="fillGradient"
                 paddingSides="0px"
               >
                 {book_now_alt_text || strings.BOOK_NOW_CTA}

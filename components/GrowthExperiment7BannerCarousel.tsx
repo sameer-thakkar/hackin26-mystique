@@ -11,14 +11,13 @@ import { ANALYTICS_PROPERTIES } from 'const/index';
 import { PAGE_TYPES } from 'const/index';
 import { trackEvent } from 'utils/analytics';
 import Swiper from 'components/Swiper';
-import Cookies from 'js-cookie';
+import { useRecoilValue } from 'recoil';
+import { hsidSetFailAtom } from 'store/atoms/hsid';
 
 import Conditional from './common/Conditional';
 import Banner from './Banner';
 import Button from './UI/Button';
 import Image from './UI/Image';
-import { useRecoilValue } from 'recoil';
-import { hsidSetFailAtom } from 'store/atoms/hsid';
 
 type TBannerCarouselProps = {
   bannerImages: {
@@ -242,7 +241,7 @@ const BannerCarousel = (props) => {
         {hideCTA ? null : (
           <ButtonWrapper>
             <Button
-              type="whiteBordered"
+              fillType="whiteBordered"
               onClick={scrollTicketSection}
               on="tap:tour-list-heading.scrollTo(duration='1200', position='top')"
             >
@@ -282,7 +281,7 @@ const BannerCarousel = (props) => {
             ) : (
               <ButtonWrapper>
                 <Button
-                  type="whiteBordered"
+                  fillType="whiteBordered"
                   onClick={scrollTicketSection}
                   fontSize={'1.125rem'}
                 >

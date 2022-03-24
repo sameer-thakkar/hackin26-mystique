@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import Button from '../UI/Button';
 
 const CTAWrapper = styled.div`
@@ -42,7 +43,7 @@ const CTA = (props) => {
   return (
     <CTAWrapper {...{ align }}>
       <a href={link} target="_blank" rel="noopener noreferrer">
-        <Button type={fill ? 'fillGradient' : type}>{text}</Button>
+        <Button fillType={fill ? 'fillGradient' : type}>{text}</Button>
       </a>
     </CTAWrapper>
   );

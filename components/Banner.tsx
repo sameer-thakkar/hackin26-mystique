@@ -389,7 +389,7 @@ const Banner = (props) => {
         {hideCTA ? null : (
           <ButtonWrapper>
             <Button
-              type="whiteBordered"
+              fillType="whiteBordered"
               onClick={scrollTicketSection}
               on="tap:tour-list-heading.scrollTo(duration='1200', position='top')"
             >
@@ -464,7 +464,7 @@ const Banner = (props) => {
             </div>
             <Conditional if={!hideCTA}>
               <ButtonWrapper>
-                <Button type="whiteBordered" onClick={scrollTicketSection}>
+                <Button fillType="whiteBordered" onClick={scrollTicketSection}>
                   {bannerCtaText || strings.BANNER_CTA}
                 </Button>
               </ButtonWrapper>

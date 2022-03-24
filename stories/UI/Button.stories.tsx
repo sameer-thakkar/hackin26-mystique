@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Button from '../../components/UI/Button';
 
 export default {
@@ -8,12 +9,14 @@ export default {
 
 export const Bordered = () => <Button>Book Now</Button>;
 
-export const Fill = () => <Button type="fill">Book Now</Button>;
+export const Fill = () => <Button fillType="fill">Book Now</Button>;
 
-export const FillGradient = () => <Button type="fillGradient">Book Now</Button>;
+export const FillGradient = () => (
+  <Button fillType="fillGradient">Book Now</Button>
+);
 
 export const WhiteBordered = () => (
   <div style={{ background: 'green', padding: '5%' }}>
-    <Button type="whiteBordered">Book Now</Button>
+    <Button fillType="whiteBordered">Book Now</Button>
   </div>
 );

@@ -704,7 +704,7 @@ const AutomatedTourComparisonTable = ({
                           })
                         }
                       >
-                        <Button type="fill" widthProp="100%">
+                        <Button fillType="fill" widthProp="100%">
                           {strings.BOOK_NOW_CTA}
                         </Button>
                       </a>

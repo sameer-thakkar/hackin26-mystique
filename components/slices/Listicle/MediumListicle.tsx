@@ -334,7 +334,7 @@ const MediumListicle: React.FC<MediumListicleProps> = ({
                 >
                   <BookNow
                     fullWidth={!read_more_link?.url}
-                    type="fillGradient"
+                    fillType="fillGradient"
                     paddingSides="0px"
                   >
                     {strings.BOOK_NOW_CTA}

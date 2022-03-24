@@ -1113,7 +1113,7 @@ const Product = (props) => {
     <Button
       className={`tour-book-now-cta`}
       paddingSides={isMobile ? '14px' : '8px'}
-      type="fill"
+      fillType="fill"
       onClick={clickHandler}
       onKeyDown={clickHandler}
       role="button"
