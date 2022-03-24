@@ -169,6 +169,7 @@ const ProductCard = styled.div`
     display: grid;
     grid-template-columns: repeat(2, max-content);
     column-gap: 4px;
+    font-size: 14px;
   }
   .avg-rating {
     color: ${COLORS.JOY_MUSTARD};
