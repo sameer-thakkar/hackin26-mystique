@@ -10,7 +10,6 @@ import { tourListApiParser } from 'utils/dataParsers';
 import { genManualSlice, getLangObject } from 'utils/helper';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import { getAlternateLanguages } from 'utils';
-import { convertUidToUrl } from 'utils/urlUtils';
 
 const HomePage: ComponentType<any> = dynamic(() =>
   import('./views/HomePage').then((mod) => mod.HomePage)
@@ -418,16 +417,6 @@ class MicrositeV2 extends Component<any, any> {
         : themeOverride;
     const { disclaimer, show_disclaimer } = this.props.data.data;
 
-    const getShowPageUrl = (image) => {
-      if (image.interaction) {
-        const activeTour = allTours[image.interaction];
-        const { showPageUid } = activeTour || {};
-        return showPageUid
-          ? convertUidToUrl({ uid: showPageUid, isDev, hostname: host })
-          : null;
-      }
-    };
-
     const heroProps = {
       banners: CMSImages.reduce((accum, image) => {
         return [
@@ -438,7 +427,7 @@ class MicrositeV2 extends Component<any, any> {
               image.mobile_banner_uploaded.url || image.mobile_banner_url.url,
             interaction: image.interaction,
             alt: image.uploaded_image.alt || image.image_alt,
-            showPageUrl: getShowPageUrl(image),
+            showPageUrl: image.onclick_url,
           },
         ];
       }, []),
