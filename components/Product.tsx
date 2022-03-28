@@ -812,8 +812,9 @@ const Product = (props) => {
   const { allTags = [], validity, combo } = scorpioData || {};
 
   const shouldShowNewProductCardDesign =
-    growthExperiment7Variant !== VARIANTS.DEFAULT_BANNER_CAROUSEL &&
-    growthExperiment7Variant !== null;
+    !isMobile ||
+    (growthExperiment7Variant !== VARIANTS.DEFAULT_BANNER_CAROUSEL &&
+      growthExperiment7Variant !== null);
 
   const descriptorsCsv = descriptors || scorpioData.descriptors;
   const cardTitle = title || scorpioData.title;

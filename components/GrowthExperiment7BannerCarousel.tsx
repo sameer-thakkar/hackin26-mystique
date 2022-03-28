@@ -1,4 +1,9 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from 'react';
 import { scroller } from 'react-scroll';
 import { strings } from 'const/strings';
 import { withShortcodes } from 'utils/helper';
@@ -103,8 +108,9 @@ const swiperParams = {
     disableOnInteraction: false,
   },
   shouldSwiperUpdate: true,
+  initialSlide: 3,
   loop: true,
-  effect: 'card',
+  loopedSlides: 3,
   lazy: true,
   preloadImages: false,
 };
@@ -206,7 +212,7 @@ const BannerCarousel = (props) => {
     });
   }, [isSwiperSet]);
 
-  const scrollTicketSection = () => {
+  const scrollTicketSection = useCallback(() => {
     scroller.scrollTo('tour-list-heading', {
       duration: 1200,
       offset: isMobile ? -80 : -100,
@@ -221,7 +227,7 @@ const BannerCarousel = (props) => {
         : VARIANTS.NEW_BANNER_CAROUSEL_WITH_CTA,
       Ranking: swiper.realIndex + 1,
     });
-  };
+  }, [swiper]);
 
   const bannerSubtext = withShortcodes(tempBannerSubtext);
 
@@ -481,7 +487,6 @@ const StyledBanner = styled.div`
   }
 
   .overlay-container {
-    /* background-color: black; */
     z-index: 10;
     transform: translateZ(1000);
     pointer-events: none;
@@ -609,8 +614,8 @@ const BannerSubtext = styled.em`
 `;
 
 const StyledPlaceHolder = styled.div`
-  height: 380px;
-  margin: 1rem auto;
+  height: 400px;
+  margin: 1rem auto 12px;
   background-color: rgba(0, 0, 0, 0.15);
   max-width: 1200px;
   border-radius: 0.5rem;
