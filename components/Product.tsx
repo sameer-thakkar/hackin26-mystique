@@ -825,25 +825,6 @@ const Product = (props) => {
         .map((descriptor) => descriptor.replace(/^["']+|['"]+$/g, '')) // replace escaped dbl-quotes.
     : [];
 
-  const noOfListItemToShow = shouldShowNewProductCardDesign
-    ? 2
-    : Math.max(NOS_OF_HIGHLIGHTS_TO_SHOW, descriptorsList.length);
-
-  const onTabChange = ({ tab, index, defaultSelection }) => {
-    const isTruncated = tab.contents.length > noOfListItemToShow;
-    setShowMoreDetails(isTruncated);
-    setActiveTabIndex(index);
-    if (!defaultSelection)
-      trackEvent({
-        eventName: ANALYTICS_EVENTS.INFO_TAB_CLICKED,
-        [ANALYTICS_PROPERTIES.TGID]: tgid,
-        [ANALYTICS_PROPERTIES.INFO_HEADING]: tab.heading,
-        [ANALYTICS_PROPERTIES.POSITION]: index + 1,
-        [ANALYTICS_PROPERTIES.IS_TRUNCATED]: isTruncated,
-        [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
-      });
-  };
-
   const handlePopup = () => {
     togglePopup();
   };
@@ -945,6 +926,31 @@ const Product = (props) => {
   const hasReadMore =
     (highlights.flat()?.length >= 3 || showMoreDetailsInTabs) && !defaultOpen;
 
+  const noOfListItemToShow = shouldShowNewProductCardDesign
+    ? getMaxListItemsToShow(tabs[activeTabIndex]?.contents)
+    : Math.max(NOS_OF_HIGHLIGHTS_TO_SHOW, descriptorsList.length);
+
+  const onTabChange = ({ tab, index, defaultSelection }) => {
+    const noOfListItems = shouldShowNewProductCardDesign
+      ? getMaxListItemsToShow(tab.contents)
+      : Math.max(NOS_OF_HIGHLIGHTS_TO_SHOW, descriptorsList.length);
+
+    const isTruncated = tab.contents.length > noOfListItems;
+
+    setShowMoreDetails(isTruncated);
+    setActiveTabIndex(index);
+
+    if (!defaultSelection)
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.INFO_TAB_CLICKED,
+        [ANALYTICS_PROPERTIES.TGID]: tgid,
+        [ANALYTICS_PROPERTIES.INFO_HEADING]: tab.heading,
+        [ANALYTICS_PROPERTIES.POSITION]: index + 1,
+        [ANALYTICS_PROPERTIES.IS_TRUNCATED]: isTruncated,
+        [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
+      });
+  };
+
   useEffect(() => {
     if (shouldShowNewProductCardDesign) {
       const isTruncated = tabs?.[0]?.contents?.length ?? 0 > noOfListItemToShow;
@@ -952,7 +958,7 @@ const Product = (props) => {
         setShowMoreDetails(isTruncated);
       }
     }
-  }, [noOfListItemToShow, tabs.length, shouldShowNewProductCardDesign]);
+  }, [tabs.length, shouldShowNewProductCardDesign]);
 
   const { listingPrice } = tourPrices[tgid];
 
@@ -1021,15 +1027,6 @@ const Product = (props) => {
       [ANALYTICS_PROPERTIES.POSITION]: indexPosition + 1,
       [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
       [ANALYTICS_PROPERTIES.SECTION]: 'Product List',
-    });
-  };
-
-  const trackProductCardImageClick = () => {
-    trackEvent({
-      eventName: 'Product Card Image Clicked',
-      Ranking: indexPosition + 1,
-      TGID: tgid,
-      Variant: growthExperiment7Variant,
     });
   };
 
@@ -1140,19 +1137,12 @@ const Product = (props) => {
       >
         {shouldShowNewProductCardDesign ? (
           <div className="card-img">
-            <a
-              target={isMobile ? null : '_blank'}
-              href={productBookingUrl}
-              rel="nofollow"
-              onClick={trackProductCardImageClick}
-            >
-              <Image
-                url={scorpioData.images[0].url}
-                imageId="card-img"
-                aspectRatio={isMobile ? '21:9' : '3:4'}
-                width={344}
-              />
-            </a>
+            <Image
+              url={scorpioData.images[0].url}
+              imageId="card-img"
+              aspectRatio={isMobile ? '21:9' : '3:4'}
+              width={344}
+            />
           </div>
         ) : null}
 
@@ -1362,3 +1352,24 @@ const Product = (props) => {
 };
 
 export default Product;
+
+const getMaxListItemsToShow = (contentsForTab: Record<string, any>[] = []) => {
+  if (contentsForTab.length === 0) {
+    return 2;
+  }
+
+  const APPROX_WORDS_SPANNING_CARD_IMG_HEIGHT = 42;
+  const MAX_LIST_ITEMS = 4;
+
+  let wordCountInListItems = 0;
+  let listItemsCount = 0;
+
+  contentsForTab.forEach((content) => {
+    if (wordCountInListItems < APPROX_WORDS_SPANNING_CARD_IMG_HEIGHT) {
+      wordCountInListItems += content.text.split(' ').length;
+      listItemsCount++;
+    }
+  });
+
+  return Math.min(MAX_LIST_ITEMS, listItemsCount);
+}
