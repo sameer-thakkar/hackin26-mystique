@@ -148,6 +148,10 @@ const Banner = (props) => {
           <div className="swiper-wrapper">
             <Swiper {...swiperOptions}>
               {banners.map((image, index) => {
+                const showPageUrl =
+                  typeof image?.showPageUrl === 'string'
+                    ? image?.showPageUrl
+                    : image?.showPageUrl?.url;
                 return (
                   <div
                     key={index}
@@ -166,7 +170,7 @@ const Banner = (props) => {
                       <a
                         target="_blank"
                         rel="noopener noreferrer"
-                        href={image.showPageUrl}
+                        href={showPageUrl}
                       >
                         <Image
                           url={
