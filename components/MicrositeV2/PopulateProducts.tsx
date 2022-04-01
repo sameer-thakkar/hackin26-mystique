@@ -100,16 +100,19 @@ const PopulateProducts = (props) => {
     const perChunk = isMobile
       ? NO_OF_CARDS_IN_ROW.MOBILE
       : NO_OF_CARDS_IN_ROW.DESKTOP;
-    const result = tgidsArr.slice(offset).reduce((resultArray, item, index) => {
-      const chunkIndex = Math.floor(index / perChunk);
-      if (!resultArray[chunkIndex]) {
-        resultArray[chunkIndex] = [];
-      }
+    const result = tgidsArr
+      .filter((tgid) => allTours?.[tgid]?.listingPrice?.finalPrice)
+      .slice(offset)
+      .reduce((resultArray, item, index) => {
+        const chunkIndex = Math.floor(index / perChunk);
+        if (!resultArray[chunkIndex]) {
+          resultArray[chunkIndex] = [];
+        }
 
-      resultArray[chunkIndex].push(item);
+        resultArray[chunkIndex].push(item);
 
-      return resultArray;
-    }, []);
+        return resultArray;
+      }, []);
     return result;
   };
 
