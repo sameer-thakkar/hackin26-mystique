@@ -32,6 +32,7 @@ import cloneDeep from 'lodash.clonedeep';
 import { StyledAccordion } from 'components/slices/Accordion';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import { fetchTourGroupReviews, fetchTGIDsByCategoryV2 } from 'utils/apiUtils';
+import { generateDescriptor } from 'utils/productUtils';
 import { StyledAsideModal } from 'components/UI/AsideModal';
 import TitleTextCombo from 'components/UI/TitleTextCombo';
 import Conditional from 'components/common/Conditional';
@@ -192,14 +193,16 @@ const ShowPage = ({
 
   const {
     name,
+    listingPrice,
+    maxDuration,
+    minDuration,
+    microBrandsDescriptor,
     microBrandsHighlight,
     imageUploads,
-    microBrandsDescriptor,
     allTags,
     topReviews,
     currency,
     reviewsDetails,
-    listingPrice,
     primarySubCategory,
     city,
     startLocation,
@@ -250,7 +253,15 @@ const ShowPage = ({
   const categoryName = showType ? showType : primarySubCategoryName;
 
   const selfCanonicalLink = convertUidToUrl({ uid });
-  const tagsArray = [categoryName, ...microBrandsDescriptor.split('\r\n')];
+  const updatedDescriptors = generateDescriptor({
+    v2Descriptors: microBrandsDescriptor?.split('\r\n'),
+    maxDuration,
+    minDuration,
+    lang: currentLanguage,
+    isShowPage: true,
+  });
+
+  const tagsArray = [categoryName, ...updatedDescriptors];
   const alternateLanguages = getAlternateLanguages(
     alternate_languages,
     isDev,

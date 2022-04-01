@@ -21,7 +21,7 @@ import {
   redirectTo,
   refsArrayToObject,
 } from 'utils';
-import { addCashbackValueToDescriptor } from 'utils/productUtils';
+import { generateDescriptor } from 'utils/productUtils';
 import { traceError } from 'utils/logutils';
 import { getHostName } from 'utils/helper';
 import { getLangUID, getValidUrlParams, sanitizeURL } from 'utils/urlUtils';
@@ -1188,7 +1188,7 @@ export const getPageData = async ({
     }
 
     if (ContentType === CUSTOM_TYPES.GLOBAL_EXPERIENCE) {
-      const { globalCollection } = CMSContent;
+      const { globalCollection, lang } = CMSContent;
 
       const {
         data: {
@@ -1205,6 +1205,7 @@ export const getPageData = async ({
         commonScratchPrice: true,
         hostname,
         cityName,
+        lang: getHeadoutLanguagecode(lang),
       });
       return {
         CMSContent: {
@@ -1445,8 +1446,10 @@ export const getPageData = async ({
         };
         const {
           name,
+          descriptors,
+          minDuration,
+          maxDuration,
           microBrandsHighlight,
-          microBrandsDescriptor,
           highlights,
           media,
           imageUrl,
@@ -1460,10 +1463,11 @@ export const getPageData = async ({
           combo,
         } = tour || {};
         const { productImages, safetyImages } = media || {};
-        const { cashbackValue } = listingPrice || {};
-        const updatedDescriptors = addCashbackValueToDescriptor({
-          descriptor: microBrandsDescriptor,
-          cashbackValue,
+        const updatedDescriptors = generateDescriptor({
+          descriptors,
+          maxDuration,
+          minDuration,
+          lang: getHeadoutLanguagecode(lang),
         });
 
         let allTags = allTagsTour || [];

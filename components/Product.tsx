@@ -33,9 +33,7 @@ import { COLORS, SOLEIL } from 'const/ui-constants';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import {
   extractTabsFromHighlights,
-  getDescriptorIconURL,
   getProductCardLayout,
-  parseDescriptorIcon,
 } from 'utils/productUtils';
 import { trackEvent } from 'utils/analytics';
 import { getHostName, truncate, wordCount } from 'utils/helper';
@@ -47,6 +45,8 @@ import {
   productCardImageSupportStyles,
 } from 'style/growthExperiment7';
 import { VARIANTS } from 'const/experiments';
+import { descriptorIcons } from 'const/descriptorIcons';
+import { getDuration } from 'utils/timeUtils';
 
 const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
   ssr: false,
@@ -726,10 +726,12 @@ const ModalCardContainer = styled.div`
 
 export const Descriptors = ({
   descriptorArray: descarr,
-  hasValidity = false,
   horizontal = false,
   pageType = '',
   shouldShowAllDescriptors = true,
+  minDuration,
+  maxDuration,
+  lang = 'en',
 }) => {
   const descriptorArray = shouldShowAllDescriptors
     ? descarr
@@ -737,23 +739,25 @@ export const Descriptors = ({
 
   return (
     <TourTags horizontal={horizontal} pageType={pageType}>
-      <Conditional if={hasValidity}>
-        <div key={'validity'} className="tour-tag">
-          <Image imageId={'validity'} url={getDescriptorIconURL('validity')} />
-          {strings.DESCRIPTORS.VALIDITY}
-        </div>
-      </Conditional>
-      {descriptorArray.reduce((acc, item, index) => {
-        const { icon, descriptor } = parseDescriptorIcon(item.trim());
+      {descriptorArray.map((item, index) => {
+        const DescriptorSVG = descriptorIcons[item];
 
-        const descEl = descriptor ? (
+        return item ? (
           <div key={`descriptor-${index}`} className="tour-tag">
-            <Image url={icon} />
-            {descriptor.replace(/['"]+/g, '')}
+            <DescriptorSVG />
+
+            <Conditional if={item === 'DURATION'}>
+              {strings.formatString(
+                strings.DESCRIPTORS.DURATION,
+                `${getDuration({ minDuration, maxDuration, lang })}`
+              )}
+            </Conditional>
+            <Conditional if={item !== 'DURATION'}>
+              {strings.DESCRIPTORS?.[item]}
+            </Conditional>
           </div>
         ) : null;
-        return [...acc, descEl];
-      }, [])}
+      })}
     </TourTags>
   );
 };
@@ -809,21 +813,15 @@ const Product = (props) => {
   );
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [showComboVariant, setShowComboVariant] = useState(false);
-  const { allTags = [], validity, combo } = scorpioData || {};
+  const { allTags = [], combo, minDuration, maxDuration } = scorpioData || {};
 
   const shouldShowNewProductCardDesign =
     !isMobile ||
     (growthExperiment7Variant !== VARIANTS.DEFAULT_BANNER_CAROUSEL &&
       growthExperiment7Variant !== null);
 
-  const descriptorsCsv = descriptors || scorpioData.descriptors;
+  const descriptorsList = descriptors || scorpioData.descriptors;
   const cardTitle = title || scorpioData.title;
-
-  const descriptorsList = descriptorsCsv
-    ? descriptorsCsv
-        .match(/(("|').*?("|')|[^",]+)(?=\s*,|\s*$)/g)
-        .map((descriptor) => descriptor.replace(/^["']+|['"]+$/g, '')) // replace escaped dbl-quotes.
-    : [];
 
   const handlePopup = () => {
     togglePopup();
@@ -870,6 +868,8 @@ const Product = (props) => {
             closeHandler={handleCloseComboPopup}
             descriptors={descriptorsList}
             bookingUrl={productBookingUrl}
+            minDuration={minDuration}
+            maxDuration={maxDuration}
           />
         ),
         type: SIDEBAR_TYPES.COMBO_VARIANT,
@@ -1173,8 +1173,10 @@ const Product = (props) => {
           <Conditional if={mbTheme === THEMES.MIN_BLUE}>
             <Descriptors
               descriptorArray={descriptorsList}
-              hasValidity={!!validity}
               pageType={pageType}
+              minDuration={minDuration}
+              maxDuration={maxDuration}
+              lang={currentLanguage}
             />
           </Conditional>
           <Conditional if={hasSafetyFlag}>
@@ -1257,10 +1259,12 @@ const Product = (props) => {
             </Conditional>
             <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
               <Descriptors
-                hasValidity={!!validity}
                 descriptorArray={descriptorsList}
                 pageType={pageType}
                 shouldShowAllDescriptors={shouldShowAllDescriptors}
+                minDuration={minDuration}
+                maxDuration={maxDuration}
+                lang={currentLanguage}
               />
             </Conditional>
           </CTAContainer>
@@ -1335,6 +1339,8 @@ const Product = (props) => {
           closeHandler={handleCloseComboPopup}
           descriptors={descriptorsList}
           bookingUrl={productBookingUrl}
+          minDuration={minDuration}
+          maxDuration={maxDuration}
         />
       )}
     </>
@@ -1372,4 +1378,4 @@ const getMaxListItemsToShow = (contentsForTab: Record<string, any>[] = []) => {
   });
 
   return Math.min(MAX_LIST_ITEMS, listItemsCount);
-}
+};

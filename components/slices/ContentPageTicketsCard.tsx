@@ -29,17 +29,16 @@ import PriceBlock from 'UI/PriceBlock';
 import Chevron from 'UI/Chevron';
 import {
   extractTabsFromHighlights,
-  getDescriptorIconURL,
   getProductCardLayout,
-  parseDescriptorIcon,
 } from 'utils/productUtils';
-import Image from 'UI/Image';
 import { truncate, wordCount } from 'utils/helper';
 import { currencyAtom } from 'store/atoms/currency';
 import { BLACK_COLOR_CLOSE } from 'assets/SvgIcons';
 import Conditional from 'components/common/Conditional';
 import Product from 'components/Product';
 import { trackEvent } from 'utils/analytics';
+import { descriptorIcons } from 'const/descriptorIcons';
+import { getDuration } from 'utils/timeUtils';
 
 const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
   ssr: false,
@@ -597,25 +596,30 @@ const ModalCardContainer = styled.div`
 
 const Descriptors = ({
   descriptorArray,
-  hasValidity = false,
   isMainCard = false,
   isOpened = false,
+  minDuration,
+  maxDuration,
+  lang = 'en',
 }) => {
   return (
     <TourTags isMainCard={isMainCard} isOpened={isOpened}>
-      <Conditional if={hasValidity}>
-        <div key={'validity'} className="tour-tag">
-          <Image imageId={'validity'} url={getDescriptorIconURL('validity')} />
-          {strings.DESCRIPTORS.VALIDITY}
-        </div>
-      </Conditional>
-      {descriptorArray.reduce((acc, item, index) => {
-        const { icon, descriptor } = parseDescriptorIcon(item.trim());
+      {descriptorArray.map((item, index) => {
+        const DescriptorSVG = descriptorIcons[item];
 
-        let descEl = descriptor ? (
+        let descEl = item ? (
           <div key={`descriptor-${index}`} className="tour-tag">
-            <Image url={icon} />
-            {descriptor.replace(/['"]+/g, '')}
+            <DescriptorSVG />
+
+            <Conditional if={item === 'DURATION'}>
+              {strings.formatString(
+                strings.DESCRIPTORS.DURATION,
+                `${getDuration({ minDuration, maxDuration, lang })}`
+              )}
+            </Conditional>
+            <Conditional if={item !== 'DURATION'}>
+              {strings.DESCRIPTORS?.[item]}
+            </Conditional>
           </div>
         ) : null;
 
@@ -623,8 +627,8 @@ const Descriptors = ({
           <div className="tour-tag-wrapper">{descEl}</div>
         ) : null;
 
-        return [...acc, descEl];
-      }, [])}
+        return descEl;
+      })}
     </TourTags>
   );
 };
@@ -663,16 +667,9 @@ const TicketCard = (props) => {
   const currency = useRecoilValue(currencyAtom);
   const [isContentOpen, toggleContentOpen] = useState(defaultOpen);
   const [isOpened, setIsOpened] = useState(false);
-  const { allTags = [] } = scorpioData || {};
+  const { allTags = [], minDuration, maxDuration } = scorpioData || {};
 
-  const { validity } = scorpioData;
-  const descriptorsCsv = descriptors || scorpioData.descriptors;
-
-  const descriptorsList = descriptorsCsv
-    ? descriptorsCsv
-        .match(/(("|').*?("|')|[^",]+)(?=\s*,|\s*$)/g)
-        .map((descriptor) => descriptor.replace(/^["']+|['"]+$/g, '')) // replace escaped dbl-quotes.
-    : [];
+  const descriptorsList = descriptors || scorpioData.descriptors;
 
   const noOfListItemToShow = Math.max(
     NOS_OF_HIGHLIGHTS_TO_SHOW,
@@ -920,10 +917,12 @@ const TicketCard = (props) => {
       </Conditional>
       <Conditional if={mbTheme !== THEMES.MIN_BLUE && (isMobile || isOpened)}>
         <Descriptors
-          hasValidity={!!validity}
           descriptorArray={descriptorsList}
           isMainCard={true}
           isOpened={isOpened}
+          minDuration={minDuration}
+          maxDuration={maxDuration}
+          lang={currentLanguage}
         />
       </Conditional>
     </>
@@ -969,15 +968,19 @@ const TicketCard = (props) => {
             <Conditional if={mbTheme === THEMES.MIN_BLUE}>
               <Descriptors
                 descriptorArray={descriptorsList}
-                hasValidity={!!validity}
                 isMainCard={true}
+                minDuration={minDuration}
+                maxDuration={maxDuration}
+                lang={currentLanguage}
               />
             </Conditional>
             <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
               <Descriptors
-                hasValidity={!!validity}
                 descriptorArray={descriptorsList}
                 isMainCard={true}
+                minDuration={minDuration}
+                maxDuration={maxDuration}
+                lang={currentLanguage}
               />
             </Conditional>
             {!isMobile && (

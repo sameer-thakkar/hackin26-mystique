@@ -147,6 +147,8 @@ type ComboVariantsProps = {
   closeHandler: () => void;
   descriptors: string[];
   bookingUrl: string;
+  minDuration: number;
+  maxDuration: number;
 };
 const ComboVariants = ({
   productTitle,
@@ -156,6 +158,8 @@ const ComboVariants = ({
   closeHandler,
   descriptors,
   bookingUrl,
+  minDuration,
+  maxDuration,
 }: ComboVariantsProps) => {
   const { lang, host, isDev, isStage } = useContext(MBContext);
   const hostname = getHostName(isStage, isDev, host);
@@ -222,7 +226,13 @@ const ComboVariants = ({
               <ProductTitle>{productTitle}</ProductTitle>
             </ProductTitleWrapper>
             <Conditional if={!isMobile}>
-              <Descriptors descriptorArray={descriptors} horizontal={true} />
+              <Descriptors
+                descriptorArray={descriptors}
+                horizontal={true}
+                minDuration={minDuration}
+                maxDuration={maxDuration}
+                lang={lang}
+              />
             </Conditional>
           </ProductInfo>
           <StyledVariantsWrapper>

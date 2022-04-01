@@ -68,7 +68,17 @@ const es = {
   THEATRE: 'Teatro',
   TIMINGS: 'Horarios',
   DESCRIPTORS: {
-    VALIDITY: 'Validez ampliada',
+    EXTENDED_VALIDITY: 'Validez ampliada',
+    MOBILE_TICKET: 'Entradas en el móvil',
+    HOTEL_PICKUP: 'Traslados de Hotel',
+    INSTANT_CONFIRMATION: 'Confirmación instantánea',
+    SKIP_THE_LINE: 'Acceso sin colas',
+    DURATION: 'Duración: {0}',
+    FREE_CANCELLATION: 'Cancelación gratuita',
+    AUDIO_GUIDE: 'Audioguía',
+    GUIDED_TOUR: 'Visita guiada',
+    RETURN_TRANSFERS: 'Traslados de ida y vuelta',
+    MEALS_INCLUDED: 'Comidas incluidas',
   },
   SAFE_EXPERIENCE: {
     HEADING: 'Estándares de Seguridad',
@@ -351,9 +361,6 @@ const es = {
   FLEXIBLE: 'Flexible',
   INCLUSIONS: 'Incluye',
   FREE_CANCELLATION: 'Cancelación gratuita',
-  HOUR: ' h',
-  HOURS: ' h',
-  MINUTES: ' min',
 };
 
 export default es;

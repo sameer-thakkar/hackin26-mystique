@@ -69,7 +69,17 @@ const nl = {
   THEATRE: 'Theater',
   TIMINGS: 'Tijdstippen',
   DESCRIPTORS: {
-    VALIDITY: 'Extended Validity',
+    EXTENDED_VALIDITY: 'Verlengde geldigheid',
+    MOBILE_TICKET: 'Tickets op je mobiel',
+    HOTEL_PICKUP: 'Ophalen bij het Hotel',
+    INSTANT_CONFIRMATION: 'Directe bevestiging',
+    SKIP_THE_LINE: 'Skip-the-line',
+    DURATION: 'Duur: {0}',
+    FREE_CANCELLATION: 'Gratis annuleren',
+    AUDIO_GUIDE: 'Audiogids',
+    GUIDED_TOUR: 'Rondleiding',
+    RETURN_TRANSFERS: 'Retour transfers',
+    MEALS_INCLUDED: 'Inclusief maaltijden',
   },
   SAFE_EXPERIENCE: {
     HEADING: 'Beste veiligheidsnormen',
@@ -341,9 +351,6 @@ const nl = {
   FLEXIBLE: 'Flexibel',
   INCLUSIONS: 'Inclusief',
   FREE_CANCELLATION: 'Gratis annuleren',
-  HOUR: ' uur',
-  HOURS: ' uur',
-  MINUTES: ' min',
 };
 
 export default nl;

@@ -10,10 +10,7 @@ import {
   fetchTourList,
 } from 'utils/apiUtils';
 import { csvTgidToArray } from 'utils/helper';
-import {
-  addCashbackValueToDescriptor,
-  getSingleAriesTag,
-} from 'utils/productUtils';
+import { generateDescriptor, getSingleAriesTag } from 'utils/productUtils';
 import { CURRENCY_SYMBOL_MAP } from 'const/index';
 
 export const uncategorizedToursListParser = (
@@ -230,18 +227,22 @@ export const categoryTourListParserV1 = async ({
         highlights,
         listingPrice,
         media,
-        microBrandsDescriptor,
+        descriptors,
+        minDuration,
+        maxDuration,
         microBrandsHighlight,
         name,
         reviewCount,
         combo,
       } = tour || {};
       const { productImages, safetyImages } = media || {};
-      const { cashbackValue } = listingPrice || {};
-      const updatedDescriptors = addCashbackValueToDescriptor({
-        descriptor: microBrandsDescriptor,
-        cashbackValue,
+      const updatedDescriptors = generateDescriptor({
+        descriptors,
+        maxDuration,
+        minDuration,
+        lang: language,
       });
+
       const { variants } =
         tgidVariantData?.find((item: any) => item.id === id) || {};
       const [variantId] =
@@ -271,6 +272,8 @@ export const categoryTourListParserV1 = async ({
           safetyImages,
           title: name,
           combo,
+          minDuration,
+          maxDuration,
         },
       };
     }, {});
@@ -445,6 +448,8 @@ export const categoryTourListParserV2 = async (
 
       const allProducts = items?.map((product) => {
         const {
+          minDuration,
+          maxDuration,
           microBrandsDescriptor,
           microBrandsHighlight,
           listingPrice,
@@ -462,13 +467,20 @@ export const categoryTourListParserV2 = async (
         const { displayName: primaryCategoryName } = primaryCategory || {};
         const { displayName: primarySubCategoryName } =
           primarySubCategory || {};
-
         const { finalPrice, originalPrice, currencyCode } = listingPrice || {};
         const currencySymbol = CURRENCY_SYMBOL_MAP[currencyCode];
         const re = /(?:\r\n|\s\|\s)/g;
-        const mbDescriptors = microBrandsDescriptor
+        const descriptors = microBrandsDescriptor
           ? microBrandsDescriptor.split(re)
           : microBrandsDescriptor;
+        const mbDescriptors = generateDescriptor({
+          v2Descriptors: descriptors,
+          maxDuration,
+          minDuration,
+          lang: 'en',
+          isEntertainmentMb: true,
+        });
+
         const filterHighlights = [
           'Theatre Name',
           'Show Timings',
@@ -580,7 +592,7 @@ export const categoryTourListParserV2 = async (
   };
 };
 
-export const tourListApiParser = (apiResponse) => {
+export const tourListApiParser = (apiResponse, lang = 'en') => {
   const currencySymbolMap = apiResponse?.currencies?.reduce(
     (acc, currency) => ({
       ...acc,
@@ -588,27 +600,29 @@ export const tourListApiParser = (apiResponse) => {
     }),
     {}
   );
-
   return apiResponse?.tourGroups?.reduce((acc, tour) => {
     const {
       id,
       allTags,
+      descriptors,
       averageRating,
       callToAction,
       highlights,
       listingPrice,
       media,
       imageUrl,
-      microBrandsDescriptor,
+      maxDuration,
+      minDuration,
       microBrandsHighlight,
       name,
       reviewCount,
     } = tour || {};
     const { productImages, safetyImages } = media || {};
-    const { cashbackValue } = listingPrice || {};
-    const updatedDescriptors = addCashbackValueToDescriptor({
-      descriptor: microBrandsDescriptor,
-      cashbackValue,
+    const updatedDescriptors = generateDescriptor({
+      descriptors,
+      maxDuration,
+      minDuration,
+      lang,
     });
 
     return {
@@ -651,11 +665,10 @@ export const parseV2ProductDescriptors = ({
   category?: string;
 }) => {
   let finalDescriptors;
-  const isCategoryTourList = hasCategoryTourList === true;
   if (!descriptors) return [];
   if (descriptors) {
     switch (true) {
-      case isCategoryTourList:
+      case hasCategoryTourList:
         finalDescriptors = category ? [category, ...descriptors] : descriptors;
         break;
       case descriptors?.includes('\r\n'):
@@ -682,7 +695,9 @@ export const getToursGlobalCollection = async ({
   commonScratchPrice,
   hostname,
   cityName,
+  lang = 'en',
 }: {
+  lang: string;
   collection?: number;
   sub_category?: number;
   tgid?: number;
@@ -776,17 +791,20 @@ export const getToursGlobalCollection = async ({
       highlights,
       listingPrice,
       media,
-      microBrandsDescriptor,
       microBrandsHighlight,
+      descriptors,
+      minDuration,
+      maxDuration,
       name,
       reviewCount,
       combo,
     } = tour || {};
     const { productImages, safetyImages } = media || {};
-    const { cashbackValue } = listingPrice || {};
-    const updatedDescriptors = addCashbackValueToDescriptor({
-      descriptor: microBrandsDescriptor,
-      cashbackValue,
+    const updatedDescriptors = generateDescriptor({
+      descriptors,
+      maxDuration,
+      minDuration,
+      lang,
     });
     const { variants } =
       tgidVariantData?.find((item: any) => item?.id === id) || {};

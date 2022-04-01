@@ -77,6 +77,7 @@ const MicrositeV1 = (props) => {
     serverRequestStartTimestamp,
     categoryTourListData,
   } = props;
+
   const [isMobile, setIsMobile] = useState(props?.isMobile);
   const windowWidth = useWindowWidth();
 
@@ -378,7 +379,7 @@ const MicrositeV1 = (props) => {
       })
         .then((res) => res.json())
         .then((data) => {
-          const formattedData = tourListApiParser(data);
+          const formattedData = tourListApiParser(data, currentLanguage);
           setScorpioData(formattedData);
         });
     }
@@ -431,6 +432,7 @@ const MicrositeV1 = (props) => {
       'Carousel Type': getCaraouselTypeFromVariant(growthExperiment7Variant),
     });
   }, [eventsReady, growthExperiment7Variant]);
+
 
   const onTogglePopup = () => {
     toggleFreeTourPopup(!freeTourPopupOpen);

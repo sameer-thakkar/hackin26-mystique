@@ -1,5 +1,9 @@
 import { RichText } from 'prismic-reactjs';
 import { THEMES } from 'const/index';
+import {
+  DESCRIPTOR_RANKING_LOGIC,
+  MAX_DESCRIPTORS_DISPLAYED,
+} from 'const/descriptors';
 
 export const extractTabsFromHighlights = (highlights) => {
   let tabs = [];
@@ -61,7 +65,7 @@ export const getProductCardLayout = ({
     case THEMES.DEF_INTERIM:
     case THEMES.DEFAULT:
     default:
-      layout = {
+      layout = layout = {
         desktop: [
           'title line cta-combo',
           hasShortSummary && 'summary line cta-combo',
@@ -93,24 +97,6 @@ export const getProductCardLayout = ({
   };
 
   return layout;
-};
-
-export const getDescriptorIconURL = (icon, ext = 'svg') =>
-  `${'https://cdn-imgix-open.headout.com/mb-icons/'}${icon}.${ext}`;
-
-export const parseDescriptorIcon = (str) => {
-  const {
-    icon = 'check',
-    descriptor,
-    ext = 'svg',
-  } = /(\{(?<icon>[\S]*)((\s*)?ext=(['"])?(?<ext>[^"'\s]*)?\S*?)?(\s*)?\})?(\s*)(?<descriptor>.*)/g.exec(
-    str
-  )?.groups;
-
-  return {
-    icon: icon ? getDescriptorIconURL(icon, ext) : null,
-    descriptor,
-  };
 };
 
 export const getContentBlocksMidIndex = (array) => {
@@ -244,3 +230,57 @@ export const addCashbackValueToDescriptor = ({
 
 export const getSingleAriesTag = (arr, tag) =>
   arr.find((ele) => ele.includes(tag));
+
+export const rankDescriptorList = (descriptorList) => {
+  const splitDescriptorListWords = descriptorList?.map((descriptor) =>
+    descriptor.split(' ')
+  );
+
+  const rankedDescriptorListWords = splitDescriptorListWords.sort(
+    (a, b) =>
+      DESCRIPTOR_RANKING_LOGIC.indexOf(a[0]) -
+      DESCRIPTOR_RANKING_LOGIC.indexOf(b[0])
+  );
+
+  const rankedDescriptorList = rankedDescriptorListWords?.map((descriptor) =>
+    descriptor.join(' ')
+  );
+
+  return rankedDescriptorList;
+};
+
+export const generateDescriptor = ({
+  descriptors = [],
+  v2Descriptors = [],
+  minDuration,
+  maxDuration,
+  isEntertainmentMb = false,
+  isShowPage = false,
+}: {
+  descriptors?: Record<string, string>[];
+  v2Descriptors?: string[];
+  minDuration: number | null;
+  maxDuration: number | null;
+  lang: string;
+  isEntertainmentMb?: boolean;
+  isShowPage?: boolean;
+}) => {
+  if (isShowPage || isEntertainmentMb) {
+    return v2Descriptors;
+  }
+
+  if (!isEntertainmentMb && !isShowPage) {
+    const headoutDescriptors = descriptors?.map(
+      (descriptor) => descriptor?.code
+    );
+
+    if (minDuration && maxDuration) {
+      headoutDescriptors.push('DURATION');
+    }
+
+    return rankDescriptorList(headoutDescriptors).slice(
+      0,
+      MAX_DESCRIPTORS_DISPLAYED
+    );
+  }
+};

@@ -89,7 +89,7 @@ const TicketCard = (props) => {
       })
         .then((res) => res.json())
         .then((data) => {
-          const formattedData = tourListApiParser(data);
+          const formattedData = tourListApiParser(data, currentLanguage);
           setScorpioData(formattedData);
         });
     }

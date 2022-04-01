@@ -152,7 +152,7 @@ const CustomLinkedTours = ({
 
   useEffect(() => {
     if (tourListData) {
-      const tours = tourListApiParser(tourListData);
+      const tours = tourListApiParser(tourListData, lang);
       const { currencies } = tourListData || {};
       const [currency] = currencies || [];
       setTours(tours);
