@@ -25,6 +25,8 @@ export const extractTabsFromHighlights = (highlights) => {
   return { highlights: nonTabHighlights, tabs };
 };
 
+const PRODUCT_CARD_DESKTOP_IMG_GRID_AREA = 'card-img ';
+
 export const getProductCardLayout = ({
   mbTheme,
   hasTags,
@@ -67,18 +69,34 @@ export const getProductCardLayout = ({
     default:
       layout = layout = {
         desktop: [
-          'card-img title line cta-combo',
-          hasShortSummary && 'card-img summary line cta-combo',
-          hasIconBoosters && 'card-img icon-booster line cta-combo',
-          hasOffer && 'card-img offer line cta-combo',
-          hasV1Booster && 'card-img booster line cta-combo',
-          'card-img body line cta-combo',
+          `${
+            isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
+          }title line cta-combo`,
+          hasShortSummary &&
+            `${
+              isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
+            } summary line cta-combo`,
+          hasIconBoosters &&
+            `${
+              isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
+            } icon-booster line cta-combo`,
+          hasOffer &&
+            `${
+              isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
+            } offer line cta-combo`,
+          hasV1Booster &&
+            `${
+              isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
+            } booster line cta-combo`,
+          `${
+            isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
+          } body line cta-combo`,
           ((!hasV1Booster && !hasOffer) || !hasShortSummary) &&
             !isTicketCard &&
             'card-img . line cta-combo',
         ],
         mobile: [
-          'card-img card-img',
+          isTicketCard ? null : 'card-img card-img',
           'title title',
           hasNextAvailable && 'next-available next-available',
           `price-block ${hasIconBoosters ? 'icon-booster' : 'price-block'}`,

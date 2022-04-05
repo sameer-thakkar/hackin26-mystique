@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import parse from 'url-parse';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { greyScheme } from 'style/theme';
 import { MBContext } from 'contexts/MBContext';
 import HorizontalLine from 'components/slices/HorizontalLine';
@@ -54,6 +54,73 @@ const Container = styled.div`
   width: 100%;
 `;
 
+const cardImageStyles = css`
+  .card-img {
+    grid-area: card-img;
+    width: 258px;
+    height: 344px;
+    border-radius: 0.5rem;
+
+    img {
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @media (max-width: 768px) {
+      grid-row-end: initial;
+      grid-column: span 2;
+
+      width: ${({ isAmp }) => ` calc(100% + ${isAmp ? '2rem' : '1rem'})`};
+      max-height: 158px;
+      margin: -22px -16px -0.5rem;
+
+      border-radius: 0.5rem 0.5rem 0 0;
+
+      img {
+        border-radius: 0.5rem 0.5rem 0 0;
+        background-color: rgba(0, 0, 0, 0.3);
+        margin: 0;
+      }
+    }
+  }
+`;
+
+const moreDetailsButtonStyles = (isAmp: boolean) => css`
+  padding: 0.75rem;
+  background-color: ${COLORS.GREY.G7};
+  margin-top: ${isAmp ? '0.4rem' : '0'};
+  grid-area: cta-block;
+  grid-column: 1 / 2;
+  width: 32vw;
+  border-radius: 4px;
+  font-weight: 600;
+  color: ${COLORS.GREY.G2};
+  position: absolute;
+  font-size: 0.875rem;
+  letter-spacing: 0.6px;
+  display: flex;
+  justify-content: center;
+  line-height: 125%;
+  .chevron {
+    display: none;
+  }
+`;
+
+const ctaBlockMobileStyles = css`
+  grid-column: 2;
+  margin-top: -1.5rem;
+  margin-left: auto;
+  width: 42vw;
+  .tour-book-now-cta {
+    line-height: 125%;
+    padding: 0.75rem;
+    border-radius: 4px;
+    min-width: auto;
+    letter-spacing: 0.6px;
+    font-size: 0.875rem;
+  }
+`;
+
 const StyledProductCard = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
   padding: ${({ isTicketCard, theme }) =>
@@ -91,34 +158,10 @@ const StyledProductCard = styled.div`
   }
   ${({ theme }) => theme.productCards?.styles?.desktop}
 
-  .card-img {
-    grid-area: card-img;
-    width: 258px;
-    height: 344px;
-    border-radius: 0.5rem;
-
-    img {
-      height: 100%;
-      object-fit: cover;
-    }
-
-    @media (max-width: 768px) {
-      grid-row-end: initial;
-      grid-column: span 2;
-
-      width: ${({ isAmp }) => ` calc(100% + ${isAmp ? '2rem' : '1rem'})`};
-      max-height: 158px;
-      margin: -22px -16px -0.5rem;
-
-      border-radius: 0.5rem 0.5rem 0 0;
-
-      img {
-        border-radius: 0.5rem 0.5rem 0 0;
-        background-color: rgba(0, 0, 0, 0.3);
-        margin: 0;
-      }
-    }
-  }
+  ${({ isTicketCard }) =>
+    isTicketCard
+      ? null
+      : cardImageStyles}
 
   grid-template-rows: min-content min-content min-content;
   grid-template-columns: auto 1fr auto;
@@ -139,26 +182,8 @@ const StyledProductCard = styled.div`
     .more-details {
       margin-left: 0;
       margin-bottom: 0;
-      padding: 0.75rem;
-      background-color: ${COLORS.GREY.G7};
-      margin-top: ${({ isAmp }) => (isAmp ? '0.4rem' : '0')};
-      grid-area: cta-block;
-      grid-column: 1 / 2;
-      width: 32vw;
-      border-radius: 4px;
-      font-weight: 600;
-      color: ${COLORS.GREY.G2};
-      position: absolute;
-      font-size: 0.875rem;
-      letter-spacing: 0.6px;
-      display: flex;
-      justify-content: center;
-
-      line-height: 125%;
-
-      .chevron {
-        display: none;
-      }
+      ${({ isTicketCard, isAmp }) =>
+        isTicketCard ? null : moreDetailsButtonStyles(isAmp)}
     }
   }
 `;
@@ -397,19 +422,7 @@ const CTABlock = styled.div`
       width: 100%;
     }
 
-    grid-column: 2;
-    margin-top: -1.5rem;
-    margin-left: auto;
-    width: 42vw;
-
-    .tour-book-now-cta {
-      line-height: 125%;
-      padding: 0.75rem;
-      border-radius: 4px;
-      min-width: auto;
-      letter-spacing: 0.6px;
-      font-size: 0.875rem;
-    }
+    ${({ isTicketCard }) => (isTicketCard ? null : ctaBlockMobileStyles)}
   }
 `;
 
@@ -1169,14 +1182,16 @@ const Product = (props) => {
         isTicketCard={isTicketCard}
         isMobile={isMobile}
       >
-        <div className="card-img">
-          <Image
-            url={scorpioData.images[0].url}
-            imageId="card-img"
-            aspectRatio={isMobile ? '21:9' : '3:4'}
-            width={344}
-          />
-        </div>
+        <Conditional if={!isTicketCard}>
+          <div className="card-img">
+            <Image
+              url={scorpioData.images[0].url}
+              imageId="card-img"
+              aspectRatio={isMobile ? '21:9' : '3:4'}
+              width={344}
+            />
+          </div>
+        </Conditional>
 
         <ProductHeader>
           <TitleWrapper hasBorderedTitle={hasBorderedTitle && !tabs.length}>
@@ -1261,6 +1276,7 @@ const Product = (props) => {
             <CTABlock
               isSticky={expandContent}
               shouldOffset={earliestAvailability && mbTheme === THEMES.MIN_BLUE}
+              isTicketCard={isTicketCard}
             >
               <Conditional if={!combo}>
                 <a
