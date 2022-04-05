@@ -233,7 +233,10 @@ export const getSingleAriesTag = (arr, tag) =>
   arr.find((ele) => ele.includes(tag));
 
 export const rankDescriptorList = (descriptorList) => {
-  const splitDescriptorListWords = descriptorList?.map((descriptor) =>
+  const filteredDescriptors = descriptorList?.filter((descriptor) =>
+    DESCRIPTOR_RANKING_LOGIC?.includes(descriptor)
+  );
+  const splitDescriptorListWords = filteredDescriptors?.map((descriptor) =>
     descriptor.split(' ')
   );
 

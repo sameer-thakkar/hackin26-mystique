@@ -7,6 +7,7 @@ import { getLanguageFromPathname } from 'utils';
 import 'public/global.css';
 import { MutableSnapshot, RecoilRoot } from 'recoil';
 import { currencyAtom } from 'store/atoms/currency';
+import '@formatjs/intl-relativetimeformat/polyfill';
 
 const App = ({ Component, pageProps, localizedStrings, lang }) => {
   strings.setContent({

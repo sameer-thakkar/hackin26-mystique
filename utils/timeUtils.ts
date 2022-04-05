@@ -1,3 +1,12 @@
+import '@formatjs/intl-relativetimeformat/polyfill';
+import '@formatjs/intl-relativetimeformat/locale-data/en';
+import '@formatjs/intl-relativetimeformat/locale-data/it';
+import '@formatjs/intl-relativetimeformat/locale-data/es';
+import '@formatjs/intl-relativetimeformat/locale-data/fr';
+import '@formatjs/intl-relativetimeformat/locale-data/de';
+import '@formatjs/intl-relativetimeformat/locale-data/nl';
+import '@formatjs/intl-relativetimeformat/locale-data/pt';
+
 const rtfUnitTypes = <const>[
   'year',
   'quarter',

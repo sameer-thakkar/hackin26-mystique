@@ -1494,6 +1494,8 @@ export const getPageData = async ({
             safetyImages: safetyImages || [],
             validity,
             combo,
+            minDuration,
+            maxDuration,
             listingPrice: {
               ...listingPrice,
               ...currencySymbolMap[listingPrice?.currencyCode],

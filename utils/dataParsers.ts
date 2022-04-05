@@ -287,7 +287,7 @@ export const categoryTourListParserV1 = async ({
   }
 };
 
-interface categoryTourListParserProps {
+interface CategoryTourListParserV2 {
   tourListCategory: { [key: string]: any };
   hostname: string;
   showpages: any;
@@ -295,7 +295,7 @@ interface categoryTourListParserProps {
 }
 
 export const categoryTourListParserV2 = async (
-  obj: categoryTourListParserProps
+  obj: CategoryTourListParserV2
 ) => {
   const categoryIds = [],
     subCategoryIds = [],
