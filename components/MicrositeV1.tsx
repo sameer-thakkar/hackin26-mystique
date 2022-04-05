@@ -38,12 +38,8 @@ import { tourListApiParser } from 'utils/dataParsers';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import renderShortCodes from 'utils/shortCodes';
 import { gtmAtom } from 'store/atoms/gtm';
-import useGrowthExperiment7Variant, {
-  getCaraouselTypeFromVariant,
-} from 'components/hooks/useGrowthExperiment7Variant';
-import { hsidAtom } from 'store/atoms/hsid';
 
-import GrowthExperiment7BannerCarousel from './GrowthExperiment7BannerCarousel';
+import Banner from './Banner';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
@@ -88,8 +84,6 @@ const MicrositeV1 = (props) => {
   const [freeTourPopupOpen, toggleFreeTourPopup] = useState(false);
   const [covidAlertActive, toggleCovidAlert] = useState(false);
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
-
-  const hsid = useRecoilValue(hsidAtom);
 
   const {
     refs,
@@ -414,11 +408,7 @@ const MicrositeV1 = (props) => {
     });
   }, []);
 
-  const growthExperiment7Variant = useGrowthExperiment7Variant(hsid);
-
   useEffect(() => {
-    if (!eventsReady || !growthExperiment7Variant) return;
-
     const renderedBaseLangPageTitle = renderShortCodes(
       baseLangPageTitle
     )?.join?.('');
@@ -429,10 +419,8 @@ const MicrositeV1 = (props) => {
       [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
       [ANALYTICS_PROPERTIES.TGIDS]: orderedTgids,
       [ANALYTICS_PROPERTIES.PAGE_TITLE]: renderedBaseLangPageTitle,
-      'Carousel Type': getCaraouselTypeFromVariant(growthExperiment7Variant),
     });
-  }, [eventsReady, growthExperiment7Variant]);
-
+  }, [eventsReady]);
 
   const onTogglePopup = () => {
     toggleFreeTourPopup(!freeTourPopupOpen);
@@ -478,7 +466,6 @@ const MicrositeV1 = (props) => {
       instantCheckout={instantCheckout}
       enableEarliestAvailability={enableEarliestAvailability}
       disable_amp={disableAMP}
-      growthExperiment7Variant={growthExperiment7Variant}
     />
   );
   return (
@@ -558,19 +545,17 @@ const MicrositeV1 = (props) => {
           </div>
         </Conditional>
         <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
-          <GrowthExperiment7BannerCarousel
-            bannerCarouselProps={{
-              bannerImages: finalBannerImages ? finalBannerImages : null,
-              bannerHeading: bannerHeading ? bannerHeading : null,
-              bannerSubtext: bannerSubtext,
-              bannerCtaText: bannerCtaText ? bannerCtaText : null,
-              isMobile: isAmp || isMobile,
-              boxed: true,
-              hideCTA: isToursAvailable ? hideBannerCTA : true,
-              isAmp: isAmp,
-              orderedTgids,
-            }}
-            variant={growthExperiment7Variant}
+          <Banner
+            bannerImages={finalBannerImages ? finalBannerImages : null}
+            bannerHeading={bannerHeading ? bannerHeading : null}
+            bannerSubtext={bannerSubtext}
+            bannerCtaText={bannerCtaText ? bannerCtaText : null}
+            currentLanguage={currentLanguage ? currentLanguage : null}
+            isMobile={isAmp || isMobile}
+            boxed={true}
+            hideCTA={isToursAvailable ? hideBannerCTA : true}
+            isAmp={isAmp}
+            orderedTgids={orderedTgids}
           />
         </Conditional>
         <Conditional if={mbTheme === THEMES.MIN_BLUE}>

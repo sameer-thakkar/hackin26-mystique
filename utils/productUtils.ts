@@ -67,17 +67,18 @@ export const getProductCardLayout = ({
     default:
       layout = layout = {
         desktop: [
-          'title line cta-combo',
-          hasShortSummary && 'summary line cta-combo',
-          hasIconBoosters && 'icon-booster line cta-combo',
-          hasOffer && 'offer line cta-combo',
-          hasV1Booster && 'booster line cta-combo',
-          'body line cta-combo',
+          'card-img title line cta-combo',
+          hasShortSummary && 'card-img summary line cta-combo',
+          hasIconBoosters && 'card-img icon-booster line cta-combo',
+          hasOffer && 'card-img offer line cta-combo',
+          hasV1Booster && 'card-img booster line cta-combo',
+          'card-img body line cta-combo',
           ((!hasV1Booster && !hasOffer) || !hasShortSummary) &&
             !isTicketCard &&
-            '. line cta-combo',
+            'card-img . line cta-combo',
         ],
         mobile: [
+          'card-img card-img',
           'title title',
           hasNextAvailable && 'next-available next-available',
           `price-block ${hasIconBoosters ? 'icon-booster' : 'price-block'}`,

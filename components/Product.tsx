@@ -25,7 +25,6 @@ import {
   THEMES,
   SIDEBAR_TYPES,
   LOCALISED_DATE_FORMATS,
-  NOS_OF_HIGHLIGHTS_TO_SHOW,
   ANALYTICS_PROPERTIES,
   CUSTOM_TYPES,
 } from 'const/index';
@@ -38,13 +37,6 @@ import {
 import { trackEvent } from 'utils/analytics';
 import { getHostName, truncate, wordCount } from 'utils/helper';
 import { isSafetyIncluded, createBookingURL } from 'utils';
-import {
-  boosterStyles,
-  ctaBlockMobileStyles,
-  moreDetailsButtonStyles,
-  productCardImageSupportStyles,
-} from 'style/growthExperiment7';
-import { VARIANTS } from 'const/experiments';
 import { descriptorIcons } from 'const/descriptorIcons';
 import { getDuration } from 'utils/timeUtils';
 
@@ -73,10 +65,8 @@ const StyledProductCard = styled.div`
   display: grid;
   grid-row-gap: 24px;
   grid-template-columns: 1fr auto;
-  grid-template-areas: ${({ layout, isAlternateDesign }) =>
-    layout.desktop.map(
-      (row) => `'${isAlternateDesign ? 'card-img' : ''} ${row}'`
-    )};
+  grid-template-areas: ${({ layout }) =>
+    layout.desktop.map((row) => `'${row}'`)};
   ${StlyedSplit} {
     margin: 0;
     max-width: unset;
@@ -101,33 +91,74 @@ const StyledProductCard = styled.div`
   }
   ${({ theme }) => theme.productCards?.styles?.desktop}
 
-  ${({ isAlternateDesign, isAmp }) =>
-    isAlternateDesign &&
-    productCardImageSupportStyles(isAmp)}
-  
+  .card-img {
+    grid-area: card-img;
+    width: 258px;
+    height: 344px;
+    border-radius: 0.5rem;
+
+    img {
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @media (max-width: 768px) {
+      grid-row-end: initial;
+      grid-column: span 2;
+
+      width: ${({ isAmp }) => ` calc(100% + ${isAmp ? '2rem' : '1rem'})`};
+      max-height: 158px;
+      margin: -22px -16px -0.5rem;
+
+      border-radius: 0.5rem 0.5rem 0 0;
+
+      img {
+        border-radius: 0.5rem 0.5rem 0 0;
+        background-color: rgba(0, 0, 0, 0.3);
+        margin: 0;
+      }
+    }
+  }
+
+  grid-template-rows: min-content min-content min-content;
+  grid-template-columns: auto 1fr auto;
+  grid-auto-rows: min-content;
+  column-gap: 1.5rem;
+
   @media (max-width: 768px) {
     padding: ${({ theme }) => theme.productCards.padding.mobile};
     margin: 0
       ${({ theme: { theme } }) => (theme !== THEMES.MIN_BLUE ? '16px' : '24px')};
-    grid-template-areas: ${({ layout, isAlternateDesign }) => {
-      if (isAlternateDesign) {
-        return ['card-img card-img']
-          .concat(layout.mobile)
-          .map((row) => `'${row}'`);
-      }
-      return layout.mobile.map((row) => `'${row}'`);
-    }};
+    grid-template-areas: ${({ layout }) =>
+      layout.mobile.map((row) => `'${row}'`)};
     width: auto;
     grid-template-columns: auto;
 
     ${({ theme }) => theme.productCards?.styles?.mobile}
 
     .more-details {
-      margin-top: 0;
       margin-left: 0;
       margin-bottom: 0;
-      ${({ isAmp, isAlternateDesign }) =>
-        isAlternateDesign && moreDetailsButtonStyles(isAmp)}
+      padding: 0.75rem;
+      background-color: ${COLORS.GREY.G7};
+      margin-top: ${({ isAmp }) => (isAmp ? '0.4rem' : '0')};
+      grid-area: cta-block;
+      grid-column: 1 / 2;
+      width: 32vw;
+      border-radius: 4px;
+      font-weight: 600;
+      color: ${COLORS.GREY.G2};
+      position: absolute;
+      font-size: 0.875rem;
+      letter-spacing: 0.6px;
+      display: flex;
+      justify-content: center;
+
+      line-height: 125%;
+
+      .chevron {
+        display: none;
+      }
     }
   }
 `;
@@ -171,17 +202,24 @@ const TitleWrapper = styled.div`
 
 const BoosterTag = styled.div`
   font-size: 11px;
+  font-weight: 600;
   line-height: 13px;
-  background: ${({ isAlternateDesign }) =>
-    isAlternateDesign ? COLORS.WHITE : COLORS.PALE_YELLOW};
-
-  border-radius: 2px;
+  color: ${COLORS.HEADOUT_CANDY};
+  text-transform: uppercase;
   letter-spacing: 0.4px;
+
+  background: ${COLORS.WHITE};
+  border-radius: 2px;
   margin-bottom: 7px;
   padding: 2px 4px;
   display: inline-block;
 
-  ${({ isAlternateDesign }) => isAlternateDesign && boosterStyles}
+  @media (max-width: 768px) {
+    position: absolute;
+    margin-top: -2.125rem;
+    padding: 5px;
+    border-radius: 4px;
+  }
 `;
 
 const ShortSummary = styled.div`
@@ -342,7 +380,6 @@ const CTABlock = styled.div`
   }
   @media (max-width: 768px) {
     grid-area: cta-block;
-    margin-top: 0;
 
     ${({ isSticky, shouldOffset }) =>
       isSticky
@@ -360,7 +397,19 @@ const CTABlock = styled.div`
       width: 100%;
     }
 
-    ${({ isAlternateDesign }) => isAlternateDesign && ctaBlockMobileStyles}
+    grid-column: 2;
+    margin-top: -1.5rem;
+    margin-left: auto;
+    width: 42vw;
+
+    .tour-book-now-cta {
+      line-height: 125%;
+      padding: 0.75rem;
+      border-radius: 4px;
+      min-width: auto;
+      letter-spacing: 0.6px;
+      font-size: 0.875rem;
+    }
   }
 `;
 
@@ -427,7 +476,7 @@ const ProductBody = styled.div`
     }
     .tour-description {
       ${({ theme }) => theme.productCards.regularFontSettings.mobile}
-      ${({ isAlternateDesign }) => isAlternateDesign && 'padding-bottom: 2rem;'}
+      padding-bottom: 2rem;
     }
     ${({ collapsed, defaultOpen }) =>
       collapsed && !defaultOpen
@@ -793,7 +842,6 @@ const Product = (props) => {
     isTicketCard = false,
     indexPosition,
     pageType = '',
-    growthExperiment7Variant,
   } = props;
 
   const {
@@ -814,11 +862,6 @@ const Product = (props) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [showComboVariant, setShowComboVariant] = useState(false);
   const { allTags = [], combo, minDuration, maxDuration } = scorpioData || {};
-
-  const shouldShowNewProductCardDesign =
-    !isMobile ||
-    (growthExperiment7Variant !== VARIANTS.DEFAULT_BANNER_CAROUSEL &&
-      growthExperiment7Variant !== null);
 
   const descriptorsList = descriptors || scorpioData.descriptors;
   const cardTitle = title || scorpioData.title;
@@ -926,14 +969,12 @@ const Product = (props) => {
   const hasReadMore =
     (highlights.flat()?.length >= 3 || showMoreDetailsInTabs) && !defaultOpen;
 
-  const noOfListItemToShow = shouldShowNewProductCardDesign
-    ? getMaxListItemsToShow(tabs[activeTabIndex]?.contents)
-    : Math.max(NOS_OF_HIGHLIGHTS_TO_SHOW, descriptorsList.length);
+  const noOfListItemToShow = getMaxListItemsToShow(
+    tabs[activeTabIndex]?.contents
+  );
 
   const onTabChange = ({ tab, index, defaultSelection }) => {
-    const noOfListItems = shouldShowNewProductCardDesign
-      ? getMaxListItemsToShow(tab.contents)
-      : Math.max(NOS_OF_HIGHLIGHTS_TO_SHOW, descriptorsList.length);
+    const noOfListItems = getMaxListItemsToShow(tab.contents);
 
     const isTruncated = tab.contents.length > noOfListItems;
 
@@ -952,13 +993,13 @@ const Product = (props) => {
   };
 
   useEffect(() => {
-    if (shouldShowNewProductCardDesign) {
-      const isTruncated = tabs?.[0]?.contents?.length ?? 0 > noOfListItemToShow;
-      if (isTruncated) {
-        setShowMoreDetails(isTruncated);
-      }
+    if (isMobile) return;
+
+    const isTruncated = tabs?.[0]?.contents?.length ?? 0 > noOfListItemToShow;
+    if (isTruncated) {
+      setShowMoreDetails(isTruncated);
     }
-  }, [tabs.length, shouldShowNewProductCardDesign]);
+  }, [tabs.length, isMobile]);
 
   const { listingPrice } = tourPrices[tgid];
 
@@ -986,12 +1027,6 @@ const Product = (props) => {
   const onMoreDetailsClick = (e) => {
     e?.stopPropagation();
     if (mbTheme !== THEMES.MIN_BLUE && isMobile) {
-      if (shouldShowNewProductCardDesign) {
-        trackEvent({
-          eventName: 'More Details Button Clicked',
-          Ranking: indexPosition + 1,
-        });
-      }
       trackedToggleContent(false);
       addToAside({
         width: '100vw',
@@ -1133,25 +1168,20 @@ const Product = (props) => {
         layout={layout}
         isTicketCard={isTicketCard}
         isMobile={isMobile}
-        isAlternateDesign={shouldShowNewProductCardDesign}
       >
-        {shouldShowNewProductCardDesign ? (
-          <div className="card-img">
-            <Image
-              url={scorpioData.images[0].url}
-              imageId="card-img"
-              aspectRatio={isMobile ? '21:9' : '3:4'}
-              width={344}
-            />
-          </div>
-        ) : null}
+        <div className="card-img">
+          <Image
+            url={scorpioData.images[0].url}
+            imageId="card-img"
+            aspectRatio={isMobile ? '21:9' : '3:4'}
+            width={344}
+          />
+        </div>
 
         <ProductHeader>
           <TitleWrapper hasBorderedTitle={hasBorderedTitle && !tabs.length}>
             <Conditional if={boosterTag && mbTheme !== THEMES.MIN_BLUE}>
-              <BoosterTag isAlternateDesign={shouldShowNewProductCardDesign}>
-                {boosterTag}
-              </BoosterTag>
+              <BoosterTag>{boosterTag}</BoosterTag>
             </Conditional>
             <TourTitle isPopup={isContentOpen} pageType={pageType}>
               {cardTitle}
@@ -1231,7 +1261,6 @@ const Product = (props) => {
             <CTABlock
               isSticky={expandContent}
               shouldOffset={earliestAvailability && mbTheme === THEMES.MIN_BLUE}
-              isAlternateDesign={shouldShowNewProductCardDesign}
             >
               <Conditional if={!combo}>
                 <a
@@ -1277,7 +1306,6 @@ const Product = (props) => {
           collapsed={!expandContent}
           noOfListItemToShow={noOfListItemToShow + 1}
           defaultOpen={defaultOpen}
-          isAlternateDesign={shouldShowNewProductCardDesign}
         >
           <Conditional
             if={
@@ -1347,13 +1375,7 @@ const Product = (props) => {
   );
 
   return (
-    <Container>
-      {getProductCardElements(
-        isContentOpen,
-        false,
-        !shouldShowNewProductCardDesign || isAmp
-      )}
-    </Container>
+    <Container>{getProductCardElements(isContentOpen, false, isAmp)}</Container>
   );
 };
 

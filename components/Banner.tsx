@@ -1,4 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from 'react';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 import { scroller } from 'react-scroll';
@@ -6,7 +11,7 @@ import Button from 'components/UI/Button';
 import Image from 'components/UI/Image';
 import Conditional from 'components/common/Conditional';
 import { strings } from 'const/strings';
-import { SOLEIL, COLORS } from 'const/ui-constants';
+import { SOLEIL, COLORS, SIZES } from 'const/ui-constants';
 import { withShortcodes } from 'utils/helper';
 import { trackEvent } from 'utils/analytics';
 import {
@@ -14,50 +19,333 @@ import {
   ANALYTICS_PROPERTIES,
   PAGE_TYPES,
 } from 'const/index';
-import { VARIANTS } from 'const/experiments';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
+const swiperParams = {
+  breakpoints: {
+    320: {
+      slidesPerView: 1.1,
+    },
+    480: {
+      slidesPerView: 'auto',
+    },
+  },
+  speed: 600,
+  centeredSlides: true,
+  autoplay: {
+    delay: 5000,
+    disableOnInteraction: false,
+  },
+  shouldSwiperUpdate: true,
+  initialSlide: 3,
+  loop: true,
+  loopedSlides: 3,
+  lazy: true,
+  preloadImages: false,
+};
+
+export const BANNER_PARAMS = {
+  DESKTOP: {
+    ASPECT_RATIO: '3:1',
+    WIDTH: '900',
+  },
+  MOBILE: {
+    ASPECT_RATIO: '16:9',
+    WIDTH: '400',
+  },
+};
+
+const renderAmpBanners = (image) => {
+  const { url, alt } = image;
+  return (
+    <Image
+      aspectRatio="16:9"
+      width="411"
+      height="163"
+      url={url}
+      alt={alt || 'banner'}
+      layout={'fill'}
+      className="banner-image"
+      addDarkOverlay
+      autoCrop={false}
+    />
+  );
+};
+
+const getAmpBanner = (bannerImages) => (
+  <amp-carousel
+    width="411"
+    height="200"
+    layout="responsive"
+    type="slides"
+    autoplay=""
+    delay="4000"
+  >
+    {bannerImages.map((banner) =>
+      renderAmpBanners({ url: banner.url, alt: banner.alt })
+    )}
+  </amp-carousel>
+);
+
+type TBannerCarouselProps = {
+  bannerImages: {
+    url: string;
+    alt: string;
+    mobileUrl?: string;
+  }[];
+  bannerHeading: string;
+  bannerSubtext: string;
+  bannerCtaText: string;
+  currentLanguage: string;
+  isMobile: boolean;
+  boxed: boolean;
+  hideCTA: boolean;
+  isAmp: boolean;
+  orderedTgids: string[];
+};
+
+/**
+ * Microsite V1 Carousel Banner
+ */
+const Banner = (props: TBannerCarouselProps) => {
+  const {
+    bannerHeading: tempBannerHeading,
+    bannerImages,
+    currentLanguage,
+    hideCTA,
+    isAmp,
+    bannerSubtext: tempBannerSubtext,
+    bannerCtaText = '',
+    orderedTgids,
+  } = props;
+
+  const [isMobile, setIsMobile] = useState(null);
+  const [swiper, updateSwiper] = useState(null);
+
+  useLayoutEffect(() => {
+    const mobileCheck = window.innerWidth < 768;
+    if (mobileCheck) {
+      setIsMobile(mobileCheck);
+    }
+  }, []);
+
+  const bannerHeading = withShortcodes(tempBannerHeading);
+
+  const analyticsParams = {
+    [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.COLLECTION,
+    [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
+    [ANALYTICS_PROPERTIES.TGIDS]: orderedTgids,
+    [ANALYTICS_PROPERTIES.MB_NAME]: bannerHeading?.join(' '),
+  };
+
+  const isSwiperSet = swiper !== null && !swiper?.destroyed;
+
+  useEffect(() => {
+    if (!isSwiperSet) {
+      return;
+    }
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MB_BANNER.VISIBLE,
+      ...analyticsParams,
+    });
+
+    swiper?.on?.('touchEnd', (touchend) => {
+      if (touchend?.srcElement.localName === 'button') {
+        return;
+      }
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MB_BANNER.BANNER_SCROLL,
+        ...analyticsParams,
+        Ranking: swiper.realIndex + 1,
+      });
+    });
+  }, [isSwiperSet]);
+
+  const scrollTicketSection = useCallback(() => {
+    scroller.scrollTo('tour-list-heading', {
+      duration: 1200,
+      offset: isMobile ? -80 : -100,
+      smooth: 'easeInOutQuart',
+    });
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MB_BANNER.CTA_CLICKED,
+      ...analyticsParams,
+      Ranking: swiper.realIndex + 1,
+    });
+  }, [swiper]);
+
+  const bannerSubtext = withShortcodes(tempBannerSubtext);
+
+  const captions = (
+    <div
+      className={`mb-captions
+         ${isAmp ? 'absolute-position' : ''}
+         `}
+    >
+      <div
+        className={`${isAmp ? 'non-opaque' : ''} mb-caption
+         `}
+      >
+        <div className="caption">
+          <h1>{bannerHeading}</h1>
+        </div>
+
+        {hideCTA ? null : (
+          <ButtonWrapper>
+            <Button
+              fillType="whiteBordered"
+              onClick={scrollTicketSection}
+              on="tap:tour-list-heading.scrollTo(duration='1200', position='top')"
+            >
+              {bannerCtaText || strings.BANNER_CTA}
+            </Button>
+          </ButtonWrapper>
+        )}
+      </div>
+    </div>
+  );
+
+  if (isAmp)
+    return (
+      <StyledBanner isAmp>
+        {getAmpBanner(bannerImages)}
+        {captions}
+      </StyledBanner>
+    );
+
+  const { ASPECT_RATIO, WIDTH } =
+    isMobile || isAmp ? BANNER_PARAMS.MOBILE : BANNER_PARAMS.DESKTOP;
+
+  const textOverLay = (isFirst = false) => (
+    <div className="overlay-container">
+      <div className={`mb-captions`}>
+        <div className={`mb-caption active`}>
+          <div className="caption">
+            {isFirst ? <h1>{bannerHeading}</h1> : <p>{bannerHeading}</p>}
+          </div>
+
+          <Conditional if={!hideCTA}>
+            <ButtonWrapper>
+              <Button
+                fillType="whiteBordered"
+                onClick={scrollTicketSection}
+                fontSize={'1.125rem'}
+              >
+                {bannerCtaText || strings.BANNER_CTA}
+              </Button>
+            </ButtonWrapper>
+          </Conditional>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div>
+      <StyledBanner>
+        {bannerImages?.length === 1 ? (
+          <div className="mb-slide single-slide">
+            <Image
+              width={WIDTH}
+              aspectRatio={ASPECT_RATIO}
+              url={bannerImages[0]?.url}
+              dontLazyLoad
+              mobileUrl={bannerImages[0]?.mobileUrl}
+              alt={bannerImages[0]?.alt || 'banner'}
+              addDarkOverlay
+            />
+            {textOverLay(true)}
+          </div>
+        ) : (
+          <Swiper {...swiperParams} getSwiper={updateSwiper}>
+            {bannerImages?.map((image, index) => {
+              return (
+                <div key={index} className="swiper-slide mb-slide">
+                  <Image
+                    key={index}
+                    width={WIDTH}
+                    aspectRatio={ASPECT_RATIO}
+                    url={image?.url}
+                    mobileUrl={image?.mobileUrl}
+                    alt={image?.alt || 'banner'}
+                    addDarkOverlay
+                    dontLazyLoad={index === 0}
+                  />
+                  {textOverLay(swiper?.realIndex === index)}
+                </div>
+              );
+            })}
+          </Swiper>
+        )}
+      </StyledBanner>
+
+      {bannerSubtext?.length ? (
+        <BannerSubtext>{bannerSubtext}</BannerSubtext>
+      ) : null}
+    </div>
+  );
+};
+
+export default Banner;
+
+/**
+ * Styled components
+ */
 const StyledBanner = styled.div`
   display: grid;
   height: 400px;
   width: 100%;
+  margin: 1rem auto;
+
   position: relative;
-  box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.16);
-  background: rgba(34, 34, 34, 0.6);
   font-family: ${SOLEIL.FONT_STACK};
-  margin-bottom: 24px;
+  margin-bottom: 12px;
+
+  .single-slide {
+    margin: 0 auto;
+  }
+
+  .image-wrapper {
+    background: rgba(34, 34, 34, 0.6);
+    z-index: 0;
+  }
+  .mb-slide {
+    aspect-ratio: 3;
+    max-height: 400px;
+    max-width: ${SIZES.MAX_WIDTH};
+    background: rgba(34, 34, 34, 0.6);
+    border-radius: 0.75rem;
+    cursor: pointer;
+    position: relative;
+  }
 
   .mb-slide img {
     height: 100%;
     width: 100%;
+    border-radius: 0.75rem;
     object-fit: cover;
-    object-position: 20% 10%;
+    object-position: 0% 25%;
   }
 
-  .single-slide {
-    height: 400px;
+  .swiper-slide {
+    transform: scale(0.9);
+    transition: all 0.7s ease-in-out;
   }
+
+  .swiper-slide-active {
+    transform: scale(1);
+  }
+
   .mb-captions {
-    z-index: 0;
+    z-index: 1;
     height: 100%;
     width: 100%;
     display: grid;
     place-content: center;
     text-align: center;
-  }
-  .swiper-pagination.swiper-pagination-bullets {
-    top: unset;
-    display: block;
-  }
-  .swiper-pagination-bullet {
-    width: 10px;
-    height: 10px;
-    background: transparent;
-    border: 2px solid #fff;
-  }
-  .swiper-pagination-bullet-active {
-    background: #fff;
   }
 
   .absolute-position {
@@ -65,15 +353,13 @@ const StyledBanner = styled.div`
   }
 
   .mb-captions .caption h1,
-  .mb-captions .caption .h1 {
-    font-size: 24px;
+  .mb-captions .caption p {
+    font-size: 2.25rem;
     color: #fff;
-    line-height: 1.2;
-  }
-
-  .mb-captions {
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
+    line-height: 122%;
+    letter-spacing: -0.5px;
+    max-width: 27vw;
+    font-weight: 600;
   }
 
   .mb-captions .mb-caption {
@@ -120,6 +406,7 @@ const StyledBanner = styled.div`
     opacity: 1;
     z-index: 10;
   }
+
   .mb-captions .mb-cta {
     background-color: rgba(0, 0, 0, 0.35);
     border: solid white 1px;
@@ -141,37 +428,57 @@ const StyledBanner = styled.div`
   }
 
   .overlay-container {
-    z-index: 1;
+    z-index: 10;
+    transform: translateZ(1000);
     pointer-events: none;
     position: absolute;
     width: 100%;
     height: 100%;
+    left: 0%;
+    top: 0;
   }
 
   @media (max-width: 768px) {
+    margin: 1rem 0;
+    max-height: 200px;
+
+    .swiper-slide {
+      transform: scale(0.95) !important;
+      -webkit-transform: scale(0.95);
+    }
+
+    .swiper-slide-active {
+      transform: scale(1) !important;
+      -webkit-transform: scale(1);
+    }
+
+    .mb-slide {
+      aspect-ratio: 16/9;
+      height: 100%;
+    }
+
     .mb-captions .mb-caption {
       justify-items: left;
-      margin-bottom: 24px;
-      margin-left: 16px;
       max-width: 85%;
       z-index: 1;
-    }
-    .mb-captions.with-indicators .mb-caption {
-      margin-bottom: 56px;
-      align-self: end;
+      margin-top: 2.5rem;
+      margin-left: ${({ isAmp }) => (isAmp ? '3.4rem' : '1.125rem')};
     }
 
     .mb-captions {
-      place-content: unset;
       text-align: left;
       align-items: end;
       background: unset;
+      place-content: center;
+      width: max-content;
+
       .caption h1,
-      .caption .h1 {
-        font-weight: 500;
-        font-size: 20px;
-        line-height: 120%;
+      .caption p {
+        font-weight: 600;
+        font-size: 21px;
+        line-height: 133%;
         margin: 0;
+        max-width: ${({ isAmp }) => (isAmp ? '70vw' : '85vw')};
       }
     }
     .mb-captions .df-caption {
@@ -187,293 +494,41 @@ const StyledBanner = styled.div`
       }
     }
 
-    .swiper-pagination.swiper-pagination-bullets {
-      grid-template-columns: repeat(auto-fill, 7px);
-      display: grid;
-      bottom: 24px;
-      margin-left: 16px;
-    }
-    .swiper-pagination-bullet {
-      width: 6px;
-      height: 6px;
-      background: rgba(255, 255, 255, 0.35);
-      border: unset;
-    }
-    .swiper-pagination-bullet-active {
-      background: rgba(255, 255, 255);
-      transform: scale(1.3);
-    }
-
     .mb-captions .non-opaque {
       opacity: 1;
     }
 
-    .banner-image {
-      object-fit: cover;
-      img {
-        object-fit: cover;
-        object-position: 20% 10%;
-      }
+    .overlay-container {
+      height: auto;
+      bottom: 0;
+      z-index: 2;
     }
   }
 `;
-
-export const BANNER_PARAMS = {
-  DESKTOP: {
-    ASPECT_RATIO: '4.5:1',
-    WIDTH: '1200',
-  },
-  MOBILE: {
-    ASPECT_RATIO: '1:1.07',
-    WIDTH: '500',
-  },
-};
 
 const ButtonWrapper = styled.div`
   pointer-events: auto;
   @media (max-width: 768px) {
     button {
       font-size: 14px;
-      padding: 13px 25px;
+      padding: 0.5rem 0.75rem;
+      border-radius: 4px;
+      font-weight: normal;
     }
   }
 `;
 
-const Banner = (props) => {
-  const [isMobile, setIsMobile] = useState(null);
-  const [swiper, updateSwiper] = useState(null);
+const BannerSubtext = styled.em`
+  display: block;
+  text-align: center;
+  font-style: italic;
+  font-size: 0.875rem;
+  color: ${COLORS.GREY_G4};
+  margin: 0 1rem 1rem;
 
-  const {
-    currentLanguage,
-    orderedTgids,
-    bannerHeading: tempBannerHeading,
-    bannerImages,
-    hideCTA,
-    isAmp,
-    bannerSubtext: tempBannerSubtext,
-    bannerCtaText = '',
-    variant = 'Default',
-  } = props;
-  const bannerHeading = withShortcodes(tempBannerHeading);
-  const bannerSubtext = withShortcodes(tempBannerSubtext);
-
-  const analyticsParams = {
-    [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.COLLECTION,
-    [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
-    [ANALYTICS_PROPERTIES.TGIDS]: orderedTgids,
-    [ANALYTICS_PROPERTIES.MB_NAME]: bannerHeading?.join(' '),
-  };
-  useEffect(() => {
-    const mobileCheck = window.innerWidth < 768;
-    if (mobileCheck) {
-      setIsMobile(mobileCheck);
-    }
-  }, []);
-
-  const isSwiperSet = swiper !== null && !swiper?.destroyed;
-
-  useEffect(() => {
-    if (!isSwiperSet) {
-      return;
-    }
-
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.MB_BANNER.VISIBLE,
-      ...analyticsParams,
-    });
-
-    swiper?.on('click', (e) => {
-      const isPaginationBullet = e.target.matches('.swiper-pagination-bullet');
-      if (isPaginationBullet) {
-        trackEvent({
-          eventName: ANALYTICS_EVENTS.MB_BANNER.BANNER_SCROLL,
-          ...analyticsParams,
-          Ranking: swiper.realIndex + 1,
-          Variant: variant,
-        });
-      }
-    });
-
-    swiper?.on('touchEnd', () => {
-      trackEvent({
-        eventName: ANALYTICS_EVENTS.MB_BANNER.BANNER_SCROLL,
-        ...analyticsParams,
-        Ranking: swiper.realIndex + 1,
-        Variant: variant,
-      });
-    });
-  }, [isSwiperSet]);
-
-  const scrollTicketSection = () => {
-    scroller.scrollTo('tour-list-heading', {
-      duration: 1200,
-      offset: isMobile ? -80 : -100,
-      smooth: 'easeInOutQuart',
-    });
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.MB_BANNER.CTA_CLICKED,
-      ...analyticsParams,
-      'CTA Type': VARIANTS.DEFAULT_BANNER_CAROUSEL,
-      Ranking: swiper.realIndex + 1,
-    });
-  };
-
-  const renderAmpBanners = (image) => {
-    const { url, alt } = image;
-    return (
-      <Image
-        width="411"
-        height="400"
-        url={url}
-        alt={alt || 'banner'}
-        layout={'fill'}
-        className="banner-image"
-        addDarkOverlay
-      />
-    );
-  };
-
-  const getAmpBanner = (bannerImages) => (
-    <amp-carousel
-      width="411"
-      height="400"
-      layout="responsive"
-      type="slides"
-      autoplay=""
-      delay="4000"
-    >
-      {bannerImages?.map((banner) =>
-        renderAmpBanners({ url: banner.url, alt: banner.alt })
-      )}
-    </amp-carousel>
-  );
-
-  let imageView;
-
-  const swiperParams = {
-    pagination: {
-      el: '.swiper-pagination',
-      type: 'bullets',
-      clickable: true,
-    },
-    slidesPerView: 1,
-    speed: 600,
-    centeredSlides: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false,
-    },
-    shouldSwiperUpdate: true,
-    loop: true,
-    initialSlide: 0,
-    freeMode: false,
-    effect: 'fade',
-    getSwiper: updateSwiper,
-  };
-
-  const captions = (
-    <div
-      className={`mb-captions ${
-        bannerImages.length > 1 ? 'with-indicators' : ''
-      }
-        ${isAmp ? 'absolute-position' : ''}
-        `}
-    >
-      <div
-        className={`${isAmp ? 'non-opaque' : ''} mb-caption
-        `}
-      >
-        <div className="caption">
-          <h1>{bannerHeading}</h1>
-        </div>
-        {hideCTA ? null : (
-          <ButtonWrapper>
-            <Button
-              fillType="whiteBordered"
-              onClick={scrollTicketSection}
-              on="tap:tour-list-heading.scrollTo(duration='1200', position='top')"
-            >
-              {bannerCtaText || strings.BANNER_CTA}
-            </Button>
-          </ButtonWrapper>
-        )}
-      </div>
-    </div>
-  );
-  if (isAmp)
-    return (
-      <StyledBanner>
-        {getAmpBanner(bannerImages)}
-        {captions}
-      </StyledBanner>
-    );
-  const { ASPECT_RATIO, WIDTH } =
-    isMobile || isAmp ? BANNER_PARAMS.MOBILE : BANNER_PARAMS.DESKTOP;
-  switch (bannerImages?.length) {
-    case 1:
-      imageView = (
-        <Image
-          className="mb-slide single-slide"
-          width={WIDTH}
-          aspectRatio={ASPECT_RATIO}
-          url={bannerImages[0]?.url}
-          dontLazyLoad
-          mobileUrl={bannerImages[0]?.mobileUrl}
-          alt={bannerImages[0]?.alt || 'banner'}
-          addDarkOverlay
-        />
-      );
-      break;
-    default:
-      imageView = (
-        <Swiper {...swiperParams}>
-          {bannerImages?.map((image, index) => {
-            return (
-              <Image
-                className="swiper-slide mb-slide"
-                key={index}
-                width={WIDTH}
-                aspectRatio={ASPECT_RATIO}
-                url={image?.url}
-                dontLazyLoad
-                mobileUrl={image?.mobileUrl}
-                alt={image?.alt || 'banner'}
-                addDarkOverlay
-              />
-            );
-          })}
-        </Swiper>
-      );
-      break;
+  @media (max-width: 768px) {
+    font-size: 0.6875rem;
+    text-align: left;
+    margin: 0 1rem 0.75rem;
   }
-  return (
-    <StyledBanner>
-      {imageView}
-      <div className="overlay-container">
-        <div
-          className={`mb-captions ${
-            bannerImages.length > 1 ? 'with-indicators' : ''
-          }`}
-        >
-          <div className={`mb-caption active`}>
-            <div className="caption">
-              <h1>{bannerHeading}</h1>
-              <Conditional if={bannerSubtext}>
-                <p>{bannerSubtext}</p>
-              </Conditional>
-            </div>
-            <Conditional if={!hideCTA}>
-              <ButtonWrapper>
-                <Button fillType="whiteBordered" onClick={scrollTicketSection}>
-                  {bannerCtaText || strings.BANNER_CTA}
-                </Button>
-              </ButtonWrapper>
-            </Conditional>
-          </div>
-        </div>
-      </div>
-    </StyledBanner>
-  );
-};
-
-export default Banner;
+`;

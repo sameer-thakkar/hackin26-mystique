@@ -1160,35 +1160,6 @@ export const BLACK_COLOR_CLOSE = (
   </svg>
 );
 
-export const RIGHT_CIRCLE_ARROW = () => (
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M10.0001 18.3332C14.6025 18.3332 18.3334 14.6023 18.3334 9.9999C18.3334 5.39753 14.6025 1.66656 10.0001 1.66656C5.39771 1.66656 1.66675 5.39753 1.66675 9.9999C1.66675 14.6023 5.39771 18.3332 10.0001 18.3332Z"
-      stroke="white"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M10 13.3332L13.3333 9.9999L10 6.66656"
-      stroke="white"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M6.66675 10H13.3334"
-      stroke="white"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
 export const STAR_FULL_NEW = ({ fillColor }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
