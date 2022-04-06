@@ -16,65 +16,74 @@ import Conditional from 'components/common/Conditional';
 
 const Swiper = dynamic(() => import('components/Swiper'));
 
-const BannerWrapper = styled.div`
-  max-width: 100%;
-  margin: ${({ isEntertainmentMb }) =>
-    isEntertainmentMb ? 'auto auto 24px auto' : 'auto'};
-  overflow: hidden;
+const StyledBanner = styled.div`
+  display: grid;
+  height: 400px;
+  width: 100%;
+  margin: 1rem auto;
 
-  .swiper-container {
-    overflow: unset;
-  }
-  .swiper-wrapper {
-    height: 400px;
-  }
-  .carousel {
-    max-width: ${SIZES.MAX_WIDTH};
+  position: relative;
+  margin-bottom: 12px;
+
+  .single-slide {
     margin: 0 auto;
   }
 
-  .swiper-slide {
-    -webkit-transform-style: preserve-3d;
-    -webkit-backface-visibility: hidden;
+  .image-wrapper {
+    background: rgba(34, 34, 34, 0.6);
+    z-index: 0;
+  }
+  .mb-slide {
+    aspect-ratio: 3;
+    max-height: 400px;
+    max-width: ${SIZES.MAX_WIDTH};
+    background: rgba(34, 34, 34, 0.6);
+    border-radius: 0.75rem;
+    position: relative;
   }
 
-  .pointer {
-    cursor: pointer;
-  }
-
-  img {
-    border-radius: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '8px' : '10px'};
+  .mb-slide img {
     height: 100%;
     width: 100%;
+    border-radius: 0.75rem;
     object-fit: cover;
+    object-position: 0% 25%;
+  }
+
+  .swiper-slide {
+    transform: scale(0.9);
+    transition: all 0.7s ease-in-out;
+  }
+
+  .swiper-slide-active {
+    transform: scale(1);
   }
 
   @media (max-width: 768px) {
-    img {
-      border-radius: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '8px' : '4px'};
-      display: flex;
-      ${({ isEntertainmentMb }) => isEntertainmentMb && `height: 100%;`};
+    margin: 1rem 0;
+    max-height: 200px;
+
+    .swiper-slide {
+      transform: scale(0.95);
+      -webkit-transform: scale(0.95);
     }
-    .swiper-wrapper {
-      height: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '214px' : '204px'};
+
+    .swiper-slide-active {
+      transform: scale(1);
+      -webkit-transform: scale(1);
     }
-    .swiper-container {
-      width: 100%;
-    }
-    .content-wrap {
-      padding: 0 20px;
+
+    .mb-slide {
+      aspect-ratio: 16/9;
+      height: 100%;
     }
   }
 `;
 
-const Banner = (props) => {
+const NewBanner = (props) => {
   const {
-    banners,
+    bannerImages,
     isMobile,
-    carouselOptions,
     ready,
     isEntertainmentMb,
     availableTours,
@@ -82,18 +91,27 @@ const Banner = (props) => {
   const [swiper, updateSwiper] = useState(null);
   const { lang } = useContext(MBContext);
 
-  const swiperOptions = {
-    ...carouselOptions,
+  const swiperParams = {
+    breakpoints: {
+      320: {
+        slidesPerView: 1.1,
+      },
+      480: {
+        slidesPerView: 'auto',
+      },
+    },
+    speed: 600,
+    centeredSlides: true,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false,
+    },
     shouldSwiperUpdate: true,
-    getSwiper: updateSwiper,
-    ...(isMobile && {
-      spaceBetween: 8,
-    }),
-    ...(banners?.length <= 1 && {
-      autoplay: false,
-      loop: false,
-      noSwiping: true,
-    }),
+    initialSlide: 3,
+    loop: true,
+    loopedSlides: 3,
+    lazy: true,
+    preloadImages: false,
   };
 
   const analyticsParams = {
@@ -141,93 +159,136 @@ const Banner = (props) => {
     }
   };
 
+  const getShowPageUrl = (image) =>
+    typeof image?.showPageUrl === 'string'
+      ? image?.showPageUrl
+      : image?.showPageUrl?.url;
+
+  const BANNER_PARAMS = {
+    DESKTOP: {
+      ASPECT_RATIO: '3:1',
+      WIDTH: '900',
+    },
+    MOBILE: {
+      ASPECT_RATIO: '16:9',
+      WIDTH: '400',
+    },
+  };
+
+  const { ASPECT_RATIO, WIDTH } = isMobile
+    ? BANNER_PARAMS.MOBILE
+    : BANNER_PARAMS.DESKTOP;
+
   return (
-    <BannerWrapper isEntertainmentMb={isEntertainmentMb}>
-      <div className="main-wrapper">
-        <div className="swiper-container">
-          <div className="swiper-wrapper">
-            <Swiper {...swiperOptions}>
-              {banners.map((image, index) => {
-                const showPageUrl =
-                  typeof image?.showPageUrl === 'string'
-                    ? image?.showPageUrl
-                    : image?.showPageUrl?.url;
-                return (
-                  <div
-                    key={index}
-                    role="button"
-                    tabIndex={0}
-                    className={`swiper-slide ${
-                      image.interaction ? 'pointer' : ''
-                    }`}
-                    onClick={
-                      !isEntertainmentMb
-                        ? () => handleInteraction(image.interaction)
-                        : undefined
-                    }
-                  >
-                    <Conditional if={isEntertainmentMb}>
-                      <a
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href={showPageUrl}
-                      >
-                        <Image
-                          url={
-                            ready &&
-                            (isMobile && image.mobile_url
-                              ? image.mobile_url
-                              : image.url)
-                          }
-                          height={isMobile ? 408 : 400}
-                          width={isMobile ? 686 : 1200}
-                          dontLazyLoad={true}
-                          alt={image.alt}
-                          imageId={stringIdfy(image.alt || '') + index}
-                        />
-                      </a>
-                    </Conditional>
-                    <Conditional if={!isEntertainmentMb}>
+    <div>
+      <StyledBanner>
+        {bannerImages?.length === 1 ? (
+          <div
+            className={`swiper-slide single-slide ${
+              bannerImages[0].interaction ? 'pointer' : ''
+            }`}
+            onClick={
+              !isEntertainmentMb
+                ? () => handleInteraction(bannerImages[0].interaction)
+                : undefined
+            }
+          >
+            <Conditional if={isEntertainmentMb}>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={getShowPageUrl(bannerImages[0])}
+              >
+                <Image
+                  width={WIDTH}
+                  aspectRatio={ASPECT_RATIO}
+                  url={
+                    ready &&
+                    (isMobile && bannerImages[0].mobile_url
+                      ? bannerImages[0].mobile_url
+                      : bannerImages[0].url)
+                  }
+                  alt={bannerImages[0]?.alt || 'banner'}
+                  dontLazyLoad={true}
+                  imageId={stringIdfy(bannerImages[0].alt || '')}
+                />
+              </a>
+            </Conditional>
+            <Conditional if={!isEntertainmentMb}>
+              <Image
+                width={WIDTH}
+                aspectRatio={ASPECT_RATIO}
+                url={
+                  ready &&
+                  (isMobile && bannerImages[0].mobile_url
+                    ? bannerImages[0].mobile_url
+                    : bannerImages[0].url)
+                }
+                alt={bannerImages[0]?.alt || 'banner'}
+                dontLazyLoad={true}
+                imageId={stringIdfy(bannerImages[0].alt || '')}
+              />
+            </Conditional>
+          </div>
+        ) : (
+          <Swiper {...swiperParams} getSwiper={updateSwiper}>
+            {bannerImages?.map((image, index) => {
+              return (
+                <div
+                  key={index}
+                  className={`swiper-slide mb-slide ${
+                    image.interaction ? 'pointer' : ''
+                  }`}
+                  onClick={
+                    !isEntertainmentMb
+                      ? () => handleInteraction(image.interaction)
+                      : undefined
+                  }
+                >
+                  <Conditional if={isEntertainmentMb}>
+                    <a
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={getShowPageUrl(image)}
+                    >
                       <Image
+                        width={WIDTH}
+                        aspectRatio={ASPECT_RATIO}
                         url={
                           ready &&
                           (isMobile && image.mobile_url
                             ? image.mobile_url
                             : image.url)
                         }
-                        height={isMobile ? 408 : 400}
-                        width={isMobile ? 686 : 1200}
+                        alt={image?.alt || 'banner'}
                         dontLazyLoad={true}
-                        alt={image.alt}
                         imageId={stringIdfy(image.alt || '') + index}
                       />
-                    </Conditional>
-                  </div>
-                );
-              })}
-            </Swiper>
-          </div>
-
-          <div className="swiper-pagination"></div>
-        </div>
-      </div>
-    </BannerWrapper>
+                    </a>
+                  </Conditional>
+                  <Conditional if={!isEntertainmentMb}>
+                    <Image
+                      width={WIDTH}
+                      aspectRatio={ASPECT_RATIO}
+                      url={
+                        ready &&
+                        (isMobile && image.mobile_url
+                          ? image.mobile_url
+                          : image.url)
+                      }
+                      alt={image?.alt || 'banner'}
+                      dontLazyLoad={true}
+                      imageId={stringIdfy(image.alt || '') + index}
+                    />
+                  </Conditional>
+                </div>
+              );
+            })}
+          </Swiper>
+        )}
+      </StyledBanner>
+    </div>
   );
 };
 
-export default Banner;
-
-Banner.defaultProps = {
-  carouselOptions: {
-    direction: 'horizontal',
-    speed: 650,
-    slidesPerView: 'auto',
-    loop: true,
-    centeredSlides: true,
-    spaceBetween: 24,
-    autoplay: {
-      delay: 2500,
-      disableOnInteraction: false,
-    },
-  },
-};
+export default NewBanner;

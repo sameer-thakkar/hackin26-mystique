@@ -250,7 +250,7 @@ export const HomePage = (props) => {
         }
       >
         <Banner
-          {...heroProps}
+          bannerImages={heroProps.banners}
           isMobile={isMobile}
           ready={true}
           isEntertainmentMb={isEntertainmentMb}
