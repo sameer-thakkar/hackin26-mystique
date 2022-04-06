@@ -192,22 +192,18 @@ export const fetchTGIDsByCategoryV2 = async ({
 }: fetchTGIDsByCategoryV2Obj) => {
   const params = {
     language,
+    'use-seatmap-prices': '1',
     ...(city && { city }),
     ...(limit && { limit }),
   };
-  const url = isSubCategory
-    ? getHeadoutApiUrl({
-        endpoint: HeadoutEndpoints.TourGroupListBySubCategoryV6,
-        hostname,
-        id: categoryId,
-        params,
-      })
-    : getHeadoutApiUrl({
-        endpoint: HeadoutEndpoints.TourGroupListByCategoryV6,
-        hostname,
-        id: categoryId,
-        params,
-      });
+  const url = getHeadoutApiUrl({
+    endpoint: isSubCategory
+      ? HeadoutEndpoints.TourGroupListBySubCategoryV6
+      : HeadoutEndpoints.TourGroupListByCategoryV6,
+    hostname,
+    id: categoryId,
+    params,
+  });
   try {
     const response = await fetch(url);
     const data = await response.json();
