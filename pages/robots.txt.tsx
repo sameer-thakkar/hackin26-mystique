@@ -7,7 +7,7 @@ const robotsContentForStage = () =>
   `User-agent: Screaming Frog SEO Spider\nDisallow:\n\nUser-agent: *\nDisallow: /`;
 
 const robotsContent = (domain) =>
-  `User-agent: *\n\nSitemap: ${domain}/sitemap.xml`;
+  `User-agent: *\n\nSitemap: ${domain}/sitemap.xml\nDisallow: */ja/*`;
 
 const tempRobotsContent = `User-agent: *\nDisallow: /`;
 
