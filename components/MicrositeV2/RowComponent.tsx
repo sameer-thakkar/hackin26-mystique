@@ -51,12 +51,13 @@ export const RowComponent = (props) => {
       event.target.blur();
       return;
     }
-    if (isMobile) {
+    if (isMobile && !isEntertainmentMb) {
       props.changePage({
         name: PAGETYPE.MOBILE_PRODUCT_PAGE,
         tgid: productTgid,
       });
-    } else {
+    }
+    if (!isMobile) {
       clickTour(productTgid, false, section);
     }
   };
@@ -91,6 +92,8 @@ export const RowComponent = (props) => {
             key={index}
             cardIdPrefix={sectionId}
             activeCategoryId={activeCategoryId}
+            host={host}
+            uid={uid}
           />
         );
       })}

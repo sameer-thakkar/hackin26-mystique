@@ -72,7 +72,7 @@ const DetailedDescriptionCard = styled.div`
     font-family: ${SOLEIL.FONT_STACK};
     font-weight: ${SOLEIL.SEMIBOLD};
   }
-  .product-v2-description-left {
+  .product-v2-description-right {
     padding: 24px 0;
   }
   .product-v2-description-left,
@@ -81,11 +81,11 @@ const DetailedDescriptionCard = styled.div`
     grid-gap: ${({ isEntertainmentMb, isListicle }) =>
       isListicle ? '16px' : isEntertainmentMb ? '32px' : '24px'};
   }
-  .product-v2-description-left p,
-  .product-v2-description-left h3 {
+  .product-v2-description-right p,
+  .product-v2-description-right h3 {
     ${({ isListicle }) => (isListicle ? 'margin: 0' : null)};
   }
-  .product-v2-description-right {
+  .product-v2-description-left {
     z-index: 1;
     display: flex;
     ${({ isEntertainmentMb }) =>
@@ -99,6 +99,11 @@ const DetailedDescriptionCard = styled.div`
     grid-auto-rows: max-content;
     ${({ isListicle }) => (isListicle ? 'margin-bottom:16px' : '')};
   }
+
+  .heading-price-bar {
+    grid-template-columns: auto max-content;
+  }
+
   .v2-desc-blocks .left {
     grid-column: 1;
   }
@@ -339,7 +344,7 @@ const DetailedDescriptionCard = styled.div`
     z-index: 0;
     left: ${({ cardPosition }) => 25 * cardPosition - 12.5}%;
   }
-  .product-v2-description-right img {
+  .product-v2-description-left img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -470,63 +475,30 @@ const DetailedProductCard = (props) => {
   };
 
   const CTABlock = () => (
-    <div className="desc-cta-price">
-      <div className="desc-price-wrapper">
-        <Conditional if={originalPrice > finalPrice}>
-          <div className="scratch-price">
-            <span>
-              {isEntertainmentMb ? strings.FROM : strings.FROM?.toLowerCase()}
-            </span>{' '}
-            <LocalisedPrice
-              className="l-price"
-              price={originalPrice}
-              currencySymbol={currencySymbol}
-              lang={lang}
-            />
-          </div>
-        </Conditional>
-        <div className="price">
-          <LocalisedPrice
-            className="l-price"
-            price={finalPrice}
-            currencySymbol={currencySymbol}
-            lang={lang}
-          />
-          <Conditional
-            if={isEntertainmentMb && bestDiscount && bestDiscount > 0}
-          >
-            <span className="discount">
-              {bestDiscount}% {strings.OFF}
-            </span>
-          </Conditional>
-        </div>
-      </div>
-
-      <div className="desc-cta-wrapper">
-        <Conditional if={isEntertainmentMb && showPageUrl}>
-          <a
-            className="cta secondary"
-            target="_blank"
-            rel="noopener noreferrer"
-            href={showPageUrl}
-          >
-            <span className="cta-text">{strings.MORE_DETAILS}</span>
-          </a>
-        </Conditional>
+    <div className="desc-cta-wrapper">
+      <Conditional if={isEntertainmentMb && showPageUrl}>
         <a
-          className="cta primary"
+          className="cta secondary"
           target="_blank"
           rel="noopener noreferrer"
-          href={createBookingURL({
-            nakedDomain,
-            lang,
-            tgid: tgidClicked,
-            biLink,
-          })}
+          href={showPageUrl}
         >
-          <span className="cta-text">{strings.BOOK_NOW_CTA}</span>
+          <span className="cta-text">{strings.MORE_DETAILS}</span>
         </a>
-      </div>
+      </Conditional>
+      <a
+        className="cta primary"
+        target="_blank"
+        rel="noopener noreferrer"
+        href={createBookingURL({
+          nakedDomain,
+          lang,
+          tgid: tgidClicked,
+          biLink,
+        })}
+      >
+        <span className="cta-text">{strings.BOOK_NOW_CTA}</span>
+      </a>
     </div>
   );
 
@@ -537,113 +509,265 @@ const DetailedProductCard = (props) => {
       isListicle={isListicle}
     >
       <div className="indicator-triangle"></div>
-      <div className="product-v2-description-left">
-        <div className="full-width-section">
-          <div className="v2-desc-title">{title}</div>
-          <Conditional if={hasSafetyFlag}>
-            <IconBoosters>
-              <Split count={2} autoWidth={true} mobileLayout={'scroll'}>
-                <IconCTA
-                  text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
-                  colorScheme={greyScheme}
-                  ctaOnClick={openSafeSidebar}
-                  icon={Shield}
+      <Conditional if={isEntertainmentMb}>
+        <div className="product-v2-description-left">
+          <Image
+            url={`${descriptionImage || productImage}`}
+            width={1200}
+            height={750}
+            format="pjpg"
+            imageId={tgidClicked}
+          />
+          <div
+            onClick={closeDescriptionCard}
+            role="button"
+            tabIndex={0}
+            className="close-button"
+          >
+            {CLOSE_WHITE}
+          </div>
+        </div>
+        <div className="product-v2-description-right">
+          <div className="v2-desc-columns heading-price-bar">
+            <div className="v2-desc-left">
+              <div className="v2-desc-title">{title}</div>
+              <Conditional if={hasSafetyFlag}>
+                <IconBoosters>
+                  <Split count={2} autoWidth={true} mobileLayout={'scroll'}>
+                    <IconCTA
+                      text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
+                      colorScheme={greyScheme}
+                      ctaOnClick={openSafeSidebar}
+                      icon={Shield}
+                    />
+                  </Split>
+                </IconBoosters>
+              </Conditional>
+              <Conditional if={descriptors?.length}>
+                <div className="v2-descriptors">
+                  {descriptors?.map((descriptor, index) => {
+                    if (descriptor) {
+                      return (
+                        <div className="v2-descriptor" key={index}>
+                          {descriptor.trim()}
+                        </div>
+                      );
+                    }
+                    return null;
+                  })}
+                </div>
+              </Conditional>
+            </div>
+
+            <div className="desc-cta-price v2-desc-right">
+              <div className="desc-price-wrapper">
+                <div className="scratch-price">
+                  <span>
+                    {isEntertainmentMb
+                      ? strings.FROM
+                      : strings.FROM?.toLowerCase()}
+                  </span>{' '}
+                  <Conditional if={originalPrice > finalPrice}>
+                    <LocalisedPrice
+                      className="l-price"
+                      price={originalPrice}
+                      currencySymbol={currencySymbol}
+                      lang={lang}
+                    />
+                  </Conditional>
+                </div>
+                <div className="price">
+                  <LocalisedPrice
+                    className="l-price"
+                    price={finalPrice}
+                    currencySymbol={currencySymbol}
+                    lang={lang}
+                  />
+                  <Conditional
+                    if={isEntertainmentMb && bestDiscount && bestDiscount > 0}
+                  >
+                    <span className="discount">
+                      {bestDiscount}% {strings.OFF}
+                    </span>
+                  </Conditional>
+                </div>
+              </div>
+            </div>
+
+            <Conditional if={description && description.length}>
+              <div className="content-block tour-description">
+                <RichText
+                  render={description}
+                  htmlSerializer={shortCodeSerializer}
                 />
-              </Split>
-            </IconBoosters>
+              </div>
+            </Conditional>
+          </div>
+          <Conditional if={isListicle}>
+            {listicleShowSummary && (
+              <div className="show-summary-wrapper">
+                <RichText render={[listicleShowSummary.text]} />
+              </div>
+            )}
+            <div>
+              <h3>{strings.SHOWPAGE.WHY_WATCH}</h3>
+              {listicleWhyWatch && (
+                <RichText render={[listicleWhyWatch.text]} />
+              )}
+            </div>
           </Conditional>
-          <Conditional if={descriptors?.length}>
-            <div className="v2-descriptors">
-              {descriptors?.map((descriptor, index) => {
-                if (descriptor) {
+          <div className="v2-desc-columns">
+            <div className="v2-desc-left">
+              {productCardContent.left.map((block, index) => {
+                const { heading, label, contents, content } = block;
+                if (heading || label) {
                   return (
-                    <div className="v2-descriptor" key={index}>
-                      {descriptor.trim()}
-                    </div>
+                    <ContentBlock
+                      content={contents || content}
+                      heading={heading || label}
+                      key={index}
+                    />
                   );
                 }
                 return null;
               })}
             </div>
-          </Conditional>
-          <Conditional if={description && description.length}>
-            <div className="content-block tour-description">
-              <RichText
-                render={description}
-                htmlSerializer={shortCodeSerializer}
-              />
+            <div className="v2-desc-right">
+              {productCardContent.right.map((block, index) => {
+                const { heading, label, contents, content } = block;
+                if (heading || label) {
+                  return (
+                    <ContentBlock
+                      content={contents || content}
+                      heading={heading || label}
+                      isRightContent={true}
+                      key={index}
+                    />
+                  );
+                }
+                return null;
+              })}
+              <Conditional if={!isEntertainmentMb}>
+                <CTABlock />
+              </Conditional>
             </div>
+          </div>
+          <Conditional if={isEntertainmentMb}>
+            <CTABlock />
           </Conditional>
         </div>
-        <Conditional if={isListicle}>
-          {listicleShowSummary && (
-            <div className="show-summary-wrapper">
-              <RichText render={[listicleShowSummary.text]} />
-            </div>
-          )}
-          <div>
-            <h3>{strings.SHOWPAGE.WHY_WATCH}</h3>
-            {listicleWhyWatch && <RichText render={[listicleWhyWatch.text]} />}
-          </div>
-        </Conditional>
-        <div className="v2-desc-columns">
-          <div className="v2-desc-left">
-            {productCardContent.left.map((block, index) => {
-              const { heading, label, contents, content } = block;
-              if (heading || label) {
-                return (
-                  <ContentBlock
-                    content={contents || content}
-                    heading={heading || label}
-                    key={index}
+      </Conditional>
+
+      <Conditional if={!isEntertainmentMb}>
+        <div className="product-v2-description-right">
+          <div className="full-width-section">
+            <div className="v2-desc-title">{title}</div>
+            <Conditional if={hasSafetyFlag}>
+              <IconBoosters>
+                <Split count={2} autoWidth={true} mobileLayout={'scroll'}>
+                  <IconCTA
+                    text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
+                    colorScheme={greyScheme}
+                    ctaOnClick={openSafeSidebar}
+                    icon={Shield}
                   />
-                );
-              }
-              return null;
-            })}
-          </div>
-          <div className="v2-desc-right">
-            {productCardContent.right.map((block, index) => {
-              const { heading, label, contents, content } = block;
-              if (heading || label) {
-                return (
-                  <ContentBlock
-                    content={contents || content}
-                    heading={heading || label}
-                    isRightContent={true}
-                    key={index}
-                  />
-                );
-              }
-              return null;
-            })}
-            <Conditional if={!isEntertainmentMb}>
-              <CTABlock />
+                </Split>
+              </IconBoosters>
+            </Conditional>
+            <Conditional if={descriptors?.length}>
+              <div className="v2-descriptors">
+                {descriptors?.map((descriptor, index) => {
+                  if (descriptor) {
+                    return (
+                      <div className="v2-descriptor" key={index}>
+                        {descriptor.trim()}
+                      </div>
+                    );
+                  }
+                  return null;
+                })}
+              </div>
+            </Conditional>
+            <Conditional if={description && description.length}>
+              <div className="content-block tour-description">
+                <RichText
+                  render={description}
+                  htmlSerializer={shortCodeSerializer}
+                />
+              </div>
             </Conditional>
           </div>
+          <Conditional if={isListicle}>
+            {listicleShowSummary && (
+              <div className="show-summary-wrapper">
+                <RichText render={[listicleShowSummary.text]} />
+              </div>
+            )}
+            <div>
+              <h3>{strings.SHOWPAGE.WHY_WATCH}</h3>
+              {listicleWhyWatch && (
+                <RichText render={[listicleWhyWatch.text]} />
+              )}
+            </div>
+          </Conditional>
+          <div className="v2-desc-columns">
+            <div className="v2-desc-left">
+              {productCardContent.left.map((block, index) => {
+                const { heading, label, contents, content } = block;
+                if (heading || label) {
+                  return (
+                    <ContentBlock
+                      content={contents || content}
+                      heading={heading || label}
+                      key={index}
+                    />
+                  );
+                }
+                return null;
+              })}
+            </div>
+            <div className="v2-desc-right">
+              {productCardContent.right.map((block, index) => {
+                const { heading, label, contents, content } = block;
+                if (heading || label) {
+                  return (
+                    <ContentBlock
+                      content={contents || content}
+                      heading={heading || label}
+                      isRightContent={true}
+                      key={index}
+                    />
+                  );
+                }
+                return null;
+              })}
+              <Conditional if={!isEntertainmentMb}>
+                <CTABlock />
+              </Conditional>
+            </div>
+          </div>
+          <Conditional if={isEntertainmentMb}>
+            <CTABlock />
+          </Conditional>
         </div>
-        <Conditional if={isEntertainmentMb}>
-          <CTABlock />
-        </Conditional>
-      </div>
-      <div className="product-v2-description-right">
-        {/* <Image url={descriptionImage} width={1200} height={750} format="pjpg" /> */}
-        <Image
-          url={`${descriptionImage || productImage}`}
-          width={1200}
-          height={750}
-          format="pjpg"
-          imageId={tgidClicked}
-        />
-        <div
-          onClick={closeDescriptionCard}
-          role="button"
-          tabIndex={0}
-          className="close-button"
-        >
-          {CLOSE_WHITE}
+        <div className="product-v2-description-left">
+          <Image
+            url={`${descriptionImage || productImage}`}
+            width={1200}
+            height={750}
+            format="pjpg"
+            imageId={tgidClicked}
+          />
+          <div
+            onClick={closeDescriptionCard}
+            role="button"
+            tabIndex={0}
+            className="close-button"
+          >
+            {CLOSE_WHITE}
+          </div>
         </div>
-      </div>
+      </Conditional>
     </DetailedDescriptionCard>
   );
 };

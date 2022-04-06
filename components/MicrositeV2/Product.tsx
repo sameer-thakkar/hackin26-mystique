@@ -17,6 +17,8 @@ import { truncate } from 'utils/helper';
 import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import { dateToString } from 'utils/dateUtils';
 import InteractionContext from 'contexts/Interaction';
+import { convertUidToUrl } from 'utils/urlUtils';
+import parse from 'url-parse';
 
 const ProductCard = styled.div`
   width: 100%;
@@ -310,6 +312,8 @@ const Product = (props) => {
     isEntertainmentMb,
     productClick,
     activeCategoryId = null,
+    host,
+    uid,
   } = props;
   const { currencySymbolMap, lang } = useContext(MBContext);
 
@@ -327,6 +331,7 @@ const Product = (props) => {
     reopeningDate,
     averageRating,
     reviewCount,
+    showPageUid = null,
   } = tour || {};
 
   const { collectionName, primaryCategoryName, primarySubCategoryName } =
@@ -349,6 +354,18 @@ const Product = (props) => {
   } else {
     categoryName = primarySubCategoryName;
   }
+
+  let url = host || window.location.host;
+  const isDev = url.includes('localhost');
+  const currentHost = !isDev ? url : parse(uid, true).pathname;
+  const hostName = currentHost.includes('stage')
+    ? currentHost.replace('stage-', '')
+    : currentHost;
+  let hostSplit = hostName.split('.');
+  hostSplit.shift();
+  const showPageUrl = showPageUid
+    ? convertUidToUrl({ uid: showPageUid, isDev, hostname: host })
+    : null;
 
   const {
     finalPrice: price,
@@ -374,115 +391,239 @@ const Product = (props) => {
   const isBeforeToday = new Date().getTime() > new Date(openingDate)?.getTime();
   const hasScratchPrice = scratchPrice > price;
   return (
-    <ProductCard
-      onClick={handleProductClick}
-      className="product-v2"
-      id={`${cardIdPrefix}-${tgid}`}
-      onKeyDown={handleProductClick}
-      role="button"
-      tabIndex={0}
-      isEntertainmentMb={isEntertainmentMb}
-    >
-      <div className="product-v2-image">
-        <Image
-          url={productImage}
-          format="pjpg"
-          width={400}
-          imageId={tgid}
-          height={250}
-          alt={title}
-        />
-        <Conditional if={overlayBooster}>
-          <div className="overlay-booster">{overlayBooster}</div>
-        </Conditional>
-      </div>
-      <div className="product-v2-bottom">
-        <Conditional if={vendor?.length && isMobile}>
-          <div className="vendor-name">{vendor}</div>
-        </Conditional>
-        <Conditional if={isEntertainmentMb}>
-          <div className="l1-booster-wrapper">
-            <div className="l1-booster">{categoryName}</div>
-            <div className="rating">
-              <Conditional if={isNew}>
-                <span className="avg-rating">{strings.NEW}</span>
-              </Conditional>
-              <Conditional if={!isNew && averageRating}>
-                <span className="avg-rating">
-                  {averageRating} {STAR(COLORS.JOY_MUSTARD)}
-                </span>
-              </Conditional>
-              <Conditional if={!isNew && reviewCount}>
-                <span className="total-rating">
-                  (
-                  {reviewCount > 999
-                    ? `${(reviewCount / 1000).toFixed(1)}k`
-                    : reviewCount}
-                  )
-                </span>
-              </Conditional>
-            </div>
-          </div>
-        </Conditional>
-        <div className="title-wrap">
-          <div className="product-v2-title">{truncate(title, 70)}</div>
-          <Conditional
-            if={
-              isEntertainmentMb &&
-              !isBeforeToday &&
-              openingDate !== 'Invalid Date'
-            }
-          >
-            <div className="reopening">
-              {OPENING_ON} {openingDate}
-            </div>
-          </Conditional>
-        </div>
-        <div className="product-v2-bottom-left">
-          <div className="product-v2-price">
-            <Conditional if={isEntertainmentMb && !hasScratchPrice}>
-              <span className="mr-4">{strings.FROM}</span>
-            </Conditional>
-            <LocalisedPrice
-              price={price}
-              currencySymbol={currencySymbol}
-              lang={lang}
+    <>
+      <Conditional if={!isMobile || !isEntertainmentMb}>
+        <ProductCard
+          onClick={handleProductClick}
+          className="product-v2"
+          id={`${cardIdPrefix}-${tgid}`}
+          onKeyDown={handleProductClick}
+          role="button"
+          tabIndex={0}
+          isEntertainmentMb={isEntertainmentMb}
+        >
+          <div className="product-v2-image">
+            <Image
+              url={productImage}
+              format="pjpg"
+              width={400}
+              imageId={tgid}
+              height={250}
+              alt={title}
             />
-            <Conditional
-              if={isEntertainmentMb && hasScratchPrice && bestDiscount}
-            >
-              <span className="discount">
-                {bestDiscount}% {strings.OFF}
-              </span>
+            <Conditional if={overlayBooster}>
+              <div className="overlay-booster">{overlayBooster}</div>
             </Conditional>
           </div>
-          <Conditional if={hasScratchPrice}>
-            <div className="product-v2-scratch-price">
-              <Conditional if={isEntertainmentMb}>
-                <span>{strings.FROM} </span>
-              </Conditional>
-              <LocalisedPrice
-                price={scratchPrice}
-                currencySymbol={currencySymbol}
-                lang={lang}
-              />
-            </div>
-          </Conditional>
-        </div>
-        <Conditional if={cardFooter?.length && !isEntertainmentMb}>
-          <div className="product-v2-bottom-right">
-            <div className="product-v2-boosters" data-cont={cardFooter?.length}>
-              <RichText
-                render={cardFooter}
-                htmlSerializer={(...defaultArgs: any) =>
-                  shortCodeSerializerWithParentProps(defaultArgs, tour)
+          <div className="product-v2-bottom">
+            <Conditional if={vendor?.length && isMobile}>
+              <div className="vendor-name">{vendor}</div>
+            </Conditional>
+            <Conditional if={isEntertainmentMb}>
+              <div className="l1-booster-wrapper">
+                <div className="l1-booster">{categoryName}</div>
+                <div className="rating">
+                  <Conditional if={isNew}>
+                    <span className="avg-rating">{strings.NEW}</span>
+                  </Conditional>
+                  <Conditional if={!isNew && averageRating}>
+                    <span className="avg-rating">
+                      {averageRating} {STAR(COLORS.JOY_MUSTARD)}
+                    </span>
+                  </Conditional>
+                  <Conditional if={!isNew && reviewCount}>
+                    <span className="total-rating">
+                      (
+                      {reviewCount > 999
+                        ? `${(reviewCount / 1000).toFixed(1)}k`
+                        : reviewCount}
+                      )
+                    </span>
+                  </Conditional>
+                </div>
+              </div>
+            </Conditional>
+            <div className="title-wrap">
+              <div className="product-v2-title">{truncate(title, 70)}</div>
+              <Conditional
+                if={
+                  isEntertainmentMb &&
+                  !isBeforeToday &&
+                  openingDate !== 'Invalid Date'
                 }
-              />
+              >
+                <div className="reopening">
+                  {OPENING_ON} {openingDate}
+                </div>
+              </Conditional>
             </div>
+            <div className="product-v2-bottom-left">
+              <div className="product-v2-price">
+                <Conditional if={isEntertainmentMb && !hasScratchPrice}>
+                  <span className="mr-4">{strings.FROM}</span>
+                </Conditional>
+                <LocalisedPrice
+                  price={price}
+                  currencySymbol={currencySymbol}
+                  lang={lang}
+                />
+                <Conditional
+                  if={isEntertainmentMb && hasScratchPrice && bestDiscount}
+                >
+                  <span className="discount">
+                    {bestDiscount}% {strings.OFF}
+                  </span>
+                </Conditional>
+              </div>
+              <Conditional if={hasScratchPrice}>
+                <div className="product-v2-scratch-price">
+                  <Conditional if={isEntertainmentMb}>
+                    <span>{strings.FROM} </span>
+                  </Conditional>
+                  <LocalisedPrice
+                    price={scratchPrice}
+                    currencySymbol={currencySymbol}
+                    lang={lang}
+                  />
+                </div>
+              </Conditional>
+            </div>
+            <Conditional if={cardFooter?.length && !isEntertainmentMb}>
+              <div className="product-v2-bottom-right">
+                <div
+                  className="product-v2-boosters"
+                  data-cont={cardFooter?.length}
+                >
+                  <RichText
+                    render={cardFooter}
+                    htmlSerializer={(...defaultArgs: any) =>
+                      shortCodeSerializerWithParentProps(defaultArgs, tour)
+                    }
+                  />
+                </div>
+              </div>
+            </Conditional>
           </div>
-        </Conditional>
-      </div>
-    </ProductCard>
+        </ProductCard>
+      </Conditional>
+
+      <Conditional if={isMobile && isEntertainmentMb}>
+        <a target="_blank" rel="noopener noreferrer" href={showPageUrl}>
+          <ProductCard
+            onClick={handleProductClick}
+            className="product-v2"
+            id={`${cardIdPrefix}-${tgid}`}
+            onKeyDown={handleProductClick}
+            role="button"
+            tabIndex={0}
+            isEntertainmentMb={isEntertainmentMb}
+          >
+            <div className="product-v2-image">
+              <Image
+                url={productImage}
+                format="pjpg"
+                width={400}
+                imageId={tgid}
+                height={250}
+                alt={title}
+              />
+              <Conditional if={overlayBooster}>
+                <div className="overlay-booster">{overlayBooster}</div>
+              </Conditional>
+            </div>
+            <div className="product-v2-bottom">
+              <Conditional if={vendor?.length && isMobile}>
+                <div className="vendor-name">{vendor}</div>
+              </Conditional>
+              <Conditional if={isEntertainmentMb}>
+                <div className="l1-booster-wrapper">
+                  <div className="l1-booster">{categoryName}</div>
+                  <div className="rating">
+                    <Conditional if={isNew}>
+                      <span className="avg-rating">{strings.NEW}</span>
+                    </Conditional>
+                    <Conditional if={!isNew && averageRating}>
+                      <span className="avg-rating">
+                        {averageRating} {STAR(COLORS.JOY_MUSTARD)}
+                      </span>
+                    </Conditional>
+                    <Conditional if={!isNew && reviewCount}>
+                      <span className="total-rating">
+                        (
+                        {reviewCount > 999
+                          ? `${(reviewCount / 1000).toFixed(1)}k`
+                          : reviewCount}
+                        )
+                      </span>
+                    </Conditional>
+                  </div>
+                </div>
+              </Conditional>
+              <div className="title-wrap">
+                <div className="product-v2-title">{truncate(title, 70)}</div>
+                <Conditional
+                  if={
+                    isEntertainmentMb &&
+                    !isBeforeToday &&
+                    openingDate !== 'Invalid Date'
+                  }
+                >
+                  <div className="reopening">
+                    {OPENING_ON} {openingDate}
+                  </div>
+                </Conditional>
+              </div>
+              <div className="product-v2-bottom-left">
+                <div className="product-v2-price">
+                  <Conditional if={isEntertainmentMb && !hasScratchPrice}>
+                    <span className="mr-4">{strings.FROM}</span>
+                  </Conditional>
+                  <LocalisedPrice
+                    price={price}
+                    currencySymbol={currencySymbol}
+                    lang={lang}
+                  />
+                  <Conditional
+                    if={isEntertainmentMb && hasScratchPrice && bestDiscount}
+                  >
+                    <span className="discount">
+                      {bestDiscount}% {strings.OFF}
+                    </span>
+                  </Conditional>
+                </div>
+                <Conditional if={hasScratchPrice}>
+                  <div className="product-v2-scratch-price">
+                    <Conditional if={isEntertainmentMb}>
+                      <span>{strings.FROM} </span>
+                    </Conditional>
+                    <LocalisedPrice
+                      price={scratchPrice}
+                      currencySymbol={currencySymbol}
+                      lang={lang}
+                    />
+                  </div>
+                </Conditional>
+              </div>
+              <Conditional if={cardFooter?.length && !isEntertainmentMb}>
+                <div className="product-v2-bottom-right">
+                  <div
+                    className="product-v2-boosters"
+                    data-cont={cardFooter?.length}
+                  >
+                    <RichText
+                      render={cardFooter}
+                      htmlSerializer={(...defaultArgs: any) =>
+                        shortCodeSerializerWithParentProps(defaultArgs, tour)
+                      }
+                    />
+                  </div>
+                </div>
+              </Conditional>
+            </div>
+          </ProductCard>
+        </a>
+      </Conditional>
+    </>
   );
 };
 
