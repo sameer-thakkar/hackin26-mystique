@@ -73,7 +73,7 @@ const nl = {
     MOBILE_TICKET: 'Tickets op je mobiel',
     HOTEL_PICKUP: 'Ophalen bij het Hotel',
     INSTANT_CONFIRMATION: 'Directe bevestiging',
-    SKIP_THE_LINE: 'Skip-the-line',
+    SKIP_THE_LINE: 'Sla de rij over en bespaar tijd',
     DURATION: 'Duur: {0}',
     FREE_CANCELLATION: 'Gratis annuleren',
     AUDIO_GUIDE: 'Audiogids',
