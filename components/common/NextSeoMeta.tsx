@@ -15,7 +15,7 @@ import { createAdditionalMetaTag, createHrefLangObj } from 'utils/headUtils';
 import { withShortcodes } from 'utils/helper';
 import { addQueryParams, convertUidToUrl } from 'utils/urlUtils';
 import { useRouter } from 'next/router';
-import { QUERY_PARAMS } from 'const/index';
+import { FB_DOMAIN_VERIFICATION, QUERY_PARAMS } from 'const/index';
 
 type PopulateMetaProps = {
   prismicData: { [key: string]: any };
@@ -180,6 +180,13 @@ export default function PopulateMeta({
         content: seoKeywords,
       })
     );
+
+  additionalMetaTags.push(
+    createAdditionalMetaTag({
+      name: 'facebook-domain-verification',
+      content: FB_DOMAIN_VERIFICATION,
+    })
+  );
 
   const ampLinkTag = {
     rel: 'amphtml',

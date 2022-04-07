@@ -664,3 +664,5 @@ export const QUERY_PARAMS = {
   LIMIT: 'limit',
   OFFSET: 'offset',
 };
+
+export const FB_DOMAIN_VERIFICATION = 'vrvsgm9rczh57d7fnspfeve29fa6ae';
