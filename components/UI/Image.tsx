@@ -97,6 +97,7 @@ const Image: React.FC<ImageProps> = ({
     }
     if (format === 'gif') return url;
     const imigxOptionsQueryParams = new URLSearchParams();
+    imigxOptionsQueryParams.set('auto', 'compress,format');
     if (width) imigxOptionsQueryParams.set('w', `${Number(width) * 1.5}`);
     if (height) imigxOptionsQueryParams.set('h', `${Number(height) * 1.5}`);
     if (quality) imigxOptionsQueryParams.set('q', `${Number(quality)}`);
@@ -110,7 +111,6 @@ const Image: React.FC<ImageProps> = ({
       imigxOptionsQueryParams.delete('fit');
     }
     imigxOptionsQueryParams.set('fm', format);
-    imigxOptionsQueryParams.set('auto', 'compress');
     if (addDarkOverlay) {
       imigxOptionsQueryParams.set('exp', '-10');
     }

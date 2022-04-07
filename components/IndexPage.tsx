@@ -25,6 +25,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { gtmAtom } from 'store/atoms/gtm';
 import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
 import { withShortcodes } from 'utils/helper';
+import { localServerSideIsMobileCheck } from 'utils/gen';
 
 const Microsite = dynamic(() => import('components/MicrositeV1'));
 const ContentPage = dynamic(() => import('components/ContentPage'));
@@ -264,13 +265,19 @@ Page.getInitialProps = async (ctx) => {
   const { host } = req?.headers || window?.location;
   const pathname =
     req?.url.split('?')[0].split('#')[0] || window.location.pathname;
-  const isMobile = req
+  let isMobile = req
     ? req?.headers?.['cloudfront-is-mobile-viewer'] === 'true'
     : window?.outerWidth < 768;
+
   // Checking if mystique is running in dev or is a preview
   const isDev = req
     ? !!query.mystique_uid
     : window.location.search.includes('mystique_uid');
+
+  if (query.mystique_uid) {
+    isMobile = localServerSideIsMobileCheck(req);
+  }
+
   const isPreview = req
     ? !!query.previewSession
     : window.location.search.includes('previewSession');

@@ -92,14 +92,17 @@ export default function PopulateMeta({
   const { ASPECT_RATIO, WIDTH } =
     isMobile || isAmp ? BANNER_PARAMS.MOBILE : BANNER_PARAMS.DESKTOP;
 
+  /**
+   * imgix query params need to be in exactly the same order as the query params for links of Image component for preloading to work
+   */
   const imageQueryParams = {
     auto: 'compress,format',
-    fm: 'pjpg',
     w: `${parseInt(WIDTH) * 1.5}`,
     q: '75',
-    ar: `${ASPECT_RATIO}`,
     fit: 'crop',
-    crop: 'faces',
+    ar: `${ASPECT_RATIO}`,
+    fm: 'pjpg',
+    exp: '-10',
   };
 
   const [preloadBannerImage] = bannerImages || [];

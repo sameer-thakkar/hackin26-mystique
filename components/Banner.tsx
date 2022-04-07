@@ -20,7 +20,12 @@ import {
   PAGE_TYPES,
 } from 'const/index';
 
-const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
+const Swiper = dynamic(() => import('components/Swiper'), {
+  ssr: false,
+  loading: function CarouselLoadingSkeleton() {
+    return <StyledPlaceHolder />;
+  },
+});
 
 const swiperParams = {
   breakpoints: {
@@ -38,7 +43,6 @@ const swiperParams = {
     disableOnInteraction: false,
   },
   shouldSwiperUpdate: true,
-  initialSlide: 3,
   loop: true,
   loopedSlides: 3,
   lazy: true,
@@ -52,7 +56,7 @@ export const BANNER_PARAMS = {
   },
   MOBILE: {
     ASPECT_RATIO: '16:9',
-    WIDTH: '400',
+    WIDTH: '360',
   },
 };
 
@@ -72,6 +76,7 @@ const renderAmpBanners = (image) => {
     />
   );
 };
+
 
 const getAmpBanner = (bannerImages) => (
   <amp-carousel
@@ -118,9 +123,11 @@ const Banner = (props: TBannerCarouselProps) => {
     bannerSubtext: tempBannerSubtext,
     bannerCtaText = '',
     orderedTgids,
+    isMobile: isMobileFromCDNHeader,
   } = props;
 
-  const [isMobile, setIsMobile] = useState(null);
+  const [isMobile, setIsMobile] = useState(isMobileFromCDNHeader);
+
   const [swiper, updateSwiper] = useState(null);
 
   useLayoutEffect(() => {
@@ -273,6 +280,7 @@ const Banner = (props: TBannerCarouselProps) => {
                     alt={image?.alt || 'banner'}
                     addDarkOverlay
                     dontLazyLoad={index === 0}
+                    autoCrop={false}
                   />
                   {textOverLay(swiper?.realIndex === index)}
                 </div>
@@ -532,3 +540,17 @@ const BannerSubtext = styled.em`
     margin: 0 1rem 0.75rem;
   }
 `;
+
+const StyledPlaceHolder = styled.div`
+  height: 400px;
+  margin: 1rem auto 12px;
+  background-color: rgba(0, 0, 0, 0.15);
+  max-width: 1200px;
+  border-radius: 0.5rem;
+  @media (max-width: 768px) {
+    border-radius: initial;
+    max-height: 200px;
+    margin: 1rem 0;
+  }
+`;
+

@@ -18,3 +18,25 @@ export const hashCode = (input) => {
 export const isServer = () => {
   return !process.browser;
 };
+
+/**
+ *
+ * @param req request object inside getInitialProps
+ * @returns isMobile boolean value determined from the userAgent
+ */
+export const localServerSideIsMobileCheck = (req) => {
+  let userAgent;
+  if (req) {
+    userAgent = req.headers['user-agent']; // Server
+  } else {
+    userAgent = navigator.userAgent; // Client
+  }
+
+  const isMobile = Boolean(
+    userAgent.match(
+      /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
+    )
+  );
+
+  return isMobile;
+};

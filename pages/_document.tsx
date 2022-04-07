@@ -68,6 +68,14 @@ class MystiqueDocument extends Document {
     return (
       <Html>
         <Head>
+          <link
+            rel="preload"
+            href="https://use.typekit.net/bqt0pit.css"
+            as="style"
+          />
+          <link rel="preconnect" href="https://images.prismic.io" />
+          <link rel="preconnect" href="https://cdn-imgix.headout.com" />
+
           <link rel="stylesheet" href="https://use.typekit.net/bqt0pit.css" />
         </Head>
         <body>
