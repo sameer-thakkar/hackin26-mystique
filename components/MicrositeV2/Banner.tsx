@@ -21,18 +21,24 @@ const StyledBanner = styled.div`
   height: 400px;
   width: 100%;
   margin: 1rem auto;
-
   position: relative;
   margin-bottom: 12px;
 
   .single-slide {
-    margin: 0 auto;
+    margin: auto;
+    position: relative;
+    aspect-ratio: 3;
+    max-height: 400px;
+    max-width: ${SIZES.MAX_WIDTH};
   }
 
-  .image-wrapper {
-    background: rgba(34, 34, 34, 0.6);
-    z-index: 0;
+  .single-slide img {
+    transform: scale(1.1);
+    border-radius: 0.75rem;
+    object-fit: cover;
+    object-position: 0% 50%;
   }
+
   .mb-slide {
     aspect-ratio: 3;
     max-height: 400px;
@@ -60,7 +66,8 @@ const StyledBanner = styled.div`
   }
 
   @media (max-width: 768px) {
-    margin: 1rem 0;
+    margin: ${({ bannerImages }) =>
+      bannerImages.length === 1 ? '2rem 0' : '1rem 0'};
     max-height: 200px;
 
     .swiper-slide {
@@ -71,6 +78,11 @@ const StyledBanner = styled.div`
     .swiper-slide-active {
       transform: scale(1);
       -webkit-transform: scale(1);
+    }
+
+    .single-slide {
+      aspect-ratio: 16/9;
+      height: 100%;
     }
 
     .mb-slide {
@@ -181,7 +193,7 @@ const NewBanner = (props) => {
 
   return (
     <div>
-      <StyledBanner>
+      <StyledBanner bannerImages={bannerImages}>
         {bannerImages?.length === 1 ? (
           <div
             className={`swiper-slide single-slide ${
