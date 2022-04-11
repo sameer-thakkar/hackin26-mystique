@@ -1182,7 +1182,6 @@ const Product = (props) => {
         isTicketCard={isTicketCard}
         isMobile={isMobile}
       >
-
         <Conditional if={!isTicketCard}>
           <div className="card-img">
             <Image
@@ -1193,7 +1192,7 @@ const Product = (props) => {
             />
           </div>
         </Conditional>
-        
+
         <ProductHeader>
           <TitleWrapper hasBorderedTitle={hasBorderedTitle && !tabs.length}>
             <Conditional if={boosterTag && mbTheme !== THEMES.MIN_BLUE}>

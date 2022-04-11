@@ -471,6 +471,7 @@ const CTABlock = styled.div`
     }
     &.primary {
       background: ${COLORS.PURPS};
+      cursor: pointer;
       .cta-text {
         color: ${COLORS.WHITE};
       }
@@ -615,19 +616,25 @@ export const MobileProductPage = (props) => {
           <div className="cta-text">{strings.MORE_DETAILS}</div>
         </a>
       </Conditional>
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href={createBookingURL({
-          nakedDomain: bookingUrl,
-          lang: currentLanguage,
-          tgid,
-          biLink,
-        })}
+      <div
+        role="button"
+        tabIndex={0}
         className="cta primary"
+        onClick={() =>
+          window.open(
+            createBookingURL({
+              nakedDomain: bookingUrl,
+              lang: currentLanguage,
+              tgid,
+              biLink,
+            }),
+            '_blank',
+            'noopener, noreferrer'
+          )
+        }
       >
         <div className="cta-text">{strings.BOOK_NOW_CTA}</div>
-      </a>
+      </div>
     </CTABlock>
   );
 

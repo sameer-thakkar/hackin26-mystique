@@ -77,7 +77,6 @@ const renderAmpBanners = (image) => {
   );
 };
 
-
 const getAmpBanner = (bannerImages) => (
   <amp-carousel
     width="411"
@@ -553,4 +552,3 @@ const StyledPlaceHolder = styled.div`
     margin: 1rem 0;
   }
 `;
-

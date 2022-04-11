@@ -236,6 +236,7 @@ const DetailedDescriptionCard = styled.div`
   }
   .cta.primary {
     background: ${COLORS.PURPS};
+    cursor: pointer;
   }
   .cta.secondary {
     background: ${COLORS.WHITE};
@@ -486,19 +487,25 @@ const DetailedProductCard = (props) => {
           <span className="cta-text">{strings.MORE_DETAILS}</span>
         </a>
       </Conditional>
-      <a
+      <div
+        role="button"
+        tabIndex={0}
         className="cta primary"
-        target="_blank"
-        rel="noopener noreferrer"
-        href={createBookingURL({
-          nakedDomain,
-          lang,
-          tgid: tgidClicked,
-          biLink,
-        })}
+        onClick={() =>
+          window.open(
+            createBookingURL({
+              nakedDomain,
+              lang,
+              tgid: tgidClicked,
+              biLink,
+            }),
+            '_blank',
+            'noopener, noreferrer'
+          )
+        }
       >
         <span className="cta-text">{strings.BOOK_NOW_CTA}</span>
-      </a>
+      </div>
     </div>
   );
 

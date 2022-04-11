@@ -190,6 +190,7 @@ const BannerContent = styled.div`
     background: ${COLORS.PURPS};
     color: ${COLORS.WHITE};
     display: block;
+    cursor: pointer;
   }
   .unavailable-button {
     background: ${COLORS.GREY.G5};
@@ -484,14 +485,16 @@ const ShowPageBanner = ({
                 </div>
               </Conditional>
               <Conditional if={listingPrice}>
-                <a
+                <div
+                  role="button"
+                  tabIndex={0}
                   className="buy-button"
-                  href={bookingUrl}
-                  target="_blank"
-                  rel="noreferrer"
+                  onClick={() =>
+                    window.open(bookingUrl, '_blank', 'noopener, noreferrer')
+                  }
                 >
                   {strings.BANNER_CTA}
-                </a>
+                </div>
               </Conditional>
               <Conditional if={!listingPrice}>
                 <button className="unavailable-button" disabled>

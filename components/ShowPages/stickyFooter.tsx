@@ -32,6 +32,7 @@ const StickyFooterContentWrapper = styled.div`
   .buy-button {
     color: ${COLORS.WHITE};
     background: ${COLORS.PURPS};
+    cursor: pointer;
   }
   .unavailable-button {
     background: ${COLORS.GREY.G5};
@@ -60,14 +61,16 @@ const StickyFooter = ({
   return (
     <StickyFooterContentWrapper>
       <Conditional if={isAvailable}>
-        <a
+        <div
+          role="button"
+          tabIndex={0}
           className="buy-button"
-          href={bookingUrl}
-          target="_blank"
-          rel="noreferrer"
+          onClick={() =>
+            window.open(bookingUrl, '_blank', 'noopener, noreferrer')
+          }
         >
           {strings.BANNER_CTA}
-        </a>
+        </div>
       </Conditional>
       <Conditional if={!isAvailable}>
         <button disabled className="unavailable-button">
