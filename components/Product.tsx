@@ -1,24 +1,21 @@
 import React, { useRef, useState, useContext, useEffect } from 'react';
 import { RichText } from 'prismic-reactjs';
 import { useRecoilValue } from 'recoil';
-import dynamic from 'next/dynamic';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import parse from 'url-parse';
 import styled, { css } from 'styled-components';
-import { greyScheme } from 'style/theme';
 import { MBContext } from 'contexts/MBContext';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import Conditional from 'components/common/Conditional';
 import ComboVariants from 'components/UI/ComboVariants';
 import PriceBlock from 'UI/PriceBlock';
 import Chevron from 'UI/Chevron';
-import Split, { StlyedSplit } from 'UI/Split';
-import IconCTA, { StyledIconCTA } from 'UI/IconCTA';
+import { StlyedSplit } from 'UI/Split';
 import Button from 'UI/Button';
 import Image from 'UI/Image';
 import { currencyAtom } from 'store/atoms/currency';
-import { CALENDAR, Shield, BackArrow } from 'assets/SvgIcons';
+import { CALENDAR, BackArrow } from 'assets/SvgIcons';
 import { strings } from 'const/strings';
 import {
   ANALYTICS_EVENTS,
@@ -36,13 +33,9 @@ import {
 } from 'utils/productUtils';
 import { trackEvent } from 'utils/analytics';
 import { getHostName, truncate, wordCount } from 'utils/helper';
-import { isSafetyIncluded, createBookingURL } from 'utils';
+import { createBookingURL } from 'utils';
 import { descriptorIcons } from 'const/descriptorIcons';
 import { getDuration } from 'utils/timeUtils';
-
-const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
-  ssr: false,
-});
 
 dayjs.extend(advancedFormat);
 
@@ -594,42 +587,6 @@ const V1BoosterBlock = styled.div`
   }
 `;
 
-const IconBoosters = styled.div`
-  grid-area: icon-booster;
-  margin-left: 16px;
-  ${StlyedSplit} {
-    grid-column-gap: 30px;
-  }
-  @media (max-width: 768px) {
-    margin-left: 0;
-    justify-self: right;
-    ${StyledIconCTA} {
-      justify-self: right;
-      grid-template-columns: auto;
-      border-radius: 50%;
-      .icon {
-        position: unset;
-        transform: unset;
-        left: unset;
-        top: unset;
-        height: 20px;
-        width: 20px;
-      }
-      padding: 4px;
-    }
-    ${StlyedSplit} {
-      border: none;
-      grid-auto-flow: column;
-      grid-column-gap: 24px;
-      padding-left: 0;
-    }
-    .text,
-    .chevron {
-      display: none;
-    }
-  }
-`;
-
 const HighlightTabsWrapper = styled.div`
   display: grid;
   grid-row-gap: 16px;
@@ -874,7 +831,7 @@ const Product = (props) => {
   );
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [showComboVariant, setShowComboVariant] = useState(false);
-  const { allTags = [], combo, minDuration, maxDuration } = scorpioData || {};
+  const { combo, minDuration, maxDuration } = scorpioData || {};
 
   const descriptorsList = descriptors || scorpioData.descriptors;
   const cardTitle = title || scorpioData.title;
@@ -1017,25 +974,11 @@ const Product = (props) => {
   const { listingPrice } = tourPrices[tgid];
 
   if (!listingPrice) return null;
-  const hasSafetyFlag = isSafetyIncluded(allTags);
   const finalPrice = listingPrice;
   const { tourId } = finalPrice || {};
-  const openSafeSidebar = () => {
-    addToAside({
-      width: '41.06vw',
-      children: (
-        <SafeExperiencesPitch
-          allTags={allTags}
-          images={scorpioData.safetyImages}
-        />
-      ),
-      sidePadding: isMobile ? 0 : 40,
-    });
-  };
   const hasV1Booster = booster && RichText.asText(booster).trim().length > 0;
   const hasOffer = isOfferEnabled && offerId;
-  const hasTags = hasSafetyFlag;
-  const hasBorderedTitle = !hasOffer && !hasV1Booster && !hasTags;
+  const hasBorderedTitle = !hasOffer && !hasV1Booster;
 
   const onMoreDetailsClick = (e) => {
     e?.stopPropagation();
@@ -1059,7 +1002,6 @@ const Product = (props) => {
 
   const layout = getProductCardLayout({
     hasOffer,
-    hasTags,
     hasV1Booster,
     mbTheme,
     hasShortSummary: hasShortSummary,
@@ -1223,22 +1165,6 @@ const Product = (props) => {
               maxDuration={maxDuration}
               lang={currentLanguage}
             />
-          </Conditional>
-          <Conditional if={hasSafetyFlag}>
-            <IconBoosters>
-              <Split count={2} autoWidth>
-                <Conditional if={hasSafetyFlag}>
-                  <IconCTA
-                    text={strings.SAFE_EXPERIENCE.FLAG_TEXT}
-                    colorScheme={greyScheme}
-                    ctaOnClick={openSafeSidebar}
-                    icon={Shield}
-                    key={'safety-tag'}
-                    showBorder
-                  />
-                </Conditional>
-              </Split>
-            </IconBoosters>
           </Conditional>
           <Conditional if={hasV1Booster && !isAmp}>
             <V1BoosterBlock boosterHasIcon={boosterHasIcon}>

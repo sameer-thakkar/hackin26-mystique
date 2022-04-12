@@ -29,7 +29,6 @@ const PRODUCT_CARD_DESKTOP_IMG_GRID_AREA = 'card-img ';
 
 export const getProductCardLayout = ({
   mbTheme,
-  hasTags,
   hasOffer,
   hasV1Booster,
   hasShortSummary,
@@ -37,13 +36,11 @@ export const getProductCardLayout = ({
   isTicketCard = false,
 }) => {
   let layout = { desktop: [], mobile: [] };
-  const hasIconBoosters = hasTags;
   switch (mbTheme) {
     case THEMES.MIN_BLUE:
       layout = {
         desktop: [
           'title cta-combo',
-          hasIconBoosters && 'icon-booster cta-combo',
           hasOffer && 'offer cta-combo',
           hasV1Booster && 'booster cta-combo',
           (!hasOffer || !hasV1Booster) && '. cta-combo',
@@ -55,7 +52,6 @@ export const getProductCardLayout = ({
           'title',
           'tags',
           'price-block',
-          hasIconBoosters && 'icon-booster',
           hasOffer && 'offer',
           hasV1Booster && 'booster ',
           'body',
@@ -76,10 +72,6 @@ export const getProductCardLayout = ({
             `${
               isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
             } summary line cta-combo`,
-          hasIconBoosters &&
-            `${
-              isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
-            } icon-booster line cta-combo`,
           hasOffer &&
             `${
               isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
@@ -99,7 +91,7 @@ export const getProductCardLayout = ({
           isTicketCard ? null : 'card-img card-img',
           'title title',
           hasNextAvailable && 'next-available next-available',
-          `price-block ${hasIconBoosters ? 'icon-booster' : 'price-block'}`,
+          'price-block price-block',
           hasOffer && 'offer offer',
           'summary summary',
           'tags tags',

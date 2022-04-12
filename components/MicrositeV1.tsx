@@ -15,12 +15,7 @@ import PopulateProducts from 'components/PopulateProducts';
 import TextBanner from 'components/TextBanner';
 import Conditional from 'components/common/Conditional';
 import { withAmp } from 'components/common/withAmp';
-import MultiBannerWrapper from 'UI/MultiBannerWrapper';
-import {
-  getAlternateLanguages,
-  isSafetyIncluded,
-  legacyBooleanCheck,
-} from 'utils';
+import { getAlternateLanguages, legacyBooleanCheck } from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import allToursParser from 'utils/allToursParser';
 import { csvTgidToArray, getLangObject, groupSlices } from 'utils/helper';
@@ -355,10 +350,6 @@ const MicrositeV1 = (props) => {
       .slice(0, bannerLimit || orderedUncategorizedTours.length);
   }
 
-  const hasSafe = Object.values(scorpioData || {}).some((tour: any) =>
-    isSafetyIncluded(tour.allTags)
-  );
-
   const finalHeaderSlices = !isHeaderInherited
     ? groupSlices(headerSlices || [], ALLOW_IMMEDIEATE_NESTING)
     : [];
@@ -569,11 +560,6 @@ const MicrositeV1 = (props) => {
             <LongForm content={coverSlices} isMobile={isAmp || isMobile} />
           </CoverSlicesWrapper>
         </Conditional>
-        <MultiBannerWrapper
-          hasSafe={hasSafe}
-          isAmp={isAmp}
-          isMobile={isMobile}
-        />
 
         <Conditional if={hasTours && !hasTourListContentFW && isToursAvailable}>
           {tourListSection}
