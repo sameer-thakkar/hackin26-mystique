@@ -1397,6 +1397,9 @@ export const getPageData = async ({
       );
       tgEndpoint.searchParams.set('language', getHeadoutLanguagecode(lang));
       tgEndpoint.searchParams.set('ids%5B%5D', tgidsArray.join(','));
+      if (getHeadoutLanguagecode(lang) !== 'en') {
+        tgEndpoint.searchParams.set('fallback-to-english', '0');
+      }
       if (AllData?.['queryParams']?.currency)
         tgEndpoint.searchParams.set(
           'currency',

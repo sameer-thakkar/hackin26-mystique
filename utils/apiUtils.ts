@@ -91,6 +91,7 @@ export const fetchTourList = ({ tgids, host = '', ...query }) => {
 interface CommonApiProps {
   hostname: string;
   language?: string;
+  fallbackToEnglish?: boolean;
 }
 
 interface TourListProps extends CommonApiProps {
@@ -101,11 +102,16 @@ export const fetchTourListV6 = async ({
   hostname,
   language,
   tgids,
+  fallbackToEnglish = false,
 }: TourListProps) => {
   try {
     const params = {
       'ids[]': tgids?.join(','),
       ...(language && { language }),
+      ...(!fallbackToEnglish &&
+        language !== 'en' && {
+          'fallback-to-english': '0',
+        }),
     };
     const apiUrl = getHeadoutApiUrl({
       endpoint: HeadoutEndpoints.TourGroupsV6,
@@ -189,12 +195,17 @@ export const fetchTGIDsByCategoryV2 = async ({
   city = '',
   language = 'en',
   limit,
+  fallbackToEnglish = false,
 }: fetchTGIDsByCategoryV2Obj) => {
   const params = {
     language,
     'use-seatmap-prices': '1',
     ...(city && { city }),
     ...(limit && { limit }),
+    ...(!fallbackToEnglish &&
+      language !== 'en' && {
+        'fallback-to-english': '0',
+      }),
   };
   const url = getHeadoutApiUrl({
     endpoint: isSubCategory
@@ -223,10 +234,13 @@ export const fetchCollection = async ({
   hostname,
   language = 'en',
   limit,
+  fallbackToEnglish = false,
 }: FetchCollectionProps) => {
   const params = {
     language,
     ...(limit && { limit }),
+    ...(!fallbackToEnglish &&
+      language !== 'en' && { 'fallback-to-english': '0' }),
   };
   const finalUrl = getHeadoutApiUrl({
     endpoint: HeadoutEndpoints.TourGroupCollectionV1,

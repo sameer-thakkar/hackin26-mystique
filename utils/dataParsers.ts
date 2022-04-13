@@ -7,7 +7,7 @@ import {
   fetchCollection,
   fetchTGIDsByCategoryV2,
   fetchTourGroupV6,
-  fetchTourList,
+  fetchTourListV6,
 } from 'utils/apiUtils';
 import { csvTgidToArray } from 'utils/helper';
 import { generateDescriptor, getSingleAriesTag } from 'utils/productUtils';
@@ -147,14 +147,13 @@ export const categoryTourListParserV1 = async ({
       (tgid) => !intialTgids.includes(tgid)
     );
     if (tgidsToFetch?.length) {
-      const additionalTours = await fetchTourList({
-        tgids: tgidsToFetch,
-        host: hostname,
+      const additionalTours = await fetchTourListV6({
+        hostname,
         language,
+        tgids: tgidsToFetch,
       });
-      const additionalToursData = await additionalTours.json();
-      if (additionalToursData?.tourGroups?.length) {
-        allTours = [...tourData, ...additionalToursData?.tourGroups];
+      if (additionalTours?.tourGroups?.length) {
+        allTours = [...tourData, ...additionalTours?.tourGroups];
       }
     }
     const tgidsWithHORanking = allTours
