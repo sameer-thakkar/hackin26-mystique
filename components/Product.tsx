@@ -99,11 +99,11 @@ const moreDetailsButtonStyles = (isAmp: boolean) => css`
   }
 `;
 
-const ctaBlockMobileStyles = css`
-  grid-column: 2;
+const ctaBlockMobileStyles = (isSticky: boolean) => css`
+  grid-column: ${isSticky ? '1' : '2'};
   margin-top: -1.5rem;
   margin-left: auto;
-  width: 42vw;
+  width: ${isSticky ? '84vw' : '42vw'};
   .tour-book-now-cta {
     line-height: 125%;
     padding: 0.75rem;
@@ -415,7 +415,8 @@ const CTABlock = styled.div`
       width: 100%;
     }
 
-    ${({ isTicketCard }) => (isTicketCard ? null : ctaBlockMobileStyles)}
+    ${({ isTicketCard, isSticky }) =>
+      isTicketCard ? null : ctaBlockMobileStyles(isSticky)}
   }
 `;
 
