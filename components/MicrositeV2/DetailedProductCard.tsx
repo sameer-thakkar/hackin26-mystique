@@ -41,13 +41,15 @@ const DetailedDescriptionCard = styled.div`
     isEntertainmentMb &&
     `
       background-color: ${COLORS.GREY.G8};
+      padding: 0 32px 0 24px;
+      border-radius: 4px;
+
       &::before {
         content: '';
         position: absolute;
         background: ${COLORS.GREY.G8};
         border-top: 1px solid ${COLORS.GREY.G6};
         border-bottom: 1px solid ${COLORS.GREY.G6};
-        width: 100vw;
         height: 100%;
         top: 0;
         left: calc((1200px - 100vw) / 2);
@@ -208,10 +210,21 @@ const DetailedDescriptionCard = styled.div`
   .desc-cta-wrapper {
     display: grid;
     align-items: center;
-    grid-template-columns: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? 'max-content max-content' : 'max-content'};
-    grid-column-gap: 12px;
-    justify-content: end;
+
+    ${({ isEntertainmentMb }) =>
+      isEntertainmentMb
+        ? `
+        grid-template-columns: 1fr 1fr;
+        grid-column-gap: 24px;
+        justify-content: start;
+        grid-auto-flow: row; 
+        grid-auto-rows: max-content;
+      `
+        : `
+        grid-template-columns: max-content;
+        grid-column-gap: 12px;
+        justify-content: end;
+      `};
   }
 
   .cta {
@@ -224,6 +237,8 @@ const DetailedDescriptionCard = styled.div`
       isEntertainmentMb ? '181px' : '150px'};
     padding: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '12px 0' : '16px'};
+
+    ${({ isEntertainmentMb }) => isEntertainmentMb && 'max-width: 181px'};
   }
   .cta .cta-text {
     font-family: ${SOLEIL.FONT_STACK};
@@ -295,14 +310,21 @@ const DetailedDescriptionCard = styled.div`
 
   .close-button {
     position: absolute;
-    top: ${({ isEntertainmentMb }) => (isEntertainmentMb ? '24px' : '0')};
+    ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? `top: -8px; right: -8px;` : `top: 0; right: 0;`}
     background-color: #000;
-    right: 0;
-    padding: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '12px' : '16px'};
+    padding: ${({ isEntertainmentMb }) => (isEntertainmentMb ? '8px' : '16px')};
     cursor: pointer;
     display: flex;
-    ${({ isEntertainmentMb }) => isEntertainmentMb && `border-radius: 0 4px;`}
+    ${({ isEntertainmentMb }) => isEntertainmentMb && `border-radius: 16px;`}
+  }
+  .close-button svg {
+    ${({ isEntertainmentMb }) =>
+      isEntertainmentMb &&
+      `
+        height: 12px;
+        width: 12px;    
+      `}
   }
   .close-button img {
     height: 11px;
@@ -525,6 +547,8 @@ const DetailedProductCard = (props) => {
             format="pjpg"
             imageId={tgidClicked}
           />
+        </div>
+        <div className="product-v2-description-right">
           <div
             onClick={closeDescriptionCard}
             role="button"
@@ -533,8 +557,6 @@ const DetailedProductCard = (props) => {
           >
             {CLOSE_WHITE}
           </div>
-        </div>
-        <div className="product-v2-description-right">
           <div className="v2-desc-columns heading-price-bar">
             <div className="v2-desc-left">
               <div className="v2-desc-title">{title}</div>
