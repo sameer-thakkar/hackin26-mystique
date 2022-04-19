@@ -44,6 +44,11 @@ Mystique is the tech that powers over 100 different microbrands at Headout.
   ```
   http://localhost:3001/?mystique_uid=www.thevaticantickets.com&lang=en-us
   ```
+### Testing on stage 🚧
+- Once deployed on stage, MB types use their own subdomain - `www-stage.<domain>.com` eg. stage-www.thevaticantickets.com
+- Not all MBs have a subdomain, to check a particular MB go to `https://stage-microbrands.headout.com/?mystique_uid=www.tickets-paris.fr.louvre-museum&lang=en-us` 
+where `www.tickets-paris.fr.louvre-museum` is the mystique uid
+- Production mbs that are on a subpath i.e `www.tickets-paris.fr/louvre-museum` use a `.` instead of a `/` when used as `mystique_uid` (see ^)
 
 ### Production
 
