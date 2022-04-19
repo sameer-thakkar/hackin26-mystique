@@ -79,7 +79,7 @@ const PopulateProducts = (props) => {
     useContext(InteractionContext) || {};
   const mbContext = useContext(MBContext);
   const { lang: currentLanguage } = mbContext;
-  const { query, asPath, push: routerPush } = useRouter();
+  const { query, asPath, push: routerPush, pathname } = useRouter();
   const {
     limit = String((rowsToShow || 4) * NO_OF_CARDS_IN_ROW.DESKTOP),
     offset = '0',
@@ -144,7 +144,7 @@ const PopulateProducts = (props) => {
       rowsInView +
         (isMobile ? NO_OF_ROWS_TO_SHOW.MOBILE : NO_OF_ROWS_TO_SHOW.DESKTOP)
     );
-    routerPush(`/?${getUpdatedQuery()?.toString()}`, null, {
+    routerPush(`${pathname}?${getUpdatedQuery()?.toString()}`, null, {
       shallow: true,
     });
   };
@@ -160,7 +160,7 @@ const PopulateProducts = (props) => {
   const tgidsSubArr = subArrays(tgids, Number(offset));
 
   const getViewMoreLink = () => {
-    return `/?${getUpdatedQuery().toString()}`;
+    return `${pathname}?${getUpdatedQuery().toString()}`;
   };
 
   return (
