@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import { MBContext } from 'contexts/MBContext';
@@ -316,6 +316,10 @@ const Product = (props) => {
     uid,
   } = props;
   const { currencySymbolMap, lang } = useContext(MBContext);
+  let url;
+  useEffect(() => {
+    url = host || window.location.hostname;
+  }, []);
 
   const { sliceData } = useContext(InteractionContext) || {};
   const { collectionId, primaryCatId, primarySubCatId } = sliceData || {};
@@ -355,14 +359,13 @@ const Product = (props) => {
     categoryName = primarySubCategoryName;
   }
 
-  let url = host || window.location.host;
-  const isDev = url.includes('localhost');
+  const isDev = url?.includes('localhost');
   const currentHost = !isDev ? url : parse(uid, true).pathname;
-  const hostName = currentHost.includes('stage')
+  const hostName = currentHost?.includes('stage')
     ? currentHost.replace('stage-', '')
     : currentHost;
-  let hostSplit = hostName.split('.');
-  hostSplit.shift();
+  let hostSplit = hostName?.split('.');
+  hostSplit?.shift();
   const showPageUrl = showPageUid
     ? convertUidToUrl({ uid: showPageUid, isDev, hostname: host })
     : null;
