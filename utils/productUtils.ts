@@ -34,6 +34,7 @@ export const getProductCardLayout = ({
   hasShortSummary,
   hasNextAvailable,
   isTicketCard = false,
+  hasPromoCode = false,
 }) => {
   let layout = { desktop: [], mobile: [] };
   switch (mbTheme) {
@@ -86,14 +87,16 @@ export const getProductCardLayout = ({
           ((!hasV1Booster && !hasOffer) || !hasShortSummary) &&
             !isTicketCard &&
             'card-img . line cta-combo',
+          hasPromoCode && `${!isTicketCard ? '' : '. line cta-combo'}`,
         ],
         mobile: [
           isTicketCard ? null : 'card-img card-img',
           'title title',
           hasNextAvailable && 'next-available next-available',
           'price-block price-block',
+          isTicketCard && hasPromoCode && 'promo-block promo-block',
           hasOffer && 'offer offer',
-          'summary summary',
+          !isTicketCard && 'summary summary',
           'tags tags',
           hasV1Booster && 'booster booster',
           'body body',

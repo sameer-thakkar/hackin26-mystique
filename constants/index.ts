@@ -182,6 +182,7 @@ export const CUSTOM_TYPES = {
   GLOBAL_EXPERIENCE: 'global_experience',
   PRODUCT_CARDS: 'product_cards',
   SAFETY_BANNER: 'safety_banner',
+  PROMO_CODES: 'promo_codes',
 };
 
 export const DESIGN = {
@@ -659,6 +660,15 @@ export const ESCAPE_REPLACER = (t: string): string =>
 
 export const UNIT_ABBREVIATIONS = ['k', 'm', 'b', 't'];
 
+export const PROMO_CODES = {
+  DEFAULT: {
+    promo_code: 'HEADOUT5',
+    discount_percentage: 5,
+    absolute_discount: null,
+    capped_value: null,
+    condition: '(on min purchase of USD 50)',
+  },
+};
 export const QUERY_PARAMS = {
   CATEGORY: 'category',
   LIMIT: 'limit',

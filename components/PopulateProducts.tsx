@@ -6,12 +6,18 @@ import HorizontalLine from 'components/slices/HorizontalLine';
 import TicketCard from 'components/slices/ContentPageTicketsCard';
 import { MBContext } from 'contexts/MBContext';
 import { COLORS, SOLEIL } from 'const/ui-constants';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, THEMES } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  THEMES,
+  PROMO_CODES,
+} from 'const/index';
 import { strings } from 'const/strings';
-import { fetchInventory } from 'utils/apiUtils';
+import { fetchInventory, fetchTourList } from 'utils/apiUtils';
 import { legacyBooleanCheck } from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
-import { getHostName } from 'utils/helper';
+import { csvTgidToArray, getHostName } from 'utils/helper';
+import { getPromoCodesDocument } from 'utils/prismicUtils';
 
 const StyledProductsWrapper = styled.div`
   margin: 0 auto;
@@ -101,6 +107,11 @@ const PopulateProducts = (props) => {
   const isDubaiSafariPark = uid === 'www.dubai-safari-park.com';
   const productsWrapperRef = useRef(null);
   const [tourPrices, setTourPrices] = useState(scorpioData);
+  const [clickedPromo, setClickedPromo] = useState();
+  const [appliedPromo, setAppliedPromo] = useState(null);
+  const [allPromoCodes, setAllPromoCodes] = useState([]);
+  const [finalPromoCodes, setFinalPromoCodes] = useState({});
+  const [productInfo, setproductInfo] = useState([]);
   const [earliestAvailabilityQueue, setEarliestAvailabilityQueue] = useState(
     []
   );
@@ -116,6 +127,29 @@ const PopulateProducts = (props) => {
   const { isStage, isDev } = useContext(MBContext);
 
   const hostname = getHostName(isStage, isDev, host);
+
+  const getAllPromoCodes = async () => {
+    const promoDoc = await getPromoCodesDocument();
+    setAllPromoCodes(promoDoc);
+  };
+
+  const onPromoClick = async (data) => {
+    setAppliedPromo(data);
+  };
+
+  const fetchProductInfo = async (tgids) => {
+    const tgidData = await fetchTourList({ tgids }).then((res) => res.json());
+    const mapping = tgidData?.tourGroups?.reduce((arr, el) => {
+      const { id, primaryCollection, cityCode } = el || {};
+      arr.push({
+        tgid: id,
+        collectionId: primaryCollection?.id,
+        city: cityCode,
+      });
+      return arr;
+    }, []);
+    setproductInfo(mapping);
+  };
 
   useEffect(() => {
     if (!productsRef.current) return;
@@ -281,6 +315,69 @@ const PopulateProducts = (props) => {
       !!scorpioData[tour.tgid]?.available &&
       scorpioData[tour.tgid]?.highlights?.length
   );
+  const allTgids = availableToursList?.map((el) => el?.tgid);
+
+  const filterPromoCodes = () => {
+    let filteredPromoCodes = {};
+    productInfo.forEach((el) => {
+      let tgidBased, collectionBased, cityBased;
+
+      //For each product, filtering out promocodes based on relevant TGID, Collection, City
+      const promosForProduct = allPromoCodes?.filter((promo) => {
+        const {
+          tgids: tgidsString,
+          exclusions: exclusionsString,
+          collections,
+          city_name,
+        } = promo || {};
+        const tgids = csvTgidToArray(tgidsString);
+        const exclusions = csvTgidToArray(exclusionsString);
+        return (
+          (tgids?.includes(el?.tgid) ||
+            el?.collectionId == collections?.collectionId ||
+            el?.city === city_name?.cityCode) &&
+          !exclusions?.includes(el?.tgid)
+        );
+      });
+
+      //If any promos found based on above filtering-
+      //We find promos specific to TGID -> Collection -> City in the filtered array
+      if (promosForProduct?.length) {
+        tgidBased = promosForProduct?.find((promo) => {
+          const tgids = csvTgidToArray(promo?.tgids);
+          return tgids?.includes(el?.tgid);
+        });
+        if (!tgidBased) {
+          collectionBased = promosForProduct?.find(
+            (promo) => el?.collectionId == promo?.collections?.collectionId
+          );
+
+          if (!collectionBased) {
+            cityBased = promosForProduct?.find(
+              (promo) => el?.city === promo?.city_name?.cityCode
+            );
+          }
+        }
+        filteredPromoCodes[el?.tgid] =
+          tgidBased || collectionBased || cityBased;
+      } else {
+        filteredPromoCodes[el?.tgid] = PROMO_CODES.DEFAULT;
+      }
+    });
+    return filteredPromoCodes;
+  };
+
+  useEffect(() => {
+    getAllPromoCodes();
+    fetchProductInfo(allTgids);
+  }, []);
+
+  useEffect(() => {
+    if (productInfo?.length && allPromoCodes && finalPromoCodes) {
+      const finalPromos = filterPromoCodes();
+      setFinalPromoCodes(finalPromos);
+    }
+  }, [productInfo, allPromoCodes]);
 
   return (
     <StyledProductsWrapper ref={productsWrapperRef}>
@@ -358,6 +455,11 @@ const PopulateProducts = (props) => {
               instantCheckout,
               indexPosition: index,
               pageType,
+              clickedPromo,
+              setClickedPromo,
+              finalPromoCode: finalPromoCodes[tgid],
+              onPromoClick,
+              appliedPromo,
             };
 
             return (

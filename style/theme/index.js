@@ -161,7 +161,7 @@ const themes = {
     productCards: {
       styles: {
         desktop: `
-          grid-column-gap: 75px;
+          grid-column-gap: 60px;
           align-items: start;
           border-radius: 8px;
           ${CTAContainer} {

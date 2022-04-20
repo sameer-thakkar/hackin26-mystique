@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
+import { isAlphabeticString } from 'utils/stringUtils';
 
 import renderShortCodes from './shortCodes';
 
@@ -459,4 +460,24 @@ export const getBuyTicketsUrl = (
       ? `https://book.headout.com/tour/${tgid}`
       : getValidUrl(officialWebsite?.trim())
     : getValidUrl(officialWebsite?.trim());
+};
+
+export const getLocalisedPriceString = (
+  price,
+  currencySymbol,
+  lang,
+  precision = 2
+) => {
+  if (!price) return null;
+  const reveresedList = ['de', 'it', 'fr'];
+  const useCommaList = ['de', 'fr', 'pt'];
+  let finalPrice = price % 1 > 0 ? price.toFixed(precision) : price;
+  finalPrice = useCommaList.includes(lang)
+    ? finalPrice.toString().replace('.', ',')
+    : finalPrice;
+  const lPrice = [currencySymbol, finalPrice];
+  const space = isAlphabeticString(currencySymbol) ? ' ' : '';
+  return reveresedList.includes(lang)
+    ? lPrice.reverse().join(' ')
+    : lPrice.join(space);
 };

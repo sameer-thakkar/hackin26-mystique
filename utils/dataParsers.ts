@@ -615,6 +615,7 @@ export const tourListApiParser = (apiResponse, lang = 'en') => {
       microBrandsHighlight,
       name,
       reviewCount,
+      primaryCollection,
     } = tour || {};
     const { productImages, safetyImages } = media || {};
     const updatedDescriptors = generateDescriptor({
@@ -649,6 +650,7 @@ export const tourListApiParser = (apiResponse, lang = 'en') => {
         scratchPrice: listingPrice?.originalPrice,
         title: name,
         tgid: id,
+        collectionId: primaryCollection,
       },
     };
   }, {});

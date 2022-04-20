@@ -426,6 +426,15 @@ const en = {
   FLEXIBLE: 'Flexible',
   INCLUSIONS: 'Inclusions',
   FREE_CANCELLATION: 'Free Cancellation',
+  PROMO_CODES: {
+    APPLY_CODE: 'APPLY CODE',
+    REMOVE: 'REMOVE',
+    DESCRIPTION: {
+      PERCENTAGE: 'Get {0}% off',
+      ABSOLUTE: 'Get {0} off',
+      CAPPED: 'Get {0}% off, upto {1}',
+    },
+  },
 };
 
 export default en;

@@ -33,6 +33,7 @@ import {
 } from 'utils/productUtils';
 import { trackEvent } from 'utils/analytics';
 import { getHostName, truncate, wordCount } from 'utils/helper';
+import PromoCodeBlock from 'UI/PromoCodeBlock';
 import { createBookingURL } from 'utils';
 import { descriptorIcons } from 'const/descriptorIcons';
 import { getDuration } from 'utils/timeUtils';
@@ -117,7 +118,7 @@ const ctaBlockMobileStyles = (isSticky: boolean) => css`
 const StyledProductCard = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
   padding: ${({ isTicketCard, theme }) =>
-    isTicketCard ? `24px 37px 24px 40px` : theme.productCards.padding.desktop};
+    isTicketCard ? `24px 0px 24px 40px` : theme.productCards.padding.desktop};
   ${({ isTicketCard, theme, isMobile }) =>
     (!isTicketCard || isMobile) &&
     `border: ${theme.productCards.border};
@@ -164,7 +165,12 @@ const StyledProductCard = styled.div`
   @media (max-width: 768px) {
     padding: ${({ theme }) => theme.productCards.padding.mobile};
     margin: 0
-      ${({ theme: { theme } }) => (theme !== THEMES.MIN_BLUE ? '16px' : '24px')};
+      ${({ theme: { theme }, isTicketCard }) =>
+        theme !== THEMES.MIN_BLUE && !isTicketCard
+          ? '16px'
+          : isTicketCard
+          ? '0'
+          : '24px'};
     grid-template-areas: ${({ layout }) =>
       layout.mobile.map((row) => `'${row}'`)};
     width: auto;
@@ -385,7 +391,7 @@ const CTABlock = styled.div`
     width: 100%;
     display: block;
     line-height: 1;
-    border-radius: 8px;
+    border-radius: ${({ isTicketCard }) => (isTicketCard ? '4px' : '8px')};
     svg {
       vertical-align: middle;
       margin-left: 24px;
@@ -396,6 +402,7 @@ const CTABlock = styled.div`
       }
     }
   }
+
   @media (max-width: 768px) {
     grid-area: cta-block;
 
@@ -813,6 +820,8 @@ const Product = (props) => {
     isTicketCard = false,
     indexPosition,
     pageType = '',
+    finalPromoCode,
+    appliedPromo,
   } = props;
 
   const {
@@ -836,6 +845,8 @@ const Product = (props) => {
 
   const descriptorsList = descriptors || scorpioData.descriptors;
   const cardTitle = title || scorpioData.title;
+
+  const { promo_code } = finalPromoCode || {};
 
   const handlePopup = () => {
     togglePopup();
@@ -1008,6 +1019,7 @@ const Product = (props) => {
     hasShortSummary: hasShortSummary,
     hasNextAvailable: earliestAvailability?.startDate,
     isTicketCard: isTicketCard,
+    hasPromoCode: promo_code,
   });
   const trackedToggleContent = (isOpen) => {
     trackEvent({
@@ -1090,6 +1102,7 @@ const Product = (props) => {
       lang: currentLanguage,
       currency,
       tgid,
+      promoCode: promo_code === appliedPromo ? appliedPromo : null,
       tourId,
       biLink,
       date:
@@ -1200,6 +1213,10 @@ const Product = (props) => {
                 key={'price-block'}
               />
             </PriceContainer>
+            <Conditional if={isTicketCard && promo_code}>
+              <PromoCodeBlock {...props} />
+            </Conditional>
+
             <CTABlock
               isSticky={expandContent}
               shouldOffset={earliestAvailability && mbTheme === THEMES.MIN_BLUE}

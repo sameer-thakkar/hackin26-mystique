@@ -146,6 +146,7 @@ export const createBookingURL = ({
   tgid,
   date = null,
   tourId = null,
+  promoCode = null,
   biLink,
   isMobile = false,
   currency = '',
@@ -172,6 +173,7 @@ export const createBookingURL = ({
   if (date?.startDate) urlObject.searchParams.set('time', date?.startTime);
   if (currency) urlObject.searchParams.set('currencyCode', currency);
   if (biLink) urlObject.searchParams.set('bi', biLink);
+  if (promoCode) urlObject.searchParams.set('couponCode', promoCode);
   return urlObject.toString();
 };
 

@@ -349,6 +349,15 @@ const de = {
   FLEXIBLE: 'Flexibel',
   INCLUSIONS: 'Inklusive',
   FREE_CANCELLATION: 'Kostenlose Stornierung',
+  PROMO_CODES: {
+    APPLY_CODE: 'CODE ANWENDEN',
+    REMOVE: 'ENTFERNEN',
+    DESCRIPTION: {
+      PERCENTAGE: '{0} % Rabatt sichern',
+      ABSOLUTE: '{0} Rabatt sichern',
+      CAPPED: '{0} % Rabatt für bis zu {1}',
+    },
+  },
 };
 
 export default de;

@@ -361,6 +361,15 @@ const es = {
   FLEXIBLE: 'Flexible',
   INCLUSIONS: 'Incluye',
   FREE_CANCELLATION: 'Cancelación gratuita',
+  PROMO_CODES: {
+    APPLY_CODE: 'APLICAR CÓDIGO',
+    REMOVE: 'ELIMINAR',
+    DESCRIPTION: {
+      PERCENTAGE: '{0} % de descuento',
+      ABSOLUTE: 'Descuento de {0}',
+      CAPPED: '{0} % de descuento, hasta {1}',
+    },
+  },
 };
 
 export default es;

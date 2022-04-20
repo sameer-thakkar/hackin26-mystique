@@ -351,6 +351,15 @@ const nl = {
   FLEXIBLE: 'Flexibel',
   INCLUSIONS: 'Inclusief',
   FREE_CANCELLATION: 'Gratis annuleren',
+  PROMO_CODES: {
+    APPLY_CODE: 'PAS CODE TOE',
+    REMOVE: 'VERWIJDEREN',
+    DESCRIPTION: {
+      PERCENTAGE: 'Krijg {0}% korting',
+      ABSOLUTE: 'Krijg {0} korting',
+      CAPPED: 'Krijg {0}% korting, tot {1}',
+    },
+  },
 };
 
 export default nl;

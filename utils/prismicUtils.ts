@@ -73,6 +73,19 @@ export const getSafetyBannerDocument = async ({ lang }) => {
   return Promise.reject();
 };
 
+export const getPromoCodesDocument = async () => {
+  const promoCodesResponse = await Client().query(
+    Prismic.Predicates.at('document.type', CUSTOM_TYPES.PROMO_CODES),
+    { lang: 'en-us' }
+  );
+  if (promoCodesResponse) {
+    const [data] = promoCodesResponse?.results;
+    const { promos } = data?.data;
+    return promos;
+  }
+  return Promise.reject();
+};
+
 export const getListicleDocument = async ({ req, uid, lang }) => {
   const listicleResponse = await Client(req).getByUID(
     CUSTOM_TYPES.LISTICLE,

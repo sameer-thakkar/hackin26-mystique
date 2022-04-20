@@ -34,6 +34,7 @@ import { BLACK_COLOR_CLOSE } from 'assets/SvgIcons';
 import Conditional from 'components/common/Conditional';
 import Product from 'components/Product';
 import { trackEvent } from 'utils/analytics';
+import PromoCodeBlock from 'UI/PromoCodeBlock';
 import { descriptorIcons } from 'const/descriptorIcons';
 import { getDuration } from 'utils/timeUtils';
 
@@ -47,7 +48,7 @@ const Container = styled.div`
 
 const StyledProductCard = styled.div`
   font-family: ${SOLEIL.FONT_STACK};
-  padding: ${({ isMainCard }) => (isMainCard ? '24px' : '24px 37px 24px 40px')};
+  padding: ${({ isMainCard }) => (isMainCard ? '24px' : '24px 0px 24px 40px')};
   display: grid;
   grid-row-gap: 24px;
   grid-template-columns: 1fr auto;
@@ -297,6 +298,7 @@ export const CTAContainer = styled.div`
 const CTAWrapper = styled.div`
   grid-gap: 16px;
   display: grid;
+  padding-right: 16px;
   @media (max-width: 768px) {
   }
 `;
@@ -339,6 +341,7 @@ const CTABlock = styled.div`
     width: 100%;
     display: block;
     line-height: 1;
+    border-radius: 4px;
     svg {
       vertical-align: middle;
       margin-left: 24px;
@@ -349,6 +352,7 @@ const CTABlock = styled.div`
       }
     }
   }
+
   @media (max-width: 768px) {
     grid-area: cta-block;
     margin-top: 0;
@@ -618,11 +622,16 @@ const TicketCard = (props) => {
     isAmp,
     instantCheckout,
     showEarliestAvailability,
+    finalPromoCode,
+    appliedPromo,
   } = props;
+
   const { mbTheme, biLink, bookSubdomain } = useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
+
   const [isContentOpen, toggleContentOpen] = useState(defaultOpen);
   const [isOpened, setIsOpened] = useState(false);
+  const { promo_code } = finalPromoCode || {};
   const { minDuration, maxDuration } = scorpioData || {};
 
   const descriptorsList = descriptors || scorpioData.descriptors;
@@ -721,6 +730,7 @@ const TicketCard = (props) => {
     hasShortSummary: hasShortSummary,
     hasNextAvailable: earliestAvailability?.startDate,
     isTicketCard: true,
+    hasPromoCode: promo_code,
   });
   const getMoreDetailsButton = () => {
     const keyPressedOnReadMore = (event) => {
@@ -803,6 +813,7 @@ const TicketCard = (props) => {
       tgid,
       tourId,
       biLink,
+      promoCode: promo_code === appliedPromo ? appliedPromo : null,
       date:
         instantCheckout && earliestAvailability ? earliestAvailability : null,
       isMobile,
@@ -822,6 +833,9 @@ const TicketCard = (props) => {
           key={'price-block'}
         />
       </PriceContainer>
+      <Conditional if={promo_code}>
+        <PromoCodeBlock {...props} />
+      </Conditional>
       <CTABlock
         isSticky={expandContent}
         shouldOffset={earliestAvailability && mbTheme === THEMES.MIN_BLUE}
@@ -870,7 +884,7 @@ const TicketCard = (props) => {
   );
 
   const getProductCardElements = () => (
-    <PopupWrapper onClick={() => popupCloser()}>
+    <PopupWrapper>
       <PopupContentWrapper>
         <WrapperProductCard layout={layout} isMobile={isMobile}>
           <Conditional if={!isMobile}>

@@ -349,6 +349,15 @@ const pt = {
   FLEXIBLE: 'Flexível',
   INCLUSIONS: 'Inclusões',
   FREE_CANCELLATION: 'Cancelamento gratuito',
+  PROMO_CODES: {
+    APPLY_CODE: 'APLICAR CÓDIGO',
+    REMOVE: 'REMOVER',
+    DESCRIPTION: {
+      PERCENTAGE: 'Desconto de {0}%',
+      ABSOLUTE: 'Desconto de {0}',
+      CAPPED: 'Desconto de {0}%, até {1}',
+    },
+  },
 };
 
 export default pt;

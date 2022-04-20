@@ -119,6 +119,7 @@ const allToursParser = (
         allTags: scorpioTour?.allTags || [],
         listingPrice: listingPrice,
         safetyImages: scorpioTour?.safetyImages,
+        collectionId: cardPrices?.[tourData.tgid]?.collectionId,
       },
     };
   }, {});
