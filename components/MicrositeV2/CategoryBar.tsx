@@ -147,6 +147,7 @@ const CategoryBar = (props) => {
   });
   const {
     categories,
+    availableTGIDs,
     isMobile,
     hideSortBySelector,
     isEntertainmentMb,
@@ -217,8 +218,15 @@ const CategoryBar = (props) => {
             {categories.map((category, index) => {
               const { ranking, name } = category || {};
               const { popularity } = ranking || {};
+              const availableShows = popularity?.reduce((acc, tgid) => {
+                if (availableTGIDs[tgid]?.available) {
+                  acc++;
+                }
+                return acc;
+              }, 0);
+              const showCategoryTab = availableShows > 0;
               return (
-                <Conditional if={popularity?.length} key={index}>
+                <Conditional if={showCategoryTab} key={index}>
                   <div
                     role="button"
                     tabIndex={0}
