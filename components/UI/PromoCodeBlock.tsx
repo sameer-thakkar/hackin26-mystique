@@ -138,7 +138,7 @@ const PromoCodeBlock = ({
 
   return (
     <>
-      <Conditional if={promo_code}>
+      <Conditional if={false && promo_code}>
         <CTABlock isTicketCard={isTicketCard}>
           <Button
             className={`promo-code-block`}
