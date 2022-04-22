@@ -422,7 +422,14 @@ const ShowPageBanner = ({
             <div className="banner-image-container is-active">
               <Conditional if={productImage}>
                 <BannerImage>
-                  <Image url={productImage.url} alt={name} objectFit="cover" />
+                  <Image
+                    url={productImage.url}
+                    alt={name}
+                    objectFit="cover"
+                    height={500}
+                    width={1000}
+                    quality={null}
+                  />
                 </BannerImage>
               </Conditional>
               <Conditional if={videoAvailable}>

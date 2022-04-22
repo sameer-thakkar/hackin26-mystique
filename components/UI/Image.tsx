@@ -70,7 +70,7 @@ const Image: React.FC<ImageProps> = ({
   height,
   quality = 75,
   aspectRatio,
-  format = 'pjpg',
+  format = 'webp',
   imageId = '',
   dontLazyLoad = false,
   alt = '',

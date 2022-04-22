@@ -319,7 +319,13 @@ const Gallery = ({ galleryArray, isMobile }) => {
                 key={index}
                 {...(activeIndexGalleryPopUp === index && { active: true })}
               >
-                <Image url={image.url} alt={image.alt || 'Gallery Image'} />
+                <Image
+                  url={image.url}
+                  alt={image.alt || 'Gallery Image'}
+                  height={600}
+                  width={900}
+                  quality={null}
+                />
               </ActiveImageWrapper>
             );
           })}
@@ -331,7 +337,13 @@ const Gallery = ({ galleryArray, isMobile }) => {
                   {...(activeIndexGalleryPopUp === index && { active: true })}
                   onClick={() => setActiveIndexGalleryPopUp(index)}
                 >
-                  <Image url={image.url} alt={image.alt || 'Gallery Image'} />
+                  <Image
+                    url={image.url}
+                    alt={image.alt || 'Gallery Image'}
+                    height={150}
+                    width={200}
+                    quality={null}
+                  />
                 </ImageWrapper>
               );
             })}
@@ -350,7 +362,13 @@ const Gallery = ({ galleryArray, isMobile }) => {
           tabIndex={0}
         >
           <Conditional if={first}>
-            <Image url={first.url} alt={first.alt || 'Gallery Image'} />
+            <Image
+              url={first.url}
+              alt={first.alt || 'Gallery Image'}
+              height={500}
+              width={800}
+              quality={null}
+            />
           </Conditional>
         </div>
         <Conditional if={second && third}>
@@ -361,7 +379,13 @@ const Gallery = ({ galleryArray, isMobile }) => {
               role="button"
               tabIndex={0}
             >
-              <Image url={second.url} alt={second.alt || 'Gallery Image'} />
+              <Image
+                url={second.url}
+                alt={second.alt || 'Gallery Image'}
+                height={250}
+                width={400}
+                quality={null}
+              />
             </div>
             <div
               className="right-image-wrapper right-image-bottom"
@@ -369,7 +393,13 @@ const Gallery = ({ galleryArray, isMobile }) => {
               role="button"
               tabIndex={0}
             >
-              <Image url={third.url} alt={third.alt || 'Gallery Image'} />
+              <Image
+                url={third.url}
+                alt={third.alt || 'Gallery Image'}
+                height={250}
+                width={400}
+                quality={null}
+              />
             </div>
           </div>
         </Conditional>
