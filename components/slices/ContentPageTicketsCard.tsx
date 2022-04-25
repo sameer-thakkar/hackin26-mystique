@@ -854,7 +854,7 @@ const TicketCard = (props) => {
             role="button"
             tabIndex={0}
           >
-            {strings.BOOK_NOW_CTA}
+            {strings.CHECK_AVAIL}
             {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
           </Button>
         </a>
