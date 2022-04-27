@@ -355,6 +355,7 @@ class ContentPage extends Component<any, any> {
       secondaryFooter,
     } = data;
     const apiReady = tourAPIData !== null;
+
     const allTours = allToursParser(
       microsite?.data,
       scorpioData,

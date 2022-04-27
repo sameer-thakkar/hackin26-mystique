@@ -321,6 +321,7 @@ const MicrositeV1 = (props) => {
     isFetched: isReady,
     cardPrices: scorpioData,
   };
+
   const allTours = allToursParser(
     micrositeData,
     scorpioData,

@@ -85,7 +85,7 @@ const allToursParser = (
         cardPrices[tourData.tgid]?.listingPrice?.currencyCode
       ];
     let listingPrice = isFetched ? cardPrices[tourData.tgid]?.listingPrice : {};
-    const scorpioTour = scorpioData[tourData.tgid] || {};
+    const scorpioTour = scorpioData?.[tourData.tgid] || {};
     listingPrice = isAmp ? scorpioTour?.listingPrice : listingPrice;
     return {
       ...accum,
