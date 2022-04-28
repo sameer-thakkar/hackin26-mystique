@@ -7,6 +7,8 @@ import { PERCENTAGE } from 'assets/SvgIcons';
 import { MBContext } from 'contexts/MBContext';
 import { getLocalisedPriceString } from 'utils/helper';
 import Conditional from 'components/common/Conditional';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { trackEvent } from 'utils/analytics';
 
 const CTABlock = styled.div`
   .promo-code-block {
@@ -70,6 +72,9 @@ const PromoCodeBlock = ({
   finalPromoCode,
   onPromoClick,
   isTicketCard = false,
+  tgid,
+  host,
+  collectionId,
 }: {
   currentLanguage: string;
   isMobile: boolean;
@@ -79,6 +84,9 @@ const PromoCodeBlock = ({
   finalPromoCode: any;
   onPromoClick: (e: any) => void;
   isTicketCard: boolean;
+  tgid: number;
+  host: string;
+  collectionId: number | null;
 }) => {
   const { currencySymbolMap } = useContext(MBContext);
   const mbCurrency = currencySymbolMap[Object.keys(currencySymbolMap)[0]];
@@ -86,23 +94,11 @@ const PromoCodeBlock = ({
   const isPromoApplied = clickedPromo === indexPosition;
 
   const promo = finalPromoCode;
-  const {
-    promo_code,
-    discount_percentage,
-    absolute_discount,
-    capped_value,
-    condition,
-  } = promo || {};
+  const { promo_code, discount_percentage, absolute_discount, capped_value } =
+    promo || {};
 
   let promoDescription;
   switch (true) {
-    case condition !== undefined:
-      promoDescription = `${strings.formatString(
-        strings.PROMO_CODES.DESCRIPTION.PERCENTAGE,
-        discount_percentage
-      )} ${condition}`;
-      break;
-
     case discount_percentage > 0 && capped_value > 0:
       promoDescription = strings.formatString(
         strings.PROMO_CODES.DESCRIPTION.CAPPED,
@@ -130,15 +126,30 @@ const PromoCodeBlock = ({
       break;
   }
 
+  const trackCouponClick = (action) => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.CONTENT_PAGE_PROMO_CLICKED,
+      [ANALYTICS_PROPERTIES.MB_NAME]: host,
+      [ANALYTICS_PROPERTIES.COLLECTION_ID]: collectionId,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.RANKING]: indexPosition + 1,
+      [ANALYTICS_PROPERTIES.ACTION]: action,
+    });
+  };
+
   const applyCode = async () => {
     isPromoApplied
-      ? (await setClickedPromo(), onPromoClick(null))
-      : (await setClickedPromo(indexPosition), onPromoClick(promo_code));
+      ? (await setClickedPromo(),
+        onPromoClick(null),
+        trackCouponClick('Removed'))
+      : (await setClickedPromo(indexPosition),
+        onPromoClick(promo_code),
+        trackCouponClick('Applied'));
   };
 
   return (
     <>
-      <Conditional if={false && promo_code}>
+      <Conditional if={promo_code}>
         <CTABlock isTicketCard={isTicketCard}>
           <Button
             className={`promo-code-block`}

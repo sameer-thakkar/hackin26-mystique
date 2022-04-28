@@ -418,6 +418,14 @@ const PopulateProducts = (props) => {
               short_summary,
               tag_booster,
             } = tour || {};
+
+            const collectionId = productInfo?.reduce((acc, product) => {
+              if (product?.tgid === tgid) {
+                acc = product?.collectionId;
+              }
+              return acc;
+            }, null);
+
             const childProps = {
               tgid,
               earliestAvailability,
@@ -460,6 +468,7 @@ const PopulateProducts = (props) => {
               finalPromoCode: finalPromoCodes[tgid],
               onPromoClick,
               appliedPromo,
+              collectionId,
             };
 
             return (

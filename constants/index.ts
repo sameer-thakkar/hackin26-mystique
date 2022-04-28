@@ -223,6 +223,7 @@ export const ANALYTICS_EVENTS = {
   ACCORDION_TOGGLED: 'Accordion Item Toggled',
   INFO_TAB_CLICKED: 'Information Tab Clicked',
   EXPERIENCE_CARD_VISIBLE: 'Experience Card Visible',
+  CONTENT_PAGE_PROMO_CLICKED: 'Content Page Apply Promo Clicked',
   COMBO_VARIANT: {
     POPUP_VIEWED: 'Popup viewed',
     VARIANT_CLICKED: 'Variant card clicked',
@@ -620,6 +621,7 @@ export const ANALYTICS_PROPERTIES = {
   TGIDS: 'Tour Group IDs',
   TGID: 'Tour Group Id',
   PAGE_TYPE: 'Page Type',
+  COLLECTION_ID: 'Collection ID',
   HEADER: 'Header',
   OPTION_TEXT: 'Option Text',
   POSITION: 'Position',
@@ -666,7 +668,6 @@ export const PROMO_CODES = {
     discount_percentage: 5,
     absolute_discount: null,
     capped_value: null,
-    condition: '(on min purchase of USD 50)',
   },
 };
 export const QUERY_PARAMS = {
