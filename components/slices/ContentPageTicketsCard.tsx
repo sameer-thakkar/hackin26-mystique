@@ -37,6 +37,7 @@ import { trackEvent } from 'utils/analytics';
 import PromoCodeBlock from 'UI/PromoCodeBlock';
 import { descriptorIcons } from 'const/descriptorIcons';
 import { getDuration } from 'utils/timeUtils';
+import ComboVariants from 'UI/ComboVariants';
 
 dayjs.extend(advancedFormat);
 
@@ -628,9 +629,11 @@ const TicketCard = (props) => {
 
   const { mbTheme, biLink, bookSubdomain } = useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
-
+  const isCombo = scorpioData?.combo;
+  const isTicketCard = true;
   const [isContentOpen, toggleContentOpen] = useState(defaultOpen);
   const [isOpened, setIsOpened] = useState(false);
+  const [showComboVariant, setShowComboVariant] = useState(false);
   const { promo_code } = finalPromoCode || {};
   const { minDuration, maxDuration } = scorpioData || {};
 
@@ -729,7 +732,7 @@ const TicketCard = (props) => {
     mbTheme,
     hasShortSummary: hasShortSummary,
     hasNextAvailable: earliestAvailability?.startDate,
-    isTicketCard: true,
+    isTicketCard,
     hasPromoCode: promo_code,
   });
   const getMoreDetailsButton = () => {
@@ -822,6 +825,46 @@ const TicketCard = (props) => {
 
   const hasReadMore = highlights.flat()?.length >= 3 && !defaultOpen;
 
+  const handleCloseComboPopup = () => {
+    setShowComboVariant(false);
+    if (!isMobile) {
+      document.body.style.overflow = 'auto';
+    }
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.COMBO_VARIANT.POPUP_CLOSED,
+      'MB name': url,
+      TGID: tgid,
+      Device: isMobile ? 'Mweb' : 'Desktop',
+    });
+  };
+
+  const handleShowComboPopup = () => {
+    setShowComboVariant(true);
+    sendBookNowEvent();
+    if (!isMobile) {
+      document.body.style.overflow = 'hidden';
+    }
+    if (isMobile) {
+      addToAside({
+        width: '100vw',
+        children: (
+          <ComboVariants
+            productTitle={cardTitle}
+            l1Booster={boosterTag}
+            tgid={tgid}
+            isMobile={isMobile}
+            closeHandler={handleCloseComboPopup}
+            descriptors={descriptorsList}
+            bookingUrl={productBookingUrl}
+            minDuration={minDuration}
+            maxDuration={maxDuration}
+          />
+        ),
+        type: SIDEBAR_TYPES.COMBO_VARIANT,
+        onCloseCallback: () => handleCloseComboPopup(),
+      });
+    }
+  };
   const getCTABlock = (expandContent) => (
     <>
       <PriceContainer isOpened={isOpened}>
@@ -840,24 +883,40 @@ const TicketCard = (props) => {
         isSticky={expandContent}
         shouldOffset={earliestAvailability && mbTheme === THEMES.MIN_BLUE}
       >
-        <a
-          target={isFetched && isMobile ? null : '_blank'}
-          href={productBookingUrl}
-          rel="nofollow"
-        >
+        <Conditional if={!isCombo}>
+          <a
+            target={isFetched && isMobile ? null : '_blank'}
+            href={productBookingUrl}
+            rel="nofollow"
+          >
+            <Button
+              className={`tour-book-now-cta`}
+              paddingSides={isMobile ? '16px' : '8px'}
+              fillType="fill"
+              onClick={sendBookNowEvent}
+              onKeyDown={sendBookNowEvent}
+              role="button"
+              tabIndex={0}
+            >
+              {strings.CHECK_AVAIL}
+              {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
+            </Button>
+          </a>
+        </Conditional>
+        <Conditional if={isCombo}>
           <Button
             className={`tour-book-now-cta`}
             paddingSides={isMobile ? '16px' : '8px'}
             fillType="fill"
-            onClick={sendBookNowEvent}
-            onKeyDown={sendBookNowEvent}
+            onClick={handleShowComboPopup}
+            onKeyDown={handleShowComboPopup}
             role="button"
             tabIndex={0}
           >
             {strings.CHECK_AVAIL}
             {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
           </Button>
-        </a>
+        </Conditional>
       </CTABlock>
       <Conditional
         if={showEarliestAvailability && earliestAvailability?.startDate}
@@ -888,7 +947,7 @@ const TicketCard = (props) => {
       <PopupContentWrapper>
         <WrapperProductCard layout={layout} isMobile={isMobile}>
           <Conditional if={!isMobile}>
-            <Product {...props} isTicketCard={true} />
+            <Product {...props} isTicketCard={isTicketCard} />
             <CloseIconWrapper onClick={() => popupCloser()}>
               {BLACK_COLOR_CLOSE}
             </CloseIconWrapper>
@@ -898,9 +957,32 @@ const TicketCard = (props) => {
     </PopupWrapper>
   );
 
+  const productOfferBlockMarkup = (productOffers) => {
+    return productOffers?.map((offer, index) => {
+      if (offer.id === offerId) {
+        return (
+          <ProductOfferBlock
+            key={index}
+            onClick={handlePopup}
+            className="tour-offer"
+          >
+            <RichText
+              render={offer.data.offer_title}
+              htmlSerializer={shortCodeSerializer}
+            />
+          </ProductOfferBlock>
+        );
+      }
+    });
+  };
+
   const getProductCard = (expandContent, isFallbackSummary = false) => (
     <>
-      <Labels>{boosterTag && <Label>{boosterTag}</Label>}</Labels>
+      <Labels>
+        <Conditional if={boosterTag}>
+          <Label>{boosterTag}</Label>
+        </Conditional>
+      </Labels>
       <WrapperProductCard layout={layout} isMainCard={true}>
         <StyledProductCard layout={layout} isMainCard={true}>
           <ProductHeader>
@@ -938,7 +1020,7 @@ const TicketCard = (props) => {
                 lang={currentLanguage}
               />
             </Conditional>
-            {!isMobile && (
+            <Conditional if={!isMobile}>
               <MoreDetailWrapper
                 onClick={() => {
                   popupOpener();
@@ -946,25 +1028,10 @@ const TicketCard = (props) => {
               >
                 {strings.MORE_DETAILS} +
               </MoreDetailWrapper>
-            )}
-            {hasOffer &&
-              offerId &&
-              productOffer.map((offer, index) => {
-                if (offer.id === offerId) {
-                  return (
-                    <ProductOfferBlock
-                      key={index}
-                      onClick={handlePopup}
-                      className="tour-offer"
-                    >
-                      <RichText
-                        render={offer.data.offer_title}
-                        htmlSerializer={shortCodeSerializer}
-                      />
-                    </ProductOfferBlock>
-                  );
-                }
-              })}
+            </Conditional>
+            <Conditional if={hasOffer && offerId}>
+              {productOfferBlockMarkup(productOffer)}
+            </Conditional>
             <CTAContainer isMainCard={true}>
               <Conditional if={isMobile}>
                 {getCTABlock(expandContent)}
@@ -991,12 +1058,27 @@ const TicketCard = (props) => {
           </Conditional>
         </StyledProductCard>
       </WrapperProductCard>
-      {isOpened && !isMobile && getProductCardElements()}
+      <Conditional if={isOpened && !isMobile}>
+        {getProductCardElements()}
+      </Conditional>
+      <Conditional if={showComboVariant && !isMobile}>
+        <ComboVariants
+          productTitle={cardTitle}
+          l1Booster={boosterTag}
+          tgid={tgid}
+          isMobile={isMobile}
+          closeHandler={handleCloseComboPopup}
+          descriptors={descriptorsList}
+          bookingUrl={productBookingUrl}
+          minDuration={minDuration}
+          maxDuration={maxDuration}
+        />
+      </Conditional>
     </>
   );
 
   return isMobile ? (
-    <Product {...props} isTicketCard={true} />
+    <Product {...props} isTicketCard={isTicketCard} />
   ) : (
     <Container>{getProductCard(isContentOpen)}</Container>
   );

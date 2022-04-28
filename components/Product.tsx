@@ -841,7 +841,7 @@ const Product = (props) => {
   );
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [showComboVariant, setShowComboVariant] = useState(false);
-  const { combo, minDuration, maxDuration } = scorpioData || {};
+  const { combo: isCombo, minDuration, maxDuration } = scorpioData || {};
 
   const descriptorsList = descriptors || scorpioData.descriptors;
   const cardTitle = title || scorpioData.title;
@@ -1222,7 +1222,7 @@ const Product = (props) => {
               shouldOffset={earliestAvailability && mbTheme === THEMES.MIN_BLUE}
               isTicketCard={isTicketCard}
             >
-              <Conditional if={!combo}>
+              <Conditional if={!isCombo}>
                 <a
                   target={isMobile ? null : '_blank'}
                   href={productBookingUrl}
@@ -1231,7 +1231,7 @@ const Product = (props) => {
                   <BookNowCta clickHandler={sendBookNowEvent} />
                 </a>
               </Conditional>
-              <Conditional if={combo}>
+              <Conditional if={isCombo}>
                 <BookNowCta clickHandler={handleShowComboPopup} />
               </Conditional>
             </CTABlock>
