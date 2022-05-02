@@ -411,7 +411,6 @@ const StyledBanner = styled.div`
 
   .mb-captions .mb-caption.active {
     opacity: 1;
-    z-index: 10;
   }
 
   .mb-captions .mb-cta {
@@ -435,7 +434,7 @@ const StyledBanner = styled.div`
   }
 
   .overlay-container {
-    z-index: 10;
+    z-index: 2;
     transform: translateZ(1000);
     pointer-events: none;
     position: absolute;
