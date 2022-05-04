@@ -371,7 +371,7 @@ const it = {
   FREE_CANCELLATION: 'Cancellazione gratuita',
   PROMO_CODES: {
     APPLY_CODE: 'APPLICA IL CODICE',
-    REMOVE: 'RIMOUVI',
+    REMOVE: 'RIMUOVI',
     DESCRIPTION: {
       PERCENTAGE: 'Sconto del {0}%',
       ABSOLUTE: 'Sconto di {0}',
