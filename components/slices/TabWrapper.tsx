@@ -6,10 +6,12 @@ import { COLORS, SIZES, SOLEIL } from 'const/ui-constants';
 import Conditional from 'components/common/Conditional';
 import { useWindowWidth } from '@react-hook/window-size';
 import { CHEVRON_LEFT, CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
-import { trackEvent } from 'utils/analytics';
+import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS } from 'const/index';
 import { ANALYTICS_PROPERTIES } from 'const/index';
 import { legacyBooleanCheck } from 'utils';
+import { useRecoilValue } from 'recoil';
+import { metaAtom } from 'store/atoms/meta';
 
 import { stringIdfy } from '../../utils/helper';
 import sliceHandler from '../Slices';
@@ -268,6 +270,7 @@ const TabWrapper = (props: TabWrapperProps) => {
   const [isEnd, updateEnd] = useState(false);
   const [isBeginning, updateBeginning] = useState(true);
   const tabsContanier = useRef(null);
+  const pageMetaData = useRecoilValue(metaAtom);
 
   const [isAtStart, setIsAtStart] = useState(true);
   const [isAtEnd, setIsAtEnd] = useState(false);
@@ -325,10 +328,11 @@ const TabWrapper = (props: TabWrapperProps) => {
 
     trackEvent({
       eventName: ANALYTICS_EVENTS.INFO_TAB_CLICKED,
-      [ANALYTICS_PROPERTIES.POSITION]: index + 1,
-      [ANALYTICS_PROPERTIES.INFO_HEADING]: heading,
+      [ANALYTICS_PROPERTIES.RANKING]: index + 1,
+      [ANALYTICS_PROPERTIES.HEADING]: heading,
       [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Standalone',
       [ANALYTICS_PROPERTIES.SECTION]: 'Longform Content',
+      ...getCommonEventMetaData(pageMetaData),
     });
   };
 

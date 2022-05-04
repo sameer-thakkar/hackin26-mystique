@@ -19,6 +19,8 @@ import CategorySlider from 'components/ShowPages/CategorySlider';
 import SubHeading from 'components/ShowPages/SubHeading';
 import {
   ALLOW_IMMEDIEATE_NESTING,
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
   FAVICON_LONDON_THEATRE_TICKETS,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -38,6 +40,10 @@ import TitleTextCombo from 'components/UI/TitleTextCombo';
 import Conditional from 'components/common/Conditional';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import { getProductSchema } from 'utils/schemaUtils';
+import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import { useRecoilValue } from 'recoil';
+import { metaAtom } from 'store/atoms/meta';
+import { gtmAtom } from 'store/atoms/gtm';
 
 const Breadcrumb = dynamic(() => import('./BreadCrumb'));
 const AccordionGroup = dynamic(() => import('../slices/AccordionGroup'));
@@ -251,6 +257,8 @@ const ShowPage = ({
 
   const currentLanguage = getHeadoutLanguagecode(lang);
   const categoryName = showType ? showType : primarySubCategoryName;
+  const pageMetaData = useRecoilValue(metaAtom);
+  const { eventsReady } = useRecoilValue(gtmAtom);
 
   const selfCanonicalLink = convertUidToUrl({ uid });
   const updatedDescriptors = generateDescriptor({
@@ -315,6 +323,16 @@ const ShowPage = ({
       }
     });
   }, []);
+
+  useEffect(() => {
+    if (eventsReady)
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
+        [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
+        [ANALYTICS_PROPERTIES.TGIDS]: [tgid],
+        ...getCommonEventMetaData(pageMetaData),
+      });
+  }, [eventsReady]);
 
   // isMobile effect
   useEffect(() => {

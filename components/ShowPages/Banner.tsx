@@ -14,12 +14,14 @@ import { COLORS } from 'const/ui-constants';
 import { createBookingURL } from 'utils';
 import { dateToString } from 'utils/dateUtils';
 import { fetchInventory } from 'utils/apiUtils';
-import { trackEvent } from 'utils/analytics';
+import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   PAGE_TYPES,
 } from 'const/index';
+import { useRecoilValue } from 'recoil';
+import { metaAtom } from 'store/atoms/meta';
 
 const Banner = styled.div`
   width: 100%;
@@ -297,7 +299,15 @@ const ShowPageBanner = ({
   isReopening,
   hostname,
 }) => {
-  const { listingPrice, currency, name, imageUploads } = tourGroupData;
+  const {
+    listingPrice,
+    currency,
+    name,
+    imageUploads,
+    primaryCategory,
+    primarySubCategory,
+  } = tourGroupData;
+  const pageMetaData = useRecoilValue(metaAtom);
 
   const { localSymbol } = currency;
 
@@ -329,13 +339,20 @@ const ShowPageBanner = ({
 
   const BannerChange = () => {
     setIsVideo(!isVideo);
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MB_BANNER.VISIBLE,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.CONTENT_PAGE,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      ...getCommonEventMetaData(pageMetaData),
+    });
   };
 
   ANALYTICS_PROPERTIES;
   useEffect(() => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.MB_BANNER.VISIBLE,
-      [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.COLLECTION,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.CONTENT_PAGE,
       [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
       [ANALYTICS_PROPERTIES.TGIDS]: [tgid],
       [ANALYTICS_PROPERTIES.MB_NAME]: BannerTitle,
@@ -363,7 +380,20 @@ const ShowPageBanner = ({
       fetchReopeningDate();
     }
   }, [tgid, isTourAvailable, hostname]);
-
+  const trackBookNowClick = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_BOOK_NOW_CLICKED,
+      ...getCommonEventMetaData(pageMetaData),
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: BannerTitle,
+      [ANALYTICS_PROPERTIES.CATEGORY_ID]: primaryCategory?.id,
+      [ANALYTICS_PROPERTIES.CATEGORY_NAME]: primaryCategory?.displayName,
+      [ANALYTICS_PROPERTIES.SUB_CAT_ID]: primarySubCategory?.id,
+      [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: primarySubCategory?.displayName,
+      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city?.cityCode,
+      [ANALYTICS_PROPERTIES.COUNTRY]: pageMetaData?.country?.code,
+    });
+  };
   const handleScroll = () => {
     const top = window.pageYOffset;
     const { clientHeight, offsetTop } = ref?.current;
@@ -496,9 +526,10 @@ const ShowPageBanner = ({
                   role="button"
                   tabIndex={0}
                   className="buy-button"
-                  onClick={() =>
-                    window.open(bookingUrl, '_blank', 'noopener, noreferrer')
-                  }
+                  onClick={() => {
+                    trackBookNowClick();
+                    window.open(bookingUrl, '_blank', 'noopener, noreferrer');
+                  }}
                 >
                   {strings.BANNER_CTA}
                 </div>

@@ -513,10 +513,8 @@ const Product = (props) => {
       <Conditional if={isMobile && isEntertainmentMb}>
         <a target="_blank" rel="noopener noreferrer" href={showPageUrl}>
           <ProductCard
-            onClick={handleProductClick}
             className="product-v2"
             id={`${cardIdPrefix}-${tgid}`}
-            onKeyDown={handleProductClick}
             role="button"
             tabIndex={0}
             isEntertainmentMb={isEntertainmentMb}

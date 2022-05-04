@@ -5,9 +5,11 @@ import { useState, useRef, useEffect } from 'react';
 import { useWindowWidth } from '@react-hook/window-size';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { useAmp } from 'next/amp';
-import { trackEvent } from 'utils/analytics';
+import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { ANALYTICS_PROPERTIES } from 'const/index';
 import { ANALYTICS_EVENTS } from 'const/index';
+import { useRecoilValue } from 'recoil';
+import { metaAtom } from 'store/atoms/meta';
 
 import LinkResolver from './LinkResolver';
 import { CHEVRON_DOWN } from '../assets/SvgIcons';
@@ -267,6 +269,7 @@ const Menu = ({ label, url, slices, isMobile, isGlobalMb = false, index }) => {
   const nestedMenuRef = useRef(null);
   const windowWidth = useWindowWidth();
   const [isOffScreen, setOffScreen] = useState(false);
+  const pageMetaData = useRecoilValue(metaAtom);
 
   useEffect(() => {
     if (nestedMenuRef.current) {
@@ -280,6 +283,7 @@ const Menu = ({ label, url, slices, isMobile, isGlobalMb = false, index }) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.DROPDOWN_SHOWN,
       [ANALYTICS_PROPERTIES.HEADER]: label,
+      ...getCommonEventMetaData(pageMetaData),
     });
   };
 
@@ -329,6 +333,7 @@ const MenuItem = (props) => {
     onMouseEnter,
     headerLabel,
   } = props;
+  const pageMetaData = useRecoilValue(metaAtom);
 
   const menuItemSelected = (e) => {
     if (onClick) onClick(e);
@@ -337,7 +342,8 @@ const MenuItem = (props) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.DROPDOWN_OPTION_SELECTED,
       [ANALYTICS_PROPERTIES.OPTION_TEXT]: menuItemText,
-      [ANALYTICS_PROPERTIES.POSITION]: index + 1,
+      [ANALYTICS_PROPERTIES.RANKING]: index + 1,
+      ...getCommonEventMetaData(pageMetaData),
       ...(headerLabel && { [ANALYTICS_PROPERTIES.HEADER]: headerLabel }),
     });
   };

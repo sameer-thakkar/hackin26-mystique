@@ -1397,6 +1397,7 @@ export const getPageData = async ({
         mbTheme,
         isStage,
         activeCurrency,
+        primaryCity: categoryTourListData?.primaryCity,
       };
     }
     let constructedTourgroupURL;
@@ -1477,6 +1478,7 @@ export const getPageData = async ({
           allTags: allTagsTour,
           id,
           combo,
+          primaryCollection,
         } = tour || {};
         const { productImages, safetyImages } = media || {};
         const updatedDescriptors = generateDescriptor({
@@ -1497,6 +1499,7 @@ export const getPageData = async ({
           ...accum,
           [id]: {
             title: name,
+            primaryCollection,
             highlights: microBrandsHighlight,
             descriptors: updatedDescriptors,
             productHighlights: highlights,
@@ -1531,11 +1534,11 @@ export const getPageData = async ({
     const activeCurrency = tourGroupAPIResponses?.currencies?.[0];
     return {
       activeCurrency,
+      primaryCity,
       ...AllData,
       tourGroupData,
       currencySymbolMap,
       primaryCountry,
-      primaryCity,
     };
   } catch (error) {
     traceError({ error, host: req?.headers?.host, url: req?.url });

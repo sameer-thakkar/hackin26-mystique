@@ -3,6 +3,11 @@ import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import { SOLEIL, COLORS } from 'const/ui-constants';
 import { shortCodeSerializer } from 'utils/shortCodes';
+import { ANALYTICS_EVENTS } from 'const/index';
+import { ANALYTICS_PROPERTIES } from 'const/index';
+import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import { useRecoilValue } from 'recoil';
+import { metaAtom } from 'store/atoms/meta';
 
 type ContentTabsProps = {
   tabsArr: any[];
@@ -91,6 +96,7 @@ const ContentTabs: React.FC<ContentTabsProps> = ({ tabsArr, contentArr }) => {
   const defaultTab = contentArr.find((tab) => tab.default_tab == 'Yes');
   const defaultTabName = defaultTab ? defaultTab.tab_name : '';
   const [activeTabName, setActiveTab] = useState(defaultTabName);
+  const pageMetaData = useRecoilValue(metaAtom);
 
   useEffect(() => {
     const defaultTab = contentArr.find((tab) => tab.default_tab == 'Yes');
@@ -102,6 +108,17 @@ const ContentTabs: React.FC<ContentTabsProps> = ({ tabsArr, contentArr }) => {
     }
   }, [tabsArr, contentArr]);
 
+  const trackTabClick = ({ tab, index }) => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.INFO_TAB_CLICKED,
+      [ANALYTICS_PROPERTIES.RANKING]: index + 1,
+      [ANALYTICS_PROPERTIES.HEADING]: tab,
+      [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Standalone',
+      [ANALYTICS_PROPERTIES.SECTION]: 'Longform Content',
+      ...getCommonEventMetaData(pageMetaData),
+    });
+  };
+
   return (
     <StyledContentTabsWrapper>
       <StyledContentTabs>
@@ -110,7 +127,10 @@ const ContentTabs: React.FC<ContentTabsProps> = ({ tabsArr, contentArr }) => {
             <StyledTab
               key={index}
               {...(activeTabName === tab && { active: true })}
-              onClick={() => setActiveTab(tab)}
+              onClick={() => {
+                trackTabClick({ tab, index });
+                setActiveTab(tab);
+              }}
             >
               {tab}
             </StyledTab>

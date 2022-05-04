@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
@@ -12,7 +12,11 @@ import Conditional from 'components/common/Conditional';
 import { strings } from 'const/strings';
 import { CLOSE_WHITE, Shield } from 'assets/SvgIcons';
 import { SOLEIL, COLORS } from 'const/ui-constants';
-import { CURRENCY_SYMBOL_MAP } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  CURRENCY_SYMBOL_MAP,
+} from 'const/index';
 import { isSafetyIncluded, createBookingURL } from 'utils';
 import {
   shortCodeSerializerWithParentProps,
@@ -21,6 +25,9 @@ import {
 import { extractContentForProductCard } from 'utils/productUtils';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { parseV2ProductDescriptors } from 'utils/dataParsers';
+import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import { useRecoilValue } from 'recoil';
+import { metaAtom } from 'store/atoms/meta';
 
 const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
   ssr: false,
@@ -399,6 +406,7 @@ const DetailedProductCard = (props) => {
     props.closeDescription();
   };
   const mbContext = useContext(MBContext);
+
   const {
     lang,
     nakedDomain,
@@ -415,6 +423,7 @@ const DetailedProductCard = (props) => {
     hasCategoryTourList,
     isListicle,
   } = props;
+  const pageMetaData = useRecoilValue(metaAtom);
   const activeTour = allTours[tgidClicked];
   const { listicleShowSummary, listicleWhyWatch } = activeTour;
   const {
@@ -429,6 +438,8 @@ const DetailedProductCard = (props) => {
     safetyImages,
     title,
     showPageUid,
+    primaryCategory,
+    primarySubCategory,
   } = activeTour || {};
   const showPageUrl = showPageUid
     ? convertUidToUrl({ uid: showPageUid, isDev, hostname: host })
@@ -459,6 +470,51 @@ const DetailedProductCard = (props) => {
       (item) => item.label === 'Duration'
     );
   }
+
+  useEffect(() => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_EXPANDED,
+      ...getCommonEventMetaData(pageMetaData),
+      [ANALYTICS_PROPERTIES.TGID]: tgidClicked,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: title,
+      [ANALYTICS_PROPERTIES.CATEGORY_ID]: primaryCategory?.id,
+      [ANALYTICS_PROPERTIES.CATEGORY_NAME]: primaryCategory?.displayName,
+      [ANALYTICS_PROPERTIES.SUB_CAT_ID]: primarySubCategory?.id,
+      [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: primarySubCategory?.displayName,
+      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city?.cityCode,
+      [ANALYTICS_PROPERTIES.COUNTRY]: pageMetaData?.country?.code,
+    });
+  }, []);
+
+  const onMoreDetailsClick = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_MORE_DETAILS_CLICKED,
+      ...getCommonEventMetaData(pageMetaData),
+      [ANALYTICS_PROPERTIES.TGID]: tgidClicked,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: title,
+      [ANALYTICS_PROPERTIES.CATEGORY_ID]: primaryCategory?.id,
+      [ANALYTICS_PROPERTIES.CATEGORY_NAME]: primaryCategory?.displayName,
+      [ANALYTICS_PROPERTIES.SUB_CAT_ID]: primarySubCategory?.id,
+      [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: primarySubCategory?.displayName,
+      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city?.cityCode,
+      [ANALYTICS_PROPERTIES.COUNTRY]: pageMetaData?.country?.code,
+    });
+  };
+
+  const trackBookNowClick = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_BOOK_NOW_CLICKED,
+      ...getCommonEventMetaData(pageMetaData),
+      [ANALYTICS_PROPERTIES.TGID]: tgidClicked,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: title,
+      [ANALYTICS_PROPERTIES.CATEGORY_ID]: primaryCategory?.id,
+      [ANALYTICS_PROPERTIES.CATEGORY_NAME]: primaryCategory?.displayName,
+      [ANALYTICS_PROPERTIES.SUB_CAT_ID]: primarySubCategory?.id,
+      [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: primarySubCategory?.displayName,
+      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city?.cityCode,
+      [ANALYTICS_PROPERTIES.COUNTRY]: pageMetaData?.country?.code,
+    });
+  };
 
   const openSafeSidebar = () => {
     addToAside({
@@ -504,6 +560,7 @@ const DetailedProductCard = (props) => {
           className="cta secondary"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={onMoreDetailsClick}
           href={showPageUrl}
         >
           <span className="cta-text">{strings.MORE_DETAILS}</span>
@@ -513,7 +570,8 @@ const DetailedProductCard = (props) => {
         role="button"
         tabIndex={0}
         className="cta primary"
-        onClick={() =>
+        onClick={() => {
+          trackBookNowClick();
           window.open(
             createBookingURL({
               nakedDomain,
@@ -523,8 +581,8 @@ const DetailedProductCard = (props) => {
             }),
             '_blank',
             'noopener, noreferrer'
-          )
-        }
+          );
+        }}
       >
         <span className="cta-text">{strings.BOOK_NOW_CTA}</span>
       </div>

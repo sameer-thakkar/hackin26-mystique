@@ -91,26 +91,22 @@ export const SortSelector = (props) => {
   ];
 
   const {
-    toggleFilterDropdown: toggleFilterDropdownFn,
+    toggleFilterDropdown,
     changeOrder,
     isEntertainmentMb,
+    isFilterDropdownActive: dropdownActive,
   } = props;
 
-  const [dropdownActive, setDropdownActive] = useState(false);
   const [activeFilter, setActiveFilter] = useState(0);
 
   const changeFilter = (index = 0) => {
     setActiveFilter(index);
-    toggleFilterDropdownFn();
+    toggleFilterDropdown();
     changeOrder(filters[index].key);
   };
 
-  const toggleFilterDropdown = () => {
-    setDropdownActive((prevState) => !prevState);
-  };
-
   const closeFilterDropdown = () => {
-    setDropdownActive(false);
+    toggleFilterDropdown(false);
   };
 
   const selectorRef = useRef(null);

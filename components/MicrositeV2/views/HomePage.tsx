@@ -1,4 +1,4 @@
-import React, { useState, useContext, ComponentType } from 'react';
+import React, { useState, useContext, ComponentType, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { ProductsContextProvider } from 'contexts/Products';
@@ -12,7 +12,7 @@ import TextBanner from 'components/TextBanner';
 import DismissAlert from 'UI/DismissAlert';
 import MultiBannerWrapper from 'UI/MultiBannerWrapper';
 import { LOCATION } from 'assets/SvgIcons';
-import { THEMES } from 'const/index';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, THEMES } from 'const/index';
 import { strings } from 'const/strings';
 import { SIZES, SOLEIL } from 'const/ui-constants';
 import { isSafetyIncluded } from 'utils';
@@ -24,6 +24,10 @@ import {
   withShortcodes,
 } from 'utils/helper';
 import Image from 'UI/Image';
+import { useRecoilValue } from 'recoil';
+import { metaAtom } from 'store/atoms/meta';
+import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import { gtmAtom } from 'store/atoms/gtm';
 
 const Alert = dynamic(() => import('UI/Alert'), { ssr: false });
 const ResponsiveSelector: ComponentType<any> = dynamic(
@@ -147,6 +151,9 @@ export const HomePage = (props) => {
     isDev,
   } = props;
 
+  const pageMetaData = useRecoilValue(metaAtom);
+  const { eventsReady } = useRecoilValue(gtmAtom);
+
   let { categoryProps } = props;
   const isDiscountedPage = displayMonths === 'Discounted';
 
@@ -183,6 +190,16 @@ export const HomePage = (props) => {
       hideSortBySelector: false,
     };
   }
+
+  useEffect(() => {
+    if (eventsReady)
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
+        [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
+        [ANALYTICS_PROPERTIES.TGIDS]: Object.keys(allTours).map(Number),
+        ...getCommonEventMetaData(pageMetaData),
+      });
+  }, [eventsReady]);
 
   const [covid19AlertOpen, setCovid19AlertOpen] = useState(true);
   const { dropdownLinks, enableDropdownLinks, languageProps } = header;

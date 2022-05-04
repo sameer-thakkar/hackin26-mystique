@@ -1,3 +1,6 @@
+/* eslint-disable no-console */
+import { ANALYTICS_PROPERTIES } from 'const/index';
+
 declare global {
   interface Window {
     dataLayer: Array<any>;
@@ -35,4 +38,13 @@ export const sendVariableToDataLayer = ({ name, value }) => {
   dLRef.push({
     [name]: value,
   });
+};
+
+export const getCommonEventMetaData = (pageMetaData) => {
+  return {
+    [ANALYTICS_PROPERTIES.COLLECTION_ID]: pageMetaData.collectionId,
+    [ANALYTICS_PROPERTIES.COLLECTION_NAME]: pageMetaData.collectionName,
+    [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData.pageType,
+    [ANALYTICS_PROPERTIES.PAGE_TITLE]: pageMetaData.pageTitle,
+  };
 };

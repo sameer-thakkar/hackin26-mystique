@@ -119,7 +119,10 @@ const allToursParser = (
         allTags: scorpioTour?.allTags || [],
         listingPrice: listingPrice,
         safetyImages: scorpioTour?.safetyImages,
-        collectionId: cardPrices?.[tourData.tgid]?.collectionId,
+        collectionId: cardPrices?.[tourData.tgid]?.primaryCollection.id,
+        primaryCollection: cardPrices?.[tourData.tgid]?.primaryCollection,
+        primaryCategory: cardPrices?.[tourData.tgid]?.primaryCategory,
+        primarySubCategory: cardPrices?.[tourData.tgid]?.primarySubCategory,
       },
     };
   }, {});

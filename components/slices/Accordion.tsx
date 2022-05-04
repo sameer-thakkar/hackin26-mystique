@@ -4,8 +4,10 @@ import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
 import Chevron from 'components/UI/Chevron';
 import { SOLEIL, COLORS } from 'const/ui-constants';
-import { trackEvent } from 'utils/analytics';
+import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { useRecoilValue } from 'recoil';
+import { metaAtom } from 'store/atoms/meta';
 
 export const StyledAccordion = styled.div`
   padding: 16px 0;
@@ -93,6 +95,7 @@ type AccordionProps = {
   isAmp?: Boolean;
   isGlobalMb?: Boolean;
   useSchema?: Boolean;
+  index?: number;
 };
 
 const Accordion = ({
@@ -103,6 +106,7 @@ const Accordion = ({
   isAmp = false,
   isGlobalMb,
   useSchema = false,
+  index = null,
 }: AccordionProps) => {
   const [isOpen, setOpen] = useState(false || isOpenOverride);
   const chevronContainerClass = classNames({
@@ -112,6 +116,7 @@ const Accordion = ({
   const accordionContainerClass = classNames({
     'accordion-container': isAmp,
   });
+  const pageMetaData = useRecoilValue(metaAtom);
 
   useEffect(() => {
     setOpen(isOpenOverride);
@@ -124,15 +129,19 @@ const Accordion = ({
     if (useSchema)
       trackEvent({
         eventName: ANALYTICS_EVENTS.FAQ_ITEM_CLICKED,
-        [ANALYTICS_PROPERTIES.INFO_HEADING]: heading,
+        [ANALYTICS_PROPERTIES.HEADING]: heading,
+        [ANALYTICS_PROPERTIES.RANKING]: index + 1,
+        ...getCommonEventMetaData(pageMetaData),
       });
     else
       trackEvent({
         eventName: ANALYTICS_EVENTS.ACCORDION_TOGGLED,
-        [ANALYTICS_PROPERTIES.INFO_HEADING]: heading,
+        [ANALYTICS_PROPERTIES.HEADING]: heading,
         [ANALYTICS_PROPERTIES.ACTION]: !isOpen ? 'Expand' : 'Contract',
         [ANALYTICS_PROPERTIES.TGID]: null,
         [ANALYTICS_PROPERTIES.SECTION]: 'Longform Content',
+        [ANALYTICS_PROPERTIES.RANKING]: index + 1,
+        ...getCommonEventMetaData(pageMetaData),
       });
   };
 

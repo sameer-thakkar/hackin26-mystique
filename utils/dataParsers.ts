@@ -9,7 +9,7 @@ import {
   fetchTourGroupV6,
   fetchTourListV6,
 } from 'utils/apiUtils';
-import { csvTgidToArray } from 'utils/helper';
+import { csvTgidToArray, getHostName, normaliseURL } from 'utils/helper';
 import { generateDescriptor, getSingleAriesTag } from 'utils/productUtils';
 import { CURRENCY_SYMBOL_MAP } from 'const/index';
 
@@ -233,6 +233,9 @@ export const categoryTourListParserV1 = async ({
         name,
         reviewCount,
         combo,
+        primaryCollection,
+        primaryCategory,
+        primarySubCategory,
       } = tour || {};
       const { productImages, safetyImages } = media || {};
       const updatedDescriptors = generateDescriptor({
@@ -273,13 +276,16 @@ export const categoryTourListParserV1 = async ({
           combo,
           minDuration,
           maxDuration,
+          primaryCollection,
+          primaryCategory,
+          primarySubCategory,
         },
       };
     }, {});
-
     return {
       scorpioData,
       primaryCountry: { code: countryCode, countryName },
+      primaryCity: {},
       orderedTours: repeatableObj,
       activeCurrency: currency,
     };
@@ -335,7 +341,8 @@ export const categoryTourListParserV2 = async (
   let allPromises,
     categoriesWithProducts = [],
     allTgids = [],
-    finalObj = {};
+    finalObj = {},
+    primaryCity;
 
   if (collectionIds?.length) {
     const collectionSet = new Set(collectionIds);
@@ -375,6 +382,7 @@ export const categoryTourListParserV2 = async (
       isCategory: true,
     });
     const data = await Promise.all(allPromises);
+    primaryCity = data?.[0]?.city;
     const categoryData = data
       ?.filter((d: any) => d?.pageData?.items?.length)
       ?.map((cat: any) => {
@@ -403,6 +411,7 @@ export const categoryTourListParserV2 = async (
       isSubCategory: true,
     });
     const data = await Promise.all(allPromises);
+    primaryCity = data?.[0]?.city;
     const subCategoryData = data
       ?.filter((d: any) => d?.pageData?.items?.length)
       ?.map((cat: any) => {
@@ -427,18 +436,20 @@ export const categoryTourListParserV2 = async (
   if (allData?.length) {
     const tgids = allTgids?.flat();
     const tgidSet = new Set(tgids);
-    const finalTgids = Array.from(tgidSet)?.join(',');
-    const allTourGroupData = await fetch(
-      `https://api.headout.com/api/v5/tour-group/list?ids%5B%5D=${finalTgids}`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        let formattedData = {};
-        data?.tourGroups?.forEach((tour) => {
-          formattedData[tour?.id] = tour;
-        });
-        return formattedData;
+    const allTourGroupData = await fetchTourListV6({
+      hostname: getHostName(
+        hostname.includes('stage-'),
+        hostname.includes('localhost'),
+        normaliseURL(hostname)
+      ),
+      tgids: Array.from(tgidSet),
+    }).then((data) => {
+      let formattedData = {};
+      data?.tourGroups?.forEach((tour) => {
+        formattedData[tour?.id] = tour;
       });
+      return formattedData;
+    });
     currencyObject = (allTourGroupData as any)?.currencies?.[0];
     const hasShowPageData = Object.keys(showpageData)?.length ? true : false;
     allData?.forEach((c: any) => {
@@ -537,6 +548,9 @@ export const categoryTourListParserV2 = async (
         return {
           title: name,
           highlights: null,
+          primaryCollection,
+          primaryCategory,
+          primarySubCategory,
           descriptors: mbDescriptors,
           productHighlights: null,
           cardFooter: null,
@@ -573,9 +587,6 @@ export const categoryTourListParserV2 = async (
           showPageUid: hasShowPageData ? showpageData[id] : null,
           listicleShowSummary,
           listicleWhyWatch,
-          primaryCollection,
-          primaryCategory,
-          primarySubCategory,
         };
       });
       finalObj[categoryId] = allProducts;
@@ -586,8 +597,10 @@ export const categoryTourListParserV2 = async (
   return {
     ...data,
     primaryCountry: {
-      ...(primary?.city?.country || {}),
+      ...(primary?.city || {}),
     },
+    primaryCity,
+    isCategoryV2: true,
   };
 };
 
@@ -616,6 +629,8 @@ export const tourListApiParser = (apiResponse, lang = 'en') => {
       name,
       reviewCount,
       primaryCollection,
+      primaryCategory,
+      primarySubCategory,
     } = tour || {};
     const { productImages, safetyImages } = media || {};
     const updatedDescriptors = generateDescriptor({
@@ -650,7 +665,9 @@ export const tourListApiParser = (apiResponse, lang = 'en') => {
         scratchPrice: listingPrice?.originalPrice,
         title: name,
         tgid: id,
-        collectionId: primaryCollection,
+        primaryCollection,
+        primaryCategory,
+        primarySubCategory,
       },
     };
   }, {});
@@ -793,6 +810,9 @@ export const getToursGlobalCollection = async ({
       listingPrice,
       media,
       microBrandsHighlight,
+      primaryCollection,
+      primaryCategory,
+      primarySubCategory,
       descriptors,
       minDuration,
       maxDuration,
@@ -825,6 +845,9 @@ export const getToursGlobalCollection = async ({
         ctaBooster: callToAction,
         descriptors: updatedDescriptors,
         highlights: microBrandsHighlight,
+        primaryCollection,
+        primaryCategory,
+        primarySubCategory,
         images: productImages,
         listingPrice: {
           ...finalListingPrice,

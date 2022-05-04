@@ -68,6 +68,7 @@ const AccordionGroup = ({
               return (
                 <Accordion
                   key={index}
+                  index={index}
                   content={content}
                   heading={accordion.heading}
                   isAmp
@@ -82,6 +83,7 @@ const AccordionGroup = ({
               return (
                 <Accordion
                   key={index}
+                  index={index}
                   content={content}
                   isOpenOverride={index == 0 && isOpenOverride}
                   heading={accordion.heading}

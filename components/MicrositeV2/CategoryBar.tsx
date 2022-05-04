@@ -4,6 +4,10 @@ import InteractionContext from 'contexts/Interaction';
 import Conditional from 'components/common/Conditional';
 import { SortSelector } from 'components/MicrositeV2/SortSelector';
 import { SOLEIL, SIZES, COLORS } from 'const/ui-constants';
+import { metaAtom } from 'store/atoms/meta';
+import { useRecoilValue } from 'recoil';
+import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 
 const StyledCategoryBar = styled.div`
   position: sticky;
@@ -135,6 +139,7 @@ const CategoryBarWrapper = styled.div`
 const CategoryBar = (props) => {
   const { changeCategory: changeCategoryHandler } =
     useContext(InteractionContext) || {};
+  const pageMetaData = useRecoilValue(metaAtom);
   const parent = useRef(null);
   const category_bar = useRef(null);
   const scroll_div = useRef(null);
@@ -153,14 +158,37 @@ const CategoryBar = (props) => {
     isEntertainmentMb,
     isListicle,
   } = props;
-  const toggleFilterDropdown = () => {
-    setFilterDropdownActive((oldState) => !oldState);
+  const toggleFilterDropdown = (dropdownState) => {
+    if (!filterDropdownActive)
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MB_SORT_BY_CLICKED,
+        ...getCommonEventMetaData(pageMetaData),
+      });
+    setFilterDropdownActive((oldState) =>
+      typeof dropdownState !== 'undefined' ? dropdownState : !oldState
+    );
   };
 
   const changeCategory = (index) => {
     let { categories } = props;
     setActiveCategory(index);
     changeCategoryHandler(categories[index].ranking[activeOrder], index);
+    const ranking = categories
+      .filter((category) =>
+        category?.ranking?.popularity?.length
+          ? category.ranking.popularity.some(
+              (tgid) => availableTGIDs[tgid]?.available
+            )
+          : false
+      )
+      .findIndex((category) => category.name === categories[index].name);
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.CATEGORY_TAB_CLICKED,
+      ...getCommonEventMetaData(pageMetaData),
+      [ANALYTICS_PROPERTIES.RANKING]: ranking + 1,
+      [ANALYTICS_PROPERTIES.HEADING]: categories[index].name,
+    });
   };
 
   const changeOrder = (orderKey) => {
@@ -171,6 +199,12 @@ const CategoryBar = (props) => {
       categories[activeCategory].ranking[orderKey],
       activeCategory
     );
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MB_EXPERIENCE_SORTED,
+      [ANALYTICS_PROPERTIES.SORT_BY]: orderKey,
+      ...getCommonEventMetaData(pageMetaData),
+    });
   };
 
   useEffect(() => {

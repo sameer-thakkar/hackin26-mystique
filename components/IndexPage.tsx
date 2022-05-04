@@ -11,6 +11,7 @@ import { getAppTheme } from 'style/theme';
 import { Client } from 'config/prismic-config';
 import {
   ANALYTICS_PROPERTIES,
+  CONTENT_PAGE_TYPES,
   CUSTOM_TYPES,
   DESIGN,
   PAGE_TYPES,
@@ -92,10 +93,9 @@ const Page = (props) => {
 
     sendVariableToDataLayer({
       name: ANALYTICS_PROPERTIES.PAGE_TYPE,
-      value:
-        customType !== CUSTOM_TYPES.CONTENT_PAGE
-          ? PAGE_TYPES.COLLECTION
-          : PAGE_TYPES.CONTENT_PAGE,
+      value: !CONTENT_PAGE_TYPES.includes(customType)
+        ? PAGE_TYPES.COLLECTION
+        : PAGE_TYPES.CONTENT_PAGE,
     });
     const pageHeading =
       customType === CUSTOM_TYPES.MICROSITE

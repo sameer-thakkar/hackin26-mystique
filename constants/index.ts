@@ -185,6 +185,11 @@ export const CUSTOM_TYPES = {
   PROMO_CODES: 'promo_codes',
 };
 
+export const CONTENT_PAGE_TYPES = [
+  CUSTOM_TYPES.CONTENT_PAGE,
+  CUSTOM_TYPES.SHOW_PAGE,
+];
+
 export const DESIGN = {
   V1: 'V1 - Horizontal Card Layout',
   V2: 'V2 - Gird Cards Layout',
@@ -234,6 +239,12 @@ export const ANALYTICS_EVENTS = {
     CTA_CLICKED: 'MB Banner CTA Clicked',
     BANNER_SCROLL: 'MB Banner Scroll',
   },
+  CATEGORY_TAB_CLICKED: 'Category Tab Clicked',
+  MB_SORT_BY_CLICKED: 'MB Sort By Clicked',
+  MB_EXPERIENCE_SORTED: 'MB Experiences Sorted',
+  EXPERIENCE_CARD_EXPANDED: 'Experience Card Expanded',
+  EXPERIENCE_CARD_MORE_DETAILS_CLICKED: 'Experience Card More Details Clicked',
+  EXPERIENCE_CARD_BOOK_NOW_CLICKED: 'Experience Card Book Now Clicked',
 };
 export const PAGE_TYPE = {
   COLLECTION_PAGE: 'Collection Page',
@@ -626,6 +637,7 @@ export const ANALYTICS_PROPERTIES = {
   OPTION_TEXT: 'Option Text',
   POSITION: 'Position',
   INFO_HEADING: 'Information Heading',
+  HEADING: 'Heading',
   ACTION: 'Action',
   PAGE_TITLE: 'Page Title',
   HSID: 'h-sid',
@@ -637,6 +649,15 @@ export const ANALYTICS_PROPERTIES = {
   RANKING: 'Ranking',
   CLICK_COUNT: 'Click Count',
   REVIEW_RANK: 'Review Rank',
+  COLLECTION_NAME: 'Collection Name',
+  SORT_BY: 'Sort By',
+  EXPERIENCE_NAME: 'Experience Name',
+  CATEGORY_ID: 'Category ID',
+  CATEGORY_NAME: 'Category Name',
+  SUB_CAT_ID: 'Sub Categroy ID',
+  SUB_CAT_NAME: 'Sub Category Name',
+  CITY: 'City',
+  COUNTRY: 'Country',
 };
 export const PAGE_TYPES = {
   COLLECTION: 'Collection',
