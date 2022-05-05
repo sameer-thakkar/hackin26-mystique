@@ -47,7 +47,7 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
           (acc: Array<any>, tours) => acc.concat(tours),
           []
         )
-      : categoryTourListData?.scorpioData ?? tourGroupData;
+      : categoryTourListData?.scorpioData ?? tourGroupData ?? {};
     let primaryCollectionName = null,
       primaryCollectionId = null;
     if (
