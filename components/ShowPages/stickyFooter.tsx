@@ -4,6 +4,7 @@ import { COLORS } from 'const/ui-constants';
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { createBookingURL } from 'utils';
+import { isMobile } from 'utils/helper';
 
 import { MBContext } from '../../contexts/MBContext';
 
@@ -65,9 +66,13 @@ const StickyFooter = ({
           role="button"
           tabIndex={0}
           className="buy-button"
-          onClick={() =>
-            window.open(bookingUrl, '_blank', 'noopener, noreferrer')
-          }
+          onClick={() => {
+            let target = '_blank';
+            if (isMobile()) {
+              target = '_self';
+            }
+            window.open(bookingUrl, target, 'noopener, noreferrer');
+          }}
         >
           {strings.BANNER_CTA}
         </div>

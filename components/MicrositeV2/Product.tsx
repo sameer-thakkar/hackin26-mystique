@@ -511,7 +511,7 @@ const Product = (props) => {
       </Conditional>
 
       <Conditional if={isMobile && isEntertainmentMb}>
-        <a target="_blank" rel="noopener noreferrer" href={showPageUrl}>
+        <a target="_self" rel="noopener noreferrer" href={showPageUrl}>
           <ProductCard
             className="product-v2"
             id={`${cardIdPrefix}-${tgid}`}

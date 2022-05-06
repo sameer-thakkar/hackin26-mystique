@@ -207,7 +207,7 @@ const NewBanner = (props) => {
           >
             <Conditional if={isEntertainmentMb}>
               <a
-                target="_blank"
+                target={isMobile ? '_self' : '_blank'}
                 rel="noopener noreferrer"
                 href={getShowPageUrl(bannerImages[0])}
               >
@@ -259,7 +259,7 @@ const NewBanner = (props) => {
                 >
                   <Conditional if={isEntertainmentMb}>
                     <a
-                      target="_blank"
+                      target={isMobile ? '_self' : '_blank'}
                       rel="noopener noreferrer"
                       href={getShowPageUrl(image)}
                     >

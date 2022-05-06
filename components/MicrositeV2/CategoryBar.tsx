@@ -100,7 +100,7 @@ const CategoryBarWrapper = styled.div`
     padding-bottom: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '0.5rem' : '0.875rem'};
     margin-top: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '2.5rem' : '1.5rem'};
+      isEntertainmentMb ? '1rem' : '1.5rem'};
 
     .tabs-wrap {
       padding-left: 1rem;
