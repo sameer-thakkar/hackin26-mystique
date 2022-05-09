@@ -149,6 +149,8 @@ type ComboVariantsProps = {
   bookingUrl: string;
   minDuration: number;
   maxDuration: number;
+  data:any;
+  error:any;
 };
 const ComboVariants = ({
   productTitle,
@@ -160,22 +162,13 @@ const ComboVariants = ({
   bookingUrl,
   minDuration,
   maxDuration,
+  data,
+  error
 }: ComboVariantsProps) => {
   const { lang, host, isDev, isStage } = useContext(MBContext);
   const hostname = getHostName(isStage, isDev, host);
-  const params = {
-    ...(lang && {
-      language: lang,
-    }),
-  };
-  const tourGroupEndpoint = getHeadoutApiUrl({
-    endpoint: HeadoutEndpoints.TourGroupsV6,
-    id: tgid,
-    hostname,
-    params,
-  });
-  const { data, error } = useSWR(tourGroupEndpoint, { fetcher: swrFetcher });
   const { variants, currency } = data || {};
+  
   const { localSymbol: currencySymbol } = currency || {};
   useEffect(() => {
     trackEvent({
@@ -213,7 +206,7 @@ const ComboVariants = ({
       </Conditional>
     );
   });
-
+  
   return (
     <PopupWrapper isMobile={isMobile}>
       <PopupContentWrapper>
@@ -239,9 +232,9 @@ const ComboVariants = ({
             <h3>
               {variants?.length > 1
                 ? strings.COMBO_VARIANT.SELECT_OPTION
-                : strings.COMBO_VARIANT.SELECT_TICKET}
+                : null}
             </h3>
-            <Conditional if={!data}>
+            <Conditional if={!data ||(data && variants.length==1)}>
               <VariantCardSkeletonWrapper>
                 <VariantCardSkeleton isMobile={isMobile} />
                 <VariantCardSkeleton isMobile={isMobile} />
@@ -249,12 +242,12 @@ const ComboVariants = ({
               </VariantCardSkeletonWrapper>
             </Conditional>
             <Conditional if={data}>
-              <Conditional if={!isMobile && !error && variants?.length > 0}>
+              <Conditional if={!isMobile && !error && variants?.length > 1}>
                 <Carousel cardsInARow={4} columnGap={24}>
                   {variantMarkup}
                 </Carousel>
               </Conditional>
-              <Conditional if={isMobile && !error && variants?.length > 0}>
+              <Conditional if={isMobile && !error && variants?.length > 1}>
                 {variantMarkup}
               </Conditional>
             </Conditional>

@@ -858,6 +858,8 @@ const TicketCard = (props) => {
             bookingUrl={productBookingUrl}
             minDuration={minDuration}
             maxDuration={maxDuration}
+            data={{}}
+            error={{}}
           />
         ),
         type: SIDEBAR_TYPES.COMBO_VARIANT,
@@ -1072,6 +1074,8 @@ const TicketCard = (props) => {
           bookingUrl={productBookingUrl}
           minDuration={minDuration}
           maxDuration={maxDuration}
+          data={{}}
+          error={{}}
         />
       </Conditional>
     </>

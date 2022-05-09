@@ -1,4 +1,5 @@
 import React, { useRef, useState, useContext, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { RichText } from 'prismic-reactjs';
 import { useRecoilValue } from 'recoil';
 import dayjs from 'dayjs';
@@ -37,6 +38,9 @@ import PromoCodeBlock from 'UI/PromoCodeBlock';
 import { createBookingURL } from 'utils';
 import { descriptorIcons } from 'const/descriptorIcons';
 import { getDuration } from 'utils/timeUtils';
+import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
+import useSWR from 'swr';
+import { addQueryParams } from 'utils/urlUtils';
 
 dayjs.extend(advancedFormat);
 
@@ -838,6 +842,7 @@ const Product = (props) => {
     mbTheme,
     biLink,
     bookSubdomain,
+    lang,
     isStage,
     isDev,
     sidebarModal: { addToAside },
@@ -852,12 +857,27 @@ const Product = (props) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [showComboVariant, setShowComboVariant] = useState(false);
   const { combo: isCombo, minDuration, maxDuration } = scorpioData || {};
-
+  const router=useRouter();
+  
   const descriptorsList = descriptors || scorpioData.descriptors;
   const cardTitle = title || scorpioData.title;
 
   const { promo_code } = finalPromoCode || {};
 
+  const params = {
+    ...(lang && {
+      language: lang,
+    }),
+  };
+  const tourGroupEndpoint = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.TourGroupsV6,
+    id: tgid,
+    hostname,
+    params,
+  });
+
+  const { data, error } = useSWR(tourGroupEndpoint, { fetcher: swrFetcher });
+  
   const handlePopup = () => {
     togglePopup();
   };
@@ -886,6 +906,26 @@ const Product = (props) => {
   };
 
   const handleShowComboPopup = () => {
+    const { variants} = data || {};
+    if(data && variants?.length==1){
+      if (typeof window !== 'undefined') {
+        const {id: variantId}=variants[0];
+        trackEvent({
+          eventName: ANALYTICS_EVENTS.COMBO_VARIANT.VARIANT_CLICKED,
+          'MB name': hostname,
+          'Variant ID': variantId,
+          TGID: tgid,
+          Device: isMobile ? 'Mweb' : 'Desktop',
+        });
+        
+        router.push(addQueryParams(productBookingUrl, {
+          variantId,
+        }))
+        return;
+      }
+    }
+
+    
     setShowComboVariant(true);
     sendBookNowEvent();
     if (!isMobile) {
@@ -905,6 +945,8 @@ const Product = (props) => {
             bookingUrl={productBookingUrl}
             minDuration={minDuration}
             maxDuration={maxDuration}
+            data={data}
+            error={error}
           />
         ),
         type: SIDEBAR_TYPES.COMBO_VARIANT,
@@ -1351,6 +1393,8 @@ const Product = (props) => {
           bookingUrl={productBookingUrl}
           minDuration={minDuration}
           maxDuration={maxDuration}
+          data={data}
+          error={error}
         />
       )}
     </>
