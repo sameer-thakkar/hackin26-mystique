@@ -48,6 +48,15 @@ const Container = styled.div`
   width: 100%;
 `;
 
+const PRODUCT_CARD_IMAGE_DIMENSIONS = {
+  MOBILE: {
+    width: 320,
+  },
+  DESKTOP: {
+    height: 320,
+  },
+};
+
 const cardImageStyles = css`
   .card-img {
     grid-area: card-img;
@@ -63,6 +72,7 @@ const cardImageStyles = css`
     @media (max-width: 768px) {
       grid-row-end: initial;
       grid-column: span 2;
+      aspect-ratio: 21/9;
 
       width: ${({ isAmp }) => ` calc(100% + ${isAmp ? '2rem' : '1rem'})`};
       max-height: 158px;
@@ -1144,7 +1154,19 @@ const Product = (props) => {
               url={scorpioData.images[0].url}
               imageId="card-img"
               aspectRatio={isMobile ? '21:9' : '3:4'}
-              width={344}
+              width={
+                isMobile
+                  ? PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.width
+                  : undefined
+              }
+              height={
+                isMobile
+                  ? undefined
+                  : PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.height
+              }
+              objectFit="cover"
+              autoCrop={false}
+              quality={80}
             />
           </div>
         </Conditional>
