@@ -220,7 +220,7 @@ class MicrositeV2 extends Component<any, any> {
     if (hasCategoryTourList) {
       const tourListSlice = CMSBody?.filter(
         (body) => body.slice_type === 'tour_list_category'
-      )?.reduce((acc, curr) => acc + curr);
+      )?.reduce((acc, curr) => acc + curr, []);
       tourListCategorySortBy = tourListSlice?.primary?.disable_sort_selector;
       tourListCategories = tourListSlice?.items?.map((item) => {
         const {
