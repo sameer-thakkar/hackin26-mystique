@@ -177,6 +177,7 @@ const Nav = styled.nav`
   grid-auto-flow: column;
   align-items: center;
   grid-column-gap: 33px;
+  ${({ isMobile }) => !isMobile && `margin-left: 16px;`}
   & > li {
     padding: 0;
   }
