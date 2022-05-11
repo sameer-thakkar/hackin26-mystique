@@ -190,7 +190,7 @@ const StickyHeader = ({
 
   const { localSymbol } = currency;
 
-  const { nakedDomain, biLink } = useContext(MBContext);
+  const { nakedDomain, biLink,uid } = useContext(MBContext);
 
   const bookingUrl = createBookingURL({
     nakedDomain: nakedDomain,
@@ -234,7 +234,7 @@ const StickyHeader = ({
                     window.open(bookingUrl, '_blank', 'noopener, noreferrer')
                   }
                 >
-                  {strings.BANNER_CTA}
+                  {uid.includes("www.london-theater-tickets.com")?strings.CHECK_AVAIL:strings.BANNER_CTA}
                 </div>
               </Conditional>
               <Conditional if={!isAvailable}>

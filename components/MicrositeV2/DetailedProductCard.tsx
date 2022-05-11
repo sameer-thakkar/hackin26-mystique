@@ -584,7 +584,7 @@ const DetailedProductCard = (props) => {
           );
         }}
       >
-        <span className="cta-text">{strings.BOOK_NOW_CTA}</span>
+        <span className="cta-text">{mbContext.uid.includes("www.london-theater-tickets.com")?strings.CHECK_AVAIL:strings.BOOK_NOW_CTA}</span>
       </div>
     </div>
   );

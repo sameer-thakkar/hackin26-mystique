@@ -315,7 +315,7 @@ const ShowPageBanner = ({
     ? imageUploads[1] || imageUploads[0]
     : null;
 
-  const { nakedDomain, biLink } = useContext(MBContext);
+  const { nakedDomain, biLink,uid } = useContext(MBContext);
 
   const bookingUrl = createBookingURL({
     nakedDomain: nakedDomain,
@@ -531,7 +531,7 @@ const ShowPageBanner = ({
                     window.open(bookingUrl, '_blank', 'noopener, noreferrer');
                   }}
                 >
-                  {strings.BANNER_CTA}
+                  {uid.includes("www.london-theater-tickets.com")?strings.CHECK_AVAIL:strings.BANNER_CTA}
                 </div>
               </Conditional>
               <Conditional if={!listingPrice}>
