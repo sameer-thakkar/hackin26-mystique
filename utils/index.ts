@@ -147,7 +147,7 @@ export const createBookingURL = ({
   date = null,
   tourId = null,
   promoCode = null,
-  biLink,
+  biLink = null,
   isMobile = false,
   currency = '',
   bookSubdomain = '',

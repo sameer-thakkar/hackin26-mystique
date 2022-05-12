@@ -18,6 +18,7 @@ import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import { dateToString } from 'utils/dateUtils';
 import InteractionContext from 'contexts/Interaction';
 import { convertUidToUrl } from 'utils/urlUtils';
+import { createBookingURL } from 'utils';
 import parse from 'url-parse';
 
 const ProductCard = styled.div`
@@ -30,9 +31,11 @@ const ProductCard = styled.div`
   grid-row-gap: 8px;
   transform: translate3d(0, 0, 0);
   transition: ease 0.2s;
+
   &:hover {
     transform: translate3d(0, -5px, 0);
   }
+
   .product-v2-title {
     font-family: ${SOLEIL.FONT_STACK};
     font-size: 16px;
@@ -43,6 +46,7 @@ const ProductCard = styled.div`
     font-weight: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? SOLEIL.SEMIBOLD : 800};
   }
+
   .reopening {
     font-family: ${SOLEIL.FONT_STACK};
     font-size: 12px;
@@ -52,10 +56,12 @@ const ProductCard = styled.div`
     margin-top: 4px;
     color: ${COLORS.BEACH};
   }
+
   .product-v2-image {
     display: block;
     position: relative;
   }
+
   .overlay-booster {
     position: absolute;
     top: 8px;
@@ -71,12 +77,14 @@ const ProductCard = styled.div`
     padding: 5px 12px;
     ${({ theme }) => theme.productCards.overlayBoosterStyles}
   }
+
   .product-v2-bottom-left {
     display: grid;
     grid-gap: ${({ isEntertainmentMb }) => (isEntertainmentMb ? '0' : '4px')};
     height: max-content;
     ${({ isEntertainmentMb }) => isEntertainmentMb && `margin-top: 12px;`}
   }
+
   .product-v2-bottom {
     display: grid;
     align-items: baseline;
@@ -89,11 +97,13 @@ const ProductCard = styled.div`
       `grid-template-columns: 1fr;
     `}
   }
+
   .product-v2-bottom-right {
     display: grid;
     grid-row-gap: 8px;
     align-self: end;
   }
+
   .product-v2-price {
     font-family: ${SOLEIL.FONT_STACK};
     font-size: 16px;
@@ -101,6 +111,7 @@ const ProductCard = styled.div`
     line-height: 20px;
     text-align: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? 'left' : 'right'};
+
     ${({ isEntertainmentMb }) =>
       isEntertainmentMb &&
       `grid-row: 2;
@@ -110,9 +121,11 @@ const ProductCard = styled.div`
       color: ${({ isEntertainmentMb }) =>
         isEntertainmentMb ? COLORS.GREY.G3 : COLORS.TWO_BLACK};
     }
+
     .mr-4 {
       margin-right: 4px;
     }
+
     .discount {
       background-color: ${COLORS.SOOTHING_GREEN};
       color: ${COLORS.OKAY_GREEN};
@@ -126,6 +139,7 @@ const ProductCard = styled.div`
       margin-left: 6px;
     }
   }
+
   .product-v2-scratch-price {
     font-family: ${SOLEIL.FONT_STACK};
     font-weight: ${SOLEIL.REGULAR};
@@ -138,6 +152,7 @@ const ProductCard = styled.div`
       isEntertainmentMb ? 'left' : 'right'};
     text-decoration-line: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? 'unset' : 'line-through'};
+
     span {
       color: ${COLORS.GREY_G4};
     }
@@ -164,18 +179,22 @@ const ProductCard = styled.div`
     font-size: 12px;
     margin-bottom: 2px;
   }
+
   .l1-booster-wrapper * {
     color: ${COLORS.GREY.G4};
   }
+
   .rating {
     display: grid;
     grid-template-columns: repeat(2, max-content);
     column-gap: 4px;
     font-size: 14px;
   }
+
   .avg-rating {
     color: ${COLORS.JOY_MUSTARD};
   }
+
   .avg-rating svg {
     width: 10.52px;
     height: 10px;
@@ -189,27 +208,33 @@ const ProductCard = styled.div`
     &:hover {
       transform: unset;
     }
+
     .overlay-booster {
       padding: 4px 6px;
     }
+
     .product-v2-title {
       font-size: 14px;
       line-height: ${({ isEntertainmentMb }) =>
         isEntertainmentMb ? '20px' : '1.3'};
       font-weight: ${SOLEIL.SEMIBOLD};
     }
+
     .product-v2-bottom {
       grid-template-columns: ${({ isEntertainmentMb }) =>
         isEntertainmentMb ? '1fr' : 'auto'};
       grid-gap: ${({ isEntertainmentMb }) =>
         isEntertainmentMb ? '0;' : '12px'};
     }
+
     .product-v2-bottom-left {
       width: 100%;
     }
+
     .title-wrap {
       grid-column: 1 / 2;
     }
+
     .product-v2-bottom-right {
       width: 100%;
       display: grid;
@@ -218,6 +243,7 @@ const ProductCard = styled.div`
       justify-content: left;
       align-items: center;
     }
+
     .product-v2-price {
       text-align: left;
       font-weight: ${SOLEIL.SEMIBOLD};
@@ -226,6 +252,7 @@ const ProductCard = styled.div`
         isEntertainmentMb ? '20px;' : '1'};
       font-family: ${SOLEIL.FONT_STACK};
     }
+
     .product-v2-scratch-price {
       text-align: left;
       font-size: 10px;
@@ -233,20 +260,24 @@ const ProductCard = styled.div`
       font-weight: ${SOLEIL.REGULAR};
       font-family: ${SOLEIL.FONT_STACK};
     }
+
     .l1-booster-wrapper {
       ${({ isEntertainmentMb }) =>
         isEntertainmentMb &&
         `font-size: 10px;line-height: 12px;margin-bottom:4px;`}
     }
+
     .avg-rating svg {
       ${({ isEntertainmentMb }) =>
         isEntertainmentMb && `width:8px;height: 8px;`}
     }
+
     .reopening {
       font-size: 10px;
       line-height: 12px;
     }
   }
+
   .product-v2-image img {
     height: auto;
     max-width: 100%;
@@ -262,6 +293,7 @@ const ProductCard = styled.div`
     position: relative;
     line-height: 1.4;
   }
+
   .product-v2-image img::after {
     content: ' ' attr(alt);
     position: absolute;
@@ -275,28 +307,34 @@ const ProductCard = styled.div`
     font-size: 14px;
     text-transform: capitalize;
   }
+
   a {
     text-decoration: none;
   }
+
   .product-v2-boosters p {
     margin: 0;
   }
+
   .product-v2-boosters,
   .product-v2-boosters p {
     font-family: ${SOLEIL.FONT_STACK};
     font-size: 12px;
     line-height: 12px;
   }
+
   .product-v2-boosters .inline-availability {
     color: ${({ theme: { cardAccent } }) =>
       cardAccent ? cardAccent : COLORS.FOUR_BLACK};
   }
+
   @media (max-width: 768px) {
     .product-v2-image img {
       height: 102px;
       border-radius: ${({ isEntertainmentMb }) =>
         isEntertainmentMb ? '4px' : '2px'};
     }
+
     .product-v2-boosters {
       font-size: 12px;
     }
@@ -315,7 +353,7 @@ const Product = (props) => {
     host,
     uid,
   } = props;
-  const { currencySymbolMap, lang } = useContext(MBContext);
+  const { currencySymbolMap, lang, nakedDomain } = useContext(MBContext);
   let url;
   useEffect(() => {
     url = host || window.location.hostname;
@@ -368,7 +406,11 @@ const Product = (props) => {
   hostSplit?.shift();
   const showPageUrl = showPageUid
     ? convertUidToUrl({ uid: showPageUid, isDev, hostname: host })
-    : null;
+    : createBookingURL({
+        nakedDomain,
+        lang,
+        tgid,
+      });
 
   const {
     finalPrice: price,
