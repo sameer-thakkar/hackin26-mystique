@@ -857,8 +857,8 @@ const Product = (props) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [showComboVariant, setShowComboVariant] = useState(false);
   const { combo: isCombo, minDuration, maxDuration } = scorpioData || {};
-  const router=useRouter();
-  
+  const router = useRouter();
+
   const descriptorsList = descriptors || scorpioData.descriptors;
   const cardTitle = title || scorpioData.title;
 
@@ -877,7 +877,7 @@ const Product = (props) => {
   });
 
   const { data, error } = useSWR(tourGroupEndpoint, { fetcher: swrFetcher });
-  
+
   const handlePopup = () => {
     togglePopup();
   };
@@ -906,10 +906,10 @@ const Product = (props) => {
   };
 
   const handleShowComboPopup = () => {
-    const { variants} = data || {};
-    if(data && variants?.length==1){
+    const { variants } = data || {};
+    if (data && variants?.length == 1) {
       if (typeof window !== 'undefined') {
-        const {id: variantId}=variants[0];
+        const { id: variantId } = variants[0];
         trackEvent({
           eventName: ANALYTICS_EVENTS.COMBO_VARIANT.VARIANT_CLICKED,
           'MB name': hostname,
@@ -917,15 +917,16 @@ const Product = (props) => {
           TGID: tgid,
           Device: isMobile ? 'Mweb' : 'Desktop',
         });
-        
-        router.push(addQueryParams(productBookingUrl, {
-          variantId,
-        }))
+
+        router.push(
+          addQueryParams(productBookingUrl, {
+            variantId,
+          })
+        );
         return;
       }
     }
 
-    
     setShowComboVariant(true);
     sendBookNowEvent();
     if (!isMobile) {

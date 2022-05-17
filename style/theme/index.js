@@ -92,7 +92,7 @@ const themes = {
           b {
             font-size: 16px;
             line-height: 24px;
-            display: block;
+            display: inline;
             margin-bottom: 8px;
             margin-top: 32px;
           }
@@ -285,7 +285,7 @@ const themes = {
           b {
             font-size: 16px;
             line-height: 24px;
-            display: block;
+            display: inline;
             margin-bottom: 8px;
             margin-top: 0;
           }
