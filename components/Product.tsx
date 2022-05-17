@@ -77,7 +77,6 @@ const cardImageStyles = css`
       grid-row-end: initial;
       grid-column: span 2;
       aspect-ratio: 21/9;
-
       width: ${({ isAmp }) => ` calc(100% + ${isAmp ? '2rem' : '1rem'})`};
       max-height: 158px;
       margin: -22px -16px -0.5rem;
@@ -188,7 +187,7 @@ const StyledProductCard = styled.div`
     grid-template-areas: ${({ layout }) =>
       layout.mobile.map((row) => `'${row}'`)};
     width: auto;
-    grid-template-columns: auto;
+    grid-template-columns: 1fr;
 
     ${({ theme }) => theme.productCards?.styles?.mobile}
 
@@ -438,6 +437,9 @@ const CTABlock = styled.div`
 
     ${({ isTicketCard, isSticky }) =>
       isTicketCard ? null : ctaBlockMobileStyles(isSticky)}
+  }
+  @media (max-width: 370px) {
+    width: 90%;
   }
 `;
 
@@ -917,7 +919,6 @@ const Product = (props) => {
           TGID: tgid,
           Device: isMobile ? 'Mweb' : 'Desktop',
         });
-
         router.push(
           addQueryParams(productBookingUrl, {
             variantId,
@@ -926,7 +927,6 @@ const Product = (props) => {
         return;
       }
     }
-
     setShowComboVariant(true);
     sendBookNowEvent();
     if (!isMobile) {
