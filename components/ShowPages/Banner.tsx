@@ -315,7 +315,7 @@ const ShowPageBanner = ({
     ? imageUploads[1] || imageUploads[0]
     : null;
 
-  const { nakedDomain, biLink,uid } = useContext(MBContext);
+  const { nakedDomain, biLink, uid } = useContext(MBContext);
 
   const bookingUrl = createBookingURL({
     nakedDomain: nakedDomain,
@@ -333,8 +333,8 @@ const ShowPageBanner = ({
   const isTourAvailable = listingPrice ? true : false;
   const ref = useRef(null);
 
-  const { REOPENING, NEXT_AVAILABLE } = strings || {};
-  const REOPENING_STRING = `${REOPENING} · ${NEXT_AVAILABLE}`;
+  const { NEXT_AVAILABLE } = strings || {};
+  const REOPENING_STRING = `${NEXT_AVAILABLE}`;
   const BannerTitle = `${name} - ${strings.TICKETS}`;
 
   const BannerChange = () => {
@@ -453,7 +453,7 @@ const ShowPageBanner = ({
               <Conditional if={productImage}>
                 <BannerImage>
                   <Image
-                    url={productImage.url}
+                    url={productImage?.url}
                     alt={name}
                     objectFit="cover"
                     height={500}
@@ -531,7 +531,9 @@ const ShowPageBanner = ({
                     window.open(bookingUrl, '_blank', 'noopener, noreferrer');
                   }}
                 >
-                  {uid.includes("www.london-theater-tickets.com")?strings.CHECK_AVAIL:strings.BANNER_CTA}
+                  {uid.includes('www.london-theater-tickets.com')
+                    ? strings.CHECK_AVAIL
+                    : strings.BANNER_CTA}
                 </div>
               </Conditional>
               <Conditional if={!listingPrice}>
