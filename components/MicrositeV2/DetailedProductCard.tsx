@@ -378,7 +378,8 @@ const DetailedDescriptionCard = styled.div`
   .product-v2-description-left img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? 'contain' : 'cover'};
     ${({ isEntertainmentMb }) => isEntertainmentMb && `border-radius: 4px`};
   }
   .tour-description p {
