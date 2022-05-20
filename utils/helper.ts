@@ -481,3 +481,7 @@ export const getLocalisedPriceString = (
     ? lPrice.reverse().join(' ')
     : lPrice.join(space);
 };
+
+export const checkLTT = (uid) => {
+  return uid.includes('www.london-theater-tickets.com');
+};

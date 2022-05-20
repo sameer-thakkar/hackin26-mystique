@@ -22,6 +22,7 @@ import {
   getDiscountedProducts,
   getPriceSortedDiscountedProducts,
   withShortcodes,
+  checkLTT,
 } from 'utils/helper';
 import Image from 'UI/Image';
 import { useRecoilValue } from 'recoil';
@@ -223,7 +224,7 @@ export const HomePage = (props) => {
     isSafetyIncluded(tour.allTags)
   );
   const allTgids = Object.keys(allTours);
-  const isLTT = uid.startsWith('www.london-theater-tickets.com');
+  const isLTT = checkLTT(uid);
   return (
     <V2MicrositeWrapper isEntertainmentMb={isEntertainmentMb}>
       <Header

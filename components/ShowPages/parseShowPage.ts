@@ -27,6 +27,12 @@ export const getObject = (data, filterArray) => {
     } else if (element.type == 'heading2') {
       // tab heading
       currentObject = 'TAB';
+    } else if (
+      element.type == 'heading5' &&
+      element.content.text?.startsWith('Listicle')
+    ) {
+      // listicle
+      currentObject = 'LISTICLE';
     } else {
       if (currentObject === 'DETAIL') {
         // detail object content

@@ -4,7 +4,7 @@ import { COLORS } from 'const/ui-constants';
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { createBookingURL } from 'utils';
-import { isMobile } from 'utils/helper';
+import { checkLTT, isMobile } from 'utils/helper';
 
 import { MBContext } from '../../contexts/MBContext';
 
@@ -59,6 +59,7 @@ const StickyFooter = ({
     biLink: biLink,
   });
 
+  const isLTT = checkLTT(uid);
   return (
     <StickyFooterContentWrapper>
       <Conditional if={isAvailable}>
@@ -74,7 +75,7 @@ const StickyFooter = ({
             window.open(bookingUrl, target, 'noopener, noreferrer');
           }}
         >
-          {uid.includes("www.london-theater-tickets.com")?strings.CHECK_AVAIL:strings.BANNER_CTA}
+          {isLTT ? strings.CHECK_AVAIL : strings.BANNER_CTA}
         </div>
       </Conditional>
       <Conditional if={!isAvailable}>

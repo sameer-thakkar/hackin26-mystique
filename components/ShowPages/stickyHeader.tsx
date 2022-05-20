@@ -6,6 +6,7 @@ import { COLORS } from 'const/ui-constants';
 import { strings } from 'const/strings';
 import { createBookingURL } from 'utils';
 import Conditional from 'components/common/Conditional';
+import { checkLTT } from 'utils/helper';
 
 const BannerContent = styled.div(
   ({ showComponent }) => `
@@ -190,7 +191,7 @@ const StickyHeader = ({
 
   const { localSymbol } = currency;
 
-  const { nakedDomain, biLink,uid } = useContext(MBContext);
+  const { nakedDomain, biLink, uid } = useContext(MBContext);
 
   const bookingUrl = createBookingURL({
     nakedDomain: nakedDomain,
@@ -198,8 +199,9 @@ const StickyHeader = ({
     tgid: tgid,
     biLink: biLink,
   });
-  const { REOPENING, NEXT_AVAILABLE } = strings || {};
-  const REOPENING_STRING = `${REOPENING} · ${NEXT_AVAILABLE}`;
+  const isLTT = checkLTT(uid);
+  const { NEXT_AVAILABLE } = strings || {};
+  const REOPENING_STRING = `${NEXT_AVAILABLE}`;
 
   return (
     <>
@@ -234,7 +236,7 @@ const StickyHeader = ({
                     window.open(bookingUrl, '_blank', 'noopener, noreferrer')
                   }
                 >
-                  {uid.includes("www.london-theater-tickets.com")?strings.CHECK_AVAIL:strings.BANNER_CTA}
+                  {isLTT ? strings.CHECK_AVAIL : strings.BANNER_CTA}
                 </div>
               </Conditional>
               <Conditional if={!isAvailable}>

@@ -28,6 +28,7 @@ import { parseV2ProductDescriptors } from 'utils/dataParsers';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
+import { checkLTT } from 'utils/helper';
 
 const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
   ssr: false,
@@ -470,6 +471,7 @@ const DetailedProductCard = (props) => {
       (item) => item.label === 'Duration'
     );
   }
+  const isLTT = checkLTT(mbContext.uid);
 
   useEffect(() => {
     trackEvent({
@@ -584,7 +586,9 @@ const DetailedProductCard = (props) => {
           );
         }}
       >
-        <span className="cta-text">{mbContext.uid.includes("www.london-theater-tickets.com")?strings.CHECK_AVAIL:strings.BOOK_NOW_CTA}</span>
+        <span className="cta-text">
+          {isLTT ? strings.CHECK_AVAIL : strings.BOOK_NOW_CTA}
+        </span>
       </div>
     </div>
   );

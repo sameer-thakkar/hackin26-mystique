@@ -22,6 +22,7 @@ import {
 } from 'const/index';
 import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
+import { checkLTT } from 'utils/helper';
 
 const Banner = styled.div`
   width: 100%;
@@ -331,6 +332,7 @@ const ShowPageBanner = ({
   const videoCode = PRODUCT_VIDEOS[tgid] ? PRODUCT_VIDEOS[tgid] : null;
   const videoAvailable = PRODUCT_VIDEOS[tgid] ? true : false;
   const isTourAvailable = listingPrice ? true : false;
+  const isLTT = checkLTT(uid);
   const ref = useRef(null);
 
   const { NEXT_AVAILABLE } = strings || {};
@@ -531,9 +533,7 @@ const ShowPageBanner = ({
                     window.open(bookingUrl, '_blank', 'noopener, noreferrer');
                   }}
                 >
-                  {uid.includes('www.london-theater-tickets.com')
-                    ? strings.CHECK_AVAIL
-                    : strings.BANNER_CTA}
+                  {isLTT ? strings.CHECK_AVAIL : strings.BANNER_CTA}
                 </div>
               </Conditional>
               <Conditional if={!listingPrice}>
