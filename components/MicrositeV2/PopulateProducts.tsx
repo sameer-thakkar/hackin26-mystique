@@ -101,7 +101,16 @@ const PopulateProducts = (props) => {
       ? NO_OF_CARDS_IN_ROW.MOBILE
       : NO_OF_CARDS_IN_ROW.DESKTOP;
     const result = tgidsArr
-      .filter((tgid) => allTours?.[tgid]?.listingPrice?.finalPrice)
+      .filter((tgid) => {
+        if (isEntertainmentMb) {
+          return (
+            allTours?.[tgid]?.listingPrice?.finalPrice &&
+            Object.keys(allTours[tgid].microBrandsHighlight).length > 0
+          );
+        } else {
+          return allTours?.[tgid]?.listingPrice?.finalPrice;
+        }
+      })
       .slice(offset)
       .reduce((resultArray, item, index) => {
         const chunkIndex = Math.floor(index / perChunk);
