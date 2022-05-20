@@ -20,7 +20,8 @@ export const getObject = (data, filterArray) => {
       currentObject = 'DETAIL';
     } else if (
       element.type == 'heading2' &&
-      element.content.text?.startsWith('FAQs')
+      (element.content.text?.startsWith('FAQs') ||
+        element.content.text?.startsWith('Frequently Asked Questions'))
     ) {
       currentObject = 'FAQ';
     } else if (element.type == 'heading2') {
@@ -105,7 +106,8 @@ export const parseShowPageData = (data) => {
       currentObject = 'LISTICLE';
     } else if (
       element.type == 'heading2' &&
-      element.content.text?.startsWith('FAQs')
+      (element.content.text?.startsWith('FAQs') ||
+        element.content.text?.startsWith('Frequently Asked Questions'))
     ) {
       // faq heading
 
