@@ -1,4 +1,10 @@
-import React, { useRef, useState, useContext, useEffect } from 'react';
+import React, {
+  useRef,
+  useState,
+  useContext,
+  useEffect,
+  useCallback,
+} from 'react';
 import { useRouter } from 'next/router';
 import { RichText } from 'prismic-reactjs';
 import { useRecoilValue } from 'recoil';
@@ -16,7 +22,7 @@ import { StlyedSplit } from 'UI/Split';
 import Button from 'UI/Button';
 import Image from 'UI/Image';
 import { currencyAtom } from 'store/atoms/currency';
-import { CALENDAR, BackArrow } from 'assets/SvgIcons';
+import { CALENDAR, BackArrow, CHEVRON_RIGHT_CIRCLE } from 'assets/SvgIcons';
 import { strings } from 'const/strings';
 import {
   ANALYTICS_EVENTS,
@@ -41,6 +47,10 @@ import { getDuration } from 'utils/timeUtils';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 import useSWR from 'swr';
 import { addQueryParams } from 'utils/urlUtils';
+import dynamic from 'next/dynamic';
+import { useWindowWidth } from '@react-hook/window-size';
+
+const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
 dayjs.extend(advancedFormat);
 
@@ -463,7 +473,7 @@ const ProductBody = styled.div`
     ${({ collapsed, noOfListItemToShow, defaultOpen }) =>
       collapsed && !defaultOpen
         ? `
-    *:not(div):nth-child(n + ${noOfListItemToShow}),
+    *:not(div, svg, rect, g, path):nth-child(n + ${noOfListItemToShow}),
     ul li:nth-child(n + ${noOfListItemToShow}) {
       display: none;
     }
@@ -619,15 +629,60 @@ const HighlightTabsWrapper = styled.div`
 `;
 
 const TabsWrapper = styled.div`
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: auto;
+  display: block;
   font-weight: ${SOLEIL.SEMIBOLD};
   font-size: 14px;
   line-height: 20px;
-  grid-column-gap: 24px;
   border-bottom: 1px solid #ebebeb;
   justify-content: left;
+  position: relative;
+  padding-top: 13px;
+  overflow: hidden;
+  .swiper-slide {
+    width: auto;
+  }
+`;
+
+const SwiperControls = styled.div`
+  display: flex;
+  align-items: center;
+  .prev-slide,
+  .next-slide {
+    position: absolute;
+    pointer-events: none;
+    cursor: pointer;
+    z-index: 2;
+    height: 32px;
+    svg {
+      fill: ${COLORS.WHITE};
+      background: linear-gradient(
+        180deg,
+        ${COLORS.WHITE} 25%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      background: -webkit-linear-gradient(
+        180deg,
+        ${COLORS.WHITE} 25%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      circle {
+        pointer-events: auto;
+        box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1),
+          0px 2px 8px rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+  .prev-slide {
+    left: 0px;
+    top: 0px;
+    svg {
+      transform: scaleX(-1);
+    }
+  }
+  .next-slide {
+    right: 0px;
+    top: 0px;
+  }
 `;
 
 const TabPanelWrapper = styled.div``;
@@ -636,10 +691,11 @@ const Tab = styled.div`
   cursor: pointer;
   padding-bottom: 8px;
   display: block;
-  width: 100%;
+  width: auto;
   border-bottom: 1px solid transparent;
   transform: translateY(1px);
   font-weight: ${SOLEIL.REGULAR};
+  margin-right: 2px;
   ${({ pageType }) =>
     pageType === CUSTOM_TYPES.GLOBAL_EXPERIENCE
       ? 'font-weight: 600;color: #444444;'
@@ -651,7 +707,7 @@ const Tab = styled.div`
       font-weight: ${SOLEIL.SEMIBOLD};
       color: ${COLORS.PURPS3};
       border-color: ${COLORS.PURPS3};
-    `
+      padding-bottom: 7.25px;`
     );
   }}
 `;
@@ -660,7 +716,10 @@ const TabPanel = styled.div`
   display: ${({ isActive }) => (isActive ? 'block' : 'none')};
   ${({ pageType }) =>
     pageType === CUSTOM_TYPES.GLOBAL_EXPERIENCE
-      ? 'li{color: #666666 !important;}'
+      ? `
+      li {
+        color: #666666 !important;
+      }`
       : ''}
 `;
 
@@ -681,6 +740,53 @@ const HighlightTabs = ({
   pageType,
   activeTabIndex,
 }) => {
+  const width = useWindowWidth();
+  const [isMobile, setIsMobile] = useState(false);
+  const [swiper, updateSwiper] = useState(null);
+  const [_currentIndex, updateCurrentIndex] = useState(0);
+  const [isBeginning, setIsBeginning] = useState(true);
+  const [isEnd, setIsEnd] = useState(false);
+  const updateIndex = useCallback(() => {
+    updateCurrentIndex(swiper.realIndex);
+  }, [swiper]);
+
+  const updateSliderPosition = useCallback(() => {
+    setIsBeginning(swiper?.isBeginning);
+    setIsEnd(swiper?.isEnd);
+  }, [swiper]);
+
+  useEffect(() => {
+    setIsMobile(width <= 768);
+  }, [width, setIsMobile]);
+
+  useEffect(() => {
+    if (isMobile) return;
+    if (swiper !== null) {
+      swiper?.on('slideChange', updateIndex);
+      updateSliderPosition();
+    }
+
+    return () => {
+      if (swiper !== null) {
+        swiper?.off('slideChange', updateIndex);
+      }
+    };
+  }, [isMobile, swiper, updateIndex, updateSliderPosition]);
+
+  const goNext = () => {
+    if (swiper !== null) {
+      swiper?.slideNext();
+      updateSliderPosition();
+    }
+  };
+
+  const goPrev = () => {
+    if (swiper !== null) {
+      swiper?.slidePrev();
+      updateSliderPosition();
+    }
+  };
+
   useEffect(() => {
     onTabChange({ tab: tabs[0], index: 0, defaultSelection: true });
   }, []);
@@ -689,22 +795,53 @@ const HighlightTabs = ({
     onTabChange({ tab: tabs[index], index });
   };
 
+  const swiperParams = {
+    slidesPerView: 'auto',
+    spaceBetween: 24,
+    getSwiper: updateSwiper,
+    shouldSwiperUpdate: true,
+  };
+
   return (
     <HighlightTabsWrapper hasRegularHighlights={hasRegularHighlights}>
-      <TabsWrapper>
-        {tabs.map((tab, index) => (
-          <Tab
-            isActive={activeTabIndex == index}
-            key={index}
-            onClick={(e) => {
-              e.stopPropagation();
-              trackedTabChange(index);
-            }}
-            pageType={pageType}
-          >
-            {tab.heading}
-          </Tab>
-        ))}
+      <TabsWrapper onClick={(e) => e.stopPropagation()}>
+        <Swiper {...swiperParams}>
+          {tabs.map((tab, index) => (
+            <Tab
+              isActive={activeTabIndex == index}
+              key={index}
+              onClick={(e) => {
+                e.stopPropagation();
+                trackedTabChange(index);
+              }}
+              pageType={pageType}
+            >
+              {tab.heading}
+            </Tab>
+          ))}
+        </Swiper>
+        <SwiperControls>
+          <Conditional if={!isBeginning}>
+            <div
+              className="prev-slide"
+              role="button"
+              tabIndex={0}
+              onClick={goPrev}
+            >
+              {CHEVRON_RIGHT_CIRCLE}
+            </div>
+          </Conditional>
+          <Conditional if={!isEnd}>
+            <div
+              className="next-slide"
+              role="button"
+              tabIndex={0}
+              onClick={goNext}
+            >
+              {CHEVRON_RIGHT_CIRCLE}
+            </div>
+          </Conditional>
+        </SwiperControls>
       </TabsWrapper>
       <TabPanelWrapper>
         {tabs.map((tab, index) => (
@@ -743,6 +880,7 @@ const ModalCardContainer = styled.div`
     }
     ${ProductBody} {
       .tour-description {
+        width: 100%;
         display: block;
         p {
           margin-bottom: 12px;
