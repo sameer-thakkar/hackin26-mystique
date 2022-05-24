@@ -1,11 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { getValidUrl } from 'utils/urlUtils';
 
 const CityList = async (req: NextApiRequest, res: NextApiResponse) => {
   let curPage = +req.query.page || 1;
   // Display 50 countries per page. Limitation by prismic
   const perPage = 50;
   try {
-    const cityRes = await fetch(`https://api.headout.com/api/v1/city/list`);
+    const cityRes = await fetch(`https://api.headout.com/api/v2/city/list`);
     const cityData = await cityRes.json();
     const totalCities = cityData?.length;
     const maxPage = Math.ceil(totalCities / perPage);
@@ -20,15 +21,14 @@ const CityList = async (req: NextApiRequest, res: NextApiResponse) => {
     const response = {
       results_size: totalCities,
       results: citiesResult?.map((c) => {
-        const { cityCode, displayName: city, country } = c || {};
+        const { cityCode, displayName: city, country, imageURL } = c || {};
         const { code: countryCode, displayName: countryName, currency } =
           country || {};
         return {
           id: cityCode,
           title: city,
           description: city,
-          image_url:
-            'https://www.headout.com/static/favicons/favicon-32x32.png',
+          image_url: getValidUrl(imageURL),
           last_update: new Date().getTime(),
           blob: {
             cityCode,
