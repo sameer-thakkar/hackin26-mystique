@@ -40,7 +40,7 @@ const StyledHeader = styled.header`
   display: flex;
   left: 0;
   right: 0;
-  z-index: 3;
+  z-index: 4;
   ${({ hasShadow }) =>
     hasShadow
       ? `

@@ -93,6 +93,8 @@ export const parseShowPageData = (data) => {
     tabSectionHeading,
     showType = '',
     isSafetyBanner = false,
+    specialOffer = {},
+    hasSpecialOffer = false,
     mapURL,
     listicleSchema = [],
     listicleHeading;
@@ -167,11 +169,19 @@ export const parseShowPageData = (data) => {
           })
         ) {
           detailsObjects[DetailObjectHeading] = element.content.text;
-        } else if (
+        }
+        if (
           DetailObjectHeading === SAFETY_BANNER_STRING &&
           element.content.text === YES_STRING
         ) {
           isSafetyBanner = true;
+        }
+        if (DetailObjectHeading.startsWith('Special Offer')) {
+          specialOffer = {
+            offerHeading: DetailObjectHeading,
+            offerText: element.content.text,
+          };
+          hasSpecialOffer = true;
         }
       } else if (currentObject === 'TAB') {
         // tab content
@@ -289,6 +299,8 @@ export const parseShowPageData = (data) => {
     detailsObjects,
     tabSectionHeading,
     isSafetyBanner,
+    specialOffer,
+    hasSpecialOffer,
     showType,
     mapURL,
     highlightsSection,

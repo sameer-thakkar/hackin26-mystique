@@ -17,6 +17,7 @@ import GoogleMap from 'components/ShowPages/GoogleMap';
 import Gallery from 'components/ShowPages/Gallery';
 import CategorySlider from 'components/ShowPages/CategorySlider';
 import SubHeading from 'components/ShowPages/SubHeading';
+import SpecialOfferBanner from 'components/ShowPages/SpecialOfferBanner';
 import {
   ALLOW_IMMEDIEATE_NESTING,
   ANALYTICS_EVENTS,
@@ -242,6 +243,8 @@ const ShowPage = ({
     mapURL,
     highlightsSection,
     aboutTheatreSection,
+    specialOffer,
+    hasSpecialOffer,
   } = parseShowPageData(microBrandsHighlight);
 
   const { commonFooter, allShowPagesDocuments } = CMSContent;
@@ -488,7 +491,15 @@ const ShowPage = ({
           tagsArray={tagsArray}
           isReopening={isReopening}
           hostname={hostname}
+          hasSpecialOffer={hasSpecialOffer}
         />
+        <Conditional if={hasSpecialOffer}>
+          <SpecialOfferBanner
+            marginTop={isMobile ? 0 : 40}
+            isShowPage={true}
+            specialOffer={specialOffer}
+          />
+        </Conditional>
         <Wrapper>
           <HighlightsSectionWrapper>
             <RichText render={highlightsSection?.tab_content} />

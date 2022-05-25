@@ -412,6 +412,7 @@ const en = {
     },
     WHY_WATCH: 'Why Watch',
     SHOW_CLOSED: 'Show Closed',
+    SPECIAL_OFFER: 'Special Offer',
   },
   CUSTOMER_REVIEW_HEADING: 'Customer Reviews',
   CATEGORY_SLIDER_HEADING: 'Customers Who Booked This Show Also Viewed',

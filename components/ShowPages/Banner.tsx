@@ -23,6 +23,7 @@ import {
 import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
 import { checkLTT } from 'utils/helper';
+import Emoji from 'components/common/Emoji';
 
 const Banner = styled.div`
   width: 100%;
@@ -51,6 +52,7 @@ const VideoWrapper = styled.div`
     height: 100%;
     opacity: 0;
     z-index: 1;
+    transition: all 0.7s ease;
     -webkit-transition: all 0.7s ease;
   }
 
@@ -75,6 +77,7 @@ const BannerImageWrapper = styled.div`
     width: 100%;
     height: 100%;
     opacity: 0;
+    transition: all 0.7s ease;
     -webkit-transition: all 0.7s ease;
     overflow: hidden;
   }
@@ -290,6 +293,45 @@ const BannerContent = styled.div`
   }
 `;
 
+const SpecialOfferBooster = styled.div`
+  position: absolute;
+  top: -16px;
+  padding: 6px 8px 7px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 15px;
+  text-align: left;
+  background-color: ${COLORS.WHITE};
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1), 0px 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+
+  .offer-emoji {
+    font-weight: 400;
+    line-height: 16px;
+  }
+`;
+
+const SpecialOfferBoosterMobile = styled.div`
+  position: absolute;
+  top: 68px;
+  left: 16px;
+  z-index: 3;
+  padding: 4px 6px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  text-align: left;
+  background-color: ${COLORS.WHITE};
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1), 0px 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+
+  .offer-emoji {
+    font-weight: 400;
+    line-height: 12px;
+    letter-spacing: 1px;
+  }
+`;
+
 const ShowPageBanner = ({
   detailsObjects,
   tgid,
@@ -299,6 +341,7 @@ const ShowPageBanner = ({
   tagsArray,
   isReopening,
   hostname,
+  hasSpecialOffer,
 }) => {
   const {
     listingPrice,
@@ -451,6 +494,12 @@ const ShowPageBanner = ({
           </VideoWrapper>
         ) : (
           <BannerImageWrapper>
+            <Conditional if={hasSpecialOffer && isMobile}>
+              <SpecialOfferBoosterMobile>
+                <Emoji symbol="🤑" label="money-mouth-face" />{' '}
+                {strings.SHOWPAGE.SPECIAL_OFFER}
+              </SpecialOfferBoosterMobile>
+            </Conditional>
             <div className="banner-image-container is-active">
               <Conditional if={productImage}>
                 <BannerImage>
@@ -479,6 +528,12 @@ const ShowPageBanner = ({
         )}
       </Banner>
       <BannerContent ref={ref}>
+        <Conditional if={hasSpecialOffer && !isMobile}>
+          <SpecialOfferBooster>
+            <Emoji symbol="🤑" label="money-mouth-face" />{' '}
+            {strings.SHOWPAGE.SPECIAL_OFFER}
+          </SpecialOfferBooster>
+        </Conditional>
         <div className="top-text-wrapper">
           {isTourAvailable
             ? `${REOPENING_STRING} ${nextAvailable}`

@@ -341,6 +341,8 @@ export const isSameURL = (urlA = '', urlB = '') =>
 
 export const getHostName = (isStage: boolean, isDev: boolean, host: string) => {
   switch (true) {
+    case isDev && isStage:
+      return `https://${host}`;
     case isDev:
       return `http://${host}`;
     default:
