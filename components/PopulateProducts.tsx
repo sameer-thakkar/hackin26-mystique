@@ -112,6 +112,7 @@ const PopulateProducts = (props) => {
   const [allPromoCodes, setAllPromoCodes] = useState([]);
   const [finalPromoCodes, setFinalPromoCodes] = useState({});
   const [productInfo, setproductInfo] = useState([]);
+  const [experienceViewed, setExperienceViewed] = useState(false);
   const [earliestAvailabilityQueue, setEarliestAvailabilityQueue] = useState(
     []
   );
@@ -170,6 +171,7 @@ const PopulateProducts = (props) => {
                   '.more-details'
                 ),
               });
+              setExperienceViewed(true);
             }
           }
         });
@@ -469,6 +471,7 @@ const PopulateProducts = (props) => {
               onPromoClick,
               appliedPromo,
               collectionId,
+              experienceCardVisible: experienceViewed,
             };
 
             return (

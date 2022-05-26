@@ -1,14 +1,24 @@
 import Button from 'UI/Button';
 import { strings } from 'const/strings';
 import styled from 'styled-components';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { COLORS } from 'const/ui-constants';
 import { PERCENTAGE } from 'assets/SvgIcons';
 import { MBContext } from 'contexts/MBContext';
 import { getLocalisedPriceString } from 'utils/helper';
 import Conditional from 'components/common/Conditional';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  PROMO_CODES,
+} from 'const/index';
 import { trackEvent } from 'utils/analytics';
+import { useRecoilValue } from 'recoil';
+import { hsidAtom } from 'store/atoms/hsid';
+import usePromoExperimentVariant, {
+  getPromoTypeFromVariant,
+} from 'hooks/usePromoExperimentVariant';
+import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
 
 const CTABlock = styled.div`
   .promo-code-block {
@@ -69,31 +79,57 @@ const PromoCodeBlock = ({
   indexPosition,
   clickedPromo,
   setClickedPromo,
-  finalPromoCode,
   onPromoClick,
   isTicketCard = false,
   tgid,
   host,
   collectionId,
+  experienceCardVisible,
 }: {
   currentLanguage: string;
   isMobile: boolean;
   indexPosition: number;
   clickedPromo?: number;
   setClickedPromo: (e?: any) => void;
-  finalPromoCode: any;
   onPromoClick: (e: any) => void;
   isTicketCard: boolean;
   tgid: number;
   host: string;
   collectionId: number | null;
+  experienceCardVisible: boolean;
 }) => {
+  const hsid = useRecoilValue(hsidAtom);
+  const promoExperimentVariant = usePromoExperimentVariant(hsid);
+
+  const experimentPromo =
+    promoExperimentVariant === VARIANTS.PROMO_5
+      ? PROMO_CODES.DEFAULT
+      : promoExperimentVariant === VARIANTS.PROMO_10
+      ? PROMO_CODES.DEFAULT_2
+      : null;
+
+  useEffect(() => {
+    if (!promoExperimentVariant) {
+      return;
+    }
+    if (experienceCardVisible) {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
+        [ANALYTICS_PROPERTIES.EXPERIMENT_NAME]:
+          EXPERIMENT_NAMES.PROMO_EXPERIMENT,
+        [ANALYTICS_PROPERTIES.EXPERIMENT_VARIANT]: getPromoTypeFromVariant(
+          promoExperimentVariant
+        ),
+      });
+    }
+  }, [promoExperimentVariant, experienceCardVisible]);
+
   const { currencySymbolMap } = useContext(MBContext);
   const mbCurrency = currencySymbolMap[Object.keys(currencySymbolMap)[0]];
   const localSymbol = mbCurrency?.localSymbol;
   const isPromoApplied = clickedPromo === indexPosition;
 
-  const promo = finalPromoCode;
+  const promo = experimentPromo;
   const { promo_code, discount_percentage, absolute_discount, capped_value } =
     promo || {};
 
@@ -102,7 +138,7 @@ const PromoCodeBlock = ({
     case discount_percentage > 0 && capped_value > 0:
       promoDescription = strings.formatString(
         strings.PROMO_CODES.DESCRIPTION.CAPPED,
-        discount_percentage,
+        discount_percentage.toString(),
         getLocalisedPriceString(capped_value, localSymbol, currentLanguage)
       );
       break;

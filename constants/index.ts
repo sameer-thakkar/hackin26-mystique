@@ -658,6 +658,8 @@ export const ANALYTICS_PROPERTIES = {
   SUB_CAT_NAME: 'Sub Category Name',
   CITY: 'City',
   COUNTRY: 'Country',
+  EXPERIMENT_NAME: 'Experiment Name',
+  EXPERIMENT_VARIANT: 'Experiment Variant',
 };
 export const PAGE_TYPES = {
   COLLECTION: 'Collection',
@@ -687,6 +689,12 @@ export const PROMO_CODES = {
   DEFAULT: {
     promo_code: 'HEADOUT5',
     discount_percentage: 5,
+    absolute_discount: null,
+    capped_value: null,
+  },
+  DEFAULT_2: {
+    promo_code: 'SUMMER22',
+    discount_percentage: 10,
     absolute_discount: null,
     capped_value: null,
   },
