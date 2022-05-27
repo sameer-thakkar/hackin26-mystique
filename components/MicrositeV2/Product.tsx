@@ -379,22 +379,27 @@ const Product = (props) => {
   const { collectionName, primaryCategoryName, primarySubCategoryName } =
     category || {};
   let categoryName = '';
-  if (collectionId) {
-    if (primaryCatId) {
-      categoryName = primaryCategoryName;
-    } else if (primarySubCatId) {
-      categoryName = primarySubCategoryName;
-    } else {
-      categoryName = collectionName;
-    }
-  } else if (primaryCatId) {
-    if (primarySubCatId) {
-      categoryName = primarySubCategoryName;
-    } else {
-      categoryName = primaryCategoryName;
-    }
-  } else {
+
+  if (isEntertainmentMb) {
     categoryName = primarySubCategoryName;
+  } else {
+    if (collectionId) {
+      if (primaryCatId) {
+        categoryName = primaryCategoryName;
+      } else if (primarySubCatId) {
+        categoryName = primarySubCategoryName;
+      } else {
+        categoryName = collectionName;
+      }
+    } else if (primaryCatId) {
+      if (primarySubCatId) {
+        categoryName = primarySubCategoryName;
+      } else {
+        categoryName = primaryCategoryName;
+      }
+    } else {
+      categoryName = primarySubCategoryName;
+    }
   }
 
   const isDev = url?.includes('localhost');

@@ -91,7 +91,6 @@ export const parseShowPageData = (data) => {
     detailsObjects = {},
     DetailObjectHeading,
     tabSectionHeading,
-    showType = '',
     isSafetyBanner = false,
     specialOffer = {},
     hasSpecialOffer = false,
@@ -157,9 +156,6 @@ export const parseShowPageData = (data) => {
     } else {
       if (currentObject === 'DETAIL') {
         // detail object content
-        if (DetailObjectHeading == 'Show Type') {
-          showType = element.content.text;
-        }
         if (DetailObjectHeading === 'Google Map') {
           mapURL = element.content.text;
         }
@@ -301,7 +297,6 @@ export const parseShowPageData = (data) => {
     isSafetyBanner,
     specialOffer,
     hasSpecialOffer,
-    showType,
     mapURL,
     highlightsSection,
     listicleSchema,

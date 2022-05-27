@@ -239,7 +239,6 @@ const ShowPage = ({
     tabHeadingInfo,
     detailsObjects,
     tabSectionHeading,
-    showType,
     mapURL,
     highlightsSection,
     aboutTheatreSection,
@@ -259,7 +258,6 @@ const ShowPage = ({
   } = CMSContent;
 
   const currentLanguage = getHeadoutLanguagecode(lang);
-  const categoryName = showType ? showType : primarySubCategoryName;
   const pageMetaData = useRecoilValue(metaAtom);
   const { eventsReady } = useRecoilValue(gtmAtom);
 
@@ -272,7 +270,7 @@ const ShowPage = ({
     isShowPage: true,
   });
 
-  const tagsArray = [categoryName, ...updatedDescriptors];
+  const tagsArray = [primarySubCategoryName, ...updatedDescriptors];
   const alternateLanguages = getAlternateLanguages(
     alternate_languages,
     isDev,
@@ -571,7 +569,7 @@ const ShowPage = ({
             currencySymbol={currencySymbol}
             allShowPagesDocuments={allShowPagesDocuments}
             currentLanguage={currentLanguage}
-            categoryName={categoryName}
+            categoryName={primarySubCategoryName}
           />
           <Breadcrumb links={breadcrumbs} />
         </Wrapper>
