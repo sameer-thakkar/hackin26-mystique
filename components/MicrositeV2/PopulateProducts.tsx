@@ -103,10 +103,17 @@ const PopulateProducts = (props) => {
     const result = tgidsArr
       .filter((tgid) => {
         if (isEntertainmentMb) {
-          return (
-            allTours?.[tgid]?.listingPrice?.finalPrice &&
-            Object.keys(allTours[tgid].microBrandsHighlight).length > 0
-          );
+          if (isListicle) {
+            return (
+              allTours?.[tgid]?.listicleShowSummary &&
+              allTours?.[tgid]?.listicleWhyWatch
+            );
+          } else {
+            return (
+              allTours?.[tgid]?.listingPrice?.finalPrice &&
+              Object.keys(allTours[tgid].microBrandsHighlight).length > 0
+            );
+          }
         } else {
           return allTours?.[tgid]?.listingPrice?.finalPrice;
         }
