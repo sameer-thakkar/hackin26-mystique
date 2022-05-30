@@ -358,6 +358,7 @@ const fr = {
       CAPPED: "Réduction de {0} %, jusqu'à {1}",
     },
   },
+  CANCELLATION_POLICY_HEADING: "Politique d'annulation",
 };
 
 export default fr;

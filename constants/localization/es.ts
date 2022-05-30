@@ -370,6 +370,7 @@ const es = {
       CAPPED: '{0} % de descuento, hasta {1}',
     },
   },
+  CANCELLATION_POLICY_HEADING: 'Política de cancelación',
 };
 
 export default es;

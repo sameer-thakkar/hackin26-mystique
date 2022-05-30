@@ -360,6 +360,7 @@ const nl = {
       CAPPED: 'Krijg {0}% korting, tot {1}',
     },
   },
+  CANCELLATION_POLICY_HEADING: 'Annuleringsbeleid',
 };
 
 export default nl;

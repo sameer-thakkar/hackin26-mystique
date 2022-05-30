@@ -436,6 +436,7 @@ const en = {
       CAPPED: 'Get {0}% off, upto {1}',
     },
   },
+  CANCELLATION_POLICY_HEADING: 'Cancellation Policy',
 };
 
 export default en;

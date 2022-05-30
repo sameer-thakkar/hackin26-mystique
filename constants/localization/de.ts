@@ -358,6 +358,7 @@ const de = {
       CAPPED: '{0} % Rabatt für bis zu {1}',
     },
   },
+  CANCELLATION_POLICY_HEADING: 'Stornierungsfrist',
 };
 
 export default de;

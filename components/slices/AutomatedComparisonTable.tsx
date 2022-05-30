@@ -452,7 +452,7 @@ const AutomatedTourComparisonTable = ({
       if (tour?.[label]?.cancellable) {
         const hours = Math.floor(tour?.[label]?.cancellableUpTo / 60);
         return {
-          title: strings.FREE_CANCELLATION,
+          title: strings.CANCELLATION_POLICY_HEADING,
           content: (
             <div className="free-cancellation block-content-wrapper">
               <div className="icon">{CHECK}</div>
@@ -467,7 +467,7 @@ const AutomatedTourComparisonTable = ({
         };
       } else {
         return {
-          title: strings.FREE_CANCELLATION,
+          title: strings.CANCELLATION_POLICY_HEADING,
           content: (
             <div className="free-cancellation block-content-wrapper">
               <div className="icon">{CROSS}</div>

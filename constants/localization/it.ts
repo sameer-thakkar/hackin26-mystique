@@ -378,6 +378,7 @@ const it = {
       CAPPED: 'Sconto del {0}%, fino a {1}',
     },
   },
+  CANCELLATION_POLICY_HEADING: 'Polizza di cancellazione',
 };
 
 export default it;
