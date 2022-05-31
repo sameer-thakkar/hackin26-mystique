@@ -32,6 +32,8 @@ const it = {
   TICKETS: 'Biglietti',
   REOPENING_ON: 'Reopening on',
   OPENING_ON: 'Opening on',
+  REOPENS: 'Riapre',
+  OPENS: 'Apre',
   NEW: 'NEW',
   SEE_ALL: 'See All',
   COMBO_VARIANT: {

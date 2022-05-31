@@ -31,6 +31,8 @@ const fr = {
   TICKETS: 'Billets',
   REOPENING_ON: 'Reopening on',
   OPENING_ON: 'Opening on',
+  REOPENS: 'Réouvre',
+  OPENS: 'Ouvre',
   NEW: 'NEW',
   SEE_ALL: 'See All',
   COMBO_VARIANT: {

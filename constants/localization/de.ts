@@ -33,6 +33,8 @@ const de = {
   TICKETS: 'Tickets',
   REOPENING_ON: 'Reopening on',
   OPENING_ON: 'Opening on',
+  REOPENS: 'Endlich wieder ab',
+  OPENS: 'Ab',
   NEW: 'NEW',
   SEE_ALL: 'See All',
   COMBO_VARIANT: {

@@ -37,6 +37,8 @@ const en = {
   REOPENING: 'Reopening',
   REOPENING_ON: 'Reopening on',
   OPENING_ON: 'Opening on',
+  REOPENS: 'Reopens',
+  OPENS: 'Opens',
   OPENING_DATE: 'Opening Date',
   REOPENING_DATE: 'Reopening Date',
   NEW: 'NEW',

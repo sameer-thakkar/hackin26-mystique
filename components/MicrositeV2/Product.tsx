@@ -433,11 +433,19 @@ const Product = (props) => {
 
   const isNew = NEW_ARRIVALS_CATEGORIES.includes(activeCategoryId);
 
-  const OPENING_ON = REOPENING_CATEGORIES.includes(activeCategoryId)
-    ? strings.REOPENING_ON
-    : strings.OPENING_ON;
-
   const openingDate = dateToString(reopeningDate, lang, 'DD MMM, YYYY');
+
+  let OPENING_ON = '';
+  if (openingDate === strings.TODAY || openingDate === strings.TOMORROW) {
+    OPENING_ON = REOPENING_CATEGORIES.includes(activeCategoryId)
+      ? strings.REOPENS
+      : strings.OPENS;
+  } else {
+    OPENING_ON = REOPENING_CATEGORIES.includes(activeCategoryId)
+      ? strings.REOPENING_ON
+      : strings.OPENING_ON;
+  }
+
   const isBeforeToday = new Date().getTime() > new Date(openingDate)?.getTime();
   const hasScratchPrice = scratchPrice > price;
   return (

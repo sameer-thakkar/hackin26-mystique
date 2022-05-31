@@ -34,6 +34,8 @@ const nl = {
   TICKETS: 'Kaartjes',
   REOPENING_ON: 'Reopening on',
   OPENING_ON: 'Opening on',
+  REOPENS: 'Heropent',
+  OPENS: 'Opent',
   NEW: 'NEW',
   SEE_ALL: 'See All',
   COMBO_VARIANT: {
