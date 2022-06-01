@@ -245,6 +245,8 @@ export const ANALYTICS_EVENTS = {
   EXPERIENCE_CARD_EXPANDED: 'Experience Card Expanded',
   EXPERIENCE_CARD_MORE_DETAILS_CLICKED: 'Experience Card More Details Clicked',
   EXPERIENCE_CARD_BOOK_NOW_CLICKED: 'Experience Card Book Now Clicked',
+  LP_TO_BOOKING_PAGE: 'LP to booking page',
+  LP_TO_SHOWPAGE: 'LP to showpage',
 };
 export const PAGE_TYPE = {
   COLLECTION_PAGE: 'Collection Page',
@@ -658,6 +660,7 @@ export const ANALYTICS_PROPERTIES = {
   SUB_CAT_NAME: 'Sub Category Name',
   CITY: 'City',
   COUNTRY: 'Country',
+  VARIANT: 'Experiment Variant',
   EXPERIMENT_NAME: 'Experiment Name',
   EXPERIMENT_VARIANT: 'Experiment Variant',
 };

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import { MBContext } from 'contexts/MBContext';
@@ -7,6 +7,8 @@ import Image from 'UI/Image';
 import LocalisedPrice from 'UI/LPrice';
 import { STAR } from 'assets/SvgIcons';
 import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
   CURRENCY_SYMBOL_MAP,
   NEW_ARRIVALS_CATEGORIES,
   REOPENING_CATEGORIES,
@@ -20,6 +22,11 @@ import InteractionContext from 'contexts/Interaction';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { createBookingURL } from 'utils';
 import parse from 'url-parse';
+import { getABTestingVariant } from 'utils/experiments/experimentUtils';
+import { useRecoilValue } from 'recoil';
+import { hsidAtom } from 'store/atoms/hsid';
+import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
+import { trackEvent } from 'utils/analytics';
 
 const ProductCard = styled.div`
   width: 100%;
@@ -354,10 +361,27 @@ const Product = (props) => {
     uid,
   } = props;
   const { currencySymbolMap, lang, nakedDomain } = useContext(MBContext);
+  const [initialized, setInitialized] = useState(true);
+  const hsid = useRecoilValue(hsidAtom);
+
   let url;
   useEffect(() => {
     url = host || window.location.hostname;
   }, []);
+
+  useEffect(() => {
+    if (hsid && isEntertainmentMb) {
+      const variant = getABTestingVariant(
+        EXPERIMENT_NAMES.LTD_LP_Experiment,
+        hsid,
+        false,
+        true,
+      );
+      if (variant === VARIANTS.SHOWPAGE_REDIRECT) {
+        setInitialized(false);
+      }
+    }
+  }, [hsid, setInitialized]);
 
   const { sliceData } = useContext(InteractionContext) || {};
   const { collectionId, primaryCatId, primarySubCatId } = sliceData || {};
@@ -409,13 +433,15 @@ const Product = (props) => {
     : currentHost;
   let hostSplit = hostName?.split('.');
   hostSplit?.shift();
+
+  const bookingURL = createBookingURL({
+    nakedDomain,
+    lang,
+    tgid,
+  });
   const showPageUrl = showPageUid
     ? convertUidToUrl({ uid: showPageUid, isDev, hostname: host })
-    : createBookingURL({
-        nakedDomain,
-        lang,
-        tgid,
-      });
+    : bookingURL;
 
   const {
     finalPrice: price,
@@ -448,125 +474,153 @@ const Product = (props) => {
 
   const isBeforeToday = new Date().getTime() > new Date(openingDate)?.getTime();
   const hasScratchPrice = scratchPrice > price;
+  const cardComponent = (
+    <ProductCard
+      onClick={initialized && handleProductClick}
+      className="product-v2"
+      id={`${cardIdPrefix}-${tgid}`}
+      onKeyDown={initialized && handleProductClick}
+      role="button"
+      tabIndex={0}
+      isEntertainmentMb={isEntertainmentMb}
+    >
+      <div className="product-v2-image">
+        <Image
+          url={productImage}
+          format="pjpg"
+          width={400}
+          imageId={tgid}
+          height={250}
+          alt={title}
+        />
+        <Conditional if={overlayBooster}>
+          <div className="overlay-booster">{overlayBooster}</div>
+        </Conditional>
+      </div>
+      <div className="product-v2-bottom">
+        <Conditional if={vendor?.length && isMobile}>
+          <div className="vendor-name">{vendor}</div>
+        </Conditional>
+        <Conditional if={isEntertainmentMb}>
+          <div className="l1-booster-wrapper">
+            <div className="l1-booster">{categoryName}</div>
+            <div className="rating">
+              <Conditional if={isNew}>
+                <span className="avg-rating">{strings.NEW}</span>
+              </Conditional>
+              <Conditional if={!isNew && averageRating}>
+                <span className="avg-rating">
+                  {averageRating} {STAR(COLORS.JOY_MUSTARD)}
+                </span>
+              </Conditional>
+              <Conditional if={!isNew && reviewCount}>
+                <span className="total-rating">
+                  (
+                  {reviewCount > 999
+                    ? `${(reviewCount / 1000).toFixed(1)}k`
+                    : reviewCount}
+                  )
+                </span>
+              </Conditional>
+            </div>
+          </div>
+        </Conditional>
+        <div className="title-wrap">
+          <div className="product-v2-title">{truncate(title, 70)}</div>
+          <Conditional
+            if={
+              isEntertainmentMb &&
+              !isBeforeToday &&
+              openingDate !== 'Invalid Date'
+            }
+          >
+            <div className="reopening">
+              {OPENING_ON} {openingDate}
+            </div>
+          </Conditional>
+        </div>
+        <div className="product-v2-bottom-left">
+          <div className="product-v2-price">
+            <Conditional if={isEntertainmentMb && !hasScratchPrice}>
+              <span className="mr-4">{strings.FROM}</span>
+            </Conditional>
+            <LocalisedPrice
+              price={price}
+              currencySymbol={currencySymbol}
+              lang={lang}
+            />
+            <Conditional
+              if={isEntertainmentMb && hasScratchPrice && bestDiscount}
+            >
+              <span className="discount">
+                {bestDiscount}% {strings.OFF}
+              </span>
+            </Conditional>
+          </div>
+          <Conditional if={hasScratchPrice}>
+            <div className="product-v2-scratch-price">
+              <Conditional if={isEntertainmentMb}>
+                <span>{strings.FROM} </span>
+              </Conditional>
+              <LocalisedPrice
+                price={scratchPrice}
+                currencySymbol={currencySymbol}
+                lang={lang}
+              />
+            </div>
+          </Conditional>
+        </div>
+        <Conditional if={cardFooter?.length && !isEntertainmentMb}>
+          <div className="product-v2-bottom-right">
+            <div className="product-v2-boosters" data-cont={cardFooter?.length}>
+              <RichText
+                render={cardFooter}
+                htmlSerializer={(...defaultArgs: any) =>
+                  shortCodeSerializerWithParentProps(defaultArgs, tour)
+                }
+              />
+            </div>
+          </div>
+        </Conditional>
+      </div>
+    </ProductCard>
+  );
+  const primaryCategory = allTours[tgid]?.primaryCategory;
+  const showPageEvent = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_EXPANDED,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: title,
+      [ANALYTICS_PROPERTIES.CATEGORY_ID]: primaryCategory?.id,
+      [ANALYTICS_PROPERTIES.CATEGORY_NAME]: primaryCategory?.displayName,
+      [ANALYTICS_PROPERTIES.SUB_CAT_ID]: primaryCategory?.id,
+      [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: primaryCategory?.displayName,
+    });
+  };
+
   return (
     <>
       <Conditional if={!isMobile || !isEntertainmentMb}>
-        <ProductCard
-          onClick={handleProductClick}
-          className="product-v2"
-          id={`${cardIdPrefix}-${tgid}`}
-          onKeyDown={handleProductClick}
-          role="button"
-          tabIndex={0}
-          isEntertainmentMb={isEntertainmentMb}
-        >
-          <div className="product-v2-image">
-            <Image
-              url={productImage}
-              format="pjpg"
-              width={400}
-              imageId={tgid}
-              height={250}
-              alt={title}
-            />
-            <Conditional if={overlayBooster}>
-              <div className="overlay-booster">{overlayBooster}</div>
-            </Conditional>
-          </div>
-          <div className="product-v2-bottom">
-            <Conditional if={vendor?.length && isMobile}>
-              <div className="vendor-name">{vendor}</div>
-            </Conditional>
-            <Conditional if={isEntertainmentMb}>
-              <div className="l1-booster-wrapper">
-                <div className="l1-booster">{categoryName}</div>
-                <div className="rating">
-                  <Conditional if={isNew}>
-                    <span className="avg-rating">{strings.NEW}</span>
-                  </Conditional>
-                  <Conditional if={!isNew && averageRating}>
-                    <span className="avg-rating">
-                      {averageRating} {STAR(COLORS.JOY_MUSTARD)}
-                    </span>
-                  </Conditional>
-                  <Conditional if={!isNew && reviewCount}>
-                    <span className="total-rating">
-                      (
-                      {reviewCount > 999
-                        ? `${(reviewCount / 1000).toFixed(1)}k`
-                        : reviewCount}
-                      )
-                    </span>
-                  </Conditional>
-                </div>
-              </div>
-            </Conditional>
-            <div className="title-wrap">
-              <div className="product-v2-title">{truncate(title, 70)}</div>
-              <Conditional
-                if={
-                  isEntertainmentMb &&
-                  !isBeforeToday &&
-                  openingDate !== 'Invalid Date'
-                }
-              >
-                <div className="reopening">
-                  {OPENING_ON} {openingDate}
-                </div>
-              </Conditional>
-            </div>
-            <div className="product-v2-bottom-left">
-              <div className="product-v2-price">
-                <Conditional if={isEntertainmentMb && !hasScratchPrice}>
-                  <span className="mr-4">{strings.FROM}</span>
-                </Conditional>
-                <LocalisedPrice
-                  price={price}
-                  currencySymbol={currencySymbol}
-                  lang={lang}
-                />
-                <Conditional
-                  if={isEntertainmentMb && hasScratchPrice && bestDiscount}
-                >
-                  <span className="discount">
-                    {bestDiscount}% {strings.OFF}
-                  </span>
-                </Conditional>
-              </div>
-              <Conditional if={hasScratchPrice}>
-                <div className="product-v2-scratch-price">
-                  <Conditional if={isEntertainmentMb}>
-                    <span>{strings.FROM} </span>
-                  </Conditional>
-                  <LocalisedPrice
-                    price={scratchPrice}
-                    currencySymbol={currencySymbol}
-                    lang={lang}
-                  />
-                </div>
-              </Conditional>
-            </div>
-            <Conditional if={cardFooter?.length && !isEntertainmentMb}>
-              <div className="product-v2-bottom-right">
-                <div
-                  className="product-v2-boosters"
-                  data-cont={cardFooter?.length}
-                >
-                  <RichText
-                    render={cardFooter}
-                    htmlSerializer={(...defaultArgs: any) =>
-                      shortCodeSerializerWithParentProps(defaultArgs, tour)
-                    }
-                  />
-                </div>
-              </div>
-            </Conditional>
-          </div>
-        </ProductCard>
+        <Conditional if={initialized}>{cardComponent}</Conditional>
+        <Conditional if={!initialized}>
+          <a
+            href={showPageUrl}
+            target="_self"
+            rel="noopener noreferrer"
+            onClick={showPageEvent}
+          >
+            {cardComponent}
+          </a>
+        </Conditional>
       </Conditional>
 
       <Conditional if={isMobile && isEntertainmentMb}>
-        <a target="_self" rel="noopener noreferrer" href={showPageUrl}>
+        <a
+          target="_self"
+          rel="noopener noreferrer"
+          href={initialized ? bookingURL : showPageUrl}
+          onClick={showPageEvent}
+        >
           <ProductCard
             className="product-v2"
             id={`${cardIdPrefix}-${tgid}`}

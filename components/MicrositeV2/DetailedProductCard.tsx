@@ -218,7 +218,6 @@ const DetailedDescriptionCard = styled.div`
   .desc-cta-wrapper {
     display: grid;
     align-items: center;
-
     ${({ isEntertainmentMb }) =>
       isEntertainmentMb
         ? `
@@ -233,6 +232,11 @@ const DetailedDescriptionCard = styled.div`
         grid-column-gap: 12px;
         justify-content: end;
       `};
+
+    ${({ experimentEnabled, isEntertainmentMb }) =>
+      experimentEnabled &&
+      isEntertainmentMb &&
+      'padding: 0 50px; grid-template-columns: 1fr;'}
   }
 
   .cta {
@@ -245,8 +249,8 @@ const DetailedDescriptionCard = styled.div`
       isEntertainmentMb ? '181px' : '150px'};
     padding: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '12px 0' : '16px'};
-
-    ${({ isEntertainmentMb }) => isEntertainmentMb && 'max-width: 181px'};
+    ${({ experimentEnabled, isEntertainmentMb }) =>
+      isEntertainmentMb && !experimentEnabled && 'max-width: 181px'};
   }
   .cta .cta-text {
     font-family: ${SOLEIL.FONT_STACK};
@@ -473,6 +477,12 @@ const DetailedProductCard = (props) => {
     );
   }
   const isLTT = checkLTT(mbContext.uid);
+  const experimentEnabled = isLTT;
+  const bookingURL = createBookingURL({
+    nakedDomain,
+    lang,
+    tgid: tgidClicked,
+  });
 
   useEffect(() => {
     trackEvent({
@@ -491,7 +501,9 @@ const DetailedProductCard = (props) => {
 
   const onMoreDetailsClick = () => {
     trackEvent({
-      eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_MORE_DETAILS_CLICKED,
+      eventName: experimentEnabled
+        ? ANALYTICS_EVENTS.EXPERIENCE_CARD_BOOK_NOW_CLICKED
+        : ANALYTICS_EVENTS.EXPERIENCE_CARD_MORE_DETAILS_CLICKED,
       ...getCommonEventMetaData(pageMetaData),
       [ANALYTICS_PROPERTIES.TGID]: tgidClicked,
       [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: title,
@@ -560,37 +572,41 @@ const DetailedProductCard = (props) => {
     <div className="desc-cta-wrapper">
       <Conditional if={isEntertainmentMb && showPageUrl}>
         <a
-          className="cta secondary"
+          className={`cta ${experimentEnabled ? 'primary' : 'secondary'}`}
           target="_blank"
           rel="noopener noreferrer"
           onClick={onMoreDetailsClick}
-          href={showPageUrl}
+          href={experimentEnabled ? bookingURL : showPageUrl}
         >
-          <span className="cta-text">{strings.MORE_DETAILS}</span>
+          <span className="cta-text">
+            {experimentEnabled ? strings.CHECK_AVAIL : strings.MORE_DETAILS}
+          </span>
         </a>
       </Conditional>
-      <div
-        role="button"
-        tabIndex={0}
-        className="cta primary"
-        onClick={() => {
-          trackBookNowClick();
-          window.open(
-            createBookingURL({
-              nakedDomain,
-              lang,
-              tgid: tgidClicked,
-              biLink,
-            }),
-            '_blank',
-            'noopener, noreferrer'
-          );
-        }}
-      >
-        <span className="cta-text">
-          {isLTT ? strings.CHECK_AVAIL : strings.BOOK_NOW_CTA}
-        </span>
-      </div>
+      <Conditional if={!experimentEnabled || !isEntertainmentMb}>
+        <div
+          role="button"
+          tabIndex={0}
+          className="cta primary"
+          onClick={() => {
+            trackBookNowClick();
+            window.open(
+              createBookingURL({
+                nakedDomain,
+                lang,
+                tgid: tgidClicked,
+                biLink,
+              }),
+              '_blank',
+              'noopener, noreferrer'
+            );
+          }}
+        >
+          <span className="cta-text">
+            {isLTT ? strings.CHECK_AVAIL : strings.BOOK_NOW_CTA}
+          </span>
+        </div>
+      </Conditional>
     </div>
   );
 
@@ -599,6 +615,7 @@ const DetailedProductCard = (props) => {
       {...{ cardPosition, rightBlocksCount }}
       isEntertainmentMb={isEntertainmentMb}
       isListicle={isListicle}
+      experimentEnabled={experimentEnabled}
     >
       <div className="indicator-triangle"></div>
       <Conditional if={isEntertainmentMb}>
