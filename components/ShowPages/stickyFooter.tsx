@@ -1,9 +1,11 @@
 import Conditional from 'components/common/Conditional';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 import { COLORS } from 'const/ui-constants';
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { createBookingURL } from 'utils';
+import { trackEvent } from 'utils/analytics';
 import { checkLTT, isMobile } from 'utils/helper';
 
 import { MBContext } from '../../contexts/MBContext';
@@ -60,6 +62,13 @@ const StickyFooter = ({
   });
 
   const isLTT = checkLTT(uid);
+  const trackBookNowClick = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_BOOK_NOW_CLICKED,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+    });
+  };
+
   return (
     <StickyFooterContentWrapper>
       <Conditional if={isAvailable}>
@@ -68,6 +77,7 @@ const StickyFooter = ({
           tabIndex={0}
           className="buy-button"
           onClick={() => {
+            trackBookNowClick();
             let target = '_blank';
             if (isMobile()) {
               target = '_self';
