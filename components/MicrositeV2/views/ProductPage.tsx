@@ -436,8 +436,8 @@ const CTABlock = styled.div`
   position: fixed;
   left: 0;
   bottom: 0;
-  display: grid;
   justify-items: center;
+  display: flex;
   ${({ isEntertainmentMb }) =>
     isEntertainmentMb &&
     `

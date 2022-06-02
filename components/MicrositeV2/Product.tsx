@@ -375,7 +375,7 @@ const Product = (props) => {
         EXPERIMENT_NAMES.LTD_LP_Experiment,
         hsid,
         false,
-        true,
+        true
       );
       if (variant === VARIANTS.SHOWPAGE_REDIRECT) {
         setInitialized(false);
@@ -597,6 +597,22 @@ const Product = (props) => {
       [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: primaryCategory?.displayName,
     });
   };
+  const showPageExists = !showPageUrl.includes('/book');
+  const MWebEntertainmentMbProductWrapper = ({ children }) =>
+    initialized || !showPageExists ? (
+      <div role="button" tabIndex={0} onClick={showPageEvent}>
+        {children}
+      </div>
+    ) : (
+      <a
+        target="_self"
+        rel="noopener noreferrer"
+        href={showPageUrl}
+        onClick={showPageEvent}
+      >
+        {children}
+      </a>
+    );
 
   return (
     <>
@@ -615,17 +631,14 @@ const Product = (props) => {
       </Conditional>
 
       <Conditional if={isMobile && isEntertainmentMb}>
-        <a
-          target="_self"
-          rel="noopener noreferrer"
-          href={initialized ? bookingURL : showPageUrl}
-          onClick={showPageEvent}
-        >
+        <MWebEntertainmentMbProductWrapper>
           <ProductCard
             className="product-v2"
             id={`${cardIdPrefix}-${tgid}`}
             role="button"
             tabIndex={0}
+            onClick={(initialized || !showPageExists) && handleProductClick}
+            onKeyDown={(initialized || !showPageExists) && handleProductClick}
             isEntertainmentMb={isEntertainmentMb}
           >
             <div className="product-v2-image">
@@ -731,7 +744,7 @@ const Product = (props) => {
               </Conditional>
             </div>
           </ProductCard>
-        </a>
+        </MWebEntertainmentMbProductWrapper>
       </Conditional>
     </>
   );

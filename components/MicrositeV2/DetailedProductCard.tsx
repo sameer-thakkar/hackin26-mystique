@@ -236,7 +236,10 @@ const DetailedDescriptionCard = styled.div`
     ${({ experimentEnabled, isEntertainmentMb }) =>
       experimentEnabled &&
       isEntertainmentMb &&
-      'padding: 0 50px; grid-template-columns: 1fr;'}
+      `
+        grid-template-columns: 1fr 1fr;
+        margin-left: 50%;
+      `}
   }
 
   .cta {

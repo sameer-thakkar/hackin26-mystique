@@ -51,13 +51,12 @@ export const RowComponent = (props) => {
       event.target.blur();
       return;
     }
-    if (isMobile && !isEntertainmentMb) {
+    if (isMobile) {
       props.changePage({
         name: PAGETYPE.MOBILE_PRODUCT_PAGE,
         tgid: productTgid,
       });
-    }
-    if (!isMobile) {
+    } else {
       clickTour(productTgid, false, section);
     }
   };
