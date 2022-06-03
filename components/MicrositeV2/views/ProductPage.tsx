@@ -625,7 +625,7 @@ export const MobileProductPage = (props) => {
           )
         }
       >
-        <div className="cta-text">{strings.BOOK_NOW_CTA}</div>
+        <div className="cta-text">{strings.CHECK_AVAIL}</div>
       </div>
     </CTABlock>
   );
