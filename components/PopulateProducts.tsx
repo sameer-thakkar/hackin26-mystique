@@ -111,7 +111,7 @@ const PopulateProducts = (props) => {
   const [appliedPromo, setAppliedPromo] = useState(null);
   const [allPromoCodes, setAllPromoCodes] = useState([]);
   const [finalPromoCodes, setFinalPromoCodes] = useState({});
-  const [productInfo, setproductInfo] = useState([]);
+  const [productInfo, setproductInfo] = useState({});
   const [experienceViewed, setExperienceViewed] = useState(false);
   const [earliestAvailabilityQueue, setEarliestAvailabilityQueue] = useState(
     []
@@ -140,16 +140,19 @@ const PopulateProducts = (props) => {
 
   const fetchProductInfo = async (tgids) => {
     const tgidData = await fetchTourList({ tgids }).then((res) => res.json());
-    const mapping = tgidData?.tourGroups?.reduce((arr, el) => {
+    const tourGroupMap = tgidData?.tourGroups?.reduce((acc, el) => {
       const { id, primaryCollection, cityCode } = el || {};
-      arr.push({
-        tgid: id,
-        collectionId: primaryCollection?.id,
-        city: cityCode,
-      });
-      return arr;
-    }, []);
-    setproductInfo(mapping);
+      return {
+        ...acc,
+        [id]: {
+          ...el,
+          tgid: id,
+          collectionId: primaryCollection?.id,
+          city: cityCode,
+        },
+      };
+    }, {});
+    setproductInfo(tourGroupMap);
   };
 
   useEffect(() => {
@@ -321,7 +324,7 @@ const PopulateProducts = (props) => {
 
   const filterPromoCodes = () => {
     let filteredPromoCodes = {};
-    productInfo.forEach((el) => {
+    Object.keys(productInfo ?? {}).forEach((tgid) => {
       let tgidBased, collectionBased, cityBased;
 
       //For each product, filtering out promocodes based on relevant TGID, Collection, City
@@ -335,10 +338,10 @@ const PopulateProducts = (props) => {
         const tgids = csvTgidToArray(tgidsString);
         const exclusions = csvTgidToArray(exclusionsString);
         return (
-          (tgids?.includes(el?.tgid) ||
-            el?.collectionId == collections?.collectionId ||
-            el?.city === city_name?.cityCode) &&
-          !exclusions?.includes(el?.tgid)
+          (tgids?.includes(tgid) ||
+            productInfo[tgid]?.collectionId == collections?.collectionId ||
+            productInfo[tgid]?.city === city_name?.cityCode) &&
+          !exclusions?.includes(tgid)
         );
       });
 
@@ -347,23 +350,24 @@ const PopulateProducts = (props) => {
       if (promosForProduct?.length) {
         tgidBased = promosForProduct?.find((promo) => {
           const tgids = csvTgidToArray(promo?.tgids);
-          return tgids?.includes(el?.tgid);
+          return tgids?.includes(tgid);
         });
         if (!tgidBased) {
           collectionBased = promosForProduct?.find(
-            (promo) => el?.collectionId == promo?.collections?.collectionId
+            (promo) =>
+              productInfo[tgid]?.collectionId ==
+              promo?.collections?.collectionId
           );
 
           if (!collectionBased) {
             cityBased = promosForProduct?.find(
-              (promo) => el?.city === promo?.city_name?.cityCode
+              (promo) => productInfo[tgid]?.city === promo?.city_name?.cityCode
             );
           }
         }
-        filteredPromoCodes[el?.tgid] =
-          tgidBased || collectionBased || cityBased;
+        filteredPromoCodes[tgid] = tgidBased || collectionBased || cityBased;
       } else {
-        filteredPromoCodes[el?.tgid] = PROMO_CODES.DEFAULT;
+        filteredPromoCodes[tgid] = PROMO_CODES.DEFAULT;
       }
     });
     return filteredPromoCodes;
@@ -375,7 +379,7 @@ const PopulateProducts = (props) => {
   }, []);
 
   useEffect(() => {
-    if (productInfo?.length && allPromoCodes && finalPromoCodes) {
+    if (Object.keys(productInfo)?.length && allPromoCodes && finalPromoCodes) {
       const finalPromos = filterPromoCodes();
       setFinalPromoCodes(finalPromos);
     }
@@ -421,12 +425,12 @@ const PopulateProducts = (props) => {
               tag_booster,
             } = tour || {};
 
-            const collectionId = productInfo?.reduce((acc, product) => {
-              if (product?.tgid === tgid) {
-                acc = product?.collectionId;
-              }
-              return acc;
-            }, null);
+            const {
+              collectionId,
+              primaryCategory,
+              primaryCollection,
+              primarySubCategory,
+            } = productInfo[tgid] ?? {};
 
             const childProps = {
               tgid,
@@ -472,6 +476,9 @@ const PopulateProducts = (props) => {
               appliedPromo,
               collectionId,
               experienceCardVisible: experienceViewed,
+              primaryCategory,
+              primaryCollection,
+              primarySubCategory,
             };
 
             return (

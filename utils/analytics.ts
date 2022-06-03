@@ -48,3 +48,29 @@ export const getCommonEventMetaData = (pageMetaData) => {
     [ANALYTICS_PROPERTIES.PAGE_TITLE]: pageMetaData.pageTitle,
   };
 };
+
+export const sendVariablesToDataLayer = (variablesMap) => {
+  Object.keys(variablesMap)
+    .filter((k) => variablesMap[k])
+    .forEach((key) => {
+      sendVariableToDataLayer({
+        name: key,
+        value: variablesMap[key],
+      });
+    });
+};
+
+export const getProductCommonProperties = ({
+  primaryCategory,
+  primaryCollection,
+  primarySubCategory,
+}) => {
+  return {
+    [ANALYTICS_PROPERTIES.CATEGORY_ID]: primaryCategory?.id,
+    [ANALYTICS_PROPERTIES.CATEGORY_NAME]: primaryCategory?.displayName,
+    [ANALYTICS_PROPERTIES.SUB_CAT_ID]: primarySubCategory?.id,
+    [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: primarySubCategory?.displayName,
+    [ANALYTICS_PROPERTIES.COLLECTION_ID]: primaryCollection?.id,
+    [ANALYTICS_PROPERTIES.COLLECTION_NAME]: primaryCollection?.displayName,
+  };
+};

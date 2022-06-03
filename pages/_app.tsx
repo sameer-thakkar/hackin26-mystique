@@ -9,8 +9,13 @@ import { MutableSnapshot, RecoilRoot } from 'recoil';
 import { currencyAtom } from 'store/atoms/currency';
 import '@formatjs/intl-relativetimeformat/polyfill';
 import { metaAtom } from 'store/atoms/meta';
-import { CONTENT_PAGE_TYPES, CUSTOM_TYPES, PAGE_TYPES } from 'const/index';
+import {
+  PAGETYPE_BY_CUSTOMTYPE,
+  CUSTOM_TYPES,
+  ANALYTICS_PROPERTIES,
+} from 'const/index';
 import renderShortCodes from 'utils/shortCodes';
+import { sendVariablesToDataLayer } from 'utils/analytics';
 
 const App = ({ Component, pageProps, localizedStrings, lang }) => {
   strings.setContent({
@@ -38,9 +43,9 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
         ? CMSContent?.data?.data?.heading
         : CMSContent?.data?.featured_title;
     pageTitle = pageTitle ?? metaTitle;
-    const pageType = !CONTENT_PAGE_TYPES.includes(customType)
-      ? PAGE_TYPES.COLLECTION
-      : PAGE_TYPES.CONTENT_PAGE;
+    pageTitle = renderShortCodes(pageTitle)?.join?.('');
+
+    const pageType = PAGETYPE_BY_CUSTOMTYPE[customType];
     const mbName = renderShortCodes(baseLangPageTitle)?.join?.('');
     let scorpioData = categoryTourListData?.isCategoryV2
       ? Object.values(categoryTourListData).reduce(
@@ -65,6 +70,16 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
       primaryCollectionName = name;
       primaryCollectionId = id;
     }
+    sendVariablesToDataLayer({
+      [ANALYTICS_PROPERTIES.COLLECTION_ID]: primaryCollectionId,
+      [ANALYTICS_PROPERTIES.CITY]: primaryCity?.displayName,
+      [ANALYTICS_PROPERTIES.COUNTRY]: primaryCity?.country?.displayName,
+      [ANALYTICS_PROPERTIES.COLLECTION_NAME]: primaryCollectionName,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: lang,
+      [ANALYTICS_PROPERTIES.MB_NAME]: mbName,
+      [ANALYTICS_PROPERTIES.PAGE_TITLE]: pageTitle,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageType,
+    });
 
     set(metaAtom, {
       city: primaryCity,

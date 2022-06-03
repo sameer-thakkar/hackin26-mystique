@@ -1,5 +1,9 @@
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import React from 'react';
+import { useRecoilValue } from 'recoil';
+import { metaAtom } from 'store/atoms/meta';
 import styled from 'styled-components';
+import { trackEvent } from 'utils/analytics';
 
 import { withAmp } from '../common/withAmp';
 
@@ -58,11 +62,20 @@ const IFrame: React.FC<IFrameProps> = ({
   ...otherProps
 }) => {
   const allowFullScreen = allowfullscreen === 'false' ? false : true;
+  const pageMetaData = useRecoilValue(metaAtom);
   if (!src) {
     return null;
   }
   const videoId = getVideoIdFromUrl(src);
   const isYoutube = src.startsWith('https://www.youtube.com');
+  const trackVideoPlayed = (e) => {
+    e.currentTarget.dataset.playing = !e.currentTarget.dataset?.playing;
+    if (e.currentTarget.dataset.playing)
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MB_VIDEO_PLAYED,
+        [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
+      });
+  };
   const ampIframe = isYoutube ? (
     <IFrameContainer {...{ paddingBottom: otherProps.height, isAmp }}>
       <amp-youtube
@@ -89,7 +102,10 @@ const IFrame: React.FC<IFrameProps> = ({
       {isAmp ? (
         ampIframe
       ) : (
-        <IFrameContainer {...{ paddingBottom: otherProps.height, isAmp }}>
+        <IFrameContainer
+          {...{ paddingBottom: otherProps.height, isAmp }}
+          onClick={isYoutube ? trackVideoPlayed : null}
+        >
           <StyledIFrame
             {...(name && { name })}
             src={src}

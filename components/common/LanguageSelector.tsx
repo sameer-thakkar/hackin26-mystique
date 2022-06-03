@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { strings } from 'const/strings';
 import Chevron from 'UI/Chevron';
 import Conditional from 'components/common/Conditional';
 import { GLOBE } from 'assets/SvgIcons';
-import { FULL_LANGUAGE_MAP, THEMES } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  FULL_LANGUAGE_MAP,
+  THEMES,
+} from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
+import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import { metaAtom } from 'store/atoms/meta';
+import { useCaptureClickOutside } from 'hooks/ClickOutside';
 
 const StyledLanguageContainer = styled.div`
   margin-left: 32px;
@@ -36,6 +45,32 @@ const StyledLanguageContainer = styled.div`
   }
   &:hover .language-dropdown {
     display: block;
+  }
+  &.v2-selector {
+    margin-left: 0;
+    .language-dropdown {
+      border-radius: 4px;
+      z-index: 10;
+      border: 1px solid #dadada;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .language-selector-container {
+      position: relative;
+      margin-left: 30px;
+    }
+
+    .lang {
+      padding-right: 20px;
+      transform: translateY(-2px);
+    }
+
+    .language-selector-container {
+      margin: 0;
+    }
+    .language-selector {
+      line-height: 1;
+    }
   }
   .language {
     display: flex;
@@ -162,14 +197,43 @@ const LanguageSelector = (props) => {
     languages: availableLanguages,
     mbTheme,
     isAmp,
+    isV2 = false,
   } = props;
+  const selectorRef = useRef(null);
+  const parentRef = useRef(null);
+  const exceptionElementRefs = [parentRef];
+  const pageMetaData = useRecoilValue(metaAtom);
+  const trackDropdownShown = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.DROPDOWN_SHOWN,
+      [ANALYTICS_PROPERTIES.HEADER]:
+        FULL_LANGUAGE_MAP[currentLanguage].language,
+      ...getCommonEventMetaData(pageMetaData),
+    });
+  };
   const handleClick = () => {
     setShowDropdown((prevState) => !prevState);
+    if (!showDropdown) trackDropdownShown();
+  };
+
+  useCaptureClickOutside(
+    selectorRef,
+    () => {
+      if (showDropdown) handleClick();
+    },
+    exceptionElementRefs
+  );
+
+  const trackLanguageChange = (newLanguage) => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MB_LANGUGAGE_CHANGED,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: newLanguage,
+    });
   };
 
   if (isMobile) {
     return (
-      <StyledMobileSelect isAmp={isAmp}>
+      <StyledMobileSelect useRef={parentRef} isAmp={isAmp} isV2={isV2}>
         <span
           onClick={handleClick}
           role="button"
@@ -187,7 +251,11 @@ const LanguageSelector = (props) => {
             {availableLanguages.map((doc, index) => {
               const { url, lang } = doc || {};
               return (
-                <a key={index} href={url}>
+                <a
+                  key={index}
+                  href={url}
+                  onClick={() => trackLanguageChange(lang)}
+                >
                   <div className="language">
                     <span className="lang-option">
                       {FULL_LANGUAGE_MAP[lang].language}
@@ -221,7 +289,12 @@ const LanguageSelector = (props) => {
     );
   }
   return (
-    <StyledLanguageContainer onClick={handleClick}>
+    <StyledLanguageContainer
+      className={`${isV2 ? 'v2-selector' : ''}`}
+      onClick={handleClick}
+      onMouseEnter={trackDropdownShown}
+      useRef={parentRef}
+    >
       <StyledLanguage>
         {mbTheme !== THEMES.MIN_BLUE ? GLOBE : null}
         {FULL_LANGUAGE_MAP[currentLanguage].language}
@@ -233,6 +306,7 @@ const LanguageSelector = (props) => {
         className={`language-dropdown ${
           showDropdown ? 'language-dropdown-active' : ''
         }`}
+        ref={selectorRef}
       >
         {availableLanguages.map((doc, index) => {
           return (
@@ -240,6 +314,7 @@ const LanguageSelector = (props) => {
               key={index}
               className={currentLanguage == doc.lang ? 'selected-tab' : ''}
               href={doc.url}
+              onClick={() => trackLanguageChange(doc.lang)}
             >
               <div className="language">
                 <span className="lang">

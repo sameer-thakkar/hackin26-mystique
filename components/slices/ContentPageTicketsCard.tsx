@@ -38,6 +38,7 @@ import PromoCodeBlock from 'UI/PromoCodeBlock';
 import { descriptorIcons } from 'const/descriptorIcons';
 import { getDuration } from 'utils/timeUtils';
 import ComboVariants from 'UI/ComboVariants';
+import { metaAtom } from 'store/atoms/meta';
 
 dayjs.extend(advancedFormat);
 
@@ -629,6 +630,7 @@ const TicketCard = (props) => {
 
   const { mbTheme, biLink, bookSubdomain } = useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
+  const pageMetaData = useRecoilValue(metaAtom);
   const isCombo = scorpioData?.combo;
   const isTicketCard = true;
   const [isContentOpen, toggleContentOpen] = useState(defaultOpen);
@@ -664,6 +666,18 @@ const TicketCard = (props) => {
       [ANALYTICS_PROPERTIES.TGID]: tgid,
       [ANALYTICS_PROPERTIES.POSITION]: position,
       'Div Type': 'product-list',
+    });
+
+    const { originalPrice, finalPrice, currencyCode } = listingPrice ?? {};
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
+      [ANALYTICS_PROPERTIES.DISCOUNT]: originalPrice > finalPrice,
+      [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
+      [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city,
     });
   };
 

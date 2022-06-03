@@ -1,16 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
 import Chevron from 'components/UI/Chevron';
 import LocalisedPrice from 'components/UI/LPrice';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { strings } from 'const/strings';
-import { ANALYTICS_EVENTS } from 'const/index';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { addQueryParams } from 'utils/urlUtils';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
 import 'react-loading-skeleton/dist/skeleton.css';
 import { trackEvent } from 'utils/analytics';
+import { metaAtom } from 'store/atoms/meta';
+import { useRecoilValue } from 'recoil';
 
 const VariantCardWrapper = styled.div`
   width: 100%;
@@ -216,15 +218,25 @@ const VariantCard = ({
   });
   const { finalPrice: variantPrice, bestDiscount } = variantListingPrice || {};
   const [isContentOpen, toggleContentOpen] = useState(false);
+  const pageMetaData = useRecoilValue(metaAtom);
   const trackVariantSelection = () => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.COMBO_VARIANT.VARIANT_CLICKED,
-      'MB name': hostname,
-      'Variant ID': variantId,
-      TGID: tgid,
-      Device: isMobile ? 'Mweb' : 'Desktop',
+      [ANALYTICS_PROPERTIES.MB_NAME]: hostname,
+      [ANALYTICS_PROPERTIES.VID]: variantId,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
     });
   };
+
+  useEffect(() => {
+    if (isContentOpen) {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.COMBO_VARIANT.MORE_DETAILS,
+        [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
+      });
+    }
+  }, [isContentOpen]);
 
   const getMoreDetailsButton = () => {
     const keyPressedOnReadMore = (event) => {

@@ -326,13 +326,14 @@ const ShowPage = ({
   }, []);
 
   useEffect(() => {
-    if (eventsReady)
+    if (eventsReady) {
       trackEvent({
         eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
         [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
         [ANALYTICS_PROPERTIES.TGIDS]: [tgid],
         ...getCommonEventMetaData(pageMetaData),
       });
+    }
   }, [eventsReady]);
 
   // isMobile effect

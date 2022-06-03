@@ -8,7 +8,12 @@ import { COLORS, SOLEIL } from 'const/ui-constants';
 import Image from 'UI/Image';
 import Button from 'UI/Button';
 import { CHEVRON_LEFT } from 'assets/SvgIcons';
-import { ANALYTICS_EVENTS, FALLBACK_IMAGE, FALLBACK_IMAGES } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  FALLBACK_IMAGE,
+  FALLBACK_IMAGES,
+} from 'const/index';
 import Conditional from 'components/common/Conditional';
 import { trackEvent } from 'utils/analytics';
 
@@ -268,6 +273,7 @@ const Card: React.FC<CardProps> = ({
   const trackClickEvent = () => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.CONTENT_CARD_CLICKED,
+      [ANALYTICS_PROPERTIES.HEADING]: title,
     });
   };
 

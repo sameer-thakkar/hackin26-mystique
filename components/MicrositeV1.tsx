@@ -32,9 +32,8 @@ import { fetchTourList } from 'utils/apiUtils';
 import { tourListApiParser } from 'utils/dataParsers';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import renderShortCodes from 'utils/shortCodes';
+import Banner from 'components/Banner';
 import { gtmAtom } from 'store/atoms/gtm';
-
-import Banner from './Banner';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
@@ -401,6 +400,7 @@ const MicrositeV1 = (props) => {
   }, []);
 
   useEffect(() => {
+    if (!eventsReady) return;
     const renderedBaseLangPageTitle = renderShortCodes(
       baseLangPageTitle
     )?.join?.('');

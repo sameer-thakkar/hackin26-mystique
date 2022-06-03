@@ -38,7 +38,11 @@ import {
   extractTabsFromHighlights,
   getProductCardLayout,
 } from 'utils/productUtils';
-import { trackEvent } from 'utils/analytics';
+import {
+  getCommonEventMetaData,
+  getProductCommonProperties,
+  trackEvent,
+} from 'utils/analytics';
 import { getHostName, truncate, wordCount } from 'utils/helper';
 import PromoCodeBlock from 'UI/PromoCodeBlock';
 import { createBookingURL } from 'utils';
@@ -49,6 +53,7 @@ import useSWR from 'swr';
 import { addQueryParams } from 'utils/urlUtils';
 import dynamic from 'next/dynamic';
 import { useWindowWidth } from '@react-hook/window-size';
+import { metaAtom } from 'store/atoms/meta';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -976,6 +981,9 @@ const Product = (props) => {
     pageType = '',
     finalPromoCode,
     appliedPromo,
+    primaryCategory,
+    primaryCollection,
+    primarySubCategory,
   } = props;
 
   const {
@@ -998,6 +1006,7 @@ const Product = (props) => {
   const [showComboVariant, setShowComboVariant] = useState(false);
   const { combo: isCombo, minDuration, maxDuration } = scorpioData || {};
   const router = useRouter();
+  const pageMetaData = useRecoilValue(metaAtom);
 
   const descriptorsList = descriptors || scorpioData.descriptors;
   const cardTitle = title || scorpioData.title;
@@ -1029,6 +1038,30 @@ const Product = (props) => {
       [ANALYTICS_PROPERTIES.POSITION]: position,
       [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
       'Div Type': 'product-list',
+      ...getProductCommonProperties({
+        primaryCategory,
+        primaryCollection,
+        primarySubCategory,
+      }),
+    });
+    const { listingPrice } = tourPrices[tgid] ?? {};
+    const { finalPrice, originalPrice, currencyCode } = listingPrice ?? {};
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
+      [ANALYTICS_PROPERTIES.DISCOUNT]:
+        isScratchPriceEnabled && originalPrice > finalPrice,
+      [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
+      [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: lang,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city,
+      ...getProductCommonProperties({
+        primaryCategory,
+        primaryCollection,
+        primarySubCategory,
+      }),
     });
   };
 
@@ -1039,9 +1072,14 @@ const Product = (props) => {
     }
     trackEvent({
       eventName: ANALYTICS_EVENTS.COMBO_VARIANT.POPUP_CLOSED,
-      'MB name': hostname,
-      TGID: tgid,
-      Device: isMobile ? 'Mweb' : 'Desktop',
+      [ANALYTICS_PROPERTIES.MB_NAME]: hostname,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageType,
+      ...getProductCommonProperties({
+        primaryCategory,
+        primaryCollection,
+        primarySubCategory,
+      }),
     });
   };
 
@@ -1056,6 +1094,11 @@ const Product = (props) => {
           'Variant ID': variantId,
           TGID: tgid,
           Device: isMobile ? 'Mweb' : 'Desktop',
+          ...getProductCommonProperties({
+            primaryCategory,
+            primaryCollection,
+            primarySubCategory,
+          }),
         });
         router.push(
           addQueryParams(productBookingUrl, {
@@ -1162,6 +1205,13 @@ const Product = (props) => {
         [ANALYTICS_PROPERTIES.POSITION]: index + 1,
         [ANALYTICS_PROPERTIES.IS_TRUNCATED]: isTruncated,
         [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
+        [ANALYTICS_PROPERTIES.SECTION]: 'Product List',
+        ...getCommonEventMetaData(pageMetaData),
+        ...getProductCommonProperties({
+          primaryCategory,
+          primaryCollection,
+          primarySubCategory,
+        }),
       });
   };
 
@@ -1221,6 +1271,11 @@ const Product = (props) => {
       [ANALYTICS_PROPERTIES.POSITION]: indexPosition + 1,
       [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
       [ANALYTICS_PROPERTIES.SECTION]: 'Product List',
+      ...getProductCommonProperties({
+        primaryCategory,
+        primaryCollection,
+        primarySubCategory,
+      }),
     });
   };
 

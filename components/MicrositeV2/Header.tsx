@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
 import dynamic from 'next/dynamic';
 import InteractionContext from 'contexts/Interaction';
-import LanguageSelector from 'components/MicrositeV2/LanguageSelector';
+import LanguageSelector from 'components/common/LanguageSelector';
 import Image from 'components/UI/Image';
 import MultiLevelNav from 'components/MultiLevelNav';
 import { groupSlices } from 'utils/helper';
@@ -480,6 +480,7 @@ const Header: FunctionComponent<HeaderProps> = ({
                 hasLanguageDropdown={hasLanguageSelector}
                 host={host}
                 isMobile={isMobileDevice}
+                isV2
               />
             </Conditional>
             <Conditional if={isMobileDevice && hamburgerIconCheck}>

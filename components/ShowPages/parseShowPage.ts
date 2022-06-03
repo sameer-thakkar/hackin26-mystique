@@ -128,25 +128,17 @@ export const parseShowPageData = (data) => {
         data[idx + 1].type != 'heading6'
       ) {
         if (tabSchema.length) {
-          tabSchema.push(
-            JSON.parse(`
-                    {
-                        "tab_name": "${element.content.text}",
-                        "default_tab": "No",
-                        "tab_content": []
-                      }
-                    `)
-          );
+          tabSchema.push({
+            tab_name: element.content.text,
+            default_tab: 'No',
+            tab_content: [],
+          });
         } else {
-          tabSchema.push(
-            JSON.parse(`
-                    {
-                        "tab_name": "${element.content.text}",
-                        "default_tab": "Yes",
-                        "tab_content": []
-                      }
-                    `)
-          );
+          tabSchema.push({
+            tab_name: element.content.text,
+            default_tab: 'Yes',
+            tab_content: [],
+          });
         }
         tabHeading.push(element.content.text);
         currentObject = 'TAB';
@@ -186,25 +178,19 @@ export const parseShowPageData = (data) => {
         tabSchema[tabSchema.length - 1].tab_content.push(element.content);
       } else if (currentObject == 'LISTICLE') {
         // listicle content
-
-        listicleSchema.push(
-          JSON.parse(`{
-          "heading": "${listicleHeading}",
-          "text": ${JSON.stringify(element)}
-        }`)
-        );
+        listicleSchema.push({
+          heading: listicleHeading,
+          text: JSON.stringify(element),
+        });
       } else {
         // faq content
         if (element.content.text.startsWith('Q-')) {
           // Question
 
-          faqSchema.push(
-            JSON.parse(`
-                {
-                "heading": "${element.content.text.replace('Q-', '')}",
-                    "content": []
-                }`)
-          );
+          faqSchema.push({
+            heading: element.content.text.replace('Q-', ''),
+            content: [],
+          });
         } else {
           // Answer
           element.content.text = element.content.text.replace('A-', '');

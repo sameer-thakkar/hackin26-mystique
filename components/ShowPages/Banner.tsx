@@ -14,7 +14,11 @@ import { COLORS } from 'const/ui-constants';
 import { createBookingURL } from 'utils';
 import { dateToString } from 'utils/dateUtils';
 import { fetchInventory } from 'utils/apiUtils';
-import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import {
+  getCommonEventMetaData,
+  getProductCommonProperties,
+  trackEvent,
+} from 'utils/analytics';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -350,6 +354,7 @@ const ShowPageBanner = ({
     imageUploads,
     primaryCategory,
     primarySubCategory,
+    primaryCollection,
   } = tourGroupData;
   const pageMetaData = useRecoilValue(metaAtom);
 
@@ -382,7 +387,7 @@ const ShowPageBanner = ({
   const REOPENING_STRING = `${NEXT_AVAILABLE}`;
   const BannerTitle = `${name} - ${strings.TICKETS}`;
 
-  const BannerChange = () => {
+  const bannerChange = () => {
     setIsVideo(!isVideo);
     trackEvent({
       eventName: ANALYTICS_EVENTS.MB_BANNER.VISIBLE,
@@ -390,7 +395,13 @@ const ShowPageBanner = ({
       [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
       [ANALYTICS_PROPERTIES.TGID]: tgid,
       ...getCommonEventMetaData(pageMetaData),
+      ...getProductCommonProperties({
+        primaryCategory,
+        primaryCollection,
+        primarySubCategory,
+      }),
     });
+    trackVideoPlayed();
   };
 
   ANALYTICS_PROPERTIES;
@@ -401,6 +412,11 @@ const ShowPageBanner = ({
       [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
       [ANALYTICS_PROPERTIES.TGIDS]: [tgid],
       [ANALYTICS_PROPERTIES.MB_NAME]: BannerTitle,
+      ...getProductCommonProperties({
+        primaryCategory,
+        primaryCollection,
+        primarySubCategory,
+      }),
     });
   }, []);
   useEffect(() => {
@@ -431,12 +447,30 @@ const ShowPageBanner = ({
       ...getCommonEventMetaData(pageMetaData),
       [ANALYTICS_PROPERTIES.TGID]: tgid,
       [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: BannerTitle,
-      [ANALYTICS_PROPERTIES.CATEGORY_ID]: primaryCategory?.id,
-      [ANALYTICS_PROPERTIES.CATEGORY_NAME]: primaryCategory?.displayName,
-      [ANALYTICS_PROPERTIES.SUB_CAT_ID]: primarySubCategory?.id,
-      [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: primarySubCategory?.displayName,
       [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city?.cityCode,
       [ANALYTICS_PROPERTIES.COUNTRY]: pageMetaData?.country?.code,
+      ...getProductCommonProperties({
+        primaryCategory,
+        primaryCollection,
+        primarySubCategory,
+      }),
+    });
+
+    const { originalPrice, finalPrice, currencyCode } = listingPrice ?? {};
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
+      [ANALYTICS_PROPERTIES.DISCOUNT]: originalPrice > finalPrice,
+      [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
+      [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city,
+      ...getProductCommonProperties({
+        primaryCategory,
+        primaryCollection,
+        primarySubCategory,
+      }),
     });
   };
   const handleScroll = () => {
@@ -454,6 +488,13 @@ const ShowPageBanner = ({
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const trackVideoPlayed = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MB_VIDEO_PLAYED,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
+    });
+  };
 
   return (
     <>
@@ -476,7 +517,12 @@ const ShowPageBanner = ({
       <Banner>
         {isVideo && videoAvailable ? (
           <VideoWrapper>
-            <div className="video-container is-active">
+            <div
+              className="video-container is-active"
+              onClick={trackVideoPlayed}
+              role="button"
+              tabIndex={0}
+            >
               <div>
                 <iframe
                   title="YouTube video player"
@@ -516,7 +562,7 @@ const ShowPageBanner = ({
               <Conditional if={videoAvailable}>
                 <div
                   className="play-button"
-                  onClick={BannerChange}
+                  onClick={bannerChange}
                   role="button"
                   tabIndex={0}
                 >

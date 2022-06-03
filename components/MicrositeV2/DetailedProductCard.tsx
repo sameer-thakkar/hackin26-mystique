@@ -233,13 +233,13 @@ const DetailedDescriptionCard = styled.div`
         justify-content: end;
       `};
 
-    ${({ experimentEnabled, isEntertainmentMb }) =>
-      experimentEnabled &&
-      isEntertainmentMb &&
-      `
+    ${({ experimentEnabled, isEntertainmentMb, isBroadway }) =>
+      (experimentEnabled && isEntertainmentMb) || isBroadway
+        ? `
         grid-template-columns: 1fr 1fr;
         margin-left: 50%;
-      `}
+      `
+        : ''}
   }
 
   .cta {
@@ -479,6 +479,7 @@ const DetailedProductCard = (props) => {
       (item) => item.label === 'Duration'
     );
   }
+  const isBroadway = mbContext?.uid?.includes('broadway-show-tickets.com'); // TODO: Need to handle this via book_now_text.
   const isLTT = checkLTT(mbContext.uid);
   const experimentEnabled = isLTT;
   const bookingURL = createBookingURL({
@@ -531,6 +532,17 @@ const DetailedProductCard = (props) => {
       [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: primarySubCategory?.displayName,
       [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city?.cityCode,
       [ANALYTICS_PROPERTIES.COUNTRY]: pageMetaData?.country?.code,
+    });
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
+      [ANALYTICS_PROPERTIES.DISCOUNT]: originalPrice > finalPrice,
+      [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
+      [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: lang,
+      [ANALYTICS_PROPERTIES.TGID]: tgidClicked,
+      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city,
     });
   };
 
@@ -606,7 +618,7 @@ const DetailedProductCard = (props) => {
           }}
         >
           <span className="cta-text">
-            {isLTT ? strings.CHECK_AVAIL : strings.BOOK_NOW_CTA}
+            {isLTT || isBroadway ? strings.CHECK_AVAIL : strings.BOOK_NOW_CTA}
           </span>
         </div>
       </Conditional>
@@ -619,6 +631,7 @@ const DetailedProductCard = (props) => {
       isEntertainmentMb={isEntertainmentMb}
       isListicle={isListicle}
       experimentEnabled={experimentEnabled}
+      isBroadway={isBroadway}
     >
       <div className="indicator-triangle"></div>
       <Conditional if={isEntertainmentMb}>

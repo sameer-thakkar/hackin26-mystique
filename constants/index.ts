@@ -185,10 +185,7 @@ export const CUSTOM_TYPES = {
   PROMO_CODES: 'promo_codes',
 };
 
-export const CONTENT_PAGE_TYPES = [
-  CUSTOM_TYPES.CONTENT_PAGE,
-  CUSTOM_TYPES.SHOW_PAGE,
-];
+export const CONTENT_PAGE_TYPES = [CUSTOM_TYPES.CONTENT_PAGE];
 
 export const DESIGN = {
   V1: 'V1 - Horizontal Card Layout',
@@ -230,9 +227,10 @@ export const ANALYTICS_EVENTS = {
   EXPERIENCE_CARD_VISIBLE: 'Experience Card Visible',
   CONTENT_PAGE_PROMO_CLICKED: 'Content Page Apply Promo Clicked',
   COMBO_VARIANT: {
-    POPUP_VIEWED: 'Popup viewed',
-    VARIANT_CLICKED: 'Variant card clicked',
-    POPUP_CLOSED: 'Popup closed',
+    POPUP_VIEWED: 'MB Combo Variant Popup viewed',
+    VARIANT_CLICKED: 'MB Combo Variant Selected',
+    POPUP_CLOSED: 'MB Combo Variant Popup closed',
+    MORE_DETAILS: 'MB Combo Variant More Details',
   },
   MB_BANNER: {
     VISIBLE: 'MB Banner Visible',
@@ -245,6 +243,9 @@ export const ANALYTICS_EVENTS = {
   EXPERIENCE_CARD_EXPANDED: 'Experience Card Expanded',
   EXPERIENCE_CARD_MORE_DETAILS_CLICKED: 'Experience Card More Details Clicked',
   EXPERIENCE_CARD_BOOK_NOW_CLICKED: 'Experience Card Book Now Clicked',
+  CHECK_AVAILABILITY_CLICKED: 'Check Availability Clicked',
+  MB_VIDEO_PLAYED: 'MB Video Played',
+  MB_LANGUGAGE_CHANGED: 'MB Language Changed',
   LP_TO_BOOKING_PAGE: 'LP to booking page',
   LP_TO_SHOWPAGE: 'LP to showpage',
 };
@@ -632,7 +633,9 @@ export const NEW_ARRIVALS_CATEGORIES: number[] = [1351];
 export const ANALYTICS_PROPERTIES = {
   LANGUAGE: 'Language',
   TGIDS: 'Tour Group IDs',
-  TGID: 'Tour Group Id',
+  TGID: 'Tour Group ID',
+  VID: 'Variant ID',
+  VARIANT_ID: 'Variant ID',
   PAGE_TYPE: 'Page Type',
   COLLECTION_ID: 'Collection ID',
   HEADER: 'Header',
@@ -663,6 +666,9 @@ export const ANALYTICS_PROPERTIES = {
   VARIANT: 'Experiment Variant',
   EXPERIMENT_NAME: 'Experiment Name',
   EXPERIMENT_VARIANT: 'Experiment Variant',
+  DISCOUNT: 'Discount',
+  DISPLAY_PRICE: 'Display Price',
+  DISPLAY_CURRENCY: 'Display Currency',
 };
 export const PAGE_TYPES = {
   COLLECTION: 'Collection',
@@ -709,3 +715,15 @@ export const QUERY_PARAMS = {
 };
 
 export const FB_DOMAIN_VERIFICATION = 'vrvsgm9rczh57d7fnspfeve29fa6ae';
+
+export const PAGETYPE_BY_CUSTOMTYPE = {
+  [CUSTOM_TYPES.CONTENT_PAGE]: PAGE_TYPES.CONTENT_PAGE,
+  [CUSTOM_TYPES.SHOW_PAGE]: PAGE_TYPES.SHOW_PAGE,
+  [CUSTOM_TYPES.MICROSITE]: PAGE_TYPES.COLLECTION,
+  [CUSTOM_TYPES.GLOBAL_CITY]: PAGE_TYPES.COLLECTION,
+  [CUSTOM_TYPES.GLOBAL_COLLECTION]: PAGE_TYPES.COLLECTION,
+  [CUSTOM_TYPES.GLOBAL_COUNTRY]: PAGE_TYPES.COLLECTION,
+  [CUSTOM_TYPES.GLOBAL_EXPERIENCE]: PAGE_TYPES.COLLECTION,
+  [CUSTOM_TYPES.GLOBAL_HOMEPAGE]: PAGE_TYPES.COLLECTION,
+  [CUSTOM_TYPES.LISTICLE]: PAGE_TYPES.COLLECTION,
+};

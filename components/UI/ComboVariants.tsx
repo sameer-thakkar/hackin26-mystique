@@ -1,5 +1,4 @@
 import { useContext, useEffect } from 'react';
-import useSWR from 'swr';
 import styled from 'styled-components';
 import { MBContext } from 'contexts/MBContext';
 import Conditional from 'components/common/Conditional';
@@ -9,10 +8,11 @@ import VariantCard, { VariantCardSkeleton } from 'components/UI/VariantCard';
 import { BLACK_COLOR_CLOSE } from 'assets/SvgIcons';
 import { strings } from 'const/strings';
 import { COLORS, SOLEIL } from 'const/ui-constants';
-import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 import { getHostName } from 'utils/helper';
-import { ANALYTICS_EVENTS } from 'const/index';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { trackEvent } from 'utils/analytics';
+import { useRecoilValue } from 'recoil';
+import { metaAtom } from 'store/atoms/meta';
 
 const PopupWrapper = styled.div`
   z-index: 10;
@@ -149,8 +149,8 @@ type ComboVariantsProps = {
   bookingUrl: string;
   minDuration: number;
   maxDuration: number;
-  data:any;
-  error:any;
+  data: any;
+  error: any;
 };
 const ComboVariants = ({
   productTitle,
@@ -163,19 +163,20 @@ const ComboVariants = ({
   minDuration,
   maxDuration,
   data,
-  error
+  error,
 }: ComboVariantsProps) => {
   const { lang, host, isDev, isStage } = useContext(MBContext);
   const hostname = getHostName(isStage, isDev, host);
   const { variants, currency } = data || {};
-  
+  const pageMetaData = useRecoilValue(metaAtom);
+
   const { localSymbol: currencySymbol } = currency || {};
   useEffect(() => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.COMBO_VARIANT.POPUP_VIEWED,
-      'MB name': hostname,
-      TGID: tgid,
-      Device: isMobile ? 'Mweb' : 'Desktop',
+      [ANALYTICS_PROPERTIES.MB_NAME]: hostname,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
     });
   }, []);
 
@@ -206,7 +207,7 @@ const ComboVariants = ({
       </Conditional>
     );
   });
-  
+
   return (
     <PopupWrapper isMobile={isMobile}>
       <PopupContentWrapper>
@@ -234,7 +235,7 @@ const ComboVariants = ({
                 ? strings.COMBO_VARIANT.SELECT_OPTION
                 : null}
             </h3>
-            <Conditional if={!data ||(data && variants.length==1)}>
+            <Conditional if={!data || (data && variants.length == 1)}>
               <VariantCardSkeletonWrapper>
                 <VariantCardSkeleton isMobile={isMobile} />
                 <VariantCardSkeleton isMobile={isMobile} />
