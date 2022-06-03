@@ -25,7 +25,6 @@ import { strings } from 'const/strings';
 import { SOLEIL, COLORS } from 'const/ui-constants';
 import { isSafetyIncluded, createBookingURL } from 'utils';
 import { shortCodeSerializer } from 'utils/shortCodes';
-import { convertUidToUrl } from 'utils/urlUtils';
 import { dateToString } from 'utils/dateUtils';
 import { parseV2ProductDescriptors } from 'utils/dataParsers';
 import InteractionContext from 'contexts/Interaction';
@@ -511,7 +510,6 @@ export const MobileProductPage = (props) => {
     price,
     scratchPrice,
     currencySymbol,
-    showPageUid = null,
     reviewCount,
     category,
     averageRating,
@@ -556,9 +554,6 @@ export const MobileProductPage = (props) => {
   });
   const { allTags = [] } = tour;
   const hasSafetyFlag = isSafetyIncluded(allTags);
-  const showPageUrl = showPageUid
-    ? convertUidToUrl({ uid: showPageUid, isDev, hostname: host })
-    : null;
   const openingDate = dateToString(reopeningDate, lang, 'DD MMM, YYYY');
 
   const openSafeSidebar = () => {
@@ -613,16 +608,6 @@ export const MobileProductPage = (props) => {
 
   const CTAMarkup = (
     <CTABlock isEntertainmentMb={isEntertainmentMb}>
-      <Conditional if={isEntertainmentMb && showPageUrl}>
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href={showPageUrl}
-          className="cta secondary"
-        >
-          <div className="cta-text">{strings.MORE_DETAILS}</div>
-        </a>
-      </Conditional>
       <div
         role="button"
         tabIndex={0}
