@@ -127,19 +127,11 @@ export const parseShowPageData = (data) => {
         data[idx + 1].type != 'heading2' &&
         data[idx + 1].type != 'heading6'
       ) {
-        if (tabSchema.length) {
-          tabSchema.push({
-            tab_name: element.content.text,
-            default_tab: 'No',
-            tab_content: [],
-          });
-        } else {
-          tabSchema.push({
-            tab_name: element.content.text,
-            default_tab: 'Yes',
-            tab_content: [],
-          });
-        }
+        tabSchema.push({
+          tab_name: element.content.text,
+          default_tab: tabSchema.length ? 'No' : 'Yes',
+          tab_content: [],
+        });
         tabHeading.push(element.content.text);
         currentObject = 'TAB';
       } else {
