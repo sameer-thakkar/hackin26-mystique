@@ -233,8 +233,8 @@ const DetailedDescriptionCard = styled.div`
         justify-content: end;
       `};
 
-    ${({ experimentEnabled, isEntertainmentMb, isBroadway }) =>
-      (experimentEnabled && isEntertainmentMb) || isBroadway
+    ${({ experimentEnabled, isEntertainmentMb, isBroadway, showPageUrl }) =>
+      (experimentEnabled && isEntertainmentMb) || (isBroadway && !showPageUrl)
         ? `
         grid-template-columns: 1fr 1fr;
         margin-left: 50%;
@@ -631,6 +631,7 @@ const DetailedProductCard = (props) => {
       isListicle={isListicle}
       experimentEnabled={experimentEnabled}
       isBroadway={isBroadway}
+      showPageUrl={showPageUrl}
     >
       <div className="indicator-triangle"></div>
       <Conditional if={isEntertainmentMb}>
