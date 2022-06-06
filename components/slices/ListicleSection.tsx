@@ -14,8 +14,8 @@ const StyledListicleSection = styled.div`
 
 const ListicleGrid = styled.div`
   display: grid;
-  grid-template-columns: ${({ type }) =>
-    type === 'small' ? 'repeat(2, 1fr)' : '1fr'};
+  grid-template-columns: ${({ listicleType }) =>
+    listicleType === 'small' ? 'repeat(2, 1fr)' : '1fr'};
   grid-row-gap: 24px;
   grid-column-gap: 16px;
   @media (max-width: 768px) {
@@ -71,7 +71,7 @@ const ListicleSection: React.FC<ListicleSectionProps> = ({
   return (
     <StyledListicleSection>
       <Title>{title}</Title>
-      <ListicleGrid type={type}>
+      <ListicleGrid listicleType={type}>
         {slices.map((slice, index) => {
           return sliceHandler(slice, { type, index });
         })}

@@ -55,10 +55,10 @@ const Header = styled.div`
   grid-template-columns: auto auto;
   padding-top: 20px;
   padding-bottom: 24px;
-  position: ${({ type }) =>
-    type === SIDEBAR_TYPES.PRODUCT_CARD ? 'unset' : 'sticky'};
-  ${({ type }) =>
-    type === SIDEBAR_TYPES.PRODUCT_CARD
+  position: ${({ headerType }) =>
+    headerType === SIDEBAR_TYPES.PRODUCT_CARD ? 'unset' : 'sticky'};
+  ${({ headerType }) =>
+    headerType === SIDEBAR_TYPES.PRODUCT_CARD
       ? `
       width: calc(100% - 32px);
       padding: 0 16px;
@@ -80,8 +80,8 @@ const Header = styled.div`
   background: ${({ addBg, isGlobalMb }) =>
     addBg ? COLORS.WHITE : isGlobalMb ? COLORS.WHITE : 'transparent'};
   z-index: 12;
-  ${({ type }) =>
-    type === SIDEBAR_TYPES.COMBO_VARIANT
+  ${({ headerType }) =>
+    headerType === SIDEBAR_TYPES.COMBO_VARIANT
       ? `
       width: calc(100% - 32px);
       background: ${COLORS.WHITE};
@@ -218,7 +218,7 @@ const AsideModal = ({
             <Header
               onClick={type === SIDEBAR_TYPES.PRODUCT_CARD ? onClose : null}
               addBg={!!title}
-              type={type}
+              headerType={type}
               sidePadding={sidePadding}
               isGlobalMb={isGlobalMb}
             >

@@ -15,8 +15,8 @@ const StyledReviews = styled.div`
   width: 690px;
   margin: 0 auto 20px auto;
   position: relative;
-  ${({ type }) => {
-    if (type === 'testimonial') {
+  ${({ reviewType }) => {
+    if (reviewType === 'testimonial') {
       return `
         .custom-pagination {
           bottom: 40px;
@@ -38,8 +38,8 @@ const StyledReviews = styled.div`
   }
   @media (max-width: 768px) {
     width: 100%;
-    ${({ type }) => {
-      if (type === 'testimonial') {
+    ${({ reviewType }) => {
+      if (reviewType === 'testimonial') {
         return `
         .custom-pagination {
           top: 95%;
@@ -206,7 +206,7 @@ const Reviews: React.FC<{
     });
 
   return (
-    <StyledReviews type={type}>
+    <StyledReviews reviewType={type}>
       <Title>{title}</Title>
       <Quotes>{QUOTES}</Quotes>
       <Slider

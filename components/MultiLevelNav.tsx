@@ -552,10 +552,10 @@ const MultiLevelNav = ({
   let withOldMenu = firstSlice?.slices || [];
 
   if (withOldMenu.length == 1 && secondSlice && isGlobalMb) {
-    withOldMenu.push(secondSlice);
+    withOldMenu = [...withOldMenu, secondSlice];
   }
   if (!isGlobalMb) {
-    withOldMenu.push(...(oldMenuItems || []));
+    withOldMenu = [...withOldMenu, ...(oldMenuItems ?? [])];
   }
 
   const isAmp = useAmp();
