@@ -136,13 +136,14 @@ const Banner = (props: TBannerCarouselProps) => {
     }
   }, []);
 
-  const bannerHeading = withShortcodes(tempBannerHeading);
+  const bannerHeadingArray = withShortcodes(tempBannerHeading);
+  const bannerHeading = bannerHeadingArray?.join(' ');
 
   const analyticsParams = {
     [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.COLLECTION,
     [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
     [ANALYTICS_PROPERTIES.TGIDS]: orderedTgids,
-    [ANALYTICS_PROPERTIES.MB_NAME]: bannerHeading?.join(' '),
+    [ANALYTICS_PROPERTIES.MB_NAME]: bannerHeading,
   };
 
   const isSwiperSet = swiper !== null && !swiper?.destroyed;
@@ -196,7 +197,7 @@ const Banner = (props: TBannerCarouselProps) => {
          `}
       >
         <div className="caption">
-          <h1>{bannerHeading}</h1>
+          <h1 dangerouslySetInnerHTML={{ __html: bannerHeading }}></h1>
         </div>
 
         {hideCTA ? null : (
@@ -230,7 +231,11 @@ const Banner = (props: TBannerCarouselProps) => {
       <div className={`mb-captions`}>
         <div className={`mb-caption active`}>
           <div className="caption">
-            {isFirst ? <h1>{bannerHeading}</h1> : <p>{bannerHeading}</p>}
+            {isFirst ? (
+              <h1 dangerouslySetInnerHTML={{ __html: bannerHeading }}></h1>
+            ) : (
+              <p dangerouslySetInnerHTML={{ __html: bannerHeading }}></p>
+            )}
           </div>
 
           <Conditional if={!hideCTA}>
@@ -365,7 +370,7 @@ const StyledBanner = styled.div`
     color: #fff;
     line-height: 122%;
     letter-spacing: -0.5px;
-    max-width: 27vw;
+    max-width: 30vw;
     font-weight: 600;
   }
 
