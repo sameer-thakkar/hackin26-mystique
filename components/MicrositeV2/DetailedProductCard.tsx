@@ -453,7 +453,6 @@ const DetailedProductCard = (props) => {
   const showPageUrl = showPageUid
     ? convertUidToUrl({ uid: showPageUid, isDev, hostname: host })
     : null;
-
   const rightBlocksCount = contentBlocks?.right?.length;
   const descriptors = parseV2ProductDescriptors({
     hasCategoryTourList,

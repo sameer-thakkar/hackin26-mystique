@@ -28,6 +28,10 @@ import { shortCodeSerializer } from 'utils/shortCodes';
 import { dateToString } from 'utils/dateUtils';
 import { parseV2ProductDescriptors } from 'utils/dataParsers';
 import InteractionContext from 'contexts/Interaction';
+import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import { ANALYTICS_PROPERTIES, ANALYTICS_EVENTS } from 'const/index';
+import { useRecoilValue } from 'recoil';
+import { metaAtom } from 'store/atoms/meta';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
@@ -516,6 +520,7 @@ export const MobileProductPage = (props) => {
     reopeningDate,
     listingPrice,
   } = tour || {};
+  const pageMetaData = useRecoilValue(metaAtom);
   let allContent = [...contentBlocks.left, ...contentBlocks.right];
   if (!hasCategoryTourList) {
     allContent = allContent.sort((a, b) => {
@@ -605,6 +610,31 @@ export const MobileProductPage = (props) => {
   }
 
   const isNew = NEW_ARRIVALS_CATEGORIES.includes(activeCategoryId);
+  const onCheckAvailabilityClick = () => {
+    window.open(
+      createBookingURL({
+        nakedDomain: bookingUrl,
+        lang: currentLanguage,
+        tgid,
+        biLink,
+      }),
+      '_blank',
+      'noopener, noreferrer'
+    );
+    const { primaryCategory, primarySubCategory } = tour || {};
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_BOOK_NOW_CLICKED,
+      ...getCommonEventMetaData(pageMetaData),
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: title,
+      [ANALYTICS_PROPERTIES.CATEGORY_ID]: primaryCategory?.id,
+      [ANALYTICS_PROPERTIES.CATEGORY_NAME]: primaryCategory?.displayName,
+      [ANALYTICS_PROPERTIES.SUB_CAT_ID]: primarySubCategory?.id,
+      [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: primarySubCategory?.displayName,
+      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city?.cityCode,
+      [ANALYTICS_PROPERTIES.COUNTRY]: pageMetaData?.country?.code,
+    });
+  };
 
   const CTAMarkup = (
     <CTABlock isEntertainmentMb={isEntertainmentMb}>
@@ -612,18 +642,7 @@ export const MobileProductPage = (props) => {
         role="button"
         tabIndex={0}
         className="cta primary"
-        onClick={() =>
-          window.open(
-            createBookingURL({
-              nakedDomain: bookingUrl,
-              lang: currentLanguage,
-              tgid,
-              biLink,
-            }),
-            '_blank',
-            'noopener, noreferrer'
-          )
-        }
+        onClick={onCheckAvailabilityClick}
       >
         <div className="cta-text">{strings.CHECK_AVAIL}</div>
       </div>

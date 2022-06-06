@@ -15,7 +15,7 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import { SOLEIL, COLORS } from 'const/ui-constants';
-import { truncate } from 'utils/helper';
+import { truncate, checkLTT } from 'utils/helper';
 import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import { dateToString } from 'utils/dateUtils';
 import InteractionContext from 'contexts/Interaction';
@@ -363,6 +363,7 @@ const Product = (props) => {
   const { currencySymbolMap, lang, nakedDomain } = useContext(MBContext);
   const [initialized, setInitialized] = useState(true);
   const hsid = useRecoilValue(hsidAtom);
+  const isLTT = checkLTT(uid);
 
   let url;
   useEffect(() => {
@@ -370,7 +371,7 @@ const Product = (props) => {
   }, []);
 
   useEffect(() => {
-    if (hsid && isEntertainmentMb) {
+    if (hsid && isLTT) {
       const variant = getABTestingVariant(
         EXPERIMENT_NAMES.LTD_LP_Experiment,
         hsid,
@@ -381,7 +382,7 @@ const Product = (props) => {
         setInitialized(false);
       }
     }
-  }, [hsid, setInitialized]);
+  }, [hsid, setInitialized, isLTT]);
 
   const { sliceData } = useContext(InteractionContext) || {};
   const { collectionId, primaryCatId, primarySubCatId } = sliceData || {};
