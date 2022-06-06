@@ -584,7 +584,7 @@ const DetailedProductCard = (props) => {
 
   const CTABlock = () => (
     <div className="desc-cta-wrapper">
-      <Conditional if={isEntertainmentMb && showPageUrl}>
+      <Conditional if={(isEntertainmentMb && showPageUrl) || experimentEnabled}>
         <a
           className={`cta ${experimentEnabled ? 'primary' : 'secondary'}`}
           target="_blank"
