@@ -1,3 +1,5 @@
+import { expandFontToken } from 'constants/typography';
+
 import React, {
   useRef,
   useState,
@@ -5,6 +7,8 @@ import React, {
   useEffect,
   useCallback,
 } from 'react';
+import COLORS from 'const/colors';
+import { HALYARD } from 'const/ui-constants';
 import { useRouter } from 'next/router';
 import { RichText } from 'prismic-reactjs';
 import { useRecoilValue } from 'recoil';
@@ -32,7 +36,6 @@ import {
   ANALYTICS_PROPERTIES,
   CUSTOM_TYPES,
 } from 'const/index';
-import { COLORS, SOLEIL } from 'const/ui-constants';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import {
   extractTabsFromHighlights,
@@ -109,17 +112,15 @@ const cardImageStyles = css`
 
 const moreDetailsButtonStyles = (isAmp: boolean) => css`
   padding: 0.75rem;
-  background-color: ${COLORS.GREY.G7};
+  background-color: ${COLORS.GRAY.G7};
   margin-top: ${isAmp ? '0.4rem' : '0'};
   grid-area: cta-block;
   grid-column: 1 / 2;
   width: 32vw;
   border-radius: 4px;
-  font-weight: 600;
-  color: ${COLORS.GREY.G2};
+  color: ${COLORS.GRAY.G2};
   position: absolute;
-  font-size: 0.875rem;
-  letter-spacing: 0.6px;
+  ${expandFontToken('Button/Medium')}
   display: flex;
   justify-content: center;
   line-height: 125%;
@@ -144,7 +145,6 @@ const ctaBlockMobileStyles = (isSticky: boolean) => css`
 `;
 
 const StyledProductCard = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
   padding: ${({ isTicketCard, theme }) =>
     isTicketCard ? `24px 0px 24px 40px` : theme.productCards.padding.desktop};
   ${({ isTicketCard, theme, isMobile }) =>
@@ -169,21 +169,28 @@ const StyledProductCard = styled.div`
   }
 
   .more-details {
-    font-weight: ${SOLEIL.MEDIUM};
-    font-size: 14px;
-    line-height: 15px;
+    ${expandFontToken('Button/Medium')}
+	color: ${COLORS.BRAND.CANDY};
     margin-left: 1em;
     margin-top: 16px;
     cursor: pointer;
     outline: none;
-    ${({ theme }) => theme.productCards.moreDetailsStyle}
+	display: grid;
+	grid-auto-flow: column;
+	justify-content: start;
+	grid-gap: 8px;
+
+	.chevron::before, .chevron::after {
+		top: 0.6em;
+		background-color: ${COLORS.BRAND.CANDY};
+	}
+	@media(max-width: 768px) {
+		justify-content: left;
+	}
   }
   ${({ theme }) => theme.productCards?.styles?.desktop}
 
-  ${({ isTicketCard }) =>
-    isTicketCard
-      ? null
-      : cardImageStyles}
+  ${({ isTicketCard }) => (isTicketCard ? null : cardImageStyles)}
 
   grid-template-rows: min-content min-content min-content;
   grid-template-columns: auto 1fr auto;
@@ -223,17 +230,11 @@ const ProductHeader = styled.div`
 `;
 
 const TourTitle = styled.h2`
-  font-weight: ${SOLEIL.MEDIUM};
+  ${expandFontToken('Heading/Large')}
   margin: 0;
   max-width: 768px;
-  ${({ theme }) => theme.productCards.titleFontSettings.desktop};
-  ${({ pageType }) =>
-    pageType === CUSTOM_TYPES.GLOBAL_EXPERIENCE ? 'font-weight: 600;' : ''}
   @media (max-width: 768px) {
-    ${({ isPopup, theme }) =>
-      isPopup
-        ? theme.productCards.titleFontSettings.popupMobile
-        : theme.productCards.titleFontSettings.mobile};
+    ${expandFontToken('Heading/Small')};
   }
 `;
 
@@ -242,7 +243,7 @@ const TitleWrapper = styled.div`
   ${({ hasBorderedTitle }) =>
     hasBorderedTitle
       ? `
-            border-bottom: 1px solid ${COLORS.GREY.G6};
+            border-bottom: 1px solid ${COLORS.GRAY.G6};
             padding-bottom: 16px;
             margin-bottom: -8px;
             @media(max-width: 768px) {
@@ -256,11 +257,10 @@ const BoosterTag = styled.div`
   font-size: 11px;
   font-weight: 600;
   line-height: 13px;
-  color: ${COLORS.HEADOUT_CANDY};
+  color: ${COLORS.BRAND.CANDY};
   text-transform: uppercase;
   letter-spacing: 0.4px;
-
-  background: ${COLORS.WHITE};
+  background: ${COLORS.BRAND.WHITE};
   border-radius: 2px;
   margin-bottom: 7px;
   padding: 2px 4px;
@@ -278,28 +278,25 @@ const ShortSummary = styled.div`
   margin-top: -8px;
   grid-area: summary;
   p {
-    color: ${COLORS.GREY.G2};
-    font-size: 14px;
-    line-height: 20px;
+    color: ${COLORS.GRAY.G2};
+    ${expandFontToken('Paragraph/Regular')}
     margin: 0;
   }
   @media (max-width: 768px) {
     margin-top: 0;
-    font-size: 14px;
-    line-height: 23px;
+    ${expandFontToken('Paragraph/Regular')}
   }
 `;
 
 const TourTags = styled.div`
-  font-size: 14px;
-  font-weight: ${SOLEIL.REGULAR};
+  ${expandFontToken('UI/Label Regular')}
   display: grid;
-  grid-row-gap: 12px;
+  grid-row-gap: 16px;
   align-items: start;
   align-content: start;
   margin: 0;
   margin-top: 8px;
-  color: ${COLORS.GREY_G3};
+  color: ${COLORS.GRAY.G3};
   ${({ horizontal }) =>
     horizontal &&
     `
@@ -312,9 +309,7 @@ const TourTags = styled.div`
     grid-auto-flow: column;
     grid-column-gap: 8px;
     margin-right: 8px;
-    font-size: 14px;
     max-width: 230px;
-    line-height: 22px;
     justify-content: left;
     align-items: center;
     margin-bottom: 0;
@@ -339,11 +334,10 @@ const TourTags = styled.div`
     align-items: start;
     display: grid;
     grid-template-columns: auto auto;
-    font-size: 12px;
-    line-height: 13px;
+    ${expandFontToken('UI/Label Regular')}
     margin-top: -8px;
     grid-column-gap: 8px;
-    grid-row-gap: 12px;
+    grid-row-gap: 16px;
     .tour-tag {
       margin: 0;
     }
@@ -364,10 +358,7 @@ export const CTAContainer = styled.div`
   `
       : ``}
   button.tour-book-now-cta {
-    ${({ pageType }) =>
-      pageType === CUSTOM_TYPES.GLOBAL_EXPERIENCE
-        ? 'border-radius: 2px;font-weight: 600;line-height: 22px;'
-        : ''}
+    ${expandFontToken('Button/Medium')}
   }
   @media (max-width: 768px) {
     display: contents;
@@ -387,25 +378,18 @@ const PriceContainer = styled.div`
     grid-template-columns: auto auto;
     justify-content: left;
     grid-column-gap: 4px;
-    ${({ pageType }) =>
-      pageType === CUSTOM_TYPES.GLOBAL_EXPERIENCE
-        ? 'font-size: 13px !important;line-height: 17px !important;'
-        : ''}
+    ${expandFontToken('UI/Label Small')}
   }
+  justify-self: left;
   .tour-price {
     display: flex;
-    ${({ pageType }) =>
-      pageType === CUSTOM_TYPES.GLOBAL_EXPERIENCE
-        ? 'line-height: 28px !important; color: #666666;'
-        : ''}
+    ${expandFontToken('Heading/Large')}
   }
-  ${({ theme }) => theme.productCards.priceFontSettings.desktop}
   @media (max-width: 768px) {
-    justify-self: left;
     grid-area: price-block;
     ${({ theme }) => theme.productCards.priceFontSettings.mobile}
     .tour-price {
-      font-size: 24px;
+      ${expandFontToken('Heading/Large')}
     }
   }
 `;
@@ -441,7 +425,7 @@ const CTABlock = styled.div`
       bottom: 16px;
       bottom: calc(16px + env(safe-area-inset-bottom));
       ${shouldOffset ? 'transform: translateY(32px);' : ''}
-      background: ${COLORS.WHITE};
+      background: ${COLORS.BRAND.WHITE};
       z-index: 2;
     `
         : ``}
@@ -465,14 +449,11 @@ const ProductBody = styled.div`
   overflow-anchor: none;
   .tour-description {
     cursor: ${({ hasReadMore }) => (hasReadMore ? 'pointer' : '')};
+    ${expandFontToken('Paragraph/Medium')}
     p {
       margin: 0;
-      font-weight: ${SOLEIL.MEDIUM};
     }
-    font-family: ${SOLEIL.FONT_STACK};
-    ${({ theme }) => theme.productCards.regularFontSettings.desktop}
-    color: ${COLORS.FOUR_BLACK};
-    opacity: 0.99;
+    color: ${COLORS.GRAY.G2};
     display: grid;
     grid-gap: 0;
     ${({ collapsed, noOfListItemToShow, defaultOpen }) =>
@@ -485,13 +466,25 @@ const ProductBody = styled.div`
     `
         : ''}
     ul {
+      margin: 0;
       padding: 0;
-      padding-left: 1.0em;
+      padding-left: 1rem;
       display: grid;
-      grid-gap: 12px;
+      list-style-type: none;
+
+      li {
+        position: relative;
+      }
+
+      li::before {
+        content: '•';
+        position: absolute;
+        left: -0.8rem;
+        color: currentColor;
+      }
     }
   }
-  .amp-tour-description{
+  .amp-tour-description {
     ${({ collapsed, noOfListItemToShow, defaultOpen }) =>
       collapsed && !defaultOpen
         ? `
@@ -501,17 +494,17 @@ const ProductBody = styled.div`
   }
   `
         : ''}
-        margin-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
   }
   ul:last-child {
     margin-bottom: 0;
   }
   @media (max-width: 768px) {
     position: relative;
-    
-    .show-more-information{
+
+    .show-more-information {
       p:nth-child(1) {
-              display: block;
+        display: block;
       }
       ul {
         li:nth-child(n + 2) {
@@ -520,7 +513,17 @@ const ProductBody = styled.div`
       }
     }
     .tour-description {
-      ${({ theme }) => theme.productCards.regularFontSettings.mobile}
+      ${expandFontToken('Paragraph/Medium')}
+
+      h6 {
+        ${expandFontToken('Heading/Small')}
+        margin: 16px 0;
+        margin-top: 32px;
+      }
+
+      h6:first-child {
+        margin-top: 0;
+      }
       padding-bottom: 2rem;
     }
     ${({ collapsed, defaultOpen }) =>
@@ -532,19 +535,17 @@ const ProductBody = styled.div`
     `
         : ''}
   }
-  .display-none{
+  .display-none {
     display: none;
   }
-  .display-expand{
-    display:grid;
+  .display-expand {
+    display: grid;
   }
 `;
 
 const NextAvailableBlock = styled.div`
-  font-size: 14px;
-  font-weight: ${SOLEIL.MEDIUM};
-  color: ${COLORS.FOUR_BLACK};
-  line-height: 15px;
+  ${expandFontToken('Misc/Overline Large')}
+  color: ${COLORS.GRAY.G2};
   display: grid;
   grid-column-gap: 8px;
   grid-template-columns: auto auto;
@@ -564,15 +565,15 @@ const ProductOfferBlock = styled.div`
   grid-area: offer;
   font-size: 14px;
   line-height: 15px;
-  font-family: ${SOLEIL.FONT_STACK};
-  font-weight: ${SOLEIL.REGULAR};
+  font-family: ${HALYARD.FONT_STACK};
+  font-weight: 400;
   cursor: pointer;
   color: ${({ theme: { primaryAccent } }) =>
-    primaryAccent ? primaryAccent : COLORS.MED_SLATE_BLUE};
+    primaryAccent ? primaryAccent : COLORS.BRAND.PURPS};
   p {
     margin: 0;
     color: ${({ theme: { primaryAccent } }) =>
-      primaryAccent ? primaryAccent : COLORS.MED_SLATE_BLUE};
+      primaryAccent ? primaryAccent : COLORS.BRAND.PURPS};
   }
   @media (max-width: 768px) {
     font-size: 14px;
@@ -580,17 +581,17 @@ const ProductOfferBlock = styled.div`
 `;
 const V1BoosterBlock = styled.div`
   grid-area: booster;
-  font-family: ${SOLEIL.FONT_STACK};
-  font-weight: ${SOLEIL.REGULAR};
+  font-family: ${HALYARD.FONT_STACK};
+  font-weight: 400;
   font-size: 15px;
   line-height: 21px;
   text-align: left;
-  color: ${COLORS.GREY.G4};
+  color: ${COLORS.GRAY.G4};
   font-size: 1em;
   display: inline-block;
   p {
     margin: 0;
-    color: ${COLORS.GREY.G4};
+    color: ${COLORS.GRAY.G4};
     font-size: 15px;
     strong {
       font-weight: unset;
@@ -613,7 +614,7 @@ const V1BoosterBlock = styled.div`
     p {
       font-size: 12px;
       strong {
-        font-weight: ${SOLEIL.MEDIUM};
+        font-weight: 500;
         line-height: 1.5;
       }
     }
@@ -635,9 +636,7 @@ const HighlightTabsWrapper = styled.div`
 
 const TabsWrapper = styled.div`
   display: block;
-  font-weight: ${SOLEIL.SEMIBOLD};
-  font-size: 14px;
-  line-height: 20px;
+  ${expandFontToken('Paragraph/Large')}
   border-bottom: 1px solid #ebebeb;
   justify-content: left;
   position: relative;
@@ -659,15 +658,15 @@ const SwiperControls = styled.div`
     z-index: 2;
     height: 32px;
     svg {
-      fill: ${COLORS.WHITE};
+      fill: ${COLORS.BRAND.WHITE};
       background: linear-gradient(
         180deg,
-        ${COLORS.WHITE} 25%,
+        ${COLORS.BRAND.WHITE} 25%,
         rgba(255, 255, 255, 0) 100%
       );
       background: -webkit-linear-gradient(
         180deg,
-        ${COLORS.WHITE} 25%,
+        ${COLORS.BRAND.WHITE} 25%,
         rgba(255, 255, 255, 0) 100%
       );
       circle {
@@ -699,19 +698,14 @@ const Tab = styled.div`
   width: auto;
   border-bottom: 1px solid transparent;
   transform: translateY(1px);
-  font-weight: ${SOLEIL.REGULAR};
+  ${expandFontToken('UI/Label Medium')}
   margin-right: 2px;
-  ${({ pageType }) =>
-    pageType === CUSTOM_TYPES.GLOBAL_EXPERIENCE
-      ? 'font-weight: 600;color: #444444;'
-      : ''}
   ${({ isActive }) => {
     return (
       isActive &&
       `
-      font-weight: ${SOLEIL.SEMIBOLD};
-      color: ${COLORS.PURPS3};
-      border-color: ${COLORS.PURPS3};
+      color: ${COLORS.TEXT.PURPS_3};
+      border-color: ${COLORS.TEXT.PURPS_3};
       padding-bottom: 7.25px;`
     );
   }}
@@ -1517,7 +1511,7 @@ const Product = (props) => {
           </CTAContainer>
         </ProductHeader>
         <Conditional if={!isMobile}>
-          <HorizontalLine colorProp={COLORS.GREY.G6} />
+          <HorizontalLine colorProp={COLORS.GRAY.G6} />
         </Conditional>
         <ProductBody
           hasReadMore={hasReadMore}

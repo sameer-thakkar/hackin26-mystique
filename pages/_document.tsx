@@ -70,13 +70,12 @@ class MystiqueDocument extends Document {
         <Head>
           <link
             rel="preload"
-            href="https://use.typekit.net/bqt0pit.css"
+            href="https://use.typekit.net/rql1une.css"
             as="style"
           />
           <link rel="preconnect" href="https://images.prismic.io" />
           <link rel="preconnect" href="https://cdn-imgix.headout.com" />
-
-          <link rel="stylesheet" href="https://use.typekit.net/bqt0pit.css" />
+          <link rel="stylesheet" href="https://use.typekit.net/rql1une.css" />
         </Head>
         <body>
           <AMPAnalytics asPath={asPath} query={query} />

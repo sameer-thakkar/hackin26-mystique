@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 
 import sliceHandler from '../Slices';
 import { FULL_WIDTH_SLICES } from '../../constants';
@@ -9,7 +10,7 @@ const StyledBackground = styled.div`
   padding: 40px 0;
   background: ${({ colorProp }) => colorProp};
   text-align: ${({ textCenter }) => (textCenter ? 'center' : 'initial')};
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
 `;
 
 /**
@@ -37,8 +38,8 @@ const StyledBackground = styled.div`
 const Background = (props) => {
   const { slices, sliceProps, color, gridCenter, textCenter } = props;
   const colorMap = {
-    'Chalk Grey': COLORS.CHALK,
-    'Light Grey': COLORS.LIGHTER_WHITE,
+    'Chalk Grey': COLORS.GRAY.G7,
+    'Light Grey': COLORS.GRAY.G8,
   };
   return (
     <StyledBackground
@@ -49,9 +50,8 @@ const Background = (props) => {
       {slices.map((slice, index) => (
         <div
           key={index}
-          className={`${
-            !FULL_WIDTH_SLICES.includes(slice.slice_type) ? 'slice-wrapper' : ''
-          } slice-block ${slice.slice_type}`}
+          className={`${!FULL_WIDTH_SLICES.includes(slice.slice_type) ? 'slice-wrapper' : ''
+            } slice-block ${slice.slice_type}`}
         >
           {sliceHandler(slice, sliceProps)}
         </div>

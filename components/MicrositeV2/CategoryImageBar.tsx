@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'components/UI/Image';
+import { HALYARD } from 'const/ui-constants';
 
 export const CategoryImageBar = (props) => {
   let tagsRef = {};
@@ -31,7 +32,7 @@ export const CategoryImageBar = (props) => {
       <style jsx>
         {`
           .category-heading {
-            font-family: SOLEIL;
+            font-family: ${HALYARD.FONT_STACK};
             font-size: 24px;
             font-weight: 500;
             margin-left: 10px;
@@ -54,7 +55,7 @@ export const CategoryImageBar = (props) => {
           .category-card {
             display: grid;
             align-content: start;
-            font-family: SOLEIL;
+            font-family: ${HALYARD.FONT_STACK};
             font-size: 14px;
             font-weight: 500;
             grid-row-gap: 8px;

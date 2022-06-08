@@ -1,12 +1,13 @@
 import styled from 'styled-components';
-import { COLORS, SIZES } from 'const/ui-constants';
+import { SIZES } from 'const/ui-constants';
+import COLORS from 'const/colors';
 
 import Conditional from './common/Conditional';
 
 const Banner = styled.div`
   padding: 40px 0;
   background: ${({ theme: { primaryBackground } }) =>
-    primaryBackground ? primaryBackground : COLORS.WHITE};
+    primaryBackground ? primaryBackground : COLORS.BRAND.WHITE};
   margin-bottom: 48px;
   &:empty {
     padding: 0;
@@ -14,7 +15,7 @@ const Banner = styled.div`
   }
   h1 {
     color: ${({ theme: { primaryBGColor } }) =>
-      primaryBGColor ? primaryBGColor : COLORS.WHITE};
+    primaryBGColor ? primaryBGColor : COLORS.BRAND.WHITE};
     margin: 0;
     font-size: 24px;
     max-width: 420px;

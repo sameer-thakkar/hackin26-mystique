@@ -11,7 +11,7 @@ import Button from 'components/UI/Button';
 import Image from 'components/UI/Image';
 import Conditional from 'components/common/Conditional';
 import { strings } from 'const/strings';
-import { SOLEIL, COLORS, SIZES } from 'const/ui-constants';
+import { SIZES } from 'const/ui-constants';
 import { withShortcodes } from 'utils/helper';
 import { trackEvent } from 'utils/analytics';
 import {
@@ -19,6 +19,8 @@ import {
   ANALYTICS_PROPERTIES,
   PAGE_TYPES,
 } from 'const/index';
+import COLORS from 'const/colors';
+import { expandFontToken } from 'const/typography';
 
 const Swiper = dynamic(() => import('components/Swiper'), {
   ssr: false,
@@ -313,8 +315,7 @@ const StyledBanner = styled.div`
   margin: 1rem auto;
 
   position: relative;
-  font-family: ${SOLEIL.FONT_STACK};
-  margin-bottom: 12px;
+  margin-bottom: 42px;
 
   .single-slide {
     margin: 0 auto;
@@ -366,12 +367,9 @@ const StyledBanner = styled.div`
 
   .mb-captions .caption h1,
   .mb-captions .caption p {
-    font-size: 2.25rem;
+    ${expandFontToken('Display/Regular')}
     color: #fff;
-    line-height: 122%;
-    letter-spacing: -0.5px;
     max-width: 30vw;
-    font-weight: 600;
   }
 
   .mb-captions .mb-caption {
@@ -388,7 +386,7 @@ const StyledBanner = styled.div`
     }
   }
   p {
-    color: ${COLORS.WHITE};
+    color: ${COLORS.BRAND.WHITE};
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
@@ -422,13 +420,13 @@ const StyledBanner = styled.div`
     background-color: rgba(0, 0, 0, 0.35);
     border: solid white 1px;
     text-transform: uppercase;
-    font-weight: 400;
-    letter-spacing: 1.2px;
     cursor: pointer;
     padding: 15px 40px;
     justify-self: center;
     color: #fff;
     font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 1.2px;
   }
   .mb-captions .mb-cta:hover {
     background: rgba(0, 0, 0, 0.5);
@@ -485,9 +483,7 @@ const StyledBanner = styled.div`
 
       .caption h1,
       .caption p {
-        font-weight: 600;
-        font-size: 21px;
-        line-height: 133%;
+        ${expandFontToken('Heading/Large')}
         margin: 0;
         max-width: ${({ isAmp }) => (isAmp ? '70vw' : '85vw')};
       }
@@ -519,12 +515,16 @@ const StyledBanner = styled.div`
 
 const ButtonWrapper = styled.div`
   pointer-events: auto;
+
+  button {
+    ${expandFontToken('Button/Big')}
+  }
+
   @media (max-width: 768px) {
     button {
-      font-size: 14px;
-      padding: 0.5rem 0.75rem;
+      ${expandFontToken('Button/Small')}
+      padding: 7px 12px 9px;
       border-radius: 4px;
-      font-weight: normal;
     }
   }
 `;
@@ -534,7 +534,7 @@ const BannerSubtext = styled.em`
   text-align: center;
   font-style: italic;
   font-size: 0.875rem;
-  color: ${COLORS.GREY_G4};
+  color: ${COLORS.GRAY.G4};
   margin: 0 1rem 1rem;
 
   @media (max-width: 768px) {

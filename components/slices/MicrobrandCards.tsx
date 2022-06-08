@@ -4,11 +4,12 @@ import { RichText } from 'prismic-reactjs';
 import Image from 'UI/Image';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { tourListApiParser } from 'utils/dataParsers';
-import { SOLEIL, COLORS } from 'const/ui-constants';
 import { THEMES } from 'const/index';
 import Conditional from 'components/common/Conditional';
 import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
 import { MBContext } from 'contexts/MBContext';
+import { expandFontToken } from 'const/typography';
+import COLORS from 'const/colors';
 
 const StyledMBCards = styled.div`
   display: grid;
@@ -35,18 +36,16 @@ const StyledMBCards = styled.div`
 `;
 
 const MicrobrandCard = styled.div`
-  color: #444444;
   display: grid;
   grid-template-rows: 170px auto;
   transition: all ease 0.2s;
   align-items: start;
-  border-radius: 5px;
+  border-radius: 6px;
 
   ${StyledPriceBlock} {
     grid-column: 2 / 3;
     align-items: center;
-    font-size: 16px;
-    line-height: 1.2;
+    ${expandFontToken('Heading/XS')}
     justify-content: right;
     .tour-scratch-price {
       grid-column: 1 / 2;
@@ -54,11 +53,6 @@ const MicrobrandCard = styled.div`
     .tour-price {
       grid-column: 2 / 3;
     }
-  }
-
-  .card-bottom .card-price {
-    font-size: 16px;
-    font-weight: 500;
   }
 
   .card-bottom {
@@ -81,30 +75,25 @@ const MicrobrandCard = styled.div`
     object-fit: cover;
     height: 100%;
     width: 100%;
-    border-radius: 5px;
+    border-radius: 6px;
     grid-row: 1 / 2;
     grid-column: 1 / 2;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
   }
   .card-bottom .card-title {
-    font-size: 15px;
-    color: #000;
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.MEDIUM};
-    line-height: 1;
+    color: ${COLORS.GRAY.G2};
+    ${expandFontToken('Heading/Product Card')}
     grid-row: 1;
     grid-column: 1 / 2;
   }
 
   .card-bottom .card-price {
-    font-family: ${SOLEIL.FONT_STACK};
+    ${expandFontToken('Heading/XS')}
     justify-self: right;
     grid-row: 1;
     grid-column: 2 / 3;
-    letter-spacing: 0.5px;
     text-align: right;
-    line-height: 1.3;
   }
 
   ${({ theme }) =>
@@ -127,16 +116,16 @@ const MicrobrandCard = styled.div`
       .card-bottom .tour-scratch-price {
         font-size: 12px;
         line-height: 12px;
-        color: ${COLORS.GREY_G4};
+        color: ${COLORS.GRAY.G4};
       }
       .card-bottom .card-price,
       .card-bottom .tour-price {
         justify-self: left;
-        color: ${COLORS.GREY_G3};
-        font-weight: ${SOLEIL.BOLD};
+        color: ${COLORS.GRAY.G3};
+        font-weight: 700;
       }
       .card-bottom .card-title {
-        font-weight: ${SOLEIL.SEMIBOLD};
+        font-weight: 600;
       }
       `
       : `

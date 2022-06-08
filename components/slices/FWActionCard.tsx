@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import Button from 'UI/Button';
-import { SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
 
 type FWActionCardProps = {
   title: string;
@@ -41,7 +41,7 @@ const StyledProductCardLeft = styled.div`
 `;
 
 const StyledProductCardHeading = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   font-size: 18px;
   font-weight: 600;
   line-height: 1.4;

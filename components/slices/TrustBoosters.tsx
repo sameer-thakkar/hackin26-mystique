@@ -1,5 +1,6 @@
 import React from 'react';
-import { SOLEIL, COLORS } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import styled from 'styled-components';
 
 import Image from '../UI/Image';
@@ -33,19 +34,18 @@ const StyledTrustBoosters = styled.div`
     grid-row-gap: 4px;
   }
   .trust-booster .booster-heading {
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
     font-size: 16px;
     line-height: 22px;
-    color: #545454;
-    font-weight: ${SOLEIL.SEMIBOLD};
-    color: ${COLORS.TWO_BLACK};
+    font-weight: 600;
+    color: ${COLORS.GRAY.G2};
   }
   .trust-booster .booster-text {
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
     font-size: 14px;
-    font-weight: ${SOLEIL.REGULAR};
+    font-weight: 400;
     line-height: 15px;
-    color: ${COLORS.FOUR_BLACK};
+    color: ${COLORS.GRAY.G2};
   }
 
   @media (max-width: 768px) {

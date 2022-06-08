@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import Image from 'components/UI/Image';
-import { SOLEIL } from 'const/ui-constants';
 import { withShortcodes } from 'utils/helper';
 import { trackEvent } from 'utils/analytics';
 import {
@@ -10,6 +9,7 @@ import {
   PAGE_TYPES,
 } from 'const/index';
 import { MBContext } from 'contexts/MBContext';
+import { expandFontToken } from 'const/typography';
 
 const StyledMasthead = styled.div`
   width: 100%;
@@ -35,9 +35,7 @@ const Title = styled.h1`
   position: absolute;
   top: 50%;
   color: white;
-  font-family: ${SOLEIL.FONT_STACK};
-  font-weight: ${SOLEIL.SEMIBOLD};
-  font-size: 2rem;
+  ${expandFontToken('Display/Regular')}
   transform: translateY(-50%);
   margin: 0;
   max-width: 792px;
@@ -45,8 +43,7 @@ const Title = styled.h1`
   @media (max-width: 768px) {
     text-align: center;
     top: 42%;
-    font-weight: 600;
-    font-size: 1.5rem;
+    ${expandFontToken('Heading/Large')}
     padding: 0px 16px;
   }
 `;

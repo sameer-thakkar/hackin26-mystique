@@ -2,7 +2,7 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
-import { SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
 
 const Swiper = dynamic(() => import('components/Swiper'));
 
@@ -12,7 +12,7 @@ const StyledWrapper = styled.div`
   grid-template-areas: 'images content';
   grid-template-rows: max-content;
   grid-column-gap: 20px;
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   width: 850px;
   height: 522px;
   color: #444444;
@@ -55,7 +55,7 @@ const StyledImages = styled.div`
 `;
 
 const StyledTitle = styled.div`
-  font-weight: ${SOLEIL.SEMIBOLD};
+  font-weight: 600;
   font-size: 22px;
   line-height: 24px;
   margin-bottom: 16px;

@@ -2,7 +2,7 @@ import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 import { CLOSE_WHITE, BackArrow } from 'assets/SvgIcons';
 import { useState, useEffect } from 'react';
-import { COLORS } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { SIDEBAR_TYPES } from 'const/index';
 import useWindowSize from 'hooks/useWindowSize';
 export const StyledAsideModal = styled.div`
@@ -22,7 +22,7 @@ export const StyledAsideModal = styled.div`
     ${({ width, sidePadding }) =>
       `${width ? width : '27.5vw'} - ${sidePadding ? sidePadding * 2 : '48'}px`}
   );
-  background: ${COLORS.WHITE};
+  background: ${COLORS.BRAND.WHITE};
   z-index: 100;
   @media (max-width: 768px) {
     position: absolute;
@@ -45,7 +45,7 @@ export const StyledAsideModal = styled.div`
         ? `
       height: auto;
       padding: 0;
-      background: ${COLORS.BLACK};
+      background: ${COLORS.BRAND.BLACK};
     `
         : ``}
   }
@@ -68,7 +68,7 @@ const Header = styled.div`
         display: flex;
         padding: 6px;
         border-radius: 100%;
-        background: ${COLORS.WHITE};
+        background: ${COLORS.BRAND.WHITE};
         svg {
           height: 10px;
           width: 10px;
@@ -78,20 +78,24 @@ const Header = styled.div`
       : ''}
   top: 0;
   background: ${({ addBg, isGlobalMb }) =>
-    addBg ? COLORS.WHITE : isGlobalMb ? COLORS.WHITE : 'transparent'};
+    addBg
+      ? COLORS.BRAND.WHITE
+      : isGlobalMb
+      ? COLORS.BRAND.WHITE
+      : 'transparent'};
   z-index: 12;
   ${({ headerType }) =>
     headerType === SIDEBAR_TYPES.COMBO_VARIANT
       ? `
       width: calc(100% - 32px);
-      background: ${COLORS.WHITE};
+      background: ${COLORS.BRAND.WHITE};
       margin-top: 8px;
       padding: 32px 16px 8px 16px;
       border-radius: 20px 20px 0 0;
       .close-icon {
         display: flex;
         padding: 6px;
-        background: ${COLORS.GREY.G8};
+        background: ${COLORS.GRAY.G8};
         border-radius: 4px;
         svg {
           height: 10px;
@@ -107,7 +111,7 @@ const Header = styled.div`
       width: 24px;
       position: absolute;
       height: 100%;
-      background: ${COLORS.WHITE};
+      background: ${COLORS.BRAND.WHITE};
     }
     &::before {
       left: 100%;
@@ -218,7 +222,7 @@ const AsideModal = ({
             <Header
               onClick={type === SIDEBAR_TYPES.PRODUCT_CARD ? onClose : null}
               addBg={!!title}
-              headerType={type}
+              type={type}
               sidePadding={sidePadding}
               isGlobalMb={isGlobalMb}
             >

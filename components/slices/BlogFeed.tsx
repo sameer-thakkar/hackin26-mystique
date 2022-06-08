@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 
 import { CHEVRON_LEFT } from '../../assets/SvgIcons';
 import Image from '../UI/Image';
@@ -11,7 +12,7 @@ const FeedContainer = styled.div`
 `;
 
 const Card = styled.div`
-  border: 1px solid ${COLORS.DADDY};
+  border: 1px solid ${COLORS.GRAY.G6};
   border-radius: 4px;
   display: grid;
   grid-template-columns: 25% auto;
@@ -30,7 +31,7 @@ const Card = styled.div`
 const Content = styled.div`
   display: grid;
   grid-row-gap: 12px;
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   line-height: 26px;
   padding: 12px;
   align-content: flex-start;
@@ -65,7 +66,7 @@ const IconLink = styled.a`
     width: 12px;
     height: 12px;
     path {
-      stroke: ${COLORS.LIGHTER_LINK_BLUE};
+      stroke: ${COLORS.TEXT.CANDY_1};
       stroke-width: 3px;
     }
   }

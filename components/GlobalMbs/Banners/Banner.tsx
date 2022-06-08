@@ -11,7 +11,8 @@ import {
   ANALYTICS_PROPERTIES,
   PAGE_TYPES,
 } from 'const/index';
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { CHEVRON_DOWN } from 'assets/SvgIcons';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { MBContext } from 'contexts/MBContext';
@@ -57,14 +58,14 @@ const StyledBanner = styled.div((props) => {
   return `
   display: grid;
   align-content: start;
-  background: ${COLORS.WHITE};
+  background: ${COLORS.BRAND.WHITE};
   grid-template-columns: ${styles.gridTemplateColumns};
   column-gap: 80px;
   height: calc(100% - 2px);
   max-width: 1200px;
   margin: 0 auto 72px auto;
   text-decoration: none;
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   font-size: 16px;
   line-height: 150%;
   font-weight: 400;
@@ -113,8 +114,8 @@ const StyledBanner = styled.div((props) => {
     .tag {
       padding: 4px 8px;
       width: max-content;
-      background-color: ${COLORS.GREY_FO};
-      color: ${COLORS.GREY_G3};
+      background-color: ${COLORS.GRAY.G7};
+      color: ${COLORS.GRAY.G3};
       font-size: 12px;
       line-height: 12px;
       border-radius: 2px;
@@ -136,8 +137,8 @@ const StyledBanner = styled.div((props) => {
         align-items: center;
         padding: 8px 70px;
         border-radius: 2px;
-        background-color: ${COLORS.PURPS};
-        color: ${COLORS.WHITE};
+        background-color: ${COLORS.BRAND.PURPS};
+        color: ${COLORS.BRAND.WHITE};
         font-size: 16px;
         line-height: 24px;
       }
@@ -148,7 +149,7 @@ const StyledBanner = styled.div((props) => {
         .starting-from {
           font-size: 14px;
           line-height: 16px;
-          color: ${COLORS.GREY_G4}
+          color: ${COLORS.GRAY.G4}
         }
         .price {
           font-size: 24px;
@@ -168,7 +169,7 @@ const StyledBanner = styled.div((props) => {
       }
     }
     a {
-      color: ${COLORS.LIGHTER_LINK_BLUE};
+      color: ${COLORS.TEXT.CANDY_1};
       word-wrap: break-word;
     }
   }

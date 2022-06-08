@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { COLORS } from 'const/ui-constants';
+import COLORS from 'const/colors';
+import { expandFontToken } from 'const/typography';
 
 const Button = styled.button((props) => {
   let styles = `
@@ -15,22 +16,22 @@ const Button = styled.button((props) => {
     case 'fill':
       styles = `
       border: 0;
-      color: ${COLORS.WHITE};
+      color: ${COLORS.BRAND.WHITE};
       background: ${props.theme.primaryColor};
       padding: 14px ${props.paddingSides || '22px'};
       * {
-        color: ${COLORS.WHITE};
+        color: ${COLORS.BRAND.WHITE};
       }
       `;
       break;
     case 'fillGradient':
       styles = `
       border: 0;
-      color: ${COLORS.WHITE};
+      color: ${COLORS.BRAND.WHITE};
       background: ${props.theme.primaryColor};
       padding: 14px ${props.paddingSides || '22px'};
       * {
-        color: ${COLORS.WHITE};
+        color: ${COLORS.BRAND.WHITE};
       }
       `;
       break;
@@ -38,7 +39,7 @@ const Button = styled.button((props) => {
       styles = `
       border: 1px solid ${props.theme.primaryColor};
       color: ${props.theme.primaryColor};
-      background: ${COLORS.WHITE};
+      background: ${COLORS.BRAND.WHITE};
       padding: 13px ${props.paddingSides || '21px'};
       * {
         color: ${props.theme.primaryColor};
@@ -47,12 +48,12 @@ const Button = styled.button((props) => {
       break;
     case 'whiteBordered':
       styles = `
-      border: 1px solid ${COLORS.WHITE};
-      color: ${COLORS.WHITE};
+      border: 1px solid ${COLORS.BRAND.WHITE};
+      color: ${COLORS.BRAND.WHITE};
       background: rgba(34, 34, 34, 0.5);
       padding: 13px ${props.paddingSides || '21px'};
       * {
-        color: ${COLORS.WHITE};
+        color: ${COLORS.BRAND.WHITE};
       }
       `;
       break;
@@ -62,11 +63,8 @@ const Button = styled.button((props) => {
   return `
   ${styles}
   ${props.widthProp ? `width: ${props.widthProp};` : ''}
-  border-radius: ${props.theme.button.borderRadius};
-  font-family: ${props.theme.button.fontFamily};
-  font-size: ${props.fontSize || props.theme.button.fontSize};
-  font-weight: ${props.theme.button.fontWeight};
-  line-height: 1;
+  border-radius: 8px;
+  ${expandFontToken('Button/Medium')}
   cursor: pointer;
   text-align: center;
   :focus {

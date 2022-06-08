@@ -1,7 +1,8 @@
 import { RichText } from 'prismic-reactjs';
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import {
   CHEVRON_LEFT,
   CHEVRON_LEFT_CIRCLE,
@@ -23,8 +24,8 @@ const StyledImageGallery = styled.div`
   margin: 0 -16px;
   .heading {
     font-size: 24px;
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.SEMIBOLD};
+    font-family: ${HALYARD.FONT_STACK};
+    font-weight: 600;
     max-width: 1200px;
     width: 100%;
     line-height: 26px;
@@ -99,13 +100,13 @@ const StyledImageGallery = styled.div`
 `;
 
 const Heading = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   font-style: normal;
-  font-weight: ${SOLEIL.SEMIBOLD};
+  font-weight: 600;
   font-size: 24px;
   line-height: 30px;
   p {
-    color: ${COLORS.WHITE};
+    color: ${COLORS.BRAND.WHITE};
     margin: 0;
   }
   @media (max-width: 768px) {
@@ -116,9 +117,8 @@ const Heading = styled.div`
 `;
 
 const Description = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   p {
-    font-family: Soleil;
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
@@ -132,12 +132,12 @@ const Description = styled.div`
 `;
 
 const Content = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   display: grid;
   grid-row-gap: 16px;
   ${Heading}${Heading} {
     * {
-      color: ${COLORS.WHITE};
+      color: ${COLORS.BRAND.WHITE};
       margin-bottom: 0
     }
   }
@@ -145,7 +145,7 @@ const Content = styled.div`
     * {
       margin-bottom: 0;
       margin-top: 0;
-      color: ${COLORS.WHITE};
+      color: ${COLORS.BRAND.WHITE};
     }
   }
   @media(max-width: 768px) {
@@ -225,7 +225,7 @@ const Lightbox = styled.div`
   }
   .nav-indicator {
     font-size: 16px;
-    color: ${COLORS.WHITE};
+    color: ${COLORS.BRAND.WHITE};
   }
   .swiper {
     position: relative;
@@ -257,15 +257,15 @@ const Lightbox = styled.div`
       align-items: center;
     }
     .lightbox-mask {
-      background: ${COLORS.BLACK};
+      background: ${COLORS.BRAND.BLACK};
     }
     .swiper-container {
       max-width: 100vw;
       ${({ isZoomed }) =>
-        !isZoomed
-          ? `
+    !isZoomed
+      ? `
       `
-          : `
+      : `
       overflow: unset;
       `}
     }
@@ -273,7 +273,7 @@ const Lightbox = styled.div`
 `;
 
 const LightboxImage = styled.div`
-  background: ${COLORS.WHITE};
+  background: ${COLORS.BRAND.WHITE};
   .swiper-slide img {
     padding: 8px;
     padding-bottom: 0;
@@ -338,7 +338,7 @@ const FullImage = styled.div`
     line-height: 30px;
     font-size: 24px;
     padding: 40px;
-    font-weight: ${SOLEIL.SEMIBOLD};
+    font-weight: 600;
     color: #fff;
   }
 `;
@@ -507,19 +507,19 @@ const ImageGallery = (props) => {
               isMobile
                 ? null
                 : () => (
-                    <div className="button-right">
-                      {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
-                    </div>
-                  )
+                  <div className="button-right">
+                    {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
+                  </div>
+                )
             }
             renderNextButton={
               isMobile
                 ? null
                 : () => (
-                    <div className="button-left">
-                      {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
-                    </div>
-                  )
+                  <div className="button-left">
+                    {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
+                  </div>
+                )
             }
             {...swiperOpts}
             {...galleryOpts}

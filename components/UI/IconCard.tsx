@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { COLORS } from 'const/ui-constants';
-
+import COLORS from 'const/colors';
 import Image from './Image';
 
 export const StyledIconCard = styled.div`
@@ -20,7 +19,7 @@ const Icon = styled.div`
   border-radius: 4px;
   transform: translateY(-50%);
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.07);
-  background: ${COLORS.WHITE};
+  background: ${COLORS.BRAND.WHITE};
   justify-self: left;
   margin-bottom: -20px;
   img {

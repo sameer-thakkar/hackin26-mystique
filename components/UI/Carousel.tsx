@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import { useWindowWidth } from '@react-hook/window-size';
 import Conditional from 'components/common/Conditional';
 import OverflowScroll from 'UI/OverflowScroll';
-import { COLORS, SIZES } from 'const/ui-constants';
+import { SIZES } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
@@ -45,7 +46,7 @@ const Controls = styled.div`
     cursor: pointer;
     z-index: 2;
     svg {
-      fill: ${COLORS.WHITE};
+      fill: ${COLORS.BRAND.WHITE};
       circle {
         box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
       }

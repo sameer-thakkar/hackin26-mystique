@@ -1,7 +1,7 @@
 import Conditional from 'components/common/Conditional';
 import CollectionTabs from 'components/GlobalMbs/collectionTabs';
-import { COLORS } from 'const/ui-constants';
 import styled from 'styled-components';
+import COLORS from 'const/colors';
 
 import TopDestinationsCarousel from '../Carousels/TopDestinationsCarousel';
 
@@ -16,7 +16,7 @@ const HeadingSection = styled.div`
     font-size: 46px;
     line-height: 54px;
     letter-spacing: -1px;
-    color: ${COLORS.GREY.G2};
+    color: ${COLORS.GRAY.G2};
     margin: 0 0 16px;
   }
   p {
@@ -24,7 +24,7 @@ const HeadingSection = styled.div`
     font-weight: normal;
     font-size: 17px;
     line-height: 28px;
-    color: ${COLORS.GREY.G2};
+    color: ${COLORS.GRAY.G2};
     margin: 0;
   }
 `;

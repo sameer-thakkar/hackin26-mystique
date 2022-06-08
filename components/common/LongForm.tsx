@@ -1,37 +1,34 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import { expandFontToken } from 'const/typography';
+import COLORS from 'const/colors';
 
 import sliceHandler from '../Slices';
 import { FULL_WIDTH_SLICES } from '../../constants';
 
 export const StyledLongForm = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
-  line-height: 1.6;
   display: grid;
-  grid-row-gap: 72px;
+  grid-row-gap: 56px;
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
-    color: ${COLORS.FOUR_BLACK};
+    color: ${COLORS.GRAY.G2};
     line-height: 1.2;
   }
   .slice-block img {
     width: 100%;
   }
   h2 {
+    color: ${COLORS.GRAY.G2};
     display: inline-block;
-    color: ${COLORS.FOUR_BLACK};
-    font-size: 24px;
     margin: 0.2em 0;
-    font-weight: ${SOLEIL.SEMIBOLD};
+    ${expandFontToken('Heading/Large')}
   }
   h3 {
-    font-size: 22px;
-    font-weight: 500;
+    ${expandFontToken('Heading/Small')}
   }
   /* Ignore immediate em,b,strong... inside h-tags */
   h1 > *,
@@ -40,52 +37,53 @@ export const StyledLongForm = styled.div`
   h4 > *,
   h5 > *,
   h6 > * {
-    font-weight: ${SOLEIL.SEMIBOLD};
-    color: ${COLORS.FOUR_BLACK};
+    font-weight: 500;
+    color: ${COLORS.GRAY.G2};
   }
   p {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: ${COLORS.FOUR_BLACK};
-    font-family: ${SOLEIL.FONT_STACK};
+    ${expandFontToken('Paragraph/Large')}
+    margin-top: 0;
+    color: ${COLORS.GRAY.G2};
   }
   & > p > a {
     text-decoration: none;
-    color: ${COLORS.PURPS};
+    color: ${COLORS.BRAND.PURPS};
   }
 
   ul {
-    font-size: 1rem;
+    color: ${COLORS.GRAY.G2};
+    ${expandFontToken('Paragraph/Large')}
     padding-left: 20px;
-    line-height: 2;
-    color: ${COLORS.FOUR_BLACK};
   }
 
   @media (max-width: 768px) {
     grid-row-gap: 52px;
     h1 {
-      font-size: 1.6rem;
-      color: ${COLORS.FOUR_BLACK};
+      ${expandFontToken('Heading/Large')}
+      color: ${COLORS.GRAY.G2};
     }
     h2 {
-      font-size: 1.4rem;
-      color: ${COLORS.FOUR_BLACK};
+      ${expandFontToken('Heading/Regular')}
+      color: ${COLORS.GRAY.G2};
     }
     h3 {
-      font-size: 1.2rem;
-      color: ${COLORS.FOUR_BLACK};
+      ${expandFontToken('Heading/Small')}
+      color: ${COLORS.GRAY.G2};
     }
     h4 {
       font-size: 1rem;
-      color: ${COLORS.FOUR_BLACK};
+      color: ${COLORS.GRAY.G2};
     }
     h5 {
       font-size: 0.8rem;
-      color: ${COLORS.FOUR_BLACK};
+      color: ${COLORS.GRAY.G2};
     }
     h6 {
       font-size: 0.6rem;
-      color: ${COLORS.FOUR_BLACK};
+      color: ${COLORS.GRAY.G2};
+    }
+    p, ul, ol {
+      ${expandFontToken('Paragraph/Medium')}
     }
   }
 `;
@@ -97,11 +95,10 @@ export default class LongForm extends Component<any, any> {
         {content.map((slice, index) => (
           <div
             key={`long-form-${slice?.slice_type}-${index}`}
-            className={`${
-              !FULL_WIDTH_SLICES.includes(slice.slice_type)
+            className={`${!FULL_WIDTH_SLICES.includes(slice.slice_type)
                 ? 'slice-wrapper'
                 : ''
-            } slice-block ${slice.slice_type}`}
+              } slice-block ${slice.slice_type}`}
           >
             {sliceHandler(slice, { ...props, sliceIndex: index })}
           </div>

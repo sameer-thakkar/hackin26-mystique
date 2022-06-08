@@ -10,7 +10,7 @@ import Image from 'UI/Image';
 import { PLAY_CIRCLE } from 'assets/SvgIcons';
 import { PRODUCT_VIDEOS } from 'const/ShowPageProductVideos';
 import { strings } from 'const/strings';
-import { COLORS } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { createBookingURL } from 'utils';
 import { dateToString } from 'utils/dateUtils';
 import { fetchInventory } from 'utils/apiUtils';
@@ -26,6 +26,7 @@ import {
 } from 'const/index';
 import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
+import { expandFontToken } from 'const/typography';
 import { checkLTT } from 'utils/helper';
 import Emoji from 'components/common/Emoji';
 
@@ -115,38 +116,34 @@ const BannerContent = styled.div`
   position: relative;
   max-width: 1200px;
   z-index: 2;
-  background: ${COLORS.WHITE};
+  background: ${COLORS.BRAND.WHITE};
   padding: 32px 30px 0;
   border-radius: 8px 8px 0px 0px;
 
   .heading-wrapper {
-    border-bottom: 1px solid ${COLORS.GREY.G6};
+    border-bottom: 1px solid ${COLORS.GRAY.G6};
     padding-bottom: 32px;
     display: grid;
     grid-template-columns: 70% 30%;
   }
 
   .top-text-wrapper {
-    font-size: 14px;
-    line-height: 16px;
-    font-weight: normal;
+    ${expandFontToken('UI/Label Regular')}
   }
 
   h1 {
-    font-size: 24px;
+    ${expandFontToken('Heading/Large')}
     margin: 6px 0 12px;
-    line-height: 28px;
   }
 
   .tags-wrapper {
     display: inline-block;
-    color: ${COLORS.GREY.G3};
-    background: ${COLORS.GREY.G7};
+    color: ${COLORS.GRAY.G3};
+    background: ${COLORS.GRAY.G7};
     padding: 6px 8px;
     margin: 0 8px 0 0;
     border-radius: 2px;
-    font-size: 12px;
-    line-height: 16px;
+    ${expandFontToken('UI/Label Small')}
   }
 
   .right-pricing {
@@ -159,20 +156,18 @@ const BannerContent = styled.div`
   .priceBlockWrapper {
     justify-content: flex-end;
     display: flex;
-    border-right: 1px solid ${COLORS.GREY.G6};
+    border-right: 1px solid ${COLORS.GRAY.G6};
     padding-right: 16px;
     grid-area: 'price';
   }
 
   .tour-price {
-    color: ${COLORS.GREY.G2};
-    font-weight: 600;
-    font-size: 21px;
-    line-height: 28px;
+    color: ${COLORS.GRAY.G2};
+    ${expandFontToken('Heading/Regular')}
   }
 
   .tour-scratch-price {
-    color: ${COLORS.GREY.G4};
+    color: ${COLORS.GRAY.G4};
     font-size: 14px;
     line-height: 16px;
     text-align: left;
@@ -181,30 +176,26 @@ const BannerContent = styled.div`
 
   .buy-button,
   .unavailable-button {
+    ${expandFontToken('Button/Medium')}
     padding: 12px 20px;
     border-radius: 4px;
     margin: 0px 16px;
     border: none;
-    font-weight: 600;
-    font-size: 16px;
-    font-style: normal;
-    letter-spacing: 0.8px;
     max-width: 160px;
     width: 100%;
     display: block;
     text-align: center;
-    line-height: 20px;
     grid-area: cta;
   }
   .buy-button {
-    background: ${COLORS.PURPS};
-    color: ${COLORS.WHITE};
+    background: ${COLORS.BRAND.PURPS};
+    color: ${COLORS.BRAND.WHITE};
     display: block;
     cursor: pointer;
   }
   .unavailable-button {
-    background: ${COLORS.GREY.G5};
-    color: ${COLORS.WHITE};
+    background: ${COLORS.GRAY.G5};
+    color: ${COLORS.BRAND.WHITE};
     margin: 0;
     align-items: unset;
     justify-self: end;
@@ -217,17 +208,14 @@ const BannerContent = styled.div`
   }
 
   .details-container .key {
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 16px;
-    color: ${COLORS.GREY.G4};
+    ${expandFontToken('UI/Label Small')}
+    color: ${COLORS.GRAY.G4};
     padding-bottom: 4px;
   }
 
   .details-container .value {
-    color: ${COLORS.GREY.G2};
-    font-size: 15px;
-    line-height: 20px;
+    ${expandFontToken('UI/Label Medium')}
+    color: ${COLORS.GRAY.G2};
   }
 
   @media (max-width: 768px) {
@@ -284,7 +272,7 @@ const BannerContent = styled.div`
       border: 0;
       padding-bottom: 24px;
       margin-bottom: 24px;
-      border-bottom: 1px solid ${COLORS.GREY.G6};
+      border-bottom: 1px solid ${COLORS.GRAY.G6};
     }
     .tags-wrapper {
       margin: 4px 4px 0 0;
@@ -305,7 +293,7 @@ const SpecialOfferBooster = styled.div`
   font-weight: 600;
   line-height: 15px;
   text-align: left;
-  background-color: ${COLORS.WHITE};
+  background-color: ${COLORS.BRAND.WHITE};
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1), 0px 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
 
@@ -325,7 +313,7 @@ const SpecialOfferBoosterMobile = styled.div`
   font-weight: 600;
   line-height: 16px;
   text-align: left;
-  background-color: ${COLORS.WHITE};
+  background-color: ${COLORS.BRAND.WHITE};
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1), 0px 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 2px;
 

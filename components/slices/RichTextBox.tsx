@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
+import COLORS from 'const/colors';
 
 import { shortCodeSerializer } from '../../utils/shortCodes';
 
@@ -9,15 +10,14 @@ const StyledRichTextBox = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-gap: 40px;
   .rich-text-box {
-    border: 1px solid #ebebeb;
+    border: 1px solid ${COLORS.GRAY.G6};
+    border-radius: 4px;
     padding: 14px 16px;
   }
   .rich-text-box * {
-    line-height: 30px;
     margin: 0;
   }
   .rich-text-box h3 {
-    font-size: 24px;
     margin-bottom: 8px;
   }
   @media (max-width: 768px) {

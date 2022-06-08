@@ -3,7 +3,8 @@ import dynamic from 'next/dynamic';
 import { scroller } from 'react-scroll';
 import styled from 'styled-components';
 import ProductsContext from 'contexts/Products';
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { CHEVRON_LEFT } from 'assets/SvgIcons';
 import Conditional from 'components/common/Conditional';
 
@@ -70,9 +71,9 @@ const StyledCategorySlider = styled.div`
   .availability p {
     font-size: 12px !important;
     line-height: 12px !important;
-    color: ${COLORS.TEAL} !important;
+    color: ${COLORS.TEXT.BEACH} !important;
     text-align: left !important;
-    font-family: ${SOLEIL.FONT_STACK} !important;
+    font-family: ${HALYARD.FONT_STACK} !important;
   }
   .controls .btn svg {
     stroke-width: 1.5px;

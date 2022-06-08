@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { COLORS, SOLEIL } from 'const/ui-constants';
-
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import Button from '../UI/Button';
 import { CURRENCY_SYMBOL_MAP } from '../../constants';
 
 const TicketCardsWrapper = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   display: grid;
   grid-gap: 24px;
   ${(props) => {
@@ -25,9 +25,9 @@ const TicketCard = styled.div`
   grid-template-areas: 'heading price cta';
   grid-gap: 16px;
   align-items: center;
-  border: 1px solid ${COLORS.CHALK};
+  border: 1px solid ${COLORS.GRAY.G7};
   padding: 16px;
-  color: ${COLORS.DAVY_GREY};
+  color: ${COLORS.GRAY.G2};
   @media (max-width: 768px) {
     grid-template-areas: 'heading heading' 'price cta';
     grid-template-columns: 1fr 1fr;
@@ -39,7 +39,7 @@ const TicketCardHeading = styled.div`
   font-size: 18px;
   font-weight: 600;
   line-height: 1.4;
-  color: #545454;
+  color: ${COLORS.GRAY.G2};
   margin: 0;
 `;
 
@@ -48,7 +48,7 @@ const TicketCardPrice = styled.div`
   justify-self: flex-end;
   font-size: 20px;
   line-height: 24px;
-  font-weight: ${SOLEIL.MEDIUM};
+  font-weight: 500;
   div {
     display: flex;
     justify-content: flex-end;

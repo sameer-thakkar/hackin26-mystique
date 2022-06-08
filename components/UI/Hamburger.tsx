@@ -1,5 +1,5 @@
-import { COLORS } from 'const/ui-constants';
 import React from 'react';
+import COLORS from 'const/colors';
 import styled from 'styled-components';
 
 const StyledHamburger = styled.div`
@@ -15,7 +15,7 @@ const StyledHamburger = styled.div`
   &:before,
   & div {
     background-color: ${({ isGlobalMb, theme }) =>
-      isGlobalMb ? COLORS.GREY.G2 : theme.primaryBGText || '#333'};
+    isGlobalMb ? COLORS.GRAY.G2 : theme.primaryBGText || COLORS.GRAY.G2};
     border-radius: 3px;
     content: '';
     display: block;

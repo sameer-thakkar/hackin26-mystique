@@ -6,7 +6,8 @@ import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import { useWindowWidth } from '@react-hook/window-size';
 import { RichText } from 'prismic-reactjs';
-import { SOLEIL, COLORS } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import { getAlternateLanguages } from 'utils';
 
@@ -43,8 +44,8 @@ const Wrapper = styled.div`
 `;
 
 const Content = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
-  color: ${COLORS.DAVY_GREY};
+  font-family: ${HALYARD.FONT_STACK};
+  color: ${COLORS.GRAY.G2};
   width: 792px;
   margin-right: 24px;
   @media (max-width: 768px) {
@@ -55,7 +56,7 @@ const Content = styled.div`
 const Title = styled.div`
   font-size: 26px;
   line-height: 35px;
-  font-weight: ${SOLEIL.SEMIBOLD};
+  font-weight: 600;
   color: black;
 
   margin-bottom: 16px;
@@ -110,7 +111,7 @@ const Category = styled.div`
   text-decoration: none;
 
   color: ${({ active }) =>
-    active ? `${COLORS.PURPS}` : `${COLORS.DAVY_GREY}`};
+    active ? `${COLORS.BRAND.PURPS}` : `${COLORS.GRAY.G2}`};
 `;
 
 const ListicleDescription = styled.div`
@@ -301,9 +302,8 @@ const Listicle = (props) => {
   const currentLanguage = lang.split('-')[0];
   const hostSplit = host.split('.');
   hostSplit.shift();
-  const bookingUrl = `https://book.${hostSplit.join('.')}${
-    currentLanguage === 'en' ? '' : `/${currentLanguage}`
-  }/book/`;
+  const bookingUrl = `https://book.${hostSplit.join('.')}${currentLanguage === 'en' ? '' : `/${currentLanguage}`
+    }/book/`;
 
   // Fetching all tours of the listicle categories using tags and then fetching tour data
   useEffect(() => {
@@ -314,10 +314,8 @@ const Listicle = (props) => {
         const tourData = await Promise.all(
           res.results.map((tour) => {
             return fetch(
-              `${HEADOUT_API_ENDPOINT}/v5/tour-group/get/${
-                tour.data.tgid
-              }?fetch-variants=false&fetch-collection-svg=false&language=${
-                currentLanguage || 'en'
+              `${HEADOUT_API_ENDPOINT}/v5/tour-group/get/${tour.data.tgid
+              }?fetch-variants=false&fetch-collection-svg=false&language=${currentLanguage || 'en'
               }`
             ).then((r) => r.json());
           })
@@ -486,12 +484,12 @@ const Listicle = (props) => {
                     <Category
                       key={index}
                       {...(listicleCategoryName.toLowerCase() ===
-                      category.listicle_category_name.toLowerCase()
+                        category.listicle_category_name.toLowerCase()
                         ? { active: true }
                         : {
-                            as: 'a',
-                            href: category.listicle_category_link?.url || '/',
-                          })}
+                          as: 'a',
+                          href: category.listicle_category_link?.url || '/',
+                        })}
                     >
                       {category.listicle_category_name}
                     </Category>
@@ -511,12 +509,12 @@ const Listicle = (props) => {
                     <Category
                       key={index}
                       {...(listicleCategoryName.toLowerCase() ===
-                      category.listicle_category_name.toLowerCase()
+                        category.listicle_category_name.toLowerCase()
                         ? { active: true }
                         : {
-                            as: 'a',
-                            href: category.listicle_category_link?.url || '/',
-                          })}
+                          as: 'a',
+                          href: category.listicle_category_link?.url || '/',
+                        })}
                     >
                       {category.listicle_category_name}
                     </Category>

@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import Rating from 'UI/Rating';
 import Image from 'UI/Image';
-import { COLORS } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { QUOTES } from 'assets/SvgIcons';
 
 const Slider = dynamic(() => import('UI/Slider'));
@@ -39,16 +39,16 @@ const StyledReviews = styled.div`
   @media (max-width: 768px) {
     width: 100%;
     ${({ reviewType }) => {
-      if (reviewType === 'testimonial') {
-        return `
+    if (reviewType === 'testimonial') {
+      return `
         .custom-pagination {
           top: 95%;
           left: 50%;
           transform: translateX(-50%);
         }
       `;
-      }
-    }}
+    }
+  }}
   }
 `;
 
@@ -75,7 +75,7 @@ const Quotes = styled.div`
 `;
 
 const Review = styled.div`
-  border: 1px solid ${COLORS.GREY.G6};
+  border: 1px solid ${COLORS.GRAY.G6};
   border-radius: 8px;
   min-height: 300px;
   @media (max-width: 768px) {
@@ -129,7 +129,7 @@ const ReviewerName = styled.div`
 const ReviewerSubtext = styled.div`
   font-size: 14px;
   line-height: 20px;
-  color: ${COLORS.GREY_G4};
+  color: ${COLORS.GRAY.G4};
 `;
 
 const RatingWrapper = styled.div`
@@ -145,7 +145,7 @@ const RatingTime = styled.div`
   text-align: right;
   font-size: 12px;
   line-height: 16px;
-  color: ${COLORS.GREY_G4};
+  color: ${COLORS.GRAY.G4};
 `;
 
 /**
@@ -248,7 +248,7 @@ const Reviews: React.FC<{
                   </Reviewer>
                   {type === 'regular' ? (
                     <RatingWrapper>
-                      <Rating fillColor={COLORS.HEADOUT_CANDY} value={rating} />
+                      <Rating fillColor={COLORS.BRAND.CANDY} value={rating} />
                       <RatingTime>{ratingDate}</RatingTime>
                     </RatingWrapper>
                   ) : null}

@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
+import COLORS from 'const/colors';
+
 import Image from '../UI/Image';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 
@@ -12,25 +14,28 @@ type FeatureBoxProps = {
 const StyledFeatureBoxWrapper = styled.div`
   display: grid;
   grid-row-gap: 40px;
-  line-height: 30px;
 `;
 
 const StyledFeatureBox = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  border: 1px solid #ebebeb;
+  border: 1px solid ${COLORS.GRAY.G6};
+  border-radius: 6px;
+  overflow: hidden;
   height: 100%;
-  grid-column-gap: 40px;
+
   img {
     height: 100%;
     width: 100%;
     object-fit: cover;
   }
-  h3 {
-    margin-top: 20px;
+
+  .content {
+    padding: 24px 40px;
   }
-  p {
-    padding-right: 40px;
+
+  h3 {
+    margin-top: 0;
   }
   @media (max-width: 768px) {
     grid-template-rows: auto auto;

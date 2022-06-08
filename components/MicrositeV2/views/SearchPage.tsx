@@ -1,7 +1,7 @@
 import React, { ComponentType, useState } from 'react';
 import { PAGETYPE } from 'const/index';
 import { CLOSE_WHITE } from 'assets/SvgIcons';
-import { SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
 import dynamic from 'next/dynamic';
 
 import PopulateProducts from '../PopulateProducts';
@@ -70,14 +70,14 @@ export const SearchPage = (props) => {
       <div className="search-results">
         {results.length
           ? results.map(({ item }, index) => {
-              return (
-                <SearchItem
-                  key={index}
-                  onSearchResultClick={searchItemClick}
-                  {...item}
-                />
-              );
-            })
+            return (
+              <SearchItem
+                key={index}
+                onSearchResultClick={searchItemClick}
+                {...item}
+              />
+            );
+          })
           : null}
       </div>
       <pre></pre>
@@ -93,7 +93,7 @@ export const SearchPage = (props) => {
             grid-template-columns: 1fr auto;
             align-items: center;
             justify-content: space-between;
-            font-family: ${SOLEIL.FONT_STACK};
+            font-family: ${HALYARD.FONT_STACK};
             grid-gap: 10px;
             border-bottom: 1px solid #dadada;
           }
@@ -116,8 +116,8 @@ export const SearchPage = (props) => {
           }
           .heading {
             font-size: 22px;
-            font-weight: ${SOLEIL.SEMIBOLD};
-            font-family: ${SOLEIL.FONT_STACK};
+            font-weight: 600;
+            font-family: ${HALYARD.FONT_STACK};
             color: #545454;
           }
         `}

@@ -14,7 +14,7 @@ import MultiBannerWrapper from 'UI/MultiBannerWrapper';
 import { LOCATION } from 'assets/SvgIcons';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, THEMES } from 'const/index';
 import { strings } from 'const/strings';
-import { SIZES, SOLEIL } from 'const/ui-constants';
+import { SIZES } from 'const/ui-constants';
 import { isSafetyIncluded } from 'utils';
 import {
   groupSlices,
@@ -74,7 +74,6 @@ const V2MicrositeWrapper = styled.div`
     max-width: ${SIZES.MAX_WIDTH};
     margin-left: auto;
     margin-right: auto;
-    font-family: ${SOLEIL.FONT_STACK};
   }
 
   @media (max-width: 768px) {

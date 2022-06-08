@@ -45,6 +45,7 @@ import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
 import { gtmAtom } from 'store/atoms/gtm';
+import { expandFontToken } from 'const/typography';
 
 const Breadcrumb = dynamic(() => import('./BreadCrumb'));
 const AccordionGroup = dynamic(() => import('../slices/AccordionGroup'));
@@ -105,15 +106,12 @@ const ComponentWrapper = styled.div`
 
 const HighlightsSectionWrapper = styled.div`
   margin: 0 0 64px;
-  font-size: 15px;
   max-width: 792px;
-  line-height: 24px;
-  font-weight: normal;
+  ${expandFontToken('Paragraph/Large')}
 
   h2 {
-    font-size: 24px;
+    ${expandFontToken('Heading/Large')}
     margin: 0 0 24px;
-    line-height: 28px;
   }
   ul {
     padding-inline-start: 0;
@@ -124,7 +122,6 @@ const HighlightsSectionWrapper = styled.div`
   }
   li {
     margin-bottom: 12px;
-    font-weight: normal;
     padding-left: 1.5rem;
     text-indent: -1.5em;
   }
@@ -144,15 +141,12 @@ const HighlightsSectionWrapper = styled.div`
 
 const AboutTheatreSectionWrapper = styled.div`
   margin: 0 0 64px;
-  font-size: 15px;
   max-width: 792px;
-  line-height: 24px;
-  font-weight: normal;
+  ${expandFontToken('Paragraph/Large')}
 
   h2 {
-    font-size: 24px;
+    ${expandFontToken('Heading/Large')}
     margin: 0 0 24px;
-    line-height: 28px;
   }
   ul {
     padding-inline-start: 0;
@@ -163,9 +157,6 @@ const AboutTheatreSectionWrapper = styled.div`
     font-weight: normal;
     padding-left: 1.5rem;
     text-indent: -1.5em;
-  }
-  a {
-    color: #114cd6;
   }
   @media (max-width: 768px) {
     width: 100%;

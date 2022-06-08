@@ -1,12 +1,13 @@
+import { expandFontToken } from 'const/typography';
 import styled from 'styled-components';
 
 const TitleTextCombo = styled.div`
   h2 {
     margin: 0;
-    font-size: 24px;
+    ${expandFontToken('Heading/Large')}
   }
   p {
-    font-size: 16px;
+    ${expandFontToken('Paragraph/Large')}
   }
   display: grid;
   grid-row-gap: 0px;

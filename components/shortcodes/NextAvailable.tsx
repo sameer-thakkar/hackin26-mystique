@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import calendar from 'dayjs/plugin/calendar';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import { strings } from 'const/strings';
-import { SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
 
 import { HEADOUT_API_ENDPOINT } from '../../constants';
 
@@ -12,7 +12,7 @@ dayjs.extend(calendar);
 dayjs.extend(advancedFormat);
 
 const Text = styled.span`
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
 `;
 
 type NextAvailableProps = {

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { COLORS } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import styled from 'styled-components';
 import { PURPS_TICK_MARK } from 'assets/SvgIcons';
 
@@ -18,7 +18,7 @@ const DropdownOverlay = styled.div`
   grid-row-gap: 24px;
   border-radius: 4px;
   z-index: 10;
-  border: 1px solid #dadada;
+  border: 1px solid ${COLORS.GRAY.G6};
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.08);
   margin-top: 5px;
 `;
@@ -31,7 +31,7 @@ const StyledDropdownItem = styled.div`
       display: grid;
       grid-auto-flow: column;
       grid-gap: 20px;
-      color: ${COLORS.PURPS};
+      color: ${COLORS.BRAND.PURPS};
       align-items: center;
     `
       : ``}

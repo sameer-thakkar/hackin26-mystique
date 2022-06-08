@@ -3,16 +3,17 @@ import classNames from 'classnames';
 import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
 import Chevron from 'components/UI/Chevron';
-import { SOLEIL, COLORS } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
+import { expandFontToken } from 'const/typography';
 
 export const StyledAccordion = styled.div`
   padding: 16px 0;
   margin-right: ${({ isGlobalMb }) => (isGlobalMb ? '0' : '24px')};
-  border-bottom: 1px solid ${COLORS.CHALK};
+  border-bottom: 1px solid ${COLORS.GRAY.G7};
   display: grid;
   grid-template-rows: max-content max-content;
   grid-row-gap: ${({ isOpen }) => (isOpen ? '8px' : '')};
@@ -26,7 +27,7 @@ export const StyledAccordion = styled.div`
 
     &:first-child {
       border-top: ${({ isGlobalMb }) =>
-        isGlobalMb && `1px solid ${COLORS.CHALK}`};
+    isGlobalMb && `1px solid ${COLORS.GRAY.G7}`};
     }
     &.accordion-container[expanded] header .chevron-icon {
       &::before {
@@ -45,9 +46,7 @@ const Title = styled.div`
   display: grid;
   grid-template-columns: 1fr auto;
   grid-column-gap: 10px;
-  line-height: 20px;
-  font-weight: ${SOLEIL.SEMIBOLD};
-  font-family: ${SOLEIL.FONT_STACK};
+  ${expandFontToken('Heading/Small')}
   ${({ isGlobalMb }) => isGlobalMb && `font-size: 16px;`}
   .question-text {
     cursor: pointer;
@@ -59,28 +58,27 @@ const Title = styled.div`
   }
   @media (max-width: 768px) {
     ${({ isAmp }) => {
-      return isAmp
-        ? `
+    return isAmp
+      ? `
           background-color: transparent;
           outline: none;
           border: none;
           margin: 0;
         `
-        : '';
-    }}
+      : '';
+  }}
   }
 `;
 
 const ContentBlock = styled.div`
   display: ${({ isOpen }) => (isOpen ? 'grid' : 'none')};
   grid-row-gap: 8px;
-  font-family: ${SOLEIL.FONT_STACK};
   p {
     margin: 0;
     ${({ isGlobalMb }) => isGlobalMb && `font-size: 14px; line-height: 20px;`}
   }
   a {
-    color: ${COLORS.LIGHTER_LINK_BLUE};
+    color: ${COLORS.TEXT.CANDY_1};
   }
   img {
     width: 100%;

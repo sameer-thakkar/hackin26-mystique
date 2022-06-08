@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { SOLEIL, COLORS } from 'const/ui-constants';
+import COLORS from 'const/colors';
 
 import sliceHandler from '../Slices';
 import { stringIdfy } from '../../utils/helper';
@@ -8,11 +8,8 @@ import { stringIdfy } from '../../utils/helper';
 const StyledTabPanel = styled.div`
   position: relative;
   display: grid;
-  grid-row-gap: 16px;
-  font-family: ${SOLEIL.FONT_STACK};
-  line-height: 1.5;
   a {
-    color: ${COLORS.LIGHTER_LINK_BLUE};
+    color: ${COLORS.TEXT.CANDY_1};
   }
   p {
     margin: 0;

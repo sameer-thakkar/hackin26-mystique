@@ -5,7 +5,7 @@ import Image from 'UI/Image';
 import Conditional from 'components/common/Conditional';
 import DetailedCollectionCard from 'components/GlobalMbs/collectionTabs/detailedCollectionCard';
 import { ASPECT_RATIO, FALLBACK_IMAGES, SIDEBAR_TYPES } from 'const/index';
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import COLORS from 'const/colors';
 
 const StyledCard = styled.div`
   display: grid;
@@ -27,14 +27,14 @@ const StyledCard = styled.div`
     align-items: center;
     top: 12px;
     left: 12px;
-    background-color: ${COLORS.WHITE};
+    background-color: ${COLORS.BRAND.WHITE};
     width: max-content;
     padding: 4px 8px;
     border-radius: 2px;
     z-index: 10;
     font-size: 12px;
     font-style: normal;
-    font-weight: ${SOLEIL.REGULAR};
+    font-weight: 400;
     line-height: 14px;
     span {
       margin-right: 4px;
@@ -59,14 +59,14 @@ const StyledCard = styled.div`
       line-height: 16px;
       font-size: 12px;
       font-style: normal;
-      font-weight: ${SOLEIL.REGULAR};
-      color: ${COLORS.GREY.G4};
+      font-weight: 400;
+      color: ${COLORS.GRAY.G4};
     }
   }
   .name {
     font-size: 16px;
     font-style: normal;
-    font-weight: ${SOLEIL.SEMIBOLD};
+    font-weight: 600;
     line-height: 20px;
   }
   .price-wrapper {
@@ -78,13 +78,13 @@ const StyledCard = styled.div`
       line-height: 16px;
       font-size: 12px;
       font-style: normal;
-      font-weight: ${SOLEIL.REGULAR};
-      color: ${COLORS.GREY.G4};
+      font-weight: 400;
+      color: ${COLORS.GRAY.G4};
     }
     .price {
       font-size: 16px;
       font-style: normal;
-      font-weight: ${SOLEIL.SEMIBOLD};
+      font-weight: 600;
       line-height: 16px;
     }
   }

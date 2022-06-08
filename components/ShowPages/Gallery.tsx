@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 import Conditional from 'components/common/Conditional';
-import { COLORS } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import Image, { Wrapper } from 'components/UI/Image';
 import { BLACK_CROSS, ALL_PHOTOS } from 'assets/SvgIcons';
 
@@ -211,7 +211,7 @@ const ImageWrapper = styled.div(
     width: 186px;
     height: 115.73px;
     cursor: pointer;
-    ${active && `border: 2px solid ${COLORS.PURPS};`}
+    ${active && `border: 2px solid ${COLORS.BRAND.PURPS};`}
     box-sizing: border-box;
     border-radius: 4px;
   }
@@ -294,9 +294,9 @@ const Gallery = ({ galleryArray, isMobile }) => {
     navigation: isMobile
       ? false
       : {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
   };
 
   const popupOpener = (index) => {

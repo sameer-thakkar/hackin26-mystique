@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
-import { SOLEIL, COLORS } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import {
   SAFETY_DETAILS_IMAGES,
   SAFETY_DETAILS_TYPE,
@@ -94,14 +95,14 @@ const SliderSection = styled.div`
 
 const Caption = styled.div`
   font-size: 12px;
-  color: ${COLORS.WHITE};
+  color: ${COLORS.BRAND.WHITE};
   line-height: 19px;
-  background: ${COLORS.BLACK};
+  background: ${COLORS.BRAND.BLACK};
   padding: 8px 16px;
 `;
 
 const Heading = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
@@ -109,8 +110,8 @@ const Heading = styled.div`
 `;
 
 const Text = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
-  color: ${COLORS.FOUR_BLACK};
+  font-family: ${HALYARD.FONT_STACK};
+  color: ${COLORS.GRAY.G2};
   font-style: normal;
   font-weight: normal;
   font-size: 15px;
@@ -136,7 +137,7 @@ const Pitch = styled.div`
 `;
 
 const EmphasizedText = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
@@ -196,7 +197,7 @@ const SafetyCard = styled.div`
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.08);
     padding: 4px 7px;
     padding-left: 18px;
-    background: ${COLORS.WHITE};
+    background: ${COLORS.BRAND.WHITE};
     grid-template-columns: auto;
     svg {
       transform: scale(1.1);
@@ -214,15 +215,15 @@ const SafetyCard = styled.div`
 `;
 
 const AttentionStrip = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 20px;
   padding: 12px 16px;
   border-radius: 4px;
-  background-color: ${COLORS.GENERAL_WARNING_BG};
-  color: ${COLORS.GENERAL_WARNING_FG};
+  background-color: ${COLORS.WARNING_RED.LIGHT_TONE_3};
+  color: ${COLORS.WARNING_RED.DARK_TONE};
   margin-top: -8px;
   margin-bottom: 8px;
   p {
@@ -235,7 +236,7 @@ const AttentionStrip = styled.div`
     display: inline-block;
     text-decoration: underline;
     cursor: pointer;
-    color: ${COLORS.GENERAL_WARNING_FG};
+    color: ${COLORS.WARNING_RED.DARK_TONE};
     @media (max-width: 768px) {
       display: block;
       margin-top: 4px;

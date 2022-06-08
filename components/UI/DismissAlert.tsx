@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
 
 import { CLOSE_YELLOW } from '../../assets/SvgIcons';
 
 const StyledAlert = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   margin-top: 80px;
   position: fixed;
   top: 0;
@@ -38,7 +38,7 @@ const StyledContent = styled.div`
   padding: 8px;
   .alert-key-text {
     grid-area: key-text;
-    font-weight: ${SOLEIL.SEMIBOLD};
+    font-weight: 600;
     justify-self: end;
   }
   .alert-text {

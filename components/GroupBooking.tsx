@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import PhoneInput from 'react-phone-input-2';
 import { parsePhoneNumberFromString as parseMobile } from 'libphonenumber-js/mobile';
 import { RichText } from 'prismic-reactjs';
-import { COLORS, MODAL_STYLE, SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
 
 import {
   PREFERRED_COUNTRIES_CODES,
@@ -30,10 +30,12 @@ import 'react-datepicker/dist/react-datepicker.css';
 import 'react-phone-input-2/lib/style.css';
 import Conditional from './common/Conditional';
 
+import COLORS from 'const/colors';
+
 dayjs.extend(isSameOrBefore);
 
 const Checkbox = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   display: grid;
   grid-template-columns: auto auto;
   justify-content: left;
@@ -82,8 +84,8 @@ const StyledGroupBooking = styled.div`
     line-height: 1.5;
     font-weight: 400;
     border-bottom: 1px solid #44444452;
-    font-weight: ${SOLEIL.SEMIBOLD};
-    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: 600;
+    font-family: ${HALYARD.FONT_STACK};
     span {
       color: #fff;
     }
@@ -166,7 +168,7 @@ const StyledGroupBooking = styled.div`
   }
   .form .react-select__placeholder {
     font-size: 1em;
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
     width: 100%;
   }
   form.form {
@@ -189,7 +191,7 @@ const StyledGroupBooking = styled.div`
     color: #333333;
     line-height: 1.4;
     font-size: 1em;
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
     text-transform: capitalize;
   }
   .form-wrapper .react-select__option:hover,
@@ -199,7 +201,7 @@ const StyledGroupBooking = styled.div`
   }
   .form-wrapper .react-select__single-value {
     font-size: 1em;
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
   }
   .form-wrapper .split {
     display: grid;
@@ -230,7 +232,7 @@ const StyledGroupBooking = styled.div`
     width: calc(100% - 16px);
     cursor: pointer;
     font-size: 1em;
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
   }
   .react-datepicker__input-container input:focus {
     border-color: #333;
@@ -283,7 +285,7 @@ const StyledGroupBooking = styled.div`
     right: 20px;
   }
   .hide-mobi {
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
   }
   .hide-mobi a {
     color: #fff;
@@ -326,7 +328,7 @@ const StyledGroupBooking = styled.div`
       padding: 20px;
       display: block;
       text-align: center;
-      font-family: ${SOLEIL.FONT_STACK};
+      font-family: ${HALYARD.FONT_STACK};
       font-weight: 300;
       line-height: 140%;
     }
@@ -394,7 +396,7 @@ const StyledGroupBooking = styled.div`
     width: 15px;
   }
   .success .call span {
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
     font-size: 16px;
     font-weight: 500;
     font-style: normal;
@@ -406,16 +408,16 @@ const StyledGroupBooking = styled.div`
   }
   .info-text {
     font-size: 1em;
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
     line-height: 2.06;
   }
   .error {
     font-size: 0.625em;
     span {
-      color: ${COLORS.RHAPSODY};
+      color: ${COLORS.TEXT.WARNING_RED_1};
     }
     padding-top: 6px;
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
     position: absolute;
   }
 `;
@@ -728,7 +730,35 @@ export default class GroupBooking extends Component<any, any> {
       blackoutStartDate,
       blackoutEndDate
     );
-    const styles = MODAL_STYLE;
+
+    const styles = {
+      overlay: {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        zIndex: 3,
+      },
+      content: {
+        width: '100%',
+        maxWidth: '1020px',
+        margin: 'auto',
+        boxShadow: '0 3px 6px 0 rgba(0, 0, 0, 0.1)',
+        background: '#fff',
+        borderRadius: '4px',
+        padding: '0 0px 25px',
+        zIndex: '999',
+        top: 0,
+        bottom: 0,
+        height: 'max-content',
+        border: 'none',
+        left: 0,
+        right: 0,
+      },
+    };
+
     if (isMobile) {
       styles.content = {
         ...styles.content,

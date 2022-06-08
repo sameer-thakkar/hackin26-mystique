@@ -5,10 +5,11 @@ import InteractionContext from 'contexts/Interaction';
 import { MBContext } from 'contexts/MBContext';
 import Conditional from 'components/common/Conditional';
 import { strings } from 'const/strings';
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import LinkResolver from 'components/LinkResolver';
 import { useRouter } from 'next/router';
 import { QUERY_PARAMS } from 'const/index';
+import { expandFontToken } from 'const/typography';
 
 const RowComponent: ComponentType<any> = dynamic(() =>
   import('./RowComponent').then((mod) => mod.RowComponent)
@@ -20,13 +21,9 @@ const StyledProductWrapper = styled.div`
   grid-row-gap: 32px;
   .view-more {
     display: grid;
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? SOLEIL.SEMIBOLD : SOLEIL.REGULAR};
-    font-size: 16px;
-    line-height: ${({ isEntertainmentMb }) => (isEntertainmentMb ? '20px' : 1)};
+    ${expandFontToken('Button/Medium')}
     color: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? COLORS.GREY.G2 : COLORS.PURPS};
+    isEntertainmentMb ? COLORS.GRAY.G2 : COLORS.BRAND.PURPS};
     border: 1px solid;
     border-radius: 4px;
     margin: auto;
@@ -141,9 +138,9 @@ const PopulateProducts = (props) => {
       QUERY_PARAMS.LIMIT,
       String(
         Number(queryLimit) +
-          (isMobile
-            ? NO_OF_CARDS_IN_ROW.MOBILE * NO_OF_ROWS_TO_SHOW.MOBILE
-            : NO_OF_CARDS_IN_ROW.DESKTOP * NO_OF_ROWS_TO_SHOW.DESKTOP)
+        (isMobile
+          ? NO_OF_CARDS_IN_ROW.MOBILE * NO_OF_ROWS_TO_SHOW.MOBILE
+          : NO_OF_CARDS_IN_ROW.DESKTOP * NO_OF_ROWS_TO_SHOW.DESKTOP)
       )
     );
     query.set(QUERY_PARAMS.OFFSET, '0');
@@ -158,7 +155,7 @@ const PopulateProducts = (props) => {
     e.preventDefault();
     setRowsInView(
       rowsInView +
-        (isMobile ? NO_OF_ROWS_TO_SHOW.MOBILE : NO_OF_ROWS_TO_SHOW.DESKTOP)
+      (isMobile ? NO_OF_ROWS_TO_SHOW.MOBILE : NO_OF_ROWS_TO_SHOW.DESKTOP)
     );
     routerPush(`${pathname}?${getUpdatedQuery()?.toString()}`, null, {
       shallow: true,
@@ -170,8 +167,8 @@ const PopulateProducts = (props) => {
   const tgids = isListicle
     ? categoryPropsPopularityRank
     : isDiscountedPage
-    ? activeCategoryTgids || categoryPropsPopularityRank
-    : propTgids || activeCategoryTgids;
+      ? activeCategoryTgids || categoryPropsPopularityRank
+      : propTgids || activeCategoryTgids;
 
   const tgidsSubArr = subArrays(tgids, Number(offset));
 

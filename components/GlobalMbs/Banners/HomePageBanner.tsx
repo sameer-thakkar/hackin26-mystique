@@ -11,7 +11,7 @@ import {
   FALLBACK_IMAGES,
   PAGE_TYPES,
 } from 'const/index';
-import { SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
 import { trackEvent } from 'utils/analytics';
 import { MBContext } from 'contexts/MBContext';
 
@@ -53,7 +53,7 @@ const TextWrapper = styled.div`
   display: grid;
   grid-template-rows: repeat(2, max-content);
   grid-gap: 16px;
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   h1,
   p {
     margin: 0;
@@ -61,7 +61,7 @@ const TextWrapper = styled.div`
   h1 {
     font-size: 48px;
     font-style: normal;
-    font-weight: ${SOLEIL.BOLD};
+    font-weight: 700;
     line-height: 61px;
     letter-spacing: -0.2px;
   }
@@ -77,13 +77,13 @@ const TextWrapper = styled.div`
     h1 {
       font-size: 24px;
       font-style: normal;
-      font-weight: ${SOLEIL.SEMIBOLD};
+      font-weight: 600;
       line-height: 32px;
     }
     p {
       font-size: 14px;
       font-style: normal;
-      font-weight: ${SOLEIL.REGULAR};
+      font-weight: 400;
       line-height: 20px;
     }
   }

@@ -1,6 +1,6 @@
 import { RichText } from 'prismic-reactjs';
-import { SOLEIL, COLORS } from 'const/ui-constants';
-
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 import Image from '../UI/Image';
 
@@ -63,17 +63,17 @@ export const SearchItem = (props) => {
         {`
           .search-item {
             display: grid;
-            font-family: ${SOLEIL.FONT_STACK};
+            font-family: ${HALYARD.FONT_STACK};
             grid-template-columns: 105px auto;
             grid-column-gap: 16px;
             cursor: pointer;
           }
 
           .search-item .search-title {
-            font-family: ${SOLEIL.FONT_STACK};
+            font-family: ${HALYARD.FONT_STACK};
             font-size: 16px;
-            color: ${COLORS.DAVY_GREY};
-            font-weight: ${SOLEIL.SEMIBOLD};
+            color: ${COLORS.GRAY.G2};
+            font-weight: 600;
             line-height: 1.2;
           }
 
@@ -97,17 +97,17 @@ export const SearchItem = (props) => {
             font-size: 10px;
             text-decoration: line-through;
             color: #757575;
-            font-weight: ${SOLEIL.REGULAR};
+            font-weight: 400;
           }
           .search-item .current-price {
             font-size: 14px;
-            color: ${COLORS.DAVY_GREY};
-            font-weight: ${SOLEIL.MEDIUM};
+            color: ${COLORS.GRAY.G2};
+            font-weight: 500;
           }
           @media (max-width: 768px) {
             .search-item .search-title {
               font-size: 14px;
-              font-weight: ${SOLEIL.SEMIBOLD};
+              font-weight: 600;
             }
           }
         `}
@@ -129,7 +129,7 @@ export const SearchItem = (props) => {
           @media (max-width: 768px) {
             .booster p {
               font-size: 12px;
-              color: ${COLORS.TEAL};
+              color: ${COLORS.TEXT.BEACH};
             }
             .booster p * {
               display: none;

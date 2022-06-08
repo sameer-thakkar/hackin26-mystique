@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
-import { SOLEIL } from 'const/ui-constants';
+import { expandFontToken } from 'const/typography';
+import COLORS from 'const/colors';
 
 import Image from '../UI/Image';
 import { shortCodeSerializer } from '../../utils/shortCodes';
@@ -24,27 +25,22 @@ const StyledComboCard = styled.div`
   display: grid;
   grid-template-rows: auto auto 1fr;
   grid-gap: 10px;
-  padding: 20px;
-  padding-top: 14px;
-  border-radius: 3px;
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.18);
+  padding: 16px 24px;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   img {
     width: 100%;
   }
   h2.title {
-    font-size: 18px;
-    line-height: 1.4;
-    color: #666666;
     text-align: justify;
-    font-weight: 500;
-    font-family: ${SOLEIL.FONT_STACK};
+    color: ${COLORS.GRAY.G3};
+    ${expandFontToken('Heading/Regular')}
     margin: unset;
     ::after {
       content: unset !important;
     }
   }
   div {
-    font-family: ${SOLEIL.FONT_STACK};
     p {
       margin: unset !important;
     }

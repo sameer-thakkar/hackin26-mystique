@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
-import { COLORS, SOLEIL } from 'const/ui-constants';
-
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import RichContent from '../UI/RichContent';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 import { stringIdfy } from '../../utils/helper';
@@ -12,10 +12,10 @@ const StyledTable = styled.div`
   display: grid;
   grid-auto-flow: row;
   grid-auto-rows: auto;
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   .heading {
     font-size: 26px;
-    font-weight: ${SOLEIL.SEMIBOLD};
+    font-weight: 600;
     margin-bottom: 40px;
   }
   @media (max-width: 768px) {
@@ -25,11 +25,11 @@ const StyledTable = styled.div`
     grid-gap: 24px;
   }
 `;
-const StyledRow = styled.div`{
-  background: ${COLORS.WHITE};
+const StyledRow = styled.div`
+  background: ${COLORS.BRAND.WHITE};
   &:nth-of-type(2n){
-    background: ${COLORS.LIGHTER_WHITE};
-    color: ${COLORS.FOUR_BLACK};
+    background: ${COLORS.GRAY.G8};
+    color: ${COLORS.GRAY.G2};
   }
   display: grid;
   grid-auto-flow: column;
@@ -48,7 +48,7 @@ const StyledColumn = styled.div`
   display: grid;
   padding: 14px 16px;
   strong {
-    font-weight: ${SOLEIL.MEDIUM};
+    font-weight: 500;
   }
   p {
     margin: 0;
@@ -57,9 +57,9 @@ const StyledColumn = styled.div`
     &:nth-of-type(1) {
       display: none;
     }
-    background: ${COLORS.WHITE};
+    background: ${COLORS.BRAND.WHITE};
     &:nth-of-type(2n) {
-      background: ${COLORS.LIGHTER_WHITE};
+      background: ${COLORS.GRAY.G8};
     }
     &:nth-of-type(${({ colCount }) => colCount + 1}) {
       grid-column: 1 / 3;
@@ -67,8 +67,8 @@ const StyledColumn = styled.div`
       font-size: 18px;
       padding-left: 0;
       padding-top: 0;
-      background: ${COLORS.WHITE};
-      font-weight: ${SOLEIL.MEDIUM};
+      background: ${COLORS.BRAND.WHITE};
+      font-weight: 500;
     }
   }
 `;

@@ -14,7 +14,8 @@ import {
   REOPENING_CATEGORIES,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { SOLEIL, COLORS } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { truncate, checkLTT } from 'utils/helper';
 import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import { dateToString } from 'utils/dateUtils';
@@ -22,6 +23,7 @@ import InteractionContext from 'contexts/Interaction';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { createBookingURL } from 'utils';
 import parse from 'url-parse';
+import { expandFontToken } from 'const/typography';
 import { getABTestingVariant } from 'utils/experiments/experimentUtils';
 import { useRecoilValue } from 'recoil';
 import { hsidAtom } from 'store/atoms/hsid';
@@ -44,24 +46,14 @@ const ProductCard = styled.div`
   }
 
   .product-v2-title {
-    font-family: ${SOLEIL.FONT_STACK};
-    font-size: 16px;
-    line-height: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '20px' : '24px'};
-    color: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? COLORS.GREY.G2 : COLORS.TWO_BLACK};
-    font-weight: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? SOLEIL.SEMIBOLD : 800};
+    color: ${COLORS.GRAY.G2};
+    ${expandFontToken('Heading/Product Card')}
   }
 
   .reopening {
-    font-family: ${SOLEIL.FONT_STACK};
-    font-size: 12px;
-    font-style: normal;
-    font-weight: ${SOLEIL.REGULAR};
-    line-height: 16px;
     margin-top: 4px;
-    color: ${COLORS.BEACH};
+    color: ${COLORS.TEXT.BEACH};
+    ${expandFontToken('UI/Label Small')}
   }
 
   .product-v2-image {
@@ -73,11 +65,10 @@ const ProductCard = styled.div`
     position: absolute;
     top: 8px;
     left: 0;
-    background: ${COLORS.ETHER};
+    background: ${COLORS.PRIMARY.OCEAN_BLUE};
     border-radius: 0 2px 2px 0;
     color: #fff;
     line-height: 1;
-    font-family: ${SOLEIL.FONT_STACK};
     font-size: 12px;
     text-transform: uppercase;
     font-weight: 800;
@@ -112,10 +103,7 @@ const ProductCard = styled.div`
   }
 
   .product-v2-price {
-    font-family: ${SOLEIL.FONT_STACK};
-    font-size: 16px;
-    font-weight: ${SOLEIL.SEMIBOLD};
-    line-height: 20px;
+    ${expandFontToken('Subheading/Large')}
     text-align: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? 'left' : 'right'};
 
@@ -126,7 +114,7 @@ const ProductCard = styled.div`
     align-items: center;`}
     span {
       color: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? COLORS.GREY.G3 : COLORS.TWO_BLACK};
+        isEntertainmentMb ? COLORS.GRAY.G3 : COLORS.GRAY.G1};
     }
 
     .mr-4 {
@@ -134,61 +122,47 @@ const ProductCard = styled.div`
     }
 
     .discount {
-      background-color: ${COLORS.SOOTHING_GREEN};
-      color: ${COLORS.OKAY_GREEN};
+      background-color: ${COLORS.BACKGROUND.SOOTHING_GREEN};
+      color: ${COLORS.TEXT.OKAY_GREEN_3};
       padding: 2px 4px;
       border-radius: 2px;
-      font-family: ${SOLEIL.FONT_STACK};
-      font-size: 10px;
-      font-style: normal;
-      font-weight: ${SOLEIL.REGULAR};
-      line-height: 12px;
       margin-left: 6px;
+      ${expandFontToken('UI/Label XS')}
     }
   }
 
   .product-v2-scratch-price {
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.REGULAR};
-    font-size: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '12px' : '14px'};
-    line-height: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '16px' : '14px'};
-    letter-spacing: 0.5px;
+    ${expandFontToken('UI/Label Small')}
     text-align: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? 'left' : 'right'};
     text-decoration-line: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? 'unset' : 'line-through'};
 
     span {
-      color: ${COLORS.GREY_G4};
+      color: ${COLORS.GRAY.G4};
     }
   }
 
   .vendor-name {
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.MEDIUM};
+    font-family: ${HALYARD.FONT_STACK};
+    font-weight: 500;
     text-transform: uppercase;
     font-size: 11px;
     line-height: 11px;
     letter-spacing: 0.5px;
-    color: ${COLORS.GREY_G4};
+    color: ${COLORS.GRAY.G4};
   }
 
   .l1-booster-wrapper {
     display: grid;
     grid-template-columns: repeat(2, max-content);
     justify-content: space-between;
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.REGULAR};
-    font-style: normal;
-    line-height: 16px;
-    font-size: 12px;
+    ${expandFontToken('UI/Label Small')}
     margin-bottom: 2px;
   }
 
   .l1-booster-wrapper * {
-    color: ${COLORS.GREY.G4};
+    color: ${COLORS.GRAY.G4};
   }
 
   .rating {
@@ -199,7 +173,7 @@ const ProductCard = styled.div`
   }
 
   .avg-rating {
-    color: ${COLORS.JOY_MUSTARD};
+    color: ${COLORS.PRIMARY.JOY_MUSTARD};
   }
 
   .avg-rating svg {
@@ -221,10 +195,7 @@ const ProductCard = styled.div`
     }
 
     .product-v2-title {
-      font-size: 14px;
-      line-height: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '20px' : '1.3'};
-      font-weight: ${SOLEIL.SEMIBOLD};
+      ${expandFontToken('Heading/XS')}
     }
 
     .product-v2-bottom {
@@ -253,25 +224,16 @@ const ProductCard = styled.div`
 
     .product-v2-price {
       text-align: left;
-      font-weight: ${SOLEIL.SEMIBOLD};
-      font-size: 14px;
-      line-height: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '20px;' : '1'};
-      font-family: ${SOLEIL.FONT_STACK};
+      ${expandFontToken('Subheading/Regular')}
     }
 
     .product-v2-scratch-price {
       text-align: left;
-      font-size: 10px;
-      line-height: 1.2;
-      font-weight: ${SOLEIL.REGULAR};
-      font-family: ${SOLEIL.FONT_STACK};
+      ${expandFontToken('UI/Label XS')}
     }
 
     .l1-booster-wrapper {
-      ${({ isEntertainmentMb }) =>
-        isEntertainmentMb &&
-        `font-size: 10px;line-height: 12px;margin-bottom:4px;`}
+      ${expandFontToken('UI/Label XS')}
     }
 
     .avg-rating svg {
@@ -280,8 +242,7 @@ const ProductCard = styled.div`
     }
 
     .reopening {
-      font-size: 10px;
-      line-height: 12px;
+      ${expandFontToken('UI/Label XS')}
     }
   }
 
@@ -293,7 +254,7 @@ const ProductCard = styled.div`
     width: 100%;
     object-fit: cover;
     border-radius: 4px;
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
     background: #ebebeb;
     font-weight: 600;
     color: #bababa;
@@ -325,14 +286,14 @@ const ProductCard = styled.div`
 
   .product-v2-boosters,
   .product-v2-boosters p {
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
     font-size: 12px;
     line-height: 12px;
   }
 
   .product-v2-boosters .inline-availability {
     color: ${({ theme: { cardAccent } }) =>
-      cardAccent ? cardAccent : COLORS.FOUR_BLACK};
+      cardAccent ? cardAccent : COLORS.GRAY.G2};
   }
 
   @media (max-width: 768px) {
@@ -667,7 +628,7 @@ const Product = (props) => {
                     </Conditional>
                     <Conditional if={!isNew && averageRating}>
                       <span className="avg-rating">
-                        {averageRating} {STAR(COLORS.JOY_MUSTARD)}
+                        {averageRating} {STAR(COLORS.PRIMARY.JOY_MUSTARD)}
                       </span>
                     </Conditional>
                     <Conditional if={!isNew && reviewCount}>

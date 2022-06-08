@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PAGETYPE } from 'const/index';
 import { CHEVRON_LEFT, SEARCH_ICON } from 'assets/SvgIcons';
-import { SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
 
 import { SortSelector } from '../SortSelector';
 import { ProductsWrapper } from '../ProductsWrapper';
@@ -85,7 +85,7 @@ export const CategoryPage = (props) => {
             display: grid;
             grid-template-columns: auto 1fr auto;
             align-items: center;
-            font-family: ${SOLEIL.FONT_STACK};
+            font-family: ${HALYARD.FONT_STACK};
             grid-gap: 10px;
             border-bottom: 1px solid #dadada;
           }
@@ -101,7 +101,7 @@ export const CategoryPage = (props) => {
           }
           .category-title {
             font-size: 24px;
-            font-family: SOLEIL;
+            font-family: ${HALYARD.FONT_STACK};
             font-weight: 500;
           }
 

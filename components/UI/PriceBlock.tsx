@@ -1,17 +1,17 @@
-import { SOLEIL, COLORS } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
 import { THEMES } from 'const/index';
 import styled from 'styled-components';
 import { strings } from 'const/strings';
 import Conditional from 'components/common/Conditional';
 import { useContext } from 'react';
 import { MBContext } from 'contexts/MBContext';
-
+import COLORS from 'const/colors';
 import LocalisedPrice from './LPrice';
 
 export const StyledPriceBlock = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   font-style: normal;
-  font-weight: ${SOLEIL.SEMIBOLD};
+  font-weight: 600;
   font-size: 24px;
   line-height: 30px;
   display: grid;
@@ -27,12 +27,12 @@ export const StyledPriceBlock = styled.div`
     font-weight: normal;
     font-size: 14px;
     line-height: 18px;
-    color: ${COLORS.GREY_G4};
+    color: ${COLORS.GRAY.G4};
     text-transform: lowercase;
     & > span {
       text-transform: uppercase;
       text-decoration: line-through;
-      color: ${COLORS.GREY_G4};
+      color: ${COLORS.GRAY.G4};
     }
   }
 `;

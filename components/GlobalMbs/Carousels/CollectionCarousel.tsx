@@ -5,7 +5,8 @@ import Image from 'UI/Image';
 import Carousel from 'components/GlobalMbs/Carousels/Carousel';
 import Conditional from 'components/common/Conditional';
 import { ASPECT_RATIO, FALLBACK_IMAGE, FALLBACK_IMAGES } from 'const/index';
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { MBContext } from 'contexts/MBContext';
 
@@ -47,14 +48,14 @@ const StyledCard = styled.a`
   .city {
     font-size: 12px;
     font-style: normal;
-    font-weight: ${SOLEIL.REGULAR};
+    font-weight: 400;
     line-height: 16px;
-    color: ${COLORS.GREY.G4};
+    color: ${COLORS.GRAY.G4};
   }
   .collection-name {
     font-size: 16px;
     font-style: normal;
-    font-weight: ${SOLEIL.SEMIBOLD};
+    font-weight: 600;
     line-height: 20px;
   }
 `;
@@ -63,7 +64,7 @@ const HeaderWrapper = styled.div`
   display: grid;
   grid-template-rows: repeat(2, max-content);
   row-gap: 12px;
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   @media (max-width: 500px) {
     margin-bottom: 24px;
   }
@@ -74,9 +75,9 @@ const HeaderWrapper = styled.div`
   }
   h2 {
     font-size: 24px;
-    font-weight: ${SOLEIL.SEMIBOLD};
+    font-weight: 600;
     line-height: 28px;
-    color: ${COLORS.GREY.G2};
+    color: ${COLORS.GRAY.G2};
     margin: 0;
   }
   a {
@@ -85,7 +86,7 @@ const HeaderWrapper = styled.div`
     font-size: 14px;
     line-height: 16px;
     letter-spacing: 0.2px;
-    color: ${COLORS.GREY.G2};
+    color: ${COLORS.GRAY.G2};
   }
   p {
     margin: 0;

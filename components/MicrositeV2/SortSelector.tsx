@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import Conditional from 'components/common/Conditional';
 import { CHEVRON_DOWN, PURPS_TICK_MARK } from 'assets/SvgIcons';
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import { expandFontToken } from 'const/typography';
+import COLORS from 'const/colors';
 
 const StyledSortSelector = styled.div`
   margin: 0;
@@ -13,36 +14,27 @@ const StyledSortSelector = styled.div`
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.08);
   }
   .selected-tab {
-    color: ${COLORS.PURPS};
+    color: ${COLORS.BRAND.PURPS};
   }
   .filter-selector {
     line-height: 1;
   }
   .current-filter-toggle {
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? SOLEIL.SEMIBOLD : SOLEIL.REGULAR};
-    font-size: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '14px' : '16px'};
-    line-height: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '15px' : '17px'};
+    ${expandFontToken('UI/Label Regular')}
     text-transform: capitalize;
     cursor: pointer;
     display: grid;
     grid-template-columns: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '1fr' : 'auto 16px'};
+    isEntertainmentMb ? '1fr' : 'auto 16px'};
     grid-column-gap: 12px;
     align-items: center;
 
     span {
       ${({ isEntertainmentMb }) =>
-        isEntertainmentMb && `color: ${COLORS.GREY.G4};`}
+    isEntertainmentMb && `color: ${COLORS.GRAY.G4};`}
     }
     .current-filter {
-      color: ${COLORS.PURPS};
-      ${({ isEntertainmentMb }) =>
-        isEntertainmentMb &&
-        `font-weight:${SOLEIL.REGULAR};font-size: 15px;line-height:20px;font-feature-settings: 'ss04' on;`}
+      color: ${COLORS.BRAND.PURPS};
     }
     .icon {
       display: flex;
@@ -64,9 +56,7 @@ const StyledSortSelector = styled.div`
     display: grid;
   }
   .filter-name {
-    font-family: ${SOLEIL.FONT_STACK};
     cursor: pointer;
-    font-size: 16px;
     border: none;
     text-transform: capitalize;
     display: grid;

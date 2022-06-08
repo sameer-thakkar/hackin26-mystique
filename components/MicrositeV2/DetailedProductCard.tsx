@@ -11,7 +11,8 @@ import LocalisedPrice from 'UI/LPrice';
 import Conditional from 'components/common/Conditional';
 import { strings } from 'const/strings';
 import { CLOSE_WHITE, Shield } from 'assets/SvgIcons';
-import { SOLEIL, COLORS } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -40,24 +41,24 @@ const DetailedDescriptionCard = styled.div`
   grid-template-columns: 1fr 0.9fr;
   grid-column-gap: 24px;
   border: ${({ isEntertainmentMb }) =>
-    isEntertainmentMb ? 'none' : `1px solid ${COLORS.GREY_75}`};
-  color: ${COLORS.FOUR_BLACK};
+    isEntertainmentMb ? 'none' : `1px solid ${COLORS.GRAY.G3}`};
+  color: ${COLORS.GRAY.G2};
   border-left: none;
   border-right: none;
   position: relative;
   ${({ isEntertainmentMb }) =>
     isEntertainmentMb &&
     `
-      background-color: ${COLORS.GREY.G8};
+      background-color: ${COLORS.GRAY.G8};
       padding: 0 32px 0 24px;
       border-radius: 4px;
 
       &::before {
         content: '';
         position: absolute;
-        background: ${COLORS.GREY.G8};
-        border-top: 1px solid ${COLORS.GREY.G6};
-        border-bottom: 1px solid ${COLORS.GREY.G6};
+        background: ${COLORS.GRAY.G8};
+        border-top: 1px solid ${COLORS.GRAY.G6};
+        border-bottom: 1px solid ${COLORS.GRAY.G6};
         height: 100%;
         top: 0;
         left: calc((1200px - 100vw) / 2);
@@ -77,10 +78,9 @@ const DetailedDescriptionCard = styled.div`
     font-size: 24px;
     line-height: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '28px' : '1.37'};
-    color: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? COLORS.GREY.G2 : COLORS.TWO_BLACK};
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.SEMIBOLD};
+    color: ${COLORS.GRAY.G2};
+    font-family: ${HALYARD.FONT_STACK};
+    font-weight: 600;
   }
   .product-v2-description-right {
     padding: 24px 0;
@@ -125,10 +125,9 @@ const DetailedDescriptionCard = styled.div`
       isEntertainmentMb ? '15px' : '16px'};
     line-height: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '20px' : '1.4'};
-    color: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? COLORS.GREY.G2 : COLORS.TWO_BLACK};
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.SEMIBOLD};
+    color: ${COLORS.GRAY.G2};
+    font-family: ${HALYARD.FONT_STACK};
+    font-weight: 600;
   }
   .full-width-section {
     display: grid;
@@ -137,26 +136,24 @@ const DetailedDescriptionCard = styled.div`
   .v2-descriptors {
     display: grid;
     grid-template-columns: repeat(5, auto);
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
     grid-gap: 12px;
     justify-content: left;
     height: max-content;
   }
   .v2-descriptor {
-    background: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? COLORS.GREY.G6 : COLORS.GREY_FO};
+    background: ${COLORS.GRAY.G6};
     border-radius: 2px;
     font-size: 12px;
     padding: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '6px 8px' : '8px 12px'};
-    color: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? COLORS.GREY.G3 : COLORS.TWO_BLACK};
+    color: ${COLORS.GRAY.G3};
     font-weight: 400;
     line-height: ${({ isEntertainmentMb }) => (isEntertainmentMb ? '16px' : 1)};
     text-transform: capitalize;
   }
   .tour-description {
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
     margin-top: 4px;
   }
 
@@ -165,9 +162,9 @@ const DetailedDescriptionCard = styled.div`
       isEntertainmentMb ? '15px' : '16px'};
     line-height: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '24px' : '1.37'};
-    color: ${COLORS.GREY.G2};
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.REGULAR};
+    color: ${COLORS.GRAY.G2};
+    font-family: ${HALYARD.FONT_STACK};
+    font-weight: 400;
     li,
     p {
       line-height: ${({ isEntertainmentMb }) =>
@@ -256,34 +253,34 @@ const DetailedDescriptionCard = styled.div`
       isEntertainmentMb && !experimentEnabled && 'max-width: 181px'};
   }
   .cta .cta-text {
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
     font-size: 16px;
     line-height: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '20px' : '16px'};
-    font-weight: ${SOLEIL.SEMIBOLD};
+    font-weight: 600;
     ${({ isEntertainmentMb }) =>
       isEntertainmentMb && `letter-spacing: 0.6px; width: max-content;`}
   }
   .cta.primary {
-    background: ${COLORS.PURPS};
+    background: ${COLORS.BRAND.PURPS};
     cursor: pointer;
   }
   .cta.secondary {
-    background: ${COLORS.WHITE};
-    border: 1px solid ${COLORS.GREY.G2};
+    background: ${COLORS.BRAND.WHITE};
+    border: 1px solid ${COLORS.GRAY.G2};
   }
   .cta.primary .cta-text {
-    color: ${COLORS.WHITE};
+    color: ${COLORS.BRAND.WHITE};
   }
   .cta.secondary .cta-text {
-    color: ${COLORS.GREY.G2};
+    color: ${COLORS.GRAY.G2};
   }
 
   .desc-price-wrapper {
     .scratch-price {
       span {
-        color: ${COLORS.GREY.G4};
-        font-weight: ${SOLEIL.REGULAR};
+        color: ${COLORS.GRAY.G4};
+        font-weight: 400;
         font-size: 14px;
         line-height: ${({ isEntertainmentMb }) =>
           isEntertainmentMb ? '16px' : '18px'};
@@ -297,9 +294,9 @@ const DetailedDescriptionCard = styled.div`
       grid-template-columns: ${({ isEntertainmentMb }) =>
         isEntertainmentMb ? 'max-content max-content' : 'max-content'};
       .l-price {
-        font-family: ${SOLEIL.FONT_STACK};
-        font-weight: ${SOLEIL.SEMIBOLD};
-        color: ${COLORS.FOUR_BLACK};
+        font-family: ${HALYARD.FONT_STACK};
+        font-weight: 600;
+        color: ${COLORS.GRAY.G2};
         font-size: ${({ isEntertainmentMb }) =>
           isEntertainmentMb ? '24px' : '20px'};
         line-height: ${({ isEntertainmentMb }) =>
@@ -309,15 +306,15 @@ const DetailedDescriptionCard = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: ${COLORS.SOOTHING_GREEN};
-        color: ${COLORS.OKAY_GREEN};
+        background-color: ${COLORS.BACKGROUND.SOOTHING_GREEN};
+        color: ${COLORS.TEXT.OKAY_GREEN_3};
         padding: 2px 4px;
         border-radius: 2px;
         line-height: 16px;
         font-size: 12px;
-        font-family: ${SOLEIL.FONT_STACK};
+        font-family: ${HALYARD.FONT_STACK};
         font-style: normal;
-        font-weight: ${SOLEIL.REGULAR};
+        font-weight: 400;
         margin-left: 8px;
       }
     }
@@ -357,7 +354,7 @@ const DetailedDescriptionCard = styled.div`
   .indicator-triangle::before {
     border-color: transparent transparent
       ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? COLORS.GREY.G6 : '#757575'}
+        isEntertainmentMb ? COLORS.GRAY.G6 : COLORS.GRAY.G3}
       transparent;
     border-style: solid;
     border-width: 13px;
@@ -370,7 +367,7 @@ const DetailedDescriptionCard = styled.div`
   .indicator-triangle::after {
     border-color: transparent transparent
       ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? COLORS.GREY.G8 : COLORS.WHITE}
+        isEntertainmentMb ? COLORS.GRAY.G8 : COLORS.BRAND.WHITE}
       transparent;
     border-width: 12px;
     transform: translateY(2px);

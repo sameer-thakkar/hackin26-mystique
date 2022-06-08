@@ -5,7 +5,8 @@ import useWindowSize from 'hooks/useWindowSize';
 import ProductsContext from 'contexts/Products';
 import InteractionContext from 'contexts/Interaction';
 import Conditional from 'components/common/Conditional';
-import { SOLEIL, COLORS } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { DONT_AUTO_SCROLL, DONT_HOIST } from 'const/index';
 
 const PopulateProducts = dynamic(() => import('./PopulateProducts'));
@@ -13,40 +14,39 @@ const PopulateProducts = dynamic(() => import('./PopulateProducts'));
 const StyledCategorySection = styled.div`
   display: grid;
   grid-row-gap: 8px;
-
-  color: ${COLORS.DAVY_GREY};
+  color: ${COLORS.GRAY.G2};
 
   .category-heading {
     margin: 0;
     font-size: 24px;
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.MEDIUM};
+    font-family: ${HALYARD.FONT_STACK};
+    font-weight: 500;
     line-height: 33px;
-    color: ${COLORS.TWO_BLACK};
+    color: ${COLORS.GRAY.G2};
   }
   .category-description {
     margin: 0;
     font-size: 16px;
     width: 60%;
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
     line-height: 20px;
-    font-weight: ${SOLEIL.MEDIUM};
-    color: ${COLORS.FOUR_BLACK};
+    font-weight: 500;
+    color: ${COLORS.GRAY.G2};
   }
   @media (max-width: 768px) {
     grid-row-gap: 8px;
     .category-heading {
       margin: 0;
       font-size: 24px;
-      font-family: ${SOLEIL.FONT_STACK};
-      font-weight: ${SOLEIL.SEMIBOLD};
+      font-family: ${HALYARD.FONT_STACK};
+      font-weight: 600;
       line-height: 26px;
     }
     .category-description {
-      font-family: ${SOLEIL.FONT_STACK};
+      font-family: ${HALYARD.FONT_STACK};
       line-height: 20px;
       width: 100%;
-      font-weight: ${SOLEIL.REGULAR};
+      font-weight: 400;
     }
   }
 `;

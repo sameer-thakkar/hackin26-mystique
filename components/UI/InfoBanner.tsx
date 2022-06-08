@@ -2,7 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
 import { getNonAmpUrl } from 'utils/urlUtils';
 
 export const StyledInfoBanner = styled.div`
@@ -36,13 +36,12 @@ const Content = styled.div`
 `;
 
 const Title = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   font-weight: 600;
   font-size: 15px;
   line-height: 20px;
 
   @media (max-width: 768px) {
-    /* color: ${COLORS.OKAY_GREEN_DARK}; */
     svg {
       height: 24px;
       width: 24px;
@@ -66,7 +65,6 @@ const CTA = styled.div`
   display: inline-block;
   text-decoration: underline;
   cursor: pointer;
-  /* color: ${COLORS.OKAY_GREEN_DARK}; */
   @media (max-width: 768px) {
     display: block;
     margin-top: 4px;

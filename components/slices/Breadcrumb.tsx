@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 
 type BreadcrumbProps = {
   orderedLinks: any[];
@@ -8,7 +9,7 @@ type BreadcrumbProps = {
 
 const BreadcrumbContainer = styled.div`
   a {
-    color: ${COLORS.TEAL};
+    color: ${COLORS.TEXT.BEACH};
   }
   @media (max-width: 768px) {
     padding: 0;
@@ -16,13 +17,13 @@ const BreadcrumbContainer = styled.div`
 `;
 
 const StyledBreadcrumb = styled.a`
-  color: ${COLORS.PURPS3} !important;
+  color: ${COLORS.TEXT.PURPS_3} !important;
   text-decoration: none;
   &:last-child {
-    color: ${COLORS.GREY.G3} !important;
+    color: ${COLORS.GRAY.G3} !important;
   }
-  font-family: ${SOLEIL.FONT_STACK};
-  font-weight: ${SOLEIL.REGULAR};
+  font-family: ${HALYARD.FONT_STACK};
+  font-weight: 400;
 `;
 
 /**

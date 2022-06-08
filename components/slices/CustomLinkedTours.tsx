@@ -11,7 +11,8 @@ import { createBookingURL } from 'utils';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 import { getHostName } from 'utils/helper';
 import { STAR_FULL } from 'assets/SvgIcons';
-import { SOLEIL, COLORS } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { DESIGN } from 'const/index';
 import TitleTextCombo from 'UI/TitleTextCombo';
 
@@ -36,8 +37,8 @@ const TitlePriceCombo = styled.div`
   grid-column-gap: 8px;
   grid-template-columns: 1fr auto;
   span {
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.SEMIBOLD};
+    font-family: ${HALYARD.FONT_STACK};
+    font-weight: 600;
     font-size: 16px;
     line-height: 20px;
     text-align: right;
@@ -53,10 +54,10 @@ const TitlePriceCombo = styled.div`
 `;
 
 const Title = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   font-size: 16px;
   line-height: 24px;
-  font-weight: ${SOLEIL.SEMIBOLD};
+  font-weight: 600;
   @media (max-width: 768px) {
     font-size: 14px;
     line-height: 1.3;
@@ -71,9 +72,9 @@ const Booster = styled.div`
   grid-column-gap: 5px;
   span {
     align-items: center;
-    font-weight: ${SOLEIL.REGULAR};
+    font-weight: 400;
     font-size: 12px;
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
     line-height: 1;
   }
   svg {
@@ -84,7 +85,7 @@ const Booster = styled.div`
 
 const StyledCustomLinkedTours = styled.div`
   color: ${({ design }) =>
-    design === DESIGN.V1 ? COLORS.FOUR_BLACK : COLORS.TWO_BLACK};
+    design === DESIGN.V1 ? COLORS.GRAY.G2 : COLORS.GRAY.G1};
 `;
 
 const TourGrid = styled.div`

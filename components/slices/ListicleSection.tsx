@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
 
 import sliceHandler from '../Slices';
 
@@ -24,8 +24,8 @@ const ListicleGrid = styled.div`
 `;
 
 const Title = styled.h2`
-  font-family: ${SOLEIL.FONT_STACK} !important;
-  font-weight: ${SOLEIL.SEMIBOLD} !important;
+  font-family: ${HALYARD.FONT_STACK} !important;
+  font-weight: 600 !important;
   font-size: 24px !important;
   line-height: 28px !important;
   margin: 0 0 24px 0 !important;

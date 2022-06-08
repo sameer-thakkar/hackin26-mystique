@@ -1,4 +1,5 @@
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import React, { useState, useRef, useEffect } from 'react';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import { strings } from 'const/strings';
@@ -14,14 +15,14 @@ const ResponsiveSelectWrapper = styled.div`
   .responsive-dropdown {
     z-index: 10;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.08);
-    border: 1px solid ${COLORS.DADDY};
-    color: ${COLORS.DAVY_GREY};
+    border: 1px solid ${COLORS.GRAY.G6};
+    color: ${COLORS.GRAY.G2};
   }
   .responsive-selector {
     line-height: 1;
   }
   .current-responsive-toggle {
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
     font-size: 16px;
     text-transform: capitalize;
     cursor: pointer;
@@ -29,7 +30,7 @@ const ResponsiveSelectWrapper = styled.div`
   .responsive-dropdown {
     padding: 20px 15px;
     position: absolute;
-    background: #fff;
+    background: ${COLORS.BRAND.WHITE};
     grid-row-gap: 24px;
     border-radius: 4px;
     display: grid;
@@ -40,7 +41,7 @@ const ResponsiveSelectWrapper = styled.div`
 
   .responsive-option,
   .close-btn {
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
     cursor: pointer;
     font-size: 16px;
     border: none;
@@ -58,20 +59,20 @@ const ResponsiveSelectWrapper = styled.div`
   .current-selection {
     display: grid;
     grid-template-columns: auto ${({ hasIcon }) => (hasIcon ? 'auto' : '')} ${({
-        hasChevron,
-      }) => (hasChevron ? 'auto' : '')};
+  hasChevron,
+}) => (hasChevron ? 'auto' : '')};
     justify-content: space-between;
     align-items: center;
     grid-gap: 8px;
     font-size: 16px;
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.REGULAR};
+    font-family: ${HALYARD.FONT_STACK};
+    font-weight: 400;
     span {
-      color: ${({ theme }) => theme.primaryBGText || COLORS.DAVY_GREY};
+      color: ${({ theme }) => theme.primaryBGText || COLORS.GRAY.G2};
     }
     svg {
       path {
-        stroke: ${({ theme }) => theme.primaryBGText || COLORS.DAVY_GREY};
+        stroke: ${({ theme }) => theme.primaryBGText || COLORS.GRAY.G2};
       }
     }
   }
@@ -91,16 +92,16 @@ const ResponsiveSelectWrapper = styled.div`
       justify-content: left;
       padding: ${({ addPadding }) => (addPadding ? '16px' : '')};
       span {
-        color: ${COLORS.DAVY_GREY};
+        color: ${COLORS.GRAY.G2};
       }
       svg {
         path {
-          stroke: ${COLORS.DAVY_GREY};
+          stroke: ${COLORS.GRAY.G2};
         }
       }
     }
     .responsive-option.active {
-      color: ${COLORS.DAVY_GREY};
+      color: ${COLORS.GRAY.G2};
     }
     .responsive-dropdown {
       position: fixed;
@@ -127,7 +128,7 @@ const ResponsiveSelectWrapper = styled.div`
 
     .responsive-option,
     .close-btn {
-      border-bottom: 1px solid #dadada;
+      border-bottom: 1px solid ${COLORS.GRAY.G6};
       padding: 16px 0;
       background: none;
     }
@@ -146,7 +147,7 @@ const ResponsiveSelectWrapper = styled.div`
       z-index: 500;
     }
     .close-btn {
-      color: ${COLORS.PURPS};
+      color: ${COLORS.BRAND.PURPS};
     }
 
     @keyframes scroll-in {
@@ -244,16 +245,14 @@ export const ResponsiveSelector = (props) => {
       {toggleActive ? (
         <div
           ref={selectorRef}
-          className={`responsive-dropdown ${
-            toggleActive ? 'responsive-dropdown-active' : ''
-          }`}
+          className={`responsive-dropdown ${toggleActive ? 'responsive-dropdown-active' : ''
+            }`}
         >
           {options.map((option, index) => {
             return (
               <div
-                className={`responsive-option ${
-                  current == index ? 'active' : ''
-                }`}
+                className={`responsive-option ${current == index ? 'active' : ''
+                  }`}
                 key={index}
                 role="button"
                 tabIndex={0}

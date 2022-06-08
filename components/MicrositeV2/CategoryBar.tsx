@@ -3,15 +3,17 @@ import styled from 'styled-components';
 import InteractionContext from 'contexts/Interaction';
 import Conditional from 'components/common/Conditional';
 import { SortSelector } from 'components/MicrositeV2/SortSelector';
-import { SOLEIL, SIZES, COLORS } from 'const/ui-constants';
+import { SIZES } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { metaAtom } from 'store/atoms/meta';
 import { useRecoilValue } from 'recoil';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { expandFontToken } from 'const/typography';
 
 const StyledCategoryBar = styled.div`
   position: sticky;
-  background: ${COLORS.WHITE};
+  background: ${COLORS.BRAND.WHITE};
   top: 0;
   z-index: 20;
 
@@ -33,8 +35,8 @@ const CategoryBarWrapper = styled.div`
   align-items: center;
   border-bottom: ${({ isEntertainmentMb }) =>
     isEntertainmentMb
-      ? `1px solid ${COLORS.GREY.G6}`
-      : `1px solid ${COLORS.CHALK}`};
+      ? `1px solid ${COLORS.GRAY.G6}`
+      : `1px solid ${COLORS.GRAY.G7}`};
   grid-gap: 0.5rem;
   padding-top: 2.25rem;
   padding-bottom: ${({ isEntertainmentMb }) =>
@@ -51,28 +53,21 @@ const CategoryBarWrapper = styled.div`
     position: relative;
   }
   .tab {
-    font-family: ${SOLEIL.FONT_STACK};
-    font-size: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '1.313rem' : '1.375rem'};
-    line-height: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '1.75rem' : '1.3'};
-    color: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? COLORS.GREY.G2 : COLORS.DAVY_GREY};
-    font-weight: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? SOLEIL.SEMIBOLD : SOLEIL.MEDIUM};
+    ${expandFontToken('Heading/Large')}
+    color: ${COLORS.GRAY.G2};
     text-align: center;
     cursor: pointer;
   }
   .tab.active {
-    color: ${COLORS.PURPS3};
+    color: ${COLORS.TEXT.PURPS_3};
   }
   .active-indicator {
     position: absolute;
-    bottom: -1rem;
+    bottom: -0.8rem;
     left: 0;
     width: 6.25rem;
     height: 0.125rem;
-    background: ${COLORS.PURPS3};
+    background: ${COLORS.TEXT.PURPS_3};
     z-index: 8;
     transition: width 0.5s ease, left 0.5s ease;
   }
@@ -88,7 +83,7 @@ const CategoryBarWrapper = styled.div`
     grid-template-columns: auto auto;
   }
   .filter-wrapper span {
-    font-family: ${SOLEIL.FONT_STACK};
+    ${expandFontToken('UI/Label Regular (Heavy)')}
   }
 
   @media (max-width: 768px) {
@@ -96,11 +91,11 @@ const CategoryBarWrapper = styled.div`
     overflow-x: scroll;
     -webkit-overflow-scrolling: touch;
     padding-top: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '1.125rem' : '1.188rem'};
+    isEntertainmentMb ? '1.125rem' : '1.188rem'};
     padding-bottom: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '0.5rem' : '0.875rem'};
+    isEntertainmentMb ? '0.5rem' : '0.875rem'};
     margin-top: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '1rem' : '1.5rem'};
+    isEntertainmentMb ? '1rem' : '1.5rem'};
 
     .tabs-wrap {
       padding-left: 1rem;
@@ -113,17 +108,11 @@ const CategoryBarWrapper = styled.div`
 
     .active-indicator {
       bottom: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '-0.5rem' : '-0.875rem'};
+    isEntertainmentMb ? '-0.5rem' : '-0.875rem'};
     }
 
     .tab {
-      font-size: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '0.938rem' : '1.125rem'};
-      font-family: ${SOLEIL.FONT_STACK};
-      font-weight: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? SOLEIL.SEMIBOLD : SOLEIL.MEDIUM};
-      line-height: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '1.25rem' : '1.3'};
+      ${expandFontToken('Heading/Product Card')}
     }
 
     .filter-wrapper {
@@ -177,8 +166,8 @@ const CategoryBar = (props) => {
       .filter((category) =>
         category?.ranking?.popularity?.length
           ? category.ranking.popularity.some(
-              (tgid) => availableTGIDs[tgid]?.available
-            )
+            (tgid) => availableTGIDs[tgid]?.available
+          )
           : false
       )
       .findIndex((category) => category.name === categories[index].name);

@@ -2,7 +2,7 @@ import { FunctionComponent, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Tabs from 'components/GlobalMbs/Tabs';
 import RowComponent from 'components/GlobalMbs/collectionTabs/rowComponent';
-import { SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
 import { chunkArray } from 'utils/arrayUtils';
 
 const TitleWrapper = styled.div`
@@ -19,10 +19,10 @@ const TitleWrapper = styled.div`
 `;
 
 const Title = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   font-size: 24px;
   font-style: normal;
-  font-weight: ${SOLEIL.SEMIBOLD};
+  font-weight: 600;
   line-height: 28px;
 `;
 

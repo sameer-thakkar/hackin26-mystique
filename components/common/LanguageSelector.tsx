@@ -5,13 +5,14 @@ import { strings } from 'const/strings';
 import Chevron from 'UI/Chevron';
 import Conditional from 'components/common/Conditional';
 import { GLOBE } from 'assets/SvgIcons';
+import COLORS from 'const/colors';
+import { expandFontToken } from 'const/typography';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   FULL_LANGUAGE_MAP,
   THEMES,
 } from 'const/index';
-import { COLORS, SOLEIL } from 'const/ui-constants';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { metaAtom } from 'store/atoms/meta';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
@@ -21,7 +22,7 @@ const StyledLanguageContainer = styled.div`
   position: relative;
   .language-dropdown a {
     text-decoration: none;
-    color: ${COLORS.GREY.G2};
+    color: ${COLORS.GRAY.G2};
   }
   .language-dropdown {
     display: none;
@@ -76,26 +77,24 @@ const StyledLanguageContainer = styled.div`
     display: flex;
     align-items: center;
     border-bottom: 0.5px dotted #d8d8d8;
-    background-color: ${({ theme }) => theme.primaryBackground};
-    background-color: ${COLORS.WHITE};
+    background-color: ${COLORS.BRAND.WHITE};
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
-    font-family: ${SOLEIL.FONT_STACK};
-    font-size: 16px;
+    ${expandFontToken('UI/Label Medium')}
     padding: 10px 25px;
     cursor: pointer;
   }
   .language-dropdown span {
-    color: ${COLORS.FOUR_BLACK};
+    color: ${COLORS.GRAY.G2};
   }
   .language:hover {
-    color: ${COLORS.PURPS};
+    color: ${COLORS.BRAND.PURPS};
   }
   .lang {
     transform: translateY(-2px);
     white-space: nowrap;
   }
   .selected-tab {
-    color: ${COLORS.PURPS};
+    color: ${COLORS.BRAND.PURPS};
   }
   .language-dropdown-active {
     display: block;
@@ -110,8 +109,7 @@ const StyledMobileSelect = styled.div`
     padding: 4px; /* increase trigger area */
     padding-left: 12px;
     display: block;
-    font-family: ${SOLEIL.FONT_STACK};
-    font-size: 14px;
+    ${expandFontToken('UI/Label Regular')}
     color: ${({ theme }) => theme.primaryBGText};
   }
   select {
@@ -122,7 +120,7 @@ const StyledMobileSelect = styled.div`
     opacity: 0;
   }
   .language-dropdown {
-    background: ${COLORS.WHITE};
+    background: ${COLORS.BRAND.WHITE};
     position: fixed;
     bottom: -2px;
     top: unset;
@@ -135,7 +133,7 @@ const StyledMobileSelect = styled.div`
   }
   .language,
   .close-btn {
-    border-bottom: 1px solid ${COLORS.DADDY};
+    border-bottom: 1px solid ${COLORS.GRAY.G6};
     padding: 16px 0;
   }
   .close-mask {
@@ -144,12 +142,12 @@ const StyledMobileSelect = styled.div`
     left: 0;
     height: 100vh;
     width: 100%;
-    background: ${COLORS.BLACK};
+    background: ${COLORS.BRAND.BLACK};
     opacity: 0.5;
     z-index: 25;
   }
   .close-btn {
-    color: ${COLORS.PURPS};
+    color: ${COLORS.BRAND.PURPS};
   }
   .hide {
     display: none;
@@ -158,9 +156,8 @@ const StyledMobileSelect = styled.div`
 
 const StyledLanguage = styled.span`
   margin-top: 7px;
-  font-family: ${SOLEIL.FONT_STACK};
-  font-size: 16px;
-  color: ${COLORS.DAVY_GREY};
+  color: ${COLORS.GRAY.G2};
+  ${expandFontToken('UI/Label Medium')}
   cursor: pointer;
   transform: translateY(-3px);
   svg {

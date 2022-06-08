@@ -22,7 +22,8 @@ import {
   REOPENING_CATEGORIES,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { SOLEIL, COLORS } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { isSafetyIncluded, createBookingURL } from 'utils';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { dateToString } from 'utils/dateUtils';
@@ -60,7 +61,7 @@ const StyledMobileProductPage = styled.div`
     isEntertainmentMb ? '0' : '24px'};
   grid-template-rows: 56px 1fr;
   overflow: hidden;
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   position: relative;
   &::before {
     content: '';
@@ -72,7 +73,7 @@ const StyledMobileProductPage = styled.div`
   .hr-line {
     margin-top: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '0' : '-8px'};
-    border-top: 1px solid ${COLORS.CHALK};
+    border-top: 1px solid ${COLORS.GRAY.G7};
   }
   .header {
     display: grid;
@@ -80,11 +81,11 @@ const StyledMobileProductPage = styled.div`
     padding: 18px 16px;
     box-sizing: border-box;
     border-bottom: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? 'none' : `1px solid ${COLORS.DADDY}`};
+      isEntertainmentMb ? 'none' : `1px solid ${COLORS.GRAY.G6}`};
     position: fixed;
     width: 100%;
     z-index: 99;
-    background: ${COLORS.WHITE};
+    background: ${COLORS.BRAND.WHITE};
     .title {
       font-size: 14px;
       line-height: 20px;
@@ -103,7 +104,7 @@ const StyledMobileProductPage = styled.div`
         isEntertainmentMb && `justify-content: flex-end;`}
       path {
         ${({ isEntertainmentMb }) =>
-          isEntertainmentMb && `stroke: ${COLORS.GREY.G2};stroke-width: 1px;`}
+          isEntertainmentMb && `stroke: ${COLORS.GRAY.G2};stroke-width: 1px;`}
       }
     }
   }
@@ -141,7 +142,7 @@ const StyledMobileProductPage = styled.div`
     }
 
     .close {
-      background: ${COLORS.BLACK};
+      background: ${COLORS.BRAND.BLACK};
       padding: 15px;
       display: flex;
       position: fixed;
@@ -151,7 +152,7 @@ const StyledMobileProductPage = styled.div`
     }
   }
   .prod-content {
-    background: ${COLORS.WHITE};
+    background: ${COLORS.BRAND.WHITE};
     padding: 0 16px;
     margin-bottom: 80px;
     z-index: 9;
@@ -160,10 +161,10 @@ const StyledMobileProductPage = styled.div`
   }
   .title {
     font-size: 18px;
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.SEMIBOLD};
+    font-family: ${HALYARD.FONT_STACK};
+    font-weight: 600;
     color: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? COLORS.GREY.G2 : COLORS.TWO_BLACK};
+      isEntertainmentMb ? COLORS.GRAY.G2 : COLORS.GRAY.G1};
     line-height: 24px;
     text-transform: unset;
     margin-bottom: 0;
@@ -193,7 +194,7 @@ const StyledMobileProductPage = styled.div`
           justify-content: center;
           align-items: center;
           .avg-rating {
-            font-weight: ${SOLEIL.SEMIBOLD};
+            font-weight: 600;
             color: ${COLORS.JOY_MUSTARD};
             svg {
               width: 8px;
@@ -203,40 +204,40 @@ const StyledMobileProductPage = styled.div`
           .total-rating {
             font-size: 10px;
             line-height: 12px;
-            color: ${COLORS.GREY.G4}
+            color: ${COLORS.GRAY.G4}
           }
         }
         .l1-booster {
-          color: ${COLORS.BEACH};
+          color: ${COLORS.TEXT.BEACH};
         }
       }
     `}
     .price {
-      font-family: ${SOLEIL.FONT_STACK};
-      font-weight: ${SOLEIL.SEMIBOLD};
+      font-family: ${HALYARD.FONT_STACK};
+      font-weight: 600;
       margin-left: ${({ isEntertainmentMb }) =>
         isEntertainmentMb ? '0' : '16px'};
       margin-bottom: 0px;
       ${({ isEntertainmentMb }) => isEntertainmentMb && `padding-top: 8px;`};
       .scratched-price {
-        font-weight: ${SOLEIL.MEDIUM};
+        font-weight: 500;
         font-size: 12px;
         text-decoration: line-through;
-        color: ${COLORS.FOUR_BLACK};
+        color: ${COLORS.GRAY.G2};
       }
       .current-price,
       .from-text {
-        color: ${COLORS.TWO_BLACK};
+        color: ${COLORS.GRAY.G1};
       }
       .current-price {
         font-size: 18px;
         line-height: 24px;
-        font-weight: ${SOLEIL.SEMIBOLD};
+        font-weight: 600;
       }
       .from-text {
         font-size: 14px;
         line-height: 1;
-        font-weight: ${SOLEIL.MEDIUM};
+        font-weight: 500;
         margin-bottom: 4px;
       }
       ${({ isEntertainmentMb }) =>
@@ -252,16 +253,16 @@ const StyledMobileProductPage = styled.div`
             span {
               font-size: 17px;
               line-height: 20px;
-              font-weight: ${SOLEIL.SEMIBOLD};
+              font-weight: 600;
             }
             .discount {
-              background-color: ${COLORS.SOOTHING_GREEN};
-              color: ${COLORS.OKAY_GREEN};
+              background-color: ${COLORS.BACKGROUND.SOOTHING_GREEN};
+              color: ${COLORS.TEXT.OKAY_GREEN_3};
               padding: 4px 6px;
               border-radius: 2px;
               font-size: 10px;
               font-style: normal;
-              font-weight: ${SOLEIL.REGULAR};
+              font-weight: 400;
               line-height: 12px;
               margin-left: 6px;
             }
@@ -273,7 +274,7 @@ const StyledMobileProductPage = styled.div`
               margin-right: 2px;
             }
             span {
-              color: ${COLORS.GREY.G4};
+              color: ${COLORS.GRAY.G4};
               font-size: 12px;
               line-height: 16px;
             }
@@ -283,7 +284,7 @@ const StyledMobileProductPage = styled.div`
   }
 
   .tags {
-    color: ${COLORS.PURPS};
+    color: ${COLORS.BRAND.PURPS};
     border: 1px solid;
     border-radius: 2px;
     padding: 5px 4px;
@@ -306,21 +307,21 @@ const StyledMobileProductPage = styled.div`
   .content-block {
     font-size: 14px;
     line-height: 1.57;
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.REGULAR};
-    color: ${COLORS.DAVY_GREY};
+    font-family: ${HALYARD.FONT_STACK};
+    font-weight: 400;
+    color: ${COLORS.GRAY.G2};
     display: grid;
     grid-row-gap: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '8px' : '4px'};
     .label-title {
       font-size: ${({ isEntertainmentMb }) =>
         isEntertainmentMb ? '14px' : '16px'};
-      font-weight: ${SOLEIL.SEMIBOLD};
-      font-family: ${SOLEIL.FONT_STACK};
+      font-weight: 600;
+      font-family: ${HALYARD.FONT_STACK};
       line-height: ${({ isEntertainmentMb }) =>
         isEntertainmentMb ? '20px' : '1.12'};
       color: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? COLORS.GREY.G2 : COLORS.TWO_BLACK};
+        isEntertainmentMb ? COLORS.GRAY.G2 : COLORS.GRAY.G1};
     }
     p {
       margin: 0;
@@ -339,7 +340,7 @@ const StyledMobileProductPage = styled.div`
     grid-column: 1 / 3;
     min-height: 1em;
     .inline-availability {
-      color: ${COLORS.TEAL};
+      color: ${COLORS.TEXT.BEACH};
     }
     p {
       margin: 0;
@@ -352,12 +353,12 @@ const StyledMobileProductPage = styled.div`
     display: grid;
     grid-column: 1 / 3;
     align-items: center;
-    color: ${COLORS.FOUR_BLACK};
+    color: ${COLORS.GRAY.G2};
     grid-auto-flow: column;
     justify-content: left;
     grid-gap: 8px;
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.REGULAR};
+    font-family: ${HALYARD.FONT_STACK};
+    font-weight: 400;
     .rating {
       display: grid;
       align-items: center;
@@ -369,18 +370,18 @@ const StyledMobileProductPage = styled.div`
   .divider-line {
     width: 1px;
     height: 85%;
-    background: ${COLORS.DADDY};
+    background: ${COLORS.GRAY.G6};
   }
 
   .vendor-name {
     grid-column: 1 / 3;
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.MEDIUM};
+    font-family: ${HALYARD.FONT_STACK};
+    font-weight: 500;
     text-transform: uppercase;
     font-size: 11px;
     line-height: 11px;
     letter-spacing: 0.5px;
-    color: ${COLORS.GREY_G4};
+    color: ${COLORS.GRAY.G4};
     display: none;
   }
   @media (max-width: 768px) {
@@ -403,7 +404,7 @@ const StyledMobileProductPage = styled.div`
 const Descriptors = styled.div`
   grid-column: 1 / 3;
   font-size: 12px;
-  font-weight: ${SOLEIL.REGULAR};
+  font-weight: 400;
   max-width: calc(100vw - 32px);
   display: flex;
   flex-wrap: wrap;
@@ -419,10 +420,10 @@ const Descriptors = styled.div`
   .descriptor {
     padding: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '6px 8px' : '7px 12px'};
-    background: ${COLORS.GREY_FO};
+    background: ${COLORS.GRAY.G8};
     border-radius: 2px;
     color: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? COLORS.GREY.G3 : COLORS.TWO_BLACK};
+      isEntertainmentMb ? COLORS.GRAY.G3 : COLORS.GRAY.G1};
     margin: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '0 4px 4px 0' : '0 8px 8px 0'};
     &.mr-0 {
@@ -432,9 +433,9 @@ const Descriptors = styled.div`
 `;
 
 const CTABlock = styled.div`
-  color: ${COLORS.WHITE};
+  color: ${COLORS.BRAND.WHITE};
   width: 100%;
-  background: ${COLORS.WHITE};
+  background: ${COLORS.BRAND.WHITE};
   z-index: 10;
   position: fixed;
   left: 0;
@@ -448,7 +449,7 @@ const CTABlock = styled.div`
     column-gap: 16px;
     padding: 16px;
     box-sizing: border-box;
-    border-top: 1px solid ${COLORS.GREY.G6};
+    border-top: 1px solid ${COLORS.GRAY.G6};
   `}
   .cta {
     text-decoration: none;
@@ -461,9 +462,9 @@ const CTABlock = styled.div`
       isEntertainmentMb ? '4px' : '2px'};
     .cta-text {
       padding: 16px;
-      font-family: ${SOLEIL.FONT_STACK};
+      font-family: ${HALYARD.FONT_STACK};
       font-size: 16px;
-      font-weight: ${SOLEIL.SEMIBOLD};
+      font-weight: 600;
       font-style: normal;
       font-stretch: normal;
       line-height: ${({ isEntertainmentMb }) =>
@@ -473,18 +474,18 @@ const CTABlock = styled.div`
       text-align: center;
     }
     &.primary {
-      background: ${COLORS.PURPS};
+      background: ${COLORS.BRAND.PURPS};
       cursor: pointer;
       .cta-text {
-        color: ${COLORS.WHITE};
+        color: ${COLORS.BRAND.WHITE};
       }
     }
     &.secondary {
-      color: ${COLORS.GREY.G2};
-      background: ${COLORS.WHITE};
+      color: ${COLORS.GRAY.G2};
+      background: ${COLORS.BRAND.WHITE};
       border: 1px solid;
       .cta-text {
-        color: ${COLORS.GREY.G2};
+        color: ${COLORS.GRAY.G2};
       }
     }
   }
@@ -711,7 +712,7 @@ export const MobileProductPage = (props) => {
                   </Conditional>
                   <Conditional if={!isNew && averageRating}>
                     <span className="avg-rating">
-                      {averageRating} {STAR(COLORS.JOY_MUSTARD)}
+                      {averageRating} {STAR(COLORS.PRIMARY.JOY_MUSTARD)}
                     </span>
                   </Conditional>
                   <Conditional if={!isNew && reviewCount}>

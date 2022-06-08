@@ -1,6 +1,7 @@
 import { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import { expandFontToken } from 'const/typography';
+import COLORS from 'const/colors';
 
 const TabWrapper = styled.div`
   display: grid;
@@ -8,7 +9,6 @@ const TabWrapper = styled.div`
   max-width: 1200px;
   padding-top: 24px;
   margin: 24px auto 96px auto;
-  font-family: ${SOLEIL.FONT_STACK};
   width: calc(100% - (5.46vw * 2));
   @media (max-width: 768px) {
     overflow: hidden;
@@ -19,12 +19,9 @@ const TabWrapper = styled.div`
 
 const SubHeadingLarge = styled.div`
   width: max-content;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 20px;
+  ${expandFontToken('UI/Label Large')}
   ${({ active }) =>
-    active ? `color: ${COLORS.PURPS3};` : `${COLORS.GREY.G2}`};
+    active ? `color: ${COLORS.TEXT.PURPS_3};` : `${COLORS.GRAY.G2}`};
 `;
 
 const TabControl = styled.div`
@@ -32,7 +29,7 @@ const TabControl = styled.div`
   grid-auto-flow: column;
   justify-content: left;
   grid-column-gap: 4rem;
-  border-bottom: 1px solid ${COLORS.GREY.G6};
+  border-bottom: 1px solid ${COLORS.GRAY.G6};
   @media (max-width: 768px) {
     overflow-x: scroll;
   }
@@ -41,7 +38,7 @@ const TabControl = styled.div`
 const Tab = styled(SubHeadingLarge)`
   padding-bottom: 1rem;
   border-bottom: 2px solid transparent;
-  ${({ active }) => (active ? `border-color: ${COLORS.PURPS3};` : ``)};
+  ${({ active }) => (active ? `border-color: ${COLORS.TEXT.PURPS_3};` : ``)};
   transform: translateY(1px);
   cursor: pointer;
 `;

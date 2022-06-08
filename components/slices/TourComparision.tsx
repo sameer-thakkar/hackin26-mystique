@@ -18,7 +18,8 @@ import {
   TOUR_COMPARISION_DESIGN,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { SOLEIL, COLORS } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import Conditional from 'components/common/Conditional';
 import { trackEvent } from 'utils/analytics';
 
@@ -26,7 +27,7 @@ const StyledTourComparisionTable = styled.div`
   width: auto;
   display: grid;
   line-height: 1.3;
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   .heading-wrapper {
     max-width: 1200px;
     margin: auto;
@@ -36,26 +37,26 @@ const StyledTourComparisionTable = styled.div`
     text-align: left;
     font-size: 24px;
     margin-bottom: 8px;
-    font-weight: ${SOLEIL.MEDIUM};
-    font-family: ${SOLEIL.FONT_STACK};
-    color: ${COLORS.TWO_BLACK};
+    font-weight: 500;
+    font-family: ${HALYARD.FONT_STACK};
+    color: ${COLORS.GRAY.G2};
     line-height: 33px;
   }
   .comparision-description {
     padding-bottom: 32px;
     max-width: 60%;
     font-size: 16px;
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.REGULAR};
+    font-family: ${HALYARD.FONT_STACK};
+    font-weight: 400;
     line-height: 20px;
-    color: ${COLORS.FOUR_BLACK};
+    color: ${COLORS.GRAY.G2};
   }
 
   .tour-title {
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.SEMIBOLD};
+    font-family: ${HALYARD.FONT_STACK};
+    font-weight: 600;
     font-size: 16px;
-    color: ${COLORS.TWO_BLACK};
+    color: ${COLORS.GRAY.G2};
     letter-spacing: 0.0035em;
     line-height: 24px;
     grid-column: 1 / 3;
@@ -73,11 +74,11 @@ const StyledTourComparisionTable = styled.div`
     grid-auto-rows: max-content;
     grid-row-gap: 32px;
     ${({ designType }) =>
-      designType == TOUR_COMPARISION_DESIGN.TYPE_2
-        ? `
+    designType == TOUR_COMPARISION_DESIGN.TYPE_2
+      ? `
       grid-row-gap: 16px;
     `
-        : ``}
+      : ``}
     grid-column-gap: 8px;
   }
   .row {
@@ -89,12 +90,12 @@ const StyledTourComparisionTable = styled.div`
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: repeat(4, 1fr) ${({ isMobile }) =>
-      isMobile ? '16px' : ''};
+    isMobile ? '16px' : ''};
     grid-column-gap: 24px;
     ${({ designType, showImage }) =>
-      designType == TOUR_COMPARISION_DESIGN.TYPE_2
-        ? `
-      border-bottom: 1px solid ${COLORS.GREY.G6};
+    designType == TOUR_COMPARISION_DESIGN.TYPE_2
+      ? `
+      border-bottom: 1px solid ${COLORS.GRAY.G6};
       padding-bottom: 16px;
       &:nth-of-type(0n+1),
       &:last-child
@@ -103,10 +104,10 @@ const StyledTourComparisionTable = styled.div`
         padding-bottom: 0;
       }
     `
-        : ``}
+      : ``}
   }
   .cta-table-wrap .row {
-    background: ${COLORS.WHITE};
+    background: ${COLORS.BRAND.WHITE};
     padding-top: 32px;
     padding-bottom: 32px;
     margin-bottom: -32px; /* This allows the Sticky Header to end early. without crossing over the CTA button. */
@@ -125,8 +126,8 @@ const StyledTourComparisionTable = styled.div`
   }
   .old-price {
     font-size: 12px;
-    font-family: ${SOLEIL.FONT_STACK};
-    color: ${COLORS.GREY_G4};
+    font-family: ${HALYARD.FONT_STACK};
+    color: ${COLORS.GRAY.G4};
     line-height: 16px;
     grid-row: 1;
     text-decoration: line-through;
@@ -135,21 +136,21 @@ const StyledTourComparisionTable = styled.div`
     justify-content: left;
     .tour-price {
       font-size: 16px;
-      font-family: ${SOLEIL.FONT_STACK};
-      font-weight: ${SOLEIL.SEMIBOLD};
-      color: ${COLORS.FOUR_BLACK};
+      font-family: ${HALYARD.FONT_STACK};
+      font-weight: 600;
+      color: ${COLORS.GRAY.G2};
       line-height: 20px;
     }
     .tour-price {
-      font-family: ${SOLEIL.FONT_STACK};
-      font-weight: ${SOLEIL.SEMIBOLD};
-      color: ${COLORS.FOUR_BLACK};
+      font-family: ${HALYARD.FONT_STACK};
+      font-weight: 600;
+      color: ${COLORS.GRAY.G2};
     }
     .tour-scratch-price {
       font-size: 14px;
-      font-family: ${SOLEIL.FONT_STACK};
+      font-family: ${HALYARD.FONT_STACK};
       margin-left: 0;
-      color: ${COLORS.FOUR_BLACK};
+      color: ${COLORS.GRAY.G2};
       grid-column: unset;
     }
   }
@@ -158,15 +159,15 @@ const StyledTourComparisionTable = styled.div`
   .sticky.wrapper {
     position: sticky;
     top: 12px;
-    background: ${COLORS.WHITE};
+    background: ${COLORS.BRAND.WHITE};
     z-index: 15;
     padding-bottom: 8px;
     ${({ designType }) =>
-      designType == TOUR_COMPARISION_DESIGN.TYPE_2
-        ? `
+    designType == TOUR_COMPARISION_DESIGN.TYPE_2
+      ? `
       margin-bottom: -8px;
     `
-        : ``}
+      : ``}
   }
   .sticky.wrapper {
     width: 100%;
@@ -183,11 +184,11 @@ const StyledTourComparisionTable = styled.div`
   .tour-image {
     margin-bottom: -32px;
     ${({ designType }) =>
-      designType == TOUR_COMPARISION_DESIGN.TYPE_2
-        ? `
+    designType == TOUR_COMPARISION_DESIGN.TYPE_2
+      ? `
       margin-bottom: -8px;
   `
-        : ``}
+      : ``}
   }
   .column .tour-image img {
     width: 100%;
@@ -202,34 +203,34 @@ const StyledTourComparisionTable = styled.div`
   }
   .block-label {
     font-size: 16px;
-    font-weight: ${SOLEIL.SEMIBOLD};
-    font-family: ${SOLEIL.FONT_STACK};
+    font-weight: 600;
+    font-family: ${HALYARD.FONT_STACK};
     line-height: 18px;
     letter-spacing: 0.5px;
-    color: ${COLORS.GREY_G4};
+    color: ${COLORS.GRAY.G4};
     ${({ designType }) =>
-      designType == TOUR_COMPARISION_DESIGN.TYPE_2
-        ? `
-      color: ${COLORS.GREY_6D};
+    designType == TOUR_COMPARISION_DESIGN.TYPE_2
+      ? `
+      color: ${COLORS.GRAY.G3};
       font-size: 14px;
       line-height: 22px;
     `
-        : ``}
+      : ``}
   }
 
   .block-content {
     font-size: 15px;
     line-height: 20px;
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.REGULAR};
-    color: ${COLORS.FOUR_BLACK};
+    font-family: ${HALYARD.FONT_STACK};
+    font-weight: 400;
+    color: ${COLORS.GRAY.G2};
     ${({ designType }) =>
-      designType == TOUR_COMPARISION_DESIGN.TYPE_2
-        ? `
+    designType == TOUR_COMPARISION_DESIGN.TYPE_2
+      ? `
       font-size: 14px;
       line-height: 22px;
     `
-        : ``}
+      : ``}
     img {
       height: 20px;
       width: 20px;
@@ -241,11 +242,11 @@ const StyledTourComparisionTable = styled.div`
     text-align: center;
     line-height: 16px;
     font-size: 14px;
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.MEDIUM};
+    font-family: ${HALYARD.FONT_STACK};
+    font-weight: 500;
   }
   .vendor-cta a {
-    color: ${COLORS.PURPS};
+    color: ${COLORS.BRAND.PURPS};
     text-decoration: underline;
   }
   .row .column:not(:first-child) .block-label {
@@ -258,14 +259,14 @@ const StyledTourComparisionTable = styled.div`
     grid-row-gap: 8px;
     margin: 0;
   }
-  color: ${COLORS.GREY_6D};
+  color: ${COLORS.GRAY.G3};
   font-size: 14px;
   line-height: 22px;
   ${({ designType }) =>
     designType == TOUR_COMPARISION_DESIGN.TYPE_2
       ? `
     a {
-      color: ${COLORS.HEADOUT_CANDY};
+      color: ${COLORS.BRAND.CANDY};
     }
     `
       : ``}
@@ -293,13 +294,13 @@ const StyledTourComparisionTable = styled.div`
       max-width: 100vw;
       grid-column-gap: 12px;
       ${({ designType }) =>
-        designType == TOUR_COMPARISION_DESIGN.TYPE_2
-          ? `
+    designType == TOUR_COMPARISION_DESIGN.TYPE_2
+      ? `
       grid-column-gap: 16px;
       `
-          : ``}
+      : ``}
       grid-template-columns: 0px repeat(${({ tourCount }) =>
-        tourCount}, 164px) 4px;
+    tourCount}, 164px) 4px;
       position: relative;
     }
     .row::before {
@@ -359,34 +360,34 @@ const StyledTourComparisionTable = styled.div`
     }
     .block-label {
       ${({ designType }) =>
-        designType == TOUR_COMPARISION_DESIGN.TYPE_2
-          ? ``
-          : `
+    designType == TOUR_COMPARISION_DESIGN.TYPE_2
+      ? ``
+      : `
         font-size: 12px;
         line-height: 12px;
       `}
-      color: ${COLORS.GREY_75};
-      font-family: ${SOLEIL.FONT_STACK};
-      font-weight: ${SOLEIL.MEDIUM};
+      color: ${COLORS.GRAY.G3};
+      font-family: ${HALYARD.FONT_STACK};
+      font-weight: 500;
     }
     .block-content {
     ${({ designType }) =>
-      designType == TOUR_COMPARISION_DESIGN.TYPE_2
-        ? ``
-        : `
+    designType == TOUR_COMPARISION_DESIGN.TYPE_2
+      ? ``
+      : `
       font-size: 15px;
     `}
     }
     .comparision-heading {
-      font-family: ${SOLEIL.FONT_STACK};
-      font-weight: ${SOLEIL.MEDIUM};
+      font-family: ${HALYARD.FONT_STACK};
+      font-weight: 500;
       line-height: 26px;
       margin-bottom: 8px;
     }
     .comparision-description {
       font-size: 16px;
-      color: ${COLORS.DAVY_GREY};
-      font-weight: ${SOLEIL.REGULAR};
+      color: ${COLORS.GRAY.G2};
+      font-weight: 400;
       padding-bottom: 24px;
       width: 100%;
     }
@@ -406,7 +407,7 @@ const StyledTourComparisionTable = styled.div`
       justify-content: center;
       svg {
         path {
-          stroke: ${COLORS.PURPS};
+          stroke: ${COLORS.BRAND.PURPS};
           stroke-width: 1.5px;
         }
       }
@@ -666,9 +667,8 @@ const TourComparisonTable = (props) => {
             .map((label, rowIndex) => {
               return (
                 <div
-                  className={`row ${
-                    rowIndex >= 2 && isAmp ? 'no-display' : ''
-                  } `}
+                  className={`row ${rowIndex >= 2 && isAmp ? 'no-display' : ''
+                    } `}
                   id={`comparison-list-details-${rowIndex}`}
                   key={rowIndex}
                 >

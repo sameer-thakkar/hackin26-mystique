@@ -2,18 +2,25 @@ html,
 body {
   margin: 0;
   padding: 0;
-  font-family: 'soleil', sans-serif;
+  font-family: 'halyard-text', sans-serif;
 }
 body {
   scroll-behavior: smooth;
 }
 a {
   text-decoration: none;
-  color: #114cd6;
+  color: #ff007c;
+}
+
+b,
+strong {
+  font-weight: 500;
 }
 
 * {
   outline: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
 }
 
 li,
@@ -30,7 +37,7 @@ h3 > strong,
 h4 > strong,
 h5 > strong,
 h6 > strong {
-  font-weight: 600;
+  font-weight: 500;
   color: #444444;
 }
 
@@ -40,7 +47,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: 600;
+  font-weight: 500;
   color: #444444;
 }
 

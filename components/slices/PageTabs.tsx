@@ -2,7 +2,8 @@ import React from 'react';
 import { useAmp } from 'next/amp';
 import styled from 'styled-components';
 import classNames from 'classnames';
-import { SOLEIL, COLORS } from 'const/ui-constants';
+import COLORS from 'const/colors';
+import { expandFontToken } from 'const/typography';
 
 import LinkResolver from '../LinkResolver';
 
@@ -12,7 +13,7 @@ const Tabs = styled.div`
   grid-auto-flow: column;
   justify-content: left;
   margin: auto;
-  border-bottom: 1px solid #ebebeb;
+  border-bottom: 1px solid ${COLORS.GRAY.G6};
   justify-content: ${({ align }) => {
     switch (align) {
       case 'center':
@@ -25,19 +26,17 @@ const Tabs = styled.div`
         break;
     }
   }};
+
   .navigation-tab {
-    font-weight: 500;
-    font-family: ${SOLEIL.FONT_STACK};
-    color: #444444;
-    font-size: 22px;
-    line-height: 1.3;
+    color: ${COLORS.GRAY.G2};
     padding-bottom: 16px;
+    ${expandFontToken('Heading/Regular')}
   }
 
   .selected-nav-tab {
-    border-bottom: 3px solid ${COLORS.PURPS3};
+    border-bottom: 2px solid ${COLORS.TEXT.PURPS_3};
     border-radius: 1px;
-    color: ${COLORS.PURPS3};
+    color: ${COLORS.TEXT.PURPS_3};
   }
   @media (max-width: 768px) {
     overflow: scroll;
@@ -54,13 +53,13 @@ const Tabs = styled.div`
       text-align: center;
     }
     .navigation-tab {
-      font-size: 16px;
+      ${expandFontToken('Heading/Product Card')}
     }
     .navigation-tab:last-child {
       margin-right: 16px;
     }
     .selected-nav-tab {
-      border-bottom: 2px solid ${COLORS.PURPS3};
+      border-bottom: 2px solid ${COLORS.TEXT.PURPS_3};
     }
     .content-container {
       margin-left: 15px !important;
@@ -81,17 +80,17 @@ const AmpSelectorContainer = styled.div`
     grid-auto-flow: column;
     margin: auto;
     justify-content: ${({ align }) => {
-      switch (align) {
-        case 'center':
-          return 'space-around';
-        case 'left':
-          return 'flex-start';
-        case 'right':
-          return 'flex-end';
-        default:
-          break;
-      }
-    }};
+    switch (align) {
+      case 'center':
+        return 'space-around';
+      case 'left':
+        return 'flex-start';
+      case 'right':
+        return 'flex-end';
+      default:
+        break;
+    }
+  }};
   }
   amp-selector [role='tab'] {
     cursor: pointer;
@@ -102,7 +101,7 @@ const AmpSelectorContainer = styled.div`
 
   .selected,
   amp-selector [role='tab'][selected] {
-    color: ${COLORS.PURPS};
+    color: ${COLORS.BRAND.PURPS};
     border-bottom: 2px solid;
     outline: none;
   }

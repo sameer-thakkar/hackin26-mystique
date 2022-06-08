@@ -1,16 +1,17 @@
 import { FunctionComponent, useContext } from 'react';
 import styled from 'styled-components';
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import { MBContext } from 'contexts/MBContext';
 
 const TagSection = styled.div`
   max-width: 1200px;
   margin: 0 auto 57px auto;
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   width: calc(100vw - (5.46vw * 2));
   h2 {
-    font-weight: ${SOLEIL.SEMIBOLD};
+    font-weight: 600;
     font-size: 24px;
     line-height: 28px;
     margin: 0;
@@ -34,11 +35,11 @@ const Tag = styled.a`
   width: max-content;
   padding: 16px;
   border-radius: 4px;
-  background-color: ${COLORS.GREY.G8};
-  font-weight: ${SOLEIL.SEMIBOLD};
+  background-color: ${COLORS.GRAY.G8};
+  font-weight: 600;
   font-size: 12px;
   line-height: 16px;
-  color: ${COLORS.GREY.G3};
+  color: ${COLORS.GRAY.G3};
 `;
 interface TagsProps {
   collections: any[];

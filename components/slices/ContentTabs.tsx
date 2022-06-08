@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useAmp } from 'next/amp';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
-import { SOLEIL, COLORS } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 
 type ContentTabsProps = {
   tabsArr: any[];
@@ -12,12 +13,12 @@ type ContentTabsProps = {
 const StyledContentTabsWrapper = styled.div`
   display: grid;
   grid-row-gap: 16px;
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
 `;
 
 const StyledContentTabs = styled.div`
   display: grid;
-  color: ${COLORS.DAVY_GREY};
+  color: ${COLORS.GRAY.G2};
   grid-auto-flow: column;
   font-size: 18px;
   grid-column-gap: 32px;
@@ -31,7 +32,7 @@ const StyledContentTabs = styled.div`
 const StyledTab = styled.div(({ active }) => {
   if (active) {
     return `
-  color: ${COLORS.PURPS};
+  color: ${COLORS.BRAND.PURPS};
   border-bottom: 2px solid;
   padding-bottom: 8px;
   `;
@@ -44,7 +45,7 @@ const StyledTab = styled.div(({ active }) => {
 
 const AmpSelectorContainer = styled.div`
   amp-selector [role='tab'][selected] {
-    color: ${COLORS.PURPS};
+    color: ${COLORS.BRAND.PURPS};
     border-bottom: 2px solid;
     padding-bottom: 8px;
     outline: none;
@@ -63,14 +64,14 @@ const AmpSelectorContainer = styled.div`
 const StyledContent = styled.div`
   p {
     margin: 0;
-    color: ${COLORS.DAVY_GREY};
+    color: ${COLORS.GRAY.G2};
   }
   img {
     width: 100%;
     max-width: 100%;
   }
   a {
-    color: ${COLORS.PURPS};
+    color: ${COLORS.BRAND.PURPS};
   }
 `;
 

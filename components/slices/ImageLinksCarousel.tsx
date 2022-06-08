@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
-import { SOLEIL, COLORS } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
 import Image from 'UI/Image';
@@ -47,19 +48,19 @@ const StyledContent = styled.div`
   grid-row-gap: 8px;
   h2 {
     margin: 0;
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
     font-size: 24px !important;
     line-height: 33px;
     color: ${({ design }) =>
-      design === DESIGN.V1 ? COLORS.FOUR_BLACK : COLORS.TWO_BLACK};
-    font-weight: ${SOLEIL.SEMIBOLD};
+    design === DESIGN.V1 ? COLORS.GRAY.G2 : COLORS.GRAY.G1};
+    font-weight: 600;
   }
   div {
     margin: 0;
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
     font-size: 16px;
     line-height: 20px;
-    color: ${COLORS.FOUR_BLACK};
+    color: ${COLORS.GRAY.G2};
     p {
       margin: 0;
     }
@@ -67,12 +68,12 @@ const StyledContent = styled.div`
   @media (max-width: 768px) {
     h2 {
       line-height: 26px;
-      font-family: ${SOLEIL.FONT_STACK};
+      font-family: ${HALYARD.FONT_STACK};
     }
     div {
       line-height: 20px;
-      font-family: ${SOLEIL.FONT_STACK};
-      font-weight: ${SOLEIL.REGULAR};
+      font-family: ${HALYARD.FONT_STACK};
+      font-weight: 400;
     }
   }
 `;
@@ -129,10 +130,10 @@ const StyledSlide = styled.div`
     height: max-content;
   }
   div {
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
     font-size: 16px;
-    font-weight: ${SOLEIL.SEMIBOLD};
-    color: ${COLORS.TWO_BLACK};
+    font-weight: 600;
+    color: ${COLORS.GRAY.G1};
     margin-top: 4px;
   }
   a {

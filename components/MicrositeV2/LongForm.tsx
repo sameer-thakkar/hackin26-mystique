@@ -1,14 +1,13 @@
-import { COLORS, SOLEIL } from 'const/ui-constants';
 import styled from 'styled-components';
+import { expandFontToken } from 'const/typography';
+import COLORS from 'const/colors';
 
 import sliceHandler from '../Slices';
 import { FULL_WIDTH_SLICES } from '../../constants';
 
 const StyledLongform = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
-  line-height: 1.6;
-  color: #545454;
-  border-top: 1px solid ${COLORS.DADDY};
+  color: ${COLORS.GRAY.G2};
+  border-top: 1px solid ${COLORS.GRAY.G6};
   padding-top: 64px;
   margin-top: 48px;
   display: grid;
@@ -34,20 +33,19 @@ const StyledLongform = styled.div`
   h4,
   h5,
   h6 {
-    color: #333;
+    color: ${COLORS.GRAY.G2};
     line-height: 1.4;
   }
   .slice-wrapper {
     ${({ isGlobalMb }) => isGlobalMb && `width: calc(100vw - (5.46vw * 2));`}
   }
 
+  .rich_text h1 {
+    ${expandFontToken('Display/Small')}
+  }
+
   h2 {
-    font-weight: 500;
-    ${({ isGlobalMb }) =>
-      isGlobalMb &&
-      `color:${COLORS.FOUR_BLACK};
-      font-weight: ${SOLEIL.SEMIBOLD};
-      line-height: 28px`}
+    ${expandFontToken('Heading/Large')}
   }
   .rich_text h2 {
     ${({ isGlobalMb }) => isGlobalMb && `margin: 0 0 32px 0;`}
@@ -56,11 +54,11 @@ const StyledLongform = styled.div`
   .tab_wrapper h2 {
     ${({ isGlobalMb }) => isGlobalMb && `margin: 0 0 12px 0 !important;`}
   }
-  p, li {
-    font-size: 16px;
+  p,
+  li {
+    color: ${COLORS.GRAY.G2};
+    ${expandFontToken('Paragraph/Large')}
     ${({ isGlobalMb }) => isGlobalMb && `margin: 0;`}
-    line-height: ${({ isGlobalMb }) => (isGlobalMb ? '24px' : 1.6)};
-    color: ${COLORS.FOUR_BLACK};
   }
   li:not(:last-child) {
     ${({ isGlobalMb }) => isGlobalMb && `margin-bottom: 16px;`}
@@ -74,7 +72,8 @@ const StyledLongform = styled.div`
       }
     `}
   }
-  .tab_wrapper ul, .tab_wrapper ol {
+  .tab_wrapper ul,
+  .tab_wrapper ol {
     margin: 0;
   }
   .tab_wrapper p {
@@ -88,6 +87,21 @@ const StyledLongform = styled.div`
     margin-bottom: 52px;
 
     ${({ noBorder }) => noBorder && `margin-top: 32px;`}
+
+    .rich_text h1 {
+      ${expandFontToken('Heading/Regular')}
+    }
+    h2 {
+      ${expandFontToken('Heading/Regular')}
+    }
+    h3 {
+      ${expandFontToken('Heading/Small')}
+    }
+    p,
+    ul,
+    ol {
+      ${expandFontToken('Paragraph/Medium')}
+    }
   }
 `;
 

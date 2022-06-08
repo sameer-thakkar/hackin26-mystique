@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
 import Chevron from 'components/UI/Chevron';
 import LocalisedPrice from 'components/UI/LPrice';
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
 import { strings } from 'const/strings';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { addQueryParams } from 'utils/urlUtils';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-
+import COLORS from 'const/colors';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { trackEvent } from 'utils/analytics';
 import { metaAtom } from 'store/atoms/meta';
@@ -19,8 +19,8 @@ const VariantCardWrapper = styled.div`
   height: inherit;
   display: grid;
   grid-template-rows: repeat(2, max-content) auto;
-  background: ${COLORS.WHITE};
-  border: 1px solid ${COLORS.GREY.G6};
+  background: ${COLORS.BRAND.WHITE};
+  border: 1px solid ${COLORS.GRAY.G6};
   border-radius: 8px;
   padding: 14px 16px 16px;
   box-sizing: border-box;
@@ -36,15 +36,15 @@ const VariantCardWrapper = styled.div`
     grid-template-columns: repeat(2, max-content);
     column-gap: 4px;
     align-items: center;
-    color: ${COLORS.PURPS3};
+    color: ${COLORS.TEXT.PURPS_3};
     font-size: 14px;
     line-height: 16px;
-    font-weight: ${SOLEIL.REGULAR};
+    font-weight: 400;
     margin-top: 16px;
   }
   .chevron::after,
   .chevron::before {
-    background-color: ${COLORS.PURPS3};
+    background-color: ${COLORS.TEXT.PURPS_3};
   }
   ul {
     margin: 0;
@@ -55,7 +55,7 @@ const Name = styled.div`
   margin-bottom: 20px;
   font-size: 16px;
   line-height: 20px;
-  font-weight: ${SOLEIL.SEMIBOLD};
+  font-weight: 600;
   ${({ isSkeleton }) => isSkeleton && `margin-bottom: 0;`}
 `;
 
@@ -68,7 +68,7 @@ const PriceWrapper = styled.div`
 
 const From = styled.div`
   text-transform: lowercase;
-  color: ${COLORS.GREY.G4};
+  color: ${COLORS.GRAY.G4};
   font-size: 10px;
   line-height: 12px;
 `;
@@ -77,9 +77,9 @@ const Price = styled.div`
   display: grid;
   row-gap: 2px;
   .variant-price {
-    color: ${COLORS.GREY.G2};
-    font-weight: ${SOLEIL.SEMIBOLD};
-    font-family: ${SOLEIL.FONT_STACK};
+    color: ${COLORS.GRAY.G2};
+    font-weight: 600;
+    font-family: ${HALYARD.FONT_STACK};
     font-size: 16px;
     line-height: 20px;
     margin-right: 8px;
@@ -88,12 +88,12 @@ const Price = styled.div`
     }
   }
   .discount {
-    color: ${COLORS.OKAY_GREEN};
-    background-color: ${COLORS.SOOTHING_GREEN};
+    color: ${COLORS.TEXT.OKAY_GREEN_3};
+    background-color: ${COLORS.BACKGROUND.SOOTHING_GREEN};
     font-size: 10px;
     line-height: 12px;
     letter-spacing: 0.2px;
-    font-weight: ${SOLEIL.REGULAR};
+    font-weight: 400;
     padding: 2px 4px;
     border-radius: 2px;
   }
@@ -101,12 +101,12 @@ const Price = styled.div`
 
 const Button = styled.div`
   padding: 7px 12px 5px 12px;
-  border: 1px solid ${COLORS.PURPS};
+  border: 1px solid ${COLORS.BRAND.PURPS};
   border-radius: 4px;
   width: 65px;
   text-align: center;
-  background-color: ${COLORS.WHITE};
-  color: ${COLORS.PURPS};
+  background-color: ${COLORS.BRAND.WHITE};
+  color: ${COLORS.BRAND.PURPS};
   cursor: pointer;
   font-size: 14px;
   line-height: 16px;
@@ -116,8 +116,8 @@ const Button = styled.div`
     padding: 8px 12px;
   }
   &:hover {
-    background-color: ${COLORS.PURPS};
-    color: ${COLORS.WHITE};
+    background-color: ${COLORS.BRAND.PURPS};
+    color: ${COLORS.BRAND.WHITE};
     border: none;
   }
 `;
@@ -134,7 +134,7 @@ const Description = styled.div`
   ${({ hasVariantInfo }) =>
     hasVariantInfo &&
     `
-    border-top: 1px solid ${COLORS.GREY.G7};
+    border-top: 1px solid ${COLORS.GRAY.G7};
     padding-top: 16px;
     margin-top: 16px;
     `}
@@ -145,15 +145,15 @@ const Description = styled.div`
 
   .desc-text {
     white-space: pre-line;
-    color: ${COLORS.GREY.G2};
+    color: ${COLORS.GRAY.G2};
   }
 `;
 
 export const VariantCardSkeleton = ({ isMobile }: { isMobile: boolean }) => {
   return (
     <SkeletonTheme
-      baseColor={COLORS.GREY.G6}
-      highlightColor={COLORS.GREY.G7}
+      baseColor={COLORS.GRAY.G6}
+      highlightColor={COLORS.GRAY.G7}
       borderRadius={0}
       height="20px"
     >

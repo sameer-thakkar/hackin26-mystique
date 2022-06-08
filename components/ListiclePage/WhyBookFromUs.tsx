@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { strings } from 'const/strings';
-import { SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
 
 import { CIRCLE_TICK } from '../../assets/SvgIcons';
 
@@ -11,11 +11,11 @@ const WhyBookFromUsWrapper = styled.div`
   background: #f8f6ff;
   border-radius: 4px;
   padding: 24px 24px 20px 24px;
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
 `;
 
 const Heading = styled.div`
-  font-weight: ${SOLEIL.MEDIUM};
+  font-weight: 500;
   font-size: 24px;
   line-height: 28px;
   margin-bottom: 24px;

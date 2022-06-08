@@ -17,7 +17,8 @@ import CurrencySelector from 'components/common/CurrencySelector';
 import Hamburger from 'UI/Hamburger';
 import Image from 'UI/Image';
 import { strings } from 'const/strings';
-import { SOLEIL, COLORS } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { POWERED_BY_HEADOUT } from 'assets/SvgIcons';
 import { throttle, withTrailingSlash } from 'utils/helper';
 
@@ -74,7 +75,7 @@ const StyledHeaderContainer = styled.div`
   .header-city-selector .current-selection {
     border-radius: 4px;
     padding: 12px 15px;
-    border: 1px solid ${({ theme }) => theme.primaryBGColor || COLORS.DADDY};
+    border: 1px solid ${({ theme }) => theme.primaryBGColor || COLORS.GRAY.G6};
   }
   @media (max-width: 768px) {
     height: 56px;
@@ -122,7 +123,7 @@ const StyledHeaderElements = styled.div`
   align-items: center;
   * {
     color: ${({ theme: { primaryBGText } }) =>
-      primaryBGText ? primaryBGText : COLORS.FOUR_BLACK};
+    primaryBGText ? primaryBGText : COLORS.GRAY.G2};
   }
   ${(props) => {
     if (props.active) {
@@ -134,7 +135,7 @@ const StyledHeaderElements = styled.div`
   }};
   @media (max-width: 768px) {
     * {
-      color: ${COLORS.FOUR_BLACK};
+      color: ${COLORS.GRAY.G2};
     }
   }
 `;
@@ -142,8 +143,8 @@ const StyledHeaderElements = styled.div`
 const StyledMenuItem = styled.div`
   margin-left: 24px;
   font-size: 16px;
-  font-family: ${SOLEIL.FONT_STACK};
-  color: ${({ color }) => color || COLORS.PURPS};
+  font-family: ${HALYARD.FONT_STACK};
+  color: ${({ color }) => color || COLORS.BRAND.PURPS};
   text-decoration: none;
   cursor: pointer;
   @media (max-width: 768px) {

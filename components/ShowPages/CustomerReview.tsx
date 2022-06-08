@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
-import { COLORS } from 'const/ui-constants';
+import COLORS from 'const/colors';
 
 import { BLUE_QUOTES } from '../../assets/SvgIcons';
 
@@ -74,14 +74,14 @@ const CardCarouselContainer = styled.div`
         padding: 28px 32px 24px;
 
         .review {
-          color: ${COLORS.GREY.G2};
+          color: ${COLORS.GRAY.G2};
           font-size: 15px;
           font-weight: 400;
           line-height: 24px;
         }
 
         .reviewer-name {
-          color: ${COLORS.GREY.G2};
+          color: ${COLORS.GRAY.G2};
           font-size: 15px;
           margin-top: 32px;
           line-height: 20px;
@@ -94,7 +94,7 @@ const CardCarouselContainer = styled.div`
     overflow: hidden;
   }
   .carousel-slider .swiper-pagination-bullet-active {
-    background: ${COLORS.GREY_G3} !important;
+    background: ${COLORS.GRAY.G3} !important;
     opacity: 1 !important;
   }
   .carousel-slider .swiper-pagination-bullet {
@@ -102,7 +102,7 @@ const CardCarouselContainer = styled.div`
     height: 8px;
     display: inline-block;
     border-radius: 100%;
-    background: ${COLORS.GREY.G2};
+    background: ${COLORS.GRAY.G2};
     opacity: 0.1;
   }
   .carousel-slider .swiper-container {
@@ -210,9 +210,9 @@ export default class CustomerReview extends Component<CardCarouselProps> {
       navigation: isMobile
         ? false
         : {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-          },
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
       pagination: {
         el: '.swiper-pagination',
         type: 'bullets',

@@ -1,4 +1,4 @@
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { CURRENCY_SYMBOL_MAP } from 'const/index';
 import React from 'react';
 import styled from 'styled-components';
@@ -7,12 +7,12 @@ import { strings } from 'const/strings';
 const StyledPricing = styled.div`
   width: max-content;
   div {
-    color: ${COLORS.GREY_G4};
+    color: ${COLORS.GRAY.G4};
     font-size: 14px;
     line-height: 18px;
     margin-bottom: 4px;
     span {
-      color: ${COLORS.GREY_G4};
+      color: ${COLORS.GRAY.G4};
       text-decoration: line-through;
     }
   }
@@ -24,7 +24,7 @@ const StyledPricing = styled.div`
 const Price = styled.span`
   font-size: 21px;
   line-height: 20px;
-  font-weight: ${SOLEIL.BOLD};
+  font-weight: 700;
   ${(props) => (props.floatRight ? `float: right;` : '')}
 `;
 

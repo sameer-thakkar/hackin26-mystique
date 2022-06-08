@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
-import { SOLEIL, COLORS } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import {
   SAFETY_DETAILS_TYPE,
   CLUBBED_SAFETY_TAGS,
@@ -27,7 +28,7 @@ const PitchGrid = styled.div`
     grid-template-columns: repeat(2, max-content);
     column-gap: 0.469rem;
     align-items: center;
-    color: ${COLORS.PURPS3};
+    color: ${COLORS.TEXT.PURPS_3};
   }
 `;
 
@@ -97,14 +98,14 @@ const SliderSection = styled.div`
 
 const Caption = styled.div`
   font-size: 0.75rem;
-  color: ${COLORS.WHITE};
+  color: ${COLORS.BRAND.WHITE};
   line-height: 1.188rem;
-  background: ${COLORS.BLACK};
+  background: ${COLORS.BRAND.BLACK};
   padding: 0.5rem 1rem;
 `;
 
 const Heading = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   font-style: normal;
   font-weight: 500;
   font-size: 1.25rem;
@@ -112,8 +113,8 @@ const Heading = styled.div`
 `;
 
 const Text = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
-  color: ${COLORS.FOUR_BLACK};
+  font-family: ${HALYARD.FONT_STACK};
+  color: ${COLORS.GRAY.G2};
   font-style: normal;
   font-weight: normal;
   font-size: 0.938rem;
@@ -138,7 +139,7 @@ const Pitch = styled.div`
 `;
 
 const EmphasizedText = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   font-style: normal;
   font-weight: 600;
   font-size: 1rem;
@@ -166,7 +167,7 @@ const Icon = styled.div``;
 
 const HorizontalLine = styled.hr`
   grid-column: 1;
-  color: ${COLORS.GREY.G6};
+  color: ${COLORS.GRAY.G6};
   margin: 1.25rem 0rem;
 
   @media (max-width: 768px) {

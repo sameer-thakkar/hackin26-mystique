@@ -3,13 +3,14 @@ import styled from 'styled-components';
 import { strings } from 'const/strings';
 import { useState, useRef, useEffect } from 'react';
 import { useWindowWidth } from '@react-hook/window-size';
-import { COLORS, SOLEIL } from 'const/ui-constants';
 import { useAmp } from 'next/amp';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { ANALYTICS_PROPERTIES } from 'const/index';
 import { ANALYTICS_EVENTS } from 'const/index';
 import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
+import { expandFontToken } from 'const/typography';
+import COLORS from 'const/colors';
 
 import LinkResolver from './LinkResolver';
 import { CHEVRON_DOWN } from '../assets/SvgIcons';
@@ -20,25 +21,23 @@ const StyledMenuItem = styled.li`
     `
     display:none;
   `}
-  font-size: 16px;
-  line-height: 24px;
   padding: 12px 16px;
-  font-family: ${SOLEIL.FONT_STACK};
+  ${expandFontToken('UI/Label Medium')}
   color: ${({ theme: { primaryBGText }, isGlobalMb }) =>
     isGlobalMb
-      ? COLORS.GREY.G2
+      ? COLORS.GRAY.G2
       : primaryBGText
-      ? primaryBGText
-      : COLORS.FOUR_BLACK};
+        ? primaryBGText
+        : COLORS.GRAY.G2};
   cursor: pointer;
   position: relative;
   span {
     color: ${({ theme: { primaryBGText }, isGlobalMb }) =>
-      isGlobalMb
-        ? COLORS.GREY.G2
-        : primaryBGText
+    isGlobalMb
+      ? COLORS.GRAY.G2
+      : primaryBGText
         ? primaryBGText
-        : COLORS.FOUR_BLACK};
+        : COLORS.GRAY.G2};
   }
   &.group-booking-cta {
     padding: 12px 16px;
@@ -59,11 +58,11 @@ const StyledMenuItem = styled.li`
         height: 24px;
         path {
           stroke: ${({ theme: { primaryBGText }, isGlobalMb }) =>
-            isGlobalMb
-              ? COLORS.GREY.G2
-              : primaryBGText
-              ? primaryBGText
-              : COLORS.FOUR_BLACK};
+    isGlobalMb
+      ? COLORS.GRAY.G2
+      : primaryBGText
+        ? primaryBGText
+        : COLORS.GRAY.G2};
           stroke-width: 1.5px;
         }
       }
@@ -90,7 +89,7 @@ const StyledMenuItem = styled.li`
         svg {
           transition: transform 0.3s ease;
           path {
-            stroke: ${COLORS.FOUR_BLACK};
+            stroke: ${COLORS.GRAY.G2};
           }
         }
       }
@@ -104,9 +103,9 @@ const StyledMenuItem = styled.li`
       }
     }
     ${({ nestOpen }) =>
-      nestOpen &&
-      `
-      background: ${COLORS.FLOAT_PURPS};
+    nestOpen &&
+    `
+      background: ${COLORS.BACKGROUND.FLOATING_PURPS};
       & > a > .nested-menu {
         display: grid;
         visibility: unset;
@@ -130,7 +129,7 @@ const NestedMenu = styled.ul`
   left: 0;
   width: max-content;
   background-color: ${({ theme: { primaryBackground } }) =>
-    primaryBackground ? primaryBackground : COLORS.WHITE};
+    primaryBackground ? primaryBackground : COLORS.BRAND.WHITE};
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   .nest-icon svg {
@@ -150,7 +149,7 @@ const NestedMenu = styled.ul`
     z-index: 1;
     li:hover {
       background-color: ${({ theme: { primaryBGHover } }) =>
-        primaryBGHover ? primaryBGHover : COLORS.FLOAT_PURPS};
+    primaryBGHover ? primaryBGHover : COLORS.BACKGROUND.FLOATING_PURPS};
     }
   }
   @media (max-width: 768px) {
@@ -197,7 +196,7 @@ const Nav = styled.nav`
       left: 0;
       height: 100%;
       align-content: flex-start;
-      background: ${COLORS.WHITE};
+      background: ${COLORS.BRAND.WHITE};
       width: 100%;
       grid-auto-flow: row;
       overflow: scroll;
@@ -208,7 +207,7 @@ const Nav = styled.nav`
       }
       & > li > a > .withIcon {
         padding-bottom: 16px;
-        border-bottom: 1px solid ${COLORS.GREY.G6};
+        border-bottom: 1px solid ${COLORS.GRAY.G6};
       }
     }
     .expandMenuItems {
@@ -220,7 +219,7 @@ const Nav = styled.nav`
 
 const HeadingMenu = styled(StyledMenuItem)`
   font-weight: 500;
-  border-bottom: 1px solid ${COLORS.CHALK};
+  border-bottom: 1px solid ${COLORS.GRAY.G7};
   display: grid;
   margin: 12px 14px 0;
   align-items: center;

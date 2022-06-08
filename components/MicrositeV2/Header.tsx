@@ -16,7 +16,8 @@ import { groupSlices } from 'utils/helper';
 import Hamburger from 'components/UI/Hamburger';
 import HeaderLinks from 'components/HeaderLinks';
 import { SEARCH_ICON, POWERED_BY_HEADOUT } from 'assets/SvgIcons';
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { PAGETYPE, ALLOW_IMMEDIEATE_NESTING, THEMES } from 'const/index';
 import { strings } from 'const/strings';
 
@@ -56,7 +57,7 @@ const StyledHeader = styled.div`
     z-index: ${({ overlayActive: check, headerHover }) =>
       check || headerHover ? 100 : 15};
     ${({ isGlobalMb }) =>
-      isGlobalMb && `box-shadow: inset 0px -1px 0px ${COLORS.GREY_D7};`}
+      isGlobalMb && `box-shadow: inset 0px -1px 0px ${COLORS.GRAY.G5};`}
   }
   .fixed-offset::after {
     content: '';
@@ -66,7 +67,7 @@ const StyledHeader = styled.div`
   }
   .main-wrapper .header-city-selector {
     min-width: 180px;
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
   }
   .header-city-selector .toggle-icon svg path {
     stroke-width: 1.5px;
@@ -74,7 +75,7 @@ const StyledHeader = styled.div`
   .header-city-selector .current-selection {
     border-radius: 4px;
     padding: 12px 15px;
-    border: 1px solid ${COLORS.DADDY};
+    border: 1px solid ${COLORS.GRAY.G2};
   }
 
   @media (max-width: 768px) {
@@ -84,7 +85,7 @@ const StyledHeader = styled.div`
       padding: ${({ isEntertainmentMb }) =>
         isEntertainmentMb ? '18px 16px' : '12px 16px'};
       border-bottom: ${({ theme: { theme } }) =>
-        theme === THEMES.DEFAULT ? '1px solid #dadada' : 'none'};
+        theme === THEMES.DEFAULT ? `1px solid ${COLORS.GRAY.G6}` : 'none'};
     }
     .fixed-wrap {
       min-height: ${({ isGlobalMb }) => (isGlobalMb ? '48px' : '56px')};
@@ -112,25 +113,25 @@ const HeaderRight = styled.div`
   .buy-tickets {
     font-size: 16px;
     cursor: pointer;
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.REGULAR};
+    font-family: ${HALYARD.FONT_STACK};
+    font-weight: 400;
     color: ${({ theme: { primaryBGText } }) =>
-      primaryBGText ? primaryBGText : COLORS.FOUR_BLACK};
+      primaryBGText ? primaryBGText : COLORS.GRAY.G2};
   }
 
   .buy-tickets.global-mb {
-    background: ${COLORS.PURPS};
-    color: ${COLORS.WHITE};
+    background: ${COLORS.BRAND.PURPS};
+    color: ${COLORS.BRAND.WHITE};
     padding: 8px 12px;
     border-radius: 4px;
     font-size: 16px;
     font-style: normal;
-    font-weight: ${SOLEIL.REGULAR};
+    font-weight: 400;
     line-height: 24px;
   }
   .current-language-toggle {
     color: ${({ theme: { primaryBGText } }) =>
-      primaryBGText ? primaryBGText : COLORS.FOUR_BLACK};
+      primaryBGText ? primaryBGText : COLORS.GRAY.G2};
   }
   .mobi-search-trigger {
     height: 20px;
@@ -220,7 +221,7 @@ const SearchWrapper = styled.div`
     background: #fff;
     display: grid;
     grid-row-gap: 10px;
-    border: 1px solid #dadada;
+    border: 1px solid ${COLORS.GRAY.G6};
     box-shadow: 0 4px 6px #0000002b;
     img {
       width: 104px;
@@ -234,10 +235,10 @@ const SearchWrapper = styled.div`
     .booster * {
       font-size: 12px;
       font-weight: regular;
-      font-family: ${SOLEIL.FONT_STACK};
+      font-family: ${HALYARD.FONT_STACK};
     }
     .inline-availability {
-      color: ${COLORS.TEAL};
+      color: ${COLORS.TEXT.BEACH};
     }
   }
   @media (max-width: 768px) {

@@ -1,9 +1,10 @@
-import { COLORS } from 'const/ui-constants';
 import dynamic from 'next/dynamic';
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Image from 'UI/Image';
 import { isMobile } from 'utils/helper';
+import COLORS from 'const/colors';
+import { HALYARD } from 'const/ui-constants';
 
 import InlinePrice from './InlinePrice';
 
@@ -120,7 +121,7 @@ width: 80%; */
   }
 
   .sub-title {
-    font-family: SOLEIL;
+    font-family: ${HALYARD.FONT_STACK};
     font-size: 22px;
     font-weight: 500;
     font-style: normal;
@@ -133,7 +134,7 @@ width: 80%; */
   }
 
   .title {
-    font-family: SOLEIL;
+    font-family: ${HALYARD.FONT_STACK};
     font-size: 26px;
     font-weight: 600;
     font-style: normal;
@@ -149,7 +150,7 @@ width: 80%; */
   .scratch-price {
     opacity: 0.6;
     text-decoration: line-through;
-    font-family: SOLEIL;
+    font-family: ${HALYARD.FONT_STACK};
     font-size: 18px;
     font-weight: normal;
     font-style: normal;
@@ -162,7 +163,7 @@ width: 80%; */
   }
 
   .price {
-    font-family: SOLEIL;
+    font-family: ${HALYARD.FONT_STACK};
     font-size: 28px;
     font-weight: 500;
     font-style: normal;
@@ -175,7 +176,7 @@ width: 80%; */
   }
 
   .popupv2-list li {
-    font-family: SOLEIL;
+    font-family: ${HALYARD.FONT_STACK};
     font-size: 16px;
     font-weight: normal;
     font-style: normal;
@@ -197,8 +198,8 @@ width: 80%; */
   }
 
   .popupv2-cta {
-    background-color: ${COLORS.PURPS};
-    font-family: SOLEIL;
+    background-color: ${COLORS.BRAND.PURPS};
+    font-family: ${HALYARD.FONT_STACK};
     font-size: 16px;
     font-weight: 500;
     font-style: normal;

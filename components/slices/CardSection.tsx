@@ -6,7 +6,8 @@ import { useWindowWidth } from '@react-hook/window-size';
 import RichContent from 'UI/RichContent';
 import TitleTextCombo from 'UI/TitleTextCombo';
 import { CHEVRON_LEFT, CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
-import { COLORS, SIZES } from 'const/ui-constants';
+import { SIZES } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import sliceHandler from 'components/Slices';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
@@ -42,8 +43,8 @@ const StyledSwiper = styled.div`
     padding: ${(isGlobalMb) => (isGlobalMb ? '12px 0 24px 0' : '25px 0')};
 
     ${({ hasLessCards }) =>
-      hasLessCards &&
-      `
+    hasLessCards &&
+    `
     display:flex;
     grid-auto-flow: unset;
     `}
@@ -97,7 +98,7 @@ const ExitDescription = styled.div`
   ${({ isGlobalMb, cardsInARow }) =>
     isGlobalMb &&
     cardsInARow === 1 &&
-    `border-bottom: 1px solid ${COLORS.GREY.G6};`};
+    `border-bottom: 1px solid ${COLORS.GRAY.G6};`};
 `;
 
 type CardSectionProps = {

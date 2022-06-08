@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { CHEVRON_LEFT } from 'assets/SvgIcons';
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 
 const BreadcrumbContainer = styled.div`
   display: grid;
@@ -22,12 +23,12 @@ const StyledBreadcrumb = styled.div`
 const StyledLink = styled.a`
   display: block;
   text-decoration: none;
-  font-family: ${SOLEIL.FONT_STACK};
-  font-weight: ${SOLEIL.REGULAR};
+  font-family: ${HALYARD.FONT_STACK};
+  font-weight: 400;
   font-size: 14px;
   line-height: 16px;
   font-weight: normal;
-  color: ${COLORS.GREY.G4} !important;
+  color: ${COLORS.GRAY.G4} !important;
   @media (max-width: 768px) {
     font-size: 12px;
   }

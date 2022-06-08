@@ -5,7 +5,6 @@ import Conditional from 'components/common/Conditional';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import TicketCard from 'components/slices/ContentPageTicketsCard';
 import { MBContext } from 'contexts/MBContext';
-import { COLORS, SOLEIL } from 'const/ui-constants';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -18,6 +17,8 @@ import { legacyBooleanCheck } from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import { csvTgidToArray, getHostName } from 'utils/helper';
 import { getPromoCodesDocument } from 'utils/prismicUtils';
+import { expandFontToken } from 'const/typography';
+import COLORS from 'const/colors';
 
 const StyledProductsWrapper = styled.div`
   margin: 0 auto;
@@ -51,27 +52,19 @@ const ProductContainer = styled.div`
 `;
 
 const StyledTourListHeading = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
-  font-weight: ${({ isTicketCard }) => (isTicketCard ? 600 : 800)};
-  font-size: ${({ isTicketCard }) => (isTicketCard ? '24px' : '32px')};
-  line-height: ${({ isTicketCard }) => (isTicketCard ? '1.4' : '44px')};
-  color: ${COLORS.GREY.G2};
+  ${expandFontToken('Display/Small')}
+  color: ${COLORS.GRAY.G2};
   @media (max-width: 768px) {
-    font-size: 22px;
-    line-height: 30px;
+    ${expandFontToken('Heading/Regular')}
   }
 `;
 
 const StyledTourListSubHeading = styled.div`
   margin-top: 8px;
-  font-family: ${SOLEIL.FONT_STACK};
-  font-size: 18px;
-  line-height: 1.33;
-  text-align: left;
-  color: ${COLORS.GREY.G2};
+  ${expandFontToken('Paragraph/Large')}
+  color: ${COLORS.GRAY.G2};
   @media (max-width: 768px) {
-    font-size: 14px;
-    margin-top: 4px;
+    ${expandFontToken('Paragraph/Medium')}
   }
 `;
 
@@ -496,7 +489,7 @@ const PopulateProducts = (props) => {
                   />
                 )}
                 <Conditional if={mbTheme === THEMES.MIN_BLUE}>
-                  <HorizontalLine colorProp={COLORS.GREY.G6} />
+                  <HorizontalLine colorProp={COLORS.GRAY.G6} />
                 </Conditional>
               </ProductWrapper>
             );

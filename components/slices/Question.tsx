@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { RichText } from 'prismic-reactjs';
-import { SOLEIL, COLORS } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import dynamic from 'next/dynamic';
 
 import Image from '../UI/Image';
@@ -82,8 +83,8 @@ const Question = (props) => {
               display: grid;
               grid-template-columns: 1fr auto;
               justify-items: space-between;
-              font-weight: ${SOLEIL.SEMIBOLD};
-              font-family: ${SOLEIL.FONT_STACK};
+              font-weight: 600;
+              font-family: ${HALYARD.FONT_STACK};
             }
             .question-carousel{
               display: flex;
@@ -138,7 +139,7 @@ const Question = (props) => {
           object-fit: cover;
         }
         .answer a {
-          color: ${COLORS.LIGHTER_LINK_BLUE};
+          color: ${COLORS.TEXT.CANDY_1};
         }
       `}</style>
     </div>

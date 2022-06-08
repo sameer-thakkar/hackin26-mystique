@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { SOLEIL, COLORS } from 'const/ui-constants';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { trackEvent } from 'utils/analytics';
 import LinkResolver from 'components/LinkResolver';
+import { expandFontToken } from 'const/typography';
+import COLORS from 'const/colors';
 
 type FooterColumnProps = {
   title: string;
@@ -17,11 +18,9 @@ const StyledFooterColumn = styled.div`
   display: grid;
   align-items: start;
   grid-template-rows: max-content max-content;
-  font-family: ${SOLEIL.FONT_STACK};
-  color: ${COLORS.DAVY_GREY};
+  color: ${COLORS.GRAY.G2};
   .link-item {
-    color: ${({ theme }) =>
-      theme?.footer?.secondaryColor || COLORS.LIGHTER_LINK_BLUE};
+    color: ${COLORS.GRAY.G4};
     text-decoration: none;
     margin-top: 12px;
     :last-child {
@@ -31,8 +30,7 @@ const StyledFooterColumn = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 14px;
-  font-weight: ${SOLEIL.SEMIBOLD};
+  ${expandFontToken('Subheading/Large')}
   margin-bottom: 4px;
 `;
 

@@ -1,8 +1,8 @@
+import React, { useContext, useEffect } from 'react';
 import Button from 'UI/Button';
 import { strings } from 'const/strings';
 import styled from 'styled-components';
-import React, { useContext, useEffect } from 'react';
-import { COLORS } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { PERCENTAGE } from 'assets/SvgIcons';
 import { MBContext } from 'contexts/MBContext';
 import { getLocalisedPriceString } from 'utils/helper';
@@ -28,8 +28,8 @@ const CTABlock = styled.div`
     grid-gap: 4px 14px;
     width: 310px;
     padding: 8px 12px;
-    color: ${COLORS.GREY_6D};
-    border: 1px dashed ${COLORS.GREY.G6};
+    color: ${COLORS.GRAY.G3};
+    border: 1px dashed ${COLORS.GRAY.G6};
     border-radius: 4px;
   }
   .promo-contents {
@@ -38,13 +38,13 @@ const CTABlock = styled.div`
     grid-gap: 4px;
   }
   .promo-code {
-    color: ${COLORS.GREY.G2};
+    color: ${COLORS.GRAY.G2};
     font-weight: 600;
     font-size: 12px;
     line-height: 16px;
   }
   .promo-cta {
-    color: ${COLORS.PURPS3};
+    color: ${COLORS.TEXT.PURPS_3};
     font-size: 14px;
     grid-row: 1 / 3;
     grid-column: 2 / 2;
@@ -53,10 +53,10 @@ const CTABlock = styled.div`
     text-align: end;
   }
   .off {
-    color: ${COLORS.GREY.G3};
+    color: ${COLORS.GRAY.G3};
   }
   .promo-description {
-    color: ${COLORS.GREY.G3};
+    color: ${COLORS.GRAY.G3};
     display: flex;
     font-size: 12px;
     text-align: start;
@@ -105,8 +105,8 @@ const PromoCodeBlock = ({
     promoExperimentVariant === VARIANTS.PROMO_5
       ? PROMO_CODES.DEFAULT
       : promoExperimentVariant === VARIANTS.PROMO_10
-      ? PROMO_CODES.DEFAULT_2
-      : null;
+        ? PROMO_CODES.DEFAULT_2
+        : null;
 
   useEffect(() => {
     if (!promoExperimentVariant) {

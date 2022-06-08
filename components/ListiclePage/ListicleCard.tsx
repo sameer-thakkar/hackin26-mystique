@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
 import { strings } from 'const/strings';
-import { COLORS, SOLEIL } from 'const/ui-constants';
-
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import Rating from '../UI/Rating';
 import Tags from '../UI/Tags';
 import Chevron from '../UI/Chevron';
@@ -21,7 +21,7 @@ const CardWrapper = styled.div`
   max-width: 792px;
   display: grid;
   color: #545454;
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   margin-top: 24px;
   @media (max-width: 768px) {
     width: 100%;
@@ -85,7 +85,7 @@ const MobileCardTitleSection = styled.div`
 const CardTitle = styled.div`
   font-weight: bold;
   font-size: 20px;
-  color: ${COLORS.DAVY_GREY};
+  color: ${COLORS.GRAY.G2};
 
   @media (max-width: 768px) {
     display: flex;
@@ -103,12 +103,12 @@ const Pricing = styled.div`
     line-height: 16px;
     display: flex;
     justify-content: flex-end;
-    font-weight: ${SOLEIL.REGULAR};
+    font-weight: 400;
   }
   width: max-content;
   font-size: 20px;
   line-height: 24px;
-  font-weight: ${SOLEIL.MEDIUM};
+  font-weight: 500;
   @media (max-width: 768px) {
     display: flex;
     justify-self: flex-end;
@@ -170,7 +170,7 @@ const CardBottomContent = styled.div`
     }
     .seatmap-chart {
       font-size: 14px;
-      color: ${COLORS.PURPS};
+      color: ${COLORS.BRAND.PURPS};
       cursor: pointer;
     }
   }

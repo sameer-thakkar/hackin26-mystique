@@ -1,4 +1,4 @@
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
@@ -7,13 +7,13 @@ import Image from 'UI/Image';
 import Button from 'UI/Button';
 import { strings } from 'const/strings';
 import { shortCodeSerializer } from 'utils/shortCodes';
-
+import COLORS from 'const/colors';
 import Pricing from './Pricing';
 
 const StyledLargeListicle = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   padding: 24px;
-  border: 1px solid ${COLORS.GREY.G6};
+  border: 1px solid ${COLORS.GRAY.G6};
   border-radius: 8px;
   @media (max-width: 768px) {
     padding: 16px;
@@ -36,7 +36,7 @@ const StyledNumber = styled.div`
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: ${COLORS.DAVY_GREY};
+  background: ${COLORS.GRAY.G2};
   color: white;
   line-height: 22px;
   font-size: 16px;
@@ -79,7 +79,7 @@ const InfoGrid = styled.div`
 `;
 
 const InfoTitle = styled.div`
-  font-weight: ${SOLEIL.SEMIBOLD};
+  font-weight: 600;
   line-height: 20px;
   margin-bottom: 8px;
 `;
@@ -96,7 +96,7 @@ const InfoTimings = styled.table`
 `;
 
 const WTTDTSection = styled.div`
-  background: ${COLORS.GREY.G8};
+  background: ${COLORS.GRAY.G8};
   padding: 16px;
   margin-bottom: 32px;
   div {
@@ -110,7 +110,7 @@ const WTTDTSection = styled.div`
 const WTTDTSectionRichText = styled.div`
   ${({ collapsed }) => (collapsed ? `height: 50px;` : '')}
   overflow: hidden;
-  color: ${COLORS.DAVY_GREY};
+  color: ${COLORS.GRAY.G2};
   line-height: 22px;
   * {
     margin-top: 0;
@@ -118,7 +118,7 @@ const WTTDTSectionRichText = styled.div`
 `;
 
 const WTTDTToggle = styled.div`
-  color: ${COLORS.HEADOUT_CANDY};
+  color: ${COLORS.BRAND.CANDY};
   cursor: pointer;
 `;
 
@@ -214,8 +214,8 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
           <TagWrapper>
             <Tags
               tags={finalTags}
-              color={COLORS.GREY_G3}
-              backgroundColor={COLORS.GREY.G7}
+              color={COLORS.GRAY.G3}
+              backgroundColor={COLORS.GRAY.G7}
             />
           </TagWrapper>
         </ImageWrapper>
@@ -270,9 +270,8 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
             role="button"
             tabIndex={0}
           >
-            {` ${
-              WTTDTCollapsed ? strings.MORE_DETAILS : strings.SHOW_LESS_TEXT
-            }`}
+            {` ${WTTDTCollapsed ? strings.MORE_DETAILS : strings.SHOW_LESS_TEXT
+              }`}
           </WTTDTToggle>
         </WTTDTSection>
       ) : null}

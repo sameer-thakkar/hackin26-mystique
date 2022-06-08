@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
-import { SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
 import Image from 'UI/Image';
 
 const StyledInternalContentCard = styled.div`
@@ -31,7 +31,7 @@ const StyledInternalContentCard = styled.div`
   }
   .more-reads-text-heading {
     display: block;
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
     font-weight: 600;
     font-size: 18px;
     color: #080808;
@@ -45,7 +45,7 @@ const StyledInternalContentCard = styled.div`
   }
   .more-reads-text-text {
     display: block;
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
     font-size: 16px;
     line-height: 1.5;
     color: #444444;

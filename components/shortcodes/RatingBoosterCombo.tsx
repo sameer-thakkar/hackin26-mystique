@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { SOLEIL, COLORS } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { STAR } from 'assets/SvgIcons';
 import { strings } from 'const/strings';
 import { HEADOUT_API_ENDPOINT } from 'const/index';
@@ -44,15 +45,15 @@ const RatingBoosterCombo = (props) => {
           grid-template-columns: auto auto auto;
           justify-content: left;
           align-items: center;
-          font-weight: ${SOLEIL.REGULAR};
+          font-weight: 400;
           grid-gap: 5px;
           font-size: 12px;
-          font-family: ${SOLEIL.FONT_STACK};
+          font-family: ${HALYARD.FONT_STACK};
           line-height: 1;
-          color: ${COLORS.DAVY_GREY};
+          color: ${COLORS.GRAY.G2};
         }
         .booster-container .new {
-          color: ${COLORS.TEAL};
+          color: ${COLORS.TEXT.BEACH};
         }
         .booster-container .booster-rating {
           display: grid;
@@ -61,7 +62,7 @@ const RatingBoosterCombo = (props) => {
           align-items: center;
         }
         .booster-container .booster-text {
-          color: ${COLORS.DAVY_GREY};
+          color: ${COLORS.GRAY.G2};
         }
       `}</style>
       <style jsx global>{`

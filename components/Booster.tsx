@@ -1,5 +1,5 @@
 import React from 'react';
-import { COLORS } from 'const/ui-constants';
+import COLORS from 'const/colors';
 
 const Booster = (props) => {
   const { color, text } = props;
@@ -11,7 +11,7 @@ const Booster = (props) => {
 };
 
 Booster.defaultProps = {
-  color: COLORS.TEAL,
+  color: COLORS.TEXT.BEACH,
 };
 
 export default Booster;

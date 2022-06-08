@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import Image from 'UI/Image';
 import Conditional from 'components/common/Conditional';
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { CLOSE_WHITE } from 'assets/SvgIcons';
 import { ASPECT_RATIO, FALLBACK_IMAGE } from 'const/index';
 import { strings } from 'const/strings';
@@ -16,8 +17,8 @@ const Wrapper = styled.div`
   grid-template-columns: repeat(2, 1fr);
   gap: 24px;
   margin: 24px 0;
-  border-top: 1px solid ${COLORS.GREY.G6};
-  border-bottom: 1px solid ${COLORS.GREY.G6};
+  border-top: 1px solid ${COLORS.GRAY.G6};
+  border-bottom: 1px solid ${COLORS.GRAY.G6};
   img {
     width: 100%;
     height: 448px;
@@ -54,14 +55,14 @@ const Wrapper = styled.div`
     .title {
       font-size: 24px;
       font-style: normal;
-      font-weight: ${SOLEIL.SEMIBOLD};
+      font-weight: 600;
       line-height: 28px;
     }
   }
   .description {
     font-size: 16px;
     font-style: normal;
-    font-weight: ${SOLEIL.REGULAR};
+    font-weight: 400;
     line-height: 24px;
   }
   .info {
@@ -84,13 +85,13 @@ const DescriptorWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   .descriptor {
-    background-color: ${COLORS.GREY.G7};
+    background-color: ${COLORS.GRAY.G7};
     padding: 4px 8px;
     border-radius: 2px;
-    color: ${COLORS.GREY.G3};
+    color: ${COLORS.GRAY.G3};
     font-size: 11px;
     font-style: normal;
-    font-weight: ${SOLEIL.REGULAR};
+    font-weight: 400;
     line-height: 11px;
     letter-spacing: 0.4px;
     margin-bottom: 8px;
@@ -113,16 +114,16 @@ const TicketsWrapper = styled.div`
     .text {
       font-size: 14px;
       font-style: normal;
-      font-weight: ${SOLEIL.REGULAR};
+      font-weight: 400;
       line-height: 16px;
-      color: ${COLORS.GREY.G4};
+      color: ${COLORS.GRAY.G4};
     }
     .price {
       font-size: 24px;
       font-style: normal;
-      font-weight: ${SOLEIL.SEMIBOLD};
+      font-weight: 600;
       line-height: 16px;
-      color: ${COLORS.GREY.G3};
+      color: ${COLORS.GRAY.G3};
     }
   }
   .cta-wrapper {
@@ -137,20 +138,20 @@ const TicketsWrapper = styled.div`
       border-radius: 4px;
       font-size: 16px;
       font-style: normal;
-      font-weight: ${SOLEIL.REGULAR};
+      font-weight: 400;
       line-height: 24px;
       text-align: center;
     }
     .primary {
       grid-column: 1;
-      background-color: ${COLORS.PURPS};
-      color: ${COLORS.WHITE};
+      background-color: ${COLORS.BRAND.PURPS};
+      color: ${COLORS.BRAND.WHITE};
     }
     .secondary {
       grid-column: 2;
-      background-color: ${COLORS.WHITE};
-      border: 1px solid ${COLORS.BLACK};
-      color: ${COLORS.GREY.G2};
+      background-color: ${COLORS.BRAND.WHITE};
+      border: 1px solid ${COLORS.BRAND.BLACK};
+      color: ${COLORS.GRAY.G2};
     }
   }
   @media (max-width: 768px) {
@@ -170,7 +171,7 @@ const CloseButton = styled.div`
   align-items: center;
   width: 48px;
   height: 48px;
-  background-color: ${COLORS.BLACK};
+  background-color: ${COLORS.BRAND.BLACK};
   cursor: pointer;
   position: absolute;
   top: 0;
@@ -192,7 +193,7 @@ const Modal = styled.div`
     grid-template-rows: max-content max-content;
     position: relative;
   }
-  background-color: ${COLORS.WHITE};
+  background-color: ${COLORS.BRAND.WHITE};
   svg {
     width: 13.33px;
     height: 13.33px;
@@ -209,8 +210,8 @@ const Modal = styled.div`
   }
   ${TicketsWrapper} {
     padding: 12px 16px;
-    background: ${COLORS.WHITE};
-    border-top: 1px solid ${COLORS.GREY.G6};
+    background: ${COLORS.BRAND.WHITE};
+    border-top: 1px solid ${COLORS.GRAY.G6};
     position: sticky;
     width: 100%;
     bottom: 0;
@@ -289,8 +290,8 @@ const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = f
               data.uid
                 ? convertUidToUrl({ uid: data.uid, isDev, hostname: host })
                 : microbrand
-                ? getValidUrl(microbrand?.trim())
-                : ''
+                  ? getValidUrl(microbrand?.trim())
+                  : ''
             }
             className="cta secondary"
           >

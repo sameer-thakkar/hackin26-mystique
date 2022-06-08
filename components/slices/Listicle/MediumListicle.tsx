@@ -1,4 +1,4 @@
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
@@ -10,15 +10,16 @@ import { strings } from 'const/strings';
 import { CANDY_STAR } from 'assets/SvgIcons';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import Image from 'UI/Image';
+import COLORS from 'const/colors';
 
 import Pricing from './Pricing';
 
 const CardWrapper = styled.div`
-  border: 1px solid ${COLORS.GREY.G6};
+  border: 1px solid ${COLORS.GRAY.G6};
   border-radius: 8px;
   display: grid;
   padding: 24px;
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   @media (max-width: 768px) {
     padding: 0;
   }
@@ -31,7 +32,7 @@ const CardTop = styled.div`
   cursor: pointer;
   ${({ isActive }) =>
     isActive
-      ? `  border-bottom: 1px solid ${COLORS.GREY.G6}; padding-bottom: 24px;`
+      ? `  border-bottom: 1px solid ${COLORS.GRAY.G6}; padding-bottom: 24px;`
       : ``}
   img {
     width: 100%;
@@ -54,9 +55,9 @@ const CardTop = styled.div`
 
 const Rating = styled.div`
   margin-top: 4px;
-  color: ${COLORS.HEADOUT_CANDY};
+  color: ${COLORS.BRAND.CANDY};
   span {
-    color: ${COLORS.GREY_G4};
+    color: ${COLORS.GRAY.G4};
   }
 `;
 
@@ -73,7 +74,7 @@ const MobileCardTitleSection = styled.div`
 `;
 
 const CardTitle = styled.div`
-  font-weight: ${SOLEIL.SEMIBOLD};
+  font-weight: 600;
   font-size: 21px;
   line-height: 28px;
   @media (max-width: 768px) {
@@ -92,7 +93,7 @@ const CardBottom = styled.div`
   padding-top: 24px;
   @media (max-width: 768px) {
     padding: 0;
-    border-top: 1px solid ${COLORS.GREY.G6};
+    border-top: 1px solid ${COLORS.GRAY.G6};
   }
 `;
 
@@ -104,7 +105,7 @@ const CardBottomContent = styled.div`
   .summary {
     grid-area: summary;
     * {
-      font-family: ${SOLEIL.FONT_STACK};
+      font-family: ${HALYARD.FONT_STACK};
       font-size: 16px;
       line-height: 24px;
       margin-top: 0;
@@ -144,7 +145,7 @@ const DurationInfo = styled.div`
   font-size: 16px;
   grid-area: duration;
   div {
-    font-weight: ${SOLEIL.SEMIBOLD};
+    font-weight: 600;
     line-height: 20px;
     margin-bottom: 8px;
   }
@@ -155,7 +156,7 @@ const TheatreInfo = styled.div`
   grid-area: theatre;
   font-size: 16px;
   div {
-    font-weight: ${SOLEIL.SEMIBOLD};
+    font-weight: 600;
     line-height: 20px;
     margin-bottom: 8px;
   }
@@ -163,7 +164,7 @@ const TheatreInfo = styled.div`
 
 const StyledLink = styled.a`
   text-decoration: none;
-  color: ${COLORS.HEADOUT_CANDY};
+  color: ${COLORS.BRAND.CANDY};
 `;
 
 const ReadMore = styled(Button)`
@@ -255,8 +256,8 @@ const MediumListicle: React.FC<MediumListicleProps> = ({
               </div>
               <Tags
                 tags={finalTags}
-                color={COLORS.GREY_G3}
-                backgroundColor={COLORS.GREY.G7}
+                color={COLORS.GRAY.G3}
+                backgroundColor={COLORS.GRAY.G7}
               />
               <div className="price-section">
                 {tourData?.listingPrice && show_price ? (
@@ -278,8 +279,8 @@ const MediumListicle: React.FC<MediumListicleProps> = ({
               {isMobile ? (
                 <Tags
                   tags={finalTags}
-                  color={COLORS.GREY_G3}
-                  backgroundColor={COLORS.GREY.G7}
+                  color={COLORS.GRAY.G3}
+                  backgroundColor={COLORS.GRAY.G7}
                 />
               ) : null}
             </div>

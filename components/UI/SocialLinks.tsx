@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { FACEBOOK, TWITTER, INSTAGRAM } from 'assets/SvgIcons';
-import { COLORS } from 'const/ui-constants';
+import COLORS from 'const/colors';
 
 const StyledSocialLinks = styled.div`
   display: grid;
@@ -22,7 +22,7 @@ const SocialIcon = styled.div`
     width: 20px;
     path {
       fill: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? COLORS.GREY.G5 : COLORS.WHITE};
+    isEntertainmentMb ? COLORS.GRAY.G5 : COLORS.BRAND.WHITE};
     }
   }
 `;

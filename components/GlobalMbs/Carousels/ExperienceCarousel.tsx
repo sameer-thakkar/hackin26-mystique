@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import Image from 'UI/Image';
 import Conditional from 'components/common/Conditional';
 import Carousel from 'components/GlobalMbs/Carousels/Carousel';
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { CHEVRON_LEFT } from 'assets/SvgIcons';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import { ASPECT_RATIO } from 'const/index';
@@ -11,7 +12,7 @@ import { MBContext } from 'contexts/MBContext';
 import { strings } from 'const/strings';
 
 const StyledCard = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   img {
     width: 100%;
     height: 180px;
@@ -21,7 +22,7 @@ const StyledCard = styled.div`
   }
   .title {
     font-size: 16px;
-    font-weight: ${SOLEIL.SEMIBOLD};
+    font-weight: 600;
     line-height: 20px;
     margin-bottom: 8px;
   }
@@ -31,12 +32,12 @@ const StyledCard = styled.div`
   .tag {
     font-size: 12px;
     font-style: normal;
-    font-weight: ${SOLEIL.REGULAR};
+    font-weight: 400;
     line-height: 12px;
     margin-right: 8px;
     padding: 4px 8px;
-    color: ${COLORS.GREY.G3};
-    background-color: ${COLORS.GREY.G7};
+    color: ${COLORS.GRAY.G3};
+    background-color: ${COLORS.GRAY.G7};
     border-radius: 2px;
     &:last-child {
       margin-right: 0;
@@ -49,30 +50,30 @@ const StyledCard = styled.div`
   }
   .from-price {
     font-style: normal;
-    font-weight: ${SOLEIL.REGULAR};
+    font-weight: 400;
     font-size: 12px;
     line-height: 16px;
-    color: ${COLORS.GREY.G4};
+    color: ${COLORS.GRAY.G4};
   }
   .from-price span {
-    color: ${COLORS.GREY.G4};
+    color: ${COLORS.GRAY.G4};
     text-decoration: line-through;
   }
   .final-price {
     font-size: 16px;
     line-height: 16px;
     font-style: normal;
-    font-weight: ${SOLEIL.SEMIBOLD};
-    color: ${COLORS.GREY.G3};
+    font-weight: 600;
+    color: ${COLORS.GRAY.G3};
   }
   .final-price .discount {
-    color: ${COLORS.OKAY_GREEN};
-    background-color: ${COLORS.SOOTHING_GREEN};
+    color: ${COLORS.TEXT.OKAY_GREEN_3};
+    background-color: ${COLORS.BACKGROUND.SOOTHING_GREEN};
     border-radius: 2px;
     font-size: 11px;
     line-height: 12px;
     font-style: normal;
-    font-weight: ${SOLEIL.REGULAR};
+    font-weight: 400;
     letter-spacing: 0.2px;
     padding: 2px 4px;
     margin-left: 8px;
@@ -83,15 +84,15 @@ const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   @media (max-width: 500px) {
     margin-bottom: 24px;
   }
   h2 {
     font-size: 24px;
-    font-weight: ${SOLEIL.SEMIBOLD};
+    font-weight: 600;
     line-height: 28px;
-    color: ${COLORS.GREY.G2};
+    color: ${COLORS.GRAY.G2};
     margin: 0;
   }
   a {
@@ -100,7 +101,7 @@ const HeaderWrapper = styled.div`
     font-size: 14px;
     line-height: 16px;
     letter-spacing: 0.2px;
-    color: ${COLORS.GREY.G2};
+    color: ${COLORS.GRAY.G2};
   }
   svg {
     height: 10px;

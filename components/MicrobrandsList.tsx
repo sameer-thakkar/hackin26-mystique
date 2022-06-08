@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
 
 import MicrobrandCards from './slices/MicrobrandCards';
 
@@ -11,8 +11,8 @@ const StyledMBList = styled.div`
   .microbrands-list-heading {
     border-left: 3px solid #669dde;
     padding: 5px 10px 5px;
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.SEMIBOLD};
+    font-family: ${HALYARD.FONT_STACK};
+    font-weight: 600;
     color: #000000;
     margin: 40px 0px;
     font-size: 2em;

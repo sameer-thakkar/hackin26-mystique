@@ -7,10 +7,11 @@ import Carousel from 'components/UI/Carousel';
 import VariantCard, { VariantCardSkeleton } from 'components/UI/VariantCard';
 import { BLACK_COLOR_CLOSE } from 'assets/SvgIcons';
 import { strings } from 'const/strings';
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
 import { getHostName } from 'utils/helper';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { trackEvent } from 'utils/analytics';
+import COLORS from 'const/colors';
 import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
 
@@ -19,7 +20,7 @@ const PopupWrapper = styled.div`
   width: 100vw;
   height: 100%;
   position: fixed;
-  background: ${COLORS.WHITE};
+  background: ${COLORS.BRAND.WHITE};
   top: 0;
   left: 0;
   display: grid;
@@ -53,7 +54,7 @@ const CloseIconWrapper = styled.div`
   align-items: center;
   position: absolute;
   align-items: center;
-  background: ${COLORS.GREY.G8};
+  background: ${COLORS.GRAY.G8};
   top: 0;
   right: 0;
   cursor: pointer;
@@ -89,11 +90,11 @@ const ProductTitleWrapper = styled.div`
 `;
 
 const ProductTitle = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
-  font-weight: ${SOLEIL.SEMIBOLD};
+  font-family: ${HALYARD.FONT_STACK};
+  font-weight: 600;
   font-size: 24px;
   line-height: 28px;
-  color: ${COLORS.GREY.G2};
+  color: ${COLORS.GRAY.G2};
   @media (max-width: 768px) {
     font-size: 18px;
     line-height: 24px;
@@ -101,12 +102,12 @@ const ProductTitle = styled.div`
 `;
 const L1Booster = styled.div`
   text-transform: uppercase;
-  font-family: ${SOLEIL.FONT_STACK};
-  font-weight: ${SOLEIL.SEMIBOLD};
+  font-family: ${HALYARD.FONT_STACK};
+  font-weight: 600;
   font-size: 10px;
   line-height: 12px;
-  color: ${COLORS.GREY.G2};
-  background-color: ${COLORS.PALE_YELLOW};
+  color: ${COLORS.GRAY.G2};
+  background-color: ${COLORS.JOY_MUSTARD.LIGHT_TONE_2};
   padding: 3px 6px 1px;
   width: max-content;
 `;
@@ -115,11 +116,11 @@ const StyledVariantsWrapper = styled.div`
   grid-template-rows: repeat(2, max-content);
   gap: 24px;
   h3 {
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.SEMIBOLD};
+    font-family: ${HALYARD.FONT_STACK};
+    font-weight: 600;
     font-size: 21px;
     line-height: 28px;
-    color: ${COLORS.GREY.G2};
+    color: ${COLORS.GRAY.G2};
     margin: 0;
     @media (max-width: 768px) {
       font-size: 16px;

@@ -2,16 +2,17 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { MBContext } from 'contexts/MBContext';
 import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
-import { COLORS } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { strings } from 'const/strings';
 import { createBookingURL } from 'utils';
 import Conditional from 'components/common/Conditional';
+import { expandFontToken } from 'const/typography';
 import { checkLTT } from 'utils/helper';
 
 const BannerContent = styled.div(
   ({ showComponent }) => `
   z-index: 3;
-  background: #ffffff;
+  background: ${COLORS.BRAND.WHITE};
   top: 80px;
   position: -webkit-sticky;
 
@@ -27,26 +28,20 @@ const BannerContent = styled.div(
   }
 
   .top-text-wrapper {
-    font-size: 14px;
-    font-style: normal;
-    font-weight: normal;
-    line-height: 16px;
-    color: #666666;
+    ${expandFontToken('UI/Label Regular')}
+    color: ${COLORS.GRAY.G3};
     margin-bottom: 8px;
   }
 
   .heading {
-    font-size: 18px;
-    font-weight: 600;
-    font-style: normal;
-    line-height: 24px;
-    color: #444444;
+    ${expandFontToken('Heading/Small')}
+    color: ${COLORS.GRAY.G2};
   }
 
   .tags-wrapper {
     display: inline-block;
-    border: 1px solid #e2e2e2;
-    color: #666666;
+    border: 1px solid ${COLORS.GRAY.G6};
+    color: ${COLORS.GRAY.G3};
     padding: 6px 8px;
     margin: 8px 8px 8px 0;
     border-radius: 2px;
@@ -56,7 +51,7 @@ const BannerContent = styled.div(
   .priceBlockWrapper {
     justify-content: flex-end;
     display: flex;
-    border-right: 1px solid #E2E2E2;
+    border-right: 1px solid ${COLORS.GRAY.G6};
   }
 
   .right-pricing {
@@ -67,29 +62,12 @@ const BannerContent = styled.div(
     justify-content: right;
   }
 
-  .tour-price {
-    color: #444444;
-    font-weight: 600;
-    font-size: 21px;
-  }
-
-  .tour-scratch-price {
-    color: #888888;
-    font-size: 14px;
-    line-height: 16px;
-    text-align: left;
-  }
-
   .buy-button,
   .unavailable-button {
     margin: 0px 16px;
     color: #ffffff;
     border: none;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 20px;
-    letter-spacing: 0.6px;
+    ${expandFontToken('Button/Medium')}
     display: block;
     text-align: center;
     border-radius: 4px;
@@ -99,13 +77,13 @@ const BannerContent = styled.div(
   }
 
   .buy-button {
-    color: ${COLORS.WHITE};
-    background: ${COLORS.PURPS};
+    color: ${COLORS.BRAND.WHITE};
+    background: ${COLORS.BRAND.PURPS};
     cursor: pointer;
   }
   .unavailable-button {
-    background: ${COLORS.GREY.G5};
-    color: ${COLORS.WHITE};
+    background: ${COLORS.GRAY.G5};
+    color: ${COLORS.BRAND.WHITE};
   }
   .details-container {
     display: grid;
@@ -129,18 +107,12 @@ const BannerContent = styled.div(
   ${StyledPriceBlock} {
     margin-right: 16px;
     .tour-price{
-      font-style: normal;
-      font-weight: 600;
-      font-size: 21px;
-      line-height: 28px;
-      color: #444444;
+      color: ${COLORS.GRAY.G2};
+      ${expandFontToken('Heading/Regular')}
     }
     .tour-scratch-price{
-      font-style: normal;
-      font-weight: normal;
-      font-size: 14px;
-      line-height: 16px;
-      color: #888888;
+      ${expandFontToken('UI/Label Regular')}
+      color: ${COLORS.GRAY.G4};
     }
   }
 

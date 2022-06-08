@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import { useWindowWidth } from '@react-hook/window-size';
 import { RichText } from 'prismic-reactjs';
 import { strings } from 'const/strings';
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import COLORS from 'const/colors';
+import { expandFontToken } from 'const/typography';
 import Image from 'UI/Image';
 import Button from 'UI/Button';
 import { CHEVRON_LEFT } from 'assets/SvgIcons';
@@ -61,12 +62,14 @@ const StyledCard = styled.div((props) => {
     : '245px';
   return `
   display: grid;
+  position: relative;
   align-content: start;
-  background: ${COLORS.WHITE};
+  background: ${COLORS.BRAND.WHITE};
   box-shadow: ${isGlobalMb ? 'unset' : '0px 12px 20px rgba(0, 0, 0, 0.07)'};
-  border: ${isGlobalMb ? 'unset' : `1px solid ${COLORS.CHALK}`};
+  border: ${isGlobalMb ? 'unset' : `1px solid ${COLORS.GRAY.G7}`};
+  border-radius: 8px;
+  overflow: hidden;
   grid-template-columns: ${styles.gridTemplateColumns};
-  height: calc(100% - 8px);
   text-decoration: none;
   ${props.link && `cursor: pointer;`}
   .flex{
@@ -80,11 +83,7 @@ const StyledCard = styled.div((props) => {
   }
   .card-content-section {
     padding: ${
-      isGlobalMb
-        ? hasSingleCard
-          ? '0 0 0 14px'
-          : '16px 0 0 0'
-        : '16px 16px 0 16px'
+      isGlobalMb ? (hasSingleCard ? '0 0 0 14px' : '16px 0 0 0') : '8px 16px'
     };
     * {
       margin-top: 0;
@@ -93,18 +92,22 @@ const StyledCard = styled.div((props) => {
       padding-inline-start: 20px;
     }
     p, li {
-      font-size: ${isGlobalMb ? '14px' : '16px'};
-      line-height: ${isGlobalMb ? '20px' : '160%'};
-      font-family: ${SOLEIL.FONT_STACK};
+      ${expandFontToken('Paragraph/Medium')}
+    }
+    h3 {
+      ${expandFontToken('Heading/Small')}
     }
     p {
       margin-bottom: ${isGlobalMb ? 0 : '16px'};
-      color:  ${isGlobalMb ? COLORS.GREY_G3 : 'inherit'};
+      color:  ${isGlobalMb ? COLORS.GRAY.G3 : 'inherit'};
     }
     a {
-      color: ${COLORS.LIGHTER_LINK_BLUE};
+      color: ${COLORS.TEXT.CANDY_1};
       word-wrap: break-word;
     }
+  }
+  .card-content-section.link {
+    padding-bottom: 42px;
   }
   .swiper-pagination.swiper-pagination-bullets {
     top: unset;
@@ -124,14 +127,8 @@ const StyledCard = styled.div((props) => {
 });
 
 const Title = styled.h3`
-  font-family: ${SOLEIL.FONT_STACK};
-  font-weight: ${({ isGlobalMb }) =>
-    isGlobalMb ? `${SOLEIL.SEMIBOLD}` : `${SOLEIL.BOLD}`};
-  font-size: ${({ isGlobalMb }) => (isGlobalMb ? '16px' : '20px')};
-  line-height: ${({ isGlobalMb }) => (isGlobalMb ? '20px' : '27px')};
-  text-decoration: none;
-  color: ${({ isGlobalMb }) =>
-    isGlobalMb ? `${COLORS.GREY.G2}` : `${COLORS.DAVY_GREY}`} !important;
+  ${expandFontToken('Subheading/Regular')}
+  color: ${COLORS.GRAY.G2} !important;
   margin-bottom: 8px;
 `;
 
@@ -150,9 +147,10 @@ const ButtonWrapper = styled.div`
 `;
 
 const CTALink = styled.a`
-  color: ${({ theme }) => theme.primaryColor} !important;
-  font-weight: ${SOLEIL.SEMIBOLD};
-  font-family: ${SOLEIL.FONT_STACK};
+  position: absolute;
+  bottom: 0;
+  color: ${COLORS.BRAND.CANDY} !important;
+  ${expandFontToken('UI/Label Medium (Heavy)')}
   display: block;
   margin: 24px 0 16px 0 !important;
   svg {
@@ -162,7 +160,7 @@ const CTALink = styled.a`
     width: 11px;
     path {
       stroke-width: 4px;
-      stroke: ${({ theme }) => theme.primaryColor};
+      stroke: ${COLORS.BRAND.CANDY};
     }
   }
   @media (max-width: 768px) {
@@ -380,7 +378,7 @@ const Card: React.FC<CardProps> = ({
     >
       {imageView}
       {hasTextContent ? (
-        <div className="card-content-section">
+        <div className={`card-content-section${cta?.link?.url ? ` link` : ''}`}>
           <Conditional if={title}>
             <Title
               {...(linkType === 'Title' && {

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
-import { SOLEIL, COLORS } from 'const/ui-constants';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { ANALYTICS_EVENTS } from 'const/index';
 import { ANALYTICS_PROPERTIES } from 'const/index';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
+import { expandFontToken } from 'const/typography';
+import COLORS from 'const/colors';
 
 type ContentTabsProps = {
   tabsArr: any[];
@@ -18,16 +19,14 @@ const StyledContentTabsWrapper = styled.div`
   display: grid;
   grid-row-gap: 10px;
   margin-bottom: 48px;
-  font-family: ${SOLEIL.FONT_STACK};
 `;
 
 const StyledContentTabs = styled.div`
   display: grid;
-  color: ${COLORS.DAVY_GREY};
+  color: ${COLORS.GRAY.G2};
   grid-auto-flow: column;
-  font-size: 18px;
   grid-column-gap: 40px;
-  border-bottom: 1px solid #ebebeb;
+  border-bottom: 1px solid ${COLORS.GRAY.G6};
   justify-content: left;
 
   @media (max-width: 768px) {
@@ -37,15 +36,13 @@ const StyledContentTabs = styled.div`
 
 const StyledTab = styled.h3(({ active }) => {
   return `
-  ${active ? `color: ${COLORS.PURPS3};` : ``}
+  ${active ? `color: ${COLORS.TEXT.PURPS_3};` : ``}
   cursor: pointer;
   ${active ? `border-bottom: 2px solid;` : ``}
   padding-bottom: 12px;
-  font-size: 18px;
-  line-height: 24px;
+  ${expandFontToken('Heading/Regular')}
   height: min-content;
   margin: 0;
-  font-weight: 600;
   `;
 });
 
@@ -53,15 +50,12 @@ const StyledContent = styled.div(({ active }) => {
   if (active) {
     return `
     display:block;
-    font-size: 15px;
-    max-width: 776px;
-    line-height: 24px;
+    ${expandFontToken('Paragraph/Large')}
+    max-width: 792px;
 
     h2{
       margin: 32px 0px 16px;
-      font-size: 16px;
-      line-height: 20px;
-      color: #666666;
+      ${expandFontToken('Heading/Small')}
     }
     p{
       margin: 16px 0 0;
@@ -71,7 +65,7 @@ const StyledContent = styled.div(({ active }) => {
       max-width: 100%;
     }
     a {
-      color: ${COLORS.PURPS};
+      color: ${COLORS.BRAND.PURPS};
     }
     ul{
       padding: 0;

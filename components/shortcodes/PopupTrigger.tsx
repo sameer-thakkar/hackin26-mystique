@@ -1,5 +1,5 @@
 import { CUSTOM_TYPES } from 'const/index';
-import { COLORS } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
@@ -9,7 +9,7 @@ import { Client } from '../../config/prismic-config';
 const Popup = dynamic(() => import('components/common/Popup'), { ssr: false });
 
 const StyledTrigger = styled.span`
-  color: ${COLORS.TEAL};
+  color: ${COLORS.TEXT.BEACH};
   cursor: pointer;
   line-height: 20px;
 `;

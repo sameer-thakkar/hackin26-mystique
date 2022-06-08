@@ -16,7 +16,7 @@ import {
   NOS_OF_HIGHLIGHTS_TO_SHOW,
   ANALYTICS_PROPERTIES,
 } from 'const/index';
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { CALENDAR, BackArrow } from 'assets/SvgIcons';
 import { StlyedSplit } from 'UI/Split';
@@ -38,6 +38,7 @@ import PromoCodeBlock from 'UI/PromoCodeBlock';
 import { descriptorIcons } from 'const/descriptorIcons';
 import { getDuration } from 'utils/timeUtils';
 import ComboVariants from 'UI/ComboVariants';
+import { expandFontToken } from 'const/typography';
 import { metaAtom } from 'store/atoms/meta';
 
 dayjs.extend(advancedFormat);
@@ -49,7 +50,6 @@ const Container = styled.div`
 `;
 
 const StyledProductCard = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
   padding: ${({ isMainCard }) => (isMainCard ? '24px' : '24px 0px 24px 40px')};
   display: grid;
   grid-row-gap: 24px;
@@ -67,7 +67,7 @@ const StyledProductCard = styled.div`
     ${({ theme }) => theme.productCards.lineStyles || ''};
   }
   .more-details {
-    font-weight: ${SOLEIL.MEDIUM};
+    font-weight: 500;
     font-size: 14px;
     line-height: 15px;
     margin-left: 1em;
@@ -107,15 +107,13 @@ const CloseIconWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f8f8f8;
+  background: ${COLORS.GRAY.G8};
   right: 0;
   position: sticky;
   cursor: pointer;
   svg {
     width: 16px;
     height: 16px;
-  }
-  @media (max-width: 768px) {
   }
 `;
 
@@ -133,18 +131,7 @@ const WrapperProductCard = styled.div`
 `;
 
 const TourTitle = styled.h2`
-  ${({ theme }) => theme.productCards.titleFontSettings.desktop};
-  ${({ isOpened }) =>
-    isOpened
-      ? `
-  font-size: 24px !important;
-  font-style: normal !important;
-  line-height: 28px !important;
-  font-weight: normal !important;`
-      : `font-size: 21px !important;
-  font-style: normal !important;
-  line-height: 28px !important;
-  font-weight: ${SOLEIL.SEMIBOLD} !important;`};
+  ${expandFontToken('Heading/Large')}
   margin: 0 !important;
   max-width: 768px;
   @media (max-width: 768px) {
@@ -156,11 +143,8 @@ const TourTitle = styled.h2`
 `;
 
 const MoreDetailWrapper = styled.div`
-  color: ${COLORS.PURPS3};
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 20px;
+  color: ${COLORS.TEXT.CANDY_1};
+  ${expandFontToken('Button/Medium')}
   cursor: pointer;
   @media (max-width: 768px) {
   }
@@ -189,7 +173,7 @@ const TitleWrapper = styled.div`
   ${({ hasBorderedTitle }) =>
     hasBorderedTitle
       ? `
-            border-bottom: 1px solid ${COLORS.GREY.G6};
+            border-bottom: 1px solid ${COLORS.GRAY.G6};
             padding-bottom: 16px;
             margin-bottom: -8px;
             @media(max-width: 768px) {
@@ -203,29 +187,23 @@ const ShortSummary = styled.div`
   margin-top: -8px;
   grid-area: summary;
   p {
-    color: ${COLORS.GREY_G3};
-    font-size: 14px;
-    line-height: 20px;
+    color: ${COLORS.GRAY.G3};
+    ${expandFontToken('Paragraph/Regular')}
     margin: 0;
   }
   @media (max-width: 768px) {
     margin-top: 0;
-    font-size: 14px;
-    line-height: 23px;
   }
 `;
 
 const TourTags = styled.div(
   ({ isMainCard, isOpened }) => `
-  font-size: 14px;
-  font-weight: ${SOLEIL.REGULAR};
-  display: ${isMainCard && !isOpened ? 'inline' : 'grid'};
+  display: ${isMainCard ? 'inline' : 'grid'};
   grid-row-gap: 12px;
   align-items: start;
   align-content: start;
   margin: 0;
-  margin-top: ${isOpened ? `0px` : '-8px'};
-  color: ${COLORS.GREY_G3};
+  color: ${COLORS.GRAY.G3};
   .tour-tag-wrapper{
     ${!isOpened ? `display: inline !important;float: left;` : ''}
   }
@@ -234,13 +212,10 @@ const TourTags = styled.div(
     grid-auto-flow: column;
     grid-column-gap: 8px;
     margin-right: ${isMainCard ? '20px' : '8px'};
-    font-size: 14px;
     max-width: 230px;
     justify-content: left;
     align-items: center;
-    font-style: normal;
-    font-weight: normal;
-    line-height: ${isMainCard ? `20px` : `16px`};
+    ${expandFontToken('UI/Label Medium')}
     margin-bottom: ${isMainCard ? '5px' : '0'};
     .image-wrap {
       display: flex;
@@ -259,8 +234,7 @@ const TourTags = styled.div(
     align-items: start;
     display: grid;
     grid-template-columns: auto auto;
-    font-size: 12px;
-    line-height: 13px;
+    ${expandFontToken('UI/Label Regular')}
     margin-top: -8px;
     grid-column-gap: 8px;
     grid-row-gap: 12px;
@@ -301,8 +275,6 @@ const CTAWrapper = styled.div`
   grid-gap: 16px;
   display: grid;
   padding-right: 16px;
-  @media (max-width: 768px) {
-  }
 `;
 
 const PriceContainer = styled.div`
@@ -322,10 +294,7 @@ const PriceContainer = styled.div`
   ${({ theme }) => theme.productCards.priceFontSettings.desktop}
   .tour-price {
     display: flex;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 24px;
-    line-height: ${({ isOpened }) => (!isOpened ? `28px` : `24px`)};
+    ${expandFontToken('Heading/Large')}
   }
   @media (max-width: 768px) {
     justify-self: left;
@@ -342,7 +311,7 @@ const CTABlock = styled.div`
     min-width: 230px;
     width: 100%;
     display: block;
-    line-height: 1;
+    ${expandFontToken('Button/Medium')}
     border-radius: 4px;
     svg {
       vertical-align: middle;
@@ -365,7 +334,7 @@ const CTABlock = styled.div`
       bottom: 0;
       padding-bottom: 16px;
       ${shouldOffset ? 'transform: translateY(32px);' : ''}
-      background: ${COLORS.WHITE};
+      background: ${COLORS.BRAND.WHITE};
       z-index: 2;
     `
         : ``}
@@ -385,11 +354,10 @@ const ProductBody = styled.div`
     cursor: ${({ hasReadMore }) => (hasReadMore ? 'pointer' : '')};
     p {
       margin: 0;
-      font-weight: ${SOLEIL.MEDIUM};
+      font-weight: 500;
     }
-    font-family: ${SOLEIL.FONT_STACK};
     ${({ theme }) => theme.productCards.regularFontSettings.desktop}
-    color: ${COLORS.FOUR_BLACK};
+    color: ${COLORS.GRAY.G2};
     opacity: 0.99;
     display: grid;
     grid-gap: 0;
@@ -464,8 +432,8 @@ const ProductBody = styled.div`
 
 const NextAvailableBlock = styled.div`
   font-size: 14px;
-  font-weight: ${SOLEIL.MEDIUM};
-  color: ${COLORS.FOUR_BLACK};
+  font-weight: 500;
+  color: ${COLORS.GRAY.G2};
   line-height: 15px;
   display: grid;
   grid-column-gap: 8px;
@@ -486,15 +454,14 @@ const ProductOfferBlock = styled.div`
   grid-area: offer;
   font-size: 14px;
   line-height: 15px;
-  font-family: ${SOLEIL.FONT_STACK};
-  font-weight: ${SOLEIL.REGULAR};
+  font-weight: 400;
   cursor: pointer;
   color: ${({ theme: { primaryAccent } }) =>
-    primaryAccent ? primaryAccent : COLORS.MED_SLATE_BLUE};
+    primaryAccent ? primaryAccent : COLORS.BRAND.PURPS};
   p {
     margin: 0;
     color: ${({ theme: { primaryAccent } }) =>
-      primaryAccent ? primaryAccent : COLORS.MED_SLATE_BLUE};
+      primaryAccent ? primaryAccent : COLORS.BRAND.PURPS};
   }
   @media (max-width: 768px) {
     font-size: 14px;
@@ -516,7 +483,7 @@ const Label = styled.div`
   line-height: 12px;
   color: #444444;
   border-radius: 2px;
-  background: ${COLORS.PALE_YELLOW};
+  background: ${COLORS.JOY_MUSTARD.LIGHT_TONE_2};
 `;
 
 const ModalCardContainer = styled.div`
@@ -1058,7 +1025,7 @@ const TicketCard = (props) => {
             </CTAContainer>
           </ProductHeader>
           <Conditional if={!isMobile}>
-            <HorizontalLine colorProp={COLORS.GREY.G6} />
+            <HorizontalLine colorProp={COLORS.GRAY.G6} />
           </Conditional>
           <Conditional if={isMobile}>
             <ProductBody

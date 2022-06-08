@@ -9,8 +9,9 @@ import styled from 'styled-components';
 import Fuse from 'fuse.js';
 import InteractionContext from 'contexts/Interaction';
 import Conditional from 'components/common/Conditional';
-import { SOLEIL, COLORS } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { SEARCH_ICON, CLOSE_WHITE } from 'assets/SvgIcons';
+import { expandFontToken } from 'const/typography';
 
 const StyledSearchBox = styled.div`
   position: relative;
@@ -21,16 +22,14 @@ const StyledSearchBox = styled.div`
     outline: none;
     padding-left: 2.5rem;
     border-radius: 0.25rem;
-    border: 1px solid ${COLORS.DADDY};
+    border: 1px solid ${COLORS.GRAY.G6};
     width: calc(100% - 2.5rem);
     min-width: 17.5rem;
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.REGULAR};
-    font-size: 1rem;
+    ${expandFontToken('UI/Label Medium')}
 
     ::placeholder {
       ${({ isEntertainmentMb }) =>
-        isEntertainmentMb && `color: ${COLORS.GREY.G4};`}
+        isEntertainmentMb && `color: ${COLORS.GRAY.G4};`}
     }
 
     ${({ isEntertainmentMb }) =>
@@ -50,7 +49,7 @@ const StyledSearchBox = styled.div`
     align-items: center;
 
     svg {
-      stroke: ${COLORS.GREY_75};
+      stroke: ${COLORS.GRAY.G3};
       height: ${({ isEntertainmentMb }) =>
         isEntertainmentMb ? '1rem' : '1.125rem'};
       height: ${({ isEntertainmentMb }) =>
@@ -58,7 +57,7 @@ const StyledSearchBox = styled.div`
     }
 
     path {
-      stroke: ${COLORS.DAVY_GREY};
+      stroke: ${COLORS.GRAY.G2};
     }
   }
 
@@ -75,7 +74,7 @@ const StyledSearchBox = styled.div`
       width: auto;
 
       path {
-        stroke: ${COLORS.DAVY_GREY};
+        stroke: ${COLORS.GRAY.G2};
       }
     }
   }

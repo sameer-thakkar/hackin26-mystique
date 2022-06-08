@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 
 import sliceHandler from '../Slices';
 import { CLOSE_BLACK } from '../../assets/SvgIcons';
@@ -78,8 +79,8 @@ const Popup = (props) => {
         }
         .popup-slice {
           display: block;
-          font-family: ${SOLEIL.FONT_STACK};
-          font-weight: ${SOLEIL.REGULAR};
+          font-family: ${HALYARD.FONT_STACK};
+          font-weight: 400;
           background: #fff;
         }
         .popup-mask {
@@ -123,7 +124,7 @@ const Popup = (props) => {
           width: 24px;
         }
         .aio-popup-container .close svg path {
-          stroke: ${COLORS.WHITE};
+          stroke: ${COLORS.BRAND.WHITE};
           height: 32px;
           width: 32px;
         }
@@ -138,8 +139,8 @@ const Popup = (props) => {
         .popup-slice.rich_text {
           border-top: none;
           padding: 0 1em 2em 0;
-          color: ${COLORS.DAVY_GREY};
-          font-family: ${SOLEIL.FONT_STACK};
+          color: ${COLORS.GRAY.G2};
+          font-family: ${HALYARD.FONT_STACK};
         }
         @media (max-width: 768px) {
           .popup-slice.rich_text {

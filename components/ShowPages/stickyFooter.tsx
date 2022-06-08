@@ -1,7 +1,7 @@
 import Conditional from 'components/common/Conditional';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
-import { COLORS } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { createBookingURL } from 'utils';
@@ -33,13 +33,13 @@ const StickyFooterContentWrapper = styled.div`
     max-width: 280px;
   }
   .buy-button {
-    color: ${COLORS.WHITE};
-    background: ${COLORS.PURPS};
+    color: ${COLORS.BRAND.WHITE};
+    background: ${COLORS.BRAND.PURPS};
     cursor: pointer;
   }
   .unavailable-button {
-    background: ${COLORS.GREY.G5};
-    color: ${COLORS.WHITE};
+    background: ${COLORS.GRAY.G5};
+    color: ${COLORS.BRAND.WHITE};
   }
 `;
 

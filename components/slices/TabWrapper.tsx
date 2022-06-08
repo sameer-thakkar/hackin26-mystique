@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useAmp } from 'next/amp';
-import { COLORS, SIZES, SOLEIL } from 'const/ui-constants';
+import { SIZES } from 'const/ui-constants';
 import Conditional from 'components/common/Conditional';
 import { useWindowWidth } from '@react-hook/window-size';
 import { CHEVRON_LEFT, CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
@@ -12,6 +12,8 @@ import { ANALYTICS_PROPERTIES } from 'const/index';
 import { legacyBooleanCheck } from 'utils';
 import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
+import { expandFontToken } from 'const/typography';
+import COLORS from 'const/colors';
 
 import { stringIdfy } from '../../utils/helper';
 import sliceHandler from '../Slices';
@@ -23,13 +25,12 @@ const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 const StyledTabWrapper = styled.div`
   display: grid;
   grid-row-gap: 16px;
-  line-height: 1.5;
-  font-family: ${SOLEIL.FONT_STACK};
+
   .tabs {
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: auto;
-    font-size: ${({ isGlobalMb }) => (isGlobalMb ? '16px' : '18px')};
+    ${expandFontToken('UI/Label Large')}
     grid-column-gap: ${({ isGlobalMb }) => (isGlobalMb ? '48px' : '32px')};
     border-bottom: 1px solid #ebebeb;
     justify-content: left;
@@ -37,8 +38,8 @@ const StyledTabWrapper = styled.div`
       display: none;
     }
     ${({ isGlobalMb }) =>
-      isGlobalMb &&
-      `
+    isGlobalMb &&
+    `
       line-height: 20px;
       `}
   }
@@ -78,7 +79,7 @@ const StyledTab = styled.div`
     return (
       isActive &&
       `
-      color: ${COLORS.PURPS3};
+      color: ${COLORS.TEXT.PURPS_3};
       border-bottom: 2px solid;
     `
     );
@@ -98,7 +99,7 @@ const AmpSelectorContainer = styled.div`
   }
 
   amp-selector [role='tab'][selected] {
-    color: ${COLORS.PURPS};
+    color: ${COLORS.BRAND.PURPS};
     border-bottom: 2px solid;
     outline: none;
   }
@@ -130,7 +131,7 @@ const StyledSwiper = styled.div`
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: max-content;
-    border-bottom: 1px solid ${COLORS.GREY.G6};
+    border-bottom: 1px solid ${COLORS.GRAY.G6};
   }
   .swiper-container {
     width: 100%;
@@ -179,7 +180,7 @@ const SlideControls = styled.div`
     cursor: pointer;
     z-index: 2;
     svg {
-      fill: ${COLORS.WHITE};
+      fill: ${COLORS.BRAND.WHITE};
       width: ${({ isMobile }) => (isMobile ? '32px' : 'auto')};
       circle {
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);

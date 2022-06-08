@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { CHEVRON_LEFT } from 'assets/SvgIcons';
-import { COLORS } from 'const/ui-constants';
+import COLORS from 'const/colors';
 
 export const StyledIconCTA = styled.div`
   padding: 8px;
@@ -17,7 +17,7 @@ export const StyledIconCTA = styled.div`
   width: max-content;
   cursor: ${({ onClick }) => (onClick ? 'pointer' : '')};
   @media (max-width: 768px) {
-    ${({ showBorder }) => showBorder && `border: 1px solid ${COLORS.GREY.G6}`}
+    ${({ showBorder }) => showBorder && `border: 1px solid ${COLORS.GRAY.G6}`}
     margin: 0.5rem 1rem;
   }
 `;

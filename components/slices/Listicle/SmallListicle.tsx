@@ -1,14 +1,15 @@
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import React from 'react';
 import styled from 'styled-components';
 import Image from 'UI/Image';
 import { strings } from 'const/strings';
 
 const StyledSmallListicle = styled.div`
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   width: 305px !important;
   padding: 16px 16px 24px 16px;
-  border: 1px solid ${COLORS.GREY.G6};
+  border: 1px solid ${COLORS.GRAY.G6};
   border-radius: 8px;
   display: grid;
   grid-column-gap: 16px;
@@ -31,7 +32,7 @@ const Title = styled.div`
 `;
 
 const ShowText = styled.div`
-  color: ${COLORS.PURPS};
+  color: ${COLORS.BRAND.PURPS};
   font-size: 10px;
   line-height: 10px;
   letter-spacing: 0.8px;
@@ -60,7 +61,7 @@ const Links = styled.div`
   a {
     font-size: 12px;
     line-height: 22px;
-    color: ${COLORS.HEADOUT_CANDY};
+    color: ${COLORS.BRAND.CANDY};
     margin-bottom: 4px;
     :last-child {
       margin-top: -4px;

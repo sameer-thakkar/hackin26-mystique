@@ -1,4 +1,4 @@
-import { SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
 import { CUSTOM_TYPES } from 'const/index';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
@@ -18,7 +18,7 @@ const StyledAlert = styled.div`
   margin: 0 auto;
   background: #d6f8ff;
   border-radius: 4px;
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   color: #1a4d57;
   grid-row-gap: 8px;
   grid-column-gap: 12px;
@@ -40,7 +40,7 @@ const StyledTitle = styled.div`
   grid-area: title;
   font-size: 16px;
   line-height: 16px;
-  font-weight: ${SOLEIL.SEMIBOLD};
+  font-weight: 600;
 `;
 
 const StyledContent = styled.div`

@@ -14,7 +14,6 @@ import sliceHandler from 'components/Slices';
 import Header from 'components/common/Header';
 import Conditional from 'components/common/Conditional';
 import { strings } from 'const/strings';
-import { COLORS, SOLEIL } from 'const/ui-constants';
 import {
   DROPDOWN_ELEMENT,
   FULL_WIDTH_SLICES,
@@ -29,6 +28,8 @@ import { tourListApiParser } from 'utils/dataParsers';
 import { groupSlices, getLangObject } from 'utils/helper';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import renderShortCodes from 'utils/shortCodes';
+import COLORS from 'const/colors';
+import { expandFontToken } from 'const/typography';
 
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 
@@ -43,22 +44,15 @@ const StyledContentPage = styled.div`
   margin-bottom: 72px;
 
   .slice-block h2 {
-    font-size: 24px;
     margin: 0.2em 0;
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.SEMIBOLD};
     position: relative;
-    line-height: 1.4;
-    color: #444444;
+    color: ${COLORS.GRAY.G2};
+    ${expandFontToken('Heading/Large')}
   }
   .slice-block h3 {
-    font-weight: 500;
-    font-size: 22px;
-    font-family: ${SOLEIL.FONT_STACK};
-    font-weight: ${SOLEIL.SEMIBOLD};
     position: relative;
-    line-height: 1.4;
-    color: #444444;
+    color: ${COLORS.GRAY.G2};
+    ${expandFontToken('Heading/Small')}
   }
 
   .slice-block > h2 {
@@ -66,28 +60,14 @@ const StyledContentPage = styled.div`
   }
 
   .slice-block p {
-    color: #444444;
-    font-family: ${SOLEIL.FONT_STACK};
-    font-size: 16px;
+    ${expandFontToken('Paragraph/Large')}
+    color: ${COLORS.GRAY.G2};
     margin-bottom: 15px;
-    line-height: 30px;
   }
 
   .slice-block ul {
+    ${expandFontToken('Paragraph/Large')}
     padding-left: 20px;
-  }
-
-  .slice-block rich_text ul li,
-  .slice-block rich_text ol li {
-    font-family: ${SOLEIL.FONT_STACK};
-    font-size: 16px;
-    color: #444444;
-    line-height: 40px;
-  }
-
-  .ticket_card_shoulder_page ul li,
-  .ticket_card_shoulder_page ol li {
-    line-height: 22px;
   }
 
   .product .product-left p {
@@ -101,14 +81,14 @@ const StyledContentPage = styled.div`
 
   a {
     text-decoration: none;
-    color: ${COLORS.LIGHTER_LINK_BLUE};
+    color: ${COLORS.TEXT.CANDY_1};
   }
 
   .product {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 2px solid #ebebeb;
+    border: 2px solid ${COLORS.GRAY.G6};
     /*box-shadow: 0 1px 2px rgba(0,0,0,.18);*/
     margin-bottom: 40px;
     border-radius: 5px;
@@ -120,7 +100,7 @@ const StyledContentPage = styled.div`
   }
 
   .products .product .product-left .product-heading {
-    color: #444444;
+    color: ${COLORS.GRAY.G2};
     margin: 0;
   }
 
@@ -141,19 +121,23 @@ const StyledContentPage = styled.div`
     grid-row-gap: 52px;
     margin-top: 52px;
     .slice-block h2 {
-      font-size: 20px;
+      ${expandFontToken('Heading/Regular')}
     }
     .product .product-left {
       width: 100%;
     }
     .slice-block p,
     .slice-block .more-reads-text-text {
-      font-size: 16px;
+      ${expandFontToken('Paragraph/Medium')}
+    }
+
+    .slice-block ul {
+      ${expandFontToken('Paragraph/Medium')}
     }
     .slice-block h3,
     .slice-block .more-reads-text-heading,
     .products .product .product-left .product-heading {
-      font-size: 18px;
+      ${expandFontToken('Heading/XS')}
     }
     .product {
       display: block;
@@ -553,11 +537,10 @@ class ContentPage extends Component<any, any> {
                   const sliceComponent = (
                     <div
                       key={index}
-                      className={`${
-                        !FULL_WIDTH_SLICES.includes(slice.slice_type)
+                      className={`${!FULL_WIDTH_SLICES.includes(slice.slice_type)
                           ? 'slice-wrapper'
                           : ''
-                      } slice-block ${slice.slice_type}`}
+                        } slice-block ${slice.slice_type}`}
                     >
                       {sliceHandler(slice, {
                         isMobile: this.state.isMobile,

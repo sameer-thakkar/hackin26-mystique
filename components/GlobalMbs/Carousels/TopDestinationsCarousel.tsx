@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import Carousel from 'components/GlobalMbs/Carousels/Carousel';
 import Image from 'UI/Image';
 import TitleTextCombo from 'UI/TitleTextCombo';
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { FALLBACK_IMAGES } from 'const/index';
 import { MBContext } from 'contexts/MBContext';
@@ -40,16 +41,16 @@ const TextWrapper = styled.div`
   .city {
     font-size: 17px;
     font-style: normal;
-    font-weight: ${SOLEIL.SEMIBOLD};
+    font-weight: 600;
     line-height: 20px;
     letter-spacing: 0.5px;
   }
   .country {
     font-size: 14px;
     font-style: normal;
-    font-weight: ${SOLEIL.REGULAR};
+    font-weight: 400;
     line-height: 20px;
-    color: ${COLORS.GREY.G3};
+    color: ${COLORS.GRAY.G3};
   }
 `;
 

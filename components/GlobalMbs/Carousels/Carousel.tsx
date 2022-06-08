@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useWindowWidth } from '@react-hook/window-size';
 import Conditional from 'components/common/Conditional';
 import OverflowScroll from 'UI/OverflowScroll';
-import { SIZES, SOLEIL } from 'const/ui-constants';
+import { SIZES, HALYARD } from 'const/ui-constants';
 import { CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
@@ -57,7 +57,7 @@ const Controls = styled.div`
 
 const EntrySection = styled.div`
   margin-bottom: 32px;
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   @media (max-width: 500px) {
     margin-bottom: 24px;
   }

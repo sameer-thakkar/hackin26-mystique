@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { COLORS } from 'const/ui-constants';
+import COLORS from 'const/colors';
 
 const StyledChevron = styled.div`
   width: 1.25em;
@@ -14,7 +14,7 @@ const StyledChevron = styled.div`
     position: absolute;
     width: 0.75em;
     height: 0.1em;
-    background-color: ${COLORS.DAVY_GREY};
+    background-color: ${COLORS.GRAY.G2};
     display: inline-block;
     -webkit-transition: all 0.2s ease;
     transition: all 0.2s ease;

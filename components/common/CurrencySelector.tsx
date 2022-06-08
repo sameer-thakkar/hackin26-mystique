@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { THEMES } from 'const/index';
-import { COLORS, SOLEIL } from 'const/ui-constants';
+import { HALYARD } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { useRecoilState } from 'recoil';
 import { currencyAtom } from 'store/atoms/currency';
 import { useRouter } from 'next/router';
@@ -38,23 +39,23 @@ const StyledCurrencySelector = styled.div`
     background-color: ${({ theme }) => theme.primaryBackground};
     background-color: #fff;
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
     font-size: 16px;
     padding: 10px 25px;
     cursor: pointer;
   }
   .currency-dropdown span {
-    color: ${COLORS.FOUR_BLACK};
+    color: ${COLORS.GRAY.G2};
   }
   .currency-item:hover {
-    color: ${COLORS.PURPS};
+    color: ${COLORS.BRAND.PURPS};
   }
   .curr {
     transform: translateY(-2px);
     white-space: nowrap;
   }
   .selected-tab {
-    color: ${COLORS.PURPS};
+    color: ${COLORS.BRAND.PURPS};
   }
   .currency-dropdown-active {
     display: block;
@@ -69,7 +70,7 @@ const MobileCurrencySelector = styled.div`
     padding: 4px; /* increase trigger area */
     padding-left: 12px;
     display: block;
-    font-family: ${SOLEIL.FONT_STACK};
+    font-family: ${HALYARD.FONT_STACK};
     font-size: 14px;
     color: ${({ theme }) => theme.primaryBGText};
   }
@@ -84,7 +85,7 @@ const MobileCurrencySelector = styled.div`
 
 const StyledCurrency = styled.span`
   margin-top: 7px;
-  font-family: ${SOLEIL.FONT_STACK};
+  font-family: ${HALYARD.FONT_STACK};
   font-size: 16px;
   color: #545454;
   cursor: pointer;
@@ -117,7 +118,7 @@ const StyledCurrency = styled.span`
 
 const CurrencyPlaceholder = styled.div`
   width: 60px;
-  background: ${COLORS.CHALK};
+  background: ${COLORS.GRAY.G7};
   display: block;
   height: 16px;
   margin-left: 32px;
@@ -226,9 +227,8 @@ const CurrencySelector = (props) => {
     >
       <StyledCurrency>{displayCurrency}</StyledCurrency>
       <div
-        className={`currency-dropdown ${
-          isActive ? 'currency-dropdown-active' : ''
-        }`}
+        className={`currency-dropdown ${isActive ? 'currency-dropdown-active' : ''
+          }`}
       >
         {currencies.map((currency, index) => {
           return (

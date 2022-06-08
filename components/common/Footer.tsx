@@ -10,19 +10,16 @@ import sliceHandler from 'components/Slices';
 import Conditional from 'components/common/Conditional';
 import { POWERED_BY_HEADOUT, WHITE_BLIP } from 'assets/SvgIcons';
 import { THEMES } from 'const/index';
-import { COLORS, SOLEIL } from 'const/ui-constants';
 import { strings } from 'const/strings';
+import { expandFontToken } from 'const/typography';
+import COLORS from 'const/colors';
 import { metaAtom } from 'store/atoms/meta';
 
 const StyledFooter = styled.footer`
   width: 100%;
-  background: white;
-  color: black;
   display: grid;
-  font-family: ${SOLEIL.FONT_STACK};
-  font-size: 14px;
   margin-top: 40px;
-  border-top: 1px solid ${COLORS.GREY.G8};
+  border-top: 1px solid ${COLORS.GRAY.G8};
 `;
 
 const FooterLinksWrapper = styled.div`
@@ -34,10 +31,9 @@ const FooterLinksWrapper = styled.div`
     padding-bottom: 0;
   }
   .quick-links-title {
-    font-size: 22px;
-    font-family: ${SOLEIL.FONT_STACK};
+    ${expandFontToken('Heading/Large')}
     margin-bottom: 32px;
-    color: ${COLORS.DAVY_GREY};
+    color: ${COLORS.GRAY.G2};
   }
   &.primary-footer + .secondary-footer .quick-links-title {
     display: none;
@@ -47,6 +43,7 @@ const FooterLinksWrapper = styled.div`
   }
 
   .quick-links {
+    ${expandFontToken('UI/Label Medium')}
     display: grid;
     justify-content: space-between;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -65,23 +62,21 @@ const FooterLegalWrapper = styled.div`
   width: 100%;
   .footer-chin {
     display: grid;
-    font-size: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '10px' : '12px'};
-    line-height: 12px;
+    ${expandFontToken('UI/Label Small')}
     margin-bottom: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '72px' : '56px'};
+    isEntertainmentMb ? '72px' : '56px'};
     grid-template-columns: auto auto;
     justify-content: space-between;
     grid-template-areas: 'white-line white-line' 'super-brand-logo social-links';
     grid-row-gap: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '18px' : '24px'};
+    isEntertainmentMb ? '18px' : '24px'};
     .white-line {
       grid-area: white-line;
       width: 100%;
       height: 0;
       border: 0.5px solid
         ${({ isEntertainmentMb }) =>
-          isEntertainmentMb ? COLORS.GREY.G4 : COLORS.WHITE};
+    isEntertainmentMb ? COLORS.GRAY.G4 : COLORS.BRAND.WHITE};
     }
     .super-brand-logo {
       grid-area: super-brand-logo;
@@ -92,7 +87,7 @@ const FooterLegalWrapper = styled.div`
       justify-items: left;
       span {
         color: ${({ theme, isEntertainmentMb }) =>
-          isEntertainmentMb ? COLORS.GREY.G4a : theme.footer.color};
+    isEntertainmentMb ? COLORS.GRAY.G4A : theme.footer.color};
       }
       svg {
         height: 16px;
@@ -110,20 +105,20 @@ const FooterLegalWrapper = styled.div`
         }
       }
       grid-template-columns: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? `1fr 1fr` : `1fr`};
+    isEntertainmentMb ? `1fr 1fr` : `1fr`};
       grid-template-areas: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb
-          ? `
+    isEntertainmentMb
+      ? `
           'white-line white-line'
           'super-brand-logo social-links'`
-          : `
+      : `
           'social-links'
           'white-line'
           'super-brand-logo'`};
       grid-row-gap: 24px;
       .social-links {
         ${({ isEntertainmentMb }) =>
-          isEntertainmentMb && `justify-content: end;`}
+    isEntertainmentMb && `justify-content: end;`}
       }
     }
   }
@@ -144,13 +139,9 @@ const LinksWrapper = styled.div`
   grid-template-rows: repeat(2, max-content);
   row-gap: 16px;
   .header {
-    font-weight: ${SOLEIL.SEMIBOLD};
-    font-size: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '18px' : '14px'};
-    line-height: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '24px' : '20px'};
+    ${expandFontToken('Subheading/Large')}
     color: ${({ theme, isEntertainmentMb }) =>
-      isEntertainmentMb ? COLORS.GREY.G7 : theme.footer.headingColor};
+    isEntertainmentMb ? COLORS.GRAY.G7 : theme.footer.headingColor};
   }
   .links {
     display: grid;
@@ -158,30 +149,25 @@ const LinksWrapper = styled.div`
     grid-template-rows: max-content;
     row-gap: ${({ isEntertainmentMb }) => (isEntertainmentMb ? '8px' : '16px')};
     a {
+      ${expandFontToken('UI/Label Medium')}
       display: block;
       text-decoration: none;
       color: ${({ theme, isEntertainmentMb }) =>
-        isEntertainmentMb ? COLORS.GREY.G6 : theme.footer.color};
-      ${({ isEntertainmentMb }) =>
-        isEntertainmentMb &&
-        `
-        font-size: 15px;
-        line-height: 20px;
-        font-weight: ${SOLEIL.REGULAR};`}
+    isEntertainmentMb ? COLORS.GRAY.G6 : theme.footer.color};
     }
   }
   @media (max-width: 768px) {
     ${({ isEntertainmentMb }) => isEntertainmentMb && `row-gap: 20px;`}
     .header {
       ${({ isEntertainmentMb }) =>
-        isEntertainmentMb && `font-size:15px;line-height:20px;`};
+    isEntertainmentMb && `font-size:15px;line-height:20px;`};
     }
     .links {
       ${({ isEntertainmentMb }) => isEntertainmentMb && `row-gap: 16px;`}
       a {
         ${({ isEntertainmentMb }) =>
-          isEntertainmentMb &&
-          `
+    isEntertainmentMb &&
+    `
         font-size: 14px;
         line-height: 16px;`}
       }
@@ -231,7 +217,7 @@ const FooterLegal = styled.div`
         max-width: 100%;
         width: unset;
         ${({ invertLogoColor }) =>
-          invertLogoColor ? `filter: brightness(0) invert(1);` : ''}
+    invertLogoColor ? `filter: brightness(0) invert(1);` : ''}
       }
       svg {
         height: 40px;
@@ -239,7 +225,7 @@ const FooterLegal = styled.div`
         width: 100.5px;
         path {
           fill: ${({ isEntertainmentMb }) =>
-            isEntertainmentMb ? COLORS.GREY.G5 : COLORS.WHITE};
+    isEntertainmentMb ? COLORS.GRAY.G5 : COLORS.BRAND.WHITE};
         }
       }
     }
@@ -251,18 +237,14 @@ const FooterLegal = styled.div`
     grid-auto-flow: column;
     grid-auto-columns: max-content;
     column-gap:${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '48px' : '120px'};
+    isEntertainmentMb ? '48px' : '120px'};
   }
 
   .disclaimer-text {
     color: ${({ isEntertainmentMb, theme }) =>
-      isEntertainmentMb ? COLORS.GREY.G6 : theme.footer.color};
+    isEntertainmentMb ? COLORS.GRAY.G6 : theme.footer.color};
     margin-top: 32px;
-    font-family: ${SOLEIL.FONT_STACK};
-    font-size: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '12px' : '14px'};
-    line-height:${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '20px' : '19px'} ;
+    ${expandFontToken('UI/Label Medium')}
     max-width: 500px;
   }
   @media (min-width: 800px) and (max-width: 1200px) {
@@ -272,20 +254,20 @@ const FooterLegal = styled.div`
     grid-template-areas: 'logo-disclaimer logo-disclaimer' 'footer-links footer-links';
     grid-template-columns: 1fr 1fr;
     grid-row-gap: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '48px' : '64px'};
+    isEntertainmentMb ? '48px' : '64px'};
     grid-column-gap: unset;
     margin: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '52px 0 48px 0' : '40px 0 64px 0'};
+    isEntertainmentMb ? '52px 0 48px 0' : '40px 0 64px 0'};
     padding-bottom: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '0' : '24px'};
+    isEntertainmentMb ? '0' : '24px'};
     .footer-links {
         column-gap: 0;
         grid-auto-columns: 1fr;
       }
     .disclaimer-text {
       ${({ isEntertainmentMb }) =>
-        isEntertainmentMb &&
-        `margin-top: 28px;font-size:10px;line-height:16px;`}
+    isEntertainmentMb &&
+    `margin-top: 28px;font-size:10px;line-height:16px;`}
     }
   }
 `;
@@ -314,9 +296,8 @@ const LinkSlices = ({ linksTitle, slices, theme, className = '' }) => (
     <Container>
       <Conditional if={theme !== THEMES.MIN_BLUE}>
         <div
-          className={`quick-links-title ${
-            linksTitle ? 'has-custom-title' : ''
-          }`}
+          className={`quick-links-title ${linksTitle ? 'has-custom-title' : ''
+            }`}
         >
           {linksTitle || strings.FOOTER.QUICK_LINKS}
         </div>
@@ -430,9 +411,9 @@ const Footer: React.FC<FooterProps> = ({
                     {disclaimerText
                       ? disclaimerText
                       : strings.FOOTER.DISCLAIMER.replace(
-                          '<attraction>',
-                          attraction
-                        )}
+                        '<attraction>',
+                        attraction
+                      )}
                   </div>
                 </Conditional>
                 <Conditional
@@ -462,11 +443,10 @@ const Footer: React.FC<FooterProps> = ({
                         {!isMobile ? `${getContactNo()}` : ''}
                       </a>
                       <a
-                        href={`mailto:${
-                          finalThemeName !== THEMES.MIN_BLUE
+                        href={`mailto:${finalThemeName !== THEMES.MIN_BLUE
                             ? 'support@headout.com'
                             : 'support@online-tickets.co'
-                        }`}
+                          }`}
                         target="_blank"
                         rel="noreferrer noopener"
                       >
