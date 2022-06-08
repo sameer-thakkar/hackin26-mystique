@@ -162,7 +162,7 @@ export const parseShowPageData = (data) => {
         ) {
           isSafetyBanner = true;
         }
-        if (DetailObjectHeading === 'Special Offer Closing Date') {
+        if (DetailObjectHeading === 'Closing Date Special Offer') {
           specialOfferClosingDate = dayjs(element.content.text, 'YYYY-MM-DD');
         }
         if (DetailObjectHeading.startsWith('Special Offer')) {
