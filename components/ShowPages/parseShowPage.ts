@@ -6,6 +6,11 @@ import {
   TAB_ALLOWED_INFO,
 } from 'constants/index';
 
+import dayjs from 'dayjs';
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
+
+dayjs.extend(isSameOrAfter);
+
 export const getObject = (data, filterArray) => {
   let detailsObjects: { [key: string]: string } = {},
     showType = '',
@@ -93,6 +98,7 @@ export const parseShowPageData = (data) => {
     tabSectionHeading,
     isSafetyBanner = false,
     specialOffer = {},
+    specialOfferClosingDate,
     hasSpecialOffer = false,
     mapURL,
     listicleSchema = [],
@@ -156,12 +162,22 @@ export const parseShowPageData = (data) => {
         ) {
           isSafetyBanner = true;
         }
+        if (DetailObjectHeading === 'Special Offer Closing Date') {
+          specialOfferClosingDate = dayjs(element.content.text, 'YYYY-MM-DD');
+        }
         if (DetailObjectHeading.startsWith('Special Offer')) {
-          specialOffer = {
-            offerHeading: DetailObjectHeading,
-            offerText: element.content.text,
-          };
-          hasSpecialOffer = true;
+          if (
+            specialOfferClosingDate &&
+            !specialOfferClosingDate.isSameOrAfter(dayjs())
+          ) {
+            hasSpecialOffer = false;
+          } else {
+            specialOffer = {
+              offerHeading: DetailObjectHeading,
+              offerText: element.content.text,
+            };
+            hasSpecialOffer = true;
+          }
         }
       } else if (currentObject === 'TAB') {
         // tab content
