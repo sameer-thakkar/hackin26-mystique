@@ -77,6 +77,7 @@ export const categoryTourListParserV1 = async ({
   const finalLimit = shoulderPageLimit || limit;
 
   const language = getHeadoutLanguagecode(lang);
+  let primaryCity;
 
   if (collection) {
     const collectionData = await fetchCollection({
@@ -85,6 +86,7 @@ export const categoryTourListParserV1 = async ({
       language,
       limit: finalLimit,
     });
+    primaryCity = collectionData?.city;
     currency = collectionData?.city?.country?.currency;
     const getCollectionSection = (collectionData, sectionType: string) => {
       return collectionData?.sections
@@ -128,6 +130,7 @@ export const categoryTourListParserV1 = async ({
     });
     currency = categoryData?.currency;
     tourData.push(...categoryData?.pageData?.items);
+    primaryCity = categoryData?.city;
   } else if (sub_category) {
     const subCategoryData = await fetchTGIDsByCategoryV2({
       categoryId: sub_category,
@@ -138,6 +141,7 @@ export const categoryTourListParserV1 = async ({
       limit: finalLimit,
     });
     currency = subCategoryData?.currency;
+    primaryCity = subCategoryData?.city;
     tourData.push(...subCategoryData?.pageData?.items);
   }
   if (tourData?.length) {
@@ -284,8 +288,11 @@ export const categoryTourListParserV1 = async ({
     }, {});
     return {
       scorpioData,
-      primaryCountry: { code: countryCode, countryName },
-      primaryCity: {},
+      primaryCountry: primaryCity?.country ?? {
+        code: countryCode,
+        countryName,
+      },
+      primaryCity,
       orderedTours: repeatableObj,
       activeCurrency: currency,
     };

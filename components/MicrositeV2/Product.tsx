@@ -358,9 +358,8 @@ const Product = (props) => {
     productClick,
     activeCategoryId = null,
     host,
-    uid,
   } = props;
-  const { currencySymbolMap, lang, nakedDomain } = useContext(MBContext);
+  const { currencySymbolMap, lang, nakedDomain, uid } = useContext(MBContext);
   const [initialized, setInitialized] = useState(true);
   const hsid = useRecoilValue(hsidAtom);
   const isLTT = checkLTT(uid);

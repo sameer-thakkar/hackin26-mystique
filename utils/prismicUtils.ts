@@ -1041,10 +1041,10 @@ export const getPageData = async ({
     }
 
     /**
-     * AllData will yield different sets of Properties based on CUSTOM_TYPE,
+     * scorpioAllTourGroupData will yield different sets of Properties based on CUSTOM_TYPE,
      * and finally gets returned with any other common data for CUSTOM_TYPE
      */
-    let AllData: any = {};
+    let scorpioAllTourGroupData: any = {};
     let tgidsArray = [];
     const queryParams = (function getQueryparams() {
       try {
@@ -1115,9 +1115,10 @@ export const getPageData = async ({
       tgidsArray = toursList?.reduce((acc, tour) => {
         return [...acc, tour.tgid];
       }, []);
-      const { activeCurrency } = categoryTourListData || {};
+      const { activeCurrency, primaryCity, primaryCountry } =
+        categoryTourListData || {};
 
-      AllData = {
+      scorpioAllTourGroupData = {
         CMSContent,
         toursList,
         categoryTourListData,
@@ -1130,7 +1131,9 @@ export const getPageData = async ({
         queryParams,
         mbTheme,
         isStage,
-        activeCurrency,
+        ...(primaryCity && { primaryCity }),
+        ...(primaryCountry && { primaryCountry }),
+        ...(activeCurrency && { activeCurrency }),
       };
     }
 
@@ -1265,9 +1268,9 @@ export const getPageData = async ({
           lang,
           isDev,
           host,
-          primaryCountry,
-          primaryCity,
-          activeCurrency,
+          ...(primaryCity && { primaryCity }),
+          ...(primaryCountry && { primaryCountry }),
+          ...(activeCurrency && { activeCurrency }),
         };
       } catch (error) {
         traceError({ error, host: req?.headers?.host, url: req?.url });
@@ -1382,8 +1385,10 @@ export const getPageData = async ({
       }, []);
 
       const activeCurrency = categoryTourListData?.activeCurrency;
+      const primaryCity = categoryTourListData?.primaryCity;
+      const primaryCountry = primaryCity?.country;
 
-      AllData = {
+      scorpioAllTourGroupData = {
         CMSContent,
         toursList,
         categoryTourListData,
@@ -1396,14 +1401,15 @@ export const getPageData = async ({
         queryParams,
         mbTheme,
         isStage,
-        activeCurrency,
-        primaryCity: categoryTourListData?.primaryCity,
+        ...(primaryCity && { primaryCity }),
+        ...(primaryCountry && { primaryCountry }),
+        ...(activeCurrency && { activeCurrency }),
       };
     }
     let constructedTourgroupURL;
     tgidsArray = [...tgidsArray, ...all_tours_tab_tgids];
     try {
-      const useTest = !!AllData?.['queryParams']?.bookSubdomain;
+      const useTest = !!scorpioAllTourGroupData?.['queryParams']?.bookSubdomain;
       const tgEndpoint = new URL(
         `https://${
           isStage ? 'stage-' : ''
@@ -1414,10 +1420,10 @@ export const getPageData = async ({
       if (getHeadoutLanguagecode(lang) !== 'en') {
         tgEndpoint.searchParams.set('fallback-to-english', '0');
       }
-      if (AllData?.['queryParams']?.currency)
+      if (scorpioAllTourGroupData?.['queryParams']?.currency)
         tgEndpoint.searchParams.set(
           'currency',
-          AllData?.['queryParams']?.currency
+          scorpioAllTourGroupData?.['queryParams']?.currency
         );
       if (useTest) {
         tgEndpoint.searchParams.set('useTest', 'true');
@@ -1457,7 +1463,8 @@ export const getPageData = async ({
 
     const tourGroupData = tourGroupAPIResponses?.tourGroups?.reduce(
       (accum: {}, tour: any) => {
-        const { hide_df, hide_safe } = AllData['CMSContent']?.data?.data || {
+        const { hide_df, hide_safe } = scorpioAllTourGroupData['CMSContent']
+          ?.data?.data || {
           hide_df: false,
           hide_safe: false,
         };
@@ -1527,15 +1534,14 @@ export const getPageData = async ({
 
     const primaryCountry =
       tourGroupAPIResponses?.cities?.[0]?.country ||
-      AllData?.categoryTourListData?.primaryCountry;
+      scorpioAllTourGroupData?.categoryTourListData?.primaryCountry;
 
     const primaryCity = tourGroupAPIResponses?.cities?.[0];
-
     const activeCurrency = tourGroupAPIResponses?.currencies?.[0];
     return {
-      activeCurrency,
-      primaryCity,
-      ...AllData,
+      ...scorpioAllTourGroupData,
+      ...(activeCurrency && { activeCurrency }),
+      ...(primaryCity && { primaryCity }),
       tourGroupData,
       currencySymbolMap,
       primaryCountry,

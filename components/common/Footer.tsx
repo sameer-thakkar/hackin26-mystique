@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import styled, { ThemeProvider } from 'styled-components';
 import { MBContext } from 'contexts/MBContext';
 import { getAppTheme } from 'style/theme';
@@ -11,6 +12,7 @@ import { POWERED_BY_HEADOUT, WHITE_BLIP } from 'assets/SvgIcons';
 import { THEMES } from 'const/index';
 import { COLORS, SOLEIL } from 'const/ui-constants';
 import { strings } from 'const/strings';
+import { metaAtom } from 'store/atoms/meta';
 
 const StyledFooter = styled.footer`
   width: 100%;
@@ -355,6 +357,7 @@ const Footer: React.FC<FooterProps> = ({
   isEntertainmentMb = false,
 }) => {
   const { mbTheme = THEMES.DEFAULT } = useContext(MBContext);
+  const pageMeta = useRecoilValue(metaAtom);
   const width = useWindowWidth();
   const [isMobile, setIsMobile] = useState(width < 768);
   const finalThemeName =
@@ -363,6 +366,16 @@ const Footer: React.FC<FooterProps> = ({
   useEffect(() => {
     setIsMobile(width < 768);
   }, [width]);
+
+  const getContactNo = () => {
+    switch (pageMeta?.country?.code) {
+      case 'AU':
+        return '+61 3 7066 3969';
+      default:
+        return '+1 347 897 0100';
+    }
+  };
+
   return (
     <ThemeProvider theme={getAppTheme(finalThemeName)}>
       <StyledFooter isEntertainmentMb={isEntertainmentMb}>
@@ -444,9 +457,9 @@ const Footer: React.FC<FooterProps> = ({
                           {strings.FOOTER.CHAT_WITH_US}
                         </a>
                       </Conditional>
-                      <a href={`tel: +1 347 897 0100`}>
+                      <a href={`tel: ${getContactNo()}`}>
                         {strings.FOOTER.CALL_US}{' '}
-                        {!isMobile ? '+1 347 897 0100' : ''}
+                        {!isMobile ? `${getContactNo()}` : ''}
                       </a>
                       <a
                         href={`mailto:${
