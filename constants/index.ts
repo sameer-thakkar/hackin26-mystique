@@ -309,6 +309,10 @@ export const MICROSITE_STRING_KEYS: string[] = [
   'canonical_link',
 ];
 
+export const DESCRIPTORS = {
+  DURATION: 'DURATION',
+};
+
 export const MICROSITE_OBJECT_KEYS: string[] = [
   'header_scripts',
   'image',

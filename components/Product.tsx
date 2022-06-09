@@ -35,6 +35,7 @@ import {
   LOCALISED_DATE_FORMATS,
   ANALYTICS_PROPERTIES,
   CUSTOM_TYPES,
+  DESCRIPTORS,
 } from 'const/index';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import {
@@ -456,11 +457,11 @@ const ProductBody = styled.div`
     color: ${COLORS.GRAY.G2};
     display: grid;
     grid-gap: 0;
-    ${({ collapsed, noOfListItemToShow, defaultOpen }) =>
+    ${({ collapsed, defaultOpen }) =>
       collapsed && !defaultOpen
         ? `
-    *:not(div, svg, rect, g, path):nth-child(n + ${noOfListItemToShow}),
-    ul li:nth-child(n + ${noOfListItemToShow}) {
+    *:not(div, svg, rect, g, path):nth-child(n + 4),
+    ul li:nth-child(n + 4) {
       display: none;
     }
     `
@@ -912,6 +913,7 @@ export const Descriptors = ({
   minDuration,
   maxDuration,
   lang = 'en',
+  isCombo = false,
 }) => {
   const descriptorArray = shouldShowAllDescriptors
     ? descarr
@@ -921,18 +923,19 @@ export const Descriptors = ({
     <TourTags horizontal={horizontal} pageType={pageType}>
       {descriptorArray.map((item, index) => {
         const DescriptorSVG = descriptorIcons[item];
+        if (item === DESCRIPTORS.DURATION && isCombo) return null;
 
         return item ? (
           <div key={`descriptor-${index}`} className="tour-tag">
             <DescriptorSVG />
 
-            <Conditional if={item === 'DURATION'}>
+            <Conditional if={item === DESCRIPTORS.DURATION}>
               {strings.formatString(
                 strings.DESCRIPTORS.DURATION,
                 `${getDuration({ minDuration, maxDuration, lang })}`
               )}
             </Conditional>
-            <Conditional if={item !== 'DURATION'}>
+            <Conditional if={item !== DESCRIPTORS.DURATION}>
               {strings.DESCRIPTORS?.[item]}
             </Conditional>
           </div>
@@ -1430,6 +1433,7 @@ const Product = (props) => {
               minDuration={minDuration}
               maxDuration={maxDuration}
               lang={currentLanguage}
+              isCombo={isCombo}
             />
           </Conditional>
           <Conditional if={hasV1Booster && !isAmp}>
@@ -1506,6 +1510,7 @@ const Product = (props) => {
                 minDuration={minDuration}
                 maxDuration={maxDuration}
                 lang={currentLanguage}
+                isCombo={isCombo}
               />
             </Conditional>
           </CTAContainer>

@@ -110,7 +110,7 @@ const Image: React.FC<ImageProps> = ({
       imigxOptionsQueryParams.set('crop', 'faces');
       imigxOptionsQueryParams.delete('fit');
     }
-    imigxOptionsQueryParams.set('fm', format);
+    imigxOptionsQueryParams.set('fm', fm);
     if (addDarkOverlay) {
       imigxOptionsQueryParams.set('exp', '-10');
     }
@@ -168,6 +168,12 @@ const Image: React.FC<ImageProps> = ({
             mobileUrl ? makeImageUrl('webp', mobileUrl) + ' 768w,' : ''
           }${makeImageUrl('webp', url)}`}
         />
+        <source
+          type="image/jpeg"
+          data-srcset={`${
+            mobileUrl ? makeImageUrl('pjpg', mobileUrl) + ' 768w,' : ''
+          }${makeImageUrl('pjpg', url)}`}
+        />
         <img
           className={`image- ${imageId}`}
           data-srcset={`${
@@ -189,6 +195,12 @@ const Image: React.FC<ImageProps> = ({
           data-srcset={`${
             mobileUrl ? makeImageUrl('webp', mobileUrl) + ' 768w,' : ''
           }${makeImageUrl('webp', url)}`}
+        />
+        <source
+          type="image/jpeg"
+          data-srcset={`${
+            mobileUrl ? makeImageUrl('pjpg', mobileUrl) + ' 768w,' : ''
+          }${makeImageUrl('pjpg', url)}`}
         />
         <img
           className={`lazyload ${imageId}`}
