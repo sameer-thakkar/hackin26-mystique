@@ -68,7 +68,7 @@ const StyledBanner = styled.div`
   @media (max-width: 768px) {
     margin: ${({ bannerImages }) =>
       bannerImages.length === 1 ? '2rem 0' : '1rem 0'};
-    max-height: 200px;
+    height: unset;
 
     .swiper-slide {
       transform: scale(0.95);
@@ -80,14 +80,11 @@ const StyledBanner = styled.div`
       -webkit-transform: scale(1);
     }
 
-    .single-slide {
-      aspect-ratio: 16/9;
-      height: 100%;
-    }
-
+    .single-slide,
     .mb-slide {
-      aspect-ratio: 16/9;
-      height: 100%;
+      aspect-ratio: 16 / 10;
+      width: auto;
+      height: auto;
     }
   }
 `;

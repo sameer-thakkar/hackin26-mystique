@@ -71,6 +71,7 @@ const StyledCard = styled.div((props) => {
   overflow: hidden;
   grid-template-columns: ${styles.gridTemplateColumns};
   text-decoration: none;
+  height: 100%;
   ${props.link && `cursor: pointer;`}
   .flex{
     display: flex;
