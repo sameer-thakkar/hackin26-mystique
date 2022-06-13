@@ -69,7 +69,7 @@ const StyledBanner = styled.div`
     margin: ${({ bannerImages }) =>
       bannerImages.length === 1 ? '2rem 0' : '1rem 0'};
     height: unset;
-
+    max-height: 57vw; /** maintaining aspect ratio */
     .swiper-slide {
       transform: scale(0.95);
       -webkit-transform: scale(0.95);
