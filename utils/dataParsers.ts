@@ -30,7 +30,7 @@ export const uncategorizedToursListParser = (
 const extractTgidsFromCategories = (arr) => {
   if (arr?.length > 0) {
     return arr
-      ?.map((data) => data?.items?.map((product) => product?.id))
+      ?.map((data) => data?.items?.map((product) => product?.id) ?? [])
       ?.flat();
   }
 };
