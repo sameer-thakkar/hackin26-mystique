@@ -188,7 +188,7 @@ export const parseShowPageData = (data) => {
         // listicle content
         listicleSchema.push({
           heading: listicleHeading,
-          text: JSON.stringify(element),
+          text: element,
         });
       } else {
         // faq content
