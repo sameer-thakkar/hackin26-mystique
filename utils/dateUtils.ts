@@ -23,3 +23,5 @@ export const dateToString = (
     .locale(currentLanguage)
     .format(dateFormat);
 };
+
+export const isDateInThePast = (date) => new Date(date).getTime() < Date.now();

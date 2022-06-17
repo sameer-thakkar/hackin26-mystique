@@ -12,7 +12,7 @@ import { PRODUCT_VIDEOS } from 'const/ShowPageProductVideos';
 import { strings } from 'const/strings';
 import COLORS from 'const/colors';
 import { createBookingURL } from 'utils';
-import { dateToString } from 'utils/dateUtils';
+import { dateToString, isDateInThePast } from 'utils/dateUtils';
 import { fetchInventory } from 'utils/apiUtils';
 import {
   getCommonEventMetaData,
@@ -635,6 +635,13 @@ const ShowPageBanner = ({
         </div>
         <div className="details-container">
           {Object.entries(detailsObjects).map((element, index) => {
+            if (
+              element[0] === strings.OPENING_DATE &&
+              isDateInThePast(element[1])
+            ) {
+              return null;
+            }
+
             return (
               <div className="individual-container" key={index}>
                 <div className="key">

@@ -26,7 +26,7 @@ import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
 import { isSafetyIncluded, createBookingURL } from 'utils';
 import { shortCodeSerializer } from 'utils/shortCodes';
-import { dateToString } from 'utils/dateUtils';
+import { dateToString, isDateInThePast } from 'utils/dateUtils';
 import { parseV2ProductDescriptors } from 'utils/dataParsers';
 import InteractionContext from 'contexts/Interaction';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
@@ -181,16 +181,12 @@ const StyledMobileProductPage = styled.div`
     grid-auto-flow: row;
     grid-auto-rows: max-content;
       .l1-booster-wrapper {
-        display:grid;
-        grid-template-columns: repeat(2, 1fr);
+        display:flex;
         font-size: 12px;
         line-height: 16px;
+        justify-content: space-between;
         .rating {
           justify-self: end;
-          display:grid;
-          grid-auto-flow: column;
-          grid-auto-columns: max-content;
-          column-gap: 4px;
           justify-content: center;
           align-items: center;
           .avg-rating {
@@ -561,6 +557,7 @@ export const MobileProductPage = (props) => {
   const { allTags = [] } = tour;
   const hasSafetyFlag = isSafetyIncluded(allTags);
   const openingDate = dateToString(reopeningDate, lang, 'DD MMM, YYYY');
+  const isOpeningDateInThePast = isDateInThePast(reopeningDate);
 
   const openSafeSidebar = () => {
     addToAside({
@@ -703,9 +700,11 @@ export const MobileProductPage = (props) => {
             </Conditional>
             <Conditional if={isEntertainmentMb}>
               <div className="l1-booster-wrapper">
-                <div className="l1-booster">
-                  {OPENING_ON} {openingDate}
-                </div>
+                <Conditional if={!isOpeningDateInThePast}>
+                  <div className="l1-booster">
+                    {OPENING_ON} {openingDate}
+                  </div>
+                </Conditional>
                 <div className="rating">
                   <Conditional if={isNew}>
                     <span className="avg-rating">{strings.NEW}</span>
