@@ -5,6 +5,7 @@ import { RichText } from 'prismic-reactjs';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
+
 import Rating from '../UI/Rating';
 import Tags from '../UI/Tags';
 import Chevron from '../UI/Chevron';

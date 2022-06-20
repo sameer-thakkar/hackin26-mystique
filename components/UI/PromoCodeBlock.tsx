@@ -105,8 +105,8 @@ const PromoCodeBlock = ({
     promoExperimentVariant === VARIANTS.PROMO_5
       ? PROMO_CODES.DEFAULT
       : promoExperimentVariant === VARIANTS.PROMO_10
-        ? PROMO_CODES.DEFAULT_2
-        : null;
+      ? PROMO_CODES.DEFAULT_2
+      : null;
 
   useEffect(() => {
     if (!promoExperimentVariant) {

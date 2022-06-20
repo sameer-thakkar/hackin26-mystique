@@ -27,15 +27,15 @@ const StyledMenuItem = styled.li`
     isGlobalMb
       ? COLORS.GRAY.G2
       : primaryBGText
-        ? primaryBGText
-        : COLORS.GRAY.G2};
+      ? primaryBGText
+      : COLORS.GRAY.G2};
   cursor: pointer;
   position: relative;
   span {
     color: ${({ theme: { primaryBGText }, isGlobalMb }) =>
-    isGlobalMb
-      ? COLORS.GRAY.G2
-      : primaryBGText
+      isGlobalMb
+        ? COLORS.GRAY.G2
+        : primaryBGText
         ? primaryBGText
         : COLORS.GRAY.G2};
   }
@@ -58,11 +58,11 @@ const StyledMenuItem = styled.li`
         height: 24px;
         path {
           stroke: ${({ theme: { primaryBGText }, isGlobalMb }) =>
-    isGlobalMb
-      ? COLORS.GRAY.G2
-      : primaryBGText
-        ? primaryBGText
-        : COLORS.GRAY.G2};
+            isGlobalMb
+              ? COLORS.GRAY.G2
+              : primaryBGText
+              ? primaryBGText
+              : COLORS.GRAY.G2};
           stroke-width: 1.5px;
         }
       }
@@ -103,8 +103,8 @@ const StyledMenuItem = styled.li`
       }
     }
     ${({ nestOpen }) =>
-    nestOpen &&
-    `
+      nestOpen &&
+      `
       background: ${COLORS.BACKGROUND.FLOATING_PURPS};
       & > a > .nested-menu {
         display: grid;
@@ -149,7 +149,7 @@ const NestedMenu = styled.ul`
     z-index: 1;
     li:hover {
       background-color: ${({ theme: { primaryBGHover } }) =>
-    primaryBGHover ? primaryBGHover : COLORS.BACKGROUND.FLOATING_PURPS};
+        primaryBGHover ? primaryBGHover : COLORS.BACKGROUND.FLOATING_PURPS};
     }
   }
   @media (max-width: 768px) {

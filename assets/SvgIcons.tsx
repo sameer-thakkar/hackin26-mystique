@@ -627,12 +627,7 @@ export const CROSS = (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <circle
-      cx="12"
-      cy="12"
-      r="11.5"
-      stroke={COLORS.BRAND.CANDY}
-    />
+    <circle cx="12" cy="12" r="11.5" stroke={COLORS.BRAND.CANDY} />
     <path
       d="M17 7L7 17"
       stroke={COLORS.BRAND.CANDY}

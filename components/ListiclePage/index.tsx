@@ -302,8 +302,9 @@ const Listicle = (props) => {
   const currentLanguage = lang.split('-')[0];
   const hostSplit = host.split('.');
   hostSplit.shift();
-  const bookingUrl = `https://book.${hostSplit.join('.')}${currentLanguage === 'en' ? '' : `/${currentLanguage}`
-    }/book/`;
+  const bookingUrl = `https://book.${hostSplit.join('.')}${
+    currentLanguage === 'en' ? '' : `/${currentLanguage}`
+  }/book/`;
 
   // Fetching all tours of the listicle categories using tags and then fetching tour data
   useEffect(() => {
@@ -314,8 +315,10 @@ const Listicle = (props) => {
         const tourData = await Promise.all(
           res.results.map((tour) => {
             return fetch(
-              `${HEADOUT_API_ENDPOINT}/v5/tour-group/get/${tour.data.tgid
-              }?fetch-variants=false&fetch-collection-svg=false&language=${currentLanguage || 'en'
+              `${HEADOUT_API_ENDPOINT}/v5/tour-group/get/${
+                tour.data.tgid
+              }?fetch-variants=false&fetch-collection-svg=false&language=${
+                currentLanguage || 'en'
               }`
             ).then((r) => r.json());
           })
@@ -332,7 +335,7 @@ const Listicle = (props) => {
         setFilteredTours(result);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err); //eslint-disable-line
       });
   }, [
     uid,
@@ -484,12 +487,12 @@ const Listicle = (props) => {
                     <Category
                       key={index}
                       {...(listicleCategoryName.toLowerCase() ===
-                        category.listicle_category_name.toLowerCase()
+                      category.listicle_category_name.toLowerCase()
                         ? { active: true }
                         : {
-                          as: 'a',
-                          href: category.listicle_category_link?.url || '/',
-                        })}
+                            as: 'a',
+                            href: category.listicle_category_link?.url || '/',
+                          })}
                     >
                       {category.listicle_category_name}
                     </Category>
@@ -509,12 +512,12 @@ const Listicle = (props) => {
                     <Category
                       key={index}
                       {...(listicleCategoryName.toLowerCase() ===
-                        category.listicle_category_name.toLowerCase()
+                      category.listicle_category_name.toLowerCase()
                         ? { active: true }
                         : {
-                          as: 'a',
-                          href: category.listicle_category_link?.url || '/',
-                        })}
+                            as: 'a',
+                            href: category.listicle_category_link?.url || '/',
+                          })}
                     >
                       {category.listicle_category_name}
                     </Category>

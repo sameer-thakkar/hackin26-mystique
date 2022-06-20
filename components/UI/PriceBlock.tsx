@@ -6,6 +6,7 @@ import Conditional from 'components/common/Conditional';
 import { useContext } from 'react';
 import { MBContext } from 'contexts/MBContext';
 import COLORS from 'const/colors';
+
 import LocalisedPrice from './LPrice';
 
 export const StyledPriceBlock = styled.div`

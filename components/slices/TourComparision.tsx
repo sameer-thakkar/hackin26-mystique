@@ -74,11 +74,11 @@ const StyledTourComparisionTable = styled.div`
     grid-auto-rows: max-content;
     grid-row-gap: 32px;
     ${({ designType }) =>
-    designType == TOUR_COMPARISION_DESIGN.TYPE_2
-      ? `
+      designType == TOUR_COMPARISION_DESIGN.TYPE_2
+        ? `
       grid-row-gap: 16px;
     `
-      : ``}
+        : ``}
     grid-column-gap: 8px;
   }
   .row {
@@ -90,11 +90,11 @@ const StyledTourComparisionTable = styled.div`
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: repeat(4, 1fr) ${({ isMobile }) =>
-    isMobile ? '16px' : ''};
+      isMobile ? '16px' : ''};
     grid-column-gap: 24px;
     ${({ designType, showImage }) =>
-    designType == TOUR_COMPARISION_DESIGN.TYPE_2
-      ? `
+      designType == TOUR_COMPARISION_DESIGN.TYPE_2
+        ? `
       border-bottom: 1px solid ${COLORS.GRAY.G6};
       padding-bottom: 16px;
       &:nth-of-type(0n+1),
@@ -104,7 +104,7 @@ const StyledTourComparisionTable = styled.div`
         padding-bottom: 0;
       }
     `
-      : ``}
+        : ``}
   }
   .cta-table-wrap .row {
     background: ${COLORS.BRAND.WHITE};
@@ -163,11 +163,11 @@ const StyledTourComparisionTable = styled.div`
     z-index: 15;
     padding-bottom: 8px;
     ${({ designType }) =>
-    designType == TOUR_COMPARISION_DESIGN.TYPE_2
-      ? `
+      designType == TOUR_COMPARISION_DESIGN.TYPE_2
+        ? `
       margin-bottom: -8px;
     `
-      : ``}
+        : ``}
   }
   .sticky.wrapper {
     width: 100%;
@@ -184,11 +184,11 @@ const StyledTourComparisionTable = styled.div`
   .tour-image {
     margin-bottom: -32px;
     ${({ designType }) =>
-    designType == TOUR_COMPARISION_DESIGN.TYPE_2
-      ? `
+      designType == TOUR_COMPARISION_DESIGN.TYPE_2
+        ? `
       margin-bottom: -8px;
   `
-      : ``}
+        : ``}
   }
   .column .tour-image img {
     width: 100%;
@@ -209,13 +209,13 @@ const StyledTourComparisionTable = styled.div`
     letter-spacing: 0.5px;
     color: ${COLORS.GRAY.G4};
     ${({ designType }) =>
-    designType == TOUR_COMPARISION_DESIGN.TYPE_2
-      ? `
+      designType == TOUR_COMPARISION_DESIGN.TYPE_2
+        ? `
       color: ${COLORS.GRAY.G3};
       font-size: 14px;
       line-height: 22px;
     `
-      : ``}
+        : ``}
   }
 
   .block-content {
@@ -225,12 +225,12 @@ const StyledTourComparisionTable = styled.div`
     font-weight: 400;
     color: ${COLORS.GRAY.G2};
     ${({ designType }) =>
-    designType == TOUR_COMPARISION_DESIGN.TYPE_2
-      ? `
+      designType == TOUR_COMPARISION_DESIGN.TYPE_2
+        ? `
       font-size: 14px;
       line-height: 22px;
     `
-      : ``}
+        : ``}
     img {
       height: 20px;
       width: 20px;
@@ -294,13 +294,13 @@ const StyledTourComparisionTable = styled.div`
       max-width: 100vw;
       grid-column-gap: 12px;
       ${({ designType }) =>
-    designType == TOUR_COMPARISION_DESIGN.TYPE_2
-      ? `
+        designType == TOUR_COMPARISION_DESIGN.TYPE_2
+          ? `
       grid-column-gap: 16px;
       `
-      : ``}
+          : ``}
       grid-template-columns: 0px repeat(${({ tourCount }) =>
-    tourCount}, 164px) 4px;
+        tourCount}, 164px) 4px;
       position: relative;
     }
     .row::before {
@@ -360,9 +360,9 @@ const StyledTourComparisionTable = styled.div`
     }
     .block-label {
       ${({ designType }) =>
-    designType == TOUR_COMPARISION_DESIGN.TYPE_2
-      ? ``
-      : `
+        designType == TOUR_COMPARISION_DESIGN.TYPE_2
+          ? ``
+          : `
         font-size: 12px;
         line-height: 12px;
       `}
@@ -372,9 +372,9 @@ const StyledTourComparisionTable = styled.div`
     }
     .block-content {
     ${({ designType }) =>
-    designType == TOUR_COMPARISION_DESIGN.TYPE_2
-      ? ``
-      : `
+      designType == TOUR_COMPARISION_DESIGN.TYPE_2
+        ? ``
+        : `
       font-size: 15px;
     `}
     }
@@ -667,8 +667,9 @@ const TourComparisonTable = (props) => {
             .map((label, rowIndex) => {
               return (
                 <div
-                  className={`row ${rowIndex >= 2 && isAmp ? 'no-display' : ''
-                    } `}
+                  className={`row ${
+                    rowIndex >= 2 && isAmp ? 'no-display' : ''
+                  } `}
                   id={`comparison-list-details-${rowIndex}`}
                   key={rowIndex}
                 >

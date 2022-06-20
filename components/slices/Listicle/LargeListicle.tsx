@@ -8,6 +8,7 @@ import Button from 'UI/Button';
 import { strings } from 'const/strings';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import COLORS from 'const/colors';
+
 import Pricing from './Pricing';
 
 const StyledLargeListicle = styled.div`
@@ -270,8 +271,9 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
             role="button"
             tabIndex={0}
           >
-            {` ${WTTDTCollapsed ? strings.MORE_DETAILS : strings.SHOW_LESS_TEXT
-              }`}
+            {` ${
+              WTTDTCollapsed ? strings.MORE_DETAILS : strings.SHOW_LESS_TEXT
+            }`}
           </WTTDTToggle>
         </WTTDTSection>
       ) : null}

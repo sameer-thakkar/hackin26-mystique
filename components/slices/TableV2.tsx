@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
+
 import RichContent from '../UI/RichContent';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 import { stringIdfy } from '../../utils/helper';
@@ -27,7 +28,7 @@ const StyledTable = styled.div`
 `;
 const StyledRow = styled.div`
   background: ${COLORS.BRAND.WHITE};
-  &:nth-of-type(2n){
+  &:nth-of-type(2n) {
     background: ${COLORS.GRAY.G8};
     color: ${COLORS.GRAY.G2};
   }
@@ -35,8 +36,8 @@ const StyledRow = styled.div`
   grid-auto-flow: column;
   grid-auto-rows: 1fr;
   grid-template-columns: repeat(auto-fit, minmax(2em, 1fr));
-  @media(max-width: 768px){
-    &:nth-of-type(1){
+  @media (max-width: 768px) {
+    &:nth-of-type(1) {
       display: none;
     }
     grid-template-columns: unset;

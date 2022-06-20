@@ -15,7 +15,7 @@ const StyledHamburger = styled.div`
   &:before,
   & div {
     background-color: ${({ isGlobalMb, theme }) =>
-    isGlobalMb ? COLORS.GRAY.G2 : theme.primaryBGText || COLORS.GRAY.G2};
+      isGlobalMb ? COLORS.GRAY.G2 : theme.primaryBGText || COLORS.GRAY.G2};
     border-radius: 3px;
     content: '';
     display: block;

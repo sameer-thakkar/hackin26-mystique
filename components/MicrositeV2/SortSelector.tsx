@@ -25,13 +25,13 @@ const StyledSortSelector = styled.div`
     cursor: pointer;
     display: grid;
     grid-template-columns: ${({ isEntertainmentMb }) =>
-    isEntertainmentMb ? '1fr' : 'auto 16px'};
+      isEntertainmentMb ? '1fr' : 'auto 16px'};
     grid-column-gap: 12px;
     align-items: center;
 
     span {
       ${({ isEntertainmentMb }) =>
-    isEntertainmentMb && `color: ${COLORS.GRAY.G4};`}
+        isEntertainmentMb && `color: ${COLORS.GRAY.G4};`}
     }
     .current-filter {
       color: ${COLORS.BRAND.PURPS};
@@ -117,7 +117,7 @@ export const SortSelector = (props) => {
         tabIndex={0}
       >
         <span>
-          Sort By:{' '}
+          Sort by:{' '}
           <span className="current-filter">{filters[activeFilter].name}</span>
         </span>
         <Conditional if={!isEntertainmentMb}>

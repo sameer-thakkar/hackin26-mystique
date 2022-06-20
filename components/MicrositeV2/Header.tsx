@@ -58,6 +58,8 @@ const StyledHeader = styled.div`
       check || headerHover ? 100 : 15};
     ${({ isGlobalMb }) =>
       isGlobalMb && `box-shadow: inset 0px -1px 0px ${COLORS.GRAY.G5};`}
+    ${({ isLTTListicle }) =>
+      isLTTListicle && `border-bottom: 1px solid ${COLORS.GRAY.G6};`}
   }
   .fixed-offset::after {
     content: '';
@@ -266,6 +268,7 @@ interface HeaderProps {
   isGlobalMb?: boolean;
   buyTicketsLink?: string;
   isEntertainmentMb?: boolean;
+  isLTTListicle?: boolean;
 }
 
 const Header: FunctionComponent<HeaderProps> = ({
@@ -288,6 +291,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   isGlobalMb = false,
   buyTicketsLink = '',
   isEntertainmentMb = false,
+  isLTTListicle,
 }) => {
   const interactionContext = useContext(InteractionContext);
   const [languageDropdown, setLanguageDropdown] = useState(false);
@@ -365,6 +369,7 @@ const Header: FunctionComponent<HeaderProps> = ({
       headerHover={headerHover}
       isGlobalMb={isGlobalMb}
       isEntertainmentMb={isEntertainmentMb}
+      isLTTListicle={isLTTListicle}
     >
       <div className="fixed-offset"></div>
       <div className="fixed-wrap">

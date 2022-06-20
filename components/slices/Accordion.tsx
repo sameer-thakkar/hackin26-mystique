@@ -27,7 +27,7 @@ export const StyledAccordion = styled.div`
 
     &:first-child {
       border-top: ${({ isGlobalMb }) =>
-    isGlobalMb && `1px solid ${COLORS.GRAY.G7}`};
+        isGlobalMb && `1px solid ${COLORS.GRAY.G7}`};
     }
     &.accordion-container[expanded] header .chevron-icon {
       &::before {
@@ -58,15 +58,15 @@ const Title = styled.div`
   }
   @media (max-width: 768px) {
     ${({ isAmp }) => {
-    return isAmp
-      ? `
+      return isAmp
+        ? `
           background-color: transparent;
           outline: none;
           border: none;
           margin: 0;
         `
-      : '';
-  }}
+        : '';
+    }}
   }
 `;
 

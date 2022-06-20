@@ -123,7 +123,7 @@ const StyledHeaderElements = styled.div`
   align-items: center;
   * {
     color: ${({ theme: { primaryBGText } }) =>
-    primaryBGText ? primaryBGText : COLORS.GRAY.G2};
+      primaryBGText ? primaryBGText : COLORS.GRAY.G2};
   }
   ${(props) => {
     if (props.active) {

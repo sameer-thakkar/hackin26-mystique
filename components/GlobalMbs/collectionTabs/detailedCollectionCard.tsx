@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import Image from 'UI/Image';
 import Conditional from 'components/common/Conditional';
-import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
 import { CLOSE_WHITE } from 'assets/SvgIcons';
 import { ASPECT_RATIO, FALLBACK_IMAGE } from 'const/index';
@@ -290,8 +289,8 @@ const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = f
               data.uid
                 ? convertUidToUrl({ uid: data.uid, isDev, hostname: host })
                 : microbrand
-                  ? getValidUrl(microbrand?.trim())
-                  : ''
+                ? getValidUrl(microbrand?.trim())
+                : ''
             }
             className="cta secondary"
           >

@@ -80,17 +80,17 @@ const AmpSelectorContainer = styled.div`
     grid-auto-flow: column;
     margin: auto;
     justify-content: ${({ align }) => {
-    switch (align) {
-      case 'center':
-        return 'space-around';
-      case 'left':
-        return 'flex-start';
-      case 'right':
-        return 'flex-end';
-      default:
-        break;
-    }
-  }};
+      switch (align) {
+        case 'center':
+          return 'space-around';
+        case 'left':
+          return 'flex-start';
+        case 'right':
+          return 'flex-end';
+        default:
+          break;
+      }
+    }};
   }
   amp-selector [role='tab'] {
     cursor: pointer;

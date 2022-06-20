@@ -9,26 +9,29 @@ import Header from 'components/MicrositeV2/Header';
 import LttFeatureCard from 'components/ShowPages/FeatureCard';
 import Conditional from 'components/common/Conditional';
 import TextBanner from 'components/TextBanner';
+import MonthTabs from 'components/slices/MonthTabs';
 import DismissAlert from 'UI/DismissAlert';
 import MultiBannerWrapper from 'UI/MultiBannerWrapper';
 import { LOCATION } from 'assets/SvgIcons';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, THEMES } from 'const/index';
 import { strings } from 'const/strings';
 import { SIZES } from 'const/ui-constants';
+import COLORS from 'const/colors';
 import { isSafetyIncluded } from 'utils';
 import {
   groupSlices,
   getTGIDListForMonth,
   getDiscountedProducts,
   getPriceSortedDiscountedProducts,
+  getPriceSortedListicleTgids,
   withShortcodes,
   checkLTT,
 } from 'utils/helper';
-import Image from 'UI/Image';
 import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { gtmAtom } from 'store/atoms/gtm';
+import { expandFontToken } from 'const/typography';
 
 const Alert = dynamic(() => import('UI/Alert'), { ssr: false });
 const ResponsiveSelector: ComponentType<any> = dynamic(
@@ -55,8 +58,8 @@ const V2MicrositeWrapper = styled.div`
     margin-top: 40px;
   }
   .hero-slice-section {
-    margin-bottom: 24px;
-    margin-top: 56px;
+    margin-top: 24px;
+    margin-bottom: 36px;
   }
   .hero-slice-section:empty {
     margin: 0;
@@ -77,48 +80,44 @@ const V2MicrositeWrapper = styled.div`
   }
 
   @media (max-width: 768px) {
-    .hero-slice-section {
-      margin-top: 48px;
-      margin-bottom: 48px;
-    }
     .main-wrapper {
       padding-left: 16px;
       padding-right: 16px;
       width: calc(100% - 32px);
     }
-  }
-`;
-
-const BannerWrapper = styled.div`
-  width: 100%;
-  height: 400px;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  h1 {
-    position: absolute;
-    margin-left: 120px;
-    z-index: 11;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 36px;
-    line-height: 44px;
-    display: flex;
-    align-items: center;
-    letter-spacing: -0.5px;
-    color: #ffffff;
-  }
-  @media (max-width: 768px) {
-    h1 {
-      margin-left: 16px;
-      font-size: 20px;
+    .hero-slice-section {
+      margin-bottom: 32px;
+      padding-right: unset;
+      padding-left: unset;
+      width: unset;
     }
   }
 `;
 
-const BannerImage = styled.div`
-  width: 100%;
-  height: 400px;
+const ListicleHeadingWrapper = styled.div`
+  padding-top: 36px;
+  color: ${COLORS.GRAY.G2};
+  h1 {
+    margin: unset;
+    ${expandFontToken('Display/Regular')}
+  }
+  h2 {
+    margin: unset;
+    margin-top: 10px;
+    ${expandFontToken('Heading/Large')}
+  }
+  @media (max-width: 768px) {
+    padding-top: 32px;
+    padding-left: 24px;
+    h1 {
+      ${expandFontToken('Heading/Large')}
+    }
+    h2 {
+      margin-top: 8px;
+
+      ${expandFontToken('Heading/Small')}
+    }
+  }
 `;
 
 /*
@@ -169,6 +168,7 @@ export const HomePage = (props) => {
       priceSortTours = getPriceSortedDiscountedProducts(allTours);
     } else {
       allowedTours = getTGIDListForMonth(allTours, displayMonths);
+      priceSortTours = getPriceSortedListicleTgids(allTours, allowedTours);
     }
     singleCategory = [
       {
@@ -224,6 +224,7 @@ export const HomePage = (props) => {
   );
   const allTgids = Object.keys(allTours);
   const isLTT = checkLTT(uid);
+  const isLTTListicle = isEntertainmentMb && isListicle;
   return (
     <V2MicrositeWrapper isEntertainmentMb={isEntertainmentMb}>
       <Header
@@ -234,6 +235,7 @@ export const HomePage = (props) => {
         allTours={allTours}
         isEntertainmentMb={isEntertainmentMb}
         hasLanguageSelector={hasLanguageSelector}
+        isLTTListicle={isLTTListicle}
       />
       <Conditional if={isMobile && hasDropdownLinks}>
         <div className="main-wrapper city-selector">
@@ -274,17 +276,11 @@ export const HomePage = (props) => {
           availableTours={allTgids}
         />
       </Conditional>
-      <Conditional if={isListicle && heroProps.banners.length}>
-        <BannerWrapper>
+      <Conditional if={isLTTListicle}>
+        <ListicleHeadingWrapper className="main-wrapper">
           <h1>{bannerHeading}</h1>
-          <BannerImage>
-            <Image
-              url={heroProps.banners[0]?.url}
-              alt={heroProps.banners[0]?.alt}
-              objectFit="cover"
-            />
-          </BannerImage>
-        </BannerWrapper>
+          <h2>{strings.BEST_WESTEND_SHOWS}</h2>
+        </ListicleHeadingWrapper>
       </Conditional>
       <Conditional if={mbTheme === THEMES.MIN_BLUE}>
         <TextBanner bannerHeading={bannerHeading ? bannerHeading : null} />
@@ -297,7 +293,7 @@ export const HomePage = (props) => {
       <Conditional if={!isEntertainmentMb}>
         <MultiBannerWrapper hasSafe={hasSafe} marginTop={40} />
       </Conditional>
-      <Conditional if={heroSectionSlice.length}>
+      <Conditional if={heroSectionSlice.length && !isLTTListicle}>
         <ProductsContextProvider allTours={allTours} ready={ready}>
           <div className="main-wrapper hero-slice-section">
             {heroSectionSlice
@@ -310,6 +306,17 @@ export const HomePage = (props) => {
                   {sliceHandler(slice, { isMobile })}
                 </div>
               ))}
+          </div>
+        </ProductsContextProvider>
+      </Conditional>
+      <Conditional if={isLTTListicle}>
+        <ProductsContextProvider allTours={allTours} ready={ready}>
+          <div className="main-wrapper hero-slice-section">
+            <MonthTabs
+              tabs={heroSectionSlice[0].items}
+              isMobile={isMobile}
+              {...categoryProps}
+            />
           </div>
         </ProductsContextProvider>
       </Conditional>

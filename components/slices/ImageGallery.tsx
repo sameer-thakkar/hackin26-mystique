@@ -262,10 +262,10 @@ const Lightbox = styled.div`
     .swiper-container {
       max-width: 100vw;
       ${({ isZoomed }) =>
-    !isZoomed
-      ? `
+        !isZoomed
+          ? `
       `
-      : `
+          : `
       overflow: unset;
       `}
     }
@@ -507,19 +507,19 @@ const ImageGallery = (props) => {
               isMobile
                 ? null
                 : () => (
-                  <div className="button-right">
-                    {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
-                  </div>
-                )
+                    <div className="button-right">
+                      {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
+                    </div>
+                  )
             }
             renderNextButton={
               isMobile
                 ? null
                 : () => (
-                  <div className="button-left">
-                    {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
-                  </div>
-                )
+                    <div className="button-left">
+                      {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
+                    </div>
+                  )
             }
             {...swiperOpts}
             {...galleryOpts}

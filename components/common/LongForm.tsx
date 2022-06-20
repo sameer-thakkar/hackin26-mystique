@@ -95,10 +95,11 @@ export default class LongForm extends Component<any, any> {
         {content.map((slice, index) => (
           <div
             key={`long-form-${slice?.slice_type}-${index}`}
-            className={`${!FULL_WIDTH_SLICES.includes(slice.slice_type)
+            className={`${
+              !FULL_WIDTH_SLICES.includes(slice.slice_type)
                 ? 'slice-wrapper'
                 : ''
-              } slice-block ${slice.slice_type}`}
+            } slice-block ${slice.slice_type}`}
           >
             {sliceHandler(slice, { ...props, sliceIndex: index })}
           </div>

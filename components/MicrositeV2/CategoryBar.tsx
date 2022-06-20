@@ -91,11 +91,11 @@ const CategoryBarWrapper = styled.div`
     overflow-x: scroll;
     -webkit-overflow-scrolling: touch;
     padding-top: ${({ isEntertainmentMb }) =>
-    isEntertainmentMb ? '1.125rem' : '1.188rem'};
+      isEntertainmentMb ? '1.125rem' : '1.188rem'};
     padding-bottom: ${({ isEntertainmentMb }) =>
-    isEntertainmentMb ? '0.5rem' : '0.875rem'};
+      isEntertainmentMb ? '0.5rem' : '0.875rem'};
     margin-top: ${({ isEntertainmentMb }) =>
-    isEntertainmentMb ? '1rem' : '1.5rem'};
+      isEntertainmentMb ? '1rem' : '1.5rem'};
 
     .tabs-wrap {
       padding-left: 1rem;
@@ -108,7 +108,7 @@ const CategoryBarWrapper = styled.div`
 
     .active-indicator {
       bottom: ${({ isEntertainmentMb }) =>
-    isEntertainmentMb ? '-0.5rem' : '-0.875rem'};
+        isEntertainmentMb ? '-0.5rem' : '-0.875rem'};
     }
 
     .tab {
@@ -166,8 +166,8 @@ const CategoryBar = (props) => {
       .filter((category) =>
         category?.ranking?.popularity?.length
           ? category.ranking.popularity.some(
-            (tgid) => availableTGIDs[tgid]?.available
-          )
+              (tgid) => availableTGIDs[tgid]?.available
+            )
           : false
       )
       .findIndex((category) => category.name === categories[index].name);

@@ -5,10 +5,10 @@ import InteractionContext from 'contexts/Interaction';
 import { MBContext } from 'contexts/MBContext';
 import Conditional from 'components/common/Conditional';
 import { strings } from 'const/strings';
-import COLORS from 'const/colors';
 import LinkResolver from 'components/LinkResolver';
 import { useRouter } from 'next/router';
 import { QUERY_PARAMS } from 'const/index';
+import COLORS from 'const/colors';
 import { expandFontToken } from 'const/typography';
 
 const RowComponent: ComponentType<any> = dynamic(() =>
@@ -21,14 +21,18 @@ const StyledProductWrapper = styled.div`
   grid-row-gap: 32px;
   .view-more {
     display: grid;
-    ${expandFontToken('Button/Medium')}
+    ${({ isLTTListicle }) =>
+      isLTTListicle
+        ? expandFontToken('Button/Big')
+        : expandFontToken('Button/Medium')};
     color: ${({ isEntertainmentMb }) =>
-    isEntertainmentMb ? COLORS.GRAY.G2 : COLORS.BRAND.PURPS};
+      isEntertainmentMb ? COLORS.GRAY.G2 : COLORS.BRAND.PURPS};
     border: 1px solid;
     border-radius: 4px;
     margin: auto;
     width: max-content;
-    padding: 16px 32px;
+    padding: ${({ isLTTListicle }) =>
+      isLTTListicle ? '12px 24px' : '16px 32px'};
     cursor: pointer;
     ${({ isEntertainmentMb }) => isEntertainmentMb && 'letter-spacing: 0.6px;'}
   }
@@ -92,6 +96,8 @@ const PopulateProducts = (props) => {
     setRowsInView(firstView);
   }, [activeCategoryTgids, firstView]);
 
+  const isLTTListicle = isListicle && isEntertainmentMb;
+
   const subArrays = (tgidsArr, offset = 0) => {
     const { isMobile } = props;
     const perChunk = isMobile
@@ -99,18 +105,16 @@ const PopulateProducts = (props) => {
       : NO_OF_CARDS_IN_ROW.DESKTOP;
     const result = tgidsArr
       .filter((tgid) => {
-        if (isEntertainmentMb) {
-          if (isListicle) {
-            return (
-              allTours?.[tgid]?.listicleShowSummary &&
-              allTours?.[tgid]?.listicleWhyWatch
-            );
-          } else {
-            return (
-              allTours?.[tgid]?.listingPrice?.finalPrice &&
-              Object.keys(allTours[tgid].microBrandsHighlight).length > 0
-            );
-          }
+        if (isLTTListicle) {
+          return (
+            allTours?.[tgid]?.listicleShowSummary &&
+            allTours?.[tgid]?.listicleWhyWatch
+          );
+        } else if (isEntertainmentMb) {
+          return (
+            allTours?.[tgid]?.listingPrice?.finalPrice &&
+            Object.keys(allTours[tgid].microBrandsHighlight).length > 0
+          );
         } else {
           return allTours?.[tgid]?.listingPrice?.finalPrice;
         }
@@ -138,9 +142,9 @@ const PopulateProducts = (props) => {
       QUERY_PARAMS.LIMIT,
       String(
         Number(queryLimit) +
-        (isMobile
-          ? NO_OF_CARDS_IN_ROW.MOBILE * NO_OF_ROWS_TO_SHOW.MOBILE
-          : NO_OF_CARDS_IN_ROW.DESKTOP * NO_OF_ROWS_TO_SHOW.DESKTOP)
+          (isMobile
+            ? NO_OF_CARDS_IN_ROW.MOBILE * NO_OF_ROWS_TO_SHOW.MOBILE
+            : NO_OF_CARDS_IN_ROW.DESKTOP * NO_OF_ROWS_TO_SHOW.DESKTOP)
       )
     );
     query.set(QUERY_PARAMS.OFFSET, '0');
@@ -155,7 +159,7 @@ const PopulateProducts = (props) => {
     e.preventDefault();
     setRowsInView(
       rowsInView +
-      (isMobile ? NO_OF_ROWS_TO_SHOW.MOBILE : NO_OF_ROWS_TO_SHOW.DESKTOP)
+        (isMobile ? NO_OF_ROWS_TO_SHOW.MOBILE : NO_OF_ROWS_TO_SHOW.DESKTOP)
     );
     routerPush(`${pathname}?${getUpdatedQuery()?.toString()}`, null, {
       shallow: true,
@@ -164,11 +168,9 @@ const PopulateProducts = (props) => {
 
   const categoryPropsPopularityRank =
     categoryProps?.categories[0]?.ranking.popularity;
-  const tgids = isListicle
-    ? categoryPropsPopularityRank
-    : isDiscountedPage
-      ? activeCategoryTgids || categoryPropsPopularityRank
-      : propTgids || activeCategoryTgids;
+  const tgids = isDiscountedPage
+    ? activeCategoryTgids || categoryPropsPopularityRank
+    : propTgids || activeCategoryTgids;
 
   const tgidsSubArr = subArrays(tgids, Number(offset));
 
@@ -177,7 +179,10 @@ const PopulateProducts = (props) => {
   };
 
   return (
-    <StyledProductWrapper isEntertainmentMb={isEntertainmentMb}>
+    <StyledProductWrapper
+      isEntertainmentMb={isEntertainmentMb}
+      isLTTListicle={isLTTListicle}
+    >
       {tgidsSubArr.map((row, index) => {
         if (showAll || index < rowsInView)
           return (
@@ -207,7 +212,9 @@ const PopulateProducts = (props) => {
           onClick={viewMore}
           className="view-more"
         >
-          {mbContext.buttons.see_more_text || strings.VIEW_MORE}
+          {isLTTListicle
+            ? strings.SEE_MORE_SHOWS
+            : mbContext.buttons.see_more_text || strings.VIEW_MORE}
         </LinkResolver>
       </Conditional>
     </StyledProductWrapper>

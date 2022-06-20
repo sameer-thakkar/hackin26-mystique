@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import COLORS from 'const/colors';
+
 import Image from './Image';
 
 export const StyledIconCard = styled.div`

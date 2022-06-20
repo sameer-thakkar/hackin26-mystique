@@ -210,9 +210,9 @@ export default class CustomerReview extends Component<CardCarouselProps> {
       navigation: isMobile
         ? false
         : {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
       pagination: {
         el: '.swiper-pagination',
         type: 'bullets',

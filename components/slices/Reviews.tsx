@@ -39,16 +39,16 @@ const StyledReviews = styled.div`
   @media (max-width: 768px) {
     width: 100%;
     ${({ reviewType }) => {
-    if (reviewType === 'testimonial') {
-      return `
+      if (reviewType === 'testimonial') {
+        return `
         .custom-pagination {
           top: 95%;
           left: 50%;
           transform: translateX(-50%);
         }
       `;
-    }
-  }}
+      }
+    }}
   }
 `;
 

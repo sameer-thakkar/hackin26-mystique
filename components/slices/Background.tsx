@@ -50,8 +50,9 @@ const Background = (props) => {
       {slices.map((slice, index) => (
         <div
           key={index}
-          className={`${!FULL_WIDTH_SLICES.includes(slice.slice_type) ? 'slice-wrapper' : ''
-            } slice-block ${slice.slice_type}`}
+          className={`${
+            !FULL_WIDTH_SLICES.includes(slice.slice_type) ? 'slice-wrapper' : ''
+          } slice-block ${slice.slice_type}`}
         >
           {sliceHandler(slice, sliceProps)}
         </div>

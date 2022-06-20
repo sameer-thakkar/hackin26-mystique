@@ -70,14 +70,14 @@ export const SearchPage = (props) => {
       <div className="search-results">
         {results.length
           ? results.map(({ item }, index) => {
-            return (
-              <SearchItem
-                key={index}
-                onSearchResultClick={searchItemClick}
-                {...item}
-              />
-            );
-          })
+              return (
+                <SearchItem
+                  key={index}
+                  onSearchResultClick={searchItemClick}
+                  {...item}
+                />
+              );
+            })
           : null}
       </div>
       <pre></pre>

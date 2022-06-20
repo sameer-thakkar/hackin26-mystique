@@ -70,7 +70,7 @@ const StyledTourComparisionTable = styled.div`
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: repeat(3, 1fr) ${({ isMobile }) =>
-    isMobile ? '16px' : ''};
+      isMobile ? '16px' : ''};
     grid-column-gap: 24px;
     border-bottom: 1px solid ${COLORS.GRAY.G6};
     padding-bottom: 24px;
@@ -205,7 +205,7 @@ const StyledTourComparisionTable = styled.div`
       width: 100% !important;
       grid-column-gap: 16px;
       grid-template-columns: 0px repeat(${({ tourCount }) =>
-    tourCount}, 164px) 4px;
+        tourCount}, 164px) 4px;
       position: relative;
     }
     .row::before {
@@ -594,8 +594,9 @@ const AutomatedTourComparisonTable = ({
               .map((label, rowIndex) => {
                 return (
                   <div
-                    className={`row ${rowIndex >= 2 && isAmp ? 'no-display' : ''
-                      } `}
+                    className={`row ${
+                      rowIndex >= 2 && isAmp ? 'no-display' : ''
+                    } `}
                     id={`comparison-list-details-${rowIndex}`}
                     key={rowIndex}
                   >

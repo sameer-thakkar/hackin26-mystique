@@ -43,8 +43,8 @@ const StyledSwiper = styled.div`
     padding: ${(isGlobalMb) => (isGlobalMb ? '12px 0 24px 0' : '25px 0')};
 
     ${({ hasLessCards }) =>
-    hasLessCards &&
-    `
+      hasLessCards &&
+      `
     display:flex;
     grid-auto-flow: unset;
     `}

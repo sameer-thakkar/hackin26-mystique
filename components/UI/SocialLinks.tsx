@@ -22,7 +22,7 @@ const SocialIcon = styled.div`
     width: 20px;
     path {
       fill: ${({ isEntertainmentMb }) =>
-    isEntertainmentMb ? COLORS.GRAY.G5 : COLORS.BRAND.WHITE};
+        isEntertainmentMb ? COLORS.GRAY.G5 : COLORS.BRAND.WHITE};
     }
   }
 `;

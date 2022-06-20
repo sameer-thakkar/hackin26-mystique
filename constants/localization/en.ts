@@ -17,6 +17,7 @@ const en = {
   },
   READ_MORE: 'Read More',
   VIEW_MORE: 'View More',
+  SEE_MORE_SHOWS: 'See More Shows',
   BANNER_CTA: 'Buy Tickets',
   BOOK_NOW_CTA: 'Book Now',
   CHECK_AVAIL: 'Check Availability',
@@ -42,6 +43,7 @@ const en = {
   OPENING_DATE: 'Opening Date',
   REOPENING_DATE: 'Reopening Date',
   NEW: 'NEW',
+  NEW_ARRIVAL: 'New Arrival',
   SEE_ALL: 'See All',
   COMBO_VARIANT: {
     SELECT_CTA: 'Select',
@@ -57,6 +59,7 @@ const en = {
   PRICES_STARTING: 'Prices Starting',
   FROM: 'From',
   MORE_DETAILS: 'More Details',
+  BEST_WESTEND_SHOWS: 'Best West-End Shows in London',
   FOOTER: {
     DISCLAIMER:
       'This website is not the official website of the <attraction>. It is run by Headout and works with attractions and tour operators to provide incredible experiences at the tap of a button.',

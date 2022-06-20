@@ -294,9 +294,9 @@ const Gallery = ({ galleryArray, isMobile }) => {
     navigation: isMobile
       ? false
       : {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
   };
 
   const popupOpener = (index) => {

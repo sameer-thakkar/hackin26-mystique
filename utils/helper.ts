@@ -420,6 +420,18 @@ export const getPriceSortedDiscountedProducts = (allTours) => {
     }, []);
 };
 
+export const getPriceSortedListicleTgids = (allTours, allowedTours) => {
+  return Object.values(allTours)
+    .sort((a: any, b: any) => {
+      return a?.listingPrice?.finalPrice - b?.listingPrice?.finalPrice;
+    })
+    .filter(
+      ({ listingPrice, tgid }: any) =>
+        listingPrice && allowedTours.includes(tgid)
+    )
+    .map(({ tgid }: any) => tgid);
+};
+
 /**
  *
  * @param fn callback function

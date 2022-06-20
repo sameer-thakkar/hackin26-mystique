@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import Carousel from 'components/GlobalMbs/Carousels/Carousel';
 import Image from 'UI/Image';
 import TitleTextCombo from 'UI/TitleTextCombo';
-import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { FALLBACK_IMAGES } from 'const/index';

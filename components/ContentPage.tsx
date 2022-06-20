@@ -537,10 +537,11 @@ class ContentPage extends Component<any, any> {
                   const sliceComponent = (
                     <div
                       key={index}
-                      className={`${!FULL_WIDTH_SLICES.includes(slice.slice_type)
+                      className={`${
+                        !FULL_WIDTH_SLICES.includes(slice.slice_type)
                           ? 'slice-wrapper'
                           : ''
-                        } slice-block ${slice.slice_type}`}
+                      } slice-block ${slice.slice_type}`}
                     >
                       {sliceHandler(slice, {
                         isMobile: this.state.isMobile,

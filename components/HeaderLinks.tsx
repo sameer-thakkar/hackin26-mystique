@@ -33,11 +33,11 @@ const StyledHeaderLinksWrapper = styled.div`
   }
   @media (max-width: 768px) {
     display: ${(props) => {
-    if (!props.show) {
-      return `none`;
-    }
-    return 'block';
-  }};
+      if (!props.show) {
+        return `none`;
+      }
+      return 'block';
+    }};
     position: fixed;
     right: 2%;
     top: 56px;

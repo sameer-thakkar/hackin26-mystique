@@ -227,8 +227,9 @@ const CurrencySelector = (props) => {
     >
       <StyledCurrency>{displayCurrency}</StyledCurrency>
       <div
-        className={`currency-dropdown ${isActive ? 'currency-dropdown-active' : ''
-          }`}
+        className={`currency-dropdown ${
+          isActive ? 'currency-dropdown-active' : ''
+        }`}
       >
         {currencies.map((currency, index) => {
           return (

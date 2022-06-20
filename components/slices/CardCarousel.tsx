@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 import COLORS from 'const/colors';
+
 import { LinkCards } from './MicrobrandCards';
 import { tourListApiParser } from '../../utils/dataParsers';
 
@@ -192,9 +193,9 @@ export default class CardCarousel extends Component<CardCarouselProps> {
       navigation: isMobile
         ? false
         : {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
       pagination: {
         el: '.swiper-pagination',
         type: 'bullets',

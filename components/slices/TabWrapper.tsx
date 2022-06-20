@@ -38,8 +38,8 @@ const StyledTabWrapper = styled.div`
       display: none;
     }
     ${({ isGlobalMb }) =>
-    isGlobalMb &&
-    `
+      isGlobalMb &&
+      `
       line-height: 20px;
       `}
   }

@@ -15,7 +15,7 @@ const Banner = styled.div`
   }
   h1 {
     color: ${({ theme: { primaryBGColor } }) =>
-    primaryBGColor ? primaryBGColor : COLORS.BRAND.WHITE};
+      primaryBGColor ? primaryBGColor : COLORS.BRAND.WHITE};
     margin: 0;
     font-size: 24px;
     max-width: 420px;

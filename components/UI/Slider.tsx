@@ -103,105 +103,106 @@ const Slider: React.FC<{
   parentOverflowHidden = false,
   paginationClass,
 }) => {
-    /* Swiper configuration for using external controls starts here */
-    const [swiper, updateSwiper] = useState(null);
-    const [currentIndex, updateCurrentIndex] = useState(0);
-    const isAmp = useAmp();
-    const goToSlide = (index) => {
-      if (swiper !== null) {
-        swiper.slideTo(index);
-      }
-    };
+  /* Swiper configuration for using external controls starts here */
+  const [swiper, updateSwiper] = useState(null);
+  const [currentIndex, updateCurrentIndex] = useState(0);
+  const isAmp = useAmp();
+  const goToSlide = (index) => {
+    if (swiper !== null) {
+      swiper.slideTo(index);
+    }
+  };
 
-    const goNext = () => {
-      if (swiper !== null) {
-        swiper.slideNext();
-      }
-    };
+  const goNext = () => {
+    if (swiper !== null) {
+      swiper.slideNext();
+    }
+  };
 
-    const goPrev = () => {
-      if (swiper !== null) {
-        swiper.slidePrev();
-      }
-    };
+  const goPrev = () => {
+    if (swiper !== null) {
+      swiper.slidePrev();
+    }
+  };
 
-    const updateIndex = useCallback(() => updateCurrentIndex(swiper.realIndex), [
-      swiper,
-    ]);
+  const updateIndex = useCallback(() => updateCurrentIndex(swiper.realIndex), [
+    swiper,
+  ]);
 
-    useEffect(() => {
+  useEffect(() => {
+    if (swiper && swiper !== null) {
+      swiper.on('slideChange', updateIndex);
+    }
+
+    return () => {
       if (swiper && swiper !== null) {
-        swiper.on('slideChange', updateIndex);
+        swiper.off('slideChange', updateIndex);
       }
+    };
+  }, [swiper, updateIndex]);
+  /* Swiper configuration for using external controls ends here */
 
-      return () => {
-        if (swiper && swiper !== null) {
-          swiper.off('slideChange', updateIndex);
-        }
-      };
-    }, [swiper, updateIndex]);
-    /* Swiper configuration for using external controls ends here */
-
-    return (
-      <StyledSlider parentOverflowHidden={parentOverflowHidden}>
-        <Swiper {...sliderOptions} getSwiper={updateSwiper}>
-          {children.map((child, index) => {
+  return (
+    <StyledSlider parentOverflowHidden={parentOverflowHidden}>
+      <Swiper {...sliderOptions} getSwiper={updateSwiper}>
+        {children.map((child, index) => {
+          return (
+            <div className="swiper-slide" key={index}>
+              {child}
+            </div>
+          );
+        })}
+      </Swiper>
+      {nextButton && prevButton ? (
+        <Controls>
+          {!swiper?.isBeginning ? (
+            <div
+              className="prev-slide"
+              role="button"
+              tabIndex={0}
+              onClick={goPrev}
+            >
+              {isAmp ? CHEVRON_LEFT : prevButton}
+            </div>
+          ) : null}
+          {!swiper?.isEnd ? (
+            <div
+              className="next-slide"
+              role="button"
+              tabIndex={0}
+              onClick={goNext}
+            >
+              {isAmp ? CHEVRON_LEFT : nextButton}
+            </div>
+          ) : null}
+        </Controls>
+      ) : null}
+      {paginationClass ? (
+        <div
+          className={`${paginationClass} slider-pagination swiper-pagination-clickable swiper-pagination-bullets`}
+        >
+          {children.map((item, index) => {
             return (
-              <div className="swiper-slide" key={index}>
-                {child}
-              </div>
+              <span
+                key={index}
+                className={`slider-bullet ${
+                  index === currentIndex
+                    ? 'swiper-pagination-bullet-active'
+                    : ''
+                }`}
+                tabIndex={0}
+                role="button"
+                onClick={() => {
+                  goToSlide(index);
+                }}
+                aria-label={`Go to slide ${index}`}
+              />
             );
           })}
-        </Swiper>
-        {nextButton && prevButton ? (
-          <Controls>
-            {!swiper?.isBeginning ? (
-              <div
-                className="prev-slide"
-                role="button"
-                tabIndex={0}
-                onClick={goPrev}
-              >
-                {isAmp ? CHEVRON_LEFT : prevButton}
-              </div>
-            ) : null}
-            {!swiper?.isEnd ? (
-              <div
-                className="next-slide"
-                role="button"
-                tabIndex={0}
-                onClick={goNext}
-              >
-                {isAmp ? CHEVRON_LEFT : nextButton}
-              </div>
-            ) : null}
-          </Controls>
-        ) : null}
-        {paginationClass ? (
-          <div
-            className={`${paginationClass} slider-pagination swiper-pagination-clickable swiper-pagination-bullets`}
-          >
-            {children.map((item, index) => {
-              return (
-                <span
-                  key={index}
-                  className={`slider-bullet ${index === currentIndex
-                      ? 'swiper-pagination-bullet-active'
-                      : ''
-                    }`}
-                  tabIndex={0}
-                  role="button"
-                  onClick={() => {
-                    goToSlide(index);
-                  }}
-                  aria-label={`Go to slide ${index}`}
-                />
-              );
-            })}
-          </div>
-        ) : null}
-      </StyledSlider>
-    );
-  };
+        </div>
+      ) : null}
+    </StyledSlider>
+  );
+};
 
 export default Slider;

@@ -59,8 +59,8 @@ const ResponsiveSelectWrapper = styled.div`
   .current-selection {
     display: grid;
     grid-template-columns: auto ${({ hasIcon }) => (hasIcon ? 'auto' : '')} ${({
-  hasChevron,
-}) => (hasChevron ? 'auto' : '')};
+        hasChevron,
+      }) => (hasChevron ? 'auto' : '')};
     justify-content: space-between;
     align-items: center;
     grid-gap: 8px;
@@ -245,14 +245,16 @@ export const ResponsiveSelector = (props) => {
       {toggleActive ? (
         <div
           ref={selectorRef}
-          className={`responsive-dropdown ${toggleActive ? 'responsive-dropdown-active' : ''
-            }`}
+          className={`responsive-dropdown ${
+            toggleActive ? 'responsive-dropdown-active' : ''
+          }`}
         >
           {options.map((option, index) => {
             return (
               <div
-                className={`responsive-option ${current == index ? 'active' : ''
-                  }`}
+                className={`responsive-option ${
+                  current == index ? 'active' : ''
+                }`}
                 key={index}
                 role="button"
                 tabIndex={0}

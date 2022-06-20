@@ -5,12 +5,12 @@ import { MBContext } from 'contexts/MBContext';
 import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
 import LocalisedPrice from 'UI/LPrice';
+import Emoji from 'components/common/Emoji';
 import { STAR } from 'assets/SvgIcons';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   CURRENCY_SYMBOL_MAP,
-  NEW_ARRIVALS_CATEGORIES,
   REOPENING_CATEGORIES,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -64,16 +64,13 @@ const ProductCard = styled.div`
   .overlay-booster {
     position: absolute;
     top: 8px;
-    left: 0;
-    background: ${COLORS.PRIMARY.OCEAN_BLUE};
-    border-radius: 0 2px 2px 0;
-    color: #fff;
-    line-height: 1;
-    font-size: 12px;
-    text-transform: uppercase;
-    font-weight: 800;
-    padding: 5px 12px;
-    ${({ theme }) => theme.productCards.overlayBoosterStyles}
+    left: 8px;
+    border-radius: 2px;
+    padding: 4px 6px 5px;
+    background: ${COLORS.BRAND.WHITE};
+    color: ${COLORS.GRAY.G2};
+    ${expandFontToken('UI/Label Small (Heavy)')}
+    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1), 0px 2px 8px rgba(0, 0, 0, 0.1);
   }
 
   .product-v2-bottom-left {
@@ -191,7 +188,8 @@ const ProductCard = styled.div`
     }
 
     .overlay-booster {
-      padding: 4px 6px;
+      padding: 3px 6px;
+      ${expandFontToken('UI/Label XS')}
     }
 
     .product-v2-title {
@@ -349,9 +347,9 @@ const Product = (props) => {
   if (!allTours[tgid]) return null;
   const { listingPrice, ...tour } = allTours[tgid] || {};
   const {
+    allTags,
     productImage,
     title,
-    overlayBooster,
     vendor,
     cardFooter,
     category,
@@ -418,7 +416,7 @@ const Product = (props) => {
     productClick(tgid, cardIdPrefix, event);
   };
 
-  const isNew = NEW_ARRIVALS_CATEGORIES.includes(activeCategoryId);
+  const isNewArrival = allTags.includes('NEWARRIVAL');
 
   const openingDate = dateToString(reopeningDate, lang, 'DD MMM, YYYY');
 
@@ -454,8 +452,10 @@ const Product = (props) => {
           height={250}
           alt={title}
         />
-        <Conditional if={overlayBooster}>
-          <div className="overlay-booster">{overlayBooster}</div>
+        <Conditional if={isNewArrival}>
+          <div className="overlay-booster">
+            <Emoji symbol="🌟" label="glowing-star" /> {strings.NEW_ARRIVAL}
+          </div>
         </Conditional>
       </div>
       <div className="product-v2-bottom">
@@ -466,15 +466,12 @@ const Product = (props) => {
           <div className="l1-booster-wrapper">
             <div className="l1-booster">{categoryName}</div>
             <div className="rating">
-              <Conditional if={isNew}>
-                <span className="avg-rating">{strings.NEW}</span>
-              </Conditional>
-              <Conditional if={!isNew && averageRating}>
+              <Conditional if={averageRating}>
                 <span className="avg-rating">
                   {averageRating} {STAR(COLORS.JOY_MUSTARD)}
                 </span>
               </Conditional>
-              <Conditional if={!isNew && reviewCount}>
+              <Conditional if={reviewCount}>
                 <span className="total-rating">
                   (
                   {reviewCount > 999
@@ -611,8 +608,11 @@ const Product = (props) => {
                 height={250}
                 alt={title}
               />
-              <Conditional if={overlayBooster}>
-                <div className="overlay-booster">{overlayBooster}</div>
+              <Conditional if={isNewArrival}>
+                <div className="overlay-booster">
+                  <Emoji symbol="🌟" label="glowing-star" />{' '}
+                  {strings.NEW_ARRIVAL}
+                </div>
               </Conditional>
             </div>
             <div className="product-v2-bottom">
@@ -623,15 +623,12 @@ const Product = (props) => {
                 <div className="l1-booster-wrapper">
                   <div className="l1-booster">{categoryName}</div>
                   <div className="rating">
-                    <Conditional if={isNew}>
-                      <span className="avg-rating">{strings.NEW}</span>
-                    </Conditional>
-                    <Conditional if={!isNew && averageRating}>
+                    <Conditional if={averageRating}>
                       <span className="avg-rating">
                         {averageRating} {STAR(COLORS.PRIMARY.JOY_MUSTARD)}
                       </span>
                     </Conditional>
-                    <Conditional if={!isNew && reviewCount}>
+                    <Conditional if={reviewCount}>
                       <span className="total-rating">
                         (
                         {reviewCount > 999

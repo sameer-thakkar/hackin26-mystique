@@ -1,6 +1,7 @@
 import { RichText } from 'prismic-reactjs';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
+
 import { shortCodeSerializer } from '../../utils/shortCodes';
 import Image from '../UI/Image';
 
