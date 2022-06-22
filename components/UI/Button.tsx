@@ -4,10 +4,11 @@ import { expandFontToken } from 'const/typography';
 
 const Button = styled.button((props) => {
   let styles = `
-  border: 2px solid ${props.theme.primaryColor};
+  border: ${props.borderWidth || '2px'} solid ${props.theme.primaryColor};
   padding: 12px ${props.paddingSides || '20px'};
   color: ${props.theme.primaryColor};
   background: transparent;
+  min-width: ${props.minWidth || 'unset'};
   * {
     color: ${props.theme.primaryColor};
   }

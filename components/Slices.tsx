@@ -1,7 +1,5 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
-import { RichText } from 'prismic-reactjs';
-import { shortCodeSerializer } from 'utils/shortCodes';
 import { csvTgidToArray } from 'utils/helper';
 
 // Non-dynamic imports
@@ -14,6 +12,7 @@ import Breadcrumb from './slices/Breadcrumb';
 import Background from './slices/Background';
 import FooterColumn from './slices/FooterColumn';
 import TicketCard from './slices/TickerCardSlice';
+import RichtextWithCTA from './slices/RichTextWithCTA';
 
 // Dynamic imports
 const CustomLinkedTours = dynamic(() => import('./slices/CustomLinkedTours'));
@@ -62,13 +61,7 @@ const sliceHandler = (slice, props: any = {}) => {
   switch (slice.slice_type) {
     case 'rich_text':
     case 'rich_text_only':
-      return slice.items.map((block, index) => (
-        <RichText
-          key={index}
-          render={block.text}
-          htmlSerializer={shortCodeSerializer}
-        />
-      ));
+      return <RichtextWithCTA slices={slice.items} />;
     case 'image':
     case 'image_grid':
       return (
