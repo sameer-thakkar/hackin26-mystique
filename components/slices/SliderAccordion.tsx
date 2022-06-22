@@ -16,7 +16,8 @@ const StyledSliderAccordion = styled.div`
     }) => (hasImageComponent ? `1fr` : ``)};
   grid-gap: 24px;
   border: 1px solid #ebebeb;
-  border-radius: 2px;
+  border-radius: 8px;
+  overflow: hidden;
   height: max-content;
   width: 100%;
   line-height: 1.4;
