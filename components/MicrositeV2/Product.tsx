@@ -556,21 +556,6 @@ const Product = (props) => {
     });
   };
   const showPageExists = !showPageUrl.includes('/book');
-  const MWebEntertainmentMbProductWrapper = ({ children }) =>
-    initialized || !showPageExists ? (
-      <div role="button" tabIndex={0} onClick={showPageEvent}>
-        {children}
-      </div>
-    ) : (
-      <a
-        target="_self"
-        rel="noopener noreferrer"
-        href={showPageUrl}
-        onClick={showPageEvent}
-      >
-        {children}
-      </a>
-    );
 
   return (
     <>
@@ -589,14 +574,17 @@ const Product = (props) => {
       </Conditional>
 
       <Conditional if={isMobile && isEntertainmentMb}>
-        <MWebEntertainmentMbProductWrapper>
+        <a
+          target="_self"
+          rel="noopener noreferrer"
+          href={showPageExists ? showPageUrl : bookingURL}
+          onClick={showPageEvent}
+        >
           <ProductCard
             className="product-v2"
             id={`${cardIdPrefix}-${tgid}`}
             role="button"
             tabIndex={0}
-            onClick={(initialized || !showPageExists) && handleProductClick}
-            onKeyDown={(initialized || !showPageExists) && handleProductClick}
             isEntertainmentMb={isEntertainmentMb}
           >
             <div className="product-v2-image">
@@ -702,7 +690,7 @@ const Product = (props) => {
               </Conditional>
             </div>
           </ProductCard>
-        </MWebEntertainmentMbProductWrapper>
+        </a>
       </Conditional>
     </>
   );

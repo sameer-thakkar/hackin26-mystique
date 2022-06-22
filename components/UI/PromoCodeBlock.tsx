@@ -88,7 +88,6 @@ const PromoCodeBlock = ({
   host: string;
   collectionId: number | null;
 }) => {
-
   const { currencySymbolMap } = useContext(MBContext);
   const mbCurrency = currencySymbolMap[Object.keys(currencySymbolMap)[0]];
   const localSymbol = mbCurrency?.localSymbol;
