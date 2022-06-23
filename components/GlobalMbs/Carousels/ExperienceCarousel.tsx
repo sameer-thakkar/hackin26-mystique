@@ -1,15 +1,16 @@
 import { FunctionComponent, useContext } from 'react';
 import styled from 'styled-components';
+import { MBContext } from 'contexts/MBContext';
 import Image from 'UI/Image';
 import Conditional from 'components/common/Conditional';
 import Carousel from 'components/GlobalMbs/Carousels/Carousel';
-import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
+import { HALYARD } from 'const/ui-constants';
+import { ASPECT_RATIO } from 'const/index';
+import { strings } from 'const/strings';
 import { CHEVRON_LEFT } from 'assets/SvgIcons';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
-import { ASPECT_RATIO } from 'const/index';
-import { MBContext } from 'contexts/MBContext';
-import { strings } from 'const/strings';
+import { getLocalisedPrice } from 'utils/currency';
 
 const StyledCard = styled.div`
   font-family: ${HALYARD.FONT_STACK};
@@ -131,9 +132,7 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
   rides,
   tickets,
 }) => {
-  strings.SEE_ALL;
   const { isDev, host } = useContext(MBContext);
-  const currencySymbol = tickets?.currencySymbol?.localSymbol;
 
   const entrySection = (
     <HeaderWrapper>
@@ -162,7 +161,7 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
       cards = rides?.map((a) => a);
       break;
     case 'Tickets':
-      cards = tickets && tickets?.data ? [...tickets?.data?.products] : [];
+      cards = tickets?.data ?? [];
   }
 
   let ridesAttractionMarkup, ticketsMarkup;
@@ -219,7 +218,13 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
         name,
         imageUrl,
         image_alt_text: altText,
-        listingPrice: { originalPrice, finalPrice, bestDiscount, cashbackType },
+        listingPrice: {
+          originalPrice,
+          finalPrice,
+          bestDiscount,
+          cashbackType,
+          currencyCode,
+        },
       } = card;
       return (
         <div key={index} className="swiper-slide">
@@ -238,19 +243,25 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
                   <div className="from-price">
                     from{' '}
                     <span>
-                      {currencySymbol}
-                      {originalPrice}
+                      <Conditional if={originalPrice}>
+                        {getLocalisedPrice({
+                          price: originalPrice,
+                          currencyCode,
+                        })}
+                      </Conditional>
                     </span>
                   </div>
                 </Conditional>
                 <div className="final-price">
-                  {currencySymbol} {finalPrice}
-                  {bestDiscount > 0 && (
+                  <Conditional if={finalPrice}>
+                    {getLocalisedPrice({ price: finalPrice, currencyCode })}
+                  </Conditional>
+                  <Conditional if={bestDiscount > 0}>
                     <span className="discount">
                       {bestDiscount}
                       {cashbackType === 'PERCENTAGE' && '%'}
                     </span>
-                  )}
+                  </Conditional>
                 </div>
               </div>
             </Conditional>

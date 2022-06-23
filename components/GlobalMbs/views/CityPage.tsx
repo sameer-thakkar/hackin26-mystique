@@ -5,8 +5,7 @@ import Conditional from 'components/common/Conditional';
 
 const CityPage = (props) => {
   const breadcrumbs = [];
-  const { cityCollections, currencies, body: slices, ticketPages } =
-    props || {};
+  const { cityCollections, body: slices, ticketPages } = props || {};
   // Banner
   const bannerSlice = slices?.length
     ? slices
@@ -42,8 +41,8 @@ const CityPage = (props) => {
         <CollectionTabs
           collections={cityCollections}
           title={collectionTabTitle}
-          currencies={currencies}
           ticketPages={ticketPages}
+          city={cityName}
         />
       </Conditional>
     </div>

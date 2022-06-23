@@ -15,6 +15,7 @@ import {
 import { COMMON_DATA_PROPS_FOR_LISTICLE } from 'const/index';
 import {
   documentUidUpdateRedirectHandler,
+  getCollectionSection,
   getEnglishDocUid,
   getHeadoutLanguagecode,
   getSinglePrismicSlice,
@@ -32,10 +33,11 @@ import {
   getToursGlobalCollection,
 } from 'utils/dataParsers';
 import {
-  fetchCategory,
-  fetchCurrencyList,
   fetchTourGroupV6,
   fetchTourGroupSlots,
+  fetchCollection,
+  fetchCollectionList,
+  fetchTourGroupsByCategory,
 } from 'utils/apiUtils';
 
 export const fetchAllMatchingDocs = async ({
@@ -1138,38 +1140,56 @@ export const getPageData = async ({
     }
 
     if (ContentType === CUSTOM_TYPES.GLOBAL_COLLECTION) {
-      let ticketsData, startingPrice, currencyCode, currencySymbol;
+      let ticketsData, startingPrice, currencyCode;
+      const language = getHeadoutLanguagecode(lang);
+      const city = CMSContent?.data?.city_name?.trim()?.split(' ')?.join('_');
       const categoryId = CMSContent?.data?.headout_category_id;
-      if (categoryId) {
-        ticketsData = await fetchCategory(categoryId, hostname);
+      const collectionId = CMSContent?.data?.headout_collection_id;
+      if (collectionId) {
+        const collectionData = await fetchCollection({
+          collectionId,
+          hostname,
+          language: getHeadoutLanguagecode(lang),
+          currency: 'USD',
+        });
+        const pinnedCards =
+          getCollectionSection(collectionData, 'PINNED_CARDS') ?? [];
+        const genericSection = getCollectionSection(collectionData, 'GENERIC');
+        const headoutPicks =
+          getCollectionSection(collectionData, 'HEADOUT_PICKS') ?? [];
+        ticketsData = [...pinnedCards, ...genericSection, ...headoutPicks];
+        const { collections: collectionList } =
+          (await fetchCollectionList({
+            collectionIds: [collectionId],
+            language,
+            currency: 'USD',
+            hostname,
+          })) ?? {};
+        const [currentCollection] = collectionList ?? [];
+        const { startingPrice: price } = currentCollection ?? {};
+        startingPrice = price?.listingPrice;
+        currencyCode = price?.currency;
       }
-      if (ticketsData?.products?.length) {
-        currencyCode = ticketsData?.products
-          ?.map((ticket) => ticket?.listingPrice?.currencyCode)
-          ?.filter((currency, index, self) => self.indexOf(currency) === index)
-          ?.reduce((acc, cur) => acc + cur);
-
-        startingPrice = Math.min(
-          ...ticketsData?.products?.map(
-            (ticket) => ticket?.listingPrice?.finalPrice
-          )
-        );
+      if (!collectionId && categoryId) {
+        const categoryData = await fetchTourGroupsByCategory({
+          categoryId,
+          hostname,
+          isSubCategory: false,
+          city,
+          language,
+          currency: 'USD',
+        });
+        ticketsData = categoryData?.pageData?.items;
+        startingPrice = categoryData?.unFilteredMetaData?.minPrice;
+        currencyCode = categoryData?.currency?.code;
       }
-
-      if (currencyCode) {
-        const allCurrencies = await fetchCurrencyList();
-        currencySymbol = allCurrencies
-          ?.filter((d) => d.code === currencyCode)
-          ?.reduce((acc, cur) => acc + cur);
-      }
-
       return {
         CMSContent: {
           ...CMSContent,
           tickets: {
             data: ticketsData,
             startingPrice,
-            currencySymbol,
+            currencyCode,
           },
         },
         ContentType,
@@ -1181,11 +1201,9 @@ export const getPageData = async ({
     }
 
     if (ContentType === CUSTOM_TYPES.GLOBAL_CITY) {
-      const allCurrencies = await fetchCurrencyList();
       return {
         CMSContent: {
           ...CMSContent,
-          allCurrencies,
         },
         ContentType,
         uid,

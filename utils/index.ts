@@ -9,7 +9,7 @@ import {
   PRISMIC_LANG_TO_ROUTE_PARAM,
   CUSTOM_TYPES,
 } from '../constants';
-import { fetchCollection, fetchTGIDsByCategoryV2 } from './apiUtils';
+import { fetchCollection, fetchTourGroupsByCategory } from './apiUtils';
 import { convertUidToUrl, getDomainFromUid } from './urlUtils';
 
 export const getLanguageFromPathname = ({
@@ -338,7 +338,7 @@ export const generatePromiseForCategoryTours = ({
         break;
       case isCategory:
       case isSubCategory:
-        promise = await fetchTGIDsByCategoryV2({
+        promise = await fetchTourGroupsByCategory({
           categoryId: catId,
           isSubCategory,
           hostname,
@@ -383,4 +383,14 @@ export const getEnglishDocUid = (
   } else {
     return null;
   }
+};
+
+export const getCollectionSection = (
+  collectionData,
+  sectionType: 'PINNED_CARDS' | 'GENERIC' | 'HEADOUT_PICKS'
+) => {
+  const section = collectionData?.sections?.find(
+    (section) => section.type === sectionType
+  );
+  return section?.tourGroups?.items;
 };

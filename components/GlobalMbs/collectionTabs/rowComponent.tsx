@@ -52,10 +52,9 @@ const RowComponent: FunctionComponent<RowComponentProps> = ({
 
   const detailedCardRef = useRef<HTMLDivElement | null>(null);
   const getPrice = (currentCardCatId) => {
-    const data = categoryData?.filter(
-      (data) => data?.catId === currentCardCatId
+    return categoryData?.find(
+      (category) => category?.id === Number(currentCardCatId)
     );
-    return data?.length ? data?.reduce((acc, curr) => acc + curr) : {};
   };
 
   const updateActiveCard = (e, active_card) => {
@@ -66,7 +65,10 @@ const RowComponent: FunctionComponent<RowComponentProps> = ({
         (page) => page.data.collection.id === active_card?.id
       )?.[0]?.uid;
       setTicketURl(ticketURL);
-      const price = getPrice(active_card?.data.headout_category_id);
+      const price = getPrice(
+        active_card?.data.headout_collection_id ||
+          active_card?.data.headout_category_id
+      );
       setActiveCardPrice(price);
     } else {
       closeActiveCard();
@@ -84,7 +86,9 @@ const RowComponent: FunctionComponent<RowComponentProps> = ({
   }, [activeCard]);
 
   const cardMarkup = cards?.map((card, index) => {
-    const price = getPrice(card?.data?.headout_category_id);
+    const price = getPrice(
+      card?.data?.headout_collection_id || card?.data.headout_category_id
+    );
     return (
       <Card
         key={index}
@@ -92,7 +96,7 @@ const RowComponent: FunctionComponent<RowComponentProps> = ({
         clickHandler={updateActiveCard}
         isMobile={isMobile}
         price={price?.startingPrice}
-        currency={price?.currency?.localSymbol}
+        currency={price?.currency}
       />
     );
   });
@@ -108,7 +112,7 @@ const RowComponent: FunctionComponent<RowComponentProps> = ({
             clickHandler={closeActiveCard}
             isMobile={isMobile}
             price={activeCardPrice?.startingPrice}
-            currency={activeCardPrice?.currency?.localSymbol}
+            currency={activeCardPrice?.currency}
             ticketURL={ticketURL}
           />
         </Conditional>

@@ -1,6 +1,7 @@
 import { forwardRef, FunctionComponent, Ref, useContext } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
+import { MBContext } from 'contexts/MBContext';
 import Image from 'UI/Image';
 import Conditional from 'components/common/Conditional';
 import COLORS from 'const/colors';
@@ -9,7 +10,7 @@ import { ASPECT_RATIO, FALLBACK_IMAGE } from 'const/index';
 import { strings } from 'const/strings';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import { shortCodeSerializer } from 'utils/shortCodes';
-import { MBContext } from 'contexts/MBContext';
+import { getLocalisedPrice } from 'utils/currency';
 
 const Wrapper = styled.div`
   display: grid;
@@ -241,21 +242,30 @@ interface DetailedCollectionCardProps {
 
 const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = forwardRef(
   ({ data, isMobile, clickHandler, price, currency, ticketURL }, ref) => {
-    const { isDev, host } = useContext(MBContext);
     const {
       data: {
         microbrand_url: microbrand,
         images,
         descriptors,
         supply,
-        headout_category_id: categoryId,
         collection_name: name,
+        headout_collection_id: collectionId,
+        headout_category_id: categoryId,
         collection_overview: overview,
         location,
         suggested_duration: duration,
         timings,
       },
     } = data || {};
+    const { isDev, host, lang } = useContext(MBContext);
+    const localisedPrice =
+      price && currency
+        ? getLocalisedPrice({
+            price: Number(price),
+            currencyCode: currency,
+            lang,
+          })
+        : null;
 
     const imageUrl = images[0]?.image_url || FALLBACK_IMAGE;
     const descriptorMarkup = descriptors?.map((descriptor, index) => (
@@ -265,16 +275,15 @@ const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = f
     ));
 
     const ticketLink = convertUidToUrl({ uid: ticketURL });
-    const hasTicketsPage = supply === 'Direct' && categoryId && ticketLink;
+    const hasTicketsPage =
+      (collectionId || categoryId) && supply === 'Direct' && ticketLink;
 
     const TicketsMarkup = (
       <TicketsWrapper>
-        <Conditional if={categoryId && price}>
+        <Conditional if={price}>
           <div className="price-wrapper">
             <div className="text">Tickets start from</div>
-            <div className="price">
-              {currency} {price}
-            </div>
+            <div className="price">{localisedPrice}</div>
           </div>
         </Conditional>
 

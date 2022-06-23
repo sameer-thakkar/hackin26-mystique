@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import { useRecoilValue } from 'recoil';
 import { RichText } from 'prismic-reactjs';
 import { ProductJsonLd } from 'next-seo';
+import cloneDeep from 'lodash.clonedeep';
 import { useWindowWidth } from '@react-hook/window-size';
 import styled from 'styled-components';
 import { StyledRichContent } from 'UI/RichContent';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
-import { parseShowPageData } from 'components/ShowPages/parseShowPage';
 import ContentTabs from 'components/ShowPages/ContentTabs';
 import ShowPageBanner from 'components/ShowPages/Banner';
 import CustomerReview from 'components/ShowPages/CustomerReview';
@@ -18,6 +19,12 @@ import Gallery from 'components/ShowPages/Gallery';
 import CategorySlider from 'components/ShowPages/CategorySlider';
 import SubHeading from 'components/ShowPages/SubHeading';
 import SpecialOfferBanner from 'components/ShowPages/SpecialOfferBanner';
+import TitleTextCombo from 'components/UI/TitleTextCombo';
+import Conditional from 'components/common/Conditional';
+import PopulateMeta from 'components/common/NextSeoMeta';
+import { parseShowPageData } from 'components/ShowPages/parseShowPage';
+import { StyledAsideModal } from 'components/UI/AsideModal';
+import { StyledAccordion } from 'components/slices/Accordion';
 import {
   ALLOW_IMMEDIEATE_NESTING,
   ANALYTICS_EVENTS,
@@ -25,27 +32,23 @@ import {
   FAVICON_LONDON_THEATRE_TICKETS,
 } from 'const/index';
 import { strings } from 'const/strings';
+import { expandFontToken } from 'const/typography';
 import {
   getAlternateLanguages,
   getHeadoutLanguagecode,
   legacyBooleanCheck,
 } from 'utils';
 import { groupSlices, getHostName } from 'utils/helper';
-import cloneDeep from 'lodash.clonedeep';
-import { StyledAccordion } from 'components/slices/Accordion';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
-import { fetchTourGroupReviews, fetchTGIDsByCategoryV2 } from 'utils/apiUtils';
+import {
+  fetchTourGroupReviews,
+  fetchTourGroupsByCategory,
+} from 'utils/apiUtils';
 import { generateDescriptor } from 'utils/productUtils';
-import { StyledAsideModal } from 'components/UI/AsideModal';
-import TitleTextCombo from 'components/UI/TitleTextCombo';
-import Conditional from 'components/common/Conditional';
-import PopulateMeta from 'components/common/NextSeoMeta';
 import { getProductSchema } from 'utils/schemaUtils';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
-import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
 import { gtmAtom } from 'store/atoms/gtm';
-import { expandFontToken } from 'const/typography';
 
 const Breadcrumb = dynamic(() => import('./BreadCrumb'));
 const AccordionGroup = dynamic(() => import('../slices/AccordionGroup'));
@@ -298,7 +301,7 @@ const ShowPage = ({
   );
 
   useEffect(() => {
-    fetchTGIDsByCategoryV2({
+    fetchTourGroupsByCategory({
       categoryId: primarySubCategoryID,
       hostname,
       isSubCategory: true,

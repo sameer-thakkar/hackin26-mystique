@@ -275,6 +275,13 @@ const Banner = (props: TBannerCarouselProps) => {
         ) : (
           <Swiper {...swiperParams} getSwiper={updateSwiper}>
             {bannerImages?.map((image, index) => {
+              /**
+               * In the current version, on initial load the last slide (on the left) is lazyloaded. We do not want this behavior hence the condition.
+               * Latest version of swiper handles this by default
+               */
+
+              const dontLazyLoad =
+                index <= 1 || index === bannerImages?.length - 1;
               return (
                 <div key={index} className="swiper-slide mb-slide">
                   <Image
@@ -285,7 +292,7 @@ const Banner = (props: TBannerCarouselProps) => {
                     mobileUrl={image?.mobileUrl}
                     alt={image?.alt || 'banner'}
                     addDarkOverlay
-                    dontLazyLoad={index === 0}
+                    dontLazyLoad={dontLazyLoad}
                     autoCrop={false}
                   />
                   {textOverLay(swiper?.realIndex === index)}

@@ -9,6 +9,8 @@ import { CHEVRON_LEFT, CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
 import { SIZES } from 'const/ui-constants';
 import COLORS from 'const/colors';
 import sliceHandler from 'components/Slices';
+import Conditional from 'components/common/Conditional';
+import AMPCarousel from 'components/common/AMPCarousel';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -29,6 +31,27 @@ const CardCarousel = styled.div`
   position: relative;
   @media (max-width: 768px) {
     width: 100%;
+  }
+  .amp-carousel > div {
+    height: 400px;
+  }
+  .amp-carousel-button-prev,
+  .amp-carousel-button-next {
+    width: 24.5px;
+    height: 24.5px;
+    border-radius: 50%;
+    background: white;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 6px 12px;
+  }
+  .amp-carousel-button-prev {
+    left: 3px;
+    background-image: url("data:image/svg+xml,%3Csvg width='8' height='16' viewBox='0 0 8 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7.33325 1.33341L0.666586 8.00008L7.33325 14.6667' stroke='%23444444' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
+  }
+  .amp-carousel-button-next {
+    right: 3px;
+    background-image: url("data:image/svg+xml,%3Csvg width='8' height='16' viewBox='0 0 8 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.666748 14.6667L7.33341 8.00004L0.666748 1.33337' stroke='%23444444' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
   }
 `;
 
@@ -153,6 +176,7 @@ const CardSection: React.FC<CardSectionProps> = ({
   const width = useWindowWidth();
   const [isMobile, setIsMobile] = React.useState(false);
   const isAmp = useAmp();
+
   // Title and Text combo for the starting of the Card Section
   const EntrySection = (
     <TitleTextCombo>
@@ -213,8 +237,22 @@ const CardSection: React.FC<CardSectionProps> = ({
     };
   }, [isMobile, swiper, updateIndex]);
 
+  if (sectionType === 'Carousel' && isAmp) {
+    return (
+      <>
+        {EntrySection}
+        <CardCarousel>
+          <AMPCarousel type="slides" height="350" layout="fixed-height">
+            {cards}
+          </AMPCarousel>
+        </CardCarousel>
+        {ExitSection}
+      </>
+    );
+  }
+
   // Carousel (and Overflow Scroll for mobile) Logic
-  if (sectionType === 'Carousel') {
+  if (sectionType === 'Carousel' && !isAmp) {
     const goNext = () => {
       if (swiper !== null) {
         swiper.slideNext();
@@ -251,7 +289,7 @@ const CardSection: React.FC<CardSectionProps> = ({
             </Swiper>
           </StyledSwiper>
           <Controls>
-            {!swiper?.isBeginning ? (
+            <Conditional if={!swiper?.isBeginning}>
               <div
                 className="prev-slide"
                 role="button"
@@ -260,8 +298,8 @@ const CardSection: React.FC<CardSectionProps> = ({
               >
                 {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
               </div>
-            ) : null}
-            {!swiper?.isEnd ? (
+            </Conditional>
+            <Conditional if={!swiper?.isEnd}>
               <div
                 className="next-slide"
                 role="button"
@@ -270,7 +308,7 @@ const CardSection: React.FC<CardSectionProps> = ({
               >
                 {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
               </div>
-            ) : null}
+            </Conditional>
           </Controls>
         </CardCarousel>
         {ExitSection}

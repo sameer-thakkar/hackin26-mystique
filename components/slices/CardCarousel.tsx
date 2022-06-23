@@ -1,11 +1,10 @@
-import { RichText } from 'prismic-reactjs';
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import dynamic from 'next/dynamic';
+import { RichText } from 'prismic-reactjs';
+import styled from 'styled-components';
+import { LinkCards } from 'components/slices/MicrobrandCards';
 import COLORS from 'const/colors';
-
-import { LinkCards } from './MicrobrandCards';
-import { tourListApiParser } from '../../utils/dataParsers';
+import { tourListApiParser } from 'utils/dataParsers';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -149,7 +148,7 @@ export default class CardCarousel extends Component<CardCarouselProps> {
   async componentDidMount() {
     const mobileCheck = window.innerWidth < 768;
     const { cards } = this.props;
-    const tgids = cards.map((card) => card.tgid);
+    const tgids = cards.map((card) => card.tgid)?.filter(Boolean);
     const fetchPrice = await fetch(
       `/api/tours/v6/tour-groups/?ids%5B%5D=${tgids}`
     ).then((res) => res.json());

@@ -114,8 +114,12 @@ const StyledMenuItem = styled.li`
         svg{
           transform: rotate(180deg)
         }
-      }
-    `}
+        & > a > .withIcon > .nest-icon {
+          svg{
+            transform: rotate(180deg)
+          }
+        }
+      `}
   }
 `;
 
@@ -146,7 +150,6 @@ const NestedMenu = styled.ul`
 
   ${StyledMenuItem}:hover > a > & {
     visibility: unset;
-    z-index: 1;
     li:hover {
       background-color: ${({ theme: { primaryBGHover } }) =>
         primaryBGHover ? primaryBGHover : COLORS.BACKGROUND.FLOATING_PURPS};

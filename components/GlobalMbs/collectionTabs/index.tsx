@@ -1,9 +1,18 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import styled from 'styled-components';
+import useSWR from 'swr';
+import { MBContext } from 'contexts/MBContext';
 import Tabs from 'components/GlobalMbs/Tabs';
 import RowComponent from 'components/GlobalMbs/collectionTabs/rowComponent';
 import { HALYARD } from 'const/ui-constants';
 import { chunkArray } from 'utils/arrayUtils';
+import {
+  getHeadoutApiUrl,
+  HeadoutEndpoints,
+  swrFetcher,
+  swrMultiFetcher,
+} from 'utils/apiUtils';
+import { getHostName } from 'utils/helper';
 
 const TitleWrapper = styled.div`
   display: flex;
@@ -29,64 +38,87 @@ const Title = styled.div`
 interface CollectionCardProps {
   collections: any[];
   title: string;
-  currencies?: any[];
+  city?: string;
   ticketPages?: any[];
 }
 
-const CollectionCard: FunctionComponent<CollectionCardProps> = ({
+const CollectionCard = ({
   collections,
   title,
-  currencies,
   ticketPages = [],
-}) => {
+  city,
+}: CollectionCardProps) => {
   const tabs = [];
   const tabTitles = collections
     ?.map((collection) => collection?.data?.primary_category)
     ?.filter((tag, index, self) => self.indexOf(tag) === index);
-  const [categoryData, setCategoryData] = useState(null);
+  const { isDev, host, isStage, lang } = useContext(MBContext);
+  const hostname = getHostName(isStage, isDev, host);
+  const allCategoryIds = collections
+    .map((collection) => collection?.data?.headout_category_id)
+    ?.filter(Boolean);
+  const categoryIds = Array.from(new Set([...allCategoryIds]));
 
-  useEffect(() => {
-    const allCategoryIds = collections
-      ?.filter((collection) => collection?.data?.headout_category_id)
-      .map((data) => data?.data?.headout_category_id);
+  const allCollectionIds = collections
+    .map((collection) => collection?.data?.headout_collection_id)
+    ?.filter(Boolean);
+  const collectionIds = Array.from(new Set([...allCollectionIds]));
 
-    const categoryIds = Array.from(new Set([...allCategoryIds]));
-    if (categoryIds?.length) {
-      const promises = categoryIds?.map((id) =>
-        fetch(`https://api.headout.com/api/v1/feed/category/get/${id}/`)
-      );
-      Promise.all(promises)
-        .then((responses) =>
-          Promise.all(responses?.map((response) => response.json()))
-        )
-        .then(async (data) => {
-          if (data?.length) {
-            const currencyCode =
-              data[0]?.products[0]?.listingPrice?.currencyCode;
+  const collectionEndpoint = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.Collection,
+    hostname,
+    params: {
+      'ids[]': collectionIds?.join(','),
+      currency: 'USD',
+      ...(lang && {
+        language: lang,
+      }),
+    },
+    id: null,
+  });
 
-            const currency = currencies
-              ?.filter((currency) => currency?.code === currencyCode)
-              ?.reduce((acc, curr) => acc + curr, {});
+  const allCategoryEndpoints = categoryIds?.map((id) => {
+    return getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.TourGroupListByCategoryV6,
+      hostname,
+      params: {
+        city,
+        currency: 'USD',
+        ...(lang && {
+          language: lang,
+        }),
+      },
+      id,
+    });
+  });
 
-            const formattedData = data?.map((cat) => {
-              const startingPrice = Math.min(
-                ...cat?.products?.map(
-                  (ticket) => ticket?.listingPrice?.finalPrice
-                )
-              );
+  const { data: collectionData } = useSWR(collectionEndpoint, {
+    fetcher: swrFetcher,
+  });
+  const { data: categoryData } = useSWR(allCategoryEndpoints, {
+    fetcher: swrMultiFetcher,
+  });
 
-              return {
-                catId: cat?.categories[0]?.id,
-                startingPrice,
-                currency,
-              };
-            });
-
-            setCategoryData(formattedData);
-          }
-        });
-    }
-  }, []);
+  const collectionPrices = collectionData
+    ? collectionData?.collections?.map((collection) => {
+        const { id, startingPrice } = collection ?? {};
+        return {
+          id,
+          startingPrice: startingPrice?.listingPrice,
+          currency: startingPrice?.currency,
+        };
+      })
+    : [];
+  const categoryPrices = categoryData
+    ? categoryData?.map((cat) => {
+        const { category, unFilteredMetaData, currency } = cat ?? {};
+        return {
+          id: category?.id,
+          startingPrice: unFilteredMetaData?.minPrice,
+          currency: currency?.code,
+        };
+      })
+    : [];
 
   const [row, setRow] = useState();
   if (collections?.length) {
@@ -102,7 +134,7 @@ const CollectionCard: FunctionComponent<CollectionCardProps> = ({
           setSectionIndex={row}
           setRow={setRow}
           cards={collection}
-          categoryData={categoryData}
+          categoryData={[...collectionPrices, ...categoryPrices]}
           ticketPages={ticketPages}
         />
       )),
@@ -129,7 +161,7 @@ const CollectionCard: FunctionComponent<CollectionCardProps> = ({
               setSectionIndex={row}
               setRow={setRow}
               cards={collection}
-              categoryData={categoryData}
+              categoryData={[...collectionPrices, ...categoryPrices]}
               ticketPages={ticketPages}
             />
           )),

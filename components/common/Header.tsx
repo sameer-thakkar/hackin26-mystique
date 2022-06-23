@@ -48,6 +48,10 @@ const StyledHeader = styled.header`
     box-shadow: 0 1px 1em 0 rgba(0,0,0,.1);
   `
       : ''};
+
+  :hover {
+    z-index: 99;
+  }
   @media (max-width: 768px) {
     height: 56px;
   }

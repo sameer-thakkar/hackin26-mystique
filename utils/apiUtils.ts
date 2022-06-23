@@ -16,6 +16,16 @@ export const swrFetcher = async (url) => {
   return res.json();
 };
 
+/**
+ * Use this if you need to use Promise.all with swr. It takes an array of URLs and returns an array of fetched data
+ * Note this will create a cache key with the array of all of them and it will revalidate all of them at the same time. If you want more granular control you will need to use more than one useSWR call.
+ * @param urls - An array of URLs to fetch.
+ * @returns An array of promises.
+ */
+export const swrMultiFetcher = (...urls) => {
+  return Promise.all(urls.map((url) => swrFetcher(url)));
+};
+
 export enum HeadoutEndpoints {
   TourGroupInventoryV5,
   TourGroupsV6,
@@ -24,7 +34,8 @@ export enum HeadoutEndpoints {
   TourGroupListByCategoryV6,
   TourGroupListBySubCategoryV6,
   TourGroupReviewsV2,
-  TourGroupCollectionV1,
+  Collection,
+  CollectionSections,
   CurrencyList,
 }
 
@@ -62,7 +73,10 @@ export const getHeadoutApiUrl = ({
     case HeadoutEndpoints.TourGroupReviewsV2:
       endpointSlug = `/api/tours/v2/review/tour-group/id/${id}/`;
       break;
-    case HeadoutEndpoints.TourGroupCollectionV1:
+    case HeadoutEndpoints.Collection:
+      endpointSlug = `/api/tours/v1/collection/`;
+      break;
+    case HeadoutEndpoints.CollectionSections:
       endpointSlug = `/api/tours/v1/collection/${id}/sections/`;
       break;
     case HeadoutEndpoints.CurrencyList:
@@ -92,6 +106,7 @@ interface CommonApiProps {
   hostname: string;
   language?: string;
   fallbackToEnglish?: boolean;
+  currency?: string;
 }
 
 interface TourListProps extends CommonApiProps {
@@ -129,7 +144,6 @@ export const fetchTourListV6 = async ({
 
 interface TourGroupProps extends CommonApiProps {
   tgid: string | number;
-  currency?: string;
 }
 
 export const fetchTourGroupV6 = async ({
@@ -165,30 +179,14 @@ export const fetchCurrencyList = async () => {
   }
 };
 
-export const fetchCategory = async (
-  categoryId: string | number,
-  hostname: string
-) => {
-  try {
-    const response = await fetch(
-      `${hostname}/api/tours/v1/feed/category/get/${categoryId}/?limit-products=50`
-    );
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('[fetchCategory]', error);
-  }
-};
-
-interface fetchTGIDsByCategoryV2Obj extends CommonApiProps {
+interface fetchTourGroupsByCategoryProps extends CommonApiProps {
   categoryId: string | number;
   isSubCategory: boolean;
   city?: string;
   limit?: string;
 }
 
-export const fetchTGIDsByCategoryV2 = async ({
+export const fetchTourGroupsByCategory = async ({
   categoryId,
   hostname,
   isSubCategory = false,
@@ -196,12 +194,14 @@ export const fetchTGIDsByCategoryV2 = async ({
   language = 'en',
   limit,
   fallbackToEnglish = false,
-}: fetchTGIDsByCategoryV2Obj) => {
+  currency,
+}: fetchTourGroupsByCategoryProps) => {
   const params = {
     language,
     'use-seatmap-prices': '1',
     ...(city && { city }),
     ...(limit && { limit }),
+    ...(currency && { currency }),
     ...(!fallbackToEnglish &&
       language !== 'en' && {
         'fallback-to-english': '0',
@@ -235,15 +235,19 @@ export const fetchCollection = async ({
   language = 'en',
   limit,
   fallbackToEnglish = false,
+  currency,
 }: FetchCollectionProps) => {
   const params = {
     language,
     ...(limit && { limit }),
     ...(!fallbackToEnglish &&
       language !== 'en' && { 'fallback-to-english': '0' }),
+    ...(currency && {
+      currency,
+    }),
   };
   const finalUrl = getHeadoutApiUrl({
-    endpoint: HeadoutEndpoints.TourGroupCollectionV1,
+    endpoint: HeadoutEndpoints.CollectionSections,
     hostname,
     params,
     id: collectionId,
@@ -255,6 +259,40 @@ export const fetchCollection = async ({
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('[fetchCollection]', error);
+  }
+};
+
+interface FetchCollectionListProps
+  extends Omit<CommonApiProps, 'fallbackToEnglish'> {
+  collectionIds: number[];
+}
+
+export const fetchCollectionList = async ({
+  collectionIds,
+  hostname,
+  currency,
+  language,
+}: FetchCollectionListProps) => {
+  const params = {
+    'ids[]': collectionIds?.join(','),
+    language,
+    ...(currency && {
+      currency,
+    }),
+  };
+  const finalUrl = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.Collection,
+    hostname,
+    params,
+    id: null,
+  });
+  try {
+    const response = await fetch(finalUrl);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[fetchCollectionList]', error);
   }
 };
 

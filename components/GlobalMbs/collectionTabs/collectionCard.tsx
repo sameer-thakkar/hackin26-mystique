@@ -1,4 +1,4 @@
-import { FunctionComponent, useContext } from 'react';
+import { useContext } from 'react';
 import styled from 'styled-components';
 import { MBContext } from 'contexts/MBContext';
 import Image from 'UI/Image';
@@ -6,6 +6,7 @@ import Conditional from 'components/common/Conditional';
 import DetailedCollectionCard from 'components/GlobalMbs/collectionTabs/detailedCollectionCard';
 import { ASPECT_RATIO, FALLBACK_IMAGES, SIDEBAR_TYPES } from 'const/index';
 import COLORS from 'const/colors';
+import { getLocalisedPrice } from 'utils/currency';
 
 const StyledCard = styled.div`
   display: grid;
@@ -98,20 +99,23 @@ interface CardProps {
   currency?: string;
 }
 
-const Card: FunctionComponent<CardProps> = ({
-  card,
-  clickHandler,
-  isMobile,
-  price,
-  currency,
-}) => {
+const Card = ({ card, clickHandler, isMobile, price, currency }: CardProps) => {
+  const { lang } = useContext(MBContext);
+  const localisedPrice =
+    price && currency
+      ? getLocalisedPrice({
+          price: Number(price),
+          currencyCode: currency,
+          lang,
+        })
+      : null;
+
   const {
     data: {
       images,
       other_filters: otherFilters,
       primary_category: primaryCategory,
       collection_name: collectionName,
-      headout_category_id: categoryId,
     },
   } = card;
   const imageUrl = images?.[0]?.image_url || FALLBACK_IMAGES.THEMEPARKS;
@@ -169,12 +173,10 @@ const Card: FunctionComponent<CardProps> = ({
         <div className="category">{primaryCategory}</div>
       </div>
       <div className="name">{collectionName}</div>
-      <Conditional if={categoryId && price}>
+      <Conditional if={price && currency}>
         <div className="price-wrapper">
           <div className="text">Tickets start from</div>
-          <div className="price">
-            {currency} {price}
-          </div>
+          <div className="price">{localisedPrice}</div>
         </div>
       </Conditional>
     </StyledCard>

@@ -5,7 +5,7 @@ import {
 import { generatePromiseForCategoryTours, getHeadoutLanguagecode } from 'utils';
 import {
   fetchCollection,
-  fetchTGIDsByCategoryV2,
+  fetchTourGroupsByCategory,
   fetchTourGroupV6,
   fetchTourListV6,
 } from 'utils/apiUtils';
@@ -120,7 +120,7 @@ export const categoryTourListParserV1 = async ({
       : finalSections;
     tourData.push(...pinnedProducts, ...allProducts);
   } else if (category) {
-    const categoryData = await fetchTGIDsByCategoryV2({
+    const categoryData = await fetchTourGroupsByCategory({
       categoryId: category,
       hostname,
       isSubCategory: false,
@@ -132,7 +132,7 @@ export const categoryTourListParserV1 = async ({
     tourData.push(...categoryData?.pageData?.items);
     primaryCity = categoryData?.city;
   } else if (sub_category) {
-    const subCategoryData = await fetchTGIDsByCategoryV2({
+    const subCategoryData = await fetchTourGroupsByCategory({
       categoryId: sub_category,
       hostname,
       isSubCategory: true,
@@ -759,7 +759,7 @@ export const getToursGlobalCollection = async ({
       : headoutPicksSection?.tourGroups?.items;
     tourData.push(...finalSection);
   } else if (sub_category) {
-    const subCategoryData = await fetchTGIDsByCategoryV2({
+    const subCategoryData = await fetchTourGroupsByCategory({
       categoryId: sub_category,
       hostname,
       isSubCategory: true,

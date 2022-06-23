@@ -32,7 +32,6 @@ const HeadingSection = styled.div`
 const CountryPage = (props) => {
   const {
     cityCollections,
-    currencies,
     collections,
     country_name: countryName,
     sub_heading: subHeading,
@@ -56,7 +55,6 @@ const CountryPage = (props) => {
         <CollectionTabs
           collections={collections}
           title={tabTitle}
-          currencies={currencies}
           ticketPages={ticketPages}
         />
       </Conditional>

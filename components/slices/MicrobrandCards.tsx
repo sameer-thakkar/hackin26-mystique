@@ -1,15 +1,18 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
-import Image from 'UI/Image';
-import { shortCodeSerializer } from 'utils/shortCodes';
-import { tourListApiParser } from 'utils/dataParsers';
-import { THEMES } from 'const/index';
-import Conditional from 'components/common/Conditional';
-import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
 import { MBContext } from 'contexts/MBContext';
+import useSWR from 'swr';
+import Conditional from 'components/common/Conditional';
+import Image from 'UI/Image';
+import { THEMES } from 'const/index';
+import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
 import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
+import { tourListApiParser } from 'utils/dataParsers';
+import { shortCodeSerializer } from 'utils/shortCodes';
+import { getHostName } from 'utils/helper';
+import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 
 const StyledMBCards = styled.div`
   display: grid;
@@ -246,31 +249,31 @@ type MicrobrandCardsProps = {
 };
 
 const MicrobrandCards: React.FC<MicrobrandCardsProps> = (props) => {
-  const [state, setState] = useState({
-    cardPrices: {},
-    currencySymbol: '',
-    isFetched: false,
-  });
   const { cards, cardsContent } = props;
-  const { isFetched, currencySymbol, cardPrices } = state;
+  const { isDev, host, isStage, lang } = useContext(MBContext);
+  const hostname = getHostName(isStage, isDev, host);
+  const tgids = cards
+    ?.map((card) => card.tgid)
+    ?.filter((tgid) => tgid)
+    ?.join(',');
+  const tourListEndpoint = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.TourGroupsV6,
+    hostname,
+    params: {
+      'ids[]': tgids,
+      ...(lang && {
+        language: lang,
+      }),
+    },
+    id: null,
+  });
+  const { data: tourListData } = useSWR(tourListEndpoint, {
+    fetcher: swrFetcher,
+  });
 
-  useEffect(() => {
-    const tgidsExist = cards.map((card) => card.tgid).filter((tgid) => tgid);
-    if (tgidsExist.length) {
-      fetch(`/api/tours/v5/tour-group/list?ids%5B%5D=${tgidsExist}`)
-        .then((res) => res.json())
-        .then((json) => {
-          if (json.error) return;
-          const cardPrices = tourListApiParser(json);
-          const currencySymbol = json.currencies[0]?.localSymbol;
-          setState({
-            cardPrices: cardPrices,
-            currencySymbol: currencySymbol,
-            isFetched: true,
-          });
-        });
-    }
-  }, [cards, setState]);
+  const cardPrices = tourListData ? tourListApiParser(tourListData) : {};
+  const currencySymbol = tourListData?.currencies?.[0]?.localSymbol ?? '';
+  const isFetched = tourListData ? true : false;
 
   const finalCards = cards.map((card) => {
     return {

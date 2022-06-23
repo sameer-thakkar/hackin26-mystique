@@ -49,7 +49,6 @@ const GlobalMB = (props) => {
     ticketsPage,
     tickets,
     experiencesPage,
-    allCurrencies: currencies,
     cityCollections,
     countryCollections = [],
     collections,
@@ -116,7 +115,6 @@ const GlobalMB = (props) => {
   const cityPageProps = {
     ...commonProps,
     ...CMSContent,
-    currencies,
     cityCollections: cityCollectionsData,
     ticketPages: ticketPages?.results || [],
   };

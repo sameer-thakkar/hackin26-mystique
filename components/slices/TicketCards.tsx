@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { HALYARD } from 'const/ui-constants';
+import useSWR from 'swr';
+import { MBContext } from 'contexts/MBContext';
+import Button from 'UI/Button';
 import COLORS from 'const/colors';
-
-import Button from '../UI/Button';
-import { CURRENCY_SYMBOL_MAP } from '../../constants';
+import { CURRENCY_SYMBOL_MAP } from 'const/index';
+import { getHostName } from 'utils/helper';
+import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 
 const TicketCardsWrapper = styled.div`
   font-family: ${HALYARD.FONT_STACK};
@@ -102,31 +105,45 @@ const TicketCards: React.FC<TicketCardsProps> = ({
   twoColumns = false,
 }) => {
   const [data, setData] = useState(cards);
+  const { isDev, host, isStage, lang } = useContext(MBContext);
+  const hostname = getHostName(isStage, isDev, host);
+  const tgids = cards.reduce((acc, card) => {
+    if (card.tgid) return [...acc, card.tgid];
+    else return [...acc];
+  }, []);
+  const tourListEndpoint = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.TourGroupsV6,
+    hostname,
+    params: {
+      'ids[]': tgids?.join(','),
+      ...(lang && {
+        language: lang,
+      }),
+    },
+    id: null,
+  });
+  const { data: tourListData } = useSWR(tourListEndpoint, {
+    fetcher: swrFetcher,
+  });
 
   useEffect(() => {
-    const tours = cards.reduce((acc, card) => {
-      if (card.tgid) return [...acc, card.tgid];
-      else return [...acc];
-    }, []);
-    fetch(`/api/tours/v5/tour-group/list?ids%5B%5D=${tours.join(',')}`)
-      .then((res) => res.json())
-      .then((payload) => {
-        let finalCards = cards.reduce((acc, card) => {
-          let temp = null;
-          payload.tourGroups.forEach((tour) => {
-            if (tour.id === Number(card.tgid)) {
-              temp = {
-                name: tour.name,
-                listingPrice: tour.listingPrice,
-              };
-            }
-          });
-          if (temp) return [...acc, { ...card, ...temp }];
-          return [...acc, card];
-        }, []);
-        setData(finalCards);
-      });
-  }, [cards, setData]);
+    if (tourListData) {
+      let finalCards = cards.reduce((acc, card) => {
+        let temp = null;
+        const { name, listingPrice } =
+          tourListData?.tourGroups?.find(
+            (tour) => tour.id === Number(card.tgid)
+          ) ?? {};
+        temp = {
+          name: name,
+          listingPrice: listingPrice,
+        };
+        if (temp) return [...acc, { ...card, ...temp }];
+        return [...acc, card];
+      }, []);
+      setData(finalCards);
+    }
+  }, [tourListData, cards, setData]);
 
   return (
     <>

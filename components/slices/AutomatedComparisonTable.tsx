@@ -461,7 +461,7 @@ const AutomatedTourComparisonTable = ({
     'include-unavailable': 'true',
   };
   const collectionEndpoint = getHeadoutApiUrl({
-    endpoint: HeadoutEndpoints.TourGroupCollectionV1,
+    endpoint: HeadoutEndpoints.CollectionSections,
     hostname: currentHost,
     params: collectionEndpointParams,
     id: collectionId,
