@@ -16,6 +16,7 @@ import {
 } from 'const/index';
 import renderShortCodes from 'utils/shortCodes';
 import { sendVariablesToDataLayer } from 'utils/analytics';
+import { getLangObject } from 'utils/helper';
 
 const App = ({ Component, pageProps, localizedStrings, lang }) => {
   strings.setContent({
@@ -75,7 +76,7 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
       [ANALYTICS_PROPERTIES.CITY]: primaryCity?.displayName,
       [ANALYTICS_PROPERTIES.COUNTRY]: primaryCity?.country?.displayName,
       [ANALYTICS_PROPERTIES.COLLECTION_NAME]: primaryCollectionName,
-      [ANALYTICS_PROPERTIES.LANGUAGE]: lang,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: getLangObject(lang).bookingFlow,
       [ANALYTICS_PROPERTIES.MB_NAME]: mbName,
       [ANALYTICS_PROPERTIES.PAGE_TITLE]: pageTitle,
       [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageType,
@@ -84,7 +85,7 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
     set(metaAtom, {
       city: primaryCity,
       country: primaryCity?.country,
-      language: lang,
+      language: getLangObject(lang).bookingFlow,
       pageTitle: pageTitle,
       collectionId: primaryCollectionId,
       collectionName: primaryCollectionName,

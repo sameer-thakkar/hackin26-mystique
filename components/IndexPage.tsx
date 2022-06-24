@@ -11,10 +11,9 @@ import { getAppTheme } from 'style/theme';
 import { Client } from 'config/prismic-config';
 import {
   ANALYTICS_PROPERTIES,
-  CONTENT_PAGE_TYPES,
   CUSTOM_TYPES,
   DESIGN,
-  PAGE_TYPES,
+  ANALYTICS_PLATFORM,
   THEMES,
 } from 'const/index';
 import { redirectTo, reflect, isNakedDomain } from 'utils';
@@ -84,19 +83,17 @@ const Page = (props) => {
 
   useEffect(() => {
     // GTM Universal Properties
-    sendVariableToDataLayer({
-      name: ANALYTICS_PROPERTIES.LANGUAGE,
-      value: lang,
-    });
     const customType = ContentType;
     if (!customType) return;
 
     sendVariableToDataLayer({
-      name: ANALYTICS_PROPERTIES.PAGE_TYPE,
-      value: !CONTENT_PAGE_TYPES.includes(customType)
-        ? PAGE_TYPES.COLLECTION
-        : PAGE_TYPES.CONTENT_PAGE,
+      name: ANALYTICS_PROPERTIES.PLATFORM_NAME,
+      value:
+        window.outerWidth < 768
+          ? ANALYTICS_PLATFORM.MOBILE
+          : ANALYTICS_PLATFORM.DESKTOP,
     });
+
     const pageHeading =
       customType === CUSTOM_TYPES.MICROSITE
         ? CMSContent?.data?.data?.heading

@@ -47,7 +47,7 @@ const StyledProductWrapper = styled.div`
   }
 `;
 
-const NO_OF_CARDS_IN_ROW = {
+export const NO_OF_CARDS_IN_ROW = {
   DESKTOP: 4,
   MOBILE: 2,
 };
@@ -202,6 +202,7 @@ const PopulateProducts = (props) => {
               sectionId={sectionId}
               isListicle={isListicle}
               isDev={isDev}
+              sectionIndex={index}
             />
           );
       })}

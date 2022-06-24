@@ -26,7 +26,11 @@ import {
 import { extractContentForProductCard } from 'utils/productUtils';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { parseV2ProductDescriptors } from 'utils/dataParsers';
-import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import {
+  getCommonEventMetaData,
+  getProductCommonProperties,
+  trackEvent,
+} from 'utils/analytics';
 import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
 import { checkLTT } from 'utils/helper';
@@ -428,6 +432,7 @@ const DetailedProductCard = (props) => {
     isEntertainmentMb,
     hasCategoryTourList,
     isListicle,
+    cardRanking,
   } = props;
   const pageMetaData = useRecoilValue(metaAtom);
   const activeTour = allTours[tgidClicked];
@@ -446,6 +451,7 @@ const DetailedProductCard = (props) => {
     showPageUid,
     primaryCategory,
     primarySubCategory,
+    primaryCollection,
   } = activeTour || {};
   const showPageUrl = showPageUid
     ? convertUidToUrl({ uid: showPageUid, isDev, hostname: host })
@@ -535,10 +541,18 @@ const DetailedProductCard = (props) => {
       [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
       [ANALYTICS_PROPERTIES.DISCOUNT]: originalPrice > finalPrice,
       [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: title,
+      [ANALYTICS_PROPERTIES.POSITION]: cardRanking,
       [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_DATE]: null,
       [ANALYTICS_PROPERTIES.LANGUAGE]: lang,
       [ANALYTICS_PROPERTIES.TGID]: tgidClicked,
-      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city,
+      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city?.cityCode,
+      ...getProductCommonProperties({
+        primaryCategory,
+        primaryCollection,
+        primarySubCategory,
+      }),
     });
   };
 

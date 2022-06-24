@@ -635,6 +635,7 @@ export const REOPENING_CATEGORIES: number[] = [3159];
 export const NEW_ARRIVALS_CATEGORIES: number[] = [1351];
 
 export const ANALYTICS_PROPERTIES = {
+  PLATFORM_NAME: 'Platform Name',
   LANGUAGE: 'Language',
   TGIDS: 'Tour Group IDs',
   TGID: 'Tour Group ID',
@@ -663,8 +664,8 @@ export const ANALYTICS_PROPERTIES = {
   EXPERIENCE_NAME: 'Experience Name',
   CATEGORY_ID: 'Category ID',
   CATEGORY_NAME: 'Category Name',
-  SUB_CAT_ID: 'Sub Categroy ID',
-  SUB_CAT_NAME: 'Sub Category Name',
+  SUB_CAT_ID: 'Sub-Category ID',
+  SUB_CAT_NAME: 'Sub-Category Name',
   CITY: 'City',
   COUNTRY: 'Country',
   VARIANT: 'Experiment Variant',
@@ -673,11 +674,17 @@ export const ANALYTICS_PROPERTIES = {
   DISCOUNT: 'Discount',
   DISPLAY_PRICE: 'Display Price',
   DISPLAY_CURRENCY: 'Display Currency',
+  EXPERIENCE_DATE: 'Experience Date',
 };
 export const PAGE_TYPES = {
   COLLECTION: 'Collection',
   CONTENT_PAGE: 'Content Page',
   SHOW_PAGE: 'Show Page',
+};
+
+export const ANALYTICS_PLATFORM = {
+  MOBILE: 'Mobile',
+  DESKTOP: 'Desktop',
 };
 
 const ESCAPE_ENTITIES = Object.freeze({

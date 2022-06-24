@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import InteractionContext from 'contexts/Interaction';
 import { PAGETYPE } from 'const/index';
 import Conditional from 'components/common/Conditional';
+import { NO_OF_CARDS_IN_ROW } from 'components/MicrositeV2/PopulateProducts';
 
 const DetailedProductCard = dynamic(() => import('./DetailedProductCard'), {
   ssr: false,
@@ -37,6 +38,7 @@ export const RowComponent = (props) => {
     sectionId,
     isListicle,
     isDev,
+    sectionIndex,
   } = props;
   const { activeCategoryId, activeTour, clickTour, closeTour } =
     useContext(InteractionContext) || {};
@@ -112,6 +114,13 @@ export const RowComponent = (props) => {
           closeDescription={closeDescription}
           isListicle={isListicle}
           isDev={isDev}
+          cardRanking={
+            sectionIndex *
+              (isMobile
+                ? NO_OF_CARDS_IN_ROW.MOBILE
+                : NO_OF_CARDS_IN_ROW.DESKTOP) +
+            (tgidsSubArr.indexOf(tgidClicked) + 1)
+          }
         />
       </Conditional>
     </ProductsRow>

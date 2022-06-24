@@ -33,7 +33,7 @@ import { currencyAtom } from 'store/atoms/currency';
 import { BLACK_COLOR_CLOSE } from 'assets/SvgIcons';
 import Conditional from 'components/common/Conditional';
 import Product from 'components/Product';
-import { trackEvent } from 'utils/analytics';
+import { getProductCommonProperties, trackEvent } from 'utils/analytics';
 import PromoCodeBlock from 'UI/PromoCodeBlock';
 import { descriptorIcons } from 'const/descriptorIcons';
 import { getDuration } from 'utils/timeUtils';
@@ -636,15 +636,26 @@ const TicketCard = (props) => {
     });
 
     const { originalPrice, finalPrice, currencyCode } = listingPrice ?? {};
+    const { primaryCategory, primaryCollection, primarySubCategory } =
+      scorpioData ?? {};
     trackEvent({
       eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,
       [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
-      [ANALYTICS_PROPERTIES.DISCOUNT]: originalPrice > finalPrice,
+      [ANALYTICS_PROPERTIES.DISCOUNT]:
+        isScratchPriceEnabled && originalPrice > finalPrice,
       [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
+      [ANALYTICS_PROPERTIES.POSITION]: position,
       [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: cardTitle,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_DATE]: null,
       [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
       [ANALYTICS_PROPERTIES.TGID]: tgid,
-      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city,
+      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city?.cityCode,
+      ...getProductCommonProperties({
+        primaryCategory,
+        primaryCollection,
+        primarySubCategory,
+      }),
     });
   };
 
