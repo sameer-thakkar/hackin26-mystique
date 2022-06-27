@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { strings } from 'const/strings';
+import { FONTS } from 'const/fonts';
+import { expandFontToken } from 'const/typography';
 import { HEADPHONE, HAPPY_EMOJI, VERIFIED, GOLDEN_STAR } from 'assets/SvgIcons';
 
 const FeatureCardWrapper = styled.div`
@@ -19,10 +21,9 @@ const FeatureCardWrapper = styled.div`
     padding: 0 15px;
   }
 
-  h3 {
-    font-size: 16px;
+  .feature-card-heading {
+    ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)}
     margin: 20px 0 8px 0;
-    line-height: 20px;
   }
 
   p {
@@ -46,22 +47,28 @@ const FeatureCard = () => {
     <FeatureCardWrapper>
       <div>
         <div>{HAPPY_EMOJI}</div>
-        <h3>{FEATURE_CARD.HEADING_CUSTOMER}</h3>
+        <div className="feature-card-heading">
+          {FEATURE_CARD.HEADING_CUSTOMER}
+        </div>
         <p>{FEATURE_CARD.SUB_HEADING_CUSTOMER}</p>
       </div>
       <div>
         <div>{GOLDEN_STAR}</div>
-        <h3>{FEATURE_CARD.HEADING_RATING}</h3>
+        <div className="feature-card-heading">
+          {FEATURE_CARD.HEADING_RATING}
+        </div>
         <p>{FEATURE_CARD.SUB_HEADING_RATING}</p>
       </div>
       <div>
         <div>{VERIFIED}</div>
-        <h3>{FEATURE_CARD.HEADING_SAFE}</h3>
+        <div className="feature-card-heading">{FEATURE_CARD.HEADING_SAFE}</div>
         <p>{FEATURE_CARD.SUB_HEADING_SAFE}</p>
       </div>
       <div>
         <div>{HEADPHONE}</div>
-        <h3>{FEATURE_CARD.HEADING_SUPPORT}</h3>
+        <div className="feature-card-heading">
+          {FEATURE_CARD.HEADING_SUPPORT}
+        </div>
         <p>{FEATURE_CARD.SUB_HEADING_SUPPORT}</p>
       </div>
     </FeatureCardWrapper>

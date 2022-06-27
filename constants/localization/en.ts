@@ -59,7 +59,6 @@ const en = {
   PRICES_STARTING: 'Prices Starting',
   FROM: 'From',
   MORE_DETAILS: 'More Details',
-  BEST_WESTEND_SHOWS: 'Best West-End Shows in London',
   FOOTER: {
     DISCLAIMER:
       'This website is not the official website of the <attraction>. It is run by Headout and works with attractions and tour operators to provide incredible experiences at the tap of a button.',

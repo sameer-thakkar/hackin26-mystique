@@ -2,6 +2,7 @@ import { useEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
 import classNames from 'classnames';
 import COLORS from 'const/colors';
+import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 import { SortSelector } from 'components/MicrositeV2/SortSelector';
 import InteractionContext from 'contexts/Interaction';
@@ -32,7 +33,7 @@ const Tabs = styled.div`
     border: 1px solid ${COLORS.GRAY.G6};
     border-radius: 4px;
     color: ${COLORS.GRAY.G2};
-    ${expandFontToken('UI/Label Medium')}
+    ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
   }
 
   .selected-nav-tab {
@@ -59,7 +60,8 @@ const Tabs = styled.div`
     }
 
     .navigation-tab {
-      ${expandFontToken('UI/Label Regular')}
+      ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
+      white-space: nowrap;
     }
   }
 `;

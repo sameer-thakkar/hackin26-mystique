@@ -17,6 +17,7 @@ import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, THEMES } from 'const/index';
 import { strings } from 'const/strings';
 import { SIZES } from 'const/ui-constants';
 import COLORS from 'const/colors';
+import { FONTS } from 'const/fonts';
 import { isSafetyIncluded } from 'utils';
 import {
   groupSlices,
@@ -95,27 +96,22 @@ const V2MicrositeWrapper = styled.div`
 `;
 
 const ListicleHeadingWrapper = styled.div`
+  max-width: 550px;
   padding-top: 36px;
   color: ${COLORS.GRAY.G2};
+  padding-left: unset;
+  margin-left: 155px;
   h1 {
     margin: unset;
-    ${expandFontToken('Display/Regular')}
+    ${expandFontToken(FONTS.DISPLAY_REGULAR)}
   }
-  h2 {
-    margin: unset;
-    margin-top: 10px;
-    ${expandFontToken('Heading/Large')}
-  }
+
   @media (max-width: 768px) {
     padding-top: 32px;
     padding-left: 24px;
+    margin-left: unset;
     h1 {
-      ${expandFontToken('Heading/Large')}
-    }
-    h2 {
-      margin-top: 8px;
-
-      ${expandFontToken('Heading/Small')}
+      ${expandFontToken(FONTS.HEADING_LARGE)}
     }
   }
 `;
@@ -224,7 +220,7 @@ export const HomePage = (props) => {
   );
   const allTgids = Object.keys(allTours);
   const isLTT = checkLTT(uid);
-  const isLTTListicle = isEntertainmentMb && isListicle;
+  const isEntertainmentMbListicle = isEntertainmentMb && isListicle;
   return (
     <V2MicrositeWrapper isEntertainmentMb={isEntertainmentMb}>
       <Header
@@ -235,7 +231,7 @@ export const HomePage = (props) => {
         allTours={allTours}
         isEntertainmentMb={isEntertainmentMb}
         hasLanguageSelector={hasLanguageSelector}
-        isLTTListicle={isLTTListicle}
+        isEntertainmentMbListicle={isEntertainmentMbListicle}
       />
       <Conditional if={isMobile && hasDropdownLinks}>
         <div className="main-wrapper city-selector">
@@ -276,10 +272,9 @@ export const HomePage = (props) => {
           availableTours={allTgids}
         />
       </Conditional>
-      <Conditional if={isLTTListicle}>
+      <Conditional if={isEntertainmentMbListicle}>
         <ListicleHeadingWrapper className="main-wrapper">
           <h1>{bannerHeading}</h1>
-          <h2>{strings.BEST_WESTEND_SHOWS}</h2>
         </ListicleHeadingWrapper>
       </Conditional>
       <Conditional if={mbTheme === THEMES.MIN_BLUE}>
@@ -293,7 +288,7 @@ export const HomePage = (props) => {
       <Conditional if={!isEntertainmentMb}>
         <MultiBannerWrapper hasSafe={hasSafe} marginTop={40} />
       </Conditional>
-      <Conditional if={heroSectionSlice.length && !isLTTListicle}>
+      <Conditional if={heroSectionSlice.length && !isEntertainmentMbListicle}>
         <ProductsContextProvider allTours={allTours} ready={ready}>
           <div className="main-wrapper hero-slice-section">
             {heroSectionSlice
@@ -309,7 +304,7 @@ export const HomePage = (props) => {
           </div>
         </ProductsContextProvider>
       </Conditional>
-      <Conditional if={isLTTListicle}>
+      <Conditional if={isEntertainmentMbListicle}>
         <ProductsContextProvider allTours={allTours} ready={ready}>
           <div className="main-wrapper hero-slice-section">
             <MonthTabs

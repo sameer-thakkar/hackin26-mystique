@@ -519,9 +519,8 @@ const TYPOGRAPHY = {
 };
 
 Object.freeze(TYPOGRAPHY);
-type TokenProps = keyof typeof TYPOGRAPHY;
 
-export function expandFontToken(label: TokenProps = 'Paragraph/Large') {
+export function expandFontToken(label: string = 'PARAGRAPH_LARGE') {
   const {
     fontFamily,
     fontSize,

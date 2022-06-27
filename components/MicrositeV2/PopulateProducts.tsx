@@ -21,8 +21,8 @@ const StyledProductWrapper = styled.div`
   grid-row-gap: 32px;
   .view-more {
     display: grid;
-    ${({ isLTTListicle }) =>
-      isLTTListicle
+    ${({ isEntertainmentMbListicle }) =>
+      isEntertainmentMbListicle
         ? expandFontToken('Button/Big')
         : expandFontToken('Button/Medium')};
     color: ${({ isEntertainmentMb }) =>
@@ -31,8 +31,8 @@ const StyledProductWrapper = styled.div`
     border-radius: 4px;
     margin: auto;
     width: max-content;
-    padding: ${({ isLTTListicle }) =>
-      isLTTListicle ? '12px 24px' : '16px 32px'};
+    padding: ${({ isEntertainmentMbListicle }) =>
+      isEntertainmentMbListicle ? '12px 24px' : '16px 32px'};
     cursor: pointer;
     ${({ isEntertainmentMb }) => isEntertainmentMb && 'letter-spacing: 0.6px;'}
   }
@@ -96,7 +96,7 @@ const PopulateProducts = (props) => {
     setRowsInView(firstView);
   }, [activeCategoryTgids, firstView]);
 
-  const isLTTListicle = isListicle && isEntertainmentMb;
+  const isEntertainmentMbListicle = isListicle && isEntertainmentMb;
 
   const subArrays = (tgidsArr, offset = 0) => {
     const { isMobile } = props;
@@ -105,7 +105,7 @@ const PopulateProducts = (props) => {
       : NO_OF_CARDS_IN_ROW.DESKTOP;
     const result = tgidsArr
       .filter((tgid) => {
-        if (isLTTListicle) {
+        if (isEntertainmentMbListicle) {
           return (
             allTours?.[tgid]?.listicleShowSummary &&
             allTours?.[tgid]?.listicleWhyWatch
@@ -181,7 +181,7 @@ const PopulateProducts = (props) => {
   return (
     <StyledProductWrapper
       isEntertainmentMb={isEntertainmentMb}
-      isLTTListicle={isLTTListicle}
+      isEntertainmentMbListicle={isEntertainmentMbListicle}
     >
       {tgidsSubArr.map((row, index) => {
         if (showAll || index < rowsInView)
@@ -213,7 +213,7 @@ const PopulateProducts = (props) => {
           onClick={viewMore}
           className="view-more"
         >
-          {isLTTListicle
+          {isEntertainmentMbListicle
             ? strings.SEE_MORE_SHOWS
             : mbContext.buttons.see_more_text || strings.VIEW_MORE}
         </LinkResolver>

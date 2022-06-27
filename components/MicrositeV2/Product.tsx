@@ -16,6 +16,7 @@ import {
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
+import { FONTS } from 'const/fonts';
 import { truncate, checkLTT } from 'utils/helper';
 import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import { dateToString } from 'utils/dateUtils';
@@ -47,13 +48,13 @@ const ProductCard = styled.div`
 
   .product-v2-title {
     color: ${COLORS.GRAY.G2};
-    ${expandFontToken('Heading/Product Card')}
+    ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)}
   }
 
   .reopening {
     margin-top: 4px;
     color: ${COLORS.TEXT.BEACH};
-    ${expandFontToken('UI/Label Small')}
+    ${expandFontToken(FONTS.UI_LABEL_SMALL)}
   }
 
   .product-v2-image {
@@ -69,7 +70,7 @@ const ProductCard = styled.div`
     padding: 4px 6px 5px;
     background: ${COLORS.BRAND.WHITE};
     color: ${COLORS.GRAY.G2};
-    ${expandFontToken('UI/Label Small (Heavy)')}
+    ${expandFontToken(FONTS.UI_LABEL_SMALL_HEAVY)}
     box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1), 0px 2px 8px rgba(0, 0, 0, 0.1);
   }
 
@@ -100,7 +101,7 @@ const ProductCard = styled.div`
   }
 
   .product-v2-price {
-    ${expandFontToken('Subheading/Large')}
+    ${expandFontToken(FONTS.SUBHEADING_LARGE)}
     text-align: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? 'left' : 'right'};
 
@@ -124,12 +125,12 @@ const ProductCard = styled.div`
       padding: 2px 4px;
       border-radius: 2px;
       margin-left: 6px;
-      ${expandFontToken('UI/Label XS')}
+      ${expandFontToken(FONTS.UI_LABEL_XS)}
     }
   }
 
   .product-v2-scratch-price {
-    ${expandFontToken('UI/Label Small')}
+    ${expandFontToken(FONTS.UI_LABEL_SMALL)}
     text-align: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? 'left' : 'right'};
     text-decoration-line: ${({ isEntertainmentMb }) =>
@@ -154,7 +155,7 @@ const ProductCard = styled.div`
     display: grid;
     grid-template-columns: repeat(2, max-content);
     justify-content: space-between;
-    ${expandFontToken('UI/Label Small')}
+    ${expandFontToken(FONTS.UI_LABEL_SMALL)}
     margin-bottom: 2px;
   }
 
@@ -189,11 +190,11 @@ const ProductCard = styled.div`
 
     .overlay-booster {
       padding: 3px 6px;
-      ${expandFontToken('UI/Label XS')}
+      ${expandFontToken(FONTS.UI_LABEL_XS)}
     }
 
     .product-v2-title {
-      ${expandFontToken('Heading/XS')}
+      ${expandFontToken(FONTS.HEADING_XS)}
     }
 
     .product-v2-bottom {
@@ -222,16 +223,16 @@ const ProductCard = styled.div`
 
     .product-v2-price {
       text-align: left;
-      ${expandFontToken('Subheading/Regular')}
+      ${expandFontToken(FONTS.SUBHEADING_REGULAR)}
     }
 
     .product-v2-scratch-price {
       text-align: left;
-      ${expandFontToken('UI/Label XS')}
+      ${expandFontToken(FONTS.UI_LABEL_XS)}
     }
 
     .l1-booster-wrapper {
-      ${expandFontToken('UI/Label XS')}
+      ${expandFontToken(FONTS.UI_LABEL_XS)}
     }
 
     .avg-rating svg {
@@ -240,7 +241,7 @@ const ProductCard = styled.div`
     }
 
     .reopening {
-      ${expandFontToken('UI/Label XS')}
+      ${expandFontToken(FONTS.UI_LABEL_XS)}
     }
   }
 
@@ -413,7 +414,21 @@ const Product = (props) => {
     CURRENCY_SYMBOL_MAP[currencyCode];
 
   const handleProductClick = (event) => {
-    productClick(tgid, cardIdPrefix, event);
+    event.preventDefault();
+    if (isMobile) {
+      if (showPageExists) {
+        window.open(showPageUrl, '_self', 'noopener,noreferrer');
+      } else {
+        window.open(bookingURL, '_self', 'noopener,noreferrer');
+      }
+    } else {
+      if (initialized || !showPageExists) {
+        showPageEvent();
+        productClick(tgid, cardIdPrefix, event);
+      } else {
+        window.open(showPageUrl, '_self', 'noopener,noreferrer');
+      }
+    }
   };
 
   const isNewArrival = allTags.includes('NEWARRIVAL');
@@ -433,12 +448,26 @@ const Product = (props) => {
 
   const isBeforeToday = new Date().getTime() > new Date(openingDate)?.getTime();
   const hasScratchPrice = scratchPrice > price;
+  const primaryCategory = allTours[tgid]?.primaryCategory;
+  const showPageEvent = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_EXPANDED,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: title,
+      [ANALYTICS_PROPERTIES.CATEGORY_ID]: primaryCategory?.id,
+      [ANALYTICS_PROPERTIES.CATEGORY_NAME]: primaryCategory?.displayName,
+      [ANALYTICS_PROPERTIES.SUB_CAT_ID]: primaryCategory?.id,
+      [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: primaryCategory?.displayName,
+    });
+  };
+  const showPageExists = !showPageUrl.includes('/book');
+
   const cardComponent = (
     <ProductCard
-      onClick={initialized && handleProductClick}
+      onClick={handleProductClick}
       className="product-v2"
       id={`${cardIdPrefix}-${tgid}`}
-      onKeyDown={initialized && handleProductClick}
+      onKeyDown={handleProductClick}
       role="button"
       tabIndex={0}
       isEntertainmentMb={isEntertainmentMb}
@@ -484,7 +513,19 @@ const Product = (props) => {
           </div>
         </Conditional>
         <div className="title-wrap">
-          <div className="product-v2-title">{truncate(title, 70)}</div>
+          <Conditional if={initialized || !showPageExists}>
+            <div className="product-v2-title">{truncate(title, 70)}</div>
+          </Conditional>
+          <Conditional if={!initialized && showPageExists}>
+            <a
+              target="_self"
+              rel="noopener noreferrer"
+              href={showPageUrl}
+              onClick={handleProductClick}
+            >
+              <div className="product-v2-title">{truncate(title, 70)}</div>
+            </a>
+          </Conditional>
           <Conditional
             if={
               isEntertainmentMb &&
@@ -543,43 +584,15 @@ const Product = (props) => {
       </div>
     </ProductCard>
   );
-  const primaryCategory = allTours[tgid]?.primaryCategory;
-  const showPageEvent = () => {
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_EXPANDED,
-      [ANALYTICS_PROPERTIES.TGID]: tgid,
-      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: title,
-      [ANALYTICS_PROPERTIES.CATEGORY_ID]: primaryCategory?.id,
-      [ANALYTICS_PROPERTIES.CATEGORY_NAME]: primaryCategory?.displayName,
-      [ANALYTICS_PROPERTIES.SUB_CAT_ID]: primaryCategory?.id,
-      [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: primaryCategory?.displayName,
-    });
-  };
-  const showPageExists = !showPageUrl.includes('/book');
 
   return (
     <>
       <Conditional if={!isMobile || !isEntertainmentMb}>
-        <Conditional if={initialized}>{cardComponent}</Conditional>
-        <Conditional if={!initialized}>
-          <a
-            href={showPageUrl}
-            target="_self"
-            rel="noopener noreferrer"
-            onClick={showPageEvent}
-          >
-            {cardComponent}
-          </a>
-        </Conditional>
+        {cardComponent}
       </Conditional>
 
       <Conditional if={isMobile && isEntertainmentMb}>
-        <a
-          target="_self"
-          rel="noopener noreferrer"
-          href={showPageExists ? showPageUrl : bookingURL}
-          onClick={showPageEvent}
-        >
+        <div role="button" tabIndex={0} onClick={handleProductClick}>
           <ProductCard
             className="product-v2"
             id={`${cardIdPrefix}-${tgid}`}
@@ -629,7 +642,14 @@ const Product = (props) => {
                 </div>
               </Conditional>
               <div className="title-wrap">
-                <div className="product-v2-title">{truncate(title, 70)}</div>
+                <a
+                  target="_self"
+                  rel="noopener noreferrer"
+                  href={showPageExists ? showPageUrl : bookingURL}
+                  onClick={showPageEvent}
+                >
+                  <div className="product-v2-title">{truncate(title, 70)}</div>
+                </a>
                 <Conditional
                   if={
                     isEntertainmentMb &&
@@ -690,7 +710,7 @@ const Product = (props) => {
               </Conditional>
             </div>
           </ProductCard>
-        </a>
+        </div>
       </Conditional>
     </>
   );
