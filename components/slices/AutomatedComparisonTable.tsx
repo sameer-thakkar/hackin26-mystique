@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useAmp } from 'next/amp';
 import useSWR from 'swr';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
@@ -9,7 +9,7 @@ import EnvironmentContext from 'contexts/environmentContext';
 import { MBContext } from 'contexts/MBContext';
 import Image from 'components/UI/Image';
 import Button from 'components/UI/Button';
-import { createBookingURL } from 'utils';
+import { createBookingURL, getCollectionSection } from 'utils';
 import { CHEVRON_DOWN, CHECK, CROSS } from 'assets/SvgIcons';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
@@ -20,7 +20,7 @@ import { getDuration } from 'utils/timeUtils';
 import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
 
-const StyledTourComparisionTable = styled.div`
+const ComparisonTableWrapper = styled.div`
   width: auto;
   display: grid;
   line-height: 1.3;
@@ -30,12 +30,12 @@ const StyledTourComparisionTable = styled.div`
     margin: auto;
     width: 100%;
   }
-  .comparision-heading {
+  .comparison-heading {
     margin-bottom: 8px;
     ${expandFontToken('Heading/Large')}
     color: ${COLORS.GRAY.G2};
   }
-  .comparision-description {
+  .comparison-description {
     padding-bottom: 32px;
     max-width: 60%;
     ${expandFontToken('UI/Label Medium')}
@@ -223,7 +223,7 @@ const StyledTourComparisionTable = styled.div`
     }
 
     .row,
-    .comparision-heading,
+    .comparison-heading,
     #compare-all-details-button {
       max-width: unset;
       width: calc(100% - 32px);
@@ -254,10 +254,10 @@ const StyledTourComparisionTable = styled.div`
     .content-block {
       grid-row-gap: 8px;
     }
-    .comparision-heading {
+    .comparison-heading {
       margin-bottom: 8px;
     }
-    .comparision-description {
+    .comparison-description {
       ${expandFontToken('Paragraph/Regular')}
       padding-bottom: 24px;
       color: ${COLORS.GRAY.G2};
@@ -366,7 +366,6 @@ const AutomatedTourComparisonTable = ({
   collectionId,
 }) => {
   const [isExpanded, setExpand] = useState(false);
-  const [itemArray, setItemArray] = useState([]);
 
   const envContext = useContext(EnvironmentContext);
   const mbContext = useContext(MBContext);
@@ -452,7 +451,7 @@ const AutomatedTourComparisonTable = ({
       eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED,
       [ANALYTICS_PROPERTIES.TGID]: tgid,
       [ANALYTICS_PROPERTIES.POSITION]: position,
-      [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Comparision Card',
+      [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Comparison Card',
       'Div Type': 'product-list',
     });
   };
@@ -469,34 +468,28 @@ const AutomatedTourComparisonTable = ({
   const { data: collectionData } = useSWR(collectionEndpoint, {
     fetcher: swrFetcher,
   });
-  useEffect(() => {
-    const headoutPicks = collectionData?.sections
-      ?.filter((section) => {
-        if (section?.type === 'HEADOUT_PICKS') {
-          return section?.tourGroups?.items;
-        }
-      })?.[0]
-      ?.tourGroups?.items?.filter(
-        (item) => item.language.toLowerCase() === lang
-      );
-    setItemArray(headoutPicks);
-  }, [collectionData]);
+  const headoutPicks = collectionData
+    ? getCollectionSection(collectionData, 'HEADOUT_PICKS')
+    : [];
+  const tourGroups = collectionData
+    ? headoutPicks.filter((item) => item.language.toLowerCase() === lang)
+    : [];
 
   return (
-    <Conditional if={itemArray?.length}>
-      <StyledTourComparisionTable
+    <Conditional if={tourGroups?.length}>
+      <ComparisonTableWrapper
         isExpanded={isExpanded || isAmp}
         isMobile={isMobile}
-        tourCount={itemArray?.length}
+        tourCount={tourGroups?.length}
       >
         <div className="heading-wrapper">
-          <div className="comparision-heading">{heading}</div>
-          <div className="comparision-description">{description}</div>
+          <div className="comparison-heading">{heading}</div>
+          <div className="comparison-description">{description}</div>
         </div>
         <div className="full-width-wrap">
           <div className="table">
-            <div className="row max-content" style={{ zIndex: -1 }}>
-              {itemArray?.map((tour, index) => {
+            <div className="row max-content">
+              {tourGroups?.map((tour, index) => {
                 return (
                   <Column key={index}>
                     <div className="tour-image">
@@ -508,7 +501,7 @@ const AutomatedTourComparisonTable = ({
             </div>
             <div className="sticky wrapper">
               <div className="row wrapper">
-                {itemArray?.map((tour, index) => {
+                {tourGroups?.map((tour, index) => {
                   return (
                     <Column key={index}>
                       <div className="tour-chin">
@@ -536,7 +529,7 @@ const AutomatedTourComparisonTable = ({
                 id="expanded-details-section"
                 style={{ marginTop: -8 }}
               >
-                {itemArray?.map((tour, index) => {
+                {tourGroups?.map((tour, index) => {
                   const ctaProps = {
                     link: {
                       url: createBookingURL({
@@ -570,7 +563,7 @@ const AutomatedTourComparisonTable = ({
               </div>
             </Conditional>
             <div className="row max-content">
-              {itemArray?.map((tour, index) => {
+              {tourGroups?.map((tour, index) => {
                 return (
                   <div className="column flat-price-block" key={index}>
                     <div className="content-block">
@@ -600,7 +593,7 @@ const AutomatedTourComparisonTable = ({
                     id={`comparison-list-details-${rowIndex}`}
                     key={rowIndex}
                   >
-                    {itemArray?.map((tour, colIndex) => {
+                    {tourGroups?.map((tour, colIndex) => {
                       const { title, content } = getLabelContent(label, tour);
                       return (
                         <Column key={colIndex}>
@@ -619,7 +612,7 @@ const AutomatedTourComparisonTable = ({
                 className={`row max-content ${isAmp ? 'no-display' : ''}`}
                 id="expanded-details-column"
               >
-                {itemArray?.map((tour, index) => {
+                {tourGroups?.map((tour, index) => {
                   return (
                     <div className="column flat-price-block" key={index}>
                       <div className="content-block">
@@ -640,7 +633,7 @@ const AutomatedTourComparisonTable = ({
           </div>
           <div className="table cta-table-wrap">
             <div className="row">
-              {itemArray?.map((tour, index) => {
+              {tourGroups?.map((tour, index) => {
                 const ctaProps = {
                   link: {
                     url: createBookingURL({
@@ -690,7 +683,7 @@ const AutomatedTourComparisonTable = ({
             </div>
           </Button>
         </Conditional>
-      </StyledTourComparisionTable>
+      </ComparisonTableWrapper>
     </Conditional>
   );
 };

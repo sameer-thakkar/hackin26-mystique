@@ -152,6 +152,8 @@ export const LinkCards = (props) => {
   return (
     <StyledMBCards {...(as !== React.Fragment ? { gridAutoCol } : {})} as={as}>
       {cards.map((card, index) => {
+        const cardPrice = cardPrices?.[card?.tgid];
+
         return (
           <div key={index} className={cardClassName || ''}>
             <a target="_blank" rel="noopener noreferrer" href={card.link}>
@@ -168,32 +170,27 @@ export const LinkCards = (props) => {
                 </div>
                 <div className="card-bottom">
                   <span className="card-title">{card.title}</span>
-                  {isFetched && card.tgid && cardPrices[card.tgid] ? (
+                  <Conditional if={isFetched && card?.tgid && cardPrice}>
                     <>
-                      <Conditional if={cardPrices[card.tgid].listingPrice}>
+                      <Conditional if={cardPrice?.listingPrice}>
                         <PriceBlock
                           lang={lang}
-                          price={cardPrices[card.tgid].listingPrice}
+                          price={cardPrice?.listingPrice}
                           showScratchPrice={true}
                           prefix={false}
                           currencySymbolOverride={currencySymbol}
                         />
                       </Conditional>
                       <Conditional
-                        if={
-                          !cardPrices[card.tgid].listingPrice &&
-                          cardPrices[card.tgid].price
-                        }
+                        if={!cardPrice?.listingPrice && cardPrice?.price}
                       >
                         <span className="card-price">
                           {currencySymbol}
-                          {cardPrices[card.tgid].price}
+                          {cardPrice?.price}
                         </span>
                       </Conditional>
                     </>
-                  ) : (
-                    ''
-                  )}
+                  </Conditional>
                 </div>
               </MicrobrandCard>
             </a>
