@@ -96,12 +96,10 @@ const V2MicrositeWrapper = styled.div`
 `;
 
 const ListicleHeadingWrapper = styled.div`
-  max-width: 550px;
   padding-top: 36px;
   color: ${COLORS.GRAY.G2};
-  padding-left: unset;
-  margin-left: 155px;
   h1 {
+    max-width: 550px;
     margin: unset;
     ${expandFontToken(FONTS.DISPLAY_REGULAR)}
   }
@@ -109,7 +107,6 @@ const ListicleHeadingWrapper = styled.div`
   @media (max-width: 768px) {
     padding-top: 32px;
     padding-left: 24px;
-    margin-left: unset;
     h1 {
       ${expandFontToken(FONTS.HEADING_LARGE)}
     }
