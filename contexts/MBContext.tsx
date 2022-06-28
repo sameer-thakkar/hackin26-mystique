@@ -30,6 +30,7 @@ export const MBContext = createContext({
   bookSubdomain: 'book',
   primaryCountry: null,
   primaryCity: null,
+  redirectToHeadoutBookingFlow: false,
 });
 
 export const MBContextProvider = (props) => {
@@ -50,6 +51,7 @@ export const MBContextProvider = (props) => {
     bookSubdomain,
     primaryCountry,
     primaryCity,
+    redirectToHeadoutBookingFlow,
   } = props;
   const [sidebarModalStack, setSidebarModalStack] = useState([]);
 
@@ -113,6 +115,7 @@ export const MBContextProvider = (props) => {
         bookSubdomain,
         primaryCountry,
         primaryCity,
+        redirectToHeadoutBookingFlow,
       }}
     >
       {props.children}

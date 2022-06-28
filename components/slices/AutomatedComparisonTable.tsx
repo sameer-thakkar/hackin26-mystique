@@ -368,11 +368,14 @@ const AutomatedTourComparisonTable = ({
   const [isExpanded, setExpand] = useState(false);
 
   const envContext = useContext(EnvironmentContext);
-  const mbContext = useContext(MBContext);
+  const {
+    lang,
+    host,
+    nakedDomain,
+    biLink,
+    redirectToHeadoutBookingFlow,
+  } = useContext(MBContext);
   const isAmp = useAmp();
-  const { nakedDomain, biLink } = mbContext;
-  const lang = mbContext.lang || 'en';
-  const host = mbContext?.host;
   const currentHost = !envContext.isDev ? `https://${host}` : `http://${host}`;
   const orderedLabels = ['maxDuration', 'inclusions', 'cancellationPolicy'];
 
@@ -537,6 +540,7 @@ const AutomatedTourComparisonTable = ({
                         lang,
                         tgid: tour.id,
                         biLink,
+                        redirectToHeadoutBookingFlow,
                       }),
                     },
                   };
@@ -641,6 +645,7 @@ const AutomatedTourComparisonTable = ({
                       lang,
                       tgid: tour.id,
                       biLink,
+                      redirectToHeadoutBookingFlow,
                     }),
                   },
                 };

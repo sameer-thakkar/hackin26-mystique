@@ -374,6 +374,7 @@ export const DONT_AUTO_SCROLL = false;
 export const DONT_HOIST = false;
 
 export const HEADOUT_API_ENDPOINT = 'https://api.headout.com/api';
+export const HEADOUT_NAKED_DOMAIN = 'headout.com';
 
 export const TOUR_COMPARISION_DESIGN = {
   TYPE_1: 'Type-1',

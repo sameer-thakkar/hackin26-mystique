@@ -595,7 +595,13 @@ const TicketCard = (props) => {
     appliedPromo,
   } = props;
 
-  const { mbTheme, biLink, bookSubdomain } = useContext(MBContext);
+  const {
+    mbTheme,
+    biLink,
+    bookSubdomain,
+    redirectToHeadoutBookingFlow,
+    sidebarModal: { addToAside },
+  } = useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
   const pageMetaData = useRecoilValue(metaAtom);
   const isCombo = scorpioData?.combo;
@@ -700,10 +706,6 @@ const TicketCard = (props) => {
   const finalShortSummary = isFallbackSummary
     ? mobileFallbackShortSummary
     : shortSummary;
-  const {
-    sidebarModal: { addToAside },
-  } = useContext(MBContext);
-
   const { highlights, tabs } = isMobile
     ? { highlights: finalHighlights, tabs: [] }
     : extractTabsFromHighlights(finalHighlights);
@@ -813,6 +815,7 @@ const TicketCard = (props) => {
         instantCheckout && earliestAvailability ? earliestAvailability : null,
       isMobile,
       bookSubdomain,
+      redirectToHeadoutBookingFlow,
     }) + (ctaUrlSuffix || '');
 
   const hasReadMore = highlights.flat()?.length >= 3 && !defaultOpen;

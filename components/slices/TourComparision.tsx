@@ -480,11 +480,15 @@ const TourComparisonTable = (props) => {
   const [isExpanded, setExpand] = useState(false);
   const envContext = useContext(EnvironmentContext);
   const toursContext = useContext(ProductsContext);
-  const mbContext = useContext(MBContext);
+  const {
+    uid,
+    nakedDomain,
+    biLink,
+    lang,
+    redirectToHeadoutBookingFlow,
+  } = useContext(MBContext);
   const isAmp = useAmp();
   const url = envContext.windowUrl;
-  const { uid, nakedDomain, biLink } = mbContext;
-  const lang = mbContext.lang || 'en';
   const currentHost = !envContext.isDev ? url : parse(uid, true).pathname;
   const hostName = currentHost.includes('stage')
     ? currentHost.replace('stage-', '')
@@ -612,6 +616,7 @@ const TourComparisonTable = (props) => {
                       lang,
                       tgid: tour.tgid,
                       biLink,
+                      redirectToHeadoutBookingFlow,
                     }),
                   },
                 };
@@ -732,6 +737,7 @@ const TourComparisonTable = (props) => {
                     lang,
                     tgid: tour.tgid,
                     biLink,
+                    redirectToHeadoutBookingFlow,
                   }),
                 },
               };

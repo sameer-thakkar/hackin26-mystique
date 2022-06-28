@@ -991,6 +991,7 @@ const Product = (props) => {
     isStage,
     isDev,
     sidebarModal: { addToAside },
+    redirectToHeadoutBookingFlow,
   } = useContext(MBContext);
 
   const hostname = getHostName(isStage, isDev, host);
@@ -1355,6 +1356,7 @@ const Product = (props) => {
         instantCheckout && earliestAvailability ? earliestAvailability : null,
       isMobile,
       bookSubdomain,
+      redirectToHeadoutBookingFlow,
     }) + (ctaUrlSuffix || '');
 
   const BookNowCta = ({ clickHandler }: { clickHandler: () => void }) => (

@@ -132,6 +132,7 @@ const CustomLinkedTours = ({
     nakedDomain,
     currencySymbolMap,
     biLink,
+    redirectToHeadoutBookingFlow,
   } = useContext(MBContext);
   const [currency, setCurrency] = useState(null);
 
@@ -162,7 +163,13 @@ const CustomLinkedTours = ({
   }, [tourListData]);
 
   const defaultURL = (tgid) =>
-    createBookingURL({ nakedDomain, lang, tgid, biLink });
+    createBookingURL({
+      nakedDomain,
+      lang,
+      tgid,
+      biLink,
+      redirectToHeadoutBookingFlow,
+    });
   return (
     <StyledCustomLinkedTours design={design}>
       <TitleTextCombo>

@@ -250,6 +250,10 @@ export const getContentPageDocument = async ({
           baseLangExperienceLimit,
           baseLangPageTitle:
             lang !== 'en-us' ? baseLangData?.data?.title : page.data.title,
+          redirect_to_headout_booking_flow:
+            lang !== 'en-us'
+              ? baseLangData?.data?.redirect_to_headout_booking_flow
+              : page.data.redirect_to_headout_booking_flow,
         },
       };
       return {
@@ -496,6 +500,11 @@ export const getMicrositeDocument = async ({
                   lang !== 'en-us'
                     ? baseLangData?.data?.title
                     : completeMicrosite.data.data.title,
+                redirect_to_headout_booking_flow:
+                  lang !== 'en-us'
+                    ? baseLangData?.data?.redirect_to_headout_booking_flow
+                    : completeMicrosite.data.data
+                        .redirect_to_headout_booking_flow,
                 categorisedToursV1,
                 ...(allShowPages && { allShowPages }),
               },

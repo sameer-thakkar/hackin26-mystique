@@ -52,13 +52,16 @@ const StickyFooter = ({
   currentLanguage: string;
   isAvailable?: boolean;
 }) => {
-  const { nakedDomain, biLink, uid } = useContext(MBContext);
+  const { nakedDomain, biLink, uid, redirectToHeadoutBookingFlow } = useContext(
+    MBContext
+  );
 
   const bookingUrl = createBookingURL({
     nakedDomain: nakedDomain,
     lang: currentLanguage,
     tgid: tgid,
     biLink: biLink,
+    redirectToHeadoutBookingFlow,
   });
 
   const isLTT = checkLTT(uid);

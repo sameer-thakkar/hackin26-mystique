@@ -319,7 +319,13 @@ const Product = (props) => {
     activeCategoryId = null,
     host,
   } = props;
-  const { currencySymbolMap, lang, nakedDomain, uid } = useContext(MBContext);
+  const {
+    currencySymbolMap,
+    lang,
+    nakedDomain,
+    uid,
+    redirectToHeadoutBookingFlow,
+  } = useContext(MBContext);
   const [initialized, setInitialized] = useState(true);
   const hsid = useRecoilValue(hsidAtom);
   const isLTT = checkLTT(uid);
@@ -398,6 +404,7 @@ const Product = (props) => {
     nakedDomain,
     lang,
     tgid,
+    redirectToHeadoutBookingFlow,
   });
   const showPageUrl = showPageUid
     ? convertUidToUrl({ uid: showPageUid, isDev, hostname: host })

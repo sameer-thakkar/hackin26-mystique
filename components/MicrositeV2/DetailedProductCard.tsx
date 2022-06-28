@@ -424,6 +424,7 @@ const DetailedProductCard = (props) => {
     sidebarModal: { addToAside },
     host,
     isDev,
+    redirectToHeadoutBookingFlow,
   } = mbContext;
   const {
     allTours,
@@ -621,6 +622,7 @@ const DetailedProductCard = (props) => {
                 lang,
                 tgid: tgidClicked,
                 biLink,
+                redirectToHeadoutBookingFlow,
               }),
               '_blank',
               'noopener, noreferrer'

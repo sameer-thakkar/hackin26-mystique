@@ -113,6 +113,11 @@ const Page = (props) => {
   }
 
   const microsite = CMSContent?.data?.microsite?.data || CMSContent?.data?.data;
+  const redirectToHeadoutBookingFlow =
+    ContentType === CUSTOM_TYPES.MICROSITE
+      ? microsite?.redirect_to_headout_booking_flow
+      : CMSContent?.data?.redirect_to_headout_booking_flow;
+
   const isGlobalMb =
     ContentType === CUSTOM_TYPES.GLOBAL_HOMEPAGE ||
     ContentType === CUSTOM_TYPES.GLOBAL_CITY ||
@@ -243,6 +248,7 @@ const Page = (props) => {
             bookSubdomain={bookSubdomain}
             primaryCountry={primaryCountry}
             primaryCity={primaryCity}
+            redirectToHeadoutBookingFlow={redirectToHeadoutBookingFlow}
           >
             {Component}
             {typeof window !== 'undefined' ? (

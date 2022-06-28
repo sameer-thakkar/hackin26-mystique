@@ -533,6 +533,7 @@ export const MobileProductPage = (props) => {
     sidebarModal: { addToAside },
     biLink,
     lang,
+    redirectToHeadoutBookingFlow,
   } = useContext(MBContext);
   const closeProductCard = () => {
     props.changePage({ name: PAGETYPE.HOMEPAGE });
@@ -615,6 +616,7 @@ export const MobileProductPage = (props) => {
         lang: currentLanguage,
         tgid,
         biLink,
+        redirectToHeadoutBookingFlow,
       }),
       '_blank',
       'noopener, noreferrer'

@@ -1,16 +1,16 @@
 import Router from 'next/router';
 import dayjs from 'dayjs';
-
-import { getLangObject, withoutTrailingSlash } from '../utils/helper';
 import {
   SUPPORTED_LANGUAGES,
   SUPPORTED_LANGUAGES_MAP,
   FULL_LANGUAGE_MAP,
   PRISMIC_LANG_TO_ROUTE_PARAM,
   CUSTOM_TYPES,
-} from '../constants';
-import { fetchCollection, fetchTourGroupsByCategory } from './apiUtils';
-import { convertUidToUrl, getDomainFromUid } from './urlUtils';
+  HEADOUT_NAKED_DOMAIN,
+} from 'const/index';
+import { getLangObject, withoutTrailingSlash } from 'utils/helper';
+import { fetchCollection, fetchTourGroupsByCategory } from 'utils/apiUtils';
+import { convertUidToUrl, getDomainFromUid } from 'utils/urlUtils';
 
 export const getLanguageFromPathname = ({
   pathname,
@@ -151,6 +151,7 @@ export const createBookingURL = ({
   isMobile = false,
   currency = '',
   bookSubdomain = '',
+  redirectToHeadoutBookingFlow = false,
 }) => {
   const bookingFlowSubdomain =
     bookSubdomain &&
@@ -161,12 +162,15 @@ export const createBookingURL = ({
   const langRouteParam =
     lang && lang !== 'en' ? '/' + FULL_LANGUAGE_MAP[lang].bookingFlow : '';
 
+  const domain = redirectToHeadoutBookingFlow
+    ? HEADOUT_NAKED_DOMAIN
+    : nakedDomain;
   // date is passed when we directly land user on Checkout Page, skipping date selection
   let bookingStageSuffix = date ? '/checkout/' : '';
   // on Mobile, we have intermediate Pax Selection step.
   bookingStageSuffix = isMobile && date ? '/select/pax/' : '';
   const urlObject = new URL(
-    `https://${bookingFlowSubdomain}.${nakedDomain}${langRouteParam}/book/${tgid}${bookingStageSuffix}`
+    `https://${bookingFlowSubdomain}.${domain}${langRouteParam}/book/${tgid}${bookingStageSuffix}`
   );
   if (date?.startDate) urlObject.searchParams.set('date', date?.startDate);
   if (date?.startDate) urlObject.searchParams.set('variantId', tourId);
@@ -180,7 +184,7 @@ export const createBookingURL = ({
 export const getNakedDomain = (host) => {
   return !host.includes('localhost')
     ? host.replace('stage-', '').split('.').slice(1).join('.')
-    : 'headout.com';
+    : HEADOUT_NAKED_DOMAIN;
 };
 
 export const getSavingsPercent = (listingPriceObject) =>
