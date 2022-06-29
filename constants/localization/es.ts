@@ -16,6 +16,7 @@ const es = {
       'https://medium.com/headout/epidemia-de-coronavirus-pol%C3%ADtica-de-cancelaci%C3%B3n-e577f63d5553',
   },
   READ_MORE: 'Leer más',
+  VIEW_MORE: 'Leer más',
   BANNER_CTA: 'Comprar entradas',
   BOOK_NOW_CTA: 'Reserva ahora',
   CHECK_AVAIL: 'Comprobar la disponibilidad',

@@ -16,6 +16,7 @@ const nl = {
       'https://medium.com/headout/coronavirus-outbreak-cancellation-policy-8fe8e1104b83',
   },
   READ_MORE: 'Meer Info',
+  VIEW_MORE: 'Meer Info',
   BANNER_CTA: 'Koop kaartjes',
   BOOK_NOW_CTA: 'Reserveer nu',
   CHECK_AVAIL: 'Controleer beschikbaarheid',

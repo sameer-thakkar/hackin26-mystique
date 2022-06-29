@@ -15,6 +15,7 @@ const fr = {
       'https://medium.com/headout/%C3%A9pid%C3%A9mie-de-coronavirus-politique-dannulation-595a47a8bb50',
   },
   READ_MORE: 'En savoir plus',
+  VIEW_MORE: 'En Savoir Plus',
   BANNER_CTA: 'Voir nos offres',
   BOOK_NOW_CTA: 'Réserver',
   CHECK_AVAIL: 'Vérifier la disponibilité',

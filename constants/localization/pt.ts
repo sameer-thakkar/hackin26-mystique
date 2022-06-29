@@ -16,6 +16,7 @@ const pt = {
       'https://medium.com/headout/surto-coronav%C3%ADrus-pol%C3%ADtica-de-cancelamento-18a2fb65b25',
   },
   READ_MORE: 'Saiba mais',
+  VIEW_MORE: 'Ver mais',
   BANNER_CTA: 'Faça sua reserva',
   BOOK_NOW_CTA: 'Reserve agora',
   CHECK_AVAIL: 'Verificar disponibilidade',

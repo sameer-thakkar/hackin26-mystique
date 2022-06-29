@@ -16,6 +16,7 @@ const it = {
       'https://medium.com/headout/epidemia-coronavirus-polizza-di-cancellazione-e7abdfb20451',
   },
   READ_MORE: 'Leggi tutto',
+  VIEW_MORE: 'Leggi tutto',
   BANNER_CTA: 'Scopri le nostre offerte',
   BOOK_NOW_CTA: 'Prenota ora',
   CHECK_AVAIL: 'Verifica la disponibilità',
