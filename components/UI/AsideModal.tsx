@@ -209,6 +209,7 @@ const AsideModal = ({
     if (isMobile) window.scrollTo(0, scrollY);
     resetAside();
   };
+
   return container && active
     ? createPortal(
         <>
@@ -222,7 +223,7 @@ const AsideModal = ({
             <Header
               onClick={type === SIDEBAR_TYPES.PRODUCT_CARD ? onClose : null}
               addBg={!!title}
-              type={type}
+              headerType={type}
               sidePadding={sidePadding}
               isGlobalMb={isGlobalMb}
             >
