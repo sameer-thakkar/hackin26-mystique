@@ -10,7 +10,11 @@ import {
   fetchTourListV6,
 } from 'utils/apiUtils';
 import { csvTgidToArray, getHostName, normaliseURL } from 'utils/helper';
-import { generateDescriptor, getSingleAriesTag } from 'utils/productUtils';
+import {
+  generateDescriptor,
+  getSingleAriesTag,
+  standarizeCancellationPolicy,
+} from 'utils/productUtils';
 import { CURRENCY_SYMBOL_MAP } from 'const/index';
 
 export const uncategorizedToursListParser = (
@@ -233,20 +237,30 @@ export const categoryTourListParserV1 = async ({
         descriptors,
         minDuration,
         maxDuration,
-        microBrandsHighlight,
         name,
         reviewCount,
         combo,
         primaryCollection,
         primaryCategory,
         primarySubCategory,
-      } = tour || {};
+        cancellationPolicy,
+        reschedulePolicy,
+        ticketValidity,
+      } = tour ?? {};
       const { productImages, safetyImages } = media || {};
       const updatedDescriptors = generateDescriptor({
         descriptors,
         maxDuration,
         minDuration,
         lang: language,
+      });
+      let { microBrandsHighlight } = tour ?? {};
+
+      microBrandsHighlight = standarizeCancellationPolicy({
+        highlights: microBrandsHighlight,
+        cancellationPolicy,
+        reschedulePolicy,
+        ticketValidity,
       });
 
       const { variants } =
@@ -468,7 +482,6 @@ export const categoryTourListParserV2 = async (
           minDuration,
           maxDuration,
           microBrandsDescriptor,
-          microBrandsHighlight,
           listingPrice,
           allTags,
           name,
@@ -479,6 +492,9 @@ export const categoryTourListParserV2 = async (
           primaryCollection,
           primaryCategory,
           primarySubCategory,
+          cancellationPolicy,
+          reschedulePolicy,
+          ticketValidity,
         } = product || {};
         const { displayName: collectionName } = primaryCollection || {};
         const { displayName: primaryCategoryName } = primaryCategory || {};
@@ -496,6 +512,15 @@ export const categoryTourListParserV2 = async (
           minDuration,
           lang: 'en',
           isEntertainmentMb: true,
+        });
+        let { microBrandsHighlight } = product ?? {};
+
+        microBrandsHighlight = standarizeCancellationPolicy({
+          highlights: microBrandsHighlight,
+          cancellationPolicy,
+          reschedulePolicy,
+          ticketValidity,
+          showValidity: false,
         });
 
         const filterHighlights = [

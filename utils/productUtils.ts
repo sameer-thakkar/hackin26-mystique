@@ -1,14 +1,17 @@
 import { RichText } from 'prismic-reactjs';
-import { THEMES } from 'const/index';
+import dayjs from 'dayjs';
+import { getDurationInHours, isDateValid } from 'utils/dateUtils';
+import { HIGHLIGHT_TYPES, THEMES, VALIDITY_TYPES } from 'const/index';
 import {
   DESCRIPTOR_RANKING_LOGIC,
   MAX_DESCRIPTORS_DISPLAYED,
 } from 'const/descriptors';
+import { strings } from 'const/strings';
 
 export const extractTabsFromHighlights = (highlights) => {
   let tabs = [];
   const nonTabHighlights = highlights.reduce((acc, highlight) => {
-    if (highlight.type === 'heading6') {
+    if (highlight.type === HIGHLIGHT_TYPES.H6_HEADING) {
       tabs.push({
         type: 'tab',
         heading: RichText.asText([highlight]),
@@ -300,4 +303,173 @@ export const generateDescriptor = ({
       MAX_DESCRIPTORS_DISPLAYED
     );
   }
+};
+
+export const getCancellationPolicyString = ({
+  cancellationPolicy,
+  reschedulePolicy,
+  ticketValidity,
+}) => {
+  const { cancellable, cancellableUpTo: cancellableUptoMinutes } =
+    cancellationPolicy ?? {};
+  const { reschedulable, reschedulableUpTo: reschedulableUptoMinutes } =
+    reschedulePolicy ?? {};
+  const {
+    ticketValidityType: validityType,
+    ticketValidityUntilDate: validUptoDate,
+    ticketValidityUntilDaysFromPurchase: validUptoDays,
+  } = ticketValidity ?? {};
+
+  const isValidUptoMonths = validUptoDays >= 60; // show validity in months if n(months) >= 2
+  const validUptoMonths = isValidUptoMonths
+    ? Math.floor(validUptoDays / 30)
+    : 0;
+  const cancellableUptoHours = getDurationInHours(cancellableUptoMinutes);
+  const reschedulableUptoHours = getDurationInHours(reschedulableUptoMinutes);
+  const formattedValidUptoDate = isDateValid(validUptoDate)
+    ? dayjs(validUptoDate).format('D MMMM, YYYY')
+    : null;
+
+  if (!cancellable && !reschedulable) {
+    switch (validityType) {
+      case VALIDITY_TYPES.UNTIL_DATE:
+        return strings.formatString(
+          strings.CANCELLATION_POLICY.VALID_UNTIL_DATE,
+          formattedValidUptoDate
+        );
+      case VALIDITY_TYPES.UNTIL_DAYS_FROM_PURCHASE:
+        return isValidUptoMonths
+          ? strings.formatString(
+              strings.CANCELLATION_POLICY.VALID_WITHIN_NEXT_MONTHS,
+              validUptoMonths
+            )
+          : strings.formatString(
+              strings.CANCELLATION_POLICY.VALID_WITHIN_NEXT_DAYS,
+              validUptoDays
+            );
+      case VALIDITY_TYPES.EXTENDABLE_BUT_UNKNOWN:
+        return strings.CANCELLATION_POLICY.EXTENDED_BUT_UNKNOWN_VALIDITY;
+      default:
+        return strings.CANCELLATION_POLICY.NON_CANCELLABLE_NON_RESCHEDULABLE;
+    }
+  } else if (!cancellable && reschedulable) {
+    return strings.formatString(
+      strings.CANCELLATION_POLICY.NON_CANCELLABLE_BUT_RESCHEDULABLE,
+      reschedulableUptoHours
+    );
+  } else {
+    return strings.formatString(
+      strings.CANCELLATION_POLICY.CANCELLABLE,
+      cancellableUptoHours
+    );
+  }
+};
+
+const getValidityPolicyString = (ticketValidity) => {
+  const {
+    ticketValidityType: validityType,
+    ticketValidityUntilDate: validUptoDate,
+    ticketValidityUntilDaysFromPurchase: validUptoDays,
+  } = ticketValidity ?? {};
+
+  if (!validityType || validityType === VALIDITY_TYPES.NOT_EXTENDABLE)
+    return null;
+
+  const isValidUptoMonths = validUptoDays >= 60;
+  const validUptoMonths = isValidUptoMonths
+    ? Math.floor(validUptoDays / 30)
+    : 0;
+  const formattedValidUptoDate = isDateValid(validUptoDate)
+    ? dayjs(validUptoDate).format('D MMMM, YYYY')
+    : null;
+
+  switch (validityType) {
+    case VALIDITY_TYPES.UNTIL_DATE:
+      return strings.formatString(
+        strings.VALIDITY.UNTIL_DATE,
+        formattedValidUptoDate
+      );
+    case VALIDITY_TYPES.UNTIL_DAYS_FROM_PURCHASE:
+      return isValidUptoMonths
+        ? strings.formatString(
+            strings.VALIDITY.UNTIL_MONTHS_FROM_PURCHASE,
+            validUptoMonths
+          )
+        : strings.formatString(
+            strings.VALIDITY.UNTIL_DAYS_FROM_PURCHASE,
+            validUptoDays
+          );
+    default:
+      return strings.VALIDITY.EXTENDED_BUT_UNKNOWN_VALIDITY;
+  }
+};
+
+export const standarizeCancellationPolicy = ({
+  highlights = [],
+  cancellationPolicy = {},
+  reschedulePolicy = {},
+  ticketValidity = {},
+  showValidity = true,
+}) => {
+  let updatedHighlights = [...highlights];
+
+  // Removing the existing (hard-coded) cancellation policy from highlights array
+  const firstIndex = updatedHighlights.findIndex(
+    (item) =>
+      item.type === HIGHLIGHT_TYPES.H6_HEADING &&
+      (item.text.toLowerCase() ===
+        strings.CANCELLATION_POLICY_HEADING.toLowerCase() ||
+        item.text.toLowerCase() === 'politica di cancellazione' ||
+        item.text.toLowerCase() === 'cancellazione') // Temporary fix - should remove once cancellation policy is removed from MBHighlights
+  );
+  let lastIndex = firstIndex + 1;
+
+  while (lastIndex < updatedHighlights.length) {
+    if (updatedHighlights[lastIndex].type.startsWith('heading')) break; // stop iterating when next heading is found
+    lastIndex++;
+  }
+
+  updatedHighlights = updatedHighlights.filter(
+    (_, index) => index < firstIndex || index >= lastIndex
+  );
+
+  // Adding the new cancellation and validity policy to highlights array
+  const text = strings.CANCELLATION_POLICY_HEADING,
+    spans = [],
+    cancellationPolicyString = getCancellationPolicyString({
+      cancellationPolicy,
+      reschedulePolicy,
+      ticketValidity,
+    });
+
+  updatedHighlights = updatedHighlights.concat([
+    {
+      type: HIGHLIGHT_TYPES.H6_HEADING,
+      text,
+      spans,
+      content: { text, spans },
+    },
+    {
+      type: HIGHLIGHT_TYPES.LIST_ITEM,
+      text: cancellationPolicyString,
+      spans,
+      content: { text: cancellationPolicyString, spans },
+    },
+  ]);
+
+  if (showValidity) {
+    const validityPolicyString = getValidityPolicyString(ticketValidity);
+    updatedHighlights = validityPolicyString
+      ? updatedHighlights.concat([
+          {
+            type: HIGHLIGHT_TYPES.LIST_ITEM,
+            text: validityPolicyString,
+            spans,
+            content: { text: validityPolicyString, spans },
+          },
+        ])
+      : updatedHighlights;
+  }
+
+  return updatedHighlights;
 };

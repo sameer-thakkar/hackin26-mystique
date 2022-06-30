@@ -25,3 +25,7 @@ export const dateToString = (
 };
 
 export const isDateInThePast = (date) => new Date(date).getTime() < Date.now();
+
+export const getDurationInHours = (duration) => Math.round(duration / 60);
+
+export const isDateValid = (date) => dayjs(date).isValid();

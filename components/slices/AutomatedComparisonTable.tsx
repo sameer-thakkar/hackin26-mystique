@@ -17,6 +17,7 @@ import Conditional from 'components/common/Conditional';
 import { trackEvent } from 'utils/analytics';
 import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import { getDuration } from 'utils/timeUtils';
+import { getCancellationPolicyString } from 'utils/productUtils';
 import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
 
@@ -410,33 +411,23 @@ const AutomatedTourComparisonTable = ({
         ),
       };
     } else if (label == 'cancellationPolicy') {
-      if (tour?.[label]?.cancellable) {
-        const hours = Math.floor(tour?.[label]?.cancellableUpTo / 60);
-        return {
-          title: strings.CANCELLATION_POLICY_HEADING,
-          content: (
-            <div className="free-cancellation block-content-wrapper">
-              <div className="icon">{CHECK}</div>
-              <p>
-                {strings.TICKET_CAN_BE_CANCELED.replace(
-                  '{hours}',
-                  hours.toString()
-                )}
-              </p>
-            </div>
-          ),
-        };
-      } else {
-        return {
-          title: strings.CANCELLATION_POLICY_HEADING,
-          content: (
-            <div className="free-cancellation block-content-wrapper">
-              <div className="icon">{CROSS}</div>
-              <p>{strings.TICKET_CANNOT_BE_CANCELED}</p>
-            </div>
-          ),
-        };
-      }
+      const { cancellationPolicy, reschedulePolicy, ticketValidity } = tour;
+      const { cancellable } = cancellationPolicy;
+      const cancellationPolicyString = getCancellationPolicyString({
+        cancellationPolicy,
+        reschedulePolicy,
+        ticketValidity,
+      });
+
+      return {
+        title: strings.CANCELLATION_POLICY_HEADING,
+        content: (
+          <div className="free-cancellation block-content-wrapper">
+            <div className="icon">{cancellable ? CHECK : CROSS}</div>
+            <p>{cancellationPolicyString}</p>
+          </div>
+        ),
+      };
     }
   };
 

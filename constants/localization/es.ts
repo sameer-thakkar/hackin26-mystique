@@ -374,6 +374,32 @@ const es = {
     },
   },
   CANCELLATION_POLICY_HEADING: 'Política de cancelación',
+  CANCELLATION_POLICY: {
+    HEADING: 'Política de modificaciones',
+    NON_CANCELLABLE_NON_RESCHEDULABLE:
+      'Estas entradas no se pueden cancelar ni reprogramar.',
+    VALID_UNTIL_DATE:
+      'Estas entradas no se pueden cancelar. Sin embargo, puedes utilizarlas en cualquier momento hasta el {0}.',
+    VALID_WITHIN_NEXT_DAYS:
+      'Estas entradas no se pueden cancelar. Sin embargo, puedes utilizarlas en cualquier momento dentro de los siguientes {0} días.',
+    VALID_WITHIN_NEXT_MONTHS:
+      'Estas entradas no se pueden cancelar. Sin embargo, puedes utilizarlas en cualquier momento dentro de los próximos {0} meses.',
+    EXTENDED_BUT_UNKNOWN_VALIDITY:
+      'Estas entradas no se pueden cancelar. Sin embargo, son válidas durante un periodo de tiempo prolongado.',
+    NON_CANCELLABLE_BUT_RESCHEDULABLE:
+      'Estas entradas no se pueden cancelar. Sin embargo, se pueden reprogramar hasta {0} horas antes del comienzo de la experiencia.',
+    CANCELLABLE:
+      'Puedes cancelar estas entradas hasta {0} horas antes del comienzo de la experiencia y recibir un reembolso completo.',
+  },
+  VALIDITY: {
+    UNTIL_DATE: 'Estas entradas son válidas hasta el {0}.',
+    UNTIL_DAYS_FROM_PURCHASE:
+      'Estas entradas son válidas durante {0} días a partir de la fecha de compra.',
+    UNTIL_MONTHS_FROM_PURCHASE:
+      'Estas entradas son válidas durante {0} meses a partir de la fecha de compra.',
+    EXTENDED_BUT_UNKNOWN_VALIDITY:
+      'Estas entradas son válidas durante un periodo de tiempo prolongado. Los detalles exactos se mencionarán en la entrada.',
+  },
 };
 
 export default es;

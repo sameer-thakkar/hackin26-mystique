@@ -362,6 +362,32 @@ const pt = {
     },
   },
   CANCELLATION_POLICY_HEADING: 'Política de cancelamento',
+  CANCELLATION_POLICY: {
+    HEADING: 'Política de alteração',
+    NON_CANCELLABLE_NON_RESCHEDULABLE:
+      'Estes ingressos não podem ser cancelados ou alterados.',
+    VALID_UNTIL_DATE:
+      'Estes ingressos não podem ser cancelados. No entanto, você pode utilizá-los a qualquer momento até {0}.',
+    VALID_WITHIN_NEXT_DAYS:
+      'Estes ingressos não podem ser cancelados. No entanto, você pode utilizá-los a qualquer momento dentro dos próximos {0} dias.',
+    VALID_WITHIN_NEXT_MONTHS:
+      'Estes ingressos não podem ser cancelados. No entanto, você pode utilizá-los a qualquer momento dentro dos próximos {0} meses.',
+    EXTENDED_BUT_UNKNOWN_VALIDITY:
+      'Estes ingressos não podem ser cancelados. No entanto, eles são válidos por um período estendido.',
+    NON_CANCELLABLE_BUT_RESCHEDULABLE:
+      'Estes ingressos não podem ser cancelados. No entanto, eles podem ser alterados até {0} horas antes do início da experiência.',
+    CANCELLABLE:
+      'Você pode cancelar estes ingressos até {0} horas antes do início da experiência para obter um reembolso total.',
+  },
+  VALIDITY: {
+    UNTIL_DATE: 'Estes ingressos são válidos até o dia {0}.',
+    UNTIL_DAYS_FROM_PURCHASE:
+      'Estes ingressos são válidos por {0} dias a partir da data da compra.',
+    UNTIL_MONTHS_FROM_PURCHASE:
+      'Estes ingressos são válidos por {0} meses a partir da data da compra.',
+    EXTENDED_BUT_UNKNOWN_VALIDITY:
+      'Estes ingressos são válidos por uma duração estendida. Os detalhes exatos serão informados no ingresso.',
+  },
 };
 
 export default pt;
