@@ -30,14 +30,7 @@ const Swiper = dynamic(() => import('components/Swiper'), {
 });
 
 const swiperParams = {
-  breakpoints: {
-    320: {
-      slidesPerView: 1.1,
-    },
-    480: {
-      slidesPerView: 'auto',
-    },
-  },
+  slidesPerView: 'auto',
   speed: 600,
   centeredSlides: true,
   autoplay: {
@@ -303,9 +296,9 @@ const Banner = (props: TBannerCarouselProps) => {
         )}
       </StyledBanner>
 
-      {bannerSubtext?.length ? (
+      <Conditional if={bannerSubtext?.length}>
         <BannerSubtext>{bannerSubtext}</BannerSubtext>
-      ) : null}
+      </Conditional>
     </div>
   );
 };
@@ -471,6 +464,7 @@ const StyledBanner = styled.div`
     .mb-slide {
       aspect-ratio: 16/9;
       height: 100%;
+      width: 91.7vw;
     }
 
     .mb-captions .mb-caption {
