@@ -202,7 +202,7 @@ const formatDescription = (desc) =>
   );
 
 const VariantCard = ({
-  currencySymbol,
+  currencyCode,
   variantListingPrice,
   variantId,
   variantName,
@@ -273,14 +273,14 @@ const VariantCard = ({
             <LocalisedPrice
               {...{
                 price: variantPrice,
-                currencySymbol,
+                currencyCode,
                 lang: language,
                 className: 'variant-price',
               }}
             />
             <Conditional if={isMobile && bestDiscount > 0}>
               <span className="discount">
-                {strings.SAVE.replace('<val>', `${bestDiscount}`)}
+                {strings.formatString(strings.SAVE, `${bestDiscount}`)}
               </span>
             </Conditional>
           </div>

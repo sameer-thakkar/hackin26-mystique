@@ -1,20 +1,20 @@
-import { useEffect, useState, useContext } from 'react';
+import { useContext } from 'react';
 import styled from 'styled-components';
 import useSWR from 'swr';
 import { MBContext } from 'contexts/MBContext';
 import Conditional from 'components/common/Conditional';
-import Image from 'components/UI/Image';
-import LocalisedPrice from 'components/UI/LPrice';
-import { tourListApiParser } from 'utils/dataParsers';
-import RichContent from 'components/UI/RichContent';
+import Image from 'UI/Image';
+import RichContent from 'UI/RichContent';
+import LocalisedPrice from 'UI/LPrice';
+import TitleTextCombo from 'UI/TitleTextCombo';
 import { createBookingURL } from 'utils';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
+import { tourListApiParser } from 'utils/dataParsers';
 import { getHostName } from 'utils/helper';
 import { STAR_FULL } from 'assets/SvgIcons';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
 import { DESIGN } from 'const/index';
-import TitleTextCombo from 'UI/TitleTextCombo';
 
 const Tour = styled.a`
   display: grid;
@@ -122,7 +122,6 @@ const CustomLinkedTours = ({
   content,
   commonLink,
 }) => {
-  const [apiTours, setTours] = useState(null);
   const {
     isDev,
     host,
@@ -130,11 +129,9 @@ const CustomLinkedTours = ({
     lang,
     design,
     nakedDomain,
-    currencySymbolMap,
     biLink,
     redirectToHeadoutBookingFlow,
   } = useContext(MBContext);
-  const [currency, setCurrency] = useState(null);
 
   const hostname = getHostName(isStage, isDev, host);
   const tourListEndpoint = getHeadoutApiUrl({
@@ -151,16 +148,7 @@ const CustomLinkedTours = ({
   const { data: tourListData } = useSWR(tourListEndpoint, {
     fetcher: swrFetcher,
   });
-
-  useEffect(() => {
-    if (tourListData) {
-      const tours = tourListApiParser(tourListData, lang);
-      const { currencies } = tourListData || {};
-      const [currency] = currencies || [];
-      setTours(tours);
-      setCurrency(currency);
-    }
-  }, [tourListData]);
+  const apiTours = tourListData ? tourListApiParser(tourListData, lang) : {};
 
   const defaultURL = (tgid) =>
     createBookingURL({
@@ -181,7 +169,7 @@ const CustomLinkedTours = ({
             const {
               title,
               image,
-              currency: tourCurrency,
+              currency,
               price,
               averageRating,
               reviewCount,
@@ -198,10 +186,7 @@ const CustomLinkedTours = ({
                 <TitlePriceCombo>
                   <Title>{title}</Title>
                   <LocalisedPrice
-                    currencySymbol={
-                      currency?.localSymbol ??
-                      currencySymbolMap[tourCurrency]?.localSymbol
-                    }
+                    currencyCode={currency}
                     price={price}
                     lang={lang}
                   />

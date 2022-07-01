@@ -337,16 +337,13 @@ const ShowPageBanner = ({
 }) => {
   const {
     listingPrice,
-    currency,
     name,
     imageUploads,
     primaryCategory,
     primarySubCategory,
     primaryCollection,
-  } = tourGroupData;
+  } = tourGroupData ?? {};
   const pageMetaData = useRecoilValue(metaAtom);
-
-  const { localSymbol } = currency;
 
   const productImage = imageUploads.length
     ? imageUploads[1] || imageUploads[0]
@@ -432,6 +429,7 @@ const ShowPageBanner = ({
       fetchReopeningDate();
     }
   }, [tgid, isTourAvailable, hostname]);
+
   const trackBookNowClick = () => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_BOOK_NOW_CLICKED,
@@ -589,7 +587,6 @@ const ShowPageBanner = ({
                   lang={currentLanguage}
                   showSavings={true}
                   showScratchPrice={true}
-                  currencySymbolOverride={localSymbol}
                   prefix={true}
                 />
               </div>
@@ -613,7 +610,6 @@ const ShowPageBanner = ({
                     lang={currentLanguage}
                     showSavings={true}
                     showScratchPrice={true}
-                    currencySymbolOverride={localSymbol}
                     prefix={true}
                   />
                 </div>

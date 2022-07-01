@@ -104,13 +104,11 @@ const CategoryCard = ({
   allShowPagesDocuments,
   element,
   currentLanguage,
-  currencySymbol,
   categoryName,
   isMobile,
 }) => {
   const { listingPrice, name, imageUrl, id, tourGroupUrl } = element;
   const { isDev, host } = useContext(MBContext);
-  const currencyCode = listingPrice?.currencyCode;
 
   let cardDocument = allShowPagesDocuments.filter(
     (element) => element.data.tgid === id
@@ -141,7 +139,6 @@ const CategoryCard = ({
             lang={currentLanguage}
             showSavings={true}
             showScratchPrice={true}
-            currencySymbolOverride={currencySymbol || currencyCode}
             prefix={true}
           />
         </div>

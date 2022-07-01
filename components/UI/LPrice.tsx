@@ -1,19 +1,32 @@
 import React from 'react';
-import { getLocalisedPriceString } from 'utils/helper';
+import { getLocalisedPrice, CurrencyDisplayType } from 'utils/currency';
+
+type LocalisedPriceProps = {
+  className?: string;
+  currencyCode?: string;
+  currencyDisplay?: CurrencyDisplayType;
+  currencySymbol?: string;
+  lang?: string;
+  price: number;
+  precision?: number;
+};
 
 const LocalisedPrice = ({
-  price,
-  currencySymbol,
-  lang,
   className = '',
+  currencyCode,
+  currencyDisplay = 'narrowSymbol',
+  lang = 'en',
+  price,
   precision = 2,
-}) => {
-  const finalPrice = getLocalisedPriceString(
+}: LocalisedPriceProps) => {
+  const formattedPrice = getLocalisedPrice({
     price,
-    currencySymbol,
+    currencyCode,
     lang,
-    precision
-  );
-  return <span className={className}>{finalPrice}</span>;
+    currencyDisplay,
+    precision,
+  });
+
+  return <span className={className}>{formattedPrice}</span>;
 };
 export default LocalisedPrice;

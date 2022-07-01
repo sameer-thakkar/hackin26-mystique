@@ -168,10 +168,10 @@ const ComboVariants = ({
 }: ComboVariantsProps) => {
   const { lang, host, isDev, isStage } = useContext(MBContext);
   const hostname = getHostName(isStage, isDev, host);
-  const { variants, currency } = data || {};
+  const { variants, currency } = data ?? {};
   const pageMetaData = useRecoilValue(metaAtom);
 
-  const { localSymbol: currencySymbol } = currency || {};
+  const { code: currencyCode } = currency ?? {};
   useEffect(() => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.COMBO_VARIANT.POPUP_VIEWED,
@@ -193,7 +193,7 @@ const ComboVariants = ({
       variantName,
       variantListingPrice,
       variantInfo,
-      currencySymbol,
+      currencyCode,
       language: lang,
       bookingUrl,
       hostname,

@@ -216,7 +216,7 @@ const ShowPage = ({
     primarySubCategory || {};
   const { code: cityCode } = city || {};
 
-  const { code: currencyCode, localSymbol: currencySymbol } = currency || {};
+  const { code: currencyCode } = currency || {};
 
   allTags.forEach((element) => {
     if (element === strings.REOPENING?.toUpperCase()) {
@@ -561,7 +561,6 @@ const ShowPage = ({
           <CategorySlider
             cards={similarProductData}
             isMobile={isMobile}
-            currencySymbol={currencySymbol}
             allShowPagesDocuments={allShowPagesDocuments}
             currentLanguage={currentLanguage}
             categoryName={primarySubCategoryName}

@@ -10,7 +10,6 @@ import { STAR } from 'assets/SvgIcons';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
-  CURRENCY_SYMBOL_MAP,
   REOPENING_CATEGORIES,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -319,6 +318,7 @@ const Product = (props) => {
     activeCategoryId = null,
     host,
   } = props;
+  
   const {
     currencySymbolMap,
     lang,
@@ -326,6 +326,7 @@ const Product = (props) => {
     uid,
     redirectToHeadoutBookingFlow,
   } = useContext(MBContext);
+
   const [initialized, setInitialized] = useState(true);
   const hsid = useRecoilValue(hsidAtom);
   const isLTT = checkLTT(uid);
@@ -416,9 +417,6 @@ const Product = (props) => {
     currencyCode,
     bestDiscount,
   } = listingPrice || {};
-  const currencySymbol =
-    currencySymbolMap[currencyCode]?.localSymbol ||
-    CURRENCY_SYMBOL_MAP[currencyCode];
 
   const handleProductClick = (event) => {
     event.preventDefault();
@@ -552,7 +550,7 @@ const Product = (props) => {
             </Conditional>
             <LocalisedPrice
               price={price}
-              currencySymbol={currencySymbol}
+              currencyCode={currencyCode}
               lang={lang}
             />
             <Conditional
@@ -570,7 +568,7 @@ const Product = (props) => {
               </Conditional>
               <LocalisedPrice
                 price={scratchPrice}
-                currencySymbol={currencySymbol}
+                currencyCode={currencyCode}
                 lang={lang}
               />
             </div>
@@ -676,7 +674,7 @@ const Product = (props) => {
                   </Conditional>
                   <LocalisedPrice
                     price={price}
-                    currencySymbol={currencySymbol}
+                    currencyCode={currencyCode}
                     lang={lang}
                   />
                   <Conditional
@@ -694,7 +692,7 @@ const Product = (props) => {
                     </Conditional>
                     <LocalisedPrice
                       price={scratchPrice}
-                      currencySymbol={currencySymbol}
+                      currencyCode={currencyCode}
                       lang={lang}
                     />
                   </div>

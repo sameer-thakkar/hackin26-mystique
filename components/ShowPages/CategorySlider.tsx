@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
+import CategoryCard from 'components/ShowPages/CategoryCard';
 import Conditional from 'components/common/Conditional';
-
-import CategoryCard from './CategoryCard';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -122,7 +121,6 @@ interface PagesDocuments {
 type CardCarouselProps = {
   cards: any[];
   isMobile: boolean;
-  currencySymbol: any;
   allShowPagesDocuments: PagesDocuments[];
   currentLanguage: string;
   categoryName: string;
@@ -132,7 +130,6 @@ export default class CategorySlider extends Component<CardCarouselProps> {
   state = {
     isMobile: null,
     cardPrices: {},
-    currencySymbol: '',
     isFetched: false,
     numberOfCard: 6,
   };
@@ -146,7 +143,6 @@ export default class CategorySlider extends Component<CardCarouselProps> {
     const {
       cards,
       isMobile,
-      currencySymbol,
       allShowPagesDocuments,
       currentLanguage,
       categoryName,
@@ -184,7 +180,6 @@ export default class CategorySlider extends Component<CardCarouselProps> {
                       allShowPagesDocuments={allShowPagesDocuments}
                       element={element}
                       currentLanguage={currentLanguage}
-                      currencySymbol={currencySymbol}
                       categoryName={categoryName}
                       isMobile={isMobile}
                     />
@@ -210,7 +205,6 @@ export default class CategorySlider extends Component<CardCarouselProps> {
                     allShowPagesDocuments={allShowPagesDocuments}
                     element={element}
                     currentLanguage={currentLanguage}
-                    currencySymbol={currencySymbol}
                     categoryName={categoryName}
                     isMobile={isMobile}
                   />

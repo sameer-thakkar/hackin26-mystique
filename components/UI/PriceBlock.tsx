@@ -1,13 +1,11 @@
-import { HALYARD } from 'const/ui-constants';
-import { THEMES } from 'const/index';
 import styled from 'styled-components';
-import { strings } from 'const/strings';
 import Conditional from 'components/common/Conditional';
-import { useContext } from 'react';
-import { MBContext } from 'contexts/MBContext';
+import LocalisedPrice from 'UI/LPrice';
 import COLORS from 'const/colors';
-
-import LocalisedPrice from './LPrice';
+import { THEMES } from 'const/index';
+import { strings } from 'const/strings';
+import { HALYARD } from 'const/ui-constants';
+import { CurrencyDisplayType } from 'utils/currency';
 
 export const StyledPriceBlock = styled.div`
   font-family: ${HALYARD.FONT_STACK};
@@ -51,58 +49,52 @@ export const SavedTag = styled.div`
   border-radius: 3px;
 `;
 
+type PriceBlockProps = {
+  currencyDisplay?: CurrencyDisplayType;
+  lang: string;
+  price: any;
+  prefix?: boolean;
+  showSavings?: boolean;
+  showScratchPrice?: boolean;
+};
+
 const PriceBlock = ({
   price,
   lang,
   showScratchPrice = true,
   prefix = true,
   showSavings = false,
-  currencySymbolOverride = '',
-}: {
-  showScratchPrice?: boolean;
-  lang: string;
-  price: any;
-  prefix?: boolean;
-  showSavings?: boolean;
-  currencySymbolOverride?: string;
-}) => {
-  const { currencySymbolMap } = useContext(MBContext);
+  currencyDisplay = 'narrowSymbol',
+}: PriceBlockProps) => {
   if (!price) return null;
-  const {
-    originalPrice,
-    finalPrice,
-    currencyCode,
-    precision,
-    localSymbol,
-    bestDiscount,
-  } = price;
-  const currencySymbol =
-    localSymbol ||
-    currencySymbolOverride ||
-    currencySymbolMap?.[currencyCode]?.localSymbol ||
-    currencyCode;
+  const { originalPrice, finalPrice, currencyCode, precision, bestDiscount } =
+    price ?? {};
   return (
     <StyledPriceBlock>
-      {originalPrice > finalPrice && showScratchPrice ? (
+      <Conditional if={originalPrice > finalPrice && showScratchPrice}>
         <span className="tour-scratch-price">
           {prefix ? strings.FROM + ' ' : ''}
           <LocalisedPrice
-            currencySymbol={currencySymbol}
-            price={originalPrice}
+            currencyCode={currencyCode}
+            currencyDisplay={currencyDisplay}
             lang={lang}
+            price={originalPrice}
             precision={precision}
           />
         </span>
-      ) : null}
+      </Conditional>
       <LocalisedPrice
         className="tour-price"
-        currencySymbol={currencySymbol}
-        price={finalPrice}
+        currencyCode={currencyCode}
+        currencyDisplay={currencyDisplay}
         lang={lang}
+        price={finalPrice}
         precision={precision}
       />
       <Conditional if={showSavings && showScratchPrice && bestDiscount > 0}>
-        <SavedTag>{strings.SAVE.replace('<val>', `${bestDiscount}`)}</SavedTag>
+        <SavedTag>
+          {strings.formatString(strings.SAVE, `${bestDiscount}`)}
+        </SavedTag>
       </Conditional>
     </StyledPriceBlock>
   );

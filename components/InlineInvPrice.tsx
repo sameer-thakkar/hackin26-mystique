@@ -1,12 +1,20 @@
-import { MBContext } from 'contexts/MBContext';
 import React, { Component } from 'react';
+import styled from 'styled-components';
+import { MBContext } from 'contexts/MBContext';
 import LocalisedPrice from 'UI/LPrice';
+import Conditional from 'components/common/Conditional';
+import { getLocalisedPrice } from 'utils/currency';
 
+const InlineScratchPrice = styled.span`
+  text-decoration: line-through;
+  margin-left: 5px;
+  color: rgba(84, 84, 84, 0.7);
+`;
 export default class InlineInvPrice extends Component<any, any> {
   state = {
     price: '',
     scratchPrice: '',
-    currencySymbol: '',
+    currencyCode: '',
     showScratchPrice: '',
     isFetched: false,
   };
@@ -18,7 +26,7 @@ export default class InlineInvPrice extends Component<any, any> {
       const fetchTour = await fetch(
         `/api/tours/v5/tour-group/inventory/get/${this.props.tgid}`
       ).then((res) => res.json());
-      const currencySymbol = fetchTour.currency.localSymbol;
+      const currencyCode = fetchTour.currency.code;
       const getTIDData = fetchTour.inventoryList.find(
         (inventoryList) => inventoryList.tourId == this.props.tid
       );
@@ -32,7 +40,7 @@ export default class InlineInvPrice extends Component<any, any> {
       this.setState({
         price,
         scratchPrice,
-        currencySymbol,
+        currencyCode,
         showScratchPrice,
         isFetched: true,
       });
@@ -42,44 +50,34 @@ export default class InlineInvPrice extends Component<any, any> {
   render() {
     const {
       scratchPrice,
-      currencySymbol,
+      currencyCode,
       isFetched,
       price,
       showScratchPrice,
     } = this.state;
-    const isScratchPriceExist =
+    const hasScratchPrice =
       showScratchPrice && scratchPrice && price < scratchPrice;
     return (
-      <>
-        {isFetched ? (
-          <>
-            {price ? (
-              <LocalisedPrice
-                price={price}
-                currencySymbol={currencySymbol}
-                lang={this.context.lang}
-              />
-            ) : (
-              ''
-            )}
-            {isScratchPriceExist ? (
-              <span className="inline-scratchprice">
-                {currencySymbol}
-                {scratchPrice}
-              </span>
-            ) : (
-              ''
-            )}
-            <style jsx>{`
-              .inline-scratchprice {
-                text-decoration: line-through;
-                margin-left: 5px;
-                color: rgba(84, 84, 84, 0.7);
-              }
-            `}</style>
-          </>
-        ) : null}
-      </>
+      <Conditional if={isFetched}>
+        <>
+          <Conditional if={price}>
+            <LocalisedPrice
+              price={Number(price)}
+              currencyCode={currencyCode}
+              lang={this.context.lang}
+            />
+          </Conditional>
+          <Conditional if={hasScratchPrice}>
+            <InlineScratchPrice>
+              {getLocalisedPrice({
+                price: Number(scratchPrice),
+                currencyCode,
+                lang: this.context.lang,
+              })}
+            </InlineScratchPrice>
+          </Conditional>
+        </>
+      </Conditional>
     );
   }
 }

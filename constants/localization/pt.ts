@@ -24,7 +24,7 @@ const pt = {
   SHOW_LESS_TEXT: 'Ver menos',
   NEXT_AVAILABLE: 'Próxima disponível: ',
   SAVE_UPTO: 'Economize até',
-  SAVE: 'Economize  <val>%',
+  SAVE: 'Economize  {0}%',
   AVAILABLE: 'Disponível',
   EARLIEST_AVAILABILITY: 'Próxima disponível: ',
   UNAVAILABLE: 'Indisponível',

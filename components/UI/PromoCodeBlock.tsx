@@ -1,14 +1,14 @@
 import React, { useContext } from 'react';
-import Button from 'UI/Button';
-import { strings } from 'const/strings';
 import styled from 'styled-components';
-import COLORS from 'const/colors';
-import { PERCENTAGE } from 'assets/SvgIcons';
 import { MBContext } from 'contexts/MBContext';
-import { getLocalisedPriceString } from 'utils/helper';
+import Button from 'UI/Button';
 import Conditional from 'components/common/Conditional';
+import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { strings } from 'const/strings';
+import { PERCENTAGE } from 'assets/SvgIcons';
 import { trackEvent } from 'utils/analytics';
+import { getLocalisedPrice } from 'utils/currency';
 
 const CTABlock = styled.div`
   .promo-code-block {
@@ -89,8 +89,8 @@ const PromoCodeBlock = ({
   collectionId: number | null;
 }) => {
   const { currencySymbolMap } = useContext(MBContext);
-  const mbCurrency = currencySymbolMap[Object.keys(currencySymbolMap)[0]];
-  const localSymbol = mbCurrency?.localSymbol;
+  const currency = currencySymbolMap[Object.keys(currencySymbolMap)[0]];
+  const { code: currencyCode } = currency ?? {};
   const isPromoApplied = clickedPromo === indexPosition;
 
   const promo = finalPromoCode;
@@ -103,14 +103,22 @@ const PromoCodeBlock = ({
       promoDescription = strings.formatString(
         strings.PROMO_CODES.DESCRIPTION.CAPPED,
         discount_percentage.toString(),
-        getLocalisedPriceString(capped_value, localSymbol, currentLanguage)
+        getLocalisedPrice({
+          price: capped_value,
+          currencyCode,
+          lang: currentLanguage,
+        })
       );
       break;
 
     case absolute_discount > 0:
       promoDescription = strings.formatString(
         strings.PROMO_CODES.DESCRIPTION.ABSOLUTE,
-        getLocalisedPriceString(absolute_discount, localSymbol, currentLanguage)
+        getLocalisedPrice({
+          price: absolute_discount,
+          currencyCode,
+          lang: currentLanguage,
+        })
       );
       break;
 

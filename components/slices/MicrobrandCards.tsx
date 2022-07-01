@@ -140,8 +140,8 @@ export const LinkCards = (props) => {
   const {
     cards,
     isFetched,
-    currencySymbol,
     cardPrices,
+    currencySymbol,
     cardClassName,
     as,
     gridAutoCol,
@@ -152,41 +152,41 @@ export const LinkCards = (props) => {
   return (
     <StyledMBCards {...(as !== React.Fragment ? { gridAutoCol } : {})} as={as}>
       {cards.map((card, index) => {
-        const cardPrice = cardPrices?.[card?.tgid];
+        const { image, title, tgid, link } = card ?? {};
+        const { url: imageUrl, alt: altText } = image ?? {};
+        const cardPrice = cardPrices?.[tgid] ?? {};
+        const { listingPrice, price } = cardPrice ?? {};
 
         return (
           <div key={index} className={cardClassName || ''}>
-            <a target="_blank" rel="noopener noreferrer" href={card.link}>
+            <a target="_blank" rel="noopener noreferrer" href={link}>
               <MicrobrandCard className="microbrand-card">
                 <div className="card-image">
                   <Image
                     width={600}
                     height={300}
                     aspectRatio="16:10"
-                    url={card.image.url}
-                    alt={card.image.alt}
+                    url={imageUrl}
+                    alt={altText}
                     dontLazyLoad={index < 8}
                   />
                 </div>
                 <div className="card-bottom">
-                  <span className="card-title">{card.title}</span>
-                  <Conditional if={isFetched && card?.tgid && cardPrice}>
+                  <span className="card-title">{title}</span>
+                  <Conditional if={isFetched && tgid && cardPrice}>
                     <>
-                      <Conditional if={cardPrice?.listingPrice}>
+                      <Conditional if={listingPrice}>
                         <PriceBlock
                           lang={lang}
-                          price={cardPrice?.listingPrice}
+                          price={listingPrice}
                           showScratchPrice={true}
                           prefix={false}
-                          currencySymbolOverride={currencySymbol}
                         />
                       </Conditional>
-                      <Conditional
-                        if={!cardPrice?.listingPrice && cardPrice?.price}
-                      >
+                      <Conditional if={!listingPrice && price}>
                         <span className="card-price">
                           {currencySymbol}
-                          {cardPrice?.price}
+                          {price}
                         </span>
                       </Conditional>
                     </>

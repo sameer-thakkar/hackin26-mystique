@@ -159,9 +159,7 @@ const StickyHeader = ({
   showComponent,
   isAvailable,
 }) => {
-  const { listingPrice, currency, name } = tourGroupData;
-
-  const { localSymbol } = currency;
+  const { listingPrice, name } = tourGroupData ?? {};
 
   const { nakedDomain, biLink, uid, redirectToHeadoutBookingFlow } = useContext(
     MBContext
@@ -198,7 +196,6 @@ const StickyHeader = ({
                   lang={currentLanguage}
                   showSavings={true}
                   showScratchPrice={true}
-                  currencySymbolOverride={localSymbol ? localSymbol : '£'}
                   prefix={true}
                 />
               </div>

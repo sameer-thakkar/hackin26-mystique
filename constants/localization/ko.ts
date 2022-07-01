@@ -1,7 +1,7 @@
 const ko = {
   TOUR_LIST_HEADING: '원하는 체험을 검색하세요',
   GROUP_TICKETS: '그룹 티켓',
-  SAVE: 'Save <vale>',
+  SAVE: 'Save {0}',
   TOUR_LIST_SUB_HEADING:
     '각 분야의 검증된 회사들이 뽑은 다양한 티켓, 투어, 콤보 상품을 만나보세요',
   SANITARY_ALERT: {

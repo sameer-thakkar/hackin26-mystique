@@ -13,11 +13,7 @@ import { strings } from 'const/strings';
 import { CLOSE_WHITE, Shield } from 'assets/SvgIcons';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
-import {
-  ANALYTICS_EVENTS,
-  ANALYTICS_PROPERTIES,
-  CURRENCY_SYMBOL_MAP,
-} from 'const/index';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { isSafetyIncluded, createBookingURL } from 'utils';
 import {
   shortCodeSerializerWithParentProps,
@@ -465,7 +461,6 @@ const DetailedProductCard = (props) => {
 
   const { finalPrice, bestDiscount, originalPrice, currencyCode } =
     listingPrice || {};
-  const currencySymbol = CURRENCY_SYMBOL_MAP[currencyCode];
   const hasSafetyFlag = isSafetyIncluded(allTags);
   const contentBlockForLTT = extractContentForProductCard(
     highlights,
@@ -709,7 +704,7 @@ const DetailedProductCard = (props) => {
                     <LocalisedPrice
                       className="l-price"
                       price={originalPrice}
-                      currencySymbol={currencySymbol}
+                      currencyCode={currencyCode}
                       lang={lang}
                     />
                   </Conditional>
@@ -718,7 +713,7 @@ const DetailedProductCard = (props) => {
                   <LocalisedPrice
                     className="l-price"
                     price={finalPrice}
-                    currencySymbol={currencySymbol}
+                    currencyCode={currencyCode}
                     lang={lang}
                   />
                   <Conditional

@@ -26,7 +26,7 @@ const en = {
   SELECT_CITY: 'Select City',
   NEXT_AVAILABLE: 'Next Available: ',
   SAVE_UPTO: 'Save upto',
-  SAVE: 'Save <val>%',
+  SAVE: 'Save {0}%',
   AVAILABLE: 'Available',
   EARLIEST_AVAILABILITY: 'Earliest Availability',
   UNAVAILABLE: 'Unavailable',

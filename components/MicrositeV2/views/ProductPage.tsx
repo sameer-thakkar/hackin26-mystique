@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import parse from 'url-parse';
 import { greyScheme } from 'style/theme';
 import { RichText } from 'prismic-reactjs';
 import { MBContext } from 'contexts/MBContext';
+import InteractionContext from 'contexts/Interaction';
 import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
 import IconCTA from 'UI/IconCTA';
@@ -20,6 +22,8 @@ import {
   NEW_ARRIVALS_CATEGORIES,
   PAGETYPE,
   REOPENING_CATEGORIES,
+  ANALYTICS_PROPERTIES,
+  ANALYTICS_EVENTS,
 } from 'const/index';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
@@ -28,10 +32,7 @@ import { isSafetyIncluded, createBookingURL } from 'utils';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { dateToString, isDateInThePast } from 'utils/dateUtils';
 import { parseV2ProductDescriptors } from 'utils/dataParsers';
-import InteractionContext from 'contexts/Interaction';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
-import { ANALYTICS_PROPERTIES, ANALYTICS_EVENTS } from 'const/index';
-import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
@@ -510,13 +511,13 @@ export const MobileProductPage = (props) => {
     vendor,
     price,
     scratchPrice,
-    currencySymbol,
     reviewCount,
     category,
     averageRating,
     reopeningDate,
     listingPrice,
   } = tour || {};
+  const { currencyCode } = listingPrice ?? {};
   const pageMetaData = useRecoilValue(metaAtom);
   let allContent = [...contentBlocks.left, ...contentBlocks.right];
   if (!hasCategoryTourList) {
@@ -738,7 +739,7 @@ export const MobileProductPage = (props) => {
               <div className="current-price">
                 <LocalisedPrice
                   price={price}
-                  currencySymbol={currencySymbol}
+                  currencyCode={currencyCode}
                   lang={lang}
                 />
                 <Conditional
@@ -758,7 +759,7 @@ export const MobileProductPage = (props) => {
                   </Conditional>
                   <LocalisedPrice
                     price={scratchPrice}
-                    currencySymbol={currencySymbol}
+                    currencyCode={currencyCode}
                     lang={lang}
                   />
                 </div>
