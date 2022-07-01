@@ -13,7 +13,7 @@ import { csvTgidToArray, getHostName, normaliseURL } from 'utils/helper';
 import {
   generateDescriptor,
   getSingleAriesTag,
-  standarizeCancellationPolicy,
+  standardizeCancellationPolicy,
 } from 'utils/productUtils';
 import { CURRENCY_SYMBOL_MAP } from 'const/index';
 
@@ -244,6 +244,7 @@ export const categoryTourListParserV1 = async ({
         primaryCategory,
         primarySubCategory,
         cancellationPolicy,
+        cancellationPolicyV2,
         reschedulePolicy,
         ticketValidity,
       } = tour ?? {};
@@ -256,11 +257,12 @@ export const categoryTourListParserV1 = async ({
       });
       let { microBrandsHighlight } = tour ?? {};
 
-      microBrandsHighlight = standarizeCancellationPolicy({
+      microBrandsHighlight = standardizeCancellationPolicy({
         highlights: microBrandsHighlight,
-        cancellationPolicy,
+        cancellationPolicy: cancellationPolicyV2 ?? cancellationPolicy,
         reschedulePolicy,
         ticketValidity,
+        lang: getHeadoutLanguagecode(lang),
       });
 
       const { variants } =
@@ -493,6 +495,7 @@ export const categoryTourListParserV2 = async (
           primaryCategory,
           primarySubCategory,
           cancellationPolicy,
+          cancellationPolicyV2,
           reschedulePolicy,
           ticketValidity,
         } = product || {};
@@ -515,12 +518,13 @@ export const categoryTourListParserV2 = async (
         });
         let { microBrandsHighlight } = product ?? {};
 
-        microBrandsHighlight = standarizeCancellationPolicy({
+        microBrandsHighlight = standardizeCancellationPolicy({
           highlights: microBrandsHighlight,
-          cancellationPolicy,
+          cancellationPolicy: cancellationPolicyV2 ?? cancellationPolicy,
           reschedulePolicy,
           ticketValidity,
           showValidity: false,
+          lang: 'en',
         });
 
         const filterHighlights = [

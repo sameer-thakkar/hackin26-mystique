@@ -417,6 +417,7 @@ const AutomatedTourComparisonTable = ({
         cancellationPolicy,
         reschedulePolicy,
         ticketValidity,
+        lang,
       });
 
       return {

@@ -26,6 +26,7 @@ import { gtmAtom } from 'store/atoms/gtm';
 import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
 import { withShortcodes } from 'utils/helper';
 import { localServerSideIsMobileCheck } from 'utils/gen';
+import { strings } from 'const/strings';
 
 const Microsite = dynamic(() => import('components/MicrositeV1'));
 const ContentPage = dynamic(() => import('components/ContentPage'));
@@ -262,8 +263,11 @@ const Page = (props) => {
 };
 
 Page.getInitialProps = async (ctx) => {
-  const { req, query, res, asPath } = ctx;
+  const { req, query, res, asPath, localizedStrings } = ctx;
   const serverRequestStartTimestamp = Math.floor(new Date().getTime());
+  strings.setContent({
+    default: localizedStrings,
+  });
   const queryParamsString = getValidUrlParams(query);
   const { host } = req?.headers || window?.location;
   const pathname =

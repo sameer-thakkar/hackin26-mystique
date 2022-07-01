@@ -382,32 +382,6 @@ const it = {
     },
   },
   CANCELLATION_POLICY_HEADING: 'Polizza di cancellazione',
-  CANCELLATION_POLICY: {
-    HEADING: 'Polizza di modifica dei biglietti',
-    NON_CANCELLABLE_NON_RESCHEDULABLE:
-      'Questi biglietti non possono essere cancellati o riprogrammati.',
-    VALID_UNTIL_DATE:
-      'Questi biglietti non possono essere cancellati, ma puoi usarli in qualsiasi momento fino alla seguente data: {0}.',
-    VALID_WITHIN_NEXT_DAYS:
-      'Questi biglietti non possono essere cancellati, ma puoi usarli in qualsiasi momento entro i prossimi {0} giorni.',
-    VALID_WITHIN_NEXT_MONTHS:
-      'Questi biglietti non possono essere cancellati, ma puoi usarli in qualsiasi momento entro i prossimi {0} mesi.',
-    EXTENDED_BUT_UNKNOWN_VALIDITY:
-      'Questi biglietti non possono essere cancellati. Tuttavia, i biglietti sono validi per un periodo di tempo prolungato.',
-    NON_CANCELLABLE_BUT_RESCHEDULABLE:
-      "Questi biglietti non possono essere cancellati. Tuttavia, i biglietti possono essere riprogrammati fino a {0} ore prima dell'inizio dell'esperienza.",
-    CANCELLABLE:
-      "Puoi cancellare questi biglietti fino a {0} ore prima dell'inizio dell'esperienza e ottenere un rimborso completo.",
-  },
-  VALIDITY: {
-    UNTIL_DATE: 'Questi biglietti sono validi fino al giorno {0}.',
-    UNTIL_DAYS_FROM_PURCHASE:
-      'Questi biglietti sono validi per {0} giorni a partire dalla data di acquisto.',
-    UNTIL_MONTHS_FROM_PURCHASE:
-      'Questi biglietti sono validi per {0} mesi a partire dalla data di acquisto.',
-    EXTENDED_BUT_UNKNOWN_VALIDITY:
-      'Questi biglietti offrono una durata estesa. I dettagli saranno riportati sul biglietto.',
-  },
 };
 
 export default it;

@@ -6,7 +6,7 @@ import {
   DESCRIPTOR_RANKING_LOGIC,
   MAX_DESCRIPTORS_DISPLAYED,
 } from 'const/descriptors';
-import { strings } from 'const/strings';
+import getServerStrings from 'const/serverStrings';
 
 export const extractTabsFromHighlights = (highlights) => {
   let tabs = [];
@@ -309,7 +309,13 @@ export const getCancellationPolicyString = ({
   cancellationPolicy,
   reschedulePolicy,
   ticketValidity,
+  lang,
 }) => {
+  const strings = getServerStrings(lang);
+
+  const formatString = (currentString, replaceWith) =>
+    currentString?.replace('{0}', replaceWith);
+
   const { cancellable, cancellableUpTo: cancellableUptoMinutes } =
     cancellationPolicy ?? {};
   const { reschedulable, reschedulableUpTo: reschedulableUptoMinutes } =
@@ -333,17 +339,17 @@ export const getCancellationPolicyString = ({
   if (!cancellable && !reschedulable) {
     switch (validityType) {
       case VALIDITY_TYPES.UNTIL_DATE:
-        return strings.formatString(
+        return formatString(
           strings.CANCELLATION_POLICY.VALID_UNTIL_DATE,
           formattedValidUptoDate
         );
       case VALIDITY_TYPES.UNTIL_DAYS_FROM_PURCHASE:
         return isValidUptoMonths
-          ? strings.formatString(
+          ? formatString(
               strings.CANCELLATION_POLICY.VALID_WITHIN_NEXT_MONTHS,
               validUptoMonths
             )
-          : strings.formatString(
+          : formatString(
               strings.CANCELLATION_POLICY.VALID_WITHIN_NEXT_DAYS,
               validUptoDays
             );
@@ -353,19 +359,24 @@ export const getCancellationPolicyString = ({
         return strings.CANCELLATION_POLICY.NON_CANCELLABLE_NON_RESCHEDULABLE;
     }
   } else if (!cancellable && reschedulable) {
-    return strings.formatString(
+    return formatString(
       strings.CANCELLATION_POLICY.NON_CANCELLABLE_BUT_RESCHEDULABLE,
       reschedulableUptoHours
     );
   } else {
-    return strings.formatString(
+    return formatString(
       strings.CANCELLATION_POLICY.CANCELLABLE,
       cancellableUptoHours
     );
   }
 };
 
-const getValidityPolicyString = (ticketValidity) => {
+const getValidityPolicyString = ({ ticketValidity, lang }) => {
+  const strings = getServerStrings(lang);
+
+  const formatString = (currentString, replaceWith) =>
+    currentString.replace('{0}', replaceWith);
+
   const {
     ticketValidityType: validityType,
     ticketValidityUntilDate: validUptoDate,
@@ -385,17 +396,14 @@ const getValidityPolicyString = (ticketValidity) => {
 
   switch (validityType) {
     case VALIDITY_TYPES.UNTIL_DATE:
-      return strings.formatString(
-        strings.VALIDITY.UNTIL_DATE,
-        formattedValidUptoDate
-      );
+      return formatString(strings.VALIDITY.UNTIL_DATE, formattedValidUptoDate);
     case VALIDITY_TYPES.UNTIL_DAYS_FROM_PURCHASE:
       return isValidUptoMonths
-        ? strings.formatString(
+        ? formatString(
             strings.VALIDITY.UNTIL_MONTHS_FROM_PURCHASE,
             validUptoMonths
           )
-        : strings.formatString(
+        : formatString(
             strings.VALIDITY.UNTIL_DAYS_FROM_PURCHASE,
             validUptoDays
           );
@@ -404,13 +412,17 @@ const getValidityPolicyString = (ticketValidity) => {
   }
 };
 
-export const standarizeCancellationPolicy = ({
+export const standardizeCancellationPolicy = ({
   highlights = [],
   cancellationPolicy = {},
   reschedulePolicy = {},
   ticketValidity = {},
   showValidity = true,
+  lang,
 }) => {
+  if (!highlights.length) return highlights;
+
+  const strings = getServerStrings(lang);
   let updatedHighlights = [...highlights];
 
   // Removing the existing (hard-coded) cancellation policy from highlights array
@@ -440,6 +452,7 @@ export const standarizeCancellationPolicy = ({
       cancellationPolicy,
       reschedulePolicy,
       ticketValidity,
+      lang,
     });
 
   updatedHighlights = updatedHighlights.concat([
@@ -458,7 +471,10 @@ export const standarizeCancellationPolicy = ({
   ]);
 
   if (showValidity) {
-    const validityPolicyString = getValidityPolicyString(ticketValidity);
+    const validityPolicyString = getValidityPolicyString({
+      ticketValidity,
+      lang,
+    });
     updatedHighlights = validityPolicyString
       ? updatedHighlights.concat([
           {
