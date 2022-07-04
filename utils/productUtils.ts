@@ -1,7 +1,12 @@
 import { RichText } from 'prismic-reactjs';
 import dayjs from 'dayjs';
 import { getDurationInHours, isDateValid } from 'utils/dateUtils';
-import { HIGHLIGHT_TYPES, THEMES, VALIDITY_TYPES } from 'const/index';
+import {
+  CANCELLATION_POLICY_POSSIBLE_LABELS,
+  HIGHLIGHT_TYPES,
+  THEMES,
+  VALIDITY_TYPES,
+} from 'const/index';
 import {
   DESCRIPTOR_RANKING_LOGIC,
   MAX_DESCRIPTORS_DISPLAYED,
@@ -431,8 +436,9 @@ export const standardizeCancellationPolicy = ({
       item.type === HIGHLIGHT_TYPES.H6_HEADING &&
       (item.text.toLowerCase() ===
         strings.CANCELLATION_POLICY_HEADING.toLowerCase() ||
-        item.text.toLowerCase() === 'politica di cancellazione' ||
-        item.text.toLowerCase() === 'cancellazione') // Temporary fix - should remove once cancellation policy is removed from MBHighlights
+        CANCELLATION_POLICY_POSSIBLE_LABELS.some(
+          (label) => label.toLowerCase() === item.text.toLowerCase().trim()
+        ))
   );
   let lastIndex = firstIndex + 1;
 

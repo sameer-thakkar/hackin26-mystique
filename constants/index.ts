@@ -756,3 +756,20 @@ export const VALIDITY_TYPES = {
   EXTENDABLE_BUT_UNKNOWN: 'EXTENDABLE_BUT_UNKNOWN',
   NOT_EXTENDABLE: 'NOT_EXTENDABLE',
 };
+
+export const CANCELLATION_POLICY_POSSIBLE_LABELS = [
+  'Cancelation Policy',
+  'Cancellation Poilcy',
+  'Cancellatoin Policy',
+  'Política de cancelación',
+  'Politique d’annulation',
+  'Politique d’anulation',
+  'Stornierungsfrist',
+  'Stornierungsbedingungen',
+  'Annuleringsvoorwaarden',
+  'Polizza di cancellazione',
+  'Política de cancelamento',
+  'Política de cancelamenyo',
+  'politica di cancellazione',
+  'cancellazione',
+];
