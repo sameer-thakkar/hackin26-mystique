@@ -159,7 +159,8 @@ export const createBookingURL = ({
     bookSubdomain !== 'undefined'
       ? bookSubdomain
       : 'book';
-  const langRouteParam = lang ? '/' + FULL_LANGUAGE_MAP[lang].bookingFlow : '';
+  const langRouteParam =
+    lang && lang !== 'en' ? '/' + FULL_LANGUAGE_MAP[lang].bookingFlow : '';
 
   const domain = redirectToHeadoutBookingFlow
     ? HEADOUT_NAKED_DOMAIN
