@@ -22,7 +22,10 @@ import {
   redirectTo,
   refsArrayToObject,
 } from 'utils';
-import { generateDescriptor } from 'utils/productUtils';
+import {
+  generateDescriptor,
+  standardizeCancellationPolicy,
+} from 'utils/productUtils';
 import { traceError } from 'utils/logutils';
 import { getHostName } from 'utils/helper';
 import { getLangUID, getValidUrlParams, sanitizeURL } from 'utils/urlUtils';
@@ -1500,7 +1503,6 @@ export const getPageData = async ({
           descriptors,
           minDuration,
           maxDuration,
-          microBrandsHighlight,
           highlights,
           media,
           imageUrl,
@@ -1513,7 +1515,22 @@ export const getPageData = async ({
           id,
           combo,
           primaryCollection,
-        } = tour || {};
+          ticketValidity,
+          reschedulePolicy,
+          cancellationPolicy,
+          cancellationPolicyV2,
+        } = tour ?? {};
+
+        let { microBrandsHighlight } = tour ?? {};
+
+        microBrandsHighlight = standardizeCancellationPolicy({
+          highlights: microBrandsHighlight,
+          ticketValidity,
+          reschedulePolicy,
+          cancellationPolicy: cancellationPolicyV2 ?? cancellationPolicy,
+          lang: getHeadoutLanguagecode(lang),
+        });
+
         const { productImages, safetyImages } = media || {};
         const updatedDescriptors = generateDescriptor({
           descriptors,
