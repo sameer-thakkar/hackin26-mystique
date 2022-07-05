@@ -8,6 +8,7 @@ import Image from '../UI/Image';
 export const SearchItem = (props) => {
   const {
     tgid,
+    showPageUid,
     productImage,
     title,
     cardFooter,
@@ -22,7 +23,7 @@ export const SearchItem = (props) => {
       role={'button'}
       tabIndex={0}
       onClick={() => {
-        onSearchResultClick(tgid);
+        onSearchResultClick(tgid, showPageUid);
       }}
     >
       <div className="left">

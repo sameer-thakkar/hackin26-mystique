@@ -8,7 +8,7 @@ import React, {
 import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
 import dynamic from 'next/dynamic';
-import InteractionContext from 'contexts/Interaction';
+import { MBContext } from 'contexts/MBContext';
 import LanguageSelector from 'components/common/LanguageSelector';
 import Image from 'components/UI/Image';
 import MultiLevelNav from 'components/MultiLevelNav';
@@ -20,6 +20,8 @@ import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
 import { PAGETYPE, ALLOW_IMMEDIEATE_NESTING, THEMES } from 'const/index';
 import { strings } from 'const/strings';
+import { createBookingURL } from 'utils';
+import { convertUidToUrl } from 'utils/urlUtils';
 
 const SearchBox: ComponentType<any> = dynamic(
   () => import('./SearchBox').then((mod) => mod.SearchBox),
@@ -294,7 +296,10 @@ const Header: FunctionComponent<HeaderProps> = ({
   isEntertainmentMb = false,
   isEntertainmentMbListicle,
 }) => {
-  const interactionContext = useContext(InteractionContext);
+  const { lang, nakedDomain, redirectToHeadoutBookingFlow } = useContext(
+    MBContext
+  );
+
   const [languageDropdown, setLanguageDropdown] = useState(false);
   const [results, setResults] = useState([]);
   const [resultClicked, setResultClicked] = useState(false);
@@ -310,9 +315,18 @@ const Header: FunctionComponent<HeaderProps> = ({
   const loadSearchPage = () => {
     changePage({ name: PAGETYPE.SEARCH });
   };
-  const onSearchResultClick = (tgid) => {
-    const { clickTour } = interactionContext;
-    clickTour(tgid, true);
+  const onSearchResultClick = (tgid, showPageUid) => {
+    const bookingURL = createBookingURL({
+      nakedDomain,
+      lang,
+      tgid,
+      redirectToHeadoutBookingFlow,
+    });
+    const showPageUrl = showPageUid
+      ? convertUidToUrl({ uid: showPageUid, hostname: host })
+      : bookingURL;
+
+    window.open(showPageUrl ?? bookingURL, '_self', 'noopener,noreferrer');
     setResultClicked(true);
   };
   const buyTicketHandler = () => {
