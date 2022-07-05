@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import { MBContext } from 'contexts/MBContext';
@@ -16,7 +16,7 @@ import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
-import { truncate, checkLTT } from 'utils/helper';
+import { truncate } from 'utils/helper';
 import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import { dateToString } from 'utils/dateUtils';
 import InteractionContext from 'contexts/Interaction';
@@ -24,10 +24,6 @@ import { convertUidToUrl } from 'utils/urlUtils';
 import { createBookingURL } from 'utils';
 import parse from 'url-parse';
 import { expandFontToken } from 'const/typography';
-import { getABTestingVariant } from 'utils/experiments/experimentUtils';
-import { useRecoilValue } from 'recoil';
-import { hsidAtom } from 'store/atoms/hsid';
-import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
 import { trackEvent } from 'utils/analytics';
 
 const ProductCard = styled.div`
@@ -314,41 +310,18 @@ const Product = (props) => {
     cardIdPrefix,
     isMobile,
     isEntertainmentMb,
-    productClick,
     activeCategoryId = null,
     host,
   } = props;
-  
-  const {
-    currencySymbolMap,
-    lang,
-    nakedDomain,
-    uid,
-    redirectToHeadoutBookingFlow,
-  } = useContext(MBContext);
 
-  const [initialized, setInitialized] = useState(true);
-  const hsid = useRecoilValue(hsidAtom);
-  const isLTT = checkLTT(uid);
+  const { lang, nakedDomain, uid, redirectToHeadoutBookingFlow } = useContext(
+    MBContext
+  );
 
   let url;
   useEffect(() => {
     url = host || window.location.hostname;
   }, []);
-
-  useEffect(() => {
-    if (hsid && isLTT) {
-      const variant = getABTestingVariant(
-        EXPERIMENT_NAMES.LTD_LP_Experiment,
-        hsid,
-        false,
-        true
-      );
-      if (variant === VARIANTS.SHOWPAGE_REDIRECT) {
-        setInitialized(false);
-      }
-    }
-  }, [hsid, setInitialized, isLTT]);
 
   const { sliceData } = useContext(InteractionContext) || {};
   const { collectionId, primaryCatId, primarySubCatId } = sliceData || {};
@@ -427,12 +400,7 @@ const Product = (props) => {
         window.open(bookingURL, '_self', 'noopener,noreferrer');
       }
     } else {
-      if (initialized || !showPageExists) {
-        showPageEvent();
-        productClick(tgid, cardIdPrefix, event);
-      } else {
-        window.open(showPageUrl, '_self', 'noopener,noreferrer');
-      }
+      window.open(showPageUrl, '_self', 'noopener,noreferrer');
     }
   };
 
@@ -518,10 +486,10 @@ const Product = (props) => {
           </div>
         </Conditional>
         <div className="title-wrap">
-          <Conditional if={initialized || !showPageExists}>
+          <Conditional if={!showPageExists}>
             <div className="product-v2-title">{truncate(title, 70)}</div>
           </Conditional>
-          <Conditional if={!initialized && showPageExists}>
+          <Conditional if={showPageExists}>
             <a
               target="_self"
               rel="noopener noreferrer"
