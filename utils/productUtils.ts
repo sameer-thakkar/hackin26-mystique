@@ -440,16 +440,19 @@ export const standardizeCancellationPolicy = ({
           (label) => label.toLowerCase() === item.text.toLowerCase().trim()
         ))
   );
-  let lastIndex = firstIndex + 1;
 
-  while (lastIndex < updatedHighlights.length) {
-    if (updatedHighlights[lastIndex].type.startsWith('heading')) break; // stop iterating when next heading is found
-    lastIndex++;
+  if (firstIndex !== -1) {
+    let lastIndex = firstIndex + 1;
+
+    while (lastIndex < updatedHighlights.length) {
+      if (updatedHighlights[lastIndex].type.startsWith('heading')) break; // stop iterating when next heading is found
+      lastIndex++;
+    }
+
+    updatedHighlights = updatedHighlights.filter(
+      (_, index) => index < firstIndex || index >= lastIndex
+    );
   }
-
-  updatedHighlights = updatedHighlights.filter(
-    (_, index) => index < firstIndex || index >= lastIndex
-  );
 
   // Adding the new cancellation and validity policy to highlights array
   const text = strings.CANCELLATION_POLICY_HEADING,
