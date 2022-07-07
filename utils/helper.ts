@@ -482,19 +482,19 @@ export const checkLTT = (uid) => {
 };
 
 export const getCheckAvailText = (lang, hsid) => {
-  let variant = VARIANTS.TREATMENT;
-  if (hsid) {
-    variant = getABTestingVariant(
-      EXPERIMENT_NAMES.CTA_TEST_MB,
-      hsid,
-      false,
-      true
-    );
-  }
-
   if (lang === 'es') {
-    return variant === VARIANTS.CONTROL
-      ? 'ver disponibilidad'
+    let variant = VARIANTS.TREATMENT;
+    if (hsid) {
+      variant = getABTestingVariant(
+        EXPERIMENT_NAMES.CTA_TEST_MB,
+        hsid,
+        false,
+        true
+      );
+    }
+
+    return variant === VARIANTS.TREATMENT
+      ? strings.CHECK_AVAIL
       : strings.CHECK_AVAIL;
   } else {
     return strings.CHECK_AVAIL;
