@@ -6,7 +6,9 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { createBookingURL } from 'utils';
 import { trackEvent } from 'utils/analytics';
-import { checkLTT, isMobile } from 'utils/helper';
+import { checkLTT, getCheckAvailText, isMobile } from 'utils/helper';
+import { hsidAtom } from 'store/atoms/hsid';
+import { useRecoilValue } from 'recoil';
 
 import { MBContext } from '../../contexts/MBContext';
 
@@ -55,6 +57,7 @@ const StickyFooter = ({
   const { nakedDomain, biLink, uid, redirectToHeadoutBookingFlow } = useContext(
     MBContext
   );
+  const hsid = useRecoilValue(hsidAtom);
 
   const bookingUrl = createBookingURL({
     nakedDomain: nakedDomain,
@@ -88,7 +91,9 @@ const StickyFooter = ({
             window.open(bookingUrl, target, 'noopener, noreferrer');
           }}
         >
-          {isLTT ? strings.CHECK_AVAIL : strings.BANNER_CTA}
+          {isLTT
+            ? getCheckAvailText(currentLanguage, hsid)
+            : strings.BANNER_CTA}
         </div>
       </Conditional>
       <Conditional if={!isAvailable}>

@@ -28,7 +28,7 @@ import {
   extractTabsFromHighlights,
   getProductCardLayout,
 } from 'utils/productUtils';
-import { truncate, wordCount } from 'utils/helper';
+import { getCheckAvailText, truncate, wordCount } from 'utils/helper';
 import { currencyAtom } from 'store/atoms/currency';
 import { BLACK_COLOR_CLOSE } from 'assets/SvgIcons';
 import Conditional from 'components/common/Conditional';
@@ -40,6 +40,7 @@ import { getDuration } from 'utils/timeUtils';
 import ComboVariants from 'UI/ComboVariants';
 import { expandFontToken } from 'const/typography';
 import { metaAtom } from 'store/atoms/meta';
+import { hsidAtom } from 'store/atoms/hsid';
 
 dayjs.extend(advancedFormat);
 
@@ -611,6 +612,7 @@ const TicketCard = (props) => {
   const [showComboVariant, setShowComboVariant] = useState(false);
   const { promo_code } = finalPromoCode || {};
   const { minDuration, maxDuration } = scorpioData || {};
+  const hsid = useRecoilValue(hsidAtom);
 
   const descriptorsList = descriptors || scorpioData.descriptors;
 
@@ -895,7 +897,7 @@ const TicketCard = (props) => {
               role="button"
               tabIndex={0}
             >
-              {strings.CHECK_AVAIL}
+              {getCheckAvailText(currentLanguage, hsid)}
               {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
             </Button>
           </a>
@@ -910,7 +912,7 @@ const TicketCard = (props) => {
             role="button"
             tabIndex={0}
           >
-            {strings.CHECK_AVAIL}
+            {getCheckAvailText(currentLanguage, hsid)}
             {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
           </Button>
         </Conditional>

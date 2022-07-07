@@ -7,7 +7,9 @@ import { strings } from 'const/strings';
 import { createBookingURL } from 'utils';
 import Conditional from 'components/common/Conditional';
 import { expandFontToken } from 'const/typography';
-import { checkLTT } from 'utils/helper';
+import { checkLTT, getCheckAvailText } from 'utils/helper';
+import { hsidAtom } from 'store/atoms/hsid';
+import { useRecoilValue } from 'recoil';
 
 const BannerContent = styled.div(
   ({ showComponent }) => `
@@ -164,6 +166,7 @@ const StickyHeader = ({
   const { nakedDomain, biLink, uid, redirectToHeadoutBookingFlow } = useContext(
     MBContext
   );
+  const hsid = useRecoilValue(hsidAtom);
 
   const bookingUrl = createBookingURL({
     nakedDomain: nakedDomain,
@@ -208,7 +211,9 @@ const StickyHeader = ({
                     window.open(bookingUrl, '_blank', 'noopener, noreferrer')
                   }
                 >
-                  {isLTT ? strings.CHECK_AVAIL : strings.BANNER_CTA}
+                  {isLTT
+                    ? getCheckAvailText(currentLanguage, hsid)
+                    : strings.BANNER_CTA}
                 </div>
               </Conditional>
               <Conditional if={!isAvailable}>

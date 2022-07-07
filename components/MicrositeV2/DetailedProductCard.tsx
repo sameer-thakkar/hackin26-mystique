@@ -29,7 +29,8 @@ import {
 } from 'utils/analytics';
 import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
-import { checkLTT } from 'utils/helper';
+import { checkLTT, getCheckAvailText } from 'utils/helper';
+import { hsidAtom } from 'store/atoms/hsid';
 
 const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
   ssr: false,
@@ -485,6 +486,7 @@ const DetailedProductCard = (props) => {
     lang,
     tgid: tgidClicked,
   });
+  const hsid = useRecoilValue(hsidAtom);
 
   useEffect(() => {
     trackEvent({
@@ -600,7 +602,9 @@ const DetailedProductCard = (props) => {
           href={experimentEnabled ? bookingURL : showPageUrl}
         >
           <span className="cta-text">
-            {experimentEnabled ? strings.CHECK_AVAIL : strings.MORE_DETAILS}
+            {experimentEnabled
+              ? getCheckAvailText(lang, hsid)
+              : strings.MORE_DETAILS}
           </span>
         </a>
       </Conditional>
@@ -625,7 +629,9 @@ const DetailedProductCard = (props) => {
           }}
         >
           <span className="cta-text">
-            {isLTT || isBroadway ? strings.CHECK_AVAIL : strings.BOOK_NOW_CTA}
+            {isLTT || isBroadway
+              ? getCheckAvailText(lang, hsid)
+              : strings.BOOK_NOW_CTA}
           </span>
         </div>
       </Conditional>

@@ -47,7 +47,12 @@ import {
   getProductCommonProperties,
   trackEvent,
 } from 'utils/analytics';
-import { getHostName, truncate, wordCount } from 'utils/helper';
+import {
+  getCheckAvailText,
+  getHostName,
+  truncate,
+  wordCount,
+} from 'utils/helper';
 import PromoCodeBlock from 'UI/PromoCodeBlock';
 import { createBookingURL } from 'utils';
 import { descriptorIcons } from 'const/descriptorIcons';
@@ -58,6 +63,7 @@ import { addQueryParams } from 'utils/urlUtils';
 import dynamic from 'next/dynamic';
 import { useWindowWidth } from '@react-hook/window-size';
 import { metaAtom } from 'store/atoms/meta';
+import { hsidAtom } from 'store/atoms/hsid';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -1005,6 +1011,7 @@ const Product = (props) => {
   const { combo: isCombo, minDuration, maxDuration } = scorpioData || {};
   const router = useRouter();
   const pageMetaData = useRecoilValue(metaAtom);
+  const hsid = useRecoilValue(hsidAtom);
 
   const descriptorsList = descriptors || scorpioData.descriptors;
   const cardTitle = title || scorpioData.title;
@@ -1369,7 +1376,7 @@ const Product = (props) => {
       role="button"
       tabIndex={0}
     >
-      {strings.CHECK_AVAIL}
+      {getCheckAvailText(currentLanguage, hsid)}
       {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
     </Button>
   );
