@@ -64,7 +64,7 @@ const PriceBlock = ({
   showScratchPrice = true,
   prefix = true,
   showSavings = false,
-  currencyDisplay = 'narrowSymbol',
+  currencyDisplay = 'symbol',
 }: PriceBlockProps) => {
   if (!price) return null;
   const { originalPrice, finalPrice, currencyCode, precision, bestDiscount } =

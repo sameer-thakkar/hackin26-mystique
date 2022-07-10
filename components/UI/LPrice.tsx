@@ -14,7 +14,7 @@ type LocalisedPriceProps = {
 const LocalisedPrice = ({
   className = '',
   currencyCode,
-  currencyDisplay = 'narrowSymbol',
+  currencyDisplay = 'symbol',
   lang = 'en',
   price,
   precision = 2,

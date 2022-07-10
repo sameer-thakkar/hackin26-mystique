@@ -1,10 +1,10 @@
-export type CurrencyDisplayType = 'narrowSymbol' | 'code';
+export type CurrencyDisplayType = 'symbol' | 'code';
 
 export const getLocalisedPrice = ({
   price,
   currencyCode,
   lang = 'en',
-  currencyDisplay = 'narrowSymbol',
+  currencyDisplay = 'symbol',
   precision = 2,
 }: {
   price: number;
