@@ -404,7 +404,7 @@ const en = {
   },
   SHOWPAGE: {
     FEATURE_CARD: {
-      HEADING_CUSTOMER: '5 million +',
+      HEADING_CUSTOMER: '10 million +',
       SUB_HEADING_CUSTOMER: 'Happy customers across 10,000+ experiences',
       HEADING_RATING: '4.4/5',
       SUB_HEADING_RATING: '5,000+ verified reviews with 90% excellent score',

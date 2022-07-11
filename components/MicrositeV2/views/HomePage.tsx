@@ -330,11 +330,6 @@ export const HomePage = (props) => {
           isDiscountedPage={isDiscountedPage}
         />
       </Conditional>
-      <Conditional if={isEntertainmentMb}>
-        <div className="main-wrapper">
-          <LttFeatureCard />
-        </div>
-      </Conditional>
       <ProductsContextProvider allTours={allTours} ready={ready}>
         <div className="main-wrapper v2-long-form">
           <Conditional if={longFormContent}>
@@ -355,6 +350,11 @@ export const HomePage = (props) => {
           </Conditional>
         </div>
       </ProductsContextProvider>
+      <Conditional if={isEntertainmentMb}>
+        <div className="main-wrapper">
+          <LttFeatureCard />
+        </div>
+      </Conditional>
       <Footer
         currentLanguage={currentLanguage}
         attraction={footer.attraction || 'attraction'}
