@@ -312,6 +312,15 @@ export const categoryTourListParserV1 = async ({
       orderedTours: repeatableObj,
       activeCurrency: currency,
     };
+  } else {
+    return {
+      primaryCountry: primaryCity?.country ?? {
+        code: countryCode,
+        countryName,
+      },
+      primaryCity,
+      activeCurrency: currency,
+    };
   }
 };
 

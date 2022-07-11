@@ -350,6 +350,8 @@ const Footer: React.FC<FooterProps> = ({
   }, [width]);
 
   const getContactNo = () => {
+    if (pageMeta?.city?.cityCode === 'DUBAI') return '+971 8 000 321171';
+
     switch (pageMeta?.country?.code) {
       case 'AU':
         return '+61 3 7066 3969';
