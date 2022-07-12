@@ -33,12 +33,14 @@ const Wrapper = styled.div`
       cursor: pointer;
       ${expandFontToken('Paragraph/Large')};
       color: ${COLORS.TEXT.CANDY_1};
+      padding: 0;
     }
     svg {
       path {
         stroke: ${COLORS.TEXT.CANDY_1};
       }
       margin-bottom: -2px;
+      padding: 0 7px;
       ${({ isExpanded }) => isExpanded && ` transform: rotate(180deg);`}
     }
   }
@@ -77,8 +79,8 @@ const RichtextWithCTA = (props) => {
               <span className="toggle">
                 <button onClick={handleClick} className="view-more">
                   {isExpanded ? strings.SHOW_LESS_TEXT : strings.VIEW_MORE}
+                  {CHEVRON_DOWN}
                 </button>
-                {CHEVRON_DOWN}
               </span>
             </Conditional>
           </Wrapper>

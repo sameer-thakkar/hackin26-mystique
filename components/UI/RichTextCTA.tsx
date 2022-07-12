@@ -7,7 +7,7 @@ import Button from 'UI/Button';
 import COLORS from 'const/colors';
 
 const CTAWrapper = styled.div`
-  margin: 7px 0px;
+  margin-top: ${({ isButtonCTA }) => (isButtonCTA ? '24px' : '7px')};
   a {
     text-decoration: none;
     color: ${COLORS.BRAND.PURPS};
@@ -22,7 +22,7 @@ const RichTextCTA = (block) => {
   const { cta_type, cta_link, cta_text } = block || {};
 
   return (
-    <CTAWrapper>
+    <CTAWrapper isButtonCTA={cta_type === CTA_TYPE.BUTTON}>
       <a href={cta_link?.url} {...anchorTagProps}>
         <Conditional if={cta_type === CTA_TYPE.TEXT}>{cta_text}</Conditional>
         <Conditional if={cta_type === CTA_TYPE.BUTTON}>

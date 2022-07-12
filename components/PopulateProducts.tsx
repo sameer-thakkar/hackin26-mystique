@@ -382,7 +382,7 @@ const PopulateProducts = (props) => {
         <div id="tour-list-heading">
           <Conditional
             if={
-              availableToursList?.length &&
+              availableToursList?.length > 1 &&
               (sectionTitle || strings.TOUR_LIST_HEADING)
             }
           >
@@ -393,6 +393,7 @@ const PopulateProducts = (props) => {
           <Conditional
             if={
               !isDubaiSafariPark &&
+              availableToursList?.length > 1 &&
               (sectionSubtext || strings.TOUR_LIST_SUB_HEADING)
             }
           >
