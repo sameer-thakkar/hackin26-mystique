@@ -129,35 +129,18 @@ export default class companyDetails extends Component<any, any> {
         <ContentContainer>
           <TopHeading h1>Company Details</TopHeading>
           <Paragraph>
-            <b>Website operator:</b> <br />
-            Headout UK Ltd. <br /> 14 Grays Inn Road, <br /> London, WC1X 8HN,
-            <br /> United Kingdom
+            <b>Company Name:</b> <br />
+            Headout Inc.
           </Paragraph>
           <Paragraph>
-            <b>Management:</b>
-            <br /> Varun M. Khona, Suren Sultania
+            <b>Mailing Address:</b>
+            <br /> 82 Nassau St #60351 New York, NY 10038
           </Paragraph>
           <Paragraph>
-            <b>Contact information</b> <br />
-            support@headout.com
-          </Paragraph>
-          <Paragraph>
-            <b>Company Number:</b> 10497035 (Companies House, UK)
-          </Paragraph>
-          <Paragraph>
-            <b> VAT Number:</b> 275 5393 71
-          </Paragraph>
-          <Paragraph>
-            <b> Online Dispute Resolution website of the EU-Commission:</b>
-            <br />
-            ec.europa.eu/consumers/odr/main
+            <b>Contact Information:</b> <br />
+            <a href="mailto:support@headout.com">support@headout.com</a>
           </Paragraph>
         </ContentContainer>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
         <br />
         <br />
         <br />
