@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
@@ -29,7 +29,11 @@ import {
 } from 'utils/analytics';
 import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
-import { checkLTT, getCheckAvailText } from 'utils/helper';
+import {
+  checkLTT,
+  getCheckAvailText,
+  getCheckAvailVariant,
+} from 'utils/helper';
 import { hsidAtom } from 'store/atoms/hsid';
 
 const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
@@ -486,7 +490,12 @@ const DetailedProductCard = (props) => {
     lang,
     tgid: tgidClicked,
   });
+  const [checkAvailVariant, setCheckAvailVariant] = useState(null);
   const hsid = useRecoilValue(hsidAtom);
+
+  useEffect(() => {
+    setCheckAvailVariant(getCheckAvailVariant(hsid));
+  }, [hsid]);
 
   useEffect(() => {
     trackEvent({
@@ -603,7 +612,7 @@ const DetailedProductCard = (props) => {
         >
           <span className="cta-text">
             {experimentEnabled
-              ? getCheckAvailText(lang, hsid)
+              ? getCheckAvailText(lang, checkAvailVariant)
               : strings.MORE_DETAILS}
           </span>
         </a>
@@ -630,7 +639,7 @@ const DetailedProductCard = (props) => {
         >
           <span className="cta-text">
             {isLTT || isBroadway
-              ? getCheckAvailText(lang, hsid)
+              ? getCheckAvailText(lang, checkAvailVariant)
               : strings.BOOK_NOW_CTA}
           </span>
         </div>

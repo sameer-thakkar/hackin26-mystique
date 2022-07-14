@@ -9,7 +9,7 @@ export const VARIANTS = {
 
 export const EXPERIMENT_NAMES = {
   LTD_LP_Experiment: 'LTD LP Experiment',
-  CTA_TEST_MB: 'CTA Test on MBs',
+  CTA_TEST_MB: 'CTA Test Spanish MBs',
 };
 
 export const EXPERIMENTS = {

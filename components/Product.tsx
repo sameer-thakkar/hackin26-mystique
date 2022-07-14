@@ -49,6 +49,7 @@ import {
 } from 'utils/analytics';
 import {
   getCheckAvailText,
+  getCheckAvailVariant,
   getHostName,
   truncate,
   wordCount,
@@ -1011,7 +1012,12 @@ const Product = (props) => {
   const { combo: isCombo, minDuration, maxDuration } = scorpioData || {};
   const router = useRouter();
   const pageMetaData = useRecoilValue(metaAtom);
+  const [checkAvailVariant, setCheckAvailVariant] = useState(null);
   const hsid = useRecoilValue(hsidAtom);
+
+  useEffect(() => {
+    setCheckAvailVariant(getCheckAvailVariant(hsid));
+  }, [hsid]);
 
   const descriptorsList = descriptors || scorpioData.descriptors;
   const cardTitle = title || scorpioData.title;
@@ -1376,7 +1382,7 @@ const Product = (props) => {
       role="button"
       tabIndex={0}
     >
-      {getCheckAvailText(currentLanguage, hsid)}
+      {getCheckAvailText(currentLanguage, checkAvailVariant)}
       {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
     </Button>
   );

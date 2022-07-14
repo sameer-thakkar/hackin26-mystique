@@ -481,20 +481,24 @@ export const checkLTT = (uid) => {
   return uid.includes('www.london-theater-tickets.com');
 };
 
-export const getCheckAvailText = (lang, hsid) => {
-  if (lang === 'es') {
-    let variant = VARIANTS.TREATMENT;
-    if (hsid) {
-      variant = getABTestingVariant(
-        EXPERIMENT_NAMES.CTA_TEST_MB,
-        hsid,
-        false,
-        true
-      );
-    }
+export const getCheckAvailVariant = (hsid) => {
+  let variant = VARIANTS.CONTROL;
+  if (hsid) {
+    variant = getABTestingVariant(
+      EXPERIMENT_NAMES.CTA_TEST_MB,
+      hsid,
+      false,
+      true
+    );
+  }
+  return variant;
+};
 
+export const getCheckAvailText = (lang, variant) => {
+  if (lang === 'es') {
+    if (!variant) return '';
     return variant === VARIANTS.TREATMENT
-      ? strings.CHECK_AVAIL
+      ? 'Ver disponibilidad'
       : strings.CHECK_AVAIL;
   } else {
     return strings.CHECK_AVAIL;

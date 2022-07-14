@@ -27,7 +27,11 @@ import {
 import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
 import { expandFontToken } from 'const/typography';
-import { checkLTT, getCheckAvailText } from 'utils/helper';
+import {
+  checkLTT,
+  getCheckAvailText,
+  getCheckAvailVariant,
+} from 'utils/helper';
 import Emoji from 'components/common/Emoji';
 import { hsidAtom } from 'store/atoms/hsid';
 
@@ -365,7 +369,12 @@ const ShowPageBanner = ({
   const [isVideo, setIsVideo] = useState(false);
   const [showStickyNav, setShowStickyNav] = useState(false);
   const [nextAvailable, setNextAvailable] = useState('');
+  const [checkAvailVariant, setCheckAvailVariant] = useState(null);
   const hsid = useRecoilValue(hsidAtom);
+
+  useEffect(() => {
+    setCheckAvailVariant(getCheckAvailVariant(hsid));
+  }, [hsid]);
 
   const videoCode = PRODUCT_VIDEOS[tgid] ? PRODUCT_VIDEOS[tgid] : null;
   const videoAvailable = PRODUCT_VIDEOS[tgid] ? true : false;
@@ -627,7 +636,7 @@ const ShowPageBanner = ({
                   }}
                 >
                   {isLTT
-                    ? getCheckAvailText(currentLanguage, hsid)
+                    ? getCheckAvailText(currentLanguage, checkAvailVariant)
                     : strings.BANNER_CTA}
                 </div>
               </Conditional>

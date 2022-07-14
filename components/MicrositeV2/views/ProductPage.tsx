@@ -35,7 +35,7 @@ import { parseV2ProductDescriptors } from 'utils/dataParsers';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { metaAtom } from 'store/atoms/meta';
 import { hsidAtom } from 'store/atoms/hsid';
-import { getCheckAvailText } from 'utils/helper';
+import { getCheckAvailText, getCheckAvailVariant } from 'utils/helper';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
@@ -589,7 +589,12 @@ export const MobileProductPage = (props) => {
   };
 
   const [showTitle, setShowTitle] = useState(false);
+  const [checkAvailVariant, setCheckAvailVariant] = useState(null);
   const hsid = useRecoilValue(hsidAtom);
+
+  useEffect(() => {
+    setCheckAvailVariant(getCheckAvailVariant(hsid));
+  }, [hsid]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -649,7 +654,7 @@ export const MobileProductPage = (props) => {
         onClick={onCheckAvailabilityClick}
       >
         <div className="cta-text">
-          {getCheckAvailText(currentLanguage, hsid)}
+          {getCheckAvailText(currentLanguage, checkAvailVariant)}
         </div>
       </div>
     </CTABlock>

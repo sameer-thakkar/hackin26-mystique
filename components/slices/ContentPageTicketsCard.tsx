@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import parse from 'url-parse';
 import styled from 'styled-components';
-import React, { useRef, useState, useContext } from 'react';
+import React, { useRef, useState, useContext, useEffect } from 'react';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import {
   ANALYTICS_EVENTS,
@@ -28,7 +28,12 @@ import {
   extractTabsFromHighlights,
   getProductCardLayout,
 } from 'utils/productUtils';
-import { getCheckAvailText, truncate, wordCount } from 'utils/helper';
+import {
+  getCheckAvailText,
+  getCheckAvailVariant,
+  truncate,
+  wordCount,
+} from 'utils/helper';
 import { currencyAtom } from 'store/atoms/currency';
 import { BLACK_COLOR_CLOSE } from 'assets/SvgIcons';
 import Conditional from 'components/common/Conditional';
@@ -612,7 +617,12 @@ const TicketCard = (props) => {
   const [showComboVariant, setShowComboVariant] = useState(false);
   const { promo_code } = finalPromoCode || {};
   const { minDuration, maxDuration } = scorpioData || {};
+  const [checkAvailVariant, setCheckAvailVariant] = useState(null);
   const hsid = useRecoilValue(hsidAtom);
+
+  useEffect(() => {
+    setCheckAvailVariant(getCheckAvailVariant(hsid));
+  }, [hsid]);
 
   const descriptorsList = descriptors || scorpioData.descriptors;
 
@@ -897,7 +907,7 @@ const TicketCard = (props) => {
               role="button"
               tabIndex={0}
             >
-              {getCheckAvailText(currentLanguage, hsid)}
+              {getCheckAvailText(currentLanguage, checkAvailVariant)}
               {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
             </Button>
           </a>
@@ -912,7 +922,7 @@ const TicketCard = (props) => {
             role="button"
             tabIndex={0}
           >
-            {getCheckAvailText(currentLanguage, hsid)}
+            {getCheckAvailText(currentLanguage, checkAvailVariant)}
             {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
           </Button>
         </Conditional>

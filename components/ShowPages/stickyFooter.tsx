@@ -2,11 +2,16 @@ import Conditional from 'components/common/Conditional';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 import COLORS from 'const/colors';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { createBookingURL } from 'utils';
 import { trackEvent } from 'utils/analytics';
-import { checkLTT, getCheckAvailText, isMobile } from 'utils/helper';
+import {
+  checkLTT,
+  getCheckAvailText,
+  getCheckAvailVariant,
+  isMobile,
+} from 'utils/helper';
 import { hsidAtom } from 'store/atoms/hsid';
 import { useRecoilValue } from 'recoil';
 
@@ -57,7 +62,12 @@ const StickyFooter = ({
   const { nakedDomain, biLink, uid, redirectToHeadoutBookingFlow } = useContext(
     MBContext
   );
+  const [checkAvailVariant, setCheckAvailVariant] = useState(null);
   const hsid = useRecoilValue(hsidAtom);
+
+  useEffect(() => {
+    setCheckAvailVariant(getCheckAvailVariant(hsid));
+  }, [hsid]);
 
   const bookingUrl = createBookingURL({
     nakedDomain: nakedDomain,
@@ -92,7 +102,7 @@ const StickyFooter = ({
           }}
         >
           {isLTT
-            ? getCheckAvailText(currentLanguage, hsid)
+            ? getCheckAvailText(currentLanguage, checkAvailVariant)
             : strings.BANNER_CTA}
         </div>
       </Conditional>

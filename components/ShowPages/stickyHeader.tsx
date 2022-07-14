@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MBContext } from 'contexts/MBContext';
 import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
@@ -7,7 +7,11 @@ import { strings } from 'const/strings';
 import { createBookingURL } from 'utils';
 import Conditional from 'components/common/Conditional';
 import { expandFontToken } from 'const/typography';
-import { checkLTT, getCheckAvailText } from 'utils/helper';
+import {
+  checkLTT,
+  getCheckAvailText,
+  getCheckAvailVariant,
+} from 'utils/helper';
 import { hsidAtom } from 'store/atoms/hsid';
 import { useRecoilValue } from 'recoil';
 
@@ -166,7 +170,12 @@ const StickyHeader = ({
   const { nakedDomain, biLink, uid, redirectToHeadoutBookingFlow } = useContext(
     MBContext
   );
+  const [checkAvailVariant, setCheckAvailVariant] = useState(null);
   const hsid = useRecoilValue(hsidAtom);
+
+  useEffect(() => {
+    setCheckAvailVariant(getCheckAvailVariant(hsid));
+  }, [hsid]);
 
   const bookingUrl = createBookingURL({
     nakedDomain: nakedDomain,
@@ -212,7 +221,7 @@ const StickyHeader = ({
                   }
                 >
                   {isLTT
-                    ? getCheckAvailText(currentLanguage, hsid)
+                    ? getCheckAvailText(currentLanguage, checkAvailVariant)
                     : strings.BANNER_CTA}
                 </div>
               </Conditional>
