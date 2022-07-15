@@ -1,5 +1,3 @@
-import { expandFontToken } from 'constants/typography';
-
 import React, {
   useRef,
   useState,
@@ -7,27 +5,35 @@ import React, {
   useEffect,
   useCallback,
 } from 'react';
-import COLORS from 'const/colors';
-import { HALYARD } from 'const/ui-constants';
-import { useRouter } from 'next/router';
 import { RichText } from 'prismic-reactjs';
-import { useRecoilValue } from 'recoil';
+import dynamic from 'next/dynamic';
+import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import parse from 'url-parse';
-import styled, { css } from 'styled-components';
 import { MBContext } from 'contexts/MBContext';
+import useSWR from 'swr';
+import { useRecoilValue } from 'recoil';
+import { useRouter } from 'next/router';
+import { useWindowWidth } from '@react-hook/window-size';
+import { currencyAtom } from 'store/atoms/currency';
+import { metaAtom } from 'store/atoms/meta';
+import { hsidAtom } from 'store/atoms/hsid';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import Conditional from 'components/common/Conditional';
-import ComboVariants from 'components/UI/ComboVariants';
+import ComboPopup from 'UI/ComboPopup';
 import PriceBlock from 'UI/PriceBlock';
 import Chevron from 'UI/Chevron';
 import { StlyedSplit } from 'UI/Split';
 import Button from 'UI/Button';
 import Image from 'UI/Image';
-import { currencyAtom } from 'store/atoms/currency';
+import PromoCodeBlock from 'UI/PromoCodeBlock';
 import { CALENDAR, BackArrow, CHEVRON_RIGHT_CIRCLE } from 'assets/SvgIcons';
+import COLORS from 'const/colors';
+import { descriptorIcons } from 'const/descriptorIcons';
 import { strings } from 'const/strings';
+import { expandFontToken } from 'const/typography';
+import { HALYARD } from 'const/ui-constants';
 import {
   ANALYTICS_EVENTS,
   THEMES,
@@ -37,34 +43,22 @@ import {
   CUSTOM_TYPES,
   DESCRIPTORS,
 } from 'const/index';
-import { shortCodeSerializer } from 'utils/shortCodes';
-import {
-  extractTabsFromHighlights,
-  getProductCardLayout,
-} from 'utils/productUtils';
+import { createBookingURL } from 'utils';
 import {
   getCommonEventMetaData,
   getProductCommonProperties,
   trackEvent,
 } from 'utils/analytics';
-import {
-  getCheckAvailText,
-  getCheckAvailVariant,
-  getHostName,
-  truncate,
-  wordCount,
-} from 'utils/helper';
-import PromoCodeBlock from 'UI/PromoCodeBlock';
-import { createBookingURL } from 'utils';
-import { descriptorIcons } from 'const/descriptorIcons';
-import { getDuration } from 'utils/timeUtils';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
-import useSWR from 'swr';
+import { getCheckAvailText, getCheckAvailVariant, getHostName, truncate, wordCount } from 'utils/helper';
+import {
+
+  extractTabsFromHighlights,
+  getProductCardLayout,
+} from 'utils/productUtils';
+import { shortCodeSerializer } from 'utils/shortCodes';
+import { getDuration } from 'utils/timeUtils';
 import { addQueryParams } from 'utils/urlUtils';
-import dynamic from 'next/dynamic';
-import { useWindowWidth } from '@react-hook/window-size';
-import { metaAtom } from 'store/atoms/meta';
-import { hsidAtom } from 'store/atoms/hsid';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -1000,20 +994,28 @@ const Product = (props) => {
     sidebarModal: { addToAside },
     redirectToHeadoutBookingFlow,
   } = useContext(MBContext);
-
-  const hostname = getHostName(isStage, isDev, host);
+  const router = useRouter();
+  const hsid = useRecoilValue(hsidAtom);
+  const pageMetaData = useRecoilValue(metaAtom);
   const currency = useRecoilValue(currencyAtom);
+  const hostname = getHostName(isStage, isDev, host);
   const [isContentOpen, toggleContentOpen] = useState(defaultOpen);
   const [showMoreDetailsInTabs, setShowMoreDetails] = useState(
     defaultOpen || false
   );
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [showComboVariant, setShowComboVariant] = useState(false);
-  const { combo: isCombo, minDuration, maxDuration } = scorpioData || {};
-  const router = useRouter();
-  const pageMetaData = useRecoilValue(metaAtom);
   const [checkAvailVariant, setCheckAvailVariant] = useState(null);
-  const hsid = useRecoilValue(hsidAtom);
+
+  const {
+    combo: isCombo,
+    multiVariant: isMultiVariant,
+    minDuration,
+    maxDuration,
+  } = scorpioData || {};
+
+  const isComboWithSingleVariant = isCombo && !isMultiVariant;
+  const isComboWithMultiVariant = isCombo && isMultiVariant;
 
   useEffect(() => {
     setCheckAvailVariant(getCheckAvailVariant(hsid));
@@ -1036,7 +1038,10 @@ const Product = (props) => {
     params,
   });
 
-  const { data, error } = useSWR(tourGroupEndpoint, { fetcher: swrFetcher });
+  const { data: tourGroupData } = useSWR(
+    isComboWithSingleVariant ? tourGroupEndpoint : null,
+    { fetcher: swrFetcher }
+  );
 
   const handlePopup = () => {
     togglePopup();
@@ -1098,8 +1103,8 @@ const Product = (props) => {
   };
 
   const handleShowComboPopup = () => {
-    const { variants } = data || {};
-    if (data && variants?.length == 1) {
+    const { variants } = tourGroupData || {};
+    if (tourGroupData && isComboWithSingleVariant) {
       if (typeof window !== 'undefined') {
         const { id: variantId } = variants[0];
         trackEvent({
@@ -1127,11 +1132,11 @@ const Product = (props) => {
     if (!isMobile) {
       document.body.style.overflow = 'hidden';
     }
-    if (isMobile) {
+    if (isMobile && isComboWithMultiVariant) {
       addToAside({
         width: '100vw',
         children: (
-          <ComboVariants
+          <ComboPopup
             productTitle={cardTitle}
             l1Booster={boosterTag}
             tgid={tgid}
@@ -1141,8 +1146,6 @@ const Product = (props) => {
             bookingUrl={productBookingUrl}
             minDuration={minDuration}
             maxDuration={maxDuration}
-            data={data}
-            error={error}
           />
         ),
         type: SIDEBAR_TYPES.COMBO_VARIANT,
@@ -1593,8 +1596,10 @@ const Product = (props) => {
           </Conditional>
         </ProductBody>
       </StyledProductCard>
-      {showComboVariant && !isMobile && (
-        <ComboVariants
+      <Conditional
+        if={!isMobile && isComboWithMultiVariant && showComboVariant}
+      >
+        <ComboPopup
           productTitle={cardTitle}
           l1Booster={boosterTag}
           tgid={tgid}
@@ -1604,10 +1609,8 @@ const Product = (props) => {
           bookingUrl={productBookingUrl}
           minDuration={minDuration}
           maxDuration={maxDuration}
-          data={data}
-          error={error}
         />
-      )}
+      </Conditional>
     </>
   );
 

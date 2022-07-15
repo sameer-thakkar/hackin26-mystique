@@ -1514,6 +1514,7 @@ export const getPageData = async ({
           allTags: allTagsTour,
           id,
           combo,
+          multiVariant,
           primaryCollection,
           ticketValidity,
           reschedulePolicy,
@@ -1564,6 +1565,7 @@ export const getPageData = async ({
             safetyImages: safetyImages || [],
             validity,
             combo,
+            multiVariant,
             minDuration,
             maxDuration,
             listingPrice: {

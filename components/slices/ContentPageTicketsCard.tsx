@@ -42,7 +42,7 @@ import { getProductCommonProperties, trackEvent } from 'utils/analytics';
 import PromoCodeBlock from 'UI/PromoCodeBlock';
 import { descriptorIcons } from 'const/descriptorIcons';
 import { getDuration } from 'utils/timeUtils';
-import ComboVariants from 'UI/ComboVariants';
+import ComboPopup from 'UI/ComboPopup';
 import { expandFontToken } from 'const/typography';
 import { metaAtom } from 'store/atoms/meta';
 import { hsidAtom } from 'store/atoms/hsid';
@@ -610,21 +610,33 @@ const TicketCard = (props) => {
   } = useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
   const pageMetaData = useRecoilValue(metaAtom);
-  const isCombo = scorpioData?.combo;
   const isTicketCard = true;
   const [isContentOpen, toggleContentOpen] = useState(defaultOpen);
   const [isOpened, setIsOpened] = useState(false);
   const [showComboVariant, setShowComboVariant] = useState(false);
-  const { promo_code } = finalPromoCode || {};
-  const { minDuration, maxDuration } = scorpioData || {};
   const [checkAvailVariant, setCheckAvailVariant] = useState(null);
+  const { promo_code } = finalPromoCode || {};
+
+  const {
+    minDuration,
+    maxDuration,
+    combo: isCombo,
+    multiVariant: isMultiVariant,
+    descriptors: tourDescriptors,
+    primaryCategory,
+    primaryCollection,
+    primarySubCategory,
+    title: tourTitle,
+    highlights: tourHighlights,
+    listingPrice: tourListingPrice,
+  } = scorpioData ?? {};
+  const descriptorsList = descriptors || tourDescriptors;
+  const isComboWithMultiVariant = isCombo && isMultiVariant;
   const hsid = useRecoilValue(hsidAtom);
 
-  useEffect(() => {
+ useEffect(() => {
     setCheckAvailVariant(getCheckAvailVariant(hsid));
   }, [hsid]);
-
-  const descriptorsList = descriptors || scorpioData.descriptors;
 
   const noOfListItemToShow = Math.max(
     NOS_OF_HIGHLIGHTS_TO_SHOW,
@@ -654,8 +666,6 @@ const TicketCard = (props) => {
     });
 
     const { originalPrice, finalPrice, currencyCode } = listingPrice ?? {};
-    const { primaryCategory, primaryCollection, primarySubCategory } =
-      scorpioData ?? {};
     trackEvent({
       eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,
       [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
@@ -687,7 +697,7 @@ const TicketCard = (props) => {
       .format(LOCALISED_DATE_FORMATS[currentLanguage].DATE_MONTH);
   };
 
-  const cardTitle = title || scorpioData.title;
+  const cardTitle = title || tourTitle;
   let url = host || window.location.host;
   const isDev = url.includes('localhost');
   const currentHost = !isDev ? url : parse(uid, true).pathname;
@@ -700,7 +710,7 @@ const TicketCard = (props) => {
   const showScratchPrice = isFetched && isScratchPriceEnabled;
   const finalHighlights = RichText.asText(tempHighlights)?.trim()?.length
     ? tempHighlights
-    : scorpioData.highlights;
+    : tourHighlights;
   let mobileFallbackShortSummary =
     finalHighlights?.filter((line) => wordCount(line?.text) > 5)?.slice(0, 1) ??
     '';
@@ -723,7 +733,7 @@ const TicketCard = (props) => {
     : extractTabsFromHighlights(finalHighlights);
 
   let { listingPrice } = tourPrices[tgid];
-  listingPrice = isAmp ? scorpioData.listingPrice : listingPrice;
+  listingPrice = isAmp ? tourListingPrice : tourListingPrice;
 
   if (isFetched && !listingPrice) return null;
   const finalPrice = listingPrice;
@@ -855,7 +865,7 @@ const TicketCard = (props) => {
       addToAside({
         width: '100vw',
         children: (
-          <ComboVariants
+          <ComboPopup
             productTitle={cardTitle}
             l1Booster={boosterTag}
             tgid={tgid}
@@ -865,8 +875,6 @@ const TicketCard = (props) => {
             bookingUrl={productBookingUrl}
             minDuration={minDuration}
             maxDuration={maxDuration}
-            data={{}}
-            error={{}}
           />
         ),
         type: SIDEBAR_TYPES.COMBO_VARIANT,
@@ -912,7 +920,7 @@ const TicketCard = (props) => {
             </Button>
           </a>
         </Conditional>
-        <Conditional if={isCombo}>
+        <Conditional if={isComboWithMultiVariant}>
           <Button
             className={`tour-book-now-cta`}
             paddingSides={isMobile ? '16px' : '8px'}
@@ -1070,8 +1078,10 @@ const TicketCard = (props) => {
       <Conditional if={isOpened && !isMobile}>
         {getProductCardElements()}
       </Conditional>
-      <Conditional if={showComboVariant && !isMobile}>
-        <ComboVariants
+      <Conditional
+        if={!isMobile && isComboWithMultiVariant && showComboVariant}
+      >
+        <ComboPopup
           productTitle={cardTitle}
           l1Booster={boosterTag}
           tgid={tgid}
@@ -1081,8 +1091,6 @@ const TicketCard = (props) => {
           bookingUrl={productBookingUrl}
           minDuration={minDuration}
           maxDuration={maxDuration}
-          data={{}}
-          error={{}}
         />
       </Conditional>
     </>

@@ -1,19 +1,21 @@
 import { useContext, useEffect } from 'react';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
+import useSWR from 'swr';
 import { MBContext } from 'contexts/MBContext';
+import { metaAtom } from 'store/atoms/meta';
 import Conditional from 'components/common/Conditional';
 import { Descriptors } from 'components/Product';
 import Carousel from 'components/UI/Carousel';
 import VariantCard, { VariantCardSkeleton } from 'components/UI/VariantCard';
 import { BLACK_COLOR_CLOSE } from 'assets/SvgIcons';
+import COLORS from 'const/colors';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
-import { getHostName } from 'utils/helper';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { trackEvent } from 'utils/analytics';
-import COLORS from 'const/colors';
-import { useRecoilValue } from 'recoil';
-import { metaAtom } from 'store/atoms/meta';
+import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
+import { getHostName } from 'utils/helper';
 
 const PopupWrapper = styled.div`
   z-index: 10;
@@ -140,7 +142,7 @@ const VariantCardSkeletonWrapper = styled.div`
   }
 `;
 
-type ComboVariantsProps = {
+type ComboPopupType = {
   productTitle: string;
   l1Booster: string;
   tgid: string | number;
@@ -150,10 +152,8 @@ type ComboVariantsProps = {
   bookingUrl: string;
   minDuration: number;
   maxDuration: number;
-  data: any;
-  error: any;
 };
-const ComboVariants = ({
+const ComboPopup = ({
   productTitle,
   l1Booster,
   tgid,
@@ -163,15 +163,27 @@ const ComboVariants = ({
   bookingUrl,
   minDuration,
   maxDuration,
-  data,
-  error,
-}: ComboVariantsProps) => {
+}: ComboPopupType) => {
   const { lang, host, isDev, isStage } = useContext(MBContext);
   const hostname = getHostName(isStage, isDev, host);
-  const { variants, currency } = data ?? {};
   const pageMetaData = useRecoilValue(metaAtom);
 
-  const { code: currencyCode } = currency ?? {};
+  const params = {
+    ...(lang && {
+      language: lang,
+    }),
+  };
+
+  const tourGroupEndpoint = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.TourGroupsV6,
+    id: tgid,
+    hostname,
+    params,
+  });
+  const { data: tourGroupData, error } = useSWR(tourGroupEndpoint, {
+    fetcher: swrFetcher,
+  });
+  const { variants } = tourGroupData ?? {};
   useEffect(() => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.COMBO_VARIANT.POPUP_VIEWED,
@@ -193,7 +205,7 @@ const ComboVariants = ({
       variantName,
       variantListingPrice,
       variantInfo,
-      currencyCode,
+      currencyCode: variantListingPrice?.currencyCode,
       language: lang,
       bookingUrl,
       hostname,
@@ -231,19 +243,15 @@ const ComboVariants = ({
             </Conditional>
           </ProductInfo>
           <StyledVariantsWrapper>
-            <h3>
-              {variants?.length > 1
-                ? strings.COMBO_VARIANT.SELECT_OPTION
-                : null}
-            </h3>
-            <Conditional if={!data || (data && variants.length == 1)}>
+            <h3>{strings.COMBO_VARIANT.SELECT_OPTION}</h3>
+            <Conditional if={!tourGroupData}>
               <VariantCardSkeletonWrapper>
                 <VariantCardSkeleton isMobile={isMobile} />
                 <VariantCardSkeleton isMobile={isMobile} />
                 <VariantCardSkeleton isMobile={isMobile} />
               </VariantCardSkeletonWrapper>
             </Conditional>
-            <Conditional if={data}>
+            <Conditional if={tourGroupData}>
               <Conditional if={!isMobile && !error && variants?.length > 1}>
                 <Carousel cardsInARow={4} columnGap={24}>
                   {variantMarkup}
@@ -265,4 +273,4 @@ const ComboVariants = ({
   );
 };
 
-export default ComboVariants;
+export default ComboPopup;
