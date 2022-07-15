@@ -29,3 +29,34 @@ export const isDateInThePast = (date) => new Date(date).getTime() < Date.now();
 export const getDurationInHours = (duration) => Math.round(duration / 60);
 
 export const isDateValid = (date) => dayjs(date).isValid();
+
+export const getPrevDate = (date) =>
+  dayjs(date).subtract(1, 'day').format('YYYY-MM-DD');
+
+/**
+ * Returns ISO 8601 representation of a duration string.
+ * The duration string is expected to be in the format "x hrs y mins...".
+ * Currently only supports hours and minutes.
+ *
+ * @param {string} durationString (eg - "2 hrs, 45 mins with 1 intermission").
+ * @return {string} ISO 8601 representation (eg - "PT2H45M").
+ */
+export const getDurationISO = (durationString) => {
+  const durationObject = durationString
+    .split(' ')
+    .reduce((accObject, item, index, array) => {
+      if (item.startsWith('hrs')) {
+        accObject['hrs'] = array[index - 1];
+      }
+      if (item.startsWith('mins')) {
+        accObject['mins'] = array[index - 1];
+      }
+      return accObject;
+    }, {});
+  return dayjs
+    .duration({
+      hours: durationObject?.hrs,
+      minutes: durationObject?.mins,
+    })
+    .toISOString();
+};

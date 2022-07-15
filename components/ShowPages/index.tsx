@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useRecoilValue } from 'recoil';
@@ -7,6 +7,7 @@ import { ProductJsonLd } from 'next-seo';
 import cloneDeep from 'lodash.clonedeep';
 import { useWindowWidth } from '@react-hook/window-size';
 import styled from 'styled-components';
+import { MBContext } from 'contexts/MBContext';
 import { StyledRichContent } from 'UI/RichContent';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
@@ -37,6 +38,7 @@ import {
   getAlternateLanguages,
   getHeadoutLanguagecode,
   legacyBooleanCheck,
+  createBookingURL,
 } from 'utils';
 import { groupSlices, getHostName } from 'utils/helper';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
@@ -45,6 +47,7 @@ import {
   fetchTourGroupsByCategory,
 } from 'utils/apiUtils';
 import { generateDescriptor } from 'utils/productUtils';
+import { getPrevDate, getDurationISO } from 'utils/dateUtils';
 import { getProductSchema } from 'utils/schemaUtils';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { metaAtom } from 'store/atoms/meta';
@@ -208,6 +211,7 @@ const ShowPage = ({
     city,
     startLocation,
     endLocation,
+    variants,
   } = tourGroupData || {};
 
   const { slots } = inventorySlotData || {};
@@ -387,6 +391,35 @@ const ShowPage = ({
   const { addressLine1, addressLine2, postalCode, cityName, state } =
     startLocation || endLocation || {};
   const productImages = imageUploads?.map((image) => image?.url);
+  const showDescription = tabSchemaHighlight?.[0]?.tab_content?.[0]?.text;
+  const showDuration = detailsObjects?.['Duration'];
+  const showDurationISO = getDurationISO(showDuration);
+  const theatreSeatingCapacity = aboutTheatreSection?.tab_content[1]?.text?.split(
+    ' '
+  )[2];
+  const { nakedDomain } = useContext(MBContext);
+  const showBookingUrl = createBookingURL({
+    nakedDomain,
+    lang: currentLanguage,
+    tgid,
+  });
+  const pricingValidFromDate = getPrevDate(inventorySlotData?.fromDate);
+
+  let offerSchema = [];
+  variants
+    ?.filter((variant) => variant?.listingPrice)
+    ?.map((variant) => {
+      offerSchema.push({
+        '@type': 'Offer',
+        name: variant?.name,
+        price: variant.listingPrice?.finalPrice,
+        priceCurrency: variant.listingPrice?.currencyCode,
+        validFrom: pricingValidFromDate,
+        url: showBookingUrl,
+        availability: 'https://schema.org/InStock',
+      });
+    });
+
   const eventSchemaMarkup = slots
     ?.slice(0, 9)
     ?.map((slot) => {
@@ -394,10 +427,19 @@ const ShowPage = ({
       return `
       {
         "@context": "https://schema.org",
-        "@type": "Event",
+        "@type": "TheaterEvent",
         "name": "${name}",
+        "description": "${showDescription}",
+        "inLanguage": "English",
+        "image": [${productImages?.map((image) => `"${image}"`)}],
         "startDate": "${startDate}T${startTime}",
+        "duration": "${showDurationISO}",
         "endDate": "${startDate}T${endTime}",
+        "maximumAttendeeCapacity": "${theatreSeatingCapacity}",
+        "typicalAgeRange": "${detailsObjects?.['Age Limit']}",
+        "url": "${PageURL}",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
         "location": {
           "@type": "Place",
           "name": "${addressLine1}",
@@ -410,19 +452,11 @@ const ShowPage = ({
             "addressCountry": "${city?.country?.code}"
           }
         },
-        "image": [${productImages.map((image) => `"${image}"`)}],
-        "offers": {
-          "@type": "Offer",
-          "url": "${PageURL}",
-          "price": ${listingPrice?.finalPrice},
-          "priceCurrency": "${currencyCode}",
-          "availability": "${
-            listingPrice
-              ? 'https://schema.org/InStock'
-              : 'https://schema.org/SoldOut'
-          }",
-          "itemCondition": "http://schema.org/NewCondition"
-        }
+        "performer": {
+          "@type": "TheaterGroup",
+          "name": "${name} Cast"
+        },
+        "offers": [${offerSchema?.map((variant) => JSON.stringify(variant))}]
       }`;
     })
     ?.join(',');
