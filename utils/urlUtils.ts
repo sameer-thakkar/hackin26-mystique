@@ -186,3 +186,16 @@ export const addQueryParams = (
     return theURL.toString();
   }
 };
+
+export const getShowpageBreadcrumbLink = (primarySubCategoryName: string) => {
+  switch (primarySubCategoryName) {
+    case 'Musicals':
+      return 'https://www.london-theater-tickets.com/london-musicals/';
+    case 'Plays':
+      return 'https://www.london-theater-tickets.com/west-end-plays-in-london/';
+    case 'Opera':
+      return 'https://www.london-theater-tickets.com/london-operas/';
+    default:
+      return '';
+  }
+};

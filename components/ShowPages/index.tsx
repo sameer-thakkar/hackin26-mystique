@@ -41,7 +41,11 @@ import {
   createBookingURL,
 } from 'utils';
 import { groupSlices, getHostName } from 'utils/helper';
-import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
+import {
+  convertUidToUrl,
+  getValidUrl,
+  getShowpageBreadcrumbLink,
+} from 'utils/urlUtils';
 import {
   fetchTourGroupReviews,
   fetchTourGroupsByCategory,
@@ -367,6 +371,10 @@ const ShowPage = ({
   const [bannerImageOne, bannerImageTwo] = imageUploads || [];
   const breadcrumbs = [
     { url: '/', text: 'London Theatre Tickets' },
+    {
+      url: getShowpageBreadcrumbLink(primarySubCategoryName),
+      text: primarySubCategoryName,
+    },
     {
       url: PageURL,
       text: name + ' - ' + strings.TICKETS,
