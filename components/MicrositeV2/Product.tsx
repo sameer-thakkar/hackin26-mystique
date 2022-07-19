@@ -470,7 +470,7 @@ const Product = (props) => {
             <div className="rating">
               <Conditional if={averageRating}>
                 <span className="avg-rating">
-                  {averageRating} {STAR(COLORS.JOY_MUSTARD)}
+                  {averageRating} {STAR(COLORS.PRIMARY.JOY_MUSTARD)}
                 </span>
               </Conditional>
               <Conditional if={reviewCount}>
