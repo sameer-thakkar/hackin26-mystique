@@ -80,7 +80,7 @@ const de = {
     FREE_CANCELLATION: 'Kostenlose Stornierung',
     AUDIO_GUIDE: 'Audioguide',
     GUIDED_TOUR: 'Geführte Tour',
-    RETURN_TRANSFERS: 'Hin- und Rücktransfer',
+    RETURN_TRANSFERS: 'Überweisungen',
     MEALS_INCLUDED: 'Inkl. Mahlzeit',
   },
   SAFE_EXPERIENCE: {

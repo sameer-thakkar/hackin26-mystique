@@ -78,7 +78,7 @@ const fr = {
     FREE_CANCELLATION: 'Annulation gratuite',
     AUDIO_GUIDE: 'Audioguide',
     GUIDED_TOUR: 'Visite guidée',
-    RETURN_TRANSFERS: 'Navettes aller-retour',
+    RETURN_TRANSFERS: 'Transferts',
     MEALS_INCLUDED: 'Repas inclus',
   },
   SAFE_EXPERIENCE: {

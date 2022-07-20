@@ -338,7 +338,7 @@ export const getCancellationPolicyString = ({
   const cancellableUptoHours = getDurationInHours(cancellableUptoMinutes);
   const reschedulableUptoHours = getDurationInHours(reschedulableUptoMinutes);
   const formattedValidUptoDate = isDateValid(validUptoDate)
-    ? dayjs(validUptoDate).format('D MMMM, YYYY')
+    ? dayjs(validUptoDate).locale(lang).format('D MMMM, YYYY')
     : null;
 
   if (!cancellable && !reschedulable) {
@@ -396,7 +396,7 @@ const getValidityPolicyString = ({ ticketValidity, lang }) => {
     ? Math.floor(validUptoDays / 30)
     : 0;
   const formattedValidUptoDate = isDateValid(validUptoDate)
-    ? dayjs(validUptoDate).format('D MMMM, YYYY')
+    ? dayjs(validUptoDate).locale(lang).format('D MMMM, YYYY')
     : null;
 
   switch (validityType) {

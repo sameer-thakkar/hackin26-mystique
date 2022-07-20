@@ -81,7 +81,7 @@ const nl = {
     FREE_CANCELLATION: 'Gratis annuleren',
     AUDIO_GUIDE: 'Audiogids',
     GUIDED_TOUR: 'Rondleiding',
-    RETURN_TRANSFERS: 'Retour transfers',
+    RETURN_TRANSFERS: 'Transfers',
     MEALS_INCLUDED: 'Inclusief maaltijden',
   },
   SAFE_EXPERIENCE: {
