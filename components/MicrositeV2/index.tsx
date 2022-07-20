@@ -429,10 +429,11 @@ class MicrositeV2 extends Component<any, any> {
             interaction: image.interaction,
             alt: image.uploaded_image.alt || image.image_alt,
             showPageUrl: image.onclick_url,
+            bannerHeading: image.main_heading,
           },
         ];
       }, []),
-      bannerHeading: CMSHeading,
+      coverHeading: CMSHeading,
     };
 
     const MBData = {

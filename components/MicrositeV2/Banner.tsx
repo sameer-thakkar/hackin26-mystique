@@ -4,7 +4,9 @@ import { scroller } from 'react-scroll';
 import styled from 'styled-components';
 import Image from 'UI/Image';
 import { SIZES } from 'const/ui-constants';
-import { stringIdfy } from 'utils/helper';
+import COLORS from 'const/colors';
+import { expandFontToken } from 'const/typography';
+import { stringIdfy, withShortcodes } from 'utils/helper';
 import { trackEvent } from 'utils/analytics';
 import {
   ANALYTICS_EVENTS,
@@ -65,6 +67,41 @@ const StyledBanner = styled.div`
     transform: scale(1);
   }
 
+  .mb-captions {
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    display: grid;
+  }
+
+  .mb-captions .caption h1 {
+    ${expandFontToken('Display/Regular')}
+    color: ${COLORS.BRAND.WHITE};
+  }
+
+  .mb-captions .mb-caption {
+    opacity: 0;
+    grid-row: 1;
+    grid-column: 1 / 2;
+    display: grid;
+    align-self: center;
+    margin-left: 80px;
+  }
+
+  .mb-captions .mb-caption.active {
+    opacity: 1;
+  }
+
+  .overlay-container {
+    z-index: 2;
+    pointer-events: none;
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    left: 0;
+    top: 0;
+  }
+
   @media (max-width: 768px) {
     margin: ${({ bannerImages }) =>
       bannerImages.length === 1 ? '2rem 0' : '1rem 0'};
@@ -85,6 +122,22 @@ const StyledBanner = styled.div`
       width: auto;
       height: auto;
       max-height: 57vw; /** maintaining aspect ratio */
+    }
+
+    .mb-captions .mb-caption {
+      z-index: 1;
+      margin: unset;
+      align-self: end;
+    }
+    
+    .mb-captions .caption h1 {
+        ${expandFontToken('Heading/Small')}
+        margin: auto 24px 24px;
+    }
+
+    .overlay-container {
+      width: 90%;
+      z-index: 2;
     }
   }
 `;
@@ -188,6 +241,21 @@ const NewBanner = (props) => {
     ? BANNER_PARAMS.MOBILE
     : BANNER_PARAMS.DESKTOP;
 
+  const textOverLay = (bannerHeading) => {
+    const parsedBannerHeading = withShortcodes(bannerHeading).join('');
+    return (
+      <div className="overlay-container">
+        <div className={`mb-captions`}>
+          <div className={`mb-caption active`}>
+            <div className="caption">
+              <h1>{parsedBannerHeading}</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div>
       <StyledBanner bannerImages={bannerImages}>
@@ -221,6 +289,9 @@ const NewBanner = (props) => {
                   dontLazyLoad={true}
                   imageId={stringIdfy(bannerImages[0].alt || '')}
                 />
+                <Conditional if={bannerImages[0].bannerHeading}>
+                  {textOverLay(bannerImages[0].bannerHeading)}
+                </Conditional>
               </a>
             </Conditional>
             <Conditional if={!isEntertainmentMb}>
@@ -273,6 +344,9 @@ const NewBanner = (props) => {
                         dontLazyLoad={true}
                         imageId={stringIdfy(image.alt || '') + index}
                       />
+                      <Conditional if={image.bannerHeading}>
+                        {textOverLay(image.bannerHeading)}
+                      </Conditional>
                     </a>
                   </Conditional>
                   <Conditional if={!isEntertainmentMb}>

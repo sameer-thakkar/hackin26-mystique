@@ -211,7 +211,7 @@ export const HomePage = (props) => {
   const themeOverride = footer?.themeOverride;
   const hasDropdownLinks = enableDropdownLinks && dropdownLinks?.length;
   const { mbTheme } = useContext(MBContext);
-  const bannerHeading = withShortcodes(heroProps?.bannerHeading);
+  const coverHeading = withShortcodes(heroProps?.coverHeading);
   const hasSafe = Object.values(allTours).some((tour: any) =>
     isSafetyIncluded(tour.allTags)
   );
@@ -271,11 +271,11 @@ export const HomePage = (props) => {
       </Conditional>
       <Conditional if={isEntertainmentMbListicle}>
         <ListicleHeadingWrapper className="main-wrapper">
-          <h1>{bannerHeading}</h1>
+          <h1>{coverHeading}</h1>
         </ListicleHeadingWrapper>
       </Conditional>
       <Conditional if={mbTheme === THEMES.MIN_BLUE}>
-        <TextBanner bannerHeading={bannerHeading ? bannerHeading : null} />
+        <TextBanner bannerHeading={coverHeading ? coverHeading : null} />
       </Conditional>
       <Conditional if={alertPopup?.uid}>
         <div className="alert-wrapper">
