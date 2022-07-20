@@ -80,7 +80,7 @@ const it = {
     FREE_CANCELLATION: 'Cancellazione gratuita',
     AUDIO_GUIDE: 'Audio-guida',
     GUIDED_TOUR: 'Tour guidato',
-    RETURN_TRANSFERS: 'Trasferimenti',
+    TRANSFERS: 'Trasferimenti',
     MEALS_INCLUDED: 'Pasti inclusi',
   },
   SAFE_EXPERIENCE: {

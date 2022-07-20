@@ -87,7 +87,7 @@ const en = {
     FREE_CANCELLATION: 'Free Cancellation',
     AUDIO_GUIDE: 'Audio Guide',
     GUIDED_TOUR: 'Guided Tour',
-    RETURN_TRANSFERS: 'Transfers',
+    TRANSFERS: 'Transfers',
     MEALS_INCLUDED: 'Meals Included',
   },
   SAFE_EXPERIENCE: {
