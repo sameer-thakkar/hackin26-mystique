@@ -101,22 +101,15 @@ export const getListicleDocument = async ({ req, uid, lang }) => {
     }
   );
   if (listicleResponse) {
-    const {
-      common_footer,
-      common_header,
-      content_framework,
-    } = listicleResponse.data;
+    const { common_footer, common_header, content_framework } =
+      listicleResponse.data;
 
     const refArray = await getRefsArrayByIds(
       [common_footer.id, common_header.id, content_framework.id],
       req
     );
-    const {
-      commonFooter,
-      commonHeader,
-      contentFramework,
-      secondaryFooter,
-    } = refsArrayToObject(refArray);
+    const { commonFooter, commonHeader, contentFramework, secondaryFooter } =
+      refsArrayToObject(refArray);
     return {
       CMSContent: {
         ...listicleResponse,
@@ -214,9 +207,8 @@ export const getContentPageDocument = async ({
         [baseLangData?.data?.content_framework?.id],
         req
       );
-      const { contentFramework: baseLangContentFramework } = refsArrayToObject(
-        baseLangRefArray
-      );
+      const { contentFramework: baseLangContentFramework } =
+        refsArrayToObject(baseLangRefArray);
 
       let categoryTourListV1 = getSinglePrismicSlice({
         sliceName: 'ticket_card_shoulder_page',
@@ -250,6 +242,8 @@ export const getContentPageDocument = async ({
           microsite: micrositeData,
           secondaryFooter,
           productCardData,
+          noindex:
+            lang !== 'en-us' ? baseLangData.data.noindex : page.data.noindex,
           baseLangExperienceLimit,
           baseLangPageTitle:
             lang !== 'en-us' ? baseLangData?.data?.title : page.data.title,
@@ -489,6 +483,10 @@ export const getMicrositeDocument = async ({
                 ...boolValues,
                 canonical_link:
                   canonicalLink || completeMicrosite.data.data.page_url,
+                noindex:
+                  lang !== 'en-us'
+                    ? baseLangData.data.noindex
+                    : completeMicrosite.data.noindex,
                 logo_redirection_url: completeMicrosite.data.data
                   .logo_redirection_url.url
                   ? completeMicrosite.data.data.logo_redirection_url
@@ -501,11 +499,11 @@ export const getMicrositeDocument = async ({
                     : poweredByHeadout,
                 baseLangPageTitle:
                   lang !== 'en-us'
-                    ? baseLangData?.data?.title
+                    ? baseLangData.data.title
                     : completeMicrosite.data.data.title,
                 redirect_to_headout_booking_flow:
                   lang !== 'en-us'
-                    ? baseLangData?.data?.redirect_to_headout_booking_flow
+                    ? baseLangData.data.redirect_to_headout_booking_flow
                     : completeMicrosite.data.data
                         .redirect_to_headout_booking_flow,
                 categorisedToursV1,
@@ -533,12 +531,8 @@ export const getGlobalHomepage = async ({ req, uid, lang }) => {
     }
   );
   if (response) {
-    const {
-      common_header,
-      common_footer,
-      content_framework,
-      mb_type,
-    } = response.data;
+    const { common_header, common_footer, content_framework, mb_type } =
+      response.data;
 
     const client = Client();
     const cityCollections = mb_type
@@ -573,9 +567,8 @@ export const getGlobalHomepage = async ({ req, uid, lang }) => {
       [common_header.id, common_footer.id, content_framework.id],
       req
     );
-    const { commonHeader, commonFooter, contentFramework } = refsArrayToObject(
-      refArray
-    );
+    const { commonHeader, commonFooter, contentFramework } =
+      refsArrayToObject(refArray);
     return {
       CMSContent: {
         ...response,
@@ -668,9 +661,8 @@ export const getGlobalCollection = async ({ req, uid, lang }) => {
       [common_header.id, common_footer.id, content_framework.id],
       req
     );
-    const { commonHeader, commonFooter, contentFramework } = refsArrayToObject(
-      refArray
-    );
+    const { commonHeader, commonFooter, contentFramework } =
+      refsArrayToObject(refArray);
     return {
       CMSContent: {
         ...response,
@@ -698,11 +690,8 @@ export const getGlobalCity = async ({ req, uid, lang }) => {
   );
   if (cityResponse) {
     const { id: cityDocId } = cityResponse;
-    const {
-      common_header,
-      common_footer,
-      content_framework,
-    } = cityResponse.data;
+    const { common_header, common_footer, content_framework } =
+      cityResponse.data;
 
     const client = Client();
     const cityCollections = await client.query(
@@ -731,9 +720,8 @@ export const getGlobalCity = async ({ req, uid, lang }) => {
       [common_header.id, common_footer.id, content_framework.id],
       req
     );
-    const { commonHeader, commonFooter, contentFramework } = refsArrayToObject(
-      refArray
-    );
+    const { commonHeader, commonFooter, contentFramework } =
+      refsArrayToObject(refArray);
     return {
       CMSContent: {
         ...cityResponse,
@@ -759,11 +747,8 @@ export const getGlobalCountry = async ({ req, uid, lang }) => {
   );
   if (countryResponse) {
     const { id: countryDocID } = countryResponse;
-    const {
-      common_header,
-      common_footer,
-      content_framework,
-    } = countryResponse.data;
+    const { common_header, common_footer, content_framework } =
+      countryResponse.data;
 
     const client = Client();
     const getAllCollections = await client.query(
@@ -803,9 +788,8 @@ export const getGlobalCountry = async ({ req, uid, lang }) => {
       [common_header.id, common_footer.id, content_framework.id],
       req
     );
-    const { commonHeader, commonFooter, contentFramework } = refsArrayToObject(
-      refArray
-    );
+    const { commonHeader, commonFooter, contentFramework } =
+      refsArrayToObject(refArray);
     return {
       CMSContent: {
         ...countryResponse,
@@ -833,23 +817,15 @@ export const getGlobalExperience = async ({ req, uid, lang }) => {
     }
   );
   if (response) {
-    const {
-      common_header,
-      common_footer,
-      content_framework,
-      collection,
-    } = response.data;
+    const { common_header, common_footer, content_framework, collection } =
+      response.data;
 
     const refArray = await getRefsArrayByIds(
       [common_header.id, common_footer.id, content_framework.id, collection.id],
       req
     );
-    const {
-      commonHeader,
-      commonFooter,
-      contentFramework,
-      globalCollection,
-    } = refsArrayToObject(refArray);
+    const { commonHeader, commonFooter, contentFramework, globalCollection } =
+      refsArrayToObject(refArray);
     const {
       country: { id: countryDocID },
       city: { id: cityDocID },
