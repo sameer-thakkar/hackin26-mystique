@@ -900,7 +900,7 @@ const TicketCard = (props) => {
         isSticky={expandContent}
         shouldOffset={earliestAvailability && mbTheme === THEMES.MIN_BLUE}
       >
-        <Conditional if={!isCombo}>
+        <Conditional if={!isComboWithMultiVariant}>
           <a
             target={isFetched && isMobile ? null : '_blank'}
             href={productBookingUrl}
