@@ -115,7 +115,7 @@ const cardImageStyles = css`
 const moreDetailsButtonStyles = (isAmp: boolean) => css`
   padding: 0.75rem;
   background-color: ${COLORS.GRAY.G7};
-  margin-top: ${isAmp ? '0.4rem' : '0'};
+  margin-top: ${isAmp ? '0' : '0'};
   grid-area: cta-block;
   grid-column: 1 / 2;
   width: 32vw;
@@ -1342,7 +1342,6 @@ const Product = (props) => {
         on={`tap:tour-description-more-text-${position}.toggleClass(class='display-none'),tour-description-less-text-${position}.toggleClass(class='display-none'),tour-description-${position}.toggleClass(class='display-expand')`}
       >
         <span
-          className="more-details"
           id={`tour-description-more-text-${position}`}
         >
           {'+ ' + strings.MORE_DETAILS}
