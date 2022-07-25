@@ -1,6 +1,7 @@
 import { SIZES } from 'const/ui-constants';
 import styled from 'styled-components';
 import { greyScheme } from 'style/theme';
+import { titleCase } from 'utils/stringUtils';
 
 import InfoBanner from './InfoBanner';
 import Split, { StlyedSplit } from '../UI/Split';
@@ -31,7 +32,7 @@ const SpecialOfferBanner = ({
     <Wrapper marginTop={marginTop}>
       <Split mobileLayout={'scroll'} count={1}>
         <InfoBanner
-          title={specialOffer.offerHeading}
+          title={titleCase(specialOffer.offerHeading)}
           description={specialOffer.offerText}
           colorScheme={greyScheme}
         />

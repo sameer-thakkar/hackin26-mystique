@@ -173,7 +173,10 @@ export const parseShowPageData = (data) => {
             hasSpecialOffer = false;
           } else {
             specialOffer = {
-              offerHeading: DetailObjectHeading,
+              offerHeading: DetailObjectHeading.replace(
+                /(Special Offer:)|(Special Offer :)/,
+                ''
+              ).trim(),
               offerText: element.content.text,
             };
             hasSpecialOffer = true;
