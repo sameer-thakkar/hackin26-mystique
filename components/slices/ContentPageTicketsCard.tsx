@@ -547,10 +547,7 @@ const Descriptors = ({
             <DescriptorSVG />
 
             <Conditional if={item === 'DURATION'}>
-              {strings.formatString(
-                strings.DESCRIPTORS.DURATION,
-                `${getDuration({ minDuration, maxDuration, lang })}`
-              )}
+              {getDuration({ minDuration, maxDuration, lang })}
             </Conditional>
             <Conditional if={item !== 'DURATION'}>
               {strings.DESCRIPTORS?.[item]}
@@ -634,7 +631,7 @@ const TicketCard = (props) => {
   const isComboWithMultiVariant = isCombo && isMultiVariant;
   const hsid = useRecoilValue(hsidAtom);
 
- useEffect(() => {
+  useEffect(() => {
     setCheckAvailVariant(getCheckAvailVariant(hsid));
   }, [hsid]);
 

@@ -50,9 +50,14 @@ import {
   trackEvent,
 } from 'utils/analytics';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
-import { getCheckAvailText, getCheckAvailVariant, getHostName, truncate, wordCount } from 'utils/helper';
 import {
-
+  getCheckAvailText,
+  getCheckAvailVariant,
+  getHostName,
+  truncate,
+  wordCount,
+} from 'utils/helper';
+import {
   extractTabsFromHighlights,
   getProductCardLayout,
 } from 'utils/productUtils';
@@ -931,10 +936,7 @@ export const Descriptors = ({
             <DescriptorSVG />
 
             <Conditional if={item === DESCRIPTORS.DURATION}>
-              {strings.formatString(
-                strings.DESCRIPTORS.DURATION,
-                `${getDuration({ minDuration, maxDuration, lang })}`
-              )}
+              {getDuration({ minDuration, maxDuration, lang })}
             </Conditional>
             <Conditional if={item !== DESCRIPTORS.DURATION}>
               {strings.DESCRIPTORS?.[item]}
