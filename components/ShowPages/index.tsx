@@ -53,6 +53,7 @@ import {
 import { generateDescriptor } from 'utils/productUtils';
 import { getPrevDate, getDurationISO } from 'utils/dateUtils';
 import { getProductSchema } from 'utils/schemaUtils';
+import { getUniqueArrayItemsBy } from 'utils/arrayUtils';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { metaAtom } from 'store/atoms/meta';
 import { gtmAtom } from 'store/atoms/gtm';
@@ -428,7 +429,12 @@ const ShowPage = ({
       });
     });
 
-  const eventSchemaMarkup = slots
+  const uniqueDateTimeSlots = getUniqueArrayItemsBy(slots, [
+    'startDate',
+    'startTime',
+  ]);
+
+  const eventSchemaMarkup = uniqueDateTimeSlots
     ?.slice(0, 9)
     ?.map((slot) => {
       const { endTime, startTime, startDate } = slot || {};

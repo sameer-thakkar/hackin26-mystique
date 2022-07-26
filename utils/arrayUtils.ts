@@ -8,3 +8,15 @@ export const chunkArray = (array: any[], itemsPerChunk: number): any[] => {
     return resultArray;
   }, []);
 };
+
+export const getUniqueArrayItemsBy = (
+  array: any[],
+  keyProps: string[]
+): any[] =>
+  Object.values(
+    array.reduce((uniqueMap, item) => {
+      const key = keyProps.map((k) => item[k]).join('|');
+      if (!(key in uniqueMap)) uniqueMap[key] = item;
+      return uniqueMap;
+    }, {})
+  );
