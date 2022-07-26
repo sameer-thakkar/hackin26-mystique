@@ -101,15 +101,22 @@ export const getListicleDocument = async ({ req, uid, lang }) => {
     }
   );
   if (listicleResponse) {
-    const { common_footer, common_header, content_framework } =
-      listicleResponse.data;
+    const {
+      common_footer,
+      common_header,
+      content_framework,
+    } = listicleResponse.data;
 
     const refArray = await getRefsArrayByIds(
       [common_footer.id, common_header.id, content_framework.id],
       req
     );
-    const { commonFooter, commonHeader, contentFramework, secondaryFooter } =
-      refsArrayToObject(refArray);
+    const {
+      commonFooter,
+      commonHeader,
+      contentFramework,
+      secondaryFooter,
+    } = refsArrayToObject(refArray);
     return {
       CMSContent: {
         ...listicleResponse,
@@ -207,8 +214,9 @@ export const getContentPageDocument = async ({
         [baseLangData?.data?.content_framework?.id],
         req
       );
-      const { contentFramework: baseLangContentFramework } =
-        refsArrayToObject(baseLangRefArray);
+      const { contentFramework: baseLangContentFramework } = refsArrayToObject(
+        baseLangRefArray
+      );
 
       let categoryTourListV1 = getSinglePrismicSlice({
         sliceName: 'ticket_card_shoulder_page',
@@ -531,8 +539,12 @@ export const getGlobalHomepage = async ({ req, uid, lang }) => {
     }
   );
   if (response) {
-    const { common_header, common_footer, content_framework, mb_type } =
-      response.data;
+    const {
+      common_header,
+      common_footer,
+      content_framework,
+      mb_type,
+    } = response.data;
 
     const client = Client();
     const cityCollections = mb_type
@@ -567,8 +579,9 @@ export const getGlobalHomepage = async ({ req, uid, lang }) => {
       [common_header.id, common_footer.id, content_framework.id],
       req
     );
-    const { commonHeader, commonFooter, contentFramework } =
-      refsArrayToObject(refArray);
+    const { commonHeader, commonFooter, contentFramework } = refsArrayToObject(
+      refArray
+    );
     return {
       CMSContent: {
         ...response,
@@ -661,8 +674,9 @@ export const getGlobalCollection = async ({ req, uid, lang }) => {
       [common_header.id, common_footer.id, content_framework.id],
       req
     );
-    const { commonHeader, commonFooter, contentFramework } =
-      refsArrayToObject(refArray);
+    const { commonHeader, commonFooter, contentFramework } = refsArrayToObject(
+      refArray
+    );
     return {
       CMSContent: {
         ...response,
@@ -690,8 +704,11 @@ export const getGlobalCity = async ({ req, uid, lang }) => {
   );
   if (cityResponse) {
     const { id: cityDocId } = cityResponse;
-    const { common_header, common_footer, content_framework } =
-      cityResponse.data;
+    const {
+      common_header,
+      common_footer,
+      content_framework,
+    } = cityResponse.data;
 
     const client = Client();
     const cityCollections = await client.query(
@@ -720,8 +737,9 @@ export const getGlobalCity = async ({ req, uid, lang }) => {
       [common_header.id, common_footer.id, content_framework.id],
       req
     );
-    const { commonHeader, commonFooter, contentFramework } =
-      refsArrayToObject(refArray);
+    const { commonHeader, commonFooter, contentFramework } = refsArrayToObject(
+      refArray
+    );
     return {
       CMSContent: {
         ...cityResponse,
@@ -747,8 +765,11 @@ export const getGlobalCountry = async ({ req, uid, lang }) => {
   );
   if (countryResponse) {
     const { id: countryDocID } = countryResponse;
-    const { common_header, common_footer, content_framework } =
-      countryResponse.data;
+    const {
+      common_header,
+      common_footer,
+      content_framework,
+    } = countryResponse.data;
 
     const client = Client();
     const getAllCollections = await client.query(
@@ -788,8 +809,9 @@ export const getGlobalCountry = async ({ req, uid, lang }) => {
       [common_header.id, common_footer.id, content_framework.id],
       req
     );
-    const { commonHeader, commonFooter, contentFramework } =
-      refsArrayToObject(refArray);
+    const { commonHeader, commonFooter, contentFramework } = refsArrayToObject(
+      refArray
+    );
     return {
       CMSContent: {
         ...countryResponse,
@@ -817,15 +839,23 @@ export const getGlobalExperience = async ({ req, uid, lang }) => {
     }
   );
   if (response) {
-    const { common_header, common_footer, content_framework, collection } =
-      response.data;
+    const {
+      common_header,
+      common_footer,
+      content_framework,
+      collection,
+    } = response.data;
 
     const refArray = await getRefsArrayByIds(
       [common_header.id, common_footer.id, content_framework.id, collection.id],
       req
     );
-    const { commonHeader, commonFooter, contentFramework, globalCollection } =
-      refsArrayToObject(refArray);
+    const {
+      commonHeader,
+      commonFooter,
+      contentFramework,
+      globalCollection,
+    } = refsArrayToObject(refArray);
     const {
       country: { id: countryDocID },
       city: { id: cityDocID },
@@ -914,10 +944,32 @@ export const getShowPage = async ({
     });
   }
 
-  const collections = await Client().query(
-    [Prismic.Predicates.at('document.type', CUSTOM_TYPES.SHOW_PAGE)],
-    { pageSize: 100 }
-  );
+  const getCollections = async ({ pageSize = 100, page = 1, prevResults }) => {
+    const {
+      results = [],
+      total_results_size: totalDocuments,
+    } = await Client().query(
+      [Prismic.Predicates.at('document.type', CUSTOM_TYPES.SHOW_PAGE)],
+      { page, pageSize }
+    );
+    const allResults = [...prevResults, ...results];
+
+    if (allResults.length < totalDocuments) {
+      return getCollections({
+        pageSize: 100,
+        page: page + 1,
+        prevResults: allResults,
+      });
+    }
+
+    return allResults;
+  };
+
+  const allDocuments = await getCollections({
+    pageSize: 100,
+    page: 1,
+    prevResults: [],
+  });
 
   if (page) {
     const { common_footer, common_header } = page.data;
@@ -933,7 +985,7 @@ export const getShowPage = async ({
         ...page,
         commonFooter,
         commonHeader,
-        allShowPagesDocuments: collections?.results,
+        allShowPagesDocuments: allDocuments,
       },
       ContentType: CUSTOM_TYPES.SHOW_PAGE,
     };
