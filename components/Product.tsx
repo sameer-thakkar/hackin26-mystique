@@ -18,7 +18,6 @@ import { useRouter } from 'next/router';
 import { useWindowWidth } from '@react-hook/window-size';
 import { currencyAtom } from 'store/atoms/currency';
 import { metaAtom } from 'store/atoms/meta';
-import { hsidAtom } from 'store/atoms/hsid';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import Conditional from 'components/common/Conditional';
 import ComboPopup from 'UI/ComboPopup';
@@ -50,13 +49,7 @@ import {
   trackEvent,
 } from 'utils/analytics';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
-import {
-  getCheckAvailText,
-  getCheckAvailVariant,
-  getHostName,
-  truncate,
-  wordCount,
-} from 'utils/helper';
+import { getHostName, truncate, wordCount } from 'utils/helper';
 import {
   extractTabsFromHighlights,
   getProductCardLayout,
@@ -997,7 +990,6 @@ const Product = (props) => {
     redirectToHeadoutBookingFlow,
   } = useContext(MBContext);
   const router = useRouter();
-  const hsid = useRecoilValue(hsidAtom);
   const pageMetaData = useRecoilValue(metaAtom);
   const currency = useRecoilValue(currencyAtom);
   const hostname = getHostName(isStage, isDev, host);
@@ -1007,7 +999,6 @@ const Product = (props) => {
   );
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [showComboVariant, setShowComboVariant] = useState(false);
-  const [checkAvailVariant, setCheckAvailVariant] = useState(null);
 
   const {
     combo: isCombo,
@@ -1018,10 +1009,6 @@ const Product = (props) => {
 
   const isComboWithSingleVariant = isCombo && !isMultiVariant;
   const isComboWithMultiVariant = isCombo && isMultiVariant;
-
-  useEffect(() => {
-    setCheckAvailVariant(getCheckAvailVariant(hsid));
-  }, [hsid]);
 
   const descriptorsList = descriptors || scorpioData.descriptors;
   const cardTitle = title || scorpioData.title;
@@ -1343,9 +1330,7 @@ const Product = (props) => {
         // @ts-ignore
         on={`tap:tour-description-more-text-${position}.toggleClass(class='display-none'),tour-description-less-text-${position}.toggleClass(class='display-none'),tour-description-${position}.toggleClass(class='display-expand')`}
       >
-        <span
-          id={`tour-description-more-text-${position}`}
-        >
+        <span id={`tour-description-more-text-${position}`}>
           {'+ ' + strings.MORE_DETAILS}
         </span>
         <span
@@ -1386,7 +1371,7 @@ const Product = (props) => {
       role="button"
       tabIndex={0}
     >
-      {getCheckAvailText(currentLanguage, checkAvailVariant)}
+      {strings.CHECK_AVAIL}
       {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
     </Button>
   );

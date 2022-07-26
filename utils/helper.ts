@@ -5,9 +5,6 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import { FULL_LANGUAGE_MAP } from 'const/index';
 import renderShortCodes from 'utils/shortCodes';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
-import { strings } from 'const/strings';
-import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
-import { getABTestingVariant } from 'utils/experiments/experimentUtils';
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
@@ -479,28 +476,4 @@ export const getBuyTicketsUrl = (
 
 export const checkLTT = (uid) => {
   return uid.includes('www.london-theater-tickets.com');
-};
-
-export const getCheckAvailVariant = (hsid) => {
-  let variant = VARIANTS.CONTROL;
-  if (hsid) {
-    variant = getABTestingVariant(
-      EXPERIMENT_NAMES.CTA_TEST_MB,
-      hsid,
-      false,
-      true
-    );
-  }
-  return variant;
-};
-
-export const getCheckAvailText = (lang, variant) => {
-  if (lang === 'es') {
-    if (!variant) return '';
-    return variant === VARIANTS.TREATMENT
-      ? 'Ver disponibilidad'
-      : strings.CHECK_AVAIL;
-  } else {
-    return strings.CHECK_AVAIL;
-  }
 };

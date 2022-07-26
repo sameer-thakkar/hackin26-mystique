@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { MBContext } from 'contexts/MBContext';
 import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
@@ -7,13 +7,7 @@ import { strings } from 'const/strings';
 import { createBookingURL } from 'utils';
 import Conditional from 'components/common/Conditional';
 import { expandFontToken } from 'const/typography';
-import {
-  checkLTT,
-  getCheckAvailText,
-  getCheckAvailVariant,
-} from 'utils/helper';
-import { hsidAtom } from 'store/atoms/hsid';
-import { useRecoilValue } from 'recoil';
+import { checkLTT } from 'utils/helper';
 
 const BannerContent = styled.div(
   ({ showComponent }) => `
@@ -170,12 +164,6 @@ const StickyHeader = ({
   const { nakedDomain, biLink, uid, redirectToHeadoutBookingFlow } = useContext(
     MBContext
   );
-  const [checkAvailVariant, setCheckAvailVariant] = useState(null);
-  const hsid = useRecoilValue(hsidAtom);
-
-  useEffect(() => {
-    setCheckAvailVariant(getCheckAvailVariant(hsid));
-  }, [hsid]);
 
   const bookingUrl = createBookingURL({
     nakedDomain: nakedDomain,
@@ -220,9 +208,7 @@ const StickyHeader = ({
                     window.open(bookingUrl, '_blank', 'noopener, noreferrer')
                   }
                 >
-                  {isLTT
-                    ? getCheckAvailText(currentLanguage, checkAvailVariant)
-                    : strings.BANNER_CTA}
+                  {isLTT ? strings.CHECK_AVAIL : strings.BANNER_CTA}
                 </div>
               </Conditional>
               <Conditional if={!isAvailable}>
