@@ -19,7 +19,7 @@ const it = {
   VIEW_MORE: 'Leggi tutto',
   BANNER_CTA: 'Scopri le nostre offerte',
   BOOK_NOW_CTA: 'Prenota ora',
-  CHECK_AVAIL: 'Verifica la disponibilità',
+  CHECK_AVAIL: 'Verifica disponibilità',
   READ_MORE_TEXT: 'Leggi tutto',
   SHOW_LESS_TEXT: 'Mostra meno',
   NEXT_AVAILABLE: 'Prossimo disponibile: ',
