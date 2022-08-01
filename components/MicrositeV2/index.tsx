@@ -10,6 +10,7 @@ import { tourListApiParser } from 'utils/dataParsers';
 import { genManualSlice, getLangObject } from 'utils/helper';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import { getAlternateLanguages } from 'utils';
+import { checkLTT } from 'utils/helper';
 
 const HomePage: ComponentType<any> = dynamic(() =>
   import('./views/HomePage').then((mod) => mod.HomePage)
@@ -49,6 +50,7 @@ class MicrositeV2 extends Component<any, any> {
     const isMobile = window.innerWidth <= 768;
     const { all_tours: allTours } = this.props.data.data;
     const allTgids = allTours.map((tour) => tour.primary.tgid);
+    const isLTT = checkLTT(this.props.data.uid);
 
     fetch(`/api/tours/v6/tour-groups/?ids%5B%5D=${allTgids}`)
       .then((res) => {
@@ -63,7 +65,7 @@ class MicrositeV2 extends Component<any, any> {
       });
 
     const directTgid = this.props.router.query.tgid;
-    if (isMobile && directTgid) {
+    if (isMobile && directTgid && !isLTT) {
       this.setState({
         page: {
           name: PAGETYPE.MOBILE_PRODUCT_PAGE,
@@ -471,7 +473,7 @@ class MicrositeV2 extends Component<any, any> {
       showCovid19Alert: CMSContent?.data.show_covid19_alert,
     };
 
-    const directTgid = isMobile ? null : this.props.router.query.tgid;
+    const directTgid = this.props.router.query.tgid;
     const longFormContent = this.props.data.data.body2;
     let activePage = this.state.page.name;
     return (

@@ -5,6 +5,7 @@ import CategoryBar from 'components/MicrositeV2/CategoryBar';
 import InteractionContext from 'contexts/Interaction';
 import { DONT_AUTO_SCROLL } from 'const/index';
 import Conditional from 'components/common/Conditional';
+import { checkLTT } from 'utils/helper';
 
 const PopulateProducts = dynamic(() => import('./PopulateProducts'));
 
@@ -48,7 +49,10 @@ export const ProductsWrapper = (props) => {
     changeCategory(tgidArray, activeCategory || 0);
     setTimeout(() => {
       if (directTgid) {
-        clickTour(directTgid, true, 'main', DONT_AUTO_SCROLL);
+        const isLTT = checkLTT(uid);
+        const section = isMobile || isLTT ? null : 'main';
+
+        clickTour(directTgid, true, section, DONT_AUTO_SCROLL);
       }
     }, 1000);
   }, []);
