@@ -55,8 +55,8 @@ export const getDurationISO = (durationString) => {
     }, {});
   return dayjs
     .duration({
-      hours: durationObject?.hrs,
-      minutes: durationObject?.mins,
+      hours: durationObject?.hrs || 0,
+      minutes: durationObject?.mins || 0,
     })
     .toISOString();
 };

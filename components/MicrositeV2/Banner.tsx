@@ -172,8 +172,6 @@ const NewBanner = (props) => {
     initialSlide: 3,
     loop: true,
     loopedSlides: 3,
-    lazy: true,
-    preloadImages: false,
   };
 
   const analyticsParams = {
