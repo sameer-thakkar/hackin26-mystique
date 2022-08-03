@@ -11,14 +11,17 @@ import { strings } from 'const/strings';
 
 const Wrapper = styled.div`
   position: relative;
-  .collapsible-text {
-    ${({ isExpanded }) => !isExpanded && `display: none;`}
+  .rich-text {
+    ${({ isExpanded, contentHeight }) =>
+      !isExpanded && `height: ${contentHeight}px;`}
+    ${({ contentHeight }) => contentHeight && `margin-bottom: -6px;`}
+    ${({ isExpanded }) => !isExpanded && `overflow: hidden;`}
   }
   .fadeout {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 120px;
+    height: 60px;
     background-image: linear-gradient(
       rgba(255, 255, 255, 0) 0%,
       rgba(255, 255, 255, 1) 100%
@@ -44,6 +47,11 @@ const Wrapper = styled.div`
       ${({ isExpanded }) => isExpanded && ` transform: rotate(180deg);`}
     }
   }
+  @media (max-width: 768px) {
+    .rich-text {
+      ${({ isExpanded, contentHeight }) =>
+        !isExpanded && `height: ${2 * contentHeight}px;`}
+    margin-bottom: unset;    }
 `;
 
 const RichtextWithCTA = (props) => {
@@ -56,25 +64,24 @@ const RichtextWithCTA = (props) => {
   return (
     <>
       {props.slices.map((block, index) => {
-        const { para_count: paraCount, cta_text, text: textArray } =
+        const { content_height: contentHeight, cta_text, text: textArray } =
           block || {};
         return (
-          <Wrapper key={index} isExpanded={isExpanded}>
-            <RichText
-              render={paraCount ? textArray.slice(0, paraCount) : textArray}
-              htmlSerializer={shortCodeSerializer}
-            />
-
+          <Wrapper
+            key={index}
+            isExpanded={isExpanded}
+            contentHeight={contentHeight}
+          >
+            <div className="rich-text">
+              <RichText
+                render={textArray}
+                htmlSerializer={shortCodeSerializer}
+              />
+            </div>
             <Conditional if={cta_text}>
               <RichTextCTA {...block} />
             </Conditional>
-            <Conditional if={paraCount}>
-              <div className="collapsible-text">
-                <RichText
-                  render={textArray.slice(paraCount)}
-                  htmlSerializer={shortCodeSerializer}
-                />
-              </div>
+            <Conditional if={contentHeight}>
               <div className="fadeout" />
               <span className="toggle">
                 <button onClick={handleClick} className="view-more">
