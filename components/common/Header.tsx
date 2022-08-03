@@ -91,7 +91,6 @@ const StyledLogo = styled.div(
   ({ isEntertainmentMB }) => `
   display: grid;
   grid-auto-flow: column;
-  grid-column-gap: 10px;
   align-items: center;
   justify-self: left;
   justify-content: left;

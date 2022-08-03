@@ -26,18 +26,22 @@ const FooterLinksWrapper = styled.div`
   padding-top: 32px;
   background: ${({ theme }) => theme.footer.secondaryBackground};
   padding-bottom: 32px;
+
   &.primary-footer {
     margin-bottom: 0;
     padding-bottom: 0;
   }
+
   .quick-links-title {
     ${expandFontToken('Heading/Large')}
     margin-bottom: 32px;
     color: ${COLORS.GRAY.G2};
   }
+
   &.primary-footer + .secondary-footer .quick-links-title {
     display: none;
   }
+
   &.primary-footer + .secondary-footer .quick-links-title.has-custom-title {
     display: block;
   }
@@ -60,6 +64,7 @@ const FooterLegalWrapper = styled.div`
   background: ${({ theme }) => theme.footer.background};
   margin: 0 auto;
   width: 100%;
+
   .footer-chin {
     display: grid;
     ${expandFontToken('UI/Label Small')}
@@ -70,14 +75,15 @@ const FooterLegalWrapper = styled.div`
     grid-template-areas: 'white-line white-line' 'super-brand-logo social-links';
     grid-row-gap: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '18px' : '24px'};
+
     .white-line {
       grid-area: white-line;
       width: 100%;
       height: 0;
-      border: 0.5px solid
-        ${({ isEntertainmentMb }) =>
-          isEntertainmentMb ? COLORS.GRAY.G4 : COLORS.BRAND.WHITE};
+      border: 0.5px solid ${({ isEntertainmentMb }) =>
+        isEntertainmentMb ? COLORS.GRAY.G4 : COLORS.BRAND.WHITE};
     }
+
     .super-brand-logo {
       grid-area: super-brand-logo;
       display: grid;
@@ -85,14 +91,17 @@ const FooterLegalWrapper = styled.div`
       grid-column-gap: 12px;
       align-items: center;
       justify-items: left;
+
       span {
         color: ${({ theme, isEntertainmentMb }) =>
           isEntertainmentMb ? COLORS.GRAY.G4A : theme.footer.color};
       }
+
       svg {
         height: 16px;
       }
     }
+
     .social-links {
       grid-area: social-links;
     }
@@ -100,10 +109,12 @@ const FooterLegalWrapper = styled.div`
     @media (max-width: 768px) {
       .super-brand-logo {
         grid-template-columns: max-content max-content;
+
         svg {
           height: 12px;
         }
       }
+
       grid-template-columns: ${({ isEntertainmentMb }) =>
         isEntertainmentMb ? `1fr 1fr` : `1fr`};
       grid-template-areas: ${({ isEntertainmentMb }) =>
@@ -138,16 +149,19 @@ const LinksWrapper = styled.div`
   display: grid;
   grid-template-rows: repeat(2, max-content);
   row-gap: 16px;
+
   .header {
     ${expandFontToken('Subheading/Large')}
     color: ${({ theme, isEntertainmentMb }) =>
       isEntertainmentMb ? COLORS.GRAY.G7 : theme.footer.headingColor};
   }
+
   .links {
     display: grid;
     grid-auto-flow: row;
     grid-template-rows: max-content;
     row-gap: ${({ isEntertainmentMb }) => (isEntertainmentMb ? '8px' : '16px')};
+
     a {
       ${expandFontToken('UI/Label Medium')}
       display: block;
@@ -156,12 +170,14 @@ const LinksWrapper = styled.div`
         isEntertainmentMb ? COLORS.GRAY.G6 : theme.footer.color};
     }
   }
+
   @media (max-width: 768px) {
     ${({ isEntertainmentMb }) => isEntertainmentMb && `row-gap: 20px;`}
     .header {
       ${({ isEntertainmentMb }) =>
         isEntertainmentMb && `font-size:15px;line-height:20px;`};
     }
+
     .links {
       ${({ isEntertainmentMb }) => isEntertainmentMb && `row-gap: 16px;`}
       a {
@@ -205,13 +221,17 @@ const FooterLegal = styled.div`
   padding-bottom: ${({ isEntertainmentMb }) =>
     isEntertainmentMb ? '0' : '40px'};
   line-height: 20px;
+
   .logo-disclaimer {
     grid-area: logo-disclaimer;
+
     .logo-wrapper {
       display: flex;
+
       .image-wrap {
         width: auto;
       }
+
       img {
         height: 40px;
         max-width: 100%;
@@ -219,10 +239,11 @@ const FooterLegal = styled.div`
         ${({ invertLogoColor }) =>
           invertLogoColor ? `filter: brightness(0) invert(1);` : ''}
       }
+
       svg {
         height: 40px;
-        margin-left: 10px;
         width: 100.5px;
+
         path {
           fill: ${({ isEntertainmentMb }) =>
             isEntertainmentMb ? COLORS.GRAY.G5 : COLORS.BRAND.WHITE};
@@ -236,7 +257,7 @@ const FooterLegal = styled.div`
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: max-content;
-    column-gap:${({ isEntertainmentMb }) =>
+    column-gap: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '48px' : '120px'};
   }
 
@@ -247,6 +268,7 @@ const FooterLegal = styled.div`
     ${expandFontToken('UI/Label Medium')}
     max-width: 500px;
   }
+
   @media (min-width: 800px) and (max-width: 1200px) {
     grid-column-gap: 64px;
   }
@@ -261,9 +283,10 @@ const FooterLegal = styled.div`
     padding-bottom: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '0' : '24px'};
     .footer-links {
-        column-gap: 0;
-        grid-auto-columns: 1fr;
-      }
+      column-gap: 0;
+      grid-auto-columns: 1fr;
+    }
+
     .disclaimer-text {
       ${({ isEntertainmentMb }) =>
         isEntertainmentMb &&

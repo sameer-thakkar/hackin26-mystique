@@ -176,7 +176,6 @@ const HeaderLeft = styled.div`
     height: unset;
     display: grid;
     grid-auto-flow: column;
-    grid-column-gap: 10px;
     padding: ${({ isGlobalMb, isEntertainmentMb }) =>
       isGlobalMb || isEntertainmentMb ? '0' : '8px'};
     margin-right: 16px;
@@ -239,7 +238,7 @@ const SearchWrapper = styled.div`
     }
     .booster * {
       font-size: 12px;
-      font-weight: regular;
+      font-weight: normal;
       font-family: ${HALYARD.FONT_STACK};
     }
     .inline-availability {
