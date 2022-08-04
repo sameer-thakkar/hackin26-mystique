@@ -773,3 +773,9 @@ export const CANCELLATION_POLICY_POSSIBLE_LABELS = [
   'politica di cancellazione',
   'cancellazione',
 ];
+
+export const LIVE_CHAT = {
+  DELAY: 3000,
+  LICENCE_KEY: '8339531',
+  SALES_TRACKER_ID: 'xKAt5wZBBFuxqR7H2oMHEdeZksNqY2VL',
+};
