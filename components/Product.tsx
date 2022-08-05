@@ -1334,7 +1334,7 @@ const Product = (props) => {
           {'+ ' + strings.MORE_DETAILS}
         </span>
         <span
-          className="more-details display-none"
+          className="display-none"
           id={`tour-description-less-text-${position}`}
         >
           {'- ' + strings.SHOW_LESS_TEXT}
