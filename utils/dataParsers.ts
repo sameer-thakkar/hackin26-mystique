@@ -195,7 +195,7 @@ export const categoryTourListParserV1 = async ({
       ?.slice(0, sliceIndex)
       ?.reduce((acc, tour) => {
         const { id, allTags } = tour || {};
-        const tourObj = items.find((item) => item.tgid === id);
+        const tourObj = items?.find((item) => item.tgid === id);
         const [variantId] =
           getSingleAriesTag(allTags, 'DEFAULT_VARIANT')?.match(/\d+/) || [];
         const finalObj = {
