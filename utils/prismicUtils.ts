@@ -494,7 +494,7 @@ export const getMicrositeDocument = async ({
                 noindex:
                   lang !== 'en-us'
                     ? baseLangData.data.noindex
-                    : completeMicrosite.data.noindex,
+                    : completeMicrosite.data.data.noindex,
                 logo_redirection_url: completeMicrosite.data.data
                   .logo_redirection_url.url
                   ? completeMicrosite.data.data.logo_redirection_url
