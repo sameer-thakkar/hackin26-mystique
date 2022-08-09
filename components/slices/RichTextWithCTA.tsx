@@ -49,9 +49,11 @@ const Wrapper = styled.div`
   }
   @media (max-width: 768px) {
     .rich-text {
-      ${({ isExpanded, contentHeight }) =>
-        !isExpanded && `height: ${2 * contentHeight}px;`}
-    margin-bottom: unset;    }
+      ${({ isExpanded, contentHeight, hasCTA }) =>
+        hasCTA && !isExpanded && `height: ${2 * contentHeight}px;`}
+    margin-bottom: unset;
+    }
+  }
 `;
 
 const RichtextWithCTA = (props) => {
@@ -71,6 +73,7 @@ const RichtextWithCTA = (props) => {
             key={index}
             isExpanded={isExpanded}
             contentHeight={contentHeight}
+            hasCTA={cta_text}
           >
             <div className="rich-text">
               <RichText
