@@ -100,10 +100,12 @@ const StyledLogo = styled.div(
     max-width: 100%;
     width: unset;
     object-fit: contain;
+    padding-top: ${isEntertainmentMB && `4.5px`};
   }
   svg {
     height: ${isEntertainmentMB ? `36px` : `44px`};
     width: 113px;
+    margin-left: ${isEntertainmentMB && `-11px`};
   }
   @media (max-width: 768px) {
     display: grid;
