@@ -185,6 +185,7 @@ const HeaderLeft = styled.div`
       margin: 0;
       max-width: 160px;
       width: auto;
+      padding-right: 5px;
     }
   }
   .poweredBy svg {

@@ -166,7 +166,7 @@ const ProductCard = styled.div`
   }
 
   .avg-rating {
-    color: ${COLORS.PRIMARY.JOY_MUSTARD};
+    color: ${COLORS.BRAND.CANDY};
   }
 
   .avg-rating svg {
@@ -470,7 +470,7 @@ const Product = (props) => {
             <div className="rating">
               <Conditional if={averageRating}>
                 <span className="avg-rating">
-                  {averageRating} {STAR(COLORS.PRIMARY.JOY_MUSTARD)}
+                  {averageRating} {STAR(COLORS.BRAND.CANDY)}
                 </span>
               </Conditional>
               <Conditional if={reviewCount}>

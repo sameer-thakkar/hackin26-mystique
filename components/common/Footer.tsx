@@ -12,6 +12,7 @@ import { POWERED_BY_HEADOUT, WHITE_BLIP } from 'assets/SvgIcons';
 import { THEMES } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
+import { FONTS } from 'const/fonts';
 import COLORS from 'const/colors';
 import { metaAtom } from 'store/atoms/meta';
 
@@ -33,7 +34,7 @@ const FooterLinksWrapper = styled.div`
   }
 
   .quick-links-title {
-    ${expandFontToken('Heading/Large')}
+    ${expandFontToken(FONTS.HEADING_LARGE)}
     margin-bottom: 32px;
     color: ${COLORS.GRAY.G2};
   }
@@ -47,7 +48,7 @@ const FooterLinksWrapper = styled.div`
   }
 
   .quick-links {
-    ${expandFontToken('UI/Label Medium')}
+    ${expandFontToken(FONTS.UI_LABEL_MEDIUM)}
     display: grid;
     justify-content: space-between;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -67,7 +68,7 @@ const FooterLegalWrapper = styled.div`
 
   .footer-chin {
     display: grid;
-    ${expandFontToken('UI/Label Small')}
+    ${expandFontToken(FONTS.UI_LABEL_SMALL)}
     margin-bottom: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '72px' : '56px'};
     grid-template-columns: auto auto;
@@ -151,7 +152,7 @@ const LinksWrapper = styled.div`
   row-gap: 16px;
 
   .header {
-    ${expandFontToken('Subheading/Large')}
+    ${expandFontToken(FONTS.HEADING_SMALL)}
     color: ${({ theme, isEntertainmentMb }) =>
       isEntertainmentMb ? COLORS.GRAY.G7 : theme.footer.headingColor};
   }
@@ -163,7 +164,7 @@ const LinksWrapper = styled.div`
     row-gap: ${({ isEntertainmentMb }) => (isEntertainmentMb ? '8px' : '16px')};
 
     a {
-      ${expandFontToken('UI/Label Medium')}
+      ${expandFontToken(FONTS.UI_LABEL_MEDIUM)}
       display: block;
       text-decoration: none;
       color: ${({ theme, isEntertainmentMb }) =>
@@ -265,7 +266,7 @@ const FooterLegal = styled.div`
     color: ${({ isEntertainmentMb, theme }) =>
       isEntertainmentMb ? COLORS.GRAY.G6 : theme.footer.color};
     margin-top: 32px;
-    ${expandFontToken('UI/Label Medium')}
+    ${expandFontToken(FONTS.UI_LABEL_MEDIUM)}
     max-width: 500px;
   }
 

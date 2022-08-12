@@ -9,6 +9,12 @@ const BreadcrumbContainer = styled.div`
   grid-auto-columns: max-content;
   column-gap: 8px;
   margin-top: 80px;
+  overflow-x: auto;
+  -ms-overflow-style: none; //IE 10+
+  scrollbar-width: none; //Firefox
+  ::-webkit-scrollbar {
+    display: none; // Safari, Chrome
+  }
   @media (max-width: 768px) {
     margin-top: 64px;
   }
