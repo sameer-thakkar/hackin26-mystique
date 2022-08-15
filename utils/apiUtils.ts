@@ -37,6 +37,7 @@ export enum HeadoutEndpoints {
   Collection,
   CollectionSections,
   CurrencyList,
+  CalendarInventory,
 }
 
 export const getHeadoutApiUrl = ({
@@ -46,7 +47,7 @@ export const getHeadoutApiUrl = ({
   id,
 }: {
   endpoint: HeadoutEndpoints;
-  hostname: string;
+  hostname?: string;
   params: { [key: string]: string };
   id: string | number;
 }) => {
@@ -80,11 +81,18 @@ export const getHeadoutApiUrl = ({
       endpointSlug = `/api/tours/v1/collection/${id}/sections/`;
       break;
     case HeadoutEndpoints.CurrencyList:
-      endpointSlug = `'https://api.headout.com/api/v1/currency/list/`;
+      endpointSlug = `https://api.headout.com/api/v1/currency/list/`;
       break;
+    case HeadoutEndpoints.CalendarInventory:
+      endpointSlug = `https://api.headout.com/api/v7/tour-groups/${id}/calendar/`;
   }
 
-  const url = `${hostname}${endpointSlug}`;
+  let url = endpointSlug;
+
+  if (hostname) {
+    url = `${hostname}${endpointSlug}`;
+  }
+
   if (Object.keys(params).length) {
     const finalUrl = addQueryParams(url, params);
     return finalUrl;
@@ -412,5 +420,44 @@ export const fetchTourGroupSlots = async ({
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('[fetchTourGroupSlots]', error);
+  }
+};
+
+interface TFetchCalendarInventoryTypes {
+  tgid: string | number;
+  currency: string;
+  fromDate?: string;
+  toDate?: string;
+}
+
+export const fetchCalendarInventory = async ({
+  tgid,
+  currency,
+  fromDate = '',
+  toDate = '',
+}: TFetchCalendarInventoryTypes) => {
+  try {
+    const params = {
+      ...(fromDate && {
+        'from-date': fromDate,
+      }),
+      ...(toDate && {
+        'to-date': toDate,
+      }),
+      ...(currency && {
+        currency,
+      }),
+    };
+    const url = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.CalendarInventory,
+      id: tgid,
+      params,
+    });
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log('[fetchCalendarInventory]', error);
   }
 };

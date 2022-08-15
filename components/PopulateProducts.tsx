@@ -12,7 +12,11 @@ import {
   PROMO_CODES,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { fetchInventory, fetchTourList } from 'utils/apiUtils';
+import {
+  fetchCalendarInventory,
+  fetchInventory,
+  fetchTourList,
+} from 'utils/apiUtils';
 import { legacyBooleanCheck } from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import { csvTgidToArray, getHostName } from 'utils/helper';
@@ -211,9 +215,8 @@ const PopulateProducts = (props) => {
       currency = null,
     }) => {
       const requestQueue = uncategorizedToursList.map(({ tgid }) => {
-        return fetchInventory({
+        return fetchCalendarInventory({
           tgid,
-          hostname,
           ...(currency && {
             currency: `${currency}`,
           }),
@@ -223,11 +226,12 @@ const PopulateProducts = (props) => {
         (res): any => {
           return res.reduce((acc: any, tour: any, index) => {
             const tgid = uncategorizedToursList[index].tgid;
+            const { metadata } = tour ?? {};
+            const { startDate = '' } = metadata ?? {};
             return {
               ...acc,
               [tgid]: {
-                startDate: tour?.inventoryList?.[0]?.startDate || '',
-                startTime: tour?.inventoryList?.[0]?.startTime || '',
+                startDate,
               },
             };
           }, {});
