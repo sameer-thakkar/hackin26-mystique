@@ -232,8 +232,8 @@ const PopulateProducts = (props) => {
         (res): any => {
           return res.reduce((acc: any, tour: any, index) => {
             const tgid = uncategorizedToursList[index].tgid;
-            const { metadata } = tour ?? {};
-            const { startDate = '' } = metadata ?? {};
+            const { dates = {} } = tour ?? {};
+            const startDate = Object.keys(dates)?.[0] ?? '';
             return {
               ...acc,
               [tgid]: {
