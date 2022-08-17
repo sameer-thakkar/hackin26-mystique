@@ -467,7 +467,7 @@ const AutomatedTourComparisonTable = ({
     ? getCollectionSection(collectionData, 'HEADOUT_PICKS')
     : [];
   const tourGroups = collectionData
-    ? headoutPicks.filter((item) => item.language.toLowerCase() === lang)
+    ? headoutPicks?.filter((item) => item.language.toLowerCase() === lang)
     : [];
 
   return (
