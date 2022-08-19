@@ -1005,7 +1005,9 @@ const Product = (props) => {
     multiVariant: isMultiVariant,
     minDuration,
     maxDuration,
+    images,
   } = scorpioData || {};
+  const [tourGroupFirstImage] = images ?? [];
 
   const isComboWithSingleVariant = isCombo && !isMultiVariant;
   const isComboWithMultiVariant = isCombo && isMultiVariant;
@@ -1388,10 +1390,10 @@ const Product = (props) => {
         isTicketCard={isTicketCard}
         isMobile={isMobile}
       >
-        <Conditional if={!isTicketCard}>
+        <Conditional if={!isTicketCard && tourGroupFirstImage}>
           <div className="card-img">
             <Image
-              url={scorpioData.images[0].url}
+              url={tourGroupFirstImage?.url}
               imageId="card-img"
               aspectRatio={isMobile ? '21:9' : '3:4'}
               width={
