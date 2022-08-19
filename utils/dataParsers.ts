@@ -257,6 +257,14 @@ export const categoryTourListParserV1 = async ({
         lang: language,
       });
       let { microBrandsHighlight } = tour ?? {};
+      const {
+        urlSlugs: _primaryCategoryUrlSlugs,
+        ...primaryCategoryWithoutSlugs
+      } = primaryCategory ?? {};
+      const {
+        urlSlugs: _primarySubCategoryUrlSlugs,
+        ...primarySubCategoryWithoutSlugs
+      } = primarySubCategory ?? {};
 
       microBrandsHighlight = standardizeCancellationPolicy({
         highlights: microBrandsHighlight,
@@ -299,8 +307,8 @@ export const categoryTourListParserV1 = async ({
           minDuration,
           maxDuration,
           primaryCollection,
-          primaryCategory,
-          primarySubCategory,
+          primaryCategory: primaryCategoryWithoutSlugs,
+          primarySubCategory: primarySubCategoryWithoutSlugs,
         },
       };
     }, {});
@@ -514,6 +522,14 @@ export const categoryTourListParserV2 = async (
         const { displayName: primaryCategoryName } = primaryCategory || {};
         const { displayName: primarySubCategoryName } =
           primarySubCategory || {};
+        const {
+          urlSlugs: _primaryCategoryUrlSlugs,
+          ...primaryCategoryWithoutSlugs
+        } = primaryCategory ?? {};
+        const {
+          urlSlugs: _primarySubCategoryUrlSlugs,
+          ...primarySubCategoryWithoutSlugs
+        } = primarySubCategory ?? {};
         const { finalPrice, originalPrice, currencyCode } = listingPrice || {};
         const currencySymbol = CURRENCY_SYMBOL_MAP[currencyCode];
         const re = /(?:\r\n|\s\|\s)/g;
@@ -596,8 +612,8 @@ export const categoryTourListParserV2 = async (
           title: name,
           highlights: null,
           primaryCollection,
-          primaryCategory,
-          primarySubCategory,
+          primaryCategory: primaryCategoryWithoutSlugs,
+          primarySubCategory: primarySubCategoryWithoutSlugs,
           descriptors: mbDescriptors,
           productHighlights: null,
           cardFooter: null,
