@@ -141,7 +141,7 @@ const CategoryBar = (props) => {
   });
   const {
     categories,
-    availableTGIDs,
+    allTours,
     isMobile,
     hideSortBySelector,
     isEntertainmentMb,
@@ -166,7 +166,7 @@ const CategoryBar = (props) => {
       .filter((category) =>
         category?.ranking?.popularity?.length
           ? category.ranking.popularity.some(
-              (tgid) => availableTGIDs[tgid]?.available
+              (tgid) => allTours[tgid]?.available
             )
           : false
       )
@@ -232,6 +232,13 @@ const CategoryBar = (props) => {
     if (isMobile && parent.current) centerActiveCategory();
   }, [activeCategory, parent, isMobile]);
 
+  // Don't render the category bar if all TGIDs are unavailable
+  const isAnyTGIDAvailable = Object.keys(allTours).some(
+    (tgid) => allTours[tgid].available
+  );
+
+  if (!isAnyTGIDAvailable) return null;
+
   return (
     <>
       <div className="scroll-reference" ref={scroll_div}></div>
@@ -242,7 +249,7 @@ const CategoryBar = (props) => {
               const { ranking, name } = category || {};
               const { popularity } = ranking || {};
               const availableShows = popularity?.reduce((acc, tgid) => {
-                if (availableTGIDs[tgid]?.available) {
+                if (allTours[tgid]?.available) {
                   acc++;
                 }
                 return acc;

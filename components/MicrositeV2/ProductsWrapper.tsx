@@ -66,7 +66,7 @@ export const ProductsWrapper = (props) => {
       <Conditional if={!isListicle}>
         <CategoryBar
           {...categoryProps}
-          availableTGIDs={allTours}
+          allTours={allTours}
           isMobile={isMobile}
           isEntertainmentMb={isEntertainmentMb}
           isListicle={isListicle}
