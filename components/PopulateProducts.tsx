@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
 import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
 import Product from 'components/Product';
 import Conditional from 'components/common/Conditional';
 import HorizontalLine from 'components/slices/HorizontalLine';
@@ -22,10 +21,8 @@ import { legacyBooleanCheck } from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import { csvTgidToArray, getHostName } from 'utils/helper';
 import { getPromoCodesDocument } from 'utils/prismicUtils';
-import { nextAvailableDateExpVariantAtom } from 'store/atoms/nextAvailableDateExpVariant';
 import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
-import { VARIANTS } from 'const/experiments';
 
 const StyledProductsWrapper = styled.div`
   margin: 0 auto;
@@ -119,9 +116,6 @@ const PopulateProducts = (props) => {
     null
   );
   const productsRef = useRef([]);
-  const nextAvailableDateExperimentVariant = useRecoilValue(
-    nextAvailableDateExpVariantAtom
-  );
 
   const addToRef = (el) => {
     productsRef.current.push(el);
@@ -250,15 +244,12 @@ const PopulateProducts = (props) => {
       enableEarliestAvailability
     );
 
-    if (
-      (showEarliestAvailability || instantCheckout) &&
-      nextAvailableDateExperimentVariant === VARIANTS.SHOW_NEXT_AVAILABLE_DATE
-    ) {
+    if (showEarliestAvailability || instantCheckout) {
       fetchEarliestAvailability({
         uncategorizedToursList: tours,
       });
     }
-  }, [nextAvailableDateExperimentVariant]);
+  }, []);
 
   useEffect(() => {
     const fetchVariantPrices = async ({ variantTgids, currency }) => {
