@@ -297,7 +297,9 @@ const Banner = (props: TBannerCarouselProps) => {
       </StyledBanner>
 
       <Conditional if={bannerSubtext?.length}>
-        <BannerSubtext>{bannerSubtext}</BannerSubtext>
+        <BannerSubtext>
+          <p dangerouslySetInnerHTML={{ __html: bannerSubtext.join(' ') }}></p>
+        </BannerSubtext>
       </Conditional>
     </div>
   );
@@ -531,17 +533,19 @@ const ButtonWrapper = styled.div`
 `;
 
 const BannerSubtext = styled.em`
-  display: block;
-  text-align: center;
-  font-style: italic;
-  font-size: 0.875rem;
-  color: ${COLORS.GRAY.G4};
-  margin: 0 1rem 1rem;
+  p {
+    display: block;
+    text-align: center;
+    font-style: italic;
+    font-size: 0.875rem;
+    color: ${COLORS.GRAY.G4};
+    margin: 0 1rem 1rem;
 
-  @media (max-width: 768px) {
-    font-size: 0.6875rem;
-    text-align: left;
-    margin: 0 1rem 0.75rem;
+    @media (max-width: 768px) {
+      font-size: 0.6875rem;
+      text-align: left;
+      margin: 0 1rem 0.75rem;
+    }
   }
 `;
 
