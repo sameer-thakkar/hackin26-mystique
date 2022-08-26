@@ -317,7 +317,7 @@ const StyledBanner = styled.div`
   margin: 1rem auto;
 
   position: relative;
-  margin-bottom: 42px;
+  margin-bottom: 0.75rem;
 
   .single-slide {
     margin: 0 auto;
@@ -539,7 +539,7 @@ const BannerSubtext = styled.em`
     font-style: italic;
     font-size: 0.875rem;
     color: ${COLORS.GRAY.G4};
-    margin: 0 1rem 1rem;
+    margin: 0 1rem 2.75rem;
 
     @media (max-width: 768px) {
       font-size: 0.6875rem;
