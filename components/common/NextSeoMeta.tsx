@@ -212,7 +212,7 @@ export default function PopulateMeta({
       // @ts-ignore
       as: 'image',
       href: bannerImage,
-      ...(isAmp && { fetchpriority: 'high' }),
+      ...(!isAmp && { fetchpriority: 'high' }),
     });
   }
 
