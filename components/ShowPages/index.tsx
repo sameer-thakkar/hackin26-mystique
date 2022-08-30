@@ -5,6 +5,7 @@ import { useRecoilValue } from 'recoil';
 import { RichText } from 'prismic-reactjs';
 import { ProductJsonLd } from 'next-seo';
 import cloneDeep from 'lodash.clonedeep';
+import dayjs from 'dayjs';
 import { useWindowWidth } from '@react-hook/window-size';
 import styled from 'styled-components';
 import { MBContext } from 'contexts/MBContext';
@@ -40,7 +41,7 @@ import {
   legacyBooleanCheck,
   createBookingURL,
 } from 'utils';
-import { groupSlices, getHostName } from 'utils/helper';
+import { groupSlices, getHostName, checkLTT } from 'utils/helper';
 import {
   convertUidToUrl,
   getValidUrl,
@@ -414,6 +415,8 @@ const ShowPage = ({
   });
   const pricingValidFromDate = getPrevDate(inventorySlotData?.fromDate);
 
+  const isLTT = checkLTT(uid);
+
   let offerSchema = [];
   variants
     ?.filter((variant) => variant?.listingPrice)
@@ -475,6 +478,14 @@ const ShowPage = ({
     })
     ?.join(',');
 
+  const cashbackOffer = {
+    offerHeading: strings.SHOWPAGE?.LIMITED_CASHBACK_OFFER?.OFFER_TITLE,
+    offerText: strings.SHOWPAGE?.LIMITED_CASHBACK_OFFER?.OFFER_SUBTEXT,
+  };
+  const cashbackOfferClosingDate = dayjs('2022-09-04', 'YYYY-MM-DD');
+  const showCashbackOffer =
+    cashbackOfferClosingDate && cashbackOfferClosingDate.isSameOrAfter(dayjs());
+
   return (
     <>
       <ShowPageWrapper>
@@ -534,11 +545,13 @@ const ShowPage = ({
           hostname={hostname}
           hasSpecialOffer={hasSpecialOffer}
         />
-        <Conditional if={hasSpecialOffer}>
+        <Conditional if={(isLTT && showCashbackOffer) || hasSpecialOffer}>
           <SpecialOfferBanner
             marginTop={isMobile ? 0 : 40}
             isShowPage={true}
-            specialOffer={specialOffer}
+            specialOffer={
+              isLTT && showCashbackOffer ? cashbackOffer : specialOffer
+            }
           />
         </Conditional>
         <Wrapper>

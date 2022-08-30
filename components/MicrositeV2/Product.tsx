@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import { MBContext } from 'contexts/MBContext';
@@ -22,7 +22,6 @@ import { dateToString } from 'utils/dateUtils';
 import InteractionContext from 'contexts/Interaction';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { createBookingURL } from 'utils';
-import parse from 'url-parse';
 import { expandFontToken } from 'const/typography';
 import { trackEvent } from 'utils/analytics';
 
@@ -314,14 +313,9 @@ const Product = (props) => {
     host,
   } = props;
 
-  const { lang, nakedDomain, uid, redirectToHeadoutBookingFlow } = useContext(
+  const { lang, nakedDomain, redirectToHeadoutBookingFlow, isDev } = useContext(
     MBContext
   );
-
-  let url;
-  useEffect(() => {
-    url = host || window.location.hostname;
-  }, []);
 
   const { sliceData } = useContext(InteractionContext) || {};
   const { collectionId, primaryCatId, primarySubCatId } = sliceData || {};
@@ -365,14 +359,6 @@ const Product = (props) => {
       categoryName = primarySubCategoryName;
     }
   }
-
-  const isDev = url?.includes('localhost');
-  const currentHost = !isDev ? url : parse(uid, true).pathname;
-  const hostName = currentHost?.includes('stage')
-    ? currentHost.replace('stage-', '')
-    : currentHost;
-  let hostSplit = hostName?.split('.');
-  hostSplit?.shift();
 
   const bookingURL = createBookingURL({
     nakedDomain,
