@@ -543,7 +543,7 @@ const ShowPage = ({
           tagsArray={tagsArray}
           isReopening={isReopening}
           hostname={hostname}
-          hasSpecialOffer={hasSpecialOffer}
+          hasSpecialOffer={(isLTT && showCashbackOffer) || hasSpecialOffer}
         />
         <Conditional if={(isLTT && showCashbackOffer) || hasSpecialOffer}>
           <SpecialOfferBanner
