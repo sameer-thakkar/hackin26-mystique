@@ -57,6 +57,7 @@ import {
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { getDuration } from 'utils/timeUtils';
 import { addQueryParams } from 'utils/urlUtils';
+import { localisedCurrencyloaderAtom } from 'store/atoms/localisedCurrencyAtom';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -1363,20 +1364,25 @@ const Product = (props) => {
       redirectToHeadoutBookingFlow,
     }) + (ctaUrlSuffix || '');
 
-  const BookNowCta = ({ clickHandler }: { clickHandler: () => void }) => (
-    <Button
-      className={`tour-book-now-cta`}
-      paddingSides={isMobile ? '14px' : '8px'}
-      fillType="fill"
-      onClick={clickHandler}
-      onKeyDown={clickHandler}
-      role="button"
-      tabIndex={0}
-    >
-      {strings.CHECK_AVAIL}
-      {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
-    </Button>
-  );
+  const BookNowCta = ({ clickHandler }: { clickHandler: () => void }) => {
+    const loaderStatus = useRecoilValue(localisedCurrencyloaderAtom);
+
+    return (
+      <Button
+        className={`tour-book-now-cta`}
+        paddingSides={isMobile ? '14px' : '8px'}
+        fillType="fill"
+        onClick={clickHandler}
+        onKeyDown={clickHandler}
+        role="button"
+        tabIndex={0}
+        disabled={loaderStatus ? true : false}
+      >
+        {strings.CHECK_AVAIL}
+        {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
+      </Button>
+    );
+  };
 
   const getProductCardElements = (
     expandContent,

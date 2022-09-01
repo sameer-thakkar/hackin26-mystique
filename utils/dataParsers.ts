@@ -731,6 +731,8 @@ export const tourListApiParser = (apiResponse, lang = 'en') => {
         primaryCollection,
         primaryCategory,
         primarySubCategory,
+        minDuration,
+        maxDuration,
       },
     };
   }, {});

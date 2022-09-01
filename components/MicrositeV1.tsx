@@ -2,8 +2,12 @@ import React, { ComponentType, useEffect, useState } from 'react';
 import { RichText } from 'prismic-reactjs';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
+import useSWR from 'swr';
 import { scroller } from 'react-scroll';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { gtmAtom } from 'store/atoms/gtm';
+import { localisedCurrencyloaderAtom } from 'store/atoms/localisedCurrencyAtom';
+import { localisedCurrencyExpVariantAtom } from 'store/atoms/localisedCurrencyExpVariant';
 import { currencyAtom } from 'store/atoms/currency';
 import { useWindowWidth } from '@react-hook/window-size';
 import { InteractionContextProvider } from 'contexts/Interaction';
@@ -28,12 +32,17 @@ import {
   ANALYTICS_PROPERTIES,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { fetchTourList } from 'utils/apiUtils';
+import {
+  fetchTourList,
+  getHeadoutApiUrl,
+  HeadoutEndpoints,
+  swrFetcher,
+} from 'utils/apiUtils';
 import { tourListApiParser } from 'utils/dataParsers';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import renderShortCodes from 'utils/shortCodes';
 import Banner from 'components/Banner';
-import { gtmAtom } from 'store/atoms/gtm';
+import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
@@ -74,7 +83,6 @@ const MicrositeV1 = (props) => {
   const currency = useRecoilValue(currencyAtom);
 
   const { eventsReady } = useRecoilValue(gtmAtom);
-  const [initialCurrency] = useState(currency);
   const [freeTourPopupOpen, toggleFreeTourPopup] = useState(false);
   const [covidAlertActive, toggleCovidAlert] = useState(false);
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
@@ -350,25 +358,102 @@ const MicrositeV1 = (props) => {
       .slice(0, bannerLimit || orderedUncategorizedTours.length);
   }
 
+  const geoLocateUserEndpoint = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.GeoLocateUser,
+    params: {},
+    id: null,
+  });
+
+  const currencyListEndpoint = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.CurrencyList,
+    params: {},
+    id: null,
+  });
+
+  const localisedCurrencyExpVariant = useRecoilValue(
+    localisedCurrencyExpVariantAtom
+  );
+
+  const setCurrency = useSetRecoilState(currencyAtom);
+  const setLoaderStatus = useSetRecoilState(localisedCurrencyloaderAtom);
+  const [localisedCurrencyCode, setLocalisedCurrencyCode] = useState(currency);
+  const [isLocalCurrencySupported, setIsLocalCurrencySupported] = useState(
+    false
+  );
+  const { data: geoLocateUserData } = useSWR(
+    localisedCurrencyExpVariant === VARIANTS.SHOW_LOCALISED_CURRENCY
+      ? geoLocateUserEndpoint
+      : null,
+    { fetcher: swrFetcher }
+  );
+
+  const { data: currencyList } = useSWR(
+    localisedCurrencyExpVariant === VARIANTS.SHOW_LOCALISED_CURRENCY
+      ? currencyListEndpoint
+      : null,
+    { fetcher: swrFetcher }
+  );
+
+  useEffect(() => {
+    if (localisedCurrencyExpVariant === VARIANTS.SHOW_LOCALISED_CURRENCY) {
+      const usersLocalCurrency =
+        geoLocateUserData?.currentCountry?.currency?.code;
+      setLocalisedCurrencyCode(usersLocalCurrency);
+    } else if (localisedCurrencyExpVariant === VARIANTS.SHOW_DEFAULT_CURRENCY) {
+      setLoaderStatus(false);
+
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
+        'Experiment Name': EXPERIMENT_NAMES.LOCAL_CURRENCY_Experiment,
+        'Experiment Variant': localisedCurrencyExpVariant,
+      });
+    }
+  }, [geoLocateUserData, localisedCurrencyExpVariant]);
+
+  useEffect(() => {
+    if (localisedCurrencyCode) {
+      const isLocalCurrencySupported = currencyList?.filter(
+        ({ code }) => code === localisedCurrencyCode
+      );
+
+      if (isLocalCurrencySupported?.length !== 0) {
+        setIsLocalCurrencySupported(true);
+        setCurrency(localisedCurrencyCode);
+      } else {
+        setLoaderStatus(false);
+      }
+
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
+        'Experiment Name': EXPERIMENT_NAMES.LOCAL_CURRENCY_Experiment,
+        'Experiment Variant': localisedCurrencyExpVariant,
+        [ANALYTICS_EVENTS.CURRENCY_OF_CHOICE_SUPPORTED]:
+          isLocalCurrencySupported?.length !== 0 ? true : false,
+        [ANALYTICS_EVENTS.CURRENCY_OF_CHOICE]: localisedCurrencyCode,
+      });
+    }
+  }, [localisedCurrencyCode]);
+
   const finalHeaderSlices = !isHeaderInherited
     ? groupSlices(headerSlices || [], ALLOW_IMMEDIEATE_NESTING)
     : [];
   const finalHeaderLinks =
     headerLinks && !isHeaderInherited ? headerLinks : null;
   useEffect(() => {
-    if (initialCurrency !== currency) {
+    if (isLocalCurrencySupported) {
       fetchTourList({
         tgids: orderedTgids,
         language: currentLanguage,
-        currency,
+        currency: isLocalCurrencySupported ? localisedCurrencyCode : currency,
       })
         .then((res) => res.json())
         .then((data) => {
           const formattedData = tourListApiParser(data, currentLanguage);
           setScorpioData(formattedData);
+          setLoaderStatus(false);
         });
     }
-  }, [currency]);
+  }, [isLocalCurrencySupported]);
 
   useEffect(() => {
     setIsMobile(windowWidth < 768);

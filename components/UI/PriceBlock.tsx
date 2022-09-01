@@ -1,5 +1,8 @@
 import styled from 'styled-components';
+import { localisedCurrencyloaderAtom } from 'store/atoms/localisedCurrencyAtom';
+import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
+import Spinner from 'UI/Spinner';
 import LocalisedPrice from 'UI/LPrice';
 import COLORS from 'const/colors';
 import { THEMES } from 'const/index';
@@ -66,9 +69,16 @@ const PriceBlock = ({
   showSavings = false,
   currencyDisplay = 'symbol',
 }: PriceBlockProps) => {
+  const loaderAtom = useRecoilValue(localisedCurrencyloaderAtom);
+
+  if (loaderAtom) {
+    return <Spinner width="1rem" height="1rem" />;
+  }
+
   if (!price) return null;
   const { originalPrice, finalPrice, currencyCode, precision, bestDiscount } =
     price ?? {};
+
   return (
     <StyledPriceBlock>
       <Conditional if={originalPrice > finalPrice && showScratchPrice}>

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useAmp } from 'next/amp';
+import { useRecoilValue } from 'recoil';
 import useSWR from 'swr';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 import styled from 'styled-components';
@@ -20,6 +21,8 @@ import { getDuration } from 'utils/timeUtils';
 import { getCancellationPolicyString } from 'utils/productUtils';
 import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
+import { currencyAtom } from 'store/atoms/currency';
+import { localisedCurrencyloaderAtom } from 'store/atoms/localisedCurrencyAtom';
 
 const ComparisonTableWrapper = styled.div`
   width: auto;
@@ -450,9 +453,14 @@ const AutomatedTourComparisonTable = ({
       'Div Type': 'product-list',
     });
   };
+
+  const currency = useRecoilValue(currencyAtom);
+  const loaderStatus = useRecoilValue(localisedCurrencyloaderAtom);
+
   const collectionEndpointParams = {
     language: lang,
     'include-unavailable': 'true',
+    ...(currency && { currency }),
   };
   const collectionEndpoint = getHeadoutApiUrl({
     endpoint: HeadoutEndpoints.CollectionSections,
@@ -655,7 +663,11 @@ const AutomatedTourComparisonTable = ({
                           })
                         }
                       >
-                        <Button fillType="fill" widthProp="100%">
+                        <Button
+                          disabled={loaderStatus}
+                          fillType="fill"
+                          widthProp="100%"
+                        >
                           {strings.BOOK_NOW_CTA}
                         </Button>
                       </a>

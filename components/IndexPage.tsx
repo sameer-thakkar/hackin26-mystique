@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import ErrorPage from 'next/error';
 import dynamic from 'next/dynamic';
 import Cookies from 'js-cookie';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { parseCookies, setCookie } from 'nookies';
+import { localisedCurrencyExpVariantAtom } from 'store/atoms/localisedCurrencyExpVariant';
 import { ThemeProvider } from 'styled-components';
 import 'lazysizes';
 import 'lazysizes/plugins/attrchange/ls.attrchange';
@@ -21,12 +24,13 @@ import { getPageData } from 'utils/prismicUtils';
 import { sendVariableToDataLayer } from 'utils/analytics';
 import { removePageQuery } from 'utils/urlUtils';
 import { traceError } from 'utils/logutils';
-import { useRecoilState, useSetRecoilState } from 'recoil';
 import { gtmAtom } from 'store/atoms/gtm';
 import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
 import { withShortcodes } from 'utils/helper';
 import { localServerSideIsMobileCheck } from 'utils/gen';
 import { strings } from 'const/strings';
+import { getABTestingVariant } from 'utils/experiments/experimentUtils';
+import { EXPERIMENT_NAMES } from 'const/experiments';
 
 const Microsite = dynamic(() => import('components/MicrositeV1'));
 const ContentPage = dynamic(() => import('components/ContentPage'));
@@ -81,6 +85,10 @@ const Page = (props) => {
     primaryCity,
   } = props;
   const [{ eventsReady }, setEventsReady] = useRecoilState(gtmAtom);
+  const hsid = useRecoilValue(hsidAtom);
+  const setLocalisedCurrencyExpVariant = useSetRecoilState(
+    localisedCurrencyExpVariantAtom
+  );
 
   useEffect(() => {
     // GTM Universal Properties
@@ -106,6 +114,29 @@ const Page = (props) => {
 
     setEventsReady({ eventsReady: true });
   }, []);
+
+  useEffect(() => {
+    if (hsid) {
+      const cookies = parseCookies();
+      const { localisedCurrencyExpVariant } = cookies;
+
+      if (!localisedCurrencyExpVariant) {
+        const variant = getABTestingVariant(
+          EXPERIMENT_NAMES.LOCAL_CURRENCY_Experiment,
+          hsid,
+          true
+        );
+
+        setCookie(null, 'localisedCurrencyExpVariant', variant, {
+          path: '/',
+        });
+
+        setLocalisedCurrencyExpVariant(variant);
+      } else {
+        setLocalisedCurrencyExpVariant(localisedCurrencyExpVariant);
+      }
+    }
+  }, [hsid, setLocalisedCurrencyExpVariant]);
 
   const { noTrack, tgidToScroll, bookSubdomain } = queryParams;
 
