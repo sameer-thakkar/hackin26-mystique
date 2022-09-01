@@ -488,14 +488,14 @@ const Footer: React.FC<FooterProps> = ({
                     <div className="header">{strings.FOOTER.LEGAL}</div>
                     <div className="links">
                       <a
-                        href="/terms"
+                        href="/terms/"
                         target="_blank"
                         rel="noreferrer noopener"
                       >
                         {strings.FOOTER.TERMS_AND_CONDITIONS}
                       </a>
                       <a
-                        href="/privacy-policy"
+                        href="/privacy-policy/"
                         target="_blank"
                         rel="noreferrer noopener"
                       >
@@ -503,7 +503,7 @@ const Footer: React.FC<FooterProps> = ({
                       </a>
                       <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
                         <a
-                          href="/company-details"
+                          href="/company-details/"
                           target="_blank"
                           rel="noreferrer noopener"
                         >

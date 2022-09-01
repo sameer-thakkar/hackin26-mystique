@@ -240,7 +240,11 @@ const Header: React.FC<any> = (props) => {
   return (
     <StyledHeader hasShadow={scrollPos > 60}>
       <StyledHeaderContainer hasDropdownLinks={!isMobile && hasDropdownLinks}>
-        <a href={logoRedirectionURL || '/'}>
+        <a
+          href={
+            logoRedirectionURL ? withTrailingSlash(logoRedirectionURL) : '/'
+          }
+        >
           <StyledLogo isEntertainmentMB={isEntertainmentMB}>
             <Image
               url={logoUrl}

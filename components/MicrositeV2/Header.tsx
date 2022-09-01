@@ -12,7 +12,7 @@ import { MBContext } from 'contexts/MBContext';
 import LanguageSelector from 'components/common/LanguageSelector';
 import Image from 'components/UI/Image';
 import MultiLevelNav from 'components/MultiLevelNav';
-import { groupSlices } from 'utils/helper';
+import { groupSlices, withTrailingSlash } from 'utils/helper';
 import Hamburger from 'components/UI/Hamburger';
 import HeaderLinks from 'components/HeaderLinks';
 import { SEARCH_ICON, POWERED_BY_HEADOUT } from 'assets/SvgIcons';
@@ -344,16 +344,19 @@ const Header: FunctionComponent<HeaderProps> = ({
     headerSlices,
     ALLOW_IMMEDIEATE_NESTING
   );
-  const convertedRegularMenuItems = headerLinks?.map((link) => ({
-    slice_type: 'menu_item',
-    primary: {
-      label: link.link_heading,
-      url: {
-        url: link.link_url.url,
-        target: link.link_url.target,
-      },
-    },
-  }));
+  const convertedRegularMenuItems =
+    headerLinks
+      ?.filter((link) => !!link.link_url?.url)
+      ?.map((link) => ({
+        slice_type: 'menu_item',
+        primary: {
+          label: link.link_heading,
+          url: {
+            url: withTrailingSlash(link?.link_url?.url),
+            target: link.link_url.target,
+          },
+        },
+      })) || [];
   const hamburgerIconCheck = !!(
     headerLinks?.filter((link) => link?.link_url)?.length || headerSlices.length
   );
@@ -396,7 +399,11 @@ const Header: FunctionComponent<HeaderProps> = ({
             isGlobalMb={isGlobalMb}
             isEntertainmentMb={isEntertainmentMb}
           >
-            <a href={logoRedirectionURL || '/'}>
+            <a
+              href={
+                logoRedirectionURL ? withTrailingSlash(logoRedirectionURL) : '/'
+              }
+            >
               <div className="header-logo">
                 <Image url={logoUrl} alt={logoAltText} dontLazyLoad={true} />
                 <Conditional if={hasPoweredByHeadoutLogo}>

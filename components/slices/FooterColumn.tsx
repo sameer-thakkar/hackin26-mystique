@@ -5,6 +5,7 @@ import { trackEvent } from 'utils/analytics';
 import LinkResolver from 'components/LinkResolver';
 import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
+import { withTrailingSlash } from 'utils/helper';
 
 type FooterColumnProps = {
   title: string;
@@ -56,7 +57,7 @@ const FooterColumn: React.FC<FooterColumnProps> = ({ links, title }) => {
           <LinkResolver
             key={index}
             className="link-item"
-            url={link.link_type.url}
+            url={withTrailingSlash(link?.link_type?.url)}
             onClick={onLinkClick}
           >
             {link.link_text}
