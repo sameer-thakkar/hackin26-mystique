@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
+import { withTrailingSlash } from 'utils/helper';
 
 import LinkResolver from './LinkResolver';
 
@@ -68,7 +69,11 @@ const HeaderLinks: React.FC<any> = ({
   return (
     <StyledHeaderLinksWrapper show={hiddenMobile}>
       {headerLinks.map((link, index) => (
-        <LinkResolver target="_blank" url={link.link_url.url} key={index}>
+        <LinkResolver
+          target="_blank"
+          url={withTrailingSlash(link?.link_url?.url)}
+          key={index}
+        >
           {link.link_heading}
         </LinkResolver>
       ))}
