@@ -1,5 +1,4 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
-import dayjs from 'dayjs';
+import { useState, useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { MBContext } from 'contexts/MBContext';
 import StickyHeader from 'components/ShowPages/stickyHeader';
@@ -13,7 +12,7 @@ import { strings } from 'const/strings';
 import COLORS from 'const/colors';
 import { createBookingURL } from 'utils';
 import { dateToString, isDateInThePast } from 'utils/dateUtils';
-import { fetchInventory } from 'utils/apiUtils';
+import { fetchCalendarInventory } from 'utils/apiUtils';
 import {
   getCommonEventMetaData,
   getProductCommonProperties,
@@ -409,21 +408,13 @@ const ShowPageBanner = ({
   }, []);
   useEffect(() => {
     const fetchReopeningDate = async () => {
-      const { inventoryList } =
-        (await fetchInventory({
-          tgid,
-          hostname,
-          useSeatmapPrices: true,
-        })) || {};
-      const today = dayjs().format('YYYY-MM-DD');
+      const { sortedInventoryDates } =
+        (await fetchCalendarInventory({
+          tgid: parseInt(tgid),
+        })) ?? {};
 
-      inventoryList.every(({ startDate }) => {
-        if (today <= startDate) {
-          setNextAvailable(dateToString(startDate));
-
-          return false;
-        }
-      });
+      const [firstAvailableDate] = sortedInventoryDates ?? [];
+      setNextAvailable(dateToString(firstAvailableDate));
     };
     if (isTourAvailable) {
       fetchReopeningDate();

@@ -60,3 +60,6 @@ export const getDurationISO = (durationString) => {
     })
     .toISOString();
 };
+
+export const sortDateArray = (dates) =>
+  dates.sort((a, b) => new Date(a).getTime() - new Date(b).getTime());

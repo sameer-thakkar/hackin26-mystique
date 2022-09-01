@@ -1,4 +1,5 @@
-import { addQueryParams } from './urlUtils';
+import { sortDateArray } from 'utils/dateUtils';
+import { addQueryParams } from 'utils/urlUtils';
 
 const objectToQuery = (query) => {
   const params = Object.entries(query);
@@ -429,7 +430,7 @@ export const fetchTourGroupSlots = async ({
 
 interface TFetchCalendarInventoryTypes {
   tgid: string | number;
-  currency: string;
+  currency?: string;
   fromDate?: string;
   toDate?: string;
 }
@@ -459,7 +460,10 @@ export const fetchCalendarInventory = async ({
     });
     const response = await fetch(url);
     const data = await response.json();
-    return data;
+    const { dates, metaData } = data ?? {};
+    const sortedInventoryDates = sortDateArray(Object.keys(dates) ?? []);
+
+    return { sortedInventoryDates, metaData, dates };
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log('[fetchCalendarInventory]', error);

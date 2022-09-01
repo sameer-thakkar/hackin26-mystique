@@ -226,12 +226,13 @@ const PopulateProducts = (props) => {
         (res): any => {
           return res.reduce((acc: any, tour: any, index) => {
             const tgid = uncategorizedToursList[index].tgid;
-            const { dates = {} } = tour ?? {};
-            const startDate = Object.keys(dates)?.[0] ?? '';
+            const { sortedInventoryDates } = tour ?? {};
+            const [firstAvailableDate] = sortedInventoryDates ?? [];
+
             return {
               ...acc,
               [tgid]: {
-                startDate,
+                startDate: firstAvailableDate,
               },
             };
           }, {});
