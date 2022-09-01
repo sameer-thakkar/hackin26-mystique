@@ -694,6 +694,8 @@ export const tourListApiParser = (apiResponse, lang = 'en') => {
       primaryCollection,
       primaryCategory,
       primarySubCategory,
+      combo,
+      multiVariant,
     } = tour || {};
     const { productImages, safetyImages } = media || {};
     const updatedDescriptors = generateDescriptor({
@@ -733,6 +735,8 @@ export const tourListApiParser = (apiResponse, lang = 'en') => {
         primarySubCategory,
         minDuration,
         maxDuration,
+        combo,
+        multiVariant,
       },
     };
   }, {});

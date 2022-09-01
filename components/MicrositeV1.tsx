@@ -38,7 +38,6 @@ import {
   HeadoutEndpoints,
   swrFetcher,
 } from 'utils/apiUtils';
-import { tourListApiParser } from 'utils/dataParsers';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import renderShortCodes from 'utils/shortCodes';
 import Banner from 'components/Banner';
@@ -399,16 +398,15 @@ const MicrositeV1 = (props) => {
       const usersLocalCurrency =
         geoLocateUserData?.currentCountry?.currency?.code;
       setLocalisedCurrencyCode(usersLocalCurrency);
-    } else if (localisedCurrencyExpVariant === VARIANTS.SHOW_DEFAULT_CURRENCY) {
+    } else {
       setLoaderStatus(false);
-
       trackEvent({
         eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
         'Experiment Name': EXPERIMENT_NAMES.LOCAL_CURRENCY_Experiment,
         'Experiment Variant': localisedCurrencyExpVariant,
       });
     }
-  }, [geoLocateUserData, localisedCurrencyExpVariant]);
+  }, [geoLocateUserData, localisedCurrencyExpVariant, setLoaderStatus]);
 
   useEffect(() => {
     if (localisedCurrencyCode) {
@@ -448,7 +446,22 @@ const MicrositeV1 = (props) => {
       })
         .then((res) => res.json())
         .then((data) => {
-          const formattedData = tourListApiParser(data, currentLanguage);
+          const formattedData = data?.tourGroups?.reduce((acc, currentTour) => {
+            const { id, listingPrice } = currentTour ?? {};
+            const { currencyCode, originalPrice, finalPrice } =
+              listingPrice ?? {};
+
+            return {
+              ...acc,
+              [id]: {
+                ...scorpioData[id],
+                listingPrice,
+                price: finalPrice,
+                scratchPrice: originalPrice,
+                currency: currencyCode,
+              },
+            };
+          }, {});
           setScorpioData(formattedData);
           setLoaderStatus(false);
         });
