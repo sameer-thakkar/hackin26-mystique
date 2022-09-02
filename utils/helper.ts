@@ -13,7 +13,7 @@ export const withoutTrailingSlash = (url) =>
   url?.charAt(url?.length - 1) === '/' ? url?.substr(0, url.length - 1) : url;
 
 export const withTrailingSlash = (url) =>
-  url?.charAt(url?.length - 1) !== '/' ? `${url}/` : url;
+  url && url?.charAt(url?.length - 1) !== '/' ? `${url}/` : url;
 
 export const isMobileDevice = () => {
   return document.documentElement.clientWidth < 768;
