@@ -11,6 +11,7 @@ import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
 import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
+import { withTrailingSlash } from 'utils/helper';
 
 import LinkResolver from './LinkResolver';
 import { CHEVRON_DOWN } from '../assets/SvgIcons';
@@ -360,7 +361,7 @@ const MenuItem = (props) => {
       id={`menu-item-${index}`}
       onMouseEnter={onMouseEnter ? onMouseEnter : null}
     >
-      <LinkResolver target={url?.target} url={url?.url}>
+      <LinkResolver target={url?.target} url={withTrailingSlash(url?.url)}>
         <div
           className={`${isNested ? 'withIcon' : ''} menu-item-text`}
           onClick={menuItemSelected}
@@ -442,7 +443,7 @@ const HeaderSliceHandler = (slice, props) => {
           key={index}
           className="withIcon"
           as="a"
-          href={slice?.url?.url}
+          href={withTrailingSlash(slice?.url?.url)}
           target={slice?.url?.target}
           role="button"
           tabIndex={0}
