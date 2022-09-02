@@ -1,4 +1,4 @@
-import React, { ComponentType, useEffect, useState } from 'react';
+import { ComponentType, useEffect, useState } from 'react';
 import { RichText } from 'prismic-reactjs';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
@@ -85,6 +85,49 @@ const MicrositeV1 = (props) => {
   const [freeTourPopupOpen, toggleFreeTourPopup] = useState(false);
   const [covidAlertActive, toggleCovidAlert] = useState(false);
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
+  const geoLocateUserEndpoint = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.GeoLocateUser,
+    params: {},
+    id: null,
+  });
+
+  const currencyListEndpoint = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.CurrencyList,
+    params: {},
+    id: null,
+  });
+
+  const localisedCurrencyExpVariant = useRecoilValue(
+    localisedCurrencyExpVariantAtom
+  );
+
+  const setCurrency = useSetRecoilState(currencyAtom);
+  const setLoaderStatus = useSetRecoilState(localisedCurrencyloaderAtom);
+  const [localisedCurrencyCode, setLocalisedCurrencyCode] = useState(currency);
+  const [isLocalCurrencySupported, setIsLocalCurrencySupported] = useState(
+    false
+  );
+  const {
+    data: geoLocateUserData,
+    error: geoLocateError,
+  } = useSWR(
+    localisedCurrencyExpVariant === VARIANTS.SHOW_LOCALISED_CURRENCY
+      ? geoLocateUserEndpoint
+      : null,
+    { fetcher: swrFetcher }
+  );
+  const isGeoLocateAPILoading = !geoLocateUserData && !geoLocateError;
+
+  const {
+    data: currencyList,
+    error: currencyListError,
+  } = useSWR(
+    localisedCurrencyExpVariant === VARIANTS.SHOW_LOCALISED_CURRENCY
+      ? currencyListEndpoint
+      : null,
+    { fetcher: swrFetcher }
+  );
+  const isCurrencyListAPILoading = !currencyList && !currencyListError;
 
   const {
     refs,
@@ -158,7 +201,21 @@ const MicrositeV1 = (props) => {
   const { footer_heading: footerHeadingSFoot, body: slicesSFoot } =
     secondaryFooterData || {};
 
-  const headerCurrencies = currencies_list.filter((c) => c?.currency);
+  const localisedCurrencyList =
+    !(isCurrencyListAPILoading || isGeoLocateAPILoading) &&
+    localisedCurrencyCode
+      ? [
+          {
+            currency: currencyList.find(
+              ({ code }) => code === localisedCurrencyCode
+            ),
+          },
+        ]
+      : [];
+  const headerCurrencies = [
+    ...currencies_list.filter((c) => c?.currency),
+    ...localisedCurrencyList,
+  ];
 
   const currentLanguage = getLangObject(lang).short;
   const isCategorisedTours = Object.keys(categoryTourListData)?.length > 0;
@@ -356,42 +413,6 @@ const MicrositeV1 = (props) => {
       })
       .slice(0, bannerLimit || orderedUncategorizedTours.length);
   }
-
-  const geoLocateUserEndpoint = getHeadoutApiUrl({
-    endpoint: HeadoutEndpoints.GeoLocateUser,
-    params: {},
-    id: null,
-  });
-
-  const currencyListEndpoint = getHeadoutApiUrl({
-    endpoint: HeadoutEndpoints.CurrencyList,
-    params: {},
-    id: null,
-  });
-
-  const localisedCurrencyExpVariant = useRecoilValue(
-    localisedCurrencyExpVariantAtom
-  );
-
-  const setCurrency = useSetRecoilState(currencyAtom);
-  const setLoaderStatus = useSetRecoilState(localisedCurrencyloaderAtom);
-  const [localisedCurrencyCode, setLocalisedCurrencyCode] = useState(currency);
-  const [isLocalCurrencySupported, setIsLocalCurrencySupported] = useState(
-    false
-  );
-  const { data: geoLocateUserData } = useSWR(
-    localisedCurrencyExpVariant === VARIANTS.SHOW_LOCALISED_CURRENCY
-      ? geoLocateUserEndpoint
-      : null,
-    { fetcher: swrFetcher }
-  );
-
-  const { data: currencyList } = useSWR(
-    localisedCurrencyExpVariant === VARIANTS.SHOW_LOCALISED_CURRENCY
-      ? currencyListEndpoint
-      : null,
-    { fetcher: swrFetcher }
-  );
 
   useEffect(() => {
     if (localisedCurrencyExpVariant === VARIANTS.SHOW_LOCALISED_CURRENCY) {
