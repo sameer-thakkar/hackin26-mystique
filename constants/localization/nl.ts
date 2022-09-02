@@ -83,6 +83,7 @@ const nl = {
     GUIDED_TOUR: 'Rondleiding',
     TRANSFERS: 'Transfers inbegrepen',
     MEALS_INCLUDED: 'Inclusief maaltijden',
+    FLEXIBLE_HOURS: 'Flexibele uren',
   },
   SAFE_EXPERIENCE: {
     HEADING: 'Beste veiligheidsnormen',

@@ -252,8 +252,6 @@ export const categoryTourListParserV1 = async ({
       const { productImages, safetyImages } = media || {};
       const updatedDescriptors = generateDescriptor({
         descriptors,
-        maxDuration,
-        minDuration,
         lang: language,
       });
       let { microBrandsHighlight } = tour ?? {};
@@ -500,8 +498,6 @@ export const categoryTourListParserV2 = async (
 
       const allProducts = items?.map((product) => {
         const {
-          minDuration,
-          maxDuration,
           microBrandsDescriptor,
           listingPrice,
           allTags,
@@ -538,8 +534,6 @@ export const categoryTourListParserV2 = async (
           : microBrandsDescriptor;
         const mbDescriptors = generateDescriptor({
           v2Descriptors: descriptors,
-          maxDuration,
-          minDuration,
           lang: 'en',
           isEntertainmentMb: true,
         });
@@ -700,8 +694,6 @@ export const tourListApiParser = (apiResponse, lang = 'en') => {
     const { productImages, safetyImages } = media || {};
     const updatedDescriptors = generateDescriptor({
       descriptors,
-      maxDuration,
-      minDuration,
       lang,
     });
 
@@ -883,8 +875,6 @@ export const getToursGlobalCollection = async ({
       primaryCategory,
       primarySubCategory,
       descriptors,
-      minDuration,
-      maxDuration,
       name,
       reviewCount,
       combo,
@@ -892,8 +882,6 @@ export const getToursGlobalCollection = async ({
     const { productImages, safetyImages } = media || {};
     const updatedDescriptors = generateDescriptor({
       descriptors,
-      maxDuration,
-      minDuration,
       lang,
     });
     const { variants } =

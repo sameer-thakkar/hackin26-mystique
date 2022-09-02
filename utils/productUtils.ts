@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import { getDurationInHours, isDateValid } from 'utils/dateUtils';
 import {
   CANCELLATION_POLICY_POSSIBLE_LABELS,
+  DESCRIPTORS,
   HIGHLIGHT_TYPES,
   THEMES,
   VALIDITY_TYPES,
@@ -277,15 +278,11 @@ export const rankDescriptorList = (descriptorList) => {
 export const generateDescriptor = ({
   descriptors = [],
   v2Descriptors = [],
-  minDuration,
-  maxDuration,
   isEntertainmentMb = false,
   isShowPage = false,
 }: {
   descriptors?: Record<string, string>[];
   v2Descriptors?: string[];
-  minDuration: number | null;
-  maxDuration: number | null;
   lang: string;
   isEntertainmentMb?: boolean;
   isShowPage?: boolean;
@@ -299,9 +296,7 @@ export const generateDescriptor = ({
       (descriptor) => descriptor?.code
     );
 
-    if (minDuration && maxDuration) {
-      headoutDescriptors.push('DURATION');
-    }
+    headoutDescriptors.push(DESCRIPTORS.DURATION);
 
     return rankDescriptorList(headoutDescriptors).slice(
       0,

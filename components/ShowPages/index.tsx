@@ -204,8 +204,6 @@ const ShowPage = ({
   const {
     name,
     listingPrice,
-    maxDuration,
-    minDuration,
     microBrandsDescriptor,
     microBrandsHighlight,
     imageUploads,
@@ -268,8 +266,6 @@ const ShowPage = ({
   const selfCanonicalLink = convertUidToUrl({ uid });
   const updatedDescriptors = generateDescriptor({
     v2Descriptors: microBrandsDescriptor?.split('\r\n'),
-    maxDuration,
-    minDuration,
     lang: currentLanguage,
     isShowPage: true,
   });

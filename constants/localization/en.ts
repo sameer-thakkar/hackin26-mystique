@@ -89,6 +89,7 @@ const en = {
     GUIDED_TOUR: 'Guided Tour',
     TRANSFERS: 'Transfers Included',
     MEALS_INCLUDED: 'Meals Included',
+    FLEXIBLE_HOURS: 'Flexible Hours',
   },
   SAFE_EXPERIENCE: {
     HEADING: 'Best Safety Standards',

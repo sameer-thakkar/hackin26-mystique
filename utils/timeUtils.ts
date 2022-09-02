@@ -6,6 +6,7 @@ import '@formatjs/intl-relativetimeformat/locale-data/fr';
 import '@formatjs/intl-relativetimeformat/locale-data/de';
 import '@formatjs/intl-relativetimeformat/locale-data/nl';
 import '@formatjs/intl-relativetimeformat/locale-data/pt';
+import { strings } from 'const/strings';
 
 const rtfUnitTypes = <const>[
   'year',
@@ -79,7 +80,7 @@ export const getDuration = ({
   maxDuration: number | null;
   lang?: string;
 }) => {
-  if (!minDuration && !maxDuration) return '';
+  if (!minDuration && !maxDuration) return strings.DESCRIPTORS.FLEXIBLE_HOURS;
   const formatDurationToString = ({ hour, minute }) => {
     let res = '';
     if (hour) {

@@ -1563,8 +1563,6 @@ export const getPageData = async ({
         const { productImages, safetyImages } = media || {};
         const updatedDescriptors = generateDescriptor({
           descriptors,
-          maxDuration,
-          minDuration,
           lang: getHeadoutLanguagecode(lang),
         });
 

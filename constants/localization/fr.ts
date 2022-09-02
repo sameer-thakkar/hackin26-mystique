@@ -80,6 +80,7 @@ const fr = {
     GUIDED_TOUR: 'Visite guidée',
     TRANSFERS: 'Navettes incluses',
     MEALS_INCLUDED: 'Repas inclus',
+    FLEXIBLE_HOURS: 'Horaires flexibles',
   },
   SAFE_EXPERIENCE: {
     HEADING: 'Normes de sécurité et sanitaires en vigueur',
