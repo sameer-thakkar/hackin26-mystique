@@ -69,7 +69,6 @@ const PriceBlock = ({
   if (!price) return null;
   const { originalPrice, finalPrice, currencyCode, precision, bestDiscount } =
     price ?? {};
-
   return (
     <StyledPriceBlock>
       <Conditional if={originalPrice > finalPrice && showScratchPrice}>

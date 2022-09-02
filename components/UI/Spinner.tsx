@@ -11,8 +11,8 @@ const StyledSpinner = styled.div`
   border: 6px solid #f3f3f3;
   border-radius: 50%;
   border-top: 6px solid ${COLORS.BRAND.PURPS};
-  width: ${({ width }) => width || '2.1875rem'};
-  height: ${({ height }) => height || '2.1875rem'};
+  width: 35px;
+  height: 35px;
   -webkit-animation: spin 1s linear infinite; /* Safari */
   animation: spin 1s linear infinite;
   /* Safari */
@@ -40,14 +40,10 @@ const Text = styled.div`
   margin-top: 8px;
 `;
 
-const Spinner: React.FC<{
-  children?: any;
-  width?: string;
-  height?: string;
-}> = ({ children, width, height }) => {
+const Spinner: React.FC<{ children: any }> = ({ children }) => {
   return (
     <Wrapper>
-      <StyledSpinner width={width} height={height} />
+      <StyledSpinner />
       <Text>{children}</Text>
     </Wrapper>
   );

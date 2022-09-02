@@ -57,8 +57,6 @@ import {
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { getDuration } from 'utils/timeUtils';
 import { addQueryParams } from 'utils/urlUtils';
-import Spinner from 'UI/Spinner';
-import { localisedCurrencyloaderAtom } from 'store/atoms/localisedCurrencyAtom';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -995,8 +993,6 @@ const Product = (props) => {
   const pageMetaData = useRecoilValue(metaAtom);
   const currency = useRecoilValue(currencyAtom);
   const hostname = getHostName(isStage, isDev, host);
-
-  const isLoading = useRecoilValue(localisedCurrencyloaderAtom);
   const [isContentOpen, toggleContentOpen] = useState(defaultOpen);
   const [showMoreDetailsInTabs, setShowMoreDetails] = useState(
     defaultOpen || false
@@ -1474,18 +1470,13 @@ const Product = (props) => {
             })}
           <CTAContainer pageType={pageType}>
             <PriceContainer pageType={pageType}>
-              <Conditional if={isLoading}>
-                <Spinner width="1rem" height="1rem" />
-              </Conditional>
-              <Conditional if={!isLoading}>
-                <PriceBlock
-                  showScratchPrice={showScratchPrice}
-                  price={finalPrice}
-                  lang={currentLanguage}
-                  showSavings={true}
-                  key={'price-block'}
-                />
-              </Conditional>
+              <PriceBlock
+                showScratchPrice={showScratchPrice}
+                price={finalPrice}
+                lang={currentLanguage}
+                showSavings={true}
+                key={'price-block'}
+              />
             </PriceContainer>
             <Conditional if={isTicketCard && promo_code}>
               <PromoCodeBlock {...props} />

@@ -248,8 +248,6 @@ export const ANALYTICS_EVENTS = {
   MB_LANGUGAGE_CHANGED: 'MB Language Changed',
   LP_TO_BOOKING_PAGE: 'LP to booking page',
   LP_TO_SHOWPAGE: 'LP to showpage',
-  CURRENCY_OF_CHOICE_SUPPORTED: 'Currency of Choice Supported',
-  CURRENCY_OF_CHOICE: 'Currency of Choice',
 };
 export const PAGE_TYPE = {
   COLLECTION_PAGE: 'Collection Page',
