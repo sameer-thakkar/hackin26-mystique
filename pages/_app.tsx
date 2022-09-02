@@ -17,7 +17,7 @@ import {
 import renderShortCodes from 'utils/shortCodes';
 import { sendVariablesToDataLayer } from 'utils/analytics';
 import { getLangObject } from 'utils/helper';
-// import LiveChat from 'components/common/LiveChat';
+import LiveChat from 'components/common/LiveChat';
 
 const App = ({ Component, pageProps, localizedStrings, lang }) => {
   strings.setContent({
@@ -102,7 +102,7 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
   return (
     <RecoilRoot initializeState={initRecoil}>
       <Component {...pageProps} />
-      {/*<LiveChat />*/}
+      <LiveChat />
     </RecoilRoot>
   );
 };
