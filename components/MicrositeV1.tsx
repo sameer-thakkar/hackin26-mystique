@@ -201,9 +201,11 @@ const MicrositeV1 = (props) => {
   const { footer_heading: footerHeadingSFoot, body: slicesSFoot } =
     secondaryFooterData || {};
 
+  const prismicCurrencyList = currencies_list.filter((c) => c?.currency);
   const localisedCurrencyList =
     !(isCurrencyListAPILoading || isGeoLocateAPILoading) &&
-    localisedCurrencyCode
+    localisedCurrencyCode &&
+    prismicCurrencyList.length > 0
       ? [
           {
             currency: currencyList.find(
@@ -212,10 +214,7 @@ const MicrositeV1 = (props) => {
           },
         ]
       : [];
-  const headerCurrencies = [
-    ...currencies_list.filter((c) => c?.currency),
-    ...localisedCurrencyList,
-  ];
+  const headerCurrencies = [...prismicCurrencyList, ...localisedCurrencyList];
 
   const currentLanguage = getLangObject(lang).short;
   const isCategorisedTours = Object.keys(categoryTourListData)?.length > 0;
