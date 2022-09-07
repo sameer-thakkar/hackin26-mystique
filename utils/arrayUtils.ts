@@ -20,3 +20,10 @@ export const getUniqueArrayItemsBy = (
       return uniqueMap;
     }, {})
   );
+
+export const groupBy = (array: Record<string, any>[], key: string) => {
+  return array.reduce(function (acc, obj) {
+    (acc[obj[key]] = acc[obj[key]] || []).push(obj);
+    return acc;
+  }, {});
+};

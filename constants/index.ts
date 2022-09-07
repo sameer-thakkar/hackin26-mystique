@@ -185,6 +185,18 @@ export const CUSTOM_TYPES = {
   PROMO_CODES: 'promo_codes',
 };
 
+export const DOC_TYPES = {
+  microsite: 'Microsite',
+  content_page: 'Content Page',
+  showpage: 'Showpage',
+  global_homepage: 'Global Homepage',
+  global_city: 'Global City',
+  global_country: 'Global Country',
+  global_collection: 'Global Collection',
+  global_experience: 'Global Experience',
+  product_cards: 'Product Cards',
+};
+
 export const CONTENT_PAGE_TYPES = [CUSTOM_TYPES.CONTENT_PAGE];
 
 export const DESIGN = {
@@ -780,4 +792,12 @@ export const LIVE_CHAT = {
   DELAY: 3000,
   LICENCE_KEY: '8339531',
   SALES_TRACKER_ID: 'xKAt5wZBBFuxqR7H2oMHEdeZksNqY2VL',
+};
+
+export const SLICE_TYPES = {
+  SHOULDER_PAGE_TICKET_CARD: 'ticket_card_shoulder_page',
+  BREADCRUMBS: 'breadcrumbs',
+  TOUR_LIST_CATEGORY_V1: 'tour_list_category_v1',
+  TOUR_LIST_CATEGORY: 'tour_list_category',
+  CONTENT_TYPE_TAG: 'content_type_tag',
 };
