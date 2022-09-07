@@ -233,6 +233,7 @@ export const categoryTourListParserV1 = async ({
         callToAction,
         highlights,
         listingPrice,
+        imageUrl,
         media,
         descriptors,
         minDuration,
@@ -290,6 +291,7 @@ export const categoryTourListParserV1 = async ({
           ctaBooster: callToAction,
           descriptors: updatedDescriptors,
           highlights: microBrandsHighlight,
+          imageUrl,
           images: productImages,
           listingPrice: {
             ...finalListingPrice,

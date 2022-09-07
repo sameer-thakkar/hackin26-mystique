@@ -1009,9 +1009,8 @@ const Product = (props) => {
     multiVariant: isMultiVariant,
     minDuration,
     maxDuration,
-    images,
+    imageUrl: productImage,
   } = scorpioData || {};
-  const [tourGroupFirstImage] = images ?? [];
 
   const isComboWithSingleVariant = isCombo && !isMultiVariant;
   const isComboWithMultiVariant = isCombo && isMultiVariant;
@@ -1234,7 +1233,7 @@ const Product = (props) => {
     if (isTruncated) {
       setShowMoreDetails(isTruncated);
     }
-  }, [tabs.length, isMobile]);
+  }, [tabs, isMobile, noOfListItemToShow]);
 
   const { listingPrice } = tourPrices[tgid];
 
@@ -1394,10 +1393,10 @@ const Product = (props) => {
         isTicketCard={isTicketCard}
         isMobile={isMobile}
       >
-        <Conditional if={!isTicketCard && tourGroupFirstImage}>
+        <Conditional if={!isTicketCard && productImage}>
           <div className="card-img">
             <Image
-              url={tourGroupFirstImage?.url}
+              url={productImage}
               imageId="card-img"
               aspectRatio={isMobile ? '21:9' : '3:4'}
               width={

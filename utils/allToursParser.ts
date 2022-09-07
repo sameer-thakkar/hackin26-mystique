@@ -108,6 +108,7 @@ const allToursParser = (
         scratchPrice: isFetched ? cardPrices[tourData.tgid]?.scratchPrice : '',
         currencySymbol: isFetched ? currencySymbol : '',
         tgid: parseInt(tourData.tgid),
+        imageUrl: scorpioTour?.imageUrl,
         images: scorpioTour?.images,
         averageRating: scorpioTour?.averageRating,
         reviewCount: scorpioTour?.reviewCount,
