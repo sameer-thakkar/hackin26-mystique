@@ -418,12 +418,6 @@ const en = {
     WHY_WATCH: 'Why Watch',
     SHOW_CLOSED: 'Show Closed',
     SPECIAL_OFFER: 'Special Offer',
-    // Remove this 👇 after 5-9-22
-    LIMITED_CASHBACK_OFFER: {
-      OFFER_TITLE: 'Get 10% Cashback On Your Tickets for London Theatre Week!',
-      OFFER_SUBTEXT:
-        'Hurry and book now to avail this exciting offer valid till September 4, 2022.',
-    },
   },
   CUSTOMER_REVIEW_HEADING: 'Customer Reviews',
   CATEGORY_SLIDER_HEADING: 'Customers Who Booked This Show Also Viewed',
