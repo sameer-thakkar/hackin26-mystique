@@ -1,16 +1,29 @@
-import { CTA_TYPE } from 'constants/index';
-
-import Conditional from 'components/common/Conditional';
 import React from 'react';
 import styled from 'styled-components';
+import Conditional from 'components/common/Conditional';
 import Button from 'UI/Button';
 import COLORS from 'const/colors';
+import { CTA_TYPE } from 'const/index';
+import { CHEVRON_LEFT } from 'assets/SvgIcons';
 
-const CTAWrapper = styled.div`
-  margin-top: ${({ isButtonCTA }) => (isButtonCTA ? '24px' : '7px')};
+interface StyledCTAWrapperProps {
+  $isButtonCTA?: boolean;
+}
+const CTAWrapper = styled.div<StyledCTAWrapperProps>`
+  margin-top: ${({ $isButtonCTA }) => ($isButtonCTA ? '24px' : '7px')};
   a {
     text-decoration: none;
     color: ${COLORS.BRAND.PURPS};
+  }
+  svg {
+    margin-left: 4px;
+    transform: rotate(180deg);
+    height: 11px;
+    width: 11px;
+    path {
+      stroke-width: 4px;
+      stroke: ${COLORS.BRAND.CANDY};
+    }
   }
 `;
 
@@ -22,7 +35,7 @@ const RichTextCTA = (block) => {
   const { cta_type, cta_link, cta_text } = block || {};
 
   return (
-    <CTAWrapper isButtonCTA={cta_type === CTA_TYPE.BUTTON}>
+    <CTAWrapper $isButtonCTA={cta_type === CTA_TYPE.BUTTON}>
       <a href={cta_link?.url} {...anchorTagProps}>
         <Conditional if={cta_type === CTA_TYPE.TEXT}>{cta_text}</Conditional>
         <Conditional if={cta_type === CTA_TYPE.BUTTON}>
@@ -30,6 +43,7 @@ const RichTextCTA = (block) => {
             {cta_text}
           </Button>
         </Conditional>
+        {CHEVRON_LEFT}
       </a>
     </CTAWrapper>
   );
