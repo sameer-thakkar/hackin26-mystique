@@ -40,7 +40,7 @@ import {
   legacyBooleanCheck,
   createBookingURL,
 } from 'utils';
-import { groupSlices, getHostName } from 'utils/helper';
+import { groupSlices, getHostName, checkLTT } from 'utils/helper';
 import {
   convertUidToUrl,
   getValidUrl,
@@ -57,6 +57,7 @@ import { getUniqueArrayItemsBy } from 'utils/arrayUtils';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { metaAtom } from 'store/atoms/meta';
 import { gtmAtom } from 'store/atoms/gtm';
+import dayjs from 'dayjs';
 
 const Breadcrumb = dynamic(() => import('./BreadCrumb'));
 const AccordionGroup = dynamic(() => import('../slices/AccordionGroup'));
@@ -258,6 +259,7 @@ const ShowPage = ({
     lang,
   } = CMSContent;
 
+  const isLTT = checkLTT(uid);
   const currentLanguage = getHeadoutLanguagecode(lang);
   const pageMetaData = useRecoilValue(metaAtom);
   const { eventsReady } = useRecoilValue(gtmAtom);
@@ -471,6 +473,14 @@ const ShowPage = ({
     })
     ?.join(',');
 
+  const cashbackOffer = {
+    offerHeading: strings.SHOWPAGE?.LIMITED_CASHBACK_OFFER?.OFFER_TITLE,
+    offerText: strings.SHOWPAGE?.LIMITED_CASHBACK_OFFER?.OFFER_SUBTEXT,
+  };
+  const cashbackOfferClosingDate = dayjs('2022-09-11', 'YYYY-MM-DD');
+  const showCashbackOffer =
+    cashbackOfferClosingDate && cashbackOfferClosingDate.isSameOrAfter(dayjs());
+
   return (
     <>
       <ShowPageWrapper>
@@ -528,13 +538,15 @@ const ShowPage = ({
           tagsArray={tagsArray}
           isReopening={isReopening}
           hostname={hostname}
-          hasSpecialOffer={hasSpecialOffer}
+          hasSpecialOffer={(isLTT && showCashbackOffer) || hasSpecialOffer}
         />
-        <Conditional if={hasSpecialOffer}>
+        <Conditional if={(isLTT && showCashbackOffer) || hasSpecialOffer}>
           <SpecialOfferBanner
             marginTop={isMobile ? 0 : 40}
             isShowPage={true}
-            specialOffer={specialOffer}
+            specialOffer={
+              isLTT && showCashbackOffer ? cashbackOffer : specialOffer
+            }
           />
         </Conditional>
         <Wrapper>
