@@ -9,13 +9,16 @@ import COLORS from 'const/colors';
 import { CHEVRON_DOWN } from 'assets/SvgIcons';
 import { strings } from 'const/strings';
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{
+  $isExpanded: boolean;
+  $contentHeight: number;
+}>`
   position: relative;
   .rich-text {
-    ${({ isExpanded, contentHeight }) =>
-      !isExpanded && `height: ${contentHeight}px;`}
-    ${({ contentHeight }) => contentHeight && `margin-bottom: -6px;`}
-    ${({ isExpanded }) => !isExpanded && `overflow: hidden;`}
+    ${({ $isExpanded, $contentHeight }) =>
+      !$isExpanded && `height: ${$contentHeight}px;`}
+    ${({ $contentHeight }) => $contentHeight && `margin-bottom: -6px;`}
+    ${({ $isExpanded }) => !$isExpanded && `overflow: hidden;`}
   }
   .fadeout {
     position: absolute;
@@ -26,7 +29,7 @@ const Wrapper = styled.div`
       rgba(255, 255, 255, 0) 0%,
       rgba(255, 255, 255, 1) 100%
     );
-    ${({ isExpanded }) => isExpanded && `display: none;`}
+    ${({ $isExpanded }) => $isExpanded && `display: none;`}
   }
   .toggle {
     position: absolute;
@@ -44,14 +47,16 @@ const Wrapper = styled.div`
       }
       margin-bottom: -2px;
       padding: 0 7px;
-      ${({ isExpanded }) => isExpanded && ` transform: rotate(180deg);`}
+      ${({ $isExpanded }) => $isExpanded && ` transform: rotate(180deg);`}
     }
   }
   @media (max-width: 768px) {
     .rich-text {
-      ${({ isExpanded, contentHeight, hasCTA }) =>
-        hasCTA && !isExpanded && `height: ${2 * contentHeight}px;`}
-    margin-bottom: unset;
+      height: ${({ $isExpanded, $contentHeight, $hasCTA }) =>
+        $contentHeight && $hasCTA && !$isExpanded
+          ? `${2 * $contentHeight}px`
+          : '100%'};
+      margin-bottom: unset;
     }
   }
 `;
@@ -71,9 +76,9 @@ const RichtextWithCTA = (props) => {
         return (
           <Wrapper
             key={index}
-            isExpanded={isExpanded}
-            contentHeight={contentHeight}
-            hasCTA={cta_text}
+            $isExpanded={isExpanded}
+            $contentHeight={contentHeight}
+            $hasCTA={cta_text}
           >
             <div className="rich-text">
               <RichText
