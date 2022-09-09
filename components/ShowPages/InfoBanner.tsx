@@ -22,7 +22,8 @@ const Title = styled.div`
   font-weight: 600;
   font-size: 16px;
   line-height: 20px;
-  margin-bottom: 2px;
+  margin-bottom: ${({ applyCustomMarginForHeading }) =>
+    applyCustomMarginForHeading};
 
   @media (max-width: 768px) {
     font-size: 14px;
@@ -52,11 +53,18 @@ const Description = styled.div`
   }
 `;
 
-const InfoBanner = ({ title, description, colorScheme }) => {
+const InfoBanner = ({
+  title,
+  description,
+  colorScheme,
+  emojiSymbol = '🤑',
+  emojiLabel = 'money-mouth-face',
+  applyCustomMarginForHeading = '2px',
+}) => {
   return (
     <StyledInfoBanner colorScheme={colorScheme}>
-      <Title>
-        <Emoji symbol="🤑" label="money-mouth-face" /> {title}
+      <Title applyCustomMarginForHeading={applyCustomMarginForHeading}>
+        <Emoji symbol={emojiSymbol} label={emojiLabel} /> {title}
       </Title>
       <Description>{description}</Description>
     </StyledInfoBanner>

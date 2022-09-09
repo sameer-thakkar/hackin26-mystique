@@ -448,6 +448,10 @@ const en = {
     },
   },
   CANCELLATION_POLICY_HEADING: 'Cancellation Policy',
+  QUEEN_ELIZABETH_II_DEMISE: {
+    HEADING: 'Important',
+    DESCRIPTION: `We are saddened by the passing of Her Majesty Queen Elizabeth II and offer our sincere condolences to everyone affected. As of now, all shows are still playing as scheduled and there have been no cancellations or reschedules. If this changes, the respective show calendars will be updated.`,
+  },
 };
 
 export default en;
