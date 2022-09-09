@@ -41,6 +41,7 @@ import {
   ANALYTICS_PROPERTIES,
   CUSTOM_TYPES,
   DESCRIPTORS,
+  PAGE_TYPES,
 } from 'const/index';
 import { createBookingURL } from 'utils';
 import {
@@ -1473,10 +1474,20 @@ const Product = (props) => {
             })}
           <CTAContainer pageType={pageType}>
             <PriceContainer pageType={pageType}>
-              <Conditional if={isLoading}>
+              <Conditional
+                if={
+                  isLoading &&
+                  pageMetaData?.pageType !== PAGE_TYPES.CONTENT_PAGE
+                }
+              >
                 <Spinner width="1rem" height="1rem" />
               </Conditional>
-              <Conditional if={!isLoading}>
+              <Conditional
+                if={
+                  !isLoading ||
+                  pageMetaData?.pageType === PAGE_TYPES.CONTENT_PAGE
+                }
+              >
                 <PriceBlock
                   showScratchPrice={showScratchPrice}
                   price={finalPrice}
