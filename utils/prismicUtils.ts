@@ -1582,6 +1582,7 @@ export const getPageData = async ({
             descriptors: updatedDescriptors,
             productHighlights: highlights,
             productTitle: name,
+            imageUrl,
             images: [...(productImages || []), { url: imageUrl }],
             averageRating,
             reviewCount,
