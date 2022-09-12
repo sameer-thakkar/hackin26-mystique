@@ -39,7 +39,6 @@ export enum HeadoutEndpoints {
   CollectionSections,
   CurrencyList,
   CalendarInventory,
-  GeoLocateUser,
 }
 
 export const getHeadoutApiUrl = ({
@@ -84,9 +83,6 @@ export const getHeadoutApiUrl = ({
       break;
     case HeadoutEndpoints.CurrencyList:
       endpointSlug = `https://api.headout.com/api/v1/currency/list/`;
-      break;
-    case HeadoutEndpoints.GeoLocateUser:
-      endpointSlug = `https://api.headout.com/api/v2/geolocate/city/`;
       break;
     case HeadoutEndpoints.CalendarInventory:
       endpointSlug = `https://api.headout.com/api/v7/tour-groups/${id}/calendar/`;
