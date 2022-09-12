@@ -231,7 +231,15 @@ const ProductCard = styled.div`
 
     .avg-rating svg {
       ${({ isEntertainmentMb }) =>
-        isEntertainmentMb && `width:8px;height: 8px;`}
+        isEntertainmentMb &&
+        `width:8px;
+        height: 8px;
+        
+        path {
+          fill:  ${COLORS.BRAND.CANDY};
+          stroke:  ${COLORS.BRAND.CANDY};
+        }
+        `}
     }
 
     .reopening {
