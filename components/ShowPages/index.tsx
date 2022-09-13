@@ -57,7 +57,6 @@ import { getUniqueArrayItemsBy } from 'utils/arrayUtils';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { metaAtom } from 'store/atoms/meta';
 import { gtmAtom } from 'store/atoms/gtm';
-import dayjs from 'dayjs';
 
 const Breadcrumb = dynamic(() => import('./BreadCrumb'));
 const AccordionGroup = dynamic(() => import('../slices/AccordionGroup'));
@@ -477,9 +476,6 @@ const ShowPage = ({
     offerHeading: strings.SHOWPAGE?.LIMITED_CASHBACK_OFFER?.OFFER_TITLE,
     offerText: strings.SHOWPAGE?.LIMITED_CASHBACK_OFFER?.OFFER_SUBTEXT,
   };
-  const cashbackOfferClosingDate = dayjs('2022-09-11', 'YYYY-MM-DD');
-  const showCashbackOffer =
-    cashbackOfferClosingDate && cashbackOfferClosingDate.isSameOrAfter(dayjs());
 
   return (
     <>
@@ -538,15 +534,13 @@ const ShowPage = ({
           tagsArray={tagsArray}
           isReopening={isReopening}
           hostname={hostname}
-          hasSpecialOffer={(isLTT && showCashbackOffer) || hasSpecialOffer}
+          hasSpecialOffer={isLTT || hasSpecialOffer}
         />
-        <Conditional if={(isLTT && showCashbackOffer) || hasSpecialOffer}>
+        <Conditional if={isLTT || hasSpecialOffer}>
           <SpecialOfferBanner
             marginTop={isMobile ? 0 : 40}
             isShowPage={true}
-            specialOffer={
-              isLTT && showCashbackOffer ? cashbackOffer : specialOffer
-            }
+            specialOffer={isLTT ? cashbackOffer : specialOffer}
           />
         </Conditional>
         <Wrapper>
