@@ -5,9 +5,10 @@ import ContentContainer from 'components/UI/ContentContainer';
 import Paragraph from 'components/UI/Paragraph';
 import { TopHeading } from 'components/UI/Headings';
 import { MinimalHelmet } from 'components/common/NextSeoMeta';
+import { getPrismicDocument } from 'utils/prismicUtils';
 
-import { Client } from '../config/prismic-config';
-import { DROPDOWN_ELEMENT } from '../constants';
+import { Client } from 'config/prismic-config';
+import { CUSTOM_TYPES, DROPDOWN_ELEMENT } from 'constants/index';
 import 'lazysizes';
 
 export default class companyDetails extends Component<any, any> {
@@ -19,39 +20,63 @@ export default class companyDetails extends Component<any, any> {
     isMobile: false,
   };
 
-  static async getInitialProps({ req, query }) {
+  static async getInitialProps({ req, res, query }) {
     try {
       const isDev = req
         ? !!query.mystique_uid
         : window.location.search.includes('mystique_uid');
 
-      const props = await companyDetails.getTermsData({ req, isDev, query });
+      const props = await companyDetails.getTermsData({
+        req,
+        res,
+        isDev,
+        query,
+      });
       return props;
     } catch (error) {
       console.log(error);
     }
   }
 
-  static async getTermsData({ req, isDev, query }) {
-    let superHost;
+  static async getTermsData({ req, res, isDev, query }) {
+    let uid;
+    const { host } = req ? req.headers : window.location;
     if (isDev) {
-      superHost = req
+      uid = req
         ? query.mystique_uid
         : window.location.search.includes('mystique_uid');
     } else {
       const { host } = req ? req.headers : window.location;
-      superHost = host.replace('stage-', '');
+      uid = host.replace('stage-', '');
     }
 
-    const lang = 'en-us';
-    const uidType = 'microsite';
-    const response = await Client(req).getByUID(uidType, superHost, { lang });
-    const footerID = response.data.footer_ref.id;
+    const { ContentType, CMSContent } = await getPrismicDocument({
+      req,
+      serverResponse: res,
+      query,
+      isDev,
+    });
+    let response, footerID, headerID;
+    switch (ContentType) {
+      case CUSTOM_TYPES.GLOBAL_HOMEPAGE:
+        response = CMSContent;
+        footerID = response.data.common_footer.id;
+        headerID = response.data.common_header.id;
+        break;
+      case CUSTOM_TYPES.MICROSITE:
+        response = CMSContent.completeMicrosite.data;
+        footerID = response.data.footer_ref.id;
+        headerID = response.data.common_header_ref.id;
+    }
     if (footerID) {
       const commonFooter = await Client(req).getByID(footerID);
       response.data.commonFooter = commonFooter;
     }
-    return { response };
+    if (headerID) {
+      const commonHeader = await Client(req).getByID(headerID);
+      response.data.commonHeader = commonHeader;
+    }
+    return { response, host, uid };
   }
 
   handleDropdownToggle = (elementIdentifier) => {
@@ -91,13 +116,19 @@ export default class companyDetails extends Component<any, any> {
     const { response, host } = this.props;
     const { uid, data } = response;
     const {
-      link_to_logo_file: { url: logoUrl },
-      logo: { url: uploadedLogoUrl, alt: altText },
+      link_to_logo_file,
+      logo,
       favicon,
-      logo_alt_text: logoAltText,
       logo_redirection_url: logoRedirectionURL,
       commonFooter,
+      commonHeader,
     } = data;
+    const headerLogoAltText =
+      logo?.alt || data?.logo_alt_text || commonHeader?.data?.logo_alt_text;
+    const headerLogoUrl =
+      link_to_logo_file?.url?.logoUrl ||
+      logo?.uploadedLogoUrl ||
+      commonHeader?.data?.logo?.url;
     const footerLogoURL =
       commonFooter?.data?.logo.url ||
       response.data?.footer_logo_link?.url ||
@@ -116,13 +147,13 @@ export default class companyDetails extends Component<any, any> {
         />
         <Header
           headerLinks={null}
-          logoUrl={logoUrl || uploadedLogoUrl || null}
+          logoUrl={headerLogoUrl || '/'}
           currentLanguage={'en'}
-          logoAltText={altText || logoAltText}
+          logoAltText={headerLogoAltText}
           selectedLanguage={'en'}
           uid={uid}
           isMobile={this.state.isMobile}
-          logoRedirectionURL={logoRedirectionURL.url || '/'}
+          logoRedirectionURL={logoRedirectionURL?.url || '/'}
           dropdown={this.state.dropdown}
           handleDropdownToggle={this.handleDropdownToggle}
         />

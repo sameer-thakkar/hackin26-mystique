@@ -993,7 +993,7 @@ export const getShowPage = async ({
   return Promise.reject();
 };
 
-const getPrismicDocument = async ({
+export const getPrismicDocument = async ({
   req,
   serverResponse,
   query,

@@ -13,9 +13,15 @@ import Conditional from 'components/common/Conditional';
 import RichContent from 'UI/RichContent';
 import { getNakedDomain } from 'utils';
 import { getAppTheme } from 'style/theme';
+import { getPrismicDocument } from 'utils/prismicUtils';
 
-import { DROPDOWN_ELEMENT, CUSTOM_TYPES, THEMES, DESIGN } from '../constants';
-import { Client } from '../config/prismic-config';
+import {
+  DROPDOWN_ELEMENT,
+  CUSTOM_TYPES,
+  DESIGN,
+  THEMES,
+} from 'constants/index';
+import { Client } from 'config/prismic-config';
 
 const Title = styled.div`
   margin: 10px 0px;
@@ -31,20 +37,20 @@ export default class privacy extends Component<any, any> {
     isMobile: false,
   };
 
-  static async getInitialProps({ req, query }) {
+  static async getInitialProps({ req, res, query }) {
     try {
       const isDev = req
         ? !!query.mystique_uid
         : window.location.search.includes('mystique_uid');
 
-      const props = await privacy.getData({ req, isDev, query });
+      const props = await privacy.getData({ req, res, isDev, query });
       return props;
     } catch (error) {
       console.log(error);
     }
   }
 
-  static async getData({ req, isDev, query }) {
+  static async getData({ req, res, isDev, query }) {
     let uid;
     const { host } = req ? req.headers : window.location;
     if (isDev) {
@@ -54,14 +60,31 @@ export default class privacy extends Component<any, any> {
     } else {
       uid = host.replace('stage-', '');
     }
-    const lang = 'en-us';
-    const response = await Client(req).getByUID(CUSTOM_TYPES.MICROSITE, uid, {
-      lang,
+    const { ContentType, CMSContent } = await getPrismicDocument({
+      req,
+      serverResponse: res,
+      query,
+      isDev,
     });
-    const footerID = response.data.footer_ref.id;
+    let response, footerID, headerID;
+    switch (ContentType) {
+      case CUSTOM_TYPES.GLOBAL_HOMEPAGE:
+        response = CMSContent;
+        footerID = response.data.common_footer.id;
+        headerID = response.data.common_header.id;
+        break;
+      case CUSTOM_TYPES.MICROSITE:
+        response = CMSContent.completeMicrosite.data;
+        footerID = response.data.footer_ref.id;
+        headerID = response.data.common_header_ref.id;
+    }
     if (footerID) {
       const commonFooter = await Client(req).getByID(footerID);
       response.data.commonFooter = commonFooter;
+    }
+    if (headerID) {
+      const commonHeader = await Client(req).getByID(headerID);
+      response.data.commonHeader = commonHeader;
     }
     return { response, host, uid };
   }
@@ -103,18 +126,24 @@ export default class privacy extends Component<any, any> {
     const { response, host } = this.props;
     const { uid, data } = response;
     const {
-      link_to_logo_file: { url: logoUrl },
-      logo: { url: uploadedLogoUrl, alt: altText },
+      link_to_logo_file,
+      logo,
       favicon,
-      logo_alt_text: logoAltText,
       logo_redirection_url: logoRedirectionURL,
       commonFooter,
+      commonHeader,
       theme_override: footerTheme,
       theme: mbTheme,
       address_line: addressLine,
       organization_name: organization,
       use_domain_email: useDomain,
     } = data;
+    const headerLogoAltText =
+      logo?.alt || data?.logo_alt_text || commonHeader?.data?.logo_alt_text;
+    const headerLogoUrl =
+      link_to_logo_file?.url?.logoUrl ||
+      logo?.uploadedLogoUrl ||
+      commonHeader?.data?.logo?.url;
     const footerLogoURL =
       commonFooter?.data?.logo.url ||
       response.data?.footer_logo_link?.url ||
@@ -152,13 +181,13 @@ export default class privacy extends Component<any, any> {
           />
           <Header
             headerLinks={null}
-            logoUrl={logoUrl || uploadedLogoUrl || null}
+            logoUrl={headerLogoUrl || '/'}
             currentLanguage={'en'}
-            logoAltText={altText || logoAltText}
+            logoAltText={headerLogoAltText}
             selectedLanguage={'en'}
             uid={uid}
             isMobile={this.state.isMobile}
-            logoRedirectionURL={logoRedirectionURL.url || '/'}
+            logoRedirectionURL={logoRedirectionURL?.url || '/'}
             dropdown={this.state.dropdown}
             handleDropdownToggle={this.handleDropdownToggle}
           />
