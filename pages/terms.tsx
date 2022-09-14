@@ -20,6 +20,7 @@ import {
   DESIGN,
   THEMES,
 } from 'constants/index';
+
 import { Client } from 'config/prismic-config';
 
 export default class TermsPage extends Component<any, any> {
@@ -40,6 +41,7 @@ export default class TermsPage extends Component<any, any> {
       const props = await TermsPage.getData({ req, res, isDev, query });
       return props;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
   }
@@ -59,6 +61,7 @@ export default class TermsPage extends Component<any, any> {
       serverResponse: res,
       query,
       isDev,
+      useHostAsUid: true,
     });
     let response, footerID, headerID;
     switch (ContentType) {

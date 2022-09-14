@@ -1,3 +1,5 @@
+import { CUSTOM_TYPES, DROPDOWN_ELEMENT } from 'constants/index';
+
 import React, { Component } from 'react';
 import Header from 'components/common/Header';
 import Footer from 'components/common/Footer';
@@ -6,9 +8,7 @@ import Paragraph from 'components/UI/Paragraph';
 import { TopHeading } from 'components/UI/Headings';
 import { MinimalHelmet } from 'components/common/NextSeoMeta';
 import { getPrismicDocument } from 'utils/prismicUtils';
-
 import { Client } from 'config/prismic-config';
-import { CUSTOM_TYPES, DROPDOWN_ELEMENT } from 'constants/index';
 import 'lazysizes';
 
 export default class companyDetails extends Component<any, any> {
@@ -34,6 +34,7 @@ export default class companyDetails extends Component<any, any> {
       });
       return props;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
   }
@@ -55,6 +56,7 @@ export default class companyDetails extends Component<any, any> {
       serverResponse: res,
       query,
       isDev,
+      useHostAsUid: true,
     });
     let response, footerID, headerID;
     switch (ContentType) {

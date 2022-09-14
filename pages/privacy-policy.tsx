@@ -21,6 +21,7 @@ import {
   DESIGN,
   THEMES,
 } from 'constants/index';
+
 import { Client } from 'config/prismic-config';
 
 const Title = styled.div`
@@ -46,6 +47,7 @@ export default class privacy extends Component<any, any> {
       const props = await privacy.getData({ req, res, isDev, query });
       return props;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
   }
@@ -65,6 +67,7 @@ export default class privacy extends Component<any, any> {
       serverResponse: res,
       query,
       isDev,
+      useHostAsUid: true,
     });
     let response, footerID, headerID;
     switch (ContentType) {

@@ -998,14 +998,19 @@ export const getPrismicDocument = async ({
   serverResponse,
   query,
   isDev,
+  useHostAsUid = false,
 }): Promise<{
   ContentType?: string;
   CMSContent?: any;
   statusCode?: number;
   isDev?: boolean;
+  useHostAsUid?: boolean;
 }> => {
   const { host } = req.headers || window.location;
-  const { uid, lang } = getLangUID(req, query);
+  const { lang } = getLangUID(req, query);
+  const uid = useHostAsUid
+    ? host.replace('stage-', '')
+    : getLangUID(req, query)?.uid;
   const queryParamsString = getValidUrlParams(query);
 
   try {
