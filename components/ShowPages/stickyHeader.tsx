@@ -192,7 +192,7 @@ const StickyHeader = ({
             <div className="right-pricing">
               <div className="priceBlockWrapper">
                 <PriceBlock
-                  price={listingPrice}
+                  listingPrice={listingPrice}
                   lang={currentLanguage}
                   showSavings={true}
                   showScratchPrice={true}

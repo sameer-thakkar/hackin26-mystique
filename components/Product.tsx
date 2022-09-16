@@ -1471,7 +1471,7 @@ const Product = (props) => {
             <PriceContainer pageType={pageType}>
               <PriceBlock
                 showScratchPrice={showScratchPrice}
-                price={finalPrice}
+                listingPrice={finalPrice}
                 lang={currentLanguage}
                 showSavings={true}
                 key={'price-block'}

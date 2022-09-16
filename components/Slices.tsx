@@ -501,8 +501,8 @@ const sliceHandler = (slice, props: any = {}) => {
     case 'ticket_card_shoulder_page':
       return (
         <TicketCard
-          title={slice?.primary?.title}
           subtext={slice?.primary?.subtext}
+          title={slice?.primary?.title}
           {...props}
         />
       );

@@ -872,7 +872,7 @@ const TicketCard = (props) => {
       <PriceContainer isOpened={isOpened}>
         <PriceBlock
           showScratchPrice={showScratchPrice}
-          price={finalPrice}
+          listingPrice={finalPrice}
           lang={currentLanguage}
           showSavings={true}
           key={'price-block'}

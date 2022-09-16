@@ -178,7 +178,7 @@ export const LinkCards = (props) => {
                       <Conditional if={listingPrice}>
                         <PriceBlock
                           lang={lang}
-                          price={listingPrice}
+                          listingPrice={listingPrice}
                           showScratchPrice={true}
                           prefix={false}
                         />

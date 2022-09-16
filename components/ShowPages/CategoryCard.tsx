@@ -135,7 +135,7 @@ const CategoryCard = ({
         <h3>{name}</h3>
         <div className="priceBlockWrapper">
           <PriceBlock
-            price={listingPrice}
+            listingPrice={listingPrice}
             lang={currentLanguage}
             showSavings={true}
             showScratchPrice={true}

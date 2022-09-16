@@ -1,9 +1,14 @@
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import { experimentsAtom } from 'store/atoms/experiment';
 import Conditional from 'components/common/Conditional';
 import LocalisedPrice from 'UI/LPrice';
 import COLORS from 'const/colors';
-import { THEMES } from 'const/index';
+import { CASHBACK_TYPES, THEMES } from 'const/index';
 import { strings } from 'const/strings';
+import { expandFontToken } from 'const/typography';
+import { FONTS } from 'const/fonts';
+import { VARIANTS } from 'const/experiments';
 import { HALYARD } from 'const/ui-constants';
 import { CurrencyDisplayType } from 'utils/currency';
 
@@ -37,38 +42,79 @@ export const StyledPriceBlock = styled.div`
 `;
 
 export const SavedTag = styled.div`
-  padding: 4px 8px;
+  padding: 1px 4px;
+  align-self: center;
+  margin-top: 1px; // hack to visually align center.
   background: ${({ theme }) =>
-    theme.theme === THEMES.DEFAULT ? 'transparent' : '#dbfddb'};
+    theme.theme === THEMES.DEFAULT
+      ? 'transparent'
+      : COLORS.BACKGROUND.SOOTHING_GREEN};
   color: ${({ theme }) =>
-    theme.theme === THEMES.DEFAULT ? theme.primaryText : '#34a853'};
-  font-size: 12px;
-  line-height: 16px;
-  font-style: normal;
-  font-weight: normal;
-  border-radius: 3px;
+    theme.theme === THEMES.DEFAULT
+      ? theme.primaryText
+      : COLORS.TEXT.OKAY_GREEN_3};
+
+  ${expandFontToken(FONTS.MISC_TAG_REGULAR)}
+  border-radius: 2px;
 `;
 
 type PriceBlockProps = {
   currencyDisplay?: CurrencyDisplayType;
   lang: string;
-  price: any;
+  listingPrice: any;
   prefix?: boolean;
   showSavings?: boolean;
   showScratchPrice?: boolean;
 };
 
 const PriceBlock = ({
-  price,
+  listingPrice,
   lang,
   showScratchPrice = true,
   prefix = true,
-  showSavings = false,
+  showSavings: showSavingsFromProp = false,
   currencyDisplay = 'symbol',
 }: PriceBlockProps) => {
-  if (!price) return null;
-  const { originalPrice, finalPrice, currencyCode, precision, bestDiscount } =
-    price ?? {};
+  const experiments = useRecoilValue(experimentsAtom);
+  if (!listingPrice) return null;
+  const {
+    originalPrice,
+    finalPrice,
+    currencyCode,
+    precision,
+    bestDiscount,
+    cashbackValue,
+    cashbackType,
+  } = listingPrice ?? {};
+  const isCashbackEfficacyTreatment =
+    experiments.CASHBACK_EFFICACY.ready &&
+    experiments.CASHBACK_EFFICACY.activeVariant === VARIANTS.SHOW_CASHBACK;
+  const isNonExperimentGroup =
+    experiments.CASHBACK_EFFICACY.ready &&
+    experiments.CASHBACK_EFFICACY.activeVariant === null;
+
+  const showSavings =
+    showSavingsFromProp &&
+    (isCashbackEfficacyTreatment || isNonExperimentGroup);
+  const savingsElementsArray = [];
+
+  if (bestDiscount > 0) {
+    savingsElementsArray.push(
+      strings.formatString(strings.SAVE, `${bestDiscount}`)
+    );
+  }
+
+  if (cashbackValue > 0 && isCashbackEfficacyTreatment) {
+    savingsElementsArray.push(
+      `${strings.formatString(
+        strings.CASHBACK,
+        `${cashbackValue}${
+          cashbackType === CASHBACK_TYPES.PERCENTAGE ? '%' : ''
+        }`
+      )}`
+    );
+  }
+
   return (
     <StyledPriceBlock>
       <Conditional if={originalPrice > finalPrice && showScratchPrice}>
@@ -91,10 +137,10 @@ const PriceBlock = ({
         price={finalPrice}
         precision={precision}
       />
-      <Conditional if={showSavings && showScratchPrice && bestDiscount > 0}>
-        <SavedTag>
-          {strings.formatString(strings.SAVE, `${bestDiscount}`)}
-        </SavedTag>
+      <Conditional
+        if={showSavings && showScratchPrice && !!savingsElementsArray.length}
+      >
+        <SavedTag>{savingsElementsArray.join(' + ')}</SavedTag>
       </Conditional>
     </StyledPriceBlock>
   );

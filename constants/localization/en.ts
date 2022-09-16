@@ -27,6 +27,7 @@ const en = {
   NEXT_AVAILABLE: 'Next available: ',
   SAVE_UPTO: 'Save upto',
   SAVE: 'Save {0}%',
+  CASHBACK: '{0} Cashback',
   AVAILABLE: 'Available',
   EARLIEST_AVAILABILITY: 'Earliest availability',
   UNAVAILABLE: 'Unavailable',

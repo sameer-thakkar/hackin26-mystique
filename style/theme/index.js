@@ -308,9 +308,8 @@ const themes = {
             font-size: 18px;
           }
           ${SavedTag} {
-            padding: 0 4px;
+            padding: 2px 4px;
             font-size: 11px;
-            color: ${COLORS.TEXT.OKAY_GREEN_3};
           }
         `,
       },

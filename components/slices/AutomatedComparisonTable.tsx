@@ -566,7 +566,7 @@ const AutomatedTourComparisonTable = ({
                       <BlockContent>
                         <PriceBlock
                           lang={lang}
-                          price={tour?.listingPrice}
+                          listingPrice={tour?.listingPrice}
                           showScratchPrice={true}
                           prefix={false}
                           currencyDisplay="code"
@@ -617,7 +617,7 @@ const AutomatedTourComparisonTable = ({
                         <BlockContent>
                           <PriceBlock
                             lang={lang}
-                            price={tour?.listingPrice}
+                            listingPrice={tour?.listingPrice}
                             showScratchPrice={true}
                             currencyDisplay="code"
                           />

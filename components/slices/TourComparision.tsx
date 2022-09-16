@@ -655,7 +655,7 @@ const TourComparisonTable = (props) => {
                     <div className="block-content">
                       <PriceBlock
                         lang={lang}
-                        price={tour.listingPrice}
+                        listingPrice={tour.listingPrice}
                         showScratchPrice={true}
                         prefix={false}
                       />
@@ -716,7 +716,7 @@ const TourComparisonTable = (props) => {
                       <div className="block-content">
                         <PriceBlock
                           lang={lang}
-                          price={tour.listingPrice}
+                          listingPrice={tour.listingPrice}
                           showScratchPrice={true}
                         />
                       </div>

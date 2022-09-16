@@ -575,7 +575,7 @@ const ShowPageBanner = ({
             <Conditional if={isMobile}>
               <div className="priceBlockWrapper">
                 <PriceBlock
-                  price={listingPrice}
+                  listingPrice={listingPrice}
                   lang={currentLanguage}
                   showSavings={true}
                   showScratchPrice={true}
@@ -598,7 +598,7 @@ const ShowPageBanner = ({
               <Conditional if={listingPrice}>
                 <div className="priceBlockWrapper">
                   <PriceBlock
-                    price={listingPrice}
+                    listingPrice={listingPrice}
                     lang={currentLanguage}
                     showSavings={true}
                     showScratchPrice={true}
