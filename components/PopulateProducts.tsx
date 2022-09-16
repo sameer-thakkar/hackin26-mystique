@@ -387,7 +387,7 @@ const PopulateProducts = (props) => {
         <div id="tour-list-heading">
           <Conditional
             if={
-              availableToursList?.length > 1 &&
+              availableToursList?.length &&
               (sectionTitle || strings.TOUR_LIST_HEADING)
             }
           >
