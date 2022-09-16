@@ -399,11 +399,20 @@ export const categoryTourListParserV2 = async (
     const collectionData: any = data?.map((c: any) => {
       const { collection, sections } = c || {};
       const filteredData = sections.filter((curr) => {
-        return curr?.type === 'GENERIC' && curr?.tourGroups?.items?.length;
+        return (
+          (curr?.type === 'GENERIC' || curr?.type === 'PINNED_CARDS') &&
+          curr?.tourGroups?.items?.length
+        );
+      });
+      let filterTgids = [];
+      filteredData.forEach((section) => {
+        if (section?.tourGroups?.items) {
+          filterTgids = filterTgids.concat(section.tourGroups.items);
+        }
       });
       return {
         collection,
-        items: filteredData?.[0]?.tourGroups?.items,
+        items: filterTgids,
       };
     });
     if (collectionData?.length) {
