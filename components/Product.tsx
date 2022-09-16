@@ -233,6 +233,11 @@ const TourTitle = styled.h2`
   ${expandFontToken('Heading/Large')}
   margin: 0;
   max-width: 768px;
+  ${({ mbCardExperimentTreatment }) =>
+    mbCardExperimentTreatment
+      ? `
+          text-decoration: underline; `
+      : ''}
   @media (max-width: 768px) {
     ${expandFontToken('Heading/Small')};
   }
@@ -977,6 +982,7 @@ const Product = (props) => {
     primaryCategory,
     primaryCollection,
     primarySubCategory,
+    mbCardExperimentTreatment,
   } = props;
 
   const {
@@ -1259,7 +1265,12 @@ const Product = (props) => {
       toggleContentOpen(!isContentOpen);
     }
   };
-
+  const sendToBookingFlow = () => {
+    if (!mbCardExperimentTreatment) return;
+    else {
+      router.push(productBookingUrl);
+    }
+  };
   const layout = getProductCardLayout({
     hasOffer,
     hasV1Booster,
@@ -1408,6 +1419,7 @@ const Product = (props) => {
               objectFit="cover"
               autoCrop={false}
               quality={80}
+              onClick={sendToBookingFlow}
             />
           </div>
         </Conditional>
@@ -1417,7 +1429,12 @@ const Product = (props) => {
             <Conditional if={boosterTag && mbTheme !== THEMES.MIN_BLUE}>
               <BoosterTag>{boosterTag}</BoosterTag>
             </Conditional>
-            <TourTitle isPopup={isContentOpen} pageType={pageType}>
+            <TourTitle
+              isPopup={isContentOpen}
+              pageType={pageType}
+              mbCardExperimentTreatment={mbCardExperimentTreatment}
+              onClick={sendToBookingFlow}
+            >
               {cardTitle}
             </TourTitle>
           </TitleWrapper>

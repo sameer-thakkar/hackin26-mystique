@@ -34,6 +34,9 @@ import PopulateMeta from 'components/common/NextSeoMeta';
 import renderShortCodes from 'utils/shortCodes';
 import Banner from 'components/Banner';
 import { gtmAtom } from 'store/atoms/gtm';
+import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
+import { getABTestingVariant } from 'utils/experiments/experimentUtils';
+import Cookies from 'js-cookie';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
@@ -78,6 +81,9 @@ const MicrositeV1 = (props) => {
   const [freeTourPopupOpen, toggleFreeTourPopup] = useState(false);
   const [covidAlertActive, toggleCovidAlert] = useState(false);
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
+  const [mbCardExperimentTreatment, setMbCardExperimentTreatment] = useState(
+    false
+  );
 
   const {
     refs,
@@ -414,6 +420,17 @@ const MicrositeV1 = (props) => {
     });
   }, [eventsReady]);
 
+  useEffect(() => {
+    if (isMobile) {
+      const hsid = Cookies.get(ANALYTICS_PROPERTIES.HSID);
+      const variant = getABTestingVariant(
+        EXPERIMENT_NAMES.CLICKABLE_MB_CARD,
+        hsid
+      );
+      setMbCardExperimentTreatment(variant === VARIANTS.TREATMENT);
+    }
+  }, []);
+
   const onTogglePopup = () => {
     toggleFreeTourPopup(!freeTourPopupOpen);
   };
@@ -458,6 +475,7 @@ const MicrositeV1 = (props) => {
       instantCheckout={instantCheckout}
       enableEarliestAvailability={enableEarliestAvailability}
       disable_amp={disableAMP}
+      mbCardExperimentTreatment={mbCardExperimentTreatment}
     />
   );
   return (
