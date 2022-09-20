@@ -1268,6 +1268,12 @@ const Product = (props) => {
   const sendToBookingFlow = () => {
     if (!mbCardExperimentTreatment) return;
     else {
+      trackEvent({
+        eventName: 'MB Product Card Clicked',
+        [ANALYTICS_PROPERTIES.TGID]: tgid,
+        [ANALYTICS_PROPERTIES.RANKING]: indexPosition + 1,
+        [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: cardTitle,
+      });
       router.push(productBookingUrl);
     }
   };

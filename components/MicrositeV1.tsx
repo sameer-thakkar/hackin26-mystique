@@ -36,7 +36,7 @@ import Banner from 'components/Banner';
 import { gtmAtom } from 'store/atoms/gtm';
 import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
 import { getABTestingVariant } from 'utils/experiments/experimentUtils';
-import Cookies from 'js-cookie';
+import { hsidAtom } from 'store/atoms/hsid';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
@@ -84,6 +84,7 @@ const MicrositeV1 = (props) => {
   const [mbCardExperimentTreatment, setMbCardExperimentTreatment] = useState(
     false
   );
+  const hsid = useRecoilValue(hsidAtom);
 
   const {
     refs,
@@ -421,15 +422,14 @@ const MicrositeV1 = (props) => {
   }, [eventsReady]);
 
   useEffect(() => {
-    if (isMobile) {
-      const hsid = Cookies.get(ANALYTICS_PROPERTIES.HSID);
+    if (isMobile && hasTours) {
       const variant = getABTestingVariant(
         EXPERIMENT_NAMES.CLICKABLE_MB_CARD,
         hsid
       );
       setMbCardExperimentTreatment(variant === VARIANTS.TREATMENT);
     }
-  }, []);
+  }, [hsid]);
 
   const onTogglePopup = () => {
     toggleFreeTourPopup(!freeTourPopupOpen);
