@@ -16,8 +16,9 @@ import {
   ANALYTICS_PLATFORM,
   THEMES,
   CASHBACK_EFFICACY_UIDS,
+  COOKIE,
 } from 'const/index';
-import { redirectTo, reflect, isNakedDomain } from 'utils';
+import { redirectTo, reflect, isNakedDomain, getNakedDomain } from 'utils';
 import { getPageData } from 'utils/prismicUtils';
 import { sendVariableToDataLayer } from 'utils/analytics';
 import { removePageQuery } from 'utils/urlUtils';
@@ -131,6 +132,9 @@ const Page = (props) => {
       experiments.CASHBACK_EFFICACY.experimentName,
       hsid
     );
+    Cookies.set(COOKIE.CASHBACK_EXP_VIEWED, variant, {
+      domain: `.${getNakedDomain(window.location.host)}`,
+    });
     updateExperiments((prevState) => ({
       ...prevState,
       CASHBACK_EFFICACY: {
@@ -428,7 +432,7 @@ Page.getInitialProps = async (ctx) => {
 };
 
 const HeadoutSessionIdSetterComponent = () => {
-  const validHsidFromCookie = Cookies.get(ANALYTICS_PROPERTIES.HSID);
+  const validHsidFromCookie = Cookies.get(COOKIE.SANDBOX_ID);
   const setHsid = useSetRecoilState(hsidAtom);
   const setHsidSetFail = useSetRecoilState(hsidSetFailAtom);
 
@@ -466,7 +470,7 @@ const HeadoutSessionIdSetterComponent = () => {
             .slice(1)
             .join('.');
           pushSandboxIDtoDataLayer(hsid);
-          Cookies.set('h-sid', hsid, {
+          Cookies.set(COOKIE.SANDBOX_ID, hsid, {
             domain: nakedDomain,
             path: '/',
             expires: new Date(new Date().getTime() + 365 * 24 * 60 * 60 * 1000),

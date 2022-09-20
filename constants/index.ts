@@ -12,6 +12,11 @@ export const PREFERRED_COUNTRIES_CODES = [
   'th',
 ];
 
+export const COOKIE = {
+  SANDBOX_ID: 'h-sid',
+  CASHBACK_EXP_VIEWED: 'cshbck-exp',
+};
+
 export const ASPECT_RATIO = {
   GLOBAL_MB: '16:10',
 };
