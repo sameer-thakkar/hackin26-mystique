@@ -237,6 +237,7 @@ export const fetchTourGroupsByCategory = async ({
 interface FetchCollectionProps extends CommonApiProps {
   collectionId: string | number;
   limit?: string;
+  useSeatmapPrices?: string;
 }
 export const fetchCollection = async ({
   collectionId,
@@ -245,6 +246,7 @@ export const fetchCollection = async ({
   limit,
   fallbackToEnglish = false,
   currency,
+  useSeatmapPrices = '1',
 }: FetchCollectionProps) => {
   const params = {
     language,
@@ -254,6 +256,7 @@ export const fetchCollection = async ({
     ...(currency && {
       currency,
     }),
+    ...(useSeatmapPrices && { 'use-seatmap-prices': useSeatmapPrices }),
   };
   const finalUrl = getHeadoutApiUrl({
     endpoint: HeadoutEndpoints.CollectionSections,
