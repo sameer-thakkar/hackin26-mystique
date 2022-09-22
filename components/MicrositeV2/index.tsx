@@ -232,38 +232,43 @@ class MicrositeV2 extends Component<any, any> {
           sub_category,
           exclude_tgids,
           category_name,
+          max_price_filter,
         } = item || {};
         const re = /\s*(?:,)\s*/g;
         const excludedTgids = exclude_tgids ? exclude_tgids?.split(re) : [];
+        const maxPrice = max_price_filter || Number.MAX_VALUE;
         const tgidData =
           categoryTourListData[collection] ||
           categoryTourListData[category] ||
           categoryTourListData[sub_category];
 
         const filteredData = tgidData?.filter((product) => {
-          const { tgid, primaryCategory, primarySubCategory } = product || {};
-
+          const { tgid, primaryCategory, primarySubCategory, price } =
+            product || {};
           if (collection) {
             if (category) {
               return (
                 !excludedTgids.includes(tgid) &&
-                primaryCategory?.id === category
+                primaryCategory?.id === category &&
+                price <= maxPrice
               );
             } else if (sub_category) {
               return (
                 !excludedTgids.includes(tgid) &&
-                primarySubCategory?.id === sub_category
+                primarySubCategory?.id === sub_category &&
+                price <= maxPrice
               );
             } else {
-              return !excludedTgids.includes(tgid);
+              return !excludedTgids.includes(tgid) && price <= maxPrice;
             }
           } else if (category && sub_category) {
             return (
               !excludedTgids.includes(tgid) &&
-              primarySubCategory?.id === sub_category
+              primarySubCategory?.id === sub_category &&
+              price <= maxPrice
             );
           } else {
-            return !excludedTgids.includes(tgid);
+            return !excludedTgids.includes(tgid) && price <= maxPrice;
           }
         });
         let tgids, prices;

@@ -33,8 +33,6 @@ import { metaAtom } from 'store/atoms/meta';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { gtmAtom } from 'store/atoms/gtm';
 import { expandFontToken } from 'const/typography';
-import InfoBanner from 'components/ShowPages/InfoBanner';
-import { greyScheme } from 'style/theme';
 
 const Alert = dynamic(() => import('UI/Alert'), { ssr: false });
 const ResponsiveSelector: ComponentType<any> = dynamic(
@@ -112,16 +110,6 @@ const ListicleHeadingWrapper = styled.div`
     h1 {
       ${expandFontToken(FONTS.HEADING_LARGE)}
     }
-  }
-`;
-
-const BannerWrapper = styled.div`
-  max-width: ${SIZES.MAX_WIDTH};
-  margin: 40px auto 0;
-  width: 100%;
-  @media (max-width: 768px) {
-    margin-top: 32px;
-    width: calc(100% - 32px);
   }
 `;
 
@@ -281,18 +269,7 @@ export const HomePage = (props) => {
           availableTours={allTgids}
         />
       </Conditional>
-      <Conditional if={isLTT}>
-        <BannerWrapper>
-          <InfoBanner
-            title={strings.QUEEN_ELIZABETH_II_DEMISE.HEADING}
-            description={strings.QUEEN_ELIZABETH_II_DEMISE.DESCRIPTION}
-            colorScheme={greyScheme}
-            emojiSymbol="👉"
-            emojiLabel="point-right"
-            applyCustomMarginForHeading="12px"
-          />
-        </BannerWrapper>
-      </Conditional>
+
       <Conditional if={isEntertainmentMbListicle}>
         <ListicleHeadingWrapper className="main-wrapper">
           <h1>{coverHeading}</h1>

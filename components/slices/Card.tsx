@@ -224,7 +224,12 @@ type CardProps = {
 
 const HyperLink = ({ children, data }) => {
   return (
-    <a href={data.url} onClick={(e) => e.stopPropagation()}>
+    <a
+      href={data.url}
+      target="_blank"
+      rel="noreferrer noopener"
+      onClick={(e) => e.stopPropagation()}
+    >
       {children}
     </a>
   );
