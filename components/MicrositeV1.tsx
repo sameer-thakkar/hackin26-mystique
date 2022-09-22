@@ -422,7 +422,7 @@ const MicrositeV1 = (props) => {
   }, [eventsReady]);
 
   useEffect(() => {
-    if (isMobile && hasTours) {
+    if (isMobile && hasTours && hsid) {
       const variant = getABTestingVariant(
         EXPERIMENT_NAMES.CLICKABLE_MB_CARD,
         hsid
