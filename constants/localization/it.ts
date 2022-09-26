@@ -83,7 +83,7 @@ const it = {
     GUIDED_TOUR: 'Tour guidato',
     TRANSFERS: 'Trasferimenti inclusi',
     MEALS_INCLUDED: 'Pasti inclusi',
-    FLEXIBLE_HOURS: 'Orari flessibili',
+    FLEXIBLE_DURATION: 'Durata flessibile',
   },
   SAFE_EXPERIENCE: {
     HEADING: 'I più alti standard di sicurezza',

@@ -80,7 +80,8 @@ export const getDuration = ({
   maxDuration: number | null;
   lang?: string;
 }) => {
-  if (!minDuration && !maxDuration) return strings.DESCRIPTORS.FLEXIBLE_HOURS;
+  if (!minDuration && !maxDuration)
+    return strings.DESCRIPTORS.FLEXIBLE_DURATION;
   const formatDurationToString = ({ hour, minute }) => {
     let res = '';
     if (hour) {
