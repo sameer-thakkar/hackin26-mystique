@@ -806,7 +806,7 @@ export const SLICE_TYPES = {
 };
 
 export const CASHBACK_EFFICACY_UIDS = [
-  'sunway-lagoon.malaysia-tickets.com',
+  'www.malaysia-tickets.com.sunway-lagoon',
   'www.singapore-tickets.com.grandprix',
   'klcc-aquaria.malaysia-tickets.com',
   'www.thevaticantickets.com.test', // qa changes
