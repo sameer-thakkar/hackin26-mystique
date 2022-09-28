@@ -6,13 +6,13 @@ export const VARIANTS = {
   SHOW_CASHBACK: 'Show Cashback',
   HIDE_CASHBACK: 'Hide Cashback',
   CONTROL: 'Control',
-  TREATMENT: 'Variant A',
+  TREATMENT: 'Variant B',
 };
 
 export const EXPERIMENT_NAMES = {
   LTD_LP_Experiment: 'LTD LP Experiment',
   CASHBACK_EFFICACY: 'Cashback Experiment',
-  CLICKABLE_MB_CARD: 'MB Clickable Product Cards A Experiment',
+  CLICKABLE_MB_CARD: 'MB Clickable Product Cards B Experiment',
 };
 
 export const EXPERIMENTS = {

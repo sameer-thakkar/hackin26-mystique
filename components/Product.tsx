@@ -233,11 +233,6 @@ const TourTitle = styled.h2`
   ${expandFontToken('Heading/Large')}
   margin: 0;
   max-width: 768px;
-  ${({ mbCardExperimentTreatment }) =>
-    mbCardExperimentTreatment
-      ? `
-          text-decoration: underline; `
-      : ''}
   @media (max-width: 768px) {
     ${expandFontToken('Heading/Small')};
   }
@@ -1405,6 +1400,7 @@ const Product = (props) => {
         layout={layout}
         isTicketCard={isTicketCard}
         isMobile={isMobile}
+        onClick={sendToBookingFlow}
       >
         <Conditional if={!isTicketCard && productImage}>
           <div className="card-img">
@@ -1425,7 +1421,6 @@ const Product = (props) => {
               objectFit="cover"
               autoCrop={false}
               quality={80}
-              onClick={sendToBookingFlow}
             />
           </div>
         </Conditional>
@@ -1435,12 +1430,7 @@ const Product = (props) => {
             <Conditional if={boosterTag && mbTheme !== THEMES.MIN_BLUE}>
               <BoosterTag>{boosterTag}</BoosterTag>
             </Conditional>
-            <TourTitle
-              isPopup={isContentOpen}
-              pageType={pageType}
-              mbCardExperimentTreatment={mbCardExperimentTreatment}
-              onClick={sendToBookingFlow}
-            >
+            <TourTitle isPopup={isContentOpen} pageType={pageType}>
               {cardTitle}
             </TourTitle>
           </TitleWrapper>
