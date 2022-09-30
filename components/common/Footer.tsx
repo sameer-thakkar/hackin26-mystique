@@ -303,7 +303,6 @@ type FooterProps = {
   logoURL: string;
   logoAlt: string;
   hasPoweredByHeadoutLogo?: boolean;
-  microbrandType: string;
   showDisclaimer: boolean;
   disclaimerText: string;
   invertLogoColor?: boolean;

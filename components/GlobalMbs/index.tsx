@@ -85,7 +85,6 @@ const GlobalMB = (props) => {
   const {
     attraction: footerAttraction,
     footer_heading: footerHeading,
-    microbrand_type: footerMbType,
     theme_override: footerThemeOverride,
     invert_logo_color: invertLogoColor,
     show_disclaimer: showDisclaimer,
@@ -459,7 +458,6 @@ const GlobalMB = (props) => {
           currentLanguage={currentLanguage}
           attraction={footerAttraction || 'attraction'}
           primaryHeading={footerHeading}
-          microbrandType={footerMbType || ''}
           themeOverride={footerThemeOverride}
           invertLogoColor={invertLogoColor}
           showDisclaimer={showDisclaimer}

@@ -116,7 +116,6 @@ const MicrositeV1 = (props) => {
     body4: coverSlices,
     currencies_list,
     group_booking_excluded_tgids: groupBookingExcludedTgids,
-    microbrand_type: microbrandTypeCMS,
     microbrand_cards: microbrandCards,
     microbrand_cards_heading: microbrandCardsHeadingCMS,
     alert_popup: alertPopupCMS,
@@ -153,7 +152,6 @@ const MicrositeV1 = (props) => {
     theme_override: themeOverrideCFoot,
     disclaimer_text: disclaimerTextCFoot,
     show_disclaimer: showDisclaimerCFoot,
-    microbrand_type: microbrandTypeCFoot,
   } = commonFooterData || {};
   const { footer_heading: footerHeadingSFoot, body: slicesSFoot } =
     secondaryFooterData || {};
@@ -251,7 +249,6 @@ const MicrositeV1 = (props) => {
   const hasOffer = productOffer.length > 0;
   const offerPopup = hasOffer ? productOffer[0] : null;
   const disclaimerText = disclaimerTextCFoot || RichText.asText(disclaimerCMS);
-  const microbrandType = microbrandTypeCFoot || microbrandTypeCMS;
   const showDisclaimer = showDisclaimerCFoot || showDisclaimerCMS;
   const microbrandCardsHeading = microbrandCardsHeadingCMS
     ? microbrandCardsHeadingCMS
@@ -614,7 +611,6 @@ const MicrositeV1 = (props) => {
           hasPoweredByHeadoutLogo={footerPoweredByHeadout}
           showDisclaimer={showDisclaimer}
           disclaimerText={disclaimerText}
-          microbrandType={microbrandType}
           slices={!isFooterInherited ? slicesCFoot || [] : []}
           invertLogoColor={invertFooterLogoColor}
           themeOverride={footerThemeOverride}

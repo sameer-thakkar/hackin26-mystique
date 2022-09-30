@@ -618,6 +618,7 @@ export const TAB_ALLOWED_INFO = [
 
 export const DETAILS_ALLOWED_SHOWPAGES = [
   'Opening Date',
+  'Closing Date',
   'Theatre Name',
   'Duration',
   'Age Limit',

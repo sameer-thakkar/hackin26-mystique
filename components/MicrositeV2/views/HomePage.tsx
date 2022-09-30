@@ -364,7 +364,6 @@ export const HomePage = (props) => {
         hasPoweredByHeadoutLogo={footer.powered_by_superbrand || false}
         showDisclaimer={!isLTT && footer.show_disclaimer}
         disclaimerText={footer.disclaimer_text}
-        microbrandType={footer.microbrand_type || ''}
         slices={footer.body || []}
         invertLogoColor={footer?.invertFooterLogoColor}
         themeOverride={themeOverride}

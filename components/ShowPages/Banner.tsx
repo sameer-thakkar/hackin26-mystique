@@ -1,33 +1,35 @@
 import { useState, useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import { MBContext } from 'contexts/MBContext';
+import { metaAtom } from 'store/atoms/meta';
 import StickyHeader from 'components/ShowPages/stickyHeader';
 import StickyFooter from 'components/ShowPages/stickyFooter';
 import Conditional from 'components/common/Conditional';
+import Emoji from 'components/common/Emoji';
 import PriceBlock, { SavedTag } from 'UI/PriceBlock';
 import Image from 'UI/Image';
-import { PLAY_CIRCLE } from 'assets/SvgIcons';
+import { PLAY_CIRCLE, LOCATION, STAR } from 'assets/SvgIcons';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  PAGE_TYPES,
+} from 'const/index';
 import { PRODUCT_VIDEOS } from 'const/ShowPageProductVideos';
 import { strings } from 'const/strings';
 import COLORS from 'const/colors';
+import { expandFontToken } from 'const/typography';
+import { descriptorIcons } from 'const/descriptorIcons';
+import { FONTS } from 'const/fonts';
 import { createBookingURL } from 'utils';
-import { dateToString, isDateInThePast } from 'utils/dateUtils';
+import { dateToString } from 'utils/dateUtils';
 import { fetchCalendarInventory } from 'utils/apiUtils';
 import {
   getCommonEventMetaData,
   getProductCommonProperties,
   trackEvent,
 } from 'utils/analytics';
-import {
-  ANALYTICS_EVENTS,
-  ANALYTICS_PROPERTIES,
-  PAGE_TYPES,
-} from 'const/index';
-import { useRecoilValue } from 'recoil';
-import { metaAtom } from 'store/atoms/meta';
-import { expandFontToken } from 'const/typography';
 import { checkLTT } from 'utils/helper';
-import Emoji from 'components/common/Emoji';
 
 const Banner = styled.div`
   width: 100%;
@@ -111,7 +113,7 @@ const BannerImage = styled.div`
 `;
 
 const BannerContent = styled.div`
-  margin: -2em auto 0;
+  margin: -2em auto 3rem;
   position: relative;
   max-width: 1200px;
   z-index: 2;
@@ -127,12 +129,12 @@ const BannerContent = styled.div`
   }
 
   .top-text-wrapper {
-    ${expandFontToken('UI/Label Regular')}
+    ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
   }
 
   h1 {
-    ${expandFontToken('Heading/Large')}
-    margin: 6px 0 12px;
+    ${expandFontToken(FONTS.HEADING_LARGE)}
+    margin: 0.5rem 0 1rem;
   }
 
   .tags-wrapper {
@@ -142,7 +144,7 @@ const BannerContent = styled.div`
     padding: 6px 8px;
     margin: 0 8px 0 0;
     border-radius: 2px;
-    ${expandFontToken('UI/Label Small')}
+    ${expandFontToken(FONTS.UI_LABEL_SMALL)}
   }
 
   .right-pricing {
@@ -156,28 +158,28 @@ const BannerContent = styled.div`
     justify-content: flex-end;
     display: flex;
     border-right: 1px solid ${COLORS.GRAY.G6};
-    padding-right: 16px;
+    padding-right: 0.5rem;
     grid-area: 'price';
   }
 
   .tour-price {
     color: ${COLORS.GRAY.G2};
-    ${expandFontToken('Heading/Regular')}
+    ${expandFontToken(FONTS.HEADING_REGULAR)}
   }
 
   .tour-scratch-price {
     color: ${COLORS.GRAY.G4};
-    font-size: 14px;
-    line-height: 16px;
+    font-size: 0.5rem;
+    line-height: 1rem;
     text-align: left;
     font-weight: normal;
   }
 
   .buy-button,
   .unavailable-button {
-    ${expandFontToken('Button/Medium')}
+    ${expandFontToken(FONTS.BUTTON_MEDIUM)}
     padding: 12px 20px;
-    border-radius: 4px;
+    border-radius: 8px;
     margin: 0px 16px;
     border: none;
     max-width: 160px;
@@ -200,21 +202,38 @@ const BannerContent = styled.div`
     justify-self: end;
   }
 
-  .details-container {
+  .theater-reviews-wrapper {
+    ${expandFontToken(FONTS.UI_LABEL_LARGE)}
+    margin-top: 1.5rem;
+    
+    .ratings-wrapper {
+      ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)}
+      margin: 0rem 0.5rem 0rem 1.5rem;
+      color: ${COLORS.BRAND.CANDY};
+    } 
+    
+    svg {
+      margin-right: 0.5rem;
+    }
+  }
+  
+  .details-wrapper {
     display: grid;
     grid-template-columns: auto auto auto auto;
-    margin-top: 32px;
-  }
-
-  .details-container .key {
-    ${expandFontToken('UI/Label Small')}
-    color: ${COLORS.GRAY.G4};
-    padding-bottom: 4px;
-  }
-
-  .details-container .value {
-    ${expandFontToken('UI/Label Medium')}
+    padding-top: 0.5rem;
+    ${expandFontToken(FONTS.UI_LABEL_LARGE)}
     color: ${COLORS.GRAY.G2};
+    
+    .individual-wrapper {
+      margin-top: 1.5rem;
+    }
+
+    svg {
+      position: relative;
+      top: 0.1rem;
+      margin-right: 0.5rem;
+    }
+    
   }
 
   @media (max-width: 768px) {
@@ -222,11 +241,7 @@ const BannerContent = styled.div`
 
     .heading-wrapper {
       grid-template-columns: auto;
-      padding-bottom: 24px;
-    }
-
-    .individual-container {
-      padding-bottom: 32px;
+      padding-bottom: 1.5rem;
     }
 
     .right-pricing {
@@ -238,18 +253,23 @@ const BannerContent = styled.div`
       display: none;
     }
 
-    .details-container {
-      grid-template-columns: auto auto;
-      margin-top: 24px;
+    .details-wrapper {
+      grid-template-columns: auto;
+      padding-top: 0.5rem;
+      ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
+
+      .individual-wrapper {
+        margin-top: 1rem;
+      }
     }
 
     h1 {
-      font-size: 21px;
-      margin: 8px 0 16px;
+      ${expandFontToken(FONTS.HEADING_REGULAR)}
+      margin: 0.5rem 0 0.5rem;
     }
 
     .top-text-wrapper {
-      font-size: 12px;
+      ${expandFontToken(FONTS.UI_LABEL_SMALL)}
     }
 
     .tour-price {
@@ -261,26 +281,43 @@ const BannerContent = styled.div`
       font-size: 12px;
     }
 
-    .details-container .value {
-      font-size: 14px;
-      line-height: 16px;
-    }
-
     .priceBlockWrapper {
-      justify-content: flex-start;
+      justify-content: space-between;
       border: 0;
-      padding-bottom: 24px;
+      padding: 0rem 0rem 1.5rem;
       margin-bottom: 24px;
       border-bottom: 1px solid ${COLORS.GRAY.G6};
     }
+
     .tags-wrapper {
-      margin: 4px 4px 0 0;
+      margin: 0.375rem 0.313rem 0 0;
     }
+
     ${SavedTag} {
       font-weight: normal;
       font-size: 10px;
       line-height: 12px;
     }
+
+    .theater-wrapper {
+      margin-bottom: 1rem;
+      ${expandFontToken(FONTS.UI_LABEL_MEDIUM)}
+
+      svg {
+        margin-right: 0.3rem;
+        position: relative;
+        top: 0.2rem;
+      }
+    }
+
+    .ratings-reviews-wrapper {
+      ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
+    }
+
+    .ratings-wrapper {
+      ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)};
+      color: ${COLORS.BRAND.CANDY};
+    } 
   }
 `;
 
@@ -288,18 +325,10 @@ const SpecialOfferBooster = styled.div`
   position: absolute;
   top: -16px;
   padding: 6px 8px 7px;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 15px;
-  text-align: left;
+  ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)}
   background-color: ${COLORS.BRAND.WHITE};
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1), 0px 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
-
-  .offer-emoji {
-    font-weight: 400;
-    line-height: 16px;
-  }
 `;
 
 const SpecialOfferBoosterMobile = styled.div`
@@ -308,19 +337,10 @@ const SpecialOfferBoosterMobile = styled.div`
   left: 16px;
   z-index: 3;
   padding: 4px 6px;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 16px;
-  text-align: left;
+  ${expandFontToken(FONTS.UI_LABEL_SMALL_HEAVY)}
   background-color: ${COLORS.BRAND.WHITE};
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1), 0px 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 2px;
-
-  .offer-emoji {
-    font-weight: 400;
-    line-height: 12px;
-    letter-spacing: 1px;
-  }
 `;
 
 const ShowPageBanner = ({
@@ -330,7 +350,6 @@ const ShowPageBanner = ({
   tourGroupData,
   currentLanguage,
   tagsArray,
-  isReopening,
   hostname,
   hasSpecialOffer,
 }) => {
@@ -341,6 +360,9 @@ const ShowPageBanner = ({
     primaryCategory,
     primarySubCategory,
     primaryCollection,
+    descriptors,
+    reviewCount,
+    reviewsDetails: { averageRating },
   } = tourGroupData ?? {};
   const pageMetaData = useRecoilValue(metaAtom);
 
@@ -373,6 +395,34 @@ const ShowPageBanner = ({
   const { NEXT_AVAILABLE } = strings || {};
   const REOPENING_STRING = `${NEXT_AVAILABLE}`;
   const BannerTitle = `${name} - ${strings.TICKETS}`;
+
+  const theaterName = detailsObjects?.['Theatre Name'];
+
+  let showDetails = {};
+  Object.keys(detailsObjects)?.forEach((key) => {
+    switch (key) {
+      case 'Opening Date':
+      case 'Closing Date':
+        if (
+          !!detailsObjects['Opening Date'] &&
+          !!detailsObjects['Closing Date']
+        ) {
+          showDetails['EXTENDED_VALIDITY'] = `${dateToString(
+            detailsObjects['Opening Date']
+          )} - ${dateToString(detailsObjects['Closing Date'])}`;
+        }
+        break;
+      case 'Duration':
+        showDetails['DURATION'] = detailsObjects[key];
+        break;
+      case 'Age Limit':
+        showDetails['USER'] = detailsObjects[key];
+        break;
+    }
+  });
+  descriptors?.forEach((descriptor) => {
+    showDetails[descriptor?.code] = descriptor.name;
+  });
 
   const bannerChange = () => {
     setIsVideo(!isVideo);
@@ -573,6 +623,9 @@ const ShowPageBanner = ({
           <div>
             <h1>{BannerTitle}</h1>
             <Conditional if={isMobile}>
+              <div className="theater-wrapper">
+                {LOCATION} {theaterName}
+              </div>
               <div className="priceBlockWrapper">
                 <PriceBlock
                   listingPrice={listingPrice}
@@ -581,6 +634,16 @@ const ShowPageBanner = ({
                   showScratchPrice={true}
                   prefix={true}
                 />
+                <div className="ratings-reviews-wrapper">
+                  <span className="ratings-wrapper">
+                    {averageRating} {STAR(COLORS.BRAND.CANDY)}{' '}
+                  </span>
+                  (
+                  {reviewCount > 999
+                    ? `${(reviewCount / 1000).toFixed(1)}k`
+                    : reviewCount}
+                  )
+                </div>
               </div>
             </Conditional>
             {tagsArray.map((element, index) => {
@@ -626,28 +689,33 @@ const ShowPageBanner = ({
               </Conditional>
             </div>
           </Conditional>
+          <Conditional if={!isMobile}>
+            <div className="theater-reviews-wrapper">
+              <span>
+                {LOCATION} {theaterName}
+              </span>
+              <span>
+                <span className="ratings-wrapper">
+                  {STAR(COLORS.BRAND.CANDY)} {averageRating}
+                </span>
+                (
+                {reviewCount > 999
+                  ? `${(reviewCount / 1000).toFixed(1)}k Reviews`
+                  : reviewCount}
+                )
+              </span>
+            </div>
+          </Conditional>
         </div>
-        <div className="details-container">
-          {Object.entries(detailsObjects).map((element, index) => {
-            if (
-              element[0] === strings.OPENING_DATE &&
-              isDateInThePast(element[1])
-            ) {
+        <div className="details-wrapper">
+          {Object.keys(showDetails)?.map((key, index) => {
+            const ShowDetailsSvg = descriptorIcons[key];
+            if (!showDetails[key]) {
               return null;
             }
-
             return (
-              <div className="individual-container" key={index}>
-                <div className="key">
-                  {isReopening && element[0] === strings.OPENING_DATE
-                    ? strings.REOPENING_DATE
-                    : element[0]}
-                </div>
-                <div className="value">
-                  {element[0] === strings.OPENING_DATE
-                    ? dateToString(element[1])
-                    : element[1]}
-                </div>
+              <div className="individual-wrapper" key={index}>
+                <ShowDetailsSvg /> {showDetails[key]}
               </div>
             );
           })}

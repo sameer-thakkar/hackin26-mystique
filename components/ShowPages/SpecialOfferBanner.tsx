@@ -2,9 +2,8 @@ import { SIZES } from 'const/ui-constants';
 import styled from 'styled-components';
 import { greyScheme } from 'style/theme';
 import { titleCase } from 'utils/stringUtils';
-
-import InfoBanner from './InfoBanner';
-import Split, { StlyedSplit } from '../UI/Split';
+import InfoBanner from 'components/ShowPages/InfoBanner';
+import Split, { StlyedSplit } from 'components/UI/Split';
 
 const Wrapper = styled.div`
   max-width: ${SIZES.MAX_WIDTH};

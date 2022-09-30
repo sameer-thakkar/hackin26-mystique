@@ -193,7 +193,6 @@ const ShowPage = ({
   const tourGroupData = cloneDeep(tempTourGroupData);
   const [customerReviews, setCustomerReviews] = useState([]);
   const [similarProductData, setSimilarProductData] = useState([]);
-  let isReopening = false;
   const isStage = host.includes('stage-');
   const hostname = getHostName(isStage, isDev, host);
 
@@ -206,7 +205,6 @@ const ShowPage = ({
     microBrandsDescriptor,
     microBrandsHighlight,
     imageUploads,
-    allTags,
     topReviews,
     currency,
     reviewsDetails,
@@ -224,12 +222,6 @@ const ShowPage = ({
   const { code: cityCode } = city || {};
 
   const { code: currencyCode } = currency || {};
-
-  allTags.forEach((element) => {
-    if (element === strings.REOPENING?.toUpperCase()) {
-      isReopening = true;
-    }
-  });
 
   const {
     faqHeading,
@@ -532,7 +524,6 @@ const ShowPage = ({
           tourGroupData={tourGroupData}
           currentLanguage={currentLanguage}
           tagsArray={tagsArray}
-          isReopening={isReopening}
           hostname={hostname}
           hasSpecialOffer={isLTT || hasSpecialOffer}
         />
@@ -626,7 +617,6 @@ const ShowPage = ({
           }
           showDisclaimer={commonFooter?.data?.show_disclaimer}
           disclaimerText={commonFooter?.data?.disclaimer_text}
-          microbrandType={commonFooter?.data?.microbrand_type}
           slices={commonFooter?.data?.body || []}
           invertLogoColor={commonFooter?.data?.invert_logo_color}
           attraction={commonFooter?.data?.attraction || 'attraction'}

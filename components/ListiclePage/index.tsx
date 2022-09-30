@@ -573,7 +573,6 @@ const Listicle = (props) => {
         }
         showDisclaimer={commonFooter?.data?.show_disclaimer}
         disclaimerText={commonFooter?.data?.disclaimer_text}
-        microbrandType={commonFooter?.data?.microbrand_type}
         slices={commonFooter?.data?.body || []}
         invertLogoColor={commonFooter?.data?.invert_logo_color}
       />

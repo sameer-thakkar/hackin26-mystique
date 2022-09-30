@@ -185,7 +185,6 @@ export default class companyDetails extends Component<any, any> {
           logoURL={footerLogoURL}
           logoAlt={footerLogoAlt}
           attraction={commonFooter?.data?.attraction || 'attraction'}
-          microbrandType={commonFooter?.data?.microbrand_type}
           hasPoweredByHeadoutLogo={
             commonFooter?.data?.powered_by_superbrand || false
           }

@@ -905,19 +905,14 @@ const ModalCardContainer = styled.div`
 `;
 
 export const Descriptors = ({
-  descriptorArray: descarr,
+  descriptorArray,
   horizontal = false,
   pageType = '',
-  shouldShowAllDescriptors = true,
   minDuration,
   maxDuration,
   lang = 'en',
   isCombo = false,
 }) => {
-  const descriptorArray = shouldShowAllDescriptors
-    ? descarr
-    : descarr.slice(0, 4);
-
   return (
     <TourTags horizontal={horizontal} pageType={pageType}>
       {descriptorArray.map((item, index) => {
@@ -1389,11 +1384,7 @@ const Product = (props) => {
     </Button>
   );
 
-  const getProductCardElements = (
-    expandContent,
-    isFallbackSummary = false,
-    shouldShowAllDescriptors?: boolean
-  ) => (
+  const getProductCardElements = (expandContent, isFallbackSummary = false) => (
     <>
       <StyledProductCard
         isAmp={isAmp}
@@ -1527,7 +1518,6 @@ const Product = (props) => {
               <Descriptors
                 descriptorArray={descriptorsList}
                 pageType={pageType}
-                shouldShowAllDescriptors={shouldShowAllDescriptors}
                 minDuration={minDuration}
                 maxDuration={maxDuration}
                 lang={currentLanguage}
@@ -1614,9 +1604,7 @@ const Product = (props) => {
     </>
   );
 
-  return (
-    <Container>{getProductCardElements(isContentOpen, false, isAmp)}</Container>
-  );
+  return <Container>{getProductCardElements(isContentOpen, false)}</Container>;
 };
 
 export default Product;

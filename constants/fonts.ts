@@ -27,7 +27,7 @@ export const FONTS = {
   PARAGRAPH_LARGE: 'Paragraph/Large',
   PARAGRAPH_MEDIUM: 'Paragraph/Medium',
   PARAGRAPH_REGULAR: 'Paragraph/Regular',
-  PARAGRAH_SMALL: 'Paragraph/Small',
+  PARAGRAPH_SMALL: 'Paragraph/Small',
   PARAGRAPH_XS: 'Paragraph/XS',
   PARAGRAPH_CAPTION: 'Paragraph/Caption',
   PARAGRAPH_BLOCKQUOTE: 'Paragraph/Blockquote',
