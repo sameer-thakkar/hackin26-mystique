@@ -19,7 +19,7 @@ const CTAWrapper = styled.div`
 `;
 
 /**
- * CTAProps is an object with a text, link, align, fill, type, and download property. The text and link
+ * CTAProps is an object with a text, link, align, fill, type, download, onclick_text, backink and embed property. The text and link
  * properties are required, and the rest are optional.
  * @example - {cta text="Read More" link="https://www.headout.com/" type="fillGradient" align="center"}
  * @property {string} text - The text that will be displayed in the button
@@ -28,6 +28,9 @@ const CTAWrapper = styled.div`
  * @property {string} fill - The background color of the button. If fill is 'true' we use 'fillGradient'.
  * @property {string} type - The type of button. 'bordered' (default), 'whiteBordered', 'fill', 'fillGradient'.
  * @property {string} download - If you want to download a file, you can set this to 'true'.
+ * @property {string} embed - If you want to generate embed code, you can set this to 'true'.
+ * @property {string} backlink - The URL to which the embed code will link back to.
+ *  * @property {string} onclick_text - The text that appears for 900 ms after clicking on the CTA.
  */
 
 type CTAProps = {
@@ -37,6 +40,9 @@ type CTAProps = {
   fill?: string;
   type?: string;
   download?: string;
+  embed?: string;
+  backlink?: string;
+  onclick_text?: string;
 };
 
 /**
@@ -52,9 +58,14 @@ const CTA = ({
   fill,
   type,
   download,
+  embed,
+  backlink,
+  onclick_text,
 }: CTAProps) => {
   const [blobUrl, setBlobUrl] = useState(null);
+  const [isCopied, setIsCopied] = useState(false);
   const isDownload = legacyBooleanCheck(download);
+  const isEmbed = legacyBooleanCheck(embed);
   const anchorTagProps = isDownload
     ? {
         download: true,
@@ -74,15 +85,36 @@ const CTA = ({
     fetchImageBlob(url);
   }, [url]);
 
+  const copyEmbedCode = () => {
+    navigator.clipboard.writeText(
+      `<a href="${backlink}"><img src="${url}" style="width:100%;height:100%;"></a>`
+    );
+    setIsCopied(true);
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 800);
+  };
+
   return (
     <>
       <CTAWrapper {...{ align }}>
-        <a href={isDownload ? blobUrl : url} {...anchorTagProps}>
-          <Conditional if={isDownload}>{text}</Conditional>
-          <Conditional if={!isDownload}>
-            <Button fillType={fill ? 'fillGradient' : type}>{text}</Button>
-          </Conditional>
-        </a>
+        <Conditional if={isEmbed}>
+          <Button
+            onClick={() => {
+              copyEmbedCode();
+            }}
+          >
+            {!isCopied ? text : onclick_text}
+          </Button>
+        </Conditional>
+        <Conditional if={!isEmbed}>
+          <a href={isDownload ? blobUrl : url} {...anchorTagProps}>
+            <Conditional if={isDownload}>{text}</Conditional>
+            <Conditional if={!isDownload}>
+              <Button fillType={fill ? 'fillGradient' : type}>{text}</Button>
+            </Conditional>
+          </a>
+        </Conditional>
       </CTAWrapper>
     </>
   );
