@@ -6,6 +6,7 @@ import {
   LANGUAGE_PARAMS_REGEX,
   SLICE_TYPES,
 } from 'const/index';
+import { strings } from 'const/strings';
 import { getSinglePrismicSlice, getHeadoutLanguagecode } from 'utils';
 import { groupBy } from 'utils/arrayUtils';
 import { convertUidToUrl } from 'utils/urlUtils';
@@ -235,4 +236,115 @@ export const getParentDomain = (url: URL): string | null => {
   const hostnameArray = url?.hostname?.split('.');
   hostnameArray[0] = 'www';
   return hostnameArray.join('.');
+};
+
+export const uncategorisedToursCheck = ({
+  type,
+  data,
+}: PrismicDocumentType): boolean => {
+  return (
+    type === CUSTOM_TYPES.MICROSITE &&
+    data?.body1?.[0]?.items?.filter((tour) => tour?.tgid).length > 0
+  );
+};
+
+export const getFaviconUrl = ({ type, data }: PrismicDocumentType): string => {
+  const { favicon } = data || {};
+  switch (type) {
+    case CUSTOM_TYPES.MICROSITE:
+    case CUSTOM_TYPES.GLOBAL_EXPERIENCE:
+      return favicon?.url || '';
+    default:
+      return favicon || '';
+  }
+};
+
+export const getMetaImageUrl = ({
+  type,
+  data,
+}: PrismicDocumentType): string => {
+  const { image } = data || {};
+  switch (type) {
+    case CUSTOM_TYPES.MICROSITE:
+    case CUSTOM_TYPES.CONTENT_PAGE:
+      return image?.url || '';
+    default:
+      return image || '';
+  }
+};
+
+type HeaderDetailsType = {
+  headerLogoUrl: string;
+  headerLogoRedirectUrl: string;
+};
+
+export const getHeaderDetails = async ({
+  type,
+  data,
+}: PrismicDocumentType): Promise<HeaderDetailsType> => {
+  const headerDocRef = data?.header_ref || data?.common_header;
+  if (headerDocRef?.id) {
+    const { id: headerDocId } = headerDocRef || {};
+    const headerDocs = await fetchAllMatchingDocs({
+      query: [Prismic.Predicates.at(`document.id`, headerDocId)],
+    });
+    const { data: headerDocData } = headerDocs?.[0] || {};
+    return {
+      headerLogoUrl: headerDocData?.logo?.url || '',
+      headerLogoRedirectUrl: headerDocData?.logo_redirection_url?.url || '',
+    };
+  }
+  if (type === CUSTOM_TYPES.MICROSITE) {
+    return {
+      headerLogoUrl: data?.logo?.url || '',
+      headerLogoRedirectUrl: data?.logo_redirection_url?.url || '',
+    };
+  }
+};
+
+type FooterDetailsType = {
+  footerLogoUrl: string;
+  footerDisclaimer: string;
+  micrositeDocFooterDisclaimer: string;
+};
+
+export const getFooterDetails = async ({
+  type,
+  data,
+}: PrismicDocumentType): Promise<FooterDetailsType> => {
+  const footerDocRef = data?.footer_ref || data?.common_footer;
+  if (footerDocRef?.id) {
+    const { id: footerDocId } = footerDocRef || {};
+    const footerDocs = await fetchAllMatchingDocs({
+      query: [Prismic.Predicates.at(`document.id`, footerDocId)],
+    });
+    const { data: footerDocData } = footerDocs?.[0] || {};
+    const defaultDisclaimer = strings.FOOTER.DISCLAIMER.replace(
+      '<attraction>',
+      footerDocData?.attraction || 'attraction'
+    );
+    return {
+      footerLogoUrl: footerDocData?.logo?.url || '',
+      footerDisclaimer: footerDocData?.show_disclaimer
+        ? footerDocData?.disclaimer_text || defaultDisclaimer
+        : '',
+      micrositeDocFooterDisclaimer:
+        type === CUSTOM_TYPES.MICROSITE && data?.show_disclaimer
+          ? data?.disclaimer?.[0]?.text || defaultDisclaimer
+          : '',
+    };
+  }
+  if (type === CUSTOM_TYPES.MICROSITE) {
+    const defaultDisclaimer = strings.FOOTER.DISCLAIMER.replace(
+      '<attraction>',
+      'attraction'
+    );
+    return {
+      footerLogoUrl: data?.footer_logo?.url || '',
+      footerDisclaimer: '',
+      micrositeDocFooterDisclaimer: data?.show_disclaimer
+        ? data?.disclaimer?.[0]?.text || defaultDisclaimer
+        : '',
+    };
+  }
 };

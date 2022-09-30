@@ -12,6 +12,11 @@ import {
   getPageUrl,
   getAvailableLanguages,
   getParentDomain,
+  uncategorisedToursCheck,
+  getFaviconUrl,
+  getMetaImageUrl,
+  getHeaderDetails,
+  getFooterDetails,
 } from 'utils/lookerUtils';
 import { CUSTOM_TYPES, SLICE_TYPES } from 'const/index';
 
@@ -66,14 +71,17 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }) => {
       last_publication_date,
       alternate_languages,
       data: {
+        design,
         redirect_type,
         redirect_url,
         disable_amp,
         noindex,
         title,
         description,
+        banner_subtext,
         focus_keyword,
         google_site_verification,
+        bing_site_verification,
         canonical_link,
         content_framework,
         author_name,
@@ -98,6 +106,9 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }) => {
       )[0];
     }
 
+    const pageDocHeaderDetails = await getHeaderDetails(doc);
+    const pageDocFooterDetails = await getFooterDetails(doc);
+
     const metaData = {
       uid,
       document_type: getDocType(type),
@@ -113,7 +124,8 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }) => {
       city: tagged_city,
       country: tagged_country,
       structure: pageUrl ? getStructure(new URL(pageUrl)) : null,
-      page_type: tagged_page_type,
+      page_type:
+        type === CUSTOM_TYPES.SHOW_PAGE ? 'Landing Page' : tagged_page_type,
       mb_type: tagged_mb_type,
       shoulder_page_type:
         tagged_page_type === 'Shoulder Page' ? shoulder_page_type : null,
@@ -122,9 +134,21 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }) => {
         ?.filter((tag) => tag),
       focus_keyword,
       google_site_verification_id: google_site_verification,
+      bing_site_verification_id: bing_site_verification,
       author_name: author_name,
-      has_noindex: legacyBooleanCheck(noindex),
-      has_nofollow: legacyBooleanCheck(noindex),
+      has_uncategorised_tours: uncategorisedToursCheck(doc),
+      banner_subtext,
+      layout: type === CUSTOM_TYPES.MICROSITE ? design : null,
+      favicon_url: getFaviconUrl(doc),
+      meta_image_url: getMetaImageUrl(doc),
+      header_logo_url: pageDocHeaderDetails?.headerLogoUrl,
+      header_logo_redirect_url: pageDocHeaderDetails?.headerLogoRedirectUrl,
+      footer_logo_url: pageDocFooterDetails?.footerLogoUrl,
+      footer_disclaimer: pageDocFooterDetails?.footerDisclaimer,
+      microsite_doc_footer_disclaimer:
+        pageDocFooterDetails?.micrositeDocFooterDisclaimer,
+      has_noindex: !!legacyBooleanCheck(noindex),
+      has_nofollow: !!legacyBooleanCheck(noindex),
       has_amp: !disable_amp || false,
       title,
       description,
@@ -176,6 +200,7 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }) => {
     pageDocs,
     productCardDocs,
     baseLangDocId: baseLangDoc?.id,
+    baseLangDocUid: baseLangDoc?.uid,
     hasDataToPush,
   };
 };
@@ -221,6 +246,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     pageDocs,
     productCardDocs,
     baseLangDocId,
+    baseLangDocUid,
     hasDataToPush,
   } = await parseDocuments({
     documents,
@@ -252,6 +278,24 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       host,
     });
     baseLangPageDocs = pageDocs;
+  }
+
+  //get lang docs categorisation metadata from it's corresponding base lang doc categorisation metadata
+  if (baseLangDocUid) {
+    pageDocs?.forEach((pageDoc: Record<string, any>) => {
+      const baseLangPageDoc = baseLangPageDocs?.find(
+        (doc) => doc?.uid === baseLangDocUid
+      );
+      pageDoc.collection_id = baseLangPageDoc?.collection_id;
+      pageDoc.category_name = baseLangPageDoc?.category_name;
+      pageDoc.sub_category_name = baseLangPageDoc?.sub_category_name;
+      pageDoc.city = baseLangPageDoc?.city;
+      pageDoc.country = baseLangPageDoc?.country;
+      pageDoc.mb_type = baseLangPageDoc?.mb_type;
+      pageDoc.page_type = baseLangPageDoc?.page_type;
+      pageDoc.shoulder_page_type = baseLangPageDoc?.shoulder_page_type;
+      pageDoc.content_type = baseLangPageDoc?.content_type;
+    });
   }
 
   if (productCardDocs.length) {
