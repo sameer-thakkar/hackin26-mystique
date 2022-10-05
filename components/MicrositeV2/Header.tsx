@@ -18,10 +18,16 @@ import HeaderLinks from 'components/HeaderLinks';
 import { SEARCH_ICON, POWERED_BY_HEADOUT } from 'assets/SvgIcons';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
-import { PAGETYPE, ALLOW_IMMEDIEATE_NESTING, THEMES } from 'const/index';
+import {
+  PAGETYPE,
+  ALLOW_IMMEDIEATE_NESTING,
+  THEMES,
+  ANALYTICS_EVENTS,
+} from 'const/index';
 import { strings } from 'const/strings';
 import { createBookingURL } from 'utils';
 import { convertUidToUrl } from 'utils/urlUtils';
+import { trackEvent } from 'utils/analytics';
 
 const SearchBox: ComponentType<any> = dynamic(
   () => import('./SearchBox').then((mod) => mod.SearchBox),
@@ -494,6 +500,9 @@ const Header: FunctionComponent<HeaderProps> = ({
                 role="button"
                 tabIndex={0}
                 onClick={() => {
+                  trackEvent({
+                    eventName: ANALYTICS_EVENTS.SEARCH_ICON_CLICKED,
+                  });
                   loadSearchPage();
                 }}
               >

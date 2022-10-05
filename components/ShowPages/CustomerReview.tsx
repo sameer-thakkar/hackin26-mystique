@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 import COLORS from 'const/colors';
+import { trackEvent } from 'utils/analytics';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 
 import { BLUE_QUOTES } from '../../assets/SvgIcons';
 
@@ -213,6 +215,27 @@ export default class CustomerReview extends Component<CardCarouselProps> {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
           },
+      on: {
+        click: (e) => {
+          const buttonClassNameArr = e.target.className.split('-');
+          const isButton = buttonClassNameArr[1];
+
+          let direction;
+
+          if (isButton === 'button') {
+            let isNextButton =
+              buttonClassNameArr[buttonClassNameArr.length - 1];
+            direction = isNextButton === 'next' ? 'Next' : 'Previous';
+          } else {
+            direction = e.target.getAttribute('aria-label');
+          }
+
+          trackEvent({
+            eventName: ANALYTICS_EVENTS.CUSTOMER_REVIEWS_SCROLLED,
+            [ANALYTICS_PROPERTIES.DIRECTION]: direction,
+          });
+        },
+      },
       pagination: {
         el: '.swiper-pagination',
         type: 'bullets',

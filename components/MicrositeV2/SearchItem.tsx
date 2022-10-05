@@ -1,11 +1,16 @@
 import { RichText } from 'prismic-reactjs';
+import { useRecoilValue } from 'recoil';
+import { searchQueryAtom } from 'store/atoms/searchQuery';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
+import { trackEvent } from 'utils/analytics';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 
 import { shortCodeSerializer } from '../../utils/shortCodes';
 import Image from '../UI/Image';
 
 export const SearchItem = (props) => {
+  const query = useRecoilValue(searchQueryAtom);
   const {
     tgid,
     showPageUid,
@@ -24,6 +29,12 @@ export const SearchItem = (props) => {
       tabIndex={0}
       onClick={() => {
         onSearchResultClick(tgid, showPageUid);
+
+        trackEvent({
+          eventName: ANALYTICS_EVENTS.SEARCH_RESULT_CLICKED,
+          [ANALYTICS_PROPERTIES.TGID]: tgid,
+          [ANALYTICS_PROPERTIES.SEARCH_QUERY]: query,
+        });
       }}
     >
       <div className="left">

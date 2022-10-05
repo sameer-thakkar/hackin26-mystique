@@ -6,6 +6,8 @@ import { SEE_SAFETY } from 'assets/SvgIcons';
 import { safetyChecker } from 'components/ShowPages/parseShowPage';
 import Conditional from 'components/common/Conditional';
 import { MBContext } from 'contexts/MBContext';
+import { trackEvent } from 'utils/analytics';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 
 import Image from '../UI/Image';
 
@@ -119,9 +121,16 @@ const CategoryCard = ({
 
   const isSafe = safetyChecker(element.microBrandsHighlight);
 
+  const trackClickEvent = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED,
+      [ANALYTICS_PROPERTIES.TGID]: id,
+    });
+  };
+
   return (
     <CategoryCardWrapper>
-      <a href={redirectURL} target="blank">
+      <a href={redirectURL} target="blank" onClick={trackClickEvent}>
         <Conditional if={isSafe}>
           <SeeSafetyWrapper>{SEE_SAFETY}</SeeSafetyWrapper>
         </Conditional>

@@ -1,4 +1,6 @@
 import React, { useContext } from 'react';
+import { useRecoilValue } from 'recoil';
+import { metaAtom } from 'store/atoms/meta';
 import styled from 'styled-components';
 import { MBContext } from 'contexts/MBContext';
 import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
@@ -8,6 +10,9 @@ import { createBookingURL } from 'utils';
 import Conditional from 'components/common/Conditional';
 import { expandFontToken } from 'const/typography';
 import { checkLTT } from 'utils/helper';
+import { ANALYTICS_EVENTS } from 'const/index';
+import { ANALYTICS_PROPERTIES } from 'const/index';
+import { getProductCommonProperties, trackEvent } from 'utils/analytics';
 
 const BannerContent = styled.div(
   ({ showComponent }) => `
@@ -159,7 +164,13 @@ const StickyHeader = ({
   showComponent,
   isAvailable,
 }) => {
-  const { listingPrice, name } = tourGroupData ?? {};
+  const {
+    listingPrice,
+    name,
+    primaryCategory,
+    primarySubCategory,
+    primaryCollection,
+  } = tourGroupData ?? {};
 
   const { nakedDomain, biLink, uid, redirectToHeadoutBookingFlow } = useContext(
     MBContext
@@ -175,6 +186,27 @@ const StickyHeader = ({
   const isLTT = checkLTT(uid);
   const { NEXT_AVAILABLE } = strings || {};
   const REOPENING_STRING = `${NEXT_AVAILABLE}`;
+  const pageMetaData = useRecoilValue(metaAtom);
+
+  const trackBookNowClick = () => {
+    const { originalPrice, finalPrice, currencyCode } = listingPrice ?? {};
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
+      [ANALYTICS_PROPERTIES.DISCOUNT]: originalPrice > finalPrice,
+      [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: name,
+      [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city?.code,
+      ...getProductCommonProperties({
+        primaryCategory,
+        primaryCollection,
+        primarySubCategory,
+      }),
+    });
+  };
 
   return (
     <>
@@ -204,9 +236,10 @@ const StickyHeader = ({
                   role="button"
                   tabIndex={0}
                   className="buy-button"
-                  onClick={() =>
-                    window.open(bookingUrl, '_blank', 'noopener, noreferrer')
-                  }
+                  onClick={() => {
+                    trackBookNowClick();
+                    window.open(bookingUrl, '_blank', 'noopener, noreferrer');
+                  }}
                 >
                   {isLTT ? strings.CHECK_AVAIL : strings.BANNER_CTA}
                 </div>

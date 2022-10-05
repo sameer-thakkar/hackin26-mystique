@@ -358,7 +358,10 @@ const Card: React.FC<CardProps> = ({
         <CTALink
           href={cta.link.url}
           target={cta.link.target}
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e) => {
+            e.stopPropagation();
+            trackClickEvent();
+          }}
         >
           {cta.text || strings.BOOK_NOW_CTA}
           {CHEVRON_LEFT}
@@ -380,7 +383,6 @@ const Card: React.FC<CardProps> = ({
       cardType={type}
       isGlobalMb={isGlobalMb}
       cardsInARow={cardsInARow}
-      onClick={trackClickEvent}
     >
       {imageView}
       {hasTextContent ? (

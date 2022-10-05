@@ -396,6 +396,11 @@ const Product = (props) => {
     } else {
       window.open(showPageUrl, '_self', 'noopener,noreferrer');
     }
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+    });
   };
 
   const isNewArrival = allTags.includes('NEWARRIVAL');

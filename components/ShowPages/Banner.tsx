@@ -10,11 +10,7 @@ import Emoji from 'components/common/Emoji';
 import PriceBlock, { SavedTag } from 'UI/PriceBlock';
 import Image from 'UI/Image';
 import { PLAY_CIRCLE, LOCATION, STAR } from 'assets/SvgIcons';
-import {
-  ANALYTICS_EVENTS,
-  ANALYTICS_PROPERTIES,
-  PAGE_TYPES,
-} from 'const/index';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { PRODUCT_VIDEOS } from 'const/ShowPageProductVideos';
 import { strings } from 'const/strings';
 import COLORS from 'const/colors';
@@ -24,12 +20,12 @@ import { FONTS } from 'const/fonts';
 import { createBookingURL } from 'utils';
 import { dateToString } from 'utils/dateUtils';
 import { fetchCalendarInventory } from 'utils/apiUtils';
+import { checkLTT } from 'utils/helper';
 import {
-  getCommonEventMetaData,
   getProductCommonProperties,
+  sendVariablesToDataLayer,
   trackEvent,
 } from 'utils/analytics';
-import { checkLTT } from 'utils/helper';
 
 const Banner = styled.div`
   width: 100%;
@@ -426,18 +422,6 @@ const ShowPageBanner = ({
 
   const bannerChange = () => {
     setIsVideo(!isVideo);
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.MB_BANNER.VISIBLE,
-      [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.CONTENT_PAGE,
-      [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
-      [ANALYTICS_PROPERTIES.TGID]: tgid,
-      ...getCommonEventMetaData(pageMetaData),
-      ...getProductCommonProperties({
-        primaryCategory,
-        primaryCollection,
-        primarySubCategory,
-      }),
-    });
     trackVideoPlayed();
   };
 
@@ -445,7 +429,7 @@ const ShowPageBanner = ({
   useEffect(() => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.MB_BANNER.VISIBLE,
-      [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.CONTENT_PAGE,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
       [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
       [ANALYTICS_PROPERTIES.TGIDS]: [tgid],
       [ANALYTICS_PROPERTIES.MB_NAME]: BannerTitle,
@@ -454,6 +438,10 @@ const ShowPageBanner = ({
         primaryCollection,
         primarySubCategory,
       }),
+    });
+
+    sendVariablesToDataLayer({
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
     });
   }, []);
   useEffect(() => {
@@ -472,20 +460,6 @@ const ShowPageBanner = ({
   }, [tgid, isTourAvailable, hostname]);
 
   const trackBookNowClick = () => {
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_BOOK_NOW_CLICKED,
-      ...getCommonEventMetaData(pageMetaData),
-      [ANALYTICS_PROPERTIES.TGID]: tgid,
-      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: BannerTitle,
-      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city?.cityCode,
-      [ANALYTICS_PROPERTIES.COUNTRY]: pageMetaData?.country?.code,
-      ...getProductCommonProperties({
-        primaryCategory,
-        primaryCollection,
-        primarySubCategory,
-      }),
-    });
-
     const { originalPrice, finalPrice, currencyCode } = listingPrice ?? {};
     trackEvent({
       eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,
@@ -493,12 +467,10 @@ const ShowPageBanner = ({
       [ANALYTICS_PROPERTIES.DISCOUNT]: originalPrice > finalPrice,
       [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
       [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: name,
-      [ANALYTICS_PROPERTIES.POSITION]: null,
       [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
-      [ANALYTICS_PROPERTIES.EXPERIENCE_DATE]: null,
       [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
       [ANALYTICS_PROPERTIES.TGID]: tgid,
-      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city?.cityCode,
+      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city?.code,
       ...getProductCommonProperties({
         primaryCategory,
         primaryCollection,
@@ -544,6 +516,7 @@ const ShowPageBanner = ({
           tgid={tgid}
           currentLanguage={currentLanguage}
           isAvailable={isTourAvailable}
+          tourGroupData={tourGroupData}
         />
       </Conditional>
 

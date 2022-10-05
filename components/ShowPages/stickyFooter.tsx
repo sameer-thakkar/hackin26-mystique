@@ -1,3 +1,5 @@
+import { useRecoilValue } from 'recoil';
+import { metaAtom } from 'store/atoms/meta';
 import Conditional from 'components/common/Conditional';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
@@ -5,7 +7,7 @@ import COLORS from 'const/colors';
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { createBookingURL } from 'utils';
-import { trackEvent } from 'utils/analytics';
+import { getProductCommonProperties, trackEvent } from 'utils/analytics';
 import { checkLTT, isMobile } from 'utils/helper';
 
 import { MBContext } from '../../contexts/MBContext';
@@ -47,14 +49,24 @@ const StickyFooter = ({
   tgid,
   currentLanguage,
   isAvailable = true,
+  tourGroupData,
 }: {
   tgid: string | number;
   currentLanguage: string;
   isAvailable?: boolean;
+  tourGroupData?: any;
 }) => {
   const { nakedDomain, biLink, uid, redirectToHeadoutBookingFlow } = useContext(
     MBContext
   );
+
+  const {
+    listingPrice,
+    name,
+    primaryCategory,
+    primarySubCategory,
+    primaryCollection,
+  } = tourGroupData ?? {};
 
   const bookingUrl = createBookingURL({
     nakedDomain: nakedDomain,
@@ -64,11 +76,26 @@ const StickyFooter = ({
     redirectToHeadoutBookingFlow,
   });
 
+  const pageMetaData = useRecoilValue(metaAtom);
+
   const isLTT = checkLTT(uid);
   const trackBookNowClick = () => {
+    const { originalPrice, finalPrice, currencyCode } = listingPrice ?? {};
     trackEvent({
-      eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_BOOK_NOW_CLICKED,
+      eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
+      [ANALYTICS_PROPERTIES.DISCOUNT]: originalPrice > finalPrice,
+      [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: name,
+      [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
       [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city?.code,
+      ...getProductCommonProperties({
+        primaryCategory,
+        primaryCollection,
+        primarySubCategory,
+      }),
     });
   };
 

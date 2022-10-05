@@ -81,6 +81,7 @@ const MicrositeV1 = (props) => {
   const [freeTourPopupOpen, toggleFreeTourPopup] = useState(false);
   const [covidAlertActive, toggleCovidAlert] = useState(false);
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
+
   const [mbCardExperimentTreatment, setMbCardExperimentTreatment] = useState(
     false
   );

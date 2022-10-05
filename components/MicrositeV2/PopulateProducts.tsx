@@ -7,9 +7,15 @@ import Conditional from 'components/common/Conditional';
 import { strings } from 'const/strings';
 import LinkResolver from 'components/LinkResolver';
 import { useRouter } from 'next/router';
-import { QUERY_PARAMS } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  CTA_TYPE,
+  QUERY_PARAMS,
+} from 'const/index';
 import COLORS from 'const/colors';
 import { expandFontToken } from 'const/typography';
+import { trackEvent } from 'utils/analytics';
 
 const RowComponent: ComponentType<any> = dynamic(() =>
   import('./RowComponent').then((mod) => mod.RowComponent)
@@ -164,6 +170,23 @@ const PopulateProducts = (props) => {
     routerPush(`${pathname}?${getUpdatedQuery()?.toString()}`, null, {
       shallow: true,
     });
+
+    let nextItemsCardCount = isMobile
+      ? NO_OF_CARDS_IN_ROW.MOBILE * NO_OF_ROWS_TO_SHOW.MOBILE
+      : NO_OF_CARDS_IN_ROW.DESKTOP * NO_OF_ROWS_TO_SHOW.DESKTOP;
+
+    const cardsAlreadyVisible = Number(limit);
+    const totalCards = tgids.length;
+
+    if (cardsAlreadyVisible + nextItemsCardCount > totalCards) {
+      nextItemsCardCount = totalCards - cardsAlreadyVisible;
+    }
+
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.PAGINATION_CLICKED,
+      [ANALYTICS_PROPERTIES.PAGINATION_TYPE]: CTA_TYPE.SHOW_MORE,
+      [ANALYTICS_PROPERTIES.NEXT_ITEMS_COUNT]: nextItemsCardCount,
+    });
   };
 
   const categoryPropsPopularityRank =
@@ -173,7 +196,6 @@ const PopulateProducts = (props) => {
     : propTgids || activeCategoryTgids;
 
   const tgidsSubArr = subArrays(tgids, Number(offset));
-
   const getViewMoreLink = () => {
     return `${pathname}?${getUpdatedQuery().toString()}`;
   };

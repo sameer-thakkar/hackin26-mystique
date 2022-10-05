@@ -178,7 +178,6 @@ const NewBanner = (props) => {
     [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.COLLECTION,
     [ANALYTICS_PROPERTIES.LANGUAGE]: lang,
     [ANALYTICS_PROPERTIES.TGIDS]: availableTours,
-    [ANALYTICS_PROPERTIES.MB_NAME]: '',
   };
 
   const isSwiperSet = swiper !== null && !swiper?.destroyed;
@@ -192,13 +191,15 @@ const NewBanner = (props) => {
       eventName: ANALYTICS_EVENTS.MB_BANNER.VISIBLE,
       ...analyticsParams,
     });
-    swiper?.on('touchEnd', () => {
-      trackEvent({
-        eventName: ANALYTICS_EVENTS.MB_BANNER.BANNER_SCROLL,
-        ...analyticsParams,
-      });
-    });
   }, [isSwiperSet]);
+
+  const trackBannerClick = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MB_BANNER.CTA_CLICKED,
+      Ranking: swiper.realIndex + 1,
+      ...analyticsParams,
+    });
+  };
 
   const scrollToSection = (sectionId) => {
     scroller.scrollTo(sectionId, {
@@ -302,6 +303,12 @@ const NewBanner = (props) => {
                     ? bannerImages[0].mobile_url
                     : bannerImages[0].url)
                 }
+                onClick={() => {
+                  trackEvent({
+                    eventName: ANALYTICS_EVENTS.MB_BANNER.CTA_CLICKED,
+                    ...analyticsParams,
+                  });
+                }}
                 alt={bannerImages[0]?.alt || 'banner'}
                 dontLazyLoad={true}
                 imageId={stringIdfy(bannerImages[0].alt || '')}
@@ -328,6 +335,7 @@ const NewBanner = (props) => {
                       target={isMobile ? '_self' : '_blank'}
                       rel="noopener noreferrer"
                       href={getShowPageUrl(image)}
+                      onClick={() => trackBannerClick()}
                     >
                       <Image
                         width={WIDTH}

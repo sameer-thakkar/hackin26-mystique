@@ -243,6 +243,11 @@ export const ANALYTICS_EVENTS = {
   INFO_TAB_CLICKED: 'Information Tab Clicked',
   EXPERIENCE_CARD_VISIBLE: 'Experience Card Visible',
   CONTENT_PAGE_PROMO_CLICKED: 'Content Page Apply Promo Clicked',
+  PAGINATION_CLICKED: 'Pagination Clicked',
+  CUSTOMER_REVIEWS_SCROLLED: 'Customer Reviews Scrolled',
+  SEARCH_STARTED: 'Search Started',
+  SEARCH_RESULT_CLICKED: 'Search Result Clicked',
+  SEARCH_ICON_CLICKED: 'Search Icon Clicked',
   COMBO_VARIANT: {
     POPUP_VIEWED: 'MB Combo Variant Popup viewed',
     VARIANT_CLICKED: 'MB Combo Variant Selected',
@@ -694,6 +699,10 @@ export const ANALYTICS_PROPERTIES = {
   DISPLAY_PRICE: 'Display Price',
   DISPLAY_CURRENCY: 'Display Currency',
   EXPERIENCE_DATE: 'Experience Date',
+  PAGINATION_TYPE: 'Pagination Type',
+  SEARCH_QUERY: 'Search Query',
+  DIRECTION: 'Direction',
+  NEXT_ITEMS_COUNT: 'Next Items Count',
 };
 export const PAGE_TYPES = {
   COLLECTION: 'Collection',
@@ -761,6 +770,7 @@ export const PAGETYPE_BY_CUSTOMTYPE = {
 export const CTA_TYPE = {
   BUTTON: 'Button CTA',
   TEXT: 'Text CTA',
+  SHOW_MORE: 'Show More Button',
 };
 
 export const HIGHLIGHT_TYPES = {

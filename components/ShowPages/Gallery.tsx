@@ -5,6 +5,8 @@ import Conditional from 'components/common/Conditional';
 import COLORS from 'const/colors';
 import Image, { Wrapper } from 'components/UI/Image';
 import { BLACK_CROSS, ALL_PHOTOS } from 'assets/SvgIcons';
+import { trackEvent } from 'utils/analytics';
+import { ANALYTICS_PROPERTIES } from 'const/index';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -303,6 +305,11 @@ const Gallery = ({ galleryArray, isMobile }) => {
     setIsVisibleGalleryPopUp(true);
     setActiveIndexGalleryPopUp(index);
     document.body.style.overflow = 'hidden';
+
+    trackEvent({
+      eventName: 'Product Card Image Clicked',
+      [ANALYTICS_PROPERTIES.RANKING]: index + 1,
+    });
   };
   const popupCloser = () => {
     setIsVisibleGalleryPopUp(false);
