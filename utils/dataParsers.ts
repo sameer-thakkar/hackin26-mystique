@@ -148,7 +148,7 @@ export const categoryTourListParserV1 = async ({
     primaryCity = subCategoryData?.city;
     tourData.push(...subCategoryData?.pageData?.items);
   }
-  if (tourData?.length) {
+  if (tourData?.length || finalRanking?.length) {
     let allTours = [...tourData];
     const intialTgids = tourData?.map((tour) => tour.id);
     const tgidsToFetch = finalRanking?.filter(
