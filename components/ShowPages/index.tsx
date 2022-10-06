@@ -525,9 +525,9 @@ const ShowPage = ({
           currentLanguage={currentLanguage}
           tagsArray={tagsArray}
           hostname={hostname}
-          hasSpecialOffer={isLTT || hasSpecialOffer}
+          hasSpecialOffer={hasSpecialOffer}
         />
-        <Conditional if={isLTT || hasSpecialOffer}>
+        <Conditional if={hasSpecialOffer}>
           <SpecialOfferBanner
             marginTop={isMobile ? 0 : 40}
             isShowPage={true}
