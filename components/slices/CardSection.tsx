@@ -19,6 +19,7 @@ const CardGrid = styled.div(({ cardsInARow }) => {
   gridTemplateColumns = `repeat(${cardsInARow}, 1fr)`;
   return `
     display: grid;
+    background: ${COLORS.BRAND.WHITE};
     grid-template-columns: ${gridTemplateColumns};
     grid-gap: 20px;
     @media(max-width: 768px){
