@@ -5,22 +5,14 @@ export const VARIANTS = {
   CHECKOUT_REDIRECT: 'LP to booking page',
   SHOW_CASHBACK: 'Show Cashback',
   HIDE_CASHBACK: 'Hide Cashback',
-  CONTROL: 'Control',
-  TREATMENT: 'Variant B',
 };
 
 export const EXPERIMENT_NAMES = {
   LTD_LP_Experiment: 'LTD LP Experiment',
   CASHBACK_EFFICACY: 'Cashback Experiment',
-  CLICKABLE_MB_CARD: 'MB Clickable Product Cards B Experiment',
 };
 
 export const EXPERIMENTS = {
-  [EXPERIMENT_NAMES.CLICKABLE_MB_CARD]: new Experiment(
-    EXPERIMENT_NAMES.CLICKABLE_MB_CARD,
-    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
-    [50, 50]
-  ),
   [EXPERIMENT_NAMES.LTD_LP_Experiment]: new Experiment(
     EXPERIMENT_NAMES.LTD_LP_Experiment,
     [VARIANTS.SHOWPAGE_REDIRECT, VARIANTS.CHECKOUT_REDIRECT],

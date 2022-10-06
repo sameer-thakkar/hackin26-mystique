@@ -100,7 +100,6 @@ const PopulateProducts = (props) => {
     sectionSubtext = '',
     pageType = '',
     growthExperiment7Variant,
-    mbCardExperimentTreatment,
   } = props;
   const isDubaiSafariPark = uid === 'www.dubai-safari-park.com';
   const productsWrapperRef = useRef(null);
@@ -490,7 +489,6 @@ const PopulateProducts = (props) => {
                   <Product
                     {...childProps}
                     growthExperiment7Variant={growthExperiment7Variant}
-                    mbCardExperimentTreatment={mbCardExperimentTreatment}
                   />
                 )}
                 <Conditional if={mbTheme === THEMES.MIN_BLUE}>

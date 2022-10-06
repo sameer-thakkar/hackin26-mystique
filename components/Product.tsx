@@ -972,7 +972,6 @@ const Product = (props) => {
     primaryCategory,
     primaryCollection,
     primarySubCategory,
-    mbCardExperimentTreatment,
   } = props;
 
   const {
@@ -1255,18 +1254,7 @@ const Product = (props) => {
       toggleContentOpen(!isContentOpen);
     }
   };
-  const sendToBookingFlow = () => {
-    if (!mbCardExperimentTreatment) return;
-    else {
-      trackEvent({
-        eventName: 'MB Product Card Clicked',
-        [ANALYTICS_PROPERTIES.TGID]: tgid,
-        [ANALYTICS_PROPERTIES.RANKING]: indexPosition + 1,
-        [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: cardTitle,
-      });
-      router.push(productBookingUrl);
-    }
-  };
+
   const layout = getProductCardLayout({
     hasOffer,
     hasV1Booster,
@@ -1391,7 +1379,6 @@ const Product = (props) => {
         layout={layout}
         isTicketCard={isTicketCard}
         isMobile={isMobile}
-        onClick={sendToBookingFlow}
       >
         <Conditional if={!isTicketCard && productImage}>
           <div className="card-img">
