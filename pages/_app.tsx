@@ -62,7 +62,7 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
       customType !== CUSTOM_TYPES.SHOW_PAGE
     ) {
       const [firstTour]: any = Object.values(scorpioData);
-      const { primaryCollection } = firstTour;
+      const { primaryCollection } = firstTour ?? {};
       const { id, name } = primaryCollection ?? {};
       primaryCollectionName = name;
       primaryCollectionId = id;
