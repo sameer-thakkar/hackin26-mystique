@@ -475,5 +475,9 @@ export const getBuyTicketsUrl = (
 };
 
 export const checkLTT = (uid) => {
-  return uid.includes('www.london-theater-tickets.com');
+  return uid?.includes('www.london-theater-tickets.com') ?? false;
+};
+
+export const checkBroadway = (uid) => {
+  return uid?.includes('www.broadway-show-tickets.com') ?? false;
 };

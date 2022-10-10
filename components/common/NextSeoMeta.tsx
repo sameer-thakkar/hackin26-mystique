@@ -12,7 +12,7 @@ import {
 } from 'components/common/Scripts';
 import { legacyBooleanCheck } from 'utils';
 import { createAdditionalMetaTag, createHrefLangObj } from 'utils/headUtils';
-import { withShortcodes } from 'utils/helper';
+import { checkLTT, withShortcodes } from 'utils/helper';
 import { addQueryParams, convertUidToUrl } from 'utils/urlUtils';
 import { useRouter } from 'next/router';
 import { FB_DOMAIN_VERIFICATION, QUERY_PARAMS } from 'const/index';
@@ -192,7 +192,7 @@ export default function PopulateMeta({
     rel: 'amphtml',
     ...(!disableAmp &&
       !isAmp &&
-      !uid.includes('www.london-theater-tickets.com') &&
+      !checkLTT(uid) &&
       !uid.includes('www.themeparkstickets.com') && {
         href: '?amp=1',
       }),

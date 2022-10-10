@@ -29,7 +29,7 @@ import {
 } from 'utils/analytics';
 import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
-import { checkLTT } from 'utils/helper';
+import { checkBroadway, checkLTT } from 'utils/helper';
 
 const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
   ssr: false,
@@ -477,7 +477,7 @@ const DetailedProductCard = (props) => {
       (item) => item.label === 'Duration'
     );
   }
-  const isBroadway = mbContext?.uid?.includes('broadway-show-tickets.com'); // TODO: Need to handle this via book_now_text.
+  const isBroadway = checkBroadway(mbContext?.uid); // TODO: Need to handle this via book_now_text.
   const isLTT = checkLTT(mbContext.uid);
   const experimentEnabled = isLTT;
   const bookingURL = createBookingURL({

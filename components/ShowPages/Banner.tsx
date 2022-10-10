@@ -366,7 +366,7 @@ const ShowPageBanner = ({
     ? imageUploads[1] || imageUploads[0]
     : null;
 
-  const { nakedDomain, biLink, uid, redirectToHeadoutBookingFlow } = useContext(
+  const { nakedDomain, biLink, redirectToHeadoutBookingFlow } = useContext(
     MBContext
   );
 
@@ -385,7 +385,6 @@ const ShowPageBanner = ({
   const videoCode = PRODUCT_VIDEOS[tgid] ? PRODUCT_VIDEOS[tgid] : null;
   const videoAvailable = PRODUCT_VIDEOS[tgid] ? true : false;
   const isTourAvailable = listingPrice ? true : false;
-  const isLTT = checkLTT(uid);
   const ref = useRef(null);
 
   const { NEXT_AVAILABLE } = strings || {};
@@ -652,7 +651,7 @@ const ShowPageBanner = ({
                     window.open(bookingUrl, '_blank', 'noopener, noreferrer');
                   }}
                 >
-                  {isLTT ? strings.CHECK_AVAIL : strings.BANNER_CTA}
+                  {strings.CHECK_AVAIL}
                 </div>
               </Conditional>
               <Conditional if={!listingPrice}>
