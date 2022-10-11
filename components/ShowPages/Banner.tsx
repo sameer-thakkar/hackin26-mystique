@@ -151,11 +151,14 @@ const BannerContent = styled.div`
   }
 
   .priceBlockWrapper {
-    justify-content: flex-end;
-    display: flex;
     border-right: 1px solid ${COLORS.GRAY.G6};
-    padding-right: 0.5rem;
     grid-area: 'price';
+
+    .price-block-from{
+      ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
+      text-align: left;
+      margin-bottom: 0.125rem;
+    }
   }
 
   .tour-price {
@@ -277,7 +280,13 @@ const BannerContent = styled.div`
       font-size: 12px;
     }
 
+    .price-block-from {
+      ${expandFontToken(FONTS.UI_LABEL_SMALL)}
+      margin-bottom: 0.25rem;
+    }
+
     .priceBlockWrapper {
+      display: flex;
       justify-content: space-between;
       border: 0;
       padding: 0rem 0rem 1.5rem;
@@ -598,6 +607,9 @@ const ShowPageBanner = ({
               <div className="theater-wrapper">
                 {LOCATION} {theaterName}
               </div>
+              <div className="price-block-from">
+                {strings.FROM.toLowerCase() + ' '}
+              </div>
               <div className="priceBlockWrapper">
                 <PriceBlock
                   listingPrice={listingPrice}
@@ -632,6 +644,9 @@ const ShowPageBanner = ({
             <div className="right-pricing">
               <Conditional if={listingPrice}>
                 <div className="priceBlockWrapper">
+                  <div className="price-block-from">
+                    {strings.FROM.toLowerCase() + ' '}
+                  </div>
                   <PriceBlock
                     listingPrice={listingPrice}
                     lang={currentLanguage}

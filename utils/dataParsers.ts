@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {
   getObject,
   parseShowPageData,
@@ -84,69 +85,81 @@ export const categoryTourListParserV1 = async ({
   let primaryCity;
 
   if (collection) {
-    const collectionData = await fetchCollection({
-      collectionId: collection,
-      hostname,
-      language,
-      limit: finalLimit,
-    });
-    primaryCity = collectionData?.city;
-    currency = collectionData?.city?.country?.currency;
-    const getCollectionSection = (collectionData, sectionType: string) => {
-      return collectionData?.sections
-        ?.filter((section) => {
-          if (section?.type === sectionType) {
-            return section?.tourGroups?.items;
-          }
-        })
-        ?.reduce((acc, curr) => curr + acc);
-    };
-    const pinnedCardsSection = getCollectionSection(
-      collectionData,
-      'PINNED_CARDS'
-    );
-    const genericSection = getCollectionSection(collectionData, 'GENERIC');
-    const headoutPicksSection = getCollectionSection(
-      collectionData,
-      'HEADOUT_PICKS'
-    );
+    try {
+      const collectionData = await fetchCollection({
+        collectionId: collection,
+        hostname,
+        language,
+        limit: finalLimit,
+      });
+      primaryCity = collectionData?.city;
+      currency = collectionData?.city?.country?.currency;
+      const getCollectionSection = (collectionData, sectionType: string) => {
+        return collectionData?.sections
+          ?.filter((section) => {
+            if (section?.type === sectionType) {
+              return section?.tourGroups?.items;
+            }
+          })
+          ?.reduce((acc, curr) => curr + acc);
+      };
+      const pinnedCardsSection = getCollectionSection(
+        collectionData,
+        'PINNED_CARDS'
+      );
+      const genericSection = getCollectionSection(collectionData, 'GENERIC');
+      const headoutPicksSection = getCollectionSection(
+        collectionData,
+        'HEADOUT_PICKS'
+      );
 
-    const pinnedProducts = pinnedCardsSection?.tourGroups?.items?.length
-      ? pinnedCardsSection?.tourGroups?.items
-      : [];
-    const finalSections = genericSection?.tourGroups?.items?.length
-      ? [...genericSection?.tourGroups?.items]
-      : [...headoutPicksSection?.tourGroups?.items];
-    const allProducts = pinnedProducts?.length
-      ? finalSections?.filter((product) =>
-          pinnedProducts?.some((p) => product?.id !== p?.id)
-        )
-      : finalSections;
-    tourData.push(...pinnedProducts, ...allProducts);
+      const pinnedProducts = pinnedCardsSection?.tourGroups?.items?.length
+        ? pinnedCardsSection?.tourGroups?.items
+        : [];
+      const finalSections = genericSection?.tourGroups?.items?.length
+        ? [...genericSection?.tourGroups?.items]
+        : [...headoutPicksSection?.tourGroups?.items];
+      const allProducts = pinnedProducts?.length
+        ? finalSections?.filter((product) =>
+            pinnedProducts?.some((p) => product?.id !== p?.id)
+          )
+        : finalSections;
+      tourData.push(...pinnedProducts, ...allProducts);
+    } catch (err) {
+      console.error(err);
+    }
   } else if (category) {
-    const categoryData = await fetchTourGroupsByCategory({
-      categoryId: category,
-      hostname,
-      isSubCategory: false,
-      city: cityCode,
-      language,
-      limit: finalLimit,
-    });
-    currency = categoryData?.currency;
-    tourData.push(...categoryData?.pageData?.items);
-    primaryCity = categoryData?.city;
+    try {
+      const categoryData = await fetchTourGroupsByCategory({
+        categoryId: category,
+        hostname,
+        isSubCategory: false,
+        city: cityCode,
+        language,
+        limit: finalLimit,
+      });
+      currency = categoryData?.currency;
+      tourData.push(...categoryData?.pageData?.items);
+      primaryCity = categoryData?.city;
+    } catch (err) {
+      console.error(err);
+    }
   } else if (sub_category) {
-    const subCategoryData = await fetchTourGroupsByCategory({
-      categoryId: sub_category,
-      hostname,
-      isSubCategory: true,
-      city: cityCode,
-      language,
-      limit: finalLimit,
-    });
-    currency = subCategoryData?.currency;
-    primaryCity = subCategoryData?.city;
-    tourData.push(...subCategoryData?.pageData?.items);
+    try {
+      const subCategoryData = await fetchTourGroupsByCategory({
+        categoryId: sub_category,
+        hostname,
+        isSubCategory: true,
+        city: cityCode,
+        language,
+        limit: finalLimit,
+      });
+      currency = subCategoryData?.currency;
+      primaryCity = subCategoryData?.city;
+      tourData.push(...subCategoryData?.pageData?.items);
+    } catch (err) {
+      console.error(err);
+    }
   }
   if (tourData?.length || finalRanking?.length) {
     let allTours = [...tourData];
@@ -387,98 +400,110 @@ export const categoryTourListParserV2 = async (
     primaryCity;
 
   if (collectionIds?.length) {
-    const collectionSet = new Set(collectionIds);
-    const collections = Array.from(collectionSet);
-    allPromises = generatePromiseForCategoryTours({
-      arr: collections,
-      hostname,
-      city,
-      isCollection: true,
-    });
-    const data = await Promise.all(allPromises);
-    const collectionData: any = data?.map((c: any) => {
-      const { collection, sections } = c || {};
-      const filteredData = sections.filter((curr) => {
-        return (
-          (curr?.type === 'GENERIC' || curr?.type === 'PINNED_CARDS') &&
-          curr?.tourGroups?.items?.length
-        );
+    try {
+      const collectionSet = new Set(collectionIds);
+      const collections = Array.from(collectionSet);
+      allPromises = generatePromiseForCategoryTours({
+        arr: collections,
+        hostname,
+        city,
+        isCollection: true,
       });
-      let filterTgids = [];
-      filteredData.forEach((section) => {
-        if (section?.tourGroups?.items) {
-          filterTgids = filterTgids.concat(section.tourGroups.items);
+      const data = await Promise.all(allPromises);
+      const collectionData: any = data?.map((c: any) => {
+        const { collection, sections } = c || {};
+        const filteredData = sections.filter((curr) => {
+          return (
+            (curr?.type === 'GENERIC' || curr?.type === 'PINNED_CARDS') &&
+            curr?.tourGroups?.items?.length
+          );
+        });
+        let filterTgids = [];
+        filteredData.forEach((section) => {
+          if (section?.tourGroups?.items) {
+            filterTgids = filterTgids.concat(section.tourGroups.items);
+          }
+        });
+        return {
+          collection,
+          items: filterTgids,
+        };
+      });
+      if (collectionData?.length) {
+        categoriesWithProducts.push(collectionData);
+        const tgids = extractTgidsFromCategories(collectionData);
+        if (tgids?.length) {
+          allTgids.push(tgids);
         }
-      });
-      return {
-        collection,
-        items: filterTgids,
-      };
-    });
-    if (collectionData?.length) {
-      categoriesWithProducts.push(collectionData);
-      const tgids = extractTgidsFromCategories(collectionData);
-      if (tgids?.length) {
-        allTgids.push(tgids);
       }
+    } catch (err) {
+      console.error(err);
     }
   }
   if (categoryIds?.length) {
-    const categorySet = new Set(categoryIds);
-    const categories = Array.from(categorySet);
-    allPromises = generatePromiseForCategoryTours({
-      arr: categories,
-      hostname,
-      city,
-      isCategory: true,
-    });
-    const data = await Promise.all(allPromises);
-    primaryCity = data?.[0]?.city;
-    const categoryData = data
-      ?.filter((d: any) => d?.pageData?.items?.length)
-      ?.map((cat: any) => {
-        const { category, pageData } = cat || {};
-        const { items } = pageData || {};
-        return {
-          category,
-          items,
-        };
+    try {
+      const categorySet = new Set(categoryIds);
+      const categories = Array.from(categorySet);
+      allPromises = generatePromiseForCategoryTours({
+        arr: categories,
+        hostname,
+        city,
+        isCategory: true,
       });
-    const tgids = extractTgidsFromCategories(categoryData);
-    if (categoryData?.length) {
-      categoriesWithProducts.push(categoryData);
-    }
-    if (tgids?.length) {
-      allTgids.push(tgids);
+      const data = await Promise.all(allPromises);
+      primaryCity = data?.[0]?.city;
+      const categoryData = data
+        ?.filter((d: any) => d?.pageData?.items?.length)
+        ?.map((cat: any) => {
+          const { category, pageData } = cat || {};
+          const { items } = pageData || {};
+          return {
+            category,
+            items,
+          };
+        });
+      const tgids = extractTgidsFromCategories(categoryData);
+      if (categoryData?.length) {
+        categoriesWithProducts.push(categoryData);
+      }
+      if (tgids?.length) {
+        allTgids.push(tgids);
+      }
+    } catch (err) {
+      console.error(err);
     }
   }
   if (subCategoryIds?.length) {
-    const subCategorySet = new Set(subCategoryIds);
-    const subCategories = Array.from(subCategorySet);
-    allPromises = generatePromiseForCategoryTours({
-      arr: subCategories,
-      hostname,
-      city,
-      isSubCategory: true,
-    });
-    const data = await Promise.all(allPromises);
-    primaryCity = data?.[0]?.city;
-    const subCategoryData = data
-      ?.filter((d: any) => d?.pageData?.items?.length)
-      ?.map((cat: any) => {
-        const { subCategory, pageData } = cat || {};
-        const { items } = pageData || {};
-        return {
-          subCategory,
-          items,
-        };
+    try {
+      const subCategorySet = new Set(subCategoryIds);
+      const subCategories = Array.from(subCategorySet);
+      allPromises = generatePromiseForCategoryTours({
+        arr: subCategories,
+        hostname,
+        city,
+        isSubCategory: true,
       });
-    const tgids = extractTgidsFromCategories(subCategoryData);
-    if (subCategoryData?.length) {
-      categoriesWithProducts.push(subCategoryData);
-    }
-    if (tgids?.length) {
-      allTgids.push(tgids);
+      const data = await Promise.all(allPromises);
+      primaryCity = data?.[0]?.city;
+      const subCategoryData = data
+        ?.filter((d: any) => d?.pageData?.items?.length)
+        ?.map((cat: any) => {
+          const { subCategory, pageData } = cat || {};
+          const { items } = pageData || {};
+          return {
+            subCategory,
+            items,
+          };
+        });
+      const tgids = extractTgidsFromCategories(subCategoryData);
+      if (subCategoryData?.length) {
+        categoriesWithProducts.push(subCategoryData);
+      }
+      if (tgids?.length) {
+        allTgids.push(tgids);
+      }
+    } catch (err) {
+      console.error(err);
     }
   }
 
@@ -792,45 +817,57 @@ export const getToursGlobalCollection = async ({
     currency;
 
   if (collection) {
-    const collectionData = await fetchCollection({
-      collectionId: collection,
-      hostname,
-    });
-    currency = collectionData?.city?.country?.currency;
-    const getCollectionSection = (collectionData, sectionType: string) => {
-      return collectionData?.sections
-        ?.filter((section) => {
-          if (section?.type === sectionType) {
-            return section?.tourGroups?.items;
-          }
-        })
-        ?.reduce((acc, curr) => curr + acc);
-    };
-    const genericSection = getCollectionSection(collectionData, 'GENERIC');
-    const headoutPicksSection = getCollectionSection(
-      collectionData,
-      'HEADOUT_PICKS'
-    );
-    const finalSection = genericSection?.tourGroups?.items?.length
-      ? genericSection?.tourGroups?.items
-      : headoutPicksSection?.tourGroups?.items;
-    tourData.push(...finalSection);
+    try {
+      const collectionData = await fetchCollection({
+        collectionId: collection,
+        hostname,
+      });
+      currency = collectionData?.city?.country?.currency;
+      const getCollectionSection = (collectionData, sectionType: string) => {
+        return collectionData?.sections
+          ?.filter((section) => {
+            if (section?.type === sectionType) {
+              return section?.tourGroups?.items;
+            }
+          })
+          ?.reduce((acc, curr) => curr + acc);
+      };
+      const genericSection = getCollectionSection(collectionData, 'GENERIC');
+      const headoutPicksSection = getCollectionSection(
+        collectionData,
+        'HEADOUT_PICKS'
+      );
+      const finalSection = genericSection?.tourGroups?.items?.length
+        ? genericSection?.tourGroups?.items
+        : headoutPicksSection?.tourGroups?.items;
+      tourData.push(...finalSection);
+    } catch (err) {
+      console.error(err);
+    }
   } else if (sub_category) {
-    const subCategoryData = await fetchTourGroupsByCategory({
-      categoryId: sub_category,
-      hostname,
-      isSubCategory: true,
-      city: cityName,
-    });
-    currency = subCategoryData?.currency;
-    tourData.push(...subCategoryData?.pageData?.items);
+    try {
+      const subCategoryData = await fetchTourGroupsByCategory({
+        categoryId: sub_category,
+        hostname,
+        isSubCategory: true,
+        city: cityName,
+      });
+      currency = subCategoryData?.currency;
+      tourData.push(...subCategoryData?.pageData?.items);
+    } catch (err) {
+      console.error(err);
+    }
   } else if (tgid) {
-    const tgidData = await fetchTourGroupV6({
-      tgid,
-      hostname,
-    });
-    currency = tgidData?.currency;
-    tourData.push(tgidData);
+    try {
+      const tgidData = await fetchTourGroupV6({
+        tgid,
+        hostname,
+      });
+      currency = tgidData?.currency;
+      tourData.push(tgidData);
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   const repeatableObj = tourData?.reduce((acc, tour) => {

@@ -110,6 +110,10 @@ body.scroll-lock {
   margin-top: -72px;
 }
 
+.slice-wrapper + .slice-wrapper.unspace + .slice-wrapper {
+  margin-top: -144px;
+}
+
 .slice-wrapper:empty {
   display: none;
 }
