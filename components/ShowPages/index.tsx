@@ -40,7 +40,7 @@ import {
   legacyBooleanCheck,
   createBookingURL,
 } from 'utils';
-import { groupSlices, getHostName, checkLTT } from 'utils/helper';
+import { groupSlices, getHostName } from 'utils/helper';
 import {
   convertUidToUrl,
   getValidUrl,
@@ -250,7 +250,6 @@ const ShowPage = ({
     lang,
   } = CMSContent;
 
-  const isLTT = checkLTT(uid);
   const currentLanguage = getHeadoutLanguagecode(lang);
   const pageMetaData = useRecoilValue(metaAtom);
   const { eventsReady } = useRecoilValue(gtmAtom);
@@ -464,11 +463,6 @@ const ShowPage = ({
     })
     ?.join(',');
 
-  const cashbackOffer = {
-    offerHeading: strings.SHOWPAGE?.LIMITED_CASHBACK_OFFER?.OFFER_TITLE,
-    offerText: strings.SHOWPAGE?.LIMITED_CASHBACK_OFFER?.OFFER_SUBTEXT,
-  };
-
   return (
     <>
       <ShowPageWrapper>
@@ -531,7 +525,7 @@ const ShowPage = ({
           <SpecialOfferBanner
             marginTop={isMobile ? 0 : 40}
             isShowPage={true}
-            specialOffer={isLTT ? cashbackOffer : specialOffer}
+            specialOffer={specialOffer}
           />
         </Conditional>
         <Wrapper>
