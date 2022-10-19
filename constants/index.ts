@@ -21,6 +21,8 @@ export const ASPECT_RATIO = {
   GLOBAL_MB: '16:10',
 };
 
+export const NON_SUPPORTED_LANGUAGES = ['zh-cn', 'zh-tw'];
+
 export const SUPPORTED_LANGUAGES = [
   'en',
   'es',

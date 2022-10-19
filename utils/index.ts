@@ -7,6 +7,7 @@ import {
   PRISMIC_LANG_TO_ROUTE_PARAM,
   CUSTOM_TYPES,
   HEADOUT_NAKED_DOMAIN,
+  NON_SUPPORTED_LANGUAGES,
 } from 'const/index';
 import { getLangObject, withoutTrailingSlash } from 'utils/helper';
 import { fetchCollection, fetchTourGroupsByCategory } from 'utils/apiUtils';
@@ -223,7 +224,11 @@ export const getAlternateLanguages = (
     const englishDocUid =
       getEnglishDocUid(alternateLangsArray) || currentDocUid;
     const englishDomain = englishDocUid ? getDomainFromUid(englishDocUid) : '';
-    return alternateLangsArray.map((doc) => {
+    // Don't show chinese docs in header or in hreflang as we have stopped supporting chinese language
+    const filteredLanguagesArray = alternateLangsArray?.filter(
+      (langObj) => !NON_SUPPORTED_LANGUAGES.includes(langObj?.lang)
+    );
+    return filteredLanguagesArray.map((doc) => {
       const { uid, lang: docLang } = doc || {};
       const domain = getDomainFromUid(uid);
       const { short: lang } = getLangObject(docLang) || {};
