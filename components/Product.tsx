@@ -1184,8 +1184,11 @@ const Product = (props) => {
     ? { highlights: finalHighlights, tabs: [] }
     : extractTabsFromHighlights(finalHighlights);
 
-  const hasReadMore =
-    (highlights.flat()?.length >= 3 || showMoreDetailsInTabs) && !defaultOpen;
+  const shouldShowMoreDetails =
+    tabs[activeTabIndex]?.contents.flat()?.length > 3 &&
+    showMoreDetailsInTabs &&
+    !defaultOpen;
+  const hasReadMore = shouldShowMoreDetails || isMobile;
 
   const noOfListItemToShow = getMaxListItemsToShow(
     tabs[activeTabIndex]?.contents
