@@ -1,6 +1,4 @@
-import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { experimentsAtom } from 'store/atoms/experiment';
 import Conditional from 'components/common/Conditional';
 import LocalisedPrice from 'UI/LPrice';
 import COLORS from 'const/colors';
@@ -8,7 +6,6 @@ import { CASHBACK_TYPES, THEMES } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import { FONTS } from 'const/fonts';
-import { VARIANTS } from 'const/experiments';
 import { HALYARD } from 'const/ui-constants';
 import { CurrencyDisplayType } from 'utils/currency';
 
@@ -72,10 +69,9 @@ const PriceBlock = ({
   lang,
   showScratchPrice = true,
   prefix = true,
-  showSavings: showSavingsFromProp = false,
+  showSavings,
   currencyDisplay = 'symbol',
 }: PriceBlockProps) => {
-  const experiments = useRecoilValue(experimentsAtom);
   if (!listingPrice) return null;
   const {
     originalPrice,
@@ -86,16 +82,7 @@ const PriceBlock = ({
     cashbackValue,
     cashbackType,
   } = listingPrice ?? {};
-  const isCashbackEfficacyTreatment =
-    experiments.CASHBACK_EFFICACY.ready &&
-    experiments.CASHBACK_EFFICACY.activeVariant === VARIANTS.SHOW_CASHBACK;
-  const isNonExperimentGroup =
-    experiments.CASHBACK_EFFICACY.ready &&
-    experiments.CASHBACK_EFFICACY.activeVariant === null;
 
-  const showSavings =
-    showSavingsFromProp &&
-    (isCashbackEfficacyTreatment || isNonExperimentGroup);
   const savingsElementsArray = [];
 
   if (bestDiscount > 0) {
@@ -104,7 +91,7 @@ const PriceBlock = ({
     );
   }
 
-  if (cashbackValue > 0 && isCashbackEfficacyTreatment) {
+  if (cashbackValue > 0) {
     savingsElementsArray.push(
       `${strings.formatString(
         strings.CASHBACK,

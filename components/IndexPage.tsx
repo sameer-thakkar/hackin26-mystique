@@ -15,22 +15,19 @@ import {
   DESIGN,
   ANALYTICS_PLATFORM,
   THEMES,
-  CASHBACK_EFFICACY_UIDS,
   COOKIE,
 } from 'const/index';
-import { redirectTo, reflect, isNakedDomain, getNakedDomain } from 'utils';
+import { redirectTo, reflect, isNakedDomain } from 'utils';
 import { getPageData } from 'utils/prismicUtils';
 import { sendVariableToDataLayer } from 'utils/analytics';
 import { removePageQuery } from 'utils/urlUtils';
 import { traceError } from 'utils/logutils';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { gtmAtom } from 'store/atoms/gtm';
 import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
 import { withShortcodes } from 'utils/helper';
 import { localServerSideIsMobileCheck } from 'utils/gen';
-import { getABTestingVariant } from 'utils/experiments/experimentUtils';
 import { strings } from 'const/strings';
-import { experimentsAtom } from 'store/atoms/experiment';
 
 const Microsite = dynamic(() => import('components/MicrositeV1'));
 const ContentPage = dynamic(() => import('components/ContentPage'));
@@ -110,40 +107,6 @@ const Page = (props) => {
 
     setEventsReady({ eventsReady: true });
   }, []);
-
-  const [experiments, updateExperiments] = useRecoilState(experimentsAtom);
-  const hsid = useRecoilValue(hsidAtom);
-
-  useEffect(() => {
-    if (!hsid) return;
-    if (experiments.CASHBACK_EFFICACY.ready) return;
-    if (!CASHBACK_EFFICACY_UIDS.includes(uid)) {
-      updateExperiments((prevState) => ({
-        ...prevState,
-        CASHBACK_EFFICACY: {
-          ...prevState.CASHBACK_EFFICACY,
-          ready: true,
-        },
-      }));
-      return;
-    }
-
-    const variant = getABTestingVariant(
-      experiments.CASHBACK_EFFICACY.experimentName,
-      hsid
-    );
-    Cookies.set(COOKIE.CASHBACK_EXP_VIEWED, variant, {
-      domain: `.${getNakedDomain(window.location.host)}`,
-    });
-    updateExperiments((prevState) => ({
-      ...prevState,
-      CASHBACK_EFFICACY: {
-        ...prevState.CASHBACK_EFFICACY,
-        activeVariant: variant,
-        ready: true,
-      },
-    }));
-  }, [hsid, uid]);
 
   const { noTrack, tgidToScroll, bookSubdomain } = queryParams;
 

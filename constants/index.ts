@@ -818,13 +818,6 @@ export const SLICE_TYPES = {
   CONTENT_TYPE_TAG: 'content_type_tag',
 };
 
-export const CASHBACK_EFFICACY_UIDS = [
-  'www.malaysia-tickets.com.sunway-lagoon',
-  'www.singapore-tickets.com.grandprix',
-  'klcc-aquaria.malaysia-tickets.com',
-  'www.thevaticantickets.com.test', // qa changes
-];
-
 export const CASHBACK_TYPES = {
   PERCENTAGE: 'PERCENTAGE',
   ABSOLUTE: 'ABSOLUTE',
