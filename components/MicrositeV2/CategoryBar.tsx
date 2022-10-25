@@ -12,6 +12,7 @@ import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { expandFontToken } from 'const/typography';
 
 const StyledCategoryBar = styled.div`
+  height: fit-content;
   position: sticky;
   background: ${COLORS.BRAND.WHITE};
   top: 0;
@@ -40,8 +41,7 @@ const CategoryBarWrapper = styled.div`
   grid-gap: 0.5rem;
   padding-top: 2.25rem;
   padding-bottom: ${({ isEntertainmentMb }) =>
-    isEntertainmentMb ? '0.75rem' : '0.875rem'};
-
+    isEntertainmentMb ? '0.75rem' : '1.25rem'};
   .tabs-wrap {
     margin: 0;
     padding: 0;
@@ -63,7 +63,8 @@ const CategoryBarWrapper = styled.div`
   }
   .active-indicator {
     position: absolute;
-    bottom: -0.8rem;
+    bottom: ${({ isEntertainmentMb }) =>
+      isEntertainmentMb ? '-0.83rem' : '-1.3rem'};
     left: 0;
     width: 6.25rem;
     height: 0.125rem;
@@ -93,7 +94,7 @@ const CategoryBarWrapper = styled.div`
     padding-top: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '1.125rem' : '1.188rem'};
     padding-bottom: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '0.5rem' : '0.875rem'};
+      isEntertainmentMb ? '1.10rem' : '1.01rem'};
     margin-top: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '1rem' : '1.5rem'};
 
@@ -108,7 +109,7 @@ const CategoryBarWrapper = styled.div`
 
     .active-indicator {
       bottom: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '-0.5rem' : '-0.875rem'};
+        isEntertainmentMb ? '-1.10rem' : '-1.01rem'};
     }
 
     .tab {

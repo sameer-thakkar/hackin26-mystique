@@ -57,7 +57,7 @@ const StyledHeader = styled.div`
   }
   .fixed-wrap {
     position: fixed;
-    width: 100vw;
+    width: calc(100vw - (100vw - 100%));
     top: 0;
     min-height: ${({ isGlobalMb }) => (isGlobalMb ? '64px' : '80px')};
     background-color: ${({ theme: { primaryBackground } }) =>
@@ -94,7 +94,7 @@ const StyledHeader = styled.div`
       margin: unset;
       width: calc(100% - (16px * 2));
       padding: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '18px 16px' : '12px 16px'};
+        isEntertainmentMb ? '15px 16px' : '12px 16px'};
       border-bottom: ${({ theme: { theme } }) =>
         theme === THEMES.DEFAULT ? `1px solid ${COLORS.GRAY.G6}` : 'none'};
     }
@@ -119,7 +119,7 @@ const HeaderRight = styled.div`
   display: grid;
   grid-gap: 22px;
   grid-auto-flow: column !important;
-  grid-auto-columns: max-content;
+  grid-auto-columns: auto;
   align-items: center;
   .buy-tickets {
     font-size: 16px;
@@ -352,7 +352,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   );
   const convertedRegularMenuItems =
     headerLinks
-      ?.filter((link) => !!link.link_url?.url)
+      ?.filter((link) => !!link.link_url?.url && !!link.link_heading)
       ?.map((link) => ({
         slice_type: 'menu_item',
         primary: {

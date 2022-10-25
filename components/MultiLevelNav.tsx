@@ -179,7 +179,7 @@ const Nav = styled.nav`
   display: grid;
   grid-auto-flow: column;
   align-items: center;
-  grid-column-gap: 33px;
+  grid-column-gap: 30px;
   ${({ isMobile }) => !isMobile && `margin-left: 16px;`}
   & > li {
     padding: 0;
