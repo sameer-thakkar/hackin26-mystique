@@ -40,8 +40,12 @@ const ContentWrapper = styled.main`
 const StyledContentPage = styled.div`
   display: grid;
   grid-row-gap: 72px;
-  margin-top: 72px;
+  margin-top: 32px;
   margin-bottom: 72px;
+
+  .page_tabs + div {
+    margin-top: -64px;
+  }
 
   .slice-block h2 {
     margin: 0.2em 0;
@@ -119,7 +123,9 @@ const StyledContentPage = styled.div`
 
   @media (max-width: 768px) {
     grid-row-gap: 52px;
-    margin-top: 52px;
+    .page_tabs + div {
+      margin-top: -48px;
+    }
     .slice-block h2 {
       ${expandFontToken('Heading/Regular')}
     }
