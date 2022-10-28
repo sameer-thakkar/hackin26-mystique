@@ -10,7 +10,7 @@ import { expandFontToken } from 'const/typography';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
-  FULL_LANGUAGE_MAP,
+  LANGUAGE_MAP,
   THEMES,
 } from 'const/index';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
@@ -203,8 +203,7 @@ const LanguageSelector = (props) => {
   const trackDropdownShown = () => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.DROPDOWN_SHOWN,
-      [ANALYTICS_PROPERTIES.HEADER]:
-        FULL_LANGUAGE_MAP[currentLanguage].language,
+      [ANALYTICS_PROPERTIES.HEADER]: LANGUAGE_MAP[currentLanguage].displayName,
       ...getCommonEventMetaData(pageMetaData),
     });
   };
@@ -255,7 +254,7 @@ const LanguageSelector = (props) => {
                 >
                   <div className="language">
                     <span className="lang-option">
-                      {FULL_LANGUAGE_MAP[lang].language}
+                      {LANGUAGE_MAP[lang].displayName}
                     </span>
                   </div>
                 </a>
@@ -294,7 +293,7 @@ const LanguageSelector = (props) => {
     >
       <StyledLanguage>
         {mbTheme !== THEMES.MIN_BLUE ? GLOBE : null}
-        {FULL_LANGUAGE_MAP[currentLanguage].language}
+        {LANGUAGE_MAP[currentLanguage].displayName}
         <Conditional if={mbTheme === THEMES.MIN_BLUE}>
           <Chevron className="chevron" isActive={showDropdown} />
         </Conditional>
@@ -315,7 +314,7 @@ const LanguageSelector = (props) => {
             >
               <div className="language">
                 <span className="lang">
-                  {FULL_LANGUAGE_MAP[doc.lang].language}
+                  {LANGUAGE_MAP[doc.lang].displayName}
                 </span>
               </div>
             </a>

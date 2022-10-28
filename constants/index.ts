@@ -35,9 +35,10 @@ export const SUPPORTED_LANGUAGES = [
   'tw',
   'cn',
   'ko',
+  'ar',
 ];
 
-export const SUPPORTED_LANGUAGES_MAP = {
+export const SUPPORTED_LOCALE_MAP = {
   en: 'en-us',
   es: 'es-es',
   it: 'it-it',
@@ -49,74 +50,69 @@ export const SUPPORTED_LANGUAGES_MAP = {
   cn: 'zh-cn',
   tw: 'zh-tw',
   ko: 'ko-kr',
+  ar: 'ar-ae',
 };
 
-export const FULL_LANGUAGE_MAP = {
+export const LANGUAGE_MAP = {
   en: {
-    language: 'English',
-    paramLang: 'en-us',
-    short: 'en',
-    bookingFlow: 'en',
+    displayName: 'English',
+    locale: 'en-us',
+    code: 'en',
   },
   it: {
-    language: 'Italiano',
-    paramLang: 'it-it',
-    short: 'it',
-    bookingFlow: 'it',
+    displayName: 'Italiano',
+    locale: 'it-it',
+    code: 'it',
   },
   es: {
-    language: 'Español',
-    paramLang: 'es-es',
-    short: 'es',
-    bookingFlow: 'es',
+    displayName: 'Español',
+    locale: 'es-es',
+    code: 'es',
   },
   fr: {
-    language: 'Français',
-    paramLang: 'fr-fr',
-    short: 'fr',
-    bookingFlow: 'fr',
+    displayName: 'Français',
+    locale: 'fr-fr',
+    code: 'fr',
   },
   de: {
-    language: 'Deutsch',
-    paramLang: 'de-de',
-    short: 'de',
-    bookingFlow: 'de',
+    displayName: 'Deutsch',
+    locale: 'de-de',
+    code: 'de',
   },
   nl: {
-    language: 'Nederlands',
-    paramLang: 'nl-nl',
-    short: 'nl',
-    bookingFlow: 'nl',
+    displayName: 'Nederlands',
+    locale: 'nl-nl',
+    code: 'nl',
   },
   pt: {
-    language: 'Português',
-    paramLang: 'pt-pt',
-    short: 'pt',
-    bookingFlow: 'pt',
+    displayName: 'Português',
+    locale: 'pt-pt',
+    code: 'pt',
   },
   cn: {
-    language: '简体中文',
-    paramLang: 'zh-cn',
-    short: 'cn',
-    bookingFlow: 'zh-hans',
+    displayName: '简体中文',
+    locale: 'zh-cn',
+    code: 'zh-hans',
   },
   tw: {
-    language: '繁體中文 ',
-    paramLang: 'zh-tw',
-    short: 'tw',
-    bookingFlow: 'zh-hant',
+    displayName: '繁體中文 ',
+    locale: 'zh-tw',
+    code: 'zh-hant',
   },
   ja: {
-    language: '日本語',
-    paramLang: 'ja-jp',
-    short: 'ja',
-    bookingFlow: 'ja',
+    displayName: '日本語',
+    locale: 'ja-jp',
+    code: 'ja',
   },
   ko: {
-    language: 'Korean',
-    paramLang: 'ko-kr',
-    short: 'ko',
-    bookingFlow: 'ko',
+    displayName: 'Korean',
+    locale: 'ko-kr',
+    code: 'ko',
+  },
+  ar: {
+    displayName: 'Arabic',
+    locale: 'ar-ae',
+    code: 'ar',
   },
 };
 
@@ -132,9 +128,10 @@ export const PRISMIC_LANG_TO_ROUTE_PARAM = {
   'zh-tw': 'tw',
   'ja-jp': 'ja',
   'ko-kr': 'ko',
+  'ar-ae': 'ar',
 };
 
-export const LANGUAGE_PARAMS_REGEX = /^(\/)?(en|fr|de|it|nl|pt|es|ja|tw|cn|ko){0,2}(\/)/;
+export const LANGUAGE_PARAMS_REGEX = /^(\/)?(en|fr|de|it|nl|pt|es|ja|tw|cn|ko|ar){0,2}(\/)/;
 
 export const GROUP_TOUR_PREFERED_TOUR = [
   {
@@ -599,6 +596,11 @@ export const LOCALISED_DATE_FORMATS = {
     FULL: 'DD-MMMM-YYYY',
     DATE_MONTH: 'MMM D',
   },
+  ar: {
+    SHORT: 'DD-MMM-YY',
+    FULL: 'DD-MMMM-YYYY',
+    DATE_MONTH: 'MMM D',
+  },
 };
 
 export const SHORT_CODE_TYPES = {
@@ -803,6 +805,8 @@ export const CANCELLATION_POLICY_POSSIBLE_LABELS = [
   'politica di cancellazione',
   'cancellazione',
 ];
+
+export const RTL_LANGUAGE_CODES = [LANGUAGE_MAP.ar.code];
 
 export const LIVE_CHAT = {
   DELAY: 3000,

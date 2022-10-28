@@ -89,7 +89,7 @@ const CategorySection = (props) => {
   } = props;
   const toursContext = useContext(ProductsContext);
   const interactionContext = useContext(InteractionContext);
-  const allTours = toursContext.allTours;
+  const { allTours } = toursContext;
 
   let filteredTgids;
   const categoryDataObj = {};

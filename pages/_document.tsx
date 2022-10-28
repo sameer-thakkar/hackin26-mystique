@@ -4,9 +4,11 @@ import { ServerStyleSheet } from 'styled-components';
 import * as Sentry from '@sentry/node';
 import AMPAnalytics from 'components/common/AMPAnalytics';
 import Conditional from 'components/common/Conditional';
-import { isAmpUrl } from 'utils/urlUtils';
+import { getLangUID, isAmpUrl } from 'utils/urlUtils';
+import { RTL_LANGUAGE_CODES } from 'const/index';
 
 import ampFonts from '../style/amp/ampFonts';
+import { getLangObject } from '../utils/helper';
 
 Sentry.init({
   dsn: 'https://a952d80706b3435388b1fb5983c74b18@sentry.io/1545593',
@@ -14,8 +16,9 @@ Sentry.init({
 
 class MystiqueDocument extends Document {
   static async getInitialProps(ctx) {
-    const { asPath, query } = ctx;
+    const { asPath, query, req } = ctx;
     const sheet = new ServerStyleSheet();
+    const { lang } = getLangUID(req, query);
     const originalRenderPage = ctx.renderPage;
     const isAmp = isAmpUrl(query);
     try {
@@ -56,6 +59,7 @@ class MystiqueDocument extends Document {
         isAmp,
         asPath,
         query,
+        lang,
       };
     } finally {
       sheet.seal();
@@ -64,9 +68,13 @@ class MystiqueDocument extends Document {
 
   render() {
     // @ts-ignore
-    const { isAmp, asPath, query } = this.props;
+    const { isAmp, asPath, query, lang } = this.props;
+    const textDirection = RTL_LANGUAGE_CODES.includes(getLangObject(lang)?.code)
+      ? 'rtl'
+      : 'ltr';
+
     return (
-      <Html>
+      <Html dir={textDirection}>
         <Head>
           <link
             rel="preload"

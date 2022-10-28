@@ -7,7 +7,7 @@ import {
   SAFETY_DETAILS_IMAGES,
   SAFETY_DETAILS_TYPE,
   CLUBBED_SAFETY_TAGS,
-  FULL_LANGUAGE_MAP,
+  LANGUAGE_MAP,
 } from 'const/index';
 import useWindowSize from 'hooks/useWindowSize';
 import Conditional from 'components/common/Conditional';
@@ -266,7 +266,7 @@ const renderSafetyDetailsSection = (tags, lang, isMobile) =>
   );
 
 export const getSafetyDescription = async (countryCode, cityCode, lang?) => {
-  const language = FULL_LANGUAGE_MAP[lang]?.paramLang;
+  const language = LANGUAGE_MAP[lang]?.locale;
   try {
     const options = await getSafetyBannerDocument({ lang: language });
     const selectedSafetyPitch = options?.find((el) => {

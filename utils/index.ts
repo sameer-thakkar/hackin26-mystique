@@ -2,8 +2,7 @@ import Router from 'next/router';
 import dayjs from 'dayjs';
 import {
   SUPPORTED_LANGUAGES,
-  SUPPORTED_LANGUAGES_MAP,
-  FULL_LANGUAGE_MAP,
+  LANGUAGE_MAP,
   PRISMIC_LANG_TO_ROUTE_PARAM,
   CUSTOM_TYPES,
   HEADOUT_NAKED_DOMAIN,
@@ -61,7 +60,7 @@ export const getPrismicProps = ({ host, pathname }) => {
 
   return {
     uid,
-    lang: SUPPORTED_LANGUAGES_MAP[requestedLang],
+    lang: LANGUAGE_MAP[requestedLang].locale,
   };
 };
 
@@ -160,7 +159,7 @@ export const createBookingURL = ({
     bookSubdomain !== 'undefined'
       ? bookSubdomain
       : 'book';
-  const langRouteParam = lang ? '/' + FULL_LANGUAGE_MAP[lang].bookingFlow : '';
+  const langRouteParam = lang ? '/' + LANGUAGE_MAP[lang].code : '';
 
   const domain = redirectToHeadoutBookingFlow
     ? HEADOUT_NAKED_DOMAIN
@@ -208,8 +207,7 @@ export const isNakedDomain = (host) => {
 
 export const getHeadoutLanguagecode = (prismicLangCode) => {
   return (
-    FULL_LANGUAGE_MAP[PRISMIC_LANG_TO_ROUTE_PARAM?.[prismicLangCode]]
-      ?.bookingFlow || 'en'
+    LANGUAGE_MAP[PRISMIC_LANG_TO_ROUTE_PARAM?.[prismicLangCode]]?.code || 'en'
   );
 };
 
@@ -231,7 +229,7 @@ export const getAlternateLanguages = (
     return filteredLanguagesArray.map((doc) => {
       const { uid, lang: docLang } = doc || {};
       const domain = getDomainFromUid(uid);
-      const { short: lang } = getLangObject(docLang) || {};
+      const { code: lang } = getLangObject(docLang) || {};
 
       return {
         url: convertUidToUrl({
@@ -323,6 +321,7 @@ export const generatePromiseForCategoryTours = ({
   isCollection = false,
   isCategory = false,
   isSubCategory = false,
+  lang,
 }: {
   arr: any[];
   hostname: string;
@@ -330,6 +329,7 @@ export const generatePromiseForCategoryTours = ({
   isCollection?: boolean;
   isCategory?: boolean;
   isSubCategory?: boolean;
+  lang: string;
 }) => {
   const idSet = new Set(arr);
   const allIds = Array.from(idSet);
@@ -342,6 +342,7 @@ export const generatePromiseForCategoryTours = ({
           collectionId: catId,
           hostname,
           limit: '100',
+          language: getHeadoutLanguagecode(lang),
         });
         break;
       case isCategory:
@@ -352,6 +353,7 @@ export const generatePromiseForCategoryTours = ({
           hostname,
           city,
           limit: '100',
+          language: getHeadoutLanguagecode(lang),
         });
         break;
     }

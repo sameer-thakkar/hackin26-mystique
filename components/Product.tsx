@@ -170,23 +170,24 @@ const StyledProductCard = styled.div`
 
   .more-details {
     ${expandFontToken('Button/Medium')}
-	color: ${COLORS.BRAND.CANDY};
+    color: ${COLORS.BRAND.CANDY};
     margin-left: 1em;
     margin-top: 16px;
     cursor: pointer;
     outline: none;
-	display: grid;
-	grid-auto-flow: column;
-	justify-content: start;
-	grid-gap: 8px;
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: start;
+    grid-gap: 8px;
 
-	.chevron::before, .chevron::after {
-		top: 0.6em;
-		background-color: ${COLORS.BRAND.CANDY};
-	}
-	@media(max-width: 768px) {
-		justify-content: left;
-	}
+    .chevron::before,
+    .chevron::after {
+      top: 0.6em;
+      background-color: ${COLORS.BRAND.CANDY};
+    }
+    @media (max-width: 768px) {
+      justify-content: left;
+    }
   }
   ${({ theme }) => theme.productCards?.styles?.desktop}
 
@@ -1484,7 +1485,7 @@ const Product = (props) => {
                 <a
                   target={isMobile ? null : '_blank'}
                   href={productBookingUrl}
-                  rel="nofollow"
+                  rel="nofollow noreferrer"
                 >
                   <BookNowCta clickHandler={sendBookNowEvent} />
                 </a>

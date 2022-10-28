@@ -20,7 +20,6 @@ import { FONTS } from 'const/fonts';
 import { createBookingURL } from 'utils';
 import { dateToString } from 'utils/dateUtils';
 import { fetchCalendarInventory } from 'utils/apiUtils';
-import { checkLTT } from 'utils/helper';
 import {
   getProductCommonProperties,
   sendVariablesToDataLayer,
@@ -152,7 +151,7 @@ const BannerContent = styled.div`
 
   .priceBlockWrapper {
     border-right: 1px solid ${COLORS.GRAY.G6};
-    grid-area: 'price';
+    grid-area: price;
 
     .price-block-from{
       ${expandFontToken(FONTS.UI_LABEL_REGULAR)}

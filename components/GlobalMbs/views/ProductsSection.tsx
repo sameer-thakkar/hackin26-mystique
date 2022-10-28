@@ -54,7 +54,7 @@ const ProductsSection = (props) => {
     setIsMobile(windowWidth < 768);
   }, [windowWidth]);
 
-  const currentLanguage = getLangObject(lang).short;
+  const currentLanguage = getLangObject(lang).code;
   const onTogglePopup = () => {
     toggleFreeTourPopup(!freeTourPopupOpen);
   };

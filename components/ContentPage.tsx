@@ -459,7 +459,7 @@ class ContentPage extends Component<any, any> {
       commonHeader.data.enable_powered_by_superbrand_logo ||
       microsite.data.enable_powered_by_superbrand_logo;
     const showGroupBooking = legacyBooleanCheck(enableGroupBooking);
-    const currentLanguage = getLangObject(lang).short;
+    const currentLanguage = getLangObject(lang).code;
     return (
       <div className="page-wrapper">
         {this.state.showGroupBookingModal && groupBookingTourTitles && (

@@ -1,5 +1,5 @@
 import { PRISMIC_LANG_TO_ROUTE_PARAM } from 'const/index';
-import { FULL_LANGUAGE_MAP } from 'const/index';
+import { LANGUAGE_MAP } from 'const/index';
 import queryParser from 'query-string';
 import { getPrismicProps } from 'utils';
 import { fromEntries } from 'utils/gen';
@@ -51,9 +51,7 @@ export const getLangUID = (req, query) => {
     if (isDev) {
       const { mystique_uid: queryParamUID, lang: queryParamLang } = query;
       uid = queryParamUID;
-      lang =
-        FULL_LANGUAGE_MAP[PRISMIC_LANG_TO_ROUTE_PARAM[queryParamLang]]
-          .paramLang;
+      lang = LANGUAGE_MAP[PRISMIC_LANG_TO_ROUTE_PARAM[queryParamLang]].locale;
     } else {
       const { uid: reqUID, lang: reqLang } = getPrismicProps({
         host,
@@ -142,7 +140,7 @@ export const convertUidToUrl = ({
     return url;
   };
   const devUrl = `http://${hostname}/?mystique_uid=${uid}&lang=${
-    getLangObject(lang)?.paramLang
+    getLangObject(lang)?.locale
   }${isAmp ? `&amp=1` : ''}`;
   const isStage = hostname?.includes('stage-');
   if (isStage) {

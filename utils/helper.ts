@@ -2,7 +2,7 @@ import parse from 'url-parse';
 import dayjs from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
-import { FULL_LANGUAGE_MAP } from 'const/index';
+import { LANGUAGE_MAP } from 'const/index';
 import renderShortCodes from 'utils/shortCodes';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 
@@ -321,8 +321,8 @@ export const uaIsMobile = (userAgentString) =>
   );
 
 export const getLangObject = (language) => {
-  return Object.values(FULL_LANGUAGE_MAP).find(
-    (lang: any) => lang.paramLang === language || lang.short === language
+  return Object.values(LANGUAGE_MAP).find(
+    (lang: any) => lang.locale === language || lang.code === language
   );
 };
 

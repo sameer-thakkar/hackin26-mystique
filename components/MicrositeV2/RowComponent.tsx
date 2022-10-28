@@ -30,7 +30,6 @@ export const RowComponent = (props) => {
     tgidsSubArr,
     allTours,
     hasCategoryTourList,
-    categoryTourList,
     isEntertainmentMb,
     currentLanguage,
     host,
@@ -87,8 +86,6 @@ export const RowComponent = (props) => {
             productClick={handleProductClicked}
             isEntertainmentMb={isEntertainmentMb}
             allTours={allTours}
-            hasCategoryTourList={hasCategoryTourList}
-            categoryTourList={categoryTourList}
             isMobile={isMobile}
             key={index}
             cardIdPrefix={sectionId}
@@ -103,7 +100,6 @@ export const RowComponent = (props) => {
           tgidClicked={tgidClicked}
           allTours={allTours}
           hasCategoryTourList={hasCategoryTourList}
-          categoryTourList={categoryTourList}
           isMobile={isMobile}
           isEntertainmentMb={isEntertainmentMb}
           currentLanguage={currentLanguage}

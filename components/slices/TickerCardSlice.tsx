@@ -103,7 +103,7 @@ const TicketCard = (props) => {
       ? ''
       : uncategorizedTours[0].primary
     : '';
-  const currentLanguage = lang ? getLangObject(lang).short : null;
+  const currentLanguage = lang ? getLangObject(lang).code : null;
   const withCommonHeaderOverrides = {
     ...micrositeData,
   };

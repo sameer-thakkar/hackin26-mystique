@@ -92,7 +92,7 @@ export const MBContextProvider = (props) => {
     <MBContext.Provider
       value={{
         uid,
-        lang: getLangObject(lang).short,
+        lang: getLangObject(lang).code,
         language_full: lang,
         nakedDomain,
         buttons: buttons,

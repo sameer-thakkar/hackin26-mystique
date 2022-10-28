@@ -154,7 +154,7 @@ class MicrositeV2 extends Component<any, any> {
       group_booking_excluded_tgids,
       body: CMSBody,
     } = CMSData || {};
-    const currentLanguage = getLangObject(CMSContent.lang).short;
+    const currentLanguage = getLangObject(CMSContent.lang).code;
     const { isMobile } = this.state;
     const languageProps = {
       uid,

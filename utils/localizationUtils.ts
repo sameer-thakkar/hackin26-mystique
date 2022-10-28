@@ -11,6 +11,7 @@ const dayJsLocales = {
   ko: () => import(`dayjs/locale/ko`),
   tw: () => import('dayjs/locale/zh-tw'),
   cn: () => import('dayjs/locale/zh-cn'),
+  ar: () => import('dayjs/locale/ar'),
 };
 
 const langStrings = {
@@ -25,6 +26,7 @@ const langStrings = {
   ko: () => import(`const/localization/ko`),
   cn: () => import(`const/localization/cn`),
   tw: () => import(`const/localization/tw`),
+  ar: () => import(`const/localization/ar`),
 };
 
 export const initDayJSLocale = (lang) => dayJsLocales[lang]();

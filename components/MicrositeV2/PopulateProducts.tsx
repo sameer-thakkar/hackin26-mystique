@@ -70,7 +70,6 @@ const PopulateProducts = (props) => {
     propTgids,
     allTours,
     hasCategoryTourList,
-    categoryTourList,
     changePage,
     host,
     uid,
@@ -85,7 +84,7 @@ const PopulateProducts = (props) => {
   const { activeCategoryTgids, activeCategoryIndex } =
     useContext(InteractionContext) || {};
   const mbContext = useContext(MBContext);
-  const { lang: currentLanguage } = mbContext;
+  const { lang } = mbContext;
   const { query, asPath, push: routerPush, pathname } = useRouter();
   const {
     limit = String((rowsToShow || 4) * NO_OF_CARDS_IN_ROW.DESKTOP),
@@ -213,11 +212,10 @@ const PopulateProducts = (props) => {
               allTours={allTours}
               isMobile={isMobile}
               hasCategoryTourList={hasCategoryTourList}
-              categoryTourList={categoryTourList}
               isEntertainmentMb={isEntertainmentMb}
               changePage={changePage}
               host={host}
-              currentLanguage={currentLanguage}
+              currentLanguage={lang}
               uid={uid}
               rowsInView={rowsInView}
               key={index}

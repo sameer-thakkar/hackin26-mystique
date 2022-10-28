@@ -2,7 +2,9 @@ import { Client } from 'config/prismic-config';
 import Prismic from 'prismic-javascript';
 import { toursTabSliceHandler } from 'components/Slices';
 import {
+  COMMON_DATA_PROPS_FOR_LISTICLE,
   CUSTOM_TYPES,
+  LANGUAGE_MAP,
   LINKED_MICROSITE_PROPS,
   MICROSITE_ARRAY_KEYS,
   MICROSITE_BOOL_KEYS,
@@ -12,7 +14,6 @@ import {
   PRISMIC_LANG_TO_ROUTE_PARAM,
   THEMES,
 } from 'const/index';
-import { COMMON_DATA_PROPS_FOR_LISTICLE } from 'const/index';
 import {
   documentUidUpdateRedirectHandler,
   getCollectionSection,
@@ -32,15 +33,15 @@ import { getLangUID, getValidUrlParams, sanitizeURL } from 'utils/urlUtils';
 import {
   categoryTourListParserV1,
   categoryTourListParserV2,
-  uncategorizedToursListParser,
   getToursGlobalCollection,
+  uncategorizedToursListParser,
 } from 'utils/dataParsers';
 import {
-  fetchTourGroupV6,
-  fetchTourGroupSlots,
   fetchCollection,
   fetchCollectionList,
   fetchTourGroupsByCategory,
+  fetchTourGroupSlots,
+  fetchTourGroupV6,
 } from 'utils/apiUtils';
 
 export const fetchAllMatchingDocs = async ({
@@ -310,7 +311,7 @@ export const getMicrositeDocument = async ({
           const {
             data: {
               is_entertainment_mb: isEntertainmentMb,
-              body: categorisedTours,
+              body: localisedCategoryTourListSlice,
             },
           } = baseLangData || { data: {} };
 
@@ -320,6 +321,7 @@ export const getMicrositeDocument = async ({
               query: [
                 Prismic.Predicates.at(`document.type`, CUSTOM_TYPES.SHOW_PAGE),
               ],
+              params: { lang },
             });
           }
 
@@ -378,26 +380,37 @@ export const getMicrositeDocument = async ({
               baseLangData?.data?.body1[0]?.primary?.ranking;
           }
 
-          // Base lang Fallback for CategorisedToursV1.
-          let categorisedToursV1 = getSinglePrismicSlice({
+          // Base lang Fallback for CategorisedToursV1
+          let localisedCategoryTourListV1 = getSinglePrismicSlice({
             sliceName: 'tour_list_category_v1',
-            slices: categorisedTours,
+            slices: localisedCategoryTourListSlice,
           });
+
+          const englishCategoryTourListSlice = completeMicrosite.data.data.body;
 
           let categoryTourListV1 = getSinglePrismicSlice({
             sliceName: 'tour_list_category_v1',
-            slices: completeMicrosite.data.data.body,
+            slices: englishCategoryTourListSlice,
           });
-          if (Object.keys(categorisedToursV1)?.length) {
-            categorisedToursV1.primary.locale_ranking =
+
+          let categoryTourListV2 = getSinglePrismicSlice({
+            sliceName: 'tour_list_category',
+            slices:
+              lang === LANGUAGE_MAP.en.locale
+                ? englishCategoryTourListSlice
+                : localisedCategoryTourListSlice,
+          });
+
+          if (Object.keys(localisedCategoryTourListV1)?.length) {
+            localisedCategoryTourListV1.primary.locale_ranking =
               categoryTourListV1?.primary?.locale_ranking ||
-              categorisedToursV1?.primary?.locale_ranking;
-            categorisedToursV1.primary.locale_exclusions =
+              localisedCategoryTourListV1?.primary?.locale_ranking;
+            localisedCategoryTourListV1.primary.locale_exclusions =
               categoryTourListV1?.primary?.locale_exclusions ||
-              categorisedToursV1?.primary?.locale_exclusions;
+              localisedCategoryTourListV1?.primary?.locale_exclusions;
           }
           if (!categoryTourListV1?.primary?.product_cards?.id) {
-            categoryTourListV1 = categorisedToursV1;
+            categoryTourListV1 = localisedCategoryTourListV1;
           }
 
           const hasCategoryTourListV1 = Object.keys(categoryTourListV1)?.length;
@@ -514,7 +527,8 @@ export const getMicrositeDocument = async ({
                     ? baseLangData.data.redirect_to_headout_booking_flow
                     : completeMicrosite.data.data
                         .redirect_to_headout_booking_flow,
-                categorisedToursV1,
+                localisedCategoryTourListV1,
+                categoryTourListV2,
                 ...(allShowPages && { allShowPages }),
               },
             },
@@ -944,6 +958,15 @@ export const getShowPage = async ({
     });
   }
 
+  // const baseLangData =
+  //   lang !== 'en-us'
+  //     ? await Client(req)
+  //       .getByUID(CUSTOM_TYPES.SHOW_PAGE, uid, {
+  //         lang: 'en-us',
+  //       })
+  //       .then((res) => res)
+  //     : page.data;
+
   const getCollections = async ({ pageSize = 100, page = 1, prevResults }) => {
     const {
       results = [],
@@ -1194,7 +1217,7 @@ export const getPageData = async ({
         const collectionData = await fetchCollection({
           collectionId,
           hostname,
-          language: getHeadoutLanguagecode(lang),
+          language,
           currency: 'USD',
         });
         const pinnedCards =
@@ -1373,20 +1396,14 @@ export const getPageData = async ({
       const {
         design,
         theme,
-        body,
         body1,
         allShowPages,
-        categorisedToursV1: categoryTourListV1,
+        localisedCategoryTourListV1,
+        categoryTourListV2,
       } = CMSData || {};
       const MBDesign = design || '';
       const mbTheme = theme || THEMES.DEFAULT;
       const toursTabFirstSlice = body1[0];
-      const categorizedTours = body;
-
-      const categoryTourList = getSinglePrismicSlice({
-        sliceName: 'tour_list_category',
-        slices: categorizedTours,
-      });
 
       const categoryCarouselCF = getSinglePrismicSlice({
         sliceName: 'category_carousel',
@@ -1394,8 +1411,9 @@ export const getPageData = async ({
       });
 
       let categoryTourListData;
-      const hasCategoryTourListV1 = Object.keys(categoryTourListV1)?.length;
-      const hasCategoryTourListV2 = Object.keys(categoryTourList)?.length;
+      const hasCategoryTourListV1 = Object.keys(localisedCategoryTourListV1)
+        ?.length;
+      const hasCategoryTourListV2 = Object.keys(categoryTourListV2)?.length;
       const hasCategoryTourList =
         hasCategoryTourListV2 ||
         hasCategoryTourListV1 ||
@@ -1404,16 +1422,17 @@ export const getPageData = async ({
         if (hasCategoryTourListV1) {
           categoryTourListData = await categoryTourListParserV1({
             productCard: productCardData,
-            sliceObj: categoryTourListV1,
+            sliceObj: localisedCategoryTourListV1,
             hostname,
             lang,
           });
         } else {
           categoryTourListData = await categoryTourListParserV2({
-            tourListCategory: categoryTourList,
+            tourListCategory: categoryTourListV2,
             hostname,
             showpages: allShowPages,
             categoryCarousel: categoryCarouselCF,
+            lang,
           });
         }
       }

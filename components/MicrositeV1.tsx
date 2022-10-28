@@ -151,7 +151,7 @@ const MicrositeV1 = (props) => {
 
   const headerCurrencies = currencies_list.filter((c) => c?.currency);
 
-  const currentLanguage = getLangObject(lang).short;
+  const currentLanguage = getLangObject(lang).code;
   const isCategorisedTours = Object.keys(categoryTourListData)?.length > 0;
   const {
     scorpioData: scorpioDataCategorised,
@@ -186,10 +186,10 @@ const MicrositeV1 = (props) => {
 
   const isHeaderInherited =
     commonHeader &&
-    commonHeader?.lang !== getLangObject(currentLanguage).paramLang;
+    commonHeader?.lang !== getLangObject(currentLanguage).locale;
   const isFooterInherited =
     commonFooter &&
-    commonFooter?.lang !== getLangObject(currentLanguage).paramLang;
+    commonFooter?.lang !== getLangObject(currentLanguage).locale;
   const withCommonHeaderOverrides = {
     ...micrositeData,
     ...commonHeader?.data,
