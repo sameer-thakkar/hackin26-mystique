@@ -24,38 +24,35 @@ const StyledFooter = styled.footer`
 `;
 
 const FooterLinksWrapper = styled.div`
-  padding-top: 32px;
-  background: ${({ theme }) => theme.footer.secondaryBackground};
   padding-bottom: 32px;
-
   &.primary-footer {
     margin-bottom: 0;
     padding-bottom: 0;
   }
-
   .quick-links-title {
-    ${expandFontToken(FONTS.HEADING_LARGE)}
-    margin-bottom: 32px;
+    ${expandFontToken(FONTS.HEADING_SMALL)}
     color: ${COLORS.GRAY.G2};
+    margin-bottom: 2.4rem;
   }
-
   &.primary-footer + .secondary-footer .quick-links-title {
     display: none;
   }
-
   &.primary-footer + .secondary-footer .quick-links-title.has-custom-title {
     display: block;
   }
-
+  &.secondary-footer {
+    margin-top: 3.6rem;
+    padding-bottom: 0;
+    @media (max-width: 768px) {
+      margin-top: 2.4rem;
+    }
+  }
   .quick-links {
     ${expandFontToken(FONTS.UI_LABEL_MEDIUM)}
-    display: grid;
-    justify-content: space-between;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-row-gap: 32px;
-    @media (max-width: 768px) {
-      grid-template-columns: 1fr;
-      grid-row-gap: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    .footer_column {
+      display: contents;
     }
   }
 `;
@@ -65,7 +62,6 @@ const FooterLegalWrapper = styled.div`
   background: ${({ theme }) => theme.footer.background};
   margin: 0 auto;
   width: 100%;
-
   .footer-chin {
     display: grid;
     ${expandFontToken(FONTS.UI_LABEL_SMALL)}
@@ -76,15 +72,14 @@ const FooterLegalWrapper = styled.div`
     grid-template-areas: 'white-line white-line' 'super-brand-logo social-links';
     grid-row-gap: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '18px' : '24px'};
-
     .white-line {
       grid-area: white-line;
       width: 100%;
       height: 0;
-      border: 0.5px solid ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? COLORS.GRAY.G4 : COLORS.BRAND.WHITE};
+      border: 0.5px solid
+        ${({ isEntertainmentMb }) =>
+          isEntertainmentMb ? COLORS.GRAY.G4 : COLORS.BRAND.WHITE};
     }
-
     .super-brand-logo {
       grid-area: super-brand-logo;
       display: grid;
@@ -92,17 +87,14 @@ const FooterLegalWrapper = styled.div`
       grid-column-gap: 12px;
       align-items: center;
       justify-items: left;
-
       span {
         color: ${({ theme, isEntertainmentMb }) =>
           isEntertainmentMb ? COLORS.GRAY.G4A : theme.footer.color};
       }
-
       svg {
         height: 16px;
       }
     }
-
     .social-links {
       grid-area: social-links;
     }
@@ -110,12 +102,10 @@ const FooterLegalWrapper = styled.div`
     @media (max-width: 768px) {
       .super-brand-logo {
         grid-template-columns: max-content max-content;
-
         svg {
           height: 12px;
         }
       }
-
       grid-template-columns: ${({ isEntertainmentMb }) =>
         isEntertainmentMb ? `1fr 1fr` : `1fr`};
       grid-template-areas: ${({ isEntertainmentMb }) =>
@@ -140,6 +130,7 @@ const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   width: calc(100vw - 5.6vw * 2);
+
   @media (max-width: 768px) {
     width: auto;
     padding: 0 16px;
@@ -150,19 +141,16 @@ const LinksWrapper = styled.div`
   display: grid;
   grid-template-rows: repeat(2, max-content);
   row-gap: 16px;
-
   .header {
     ${expandFontToken(FONTS.HEADING_SMALL)}
     color: ${({ theme, isEntertainmentMb }) =>
       isEntertainmentMb ? COLORS.GRAY.G7 : theme.footer.headingColor};
   }
-
   .links {
     display: grid;
     grid-auto-flow: row;
     grid-template-rows: max-content;
     row-gap: ${({ isEntertainmentMb }) => (isEntertainmentMb ? '8px' : '16px')};
-
     a {
       ${expandFontToken(FONTS.UI_LABEL_MEDIUM)}
       display: block;
@@ -178,7 +166,6 @@ const LinksWrapper = styled.div`
       ${({ isEntertainmentMb }) =>
         isEntertainmentMb && `font-size:15px;line-height:20px;`};
     }
-
     .links {
       ${({ isEntertainmentMb }) => isEntertainmentMb && `row-gap: 16px;`}
       a {
@@ -195,10 +182,14 @@ const LinksWrapper = styled.div`
 const LinkSlicesWrapper = styled.div`
   display: grid;
   grid-row-gap: 24px;
-  margin-bottom: ${({ isEntertainmentMb }) =>
-    isEntertainmentMb ? '80px' : '40px'};
+  padding: 4rem 0;
+  background-color: ${COLORS.GRAY.G8};
+  margin-bottom: 0;
+
   @media (max-width: 768px) {
     ${({ isEntertainmentMb }) => isEntertainmentMb && `margin-bottom: 48px;`}
+    padding: 2.4rem 0;
+    margin-bottom: 0;
   }
 `;
 
@@ -222,17 +213,13 @@ const FooterLegal = styled.div`
   padding-bottom: ${({ isEntertainmentMb }) =>
     isEntertainmentMb ? '0' : '40px'};
   line-height: 20px;
-
   .logo-disclaimer {
     grid-area: logo-disclaimer;
-
     .logo-wrapper {
       display: flex;
-
       .image-wrap {
         width: auto;
       }
-
       img {
         height: 40px;
         max-width: 100%;
@@ -240,11 +227,9 @@ const FooterLegal = styled.div`
         ${({ invertLogoColor }) =>
           invertLogoColor ? `filter: brightness(0) invert(1);` : ''}
       }
-
       svg {
         height: 40px;
         width: 100.5px;
-
         path {
           fill: ${({ isEntertainmentMb }) =>
             isEntertainmentMb ? COLORS.GRAY.G5 : COLORS.BRAND.WHITE};
@@ -252,7 +237,6 @@ const FooterLegal = styled.div`
       }
     }
   }
-
   .footer-links {
     grid-area: footer-links;
     display: grid;
@@ -261,7 +245,6 @@ const FooterLegal = styled.div`
     column-gap: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '48px' : '120px'};
   }
-
   .disclaimer-text {
     color: ${({ isEntertainmentMb, theme }) =>
       isEntertainmentMb ? COLORS.GRAY.G6 : theme.footer.color};
@@ -269,7 +252,6 @@ const FooterLegal = styled.div`
     ${expandFontToken(FONTS.UI_LABEL_MEDIUM)}
     max-width: 500px;
   }
-
   @media (min-width: 800px) and (max-width: 1200px) {
     grid-column-gap: 64px;
   }
@@ -287,7 +269,7 @@ const FooterLegal = styled.div`
       column-gap: 0;
       grid-auto-columns: 1fr;
     }
-
+    
     .disclaimer-text {
       ${({ isEntertainmentMb }) =>
         isEntertainmentMb &&
@@ -337,7 +319,7 @@ const LinkSlices = ({ linksTitle, slices, theme, className = '' }) => (
         {slices.map((slice, index) => {
           return (
             <div className={`${slice.slice_type}`} key={index}>
-              {sliceHandler(slice)}
+              {sliceHandler(slice, { index, sliceLength: slices.length })}
             </div>
           );
         })}

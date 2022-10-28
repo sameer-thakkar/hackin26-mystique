@@ -2,7 +2,6 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import { csvTgidToArray } from 'utils/helper';
 
-// Non-dynamic imports
 import HorizontalLine from './slices/HorizontalLine';
 import ContentTabs from './slices/ContentTabs';
 import PageTabs from './slices/PageTabs';
@@ -10,7 +9,7 @@ import RichTextBox from './slices/RichTextBox';
 import Table from './slices/Table';
 import Breadcrumb from './slices/Breadcrumb';
 import Background from './slices/Background';
-import FooterColumn from './slices/FooterColumn';
+import FooterLinksSection from './slices/FooterLinksSection';
 import TicketCard from './slices/TickerCardSlice';
 import RichtextWithCTA from './slices/RichTextWithCTA';
 
@@ -95,7 +94,14 @@ const sliceHandler = (slice, props: any = {}) => {
     case 'feature_box':
       return <FeatureBox blocks={slice.items} lazyLoad={true} />;
     case 'footer_column':
-      return <FooterColumn title={slice.primary.heading} links={slice.items} />;
+      return (
+        <FooterLinksSection
+          title={slice.primary.heading}
+          links={slice.items}
+          sliceLength={props.sliceLength}
+          sliceIndex={props.index}
+        />
+      );
     case 'table':
       return (
         <Table
