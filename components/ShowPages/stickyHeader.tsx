@@ -9,7 +9,6 @@ import { strings } from 'const/strings';
 import { createBookingURL } from 'utils';
 import Conditional from 'components/common/Conditional';
 import { expandFontToken } from 'const/typography';
-import { checkLTT } from 'utils/helper';
 import { ANALYTICS_EVENTS } from 'const/index';
 import { ANALYTICS_PROPERTIES } from 'const/index';
 import { getProductCommonProperties, trackEvent } from 'utils/analytics';
@@ -172,7 +171,7 @@ const StickyHeader = ({
     primaryCollection,
   } = tourGroupData ?? {};
 
-  const { nakedDomain, biLink, uid, redirectToHeadoutBookingFlow } = useContext(
+  const { nakedDomain, biLink, redirectToHeadoutBookingFlow } = useContext(
     MBContext
   );
 
@@ -183,7 +182,6 @@ const StickyHeader = ({
     biLink: biLink,
     redirectToHeadoutBookingFlow,
   });
-  const isLTT = checkLTT(uid);
   const { NEXT_AVAILABLE } = strings || {};
   const REOPENING_STRING = `${NEXT_AVAILABLE}`;
   const pageMetaData = useRecoilValue(metaAtom);
@@ -241,7 +239,7 @@ const StickyHeader = ({
                     window.open(bookingUrl, '_blank', 'noopener, noreferrer');
                   }}
                 >
-                  {isLTT ? strings.CHECK_AVAIL : strings.BANNER_CTA}
+                  {strings.CHECK_AVAIL}
                 </div>
               </Conditional>
               <Conditional if={!isAvailable}>
