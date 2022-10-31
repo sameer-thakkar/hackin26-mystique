@@ -449,6 +449,10 @@ const ShowPageBanner = ({
 
     sendVariablesToDataLayer({
       [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.CATEGORY_ID]: primaryCategory?.id,
+      [ANALYTICS_PROPERTIES.CATEGORY_NAME]: primaryCategory?.name,
+      [ANALYTICS_PROPERTIES.SUB_CAT_ID]: primarySubCategory?.id,
+      [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: primarySubCategory?.name,
     });
   }, []);
   useEffect(() => {

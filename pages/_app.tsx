@@ -68,8 +68,8 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
       primaryCollectionId = id;
     } else if (customType === CUSTOM_TYPES.SHOW_PAGE) {
       const { primaryCollection } = tourGroupData;
-      const { id, name } = primaryCollection ?? {};
-      primaryCollectionName = name;
+      const { id, displayName } = primaryCollection ?? {};
+      primaryCollectionName = displayName;
       primaryCollectionId = id;
     }
     sendVariablesToDataLayer({

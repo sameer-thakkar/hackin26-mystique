@@ -707,6 +707,7 @@ export const ANALYTICS_PROPERTIES = {
   SEARCH_QUERY: 'Search Query',
   DIRECTION: 'Direction',
   NEXT_ITEMS_COUNT: 'Next Items Count',
+  DIV_TYPE: 'Div Type',
 };
 export const PAGE_TYPES = {
   COLLECTION: 'Collection',

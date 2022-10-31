@@ -346,6 +346,9 @@ const Product = (props) => {
     category || {};
   let categoryName = '';
 
+  const primaryCategory = allTours[tgid]?.primaryCategory;
+  const primarySubCategory = allTours[tgid]?.primarySubCategory;
+
   if (isEntertainmentMb) {
     categoryName = primarySubCategoryName;
   } else {
@@ -400,6 +403,14 @@ const Product = (props) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED,
       [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.CATEGORY_ID]: primaryCategory?.id,
+      [ANALYTICS_PROPERTIES.CATEGORY_NAME]: primaryCategory?.displayName,
+      [ANALYTICS_PROPERTIES.SUB_CAT_ID]: primarySubCategory?.id,
+      [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: primarySubCategory?.displayName,
+      [ANALYTICS_PROPERTIES.COLLECTION_ID]: activeCategoryId,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: title,
+      [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
+      [ANALYTICS_PROPERTIES.DIV_TYPE]: 'Product List',
     });
   };
 
@@ -420,7 +431,7 @@ const Product = (props) => {
 
   const isBeforeToday = new Date().getTime() > new Date(openingDate)?.getTime();
   const hasScratchPrice = scratchPrice > price;
-  const primaryCategory = allTours[tgid]?.primaryCategory;
+
   const showPageEvent = () => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_EXPANDED,
@@ -428,8 +439,8 @@ const Product = (props) => {
       [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: title,
       [ANALYTICS_PROPERTIES.CATEGORY_ID]: primaryCategory?.id,
       [ANALYTICS_PROPERTIES.CATEGORY_NAME]: primaryCategory?.displayName,
-      [ANALYTICS_PROPERTIES.SUB_CAT_ID]: primaryCategory?.id,
-      [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: primaryCategory?.displayName,
+      [ANALYTICS_PROPERTIES.SUB_CAT_ID]: primarySubCategory?.id,
+      [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: primarySubCategory?.displayName,
     });
   };
   const showPageExists = !showPageUrl.includes('/book');
