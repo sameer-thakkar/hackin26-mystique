@@ -115,7 +115,7 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }) => {
       first_publication_date,
       last_publication_date,
       has_shoulder_page_tickets: await shoulderPageTicketsCheck(doc),
-      has_breadcrumbs: breadcrumbsCheck(doc),
+      has_breadcrumbs: await breadcrumbsCheck(doc),
       redirect_type,
       redirect_url: redirect_url?.url,
       collection_id: tagged_collection,

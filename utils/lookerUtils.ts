@@ -61,42 +61,69 @@ export const getStructure = (url: URL): string | null => {
   }
 };
 
+const contentFrameworkSliceCheck = async ({
+  docId,
+  sliceType,
+}: {
+  docId: string;
+  sliceType: string;
+}): Promise<boolean> => {
+  const contentFrameworkDoc = await fetchAllMatchingDocs({
+    query: [Prismic.Predicates.at(`document.id`, docId)],
+  });
+  const { body } = contentFrameworkDoc?.[0]?.data || {};
+  return body?.some((slice) => slice?.slice_type === sliceType);
+};
+
 export const shoulderPageTicketsCheck = async ({
   type,
   data,
 }: PrismicDocumentType): Promise<boolean> => {
   const contentFrameworkId = data?.content_framework?.id;
   if (type === CUSTOM_TYPES.CONTENT_PAGE && contentFrameworkId) {
-    const contentFrameworkDoc = await fetchAllMatchingDocs({
-      query: [Prismic.Predicates.at(`document.id`, contentFrameworkId)],
+    return await contentFrameworkSliceCheck({
+      docId: contentFrameworkId,
+      sliceType: SLICE_TYPES.SHOULDER_PAGE_TICKET_CARD,
     });
-    const { body } = contentFrameworkDoc?.[0]?.data || {};
-    return body?.some(
-      (slice) => slice?.slice_type === SLICE_TYPES.SHOULDER_PAGE_TICKET_CARD
-    );
   }
 
   return false;
 };
 
-export const breadcrumbsCheck = ({
+export const breadcrumbsCheck = async ({
   type,
   data,
-}: PrismicDocumentType): boolean => {
-  if (type === CUSTOM_TYPES.MICROSITE) {
-    return data?.body2?.some(
-      (slice) => slice?.slice_type === SLICE_TYPES.BREADCRUMBS
-    );
-  }
-  if (
-    type === CUSTOM_TYPES.CONTENT_PAGE ||
-    type === CUSTOM_TYPES.SHOW_PAGE ||
-    type === CUSTOM_TYPES.GLOBAL_COLLECTION ||
-    type === CUSTOM_TYPES.GLOBAL_EXPERIENCE
-  )
-    return true;
+}: PrismicDocumentType): Promise<boolean> => {
+  let hasBreadcrumbs = false;
 
-  return false;
+  switch (true) {
+    case type === CUSTOM_TYPES.MICROSITE:
+      hasBreadcrumbs =
+        data?.body2?.some(
+          (slice) => slice?.slice_type === SLICE_TYPES.BREADCRUMBS
+        ) ||
+        (data?.content_framework?.id &&
+          (await contentFrameworkSliceCheck({
+            docId: data.content_framework.id,
+            sliceType: SLICE_TYPES.BREADCRUMBS,
+          })));
+      break;
+    case type === CUSTOM_TYPES.CONTENT_PAGE && data?.content_framework?.id:
+      hasBreadcrumbs = await contentFrameworkSliceCheck({
+        docId: data.content_framework.id,
+        sliceType: SLICE_TYPES.BREADCRUMBS,
+      });
+      break;
+    case type === CUSTOM_TYPES.SHOW_PAGE ||
+      type === CUSTOM_TYPES.GLOBAL_COLLECTION ||
+      type === CUSTOM_TYPES.GLOBAL_EXPERIENCE:
+      hasBreadcrumbs = true;
+      break;
+    default:
+      hasBreadcrumbs = false;
+  }
+
+  return hasBreadcrumbs;
 };
 
 export const getPageUrl = ({
