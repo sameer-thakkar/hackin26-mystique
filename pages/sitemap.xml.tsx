@@ -6,14 +6,6 @@ import builder from 'xmlbuilder';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { fetchAllMatchingDocs } from 'utils/prismicUtils';
 
-const withHttps = (url) =>
-  (url.startsWith('http') ? url : `https://${url}`).replace('http:', 'https:');
-
-const withTrailingSlash = (url) =>
-  url.charAt(url.length - 1) !== '/' ? `${url}/` : url;
-
-const createLoc = (doc) => convertUidToUrl({ uid: doc.uid });
-
 const createImg = (doc) => {
   if (doc.type === CUSTOM_TYPES.MICROSITE) {
     if (doc.data.image && doc.data.image.url) {
@@ -28,6 +20,54 @@ const createImg = (doc) => {
   return {};
 };
 
+const createAltLangUrls = (langArr) => {
+  const langLinksArr = langArr.map((langItem) => {
+    const { lang, url } = langItem;
+    return {
+      '@rel': 'alternate',
+      '@hreflang': lang,
+      '@href': url,
+    };
+  });
+
+  return {
+    'xhtml:link': langLinksArr,
+  };
+};
+
+const createUrlArr = (doc) => {
+  const {
+    alternate_languages: languages = [],
+    uid,
+    lang: defaultLang = '',
+  } = doc;
+
+  const langData = languages.map((language) => {
+    const { lang } = language;
+    const langPrefix = lang?.split('-')[0];
+    return {
+      lang: langPrefix,
+      url: convertUidToUrl({ uid, lang: langPrefix }),
+    };
+  });
+
+  const defaultLangPrefix = defaultLang.split('-')[0];
+  langData.push({
+    lang: defaultLangPrefix,
+    url: convertUidToUrl({ uid, lang: defaultLangPrefix }),
+    isDefault: true,
+  });
+
+  return langData.map((item) => {
+    return {
+      loc: item.url,
+      lastmod: new Date(doc.last_publication_date).toISOString(),
+      ...createImg(doc),
+      ...createAltLangUrls(langData),
+    };
+  });
+};
+
 export default class SitemapXml extends Component {
   static async getInitialProps({ req, res, query }) {
     let uid;
@@ -40,6 +80,7 @@ export default class SitemapXml extends Component {
     const xmlDoc = {
       urlset: {
         '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+        '@xmlns:xhtml': 'http://www.w3.org/TR/xhtml11/xhtml11_schema.html',
         '@xmlns:image': 'http://www.google.com/schemas/sitemap-image/1.1',
         '@xsi:schemaLocation':
           'http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd',
@@ -83,11 +124,7 @@ export default class SitemapXml extends Component {
           .filter((doc) => doc.data.is_excluded_from_sitemap !== 'Yes')
           .forEach((doc) => {
             if (!doc?.data?.microbrand_url) {
-              xmlDoc.urlset.url.push({
-                loc: withTrailingSlash(withHttps(createLoc(doc))),
-                lastmod: new Date(doc.last_publication_date).toISOString(),
-                ...createImg(doc),
-              });
+              xmlDoc.urlset.url.push(...createUrlArr(doc));
             }
           });
         const xml = builder.create(xmlDoc, { encoding: 'utf-8' });
