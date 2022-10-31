@@ -32,7 +32,7 @@ const FooterLinksWrapper = styled.div`
   .quick-links-title {
     ${expandFontToken(FONTS.HEADING_SMALL)}
     color: ${COLORS.GRAY.G2};
-    margin-bottom: 2.4rem;
+    margin-bottom: 1.5rem;
   }
   &.primary-footer + .secondary-footer .quick-links-title {
     display: none;
@@ -41,10 +41,10 @@ const FooterLinksWrapper = styled.div`
     display: block;
   }
   &.secondary-footer {
-    margin-top: 3.6rem;
+    margin-top: 3.25rem;
     padding-bottom: 0;
     @media (max-width: 768px) {
-      margin-top: 2.4rem;
+      margin-top: 1.5rem;
     }
   }
   .quick-links {
@@ -181,14 +181,13 @@ const LinksWrapper = styled.div`
 
 const LinkSlicesWrapper = styled.div`
   display: grid;
-  grid-row-gap: 24px;
   padding: 4rem 0;
   background-color: ${COLORS.GRAY.G8};
   margin-bottom: 0;
 
   @media (max-width: 768px) {
     ${({ isEntertainmentMb }) => isEntertainmentMb && `margin-bottom: 48px;`}
-    padding: 2.4rem 0;
+    padding: 2.25rem 0;
     margin-bottom: 0;
   }
 `;

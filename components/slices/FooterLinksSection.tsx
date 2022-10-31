@@ -25,13 +25,11 @@ const FooterLinksSectionWrapper = styled.div`
 
   .link-item {
     ${expandFontToken(FONTS.UI_LABEL_MEDIUM)};
-    margin-right: 1.2rem;
+    margin: 0 0.75rem 0.75rem 0;
     text-decoration: none;
-    margin-bottom: 1.2rem;
     color: ${COLORS.GRAY.G3};
-    margin-top: 0;
-    padding-right: 1.2rem;
-    border-right: 0.1rem solid ${COLORS.GRAY.G6};
+    padding-right: 0.75rem;
+    border-right: 0.063rem solid ${COLORS.GRAY.G6};
     :last-child {
       border-right: ${({ isLastSlice }) => isLastSlice && 'none'};
     }
@@ -40,8 +38,7 @@ const FooterLinksSectionWrapper = styled.div`
 
 const Title = styled.div`
   ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)};
-  margin-bottom: 1.2rem;
-  margin-right: 1.2rem;
+  margin: 0 0.75rem 0.75rem 0;
 `;
 
 const FooterLinksSection: React.FC<FooterLinksSectionProps> = ({
