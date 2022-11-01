@@ -7,8 +7,6 @@ import { DONT_AUTO_SCROLL } from 'const/index';
 import Conditional from 'components/common/Conditional';
 import { checkLTT } from 'utils/helper';
 
-import Spinner from '../UI/Spinner';
-
 const PopulateProducts = dynamic(() => import('./PopulateProducts'));
 const CategorisedPopulateProducts = dynamic(() =>
   import('./CategorisedPopulateProducts')
@@ -25,10 +23,6 @@ const StyledProductWrapper = styled.div`
     margin-bottom: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '48px' : '0'};
   }
-`;
-const SpinnerWrapper = styled.div`
-  margin: 10% auto;
-  width: max-content;
 `;
 
 export const ProductsWrapper = (props) => {
@@ -84,11 +78,6 @@ export const ProductsWrapper = (props) => {
           isListicle={isListicle}
           showLtdCategoryHomepage={showLtdCategoryHomepage}
         />
-      </Conditional>
-      <Conditional if={showLtdCategoryHomepage === null}>
-        <SpinnerWrapper>
-          <Spinner>.</Spinner>
-        </SpinnerWrapper>
       </Conditional>
       <Conditional if={showLtdCategoryHomepage === false}>
         <PopulateProducts

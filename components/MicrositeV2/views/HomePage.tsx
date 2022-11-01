@@ -155,10 +155,7 @@ export const HomePage = (props) => {
 
   let { categoryProps } = props;
   const isDiscountedPage = displayMonths === 'Discounted';
-
-  const [showLtdCategoryHomepage, setShowLtdCategoryHomepage] = useState(
-    isLTT && !isListicle ? null : false
-  );
+  const [showLtdCategoryHomepage, setShowLtdCategoryHomepage] = useState(false);
   const hsid = useRecoilValue(hsidAtom);
   useEffect(() => {
     const { categories } = categoryProps;
