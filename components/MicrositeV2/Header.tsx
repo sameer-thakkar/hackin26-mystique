@@ -59,6 +59,7 @@ const StyledHeader = styled.div`
     position: fixed;
     width: calc(100vw - (100vw - 100%));
     top: 0;
+
     min-height: ${({ isGlobalMb }) => (isGlobalMb ? '64px' : '80px')};
     background-color: ${({ theme: { primaryBackground } }) =>
       primaryBackground ? primaryBackground : '#fff'};
@@ -97,10 +98,22 @@ const StyledHeader = styled.div`
         isEntertainmentMb ? '15px 16px' : '12px 16px'};
       border-bottom: ${({ theme: { theme } }) =>
         theme === THEMES.DEFAULT ? `1px solid ${COLORS.GRAY.G6}` : 'none'};
+      ${({ showLtdCategoryHomepage }) =>
+        showLtdCategoryHomepage
+          ? `
+      padding-left: 0 !important;
+    `
+          : ''}
     }
     .fixed-wrap {
       min-height: ${({ isGlobalMb }) => (isGlobalMb ? '48px' : '56px')};
       height: ${({ isGlobalMb }) => (isGlobalMb ? '48px' : '56px')};
+      ${({ showLtdCategoryHomepage }) =>
+        showLtdCategoryHomepage
+          ? `
+      right: 0;
+    `
+          : ''}
     }
     .fixed-offset::after {
       content: '';
@@ -278,6 +291,7 @@ interface HeaderProps {
   buyTicketsLink?: string;
   isEntertainmentMb?: boolean;
   isEntertainmentMbListicle?: boolean;
+  showLtdCategoryHomepage?: boolean;
 }
 
 const Header: FunctionComponent<HeaderProps> = ({
@@ -301,6 +315,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   buyTicketsLink = '',
   isEntertainmentMb = false,
   isEntertainmentMbListicle,
+  showLtdCategoryHomepage,
 }) => {
   const { lang, nakedDomain, redirectToHeadoutBookingFlow } =
     useContext(MBContext);
@@ -386,6 +401,13 @@ const Header: FunctionComponent<HeaderProps> = ({
     );
   }, []);
 
+  const onHamburgerClicked = () => {
+    trackEvent({
+      eventName: 'Hamburger Clicked',
+      Action: !navActive ? 'Expand' : 'Contract',
+    });
+    toggleNav(!navActive);
+  };
   return (
     <StyledHeader
       overlayActive={languageDropdown || navActive}
@@ -393,6 +415,7 @@ const Header: FunctionComponent<HeaderProps> = ({
       isGlobalMb={isGlobalMb}
       isEntertainmentMb={isEntertainmentMb}
       isEntertainmentMbListicle={isEntertainmentMbListicle}
+      showLtdCategoryHomepage={showLtdCategoryHomepage}
     >
       <div className="fixed-offset"></div>
       <div className="fixed-wrap">
@@ -523,7 +546,7 @@ const Header: FunctionComponent<HeaderProps> = ({
               <Hamburger
                 className={'hamburger'}
                 isActive={navActive}
-                onClickFn={() => toggleNav(!navActive)}
+                onClickFn={onHamburgerClicked}
                 isGlobalMb={isGlobalMb}
               />
             </Conditional>

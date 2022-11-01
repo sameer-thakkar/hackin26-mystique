@@ -7,7 +7,12 @@ import { DONT_AUTO_SCROLL } from 'const/index';
 import Conditional from 'components/common/Conditional';
 import { checkLTT } from 'utils/helper';
 
+import Spinner from '../UI/Spinner';
+
 const PopulateProducts = dynamic(() => import('./PopulateProducts'));
+const CategorisedPopulateProducts = dynamic(() =>
+  import('./CategorisedPopulateProducts')
+);
 
 const StyledProductWrapper = styled.div`
   margin-bottom: ${({ isEntertainmentMb }) =>
@@ -21,12 +26,15 @@ const StyledProductWrapper = styled.div`
       isEntertainmentMb ? '48px' : '0'};
   }
 `;
+const SpinnerWrapper = styled.div`
+  margin: 10% auto;
+  width: max-content;
+`;
 
 export const ProductsWrapper = (props) => {
   const interactionContext = useContext(InteractionContext);
   const { activeCategoryTgids, changeCategory, clickTour } =
     interactionContext || {};
-
   const {
     isMobile,
     isEntertainmentMb,
@@ -42,7 +50,11 @@ export const ProductsWrapper = (props) => {
     isListicle,
     isDev,
     isDiscountedPage,
+    showLtdCategoryHomepage,
   } = props;
+
+  const { categories } = categoryProps;
+
   useEffect(() => {
     const tgidArray =
       categoryProps.categories[activeCategory || 0].ranking.popularity;
@@ -70,24 +82,44 @@ export const ProductsWrapper = (props) => {
           isMobile={isMobile}
           isEntertainmentMb={isEntertainmentMb}
           isListicle={isListicle}
+          showLtdCategoryHomepage={showLtdCategoryHomepage}
         />
       </Conditional>
-      <PopulateProducts
-        tgids={activeCategoryTgids}
-        allTours={allTours}
-        hasCategoryTourList={hasCategoryTourList}
-        isMobile={isMobile}
-        isEntertainmentMb={isEntertainmentMb}
-        changePage={changePage}
-        currentLanguage={currentLanguage}
-        host={host}
-        uid={uid}
-        sectionId={'main'}
-        isListicle={isListicle}
-        categoryProps={categoryProps}
-        isDev={isDev}
-        isDiscountedPage={isDiscountedPage}
-      />
+      <Conditional if={showLtdCategoryHomepage === null}>
+        <SpinnerWrapper>
+          <Spinner>.</Spinner>
+        </SpinnerWrapper>
+      </Conditional>
+      <Conditional if={showLtdCategoryHomepage === false}>
+        <PopulateProducts
+          tgids={activeCategoryTgids}
+          allTours={allTours}
+          hasCategoryTourList={hasCategoryTourList}
+          isMobile={isMobile}
+          isEntertainmentMb={isEntertainmentMb}
+          changePage={changePage}
+          currentLanguage={currentLanguage}
+          host={host}
+          uid={uid}
+          sectionId={'main'}
+          isListicle={isListicle}
+          categoryProps={categoryProps}
+          isDev={isDev}
+          isDiscountedPage={isDiscountedPage}
+        />
+      </Conditional>
+      <Conditional if={showLtdCategoryHomepage}>
+        <CategorisedPopulateProducts
+          categories={categories}
+          allTours={allTours}
+          hasCategoryTourList={hasCategoryTourList}
+          host={host}
+          sectionId={'main'}
+          isMobile={isMobile}
+          uid={uid}
+          directTgid={directTgid}
+        />
+      </Conditional>
     </StyledProductWrapper>
   );
 };

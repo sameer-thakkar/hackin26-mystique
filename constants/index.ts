@@ -707,6 +707,12 @@ export const ANALYTICS_PROPERTIES = {
   SEARCH_QUERY: 'Search Query',
   DIRECTION: 'Direction',
   NEXT_ITEMS_COUNT: 'Next Items Count',
+  PINNED_CARD_PRESENT: 'Is Pinned Card Present',
+  IS_PINNED_CARD: 'Is Pinned Card',
+  AVERAGE_RATING: 'Average Rating',
+  NUMBER_OF_RATINGS: 'Number Of Ratings',
+  IS_DISCOUNT_PRESENT: 'Is Discount Present',
+  IS_OPENING_DATE_SHOWN: 'Is Opening Date Shown',
   DIV_TYPE: 'Div Type',
 };
 export const PAGE_TYPES = {
@@ -826,4 +832,47 @@ export const SLICE_TYPES = {
 export const CASHBACK_TYPES = {
   PERCENTAGE: 'PERCENTAGE',
   ABSOLUTE: 'ABSOLUTE',
+};
+
+export const LTD_DISCOVERY_EXPERIMENT_CATEGORY_MAP = {
+  Bestsellers: {
+    displayName: '🔥 Bestsellers',
+    url:
+      'https://www.london-theater-tickets.com/best-west-end-shows-in-london/',
+  },
+  'New Arrivals': {
+    displayName: '🥳 New Arrivals',
+    url:
+      'https://www.london-theater-tickets.com/shows-in-london/new-west-end-shows/',
+  },
+  Christmas: {
+    displayName: '🎄 Christmas Specials',
+    url: 'https://www.london-theater-tickets.com/christmas-shows-in-london/',
+  },
+  Musicals: {
+    displayName: `💃 Musicals`,
+    url: 'https://www.london-theater-tickets.com/london-musicals/',
+  },
+  Kids: {
+    displayName: "👶 Kids' Favourites",
+    url:
+      'https://www.london-theater-tickets.com/shows-in-london/shows-for-kids/',
+  },
+  Plays: {
+    displayName: '🎭 Plays',
+    url: 'https://www.london-theater-tickets.com/west-end-plays-in-london/',
+  },
+  Comedy: {
+    displayName: '🤣 Comedy',
+    url: 'https://www.london-theater-tickets.com/shows-in-london/comedy-shows/',
+  },
+  Opera: {
+    displayName: '🎻 Opera',
+    url: 'https://www.london-theater-tickets.com/shows-in-london/opera-shows/',
+  },
+  'Coming Soon': {
+    displayName: '💜 Coming Soon',
+    url:
+      'https://www.london-theater-tickets.com/shows-in-london/upcoming-shows/',
+  },
 };

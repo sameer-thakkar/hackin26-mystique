@@ -9,7 +9,6 @@ const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
 const StyledSlider = styled.div`
   display: flex;
-  position: relative;
   ${({ parentOverflowHidden }) =>
     parentOverflowHidden ? 'overflow: hidden;' : ''}
   .slider-bullet {
@@ -95,6 +94,7 @@ const Slider: React.FC<{
   prevButton?: React.ReactElement;
   parentOverflowHidden?: boolean;
   paginationClass?: string;
+  slideChangeCallback?: (realIndex: number, currentIndex: number) => void;
 }> = ({
   children,
   sliderOptions,
@@ -102,6 +102,7 @@ const Slider: React.FC<{
   prevButton,
   parentOverflowHidden = false,
   paginationClass,
+  slideChangeCallback,
 }) => {
   /* Swiper configuration for using external controls starts here */
   const [swiper, updateSwiper] = useState(null);
@@ -116,12 +117,18 @@ const Slider: React.FC<{
   const goNext = () => {
     if (swiper !== null) {
       swiper.slideNext();
+      if (slideChangeCallback) {
+        slideChangeCallback(swiper.realIndex, currentIndex);
+      }
     }
   };
 
   const goPrev = () => {
     if (swiper !== null) {
       swiper.slidePrev();
+      if (slideChangeCallback) {
+        slideChangeCallback(swiper.realIndex, currentIndex);
+      }
     }
   };
 

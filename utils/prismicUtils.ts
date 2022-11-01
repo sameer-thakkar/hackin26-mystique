@@ -1405,6 +1405,19 @@ export const getPageData = async ({
       const mbTheme = theme || THEMES.DEFAULT;
       const toursTabFirstSlice = body1[0];
 
+      let directTgidData;
+      if (queryParams.tgidToScroll) {
+        try {
+          directTgidData = await fetchTourGroupV6({
+            tgid: queryParams.tgidToScroll,
+            hostname,
+            language: getHeadoutLanguagecode(lang),
+          });
+        } catch {
+          directTgidData = null;
+        }
+      }
+
       const categoryCarouselCF = getSinglePrismicSlice({
         sliceName: 'category_carousel',
         slices: contentFrameworkData?.body,
@@ -1474,6 +1487,7 @@ export const getPageData = async ({
         CMSContent,
         toursList,
         categoryTourListData,
+        directTgidData,
         ContentType,
         uid,
         lang,

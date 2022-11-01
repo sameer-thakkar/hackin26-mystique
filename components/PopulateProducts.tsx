@@ -164,7 +164,7 @@ const PopulateProducts = (props) => {
               trackEvent({
                 eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_VISIBLE,
                 [ANALYTICS_PROPERTIES.TGID]: tgid,
-                [ANALYTICS_PROPERTIES.POSITION]:
+                [ANALYTICS_PROPERTIES.RANKING]:
                   availableToursList?.findIndex((t) => t.tgid === tgid) + 1,
                 [ANALYTICS_PROPERTIES.IS_TRUNCATED]: !!entry.target?.querySelector?.(
                   '.more-details'

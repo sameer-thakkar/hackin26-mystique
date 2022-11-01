@@ -121,6 +121,7 @@ class MicrositeV2 extends Component<any, any> {
       scorpioData,
       categoryTourListData,
       isAmp,
+      directTgidData,
     } = this.props;
     const {
       commonFooter,
@@ -508,6 +509,7 @@ class MicrositeV2 extends Component<any, any> {
             openCategory={this.openCategory}
             longFormContent={longFormContent}
             isFetched={isFetched}
+            directTgidData={directTgidData}
             host={host}
             uid={uid}
             directTgid={directTgid}

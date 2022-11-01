@@ -1,5 +1,8 @@
+import { LTD_DISCOVERY_EXPERIMENT_CATEGORY_MAP as ltdExpCategoryNameMap } from 'constants/index';
+
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
+import { scroller } from 'react-scroll';
 import InteractionContext from 'contexts/Interaction';
 import Conditional from 'components/common/Conditional';
 import { SortSelector } from 'components/MicrositeV2/SortSelector';
@@ -10,12 +13,14 @@ import { useRecoilValue } from 'recoil';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { expandFontToken } from 'const/typography';
+import debounce from 'lodash.debounce';
 
 const StyledCategoryBar = styled.div`
   height: fit-content;
   position: sticky;
   background: ${COLORS.BRAND.WHITE};
-  top: 0;
+  top: ${({ showLtdCategoryHomepage }) =>
+    showLtdCategoryHomepage ? '70px' : 0};
   z-index: 20;
 
   .swiper-container {
@@ -26,7 +31,11 @@ const StyledCategoryBar = styled.div`
   }
   @media (max-width: 768px) {
     margin-left: -1rem;
-    margin-right: -1rem;
+    margin-right: ${({ showLtdCategoryHomepage }) =>
+      showLtdCategoryHomepage ? '0' : '-1rem'};
+    top: ${({ showLtdCategoryHomepage }) =>
+      showLtdCategoryHomepage ? '50px' : 0};
+    width: 100vw;
   }
 `;
 
@@ -39,7 +48,7 @@ const CategoryBarWrapper = styled.div`
       ? `1px solid ${COLORS.GRAY.G6}`
       : `1px solid ${COLORS.GRAY.G7}`};
   grid-gap: 0.5rem;
-  padding-top: 2.25rem;
+  padding-top: 1.25rem;
   padding-bottom: ${({ isEntertainmentMb }) =>
     isEntertainmentMb ? '0.75rem' : '1.25rem'};
   .tabs-wrap {
@@ -147,7 +156,46 @@ const CategoryBar = (props) => {
     hideSortBySelector,
     isEntertainmentMb,
     isListicle,
+    showLtdCategoryHomepage,
   } = props;
+
+  const experimentCategoriesToShow = Object.keys(ltdExpCategoryNameMap).map(
+    (categoryName) => {
+      const category = categories.find((c) => c.name === categoryName);
+      if (!category) return;
+      let displayName = null;
+      if (category.name === 'Christmas') displayName = 'Christmas Special';
+      return {
+        ...category,
+        displayName,
+        products: category?.ranking?.popularity?.slice(0, 10),
+        redirectUrl: ltdExpCategoryNameMap[category.name].url,
+      };
+    }
+  );
+
+  const categoriesToRender = (showLtdCategoryHomepage
+    ? experimentCategoriesToShow
+    : categories
+        .filter(
+          (category) => !['Coming Soon', 'Christmas'].includes(category.name)
+        )
+        .map((category) => ({
+          ...category,
+          name: category.name === 'Bestsellers' ? 'All Shows' : category.name,
+        }))
+  ).filter((category) => {
+    const { ranking } = category || {};
+    const { popularity } = ranking || {};
+    const availableShows = popularity?.reduce((acc, tgid) => {
+      if (allTours[tgid]?.available) {
+        acc++;
+      }
+      return acc;
+    }, 0);
+    return availableShows > 0;
+  });
+
   const toggleFilterDropdown = (dropdownState) => {
     if (!filterDropdownActive)
       trackEvent({
@@ -162,7 +210,6 @@ const CategoryBar = (props) => {
   const changeCategory = (index) => {
     let { categories } = props;
     setActiveCategory(index);
-    changeCategoryHandler(categories[index].ranking[activeOrder], index);
     const ranking = categories
       .filter((category) =>
         category?.ranking?.popularity?.length
@@ -179,6 +226,17 @@ const CategoryBar = (props) => {
       [ANALYTICS_PROPERTIES.RANKING]: ranking + 1,
       [ANALYTICS_PROPERTIES.HEADING]: categories[index].name,
     });
+    if (showLtdCategoryHomepage) {
+      scroller.scrollTo(categoriesToRender[index]?.name, {
+        duration: 750,
+        delay: 80,
+        smooth: 'easeInQuad',
+        offset: isMobile ? -124 : -172,
+      });
+      return;
+    }
+
+    changeCategoryHandler(categories[index].ranking[activeOrder], index);
   };
 
   const changeOrder = (orderKey) => {
@@ -204,10 +262,10 @@ const CategoryBar = (props) => {
       const parentElement = parent.current;
       const selectedTab = parentElement.querySelector('.tab.active');
       if (isMobile) {
-        selectedTab.scrollIntoView({
-          inline: 'center',
+        selectedTab?.scrollIntoView({
           behavior: 'smooth',
-          block: 'end',
+          block: showLtdCategoryHomepage ? 'nearest' : 'end',
+          inline: 'center',
         });
       }
     };
@@ -215,23 +273,43 @@ const CategoryBar = (props) => {
     const getActiveLineDimension = () => {
       const parentElement = parent.current;
       const tag = parentElement.querySelector('.tab.active');
-      let selectedTab = window.getComputedStyle(tag);
-      let width = parseFloat(selectedTab.width);
-      let selectedTabDimensions = tag.getBoundingClientRect();
-      let parentDimensions = parentElement.getBoundingClientRect();
-      let activeLineXOffset =
-        parseInt(selectedTabDimensions.x) -
-        parseInt(parentDimensions.left) +
-        parseInt(selectedTab.paddingLeft);
-      if (isMobile) {
-        activeLineXOffset += parentElement.scrollLeft;
-      }
-      return { width: width, left: activeLineXOffset };
+      if (tag) {
+        let selectedTab = window.getComputedStyle(tag);
+        let width = parseFloat(selectedTab.width);
+        let selectedTabDimensions = tag.getBoundingClientRect();
+        let parentDimensions = parentElement.getBoundingClientRect();
+        let activeLineXOffset =
+          parseInt(selectedTabDimensions.x) -
+          parseInt(parentDimensions.left) +
+          parseInt(selectedTab.paddingLeft);
+        if (isMobile) {
+          activeLineXOffset += parentElement.scrollLeft;
+        }
+        return { width: width, left: activeLineXOffset };
+      } else return { width: null, left: null };
     };
 
     setIndicatorStyles(getActiveLineDimension());
     if (isMobile && parent.current) centerActiveCategory();
   }, [activeCategory, parent, isMobile]);
+
+  const updateCategoryOnScroll = debounce(() => {
+    const categoryRows = document.getElementsByClassName('category-row');
+    for (let i = 0; i < categoryRows.length; i++) {
+      const row = categoryRows[i];
+      const top = row.getBoundingClientRect().top;
+      if (top > -50) {
+        setActiveCategory(i);
+        break;
+      }
+    }
+  }, 50);
+  useEffect(() => {
+    if (showLtdCategoryHomepage) {
+      window.addEventListener('scroll', updateCategoryOnScroll);
+    }
+    return () => window.removeEventListener('scroll', updateCategoryOnScroll);
+  }, [showLtdCategoryHomepage]);
 
   // Don't render the category bar if all TGIDs are unavailable
   const isAnyTGIDAvailable = Object.keys(allTours).some(
@@ -243,35 +321,29 @@ const CategoryBar = (props) => {
   return (
     <>
       <div className="scroll-reference" ref={scroll_div}></div>
-      <StyledCategoryBar ref={category_bar}>
+      <StyledCategoryBar
+        ref={category_bar}
+        showLtdCategoryHomepage={showLtdCategoryHomepage}
+      >
         <CategoryBarWrapper ref={parent} isEntertainmentMb={isEntertainmentMb}>
           <div className="tabs-wrap">
-            {categories.map((category, index) => {
-              const { ranking, name } = category || {};
+            {categoriesToRender.map((category, index) => {
+              const { ranking, name, displayName } = category || {};
               const { popularity } = ranking || {};
-              const availableShows = popularity?.reduce((acc, tgid) => {
-                if (allTours[tgid]?.available) {
-                  acc++;
-                }
-                return acc;
-              }, 0);
-              const showCategoryTab = availableShows > 0;
+
               return (
-                <Conditional if={showCategoryTab} key={index}>
-                  <div
-                    role="button"
-                    tabIndex={0}
-                    onClick={() => {
-                      changeCategory(index);
-                    }}
-                    className={
-                      'tab ' + (activeCategory == index ? 'active' : '')
-                    }
-                    data-tgid={popularity}
-                  >
-                    {name}
-                  </div>
-                </Conditional>
+                <div
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => {
+                    changeCategory(index);
+                  }}
+                  className={'tab ' + (activeCategory == index ? 'active' : '')}
+                  data-tgid={popularity}
+                  key={index}
+                >
+                  {displayName ?? name}
+                </div>
               );
             })}
             <div
@@ -279,7 +351,14 @@ const CategoryBar = (props) => {
               style={{ ...indicatorStyles }}
             ></div>
           </div>
-          <Conditional if={!isMobile && !hideSortBySelector && !isListicle}>
+          <Conditional
+            if={
+              !isMobile &&
+              !hideSortBySelector &&
+              !isListicle &&
+              !showLtdCategoryHomepage
+            }
+          >
             <div className="filter-wrapper">
               <SortSelector
                 isFilterDropdownActive={filterDropdownActive}
