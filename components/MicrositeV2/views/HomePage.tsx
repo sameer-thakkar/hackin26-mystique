@@ -159,7 +159,7 @@ export const HomePage = (props) => {
   const hsid = useRecoilValue(hsidAtom);
   useEffect(() => {
     const { categories } = categoryProps;
-    if (isLTT && !isListicle && hsid && categories.length > 1) {
+    if (isLTT && hsid && categories.length > 1) {
       const variant = getABTestingVariant(
         EXPERIMENT_NAMES.LTD_HOME_PAGE_EXPERIMENT,
         hsid
