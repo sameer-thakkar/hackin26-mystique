@@ -149,7 +149,6 @@ export const HomePage = (props) => {
     displayMonths,
     isDev,
   } = props;
-
   const pageMetaData = useRecoilValue(metaAtom);
   const { eventsReady } = useRecoilValue(gtmAtom);
   const isLTT = checkLTT(uid);
@@ -157,11 +156,13 @@ export const HomePage = (props) => {
   let { categoryProps } = props;
   const isDiscountedPage = displayMonths === 'Discounted';
 
-  const [showLtdCategoryHomepage, setShowLtdCategoryHomepage] = useState(null);
+  const [showLtdCategoryHomepage, setShowLtdCategoryHomepage] = useState(
+    isLTT && !isListicle ? null : false
+  );
   const hsid = useRecoilValue(hsidAtom);
   useEffect(() => {
     const { categories } = categoryProps;
-    if (isLTT && hsid && categories.length > 1) {
+    if (isLTT && !isListicle && hsid && categories.length > 1) {
       const variant = getABTestingVariant(
         EXPERIMENT_NAMES.LTD_HOME_PAGE_EXPERIMENT,
         hsid
