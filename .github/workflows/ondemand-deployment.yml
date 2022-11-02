@@ -34,7 +34,6 @@ jobs:
           DEPLOY_NAMESPACE: ${{ inputs.environment }}
         run: |
           git config --global url."https://${{ github.actor }}:${{ secrets.HEADOUT_CI_PACKAGE_PAT }}@github.com/".insteadOf ssh://git@github.com/
-          rm .env.production .env.test .env.stage
           yarn
           export NEXT_PUBLIC_API_BASE_URL=https://${{ inputs.environment }}.deimos.test-headout.com
           export NEXT_PUBLIC_API_CDN_BASE_URL=https://${{ inputs.environment }}.api.test-headout.com
