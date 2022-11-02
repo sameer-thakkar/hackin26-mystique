@@ -568,7 +568,6 @@ const AutomatedTourComparisonTable = ({
                           lang={lang}
                           listingPrice={tour?.listingPrice}
                           showScratchPrice={true}
-                          prefix={false}
                           currencyDisplay="code"
                         />
                       </BlockContent>

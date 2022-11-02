@@ -620,7 +620,6 @@ const ShowPageBanner = ({
                   lang={currentLanguage}
                   showSavings={true}
                   showScratchPrice={true}
-                  prefix={true}
                 />
                 <div className="ratings-reviews-wrapper">
                   <span className="ratings-wrapper">
@@ -656,7 +655,6 @@ const ShowPageBanner = ({
                     lang={currentLanguage}
                     showSavings={true}
                     showScratchPrice={true}
-                    prefix={true}
                   />
                 </div>
               </Conditional>

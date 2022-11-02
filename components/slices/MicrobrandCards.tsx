@@ -180,7 +180,6 @@ export const LinkCards = (props) => {
                           lang={lang}
                           listingPrice={listingPrice}
                           showScratchPrice={true}
-                          prefix={false}
                         />
                       </Conditional>
                       <Conditional if={!listingPrice && price}>

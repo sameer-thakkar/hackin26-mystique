@@ -148,7 +148,6 @@ const CategoryCard = ({
             lang={currentLanguage}
             showSavings={true}
             showScratchPrice={true}
-            prefix={true}
           />
         </div>
       </a>

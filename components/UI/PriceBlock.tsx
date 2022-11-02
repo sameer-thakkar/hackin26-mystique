@@ -59,7 +59,6 @@ type PriceBlockProps = {
   currencyDisplay?: CurrencyDisplayType;
   lang: string;
   listingPrice: any;
-  prefix?: boolean;
   showSavings?: boolean;
   showScratchPrice?: boolean;
 };
@@ -68,7 +67,6 @@ const PriceBlock = ({
   listingPrice,
   lang,
   showScratchPrice = true,
-  prefix = true,
   showSavings,
   currencyDisplay = 'symbol',
 }: PriceBlockProps) => {
@@ -81,6 +79,7 @@ const PriceBlock = ({
     bestDiscount,
     cashbackValue,
     cashbackType,
+    otherPricesExist,
   } = listingPrice ?? {};
 
   const savingsElementsArray = [];
@@ -104,9 +103,9 @@ const PriceBlock = ({
 
   return (
     <StyledPriceBlock>
-      <Conditional if={originalPrice > finalPrice && showScratchPrice}>
-        <span className="tour-scratch-price">
-          {prefix ? strings.FROM + ' ' : ''}
+      <span className="tour-scratch-price">
+        {otherPricesExist ? strings.FROM + ' ' : ''}
+        <Conditional if={originalPrice > finalPrice && showScratchPrice}>
           <LocalisedPrice
             currencyCode={currencyCode}
             currencyDisplay={currencyDisplay}
@@ -114,8 +113,8 @@ const PriceBlock = ({
             price={originalPrice}
             precision={precision}
           />
-        </span>
-      </Conditional>
+        </Conditional>
+      </span>
       <LocalisedPrice
         className="tour-price"
         currencyCode={currencyCode}

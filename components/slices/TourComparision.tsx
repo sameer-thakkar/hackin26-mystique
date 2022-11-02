@@ -657,7 +657,6 @@ const TourComparisonTable = (props) => {
                         lang={lang}
                         listingPrice={tour.listingPrice}
                         showScratchPrice={true}
-                        prefix={false}
                       />
                     </div>
                   </div>

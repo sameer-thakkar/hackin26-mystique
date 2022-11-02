@@ -227,7 +227,6 @@ const StickyHeader = ({
                   lang={currentLanguage}
                   showSavings={true}
                   showScratchPrice={true}
-                  prefix={true}
                 />
               </div>
               <Conditional if={isAvailable}>
