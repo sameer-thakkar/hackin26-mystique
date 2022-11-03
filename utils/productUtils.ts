@@ -13,6 +13,7 @@ import {
   MAX_DESCRIPTORS_DISPLAYED,
 } from 'const/descriptors';
 import getServerStrings from 'const/serverStrings';
+import { strings } from 'const/strings';
 
 export const extractTabsFromHighlights = (highlights) => {
   let tabs = [];
@@ -152,15 +153,15 @@ export const extractContentForProductCard = (markdownBlocks, contentBlocks) => {
   if (tabsMarkdown.length > 0) {
     const filteredMarkdown = tabsMarkdown?.filter((md) => {
       const values = [
-        'Theatre Name',
+        strings.SHOW_PAGE.THEATRE_NAME,
         'My Ticket',
-        'Your Tickets',
+        strings.SHOW_PAGE.YOUR_TICKETS,
         'Your Ticket',
-        'Show Timings',
-        'Duration',
-        'Cancellation Policy',
+        strings.SHOW_PAGE.SHOW_TIMINGS,
+        strings.SHOW_PAGE.DURATION,
+        strings.SHOW_PAGE.CANCELLATION_POLICY,
         'Cancellation',
-        'Age Limit',
+        strings.SHOW_PAGE.AGE_LIMIT,
       ];
       if (values.indexOf(md.heading) !== -1) {
         return md;
@@ -172,13 +173,17 @@ export const extractContentForProductCard = (markdownBlocks, contentBlocks) => {
       filteredMarkdown.slice(sliceValue, tabsMarkdown.length),
     ];
 
-    const isLeftBlock = ['Theatre Name', 'Show Timings', 'Duration'];
+    const isLeftBlock = [
+      strings.SHOW_PAGE.THEATRE_NAME,
+      strings.SHOW_PAGE.SHOW_TIMINGS,
+      strings.SHOW_PAGE.DURATION,
+    ];
     const isRightBlock = [
-      'Your Tickets',
+      strings.SHOW_PAGE.YOUR_TICKETS,
       'Your Ticket',
-      'Cancellation Policy',
+      strings.SHOW_PAGE.CANCELLATION_POLICY,
       'Cancellation',
-      'Age Limit',
+      strings.SHOW_PAGE.AGE_LIMIT,
     ];
     tabsMarkdownLeft.forEach((highlight) => {
       if (isLeftBlock.includes(highlight?.heading)) {
@@ -191,7 +196,7 @@ export const extractContentForProductCard = (markdownBlocks, contentBlocks) => {
 
     tabsMarkdownRight.forEach((highlight) => {
       const isCancellation =
-        highlight?.heading === 'Cancellation Policy' ||
+        highlight?.heading === strings.SHOW_PAGE.CANCELLATION_POLICY ||
         highlight?.heading === 'Cancellation';
 
       if (isRightBlock.includes(highlight?.heading)) {

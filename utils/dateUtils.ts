@@ -42,6 +42,7 @@ export const getPrevDate = (date) =>
  * @return {string} ISO 8601 representation (eg - "PT2H45M").
  */
 export const getDurationISO = (durationString) => {
+  if (!durationString) return '';
   const durationObject = durationString
     .split(' ')
     .reduce((accObject, item, index, array) => {

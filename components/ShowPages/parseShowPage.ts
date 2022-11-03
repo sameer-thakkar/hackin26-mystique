@@ -1,13 +1,13 @@
 import {
   DETAILS_ALLOWED_SHOWPAGES,
   YES_STRING,
-  SAFETY_BANNER_STRING,
   TAB_ALLOWED_HIGHLIGHT,
   TAB_ALLOWED_INFO,
 } from 'constants/index';
 
 import dayjs from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
+import { strings } from 'const/strings';
 
 dayjs.extend(isSameOrAfter);
 
@@ -41,7 +41,7 @@ export const getObject = (data, filterArray) => {
     } else {
       if (currentObject === 'DETAIL') {
         // detail object content
-        if (detailObjectHeading == 'Show Type') {
+        if (detailObjectHeading === strings.SHOW_PAGE.SHOW_TYPE) {
           showType = element.content.text;
         }
         if (
@@ -51,7 +51,7 @@ export const getObject = (data, filterArray) => {
         ) {
           detailsObjects[detailObjectHeading] = element.content.text;
         } else if (
-          detailObjectHeading === SAFETY_BANNER_STRING &&
+          detailObjectHeading === strings.SHOW_PAGE.SAFETY_BANNER &&
           element.content.text === YES_STRING
         ) {
           isSafetyBanner = true;
@@ -71,7 +71,10 @@ export const safetyChecker = (data) => {
   let isSafetyBanner = false;
 
   data.forEach((element, index) => {
-    if (element.type == 'heading6' && element.text === SAFETY_BANNER_STRING) {
+    if (
+      element.type == 'heading6' &&
+      element.text === strings.SHOW_PAGE.SAFETY_BANNER
+    ) {
       if (index + 1 < data.length) {
         let nextElement = data[index + 1];
         if (
@@ -157,15 +160,17 @@ export const parseShowPageData = (data) => {
           detailsObjects[DetailObjectHeading] = element.content.text;
         }
         if (
-          DetailObjectHeading === SAFETY_BANNER_STRING &&
+          DetailObjectHeading === strings.SHOW_PAGE.SAFETY_BANNER &&
           element.content.text === YES_STRING
         ) {
           isSafetyBanner = true;
         }
-        if (DetailObjectHeading === 'Closing Date Special Offer') {
+        if (
+          DetailObjectHeading === strings.SHOW_PAGE.CLOSING_DATE_SPECIAL_OFFER
+        ) {
           specialOfferClosingDate = dayjs(element.content.text, 'YYYY-MM-DD');
         }
-        if (DetailObjectHeading.startsWith('Special Offer')) {
+        if (DetailObjectHeading.startsWith(strings.SHOW_PAGE.SPECIAL_OFFER)) {
           if (
             specialOfferClosingDate &&
             !specialOfferClosingDate.isSameOrAfter(dayjs())

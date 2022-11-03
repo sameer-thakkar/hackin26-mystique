@@ -378,7 +378,7 @@ const Product = (props) => {
     redirectToHeadoutBookingFlow,
   });
   const showPageUrl = showPageUid
-    ? convertUidToUrl({ uid: showPageUid, isDev, hostname: host })
+    ? convertUidToUrl({ uid: showPageUid, isDev, hostname: host, lang })
     : bookingURL;
 
   const {

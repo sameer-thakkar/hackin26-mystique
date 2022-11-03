@@ -399,26 +399,26 @@ const ShowPageBanner = ({
   const REOPENING_STRING = `${NEXT_AVAILABLE}`;
   const BannerTitle = `${name} - ${strings.TICKETS}`;
 
-  const theaterName = detailsObjects?.['Theatre Name'];
+  const theaterName = detailsObjects?.[strings.SHOW_PAGE.THEATRE_NAME];
 
   let showDetails = {};
   Object.keys(detailsObjects)?.forEach((key) => {
     switch (key) {
-      case 'Opening Date':
-      case 'Closing Date':
+      case strings.SHOW_PAGE.OPENING_DATE:
+      case strings.SHOW_PAGE.CLOSING_DATE:
         if (
-          !!detailsObjects['Opening Date'] &&
-          !!detailsObjects['Closing Date']
+          !!detailsObjects[strings.SHOW_PAGE.OPENING_DATE] &&
+          !!detailsObjects[strings.SHOW_PAGE.CLOSING_DATE]
         ) {
           showDetails['EXTENDED_VALIDITY'] = `${dateToString(
-            detailsObjects['Opening Date']
-          )} - ${dateToString(detailsObjects['Closing Date'])}`;
+            detailsObjects[strings.SHOW_PAGE.OPENING_DATE]
+          )} - ${dateToString(detailsObjects[strings.SHOW_PAGE.CLOSING_DATE])}`;
         }
         break;
-      case 'Duration':
+      case strings.SHOW_PAGE.DURATION:
         showDetails['DURATION'] = detailsObjects[key];
         break;
-      case 'Age Limit':
+      case strings.SHOW_PAGE.AGE_LIMIT:
         showDetails['USER'] = detailsObjects[key];
         break;
     }

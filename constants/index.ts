@@ -1,3 +1,5 @@
+import { strings } from './strings';
+
 export const IP_INFO_TOKEN = '108f1155413636';
 
 export const PREFERRED_COUNTRIES_CODES = [
@@ -628,29 +630,12 @@ export const TAB_ALLOWED_INFO = [
 export const DETAILS_ALLOWED_SHOWPAGES = [
   'Opening Date',
   'Closing Date',
-  'Theatre Name',
-  'Duration',
-  'Age Limit',
+  strings.SHOW_PAGE.THEATRE_NAME,
+  strings.SHOW_PAGE.DURATION,
+  strings.SHOW_PAGE.AGE_LIMIT,
 ];
-
-export const SAFETY_BANNER_STRING = 'Safety Banner';
 
 export const YES_STRING = 'YES';
-
-export const MONTH_ARRAY = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
 
 export const SAFETY_MEASURE_REDIRECT_PAGE_LINK =
   'https://www.london-theater-tickets.com/reopening-london-theatres-safety-measures/';

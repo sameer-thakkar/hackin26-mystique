@@ -443,9 +443,21 @@ const en = {
     },
   },
   CANCELLATION_POLICY_HEADING: 'Cancellation Policy',
-  QUEEN_ELIZABETH_II_DEMISE: {
-    HEADING: 'Important',
-    DESCRIPTION: `We are saddened by the passing of Her Majesty Queen Elizabeth II and offer our sincere condolences to everyone affected. As of now, all shows are still playing as scheduled and there have been no cancellations or reschedules. If this changes, the respective show calendars will be updated.`,
+  SHOW_PAGE: {
+    SAFETY_BANNER: 'Safety Banner',
+    SHOW_TYPE: 'Show Type',
+    CLOSING_DATE_SPECIAL_OFFER: 'Closing Date Special Offer',
+    SPECIAL_OFFER: 'Special Offer',
+    OPENING_DATE: 'Opening Date',
+    CLOSING_DATE: 'Closing Date',
+    THEATRE_NAME: 'Theatre Name',
+    THEATRE_CAPACITY: 'Theatre Capacity',
+    THEATRE_ADDRESS: 'Theatre Address',
+    SHOW_TIMINGS: 'Show Timings',
+    DURATION: 'Duration',
+    AGE_LIMIT: 'Age Limit',
+    YOUR_TICKETS: 'Your Tickets',
+    CANCELLATION_POLICY: 'Cancellation Policy',
   },
 };
 

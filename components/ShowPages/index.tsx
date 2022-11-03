@@ -389,7 +389,7 @@ const ShowPage = ({
     startLocation || endLocation || {};
   const productImages = imageUploads?.map((image) => image?.url);
   const showDescription = tabSchemaHighlight?.[0]?.tab_content?.[0]?.text;
-  const showDuration = detailsObjects?.['Duration'];
+  const showDuration = detailsObjects?.[strings.SHOW_PAGE.DURATION];
   const showDurationISO = getDurationISO(showDuration);
   const theatreSeatingCapacity = aboutTheatreSection?.tab_content[1]?.text?.split(
     ' '
@@ -438,7 +438,7 @@ const ShowPage = ({
         "duration": "${showDurationISO}",
         "endDate": "${startDate}T${endTime}",
         "maximumAttendeeCapacity": "${theatreSeatingCapacity}",
-        "typicalAgeRange": "${detailsObjects?.['Age Limit']}",
+        "typicalAgeRange": "${detailsObjects?.[strings.SHOW_PAGE.AGE_LIMIT]}",
         "url": "${PageURL}",
         "eventStatus": "https://schema.org/EventScheduled",
         "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",

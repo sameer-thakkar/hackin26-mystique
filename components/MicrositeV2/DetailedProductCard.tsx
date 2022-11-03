@@ -471,10 +471,10 @@ const DetailedProductCard = (props) => {
     : activeTour.contentBlocks;
   if (isListicle) {
     productCardContent.left = contentBlocks?.left?.filter(
-      (item) => item.label === 'Theatre Name'
+      (item) => item.label === strings.SHOW_PAGE.THEATRE_NAME
     );
     productCardContent.right = contentBlocks?.left?.filter(
-      (item) => item.label === 'Duration'
+      (item) => item.label === strings.SHOW_PAGE.DURATION
     );
   }
   const isBroadway = checkBroadway(mbContext?.uid); // TODO: Need to handle this via book_now_text.

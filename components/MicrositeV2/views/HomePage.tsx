@@ -53,9 +53,11 @@ const ProductsWrapper: ComponentType<any> = dynamic(() =>
 const Banner: ComponentType<any> = dynamic(() =>
   import('components/MicrositeV2/Banner')
 );
+
 const LongForm: ComponentType<any> = dynamic(() =>
   import('components/MicrositeV2/LongForm')
 );
+
 const PinnedTour: ComponentType<any> = dynamic(() =>
   import('components/MicrositeV2/PinnedTour')
 );
@@ -223,7 +225,7 @@ export const HomePage = (props) => {
   const contentFWSlices = (slices && groupSlices(slices)) || [];
   const longFormSlices = [...contentFWSlices, ...longFormContent];
   const { currentLanguage, languages } = languageProps || {};
-  const hasLanguageSelector = languages?.length > 1;
+  const hasLanguageSelector = languages?.length > 0;
   const hasToursSection = categoryProps?.categories?.length > 0;
   const { secondaryFooter } = footer;
   const footerLogoURL = footer?.logo?.url;

@@ -362,6 +362,22 @@ const de = {
     },
   },
   CANCELLATION_POLICY_HEADING: 'Stornierungsfrist',
+  SHOW_PAGE: {
+    SAFETY_BANNER: 'Sicherheitsbanner',
+    SHOW_TYPE: 'Art der Show',
+    CLOSING_DATE_SPECIAL_OFFER: 'Dernière Sonderangebot',
+    SPECIAL_OFFER: 'Sonderangebot',
+    OPENING_DATE: 'Premiere',
+    CLOSING_DATE: 'Dernière',
+    THEATRE_NAME: 'Theater',
+    THEATRE_CAPACITY: 'Kapazität',
+    THEATRE_ADDRESS: 'Adresse',
+    SHOW_TIMINGS: 'Showzeiten',
+    DURATION: 'Dauer',
+    AGE_LIMIT: 'Altersbeschränkung',
+    YOUR_TICKETS: 'Ihre Tickets',
+    CANCELLATION_POLICY: 'Stornierungsfrist',
+  },
 };
 
 export default de;

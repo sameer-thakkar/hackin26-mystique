@@ -317,8 +317,9 @@ const Header: FunctionComponent<HeaderProps> = ({
   isEntertainmentMbListicle,
   showLtdCategoryHomepage,
 }) => {
-  const { lang, nakedDomain, redirectToHeadoutBookingFlow } =
-    useContext(MBContext);
+  const { lang, nakedDomain, redirectToHeadoutBookingFlow } = useContext(
+    MBContext
+  );
 
   const [languageDropdown, setLanguageDropdown] = useState(false);
   const [results, setResults] = useState([]);
@@ -358,8 +359,6 @@ const Header: FunctionComponent<HeaderProps> = ({
 
   const allToursArray = Object?.values(allTours);
   const hasDropdownLinks = enableDropdownLinks && dropdownLinks.length;
-  const hasLanguageDropdown =
-    languageProps?.languages?.length > 1 && hasLanguageSelector;
   const groupedHeaderSlices = groupSlices(
     headerSlices,
     ALLOW_IMMEDIEATE_NESTING
@@ -476,7 +475,7 @@ const Header: FunctionComponent<HeaderProps> = ({
             </Conditional>
           </HeaderLeft>
           <HeaderRight
-            hasLanguageDropdown={hasLanguageDropdown}
+            hasLanguageDropdown={hasLanguageSelector}
             hasHamburger={isMobileDevice && hamburgerIconCheck}
             hasSearch={enableSearch}
             onMouseEnter={() => setHeaderHover(true)}
@@ -531,7 +530,7 @@ const Header: FunctionComponent<HeaderProps> = ({
                 {SEARCH_ICON}
               </div>
             </Conditional>
-            <Conditional if={hasLanguageDropdown}>
+            <Conditional if={hasLanguageSelector}>
               <LanguageSelector
                 {...languageProps}
                 languageDropdown={languageDropdown}
