@@ -364,10 +364,12 @@ export const getCancellationPolicyString = ({
       reschedulableUptoHours
     );
   } else {
-    return formatString(
-      strings.CANCELLATION_POLICY.CANCELLABLE,
-      cancellableUptoHours
-    );
+    return cancellableUptoHours === 0
+      ? strings.CANCELLATION_POLICY.CANCELLABLE_ANYTIME
+      : formatString(
+          strings.CANCELLATION_POLICY.CANCELLABLE,
+          cancellableUptoHours
+        );
   }
 };
 

@@ -19,6 +19,8 @@ const langStringMap = {
         "These tickets can't be cancelled. However, they can be rescheduled up to {0} hours before the experience begins.",
       CANCELLABLE:
         'You can cancel these tickets up to {0} hours before the experience begins and get a full refund.',
+      CANCELLABLE_ANYTIME:
+        'Free cancellation anytime before the start of your experience',
     },
     VALIDITY: {
       UNTIL_DATE: 'These Tickets are valid until {0}.',
@@ -48,6 +50,8 @@ const langStringMap = {
         "Questi biglietti non possono essere cancellati. Tuttavia, i biglietti possono essere riprogrammati fino a {0} ore prima dell'inizio dell'esperienza.",
       CANCELLABLE:
         "Puoi cancellare questi biglietti fino a {0} ore prima dell'inizio dell'esperienza e ottenere un rimborso completo.",
+      CANCELLABLE_ANYTIME:
+        "Cancellazione gratuita in qualsiasi momento prima dell'inizio dell'esperienza",
     },
     VALIDITY: {
       UNTIL_DATE: 'Questi biglietti sono validi fino al giorno {0}.',
@@ -77,6 +81,8 @@ const langStringMap = {
         'Estas entradas no se pueden cancelar. Sin embargo, se pueden reprogramar hasta {0} horas antes del comienzo de la experiencia.',
       CANCELLABLE:
         'Puedes cancelar estas entradas hasta {0} horas antes del comienzo de la experiencia y recibir un reembolso completo.',
+      CANCELLABLE_ANYTIME:
+        'Cancelación gratuita en cualquier momento antes del comienzo de tu experiencia',
     },
     VALIDITY: {
       UNTIL_DATE: 'Estas entradas son válidas hasta el {0}.',
@@ -106,6 +112,8 @@ const langStringMap = {
         'Ces billets ne peuvent pas être annulés. Cependant, ils peuvent être reportés jusqu’à {0} heures avant le début de l’expérience.',
       CANCELLABLE:
         'Vous pouvez annuler ces billets jusqu’à {0} heures avant le début de l’expérience et bénéficiez d’un remboursement complet.',
+      CANCELLABLE_ANYTIME:
+        'Annulation gratuite à tout moment avant le début de votre activité',
     },
     VALIDITY: {
       UNTIL_DATE: 'Ces billets sont valables jusqu’au {0}.',
@@ -135,6 +143,8 @@ const langStringMap = {
         'Diese Tickets können nicht storniert werden. Sie können jedoch bis zu {0} Stunden vor Erlebnisbeginn verschoben werden.',
       CANCELLABLE:
         'Sie können diese Tickets bis zu {0} Stunden vor Erlebnisbeginn stornieren, um eine vollständige Rückerstattung zu erhalten.',
+      CANCELLABLE_ANYTIME:
+        'Kostenfreie Stornierung vor Beginn Ihres Erlebnisses',
     },
     VALIDITY: {
       UNTIL_DATE: 'Diese Tickets sind bis zum {0} gültig.',
@@ -164,6 +174,8 @@ const langStringMap = {
         'Deze tickets kunnen niet geannuleerd worden. Ze kunnen echter verschoven worden tot {0} uur voor de belevenis begint.',
       CANCELLABLE:
         'Je annuleert deze tickets tot {0} uur voor de belevenis begint en krijgt een volledige terugbetaling.',
+      CANCELLABLE_ANYTIME:
+        'Gratis annulering op elk moment voor het begin van uw ervaring',
     },
     VALIDITY: {
       UNTIL_DATE: 'Deze tickets zijn geldig tot {0}.',
@@ -193,6 +205,8 @@ const langStringMap = {
         'Estes ingressos não podem ser cancelados. No entanto, eles podem ser alterados até {0} horas antes do início da experiência.',
       CANCELLABLE:
         'Você pode cancelar estes ingressos até {0} horas antes do início da experiência para obter um reembolso total.',
+      CANCELLABLE_ANYTIME:
+        'Cancelamento gratuito a qualquer momento antes do início da sua experiência',
     },
     VALIDITY: {
       UNTIL_DATE: 'Estes ingressos são válidos até o dia {0}.',
