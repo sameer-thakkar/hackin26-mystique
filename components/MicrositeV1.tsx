@@ -185,11 +185,11 @@ const MicrositeV1 = (props) => {
   footerThemeOverride = themeOverrideCMS || THEMES.INHERIT;
 
   const isHeaderInherited =
-    commonHeader &&
     commonHeader?.lang !== getLangObject(currentLanguage).locale;
   const isFooterInherited =
-    commonFooter &&
     commonFooter?.lang !== getLangObject(currentLanguage).locale;
+  const isSecondaryFooterInherited =
+    secondaryFooter?.lang !== getLangObject(currentLanguage).locale;
   const withCommonHeaderOverrides = {
     ...micrositeData,
     ...commonHeader?.data,
@@ -598,7 +598,7 @@ const MicrositeV1 = (props) => {
           themeOverride={footerThemeOverride}
           secondaryHeading={footerHeadingSFoot}
           primaryHeading={footerHeadingCFoot}
-          secondarySlices={!isFooterInherited ? slicesSFoot || [] : []}
+          secondarySlices={!isSecondaryFooterInherited ? slicesSFoot || [] : []}
         />
         <Conditional if={hasOffer}>
           <FreeTourPopup
