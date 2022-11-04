@@ -404,6 +404,14 @@ const en = {
       LIMITED: 'Limited Period Offer',
     },
   },
+  ENTERTAINMENT_MB: {
+    LTT: {
+      MB_NAME: 'London Theater Tickets',
+    },
+    BROADWAY: {
+      MB_NAME: 'Broadway Theater Tickets',
+    },
+  },
   SHOWPAGE: {
     FEATURE_CARD: {
       HEADING_CUSTOMER: '10 million +',

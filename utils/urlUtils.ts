@@ -1,4 +1,7 @@
-import { PRISMIC_LANG_TO_ROUTE_PARAM } from 'const/index';
+import {
+  ENTERTAINMENT_MB_BREADCRUMBS,
+  PRISMIC_LANG_TO_ROUTE_PARAM,
+} from 'const/index';
 import { LANGUAGE_MAP } from 'const/index';
 import queryParser from 'query-string';
 import { getPrismicProps } from 'utils';
@@ -185,15 +188,20 @@ export const addQueryParams = (
   }
 };
 
-export const getShowpageBreadcrumbLink = (primarySubCategoryName: string) => {
+export const getShowpageBreadcrumbUid = (
+  primarySubCategoryName: string,
+  isLTT: boolean
+) => {
+  const breadcrumbsMap =
+    ENTERTAINMENT_MB_BREADCRUMBS?.[isLTT ? 'LTT' : 'BROADWAY'];
   switch (primarySubCategoryName) {
     case 'Musicals':
-      return 'https://www.london-theater-tickets.com/london-musicals/';
+      return breadcrumbsMap?.MUSICALS;
     case 'Plays':
-      return 'https://www.london-theater-tickets.com/west-end-plays-in-london/';
+      return breadcrumbsMap?.PLAYS;
     case 'Opera':
-      return 'https://www.london-theater-tickets.com/london-operas/';
+      return breadcrumbsMap?.OPERA;
     default:
-      return '';
+      return breadcrumbsMap?.ROOT_DOMAIN;
   }
 };

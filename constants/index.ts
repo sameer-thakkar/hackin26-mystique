@@ -861,3 +861,19 @@ export const LTD_DISCOVERY_EXPERIMENT_CATEGORY_MAP = {
       'https://www.london-theater-tickets.com/shows-in-london/upcoming-shows/',
   },
 };
+
+export const ENTERTAINMENT_MB_BREADCRUMBS = {
+  LTT: {
+    ROOT_DOMAIN: 'www.london-theater-tickets.com',
+    MUSICALS: 'www.london-theater-tickets.com.london-musicals',
+    PLAYS: 'www.london-theater-tickets.com.west-end-plays-in-london',
+    OPERA: 'www.london-theater-tickets.com.london-operas',
+  },
+  BROADWAY: {
+    ROOT_DOMAIN: 'www.broadway-show-tickets.com',
+    MUSICALS: 'www.broadway-show-tickets.com.broadway-musicals-in-new-york',
+    PLAYS: 'www.broadway-show-tickets.broadway-plays-in-new-york',
+    // No shoulder page for Opera adding broadway homepage as fallback
+    OPERA: 'www.broadway-show-tickets',
+  },
+};

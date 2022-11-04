@@ -40,11 +40,11 @@ import {
   legacyBooleanCheck,
   createBookingURL,
 } from 'utils';
-import { groupSlices, getHostName } from 'utils/helper';
+import { groupSlices, getHostName, checkLTT } from 'utils/helper';
 import {
   convertUidToUrl,
   getValidUrl,
-  getShowpageBreadcrumbLink,
+  getShowpageBreadcrumbUid,
 } from 'utils/urlUtils';
 import {
   fetchTourGroupReviews,
@@ -351,21 +351,39 @@ const ShowPage = ({
     reviewTourGroup();
   }, [tgid]);
 
-  const PageURL = convertUidToUrl({
+  const pageURL = convertUidToUrl({
     uid,
     lang: currentLanguage,
     isDev,
     hostname: host,
   });
   const [bannerImageOne, bannerImageTwo] = imageUploads || [];
+
+  const isLTT = checkLTT(uid);
+
   const breadcrumbs = [
-    { url: '/', text: 'London Theatre Tickets' },
     {
-      url: getShowpageBreadcrumbLink(primarySubCategoryName),
+      url: convertUidToUrl({
+        uid: getShowpageBreadcrumbUid('', isLTT),
+        lang: currentLanguage,
+        isDev,
+        hostname: host,
+      }),
+      text: isLTT
+        ? strings.ENTERTAINMENT_MB.LTT.MB_NAME
+        : strings.ENTERTAINMENT_MB.BROADWAY.MB_NAME,
+    },
+    {
+      url: convertUidToUrl({
+        uid: getShowpageBreadcrumbUid(primarySubCategoryName, isLTT),
+        lang: currentLanguage,
+        isDev,
+        hostname: host,
+      }),
       text: primarySubCategoryName,
     },
     {
-      url: PageURL,
+      url: pageURL,
       text: name + ' - ' + strings.TICKETS,
     },
   ];
@@ -439,7 +457,7 @@ const ShowPage = ({
         "endDate": "${startDate}T${endTime}",
         "maximumAttendeeCapacity": "${theatreSeatingCapacity}",
         "typicalAgeRange": "${detailsObjects?.[strings.SHOW_PAGE.AGE_LIMIT]}",
-        "url": "${PageURL}",
+        "url": "${pageURL}",
         "eventStatus": "https://schema.org/EventScheduled",
         "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
         "location": {
