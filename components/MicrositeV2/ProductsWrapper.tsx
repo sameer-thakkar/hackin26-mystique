@@ -79,7 +79,7 @@ export const ProductsWrapper = (props) => {
           showLtdCategoryHomepage={showLtdCategoryHomepage}
         />
       </Conditional>
-      <Conditional if={showLtdCategoryHomepage === false}>
+      <Conditional if={!showLtdCategoryHomepage}>
         <PopulateProducts
           tgids={activeCategoryTgids}
           allTours={allTours}

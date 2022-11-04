@@ -157,10 +157,11 @@ export const HomePage = (props) => {
 
   let { categoryProps } = props;
   const isDiscountedPage = displayMonths === 'Discounted';
-  const [showLtdCategoryHomepage, setShowLtdCategoryHomepage] = useState(false);
+  const [showLtdCategoryHomepage, setShowLtdCategoryHomepage] = useState(null);
   const hsid = useRecoilValue(hsidAtom);
+  const { categories } = categoryProps;
+
   useEffect(() => {
-    const { categories } = categoryProps;
     if (isLTT && hsid && categories.length > 1) {
       const variant = getABTestingVariant(
         EXPERIMENT_NAMES.LTD_HOME_PAGE_EXPERIMENT,
@@ -206,15 +207,29 @@ export const HomePage = (props) => {
   }
 
   useEffect(() => {
-    if (eventsReady)
+    if (eventsReady) {
+      if (
+        isLTT &&
+        categories.length > 1 && // Only do this check on landing page
+        !(
+          (
+            showLtdCategoryHomepage !== null || // Bucket is resolved
+            (showLtdCategoryHomepage === null && !hsid)
+          ) // Bucket is not resolved because hsid is not present (cookies disabled)
+        )
+      ) {
+        return;
+      }
       trackEvent({
         eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
         [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
         [ANALYTICS_PROPERTIES.TGIDS]: Object.keys(allTours).map(Number),
-        [ANALYTICS_PROPERTIES.PINNED_CARD_PRESENT]: directTgid ? true : false,
+        [ANALYTICS_PROPERTIES.PINNED_CARD_PRESENT]:
+          directTgid && showLtdCategoryHomepage ? true : false,
         ...getCommonEventMetaData(pageMetaData),
       });
-  }, [eventsReady, directTgid]);
+    }
+  }, [eventsReady, directTgid, showLtdCategoryHomepage]);
 
   const [covid19AlertOpen, setCovid19AlertOpen] = useState(true);
   const { dropdownLinks, enableDropdownLinks, languageProps } = header;
