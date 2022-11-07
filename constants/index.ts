@@ -220,6 +220,9 @@ export const PAGETYPE = {
 export const POWERED_BY_HEADOUT_LOGO =
   'https://cdn-imgix-open.headout.com/Powered%20By%20Headout/powered-by-logo.svg';
 
+export const HEADOUT_PURPS_LOGO =
+  'https://cdn-imgix-open.headout.com/MB/UGC/headout_logo_circle.png';
+
 export const DROPDOWN_ELEMENT = {
   HAMBURGER: 'HAMBURGER',
   LANGUAGE_SELECTOR: 'LANGUAGE_SELECTOR',
@@ -271,6 +274,17 @@ export const ANALYTICS_EVENTS = {
   MB_LANGUGAGE_CHANGED: 'MB Language Changed',
   LP_TO_BOOKING_PAGE: 'LP to booking page',
   LP_TO_SHOWPAGE: 'LP to showpage',
+  UGC: {
+    VIEWED: 'Influencer Content Section Viewed',
+    CARD_VISIBLE: 'Influencer Content Embed Card Visible',
+    CARD_CLICKED: 'Influencer Content Embed Card Clicked',
+    POPUP_VIEWED: 'Influencer Content Popup Viewed',
+    POPUP_CLOSED: 'Influencer Content Popup Closed',
+    FOLLOW_CLICKED: 'Influencer Content Follow Button Clicked',
+    USERNAME_CLICKED: 'Influencer Content Username Clicked',
+    REDIRECT_TO_IG: 'Influencer Content Redirect To Instagram',
+    IG_LINK_CLICK: 'Influencer Content Instagram Link Clicked',
+  },
 };
 export const PAGE_TYPE = {
   COLLECTION_PAGE: 'Collection Page',
@@ -687,6 +701,10 @@ export const ANALYTICS_PROPERTIES = {
   DISCOUNT: 'Discount',
   DISPLAY_PRICE: 'Display Price',
   DISPLAY_CURRENCY: 'Display Currency',
+  UGC: {
+    CONTENT_TYPE: 'Content Type',
+    USERNAME: 'Username',
+  },
   EXPERIENCE_DATE: 'Experience Date',
   PAGINATION_TYPE: 'Pagination Type',
   SEARCH_QUERY: 'Search Query',

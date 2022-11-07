@@ -36,6 +36,10 @@ const fr = {
   OPENS: 'Ouvre',
   NEW: 'NEW',
   SEE_ALL: 'See All',
+  UGC: {
+    FOLLOW: 'Suivre',
+    FOLLOW_IG: 'Suivre sur Instagram',
+  },
   COMBO_VARIANT: {
     SELECT_CTA: 'Sélectionner',
     SELECT_OPTION: 'Sélectionnez votre option',

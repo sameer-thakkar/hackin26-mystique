@@ -11,6 +11,7 @@ import Breadcrumb from './slices/Breadcrumb';
 import Background from './slices/Background';
 import FooterLinksSection from './slices/FooterLinksSection';
 import TicketCard from './slices/TickerCardSlice';
+import UGCCarousel from './slices/UGCCarousel';
 import RichtextWithCTA from './slices/RichTextWithCTA';
 
 // Dynamic imports
@@ -519,6 +520,15 @@ const sliceHandler = (slice, props: any = {}) => {
           heading={slice?.primary?.section_title}
           description={slice?.primary?.section_sub_heading}
           collectionId={slice?.primary?.collection_id}
+        />
+      );
+    case 'ugc_carousel':
+      return (
+        <UGCCarousel
+          isMobile={props.isMobile}
+          heading={slice?.primary?.title}
+          subHeading={slice?.primary?.sub_title}
+          cards={slice?.items}
         />
       );
     default:

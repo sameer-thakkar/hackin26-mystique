@@ -1500,3 +1500,49 @@ export const PERCENTAGE = (
     />
   </svg>
 );
+
+export const VIDEO_ICON = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="28"
+    height="28"
+    viewBox="0 0 28 28"
+    fill="none"
+  >
+    <path
+      d="M26.8327 8.16797L18.666 14.0013L26.8327 19.8346V8.16797Z"
+      fill="white"
+    />
+    <path
+      d="M16.3327 5.83203H3.49935C2.21068 5.83203 1.16602 6.8767 1.16602 8.16536V19.832C1.16602 21.1207 2.21068 22.1654 3.49935 22.1654H16.3327C17.6213 22.1654 18.666 21.1207 18.666 19.832V8.16536C18.666 6.8767 17.6213 5.83203 16.3327 5.83203Z"
+      fill="white"
+    />
+  </svg>
+);
+
+export const PLAY_BUTTON = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="72"
+    height="72"
+    viewBox="0 0 72 72"
+    fill="none"
+  >
+    <path
+      d="M36.001 65.9981C52.5695 65.9981 66.001 52.5666 66.001 35.998C66.001 19.4295 52.5695 5.99805 36.001 5.99805C19.4324 5.99805 6.00098 19.4295 6.00098 35.998C6.00098 52.5666 19.4324 65.9981 36.001 65.9981Z"
+      fill="black"
+      fillOpacity="0.4"
+      stroke="#E2E2E2"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M29.999 23.998L47.999 35.998L29.999 47.998V23.998Z"
+      stroke="#F8F8F8"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);

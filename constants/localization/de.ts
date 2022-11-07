@@ -37,6 +37,10 @@ const de = {
   OPENS: 'Ab',
   NEW: 'NEW',
   SEE_ALL: 'See All',
+  UGC: {
+    FOLLOW: 'Folgen',
+    FOLLOW_IG: 'Auf Instagram folgen',
+  },
   COMBO_VARIANT: {
     SELECT_CTA: 'Auswählen',
     SELECT_OPTION: 'Gewünschte Ticketvariante wählen',

@@ -58,6 +58,17 @@ const Button = styled.button((props) => {
       }
       `;
       break;
+    case 'blackBordered':
+      styles = `
+        border: 1px solid ${COLORS.GRAY.G2};
+        color: ${COLORS.GRAY.G2};
+        background: ${COLORS.BRAND.WHITE};
+        padding: 8px ${props.paddingSides || '21px'};
+        * {
+          color: ${COLORS.GRAY.G2};
+        }
+        `;
+      break;
     default:
       break;
   }

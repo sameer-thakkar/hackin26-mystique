@@ -39,6 +39,10 @@ const nl = {
   OPENS: 'Opent',
   NEW: 'NEW',
   SEE_ALL: 'See All',
+  UGC: {
+    FOLLOW: 'Volgen',
+    FOLLOW_IG: 'Volg op Instagram',
+  },
   COMBO_VARIANT: {
     SELECT_CTA: 'Selecteer',
     SELECT_OPTION: 'Selecteer de gewenste optie',

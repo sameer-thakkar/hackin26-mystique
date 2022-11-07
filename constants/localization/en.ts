@@ -46,6 +46,10 @@ const en = {
   NEW: 'NEW',
   NEW_ARRIVAL: 'New Arrival',
   SEE_ALL: 'See all',
+  UGC: {
+    FOLLOW: 'Follow',
+    FOLLOW_IG: 'Follow on Instagram',
+  },
   COMBO_VARIANT: {
     SELECT_CTA: 'Select',
     SELECT_OPTION: 'Select your option',

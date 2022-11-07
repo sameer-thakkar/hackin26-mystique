@@ -38,6 +38,10 @@ const it = {
   OPENS: 'Apre',
   NEW: 'NEW',
   SEE_ALL: 'See All',
+  UGC: {
+    FOLLOW: 'Segui',
+    FOLLOW_IG: 'Segui su Instagram',
+  },
   COMBO_VARIANT: {
     SELECT_CTA: 'Seleziona',
     SELECT_OPTION: 'Seleziona la variante desiderata',

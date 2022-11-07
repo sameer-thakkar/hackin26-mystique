@@ -73,7 +73,19 @@ body.scroll-lock {
   padding-right: 1em;
 }
 
+.slice-wrapper.ugc_carousel {
+  overflow-x: hidden;
+  background-color: #f8f6ff;
+  max-width: calc(100% - 132px) !important;
+}
+
 @media (max-width: 768px) {
+  .slice-wrapper.ugc_carousel {
+    max-width: unset !important;
+    overflow-x: hidden;
+    padding: 0 0 0 16px !important;
+    width: calc(100vw - 16px) !important;
+  }
   .main-wrapper {
     padding: 0 16px;
   }

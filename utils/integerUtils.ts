@@ -30,3 +30,7 @@ export const intInRangeFromString = (string, min, max) => {
   const numberFromString = hashCode(string);
   return (numberFromString % (max - min)) + min;
 };
+
+export const modulus = (x, y) => {
+  return ((x % y) + y) % y;
+};
