@@ -1,7 +1,6 @@
 // _document is only rendered on the server side and not on the client side
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
-import * as Sentry from '@sentry/node';
 import AMPAnalytics from 'components/common/AMPAnalytics';
 import Conditional from 'components/common/Conditional';
 import { getLangUID, isAmpUrl } from 'utils/urlUtils';
@@ -9,10 +8,6 @@ import { RTL_LANGUAGE_CODES } from 'const/index';
 
 import ampFonts from '../style/amp/ampFonts';
 import { getLangObject } from '../utils/helper';
-
-Sentry.init({
-  dsn: 'https://a952d80706b3435388b1fb5983c74b18@sentry.io/1545593',
-});
 
 class MystiqueDocument extends Document {
   static async getInitialProps(ctx) {

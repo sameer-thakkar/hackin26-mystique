@@ -19,7 +19,7 @@
   "dependencies": {
     "@formatjs/intl-relativetimeformat": "^10.0.1",
     "@react-hook/window-size": "^3.0.6",
-    "@sentry/node": "^5.11.1",
+    "@sentry/nextjs": "7.14.2",
     "@ueno/markdown-to-prismic-richtext": "^1.2.0",
     "classnames": "^2.2.6",
     "cookies": "^0.8.0",
@@ -30,7 +30,7 @@
     "lazysizes": "^5.1.1",
     "libphonenumber-js": "^1.7.22",
     "lodash.clonedeep": "^4.5.0",
-    "next": "^10.0.7",
+    "next": "^10.1.0",
     "next-seo": "^4.27.0",
     "prismic-javascript": "^3.0.0",
     "prismic-reactjs": "^1.0.1",

@@ -125,3 +125,6 @@ storybook-static
 # VS Code
 
 .vscode/*
+
+# Sentry
+.sentryclirc
