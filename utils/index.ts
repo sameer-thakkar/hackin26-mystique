@@ -152,6 +152,7 @@ export const createBookingURL = ({
   currency = '',
   bookSubdomain = '',
   redirectToHeadoutBookingFlow = false,
+  ctaSuffix = '',
 }) => {
   const bookingFlowSubdomain =
     bookSubdomain &&
@@ -168,15 +169,23 @@ export const createBookingURL = ({
   let bookingStageSuffix = date ? '/checkout/' : '';
   // on Mobile, we have intermediate Pax Selection step.
   bookingStageSuffix = isMobile && date ? '/select/pax/' : '';
+
   const urlObject = new URL(
     `https://${bookingFlowSubdomain}.${domain}${langRouteParam}/book/${tgid}${bookingStageSuffix}`
   );
+
   if (date?.startDate) urlObject.searchParams.set('date', date?.startDate);
   if (date?.startDate) urlObject.searchParams.set('variantId', tourId);
-  if (date?.startDate) urlObject.searchParams.set('time', date?.startTime);
+  if (date?.startDate && date?.startTime) urlObject.searchParams.set('time', date?.startTime);
   if (currency) urlObject.searchParams.set('currencyCode', currency);
   if (biLink) urlObject.searchParams.set('bi', biLink);
   if (promoCode) urlObject.searchParams.set('couponCode', promoCode);
+  if (ctaSuffix) {
+    const suffixes = new URLSearchParams(ctaSuffix);
+    for (const [key, value] of suffixes.entries()) {
+      urlObject.searchParams.set(key, value);
+    }
+  }
   return urlObject.toString();
 };
 

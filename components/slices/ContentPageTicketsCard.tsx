@@ -810,21 +810,20 @@ const TicketCard = (props) => {
     );
   };
 
-  const productBookingUrl =
-    createBookingURL({
-      nakedDomain: bookingUrl,
-      lang: currentLanguage,
-      currency,
-      tgid,
-      tourId,
-      biLink,
-      promoCode: promo_code === appliedPromo ? appliedPromo : null,
-      date:
-        instantCheckout && earliestAvailability ? earliestAvailability : null,
-      isMobile,
-      bookSubdomain,
-      redirectToHeadoutBookingFlow,
-    }) + (ctaUrlSuffix || '');
+  const productBookingUrl = createBookingURL({
+    nakedDomain: bookingUrl,
+    lang: currentLanguage,
+    currency,
+    tgid,
+    tourId,
+    biLink,
+    promoCode: promo_code === appliedPromo ? appliedPromo : null,
+    date: instantCheckout && earliestAvailability ? earliestAvailability : null,
+    isMobile,
+    bookSubdomain,
+    redirectToHeadoutBookingFlow,
+    ctaSuffix: ctaUrlSuffix,
+  });
 
   const hasReadMore = highlights.flat()?.length >= 3 && !defaultOpen;
 

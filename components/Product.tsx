@@ -1351,21 +1351,20 @@ const Product = (props) => {
 
   const hasHighlights =
     isLengthyArray(highlights) && highlights.filter((item) => item.text).length;
-  const productBookingUrl =
-    createBookingURL({
-      nakedDomain: bookingUrl,
-      lang: currentLanguage,
-      currency,
-      tgid,
-      promoCode: promo_code === appliedPromo ? appliedPromo : null,
-      tourId,
-      biLink,
-      date:
-        instantCheckout && earliestAvailability ? earliestAvailability : null,
-      isMobile,
-      bookSubdomain,
-      redirectToHeadoutBookingFlow,
-    }) + (ctaUrlSuffix || '');
+  const productBookingUrl = createBookingURL({
+    nakedDomain: bookingUrl,
+    lang: currentLanguage,
+    currency,
+    tgid,
+    promoCode: promo_code === appliedPromo ? appliedPromo : null,
+    tourId,
+    biLink,
+    date: instantCheckout && earliestAvailability ? earliestAvailability : null,
+    isMobile,
+    bookSubdomain,
+    redirectToHeadoutBookingFlow,
+    ctaSuffix: ctaUrlSuffix,
+  });
 
   const BookNowCta = ({ clickHandler }: { clickHandler: () => void }) => (
     <Button
