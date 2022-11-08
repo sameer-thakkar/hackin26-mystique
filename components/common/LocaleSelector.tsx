@@ -79,6 +79,11 @@ const drawerStyles = css`
       padding: 0 24px;
       max-height: calc(100vh - 152px);
       overflow-y: scroll;
+      &:after {
+        height: 50px;
+        display: block;
+        content: '';
+      }
     }
     ${TabControl} {
       padding: 0 24px 0 12px;
