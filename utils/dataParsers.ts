@@ -608,10 +608,10 @@ export const categoryTourListParserV2 = async (
 
           for (let item of listicleSchema) {
             const heading = item['heading'];
-            if (heading === 'Listicle Show Why Watch') {
+            if (heading === strings.SHOW_PAGE.LISTICLE_SHOW_WHY_WATCH) {
               listicleWhyWatch = item;
             }
-            if (heading === 'Listicle Show Summary') {
+            if (heading === strings.SHOW_PAGE.LISTICLE_SHOW_SUMMARY) {
               listicleShowSummary = item;
             }
           }

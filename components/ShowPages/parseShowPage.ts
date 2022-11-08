@@ -1,10 +1,4 @@
-import {
-  DETAILS_ALLOWED_SHOWPAGES,
-  YES_STRING,
-  TAB_ALLOWED_HIGHLIGHT,
-  TAB_ALLOWED_INFO,
-} from 'constants/index';
-
+import { YES_STRING } from 'const/index';
 import dayjs from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import { strings } from 'const/strings';
@@ -26,7 +20,9 @@ export const getObject = (data, filterArray) => {
     } else if (
       element.type == 'heading2' &&
       (element.content.text?.startsWith('FAQs') ||
-        element.content.text?.startsWith('Frequently Asked Questions'))
+        element.content.text?.startsWith(
+          strings.SHOW_PAGE.FREQUENTLY_ASKED_QUESTIONS
+        ))
     ) {
       currentObject = 'FAQ';
     } else if (element.type == 'heading2') {
@@ -107,7 +103,29 @@ export const parseShowPageData = (data) => {
     listicleSchema = [],
     listicleHeading;
 
-  data.forEach((element, idx) => {
+  const TAB_ALLOWED_HIGHLIGHT = [
+    strings.SHOW_PAGE.ABOUT_SHOW,
+    strings.SHOW_PAGE.SHOW_DETAILS,
+    strings.SHOW_PAGE.AGE_SUITABILITY,
+    strings.SHOW_PAGE.TOP_SONGS,
+    strings.SHOW_PAGE.TICKETS,
+  ];
+
+  const TAB_ALLOWED_INFO = [
+    strings.SHOW_PAGE.GETTING_THERE,
+    strings.SHOW_PAGE.FACILITIES_AND_ACCESSIBILITY,
+    strings.SHOW_PAGE.ADDITIONAL_INFORMATION,
+  ];
+
+  const DETAILS_ALLOWED_SHOWPAGES = [
+    strings.SHOW_PAGE.OPENING_DATE,
+    strings.SHOW_PAGE.CLOSING_DATE,
+    strings.SHOW_PAGE.THEATRE_NAME,
+    strings.SHOW_PAGE.DURATION,
+    strings.SHOW_PAGE.AGE_LIMIT,
+  ];
+
+  data.forEach((element, index) => {
     if (element.type == 'heading6') {
       // detail object heading
       DetailObjectHeading = element.content.text;
@@ -123,7 +141,9 @@ export const parseShowPageData = (data) => {
     } else if (
       element.type == 'heading2' &&
       (element.content.text?.startsWith('FAQs') ||
-        element.content.text?.startsWith('Frequently Asked Questions'))
+        element.content.text?.startsWith(
+          strings.SHOW_PAGE.FREQUENTLY_ASKED_QUESTIONS
+        ))
     ) {
       // faq heading
 
@@ -132,9 +152,9 @@ export const parseShowPageData = (data) => {
     } else if (element.type == 'heading2') {
       // tab heading
       if (
-        idx < data.length - 1 &&
-        data[idx + 1].type != 'heading2' &&
-        data[idx + 1].type != 'heading6'
+        index < data.length - 1 &&
+        data[index + 1].type != 'heading2' &&
+        data[index + 1].type != 'heading6'
       ) {
         tabSchema.push({
           tab_name: element.content.text,
@@ -149,7 +169,7 @@ export const parseShowPageData = (data) => {
     } else {
       if (currentObject === 'DETAIL') {
         // detail object content
-        if (DetailObjectHeading === 'Google Map') {
+        if (DetailObjectHeading === strings.SHOW_PAGE.GOOGLE_MAP) {
           mapURL = element.content.text;
         }
         if (
@@ -189,7 +209,6 @@ export const parseShowPageData = (data) => {
         }
       } else if (currentObject === 'TAB') {
         // tab content
-
         element.content.type = element.type;
         tabSchema[tabSchema.length - 1].tab_content.push(element.content);
       } else if (currentObject == 'LISTICLE') {
@@ -200,16 +219,22 @@ export const parseShowPageData = (data) => {
         });
       } else {
         // faq content
-        if (element.content.text.startsWith('Q-')) {
+        if (element.content.text.startsWith(strings.SHOW_PAGE.QUESTION)) {
           // Question
 
           faqSchema.push({
-            heading: element.content.text.replace('Q-', ''),
+            heading: element.content.text.replace(
+              strings.SHOW_PAGE.QUESTION,
+              ''
+            ),
             content: [],
           });
         } else {
           // Answer
-          element.content.text = element.content.text.replace('A-', '');
+          element.content.text = element.content.text.replace(
+            strings.SHOW_PAGE.ANSWER,
+            ''
+          );
           element.content.type = element.type;
           for (let i = 0; i < element.content.spans.length; i++) {
             element.content.spans[i].start = element.content.spans[i].start - 2;
@@ -229,7 +254,7 @@ export const parseShowPageData = (data) => {
   let aboutTheatreSection;
 
   tabSchema.forEach((element, index) => {
-    if (element.tab_name === 'About Theatre') {
+    if (element.tab_name === strings.SHOW_PAGE.ABOUT_THEATRE) {
       element.tab_content.forEach((data) => {
         if (data.type === 'heading3') {
           data.type = 'heading2';
@@ -247,10 +272,7 @@ export const parseShowPageData = (data) => {
       })
     ) {
       element.tab_content.forEach((data) => {
-        if (data.type === 'heading3') {
-          data.type = 'heading2';
-        }
-        if (data.type === 'heading4') {
+        if (data.type === 'heading3' || data.type === 'heading4') {
           data.type = 'heading2';
         }
       });
@@ -259,7 +281,7 @@ export const parseShowPageData = (data) => {
       tabHeadingHighlight.push(tabHeading[index]);
     }
 
-    if (element.tab_name === 'Highlights') {
+    if (element.tab_name === strings.SHOW_PAGE.HIGHLIGHTS) {
       element.tab_content.forEach((data) => {
         if (data.type === 'heading3') {
           data.type = 'heading2';

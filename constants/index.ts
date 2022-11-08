@@ -1,5 +1,3 @@
-import { strings } from './strings';
-
 export const IP_INFO_TOKEN = '108f1155413636';
 
 export const PREFERRED_COUNTRIES_CODES = [
@@ -416,6 +414,7 @@ export const DONT_AUTO_SCROLL = false;
 export const DONT_HOIST = false;
 
 export const HEADOUT_API_ENDPOINT = 'https://api.headout.com/api';
+
 export const HEADOUT_NAKED_DOMAIN = 'headout.com';
 
 export const TOUR_COMPARISION_DESIGN = {
@@ -631,29 +630,6 @@ export const SHORT_CODE_TYPES = {
 
 export const NOS_OF_HIGHLIGHTS_TO_SHOW = 4;
 
-export const TAB_ALLOWED_HIGHLIGHT = [
-  'About Show',
-  'Show Details',
-  'Age Suitability',
-  'Top Songs',
-  'Tickets',
-  'Covid-19 Safety',
-];
-
-export const TAB_ALLOWED_INFO = [
-  'Getting There',
-  'Facilities & Accessibility',
-  'Additional Information',
-];
-
-export const DETAILS_ALLOWED_SHOWPAGES = [
-  'Opening Date',
-  'Closing Date',
-  strings.SHOW_PAGE.THEATRE_NAME,
-  strings.SHOW_PAGE.DURATION,
-  strings.SHOW_PAGE.AGE_LIMIT,
-];
-
 export const YES_STRING = 'YES';
 
 export const SAFETY_MEASURE_REDIRECT_PAGE_LINK =
@@ -663,7 +639,9 @@ export const FAVICON_LONDON_THEATRE_TICKETS =
   'https://images.prismic.io/mystique/43d0bf7f-2955-413b-a266-8fc62dd9c933_shows-favicon.png?auto=compress,format';
 
 export const AUDIOGUIDE_TAG_REGEX = /AUDIO_GUIDE_[0-9]+/g;
+
 export const REOPENING_CATEGORIES: number[] = [3159];
+
 export const NEW_ARRIVALS_CATEGORIES: number[] = [1351];
 
 export const ANALYTICS_PROPERTIES = {
