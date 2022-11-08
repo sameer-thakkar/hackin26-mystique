@@ -264,6 +264,7 @@ export const HomePage = (props) => {
         allTours={allTours}
         isEntertainmentMb={isEntertainmentMb}
         hasLanguageSelector={hasLanguageSelector}
+        hideCurrencySelector
         isEntertainmentMbListicle={isEntertainmentMbListicle}
         showLtdCategoryHomepage={showLtdCategoryHomepage}
       />

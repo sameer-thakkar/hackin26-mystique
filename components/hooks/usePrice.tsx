@@ -1,14 +1,21 @@
 import { useEffect } from 'react';
-import { useRecoilState, useRecoilValueLoadable } from 'recoil';
+import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from 'recoil';
+import { appAtom } from 'store/atoms/app';
+import { currencyAtom } from 'store/atoms/currency';
 import { tgidListAtom } from 'store/atoms/tgidList';
 import { priceSelector } from 'store/selectors/price';
 
 const usePrice = ({ tgid, ssrListingPrice }) => {
   const [tgidList, setTgidList] = useRecoilState(tgidListAtom);
+  const { initialCurrency } = useRecoilValue(appAtom);
+  const activeCurrency = useRecoilValue(currencyAtom);
+
   const { state, contents: tourListAPIData } = useRecoilValueLoadable(
     priceSelector
   );
   const isLoading = state !== 'hasError' && state === 'loading';
+  const isFetchRequired =
+    initialCurrency !== activeCurrency && !tgidList.isCollecting;
 
   useEffect(() => {
     if (!tgidList.tgids.includes(tgid)) {
@@ -34,7 +41,7 @@ const usePrice = ({ tgid, ssrListingPrice }) => {
     case 'hasError':
     case 'loading':
       return {
-        isLoading,
+        isLoading: isFetchRequired && isLoading,
         listingPrice: ssrListingPrice,
       };
 

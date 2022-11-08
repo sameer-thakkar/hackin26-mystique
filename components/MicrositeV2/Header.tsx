@@ -294,6 +294,7 @@ interface HeaderProps {
   isEntertainmentMb?: boolean;
   isEntertainmentMbListicle?: boolean;
   showLtdCategoryHomepage?: boolean;
+  hideCurrencySelector?: boolean;
 }
 
 const Header: FunctionComponent<HeaderProps> = ({
@@ -318,6 +319,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   isEntertainmentMb = false,
   isEntertainmentMbListicle,
   showLtdCategoryHomepage,
+  hideCurrencySelector = false,
 }) => {
   const { lang, nakedDomain, redirectToHeadoutBookingFlow } = useContext(
     MBContext
@@ -363,7 +365,7 @@ const Header: FunctionComponent<HeaderProps> = ({
     ALLOW_IMMEDIEATE_NESTING
   );
   const headerCurrencies = useRecoilValue(currencyListAtom);
-  const headerLanguages = [...languageProps.languages, { code: lang }];
+  const headerLanguages = [...(languageProps?.languages ?? []), { code: lang }];
 
   const convertedRegularMenuItems =
     headerLinks
@@ -537,6 +539,7 @@ const Header: FunctionComponent<HeaderProps> = ({
               currencies={headerCurrencies}
               currentLanguage={lang}
               hasLanguageDropdown={hasLanguageSelector}
+              hasCurrencySelector={hideCurrencySelector}
             />
             <Conditional if={isMobileDevice && hamburgerIconCheck}>
               <Hamburger

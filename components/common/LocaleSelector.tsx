@@ -118,6 +118,7 @@ const LocaleSelector = ({
   currencies,
   currentLanguage,
   hasLanguageDropdown = true,
+  hasCurrencySelector = true,
 }) => {
   const { uid, host, isDev } = useContext(MBContext);
   const menuItemRef = useRef(null);
@@ -231,8 +232,9 @@ const LocaleSelector = ({
     onDrawerClose();
   };
 
-  let tabsArray = [
-    {
+  let tabsArray = [];
+  if (hasCurrencySelector) {
+    tabsArray.push({
       body: (
         <RadioList
           onChange={onCurrencyChange}
@@ -246,8 +248,9 @@ const LocaleSelector = ({
       ),
       header: <DrawerTabHeading>{strings.CURRENCY}</DrawerTabHeading>,
       trackingLabel: 'Currency',
-    },
-  ];
+    });
+  }
+
   if (hasLanguageDropdown && languages?.length > 1) {
     tabsArray.unshift({
       body: (
@@ -274,6 +277,8 @@ const LocaleSelector = ({
       trackingLabel: 'Language',
     });
   }
+
+  if (!tabsArray.length) return null;
 
   return (
     <>
