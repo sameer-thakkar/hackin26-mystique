@@ -875,7 +875,8 @@ const TicketCard = (props) => {
           showScratchPrice={showScratchPrice}
           listingPrice={finalPrice}
           lang={currentLanguage}
-          showSavings={true}
+          tgid={tgid}
+          showSavings
           key={'price-block'}
         />
       </PriceContainer>

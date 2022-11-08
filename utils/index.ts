@@ -243,6 +243,7 @@ export const getAlternateLanguages = (
           }),
         }),
         lang,
+        code: lang,
       };
     });
   } else {

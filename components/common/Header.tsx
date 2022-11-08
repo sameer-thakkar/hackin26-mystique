@@ -1,21 +1,15 @@
-import React, {
-  useRef,
-  useState,
-  useEffect,
-  useContext,
-  ComponentType,
-} from 'react';
+import React, { useRef, useState, useEffect, ComponentType } from 'react';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
-import { MBContext } from 'contexts/MBContext';
-import HeaderLinks from 'components/HeaderLinks';
-import LanguageSelector from 'components/common/LanguageSelector';
-import Conditional from 'components/common/Conditional';
-import CurrencySelector from 'components/common/CurrencySelector';
-import Hamburger from 'UI/Hamburger';
+import { currencyListAtom } from 'store/atoms/currencyList';
 import Image from 'UI/Image';
+import Hamburger from 'UI/Hamburger';
+import HeaderLinks from 'components/HeaderLinks';
+import LocaleSelector from 'components/common/LocaleSelector';
+import Conditional from 'components/common/Conditional';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
@@ -126,19 +120,14 @@ const StyledHeaderElements = styled.div`
   justify-self: right;
   display: flex;
   align-items: center;
+  column-gap: 8px;
   * {
     color: ${({ theme: { primaryBGText } }) =>
       primaryBGText ? primaryBGText : COLORS.GRAY.G2};
   }
-  ${(props) => {
-    if (props.active) {
-      return `
-      @media (max-width: 768px) {
-        margin-right: 55px;
-        `;
-    }
-  }};
+
   @media (max-width: 768px) {
+    margin-right: 24px;
     * {
       color: ${COLORS.GRAY.G2};
     }
@@ -165,24 +154,22 @@ const Header: React.FC<any> = (props) => {
     currentLanguage,
     logoUrl,
     logoAltText,
-    uid,
     isMobile,
     showGroupBooking = false,
     enableBuyTickets = 'No',
     logoRedirectionURL,
     showTicketRedirectionURL,
-    host,
     hasPoweredByHeadoutLogo,
     openGroupBookingModal,
     slices = [],
     hasDropdownLinks,
     dropdownLinks,
     showTicketMenu,
-    isAmp,
-    headerCurrencies,
-    currentCurrency,
     isEntertainmentMB = false,
   } = props;
+  const headerCurrencies = useRecoilValue(currencyListAtom);
+  const headerLanguages = [...languages, { code: currentLanguage }];
+
   const hamburgerIconCheck =
     showGroupBooking ||
     !!headerLinks?.filter((link) => link.link_url?.url)?.length ||
@@ -190,7 +177,6 @@ const Header: React.FC<any> = (props) => {
   const hamburgerRef = useRef(null);
   const multiNavRef = useRef(null);
   const [scrollPos, setScrollPos] = useState(0);
-  const { mbTheme } = useContext(MBContext);
 
   useCaptureClickOutside(
     hamburgerRef,
@@ -269,28 +255,15 @@ const Header: React.FC<any> = (props) => {
           </div>
         </Conditional>
         <StyledHeaderElements active={hamburgerIconCheck}>
-          <div ref={hamburgerRef}>
-            <Conditional if={isMobile && hamburgerIconCheck}>
-              <div
-                onClick={() => {
-                  setHamburgerOpen((c) => !c);
-                }}
-                tabIndex={0}
-                role="button"
-              >
-                <Hamburger isActive={hamburgerOpen} />
-              </div>
-            </Conditional>
-            <Conditional if={!slices && headerLinks}>
-              <HeaderLinks
-                headerLinks={headerLinks}
-                openGroupBookingModal={openGroupBookingModal}
-                isMobile={isMobile}
-                showGroupBooking={showGroupBooking}
-                hiddenMobile={hamburgerOpen}
-              />
-            </Conditional>
-          </div>
+          <Conditional if={!slices && headerLinks}>
+            <HeaderLinks
+              headerLinks={headerLinks}
+              openGroupBookingModal={openGroupBookingModal}
+              isMobile={isMobile}
+              showGroupBooking={showGroupBooking}
+              hiddenMobile={hamburgerOpen}
+            />
+          </Conditional>
           <Conditional if={slices}>
             <span ref={multiNavRef}>
               <MultiLevelNav
@@ -321,25 +294,23 @@ const Header: React.FC<any> = (props) => {
               {strings.TICKETS}
             </StyledMenuItem>
           </Conditional>
-          <Conditional if={languages?.length}>
-            <LanguageSelector
-              languages={languages}
-              currentLanguage={currentLanguage}
-              uid={uid}
-              host={host}
-              isMobile={isMobile}
-              mbTheme={mbTheme}
-              isAmp={isAmp}
-            />
-          </Conditional>
-          <Conditional if={headerCurrencies?.length}>
-            <CurrencySelector
-              currentCurrency={currentCurrency}
-              currencies={headerCurrencies}
-              isMobile={isMobile}
-              isAmp={isAmp}
-              host={host}
-            />
+
+          <LocaleSelector
+            currencies={headerCurrencies}
+            languages={headerLanguages}
+            currentLanguage={currentLanguage}
+          />
+          <Conditional if={isMobile && hamburgerIconCheck}>
+            <div
+              ref={hamburgerRef}
+              onClick={() => {
+                setHamburgerOpen((c) => !c);
+              }}
+              tabIndex={0}
+              role="button"
+            >
+              <Hamburger isActive={hamburgerOpen} />
+            </div>
           </Conditional>
         </StyledHeaderElements>
       </StyledHeaderContainer>

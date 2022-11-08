@@ -567,7 +567,8 @@ const AutomatedTourComparisonTable = ({
                         <PriceBlock
                           lang={lang}
                           listingPrice={tour?.listingPrice}
-                          showScratchPrice={true}
+                          tgid={tour?.id}
+                          showScratchPrice
                           currencyDisplay="code"
                         />
                       </BlockContent>
@@ -617,7 +618,8 @@ const AutomatedTourComparisonTable = ({
                           <PriceBlock
                             lang={lang}
                             listingPrice={tour?.listingPrice}
-                            showScratchPrice={true}
+                            tgid={tour?.id}
+                            showScratchPrice
                             currencyDisplay="code"
                           />
                         </BlockContent>

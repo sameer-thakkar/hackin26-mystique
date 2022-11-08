@@ -1,15 +1,14 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { convertUidToUrl } from 'utils/urlUtils';
+import Image from 'components/UI/Image';
 import PriceBlock, { SavedTag, StyledPriceBlock } from 'UI/PriceBlock';
-import { SEE_SAFETY } from 'assets/SvgIcons';
-import { safetyChecker } from 'components/ShowPages/parseShowPage';
-import Conditional from 'components/common/Conditional';
 import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
+import { convertUidToUrl } from 'utils/urlUtils';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
-
-import Image from '../UI/Image';
+import { expandFontToken } from 'const/typography';
+import { FONTS } from 'const/fonts';
+import COLORS from 'const/colors';
 
 const CategoryCardWrapper = styled.div`
   ${StyledPriceBlock} {
@@ -24,20 +23,21 @@ const CategoryCardWrapper = styled.div`
     border-radius: 4px;
   }
 
-  .tour-scratch-price {
-    color: #888888;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 16px;
+  .tour-price {
+    color: ${COLORS.GRAY.G2};
+    ${expandFontToken(FONTS.SUBHEADING_REGULAR)}
+    display: flex;
+    flex-direction: column;
+    .prefix {
+      text-align: left;
+      ${expandFontToken(FONTS.UI_LABEL_SMALL)}
+    }
   }
 
-  .tour-price {
-    color: #444444;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 20px;
+  .tour-scratch-price {
+    color: ${COLORS.GRAY.G4};
+    ${expandFontToken(FONTS.UI_LABEL_SMALL)}
+    text-align: left;
   }
 
   ${SavedTag} {
@@ -89,19 +89,6 @@ const CategoryCardWrapper = styled.div`
   }
 `;
 
-const SeeSafetyWrapper = styled.div`
-  position: absolute;
-  filter: drop-shadow(0px -1px 2px rgba(0, 0, 0, 0.08)),
-    drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.12));
-  margin: 8px 0 0 8px;
-  max-height: 32px;
-  max-width: 52px;
-  svg {
-    width: 100%;
-    height: 100%;
-  }
-`;
-
 const CategoryCard = ({
   allShowPagesDocuments,
   element,
@@ -119,8 +106,6 @@ const CategoryCard = ({
     ? convertUidToUrl({ uid: cardDocument[0].uid, isDev, hostname: host })
     : `https://www.headout.com${tourGroupUrl}`;
 
-  const isSafe = safetyChecker(element.microBrandsHighlight);
-
   const trackClickEvent = () => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED,
@@ -131,9 +116,6 @@ const CategoryCard = ({
   return (
     <CategoryCardWrapper>
       <a href={redirectURL} target="blank" onClick={trackClickEvent}>
-        <Conditional if={isSafe}>
-          <SeeSafetyWrapper>{SEE_SAFETY}</SeeSafetyWrapper>
-        </Conditional>
         <Image
           url={imageUrl}
           alt={name}
@@ -146,8 +128,10 @@ const CategoryCard = ({
           <PriceBlock
             listingPrice={listingPrice}
             lang={currentLanguage}
-            showSavings={true}
-            showScratchPrice={true}
+            tgid={id}
+            showSavings
+            showScratchPrice
+            prefix
           />
         </div>
       </a>

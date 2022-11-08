@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
+import { currencyAtom } from 'store/atoms/currency';
 import { MBContext } from 'contexts/MBContext';
+import PriceBlock, { PriceSkeleton, StyledPriceBlock } from 'UI/PriceBlock';
 import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
-import LocalisedPrice from 'UI/LPrice';
 import Emoji from 'components/common/Emoji';
 import { STAR } from 'assets/SvgIcons';
 import {
@@ -94,7 +96,21 @@ const ProductCard = styled.div`
     align-self: end;
   }
 
-  .product-v2-price {
+  ${StyledPriceBlock} {
+    grid-template-columns: auto;
+  } 
+
+  ${PriceSkeleton} {
+    &:before {
+      content: unset;
+    }
+    &:after {
+      height: 24px;
+    }
+  }
+
+  .tour-price {
+    column-gap: 4px;
     ${expandFontToken(FONTS.SUBHEADING_LARGE)}
     text-align: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? 'left' : 'right'};
@@ -123,7 +139,8 @@ const ProductCard = styled.div`
     }
   }
 
-  .product-v2-scratch-price {
+  .tour-scratch-price {
+    grid-column: 1 / 2;
     ${expandFontToken(FONTS.UI_LABEL_SMALL)}
     text-align: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? 'left' : 'right'};
@@ -215,12 +232,12 @@ const ProductCard = styled.div`
       align-items: center;
     }
 
-    .product-v2-price {
+    .tour-price {
       text-align: left;
       ${expandFontToken(FONTS.SUBHEADING_REGULAR)}
     }
 
-    .product-v2-scratch-price {
+    .tour-scratch-price {
       text-align: left;
       ${expandFontToken(FONTS.UI_LABEL_XS)}
     }
@@ -320,6 +337,7 @@ const Product = (props) => {
     activeCategoryId = null,
     host,
   } = props;
+  const currency = useRecoilValue(currencyAtom);
 
   const { lang, nakedDomain, redirectToHeadoutBookingFlow, isDev } = useContext(
     MBContext
@@ -341,6 +359,7 @@ const Product = (props) => {
     reviewCount,
     showPageUid = null,
   } = tour || {};
+  const { finalPrice: price, originalPrice: scratchPrice } = listingPrice || {};
 
   const { collectionName, primaryCategoryName, primarySubCategoryName } =
     category || {};
@@ -376,17 +395,11 @@ const Product = (props) => {
     lang,
     tgid,
     redirectToHeadoutBookingFlow,
+    currency,
   });
   const showPageUrl = showPageUid
     ? convertUidToUrl({ uid: showPageUid, isDev, hostname: host, lang })
     : bookingURL;
-
-  const {
-    finalPrice: price,
-    originalPrice: scratchPrice,
-    currencyCode,
-    bestDiscount,
-  } = listingPrice || {};
 
   const handleProductClick = (event) => {
     const { ranking, ltdCategory, isPinnedCard } = props;
@@ -444,7 +457,6 @@ const Product = (props) => {
   }
 
   const isBeforeToday = new Date().getTime() > new Date(openingDate)?.getTime();
-  const hasScratchPrice = scratchPrice > price;
 
   const showPageEvent = () => {
     trackEvent({
@@ -536,35 +548,13 @@ const Product = (props) => {
           </Conditional>
         </div>
         <div className="product-v2-bottom-left">
-          <div className="product-v2-price">
-            <Conditional if={isEntertainmentMb && !hasScratchPrice}>
-              <span className="mr-4">{strings.FROM}</span>
-            </Conditional>
-            <LocalisedPrice
-              price={price}
-              currencyCode={currencyCode}
-              lang={lang}
-            />
-            <Conditional
-              if={isEntertainmentMb && hasScratchPrice && bestDiscount}
-            >
-              <span className="discount">
-                {bestDiscount}% {strings.OFF}
-              </span>
-            </Conditional>
-          </div>
-          <Conditional if={hasScratchPrice}>
-            <div className="product-v2-scratch-price">
-              <Conditional if={isEntertainmentMb}>
-                <span>{strings.FROM} </span>
-              </Conditional>
-              <LocalisedPrice
-                price={scratchPrice}
-                currencyCode={currencyCode}
-                lang={lang}
-              />
-            </div>
-          </Conditional>
+          <PriceBlock
+            prefix
+            listingPrice={listingPrice}
+            showSavings
+            lang={lang}
+            tgid={tgid}
+          />
         </div>
         <Conditional if={cardFooter?.length && !isEntertainmentMb}>
           <div className="product-v2-bottom-right">
@@ -660,35 +650,13 @@ const Product = (props) => {
                 </Conditional>
               </div>
               <div className="product-v2-bottom-left">
-                <div className="product-v2-price">
-                  <Conditional if={isEntertainmentMb && !hasScratchPrice}>
-                    <span className="mr-4">{strings.FROM}</span>
-                  </Conditional>
-                  <LocalisedPrice
-                    price={price}
-                    currencyCode={currencyCode}
-                    lang={lang}
-                  />
-                  <Conditional
-                    if={isEntertainmentMb && hasScratchPrice && bestDiscount}
-                  >
-                    <span className="discount">
-                      {bestDiscount}% {strings.OFF}
-                    </span>
-                  </Conditional>
-                </div>
-                <Conditional if={hasScratchPrice}>
-                  <div className="product-v2-scratch-price">
-                    <Conditional if={isEntertainmentMb}>
-                      <span>{strings.FROM} </span>
-                    </Conditional>
-                    <LocalisedPrice
-                      price={scratchPrice}
-                      currencyCode={currencyCode}
-                      lang={lang}
-                    />
-                  </div>
-                </Conditional>
+                <PriceBlock
+                  prefix
+                  listingPrice={listingPrice}
+                  showSavings
+                  lang={lang}
+                  tgid={tgid}
+                />
               </div>
               <Conditional if={cardFooter?.length && !isEntertainmentMb}>
                 <div className="product-v2-bottom-right">

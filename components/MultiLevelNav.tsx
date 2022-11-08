@@ -132,6 +132,7 @@ const NestedMenu = styled.ul`
   position: absolute;
   top: 24px;
   left: 0;
+  z-index: 11;
   width: max-content;
   background-color: ${({ theme: { primaryBackground } }) =>
     primaryBackground ? primaryBackground : COLORS.BRAND.WHITE};

@@ -1,3 +1,5 @@
+import { CURRENCY_CODES_ORDER, LOCALE_ORDER } from 'const/index';
+
 export const fromEntries = (iterable) =>
   [...iterable].reduce(
     (obj, [key, val]) => Object.assign(obj, { [key]: val }),
@@ -40,3 +42,24 @@ export const localServerSideIsMobileCheck = (req) => {
 
   return isMobile;
 };
+
+export const localeSortFn = (localeA, localeB) =>
+  LOCALE_ORDER.indexOf(localeA.code) - LOCALE_ORDER.indexOf(localeB.code);
+
+export const currencySortFn = (currencyA, currencyB) =>
+  CURRENCY_CODES_ORDER.indexOf(currencyA.code) -
+  CURRENCY_CODES_ORDER.indexOf(currencyB.code);
+
+export function debounce(func, wait, immediate = false) {
+  let timeout;
+  return function () {
+    let context = this,
+      args = arguments;
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    }, wait);
+    if (immediate && !timeout) func.apply(context, args);
+  };
+}

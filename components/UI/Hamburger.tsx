@@ -5,11 +5,6 @@ import styled from 'styled-components';
 const StyledHamburger = styled.div`
   display: none;
   cursor: pointer;
-  position: absolute;
-  right: 19px;
-  top: 50%;
-  margin: 0;
-  transform: translateY(-50%);
   width: 22px;
   &:after,
   &:before,

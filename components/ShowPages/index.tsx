@@ -8,6 +8,9 @@ import cloneDeep from 'lodash.clonedeep';
 import { useWindowWidth } from '@react-hook/window-size';
 import styled from 'styled-components';
 import { MBContext } from 'contexts/MBContext';
+import { metaAtom } from 'store/atoms/meta';
+import { gtmAtom } from 'store/atoms/gtm';
+import { currencyAtom } from 'store/atoms/currency';
 import { StyledRichContent } from 'UI/RichContent';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
@@ -55,8 +58,6 @@ import { getPrevDate, getDurationISO } from 'utils/dateUtils';
 import { getProductSchema } from 'utils/schemaUtils';
 import { getUniqueArrayItemsBy } from 'utils/arrayUtils';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
-import { metaAtom } from 'store/atoms/meta';
-import { gtmAtom } from 'store/atoms/gtm';
 
 const Breadcrumb = dynamic(() => import('./BreadCrumb'));
 const AccordionGroup = dynamic(() => import('../slices/AccordionGroup'));
@@ -195,6 +196,7 @@ const ShowPage = ({
   const [similarProductData, setSimilarProductData] = useState([]);
   const isStage = host.includes('stage-');
   const hostname = getHostName(isStage, isDev, host);
+  const currency = useRecoilValue(currencyAtom);
 
   const [isMobile, setIsMobile] = useState(false);
   const width = useWindowWidth();
@@ -206,7 +208,6 @@ const ShowPage = ({
     microBrandsHighlight,
     imageUploads,
     topReviews,
-    currency,
     reviewsDetails,
     primarySubCategory,
     city,
@@ -417,6 +418,7 @@ const ShowPage = ({
     nakedDomain,
     lang: currentLanguage,
     tgid,
+    currency,
   });
   const pricingValidFromDate = getPrevDate(inventorySlotData?.fromDate);
 

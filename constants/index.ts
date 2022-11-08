@@ -274,6 +274,11 @@ export const ANALYTICS_EVENTS = {
   MB_LANGUGAGE_CHANGED: 'MB Language Changed',
   LP_TO_BOOKING_PAGE: 'LP to booking page',
   LP_TO_SHOWPAGE: 'LP to showpage',
+  LOCALE_CLICKED: 'Locale Selector Clicked',
+  LOCALE_POPUP_VIEWED: 'Locale Popup Viewed',
+  LOCALE_OPTION_SELECTED: 'Locale Option Selected',
+  LOCALE_POPUP_CLOSED: 'Locale Popup Closed',
+  LOCALE_PRICE_LOADED: 'Product Card Price Loaded',
   UGC: {
     VIEWED: 'Influencer Content Section Viewed',
     CARD_VISIBLE: 'Influencer Content Embed Card Visible',
@@ -672,6 +677,7 @@ export const ANALYTICS_PROPERTIES = {
   COLLECTION_ID: 'Collection ID',
   HEADER: 'Header',
   OPTION_TEXT: 'Option Text',
+  OPTION_NAME: 'Option Name',
   POSITION: 'Position',
   INFO_HEADING: 'Information Heading',
   HEADING: 'Heading',
@@ -710,6 +716,8 @@ export const ANALYTICS_PROPERTIES = {
   SEARCH_QUERY: 'Search Query',
   DIRECTION: 'Direction',
   NEXT_ITEMS_COUNT: 'Next Items Count',
+  OPTION_TYPE: 'Option Type',
+  LOAD_TIME: 'Load Time',
   PINNED_CARD_PRESENT: 'Is Pinned Card Present',
   IS_PINNED_CARD: 'Is Pinned Card',
   AVERAGE_RATING: 'Average Rating',
@@ -717,6 +725,8 @@ export const ANALYTICS_PROPERTIES = {
   IS_DISCOUNT_PRESENT: 'Is Discount Present',
   IS_OPENING_DATE_SHOWN: 'Is Opening Date Shown',
   DIV_TYPE: 'Div Type',
+  CURRENCY: 'Currency',
+  TRIGGERED_BY: 'Triggered By',
 };
 export const PAGE_TYPES = {
   COLLECTION: 'Collection',
@@ -766,6 +776,45 @@ export const QUERY_PARAMS = {
   LIMIT: 'limit',
   OFFSET: 'offset',
 };
+
+export const LOCALE_ORDER = [
+  LANGUAGE_MAP.en.code,
+  LANGUAGE_MAP.es.code,
+  LANGUAGE_MAP.fr.code,
+  LANGUAGE_MAP.it.code,
+  LANGUAGE_MAP.de.code,
+  LANGUAGE_MAP.pt.code,
+  LANGUAGE_MAP.nl.code,
+];
+
+export const TOP_CURRENCIES = ['EUR', 'USD', 'AED', 'SGD', 'INR', 'MYR'];
+
+export const CURRENCY_CODES_ORDER = [
+  'AUD',
+  'GBP',
+  'CAD',
+  'CNY',
+  'EGP',
+  'EUR',
+  'HKD',
+  'ISK',
+  'INR',
+  'IDR',
+  'JPY',
+  'MOP',
+  'MYR',
+  'MXN',
+  'NZD',
+  'QAR',
+  'SGD',
+  'ZAR',
+  'KRW',
+  'CHF',
+  'TWD',
+  'THB',
+  'AED',
+  'USD',
+];
 
 export const FB_DOMAIN_VERIFICATION = 'vrvsgm9rczh57d7fnspfeve29fa6ae';
 

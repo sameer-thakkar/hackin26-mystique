@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
 import { greyScheme } from 'style/theme';
+import { currencyAtom } from 'store/atoms/currency';
 import { MBContext } from 'contexts/MBContext';
 import Image from 'UI/Image';
 import IconCTA from 'UI/IconCTA';
@@ -432,6 +433,7 @@ const DetailedProductCard = (props) => {
     cardRanking,
   } = props;
   const pageMetaData = useRecoilValue(metaAtom);
+  const currency = useRecoilValue(currencyAtom);
   const activeTour = allTours[tgidClicked];
   const { listicleShowSummary, listicleWhyWatch } = activeTour;
   const {
@@ -484,6 +486,7 @@ const DetailedProductCard = (props) => {
     nakedDomain,
     lang,
     tgid: tgidClicked,
+    currency,
   });
 
   useEffect(() => {

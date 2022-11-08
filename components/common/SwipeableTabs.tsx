@@ -1,0 +1,136 @@
+import { FunctionComponent, useEffect, useRef, useState } from 'react';
+import styled from 'styled-components';
+import { expandFontToken } from 'const/typography';
+import COLORS from 'const/colors';
+import { debounce } from 'utils/gen';
+
+const TabWrapper = styled.div`
+  display: grid;
+  width: auto;
+  row-gap: 20px;
+  @media (max-width: 768px) {
+    row-gap: 16px;
+    overflow: hidden;
+    width: unset;
+  }
+`;
+
+const SubHeadingLarge = styled.div`
+  width: max-content;
+  ${expandFontToken('UI/Label Large')}
+`;
+
+export const TabControl = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: left;
+  column-gap: 12px;
+  border-bottom: 1px solid ${COLORS.GRAY.G6};
+  @media (min-width: 768px) {
+    column-gap: 24px;
+  }
+`;
+
+export const Tab = styled(SubHeadingLarge)`
+  padding-bottom: 12px;
+  border-bottom: 2px solid;
+
+  ${({ active }) =>
+    active ? `color: ${COLORS.TEXT.PURPS_3};` : ` border-color: transparent;`};
+  transform: translateY(1px);
+  cursor: pointer;
+`;
+
+export const Panel = styled.div`
+  display: ${({ active }) => (active ? 'block' : 'none')};
+`;
+
+interface TabProps {
+  tabs: Array<{ header: any; body: any; trackingLabel?: string }>;
+  defaultActiveIndex?: number;
+  isCollectionCard?: boolean;
+  onTabView?: Function;
+}
+
+const SWIPE_THRESHOLD = 50;
+
+const SwipeableTabs: FunctionComponent<TabProps> = ({
+  tabs,
+  defaultActiveIndex = 0,
+  isCollectionCard = false,
+  onTabView = null,
+}) => {
+  const swipeRef = useRef({
+    touchStartX: 0,
+    touchEndX: 0,
+    eventAttached: false,
+    activeTab: defaultActiveIndex,
+  });
+  const [activeTab, setTab] = useState(defaultActiveIndex);
+
+  useEffect(() => {
+    swipeRef.current.activeTab = activeTab;
+    if (onTabView)
+      onTabView({
+        index: activeTab,
+        trackingLabel: tabs[activeTab].trackingLabel,
+      });
+  }, [activeTab]);
+
+  useEffect(() => {
+    const onSwipeStart = debounce((e) => {
+      swipeRef.current.touchStartX = e.changedTouches[0].screenX;
+    }, 250);
+
+    const onSwipeEnd = debounce((e) => {
+      swipeRef.current.touchEndX = e.changedTouches[0].screenX;
+      const { touchEndX, touchStartX, activeTab } = swipeRef.current;
+      const delta = touchStartX - touchEndX;
+      if (Math.abs(delta) > SWIPE_THRESHOLD) {
+        const isSwipeLeft = delta > 0;
+        const len = tabs.length;
+        if (!isSwipeLeft) {
+          const newTabIndex = (activeTab - 1) % len;
+          setTab(newTabIndex < 0 ? len - 1 : newTabIndex);
+        } else setTab((activeTab + 1) % len);
+      }
+    }, 250);
+
+    window.addEventListener('touchstart', onSwipeStart);
+    window.addEventListener('touchend', onSwipeEnd);
+
+    return () => {
+      window.removeEventListener('touchstart', onSwipeStart);
+      window.removeEventListener('touchEnd', onSwipeEnd);
+    };
+  }, []);
+
+  return (
+    <TabWrapper>
+      <TabControl>
+        {tabs.map((tab, index) => (
+          <Tab
+            active={index === activeTab}
+            key={`tab${index + 1}`}
+            onClick={() => setTab(index)}
+          >
+            {tab.header}
+          </Tab>
+        ))}
+      </TabControl>
+      <div>
+        {tabs.map((tab, index) => (
+          <Panel
+            active={index === activeTab}
+            key={index}
+            isCollectionCard={isCollectionCard}
+          >
+            {tab.body}
+          </Panel>
+        ))}
+      </div>
+    </TabWrapper>
+  );
+};
+
+export default SwipeableTabs;

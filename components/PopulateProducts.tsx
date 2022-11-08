@@ -90,7 +90,6 @@ const PopulateProducts = (props) => {
     isMobile,
     scorpioData,
     pageUrl,
-    host,
     mbTheme,
     isAmp,
     instantCheckout,
@@ -121,7 +120,7 @@ const PopulateProducts = (props) => {
     productsRef.current.push(el);
   };
 
-  const { isStage, isDev } = useContext(MBContext);
+  const { isStage, isDev, host } = useContext(MBContext);
 
   const hostname = getHostName(isStage, isDev, host);
 
@@ -210,16 +209,10 @@ const PopulateProducts = (props) => {
   }, [productsWrapperRef]);
 
   useEffect(() => {
-    const fetchEarliestAvailability = async ({
-      uncategorizedToursList,
-      currency = null,
-    }) => {
+    const fetchEarliestAvailability = async ({ uncategorizedToursList }) => {
       const requestQueue = uncategorizedToursList.map(({ tgid }) => {
         return fetchCalendarInventory({
           tgid,
-          ...(currency && {
-            currency: `${currency}`,
-          }),
         });
       });
       const response: Array<any> = await Promise.all(requestQueue).then(

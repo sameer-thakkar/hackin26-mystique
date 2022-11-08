@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { HALYARD } from 'const/ui-constants';
 import useSWR from 'swr';
+import styled from 'styled-components';
 import { MBContext } from 'contexts/MBContext';
+import Conditional from 'components/common/Conditional';
+import PriceBlock from 'UI/PriceBlock';
 import Button from 'UI/Button';
+import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
-import { CURRENCY_SYMBOL_MAP } from 'const/index';
 import { getHostName } from 'utils/helper';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 
@@ -49,18 +50,20 @@ const TicketCardHeading = styled.div`
 
 const TicketCardPrice = styled.div`
   grid-area: price;
-  justify-self: flex-end;
-  font-size: 20px;
-  line-height: 24px;
-  font-weight: 500;
-  div {
-    display: flex;
-    justify-content: flex-end;
+  .tour-price {
+    justify-self: flex-end;
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 500;
+  }
+  .tour-scratch-price {
     font-weight: normal;
     font-size: 14px;
     line-height: 16px;
     color: #939393;
-    text-decoration: line-through;
+    .strike-through {
+      text-decoration: line-through;
+    }
   }
   @media (max-width: 768px) {
     justify-self: flex-start;
@@ -157,23 +160,22 @@ const TicketCards: React.FC<TicketCardsProps> = ({
               listingPrice,
               cta_link: ctaLink,
               cta_title: ctaTitle,
+              tgid,
             },
             index
           ) => (
             <TicketCard key={index}>
               <TicketCardHeading>{cardHeading || name}</TicketCardHeading>
-              {listingPrice ? (
+              <Conditional if={listingPrice}>
                 <TicketCardPrice>
-                  {listingPrice.originalPrice > listingPrice.finalPrice ? (
-                    <div>
-                      {CURRENCY_SYMBOL_MAP[listingPrice.currencyCode]}
-                      {listingPrice.originalPrice}
-                    </div>
-                  ) : null}
-                  {CURRENCY_SYMBOL_MAP[listingPrice.currencyCode]}
-                  {listingPrice.finalPrice}
+                  <PriceBlock
+                    lang={lang}
+                    listingPrice={listingPrice}
+                    tgid={tgid}
+                    showScratchPrice
+                  />
                 </TicketCardPrice>
-              ) : null}
+              </Conditional>
               <TicketCardCTA>
                 <a href={ctaLink.url} target={ctaLink.target}>
                   <Button>{ctaTitle || 'Book Now'}</Button>

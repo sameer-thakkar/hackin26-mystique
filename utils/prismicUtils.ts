@@ -40,6 +40,7 @@ import {
   fetchCollection,
   fetchCollectionList,
   fetchTourGroupsByCategory,
+  fetchCurrencyList,
   fetchTourGroupSlots,
   fetchTourGroupV6,
 } from 'utils/apiUtils';
@@ -1103,6 +1104,7 @@ export const getPageData = async ({
       serverResponse,
       isDev,
     })) || { statusCode: 404 };
+    const currencyListPromise = fetchCurrencyList();
 
     if (statusCode) {
       return {
@@ -1204,6 +1206,7 @@ export const getPageData = async ({
         ...(primaryCity && { primaryCity }),
         ...(primaryCountry && { primaryCountry }),
         ...(activeCurrency && { activeCurrency }),
+        currencyList: await currencyListPromise,
       };
     }
 
@@ -1265,6 +1268,7 @@ export const getPageData = async ({
         lang,
         isDev,
         host,
+        currencyList: await currencyListPromise,
       };
     }
 
@@ -1278,6 +1282,7 @@ export const getPageData = async ({
         lang,
         isDev,
         host,
+        currencyList: await currencyListPromise,
       };
     }
 
@@ -1286,7 +1291,15 @@ export const getPageData = async ({
       ContentType === CUSTOM_TYPES.GLOBAL_COUNTRY ||
       ContentType === CUSTOM_TYPES.LISTICLE
     ) {
-      return { CMSContent, ContentType, uid, lang, isDev, host };
+      return {
+        CMSContent,
+        ContentType,
+        uid,
+        lang,
+        isDev,
+        host,
+        currencyList: await currencyListPromise,
+      };
     }
 
     if (ContentType === CUSTOM_TYPES.GLOBAL_EXPERIENCE) {
@@ -1323,6 +1336,7 @@ export const getPageData = async ({
         isDev,
         host,
         categoryTourListData,
+        currencyList: await currencyListPromise,
       };
     }
 
@@ -1357,6 +1371,7 @@ export const getPageData = async ({
           ...(primaryCity && { primaryCity }),
           ...(primaryCountry && { primaryCountry }),
           ...(activeCurrency && { activeCurrency }),
+          currencyList: await currencyListPromise,
         };
       } catch (error) {
         traceError({ error, host: req?.headers?.host, url: req?.url });
@@ -1656,6 +1671,7 @@ export const getPageData = async ({
       tourGroupData,
       currencySymbolMap,
       primaryCountry,
+      currencyList: await currencyListPromise,
     };
   } catch (error) {
     traceError({ error, host: req?.headers?.host, url: req?.url });

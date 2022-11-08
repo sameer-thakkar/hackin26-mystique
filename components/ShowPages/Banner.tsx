@@ -2,6 +2,7 @@ import { useState, useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { MBContext } from 'contexts/MBContext';
+import { currencyAtom } from 'store/atoms/currency';
 import { metaAtom } from 'store/atoms/meta';
 import StickyHeader from 'components/ShowPages/stickyHeader';
 import StickyFooter from 'components/ShowPages/stickyFooter';
@@ -163,14 +164,18 @@ const BannerContent = styled.div`
   .tour-price {
     color: ${COLORS.GRAY.G2};
     ${expandFontToken(FONTS.HEADING_REGULAR)}
+    display: flex;
+    flex-direction: column;
+    .prefix {
+      text-align: left;
+      ${expandFontToken(FONTS.UI_LABEL_SMALL)}
+    }
   }
 
   .tour-scratch-price {
     color: ${COLORS.GRAY.G4};
-    font-size: 0.5rem;
-    line-height: 1rem;
+    ${expandFontToken(FONTS.UI_LABEL_SMALL)}
     text-align: left;
-    font-weight: normal;
   }
 
   .buy-button,
@@ -368,6 +373,7 @@ const ShowPageBanner = ({
     reviewCount,
     reviewsDetails: { averageRating },
   } = tourGroupData ?? {};
+  const currency = useRecoilValue(currencyAtom);
   const pageMetaData = useRecoilValue(metaAtom);
 
   const productImage = imageUploads.length
@@ -384,6 +390,7 @@ const ShowPageBanner = ({
     tgid: tgid,
     biLink: biLink,
     redirectToHeadoutBookingFlow,
+    currency,
   });
 
   const [isVideo, setIsVideo] = useState(false);
@@ -611,15 +618,14 @@ const ShowPageBanner = ({
               <div className="theater-wrapper">
                 {LOCATION} {theaterName}
               </div>
-              <div className="price-block-from">
-                {strings.FROM.toLowerCase() + ' '}
-              </div>
               <div className="priceBlockWrapper">
                 <PriceBlock
                   listingPrice={listingPrice}
                   lang={currentLanguage}
-                  showSavings={true}
-                  showScratchPrice={true}
+                  showSavings
+                  showScratchPrice
+                  prefix
+                  tgid={tgid}
                 />
                 <div className="ratings-reviews-wrapper">
                   <span className="ratings-wrapper">
@@ -647,14 +653,13 @@ const ShowPageBanner = ({
             <div className="right-pricing">
               <Conditional if={listingPrice}>
                 <div className="priceBlockWrapper">
-                  <div className="price-block-from">
-                    {strings.FROM.toLowerCase() + ' '}
-                  </div>
                   <PriceBlock
                     listingPrice={listingPrice}
                     lang={currentLanguage}
-                    showSavings={true}
-                    showScratchPrice={true}
+                    showSavings
+                    showScratchPrice
+                    prefix
+                    tgid={tgid}
                   />
                 </div>
               </Conditional>

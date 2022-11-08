@@ -12,6 +12,7 @@ import { expandFontToken } from 'const/typography';
 import { ANALYTICS_EVENTS } from 'const/index';
 import { ANALYTICS_PROPERTIES } from 'const/index';
 import { getProductCommonProperties, trackEvent } from 'utils/analytics';
+import { FONTS } from 'const/fonts';
 
 const BannerContent = styled.div(
   ({ showComponent }) => `
@@ -110,12 +111,18 @@ const BannerContent = styled.div(
 
   ${StyledPriceBlock} {
     margin-right: 16px;
-    .tour-price{
+    .tour-price {
       color: ${COLORS.GRAY.G2};
-      ${expandFontToken('Heading/Regular')}
+      ${expandFontToken(FONTS.HEADING_REGULAR)}
+      display: flex;
+      flex-direction: column;
+      .prefix {
+        text-align: left;
+        ${expandFontToken(FONTS.UI_LABEL_SMALL)}
+      }
     }
     .tour-scratch-price{
-      ${expandFontToken('UI/Label Regular')}
+      ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
       color: ${COLORS.GRAY.G4};
     }
   }
@@ -225,8 +232,10 @@ const StickyHeader = ({
                 <PriceBlock
                   listingPrice={listingPrice}
                   lang={currentLanguage}
-                  showSavings={true}
-                  showScratchPrice={true}
+                  tgid={tgid}
+                  showSavings
+                  showScratchPrice
+                  prefix
                 />
               </div>
               <Conditional if={isAvailable}>

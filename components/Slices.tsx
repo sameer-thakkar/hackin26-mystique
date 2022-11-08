@@ -150,7 +150,7 @@ const sliceHandler = (slice, props: any = {}) => {
     case 'trust_boosters':
       let boosters = slice.items.reduce((accum, item) => {
         let booster = {
-          image_url: item.uploaded_icon.url || item.icon_link.url,
+          image_url: item.uploaded_icon.url || item.icon_link?.url,
           title: item.booster_title,
           description: item.booster_description,
         };

@@ -5,16 +5,17 @@ import React, {
   useEffect,
   useState,
 } from 'react';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import Conditional from 'components/common/Conditional';
 import dynamic from 'next/dynamic';
+import { currencyListAtom } from 'store/atoms/currencyList';
 import { MBContext } from 'contexts/MBContext';
-import LanguageSelector from 'components/common/LanguageSelector';
 import Image from 'components/UI/Image';
 import MultiLevelNav from 'components/MultiLevelNav';
-import { groupSlices, withTrailingSlash } from 'utils/helper';
+import LocaleSelector from 'components/common/LocaleSelector';
 import Hamburger from 'components/UI/Hamburger';
 import HeaderLinks from 'components/HeaderLinks';
+import Conditional from 'components/common/Conditional';
 import { SEARCH_ICON, POWERED_BY_HEADOUT } from 'assets/SvgIcons';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
@@ -25,6 +26,7 @@ import {
   ANALYTICS_EVENTS,
 } from 'const/index';
 import { strings } from 'const/strings';
+import { groupSlices, withTrailingSlash } from 'utils/helper';
 import { createBookingURL } from 'utils';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { trackEvent } from 'utils/analytics';
@@ -130,7 +132,7 @@ const StyledHeader = styled.div`
 
 const HeaderRight = styled.div`
   display: grid;
-  grid-gap: 22px;
+  grid-gap: 8px;
   grid-auto-flow: column !important;
   grid-auto-columns: auto;
   align-items: center;
@@ -321,14 +323,11 @@ const Header: FunctionComponent<HeaderProps> = ({
     MBContext
   );
 
-  const [languageDropdown, setLanguageDropdown] = useState(false);
   const [results, setResults] = useState([]);
   const [resultClicked, setResultClicked] = useState(false);
   const [navActive, toggleNav] = useState(false);
   const [headerHover, setHeaderHover] = useState(false);
-  const toggleLanguageDropdown = () => {
-    setLanguageDropdown(!languageDropdown);
-  };
+
   const handleResults = (results) => {
     setResults(results);
     setResultClicked(false);
@@ -363,6 +362,9 @@ const Header: FunctionComponent<HeaderProps> = ({
     headerSlices,
     ALLOW_IMMEDIEATE_NESTING
   );
+  const headerCurrencies = useRecoilValue(currencyListAtom);
+  const headerLanguages = [...languageProps.languages, { code: lang }];
+
   const convertedRegularMenuItems =
     headerLinks
       ?.filter((link) => !!link.link_url?.url && !!link.link_heading)
@@ -409,7 +411,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   };
   return (
     <StyledHeader
-      overlayActive={languageDropdown || navActive}
+      overlayActive={navActive}
       headerHover={headerHover}
       isGlobalMb={isGlobalMb}
       isEntertainmentMb={isEntertainmentMb}
@@ -530,17 +532,12 @@ const Header: FunctionComponent<HeaderProps> = ({
                 {SEARCH_ICON}
               </div>
             </Conditional>
-            <Conditional if={hasLanguageSelector}>
-              <LanguageSelector
-                {...languageProps}
-                languageDropdown={languageDropdown}
-                toggleDropdown={toggleLanguageDropdown}
-                hasLanguageDropdown={hasLanguageSelector}
-                host={host}
-                isMobile={isMobileDevice}
-                isV2
-              />
-            </Conditional>
+            <LocaleSelector
+              languages={headerLanguages}
+              currencies={headerCurrencies}
+              currentLanguage={lang}
+              hasLanguageDropdown={hasLanguageSelector}
+            />
             <Conditional if={isMobileDevice && hamburgerIconCheck}>
               <Hamburger
                 className={'hamburger'}

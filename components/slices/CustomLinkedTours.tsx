@@ -5,7 +5,7 @@ import { MBContext } from 'contexts/MBContext';
 import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
 import RichContent from 'UI/RichContent';
-import LocalisedPrice from 'UI/LPrice';
+import PriceBlock from 'UI/PriceBlock';
 import TitleTextCombo from 'UI/TitleTextCombo';
 import { createBookingURL } from 'utils';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
@@ -166,14 +166,8 @@ const CustomLinkedTours = ({
       <TourGrid>
         {apiTours &&
           tgids.map((tgid: any, index) => {
-            const {
-              title,
-              image,
-              currency,
-              price,
-              averageRating,
-              reviewCount,
-            } = apiTours[tgid] || {};
+            const { title, image, averageRating, reviewCount, listingPrice } =
+              apiTours[tgid] || {};
             return (
               <Tour
                 key={index}
@@ -185,10 +179,10 @@ const CustomLinkedTours = ({
                 <Image url={image} aspectRatio={'16:10'} alt={title} />
                 <TitlePriceCombo>
                   <Title>{title}</Title>
-                  <LocalisedPrice
-                    currencyCode={currency}
-                    price={price}
+                  <PriceBlock
                     lang={lang}
+                    listingPrice={listingPrice}
+                    tgid={tgid}
                   />
                 </TitlePriceCombo>
                 <Conditional if={averageRating}>

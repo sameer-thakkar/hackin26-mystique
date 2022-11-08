@@ -1,5 +1,6 @@
 import { sortDateArray } from 'utils/dateUtils';
 import { addQueryParams } from 'utils/urlUtils';
+import { currencySortFn } from 'utils/gen';
 
 const objectToQuery = (query) => {
   const params = Object.entries(query);
@@ -120,6 +121,7 @@ interface CommonApiProps {
 
 interface TourListProps extends CommonApiProps {
   tgids: string[] | number[];
+  currency?: string;
 }
 
 export const fetchTourListV6 = async ({
@@ -127,11 +129,13 @@ export const fetchTourListV6 = async ({
   language,
   tgids,
   fallbackToEnglish = false,
+  currency,
 }: TourListProps) => {
   try {
     const params = {
       'ids[]': tgids?.join(','),
       ...(language && { language }),
+      ...(currency && { currency }),
       ...(!fallbackToEnglish &&
         language !== 'en' && {
           'fallback-to-english': '0',
@@ -181,7 +185,8 @@ export const fetchCurrencyList = async () => {
   try {
     const res = await fetch('https://api.headout.com/api/v1/currency/list');
     const data = await res.json();
-    return data;
+    const sortedData = data?.sort(currencySortFn);
+    return sortedData;
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('[fetchCurrencyList]', error);

@@ -1,23 +1,25 @@
-import {
-  getLocalizationLabels,
-  initDayJSLocale,
-} from 'utils/localizationUtils';
-import { strings } from 'const/strings';
-import { getLanguageFromPathname } from 'utils';
-import 'public/global.css';
 import { MutableSnapshot, RecoilRoot } from 'recoil';
-import { currencyAtom } from 'store/atoms/currency';
 import '@formatjs/intl-relativetimeformat/polyfill';
+import 'public/global.css';
+import { currencyListAtom } from 'store/atoms/currencyList';
+import { appAtom } from 'store/atoms/app';
+import { currencyAtom } from 'store/atoms/currency';
 import { metaAtom } from 'store/atoms/meta';
+import LiveChat from 'components/common/LiveChat';
 import {
   PAGETYPE_BY_CUSTOMTYPE,
   CUSTOM_TYPES,
   ANALYTICS_PROPERTIES,
 } from 'const/index';
+import { strings } from 'const/strings';
+import {
+  getLocalizationLabels,
+  initDayJSLocale,
+} from 'utils/localizationUtils';
+import { getLanguageFromPathname } from 'utils';
 import renderShortCodes from 'utils/shortCodes';
 import { sendVariablesToDataLayer } from 'utils/analytics';
 import { getLangObject } from 'utils/helper';
-import LiveChat from 'components/common/LiveChat';
 
 const App = ({ Component, pageProps, localizedStrings, lang }) => {
   strings.setContent({
@@ -29,16 +31,18 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
     if (!pageProps?.ContentType) return;
     const { lang } = pageProps ?? {};
     const {
-      queryParams = {},
       baseLangPageTitle,
       categoryTourListData,
       CMSContent,
       ContentType: customType,
       tourGroupData,
       primaryCity,
+      currencyList,
+      host,
+      isDev,
+      isStage,
     } = pageProps;
     const { title } = CMSContent?.data ?? {};
-    const { currencyCode } = queryParams;
     const metaTitle = renderShortCodes(title)?.join?.('');
     let pageTitle =
       customType === CUSTOM_TYPES.MICROSITE
@@ -46,6 +50,7 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
         : CMSContent?.data?.featured_title;
     pageTitle = pageTitle ?? metaTitle;
     pageTitle = renderShortCodes(pageTitle)?.join?.('');
+    const ssrCurrencyCode = primaryCity?.country?.currency?.code;
 
     const pageType = PAGETYPE_BY_CUSTOMTYPE[customType];
     const mbName = renderShortCodes(baseLangPageTitle)?.join?.('');
@@ -78,6 +83,7 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
       [ANALYTICS_PROPERTIES.COUNTRY]: primaryCity?.country?.displayName,
       [ANALYTICS_PROPERTIES.COLLECTION_NAME]: primaryCollectionName,
       [ANALYTICS_PROPERTIES.LANGUAGE]: getLangObject(lang).code,
+      [ANALYTICS_PROPERTIES.CURRENCY]: ssrCurrencyCode,
       [ANALYTICS_PROPERTIES.MB_NAME]: mbName,
       [ANALYTICS_PROPERTIES.PAGE_TITLE]: pageTitle,
       [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageType,
@@ -93,10 +99,15 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
       mbName,
       pageType,
     });
-
-    if (currencyCode?.length) {
-      set(currencyAtom, currencyCode);
-    }
+    set(appAtom, {
+      isMobile: pageProps.isMobile,
+      host,
+      isDev,
+      isStage,
+      initialCurrency: ssrCurrencyCode,
+    });
+    set(currencyListAtom, currencyList);
+    set(currencyAtom, ssrCurrencyCode);
   };
 
   return (

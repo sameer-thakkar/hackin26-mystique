@@ -28,8 +28,6 @@ import {
   ANALYTICS_PROPERTIES,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { fetchTourList } from 'utils/apiUtils';
-import { tourListApiParser } from 'utils/dataParsers';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import renderShortCodes from 'utils/shortCodes';
 import Banner from 'components/Banner';
@@ -61,7 +59,6 @@ const MicrositeV1 = (props) => {
     offerData,
     mbTheme,
     scorpioData: scorpioDataUncategorised,
-    activeCurrency,
     host,
     isDev,
     serverRequestStartTimestamp,
@@ -74,7 +71,6 @@ const MicrositeV1 = (props) => {
   const currency = useRecoilValue(currencyAtom);
 
   const { eventsReady } = useRecoilValue(gtmAtom);
-  const [initialCurrency] = useState(currency);
   const [freeTourPopupOpen, toggleFreeTourPopup] = useState(false);
   const [covidAlertActive, toggleCovidAlert] = useState(false);
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
@@ -166,11 +162,9 @@ const MicrositeV1 = (props) => {
       ? ''
       : uncategorizedTours[0].primary
     : '';
-  const initialScorpioData = isCategorisedTours
+  const scorpioData = isCategorisedTours
     ? scorpioDataCategorised
     : scorpioDataUncategorised;
-
-  const [scorpioData, setScorpioData] = useState(initialScorpioData);
 
   const footerLogoURL =
     logoCFoot?.url || footerLogoCMS?.url || footerLogoLinkCMS?.url;
@@ -352,20 +346,6 @@ const MicrositeV1 = (props) => {
     : [];
   const finalHeaderLinks =
     headerLinks && !isHeaderInherited ? headerLinks : null;
-  useEffect(() => {
-    if (initialCurrency !== currency) {
-      fetchTourList({
-        tgids: orderedTgids,
-        language: currentLanguage,
-        currency,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          const formattedData = tourListApiParser(data, currentLanguage);
-          setScorpioData(formattedData);
-        });
-    }
-  }, [currency]);
 
   useEffect(() => {
     setIsMobile(windowWidth < 768);
@@ -506,7 +486,6 @@ const MicrositeV1 = (props) => {
           hasDropdownLinks={!isHeaderInherited ? hasDropdownLinks : null}
           isAmp={isAmp}
           headerCurrencies={headerCurrencies}
-          currentCurrency={activeCurrency}
         />
         <Conditional if={showCovid19Alert && covidAlertActive}>
           <DismissAlert

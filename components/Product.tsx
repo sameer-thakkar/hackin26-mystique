@@ -384,6 +384,11 @@ const PriceContainer = styled.div`
   justify-self: left;
   .tour-price {
     display: flex;
+    flex-direction: column;
+    .prefix {
+      color: ${COLORS.GRAY.G4};
+      ${expandFontToken('UI/Label Small')}
+    }
     ${expandFontToken('Heading/Large')}
   }
   @media (max-width: 768px) {
@@ -1469,8 +1474,10 @@ const Product = (props) => {
                 showScratchPrice={showScratchPrice}
                 listingPrice={finalPrice}
                 lang={currentLanguage}
-                showSavings={true}
+                showSavings
+                prefix
                 key={'price-block'}
+                tgid={tgid}
               />
             </PriceContainer>
             <Conditional if={isTicketCard && promo_code}>
