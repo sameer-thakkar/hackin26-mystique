@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
 import { CloseIcon } from 'assets/SvgIcons';
+import { throttle } from 'utils/helper';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
@@ -58,6 +59,8 @@ const DrawerWrapper = styled.div`
   height: 100%;
   align-content: flex-start;
   animation: enter 0.4s ease;
+  transform: translateY(0);
+  transition: transform 0.3s ease;
 
   @keyframes enter {
     from {
@@ -132,6 +135,8 @@ const HeadingText = styled.div`
   ${expandFontToken(FONTS.HEADING_SMALL)}
 `;
 
+const SWIPE_DOWN_THRESHOLD_PX = 250;
+
 const Drawer = ({
   closeHandler,
   contents,
@@ -151,11 +156,63 @@ const Drawer = ({
   $drawerStyles?: any;
   container?: HTMLElement;
 }) => {
+  const drawerRef = useRef(null);
+
   useEffect(() => {
     document.body.classList.add('scroll-lock', 'no-shadow');
 
     return () => {
       document.body.classList.remove('scroll-lock', 'no-shadow');
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!drawerRef.current) return;
+    const drawer = drawerRef.current;
+
+    const onStart = (e) => {
+      const [touch] = e.changedTouches;
+      const currentYTouchPos = touch.clientY;
+      drawer.prevDragPos = currentYTouchPos;
+    };
+
+    const onMove = throttle((e) => {
+      const [touch] = e.changedTouches;
+      const currentYTouchPos = touch.clientY;
+      if (drawer.prevDragPos) {
+        const delta = currentYTouchPos - drawer.prevDragPos;
+        if (delta > 0) {
+          drawer.style.transform = `translateY(${delta}px)`;
+        }
+      }
+    }, 100);
+
+    const onEnd = (e) => {
+      const [touch] = e.changedTouches;
+      const currentYTouchPos = touch.clientY;
+      const delta = currentYTouchPos - drawer.prevDragPos;
+      if (delta > SWIPE_DOWN_THRESHOLD_PX) {
+        drawer.style.transform = `translateY(100%)`;
+        setTimeout(() => {
+          closeHandler('Swipe');
+        }, 200);
+      } else {
+        drawer.style.transform = `translateY(0px)`;
+      }
+    };
+
+    try {
+      drawer.addEventListener('touchstart', onStart);
+      drawer.addEventListener('touchmove', onMove);
+      drawer.addEventListener('touchend', onEnd);
+    } catch (e) {
+      //
+    }
+
+    return () => {
+      drawer.removeEventListener('touchstart', onStart);
+      drawer.removeEventListener('touchmove', onMove);
+      drawer.removeEventListener('touchend', onEnd);
     };
   }, []);
 
@@ -173,6 +230,7 @@ const Drawer = ({
         $hasHeading={heading?.length}
         className={`${className || ''}`}
         $noMargin={noMargin}
+        ref={drawerRef}
       >
         <HeadingContainer $hasHeading={heading?.length}>
           <PanelAnchor />

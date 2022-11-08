@@ -1,6 +1,8 @@
 const ar = {
   TOUR_LIST_HEADING: 'اختر تجربك',
   GROUP_TICKETS: 'تذاكر المجموعات',
+  LANGUAGE: 'اللغة',
+  CURRENCY: 'العملة',
   TOUR_LIST_SUB_HEADING:
     'اختر من بين العديد من خيارات التذاكر والجولات او كليهما من قبل المشغلين المعتمدين',
   SANITARY_ALERT: {

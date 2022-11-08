@@ -1,6 +1,8 @@
 const pt = {
   TOUR_LIST_HEADING: 'Selecione a experiência desejada',
   GROUP_TICKETS: 'Ingressos para grupos',
+  LANGUAGE: 'Idioma',
+  CURRENCY: 'Moeda',
   TOUR_LIST_SUB_HEADING:
     'Escolha entre diferentes opções de ingressos, excursões e combos de operadores verificados:',
   SANITARY_ALERT: {

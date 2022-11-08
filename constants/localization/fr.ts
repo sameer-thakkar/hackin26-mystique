@@ -1,6 +1,8 @@
 const fr = {
   TOUR_LIST_HEADING: `Sélectionnez l'offre qui vous plaît`,
   GROUP_TICKETS: 'Billets de groupe',
+  LANGUAGE: 'Langue',
+  CURRENCY: 'Devise',
   TOUR_LIST_SUB_HEADING:
     'Choisissez parmi une multitude de billets, visites guidées et offres combo proposés par des agences de tourisme.',
   SANITARY_ALERT: {

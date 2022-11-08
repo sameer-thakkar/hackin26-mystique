@@ -1,6 +1,8 @@
 const nl = {
   TOUR_LIST_HEADING: 'Kies je ervaring',
   GROUP_TICKETS: 'Groepskaartjes',
+  LANGUAGE: 'Taal',
+  CURRENCY: 'Valuta',
   TOUR_LIST_SUB_HEADING:
     'Kies uit meerdere kaartjes, tours en combo-opties van geverifieerde operators',
   SANITARY_ALERT: {

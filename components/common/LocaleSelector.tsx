@@ -18,13 +18,13 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   CURRENCY_CODES_ORDER,
+  LOCALE_ORDER,
   TOP_CURRENCIES,
 } from 'const/index';
 import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { strings } from 'const/strings';
-import { localeSortFn } from 'utils/gen';
 import { getLangObject } from 'utils/helper';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
@@ -42,9 +42,10 @@ const DrawerTabHeading = styled.div`
 const drawerStyles = css`
   .close-icon {
     position: absolute;
-    top: 16px;
-    right: 24px;
+    top: 2px;
+    right: 14px;
     cursor: pointer;
+    padding: 14px;
   }
   ${TabControl} {
     padding: 0 24px;
@@ -72,7 +73,7 @@ const drawerStyles = css`
   }
   @media (max-width: 768px) {
     .close-icon {
-      top: 34px;
+      top: 24px;
     }
     ${Panel} {
       padding: 0 24px;
@@ -145,14 +146,26 @@ const LocaleSelector = ({
       (c) => initialCurrency !== c
     );
     const orderedCurrencies = Array.from(
-      new Set([...finalTopCurrencies, ...CURRENCY_CODES_ORDER])
+      new Set([activeCurrency, ...finalTopCurrencies, ...CURRENCY_CODES_ORDER])
     );
     const currenciesShallowClone = [...currencies];
     return currenciesShallowClone.sort(
       (cA, cB) =>
         orderedCurrencies.indexOf(cA.code) - orderedCurrencies.indexOf(cB.code)
     );
-  }, [currencies]);
+  }, [currencies, activeCurrency]);
+
+  const sortedLanguages = useMemo(() => {
+    const orderedLocales = Array.from(
+      new Set([getLangObject(currentLanguage).code, ...LOCALE_ORDER])
+    );
+    const languagesShallowClone = [...languages];
+
+    return languagesShallowClone.sort(
+      (lA, lB) =>
+        orderedLocales.indexOf(lA.code) - orderedLocales.indexOf(lB.code)
+    );
+  }, [languages]);
 
   useEffect(() => {
     const { requestedAt, tracked, isManual } = trackerRef.current ?? {};
@@ -257,7 +270,7 @@ const LocaleSelector = ({
         <RadioList
           currentValue={currentLanguage}
           onChange={onLanguageChange}
-          items={languages.sort(localeSortFn).map((l) => ({
+          items={sortedLanguages.map((l) => ({
             label: (
               <StyledLink
                 onClick={(e) => {

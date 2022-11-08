@@ -1,6 +1,8 @@
 const es = {
   TOUR_LIST_HEADING: 'Selecciona tu experiencia',
   GROUP_TICKETS: 'Visita en grupo',
+  LANGUAGE: 'Idioma',
+  CURRENCY: 'Monedas',
   TOUR_LIST_SUB_HEADING:
     'Elige entre una gran variedad de entradas, tours y ofertas de agencias turísticas verificadas',
   SANITARY_ALERT: {

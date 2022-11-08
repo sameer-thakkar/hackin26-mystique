@@ -1,6 +1,8 @@
 const de = {
   TOUR_LIST_HEADING: 'Wählen Sie Ihr Erlebnis',
   GROUP_TICKETS: 'Gruppentickets',
+  LANGUAGE: 'Sprache',
+  CURRENCY: 'Währung',
   TOUR_LIST_SUB_HEADING:
     'Hier finden Sie zahlreiche Tickets, Touren und Kombinationen von geprüften Anbietern:',
   SANITARY_ALERT: {
