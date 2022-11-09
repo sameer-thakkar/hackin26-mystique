@@ -398,8 +398,8 @@ const ShowPageBanner = ({
   const [nextAvailable, setNextAvailable] = useState('');
 
   const videoCode = PRODUCT_VIDEOS[tgid] ? PRODUCT_VIDEOS[tgid] : null;
-  const videoAvailable = PRODUCT_VIDEOS[tgid] ? true : false;
-  const isTourAvailable = listingPrice ? true : false;
+  const videoAvailable = !!PRODUCT_VIDEOS[tgid];
+  const isTourAvailable = !!listingPrice;
   const ref = useRef(null);
 
   const { NEXT_AVAILABLE } = strings || {};
@@ -431,7 +431,8 @@ const ShowPageBanner = ({
     }
   });
   descriptors?.forEach((descriptor) => {
-    showDetails[descriptor?.code] = descriptor.name;
+    showDetails[descriptor?.code] =
+      strings.DESCRIPTORS[descriptor?.code] || descriptor.name;
   });
 
   const bannerChange = () => {
@@ -568,7 +569,7 @@ const ShowPageBanner = ({
             <Conditional if={hasSpecialOffer && isMobile}>
               <SpecialOfferBoosterMobile>
                 <Emoji symbol="🤑" label="money-mouth-face" />{' '}
-                {strings.SHOWPAGE.SPECIAL_OFFER}
+                {strings.SPECIAL_OFFER}
               </SpecialOfferBoosterMobile>
             </Conditional>
             <div className="banner-image-container is-active">
@@ -603,13 +604,13 @@ const ShowPageBanner = ({
         <Conditional if={hasSpecialOffer && !isMobile}>
           <SpecialOfferBooster>
             <Emoji symbol="🤑" label="money-mouth-face" />{' '}
-            {strings.SHOWPAGE.SPECIAL_OFFER}
+            {strings.SPECIAL_OFFER}
           </SpecialOfferBooster>
         </Conditional>
         <div className="top-text-wrapper">
           {isTourAvailable
             ? `${REOPENING_STRING} ${nextAvailable}`
-            : strings.SHOWPAGE.SHOW_CLOSED}
+            : strings.SHOW_CLOSED}
         </div>
         <div className="heading-wrapper">
           <div>

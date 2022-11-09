@@ -41,8 +41,7 @@ const FeatureCardWrapper = styled.div`
 `;
 
 const FeatureCard = () => {
-  const { SHOWPAGE } = strings || {};
-  const { FEATURE_CARD } = SHOWPAGE || {};
+  const { FEATURE_CARD } = strings || {};
   return (
     <FeatureCardWrapper>
       <div>

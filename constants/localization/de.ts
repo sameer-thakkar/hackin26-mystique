@@ -394,7 +394,7 @@ const de = {
     TICKETS_REDEMPTION: 'Ticket-Einlösung',
     CANCELLATION_AND_REFUNDS: 'Stornierung und Rückerstattung',
     ABOUT_THEATRE: 'Das Theater',
-    GOOGLE_MAP: 'Google Map',
+    GOOGLE_MAP: 'Google Maps',
     GETTING_THERE: 'Wegbeschreibung',
     FACILITIES_AND_ACCESSIBILITY: 'Einrichtungen und Barrierefreiheit',
     ADDITIONAL_INFORMATION: 'Zusätzliche Informationen',

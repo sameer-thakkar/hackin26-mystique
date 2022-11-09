@@ -231,10 +231,9 @@ export const parseShowPageData = (data) => {
           });
         } else {
           // Answer
-          element.content.text = element.content.text.replace(
-            strings.SHOW_PAGE.ANSWER,
-            ''
-          );
+          element.content.text = element.content.text
+            .replace(strings.SHOW_PAGE.ANSWER, '')
+            .replace('A-', '');
           element.content.type = element.type;
           for (let i = 0; i < element.content.spans.length; i++) {
             element.content.spans[i].start = element.content.spans[i].start - 2;

@@ -245,11 +245,9 @@ export const addCashbackValueToDescriptor = ({
     if (cashbackValue) {
       const [cashbackDescriptor] = descriptor.match(regex) || [];
       const updatedDescriptor = `${cashbackDescriptor}: ${cashbackValue}%`;
-      const finalString = descriptor.replace(regex, updatedDescriptor);
-      return finalString;
+      return descriptor.replace(regex, updatedDescriptor);
     } else {
-      const finalString = descriptor.replace(regex, '');
-      return finalString;
+      return descriptor.replace(regex, '');
     }
   } else {
     return descriptor;

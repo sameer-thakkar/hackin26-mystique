@@ -418,22 +418,20 @@ const en = {
       MB_NAME: 'Broadway Theater Tickets',
     },
   },
-  SHOWPAGE: {
-    FEATURE_CARD: {
-      HEADING_CUSTOMER: '10 million +',
-      SUB_HEADING_CUSTOMER: 'Happy customers across 10,000+ experiences',
-      HEADING_RATING: '4.4/5',
-      SUB_HEADING_RATING: '5,000+ verified reviews with 90% excellent score',
-      HEADING_SAFE: '100% Safe',
-      SUB_HEADING_SAFE: 'All the outdoor activities are 100% safe and secure',
-      HEADING_SUPPORT: '24x7 Help Center',
-      SUB_HEADING_SUPPORT:
-        'Have a question? Live chat with local experts anywhere, amytime',
-    },
-    WHY_WATCH: 'Why Watch',
-    SHOW_CLOSED: 'Show Closed',
-    SPECIAL_OFFER: 'Special Offer',
+  FEATURE_CARD: {
+    HEADING_CUSTOMER: '10 million +',
+    SUB_HEADING_CUSTOMER: 'Happy customers across 10,000+ experiences',
+    HEADING_RATING: '4.4/5',
+    SUB_HEADING_RATING: '5,000+ verified reviews with 90% excellent score',
+    HEADING_SAFE: '100% Safe',
+    SUB_HEADING_SAFE: 'All the outdoor activities are 100% safe and secure',
+    HEADING_SUPPORT: '24x7 Help Center',
+    SUB_HEADING_SUPPORT:
+      'Have a question? Live chat with local experts anywhere, amytime',
   },
+  WHY_WATCH: 'Why Watch',
+  SHOW_CLOSED: 'Show Closed',
+  SPECIAL_OFFER: 'Special Offer',
   CUSTOMER_REVIEW_HEADING: 'Customer Reviews',
   CATEGORY_SLIDER_HEADING: 'Customers Who Booked This Show Also Viewed',
   AUDIO_GUIDE: {

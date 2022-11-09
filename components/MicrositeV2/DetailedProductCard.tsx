@@ -747,7 +747,7 @@ const DetailedProductCard = (props) => {
               </div>
             )}
             <div>
-              <h3>{strings.SHOWPAGE.WHY_WATCH}</h3>
+              <h3>{strings.WHY_WATCH}</h3>
               {listicleWhyWatch && (
                 <RichText render={[listicleWhyWatch.text]} />
               )}
@@ -841,7 +841,7 @@ const DetailedProductCard = (props) => {
               </div>
             )}
             <div>
-              <h3>{strings.SHOWPAGE.WHY_WATCH}</h3>
+              <h3>{strings.WHY_WATCH}</h3>
               {listicleWhyWatch && (
                 <RichText render={[listicleWhyWatch.text]} />
               )}

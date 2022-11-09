@@ -402,22 +402,20 @@ const ar = {
       LIMITED: 'العرض لفترة محدودة',
     },
   },
-  SHOWPAGE: {
-    FEATURE_CARD: {
-      HEADING_CUSTOMER: '10 مليون +',
-      SUB_HEADING_CUSTOMER: 'عملاء سعداء عبر ما يزيد عن 10000 تجربة',
-      HEADING_RATING: '4.4/5',
-      SUB_HEADING_RATING: 'أكثر من 5000 تقييم بدرجة ممتازة 90٪',
-      HEADING_SAFE: '100% Safe',
-      SUB_HEADING_SAFE: 'جميع الأنشطة الخارجية آمنة 100٪',
-      HEADING_SUPPORT: 'مركز المساعدة على مدار الساعة طوال أيام الأسبوع',
-      SUB_HEADING_SUPPORT:
-        'لديك سؤال؟ دردشة مباشرة مع الخبراء المحليين في أي مكان وفي أي وقت',
-    },
-    WHY_WATCH: 'لماذا المشاهدة',
-    SHOW_CLOSED: 'عرض مغلق',
-    SPECIAL_OFFER: 'عرض خاص',
+  FEATURE_CARD: {
+    HEADING_CUSTOMER: '10 مليون +',
+    SUB_HEADING_CUSTOMER: 'عملاء سعداء عبر ما يزيد عن 10000 تجربة',
+    HEADING_RATING: '4.4/5',
+    SUB_HEADING_RATING: 'أكثر من 5000 تقييم بدرجة ممتازة 90٪',
+    HEADING_SAFE: '100% Safe',
+    SUB_HEADING_SAFE: 'جميع الأنشطة الخارجية آمنة 100٪',
+    HEADING_SUPPORT: 'مركز المساعدة على مدار الساعة طوال أيام الأÒسبوع',
+    SUB_HEADING_SUPPORT:
+      'لديك سؤال؟ دردشة مباشرة مع الخبراء المحليين في أي مكان وفي أي وقت',
   },
+  WHY_WATCH: 'لماذا المشاهدة',
+  SHOW_CLOSED: 'عرض مغلق',
+  SPECIAL_OFFER: 'عرض خاص',
   CUSTOMER_REVIEW_HEADING: 'اراء العملاء',
   CATEGORY_SLIDER_HEADING: 'العملاء الذين حجزوا هذا العرض شاهدوا أيضا',
   AUDIO_GUIDE: {
