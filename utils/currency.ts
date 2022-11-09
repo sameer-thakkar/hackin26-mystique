@@ -23,3 +23,25 @@ export const getLocalisedPrice = ({
   }).format(price);
   return localisedPrice;
 };
+
+export const getLocalisedCurrencySymbol = ({
+  lang,
+  currencyCode,
+  currencyDisplay,
+}: {
+  currencyCode: string;
+  currencyDisplay?: CurrencyDisplayType;
+  lang?: string;
+}) => {
+  const numberFormat = new Intl.NumberFormat(lang, {
+    style: 'currency',
+    currency: currencyCode,
+    currencyDisplay,
+    minimumFractionDigits: 0,
+  });
+  const currencyString = numberFormat
+    .formatToParts()
+    .find((c) => c.type === 'currency').value;
+
+  return currencyString;
+};

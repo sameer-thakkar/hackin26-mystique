@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from 'recoil';
-import { MBContext } from 'contexts/MBContext';
 import { currencyAtom } from 'store/atoms/currency';
 import { priceSelector } from 'store/selectors/price';
 import { appAtom } from 'store/atoms/app';
@@ -26,8 +25,8 @@ import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { strings } from 'const/strings';
 import { getLangObject } from 'utils/helper';
-import { convertUidToUrl } from 'utils/urlUtils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
+import { getLocalisedCurrencySymbol } from 'utils/currency';
 
 const DrawerTabHeading = styled.div`
   ${expandFontToken(FONTS.SUBHEADING_LARGE)}
@@ -126,7 +125,6 @@ const LocaleSelector = ({
   hasLanguageDropdown = true,
   hasCurrencySelector = true,
 }) => {
-  const { uid, host, isDev } = useContext(MBContext);
   const menuItemRef = useRef(null);
   const currentTabInView = useRef({ trackingLabel: '' });
   const trackerRef = useRef({
@@ -138,14 +136,6 @@ const LocaleSelector = ({
   const { initialCurrency } = useRecoilValue(appAtom);
   const [isDrawerActive, setDrawerActive] = useState(false);
   const [activeCurrency, setCurrency] = useRecoilState(currencyAtom);
-  const getLanguageURL = ({ code }) => {
-    return convertUidToUrl({
-      uid,
-      hostname: host,
-      lang: code,
-      isDev,
-    });
-  };
   const sortedCurrencies = useMemo(() => {
     const finalTopCurrencies = TOP_CURRENCIES.filter(
       (c) => initialCurrency !== c
@@ -207,8 +197,8 @@ const LocaleSelector = ({
     });
   };
 
-  const onLanguageChange = ({ code }: RadioItemArg) => {
-    window.location.href = getLanguageURL({ code });
+  const onLanguageChange = ({ code, url }: RadioItemArg) => {
+    window.location.href = url;
     trackEvent({
       eventName: ANALYTICS_EVENTS.LOCALE_OPTION_SELECTED,
       [ANALYTICS_PROPERTIES.OPTION_TYPE]: 'Language',
@@ -257,11 +247,20 @@ const LocaleSelector = ({
         <RadioList
           onChange={onCurrencyChange}
           currentValue={activeCurrency}
-          items={(sortedCurrencies ?? []).map((c) => ({
-            label: `${c.currencyName} (${c.code})`,
-            value: c.code,
-            ...c,
-          }))}
+          items={(sortedCurrencies ?? []).map((currency) => {
+            const { code } = currency;
+            const symbolString = getLocalisedCurrencySymbol({
+              currencyCode: code,
+              currencyDisplay: 'symbol',
+              lang: currentLanguage,
+            });
+
+            return {
+              label: `${currency.currencyName} (${symbolString})`,
+              value: currency.code,
+              ...currency,
+            };
+          })}
         />
       ),
       header: <DrawerTabHeading>{strings.CURRENCY}</DrawerTabHeading>,
@@ -277,12 +276,7 @@ const LocaleSelector = ({
           onChange={onLanguageChange}
           items={sortedLanguages.map((l) => ({
             label: (
-              <StyledLink
-                onClick={(e) => {
-                  e.preventDefault();
-                }}
-                href={l.code !== currentLanguage ? getLanguageURL(l) : null}
-              >
+              <StyledLink href={l.code !== currentLanguage ? l.url : null}>
                 {getLangObject(l.code).displayName}
               </StyledLink>
             ),
