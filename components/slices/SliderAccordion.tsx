@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useAmp } from 'next/amp';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import dynamic from 'next/dynamic';
@@ -127,7 +126,6 @@ const SliderAccordion = (props) => {
       accordian.images[0] = accordions[0].images[0];
   });
 
-  const isAmp = useAmp();
   const [activeAccordionIndex, setActiveAccordionIndex] = useState(0);
   const activeAccordionImages = accordions[activeAccordionIndex].images.filter(
     (i) => i?.url
@@ -180,32 +178,7 @@ const SliderAccordion = (props) => {
       isGlobalMb={isGlobalMb}
     >
       {!isMobile && activeAccordionIndex >= 0 ? SliderComponent : null}
-      {isAmp ? (
-        <amp-accordion animate="">
-          {accordions.map((accordion, index) => {
-            const content = (
-              <>
-                {isMobile ? SliderComponent : null}
-                <div className="answer-content">
-                  <RichText
-                    render={accordion.answer}
-                    htmlSerializer={shortCodeSerializer}
-                  />
-                </div>
-              </>
-            );
-            return (
-              <Accordion
-                key={index}
-                content={content}
-                heading={accordion.question}
-                isAmp
-              />
-            );
-          })}
-        </amp-accordion>
-      ) : (
-        <AccordionsWrap>
+      <AccordionsWrap>
           {accordions.map((accordion, index) => {
             const isOpen = index == activeAccordionIndex;
             const content = (
@@ -231,7 +204,6 @@ const SliderAccordion = (props) => {
             );
           })}
         </AccordionsWrap>
-      )}
     </StyledSliderAccordion>
   );
 };

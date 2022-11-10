@@ -266,7 +266,6 @@ const ShowPage = ({
   const alternateLanguages = getAlternateLanguages(
     alternate_languages,
     isDev,
-    false,
     host,
     uid
   );
@@ -503,7 +502,6 @@ const ShowPage = ({
             serverRequestStartTimestamp,
             languages: alternateLanguages,
             isMobile,
-            isAmp: false,
             bannerImages,
           }}
         />

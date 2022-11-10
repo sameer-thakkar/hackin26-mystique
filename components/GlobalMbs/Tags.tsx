@@ -45,14 +45,12 @@ interface TagsProps {
   collections: any[];
   uid: string;
   title: string;
-  isAmp?: boolean;
 }
 
 const Tags: FunctionComponent<TagsProps> = ({
   collections,
   uid,
   title,
-  isAmp = false,
 }) => {
   const { host, isDev } = useContext(MBContext);
 
@@ -66,7 +64,7 @@ const Tags: FunctionComponent<TagsProps> = ({
       data || {};
     const url = microbrandUrl
       ? getValidUrl(microbrandUrl?.trim())
-      : convertUidToUrl({ uid, isDev, hostname: host, isAmp });
+      : convertUidToUrl({ uid, isDev, hostname: host });
     return (
       <Tag key={id} href={url}>
         {collectionName}

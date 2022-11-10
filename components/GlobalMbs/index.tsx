@@ -59,7 +59,6 @@ const GlobalMB = (props) => {
   const alternateLanguages = getAlternateLanguages(
     alternate_languages,
     isDev,
-    false,
     host,
     uid
   );
@@ -378,7 +377,6 @@ const GlobalMB = (props) => {
             serverRequestStartTimestamp,
             languages: alternateLanguages,
             isMobile,
-            isAmp: false,
             bannerImages: finalBannerImages,
           }}
         />

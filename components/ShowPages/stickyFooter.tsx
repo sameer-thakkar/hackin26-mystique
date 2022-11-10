@@ -56,9 +56,8 @@ const StickyFooter = ({
   isAvailable?: boolean;
   tourGroupData?: any;
 }) => {
-  const { nakedDomain, biLink, uid, redirectToHeadoutBookingFlow } = useContext(
-    MBContext
-  );
+  const { nakedDomain, biLink, uid, redirectToHeadoutBookingFlow } =
+    useContext(MBContext);
 
   const {
     listingPrice,

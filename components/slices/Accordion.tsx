@@ -51,23 +51,6 @@ const Title = styled.div`
   .question-text {
     cursor: pointer;
   }
-  .with-amp {
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
-  @media (max-width: 768px) {
-    ${({ isAmp }) => {
-      return isAmp
-        ? `
-          background-color: transparent;
-          outline: none;
-          border: none;
-          margin: 0;
-        `
-        : '';
-    }}
-  }
 `;
 
 const ContentBlock = styled.div`
@@ -90,7 +73,6 @@ type AccordionProps = {
   isOpenOverride?: Boolean;
   heading: string;
   content: any;
-  isAmp?: Boolean;
   isGlobalMb?: Boolean;
   useSchema?: Boolean;
   index?: number;
@@ -101,7 +83,6 @@ const Accordion = ({
   content,
   isOpenOverride = false,
   clickHandler = null,
-  isAmp = false,
   isGlobalMb,
   useSchema = false,
   index = null,
@@ -109,11 +90,8 @@ const Accordion = ({
   const [isOpen, setOpen] = useState(false || isOpenOverride);
   const chevronContainerClass = classNames({
     'state-icon': true,
-    'with-amp': isAmp,
   });
-  const accordionContainerClass = classNames({
-    'accordion-container': isAmp,
-  });
+
   const pageMetaData = useRecoilValue(metaAtom);
 
   useEffect(() => {
@@ -144,18 +122,12 @@ const Accordion = ({
   };
 
   return (
-    <StyledAccordion
-      isOpen={isOpen}
-      as={isAmp ? 'section' : 'div'}
-      className={accordionContainerClass}
-      isGlobalMb={isGlobalMb}
-    >
+    <StyledAccordion isOpen={isOpen} as={'div'} isGlobalMb={isGlobalMb}>
       <Title
         role="button"
         tabIndex={0}
         className="question"
-        as={isAmp ? 'header' : 'div'}
-        isAmp={isAmp}
+        as={'div'}
         onClick={onAccordionToggle}
         isGlobalMb={isGlobalMb}
       >

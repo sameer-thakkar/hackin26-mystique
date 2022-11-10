@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { useAmp } from 'next/amp';
 import styled from 'styled-components';
 import parse from 'url-parse';
 import { RichText } from 'prismic-reactjs';
@@ -271,7 +270,6 @@ const StyledTourComparisionTable = styled.div`
     `
       : ``}
   @media (max-width: 768px) {
-
     .full-width-wrap {
       margin: 0 -16px;
       padding-right: 16px;
@@ -307,7 +305,7 @@ const StyledTourComparisionTable = styled.div`
       display: grid;
       content: '';
     }
-    .row::after{
+    .row::after {
       content: '';
       width: 16px;
       background: #fff;
@@ -329,7 +327,7 @@ const StyledTourComparisionTable = styled.div`
     #compare-all-details-button {
       max-width: unset;
       margin: 0 16px;
-      width: calc(100% - 32px); 
+      width: calc(100% - 32px);
     }
     ${StyledPriceBlock} {
       .tour-price {
@@ -371,10 +369,10 @@ const StyledTourComparisionTable = styled.div`
       font-weight: 500;
     }
     .block-content {
-    ${({ designType }) =>
-      designType == TOUR_COMPARISION_DESIGN.TYPE_2
-        ? ``
-        : `
+      ${({ designType }) =>
+        designType == TOUR_COMPARISION_DESIGN.TYPE_2
+          ? ``
+          : `
       font-size: 15px;
     `}
     }
@@ -412,24 +410,25 @@ const StyledTourComparisionTable = styled.div`
         }
       }
     }
-    .no-display{
+    .no-display {
       display: none;
     }
-    .show-two-children:nth-child(0){
-      display:grid;
+    .show-two-children:nth-child(0) {
+      display: grid;
     }
-    .show-two-children:nth-child(0){
-      display:grid;
+    .show-two-children:nth-child(0) {
+      display: grid;
     }
   }
 
   /* CSS Target Safari. (double @media intentional) */
-  @media not all and (min-resolution:.001dpcm){ 
-    @supports (-webkit-appearance:none) {
+  @media not all and (min-resolution: 0.001dpcm) {
+    @supports (-webkit-appearance: none) {
       .full-width-wrap {
         max-width: 100vw;
       }
-  }}
+    }
+  }
 `;
 
 /**
@@ -487,7 +486,6 @@ const TourComparisonTable = (props) => {
     lang,
     redirectToHeadoutBookingFlow,
   } = useContext(MBContext);
-  const isAmp = useAmp();
   const url = envContext.windowUrl;
   const currentHost = !envContext.isDev ? url : parse(uid, true).pathname;
   const hostName = currentHost.includes('stage')
@@ -534,12 +532,6 @@ const TourComparisonTable = (props) => {
 
   // Return null if no / only one tgid given/available
   if (tgidArray.length <= 1) return null;
-  // @ts-ignore
-  const compareTableOnClickForAMP = Array(...Array(orderedLabels.length).keys())
-    .map(
-      (el) => `comparison-list-details-${el}.toggleClass(class='no-display')`
-    )
-    .join(',');
 
   const onBookNowClick = ({ tgid, position }) => {
     trackEvent({
@@ -553,7 +545,7 @@ const TourComparisonTable = (props) => {
 
   return (
     <StyledTourComparisionTable
-      isExpanded={isExpanded || isAmp}
+      isExpanded={isExpanded}
       isMobile={isMobile}
       tourCount={tgidArray.length}
       designType={designType}
@@ -602,9 +594,9 @@ const TourComparisonTable = (props) => {
               })}
             </div>
           </div>
-          <Conditional if={isExpanded || isAmp}>
+          <Conditional if={isExpanded}>
             <div
-              className={`row ${isAmp ? 'no-display' : ''}`}
+              className="row"
               id="expanded-details-section"
               style={{ marginTop: -8 }}
             >
@@ -667,14 +659,12 @@ const TourComparisonTable = (props) => {
           </div>
           {orderedLabels
             .filter((label, index) =>
-              isMobile && !isExpanded && !isAmp ? index < 2 : true
+              isMobile && !isExpanded ? index < 2 : true
             )
             .map((label, rowIndex) => {
               return (
                 <div
-                  className={`row ${
-                    rowIndex >= 2 && isAmp ? 'no-display' : ''
-                  } `}
+                  className="row"
                   id={`comparison-list-details-${rowIndex}`}
                   key={rowIndex}
                 >
@@ -701,11 +691,8 @@ const TourComparisonTable = (props) => {
                 </div>
               );
             })}
-          <Conditional if={(isMobile && isExpanded) || !isMobile || isAmp}>
-            <div
-              className={`row max-content ${isAmp ? 'no-display' : ''}`}
-              id="expanded-details-column"
-            >
+          <Conditional if={(isMobile && isExpanded) || !isMobile}>
+            <div className="row max-content" id="expanded-details-column">
               {content_normalized_tours.map((tour, index) => {
                 return (
                   <div className="column flat-price-block" key={index}>
@@ -763,16 +750,7 @@ const TourComparisonTable = (props) => {
         </div>
       </div>
       <Conditional if={isMobile && !isExpanded}>
-        <Button
-          onClick={() => setExpand(true)}
-          id="compare-all-details-button"
-          on={`
-              tap:expanded-details-section.toggleClass(class='no-display'),
-              expanded-details-column.toggleClass(class='no-display'),
-              compare-all-details-button.toggleClass(class='no-display', force=true),
-              ${compareTableOnClickForAMP}
-            `}
-        >
+        <Button onClick={() => setExpand(true)} id="compare-all-details-button">
           <div className="start-compare-icon">
             {strings.COMPARE_ALL_DETAILS} {CHEVRON_DOWN}
           </div>

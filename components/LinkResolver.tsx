@@ -1,7 +1,6 @@
 import React from 'react';
 import parse from 'url-parse';
 import EnvironmentContext from 'contexts/environmentContext';
-import { withAmp } from 'components/common/withAmp';
 import { getUID } from 'utils/helper';
 
 const qs = (obj) =>
@@ -11,10 +10,11 @@ const qs = (obj) =>
 
 const resolveLink: any = (url, ctx) => {
   const { isDev, windowUrl } = ctx;
-  const { href: linkHref, host: linkHost, pathname: linkPathname } = parse(
-    url,
-    true
-  );
+  const {
+    href: linkHref,
+    host: linkHost,
+    pathname: linkPathname,
+  } = parse(url, true);
   const { host, query, protocol } = parse(windowUrl, true);
 
   if (isDev) {
@@ -37,11 +37,11 @@ const resolveLink: any = (url, ctx) => {
   return url;
 };
 
-const LinkResolver = ({ url, children, isAmp, ...props }) => {
+const LinkResolver = ({ url, children, ...props }) => {
   return (
     <EnvironmentContext.Consumer>
       {(ctx) => (
-        <a href={resolveLink(url, ctx, isAmp)} {...props}>
+        <a href={resolveLink(url, ctx)} {...props}>
           {children}
         </a>
       )}
@@ -49,4 +49,4 @@ const LinkResolver = ({ url, children, isAmp, ...props }) => {
   );
 };
 
-export default withAmp(LinkResolver);
+export default LinkResolver;

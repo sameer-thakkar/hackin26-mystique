@@ -8,8 +8,8 @@ import Conditional from 'components/common/Conditional';
 import { checkLTT } from 'utils/helper';
 
 const PopulateProducts = dynamic(() => import('./PopulateProducts'));
-const CategorisedPopulateProducts = dynamic(() =>
-  import('./CategorisedPopulateProducts')
+const CategorisedPopulateProducts = dynamic(
+  () => import('./CategorisedPopulateProducts')
 );
 
 const StyledProductWrapper = styled.div`

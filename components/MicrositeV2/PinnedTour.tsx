@@ -244,12 +244,8 @@ const PinnedTour = (props) => {
   } = listingPrice ?? {};
   const isScratchPrice = finalPrice < originalPrice;
   const [nextAvailable, setNextAvailable] = useState('');
-  const {
-    nakedDomain,
-    lang,
-    biLink,
-    redirectToHeadoutBookingFlow,
-  } = useContext(MBContext);
+  const { nakedDomain, lang, biLink, redirectToHeadoutBookingFlow } =
+    useContext(MBContext);
   const pageMetaData = useRecoilValue(metaAtom);
 
   const isTourAvailable = listingPrice ? true : false;

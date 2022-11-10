@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { strings } from 'const/strings';
 import { useState, useRef, useEffect } from 'react';
 import { useWindowWidth } from '@react-hook/window-size';
-import { useAmp } from 'next/amp';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { ANALYTICS_PROPERTIES } from 'const/index';
 import { ANALYTICS_EVENTS } from 'const/index';
@@ -17,11 +16,6 @@ import LinkResolver from './LinkResolver';
 import { CHEVRON_DOWN } from '../assets/SvgIcons';
 
 const StyledMenuItem = styled.li`
-  ${({ isAmp }) =>
-    isAmp &&
-    `
-    display:none;
-  `}
   padding: 12px 16px;
   ${expandFontToken('UI/Label Medium')}
   color: ${({ theme: { primaryBGText }, isGlobalMb }) =>
@@ -240,7 +234,7 @@ const HeadingMenu = styled(StyledMenuItem)`
 `;
 
 const Navigation = (props) => {
-  const { slices, isMobile, navOpen, id, isGlobalMb = false, isAmp } = props;
+  const { slices, isMobile, navOpen, id, isGlobalMb = false } = props;
   return (
     <Nav
       className={navOpen ? 'navigation-nav-open' : ''}
@@ -253,7 +247,6 @@ const Navigation = (props) => {
           isMobile,
           navOpen,
           isGlobalMb,
-          isAmp,
         })
       )}
     </Nav>
@@ -334,7 +327,6 @@ const MenuItem = (props) => {
     className,
     index,
     isGlobalMb = false,
-    isAmp,
     onMouseEnter,
     headerLabel,
   } = props;
@@ -358,7 +350,6 @@ const MenuItem = (props) => {
       nestOpen={nestOpen}
       className={`${className}`}
       isGlobalMb={isGlobalMb}
-      isAmp={isAmp}
       id={`menu-item-${index}`}
       onMouseEnter={onMouseEnter ? onMouseEnter : null}
     >
@@ -379,7 +370,7 @@ const MenuItem = (props) => {
 };
 
 const HeaderSliceHandler = (slice, props) => {
-  const { index, navOpen, isGlobalMb = false, isAmp } = props;
+  const { index, navOpen, isGlobalMb = false } = props;
   switch (slice.slice_type) {
     case 'navigation':
       return (
@@ -399,7 +390,6 @@ const HeaderSliceHandler = (slice, props) => {
           url={slice.primary.url}
           isGlobalMb={isGlobalMb}
           index={index}
-          isAmp={isAmp}
           headerLabel={props.headerLabel}
         />
       );
@@ -430,15 +420,6 @@ const HeaderSliceHandler = (slice, props) => {
         </StyledMenuItem>
       );
     case 'heading_menu_item':
-      const expandMenu = () => {
-        const noOfChildren = slice.noOfchildren;
-        let ampFunc = 'tap:';
-        for (let i = index + 1; i <= index + noOfChildren; i++) {
-          ampFunc += `menu-item-${i}.toggleClass(class='expandMenuItems'),`;
-        }
-        ampFunc += `nest-icon-${index}.toggleClass(class='chevronUp')`;
-        return ampFunc;
-      };
       return (
         <HeadingMenu
           key={index}
@@ -448,8 +429,6 @@ const HeaderSliceHandler = (slice, props) => {
           target={slice?.url?.target}
           role="button"
           tabIndex={0}
-          // @ts-ignore
-          on={expandMenu()}
         >
           {slice.label}
           <span className="nest-icon" id={`nest-icon-${index}`}>
@@ -524,26 +503,6 @@ const HeaderSliceHandler = (slice, props) => {
  *
  */
 
-const flattenMenu = (slices) => {
-  return slices.reduce((acc, slice) => {
-    if (slice.slice_type === 'nested_menu') {
-      // change all nested_menu slices to same level slice by spreading the childrenSlices.
-      const childrenSlices = slice.slices;
-      return [
-        ...acc,
-        {
-          slice_type: 'heading_menu_item',
-          label: slice.primary.label,
-          url: slice.primary.url,
-          noOfchildren: childrenSlices.length,
-        },
-        ...childrenSlices,
-      ];
-    }
-    return [...acc, slice];
-  }, []);
-};
-
 const MultiLevelNav = ({
   slice,
   oldMenuItems = [],
@@ -562,15 +521,12 @@ const MultiLevelNav = ({
     withOldMenu = [...withOldMenu, ...(oldMenuItems ?? [])];
   }
 
-  const isAmp = useAmp();
-  const finalSlices = isAmp ? flattenMenu(withOldMenu) : withOldMenu;
   return (
     <Navigation
       navOpen={isActive}
       isMobile={isMobile}
-      slices={finalSlices}
+      slices={withOldMenu}
       isGlobalMb={isGlobalMb}
-      isAmp={isAmp}
     />
   );
 };

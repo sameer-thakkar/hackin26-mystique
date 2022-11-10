@@ -5,14 +5,13 @@ import { MBContext } from 'contexts/MBContext';
 import { BANNER_PARAMS } from 'components/Banner';
 import Conditional from 'components/common/Conditional';
 import {
-  AMPImports,
   WebpageJsonLD,
   MystiquePerfScript,
   TrackingScripts,
 } from 'components/common/Scripts';
 import { legacyBooleanCheck } from 'utils';
 import { createAdditionalMetaTag, createHrefLangObj } from 'utils/headUtils';
-import { checkLTT, withShortcodes } from 'utils/helper';
+import { withShortcodes } from 'utils/helper';
 import { addQueryParams, convertUidToUrl } from 'utils/urlUtils';
 import { useRouter } from 'next/router';
 import { FB_DOMAIN_VERIFICATION, QUERY_PARAMS } from 'const/index';
@@ -23,7 +22,6 @@ type PopulateMetaProps = {
   datePublished: string;
   dateModified: string;
   serverRequestStartTimestamp: string;
-  isAmp: boolean;
   isMobile: boolean;
   bannerImages: { [key: string]: any }[];
   mbTheme?: string;
@@ -34,21 +32,12 @@ export default function PopulateMeta({
   datePublished,
   dateModified,
   languages,
-  isAmp,
   isMobile,
   bannerImages,
   serverRequestStartTimestamp,
 }: PopulateMetaProps) {
-  const {
-    noTrack,
-    uid,
-    isDev,
-    isPreview,
-    isStage,
-    host,
-    lang,
-    language_full,
-  } = useContext(MBContext);
+  const { noTrack, uid, isDev, isPreview, isStage, host, lang, language_full } =
+    useContext(MBContext);
   const { query } = useRouter();
   const {
     [QUERY_PARAMS.LIMIT]: limit,
@@ -59,7 +48,6 @@ export default function PopulateMeta({
   const {
     bing_site_verification: bingSiteVerification,
     canonical_link: canonicalLink,
-    canonical_link_amp: canonicalLinkForAMP,
     description: rawDescription,
     favicon,
     google_site_verification: googleSiteVerification,
@@ -69,7 +57,6 @@ export default function PopulateMeta({
     noindex,
     seo_keywords: seoKeywords,
     title: rawTitle,
-    disable_amp: disableAmp,
     enable_search,
   } = prismicData || {};
   const pageUrl = convertUidToUrl({
@@ -85,12 +72,11 @@ export default function PopulateMeta({
   const logoUrl = image?.url || logo?.url;
   const title = withShortcodes(rawTitle).join('');
   const description = withShortcodes(rawDescription).join('');
-  let modifiedCanonicalLink = isMobile
-    ? canonicalLinkForAMP || canonicalLink
-    : canonicalLink;
+  let modifiedCanonicalLink = canonicalLink;
 
-  const { ASPECT_RATIO, WIDTH } =
-    isMobile || isAmp ? BANNER_PARAMS.MOBILE : BANNER_PARAMS.DESKTOP;
+  const { ASPECT_RATIO, WIDTH } = isMobile
+    ? BANNER_PARAMS.MOBILE
+    : BANNER_PARAMS.DESKTOP;
 
   /**
    * imgix query params need to be in exactly the same order as the query params for links of Image component for preloading to work
@@ -188,19 +174,8 @@ export default function PopulateMeta({
     })
   );
 
-  const ampLinkTag = {
-    rel: 'amphtml',
-    ...(!disableAmp &&
-      !isAmp &&
-      !checkLTT(uid) &&
-      !uid.includes('www.themeparkstickets.com') && {
-        href: '?amp=1',
-      }),
-  };
-
   // Add link tags
   const additionalLinkTags = [
-    ampLinkTag,
     {
       rel: 'icon',
       href: favicon?.url,
@@ -212,7 +187,7 @@ export default function PopulateMeta({
       // @ts-ignore
       as: 'image',
       href: bannerImage,
-      ...(!isAmp && { fetchpriority: 'high' }),
+      ...{ fetchpriority: 'high' },
     });
   }
 
@@ -268,23 +243,18 @@ export default function PopulateMeta({
   return (
     <>
       <NextSeo {...metaProps} />
-      <Conditional if={!isAmp}>{scriptTags}</Conditional>
-      <Conditional if={!noTrack && !isAmp}>
+      {scriptTags}
+      <Conditional if={!noTrack}>
         <TrackingScripts
           isDev={isDev}
           isPreview={isPreview}
           originalHost={host}
         />
       </Conditional>
-      <Conditional if={isAmp && !disableAmp}>
-        <AMPImports />
-      </Conditional>
       <WebpageJsonLD {...jsonLdProps} />
-      <Conditional if={!isAmp}>
-        <MystiquePerfScript
-          serverRequestStartTimestamp={serverRequestStartTimestamp}
-        />
-      </Conditional>
+      <MystiquePerfScript
+        serverRequestStartTimestamp={serverRequestStartTimestamp}
+      />
     </>
   );
 }

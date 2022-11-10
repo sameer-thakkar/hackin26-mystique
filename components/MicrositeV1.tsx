@@ -14,7 +14,6 @@ import LongForm from 'components/common/LongForm';
 import PopulateProducts from 'components/PopulateProducts';
 import TextBanner from 'components/TextBanner';
 import Conditional from 'components/common/Conditional';
-import { withAmp } from 'components/common/withAmp';
 import { getAlternateLanguages, legacyBooleanCheck } from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import allToursParser from 'utils/allToursParser';
@@ -54,7 +53,6 @@ const MicrositeV1 = (props) => {
   const {
     toursList: uncategorizedToursList,
     tgidToScroll,
-    isAmp,
     data,
     offerData,
     mbTheme,
@@ -124,7 +122,6 @@ const MicrositeV1 = (props) => {
   const alternateLanguages = getAlternateLanguages(
     alternate_languages,
     isDev,
-    isAmp,
     host,
     uid
   );
@@ -209,7 +206,6 @@ const MicrositeV1 = (props) => {
     body: headerSlices,
     header_links: headerLinks,
     enable_dropdown: enableDropdownLinks,
-    disable_amp: disableAMP,
     dropdown_menu,
   } = withCommonHeaderOverrides;
   const logoRedirectionURL = commonHeader
@@ -218,7 +214,6 @@ const MicrositeV1 = (props) => {
       : micrositeData.logo_redirection_url
     : micrositeData.logo_redirection_url;
 
-  disableAMP = micrositeData?.disable_amp || disableAMP;
   const { url: logoUrl } = linkedLogo;
   const { url: uploadedLogoUrl, alt: altText } = uploadedLogo;
 
@@ -312,12 +307,7 @@ const MicrositeV1 = (props) => {
     cardPrices: scorpioData,
   };
 
-  const allTours = allToursParser(
-    micrositeData,
-    scorpioData,
-    pricingData,
-    isAmp
-  );
+  const allTours = allToursParser(micrositeData, scorpioData, pricingData);
 
   let finalBannerImages = bannerImages.map((banner) => {
     return {
@@ -420,7 +410,6 @@ const MicrositeV1 = (props) => {
       scorpioData={scorpioData}
       uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
       uid={uid}
-      isAmp={isAmp}
       currentLanguage={currentLanguage}
       bookNowText={bookNowText}
       readMoreText={readMoreText}
@@ -429,12 +418,11 @@ const MicrositeV1 = (props) => {
       hasOffer={hasOffer}
       togglePopup={onTogglePopup}
       pageUrl={pageUrl}
-      isMobile={isAmp || isMobile}
+      isMobile={isMobile}
       host={host}
       mbTheme={mbTheme}
       instantCheckout={instantCheckout}
       enableEarliestAvailability={enableEarliestAvailability}
-      disable_amp={disableAMP}
     />
   );
   return (
@@ -463,7 +451,6 @@ const MicrositeV1 = (props) => {
             serverRequestStartTimestamp,
             languages: alternateLanguages,
             isMobile,
-            isAmp,
             bannerImages: finalBannerImages,
           }}
         />
@@ -475,7 +462,7 @@ const MicrositeV1 = (props) => {
           currentLanguage={currentLanguage ? currentLanguage : null}
           uid={uid}
           openGroupBookingModal={openGroupBookingModal}
-          isMobile={isAmp || isMobile}
+          isMobile={isMobile}
           showGroupBooking={showGroupBooking}
           enableBuyTickets={isToursAvailable ? enableBuyTickets : false}
           logoRedirectionURL={logoRedirectionURL?.url || pageUrl}
@@ -484,7 +471,6 @@ const MicrositeV1 = (props) => {
           slices={finalHeaderSlices}
           dropdownLinks={!isHeaderInherited ? dropdownLinks : null}
           hasDropdownLinks={!isHeaderInherited ? hasDropdownLinks : null}
-          isAmp={isAmp}
           headerCurrencies={headerCurrencies}
         />
         <Conditional if={showCovid19Alert && covidAlertActive}>
@@ -519,10 +505,9 @@ const MicrositeV1 = (props) => {
             bannerSubtext={bannerSubtext}
             bannerCtaText={bannerCtaText ? bannerCtaText : null}
             currentLanguage={currentLanguage ? currentLanguage : null}
-            isMobile={isAmp || isMobile}
+            isMobile={isMobile}
             boxed={true}
             hideCTA={isToursAvailable ? hideBannerCTA : true}
-            isAmp={isAmp}
             orderedTgids={orderedTgids}
           />
         </Conditional>
@@ -534,7 +519,7 @@ const MicrositeV1 = (props) => {
         </Conditional>
         <Conditional if={coverSlices?.length}>
           <CoverSlicesWrapper>
-            <LongForm content={coverSlices} isMobile={isAmp || isMobile} />
+            <LongForm content={coverSlices} isMobile={isMobile} />
           </CoverSlicesWrapper>
         </Conditional>
 
@@ -558,8 +543,7 @@ const MicrositeV1 = (props) => {
               <LongForm
                 tourListSection={tourListSection}
                 content={[...longFormContent, ...contentFWSlices]}
-                isMobile={isAmp || isMobile}
-                isAmp={isAmp}
+                isMobile={isMobile}
               />
             </Conditional>
           </InteractionContextProvider>
@@ -585,7 +569,7 @@ const MicrositeV1 = (props) => {
             togglePopup={onTogglePopup}
             productOffer={offerPopup}
             scorpioData={scorpioData}
-            isMobile={isAmp || isMobile}
+            isMobile={isMobile}
           />
         </Conditional>
       </div>
@@ -593,4 +577,4 @@ const MicrositeV1 = (props) => {
   );
 };
 
-export default withAmp(MicrositeV1);
+export default MicrositeV1;

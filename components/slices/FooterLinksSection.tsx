@@ -60,7 +60,7 @@ const FooterLinksSection: React.FC<FooterLinksSectionProps> = ({
       <Title>{title}:</Title>
       {links.map((link) => (
         <LinkResolver
-          key={link}
+          key={link?.link_type?.url}
           className="link-item"
           url={withTrailingSlash(link?.link_type?.url)}
           onClick={onLinkClick}

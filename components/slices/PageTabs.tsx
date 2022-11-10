@@ -1,5 +1,4 @@
 import React from 'react';
-import { useAmp } from 'next/amp';
 import styled from 'styled-components';
 import classNames from 'classnames';
 import COLORS from 'const/colors';
@@ -68,57 +67,6 @@ const Tabs = styled.div`
   }
 `;
 
-const AmpSelectorContainer = styled.div`
-  amp-selector {
-    white-space: nowrap;
-    overflow: scroll;
-    margin-bottom: 20px;
-    width: calc(100vw - 32px);
-    display: grid;
-    grid-column-gap: 30px;
-    grid-template-columns: max-content;
-    grid-auto-flow: column;
-    margin: auto;
-    justify-content: ${({ align }) => {
-      switch (align) {
-        case 'center':
-          return 'space-around';
-        case 'left':
-          return 'flex-start';
-        case 'right':
-          return 'flex-end';
-        default:
-          break;
-      }
-    }};
-  }
-  amp-selector [role='tab'] {
-    cursor: pointer;
-    padding-bottom: 8px;
-    display: block;
-    width: 100%;
-  }
-
-  .selected,
-  amp-selector [role='tab'][selected] {
-    color: ${COLORS.BRAND.PURPS};
-    border-bottom: 2px solid;
-    outline: none;
-  }
-
-  amp-selector [role='tabpanel'] {
-    display: none;
-  }
-
-  amp-selector [role='tabpanel'][selected] {
-    outline: none;
-    display: block;
-    .tab-item-amp {
-      display: block;
-    }
-  }
-`;
-
 type PageTabsProps = {
   tabs: Array<any>;
   align: String;
@@ -126,46 +74,21 @@ type PageTabsProps = {
 
 const PageTabs = (props: PageTabsProps) => {
   const { tabs, align } = props;
-  const isAmp = useAmp();
 
   return (
-    <>
-      {isAmp ? (
-        <AmpSelectorContainer align={align}>
-          <amp-selector role="tablist" keyboard-select-mode="focus">
-            {tabs.map((tab, index) => {
-              return (
-                <LinkResolver key={index} url={tab.tab_link.url}>
-                  <div
-                    key={index}
-                    role="tab"
-                    // @ts-ignore
-                    option={`${index}`}
-                    selected={tab.is_selected_link === 'Yes'}
-                  >
-                    {tab.title}
-                  </div>
-                </LinkResolver>
-              );
+    <Tabs align={align}>
+      {tabs.map((tab, index) => (
+        <LinkResolver key={index} url={tab.tab_link.url}>
+          <div
+            className={classNames('navigation-tab', {
+              'selected-nav-tab': tab.is_selected_link === 'Yes',
             })}
-          </amp-selector>
-        </AmpSelectorContainer>
-      ) : (
-        <Tabs align={align}>
-          {tabs.map((tab, index) => (
-            <LinkResolver key={index} url={tab.tab_link.url}>
-              <div
-                className={classNames('navigation-tab', {
-                  'selected-nav-tab': tab.is_selected_link === 'Yes',
-                })}
-              >
-                {tab.title}
-              </div>
-            </LinkResolver>
-          ))}
-        </Tabs>
-      )}
-    </>
+          >
+            {tab.title}
+          </div>
+        </LinkResolver>
+      ))}
+    </Tabs>
   );
 };
 

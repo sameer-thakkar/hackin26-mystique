@@ -119,13 +119,21 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
 };
 
 App.getInitialProps = async ({ Component, ctx }) => {
-  const { asPath, query } = ctx;
+  const { asPath, query, res } = ctx;
   const [pathname, ..._query] = asPath.split('?');
   const lang = getLanguageFromPathname({ pathname, query }) || 'en';
   const localizedStrings = await getLocalizationLabels({ lang });
   const pageProps = Component.getInitialProps
     ? await Component.getInitialProps({ ...ctx, localizedStrings })
     : {};
+
+  if (query?.amp) {
+    const location = asPath.replace('?amp=1', '');
+    res.writeHead(301, {
+      location,
+    });
+    res.end();
+  }
 
   return { localizedStrings, pageProps, lang };
 };

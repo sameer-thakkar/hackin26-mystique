@@ -9,14 +9,6 @@ import { fromEntries } from 'utils/gen';
 
 import { getLangObject } from './helper';
 
-export const isAmpUrl = (query) => {
-  return query.amp === '1';
-};
-
-export const getNonAmpUrl = (asPath) => {
-  return asPath && asPath.replace('amp=1', '');
-};
-
 export const getStringifiedQueryFromObject = (queryJson) =>
   queryParser.stringify(queryJson);
 
@@ -114,7 +106,6 @@ export const convertUidToUrl = ({
   uid,
   lang = 'en',
   isDev,
-  isAmp,
   hostname = '',
   removeLangPath = false,
 }: {
@@ -122,7 +113,6 @@ export const convertUidToUrl = ({
   hostname?: string;
   lang?: string;
   isDev?: boolean;
-  isAmp?: boolean;
   removeLangPath?: boolean;
 }) => {
   const getUrl = (uid: string, lang, isStage: boolean) => {
@@ -144,14 +134,14 @@ export const convertUidToUrl = ({
   };
   const devUrl = `http://${hostname}/?mystique_uid=${uid}&lang=${
     getLangObject(lang)?.locale
-  }${isAmp ? `&amp=1` : ''}`;
+  }`;
   const isStage = hostname?.includes('stage-');
   if (isStage) {
     if (isDev) {
       return devUrl;
     } else {
       const url = getUrl(uid, lang, true);
-      return `${url}${isAmp ? `&amp=1` : ''}`;
+      return url;
     }
   }
   if (isDev) {
@@ -160,11 +150,6 @@ export const convertUidToUrl = ({
 
   if (uid) {
     let url = getUrl(uid, lang, false);
-    if (isAmp) {
-      const urlObject = new URL(url);
-      urlObject.searchParams.set('amp', '1');
-      return urlObject.toString();
-    }
     return url;
   } else {
     return null;

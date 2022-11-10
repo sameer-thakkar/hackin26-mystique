@@ -71,11 +71,9 @@ const Description = styled.div`
 const MultiBannerWrapper = ({
   hasSafe = false,
   marginTop = null,
-  isAmp = false,
   isMobile: isMobileCloudfront = false,
 }: {
   hasSafe: boolean;
-  isAmp?: boolean;
   marginTop?: number;
   isMobile?: boolean;
 }) => {
@@ -141,7 +139,6 @@ const MultiBannerWrapper = ({
               description={description}
               bannerOnClick={openSafeSidebar}
               icon={Shield}
-              isAmp={isAmp}
               colorScheme={greyScheme}
               isMobile={isMobile}
             />

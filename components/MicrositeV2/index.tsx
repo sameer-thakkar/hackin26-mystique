@@ -1,8 +1,8 @@
 import dynamic from 'next/dynamic';
 import React, { Component, ComponentType } from 'react';
 import { withRouter } from 'next/router';
+import { createGlobalStyle } from 'styled-components';
 import { InteractionContextProvider } from 'contexts/Interaction';
-import { withAmp } from 'components/common/withAmp';
 import Conditional from 'components/common/Conditional';
 import { PAGETYPE, QUERY_PARAMS, THEMES } from 'const/index';
 import allToursParser from 'utils/allToursParser';
@@ -23,6 +23,13 @@ const MobileProductPage: ComponentType<any> = dynamic(
   () => import('./views/ProductPage').then((mod) => mod.MobileProductPage),
   { ssr: false }
 );
+
+const GlobalStyle = createGlobalStyle`
+* {
+text-rendering: optimizeLegibility;
+-webkit-font-smoothing: antialiased;
+}
+`;
 class MicrositeV2 extends Component<any, any> {
   constructor(props) {
     super(props);
@@ -40,6 +47,7 @@ class MicrositeV2 extends Component<any, any> {
       ready: false,
     };
   }
+
   sendVariableToDataLayer = (JSONObject) => {
     if (window && (window as any).dataLayer) {
       (window as any).dataLayer.push(JSONObject);
@@ -120,15 +128,10 @@ class MicrositeV2 extends Component<any, any> {
       host,
       scorpioData,
       categoryTourListData,
-      isAmp,
       directTgidData,
     } = this.props;
-    const {
-      commonFooter,
-      contentFramework,
-      commonHeader,
-      secondaryFooter,
-    } = this.props.data.refs;
+    const { commonFooter, contentFramework, commonHeader, secondaryFooter } =
+      this.props.data.refs;
     const { isDev, serverRequestStartTimestamp } = this.props;
     const {
       uid,
@@ -141,7 +144,6 @@ class MicrositeV2 extends Component<any, any> {
     const alternateLanguages = getAlternateLanguages(
       alternate_languages,
       isDev,
-      isAmp,
       host,
       uid
     );
@@ -306,8 +308,7 @@ class MicrositeV2 extends Component<any, any> {
 
     const allTours = hasCategoryTourList
       ? tourListCategoryAllTours
-      : allToursParser(CMSData, scorpioData, pricingData, isAmp);
-
+      : allToursParser(CMSData, scorpioData, pricingData);
     const tgidsOrderByPrice: any = isFetched
       ? Object.values(allTours)
           .sort(
@@ -484,6 +485,7 @@ class MicrositeV2 extends Component<any, any> {
     let activePage = this.state.page.name;
     return (
       <InteractionContextProvider {...categoryProps}>
+        <GlobalStyle />
         <PopulateMeta
           {...{
             prismicData: CMSData,
@@ -492,7 +494,6 @@ class MicrositeV2 extends Component<any, any> {
             serverRequestStartTimestamp,
             languages: alternateLanguages,
             isMobile: this.state.isMobile,
-            isAmp,
             bannerImages: heroProps?.banners,
           }}
         />
@@ -539,15 +540,9 @@ class MicrositeV2 extends Component<any, any> {
             changePage={this.changePage}
           />
         </Conditional>
-        <style global jsx>{`
-          * {
-            text-rendering: optimizeLegibility;
-            -webkit-font-smoothing: antialiased;
-          }
-        `}</style>
       </InteractionContextProvider>
     );
   }
 }
 
-export default withAmp(withRouter(MicrositeV2));
+export default withRouter(MicrositeV2);

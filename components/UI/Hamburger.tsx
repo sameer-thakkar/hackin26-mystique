@@ -69,12 +69,6 @@ const Hamburger: React.FC<any> = ({
       id="hamburger"
       role="button"
       tabIndex={0}
-      on="
-        tap:hamburger.toggleClass(class='close'),
-        nav-menu.toggleClass(class='now-active'),
-        navigation-menu-mobile.toggleClass(class='navigation-nav-open'),
-        navigation-menu-mobile_0.toggleClass(class='navigation-nav-open')
-      "
       isGlobalMb={isGlobalMb}
     >
       <div role="button" tabIndex={0} />

@@ -362,8 +362,6 @@ export const MICROSITE_OBJECT_KEYS: string[] = [
   'footer_logo',
 ];
 
-export const MICROSITE_BOOL_KEYS: string[] = ['disable_amp'];
-
 export const MICROSITE_LINK_KEYS: string[] = ['footer_logo_link'];
 
 export const MICROSITE_ARRAY_KEYS: string[] = ['images', 'body1'];
@@ -550,10 +548,6 @@ export const SIDEBAR_TYPES = {
   PRODUCT_CARD: 'product-card',
   COMBO_VARIANT: 'combo-variant',
 };
-
-export const GTM_AMP_URL = 'https://www.googletagmanager.com/amp.json';
-
-export const GTM_AMP_KEY_PROD = 'GTM-5HMPHR2';
 
 export const DATE_FORMAT_TYPES = {
   FULL: 'FULL',

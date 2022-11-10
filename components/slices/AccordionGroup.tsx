@@ -1,5 +1,4 @@
 import React from 'react';
-import { useAmp } from 'next/amp';
 import { RichText } from 'prismic-reactjs';
 import { FAQPageJsonLd } from 'next-seo';
 import Conditional from 'components/common/Conditional';
@@ -41,7 +40,6 @@ const AccordionGroup = ({
   isOpenOverride = true,
 }: AccordionGroupProps) => {
   const isGlobalMb = sliceProps?.isGlobalMb ? sliceProps?.isGlobalMb : false;
-  const isAmp = useAmp();
   const faqSchemaProps = accordions.map((acc) => {
     const { heading, content } = acc || {};
     return {
@@ -61,39 +59,20 @@ const AccordionGroup = ({
             <h2>{heading}</h2>
           </TitleTextCombo>
         </Conditional>
-        {isAmp ? (
-          <amp-accordion animate="">
-            {accordions.map((accordion, index) => {
-              const content = <RichContent render={accordion.content} />;
-              return (
-                <Accordion
-                  key={index}
-                  index={index}
-                  content={content}
-                  heading={accordion.heading}
-                  isAmp
-                />
-              );
-            })}
-          </amp-accordion>
-        ) : (
-          <>
-            {accordions.map((accordion, index) => {
-              const content = <RichContent render={accordion.content} />;
-              return (
-                <Accordion
-                  key={index}
-                  index={index}
-                  content={content}
-                  isOpenOverride={index == 0 && isOpenOverride}
-                  heading={accordion.heading}
-                  isGlobalMb={isGlobalMb}
-                  useSchema={useSchema}
-                />
-              );
-            })}
-          </>
-        )}
+        {accordions.map((accordion, index) => {
+          const content = <RichContent render={accordion.content} />;
+          return (
+            <Accordion
+              key={index}
+              index={index}
+              content={content}
+              isOpenOverride={index == 0 && isOpenOverride}
+              heading={accordion.heading}
+              isGlobalMb={isGlobalMb}
+              useSchema={useSchema}
+            />
+          );
+        })}
       </div>
       <Conditional if={useSchema}>
         <FAQPageJsonLd mainEntity={faqSchemaProps} />

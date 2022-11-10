@@ -55,38 +55,6 @@ export const BANNER_PARAMS = {
   },
 };
 
-const renderAmpBanners = (image) => {
-  const { url, alt } = image;
-  return (
-    <Image
-      aspectRatio="16:9"
-      width="411"
-      height="163"
-      url={url}
-      alt={alt || 'banner'}
-      layout={'fill'}
-      className="banner-image"
-      addDarkOverlay
-      autoCrop={false}
-    />
-  );
-};
-
-const getAmpBanner = (bannerImages) => (
-  <amp-carousel
-    width="411"
-    height="200"
-    layout="responsive"
-    type="slides"
-    autoplay=""
-    delay="4000"
-  >
-    {bannerImages.map((banner) =>
-      renderAmpBanners({ url: banner.url, alt: banner.alt })
-    )}
-  </amp-carousel>
-);
-
 type TBannerCarouselProps = {
   bannerImages: {
     url: string;
@@ -100,7 +68,6 @@ type TBannerCarouselProps = {
   isMobile: boolean;
   boxed: boolean;
   hideCTA: boolean;
-  isAmp: boolean;
   orderedTgids: string[];
 };
 
@@ -113,7 +80,6 @@ const Banner = (props: TBannerCarouselProps) => {
     bannerImages,
     currentLanguage,
     hideCTA,
-    isAmp,
     bannerSubtext: tempBannerSubtext,
     bannerCtaText = '',
     orderedTgids,
@@ -181,45 +147,9 @@ const Banner = (props: TBannerCarouselProps) => {
 
   const bannerSubtext = withShortcodes(tempBannerSubtext);
 
-  const captions = (
-    <div
-      className={`mb-captions
-         ${isAmp ? 'absolute-position' : ''}
-         `}
-    >
-      <div
-        className={`${isAmp ? 'non-opaque' : ''} mb-caption
-         `}
-      >
-        <div className="caption">
-          <h1 dangerouslySetInnerHTML={{ __html: bannerHeading }}></h1>
-        </div>
-
-        {hideCTA ? null : (
-          <ButtonWrapper>
-            <Button
-              fillType="whiteBordered"
-              onClick={scrollTicketSection}
-              on="tap:tour-list-heading.scrollTo(duration='1200', position='top')"
-            >
-              {bannerCtaText || strings.BANNER_CTA}
-            </Button>
-          </ButtonWrapper>
-        )}
-      </div>
-    </div>
-  );
-
-  if (isAmp)
-    return (
-      <StyledBanner isAmp>
-        {getAmpBanner(bannerImages)}
-        {captions}
-      </StyledBanner>
-    );
-
-  const { ASPECT_RATIO, WIDTH } =
-    isMobile || isAmp ? BANNER_PARAMS.MOBILE : BANNER_PARAMS.DESKTOP;
+  const { ASPECT_RATIO, WIDTH } = isMobile
+    ? BANNER_PARAMS.MOBILE
+    : BANNER_PARAMS.DESKTOP;
 
   const textOverLay = (isFirst = false) => (
     <div className="overlay-container">
@@ -474,7 +404,7 @@ const StyledBanner = styled.div`
       max-width: 85%;
       z-index: 1;
       margin-top: 2.5rem;
-      margin-left: ${({ isAmp }) => (isAmp ? '3.4rem' : '1.125rem')};
+      margin-left: 1.125rem;
     }
 
     .mb-captions {
@@ -488,7 +418,7 @@ const StyledBanner = styled.div`
       .caption p {
         ${expandFontToken('Heading/Large')}
         margin: 0;
-        max-width: ${({ isAmp }) => (isAmp ? '70vw' : '85vw')};
+        max-width: 85vw;
       }
     }
     .mb-captions .df-caption {

@@ -10,7 +10,6 @@ const allToursParser = (
   CMSData,
   scorpioData,
   pricingData: ToursData,
-  isAmp
 ) => {
   const { cardPrices, isFetched } = pricingData;
   const labelIDMap = CMSData?.labels?.reduce((accum, label) => {
@@ -86,7 +85,7 @@ const allToursParser = (
       ];
     let listingPrice = isFetched ? cardPrices[tourData.tgid]?.listingPrice : {};
     const scorpioTour = scorpioData?.[tourData.tgid] || {};
-    listingPrice = isAmp ? scorpioTour?.listingPrice : listingPrice;
+
     return {
       ...accum,
       [tourData.tgid]: {

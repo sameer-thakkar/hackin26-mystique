@@ -223,7 +223,6 @@ export const getHeadoutLanguagecode = (prismicLangCode) => {
 export const getAlternateLanguages = (
   alternateLangsArray: any[],
   isDev: boolean,
-  isAmp: boolean,
   host,
   currentDocUid = ''
 ) => {
@@ -246,7 +245,6 @@ export const getAlternateLanguages = (
           lang,
           hostname: host,
           isDev,
-          isAmp,
           ...(domain !== englishDomain && {
             removeLangPath: true,
           }),

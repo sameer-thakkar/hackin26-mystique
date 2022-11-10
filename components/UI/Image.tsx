@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useAmp } from 'next/amp';
 import Conditional from 'components/common/Conditional';
 import { INFO_ICON } from 'assets/SvgIcons';
 
@@ -75,19 +74,13 @@ const Image: React.FC<ImageProps> = ({
   dontLazyLoad = false,
   alt = '',
   className = '',
-  isLogo,
-  isCardSlices,
   mobileUrl,
-  isFooterLogo,
-  isHeaderLogo,
-  layout,
   attribution = '',
   autoCrop = true,
   objectFit,
   addDarkOverlay,
   onClick,
 }) => {
-  const isAmp = useAmp();
   const makeImageUrl = (fm: string, url): string => {
     if (!url) {
       return null;
@@ -134,32 +127,7 @@ const Image: React.FC<ImageProps> = ({
     if (height && !width)
       calculatedWidth = Number(height) * (widthRatio / heightRatio);
   }
-  if (isAmp) {
-    if (isCardSlices) {
-      calculatedWidth = 377;
-    }
-    if (isHeaderLogo) {
-      calculatedHeight = '26';
-      calculatedWidth = '100';
-    }
-    if (isFooterLogo) {
-      calculatedHeight = '40';
-      calculatedWidth = '130';
-    }
-    const imageSrc = makeImageUrl(format, url);
-    ImageComponent = imageSrc && (
-      <amp-img
-        width={calculatedWidth || '85'}
-        height={calculatedHeight || '26'}
-        layout={
-          layout ? 'fill' : isLogo || isFooterLogo ? 'fixed' : 'responsive'
-        }
-        className={className}
-        src={imageSrc}
-        alt={alt}
-      />
-    );
-  } else if (dontLazyLoad) {
+  if (dontLazyLoad) {
     ImageComponent = (
       <Picture objectFit={objectFit} key={imageId}>
         <source

@@ -53,26 +53,6 @@ export const TrackingScripts = ({
   );
 };
 
-export const AMPImports = () => (
-  <Head>
-    <script
-      async
-      custom-element="amp-carousel"
-      src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js"
-    />
-    <script
-      async
-      custom-element="amp-selector"
-      src="https://cdn.ampproject.org/v0/amp-selector-0.1.js"
-    />
-    <script
-      async
-      custom-element="amp-analytics"
-      src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"
-    />
-  </Head>
-);
-
 export const WebpageJsonLD = ({
   uid,
   lang,

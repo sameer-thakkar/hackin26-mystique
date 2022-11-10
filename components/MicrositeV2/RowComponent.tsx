@@ -41,8 +41,11 @@ export const RowComponent = (props) => {
   } = props;
   const { activeCategoryId, activeTour, clickTour, closeTour } =
     useContext(InteractionContext) || {};
-  const { tgid: activeTgid, section: activeSection, autoScroll } =
-    activeTour || {};
+  const {
+    tgid: activeTgid,
+    section: activeSection,
+    autoScroll,
+  } = activeTour || {};
   const tgidClicked = activeTgid;
   const cardPosition = tgidsSubArr.indexOf(activeTgid);
   const showDescription = cardPosition > -1 && sectionId === activeSection;

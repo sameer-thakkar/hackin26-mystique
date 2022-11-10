@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { useAmp } from 'next/amp';
 import useSWR from 'swr';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 import styled from 'styled-components';
@@ -376,7 +375,6 @@ const AutomatedTourComparisonTable = ({
     biLink,
     redirectToHeadoutBookingFlow,
   } = useContext(MBContext);
-  const isAmp = useAmp();
   const currentHost = !envContext.isDev ? `https://${host}` : `http://${host}`;
   const orderedLabels = ['maxDuration', 'inclusions', 'cancellationPolicy'];
 
@@ -432,15 +430,6 @@ const AutomatedTourComparisonTable = ({
     }
   };
 
-  // Return null if no / only one tgid given/available
-  // if (tgidArray.length <= 1) return null;
-  // @ts-ignore
-  const compareTableOnClickForAMP = Array(...Array(orderedLabels.length).keys())
-    .map(
-      (el) => `comparison-list-details-${el}.toggleClass(class='no-display')`
-    )
-    .join(',');
-
   const onBookNowClick = ({ tgid, position }) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED,
@@ -450,6 +439,7 @@ const AutomatedTourComparisonTable = ({
       'Div Type': 'product-list',
     });
   };
+
   const collectionEndpointParams = {
     language: lang,
     'include-unavailable': 'true',
@@ -473,7 +463,7 @@ const AutomatedTourComparisonTable = ({
   return (
     <Conditional if={tourGroups?.length}>
       <ComparisonTableWrapper
-        isExpanded={isExpanded || isAmp}
+        isExpanded={isExpanded}
         isMobile={isMobile}
         tourCount={tourGroups?.length}
       >
@@ -518,9 +508,9 @@ const AutomatedTourComparisonTable = ({
                 })}
               </div>
             </div>
-            <Conditional if={isExpanded || isAmp}>
+            <Conditional if={isExpanded}>
               <div
-                className={`row ${isAmp ? 'no-display' : ''}`}
+                className={`row`}
                 id="expanded-details-section"
                 style={{ marginTop: -8 }}
               >
@@ -579,14 +569,12 @@ const AutomatedTourComparisonTable = ({
             </div>
             {orderedLabels
               .filter((label, index) =>
-                isMobile && !isExpanded && !isAmp ? index < 2 : true
+                isMobile && !isExpanded ? index < 2 : true
               )
               .map((label, rowIndex) => {
                 return (
                   <div
-                    className={`row ${
-                      rowIndex >= 2 && isAmp ? 'no-display' : ''
-                    } `}
+                    className={`row`}
                     id={`comparison-list-details-${rowIndex}`}
                     key={rowIndex}
                   >
@@ -604,11 +592,8 @@ const AutomatedTourComparisonTable = ({
                   </div>
                 );
               })}
-            <Conditional if={(isMobile && isExpanded) || !isMobile || isAmp}>
-              <div
-                className={`row max-content ${isAmp ? 'no-display' : ''}`}
-                id="expanded-details-column"
-              >
+            <Conditional if={(isMobile && isExpanded) || !isMobile}>
+              <div className={`row max-content`} id="expanded-details-column">
                 {tourGroups?.map((tour, index) => {
                   return (
                     <div className="column flat-price-block" key={index}>
@@ -671,12 +656,6 @@ const AutomatedTourComparisonTable = ({
           <Button
             onClick={() => setExpand(true)}
             id="compare-all-details-button"
-            on={`
-              tap:expanded-details-section.toggleClass(class='no-display'),
-              expanded-details-column.toggleClass(class='no-display'),
-              compare-all-details-button.toggleClass(class='no-display', force=true),
-              ${compareTableOnClickForAMP}
-            `}
           >
             <div className="start-compare-icon">
               {strings.COMPARE_ALL_DETAILS} {CHEVRON_DOWN}

@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
-import { useAmp } from 'next/amp';
 import { SIZES } from 'const/ui-constants';
 import Conditional from 'components/common/Conditional';
 import { useWindowWidth } from '@react-hook/window-size';
-import { CHEVRON_LEFT, CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
+import { CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS } from 'const/index';
 import { ANALYTICS_PROPERTIES } from 'const/index';
@@ -84,37 +83,6 @@ const StyledTab = styled.div`
     `
     );
   }}
-`;
-
-const AmpSelectorContainer = styled.div`
-  amp-selector {
-    width: calc(100vw - 32px);
-    margin-bottom: 20px;
-  }
-  amp-selector [role='tab'] {
-    cursor: pointer;
-    padding-bottom: 8px;
-    display: block;
-    width: 100%;
-  }
-
-  amp-selector [role='tab'][selected] {
-    color: ${COLORS.BRAND.PURPS};
-    border-bottom: 2px solid;
-    outline: none;
-  }
-
-  amp-selector [role='tabpanel'] {
-    display: none;
-  }
-
-  amp-selector [role='tabpanel'][selected] {
-    outline: none;
-    display: block;
-    .tab-item-amp {
-      display: block;
-    }
-  }
 `;
 
 const TabCarousel = styled.div`
@@ -235,17 +203,14 @@ type TabWrapperProps = {
 const TabWrapper = (props: TabWrapperProps) => {
   const { heading, slices, sliceProps: parentSliceProps, description } = props;
   // @ts-ignore
-  const { sliceIndex, isGlobalMb } = parentSliceProps;
+  const { isGlobalMb } = parentSliceProps;
   const defaultFromPrismic = slices.filter(
     (slice) => slice.primary.is_default == 'Yes'
   );
-  let modifiedSlices = slices.map((slice, index) => {
-    return { ...slice, index };
-  });
+  
   const defaultTab = stringIdfy(
     (defaultFromPrismic[0] || slices[0])?.primary?.title || ''
   );
-  const isAmp = useAmp();
   const [activeTabId, setActiveTab] = useState(defaultTab);
   const [activeTabIndex, setActiveTabIndex] = useState(
     slices.indexOf((slice) => legacyBooleanCheck(slice.primary.is_default)) ?? 0
@@ -419,7 +384,7 @@ const TabWrapper = (props: TabWrapperProps) => {
                 tabIndex={0}
                 onClick={goPrev}
               >
-                {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
+                {CHEVRON_LEFT_CIRCLE}
               </div>
             ) : null}
             {!isEnd ? (
@@ -429,7 +394,7 @@ const TabWrapper = (props: TabWrapperProps) => {
                 tabIndex={0}
                 onClick={goNext}
               >
-                {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
+                {CHEVRON_LEFT_CIRCLE}
               </div>
             ) : null}
           </Controls>
@@ -451,54 +416,7 @@ const TabWrapper = (props: TabWrapperProps) => {
         </Conditional>
         {description ? <RichContent render={description} /> : null}
       </TitleTextCombo>
-      {isAmp ? (
-        <AmpSelectorContainer>
-          <amp-selector
-            className="tabs-with-selector tabs"
-            role="tablist"
-            on={`select:tabWrapperPanel_${sliceIndex}.toggle(index=event.targetOption, value=true)`}
-            keyboard-select-mode="focus"
-          >
-            {modifiedSlices.map((slice, index) => {
-              return (
-                <div
-                  key={index}
-                  role="tab"
-                  className="tab-heading"
-                  // @ts-ignore
-                  option={`${index}`}
-                  selected={index === 0}
-                >
-                  {slice.primary.title}
-                </div>
-              );
-            })}
-          </amp-selector>
-          <amp-selector id={`tabWrapperPanel_${sliceIndex}`}>
-            <div className="tab-content-wrap">
-              {modifiedSlices.map((slice, keyIndex) => {
-                return (
-                  <div
-                    key={keyIndex}
-                    role="tabpanel"
-                    // @ts-ignore
-                    option={`${keyIndex}`}
-                    selected={keyIndex === 0}
-                  >
-                    {sliceHandler(slice, {
-                      ...sliceProps,
-                      keyIndex,
-                      ampModified: true,
-                    })}
-                  </div>
-                );
-              })}
-            </div>
-          </amp-selector>
-        </AmpSelectorContainer>
-      ) : (
-        <>
-          <div ref={tabsContanier} className="tabs">
+      <div ref={tabsContanier} className="tabs">
             {slices.map((slice, index) => {
               const tabId = stringIdfy(slice.primary.title);
               return (
@@ -528,7 +446,7 @@ const TabWrapper = (props: TabWrapperProps) => {
                     tabIndex={0}
                     onClick={() => scrollTab('left')}
                   >
-                    {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
+                    {CHEVRON_LEFT_CIRCLE}
                   </div>
                 </Conditional>
                 <Conditional if={!isAtEnd}>
@@ -538,7 +456,7 @@ const TabWrapper = (props: TabWrapperProps) => {
                     tabIndex={0}
                     onClick={() => scrollTab('right')}
                   >
-                    {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
+                    {CHEVRON_LEFT_CIRCLE}
                   </div>
                 </Conditional>
               </SlideControls>
@@ -549,8 +467,6 @@ const TabWrapper = (props: TabWrapperProps) => {
               return sliceHandler(slice, { ...sliceProps, keyIndex });
             })}
           </div>
-        </>
-      )}
     </StyledTabWrapper>
   );
 };

@@ -2,8 +2,6 @@ import React, { useEffect, useCallback, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import COLORS from 'const/colors';
-import { useAmp } from 'next/amp';
-import { CHEVRON_LEFT } from 'assets/SvgIcons';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -107,7 +105,6 @@ const Slider: React.FC<{
   /* Swiper configuration for using external controls starts here */
   const [swiper, updateSwiper] = useState(null);
   const [currentIndex, updateCurrentIndex] = useState(0);
-  const isAmp = useAmp();
   const goToSlide = (index) => {
     if (swiper !== null) {
       swiper.slideTo(index);
@@ -132,9 +129,10 @@ const Slider: React.FC<{
     }
   };
 
-  const updateIndex = useCallback(() => updateCurrentIndex(swiper.realIndex), [
-    swiper,
-  ]);
+  const updateIndex = useCallback(
+    () => updateCurrentIndex(swiper.realIndex),
+    [swiper]
+  );
 
   useEffect(() => {
     if (swiper && swiper !== null) {
@@ -169,7 +167,7 @@ const Slider: React.FC<{
               tabIndex={0}
               onClick={goPrev}
             >
-              {isAmp ? CHEVRON_LEFT : prevButton}
+              {prevButton}
             </div>
           ) : null}
           {!swiper?.isEnd ? (
@@ -179,7 +177,7 @@ const Slider: React.FC<{
               tabIndex={0}
               onClick={goNext}
             >
-              {isAmp ? CHEVRON_LEFT : nextButton}
+              {nextButton}
             </div>
           ) : null}
         </Controls>

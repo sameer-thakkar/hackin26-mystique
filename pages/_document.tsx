@@ -1,12 +1,9 @@
 // _document is only rendered on the server side and not on the client side
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
-import AMPAnalytics from 'components/common/AMPAnalytics';
-import Conditional from 'components/common/Conditional';
-import { getLangUID, isAmpUrl } from 'utils/urlUtils';
+import { getLangUID } from 'utils/urlUtils';
 import { RTL_LANGUAGE_CODES } from 'const/index';
 
-import ampFonts from '../style/amp/ampFonts';
 import { getLangObject } from '../utils/helper';
 
 class MystiqueDocument extends Document {
@@ -15,7 +12,6 @@ class MystiqueDocument extends Document {
     const sheet = new ServerStyleSheet();
     const { lang } = getLangUID(req, query);
     const originalRenderPage = ctx.renderPage;
-    const isAmp = isAmpUrl(query);
     try {
       ctx.renderPage = () =>
         originalRenderPage({
@@ -30,28 +26,9 @@ class MystiqueDocument extends Document {
           {sheet.getStyleElement()}
         </>
       );
-      if (isAmp) {
-        styleElements = (
-          <>
-            {initialProps.styles}
-            <style
-              dangerouslySetInnerHTML={{
-                __html: ampFonts,
-              }}
-            />
-            {JSON.parse(
-              JSON.stringify(sheet.getStyleElement()).replace(
-                /\s?!important/g,
-                ''
-              )
-            )}
-          </>
-        );
-      }
       return {
         ...initialProps,
         styles: styleElements,
-        isAmp,
         asPath,
         query,
         lang,
@@ -63,7 +40,7 @@ class MystiqueDocument extends Document {
 
   render() {
     // @ts-ignore
-    const { isAmp, asPath, query, lang } = this.props;
+    const { lang } = this.props;
     const textDirection = RTL_LANGUAGE_CODES.includes(getLangObject(lang)?.code)
       ? 'rtl'
       : 'ltr';
@@ -81,17 +58,14 @@ class MystiqueDocument extends Document {
           <link rel="stylesheet" href="https://use.typekit.net/rql1une.css" />
         </Head>
         <body>
-          <AMPAnalytics asPath={asPath} query={query} />
           <Main />
           <NextScript />
-          <Conditional if={!isAmp}>
-            <script
-              async
-              defer
-              type="text/javascript"
-              src="https://static.cdn.prismic.io/prismic.js?repo=mystique&amp;new=true"
-            ></script>
-          </Conditional>
+          <script
+            async
+            defer
+            type="text/javascript"
+            src="https://static.cdn.prismic.io/prismic.js?repo=mystique&amp;new=true"
+          ></script>
         </body>
       </Html>
     );

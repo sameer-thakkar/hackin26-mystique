@@ -114,15 +114,8 @@ const CategorisedProductsWrapper = styled.div`
 `;
 
 const CategorisedPopulateProducts = (props) => {
-  const {
-    categories,
-    allTours,
-    sectionId,
-    host,
-    uid,
-    isMobile,
-    directTgid,
-  } = props;
+  const { categories, allTours, sectionId, host, uid, isMobile, directTgid } =
+    props;
   const { activeCategoryId } = useContext(InteractionContext) || {};
   const [viewedTgids] = useState<string[]>([]);
   const onSeeAllClicked = (url, category) => {
@@ -175,9 +168,8 @@ const CategorisedPopulateProducts = (props) => {
     let observer = new IntersectionObserver((elements) => {
       elements.forEach((intersectionEntry) => {
         const { isIntersecting } = intersectionEntry;
-        const [ranking, category, tgid] = intersectionEntry.target.id.split(
-          '-'
-        );
+        const [ranking, category, tgid] =
+          intersectionEntry.target.id.split('-');
         const trackAlreadyViewedKey = `${category}-${tgid}`;
 
         const id = Number(tgid);

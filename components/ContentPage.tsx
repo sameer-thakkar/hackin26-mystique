@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 import { ProductsContextProvider } from 'contexts/Products';
 import { InteractionContextProvider } from 'contexts/Interaction';
-import { withAmp } from 'components/common/withAmp';
 import DismissAlert from 'components/UI/DismissAlert';
 import { Client } from 'config/prismic-config';
 import Alert from 'components/UI/Alert';
@@ -175,9 +174,8 @@ class ContentPage extends Component<any, any> {
   }
 
   async componentDidMount() {
-    const {
-      enable_group_booking: enableGroupBooking,
-    } = this.props.data.header_ref.data;
+    const { enable_group_booking: enableGroupBooking } =
+      this.props.data.header_ref.data;
     const { data } = this.props;
 
     const { microsite, baseLangPageTitle } = data;
@@ -211,10 +209,8 @@ class ContentPage extends Component<any, any> {
       let res = await Client().getByIDs([
         this.props.data.microsite_document_ref.id,
       ]);
-      const {
-        group_booking_excluded_tgids: groupBookingExcludedTgids,
-        body1,
-      } = res.results[0].data;
+      const { group_booking_excluded_tgids: groupBookingExcludedTgids, body1 } =
+        res.results[0].data;
       let tours = body1[0]?.items || [];
       let filteredTours = tours.filter(function (tour) {
         return !groupBookingExcludedTgids.find(function (excludedTour) {
@@ -333,7 +329,6 @@ class ContentPage extends Component<any, any> {
       uid,
       host,
       scorpioData,
-      isAmp,
     } = this.props;
     const {
       footer_ref: commonFooter,
@@ -346,22 +341,16 @@ class ContentPage extends Component<any, any> {
     } = data;
     const apiReady = tourAPIData !== null;
 
-    const allTours = allToursParser(
-      microsite?.data,
-      scorpioData,
-      {
-        cardPrices: tourAPIData,
-        isFetched: apiReady,
-      },
-      isAmp
-    );
+    const allTours = allToursParser(microsite?.data, scorpioData, {
+      cardPrices: tourAPIData,
+      isFetched: apiReady,
+    });
     const CFWBody = contentFramework?.data?.body;
     const contentFWSlices = groupSlices(CFWBody || []);
 
     const alternateLanguages = getAlternateLanguages(
       alternate_languages,
       isDev,
-      isAmp,
       host,
       uid
     );
@@ -402,11 +391,7 @@ class ContentPage extends Component<any, any> {
       ...strValues,
       ...objValues,
     };
-    const {
-      header_ref: {
-        data: { disable_amp: disableAMP },
-      },
-    } = micrositeData;
+
     const headProps = {
       ...micrositeData,
       favicon: microsite_document_ref.data.favicon,
@@ -417,7 +402,6 @@ class ContentPage extends Component<any, any> {
         ? this.props.data.other_meta_tags
         : microsite_document_ref.other_meta_tags,
       faq_schema: this.props.data.faq_schema,
-      disable_amp: disableAMP,
     };
     // END Data extraction for populating head
 
@@ -484,7 +468,6 @@ class ContentPage extends Component<any, any> {
             serverRequestStartTimestamp,
             languages: alternateLanguages,
             isMobile: this.state.isMobile,
-            isAmp,
             bannerImages: [featuredImage],
           }}
         />
@@ -583,4 +566,4 @@ class ContentPage extends Component<any, any> {
   }
 }
 
-export default withAmp(ContentPage);
+export default ContentPage;

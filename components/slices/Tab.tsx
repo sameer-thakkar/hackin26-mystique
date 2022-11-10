@@ -29,7 +29,6 @@ const Tab = (props) => {
         return (
           <StyledTabContent
             key={index}
-            className="tab-item-amp"
             isActive={activeTabId == stringIdfy(title)}
           >
             {sliceHandler(slice, {

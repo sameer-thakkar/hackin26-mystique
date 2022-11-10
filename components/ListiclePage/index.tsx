@@ -276,7 +276,6 @@ const Listicle = (props) => {
   const alternateLanguages = getAlternateLanguages(
     alternate_languages,
     isDev,
-    false,
     host,
     uid
   );
@@ -441,7 +440,6 @@ const Listicle = (props) => {
           serverRequestStartTimestamp,
           languages: alternateLanguages,
           isMobile,
-          isAmp: false,
           bannerImages: listicleBannerImages,
         }}
       />

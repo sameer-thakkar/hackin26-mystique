@@ -8,13 +8,11 @@ const ProductsSection = (props) => {
     host,
     currency,
     lang,
-    isAmp,
     toursList: uncategorizedToursList,
     tgidToScroll,
     bookNowText,
     readMoreText,
     showLessText,
-    disableAMP,
     categoryTourListData,
     uid,
   } = props;
@@ -65,15 +63,13 @@ const ProductsSection = (props) => {
       uncategorizedTours={orderedTours}
       scorpioData={scorpioDataCategorised}
       uid={uid}
-      isAmp={isAmp}
       currentLanguage={currentLanguage}
       bookNowText={bookNowText}
       readMoreText={readMoreText}
       showLessText={showLessText}
       togglePopup={onTogglePopup}
-      isMobile={isAmp || isMobile}
+      isMobile={isMobile}
       host={host}
-      disable_amp={disableAMP}
       pageType={'global_experience'}
     />
   );

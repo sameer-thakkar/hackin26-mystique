@@ -4,14 +4,12 @@ import styled from 'styled-components';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
 import {
-  CHEVRON_LEFT,
   CHEVRON_LEFT_CIRCLE,
   CLOSE_WHITE,
 } from 'assets/SvgIcons';
 import { stringIdfy } from 'utils/helper';
 import Image from 'UI/Image';
 import RichContent from 'UI/RichContent';
-import { useAmp } from 'next/amp';
 import dynamic from 'next/dynamic';
 
 const Swiper = dynamic(() => import('components/Swiper'));
@@ -402,7 +400,6 @@ const ImageGallery = (props) => {
   const [lightboxIndex, setCurrentLightboxIndex] = useState(0);
   const [isZoomed, setZoomed] = useState(false);
   const toggleLightbox = () => setLightbox(!ligtboxOpen);
-  const isAmp = useAmp();
 
   const updateIndex = useCallback(
     () => setCurrentLightboxIndex(lightboxSwiper?.realIndex),
@@ -508,7 +505,7 @@ const ImageGallery = (props) => {
                 ? null
                 : () => (
                     <div className="button-right">
-                      {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
+                      {CHEVRON_LEFT_CIRCLE}
                     </div>
                   )
             }
@@ -517,7 +514,7 @@ const ImageGallery = (props) => {
                 ? null
                 : () => (
                     <div className="button-left">
-                      {isAmp ? CHEVRON_LEFT : CHEVRON_LEFT_CIRCLE}
+                      {CHEVRON_LEFT_CIRCLE}
                     </div>
                   )
             }

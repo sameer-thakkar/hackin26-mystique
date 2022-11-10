@@ -268,7 +268,7 @@ const FooterLegal = styled.div`
       column-gap: 0;
       grid-auto-columns: 1fr;
     }
-    
+
     .disclaimer-text {
       ${({ isEntertainmentMb }) =>
         isEntertainmentMb &&

@@ -5,8 +5,6 @@ import { metaAtom } from 'store/atoms/meta';
 import styled from 'styled-components';
 import { trackEvent } from 'utils/analytics';
 
-import { withAmp } from '../common/withAmp';
-
 type IFrameProps = {
   name?: string;
   src: string;
@@ -14,14 +12,13 @@ type IFrameProps = {
   allow?: string;
   allowfullscreen?: string;
   height?: string;
-  isAmp?: boolean;
 };
 
 const IFrameContainer = styled.div`
   position: relative;
   padding-bottom: ${({ paddingBottom }) =>
     paddingBottom ? paddingBottom : '56.25%'};
-  padding-top: ${({ isAmp }) => (isAmp ? '0' : '35px')};
+  padding-top: 35px;
   height: 0;
   overflow: hidden;
 `;
@@ -33,11 +30,6 @@ const StyledIFrame = styled.iframe`
   width: 100%;
   height: ${({ height }) => (height ? height : '100%')};
 `;
-
-const getVideoIdFromUrl = (url) => {
-  url = url.split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
-  return url[2] !== undefined ? url[2].split(/[^0-9a-z_-]/i)[0] : url[0];
-};
 
 /**
  *
@@ -58,7 +50,6 @@ const IFrame: React.FC<IFrameProps> = ({
   frameborder = 0,
   allow = '',
   allowfullscreen = 'false',
-  isAmp,
   ...otherProps
 }) => {
   const allowFullScreen = allowfullscreen === 'false' ? false : true;
@@ -66,7 +57,7 @@ const IFrame: React.FC<IFrameProps> = ({
   if (!src) {
     return null;
   }
-  const videoId = getVideoIdFromUrl(src);
+
   const isYoutube = src.startsWith('https://www.youtube.com');
   const trackVideoPlayed = (e) => {
     e.currentTarget.dataset.playing = !e.currentTarget.dataset?.playing;
@@ -76,48 +67,24 @@ const IFrame: React.FC<IFrameProps> = ({
         [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
       });
   };
-  const ampIframe = isYoutube ? (
-    <IFrameContainer {...{ paddingBottom: otherProps.height, isAmp }}>
-      <amp-youtube
-        width="1600"
-        height="900"
-        layout="responsive"
-        data-videoid={videoId}
-      />
-    </IFrameContainer>
-  ) : (
-    <IFrameContainer {...{ paddingBottom: otherProps.height, isAmp }}>
-      <amp-iframe
-        width="1600"
-        height="900"
-        sandbox="allow-scripts allow-same-origin"
-        layout="responsive"
-        frameborder="0"
-        src={src}
-      />
-    </IFrameContainer>
-  );
+
   return (
     <>
-      {isAmp ? (
-        ampIframe
-      ) : (
-        <IFrameContainer
-          {...{ paddingBottom: otherProps.height, isAmp }}
-          onClick={isYoutube ? trackVideoPlayed : null}
-        >
-          <StyledIFrame
-            {...(name && { name })}
-            src={src}
-            frameBorder={Number(frameborder)}
-            allow={allow}
-            allowFullScreen={allowFullScreen}
-            {...otherProps}
-          />
-        </IFrameContainer>
-      )}
+      <IFrameContainer
+        {...{ paddingBottom: otherProps.height }}
+        onClick={isYoutube ? trackVideoPlayed : null}
+      >
+        <StyledIFrame
+          {...(name && { name })}
+          src={src}
+          frameBorder={Number(frameborder)}
+          allow={allow}
+          allowFullScreen={allowFullScreen}
+          {...otherProps}
+        />
+      </IFrameContainer>
     </>
   );
 };
 
-export default withAmp(IFrame);
+export default IFrame;

@@ -229,7 +229,7 @@ const PopulateProducts = (props) => {
 
       <Conditional if={tgidsSubArr.length > rowsInView && !showAll}>
         <LinkResolver
-          href={getViewMoreLink()}
+          url={getViewMoreLink()}
           onClick={viewMore}
           className="view-more"
         >

@@ -15,7 +15,6 @@ const TicketCard = (props) => {
     tgidToScroll,
     data: micrositeData,
     scorpioData: scorpioDataUncategorised,
-    isAmp,
     offerData,
     host,
     mbTheme,
@@ -134,7 +133,6 @@ const TicketCard = (props) => {
       scorpioData={scorpioData}
       uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
       uid={uid}
-      isAmp={isAmp}
       currentLanguage={currentLanguage}
       bookNowText={bookNowText}
       readMoreText={readMoreText}
@@ -143,7 +141,7 @@ const TicketCard = (props) => {
       hasOffer={hasOffer}
       togglePopup={onTogglePopup}
       pageUrl={pageUrl}
-      isMobile={isAmp || isMobile}
+      isMobile={isMobile}
       host={host}
       mbTheme={mbTheme}
       instantCheckout={instantCheckout}

@@ -1,9 +1,7 @@
 import React from 'react';
-import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
 import { HALYARD } from 'const/ui-constants';
-import { getNonAmpUrl } from 'utils/urlUtils';
 
 export const StyledInfoBanner = styled.div`
   padding: 24px 32px;
@@ -71,18 +69,6 @@ const CTA = styled.div`
   }
 `;
 
-const AmpCTA = styled.a`
-  font-size: 14px;
-  display: inline-block;
-  text-decoration: underline;
-  line-height: 140%;
-  cursor: pointer;
-  @media (max-width: 768px) {
-    display: block;
-    margin-top: 8px;
-  }
-`;
-
 const InfoBanner = ({
   title,
   description,
@@ -91,11 +77,8 @@ const InfoBanner = ({
   ctaOnClick = null,
   bannerOnClick = null,
   colorScheme,
-  isAmp,
   isMobile = false,
 }) => {
-  const router = useRouter();
-  const nonAmpPageUrl = getNonAmpUrl(router.asPath);
   return (
     <StyledInfoBanner
       onClick={bannerOnClick}
@@ -113,15 +96,9 @@ const InfoBanner = ({
           {title}
         </Title>
         <Conditional if={typeof description === 'string'}>
-          {isAmp ? (
-            <Description>
-              {description} <AmpCTA href={nonAmpPageUrl}> {cta}</AmpCTA>
-            </Description>
-          ) : (
-            <Description>
+          <Description>
               {description} <CTA onClick={ctaOnClick}>{cta}</CTA>
             </Description>
-          )}
         </Conditional>
         <Conditional if={typeof description !== 'string'}>
           {description}

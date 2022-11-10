@@ -222,8 +222,7 @@ const TourTags = styled.div(
       align-items: top;
       padding-top: calc(100% / 2);
     }
-    img,
-    amp-img {
+    img{
       height: 16px;
       width: 16px;
       object-fit: cover;
@@ -372,10 +371,10 @@ const ProductBody = styled.div`
         : ''}
     ul {
       padding: 0;
-      padding-left: 1.0em;
+      padding-left: 1em;
       display: grid;
       grid-gap: 12px;
-      li{
+      li {
         font-style: normal;
         font-weight: normal;
         font-size: 16px;
@@ -384,25 +383,13 @@ const ProductBody = styled.div`
       }
     }
   }
-  .amp-tour-description{
-    ${({ collapsed, noOfListItemToShow, defaultOpen }) =>
-      collapsed && !defaultOpen
-        ? `
-  *:not(div):nth-child(n + ${noOfListItemToShow}),
-  ul li:nth-child(n + ${noOfListItemToShow}) {
-    display: grid;
-  }
-  `
-        : ''}
-  }
   ul:last-child {
     margin-bottom: 0;
   }
   @media (max-width: 768px) {
-    
-    .show-more-information{
+    .show-more-information {
       p:nth-child(1) {
-              display: block;
+        display: block;
       }
       ul {
         li:nth-child(n + 2) {
@@ -422,11 +409,11 @@ const ProductBody = styled.div`
     `
         : ''}
   }
-  .display-none{
+  .display-none {
     display: none;
   }
-  .display-expand{
-    display:grid;
+  .display-expand {
+    display: grid;
   }
 `;
 
@@ -585,7 +572,6 @@ const TicketCard = (props) => {
     shortSummary,
     boosterTag,
     isMobile,
-    isAmp,
     instantCheckout,
     showEarliestAvailability,
     finalPromoCode,
@@ -719,7 +705,7 @@ const TicketCard = (props) => {
     : extractTabsFromHighlights(finalHighlights);
 
   let { listingPrice } = tourPrices[tgid];
-  listingPrice = isAmp ? tourListingPrice : tourListingPrice;
+  listingPrice = tourListingPrice;
 
   if (isFetched && !listingPrice) return null;
   const finalPrice = listingPrice;
@@ -781,31 +767,6 @@ const TicketCard = (props) => {
         tabIndex={0}
       >
         {innerContent}
-      </div>
-    );
-  };
-  const getMoreDetailsButtonForAMP = () => {
-    return (
-      <div
-        data-open="0"
-        className="more-details"
-        role="button"
-        tabIndex={0}
-        // @ts-ignore
-        on={`tap:tour-description-more-text-${position}.toggleClass(class='display-none'),tour-description-less-text-${position}.toggleClass(class='display-none'),tour-description-${position}.toggleClass(class='display-expand')`}
-      >
-        <span
-          className="more-details"
-          id={`tour-description-more-text-${position}`}
-        >
-          {'+ ' + strings.MORE_DETAILS}
-        </span>
-        <span
-          className="more-details display-none"
-          id={`tour-description-less-text-${position}`}
-        >
-          {'- ' + strings.SHOW_LESS_TEXT}
-        </span>
       </div>
     );
   };
@@ -890,7 +851,7 @@ const TicketCard = (props) => {
           <a
             target={isFetched && isMobile ? null : '_blank'}
             href={productBookingUrl}
-            rel="nofollow"
+            rel="nofollow noreferrer"
           >
             <Button
               className={`tour-book-now-cta`}
@@ -1055,7 +1016,7 @@ const TicketCard = (props) => {
               defaultOpen={defaultOpen}
             >
               <Conditional if={hasReadMore}>
-                {isAmp ? getMoreDetailsButtonForAMP() : getMoreDetailsButton()}
+                {getMoreDetailsButton()}
               </Conditional>
             </ProductBody>
           </Conditional>

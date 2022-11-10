@@ -174,16 +174,17 @@ const CategoryBar = (props) => {
     }
   );
 
-  const categoriesToRender = (showLtdCategoryHomepage
-    ? experimentCategoriesToShow
-    : categories
-        .filter(
-          (category) => !['Coming Soon', 'Christmas'].includes(category.name)
-        )
-        .map((category) => ({
-          ...category,
-          name: category.name === 'Bestsellers' ? 'All Shows' : category.name,
-        }))
+  const categoriesToRender = (
+    showLtdCategoryHomepage
+      ? experimentCategoriesToShow
+      : categories
+          .filter(
+            (category) => !['Coming Soon', 'Christmas'].includes(category.name)
+          )
+          .map((category) => ({
+            ...category,
+            name: category.name === 'Bestsellers' ? 'All Shows' : category.name,
+          }))
   ).filter((category) => {
     const { ranking } = category || {};
     const { popularity } = ranking || {};

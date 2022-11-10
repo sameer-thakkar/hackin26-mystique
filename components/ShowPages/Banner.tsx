@@ -154,7 +154,7 @@ const BannerContent = styled.div`
     border-right: 1px solid ${COLORS.GRAY.G6};
     grid-area: price;
 
-    .price-block-from{
+    .price-block-from {
       ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
       text-align: left;
       margin-bottom: 0.125rem;
@@ -208,25 +208,25 @@ const BannerContent = styled.div`
   .theater-reviews-wrapper {
     ${expandFontToken(FONTS.UI_LABEL_LARGE)}
     margin-top: 1.5rem;
-    
+
     .ratings-wrapper {
       ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)}
       margin: 0rem 0.5rem 0rem 1.5rem;
       color: ${COLORS.BRAND.CANDY};
-    } 
-    
+    }
+
     svg {
       margin-right: 0.5rem;
     }
   }
-  
+
   .details-wrapper {
     display: grid;
     grid-template-columns: auto auto auto auto;
     padding-top: 0.5rem;
     ${expandFontToken(FONTS.UI_LABEL_LARGE)}
     color: ${COLORS.GRAY.G2};
-    
+
     .individual-wrapper {
       margin-top: 1.5rem;
     }
@@ -236,7 +236,6 @@ const BannerContent = styled.div`
       top: 0.1rem;
       margin-right: 0.5rem;
     }
-    
   }
 
   @media (max-width: 768px) {
@@ -326,7 +325,7 @@ const BannerContent = styled.div`
     .ratings-wrapper {
       ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)};
       color: ${COLORS.BRAND.CANDY};
-    } 
+    }
   }
 `;
 

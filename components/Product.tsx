@@ -95,7 +95,7 @@ const cardImageStyles = css`
       grid-row-end: initial;
       grid-column: span 2;
       aspect-ratio: 21/9;
-      width: ${({ isAmp }) => ` calc(100% + ${isAmp ? '2rem' : '1rem'})`};
+      width: calc(100% + 1rem);
       max-height: 158px;
       margin: -22px -16px -0.5rem;
 
@@ -107,25 +107,6 @@ const cardImageStyles = css`
         margin: 0;
       }
     }
-  }
-`;
-
-const moreDetailsButtonStyles = (isAmp: boolean) => css`
-  padding: 0.75rem;
-  background-color: ${COLORS.GRAY.G7};
-  margin-top: ${isAmp ? '0' : '0'};
-  grid-area: cta-block;
-  grid-column: 1 / 2;
-  width: 32vw;
-  border-radius: 4px;
-  color: ${COLORS.GRAY.G2};
-  position: absolute;
-  ${expandFontToken('Button/Medium')}
-  display: flex;
-  justify-content: center;
-  line-height: 125%;
-  .chevron {
-    display: none;
   }
 `;
 
@@ -217,8 +198,26 @@ const StyledProductCard = styled.div`
     .more-details {
       margin-left: 0;
       margin-bottom: 0;
-      ${({ isTicketCard, isAmp }) =>
-        isTicketCard ? null : moreDetailsButtonStyles(isAmp)}
+      ${({ isTicketCard }) =>
+        isTicketCard &&
+        `
+        padding: 0.75rem;
+        background-color: ${COLORS.GRAY.G7};
+        margin-top: 0;
+        grid-area: cta-block;
+        grid-column: 1 / 2;
+        width: 32vw;
+        border-radius: 4px;
+        color: ${COLORS.GRAY.G2};
+        position: absolute;
+        ${expandFontToken('Button/Medium')}
+        display: flex;
+        justify-content: center;
+        line-height: 125%;
+        .chevron {
+          display: none;
+        }
+      `}
     }
   }
 `;
@@ -319,8 +318,7 @@ const TourTags = styled.div`
       align-items: top;
       padding-top: calc(100% / 2);
     }
-    img,
-    amp-img {
+    img {
       height: 16px;
       width: 16px;
       object-fit: cover;
@@ -489,18 +487,6 @@ const ProductBody = styled.div`
         color: currentColor;
       }
     }
-  }
-  .amp-tour-description {
-    ${({ collapsed, noOfListItemToShow, defaultOpen }) =>
-      collapsed && !defaultOpen
-        ? `
-  *:not(div):nth-child(n + ${noOfListItemToShow}),
-  ul li:nth-child(n + ${noOfListItemToShow}) {
-    display: grid;
-  }
-  `
-        : ''}
-    margin-bottom: 0.5rem;
   }
   ul:last-child {
     margin-bottom: 0;
@@ -967,7 +953,6 @@ const Product = (props) => {
     shortSummary,
     boosterTag,
     isMobile,
-    isAmp,
     instantCheckout,
     showEarliestAvailability,
     isTicketCard = false,
@@ -1326,28 +1311,6 @@ const Product = (props) => {
       </div>
     );
   };
-  const getMoreDetailsButtonForAMP = () => {
-    return (
-      <div
-        data-open="0"
-        className="more-details"
-        role="button"
-        tabIndex={0}
-        // @ts-ignore
-        on={`tap:tour-description-more-text-${position}.toggleClass(class='display-none'),tour-description-less-text-${position}.toggleClass(class='display-none'),tour-description-${position}.toggleClass(class='display-expand')`}
-      >
-        <span id={`tour-description-more-text-${position}`}>
-          {'+ ' + strings.MORE_DETAILS}
-        </span>
-        <span
-          className="display-none"
-          id={`tour-description-less-text-${position}`}
-        >
-          {'- ' + strings.SHOW_LESS_TEXT}
-        </span>
-      </div>
-    );
-  };
 
   const hasHighlights =
     isLengthyArray(highlights) && highlights.filter((item) => item.text).length;
@@ -1384,7 +1347,6 @@ const Product = (props) => {
   const getProductCardElements = (expandContent, isFallbackSummary = false) => (
     <>
       <StyledProductCard
-        isAmp={isAmp}
         layout={layout}
         isTicketCard={isTicketCard}
         isMobile={isMobile}
@@ -1444,7 +1406,7 @@ const Product = (props) => {
               isCombo={isCombo}
             />
           </Conditional>
-          <Conditional if={hasV1Booster && !isAmp}>
+          <Conditional if={hasV1Booster}>
             <V1BoosterBlock boosterHasIcon={boosterHasIcon}>
               <RichText render={booster} htmlSerializer={shortCodeSerializer} />
             </V1BoosterBlock>
@@ -1541,11 +1503,7 @@ const Product = (props) => {
             }
           >
             <div
-              className={`${
-                isAmp
-                  ? 'amp-tour-description tour-description'
-                  : 'tour-description'
-              }`}
+              className={'tour-description'}
               id={`tour-description-${position}`}
               onClick={
                 !isMobile && !defaultOpen
@@ -1575,13 +1533,7 @@ const Product = (props) => {
               </Conditional>
             </div>
           </Conditional>
-          <Conditional if={hasReadMore}>
-            {isTicketCard && isAmp
-              ? null
-              : isAmp
-              ? getMoreDetailsButtonForAMP()
-              : getMoreDetailsButton()}
-          </Conditional>
+          <Conditional if={hasReadMore}>{getMoreDetailsButton()}</Conditional>
         </ProductBody>
       </StyledProductCard>
       <Conditional
