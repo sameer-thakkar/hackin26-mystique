@@ -184,6 +184,9 @@ const HeaderRight = styled.div`
       top: unset;
       right: unset;
     }
+    .globe-icon {
+      padding: 0px;
+    }
   }
 `;
 
@@ -365,7 +368,9 @@ const Header: FunctionComponent<HeaderProps> = ({
     ALLOW_IMMEDIEATE_NESTING
   );
   const headerCurrencies = useRecoilValue(currencyListAtom);
-  const headerLanguages = [...(languageProps?.languages ?? []), { code: lang }];
+  const headerLanguages = languageProps?.languages.length
+    ? [...(languageProps?.languages ?? []), { code: lang }]
+    : [];
 
   const convertedRegularMenuItems =
     headerLinks
@@ -534,13 +539,17 @@ const Header: FunctionComponent<HeaderProps> = ({
                 {SEARCH_ICON}
               </div>
             </Conditional>
-            <LocaleSelector
-              languages={headerLanguages}
-              currencies={headerCurrencies}
-              currentLanguage={lang}
-              hasLanguageDropdown={hasLanguageSelector}
-              hasCurrencySelector={hideCurrencySelector}
-            />
+            <Conditional
+              if={headerLanguages?.length || headerCurrencies?.length}
+            >
+              <LocaleSelector
+                languages={headerLanguages}
+                currencies={headerCurrencies}
+                currentLanguage={lang}
+                hasLanguageDropdown={hasLanguageSelector}
+                hasCurrencySelector={hideCurrencySelector}
+              />
+            </Conditional>
             <Conditional if={isMobileDevice && hamburgerIconCheck}>
               <Hamburger
                 className={'hamburger'}

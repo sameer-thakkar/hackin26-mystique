@@ -294,7 +294,11 @@ const LocaleSelector = ({
 
   return (
     <>
-      <IconWrapper $isActive={isDrawerActive} onClick={onLocaleSelectorClick}>
+      <IconWrapper
+        className="globe-icon"
+        $isActive={isDrawerActive}
+        onClick={onLocaleSelectorClick}
+      >
         <GlobeIcon />
       </IconWrapper>
       <Conditional if={isDrawerActive}>

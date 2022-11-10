@@ -168,7 +168,9 @@ const Header: React.FC<any> = (props) => {
     isEntertainmentMB = false,
   } = props;
   const headerCurrencies = useRecoilValue(currencyListAtom);
-  const headerLanguages = [...languages, { code: currentLanguage }];
+  const headerLanguages = languages?.length
+    ? [...languages, { code: currentLanguage }]
+    : [];
 
   const hamburgerIconCheck =
     showGroupBooking ||
@@ -295,11 +297,13 @@ const Header: React.FC<any> = (props) => {
             </StyledMenuItem>
           </Conditional>
 
-          <LocaleSelector
-            currencies={headerCurrencies}
-            languages={headerLanguages}
-            currentLanguage={currentLanguage}
-          />
+          <Conditional if={headerCurrencies?.length || headerLanguages?.length}>
+            <LocaleSelector
+              currencies={headerCurrencies}
+              languages={headerLanguages}
+              currentLanguage={currentLanguage}
+            />
+          </Conditional>
           <Conditional if={isMobile && hamburgerIconCheck}>
             <div
               ref={hamburgerRef}

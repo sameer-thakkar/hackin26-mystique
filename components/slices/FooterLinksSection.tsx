@@ -58,9 +58,9 @@ const FooterLinksSection: React.FC<FooterLinksSectionProps> = ({
   return (
     <FooterLinksSectionWrapper isLastSlice={sliceIndex === sliceLength - 1}>
       <Title>{title}:</Title>
-      {links.map((link) => (
+      {links.map((link, index) => (
         <LinkResolver
-          key={link?.link_type?.url}
+          key={`${title?.toLowerCase()}_${index}`}
           className="link-item"
           url={withTrailingSlash(link?.link_type?.url)}
           onClick={onLinkClick}

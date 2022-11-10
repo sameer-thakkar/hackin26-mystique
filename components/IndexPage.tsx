@@ -83,11 +83,12 @@ const Page = (props) => {
     primaryCity,
   } = props;
   const [{ eventsReady }, setEventsReady] = useRecoilState(gtmAtom);
+  const hsid = useRecoilState(hsidAtom);
 
   useEffect(() => {
     // GTM Universal Properties
     const customType = ContentType;
-    if (!customType) return;
+    if (!customType || !hsid || eventsReady) return;
 
     sendVariableToDataLayer({
       name: ANALYTICS_PROPERTIES.PLATFORM_NAME,
@@ -107,7 +108,7 @@ const Page = (props) => {
     });
 
     setEventsReady({ eventsReady: true });
-  }, []);
+  }, [hsid]);
 
   const { noTrack, tgidToScroll, bookSubdomain } = queryParams;
 
