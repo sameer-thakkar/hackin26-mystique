@@ -1045,14 +1045,13 @@ const Product = (props) => {
       [ANALYTICS_PROPERTIES.DISCOUNT]:
         isScratchPriceEnabled && originalPrice > finalPrice,
       [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
-      [ANALYTICS_PROPERTIES.RANKING]: position,
+      [ANALYTICS_PROPERTIES.POSITION]: position,
       [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
       [ANALYTICS_PROPERTIES.EXPERIENCE_DATE]: null,
       [ANALYTICS_PROPERTIES.LANGUAGE]: lang,
       [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: cardTitle,
       [ANALYTICS_PROPERTIES.TGID]: tgid,
       [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city?.cityCode,
-      [ANALYTICS_PROPERTIES.IS_PINNED_CARD]: false,
       ...getProductCommonProperties({
         primaryCategory,
         primaryCollection,

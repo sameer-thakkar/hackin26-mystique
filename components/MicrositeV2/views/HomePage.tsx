@@ -33,9 +33,6 @@ import { metaAtom } from 'store/atoms/meta';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { gtmAtom } from 'store/atoms/gtm';
 import { expandFontToken } from 'const/typography';
-import { hsidAtom } from 'store/atoms/hsid';
-import { getABTestingVariant } from 'utils/experiments/experimentUtils';
-import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
 
 const Alert = dynamic(() => import('UI/Alert'), { ssr: false });
 const ResponsiveSelector: ComponentType<any> = dynamic(
@@ -50,16 +47,11 @@ const ProductsWrapper: ComponentType<any> = dynamic(() =>
     (mod) => mod.ProductsWrapper
   )
 );
-const Banner: ComponentType<any> = dynamic(() =>
-  import('components/MicrositeV2/Banner')
+const Banner: ComponentType<any> = dynamic(
+  () => import('components/MicrositeV2/Banner')
 );
-
-const LongForm: ComponentType<any> = dynamic(() =>
-  import('components/MicrositeV2/LongForm')
-);
-
-const PinnedTour: ComponentType<any> = dynamic(() =>
-  import('components/MicrositeV2/PinnedTour')
+const LongForm: ComponentType<any> = dynamic(
+  () => import('components/MicrositeV2/LongForm')
 );
 
 const V2MicrositeWrapper = styled.div`
@@ -134,7 +126,6 @@ export const HomePage = (props) => {
     isMobile,
     isEntertainmentMb,
     allTours,
-    directTgidData,
     longFormContent,
     hasCategoryTourList,
     categoryTourListData,
@@ -151,25 +142,12 @@ export const HomePage = (props) => {
     displayMonths,
     isDev,
   } = props;
+
   const pageMetaData = useRecoilValue(metaAtom);
   const { eventsReady } = useRecoilValue(gtmAtom);
-  const isLTT = checkLTT(uid);
 
   let { categoryProps } = props;
   const isDiscountedPage = displayMonths === 'Discounted';
-  const [showLtdCategoryHomepage, setShowLtdCategoryHomepage] = useState(null);
-  const hsid = useRecoilValue(hsidAtom);
-  const { categories } = categoryProps;
-
-  useEffect(() => {
-    if (isLTT && hsid && categories.length > 1) {
-      const variant = getABTestingVariant(
-        EXPERIMENT_NAMES.LTD_HOME_PAGE_EXPERIMENT,
-        hsid
-      );
-      setShowLtdCategoryHomepage(variant === VARIANTS.CATEGORIES_HOMEPAGE);
-    }
-  }, [hsid]);
 
   if (isListicle || isDiscountedPage) {
     let singleCategory = [];
@@ -207,29 +185,14 @@ export const HomePage = (props) => {
   }
 
   useEffect(() => {
-    if (eventsReady) {
-      if (
-        isLTT &&
-        categories.length > 1 && // Only do this check on landing page
-        !(
-          (
-            showLtdCategoryHomepage !== null || // Bucket is resolved
-            (showLtdCategoryHomepage === null && !hsid)
-          ) // Bucket is not resolved because hsid is not present (cookies disabled)
-        )
-      ) {
-        return;
-      }
+    if (eventsReady)
       trackEvent({
         eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
         [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
         [ANALYTICS_PROPERTIES.TGIDS]: Object.keys(allTours).map(Number),
-        [ANALYTICS_PROPERTIES.PINNED_CARD_PRESENT]:
-          directTgid && showLtdCategoryHomepage ? true : false,
         ...getCommonEventMetaData(pageMetaData),
       });
-    }
-  }, [eventsReady, directTgid, showLtdCategoryHomepage]);
+  }, [eventsReady]);
 
   const [covid19AlertOpen, setCovid19AlertOpen] = useState(true);
   const { dropdownLinks, enableDropdownLinks, languageProps } = header;
@@ -253,6 +216,7 @@ export const HomePage = (props) => {
     isSafetyIncluded(tour.allTags)
   );
   const allTgids = Object.keys(allTours);
+  const isLTT = checkLTT(uid);
   const isEntertainmentMbListicle = isEntertainmentMb && isListicle;
   return (
     <V2MicrositeWrapper isEntertainmentMb={isEntertainmentMb}>
@@ -266,7 +230,6 @@ export const HomePage = (props) => {
         hasLanguageSelector={hasLanguageSelector}
         hideCurrencySelector
         isEntertainmentMbListicle={isEntertainmentMbListicle}
-        showLtdCategoryHomepage={showLtdCategoryHomepage}
       />
       <Conditional if={isMobile && hasDropdownLinks}>
         <div className="main-wrapper city-selector">
@@ -351,21 +314,6 @@ export const HomePage = (props) => {
           </div>
         </ProductsContextProvider>
       </Conditional>
-      <Conditional
-        if={
-          directTgid &&
-          showLtdCategoryHomepage &&
-          directTgidData &&
-          directTgidData.listingPrice
-        }
-      >
-        <PinnedTour
-          allTours={allTours}
-          tour={directTgidData}
-          isMobile={isMobile}
-          host={host}
-        />
-      </Conditional>
       <Conditional if={hasToursSection}>
         <ProductsWrapper
           availableTGIDs={Object.keys(allTours)}
@@ -382,7 +330,6 @@ export const HomePage = (props) => {
           isDev={isDev}
           isListicle={isListicle}
           isDiscountedPage={isDiscountedPage}
-          showLtdCategoryHomepage={showLtdCategoryHomepage}
         />
       </Conditional>
       <ProductsContextProvider allTours={allTours} ready={ready}>

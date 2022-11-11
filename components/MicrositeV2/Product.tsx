@@ -402,7 +402,6 @@ const Product = (props) => {
     : bookingURL;
 
   const handleProductClick = (event) => {
-    const { ranking, ltdCategory, isPinnedCard } = props;
     event.preventDefault();
     if (isMobile) {
       if (showPageExists) {
@@ -413,22 +412,10 @@ const Product = (props) => {
     } else {
       window.open(showPageUrl, '_self', 'noopener,noreferrer');
     }
-    const propertiesToAdd = {
-      [ANALYTICS_PROPERTIES.RANKING]: ranking,
-      Category: ltdCategory,
-      'Is Pinned Card': isPinnedCard,
-    };
-
-    const isOpeningDateShown =
-      isEntertainmentMb && !isBeforeToday && openingDate !== 'Invalid Date';
 
     trackEvent({
       eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED,
       [ANALYTICS_PROPERTIES.TGID]: tgid,
-      AVERAGE_RATING: averageRating,
-      NUMBER_OF_RATINGS: reviewCount,
-      IS_DISCOUNT_PRESENT: price < scratchPrice,
-      IS_OPENING_DATE_SHOWN: isOpeningDateShown,
       [ANALYTICS_PROPERTIES.CATEGORY_ID]: primaryCategory?.id,
       [ANALYTICS_PROPERTIES.CATEGORY_NAME]: primaryCategory?.displayName,
       [ANALYTICS_PROPERTIES.SUB_CAT_ID]: primarySubCategory?.id,
@@ -437,7 +424,6 @@ const Product = (props) => {
       [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: title,
       [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
       [ANALYTICS_PROPERTIES.DIV_TYPE]: 'Product List',
-      ...(ltdCategory ? propertiesToAdd : {}),
     });
   };
 

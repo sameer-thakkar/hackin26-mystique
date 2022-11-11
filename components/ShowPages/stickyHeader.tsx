@@ -205,7 +205,6 @@ const StickyHeader = ({
       [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
       [ANALYTICS_PROPERTIES.TGID]: tgid,
       [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city?.code,
-      [ANALYTICS_PROPERTIES.IS_PINNED_CARD]: false,
       ...getProductCommonProperties({
         primaryCategory,
         primaryCollection,

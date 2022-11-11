@@ -57,7 +57,6 @@ const Page = (props) => {
   const {
     CMSContent,
     tourGroupData,
-    directTgidData,
     inventorySlotData,
     ContentType,
     statusCode,
@@ -139,7 +138,6 @@ const Page = (props) => {
             host={host}
             isDev={isDev}
             scorpioData={tourGroupData}
-            directTgidData={directTgidData}
             categoryTourListData={categoryTourListData}
             serverRequestStartTimestamp={serverRequestStartTimestamp}
             isMobile={isMobile}
