@@ -124,6 +124,9 @@ export default class SitemapXml extends Component {
           .filter((doc) => doc.data.is_excluded_from_sitemap !== 'Yes')
           .forEach((doc) => {
             if (!doc?.data?.microbrand_url) {
+              if (uid.includes('www.thevaticantickets.com')) {
+                xmlDoc.urlset['@xmlns:xhtml'] = 'http://www.w3.org/1999/xhtml';
+              }
               xmlDoc.urlset.url.push(...createUrlArr(doc));
             }
           });
