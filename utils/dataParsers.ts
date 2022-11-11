@@ -354,6 +354,7 @@ interface CategoryTourListParserV2 {
   showpages: any;
   categoryCarousel?: { [key: string]: any };
   lang: string;
+  localizedStrings: any;
 }
 
 export const categoryTourListParserV2 = async (
@@ -362,8 +363,14 @@ export const categoryTourListParserV2 = async (
   const categoryIds = [],
     subCategoryIds = [],
     collectionIds = [];
-  const { tourListCategory, hostname, showpages, categoryCarousel, lang } =
-    obj || {};
+  const {
+    tourListCategory,
+    hostname,
+    showpages,
+    categoryCarousel,
+    lang,
+    localizedStrings,
+  } = obj || {};
 
   const { primary, items: slices } = tourListCategory || {};
   const city = primary?.city?.cityCode;
@@ -512,6 +519,11 @@ export const categoryTourListParserV2 = async (
       console.error(err);
     }
   }
+
+  if (localizedStrings)
+    strings.setContent({
+      default: localizedStrings,
+    });
 
   const allData = categoriesWithProducts?.flat();
   let currencyObject;

@@ -1079,6 +1079,7 @@ export const getPageData = async ({
   req,
   query,
   isDev,
+  localizedStrings,
 }) => {
   const { host } = req.headers || window.location;
   const isStage = host.includes('stage-');
@@ -1438,6 +1439,7 @@ export const getPageData = async ({
             showpages: allShowPages,
             categoryCarousel: categoryCarouselCF,
             lang,
+            localizedStrings,
           });
         }
       }

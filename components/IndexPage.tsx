@@ -346,6 +346,7 @@ Page.getInitialProps = async (ctx) => {
         req,
         query,
         isDev,
+        localizedStrings,
       }),
     ].map(reflect)
   );
