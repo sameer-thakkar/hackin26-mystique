@@ -128,10 +128,13 @@ class MicrositeV2 extends Component<any, any> {
       host,
       scorpioData,
       categoryTourListData,
-      isAmp,
     } = this.props;
-    const { commonFooter, contentFramework, commonHeader, secondaryFooter } =
-      this.props.data.refs;
+    const {
+      commonFooter,
+      contentFramework,
+      commonHeader,
+      secondaryFooter,
+    } = this.props.data.refs;
     const { isDev, serverRequestStartTimestamp } = this.props;
     const {
       uid,
@@ -434,7 +437,9 @@ class MicrositeV2 extends Component<any, any> {
           {
             url: image.uploaded_image.url || image.image_src.url,
             mobile_url:
-              image.mobile_banner_uploaded.url || image.mobile_banner_url.url,
+              image.mobile_banner_uploaded?.url ||
+              image.mobile_banner_url?.url ||
+              '',
             interaction: image.interaction,
             alt: image.uploaded_image.alt || image.image_alt,
             showPageUrl: image.onclick_url,
