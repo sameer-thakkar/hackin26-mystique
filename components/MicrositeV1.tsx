@@ -314,7 +314,9 @@ const MicrositeV1 = (props) => {
       url: banner.image_src.url || banner.uploaded_image.url,
       alt: banner.image_alt || banner.uploaded_image.alt,
       mobileUrl:
-        banner.mobile_banner_url.url || banner.mobile_banner_uploaded.url,
+        banner.mobile_banner_url?.url ||
+        banner.mobile_banner_uploaded?.url ||
+        '',
     };
   });
   if (autoBanner) {
