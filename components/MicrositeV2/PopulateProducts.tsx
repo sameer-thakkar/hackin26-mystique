@@ -81,7 +81,7 @@ const PopulateProducts = (props) => {
     isDev,
     isDiscountedPage,
   } = props;
-  const { activeCategoryTgids, activeCategoryIndex } =
+  const { activeCategoryTgids, activeCategoryIndex, closeTour } =
     useContext(InteractionContext) || {};
   const mbContext = useContext(MBContext);
   const { lang } = mbContext;
@@ -162,6 +162,7 @@ const PopulateProducts = (props) => {
 
   const viewMore = (e) => {
     e.preventDefault();
+    closeTour();
     setRowsInView(
       rowsInView +
         (isMobile ? NO_OF_ROWS_TO_SHOW.MOBILE : NO_OF_ROWS_TO_SHOW.DESKTOP)

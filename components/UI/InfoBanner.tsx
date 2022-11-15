@@ -97,8 +97,8 @@ const InfoBanner = ({
         </Title>
         <Conditional if={typeof description === 'string'}>
           <Description>
-              {description} <CTA onClick={ctaOnClick}>{cta}</CTA>
-            </Description>
+            {description} <CTA onClick={ctaOnClick}>{cta}</CTA>
+          </Description>
         </Conditional>
         <Conditional if={typeof description !== 'string'}>
           {description}

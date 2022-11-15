@@ -6,11 +6,7 @@ type ToursData = {
   isFetched: boolean;
 };
 
-const allToursParser = (
-  CMSData,
-  scorpioData,
-  pricingData: ToursData,
-) => {
+const allToursParser = (CMSData, scorpioData, pricingData: ToursData) => {
   const { cardPrices, isFetched } = pricingData;
   const labelIDMap = CMSData?.labels?.reduce((accum, label) => {
     return { ...accum, [label.id]: label.data.label_name };

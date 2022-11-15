@@ -179,31 +179,31 @@ const SliderAccordion = (props) => {
     >
       {!isMobile && activeAccordionIndex >= 0 ? SliderComponent : null}
       <AccordionsWrap>
-          {accordions.map((accordion, index) => {
-            const isOpen = index == activeAccordionIndex;
-            const content = (
-              <>
-                {isMobile ? SliderComponent : null}
-                <div className="answer-content">
-                  <RichText
-                    render={accordion.answer}
-                    htmlSerializer={shortCodeSerializer}
-                  />
-                </div>
-              </>
-            );
-            return (
-              <Accordion
-                content={content}
-                isOpenOverride={isOpen}
-                heading={accordion.question}
-                clickHandler={() => setActiveAccordionIndex(index)}
-                key={index}
-                isGlobalMb={isGlobalMb}
-              />
-            );
-          })}
-        </AccordionsWrap>
+        {accordions.map((accordion, index) => {
+          const isOpen = index == activeAccordionIndex;
+          const content = (
+            <>
+              {isMobile ? SliderComponent : null}
+              <div className="answer-content">
+                <RichText
+                  render={accordion.answer}
+                  htmlSerializer={shortCodeSerializer}
+                />
+              </div>
+            </>
+          );
+          return (
+            <Accordion
+              content={content}
+              isOpenOverride={isOpen}
+              heading={accordion.question}
+              clickHandler={() => setActiveAccordionIndex(index)}
+              key={index}
+              isGlobalMb={isGlobalMb}
+            />
+          );
+        })}
+      </AccordionsWrap>
     </StyledSliderAccordion>
   );
 };

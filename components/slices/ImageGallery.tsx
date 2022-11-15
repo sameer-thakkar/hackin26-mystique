@@ -3,10 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
-import {
-  CHEVRON_LEFT_CIRCLE,
-  CLOSE_WHITE,
-} from 'assets/SvgIcons';
+import { CHEVRON_LEFT_CIRCLE, CLOSE_WHITE } from 'assets/SvgIcons';
 import { stringIdfy } from 'utils/helper';
 import Image from 'UI/Image';
 import RichContent from 'UI/RichContent';
@@ -504,19 +501,13 @@ const ImageGallery = (props) => {
               isMobile
                 ? null
                 : () => (
-                    <div className="button-right">
-                      {CHEVRON_LEFT_CIRCLE}
-                    </div>
+                    <div className="button-right">{CHEVRON_LEFT_CIRCLE}</div>
                   )
             }
             renderNextButton={
               isMobile
                 ? null
-                : () => (
-                    <div className="button-left">
-                      {CHEVRON_LEFT_CIRCLE}
-                    </div>
-                  )
+                : () => <div className="button-left">{CHEVRON_LEFT_CIRCLE}</div>
             }
             {...swiperOpts}
             {...galleryOpts}

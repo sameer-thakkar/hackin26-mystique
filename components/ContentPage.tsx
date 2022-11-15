@@ -174,8 +174,9 @@ class ContentPage extends Component<any, any> {
   }
 
   async componentDidMount() {
-    const { enable_group_booking: enableGroupBooking } =
-      this.props.data.header_ref.data;
+    const {
+      enable_group_booking: enableGroupBooking,
+    } = this.props.data.header_ref.data;
     const { data } = this.props;
 
     const { microsite, baseLangPageTitle } = data;
@@ -209,8 +210,10 @@ class ContentPage extends Component<any, any> {
       let res = await Client().getByIDs([
         this.props.data.microsite_document_ref.id,
       ]);
-      const { group_booking_excluded_tgids: groupBookingExcludedTgids, body1 } =
-        res.results[0].data;
+      const {
+        group_booking_excluded_tgids: groupBookingExcludedTgids,
+        body1,
+      } = res.results[0].data;
       let tours = body1[0]?.items || [];
       let filteredTours = tours.filter(function (tour) {
         return !groupBookingExcludedTgids.find(function (excludedTour) {

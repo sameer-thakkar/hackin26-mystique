@@ -10,11 +10,10 @@ const qs = (obj) =>
 
 const resolveLink: any = (url, ctx) => {
   const { isDev, windowUrl } = ctx;
-  const {
-    href: linkHref,
-    host: linkHost,
-    pathname: linkPathname,
-  } = parse(url, true);
+  const { href: linkHref, host: linkHost, pathname: linkPathname } = parse(
+    url,
+    true
+  );
   const { host, query, protocol } = parse(windowUrl, true);
 
   if (isDev) {

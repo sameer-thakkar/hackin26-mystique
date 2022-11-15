@@ -336,6 +336,7 @@ const Product = (props) => {
     isEntertainmentMb,
     activeCategoryId = null,
     host,
+    productClick,
   } = props;
   const currency = useRecoilValue(currencyAtom);
 
@@ -359,7 +360,6 @@ const Product = (props) => {
     reviewCount,
     showPageUid = null,
   } = tour || {};
-  const { finalPrice: price, originalPrice: scratchPrice } = listingPrice || {};
 
   const { collectionName, primaryCategoryName, primarySubCategoryName } =
     category || {};
@@ -410,7 +410,11 @@ const Product = (props) => {
         window.open(bookingURL, '_self', 'noopener,noreferrer');
       }
     } else {
-      window.open(showPageUrl, '_self', 'noopener,noreferrer');
+      if (isEntertainmentMb) {
+        window.open(showPageUrl, '_self', 'noopener,noreferrer');
+      } else {
+        productClick(tgid, event);
+      }
     }
 
     trackEvent({

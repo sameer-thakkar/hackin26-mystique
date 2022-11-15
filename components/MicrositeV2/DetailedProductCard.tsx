@@ -3,7 +3,6 @@ import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
 import { greyScheme } from 'style/theme';
-import { currencyAtom } from 'store/atoms/currency';
 import { MBContext } from 'contexts/MBContext';
 import Image from 'UI/Image';
 import IconCTA from 'UI/IconCTA';
@@ -38,7 +37,7 @@ const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
 
 const DetailedDescriptionCard = styled.div`
   grid-column: 1 / 5;
-  display: grid;
+  display: ${({ showDescCard }) => (showDescCard ? 'grid' : 'none')};
   grid-template-columns: 1fr 0.9fr;
   grid-column-gap: 24px;
   border: ${({ isEntertainmentMb }) =>
@@ -431,9 +430,9 @@ const DetailedProductCard = (props) => {
     hasCategoryTourList,
     isListicle,
     cardRanking,
+    showDescCard = true,
   } = props;
   const pageMetaData = useRecoilValue(metaAtom);
-  const currency = useRecoilValue(currencyAtom);
   const activeTour = allTours[tgidClicked];
   const { listicleShowSummary, listicleWhyWatch } = activeTour;
   const {
@@ -482,12 +481,6 @@ const DetailedProductCard = (props) => {
   const isBroadway = checkBroadway(mbContext?.uid); // TODO: Need to handle this via book_now_text.
   const isLTT = checkLTT(mbContext.uid);
   const experimentEnabled = isLTT;
-  const bookingURL = createBookingURL({
-    nakedDomain,
-    lang,
-    tgid: tgidClicked,
-    currency,
-  });
 
   useEffect(() => {
     trackEvent({
@@ -600,7 +593,7 @@ const DetailedProductCard = (props) => {
           target="_blank"
           rel="noopener noreferrer"
           onClick={onMoreDetailsClick}
-          href={experimentEnabled ? bookingURL : showPageUrl}
+          href={showPageUrl}
         >
           <span className="cta-text">
             {experimentEnabled ? strings.CHECK_AVAIL : strings.MORE_DETAILS}
@@ -643,6 +636,7 @@ const DetailedProductCard = (props) => {
       experimentEnabled={experimentEnabled}
       isBroadway={isBroadway}
       showPageUrl={showPageUrl}
+      showDescCard={showDescCard}
     >
       <div className="indicator-triangle"></div>
       <Conditional if={isEntertainmentMb}>

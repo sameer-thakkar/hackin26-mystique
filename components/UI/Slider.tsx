@@ -122,10 +122,9 @@ const Slider: React.FC<{
     }
   };
 
-  const updateIndex = useCallback(
-    () => updateCurrentIndex(swiper.realIndex),
-    [swiper]
-  );
+  const updateIndex = useCallback(() => updateCurrentIndex(swiper.realIndex), [
+    swiper,
+  ]);
 
   useEffect(() => {
     if (swiper && swiper !== null) {

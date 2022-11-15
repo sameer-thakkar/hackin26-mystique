@@ -47,11 +47,7 @@ interface TagsProps {
   title: string;
 }
 
-const Tags: FunctionComponent<TagsProps> = ({
-  collections,
-  uid,
-  title,
-}) => {
+const Tags: FunctionComponent<TagsProps> = ({ collections, uid, title }) => {
   const { host, isDev } = useContext(MBContext);
 
   const finalCollection = collections.filter(

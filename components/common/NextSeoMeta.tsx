@@ -36,8 +36,16 @@ export default function PopulateMeta({
   bannerImages,
   serverRequestStartTimestamp,
 }: PopulateMetaProps) {
-  const { noTrack, uid, isDev, isPreview, isStage, host, lang, language_full } =
-    useContext(MBContext);
+  const {
+    noTrack,
+    uid,
+    isDev,
+    isPreview,
+    isStage,
+    host,
+    lang,
+    language_full,
+  } = useContext(MBContext);
   const { query } = useRouter();
   const {
     [QUERY_PARAMS.LIMIT]: limit,

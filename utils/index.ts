@@ -176,7 +176,8 @@ export const createBookingURL = ({
 
   if (date?.startDate) urlObject.searchParams.set('date', date?.startDate);
   if (date?.startDate) urlObject.searchParams.set('variantId', tourId);
-  if (date?.startDate && date?.startTime) urlObject.searchParams.set('time', date?.startTime);
+  if (date?.startDate && date?.startTime)
+    urlObject.searchParams.set('time', date?.startTime);
   if (currency) urlObject.searchParams.set('currencyCode', currency);
   if (biLink) urlObject.searchParams.set('bi', biLink);
   if (promoCode) urlObject.searchParams.set('couponCode', promoCode);

@@ -47,11 +47,11 @@ const ProductsWrapper: ComponentType<any> = dynamic(() =>
     (mod) => mod.ProductsWrapper
   )
 );
-const Banner: ComponentType<any> = dynamic(
-  () => import('components/MicrositeV2/Banner')
+const Banner: ComponentType<any> = dynamic(() =>
+  import('components/MicrositeV2/Banner')
 );
-const LongForm: ComponentType<any> = dynamic(
-  () => import('components/MicrositeV2/LongForm')
+const LongForm: ComponentType<any> = dynamic(() =>
+  import('components/MicrositeV2/LongForm')
 );
 
 const V2MicrositeWrapper = styled.div`

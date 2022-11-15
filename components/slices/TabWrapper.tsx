@@ -207,7 +207,7 @@ const TabWrapper = (props: TabWrapperProps) => {
   const defaultFromPrismic = slices.filter(
     (slice) => slice.primary.is_default == 'Yes'
   );
-  
+
   const defaultTab = stringIdfy(
     (defaultFromPrismic[0] || slices[0])?.primary?.title || ''
   );
@@ -417,56 +417,56 @@ const TabWrapper = (props: TabWrapperProps) => {
         {description ? <RichContent render={description} /> : null}
       </TitleTextCombo>
       <div ref={tabsContanier} className="tabs">
-            {slices.map((slice, index) => {
-              const tabId = stringIdfy(slice.primary.title);
-              return (
-                <StyledTab
-                  key={index}
-                  isActive={activeTabId == tabId}
-                  onClick={(e) =>
-                    onTabClick({
-                      tabId,
-                      heading: slice.primary.title,
-                      index,
-                      isScrollTab: true,
-                      scrollTarget: e.target,
-                    })
-                  }
-                >
-                  {slice.primary.title}
-                </StyledTab>
-              );
-            })}
-            <Conditional if={isMobile}>
-              <SlideControls isMobile={isMobile}>
-                <Conditional if={!isAtStart}>
-                  <div
-                    className="prev-slide"
-                    role="button"
-                    tabIndex={0}
-                    onClick={() => scrollTab('left')}
-                  >
-                    {CHEVRON_LEFT_CIRCLE}
-                  </div>
-                </Conditional>
-                <Conditional if={!isAtEnd}>
-                  <div
-                    className="next-slide"
-                    role="button"
-                    tabIndex={0}
-                    onClick={() => scrollTab('right')}
-                  >
-                    {CHEVRON_LEFT_CIRCLE}
-                  </div>
-                </Conditional>
-              </SlideControls>
+        {slices.map((slice, index) => {
+          const tabId = stringIdfy(slice.primary.title);
+          return (
+            <StyledTab
+              key={index}
+              isActive={activeTabId == tabId}
+              onClick={(e) =>
+                onTabClick({
+                  tabId,
+                  heading: slice.primary.title,
+                  index,
+                  isScrollTab: true,
+                  scrollTarget: e.target,
+                })
+              }
+            >
+              {slice.primary.title}
+            </StyledTab>
+          );
+        })}
+        <Conditional if={isMobile}>
+          <SlideControls isMobile={isMobile}>
+            <Conditional if={!isAtStart}>
+              <div
+                className="prev-slide"
+                role="button"
+                tabIndex={0}
+                onClick={() => scrollTab('left')}
+              >
+                {CHEVRON_LEFT_CIRCLE}
+              </div>
             </Conditional>
-          </div>
-          <div className="tab-content-wrap">
-            {slices.map((slice, keyIndex) => {
-              return sliceHandler(slice, { ...sliceProps, keyIndex });
-            })}
-          </div>
+            <Conditional if={!isAtEnd}>
+              <div
+                className="next-slide"
+                role="button"
+                tabIndex={0}
+                onClick={() => scrollTab('right')}
+              >
+                {CHEVRON_LEFT_CIRCLE}
+              </div>
+            </Conditional>
+          </SlideControls>
+        </Conditional>
+      </div>
+      <div className="tab-content-wrap">
+        {slices.map((slice, keyIndex) => {
+          return sliceHandler(slice, { ...sliceProps, keyIndex });
+        })}
+      </div>
     </StyledTabWrapper>
   );
 };

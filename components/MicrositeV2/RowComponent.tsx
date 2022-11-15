@@ -1,16 +1,14 @@
 import React, { useContext, useEffect } from 'react';
-import dynamic from 'next/dynamic';
 import { scroller } from 'react-scroll';
+import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import InteractionContext from 'contexts/Interaction';
 import { PAGETYPE } from 'const/index';
 import Conditional from 'components/common/Conditional';
 import { NO_OF_CARDS_IN_ROW } from 'components/MicrositeV2/PopulateProducts';
+import Product from 'components/MicrositeV2/Product';
 
-const DetailedProductCard = dynamic(() => import('./DetailedProductCard'), {
-  ssr: false,
-});
-const Product = dynamic(() => import('components/MicrositeV2/Product'));
+const DetailedProductCard = dynamic(() => import('./DetailedProductCard'));
 
 const ProductsRow = styled.div`
   display: grid;
@@ -41,16 +39,14 @@ export const RowComponent = (props) => {
   } = props;
   const { activeCategoryId, activeTour, clickTour, closeTour } =
     useContext(InteractionContext) || {};
-  const {
-    tgid: activeTgid,
-    section: activeSection,
-    autoScroll,
-  } = activeTour || {};
-  const tgidClicked = activeTgid;
-  const cardPosition = tgidsSubArr.indexOf(activeTgid);
-  const showDescription = cardPosition > -1 && sectionId === activeSection;
+  const { tgid: activeTgid, section: activeSection, autoScroll } =
+    activeTour || {};
 
-  const handleProductClicked = (productTgid, section, event) => {
+  const totalPreviousCardRendered =
+    sectionIndex *
+    (isMobile ? NO_OF_CARDS_IN_ROW.MOBILE : NO_OF_CARDS_IN_ROW.DESKTOP);
+
+  const handleProductClicked = (productTgid, event) => {
     if (event.type === 'keydown') {
       event.target.blur();
       return;
@@ -61,7 +57,7 @@ export const RowComponent = (props) => {
         tgid: productTgid,
       });
     } else {
-      clickTour(productTgid, false, section);
+      clickTour(productTgid, false, sectionId);
     }
   };
 
@@ -82,45 +78,39 @@ export const RowComponent = (props) => {
 
   return (
     <ProductsRow>
-      {tgidsSubArr.map((tgid, index) => {
-        return (
-          <Product
-            tgid={tgid}
-            productClick={handleProductClicked}
-            isEntertainmentMb={isEntertainmentMb}
-            allTours={allTours}
-            isMobile={isMobile}
-            key={index}
-            cardIdPrefix={sectionId}
-            activeCategoryId={activeCategoryId}
-            host={host}
-            uid={uid}
-          />
-        );
-      })}
-      <Conditional if={showDescription}>
-        <DetailedProductCard
-          tgidClicked={tgidClicked}
-          allTours={allTours}
-          hasCategoryTourList={hasCategoryTourList}
-          isMobile={isMobile}
+      {tgidsSubArr.map((tgid, index) => (
+        <Product
+          tgid={tgid}
+          productClick={handleProductClicked}
           isEntertainmentMb={isEntertainmentMb}
-          currentLanguage={currentLanguage}
+          allTours={allTours}
+          isMobile={isMobile}
+          key={index}
+          cardIdPrefix={sectionId}
+          activeCategoryId={activeCategoryId}
           host={host}
           uid={uid}
-          key={tgidClicked}
-          cardPosition={cardPosition + 1}
-          closeDescription={closeDescription}
-          isListicle={isListicle}
-          isDev={isDev}
-          cardRanking={
-            sectionIndex *
-              (isMobile
-                ? NO_OF_CARDS_IN_ROW.MOBILE
-                : NO_OF_CARDS_IN_ROW.DESKTOP) +
-            (tgidsSubArr.indexOf(tgidClicked) + 1)
-          }
         />
+      ))}
+      <Conditional if={!isEntertainmentMb}>
+        {tgidsSubArr.map((tgid, index) => (
+          <DetailedProductCard
+            showDescCard={tgid === activeTgid}
+            tgidClicked={tgid}
+            allTours={allTours}
+            hasCategoryTourList={hasCategoryTourList}
+            isEntertainmentMb={isEntertainmentMb}
+            currentLanguage={currentLanguage}
+            host={host}
+            uid={uid}
+            key={tgid}
+            cardPosition={index + 1}
+            closeDescription={closeDescription}
+            isListicle={isListicle}
+            isDev={isDev}
+            cardRanking={totalPreviousCardRendered + (index + 1)}
+          />
+        ))}
       </Conditional>
     </ProductsRow>
   );
