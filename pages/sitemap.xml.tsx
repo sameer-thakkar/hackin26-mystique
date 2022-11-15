@@ -80,7 +80,7 @@ export default class SitemapXml extends Component {
     const xmlDoc = {
       urlset: {
         '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-        '@xmlns:xhtml': 'http://www.w3.org/TR/xhtml11/xhtml11_schema.html',
+        '@xmlns:xhtml': 'http://www.w3.org/1999/xhtml',
         '@xmlns:image': 'http://www.google.com/schemas/sitemap-image/1.1',
         '@xsi:schemaLocation':
           'http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd',
@@ -124,9 +124,6 @@ export default class SitemapXml extends Component {
           .filter((doc) => doc.data.is_excluded_from_sitemap !== 'Yes')
           .forEach((doc) => {
             if (!doc?.data?.microbrand_url) {
-              if (uid.includes('www.thevaticantickets.com')) {
-                xmlDoc.urlset['@xmlns:xhtml'] = 'http://www.w3.org/1999/xhtml';
-              }
               xmlDoc.urlset.url.push(...createUrlArr(doc));
             }
           });
