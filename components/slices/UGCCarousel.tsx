@@ -5,6 +5,7 @@ import Image from 'UI/Image';
 import {
   BLACK_COLOR_CLOSE,
   CHEVRON_LEFT_CIRCLE,
+  CHEVRON_RIGHT_CIRCLE,
   INSTAGRAM,
   PLAY_BUTTON,
   VIDEO_ICON,
@@ -61,7 +62,7 @@ const StyledSlider = styled.div`
 
     @media (max-width: 768px) {
       ${({ cardCount }) =>
-        `max-width: calc(((${cardCount} * 10.875rem) / ${
+        `max-width: calc(((${cardCount} * 11.35rem) / ${
           cardCount / 2
         }) + 1rem)`};
     }
@@ -129,7 +130,7 @@ const StyledSlide = styled.div`
 
 const PopupWrapper = styled.div`
   display: grid;
-  z-index: 10;
+  z-index: 20;
   width: 100%;
   height: 100%;
   position: fixed;
@@ -155,7 +156,7 @@ const PopupCard = styled.div`
   grid-template-columns: 6fr repeat(2, 0) 4fr 0;
   grid-template-rows: min-content 4fr repeat(3, 0);
   max-width: 65.5rem;
-  max-height: 46.5rem;
+  max-height: 44.5rem;
   overflow: hidden;
   background: ${COLORS.BRAND.WHITE};
 
@@ -272,6 +273,7 @@ const Description = styled.div`
   }
   .caption {
     display: inline;
+    word-break: break-word;
   }
 
   @media (max-width: 768px) {
@@ -309,13 +311,13 @@ const SwiperControls = styled.div`
   .prev-slide {
     left: 2%;
     top: 50%;
+    svg {
+      transform: scaleX(-1);
+    }
   }
   .next-slide {
     right: 2%;
     top: 50%;
-    svg {
-      transform: scaleX(-1);
-    }
   }
 
   @media (min-width: 1200px) {
@@ -623,7 +625,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
               tabIndex={0}
               onClick={() => changePopup('prev')}
             >
-              {CHEVRON_LEFT_CIRCLE}
+              {CHEVRON_RIGHT_CIRCLE}
             </div>
             <div
               className="next-slide"
@@ -631,7 +633,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
               tabIndex={0}
               onClick={() => changePopup('next')}
             >
-              {CHEVRON_LEFT_CIRCLE}
+              {CHEVRON_RIGHT_CIRCLE}
             </div>
           </SwiperControls>
         </Conditional>
@@ -643,7 +645,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
     slidesPerView: isMobile ? 2.2 : 6,
     slidesPerGroup: isMobile ? 2 : 5,
     spaceBetween: isMobile ? 16 : 24,
-    freeMode: false,
+    freeMode: isMobile,
   };
 
   return (
