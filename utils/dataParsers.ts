@@ -17,7 +17,6 @@ import {
   standardizeCancellationPolicy,
 } from 'utils/productUtils';
 import { CURRENCY_SYMBOL_MAP } from 'const/index';
-import { strings } from 'const/strings';
 
 export const uncategorizedToursListParser = (
   uncategorizedToursList,
@@ -520,11 +519,6 @@ export const categoryTourListParserV2 = async (
     }
   }
 
-  if (localizedStrings)
-    strings.setContent({
-      default: localizedStrings,
-    });
-
   const allData = categoriesWithProducts?.flat();
   let currencyObject;
   if (allData?.length) {
@@ -608,22 +602,24 @@ export const categoryTourListParserV2 = async (
           });
 
           const filterHighlights = [
-            strings.SHOW_PAGE.THEATRE_NAME,
-            strings.SHOW_PAGE.SHOW_TIMINGS,
-            strings.SHOW_PAGE.DURATION,
-            strings.SHOW_PAGE.YOUR_TICKETS,
-            strings.SHOW_PAGE.CANCELLATION_POLICY,
-            strings.SHOW_PAGE.AGE_LIMIT,
+            localizedStrings.SHOW_PAGE.THEATRE_NAME,
+            localizedStrings.SHOW_PAGE.SHOW_TIMINGS,
+            localizedStrings.SHOW_PAGE.DURATION,
+            localizedStrings.SHOW_PAGE.YOUR_TICKETS,
+            localizedStrings.SHOW_PAGE.CANCELLATION_POLICY,
+            localizedStrings.SHOW_PAGE.AGE_LIMIT,
           ];
           const { listicleSchema } = parseShowPageData(microBrandsHighlight);
           let listicleShowSummary, listicleWhyWatch;
 
           for (let item of listicleSchema) {
             const heading = item['heading'];
-            if (heading === strings.SHOW_PAGE.LISTICLE_SHOW_WHY_WATCH) {
+            if (
+              heading === localizedStrings.SHOW_PAGE.LISTICLE_SHOW_WHY_WATCH
+            ) {
               listicleWhyWatch = item;
             }
-            if (heading === strings.SHOW_PAGE.LISTICLE_SHOW_SUMMARY) {
+            if (heading === localizedStrings.SHOW_PAGE.LISTICLE_SHOW_SUMMARY) {
               listicleShowSummary = item;
             }
           }
@@ -632,8 +628,8 @@ export const categoryTourListParserV2 = async (
             getObject(microBrandsHighlight, filterHighlights) || {};
           const { detailsObjects: reopeningDate } =
             getObject(microBrandsHighlight, [
-              strings.SHOW_PAGE.OPENING_DATE,
-              strings.SHOW_PAGE.CLOSING_DATE,
+              localizedStrings.SHOW_PAGE.OPENING_DATE,
+              localizedStrings.SHOW_PAGE.CLOSING_DATE,
             ]) || {};
 
           const contentBlocks = {
@@ -643,9 +639,9 @@ export const categoryTourListParserV2 = async (
           };
           for (const key of filterHighlights) {
             const isLeftBlock = [
-              strings.SHOW_PAGE.THEATRE_NAME,
-              strings.SHOW_PAGE.SHOW_TIMINGS,
-              strings.SHOW_PAGE.DURATION,
+              localizedStrings.SHOW_PAGE.THEATRE_NAME,
+              localizedStrings.SHOW_PAGE.SHOW_TIMINGS,
+              localizedStrings.SHOW_PAGE.DURATION,
             ].includes(key);
             const value = highlights[key];
             const block = {
@@ -691,8 +687,9 @@ export const categoryTourListParserV2 = async (
             overlayBooster: null,
             vendor: null,
             allTags,
-            reopeningDate: reopeningDate[strings.SHOW_PAGE.OPENING_DATE],
-            closingDate: reopeningDate[strings.SHOW_PAGE.CLOSING_DATE],
+            reopeningDate:
+              reopeningDate[localizedStrings.SHOW_PAGE.OPENING_DATE],
+            closingDate: reopeningDate[localizedStrings.SHOW_PAGE.CLOSING_DATE],
             hasBestSafety,
             category: {
               collectionName,
