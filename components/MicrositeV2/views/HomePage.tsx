@@ -218,7 +218,7 @@ export const HomePage = (props) => {
   const isLTT = checkLTT(uid);
   const isEntertainmentMbListicle = isEntertainmentMb && isListicle;
   const {
-    logo: { logoUrl, showPoweredLogo },
+    logo: { logoUrl = '', showPoweredLogo = true } = {},
     name: whiteLabelName,
   } = domainConfig || {};
 

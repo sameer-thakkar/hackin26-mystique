@@ -445,7 +445,7 @@ class ContentPage extends Component<any, any> {
     const currentLanguage = getLangObject(lang).code;
     const {
       faviconUrl,
-      logo: { logoUrl, showPoweredLogo },
+      logo: { logoUrl = '', showPoweredLogo = true } = {},
       name: whiteLabelName,
     } = domainConfig || {};
     const logoRedirectionUrl = getLogoRedirectionUrl({

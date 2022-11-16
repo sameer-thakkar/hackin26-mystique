@@ -501,5 +501,4 @@ export const fetchDomainConfig = async (uid: string) => {
     // eslint-disable-next-line no-console
     console.error('[fetchDomainConfig]', error);
   }
-  return domainArray;
 };

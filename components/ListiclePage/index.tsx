@@ -376,7 +376,7 @@ const Listicle = (props) => {
 
   const {
     faviconUrl,
-    logo: { logoUrl, showPoweredLogo },
+    logo: { logoUrl = '', showPoweredLogo = true } = {},
     name: whiteLabelName,
   } = domainConfig || {};
 

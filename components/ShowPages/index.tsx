@@ -228,7 +228,7 @@ const ShowPage = ({
 
   const {
     faviconUrl,
-    logo: { logoUrl, showPoweredLogo },
+    logo: { logoUrl = '', showPoweredLogo = true } = {},
     name: whiteLabelName,
   } = domainConfig || {};
 
