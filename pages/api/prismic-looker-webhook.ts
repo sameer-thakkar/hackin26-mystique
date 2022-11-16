@@ -13,11 +13,10 @@ import {
   getAvailableLanguages,
   getParentDomain,
   uncategorisedToursCheck,
-  getFaviconUrl,
   getMetaImageUrl,
-  getHeaderDetails,
   getFooterDetails,
 } from 'utils/lookerUtils';
+import { fetchDomainConfig } from 'utils/apiUtils';
 import { CUSTOM_TYPES, SLICE_TYPES } from 'const/index';
 
 const getUpdatedDocuments = async ({ documentIds, masterRef, req }) => {
@@ -105,7 +104,7 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }) => {
       )[0];
     }
 
-    const pageDocHeaderDetails = await getHeaderDetails(doc);
+    const { logo, faviconUrl } = await fetchDomainConfig(uid);
     const pageDocFooterDetails = await getFooterDetails(doc);
 
     const metaData = {
@@ -138,11 +137,10 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }) => {
       has_uncategorised_tours: uncategorisedToursCheck(doc),
       banner_subtext,
       layout: type === CUSTOM_TYPES.MICROSITE ? design : null,
-      favicon_url: getFaviconUrl(doc),
+      favicon_url: faviconUrl,
       meta_image_url: getMetaImageUrl(doc),
-      header_logo_url: pageDocHeaderDetails?.headerLogoUrl,
-      header_logo_redirect_url: pageDocHeaderDetails?.headerLogoRedirectUrl,
-      footer_logo_url: pageDocFooterDetails?.footerLogoUrl,
+      header_logo_url: logo?.logoUrl,
+      footer_logo_url: logo?.logoUrl,
       footer_disclaimer: pageDocFooterDetails?.footerDisclaimer,
       microsite_doc_footer_disclaimer:
         pageDocFooterDetails?.micrositeDocFooterDisclaimer,

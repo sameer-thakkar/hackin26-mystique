@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
+import { Client } from 'config/prismic-config';
 import { ProductsContextProvider } from 'contexts/Products';
 import { InteractionContextProvider } from 'contexts/Interaction';
 import DismissAlert from 'components/UI/DismissAlert';
-import { Client } from 'config/prismic-config';
 import Alert from 'components/UI/Alert';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import Masthead from 'components/Masthead';
@@ -12,6 +12,13 @@ import Footer from 'components/common/Footer';
 import sliceHandler from 'components/Slices';
 import Header from 'components/common/Header';
 import Conditional from 'components/common/Conditional';
+import { getAlternateLanguages, legacyBooleanCheck } from 'utils';
+import allToursParser from 'utils/allToursParser';
+import { tourListApiParser } from 'utils/dataParsers';
+import { groupSlices, getLangObject } from 'utils/helper';
+import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
+import renderShortCodes from 'utils/shortCodes';
+import { getLogoRedirectionUrl } from 'utils/urlUtils';
 import { strings } from 'const/strings';
 import {
   DROPDOWN_ELEMENT,
@@ -21,12 +28,6 @@ import {
   ANALYTICS_PROPERTIES,
   PAGE_TYPES,
 } from 'const/index';
-import { getAlternateLanguages, legacyBooleanCheck } from 'utils';
-import allToursParser from 'utils/allToursParser';
-import { tourListApiParser } from 'utils/dataParsers';
-import { groupSlices, getLangObject } from 'utils/helper';
-import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
-import renderShortCodes from 'utils/shortCodes';
 import COLORS from 'const/colors';
 import { expandFontToken } from 'const/typography';
 
@@ -332,6 +333,7 @@ class ContentPage extends Component<any, any> {
       uid,
       host,
       scorpioData,
+      domainConfig,
     } = this.props;
     const {
       footer_ref: commonFooter,
@@ -410,11 +412,8 @@ class ContentPage extends Component<any, any> {
 
     const {
       enable_group_booking: enableGroupBooking,
-      logo_redirection_url: logoRedirectionURL,
       show_ticket_option_url: showTicketRedirectionURL,
       group_booking_disclaimer: groupBookingDisclaimer,
-      logo,
-      logo_alt_text: logoAltText,
       header_links: headerLinks,
       show_ticket_menu: showTicketMenu,
     } = commonHeader.data;
@@ -426,7 +425,7 @@ class ContentPage extends Component<any, any> {
       minimum_pax: minimumPax,
       maximum_pax: maximumPax,
       group_form_blocked_days: blockedDays,
-      page_url: pageUrl,
+      page_url: micrositeRefPageUrl,
       alert_popup: alertPopup,
       show_covid19_alert: showCovid19Alert,
     } = microsite_document_ref.data;
@@ -442,11 +441,19 @@ class ContentPage extends Component<any, any> {
       alt: featured_image_alt || featured_image.alt,
     };
 
-    const hasPoweredByHeadoutLogo =
-      commonHeader.data.enable_powered_by_superbrand_logo ||
-      microsite.data.enable_powered_by_superbrand_logo;
     const showGroupBooking = legacyBooleanCheck(enableGroupBooking);
     const currentLanguage = getLangObject(lang).code;
+    const {
+      faviconUrl,
+      logo: { logoUrl, showPoweredLogo },
+      name: whiteLabelName,
+    } = domainConfig || {};
+    const logoRedirectionUrl = getLogoRedirectionUrl({
+      uid,
+      lang: currentLanguage,
+      isDev,
+      host,
+    });
     return (
       <div className="page-wrapper">
         {this.state.showGroupBookingModal && groupBookingTourTitles && (
@@ -472,6 +479,8 @@ class ContentPage extends Component<any, any> {
             languages: alternateLanguages,
             isMobile: this.state.isMobile,
             bannerImages: [featuredImage],
+            faviconUrl,
+            logoUrl: logoUrl,
           }}
         />
 
@@ -480,19 +489,21 @@ class ContentPage extends Component<any, any> {
           headerLinks={headerLinks}
           showTicketMenu={showTicketMenu}
           currentLanguage={currentLanguage}
-          logoUrl={logo.url}
-          logoAltText={logoAltText || logo.alt || ''}
+          logoUrl={logoUrl}
+          logoAltText={whiteLabelName || ''}
           uid={uid}
           dropdown={this.state.dropdown}
           handleDropdownToggle={this.handleDropdownToggle}
           isMobile={this.state.isMobile}
           showGroupBooking={showGroupBooking}
-          logoRedirectionURL={logoRedirectionURL?.url || pageUrl}
+          logoRedirectionURL={logoRedirectionUrl || micrositeRefPageUrl}
           showTicketRedirectionURL={
-            showTicketRedirectionURL?.url || logoRedirectionURL?.url || pageUrl
+            showTicketRedirectionURL?.url ||
+            logoRedirectionUrl ||
+            micrositeRefPageUrl
           }
           host={host}
-          hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo}
+          hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
           openGroupBookingModal={this.openGroupBookingModal}
           slices={groupSlices(
             commonHeader?.data?.body,
@@ -551,15 +562,12 @@ class ContentPage extends Component<any, any> {
         <Footer
           currentLanguage={currentLanguage}
           attraction={commonFooter?.data?.attraction || 'attraction'}
-          logoURL={commonFooter?.data?.logo?.url}
-          logoAlt={commonFooter?.data?.logo?.alt}
-          hasPoweredByHeadoutLogo={
-            commonFooter?.data?.powered_by_superbrand || false
-          }
+          logoURL={logoUrl}
+          logoAlt={whiteLabelName || ''}
+          hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
           showDisclaimer={commonFooter?.data?.show_disclaimer}
           disclaimerText={commonFooter?.data?.disclaimer_text}
           slices={commonFooter?.data?.body || []}
-          invertLogoColor={commonFooter?.data?.invert_logo_color}
           secondarySlices={secondaryFooter?.data?.body || []}
           primaryHeading={commonFooter?.data?.footer_heading}
           secondaryHeading={secondaryFooter?.data?.footer_heading}

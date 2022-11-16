@@ -275,17 +275,6 @@ export const uncategorisedToursCheck = ({
   );
 };
 
-export const getFaviconUrl = ({ type, data }: PrismicDocumentType): string => {
-  const { favicon } = data || {};
-  switch (type) {
-    case CUSTOM_TYPES.MICROSITE:
-    case CUSTOM_TYPES.GLOBAL_EXPERIENCE:
-      return favicon?.url || '';
-    default:
-      return favicon || '';
-  }
-};
-
 export const getMetaImageUrl = ({
   type,
   data,
@@ -300,37 +289,7 @@ export const getMetaImageUrl = ({
   }
 };
 
-type HeaderDetailsType = {
-  headerLogoUrl: string;
-  headerLogoRedirectUrl: string;
-};
-
-export const getHeaderDetails = async ({
-  type,
-  data,
-}: PrismicDocumentType): Promise<HeaderDetailsType> => {
-  const headerDocRef = data?.header_ref || data?.common_header;
-  if (headerDocRef?.id) {
-    const { id: headerDocId } = headerDocRef || {};
-    const headerDocs = await fetchAllMatchingDocs({
-      query: [Prismic.Predicates.at(`document.id`, headerDocId)],
-    });
-    const { data: headerDocData } = headerDocs?.[0] || {};
-    return {
-      headerLogoUrl: headerDocData?.logo?.url || '',
-      headerLogoRedirectUrl: headerDocData?.logo_redirection_url?.url || '',
-    };
-  }
-  if (type === CUSTOM_TYPES.MICROSITE) {
-    return {
-      headerLogoUrl: data?.logo?.url || '',
-      headerLogoRedirectUrl: data?.logo_redirection_url?.url || '',
-    };
-  }
-};
-
 type FooterDetailsType = {
-  footerLogoUrl: string;
   footerDisclaimer: string;
   micrositeDocFooterDisclaimer: string;
 };
@@ -351,7 +310,6 @@ export const getFooterDetails = async ({
       footerDocData?.attraction || 'attraction'
     );
     return {
-      footerLogoUrl: footerDocData?.logo?.url || '',
       footerDisclaimer: footerDocData?.show_disclaimer
         ? footerDocData?.disclaimer_text || defaultDisclaimer
         : '',
@@ -367,7 +325,6 @@ export const getFooterDetails = async ({
       'attraction'
     );
     return {
-      footerLogoUrl: data?.footer_logo?.url || '',
       footerDisclaimer: '',
       micrositeDocFooterDisclaimer: data?.show_disclaimer
         ? data?.disclaimer?.[0]?.text || defaultDisclaimer

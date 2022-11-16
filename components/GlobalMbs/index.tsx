@@ -6,7 +6,11 @@ import PopulateMeta from 'components/common/NextSeoMeta';
 import Tags from 'components/GlobalMbs/Tags';
 import Footer from 'components/common/Footer';
 import { getBuyTicketsUrl, groupSlices } from 'utils/helper';
-import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
+import {
+  convertUidToUrl,
+  getValidUrl,
+  getLogoRedirectionUrl,
+} from 'utils/urlUtils';
 import { CUSTOM_TYPES } from 'const/index';
 import {
   getSinglePrismicSlice,
@@ -54,6 +58,7 @@ const GlobalMB = (props) => {
     collections,
     categoryTourListData,
     ticketPages,
+    domainConfig,
   } = props || {};
 
   const alternateLanguages = getAlternateLanguages(
@@ -85,11 +90,9 @@ const GlobalMB = (props) => {
     attraction: footerAttraction,
     footer_heading: footerHeading,
     theme_override: footerThemeOverride,
-    invert_logo_color: invertLogoColor,
     show_disclaimer: showDisclaimer,
     disclaimer_text: disclaimerText,
     body: footerSlices,
-    powered_by_superbrand: poweredBy,
   } = footer || {};
 
   const {
@@ -104,8 +107,12 @@ const GlobalMB = (props) => {
     microbrand_url: microbrandUrl,
   } = CMSContent || {};
 
-  const { logo } = header || {};
-  const { url: logoUrl, alt: logoAltText } = logo || {};
+  const {
+    faviconUrl,
+    logo: { logoUrl, showPoweredLogo },
+    name: whiteLabelName,
+  } = domainConfig || {};
+
   const { results: collectionsData } = collections || {};
   const { results: cityCollectionsData } = cityCollections || {};
   const { results: countryCollectionsData } = countryCollections || {};
@@ -130,8 +137,6 @@ const GlobalMB = (props) => {
   );
 
   const currentLanguage = lang.split('-')[0];
-  const footerLogoURL = footer?.logo?.url;
-  const footerLogoAlt = footer?.footer_logo_alt || footer?.footer_logo?.alt;
   const { data: contentFrameworkData } = contentFramework || {};
   const { body: slices } = contentFrameworkData || {};
 
@@ -299,6 +304,13 @@ const GlobalMB = (props) => {
     }
   }
 
+  const logoRedirectionUrl = getLogoRedirectionUrl({
+    uid,
+    lang: getHeadoutLanguagecode(lang),
+    isDev,
+    host,
+  });
+
   const filterByExperienceType = (arr: any[], experienceType: string) => {
     const data = arr?.filter((d) => d?.experience_type === experienceType);
     return data;
@@ -378,6 +390,8 @@ const GlobalMB = (props) => {
             languages: alternateLanguages,
             isMobile,
             bannerImages: finalBannerImages,
+            faviconUrl,
+            logoUrl: logoUrl,
           }}
         />
         <Header
@@ -387,10 +401,11 @@ const GlobalMB = (props) => {
           enableDropdownLinks={showHeaderlinks}
           dropdownLinks={[]}
           logoUrl={logoUrl}
-          logoAltText={logoAltText}
+          logoAltText={whiteLabelName || ''}
+          logoRedirectionURL={logoRedirectionUrl}
           enableSearch={false}
           enableBuyTickets={showTicketsCta}
-          hasPoweredByHeadoutLogo={false}
+          hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
           headerSlices={headerLinks}
           hasLanguageSelector={false}
           languageProps={null}
@@ -457,13 +472,12 @@ const GlobalMB = (props) => {
           attraction={footerAttraction || 'attraction'}
           primaryHeading={footerHeading}
           themeOverride={footerThemeOverride}
-          invertLogoColor={invertLogoColor}
           showDisclaimer={showDisclaimer}
           disclaimerText={disclaimerText}
-          logoURL={footerLogoURL}
-          logoAlt={footerLogoAlt}
           slices={footerSlices || []}
-          hasPoweredByHeadoutLogo={poweredBy || false}
+          logoURL={logoUrl}
+          logoAlt={whiteLabelName || ''}
+          hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
         />
       </Conditional>
     </>

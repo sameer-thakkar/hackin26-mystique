@@ -1,6 +1,7 @@
 import { sortDateArray } from 'utils/dateUtils';
-import { addQueryParams } from 'utils/urlUtils';
 import { currencySortFn } from 'utils/gen';
+import { addQueryParams, getDomainFromUid } from 'utils/urlUtils';
+import { CUSTOM_HEADER } from 'const/index';
 
 const objectToQuery = (query) => {
   const params = Object.entries(query);
@@ -40,6 +41,7 @@ export enum HeadoutEndpoints {
   CollectionSections,
   CurrencyList,
   CalendarInventory,
+  DomainConfig,
 }
 
 export const getHeadoutApiUrl = ({
@@ -87,6 +89,9 @@ export const getHeadoutApiUrl = ({
       break;
     case HeadoutEndpoints.CalendarInventory:
       endpointSlug = `https://api.headout.com/api/v7/tour-groups/${id}/calendar/`;
+      break;
+    case HeadoutEndpoints.DomainConfig:
+      endpointSlug = `https://www.headout.com/api/domain/`;
   }
 
   let url = endpointSlug;
@@ -95,7 +100,7 @@ export const getHeadoutApiUrl = ({
     url = `${hostname}${endpointSlug}`;
   }
 
-  if (Object.keys(params).length) {
+  if (params && Object.keys(params).length) {
     const finalUrl = addQueryParams(url, params);
     return finalUrl;
   } else {
@@ -472,4 +477,29 @@ export const fetchCalendarInventory = async ({
     // eslint-disable-next-line no-console
     console.log('[fetchCalendarInventory]', error);
   }
+};
+
+export const fetchDomainConfig = async (uid: string) => {
+  const url = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.DomainConfig,
+    params: null,
+    id: null,
+  });
+  const domainArray = getDomainFromUid(uid)?.split('.');
+  domainArray[0] = 'book';
+  const whitelabel = `https://${domainArray.join('.')}`;
+  const customHeaders = new Headers();
+  customHeaders.append(CUSTOM_HEADER.ORIGIN, whitelabel);
+  const requestOptions = {
+    headers: customHeaders,
+  };
+  try {
+    const response = await fetch(url, requestOptions);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[fetchDomainConfig]', error);
+  }
+  return domainArray;
 };

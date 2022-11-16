@@ -80,6 +80,7 @@ const Page = (props) => {
     isStage,
     primaryCountry,
     primaryCity,
+    domainConfig,
   } = props;
   const [{ eventsReady }, setEventsReady] = useRecoilState(gtmAtom);
   const hsid = useRecoilState(hsidAtom);
@@ -141,6 +142,7 @@ const Page = (props) => {
             categoryTourListData={categoryTourListData}
             serverRequestStartTimestamp={serverRequestStartTimestamp}
             isMobile={isMobile}
+            domainConfig={domainConfig}
           />
         );
       case CUSTOM_TYPES.MICROSITE:
@@ -161,6 +163,7 @@ const Page = (props) => {
             serverRequestStartTimestamp={serverRequestStartTimestamp}
             isMobile={isMobile}
             mbTheme={mbTheme}
+            domainConfig={domainConfig}
           />
         );
       case CUSTOM_TYPES.CONTENT_PAGE:
@@ -180,6 +183,7 @@ const Page = (props) => {
             tgidToScroll={tgidToScroll}
             mbTheme={mbTheme}
             eventsReady={eventsReady}
+            domainConfig={domainConfig}
           />
         );
       case CUSTOM_TYPES.LISTICLE:
@@ -189,6 +193,7 @@ const Page = (props) => {
             isDev={isDev}
             host={host}
             serverRequestStartTimestamp={serverRequestStartTimestamp}
+            domainConfig={domainConfig}
           />
         );
       case CUSTOM_TYPES.SHOW_PAGE:
@@ -200,6 +205,7 @@ const Page = (props) => {
             isDev={isDev}
             host={host}
             serverRequestStartTimestamp={serverRequestStartTimestamp}
+            domainConfig={domainConfig}
           />
         );
       case CUSTOM_TYPES.GLOBAL_CITY:
@@ -215,6 +221,7 @@ const Page = (props) => {
             host={host}
             categoryTourListData={categoryTourListData}
             serverRequestStartTimestamp={serverRequestStartTimestamp}
+            domainConfig={domainConfig}
           />
         );
       default:

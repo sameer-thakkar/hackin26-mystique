@@ -148,6 +148,7 @@ const CategoryBar = (props) => {
     isEntertainmentMb,
     isListicle,
   } = props;
+
   const toggleFilterDropdown = (dropdownState) => {
     if (!filterDropdownActive)
       trackEvent({

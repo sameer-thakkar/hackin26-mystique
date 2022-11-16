@@ -412,11 +412,7 @@ const Header: FunctionComponent<HeaderProps> = ({
             isGlobalMb={isGlobalMb}
             isEntertainmentMb={isEntertainmentMb}
           >
-            <a
-              href={
-                logoRedirectionURL ? withTrailingSlash(logoRedirectionURL) : '/'
-              }
-            >
+            <a href={logoRedirectionURL || '/'}>
               <div className="header-logo">
                 <Image url={logoUrl} alt={logoAltText} dontLazyLoad={true} />
                 <Conditional if={hasPoweredByHeadoutLogo}>

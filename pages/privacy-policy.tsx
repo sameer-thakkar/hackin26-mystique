@@ -1,28 +1,23 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import Header from 'components/common/Header';
-import Footer from 'components/common/Footer';
-import ContentContainer from 'components/UI/ContentContainer';
-import Paragraph from 'components/UI/Paragraph';
-import { TopHeading, SubHeading } from 'components/UI/Headings';
-import { MinimalHelmet } from 'components/common/NextSeoMeta';
+import { Client } from 'config/prismic-config';
+import 'lazysizes';
 import { ThemeProvider } from 'styled-components';
 import { MBContextProvider } from 'contexts/MBContext';
-import 'lazysizes';
-import Conditional from 'components/common/Conditional';
+import Header from 'components/common/Header';
+import Footer from 'components/common/Footer';
+import { MinimalHelmet } from 'components/common/NextSeoMeta';
+import ContentContainer from 'components/UI/ContentContainer';
+import Paragraph from 'components/UI/Paragraph';
 import RichContent from 'UI/RichContent';
-import { getNakedDomain } from 'utils';
+import { TopHeading, SubHeading } from 'components/UI/Headings';
+import Conditional from 'components/common/Conditional';
 import { getAppTheme } from 'style/theme';
+import { getNakedDomain, getHeadoutLanguagecode } from 'utils';
 import { getPrismicDocument } from 'utils/prismicUtils';
-
-import {
-  DROPDOWN_ELEMENT,
-  CUSTOM_TYPES,
-  DESIGN,
-  THEMES,
-} from 'constants/index';
-
-import { Client } from 'config/prismic-config';
+import { getLogoRedirectionUrl } from 'utils/urlUtils';
+import { fetchDomainConfig } from 'utils/apiUtils';
+import { DROPDOWN_ELEMENT, CUSTOM_TYPES, DESIGN, THEMES } from 'const/index';
 
 const Title = styled.div`
   margin: 10px 0px;
@@ -45,7 +40,7 @@ export default class privacy extends Component<any, any> {
         : window.location.search.includes('mystique_uid');
 
       const props = await privacy.getData({ req, res, isDev, query });
-      return props;
+      return { ...props, isDev };
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error);
@@ -67,28 +62,31 @@ export default class privacy extends Component<any, any> {
       serverResponse: res,
       query,
       isDev,
-      useHostAsUid: true,
+      useHostAsUid: !isDev,
     });
-    let response, footerID, headerID;
+    const {
+      faviconUrl,
+      logo: { logoUrl, showPoweredLogo },
+      name: whiteLabelName,
+    } = await fetchDomainConfig(uid);
+    let response, footerID;
     switch (ContentType) {
       case CUSTOM_TYPES.GLOBAL_HOMEPAGE:
         response = CMSContent;
         footerID = response.data.common_footer.id;
-        headerID = response.data.common_header.id;
         break;
       case CUSTOM_TYPES.MICROSITE:
         response = CMSContent.completeMicrosite.data;
         footerID = response.data.footer_ref.id;
-        headerID = response.data.common_header_ref.id;
     }
     if (footerID) {
       const commonFooter = await Client(req).getByID(footerID);
       response.data.commonFooter = commonFooter;
     }
-    if (headerID) {
-      const commonHeader = await Client(req).getByID(headerID);
-      response.data.commonHeader = commonHeader;
-    }
+    response.data.faviconUrl = faviconUrl;
+    response.data.logoUrl = logoUrl;
+    response.data.logoAltText = whiteLabelName;
+    response.data.hasPoweredByHeadoutLogo = showPoweredLogo ?? true;
     return { response, host, uid };
   }
 
@@ -126,35 +124,26 @@ export default class privacy extends Component<any, any> {
   }
 
   render() {
-    const { response, host } = this.props;
-    const { uid, data } = response;
+    const { response, host, isDev } = this.props;
+    const { uid, data, lang } = response;
     const {
-      link_to_logo_file,
-      logo,
-      favicon,
-      logo_redirection_url: logoRedirectionURL,
+      logoUrl,
+      logoAltText,
+      hasPoweredByHeadoutLogo,
+      faviconUrl,
       commonFooter,
-      commonHeader,
       theme_override: footerTheme,
       theme: mbTheme,
       address_line: addressLine,
       organization_name: organization,
       use_domain_email: useDomain,
     } = data;
-    const headerLogoAltText =
-      logo?.alt || data?.logo_alt_text || commonHeader?.data?.logo_alt_text;
-    const headerLogoUrl =
-      link_to_logo_file?.url?.logoUrl ||
-      logo?.uploadedLogoUrl ||
-      commonHeader?.data?.logo?.url;
-    const footerLogoURL =
-      commonFooter?.data?.logo.url ||
-      response.data?.footer_logo_link?.url ||
-      response.data?.footer_logo?.url;
-    const footerLogoAlt =
-      commonFooter?.data?.logo.alt ||
-      response?.data?.footer_logo_alt ||
-      response?.data?.footer_logo?.alt;
+    const logoRedirectionUrl = getLogoRedirectionUrl({
+      uid,
+      lang: getHeadoutLanguagecode(lang),
+      isDev,
+      host,
+    });
     const abbreviatedOrganization =
       (organization &&
         organization
@@ -179,18 +168,18 @@ export default class privacy extends Component<any, any> {
         >
           <MinimalHelmet
             title="Privacy Policy"
-            favicon={favicon}
+            faviconUrl={faviconUrl}
             description={`Privacy Policy page for ${host}`}
           />
           <Header
             headerLinks={null}
-            logoUrl={headerLogoUrl || '/'}
+            logoUrl={logoUrl}
+            logoAltText={logoAltText}
             currentLanguage={'en'}
-            logoAltText={headerLogoAltText}
             selectedLanguage={'en'}
             uid={uid}
             isMobile={this.state.isMobile}
-            logoRedirectionURL={logoRedirectionURL?.url || '/'}
+            logoRedirectionURL={logoRedirectionUrl}
             dropdown={this.state.dropdown}
             handleDropdownToggle={this.handleDropdownToggle}
           />
@@ -507,12 +496,10 @@ export default class privacy extends Component<any, any> {
           <br />
           <Footer
             currentLanguage={'en'}
-            logoURL={footerLogoURL}
-            logoAlt={footerLogoAlt}
+            logoURL={logoUrl}
+            logoAlt={logoAltText}
             attraction={commonFooter?.data?.attraction || 'attraction'}
-            hasPoweredByHeadoutLogo={
-              commonFooter?.data?.powered_by_superbrand || false
-            }
+            hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo}
             showDisclaimer={commonFooter?.data?.show_disclaimer}
             disclaimerText={commonFooter?.data?.disclaimer_text}
             slices={[]}

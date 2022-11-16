@@ -323,7 +323,6 @@ export const LINKED_MICROSITE_PROPS: string[] = [
   'blackout_start_date',
   'blackout_end_date',
   'block_n_days_group_booking',
-  'enable_powered_by_superbrand_logo',
   'group_form_blocked_days',
   'alert_popup',
   'show_covid19_alert',
@@ -915,4 +914,8 @@ export const ENTERTAINMENT_MB_BREADCRUMBS = {
     // No shoulder page for Opera adding broadway homepage as fallback
     OPERA: 'www.broadway-show-tickets',
   },
+};
+
+export const CUSTOM_HEADER = {
+  ORIGIN: 'h-origin',
 };

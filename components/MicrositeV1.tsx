@@ -5,16 +5,23 @@ import styled from 'styled-components';
 import { scroller } from 'react-scroll';
 import { useRecoilValue } from 'recoil';
 import { currencyAtom } from 'store/atoms/currency';
+import { gtmAtom } from 'store/atoms/gtm';
 import { useWindowWidth } from '@react-hook/window-size';
 import { InteractionContextProvider } from 'contexts/Interaction';
 import { ProductsContextProvider } from 'contexts/Products';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
 import LongForm from 'components/common/LongForm';
+import PopulateMeta from 'components/common/NextSeoMeta';
 import PopulateProducts from 'components/PopulateProducts';
 import TextBanner from 'components/TextBanner';
 import Conditional from 'components/common/Conditional';
-import { getAlternateLanguages, legacyBooleanCheck } from 'utils';
+import Banner from 'components/Banner';
+import {
+  getAlternateLanguages,
+  getHeadoutLanguagecode,
+  legacyBooleanCheck,
+} from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import allToursParser from 'utils/allToursParser';
 import { csvTgidToArray, getLangObject, groupSlices } from 'utils/helper';
@@ -27,10 +34,8 @@ import {
   ANALYTICS_PROPERTIES,
 } from 'const/index';
 import { strings } from 'const/strings';
-import PopulateMeta from 'components/common/NextSeoMeta';
 import renderShortCodes from 'utils/shortCodes';
-import Banner from 'components/Banner';
-import { gtmAtom } from 'store/atoms/gtm';
+import { getLogoRedirectionUrl } from 'utils/urlUtils';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
@@ -61,6 +66,7 @@ const MicrositeV1 = (props) => {
     isDev,
     serverRequestStartTimestamp,
     categoryTourListData,
+    domainConfig,
   } = props;
 
   const [isMobile, setIsMobile] = useState(props?.isMobile);
@@ -108,11 +114,6 @@ const MicrositeV1 = (props) => {
     alert_popup: alertPopupCMS,
     disclaimer: disclaimerCMS,
     show_disclaimer: showDisclaimerCMS,
-    footer_logo: footerLogoCMS,
-    footer_logo_link: footerLogoLinkCMS,
-    footer_logo_alt: footerLogoAltCMS,
-    invert_footer_logo_color: invertFooterLogoColorCMS,
-    powered_by_superbrand: poweredBySuperbrandCMS,
     theme_override: themeOverrideCMS,
     instant_checkout: instantCheckout = false,
     enable_earliest_availability: enableEarliestAvailability,
@@ -131,10 +132,7 @@ const MicrositeV1 = (props) => {
   const {
     attraction: attractionCFoot,
     body: slicesCFoot,
-    logo: logoCFoot,
-    powered_by_superbrand: poweredBySuperbrandCFoot,
     footer_heading: footerHeadingCFoot,
-    invert_logo_color: invertLogoColorCFoot,
     theme_override: themeOverrideCFoot,
     disclaimer_text: disclaimerTextCFoot,
     show_disclaimer: showDisclaimerCFoot,
@@ -163,15 +161,13 @@ const MicrositeV1 = (props) => {
     ? scorpioDataCategorised
     : scorpioDataUncategorised;
 
-  const footerLogoURL =
-    logoCFoot?.url || footerLogoCMS?.url || footerLogoLinkCMS?.url;
-  const footerAttractionName = attractionCFoot || attractionCMS || 'attraction';
-  const footerPoweredByHeadout =
-    poweredBySuperbrandCFoot || poweredBySuperbrandCMS || false;
-  const invertFooterLogoColor =
-    invertLogoColorCFoot || invertFooterLogoColorCMS;
+  const {
+    faviconUrl,
+    logo: { logoUrl, showPoweredLogo },
+    name: whiteLabelName,
+  } = domainConfig || {};
 
-  const footerLogoAlt = logoCFoot?.alt || footerLogoCMS.alt || footerLogoAltCMS;
+  const footerAttractionName = attractionCFoot || attractionCMS || 'attraction';
   let footerThemeOverride = themeOverrideCFoot || THEMES.INHERIT;
   footerThemeOverride = themeOverrideCMS || THEMES.INHERIT;
 
@@ -186,14 +182,10 @@ const MicrositeV1 = (props) => {
     ...commonHeader?.data,
   };
   let {
-    link_to_logo_file: linkedLogo,
     body2: longFormContent,
-    logo: uploadedLogo,
-    logo_alt_text: logoAltText,
     book_now_text: bookNowText,
     read_more_text: readMoreText,
     show_less_text: showLessText,
-    enable_powered_by_superbrand_logo: hasPoweredByHeadoutLogo,
     enable_group_booking: enableGroupBooking,
     enable_buy_tickets_shortcut: enableBuyTickets,
     blackout_start_date: blackoutStartDate,
@@ -208,14 +200,12 @@ const MicrositeV1 = (props) => {
     enable_dropdown: enableDropdownLinks,
     dropdown_menu,
   } = withCommonHeaderOverrides;
-  const logoRedirectionURL = commonHeader
-    ? !isHeaderInherited
-      ? commonHeader?.data?.logo_redirection_url
-      : micrositeData.logo_redirection_url
-    : micrositeData.logo_redirection_url;
-
-  const { url: logoUrl } = linkedLogo;
-  const { url: uploadedLogoUrl, alt: altText } = uploadedLogo;
+  const logoRedirectionUrl = getLogoRedirectionUrl({
+    uid,
+    lang: getHeadoutLanguagecode(lang),
+    isDev,
+    host,
+  });
 
   const dropdownLinks =
     dropdown_menu?.reduce((acc, item) => {
@@ -454,22 +444,24 @@ const MicrositeV1 = (props) => {
             languages: alternateLanguages,
             isMobile,
             bannerImages: finalBannerImages,
+            faviconUrl,
+            logoUrl: logoUrl,
           }}
         />
         <Header
           languages={alternateLanguages}
           headerLinks={finalHeaderLinks}
-          logoUrl={logoUrl || uploadedLogoUrl || null}
-          logoAltText={altText || logoAltText}
+          logoUrl={logoUrl}
+          logoAltText={whiteLabelName || ''}
           currentLanguage={currentLanguage ? currentLanguage : null}
           uid={uid}
           openGroupBookingModal={openGroupBookingModal}
           isMobile={isMobile}
           showGroupBooking={showGroupBooking}
           enableBuyTickets={isToursAvailable ? enableBuyTickets : false}
-          logoRedirectionURL={logoRedirectionURL?.url || pageUrl}
+          logoRedirectionURL={logoRedirectionUrl || pageUrl}
           host={host}
-          hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo}
+          hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
           slices={finalHeaderSlices}
           dropdownLinks={!isHeaderInherited ? dropdownLinks : null}
           hasDropdownLinks={!isHeaderInherited ? hasDropdownLinks : null}
@@ -553,13 +545,12 @@ const MicrositeV1 = (props) => {
         <Footer
           currentLanguage={currentLanguage}
           attraction={footerAttractionName}
-          logoURL={footerLogoURL}
-          logoAlt={footerLogoAlt}
-          hasPoweredByHeadoutLogo={footerPoweredByHeadout}
+          logoURL={logoUrl}
+          logoAlt={whiteLabelName || ''}
+          hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
           showDisclaimer={showDisclaimer}
           disclaimerText={disclaimerText}
           slices={!isFooterInherited ? slicesCFoot || [] : []}
-          invertLogoColor={invertFooterLogoColor}
           themeOverride={footerThemeOverride}
           secondaryHeading={footerHeadingSFoot}
           primaryHeading={footerHeadingCFoot}

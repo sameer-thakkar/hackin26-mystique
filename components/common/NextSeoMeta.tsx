@@ -25,6 +25,8 @@ type PopulateMetaProps = {
   isMobile: boolean;
   bannerImages: { [key: string]: any }[];
   mbTheme?: string;
+  faviconUrl: string;
+  logoUrl?: string;
 };
 
 export default function PopulateMeta({
@@ -35,6 +37,8 @@ export default function PopulateMeta({
   isMobile,
   bannerImages,
   serverRequestStartTimestamp,
+  faviconUrl,
+  logoUrl,
 }: PopulateMetaProps) {
   const {
     noTrack,
@@ -57,10 +61,8 @@ export default function PopulateMeta({
     bing_site_verification: bingSiteVerification,
     canonical_link: canonicalLink,
     description: rawDescription,
-    favicon,
     google_site_verification: googleSiteVerification,
     header_scripts: headerScripts = [],
-    logo,
     image,
     noindex,
     seo_keywords: seoKeywords,
@@ -77,7 +79,7 @@ export default function PopulateMeta({
   let finalNoFollow = isStage || isDev ? true : legacyBooleanCheck(noindex);
 
   const primaryDomainUrl = new URL(pageUrl).hostname;
-  const logoUrl = image?.url || logo?.url;
+  const metaImageUrl = image?.url || logoUrl;
   const title = withShortcodes(rawTitle).join('');
   const description = withShortcodes(rawDescription).join('');
   let modifiedCanonicalLink = canonicalLink;
@@ -106,8 +108,8 @@ export default function PopulateMeta({
     uid,
     lang,
     title,
-    logo: logoUrl,
-    favicon: favicon?.url,
+    logo: metaImageUrl,
+    favicon: faviconUrl,
     description,
     dateModified,
     datePublished,
@@ -186,7 +188,7 @@ export default function PopulateMeta({
   const additionalLinkTags = [
     {
       rel: 'icon',
-      href: favicon?.url,
+      href: faviconUrl,
     },
   ];
   if (preloadBannerImage) {
@@ -270,11 +272,11 @@ export default function PopulateMeta({
 export const MinimalHelmet = ({
   title,
   description,
-  favicon,
+  faviconUrl,
 }: {
   title: string;
   description: string;
-  favicon: { [key: string]: any };
+  faviconUrl: string;
 }) => {
   const seoProps = {
     title,
@@ -282,7 +284,7 @@ export const MinimalHelmet = ({
     additionalLinkTags: [
       {
         rel: 'icon',
-        href: favicon?.url,
+        href: faviconUrl,
       },
     ],
   };

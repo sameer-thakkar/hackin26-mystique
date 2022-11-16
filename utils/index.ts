@@ -297,16 +297,6 @@ export const refsArrayToObject = (refArray) => {
       commonFooter.data.powered_by_headout;
     delete commonFooter.data.powered_by_headout;
   }
-  if (commonHeader?.data) {
-    commonHeader.data.enable_powered_by_superbrand_logo =
-      commonHeader.data.enable_powered_by_headout_logo;
-    delete commonHeader.data.enable_powered_by_headout_logo;
-  }
-  if (microsite?.data) {
-    microsite.data.enable_powered_by_superbrand_logo =
-      microsite.data.enable_powered_by_headout_logo;
-    delete microsite.data.enable_powered_by_headout_logo;
-  }
 
   return {
     commonFooter,

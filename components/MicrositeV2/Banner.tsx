@@ -104,7 +104,7 @@ const StyledBanner = styled.div`
 
   @media (max-width: 768px) {
     margin: ${({ bannerImages }) =>
-      bannerImages.length === 1 ? '2rem 0' : '1rem 0'};
+      bannerImages?.length === 1 ? '2rem 0' : '1rem 0'};
     height: unset;
     .swiper-slide {
       transform: scale(0.95);

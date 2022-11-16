@@ -48,6 +48,7 @@ import {
   convertUidToUrl,
   getValidUrl,
   getShowpageBreadcrumbUid,
+  getLogoRedirectionUrl,
 } from 'utils/urlUtils';
 import {
   fetchTourGroupReviews,
@@ -190,6 +191,7 @@ const ShowPage = ({
   inventorySlotData,
   isDev,
   serverRequestStartTimestamp,
+  domainConfig,
 }) => {
   const tourGroupData = cloneDeep(tempTourGroupData);
   const [customerReviews, setCustomerReviews] = useState([]);
@@ -223,6 +225,12 @@ const ShowPage = ({
   const { code: cityCode } = city || {};
 
   const { code: currencyCode } = currency || {};
+
+  const {
+    faviconUrl,
+    logo: { logoUrl, showPoweredLogo },
+    name: whiteLabelName,
+  } = domainConfig || {};
 
   const {
     faqHeading,
@@ -272,9 +280,7 @@ const ShowPage = ({
 
   const {
     enable_group_booking: enableGroupBooking,
-    logo_redirection_url: logoRedirectionURL,
     tgid,
-    favicon,
     canonical_link,
   } = CMSData;
 
@@ -289,8 +295,7 @@ const ShowPage = ({
     []
   );
 
-  const { logo, body: headerSlices } = commonHeader?.data || {};
-  const { url: logoUrl, alt: logoAltText } = logo || {};
+  const { body: headerSlices } = commonHeader?.data || {};
 
   const finalHeaderSlices = groupSlices(
     headerSlices || [],
@@ -356,6 +361,12 @@ const ShowPage = ({
     lang: currentLanguage,
     isDev,
     hostname: host,
+  });
+  const logoRedirectionUrl = getLogoRedirectionUrl({
+    uid,
+    lang: currentLanguage,
+    isDev,
+    host,
   });
   const [bannerImageOne, bannerImageTwo] = imageUploads || [];
 
@@ -491,9 +502,6 @@ const ShowPage = ({
               ...CMSData,
               ...commonHeader?.data,
               ...{
-                favicon: {
-                  url: favicon || FAVICON_LONDON_THEATRE_TICKETS,
-                },
                 canonical_link: canonical_link || selfCanonicalLink,
               },
             },
@@ -503,6 +511,8 @@ const ShowPage = ({
             languages: alternateLanguages,
             isMobile,
             bannerImages,
+            faviconUrl: faviconUrl || FAVICON_LONDON_THEATRE_TICKETS,
+            logoUrl: logoUrl,
           }}
         />
         {/* @ts-ignore */}
@@ -519,13 +529,13 @@ const ShowPage = ({
           dropdownLinks={dropdownLinksArray}
           currentLanguage={currentLanguage}
           logoUrl={logoUrl}
-          logoAltText={logoAltText || ''}
+          logoAltText={whiteLabelName || ''}
           uid={uid}
           isMobile={isMobile}
           showGroupBooking={legacyBooleanCheck(enableGroupBooking)}
-          logoRedirectionURL={logoRedirectionURL?.url || '/'}
+          logoRedirectionURL={logoRedirectionUrl}
           host={host}
-          hasPoweredByHeadoutLogo={true}
+          hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
           slices={finalHeaderSlices}
           isEntertainmentMB={true}
         />
@@ -622,15 +632,12 @@ const ShowPage = ({
         </Wrapper>
         <Footer
           currentLanguage={currentLanguage}
-          logoURL={commonFooter?.data?.logo?.url}
-          logoAlt={commonFooter?.data?.logo?.alt}
-          hasPoweredByHeadoutLogo={
-            commonFooter?.data?.powered_by_superbrand || false
-          }
+          logoURL={logoUrl}
+          logoAlt={whiteLabelName || ''}
+          hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
           showDisclaimer={commonFooter?.data?.show_disclaimer}
           disclaimerText={commonFooter?.data?.disclaimer_text}
           slices={commonFooter?.data?.body || []}
-          invertLogoColor={commonFooter?.data?.invert_logo_color}
           attraction={commonFooter?.data?.attraction || 'attraction'}
           primaryHeading={commonFooter?.data?.footer_heading}
           isEntertainmentMb={true}

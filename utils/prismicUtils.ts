@@ -42,6 +42,7 @@ import {
   fetchCurrencyList,
   fetchTourGroupSlots,
   fetchTourGroupV6,
+  fetchDomainConfig,
 } from 'utils/apiUtils';
 
 export const fetchAllMatchingDocs = async ({
@@ -454,12 +455,6 @@ export const getMicrositeDocument = async ({
             secondaryFooter,
           } = refsArrayToObject(refArray);
 
-          const poweredByHeadout =
-            completeMicrosite.data.data?.enable_powered_by_headout_logo ||
-            baseLangData.data?.enable_powered_by_headout_logo;
-          delete completeMicrosite.data.data?.enable_powered_by_headout_logo;
-          delete baseLangData.data?.enable_powered_by_headout_logo;
-
           let canonicalLink = strValues?.canonical_link;
           try {
             if (
@@ -499,16 +494,8 @@ export const getMicrositeDocument = async ({
                   lang !== 'en-us'
                     ? baseLangData.data.noindex
                     : completeMicrosite.data.data.noindex,
-                logo_redirection_url: completeMicrosite.data.data
-                  .logo_redirection_url.url
-                  ? completeMicrosite.data.data.logo_redirection_url
-                  : baseLangData.data.logo_redirection_url,
                 enable_earliest_availability:
                   baseLangData.data.enable_earliest_availability,
-                enable_powered_by_superbrand_logo:
-                  typeof poweredByHeadout === 'string'
-                    ? poweredByHeadout === 'Yes'
-                    : poweredByHeadout,
                 baseLangPageTitle:
                   lang !== 'en-us'
                     ? baseLangData.data.title
@@ -1096,6 +1083,7 @@ export const getPageData = async ({
       isDev,
     })) || { statusCode: 404 };
     const currencyListPromise = fetchCurrencyList();
+    const domainConfigPromise = fetchDomainConfig(uid);
 
     if (statusCode) {
       return {
@@ -1260,6 +1248,7 @@ export const getPageData = async ({
         isDev,
         host,
         currencyList: await currencyListPromise,
+        domainConfig: await domainConfigPromise,
       };
     }
 
@@ -1274,6 +1263,7 @@ export const getPageData = async ({
         isDev,
         host,
         currencyList: await currencyListPromise,
+        domainConfig: await domainConfigPromise,
       };
     }
 
@@ -1290,6 +1280,7 @@ export const getPageData = async ({
         isDev,
         host,
         currencyList: await currencyListPromise,
+        domainConfig: await domainConfigPromise,
       };
     }
 
@@ -1328,6 +1319,7 @@ export const getPageData = async ({
         host,
         categoryTourListData,
         currencyList: await currencyListPromise,
+        domainConfig: await domainConfigPromise,
       };
     }
 
@@ -1363,6 +1355,7 @@ export const getPageData = async ({
           ...(primaryCountry && { primaryCountry }),
           ...(activeCurrency && { activeCurrency }),
           currencyList: await currencyListPromise,
+          domainConfig: await domainConfigPromise,
         };
       } catch (error) {
         traceError({ error, host: req?.headers?.host, url: req?.url });
@@ -1650,6 +1643,7 @@ export const getPageData = async ({
       currencySymbolMap,
       primaryCountry,
       currencyList: await currencyListPromise,
+      domainConfig: await domainConfigPromise,
     };
   } catch (error) {
     traceError({ error, host: req?.headers?.host, url: req?.url });

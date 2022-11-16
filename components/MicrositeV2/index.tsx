@@ -4,13 +4,14 @@ import { withRouter } from 'next/router';
 import { createGlobalStyle } from 'styled-components';
 import { InteractionContextProvider } from 'contexts/Interaction';
 import Conditional from 'components/common/Conditional';
-import { PAGETYPE, QUERY_PARAMS, THEMES } from 'const/index';
+import PopulateMeta from 'components/common/NextSeoMeta';
+import { getAlternateLanguages } from 'utils';
 import allToursParser from 'utils/allToursParser';
 import { tourListApiParser } from 'utils/dataParsers';
 import { genManualSlice, getLangObject } from 'utils/helper';
-import PopulateMeta from 'components/common/NextSeoMeta';
-import { getAlternateLanguages } from 'utils';
 import { checkLTT } from 'utils/helper';
+import { getLogoRedirectionUrl } from 'utils/urlUtils';
+import { PAGETYPE, QUERY_PARAMS, THEMES } from 'const/index';
 
 const HomePage: ComponentType<any> = dynamic(() =>
   import('./views/HomePage').then((mod) => mod.HomePage)
@@ -128,6 +129,7 @@ class MicrositeV2 extends Component<any, any> {
       host,
       scorpioData,
       categoryTourListData,
+      domainConfig,
     } = this.props;
     const {
       commonFooter,
@@ -181,11 +183,9 @@ class MicrositeV2 extends Component<any, any> {
     const headerProps = {
       showGroupBooking: overriddenHeaderData.enable_group_booking === 'Yes',
       headerLinks,
-      logoUrl:
-        overriddenHeaderData.logo.url || overriddenHeaderData.link_to_logo_file,
-      logoAltText:
-        overriddenHeaderData.logo.alt || overriddenHeaderData.logo_alt_text,
-      logoRedirectionURL: overriddenHeaderData.logo_redirection_url.url || '/',
+      logoRedirectionURL:
+        getLogoRedirectionUrl({ uid, lang: currentLanguage, isDev, host }) ||
+        '/',
       enableBuyTickets:
         overriddenHeaderData.enable_buy_tickets_shortcut === 'Yes',
       enableSearch: overriddenHeaderData.enable_search == 'Yes',
@@ -197,8 +197,6 @@ class MicrositeV2 extends Component<any, any> {
         [],
       enableDropdownLinks: overriddenHeaderData.enable_dropdown == 'Yes',
       dropdownLinks: dropdownLinksArray,
-      hasPoweredByHeadoutLogo:
-        overriddenHeaderData.enable_powered_by_superbrand_logo,
     };
 
     const { cardPrices, isFetched, ready } = this.state;
@@ -483,6 +481,7 @@ class MicrositeV2 extends Component<any, any> {
       contentFramework: contentFramework?.data,
       alertPopup: CMSContent?.data?.alert_popup,
       showCovid19Alert: CMSContent?.data.show_covid19_alert,
+      domainConfig,
     };
 
     const directTgid = this.props.router.query.tgid;
@@ -500,6 +499,8 @@ class MicrositeV2 extends Component<any, any> {
             languages: alternateLanguages,
             isMobile: this.state.isMobile,
             bannerImages: heroProps?.banners,
+            faviconUrl: domainConfig?.faviconUrl,
+            logoUrl: domainConfig?.logo?.logoUrl,
           }}
         />
 

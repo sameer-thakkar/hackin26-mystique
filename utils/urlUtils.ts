@@ -6,8 +6,7 @@ import { LANGUAGE_MAP } from 'const/index';
 import queryParser from 'query-string';
 import { getPrismicProps } from 'utils';
 import { fromEntries } from 'utils/gen';
-
-import { getLangObject } from './helper';
+import { getLangObject } from 'utils/helper';
 
 export const getStringifiedQueryFromObject = (queryJson) =>
   queryParser.stringify(queryJson);
@@ -188,5 +187,38 @@ export const getShowpageBreadcrumbUid = (
       return breadcrumbsMap?.OPERA;
     default:
       return breadcrumbsMap?.ROOT_DOMAIN;
+  }
+};
+
+export const getLogoRedirectionUrl = ({
+  uid,
+  lang = 'en',
+  isDev,
+  host = '',
+}: {
+  uid: string;
+  lang?: string;
+  isDev?: boolean;
+  host?: string;
+}): string | null => {
+  const domainArray = getDomainFromUid(uid)?.split('.');
+  domainArray[0] = 'www';
+  const parentDomain = domainArray.join('.');
+
+  const isStage = host?.includes('stage-');
+
+  switch (true) {
+    case isDev:
+      return `http://${host}/?mystique_uid=${parentDomain}&lang=${
+        getLangObject(lang)?.locale
+      }`;
+    case isStage:
+      return `http://stage-microbrands.headout.com/?mystique_uid=${parentDomain}&lang=${
+        getLangObject(lang)?.locale
+      }`;
+    case !!uid:
+      return `https://${parentDomain}${lang !== 'en' ? `/${lang}` : ''}/`;
+    default:
+      return null;
   }
 };

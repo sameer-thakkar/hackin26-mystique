@@ -4,26 +4,26 @@ import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
-import { useWindowWidth } from '@react-hook/window-size';
 import { RichText } from 'prismic-reactjs';
+import { Client } from 'config/prismic-config';
+import { useWindowWidth } from '@react-hook/window-size';
+import PopulateMeta from 'components/common/NextSeoMeta';
+import Header from 'components/common/Header';
+import Footer from 'components/common/Footer';
+import OverflowScroll from 'components/UI/OverflowScroll';
+import Dropdown, { DropdownItem } from 'components/UI/Dropdown';
+import Spinner from 'components/UI/Spinner';
+import LongForm from 'components/common/LongForm';
+import ListicleCard from 'components/ListiclePage/ListicleCard';
+import WhyBookFromUs from 'components/ListiclePage/WhyBookFromUs';
+import { getAlternateLanguages } from 'utils';
+import { shortCodeSerializer } from 'utils/shortCodes';
+import { groupSlices } from 'utils/helper';
+import { getLogoRedirectionUrl } from 'utils/urlUtils';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
-import PopulateMeta from 'components/common/NextSeoMeta';
-import { getAlternateLanguages } from 'utils';
-
-import Header from '../common/Header';
-import OverflowScroll from '../UI/OverflowScroll';
-import Dropdown, { DropdownItem } from '../UI/Dropdown';
-import Spinner from '../UI/Spinner';
-import ListicleCard from './ListicleCard';
-import LongForm from '../common/LongForm';
-import Footer from '../common/Footer';
-import WhyBookFromUs from './WhyBookFromUs';
-import { groupSlices } from '../../utils/helper';
-import { Client } from '../../config/prismic-config';
-import { shortCodeSerializer } from '../../utils/shortCodes';
-import { CHEVRON_LEFT_CIRCLE } from '../../assets/SvgIcons';
-import { HEADOUT_API_ENDPOINT } from '../../constants';
+import { HEADOUT_API_ENDPOINT } from 'const/index';
+import { CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
 
 const Slider = dynamic(() => import('UI/Slider'));
 const Banner = dynamic(() => import('components/MicrositeV2/Banner'));
@@ -271,6 +271,7 @@ const Listicle = (props) => {
     alternate_languages,
     first_publication_date: datePublished,
     last_publication_date: dateModified,
+    domainConfig,
   } = props;
 
   const alternateLanguages = getAlternateLanguages(
@@ -304,6 +305,12 @@ const Listicle = (props) => {
   const bookingUrl = `https://book.${hostSplit.join('.')}${
     currentLanguage === 'en' ? '' : `/${currentLanguage}`
   }/book/`;
+  const logoRedirectionUrl = getLogoRedirectionUrl({
+    uid,
+    lang: currentLanguage,
+    isDev,
+    host,
+  });
 
   // Fetching all tours of the listicle categories using tags and then fetching tour data
   useEffect(() => {
@@ -349,10 +356,6 @@ const Listicle = (props) => {
   const {
     data: {
       enable_group_booking: enableGroupBooking,
-      logo_redirection_url: logoRedirectionURL,
-      enable_powered_by_superbrand_logo: hasPoweredByHeadoutLogo,
-      logo,
-      logo_alt_text: logoAltText,
       header_links: headerLinks,
     },
   } = commonHeader;
@@ -371,6 +374,12 @@ const Listicle = (props) => {
     },
   } = commonData;
 
+  const {
+    faviconUrl,
+    logo: { logoUrl, showPoweredLogo },
+    name: whiteLabelName,
+  } = domainConfig || {};
+
   // Head Props
   const headProps = {
     canonical_link,
@@ -385,7 +394,6 @@ const Listicle = (props) => {
     header_scripts,
     google_site_verification,
     bing_site_verification,
-    logo,
   };
 
   const handleFilter = (month) => {
@@ -441,20 +449,22 @@ const Listicle = (props) => {
           languages: alternateLanguages,
           isMobile,
           bannerImages: listicleBannerImages,
+          faviconUrl,
+          logoUrl: logoUrl,
         }}
       />
       <Header
         languages={alternateLanguages}
         headerLinks={headerLinks}
         currentLanguage={currentLanguage}
-        logoUrl={logo.url}
-        logoAltText={logoAltText || logo.alt || ''}
+        logoUrl={logoUrl}
+        logoAltText={whiteLabelName || ''}
         uid={uid}
         isMobile={isMobile}
         showGroupBooking={enableGroupBooking === 'Yes'}
-        logoRedirectionURL={logoRedirectionURL?.url || '/'}
+        logoRedirectionURL={logoRedirectionUrl}
         host={''}
-        hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo || false}
+        hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
       />
       <BannerWrapper>
         {listicleBannerImages.length ? (
@@ -564,15 +574,12 @@ const Listicle = (props) => {
       <Footer
         currentLanguage={currentLanguage}
         attraction={commonFooter?.data?.attraction || 'attraction'}
-        logoURL={commonFooter?.data?.logo?.url}
-        logoAlt={commonFooter?.data?.logo?.alt}
-        hasPoweredByHeadoutLogo={
-          commonFooter?.data?.powered_by_superbrand || false
-        }
+        logoURL={logoUrl}
+        logoAlt={whiteLabelName || ''}
+        hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
         showDisclaimer={commonFooter?.data?.show_disclaimer}
         disclaimerText={commonFooter?.data?.disclaimer_text}
         slices={commonFooter?.data?.body || []}
-        invertLogoColor={commonFooter?.data?.invert_logo_color}
       />
     </>
   );

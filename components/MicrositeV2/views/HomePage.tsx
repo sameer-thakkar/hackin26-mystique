@@ -141,6 +141,7 @@ export const HomePage = (props) => {
     isListicle,
     displayMonths,
     isDev,
+    domainConfig,
   } = props;
 
   const pageMetaData = useRecoilValue(metaAtom);
@@ -206,8 +207,6 @@ export const HomePage = (props) => {
   const hasLanguageSelector = languages?.length > 0;
   const hasToursSection = categoryProps?.categories?.length > 0;
   const { secondaryFooter } = footer;
-  const footerLogoURL = footer?.logo?.url;
-  const footerLogoAlt = footer?.footer_logo_alt || footer.footer_logo?.alt;
   const themeOverride = footer?.themeOverride;
   const hasDropdownLinks = enableDropdownLinks && dropdownLinks?.length;
   const { mbTheme } = useContext(MBContext);
@@ -218,6 +217,11 @@ export const HomePage = (props) => {
   const allTgids = Object.keys(allTours);
   const isLTT = checkLTT(uid);
   const isEntertainmentMbListicle = isEntertainmentMb && isListicle;
+  const {
+    logo: { logoUrl, showPoweredLogo },
+    name: whiteLabelName,
+  } = domainConfig || {};
+
   return (
     <V2MicrositeWrapper isEntertainmentMb={isEntertainmentMb}>
       <Header
@@ -230,6 +234,9 @@ export const HomePage = (props) => {
         hasLanguageSelector={hasLanguageSelector}
         hideCurrencySelector
         isEntertainmentMbListicle={isEntertainmentMbListicle}
+        logoUrl={logoUrl}
+        logoAltText={whiteLabelName || ''}
+        hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
       />
       <Conditional if={isMobile && hasDropdownLinks}>
         <div className="main-wrapper city-selector">
@@ -360,13 +367,12 @@ export const HomePage = (props) => {
       <Footer
         currentLanguage={currentLanguage}
         attraction={footer.attraction || 'attraction'}
-        logoURL={footerLogoURL}
-        logoAlt={footerLogoAlt}
-        hasPoweredByHeadoutLogo={footer.powered_by_superbrand || false}
+        logoURL={logoUrl}
+        logoAlt={whiteLabelName || ''}
+        hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
         showDisclaimer={!isLTT && footer.show_disclaimer}
         disclaimerText={footer.disclaimer_text}
         slices={footer.body || []}
-        invertLogoColor={footer?.invertFooterLogoColor}
         themeOverride={themeOverride}
         secondarySlices={secondaryFooter?.data?.body}
         secondaryHeading={secondaryFooter?.data?.footer_heading}

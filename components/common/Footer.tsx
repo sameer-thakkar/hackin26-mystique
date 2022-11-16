@@ -283,10 +283,9 @@ type FooterProps = {
   attraction?: string;
   logoURL: string;
   logoAlt: string;
-  hasPoweredByHeadoutLogo?: boolean;
+  hasPoweredByHeadoutLogo: boolean;
   showDisclaimer: boolean;
   disclaimerText: string;
-  invertLogoColor?: boolean;
   slices?: Array<any>;
   themeOverride?: string;
   secondarySlices?: Array<any>;
@@ -333,8 +332,7 @@ const Footer: React.FC<FooterProps> = ({
   logoAlt,
   showDisclaimer = false,
   disclaimerText = '',
-  hasPoweredByHeadoutLogo = false,
-  invertLogoColor = false,
+  hasPoweredByHeadoutLogo,
   slices = [],
   themeOverride = THEMES.DEFAULT,
   secondarySlices = [],
@@ -388,9 +386,7 @@ const Footer: React.FC<FooterProps> = ({
         <FooterLegalWrapper isEntertainmentMb={isEntertainmentMb}>
           <Container>
             <FooterLegal
-              invertLogoColor={
-                invertLogoColor && finalThemeName !== THEMES.MIN_BLUE
-              }
+              invertLogoColor={finalThemeName !== THEMES.MIN_BLUE}
               isEntertainmentMb={isEntertainmentMb}
             >
               <div className="logo-disclaimer">
