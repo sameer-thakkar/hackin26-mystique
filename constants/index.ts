@@ -919,3 +919,17 @@ export const ENTERTAINMENT_MB_BREADCRUMBS = {
 export const CUSTOM_HEADER = {
   ORIGIN: 'h-origin',
 };
+
+export const PAGE_URL_STRUCTURE = {
+  ROOT_DOMAIN: 'Root Domain',
+  SUBDOMAIN: 'Subdomain',
+  SUBFOLDER: 'Subfolder',
+  SUBDOMAIN_SUBFOLDER: 'Subfolder on Subdomain',
+};
+
+export const SEO_SUBDOMAINS = [
+  'https://harry-potter.london-studio-tours.com/',
+  'https://catacombs.tickets-paris.fr/',
+  'https://uffizi.tickets-florence.it/',
+  'https://sagradafamilia.barcelona-tickets.com/',
+];

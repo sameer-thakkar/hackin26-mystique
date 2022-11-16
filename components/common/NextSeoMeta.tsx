@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { NextSeo, NextSeoProps } from 'next-seo';
 import { OpenGraph, Twitter } from 'next-seo/lib/types';
+import { useRouter } from 'next/router';
 import { MBContext } from 'contexts/MBContext';
 import { BANNER_PARAMS } from 'components/Banner';
 import Conditional from 'components/common/Conditional';
@@ -13,8 +14,13 @@ import { legacyBooleanCheck } from 'utils';
 import { createAdditionalMetaTag, createHrefLangObj } from 'utils/headUtils';
 import { withShortcodes } from 'utils/helper';
 import { addQueryParams, convertUidToUrl } from 'utils/urlUtils';
-import { useRouter } from 'next/router';
-import { FB_DOMAIN_VERIFICATION, QUERY_PARAMS } from 'const/index';
+import { getStructure } from 'utils/lookerUtils';
+import {
+  FB_DOMAIN_VERIFICATION,
+  QUERY_PARAMS,
+  PAGE_URL_STRUCTURE,
+  SEO_SUBDOMAINS,
+} from 'const/index';
 
 type PopulateMetaProps = {
   prismicData: { [key: string]: any };
@@ -69,14 +75,25 @@ export default function PopulateMeta({
     title: rawTitle,
     enable_search,
   } = prismicData || {};
+
   const pageUrl = convertUidToUrl({
     uid,
     lang,
     isDev,
     hostname: host,
   });
-  let finalNoIndex = isStage || isDev ? true : legacyBooleanCheck(noindex);
-  let finalNoFollow = isStage || isDev ? true : legacyBooleanCheck(noindex);
+
+  const isSubdomain =
+    getStructure(new URL(pageUrl)) === PAGE_URL_STRUCTURE.SUBDOMAIN;
+
+  let finalNoIndex =
+    isStage || isDev || (isSubdomain && !SEO_SUBDOMAINS.includes(pageUrl))
+      ? true
+      : legacyBooleanCheck(noindex);
+  let finalNoFollow =
+    isStage || isDev || (isSubdomain && !SEO_SUBDOMAINS.includes(pageUrl))
+      ? true
+      : legacyBooleanCheck(noindex);
 
   const primaryDomainUrl = new URL(pageUrl).hostname;
   const metaImageUrl = image?.url || logoUrl;
