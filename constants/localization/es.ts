@@ -20,6 +20,8 @@ const es = {
   READ_MORE: 'Leer más',
   VIEW_MORE: 'Leer más',
   BANNER_CTA: 'Comprar entradas',
+  BANNER_SUBTEXT_DISCLAIMER:
+    'Somos un socio de confianza que ofrece una selección de las mejores entradas y excursiones. Este no es el sitio web oficial.',
   BOOK_NOW_CTA: 'Reserva ahora',
   CHECK_AVAIL: 'Ver disponibilidad',
   READ_MORE_TEXT: 'Leer más',

@@ -332,3 +332,19 @@ export const getFooterDetails = async ({
     };
   }
 };
+
+export const getBannerSubtext = ({
+  type,
+  data,
+}: PrismicDocumentType): boolean | string => {
+  switch (type) {
+    case CUSTOM_TYPES.MICROSITE:
+      return data?.show_banner_subtext;
+    case CUSTOM_TYPES.GLOBAL_HOMEPAGE || CUSTOM_TYPES.GLOBAL_EXPERIENCE:
+      return data?.banner_subtext;
+    case CUSTOM_TYPES.GLOBAL_CITY:
+      return data?.banner_sub_text;
+    default:
+      return '';
+  }
+};

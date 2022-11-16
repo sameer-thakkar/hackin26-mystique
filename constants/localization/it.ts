@@ -20,6 +20,8 @@ const it = {
   READ_MORE: 'Leggi tutto',
   VIEW_MORE: 'Leggi tutto',
   BANNER_CTA: 'Scopri le nostre offerte',
+  BANNER_SUBTEXT_DISCLAIMER:
+    "Siamo un partner di fiducia che offre una selezione curata dei migliori tour. Questo non è il sito ufficiale dell'attrazione.",
   BOOK_NOW_CTA: 'Prenota ora',
   CHECK_AVAIL: 'Verifica disponibilità',
   READ_MORE_TEXT: 'Leggi tutto',

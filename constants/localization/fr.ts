@@ -19,6 +19,8 @@ const fr = {
   READ_MORE: 'En savoir plus',
   VIEW_MORE: 'En savoir plus',
   BANNER_CTA: 'Voir nos offres',
+  BANNER_SUBTEXT_DISCLAIMER:
+    "Nous sommes un partenaire de confiance qui propose une sélection des meilleurs billets et visites. Ceci n'est pas le site officiel.",
   BOOK_NOW_CTA: 'Réserver',
   CHECK_AVAIL: 'Vérifier la disponibilité',
   READ_MORE_TEXT: 'En savoir plus',

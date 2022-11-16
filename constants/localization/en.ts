@@ -21,6 +21,8 @@ const en = {
   VIEW_MORE: 'View more',
   SEE_MORE_SHOWS: 'See More Shows',
   BANNER_CTA: 'Buy tickets',
+  BANNER_SUBTEXT_DISCLAIMER:
+    'We are a trusted partner offering a curated selection of best tickets and tours. This is not the official website.',
   BOOK_NOW_CTA: 'Book now',
   CHECK_AVAIL: 'Check availability',
   READ_MORE_TEXT: 'Read more',

@@ -20,6 +20,8 @@ const pt = {
   READ_MORE: 'Saiba mais',
   VIEW_MORE: 'Ver mais',
   BANNER_CTA: 'Faça sua reserva',
+  BANNER_SUBTEXT_DISCLAIMER:
+    'Somos um parceiro de confiança que oferece uma seleção dos melhores ingressos e excursões. Este não é o site oficial da atração.',
   BOOK_NOW_CTA: 'Reserve agora',
   CHECK_AVAIL: 'Verificar disponibilidade',
   READ_MORE_TEXT: 'Ver mais',

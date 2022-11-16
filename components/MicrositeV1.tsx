@@ -98,7 +98,6 @@ const MicrositeV1 = (props) => {
     attraction: attractionCMS,
     images: bannerImages,
     heading: bannerHeading,
-    banner_subtext: bannerSubtext,
     banner_cta_text: bannerCtaText,
     page_url: pageUrl,
     auto_banner: autoBanner,
@@ -118,6 +117,7 @@ const MicrositeV1 = (props) => {
     instant_checkout: instantCheckout = false,
     enable_earliest_availability: enableEarliestAvailability,
     baseLangPageTitle,
+    baseLangShowBannerSubtext,
   } = micrositeData || {};
 
   const alternateLanguages = getAlternateLanguages(
@@ -496,8 +496,8 @@ const MicrositeV1 = (props) => {
           <Banner
             bannerImages={finalBannerImages ? finalBannerImages : null}
             bannerHeading={bannerHeading ? bannerHeading : null}
-            bannerSubtext={bannerSubtext}
             bannerCtaText={bannerCtaText ? bannerCtaText : null}
+            showBannerSubtext={baseLangShowBannerSubtext}
             currentLanguage={currentLanguage ? currentLanguage : null}
             isMobile={isMobile}
             boxed={true}

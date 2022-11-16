@@ -15,6 +15,7 @@ import {
   uncategorisedToursCheck,
   getMetaImageUrl,
   getFooterDetails,
+  getBannerSubtext,
 } from 'utils/lookerUtils';
 import { fetchDomainConfig } from 'utils/apiUtils';
 import { CUSTOM_TYPES, SLICE_TYPES } from 'const/index';
@@ -76,7 +77,6 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }) => {
         noindex,
         title,
         description,
-        banner_subtext,
         focus_keyword,
         google_site_verification,
         bing_site_verification,
@@ -135,7 +135,7 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }) => {
       bing_site_verification_id: bing_site_verification,
       author_name: author_name,
       has_uncategorised_tours: uncategorisedToursCheck(doc),
-      banner_subtext,
+      banner_subtext: getBannerSubtext(doc),
       layout: type === CUSTOM_TYPES.MICROSITE ? design : null,
       favicon_url: faviconUrl,
       meta_image_url: getMetaImageUrl(doc),
@@ -291,6 +291,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       pageDoc.page_type = baseLangPageDoc?.page_type;
       pageDoc.shoulder_page_type = baseLangPageDoc?.shoulder_page_type;
       pageDoc.content_type = baseLangPageDoc?.content_type;
+      pageDoc.banner_subtext = baseLangPageDoc?.banner_subtext;
     });
   }
 

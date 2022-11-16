@@ -500,6 +500,10 @@ export const getMicrositeDocument = async ({
                   lang !== 'en-us'
                     ? baseLangData.data.title
                     : completeMicrosite.data.data.title,
+                baseLangShowBannerSubtext:
+                  lang !== 'en-us'
+                    ? baseLangData.data.show_banner_subtext
+                    : completeMicrosite.data.data.show_banner_subtext,
                 redirect_to_headout_booking_flow:
                   lang !== 'en-us'
                     ? baseLangData.data.redirect_to_headout_booking_flow

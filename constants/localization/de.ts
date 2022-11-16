@@ -19,6 +19,8 @@ const de = {
   },
   READ_MORE: 'Weiterlesen',
   BANNER_CTA: 'Tickets kaufen',
+  BANNER_SUBTEXT_DISCLAIMER:
+    'Wir sind ein vertrauenswürdiger Partner mit den besten Tickets und Touren. Dies ist nicht die offizielle Website.',
   BOOK_NOW_CTA: 'Jetzt buchen',
   CHECK_AVAIL: 'Verfügbarkeit prüfen',
   VIEW_MORE: 'Mehr anzeigen',

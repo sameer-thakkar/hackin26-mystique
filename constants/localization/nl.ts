@@ -20,6 +20,8 @@ const nl = {
   READ_MORE: 'Meer Info',
   VIEW_MORE: 'Meer Info',
   BANNER_CTA: 'Koop kaartjes',
+  BANNER_SUBTEXT_DISCLAIMER:
+    'Wij zijn een vertrouwde partner met de beste tickets en tours. Dit is niet de officiële website.',
   BOOK_NOW_CTA: 'Reserveer nu',
   CHECK_AVAIL: 'Controleer beschikbaarheid',
   READ_MORE_TEXT: 'Meer Info',
