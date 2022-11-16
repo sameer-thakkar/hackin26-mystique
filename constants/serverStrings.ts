@@ -218,6 +218,28 @@ const langStringMap = {
         'Estes ingressos são válidos por uma duração estendida. Os detalhes exatos serão informados no ingresso.',
     },
   },
+  ar: {
+    CANCELLATION_POLICY_HEADING: 'Cancellation Policy',
+    CANCELLATION_POLICY: {
+      HEADING: 'Amendment Policy',
+      NON_CANCELLABLE_NON_RESCHEDULABLE:
+        "These tickets can't be cancelled or rescheduled.",
+      VALID_UNTIL_DATE:
+        "These tickets can't be cancelled. However, you can use them any time until {0}.",
+      VALID_WITHIN_NEXT_DAYS:
+        'These tickets can’t be cancelled. However, you can use them any time within the next {0} days.',
+      VALID_WITHIN_NEXT_MONTHS:
+        'These tickets can’t be cancelled. However, you can use them any time within the next {0} months.',
+      EXTENDED_BUT_UNKNOWN_VALIDITY:
+        'These tickets can’t be cancelled. However, they are valid for an extended period of time.',
+      NON_CANCELLABLE_BUT_RESCHEDULABLE:
+        "These tickets can't be cancelled. However, they can be rescheduled up to {0} hours before the experience begins.",
+      CANCELLABLE:
+        'You can cancel these tickets up to {0} hours before the experience begins and get a full refund.',
+      CANCELLABLE_ANYTIME:
+        'Free cancellation anytime before the start of your experience',
+    },
+  },
 };
 
 const getServerStrings = (lang) => langStringMap[lang];

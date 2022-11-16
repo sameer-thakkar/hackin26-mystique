@@ -1,3 +1,5 @@
+import rtlPlugin from 'stylis-plugin-rtl';
+import { StyleSheetManager } from 'styled-components';
 import { MutableSnapshot, RecoilRoot } from 'recoil';
 import '@formatjs/intl-relativetimeformat/polyfill';
 import 'public/global.css';
@@ -10,6 +12,7 @@ import {
   PAGETYPE_BY_CUSTOMTYPE,
   CUSTOM_TYPES,
   ANALYTICS_PROPERTIES,
+  RTL_LANGUAGE_CODES,
 } from 'const/index';
 import { strings } from 'const/strings';
 import {
@@ -20,6 +23,7 @@ import { getLanguageFromPathname } from 'utils';
 import renderShortCodes from 'utils/shortCodes';
 import { sendVariablesToDataLayer } from 'utils/analytics';
 import { getLangObject } from 'utils/helper';
+import { ArabicGlobalStyle } from 'const/globalStyles/ar';
 
 const App = ({ Component, pageProps, localizedStrings, lang }) => {
   strings.setContent({
@@ -110,11 +114,25 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
     set(currencyAtom, ssrCurrencyCode);
   };
 
+  const getLanguageBasedGlobalStyling = (lang) => {
+    switch (lang) {
+      case 'ar':
+        return <ArabicGlobalStyle />;
+      default:
+        return null;
+    }
+  };
+
   return (
-    <RecoilRoot initializeState={initRecoil}>
-      <Component {...pageProps} />
-      <LiveChat />
-    </RecoilRoot>
+    <StyleSheetManager
+      stylisPlugins={RTL_LANGUAGE_CODES.includes(lang) ? [rtlPlugin] : []}
+    >
+      <RecoilRoot initializeState={initRecoil}>
+        {getLanguageBasedGlobalStyling(lang)}
+        <Component {...pageProps} />
+        <LiveChat />
+      </RecoilRoot>
+    </StyleSheetManager>
   );
 };
 

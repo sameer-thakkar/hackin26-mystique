@@ -3,8 +3,8 @@ import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 import { getLangUID } from 'utils/urlUtils';
 import { RTL_LANGUAGE_CODES } from 'const/index';
-
-import { getLangObject } from '../utils/helper';
+import { getLangObject } from 'utils/helper';
+import Conditional from 'components/common/Conditional';
 
 class MystiqueDocument extends Document {
   static async getInitialProps(ctx) {
@@ -56,6 +56,14 @@ class MystiqueDocument extends Document {
           <link rel="preconnect" href="https://images.prismic.io" />
           <link rel="preconnect" href="https://cdn-imgix.headout.com" />
           <link rel="stylesheet" href="https://use.typekit.net/rql1une.css" />
+          <Conditional if={lang === 'ar'}>
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" />
+            <link
+              href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600&display=swap"
+              rel="stylesheet"
+            />
+          </Conditional>
         </Head>
         <body>
           <Main />

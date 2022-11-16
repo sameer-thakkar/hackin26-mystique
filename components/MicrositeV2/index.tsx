@@ -1,7 +1,6 @@
 import dynamic from 'next/dynamic';
 import React, { Component, ComponentType } from 'react';
 import { withRouter } from 'next/router';
-import { createGlobalStyle } from 'styled-components';
 import { InteractionContextProvider } from 'contexts/Interaction';
 import Conditional from 'components/common/Conditional';
 import PopulateMeta from 'components/common/NextSeoMeta';
@@ -10,6 +9,7 @@ import allToursParser from 'utils/allToursParser';
 import { tourListApiParser } from 'utils/dataParsers';
 import { genManualSlice, getLangObject } from 'utils/helper';
 import { checkLTT } from 'utils/helper';
+import { MicrositeV2GlobalStyle } from 'const/globalStyles/micrositeV2';
 import { getLogoRedirectionUrl } from 'utils/urlUtils';
 import { PAGETYPE, QUERY_PARAMS, THEMES } from 'const/index';
 
@@ -25,12 +25,6 @@ const MobileProductPage: ComponentType<any> = dynamic(
   { ssr: false }
 );
 
-const GlobalStyle = createGlobalStyle`
-* {
-text-rendering: optimizeLegibility;
--webkit-font-smoothing: antialiased;
-}
-`;
 class MicrositeV2 extends Component<any, any> {
   constructor(props) {
     super(props);
@@ -489,7 +483,7 @@ class MicrositeV2 extends Component<any, any> {
     let activePage = this.state.page.name;
     return (
       <InteractionContextProvider {...categoryProps}>
-        <GlobalStyle />
+        <MicrositeV2GlobalStyle />
         <PopulateMeta
           {...{
             prismicData: CMSData,

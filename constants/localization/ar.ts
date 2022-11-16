@@ -22,7 +22,7 @@ const ar = {
   SEE_MORE_SHOWS: 'مشاهدة المزيد من العروض',
   BANNER_CTA: 'اشتري التذاكر',
   BOOK_NOW_CTA: 'احجز الان',
-  CHECK_AVAIL: 'التحقق من التوف',
+  CHECK_AVAIL: 'التحقق من التوفر',
   READ_MORE_TEXT: 'اقرأ المزيد',
   SHOW_LESS_TEXT: 'عرض أقل',
   SELECT_CITY: 'اختر المدينة',

@@ -414,7 +414,7 @@ const es = {
     GETTING_THERE: 'Cómo llegar',
     FACILITIES_AND_ACCESSIBILITY: 'Instalaciones y accesibilidad',
     ADDITIONAL_INFORMATION: 'Información adicional',
-    FREQUENTLY_ASKED_QUESTIONS: 'FAQs',
+    FREQUENTLY_ASKED_QUESTIONS: 'Preguntas frecuentes',
     QUESTION: 'P-',
     ANSWER: 'R-',
     LISTICLE_SHOW_SUMMARY: 'Resumen del espectáculo',
