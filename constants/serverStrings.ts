@@ -219,25 +219,23 @@ const langStringMap = {
     },
   },
   ar: {
-    CANCELLATION_POLICY_HEADING: 'Cancellation Policy',
+    CANCELLATION_POLICY_HEADING: 'سياسة الإلغاء',
     CANCELLATION_POLICY: {
-      HEADING: 'Amendment Policy',
-      NON_CANCELLABLE_NON_RESCHEDULABLE:
-        "These tickets can't be cancelled or rescheduled.",
+      HEADING: 'سياسة التعديل',
+      NON_CANCELLABLE_NON_RESCHEDULABLE: 'لا يمكن إلغاء أو تعديل هذه التذاكر',
       VALID_UNTIL_DATE:
-        "These tickets can't be cancelled. However, you can use them any time until {0}.",
+        'لا يمكن إلغاء هذه التذاكر. إنما يمكنك استخدامها في {0} أي وقت حتى',
       VALID_WITHIN_NEXT_DAYS:
-        'These tickets can’t be cancelled. However, you can use them any time within the next {0} days.',
+        ' لا يمكن إلغاء هذه التذاكر. إنما يمكنك استخدامها في أي وقت خلال الأيام الـ {0} القادمة',
       VALID_WITHIN_NEXT_MONTHS:
-        'These tickets can’t be cancelled. However, you can use them any time within the next {0} months.',
+        'لا يمكن إلغاء هذه التذاكر. إنما يمكنك استخدامها في أي وقت خلال الـ {0} الأشهر القادمة',
       EXTENDED_BUT_UNKNOWN_VALIDITY:
-        'These tickets can’t be cancelled. However, they are valid for an extended period of time.',
+        'لا يمكن إلغاء هذه التذاكر. إنما فهي صالحة لفترة طويلة من الزمن',
       NON_CANCELLABLE_BUT_RESCHEDULABLE:
-        "These tickets can't be cancelled. However, they can be rescheduled up to {0} hours before the experience begins.",
+        'لا يمكن إلغاء هذه التذاكر. إنما يمكن إعادة جدولتها حتى {0} ساعة قبل بدء التجربة',
       CANCELLABLE:
-        'You can cancel these tickets up to {0} hours before the experience begins and get a full refund.',
-      CANCELLABLE_ANYTIME:
-        'Free cancellation anytime before the start of your experience',
+        'يمكنك إلغاء هذه التذاكر حتى {0} ساعة قبل بدء التجربة واسترداد أموالك بالكامل',
+      CANCELLABLE_ANYTIME: 'إلغاء مجاني في أي وقت قبل بدء تجربتك',
     },
   },
 };

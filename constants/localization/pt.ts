@@ -402,7 +402,7 @@ const pt = {
     GETTING_THERE: 'Como chegar',
     FACILITIES_AND_ACCESSIBILITY: 'Serviços e acessibilidade',
     ADDITIONAL_INFORMATION: 'Informações adicionais',
-    FREQUENTLY_ASKED_QUESTIONS: 'FAQ',
+    FREQUENTLY_ASKED_QUESTIONS: 'Perguntas frequentes',
     QUESTION: 'P-',
     ANSWER: 'R-',
     LISTICLE_SHOW_SUMMARY: 'Listicle Resumo do show',
