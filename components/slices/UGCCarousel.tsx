@@ -450,7 +450,8 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
     };
   }, [swiper]);
 
-  const changePopup = (direction) => {
+  const changePopup = (e, direction) => {
+    e.stopPropagation();
     const changeIndex = direction === 'next' ? 1 : -1;
     const cardIndex = modulus(openedIndex + changeIndex, cards?.length);
     setOpenedIndex(cardIndex);
@@ -539,8 +540,8 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
     const { username, imageURL, caption, url, postType } = card || {};
     const instagramAccountURL = `https://www.instagram.com/${username}`;
     return (
-      <PopupWrapper>
-        <PopupContentWrapper>
+      <PopupWrapper onClick={() => popupCloser(index)}>
+        <PopupContentWrapper onClick={(e) => e.stopPropagation()}>
           <PopupCard isMobile={isMobile}>
             <WrapperHeader>
               <div>
@@ -627,7 +628,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
               className="prev-slide"
               role="button"
               tabIndex={0}
-              onClick={() => changePopup('prev')}
+              onClick={(e) => changePopup(e, 'prev')}
             >
               {CHEVRON_RIGHT_CIRCLE}
             </div>
@@ -635,7 +636,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
               className="next-slide"
               role="button"
               tabIndex={0}
-              onClick={() => changePopup('next')}
+              onClick={(e) => changePopup(e, 'next')}
             >
               {CHEVRON_RIGHT_CIRCLE}
             </div>
