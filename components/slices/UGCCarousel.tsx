@@ -54,13 +54,19 @@ const StyledHeading = styled.div`
     width: 90vw;
   }
 `;
+const SliderContainer = styled.div`
+  position: relative;
+  height: calc(100% - 0.75rem);
+`;
 
 const StyledSlider = styled.div`
   .swiper-container {
-    padding-top: 0.75em;
+    width: 90vw;
+    padding-top: 0.75rem;
     max-width: 1200px;
 
     @media (max-width: 768px) {
+      width: 100%;
       ${({ cardCount }) =>
         `max-width: calc(((${cardCount} * 11.35rem) / ${
           cardCount / 2
@@ -73,7 +79,8 @@ const StyledSlide = styled.div`
   cursor: pointer;
 
   img {
-    aspect-ratio: 3/4;
+    width: 11.25rem;
+    height: 15rem;
     border-radius: 0.25rem;
     object-fit: cover;
   }
@@ -155,8 +162,8 @@ const PopupCard = styled.div`
   display: grid;
   grid-template-columns: 6fr repeat(2, 0) 4fr 0;
   grid-template-rows: min-content 4fr repeat(3, 0);
-  max-width: 65.5rem;
-  max-height: 44.5rem;
+  max-width: 65vw;
+  max-height: 80vh;
   overflow: hidden;
   background: ${COLORS.BRAND.WHITE};
 
@@ -171,6 +178,7 @@ const PopupCard = styled.div`
   @media (max-width: 768px) {
     border-radius: 1.25em 1.25rem 0 0;
     position: fixed;
+    max-width: 100vw;
     max-height: 95%;
     bottom: 0;
     grid-template-columns: 1fr;
@@ -183,16 +191,15 @@ const PopupCard = styled.div`
   }
 `;
 
-const PlayButton = styled.a`
-  cursor: pointer;
+const PlayButton = styled.div`
+  margin: 0 auto;
   position: absolute;
-  z-index: 1;
   top: 50%;
-  left: 50%;
-  transform: translate(-12rem, -15%);
+  left: 37.5%;
+  z-index: 1;
 
   @media (max-width: 768px) {
-    transform: translate(-1.75rem, -50%);
+    left: 42%;
   }
 `;
 
@@ -332,19 +339,18 @@ const SwiperControls = styled.div`
 
 const Controls = styled.div`
   height: 0;
-  position: relative;
 
   .prev-slide,
   .next-slide {
     display: inline;
     position: absolute;
-    top: -10.25rem;
+    top: 50%;
     z-index: 2;
-    left: -1.25rem;
+    left: -2%;
     cursor: pointer;
   }
   .next-slide {
-    left: 73.85rem;
+    left: 98.5%;
     svg {
       transform: scaleX(-1);
       margin-bottom: 0.219rem;
@@ -574,12 +580,10 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
             </WrapperHeader>
             <MediaWrapper>
               <Conditional if={postType === 'Video'}>
-                <PlayButton
-                  href={url}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                >
-                  {PLAY_BUTTON}
+                <PlayButton>
+                  <a href={url} target="_blank" rel="noreferrer noopener">
+                    {PLAY_BUTTON}
+                  </a>
                 </PlayButton>
               </Conditional>
               <Image
@@ -655,58 +659,60 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
           {heading}
           <div className="sub-heading">{subHeading}</div>
         </StyledHeading>
-        <StyledSlider cardCount={cards?.length}>
-          <Swiper {...swiperParams} getSwiper={updateSwiper}>
-            {cards?.map((card, index) => (
-              <StyledSlide
-                key={index}
-                onClick={() => {
-                  setOpenedIndex(index);
-                  popupOpener(index);
-                  trackEmbedClick(index);
-                }}
-                className={'swiper-slide'}
-              >
-                <Image
-                  url={card?.instagram_posts?.imageURL}
-                  alt={card?.instagram_posts?.caption}
-                  format="jpg"
-                />
-                <div className="img-icon">{INSTAGRAM}</div>
-                <Conditional if={card?.instagram_posts?.postType === 'Video'}>
-                  <div className="img-icon right">{VIDEO_ICON}</div>
-                </Conditional>
-                <div className="img-icon bottom">
-                  @{card?.instagram_posts?.username}
+        <SliderContainer>
+          <StyledSlider cardCount={cards?.length}>
+            <Swiper {...swiperParams} getSwiper={updateSwiper}>
+              {cards?.map((card, index) => (
+                <StyledSlide
+                  key={index}
+                  onClick={() => {
+                    setOpenedIndex(index);
+                    popupOpener(index);
+                    trackEmbedClick(index);
+                  }}
+                  className={'swiper-slide'}
+                >
+                  <Image
+                    url={card?.instagram_posts?.imageURL}
+                    alt={card?.instagram_posts?.caption}
+                    format="jpg"
+                  />
+                  <div className="img-icon">{INSTAGRAM}</div>
+                  <Conditional if={card?.instagram_posts?.postType === 'Video'}>
+                    <div className="img-icon right">{VIDEO_ICON}</div>
+                  </Conditional>
+                  <div className="img-icon bottom">
+                    @{card?.instagram_posts?.username}
+                  </div>
+                </StyledSlide>
+              ))}
+            </Swiper>
+          </StyledSlider>
+          <Conditional if={!isMobile}>
+            <Controls>
+              <Conditional if={!swiper?.isBeginning}>
+                <div
+                  className="prev-slide"
+                  role="button"
+                  tabIndex={0}
+                  onClick={slidePrev}
+                >
+                  {CHEVRON_LEFT_CIRCLE}
                 </div>
-              </StyledSlide>
-            ))}
-          </Swiper>
-        </StyledSlider>
-        <Conditional if={!isMobile}>
-          <Controls>
-            <Conditional if={!swiper?.isBeginning}>
-              <div
-                className="prev-slide"
-                role="button"
-                tabIndex={0}
-                onClick={slidePrev}
-              >
-                {CHEVRON_LEFT_CIRCLE}
-              </div>
-            </Conditional>
-            <Conditional if={!swiper?.isEnd}>
-              <div
-                className="next-slide"
-                role="button"
-                tabIndex={0}
-                onClick={slideNext}
-              >
-                {CHEVRON_LEFT_CIRCLE}
-              </div>
-            </Conditional>
-          </Controls>
-        </Conditional>
+              </Conditional>
+              <Conditional if={!swiper?.isEnd}>
+                <div
+                  className="next-slide"
+                  role="button"
+                  tabIndex={0}
+                  onClick={slideNext}
+                >
+                  {CHEVRON_LEFT_CIRCLE}
+                </div>
+              </Conditional>
+            </Controls>
+          </Conditional>
+        </SliderContainer>
       </StyledWrapper>
       <Conditional if={isOpened}>
         {getPopupModal(cards, openedIndex)}
