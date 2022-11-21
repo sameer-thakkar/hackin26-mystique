@@ -45,6 +45,8 @@ const it = {
   UGC: {
     FOLLOW: 'Segui',
     FOLLOW_IG: 'Segui su Instagram',
+    HEADING: 'La tua prossima avventura ti accoglierà così',
+    SUB_HEADING: 'Esperienze selezionate con 💜 da Headout',
   },
   COMBO_VARIANT: {
     SELECT_CTA: 'Seleziona',

@@ -53,6 +53,8 @@ const en = {
   UGC: {
     FOLLOW: 'Follow',
     FOLLOW_IG: 'Follow on Instagram',
+    HEADING: 'POV: Your next adventure looks like this',
+    SUB_HEADING: 'Curated with 💜 by Headout',
   },
   COMBO_VARIANT: {
     SELECT_CTA: 'Select',

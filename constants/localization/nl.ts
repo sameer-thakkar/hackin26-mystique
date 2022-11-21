@@ -46,6 +46,8 @@ const nl = {
   UGC: {
     FOLLOW: 'Volgen',
     FOLLOW_IG: 'Volg op Instagram',
+    HEADING: 'POV: Zo ziet je volgende avontuur eruit',
+    SUB_HEADING: 'Samengesteld met 💜 door Headout',
   },
   COMBO_VARIANT: {
     SELECT_CTA: 'Selecteer',

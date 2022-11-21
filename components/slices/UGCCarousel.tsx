@@ -171,9 +171,6 @@ const PopupCard = styled.div`
     cursor: pointer;
     object-fit: cover;
   }
-  .image-wrap {
-    grid-area: 2 / 1 / 6 / 3;
-  }
 
   @media (max-width: 768px) {
     border-radius: 1.25em 1.25rem 0 0;
@@ -194,21 +191,22 @@ const PopupCard = styled.div`
 const PlayButton = styled.div`
   margin: 0 auto;
   position: absolute;
-  top: 50%;
-  left: 37.5%;
   z-index: 1;
 
   @media (max-width: 768px) {
-    left: 42%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 0);
   }
 `;
 
 const MediaWrapper = styled.div`
-  display: contents;
-
+  display: grid;
+  grid-area: 2 / 1 / 6 / 3;
+  place-items: center;
   @media (max-width: 768px) {
     position: relative;
-    display: unset;
+    grid-area: unset;
   }
 `;
 
@@ -434,7 +432,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
           eventName: ANALYTICS_EVENTS.UGC.VIEWED,
         });
 
-        const visibleSlides = isMobile ? 2 : 6;
+        const visibleSlides = isMobile ? 2 : Math.min(cards?.length, 6);
         for (let i = 0; i < swiper?.activeIndex + visibleSlides; i++) {
           trackEvent({
             eventName: ANALYTICS_EVENTS.UGC.CARD_VISIBLE,
@@ -541,8 +539,8 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
     const instagramAccountURL = `https://www.instagram.com/${username}`;
     return (
       <PopupWrapper onClick={() => popupCloser(index)}>
-        <PopupContentWrapper onClick={(e) => e.stopPropagation()}>
-          <PopupCard isMobile={isMobile}>
+        <PopupContentWrapper>
+          <PopupCard onClick={(e) => e.stopPropagation()} isMobile={isMobile}>
             <WrapperHeader>
               <div>
                 <Conditional
@@ -657,8 +655,10 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
     <>
       <StyledWrapper ref={myRef}>
         <StyledHeading>
-          {heading}
-          <div className="sub-heading">{subHeading}</div>
+          {heading || strings.UGC.HEADING}
+          <div className="sub-heading">
+            {subHeading || strings.UGC.SUB_HEADING}
+          </div>
         </StyledHeading>
         <SliderContainer>
           <StyledSlider cardCount={cards?.length}>
