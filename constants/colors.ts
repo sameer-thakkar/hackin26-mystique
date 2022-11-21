@@ -88,6 +88,7 @@ const COLORS = {
     LIGHT_TONE_2: '#b266ff',
     LIGHT_TONE_1: '#9933ff',
     LIGHT_TONE_3: '#ecd9ff',
+    LIGHT_TONE_4: '#f3E9ff',
   },
   JOY_MUSTARD: {
     SECONDARY: '#e5a900',

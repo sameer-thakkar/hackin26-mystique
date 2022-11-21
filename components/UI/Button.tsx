@@ -69,6 +69,17 @@ const Button = styled.button((props) => {
         }
         `;
       break;
+    case 'secondaryFill':
+      styles = `
+      border: 0;
+      color: ${COLORS.BRAND.PURPS};
+      background: ${COLORS.PURPS.LIGHT_TONE_4};
+      padding: 14px ${props.paddingSides || '22px'};
+      * {
+        color: ${COLORS.BRAND.WHITE};
+      }
+      `;
+      break;
     default:
       break;
   }

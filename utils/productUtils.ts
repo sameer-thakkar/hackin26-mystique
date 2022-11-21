@@ -74,7 +74,7 @@ export const getProductCardLayout = ({
     case THEMES.DEF_INTERIM:
     case THEMES.DEFAULT:
     default:
-      layout = layout = {
+      layout = {
         desktop: [
           `${
             isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA

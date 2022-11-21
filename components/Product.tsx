@@ -111,14 +111,12 @@ const cardImageStyles = css`
 `;
 
 const ctaBlockMobileStyles = (isSticky: boolean) => css`
-  grid-column: ${isSticky ? '1' : '2'};
-  margin-top: -1.5rem;
-  margin-left: auto;
-  width: ${isSticky ? '84vw' : '42vw'};
+  grid-column: 1;
+  width: ${isSticky ? '84vw' : 'auto'};
   .tour-book-now-cta {
     line-height: 125%;
     padding: 0.75rem;
-    border-radius: 4px;
+    border-radius: 8px;
     min-width: auto;
     letter-spacing: 0.6px;
     font-size: 0.875rem;
@@ -420,7 +418,7 @@ const CTABlock = styled.div`
   }
 
   @media (max-width: 768px) {
-    grid-area: cta-block;
+    grid-area: ${({ isSticky }) => (isSticky ? 'cta-block' : 'body')};
 
     ${({ isSticky, shouldOffset }) =>
       isSticky
@@ -442,7 +440,7 @@ const CTABlock = styled.div`
       isTicketCard ? null : ctaBlockMobileStyles(isSticky)}
   }
   @media (max-width: 370px) {
-    width: 90%;
+    width: 100%;
   }
 `;
 
@@ -516,7 +514,7 @@ const ProductBody = styled.div`
       h6:first-child {
         margin-top: 0;
       }
-      padding-bottom: 2rem;
+      padding-bottom: 0.5rem;
     }
     ${({ collapsed, defaultOpen }) =>
       collapsed && !defaultOpen
@@ -714,6 +712,12 @@ const TabPanel = styled.div`
       : ''}
 `;
 
+const MoreDetailsBtn = styled(Button)`
+  width: 100%;
+  grid-area: cta-block;
+  margin-top: -1rem;
+`;
+
 const richtextElements = {
   hyperlink: function Anchor({ children, data }) {
     return (
@@ -883,6 +887,9 @@ const ModalCardContainer = styled.div`
         }
       }
       .more-details {
+        display: none;
+      }
+      ${MoreDetailsBtn} {
         display: none;
       }
     }
@@ -1296,7 +1303,18 @@ const Product = (props) => {
           <Chevron isActive={isContentOpen} className={'chevron'} />
         </>
       );
-    return (
+    return isMobile ? (
+      <MoreDetailsBtn
+        fillType="secondaryFill"
+        onClick={onMoreDetailsClick}
+        onKeyDown={keyPressedOnReadMore}
+        role="button"
+        data-open="0"
+        tabIndex={0}
+      >
+        {strings.MORE_DETAILS}
+      </MoreDetailsBtn>
+    ) : (
       <div
         ref={moreDetailsRef}
         data-open="0"
@@ -1532,8 +1550,13 @@ const Product = (props) => {
               </Conditional>
             </div>
           </Conditional>
-          <Conditional if={hasReadMore}>{getMoreDetailsButton()}</Conditional>
+          <Conditional if={hasReadMore && !isMobile}>
+            {getMoreDetailsButton()}
+          </Conditional>
         </ProductBody>
+        <Conditional if={hasReadMore && isMobile && !expandContent}>
+          {getMoreDetailsButton()}
+        </Conditional>
       </StyledProductCard>
       <Conditional
         if={!isMobile && isComboWithMultiVariant && showComboVariant}
