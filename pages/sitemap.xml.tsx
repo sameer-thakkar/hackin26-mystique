@@ -43,11 +43,14 @@ const createUrlArr = (doc) => {
   } = doc;
 
   const langData = languages.map((language) => {
-    const { lang } = language;
+    const { lang, uid: alternateLanguageUid = uid } = language;
     const langPrefix = lang?.split('-')[0];
     return {
       lang: langPrefix,
-      url: convertUidToUrl({ uid, lang: langPrefix }),
+      url: convertUidToUrl({
+        uid: alternateLanguageUid,
+        lang: langPrefix,
+      }),
     };
   });
 
