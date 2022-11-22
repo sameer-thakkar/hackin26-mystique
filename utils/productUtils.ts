@@ -498,3 +498,10 @@ export const standardizeCancellationPolicy = ({
 
   return updatedHighlights;
 };
+export const parseDescriptors = (descriptorArr = []) => {
+  const allowedDescriptors = [
+    strings.DESCRIPTORS.INSTANT_CONFIRMATION,
+    strings.DESCRIPTORS.MOBILE_TICKET,
+  ];
+  return descriptorArr.filter(({ name }) => allowedDescriptors.includes(name));
+};

@@ -26,6 +26,8 @@ import { convertUidToUrl } from 'utils/urlUtils';
 import { createBookingURL } from 'utils';
 import { expandFontToken } from 'const/typography';
 import { trackEvent } from 'utils/analytics';
+import { parseDescriptors } from 'utils/productUtils';
+import { descriptorIcons } from 'const/descriptorIcons';
 
 const ProductCard = styled.div`
   width: 100%;
@@ -106,6 +108,19 @@ const ProductCard = styled.div`
     }
     &:after {
       height: 24px;
+    }
+  }
+
+  .descriptors {
+    display: flex;
+    align-items: center;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 16px;
+    padding: 0.2rem 0;
+
+    .descSvg {
+      margin: 0.12rem 0.2rem 0 0;
     }
   }
 
@@ -347,6 +362,7 @@ const Product = (props) => {
   const { sliceData } = useContext(InteractionContext) || {};
   const { collectionId, primaryCatId, primarySubCatId } = sliceData || {};
   if (!allTours[tgid]) return null;
+
   const { listingPrice, ...tour } = allTours[tgid] || {};
   const {
     allTags,
@@ -359,6 +375,7 @@ const Product = (props) => {
     averageRating,
     reviewCount,
     showPageUid = null,
+    secondaryDescriptors = [],
   } = tour || {};
 
   const { collectionName, primaryCategoryName, primarySubCategoryName } =
@@ -367,6 +384,7 @@ const Product = (props) => {
 
   const primaryCategory = allTours[tgid]?.primaryCategory;
   const primarySubCategory = allTours[tgid]?.primarySubCategory;
+  const filteredDescriptors = parseDescriptors(secondaryDescriptors);
 
   if (isEntertainmentMb) {
     categoryName = primarySubCategoryName;
@@ -481,9 +499,7 @@ const Product = (props) => {
           alt={title}
         />
         <Conditional if={isNewArrival}>
-          <div className="overlay-booster">
-            <Emoji symbol="🌟" label="glowing-star" /> {strings.NEW_ARRIVAL}
-          </div>
+          <div className="overlay-booster">{strings.NEW}</div>
         </Conditional>
       </div>
       <div className="product-v2-bottom">
@@ -525,21 +541,32 @@ const Product = (props) => {
               <div className="product-v2-title">{truncate(title, 70)}</div>
             </a>
           </Conditional>
-          <Conditional
-            if={
-              isEntertainmentMb &&
-              !isBeforeToday &&
-              openingDate !== 'Invalid Date'
+          {filteredDescriptors.map((descriptor) => {
+            const { code, name } = descriptor;
+            if (name && code) {
+              const DiscSvgElm = descriptorIcons[code];
+              return (
+                <div key={name} className="descriptors">
+                  <DiscSvgElm className="descSvg" />
+                  <span>{name}</span>
+                </div>
+              );
             }
-          >
+            return null;
+          })}
+          <Conditional if={isEntertainmentMb && openingDate !== 'Invalid Date'}>
             <div className="reopening">
-              {OPENING_ON} {openingDate}
+              {isBeforeToday
+                ? `${strings.NEXT_AVAILABLE} ${strings.TODAY}`
+                : `${OPENING_ON} ${openingDate}`}
             </div>
           </Conditional>
         </div>
         <div className="product-v2-bottom-left">
           <PriceBlock
+            showScratchPrice
             prefix
+            showCashback
             listingPrice={listingPrice}
             showSavings
             lang={lang}

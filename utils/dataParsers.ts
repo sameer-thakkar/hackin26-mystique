@@ -551,6 +551,7 @@ export const categoryTourListParserV2 = async (
         ?.map((product) => {
           const {
             microBrandsDescriptor,
+            descriptors: secondaryDescriptors,
             listingPrice,
             allTags,
             name,
@@ -666,6 +667,7 @@ export const categoryTourListParserV2 = async (
             primaryCategory: primaryCategoryWithoutSlugs,
             primarySubCategory: primarySubCategoryWithoutSlugs,
             descriptors: mbDescriptors,
+            secondaryDescriptors,
             productHighlights: null,
             cardFooter: null,
             theater: null,

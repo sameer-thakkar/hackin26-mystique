@@ -3,7 +3,7 @@ import Conditional from 'components/common/Conditional';
 import usePrice from 'hooks/usePrice';
 import LocalisedPrice from 'UI/LPrice';
 import COLORS from 'const/colors';
-import { THEMES } from 'const/index';
+import { THEMES, CASHBACK_TYPES } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import { FONTS } from 'const/fonts';
@@ -17,9 +17,16 @@ export const StyledPriceBlock = styled.div`
   align-items: end;
   text-transform: camelcase;
   width: max-content;
-  .tour-price {
-    column-gap: 4px;
+
+  .tour-price-container {
+    display: flex;
+
+    .tour-price {
+      column-gap: 4px;
+      margin-right: 0.3rem;
+    }
   }
+
   .tour-scratch-price {
     grid-column: 1 / 3;
     color: ${COLORS.GRAY.G4};
@@ -102,6 +109,7 @@ type PriceBlockProps = {
   showScratchPrice?: boolean;
   tgid?: number;
   prefix?: boolean;
+  showCashback?: boolean;
 };
 
 const PriceBlock = ({
@@ -112,6 +120,7 @@ const PriceBlock = ({
   showSavings,
   currencyDisplay = 'symbol',
   tgid,
+  showCashback = false,
 }: PriceBlockProps) => {
   const { isLoading, listingPrice } = usePrice({ tgid, ssrListingPrice });
   if (!listingPrice) return null;
@@ -123,10 +132,17 @@ const PriceBlock = ({
     precision,
     bestDiscount,
     otherPricesExist,
+    cashbackType,
+    cashbackValue,
   } = listingPrice ?? {};
 
   const showScratchPrice = originalPrice > finalPrice && showScratchPriceProp;
   const showPrefix = prefix && otherPricesExist;
+  const pricePrefix = showPrefix && !showScratchPrice ? strings.FROM + ' ' : '';
+  const showcashbackElm =
+    showCashback &&
+    cashbackValue > 0 &&
+    cashbackType === CASHBACK_TYPES.PERCENTAGE;
 
   if (isLoading) {
     return <PriceSkeleton showScratchPrice={showScratchPrice || showPrefix} />;
@@ -154,15 +170,22 @@ const PriceBlock = ({
           />
         </Conditional>
       </span>
-      <LocalisedPrice
-        className="tour-price"
-        currencyCode={currencyCode}
-        currencyDisplay={currencyDisplay}
-        lang={lang}
-        price={finalPrice}
-        precision={precision}
-        prefix={showPrefix && !showScratchPrice ? strings.FROM + ' ' : ''}
-      />
+      <div className="tour-price-container">
+        <LocalisedPrice
+          className="tour-price"
+          currencyCode={currencyCode}
+          currencyDisplay={currencyDisplay}
+          lang={lang}
+          price={finalPrice}
+          precision={precision}
+          prefix={pricePrefix}
+        />
+        <Conditional if={showcashbackElm}>
+          <SavedTag>
+            {strings.formatString(strings.CASHBACK, `${cashbackValue}%`)}
+          </SavedTag>
+        </Conditional>
+      </div>
       <Conditional
         if={showSavings && showScratchPrice && !!savingsElementsArray.length}
       >
