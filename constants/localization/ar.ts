@@ -91,6 +91,7 @@ const ar = {
     GUIDED_TOUR: '[جولة مع مرشد سياحي]',
     RETURN_TRANSFERS: 'تحويلات العودة',
     MEALS_INCLUDED: 'شاملة الوجبات',
+    FLEXIBLE_DURATION: 'أوقاط مرنة',
   },
   SAFE_EXPERIENCE: {
     HEADING: 'افضل معايير السلامة',
