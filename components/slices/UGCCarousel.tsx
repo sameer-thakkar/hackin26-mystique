@@ -193,6 +193,10 @@ const PlayButton = styled.div`
   position: absolute;
   z-index: 1;
 
+  a {
+    display: block;
+  }
+
   @media (max-width: 768px) {
     top: 50%;
     left: 50%;
@@ -356,7 +360,7 @@ const Controls = styled.div`
   }
 `;
 
-const BottomFollow = styled.div`
+const BottomCTA = styled.div`
   position: sticky;
   bottom: 0;
   display: flex;
@@ -366,8 +370,8 @@ const BottomFollow = styled.div`
   -webkit-box-shadow: 0 -0.75rem 1rem -0.25rem rgba(84, 84, 84, 0.1);
   box-shadow: 0 -0.75rem 1rem -0 25rem rgba(84, 84, 84, 0.1);
 
-  a {
-    ${expandFontToken('Button/Big')}
+  button {
+    ${expandFontToken(FONTS.BUTTON_BIG)}
     padding: 0.6rem 1.2rem;
     width: 100%;
   }
@@ -410,6 +414,14 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
       }
     }
   };
+
+  useEffect(() => {
+    if (isMobile && isOpened) {
+      window.onpopstate = () => {
+        popupCloser(openedIndex, true);
+      };
+    }
+  }, [openedIndex, isOpened, isMobile]);
 
   useEffect(() => {
     if (swiper !== null) {
@@ -479,21 +491,29 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
   };
 
   const popupOpener = (index) => {
+    if (isMobile) {
+      window.history.pushState(null, '');
+    }
     setOpenedIndex(index);
     setIsOpened(true);
     document.body.style.overflow = 'hidden';
   };
 
-  const popupCloser = (index) => {
+  const popupCloser = (index, viaBrowser = false) => {
     setOpenedIndex(null);
     setIsOpened(false);
     document.body.style.overflow = 'auto';
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.UGC.POPUP_CLOSED,
-      [ANALYTICS_PROPERTIES.RANKING]: index + 1,
-      [ANALYTICS_PROPERTIES.UGC.CONTENT_TYPE]:
-        cards[index]?.instagram_posts?.postType,
-    });
+    if ((viaBrowser && isMobile) || !isMobile) {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.UGC.POPUP_CLOSED,
+        [ANALYTICS_PROPERTIES.RANKING]: index + 1,
+        [ANALYTICS_PROPERTIES.UGC.CONTENT_TYPE]:
+          cards[index]?.instagram_posts?.postType,
+      });
+    }
+    if (!viaBrowser && isMobile) {
+      window.history.back();
+    }
   };
 
   const trackEmbedClick = (index) => {
@@ -513,13 +533,6 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
   const trackRedirectToIG = (index, postType) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.UGC.REDIRECT_TO_IG,
-      [ANALYTICS_PROPERTIES.RANKING]: index + 1,
-      [ANALYTICS_PROPERTIES.UGC.CONTENT_TYPE]: postType,
-    });
-  };
-  const trackFollowClick = (index, postType) => {
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.UGC.FOLLOW_CLICKED,
       [ANALYTICS_PROPERTIES.RANKING]: index + 1,
       [ANALYTICS_PROPERTIES.UGC.CONTENT_TYPE]: postType,
     });
@@ -559,19 +572,6 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
                 >
                   {username}
                 </a>
-                <span className="divider" />
-                <Button
-                  fillType="blackBordered"
-                  onClick={() => trackFollowClick(index, postType)}
-                >
-                  <a
-                    href={instagramAccountURL}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    {strings.UGC.FOLLOW}
-                  </a>
-                </Button>
               </div>
               <CloseIconWrapper onClick={() => popupCloser(index)}>
                 {BLACK_COLOR_CLOSE}
@@ -580,7 +580,14 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
             <MediaWrapper>
               <Conditional if={postType === 'Video'}>
                 <PlayButton>
-                  <a href={url} target="_blank" rel="noreferrer noopener">
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    onClick={() => {
+                      trackRedirectToIG(index, postType);
+                    }}
+                  >
                     {PLAY_BUTTON}
                   </a>
                 </PlayButton>
@@ -605,18 +612,14 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
               />
             </Description>
             <Conditional if={isMobile}>
-              <BottomFollow>
+              <BottomCTA>
                 <Button
-                  as="a"
                   fillType="blackBordered"
-                  href={instagramAccountURL}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  onClick={() => trackFollowClick(index, postType)}
+                  onClick={() => popupCloser(index)}
                 >
-                  {strings.UGC.FOLLOW_IG}
+                  {strings.CLOSE}
                 </Button>
-              </BottomFollow>
+              </BottomCTA>
             </Conditional>
           </PopupCard>
         </PopupContentWrapper>

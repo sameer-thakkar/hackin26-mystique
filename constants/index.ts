@@ -283,10 +283,8 @@ export const ANALYTICS_EVENTS = {
     CARD_CLICKED: 'Influencer Content Embed Card Clicked',
     POPUP_VIEWED: 'Influencer Content Popup Viewed',
     POPUP_CLOSED: 'Influencer Content Popup Closed',
-    FOLLOW_CLICKED: 'Influencer Content Follow Button Clicked',
     USERNAME_CLICKED: 'Influencer Content Username Clicked',
     REDIRECT_TO_IG: 'Influencer Content Redirect To Instagram',
-    IG_LINK_CLICK: 'Influencer Content Instagram Link Clicked',
   },
 };
 export const PAGE_TYPE = {
