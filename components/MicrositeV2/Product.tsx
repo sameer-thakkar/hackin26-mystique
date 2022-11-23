@@ -556,9 +556,7 @@ const Product = (props) => {
           })}
           <Conditional if={isEntertainmentMb && openingDate !== 'Invalid Date'}>
             <div className="reopening">
-              {isBeforeToday
-                ? `${strings.NEXT_AVAILABLE} ${strings.TODAY}`
-                : `${OPENING_ON} ${openingDate}`}
+              {OPENING_ON} {openingDate}
             </div>
           </Conditional>
         </div>
