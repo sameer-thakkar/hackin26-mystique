@@ -364,10 +364,7 @@ export const DESCRIPTORS = {
 export const MICROSITE_OBJECT_KEYS: string[] = [
   'header_scripts',
   'image',
-  'favicon',
   'other_meta_tags',
-  'logo',
-  'footer_logo',
 ];
 
 export const MICROSITE_LINK_KEYS: string[] = ['footer_logo_link'];
