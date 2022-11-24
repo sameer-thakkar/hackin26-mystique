@@ -8,6 +8,8 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { getProductCommonProperties, trackEvent } from 'utils/analytics';
 import { checkLTT, isMobile } from 'utils/helper';
+import { expandFontToken } from 'const/typography';
+import { FONTS } from 'const/fonts';
 
 import { MBContext } from '../../contexts/MBContext';
 
@@ -18,25 +20,25 @@ const StickyFooterContentWrapper = styled.div`
   position: fixed;
   width: 100%;
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1), 0px 2px 8px rgba(0, 0, 0, 0.1);
-
+  padding: 1rem 1.5rem;
+  box-sizing: border-box;
   .buy-button,
   .unavailable-button {
-    padding: 12px 24px;
-    border-radius: 4px;
-    margin: 16px auto;
-    border: none;
-    font-weight: 600;
-    font-size: 16px;
-    font-style: normal;
-    letter-spacing: 0.8px;
     display: block;
+    margin: 0 auto;
+    padding: 15px 24px;
+    width: 100%;
+    max-width: 24rem;
+    border: none;
+    border-radius: 8px;
     text-align: center;
-    max-width: 280px;
+    ${expandFontToken(FONTS.BUTTON_MEDIUM)}
   }
   .buy-button {
     color: ${COLORS.BRAND.WHITE};
     background: ${COLORS.BRAND.PURPS};
     cursor: pointer;
+    box-shadow: 0px 8px 15px rgba(128, 0, 255, 0.3);
   }
   .unavailable-button {
     background: ${COLORS.GRAY.G5};
@@ -93,8 +95,7 @@ const StickyFooter = ({
   return (
     <StickyFooterContentWrapper>
       <Conditional if={isAvailable}>
-        <div
-          role="button"
+        <button
           tabIndex={0}
           className="buy-button"
           onClick={() => {
@@ -107,7 +108,7 @@ const StickyFooter = ({
           }}
         >
           {isLTT ? strings.CHECK_AVAIL : strings.BANNER_CTA}
-        </div>
+        </button>
       </Conditional>
       <Conditional if={!isAvailable}>
         <button disabled className="unavailable-button">

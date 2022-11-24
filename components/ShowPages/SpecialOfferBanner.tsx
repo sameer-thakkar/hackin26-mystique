@@ -1,9 +1,10 @@
 import { SIZES } from 'const/ui-constants';
 import styled from 'styled-components';
-import { greyScheme } from 'style/theme';
-import { titleCase } from 'utils/stringUtils';
 import InfoBanner from 'components/ShowPages/InfoBanner';
 import Split, { StlyedSplit } from 'components/UI/Split';
+import { titleCase } from 'utils/stringUtils';
+import { greenScheme } from 'style/theme';
+import COLORS from 'const/colors';
 
 const Wrapper = styled.div`
   max-width: ${SIZES.MAX_WIDTH};
@@ -33,7 +34,7 @@ const SpecialOfferBanner = ({
         <InfoBanner
           title={titleCase(specialOffer.offerHeading)}
           description={specialOffer.offerText}
-          colorScheme={greyScheme}
+          colorScheme={greenScheme({ colorOverride: COLORS.GRAY.G2 })}
         />
       </Split>
     </Wrapper>

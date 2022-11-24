@@ -628,16 +628,18 @@ const ShowPageBanner = ({
                   prefix
                   tgid={tgid}
                 />
-                <div className="ratings-reviews-wrapper">
-                  <span className="ratings-wrapper">
-                    {averageRating} {STAR(COLORS.BRAND.CANDY)}{' '}
-                  </span>
-                  (
-                  {reviewCount > 999
-                    ? `${(reviewCount / 1000).toFixed(1)}k`
-                    : reviewCount}
-                  )
-                </div>
+                <Conditional if={reviewCount > 0}>
+                  <div className="ratings-reviews-wrapper">
+                    <span className="ratings-wrapper">
+                      {averageRating} {STAR(COLORS.BRAND.CANDY)}{' '}
+                    </span>
+                    (
+                    {reviewCount > 999
+                      ? `${(reviewCount / 1000).toFixed(1)}k`
+                      : reviewCount}
+                    )
+                  </div>
+                </Conditional>
               </div>
             </Conditional>
             {tagsArray.map((element, index) => {
@@ -689,16 +691,18 @@ const ShowPageBanner = ({
               <span>
                 {LOCATION} {theaterName}
               </span>
-              <span>
-                <span className="ratings-wrapper">
-                  {STAR(COLORS.BRAND.CANDY)} {averageRating}
+              <Conditional if={reviewCount > 0}>
+                <span>
+                  <span className="ratings-wrapper">
+                    {STAR(COLORS.BRAND.CANDY)} {averageRating}
+                  </span>
+                  (
+                  {reviewCount > 999
+                    ? `${(reviewCount / 1000).toFixed(1)}k Reviews`
+                    : reviewCount}
+                  )
                 </span>
-                (
-                {reviewCount > 999
-                  ? `${(reviewCount / 1000).toFixed(1)}k Reviews`
-                  : reviewCount}
-                )
-              </span>
+              </Conditional>
             </div>
           </Conditional>
         </div>

@@ -340,11 +340,11 @@ export const getAppTheme = (theme = THEMES.DEFAULT) => {
   return themes[theme]();
 };
 
-export const greenScheme = {
+export const greenScheme = ({ colorOverride = '', accentOverride = '' }) => ({
   background: '#F2FDEB',
-  color: '#1A4D57',
-  accent: '#CDEFD9',
-};
+  color: colorOverride || '#1A4D57',
+  accent: accentOverride || '#CDEFD9',
+});
 
 export const brownScheme = {
   background: '#FFF8EF',
