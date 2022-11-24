@@ -554,7 +554,13 @@ const Product = (props) => {
             }
             return null;
           })}
-          <Conditional if={isEntertainmentMb && openingDate !== 'Invalid Date'}>
+          <Conditional
+            if={
+              isEntertainmentMb &&
+              !isBeforeToday &&
+              openingDate !== 'Invalid Date'
+            }
+          >
             <div className="reopening">
               {OPENING_ON} {openingDate}
             </div>
