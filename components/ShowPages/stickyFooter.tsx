@@ -6,7 +6,6 @@ import { strings } from 'const/strings';
 import COLORS from 'const/colors';
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { createBookingURL } from 'utils';
 import { getProductCommonProperties, trackEvent } from 'utils/analytics';
 import { checkLTT, isMobile } from 'utils/helper';
 
@@ -50,15 +49,15 @@ const StickyFooter = ({
   currentLanguage,
   isAvailable = true,
   tourGroupData,
+  bookingUrl,
 }: {
   tgid: string | number;
   currentLanguage: string;
   isAvailable?: boolean;
   tourGroupData?: any;
+  bookingUrl: string;
 }) => {
-  const { nakedDomain, biLink, uid, redirectToHeadoutBookingFlow } = useContext(
-    MBContext
-  );
+  const { uid } = useContext(MBContext);
 
   const {
     listingPrice,
@@ -67,14 +66,6 @@ const StickyFooter = ({
     primarySubCategory,
     primaryCollection,
   } = tourGroupData ?? {};
-
-  const bookingUrl = createBookingURL({
-    nakedDomain: nakedDomain,
-    lang: currentLanguage,
-    tgid: tgid,
-    biLink: biLink,
-    redirectToHeadoutBookingFlow,
-  });
 
   const pageMetaData = useRecoilValue(metaAtom);
 

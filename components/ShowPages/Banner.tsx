@@ -528,6 +528,7 @@ const ShowPageBanner = ({
         nextAvailable={nextAvailable}
         showComponent={!isMobile && showStickyNav}
         isAvailable={isTourAvailable}
+        bookingUrl={bookingUrl}
       />
       <Conditional if={isMobile}>
         <StickyFooter
@@ -535,6 +536,7 @@ const ShowPageBanner = ({
           currentLanguage={currentLanguage}
           isAvailable={isTourAvailable}
           tourGroupData={tourGroupData}
+          bookingUrl={bookingUrl}
         />
       </Conditional>
 

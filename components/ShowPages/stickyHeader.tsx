@@ -1,12 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
 import styled from 'styled-components';
-import { MBContext } from 'contexts/MBContext';
 import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
 import COLORS from 'const/colors';
 import { strings } from 'const/strings';
-import { createBookingURL } from 'utils';
 import Conditional from 'components/common/Conditional';
 import { expandFontToken } from 'const/typography';
 import { ANALYTICS_EVENTS } from 'const/index';
@@ -169,6 +167,7 @@ const StickyHeader = ({
   nextAvailable,
   showComponent,
   isAvailable,
+  bookingUrl,
 }) => {
   const {
     listingPrice,
@@ -178,17 +177,6 @@ const StickyHeader = ({
     primaryCollection,
   } = tourGroupData ?? {};
 
-  const { nakedDomain, biLink, redirectToHeadoutBookingFlow } = useContext(
-    MBContext
-  );
-
-  const bookingUrl = createBookingURL({
-    nakedDomain: nakedDomain,
-    lang: currentLanguage,
-    tgid: tgid,
-    biLink: biLink,
-    redirectToHeadoutBookingFlow,
-  });
   const { NEXT_AVAILABLE } = strings || {};
   const REOPENING_STRING = `${NEXT_AVAILABLE}`;
   const pageMetaData = useRecoilValue(metaAtom);

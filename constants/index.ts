@@ -15,6 +15,17 @@ export const PREFERRED_COUNTRIES_CODES = [
 export const COOKIE = {
   SANDBOX_ID: 'h-sid',
   CASHBACK_EXP_VIEWED: 'cshbck-exp',
+  CURRENT_CURRENCY: 'currentCurrency',
+};
+
+export const TIME = {
+  SECONDS_IN_YEARS: 365 * 24 * 60 * 60,
+  SECONDS_IN_DAY: 24 * 60 * 60,
+  IN_YEARS: 365 * 24 * 60 * 60 * 1000,
+  IN_DAYS: 24 * 60 * 60 * 1000,
+  IN_HOURS: 60 * 60 * 1000,
+  IN_MINUTES: 60 * 1000,
+  IN_SECONDS: 1000,
 };
 
 export const ASPECT_RATIO = {
