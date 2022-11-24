@@ -1,6 +1,8 @@
 import React from 'react';
+
 import TabWrapper from '../../components/slices/TabWrapper';
 import useWindowSize from '../../components/hooks/useWindowSize';
+import ParentWrapper from '../ParentWrapper';
 
 export default {
   title: 'Slices/Tabs V2',
@@ -112,8 +114,10 @@ export const Basic = () => {
     isMobile,
   };
   return (
-    <div style={{ width: 900, padding: 50, position: 'relative' }}>
-      <TabWrapper {...data} sliceProps={sliceProps} />
-    </div>
+    <ParentWrapper>
+      <div style={{ width: 900, padding: 50, position: 'relative' }}>
+        <TabWrapper {...data} sliceProps={sliceProps} />
+      </div>
+    </ParentWrapper>
   );
 };

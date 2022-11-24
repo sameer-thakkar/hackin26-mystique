@@ -1,4 +1,6 @@
 import React from 'react';
+
+import ParentWrapper from '../ParentWrapper';
 import IFrame from '../../components/shortcodes/IFrame';
 
 export default {
@@ -8,9 +10,11 @@ export default {
 
 export const Basic = () => {
   return (
-    <IFrame
-      name="basic-iframe"
-      src="https://www.youtube.com/embed/GrrpLGAD_Y0"
-    />
+    <ParentWrapper>
+      <IFrame
+        name="basic-iframe"
+        src="https://www.youtube.com/embed/GrrpLGAD_Y0"
+      />
+    </ParentWrapper>
   );
 };

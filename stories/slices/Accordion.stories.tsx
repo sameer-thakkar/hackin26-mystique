@@ -1,4 +1,6 @@
 import React from 'react';
+
+import ParentWrapper from '../ParentWrapper';
 import AccordionGroup from '../../components/slices/AccordionGroup';
 
 export default {
@@ -43,5 +45,9 @@ const data = [
 ];
 
 export const Basic = () => {
-  return <AccordionGroup accordions={data} />;
+  return (
+    <ParentWrapper>
+      <AccordionGroup accordions={data} />
+    </ParentWrapper>
+  );
 };

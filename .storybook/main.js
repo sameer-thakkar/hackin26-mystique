@@ -9,7 +9,11 @@ module.exports = {
         loader: 'babel-loader',
         options: {
           presets: [['react-app', { flow: false, typescript: true }]],
-          plugins: ['styled-components', 'react-docgen'],
+          plugins: [
+            'styled-components',
+            'react-docgen',
+            '@babel/plugin-proposal-class-properties',
+          ],
         },
       },
     });
@@ -20,6 +24,8 @@ module.exports = {
     config.resolve.alias = {
       UI: path.resolve(__dirname, '../components/UI'),
       hooks: path.resolve(__dirname, '../components/hooks'),
+      const: path.resolve(__dirname, '../constants'),
+      components: path.resolve(__dirname, '../components'),
     };
     config.resolve.extensions.push('.ts', '.tsx');
     return config;

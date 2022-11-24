@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+
 import MultiLevelNav from '../../../components/MultiLevelNav';
+import ParentWrapper from '../../ParentWrapper';
 import useWindowSize from '../../../components/hooks/useWindowSize';
 import Hamurger from '../../../components/UI/Hamburger';
 
@@ -135,15 +137,22 @@ export const Basic = () => {
   const isMobile = useWindowSize().width < 768;
   const [isActive, setActive] = useState(false);
   return (
-    <div style={{ width: 1200, padding: 50, display: 'grid' }}>
-      <div style={{ alignSelf: 'start' }}>
-        {isMobile ? (
-          <div role="button" tabIndex={0} onClick={() => setActive(!isActive)}>
-            <Hamurger />
-          </div>
-        ) : null}
+    <ParentWrapper>
+      <div style={{ width: 1200, padding: 50, display: 'grid' }}>
+        <div style={{ alignSelf: 'start' }}>
+          {isMobile ? (
+            <div
+              role="button"
+              tabIndex={0}
+              onClick={() => setActive(!isActive)}
+            >
+              <Hamurger />
+            </div>
+          ) : null}
+        </div>
+        \
+        <MultiLevelNav isMobile={isMobile} isActive={isActive} {...data} />
       </div>
-      <MultiLevelNav isMobile={isMobile} isActive={isActive} {...data} />
-    </div>
+    </ParentWrapper>
   );
 };

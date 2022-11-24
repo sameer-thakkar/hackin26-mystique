@@ -1,6 +1,7 @@
 import React from 'react';
-import SliderAccordion from '../../components/slices/SliderAccordion';
 
+import SliderAccordion from '../../components/slices/SliderAccordion';
+import ParentWrapper from '../ParentWrapper';
 export default {
   title: 'Slices/Question',
   component: SliderAccordion,
@@ -73,14 +74,26 @@ const data = {
 
 export const AccordionComboSingleImage = () => {
   const singleImageFAQs = data.faqs.filter((faq) => faq.images.length === 1);
-  return <SliderAccordion {...data} faqs={singleImageFAQs} />;
+  return (
+    <ParentWrapper>
+      <SliderAccordion {...data} faqs={singleImageFAQs} />
+    </ParentWrapper>
+  );
 };
 
 export const AccordionComboMultiImage = () => {
   const multiImageFAQs = data.faqs.filter((faq) => faq.images.length > 1);
-  return <SliderAccordion {...data} faqs={multiImageFAQs} />;
+  return (
+    <ParentWrapper>
+      <SliderAccordion {...data} faqs={multiImageFAQs} />
+    </ParentWrapper>
+  );
 };
 
 export const AccordiOnComboSliderComplete = () => {
-  return <SliderAccordion {...data} />;
+  return (
+    <ParentWrapper>
+      <SliderAccordion {...data} />
+    </ParentWrapper>
+  );
 };
