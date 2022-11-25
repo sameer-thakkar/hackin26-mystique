@@ -1,4 +1,5 @@
 import { Client } from 'config/prismic-config';
+import * as Sentry from '@sentry/nextjs';
 import Prismic from 'prismic-javascript';
 import { toursTabSliceHandler } from 'components/Slices';
 import {
@@ -1040,6 +1041,7 @@ export const getPrismicDocument = async ({
       getGlobalCountry({ req, lang, uid }),
     ]);
   } catch (error) {
+    Sentry.captureException(error);
     traceError({
       error,
       host: req?.headers?.host,
