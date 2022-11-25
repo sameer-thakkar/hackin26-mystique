@@ -7,7 +7,6 @@ import {
   LANGUAGE_MAP,
   LINKED_MICROSITE_PROPS,
   MICROSITE_ARRAY_KEYS,
-  MICROSITE_LINK_KEYS,
   MICROSITE_OBJECT_KEYS,
   MICROSITE_STRING_KEYS,
   PRISMIC_LANG_TO_ROUTE_PARAM,
@@ -345,17 +344,6 @@ export const getMicrositeDocument = async ({
             {}
           );
 
-          const linkValues = MICROSITE_LINK_KEYS.reduce(
-            (acc, elem) => ({
-              ...acc,
-              [elem]:
-                Object.keys(completeMicrosite.data.data[elem]).length > 1
-                  ? completeMicrosite.data.data[elem]
-                  : baseLangData.data[elem],
-            }),
-            {}
-          );
-
           const arrValues = MICROSITE_ARRAY_KEYS.reduce(
             (acc, elem) => ({
               ...acc,
@@ -487,7 +475,6 @@ export const getMicrositeDocument = async ({
                 ...strValues,
                 ...objValues,
                 ...arrValues,
-                ...linkValues,
                 canonical_link:
                   canonicalLink || completeMicrosite.data.data.page_url,
                 noindex:

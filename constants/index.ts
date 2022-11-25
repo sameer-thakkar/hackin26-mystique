@@ -308,7 +308,6 @@ export const COMMON_DATA_PROPS_FOR_LISTICLE: string[] = [
   'listicle_common_summary',
   'listicle_categories',
   'why_book_from_us',
-  'favicon',
   'google_site_verification',
   'bing_site_verification',
   'header_scripts',
@@ -321,7 +320,6 @@ export const LINKED_MICROSITE_PROPS: string[] = [
   'title',
   'description',
   'image',
-  'favicon',
   'seo_keywords',
   'google_site_verification',
   'bing_site_verification',
@@ -366,8 +364,6 @@ export const MICROSITE_OBJECT_KEYS: string[] = [
   'image',
   'other_meta_tags',
 ];
-
-export const MICROSITE_LINK_KEYS: string[] = ['footer_logo_link'];
 
 export const MICROSITE_ARRAY_KEYS: string[] = ['images', 'body1'];
 

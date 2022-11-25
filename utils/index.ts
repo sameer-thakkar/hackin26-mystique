@@ -292,12 +292,6 @@ export const refsArrayToObject = (refArray) => {
     (ref) => ref.type === CUSTOM_TYPES.MICROSITE
   );
 
-  if (commonFooter?.data) {
-    commonFooter.data.powered_by_superbrand =
-      commonFooter.data.powered_by_headout;
-    delete commonFooter.data.powered_by_headout;
-  }
-
   return {
     commonFooter,
     commonHeader,

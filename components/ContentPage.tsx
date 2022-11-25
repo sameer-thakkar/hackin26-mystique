@@ -399,7 +399,6 @@ class ContentPage extends Component<any, any> {
 
     const headProps = {
       ...micrositeData,
-      favicon: microsite_document_ref.data.favicon,
       header_scripts: microsite_document_ref.data.header_scripts,
       canonical_link:
         this.props.data.canonical_link || this.props.data.page_url,

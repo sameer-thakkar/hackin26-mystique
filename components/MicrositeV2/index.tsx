@@ -396,13 +396,8 @@ class MicrositeV2 extends Component<any, any> {
     };
 
     const {
-      favicon,
-      footer_logo_link,
-      footer_logo,
       theme_override,
-      powered_by_superbrand,
       is_entertainment_mb: isEntertainmentMb,
-      invert_footer_logo_color: invertFooterLogoColor,
     } = this.props.data.data;
 
     const [listicleContent] = this.props.data.data.body;
@@ -444,17 +439,11 @@ class MicrositeV2 extends Component<any, any> {
 
     const MBData = {
       footer: {
-        favicon,
-        logo: footer_logo.url ? footer_logo : footer_logo_link,
         themeOverride: themeOverride || THEMES.INHERIT,
         show_disclaimer,
         disclaimer,
         ...commonFooterProps,
-        powered_by_superbrand:
-          powered_by_superbrand || commonFooter?.data?.powered_by_superbrand,
         secondaryFooter,
-        invertFooterLogoColor:
-          invertFooterLogoColor || commonFooter?.data?.invert_logo_color,
       },
       isMobile,
       isEntertainmentMb,
