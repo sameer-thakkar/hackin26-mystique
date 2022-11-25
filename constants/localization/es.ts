@@ -427,6 +427,8 @@ const es = {
     BLOG_SHOW_PAGE: 'Blog del espectáculo',
     GETTING_THERE_MAP_LINK: 'Ver en el mapa',
   },
+  SAVE_PERCENT: 'Ahorra {0}%',
+  SAVE_UPTO_PERCENT: 'Ahorra hasta un {0}%',
 };
 
 export default es;

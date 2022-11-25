@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import CategoryBar from 'components/MicrositeV2/CategoryBar';
@@ -6,6 +6,11 @@ import InteractionContext from 'contexts/Interaction';
 import { DONT_AUTO_SCROLL } from 'const/index';
 import Conditional from 'components/common/Conditional';
 import { checkLTT } from 'utils/helper';
+import { useRecoilState } from 'recoil';
+import { hsidAtom } from 'store/atoms/hsid';
+import { getABTestingVariant } from 'utils/experiments/experimentUtils';
+import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
+import { docCookies } from 'utils/helper';
 
 const PopulateProducts = dynamic(() => import('./PopulateProducts'));
 
@@ -43,6 +48,24 @@ export const ProductsWrapper = (props) => {
     isDev,
     isDiscountedPage,
   } = props;
+
+  const [hsid] = useRecoilState(hsidAtom);
+  const [showPromos, setShowPromos] = useState(false);
+  const [experimentResolved, setExperimentResolved] = useState(false);
+  useEffect(() => {
+    if (hsid && !experimentResolved) {
+      const variant = getABTestingVariant(
+        EXPERIMENT_NAMES.LTD_PROMOS_AND_DISCOUNT,
+        hsid
+      );
+      setShowPromos(
+        variant === VARIANTS.SHOW_PROMOS ||
+          docCookies.getItem('force-pr-ck') === 'true'
+      );
+      setExperimentResolved(true);
+    }
+  }, [hsid]);
+
   useEffect(() => {
     const tgidArray =
       categoryProps.categories[activeCategory || 0].ranking.popularity;
@@ -56,7 +79,6 @@ export const ProductsWrapper = (props) => {
       }
     }, 1000);
   }, []);
-
   if (!activeCategoryTgids?.length) return null;
   return (
     <StyledProductWrapper
@@ -87,6 +109,7 @@ export const ProductsWrapper = (props) => {
         categoryProps={categoryProps}
         isDev={isDev}
         isDiscountedPage={isDiscountedPage}
+        showPromos={showPromos}
       />
     </StyledProductWrapper>
   );

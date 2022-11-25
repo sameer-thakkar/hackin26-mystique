@@ -80,6 +80,7 @@ const PopulateProducts = (props) => {
     categoryProps,
     isDev,
     isDiscountedPage,
+    showPromos,
   } = props;
   const { activeCategoryTgids, activeCategoryIndex, closeTour } =
     useContext(InteractionContext) || {};
@@ -224,6 +225,7 @@ const PopulateProducts = (props) => {
               isListicle={isListicle}
               isDev={isDev}
               sectionIndex={index}
+              showPromos={showPromos}
             />
           );
       })}

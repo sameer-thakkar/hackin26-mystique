@@ -610,7 +610,9 @@ export const categoryTourListParserV2 = async (
             localizedStrings.SHOW_PAGE.CANCELLATION_POLICY,
             localizedStrings.SHOW_PAGE.AGE_LIMIT,
           ];
-          const { listicleSchema } = parseShowPageData(microBrandsHighlight);
+          const { listicleSchema, hasSpecialOffer } = parseShowPageData(
+            microBrandsHighlight
+          );
           let listicleShowSummary, listicleWhyWatch;
 
           for (let item of listicleSchema) {
@@ -704,6 +706,7 @@ export const categoryTourListParserV2 = async (
             showPageUid: hasShowPageData ? showpageData[id] : null,
             listicleShowSummary,
             listicleWhyWatch,
+            hasSpecialOffer,
           };
         });
     });

@@ -413,6 +413,8 @@ const de = {
     BLOG_SHOW_PAGE: 'Blog Show Page',
     GETTING_THERE_MAP_LINK: 'Wegbeschreibung Kartenlink',
   },
+  SAVE_PERCENT: '{0} % Rabatt',
+  SAVE_UPTO_PERCENT: 'Bis zu {0} % Rabatt',
 };
 
 export default de;

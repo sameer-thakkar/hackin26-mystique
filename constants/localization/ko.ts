@@ -281,6 +281,8 @@ const ko = {
       LEARN_MORE: '더 알아보기',
     },
   },
+  SAVE_PERCENT: '{0}% 절약',
+  SAVE_UPTO_PERCENT: '최대{0}% 절약',
 };
 
 export default ko;

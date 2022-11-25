@@ -700,6 +700,9 @@ export const ANALYTICS_PROPERTIES = {
   DIV_TYPE: 'Div Type',
   CURRENCY: 'Currency',
   TRIGGERED_BY: 'Triggered By',
+  DISCOUNT_SHOWN: 'Discount Shown',
+  CASHBACK_SHOWN: 'Is Cashback Shown',
+  L1_BOOSTER_SHOWN: 'L1 Booster Shown',
 };
 export const PAGE_TYPES = {
   COLLECTION: 'Collection',

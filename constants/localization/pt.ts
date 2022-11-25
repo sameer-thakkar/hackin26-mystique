@@ -415,6 +415,8 @@ const pt = {
     BLOG_SHOW_PAGE: 'Blog Página oficial do espetáculo',
     GETTING_THERE_MAP_LINK: 'Como chegar',
   },
+  SAVE_PERCENT: 'Economize {0}%',
+  SAVE_UPTO_PERCENT: 'Economize até {0}%',
 };
 
 export default pt;

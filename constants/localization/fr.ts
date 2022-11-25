@@ -414,6 +414,8 @@ const fr = {
     BLOG_SHOW_PAGE: 'Page du spectacle du blog',
     GETTING_THERE_MAP_LINK: "Comment s'y rendre",
   },
+  SAVE_PERCENT: 'Économisez {0}%',
+  SAVE_UPTO_PERCENT: "Économisez jusqu'à {0} %",
 };
 
 export default fr;

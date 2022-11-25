@@ -436,6 +436,8 @@ const it = {
     GETTING_THERE_MAP_LINK:
       'Come arrivare - Link alla mappa delle direzioni stradali',
   },
+  SAVE_PERCENT: 'Risparmia il {0}%',
+  SAVE_UPTO_PERCENT: 'Risparmia fino al {0}%',
 };
 
 export default it;

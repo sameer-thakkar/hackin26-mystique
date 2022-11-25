@@ -416,6 +416,8 @@ const nl = {
     BLOG_SHOW_PAGE: 'Blog Toon Pagina',
     GETTING_THERE_MAP_LINK: 'Erheen gaan Kaart Link',
   },
+  SAVE_PERCENT: 'Bespaar {0}%',
+  SAVE_UPTO_PERCENT: 'Bespaar tot {0}%',
 };
 
 export default nl;

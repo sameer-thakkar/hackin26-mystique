@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useContext } from 'react';
 import Conditional from 'components/common/Conditional';
 import usePrice from 'hooks/usePrice';
 import LocalisedPrice from 'UI/LPrice';
@@ -8,6 +9,8 @@ import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import { FONTS } from 'const/fonts';
 import { CurrencyDisplayType } from 'utils/currency';
+import { checkLTT } from 'utils/helper';
+import { MBContext } from 'contexts/MBContext';
 
 export const StyledPriceBlock = styled.div`
   display: grid;
@@ -17,6 +20,13 @@ export const StyledPriceBlock = styled.div`
   align-items: end;
   text-transform: camelcase;
   width: max-content;
+  .tour-price {
+    column-gap: 4px;
+    & .strike-through {
+      display: flex;
+      align-items: center;
+    }
+  }
 
   .tour-price-container {
     display: flex;
@@ -29,7 +39,8 @@ export const StyledPriceBlock = styled.div`
 
   .tour-scratch-price {
     grid-column: 1 / 3;
-    color: ${COLORS.GRAY.G4};
+    color: ${({ showScratchPrice }) =>
+      showScratchPrice ? COLORS.GRAY.G4 : COLORS.GRAY.G2};
     &:empty {
       display: none;
     }
@@ -38,10 +49,18 @@ export const StyledPriceBlock = styled.div`
       color: ${COLORS.GRAY.G4};
     }
   }
+  @media (max-width: 768px) {
+    .tour-price {
+      & .strike-through {
+        display: flex;
+      }
+    }
+  }
 `;
 
 export const SavedTag = styled.div`
   padding: 1px 4px;
+  padding-right: 0;
   align-self: center;
   margin-top: 1px; // hack to visually align center.
   background: ${({ theme }) =>
@@ -109,7 +128,9 @@ type PriceBlockProps = {
   showScratchPrice?: boolean;
   tgid?: number;
   prefix?: boolean;
+  save?: number;
   showCashback?: boolean;
+  isShowPage?: boolean;
 };
 
 const PriceBlock = ({
@@ -120,9 +141,14 @@ const PriceBlock = ({
   showSavings,
   currencyDisplay = 'symbol',
   tgid,
+  save,
   showCashback = false,
+  isShowPage = false,
 }: PriceBlockProps) => {
   const { isLoading, listingPrice } = usePrice({ tgid, ssrListingPrice });
+  const { uid } = useContext(MBContext);
+  const isLTT = checkLTT(uid);
+
   if (!listingPrice) return null;
 
   const {
@@ -135,10 +161,8 @@ const PriceBlock = ({
     cashbackType,
     cashbackValue,
   } = listingPrice ?? {};
-
   const showScratchPrice = originalPrice > finalPrice && showScratchPriceProp;
   const showPrefix = prefix && otherPricesExist;
-  const pricePrefix = showPrefix && !showScratchPrice ? strings.FROM + ' ' : '';
   const showcashbackElm =
     showCashback &&
     cashbackValue > 0 &&
@@ -157,9 +181,9 @@ const PriceBlock = ({
   }
 
   return (
-    <StyledPriceBlock>
+    <StyledPriceBlock showScratchPrice={showScratchPrice}>
       <span className="tour-scratch-price">
-        {showPrefix && showScratchPrice ? strings.FROM + ' ' : ''}
+        {showPrefix ? strings.FROM + ' ' : ''}
         <Conditional if={showScratchPrice}>
           <LocalisedPrice
             currencyCode={currencyCode}
@@ -178,11 +202,18 @@ const PriceBlock = ({
           lang={lang}
           price={finalPrice}
           precision={precision}
-          prefix={pricePrefix}
         />
+        <Conditional if={isLTT && showSavings && save > 0}>
+          <SavedTag>
+            {strings.formatString(
+              isShowPage ? strings.SAVE_PERCENT : strings.SAVE_UPTO_PERCENT,
+              `${save}`
+            )}
+          </SavedTag>
+        </Conditional>
         <Conditional if={showcashbackElm}>
           <SavedTag>
-            {strings.formatString(strings.CASHBACK, `${cashbackValue}%`)}
+            + {strings.formatString(strings.CASHBACK, `${cashbackValue}%`)}
           </SavedTag>
         </Conditional>
       </div>

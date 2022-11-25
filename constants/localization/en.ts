@@ -29,9 +29,8 @@ const en = {
   SHOW_LESS_TEXT: 'Show less',
   SELECT_CITY: 'Select city',
   NEXT_AVAILABLE: 'Next available: ',
-  SAVE_UPTO: 'Save upto',
   SAVE: 'Save {0}%',
-  CASHBACK: '{0} Cashback',
+  CASHBACK: '{0} cashback',
   AVAILABLE: 'Available',
   EARLIEST_AVAILABILITY: 'Earliest availability',
   UNAVAILABLE: 'Unavailable',
@@ -500,6 +499,8 @@ const en = {
     BLOG_SHOW_PAGE: 'Blog Show Page',
     GETTING_THERE_MAP_LINK: 'Getting There Map Link',
   },
+  SAVE_PERCENT: 'Save {0}%',
+  SAVE_UPTO_PERCENT: 'Save upto {0}%',
 };
 
 export default en;

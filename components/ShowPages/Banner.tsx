@@ -173,7 +173,6 @@ const BannerContent = styled.div`
   }
 
   .tour-scratch-price {
-    color: ${COLORS.GRAY.G4};
     ${expandFontToken(FONTS.UI_LABEL_SMALL)}
     text-align: left;
   }
@@ -372,6 +371,10 @@ const ShowPageBanner = ({
     reviewCount,
     reviewsDetails: { averageRating },
   } = tourGroupData ?? {};
+
+  const { originalPrice, finalPrice } = listingPrice;
+  const save = Math.round(((originalPrice - finalPrice) / originalPrice) * 100);
+
   const currency = useRecoilValue(currencyAtom);
   const pageMetaData = useRecoilValue(metaAtom);
 
@@ -625,8 +628,11 @@ const ShowPageBanner = ({
                   lang={currentLanguage}
                   showSavings
                   showScratchPrice
+                  showCashback
                   prefix
+                  isShowPage
                   tgid={tgid}
+                  save={save}
                 />
                 <Conditional if={reviewCount > 0}>
                   <div className="ratings-reviews-wrapper">
@@ -662,7 +668,10 @@ const ShowPageBanner = ({
                     showSavings
                     showScratchPrice
                     prefix
+                    showCashback
+                    isShowPage
                     tgid={tgid}
+                    save={save}
                   />
                 </div>
               </Conditional>
@@ -673,7 +682,7 @@ const ShowPageBanner = ({
                   className="buy-button"
                   onClick={() => {
                     trackBookNowClick();
-                    window.open(bookingUrl, '_blank', 'noopener, noreferrer');
+                    window.open(bookingUrl, '_self', 'noopener, noreferrer');
                   }}
                 >
                   {strings.CHECK_AVAIL}

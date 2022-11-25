@@ -13,6 +13,7 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   REOPENING_CATEGORIES,
+  CASHBACK_TYPES,
 } from 'const/index';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
@@ -26,6 +27,7 @@ import { convertUidToUrl } from 'utils/urlUtils';
 import { createBookingURL } from 'utils';
 import { expandFontToken } from 'const/typography';
 import { trackEvent } from 'utils/analytics';
+import { checkLTT } from 'utils/helper';
 import { parseDescriptors } from 'utils/productUtils';
 import { descriptorIcons } from 'const/descriptorIcons';
 
@@ -77,6 +79,10 @@ const ProductCard = styled.div`
     grid-gap: ${({ isEntertainmentMb }) => (isEntertainmentMb ? '0' : '4px')};
     height: max-content;
     ${({ isEntertainmentMb }) => isEntertainmentMb && `margin-top: 12px;`}
+    .discount {
+      ${expandFontToken('UI/Label Small (Heavy)')};
+      color: ${COLORS.OCEAN_BLUE.TERTIARY};
+    }
   }
 
   .product-v2-bottom {
@@ -352,12 +358,16 @@ const Product = (props) => {
     activeCategoryId = null,
     host,
     productClick,
+    showPromos,
   } = props;
   const currency = useRecoilValue(currencyAtom);
-
-  const { lang, nakedDomain, redirectToHeadoutBookingFlow, isDev } = useContext(
-    MBContext
-  );
+  const {
+    lang,
+    nakedDomain,
+    redirectToHeadoutBookingFlow,
+    isDev,
+    uid,
+  } = useContext(MBContext);
 
   const { sliceData } = useContext(InteractionContext) || {};
   const { collectionId, primaryCatId, primarySubCatId } = sliceData || {};
@@ -376,7 +386,18 @@ const Product = (props) => {
     reviewCount,
     showPageUid = null,
     secondaryDescriptors = [],
+    hasSpecialOffer,
   } = tour || {};
+  const isLTT = checkLTT(uid);
+  const {
+    originalPrice,
+    finalPrice,
+    cashbackType,
+    cashbackValue,
+  } = listingPrice;
+  const save = showPromos
+    ? Math.round(((originalPrice - finalPrice) / originalPrice) * 100)
+    : 0;
 
   const { collectionName, primaryCategoryName, primarySubCategoryName } =
     category || {};
@@ -429,7 +450,7 @@ const Product = (props) => {
       }
     } else {
       if (isEntertainmentMb) {
-        window.open(showPageUrl, '_self', 'noopener,noreferrer');
+        window.open(showPageUrl, '_blank');
       } else {
         productClick(tgid, event);
       }
@@ -446,6 +467,10 @@ const Product = (props) => {
       [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: title,
       [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
       [ANALYTICS_PROPERTIES.DIV_TYPE]: 'Product List',
+      [ANALYTICS_PROPERTIES.CASHBACK_SHOWN]:
+        cashbackValue > 0 && cashbackType === CASHBACK_TYPES.PERCENTAGE,
+      [ANALYTICS_PROPERTIES.DISCOUNT_SHOWN]: save > 0 ? 'Scratch Price' : null,
+      [ANALYTICS_PROPERTIES.L1_BOOSTER_SHOWN]: getBooster(true),
     });
   };
 
@@ -478,6 +503,23 @@ const Product = (props) => {
     });
   };
   const showPageExists = !showPageUrl.includes('/book');
+  const getBooster = (onlyBoosterText = false) => {
+    if ((save > 0 || hasSpecialOffer) && isLTT && showPromos) {
+      if (onlyBoosterText) return 'Special Offer';
+      return (
+        <div className="overlay-booster">
+          <Emoji symbol="🤑" label="glowing-star" /> {strings.SPECIAL_OFFER}
+        </div>
+      );
+    } else if (isNewArrival) {
+      if (onlyBoosterText) return 'NEW`';
+      return (
+        <div className="overlay-booster">
+          <Emoji symbol="🌟" label="glowing-star" /> {strings.NEW}
+        </div>
+      );
+    } else return null;
+  };
 
   const cardComponent = (
     <ProductCard
@@ -498,9 +540,7 @@ const Product = (props) => {
           height={250}
           alt={title}
         />
-        <Conditional if={isNewArrival}>
-          <div className="overlay-booster">{strings.NEW}</div>
-        </Conditional>
+        {getBooster()}
       </div>
       <div className="product-v2-bottom">
         <Conditional if={vendor?.length && isMobile}>
@@ -568,13 +608,14 @@ const Product = (props) => {
         </div>
         <div className="product-v2-bottom-left">
           <PriceBlock
-            showScratchPrice
             prefix
             showCashback
             listingPrice={listingPrice}
             showSavings
+            showScratchPrice
             lang={lang}
             tgid={tgid}
+            save={save}
           />
         </div>
         <Conditional if={cardFooter?.length && !isEntertainmentMb}>
@@ -617,12 +658,7 @@ const Product = (props) => {
                 height={250}
                 alt={title}
               />
-              <Conditional if={isNewArrival}>
-                <div className="overlay-booster">
-                  <Emoji symbol="🌟" label="glowing-star" />{' '}
-                  {strings.NEW_ARRIVAL}
-                </div>
-              </Conditional>
+              {getBooster()}
             </div>
             <div className="product-v2-bottom">
               <Conditional if={vendor?.length && isMobile}>
@@ -675,8 +711,11 @@ const Product = (props) => {
                   prefix
                   listingPrice={listingPrice}
                   showSavings
+                  showCashback
+                  showScratchPrice
                   lang={lang}
                   tgid={tgid}
+                  save={save}
                 />
               </div>
               <Conditional if={cardFooter?.length && !isEntertainmentMb}>

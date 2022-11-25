@@ -283,6 +283,8 @@ const ja = {
       LIMITED: 'Limited Period Offer',
     },
   },
+  SAVE_PERCENT: '{0}%割引',
+  SAVE_UPTO_PERCENT: '最大{0}%割引',
 };
 
 export default ja;

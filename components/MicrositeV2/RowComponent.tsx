@@ -36,6 +36,7 @@ export const RowComponent = (props) => {
     isListicle,
     isDev,
     sectionIndex,
+    showPromos,
   } = props;
   const { activeCategoryId, activeTour, clickTour, closeTour } =
     useContext(InteractionContext) || {};
@@ -90,6 +91,7 @@ export const RowComponent = (props) => {
           activeCategoryId={activeCategoryId}
           host={host}
           uid={uid}
+          showPromos={showPromos}
         />
       ))}
       <Conditional if={!isEntertainmentMb}>
