@@ -358,7 +358,6 @@ const Product = (props) => {
     activeCategoryId = null,
     host,
     productClick,
-    showPromos,
   } = props;
   const currency = useRecoilValue(currencyAtom);
   const {
@@ -395,9 +394,7 @@ const Product = (props) => {
     cashbackType,
     cashbackValue,
   } = listingPrice;
-  const save = showPromos
-    ? Math.round(((originalPrice - finalPrice) / originalPrice) * 100)
-    : 0;
+  const save = Math.round(((originalPrice - finalPrice) / originalPrice) * 100);
 
   const { collectionName, primaryCategoryName, primarySubCategoryName } =
     category || {};
@@ -504,7 +501,7 @@ const Product = (props) => {
   };
   const showPageExists = !showPageUrl.includes('/book');
   const getBooster = (onlyBoosterText = false) => {
-    if ((save > 0 || hasSpecialOffer) && isLTT && showPromos) {
+    if ((save > 0 || hasSpecialOffer) && isLTT) {
       if (onlyBoosterText) return 'Special Offer';
       return (
         <div className="overlay-booster">
