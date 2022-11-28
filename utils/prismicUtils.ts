@@ -1,5 +1,6 @@
 import { Client } from 'config/prismic-config';
 import Prismic from 'prismic-javascript';
+import * as Sentry from '@sentry/nextjs';
 import { toursTabSliceHandler } from 'components/Slices';
 import {
   COMMON_DATA_PROPS_FOR_LISTICLE,
@@ -1532,6 +1533,7 @@ export const getPageData = async ({
     )
       .then((r) => r.json())
       .catch((error) => {
+        Sentry.captureException(error);
         traceError({ error, host: req?.headers?.host, url: req?.url });
 
         // if tourGroup API fails, assume all tours as unavailable and render rest of the page.

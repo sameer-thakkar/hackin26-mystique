@@ -17,7 +17,6 @@ import {
   standardizeCancellationPolicy,
 } from 'utils/productUtils';
 import { CURRENCY_SYMBOL_MAP } from 'const/index';
-import { strings } from 'const/strings';
 import * as Sentry from '@sentry/nextjs';
 
 export const uncategorizedToursListParser = (
@@ -128,6 +127,7 @@ export const categoryTourListParserV1 = async ({
         : finalSections;
       tourData.push(...pinnedProducts, ...allProducts);
     } catch (err) {
+      Sentry.captureException(err);
       console.error(err);
     }
   } else if (category) {
@@ -144,6 +144,7 @@ export const categoryTourListParserV1 = async ({
       tourData.push(...categoryData?.pageData?.items);
       primaryCity = categoryData?.city;
     } catch (err) {
+      Sentry.captureException(err);
       console.error(err);
     }
   } else if (sub_category) {
@@ -160,6 +161,7 @@ export const categoryTourListParserV1 = async ({
       primaryCity = subCategoryData?.city;
       tourData.push(...subCategoryData?.pageData?.items);
     } catch (err) {
+      Sentry.captureException(err);
       console.error(err);
     }
   }
@@ -872,6 +874,7 @@ export const getToursGlobalCollection = async ({
         : headoutPicksSection?.tourGroups?.items;
       tourData.push(...finalSection);
     } catch (err) {
+      Sentry.captureException(err);
       console.error(err);
     }
   } else if (sub_category) {
@@ -885,6 +888,7 @@ export const getToursGlobalCollection = async ({
       currency = subCategoryData?.currency;
       tourData.push(...subCategoryData?.pageData?.items);
     } catch (err) {
+      Sentry.captureException(err);
       console.error(err);
     }
   } else if (tgid) {
@@ -896,6 +900,7 @@ export const getToursGlobalCollection = async ({
       currency = tgidData?.currency;
       tourData.push(tgidData);
     } catch (err) {
+      Sentry.captureException(err);
       console.error(err);
     }
   }

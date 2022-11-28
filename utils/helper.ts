@@ -1,5 +1,6 @@
 import parse from 'url-parse';
 import dayjs from 'dayjs';
+import * as Sentry from '@sentry/nextjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import { LANGUAGE_MAP } from 'const/index';
@@ -274,6 +275,7 @@ export const groupSlices = (slices, allowImmediateNesting = false) => {
     });
     return groups.slices;
   } catch (error) {
+    Sentry.captureException(error);
     // eslint-disable-next-line no-console
     console.error({ error });
     return groups.slices;
