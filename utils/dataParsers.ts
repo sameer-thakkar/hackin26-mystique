@@ -17,6 +17,8 @@ import {
   standardizeCancellationPolicy,
 } from 'utils/productUtils';
 import { CURRENCY_SYMBOL_MAP } from 'const/index';
+import { strings } from 'const/strings';
+import * as Sentry from '@sentry/nextjs';
 
 export const uncategorizedToursListParser = (
   uncategorizedToursList,
@@ -448,6 +450,7 @@ export const categoryTourListParserV2 = async (
       }
     } catch (err) {
       console.error(err);
+      Sentry.captureException(err);
     }
   }
   if (categoryIds?.length) {
@@ -482,6 +485,7 @@ export const categoryTourListParserV2 = async (
       }
     } catch (err) {
       console.error(err);
+      Sentry.captureException(err);
     }
   }
   if (subCategoryIds?.length) {
@@ -516,6 +520,7 @@ export const categoryTourListParserV2 = async (
       }
     } catch (err) {
       console.error(err);
+      Sentry.captureException(err);
     }
   }
 
