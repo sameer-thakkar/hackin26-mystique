@@ -128,7 +128,6 @@ const CategoryCard = ({
           <PriceBlock
             listingPrice={listingPrice}
             lang={currentLanguage}
-            tgid={id}
             showSavings
             showScratchPrice
             prefix

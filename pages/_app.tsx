@@ -13,6 +13,7 @@ import {
   CUSTOM_TYPES,
   ANALYTICS_PROPERTIES,
   RTL_LANGUAGE_CODES,
+  COOKIE,
 } from 'const/index';
 import { strings } from 'const/strings';
 import {
@@ -45,6 +46,7 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
       host,
       isDev,
       isStage,
+      cookies = {},
     } = pageProps;
     const { title } = CMSContent?.data ?? {};
     const metaTitle = renderShortCodes(title)?.join?.('');
@@ -54,7 +56,13 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
         : CMSContent?.data?.featured_title;
     pageTitle = pageTitle ?? metaTitle;
     pageTitle = renderShortCodes(pageTitle)?.join?.('');
-    const ssrCurrencyCode = primaryCity?.country?.currency?.code;
+    const cookieCurrency = cookies?.[COOKIE.CURRENT_CURRENCY];
+    const isValidCookieCurrency = cookieCurrency
+      ? currencyList.find((c) => c.code === cookieCurrency)
+      : false;
+    const ssrCurrencyCode = isValidCookieCurrency
+      ? cookies?.[COOKIE.CURRENT_CURRENCY]
+      : primaryCity?.country?.currency?.code;
 
     const pageType = PAGETYPE_BY_CUSTOMTYPE[customType];
     const mbName = renderShortCodes(baseLangPageTitle)?.join?.('');

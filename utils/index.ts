@@ -315,6 +315,7 @@ export const generatePromiseForCategoryTours = ({
   isCategory = false,
   isSubCategory = false,
   lang,
+  cookies,
 }: {
   arr: any[];
   hostname: string;
@@ -323,6 +324,7 @@ export const generatePromiseForCategoryTours = ({
   isCategory?: boolean;
   isSubCategory?: boolean;
   lang: string;
+  cookies?: { [key: string]: string };
 }) => {
   const idSet = new Set(arr);
   const allIds = Array.from(idSet);
@@ -336,6 +338,7 @@ export const generatePromiseForCategoryTours = ({
           hostname,
           limit: '100',
           language: getHeadoutLanguagecode(lang),
+          cookies,
         });
         break;
       case isCategory:
@@ -347,6 +350,7 @@ export const generatePromiseForCategoryTours = ({
           city,
           limit: '100',
           language: getHeadoutLanguagecode(lang),
+          cookies,
         });
         break;
     }

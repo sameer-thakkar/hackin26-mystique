@@ -1455,7 +1455,6 @@ const Product = (props) => {
                 showSavings
                 prefix
                 key={'price-block'}
-                tgid={tgid}
               />
             </PriceContainer>
             <Conditional if={isTicketCard && promo_code}>

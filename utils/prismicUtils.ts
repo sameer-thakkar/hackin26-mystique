@@ -43,6 +43,7 @@ import {
   fetchTourGroupSlots,
   fetchTourGroupV6,
   fetchDomainConfig,
+  fetchTourListV6,
 } from 'utils/apiUtils';
 
 export const fetchAllMatchingDocs = async ({
@@ -992,12 +993,14 @@ export const getPrismicDocument = async ({
   query,
   isDev,
   useHostAsUid = false,
+  cookies = {},
 }): Promise<{
   ContentType?: string;
   CMSContent?: any;
   statusCode?: number;
   isDev?: boolean;
   useHostAsUid?: boolean;
+  cookies?: { [key: string]: string };
 }> => {
   const { host } = req.headers || window.location;
   const { lang } = getLangUID(req, query);
@@ -1079,6 +1082,7 @@ export const getPageData = async ({
 }) => {
   const { host } = req.headers || window.location;
   const isStage = host.includes('stage-');
+  const cookies = req.cookies;
   const { uid, lang } = getLangUID(req, query);
   const hostname = getHostName(isStage, isDev, host);
 
@@ -1090,6 +1094,7 @@ export const getPageData = async ({
       req,
       serverResponse,
       isDev,
+      cookies,
     })) || { statusCode: 404 };
     const currencyListPromise = fetchCurrencyList();
     const domainConfigPromise = fetchDomainConfig(uid);
@@ -1160,11 +1165,12 @@ export const getPageData = async ({
           sliceObj,
           hostname,
           lang,
+          cookies,
         });
       }
 
       const prismicTours = toursTabFirstSlice
-        ? await toursTabSliceHandler(toursTabFirstSlice)
+        ? toursTabSliceHandler(toursTabFirstSlice)
         : [];
 
       const toursList = uncategorizedToursListParser(
@@ -1210,6 +1216,7 @@ export const getPageData = async ({
           hostname,
           language,
           currency: 'USD',
+          cookies,
         });
         const pinnedCards =
           getCollectionSection(collectionData, 'PINNED_CARDS') ?? [];
@@ -1223,6 +1230,7 @@ export const getPageData = async ({
             language,
             currency: 'USD',
             hostname,
+            cookies,
           })) ?? {};
         const [currentCollection] = collectionList ?? [];
         const { startingPrice: price } = currentCollection ?? {};
@@ -1237,6 +1245,7 @@ export const getPageData = async ({
           city,
           language,
           currency: 'USD',
+          cookies,
         });
         ticketsData = categoryData?.pageData?.items;
         startingPrice = categoryData?.unFilteredMetaData?.minPrice;
@@ -1312,6 +1321,7 @@ export const getPageData = async ({
         hostname,
         cityName,
         lang: getHeadoutLanguagecode(lang),
+        cookies,
       });
       return {
         CMSContent: {
@@ -1338,12 +1348,14 @@ export const getPageData = async ({
           tgid: CMSContent?.data?.tgid,
           hostname,
           language: getHeadoutLanguagecode(lang),
+          cookies,
         });
 
         const inventorySlotData = await fetchTourGroupSlots({
           tgid: CMSContent?.data?.tgid,
           hostname,
           forDays: 10,
+          cookies,
         });
 
         const primaryCountry = tgidData?.city?.country;
@@ -1433,6 +1445,7 @@ export const getPageData = async ({
             sliceObj: localisedCategoryTourListV1,
             hostname,
             lang,
+            cookies,
           });
         } else {
           categoryTourListData = await categoryTourListParserV2({
@@ -1442,12 +1455,13 @@ export const getPageData = async ({
             categoryCarousel: categoryCarouselCF,
             lang,
             localizedStrings,
+            cookies,
           });
         }
       }
 
       const prismicTours = toursTabFirstSlice
-        ? await toursTabSliceHandler(toursTabFirstSlice)
+        ? toursTabSliceHandler(toursTabFirstSlice)
         : [];
       const offers = prismicTours
         ?.filter((tour) => tour.offer__free_tour?.id)
@@ -1497,53 +1511,29 @@ export const getPageData = async ({
         ...(activeCurrency && { activeCurrency }),
       };
     }
-    let constructedTourgroupURL;
     tgidsArray = [...tgidsArray, ...all_tours_tab_tgids];
-    try {
-      const useTest = !!scorpioAllTourGroupData?.['queryParams']?.bookSubdomain;
-      const tgEndpoint = new URL(
-        `https://${
-          isStage ? 'stage-' : ''
-        }microbrands.headout.com/api/tours/v6/tour-groups/`
-      );
-      tgEndpoint.searchParams.set('language', getHeadoutLanguagecode(lang));
-      tgEndpoint.searchParams.set('ids%5B%5D', tgidsArray.join(','));
-      if (getHeadoutLanguagecode(lang) !== 'en') {
-        tgEndpoint.searchParams.set('fallback-to-english', '0');
-      }
-      if (scorpioAllTourGroupData?.['queryParams']?.currency)
-        tgEndpoint.searchParams.set(
-          'currency',
-          scorpioAllTourGroupData?.['queryParams']?.currency
-        );
-      if (useTest) {
-        tgEndpoint.searchParams.set('useTest', 'true');
-      }
-      constructedTourgroupURL = tgEndpoint.toString();
-    } catch (e) {
-      constructedTourgroupURL = `https://${
-        isStage ? 'stage-' : ''
-      }microbrands.headout.com/api/tours/v6/tour-groups/?ids%5B%5D=${tgidsArray}&language=${getHeadoutLanguagecode(
-        lang
-      )}`;
-    }
+    const useTest = !!scorpioAllTourGroupData?.['queryParams']?.bookSubdomain;
 
-    const tourGroupAPIResponses = await fetch(
-      constructedTourgroupURL.toString()
-    )
-      .then((r) => r.json())
-      .catch((error) => {
-        Sentry.captureException(error);
-        traceError({ error, host: req?.headers?.host, url: req?.url });
+    const tourGroupAPIResponses = await fetchTourListV6({
+      hostname,
+      language: getHeadoutLanguagecode(lang),
+      tgids: tgidsArray,
+      fallbackToEnglish: getHeadoutLanguagecode(lang) !== 'en',
+      currency: scorpioAllTourGroupData?.['queryParams']?.currency ?? null,
+      useTest,
+      cookies,
+    }).catch((error) => {
+      Sentry.captureException(error);
+      traceError({ error, host: req?.headers?.host, url: req?.url });
 
-        // if tourGroup API fails, assume all tours as unavailable and render rest of the page.
-        return {
-          tourGroups: tgidsArray.map((tgid) => ({
-            id: tgid,
-            listingPrice: null,
-          })),
-        };
-      });
+      // if tourGroup API fails, assume all tours as unavailable and render rest of the page.
+      return {
+        tourGroups: tgidsArray.map((tgid) => ({
+          id: tgid,
+          listingPrice: null,
+        })),
+      };
+    });
 
     const currencySymbolMap = tourGroupAPIResponses?.currencies?.reduce(
       (acc, currency) => ({

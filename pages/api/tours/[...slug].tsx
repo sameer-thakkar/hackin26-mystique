@@ -1,15 +1,41 @@
+import Cookies from 'cookies';
+import { COOKIE } from 'const/index';
+import { checkIfCurrencyCodeValid } from 'utils/currency';
+
 const markdownToRichtext = require('@ueno/markdown-to-prismic-richtext');
 const ToursAPI = async (req, res) => {
   const { useTest } = req?.query;
+  const cookies = new Cookies(req, res);
   const blackListQueryParams = ['slug', 'useTest'];
-  const queryParams = Object.entries(req.query)
-    .map(([key, value]) =>
-      !blackListQueryParams.includes(key) ? `${key}=${value}` : null
-    )
-    .filter((q) => q);
+
+  const queryParamsObj = new URLSearchParams();
+  const cookieCurrency = cookies.get(COOKIE.CURRENT_CURRENCY);
+  const isCookieCurrencyValid = checkIfCurrencyCodeValid({
+    currencyCode: cookieCurrency,
+  });
+
+  Object.entries(req.query ?? {}).forEach(([key, value]) => {
+    if (!blackListQueryParams.includes(key))
+      queryParamsObj.set(key, value as string);
+  });
+
+  if (
+    isCookieCurrencyValid &&
+    cookieCurrency &&
+    !queryParamsObj.get('currency')
+  ) {
+    queryParamsObj.set('currency', cookieCurrency);
+  } else if (cookieCurrency && !isCookieCurrencyValid) {
+    cookies.set(COOKIE.CURRENT_CURRENCY);
+  }
+
+  const queryParamsString = queryParamsObj.toString();
+
   const url = `https://api.${
     useTest === 'true' || useTest ? 'test-' : ''
-  }headout.com/api/${req.query.slug.join('/')}/?${queryParams.join('&')}`;
+  }headout.com/api/${req.query.slug.join('/')}/${
+    queryParamsString ? `?${queryParamsString}` : ''
+  }`;
   await fetch(url)
     .then((r) => r.json())
     .then((r) => {

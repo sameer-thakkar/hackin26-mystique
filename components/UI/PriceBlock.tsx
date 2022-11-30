@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { useContext } from 'react';
 import Conditional from 'components/common/Conditional';
-import usePrice from 'hooks/usePrice';
 import LocalisedPrice from 'UI/LPrice';
 import COLORS from 'const/colors';
 import { THEMES, CASHBACK_TYPES } from 'const/index';
@@ -126,7 +125,6 @@ type PriceBlockProps = {
   listingPrice: any;
   showSavings?: boolean;
   showScratchPrice?: boolean;
-  tgid?: number;
   prefix?: boolean;
   save?: number;
   showCashback?: boolean;
@@ -134,18 +132,16 @@ type PriceBlockProps = {
 };
 
 const PriceBlock = ({
-  listingPrice: ssrListingPrice,
+  listingPrice,
   lang,
   showScratchPrice: showScratchPriceProp = false,
   prefix = false,
   showSavings,
   currencyDisplay = 'symbol',
-  tgid,
   save,
   showCashback = false,
   isShowPage = false,
 }: PriceBlockProps) => {
-  const { isLoading, listingPrice } = usePrice({ tgid, ssrListingPrice });
   const { uid } = useContext(MBContext);
   const isLTT = checkLTT(uid);
 
@@ -167,10 +163,6 @@ const PriceBlock = ({
     showCashback &&
     cashbackValue > 0 &&
     cashbackType === CASHBACK_TYPES.PERCENTAGE;
-
-  if (isLoading) {
-    return <PriceSkeleton showScratchPrice={showScratchPrice || showPrefix} />;
-  }
 
   const savingsElementsArray = [];
 

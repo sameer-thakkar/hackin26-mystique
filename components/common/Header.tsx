@@ -298,6 +298,7 @@ const Header: React.FC<any> = (props) => {
               currencies={headerCurrencies}
               languages={headerLanguages}
               currentLanguage={currentLanguage}
+              isMobile={isMobile}
             />
           </Conditional>
           <Conditional if={isMobile && hamburgerIconCheck}>

@@ -281,6 +281,7 @@ export const ANALYTICS_EVENTS = {
   CHECK_AVAILABILITY_CLICKED: 'Check Availability Clicked',
   MB_VIDEO_PLAYED: 'MB Video Played',
   MB_LANGUGAGE_CHANGED: 'MB Language Changed',
+  MB_CURRENCY_CHANGED: 'MB Currency Changed',
   LP_TO_BOOKING_PAGE: 'LP to booking page',
   LP_TO_SHOWPAGE: 'LP to showpage',
   LOCALE_CLICKED: 'Locale Selector Clicked',

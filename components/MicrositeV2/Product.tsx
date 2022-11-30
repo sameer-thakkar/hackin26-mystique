@@ -611,7 +611,6 @@ const Product = (props) => {
             showSavings
             showScratchPrice
             lang={lang}
-            tgid={tgid}
             save={save}
           />
         </div>
@@ -711,7 +710,6 @@ const Product = (props) => {
                   showCashback
                   showScratchPrice
                   lang={lang}
-                  tgid={tgid}
                   save={save}
                 />
               </div>

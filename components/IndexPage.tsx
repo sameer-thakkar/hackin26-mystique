@@ -1,3 +1,4 @@
+import ServerCookies from 'cookies';
 import React, { useEffect } from 'react';
 import ErrorPage from 'next/error';
 import dynamic from 'next/dynamic';
@@ -28,6 +29,7 @@ import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
 import { withShortcodes } from 'utils/helper';
 import { localServerSideIsMobileCheck } from 'utils/gen';
 import { strings } from 'const/strings';
+import { checkIfCurrencyCodeValid } from 'utils/currency';
 
 const Microsite = dynamic(() => import('components/MicrositeV1'));
 const ContentPage = dynamic(() => import('components/ContentPage'));
@@ -277,6 +279,16 @@ Page.getInitialProps = async (ctx) => {
   strings.setContent({
     default: localizedStrings,
   });
+  const serverCookies = new ServerCookies(req, res);
+  if (
+    !checkIfCurrencyCodeValid({
+      currencyCode: serverCookies.get(COOKIE.CURRENT_CURRENCY),
+    })
+  ) {
+    delete req.cookies[COOKIE.CURRENT_CURRENCY];
+    serverCookies.set(COOKIE.CURRENT_CURRENCY);
+  }
+
   const queryParamsString = getValidUrlParams(query);
   const { host } = req?.headers || window?.location;
   const pathname =
@@ -367,7 +379,8 @@ Page.getInitialProps = async (ctx) => {
       redirectTo({ res, url });
     }
 
-    if (process?.browser) (window as any).prismic.setupEditButton();
+    if (typeof window !== 'undefined')
+      (window as any).prismic.setupEditButton();
     if (res) {
       if (props?.statusCode) {
         res.statusCode = props.statusCode;
@@ -396,6 +409,7 @@ Page.getInitialProps = async (ctx) => {
       query,
       asPath,
       biLink,
+      cookies: req?.cookies ?? {},
     };
   } catch (error) {
     traceError({ error, host: req?.headers?.host, url: req?.url });

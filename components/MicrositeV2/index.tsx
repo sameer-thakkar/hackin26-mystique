@@ -12,6 +12,7 @@ import { checkLTT } from 'utils/helper';
 import { MicrositeV2GlobalStyle } from 'const/globalStyles/micrositeV2';
 import { getLogoRedirectionUrl } from 'utils/urlUtils';
 import { PAGETYPE, QUERY_PARAMS, THEMES } from 'const/index';
+import { fetchTourListV6 } from 'utils/apiUtils';
 
 const HomePage: ComponentType<any> = dynamic(() =>
   import('./views/HomePage').then((mod) => mod.HomePage)
@@ -55,17 +56,15 @@ class MicrositeV2 extends Component<any, any> {
     const allTgids = allTours.map((tour) => tour.primary.tgid);
     const isLTT = checkLTT(this.props.data.uid);
 
-    fetch(`/api/tours/v6/tour-groups/?ids%5B%5D=${allTgids}`)
-      .then((res) => {
-        return res.json();
-      })
-      .then((jsonTours) => {
-        const cardPrices = tourListApiParser(jsonTours);
-        this.setState({
-          cardPrices: cardPrices,
-          isFetched: true,
-        });
+    fetchTourListV6({
+      tgids: allTgids,
+    }).then((jsonTours) => {
+      const cardPrices = tourListApiParser(jsonTours);
+      this.setState({
+        cardPrices: cardPrices,
+        isFetched: true,
       });
+    });
 
     const directTgid = this.props.router.query.tgid;
     if (isMobile && directTgid && !isLTT) {

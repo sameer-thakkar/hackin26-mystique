@@ -46,11 +46,13 @@ export const categoryTourListParserV1 = async ({
   sliceObj,
   hostname,
   lang,
+  cookies = {},
 }: {
   productCard: { [key: string]: any };
   sliceObj: { [key: string]: any };
   hostname: string;
   lang: string;
+  cookies?: { [key: string]: string };
 }) => {
   let tourData = [],
     currency;
@@ -92,6 +94,7 @@ export const categoryTourListParserV1 = async ({
         hostname,
         language,
         limit: finalLimit,
+        cookies,
       });
       primaryCity = collectionData?.city;
       currency = collectionData?.city?.country?.currency;
@@ -139,6 +142,7 @@ export const categoryTourListParserV1 = async ({
         city: cityCode,
         language,
         limit: finalLimit,
+        cookies,
       });
       currency = categoryData?.currency;
       tourData.push(...categoryData?.pageData?.items);
@@ -156,6 +160,7 @@ export const categoryTourListParserV1 = async ({
         city: cityCode,
         language,
         limit: finalLimit,
+        cookies,
       });
       currency = subCategoryData?.currency;
       primaryCity = subCategoryData?.city;
@@ -176,6 +181,7 @@ export const categoryTourListParserV1 = async ({
         hostname,
         language,
         tgids: tgidsToFetch,
+        cookies,
       });
       if (additionalTours?.tourGroups?.length) {
         allTours = [...tourData, ...additionalTours?.tourGroups];
@@ -238,7 +244,7 @@ export const categoryTourListParserV1 = async ({
 
     const tgidVariantData: any[] = await Promise.all(
       allMultiVariantTgids?.map(async (tgid) =>
-        fetchTourGroupV6({ tgid, hostname, language })
+        fetchTourGroupV6({ tgid, hostname, language, cookies })
       )
     );
 
@@ -358,6 +364,7 @@ interface CategoryTourListParserV2 {
   categoryCarousel?: { [key: string]: any };
   lang: string;
   localizedStrings: any;
+  cookies?: { [key: string]: string };
 }
 
 export const categoryTourListParserV2 = async (
@@ -373,6 +380,7 @@ export const categoryTourListParserV2 = async (
     categoryCarousel,
     lang,
     localizedStrings,
+    cookies,
   } = obj || {};
 
   const { primary, items: slices } = tourListCategory || {};
@@ -422,6 +430,7 @@ export const categoryTourListParserV2 = async (
         city,
         isCollection: true,
         lang,
+        cookies,
       });
       const data = await Promise.all(allPromises);
       const collectionData: any = data?.map((c: any) => {
@@ -835,6 +844,7 @@ export const getToursGlobalCollection = async ({
   hostname,
   cityName,
   lang = 'en',
+  cookies,
 }: {
   lang: string;
   collection?: number;
@@ -844,6 +854,7 @@ export const getToursGlobalCollection = async ({
   commonScratchPrice?: boolean;
   hostname?: string;
   cityName?: string;
+  cookies?: { [key: string]: string };
 }) => {
   let tourData = [],
     currency;
@@ -853,6 +864,7 @@ export const getToursGlobalCollection = async ({
       const collectionData = await fetchCollection({
         collectionId: collection,
         hostname,
+        cookies,
       });
       currency = collectionData?.city?.country?.currency;
       const getCollectionSection = (collectionData, sectionType: string) => {
@@ -884,6 +896,7 @@ export const getToursGlobalCollection = async ({
         hostname,
         isSubCategory: true,
         city: cityName,
+        cookies,
       });
       currency = subCategoryData?.currency;
       tourData.push(...subCategoryData?.pageData?.items);
@@ -896,6 +909,7 @@ export const getToursGlobalCollection = async ({
       const tgidData = await fetchTourGroupV6({
         tgid,
         hostname,
+        cookies,
       });
       currency = tgidData?.currency;
       tourData.push(tgidData);

@@ -19,7 +19,8 @@
       "hooks/*": ["components/hooks/*"],
       "atoms/*": ["store/atoms"],
       "const/*": ["constants/*"]
-    }
+    },
+    "incremental": true
   },
   "exclude": ["node_modules", ".storybook", "stories"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]

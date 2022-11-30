@@ -24,6 +24,25 @@ export const getLocalisedPrice = ({
   return localisedPrice;
 };
 
+/**
+ *
+ * **Warning**: Intl accepts any 3 Character Code to be valid
+ * this is not a comprehensive valiadtion, (only way to know that is to check it against currency list API)
+ * only ensures the currency code looks like its in ISO Standard.
+ *
+ */
+export const checkIfCurrencyCodeValid = ({ currencyCode }) => {
+  try {
+    new Intl.NumberFormat('en-us', {
+      style: 'currency',
+      currency: currencyCode,
+    }).format(0);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
 export const getLocalisedCurrencySymbol = ({
   lang,
   currencyCode,

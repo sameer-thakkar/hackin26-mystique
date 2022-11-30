@@ -222,3 +222,16 @@ export const getLogoRedirectionUrl = ({
       return null;
   }
 };
+
+export const addToSearchParams = (
+  searchParam: string,
+  params: { [key: string]: string } = {}
+) => {
+  const searchParams = new URLSearchParams(searchParam);
+  Object.entries(params ?? {}).forEach(([key, val]) => {
+    searchParams.set(key, val);
+  });
+  const searchParamsString = searchParams.toString();
+
+  return `${searchParamsString ? '?' + searchParamsString : ''}`;
+};

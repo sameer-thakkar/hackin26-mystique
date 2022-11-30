@@ -219,7 +219,6 @@ const StickyHeader = ({
                 <PriceBlock
                   listingPrice={listingPrice}
                   lang={currentLanguage}
-                  tgid={tgid}
                   showSavings
                   showScratchPrice
                   prefix

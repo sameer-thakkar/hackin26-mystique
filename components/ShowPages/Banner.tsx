@@ -538,8 +538,8 @@ const ShowPageBanner = ({
           tgid={tgid}
           currentLanguage={currentLanguage}
           isAvailable={isTourAvailable}
-          tourGroupData={tourGroupData}
           bookingUrl={bookingUrl}
+          tourGroupData={tourGroupData}
         />
       </Conditional>
 
@@ -631,7 +631,6 @@ const ShowPageBanner = ({
                   showCashback
                   prefix
                   isShowPage
-                  tgid={tgid}
                   save={save}
                 />
                 <Conditional if={reviewCount > 0}>
@@ -670,7 +669,6 @@ const ShowPageBanner = ({
                     prefix
                     showCashback
                     isShowPage
-                    tgid={tgid}
                     save={save}
                   />
                 </div>

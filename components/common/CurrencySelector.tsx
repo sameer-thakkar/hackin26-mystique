@@ -1,0 +1,79 @@
+import React from 'react';
+import { useRouter } from 'next/router';
+import styled from 'styled-components';
+import COLORS from 'const/colors';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { currencyAtom } from 'store/atoms/currency';
+import DropdownSelector from 'components/common/DropdownSelector';
+import { metaAtom } from 'store/atoms/meta';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+
+const CurrencyPlaceholder = styled.div`
+  width: 60px;
+  background: ${COLORS.GRAY.G7};
+  display: block;
+  height: 16px;
+  margin-left: 32px;
+`;
+
+const CurrencySelector = ({ currencies }) => {
+  const [activeCurrency, setCurrency] = useRecoilState(currencyAtom);
+  const router = useRouter();
+  const pageMetaData = useRecoilValue(metaAtom);
+
+  const trackDropdownShown = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.DROPDOWN_SHOWN,
+      [ANALYTICS_PROPERTIES.HEADER]: getDisplayCurrencyString({
+        currencyObj: currencies.find(({ code }) => code === activeCurrency),
+      }),
+      ...getCommonEventMetaData(pageMetaData),
+    });
+  };
+
+  const trackCurrencyChange = (option) => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.MB_CURRENCY_CHANGED,
+      [ANALYTICS_PROPERTIES.CURRENCY]: option.value,
+    });
+  };
+
+  const getDisplayCurrencyString = ({ currencyObj, full = false }) => {
+    const { currencyName, localSymbol, code } = currencyObj ?? {};
+    const finalLocalSymbol = localSymbol === code ? '' : localSymbol;
+    return full
+      ? `${currencyName} (${finalLocalSymbol}${code})`
+      : `${finalLocalSymbol ? finalLocalSymbol + ' ' : ''}${code}`;
+  };
+  const options = currencies.map((currency) => {
+    return {
+      label: getDisplayCurrencyString({ currencyObj: currency, full: true }),
+      value: currency.code,
+      activeLabel: getDisplayCurrencyString({
+        currencyObj: currency,
+      }),
+    };
+  });
+
+  const handleChange = (option) => {
+    setCurrency(option.value);
+    trackCurrencyChange(option);
+
+    // push to the back of callstack, ensures currencyCode cookie is set.
+    setTimeout(router.reload);
+  };
+
+  if (!activeCurrency) return <CurrencyPlaceholder />;
+
+  return (
+    <DropdownSelector
+      currentValue={options.find((opt) => opt.value === activeCurrency)}
+      onChange={handleChange}
+      options={options}
+      onShowDropdown={trackDropdownShown}
+    />
+  );
+};
+
+export default CurrencySelector;

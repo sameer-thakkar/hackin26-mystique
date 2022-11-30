@@ -19,6 +19,20 @@ export const swrFetcher = async (url) => {
   return res.json();
 };
 
+export const constructHeaders = ({ cookies = {} }) => {
+  const headers = new Headers();
+  if (cookies)
+    headers.set(
+      'cookie',
+      Object.entries(cookies ?? {}).reduce(
+        (acc, [key, value]) => `${acc}${key}=${value};`,
+        ''
+      )
+    );
+
+  return headers;
+};
+
 /**
  * Use this if you need to use Promise.all with swr. It takes an array of URLs and returns an array of fetched data
  * Note this will create a cache key with the array of all of them and it will revalidate all of them at the same time. If you want more granular control you will need to use more than one useSWR call.
@@ -118,10 +132,12 @@ export const fetchTourList = ({ tgids, host = '', ...query }) => {
 };
 
 interface CommonApiProps {
-  hostname: string;
+  hostname?: string;
   language?: string;
   fallbackToEnglish?: boolean;
   currency?: string;
+  useTest?: boolean;
+  cookies?: { [key: string]: string };
 }
 
 interface TourListProps extends CommonApiProps {
@@ -135,12 +151,15 @@ export const fetchTourListV6 = async ({
   tgids,
   fallbackToEnglish = false,
   currency,
+  useTest,
+  cookies = {},
 }: TourListProps) => {
   try {
     const params = {
       'ids[]': tgids?.join(','),
       ...(language && { language }),
       ...(currency && { currency }),
+      ...(useTest && { useTest: 'true' }),
       ...(!fallbackToEnglish &&
         language !== 'en' && {
           'fallback-to-english': '0',
@@ -152,7 +171,9 @@ export const fetchTourListV6 = async ({
       params,
       id: null,
     });
-    const res = await fetch(apiUrl);
+    const headers = constructHeaders({ cookies });
+
+    const res = await fetch(apiUrl, { headers });
     return await res.json();
   } catch (error) {
     // eslint-disable-next-line no-console
@@ -169,11 +190,13 @@ export const fetchTourGroupV6 = async ({
   hostname,
   language,
   currency,
+  cookies,
 }: TourGroupProps) => {
   const params = {
     ...(language && { language }),
     ...(currency && { currency }),
   };
+  const headers = constructHeaders({ cookies });
 
   const apiUrl = getHeadoutApiUrl({
     endpoint: HeadoutEndpoints.TourGroupsV6,
@@ -182,7 +205,7 @@ export const fetchTourGroupV6 = async ({
     id: tgid,
   });
 
-  const res = await fetch(apiUrl);
+  const res = await fetch(apiUrl, { headers });
   return await res.json();
 };
 
@@ -214,6 +237,7 @@ export const fetchTourGroupsByCategory = async ({
   limit,
   fallbackToEnglish = false,
   currency,
+  cookies,
 }: fetchTourGroupsByCategoryProps) => {
   const params = {
     language,
@@ -226,6 +250,7 @@ export const fetchTourGroupsByCategory = async ({
         'fallback-to-english': '0',
       }),
   };
+  const headers = constructHeaders({ cookies });
   const url = getHeadoutApiUrl({
     endpoint: isSubCategory
       ? HeadoutEndpoints.TourGroupListBySubCategoryV6
@@ -235,7 +260,7 @@ export const fetchTourGroupsByCategory = async ({
     params,
   });
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { headers });
     const data = await response.json();
     return data;
   } catch (error) {
@@ -257,6 +282,7 @@ export const fetchCollection = async ({
   fallbackToEnglish = false,
   currency,
   useSeatmapPrices = '1',
+  cookies = {},
 }: FetchCollectionProps) => {
   const params = {
     language,
@@ -274,8 +300,11 @@ export const fetchCollection = async ({
     params,
     id: collectionId,
   });
+  const headers = constructHeaders({ cookies });
   try {
-    const response = await fetch(finalUrl);
+    const response = await fetch(finalUrl, {
+      headers,
+    });
     const data = await response.json();
     return data;
   } catch (error) {
@@ -294,6 +323,7 @@ export const fetchCollectionList = async ({
   hostname,
   currency,
   language,
+  cookies,
 }: FetchCollectionListProps) => {
   const params = {
     'ids[]': collectionIds?.join(','),
@@ -308,8 +338,9 @@ export const fetchCollectionList = async ({
     params,
     id: null,
   });
+  const headers = constructHeaders({ cookies });
   try {
-    const response = await fetch(finalUrl);
+    const response = await fetch(finalUrl, { headers });
     const data = await response.json();
     return data;
   } catch (error) {
@@ -322,10 +353,12 @@ export const fetchTourGroupReviews = async ({
   tgid,
   hostname,
   limit,
+  cookies,
 }: {
   tgid: string | number;
   hostname: string;
   limit?: number;
+  cookies?: { [key: string]: any };
 }) => {
   const params = {
     ...(limit && {
@@ -339,7 +372,8 @@ export const fetchTourGroupReviews = async ({
     params,
   });
   try {
-    const res = await fetch(url);
+    const headers = constructHeaders({ cookies });
+    const res = await fetch(url, { headers });
     return await res.json();
   } catch (error) {
     // eslint-disable-next-line no-console
@@ -356,6 +390,7 @@ export const fetchInventory = async ({
   language = 'en',
   variantId,
   currency,
+  cookies,
 }: {
   tgid: number | string;
   hostname: string;
@@ -365,6 +400,7 @@ export const fetchInventory = async ({
   language?: string;
   variantId?: number;
   currency?: string | null;
+  cookies?: { [key: string]: any };
 }) => {
   try {
     const params = {
@@ -387,13 +423,14 @@ export const fetchInventory = async ({
         currency,
       }),
     };
+    const headers = constructHeaders({ cookies });
     const url = getHeadoutApiUrl({
       endpoint: HeadoutEndpoints.TourGroupInventoriesV6,
       id: tgid,
       hostname,
       params,
     });
-    const response = await fetch(url);
+    const response = await fetch(url, { headers });
     const data = await response.json();
     return data;
   } catch (error) {
@@ -407,11 +444,13 @@ export const fetchTourGroupSlots = async ({
   hostname,
   forDays,
   currency,
+  cookies,
 }: {
   tgid: string | number;
   hostname: string;
   forDays?: number;
   currency?: string;
+  cookies?: { [key: string]: any };
 }) => {
   try {
     const params = {
@@ -428,7 +467,8 @@ export const fetchTourGroupSlots = async ({
       hostname,
       params,
     });
-    const response = await fetch(url);
+    const headers = constructHeaders({ cookies });
+    const response = await fetch(url, { headers });
     const data = await response.json();
     return data;
   } catch (error) {
@@ -442,6 +482,7 @@ interface TFetchCalendarInventoryTypes {
   currency?: string;
   fromDate?: string;
   toDate?: string;
+  cookies?: { [key: string]: any };
 }
 
 export const fetchCalendarInventory = async ({
@@ -449,6 +490,7 @@ export const fetchCalendarInventory = async ({
   currency,
   fromDate = '',
   toDate = '',
+  cookies,
 }: TFetchCalendarInventoryTypes) => {
   try {
     const params = {
@@ -467,7 +509,8 @@ export const fetchCalendarInventory = async ({
       id: tgid,
       params,
     });
-    const response = await fetch(url);
+    const headers = constructHeaders({ cookies });
+    const response = await fetch(url, { headers });
     const data = await response.json();
     const { dates, metaData } = data ?? {};
     const sortedInventoryDates = sortDateArray(Object.keys(dates) ?? []);

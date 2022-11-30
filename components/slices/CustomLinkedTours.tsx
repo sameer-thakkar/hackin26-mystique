@@ -179,11 +179,7 @@ const CustomLinkedTours = ({
                 <Image url={image} aspectRatio={'16:10'} alt={title} />
                 <TitlePriceCombo>
                   <Title>{title}</Title>
-                  <PriceBlock
-                    lang={lang}
-                    listingPrice={listingPrice}
-                    tgid={tgid}
-                  />
+                  <PriceBlock lang={lang} listingPrice={listingPrice} />
                 </TitlePriceCombo>
                 <Conditional if={averageRating}>
                   <Booster>

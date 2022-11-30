@@ -160,7 +160,6 @@ const TicketCards: React.FC<TicketCardsProps> = ({
               listingPrice,
               cta_link: ctaLink,
               cta_title: ctaTitle,
-              tgid,
             },
             index
           ) => (
@@ -171,7 +170,6 @@ const TicketCards: React.FC<TicketCardsProps> = ({
                   <PriceBlock
                     lang={lang}
                     listingPrice={listingPrice}
-                    tgid={tgid}
                     showScratchPrice
                   />
                 </TicketCardPrice>

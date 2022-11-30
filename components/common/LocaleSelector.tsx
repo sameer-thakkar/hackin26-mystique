@@ -1,8 +1,8 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
+import { useRouter } from 'next/router';
 import styled, { css } from 'styled-components';
-import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { currencyAtom } from 'store/atoms/currency';
-import { priceSelector } from 'store/selectors/price';
 import { appAtom } from 'store/atoms/app';
 import Drawer from 'components/common/Drawer';
 import SwipeableTabs, {
@@ -12,6 +12,8 @@ import SwipeableTabs, {
 } from 'components/common/SwipeableTabs';
 import RadioList, { RadioItemArg } from 'components/common/RadioList';
 import Conditional from 'components/common/Conditional';
+import CurrencySelector from 'components/common/CurrencySelector';
+import LanguageSelector from 'components/common/LanguageSelector';
 import { GlobeIcon } from 'assets/SvgIcons';
 import {
   ANALYTICS_EVENTS,
@@ -124,15 +126,16 @@ const LocaleSelector = ({
   currentLanguage,
   hasLanguageDropdown = true,
   hasCurrencySelector = true,
+  isMobile = false,
 }) => {
   const menuItemRef = useRef(null);
+  const router = useRouter();
   const currentTabInView = useRef({ trackingLabel: '' });
   const trackerRef = useRef({
     requestedAt: new Date().getTime(),
     tracked: false,
     isManual: false,
   });
-  const { state, contents } = useRecoilValueLoadable(priceSelector);
   const { initialCurrency } = useRecoilValue(appAtom);
   const [isDrawerActive, setDrawerActive] = useState(false);
   const [activeCurrency, setCurrency] = useRecoilState(currencyAtom);
@@ -161,24 +164,6 @@ const LocaleSelector = ({
         orderedLocales.indexOf(lA.code) - orderedLocales.indexOf(lB.code)
     );
   }, [languages]);
-
-  useEffect(() => {
-    const { requestedAt, tracked, isManual } = trackerRef.current ?? {};
-    const useSSRPrice = state === 'hasValue' ? contents.useSSRPrice : true;
-
-    if (state === 'hasValue' && !useSSRPrice && !tracked && requestedAt) {
-      trackerRef.current.tracked = true;
-      trackEvent({
-        eventName: ANALYTICS_EVENTS.LOCALE_PRICE_LOADED,
-        [ANALYTICS_PROPERTIES.LOAD_TIME]:
-          new Date().getTime() - trackerRef.current.requestedAt,
-        [ANALYTICS_PROPERTIES.CURRENCY]: activeCurrency,
-        [ANALYTICS_PROPERTIES.TRIGGERED_BY]: isManual
-          ? 'Manual Currency Change'
-          : 'Page Reload',
-      });
-    }
-  }, [state, activeCurrency]);
 
   const getCurrentTabInView = () => currentTabInView.current.trackingLabel;
 
@@ -238,7 +223,23 @@ const LocaleSelector = ({
     });
     setCurrency(code);
     onDrawerClose();
+
+    // push to the back of callstack, ensures currencyCode cookie is set.
+    setTimeout(router.reload);
   };
+
+  if (!isMobile) {
+    return (
+      <>
+        <LanguageSelector
+          languages={sortedLanguages}
+          currentLanguage={currentLanguage}
+          isMobile={isMobile}
+        />
+        <CurrencySelector currencies={sortedCurrencies} />
+      </>
+    );
+  }
 
   let tabsArray = [];
   if (hasCurrencySelector) {

@@ -30,6 +30,7 @@ import {
 } from 'const/index';
 import COLORS from 'const/colors';
 import { expandFontToken } from 'const/typography';
+import { fetchTourListV6 } from 'utils/apiUtils';
 
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 
@@ -190,10 +191,8 @@ class ContentPage extends Component<any, any> {
       isMobile: window.innerWidth < 768,
     });
     if (allTourTgids.length > 0) {
-      const toursData = await fetch(
-        `/api/tours/v6/tour-groups/?ids%5B%5D=${[...allTourTgids]}`
-      ).then((res) => {
-        return res.json();
+      const toursData = await fetchTourListV6({
+        tgids: allTourTgids,
       });
 
       const tourAPIData = tourListApiParser(toursData);
@@ -221,12 +220,8 @@ class ContentPage extends Component<any, any> {
           return tour.tgid === excludedTour.tgid;
         });
       });
-      const toursData = await fetch(
-        `/api/tours/v6/tour-groups/?ids%5B%5D=${[
-          ...filteredTours.map((t) => t.tgid),
-        ]}`
-      ).then((res) => {
-        return res.json();
+      const toursData = await fetchTourListV6({
+        tgids: filteredTours.map((t) => t.tgid),
       });
 
       const groupBookingTourData = toursData?.tourGroups?.reduce(

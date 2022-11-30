@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { LinkCards } from 'components/slices/MicrobrandCards';
 import COLORS from 'const/colors';
 import { tourListApiParser } from 'utils/dataParsers';
+import { fetchTourListV6 } from 'utils/apiUtils';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -149,9 +150,7 @@ export default class CardCarousel extends Component<CardCarouselProps> {
     const mobileCheck = window.innerWidth < 768;
     const { cards } = this.props;
     const tgids = cards.map((card) => card.tgid)?.filter(Boolean);
-    const fetchPrice = await fetch(
-      `/api/tours/v6/tour-groups/?ids%5B%5D=${tgids}`
-    ).then((res) => res.json());
+    const fetchPrice = await fetchTourListV6({ tgids });
     const cardPrices = tourListApiParser(fetchPrice);
     const currencySymbol = fetchPrice.currencies[0]?.localSymbol;
     this.setState({
