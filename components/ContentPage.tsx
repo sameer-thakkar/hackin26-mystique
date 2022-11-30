@@ -193,6 +193,7 @@ class ContentPage extends Component<any, any> {
     if (allTourTgids.length > 0) {
       const toursData = await fetchTourListV6({
         tgids: allTourTgids,
+        hostname: window.location.origin,
       });
 
       const tourAPIData = tourListApiParser(toursData);
@@ -222,6 +223,7 @@ class ContentPage extends Component<any, any> {
       });
       const toursData = await fetchTourListV6({
         tgids: filteredTours.map((t) => t.tgid),
+        hostname: window.location.origin,
       });
 
       const groupBookingTourData = toursData?.tourGroups?.reduce(

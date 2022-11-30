@@ -150,7 +150,10 @@ export default class CardCarousel extends Component<CardCarouselProps> {
     const mobileCheck = window.innerWidth < 768;
     const { cards } = this.props;
     const tgids = cards.map((card) => card.tgid)?.filter(Boolean);
-    const fetchPrice = await fetchTourListV6({ tgids });
+    const fetchPrice = await fetchTourListV6({
+      tgids,
+      hostname: window.location.origin,
+    });
     const cardPrices = tourListApiParser(fetchPrice);
     const currencySymbol = fetchPrice.currencies[0]?.localSymbol;
     this.setState({

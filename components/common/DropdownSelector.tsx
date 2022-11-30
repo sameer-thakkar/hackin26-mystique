@@ -149,6 +149,8 @@ const DropdownSelector = ({
     onShowDropdown();
   };
 
+  if (!options.length) return null;
+
   return (
     <StyledSelector
       onMouseEnter={onActive}
