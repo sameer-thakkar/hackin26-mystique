@@ -860,7 +860,8 @@ export const getToursGlobalCollection = async ({
   cookies?: { [key: string]: string };
 }) => {
   let tourData = [],
-    currency;
+    currency,
+    primaryCity;
 
   if (collection) {
     try {
@@ -870,6 +871,7 @@ export const getToursGlobalCollection = async ({
         cookies,
       });
       currency = collectionData?.city?.country?.currency;
+      primaryCity = collectionData?.city;
       const getCollectionSection = (collectionData, sectionType: string) => {
         return collectionData?.sections
           ?.filter((section) => {
@@ -901,6 +903,7 @@ export const getToursGlobalCollection = async ({
         city: cityName,
         cookies,
       });
+      primaryCity = subCategoryData?.city;
       currency = subCategoryData?.currency;
       tourData.push(...subCategoryData?.pageData?.items);
     } catch (err) {
@@ -916,6 +919,7 @@ export const getToursGlobalCollection = async ({
       });
       currency = tgidData?.currency;
       tourData.push(tgidData);
+      primaryCity = tgidData?.city;
     } catch (err) {
       Sentry.captureException(err);
       console.error(err);
@@ -1015,5 +1019,6 @@ export const getToursGlobalCollection = async ({
   return {
     scorpioData,
     orderedTours: repeatableObj,
+    primaryCity,
   };
 };

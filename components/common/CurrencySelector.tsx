@@ -1,21 +1,11 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import styled from 'styled-components';
-import COLORS from 'const/colors';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { currencyAtom } from 'store/atoms/currency';
 import DropdownSelector from 'components/common/DropdownSelector';
 import { metaAtom } from 'store/atoms/meta';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
-
-const CurrencyPlaceholder = styled.div`
-  width: 60px;
-  background: ${COLORS.GRAY.G7};
-  display: block;
-  height: 16px;
-  margin-left: 32px;
-`;
 
 const CurrencySelector = ({ currencies }) => {
   const [activeCurrency, setCurrency] = useRecoilState(currencyAtom);
@@ -64,7 +54,7 @@ const CurrencySelector = ({ currencies }) => {
     setTimeout(router.reload);
   };
 
-  if (!activeCurrency) return <CurrencyPlaceholder />;
+  if (!activeCurrency) return null;
 
   return (
     <DropdownSelector

@@ -1323,6 +1323,11 @@ export const getPageData = async ({
         lang: getHeadoutLanguagecode(lang),
         cookies,
       });
+
+      const primaryCity = categoryTourListData?.primaryCity;
+      const primaryCountry = primaryCity?.country;
+      const activeCurrency = primaryCountry?.currency?.code;
+
       return {
         CMSContent: {
           ...CMSContent,
@@ -1337,6 +1342,9 @@ export const getPageData = async ({
         isDev,
         host,
         categoryTourListData,
+        ...(primaryCity && { primaryCity }),
+        ...(primaryCountry && { primaryCountry }),
+        ...(activeCurrency && { activeCurrency }),
         currencyList: await currencyListPromise,
         domainConfig: await domainConfigPromise,
       };
