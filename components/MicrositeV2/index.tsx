@@ -55,16 +55,23 @@ class MicrositeV2 extends Component<any, any> {
     const { all_tours: allTours } = this.props.data.data;
     const allTgids = allTours.map((tour) => tour.primary.tgid);
     const isLTT = checkLTT(this.props.data.uid);
-
-    fetchTourListV6({
-      tgids: allTgids,
-    }).then((jsonTours) => {
-      const cardPrices = tourListApiParser(jsonTours);
+    if (allTours.length > 0) {
+      fetchTourListV6({
+        tgids: allTgids,
+        hostname: window.location.origin,
+      }).then((jsonTours) => {
+        const cardPrices = tourListApiParser(jsonTours);
+        this.setState({
+          cardPrices: cardPrices,
+          isFetched: true,
+        });
+      });
+    } else {
       this.setState({
-        cardPrices: cardPrices,
+        cardPrices: {},
         isFetched: true,
       });
-    });
+    }
 
     const directTgid = this.props.router.query.tgid;
     if (isMobile && directTgid && !isLTT) {

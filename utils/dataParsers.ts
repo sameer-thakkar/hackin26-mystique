@@ -335,6 +335,7 @@ export const categoryTourListParserV1 = async ({
         },
       };
     }, {});
+
     return {
       scorpioData,
       primaryCountry: primaryCity?.country ?? {
@@ -474,6 +475,7 @@ export const categoryTourListParserV2 = async (
         city,
         isCategory: true,
         lang,
+        cookies,
       });
       const data = await Promise.all(allPromises);
       primaryCity = data?.[0]?.city;
@@ -509,6 +511,7 @@ export const categoryTourListParserV2 = async (
         city,
         isSubCategory: true,
         lang,
+        cookies,
       });
       const data = await Promise.all(allPromises);
       primaryCity = data?.[0]?.city;
