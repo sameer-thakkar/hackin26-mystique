@@ -578,19 +578,20 @@ const Product = (props) => {
               <div className="product-v2-title">{truncate(title, 70)}</div>
             </a>
           </Conditional>
-          {filteredDescriptors.map((descriptor) => {
-            const { code, name } = descriptor;
-            if (name && code) {
-              const DiscSvgElm = descriptorIcons[code];
-              return (
-                <div key={name} className="descriptors">
-                  <DiscSvgElm className="descSvg" />
-                  <span>{name}</span>
-                </div>
-              );
-            }
-            return null;
-          })}
+          {!isLTT &&
+            filteredDescriptors.map((descriptor) => {
+              const { code, name } = descriptor;
+              if (name && code) {
+                const DiscSvgElm = descriptorIcons[code];
+                return (
+                  <div key={name} className="descriptors">
+                    <DiscSvgElm className="descSvg" />
+                    <span>{name}</span>
+                  </div>
+                );
+              }
+              return null;
+            })}
           <Conditional
             if={
               isEntertainmentMb &&

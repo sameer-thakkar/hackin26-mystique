@@ -59,7 +59,6 @@ export const StyledPriceBlock = styled.div`
 
 export const SavedTag = styled.div`
   padding: 1px 4px;
-  padding-right: 0;
   align-self: center;
   margin-top: 1px; // hack to visually align center.
   background: ${({ theme }) =>
