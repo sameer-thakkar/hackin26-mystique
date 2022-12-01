@@ -124,8 +124,6 @@ export const reflect = (promise) =>
     (error) => ({ error, status: 'rejected' })
   );
 
-export const isDiscountedFuture = (tags) => tags.includes('DISCOUNTED_FUTURE');
-
 export const isSafetyIncluded = (tags) =>
   tags.filter((x) => x.includes('SAFETY')).length > 0;
 

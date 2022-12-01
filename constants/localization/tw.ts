@@ -26,7 +26,6 @@ const tw = {
   EARLIEST_AVAILABILITY: '最早可預定日期',
   TODAY: '今天',
   TOMORROW: '明天',
-  MORE_FROM: '更多從',
   REOPENING_ON: 'Reopening on',
   OPENING_ON: 'Opening on',
   NEW: 'NEW',
@@ -153,121 +152,8 @@ const tw = {
           DESCRIPTION:
             '在行程期間，為遵守社交距離指引，將實行人流管制措施，人數較多的團體將不被允許的。',
         },
-        SAFETY_CONTACTLESS: {
-          HEADING: '零接觸式入埸，無需擔心 ',
-          DESCRIPTION:
-            '到了2020年，旅客在行程中不需要觸及任何物品或人便能夠進行行程。',
-        },
       },
       BADGE_DESCRIPTION: '這個徽章保證行程的安全水平已經得到我們的認證。',
-    },
-  },
-  DISCOUNTED_FUTURES: {
-    HEADING: '現正預訂，更省錢 &隨時出發',
-    DESCRIPTION:
-      '購買折扣門票後可在<date>前任意時間出行。不但更省錢，而且還能給予旅遊業者一份支持！',
-    SHORT_DESCRIPTION:
-      'Buy an open ticket for big flexibility & savings. Valid for visits anytime until 31-Dec-21.',
-    FLAG_TEXT: '現正預訂，隨時出發',
-    HEADING_WORKS: '具體是如何運作的?',
-    BANNER: {
-      HEADING_LINE1: 'Not sure when you’re traveling next?',
-      HEADING_LINE2:
-        'Book an open ticket for big flexibility and bigger savings!',
-      DESCRIPTION_LINE1: 'Save upto 50%.',
-      DESCRIPTION_LINE2:
-        'Valid for visit anytime between <cooldownDate> and 31-Dec-21.',
-    },
-    FAQ_QUESTIONS: {
-      WORKING: {
-        QUESTION: '“現正預訂，隨時出發” 有哪些選擇？',
-        ANSWER:
-          '在Headout平台您可以不用顧慮出行日期及時間，便可輕鬆預訂心怡的行程丶景點以及門票。您現在可以在Headout.com購買符合活動的行程，並在2021年12月31日前出行。所有有關行程都以優惠價格出售。當有一天您想確定已購買行程的出行日期時，你可以在"使用"中選擇日期及時間。',
-      },
-      DATE_TIME: {
-        QUESTION:
-          '我要怎麼購買以及參與“現在預訂，隨時出發”活動的行程。哪一些行程商品符合這個活動?',
-        ANSWER:
-          '您可以在網頁上的“現在預訂，隨時出發”專區中找到符合的行程商品。不需要立即選定出行日期，可以在以後做出選擇。',
-      },
-      USAGE: {
-        QUESTION: '什麼時候才能對“現在預訂，隨時出發” 的行程進行預約?',
-        ANSWER: '您可以在付款日後三十天／景點重新開放的時候進行預約。',
-      },
-      CANCEL: {
-        QUESTION: '這些預約的行程的取消政策是怎樣的?',
-        ANSWER: '所有隸屬“現在預訂，隨時出發” 活動的預約是無法修改或取消的。',
-      },
-      LIMITS: {
-        QUESTION: '未來行程是否有任何付費或使用限制？',
-        ANSWER: [
-          '任何優惠卷／優惠碼均不能用於 “未來行程” 中付費使用。',
-          '現金返還以及Headout錢包裡的餘額均不能用於預訂／購買任何預訂／保留未來的行程。 ',
-          '為未來的行程選擇日期及時間後，您無法修改或取消預約行程。已選定日期及時間的末來行程無法退款。',
-        ],
-      },
-      RESTRICTIONS: {
-        QUESTION: '購買或使用“現在預訂，隨時出發”的行程時，會不會有任何限制？',
-        ANSWER: [
-          '任何優惠卷／優惠碼均不能用於 “現在預訂，隨時出發” 的付費使用。',
-          '現金返還以及Headout錢包裡的餘額均不能用於預訂／購買任何“現在預訂，隨時出發” 活動的行程商品。',
-          '選擇日期及時間後，無法修改或取消預約行程。已選定日期及時間的行程無法退款。',
-        ],
-      },
-      EXERCISE: {
-        QUESTION: '如何参加已預約的行程?',
-        ANSWER: [
-          '成功付款後，您將會收到已預訂的行程的收據以及憑證。',
-          '當行程地點或景點開放參觀，您將會在電郵收到預約連接，選擇您想預約的日期及時間。當您選擇的日期及時間快到之前，您將會通過電郵收到確認憑證以及門票。',
-          '於選定的日期及時間到訪行程地點，享受您的行程。',
-        ],
-      },
-    },
-    HOW_IT_WORKS: {
-      PICK: {
-        HEADING: '選擇您想要的行程',
-        SUB_TEXT:
-          '所有人都想到世界各地旅遊，明年及後年絕對是實現旅遊夢的最佳時間點 - 趕緊出發吧！',
-      },
-      VOUCHER: {
-        HEADING: '購買憑證',
-        SUB_TEXT:
-          '所有有關“現在預訂，隨時出發”的行程能夠憑優惠的價格以憑證的形式被購買，並在<date>前可以兌換門票。',
-      },
-      REDEEM: {
-        HEADING: '隨意兌換及保留',
-        SUB_TEXT:
-          '您對自己的出行時間有完全的掌控權。您的旅遊計劃確定後再預訂您的出行時間。',
-      },
-    },
-    PITCH: {
-      GO_ANYTIME: {
-        HEADING: '只要您想，隨時可以參與',
-        SUB_TEXT:
-          '我們明白您現在是很難完全確認您的行程的，因此您能夠在<date>前隨時使用這些憑證。',
-      },
-      SAVE_MONEY: {
-        HEADING: '省錢的行程您值得擁有',
-        SUB_TEXT:
-          '這些優惠是為了讓您省錢才設計的，除此以外，也為您創造更多去旅遊的機會。',
-      },
-      BUCKET_LIST: {
-        HEADING: '勾選購物車',
-        SUB_TEXT:
-          '所有人都想到世界各地旅遊，明年及後年絕對是實現旅遊夢的最佳時間點 - 趕緊出發吧！',
-      },
-    },
-    IMAGES_SECTION: {
-      HEADING: '全世界的人都在等待 - 讓我們回到以往的生活吧',
-    },
-    BOOKING_MODAL: {
-      BOOK_NOW_PITCH: '選擇日期及時間預約行程。',
-      SELECT_DATE: '選擇日期',
-      GO_LATER_HEADING: '現在預訂，省錢&隨時出發',
-      GO_LATER_PITCH:
-        '以優惠價格預約行程，自由選擇未來出行的時間。憑證從<stDate>到<edDate>有效期內使用。',
-      GET_THIS: '取得',
-      LEARN_MORE: '了解更多',
     },
   },
 };

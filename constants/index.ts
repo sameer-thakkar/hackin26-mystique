@@ -468,8 +468,6 @@ export const SAFETY_DETAILS_IMAGES = {
     'https://cdn-imgix-open.headout.com/sites/safe/guidelines.jpg',
   SAFETY_SOCIAL_DISTANCING_DEFAULT:
     'https://cdn-imgix-open.headout.com/sites/safe/guidelines.jpg',
-  SAFETY_CONTACTLESS:
-    'https://cdn-imgix-open.headout.com/sites/safe/contactless.jpg',
 };
 
 export const SAFETY_DETAILS_TYPE = {
@@ -491,7 +489,6 @@ export const SAFETY_DETAILS_TYPE = {
   SAFETY_RESTRICTED_CAPACITY_NO_GROUPS: 'SAFETY_RESTRICTED_CAPACITY_NO_GROUPS',
   SAFETY_SOCIAL_DISTANCING_DEFAULT: 'SAFETY_SOCIAL_DISTANCING_DEFAULT',
   SAFETY_NO_GROUPS: 'SAFETY_NO_GROUPS',
-  SAFETY_CONTACTLESS: 'SAFETY_CONTACTLESS',
 };
 
 export const CLUBBED_SAFETY_TAGS = {
@@ -520,21 +517,6 @@ export const CLUBBED_SAFETY_TAGS = {
     SAFETY_DETAILS_TYPE.SAFETY_NO_GROUPS,
     SAFETY_DETAILS_TYPE.SAFETY_RESTRICTED_CAPACITY_NO_GROUPS,
   ],
-};
-
-export const DISCOUNTED_FUTURE_IMAGES_SECTION = {
-  MOUNTAIN:
-    'https://cdn-s3.headout.com/assets/images/discounted-futures/mountain.png',
-  BEACH:
-    'https://cdn-s3.headout.com/assets/images/discounted-futures/beach.png',
-  SMILE:
-    'https://cdn-s3.headout.com/assets/images/discounted-futures/smile.png',
-  GIRLS:
-    'https://cdn-s3.headout.com/assets/images/discounted-futures/girls.png',
-  EXPERIENCE:
-    'https://cdn-s3.headout.com/assets/images/discounted-futures/experience.png',
-  ADVENTURE:
-    'https://cdn-s3.headout.com/assets/images/discounted-futures/adventure.png',
 };
 
 export const THEMES = {

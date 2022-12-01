@@ -34,7 +34,6 @@ const nl = {
   UNAVAILABLE: 'Niet beschikbaar',
   TODAY: 'Vandaag',
   TOMORROW: 'Morgen',
-  MORE_FROM: 'Meer van',
   OFF: 'Off',
   TICKETS: 'Kaartjes',
   REOPENING_ON: 'Reopening on',
@@ -229,129 +228,9 @@ const nl = {
           DESCRIPTION:
             'Social distancing richtlijnen worden tijdens deze ervaring te allen tijde nageleefd. Om dit te garanderen, gelden er capaciteitsbeperkingen. In hetzelfde licht zijn er geen grote groepen toegestaan',
         },
-        SAFETY_CONTACTLESS: {
-          HEADING: 'Contactloze toegang zonder gedoe ',
-          DESCRIPTION:
-            'Het is 2020 en je zou van je ervaring moeten kunnen genieten zonder iets of iemand aan te raken. En dat kan!',
-        },
       },
       BADGE_DESCRIPTION:
         'Deze badge bij een ervaring bevestigt dat de veiligheidsnormen zijn geverifieerd door ons',
-    },
-  },
-  DISCOUNTED_FUTURES: {
-    HEADING: 'Reserveer nu, bespaar geld en ga wanneer jij dat wilt',
-    DESCRIPTION:
-      'Voor een beperkte periode kun je een ** open ticket ** reserveren voor een aantal van je favoriete activiteiten dat op elk moment geldig is tot 31 december 2021. Dat levert je flinke besparingen op, meer flexibiliteit bij het plannen van je volgende vakantie en een gegarandeerd geweldige tijd!',
-    SHORT_DESCRIPTION:
-      'Koop een open kaartje voor flexibiliteit en flinke besparingen. Geldig voor bezoeken tot en met 31-12-21.',
-    FLAG_TEXT: 'Reserveer nu, ga wanneer jij dat wilt',
-    HEADING_WORKS: 'Hoe werkt het?',
-    BANNER: {
-      HEADING_LINE1: 'Weet je niet zeker wanneer je weer op pad gaat?',
-      HEADING_LINE2:
-        'Reserveer een open ticket voor flexibiliteit en flinke besparingen!',
-      DESCRIPTION_LINE1: 'Bespaar tot 50%.',
-      DESCRIPTION_LINE2:
-        'Geldig voor een bezoek op elke datum tussen <cooldownDate> en 31-12-21.',
-    },
-    FAQ_QUESTIONS: {
-      WORKING: {
-        QUESTION:
-          'Wat houdt de optie "Reserveer nu, ga wanneer jij dat wilt" in?',
-        ANSWER:
-          'We bieden je nu het comfort om je favoriete ervaringen, attracties en entertainmentkaartjes te reserveren zonder dat je je aan een vaste datum en tijd hoeft te houden. Je kunt nu de in aanmerking komende producten kopen als open kaartje en ervoor kiezen om de ervaring te hebben op een toekomstige datum tot 31 december 2021. Alle producten onder deze optie hebben speciale kortingen. Als je eenmaal klaar bent om te reizen en de gekochte producten te ervaren, kun je de reservering gebruiken door een specifieke datum en tijd te kiezen voor de betreffende ervaring',
-      },
-      DATE_TIME: {
-        QUESTION:
-          'Hoe kan ik de optie "Reserveer nu, ga wanneer jij dat wilt" kopen of gebruiken?',
-        ANSWER:
-          'Voor de in aanmerking komende producten kun je op de website de optie “Reserveer nu, ga wanneer jij dat wilt” kiezen en een open kaartje reserveren. Je hoeft dan niet meteen de datum en tijd van je bezoek te selecteren, maar kunt altijd op een later tijdstip elke gewenste tijd en datum kiezen.',
-      },
-      WHEN: {
-        QUESTION:
-          'Wanneer kan ik mijn "Reserveer nu, ga wanneer jij dat wilt"-reserveringen gebruiken?',
-        ANSWER:
-          'Je kunt gebruik maken van je open kaartje door de datum en het tijdstip van je bezoek op elk gewenst moment na 30 dagen vanaf de aankoopdatum en voor 31-12-2021 vast te leggen.',
-      },
-      CANCEL: {
-        QUESTION: 'Wat is het annuleringsbeleid voor deze reserveringen?',
-        ANSWER:
-          'Als je nog geen gebruik hebt gemaakt van je open kaartje kun je je reservering annuleren tot 31-12-2021 en ontvang je volledige restitutie. Als je je open kaartje hebt gebruikt om kaartjes voor een bepaalde datum te reserveren, kun je je reservering niet meer wijzigen of annuleren.',
-      },
-      LIMITS: {
-        QUESTION:
-          'Zijn er beperkingen of limieten voor het kopen van open kaartjes?',
-        ANSWER: [
-          'Kortings- of couponcodes kunnen niet worden gebruikt bij het kopen van open kaartjes',
-          'Cashback of credits in je <mbName> portemonnee kunnen niet worden gebruikt om een open kaartje te reserveren',
-          'Zodra je het open kaartje hebt ingewisseld door een datum voor de activiteit te kiezen, kun je de reservering niet wijzigen of annuleren.',
-          'Er zijn maximaal 2 reserveringen per persoon per ervaring toegestaan tijdens de looptijd van deze actie',
-        ],
-      },
-      EXERCISE: {
-        QUESTION: 'Hoe gebruik ik deze reserveringen?',
-        ANSWER: [
-          'Na succesvolle afronding van de betaling ontvang je per email een ontvangstbewijs en een voucher van je reservering voor het gekozen product',
-          'Je ontvangt ook een link per e-mail die je kunt gebruiken om je voucher in te wisselen voor de datum en tijd van je voorkeur voor de reservering. In het geval dat de attractie of operator van je gekozen ervaring zijn diensten nog niet heeft hervat, ontvang je deze link wanneer ze we geopend zijn. Je kunt deze stap op elk gewenst moment voltooien tijdens de geldigheid van de voucher, namelijk 31-12-2021',
-          'Zodra je de gewenste datum en tijd hebt gekozen en daarmee de reservering gebruikt, ontvang je een bevestigingsvoucher en kaartje hiervoor via e-mail',
-          'Bezoek de locatie op de gekozen datum en tijd en geniet van de ervaring die je hebt gekozen.',
-        ],
-      },
-      ELIGIBLE: {
-        QUESTION: 'Welke producten komen in aanmerking voor deze optie?',
-        ANSWER:
-          'Producten die in aanmerking komen voor deze actie zijn gemarkeerd met een ***Reserveer nu, ga wanneer jij dat wilt*** tag.',
-      },
-    },
-    HOW_IT_WORKS: {
-      PICK: {
-        HEADING: 'Kies de ervaring die je altijd al wilde hebben',
-        SUB_TEXT:
-          "Alle ervaringen onder de optie 'Reserveer nu, ga wanneer jij dat wilt' kunnen worden gekocht als een open kaartje met flinke korting. Kies simpelweg de ervaring van je dromen en reserveer je open kaartje.",
-      },
-      VOUCHER: {
-        HEADING: 'Gebruik en reserveer wanneer jij er klaar voor bent',
-        SUB_TEXT:
-          'Wanneer je reisplannen zijn bevestigd, wissel je je open kaartje in door de datum en tijd te reserveren waarop je de ervaring wilt hebben. Je kaartje is geldig voor reizen van <cooldownDate> tot en met 31-12-2021.',
-      },
-      REDEEM: {
-        HEADING: 'Heel veel plezier!',
-        SUB_TEXT:
-          'Alles is geregeld. Ga er lekker op uit en maak er een geweldige tijd van op vakantie!',
-      },
-    },
-    PITCH: {
-      GO_ANYTIME: {
-        HEADING: 'Reis wanneer jij dat wilt',
-        SUB_TEXT:
-          'We weten dat het op dit moment moeilijk is om je plannen definitief vast te leggen. Daarom kun je deze vouchers op elk moment gebruiken tot <datum>, zodat je voldoende tijd hebt om je volgende vakantie te plannen.',
-      },
-      SAVE_MONEY: {
-        HEADING: 'Bespaar geld',
-        SUB_TEXT:
-          'De hoge kortingen die je hier ziet, zijn bedoeld om je te helpen geld te besparen op je volgende reis. Voor het geval je op zoek was naar een extra reden om binnenkort weer te reizen.',
-      },
-      BUCKET_LIST: {
-        HEADING: 'Flexibele annulering',
-        SUB_TEXT:
-          'Als je je voucher niet hebt ingewisseld, kun je je reservering op elk gewenst moment annuleren en ontvang je volledige restitutie. We weten dat het wijzigen van reisplannen stressvol kan zijn en dit is een ding minder waar je je zorgen over hoeft te maken.',
-      },
-    },
-    IMAGES_SECTION: {
-      HEADING: 'De wereld wacht - laten we snel weer op pad gaan',
-    },
-    BOOKING_MODAL: {
-      BOOK_NOW_PITCH: 'Kies een datum of tijd om je ervaring te reserveren.',
-      SELECT_DATE: 'Kies een datum',
-      GO_LATER_HEADING: 'Open kaartje',
-      BOOK_NOW_HEADING: 'Vast kaartje',
-      GO_LATER_PITCH:
-        'Reserveer deze ervaring met korting en krijg de vrijheid om je bezoekdatum later te kiezen. Kan worden ingewisseld voor elke datum tussen <stDate> en <edDate>.',
-      GET_THIS: 'Reserveer nu',
-      LEARN_MORE: 'Meer unfo',
-      BOOK_NOW: 'Reserveer nu',
-      LIMITED: 'Aanbieding voor een beperkte periode',
     },
   },
   AUDIO_GUIDE: {

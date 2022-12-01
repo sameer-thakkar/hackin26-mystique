@@ -29,9 +29,9 @@ const SocialIcon = styled.div`
   }
 `;
 
-const FB_URL = 'http://www.facebook.com/headoutapp';
-const TWITTER_URL = 'http://www.twitter.com/headout';
-const INSTAGRAM_HEADOUT_URL = 'http://www.instagram.com/headout';
+const FB_URL = 'https://www.facebook.com/headoutapp';
+const TWITTER_URL = 'https://www.twitter.com/headout';
+const INSTAGRAM_HEADOUT_URL = 'https://www.instagram.com/headout/';
 const INSTAGRAM_HEADOUT_DUBAI_URL = 'https://www.instagram.com/headoutuae/';
 
 const SocialLinks = (props) => {
