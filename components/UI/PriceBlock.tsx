@@ -174,7 +174,7 @@ const PriceBlock = ({
   return (
     <StyledPriceBlock showScratchPrice={showScratchPrice}>
       <span className="tour-scratch-price">
-        {showPrefix ? strings.FROM + ' ' : ''}
+        {showPrefix ? strings.FROM.toLowerCase() + ' ' : ''}
         <Conditional if={showScratchPrice}>
           <LocalisedPrice
             currencyCode={currencyCode}

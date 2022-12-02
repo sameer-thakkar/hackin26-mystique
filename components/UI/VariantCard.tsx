@@ -268,7 +268,7 @@ const VariantCard = ({
       <Name>{variantName}</Name>
       <PriceWrapper>
         <Price>
-          <From>{strings.FROM}</From>
+          <From>{strings.FROM.toLowerCase()}</From>
           <div>
             <LocalisedPrice
               {...{

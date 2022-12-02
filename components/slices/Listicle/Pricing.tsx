@@ -43,7 +43,7 @@ const Pricing: React.FC<PricingProps> = ({
     <StyledPricing>
       {listingPrice.originalPrice > listingPrice.finalPrice ? (
         <div>
-          {strings.FROM}{' '}
+          {strings.FROM.toLowerCase()}{' '}
           <span>
             {currencySymbol}
             {listingPrice.originalPrice}

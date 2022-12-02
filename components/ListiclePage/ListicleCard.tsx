@@ -290,7 +290,7 @@ const ListicleCard: React.FC<ListicleCardProps> = ({
             <MobileCardTitleSection>
               <CardTitle>{tourName}</CardTitle>
               <Pricing>
-                <div>{strings.FROM}</div>
+                <div>{strings.FROM.toLowerCase()}</div>
                 {price}
               </Pricing>
             </MobileCardTitleSection>
@@ -310,7 +310,7 @@ const ListicleCard: React.FC<ListicleCardProps> = ({
             <div className="price-section">
               {listingPrice ? (
                 <Pricing>
-                  <div>{strings.FROM}</div>
+                  <div>{strings.FROM.toLowerCase()}</div>
                   {price}
                 </Pricing>
               ) : null}
