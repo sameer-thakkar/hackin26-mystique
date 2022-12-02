@@ -63,6 +63,7 @@ type TBannerCarouselProps = {
   }[];
   bannerHeading: string;
   bannerCtaText: string;
+  bannerSubtext: string;
   showBannerSubtext: boolean;
   currentLanguage: string;
   isMobile: boolean;
@@ -80,6 +81,7 @@ const Banner = (props: TBannerCarouselProps) => {
     bannerImages,
     currentLanguage,
     hideCTA,
+    bannerSubtext: tempBannerSubtext,
     showBannerSubtext,
     bannerCtaText = '',
     orderedTgids,
@@ -144,6 +146,8 @@ const Banner = (props: TBannerCarouselProps) => {
       Ranking: swiper.realIndex + 1,
     });
   }, [swiper]);
+
+  const bannerSubtext = withShortcodes(tempBannerSubtext);
 
   const { ASPECT_RATIO, WIDTH } = isMobile
     ? BANNER_PARAMS.MOBILE
@@ -224,7 +228,12 @@ const Banner = (props: TBannerCarouselProps) => {
         )}
       </StyledBanner>
 
-      <Conditional if={showBannerSubtext}>
+      <Conditional if={bannerSubtext?.length}>
+        <BannerSubtext>
+          <p dangerouslySetInnerHTML={{ __html: bannerSubtext.join(' ') }}></p>
+        </BannerSubtext>
+      </Conditional>
+      <Conditional if={showBannerSubtext && !bannerSubtext?.length}>
         <BannerSubtext>
           <p>{strings.BANNER_SUBTEXT_DISCLAIMER}</p>
         </BannerSubtext>

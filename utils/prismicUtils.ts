@@ -28,7 +28,12 @@ import {
 } from 'utils/productUtils';
 import { traceError } from 'utils/logutils';
 import { getHostName } from 'utils/helper';
-import { getLangUID, getValidUrlParams, sanitizeURL } from 'utils/urlUtils';
+import {
+  getLangUID,
+  getValidUrlParams,
+  sanitizeURL,
+  convertUidToUrl,
+} from 'utils/urlUtils';
 import {
   categoryTourListParserV1,
   categoryTourListParserV2,
@@ -150,7 +155,10 @@ export const getContentPageDocument = async ({
     .then(async (page) => {
       if (page) {
         if (page.uid !== uid) {
-          let url = page.data?.page_url;
+          let url = convertUidToUrl({
+            uid: page.uid,
+            lang: getHeadoutLanguagecode(lang),
+          });
           if (host.slice(0, 5) === 'stage') {
             url = url.split('//');
             url = url.join('//stage-');
@@ -287,7 +295,10 @@ export const getMicrositeDocument = async ({
       let completeMicrosite = { data: res };
       if (completeMicrosite.data) {
         if (completeMicrosite.data.uid !== uid) {
-          let url = completeMicrosite.data.data?.page_url;
+          let url = convertUidToUrl({
+            uid: completeMicrosite.data.uid,
+            lang: getHeadoutLanguagecode(lang),
+          });
           if (host.slice(0, 5) === 'stage') {
             url = url.split('//');
             url = url.join('//stage-');
@@ -478,7 +489,11 @@ export const getMicrositeDocument = async ({
                 ...objValues,
                 ...arrValues,
                 canonical_link:
-                  canonicalLink || completeMicrosite.data.data.page_url,
+                  canonicalLink ||
+                  convertUidToUrl({
+                    uid: completeMicrosite.data.uid,
+                    lang: getHeadoutLanguagecode(lang),
+                  }),
                 noindex:
                   lang !== 'en-us'
                     ? baseLangData.data.noindex

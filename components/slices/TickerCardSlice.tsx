@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useWindowWidth } from '@react-hook/window-size';
 import { useRecoilValue } from 'recoil';
 import { currencyAtom } from 'store/atoms/currency';
-import { getLangObject } from 'utils/helper';
-import { useWindowWidth } from '@react-hook/window-size';
 import PopulateProducts from 'components/PopulateProducts';
-import { csvTgidToArray } from 'utils/helper';
+import { getHeadoutLanguagecode } from 'utils';
+import { csvTgidToArray, getLangObject } from 'utils/helper';
 import { tourListApiParser } from 'utils/dataParsers';
 import { fetchTourList } from 'utils/apiUtils';
+import { convertUidToUrl } from 'utils/urlUtils';
 
 const TicketCard = (props) => {
   const {
@@ -110,11 +111,11 @@ const TicketCard = (props) => {
     book_now_text: bookNowText,
     read_more_text: readMoreText,
     show_less_text: showLessText,
-    page_url: pageUrl,
     instant_checkout: instantCheckout = false,
     enable_earliest_availability: enableEarliestAvailability,
   } = withCommonHeaderOverrides;
 
+  const pageUrl = convertUidToUrl({ uid, lang: getHeadoutLanguagecode(lang) });
   const { results: productOffer } = offerData ? offerData : { results: [] };
   const hasOffer = productOffer.length > 0;
   const onTogglePopup = () => {

@@ -35,7 +35,7 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import renderShortCodes from 'utils/shortCodes';
-import { getLogoRedirectionUrl } from 'utils/urlUtils';
+import { getLogoRedirectionUrl, convertUidToUrl } from 'utils/urlUtils';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
@@ -98,8 +98,8 @@ const MicrositeV1 = (props) => {
     attraction: attractionCMS,
     images: bannerImages,
     heading: bannerHeading,
+    banner_subtext: bannerSubtext,
     banner_cta_text: bannerCtaText,
-    page_url: pageUrl,
     auto_banner: autoBanner,
     hide_banner_cta: hideBannerCTA,
     banner_limit: bannerLimit,
@@ -119,6 +119,8 @@ const MicrositeV1 = (props) => {
     baseLangPageTitle,
     baseLangShowBannerSubtext,
   } = micrositeData || {};
+
+  const pageUrl = convertUidToUrl({ uid, lang: getHeadoutLanguagecode(lang) });
 
   const alternateLanguages = getAlternateLanguages(
     alternate_languages,
@@ -497,6 +499,7 @@ const MicrositeV1 = (props) => {
             bannerImages={finalBannerImages ? finalBannerImages : null}
             bannerHeading={bannerHeading ? bannerHeading : null}
             bannerCtaText={bannerCtaText ? bannerCtaText : null}
+            bannerSubtext={bannerSubtext}
             showBannerSubtext={baseLangShowBannerSubtext}
             currentLanguage={currentLanguage ? currentLanguage : null}
             isMobile={isMobile}

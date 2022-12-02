@@ -291,7 +291,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       pageDoc.page_type = baseLangPageDoc?.page_type;
       pageDoc.shoulder_page_type = baseLangPageDoc?.shoulder_page_type;
       pageDoc.content_type = baseLangPageDoc?.content_type;
-      pageDoc.banner_subtext = baseLangPageDoc?.banner_subtext;
+      pageDoc.banner_subtext =
+        pageDoc.banner_sub_text || baseLangPageDoc?.banner_subtext;
     });
   }
 

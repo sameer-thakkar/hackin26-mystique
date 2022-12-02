@@ -1,5 +1,7 @@
 import Prismic from 'prismic-javascript';
-import { apiEndpoint } from '../../config/prismic-config';
+import { apiEndpoint } from 'config/prismic-config';
+import { getHeadoutLanguagecode } from 'utils';
+import { convertUidToUrl } from 'utils/urlUtils';
 
 export default function handle(req, res) {
   const { uid, type, lang, ref } = req.query;
@@ -12,18 +14,15 @@ export default function handle(req, res) {
       })
     )
     .then((response) => {
-      if (response && !response.data.page_url) {
-        // if response exists (which implies document is published)
-        // then Page URL should exist!
-        res.send('Please enter `Page URL` in Prismic for its Preview to work!');
-        res.end();
-        return;
-      }
+      const pageUrl = convertUidToUrl({
+        uid,
+        lang: getHeadoutLanguagecode(lang),
+      });
       const host = req.headers['host'];
       const redirectUrl =
         !response || host.startsWith('localhost:')
           ? `http://${host}?mystique_uid=${uid}&lang=${lang}&previewSession=true`
-          : `${response.data.page_url}?previewSession=true`;
+          : `${pageUrl}?previewSession=true`;
       res.writeHead(302, {
         Location: redirectUrl,
       });

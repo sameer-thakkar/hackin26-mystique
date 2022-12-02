@@ -334,7 +334,6 @@ export const LINKED_MICROSITE_PROPS: string[] = [
   'group_form_blocked_days',
   'alert_popup',
   'show_covid19_alert',
-  'page_url',
 ].map((prop) => `${CUSTOM_TYPES.MICROSITE}.${prop}`);
 
 export const MICROSITE_STRING_KEYS: string[] = [
@@ -346,7 +345,6 @@ export const MICROSITE_STRING_KEYS: string[] = [
   'bing_site_verification',
   'noindex',
   'nofollow',
-  'page_url',
   'enable_earliest_availability',
   'blackout_start_date',
   'blackout_end_date',

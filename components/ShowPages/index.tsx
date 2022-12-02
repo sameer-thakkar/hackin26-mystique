@@ -356,7 +356,7 @@ const ShowPage = ({
     reviewTourGroup();
   }, [tgid]);
 
-  const pageURL = convertUidToUrl({
+  const pageUrl = convertUidToUrl({
     uid,
     lang: currentLanguage,
     isDev,
@@ -394,7 +394,7 @@ const ShowPage = ({
       text: primarySubCategoryName,
     },
     {
-      url: pageURL,
+      url: pageUrl,
       text: name + ' - ' + strings.TICKETS,
     },
   ];
@@ -469,7 +469,7 @@ const ShowPage = ({
         "endDate": "${startDate}T${endTime}",
         "maximumAttendeeCapacity": "${theatreSeatingCapacity}",
         "typicalAgeRange": "${detailsObjects?.[strings.SHOW_PAGE.AGE_LIMIT]}",
-        "url": "${pageURL}",
+        "url": "${pageUrl}",
         "eventStatus": "https://schema.org/EventScheduled",
         "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
         "location": {

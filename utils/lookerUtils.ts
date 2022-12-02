@@ -336,10 +336,12 @@ export const getFooterDetails = async ({
 export const getBannerSubtext = ({
   type,
   data,
-}: PrismicDocumentType): boolean | string => {
+}: PrismicDocumentType): string => {
   switch (type) {
     case CUSTOM_TYPES.MICROSITE:
-      return data?.show_banner_subtext;
+      if (data?.banner_subtext) return data?.banner_subtext;
+      else if (data?.show_banner_subtext) return 'Default banner subtext';
+      else return '';
     case CUSTOM_TYPES.GLOBAL_HOMEPAGE || CUSTOM_TYPES.GLOBAL_EXPERIENCE:
       return data?.banner_subtext;
     case CUSTOM_TYPES.GLOBAL_CITY:

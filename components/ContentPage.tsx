@@ -12,13 +12,17 @@ import Footer from 'components/common/Footer';
 import sliceHandler from 'components/Slices';
 import Header from 'components/common/Header';
 import Conditional from 'components/common/Conditional';
-import { getAlternateLanguages, legacyBooleanCheck } from 'utils';
+import {
+  getAlternateLanguages,
+  legacyBooleanCheck,
+  getHeadoutLanguagecode,
+} from 'utils';
 import allToursParser from 'utils/allToursParser';
 import { tourListApiParser } from 'utils/dataParsers';
 import { groupSlices, getLangObject } from 'utils/helper';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import renderShortCodes from 'utils/shortCodes';
-import { getLogoRedirectionUrl } from 'utils/urlUtils';
+import { getLogoRedirectionUrl, convertUidToUrl } from 'utils/urlUtils';
 import { strings } from 'const/strings';
 import {
   DROPDOWN_ELEMENT,
@@ -369,7 +373,6 @@ class ContentPage extends Component<any, any> {
       'google_site_verification',
       'bing_site_verification',
       'noindex',
-      'page_url',
     ];
     const objKeys = ['image', 'other_meta_tags'];
     const strValues = strKeys.reduce(
@@ -394,11 +397,19 @@ class ContentPage extends Component<any, any> {
       ...objValues,
     };
 
+    const pageUrl = convertUidToUrl({
+      uid,
+      lang: getHeadoutLanguagecode(lang),
+    });
+    const micrositeRefPageUrl = convertUidToUrl({
+      uid: microsite_document_ref.uid,
+      lang: getHeadoutLanguagecode(microsite_document_ref.lang),
+    });
+
     const headProps = {
       ...micrositeData,
       header_scripts: microsite_document_ref.data.header_scripts,
-      canonical_link:
-        this.props.data.canonical_link || this.props.data.page_url,
+      canonical_link: this.props.data.canonical_link || pageUrl,
       other_meta_tags: contentPageHasOtherMetaTags
         ? this.props.data.other_meta_tags
         : microsite_document_ref.other_meta_tags,
@@ -421,7 +432,6 @@ class ContentPage extends Component<any, any> {
       minimum_pax: minimumPax,
       maximum_pax: maximumPax,
       group_form_blocked_days: blockedDays,
-      page_url: micrositeRefPageUrl,
       alert_popup: alertPopup,
       show_covid19_alert: showCovid19Alert,
     } = microsite_document_ref.data;
