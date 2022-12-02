@@ -372,7 +372,7 @@ const ShowPageBanner = ({
     reviewsDetails: { averageRating },
   } = tourGroupData ?? {};
 
-  const { originalPrice, finalPrice } = listingPrice;
+  const { originalPrice, finalPrice } = listingPrice ?? {};
   const save = Math.round(((originalPrice - finalPrice) / originalPrice) * 100);
 
   const currency = useRecoilValue(currencyAtom);
