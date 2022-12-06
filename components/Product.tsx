@@ -57,7 +57,8 @@ import {
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { getDuration } from 'utils/timeUtils';
 import { addQueryParams } from 'utils/urlUtils';
-
+import { experimentsAtom } from 'store/atoms/experiment';
+import { VARIANTS } from 'const/experiments';
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
 dayjs.extend(advancedFormat);
@@ -985,6 +986,7 @@ const Product = (props) => {
   const router = useRouter();
   const pageMetaData = useRecoilValue(metaAtom);
   const currency = useRecoilValue(currencyAtom);
+  const { CTA_COPY_EXPERIMENT } = useRecoilValue(experimentsAtom);
   const hostname = getHostName(isStage, isDev, host);
   const [isContentOpen, toggleContentOpen] = useState(defaultOpen);
   const [showMoreDetailsInTabs, setShowMoreDetails] = useState(
@@ -1289,17 +1291,25 @@ const Product = (props) => {
         trackedToggleContent(isContentOpen);
       }
     };
+
+    const getCtaCopyExpVariant = () => {
+      return CTA_COPY_EXPERIMENT.activeVariant ===
+        VARIANTS.CTA_COPY_MORE_DETAILS
+        ? strings.MORE_DETAILS
+        : strings.READ_MORE;
+    };
+
     const innerContent =
       mbTheme === THEMES.DEFAULT &&
       pageType != CUSTOM_TYPES.GLOBAL_EXPERIENCE ? (
         <>
           {isContentOpen
             ? '- ' + strings.SHOW_LESS_TEXT
-            : '+ ' + strings.MORE_DETAILS}
+            : '+ ' + getCtaCopyExpVariant()}
         </>
       ) : (
         <>
-          {isContentOpen ? strings.SHOW_LESS_TEXT : strings.MORE_DETAILS}
+          {isContentOpen ? strings.SHOW_LESS_TEXT : getCtaCopyExpVariant()}
           <Chevron isActive={isContentOpen} className={'chevron'} />
         </>
       );
@@ -1312,7 +1322,7 @@ const Product = (props) => {
         data-open="0"
         tabIndex={0}
       >
-        {strings.MORE_DETAILS}
+        {getCtaCopyExpVariant()}
       </MoreDetailsBtn>
     ) : (
       <div

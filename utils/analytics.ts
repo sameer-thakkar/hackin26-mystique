@@ -9,9 +9,9 @@ declare global {
 export const trackEvent = ({ eventName, ...labelProps }) => {
   if (typeof window === 'undefined') return;
   if (!window.dataLayer) {
-    //   console.group('trackEvent failed!');
-    //   console.log({ eventName, labelProps });
-    //   console.groupEnd();
+    // console.group('trackEvent failed!');
+    // console.log({ eventName, labelProps });
+    // console.groupEnd();
     return;
   }
   const allProps = {
