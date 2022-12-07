@@ -240,15 +240,14 @@ const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
   const { design } = useContext(MBContext);
 
   const goNext = () => {
-    if (swiper !== null) {
-      swiper.slideNext();
-    }
+    if (!swiper || swiper?.destroyed) return;
+    swiper.slideNext();
   };
 
   const goPrev = () => {
-    if (swiper !== null) {
-      swiper.slidePrev();
-    }
+    if (!swiper || swiper?.destroyed) return;
+
+    swiper.slidePrev();
   };
 
   const updateIndex = useCallback(() => updateCurrentIndex(swiper.realIndex), [
@@ -256,13 +255,12 @@ const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
   ]);
 
   useEffect(() => {
-    if (isMobile) return;
-    if (swiper !== null) {
-      swiper.on('slideChange', updateIndex);
-    }
+    if (isMobile || !swiper || swiper?.destroyed) return;
+
+    swiper.on('slideChange', updateIndex);
 
     return () => {
-      if (swiper !== null) {
+      if (swiper && !swiper.destroyed) {
         swiper.off('slideChange', updateIndex);
       }
     };
