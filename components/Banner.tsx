@@ -136,7 +136,7 @@ const Banner = (props: TBannerCarouselProps) => {
   const scrollTicketSection = useCallback(() => {
     scroller.scrollTo('tour-list-heading', {
       duration: 1200,
-      offset: isMobile ? -80 : -100,
+      offset: isMobile ? 25 : -90,
       smooth: 'easeInOutQuart',
     });
 
