@@ -586,6 +586,7 @@ const ShowPageBanner = ({
                     width={1000}
                     quality={null}
                     dontLazyLoad={true}
+                    fitCrop={!isMobile}
                   />
                 </BannerImage>
               </Conditional>

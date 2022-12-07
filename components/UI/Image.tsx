@@ -61,6 +61,7 @@ type ImageProps = {
   objectFit?: string;
   addDarkOverlay?: boolean;
   onClick?: () => void;
+  fitCrop?: boolean;
 };
 
 const Image: React.FC<ImageProps> = ({
@@ -80,6 +81,7 @@ const Image: React.FC<ImageProps> = ({
   objectFit,
   addDarkOverlay,
   onClick,
+  fitCrop = false,
 }) => {
   const makeImageUrl = (fm: string, url): string => {
     if (!url) {
@@ -102,6 +104,9 @@ const Image: React.FC<ImageProps> = ({
     if (autoCrop) {
       imigxOptionsQueryParams.set('crop', 'faces');
       imigxOptionsQueryParams.delete('fit');
+    }
+    if (fitCrop) {
+      imigxOptionsQueryParams.set('fit', 'crop');
     }
     imigxOptionsQueryParams.set('fm', fm);
     if (addDarkOverlay) {
