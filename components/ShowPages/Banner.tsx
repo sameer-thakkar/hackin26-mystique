@@ -207,16 +207,19 @@ const BannerContent = styled.div`
   .theater-reviews-wrapper {
     ${expandFontToken(FONTS.UI_LABEL_LARGE)}
     margin-top: 1.5rem;
-
+    svg {
+      margin-right: 0.5rem;
+    }
     .ratings-wrapper {
+      svg {
+        margin-right: unset;
+      }
       ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)}
       margin: 0rem 0.5rem 0rem 1.5rem;
       color: ${COLORS.BRAND.CANDY};
     }
 
-    svg {
-      margin-right: 0.5rem;
-    }
+
   }
 
   .details-wrapper {
