@@ -177,7 +177,7 @@ const Banner = (props: TBannerCarouselProps) => {
 
   const textOverLay = () => (
     <OverlayInfoWrapper>
-      <p
+      <h1
         dangerouslySetInnerHTML={{ __html: bannerHeading }}
         className="banner-heading"
       />
