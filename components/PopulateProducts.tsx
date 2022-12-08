@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
-import styled from 'styled-components';
 import Product from 'components/Product';
 import Conditional from 'components/common/Conditional';
 import HorizontalLine from 'components/slices/HorizontalLine';
@@ -21,63 +20,19 @@ import { legacyBooleanCheck } from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import { csvTgidToArray, getHostName } from 'utils/helper';
 import { getPromoCodesDocument } from 'utils/prismicUtils';
-import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
+import {
+  ProductContainer,
+  ProductWrapper,
+  StyledProductsWrapper,
+  StyledTourListHeading,
+  StyledTourListSubHeading,
+} from 'components/PopulateProductsStyles';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { hsidAtom } from 'store/atoms/hsid';
 import { experimentsAtom } from 'store/atoms/experiment';
 import { getABTestingVariant } from 'utils/experiments/experimentUtils';
 import { EXPERIMENT_NAMES } from 'const/experiments';
-
-const StyledProductsWrapper = styled.div`
-  margin: 0 auto;
-  #tour-list-heading {
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-    @media (max-width: 768px) {
-      margin: 0 1rem;
-      width: auto;
-    }
-  }
-`;
-
-const ProductContainer = styled.div`
-  display: grid;
-  grid-row-gap: ${({ theme }) => theme.productCards.gap.desktop};
-  margin-top: 2.25rem;
-  margin-bottom: 2.25rem;
-  & > ${HorizontalLine} {
-    border-bottom-style: dashed;
-  }
-  & > ${HorizontalLine}:last-child {
-    display: none;
-  }
-  @media (max-width: 768px) {
-    margin-top: 1.5rem;
-    margin-bottom: 60px;
-    grid-row-gap: ${({ theme }) => theme.productCards.gap.mobile};
-  }
-`;
-
-const StyledTourListHeading = styled.div`
-  ${expandFontToken('Display/Small')}
-  color: ${COLORS.GRAY.G2};
-  @media (max-width: 768px) {
-    ${expandFontToken('Heading/Regular')}
-  }
-`;
-
-const StyledTourListSubHeading = styled.div`
-  margin-top: 8px;
-  ${expandFontToken('Paragraph/Large')}
-  color: ${COLORS.GRAY.G2};
-  @media (max-width: 768px) {
-    ${expandFontToken('Paragraph/Medium')}
-  }
-`;
-
-const ProductWrapper = styled.div``;
 
 const PopulateProducts = (props) => {
   const {

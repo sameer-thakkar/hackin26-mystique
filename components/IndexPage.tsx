@@ -82,6 +82,7 @@ const Page = (props) => {
     isStage,
     primaryCountry,
     primaryCity,
+    aggregatedRatingDetails,
     domainConfig,
   } = props;
   const [{ eventsReady }, setEventsReady] = useRecoilState(gtmAtom);
@@ -165,6 +166,7 @@ const Page = (props) => {
             serverRequestStartTimestamp={serverRequestStartTimestamp}
             isMobile={isMobile}
             mbTheme={mbTheme}
+            aggregatedRatingDetails={aggregatedRatingDetails}
             domainConfig={domainConfig}
           />
         );

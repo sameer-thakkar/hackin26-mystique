@@ -17,6 +17,7 @@ import {
   standardizeCancellationPolicy,
 } from 'utils/productUtils';
 import { CURRENCY_SYMBOL_MAP } from 'const/index';
+import { AggregatedRatingDetails } from 'components/common/models/AggregatedRatingDetailsModels';
 import * as Sentry from '@sentry/nextjs';
 
 export const uncategorizedToursListParser = (
@@ -86,6 +87,7 @@ export const categoryTourListParserV1 = async ({
 
   const language = getHeadoutLanguagecode(lang);
   let primaryCity;
+  let aggregatedRatingDetails: AggregatedRatingDetails;
 
   if (collection) {
     try {
@@ -96,6 +98,28 @@ export const categoryTourListParserV1 = async ({
         limit: finalLimit,
         cookies,
       });
+
+      const {
+        id,
+        displayName,
+        metaDescription,
+        ratingsInfo,
+        heroImageUrl,
+        cardImageUrl,
+        startingPrice,
+      } = collectionData?.collection ?? {};
+      aggregatedRatingDetails = {
+        id,
+        displayName,
+        metaDescription,
+        ratingsCount: ratingsInfo.ratingsCount,
+        averageRating: ratingsInfo.averageRating,
+        heroImageUrl,
+        cardImageUrl,
+        listingPrice: startingPrice.listingPrice,
+        currency: startingPrice.currency,
+      };
+
       primaryCity = collectionData?.city;
       currency = collectionData?.city?.country?.currency;
       const getCollectionSection = (collectionData, sectionType: string) => {
@@ -247,7 +271,6 @@ export const categoryTourListParserV1 = async ({
         fetchTourGroupV6({ tgid, hostname, language, cookies })
       )
     );
-
     const scorpioData = finalTours?.reduce((acc, tour) => {
       const {
         id,
@@ -273,6 +296,7 @@ export const categoryTourListParserV1 = async ({
         reschedulePolicy,
         ticketValidity,
       } = tour ?? {};
+
       const { productImages, safetyImages } = media || {};
       const updatedDescriptors = generateDescriptor({
         descriptors,
@@ -305,6 +329,7 @@ export const categoryTourListParserV1 = async ({
       const finalListingPrice = variantListingPrice
         ? variantListingPrice
         : listingPrice;
+
       return {
         ...acc,
         [id]: {
@@ -338,6 +363,7 @@ export const categoryTourListParserV1 = async ({
 
     return {
       scorpioData,
+      aggregatedRatingDetails,
       primaryCountry: primaryCity?.country ?? {
         code: countryCode,
         countryName,

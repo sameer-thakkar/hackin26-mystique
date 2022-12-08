@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { LogoJsonLd, SiteLinksSearchBoxJsonLd } from 'next-seo';
 import Conditional from 'components/common/Conditional';
 import { convertUidToUrl, getDomainFromUid, getValidUrl } from 'utils/urlUtils';
+import { AggregatedRatingInfo } from 'components/common/models/AggregatedRatingDetailsModels';
 
 export const TrackingScripts = ({
   isDev,
@@ -168,3 +169,48 @@ export const MystiquePerfScript = ({
     />
   </Head>
 );
+
+export const CollectionAggregatedRatingScript = ({
+  aggregatedRatingInfo,
+}: AggregatedRatingInfo) => {
+  const {
+    id,
+    displayName: name,
+    heroImageUrl,
+    cardImageUrl,
+    metaDescription: description,
+    ratingsCount: ratingCount,
+    averageRating: ratingValue,
+    listingPrice: lowPrice,
+    currency: priceCurrency,
+  } = aggregatedRatingInfo;
+  const itemList = {
+    '@context': 'https://schema.org/',
+    '@type': 'Product',
+    name,
+    image: [heroImageUrl || cardImageUrl],
+    description,
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue,
+      bestRating: 5,
+      worstRating: 1,
+      ratingCount,
+    },
+    offers: {
+      '@type': 'AggregateOffer',
+      availability: 'https://schema.org/InStock',
+      lowPrice,
+      priceCurrency,
+    },
+  };
+  return (
+    <Head>
+      <script
+        key={id}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemList) }}
+      />
+    </Head>
+  );
+};

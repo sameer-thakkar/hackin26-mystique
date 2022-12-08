@@ -21,6 +21,7 @@ import {
   getSinglePrismicSlice,
   redirectTo,
   refsArrayToObject,
+  shouldDisplayRatings,
 } from 'utils';
 import {
   generateDescriptor,
@@ -50,6 +51,7 @@ import {
   fetchDomainConfig,
   fetchTourListV6,
 } from 'utils/apiUtils';
+import { AggregatedRatingDetails } from 'components/common/models/AggregatedRatingDetailsModels';
 
 export const fetchAllMatchingDocs = async ({
   query,
@@ -1432,6 +1434,7 @@ export const getPageData = async ({
     }
 
     if (ContentType === CUSTOM_TYPES.MICROSITE) {
+      let aggregatedRatingDetails: AggregatedRatingDetails;
       const { data } = CMSContent || {};
       const { refs, data: CMSData } = data || {};
       const { contentFramework, productCardData } = refs || {};
@@ -1470,6 +1473,8 @@ export const getPageData = async ({
             lang,
             cookies,
           });
+          aggregatedRatingDetails =
+            categoryTourListData.aggregatedRatingDetails;
         } else {
           categoryTourListData = await categoryTourListParserV2({
             tourListCategory: categoryTourListV2,
@@ -1529,6 +1534,9 @@ export const getPageData = async ({
         queryParams,
         mbTheme,
         isStage,
+        ...(shouldDisplayRatings(aggregatedRatingDetails) && {
+          aggregatedRatingDetails,
+        }),
         ...(primaryCity && { primaryCity }),
         ...(primaryCountry && { primaryCountry }),
         ...(activeCurrency && { activeCurrency }),

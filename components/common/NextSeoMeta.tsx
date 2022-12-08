@@ -9,7 +9,9 @@ import {
   WebpageJsonLD,
   MystiquePerfScript,
   TrackingScripts,
+  CollectionAggregatedRatingScript,
 } from 'components/common/Scripts';
+import { AggregatedRatingDetails } from 'components/common/models/AggregatedRatingDetailsModels';
 import { legacyBooleanCheck } from 'utils';
 import { createAdditionalMetaTag, createHrefLangObj } from 'utils/headUtils';
 import { withShortcodes } from 'utils/helper';
@@ -30,6 +32,7 @@ type PopulateMetaProps = {
   serverRequestStartTimestamp: string;
   isMobile: boolean;
   bannerImages: { [key: string]: any }[];
+  aggregatedRatingDetails?: AggregatedRatingDetails;
   mbTheme?: string;
   faviconUrl: string;
   logoUrl?: string;
@@ -43,6 +46,7 @@ export default function PopulateMeta({
   isMobile,
   bannerImages,
   serverRequestStartTimestamp,
+  aggregatedRatingDetails,
   faviconUrl,
   logoUrl,
 }: PopulateMetaProps) {
@@ -279,6 +283,11 @@ export default function PopulateMeta({
         />
       </Conditional>
       <WebpageJsonLD {...jsonLdProps} />
+      <Conditional if={aggregatedRatingDetails}>
+        <CollectionAggregatedRatingScript
+          aggregatedRatingInfo={aggregatedRatingDetails}
+        />
+      </Conditional>
       <MystiquePerfScript
         serverRequestStartTimestamp={serverRequestStartTimestamp}
       />
