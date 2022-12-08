@@ -167,18 +167,20 @@ export const createBookingURL = ({
     bookSubdomain !== 'undefined'
       ? bookSubdomain
       : 'book';
-  const langRouteParam = lang ? '/' + LANGUAGE_MAP[lang].code : '';
+  const langRouteParam =
+    lang && lang !== LANGUAGE_MAP.en.code ? '/' + LANGUAGE_MAP[lang].code : '';
 
   const domain = redirectToHeadoutBookingFlow
     ? HEADOUT_NAKED_DOMAIN
     : nakedDomain;
-  // date is passed when we directly land user on Checkout Page, skipping date selection
-  let bookingStageSuffix = date ? '/checkout/' : '';
+
+  let bookingStageSuffix;
+
   // on Mobile, we have intermediate Pax Selection step.
-  bookingStageSuffix = isMobile && date ? '/select/pax/' : '';
+  bookingStageSuffix = isMobile && date ? '/select/pax' : '';
 
   const urlObject = new URL(
-    `https://${bookingFlowSubdomain}.${domain}${langRouteParam}/book/${tgid}${bookingStageSuffix}`
+    `https://${bookingFlowSubdomain}.${domain}${langRouteParam}/book/${tgid}${bookingStageSuffix}/`
   );
 
   if (date?.startDate) urlObject.searchParams.set('date', date?.startDate);
