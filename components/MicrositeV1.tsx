@@ -70,7 +70,6 @@ const MicrositeV1 = (props) => {
     isDev,
     serverRequestStartTimestamp,
     categoryTourListData,
-    aggregatedRatingDetails,
     domainConfig,
   } = props;
 
@@ -472,7 +471,6 @@ const MicrositeV1 = (props) => {
             languages: alternateLanguages,
             isMobile,
             bannerImages: finalBannerImages,
-            aggregatedRatingDetails,
             faviconUrl,
             logoUrl: logoUrl,
           }}
@@ -533,7 +531,6 @@ const MicrositeV1 = (props) => {
             boxed={true}
             hideCTA={isToursAvailable ? hideBannerCTA : true}
             orderedTgids={orderedTgids}
-            aggregatedRatingDetails={aggregatedRatingDetails}
           />
         </Conditional>
         <Conditional if={mbTheme === THEMES.MIN_BLUE}>

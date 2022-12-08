@@ -1,5 +1,3 @@
-export const UNIT_ABBREVIATIONS = ['K', 'M', 'B', 'T'];
-
 export const IP_INFO_TOKEN = '108f1155413636';
 
 export const PREFERRED_COUNTRIES_CODES = [
@@ -713,6 +711,8 @@ export const ESCAPE_REGEX = new RegExp(
 
 export const ESCAPE_REPLACER = (t: string): string =>
   ESCAPE_ENTITIES[t as keyof typeof ESCAPE_ENTITIES];
+
+export const UNIT_ABBREVIATIONS = ['k', 'm', 'b', 't'];
 
 export const PROMO_CODES = {
   DEFAULT: {
