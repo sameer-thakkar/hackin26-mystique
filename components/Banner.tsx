@@ -277,6 +277,7 @@ const StyledBanner = styled.div`
   .mb-slide img {
     height: 100%;
     width: 100%;
+    min-width: 75rem;
     border-radius: 0.75rem;
     object-fit: cover;
     object-position: 0% 25%;
@@ -404,6 +405,10 @@ const StyledBanner = styled.div`
       aspect-ratio: 16/9;
       height: 100%;
       width: 91.7vw;
+    }
+
+    .mb-slide img {
+      min-width: unset;
     }
 
     .mb-captions .mb-caption {

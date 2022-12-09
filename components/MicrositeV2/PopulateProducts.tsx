@@ -176,7 +176,7 @@ const PopulateProducts = (props) => {
       : NO_OF_CARDS_IN_ROW.DESKTOP * NO_OF_ROWS_TO_SHOW.DESKTOP;
 
     const cardsAlreadyVisible = Number(limit);
-    const totalCards = tgids.length;
+    const totalCards = finalTgidListToShow.length;
 
     if (cardsAlreadyVisible + nextItemsCardCount > totalCards) {
       nextItemsCardCount = totalCards - cardsAlreadyVisible;
@@ -191,11 +191,14 @@ const PopulateProducts = (props) => {
 
   const categoryPropsPopularityRank =
     categoryProps?.categories[0]?.ranking.popularity;
-  const tgids = isDiscountedPage
-    ? activeCategoryTgids || categoryPropsPopularityRank
-    : propTgids || activeCategoryTgids;
+  const finalTgidListToShow =
+    (isDiscountedPage
+      ? activeCategoryTgids || categoryPropsPopularityRank
+      : isListicle
+      ? categoryPropsPopularityRank
+      : propTgids || activeCategoryTgids) || [];
 
-  const tgidsSubArr = subArrays(tgids, Number(offset));
+  const tgidsSubArr = subArrays(finalTgidListToShow, Number(offset));
   const getViewMoreLink = () => {
     return `${pathname}?${getUpdatedQuery().toString()}`;
   };
