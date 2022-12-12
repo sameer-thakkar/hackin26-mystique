@@ -7,7 +7,7 @@ import PopulateMeta from 'components/common/NextSeoMeta';
 import { getAlternateLanguages } from 'utils';
 import allToursParser from 'utils/allToursParser';
 import { tourListApiParser } from 'utils/dataParsers';
-import { genManualSlice, getLangObject } from 'utils/helper';
+import { checkBroadway, genManualSlice, getLangObject } from 'utils/helper';
 import { checkLTT } from 'utils/helper';
 import { MicrositeV2GlobalStyle } from 'const/globalStyles/micrositeV2';
 import { getLogoRedirectionUrl } from 'utils/urlUtils';
@@ -55,6 +55,7 @@ class MicrositeV2 extends Component<any, any> {
     const { all_tours: allTours } = this.props.data.data;
     const allTgids = allTours.map((tour) => tour.primary.tgid);
     const isLTT = checkLTT(this.props.data.uid);
+    const isBroadway = checkBroadway(this.props.data.uid);
     if (allTours.length > 0) {
       fetchTourListV6({
         tgids: allTgids,
@@ -74,7 +75,7 @@ class MicrositeV2 extends Component<any, any> {
     }
 
     const directTgid = this.props.router.query.tgid;
-    if (isMobile && directTgid && !isLTT) {
+    if (isMobile && directTgid && !isLTT && !isBroadway) {
       this.setState({
         page: {
           name: PAGETYPE.MOBILE_PRODUCT_PAGE,
