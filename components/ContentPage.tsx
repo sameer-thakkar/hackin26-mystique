@@ -45,7 +45,7 @@ const ContentWrapper = styled.main`
 const StyledContentPage = styled.div`
   display: grid;
   grid-row-gap: 72px;
-  margin-top: 32px;
+  margin-top: 0;
   margin-bottom: 72px;
 
   .page_tabs + div {
@@ -526,13 +526,11 @@ class ContentPage extends Component<any, any> {
           />
         </Conditional>
         <ContentWrapper>
-          <Conditional if={featuredImage?.url}>
-            <Masthead
-              title={featuredTitle}
-              image={featuredImage}
-              isMobile={this.state.isMobile}
-            />
-          </Conditional>
+          <Masthead
+            title={featuredTitle}
+            image={featuredImage?.url ? featuredImage : null}
+            isMobile={this.state.isMobile}
+          />
           <Conditional if={alertPopup}>
             <Alert
               popupUID={alertPopup?.uid}

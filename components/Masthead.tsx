@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from 'react';
-import styled from 'styled-components';
 import Image from 'components/UI/Image';
 import { withShortcodes } from 'utils/helper';
 import { trackEvent } from 'utils/analytics';
@@ -9,44 +8,14 @@ import {
   PAGE_TYPES,
 } from 'const/index';
 import { MBContext } from 'contexts/MBContext';
-import { expandFontToken } from 'const/typography';
-
-const StyledMasthead = styled.div`
-  width: 100%;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-  overflow-x: hidden;
-  img {
-    width: 100vw;
-    height: 400px;
-    filter: brightness(0.7);
-    object-fit: cover;
-  }
-  @media (max-width: 768px) {
-    img {
-      height: 300px;
-    }
-  }
-`;
-
-const Title = styled.h1`
-  position: absolute;
-  top: 50%;
-  color: white;
-  ${expandFontToken('Display/Regular')}
-  transform: translateY(-50%);
-  margin: 0;
-  max-width: 792px;
-  text-align: center;
-  @media (max-width: 768px) {
-    text-align: center;
-    top: 42%;
-    ${expandFontToken('Heading/Large')}
-    padding: 0px 16px;
-  }
-`;
+import {
+  GradientWrapper,
+  ImageWrapper,
+  StyledMasthead,
+  Title,
+  TitleWrapper,
+} from 'components/MastheadStyles';
+import Conditional from 'components/common/Conditional';
 
 const Masthead = ({
   title,
@@ -54,7 +23,7 @@ const Masthead = ({
   isMobile,
 }: {
   title: string;
-  image: { url: string; alt: string };
+  image: { url: string; alt: string } | null;
   isMobile: boolean;
 }) => {
   const { lang } = useContext(MBContext);
@@ -68,15 +37,31 @@ const Masthead = ({
       [ANALYTICS_PROPERTIES.MB_NAME]: formattedTitle?.join(''),
     });
   }, []);
+
   return (
-    <StyledMasthead>
-      <Image
-        url={image.url}
-        alt={image.alt}
-        width={isMobile ? 800 : 1200}
-        height={isMobile ? 300 : 400}
-      />
-      <Title>{formattedTitle}</Title>
+    <StyledMasthead withoutImage={image === null}>
+      {image ? (
+        <>
+          <TitleWrapper withoutImage={false}>
+            <Title withoutImage={false}>{formattedTitle}</Title>
+          </TitleWrapper>
+          <ImageWrapper>
+            <Image
+              url={image.url}
+              alt={image?.alt}
+              width={isMobile ? 800 : 1200}
+              height={isMobile ? 300 : 400}
+            />
+            <Conditional if={!isMobile}>
+              <GradientWrapper />
+            </Conditional>
+          </ImageWrapper>
+        </>
+      ) : (
+        <TitleWrapper withoutImage={true}>
+          <Title withoutImage={true}>{formattedTitle}</Title>
+        </TitleWrapper>
+      )}
     </StyledMasthead>
   );
 };
