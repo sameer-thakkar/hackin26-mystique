@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { GLOBE } from 'assets/SvgIcons';
 import {
@@ -14,11 +14,13 @@ import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import { getLangObject } from 'utils/helper';
 import { MBContext } from 'contexts/MBContext';
 import DropdownSelector from 'components/common/DropdownSelector';
+import Cookies from 'js-cookie';
+import { getDomainFromUid } from 'utils/urlUtils';
 
 const LanguageSelector = (props) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const { currentLanguage, languages: availableLanguages } = props;
-  const { mbTheme } = useContext(MBContext);
+  const { mbTheme, uid, isDev } = useContext(MBContext);
 
   const selectorRef = useRef(null);
   const parentRef = useRef(null);
@@ -62,6 +64,14 @@ const LanguageSelector = (props) => {
       [ANALYTICS_PROPERTIES.LANGUAGE]: option.value,
     });
   };
+  const domain = getDomainFromUid(uid);
+
+  useEffect(() => {
+    Cookies.set('content_lang', currentLanguage, {
+      domain: isDev ? null : domain?.replace('www.', ''),
+      path: '',
+    });
+  }, [currentLanguage]);
 
   const options = sortedLanguages.map(({ code, url }) => ({
     label: LANGUAGE_MAP[code].displayName,
