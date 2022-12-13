@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
+import Image from 'UI/Image';
 
-import Image from '../UI/Image';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 
 type ImageTextProps = {

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Client } from 'config/prismic-config';
-import 'lazysizes';
 import Header from 'components/common/Header';
 import Footer from 'components/common/Footer';
 import ContentContainer from 'components/UI/ContentContainer';

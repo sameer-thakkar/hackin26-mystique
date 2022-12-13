@@ -211,7 +211,6 @@ const Reviews: React.FC<{
       <Quotes>{QUOTES}</Quotes>
       <Slider
         sliderOptions={{
-          shouldSwiperUpdate: true,
           slidesPerView: 1,
           autoHeight: true,
         }}

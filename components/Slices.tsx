@@ -90,7 +90,7 @@ const sliceHandler = (slice, props: any = {}) => {
     case 'full_width_action_card':
       return <FWActionCard title={slice.primary.title} cards={slice.items} />;
     case 'content_box':
-      return <RichTextBox slices={slice.items} />;
+      return <RichTextBox slices={slice.items} key={slice.index} />;
     case 'feature_box':
       return <FeatureBox blocks={slice.items} lazyLoad={true} />;
     case 'footer_column':

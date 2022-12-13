@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import Image from 'UI/Image';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import Accordion, { StyledAccordion } from 'components/slices/Accordion';
+import type { SwiperProps } from 'swiper/react';
 
 const Slider = dynamic(() => import('UI/Slider'));
 
@@ -131,7 +132,7 @@ const SliderAccordion = (props) => {
     (i) => i?.url
   );
 
-  const sliderOptions = {
+  const sliderOptions: SwiperProps = {
     direction: 'horizontal',
     speed: 650,
     pagination: {

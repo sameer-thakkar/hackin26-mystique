@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 import Conditional from 'components/common/Conditional';
 import COLORS from 'const/colors';
-import Image, { Wrapper } from 'components/UI/Image';
+import Image, { Wrapper } from 'UI/Image';
 import { BLACK_CROSS, ALL_PHOTOS } from 'assets/SvgIcons';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_PROPERTIES } from 'const/index';
+import type { SwiperProps } from 'swiper/react';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -60,9 +61,10 @@ const GalleryWrapper = styled.div`
   }
 `;
 
-const GalleryPopUpWrapper = styled.div(({ isVisibleGalleryPopUp }) => {
-  if (isVisibleGalleryPopUp) {
-    return `
+const GalleryPopUpWrapper = styled.div<{ isVisibleGalleryPopUp: boolean }>(
+  ({ isVisibleGalleryPopUp }) => {
+    if (isVisibleGalleryPopUp) {
+      return `
     position: fixed;
     z-index: 10;
     left: 0;
@@ -82,7 +84,7 @@ const GalleryPopUpWrapper = styled.div(({ isVisibleGalleryPopUp }) => {
     }
   
     .swiper-button-next {
-      right: 0px;
+      right: 2px;
       color: black;
       background: #ffffff;
       box-shadow: 0px 0px 1px rgb(0 0 0 / 10%), 0px 2px 8px rgb(0 0 0 / 10%);
@@ -96,7 +98,7 @@ const GalleryPopUpWrapper = styled.div(({ isVisibleGalleryPopUp }) => {
     }
   
     .swiper-button-prev {
-      left: 0px;
+      left: 2px;
       color: black;
       background: #ffffff;
       box-shadow: 0px 0px 1px rgb(0 0 0 / 10%), 0px 2px 8px rgb(0 0 0 / 10%);
@@ -174,14 +176,15 @@ const GalleryPopUpWrapper = styled.div(({ isVisibleGalleryPopUp }) => {
     }
   
   `;
-  } else {
-    return `
+    } else {
+      return `
       display:none;
     `;
+    }
   }
-});
+);
 
-const ActiveImageWrapper = styled.div(
+const ActiveImageWrapper = styled.div<{ active: boolean }>(
   ({ active }) => `
   ${active ? `display:flex;` : `display:none;`}
   height: 100%;
@@ -206,7 +209,7 @@ const ActiveImageWrapper = styled.div(
 `
 );
 
-const ImageWrapper = styled.div(
+const ImageWrapper = styled.div<{ active: boolean }>(
   ({ active }) =>
     `
   img{
@@ -262,6 +265,15 @@ const GalleryPopUpContentWrapper = styled.div`
 
   @media (max-width: 768px) {
     grid-gap: 24px;
+
+    .swiper-initialized {
+      max-width: 90vw;
+      overflow: visible;
+    }
+  }
+
+  .swiper-wrapper {
+    max-width: 1000px;
   }
 `;
 
@@ -283,22 +295,16 @@ const Gallery = ({ galleryArray, isMobile }) => {
 
   const slidesPerView = isMobile ? 2 : 5;
   const slidesPerGroup = isMobile ? 2 : 5;
-  let params = {
+  let params: SwiperProps = {
     direction: 'horizontal',
     speed: 650,
     slidesPerView: slidesPerView,
-    shouldSwiperUpdate: true,
     lazy: true,
     initialSlide: 1,
     spaceBetween: isMobile ? 8 : 16,
     slidesPerGroup: slidesPerGroup,
-    centeredSlides: isMobile,
-    navigation: isMobile
-      ? false
-      : {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
+    centeredSlides: false,
+    navigation: !isMobile,
   };
 
   const popupOpener = (index) => {

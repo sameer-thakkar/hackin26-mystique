@@ -54,9 +54,9 @@ const StyledImageGallery = styled.div`
   .button-left {
     position: absolute;
     top: 50%;
+    z-index: 2;
     display: flex;
     cursor: pointer;
-    left: -16px;
     transform: translateY(-50%);
   }
   .swiper-button-disabled {
@@ -66,7 +66,7 @@ const StyledImageGallery = styled.div`
   .btn-right,
   .button-right {
     left: unset;
-    right: -16px;
+    right: 0;
     transform: translateY(-50%) rotate(180deg);
   }
   .btn.swiper-button-disabled {
@@ -349,6 +349,9 @@ const GallerySwiper = styled.div`
       line-height: 22px;
     }
   }
+  .swiper-initialized {
+    width: 100%;
+  }
   picture {
     display: flex;
   }
@@ -357,6 +360,11 @@ const GallerySwiper = styled.div`
     height: 190px;
   }
   @media (max-width: 768px) {
+    .swiper-initialized {
+      max-width: calc(100vw - 32px);
+      overflow: visible;
+    }
+
     ${StyledImage} {
       p {
         font-size: 14px;
@@ -440,7 +448,7 @@ const ImageGallery = (props) => {
     spaceBetween: 0,
     autoHeight: true,
     initialSlide,
-    getSwiper,
+    onSwiper: getSwiper,
     freeMode: false,
     freeModeMomentum: 1,
     zoom: {
@@ -460,10 +468,12 @@ const ImageGallery = (props) => {
 
   const galleryOpts = {
     rebuildOnUpdate: true,
-    navigation: {
-      nextEl: '.button-right',
-      prevEl: '.button-left',
-    },
+    navigation: isMobile
+      ? false
+      : {
+          nextEl: '.button-right',
+          prevEl: '.button-left',
+        },
   };
 
   return (
@@ -478,7 +488,7 @@ const ImageGallery = (props) => {
               images[initialSlide].uploaded_image?.url ||
               images[initialSlide].linked_image?.url
             }
-            dontLazyLoad={true}
+            priority
             aspectRatio={'16:10'}
             imageId={`image-${initialSlide}`}
             height={'400'}
@@ -497,20 +507,14 @@ const ImageGallery = (props) => {
       <GallerySwiper>
         <div className="swiper">
           <Swiper
-            renderPrevButton={
-              isMobile
-                ? null
-                : () => (
-                    <div className="button-right">{CHEVRON_LEFT_CIRCLE}</div>
-                  )
-            }
-            renderNextButton={
-              isMobile
-                ? null
-                : () => <div className="button-left">{CHEVRON_LEFT_CIRCLE}</div>
-            }
             {...swiperOpts}
             {...galleryOpts}
+            nextButton={
+              <div className="button-right">{CHEVRON_LEFT_CIRCLE}</div>
+            }
+            previousButton={
+              <div className="button-left">{CHEVRON_LEFT_CIRCLE}</div>
+            }
           >
             {images.map((image, index) => {
               const caption = RichText.asText(image.heading);
@@ -569,7 +573,7 @@ const ImageGallery = (props) => {
                         }
                         className={`swiper-zoom-target`}
                         alt={caption}
-                        dontLazyLoad
+                        priority
                       />
                     </div>
                     <Content>

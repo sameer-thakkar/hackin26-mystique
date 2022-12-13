@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
@@ -156,10 +156,12 @@ const Drawer = ({
   $drawerStyles?: any;
   container?: HTMLElement;
 }) => {
+  const [mounted, setMounted] = useState(false);
   const drawerRef = useRef(null);
 
   useEffect(() => {
     document.body.classList.add('scroll-lock', 'no-shadow');
+    setMounted(true);
 
     return () => {
       document.body.classList.remove('scroll-lock', 'no-shadow');
@@ -216,7 +218,9 @@ const Drawer = ({
     };
   }, []);
 
-  if (typeof window === 'undefined') return null;
+  if (!mounted) {
+    return null;
+  }
 
   return ReactDOM.createPortal(
     <DrawerContainer $drawerStyles={$drawerStyles} $noMargin={noMargin}>

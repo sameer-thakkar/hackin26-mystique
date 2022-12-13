@@ -6,7 +6,7 @@ import { RichText } from 'prismic-reactjs';
 import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
 import EnvironmentContext from 'contexts/environmentContext';
 import { MBContext } from 'contexts/MBContext';
-import Image from 'components/UI/Image';
+import Image from 'UI/Image';
 import Button from 'components/UI/Button';
 import { createBookingURL, getCollectionSection } from 'utils';
 import { CHEVRON_DOWN, CHECK, CROSS } from 'assets/SvgIcons';
@@ -478,7 +478,12 @@ const AutomatedTourComparisonTable = ({
                 return (
                   <Column key={index}>
                     <div className="tour-image">
-                      <Image url={tour.imageUrl} height={176} width={282} />
+                      <Image
+                        url={tour.imageUrl}
+                        height={176}
+                        width={282}
+                        alt={tour.name}
+                      />
                     </div>
                   </Column>
                 );

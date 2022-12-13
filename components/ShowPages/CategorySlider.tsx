@@ -3,12 +3,19 @@ import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 import CategoryCard from 'components/ShowPages/CategoryCard';
 import Conditional from 'components/common/Conditional';
+import type { SwiperProps } from 'swiper/react';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
 const CardCarouselContainer = styled.div`
   max-width: 1200px;
   margin: auto;
+
+  .swiper-initialized {
+    margin: 0px;
+    width: auto;
+    position: static;
+  }
 
   .swiper-pagination {
     z-index: 2;
@@ -150,22 +157,16 @@ export default class CategorySlider extends Component<CardCarouselProps> {
 
     const slidesPerView = isMobile ? 1 : 4;
     const slidesPerGroup = isMobile ? 1 : 2;
-    let params = {
+    let params: SwiperProps = {
       direction: 'horizontal',
       speed: 650,
       slidesPerView: slidesPerView,
-      shouldSwiperUpdate: true,
       lazy: true,
       initialSlide: 1,
       spaceBetween: 24,
       slidesPerGroup: slidesPerGroup,
       centeredSlides: isMobile,
-      navigation: isMobile
-        ? false
-        : {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-          },
+      navigation: !isMobile,
     };
 
     return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from '../UI/Image';
+import Image from 'UI/Image';
 import styled from 'styled-components';
 
 type PrismicImageObject = {
