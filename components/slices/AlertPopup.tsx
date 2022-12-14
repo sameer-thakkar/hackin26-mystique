@@ -3,7 +3,6 @@ import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import { HALYARD } from 'const/ui-constants';
-import type { SwiperProps } from 'swiper/react';
 
 const Swiper = dynamic(() => import('components/Swiper'));
 
@@ -79,8 +78,9 @@ type AlertPopupProps = {
   description: string;
 };
 
-const swiperParams: SwiperProps = {
+const swiperParams = {
   pagination: {
+    el: '.swiper-pagination',
     type: 'bullets',
     clickable: true,
   },

@@ -676,12 +676,7 @@ export const MobileProductPage = (props) => {
           {/* <Banner  isMobile={true} carouselOptions/> */}
           <Conditional if={images?.length === 1}>
             <div className="single-image">
-              <Image
-                url={images[0]?.url}
-                priority
-                fill
-                alt={images[0]?.alt || ''}
-              />
+              <Image url={images[0]?.url} dontLazyLoad={true} />
             </div>
           </Conditional>
           <Conditional if={images?.length > 1}>
@@ -694,12 +689,7 @@ export const MobileProductPage = (props) => {
                     role="button"
                     tabIndex={0}
                   >
-                    <Image
-                      url={image.url}
-                      height={214}
-                      width={686}
-                      alt={image?.alt || ''}
-                    />
+                    <Image url={image.url} height={214} width={686} />
                   </div>
                 );
               })}

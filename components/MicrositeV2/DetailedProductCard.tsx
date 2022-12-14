@@ -647,7 +647,6 @@ const DetailedProductCard = (props) => {
             height={750}
             format="pjpg"
             imageId={tgidClicked}
-            alt={title}
           />
         </div>
         <div className="product-v2-description-right">
@@ -888,7 +887,6 @@ const DetailedProductCard = (props) => {
             height={750}
             format="pjpg"
             imageId={tgidClicked}
-            alt={title}
           />
           <div
             onClick={closeDescriptionCard}

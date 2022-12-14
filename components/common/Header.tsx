@@ -233,10 +233,12 @@ const Header: React.FC<any> = (props) => {
             <Image
               url={logoUrl}
               alt={logoAltText}
-              priority
+              dontLazyLoad
+              isLogo
               height="44"
               width="144"
               autoCrop={false}
+              isHeaderLogo
             />
             {hasPoweredByHeadoutLogo ? POWERED_BY_HEADOUT : null}
           </StyledLogo>

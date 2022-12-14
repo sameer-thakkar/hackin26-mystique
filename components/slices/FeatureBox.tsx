@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import COLORS from 'const/colors';
-import Image from 'UI/Image';
 
+import Image from '../UI/Image';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 
 type FeatureBoxProps = {
@@ -79,7 +79,7 @@ const FeatureBox: React.FC<FeatureBoxProps> = ({ blocks, lazyLoad }) => (
           <div>
             {imageURL ? (
               <Image
-                priority={!lazyLoad}
+                dontLazyLoad={!lazyLoad}
                 height={375}
                 attribution={block.image_source?.copyright}
                 width={580}

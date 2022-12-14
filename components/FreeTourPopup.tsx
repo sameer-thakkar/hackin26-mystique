@@ -5,7 +5,6 @@ import Image from 'UI/Image';
 import { isMobile } from 'utils/helper';
 import COLORS from 'const/colors';
 import { HALYARD } from 'const/ui-constants';
-import type { SwiperProps } from 'swiper/react';
 
 import InlinePrice from './InlinePrice';
 
@@ -378,7 +377,7 @@ export default class FreeTourPopup extends Component<any, any> {
   };
 
   renderSlider = (productOffer) => {
-    const params: SwiperProps = {
+    const params = {
       direction: 'horizontal',
       pagination: {
         el: '.swiper-pagination',
@@ -389,6 +388,7 @@ export default class FreeTourPopup extends Component<any, any> {
         delay: 2500,
         disableOnInteraction: false,
       },
+      rebuildOnUpdate: true,
     };
 
     return (
@@ -399,7 +399,6 @@ export default class FreeTourPopup extends Component<any, any> {
               <Image
                 url={image.image_url.url || image.image_source.url || null}
                 format="pjpg"
-                alt={'offer'}
               />
             </div>
           );
@@ -411,10 +410,7 @@ export default class FreeTourPopup extends Component<any, any> {
   renderImage = (image) => {
     if (image)
       return (
-        <Image
-          url={image.image_url.url || image.image_source.url || null}
-          alt={''}
-        />
+        <Image url={image.image_url.url || image.image_source.url || null} />
       );
   };
 
@@ -470,7 +466,6 @@ export default class FreeTourPopup extends Component<any, any> {
                   width={26}
                   url="https://cdn-imgix-open.headout.com/icons/cancel-icon.svg"
                   format="pjpg"
-                  alt={'cancel'}
                 />
               </div>
 

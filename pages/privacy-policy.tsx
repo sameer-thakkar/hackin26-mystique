@@ -1,13 +1,7 @@
-import {
-  DROPDOWN_ELEMENT,
-  CUSTOM_TYPES,
-  DESIGN,
-  THEMES,
-} from 'constants/index';
-
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Client } from 'config/prismic-config';
+import 'lazysizes';
 import { ThemeProvider } from 'styled-components';
 import { MBContextProvider } from 'contexts/MBContext';
 import Header from 'components/common/Header';
@@ -23,6 +17,7 @@ import { getNakedDomain, getHeadoutLanguagecode } from 'utils';
 import { getPrismicDocument } from 'utils/prismicUtils';
 import { getLogoRedirectionUrl } from 'utils/urlUtils';
 import { fetchDomainConfig } from 'utils/apiUtils';
+import { DROPDOWN_ELEMENT, CUSTOM_TYPES, DESIGN, THEMES } from 'const/index';
 
 const Title = styled.div`
   margin: 10px 0px;

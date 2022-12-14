@@ -144,7 +144,7 @@ const NestedMenu = styled.ul`
     right: 100%;
   }
 
-  ${StyledMenuItem}:hover > .link-element > & {
+  ${StyledMenuItem}:hover > a > & {
     visibility: unset;
     li:hover {
       background-color: ${({ theme: { primaryBGHover } }) =>
@@ -162,7 +162,7 @@ const NestedMenu = styled.ul`
     .nest-icon svg {
       transform: unset;
     }
-    ${StyledMenuItem}:hover > .link-element > & {
+    ${StyledMenuItem}:hover > a > & {
       li:hover {
         background: initial;
       }
@@ -353,24 +353,18 @@ const MenuItem = (props) => {
       id={`menu-item-${index}`}
       onMouseEnter={onMouseEnter ? onMouseEnter : null}
     >
-      <div className={'link-element'}>
-        <React.Fragment>
-          <LinkResolver target={url?.target} url={withTrailingSlash(url?.url)}>
-            <div
-              className={`${isNested ? 'withIcon' : ''} menu-item-text`}
-              onClick={menuItemSelected}
-              role="button"
-              tabIndex={0}
-            >
-              <span className="label">{label}</span>
-              {isNested ? (
-                <span className="nest-icon">{CHEVRON_DOWN}</span>
-              ) : null}
-            </div>
-          </LinkResolver>
-          {children}
-        </React.Fragment>
-      </div>
+      <LinkResolver target={url?.target} url={withTrailingSlash(url?.url)}>
+        <div
+          className={`${isNested ? 'withIcon' : ''} menu-item-text`}
+          onClick={menuItemSelected}
+          role="button"
+          tabIndex={0}
+        >
+          <span className="label">{label}</span>
+          {isNested ? <span className="nest-icon">{CHEVRON_DOWN}</span> : null}
+        </div>
+        {children}
+      </LinkResolver>
     </StyledMenuItem>
   );
 };

@@ -167,7 +167,6 @@ const Card = ({ card, clickHandler, isMobile, price, currency }: CardProps) => {
           autoCrop={false}
           width={800}
           height={400}
-          alt={primaryCategory}
         />
       </div>
       <div className="l2-booster-wrapper">

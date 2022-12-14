@@ -11,7 +11,7 @@ import { CurrencyDisplayType } from 'utils/currency';
 import { checkLTT } from 'utils/helper';
 import { MBContext } from 'contexts/MBContext';
 
-export const StyledPriceBlock = styled.div<{ showScratchPrice: boolean }>`
+export const StyledPriceBlock = styled.div`
   display: grid;
   grid-template-columns: auto auto;
   grid-row-gap: 4px;
@@ -74,7 +74,7 @@ export const SavedTag = styled.div`
   border-radius: 2px;
 `;
 
-export const PriceSkeleton = styled.div<{ showScratchPrice: boolean }>`
+export const PriceSkeleton = styled.div`
   display: grid;
   row-gap: 2px;
   opacity: 0.8;
@@ -144,9 +144,7 @@ const PriceBlock = ({
   const { uid } = useContext(MBContext);
   const isLTT = checkLTT(uid);
 
-  if (!listingPrice) {
-    return null;
-  }
+  if (!listingPrice) return null;
 
   const {
     originalPrice,

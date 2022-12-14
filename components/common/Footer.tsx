@@ -4,7 +4,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import { MBContext } from 'contexts/MBContext';
 import { getAppTheme } from 'style/theme';
 import { useWindowWidth } from '@react-hook/window-size';
-import Image from 'UI/Image';
+import Image from 'components/UI/Image';
 import SocialLinks from 'components/UI/SocialLinks';
 import sliceHandler from 'components/Slices';
 import Conditional from 'components/common/Conditional';
@@ -137,7 +137,7 @@ const Container = styled.div`
   }
 `;
 
-const LinksWrapper = styled.div<{ isEntertainmentMb: boolean }>`
+const LinksWrapper = styled.div`
   display: grid;
   grid-template-rows: repeat(2, max-content);
   row-gap: 16px;
@@ -157,11 +157,6 @@ const LinksWrapper = styled.div<{ isEntertainmentMb: boolean }>`
       text-decoration: none;
       color: ${({ theme, isEntertainmentMb }) =>
         isEntertainmentMb ? COLORS.GRAY.G6 : theme.footer.color};
-      
-      span {
-        color: ${({ theme, isEntertainmentMb }) =>
-          isEntertainmentMb ? COLORS.GRAY.G6 : theme.footer.color};
-      }
     }
   }
 
@@ -184,7 +179,7 @@ const LinksWrapper = styled.div<{ isEntertainmentMb: boolean }>`
   }
 `;
 
-const LinkSlicesWrapper = styled.div<{ isEntertainmentMb: boolean }>`
+const LinkSlicesWrapper = styled.div`
   display: grid;
   padding: 4rem 0;
   background-color: ${COLORS.GRAY.G8};
@@ -197,10 +192,7 @@ const LinkSlicesWrapper = styled.div<{ isEntertainmentMb: boolean }>`
   }
 `;
 
-const FooterLegal = styled.div<{
-  isEntertainmentMb: boolean;
-  invertLogoColor: boolean;
-}>`
+const FooterLegal = styled.div`
   display: grid;
   align-items: start;
   ${({ theme }) => {
@@ -282,10 +274,6 @@ const FooterLegal = styled.div<{
         isEntertainmentMb &&
         `margin-top: 28px;font-size:10px;line-height:16px;`}
     }
-
-    .hide-mobile {
-      display: none;
-    }
   }
 `;
 
@@ -363,26 +351,15 @@ const Footer: React.FC<FooterProps> = ({
     setIsMobile(width < 768);
   }, [width]);
 
-  const getContactNo = (removeSpaces: boolean = false) => {
-    let phoneNumber: string = '';
+  const getContactNo = () => {
+    if (pageMeta?.city?.cityCode === 'DUBAI') return '+971 8 000 321171';
 
     switch (pageMeta?.country?.code) {
-      case 'DUBAI':
-        phoneNumber = '+971 8 000 321171';
-        break;
       case 'AU':
-        phoneNumber = '+61 3 7066 3969';
-        break;
+        return '+61 3 7066 3969';
       default:
-        phoneNumber = '+1 347 897 0100';
-        break;
+        return '+1 347 897 0100';
     }
-
-    if (removeSpaces) {
-      phoneNumber = phoneNumber.replaceAll(' ', '');
-    }
-
-    return phoneNumber;
   };
 
   return (
@@ -414,7 +391,13 @@ const Footer: React.FC<FooterProps> = ({
             >
               <div className="logo-disclaimer">
                 <div className="logo-wrapper">
-                  <Image url={logoURL} alt={logoAlt} height="44" width="144" />
+                  <Image
+                    url={logoURL}
+                    alt={logoAlt}
+                    isFooterLogo
+                    height="44"
+                    width="144"
+                  />
                   <Conditional
                     if={
                       hasPoweredByHeadoutLogo &&
@@ -458,13 +441,9 @@ const Footer: React.FC<FooterProps> = ({
                           {strings.FOOTER.CHAT_WITH_US}
                         </a>
                       </Conditional>
-                      <a href={`tel:${getContactNo(true)}`}>
-                        <span>
-                          {`${strings.FOOTER.CALL_US} `}
-                          <span className={'hide-mobile'}>
-                            {getContactNo(true)}
-                          </span>
-                        </span>
+                      <a href={`tel: ${getContactNo()}`}>
+                        {strings.FOOTER.CALL_US}{' '}
+                        {!isMobile ? `${getContactNo()}` : ''}
                       </a>
                       <a
                         href={`mailto:${

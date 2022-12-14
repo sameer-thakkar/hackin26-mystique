@@ -19,7 +19,6 @@ export default class InlineInvPrice extends Component<any, any> {
     isFetched: false,
   };
 
-  context!: React.ContextType<typeof MBContext>;
   static contextType = MBContext;
 
   async componentDidMount() {
