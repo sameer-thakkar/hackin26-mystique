@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { createContext, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { getLangObject } from 'utils/helper';
 import { SIDEBAR_TYPES } from 'const/index';
+import { useRouter } from 'next/router';
+import { addUrlParams } from 'utils/urlUtils';
 
 const AsideModal = dynamic(() => import('UI/AsideModal'), { ssr: false });
 
@@ -54,6 +57,11 @@ export const MBContextProvider = (props) => {
     redirectToHeadoutBookingFlow,
   } = props;
   const [sidebarModalStack, setSidebarModalStack] = useState([]);
+  const router = useRouter();
+  // edge case
+  //2. handle URLs for desktop
+  // a. combo should redirect to booking flow
+  // b. pid should scroll to that card
 
   const addToAside = ({
     children,
@@ -62,20 +70,49 @@ export const MBContextProvider = (props) => {
     sidePadding = 0,
     type = SIDEBAR_TYPES.DEFAULT,
     onCloseCallback,
+    history,
   }) => {
-    const tempStack = [...sidebarModalStack];
-    tempStack.push({
+    const modalState = {
       children,
       title,
       width,
       sidePadding,
       type,
       onCloseCallback,
-    });
-    setSidebarModalStack(tempStack);
+      history,
+    };
+
+    setSidebarModalStack([...sidebarModalStack, modalState]);
+    if (history) {
+      const {
+        pid: routerPid,
+        popup: routerPopup,
+        ...otherParams
+      } = router.query;
+      //URL as a single source of truth
+      const urlParams = new URLSearchParams(window.location.search);
+      const pid = urlParams.get('pid');
+      const popup = urlParams.get('popup');
+
+      //for multilevel replace params
+      if (pid && popup)
+        addUrlParams({
+          urlParams: { ...otherParams, ...history.params },
+          historyState: { ...window.history.state, ...history.params },
+          replace: true,
+        });
+      else
+        addUrlParams({
+          urlParams: { ...otherParams, ...history.params },
+          historyState: { ...window.history.state, ...history.params },
+          replace: false,
+        });
+    }
   };
 
-  const closeAside = () => setSidebarModalStack(sidebarModalStack.slice(0, -1));
+  const closeAside = () => {
+    setSidebarModalStack([...sidebarModalStack.slice(0, -1)]);
+  };
   const resetAside = () => setSidebarModalStack([]);
 
   const getActiveAside = () =>
@@ -130,6 +167,7 @@ export const MBContextProvider = (props) => {
           closeModal={closeAside}
           type={getActiveAside()?.type}
           onCloseCallback={getActiveAside()?.onCloseCallback}
+          isQueryRestore={getActiveAside()?.history?.isQueryRestore}
           isGlobalMb={isGlobalMb}
         >
           {getActiveAside()?.children}

@@ -235,3 +235,14 @@ export const addToSearchParams = (
 
   return `${searchParamsString ? '?' + searchParamsString : ''}`;
 };
+
+export const addUrlParams = ({ urlParams, historyState, replace = false }) => {
+  const asPath =
+    '/' +
+    addToSearchParams('', {
+      ...urlParams,
+    });
+  if (replace) window.history.replaceState(historyState, '', asPath);
+  else window.history.pushState(historyState, '', asPath);
+  return asPath;
+};

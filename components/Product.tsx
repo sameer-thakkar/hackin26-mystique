@@ -995,6 +995,63 @@ const Product = (props) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [showComboVariant, setShowComboVariant] = useState(false);
 
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const pid = urlParams.get('pid');
+    const popup = urlParams.get('popup');
+    if (pid != tgid) return;
+    if (popup === 'combo') {
+      if (isMobile && isComboWithMultiVariant) {
+        addToAside({
+          width: '100vw',
+          children: (
+            <ComboPopup
+              productTitle={cardTitle}
+              l1Booster={boosterTag}
+              tgid={tgid}
+              isMobile={isMobile}
+              closeHandler={handleCloseComboPopup}
+              descriptors={descriptorsList}
+              bookingUrl={productBookingUrl}
+              minDuration={minDuration}
+              maxDuration={maxDuration}
+            />
+          ),
+          type: SIDEBAR_TYPES.COMBO_VARIANT,
+          onCloseCallback: () => handleCloseComboPopup(),
+          history: {
+            enable: true,
+            params: {
+              pid: tgid,
+              popup: 'combo',
+            },
+            isQueryRestore: true,
+          },
+        });
+      }
+    }
+    if (popup === 'details') {
+      addToAside({
+        width: '100vw',
+        children: (
+          <ModalCardContainer>
+            {getProductCardElements(true, isFallbackSummary)}
+          </ModalCardContainer>
+        ),
+        type: SIDEBAR_TYPES.PRODUCT_CARD,
+        onCloseCallback: () => trackedToggleContent(true),
+        history: {
+          enable: true,
+          params: {
+            pid: tgid,
+            popup: 'details',
+          },
+          isQueryRestore: true,
+        },
+      });
+    }
+  }, [isMobile]);
+
   const {
     combo: isCombo,
     multiVariant: isMultiVariant,
@@ -1135,6 +1192,13 @@ const Product = (props) => {
         ),
         type: SIDEBAR_TYPES.COMBO_VARIANT,
         onCloseCallback: () => handleCloseComboPopup(),
+        history: {
+          enable: true,
+          params: {
+            pid: tgid,
+            popup: 'combo',
+          },
+        },
       });
     }
   };
@@ -1251,6 +1315,13 @@ const Product = (props) => {
         ),
         type: SIDEBAR_TYPES.PRODUCT_CARD,
         onCloseCallback: () => trackedToggleContent(true),
+        history: {
+          enable: true,
+          params: {
+            pid: tgid,
+            popup: 'details',
+          },
+        },
       });
     } else {
       trackedToggleContent(isContentOpen);

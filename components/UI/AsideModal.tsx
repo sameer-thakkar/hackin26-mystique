@@ -1,10 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createPortal } from 'react-dom';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { CLOSE_WHITE, BackArrow } from 'assets/SvgIcons';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import COLORS from 'const/colors';
 import { SIDEBAR_TYPES } from 'const/index';
 import useWindowSize from 'hooks/useWindowSize';
+import { addUrlParams } from 'utils/urlUtils';
+
 export const StyledAsideModal = styled.div`
   position: fixed;
   top: 0;
@@ -166,6 +170,9 @@ const ModalContent = styled.div`
   height: ${windowHeight - 46}px;`
       : ``}
 `;
+
+type OnCloseOptions = { triggeredByPopstate?: boolean };
+
 const AsideModal = ({
   active,
   title,
@@ -178,39 +185,72 @@ const AsideModal = ({
   type,
   isGlobalMb = false,
   onCloseCallback = null,
+  isQueryRestore = false,
 }) => {
-  const [container, setContainer] = useState(null);
+  const container = useRef(null);
+  if (!container.current) container.current = document.body;
+
   const [scrollY, setScrollY] = useState(0);
   const { width: windowWidth, height: windowHeight } = useWindowSize();
   const isMobile = isGlobalMb ? windowWidth <= 768 : windowWidth < 768;
   const hasBack = stack.length > 1;
+  const router = useRouter();
+
   useEffect(() => {
-    const container = window.document.body;
+    const onPopState = () => {
+      onClose(null, { triggeredByPopstate: true });
+    };
+
     if (isMobile) {
       setScrollY(window.scrollY);
+      if (active) {
+        window.addEventListener('popstate', onPopState);
+      }
       // Saving scroll and hiding body is required for iOS compatability,
       // fixed elements break, they move from their position after partial scroll (browser hides its header)
       // to avoid this we removed position: fixed, and let the sidebar live in regular scroll flow.
       window.scrollTo(0, 0);
     }
-    if (active) container.classList.add('scroll-lock');
-    setContainer(container);
+    if (active) container.current.classList.add('scroll-lock');
+
+    return () => window.removeEventListener('popstate', onPopState);
   }, [active, isMobile]);
 
-  const onClose = (e) => {
-    e.stopPropagation();
-    container.classList.remove('scroll-lock');
+  const onClose = (e = null, options: OnCloseOptions = {}) => {
+    if (e?.target) {
+      e.stopPropagation();
+    }
+    if (!options.triggeredByPopstate) {
+      if (isQueryRestore) {
+        //go to landing page
+        const {
+          pid: routerPid,
+          popup: routerPopup,
+          ...otherParams
+        } = router.query;
+        const { pid, popup, ...historyState } = window.history.state;
+        addUrlParams({
+          urlParams: { ...otherParams },
+          historyState: { ...historyState },
+          replace: false,
+        });
+      } else {
+        history.back();
+      }
+    }
+
+    container.current.classList.remove('scroll-lock');
     if (isMobile) window.scrollTo(0, scrollY);
-    closeModal();
     if (onCloseCallback) onCloseCallback();
+    closeModal();
   };
   const onCloseAll = () => {
-    container.classList.remove('scroll-lock');
+    container.current.classList.remove('scroll-lock');
     if (isMobile) window.scrollTo(0, scrollY);
     resetAside();
   };
 
-  return container && active
+  return container.current && active
     ? createPortal(
         <>
           <Mask onClick={onCloseAll} />
@@ -245,7 +285,7 @@ const AsideModal = ({
             </ModalContent>
           </StyledAsideModal>
         </>,
-        container
+        container.current
       )
     : null;
 };
