@@ -109,9 +109,6 @@ const StyledActiveValue = styled.span`
       }
     `
       : ``}
-  @media (max-width: 768px) {
-    display: none;
-  }
 `;
 
 const StyledItem = styled.div``;

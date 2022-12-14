@@ -152,11 +152,7 @@ const HeaderRight = styled.div`
   }
   @media (max-width: 768px) {
     grid-auto-flow: unset;
-    grid-template-columns: ${({
-      hasLanguageDropdown: col1,
-      hasHamburger: col2,
-      hasSearch: col3,
-    }) => `repeat(${Number(col1) + Number(col2) + Number(col3)}, auto)`};
+    grid-template-columns: repeat(auto-fill, minmax(1.875rem, 1fr));
     align-items: center;
     .buy-tickets {
       display: none;
@@ -309,9 +305,8 @@ const Header: FunctionComponent<HeaderProps> = ({
   isEntertainmentMbListicle,
   hideCurrencySelector = false,
 }) => {
-  const { lang, nakedDomain, redirectToHeadoutBookingFlow } = useContext(
-    MBContext
-  );
+  const { lang, nakedDomain, redirectToHeadoutBookingFlow } =
+    useContext(MBContext);
 
   const [results, setResults] = useState([]);
   const [resultClicked, setResultClicked] = useState(false);
@@ -519,7 +514,10 @@ const Header: FunctionComponent<HeaderProps> = ({
               </div>
             </Conditional>
             <Conditional
-              if={headerLanguages?.length || headerCurrencies?.length}
+              if={
+                !isMobile &&
+                (headerLanguages?.length || headerCurrencies?.length)
+              }
             >
               <LocaleSelector
                 languages={headerLanguages}
