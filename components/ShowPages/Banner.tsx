@@ -106,6 +106,10 @@ const BannerImageWrapper = styled.div`
 const BannerImage = styled.div`
   width: 100%;
   height: 100%;
+
+  img {
+    object-fit: cover;
+  }
 `;
 
 const BannerContent = styled.div`
@@ -584,7 +588,7 @@ const ShowPageBanner = ({
                   <Image
                     url={productImage?.url}
                     alt={name}
-                    objectFit="cover"
+                    fill
                     height={500}
                     width={1000}
                     quality={null}
