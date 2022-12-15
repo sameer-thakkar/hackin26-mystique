@@ -16,12 +16,13 @@ export const StyledAccordion = styled.div`
   border-bottom: 1px solid ${COLORS.GRAY.G7};
   display: grid;
   grid-template-rows: max-content max-content;
-  grid-row-gap: ${({ isOpen }) => (isOpen ? '8px' : '')};
+  ${({ isOpen }) => isOpen && 'grid-row-gap: 8px'};
+
   &:last-child {
     border-bottom: none;
   }
   @media (max-width: 768px) {
-    grid-row-gap: 16px;
+    ${({ isOpen }) => isOpen && 'grid-row-gap: 16px'};
     margin-right: 0;
     padding: 16px 0;
 
@@ -54,11 +55,11 @@ const Title = styled.div`
 `;
 
 const ContentBlock = styled.div`
-  display: ${({ isOpen }) => (isOpen ? 'grid' : 'none')};
-  grid-row-gap: 8px;
+  display: ${({ $isOpen }) => ($isOpen ? 'grid' : 'none')};
+  grid-row-gap: 16px;
   p {
     margin: 0;
-    ${({ isGlobalMb }) => isGlobalMb && `font-size: 14px; line-height: 20px;`}
+    ${({ $isGlobalMb }) => $isGlobalMb && `font-size: 14px; line-height: 20px;`}
   }
   a {
     color: ${COLORS.TEXT.CANDY_1};
@@ -140,10 +141,12 @@ const Accordion = ({
           />
         </div>
       </Title>
-      <ContentBlock className="answer" isOpen={isOpen} isGlobalMb={isGlobalMb}>
-        <div>
-          <Conditional if={typeof content !== 'string'}>{content}</Conditional>
-        </div>
+      <ContentBlock
+        className="answer"
+        $isOpen={isOpen}
+        $isGlobalMb={isGlobalMb}
+      >
+        <Conditional if={typeof content !== 'string'}>{content}</Conditional>
       </ContentBlock>
     </StyledAccordion>
   );

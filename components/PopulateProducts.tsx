@@ -12,6 +12,9 @@ import {
   PROMO_CODES,
 } from 'const/index';
 import { strings } from 'const/strings';
+import { expandFontToken } from 'const/typography';
+import COLORS from 'const/colors';
+import { FONTS } from 'const/fonts';
 import {
   fetchCalendarInventory,
   fetchInventory,
@@ -21,8 +24,6 @@ import { legacyBooleanCheck } from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import { csvTgidToArray, getHostName } from 'utils/helper';
 import { getPromoCodesDocument } from 'utils/prismicUtils';
-import { expandFontToken } from 'const/typography';
-import COLORS from 'const/colors';
 
 const StyledProductsWrapper = styled.div`
   margin: 0 auto;
@@ -33,6 +34,13 @@ const StyledProductsWrapper = styled.div`
     @media (max-width: 768px) {
       margin: 0 1rem;
       width: auto;
+    }
+    h2 {
+      color: ${COLORS.GRAY.G2};
+      ${expandFontToken(FONTS.DISPLAY_SMALL)}
+      @media (max-width: 768px) {
+        ${expandFontToken(FONTS.HEADING_REGULAR)}
+      }
     }
   }
 `;
@@ -52,14 +60,6 @@ const ProductContainer = styled.div`
     margin-top: 1.5rem;
     margin-bottom: 60px;
     grid-row-gap: ${({ theme }) => theme.productCards.gap.mobile};
-  }
-`;
-
-const StyledTourListHeading = styled.div`
-  ${expandFontToken('Display/Small')}
-  color: ${COLORS.GRAY.G2};
-  @media (max-width: 768px) {
-    ${expandFontToken('Heading/Regular')}
   }
 `;
 
@@ -384,9 +384,7 @@ const PopulateProducts = (props) => {
               (sectionTitle || strings.TOUR_LIST_HEADING)
             }
           >
-            <StyledTourListHeading isTicketCard={isTicketCard}>
-              {isTicketCard ? sectionTitle : strings.TOUR_LIST_HEADING}
-            </StyledTourListHeading>
+            <h2>{isTicketCard ? sectionTitle : strings.TOUR_LIST_HEADING}</h2>
           </Conditional>
           <Conditional
             if={

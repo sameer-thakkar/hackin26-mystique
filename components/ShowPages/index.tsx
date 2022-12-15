@@ -263,7 +263,7 @@ const ShowPage = ({
   const pageMetaData = useRecoilValue(metaAtom);
   const { eventsReady } = useRecoilValue(gtmAtom);
 
-  const selfCanonicalLink = convertUidToUrl({ uid });
+  const selfCanonicalLink = convertUidToUrl({ uid, lang: currentLanguage });
   const updatedDescriptors = generateDescriptor({
     v2Descriptors: microBrandsDescriptor?.split('\r\n'),
     lang: currentLanguage,

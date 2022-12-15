@@ -22,7 +22,7 @@ const CTAWrapper = styled.div<StyledCTAWrapperProps>`
     width: 11px;
     path {
       stroke-width: 4px;
-      stroke: ${COLORS.BRAND.CANDY};
+      stroke: ${COLORS.BRAND.PURPS};
     }
   }
 `;

@@ -70,7 +70,6 @@ const SingleImage = styled.div`
   }
   @media (max-width: 768px) {
     max-height: ${({ isGlobalMb }) => (isGlobalMb ? '212px' : '195px')};
-    margin-bottom: ${({ isGlobalMb }) => (isGlobalMb ? '0' : '16px')};
     img {
       height: ${({ isGlobalMb }) => (isGlobalMb ? '212px' : '195px')};
     }
