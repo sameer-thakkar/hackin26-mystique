@@ -6,27 +6,52 @@ import { FONTS } from 'const/fonts';
 export const StyledMasthead = styled.div`
   width: 100%;
   display: flex;
-  margin-bottom: 2rem;
-  height: ${({ withoutImage }) => (withoutImage ? '9.25rem' : '11.75rem')};
-  background: ${COLORS.BRAND.BLACK};
   position: relative;
+
+  ${({ isEntMb, withoutImage }) =>
+    isEntMb
+      ? `
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  overflow-x: hidden;
   img {
+    width: 100vw;
+    height: 400px;
+    filter: brightness(0.7);
     object-fit: cover;
-  }
+      }
+        `
+      : `
+  margin-bottom: 2rem;
+  height: ${withoutImage ? '9.25rem' : '11.75rem'};
+  background: ${COLORS.BRAND.BLACK};
+  img {
+      object-fit: cover;
+      }
+  `}
 
   @media (max-width: 768px) {
-    height: auto;
-    ${({ withoutImage }) =>
-      withoutImage
+    ${({ isEntMb, withoutImage }) =>
+      isEntMb
         ? `
+        img {
+        height: 300px;
+        }
+        `
+        : `
+        height: auto;
+        ${
+          withoutImage
+            ? `
           background: ${COLORS.BRAND.WHITE};
           margin-bottom: 0;
         `
-        : `
+            : `
         margin-bottom: 1rem;
         flex-direction: column-reverse;
-        `}
-    }}
+        `
+        }
+     `}
   }
 `;
 
@@ -54,14 +79,37 @@ export const TitleWrapper = styled.div`
 `;
 
 export const Title = styled.h1`
-  color: ${COLORS.GRAY.G8};
-  ${expandFontToken(FONTS.DISPLAY_SMALL)};
   margin: 0;
 
+  ${({ isEntMb }) =>
+    isEntMb
+      ? `
+    position: absolute;
+    top: 50%;
+    color: white;
+    ${expandFontToken(FONTS.DISPLAY_REGULAR)}
+    transform: translateY(-50%);
+    max-width: 792px;
+    text-align: center;
+        `
+      : `
+    color: ${COLORS.GRAY.G8};
+    ${expandFontToken(FONTS.DISPLAY_SMALL)};
+    `}
+
   @media (max-width: 768px) {
-    color: ${({ withoutImage }) =>
-      withoutImage ? `${COLORS.GRAY.G1}` : `${COLORS.GRAY.G8}`};
-    ${expandFontToken(FONTS.HEADING_REGULAR)};
+    ${({ isEntMb, withoutImage }) =>
+      isEntMb
+        ? `
+      text-align: center;
+      top: 42%;
+      ${expandFontToken(FONTS.HEADING_LARGE)}
+      padding: 0 1rem;
+        `
+        : `
+      color: ${withoutImage ? `${COLORS.GRAY.G1}` : `${COLORS.GRAY.G8}`};
+      ${expandFontToken(FONTS.HEADING_REGULAR)};
+    `}
   }
 `;
 

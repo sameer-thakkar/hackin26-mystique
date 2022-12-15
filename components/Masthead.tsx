@@ -21,10 +21,12 @@ const Masthead = ({
   title,
   image,
   isMobile,
+  isEntertainmentMb,
 }: {
   title: string;
   image: { url: string; alt: string } | null;
   isMobile: boolean;
+  isEntertainmentMb: boolean;
 }) => {
   const { lang } = useContext(MBContext);
   const formattedTitle = withShortcodes(title);
@@ -38,32 +40,43 @@ const Masthead = ({
     });
   }, []);
 
+  const getImage = () => (
+    <Image
+      url={image?.url}
+      alt={image?.alt}
+      width={isMobile ? 800 : 1200}
+      height={isMobile ? 300 : 400}
+      objectFit={'cover'}
+    />
+  );
+
   return (
-    <StyledMasthead withoutImage={image === null}>
-      {image ? (
-        <>
-          <TitleWrapper withoutImage={false}>
-            <Title withoutImage={false}>{formattedTitle}</Title>
-          </TitleWrapper>
-          <ImageWrapper>
-            <Image
-              url={image.url}
-              alt={image?.alt}
-              width={isMobile ? 800 : 1200}
-              height={isMobile ? 300 : 400}
-              objectFit={'cover'}
-            />
-            <Conditional if={!isMobile}>
-              <GradientWrapper />
-            </Conditional>
-          </ImageWrapper>
-        </>
+    <>
+      {isEntertainmentMb ? (
+        <StyledMasthead isEntMb={true} withoutImage={false}>
+          {getImage()}
+          <Title isEntMb={true} withoutImage={false}>
+            {formattedTitle}
+          </Title>
+        </StyledMasthead>
       ) : (
-        <TitleWrapper withoutImage={true}>
-          <Title withoutImage={true}>{formattedTitle}</Title>
-        </TitleWrapper>
+        <StyledMasthead isEntMb={false} withoutImage={!image}>
+          <TitleWrapper isEntMb={false} withoutImage={!image}>
+            <Title isEntMb={false} withoutImage={!image}>
+              {formattedTitle}
+            </Title>
+          </TitleWrapper>
+          <Conditional if={image}>
+            <ImageWrapper>
+              {getImage()}
+              <Conditional if={!isMobile}>
+                <GradientWrapper />
+              </Conditional>
+            </ImageWrapper>
+          </Conditional>
+        </StyledMasthead>
       )}
-    </StyledMasthead>
+    </>
   );
 };
 
