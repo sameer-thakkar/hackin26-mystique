@@ -508,6 +508,10 @@ export const getMicrositeDocument = async ({
                   lang !== 'en-us'
                     ? baseLangData.data.show_banner_subtext
                     : completeMicrosite.data.data.show_banner_subtext,
+                baseLangisPartnered:
+                  lang !== 'en-us'
+                    ? baseLangData.data.is_partnered_poi
+                    : completeMicrosite.data.data.is_partnered_poi,
                 redirect_to_headout_booking_flow:
                   lang !== 'en-us'
                     ? baseLangData.data.redirect_to_headout_booking_flow

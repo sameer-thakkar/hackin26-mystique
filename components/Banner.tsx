@@ -65,6 +65,7 @@ type TBannerCarouselProps = {
   bannerCtaText: string;
   bannerSubtext: string;
   showBannerSubtext: boolean;
+  isPartnered: boolean;
   currentLanguage: string;
   isMobile: boolean;
   boxed: boolean;
@@ -83,6 +84,7 @@ const Banner = (props: TBannerCarouselProps) => {
     hideCTA,
     bannerSubtext: tempBannerSubtext,
     showBannerSubtext,
+    isPartnered,
     bannerCtaText = '',
     orderedTgids,
     isMobile: isMobileFromCDNHeader,
@@ -235,7 +237,11 @@ const Banner = (props: TBannerCarouselProps) => {
       </Conditional>
       <Conditional if={showBannerSubtext && !bannerSubtext?.length}>
         <BannerSubtext>
-          <p>{strings.BANNER_SUBTEXT_DISCLAIMER}</p>
+          <p>
+            {isPartnered
+              ? strings.PARTNERED_BANNER_SUBTEXT_DISCLAIMER
+              : strings.NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER}
+          </p>
         </BannerSubtext>
       </Conditional>
     </div>

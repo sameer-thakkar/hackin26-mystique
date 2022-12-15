@@ -20,8 +20,10 @@ const pt = {
   READ_MORE: 'Saiba mais',
   VIEW_MORE: 'Ver mais',
   BANNER_CTA: 'Faça sua reserva',
-  BANNER_SUBTEXT_DISCLAIMER:
-    'Somos um parceiro de confiança que oferece uma seleção dos melhores ingressos e excursões. Este não é o site oficial da atração.',
+  PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
+    'Headout é um parceiro de confiança da atração, autorizado a oferecer uma seleção das melhores experiências. Este não é o site da atração.',
+  NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
+    'Headout é uma marca que tem a confiança de mais de 15 milhões de clientes, oferecendo uma seleção das melhores experiências. Este não é o site da atração.',
   BOOK_NOW_CTA: 'Reserve agora',
   CHECK_AVAIL: 'Verificar disponibilidade',
   READ_MORE_TEXT: 'Ver mais',

@@ -125,6 +125,7 @@ const MicrositeV1 = (props) => {
     enable_earliest_availability: enableEarliestAvailability,
     baseLangPageTitle,
     baseLangShowBannerSubtext,
+    baseLangisPartnered,
   } = micrositeData || {};
 
   const pageUrl = convertUidToUrl({ uid, lang: getHeadoutLanguagecode(lang) });
@@ -526,6 +527,7 @@ const MicrositeV1 = (props) => {
             bannerCtaText={bannerCtaText ? bannerCtaText : null}
             bannerSubtext={bannerSubtext}
             showBannerSubtext={baseLangShowBannerSubtext}
+            isPartnered={baseLangisPartnered}
             currentLanguage={currentLanguage ? currentLanguage : null}
             isMobile={isMobile}
             boxed={true}

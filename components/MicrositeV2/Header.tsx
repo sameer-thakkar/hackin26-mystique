@@ -305,8 +305,9 @@ const Header: FunctionComponent<HeaderProps> = ({
   isEntertainmentMbListicle,
   hideCurrencySelector = false,
 }) => {
-  const { lang, nakedDomain, redirectToHeadoutBookingFlow } =
-    useContext(MBContext);
+  const { lang, nakedDomain, redirectToHeadoutBookingFlow } = useContext(
+    MBContext
+  );
 
   const [results, setResults] = useState([]);
   const [resultClicked, setResultClicked] = useState(false);

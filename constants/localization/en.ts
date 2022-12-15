@@ -21,8 +21,10 @@ const en = {
   VIEW_MORE: 'View more',
   SEE_MORE_SHOWS: 'See More Shows',
   BANNER_CTA: 'Buy tickets',
-  BANNER_SUBTEXT_DISCLAIMER:
-    'We are a trusted partner offering a curated selection of best tickets and tours. This is not the official website.',
+  PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
+    "Headout is an authorised and trusted partner of the venue offering a curated selection of the best experiences to enjoy this attraction. This is not the venue's website.",
+  NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
+    "Headout is a brand trusted by 15 million guests offering a curated selection of best experiences. This is not the venue's website.",
   BOOK_NOW_CTA: 'Book now',
   CHECK_AVAIL: 'Check availability',
   READ_MORE_TEXT: 'Read more',
