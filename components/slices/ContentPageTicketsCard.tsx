@@ -40,8 +40,6 @@ import { getDuration } from 'utils/timeUtils';
 import ComboPopup from 'UI/ComboPopup';
 import { expandFontToken } from 'const/typography';
 import { metaAtom } from 'store/atoms/meta';
-import { experimentsAtom } from 'store/atoms/experiment';
-import { VARIANTS } from 'const/experiments';
 
 dayjs.extend(advancedFormat);
 
@@ -589,7 +587,6 @@ const TicketCard = (props) => {
   } = useContext(MBContext);
   const currency = useRecoilValue(currencyAtom);
   const pageMetaData = useRecoilValue(metaAtom);
-  const { CTA_COPY_EXPERIMENT } = useRecoilValue(experimentsAtom);
   const isTicketCard = true;
   const [isContentOpen, toggleContentOpen] = useState(defaultOpen);
   const [isOpened, setIsOpened] = useState(false);
@@ -728,12 +725,6 @@ const TicketCard = (props) => {
   const hasOffer = isOfferEnabled && offerId;
   const hasBorderedTitle = !hasOffer && !hasV1Booster;
 
-  const getCtaCopyExpVariant = () => {
-    return CTA_COPY_EXPERIMENT.activeVariant === VARIANTS.CTA_COPY_MORE_DETAILS
-      ? strings.MORE_DETAILS
-      : strings.READ_MORE;
-  };
-
   const layout = getProductCardLayout({
     hasOffer,
     hasV1Booster,
@@ -755,11 +746,11 @@ const TicketCard = (props) => {
         ` ${
           isContentOpen
             ? '- ' + strings.SHOW_LESS_TEXT
-            : '+ ' + getCtaCopyExpVariant()
+            : '+ ' + strings.MORE_DETAILS
         }`
       ) : (
         <>
-          {isContentOpen ? strings.SHOW_LESS_TEXT : getCtaCopyExpVariant()}
+          {isContentOpen ? strings.SHOW_LESS_TEXT : strings.MORE_DETAILS}
           <Chevron isActive={isContentOpen} className={'chevron'} />
         </>
       );
@@ -1010,7 +1001,7 @@ const TicketCard = (props) => {
                   popupOpener();
                 }}
               >
-                {getCtaCopyExpVariant()} +
+                {strings.MORE_DETAILS} +
               </MoreDetailWrapper>
             </Conditional>
             <Conditional if={hasOffer && offerId}>

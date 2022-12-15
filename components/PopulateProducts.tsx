@@ -23,11 +23,6 @@ import { csvTgidToArray, getHostName } from 'utils/helper';
 import { getPromoCodesDocument } from 'utils/prismicUtils';
 import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { hsidAtom } from 'store/atoms/hsid';
-import { experimentsAtom } from 'store/atoms/experiment';
-import { getABTestingVariant } from 'utils/experiments/experimentUtils';
-import { EXPERIMENT_NAMES } from 'const/experiments';
 
 const StyledProductsWrapper = styled.div`
   margin: 0 auto;
@@ -153,27 +148,6 @@ const PopulateProducts = (props) => {
     }, {});
     setproductInfo(tourGroupMap);
   };
-
-  const hsid = useRecoilValue(hsidAtom);
-  const [experiments, setExperiments] = useRecoilState(experimentsAtom);
-
-  useEffect(() => {
-    if (isTicketCard && hsid) {
-      const variant = getABTestingVariant(
-        EXPERIMENT_NAMES.CTA_COPY_EXPERIMENT,
-        hsid
-      );
-      const CTA_COPY_EXPERIMENT = {
-        activeVariant: variant,
-        ready: true,
-        experimentName: EXPERIMENT_NAMES.CTA_COPY_EXPERIMENT,
-      };
-      setExperiments({
-        ...experiments,
-        CTA_COPY_EXPERIMENT,
-      });
-    }
-  }, [hsid]);
 
   useEffect(() => {
     if (!productsRef.current) return;

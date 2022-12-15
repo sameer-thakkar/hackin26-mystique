@@ -3,7 +3,7 @@ import { RichText } from 'prismic-reactjs';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { scroller } from 'react-scroll';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { currencyAtom } from 'store/atoms/currency';
 import { gtmAtom } from 'store/atoms/gtm';
 import { useWindowWidth } from '@react-hook/window-size';
@@ -35,10 +35,6 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import renderShortCodes from 'utils/shortCodes';
-import { EXPERIMENT_NAMES } from 'const/experiments';
-import { getABTestingVariant } from 'utils/experiments/experimentUtils';
-import { experimentsAtom } from 'store/atoms/experiment';
-import { hsidAtom } from 'store/atoms/hsid';
 import { getLogoRedirectionUrl, convertUidToUrl } from 'utils/urlUtils';
 
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
@@ -82,9 +78,6 @@ const MicrositeV1 = (props) => {
   const [freeTourPopupOpen, toggleFreeTourPopup] = useState(false);
   const [covidAlertActive, toggleCovidAlert] = useState(false);
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
-
-  const hsid = useRecoilValue(hsidAtom);
-  const [experiments, setExperiments] = useRecoilState(experimentsAtom);
 
   const {
     refs,
@@ -367,24 +360,6 @@ const MicrositeV1 = (props) => {
       value: renderedBaseLangPageTitle,
     });
   }, []);
-
-  useEffect(() => {
-    if (hsid) {
-      const variant = getABTestingVariant(
-        EXPERIMENT_NAMES.CTA_COPY_EXPERIMENT,
-        hsid
-      );
-      const CTA_COPY_EXPERIMENT = {
-        activeVariant: variant,
-        ready: true,
-        experimentName: EXPERIMENT_NAMES.CTA_COPY_EXPERIMENT,
-      };
-      setExperiments({
-        ...experiments,
-        CTA_COPY_EXPERIMENT,
-      });
-    }
-  }, [hsid]);
 
   useEffect(() => {
     if (!eventsReady) return;
