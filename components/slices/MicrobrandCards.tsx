@@ -14,7 +14,7 @@ import { shortCodeSerializer } from 'utils/shortCodes';
 import { getHostName } from 'utils/helper';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 
-const StyledMBCards = styled.div<{ gridAutoCol: boolean }>`
+const StyledMBCards = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   ${({ gridAutoCol }) =>
@@ -136,95 +136,67 @@ const MicrobrandCard = styled.div`
     `}
 `;
 
-export const LinkCardWrapper = (props) => {
-  if (props.as === React.Fragment) {
-    return (
-      <React.Fragment>
-        <LinkCards {...props} />
-      </React.Fragment>
-    );
-  }
-
-  return (
-    <StyledMBCards gridAutoCol={props.gridAutoCol}>
-      <LinkCards {...props} />
-    </StyledMBCards>
-  );
-};
-
-export const LinkCard = (props) => {
+export const LinkCards = (props) => {
   const {
-    card,
-    index,
+    cards,
     isFetched,
     cardPrices,
     currencySymbol,
     cardClassName,
+    as,
+    gridAutoCol,
   } = props;
+
   const { lang } = useContext(MBContext);
 
-  const { image, title, tgid, link } = card ?? {};
-  const { url: imageUrl, alt: altText } = image ?? {};
-  const cardPrice = cardPrices?.[tgid] ?? {};
-  const { listingPrice, price } = cardPrice ?? {};
-
   return (
-    <div key={index} className={cardClassName || ''}>
-      <a target="_blank" rel="noopener noreferrer" href={link}>
-        <MicrobrandCard className="microbrand-card">
-          <div className="card-image">
-            <Image
-              width={600}
-              height={300}
-              aspectRatio="16:10"
-              url={imageUrl}
-              alt={altText || title}
-              priority={index < 8}
-            />
-          </div>
-          <div className="card-bottom">
-            <span className="card-title">{title}</span>
-            <Conditional if={isFetched && tgid && cardPrice}>
-              <>
-                <Conditional if={listingPrice}>
-                  <PriceBlock
-                    lang={lang}
-                    listingPrice={listingPrice}
-                    showScratchPrice
+    <StyledMBCards {...(as !== React.Fragment ? { gridAutoCol } : {})} as={as}>
+      {cards.map((card, index) => {
+        const { image, title, tgid, link } = card ?? {};
+        const { url: imageUrl, alt: altText } = image ?? {};
+        const cardPrice = cardPrices?.[tgid] ?? {};
+        const { listingPrice, price } = cardPrice ?? {};
+
+        return (
+          <div key={index} className={cardClassName || ''}>
+            <a target="_blank" rel="noopener noreferrer" href={link}>
+              <MicrobrandCard className="microbrand-card">
+                <div className="card-image">
+                  <Image
+                    width={600}
+                    height={300}
+                    aspectRatio="16:10"
+                    url={imageUrl}
+                    alt={altText}
+                    dontLazyLoad={index < 8}
                   />
-                </Conditional>
-                <Conditional if={!listingPrice && price}>
-                  <span className="card-price">
-                    {currencySymbol}
-                    {price}
-                  </span>
-                </Conditional>
-              </>
-            </Conditional>
+                </div>
+                <div className="card-bottom">
+                  <span className="card-title">{title}</span>
+                  <Conditional if={isFetched && tgid && cardPrice}>
+                    <>
+                      <Conditional if={listingPrice}>
+                        <PriceBlock
+                          lang={lang}
+                          listingPrice={listingPrice}
+                          showScratchPrice
+                        />
+                      </Conditional>
+                      <Conditional if={!listingPrice && price}>
+                        <span className="card-price">
+                          {currencySymbol}
+                          {price}
+                        </span>
+                      </Conditional>
+                    </>
+                  </Conditional>
+                </div>
+              </MicrobrandCard>
+            </a>
           </div>
-        </MicrobrandCard>
-      </a>
-    </div>
-  );
-};
-
-export const LinkCards = (props) => {
-  const { cards, isFetched, cardPrices, currencySymbol, cardClassName } = props;
-
-  return (
-    <>
-      {cards.map((card, index) => (
-        <LinkCard
-          card={card}
-          key={index}
-          index={index}
-          isFetched={isFetched}
-          cardPrices={cardPrices}
-          currencySymbol={currencySymbol}
-          cardClassName={cardClassName}
-        />
-      ))}
-    </>
+        );
+      })}
+    </StyledMBCards>
   );
 };
 
@@ -319,7 +291,7 @@ const MicrobrandCards: React.FC<MicrobrandCardsProps> = (props) => {
           htmlSerializer={shortCodeSerializer}
         />
       </div>
-      <LinkCardWrapper
+      <LinkCards
         isFetched={isFetched}
         cards={finalCards}
         cardPrices={cardPrices}

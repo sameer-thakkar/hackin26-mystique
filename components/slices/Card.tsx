@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useWindowWidth } from '@react-hook/window-size';
@@ -17,7 +17,6 @@ import {
 } from 'const/index';
 import Conditional from 'components/common/Conditional';
 import { trackEvent } from 'utils/analytics';
-import type { SwiperProps } from 'swiper/react';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -248,19 +247,9 @@ const Card: React.FC<CardProps> = ({
   isGlobalMb,
 }) => {
   const width = useWindowWidth();
-  const [mounted, setMounted] = useState(false);
-
   const [isMobile, setIsMobile] = React.useState(false);
 
   React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  React.useEffect(() => {
-    if (!mounted) {
-      return;
-    }
-
     switch (type) {
       case 'full-width':
         setIsMobile(width <= 960);
@@ -274,13 +263,15 @@ const Card: React.FC<CardProps> = ({
       default:
         break;
     }
-  }, [type, mounted]);
+  }, [type, setIsMobile, width]);
 
-  const swiperParams: SwiperProps = {
+  const swiperParams = {
     pagination: {
+      el: '.swiper-pagination',
       type: 'bullets',
       clickable: true,
     },
+    shouldSwiperUpdate: true,
   };
 
   const trackClickEvent = () => {
@@ -304,6 +295,7 @@ const Card: React.FC<CardProps> = ({
           alt=""
           attribution=""
           height={variantStyles[type].img.height}
+          isCardSlices
           aspectRatio={aspectRatio}
           autoCrop={false}
         />
@@ -313,9 +305,10 @@ const Card: React.FC<CardProps> = ({
       imageView = (
         <Image
           url={images[0].url || fallbackImage}
-          alt={images[0]?.alt || ''}
+          alt={images[0].alt}
           attribution={images[0]?.copyright}
           height={variantStyles[type].img.height}
+          isCardSlices
           aspectRatio={aspectRatio}
           autoCrop={false}
         />
@@ -332,7 +325,7 @@ const Card: React.FC<CardProps> = ({
                   key={index}
                   url={image.url || fallbackImage}
                   attribution={image?.copyright}
-                  alt={image.alt || ''}
+                  alt={image.alt}
                   height={variantStyles[type].img.height}
                   aspectRatio={aspectRatio}
                   autoCrop={false}
@@ -350,15 +343,13 @@ const Card: React.FC<CardProps> = ({
     case 'Button':
       CTA = (
         <ButtonWrapper>
-          <object>
-            <a
-              href={cta.link.url}
-              target={cta.link.target}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Button>{cta.text || strings.BOOK_NOW_CTA}</Button>
-            </a>
-          </object>
+          <a
+            href={cta.link.url}
+            target={cta.link.target}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Button>{cta.text || strings.BOOK_NOW_CTA}</Button>
+          </a>
         </ButtonWrapper>
       );
       break;
@@ -382,13 +373,12 @@ const Card: React.FC<CardProps> = ({
 
   return (
     <StyledCard
-      {...(linkType === 'Full Card' &&
-        mounted && {
-          target: link?.target,
-          href: link?.url,
-          as: 'a',
-          link: true,
-        })}
+      {...(linkType === 'Full Card' && {
+        target: link?.target,
+        href: link?.url,
+        as: 'a',
+        link: true,
+      })}
       isMobile={isMobile}
       cardType={type}
       isGlobalMb={isGlobalMb}

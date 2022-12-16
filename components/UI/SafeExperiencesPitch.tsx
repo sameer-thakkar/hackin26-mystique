@@ -258,7 +258,6 @@ const renderSafetyDetailsSection = (tags, lang, isMobile) =>
               url={SAFETY_DETAILS_IMAGES[key]}
               height={120}
               width={isMobile ? 104 : 160}
-              alt={HEADING}
             />
           </div>
         </ImageTextGrid>
@@ -380,6 +379,7 @@ const SafeExperiencesPitch = ({
             prevButton={CHEVRON_LEFT_CIRCLE}
             sliderOptions={{
               pagination: false,
+              shouldSwiperUpdate: true,
             }}
           >
             {images.map(({ url, altText, description }, index) => (

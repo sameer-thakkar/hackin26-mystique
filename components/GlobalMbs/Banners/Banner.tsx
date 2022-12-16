@@ -19,7 +19,6 @@ import { MBContext } from 'contexts/MBContext';
 import { strings } from 'const/strings';
 import { getBuyTicketsUrl } from 'utils/helper';
 import { trackEvent } from 'utils/analytics';
-import type { SwiperProps } from 'swiper/react';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 const Breadcrumb = dynamic(() => import('components/GlobalMbs/Breadcrumb'));
@@ -295,8 +294,9 @@ const Banner: FunctionComponent<BannerProps> = ({
     host,
     officialWebsite
   );
-  const swiperParams: SwiperProps = {
+  const swiperParams = {
     pagination: {
+      el: '.swiper-pagination',
       type: 'bullets',
       clickable: true,
     },
@@ -307,10 +307,11 @@ const Banner: FunctionComponent<BannerProps> = ({
       delay: 3000,
       disableOnInteraction: false,
     },
+    shouldSwiperUpdate: true,
     loop: true,
     initialSlide: 1,
     freeMode: true,
-    onSwiper: updateSwiper,
+    getSwiper: updateSwiper,
   };
   const analyticsParams = {
     [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.COLLECTION,
@@ -361,7 +362,7 @@ const Banner: FunctionComponent<BannerProps> = ({
           alt="Placeholder Image"
           height={variantStyles[cardType].img.height}
           aspectRatio={globalMbAR}
-          priority
+          dontLazyLoad
           autoCrop={false}
         />
       );
@@ -376,7 +377,7 @@ const Banner: FunctionComponent<BannerProps> = ({
           width="650"
           height={variantStyles[cardType].img.height}
           aspectRatio={globalMbAR}
-          priority
+          dontLazyLoad
           autoCrop={false}
         />
       );
@@ -396,6 +397,7 @@ const Banner: FunctionComponent<BannerProps> = ({
                   width="650"
                   height={variantStyles[cardType]?.img?.height}
                   aspectRatio={globalMbAR}
+                  dontLazyLoad
                   autoCrop={false}
                 />
               );

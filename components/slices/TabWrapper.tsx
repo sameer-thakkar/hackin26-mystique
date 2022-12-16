@@ -13,7 +13,6 @@ import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
 import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
-import type { SwiperProps } from 'swiper/react';
 
 import { stringIdfy } from '../../utils/helper';
 import sliceHandler from '../Slices';
@@ -336,11 +335,12 @@ const TabWrapper = (props: TabWrapperProps) => {
         updateBeginning(swiper?.isBeginning);
       }
     };
-    const swiperParams: SwiperProps = {
+    const swiperParams = {
       slidesPerView: 'auto',
       wrapperClass: 'tabs-section-wrapper',
       spaceBetween: 48,
-      onSwiper: updateSwiper,
+      shouldSwiperUpdate: true,
+      getSwiper: updateSwiper,
     };
 
     return (
@@ -401,11 +401,7 @@ const TabWrapper = (props: TabWrapperProps) => {
         </TabCarousel>
         <div className="tab-content-wrap">
           {slices.map((slice, keyIndex) => {
-            return (
-              <React.Fragment key={keyIndex}>
-                {sliceHandler(slice, { ...sliceProps, keyIndex })}
-              </React.Fragment>
-            );
+            return sliceHandler(slice, { ...sliceProps, keyIndex });
           })}
         </div>
       </>

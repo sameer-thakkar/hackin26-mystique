@@ -11,7 +11,6 @@ import { shortCodeSerializer } from 'utils/shortCodes';
 import { stringIdfy } from 'utils/helper';
 import { MBContext } from 'contexts/MBContext';
 import { DESIGN } from 'const/index';
-import type { SwiperProps } from 'swiper/react';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -88,9 +87,6 @@ const StyledSlider = styled.div`
     width: 100%;
     max-width: 1200px;
     margin: auto;
-  }
-  .swiper-initialized {
-    width: 100%;
   }
   .swiper-container {
     padding-top: 10px;
@@ -183,7 +179,7 @@ const Slide = (props) => (
     >
       <Image
         url={props.image.url}
-        alt={props.image.alt || props.image.title}
+        alt={props.image.alt}
         width={280}
         height={250}
         aspectRatio="1.7"
@@ -270,13 +266,18 @@ const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
     };
   }, [swiper, updateIndex, isMobile]);
 
-  const swiperParams: SwiperProps = {
+  const swiperParams = {
     slidesPerGroup: 4,
     direction: 'horizontal',
     speed: 650,
     slidesPerView: 4,
     spaceBetween: 24,
-    navigation: true,
+    rebuildOnUpdate: false,
+    shouldSwiperUpdate: true,
+    navigaton: {
+      nextEl: '.swiper-btn.btn-left',
+      prevEl: '.swiper-btn.btn-right',
+    },
   };
 
   return (
@@ -296,7 +297,7 @@ const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
       ) : (
         <StyledSlider>
           <div className="slider-container">
-            <Swiper {...swiperParams} onSwiper={updateSwiper}>
+            <Swiper {...swiperParams} getSwiper={updateSwiper}>
               {cards.map((card, index) => (
                 <Slide
                   className="swiper-slide"

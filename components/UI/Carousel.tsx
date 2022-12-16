@@ -120,7 +120,7 @@ const Carousel = ({
       slidesPerView: cardsInARow,
       spaceBetween: columnGap,
       shouldSwiperUpdate: true,
-      onSwiper: updateSwiper,
+      getSwiper: updateSwiper,
       slidesPerGroup,
       autoHeight: true,
     };

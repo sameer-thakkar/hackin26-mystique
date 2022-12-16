@@ -211,7 +211,6 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
             url={image.url}
             alt={image.alt || 'Product Image'}
             height={401}
-            fill={true}
           />
           <TagWrapper>
             <Tags
@@ -244,17 +243,15 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
             <div>
               <InfoTitle>{timing_heading || strings.TIMINGS}</InfoTitle>
               <InfoTimings>
-                <tbody>
-                  {timingsList.map((timing, index) => {
-                    return (
-                      <tr key={index}>
-                        <td>{timing.leftColumn}</td>
-                        <td>:</td>
-                        <td>{timing.rightColumn}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
+                {timingsList.map((timing, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{timing.leftColumn}</td>
+                      <td>:</td>
+                      <td>{timing.rightColumn}</td>
+                    </tr>
+                  );
+                })}
               </InfoTimings>
             </div>
           ) : null}

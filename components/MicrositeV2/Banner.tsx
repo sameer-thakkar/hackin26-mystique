@@ -15,45 +15,16 @@ import {
 } from 'const/index';
 import { MBContext } from 'contexts/MBContext';
 import Conditional from 'components/common/Conditional';
-import type { SwiperProps } from 'swiper/react';
 
 const Swiper = dynamic(() => import('components/Swiper'));
 
-const loopedSlides = 3;
-
-interface IStyledBanner {
-  bannerCount: number;
-  isMounted: boolean;
-  loopedSlides: number;
-}
-
-const StyledBanner = styled.div<IStyledBanner>`
+const StyledBanner = styled.div`
   display: grid;
   height: 400px;
   width: 100%;
   margin: 1rem auto;
   position: relative;
   margin-bottom: 12px;
-
-  .swiper-wrapper {
-    max-width: 100vw;
-    
-    @media (min-width: 768px) {
-      ${({ isMounted, loopedSlides }) => {
-        const slideWidth = parseInt(SIZES.MAX_WIDTH);
-
-        return isMounted
-          ? ``
-          : `transform: translate(calc(calc(calc(100vw - ${slideWidth}px)/2) - ${
-              loopedSlides * slideWidth
-            }px), 0)`;
-      }}
-    }
-  }
-  
-  .swiper-initialized {
-    width: 100%;
-  }
 
   .single-slide {
     margin: auto;
@@ -69,30 +40,14 @@ const StyledBanner = styled.div<IStyledBanner>`
     object-fit: cover;
     object-position: 0% 50%;
   }
-  
-  .swiper-slide {
-    max-height: 400px;
-    max-width: ${SIZES.MAX_WIDTH};
-
-    aspect-ratio: 3;
-    background: rgba(34, 34, 34, 0.6);
-    border-radius: 0.75rem;
-    position: relative;
-
-    @media (min-width: 768px) {
-      background: transparent;
-    }
-  }
 
   .mb-slide {
     aspect-ratio: 3;
+    max-height: 400px;
+    max-width: ${SIZES.MAX_WIDTH};
     background: rgba(34, 34, 34, 0.6);
     border-radius: 0.75rem;
     position: relative;
-
-    @media (min-width: 768px) {
-      background: transparent;
-    }
   }
 
   .mb-slide img {
@@ -148,7 +103,8 @@ const StyledBanner = styled.div<IStyledBanner>`
   }
 
   @media (max-width: 768px) {
-    margin: ${({ bannerCount }) => (bannerCount === 1 ? '2rem 0' : '1rem 0')};
+    margin: ${({ bannerImages }) =>
+      bannerImages?.length === 1 ? '2rem 0' : '1rem 0'};
     height: unset;
     .swiper-slide {
       transform: scale(0.95);
@@ -186,28 +142,6 @@ const StyledBanner = styled.div<IStyledBanner>`
   }
 `;
 
-const swiperParams: SwiperProps = {
-  breakpoints: {
-    320: {
-      slidesPerView: 1.1,
-    },
-    480: {
-      slidesPerView: 'auto',
-    },
-  },
-  speed: 600,
-  centeredSlides: true,
-  autoplay: {
-    delay: 5000,
-    disableOnInteraction: false,
-  },
-  initialSlide: 0,
-  loop: true,
-  loopedSlides,
-};
-
-const initialSlide = 3;
-
 const NewBanner = (props) => {
   const {
     bannerImages,
@@ -217,8 +151,28 @@ const NewBanner = (props) => {
     availableTours,
   } = props;
   const [swiper, updateSwiper] = useState(null);
-  const [isMounted, setMounted] = useState(false);
   const { lang } = useContext(MBContext);
+
+  const swiperParams = {
+    breakpoints: {
+      320: {
+        slidesPerView: 1.1,
+      },
+      480: {
+        slidesPerView: 'auto',
+      },
+    },
+    speed: 600,
+    centeredSlides: true,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false,
+    },
+    shouldSwiperUpdate: true,
+    initialSlide: 3,
+    loop: true,
+    loopedSlides: 3,
+  };
 
   const analyticsParams = {
     [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.COLLECTION,
@@ -227,10 +181,6 @@ const NewBanner = (props) => {
   };
 
   const isSwiperSet = swiper !== null && !swiper?.destroyed;
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   useEffect(() => {
     if (!isSwiperSet) {
@@ -307,14 +257,10 @@ const NewBanner = (props) => {
 
   return (
     <div>
-      <StyledBanner
-        bannerCount={bannerImages?.length}
-        loopedSlides={loopedSlides}
-        isMounted={isMounted}
-      >
+      <StyledBanner bannerImages={bannerImages}>
         {bannerImages?.length === 1 ? (
           <div
-            className={`single-slide ${
+            className={`swiper-slide single-slide ${
               bannerImages[0].interaction ? 'pointer' : ''
             }`}
             onClick={
@@ -332,7 +278,6 @@ const NewBanner = (props) => {
                 <Image
                   width={WIDTH}
                   aspectRatio={ASPECT_RATIO}
-                  fill
                   url={
                     ready &&
                     (isMobile && bannerImages[0].mobile_url
@@ -340,7 +285,7 @@ const NewBanner = (props) => {
                       : bannerImages[0].url)
                   }
                   alt={bannerImages[0]?.alt || 'banner'}
-                  priority
+                  dontLazyLoad={true}
                   imageId={stringIdfy(bannerImages[0].alt || '')}
                 />
                 <Conditional if={bannerImages[0].bannerHeading}>
@@ -352,7 +297,6 @@ const NewBanner = (props) => {
               <Image
                 width={WIDTH}
                 aspectRatio={ASPECT_RATIO}
-                fill
                 url={
                   ready &&
                   (isMobile && bannerImages[0].mobile_url
@@ -366,16 +310,20 @@ const NewBanner = (props) => {
                   });
                 }}
                 alt={bannerImages[0]?.alt || 'banner'}
+                dontLazyLoad={true}
+                imageId={stringIdfy(bannerImages[0].alt || '')}
               />
             </Conditional>
           </div>
         ) : (
-          <Swiper {...swiperParams} onSwiper={updateSwiper}>
+          <Swiper {...swiperParams} getSwiper={updateSwiper}>
             {bannerImages?.map((image, index) => {
               return (
                 <div
                   key={index}
-                  className={`mb-slide ${image.interaction ? 'pointer' : ''}`}
+                  className={`swiper-slide mb-slide ${
+                    image.interaction ? 'pointer' : ''
+                  }`}
                   onClick={
                     !isEntertainmentMb
                       ? () => handleInteraction(image.interaction)
@@ -392,7 +340,6 @@ const NewBanner = (props) => {
                       <Image
                         width={WIDTH}
                         aspectRatio={ASPECT_RATIO}
-                        fill
                         url={
                           ready &&
                           (isMobile && image.mobile_url
@@ -400,7 +347,7 @@ const NewBanner = (props) => {
                             : image.url)
                         }
                         alt={image?.alt || 'banner'}
-                        priority={index === initialSlide}
+                        dontLazyLoad={true}
                         imageId={stringIdfy(image.alt || '') + index}
                       />
                       <Conditional if={image.bannerHeading}>
@@ -411,7 +358,6 @@ const NewBanner = (props) => {
                   <Conditional if={!isEntertainmentMb}>
                     <Image
                       width={WIDTH}
-                      fill
                       aspectRatio={ASPECT_RATIO}
                       url={
                         ready &&
@@ -420,7 +366,7 @@ const NewBanner = (props) => {
                           : image.url)
                       }
                       alt={image?.alt || 'banner'}
-                      priority
+                      dontLazyLoad={true}
                       imageId={stringIdfy(image.alt || '') + index}
                     />
                   </Conditional>

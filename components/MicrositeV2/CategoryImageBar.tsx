@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from 'UI/Image';
+import Image from 'components/UI/Image';
 import { HALYARD } from 'const/ui-constants';
 
 export const CategoryImageBar = (props) => {
@@ -23,7 +23,7 @@ export const CategoryImageBar = (props) => {
               className="category-card"
               data-tgid={category.ranking.popularity}
             >
-              <Image url={category.image} alt={category.name} />
+              <Image url={category.image} />
               <span className="category-name">{category.name}</span>
             </div>
           );

@@ -5,9 +5,9 @@ import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
-import Image from 'UI/Image';
 
 import { shortCodeSerializer } from '../../utils/shortCodes';
+import Image from '../UI/Image';
 
 export const SearchItem = (props) => {
   const query = useRecoilValue(searchQueryAtom);
@@ -46,7 +46,6 @@ export const SearchItem = (props) => {
             width={208}
             height={128}
             aspectRatio={'16:10'}
-            alt={title}
           />
         </div>
       </div>

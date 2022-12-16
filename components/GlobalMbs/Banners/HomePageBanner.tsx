@@ -154,7 +154,7 @@ const Banner: FunctionComponent<BannerProps> = ({
     loop: true,
     initialSlide: 1,
     freeMode: true,
-    onSwiper: updateSwiper,
+    getSwiper: updateSwiper,
   };
 
   let imageView;
@@ -171,7 +171,7 @@ const Banner: FunctionComponent<BannerProps> = ({
           url={fallbackImage}
           attribution=""
           alt="Placeholder Image"
-          priority
+          dontLazyLoad
           height={IMAGE_HEIGHT}
           aspectRatio={globalMbAR}
           autoCrop={false}
@@ -184,7 +184,7 @@ const Banner: FunctionComponent<BannerProps> = ({
           className="swiper-slide"
           url={images[0]?.url || fallbackImage}
           alt={images[0]?.altText}
-          priority
+          dontLazyLoad
           height={IMAGE_HEIGHT}
           aspectRatio={globalMbAR}
           autoCrop={false}
@@ -202,6 +202,7 @@ const Banner: FunctionComponent<BannerProps> = ({
                   key={index}
                   url={image?.url || fallbackImage}
                   alt={image?.altText}
+                  dontLazyLoad
                   height={IMAGE_HEIGHT}
                   aspectRatio={globalMbAR}
                   autoCrop={false}

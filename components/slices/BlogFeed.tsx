@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
-import Image from 'UI/Image';
 
 import { CHEVRON_LEFT } from '../../assets/SvgIcons';
+import Image from '../UI/Image';
 
 const FeedContainer = styled.div`
   display: grid;

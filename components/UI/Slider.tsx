@@ -1,8 +1,7 @@
-import React, { useCallback, useState } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import COLORS from 'const/colors';
-import type { SwiperOptions } from 'swiper';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -89,7 +88,7 @@ const Controls = styled.div`
 
 const Slider: React.FC<{
   children: React.ReactChild[];
-  sliderOptions?: SwiperOptions;
+  sliderOptions?: any;
   nextButton?: React.ReactElement;
   prevButton?: React.ReactElement;
   parentOverflowHidden?: boolean;
@@ -127,13 +126,22 @@ const Slider: React.FC<{
     swiper,
   ]);
 
+  useEffect(() => {
+    if (swiper && swiper !== null) {
+      swiper.on('slideChange', updateIndex);
+    }
+
+    return () => {
+      if (swiper && swiper !== null) {
+        swiper.off('slideChange', updateIndex);
+      }
+    };
+  }, [swiper, updateIndex]);
+  /* Swiper configuration for using external controls ends here */
+
   return (
     <StyledSlider parentOverflowHidden={parentOverflowHidden}>
-      <Swiper
-        {...sliderOptions}
-        onSwiper={updateSwiper}
-        onSlideChange={updateIndex}
-      >
+      <Swiper {...sliderOptions} getSwiper={updateSwiper}>
         {children.map((child, index) => {
           return (
             <div className="swiper-slide" key={index}>

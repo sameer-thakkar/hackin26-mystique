@@ -46,7 +46,7 @@ const Masthead = ({
       alt={image?.alt}
       width={isMobile ? 800 : 1200}
       height={isMobile ? 300 : 400}
-      fill
+      objectFit={'cover'}
     />
   );
 
