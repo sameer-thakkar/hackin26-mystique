@@ -588,11 +588,11 @@ const ShowPageBanner = ({
                   <Image
                     url={productImage?.url}
                     alt={name}
-                    objectFit={'cover'}
+                    fill
                     height={500}
                     width={1000}
                     quality={null}
-                    dontLazyLoad={true}
+                    priority
                     fitCrop={!isMobile}
                   />
                 </BannerImage>

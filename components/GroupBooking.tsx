@@ -800,7 +800,7 @@ export default class GroupBooking extends Component<any, any> {
                 <img
                   data-src="https://cdn-imgix-open.headout.com/sites/assets/close-thin.svg?auto=compress&amp;q=10"
                   alt="close"
-                  className="close-group lazyload"
+                  className="close-group"
                 />
               </span>
             </div>
@@ -924,7 +924,7 @@ export default class GroupBooking extends Component<any, any> {
                         monthsShown={isMobileDevice() ? 1 : 2}
                       />
                       <img
-                        className="input-icon group-cal-icon cal-icon lazyload"
+                        className="input-icon group-cal-icon cal-icon"
                         data-src="https://cdn-imgix-open.headout.com/sites/assets/calendar.svg?auto=compress&amp;q=10"
                         alt="cal"
                       ></img>
@@ -1038,7 +1038,6 @@ export default class GroupBooking extends Component<any, any> {
                     <img
                       data-src="https://cdn-imgix-open.headout.com/sites/assets/done.svg"
                       alt="done"
-                      className="lazyload"
                     />
                   </div>
                   <div className="info-text">

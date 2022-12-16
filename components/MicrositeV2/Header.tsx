@@ -410,7 +410,13 @@ const Header: FunctionComponent<HeaderProps> = ({
           >
             <a href={logoRedirectionURL || '/'}>
               <div className="header-logo">
-                <Image url={logoUrl} alt={logoAltText} dontLazyLoad={true} />
+                <Image
+                  url={logoUrl}
+                  alt={logoAltText}
+                  priority
+                  height="44"
+                  width="144"
+                />
                 <Conditional if={hasPoweredByHeadoutLogo}>
                   <span className="poweredBy">{POWERED_BY_HEADOUT}</span>
                 </Conditional>

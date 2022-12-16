@@ -238,7 +238,7 @@ const CategorySlider = (props) => {
           <Swiper
             {...carouselOptions}
             slidesPerGroup={4}
-            getSwiper={updateSwiper}
+            onSwiper={updateSwiper}
           >
             {filteredTgids.map((tgid, index) => {
               return (

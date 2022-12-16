@@ -176,7 +176,12 @@ const CustomLinkedTours = ({
                 }
                 target={(basicTours[tgid] || commonLink).target}
               >
-                <Image url={image} aspectRatio={'16:10'} alt={title} />
+                <Image
+                  url={image}
+                  aspectRatio={'16:10'}
+                  alt={title}
+                  width={300}
+                />
                 <TitlePriceCombo>
                   <Title>{title}</Title>
                   <PriceBlock lang={lang} listingPrice={listingPrice} />

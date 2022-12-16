@@ -320,6 +320,7 @@ const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = f
               autoCrop={false}
               width={800}
               height={400}
+              alt={name}
             />
           </div>
         </Conditional>
@@ -374,6 +375,7 @@ const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = f
               autoCrop={false}
               width={800}
               height={400}
+              alt={name}
             />
             <Conditional if={!isMobile}>
               <CloseButton onClick={(e) => clickHandler(e)}>

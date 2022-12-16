@@ -120,7 +120,7 @@ const Carousel: FunctionComponent<CarouselProps> = ({
       spaceBetween: spaceBetween,
       wrapperClass: 'cards-section-wrapper',
       shouldSwiperUpdate: true,
-      getSwiper: updateSwiper,
+      onSwiper: updateSwiper,
     };
 
     return (

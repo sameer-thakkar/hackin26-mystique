@@ -3,8 +3,8 @@ import { RichText } from 'prismic-reactjs';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
 import dynamic from 'next/dynamic';
+import Image from 'UI/Image';
 
-import Image from '../UI/Image';
 import { CHEVRON_DOWN } from '../../assets/SvgIcons';
 
 const Slider = dynamic(() => import('UI/Slider'));
