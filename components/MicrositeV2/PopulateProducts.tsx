@@ -59,8 +59,8 @@ export const NO_OF_CARDS_IN_ROW = {
 };
 
 const NO_OF_ROWS_TO_SHOW = {
-  DESKTOP: 2,
-  MOBILE: 4,
+  DESKTOP: 4,
+  MOBILE: 8,
 };
 
 const PopulateProducts = (props) => {
@@ -87,7 +87,7 @@ const PopulateProducts = (props) => {
   const { lang } = mbContext;
   const { query, asPath, push: routerPush, pathname } = useRouter();
   const {
-    limit = String((rowsToShow || 4) * NO_OF_CARDS_IN_ROW.DESKTOP),
+    limit = String((rowsToShow || 8) * NO_OF_CARDS_IN_ROW.DESKTOP),
     offset = '0',
   }: { limit?: string; offset?: string } = query || {};
   const queryRowsToShow =
