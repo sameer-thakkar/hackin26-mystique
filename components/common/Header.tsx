@@ -15,6 +15,7 @@ import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
 import { POWERED_BY_HEADOUT } from 'assets/SvgIcons';
 import { throttle, withTrailingSlash } from 'utils/helper';
+import LottieLogo from 'components/common/LottieLogo';
 
 const MultiLevelNav = dynamic(() => import('components/MultiLevelNav'));
 const ResponsiveSelector: ComponentType<any> = dynamic(
@@ -81,6 +82,7 @@ const StyledHeaderContainer = styled.div`
   }
 `;
 
+// !important only required for holiday logo animation
 const StyledLogo = styled.div(
   ({ isEntertainmentMB }) => `
   display: grid;
@@ -89,6 +91,11 @@ const StyledLogo = styled.div(
   justify-self: left;
   justify-content: left;
   max-width: 350px;
+
+  .center {
+    display: flex;
+  }
+
   img {
     height: ${isEntertainmentMB ? `36px` : `44px`};
     max-width: 100%;
@@ -96,21 +103,34 @@ const StyledLogo = styled.div(
     object-fit: contain;
     padding-top: ${isEntertainmentMB && `4.5px`};
   }
-  svg {
-    height: ${isEntertainmentMB ? `36px` : `44px`};
+
+  span {
     width: 113px;
-    margin-left: ${isEntertainmentMB && `-11px`};
+    height: ${isEntertainmentMB ? `36px` : `44px`};
   }
+
+  svg {
+    height: ${isEntertainmentMB ? `36px` : `44px`} !important;
+    width: auto !important;
+    margin-left: ${isEntertainmentMB ? '-1px' : '11px'};
+  }
+
   @media (max-width: 768px) {
     display: grid;
     grid-auto-flow: column;
     margin-left: 15px;
-    img{
+
+    img {
       height: ${isEntertainmentMB ? `20px` : `26px`};
     }
-    svg {
-      height: ${isEntertainmentMB ? `20px` : `26px`};
+
+    span {
       width: 67px;
+      height: ${isEntertainmentMB ? `20px` : `26px`};
+    }
+
+    svg {
+      height: ${isEntertainmentMB ? `20px` : `26px`} !important;
     }
   }
 `
@@ -148,6 +168,8 @@ const StyledMenuItem = styled.div`
 
 const Header: React.FC<any> = (props) => {
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
+  const [headoutLogoVisible, setHeadoutLogoVisible] = useState(true);
+
   const {
     languages,
     headerLinks,
@@ -239,8 +261,17 @@ const Header: React.FC<any> = (props) => {
               width="144"
               autoCrop={false}
               isHeaderLogo
+              className="center"
             />
-            {hasPoweredByHeadoutLogo ? POWERED_BY_HEADOUT : null}
+            <Conditional if={hasPoweredByHeadoutLogo}>
+              <span>
+                {headoutLogoVisible && POWERED_BY_HEADOUT}
+                <LottieLogo
+                  isEntertainmentMB={isEntertainmentMB}
+                  hideHeadoutLogo={() => setHeadoutLogoVisible(false)}
+                />
+              </span>
+            </Conditional>
           </StyledLogo>
         </a>
         <Conditional if={!isMobile && hasDropdownLinks}>

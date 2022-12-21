@@ -919,3 +919,10 @@ export const SEO_SUBDOMAINS = [
   'https://uffizi.tickets-florence.it/',
   'https://sagradafamilia.barcelona-tickets.com/',
 ];
+
+export const HOLIDAY_ASSETS = {
+  POWERED_BY_HEADOUT_LOGO:
+    'https://cdn-imgix-open.headout.com/logo/lottie/mb_holiday_logo_v2.json',
+  LOADING_SPINNER:
+    'https://cdn-imgix-open.headout.com/loader/mb_holiday_loader.gif',
+};

@@ -30,6 +30,7 @@ import { groupSlices, withTrailingSlash } from 'utils/helper';
 import { createBookingURL } from 'utils';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { trackEvent } from 'utils/analytics';
+import LottieLogo from 'components/common/LottieLogo';
 
 const SearchBox: ComponentType<any> = dynamic(
   () => import('./SearchBox').then((mod) => mod.SearchBox),
@@ -173,6 +174,7 @@ const HeaderRight = styled.div`
   }
 `;
 
+// !important only required for holiday logo animation
 const HeaderLeft = styled.div`
   display: grid;
   grid-template-columns: auto ${({ hasDropdownLinks }) =>
@@ -183,10 +185,16 @@ const HeaderLeft = styled.div`
     height: unset;
     display: grid;
     grid-auto-flow: column;
+    align-items: center;
     padding: ${({ isGlobalMb, isEntertainmentMb }) =>
       isGlobalMb || isEntertainmentMb ? '0' : '8px'};
     margin-right: 16px;
     ${({ isEntertainmentMb }) => isEntertainmentMb && `height: 36px;`}
+
+    .center {
+      display: flex;
+    }
+
     img {
       height: 36px;
       margin: 0;
@@ -196,8 +204,8 @@ const HeaderLeft = styled.div`
     }
   }
   .poweredBy svg {
-    height: 36px;
-    width: auto;
+    height: 36px !important;
+    width: auto !important;
   }
 
   @media (max-width: 768px) {
@@ -212,8 +220,7 @@ const HeaderLeft = styled.div`
       }
     }
     .poweredBy svg {
-      height: 24px;
-      width: auto;
+      height: 24px !important;
     }
   }
 `;
@@ -313,6 +320,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   const [resultClicked, setResultClicked] = useState(false);
   const [navActive, toggleNav] = useState(false);
   const [headerHover, setHeaderHover] = useState(false);
+  const [headoutLogoVisible, setHeadoutLogoVisible] = useState(true);
 
   const handleResults = (results) => {
     setResults(results);
@@ -410,9 +418,20 @@ const Header: FunctionComponent<HeaderProps> = ({
           >
             <a href={logoRedirectionURL || '/'}>
               <div className="header-logo">
-                <Image url={logoUrl} alt={logoAltText} dontLazyLoad={true} />
+                <Image
+                  url={logoUrl}
+                  alt={logoAltText}
+                  dontLazyLoad={true}
+                  className="center"
+                />
                 <Conditional if={hasPoweredByHeadoutLogo}>
-                  <span className="poweredBy">{POWERED_BY_HEADOUT}</span>
+                  <span className="poweredBy">
+                    {headoutLogoVisible && POWERED_BY_HEADOUT}
+                    <LottieLogo
+                      isEntertainmentMB={isEntertainmentMb}
+                      hideHeadoutLogo={() => setHeadoutLogoVisible(false)}
+                    />
+                  </span>
                 </Conditional>
               </div>
             </a>
