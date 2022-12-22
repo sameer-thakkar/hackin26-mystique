@@ -205,6 +205,7 @@ const Page = (props) => {
             tourGroupData={tourGroupData}
             inventorySlotData={inventorySlotData}
             isDev={isDev}
+            isMobile={isMobile}
             host={host}
             serverRequestStartTimestamp={serverRequestStartTimestamp}
             domainConfig={domainConfig}

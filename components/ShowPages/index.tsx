@@ -184,15 +184,16 @@ const AboutTheatreSectionWrapper = styled.div`
   }
 `;
 
-const ShowPage = ({
-  CMSContent,
-  host,
-  tourGroupData: tempTourGroupData,
-  inventorySlotData,
-  isDev,
-  serverRequestStartTimestamp,
-  domainConfig,
-}) => {
+const ShowPage = (props) => {
+  const {
+    CMSContent,
+    host,
+    tourGroupData: tempTourGroupData,
+    inventorySlotData,
+    isDev,
+    serverRequestStartTimestamp,
+    domainConfig,
+  } = props;
   const tourGroupData = cloneDeep(tempTourGroupData);
   const [customerReviews, setCustomerReviews] = useState([]);
   const [similarProductData, setSimilarProductData] = useState([]);
@@ -200,7 +201,7 @@ const ShowPage = ({
   const hostname = getHostName(isStage, isDev, host);
   const currency = useRecoilValue(currencyAtom);
 
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(props?.isMobile);
   const width = useWindowWidth();
 
   const {

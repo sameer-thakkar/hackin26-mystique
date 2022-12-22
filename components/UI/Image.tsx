@@ -62,6 +62,7 @@ type ImageProps = {
   addDarkOverlay?: boolean;
   onClick?: () => void;
   fitCrop?: boolean;
+  blurFill?: boolean;
 };
 
 const Image: React.FC<ImageProps> = ({
@@ -82,6 +83,7 @@ const Image: React.FC<ImageProps> = ({
   addDarkOverlay,
   onClick,
   fitCrop = false,
+  blurFill = false,
 }) => {
   const makeImageUrl = (fm: string, url): string => {
     if (!url) {
@@ -107,6 +109,11 @@ const Image: React.FC<ImageProps> = ({
     }
     if (fitCrop) {
       imigxOptionsQueryParams.set('fit', 'crop');
+    }
+    //TODO - revert after showpage revamp
+    if (blurFill) {
+      imigxOptionsQueryParams.set('fill', 'blur');
+      imigxOptionsQueryParams.set('fit', 'fill');
     }
     imigxOptionsQueryParams.set('fm', fm);
     if (addDarkOverlay) {

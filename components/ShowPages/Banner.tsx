@@ -245,6 +245,7 @@ const BannerContent = styled.div`
   }
 
   @media (max-width: 768px) {
+    margin: -0.5em auto 3rem;
     padding: 24px 16px 0;
 
     .heading-wrapper {
@@ -388,6 +389,7 @@ const ShowPageBanner = ({
   const productImage = imageUploads.length
     ? imageUploads[1] || imageUploads[0]
     : null;
+  const isShowPoster = imageUploads?.length === 1; //TODO - revert after showpage revamp
 
   const { nakedDomain, biLink, redirectToHeadoutBookingFlow } = useContext(
     MBContext
@@ -590,10 +592,12 @@ const ShowPageBanner = ({
                     alt={name}
                     objectFit={'cover'}
                     height={500}
-                    width={1000}
+                    width={isShowPoster && !isMobile ? 2000 : 1000}
                     quality={null}
                     dontLazyLoad={true}
-                    fitCrop={!isMobile}
+                    fitCrop={!isShowPoster && !isMobile}
+                    autoCrop={!isShowPoster && !isMobile} //TODO - revert after showpage revamp
+                    blurFill={isShowPoster && !isMobile} //TODO - revert after showpage revamp
                   />
                 </BannerImage>
               </Conditional>
