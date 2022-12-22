@@ -205,6 +205,7 @@ const PopulateProducts = (props) => {
 
   return (
     <StyledProductWrapper
+      className="product-wrapper-v2"
       isEntertainmentMb={isEntertainmentMb}
       isEntertainmentMbListicle={isEntertainmentMbListicle}
     >

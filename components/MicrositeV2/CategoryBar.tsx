@@ -1,5 +1,6 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
+import { scroller } from 'react-scroll';
 import InteractionContext from 'contexts/Interaction';
 import Conditional from 'components/common/Conditional';
 import { SortSelector } from 'components/MicrositeV2/SortSelector';
@@ -180,6 +181,12 @@ const CategoryBar = (props) => {
       [ANALYTICS_PROPERTIES.RANKING]: ranking + 1,
       [ANALYTICS_PROPERTIES.HEADING]: categories[index].name,
     });
+
+    scroller.scrollTo('product-wrapper-v2', {
+      duration: 0,
+      offset: isMobile ? -58 : -80,
+      smooth: true,
+    });
   };
 
   const changeOrder = (orderKey) => {
@@ -208,7 +215,7 @@ const CategoryBar = (props) => {
         selectedTab.scrollIntoView({
           inline: 'center',
           behavior: 'smooth',
-          block: 'end',
+          block: 'nearest',
         });
       }
     };
