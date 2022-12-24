@@ -714,7 +714,8 @@ export const MobileProductPage = (props) => {
                   </Conditional>
                   <Conditional if={!isNew && averageRating}>
                     <span className="avg-rating">
-                      {averageRating} {STAR(COLORS.PRIMARY.JOY_MUSTARD)}
+                      {averageRating?.toFixed(1)}
+                      {STAR(COLORS.PRIMARY.JOY_MUSTARD)}
                     </span>
                   </Conditional>
                   <Conditional if={!isNew && reviewCount}>

@@ -313,7 +313,7 @@ const en = {
     SUB_HEADING_SAFE: 'All the outdoor activities are 100% safe and secure',
     HEADING_SUPPORT: '24x7 Help Center',
     SUB_HEADING_SUPPORT:
-      'Have a question? Live chat with local experts anywhere, amytime',
+      'Have a question? Live chat with local experts anywhere, anytime',
   },
   WHY_WATCH: 'Why Watch',
   SHOW_CLOSED: 'Show Closed',
