@@ -7,7 +7,7 @@ import COLORS from 'const/colors';
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { getProductCommonProperties, trackEvent } from 'utils/analytics';
-import { checkLTT, isMobile } from 'utils/helper';
+import { checkBroadway, checkLTT, isMobile } from 'utils/helper';
 import { expandFontToken } from 'const/typography';
 import { FONTS } from 'const/fonts';
 
@@ -72,6 +72,7 @@ const StickyFooter = ({
   const pageMetaData = useRecoilValue(metaAtom);
 
   const isLTT = checkLTT(uid);
+  const isBroadway = checkBroadway(uid);
   const trackBookNowClick = () => {
     const { originalPrice, finalPrice, currencyCode } = listingPrice ?? {};
     trackEvent({
@@ -107,7 +108,7 @@ const StickyFooter = ({
             window.open(bookingUrl, target, 'noopener, noreferrer');
           }}
         >
-          {isLTT ? strings.CHECK_AVAIL : strings.BANNER_CTA}
+          {isLTT || isBroadway ? strings.CHECK_AVAIL : strings.BANNER_CTA}
         </button>
       </Conditional>
       <Conditional if={!isAvailable}>
