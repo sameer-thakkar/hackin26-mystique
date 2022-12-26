@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { HOLIDAY_ASSETS } from 'const/index';
-import { AnimationItem } from 'lottie-web';
+import type { AnimationItem } from 'lottie-web';
 import { Props } from 'components/common/LottieLogo/interface';
 import { LottieWrapper } from 'components/common/LottieLogo/styles';
 
@@ -9,7 +9,8 @@ const LottieLogo = ({ hideHeadoutLogo, isEntertainmentMB }: Props) => {
     lottieContainerRef = useRef<HTMLDivElement>(null),
     animationFrameCount = useRef<number>(0);
 
-  const [isVisible, setVisible] = useState(false);
+  const [isVisible, setVisible] = useState(false),
+    [lottieFailed, setLottieFailed] = useState(false);
 
   const onDataReady = () => {
     hideHeadoutLogo();
@@ -30,23 +31,31 @@ const LottieLogo = ({ hideHeadoutLogo, isEntertainmentMB }: Props) => {
   };
 
   useEffect(() => {
-    import('lottie-web').then((lottieWebInstance) => {
-      lottieWebAnimationItemRef.current = lottieWebInstance.default.loadAnimation(
-        {
-          autoplay: false,
-          loop: false,
-          path: HOLIDAY_ASSETS.POWERED_BY_HEADOUT_LOGO,
-          container: lottieContainerRef.current,
-        }
-      );
+    import('lottie-web')
+      .then((lottieWebInstance) => {
+        lottieWebAnimationItemRef.current = lottieWebInstance.default.loadAnimation(
+          {
+            autoplay: false,
+            loop: false,
+            path: HOLIDAY_ASSETS.POWERED_BY_HEADOUT_LOGO,
+            container: lottieContainerRef.current,
+          }
+        );
 
-      lottieWebAnimationItemRef.current.addEventListener('data_ready', () => {
-        setTimeout(() => {
-          onDataReady();
-        }, 2000);
+        lottieWebAnimationItemRef.current.addEventListener('data_ready', () => {
+          setTimeout(() => {
+            onDataReady();
+          }, 2000);
+        });
+      })
+      .catch(() => {
+        setLottieFailed(true);
       });
-    });
   }, []);
+
+  if (lottieFailed) {
+    return null;
+  }
 
   return (
     <LottieWrapper
