@@ -16,8 +16,8 @@ const StyledCategoryBar = styled.div`
   height: fit-content;
   position: sticky;
   background: ${COLORS.BRAND.WHITE};
-  top: 0;
-  z-index: 20;
+  top: ${({ isMobile }) => (isMobile ? '35px' : '56px')};
+  z-index: 10;
 
   .swiper-container {
     overflow: unset;
@@ -150,6 +150,13 @@ const CategoryBar = (props) => {
     isListicle,
   } = props;
 
+  const focusProductList = () =>
+    scroller.scrollTo('product-wrapper-v2', {
+      duration: 0,
+      offset: isMobile ? -120 : -170,
+      smooth: true,
+    });
+
   const toggleFilterDropdown = (dropdownState) => {
     if (!filterDropdownActive)
       trackEvent({
@@ -182,11 +189,7 @@ const CategoryBar = (props) => {
       [ANALYTICS_PROPERTIES.HEADING]: categories[index].name,
     });
 
-    scroller.scrollTo('product-wrapper-v2', {
-      duration: 0,
-      offset: isMobile ? -58 : -80,
-      smooth: true,
-    });
+    focusProductList();
   };
 
   const changeOrder = (orderKey) => {
@@ -203,6 +206,8 @@ const CategoryBar = (props) => {
       [ANALYTICS_PROPERTIES.SORT_BY]: orderKey,
       ...getCommonEventMetaData(pageMetaData),
     });
+
+    focusProductList();
   };
 
   useEffect(() => {
@@ -251,7 +256,7 @@ const CategoryBar = (props) => {
   return (
     <>
       <div className="scroll-reference" ref={scroll_div}></div>
-      <StyledCategoryBar ref={category_bar}>
+      <StyledCategoryBar ref={category_bar} isMobile={isMobile}>
         <CategoryBarWrapper ref={parent} isEntertainmentMb={isEntertainmentMb}>
           <div className="tabs-wrap">
             {categories.map((category, index) => {

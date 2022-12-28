@@ -45,7 +45,7 @@ const StyledMenuItem = styled.li`
     align-items: center;
     align-content: center;
     grid-template-columns: auto auto;
-    grid-column-gap: 10px;
+    grid-column-gap: 8px;
     .nest-icon {
       display: flex;
       justify-self: right;
