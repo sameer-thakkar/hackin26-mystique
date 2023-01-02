@@ -128,13 +128,13 @@ const CategoryBarWrapper = styled.div`
   }
 `;
 const CategoryBar = (props) => {
-  const { changeCategory: changeCategoryHandler } =
+  const { changeCategory: changeCategoryHandler, activeCategoryIndex } =
     useContext(InteractionContext) || {};
   const pageMetaData = useRecoilValue(metaAtom);
   const parent = useRef(null);
   const category_bar = useRef(null);
   const scroll_div = useRef(null);
-  const [activeCategory, setActiveCategory] = useState(0);
+  const [activeCategory, setActiveCategory] = useState(activeCategoryIndex);
   const [activeOrder, setActiveOrder] = useState('popularity');
   const [filterDropdownActive, setFilterDropdownActive] = useState(false);
   const [indicatorStyles, setIndicatorStyles] = useState({
@@ -244,7 +244,7 @@ const CategoryBar = (props) => {
 
     setIndicatorStyles(getActiveLineDimension());
     if (isMobile && parent.current) centerActiveCategory();
-  }, [activeCategory, parent, isMobile]);
+  }, [activeCategory, activeCategoryIndex, parent, isMobile]);
 
   // Don't render the category bar if all TGIDs are unavailable
   const isAnyTGIDAvailable = Object.keys(allTours).some(

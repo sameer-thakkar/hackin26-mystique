@@ -369,7 +369,7 @@ class MicrositeV2 extends Component<any, any> {
       const index = categories.findIndex((cat) => catRegex.test(cat.name));
       if (index > -1) {
         categories[index].rank = 1;
-        categories = categories.sort((catA, catB) => catB.rank - catA.rank);
+        // categories = categories.sort((catA, catB) => catB.rank - catA.rank);
       }
     }
     const directTheater = this.props.router.query.theater;
@@ -478,7 +478,10 @@ class MicrositeV2 extends Component<any, any> {
     const longFormContent = this.props.data.data.body2;
     let activePage = this.state.page.name;
     return (
-      <InteractionContextProvider {...categoryProps}>
+      <InteractionContextProvider
+        {...categoryProps}
+        queryCategory={directCategory}
+      >
         <MicrositeV2GlobalStyle />
         <PopulateMeta
           {...{

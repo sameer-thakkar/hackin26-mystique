@@ -6,13 +6,33 @@ import { trackEvent } from 'utils/analytics';
 const InteractionContext = createContext(null);
 export default InteractionContext;
 
+const getActiveCategoryIndexFromQuery = (
+  categories: any[] = [],
+  queryCategory: string = ''
+) => {
+  const catRegex = new RegExp(queryCategory, 'gi');
+  const index = categories.findIndex((cat) => catRegex.test(cat.name));
+
+  return index !== -1 ? index : 0;
+};
+
 export const InteractionContextProvider = (props) => {
-  const { categories } = props;
+  const { categories, queryCategory } = props;
+  const initialActiveCategoryIndex = getActiveCategoryIndexFromQuery(
+    categories,
+    queryCategory
+  );
+  const initialActiveCategory = categories[initialActiveCategoryIndex];
+
   const { sliceData: currentSlice } = categories || {};
   const defaultCategory =
-    (categories[0] && categories[0].ranking.popularity) || [];
-  const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
-  const [activeCategoryId, setActiveCategoryId] = useState(null);
+    (initialActiveCategory && initialActiveCategory.ranking.popularity) || [];
+  const [activeCategoryIndex, setActiveCategoryIndex] = useState(
+    initialActiveCategoryIndex
+  );
+  const [activeCategoryId, setActiveCategoryId] = useState(
+    initialActiveCategory.id
+  );
   const [sliceData, setSliceData] = useState(null);
 
   useEffect(() => {
