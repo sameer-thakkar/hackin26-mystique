@@ -31,7 +31,7 @@ export const InteractionContextProvider = (props) => {
     initialActiveCategoryIndex
   );
   const [activeCategoryId, setActiveCategoryId] = useState(
-    initialActiveCategory.id
+    initialActiveCategory?.id
   );
   const [sliceData, setSliceData] = useState(null);
 
