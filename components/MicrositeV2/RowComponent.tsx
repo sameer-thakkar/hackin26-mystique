@@ -8,7 +8,9 @@ import Conditional from 'components/common/Conditional';
 import { NO_OF_CARDS_IN_ROW } from 'components/MicrositeV2/PopulateProducts';
 import Product from 'components/MicrositeV2/Product';
 
-const DetailedProductCard = dynamic(() => import('./DetailedProductCard'));
+const DetailedProductCard = dynamic(() =>
+  import(/* webpackChunkName: "DetailedProductCard" */ './DetailedProductCard')
+);
 
 const ProductsRow = styled.div`
   display: grid;

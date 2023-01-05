@@ -9,13 +9,20 @@ import { CHEVRON_LEFT } from 'assets/SvgIcons';
 import Conditional from 'components/common/Conditional';
 
 const DetailedProductCard = dynamic(
-  () => import('components/MicrositeV2/DetailedProductCard'),
+  () =>
+    import(
+      /* webpackChunkName: "DetailedProductCard" */ 'components/MicrositeV2/DetailedProductCard'
+    ),
   {
     ssr: false,
   }
 );
-const Swiper = dynamic(() => import('components/Swiper'));
-const Product = dynamic(() => import('components/MicrositeV2/Product'));
+const Swiper = dynamic(() =>
+  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+);
+const Product = dynamic(() =>
+  import(/* webpackChunkName: "Product" */ 'components/MicrositeV2/Product')
+);
 
 const StyledCategorySlider = styled.div`
   display: grid;

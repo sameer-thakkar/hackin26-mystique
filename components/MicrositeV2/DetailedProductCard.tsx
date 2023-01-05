@@ -31,9 +31,15 @@ import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
 import { checkBroadway, checkLTT } from 'utils/helper';
 
-const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
-  ssr: false,
-});
+const SafeExperiencesPitch = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "SafeExperiencesPitch" */ 'UI/SafeExperiencesPitch'
+    ),
+  {
+    ssr: false,
+  }
+);
 
 const DetailedDescriptionCard = styled.div`
   grid-column: 1 / 5;

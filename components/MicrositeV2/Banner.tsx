@@ -16,7 +16,9 @@ import {
 import { MBContext } from 'contexts/MBContext';
 import Conditional from 'components/common/Conditional';
 
-const Swiper = dynamic(() => import('components/Swiper'));
+const Swiper = dynamic(() =>
+  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
+);
 
 const StyledBanner = styled.div`
   display: grid;

@@ -9,7 +9,9 @@ import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
 import { DONT_AUTO_SCROLL, DONT_HOIST } from 'const/index';
 
-const PopulateProducts = dynamic(() => import('./PopulateProducts'));
+const PopulateProducts = dynamic(() =>
+  import(/* webpackChunkName: "PopulateProducts" */ './PopulateProducts')
+);
 
 const StyledCategorySection = styled.div`
   display: grid;

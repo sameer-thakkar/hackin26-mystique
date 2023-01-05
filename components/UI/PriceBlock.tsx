@@ -32,20 +32,18 @@ export const StyledPriceBlock = styled.div`
 
     .tour-price {
       column-gap: 4px;
-      margin-right: 0.3rem;
+      margin-right: 0.25rem;
     }
   }
 
   .tour-scratch-price {
     grid-column: 1 / 3;
-    color: ${({ showScratchPrice }) =>
-      showScratchPrice ? COLORS.GRAY.G4 : COLORS.GRAY.G2};
+    color: ${COLORS.GRAY.G4};
     &:empty {
       display: none;
     }
     & .strike-through {
       text-decoration: line-through;
-      color: ${COLORS.GRAY.G4};
     }
   }
   @media (max-width: 768px) {
@@ -58,7 +56,7 @@ export const StyledPriceBlock = styled.div`
 `;
 
 export const SavedTag = styled.div`
-  padding: 1px 4px;
+  padding: 0.125rem 0.25rem;
   align-self: center;
   margin-top: 1px; // hack to visually align center.
   background: ${({ theme }) =>
@@ -204,7 +202,7 @@ const PriceBlock = ({
         </Conditional>
         <Conditional if={showcashbackElm}>
           <SavedTag>
-            + {strings.formatString(strings.CASHBACK, `${cashbackValue}%`)}
+            {strings.formatString(strings.CASHBACK, `${cashbackValue}%`)}
           </SavedTag>
         </Conditional>
       </div>

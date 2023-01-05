@@ -34,24 +34,27 @@ import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { gtmAtom } from 'store/atoms/gtm';
 import { expandFontToken } from 'const/typography';
 
-const Alert = dynamic(() => import('UI/Alert'), { ssr: false });
+const Alert = dynamic(
+  () => import(/* webpackChunkName: "Alert" */ 'UI/Alert'),
+  { ssr: false }
+);
 const ResponsiveSelector: ComponentType<any> = dynamic(
   () =>
-    import('components/MicrositeV2/ResponsiveSelector').then(
-      (m) => m.ResponsiveSelector
-    ),
+    import(
+      /* webpackChunkName: "ResponsiveSelector" */ 'components/MicrositeV2/ResponsiveSelector'
+    ).then((m) => m.ResponsiveSelector),
   { ssr: false }
 );
 const ProductsWrapper: ComponentType<any> = dynamic(() =>
-  import('components/MicrositeV2/ProductsWrapper').then(
-    (mod) => mod.ProductsWrapper
-  )
+  import(
+    /* webpackChunkName: "ProductsWrapper" */ 'components/MicrositeV2/ProductsWrapper'
+  ).then((mod) => mod.ProductsWrapper)
 );
 const Banner: ComponentType<any> = dynamic(() =>
-  import('components/MicrositeV2/Banner')
+  import(/* webpackChunkName: "Banner" */ 'components/MicrositeV2/Banner')
 );
 const LongForm: ComponentType<any> = dynamic(() =>
-  import('components/MicrositeV2/LongForm')
+  import(/* webpackChunkName: "LongForm" */ 'components/MicrositeV2/LongForm')
 );
 
 const V2MicrositeWrapper = styled.div`

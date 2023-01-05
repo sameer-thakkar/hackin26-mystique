@@ -35,10 +35,19 @@ import { parseV2ProductDescriptors } from 'utils/dataParsers';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { metaAtom } from 'store/atoms/meta';
 
-const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
-const SafeExperiencesPitch = dynamic(() => import('UI/SafeExperiencesPitch'), {
-  ssr: false,
-});
+const Swiper = dynamic(
+  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper'),
+  { ssr: false }
+);
+const SafeExperiencesPitch = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "SafeExperiencesPitch" */ 'UI/SafeExperiencesPitch'
+    ),
+  {
+    ssr: false,
+  }
+);
 
 const IconBoosters = styled.div`
   margin-left: 12px;

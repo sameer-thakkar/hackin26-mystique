@@ -106,7 +106,7 @@ const ProductCard = styled.div`
 
   ${StyledPriceBlock} {
     grid-template-columns: auto;
-  } 
+  }
 
   ${PriceSkeleton} {
     &:before {
@@ -188,7 +188,7 @@ const ProductCard = styled.div`
     grid-template-columns: repeat(2, max-content);
     justify-content: space-between;
     ${expandFontToken(FONTS.UI_LABEL_SMALL)}
-    margin-bottom: 2px;
+    margin-bottom: 0.25rem;
   }
 
   .l1-booster-wrapper * {
@@ -203,12 +203,17 @@ const ProductCard = styled.div`
   }
 
   .avg-rating {
-    color: ${COLORS.BRAND.CANDY};
+    .rating-number {
+      margin-right: 0.125rem;
+      color: ${COLORS.BRAND.CANDY};
+    }
   }
 
   .avg-rating svg {
-    width: 10.52px;
-    height: 10px;
+    position: relative;
+    top: 0.063rem;
+    width: 12px;
+    height: 12px;
   }
 
   @media (max-width: 768px) {
@@ -270,8 +275,8 @@ const ProductCard = styled.div`
     .avg-rating svg {
       ${({ isEntertainmentMb }) =>
         isEntertainmentMb &&
-        `width:8px;
-        height: 8px;
+        `width: 12px;
+        height: 12px;
         
         path {
           fill:  ${COLORS.BRAND.CANDY};
@@ -549,7 +554,10 @@ const Product = (props) => {
             <div className="rating">
               <Conditional if={averageRating}>
                 <span className="avg-rating">
-                  {averageRating?.toFixed(1)} {STAR(COLORS.BRAND.CANDY)}
+                  <span className="rating-number">
+                    {averageRating?.toFixed?.(1)}
+                  </span>
+                  {STAR(COLORS.BRAND.CANDY)}
                 </span>
               </Conditional>
               <Conditional if={reviewCount}>
@@ -667,7 +675,10 @@ const Product = (props) => {
                   <div className="rating">
                     <Conditional if={averageRating}>
                       <span className="avg-rating">
-                        {averageRating} {STAR(COLORS.PRIMARY.JOY_MUSTARD)}
+                        <span className="rating-number">
+                          {averageRating.toFixed?.(1)}
+                        </span>
+                        {STAR(COLORS.PRIMARY.JOY_MUSTARD)}
                       </span>
                     </Conditional>
                     <Conditional if={reviewCount}>

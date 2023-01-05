@@ -7,7 +7,9 @@ import { DONT_AUTO_SCROLL } from 'const/index';
 import Conditional from 'components/common/Conditional';
 import { checkLTT } from 'utils/helper';
 
-const PopulateProducts = dynamic(() => import('./PopulateProducts'));
+const PopulateProducts = dynamic(() =>
+  import(/* webpackChunkName: "PopulateProducts" */ './PopulateProducts')
+);
 
 const StyledProductWrapper = styled.div`
   margin-bottom: ${({ isEntertainmentMb }) =>

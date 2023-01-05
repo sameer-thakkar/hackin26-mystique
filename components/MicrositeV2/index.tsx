@@ -15,14 +15,22 @@ import { PAGETYPE, QUERY_PARAMS, THEMES } from 'const/index';
 import { fetchTourListV6 } from 'utils/apiUtils';
 
 const HomePage: ComponentType<any> = dynamic(() =>
-  import('./views/HomePage').then((mod) => mod.HomePage)
+  import(/* webpackChunkName: "HomePage" */ './views/HomePage').then(
+    (mod) => mod.HomePage
+  )
 );
 const SearchPage: ComponentType<any> = dynamic(
-  () => import('./views/SearchPage').then((mod) => mod.SearchPage),
+  () =>
+    import(/* webpackChunkName: "SearchPage" */ './views/SearchPage').then(
+      (mod) => mod.SearchPage
+    ),
   { ssr: false }
 );
 const MobileProductPage: ComponentType<any> = dynamic(
-  () => import('./views/ProductPage').then((mod) => mod.MobileProductPage),
+  () =>
+    import(
+      /* webpackChunkName: "MobileProductPage" */ './views/ProductPage'
+    ).then((mod) => mod.MobileProductPage),
   { ssr: false }
 );
 
