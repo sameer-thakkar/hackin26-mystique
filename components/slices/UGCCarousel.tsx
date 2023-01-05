@@ -60,7 +60,7 @@ const SliderContainer = styled.div`
 `;
 
 const StyledSlider = styled.div`
-  .swiper-container {
+  .swiper-initialized {
     width: 90vw;
     padding-top: 0.75rem;
     max-width: 1200px;
@@ -77,6 +77,10 @@ const StyledSlider = styled.div`
 
 const StyledSlide = styled.div`
   cursor: pointer;
+
+  .image-wrapper {
+    min-height: 15rem;
+  }
 
   img {
     width: 11.25rem;
@@ -117,6 +121,11 @@ const StyledSlide = styled.div`
 
   @media (max-width: 768px) {
     width: 9.875rem !important;
+
+    .image-wrapper {
+      min-height: 13rem;
+    }
+
     img,
     &:after {
       height: 13rem;
@@ -183,7 +192,7 @@ const PopupCard = styled.div`
     overflow: scroll;
     .image-wrap {
       grid-area: 2 / 1 / 3 / 2;
-      max-height: 70vh;
+      height: 70vh;
     }
   }
 `;
@@ -560,7 +569,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
                   if={username === 'headout' || username === 'headoutuae'}
                 >
                   <div className="user-logo">
-                    <Image url={HEADOUT_PURPS_LOGO} />
+                    <Image url={HEADOUT_PURPS_LOGO} alt={'user-logo'} />
                   </div>
                 </Conditional>
                 <a
@@ -665,7 +674,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
         </StyledHeading>
         <SliderContainer>
           <StyledSlider cardCount={cards?.length}>
-            <Swiper {...swiperParams} getSwiper={updateSwiper}>
+            <Swiper {...swiperParams} onSwiper={updateSwiper}>
               {cards?.map((card, index) => (
                 <StyledSlide
                   key={index}
@@ -677,9 +686,11 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
                   className={'swiper-slide'}
                 >
                   <Image
+                    fill
                     url={card?.instagram_posts?.imageURL}
                     alt={card?.instagram_posts?.caption}
                     format="jpg"
+                    className={'image-wrapper'}
                   />
                   <div className="img-icon">{INSTAGRAM}</div>
                   <Conditional if={card?.instagram_posts?.postType === 'Video'}>

@@ -19,9 +19,9 @@ const resolveLink: any = (url, ctx) => {
   if (isDev) {
     const updatedQuery = {
       ...query,
-      mystique_uid: getUID(linkHref),
+      mystique_uid: getUID(linkHref || 'localhost'),
     };
-    return `${isDev ? 'http:' : protocol}//${host}?${qs(updatedQuery)}`;
+    return `${isDev ? 'http:' : protocol}//${host}/?${qs(updatedQuery)}`;
   }
 
   const normalizedHost = host.replace('stage-', '');

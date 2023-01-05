@@ -76,10 +76,12 @@ const allToursParser = (CMSData, scorpioData, pricingData: ToursData) => {
     }
     const currencySymbol =
       isFetched &&
+      cardPrices &&
       CURRENCY_SYMBOL_MAP[
         cardPrices[tourData.tgid]?.listingPrice?.currencyCode
       ];
-    let listingPrice = isFetched ? cardPrices[tourData.tgid]?.listingPrice : {};
+    let listingPrice =
+      isFetched && cardPrices ? cardPrices[tourData.tgid]?.listingPrice : {};
     const scorpioTour = scorpioData?.[tourData.tgid] || {};
 
     return {
@@ -99,8 +101,11 @@ const allToursParser = (CMSData, scorpioData, pricingData: ToursData) => {
         descriptionImage:
           tourData.description_image_override.url ||
           (scorpioTour?.images?.[1] ? scorpioTour?.images?.[1].url : ''),
-        price: isFetched ? cardPrices[tourData.tgid]?.price : '',
-        scratchPrice: isFetched ? cardPrices[tourData.tgid]?.scratchPrice : '',
+        price: isFetched && cardPrices ? cardPrices[tourData.tgid]?.price : '',
+        scratchPrice:
+          isFetched && cardPrices
+            ? cardPrices[tourData.tgid]?.scratchPrice
+            : '',
         currencySymbol: isFetched ? currencySymbol : '',
         tgid: parseInt(tourData.tgid),
         imageUrl: scorpioTour?.imageUrl,

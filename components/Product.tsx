@@ -57,6 +57,8 @@ import {
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { getDuration } from 'utils/timeUtils';
 import { addQueryParams } from 'utils/urlUtils';
+import type { SwiperProps } from 'swiper/react';
+
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
 dayjs.extend(advancedFormat);
@@ -94,7 +96,7 @@ const cardImageStyles = css`
       grid-row-end: initial;
       grid-column: span 2;
       aspect-ratio: 21/9;
-      width: calc(100% + 1rem);
+      width: calc(100% + 2rem);
       max-height: 158px;
       margin: -22px -16px -0.5rem;
 
@@ -616,7 +618,7 @@ const V1BoosterBlock = styled.div`
   }
 `;
 
-const HighlightTabsWrapper = styled.div`
+const HighlightTabsWrapper = styled.div<{ hasRegularHighlights: boolean }>`
   display: grid;
   grid-row-gap: 16px;
   margin-top: ${({ hasRegularHighlights }) =>
@@ -680,7 +682,7 @@ const SwiperControls = styled.div`
 
 const TabPanelWrapper = styled.div``;
 
-const Tab = styled.div`
+const Tab = styled.div<{ isActive: boolean }>`
   cursor: pointer;
   padding-bottom: 8px;
   display: block;
@@ -700,7 +702,7 @@ const Tab = styled.div`
   }}
 `;
 
-const TabPanel = styled.div`
+const TabPanel = styled.div<{ isActive: boolean; pageType: string }>`
   display: ${({ isActive }) => (isActive ? 'block' : 'none')};
   ${({ pageType }) =>
     pageType === CUSTOM_TYPES.GLOBAL_EXPERIENCE
@@ -727,6 +729,11 @@ const richtextElements = {
   },
 };
 
+const swiperParams: SwiperProps = {
+  slidesPerView: 'auto',
+  spaceBetween: 24,
+};
+
 const HighlightTabs = ({
   tabs,
   hasRegularHighlights = false,
@@ -740,9 +747,14 @@ const HighlightTabs = ({
   const [_currentIndex, updateCurrentIndex] = useState(0);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
+
   const updateIndex = useCallback(() => {
+    if (isMobile) {
+      return;
+    }
+
     updateCurrentIndex(swiper.realIndex);
-  }, [swiper]);
+  }, [swiper, isMobile]);
 
   const updateSliderPosition = useCallback(() => {
     setIsBeginning(swiper?.isBeginning);
@@ -750,22 +762,12 @@ const HighlightTabs = ({
   }, [swiper]);
 
   useEffect(() => {
-    setIsMobile(width <= 768);
-  }, [width, setIsMobile]);
+    swiper && updateSliderPosition();
+  }, [swiper]);
 
   useEffect(() => {
-    if (isMobile) return;
-    if (swiper !== null) {
-      swiper?.on('slideChange', updateIndex);
-      updateSliderPosition();
-    }
-
-    return () => {
-      if (swiper !== null) {
-        swiper?.off('slideChange', updateIndex);
-      }
-    };
-  }, [isMobile, swiper, updateIndex, updateSliderPosition]);
+    setIsMobile(width <= 768);
+  }, [width, setIsMobile]);
 
   const goNext = () => {
     if (swiper !== null) {
@@ -789,17 +791,14 @@ const HighlightTabs = ({
     onTabChange({ tab: tabs[index], index });
   };
 
-  const swiperParams = {
-    slidesPerView: 'auto',
-    spaceBetween: 24,
-    getSwiper: updateSwiper,
-    shouldSwiperUpdate: true,
-  };
-
   return (
     <HighlightTabsWrapper hasRegularHighlights={hasRegularHighlights}>
       <TabsWrapper onClick={(e) => e.stopPropagation()}>
-        <Swiper {...swiperParams}>
+        <Swiper
+          {...swiperParams}
+          onSwiper={updateSwiper}
+          onSlideChange={updateIndex}
+        >
           {tabs.map((tab, index) => (
             <Tab
               isActive={activeTabIndex == index}
@@ -864,7 +863,7 @@ const ModalCardContainer = styled.div`
     }
 
     .card-img {
-      width: calc(100% + 1.5rem);
+      width: calc(100% + 3.5rem);
       margin: -1.5rem -1.5rem -0.5rem;
       max-height: 175px;
     }
@@ -1454,9 +1453,11 @@ const Product = (props) => {
                   ? undefined
                   : PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.height
               }
+              fill={true}
               objectFit="cover"
               autoCrop={false}
               quality={80}
+              alt={cardTitle}
             />
           </div>
         </Conditional>

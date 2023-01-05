@@ -1,11 +1,9 @@
 import ServerCookies from 'cookies';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ErrorPage from 'next/error';
 import dynamic from 'next/dynamic';
 import Cookies from 'js-cookie';
 import { ThemeProvider } from 'styled-components';
-import 'lazysizes';
-import 'lazysizes/plugins/attrchange/ls.attrchange';
 import EnvironmentContext from 'contexts/environmentContext';
 import { MBContextProvider } from 'contexts/MBContext';
 import { getAppTheme } from 'style/theme';
@@ -45,6 +43,9 @@ const getValidUrlParams = (query) =>
     .join('&')
     .trim();
 const Page = (props) => {
+  // Render headout's session-id-setter on mount
+  const [showSessionIdSetter, setShowSessionIdSetter] = useState(false);
+
   useEffect(() => {
     const { query = {}, asPath } = props;
     const { bi } = query;
@@ -54,6 +55,8 @@ const Page = (props) => {
         removePageQuery(query, 'bi', asPath);
       }
     }
+
+    setShowSessionIdSetter(true);
   }, []);
 
   const {
@@ -264,9 +267,7 @@ const Page = (props) => {
             redirectToHeadoutBookingFlow={redirectToHeadoutBookingFlow}
           >
             {Component}
-            {typeof window !== 'undefined' ? (
-              <HeadoutSessionIdSetterComponent />
-            ) : null}
+            {showSessionIdSetter ? <HeadoutSessionIdSetterComponent /> : null}
           </MBContextProvider>
         </ThemeProvider>
       </EnvironmentContext.Provider>

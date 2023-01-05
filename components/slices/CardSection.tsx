@@ -9,8 +9,9 @@ import { SIZES } from 'const/ui-constants';
 import COLORS from 'const/colors';
 import sliceHandler from 'components/Slices';
 import Conditional from 'components/common/Conditional';
+import type { SwiperProps } from 'swiper/react';
 
-const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
+const Swiper = dynamic(() => import('components/Swiper'), { ssr: true });
 
 const CardGrid = styled.div(({ cardsInARow }) => {
   let gridTemplateColumns = `100%`;
@@ -34,13 +35,11 @@ const CardCarousel = styled.div`
 `;
 
 const StyledSwiper = styled.div`
-  overflow: hidden;
-  display: flex;
   position: relative;
   max-width: ${SIZES.MAX_WIDTH};
-  .cards-section-wrapper {
-    display: grid;
-    grid-auto-flow: column;
+
+  .cards-section-wrapper,
+  .swiper-wrapper {
     padding: ${(isGlobalMb) => (isGlobalMb ? '12px 0 24px 0' : '25px 0')};
 
     ${({ hasLessCards }) =>
@@ -228,12 +227,13 @@ const CardSection: React.FC<CardSectionProps> = ({
       }
     };
 
-    const swiperParams = {
+    const swiperParams: SwiperProps = {
       slidesPerView: isMobile ? 1 : cardsInARow,
-      wrapperClass: 'cards-section-wrapper',
+      centeredSlides: false,
+      initialSlide: 0,
       spaceBetween: isGlobalMb ? 24 : 20,
-      shouldSwiperUpdate: true,
-      getSwiper: updateSwiper,
+      onSwiper: updateSwiper,
+      direction: 'horizontal',
     };
 
     return (
@@ -243,11 +243,7 @@ const CardSection: React.FC<CardSectionProps> = ({
           <StyledSwiper hasLessCards={hasLessCards}>
             <Swiper {...swiperParams}>
               {cards.map((card, index) => {
-                return (
-                  <div key={index} className="swiper-slide">
-                    {card}
-                  </div>
-                );
+                return <React.Fragment key={index}>{card}</React.Fragment>;
               })}
             </Swiper>
           </StyledSwiper>

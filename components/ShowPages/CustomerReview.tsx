@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import COLORS from 'const/colors';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import type { SwiperProps } from 'swiper/react';
 
 import { BLUE_QUOTES } from '../../assets/SvgIcons';
 
@@ -18,7 +19,7 @@ const CardCarouselContainer = styled.div`
   }
 
   .swiper-button-next {
-    right: 0px;
+    right: 5px;
     color: black;
     background: #ffffff;
     box-shadow: 0px 0px 1px rgb(0 0 0 / 10%), 0px 2px 8px rgb(0 0 0 / 10%);
@@ -32,7 +33,7 @@ const CardCarouselContainer = styled.div`
   }
 
   .swiper-button-prev {
-    left: 0px;
+    left: 5px;
     color: black;
     background: #ffffff;
     box-shadow: 0px 0px 1px rgb(0 0 0 / 10%), 0px 2px 8px rgb(0 0 0 / 10%);
@@ -50,6 +51,7 @@ const CardCarouselContainer = styled.div`
     .swiper-slide {
       border: 1px solid #e2e2e2;
       border-radius: 8px;
+      margin-bottom: 60px;
 
       img {
         width: 100%;
@@ -115,7 +117,6 @@ const CardCarouselContainer = styled.div`
   .carousel-slider .swiper-pagination.swiper-pagination-bullets {
     width: 100%;
     justify-content: center;
-    bottom: -30px;
   }
   .carousel-slider .swiper-button-next.swiper-button-disabled {
     opacity: 0;
@@ -148,6 +149,8 @@ const CardCarouselContainer = styled.div`
       margin: 24px auto 70px;
 
       .swiper-slide {
+        margin-bottom: 50px;
+
         .content-wrapper-review {
           padding: 16px;
           .quote-wrapper {
@@ -194,60 +197,50 @@ export default class CustomerReview extends Component<CardCarouselProps> {
     isMobile: false,
   };
 
+  onNavigationNextClick = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.CUSTOMER_REVIEWS_SCROLLED,
+      [ANALYTICS_PROPERTIES.DIRECTION]: 'Next',
+    });
+  };
+
+  onNavigationPreviousClick = () => {
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.CUSTOMER_REVIEWS_SCROLLED,
+      [ANALYTICS_PROPERTIES.DIRECTION]: 'Previous',
+    });
+  };
+
   renderCardsSlider = () => {
     const { cards, isMobile } = this.props;
 
     const slidesPerView = isMobile ? 1 : 2;
     const slidesPerGroup = 1;
-    let params = {
+    let params: SwiperProps = {
       direction: 'horizontal',
       speed: 650,
       slidesPerView: slidesPerView,
-      shouldSwiperUpdate: true,
       lazy: true,
       initialSlide: 1,
       spaceBetween: 24,
       slidesPerGroup: slidesPerGroup,
       centeredSlides: isMobile,
-      navigation: isMobile
-        ? false
-        : {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-          },
-      on: {
-        click: (e) => {
-          const buttonClassNameArr = e.target.className.split('-');
-          const isButton = buttonClassNameArr[1];
-
-          let direction;
-
-          if (isButton === 'button') {
-            let isNextButton =
-              buttonClassNameArr[buttonClassNameArr.length - 1];
-            direction = isNextButton === 'next' ? 'Next' : 'Previous';
-          } else {
-            direction = e.target.getAttribute('aria-label');
-          }
-
-          trackEvent({
-            eventName: ANALYTICS_EVENTS.CUSTOMER_REVIEWS_SCROLLED,
-            [ANALYTICS_PROPERTIES.DIRECTION]: direction,
-          });
-        },
-      },
+      navigation: !isMobile,
       pagination: {
-        el: '.swiper-pagination',
         type: 'bullets',
         clickable: true,
       },
     };
 
     return (
-      <Swiper {...params}>
+      <Swiper
+        {...params}
+        onNavigationNext={this.onNavigationNextClick}
+        onNavigationPrev={this.onNavigationPreviousClick}
+      >
         {cards.map((element, index) => {
           return (
-            <div key={index} className="swiper-slide">
+            <div key={index}>
               <div className="content-wrapper-review">
                 <div className="quote-wrapper">{BLUE_QUOTES}</div>
                 <div className="review-content">

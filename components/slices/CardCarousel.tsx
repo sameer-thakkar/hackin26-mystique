@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import dynamic from 'next/dynamic';
 import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
-import { LinkCards } from 'components/slices/MicrobrandCards';
+import { LinkCard } from 'components/slices/MicrobrandCards';
 import COLORS from 'const/colors';
 import { tourListApiParser } from 'utils/dataParsers';
+import type { SwiperProps } from 'swiper/react';
 import { fetchTourListV6 } from 'utils/apiUtils';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
@@ -40,7 +41,7 @@ const CardCarouselContainer = styled.div`
       }
     }
   }
-  .carousel-slider .swiper-container {
+  .carousel-slider .swiper-initialized {
     padding: 10px 6px;
     overflow: hidden;
   }
@@ -56,7 +57,7 @@ const CardCarouselContainer = styled.div`
     background: #000;
     opacity: 0.2;
   }
-  .carousel-slider .swiper-container {
+  .carousel-slider .swiper-initialized {
     margin: 0 35px;
     width: auto;
     position: static;
@@ -77,13 +78,13 @@ const CardCarouselContainer = styled.div`
     .carousel-slider .swiper-pagination.swiper-pagination-bullets {
       top: -15px;
     }
-    .carousel-slider .swiper-container {
+    .carousel-slider .swiper-initialized {
       margin: 0;
     }
     .carousel-slider .swiper-pagination.swiper-pagination-bullets {
       right: 12px;
     }
-    .carousel-slider .swiper-container {
+    .carousel-slider .swiper-initialized {
       padding: 0;
     }
     .card-carousel-heading {
@@ -181,24 +182,17 @@ export default class CardCarousel extends Component<CardCarouselProps> {
     const { isMobile, isFetched, cardPrices, currencySymbol } = this.state;
     const slidesPerView = isMobile ? 1.1 : 4;
     const slidesPerGroup = isMobile ? 1 : 4;
-    let params = {
+    let params: SwiperProps = {
       direction: 'horizontal',
       speed: 650,
       slidesPerView: slidesPerView,
-      shouldSwiperUpdate: true,
       lazy: true,
       initialSlide: 1,
       spaceBetween: 8,
       slidesPerGroup: slidesPerGroup,
       centeredSlides: isMobile,
-      navigation: isMobile
-        ? false
-        : {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-          },
+      navigation: !isMobile,
       pagination: {
-        el: '.swiper-pagination',
         type: 'bullets',
         clickable: true,
       },
@@ -206,15 +200,17 @@ export default class CardCarousel extends Component<CardCarouselProps> {
 
     return (
       <Swiper {...params}>
-        <LinkCards
-          as={React.Fragment}
-          isFetched={isFetched}
-          cards={finalCards}
-          cardPrices={cardPrices}
-          cardClassName={'swiper-slide'}
-          currencySymbol={currencySymbol}
-          gridAutoCol={true}
-        />
+        {finalCards.map((card, index) => (
+          <LinkCard
+            isFetched={isFetched}
+            index={index}
+            key={index}
+            card={card}
+            cardPrices={cardPrices}
+            cardClassName={'swiper-slide'}
+            currencySymbol={currencySymbol}
+          />
+        ))}
       </Swiper>
     );
   };

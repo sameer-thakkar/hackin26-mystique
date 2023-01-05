@@ -11,6 +11,10 @@ const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
 const StyledCarousel = styled.div`
   position: relative;
+
+  .swiper-initialized {
+    width: 100%;
+  }
 `;
 
 const StyledSwiper = styled.div`
@@ -120,7 +124,7 @@ const Carousel: FunctionComponent<CarouselProps> = ({
       spaceBetween: spaceBetween,
       wrapperClass: 'cards-section-wrapper',
       shouldSwiperUpdate: true,
-      getSwiper: updateSwiper,
+      onSwiper: updateSwiper,
     };
 
     return (

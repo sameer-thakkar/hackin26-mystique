@@ -195,12 +195,18 @@ const HeaderLeft = styled.div`
       display: flex;
     }
 
+    span {
+      width: initial !important;
+      height: initial !important;
+    }
+
     img {
-      height: 36px;
+      height: 36px !important;
       margin: 0;
-      max-width: 160px;
-      width: auto;
-      padding-right: 5px;
+      max-width: 160px !important;
+      width: auto !important;
+      padding-right: 5px !important;
+      position: relative !important;
     }
   }
   .poweredBy svg {
@@ -214,9 +220,13 @@ const HeaderLeft = styled.div`
         isGlobalMb || isEntertainmentMb ? '0' : '4px'};
       ${({ isEntertainmentMb }) => isEntertainmentMb && `height: 20px;`}
       img {
-        height: ${({ isGlobalMb, isEntertainmentMb }) =>
-          isGlobalMb ? '36px' : isEntertainmentMb ? '20px' : '24px'};
-        ${({ isEntertainmentMb }) => isEntertainmentMb && `width: 87px;`}
+        position: relative !important;
+        height: ${({ isGlobalMb, isEntertainmentMb }) => {
+          const height = isGlobalMb ? 36 : isEntertainmentMb ? 20 : 24;
+          return `${height}px !important;`;
+        }};
+        ${({ isEntertainmentMb }) =>
+          isEntertainmentMb && `width: 87px !important;`}
       }
     }
     .poweredBy svg {
@@ -421,7 +431,10 @@ const Header: FunctionComponent<HeaderProps> = ({
                 <Image
                   url={logoUrl}
                   alt={logoAltText}
-                  dontLazyLoad={true}
+                  priority
+                  height={isMobileDevice ? '22' : '44'}
+                  width={isMobileDevice ? '87' : '144'}
+                  layout={'fixed'}
                   className="center"
                 />
                 <Conditional if={hasPoweredByHeadoutLogo}>

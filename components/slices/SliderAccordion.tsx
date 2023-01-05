@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import Image from 'UI/Image';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import Accordion, { StyledAccordion } from 'components/slices/Accordion';
+import type { SwiperProps } from 'swiper/react';
 
 const Slider = dynamic(() => import('UI/Slider'));
 
@@ -61,6 +62,9 @@ const AccordionsWrap = styled.div``;
 const SingleImage = styled.div`
   width: auto;
   display: grid;
+  span {
+    min-width: 100%;
+  }
   img {
     width: 100%;
     height: ${({ isGlobalMb }) => (isGlobalMb ? `326px` : 'auto')};
@@ -130,7 +134,7 @@ const SliderAccordion = (props) => {
     (i) => i?.url
   );
 
-  const sliderOptions = {
+  const sliderOptions: SwiperProps = {
     direction: 'horizontal',
     speed: 650,
     pagination: {

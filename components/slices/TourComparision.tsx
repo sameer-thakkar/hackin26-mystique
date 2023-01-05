@@ -6,7 +6,7 @@ import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
 import EnvironmentContext from 'contexts/environmentContext';
 import ProductsContext from 'contexts/Products';
 import { MBContext } from 'contexts/MBContext';
-import Image from 'components/UI/Image';
+import Image from 'UI/Image';
 import Button from 'components/UI/Button';
 import { createBookingURL } from 'utils';
 import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
@@ -563,7 +563,12 @@ const TourComparisonTable = (props) => {
                 return (
                   <div className="column" key={index}>
                     <div className="tour-image">
-                      <Image url={tour.productImage} height={176} width={282} />
+                      <Image
+                        url={tour.productImage}
+                        height={176}
+                        width={282}
+                        alt={tour.title}
+                      />
                     </div>
                   </div>
                 );

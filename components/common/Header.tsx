@@ -96,12 +96,18 @@ const StyledLogo = styled.div(
     display: flex;
   }
 
-  img {
-    height: ${isEntertainmentMB ? `36px` : `44px`};
-    max-width: 100%;
-    width: unset;
-    object-fit: contain;
-    padding-top: ${isEntertainmentMB && `4.5px`};
+  .image-wrap {
+    span {
+      position: relative !important;
+    }
+    img {
+      height: ${isEntertainmentMB ? `36px` : `44px`} !important;
+      position: relative !important;
+      max-width: 100%;
+      width: unset !important;
+      object-fit: contain;
+      padding-top: ${isEntertainmentMB && `4.5px`};
+    }
   }
 
   span {
@@ -120,8 +126,10 @@ const StyledLogo = styled.div(
     grid-auto-flow: column;
     margin-left: 15px;
 
-    img {
-      height: ${isEntertainmentMB ? `20px` : `26px`};
+    .image-wrap {
+      img{
+        height: ${isEntertainmentMB ? `20px` : `26px`} !important;
+      }
     }
 
     span {
@@ -255,12 +263,11 @@ const Header: React.FC<any> = (props) => {
             <Image
               url={logoUrl}
               alt={logoAltText}
-              dontLazyLoad
-              isLogo
+              priority
+              fill
               height="44"
               width="144"
               autoCrop={false}
-              isHeaderLogo
               className="center"
             />
             <Conditional if={hasPoweredByHeadoutLogo}>

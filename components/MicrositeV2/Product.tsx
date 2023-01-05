@@ -540,6 +540,7 @@ const Product = (props) => {
           width={400}
           imageId={tgid}
           height={250}
+          layout={'fill'}
           alt={title}
         />
         {getBooster()}
@@ -661,6 +662,7 @@ const Product = (props) => {
                 width={400}
                 imageId={tgid}
                 height={250}
+                layout={'fill'}
                 alt={title}
               />
               {getBooster()}

@@ -3,7 +3,10 @@ import COLORS from 'const/colors';
 import { expandFontToken } from 'const/typography';
 import { FONTS } from 'const/fonts';
 
-export const StyledMasthead = styled.div`
+export const StyledMasthead = styled.div<{
+  isEntMb: boolean;
+  withoutImage: boolean;
+}>`
   width: 100%;
   display: flex;
   position: relative;
@@ -67,7 +70,10 @@ export const ImageWrapper = styled.div`
   }
 `;
 
-export const TitleWrapper = styled.div`
+export const TitleWrapper = styled.div<{
+  isEntMb: boolean;
+  withoutImage: boolean;
+}>`
   max-width: 38.125rem;
   margin: auto 0 auto 10rem;
 
@@ -78,7 +84,7 @@ export const TitleWrapper = styled.div`
   }
 `;
 
-export const Title = styled.h1`
+export const Title = styled.h1<{ isEntMb: boolean; withoutImage: boolean }>`
   margin: 0;
 
   ${({ isEntMb }) =>

@@ -19,7 +19,7 @@ const StyledSwiper = styled.div`
   position: relative;
   max-width: ${SIZES.MAX_WIDTH};
   width: 100%;
-  .swiper-container {
+  .swiper-initialized {
     width: 100%;
     margin: auto;
     overflow: hidden;
@@ -120,7 +120,7 @@ const Carousel = ({
       slidesPerView: cardsInARow,
       spaceBetween: columnGap,
       shouldSwiperUpdate: true,
-      getSwiper: updateSwiper,
+      onSwiper: updateSwiper,
       slidesPerGroup,
       autoHeight: true,
     };

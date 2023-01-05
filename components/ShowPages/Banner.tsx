@@ -590,14 +590,14 @@ const ShowPageBanner = ({
                   <Image
                     url={productImage?.url}
                     alt={name}
-                    objectFit={'cover'}
+                    fill
                     height={500}
                     width={isShowPoster && !isMobile ? 2000 : 1000}
                     quality={null}
-                    dontLazyLoad={true}
+                    priority
                     fitCrop={!isShowPoster && !isMobile}
                     autoCrop={!isShowPoster && !isMobile} //TODO - revert after showpage revamp
-                    blurFill={isShowPoster && !isMobile} //TODO - revert after showpage revamp
+                    // blurFill={isShowPoster && !isMobile} //TODO - revert after showpage revamp
                   />
                 </BannerImage>
               </Conditional>

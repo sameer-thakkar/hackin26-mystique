@@ -11,6 +11,7 @@ import { shortCodeSerializer } from 'utils/shortCodes';
 import { stringIdfy } from 'utils/helper';
 import { MBContext } from 'contexts/MBContext';
 import { DESIGN } from 'const/index';
+import type { SwiperProps } from 'swiper/react';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -88,6 +89,9 @@ const StyledSlider = styled.div`
     max-width: 1200px;
     margin: auto;
   }
+  .swiper-initialized {
+    width: 100%;
+  }
   .swiper-container {
     padding-top: 10px;
   }
@@ -122,7 +126,7 @@ const StyledSlide = styled.div`
     transform: translate3d(0, -5px, 0);
   }
   img {
-    height: 175px;
+    height: 175px !important;
     width: 280px !important;
     border-radius: 4px;
   }
@@ -143,7 +147,7 @@ const StyledSlide = styled.div`
     margin-right: 0px;
     img {
       width: 104px !important;
-      height: 60px;
+      height: 60px !important;
     }
     div {
       font-size: 14px;
@@ -179,10 +183,10 @@ const Slide = (props) => (
     >
       <Image
         url={props.image.url}
-        alt={props.image.alt}
+        alt={props.image.alt || props.image.title}
         width={280}
         height={250}
-        aspectRatio="1.7"
+        aspectRatio="5:4"
       />
       <div>{props.card_title}</div>
     </a>
@@ -266,18 +270,13 @@ const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
     };
   }, [swiper, updateIndex, isMobile]);
 
-  const swiperParams = {
+  const swiperParams: SwiperProps = {
     slidesPerGroup: 4,
     direction: 'horizontal',
     speed: 650,
     slidesPerView: 4,
     spaceBetween: 24,
-    rebuildOnUpdate: false,
-    shouldSwiperUpdate: true,
-    navigaton: {
-      nextEl: '.swiper-btn.btn-left',
-      prevEl: '.swiper-btn.btn-right',
-    },
+    navigation: true,
   };
 
   return (
@@ -297,7 +296,7 @@ const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
       ) : (
         <StyledSlider>
           <div className="slider-container">
-            <Swiper {...swiperParams} getSwiper={updateSwiper}>
+            <Swiper {...swiperParams} onSwiper={updateSwiper}>
               {cards.map((card, index) => (
                 <Slide
                   className="swiper-slide"

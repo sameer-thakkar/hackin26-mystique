@@ -2,8 +2,7 @@ import React from 'react';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
 import styled from 'styled-components';
-
-import Image from '../UI/Image';
+import Image from 'UI/Image';
 
 const StyledTrustBoosters = styled.div`
   display: grid;
