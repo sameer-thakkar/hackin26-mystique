@@ -14,31 +14,31 @@ export const StyledMasthead = styled.div<{
   ${({ isEntMb, withoutImage }) =>
     isEntMb
       ? `
-  justify-content: center;
-  margin-bottom: 1.25rem;
-  overflow-x: hidden;
-  img {
-    width: 100vw;
-    height: 400px;
-    filter: brightness(0.7);
-    object-fit: cover;
-      }
-        `
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    overflow-x: hidden;
+  
+    .image-wrap > span {
+      min-height: 400px;
+      position: relative !important;
+      filter: brightness(0.7);
+    }
+    `
       : `
-  margin-bottom: 2rem;
-  height: ${withoutImage ? '9.25rem' : '11.75rem'};
-  background: ${COLORS.BRAND.BLACK};
-  img {
-      object-fit: cover;
-      }
-  `}
+    margin-bottom: 2rem;
+    height: ${withoutImage ? '9.25rem' : '11.75rem'};
+    background: ${COLORS.BRAND.BLACK};
+    img {
+        object-fit: cover;
+    }`}
 
   @media (max-width: 768px) {
     ${({ isEntMb, withoutImage }) =>
       isEntMb
         ? `
-        img {
-        height: 300px;
+        .image-wrap > span {
+          min-height: 300px;
+          position: relative !important;
         }
         `
         : `
@@ -50,8 +50,8 @@ export const StyledMasthead = styled.div<{
           margin-bottom: 0;
         `
             : `
-        margin-bottom: 1rem;
-        flex-direction: column-reverse;
+          margin-bottom: 1rem;
+          flex-direction: column-reverse;
         `
         }
      `}

@@ -51,6 +51,7 @@ const Image: React.FC<IImageProps> = ({
   fitCrop = false,
   blurFill = false,
   layout = undefined,
+  objectFit,
 }) => {
   let calculatedWidth = width,
     calculatedHeight = height,
@@ -121,6 +122,7 @@ const Image: React.FC<IImageProps> = ({
         placeholder={!priority ? 'blur' : 'empty'}
         blurDataURL={blurDataUrl}
         priority={priority}
+        objectFit={objectFit}
         unoptimized // We use IMGIX, which does all the optimisation required. Letting Next process images will add to TTFB.
       />
       <Conditional if={!!attribution}>
