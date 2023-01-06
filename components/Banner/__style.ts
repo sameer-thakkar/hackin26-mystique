@@ -43,11 +43,12 @@ export const StyledBanner = styled.div<IStyledBanner>`
     position: relative;
   }
 
-  .mb-slide img {
-    height: 100%;
-    width: 100%;
-    min-width: 75rem;
+  .mb-slide .image-wrap {
     border-radius: 0.75rem;
+  }
+
+  .mb-slide img {
+    min-width: 75rem;
     object-fit: cover;
     object-position: 0% 25%;
   }

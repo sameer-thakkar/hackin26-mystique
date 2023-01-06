@@ -303,13 +303,11 @@ const FullImage = styled.div`
     grid-row: 1;
     grid-column: 1;
     display: flex;
-    picture {
+    height: 600px;
+
+    img {
       width: 100%;
-      img {
-        width: 100%;
-        height: 600px;
-        object-fit: cover;
-      }
+      object-fit: fill;
     }
   }
   &:after {
@@ -492,6 +490,7 @@ const ImageGallery = (props) => {
             aspectRatio={'16:10'}
             imageId={`image-${initialSlide}`}
             height={'400'}
+            layout={'fill'}
             alt={fullImageHeading}
           />
           <Content>
@@ -529,6 +528,7 @@ const ImageGallery = (props) => {
                     width={180}
                     height={112}
                     alt={caption}
+                    layout={'responsive'}
                   />
                   <RichContent render={image.heading} />
                 </StyledImage>

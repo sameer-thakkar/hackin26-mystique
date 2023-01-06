@@ -18,10 +18,13 @@ export const StyledLongForm = styled.div`
     color: ${COLORS.GRAY.G2};
     line-height: 1.2;
   }
+  .slice-block .image-wrap {
+    width: 100%;
+  }
   .slice-block img {
     width: 100%;
   }
-  .slice-block div[class^='CardSection__CardGrid'] img {
+  .slice-block div[class^='CardSection__CardGrid'] .image-wrap {
     min-height: 100%;
   }
   h2 {

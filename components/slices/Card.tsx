@@ -78,15 +78,16 @@ const StyledCard = styled.div((props) => {
     display: flex;
   }
   .image-wrap {
+    height:${isGlobalMb ? cardImgHeight : `${styles.img.height}px`};
+    width: ${isGlobalMb && hasSingleCard ? '528px' : '100%'};
+    ${isGlobalMb && `border-radius: 4px;`}
+
     span {
       min-width: 100%;
     }
   }
   img {
-    height:${isGlobalMb ? cardImgHeight : `${styles.img.height}px`};
-    width: ${isGlobalMb ? (hasSingleCard ? '528px' : '100%') : '100%'};
     object-fit: cover;
-    ${isGlobalMb && `border-radius: 4px;`}
   }
   .card-content-section {
     padding: ${
@@ -122,7 +123,7 @@ const StyledCard = styled.div((props) => {
   }
   @media(max-width: 768px){
     grid-template-columns: auto;
-    img{
+    .image-wrap {
       height: ${isGlobalMb ? (hasSingleCard ? '220px' : '186px') : '223px'};
       width: 100%;
     }
@@ -323,6 +324,8 @@ const Card: React.FC<CardProps> = ({
           height={variantStyles[type].img.height}
           aspectRatio={aspectRatio}
           autoCrop={false}
+          fill
+          objectFit={'cover'}
         />
       );
       break;
