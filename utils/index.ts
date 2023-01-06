@@ -401,3 +401,6 @@ export const getCollectionSection = (
   );
   return section?.tourGroups?.items;
 };
+
+export const checkIfMicrosite = ({ type }: Record<string, any>): boolean =>
+  type === CUSTOM_TYPES.MICROSITE;

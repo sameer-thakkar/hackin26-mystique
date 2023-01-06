@@ -1,21 +1,27 @@
 import Prismic from 'prismic-javascript';
 import {
-  CUSTOM_TYPES,
-  DOC_TYPES,
-  DESIGN,
-  LANGUAGE_PARAMS_REGEX,
-  SLICE_TYPES,
-} from 'const/index';
-import { strings } from 'const/strings';
-import { getSinglePrismicSlice, getHeadoutLanguagecode } from 'utils';
+  getSinglePrismicSlice,
+  getHeadoutLanguagecode,
+  checkIfMicrosite,
+} from 'utils';
 import { groupBy } from 'utils/arrayUtils';
-import { convertUidToUrl } from 'utils/urlUtils';
+import { convertUidToUrl, getShowpageBreadcrumbUid } from 'utils/urlUtils';
 import { fetchAllMatchingDocs } from 'utils/prismicUtils';
 import {
   categoryTourListParserV1,
   getToursGlobalCollection,
 } from 'utils/dataParsers';
 import { getHostName } from 'utils/helper';
+import {
+  CUSTOM_TYPES,
+  DOC_TYPES,
+  DESIGN,
+  LANGUAGE_PARAMS_REGEX,
+  SLICE_TYPES,
+  HEADOUT_CATEGORY_CONTENT_TYPE,
+  DEFAULT_LOOKER_VALUES,
+} from 'const/index';
+import { strings } from 'const/strings';
 
 type PrismicDocumentType = {
   id: string;
@@ -75,6 +81,23 @@ const contentFrameworkSliceCheck = async ({
   return body?.some((slice) => slice?.slice_type === sliceType);
 };
 
+const getContentFrameworkSlice = async ({
+  docId,
+  sliceType,
+  findAll = false,
+}: {
+  docId: string;
+  sliceType: string;
+  findAll?: boolean;
+}): Promise<Record<string, any>> => {
+  const contentFrameworkDoc = await fetchAllMatchingDocs({
+    query: [Prismic.Predicates.at(`document.id`, docId)],
+  });
+  const { body } = contentFrameworkDoc?.[0]?.data || {};
+  if (findAll) return body?.filter((slice) => slice?.slice_type === sliceType);
+  else return body?.find((slice) => slice?.slice_type === sliceType);
+};
+
 export const shoulderPageTicketsCheck = async ({
   type,
   data,
@@ -88,42 +111,6 @@ export const shoulderPageTicketsCheck = async ({
   }
 
   return false;
-};
-
-export const breadcrumbsCheck = async ({
-  type,
-  data,
-}: PrismicDocumentType): Promise<boolean> => {
-  let hasBreadcrumbs = false;
-
-  switch (true) {
-    case type === CUSTOM_TYPES.MICROSITE:
-      hasBreadcrumbs =
-        data?.body2?.some(
-          (slice) => slice?.slice_type === SLICE_TYPES.BREADCRUMBS
-        ) ||
-        (data?.content_framework?.id &&
-          (await contentFrameworkSliceCheck({
-            docId: data.content_framework.id,
-            sliceType: SLICE_TYPES.BREADCRUMBS,
-          })));
-      break;
-    case type === CUSTOM_TYPES.CONTENT_PAGE && data?.content_framework?.id:
-      hasBreadcrumbs = await contentFrameworkSliceCheck({
-        docId: data.content_framework.id,
-        sliceType: SLICE_TYPES.BREADCRUMBS,
-      });
-      break;
-    case type === CUSTOM_TYPES.SHOW_PAGE ||
-      type === CUSTOM_TYPES.GLOBAL_COLLECTION ||
-      type === CUSTOM_TYPES.GLOBAL_EXPERIENCE:
-      hasBreadcrumbs = true;
-      break;
-    default:
-      hasBreadcrumbs = false;
-  }
-
-  return hasBreadcrumbs;
 };
 
 export const getPageUrl = ({
@@ -289,7 +276,13 @@ export const getMetaImageUrl = ({
   }
 };
 
+const getDefaultFooterDisclaimer = (docData: Record<string, any>): string =>
+  docData?.show_disclaimer ? DEFAULT_LOOKER_VALUES.FOOTER_DISCLAIMER : '';
+
 type FooterDetailsType = {
+  hasPrimaryFooter: boolean;
+  hasSecondaryFooter: boolean;
+  attractionName: string;
   footerDisclaimer: string;
   micrositeDocFooterDisclaimer: string;
 };
@@ -298,37 +291,45 @@ export const getFooterDetails = async ({
   type,
   data,
 }: PrismicDocumentType): Promise<FooterDetailsType> => {
-  const footerDocRef = data?.footer_ref || data?.common_footer;
-  if (footerDocRef?.id) {
+  const isMicrosite = checkIfMicrosite({ type });
+  const {
+    footer_ref,
+    common_footer,
+    secondary_footer: secondaryFooterDocRef,
+    attraction,
+    disclaimer,
+  } = data || {};
+  const footerDocRef = footer_ref || common_footer;
+  const hasPrimaryFooter = !!footerDocRef?.id;
+  const hasSecondaryFooter = !!secondaryFooterDocRef?.id;
+
+  if (hasPrimaryFooter) {
     const { id: footerDocId } = footerDocRef || {};
     const footerDocs = await fetchAllMatchingDocs({
       query: [Prismic.Predicates.at(`document.id`, footerDocId)],
     });
     const { data: footerDocData } = footerDocs?.[0] || {};
-    const defaultDisclaimer = strings.FOOTER.DISCLAIMER.replace(
-      '<attraction>',
-      footerDocData?.attraction || 'attraction'
-    );
+    const { footerDocDataAttraction, disclaimer_text } = footerDocData || {};
+
     return {
-      footerDisclaimer: footerDocData?.show_disclaimer
-        ? footerDocData?.disclaimer_text || defaultDisclaimer
-        : '',
+      hasPrimaryFooter,
+      hasSecondaryFooter,
+      attractionName: attraction || footerDocDataAttraction || '',
+      footerDisclaimer:
+        disclaimer_text || getDefaultFooterDisclaimer(footerDocData),
       micrositeDocFooterDisclaimer:
-        type === CUSTOM_TYPES.MICROSITE && data?.show_disclaimer
-          ? data?.disclaimer?.[0]?.text || defaultDisclaimer
-          : '',
+        (isMicrosite && disclaimer?.[0]?.text) ||
+        (isMicrosite && getDefaultFooterDisclaimer(data)),
     };
   }
-  if (type === CUSTOM_TYPES.MICROSITE) {
-    const defaultDisclaimer = strings.FOOTER.DISCLAIMER.replace(
-      '<attraction>',
-      'attraction'
-    );
+  if (isMicrosite) {
     return {
+      hasPrimaryFooter,
+      hasSecondaryFooter,
+      attractionName: attraction || '',
       footerDisclaimer: '',
-      micrositeDocFooterDisclaimer: data?.show_disclaimer
-        ? data?.disclaimer?.[0]?.text || defaultDisclaimer
-        : '',
+      micrositeDocFooterDisclaimer:
+        disclaimer?.[0]?.text || getDefaultFooterDisclaimer(data),
     };
   }
 };
@@ -337,16 +338,226 @@ export const getBannerSubtext = ({
   type,
   data,
 }: PrismicDocumentType): string => {
+  const {
+    banner_subtext,
+    banner_sub_text,
+    show_banner_subtext,
+    is_partnered_poi,
+  } = data || {};
   switch (type) {
     case CUSTOM_TYPES.MICROSITE:
-      if (data?.banner_subtext) return data?.banner_subtext;
-      else if (data?.show_banner_subtext) return 'Default banner subtext';
+      if (banner_subtext) return banner_subtext;
+      else if (show_banner_subtext && is_partnered_poi)
+        return DEFAULT_LOOKER_VALUES.BANNER_SUBTEXT.PARTNERED;
+      else if (show_banner_subtext && !is_partnered_poi)
+        return DEFAULT_LOOKER_VALUES.BANNER_SUBTEXT.NON_PARTNERED;
       else return '';
     case CUSTOM_TYPES.GLOBAL_HOMEPAGE || CUSTOM_TYPES.GLOBAL_EXPERIENCE:
-      return data?.banner_subtext;
+      return banner_subtext;
     case CUSTOM_TYPES.GLOBAL_CITY:
-      return data?.banner_sub_text;
+      return banner_sub_text;
     default:
       return '';
   }
+};
+
+type BreadcrumbsDetailsType = {
+  text: string;
+  url: string;
+};
+
+export const getBreadcrumbs = async (
+  doc: PrismicDocumentType
+): Promise<Record<string, BreadcrumbsDetailsType>> => {
+  const { type, data, lang } = doc;
+  let breadcrumbsDetails = {},
+    counter = 0;
+
+  switch (true) {
+    case type === CUSTOM_TYPES.MICROSITE || type === CUSTOM_TYPES.CONTENT_PAGE:
+      const breadcrumbsSlice =
+        data?.body2?.find(
+          (slice) => slice?.slice_type === SLICE_TYPES.BREADCRUMBS
+        ) ||
+        (data?.content_framework?.id &&
+          (await getContentFrameworkSlice({
+            docId: data.content_framework.id,
+            sliceType: SLICE_TYPES.BREADCRUMBS,
+          })));
+
+      if (breadcrumbsSlice) {
+        breadcrumbsSlice?.items?.forEach((level, index) => {
+          counter++;
+          return (breadcrumbsDetails[`level_${index + 1}`] = {
+            text: level?.title || '',
+            url: level?.url?.url || '',
+          });
+        });
+
+        breadcrumbsDetails[`level_${counter + 1}`] = {
+          text: breadcrumbsSlice?.primary?.current_title || '',
+          url: getPageUrl(doc),
+        };
+      }
+      break;
+
+    case type === CUSTOM_TYPES.SHOW_PAGE:
+      const pageUrl = getPageUrl(doc);
+      const isLTT = pageUrl.includes('www.london-theater-tickets.com');
+
+      breadcrumbsDetails = {
+        level_1: {
+          text: isLTT
+            ? strings.ENTERTAINMENT_MB.LTT.MB_NAME
+            : strings.ENTERTAINMENT_MB.BROADWAY.MB_NAME,
+          url: convertUidToUrl({
+            uid: getShowpageBreadcrumbUid('', isLTT),
+            lang: getHeadoutLanguagecode(lang),
+          }),
+        },
+        level_2: {
+          text: data?.tagged_sub_category || '',
+          url: convertUidToUrl({
+            uid: getShowpageBreadcrumbUid(data?.tagged_sub_category, isLTT),
+            lang: getHeadoutLanguagecode(lang),
+          }),
+        },
+        level_3: { text: DEFAULT_LOOKER_VALUES.SHOWPAGE_TITLE, url: pageUrl },
+      };
+      break;
+
+    case type === CUSTOM_TYPES.GLOBAL_COLLECTION:
+      breadcrumbsDetails = {
+        level_1: {
+          text: data?.country_name || '',
+          url: convertUidToUrl({ uid: data?.country?.uid, lang }) || '',
+        },
+        level_2: {
+          text: data?.city_name || '',
+          url: convertUidToUrl({ uid: data?.city?.uid, lang }) || '',
+        },
+      };
+      break;
+
+    case type === CUSTOM_TYPES.GLOBAL_EXPERIENCE:
+      const { collection, country, city } = data || {};
+      const globalCollectionDoc = await fetchAllMatchingDocs({
+        query: [Prismic.Predicates.at(`document.id`, collection?.id)],
+      });
+      const { country_name, city_name } = globalCollectionDoc?.[0]?.data || {};
+
+      breadcrumbsDetails = {
+        level_1: {
+          text: country_name || '',
+          url: convertUidToUrl({ uid: country?.uid }) || '',
+        },
+        level_2: {
+          text: city_name || '',
+          url: convertUidToUrl({ uid: city?.uid }) || '',
+        },
+      };
+      break;
+
+    default:
+      breadcrumbsDetails = {};
+  }
+
+  return breadcrumbsDetails;
+};
+
+export const getHeadoutPageDetails = (uid: string): Record<string, string> => {
+  const [type, id] = uid.split('-') || [];
+
+  return {
+    pageType: HEADOUT_CATEGORY_CONTENT_TYPE[type] || '',
+    pageId: (type === 'city' ? id.toUpperCase() : id) || '',
+  };
+};
+
+export const getHeadings = async ({
+  type,
+  data,
+}: PrismicDocumentType): Promise<Record<string, string[]>> => {
+  let mainHeadings = [],
+    lfcHeadings = [];
+
+  switch (type) {
+    case CUSTOM_TYPES.MICROSITE:
+      const { design, is_entertainment_mb, heading, images, body } = data || {};
+      switch (true) {
+        case design === DESIGN.V1:
+          heading && mainHeadings.push(heading);
+          break;
+        case design === DESIGN.V2:
+          const isEntertainmentMB = is_entertainment_mb;
+          const isListicle = body?.[0]?.primary?.islisticle;
+          if (isEntertainmentMB && isListicle) {
+            heading && mainHeadings.push(heading);
+          } else if (isEntertainmentMB) {
+            images?.forEach((image) => {
+              image?.main_heading && mainHeadings.push(image?.main_heading);
+            });
+          }
+      }
+      break;
+    case CUSTOM_TYPES.CONTENT_PAGE:
+      const { featured_title } = data || {};
+      featured_title && mainHeadings.push(featured_title);
+      break;
+    case CUSTOM_TYPES.SHOW_PAGE:
+      mainHeadings.push(DEFAULT_LOOKER_VALUES.SHOWPAGE_TITLE);
+      break;
+    case CUSTOM_TYPES.GLOBAL_HOMEPAGE:
+      const { banner_title } = data || {};
+      banner_title && mainHeadings.push(banner_title || '');
+      break;
+    case CUSTOM_TYPES.GLOBAL_CITY:
+      const bannerSlice = getSinglePrismicSlice({
+        sliceName: SLICE_TYPES.BANNER,
+        slices: data?.body,
+      });
+      bannerSlice?.primary?.banner_title &&
+        mainHeadings.push(bannerSlice?.primary?.banner_title);
+      break;
+    case CUSTOM_TYPES.GLOBAL_COUNTRY:
+      const { country_name } = data || {};
+      country_name && mainHeadings.push(`${country_name} Theme Parks`);
+      break;
+    case CUSTOM_TYPES.GLOBAL_COLLECTION:
+      const { collection_name } = data || {};
+      collection_name && mainHeadings.push(collection_name);
+      break;
+    case CUSTOM_TYPES.GLOBAL_EXPERIENCE:
+      const globalCollectionDoc = await fetchAllMatchingDocs({
+        query: [Prismic.Predicates.at(`document.id`, data?.collection?.id)],
+      });
+      const { collection_name: globalCollectionName } =
+        globalCollectionDoc?.[0]?.data || {};
+      globalCollectionName &&
+        mainHeadings.push(`${globalCollectionName} ${strings.TICKETS}`);
+      break;
+  }
+
+  //get h1 from linked content framework doc
+  const contentFrameworkId = data?.content_framework?.id;
+  if (contentFrameworkId) {
+    const richTextSlices = await getContentFrameworkSlice({
+      docId: contentFrameworkId,
+      sliceType: SLICE_TYPES.RICH_TEXT,
+      findAll: true,
+    });
+    richTextSlices?.forEach((slice) => {
+      slice?.items?.forEach((item) => {
+        item?.text?.forEach((textItem) => {
+          const { type, text } = textItem || {};
+          return type === 'heading1' && text && lfcHeadings.push(text);
+        });
+      });
+    });
+  }
+
+  return {
+    mainHeadings,
+    lfcHeadings,
+  };
 };

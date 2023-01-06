@@ -53,7 +53,7 @@ import {
 
 export const fetchAllMatchingDocs = async ({
   query,
-  params = { pageSize: 100, page: 1 },
+  params = { pageSize: 100, page: 1, lang: '*' },
   documents = [],
 }: {
   query: string | string[];

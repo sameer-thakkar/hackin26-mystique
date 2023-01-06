@@ -99,7 +99,7 @@ const MonthTabs = (props: MonthTabsProps) => {
   return (
     <Tabs>
       <div className="tabs">
-        {tabs.map((tab, index) => (
+        {tabs?.map((tab, index) => (
           <LinkResolver key={index} url={tab.tab_link.url} className="tab-link">
             <div
               className={classNames('navigation-tab', {

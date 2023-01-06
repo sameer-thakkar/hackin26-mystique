@@ -597,7 +597,7 @@ const ShowPageBanner = ({
                     priority
                     fitCrop={!isShowPoster && !isMobile}
                     autoCrop={!isShowPoster && !isMobile} //TODO - revert after showpage revamp
-                    // blurFill={isShowPoster && !isMobile} //TODO - revert after showpage revamp
+                    blurFill={isShowPoster && !isMobile} //TODO - revert after showpage revamp
                   />
                 </BannerImage>
               </Conditional>

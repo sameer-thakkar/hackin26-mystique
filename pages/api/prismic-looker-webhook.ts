@@ -4,7 +4,6 @@ import { legacyBooleanCheck } from 'utils';
 import {
   filterByDocType,
   shoulderPageTicketsCheck,
-  breadcrumbsCheck,
   getDocType,
   getTgids,
   getStructure,
@@ -16,9 +15,17 @@ import {
   getMetaImageUrl,
   getFooterDetails,
   getBannerSubtext,
+  getBreadcrumbs,
+  getHeadoutPageDetails,
+  getHeadings,
 } from 'utils/lookerUtils';
 import { fetchDomainConfig } from 'utils/apiUtils';
-import { CUSTOM_TYPES, SLICE_TYPES } from 'const/index';
+import {
+  CUSTOM_TYPES,
+  SLICE_TYPES,
+  PAGE_URL_STRUCTURE,
+  SEO_SUBDOMAINS,
+} from 'const/index';
 
 const getUpdatedDocuments = async ({ documentIds, masterRef, req }) => {
   const linkedRefsPromise = Client(req, { ref: masterRef }).getByIDs(
@@ -47,6 +54,7 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }) => {
     [CUSTOM_TYPES.GLOBAL_COLLECTION]: globalCollection = [],
     [CUSTOM_TYPES.GLOBAL_EXPERIENCE]: globalExperience = [],
     [CUSTOM_TYPES.PRODUCT_CARDS]: productCardDocsList = [],
+    [CUSTOM_TYPES.HEADOUT_CATEGORY_CONTENT]: headoutContentDocsList = [],
   } = filterByDocType(documents);
 
   const pageDocsList = [
@@ -70,6 +78,7 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }) => {
       first_publication_date,
       last_publication_date,
       alternate_languages,
+      tags,
       data: {
         design,
         redirect_type,
@@ -97,6 +106,8 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }) => {
 
     const pageUrl = getPageUrl(doc);
     const language = lang?.split('-')[0].toUpperCase();
+    const isSubdomain =
+      getStructure(new URL(pageUrl)) === PAGE_URL_STRUCTURE.SUBDOMAIN;
 
     if (language !== 'EN') {
       baseLangDoc = alternate_languages?.filter(
@@ -106,6 +117,7 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }) => {
 
     const { logo, faviconUrl } = await fetchDomainConfig(uid);
     const pageDocFooterDetails = await getFooterDetails(doc);
+    const headingsDetails = await getHeadings(doc);
 
     const metaData = {
       uid,
@@ -113,7 +125,7 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }) => {
       first_publication_date,
       last_publication_date,
       has_shoulder_page_tickets: await shoulderPageTicketsCheck(doc),
-      has_breadcrumbs: await breadcrumbsCheck(doc),
+      breadcrumbs: await getBreadcrumbs(doc),
       redirect_type,
       redirect_url: redirect_url?.url,
       collection_id: tagged_collection,
@@ -141,11 +153,22 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }) => {
       meta_image_url: getMetaImageUrl(doc),
       header_logo_url: logo?.logoUrl,
       footer_logo_url: logo?.logoUrl,
+      has_primary_footer: pageDocFooterDetails?.hasPrimaryFooter,
+      has_secondary_footer: pageDocFooterDetails?.hasSecondaryFooter,
+      attraction_name: pageDocFooterDetails?.attractionName,
       footer_disclaimer: pageDocFooterDetails?.footerDisclaimer,
       microsite_doc_footer_disclaimer:
         pageDocFooterDetails?.micrositeDocFooterDisclaimer,
-      has_noindex: !!legacyBooleanCheck(noindex),
-      has_nofollow: !!legacyBooleanCheck(noindex),
+      has_noindex:
+        isSubdomain && !SEO_SUBDOMAINS.includes(pageUrl)
+          ? true
+          : !!legacyBooleanCheck(noindex),
+      has_nofollow:
+        isSubdomain && !SEO_SUBDOMAINS.includes(pageUrl)
+          ? true
+          : !!legacyBooleanCheck(noindex),
+      main_h1_headings: headingsDetails.mainHeadings,
+      content_framework_h1_headings: headingsDetails.lfcHeadings,
       title,
       description,
       url: pageUrl,
@@ -156,6 +179,7 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }) => {
       parent_domain: pageUrl ? getParentDomain(new URL(pageUrl)) : null,
       language,
       product_cards_id: getProductCardsId(doc),
+      tags,
     };
 
     return Object.entries(metaData).reduce(
@@ -167,6 +191,7 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }) => {
   const productCardDocs = productCardDocsList?.map((doc) => {
     const {
       id,
+      tags,
       data: {
         city,
         collection,
@@ -187,14 +212,46 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }) => {
       commonExclusions: exclusions,
       experienceLimit: limit,
       id,
+      tags,
     };
   });
 
+  const headoutContentDocs = headoutContentDocsList?.map((doc) => {
+    const {
+      uid,
+      type,
+      lang,
+      tags,
+      data: { use_accordion_as_faq_schema, content_framework },
+    } = doc;
+
+    const headoutPageDetails = getHeadoutPageDetails(uid);
+
+    const metadata = {
+      uid,
+      tags,
+      document_type: getDocType(type),
+      language: lang?.split('-')[0].toUpperCase(),
+      headout_page_type: headoutPageDetails?.pageType,
+      headout_page_id: headoutPageDetails?.pageId,
+      accordions_as_faq_and_schema: !!use_accordion_as_faq_schema,
+      has_lfc: !!content_framework?.id,
+    };
+
+    return Object.entries(metadata).reduce(
+      (acc, [key, val]) => ({ ...acc, [key]: val ?? '' }), // set empty string if no value.
+      {}
+    );
+  });
+
   const pageDocs = await Promise.all(pageDocsPromises);
-  const hasDataToPush = [...pageDocs, ...productCardDocs].length > 0;
+  const hasDataToPush =
+    [...pageDocs, ...productCardDocs, ...headoutContentDocs].length > 0;
+
   return {
     pageDocs,
     productCardDocs,
+    headoutContentDocs,
     baseLangDocId: baseLangDoc?.id,
     baseLangDocUid: baseLangDoc?.uid,
     hasDataToPush,
@@ -241,6 +298,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const {
     pageDocs,
     productCardDocs,
+    headoutContentDocs,
     baseLangDocId,
     baseLangDocUid,
     hasDataToPush,
@@ -318,6 +376,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     );
   }
 
+  if (headoutContentDocs.length) {
+    requests.push(
+      createStitchPostRequest({
+        stitchEndpointToken:
+          'b74d3528aa553a34e84a67d4215b606d3d6ab7a6ce963001431704ab23cc7522',
+        jsonBody: headoutContentDocs,
+      })
+    );
+  }
+
   if (requests?.length) {
     response['stitch'] = await Promise.all(requests);
   }
@@ -326,8 +394,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     pageDocs: baseLangPageDocs?.length
       ? [...pageDocs, ...baseLangPageDocs]
       : pageDocs,
-    documents,
     productCardDocs,
+    headoutContentDocs,
+    documents,
   };
 
   res.status(200).json({ response });

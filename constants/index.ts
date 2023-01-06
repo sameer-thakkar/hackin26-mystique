@@ -198,6 +198,7 @@ export const CUSTOM_TYPES = {
   PRODUCT_CARDS: 'product_cards',
   SAFETY_BANNER: 'safety_banner',
   PROMO_CODES: 'promo_codes',
+  HEADOUT_CATEGORY_CONTENT: 'ho_category_content',
 };
 
 export const DOC_TYPES = {
@@ -210,6 +211,14 @@ export const DOC_TYPES = {
   global_collection: 'Global Collection',
   global_experience: 'Global Experience',
   product_cards: 'Product Cards',
+  ho_category_content: 'Headout Content',
+};
+
+export const HEADOUT_CATEGORY_CONTENT_TYPE = {
+  c: 'Collection',
+  ca: 'Category',
+  sc: 'Sub-category',
+  city: 'City',
 };
 
 export const CONTENT_PAGE_TYPES = [CUSTOM_TYPES.CONTENT_PAGE];
@@ -836,6 +845,8 @@ export const SLICE_TYPES = {
   TOUR_LIST_CATEGORY_V1: 'tour_list_category_v1',
   TOUR_LIST_CATEGORY: 'tour_list_category',
   CONTENT_TYPE_TAG: 'content_type_tag',
+  BANNER: 'banner',
+  RICH_TEXT: 'rich_text',
 };
 
 export const CASHBACK_TYPES = {
@@ -925,4 +936,13 @@ export const HOLIDAY_ASSETS = {
     'https://cdn-imgix-open.headout.com/logo/lottie/mb_holiday_logo_v2.json',
   LOADING_SPINNER:
     'https://cdn-imgix-open.headout.com/loader/mb_holiday_loader.gif',
+};
+
+export const DEFAULT_LOOKER_VALUES = {
+  FOOTER_DISCLAIMER: 'Default footer disclaimer',
+  BANNER_SUBTEXT: {
+    PARTNERED: 'Default partnered banner subtext',
+    NON_PARTNERED: 'Default non-partnered banner subtext',
+  },
+  SHOWPAGE_TITLE: 'Showname - Tickets',
 };
