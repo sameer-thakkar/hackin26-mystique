@@ -59,6 +59,7 @@ const StyledBanner = styled.div<IStyledBanner>`
 
   .single-slide {
     margin: auto;
+    width: 100%;
     position: relative;
     aspect-ratio: 3;
     max-height: 400px;
@@ -165,7 +166,6 @@ const StyledBanner = styled.div<IStyledBanner>`
     .single-slide,
     .mb-slide {
       aspect-ratio: 16 / 10;
-      width: auto;
       height: auto;
       max-height: 57vw; /** maintaining aspect ratio */
     }
