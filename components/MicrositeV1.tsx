@@ -3,10 +3,11 @@ import { RichText } from 'prismic-reactjs';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { scroller } from 'react-scroll';
+import { useWindowWidth } from '@react-hook/window-size';
 import { useRecoilValue } from 'recoil';
 import { currencyAtom } from 'store/atoms/currency';
 import { gtmAtom } from 'store/atoms/gtm';
-import { useWindowWidth } from '@react-hook/window-size';
+import { mediaUpgradeExperimentAtom } from 'store/atoms/mediaupgrade';
 import { InteractionContextProvider } from 'contexts/Interaction';
 import { ProductsContextProvider } from 'contexts/Products';
 import Footer from 'components/common/Footer';
@@ -16,7 +17,6 @@ import PopulateMeta from 'components/common/NextSeoMeta';
 import PopulateProducts from 'components/PopulateProducts';
 import TextBanner from 'components/TextBanner';
 import Conditional from 'components/common/Conditional';
-import Banner from 'components/Banner';
 import {
   getAlternateLanguages,
   getHeadoutLanguagecode,
@@ -32,6 +32,7 @@ import {
   THEMES,
   PAGE_TYPES,
   ANALYTICS_PROPERTIES,
+  MEDIAUPGRADE_EXPERIMENT_PROPERTIES,
 } from 'const/index';
 import { strings } from 'const/strings';
 import renderShortCodes from 'utils/shortCodes';
@@ -49,6 +50,8 @@ const ResponsiveSelector: ComponentType<any> = dynamic(
     ),
   { ssr: false }
 );
+const Banner = dynamic(() => import('components/Banner'));
+const StaticBanner = dynamic(() => import('components/StaticBanner/index'));
 
 const CoverSlicesWrapper = styled.div`
   margin-bottom: 32px;
@@ -67,17 +70,22 @@ const MicrositeV1 = (props) => {
     serverRequestStartTimestamp,
     categoryTourListData,
     domainConfig,
+    aggregatedRatingDetails,
   } = props;
 
   const [isMobile, setIsMobile] = useState(props?.isMobile);
   const windowWidth = useWindowWidth();
 
   const currency = useRecoilValue(currencyAtom);
-
+  const mediaUpgradeExperiment = useRecoilValue(mediaUpgradeExperimentAtom);
   const { eventsReady } = useRecoilValue(gtmAtom);
   const [freeTourPopupOpen, toggleFreeTourPopup] = useState(false);
   const [covidAlertActive, toggleCovidAlert] = useState(false);
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
+  const [
+    isExperimentViewedTriggered,
+    setIsExperimentViewedTriggered,
+  ] = useState(false);
 
   const {
     refs,
@@ -150,6 +158,7 @@ const MicrositeV1 = (props) => {
   const {
     scorpioData: scorpioDataCategorised,
     orderedTours: categorizedToursList,
+    collectionVideo,
   } = categoryTourListData || {};
   const tourRanking = uncategorizedTours[0]?.primary?.ranking;
   const hasTours = isCategorisedTours
@@ -363,6 +372,31 @@ const MicrositeV1 = (props) => {
 
   useEffect(() => {
     if (!eventsReady) return;
+
+    const { isNewMediaSite, isOldMediaSite } = mediaUpgradeExperiment;
+    if (isNewMediaSite) {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
+        [ANALYTICS_PROPERTIES.EXPERIMENT_NAME]:
+          MEDIAUPGRADE_EXPERIMENT_PROPERTIES.NAME,
+        [ANALYTICS_PROPERTIES.EXPERIMENT_VARIANT]:
+          MEDIAUPGRADE_EXPERIMENT_PROPERTIES.TREATMENT,
+      });
+      setIsExperimentViewedTriggered(true);
+    } else if (isOldMediaSite) {
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
+        [ANALYTICS_PROPERTIES.EXPERIMENT_NAME]:
+          MEDIAUPGRADE_EXPERIMENT_PROPERTIES.NAME,
+        [ANALYTICS_PROPERTIES.EXPERIMENT_VARIANT]:
+          MEDIAUPGRADE_EXPERIMENT_PROPERTIES.CONTROL,
+      });
+      setIsExperimentViewedTriggered(true);
+    }
+  }, [eventsReady]);
+
+  useEffect(() => {
+    if (!eventsReady) return;
     const renderedBaseLangPageTitle = renderShortCodes(
       baseLangPageTitle
     )?.join?.('');
@@ -397,6 +431,7 @@ const MicrositeV1 = (props) => {
   );
 
   const isToursAvailable = availableTours?.length > 0;
+  const { isNewMediaSite } = mediaUpgradeExperiment;
   const closeGroupBookingModal = () => toggleGroupBookingModal(false);
   const tourListSection = (
     <PopulateProducts
@@ -418,6 +453,8 @@ const MicrositeV1 = (props) => {
       mbTheme={mbTheme}
       instantCheckout={instantCheckout}
       enableEarliestAvailability={enableEarliestAvailability}
+      mediaUpgradeExperiment={mediaUpgradeExperiment}
+      bannerVideo={collectionVideo}
     />
   );
   return (
@@ -449,6 +486,9 @@ const MicrositeV1 = (props) => {
             bannerImages: finalBannerImages,
             faviconUrl,
             logoUrl: logoUrl,
+            ...(isNewMediaSite && {
+              aggregatedRatingDetails,
+            }),
           }}
         />
         <Header
@@ -495,7 +535,7 @@ const MicrositeV1 = (props) => {
             />
           </div>
         </Conditional>
-        <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
+        <Conditional if={mbTheme !== THEMES.MIN_BLUE && !isNewMediaSite}>
           <Banner
             bannerImages={finalBannerImages ? finalBannerImages : null}
             bannerHeading={bannerHeading ? bannerHeading : null}
@@ -508,6 +548,18 @@ const MicrositeV1 = (props) => {
             boxed={true}
             hideCTA={isToursAvailable ? hideBannerCTA : true}
             orderedTgids={orderedTgids}
+          />
+        </Conditional>
+        <Conditional if={isNewMediaSite}>
+          <StaticBanner
+            bannerVideo={collectionVideo}
+            bannerImages={finalBannerImages ? finalBannerImages : null}
+            bannerHeading={bannerHeading ? bannerHeading : null}
+            showBannerSubtext={baseLangShowBannerSubtext}
+            isMobile={isMobile}
+            aggregatedRatingDetails={aggregatedRatingDetails}
+            isExperimentViewedTriggered={isExperimentViewedTriggered}
+            isPartnered={baseLangisPartnered}
           />
         </Conditional>
         <Conditional if={mbTheme === THEMES.MIN_BLUE}>

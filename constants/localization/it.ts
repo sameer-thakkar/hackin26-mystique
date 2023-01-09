@@ -308,6 +308,7 @@ const it = {
   },
   SAVE_PERCENT: 'Risparmia il {0}%',
   SAVE_UPTO_PERCENT: 'Risparmia fino al {0}%',
+  RATINGS: 'Giudizi',
 };
 
 export default it;

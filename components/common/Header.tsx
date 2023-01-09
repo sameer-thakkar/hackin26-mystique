@@ -26,29 +26,40 @@ const ResponsiveSelector: ComponentType<any> = dynamic(
   { ssr: false }
 );
 
-const StyledHeader = styled.header`
+const StyledHeader = styled.header<{ $isSticky: boolean }>`
   height: 80px;
-  position: sticky;
-  top: 0;
   width: 100%;
   background-color: ${({ theme: { primaryBackground } }) =>
     primaryBackground ? primaryBackground : '#fff'};
   display: flex;
-  left: 0;
-  right: 0;
   z-index: 4;
-  ${({ hasShadow }) =>
-    hasShadow
-      ? `
-    box-shadow: 0 1px 1em 0 rgba(0,0,0,.1);
-  `
-      : ''};
+  transition: all 0.2s ease-in;
+  position: sticky;
+  top: 0;
+  box-shadow: ${({ $isTop }) =>
+    !$isTop &&
+    '0px -1px 2px rgba(0, 0, 0, 0.08), 0px 4px 8px rgba(0, 0, 0, 0.12)'};
 
   :hover {
     z-index: 99;
   }
+
+  ${({ $isSticky }) =>
+    !$isSticky &&
+    `
+    top: -5rem;
+    left: 0;
+    right: 0;
+`}
+
   @media (max-width: 768px) {
     height: 56px;
+
+    ${({ $isSticky }) =>
+      !$isSticky &&
+      `
+      top: -3.5rem;
+    `}
   }
 `;
 
@@ -124,7 +135,7 @@ const StyledLogo = styled.div(
   @media (max-width: 768px) {
     display: grid;
     grid-auto-flow: column;
-    margin-left: 15px;
+    margin-left: 1.5rem;
 
     .image-wrap {
       img{
@@ -209,6 +220,7 @@ const Header: React.FC<any> = (props) => {
   const hamburgerRef = useRef(null);
   const multiNavRef = useRef(null);
   const [scrollPos, setScrollPos] = useState(0);
+  const [isHeaderSticky, setIsHeaderSticky] = useState(false);
 
   useCaptureClickOutside(
     hamburgerRef,
@@ -244,19 +256,22 @@ const Header: React.FC<any> = (props) => {
   useEffect(() => {
     if (!window) return;
     const scrollHandler = () => {
+      const isUpScroll = scrollPos > window.pageYOffset;
+      setIsHeaderSticky(isUpScroll);
       setScrollPos(window.pageYOffset);
     };
     const throttledScrollHandler = throttle(scrollHandler, 500);
+
     window.addEventListener('scroll', throttledScrollHandler, {
       passive: true,
     });
     return () => {
       window.removeEventListener('scroll', throttledScrollHandler);
     };
-  }, []);
+  }, [scrollPos]);
 
   return (
-    <StyledHeader hasShadow={scrollPos > 60}>
+    <StyledHeader $isSticky={isHeaderSticky} $isTop={scrollPos <= 80}>
       <StyledHeaderContainer hasDropdownLinks={!isMobile && hasDropdownLinks}>
         <a href={logoRedirectionURL || '/'}>
           <StyledLogo isEntertainmentMB={isEntertainmentMB}>

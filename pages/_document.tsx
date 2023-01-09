@@ -5,6 +5,7 @@ import { getLangUID } from 'utils/urlUtils';
 import { RTL_LANGUAGE_CODES } from 'const/index';
 import { getLangObject } from 'utils/helper';
 import Conditional from 'components/common/Conditional';
+import { InlineFontFace, PreloadFontLinks } from 'components/common/Font';
 
 class MystiqueDocument extends Document {
   static async getInitialProps(ctx) {
@@ -48,14 +49,10 @@ class MystiqueDocument extends Document {
     return (
       <Html dir={textDirection}>
         <Head>
-          <link
-            rel="preload"
-            href="https://use.typekit.net/rql1une.css"
-            as="style"
-          />
           <link rel="preconnect" href="https://images.prismic.io" />
           <link rel="preconnect" href="https://cdn-imgix.headout.com" />
-          <link rel="stylesheet" href="https://use.typekit.net/rql1une.css" />
+          <PreloadFontLinks />
+          <InlineFontFace />
           <Conditional if={lang === 'ar'}>
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" />

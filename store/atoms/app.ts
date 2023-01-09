@@ -8,5 +8,6 @@ export const appAtom = atom({
     isDev: false,
     isStage: false,
     initialCurrency: '',
+    isPageLoaded: false,
   },
 });

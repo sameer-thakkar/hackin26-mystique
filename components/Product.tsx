@@ -40,6 +40,7 @@ import {
   ANALYTICS_PROPERTIES,
   CUSTOM_TYPES,
   DESCRIPTORS,
+  MEDIA_CAROUSEL_IMAGE_LIMIT,
 } from 'const/index';
 import { createBookingURL } from 'utils';
 import {
@@ -48,7 +49,7 @@ import {
   trackEvent,
 } from 'utils/analytics';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
-import { getHostName, truncate, wordCount } from 'utils/helper';
+import { getHostName } from 'utils/helper';
 import {
   extractTabsFromHighlights,
   getProductCardLayout,
@@ -57,8 +58,10 @@ import { shortCodeSerializer } from 'utils/shortCodes';
 import { getDuration } from 'utils/timeUtils';
 import { addQueryParams } from 'utils/urlUtils';
 import type { SwiperProps } from 'swiper/react';
+import { FONTS } from 'const/fonts';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
+const MediaCarousel = dynamic(() => import('UI/MediaCarousel'));
 
 dayjs.extend(advancedFormat);
 
@@ -73,6 +76,7 @@ const Container = styled.div`
 const PRODUCT_CARD_IMAGE_DIMENSIONS = {
   MOBILE: {
     width: 320,
+    firstProductWidth: 520,
   },
   DESKTOP: {
     height: 320,
@@ -96,9 +100,9 @@ const cardImageStyles = css`
       grid-column: span 2;
       aspect-ratio: 21/9;
       width: calc(100% + 2rem);
-      max-height: 158px;
+      height: 11.25rem;
+      max-height: 11.25rem;
       margin: -22px -16px -0.5rem;
-
       border-radius: 0.5rem 0.5rem 0 0;
 
       img {
@@ -149,7 +153,7 @@ const StyledProductCard = styled.div`
 
   .more-details {
     ${expandFontToken('Button/Medium')}
-    color: ${COLORS.BRAND.CANDY};
+    color: ${COLORS.TEXT.CANDY_1};
     margin-left: 1em;
     margin-top: 16px;
     cursor: pointer;
@@ -177,12 +181,20 @@ const StyledProductCard = styled.div`
   grid-auto-rows: min-content;
   column-gap: 1.5rem;
 
+  ${({ isNewMediaSite }) =>
+    isNewMediaSite &&
+    `
+    .card-img {
+      border-radius: 0;
+    }
+  `}
+
   @media (max-width: 768px) {
     padding: ${({ theme }) => theme.productCards.padding.mobile};
     margin: 0
       ${({ theme: { theme }, isTicketCard }) =>
         theme !== THEMES.MIN_BLUE && !isTicketCard
-          ? '16px'
+          ? '1.5rem'
           : isTicketCard
           ? '0'
           : '24px'};
@@ -217,14 +229,45 @@ const StyledProductCard = styled.div`
         }
       `}
     }
+
+    ${({ isNewMediaSite }) =>
+      isNewMediaSite &&
+      `
+        .card-img {
+          width: calc(100% + 2rem);
+
+          img {
+            border-radius: 0;
+          }
+        }
+
+        .card-img img {
+          width: 100%;
+        }
+      `}
+
+    
+    ${({ isNewMediaSite, isFirstProduct }) =>
+      isNewMediaSite &&
+      isFirstProduct &&
+      `
+        .card-img {
+          height: 22.5rem;
+          max-height: 22.5rem;
+        
+          .video-container, img {
+            height: 22.5rem;
+            width: 100%;
+          }
+        }
+      `}
   }
 `;
+
 const ProductHeader = styled.div`
   display: grid;
   grid-gap: 16px;
   display: contents;
-  @media (max-width: 768px) {
-  }
 `;
 
 const TourTitle = styled.h2`
@@ -232,7 +275,7 @@ const TourTitle = styled.h2`
   margin: 0;
   max-width: 768px;
   @media (max-width: 768px) {
-    ${expandFontToken('Heading/Small')};
+    ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)};
   }
 `;
 
@@ -242,13 +285,20 @@ const TitleWrapper = styled.div`
     hasBorderedTitle
       ? `
             border-bottom: 1px solid ${COLORS.GRAY.G6};
-            padding-bottom: 16px;
-            margin-bottom: -8px;
             @media(max-width: 768px) {
               border: none;
             }
           `
       : ''}
+
+  ${({ $isTicketCard }) =>
+    !$isTicketCard &&
+    `
+    @media(max-width: 768px) {
+      margin-top: -0.5rem;
+      margin-bottom: -1rem;
+    }
+  `}
 `;
 
 const BoosterTag = styled.div`
@@ -269,20 +319,6 @@ const BoosterTag = styled.div`
     margin-top: -2.125rem;
     padding: 5px;
     border-radius: 4px;
-  }
-`;
-
-const ShortSummary = styled.div`
-  margin-top: -8px;
-  grid-area: summary;
-  p {
-    color: ${COLORS.GRAY.G2};
-    ${expandFontToken('Paragraph/Regular')}
-    margin: 0;
-  }
-  @media (max-width: 768px) {
-    margin-top: 0;
-    ${expandFontToken('Paragraph/Regular')}
   }
 `;
 
@@ -331,10 +367,11 @@ const TourTags = styled.div`
     align-items: start;
     display: grid;
     grid-template-columns: auto auto;
-    ${expandFontToken('UI/Label Regular')}
+    ${expandFontToken(FONTS.UI_LABEL_SMALL)}
     margin-top: -8px;
-    grid-column-gap: 8px;
-    grid-row-gap: 16px;
+    margin-bottom: -0.5rem;
+    grid-column-gap: 0.5rem;
+    grid-row-gap: 0.5rem;
     .tour-tag {
       margin: 0;
     }
@@ -346,14 +383,15 @@ export const CTAContainer = styled.div`
   display: grid;
   grid-gap: 16px;
   align-content: start;
+
   ${({ theme }) =>
-    theme.theme === THEMES.MIN_BLUE
-      ? `
+    theme.theme === THEMES.MIN_BLUE &&
+    `
     button.tour-book-now-cta {
       width: 100%;
     }
-  `
-      : ``}
+  `}
+
   button.tour-book-now-cta {
     ${expandFontToken('Button/Medium')}
   }
@@ -370,6 +408,8 @@ const PriceContainer = styled.div`
   grid-column-gap: 8px;
   justify-items: left;
   grid-row-gap: 4px;
+  justify-self: left;
+
   .tour-scratch-price {
     display: grid;
     grid-template-columns: auto auto;
@@ -377,24 +417,44 @@ const PriceContainer = styled.div`
     grid-column-gap: 4px;
     ${expandFontToken('UI/Label Small')}
   }
-  justify-self: left;
+
   .tour-price {
     display: flex;
     flex-direction: column;
+    ${expandFontToken('Heading/Large')}
+
     .prefix {
-      color: ${COLORS.GRAY.G4};
+      color: ${COLORS.GRAY.G3};
       ${expandFontToken('UI/Label Small')}
     }
-    ${expandFontToken('Heading/Large')}
   }
+
   @media (max-width: 768px) {
     grid-area: price-block;
+    margin-top: ${({ $hasScratchPrice }) =>
+      $hasScratchPrice ? '0' : '-0.25rem'};
+    margin-bottom: 0.25rem;
     ${({ theme }) => theme.productCards.priceFontSettings.mobile}
-    .tour-price {
-      ${expandFontToken('Heading/Large')}
+
+    .styled-price-block {
+      grid-column-gap: 0.25rem;
+    }
+
+    .tour-price-container .tour-price {
+      margin-right: 0;
+      ${expandFontToken(FONTS.HEADING_PRODUCT_CARD)};
+    }
+
+    .tour-scratch-price {
+      ${expandFontToken(FONTS.SUBHEADING_SMALL)};
+    }
+
+    .savedtag-block {
+      ${expandFontToken(FONTS.MISC_TAG_REGULAR)};
     }
   }
 `;
+
 const CTABlock = styled.div`
   a {
     text-decoration: none;
@@ -535,20 +595,24 @@ const ProductBody = styled.div`
 
 const NextAvailableBlock = styled.div`
   ${expandFontToken('Misc/Overline Large')}
-  color: ${COLORS.GRAY.G2};
+  color: ${COLORS.GRAY.G3};
   display: grid;
   grid-column-gap: 8px;
   grid-template-columns: auto auto;
   align-items: center;
   justify-content: center;
+  
   .icon {
     display: flex;
   }
+  
   ${({ theme }) => theme.productCards?.nextAvailable?.desktop}
+  
   @media (max-width: 768px) {
     grid-area: next-available;
-    margin-top: -8px;
-    ${({ theme }) => theme.productCards?.nextAvailable?.mobile}
+    margin-top: -1rem;
+    color: ${COLORS.GRAY.G3};
+    ${expandFontToken(FONTS.UI_LABEL_SMALL_HEAVY)};
   }
 `;
 const ProductOfferBlock = styled.div`
@@ -627,11 +691,11 @@ const HighlightTabsWrapper = styled.div<{ hasRegularHighlights: boolean }>`
 const TabsWrapper = styled.div`
   display: block;
   ${expandFontToken('Paragraph/Large')}
-  border-bottom: 1px solid #ebebeb;
+  border-bottom: 1px solid ${COLORS.GRAY.G6};
   justify-content: left;
   position: relative;
-  padding-top: 13px;
   overflow: hidden;
+
   .swiper-slide {
     width: auto;
   }
@@ -667,15 +731,15 @@ const SwiperControls = styled.div`
     }
   }
   .prev-slide {
-    left: 0px;
-    top: 0px;
+    left: 0;
+    top: -0.5rem;
     svg {
       transform: scaleX(-1);
     }
   }
   .next-slide {
-    right: 0px;
-    top: 0px;
+    right: 0;
+    top: -0.5rem;
   }
 `;
 
@@ -690,12 +754,13 @@ const Tab = styled.div<{ isActive: boolean }>`
   transform: translateY(1px);
   ${expandFontToken('UI/Label Medium')}
   margin-right: 2px;
+
   ${({ isActive }) => {
     return (
       isActive &&
       `
-      color: ${COLORS.TEXT.PURPS_3};
-      border-color: ${COLORS.TEXT.PURPS_3};
+      color: ${COLORS.TEXT.CANDY_1};
+      border-color: ${COLORS.TEXT.CANDY_1};
       padding-bottom: 7.25px;`
     );
   }}
@@ -850,10 +915,11 @@ const HighlightTabs = ({
   );
 };
 
-const ModalCardContainer = styled.div`
+const ModalCardContainer = styled.div<{ $isNewMediaSite: boolean }>`
   @media (max-width: 768px) {
     background: #fff;
-    border-radius: 10px 10px 0 0;
+    border-radius: 0.75rem 0.75rem 0 0;
+
     ${StyledProductCard} {
       margin: 0;
       border: none;
@@ -866,6 +932,22 @@ const ModalCardContainer = styled.div`
       margin: -1.5rem -1.5rem -0.5rem;
       max-height: 175px;
     }
+
+    ${({ $isNewMediaSite }) =>
+      $isNewMediaSite &&
+      `
+          .card-img {
+            width: calc(100% + 3rem); 
+          
+            .video-container {
+              height: 11.25rem;
+
+              video {
+                height: 11.25rem;
+              }
+            }
+          }
+      `}
 
     ${TitleWrapper} {
       max-width: calc(100% - 24px);
@@ -954,7 +1036,6 @@ const Product = (props) => {
     ctaUrlSuffix,
     isScratchPriceEnabled,
     booster,
-    shortSummary,
     boosterTag,
     isMobile,
     instantCheckout,
@@ -967,6 +1048,8 @@ const Product = (props) => {
     primaryCategory,
     primaryCollection,
     primarySubCategory,
+    mediaUpgradeExperiment,
+    bannerVideo,
   } = props;
 
   const {
@@ -1029,7 +1112,7 @@ const Product = (props) => {
         width: '100vw',
         children: (
           <ModalCardContainer>
-            {getProductCardElements(true, isFallbackSummary)}
+            {getProductCardElements(true)}
           </ModalCardContainer>
         ),
         type: SIDEBAR_TYPES.PRODUCT_CARD,
@@ -1052,6 +1135,7 @@ const Product = (props) => {
     minDuration,
     maxDuration,
     imageUrl: productImage,
+    images,
   } = scorpioData || {};
 
   const isComboWithSingleVariant = isCombo && !isMultiVariant;
@@ -1059,8 +1143,9 @@ const Product = (props) => {
 
   const descriptorsList = descriptors || scorpioData.descriptors;
   const cardTitle = title || scorpioData.title;
-
   const { promo_code } = finalPromoCode || {};
+  const { isNewMediaSite } = mediaUpgradeExperiment;
+  const isFirstProduct = indexPosition === 0;
 
   const params = {
     ...(lang && {
@@ -1222,23 +1307,6 @@ const Product = (props) => {
   const finalHighlights = RichText.asText(tempHighlights)?.trim()?.length
     ? tempHighlights
     : scorpioData.highlights;
-  let mobileFallbackShortSummary =
-    finalHighlights?.filter((line) => wordCount(line?.text) > 5)?.slice(0, 1) ??
-    '';
-  mobileFallbackShortSummary = mobileFallbackShortSummary.map((content) => ({
-    spans: [],
-    text: truncate(content.text, 80),
-    type: 'paragraph',
-  }));
-  let hasShortSummary = shortSummary?.length > 0;
-  hasShortSummary =
-    !hasShortSummary && isMobile
-      ? mobileFallbackShortSummary.length > 0
-      : hasShortSummary;
-  const isFallbackSummary = isMobile && shortSummary?.length <= 0;
-  const finalShortSummary = isFallbackSummary
-    ? mobileFallbackShortSummary
-    : shortSummary;
 
   const { highlights, tabs } = isMobile
     ? { highlights: finalHighlights, tabs: [] }
@@ -1292,8 +1360,8 @@ const Product = (props) => {
   const { listingPrice } = tourPrices[tgid];
 
   if (!listingPrice) return null;
-  const finalPrice = listingPrice;
-  const { tourId } = finalPrice || {};
+  const finalListingPrice = listingPrice;
+  const { tourId } = finalListingPrice || {};
   const hasV1Booster = booster && RichText.asText(booster).trim().length > 0;
   const hasOffer = isOfferEnabled && offerId;
   const hasBorderedTitle = !hasOffer && !hasV1Booster;
@@ -1305,8 +1373,8 @@ const Product = (props) => {
       addToAside({
         width: '100vw',
         children: (
-          <ModalCardContainer>
-            {getProductCardElements(true, isFallbackSummary)}
+          <ModalCardContainer $isNewMediaSite={isNewMediaSite}>
+            {getProductCardElements(true)}
           </ModalCardContainer>
         ),
         type: SIDEBAR_TYPES.PRODUCT_CARD,
@@ -1329,7 +1397,6 @@ const Product = (props) => {
     hasOffer,
     hasV1Booster,
     mbTheme,
-    hasShortSummary: hasShortSummary,
     hasNextAvailable: earliestAvailability?.startDate,
     isTicketCard: isTicketCard,
     hasPromoCode: promo_code,
@@ -1430,14 +1497,16 @@ const Product = (props) => {
     </Button>
   );
 
-  const getProductCardElements = (expandContent, isFallbackSummary = false) => (
+  const getProductCardElements = (expandContent) => (
     <>
       <StyledProductCard
         layout={layout}
         isTicketCard={isTicketCard}
         isMobile={isMobile}
+        isNewMediaSite={isNewMediaSite}
+        isFirstProduct={isFirstProduct}
       >
-        <Conditional if={!isTicketCard && productImage}>
+        <Conditional if={!isTicketCard && productImage && !isNewMediaSite}>
           <div className="card-img">
             <Image
               url={productImage}
@@ -1461,9 +1530,37 @@ const Product = (props) => {
             />
           </div>
         </Conditional>
+        <Conditional if={!isTicketCard && images?.length && isNewMediaSite}>
+          <div className="card-img">
+            <MediaCarousel
+              imageList={images.slice(0, MEDIA_CAROUSEL_IMAGE_LIMIT)}
+              videoUrl={isMobile && isFirstProduct ? bannerVideo : null}
+              imageId="card-img"
+              imageAspectRatio={isMobile ? '21:9' : '3:4'}
+              imageWidth={
+                isMobile
+                  ? isFirstProduct
+                    ? PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.firstProductWidth
+                    : PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.width
+                  : undefined
+              }
+              imageHeight={
+                isMobile && !isFirstProduct
+                  ? undefined
+                  : PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.height
+              }
+              isFirstProduct={isFirstProduct}
+              tgid={tgid}
+              isMobile={isMobile}
+            />
+          </div>
+        </Conditional>
 
         <ProductHeader>
-          <TitleWrapper hasBorderedTitle={hasBorderedTitle && !tabs.length}>
+          <TitleWrapper
+            $isTicketCard={isTicketCard}
+            hasBorderedTitle={hasBorderedTitle && !tabs.length}
+          >
             <Conditional if={boosterTag && mbTheme !== THEMES.MIN_BLUE}>
               <BoosterTag>{boosterTag}</BoosterTag>
             </Conditional>
@@ -1471,19 +1568,6 @@ const Product = (props) => {
               {cardTitle}
             </TourTitle>
           </TitleWrapper>
-          <Conditional
-            if={
-              mbTheme !== THEMES.MIN_BLUE &&
-              !isFallbackSummary &&
-              hasShortSummary
-            }
-          >
-            <Conditional if={!isTicketCard}>
-              <ShortSummary>
-                <RichText render={finalShortSummary} />
-              </ShortSummary>
-            </Conditional>
-          </Conditional>
           <Conditional if={mbTheme === THEMES.MIN_BLUE}>
             <Descriptors
               descriptorArray={descriptorsList}
@@ -1518,10 +1602,16 @@ const Product = (props) => {
               }
             })}
           <CTAContainer pageType={pageType}>
-            <PriceContainer pageType={pageType}>
+            <PriceContainer
+              $hasScratchPrice={
+                showScratchPrice &&
+                finalListingPrice.originalPrice > finalListingPrice.finalPrice
+              }
+              pageType={pageType}
+            >
               <PriceBlock
                 showScratchPrice={showScratchPrice}
-                listingPrice={finalPrice}
+                listingPrice={finalListingPrice}
                 lang={currentLanguage}
                 showSavings
                 prefix
@@ -1646,7 +1736,7 @@ const Product = (props) => {
     </>
   );
 
-  return <Container>{getProductCardElements(isContentOpen, false)}</Container>;
+  return <Container>{getProductCardElements(isContentOpen)}</Container>;
 };
 
 export default Product;

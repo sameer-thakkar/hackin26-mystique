@@ -7,10 +7,21 @@ import {
   CUSTOM_TYPES,
   HEADOUT_NAKED_DOMAIN,
   NON_SUPPORTED_LANGUAGES,
+  UNIT_ABBREVIATIONS,
 } from 'const/index';
 import { getLangObject, withoutTrailingSlash } from 'utils/helper';
 import { fetchCollection, fetchTourGroupsByCategory } from 'utils/apiUtils';
 import { convertUidToUrl, getDomainFromUid } from 'utils/urlUtils';
+import type { AggregatedRatingDetails } from 'components/StaticBanner/index';
+
+export const shouldDisplayCollectionRatings = (
+  aggregatedRatingDetails: AggregatedRatingDetails
+): boolean => {
+  const { averageRating, ratingsCount } = aggregatedRatingDetails ?? {};
+
+  if (!averageRating || !ratingsCount) return false;
+  return averageRating >= 4 && ratingsCount >= 100;
+};
 
 export const getLanguageFromPathname = ({
   pathname,
@@ -400,6 +411,26 @@ export const getCollectionSection = (
     (section) => section.type === sectionType
   );
   return section?.tourGroups?.items;
+};
+
+export const truncateNumber = (num = 0, truncateAfter = 3) => {
+  if (num < 10 ** (truncateAfter - 1)) return num.toString();
+  let truncatedNumber = num;
+  for (let i = UNIT_ABBREVIATIONS.length - 1; i >= 0; i--) {
+    const truncationSize = 10 ** ((i + 1) * 3);
+    if (num >= truncationSize) {
+      truncatedNumber = (Number(
+        toFixedWithPrecision(num / truncationSize, 1)
+      ).toLocaleString() + UNIT_ABBREVIATIONS[i]) as any;
+      break;
+    }
+  }
+  return truncatedNumber.toString();
+};
+
+const toFixedWithPrecision = (num, precision) => {
+  const precisionExp = 10 ** precision;
+  return Math.trunc(Math.round(num * precisionExp)) / precisionExp;
 };
 
 export const checkIfMicrosite = ({ type }: Record<string, any>): boolean =>

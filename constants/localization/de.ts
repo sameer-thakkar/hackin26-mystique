@@ -298,6 +298,7 @@ const de = {
   },
   SAVE_PERCENT: '{0} % Rabatt',
   SAVE_UPTO_PERCENT: 'Bis zu {0} % Rabatt',
+  RATINGS: 'Bewertungen',
 };
 
 export default de;

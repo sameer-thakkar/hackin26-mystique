@@ -1,9 +1,14 @@
 /* eslint-disable no-console */
+import * as Sentry from '@sentry/nextjs';
 import {
   getObject,
   parseShowPageData,
 } from 'components/ShowPages/parseShowPage';
-import { generatePromiseForCategoryTours, getHeadoutLanguagecode } from 'utils';
+import type { AggregatedRatingDetails } from 'components/StaticBanner/index';
+import {
+  generatePromiseForCategoryTours,
+  getHeadoutLanguagecode,
+} from 'utils/index';
 import {
   fetchCollection,
   fetchTourGroupsByCategory,
@@ -17,7 +22,6 @@ import {
   standardizeCancellationPolicy,
 } from 'utils/productUtils';
 import { CURRENCY_SYMBOL_MAP } from 'const/index';
-import * as Sentry from '@sentry/nextjs';
 
 export const uncategorizedToursListParser = (
   uncategorizedToursList,
@@ -86,6 +90,8 @@ export const categoryTourListParserV1 = async ({
 
   const language = getHeadoutLanguagecode(lang);
   let primaryCity;
+  let collectionVideo: string;
+  let aggregatedRatingDetails: AggregatedRatingDetails;
 
   if (collection) {
     try {
@@ -96,7 +102,30 @@ export const categoryTourListParserV1 = async ({
         limit: finalLimit,
         cookies,
       });
+
+      const {
+        id,
+        displayName,
+        metaDescription,
+        ratingsInfo,
+        heroImageUrl,
+        cardImageUrl,
+        startingPrice,
+      } = collectionData?.collection ?? {};
+      aggregatedRatingDetails = {
+        id,
+        displayName,
+        metaDescription,
+        ratingsCount: ratingsInfo.ratingsCount,
+        averageRating: ratingsInfo.averageRating,
+        heroImageUrl,
+        cardImageUrl,
+        listingPrice: startingPrice.listingPrice,
+        currency: startingPrice.currency,
+      };
+
       primaryCity = collectionData?.city;
+      collectionVideo = collectionData?.collection?.collectionVideo;
       currency = collectionData?.city?.country?.currency;
       const getCollectionSection = (collectionData, sectionType: string) => {
         return collectionData?.sections
@@ -345,6 +374,8 @@ export const categoryTourListParserV1 = async ({
       primaryCity,
       orderedTours: repeatableObj,
       activeCurrency: currency,
+      aggregatedRatingDetails,
+      collectionVideo,
     };
   } else {
     return {

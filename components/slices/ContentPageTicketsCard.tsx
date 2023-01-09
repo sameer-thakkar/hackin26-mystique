@@ -729,7 +729,6 @@ const TicketCard = (props) => {
     hasOffer,
     hasV1Booster,
     mbTheme,
-    hasShortSummary: hasShortSummary,
     hasNextAvailable: earliestAvailability?.startDate,
     isTicketCard,
     hasPromoCode: promo_code,

@@ -165,6 +165,7 @@ const ko = {
   },
   SAVE_PERCENT: '{0}% 절약',
   SAVE_UPTO_PERCENT: '최대{0}% 절약',
+  RATINGS: '평가',
 };
 
 export default ko;

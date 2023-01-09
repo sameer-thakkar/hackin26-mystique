@@ -299,6 +299,7 @@ const pt = {
   },
   SAVE_PERCENT: 'Economize {0}%',
   SAVE_UPTO_PERCENT: 'Economize até {0}%',
+  RATINGS: 'Avaliações',
 };
 
 export default pt;

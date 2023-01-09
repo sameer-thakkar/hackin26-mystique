@@ -15,6 +15,7 @@ import {
   ANALYTICS_PLATFORM,
   THEMES,
   COOKIE,
+  DOCUMENT_READY_STATES,
 } from 'const/index';
 import { redirectTo, reflect, isNakedDomain } from 'utils';
 import { getPageData } from 'utils/prismicUtils';
@@ -22,6 +23,7 @@ import { sendVariableToDataLayer } from 'utils/analytics';
 import { removePageQuery } from 'utils/urlUtils';
 import { traceError } from 'utils/logutils';
 import { useRecoilState, useSetRecoilState } from 'recoil';
+import { appAtom } from 'store/atoms/app';
 import { gtmAtom } from 'store/atoms/gtm';
 import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
 import { withShortcodes } from 'utils/helper';
@@ -85,10 +87,12 @@ const Page = (props) => {
     isStage,
     primaryCountry,
     primaryCity,
+    aggregatedRatingDetails,
     domainConfig,
   } = props;
   const [{ eventsReady }, setEventsReady] = useRecoilState(gtmAtom);
   const hsid = useRecoilState(hsidAtom);
+  const [appState, setAppState] = useRecoilState(appAtom);
 
   useEffect(() => {
     // GTM Universal Properties
@@ -114,6 +118,24 @@ const Page = (props) => {
 
     setEventsReady({ eventsReady: true });
   }, [hsid]);
+
+  useEffect(() => {
+    const setPageLoaded = () => {
+      setAppState({ ...appState, isPageLoaded: true });
+    };
+
+    /* fix for safari: page getting loaded even before listener was attached */
+    if (
+      document.readyState === DOCUMENT_READY_STATES.INTERACTIVE ||
+      document.readyState === DOCUMENT_READY_STATES.COMPLETE
+    ) {
+      setPageLoaded();
+    } else {
+      window.addEventListener('DOMContentLoaded', setPageLoaded);
+      return () =>
+        window.removeEventListener('DOMContentLoaded', setPageLoaded);
+    }
+  }, []);
 
   const { noTrack, tgidToScroll, bookSubdomain } = queryParams;
 
@@ -161,6 +183,7 @@ const Page = (props) => {
             offerData={CMSContent.offerData}
             host={host}
             toursList={toursList}
+            aggregatedRatingDetails={aggregatedRatingDetails}
             pathname={pathname}
             isDev={isDev}
             isStage={isStage}

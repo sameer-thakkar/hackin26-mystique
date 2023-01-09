@@ -1,4 +1,5 @@
 const COLORS = {
+  BLACK: '#000000',
   BRAND: {
     WHITE: '#ffffff',
     BLACK: '#111111',

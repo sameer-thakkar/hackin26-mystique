@@ -136,13 +136,14 @@ const themes = {
         desktop: `
           grid-column-gap: 60px;
           align-items: start;
-          border-radius: 8px;
+          border-radius: 1rem;
           ${CTAContainer} {
             margin-right: 40px;
           }
         `,
         mobile: `
         grid-column-gap: unset;
+        border-radius: 0.75rem;
         .more-details {
           margin: -10px 0;
           padding: 10px 0;
@@ -151,11 +152,10 @@ const themes = {
       },
       nextAvailable: {
         desktop: `
-          text-transform: uppercase;
           font-weight: 500;
           font-size: 12px;
           margin-top: 0;
-          line-height: 10px;
+          line-height: 16px;
           letter-spacing: 0.6px;
           justify-content: left;
           .available-text {
@@ -217,11 +217,11 @@ const themes = {
       `,
       padding: {
         desktop: '24px',
-        mobile: ' 22px 16px',
+        mobile: ' 1.375rem 1rem 1rem',
       },
       border: `1px solid ${COLORS.GRAY.G6}`,
       gap: {
-        desktop: '54px',
+        desktop: '2rem',
         mobile: '24px',
       },
       titleFontSettings: {

@@ -299,6 +299,7 @@ const nl = {
   },
   SAVE_PERCENT: 'Bespaar {0}%',
   SAVE_UPTO_PERCENT: 'Bespaar tot {0}%',
+  RATINGS: 'Waarderingen',
 };
 
 export default nl;

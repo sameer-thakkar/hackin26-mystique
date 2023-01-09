@@ -172,7 +172,10 @@ const PriceBlock = ({
   }
 
   return (
-    <StyledPriceBlock showScratchPrice={showScratchPrice}>
+    <StyledPriceBlock
+      className={'styled-price-block'}
+      showScratchPrice={showScratchPrice}
+    >
       <span className="tour-scratch-price">
         {showPrefix ? strings.FROM.toLowerCase() + ' ' : ''}
         <Conditional if={showScratchPrice}>
@@ -195,7 +198,7 @@ const PriceBlock = ({
           precision={precision}
         />
         <Conditional if={isLTT && showSavings && save > 0}>
-          <SavedTag>
+          <SavedTag className={'savedtag-block'}>
             {strings.formatString(
               isShowPage ? strings.SAVE_PERCENT : strings.SAVE_UPTO_PERCENT,
               `${save}`
@@ -203,15 +206,17 @@ const PriceBlock = ({
           </SavedTag>
         </Conditional>
         <Conditional if={showcashbackElm}>
-          <SavedTag>
-            {strings.formatString(strings.CASHBACK, `${cashbackValue}%`)}
+          <SavedTag className={'savedtag-block'}>
+            + {strings.formatString(strings.CASHBACK, `${cashbackValue}%`)}
           </SavedTag>
         </Conditional>
       </div>
       <Conditional
         if={showSavings && showScratchPrice && !!savingsElementsArray.length}
       >
-        <SavedTag>{savingsElementsArray.join(' + ')}</SavedTag>
+        <SavedTag className={'savedtag-block'}>
+          {savingsElementsArray.join(' + ')}
+        </SavedTag>
       </Conditional>
     </StyledPriceBlock>
   );

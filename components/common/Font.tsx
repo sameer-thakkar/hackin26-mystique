@@ -1,0 +1,119 @@
+import React from 'react';
+
+const fontFaceList = `
+    @font-face {
+		font-family: halyard-display;
+		src: url("https://use.typekit.net/af/165087/00000000000000007735adc0/30/l?primer=f592e0a4b9356877842506ce344308576437e4f677d7c9b78ca2162e6cad991a&fvd=n5&v=3")
+		format("woff2"),
+		url("https://use.typekit.net/af/165087/00000000000000007735adc0/30/d?primer=f592e0a4b9356877842506ce344308576437e4f677d7c9b78ca2162e6cad991a&fvd=n5&v=3")
+		format("woff"),
+		url("https://use.typekit.net/af/165087/00000000000000007735adc0/30/a?primer=f592e0a4b9356877842506ce344308576437e4f677d7c9b78ca2162e6cad991a&fvd=n5&v=3")
+		format("opentype");
+		font-display: swap;
+		font-style: normal;
+		font-weight: 500;
+		font-stretch: normal;
+	}
+		@font-face {
+		font-family: halyard-text;
+		src: url("https://use.typekit.net/af/e40556/00000000000000007735adbc/30/l?primer=f592e0a4b9356877842506ce344308576437e4f677d7c9b78ca2162e6cad991a&fvd=n3&v=3")
+		format("woff2"),
+		url("https://use.typekit.net/af/e40556/00000000000000007735adbc/30/d?primer=f592e0a4b9356877842506ce344308576437e4f677d7c9b78ca2162e6cad991a&fvd=n3&v=3")
+		format("woff"),
+		url("https://use.typekit.net/af/e40556/00000000000000007735adbc/30/a?primer=f592e0a4b9356877842506ce344308576437e4f677d7c9b78ca2162e6cad991a&fvd=n3&v=3")
+		format("opentype");
+		font-display: swap;
+		font-style: normal;
+		font-weight: 300;
+		font-stretch: normal;
+	}
+		@font-face {
+		font-family: halyard-text;
+		src: url("https://use.typekit.net/af/06aac1/00000000000000007735adbe/30/l?primer=f592e0a4b9356877842506ce344308576437e4f677d7c9b78ca2162e6cad991a&fvd=i3&v=3")
+		format("woff2"),
+		url("https://use.typekit.net/af/06aac1/00000000000000007735adbe/30/d?primer=f592e0a4b9356877842506ce344308576437e4f677d7c9b78ca2162e6cad991a&fvd=i3&v=3")
+		format("woff"),
+		url("https://use.typekit.net/af/06aac1/00000000000000007735adbe/30/a?primer=f592e0a4b9356877842506ce344308576437e4f677d7c9b78ca2162e6cad991a&fvd=i3&v=3")
+		format("opentype");
+		font-display: swap;
+		font-style: italic;
+		font-weight: 300;
+		font-stretch: normal;
+	}
+		@font-face {
+		font-family: halyard-text;
+		src: url("https://use.typekit.net/af/a7393c/00000000000000007735adc2/30/l?primer=f592e0a4b9356877842506ce344308576437e4f677d7c9b78ca2162e6cad991a&fvd=n4&v=3")
+		format("woff2"),
+		url("https://use.typekit.net/af/a7393c/00000000000000007735adc2/30/d?primer=f592e0a4b9356877842506ce344308576437e4f677d7c9b78ca2162e6cad991a&fvd=n4&v=3")
+		format("woff"),
+		url("https://use.typekit.net/af/a7393c/00000000000000007735adc2/30/a?primer=f592e0a4b9356877842506ce344308576437e4f677d7c9b78ca2162e6cad991a&fvd=n4&v=3")
+		format("opentype");
+		font-display: swap;
+		font-style: normal;
+		font-weight: 400;
+		font-stretch: normal;
+	}
+		@font-face {
+		font-family: halyard-text;
+		src: url("https://use.typekit.net/af/7c9acc/00000000000000007735adc8/30/l?primer=f592e0a4b9356877842506ce344308576437e4f677d7c9b78ca2162e6cad991a&fvd=n5&v=3")
+		format("woff2"),
+		url("https://use.typekit.net/af/7c9acc/00000000000000007735adc8/30/d?primer=f592e0a4b9356877842506ce344308576437e4f677d7c9b78ca2162e6cad991a&fvd=n5&v=3")
+		format("woff"),
+		url("https://use.typekit.net/af/7c9acc/00000000000000007735adc8/30/a?primer=f592e0a4b9356877842506ce344308576437e4f677d7c9b78ca2162e6cad991a&fvd=n5&v=3")
+		format("opentype");
+		font-display: swap;
+		font-style: normal;
+		font-weight: 500;
+		font-stretch: normal;
+	}
+`;
+
+export const InlineFontFace: React.FC<Record<string, undefined>> = () => {
+  return <style dangerouslySetInnerHTML={{ __html: fontFaceList }} />;
+};
+
+export const PreloadFontLinks: React.FC<Record<string, undefined>> = () => {
+  return (
+    <React.Fragment>
+      {/* Preconnect to host */}
+      <link rel="preconnect" href="https://use.typekit.net" />
+      {/* halyard-display */}
+      <link
+        rel="preload"
+        type="font/woff2"
+        crossOrigin="anonymous"
+        as="font"
+        href="https://use.typekit.net/af/165087/00000000000000007735adc0/30/l?primer=f592e0a4b9356877842506ce344308576437e4f677d7c9b78ca2162e6cad991a&fvd=n5&v=3"
+      />
+      {/* halyard-text variants below */}
+      <link
+        rel="preload"
+        type="font/woff2"
+        crossOrigin="anonymous"
+        as="font"
+        href="https://use.typekit.net/af/e40556/00000000000000007735adbc/30/l?primer=f592e0a4b9356877842506ce344308576437e4f677d7c9b78ca2162e6cad991a&fvd=n3&v=3"
+      />
+      <link
+        rel="preload"
+        type="font/woff2"
+        crossOrigin="anonymous"
+        as="font"
+        href="https://use.typekit.net/af/06aac1/00000000000000007735adbe/30/l?primer=f592e0a4b9356877842506ce344308576437e4f677d7c9b78ca2162e6cad991a&fvd=i3&v=3"
+      />
+      <link
+        rel="preload"
+        type="font/woff2"
+        crossOrigin="anonymous"
+        as="font"
+        href="https://use.typekit.net/af/a7393c/00000000000000007735adc2/30/l?primer=f592e0a4b9356877842506ce344308576437e4f677d7c9b78ca2162e6cad991a&fvd=n4&v=3"
+      />
+      <link
+        rel="preload"
+        type="font/woff2"
+        crossOrigin="anonymous"
+        as="font"
+        href="https://use.typekit.net/af/7c9acc/00000000000000007735adc8/30/l?primer=f592e0a4b9356877842506ce344308576437e4f677d7c9b78ca2162e6cad991a&fvd=n5&v=3"
+      />
+    </React.Fragment>
+  );
+};

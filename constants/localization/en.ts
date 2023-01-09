@@ -384,6 +384,7 @@ const en = {
   },
   SAVE_PERCENT: 'Save {0}%',
   SAVE_UPTO_PERCENT: 'Save upto {0}%',
+  RATINGS: 'Ratings',
 };
 
 export default en;

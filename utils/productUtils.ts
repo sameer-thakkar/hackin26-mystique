@@ -41,7 +41,6 @@ export const getProductCardLayout = ({
   mbTheme,
   hasOffer,
   hasV1Booster,
-  hasShortSummary,
   hasNextAvailable,
   isTicketCard = false,
   hasPromoCode = false,
@@ -79,10 +78,6 @@ export const getProductCardLayout = ({
           `${
             isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
           }title line cta-combo`,
-          hasShortSummary &&
-            `${
-              isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
-            } summary line cta-combo`,
           hasOffer &&
             `${
               isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
@@ -94,7 +89,8 @@ export const getProductCardLayout = ({
           `${
             isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
           } body line cta-combo`,
-          ((!hasV1Booster && !hasOffer) || !hasShortSummary) &&
+          !hasV1Booster &&
+            !hasOffer &&
             !isTicketCard &&
             'card-img . line cta-combo',
           hasPromoCode && `${!isTicketCard ? '' : '. line cta-combo'}`,
@@ -102,11 +98,10 @@ export const getProductCardLayout = ({
         mobile: [
           isTicketCard ? null : 'card-img card-img',
           'title title',
-          hasNextAvailable && 'next-available next-available',
           'price-block price-block',
+          hasNextAvailable && 'next-available next-available',
           isTicketCard && hasPromoCode && 'promo-block promo-block',
           hasOffer && 'offer offer',
-          !isTicketCard && 'summary summary',
           'tags tags',
           hasV1Booster && 'booster booster',
           'body body',

@@ -309,6 +309,7 @@ const es = {
   },
   SAVE_PERCENT: 'Ahorra {0}%',
   SAVE_UPTO_PERCENT: 'Ahorra hasta un {0}%',
+  RATINGS: 'Calificaciones',
 };
 
 export default es;

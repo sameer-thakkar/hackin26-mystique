@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { NextSeo, NextSeoProps } from 'next-seo';
 import { OpenGraph, Twitter } from 'next-seo/lib/types';
 import { useRouter } from 'next/router';
+import { useRecoilValue } from 'recoil';
 import { MBContext } from 'contexts/MBContext';
 import { BANNER_PARAMS } from 'components/Banner';
 import Conditional from 'components/common/Conditional';
@@ -9,12 +10,15 @@ import {
   WebpageJsonLD,
   MystiquePerfScript,
   TrackingScripts,
+  CollectionAggregatedRatingScript,
 } from 'components/common/Scripts';
-import { legacyBooleanCheck } from 'utils';
+import { AggregatedRatingDetails } from 'components/StaticBanner/index';
+import { legacyBooleanCheck, shouldDisplayCollectionRatings } from 'utils';
 import { createAdditionalMetaTag, createHrefLangObj } from 'utils/headUtils';
 import { withShortcodes } from 'utils/helper';
-import { addQueryParams, convertUidToUrl } from 'utils/urlUtils';
+import { convertUidToUrl } from 'utils/urlUtils';
 import { getStructure } from 'utils/lookerUtils';
+import { mediaUpgradeExperimentAtom } from 'store/atoms/mediaupgrade';
 import {
   FB_DOMAIN_VERIFICATION,
   QUERY_PARAMS,
@@ -29,6 +33,7 @@ type PopulateMetaProps = {
   dateModified: string;
   serverRequestStartTimestamp: string;
   isMobile: boolean;
+  aggregatedRatingDetails?: AggregatedRatingDetails;
   bannerImages: { [key: string]: any }[];
   mbTheme?: string;
   faviconUrl: string;
@@ -43,6 +48,7 @@ export default function PopulateMeta({
   isMobile,
   bannerImages,
   serverRequestStartTimestamp,
+  aggregatedRatingDetails,
   faviconUrl,
   logoUrl,
 }: PopulateMetaProps) {
@@ -56,6 +62,7 @@ export default function PopulateMeta({
     lang,
     language_full,
   } = useContext(MBContext);
+  const { isNewMediaSite } = useRecoilValue(mediaUpgradeExperimentAtom);
   const { query } = useRouter();
   const {
     [QUERY_PARAMS.LIMIT]: limit,
@@ -101,25 +108,9 @@ export default function PopulateMeta({
   const description = withShortcodes(rawDescription).join('');
   let modifiedCanonicalLink = canonicalLink;
 
-  const { ASPECT_RATIO, WIDTH } = isMobile
-    ? BANNER_PARAMS.MOBILE
-    : BANNER_PARAMS.DESKTOP;
+  const { WIDTH } = isMobile ? BANNER_PARAMS.MOBILE : BANNER_PARAMS.DESKTOP;
 
-  /**
-   * imgix query params need to be in exactly the same order as the query params for links of Image component for preloading to work
-   */
-  const imageQueryParams = {
-    auto: 'compress,format',
-    w: `${parseInt(WIDTH) * 1.5}`,
-    q: '75',
-    fit: 'crop',
-    ar: `${ASPECT_RATIO}`,
-    fm: 'pjpg',
-    exp: '-10',
-  };
-
-  const [preloadBannerImage] = bannerImages || [];
-  const bannerImage = addQueryParams(preloadBannerImage?.url, imageQueryParams);
+  const [firstBannerImage] = bannerImages || [];
   const hasSearchEnabled = legacyBooleanCheck(enable_search);
   const jsonLdProps = {
     uid,
@@ -208,15 +199,6 @@ export default function PopulateMeta({
       href: faviconUrl,
     },
   ];
-  if (preloadBannerImage) {
-    additionalLinkTags.push({
-      rel: 'preload',
-      // @ts-ignore
-      as: 'image',
-      href: bannerImage,
-      ...{ fetchpriority: 'high' },
-    });
-  }
 
   // Open Graph
   const openGraph: OpenGraph = {
@@ -228,10 +210,10 @@ export default function PopulateMeta({
     site_name: '',
     images: [
       {
-        url: bannerImage,
+        url: firstBannerImage?.url,
         width: parseInt(WIDTH) * 1.5,
         height: 600,
-        alt: preloadBannerImage?.alt,
+        alt: firstBannerImage?.alt,
       },
     ],
   };
@@ -279,6 +261,16 @@ export default function PopulateMeta({
         />
       </Conditional>
       <WebpageJsonLD {...jsonLdProps} />
+      <Conditional
+        if={
+          isNewMediaSite &&
+          shouldDisplayCollectionRatings(aggregatedRatingDetails)
+        }
+      >
+        <CollectionAggregatedRatingScript
+          aggregatedRatingInfo={aggregatedRatingDetails}
+        />
+      </Conditional>
       <MystiquePerfScript
         serverRequestStartTimestamp={serverRequestStartTimestamp}
       />

@@ -326,6 +326,7 @@ const ar = {
   CANCELLATION_POLICY_HEADING: 'سياسة الإلغاء',
   SAVE_PERCENT: '%وفر {0}',
   SAVE_UPTO_PERCENT: '%وفر لغاية (0)',
+  RATINGS: 'التقييمات',
 };
 
 export default ar;

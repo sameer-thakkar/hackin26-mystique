@@ -296,6 +296,7 @@ const fr = {
   },
   SAVE_PERCENT: 'Économisez {0}%',
   SAVE_UPTO_PERCENT: "Économisez jusqu'à {0} %",
+  RATINGS: 'Notes',
 };
 
 export default fr;

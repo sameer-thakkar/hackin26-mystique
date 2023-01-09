@@ -158,6 +158,7 @@ const cn = {
       BADGE_DESCRIPTION: '这个徽章保证行程的安全水平已经得到我们的认证。 ',
     },
   },
+  RATINGS: '收视率',
 };
 
 export default cn;

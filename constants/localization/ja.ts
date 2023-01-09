@@ -168,6 +168,7 @@ const ja = {
   },
   SAVE_PERCENT: '{0}%割引',
   SAVE_UPTO_PERCENT: '最大{0}%割引',
+  RATINGS: '評価',
 };
 
 export default ja;

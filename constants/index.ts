@@ -307,7 +307,13 @@ export const ANALYTICS_EVENTS = {
     USERNAME_CLICKED: 'Influencer Content Username Clicked',
     REDIRECT_TO_IG: 'Influencer Content Redirect To Instagram',
   },
+  PRODUCT_CARD_IMAGE_VIEWED: 'Product Card Image Viewed',
+  MB_Banner_Video_Played: 'MB Banner Video Played',
+  DEAD_CLICK: 'Dead Click',
+  MB_BANNER_VIDEO_AUTOPLAY_STARTED: 'MB Banner Video Autoplay Started',
+  MB_BANNER_VIDEO_AUTOPLAY_FAILED: 'MB Banner Video Autoplay Failed',
 };
+
 export const PAGE_TYPE = {
   COLLECTION_PAGE: 'Collection Page',
 };
@@ -693,7 +699,10 @@ export const ANALYTICS_PROPERTIES = {
   DISCOUNT_SHOWN: 'Discount Shown',
   CASHBACK_SHOWN: 'Is Cashback Shown',
   L1_BOOSTER_SHOWN: 'L1 Booster Shown',
+  TYPE: 'Type',
+  AUTOPLAY_LOAD_TIME: 'Autoplay Load Time',
 };
+
 export const PAGE_TYPES = {
   COLLECTION: 'Collection',
   CONTENT_PAGE: 'Content Page',
@@ -937,6 +946,49 @@ export const HOLIDAY_ASSETS = {
   LOADING_SPINNER:
     'https://cdn-imgix-open.headout.com/loader/mb_holiday_loader.gif',
 };
+
+export const DOCUMENT_READY_STATES = {
+  LOADING: 'loading',
+  INTERACTIVE: 'interactive',
+  COMPLETE: 'complete',
+};
+
+// TO BE REMOVED AFTER MEDIAUPGRADE PROJECT
+export const MEDIAUPGRADE_EXPERIMENT_UIDS = [
+  // UIDs with videos
+  'www.versailles-palace-tickets.com',
+  'www.singapore-tickets.com.gardens-by-the-bay-tickets',
+  'www.visitdubaiframe.com',
+  'www.acropolis-tickets.com',
+  'www.budapest-baths.com',
+  'www.penapalacetickets.com',
+  'casa-mila.barcelona-tickets.com',
+  'www.hagia-sophia-tickets.com',
+  // UIDs without videos
+  'www.tickets-paris.fr.disneyland-paris',
+  'www.tickets-paris.fr.disneyland-parijs',
+  'www.kennedyspacecenter-tickets.com',
+  'www.parkguell-tickets.com',
+  'burj-khalifa.dubai-tickets.co',
+  'www.billetseiffel.fr',
+  'www.pradomuseumtickets.com',
+  'www.dubai-safari-park.com',
+  'www.seine-river-cruises.com',
+  'friedrichstadt-palast.berlin-tickets.com',
+  'www.malaysia-tickets.com.sunway-lagoon',
+  'arc-de-triomphe.tickets-paris.fr',
+  'www.royal-palace-madrid-tickets.com',
+  'empire-state-building.new-york-tickets.com',
+  'www.new-york-tickets.com.summit-one-vanderbilt',
+];
+
+export const MEDIAUPGRADE_EXPERIMENT_PROPERTIES = {
+  NAME: 'Media Upgrade Experiment',
+  TREATMENT: 'Treatment',
+  CONTROL: 'Control',
+};
+
+export const MEDIA_CAROUSEL_IMAGE_LIMIT = 10;
 
 export const DEFAULT_LOOKER_VALUES = {
   FOOTER_DISCLAIMER: 'Default footer disclaimer',

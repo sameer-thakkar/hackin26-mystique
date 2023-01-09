@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import Product from 'components/Product';
 import Conditional from 'components/common/Conditional';
 import HorizontalLine from 'components/slices/HorizontalLine';
@@ -24,6 +25,7 @@ import { legacyBooleanCheck } from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import { csvTgidToArray, getHostName } from 'utils/helper';
 import { getPromoCodesDocument } from 'utils/prismicUtils';
+import { mediaUpgradeExperimentAtom } from 'store/atoms/mediaupgrade';
 
 const StyledProductsWrapper = styled.div`
   margin: 0 auto;
@@ -98,8 +100,10 @@ const PopulateProducts = (props) => {
     sectionSubtext = '',
     pageType = '',
     growthExperiment7Variant,
+    bannerVideo,
   } = props;
   const isDubaiSafariPark = uid === 'www.dubai-safari-park.com';
+  const productsRef = useRef([]);
   const productsWrapperRef = useRef(null);
   const [tourPrices, setTourPrices] = useState(scorpioData);
   const [clickedPromo, setClickedPromo] = useState();
@@ -113,7 +117,7 @@ const PopulateProducts = (props) => {
   const [showEarliestAvailability, setShowEarliestAvailability] = useState(
     null
   );
-  const productsRef = useRef([]);
+  const mediaUpgradeExperiment = useRecoilValue(mediaUpgradeExperimentAtom);
 
   const addToRef = (el) => {
     productsRef.current.push(el);
@@ -374,9 +378,10 @@ const PopulateProducts = (props) => {
     }
   }, [productInfo, allPromoCodes]);
 
+  const { isNewMediaSite } = mediaUpgradeExperiment;
   return (
     <StyledProductsWrapper ref={productsWrapperRef}>
-      <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
+      <Conditional if={mbTheme !== THEMES.MIN_BLUE && !isNewMediaSite}>
         <div id="tour-list-heading">
           <Conditional
             if={
@@ -465,6 +470,8 @@ const PopulateProducts = (props) => {
               primaryCategory,
               primaryCollection,
               primarySubCategory,
+              mediaUpgradeExperiment,
+              bannerVideo,
             };
 
             return (
