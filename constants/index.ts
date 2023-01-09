@@ -972,6 +972,7 @@ export const MEDIAUPGRADE_EXPERIMENT_UIDS = [
   'burj-khalifa.dubai-tickets.co',
   'www.billetseiffel.fr',
   'www.pradomuseumtickets.com',
+  'www.pompeii-tickets.com',
   'www.dubai-safari-park.com',
   'www.seine-river-cruises.com',
   'friedrichstadt-palast.berlin-tickets.com',
