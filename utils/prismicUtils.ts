@@ -1167,6 +1167,9 @@ export const getPageData = async ({
         lang.uid = `${lang.uid}.home`;
         return lang;
       });
+      CMSContent.data.data.noindex = true;
+      CMSContent.data.data.canonical_link =
+        CMSContent.data.data.canonical_link + 'home';
     }
 
     if (statusCode) {
