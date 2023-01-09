@@ -1169,7 +1169,7 @@ export const getPageData = async ({
       });
       CMSContent.data.data.noindex = true;
       CMSContent.data.data.canonical_link =
-        CMSContent.data.data.canonical_link + 'home';
+        CMSContent.data.data.canonical_link + 'home/';
     }
 
     if (statusCode) {
