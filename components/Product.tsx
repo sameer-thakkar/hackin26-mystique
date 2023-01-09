@@ -14,7 +14,6 @@ import parse from 'url-parse';
 import { MBContext } from 'contexts/MBContext';
 import useSWR from 'swr';
 import { useRecoilValue } from 'recoil';
-import { useRouter } from 'next/router';
 import { useWindowWidth } from '@react-hook/window-size';
 import { currencyAtom } from 'store/atoms/currency';
 import { metaAtom } from 'store/atoms/meta';
@@ -980,7 +979,6 @@ const Product = (props) => {
     sidebarModal: { addToAside },
     redirectToHeadoutBookingFlow,
   } = useContext(MBContext);
-  const router = useRouter();
   const pageMetaData = useRecoilValue(metaAtom);
   const currency = useRecoilValue(currencyAtom);
   const hostname = getHostName(isStage, isDev, host);
@@ -1157,10 +1155,12 @@ const Product = (props) => {
             primarySubCategory,
           }),
         });
-        router.push(
+        window.open(
           addQueryParams(productBookingUrl, {
             variantId,
-          })
+          }),
+          '_blank',
+          'noopener, noreferrer'
         );
         return;
       }
