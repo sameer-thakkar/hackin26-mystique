@@ -394,7 +394,7 @@ const Footer: React.FC<FooterProps> = ({
     }
 
     if (removeSpaces) {
-      phoneNumber = phoneNumber.replaceAll(' ', '');
+      phoneNumber = phoneNumber.replace(/\s/g, '');
     }
 
     return phoneNumber;
