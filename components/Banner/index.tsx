@@ -149,7 +149,7 @@ const Banner = (props: TBannerCarouselProps) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.MB_BANNER.CTA_CLICKED,
       ...analyticsParams,
-      Ranking: swiper.realIndex + 1,
+      Ranking: (swiper?.realIndex || 0) + 1,
     });
   }, [swiper]);
 
