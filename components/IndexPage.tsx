@@ -305,7 +305,11 @@ Page.getInitialProps = async (ctx) => {
     default: localizedStrings,
   });
   const serverCookies = new ServerCookies(req, res);
+  /**
+   * Adding window check below since `serverCookies.get` runs only on server side :/
+   */
   if (
+    typeof window === 'undefined' &&
     !checkIfCurrencyCodeValid({
       currencyCode: serverCookies.get(COOKIE.CURRENT_CURRENCY),
     })
