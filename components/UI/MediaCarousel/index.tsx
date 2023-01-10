@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { Swiper } from 'swiper';
 import type { SwiperProps } from 'swiper/react';
+import classNames from 'classnames';
 import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
 import SwiperWrapper from 'components/Swiper';
@@ -120,7 +121,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
           ) : (
             <Image
               url={image.url}
-              imageId={imageId}
+              imageId={classNames({ [imageId]: true, 'swiper-lazy': true })}
               alt={image.altText}
               aspectRatio={imageAspectRatio}
               autoCrop={false}
