@@ -69,6 +69,12 @@ export const getLangUID = (req, query) => {
       lang = reqLang;
     }
   }
+  /**
+   * Temporary logs to issue:
+   * https://sentry.io/organizations/headout/issues/3811420068/events/c9b34e70f75c45669a3c126523be1d0a/?project=1545593
+   */
+  // eslint-disable-next-line no-console
+  console.log('UID, Lang & Host ', uid, lang, host);
   return { uid, lang };
 };
 

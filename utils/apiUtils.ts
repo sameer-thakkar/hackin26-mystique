@@ -528,6 +528,12 @@ export const fetchDomainConfig = async (uid: string) => {
     params: null,
     id: null,
   });
+  /**
+   * Temporary logs to issue:
+   * https://sentry.io/organizations/headout/issues/3811420068/events/c9b34e70f75c45669a3c126523be1d0a/?project=1545593
+   */
+  // eslint-disable-next-line no-console
+  console.log('UID, Lang & Host ', uid);
   const domainArray = getDomainFromUid(uid)?.split('.');
   domainArray[0] = 'book';
   const whitelabel = `https://${domainArray.join('.')}`;
