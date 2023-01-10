@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
+import { FONTS } from 'const/fonts';
+import { expandFontToken } from 'const/typography';
+import { CHEVRON_RIGHT } from 'assets/SvgIcons';
+import Conditional from 'components/common/Conditional';
 
 type BreadcrumbProps = {
   orderedLinks: any[];
@@ -11,19 +14,42 @@ const BreadcrumbContainer = styled.div`
   a {
     color: ${COLORS.TEXT.BEACH};
   }
+
+  svg {
+    margin: 0 0.5rem;
+    width: 8px;
+    height: 8px;
+  }
+
   @media (max-width: 768px) {
     padding: 0;
+
+    svg {
+      margin: 0 0.25rem;
+    }
   }
 `;
 
 const StyledBreadcrumb = styled.a`
-  color: ${COLORS.TEXT.PURPS_3} !important;
-  text-decoration: none;
+  ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
+
   &:last-child {
-    color: ${COLORS.GRAY.G3} !important;
+    text-decoration: underline;
   }
-  font-family: ${HALYARD.FONT_STACK};
-  font-weight: 400;
+
+  &#breadcrumb {
+    color: ${COLORS.GRAY.G4};
+    cursor: pointer;
+  }
+
+  &:not(:last-child):hover {
+    color: ${COLORS.TEXT.CANDY_1} !important;
+  }
+
+  @media (max-width: 768px) {
+    ${expandFontToken(FONTS.UI_LABEL_SMALL)};
+    text-decoration: none;
+  }
 `;
 
 /**
@@ -48,10 +74,13 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ orderedLinks: links }) => (
             key={index}
             href={crumb.link?.url}
             target={crumb.link?.target}
+            id="breadcrumb"
           >
             {crumb.text}
           </StyledBreadcrumb>
-          {links.length - 1 !== index ? ' / ' : null}
+          <Conditional if={links.length - 1 !== index}>
+            {CHEVRON_RIGHT({ fillColor: COLORS.GRAY.G4 })}
+          </Conditional>
         </React.Fragment>
       );
     })}

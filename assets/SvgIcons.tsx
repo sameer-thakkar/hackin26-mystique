@@ -1248,18 +1248,17 @@ export const STAR_EMPTY_NEW = ({ fillColor }) => (
 export const CHEVRON_RIGHT = ({ fillColor }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="6"
-    height="10"
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
     fill="none"
-    viewBox="0 0 6 10"
   >
     <path
+      d="M4.66675 14.6667L11.3334 8.00004L4.66675 1.33337"
       stroke={fillColor}
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth="0.976"
-      d="M1 9l4-4-4-4"
-    ></path>
+    />
   </svg>
 );
 
