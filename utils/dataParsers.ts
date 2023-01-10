@@ -51,12 +51,14 @@ export const categoryTourListParserV1 = async ({
   hostname,
   lang,
   cookies = {},
+  localizedStrings,
 }: {
   productCard: { [key: string]: any };
   sliceObj: { [key: string]: any };
   hostname: string;
   lang: string;
   cookies?: { [key: string]: string };
+  localizedStrings?: { [key: string]: string };
 }) => {
   let tourData = [],
     currency;
@@ -323,6 +325,7 @@ export const categoryTourListParserV1 = async ({
         reschedulePolicy,
         ticketValidity,
         lang: getHeadoutLanguagecode(lang),
+        localizedStrings,
       });
 
       const { variants } =
@@ -646,7 +649,8 @@ export const categoryTourListParserV2 = async (
             reschedulePolicy,
             ticketValidity,
             showValidity: false,
-            lang: 'en',
+            lang: getHeadoutLanguagecode(lang),
+            localizedStrings,
           });
 
           const filterHighlights = [

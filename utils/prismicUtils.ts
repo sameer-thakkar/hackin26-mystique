@@ -1239,6 +1239,7 @@ export const getPageData = async ({
           hostname,
           lang,
           cookies,
+          localizedStrings,
         });
       }
 
@@ -1533,6 +1534,7 @@ export const getPageData = async ({
             hostname,
             lang,
             cookies,
+            localizedStrings,
           });
           aggregatedRatingDetails =
             categoryTourListData.aggregatedRatingDetails;
@@ -1672,6 +1674,7 @@ export const getPageData = async ({
           reschedulePolicy,
           cancellationPolicy: cancellationPolicyV2 ?? cancellationPolicy,
           lang: getHeadoutLanguagecode(lang),
+          localizedStrings,
         });
 
         const { productImages, safetyImages } = media || {};

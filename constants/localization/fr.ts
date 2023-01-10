@@ -296,6 +296,34 @@ const fr = {
   },
   SAVE_PERCENT: 'Économisez {0}%',
   SAVE_UPTO_PERCENT: "Économisez jusqu'à {0} %",
+  CANCELLATION_POLICY: {
+    HEADING: 'Politique de modification',
+    NON_CANCELLABLE_NON_RESCHEDULABLE:
+      'Ces billets ne peuvent être ni annulés ni reportés.',
+    VALID_UNTIL_DATE:
+      'Ces billets ne peuvent pas être annulés. Cependant, vous pouvez les utiliser à tout moment jusqu’au {0}.',
+    VALID_WITHIN_NEXT_DAYS:
+      'Ces billets ne peuvent pas être annulés. Toutefois, vous pouvez les utiliser à tout moment pendant les {0} prochains jours.',
+    VALID_WITHIN_NEXT_MONTHS:
+      'Ces billets ne peuvent pas être annulés. Cependant, vous pouvez les utiliser à tout moment durant les {0} prochains mois.',
+    EXTENDED_BUT_UNKNOWN_VALIDITY:
+      'Ces billets ne peuvent pas être annulés. Cependant, ils sont valables pour une période prolongée.',
+    NON_CANCELLABLE_BUT_RESCHEDULABLE:
+      'Ces billets ne peuvent pas être annulés. Cependant, ils peuvent être reportés jusqu’à {0} heures avant le début de l’expérience.',
+    CANCELLABLE:
+      'Vous pouvez annuler ces billets jusqu’à {0} heures avant le début de l’expérience et bénéficiez d’un remboursement complet.',
+    CANCELLABLE_ANYTIME:
+      'Annulation gratuite à tout moment avant le début de votre activité',
+  },
+  VALIDITY: {
+    UNTIL_DATE: 'Ces billets sont valables jusqu’au {0}.',
+    UNTIL_DAYS_FROM_PURCHASE:
+      'Ces billets sont valables pendant {0} jours à compter de la date d’achat.',
+    UNTIL_MONTHS_FROM_PURCHASE:
+      'Ces billets sont valables pendant {0} mois à compter de la date d’achat.',
+    EXTENDED_BUT_UNKNOWN_VALIDITY:
+      'Ces billets sont valables pour une durée prolongée. Les détails exacts seront indiqués sur le billet.',
+  },
   RATINGS: 'Notes',
 };
 

@@ -12,7 +12,6 @@ import {
   DESCRIPTOR_RANKING_LOGIC,
   MAX_DESCRIPTORS_DISPLAYED,
 } from 'const/descriptors';
-import getServerStrings from 'const/serverStrings';
 import { strings } from 'const/strings';
 
 export const extractTabsFromHighlights = (highlights) => {
@@ -308,12 +307,8 @@ export const getCancellationPolicyString = ({
   reschedulePolicy,
   ticketValidity,
   lang,
+  localizedStrings,
 }) => {
-  const strings = getServerStrings(lang);
-
-  const formatString = (currentString, replaceWith) =>
-    currentString?.replace('{0}', replaceWith);
-
   const { cancellable, cancellableUpTo: cancellableUptoMinutes } =
     cancellationPolicy ?? {};
   const { reschedulable, reschedulableUpTo: reschedulableUptoMinutes } =
@@ -337,46 +332,47 @@ export const getCancellationPolicyString = ({
   if (!cancellable && !reschedulable) {
     switch (validityType) {
       case VALIDITY_TYPES.UNTIL_DATE:
-        return formatString(
-          strings.CANCELLATION_POLICY.VALID_UNTIL_DATE,
+        return strings.formatString(
+          localizedStrings.CANCELLATION_POLICY.VALID_UNTIL_DATE,
           formattedValidUptoDate
         );
       case VALIDITY_TYPES.UNTIL_DAYS_FROM_PURCHASE:
         return isValidUptoMonths
-          ? formatString(
-              strings.CANCELLATION_POLICY.VALID_WITHIN_NEXT_MONTHS,
+          ? strings.formatString(
+              localizedStrings.CANCELLATION_POLICY.VALID_WITHIN_NEXT_MONTHS,
               validUptoMonths
             )
-          : formatString(
-              strings.CANCELLATION_POLICY.VALID_WITHIN_NEXT_DAYS,
+          : strings.formatString(
+              localizedStrings.CANCELLATION_POLICY.VALID_WITHIN_NEXT_DAYS,
               validUptoDays
             );
       case VALIDITY_TYPES.EXTENDABLE_BUT_UNKNOWN:
-        return strings.CANCELLATION_POLICY.EXTENDED_BUT_UNKNOWN_VALIDITY;
+        return localizedStrings.CANCELLATION_POLICY
+          .EXTENDED_BUT_UNKNOWN_VALIDITY;
       default:
-        return strings.CANCELLATION_POLICY.NON_CANCELLABLE_NON_RESCHEDULABLE;
+        return localizedStrings.CANCELLATION_POLICY
+          .NON_CANCELLABLE_NON_RESCHEDULABLE;
     }
   } else if (!cancellable && reschedulable) {
-    return formatString(
-      strings.CANCELLATION_POLICY.NON_CANCELLABLE_BUT_RESCHEDULABLE,
+    return strings.formatString(
+      localizedStrings.CANCELLATION_POLICY.NON_CANCELLABLE_BUT_RESCHEDULABLE,
       reschedulableUptoHours
     );
   } else {
     return cancellableUptoHours === 0
-      ? strings.CANCELLATION_POLICY.CANCELLABLE_ANYTIME
-      : formatString(
-          strings.CANCELLATION_POLICY.CANCELLABLE,
+      ? localizedStrings.CANCELLATION_POLICY.CANCELLABLE_ANYTIME
+      : strings.formatString(
+          localizedStrings.CANCELLATION_POLICY.CANCELLABLE,
           cancellableUptoHours
         );
   }
 };
 
-const getValidityPolicyString = ({ ticketValidity, lang }) => {
-  const strings = getServerStrings(lang);
-
-  const formatString = (currentString, replaceWith) =>
-    currentString.replace('{0}', replaceWith);
-
+const getValidityPolicyString = ({
+  ticketValidity,
+  lang,
+  localizedStrings,
+}) => {
   const {
     ticketValidityType: validityType,
     ticketValidityUntilDate: validUptoDate,
@@ -396,19 +392,22 @@ const getValidityPolicyString = ({ ticketValidity, lang }) => {
 
   switch (validityType) {
     case VALIDITY_TYPES.UNTIL_DATE:
-      return formatString(strings.VALIDITY.UNTIL_DATE, formattedValidUptoDate);
+      return strings.formatString(
+        localizedStrings.VALIDITY.UNTIL_DATE,
+        formattedValidUptoDate
+      );
     case VALIDITY_TYPES.UNTIL_DAYS_FROM_PURCHASE:
       return isValidUptoMonths
-        ? formatString(
-            strings.VALIDITY.UNTIL_MONTHS_FROM_PURCHASE,
+        ? strings.formatString(
+            localizedStrings.VALIDITY.UNTIL_MONTHS_FROM_PURCHASE,
             validUptoMonths
           )
-        : formatString(
-            strings.VALIDITY.UNTIL_DAYS_FROM_PURCHASE,
+        : strings.formatString(
+            localizedStrings.VALIDITY.UNTIL_DAYS_FROM_PURCHASE,
             validUptoDays
           );
     default:
-      return strings.VALIDITY.EXTENDED_BUT_UNKNOWN_VALIDITY;
+      return localizedStrings.VALIDITY.EXTENDED_BUT_UNKNOWN_VALIDITY;
   }
 };
 
@@ -419,10 +418,10 @@ export const standardizeCancellationPolicy = ({
   ticketValidity = {},
   showValidity = true,
   lang,
+  localizedStrings,
 }) => {
-  if (!highlights.length) return highlights;
+  if (!highlights.length || !localizedStrings) return highlights;
 
-  const strings = getServerStrings(lang);
   let updatedHighlights = [...highlights];
 
   // Removing the existing (hard-coded) cancellation policy from highlights array
@@ -430,7 +429,7 @@ export const standardizeCancellationPolicy = ({
     (item) =>
       item.type === HIGHLIGHT_TYPES.H6_HEADING &&
       (item.text.toLowerCase() ===
-        strings.CANCELLATION_POLICY_HEADING.toLowerCase() ||
+        localizedStrings.CANCELLATION_POLICY_HEADING.toLowerCase() ||
         CANCELLATION_POLICY_POSSIBLE_LABELS.some(
           (label) => label.toLowerCase() === item.text.toLowerCase().trim()
         ))
@@ -450,13 +449,14 @@ export const standardizeCancellationPolicy = ({
   }
 
   // Adding the new cancellation and validity policy to highlights array
-  const text = strings.CANCELLATION_POLICY_HEADING,
+  const text = localizedStrings.CANCELLATION_POLICY_HEADING,
     spans = [],
     cancellationPolicyString = getCancellationPolicyString({
       cancellationPolicy,
       reschedulePolicy,
       ticketValidity,
       lang,
+      localizedStrings,
     });
 
   updatedHighlights = updatedHighlights.concat([
@@ -478,6 +478,7 @@ export const standardizeCancellationPolicy = ({
     const validityPolicyString = getValidityPolicyString({
       ticketValidity,
       lang,
+      localizedStrings,
     });
     updatedHighlights = validityPolicyString
       ? updatedHighlights.concat([
@@ -493,6 +494,7 @@ export const standardizeCancellationPolicy = ({
 
   return updatedHighlights;
 };
+
 export const parseDescriptors = (descriptorArr = []) => {
   const allowedDescriptors = [
     strings.DESCRIPTORS.INSTANT_CONFIRMATION,

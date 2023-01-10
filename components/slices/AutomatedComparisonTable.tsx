@@ -416,6 +416,7 @@ const AutomatedTourComparisonTable = ({
         reschedulePolicy,
         ticketValidity,
         lang,
+        localizedStrings: strings, // found out that this component is csr, so we can simply use strings in place of localizedStrings.
       });
 
       return {

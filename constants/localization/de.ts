@@ -298,6 +298,33 @@ const de = {
   },
   SAVE_PERCENT: '{0} % Rabatt',
   SAVE_UPTO_PERCENT: 'Bis zu {0} % Rabatt',
+  CANCELLATION_POLICY: {
+    HEADING: 'Änderungsrichtlinie',
+    NON_CANCELLABLE_NON_RESCHEDULABLE:
+      'Diese Tickets können nicht storniert oder verschoben werden.',
+    VALID_UNTIL_DATE:
+      'Diese Tickets können nicht storniert werden. Sie können jedoch bis zum {0} verwendet werden.',
+    VALID_WITHIN_NEXT_DAYS:
+      'Diese Tickets können nicht storniert werden. Sie können jedoch jederzeit innerhalb der nächsten {0} Tage verwendet werden.',
+    VALID_WITHIN_NEXT_MONTHS:
+      'Diese Tickets können nicht storniert werden. Sie können jedoch jederzeit innerhalb der nächsten {0} Monate verwendet werden.',
+    EXTENDED_BUT_UNKNOWN_VALIDITY:
+      'Diese Tickets können nicht storniert werden. Sie sind jedoch für einen längeren Zeitraum gültig.',
+    NON_CANCELLABLE_BUT_RESCHEDULABLE:
+      'Diese Tickets können nicht storniert werden. Sie können jedoch bis zu {0} Stunden vor Erlebnisbeginn verschoben werden.',
+    CANCELLABLE:
+      'Sie können diese Tickets bis zu {0} Stunden vor Erlebnisbeginn stornieren, um eine vollständige Rückerstattung zu erhalten.',
+    CANCELLABLE_ANYTIME: 'Kostenfreie Stornierung vor Beginn Ihres Erlebnisses',
+  },
+  VALIDITY: {
+    UNTIL_DATE: 'Diese Tickets sind bis zum {0} gültig.',
+    UNTIL_DAYS_FROM_PURCHASE:
+      'Diese Tickets sind ab dem Kaufdatum {0} Tage gültig.',
+    UNTIL_MONTHS_FROM_PURCHASE:
+      'Diese Tickets sind ab dem Kaufdatum {0} Monate gültig.',
+    EXTENDED_BUT_UNKNOWN_VALIDITY:
+      'Diese Tickets sind für einen längeren Zeitraum gültig. Genaue Angaben befinden sich auf dem Ticket.',
+  },
   RATINGS: 'Bewertungen',
 };
 

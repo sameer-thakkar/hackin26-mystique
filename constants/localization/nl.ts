@@ -299,6 +299,34 @@ const nl = {
   },
   SAVE_PERCENT: 'Bespaar {0}%',
   SAVE_UPTO_PERCENT: 'Bespaar tot {0}%',
+  CANCELLATION_POLICY: {
+    HEADING: 'Wijzigingsbeleid',
+    NON_CANCELLABLE_NON_RESCHEDULABLE:
+      'Deze tickets kunnen niet geannuleerd of verschoven worden.',
+    VALID_UNTIL_DATE:
+      'Deze tickets kunnen niet geannuleerd worden. Je kunt ze echter op elk moment gebruiken tot {0}.',
+    VALID_WITHIN_NEXT_DAYS:
+      'Deze tickets kunnen niet geannuleerd worden. Je kunt ze echter op elk moment binnen de komende {0} dagen gebruiken.',
+    VALID_WITHIN_NEXT_MONTHS:
+      'Deze tickets kunnen niet geannuleerd worden. Je kunt ze echter op elk moment binnen de komende {0} maanden gebruiken.',
+    EXTENDED_BUT_UNKNOWN_VALIDITY:
+      'Deze tickets kunnen niet geannuleerd worden. Ze zijn echter voor een langere periode geldig.',
+    NON_CANCELLABLE_BUT_RESCHEDULABLE:
+      'Deze tickets kunnen niet geannuleerd worden. Ze kunnen echter verschoven worden tot {0} uur voor de belevenis begint.',
+    CANCELLABLE:
+      'Je annuleert deze tickets tot {0} uur voor de belevenis begint en krijgt een volledige terugbetaling.',
+    CANCELLABLE_ANYTIME:
+      'Gratis annulering op elk moment voor het begin van uw ervaring',
+  },
+  VALIDITY: {
+    UNTIL_DATE: 'Deze tickets zijn geldig tot {0}.',
+    UNTIL_DAYS_FROM_PURCHASE:
+      'Deze tickets zijn geldig gedurende {0} dagen vanaf de datum van aankoop.',
+    UNTIL_MONTHS_FROM_PURCHASE:
+      'Deze tickets zijn geldig voor {0} maanden vanaf de datum van aankoop.',
+    EXTENDED_BUT_UNKNOWN_VALIDITY:
+      'Deze tickets zijn geldig voor een langere duur. De precieze details staan op het ticket.',
+  },
   RATINGS: 'Waarderingen',
 };
 

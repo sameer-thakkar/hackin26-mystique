@@ -326,6 +326,23 @@ const ar = {
   CANCELLATION_POLICY_HEADING: 'سياسة الإلغاء',
   SAVE_PERCENT: '%وفر {0}',
   SAVE_UPTO_PERCENT: '%وفر لغاية (0)',
+  CANCELLATION_POLICY: {
+    HEADING: 'سياسة التعديل',
+    NON_CANCELLABLE_NON_RESCHEDULABLE: 'لا يمكن إلغاء أو تعديل هذه التذاكر',
+    VALID_UNTIL_DATE:
+      'لا يمكن إلغاء هذه التذاكر. إنما يمكنك استخدامها في {0} أي وقت حتى',
+    VALID_WITHIN_NEXT_DAYS:
+      ' لا يمكن إلغاء هذه التذاكر. إنما يمكنك استخدامها في أي وقت خلال الأيام الـ {0} القادمة',
+    VALID_WITHIN_NEXT_MONTHS:
+      'لا يمكن إلغاء هذه التذاكر. إنما يمكنك استخدامها في أي وقت خلال الـ {0} الأشهر القادمة',
+    EXTENDED_BUT_UNKNOWN_VALIDITY:
+      'لا يمكن إلغاء هذه التذاكر. إنما فهي صالحة لفترة طويلة من الزمن',
+    NON_CANCELLABLE_BUT_RESCHEDULABLE:
+      'لا يمكن إلغاء هذه التذاكر. إنما يمكن إعادة جدولتها حتى {0} ساعة قبل بدء التجربة',
+    CANCELLABLE:
+      'يمكنك إلغاء هذه التذاكر حتى {0} ساعة قبل بدء التجربة واسترداد أموالك بالكامل',
+    CANCELLABLE_ANYTIME: 'إلغاء مجاني في أي وقت قبل بدء تجربتك',
+  },
   RATINGS: 'التقييمات',
 };
 

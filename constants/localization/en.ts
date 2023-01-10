@@ -384,6 +384,34 @@ const en = {
   },
   SAVE_PERCENT: 'Save {0}%',
   SAVE_UPTO_PERCENT: 'Save upto {0}%',
+  CANCELLATION_POLICY: {
+    HEADING: 'Amendment Policy',
+    NON_CANCELLABLE_NON_RESCHEDULABLE:
+      "These tickets can't be cancelled or rescheduled.",
+    VALID_UNTIL_DATE:
+      "These tickets can't be cancelled. However, you can use them any time until {0}.",
+    VALID_WITHIN_NEXT_DAYS:
+      'These tickets can’t be cancelled. However, you can use them any time within the next {0} days.',
+    VALID_WITHIN_NEXT_MONTHS:
+      'These tickets can’t be cancelled. However, you can use them any time within the next {0} months.',
+    EXTENDED_BUT_UNKNOWN_VALIDITY:
+      'These tickets can’t be cancelled. However, they are valid for an extended period of time.',
+    NON_CANCELLABLE_BUT_RESCHEDULABLE:
+      "These tickets can't be cancelled. However, they can be rescheduled up to {0} hours before the experience begins.",
+    CANCELLABLE:
+      'You can cancel these tickets up to {0} hours before the experience begins and get a full refund.',
+    CANCELLABLE_ANYTIME:
+      'Free cancellation anytime before the start of your experience',
+  },
+  VALIDITY: {
+    UNTIL_DATE: 'These tickets are valid until {0}.',
+    UNTIL_DAYS_FROM_PURCHASE:
+      'These tickets are valid for {0} days from the date of purchase.',
+    UNTIL_MONTHS_FROM_PURCHASE:
+      'These tickets are valid for {0} months from the date of purchase.',
+    EXTENDED_BUT_UNKNOWN_VALIDITY:
+      'These tickets are valid for an extended duration. The exact details will be present on the ticket.',
+  },
   RATINGS: 'Ratings',
 };
 
