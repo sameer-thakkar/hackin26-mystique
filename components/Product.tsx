@@ -75,8 +75,8 @@ const Container = styled.div`
 
 const PRODUCT_CARD_IMAGE_DIMENSIONS = {
   MOBILE: {
-    width: 320,
-    firstProductWidth: 520,
+    width: 400,
+    firstProductWidth: 600,
   },
   DESKTOP: {
     height: 320,

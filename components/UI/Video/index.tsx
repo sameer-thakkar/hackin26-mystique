@@ -141,6 +141,7 @@ const Video: React.FC<VideoTypeProps> = ({
           autoCrop={false}
           alt={imageAltText}
           priority={dontLazyLoadImage}
+          fetchPriority={dontLazyLoadImage ? 'high' : 'auto'}
           fill
         />
         <Conditional if={isAutoplayDisabled && isVideoPaused}>

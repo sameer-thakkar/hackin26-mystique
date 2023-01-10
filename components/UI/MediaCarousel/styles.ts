@@ -14,6 +14,7 @@ export const CarouselContainer = styled.div`
     display: flex;
   }
 
+  .swiper,
   .swiper-initialized {
     height: 100%;
   }

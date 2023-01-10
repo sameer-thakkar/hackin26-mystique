@@ -15,4 +15,5 @@ export interface IImageProps
   fitCrop?: boolean;
   fill?: boolean;
   blurFill?: boolean;
+  fetchPriority?: 'high' | 'low' | 'auto';
 }

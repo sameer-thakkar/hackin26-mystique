@@ -52,6 +52,7 @@ const Image: React.FC<IImageProps> = ({
   blurFill = false,
   layout = undefined,
   objectFit,
+  fetchPriority = 'auto',
 }) => {
   let calculatedWidth = width,
     calculatedHeight = height,
@@ -124,6 +125,8 @@ const Image: React.FC<IImageProps> = ({
         priority={priority}
         objectFit={objectFit}
         unoptimized // We use IMGIX, which does all the optimisation required. Letting Next process images will add to TTFB.
+        // @ts-expect-error
+        fetchpriority={fetchPriority}
       />
       <Conditional if={!!attribution}>
         <Tooltip content={attribution} trigger={INFO_ICON} />
