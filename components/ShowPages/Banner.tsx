@@ -118,7 +118,7 @@ const BannerContent = styled.div`
   max-width: 1200px;
   z-index: 2;
   background: ${COLORS.BRAND.WHITE};
-  padding: 32px 30px 0;
+  padding: 32px 32px 0;
   border-radius: 8px 8px 0px 0px;
 
   .heading-wrapper {

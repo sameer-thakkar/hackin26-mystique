@@ -7,6 +7,7 @@ import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
 import { withTrailingSlash } from 'utils/helper';
 import { FONTS } from 'const/fonts';
+import Conditional from 'components/common/Conditional';
 
 type FooterLinksSectionProps = {
   title: string;
@@ -57,7 +58,9 @@ const FooterLinksSection: React.FC<FooterLinksSectionProps> = ({
 
   return (
     <FooterLinksSectionWrapper isLastSlice={sliceIndex === sliceLength - 1}>
-      <Title>{title}:</Title>
+      <Conditional if={title}>
+        <Title>{title}:</Title>
+      </Conditional>
       {links.map((link, index) => (
         <LinkResolver
           key={`${title?.toLowerCase()}_${index}`}
