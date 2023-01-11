@@ -114,6 +114,10 @@ export const categoryTourListParserV1 = async ({
         cardImageUrl,
         startingPrice,
       } = collectionData?.collection ?? {};
+
+      const { currency: aggregatedRatingDetailsCurrency, listingPrice } =
+        startingPrice ?? {};
+
       aggregatedRatingDetails = {
         id,
         displayName,
@@ -122,8 +126,8 @@ export const categoryTourListParserV1 = async ({
         averageRating: ratingsInfo.averageRating,
         heroImageUrl,
         cardImageUrl,
-        listingPrice: startingPrice.listingPrice,
-        currency: startingPrice.currency,
+        listingPrice,
+        currency: aggregatedRatingDetailsCurrency,
       };
 
       primaryCity = collectionData?.city;
