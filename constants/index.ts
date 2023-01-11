@@ -226,6 +226,7 @@ export const CONTENT_PAGE_TYPES = [CUSTOM_TYPES.CONTENT_PAGE];
 export const DESIGN = {
   V1: 'V1 - Horizontal Card Layout',
   V2: 'V2 - Gird Cards Layout',
+  V3: 'V3 - Grid(v2) + Collapsible(v1) Layout',
 };
 
 export const PAGETYPE = {

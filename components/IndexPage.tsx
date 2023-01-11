@@ -159,6 +159,7 @@ const Page = (props) => {
   function getPageComponent(pageType) {
     switch (pageType) {
       case CUSTOM_TYPES.MICROSITE + DESIGN.V2:
+      case CUSTOM_TYPES.MICROSITE + DESIGN.V3:
         return (
           <MicrositeV2
             data={CMSContent.data}

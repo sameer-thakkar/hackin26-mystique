@@ -1547,6 +1547,7 @@ export const getPageData = async ({
             lang,
             localizedStrings,
             cookies,
+            MBDesign,
           });
         }
       }

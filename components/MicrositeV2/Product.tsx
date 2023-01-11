@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { RichText } from 'prismic-reactjs';
 import { currencyAtom } from 'store/atoms/currency';
 import { MBContext } from 'contexts/MBContext';
 import PriceBlock, { PriceSkeleton, StyledPriceBlock } from 'UI/PriceBlock';
@@ -20,7 +19,6 @@ import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { truncate } from 'utils/helper';
-import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import { dateToString } from 'utils/dateUtils';
 import InteractionContext from 'contexts/Interaction';
 import { convertUidToUrl } from 'utils/urlUtils';
@@ -76,9 +74,9 @@ const ProductCard = styled.div`
 
   .product-v2-bottom-left {
     display: grid;
-    grid-gap: ${({ isEntertainmentMb }) => (isEntertainmentMb ? '0' : '4px')};
+    grid-gap: 0;
     height: max-content;
-    ${({ isEntertainmentMb }) => isEntertainmentMb && `margin-top: 12px;`}
+    margin-top: 12px;
     .discount {
       ${expandFontToken('UI/Label Small (Heavy)')};
       color: ${COLORS.OCEAN_BLUE.TERTIARY};
@@ -90,12 +88,9 @@ const ProductCard = styled.div`
     align-items: baseline;
     justify-content: space-between;
     grid-template-columns: 1fr auto;
-    grid-gap: ${({ isEntertainmentMb }) => (isEntertainmentMb ? '0;' : '8px')};
+    grid-gap: 0;
     height: max-content;
-    ${({ isEntertainmentMb }) =>
-      isEntertainmentMb &&
-      `grid-template-columns: 1fr;
-    `}
+    grid-template-columns: 1fr;
   }
 
   .product-v2-bottom-right {
@@ -133,17 +128,13 @@ const ProductCard = styled.div`
   .tour-price {
     column-gap: 4px;
     ${expandFontToken(FONTS.SUBHEADING_LARGE)}
-    text-align: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? 'left' : 'right'};
+    text-align: left;
 
-    ${({ isEntertainmentMb }) =>
-      isEntertainmentMb &&
-      `grid-row: 2;
-      display: flex;
-    align-items: center;`}
+    grid-row: 2;
+    display: flex;
+    align-items: center;
     span {
-      color: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? COLORS.GRAY.G3 : COLORS.GRAY.G1};
+      color: ${COLORS.GRAY.G3};
     }
 
     .mr-4 {
@@ -163,10 +154,8 @@ const ProductCard = styled.div`
   .tour-scratch-price {
     grid-column: 1 / 2;
     ${expandFontToken(FONTS.UI_LABEL_SMALL)}
-    text-align: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? 'left' : 'right'};
-    text-decoration-line: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? 'unset' : 'line-through'};
+    text-align: left;
+    text-decoration-line: unset;
 
     span {
       color: ${COLORS.GRAY.G4};
@@ -220,7 +209,7 @@ const ProductCard = styled.div`
     grid-template-rows: 102px auto;
     transform: unset;
     transition: unset;
-    ${({ isEntertainmentMb }) => isEntertainmentMb && 'grid-row-gap: 10px;'}
+    grid-row-gap: 10px;
     &:hover {
       transform: unset;
     }
@@ -235,10 +224,8 @@ const ProductCard = styled.div`
     }
 
     .product-v2-bottom {
-      grid-template-columns: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '1fr' : 'auto'};
-      grid-gap: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '0;' : '12px'};
+      grid-template-columns: 1fr;
+      grid-gap: 0;
     }
 
     .product-v2-bottom-left {
@@ -273,16 +260,13 @@ const ProductCard = styled.div`
     }
 
     .avg-rating svg {
-      ${({ isEntertainmentMb }) =>
-        isEntertainmentMb &&
-        `width: 12px;
-        height: 12px;
-        
-        path {
-          fill:  ${COLORS.BRAND.CANDY};
-          stroke:  ${COLORS.BRAND.CANDY};
-        }
-        `}
+      width: 12px;
+      height: 12px;
+
+      path {
+        fill: ${COLORS.BRAND.CANDY};
+        stroke: ${COLORS.BRAND.CANDY};
+      }
     }
 
     .reopening {
@@ -343,8 +327,7 @@ const ProductCard = styled.div`
   @media (max-width: 768px) {
     .product-v2-image img {
       height: 102px;
-      border-radius: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '4px' : '2px'};
+      border-radius: 4px;
     }
 
     .product-v2-boosters {
@@ -383,7 +366,6 @@ const Product = (props) => {
     productImage,
     title,
     vendor,
-    cardFooter,
     category,
     reopeningDate,
     averageRating,
@@ -531,7 +513,6 @@ const Product = (props) => {
       onKeyDown={handleProductClick}
       role="button"
       tabIndex={0}
-      isEntertainmentMb={isEntertainmentMb}
     >
       <div className="product-v2-image">
         <Image
@@ -549,30 +530,28 @@ const Product = (props) => {
         <Conditional if={vendor?.length && isMobile}>
           <div className="vendor-name">{vendor}</div>
         </Conditional>
-        <Conditional if={isEntertainmentMb}>
-          <div className="l1-booster-wrapper">
-            <div className="l1-booster">{categoryName}</div>
-            <div className="rating">
-              <Conditional if={averageRating}>
-                <span className="avg-rating">
-                  <span className="rating-number">
-                    {averageRating?.toFixed?.(1)}
-                  </span>
-                  {STAR(COLORS.BRAND.CANDY)}
+        <div className="l1-booster-wrapper">
+          <div className="l1-booster">{categoryName}</div>
+          <div className="rating">
+            <Conditional if={averageRating}>
+              <span className="avg-rating">
+                <span className="rating-number">
+                  {averageRating?.toFixed?.(1)}
                 </span>
-              </Conditional>
-              <Conditional if={reviewCount}>
-                <span className="total-rating">
-                  (
-                  {reviewCount > 999
-                    ? `${(reviewCount / 1000).toFixed(1)}k`
-                    : reviewCount}
-                  )
-                </span>
-              </Conditional>
-            </div>
+                {STAR(COLORS.BRAND.CANDY)}
+              </span>
+            </Conditional>
+            <Conditional if={reviewCount}>
+              <span className="total-rating">
+                (
+                {reviewCount > 999
+                  ? `${(reviewCount / 1000).toFixed(1)}k`
+                  : reviewCount}
+                )
+              </span>
+            </Conditional>
           </div>
-        </Conditional>
+        </div>
         <div className="title-wrap">
           <Conditional if={!showPageExists}>
             <div className="product-v2-title">{truncate(title, 70)}</div>
@@ -624,18 +603,6 @@ const Product = (props) => {
             save={save}
           />
         </div>
-        <Conditional if={cardFooter?.length && !isEntertainmentMb}>
-          <div className="product-v2-bottom-right">
-            <div className="product-v2-boosters" data-cont={cardFooter?.length}>
-              <RichText
-                render={cardFooter}
-                htmlSerializer={(...defaultArgs: any) =>
-                  shortCodeSerializerWithParentProps(defaultArgs, tour)
-                }
-              />
-            </div>
-          </div>
-        </Conditional>
       </div>
     </ProductCard>
   );
@@ -653,7 +620,6 @@ const Product = (props) => {
             id={`${cardIdPrefix}-${tgid}`}
             role="button"
             tabIndex={0}
-            isEntertainmentMb={isEntertainmentMb}
           >
             <div className="product-v2-image">
               <Image
@@ -671,30 +637,28 @@ const Product = (props) => {
               <Conditional if={vendor?.length && isMobile}>
                 <div className="vendor-name">{vendor}</div>
               </Conditional>
-              <Conditional if={isEntertainmentMb}>
-                <div className="l1-booster-wrapper">
-                  <div className="l1-booster">{categoryName}</div>
-                  <div className="rating">
-                    <Conditional if={averageRating}>
-                      <span className="avg-rating">
-                        <span className="rating-number">
-                          {averageRating.toFixed?.(1)}
-                        </span>
-                        {STAR(COLORS.PRIMARY.JOY_MUSTARD)}
+              <div className="l1-booster-wrapper">
+                <div className="l1-booster">{categoryName}</div>
+                <div className="rating">
+                  <Conditional if={averageRating}>
+                    <span className="avg-rating">
+                      <span className="rating-number">
+                        {averageRating.toFixed?.(1)}
                       </span>
-                    </Conditional>
-                    <Conditional if={reviewCount}>
-                      <span className="total-rating">
-                        (
-                        {reviewCount > 999
-                          ? `${(reviewCount / 1000).toFixed(1)}k`
-                          : reviewCount}
-                        )
-                      </span>
-                    </Conditional>
-                  </div>
+                      {STAR(COLORS.PRIMARY.JOY_MUSTARD)}
+                    </span>
+                  </Conditional>
+                  <Conditional if={reviewCount}>
+                    <span className="total-rating">
+                      (
+                      {reviewCount > 999
+                        ? `${(reviewCount / 1000).toFixed(1)}k`
+                        : reviewCount}
+                      )
+                    </span>
+                  </Conditional>
                 </div>
-              </Conditional>
+              </div>
               <div className="title-wrap">
                 <a
                   target="_self"
@@ -705,11 +669,7 @@ const Product = (props) => {
                   <div className="product-v2-title">{truncate(title, 70)}</div>
                 </a>
                 <Conditional
-                  if={
-                    isEntertainmentMb &&
-                    !isBeforeToday &&
-                    openingDate !== 'Invalid Date'
-                  }
+                  if={!isBeforeToday && openingDate !== 'Invalid Date'}
                 >
                   <div className="reopening">
                     {OPENING_ON} {openingDate}
@@ -727,21 +687,6 @@ const Product = (props) => {
                   save={save}
                 />
               </div>
-              <Conditional if={cardFooter?.length && !isEntertainmentMb}>
-                <div className="product-v2-bottom-right">
-                  <div
-                    className="product-v2-boosters"
-                    data-cont={cardFooter?.length}
-                  >
-                    <RichText
-                      render={cardFooter}
-                      htmlSerializer={(...defaultArgs: any) =>
-                        shortCodeSerializerWithParentProps(defaultArgs, tour)
-                      }
-                    />
-                  </div>
-                </div>
-              </Conditional>
             </div>
           </ProductCard>
         </div>

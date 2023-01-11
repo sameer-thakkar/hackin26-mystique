@@ -21,7 +21,7 @@ import {
   getSingleAriesTag,
   standardizeCancellationPolicy,
 } from 'utils/productUtils';
-import { CURRENCY_SYMBOL_MAP } from 'const/index';
+import { CURRENCY_SYMBOL_MAP, DESIGN } from 'const/index';
 
 export const uncategorizedToursListParser = (
   uncategorizedToursList,
@@ -400,6 +400,7 @@ interface CategoryTourListParserV2 {
   lang: string;
   localizedStrings: any;
   cookies?: { [key: string]: string };
+  MBDesign?: string;
 }
 
 export const categoryTourListParserV2 = async (
@@ -416,6 +417,7 @@ export const categoryTourListParserV2 = async (
     lang,
     localizedStrings,
     cookies,
+    MBDesign = '',
   } = obj || {};
 
   const { primary, items: slices } = tourListCategory || {};
@@ -596,170 +598,170 @@ export const categoryTourListParserV2 = async (
       const { collection, category, subCategory, items } = c || {};
       const { id: categoryId } = collection || category || subCategory || {};
 
-      finalObj[categoryId] = items
-        ?.filter((product) => tgidsWithShowPages.includes(String(product.id)))
-        ?.map((product) => {
-          const {
-            microBrandsDescriptor,
-            descriptors: secondaryDescriptors,
-            listingPrice,
-            allTags,
-            name,
-            imageUrl,
-            id,
-            averageRating,
-            reviewCount,
-            primaryCollection,
-            primaryCategory,
-            primarySubCategory,
-            cancellationPolicy,
-            cancellationPolicyV2,
-            reschedulePolicy,
-            ticketValidity,
-          } = product || {};
-          const { displayName: collectionName } = primaryCollection || {};
-          const { displayName: primaryCategoryName } = primaryCategory || {};
-          const { displayName: primarySubCategoryName } =
-            primarySubCategory || {};
-          const {
-            urlSlugs: _primaryCategoryUrlSlugs,
-            ...primaryCategoryWithoutSlugs
-          } = primaryCategory ?? {};
-          const {
-            urlSlugs: _primarySubCategoryUrlSlugs,
-            ...primarySubCategoryWithoutSlugs
-          } = primarySubCategory ?? {};
-          const { finalPrice, originalPrice, currencyCode } =
-            listingPrice || {};
-          const currencySymbol = CURRENCY_SYMBOL_MAP[currencyCode];
-          const re = /(?:\r\n|\s\|\s)/g;
-          const descriptors = microBrandsDescriptor
-            ? microBrandsDescriptor.split(re)
-            : microBrandsDescriptor;
-          const mbDescriptors = generateDescriptor({
-            v2Descriptors: descriptors,
-            lang: 'en',
-            isEntertainmentMb: true,
-          });
-          let { microBrandsHighlight } = product ?? {};
+      let itemsToRender = items;
+      if (MBDesign !== DESIGN.V3) {
+        itemsToRender = items?.filter((product) =>
+          tgidsWithShowPages.includes(String(product.id))
+        );
+      }
+      finalObj[categoryId] = itemsToRender?.map((product) => {
+        const {
+          microBrandsDescriptor,
+          descriptors: secondaryDescriptors,
+          listingPrice,
+          allTags,
+          name,
+          imageUrl,
+          id,
+          averageRating,
+          reviewCount,
+          primaryCollection,
+          primaryCategory,
+          primarySubCategory,
+          cancellationPolicy,
+          cancellationPolicyV2,
+          reschedulePolicy,
+          ticketValidity,
+        } = product || {};
+        const { displayName: collectionName } = primaryCollection || {};
+        const { displayName: primaryCategoryName } = primaryCategory || {};
+        const { displayName: primarySubCategoryName } =
+          primarySubCategory || {};
+        const {
+          urlSlugs: _primaryCategoryUrlSlugs,
+          ...primaryCategoryWithoutSlugs
+        } = primaryCategory ?? {};
+        const {
+          urlSlugs: _primarySubCategoryUrlSlugs,
+          ...primarySubCategoryWithoutSlugs
+        } = primarySubCategory ?? {};
+        const { finalPrice, originalPrice, currencyCode } = listingPrice || {};
+        const currencySymbol = CURRENCY_SYMBOL_MAP[currencyCode];
+        const re = /(?:\r\n|\s\|\s)/g;
+        const descriptors = microBrandsDescriptor
+          ? microBrandsDescriptor.split(re)
+          : microBrandsDescriptor;
+        const mbDescriptors = generateDescriptor({
+          v2Descriptors: descriptors,
+          lang: 'en',
+          isEntertainmentMb: true,
+        });
+        let { microBrandsHighlight } = product ?? {};
 
-          microBrandsHighlight = standardizeCancellationPolicy({
-            highlights: microBrandsHighlight,
-            cancellationPolicy: cancellationPolicyV2 ?? cancellationPolicy,
-            reschedulePolicy,
-            ticketValidity,
-            showValidity: false,
-            lang: getHeadoutLanguagecode(lang),
-            localizedStrings,
-          });
+        microBrandsHighlight = standardizeCancellationPolicy({
+          highlights: microBrandsHighlight,
+          cancellationPolicy: cancellationPolicyV2 ?? cancellationPolicy,
+          reschedulePolicy,
+          ticketValidity,
+          showValidity: false,
+          lang: getHeadoutLanguagecode(lang),
+          localizedStrings,
+        });
 
-          const filterHighlights = [
+        const filterHighlights = [
+          localizedStrings.SHOW_PAGE.THEATRE_NAME,
+          localizedStrings.SHOW_PAGE.SHOW_TIMINGS,
+          localizedStrings.SHOW_PAGE.DURATION,
+          localizedStrings.SHOW_PAGE.YOUR_TICKETS,
+          localizedStrings.SHOW_PAGE.CANCELLATION_POLICY,
+          localizedStrings.SHOW_PAGE.AGE_LIMIT,
+        ];
+        const { listicleSchema, hasSpecialOffer } = parseShowPageData(
+          microBrandsHighlight
+        );
+        let listicleShowSummary, listicleWhyWatch;
+
+        for (let item of listicleSchema) {
+          const heading = item['heading'];
+          if (heading === localizedStrings.SHOW_PAGE.LISTICLE_SHOW_WHY_WATCH) {
+            listicleWhyWatch = item;
+          }
+          if (heading === localizedStrings.SHOW_PAGE.LISTICLE_SHOW_SUMMARY) {
+            listicleShowSummary = item;
+          }
+        }
+
+        const { detailsObjects: highlights, isSafetyBanner: hasBestSafety } =
+          getObject(microBrandsHighlight, filterHighlights) || {};
+        const { detailsObjects: reopeningDate } =
+          getObject(microBrandsHighlight, [
+            localizedStrings.SHOW_PAGE.OPENING_DATE,
+            localizedStrings.SHOW_PAGE.CLOSING_DATE,
+          ]) || {};
+
+        const contentBlocks = {
+          hidden: [],
+          left: [],
+          right: [],
+        };
+        for (const key of filterHighlights) {
+          const isLeftBlock = [
             localizedStrings.SHOW_PAGE.THEATRE_NAME,
             localizedStrings.SHOW_PAGE.SHOW_TIMINGS,
             localizedStrings.SHOW_PAGE.DURATION,
-            localizedStrings.SHOW_PAGE.YOUR_TICKETS,
-            localizedStrings.SHOW_PAGE.CANCELLATION_POLICY,
-            localizedStrings.SHOW_PAGE.AGE_LIMIT,
-          ];
-          const { listicleSchema, hasSpecialOffer } = parseShowPageData(
-            microBrandsHighlight
-          );
-          let listicleShowSummary, listicleWhyWatch;
-
-          for (let item of listicleSchema) {
-            const heading = item['heading'];
-            if (
-              heading === localizedStrings.SHOW_PAGE.LISTICLE_SHOW_WHY_WATCH
-            ) {
-              listicleWhyWatch = item;
-            }
-            if (heading === localizedStrings.SHOW_PAGE.LISTICLE_SHOW_SUMMARY) {
-              listicleShowSummary = item;
-            }
-          }
-
-          const { detailsObjects: highlights, isSafetyBanner: hasBestSafety } =
-            getObject(microBrandsHighlight, filterHighlights) || {};
-          const { detailsObjects: reopeningDate } =
-            getObject(microBrandsHighlight, [
-              localizedStrings.SHOW_PAGE.OPENING_DATE,
-              localizedStrings.SHOW_PAGE.CLOSING_DATE,
-            ]) || {};
-
-          const contentBlocks = {
-            hidden: [],
-            left: [],
-            right: [],
+          ].includes(key);
+          const value = highlights[key];
+          const block = {
+            label: value ? key : null,
+            content: value ? value : null,
+            align: isLeftBlock ? 'left' : 'right',
+            len: value?.length,
+            labelId: key?.toLowerCase()?.split(' ')?.join('-'),
           };
-          for (const key of filterHighlights) {
-            const isLeftBlock = [
-              localizedStrings.SHOW_PAGE.THEATRE_NAME,
-              localizedStrings.SHOW_PAGE.SHOW_TIMINGS,
-              localizedStrings.SHOW_PAGE.DURATION,
-            ].includes(key);
-            const value = highlights[key];
-            const block = {
-              label: value ? key : null,
-              content: value ? value : null,
-              align: isLeftBlock ? 'left' : 'right',
-              len: value?.length,
-              labelId: key?.toLowerCase()?.split(' ')?.join('-'),
-            };
-            isLeftBlock
-              ? contentBlocks?.left?.push(block)
-              : contentBlocks?.right?.push(block);
-          }
-          const { media } = allTourGroupData[id] || {};
-          const { productImages } = media || {};
-          const [, descriptionImage] = productImages || [];
+          isLeftBlock
+            ? contentBlocks?.left?.push(block)
+            : contentBlocks?.right?.push(block);
+        }
+        const { media } = allTourGroupData[id] || {};
+        const { productImages } = media || {};
+        const [, descriptionImage] = productImages || [];
 
-          return {
-            title: name,
-            highlights: null,
-            primaryCollection,
-            primaryCategory: primaryCategoryWithoutSlugs,
-            primarySubCategory: primarySubCategoryWithoutSlugs,
-            descriptors: mbDescriptors,
-            secondaryDescriptors,
-            productHighlights: null,
-            cardFooter: null,
-            theater: null,
-            content_theater: null,
-            contentBlocks,
-            productImage: imageUrl,
-            descriptionImage:
-              productImages?.length > 1 ? descriptionImage?.url : imageUrl,
-            price: finalPrice,
-            scratchPrice: originalPrice,
-            currencySymbol,
-            tgid: id,
-            images: productImages,
-            averageRating,
-            reviewCount,
-            ctaBooster: null,
-            description: null,
-            available: !!listingPrice?.finalPrice,
-            overlayBooster: null,
-            vendor: null,
-            allTags,
-            reopeningDate:
-              reopeningDate[localizedStrings.SHOW_PAGE.OPENING_DATE],
-            closingDate: reopeningDate[localizedStrings.SHOW_PAGE.CLOSING_DATE],
-            hasBestSafety,
-            category: {
-              collectionName,
-              primaryCategoryName,
-              primarySubCategoryName,
-            },
-            microBrandsHighlight: highlights,
-            listingPrice,
-            safetyImages: null,
-            showPageUid: hasShowPageData ? showpageData[id] : null,
-            listicleShowSummary,
-            listicleWhyWatch,
-            hasSpecialOffer,
-          };
-        });
+        return {
+          title: name,
+          highlights: microBrandsHighlight,
+          primaryCollection,
+          primaryCategory: primaryCategoryWithoutSlugs,
+          primarySubCategory: primarySubCategoryWithoutSlugs,
+          descriptors: mbDescriptors,
+          secondaryDescriptors,
+          productHighlights: null,
+          cardFooter: null,
+          theater: null,
+          content_theater: null,
+          contentBlocks,
+          productImage: imageUrl,
+          descriptionImage:
+            productImages?.length > 1 ? descriptionImage?.url : imageUrl,
+          price: finalPrice,
+          scratchPrice: originalPrice,
+          currencySymbol,
+          tgid: id,
+          images: productImages,
+          averageRating,
+          reviewCount,
+          ctaBooster: null,
+          description: null,
+          available: !!listingPrice?.finalPrice,
+          overlayBooster: null,
+          vendor: null,
+          allTags,
+          reopeningDate: reopeningDate[localizedStrings.SHOW_PAGE.OPENING_DATE],
+          closingDate: reopeningDate[localizedStrings.SHOW_PAGE.CLOSING_DATE],
+          hasBestSafety,
+          category: {
+            collectionName,
+            primaryCategoryName,
+            primarySubCategoryName,
+          },
+          microBrandsHighlight: highlights,
+          listingPrice,
+          safetyImages: null,
+          showPageUid: hasShowPageData ? showpageData[id] : null,
+          listicleShowSummary,
+          listicleWhyWatch,
+          hasSpecialOffer,
+        };
+      });
     });
 
     data = { ...finalObj, activeCurrency: currencyObject };
