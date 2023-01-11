@@ -15,7 +15,6 @@ import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
 import { POWERED_BY_HEADOUT } from 'assets/SvgIcons';
 import { throttle, withTrailingSlash } from 'utils/helper';
-import LottieLogo from 'components/common/LottieLogo';
 
 const MultiLevelNav = dynamic(() => import('components/MultiLevelNav'));
 const ResponsiveSelector: ComponentType<any> = dynamic(
@@ -93,7 +92,6 @@ const StyledHeaderContainer = styled.div`
   }
 `;
 
-// !important only required for holiday logo animation
 const StyledLogo = styled.div(
   ({ isEntertainmentMB }) => `
   display: grid;
@@ -121,14 +119,9 @@ const StyledLogo = styled.div(
     }
   }
 
-  span {
-    width: 113px;
-    height: ${isEntertainmentMB ? `36px` : `44px`};
-  }
-
   svg {
-    height: ${isEntertainmentMB ? `36px` : `44px`} !important;
-    width: auto !important;
+    height: ${isEntertainmentMB ? `36px` : `44px`};
+    width: auto;
     margin-left: ${isEntertainmentMB ? '-1px' : '11px'};
   }
 
@@ -143,13 +136,9 @@ const StyledLogo = styled.div(
       }
     }
 
-    span {
-      width: 67px;
-      height: ${isEntertainmentMB ? `20px` : `26px`};
-    }
-
     svg {
-      height: ${isEntertainmentMB ? `20px` : `26px`} !important;
+      height: ${isEntertainmentMB ? `20px` : `26px`};
+      width: 67px;
     }
   }
 `
@@ -187,7 +176,6 @@ const StyledMenuItem = styled.div`
 
 const Header: React.FC<any> = (props) => {
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
-  const [headoutLogoVisible, setHeadoutLogoVisible] = useState(true);
 
   const {
     languages,
@@ -286,13 +274,7 @@ const Header: React.FC<any> = (props) => {
               className="center"
             />
             <Conditional if={hasPoweredByHeadoutLogo}>
-              <span>
-                {headoutLogoVisible && POWERED_BY_HEADOUT}
-                <LottieLogo
-                  isEntertainmentMB={isEntertainmentMB}
-                  hideHeadoutLogo={() => setHeadoutLogoVisible(false)}
-                />
-              </span>
+              {POWERED_BY_HEADOUT}
             </Conditional>
           </StyledLogo>
         </a>
