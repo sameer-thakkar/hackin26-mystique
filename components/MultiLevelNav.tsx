@@ -11,6 +11,7 @@ import { metaAtom } from 'store/atoms/meta';
 import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
 import { withTrailingSlash } from 'utils/helper';
+import Conditional from 'components/common/Conditional';
 
 import LinkResolver from './LinkResolver';
 import { CHEVRON_DOWN } from '../assets/SvgIcons';
@@ -101,7 +102,7 @@ const StyledMenuItem = styled.li`
       nestOpen &&
       `
       background: ${COLORS.BACKGROUND.FLOATING_PURPS};
-      & > a > .nested-menu {
+      & > .link-element > .nested-menu  {
         display: grid;
         visibility: unset;
       }
@@ -293,7 +294,7 @@ const Menu = ({ label, url, slices, isMobile, isGlobalMb = false, index }) => {
         url={url}
         onClick={(e) => nestedMobileInteraction(e, label)}
         nestOpen={active}
-        className={`${active ? 'nest-open' : 'nest-close'}`}
+        className={active ? 'nest-open' : 'nest-close'}
         isGlobalMb={isGlobalMb}
         onMouseEnter={trackHeaderItem}
         index={index}
@@ -357,15 +358,15 @@ const MenuItem = (props) => {
         <React.Fragment>
           <LinkResolver target={url?.target} url={withTrailingSlash(url?.url)}>
             <div
-              className={`${isNested ? 'withIcon' : ''} menu-item-text`}
+              className={`${isNested ? 'withIcon ' : ''}menu-item-text`}
               onClick={menuItemSelected}
               role="button"
               tabIndex={0}
             >
               <span className="label">{label}</span>
-              {isNested ? (
+              <Conditional if={isNested}>
                 <span className="nest-icon">{CHEVRON_DOWN}</span>
-              ) : null}
+              </Conditional>
             </div>
           </LinkResolver>
           {children}
