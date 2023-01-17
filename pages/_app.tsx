@@ -26,6 +26,7 @@ import renderShortCodes from 'utils/shortCodes';
 import { sendVariablesToDataLayer } from 'utils/analytics';
 import { getLangObject } from 'utils/helper';
 import { ArabicGlobalStyle } from 'const/globalStyles/ar';
+import ScrollToTop from 'components/common/ScrollToTop';
 
 const App = ({ Component, pageProps, localizedStrings, lang }) => {
   strings.setContent({
@@ -144,6 +145,7 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
       <RecoilRoot initializeState={initRecoil}>
         {getLanguageBasedGlobalStyling(lang)}
         <Component {...pageProps} />
+        <ScrollToTop />
         <LiveChat />
       </RecoilRoot>
     </StyleSheetManager>

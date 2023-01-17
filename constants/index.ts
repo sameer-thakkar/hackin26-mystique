@@ -313,6 +313,7 @@ export const ANALYTICS_EVENTS = {
   DEAD_CLICK: 'Dead Click',
   MB_BANNER_VIDEO_AUTOPLAY_STARTED: 'MB Banner Video Autoplay Started',
   MB_BANNER_VIDEO_AUTOPLAY_FAILED: 'MB Banner Video Autoplay Failed',
+  SCROLL_TO_TOP: 'Scroll To Top Button Clicked',
 };
 
 export const PAGE_TYPE = {
