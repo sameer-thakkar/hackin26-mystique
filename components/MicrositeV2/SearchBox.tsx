@@ -101,10 +101,16 @@ const StyledSearchBox = styled.div`
 
 export const SearchBox = (props) => {
   let interactionContext = useContext(InteractionContext);
-  const { handleResults, allToursArray, clearSearch, isEntertainmentMb } =
-    props || {};
+  const {
+    handleResults,
+    allToursArray,
+    clearSearch,
+    isEntertainmentMb,
+    isMobile,
+  } = props || {};
   const [query, setQuery] = useRecoilState(searchQueryAtom);
   const fuse = useRef(null);
+  const inputRef = useRef(null);
 
   const search = useCallback(
     (str) => {
@@ -143,9 +149,16 @@ export const SearchBox = (props) => {
     }
   }, [allToursArray, clearSearch, handleClearSearch, fuse]);
 
+  useEffect(() => {
+    if (isMobile) {
+      inputRef.current.focus();
+    }
+  }, []);
+
   return (
     <StyledSearchBox isEntertainmentMb={isEntertainmentMb}>
       <input
+        ref={inputRef}
         type="text"
         placeholder="Search"
         value={query}
