@@ -317,6 +317,8 @@ const pt = {
       'Você pode cancelar estes ingressos até {0} horas antes do início da experiência para obter um reembolso total.',
     CANCELLABLE_ANYTIME:
       'Cancelamento gratuito a qualquer momento antes do início da sua experiência',
+    CANCELLABLE_DAYS:
+      'Você pode cancelar estes ingressos até {0} dias antes do começo da experiência e receber um reembolso completo.',
   },
   VALIDITY: {
     UNTIL_DATE: 'Estes ingressos são válidos até o dia {0}.',

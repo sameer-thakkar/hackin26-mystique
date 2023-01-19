@@ -28,6 +28,9 @@ export const isDateInThePast = (date) => new Date(date).getTime() < Date.now();
 
 export const getDurationInHours = (duration) => Math.round(duration / 60);
 
+export const getDurationInDays = (duration: number) =>
+  Math.round(duration / 1440);
+
 export const isDateValid = (date) => dayjs(date).isValid();
 
 export const getPrevDate = (date) =>

@@ -1,6 +1,10 @@
 import { RichText } from 'prismic-reactjs';
 import dayjs from 'dayjs';
-import { getDurationInHours, isDateValid } from 'utils/dateUtils';
+import {
+  getDurationInDays,
+  getDurationInHours,
+  isDateValid,
+} from 'utils/dateUtils';
 import {
   CANCELLATION_POLICY_POSSIBLE_LABELS,
   DESCRIPTORS,
@@ -361,9 +365,14 @@ export const getCancellationPolicyString = ({
   } else {
     return cancellableUptoHours === 0
       ? localizedStrings.CANCELLATION_POLICY.CANCELLABLE_ANYTIME
-      : strings.formatString(
+      : cancellableUptoHours <= 72
+      ? strings.formatString(
           localizedStrings.CANCELLATION_POLICY.CANCELLABLE,
           cancellableUptoHours
+        )
+      : strings.formatString(
+          localizedStrings.CANCELLATION_POLICY.CANCELLABLE_DAYS,
+          getDurationInDays(cancellableUptoMinutes)
         );
   }
 };

@@ -317,6 +317,8 @@ const nl = {
       'Je annuleert deze tickets tot {0} uur voor de belevenis begint en krijgt een volledige terugbetaling.',
     CANCELLABLE_ANYTIME:
       'Gratis annulering op elk moment voor het begin van uw ervaring',
+    CANCELLABLE_DAYS:
+      'Je kunt deze tickets tot {0} dagen voor het begin van de ervaring annuleren en een volledige terugbetaling krijgen.',
   },
   VALIDITY: {
     UNTIL_DATE: 'Deze tickets zijn geldig tot {0}.',

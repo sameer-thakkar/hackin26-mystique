@@ -314,6 +314,8 @@ const fr = {
       'Vous pouvez annuler ces billets jusqu’à {0} heures avant le début de l’expérience et bénéficiez d’un remboursement complet.',
     CANCELLABLE_ANYTIME:
       'Annulation gratuite à tout moment avant le début de votre activité',
+    CANCELLABLE_DAYS:
+      'Vous pouvez annuler ces billets jusqu’à {0} jours avant le début de l’expérience et obtenir un remboursement complet.',
   },
   VALIDITY: {
     UNTIL_DATE: 'Ces billets sont valables jusqu’au {0}.',

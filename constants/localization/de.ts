@@ -315,6 +315,8 @@ const de = {
     CANCELLABLE:
       'Sie können diese Tickets bis zu {0} Stunden vor Erlebnisbeginn stornieren, um eine vollständige Rückerstattung zu erhalten.',
     CANCELLABLE_ANYTIME: 'Kostenfreie Stornierung vor Beginn Ihres Erlebnisses',
+    CANCELLABLE_DAYS:
+      'Sie können diese Tickets bis zu {0} Tage vor Beginn des Erlebnisses für eine volle Rückerstattung stornieren.',
   },
   VALIDITY: {
     UNTIL_DATE: 'Diese Tickets sind bis zum {0} gültig.',

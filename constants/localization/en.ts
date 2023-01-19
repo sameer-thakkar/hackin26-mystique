@@ -402,6 +402,8 @@ const en = {
       'You can cancel these tickets up to {0} hours before the experience begins and get a full refund.',
     CANCELLABLE_ANYTIME:
       'Free cancellation anytime before the start of your experience',
+    CANCELLABLE_DAYS:
+      'You can cancel these tickets up to {0} days before the experience begins and get a full refund.',
   },
   VALIDITY: {
     UNTIL_DATE: 'These tickets are valid until {0}.',
