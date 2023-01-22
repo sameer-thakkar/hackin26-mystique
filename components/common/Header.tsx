@@ -106,6 +106,7 @@ const StyledLogo = styled.div(
   }
 
   .image-wrap {
+    padding-right: 7px;
     span {
       position: relative !important;
     }
@@ -130,8 +131,9 @@ const StyledLogo = styled.div(
     grid-auto-flow: column;
     margin-left: 1.5rem;
 
-    .image-wrap {
-      img{
+    .image-wrap {        
+      padding-right: 0;
+      img {
         height: ${isEntertainmentMB ? `20px` : `26px`} !important;
       }
     }
