@@ -25,7 +25,10 @@ const ResponsiveSelector: ComponentType<any> = dynamic(
   { ssr: false }
 );
 
-const StyledHeader = styled.header<{ $isSticky: boolean }>`
+const StyledHeader = styled.header<{
+  $isSticky: boolean;
+  $isEntertainmentMB: boolean;
+}>`
   height: 80px;
   width: 100%;
   background-color: ${({ theme: { primaryBackground } }) =>
@@ -35,16 +38,18 @@ const StyledHeader = styled.header<{ $isSticky: boolean }>`
   transition: all 0.2s ease-in;
   position: sticky;
   top: 0;
-  box-shadow: ${({ $isTop }) =>
+  box-shadow: ${({ $isTop, $isEntertainmentMB }) =>
     !$isTop &&
+    !$isEntertainmentMB &&
     '0px -1px 2px rgba(0, 0, 0, 0.08), 0px 4px 8px rgba(0, 0, 0, 0.12)'};
 
   :hover {
     z-index: 99;
   }
 
-  ${({ $isSticky }) =>
+  ${({ $isSticky, $isEntertainmentMB }) =>
     !$isSticky &&
+    !$isEntertainmentMB &&
     `
     top: -5rem;
     left: 0;
@@ -54,11 +59,15 @@ const StyledHeader = styled.header<{ $isSticky: boolean }>`
   @media (max-width: 768px) {
     height: 56px;
 
-    ${({ $isSticky }) =>
+    ${({ $isSticky, $isEntertainmentMB }) =>
       !$isSticky &&
+      !$isEntertainmentMB &&
       `
       top: -3.5rem;
     `}
+
+    ${({ $isEntertainmentMB }) =>
+      $isEntertainmentMB && `border-bottom: 1px solid ${COLORS.GRAY.G6};`}
   }
 `;
 
@@ -261,7 +270,11 @@ const Header: React.FC<any> = (props) => {
   }, [scrollPos]);
 
   return (
-    <StyledHeader $isSticky={isHeaderSticky} $isTop={scrollPos <= 80}>
+    <StyledHeader
+      $isSticky={isHeaderSticky}
+      $isTop={scrollPos <= 80}
+      $isEntertainmentMB={isEntertainmentMB}
+    >
       <StyledHeaderContainer hasDropdownLinks={!isMobile && hasDropdownLinks}>
         <a href={logoRedirectionURL || '/'}>
           <StyledLogo isEntertainmentMB={isEntertainmentMB}>
