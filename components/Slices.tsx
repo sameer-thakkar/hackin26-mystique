@@ -16,6 +16,9 @@ import RichtextWithCTA from './slices/RichTextWithCTA';
 // Dynamic imports
 const CustomLinkedTours = dynamic(() => import('./slices/CustomLinkedTours'));
 const ImageGallery = dynamic(() => import('./slices/ImageGallery'));
+const CarouselGallery = dynamic(() =>
+  import(/* webpackChunkName: "CarouselGallery" */ './slices/CarouselGallery')
+);
 const TicketCards = dynamic(() => import('./slices/TicketCards'));
 const ImageLinksCarousel = dynamic(() => import('./slices/ImageLinksCarousel'));
 const InteractiveImage = dynamic(() => import('./slices/InteractiveImage'));
@@ -406,6 +409,10 @@ const sliceHandler = (slice, props: any = {}) => {
           mobileLayout={slice.primary.mobile_layout}
           isMobile={props.isMobile}
         />
+      );
+    case 'carousel_gallery':
+      return (
+        <CarouselGallery heading={slice.primary.heading} images={slice.items} />
       );
     case 'ticket_cards':
       return (
