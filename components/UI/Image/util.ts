@@ -25,7 +25,8 @@ export const generateImageImgixUrl = (
   const imigxOptionsQueryParams = new URLSearchParams(),
     extractedRect = /rect=[\d,.]*/.exec(url);
 
-  imigxOptionsQueryParams.set('auto', 'compress,format');
+  imigxOptionsQueryParams.set('auto', 'compress');
+  imigxOptionsQueryParams.set('auto', 'format');
 
   if (width) imigxOptionsQueryParams.set('w', `${Number(width) * 1.5}`);
   if (height) imigxOptionsQueryParams.set('h', `${Number(height) * 1.5}`);
@@ -52,8 +53,6 @@ export const generateImageImgixUrl = (
     imigxOptionsQueryParams.set('fill', 'blur');
     imigxOptionsQueryParams.set('fit', 'fill');
   }
-
-  imigxOptionsQueryParams.set('fm', format);
 
   if (addDarkOverlay) {
     imigxOptionsQueryParams.set('exp', '-10');

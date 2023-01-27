@@ -1504,6 +1504,7 @@ export const getPageData = async ({
       const {
         design,
         theme,
+        body,
         body1,
         allShowPages,
         localisedCategoryTourListV1,
@@ -1511,6 +1512,7 @@ export const getPageData = async ({
       } = CMSData || {};
       const MBDesign = design || '';
       const mbTheme = theme || THEMES.DEFAULT;
+      const toursTabSlice = body?.[0];
       const toursTabFirstSlice = body1[0];
 
       const categoryCarouselCF = getSinglePrismicSlice({
@@ -1530,7 +1532,7 @@ export const getPageData = async ({
         if (hasCategoryTourListV1) {
           categoryTourListData = await categoryTourListParserV1({
             productCard: productCardData,
-            sliceObj: localisedCategoryTourListV1,
+            sliceObj: toursTabSlice || localisedCategoryTourListV1,
             hostname,
             lang,
             cookies,

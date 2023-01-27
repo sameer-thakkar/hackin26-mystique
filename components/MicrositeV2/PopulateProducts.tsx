@@ -18,7 +18,7 @@ import { expandFontToken } from 'const/typography';
 import { trackEvent } from 'utils/analytics';
 
 const RowComponent: ComponentType<any> = dynamic(() =>
-  import(/* webpackChunkName: "SafeExperiencesPitch" */ './RowComponent').then(
+  import(/* webpackChunkName: "RowComponent" */ './RowComponent').then(
     (mod) => mod.RowComponent
   )
 );

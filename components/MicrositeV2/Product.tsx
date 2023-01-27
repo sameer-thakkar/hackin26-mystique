@@ -489,10 +489,11 @@ const Product = (props) => {
   const showPageExists = !showPageUrl.includes('/book');
   const getBooster = (onlyBoosterText = false) => {
     if ((save > 0 || hasSpecialOffer) && isLTT) {
-      if (onlyBoosterText) return 'Special Offer';
+      if (onlyBoosterText) return strings.SHOW_PAGE.SPECIAL_OFFER;
       return (
         <div className="overlay-booster">
-          <Emoji symbol="🤑" label="glowing-star" /> {strings.SPECIAL_OFFER}
+          <Emoji symbol="🤑" label="glowing-star" />{' '}
+          {strings.SHOW_PAGE.SPECIAL_OFFER}
         </div>
       );
     } else if (isNewArrival) {
