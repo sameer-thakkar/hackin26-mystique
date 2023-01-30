@@ -627,6 +627,7 @@ export const MobileProductPage = (props) => {
         tgid,
         biLink,
         redirectToHeadoutBookingFlow,
+        flowType: tour.flowType,
       }),
       '_blank',
       'noopener, noreferrer'

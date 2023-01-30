@@ -1048,6 +1048,7 @@ const Product = (props) => {
     primaryCategory,
     primaryCollection,
     primarySubCategory,
+    flowType,
     mediaUpgradeExperiment,
     bannerVideo,
   } = props;
@@ -1480,6 +1481,7 @@ const Product = (props) => {
     bookSubdomain,
     redirectToHeadoutBookingFlow,
     ctaSuffix: ctaUrlSuffix,
+    flowType,
   });
 
   const BookNowCta = ({ clickHandler }: { clickHandler: () => void }) => (

@@ -1667,6 +1667,7 @@ export const getPageData = async ({
           reschedulePolicy,
           cancellationPolicy,
           cancellationPolicyV2,
+          flowType,
         } = tour ?? {};
 
         let { microBrandsHighlight } = tour ?? {};
@@ -1719,6 +1720,7 @@ export const getPageData = async ({
               ...listingPrice,
               ...currencySymbolMap[listingPrice?.currencyCode],
             },
+            flowType,
           },
         };
       },

@@ -252,7 +252,7 @@ export const categoryTourListParserV1 = async ({
     const repeatableObj = finalTours
       ?.slice(0, sliceIndex)
       ?.reduce((acc, tour) => {
-        const { id, allTags } = tour || {};
+        const { id, allTags, flowType } = tour || {};
         const tourObj = items?.find((item) => item.tgid === id);
         const [variantId] =
           getSingleAriesTag(allTags, 'DEFAULT_VARIANT')?.match(/\d+/) || [];
@@ -269,6 +269,7 @@ export const categoryTourListParserV1 = async ({
           tour_description_override: [],
           tour_title_override: null,
           variantId,
+          flowType,
           ...tourObj,
         };
         return [...acc, finalObj];
@@ -307,6 +308,7 @@ export const categoryTourListParserV1 = async ({
         cancellationPolicyV2,
         reschedulePolicy,
         ticketValidity,
+        flowType,
       } = tour ?? {};
       const { productImages, safetyImages } = media || {};
       const updatedDescriptors = generateDescriptor({
@@ -368,6 +370,7 @@ export const categoryTourListParserV1 = async ({
           primaryCollection,
           primaryCategory: primaryCategoryWithoutSlugs,
           primarySubCategory: primarySubCategoryWithoutSlugs,
+          flowType,
         },
       };
     }, {});
@@ -716,7 +719,7 @@ export const categoryTourListParserV2 = async (
             ? contentBlocks?.left?.push(block)
             : contentBlocks?.right?.push(block);
         }
-        const { media } = allTourGroupData[id] || {};
+        const { media, flowType } = allTourGroupData[id] || {};
         const { productImages } = media || {};
         const [, descriptionImage] = productImages || [];
 
@@ -737,6 +740,7 @@ export const categoryTourListParserV2 = async (
           descriptionImage:
             productImages?.length > 1 ? descriptionImage?.url : imageUrl,
           price: finalPrice,
+          flowType,
           scratchPrice: originalPrice,
           currencySymbol,
           tgid: id,
@@ -805,6 +809,7 @@ export const tourListApiParser = (apiResponse, lang = 'en') => {
       primaryCollection,
       primaryCategory,
       primarySubCategory,
+      flowType,
     } = tour || {};
     const { productImages, safetyImages } = media || {};
     const updatedDescriptors = generateDescriptor({
@@ -840,6 +845,7 @@ export const tourListApiParser = (apiResponse, lang = 'en') => {
         primaryCollection,
         primaryCategory,
         primarySubCategory,
+        flowType,
       },
     };
   }, {});

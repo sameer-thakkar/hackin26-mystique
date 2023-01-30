@@ -217,6 +217,7 @@ const ShowPage = (props) => {
     startLocation,
     endLocation,
     variants,
+    flowType,
   } = tourGroupData || {};
 
   const { slots } = inventorySlotData || {};
@@ -430,6 +431,7 @@ const ShowPage = (props) => {
     lang: currentLanguage,
     tgid,
     currency,
+    flowType,
   });
   const pricingValidFromDate = getPrevDate(inventorySlotData?.fromDate);
 

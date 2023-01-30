@@ -378,6 +378,7 @@ const ShowPageBanner = ({
     descriptors,
     reviewCount,
     reviewsDetails: { averageRating },
+    flowType,
   } = tourGroupData ?? {};
 
   const { originalPrice, finalPrice } = listingPrice ?? {};
@@ -402,6 +403,7 @@ const ShowPageBanner = ({
     biLink: biLink,
     redirectToHeadoutBookingFlow,
     currency,
+    flowType,
   });
 
   const [isVideo, setIsVideo] = useState(false);

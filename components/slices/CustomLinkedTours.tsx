@@ -150,13 +150,14 @@ const CustomLinkedTours = ({
   });
   const apiTours = tourListData ? tourListApiParser(tourListData, lang) : {};
 
-  const defaultURL = (tgid) =>
+  const defaultURL = (tgid, flowType) =>
     createBookingURL({
       nakedDomain,
       lang,
       tgid,
       biLink,
       redirectToHeadoutBookingFlow,
+      flowType,
     });
   return (
     <StyledCustomLinkedTours design={design}>
@@ -166,13 +167,21 @@ const CustomLinkedTours = ({
       <TourGrid>
         {apiTours &&
           tgids.map((tgid: any, index) => {
-            const { title, image, averageRating, reviewCount, listingPrice } =
-              apiTours[tgid] || {};
+            const {
+              title,
+              image,
+              averageRating,
+              reviewCount,
+              listingPrice,
+              flowType,
+            } = apiTours[tgid] || {};
             return (
               <Tour
                 key={index}
                 href={
-                  basicTours[tgid].url || commonLink.url || defaultURL(tgid)
+                  basicTours[tgid].url ||
+                  commonLink.url ||
+                  defaultURL(tgid, flowType)
                 }
                 target={(basicTours[tgid] || commonLink).target}
               >

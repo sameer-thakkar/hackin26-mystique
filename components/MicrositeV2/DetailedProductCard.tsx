@@ -440,7 +440,6 @@ const DetailedProductCard = (props) => {
   } = props;
   const pageMetaData = useRecoilValue(metaAtom);
   const activeTour = allTours[tgidClicked];
-  const { listicleShowSummary, listicleWhyWatch } = activeTour;
   const {
     allTags = [],
     listingPrice,
@@ -456,6 +455,9 @@ const DetailedProductCard = (props) => {
     primaryCategory,
     primarySubCategory,
     primaryCollection,
+    listicleShowSummary,
+    listicleWhyWatch,
+    flowType,
   } = activeTour || {};
   const showPageUrl = showPageUid
     ? convertUidToUrl({ uid: showPageUid, isDev, hostname: host })
@@ -620,6 +622,7 @@ const DetailedProductCard = (props) => {
                 tgid: tgidClicked,
                 biLink,
                 redirectToHeadoutBookingFlow,
+                flowType,
               }),
               '_blank',
               'noopener, noreferrer'

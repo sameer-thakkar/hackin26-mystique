@@ -612,6 +612,7 @@ const TourComparisonTable = (props) => {
                       nakedDomain,
                       lang,
                       tgid: tour.tgid,
+                      flowType: tour.flowType,
                       biLink,
                       redirectToHeadoutBookingFlow,
                     }),

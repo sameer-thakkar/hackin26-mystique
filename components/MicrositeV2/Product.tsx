@@ -360,7 +360,7 @@ const Product = (props) => {
   const { collectionId, primaryCatId, primarySubCatId } = sliceData || {};
   if (!allTours[tgid]) return null;
 
-  const { listingPrice, ...tour } = allTours[tgid] || {};
+  const { listingPrice, flowType, ...tour } = allTours[tgid] || {};
   const {
     allTags,
     productImage,
@@ -419,6 +419,7 @@ const Product = (props) => {
     tgid,
     redirectToHeadoutBookingFlow,
     currency,
+    flowType,
   });
   const showPageUrl = showPageUid
     ? convertUidToUrl({ uid: showPageUid, isDev, hostname: host, lang })

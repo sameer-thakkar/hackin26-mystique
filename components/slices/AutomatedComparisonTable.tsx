@@ -629,6 +629,7 @@ const AutomatedTourComparisonTable = ({
                       nakedDomain,
                       lang,
                       tgid: tour.id,
+                      flowType: tour.flowType,
                       biLink,
                       redirectToHeadoutBookingFlow,
                     }),

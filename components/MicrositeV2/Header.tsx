@@ -336,12 +336,13 @@ const Header: FunctionComponent<HeaderProps> = ({
   const loadSearchPage = () => {
     changePage({ name: PAGETYPE.SEARCH });
   };
-  const onSearchResultClick = (tgid, showPageUid) => {
+  const onSearchResultClick = (tgid, showPageUid, flowType) => {
     const bookingURL = createBookingURL({
       nakedDomain,
       lang,
       tgid,
       redirectToHeadoutBookingFlow,
+      flowType,
     });
     const showPageUrl = showPageUid
       ? convertUidToUrl({ uid: showPageUid, hostname: host })

@@ -576,6 +576,7 @@ const TicketCard = (props) => {
     showEarliestAvailability,
     finalPromoCode,
     appliedPromo,
+    flowType,
   } = props;
 
   const {
@@ -795,6 +796,7 @@ const TicketCard = (props) => {
     bookSubdomain,
     redirectToHeadoutBookingFlow,
     ctaSuffix: ctaUrlSuffix,
+    flowType,
   });
 
   const hasReadMore = highlights.flat()?.length >= 3 && !defaultOpen;

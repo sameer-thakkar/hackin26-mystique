@@ -124,6 +124,7 @@ const allToursParser = (CMSData, scorpioData, pricingData: ToursData) => {
         primaryCollection: cardPrices?.[tourData.tgid]?.primaryCollection,
         primaryCategory: cardPrices?.[tourData.tgid]?.primaryCategory,
         primarySubCategory: cardPrices?.[tourData.tgid]?.primarySubCategory,
+        flowType: scorpioTour?.flowType,
       },
     };
   }, {});

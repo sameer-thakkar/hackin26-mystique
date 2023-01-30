@@ -412,6 +412,7 @@ const PopulateProducts = (props) => {
               earliestAvailability,
               tour_variant_id,
               tour_title_override,
+              flowType,
               tour_description_override,
               product_booster,
               short_summary,
@@ -470,6 +471,7 @@ const PopulateProducts = (props) => {
               primaryCategory,
               primaryCollection,
               primarySubCategory,
+              flowType,
               mediaUpgradeExperiment,
               bannerVideo,
             };

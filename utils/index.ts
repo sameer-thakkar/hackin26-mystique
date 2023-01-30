@@ -9,10 +9,12 @@ import {
   NON_SUPPORTED_LANGUAGES,
   UNIT_ABBREVIATIONS,
 } from 'const/index';
+import { BOOKING_FLOW_STAGE, BOOKING_FLOW_TYPE } from 'const/booking';
 import { getLangObject, withoutTrailingSlash } from 'utils/helper';
 import { fetchCollection, fetchTourGroupsByCategory } from 'utils/apiUtils';
 import { convertUidToUrl, getDomainFromUid } from 'utils/urlUtils';
-import type { AggregatedRatingDetails } from 'components/StaticBanner/index';
+
+import type { AggregatedRatingDetails } from '../components/StaticBanner';
 
 export const shouldDisplayCollectionRatings = (
   aggregatedRatingDetails: AggregatedRatingDetails
@@ -162,6 +164,7 @@ export const createBookingURL = ({
   bookSubdomain = '',
   redirectToHeadoutBookingFlow = false,
   ctaSuffix = '',
+  flowType = undefined,
 }) => {
   const bookingFlowSubdomain =
     bookSubdomain &&
@@ -169,6 +172,7 @@ export const createBookingURL = ({
     bookSubdomain !== 'undefined'
       ? bookSubdomain
       : 'book';
+  const hasDateQueryParam = typeof date?.startDate !== 'undefined';
   const langRouteParam =
     lang && lang !== LANGUAGE_MAP.en.code ? '/' + LANGUAGE_MAP[lang].code : '';
 
@@ -176,19 +180,44 @@ export const createBookingURL = ({
     ? HEADOUT_NAKED_DOMAIN
     : nakedDomain;
 
-  let bookingStageSuffix;
+  let bookingStageSuffix: string,
+    addTrailingSlash = false;
 
   // on Mobile, we have intermediate Pax Selection step.
-  bookingStageSuffix = isMobile && date ? '/select/pax' : '';
+  bookingStageSuffix = isMobile && date ? 'select/pax' : '';
+
+  switch (flowType) {
+    case BOOKING_FLOW_TYPE.SEATMAP:
+      bookingStageSuffix = hasDateQueryParam
+        ? BOOKING_FLOW_STAGE.SEATMAP_VARIANT
+        : BOOKING_FLOW_STAGE.SEATMAP_SELECT;
+      break;
+    case BOOKING_FLOW_TYPE.SVG:
+      bookingStageSuffix = hasDateQueryParam
+        ? BOOKING_FLOW_STAGE.SVG_VARIANT
+        : BOOKING_FLOW_STAGE.SVG_SELECT;
+      break;
+    case BOOKING_FLOW_TYPE.RESERVATION:
+    case BOOKING_FLOW_TYPE.COMBO:
+    case BOOKING_FLOW_TYPE.NORMAL:
+      bookingStageSuffix = BOOKING_FLOW_STAGE.SELECT;
+  }
+
+  addTrailingSlash = bookingStageSuffix.length > 0;
 
   const urlObject = new URL(
-    `https://${bookingFlowSubdomain}.${domain}${langRouteParam}/book/${tgid}${bookingStageSuffix}/`
+    `https://${bookingFlowSubdomain}.${domain}${langRouteParam}/book/${tgid}/${bookingStageSuffix}${
+      addTrailingSlash ? '/' : ''
+    }`
   );
 
-  if (date?.startDate) urlObject.searchParams.set('date', date?.startDate);
-  if (date?.startDate) urlObject.searchParams.set('variantId', tourId);
-  if (date?.startDate && date?.startTime)
-    urlObject.searchParams.set('time', date?.startTime);
+  if (hasDateQueryParam) {
+    urlObject.searchParams.set('date', date?.startDate);
+    urlObject.searchParams.set('variantId', tourId);
+
+    date?.startTime && urlObject.searchParams.set('time', date?.startTime);
+  }
+
   if (currency) urlObject.searchParams.set('currencyCode', currency);
   if (biLink) urlObject.searchParams.set('bi', biLink);
   if (promoCode) urlObject.searchParams.set('couponCode', promoCode);
