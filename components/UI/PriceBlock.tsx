@@ -70,6 +70,7 @@ export const SavedTag = styled.div`
 
   ${expandFontToken(FONTS.MISC_TAG_REGULAR)}
   border-radius: 2px;
+  width: fit-content;
 `;
 
 export const PriceSkeleton = styled.div<{ showScratchPrice: boolean }>`

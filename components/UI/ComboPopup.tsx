@@ -18,7 +18,7 @@ import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 import { getHostName } from 'utils/helper';
 
 const PopupWrapper = styled.div`
-  z-index: 10;
+  z-index: 16;
   width: 100vw;
   height: 100%;
   position: fixed;

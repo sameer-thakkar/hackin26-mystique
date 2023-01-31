@@ -629,6 +629,10 @@ export const categoryTourListParserV2 = async (
           cancellationPolicyV2,
           reschedulePolicy,
           ticketValidity,
+          minDuration,
+          maxDuration,
+          combo,
+          multiVariant,
         } = product || {};
         const { displayName: collectionName } = primaryCollection || {};
         const { displayName: primaryCategoryName } = primaryCategory || {};
@@ -768,6 +772,10 @@ export const categoryTourListParserV2 = async (
           listicleShowSummary,
           listicleWhyWatch,
           hasSpecialOffer,
+          minDuration,
+          maxDuration,
+          combo,
+          multiVariant,
         };
       });
     });

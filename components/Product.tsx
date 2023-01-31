@@ -68,9 +68,41 @@ dayjs.extend(advancedFormat);
 const isLengthyArray = (item) => Array.isArray(item) && item.length;
 
 const Container = styled.div`
+  display: ${({ isCardVisible }) => (isCardVisible ? 'block' : 'none')};
+
   max-width: 1200px;
   margin: auto;
   width: 100%;
+  position: relative;
+  ${({ isV3Design, indexPosition }) =>
+    isV3Design &&
+    `
+    border-top: 1px solid ${COLORS.GRAY.G4A};
+    background-color: ${COLORS.GRAY.G8};
+    min-height: 400px;
+  }
+  
+  .indicator-triangle::before {
+    border-color: transparent transparent ${COLORS.GRAY.G4A};
+    border-width: 12px;
+    border-style: solid;content: "";
+    position: absolute;
+    top: -24px;
+    // use indexPosition to find the position of card in overall list and % 4 to find the order in a single row
+    // and use this info to find a perfect fir for arrow from left
+    left: ${25 * (((indexPosition + 4) % 4) + 1) - 14.5}%;
+  }
+
+  .indicator-triangle::after {
+    border-color: transparent transparent ${COLORS.GRAY.G8};
+    border-width: 12px;
+    border-style: solid;content: "";
+    position: absolute;
+    top: -22px;
+    left: ${25 * (((indexPosition + 4) % 4) + 1) - 14.5}%;
+    transform: translateY(0px);
+  }
+  `}
 `;
 
 const PRODUCT_CARD_IMAGE_DIMENSIONS = {
@@ -130,11 +162,13 @@ const ctaBlockMobileStyles = (isSticky: boolean) => css`
 const StyledProductCard = styled.div`
   padding: ${({ isTicketCard, theme }) =>
     isTicketCard ? `24px 0px 24px 40px` : theme.productCards.padding.desktop};
-  ${({ isTicketCard, theme, isMobile }) =>
+  ${({ isTicketCard, theme, isMobile, isV3Design }) =>
     (!isTicketCard || isMobile) &&
+    !isV3Design &&
     `border: ${theme.productCards.border};
     border-radius: 4px;`};
   display: grid;
+
   grid-row-gap: 24px;
   grid-template-columns: 1fr auto;
   grid-template-areas: ${({ layout }) =>
@@ -804,6 +838,7 @@ const HighlightTabs = ({
   onTabChange,
   pageType,
   activeTabIndex,
+  showCard,
 }) => {
   const width = useWindowWidth();
   const [isMobile, setIsMobile] = useState(false);
@@ -856,62 +891,64 @@ const HighlightTabs = ({
   };
 
   return (
-    <HighlightTabsWrapper hasRegularHighlights={hasRegularHighlights}>
-      <TabsWrapper onClick={(e) => e.stopPropagation()}>
-        <Swiper
-          {...swiperParams}
-          onSwiper={updateSwiper}
-          onSlideChange={updateIndex}
-        >
+    <Conditional if={showCard}>
+      <HighlightTabsWrapper hasRegularHighlights={hasRegularHighlights}>
+        <TabsWrapper onClick={(e) => e.stopPropagation()}>
+          <Swiper
+            {...swiperParams}
+            onSwiper={updateSwiper}
+            onSlideChange={updateIndex}
+          >
+            {tabs.map((tab, index) => (
+              <Tab
+                isActive={activeTabIndex == index}
+                key={index}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  trackedTabChange(index);
+                }}
+                pageType={pageType}
+              >
+                {tab.heading}
+              </Tab>
+            ))}
+          </Swiper>
+          <SwiperControls>
+            <Conditional if={!isBeginning}>
+              <div
+                className="prev-slide"
+                role="button"
+                tabIndex={0}
+                onClick={goPrev}
+              >
+                {CHEVRON_RIGHT_CIRCLE}
+              </div>
+            </Conditional>
+            <Conditional if={!isEnd}>
+              <div
+                className="next-slide"
+                role="button"
+                tabIndex={0}
+                onClick={goNext}
+              >
+                {CHEVRON_RIGHT_CIRCLE}
+              </div>
+            </Conditional>
+          </SwiperControls>
+        </TabsWrapper>
+        <TabPanelWrapper>
           {tabs.map((tab, index) => (
-            <Tab
+            <TabPanel
               isActive={activeTabIndex == index}
               key={index}
-              onClick={(e) => {
-                e.stopPropagation();
-                trackedTabChange(index);
-              }}
               pageType={pageType}
             >
-              {tab.heading}
-            </Tab>
+              <RichText render={tab.contents} elements={richtextElements} />
+            </TabPanel>
           ))}
-        </Swiper>
-        <SwiperControls>
-          <Conditional if={!isBeginning}>
-            <div
-              className="prev-slide"
-              role="button"
-              tabIndex={0}
-              onClick={goPrev}
-            >
-              {CHEVRON_RIGHT_CIRCLE}
-            </div>
-          </Conditional>
-          <Conditional if={!isEnd}>
-            <div
-              className="next-slide"
-              role="button"
-              tabIndex={0}
-              onClick={goNext}
-            >
-              {CHEVRON_RIGHT_CIRCLE}
-            </div>
-          </Conditional>
-        </SwiperControls>
-      </TabsWrapper>
-      <TabPanelWrapper>
-        {tabs.map((tab, index) => (
-          <TabPanel
-            isActive={activeTabIndex == index}
-            key={index}
-            pageType={pageType}
-          >
-            <RichText render={tab.contents} elements={richtextElements} />
-          </TabPanel>
-        ))}
-      </TabPanelWrapper>
-    </HighlightTabsWrapper>
+        </TabPanelWrapper>
+      </HighlightTabsWrapper>
+    </Conditional>
   );
 };
 
@@ -1024,7 +1061,7 @@ const Product = (props) => {
     defaultOpen,
     title,
     descriptors,
-    highlights: tempHighlights,
+    highlights: tempHighlights = [],
     tourPrices,
     uid,
     hasOffer: isOfferEnabled,
@@ -1048,11 +1085,12 @@ const Product = (props) => {
     primaryCategory,
     primaryCollection,
     primarySubCategory,
+    showCard = true,
+    mediaUpgradeExperiment = {},
     flowType,
-    mediaUpgradeExperiment,
     bannerVideo,
+    isV3Design,
   } = props;
-
   const {
     mbTheme,
     biLink,
@@ -1128,7 +1166,7 @@ const Product = (props) => {
         },
       });
     }
-  }, [isMobile]);
+  }, [isMobile, showCard]);
 
   const {
     combo: isCombo,
@@ -1494,7 +1532,7 @@ const Product = (props) => {
       role="button"
       tabIndex={0}
     >
-      {strings.CHECK_AVAIL}
+      {isV3Design ? strings.BOOK_NOW_CTA : strings.CHECK_AVAIL}
       {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
     </Button>
   );
@@ -1507,6 +1545,7 @@ const Product = (props) => {
         isMobile={isMobile}
         isNewMediaSite={isNewMediaSite}
         isFirstProduct={isFirstProduct}
+        isV3Design={isV3Design}
       >
         <Conditional if={!isTicketCard && productImage && !isNewMediaSite}>
           <div className="card-img">
@@ -1535,7 +1574,7 @@ const Product = (props) => {
         <Conditional if={!isTicketCard && images?.length && isNewMediaSite}>
           <div className="card-img">
             <MediaCarousel
-              imageList={images.slice(0, MEDIA_CAROUSEL_IMAGE_LIMIT)}
+              imageList={images?.slice(0, MEDIA_CAROUSEL_IMAGE_LIMIT)}
               videoUrl={isMobile && isFirstProduct ? bannerVideo : null}
               imageId="card-img"
               imageAspectRatio={isMobile ? '21:9' : '3:4'}
@@ -1708,6 +1747,7 @@ const Product = (props) => {
                   tabs={tabs}
                   pageType={pageType}
                   activeTabIndex={activeTabIndex}
+                  showCard={showCard}
                 />
               </Conditional>
             </div>
@@ -1738,7 +1778,26 @@ const Product = (props) => {
     </>
   );
 
-  return <Container>{getProductCardElements(isContentOpen)}</Container>;
+  const getIsCardVisible = () => {
+    if (isMobile) {
+      return !isV3Design;
+    } else {
+      return showCard;
+    }
+  };
+
+  return (
+    <Container
+      isV3Design={isV3Design}
+      indexPosition={indexPosition}
+      isCardVisible={getIsCardVisible()}
+    >
+      <Conditional if={isV3Design}>
+        <div className="indicator-triangle"></div>
+      </Conditional>
+      {getProductCardElements(isContentOpen)}
+    </Container>
+  );
 };
 
 export default Product;

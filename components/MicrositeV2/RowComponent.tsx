@@ -3,13 +3,19 @@ import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import InteractionContext from 'contexts/Interaction';
-import { PAGETYPE } from 'const/index';
+import { DESCRIPTORS, DESIGN, PAGETYPE } from 'const/index';
 import Conditional from 'components/common/Conditional';
 import { NO_OF_CARDS_IN_ROW } from 'components/MicrositeV2/PopulateProducts';
+import { MBContext } from 'contexts/MBContext';
 import Product from 'components/MicrositeV2/Product';
+import { addUrlParams } from 'utils/urlUtils';
+import { useRouter } from 'next/router';
 
 const DetailedProductCard = dynamic(() =>
   import(/* webpackChunkName: "DetailedProductCard" */ './DetailedProductCard')
+);
+const V3DetailedProductCard = dynamic(() =>
+  import(/* webpackChunkName: "V3DetailedProductCard" */ '../Product')
 );
 
 const ProductsRow = styled.div`
@@ -19,7 +25,8 @@ const ProductsRow = styled.div`
   grid-row-gap: 24px;
   max-width: 100%;
   @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: ${({ isV3Design }) =>
+      `repeat(${isV3Design ? 1 : 2}, 1fr)`};
     grid-column-gap: 16px;
   }
 `;
@@ -41,6 +48,10 @@ export const RowComponent = (props) => {
   } = props;
   const { activeCategoryId, activeTour, clickTour, closeTour } =
     useContext(InteractionContext) || {};
+  const { design } = useContext(MBContext);
+  const isV3Design = design === DESIGN.V3;
+  const router = useRouter();
+
   const { tgid: activeTgid, section: activeSection, autoScroll } =
     activeTour || {};
 
@@ -48,16 +59,88 @@ export const RowComponent = (props) => {
     sectionIndex *
     (isMobile ? NO_OF_CARDS_IN_ROW.MOBILE : NO_OF_CARDS_IN_ROW.DESKTOP);
 
+  const getDescriptors = (descriptors, { minDuration, maxDuration }) => {
+    const allDescriptors = descriptors?.map((item) => item.code);
+    if (minDuration & maxDuration) {
+      allDescriptors.push(DESCRIPTORS.DURATION);
+    }
+    return allDescriptors;
+  };
+
+  const getV3DetailedCard = (tgid, index) => {
+    const currTour = allTours[tgid];
+    if (!currTour) return null;
+    const {
+      title,
+      listingPrice,
+      secondaryDescriptors,
+      highlights,
+      primaryCategory,
+      primaryCollection,
+      primarySubCategory,
+      minDuration,
+      maxDuration,
+      combo,
+      multiVariant,
+      productImage,
+    } = currTour;
+    return (
+      <V3DetailedProductCard
+        key={tgid}
+        tgid={tgid}
+        uid={uid}
+        currentLanguage={currentLanguage}
+        title={title}
+        descriptors={getDescriptors(secondaryDescriptors, {
+          minDuration,
+          maxDuration,
+        })}
+        isScratchPriceEnabled
+        scorpioData={{
+          highlights,
+          minDuration,
+          maxDuration,
+          multiVariant,
+          combo,
+          imageUrl: isMobile ? productImage : '',
+        }}
+        host={host}
+        showCard={tgid === activeTgid}
+        primaryCategory={primaryCategory}
+        primaryCollection={primaryCollection}
+        primarySubCategory={primarySubCategory}
+        indexPosition={totalPreviousCardRendered + index}
+        isMobile={isMobile}
+        isV3Design={isV3Design}
+        position={totalPreviousCardRendered + (index + 1)}
+        tourPrices={{ [tgid]: { listingPrice } }}
+      />
+    );
+  };
+
   const handleProductClicked = (productTgid, event) => {
     if (event.type === 'keydown') {
       event.target.blur();
       return;
     }
     if (isMobile) {
-      props.changePage({
-        name: PAGETYPE.MOBILE_PRODUCT_PAGE,
-        tgid: productTgid,
-      });
+      if (isV3Design) {
+        clickTour(productTgid, false, sectionId, false);
+        addUrlParams({
+          urlParams: { ...router.query, pid: productTgid, popup: 'details' },
+          historyState: {
+            ...window.history.state,
+            pid: productTgid,
+            popup: 'details',
+          },
+          replace: false,
+        });
+      } else {
+        props.changePage({
+          name: PAGETYPE.MOBILE_PRODUCT_PAGE,
+          tgid: productTgid,
+        });
+      }
     } else {
       clickTour(productTgid, false, sectionId);
     }
@@ -79,41 +162,49 @@ export const RowComponent = (props) => {
   }, [activeTgid]);
 
   return (
-    <ProductsRow>
-      {tgidsSubArr.map((tgid, index) => (
-        <Product
-          tgid={tgid}
-          productClick={handleProductClicked}
-          isEntertainmentMb={isEntertainmentMb}
-          allTours={allTours}
-          isMobile={isMobile}
-          key={index}
-          cardIdPrefix={sectionId}
-          activeCategoryId={activeCategoryId}
-          host={host}
-          uid={uid}
-        />
-      ))}
-      <Conditional if={!isEntertainmentMb}>
+    <>
+      <ProductsRow isV3Design={isV3Design}>
         {tgidsSubArr.map((tgid, index) => (
-          <DetailedProductCard
-            showDescCard={tgid === activeTgid}
-            tgidClicked={tgid}
-            allTours={allTours}
-            hasCategoryTourList={hasCategoryTourList}
+          <Product
+            tgid={tgid}
+            productClick={handleProductClicked}
             isEntertainmentMb={isEntertainmentMb}
-            currentLanguage={currentLanguage}
+            allTours={allTours}
+            isMobile={isMobile}
+            key={index}
+            cardIdPrefix={sectionId}
+            activeCategoryId={activeCategoryId}
             host={host}
             uid={uid}
-            key={tgid}
-            cardPosition={index + 1}
-            closeDescription={closeDescription}
-            isListicle={isListicle}
-            isDev={isDev}
-            cardRanking={totalPreviousCardRendered + (index + 1)}
+            isV3Design={isV3Design}
           />
         ))}
+        <Conditional if={!isEntertainmentMb && !isV3Design}>
+          {tgidsSubArr.map((tgid, index) => (
+            <DetailedProductCard
+              showDescCard={tgid === activeTgid}
+              tgidClicked={tgid}
+              allTours={allTours}
+              hasCategoryTourList={hasCategoryTourList}
+              isEntertainmentMb={isEntertainmentMb}
+              currentLanguage={currentLanguage}
+              host={host}
+              uid={uid}
+              key={tgid}
+              cardPosition={index + 1}
+              closeDescription={closeDescription}
+              isListicle={isListicle}
+              isDev={isDev}
+              cardRanking={totalPreviousCardRendered + (index + 1)}
+            />
+          ))}
+        </Conditional>
+      </ProductsRow>
+      <Conditional if={isV3Design}>
+        {tgidsSubArr.map((tgid, index) => {
+          return getV3DetailedCard(tgid, index);
+        })}
       </Conditional>
-    </ProductsRow>
+    </>
   );
 };

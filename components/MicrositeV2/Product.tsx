@@ -206,7 +206,7 @@ const ProductCard = styled.div`
   }
 
   @media (max-width: 768px) {
-    grid-template-rows: 102px auto;
+    grid-template-rows: ${({ isV3Design }) => (isV3Design ? '204px' : '102px')} auto;
     transform: unset;
     transition: unset;
     grid-row-gap: 10px;
@@ -346,6 +346,7 @@ const Product = (props) => {
     activeCategoryId = null,
     host,
     productClick,
+    isV3Design,
   } = props;
   const currency = useRecoilValue(currencyAtom);
   const {
@@ -428,7 +429,9 @@ const Product = (props) => {
   const handleProductClick = (event) => {
     event.preventDefault();
     if (isMobile) {
-      if (showPageExists) {
+      if (isV3Design) {
+        productClick(tgid, event);
+      } else if (showPageExists) {
         window.open(showPageUrl, '_self', 'noopener,noreferrer');
       } else {
         window.open(bookingURL, '_self', 'noopener,noreferrer');
@@ -515,6 +518,7 @@ const Product = (props) => {
       onKeyDown={handleProductClick}
       role="button"
       tabIndex={0}
+      isV3Design={isV3Design}
     >
       <div className="product-v2-image">
         <Image
