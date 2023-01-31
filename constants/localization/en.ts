@@ -32,7 +32,7 @@ const en = {
   SELECT_CITY: 'Select city',
   NEXT_AVAILABLE: 'Next available: ',
   SAVE: 'Save {0}%',
-  CASHBACK: '{0} cashback',
+  CASHBACK: '{0}% cashback',
   AVAILABLE: 'Available',
   EARLIEST_AVAILABILITY: 'Earliest availability',
   UNAVAILABLE: 'Unavailable',

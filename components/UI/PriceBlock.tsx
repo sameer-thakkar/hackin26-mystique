@@ -208,7 +208,7 @@ const PriceBlock = ({
         </Conditional>
         <Conditional if={showcashbackElm}>
           <SavedTag className={'savedtag-block'}>
-            + {strings.formatString(strings.CASHBACK, `${cashbackValue}%`)}
+            {strings.formatString(strings.CASHBACK, `${cashbackValue}`)}
           </SavedTag>
         </Conditional>
       </div>

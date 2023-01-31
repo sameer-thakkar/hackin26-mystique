@@ -297,7 +297,7 @@ const de = {
     GETTING_THERE_MAP_LINK: 'Wegbeschreibung Kartenlink',
   },
   SAVE_PERCENT: '{0} % Rabatt',
-  CASHBACK: '{0} Cashback',
+  CASHBACK: '{0} % Cashback',
   SAVE_UPTO_PERCENT: 'Bis zu {0} % Rabatt',
   CANCELLATION_POLICY: {
     HEADING: 'Änderungsrichtlinie',

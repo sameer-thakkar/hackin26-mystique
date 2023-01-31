@@ -31,7 +31,7 @@ const pt = {
   NEXT_AVAILABLE: 'Próxima disponível: ',
   SAVE_UPTO: 'Economize até',
   SAVE: 'Economize  {0}%',
-  CASHBACK: '{0} em Cashback',
+  CASHBACK: '{0}% em Cashback',
   AVAILABLE: 'Disponível',
   EARLIEST_AVAILABILITY: 'Próxima disponível: ',
   UNAVAILABLE: 'Indisponível',
