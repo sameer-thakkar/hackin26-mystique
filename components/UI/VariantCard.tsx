@@ -17,8 +17,7 @@ import { useRecoilValue } from 'recoil';
 const VariantCardWrapper = styled.div`
   width: 100%;
   height: inherit;
-  display: grid;
-  grid-template-rows: repeat(2, max-content) auto;
+  overflow-x: hidden;
   background: ${COLORS.BRAND.WHITE};
   border: 1px solid ${COLORS.GRAY.G6};
   border-radius: 8px;

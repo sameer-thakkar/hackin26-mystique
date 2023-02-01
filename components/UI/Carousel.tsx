@@ -26,9 +26,6 @@ const StyledSwiper = styled.div`
     ${({ marginBottom }) => marginBottom && `margin-bottom: ${marginBottom}px;`}
   }
   .swiper-wrapper {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: max-content;
     height: 100%;
   }
   .swiper-slide {
