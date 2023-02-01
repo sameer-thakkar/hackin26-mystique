@@ -94,10 +94,13 @@ const CarouselGallery: React.FC<CarouselGalleryProps> = ({
 
   const activeSlide = images[currentIndex];
   const { heading: activeSlideHeading, content, cta_link } = activeSlide;
+  const { url: ctaUrl } = cta_link;
 
   return (
     <>
-      <Heading id={stringIdfy(heading)}>{heading}</Heading>
+      <Heading id={stringIdfy(heading)}>
+        <h2>{heading}</h2>
+      </Heading>
       <CarouselContainer>
         <ImageGallery>
           <Swiper {...swiperParams}>
@@ -136,25 +139,27 @@ const CarouselGallery: React.FC<CarouselGalleryProps> = ({
         </ImageGallery>
         <Content>
           <ContentWrapper>
-            <div className="active-slide">
-              {currentIndex + 1}/{images.length}
-            </div>
-            <div className="heading">
-              <RichContent render={activeSlideHeading} />
-            </div>
-            <div className="content">
-              <RichContent render={content} />
-            </div>
-            <Conditional if={cta_link?.url}>
-              <div
-                className="cta"
-                onClick={() => window.open(cta_link.url, '_blank')}
-                role="button"
-                tabIndex={0}
-              >
-                {strings.READ_MORE}
+            <div className="container">
+              <div className="active-slide">
+                {currentIndex + 1}/{images.length}
               </div>
-            </Conditional>
+              <div className="heading">
+                <RichContent render={activeSlideHeading} />
+              </div>
+              <div className="content">
+                <RichContent render={content} />
+              </div>
+              <Conditional if={ctaUrl}>
+                <div
+                  className="cta"
+                  onClick={() => window.open(ctaUrl, '_blank')}
+                  role="button"
+                  tabIndex={0}
+                >
+                  {strings.READ_MORE}
+                </div>
+              </Conditional>
+            </div>
           </ContentWrapper>
         </Content>
       </CarouselContainer>

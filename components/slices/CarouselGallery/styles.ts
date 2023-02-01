@@ -154,7 +154,7 @@ export const ContentWrapper = styled.div`
     .active-slide {
       ${expandFontToken(FONTS.UI_LABEL_XS)};
     }
-    .heading p {
+    .heading h3 {
       ${expandFontToken(FONTS.HEADING_REGULAR)};
       margin-bottom: 0rem;
       margin-top: 0rem;
@@ -171,7 +171,10 @@ export const ContentWrapper = styled.div`
     }
 
     @media (min-width: 768px) {
-      margin-top: 40%;
+      .container {
+        position: absolute;
+        top: 30%;
+      }
       margin-left: 2rem;
     }
   }
