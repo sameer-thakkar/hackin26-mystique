@@ -96,13 +96,13 @@ const StyledSwiper = styled.div`
   display: flex;
   position: relative;
   max-width: ${SIZES.MAX_WIDTH};
-  .tabs-section-wrapper {
+  .swiper-wrapper {
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: max-content;
     border-bottom: 1px solid ${COLORS.GRAY.G6};
   }
-  .swiper-container {
+  .swiper-initialized {
     width: 100%;
     height: 100%;
   }
@@ -338,7 +338,6 @@ const TabWrapper = (props: TabWrapperProps) => {
     };
     const swiperParams: SwiperProps = {
       slidesPerView: 'auto',
-      wrapperClass: 'tabs-section-wrapper',
       spaceBetween: 48,
       onSwiper: updateSwiper,
     };

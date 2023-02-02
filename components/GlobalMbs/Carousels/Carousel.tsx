@@ -22,7 +22,7 @@ const StyledSwiper = styled.div`
   display: flex;
   position: relative;
   max-width: ${SIZES.MAX_WIDTH};
-  .cards-section-wrapper {
+  .swiper-wrapper {
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: max-content;
@@ -122,7 +122,6 @@ const Carousel: FunctionComponent<CarouselProps> = ({
     const swiperParams = {
       slidesPerView: cardsInARow,
       spaceBetween: spaceBetween,
-      wrapperClass: 'cards-section-wrapper',
       shouldSwiperUpdate: true,
       onSwiper: updateSwiper,
     };
