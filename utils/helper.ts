@@ -484,3 +484,10 @@ export const checkLTT = (uid) => {
 export const checkBroadway = (uid) => {
   return uid?.includes('www.broadway-show-tickets.com') ?? false;
 };
+
+export const checkIfGpMotorTickets = (uid: string | undefined) =>
+  !!uid?.includes('www.gpmotorsportstickets.com');
+
+export const checkIfSportsSubCategory = (
+  primarySubcategoryId: number | undefined | null
+) => primarySubcategoryId === 1042 || primarySubcategoryId === 1109;

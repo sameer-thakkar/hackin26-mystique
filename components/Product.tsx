@@ -49,7 +49,11 @@ import {
   trackEvent,
 } from 'utils/analytics';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
-import { getHostName } from 'utils/helper';
+import {
+  checkIfGpMotorTickets,
+  checkIfSportsSubCategory,
+  getHostName,
+} from 'utils/helper';
 import {
   extractTabsFromHighlights,
   getProductCardLayout,
@@ -1111,6 +1115,9 @@ const Product = (props) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [showComboVariant, setShowComboVariant] = useState(false);
 
+  const isGpMotorTicketsMb = checkIfGpMotorTickets(uid);
+  const isSportsSubCategory = checkIfSportsSubCategory(primarySubCategory?.id);
+
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const pid = urlParams.get('pid');
@@ -1532,7 +1539,9 @@ const Product = (props) => {
       role="button"
       tabIndex={0}
     >
-      {isV3Design ? strings.BOOK_NOW_CTA : strings.CHECK_AVAIL}
+      {isV3Design || (isGpMotorTicketsMb && isSportsSubCategory) // This is just for the experiment. Will revert this at a later time or figure a better to do this
+        ? strings.BOOK_NOW_CTA
+        : strings.CHECK_AVAIL}
       {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
     </Button>
   );
