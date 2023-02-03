@@ -19,6 +19,8 @@ const es = {
   },
   READ_MORE: 'Leer más',
   VIEW_MORE: 'Leer más',
+  SHOW_ALL_PHOTOS: 'Ver todas las fotos',
+  VIEW_LESS: 'Ver menos',
   BANNER_CTA: 'Comprar entradas',
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout es un socio de confianza de la atracción, autorizado para ofrecer una selección de las mejores experiencias. Este no es el sitio web de la atracción.',

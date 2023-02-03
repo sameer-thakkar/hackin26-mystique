@@ -28,6 +28,8 @@ const de = {
   VIEW_MORE: 'Mehr anzeigen',
   READ_MORE_TEXT: 'Mehr anzeigen',
   SHOW_LESS_TEXT: 'Weniger anzeigen',
+  SHOW_ALL_PHOTOS: 'Alle Fotos anzeigen',
+  VIEW_LESS: 'Weniger anzeigen',
   NEXT_AVAILABLE: 'Verfügbar ab: ',
   SAVE_UPTO: 'Spare',
   SAVE: '{0} % Rabatt',

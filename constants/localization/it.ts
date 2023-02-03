@@ -28,6 +28,8 @@ const it = {
   CHECK_AVAIL: 'Verifica disponibilità',
   READ_MORE_TEXT: 'Leggi tutto',
   SHOW_LESS_TEXT: 'Mostra meno',
+  SHOW_ALL_PHOTOS: 'Mostra tutte le foto',
+  VIEW_LESS: 'Mostra meno',
   NEXT_AVAILABLE: 'Prossimo disponibile: ',
   SAVE_UPTO: 'Risparmi fino al',
   SAVE: 'Risparmi il  {0}%',

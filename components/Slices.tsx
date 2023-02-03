@@ -403,12 +403,7 @@ const sliceHandler = (slice, props: any = {}) => {
       );
     case 'image_gallery':
       return (
-        <ImageGallery
-          heading={slice.primary.heading}
-          images={slice.items}
-          mobileLayout={slice.primary.mobile_layout}
-          isMobile={props.isMobile}
-        />
+        <ImageGallery heading={slice.primary.heading} images={slice.items} />
       );
     case 'carousel_gallery':
       return (

@@ -28,6 +28,8 @@ const nl = {
   CHECK_AVAIL: 'Controleer beschikbaarheid',
   READ_MORE_TEXT: 'Meer Info',
   SHOW_LESS_TEXT: 'Toon minder',
+  SHOW_ALL_PHOTOS: "Laat alle foto's zien",
+  VIEW_LESS: 'Bekijk minder',
   NEXT_AVAILABLE: 'Weer beschikbaar: ',
   SAVE_UPTO: 'Bespaar tot',
   SAVE: 'Bespaar {0}%',

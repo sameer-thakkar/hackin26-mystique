@@ -28,6 +28,8 @@ const pt = {
   CHECK_AVAIL: 'Verificar disponibilidade',
   READ_MORE_TEXT: 'Ver mais',
   SHOW_LESS_TEXT: 'Ver menos',
+  SHOW_ALL_PHOTOS: 'Ver todas as fotos',
+  VIEW_LESS: 'Mostrar menos',
   NEXT_AVAILABLE: 'Próxima disponível: ',
   SAVE_UPTO: 'Economize até',
   SAVE: 'Economize  {0}%',

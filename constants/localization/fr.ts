@@ -27,6 +27,8 @@ const fr = {
   CHECK_AVAIL: 'Vérifier la disponibilité',
   READ_MORE_TEXT: 'En savoir plus',
   SHOW_LESS_TEXT: 'Voir moins',
+  SHOW_ALL_PHOTOS: 'Afficher toutes les photos',
+  VIEW_LESS: 'Voir moins',
   NEXT_AVAILABLE: 'Prochaine disponibilité: ',
   SAVE_UPTO: "Économisez jusqu'à",
   SAVE: 'Économisez {0} %',

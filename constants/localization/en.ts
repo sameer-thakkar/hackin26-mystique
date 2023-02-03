@@ -19,6 +19,7 @@ const en = {
   },
   READ_MORE: 'Read more',
   VIEW_MORE: 'View more',
+  VIEW_LESS: 'View less',
   SEE_MORE_SHOWS: 'See More Shows',
   BANNER_CTA: 'Buy tickets',
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
@@ -384,6 +385,7 @@ const en = {
   },
   SAVE_PERCENT: 'Save {0}%',
   SAVE_UPTO_PERCENT: 'Save upto {0}%',
+  SHOW_ALL_PHOTOS: 'Show all photos',
   CANCELLATION_POLICY: {
     HEADING: 'Amendment Policy',
     NON_CANCELLABLE_NON_RESCHEDULABLE:
