@@ -221,6 +221,10 @@ export const categoryTourListParserV1 = async ({
       if (additionalTours?.tourGroups?.length) {
         allTours = [...tourData, ...additionalTours?.tourGroups];
       }
+
+      if (!primaryCity && additionalTours?.cities?.length) {
+        primaryCity = additionalTours.cities[0];
+      }
     }
     const tgidsWithHORanking = allTours
       ?.map((tour) => tour.id)
