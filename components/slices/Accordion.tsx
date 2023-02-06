@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'clas... Remove this comment to see the full error message
 import classNames from 'classnames';
 import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
@@ -12,22 +13,30 @@ import { expandFontToken } from 'const/typography';
 
 export const StyledAccordion = styled.div`
   padding: 16px 0;
-  margin-right: ${({ isGlobalMb }) => (isGlobalMb ? '0' : '24px')};
+  margin-right: ${({  
+ // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+ isGlobalMb }) => (isGlobalMb ? '0' : '24px')};
   border-bottom: 1px solid ${COLORS.GRAY.G7};
   display: grid;
   grid-template-rows: max-content max-content;
-  ${({ isOpen }) => isOpen && 'grid-row-gap: 8px'};
+  ${({  
+ // @ts-expect-error TS(2339): Property 'isOpen' does not exist on type 'Pick<Det... Remove this comment to see the full error message
+ isOpen }) => isOpen && 'grid-row-gap: 8px'};
 
   &:last-child {
     border-bottom: none;
   }
   @media (max-width: 768px) {
-    ${({ isOpen }) => isOpen && 'grid-row-gap: 16px'};
+    ${({    
+ // @ts-expect-error TS(2339): Property 'isOpen' does not exist on type 'Pick<Det... Remove this comment to see the full error message
+ isOpen }) => isOpen && 'grid-row-gap: 16px'};
     margin-right: 0;
     padding: 16px 0;
 
     &:first-child {
-      border-top: ${({ isGlobalMb }) =>
+      border-top: ${({      
+ // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+ isGlobalMb }) =>
         isGlobalMb && `1px solid ${COLORS.GRAY.G7}`};
     }
     &.accordion-container[expanded] header .chevron-icon {
@@ -48,18 +57,24 @@ const Title = styled.div`
   grid-template-columns: 1fr auto;
   grid-column-gap: 10px;
   ${expandFontToken('Heading/Small')}
-  ${({ isGlobalMb }) => isGlobalMb && `font-size: 16px;`}
+  ${({  
+ // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+ isGlobalMb }) => isGlobalMb && `font-size: 16px;`}
   .question-text {
     cursor: pointer;
   }
 `;
 
 const ContentBlock = styled.div`
-  display: ${({ $isOpen }) => ($isOpen ? 'grid' : 'none')};
+  display: ${({  
+ // @ts-expect-error TS(2339): Property '$isOpen' does not exist on type 'Pick<De... Remove this comment to see the full error message
+ $isOpen }) => ($isOpen ? 'grid' : 'none')};
   grid-row-gap: 16px;
   p {
     margin: 0;
-    ${({ $isGlobalMb }) => $isGlobalMb && `font-size: 14px; line-height: 20px;`}
+    ${({    
+ // @ts-expect-error TS(2339): Property '$isGlobalMb' does not exist on type 'Pic... Remove this comment to see the full error message
+ $isGlobalMb }) => $isGlobalMb && `font-size: 14px; line-height: 20px;`}
   }
   a {
     color: ${COLORS.TEXT.CANDY_1};
@@ -83,9 +98,11 @@ const Accordion = ({
   heading,
   content,
   isOpenOverride = false,
+  // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'Function'.
   clickHandler = null,
   isGlobalMb,
   useSchema = false,
+  // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'number'.
   index = null,
 }: AccordionProps) => {
   const [isOpen, setOpen] = useState(false || isOpenOverride);
@@ -123,7 +140,9 @@ const Accordion = ({
   };
 
   return (
+    // @ts-expect-error TS(2769): No overload matches this call.
     <StyledAccordion isOpen={isOpen} as={'div'} isGlobalMb={isGlobalMb}>
+      {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <Title
         role="button"
         tabIndex={0}
@@ -143,6 +162,7 @@ const Accordion = ({
       </Title>
       <ContentBlock
         className="answer"
+        // @ts-expect-error TS(2769): No overload matches this call.
         $isOpen={isOpen}
         $isGlobalMb={isGlobalMb}
       >

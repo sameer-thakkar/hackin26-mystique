@@ -40,16 +40,18 @@ const Masthead = ({
     });
   }, []);
 
-  const getImage = () => (
-    <Image
-      url={image?.url}
-      alt={image?.alt}
-      width={isMobile ? 800 : 1200}
-      height={isMobile ? 300 : 400}
-      layout={'fill'}
-      objectFit={'cover'}
-    />
-  );
+  const getImage = () => {
+    return !image?.url ? null : (
+      <Image
+        url={image?.url}
+        alt={image?.alt}
+        width={isMobile ? 800 : 1200}
+        height={isMobile ? 300 : 400}
+        layout={'fill'}
+        objectFit={'cover'}
+      />
+    );
+  };
 
   return (
     <>

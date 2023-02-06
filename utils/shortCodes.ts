@@ -27,7 +27,10 @@ const Notes = dynamic(() => import('components/shortcodes/Notes'));
 
 interface ShortCodeDictionary {
   [key: string]: {
-    component?: React.ComponentClass | React.FunctionComponent;
+    component?:
+      | React.ComponentClass
+      | React.FunctionComponent
+      | React.ComponentType;
     function?: Function;
     type?: string;
   };
@@ -35,18 +38,22 @@ interface ShortCodeDictionary {
 
 const shortCodesDict: ShortCodeDictionary = {
   price: {
+    // @ts-expect-error TS(2322): Type 'ComponentType<IPriceProps>' is not assignabl... Remove this comment to see the full error message
     component: InlinePrice,
   },
   'next-available': {
+    // @ts-expect-error TS(2322): Type 'ComponentType<NextAvailableProps>' is not as... Remove this comment to see the full error message
     component: NextAvailable,
   },
   booster: {
+    // @ts-expect-error TS(2322): Type 'ComponentType<NextAvailableProps>' is not as... Remove this comment to see the full error message
     component: Booster,
   },
   'inv-price': {
     component: InlineInvPrice,
   },
   cta: {
+    // @ts-expect-error TS(2322): Type 'ComponentType<CTAProps>' is not assignable t... Remove this comment to see the full error message
     component: CTA,
   },
   'rating-cta': {
@@ -56,6 +63,7 @@ const shortCodesDict: ShortCodeDictionary = {
     component: PopupTrigger,
   },
   iframe: {
+    // @ts-expect-error TS(2322): Type 'ComponentType<IFrameProps>' is not assignabl... Remove this comment to see the full error message
     component: IFrame,
   },
   cross: {
@@ -78,7 +86,7 @@ const shortCodesDict: ShortCodeDictionary = {
   },
 };
 
-const getAllAttributes = (attributesString) => {
+const getAllAttributes = (attributesString: any) => {
   let attributePattern = /([\w-]+)\s*=\s*"([^"]*)"(?:\s|$)|([\w-]+)\s*=\s*'([^']*)'(?:\s|$)|([\w-]+)\s*=\s*([^\s'"]+)(?:\s|$)|"([^"]*)"(?:\s|$)|(\S+)(?:\s|$)/g;
   attributesString = attributesString.replace(/[\u00a0\u200b]/g, ' ');
 
@@ -87,10 +95,13 @@ const getAllAttributes = (attributesString) => {
   let match;
   while ((match = attributePattern.exec(attributesString))) {
     if (match[1]) {
+      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       named[match[1].toLowerCase()] = match[2];
     } else if (match[3]) {
+      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       named[match[3].toLowerCase()] = match[4];
     } else if (match[5]) {
+      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       named[match[5].toLowerCase()] = match[6];
     } else if (match[7]) {
       numeric.push(match[7]);
@@ -105,9 +116,9 @@ const getAllAttributes = (attributesString) => {
 };
 
 const returnShortcodeObject = (
-  name,
-  indexStart,
-  indexEnd,
+  name: any,
+  indexStart: any,
+  indexEnd: any,
   attributesNamed = {},
   attributesNumeric = [],
   content = ''
@@ -126,7 +137,7 @@ const returnShortcodeObject = (
   };
 };
 
-const getShortcodesList = (stringToSearch) => {
+const getShortcodesList = (stringToSearch: any) => {
   const findShortcodeRegExp = new RegExp(
     '\\{(\\{?)(' +
       Object.keys(shortCodesDict).join('|') +
@@ -154,6 +165,7 @@ const getShortcodesList = (stringToSearch) => {
         matchIndex,
         matchLastIndex,
         shortcodeAttributes['named'],
+        // @ts-expect-error TS(2345): Argument of type 'string[]' is not assignable to p... Remove this comment to see the full error message
         shortcodeAttributes['numeric'],
         match[5]
       )
@@ -175,11 +187,13 @@ export const renderShortCodes = (CMSString = '', props = {}): Array<string> => {
     );
     let shortcodeElement = null;
     if (shortCodesDict[shortCodeObj.name].type === SHORT_CODE_TYPES.FUNCTION) {
+      // @ts-expect-error TS(2532): Object is possibly 'undefined'.
       shortcodeElement = shortCodesDict[shortCodeObj.name].function({
         ...shortCodeObj.attributes.named,
       });
     } else {
       shortcodeElement = React.createElement(
+        // @ts-expect-error TS(2769): No overload matches this call.
         shortCodesDict[shortCodeObj.name].component,
         {
           ...shortCodeObj.attributes.named,
@@ -208,23 +222,24 @@ const tagsMap = {
   em: 'i',
 };
 
-const propsWithUniqueKey = function (props, key) {
+const propsWithUniqueKey = function (props: any, key: any) {
   return Object.assign(props || {}, { key });
 };
 
 export const shortCodeSerializer = (
-  type,
-  element,
-  content,
-  children,
-  key,
-  parentProps
+  type: any,
+  _element: any,
+  content: any,
+  children: any,
+  key: any,
+  parentProps: any
 ) => {
   let props = {};
   if (getShortcodesList(content).length && !children.length) {
     let renderedChildrens: any = renderShortCodes(content, parentProps);
     renderedChildrens = WrapInLazyComponent(renderedChildrens);
     return React.createElement(
+      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       tagsMap[type] || React.Fragment,
       propsWithUniqueKey(props, key),
       renderedChildrens
@@ -235,8 +250,8 @@ export const shortCodeSerializer = (
 };
 
 export const shortCodeSerializerWithParentProps = (
-  defaultArgs,
-  parentProps
+  defaultArgs: any,
+  parentProps: any
 ) => {
   return shortCodeSerializer(
     defaultArgs[0],

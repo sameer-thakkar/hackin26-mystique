@@ -9,7 +9,9 @@ const StyledHamburger = styled.div`
   &:after,
   &:before,
   & div {
-    background-color: ${({ isGlobalMb, theme }) =>
+    background-color: ${({    
+ // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+ isGlobalMb, theme }) =>
       isGlobalMb ? COLORS.GRAY.G2 : theme.primaryBGText || COLORS.GRAY.G2};
     border-radius: 3px;
     content: '';
@@ -32,7 +34,9 @@ const StyledHamburger = styled.div`
     }
   }
 
-  ${({ isActive }) => {
+  ${({  
+ // @ts-expect-error TS(2339): Property 'isActive' does not exist on type 'Pick<D... Remove this comment to see the full error message
+ isActive }) => {
     return (
       isActive &&
       `
@@ -63,6 +67,7 @@ const Hamburger: React.FC<any> = ({
 }) => {
   return (
     <StyledHamburger
+      // @ts-expect-error TS(2769): No overload matches this call.
       isActive={isActive}
       onClick={onClickFn}
       className={className}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { ANALYTICS_EVENTS } from 'const/index';
@@ -34,6 +35,7 @@ const StyledContentTabs = styled.div`
   }
 `;
 
+// @ts-expect-error TS(2339): Property 'active' does not exist on type 'Pick<Det... Remove this comment to see the full error message
 const StyledTab = styled.h3(({ active }) => {
   return `
   ${active ? `color: ${COLORS.TEXT.PURPS_3};` : ``}
@@ -46,6 +48,7 @@ const StyledTab = styled.h3(({ active }) => {
   `;
 });
 
+// @ts-expect-error TS(2339): Property 'active' does not exist on type 'Pick<Det... Remove this comment to see the full error message
 const StyledContent = styled.div(({ active }) => {
   if (active) {
     return `
@@ -102,7 +105,10 @@ const ContentTabs: React.FC<ContentTabsProps> = ({ tabsArr, contentArr }) => {
     }
   }, [tabsArr, contentArr]);
 
-  const trackTabClick = ({ tab, index }) => {
+  const trackTabClick = ({
+    tab,
+    index
+  }: any) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.INFO_TAB_CLICKED,
       [ANALYTICS_PROPERTIES.RANKING]: index + 1,

@@ -85,7 +85,11 @@ const IconLink = styled.a`
  * **Count/No of Items**: You can control number of posts being retrieved using this count.
  */
 
-const BlogFeed = ({ feed_url, count = 0, defaultCards = [] }) => {
+const BlogFeed = ({
+  feed_url,
+  count = 0,
+  defaultCards = []
+}: any) => {
   const [cards, setCards] = useState([...defaultCards]);
 
   useEffect(() => {
@@ -96,7 +100,7 @@ const BlogFeed = ({ feed_url, count = 0, defaultCards = [] }) => {
         .then((jResp) => {
           const findFirstParagraphRegex = /<\s*p[^>]*>([\t\s\S]*?)<\s*\/\s*p>/;
           const itemCount = count || jResp.items.length;
-          const parsedItems = jResp?.items.map((item) => {
+          const parsedItems = jResp?.items.map((item: any) => {
             return {
               title: item.title,
               content: findFirstParagraphRegex

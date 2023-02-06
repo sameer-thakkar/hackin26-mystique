@@ -7,7 +7,9 @@ import Button from '../UI/Button';
 
 const CTAWrapper = styled.div`
   margin: 30px 0px;
-  text-align: ${({ align }) => align};
+  text-align: ${({  
+ // @ts-expect-error TS(2339): Property 'align' does not exist on type 'Pick<Deta... Remove this comment to see the full error message
+ align }) => align};
   a {
     text-decoration: none;
   }
@@ -76,10 +78,11 @@ const CTA = ({
       };
 
   useEffect(() => {
-    async function fetchImageBlob(url) {
+    async function fetchImageBlob(url: any) {
       const res = await fetch(url);
       const blob = await res.blob();
       const blobUrl = URL.createObjectURL(blob);
+      // @ts-expect-error TS(2345): Argument of type 'string' is not assignable to par... Remove this comment to see the full error message
       setBlobUrl(blobUrl);
     }
     fetchImageBlob(url);
@@ -108,9 +111,11 @@ const CTA = ({
           </Button>
         </Conditional>
         <Conditional if={!isEmbed}>
+          {/* @ts-expect-error TS(2322): Type 'string | null' is not assignable to type 'st... Remove this comment to see the full error message */}
           <a href={isDownload ? blobUrl : url} {...anchorTagProps}>
             <Conditional if={isDownload}>{text}</Conditional>
             <Conditional if={!isDownload}>
+              {/* @ts-expect-error TS(2769): No overload matches this call. */}
               <Button fillType={fill ? 'fillGradient' : type}>{text}</Button>
             </Conditional>
           </a>

@@ -69,32 +69,28 @@ const Alert: React.FC<AlertProps> = ({ popupUID }) => {
       .getByUID(CUSTOM_TYPES.POPUP, popupUID, {
         lang: 'en-us',
       })
-      .then((res) => {
+      .then((res: any) => {
         if (res.data) {
           setData(res.data);
         }
       });
   }, [popupUID, setData]);
 
-  return (
-    <StyledAlert>
-      {active ? <Popup togglePopup={setActive} data={data} alert /> : null}
+  return (<StyledAlert>
+      {active ? <Popup togglePopup={setActive} data={data} alert/> : null}
       <StyledShield>{SHIELD}</StyledShield>
       <StyledTitle>
-        {data?.body[0]?.primary.alert_title || strings.SANITARY_ALERT.KEY_TEXT}
+        {(data as any)?.body[0]?.primary.alert_title || strings.SANITARY_ALERT.KEY_TEXT}
       </StyledTitle>
       <StyledContent>
-        {data?.body[0]?.primary.alert_message || strings.SANITARY_ALERT.TEXT}
+        {(data as any)?.body[0]?.primary.alert_message || strings.SANITARY_ALERT.TEXT}
       </StyledContent>
-      <StyledReadMore
-        onClick={() => {
-          setActive(true);
-        }}
-      >
+      <StyledReadMore onClick={() => {
+        setActive(true);
+    }}>
         {data ? strings.READ_MORE : null}
       </StyledReadMore>
-    </StyledAlert>
-  );
+    </StyledAlert>);
 };
 
 export default Alert;

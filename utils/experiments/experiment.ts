@@ -6,16 +6,20 @@ import { hashCode } from '../gen';
 
 class Experiment {
   experimentName: string;
-  bucketName: string;
-  bucketWeight: number;
+  bucketName: string[];
+  bucketWeight: number[];
 
-  checkAssertion(condition, error) {
+  checkAssertion(condition: boolean, error: string) {
     if (!condition) {
       throw new Error(error);
     }
   }
 
-  constructor(experimentName, bucketName, bucketWeight) {
+  constructor(
+    experimentName: string,
+    bucketName: string[],
+    bucketWeight: number[]
+  ) {
     this.checkAssertion(
       bucketName.length === bucketWeight.length,
       'buckets size should match'
@@ -25,7 +29,7 @@ class Experiment {
     this.bucketWeight = bucketWeight;
   }
 
-  getHsidHashValueForExperiment(hsidHash, experimentName) {
+  getHsidHashValueForExperiment(hsidHash: number, experimentName: string) {
     let hsidHashForExperiment = 0;
     const experimentHash = hashCode(experimentName);
 
@@ -42,7 +46,7 @@ class Experiment {
     return hsidHashForExperiment;
   }
 
-  range(bitCount) {
+  range(bitCount: number) {
     return 1 << bitCount;
   }
 
@@ -50,7 +54,7 @@ class Experiment {
     return this.bucketName.length;
   }
 
-  resolveBucketIndex(hsidValueForExperiment, hsidValueRange) {
+  resolveBucketIndex(hsidValueForExperiment: number, hsidValueRange: number) {
     let index = -1;
     const len = this.bucketName.length;
     let sumBucketweight = 0;
@@ -73,7 +77,7 @@ class Experiment {
     return index;
   }
 
-  getBucket(uniqueId) {
+  getBucket(uniqueId: string | null) {
     let bucket = this.bucketName[0];
     if (uniqueId !== null) {
       const hsidString = atob(uniqueId);

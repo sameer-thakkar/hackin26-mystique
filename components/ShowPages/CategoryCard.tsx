@@ -94,13 +94,13 @@ const CategoryCard = ({
   element,
   currentLanguage,
   categoryName,
-  isMobile,
-}) => {
+  isMobile
+}: any) => {
   const { listingPrice, name, imageUrl, id, tourGroupUrl } = element;
   const { isDev, host } = useContext(MBContext);
 
   let cardDocument = allShowPagesDocuments.filter(
-    (element) => element.data.tgid === id
+    (element: any) => element.data.tgid === id
   );
   const redirectURL = cardDocument.length
     ? convertUidToUrl({ uid: cardDocument[0].uid, isDev, hostname: host })

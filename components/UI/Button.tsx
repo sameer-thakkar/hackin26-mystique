@@ -2,7 +2,21 @@ import styled from 'styled-components';
 import COLORS from 'const/colors';
 import { expandFontToken } from 'const/typography';
 
-const Button = styled.button((props) => {
+interface IButton {
+  borderWidth?: string;
+  paddingSides?: string;
+  minWidth?: string;
+  widthProp?: string;
+  fillType?:
+    | 'fill'
+    | 'fillGradient'
+    | 'redBordered'
+    | 'whiteBordered'
+    | 'blackBordered'
+    | 'secondaryFill';
+}
+
+const Button = styled.button<IButton>((props) => {
   let styles = `
   border: ${props.borderWidth || '2px'} solid ${props.theme.primaryColor};
   padding: 12px ${props.paddingSides || '20px'};

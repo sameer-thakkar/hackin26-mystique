@@ -1,10 +1,10 @@
 import Banner, { BannerLayout } from 'components/GlobalMbs/Banners/Banner';
 import { convertUidToUrl } from 'utils/urlUtils';
 
-const CollectionPage = (props) => {
+const CollectionPage = (props: any) => {
   const bannerImages = props?.images
-    ?.filter((image) => image?.image_url)
-    .map((img) => {
+    ?.filter((image: any) => image?.image_url)
+    .map((img: any) => {
       return {
         url: img?.image_url,
         altText: img?.alt_text,

@@ -1,3 +1,4 @@
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import { useRecoilValue } from 'recoil';
 import Button from 'UI/Button';
@@ -50,12 +51,17 @@ const Container = styled.div`
 `;
 
 const StyledProductCard = styled.div`
-  padding: ${({ isMainCard }) => (isMainCard ? '24px' : '24px 0px 24px 40px')};
+  padding: ${({
+    // @ts-expect-error TS(2339): Property 'isMainCard' does not exist on type 'Pick... Remove this comment to see the full error message
+    isMainCard,
+  }) => (isMainCard ? '24px' : '24px 0px 24px 40px')};
   display: grid;
   grid-row-gap: 24px;
   grid-template-columns: 1fr auto;
-  grid-template-areas: ${({ layout }) =>
-    layout.desktop.map((row) => `'${row}'`)};
+  grid-template-areas: ${({
+    // @ts-expect-error TS(2339): Property 'layout' does not exist on type 'Pick<Det... Remove this comment to see the full error message
+    layout,
+  }) => layout.desktop.map((row: any) => `'${row}'`)};
   ${StlyedSplit} {
     margin: 0;
     max-width: unset;
@@ -81,7 +87,7 @@ const StyledProductCard = styled.div`
     padding: ${({ theme }) => theme.productCards.padding.mobile};
     margin: 0;
     grid-template-areas: ${({ layout }) =>
-      layout.mobile.map((row) => `'${row}'`)};
+      layout.mobile.map((row: any) => `'${row}'`)};
     width: auto;
     grid-template-columns: auto;
     .more-details {
@@ -117,7 +123,10 @@ const CloseIconWrapper = styled.div`
   }
 `;
 
-const WrapperProductCard = styled.div`
+const WrapperProductCard = styled.div<{
+  isMainCard: boolean;
+  isMobile: boolean;
+}>`
   border: ${({ theme }) => theme.productCards.border};
   border-radius: 8px;
   display: grid;
@@ -135,7 +144,11 @@ const TourTitle = styled.h2`
   margin: 0 !important;
   max-width: 768px;
   @media (max-width: 768px) {
-    ${({ isPopup, theme }) =>
+    ${({
+      // @ts-expect-error TS(2339): Property 'isPopup' does not exist on type 'Pick<De... Remove this comment to see the full error message
+      isPopup,
+      theme,
+    }) =>
       isPopup
         ? theme.productCards.titleFontSettings.popupMobile
         : theme.productCards.titleFontSettings.mobile};
@@ -170,7 +183,10 @@ const PopupContentWrapper = styled.div`
 
 const TitleWrapper = styled.div`
   grid-area: title;
-  ${({ hasBorderedTitle }) =>
+  ${({
+    // @ts-expect-error TS(2339): Property 'hasBorderedTitle' does not exist on type... Remove this comment to see the full error message
+    hasBorderedTitle,
+  }) =>
     hasBorderedTitle
       ? `
             border-bottom: 1px solid ${COLORS.GRAY.G6};
@@ -197,6 +213,7 @@ const ShortSummary = styled.div`
 `;
 
 const TourTags = styled.div(
+  // @ts-expect-error TS(2339): Property 'isMainCard' does not exist on type 'Pick... Remove this comment to see the full error message
   ({ isMainCard, isOpened }) => `
   display: ${isMainCard ? 'inline' : 'grid'};
   grid-row-gap: 12px;
@@ -257,7 +274,10 @@ export const CTAContainer = styled.div`
     }
   `
       : ``}
-  ${({ isMainCard }) =>
+  ${({
+    // @ts-expect-error TS(2339): Property 'isMainCard' does not exist on type 'Pick... Remove this comment to see the full error message
+    isMainCard,
+  }) =>
     isMainCard
       ? `
     height: 100%;
@@ -301,7 +321,7 @@ const PriceContainer = styled.div`
     ${({ theme }) => theme.productCards.priceFontSettings.mobile}
   }
 `;
-const CTABlock = styled.div`
+const CTABlock = styled.div<{ isSticky: boolean; shouldOffset: boolean }>`
   a {
     text-decoration: none;
   }
@@ -344,13 +364,19 @@ const CTABlock = styled.div`
   }
 `;
 
-const ProductBody = styled.div`
+const ProductBody = styled.div<{
+  noOfListItemToShow: number;
+  defaultOpen: boolean;
+}>`
   grid-area: body;
   display: grid;
   grid-row-gap: 8px;
   overflow-anchor: none;
   .tour-description {
-    cursor: ${({ hasReadMore }) => (hasReadMore ? 'pointer' : '')};
+    cursor: ${({
+      // @ts-expect-error TS(2339): Property 'hasReadMore' does not exist on type 'Pic... Remove this comment to see the full error message
+      hasReadMore,
+    }) => (hasReadMore ? 'pointer' : '')};
     p {
       margin: 0;
       font-weight: 500;
@@ -360,7 +386,12 @@ const ProductBody = styled.div`
     opacity: 0.99;
     display: grid;
     grid-gap: 0;
-    ${({ collapsed, noOfListItemToShow, defaultOpen }) =>
+    ${({
+      // @ts-expect-error TS(2339): Property 'collapsed' does not exist on type 'Pick<... Remove this comment to see the full error message
+      collapsed,
+      noOfListItemToShow,
+      defaultOpen,
+    }) =>
       collapsed && !defaultOpen
         ? `
     *:not(div):nth-child(n + ${noOfListItemToShow}),
@@ -400,7 +431,11 @@ const ProductBody = styled.div`
     .tour-description {
       ${({ theme }) => theme.productCards.regularFontSettings.mobile}
     }
-    ${({ collapsed, defaultOpen }) =>
+    ${({
+      // @ts-expect-error TS(2339): Property 'collapsed' does not exist on type 'Pick<... Remove this comment to see the full error message
+      collapsed,
+      defaultOpen,
+    }) =>
       collapsed && !defaultOpen
         ? `
         .tour-description {
@@ -517,10 +552,11 @@ const Descriptors = ({
   minDuration,
   maxDuration,
   lang = 'en',
-}) => {
+}: any) => {
   return (
+    // @ts-expect-error TS(2769): No overload matches this call.
     <TourTags isMainCard={isMainCard} isOpened={isOpened}>
-      {descriptorArray.map((item, index) => {
+      {descriptorArray.map((item: any, index: number) => {
         const DescriptorSVG = descriptorIcons[item];
 
         let descEl = item ? (
@@ -531,6 +567,7 @@ const Descriptors = ({
               {getDuration({ minDuration, maxDuration, lang })}
             </Conditional>
             <Conditional if={item !== 'DURATION'}>
+              {/* @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message */}
               {strings.DESCRIPTORS?.[item]}
             </Conditional>
           </div>
@@ -546,7 +583,7 @@ const Descriptors = ({
   );
 };
 
-const TicketCard = (props) => {
+const TicketCard = (props: any) => {
   const moreDetailsRef = useRef();
   const {
     tgid,
@@ -662,7 +699,7 @@ const TicketCard = (props) => {
       [ANALYTICS_PROPERTIES.EXPERIENCE_DATE]: null,
       [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
       [ANALYTICS_PROPERTIES.TGID]: tgid,
-      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city?.cityCode,
+      [ANALYTICS_PROPERTIES.CITY]: (pageMetaData?.city as any)?.cityCode,
       ...getProductCommonProperties({
         primaryCategory,
         primaryCollection,
@@ -671,14 +708,17 @@ const TicketCard = (props) => {
     });
   };
 
-  const getDate = (date, currentLanguage) => {
+  const getDate = (date: any, currentLanguage: any) => {
     const today = dayjs().format('YYYY-MM-DD');
     const tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');
     if (date === today) return strings.TODAY;
     if (date === tomorrow) return strings.TOMORROW;
-    return dayjs(date)
-      .locale(currentLanguage)
-      .format(LOCALISED_DATE_FORMATS[currentLanguage].DATE_MONTH);
+    return (
+      dayjs(date)
+        .locale(currentLanguage)
+        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+        .format(LOCALISED_DATE_FORMATS[currentLanguage].DATE_MONTH)
+    );
   };
 
   const cardTitle = title || tourTitle;
@@ -696,13 +736,16 @@ const TicketCard = (props) => {
     ? tempHighlights
     : tourHighlights;
   let mobileFallbackShortSummary =
-    finalHighlights?.filter((line) => wordCount(line?.text) > 5)?.slice(0, 1) ??
-    '';
-  mobileFallbackShortSummary = mobileFallbackShortSummary.map((content) => ({
-    spans: [],
-    text: truncate(content.text, 80),
-    type: 'paragraph',
-  }));
+    finalHighlights
+      ?.filter((line: any) => wordCount(line?.text) > 5)
+      ?.slice(0, 1) ?? '';
+  mobileFallbackShortSummary = mobileFallbackShortSummary.map(
+    (content: any) => ({
+      spans: [],
+      text: truncate(content.text, 80),
+      type: 'paragraph',
+    })
+  );
   let hasShortSummary = shortSummary?.length > 0;
   hasShortSummary =
     !hasShortSummary && isMobile
@@ -735,7 +778,7 @@ const TicketCard = (props) => {
     hasPromoCode: promo_code,
   });
   const getMoreDetailsButton = () => {
-    const keyPressedOnReadMore = (event) => {
+    const keyPressedOnReadMore = (event: any) => {
       if (event.keyCode == 13 && !isMobile) {
         toggleContentOpen(!isContentOpen);
       }
@@ -756,10 +799,12 @@ const TicketCard = (props) => {
       );
     return (
       <div
+        // @ts-expect-error TS(2322): Type 'MutableRefObject<undefined>' is not assignab... Remove this comment to see the full error message
         ref={moreDetailsRef}
         data-open="0"
         onClick={() => {
           if (mbTheme !== THEMES.MIN_BLUE && isMobile) {
+            // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
             addToAside({
               width: '100vw',
               children: (
@@ -821,6 +866,7 @@ const TicketCard = (props) => {
       document.body.style.overflow = 'hidden';
     }
     if (isMobile) {
+      // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
       addToAside({
         width: '100vw',
         children: (
@@ -841,8 +887,9 @@ const TicketCard = (props) => {
       });
     }
   };
-  const getCTABlock = (expandContent) => (
+  const getCTABlock = (expandContent: any) => (
     <>
+      {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <PriceContainer isOpened={isOpened}>
         <PriceBlock
           showScratchPrice={showScratchPrice}
@@ -861,6 +908,7 @@ const TicketCard = (props) => {
       >
         <Conditional if={!isComboWithMultiVariant}>
           <a
+            // @ts-expect-error TS(2322): Type '"_blank" | null' is not assignable to type '... Remove this comment to see the full error message
             target={isFetched && isMobile ? null : '_blank'}
             href={productBookingUrl}
             rel="nofollow noreferrer"
@@ -921,6 +969,7 @@ const TicketCard = (props) => {
   const getProductCardElements = () => (
     <PopupWrapper>
       <PopupContentWrapper>
+        {/* @ts-expect-error TS(2769): No overload matches this call. */}
         <WrapperProductCard layout={layout} isMobile={isMobile}>
           <Conditional if={!isMobile}>
             <Product {...props} isTicketCard={isTicketCard} />
@@ -933,8 +982,8 @@ const TicketCard = (props) => {
     </PopupWrapper>
   );
 
-  const productOfferBlockMarkup = (productOffers) => {
-    return productOffers?.map((offer, index) => {
+  const productOfferBlockMarkup = (productOffers: any) => {
+    return productOffers?.map((offer: any, index: number) => {
       if (offer.id === offerId) {
         return (
           <ProductOfferBlock
@@ -952,17 +1001,21 @@ const TicketCard = (props) => {
     });
   };
 
-  const getProductCard = (expandContent, isFallbackSummary = false) => (
+  const getProductCard = (expandContent: any, isFallbackSummary = false) => (
     <>
       <Labels>
         <Conditional if={boosterTag}>
           <Label>{boosterTag}</Label>
         </Conditional>
       </Labels>
+      {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <WrapperProductCard layout={layout} isMainCard={true}>
+        {/* @ts-expect-error TS(2769): No overload matches this call. */}
         <StyledProductCard layout={layout} isMainCard={true}>
           <ProductHeader>
+            {/* @ts-expect-error TS(2769): No overload matches this call. */}
             <TitleWrapper hasBorderedTitle={hasBorderedTitle && !tabs.length}>
+              {/* @ts-expect-error TS(2769): No overload matches this call. */}
               <TourTitle isOpened={isOpened} isPopup={isContentOpen}>
                 {cardTitle}
               </TourTitle>
@@ -1008,6 +1061,7 @@ const TicketCard = (props) => {
             <Conditional if={hasOffer && offerId}>
               {productOfferBlockMarkup(productOffer)}
             </Conditional>
+            {/* @ts-expect-error TS(2769): No overload matches this call. */}
             <CTAContainer isMainCard={true}>
               <Conditional if={isMobile}>
                 {getCTABlock(expandContent)}
@@ -1022,6 +1076,7 @@ const TicketCard = (props) => {
           </Conditional>
           <Conditional if={isMobile}>
             <ProductBody
+              // @ts-expect-error TS(2769): No overload matches this call.
               hasReadMore={hasReadMore}
               collapsed={!expandContent}
               noOfListItemToShow={noOfListItemToShow + 1}

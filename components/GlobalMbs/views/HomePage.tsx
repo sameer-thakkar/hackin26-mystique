@@ -3,7 +3,7 @@ import Banner from 'components/GlobalMbs/Banners/HomePageBanner';
 import TopDestinationsCarousel from 'components/GlobalMbs/Carousels/TopDestinationsCarousel';
 import sliceHandler from 'components/Slices';
 
-const HomePage = (props) => {
+const HomePage = (props: any) => {
   const {
     banner_images: bannerImages,
     banner_subtext: bannerSubText,
@@ -15,24 +15,22 @@ const HomePage = (props) => {
     isDev,
   } = props || {};
 
-  const images = bannerImages?.map((image) => ({
+  const images = bannerImages?.map((image: any) => ({
     url: image?.image_url?.url,
-    altText: image?.alt_text,
+    altText: image?.alt_text
   }));
-  return (
-    <>
-      <Banner
-        images={images}
-        title={bannerTitle}
-        subText={bannerSubText}
-        mbType={mb_type}
-      />
-      <Conditional if={cityCollections?.length}>
-        <TopDestinationsCarousel destinations={cityCollections} />
-      </Conditional>
-      {slices?.map((slice) => sliceHandler(slice, { collections, isDev }))}
-    </>
-  );
+  return <>
+    <Banner
+      images={images}
+      title={bannerTitle}
+      subText={bannerSubText}
+      mbType={mb_type}
+    />
+    <Conditional if={cityCollections?.length}>
+      <TopDestinationsCarousel destinations={cityCollections} />
+    </Conditional>
+    {slices?.map((slice: any) => sliceHandler(slice, { collections, isDev }))}
+  </>;
 };
 
 export default HomePage;

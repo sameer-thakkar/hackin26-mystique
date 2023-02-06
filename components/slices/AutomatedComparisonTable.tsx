@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import useSWR from 'swr';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 import styled from 'styled-components';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
 import EnvironmentContext from 'contexts/environmentContext';
@@ -69,8 +70,10 @@ const ComparisonTableWrapper = styled.div`
     width: calc(100%);
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: repeat(3, 1fr) ${({ isMobile }) =>
-      isMobile ? '16px' : ''};
+    grid-template-columns: repeat(3, 1fr) ${({
+      // @ts-expect-error TS(2339): Property 'isMobile' does not exist on type 'Pick<D... Remove this comment to see the full error message
+      isMobile,
+    }) => (isMobile ? '16px' : '')};
     grid-column-gap: 24px;
     border-bottom: 1px solid ${COLORS.GRAY.G6};
     padding-bottom: 24px;
@@ -204,8 +207,10 @@ const ComparisonTableWrapper = styled.div`
       max-width: 100vw;
       width: 100% !important;
       grid-column-gap: 16px;
-      grid-template-columns: 0px repeat(${({ tourCount }) =>
-        tourCount}, 164px) 4px;
+      grid-template-columns: 0px repeat(${({
+        // @ts-expect-error TS(2339): Property 'tourCount' does not exist on type 'Pick<... Remove this comment to see the full error message
+        tourCount,
+      }) => tourCount}, 164px) 4px;
       position: relative;
     }
     .row::before {
@@ -364,7 +369,7 @@ const AutomatedTourComparisonTable = ({
   description,
   isMobile,
   collectionId,
-}) => {
+}: any) => {
   const [isExpanded, setExpand] = useState(false);
 
   const envContext = useContext(EnvironmentContext);
@@ -378,12 +383,12 @@ const AutomatedTourComparisonTable = ({
   const currentHost = !envContext.isDev ? `https://${host}` : `http://${host}`;
   const orderedLabels = ['maxDuration', 'inclusions', 'cancellationPolicy'];
 
-  const getLabelContent = (label, tour) => {
+  const getLabelContent = (label: any, tour: any) => {
     if (label === 'maxDuration') {
       if (tour?.[label]) {
         const duration = getDuration({
-          minDuration: tour?.[label],
-          maxDuration: tour?.[label],
+          minDuration: tour[label],
+          maxDuration: tour[label],
           lang,
         });
         return {
@@ -431,7 +436,7 @@ const AutomatedTourComparisonTable = ({
     }
   };
 
-  const onBookNowClick = ({ tgid, position }) => {
+  const onBookNowClick = ({ tgid, position }: any) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED,
       [ANALYTICS_PROPERTIES.TGID]: tgid,
@@ -451,6 +456,7 @@ const AutomatedTourComparisonTable = ({
     params: collectionEndpointParams,
     id: collectionId,
   });
+  // @ts-expect-error TS(2345): Argument of type '[string | undefined, { fetcher: ... Remove this comment to see the full error message
   const { data: collectionData } = useSWR(collectionEndpoint, {
     fetcher: swrFetcher,
   });
@@ -458,12 +464,13 @@ const AutomatedTourComparisonTable = ({
     ? getCollectionSection(collectionData, 'HEADOUT_PICKS')
     : [];
   const tourGroups = collectionData
-    ? headoutPicks?.filter((item) => item.language.toLowerCase() === lang)
+    ? headoutPicks?.filter((item: any) => item.language.toLowerCase() === lang)
     : [];
 
   return (
     <Conditional if={tourGroups?.length}>
       <ComparisonTableWrapper
+        // @ts-expect-error TS(2769): No overload matches this call.
         isExpanded={isExpanded}
         isMobile={isMobile}
         tourCount={tourGroups?.length}
@@ -475,7 +482,7 @@ const AutomatedTourComparisonTable = ({
         <div className="full-width-wrap">
           <div className="table">
             <div className="row max-content">
-              {tourGroups?.map((tour, index) => {
+              {tourGroups?.map((tour: any, index: number) => {
                 return (
                   <Column key={index}>
                     <div className="tour-image">
@@ -493,7 +500,7 @@ const AutomatedTourComparisonTable = ({
             </div>
             <div className="sticky wrapper">
               <div className="row wrapper">
-                {tourGroups?.map((tour, index) => {
+                {tourGroups?.map((tour: any, index: number) => {
                   return (
                     <Column key={index}>
                       <div className="tour-chin">
@@ -521,7 +528,7 @@ const AutomatedTourComparisonTable = ({
                 id="expanded-details-section"
                 style={{ marginTop: -8 }}
               >
-                {tourGroups?.map((tour, index) => {
+                {tourGroups?.map((tour: any, index: number) => {
                   const ctaProps = {
                     link: {
                       url: createBookingURL({
@@ -556,7 +563,7 @@ const AutomatedTourComparisonTable = ({
               </div>
             </Conditional>
             <div className="row max-content">
-              {tourGroups?.map((tour, index) => {
+              {tourGroups?.map((tour: any, index: number) => {
                 return (
                   <div className="column flat-price-block" key={index}>
                     <div className="content-block">
@@ -574,7 +581,7 @@ const AutomatedTourComparisonTable = ({
               })}
             </div>
             {orderedLabels
-              .filter((label, index) =>
+              .filter((_label, index) =>
                 isMobile && !isExpanded ? index < 2 : true
               )
               .map((label, rowIndex) => {
@@ -584,7 +591,8 @@ const AutomatedTourComparisonTable = ({
                     id={`comparison-list-details-${rowIndex}`}
                     key={rowIndex}
                   >
-                    {tourGroups?.map((tour, colIndex) => {
+                    {tourGroups?.map((tour: any, colIndex: number) => {
+                      // @ts-expect-error TS(2339): Property 'title' does not exist on type '{ title: ... Remove this comment to see the full error message
                       const { title, content } = getLabelContent(label, tour);
                       return (
                         <Column key={colIndex}>
@@ -600,7 +608,7 @@ const AutomatedTourComparisonTable = ({
               })}
             <Conditional if={(isMobile && isExpanded) || !isMobile}>
               <div className={`row max-content`} id="expanded-details-column">
-                {tourGroups?.map((tour, index) => {
+                {tourGroups?.map((tour: any, index: number) => {
                   return (
                     <div className="column flat-price-block" key={index}>
                       <div className="content-block">
@@ -622,7 +630,7 @@ const AutomatedTourComparisonTable = ({
           </div>
           <div className="table cta-table-wrap">
             <div className="row">
-              {tourGroups?.map((tour, index) => {
+              {tourGroups?.map((tour: any, index: number) => {
                 const ctaProps = {
                   link: {
                     url: createBookingURL({

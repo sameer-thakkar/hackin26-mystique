@@ -8,7 +8,14 @@ import { CHEVRON_DOWN, PURPS_TICK_MARK } from 'assets/SvgIcons';
 import styled from 'styled-components';
 import { isSameURL } from 'utils/helper';
 
-const ResponsiveSelectWrapper = styled.div`
+interface IResponsiveSelectWrapper {
+  hasIcon?: boolean;
+  hasChevron?: boolean;
+  iconPosition?: string;
+  addPadding?: boolean;
+}
+
+const ResponsiveSelectWrapper = styled.div<IResponsiveSelectWrapper>`
   margin: 0;
   user-select: none;
   position: relative;
@@ -168,7 +175,7 @@ const ResponsiveSelectWrapper = styled.div`
   }
 `;
 
-export const ResponsiveSelector = (props) => {
+export const ResponsiveSelector = (props: any) => {
   const {
     currentSelectionIndex,
     isMobile,
@@ -184,7 +191,7 @@ export const ResponsiveSelector = (props) => {
   const [toggleActive, setToggleActive] = useState(false);
   const [current, setCurrent] = useState(currentSelectionIndex || 0);
 
-  const selectionChangeHandler = (index) => {
+  const selectionChangeHandler = (index: number) => {
     setCurrent(index);
     onChange(options[index]);
     handleMenuToggle();
@@ -197,12 +204,13 @@ export const ResponsiveSelector = (props) => {
   const selectorRef = useRef(null);
   const parentRef = useRef(null);
   const exceptionElementRefs = [parentRef];
+  // @ts-expect-error TS(2345): Argument of type 'MutableRefObject<null>[]' is not... Remove this comment to see the full error message
   useCaptureClickOutside(selectorRef, handleMenuToggle, exceptionElementRefs);
 
   useEffect(() => {
     if (window) {
       const currentUrl = window.location.href;
-      const currentSelectionIndex = options.findIndex((option) =>
+      const currentSelectionIndex = options.findIndex((option: any) =>
         isSameURL(currentUrl, option.value)
       );
       setCurrent(currentSelectionIndex);
@@ -249,7 +257,7 @@ export const ResponsiveSelector = (props) => {
             toggleActive ? 'responsive-dropdown-active' : ''
           }`}
         >
-          {options.map((option, index) => {
+          {options.map((option: any, index: number) => {
             return (
               <div
                 className={`responsive-option ${

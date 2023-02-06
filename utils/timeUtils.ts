@@ -52,7 +52,11 @@ export const localisedRelativeTimeFormat = ({
 };
 
 export function convertMillisecondsToHours(milliseconds: number | null) {
-  if (!milliseconds) return {};
+  if (!milliseconds)
+    return {
+      hour: null,
+      minute: null,
+    };
   const hour = Math.floor(milliseconds / 1000 / 60 / 60);
   const minute = Math.floor((milliseconds / 1000 / 60 / 60 - hour) * 60);
   return {
@@ -61,7 +65,7 @@ export function convertMillisecondsToHours(milliseconds: number | null) {
   };
 }
 
-const formatPartsToDuration = (arr) => {
+const formatPartsToDuration = (arr: Array<Intl.RelativeTimeFormatPart>) => {
   if (arr.length === 3) {
     const [, value, unit] = arr || [];
     return `${value?.value}${unit?.value}`;
@@ -82,7 +86,14 @@ export const getDuration = ({
 }) => {
   if (!minDuration && !maxDuration)
     return strings.DESCRIPTORS.FLEXIBLE_DURATION;
-  const formatDurationToString = ({ hour, minute }) => {
+
+  const formatDurationToString = ({
+    hour,
+    minute,
+  }: {
+    hour: number | null;
+    minute: number | null;
+  }) => {
     let res = '';
     if (hour) {
       const hourParts = localisedRelativeTimeFormat({
@@ -91,7 +102,10 @@ export const getDuration = ({
         value: hour,
         formatToParts: true,
       });
-      res += formatPartsToDuration(hourParts);
+      res +=
+        typeof hourParts === 'string'
+          ? hourParts
+          : formatPartsToDuration(hourParts);
     }
     if (minute) {
       const minuteParts = localisedRelativeTimeFormat({
@@ -100,7 +114,10 @@ export const getDuration = ({
         value: minute,
         formatToParts: true,
       });
-      res += ` ${formatPartsToDuration(minuteParts)}`;
+      res +=
+        typeof minuteParts === 'string'
+          ? ` ${minuteParts}`
+          : ` ${formatPartsToDuration(minuteParts)}`;
     }
     return res;
   };

@@ -16,7 +16,7 @@ const getActiveCategoryIndexFromQuery = (
   return index !== -1 ? index : 0;
 };
 
-export const InteractionContextProvider = (props) => {
+export const InteractionContextProvider = (props: any) => {
   const { categories, queryCategory } = props;
   const initialActiveCategoryIndex = getActiveCategoryIndexFromQuery(
     categories,
@@ -53,7 +53,7 @@ export const InteractionContextProvider = (props) => {
     ...defaultCategory,
   ]);
 
-  const clickTour = (tgid, hoist, section = 'main', autoScroll = true) => {
+  const clickTour = (tgid: any, hoist: any, section = 'main', autoScroll = true) => {
     let expand = false;
     if (activeTour.tgid != tgid) {
       if (hoist) {
@@ -63,6 +63,7 @@ export const InteractionContextProvider = (props) => {
       setActiveTour({
         tgid,
         hoist,
+        // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'null'.
         section,
         autoScroll,
       });
@@ -81,16 +82,16 @@ export const InteractionContextProvider = (props) => {
   const closeTour = () => {
     setActiveTour({
       tgid: null,
+      // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'boolean'.
       hoist: null,
       section: null,
       autoScroll: false,
     });
   };
 
-  const uniqueTgids = (tgidArray) =>
-    tgidArray.filter((tgid, index, self) => {
-      return self.indexOf(tgid) === index;
-    });
+  const uniqueTgids = (tgidArray: any) => tgidArray.filter((tgid: any, index: any, self: any) => {
+    return self.indexOf(tgid) === index;
+  });
 
   const changeCategory = (tgidArray: any[], categoryIndex: number) => {
     const categoryId = categories?.[categoryIndex]?.id;
@@ -98,6 +99,7 @@ export const InteractionContextProvider = (props) => {
     setActiveCategoryId(categoryId);
     setActiveTour({
       tgid: null,
+      // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'boolean'.
       hoist: null,
       section: null,
       autoScroll: true,
@@ -109,6 +111,7 @@ export const InteractionContextProvider = (props) => {
 
   return (
     <InteractionContext.Provider
+      // @ts-expect-error TS(2322): Type '{ activeTour: { tgid: null; hoist: boolean; ... Remove this comment to see the full error message
       value={{
         activeTour,
         activeCategoryId,

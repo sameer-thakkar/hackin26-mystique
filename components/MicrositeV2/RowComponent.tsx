@@ -18,7 +18,7 @@ const V3DetailedProductCard = dynamic(() =>
   import(/* webpackChunkName: "V3DetailedProductCard" */ '../Product')
 );
 
-const ProductsRow = styled.div`
+const ProductsRow = styled.div<{ isV3Design: boolean }>`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-column-gap: 24px;
@@ -31,7 +31,7 @@ const ProductsRow = styled.div`
   }
 `;
 
-export const RowComponent = (props) => {
+export const RowComponent = (props: any) => {
   const {
     isMobile,
     tgidsSubArr,
@@ -46,6 +46,7 @@ export const RowComponent = (props) => {
     isDev,
     sectionIndex,
   } = props;
+  // @ts-expect-error TS(2339): Property 'activeCategoryId' does not exist on type... Remove this comment to see the full error message
   const { activeCategoryId, activeTour, clickTour, closeTour } =
     useContext(InteractionContext) || {};
   const { design } = useContext(MBContext);
@@ -59,7 +60,10 @@ export const RowComponent = (props) => {
     sectionIndex *
     (isMobile ? NO_OF_CARDS_IN_ROW.MOBILE : NO_OF_CARDS_IN_ROW.DESKTOP);
 
-  const getDescriptors = (descriptors, { minDuration, maxDuration }) => {
+  const getDescriptors = (
+    descriptors: Record<string, any>[],
+    { minDuration, maxDuration }: any
+  ) => {
     const allDescriptors = descriptors?.map((item) => item.code);
     if (minDuration & maxDuration) {
       allDescriptors.push(DESCRIPTORS.DURATION);
@@ -67,7 +71,7 @@ export const RowComponent = (props) => {
     return allDescriptors;
   };
 
-  const getV3DetailedCard = (tgid, index) => {
+  const getV3DetailedCard = (tgid: any, index: number) => {
     const currTour = allTours[tgid];
     if (!currTour) return null;
     const {
@@ -118,7 +122,7 @@ export const RowComponent = (props) => {
     );
   };
 
-  const handleProductClicked = (productTgid, event) => {
+  const handleProductClicked = (productTgid: any, event: any) => {
     if (event.type === 'keydown') {
       event.target.blur();
       return;
@@ -164,7 +168,7 @@ export const RowComponent = (props) => {
   return (
     <>
       <ProductsRow isV3Design={isV3Design}>
-        {tgidsSubArr.map((tgid, index) => (
+        {tgidsSubArr.map((tgid: any, index: number) => (
           <Product
             tgid={tgid}
             productClick={handleProductClicked}
@@ -180,7 +184,7 @@ export const RowComponent = (props) => {
           />
         ))}
         <Conditional if={!isEntertainmentMb && !isV3Design}>
-          {tgidsSubArr.map((tgid, index) => (
+          {tgidsSubArr.map((tgid: any, index: number) => (
             <DetailedProductCard
               showDescCard={tgid === activeTgid}
               tgidClicked={tgid}
@@ -201,7 +205,7 @@ export const RowComponent = (props) => {
         </Conditional>
       </ProductsRow>
       <Conditional if={isV3Design}>
-        {tgidsSubArr.map((tgid, index) => {
+        {tgidsSubArr.map((tgid: any, index: number) => {
           return getV3DetailedCard(tgid, index);
         })}
       </Conditional>

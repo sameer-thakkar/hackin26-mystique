@@ -16,14 +16,20 @@ export const StyledAsideModal = styled.div`
   height: 100vh;
   overflow-y: scroll;
   scroll-behavior: smooth;
-  padding: 20px ${({ sidePadding }) => (sidePadding ? sidePadding : '24')}px;
+  padding: 20px ${({  
+ // @ts-expect-error TS(2339): Property 'sidePadding' does not exist on type 'Pic... Remove this comment to see the full error message
+ sidePadding }) => (sidePadding ? sidePadding : '24')}px;
   padding-top: 0;
   max-width: calc(
-    ${({ width }) => (width ? (1440 * parseFloat(width)) / 100 : '606')}px -
+    ${({    
+ // @ts-expect-error TS(2339): Property 'width' does not exist on type 'Pick<Deta... Remove this comment to see the full error message
+ width }) => (width ? (1440 * parseFloat(width)) / 100 : '606')}px -
       48px
   );
   width: calc(
-    ${({ width, sidePadding }) =>
+    ${({    
+ // @ts-expect-error TS(2339): Property 'width' does not exist on type 'Pick<Deta... Remove this comment to see the full error message
+ width, sidePadding }) =>
       `${width ? width : '27.5vw'} - ${sidePadding ? sidePadding * 2 : '48'}px`}
   );
   background: ${COLORS.BRAND.WHITE};
@@ -35,7 +41,9 @@ export const StyledAsideModal = styled.div`
     -webkit-overflow-scrolling: touch;
     max-width: unset;
     width: unset;
-    ${({ sidebarType }) =>
+    ${({    
+ // @ts-expect-error TS(2339): Property 'sidebarType' does not exist on type 'Pic... Remove this comment to see the full error message
+ sidebarType }) =>
       sidebarType === SIDEBAR_TYPES.PRODUCT_CARD
         ? `
       height: auto;
@@ -59,9 +67,13 @@ const Header = styled.div`
   grid-template-columns: auto auto;
   padding-top: 20px;
   padding-bottom: 24px;
-  position: ${({ headerType }) =>
+  position: ${({  
+ // @ts-expect-error TS(2339): Property 'headerType' does not exist on type 'Pick... Remove this comment to see the full error message
+ headerType }) =>
     headerType === SIDEBAR_TYPES.PRODUCT_CARD ? 'unset' : 'sticky'};
-  ${({ headerType }) =>
+  ${({  
+ // @ts-expect-error TS(2339): Property 'headerType' does not exist on type 'Pick... Remove this comment to see the full error message
+ headerType }) =>
     headerType === SIDEBAR_TYPES.PRODUCT_CARD
       ? `
       width: calc(100% - 32px);
@@ -81,14 +93,18 @@ const Header = styled.div`
     `
       : ''}
   top: 0;
-  background: ${({ addBg, isGlobalMb }) =>
+  background: ${({  
+ // @ts-expect-error TS(2339): Property 'addBg' does not exist on type 'Pick<Deta... Remove this comment to see the full error message
+ addBg, isGlobalMb }) =>
     addBg
       ? COLORS.BRAND.WHITE
       : isGlobalMb
       ? COLORS.BRAND.WHITE
       : 'transparent'};
   z-index: 12;
-  ${({ headerType }) =>
+  ${({  
+ // @ts-expect-error TS(2339): Property 'headerType' does not exist on type 'Pick... Remove this comment to see the full error message
+ headerType }) =>
     headerType === SIDEBAR_TYPES.COMBO_VARIANT
       ? `
       width: calc(100% - 32px);
@@ -110,7 +126,9 @@ const Header = styled.div`
   @media (max-width: 768px) {
     &:before,
     &:after {
-      ${({ addBg }) => (addBg ? `content: '';` : '')};
+      ${({      
+ // @ts-expect-error TS(2339): Property 'addBg' does not exist on type 'Pick<Deta... Remove this comment to see the full error message
+ addBg }) => (addBg ? `content: '';` : '')};
       display: block;
       width: 24px;
       position: absolute;
@@ -157,7 +175,9 @@ const Mask = styled.div`
   }
 `;
 const ModalContent = styled.div`
-  ${({ sidebarType, windowHeight }) =>
+  ${({  
+ // @ts-expect-error TS(2339): Property 'sidebarType' does not exist on type 'Pic... Remove this comment to see the full error message
+ sidebarType, windowHeight }) =>
     sidebarType === SIDEBAR_TYPES.PRODUCT_CARD
       ? `
   overflow-x: scroll;
@@ -185,13 +205,15 @@ const AsideModal = ({
   type,
   isGlobalMb = false,
   onCloseCallback = null,
-  isQueryRestore = false,
-}) => {
+  isQueryRestore = false
+}: any) => {
   const container = useRef(null);
+  // @ts-expect-error TS(2322): Type 'HTMLElement' is not assignable to type 'null... Remove this comment to see the full error message
   if (!container.current) container.current = document.body;
 
   const [scrollY, setScrollY] = useState(0);
   const { width: windowWidth, height: windowHeight } = useWindowSize();
+  // @ts-expect-error TS(2532): Object is possibly 'undefined'.
   const isMobile = isGlobalMb ? windowWidth <= 768 : windowWidth < 768;
   const hasBack = stack.length > 1;
   const router = useRouter();
@@ -211,14 +233,15 @@ const AsideModal = ({
       // to avoid this we removed position: fixed, and let the sidebar live in regular scroll flow.
       window.scrollTo(0, 0);
     }
+    // @ts-expect-error TS(2531): Object is possibly 'null'.
     if (active) container.current.classList.add('scroll-lock');
 
     return () => window.removeEventListener('popstate', onPopState);
   }, [active, isMobile]);
 
   const onClose = (e = null, options: OnCloseOptions = {}) => {
-    if (e?.target) {
-      e.stopPropagation();
+    if ((e as any)?.target) {
+      (e as any).stopPropagation();
     }
     if (!options.triggeredByPopstate) {
       if (isQueryRestore) {
@@ -239,12 +262,14 @@ const AsideModal = ({
       }
     }
 
+    // @ts-expect-error TS(2531): Object is possibly 'null'.
     container.current.classList.remove('scroll-lock');
     if (isMobile) window.scrollTo(0, scrollY);
     if (onCloseCallback) onCloseCallback();
     closeModal();
   };
   const onCloseAll = () => {
+    // @ts-expect-error TS(2531): Object is possibly 'null'.
     container.current.classList.remove('scroll-lock');
     if (isMobile) window.scrollTo(0, scrollY);
     resetAside();
@@ -255,12 +280,14 @@ const AsideModal = ({
         <>
           <Mask onClick={onCloseAll} />
           <StyledAsideModal
+            // @ts-expect-error TS(2769): No overload matches this call.
             windowHeight={windowHeight}
             sidebarType={type}
             width={width}
             sidePadding={sidePadding}
           >
             <Header
+              // @ts-expect-error TS(2769): No overload matches this call.
               onClick={type === SIDEBAR_TYPES.PRODUCT_CARD ? onClose : null}
               addBg={!!title}
               headerType={type}
@@ -270,16 +297,19 @@ const AsideModal = ({
               <Title>{title}</Title>
               {hasBack ? (
                 <BackIcon
+                  // @ts-expect-error TS(2769): No overload matches this call.
                   onClick={type === SIDEBAR_TYPES.PRODUCT_CARD ? null : onClose}
                 >
                   {BackArrow}
                 </BackIcon>
               ) : (
+                // @ts-expect-error TS(2769): No overload matches this call.
                 <CloseIcon className={'close-icon'} onClick={onClose}>
                   {CLOSE_WHITE}
                 </CloseIcon>
               )}
             </Header>
+            {/* @ts-expect-error TS(2769): No overload matches this call. */}
             <ModalContent windowHeight={windowHeight} sidebarType={type}>
               {children}
             </ModalContent>

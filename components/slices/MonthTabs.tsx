@@ -1,5 +1,6 @@
 import { useEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'clas... Remove this comment to see the full error message
 import classNames from 'classnames';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
@@ -68,7 +69,7 @@ const Tabs = styled.div`
 
 type MonthTabsProps = {
   tabs: Array<any>;
-  categories: Array<{ id; name; rank; ranking }>;
+  categories: Array<{ id: any; name: any; rank: any; ranking: any }>;
   hideSortBySelector: boolean;
   isMobile: boolean;
 };
@@ -77,6 +78,7 @@ const MonthTabs = (props: MonthTabsProps) => {
   const { tabs, categories, hideSortBySelector, isMobile } = props;
 
   const interactionContext = useContext(InteractionContext);
+  // @ts-expect-error TS(2339): Property 'changeCategory' does not exist on type '... Remove this comment to see the full error message
   const { changeCategory } = interactionContext || {};
 
   const [filterDropdownActive, setFilterDropdownActive] = useState(false);
@@ -86,13 +88,13 @@ const MonthTabs = (props: MonthTabsProps) => {
     changeCategory(tgidArray, 0);
   }, []);
 
-  const toggleFilterDropdown = (dropdownState) => {
+  const toggleFilterDropdown = (dropdownState: any) => {
     setFilterDropdownActive((oldState) =>
       typeof dropdownState !== 'undefined' ? dropdownState : !oldState
     );
   };
 
-  const changeOrder = (orderKey) => {
+  const changeOrder = (orderKey: any) => {
     changeCategory(categories[0].ranking[orderKey], 0);
   };
 

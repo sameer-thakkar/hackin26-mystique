@@ -19,7 +19,11 @@ import { CHEVRON_DOWN } from '../assets/SvgIcons';
 const StyledMenuItem = styled.li`
   padding: 12px 16px;
   ${expandFontToken('UI/Label Medium')}
-  color: ${({ theme: { primaryBGText }, isGlobalMb }) =>
+  color: ${({
+    theme: { primaryBGText },
+    // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+    isGlobalMb,
+  }) =>
     isGlobalMb
       ? COLORS.GRAY.G2
       : primaryBGText
@@ -28,7 +32,11 @@ const StyledMenuItem = styled.li`
   cursor: pointer;
   position: relative;
   span {
-    color: ${({ theme: { primaryBGText }, isGlobalMb }) =>
+    color: ${({
+      theme: { primaryBGText },
+      // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+      isGlobalMb,
+    }) =>
       isGlobalMb
         ? COLORS.GRAY.G2
         : primaryBGText
@@ -53,7 +61,11 @@ const StyledMenuItem = styled.li`
       svg {
         height: 24px;
         path {
-          stroke: ${({ theme: { primaryBGText }, isGlobalMb }) =>
+          stroke: ${({
+            theme: { primaryBGText },
+            // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+            isGlobalMb,
+          }) =>
             isGlobalMb
               ? COLORS.GRAY.G2
               : primaryBGText
@@ -98,7 +110,10 @@ const StyledMenuItem = styled.li`
         padding-right: 0;
       }
     }
-    ${({ nestOpen }) =>
+    ${({
+      // @ts-expect-error TS(2339): Property 'nestOpen' does not exist on type 'Pick<D... Remove this comment to see the full error message
+      nestOpen,
+    }) =>
       nestOpen &&
       `
       background: ${COLORS.BACKGROUND.FLOATING_PURPS};
@@ -176,7 +191,10 @@ const Nav = styled.nav`
   grid-auto-flow: column;
   align-items: center;
   grid-column-gap: 30px;
-  ${({ isMobile }) => !isMobile && `margin-left: 16px;`}
+  ${({
+    // @ts-expect-error TS(2339): Property 'isMobile' does not exist on type 'Pick<D... Remove this comment to see the full error message
+    isMobile,
+  }) => !isMobile && `margin-left: 16px;`}
   & > li {
     padding: 0;
   }
@@ -234,7 +252,7 @@ const HeadingMenu = styled(StyledMenuItem)`
   }
 `;
 
-const Navigation = (props) => {
+const Navigation = (props: any) => {
   const { slices, isMobile, navOpen, id, isGlobalMb = false } = props;
   return (
     <Nav
@@ -242,7 +260,7 @@ const Navigation = (props) => {
       id={id ? id : 'navigation-menu-mobile'}
       {...props}
     >
-      {slices.map((slice, index) =>
+      {slices.map((slice: any, index: number) =>
         HeaderSliceHandler(slice, {
           index,
           isMobile,
@@ -254,9 +272,16 @@ const Navigation = (props) => {
   );
 };
 
-const Menu = ({ label, url, slices, isMobile, isGlobalMb = false, index }) => {
+const Menu = ({
+  label,
+  url,
+  slices,
+  isMobile,
+  isGlobalMb = false,
+  index,
+}: any) => {
   const [active, setActive] = useState(false);
-  const nestedMobileInteraction = (event, clickedLabel) => {
+  const nestedMobileInteraction = (event: any, clickedLabel: any) => {
     if (!isMobile) return;
     event.preventDefault();
     event.stopPropagation();
@@ -272,7 +297,7 @@ const Menu = ({ label, url, slices, isMobile, isGlobalMb = false, index }) => {
 
   useEffect(() => {
     if (nestedMenuRef.current) {
-      const nestedMenuDim = nestedMenuRef.current?.getBoundingClientRect();
+      const nestedMenuDim = (nestedMenuRef.current as any)?.getBoundingClientRect();
       if (nestedMenuDim.width + nestedMenuDim.x > windowWidth)
         setOffScreen(true);
     }
@@ -292,7 +317,7 @@ const Menu = ({ label, url, slices, isMobile, isGlobalMb = false, index }) => {
         label={label}
         isNested={true}
         url={url}
-        onClick={(e) => nestedMobileInteraction(e, label)}
+        onClick={(e: any) => nestedMobileInteraction(e, label)}
         nestOpen={active}
         className={active ? 'nest-open' : 'nest-close'}
         isGlobalMb={isGlobalMb}
@@ -303,7 +328,7 @@ const Menu = ({ label, url, slices, isMobile, isGlobalMb = false, index }) => {
           ref={nestedMenuRef}
           className={`nested-menu ${isOffScreen ? 'off-screen' : ''}`}
         >
-          {slices?.map((slice, index) =>
+          {slices?.map((slice: any, index: number) =>
             HeaderSliceHandler(slice, {
               index,
               isMobile,
@@ -317,7 +342,7 @@ const Menu = ({ label, url, slices, isMobile, isGlobalMb = false, index }) => {
   );
 };
 
-const MenuItem = (props) => {
+const MenuItem = (props: any) => {
   const {
     isNested,
     url,
@@ -333,7 +358,7 @@ const MenuItem = (props) => {
   } = props;
   const pageMetaData = useRecoilValue(metaAtom);
 
-  const menuItemSelected = (e) => {
+  const menuItemSelected = (e: any) => {
     if (onClick) onClick(e);
     e.stopPropagation();
     const menuItemText = e.target.closest('.menu-item-text')?.innerText;
@@ -348,6 +373,7 @@ const MenuItem = (props) => {
 
   return (
     <StyledMenuItem
+      // @ts-expect-error TS(2769): No overload matches this call.
       nestOpen={nestOpen}
       className={`${className}`}
       isGlobalMb={isGlobalMb}
@@ -376,7 +402,7 @@ const MenuItem = (props) => {
   );
 };
 
-const HeaderSliceHandler = (slice, props) => {
+const HeaderSliceHandler = (slice: any, props: any) => {
   const { index, navOpen, isGlobalMb = false } = props;
   switch (slice.slice_type) {
     case 'navigation':
@@ -421,6 +447,7 @@ const HeaderSliceHandler = (slice, props) => {
             props.isMobile && slice.toggleMenu();
             slice.action();
           }}
+          // @ts-expect-error TS(2769): No overload matches this call.
           isGlobalMb={isGlobalMb}
         >
           {strings.GROUP_TICKETS}
@@ -516,7 +543,7 @@ const MultiLevelNav = ({
   isMobile,
   isActive,
   isGlobalMb = false,
-}) => {
+}: any) => {
   const [firstSlice, secondSlice, ..._ignored_only_two_nav_bar] = slice;
 
   let withOldMenu = firstSlice?.slices || [];

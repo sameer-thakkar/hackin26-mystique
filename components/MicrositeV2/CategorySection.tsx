@@ -74,7 +74,7 @@ const StyledCategorySection = styled.div`
  *
  */
 
-const CategorySection = (props) => {
+const CategorySection = (props: any) => {
   const {
     tgidsArray,
     host,
@@ -91,9 +91,10 @@ const CategorySection = (props) => {
   } = props;
   const toursContext = useContext(ProductsContext);
   const interactionContext = useContext(InteractionContext);
+  // @ts-expect-error TS(2339): Property 'allTours' does not exist on type 'null'.
   const { allTours } = toursContext;
 
-  let filteredTgids;
+  let filteredTgids: any;
   const categoryDataObj = {};
 
   const categoryDataArray = Object.keys(categoryTourListData)?.length
@@ -101,7 +102,8 @@ const CategorySection = (props) => {
     : [];
 
   if (categoryDataArray?.length) {
-    categoryDataArray?.forEach((c) => {
+    categoryDataArray?.forEach((c: any) => {
+      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       categoryDataObj[c?.tgid] = c;
     });
   }
@@ -110,29 +112,33 @@ const CategorySection = (props) => {
   if (hasCategoryTourList) {
     const re = /\s*(?:,)\s*/g;
     const excludedTours = excludedTgids
-      ? excludedTgids?.split(re)?.map((tgid) => +tgid)
+      ? excludedTgids?.split(re)?.map((tgid: any) => +tgid)
       : [];
-    const allTgids = categoryDataArray?.map((c) => c?.tgid);
-    filteredTgids = allTgids?.filter((tgid) => {
+    const allTgids = categoryDataArray?.map((c: any) => c?.tgid);
+    filteredTgids = allTgids?.filter((tgid: any) => {
       return (
+        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         categoryDataObj[tgid] &&
+        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         categoryDataObj[tgid]?.available &&
         !excludedTours.includes(tgid)
       );
     });
   } else {
     filteredTgids = tgidsArray.filter(
-      (tgid) => allTours[tgid] && allTours[tgid].available
+      (tgid: any) => allTours[tgid] && allTours[tgid].available
     );
   }
 
   const elementId =
     heading?.trim().replace(/\s/g, '-').toLowerCase() || filteredTgids[0];
   const { width } = useWindowSize();
+  // @ts-expect-error TS(2532): Object is possibly 'undefined'.
   const isMobile = width < 768;
   useEffect(() => {
     setTimeout(() => {
       if (isFirstTourOpen && filteredTgids[0] && !isMobile)
+        // @ts-expect-error TS(2531): Object is possibly 'null'.
         interactionContext.clickTour(
           filteredTgids[0],
           DONT_HOIST,
@@ -143,7 +149,7 @@ const CategorySection = (props) => {
   }, []);
 
   return (
-    <StyledCategorySection id={elementId} isEntertainmentMb={isEntertainmentMb}>
+    <StyledCategorySection id={elementId}>
       <Conditional if={heading}>
         <h2 className="category-heading">{heading}</h2>
       </Conditional>

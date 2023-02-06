@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { Swiper } from 'swiper';
 import type { SwiperProps } from 'swiper/react';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'clas... Remove this comment to see the full error message
 import classNames from 'classnames';
 import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
@@ -46,10 +47,13 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
     options: { threshold: 0.75 },
   });
   const [isVisibilityTracked, setIsVisibilityTracked] = useState(false);
+  // @ts-expect-error TS(2345): Argument of type 'null' is not assignable to param... Remove this comment to see the full error message
   const [swiper, setSwiperInstance] = useState<Swiper>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
-  const getImageViewEventProperties = ({ rank }) => ({
+  const getImageViewEventProperties = ({
+    rank
+  }: any) => ({
     eventName: ANALYTICS_EVENTS.PRODUCT_CARD_IMAGE_VIEWED,
     [ANALYTICS_PROPERTIES.TGID]: tgid,
     [ANALYTICS_PROPERTIES.RANKING]: rank,
@@ -104,6 +108,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
   };
 
   return (
+    // @ts-expect-error TS(2769): No overload matches this call.
     <CarouselContainer ref={carouselRef}>
       <SwiperWrapper {...swiperParams}>
         {imageList.map((image, index) => {

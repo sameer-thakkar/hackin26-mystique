@@ -98,7 +98,7 @@ export default class LongForm extends Component<any, any> {
     const { content, ...props } = this.props;
     return (
       <StyledLongForm>
-        {content.map((slice, index) => (
+        {content.map((slice: any, index: number) => (
           <div
             key={`long-form-${slice?.slice_type}-${index}`}
             className={`${

@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { MBContext } from 'contexts/MBContext';
 import Image from 'UI/Image';
@@ -93,7 +93,7 @@ const StyledCard = styled.div`
 
 interface CardProps {
   card: any;
-  clickHandler: (e: React.MouseEvent<HTMLButtonElement>, index: number) => void;
+  clickHandler: (e: React.MouseEvent<HTMLDivElement>, index: number) => void;
   isMobile: boolean;
   price?: string;
   currency?: string;
@@ -123,15 +123,16 @@ const Card = ({ card, clickHandler, isMobile, price, currency }: CardProps) => {
   const BEST_SELLER = 'Bestseller';
 
   const hasBestSeller = otherFilters?.length
-    ? otherFilters?.some((tag) => tag?.filter_name === BEST_SELLER)
+    ? otherFilters?.some((tag: any) => tag?.filter_name === BEST_SELLER)
     : false;
 
   const {
     sidebarModal: { addToAside },
   } = useContext(MBContext);
 
-  const handleClick = (e) => {
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (isMobile) {
+      // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
       addToAside({
         width: '100vw',
         children: (

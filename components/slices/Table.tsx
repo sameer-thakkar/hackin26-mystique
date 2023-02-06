@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
-import { shortCodeSerializer } from '../../utils/shortCodes';
 import styled from 'styled-components';
+
+import { shortCodeSerializer } from '../../utils/shortCodes';
 
 const StyledTableV1 = styled.div`
   .description-table {
@@ -32,10 +34,10 @@ const StyledTableV1 = styled.div`
   }
 `;
 export default class Table extends Component<any, any> {
-  subArrays = (arr) => {
+  subArrays = (arr: any) => {
     const { numberOfColumns } = this.props;
     const perChunk = numberOfColumns;
-    const result = arr.reduce((resultArray, item, index) => {
+    const result = arr.reduce((resultArray: any, item: any, index: number) => {
       const chunkIndex = Math.floor(index / perChunk);
       if (!resultArray[chunkIndex]) {
         resultArray[chunkIndex] = [];
@@ -55,10 +57,10 @@ export default class Table extends Component<any, any> {
         <h3>{title}</h3>
         <table className="description-table">
           <tbody>
-            {tableColumns.map((column, index) => {
+            {tableColumns.map((column: any, index: number) => {
               return (
                 <tr key={index}>
-                  {column.map((item, index) => (
+                  {column.map((item: any, index: number) => (
                     <td key={index}>
                       <RichText
                         render={item.column}

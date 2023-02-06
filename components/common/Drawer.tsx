@@ -3,11 +3,10 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
 import { CloseIcon } from 'assets/SvgIcons';
-import { throttle } from 'utils/helper';
+import { throttle } from 'utils/gen';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
-
 const DrawerContainer = styled.div`
   position: fixed;
   z-index: 10;
@@ -28,7 +27,10 @@ const DrawerContainer = styled.div`
     animation: fade 0.4s ease;
   }
 
-  ${({ $drawerStyles }) => $drawerStyles}
+  ${({
+    // @ts-expect-error TS(2339): Property '$drawerStyles' does not exist on type 'P... Remove this comment to see the full error message
+    $drawerStyles,
+  }) => $drawerStyles}
 
   @keyframes fade {
     from {
@@ -50,11 +52,17 @@ const DrawerContainer = styled.div`
 const DrawerWrapper = styled.div`
   background: ${COLORS.BRAND.WHITE};
   border-radius: 20px 20px 0px 0px;
-  padding: ${({ $noMargin }) => ($noMargin ? 'unset' : '0 24px')};
+  padding: ${({
+    // @ts-expect-error TS(2339): Property '$noMargin' does not exist on type 'Pick<... Remove this comment to see the full error message
+    $noMargin,
+  }) => ($noMargin ? 'unset' : '0 24px')};
   box-shadow: 0px -2px 12px rgba(84, 84, 84, 0.1);
   display: grid;
   margin-top: auto;
-  grid-row-gap: ${({ $hasHeading }) => ($hasHeading ? '24px' : '0')};
+  grid-row-gap: ${({
+    // @ts-expect-error TS(2339): Property '$hasHeading' does not exist on type 'Pic... Remove this comment to see the full error message
+    $hasHeading,
+  }) => ($hasHeading ? '24px' : '0')};
   z-index: 1000;
   height: 100%;
   align-content: flex-start;
@@ -103,8 +111,10 @@ const Separator = styled.div`
 
 const HeadingContainer = styled.div`
   display: grid;
-  grid-template-columns: ${({ $hasHeading }) =>
-    $hasHeading ? '1fr 1.6rem' : '1fr'};
+  grid-template-columns: ${({
+    // @ts-expect-error TS(2339): Property '$hasHeading' does not exist on type 'Pic... Remove this comment to see the full error message
+    $hasHeading,
+  }) => ($hasHeading ? '1fr 1.6rem' : '1fr')};
   grid-row-gap: 1.2rem;
   align-items: center;
   ${Separator} {
@@ -145,6 +155,7 @@ const Drawer = ({
   children,
   noMargin = false,
   $drawerStyles,
+  // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'HTMLElement... Remove this comment to see the full error message
   container = null,
 }: {
   closeHandler?: Function;
@@ -171,50 +182,46 @@ const Drawer = ({
   useEffect(() => {
     if (!drawerRef.current) return;
     const drawer = drawerRef.current;
-
-    const onStart = (e) => {
+    const onStart = (e: any) => {
       const [touch] = e.changedTouches;
       const currentYTouchPos = touch.clientY;
-      drawer.prevDragPos = currentYTouchPos;
+      (drawer as any).prevDragPos = currentYTouchPos;
     };
-
-    const onMove = throttle((e) => {
+    const onMove = throttle((e: any) => {
       const [touch] = e.changedTouches;
       const currentYTouchPos = touch.clientY;
-      if (drawer.prevDragPos) {
-        const delta = currentYTouchPos - drawer.prevDragPos;
+      if ((drawer as any).prevDragPos) {
+        const delta = currentYTouchPos - (drawer as any).prevDragPos;
         if (delta > 0) {
-          drawer.style.transform = `translateY(${delta}px)`;
+          (drawer as any).style.transform = `translateY(${delta}px)`;
         }
       }
     }, 100);
-
-    const onEnd = (e) => {
+    const onEnd = (e: any) => {
       const [touch] = e.changedTouches;
       const currentYTouchPos = touch.clientY;
-      const delta = currentYTouchPos - drawer.prevDragPos;
+      const delta = currentYTouchPos - (drawer as any).prevDragPos;
       if (delta > SWIPE_DOWN_THRESHOLD_PX) {
-        drawer.style.transform = `translateY(100%)`;
+        (drawer as any).style.transform = `translateY(100%)`;
         setTimeout(() => {
+          // @ts-expect-error TS(2722): Cannot invoke an object which is possibly 'undefin... Remove this comment to see the full error message
           closeHandler('Swipe');
         }, 200);
       } else {
-        drawer.style.transform = `translateY(0px)`;
+        (drawer as any).style.transform = `translateY(0px)`;
       }
     };
-
     try {
-      drawer.addEventListener('touchstart', onStart);
-      drawer.addEventListener('touchmove', onMove);
-      drawer.addEventListener('touchend', onEnd);
+      (drawer as any).addEventListener('touchstart', onStart);
+      (drawer as any).addEventListener('touchmove', onMove);
+      (drawer as any).addEventListener('touchend', onEnd);
     } catch (e) {
       //
     }
-
     return () => {
-      drawer.removeEventListener('touchstart', onStart);
-      drawer.removeEventListener('touchmove', onMove);
-      drawer.removeEventListener('touchend', onEnd);
+      (drawer as any).removeEventListener('touchstart', onStart);
+      (drawer as any).removeEventListener('touchmove', onMove);
+      (drawer as any).removeEventListener('touchend', onEnd);
     };
   }, []);
 
@@ -223,19 +230,23 @@ const Drawer = ({
   }
 
   return ReactDOM.createPortal(
+    // @ts-expect-error TS(2769): No overload matches this call.
     <DrawerContainer $drawerStyles={$drawerStyles} $noMargin={noMargin}>
       <div
         className="shadow"
         role="button"
         tabIndex={0}
+        // @ts-expect-error TS(2722): Cannot invoke an object which is possibly 'undefin... Remove this comment to see the full error message
         onClick={() => closeHandler('Outside')}
       />
       <DrawerWrapper
+        // @ts-expect-error TS(2769): No overload matches this call.
         $hasHeading={heading?.length}
         className={`${className || ''}`}
         $noMargin={noMargin}
         ref={drawerRef}
       >
+        {/* @ts-expect-error TS(2769): No overload matches this call. */}
         <HeadingContainer $hasHeading={heading?.length}>
           <PanelAnchor />
           <Conditional if={heading}>
@@ -243,6 +254,7 @@ const Drawer = ({
             <Separator />
           </Conditional>
           <CloseIcon
+            // @ts-expect-error TS(2722): Cannot invoke an object which is possibly 'undefin... Remove this comment to see the full error message
             onClick={() => closeHandler('Close Icon')}
             className="close-icon"
           />

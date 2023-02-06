@@ -6,7 +6,7 @@ import COLORS from 'const/colors';
 import sliceHandler from '../Slices';
 import { CLOSE_BLACK } from '../../assets/SvgIcons';
 
-const Popup = (props) => {
+const Popup = (props: any) => {
   const { data, togglePopup, children } = props;
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {

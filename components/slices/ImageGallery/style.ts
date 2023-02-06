@@ -57,9 +57,9 @@ export const Heading = styled.div`
 `;
 
 export const Description = styled.div<{
-  width;
-  height;
-  maxWidth;
+  width?: string;
+  height?: string;
+  maxWidth?: string;
 }>`
   &&& {
     width : ${({ width }) => width && width};
@@ -192,7 +192,7 @@ export const GridLayoutContainer = styled.div`
   margin: 0 auto;
 `;
 
-export const Tag = styled.div`
+export const Tag = styled.div<{ isMobile: boolean }>`
   position: absolute;
   top: ${({ isMobile }) => (isMobile ? '10px' : '')};
   bottom: ${({ isMobile }) => (isMobile ? '' : '10px')};
@@ -346,7 +346,7 @@ export const DesktopLightboxHeading = styled.div`
   }
 `;
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{ noOfImages: number }>`
   /* Desktop and Tablet first style starts */
   position: relative;
   display: grid;

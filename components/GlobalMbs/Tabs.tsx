@@ -17,7 +17,7 @@ const TabWrapper = styled.div`
   }
 `;
 
-const SubHeadingLarge = styled.div`
+const SubHeadingLarge = styled.div<{ active: boolean }>`
   width: max-content;
   ${expandFontToken('UI/Label Large')}
   ${({ active }) =>
@@ -35,7 +35,7 @@ const TabControl = styled.div`
   }
 `;
 
-const Tab = styled(SubHeadingLarge)`
+const Tab = styled(SubHeadingLarge)<{ active: boolean }>`
   padding-bottom: 1rem;
   border-bottom: 2px solid transparent;
   ${({ active }) => (active ? `border-color: ${COLORS.TEXT.PURPS_3};` : ``)};
@@ -43,7 +43,7 @@ const Tab = styled(SubHeadingLarge)`
   cursor: pointer;
 `;
 
-const Panel = styled.div`
+const Panel = styled.div<{ active: boolean; isCollectionCard: boolean }>`
   display: ${({ active }) => (active ? 'block' : 'none')};
 `;
 

@@ -125,15 +125,19 @@ interface PagesDocuments {
   };
 }
 
-type CardCarouselProps = {
-  cards: any[];
-  isMobile: boolean;
-  allShowPagesDocuments: PagesDocuments[];
-  currentLanguage: string;
-  categoryName: string;
+type OwnCardCarouselProps = {
+    cards: any[];
+    isMobile: boolean;
+    allShowPagesDocuments: PagesDocuments[];
+    currentLanguage: string;
+    categoryName: string;
 };
 
-export default class CategorySlider extends Component<CardCarouselProps> {
+type CardCarouselState = any;
+
+type CardCarouselProps = OwnCardCarouselProps & typeof CategorySlider.defaultProps;
+
+export default class CategorySlider extends Component<CardCarouselProps, CardCarouselState> {
   state = {
     isMobile: null,
     cardPrices: {},

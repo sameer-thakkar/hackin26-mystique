@@ -11,7 +11,7 @@ import { expandFontToken } from 'const/typography';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 
-const StyledSearchBox = styled.div`
+const StyledSearchBox = styled.div<{ isEntertainmentMb?: boolean }>`
   position: relative;
 
   input {
@@ -99,7 +99,7 @@ const StyledSearchBox = styled.div`
   }
 `;
 
-export const SearchBox = (props) => {
+export const SearchBox = (props: any) => {
   let interactionContext = useContext(InteractionContext);
   const {
     handleResults,
@@ -110,13 +110,15 @@ export const SearchBox = (props) => {
   } = props || {};
   const [query, setQuery] = useRecoilState(searchQueryAtom);
   const fuse = useRef(null);
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const search = useCallback(
-    (str) => {
+    (str: any) => {
       setQuery(str);
       if (str.length >= 3) {
+        // @ts-expect-error TS(2531): Object is possibly 'null'.
         if (interactionContext.activeTour.tgid) interactionContext.closeTour();
+        // @ts-expect-error TS(2531): Object is possibly 'null'.
         const results = fuse.current.search(str);
         handleResults(results.slice(0, 5));
 
@@ -141,7 +143,8 @@ export const SearchBox = (props) => {
       threshold: 0.4,
       keys: ['title'],
     };
-    const searchableTours = allToursArray.filter((tour) => tour.available);
+    const searchableTours = allToursArray.filter((tour: any) => tour.available);
+    // @ts-expect-error TS(2322): Type 'Fuse<unknown, { shouldSort: boolean; thresho... Remove this comment to see the full error message
     fuse.current = new Fuse(searchableTours, opts);
 
     if (clearSearch) {
@@ -150,7 +153,7 @@ export const SearchBox = (props) => {
   }, [allToursArray, clearSearch, handleClearSearch, fuse]);
 
   useEffect(() => {
-    if (isMobile) {
+    if (isMobile && inputRef?.current) {
       inputRef.current.focus();
     }
   }, []);

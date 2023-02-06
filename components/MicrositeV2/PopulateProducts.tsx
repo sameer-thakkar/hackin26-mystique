@@ -23,7 +23,10 @@ const RowComponent: ComponentType<any> = dynamic(() =>
   )
 );
 
-const StyledProductWrapper = styled.div`
+const StyledProductWrapper = styled.div<{
+  isEntertainmentMbListicle?: boolean;
+  isEntertainmentMb: boolean;
+}>`
   margin-top: 32px;
   display: grid;
   grid-row-gap: 32px;
@@ -65,7 +68,7 @@ const NO_OF_ROWS_TO_SHOW = {
   MOBILE: 8,
 };
 
-const PopulateProducts = (props) => {
+const PopulateProducts = (props: any) => {
   const {
     isMobile,
     isEntertainmentMb,
@@ -83,6 +86,7 @@ const PopulateProducts = (props) => {
     isDev,
     isDiscountedPage,
   } = props;
+  // @ts-expect-error TS(2339): Property 'activeCategoryTgids' does not exist on t... Remove this comment to see the full error message
   const { activeCategoryTgids, activeCategoryIndex, closeTour } =
     useContext(InteractionContext) || {};
   const mbContext = useContext(MBContext);
@@ -105,13 +109,13 @@ const PopulateProducts = (props) => {
 
   const isEntertainmentMbListicle = isListicle && isEntertainmentMb;
 
-  const subArrays = (tgidsArr, offset = 0) => {
+  const subArrays = (tgidsArr: any, offset = 0) => {
     const { isMobile } = props;
     const perChunk = isMobile
       ? NO_OF_CARDS_IN_ROW.MOBILE
       : NO_OF_CARDS_IN_ROW.DESKTOP;
     const result = tgidsArr
-      .filter((tgid) => {
+      .filter((tgid: any) => {
         if (isEntertainmentMbListicle) {
           return (
             allTours?.[tgid]?.listicleShowSummary &&
@@ -127,7 +131,7 @@ const PopulateProducts = (props) => {
         }
       })
       .slice(offset)
-      .reduce((resultArray, item, index) => {
+      .reduce((resultArray: any, item: any, index: number) => {
         const chunkIndex = Math.floor(index / perChunk);
         if (!resultArray[chunkIndex]) {
           resultArray[chunkIndex] = [];
@@ -162,13 +166,14 @@ const PopulateProducts = (props) => {
     return query;
   };
 
-  const viewMore = (e) => {
+  const viewMore = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     closeTour();
     setRowsInView(
       rowsInView +
         (isMobile ? NO_OF_ROWS_TO_SHOW.MOBILE : NO_OF_ROWS_TO_SHOW.DESKTOP)
     );
+    // @ts-expect-error TS(2345): Argument of type 'null' is not assignable to param... Remove this comment to see the full error message
     routerPush(`${pathname}?${getUpdatedQuery()?.toString()}`, null, {
       shallow: true,
     });
@@ -211,7 +216,7 @@ const PopulateProducts = (props) => {
       isEntertainmentMb={isEntertainmentMb}
       isEntertainmentMbListicle={isEntertainmentMbListicle}
     >
-      {tgidsSubArr.map((row, index) => {
+      {tgidsSubArr.map((row: any, index: number) => {
         if (showAll || index < rowsInView)
           return (
             <RowComponent
@@ -242,7 +247,8 @@ const PopulateProducts = (props) => {
         >
           {isEntertainmentMbListicle
             ? strings.SEE_MORE_SHOWS
-            : mbContext.buttons.see_more_text || strings.VIEW_MORE}
+            : // @ts-expect-error TS(2531): Object is possibly 'null'.
+              mbContext.buttons.see_more_text || strings.VIEW_MORE}
         </LinkResolver>
       </Conditional>
     </StyledProductWrapper>

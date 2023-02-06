@@ -29,7 +29,7 @@ import { checkLTT } from 'utils/helper';
 import { parseDescriptors } from 'utils/productUtils';
 import { descriptorIcons } from 'const/descriptorIcons';
 
-const ProductCard = styled.div`
+const ProductCard = styled.div<{ isV3Design?: boolean }>`
   width: 100%;
   height: 100%;
   max-width: 100%;
@@ -336,7 +336,7 @@ const ProductCard = styled.div`
   }
 `;
 
-const Product = (props) => {
+const Product = (props: any) => {
   const {
     allTours,
     tgid,
@@ -357,6 +357,7 @@ const Product = (props) => {
     uid,
   } = useContext(MBContext);
 
+  // @ts-expect-error TS(2339): Property 'sliceData' does not exist on type '{}'.
   const { sliceData } = useContext(InteractionContext) || {};
   const { collectionId, primaryCatId, primarySubCatId } = sliceData || {};
   if (!allTours[tgid]) return null;
@@ -426,7 +427,11 @@ const Product = (props) => {
     ? convertUidToUrl({ uid: showPageUid, isDev, hostname: host, lang })
     : bookingURL;
 
-  const handleProductClick = (event) => {
+  const handleProductClick = (
+    event:
+      | React.KeyboardEvent<HTMLDivElement>
+      | React.MouseEvent<HTMLDivElement | HTMLAnchorElement>
+  ) => {
     event.preventDefault();
     if (isMobile) {
       if (isV3Design) {

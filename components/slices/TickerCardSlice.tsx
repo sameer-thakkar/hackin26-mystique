@@ -9,7 +9,7 @@ import { tourListApiParser } from 'utils/dataParsers';
 import { fetchTourList } from 'utils/apiUtils';
 import { convertUidToUrl } from 'utils/urlUtils';
 
-const TicketCard = (props) => {
+const TicketCard = (props: any) => {
   const {
     toursList: uncategorizedToursList,
     categoryTourListData,
@@ -37,10 +37,14 @@ const TicketCard = (props) => {
     ? Object.keys(categoryTourListData)?.length > 0
     : null;
 
-  const sortTours = (tgidToScroll, toursArray, isCategorisedTours) => {
+  const sortTours = (
+    tgidToScroll: any,
+    toursArray: any,
+    isCategorisedTours: any
+  ) => {
     if (!tgidToScroll) return toursArray;
     if (tgidToScroll) {
-      return toursArray?.reduce((accum = [], item) => {
+      return toursArray?.reduce((accum = [], item: any) => {
         const tgid = isCategorisedTours ? +tgidToScroll : tgidToScroll;
         if (item.tgid === tgid) {
           return [item, ...accum];
@@ -77,7 +81,7 @@ const TicketCard = (props) => {
   const [scorpioData, setScorpioData] = useState(initialScorpioData);
   const [initialCurrency] = useState(currency);
   const orderedTgids = orderedTours?.length
-    ? orderedTours?.map((tour) => tour.tgid)
+    ? orderedTours?.map((tour: any) => tour.tgid)
     : [];
 
   useEffect(() => {
@@ -103,7 +107,7 @@ const TicketCard = (props) => {
       ? ''
       : uncategorizedTours[0].primary
     : '';
-  const currentLanguage = lang ? getLangObject(lang).code : null;
+  const currentLanguage = getLangObject(lang).code;
   const withCommonHeaderOverrides = {
     ...micrositeData,
   };

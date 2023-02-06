@@ -11,7 +11,7 @@ const PopulateProducts = dynamic(() =>
   import(/* webpackChunkName: "PopulateProducts" */ './PopulateProducts')
 );
 
-const StyledProductWrapper = styled.div`
+const StyledProductWrapper = styled.div<{ isEntertainmentMb: boolean }>`
   margin-bottom: ${({ isEntertainmentMb }) =>
     isEntertainmentMb ? '64px' : '0'};
 
@@ -24,8 +24,9 @@ const StyledProductWrapper = styled.div`
   }
 `;
 
-export const ProductsWrapper = (props) => {
+export const ProductsWrapper = (props: any) => {
   const interactionContext = useContext(InteractionContext);
+  // @ts-expect-error TS(2339): Property 'activeCategoryTgids' does not exist on t... Remove this comment to see the full error message
   const { activeCategoryTgids, changeCategory, clickTour } =
     interactionContext || {};
 

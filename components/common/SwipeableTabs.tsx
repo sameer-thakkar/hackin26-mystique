@@ -35,14 +35,18 @@ export const Tab = styled(SubHeadingLarge)`
   padding-bottom: 12px;
   border-bottom: 2px solid;
 
-  ${({ active }) =>
+  ${({  
+ // @ts-expect-error TS(2339): Property 'active' does not exist on type 'Pick<Det... Remove this comment to see the full error message
+ active }) =>
     active ? `color: ${COLORS.TEXT.PURPS_3};` : ` border-color: transparent;`};
   transform: translateY(1px);
   cursor: pointer;
 `;
 
 export const Panel = styled.div`
-  display: ${({ active }) => (active ? 'block' : 'none')};
+  display: ${({  
+ // @ts-expect-error TS(2339): Property 'active' does not exist on type 'Pick<Det... Remove this comment to see the full error message
+ active }) => (active ? 'block' : 'none')};
 `;
 
 interface TabProps {
@@ -78,11 +82,11 @@ const SwipeableTabs: FunctionComponent<TabProps> = ({
   }, [activeTab]);
 
   useEffect(() => {
-    const onSwipeStart = debounce((e) => {
+    const onSwipeStart = debounce((e: any) => {
       swipeRef.current.touchStartX = e.changedTouches[0].screenX;
     }, 250);
 
-    const onSwipeEnd = debounce((e) => {
+    const onSwipeEnd = debounce((e: any) => {
       swipeRef.current.touchEndX = e.changedTouches[0].screenX;
       const { touchEndX, touchStartX, activeTab } = swipeRef.current;
       const delta = touchStartX - touchEndX;
@@ -110,6 +114,7 @@ const SwipeableTabs: FunctionComponent<TabProps> = ({
       <TabControl>
         {tabs.map((tab, index) => (
           <Tab
+            // @ts-expect-error TS(2769): No overload matches this call.
             active={index === activeTab}
             key={`tab${index + 1}`}
             onClick={() => setTab(index)}
@@ -121,6 +126,7 @@ const SwipeableTabs: FunctionComponent<TabProps> = ({
       <div>
         {tabs.map((tab, index) => (
           <Panel
+            // @ts-expect-error TS(2769): No overload matches this call.
             active={index === activeTab}
             key={index}
             isCollectionCard={isCollectionCard}

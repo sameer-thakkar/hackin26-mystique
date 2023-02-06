@@ -14,7 +14,7 @@ const StyledTrigger = styled.span`
   line-height: 20px;
 `;
 
-const PopupTrigger = (props) => {
+const PopupTrigger = (props: any) => {
   const { id, text, children, popupContents } = props;
   const [active, setActive] = useState(null);
   const [data, setData] = useState(false);
@@ -24,7 +24,7 @@ const PopupTrigger = (props) => {
       .getByUID(CUSTOM_TYPES.POPUP, id, {
         lang: 'en-us',
       })
-      .then((res) => {
+      .then((res: any) => {
         const { data } = res;
         if (data) setData(data);
       });
@@ -32,6 +32,7 @@ const PopupTrigger = (props) => {
 
   return (
     <>
+      {/* @ts-expect-error TS(2345): Argument of type 'true' is not assignable to param... Remove this comment to see the full error message */}
       <StyledTrigger {...(data && { onClick: () => setActive(!active) })}>
         {text || children}
       </StyledTrigger>

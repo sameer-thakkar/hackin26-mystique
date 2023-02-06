@@ -29,7 +29,7 @@ const HeadingSection = styled.div`
   }
 `;
 
-const CountryPage = (props) => {
+const CountryPage = (props: any) => {
   const {
     cityCollections,
     collections,

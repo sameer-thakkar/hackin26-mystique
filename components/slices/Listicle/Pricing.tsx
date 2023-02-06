@@ -21,11 +21,11 @@ const StyledPricing = styled.div`
   }
 `;
 
-const Price = styled.span`
+const Price = styled.span `
   font-size: 21px;
   line-height: 20px;
   font-weight: 700;
-  ${(props) => (props.floatRight ? `float: right;` : '')}
+  ${(props) => ((props as any).floatRight ? `float: right;` : '')}
 `;
 
 type PricingProps = {
@@ -38,6 +38,7 @@ const Pricing: React.FC<PricingProps> = ({
   floatRight = false,
   listingPrice,
 }) => {
+  // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
   const currencySymbol = CURRENCY_SYMBOL_MAP[listingPrice.currencyCode];
   return (
     <StyledPricing>
@@ -50,6 +51,7 @@ const Pricing: React.FC<PricingProps> = ({
           </span>
         </div>
       ) : null}
+      {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <Price floatRight={floatRight}>
         {currencySymbol}
         {listingPrice.finalPrice}

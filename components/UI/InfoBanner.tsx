@@ -11,10 +11,16 @@ export const StyledInfoBanner = styled.div`
   border-radius: 8px;
   justify-content: left;
   align-items: start;
-  ${({ clickable }) => (clickable ? `cursor: pointer;` : ``)}
-  background: ${({ colorScheme: cs }) => cs.background};
+  ${({  
+ // @ts-expect-error TS(2339): Property 'clickable' does not exist on type 'Pick<... Remove this comment to see the full error message
+ clickable }) => (clickable ? `cursor: pointer;` : ``)}
+  background: ${({  
+ // @ts-expect-error TS(2339): Property 'colorScheme' does not exist on type 'Pic... Remove this comment to see the full error message
+ colorScheme: cs }) => cs.background};
   * {
-    color: ${({ colorScheme: cs }) => cs.color};
+    color: ${({    
+ // @ts-expect-error TS(2339): Property 'colorScheme' does not exist on type 'Pic... Remove this comment to see the full error message
+ colorScheme: cs }) => cs.color};
   }
 
   @media (max-width: 768px) {
@@ -77,11 +83,12 @@ const InfoBanner = ({
   ctaOnClick = null,
   bannerOnClick = null,
   colorScheme,
-  isMobile = false,
-}) => {
+  isMobile = false
+}: any) => {
   return (
     <StyledInfoBanner
       onClick={bannerOnClick}
+      // @ts-expect-error TS(2769): No overload matches this call.
       clickable={bannerOnClick}
       colorScheme={colorScheme}
     >

@@ -21,7 +21,9 @@ const GooglMapWrapper = styled.div`
   }
 `;
 
-const GoogleMap = ({ mapURL }) => {
+const GoogleMap = ({
+  mapURL
+}: any) => {
   return (
     <Conditional if={mapURL}>
       <GooglMapWrapper>

@@ -76,21 +76,21 @@ const StickyFooter = ({
   const trackBookNowClick = () => {
     const { originalPrice, finalPrice, currencyCode } = listingPrice ?? {};
     trackEvent({
-      eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,
-      [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
-      [ANALYTICS_PROPERTIES.DISCOUNT]: originalPrice > finalPrice,
-      [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
-      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: name,
-      [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
-      [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
-      [ANALYTICS_PROPERTIES.TGID]: tgid,
-      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city?.code,
-      ...getProductCommonProperties({
+    eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,
+    [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
+    [ANALYTICS_PROPERTIES.DISCOUNT]: originalPrice > finalPrice,
+    [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
+    [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: name,
+    [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
+    [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
+    [ANALYTICS_PROPERTIES.TGID]: tgid,
+    [ANALYTICS_PROPERTIES.CITY]: (pageMetaData?.city as any)?.code,
+    ...getProductCommonProperties({
         primaryCategory,
         primaryCollection,
         primarySubCategory,
-      }),
-    });
+    }),
+});
   };
 
   return (

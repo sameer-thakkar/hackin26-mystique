@@ -17,18 +17,22 @@ const StyledTabPanel = styled.div`
 `;
 
 const StyledTabContent = styled.div`
-  display: ${({ isActive }) => (isActive ? 'block' : 'none')};
+  display: ${({
+    // @ts-expect-error TS(2339): Property 'isActive' does not exist on type 'Pick<D... Remove this comment to see the full error message
+    isActive,
+  }) => (isActive ? 'block' : 'none')};
 `;
 
-const Tab = (props) => {
+const Tab = (props: any) => {
   const { slices, title, sliceProps } = props;
   const { activeTabId, keyIndex } = sliceProps || {};
   return (
     <StyledTabPanel key={keyIndex}>
-      {slices.map((slice, index) => {
+      {slices.map((slice: any, index: number) => {
         return (
           <StyledTabContent
             key={index}
+            // @ts-expect-error TS(2769): No overload matches this call.
             isActive={activeTabId == stringIdfy(title)}
           >
             {sliceHandler(slice, {

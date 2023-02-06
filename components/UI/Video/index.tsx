@@ -79,6 +79,7 @@ const Video: React.FC<VideoTypeProps> = ({
 
   const playVideo = () => {
     if (!videoRef) return;
+    // @ts-expect-error TS(2531): Object is possibly 'null'.
     videoRef.current.play();
     setIsVideoPaused(false);
     setIsAutoplayDisabled(false);
@@ -99,13 +100,16 @@ const Video: React.FC<VideoTypeProps> = ({
     if (isPageLoaded && !hasVideoLoaded) {
       /* to calculate the time between page loaded and video autoplay */
       if (!isDuplicateSlide) {
+        // @ts-expect-error TS(2322): Type 'number' is not assignable to type 'null'.
         videoAutoplayInterval.current = setInterval(() => {
           videoAutoplayTime.current += 50;
         }, 50);
       }
 
+      // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'HTMLVideoEl... Remove this comment to see the full error message
       const lazyVideo: HTMLVideoElement = videoRef.current;
       const videoSource = lazyVideo.querySelector('source');
+      // @ts-expect-error TS(2531): Object is possibly 'null'.
       videoSource.src = videoSource.dataset.src;
       lazyVideo.load();
       setHasVideoLoaded(true);
@@ -113,6 +117,7 @@ const Video: React.FC<VideoTypeProps> = ({
   }, [hasVideoLoaded, isDuplicateSlide, isPageLoaded]);
 
   useEffect(() => {
+    // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'HTMLVideoEl... Remove this comment to see the full error message
     const videoElement: HTMLVideoElement = videoRef.current;
     if (!hasVideoLoaded) return;
     videoElement.currentTime = 0;

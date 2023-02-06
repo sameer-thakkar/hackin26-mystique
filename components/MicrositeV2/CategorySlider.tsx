@@ -106,7 +106,7 @@ const StyledCategorySlider = styled.div`
   }
 `;
 
-const CategorySlider = (props) => {
+const CategorySlider = (props: any) => {
   const {
     tgidsArray,
     carouselOptions,
@@ -127,6 +127,7 @@ const CategorySlider = (props) => {
   const [swiper, updateSwiper] = useState(null);
   const [currentIndex, updateCurrentIndex] = useState(0);
   const productsContext = useContext(ProductsContext);
+  // @ts-expect-error TS(2339): Property 'allTours' does not exist on type 'null'.
   const { allTours, isMobile } = productsContext;
 
   let filteredTgids;
@@ -137,7 +138,8 @@ const CategorySlider = (props) => {
     : [];
 
   if (categoryDataArray?.length) {
-    categoryDataArray?.forEach((c) => {
+    categoryDataArray?.forEach((c: any) => {
+      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       categoryDataObj[c?.tgid] = c;
     });
   }
@@ -149,19 +151,21 @@ const CategorySlider = (props) => {
   if (hasCategoryTourList) {
     const re = /\s*(?:,)\s*/g;
     const excludedTours = excludedTgids
-      ? excludedTgids?.split(re)?.map((tgid) => +tgid)
+      ? excludedTgids?.split(re)?.map((tgid: any) => +tgid)
       : [];
-    const allTgids = categoryDataArray?.map((c) => c?.tgid);
-    filteredTgids = allTgids?.filter((tgid) => {
+    const allTgids = categoryDataArray?.map((c: any) => c?.tgid);
+    filteredTgids = allTgids?.filter((tgid: any) => {
       return (
+        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         categoryDataObj[tgid] &&
+        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         categoryDataObj[tgid]?.available &&
         !excludedTours.includes(tgid)
       );
     });
   } else {
     filteredTgids = tgidsArray?.filter(
-      (tgid, index, arr) =>
+      (tgid: any, index: number, arr: any) =>
         allTours[tgid] &&
         allTours[tgid].available &&
         arr.slice(0, index).indexOf(tgid) == -1
@@ -174,34 +178,34 @@ const CategorySlider = (props) => {
 
   const goNext = () => {
     if (swiper !== null) {
-      swiper.slideNext();
+      (swiper as any).slideNext();
     }
   };
 
   const goPrev = () => {
     if (swiper !== null) {
-      swiper.slidePrev();
+      (swiper as any).slidePrev();
     }
   };
 
+  // @ts-expect-error TS(2531): Object is possibly 'null'.
   const updateIndex = useCallback(() => updateCurrentIndex(swiper.realIndex), [
     swiper,
   ]);
 
   useEffect(() => {
     if (swiper !== null) {
-      swiper.on('slideChange', updateIndex);
+      (swiper as any).on('slideChange', updateIndex);
     }
-
     return () => {
       if (swiper !== null) {
-        swiper.off('slideChange', updateIndex);
+        (swiper as any).off('slideChange', updateIndex);
       }
     };
   }, [swiper, updateIndex]);
 
-  const handleProductClicked = (productTgid) => {
-    setTgidClicked((prevTgid) =>
+  const handleProductClicked = (productTgid: any) => {
+    setTgidClicked((prevTgid: any) =>
       prevTgid != productTgid ? productTgid : null
     );
   };
@@ -247,7 +251,7 @@ const CategorySlider = (props) => {
             slidesPerGroup={4}
             onSwiper={updateSwiper}
           >
-            {filteredTgids.map((tgid, index) => {
+            {filteredTgids.map((tgid: any, index: number) => {
               return (
                 <div key={index} className="swiper-slide">
                   <Product
@@ -265,7 +269,7 @@ const CategorySlider = (props) => {
           </Swiper>
         </div>
         <div className="controls">
-          {swiper && !swiper.isBeginning ? (
+          {swiper && !(swiper as any).isBeginning ? (
             <div
               className="swiper-btn btn btn-left"
               role="button"
@@ -275,7 +279,7 @@ const CategorySlider = (props) => {
               {CHEVRON_LEFT}
             </div>
           ) : null}
-          {swiper && !swiper.isEnd ? (
+          {swiper && !(swiper as any).isEnd ? (
             <div
               className="swiper-btn btn btn-right"
               onClick={goNext}

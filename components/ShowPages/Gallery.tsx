@@ -299,7 +299,7 @@ const AllPhotoWrapper = styled.div`
   }
 `;
 
-const Gallery = ({ galleryArray, isMobile }) => {
+const Gallery = ({ galleryArray, isMobile }: any) => {
   const [first, second, third] = galleryArray;
   const [isVisibleGalleryPopUp, setIsVisibleGalleryPopUp] = useState(false);
   const [activeIndexGalleryPopUp, setActiveIndexGalleryPopUp] = useState(0);
@@ -318,7 +318,7 @@ const Gallery = ({ galleryArray, isMobile }) => {
     navigation: !isMobile,
   };
 
-  const popupOpener = (index) => {
+  const popupOpener = (index: number) => {
     setIsVisibleGalleryPopUp(true);
     setActiveIndexGalleryPopUp(index);
     document.body.style.overflow = 'hidden';
@@ -337,8 +337,9 @@ const Gallery = ({ galleryArray, isMobile }) => {
     <>
       <GalleryPopUpWrapper isVisibleGalleryPopUp={isVisibleGalleryPopUp}>
         <GalleryPopUpContentWrapper>
-          {galleryArray.map((image, index) => {
+          {galleryArray.map((image: any, index: number) => {
             return (
+              // @ts-expect-error TS(2769): No overload matches this call.
               <ActiveImageWrapper
                 key={index}
                 {...(activeIndexGalleryPopUp === index && { active: true })}
@@ -348,14 +349,16 @@ const Gallery = ({ galleryArray, isMobile }) => {
                   alt={image.alt || 'Gallery Image'}
                   height={600}
                   width={900}
+                  // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
                   quality={null}
                 />
               </ActiveImageWrapper>
             );
           })}
           <Swiper {...params}>
-            {galleryArray.map((image, index) => {
+            {galleryArray.map((image: any, index: number) => {
               return (
+                // @ts-expect-error TS(2769): No overload matches this call.
                 <ImageWrapper
                   key={index}
                   {...(activeIndexGalleryPopUp === index && { active: true })}
@@ -366,6 +369,7 @@ const Gallery = ({ galleryArray, isMobile }) => {
                     alt={image.alt || 'Gallery Image'}
                     height={150}
                     width={200}
+                    // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
                     quality={null}
                   />
                 </ImageWrapper>
@@ -391,6 +395,7 @@ const Gallery = ({ galleryArray, isMobile }) => {
               alt={first.alt || 'Gallery Image'}
               height={500}
               width={800}
+              // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
               quality={null}
             />
           </Conditional>
@@ -408,6 +413,7 @@ const Gallery = ({ galleryArray, isMobile }) => {
                 alt={second.alt || 'Gallery Image'}
                 height={250}
                 width={400}
+                // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
                 quality={null}
               />
             </div>
@@ -422,6 +428,7 @@ const Gallery = ({ galleryArray, isMobile }) => {
                 alt={third.alt || 'Gallery Image'}
                 height={250}
                 width={400}
+                // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
                 quality={null}
               />
             </div>

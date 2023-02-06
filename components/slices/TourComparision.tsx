@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import parse from 'url-parse';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
 import EnvironmentContext from 'contexts/environmentContext';
@@ -72,7 +73,10 @@ const StyledTourComparisionTable = styled.div`
     grid-auto-flow: row;
     grid-auto-rows: max-content;
     grid-row-gap: 32px;
-    ${({ designType }) =>
+    ${({
+      // @ts-expect-error TS(2339): Property 'designType' does not exist on type 'Pick... Remove this comment to see the full error message
+      designType,
+    }) =>
       designType == TOUR_COMPARISION_DESIGN.TYPE_2
         ? `
       grid-row-gap: 16px;
@@ -88,10 +92,17 @@ const StyledTourComparisionTable = styled.div`
     width: calc(100% - (5.46vw * 2));
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: repeat(4, 1fr) ${({ isMobile }) =>
-      isMobile ? '16px' : ''};
+    grid-template-columns: repeat(4, 1fr) ${({
+      // @ts-expect-error TS(2339): Property 'isMobile' does not exist on type 'Pick<D... Remove this comment to see the full error message
+      isMobile,
+    }) => (isMobile ? '16px' : '')};
     grid-column-gap: 24px;
-    ${({ designType, showImage }) =>
+    ${({
+      // @ts-expect-error TS(2339): Property 'designType' does not exist on type 'Pick... Remove this comment to see the full error message
+      designType,
+      // @ts-expect-error TS(2339): Property 'showImage' does not exist on type 'Pick... Remove this comment to see the full error message
+      showImage,
+    }) =>
       designType == TOUR_COMPARISION_DESIGN.TYPE_2
         ? `
       border-bottom: 1px solid ${COLORS.GRAY.G6};
@@ -161,7 +172,10 @@ const StyledTourComparisionTable = styled.div`
     background: ${COLORS.BRAND.WHITE};
     z-index: 15;
     padding-bottom: 8px;
-    ${({ designType }) =>
+    ${({
+      // @ts-expect-error TS(2339): Property 'designType' does not exist on type 'Pick... Remove this comment to see the full error message
+      designType,
+    }) =>
       designType == TOUR_COMPARISION_DESIGN.TYPE_2
         ? `
       margin-bottom: -8px;
@@ -182,7 +196,10 @@ const StyledTourComparisionTable = styled.div`
   }
   .tour-image {
     margin-bottom: -32px;
-    ${({ designType }) =>
+    ${({
+      // @ts-expect-error TS(2339): Property 'designType' does not exist on type 'Pick... Remove this comment to see the full error message
+      designType,
+    }) =>
       designType == TOUR_COMPARISION_DESIGN.TYPE_2
         ? `
       margin-bottom: -8px;
@@ -207,7 +224,10 @@ const StyledTourComparisionTable = styled.div`
     line-height: 18px;
     letter-spacing: 0.5px;
     color: ${COLORS.GRAY.G4};
-    ${({ designType }) =>
+    ${({
+      // @ts-expect-error TS(2339): Property 'designType' does not exist on type 'Pick... Remove this comment to see the full error message
+      designType,
+    }) =>
       designType == TOUR_COMPARISION_DESIGN.TYPE_2
         ? `
       color: ${COLORS.GRAY.G3};
@@ -223,7 +243,10 @@ const StyledTourComparisionTable = styled.div`
     font-family: ${HALYARD.FONT_STACK};
     font-weight: 400;
     color: ${COLORS.GRAY.G2};
-    ${({ designType }) =>
+    ${({
+      // @ts-expect-error TS(2339): Property 'designType' does not exist on type 'Pick... Remove this comment to see the full error message
+      designType,
+    }) =>
       designType == TOUR_COMPARISION_DESIGN.TYPE_2
         ? `
       font-size: 14px;
@@ -261,7 +284,10 @@ const StyledTourComparisionTable = styled.div`
   color: ${COLORS.GRAY.G3};
   font-size: 14px;
   line-height: 22px;
-  ${({ designType }) =>
+  ${({
+    // @ts-expect-error TS(2339): Property 'designType' does not exist on type 'Pick... Remove this comment to see the full error message
+    designType,
+  }) =>
     designType == TOUR_COMPARISION_DESIGN.TYPE_2
       ? `
     a {
@@ -291,14 +317,19 @@ const StyledTourComparisionTable = styled.div`
     .row {
       max-width: 100vw;
       grid-column-gap: 12px;
-      ${({ designType }) =>
+      ${({
+        // @ts-expect-error TS(2339): Property 'designType' does not exist on type 'Pick... Remove this comment to see the full error message
+        designType,
+      }) =>
         designType == TOUR_COMPARISION_DESIGN.TYPE_2
           ? `
       grid-column-gap: 16px;
       `
           : ``}
-      grid-template-columns: 0px repeat(${({ tourCount }) =>
-        tourCount}, 164px) 4px;
+      grid-template-columns: 0px repeat(${({
+        // @ts-expect-error TS(2339): Property 'tourCount' does not exist on type 'Pick<... Remove this comment to see the full error message
+        tourCount,
+      }) => tourCount}, 164px) 4px;
       position: relative;
     }
     .row::before {
@@ -464,7 +495,7 @@ const StyledTourComparisionTable = styled.div`
  *
  */
 
-const TourComparisonTable = (props) => {
+const TourComparisonTable = (props: any) => {
   const {
     heading,
     description,
@@ -487,16 +518,17 @@ const TourComparisonTable = (props) => {
     redirectToHeadoutBookingFlow,
   } = useContext(MBContext);
   const url = envContext.windowUrl;
-  const currentHost = !envContext.isDev ? url : parse(uid, true).pathname;
+  const currentHost = !envContext.isDev ? url : parse(uid || '', true).pathname;
   const hostName = currentHost.includes('stage')
     ? currentHost.replace('stage-', '')
     : currentHost;
   let hostSplit = hostName.split('.');
   hostSplit.shift();
+  // @ts-expect-error TS(2339): Property 'allTours' does not exist on type 'null'.
   const { allTours } = toursContext;
-  const getContentNormalizedTours = (tgidArray) => {
-    let toursArr = tgidArray.map((tgid) => allTours[tgid]);
-    toursArr = toursArr.reduce((acc, tour, index) => {
+  const getContentNormalizedTours = (tgidArray: any) => {
+    let toursArr = tgidArray.map((tgid: any) => allTours[tgid]);
+    toursArr = toursArr.reduce((acc: any, tour: any, index: number) => {
       let content = [
         ...tour.contentBlocks.left,
         ...tour.contentBlocks.right,
@@ -526,14 +558,14 @@ const TourComparisonTable = (props) => {
   };
   const tgidArray = tgidsCSV
     .split(',')
-    .map((tgid) => parseInt(tgid))
-    .filter((tgid) => allTours[tgid]?.available);
+    .map((tgid: any) => parseInt(tgid))
+    .filter((tgid: any) => allTours[tgid]?.available);
   const content_normalized_tours = getContentNormalizedTours(tgidArray);
 
   // Return null if no / only one tgid given/available
   if (tgidArray.length <= 1) return null;
 
-  const onBookNowClick = ({ tgid, position }) => {
+  const onBookNowClick = ({ tgid, position }: any) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_CLICKED,
       [ANALYTICS_PROPERTIES.TGID]: tgid,
@@ -545,6 +577,7 @@ const TourComparisonTable = (props) => {
 
   return (
     <StyledTourComparisionTable
+      // @ts-expect-error TS(2769): No overload matches this call.
       isExpanded={isExpanded}
       isMobile={isMobile}
       tourCount={tgidArray.length}
@@ -559,7 +592,7 @@ const TourComparisonTable = (props) => {
         <div className="table">
           <Conditional if={showImage}>
             <div className="row max-content" style={{ zIndex: -1 }}>
-              {content_normalized_tours.map((tour, index) => {
+              {content_normalized_tours.map((tour: any, index: number) => {
                 return (
                   <div className="column" key={index}>
                     <div className="tour-image">
@@ -577,7 +610,7 @@ const TourComparisonTable = (props) => {
           </Conditional>
           <div className="sticky wrapper">
             <div className="row wrapper">
-              {content_normalized_tours.map((tour, index) => {
+              {content_normalized_tours.map((tour: any, index: number) => {
                 return (
                   <div className="column" key={index}>
                     <div className="tour-chin">
@@ -605,7 +638,7 @@ const TourComparisonTable = (props) => {
               id="expanded-details-section"
               style={{ marginTop: -8 }}
             >
-              {content_normalized_tours.map((tour, index) => {
+              {content_normalized_tours.map((tour: any, index: number) => {
                 const ctaProps = {
                   link: {
                     url: createBookingURL({
@@ -639,7 +672,7 @@ const TourComparisonTable = (props) => {
             </div>
           </Conditional>
           <div className="row max-content">
-            {content_normalized_tours.map((tour, index) => {
+            {content_normalized_tours.map((tour: any, index: number) => {
               return (
                 <div className="column flat-price-block" key={index}>
                   <div className="content-block">
@@ -663,42 +696,46 @@ const TourComparisonTable = (props) => {
             })}
           </div>
           {orderedLabels
-            .filter((label, index) =>
+            .filter((_label: any, index: number) =>
               isMobile && !isExpanded ? index < 2 : true
             )
-            .map((label, rowIndex) => {
+            .map((label: any, rowIndex: number) => {
               return (
                 <div
                   className="row"
                   id={`comparison-list-details-${rowIndex}`}
                   key={rowIndex}
                 >
-                  {content_normalized_tours.map((tour, colIndex) => {
-                    return (
-                      <div className="column content-block" key={colIndex}>
-                        <div className="block-label">
-                          {tour.contentBlocks[label.labelId]?.label}
+                  {content_normalized_tours.map(
+                    (tour: any, colIndex: number) => {
+                      return (
+                        <div className="column content-block" key={colIndex}>
+                          <div className="block-label">
+                            {tour.contentBlocks[label.labelId]?.label}
+                          </div>
+                          <div className="block-content">
+                            <RichText
+                              render={
+                                tour.contentBlocks[label.labelId]?.content
+                              }
+                              htmlSerializer={(...defaultArgs: any) =>
+                                shortCodeSerializerWithParentProps(
+                                  defaultArgs,
+                                  tour
+                                )
+                              }
+                            />
+                          </div>
                         </div>
-                        <div className="block-content">
-                          <RichText
-                            render={tour.contentBlocks[label.labelId]?.content}
-                            htmlSerializer={(...defaultArgs: any) =>
-                              shortCodeSerializerWithParentProps(
-                                defaultArgs,
-                                tour
-                              )
-                            }
-                          />
-                        </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    }
+                  )}
                 </div>
               );
             })}
           <Conditional if={(isMobile && isExpanded) || !isMobile}>
             <div className="row max-content" id="expanded-details-column">
-              {content_normalized_tours.map((tour, index) => {
+              {content_normalized_tours.map((tour: any, index: number) => {
                 return (
                   <div className="column flat-price-block" key={index}>
                     <div className="content-block">
@@ -721,7 +758,7 @@ const TourComparisonTable = (props) => {
         </div>
         <div className="table cta-table-wrap">
           <div className="row">
-            {content_normalized_tours.map((tour, index) => {
+            {content_normalized_tours.map((tour: any, index: number) => {
               const ctaProps = {
                 link: {
                   url: createBookingURL({

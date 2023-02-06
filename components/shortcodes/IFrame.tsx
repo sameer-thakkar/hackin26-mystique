@@ -16,7 +16,9 @@ type IFrameProps = {
 
 const IFrameContainer = styled.div`
   position: relative;
-  padding-bottom: ${({ paddingBottom }) =>
+  padding-bottom: ${({  
+ // @ts-expect-error TS(2339): Property 'paddingBottom' does not exist on type 'P... Remove this comment to see the full error message
+ paddingBottom }) =>
     paddingBottom ? paddingBottom : '56.25%'};
   padding-top: 35px;
   height: 0;
@@ -59,7 +61,7 @@ const IFrame: React.FC<IFrameProps> = ({
   }
 
   const isYoutube = src.startsWith('https://www.youtube.com');
-  const trackVideoPlayed = (e) => {
+  const trackVideoPlayed = (e: any) => {
     e.currentTarget.dataset.playing = !e.currentTarget.dataset?.playing;
     if (e.currentTarget.dataset.playing)
       trackEvent({
@@ -72,6 +74,7 @@ const IFrame: React.FC<IFrameProps> = ({
     <>
       <IFrameContainer
         {...{ paddingBottom: otherProps.height }}
+        // @ts-expect-error TS(2769): No overload matches this call.
         onClick={isYoutube ? trackVideoPlayed : null}
       >
         <StyledIFrame

@@ -3,7 +3,7 @@ import { strings } from 'const/strings';
 import { convertUidToUrl } from 'utils/urlUtils';
 import ProductsSection from 'components/GlobalMbs/views/ProductsSection';
 
-const TicketPage = (props) => {
+const TicketPage = (props: any) => {
   const {
     global_collection: globalCollection,
     categoryTourListData,
@@ -15,9 +15,9 @@ const TicketPage = (props) => {
   } = props;
 
   const availableTours = categoryTourListData?.orderedTours?.map(
-    (tour) => tour.tgid
+    (tour: any) => tour.tgid
   );
-  let bannerImages = [];
+  let bannerImages: any = [];
   Object.values(categoryTourListData?.scorpioData).forEach((element: any) => {
     if (element?.images) {
       bannerImages.push(element?.images?.[0]);

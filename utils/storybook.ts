@@ -6,7 +6,7 @@ export const repeat = (item: any, times: number) => {
   return resultArray;
 };
 
-export const deepCopy = (obj) => {
+export const deepCopy = (obj: Record<any, any>) => {
   // Won't work if Date() is used. So don't try.
   return JSON.parse(JSON.stringify(obj));
 };

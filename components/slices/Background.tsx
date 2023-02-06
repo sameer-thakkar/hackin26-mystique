@@ -8,8 +8,14 @@ import { FULL_WIDTH_SLICES } from '../../constants';
 
 const StyledBackground = styled.div`
   padding: 40px 0;
-  background: ${({ colorProp }) => colorProp};
-  text-align: ${({ textCenter }) => (textCenter ? 'center' : 'initial')};
+  background: ${({
+    // @ts-expect-error TS(2339): Property 'colorProp' does not exist on type 'Pick<... Remove this comment to see the full error message
+    colorProp,
+  }) => colorProp};
+  text-align: ${({
+    // @ts-expect-error TS(2339): Property 'textCenter' does not exist on type 'Pick... Remove this comment to see the full error message
+    textCenter,
+  }) => (textCenter ? 'center' : 'initial')};
   font-family: ${HALYARD.FONT_STACK};
 `;
 
@@ -35,7 +41,7 @@ const StyledBackground = styled.div`
  *
  */
 
-const Background = (props) => {
+const Background = (props: any) => {
   const { slices, sliceProps, color, gridCenter, textCenter } = props;
   const colorMap = {
     'Chalk Grey': COLORS.GRAY.G7,
@@ -43,11 +49,12 @@ const Background = (props) => {
   };
   return (
     <StyledBackground
+      // @ts-expect-error TS(2769): No overload matches this call.
       colorProp={colorMap[color] || '#fff'}
       gridCenter={gridCenter}
       textCenter={textCenter}
     >
-      {slices.map((slice, index) => (
+      {slices.map((slice: any, index: number) => (
         <div
           key={index}
           className={`${

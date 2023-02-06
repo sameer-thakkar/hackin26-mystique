@@ -25,7 +25,7 @@ const StyledMBList = styled.div`
   }
 `;
 
-const MicrobrandList = (props) => {
+const MicrobrandList = (props: any) => {
   const { microbrandCards, microbrandCardsHeading } = props;
   return (
     <StyledMBList className="microbrands-list">
@@ -34,7 +34,7 @@ const MicrobrandList = (props) => {
       )}
       {microbrandCards.length ? <br /> : null}
       <MicrobrandCards
-        cards={microbrandCards.filter((card) => card?.microbrand_link?.url)}
+        cards={microbrandCards.filter((card: any) => card?.microbrand_link?.url)}
         cardsContent={{}}
       />
     </StyledMBList>

@@ -81,7 +81,7 @@ export const CLOSE_WHITE = (
   </svg>
 );
 
-export const STAR = (color) => (
+export const STAR = (color: string) => (
   <svg
     width="12"
     height="12"
@@ -670,14 +670,13 @@ export const Shield = (
   </svg>
 );
 
-export const AudioGuideIcon = (props) => (
+export const AudioGuideIcon = () => (
   <svg
     width={24}
     height={24}
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    {...props}
   >
     <path
       fillRule="evenodd"
@@ -1186,7 +1185,9 @@ export const BLACK_COLOR_CLOSE = (
   </svg>
 );
 
-export const STAR_FULL_NEW = ({ fillColor }) => (
+type TCommonSvgProps = { fillColor: string };
+
+export const STAR_FULL_NEW = ({ fillColor }: TCommonSvgProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="14"
@@ -1207,7 +1208,7 @@ export const STAR_FULL_NEW = ({ fillColor }) => (
   </svg>
 );
 
-export const STAR_HALF_NEW = ({ fillColor }) => (
+export const STAR_HALF_NEW = ({ fillColor }: TCommonSvgProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="14"
@@ -1228,7 +1229,7 @@ export const STAR_HALF_NEW = ({ fillColor }) => (
   </svg>
 );
 
-export const STAR_EMPTY_NEW = ({ fillColor }) => (
+export const STAR_EMPTY_NEW = ({ fillColor }: TCommonSvgProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="14"
@@ -1245,7 +1246,7 @@ export const STAR_EMPTY_NEW = ({ fillColor }) => (
   </svg>
 );
 
-export const CHEVRON_RIGHT = ({ fillColor }) => (
+export const CHEVRON_RIGHT = ({ fillColor }: TCommonSvgProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="16"
@@ -1291,7 +1292,7 @@ export const PERCENTAGE = (
   </svg>
 );
 
-export const CloseIcon = (props) => (
+export const CloseIcon = (props: any) => (
   <svg
     width="16"
     height="16"
@@ -1333,14 +1334,8 @@ export const VIDEO_ICON = (
   </svg>
 );
 
-export const RadioIcon = ({ isActive, ...props }) => (
-  <svg
-    width={20}
-    height={20}
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    {...props}
-  >
+export const RadioIcon = ({ isActive }: { isActive: boolean }) => (
+  <svg width={20} height={20} fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle
       cx={10}
       cy={10}
@@ -1352,14 +1347,13 @@ export const RadioIcon = ({ isActive, ...props }) => (
   </svg>
 );
 
-export const GlobeIcon = (props) => (
+export const GlobeIcon = () => (
   <svg
     width={16}
     height={16}
     fill="none"
     viewBox="0 0 16 16"
     xmlns="http://www.w3.org/2000/svg"
-    {...props}
   >
     <g
       clipPath="url(#a)"

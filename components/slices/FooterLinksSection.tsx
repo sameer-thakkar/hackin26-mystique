@@ -32,7 +32,9 @@ const FooterLinksSectionWrapper = styled.div`
     padding-right: 0.75rem;
     border-right: 0.063rem solid ${COLORS.GRAY.G6};
     :last-child {
-      border-right: ${({ isLastSlice }) => isLastSlice && 'none'};
+      border-right: ${({      
+ // @ts-expect-error TS(2339): Property 'isLastSlice' does not exist on type 'Pic... Remove this comment to see the full error message
+ isLastSlice }) => isLastSlice && 'none'};
     }
   }
 `;
@@ -48,7 +50,7 @@ const FooterLinksSection: React.FC<FooterLinksSectionProps> = ({
   sliceLength,
   sliceIndex,
 }) => {
-  const onLinkClick = (e) => {
+  const onLinkClick = (e: any) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.QUICK_LINKS_CLICKED,
       [ANALYTICS_PROPERTIES.OPTION_TEXT]: e?.target?.innerText,
@@ -57,6 +59,7 @@ const FooterLinksSection: React.FC<FooterLinksSectionProps> = ({
   };
 
   return (
+    // @ts-expect-error TS(2769): No overload matches this call.
     <FooterLinksSectionWrapper isLastSlice={sliceIndex === sliceLength - 1}>
       <Conditional if={title}>
         <Title>{title}:</Title>

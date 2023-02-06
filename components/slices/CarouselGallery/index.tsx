@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import type { SwiperProps } from 'swiper/react';
+import type { Swiper } from 'swiper/types';
 import Image from 'UI/Image';
 import RichContent from 'UI/RichContent';
 import { stringIdfy } from 'utils/helper';
@@ -17,7 +18,7 @@ import {
 } from '../CarouselGallery/styles';
 import { CarouselGalleryProps } from '../CarouselGallery/interface';
 
-const Swiper = dynamic(() =>
+const SwiperCarousel = dynamic(() =>
   import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
 
@@ -46,7 +47,7 @@ const CarouselGallery: React.FC<CarouselGalleryProps> = ({
   images,
   heading,
 }) => {
-  const [swiper, setSwiperInstance] = useState(null);
+  const [swiper, setSwiperInstance] = useState<Swiper | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const updateIndex = useCallback(() => {
@@ -94,7 +95,7 @@ const CarouselGallery: React.FC<CarouselGalleryProps> = ({
 
   const activeSlide = images[currentIndex];
   const { heading: activeSlideHeading, content, cta_link } = activeSlide;
-  const { url: ctaUrl } = cta_link;
+  const ctaUrl = cta_link?.url;
 
   return (
     <>
@@ -103,7 +104,7 @@ const CarouselGallery: React.FC<CarouselGalleryProps> = ({
       </Heading>
       <CarouselContainer>
         <ImageGallery>
-          <Swiper {...swiperParams}>
+          <SwiperCarousel {...swiperParams}>
             {images.map((image, index) => {
               return (
                 <Image
@@ -113,7 +114,7 @@ const CarouselGallery: React.FC<CarouselGalleryProps> = ({
                 />
               );
             })}
-          </Swiper>
+          </SwiperCarousel>
           <div className="controls">
             <Conditional if={swiper && !swiper.isBeginning}>
               <div

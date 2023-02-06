@@ -1,4 +1,4 @@
-import { ANALYTICS_PROPERTIES } from 'const/index';
+import { ANALYTICS_PROPERTIES, ANALYTICS_EVENTS } from 'const/index';
 
 declare global {
   interface Window {
@@ -6,7 +6,20 @@ declare global {
   }
 }
 
-export const trackEvent = ({ eventName, ...labelProps }) => {
+export type TGenericObject = Record<string, any>;
+
+export type TDatalayerValue = any;
+
+export type TDatalayerObject = Record<string, TDatalayerValue>;
+
+export type TAnalyticsEvents = typeof ANALYTICS_EVENTS[keyof typeof ANALYTICS_EVENTS];
+
+export type TTrackEvent = {
+  eventName: string;
+  [x: string]: TDatalayerValue;
+};
+
+export const trackEvent = ({ eventName, ...labelProps }: TTrackEvent) => {
   if (typeof window === 'undefined') return;
   if (!window.dataLayer) {
     // console.group('trackEvent failed!');
@@ -21,7 +34,13 @@ export const trackEvent = ({ eventName, ...labelProps }) => {
   window.dataLayer.push(allProps);
 };
 
-export const sendVariableToDataLayer = ({ name, value }) => {
+export const sendVariableToDataLayer = ({
+  name,
+  value,
+}: {
+  name: string;
+  value: TDatalayerValue;
+}) => {
   if (typeof window === 'undefined') return;
   const dLRef = typeof window !== 'undefined' ? window.dataLayer : [];
   if (!dLRef) {
@@ -39,7 +58,7 @@ export const sendVariableToDataLayer = ({ name, value }) => {
   });
 };
 
-export const getCommonEventMetaData = (pageMetaData) => {
+export const getCommonEventMetaData = (pageMetaData: TDatalayerObject) => {
   return {
     [ANALYTICS_PROPERTIES.COLLECTION_ID]: pageMetaData.collectionId,
     [ANALYTICS_PROPERTIES.COLLECTION_NAME]: pageMetaData.collectionName,
@@ -48,7 +67,7 @@ export const getCommonEventMetaData = (pageMetaData) => {
   };
 };
 
-export const sendVariablesToDataLayer = (variablesMap) => {
+export const sendVariablesToDataLayer = (variablesMap: TDatalayerObject) => {
   Object.keys(variablesMap)
     .filter((k) => variablesMap[k])
     .forEach((key) => {
@@ -63,7 +82,11 @@ export const getProductCommonProperties = ({
   primaryCategory,
   primaryCollection,
   primarySubCategory,
-}) => {
+}: {
+  primaryCategory: TGenericObject;
+  primaryCollection: TGenericObject;
+  primarySubCategory: TGenericObject;
+}): Record<string, number | string> => {
   return {
     [ANALYTICS_PROPERTIES.CATEGORY_ID]: primaryCategory?.id,
     [ANALYTICS_PROPERTIES.CATEGORY_NAME]: primaryCategory?.displayName,

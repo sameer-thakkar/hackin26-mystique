@@ -2,6 +2,7 @@ import { FunctionComponent, useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import Image from 'UI/Image';
+import type { SwiperProps } from 'swiper/react';
 import Conditional from 'components/common/Conditional';
 import {
   ANALYTICS_EVENTS,
@@ -111,18 +112,17 @@ const Banner: FunctionComponent<BannerProps> = ({
     [ANALYTICS_PROPERTIES.MB_NAME]: title,
   };
 
-  const isSwiperSet = swiper !== null && !swiper?.destroyed;
+  const isSwiperSet = swiper !== null && !(swiper as any)?.destroyed;
 
   useEffect(() => {
     if (!isSwiperSet) {
       return;
     }
-
     trackEvent({
       eventName: ANALYTICS_EVENTS.MB_BANNER.VISIBLE,
       ...analyticsParams,
     });
-    swiper?.on('touchEnd', () => {
+    (swiper as any)?.on('touchEnd', () => {
       trackEvent({
         eventName: ANALYTICS_EVENTS.MB_BANNER.BANNER_SCROLL,
         ...analyticsParams,
@@ -130,7 +130,7 @@ const Banner: FunctionComponent<BannerProps> = ({
     });
   }, [isSwiperSet]);
 
-  const swiperParams = {
+  const swiperParams: SwiperProps = {
     slidesPerView: 1.196065,
     spaceBetween: 24,
     breakpoints: {
@@ -154,6 +154,7 @@ const Banner: FunctionComponent<BannerProps> = ({
     loop: true,
     initialSlide: 1,
     freeMode: true,
+    // @ts-expect-error TS(2322): Type 'Dispatch<SetStateAction<null>>' is not assig... Remove this comment to see the full error message
     onSwiper: updateSwiper,
   };
 

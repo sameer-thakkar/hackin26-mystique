@@ -65,20 +65,26 @@ const FooterLegalWrapper = styled.div`
   .footer-chin {
     display: grid;
     ${expandFontToken(FONTS.UI_LABEL_SMALL)}
-    margin-bottom: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '72px' : '56px'};
+    margin-bottom: ${({
+      // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+      isEntertainmentMb,
+    }) => (isEntertainmentMb ? '72px' : '56px')};
     grid-template-columns: auto auto;
     justify-content: space-between;
     grid-template-areas: 'white-line white-line' 'super-brand-logo social-links';
-    grid-row-gap: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '18px' : '24px'};
+    grid-row-gap: ${({
+      // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+      isEntertainmentMb,
+    }) => (isEntertainmentMb ? '18px' : '24px')};
     .white-line {
       grid-area: white-line;
       width: 100%;
       height: 0;
       border: 0.5px solid
-        ${({ isEntertainmentMb }) =>
-          isEntertainmentMb ? COLORS.GRAY.G4 : COLORS.BRAND.WHITE};
+        ${({
+          // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+          isEntertainmentMb,
+        }) => (isEntertainmentMb ? COLORS.GRAY.G4 : COLORS.BRAND.WHITE)};
     }
     .super-brand-logo {
       grid-area: super-brand-logo;
@@ -88,8 +94,11 @@ const FooterLegalWrapper = styled.div`
       align-items: center;
       justify-items: left;
       span {
-        color: ${({ theme, isEntertainmentMb }) =>
-          isEntertainmentMb ? COLORS.GRAY.G4A : theme.footer.color};
+        color: ${({
+          theme,
+          // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+          isEntertainmentMb,
+        }) => (isEntertainmentMb ? COLORS.GRAY.G4A : theme.footer.color)};
       }
       svg {
         height: 16px;
@@ -106,9 +115,14 @@ const FooterLegalWrapper = styled.div`
           height: 12px;
         }
       }
-      grid-template-columns: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? `1fr 1fr` : `1fr`};
-      grid-template-areas: ${({ isEntertainmentMb }) =>
+      grid-template-columns: ${({
+        // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+        isEntertainmentMb,
+      }) => (isEntertainmentMb ? `1fr 1fr` : `1fr`)};
+      grid-template-areas: ${({
+        // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+        isEntertainmentMb,
+      }) =>
         isEntertainmentMb
           ? `
           'white-line white-line'
@@ -119,8 +133,10 @@ const FooterLegalWrapper = styled.div`
           'super-brand-logo'`};
       grid-row-gap: 24px;
       .social-links {
-        ${({ isEntertainmentMb }) =>
-          isEntertainmentMb && `justify-content: end;`}
+        ${({
+          // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+          isEntertainmentMb,
+        }) => isEntertainmentMb && `justify-content: end;`}
       }
     }
   }
@@ -321,7 +337,7 @@ type FooterProps = {
   isEntertainmentMb?: boolean;
 };
 
-const LinkSlices = ({ linksTitle, slices, theme, className = '' }) => (
+const LinkSlices = ({ linksTitle, slices, theme, className = '' }: any) => (
   <FooterLinksWrapper className={className}>
     <Container>
       <Conditional if={theme !== THEMES.MIN_BLUE}>
@@ -341,7 +357,7 @@ const LinkSlices = ({ linksTitle, slices, theme, className = '' }) => (
             </div>
           </div>
         </Conditional>
-        {slices.map((slice, index) => {
+        {slices.map((slice: any, index: number) => {
           return (
             <div className={`${slice.slice_type}`} key={index}>
               {sliceHandler(slice, { index, sliceLength: slices.length })}
@@ -381,7 +397,7 @@ const Footer: React.FC<FooterProps> = ({
   const getContactNo = (removeSpaces: boolean = false) => {
     let phoneNumber: string = '';
 
-    switch (pageMeta?.country?.code) {
+    switch ((pageMeta?.country as any)?.code) {
       case 'DUBAI':
         phoneNumber = '+971 8 000 321171';
         break;
@@ -401,7 +417,9 @@ const Footer: React.FC<FooterProps> = ({
   };
 
   return (
+    // @ts-expect-error TS(2786): 'ThemeProvider' cannot be used as a JSX component.
     <ThemeProvider theme={getAppTheme(finalThemeName)}>
+      {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <StyledFooter isEntertainmentMb={isEntertainmentMb}>
         <LinkSlicesWrapper isEntertainmentMb={isEntertainmentMb}>
           <Conditional if={slices?.length}>
@@ -421,6 +439,7 @@ const Footer: React.FC<FooterProps> = ({
             />
           </Conditional>
         </LinkSlicesWrapper>
+        {/* @ts-expect-error TS(2769): No overload matches this call. */}
         <FooterLegalWrapper isEntertainmentMb={isEntertainmentMb}>
           <Container>
             <FooterLegal

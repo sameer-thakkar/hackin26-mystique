@@ -21,7 +21,11 @@ export default class companyDetails extends Component<any, any> {
     isMobile: false,
   };
 
-  static async getInitialProps({ req, res, query }) {
+  static async getInitialProps({
+    req,
+    res,
+    query
+  }: any) {
     try {
       const isDev = req
         ? !!query.mystique_uid
@@ -40,7 +44,12 @@ export default class companyDetails extends Component<any, any> {
     }
   }
 
-  static async getTermsData({ req, res, isDev, query }) {
+  static async getTermsData({
+    req,
+    res,
+    isDev,
+    query
+  }: any) {
     let uid;
     const { host } = req ? req.headers : window.location;
     if (isDev) {
@@ -85,7 +94,7 @@ export default class companyDetails extends Component<any, any> {
     return { response, host, uid };
   }
 
-  handleDropdownToggle = (elementIdentifier) => {
+  handleDropdownToggle = (elementIdentifier: any) => {
     switch (elementIdentifier) {
       case DROPDOWN_ELEMENT.HAMBURGER: {
         this.setState({

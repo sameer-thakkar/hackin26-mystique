@@ -40,10 +40,14 @@ export const StyledTooltip = styled.div`
   }
 `;
 
-const Tooltip = ({ trigger, content }) => {
+const Tooltip = ({
+  trigger,
+  content
+}: any) => {
   const uniqueId = genUniqueId();
   return (
     <StyledTooltip className="tooltip">
+      {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <Trigger className="trigger" role="button" for={uniqueId} tabindex={0}>
         {trigger}
       </Trigger>

@@ -1,3 +1,4 @@
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import dayjs from 'dayjs';
 import {
@@ -18,27 +19,39 @@ import {
 } from 'const/descriptors';
 import { strings } from 'const/strings';
 
-export const extractTabsFromHighlights = (highlights) => {
-  let tabs = [];
-  const nonTabHighlights = highlights.reduce((acc, highlight) => {
-    if (highlight.type === HIGHLIGHT_TYPES.H6_HEADING) {
-      tabs.push({
-        type: 'tab',
-        heading: RichText.asText([highlight]),
-        contents: [],
-      });
-      return acc;
-    }
-    if (tabs.length) {
-      tabs[tabs.length - 1].contents.push(highlight);
-      return acc;
-    } else return [...acc, highlight];
-  }, []);
+export const extractTabsFromHighlights = (highlights: Record<string, any>) => {
+  let tabs: Record<string, any> = [];
+  const nonTabHighlights = highlights.reduce(
+    (acc: Record<string, any>[], highlight: Record<string, any>) => {
+      if (highlight.type === HIGHLIGHT_TYPES.H6_HEADING) {
+        tabs.push({
+          type: 'tab',
+          heading: RichText.asText([highlight]),
+          contents: [],
+        });
+        return acc;
+      }
+      if (tabs.length) {
+        tabs[tabs.length - 1].contents.push(highlight);
+        return acc;
+      } else return [...acc, highlight];
+    },
+    []
+  );
 
   return { highlights: nonTabHighlights, tabs };
 };
 
 const PRODUCT_CARD_DESKTOP_IMG_GRID_AREA = 'card-img ';
+
+type TGetProductCardLayout = {
+  mbTheme?: string | null;
+  hasOffer?: boolean;
+  hasV1Booster?: boolean;
+  hasNextAvailable?: boolean;
+  isTicketCard?: boolean;
+  hasPromoCode?: boolean;
+};
 
 export const getProductCardLayout = ({
   mbTheme,
@@ -47,28 +60,43 @@ export const getProductCardLayout = ({
   hasNextAvailable,
   isTicketCard = false,
   hasPromoCode = false,
-}) => {
+}: TGetProductCardLayout) => {
   let layout = { desktop: [], mobile: [] };
   switch (mbTheme) {
     case THEMES.MIN_BLUE:
       layout = {
         desktop: [
+          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'title cta-combo',
+          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           hasOffer && 'offer cta-combo',
+          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           hasV1Booster && 'booster cta-combo',
+          // @ts-expect-error TS(2322): Type 'string | boolean' is not assignable to type ... Remove this comment to see the full error message
           (!hasOffer || !hasV1Booster) && '. cta-combo',
+          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'line line',
+          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'tags tags',
+          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'body body',
         ],
         mobile: [
+          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'title',
+          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'tags',
+          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'price-block',
+          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           hasOffer && 'offer',
+          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           hasV1Booster && 'booster ',
+          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'body',
+          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'cta-block',
+          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           hasNextAvailable && 'next-available',
         ],
       };
@@ -78,36 +106,52 @@ export const getProductCardLayout = ({
     default:
       layout = {
         desktop: [
+          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           `${
             isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
           }title line cta-combo`,
+          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           hasOffer &&
             `${
               isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
             } offer line cta-combo`,
+          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           hasV1Booster &&
             `${
               isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
             } booster line cta-combo`,
+          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           `${
             isTicketCard ? '' : PRODUCT_CARD_DESKTOP_IMG_GRID_AREA
           } body line cta-combo`,
+          // @ts-expect-error TS(2322): Type 'string | boolean' is not assignable to type ... Remove this comment to see the full error message
           !hasV1Booster &&
             !hasOffer &&
             !isTicketCard &&
             'card-img . line cta-combo',
+          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           hasPromoCode && `${!isTicketCard ? '' : '. line cta-combo'}`,
         ],
         mobile: [
+          // @ts-expect-error TS(2322): Type 'string | null' is not assignable to type 'ne... Remove this comment to see the full error message
           isTicketCard ? null : 'card-img card-img',
+          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'title title',
+          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'price-block price-block',
+          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           hasNextAvailable && 'next-available next-available',
+          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           isTicketCard && hasPromoCode && 'promo-block promo-block',
+          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           hasOffer && 'offer offer',
+          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'tags tags',
+          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           hasV1Booster && 'booster booster',
+          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'body body',
+          // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'cta-block cta-block',
         ],
       };
@@ -121,16 +165,16 @@ export const getProductCardLayout = ({
   return layout;
 };
 
-export const getContentBlocksMidIndex = (array) => {
+export const getContentBlocksMidIndex = (array: any) => {
   let totalWordCount = 0;
   let resultIndex = array.length / 2;
-  array.forEach((element) => {
+  array.forEach((element: any) => {
     totalWordCount += RichText.asText(element.contents).length;
   });
 
   let leftWordCount = 0;
   let flag = true;
-  array.forEach((element, index) => {
+  array.forEach((element: any, index: any) => {
     leftWordCount += RichText.asText(element.contents).length;
     if (leftWordCount >= totalWordCount / 2 && flag) {
       resultIndex = index;
@@ -140,15 +184,19 @@ export const getContentBlocksMidIndex = (array) => {
   return resultIndex + 1;
 };
 
-export const extractContentForProductCard = (markdownBlocks, contentBlocks) => {
+export const extractContentForProductCard = (
+  markdownBlocks: any,
+  contentBlocks: any
+) => {
   const tabsMarkdown = markdownBlocks
     ? extractTabsFromHighlights(markdownBlocks).tabs
     : [];
 
-  let leftContent = [];
-  let rightContent = [];
+  let leftContent: any = [];
+  let rightContent: any = [];
 
   if (tabsMarkdown.length > 0) {
+    // @ts-expect-error TS(7006): Parameter 'md' implicitly has an 'any' type.
     const filteredMarkdown = tabsMarkdown?.filter((md) => {
       const values = [
         strings.SHOW_PAGE.THEATRE_NAME,
@@ -183,6 +231,7 @@ export const extractContentForProductCard = (markdownBlocks, contentBlocks) => {
       'Cancellation',
       strings.SHOW_PAGE.AGE_LIMIT,
     ];
+    // @ts-expect-error TS(7006): Parameter 'highlight' implicitly has an 'any' type... Remove this comment to see the full error message
     tabsMarkdownLeft.forEach((highlight) => {
       if (isLeftBlock.includes(highlight?.heading)) {
         leftContent.push({
@@ -192,6 +241,7 @@ export const extractContentForProductCard = (markdownBlocks, contentBlocks) => {
       }
     });
 
+    // @ts-expect-error TS(7006): Parameter 'highlight' implicitly has an 'any' type... Remove this comment to see the full error message
     tabsMarkdownRight.forEach((highlight) => {
       const isCancellation =
         highlight?.heading === strings.SHOW_PAGE.CANCELLATION_POLICY ||
@@ -212,14 +262,14 @@ export const extractContentForProductCard = (markdownBlocks, contentBlocks) => {
       }
     });
   } else {
-    contentBlocks.left.forEach((highlight) => {
+    contentBlocks.left.forEach((highlight: any) => {
       leftContent.push({
         heading: highlight.label,
         contents: highlight.content,
       });
     });
 
-    contentBlocks.right.forEach((highlight) => {
+    contentBlocks.right.forEach((highlight: any) => {
       rightContent.push({
         heading: highlight.label,
         contents: highlight.content,
@@ -252,28 +302,36 @@ export const addCashbackValueToDescriptor = ({
   }
 };
 
-export const getSingleAriesTag = (arr, tag) =>
-  arr.find((ele) => ele.includes(tag));
+export const getSingleAriesTag = (arr: string[], tag: string) =>
+  arr.find((ele: any) => ele.includes(tag));
 
-export const rankDescriptorList = (descriptorList) => {
-  const filteredDescriptors = descriptorList?.filter((descriptor) =>
+export const rankDescriptorList = (descriptorList: any) => {
+  const filteredDescriptors = descriptorList?.filter((descriptor: any) =>
     DESCRIPTOR_RANKING_LOGIC?.includes(descriptor)
   );
-  const splitDescriptorListWords = filteredDescriptors?.map((descriptor) =>
+  const splitDescriptorListWords = filteredDescriptors?.map((descriptor: any) =>
     descriptor.split(' ')
   );
 
   const rankedDescriptorListWords = splitDescriptorListWords.sort(
-    (a, b) =>
+    (a: any, b: any) =>
       DESCRIPTOR_RANKING_LOGIC.indexOf(a[0]) -
       DESCRIPTOR_RANKING_LOGIC.indexOf(b[0])
   );
 
-  const rankedDescriptorList = rankedDescriptorListWords?.map((descriptor) =>
-    descriptor.join(' ')
+  const rankedDescriptorList = rankedDescriptorListWords?.map(
+    (descriptor: any) => descriptor.join(' ')
   );
 
   return rankedDescriptorList;
+};
+
+type TGenerateDescriptor = {
+  descriptors?: Record<string, string>[];
+  v2Descriptors?: string[];
+  lang: string;
+  isEntertainmentMb?: boolean;
+  isShowPage?: boolean;
 };
 
 export const generateDescriptor = ({
@@ -281,13 +339,7 @@ export const generateDescriptor = ({
   v2Descriptors = [],
   isEntertainmentMb = false,
   isShowPage = false,
-}: {
-  descriptors?: Record<string, string>[];
-  v2Descriptors?: string[];
-  lang: string;
-  isEntertainmentMb?: boolean;
-  isShowPage?: boolean;
-}) => {
+}: TGenerateDescriptor) => {
   if (isShowPage || isEntertainmentMb) {
     return v2Descriptors;
   }
@@ -306,13 +358,23 @@ export const generateDescriptor = ({
   }
 };
 
+type TCancellationPolicyObj = Record<string, boolean | number | number>;
+
+type TGetCancellationPolicyString = {
+  cancellationPolicy: TCancellationPolicyObj;
+  reschedulePolicy: TCancellationPolicyObj;
+  ticketValidity: Record<string, any>;
+  lang: string;
+  localizedStrings: Record<string, any>;
+};
+
 export const getCancellationPolicyString = ({
   cancellationPolicy,
   reschedulePolicy,
   ticketValidity,
   lang,
   localizedStrings,
-}) => {
+}: TGetCancellationPolicyString) => {
   const { cancellable, cancellableUpTo: cancellableUptoMinutes } =
     cancellationPolicy ?? {};
   const { reschedulable, reschedulableUpTo: reschedulableUptoMinutes } =
@@ -327,8 +389,12 @@ export const getCancellationPolicyString = ({
   const validUptoMonths = isValidUptoMonths
     ? Math.floor(validUptoDays / 30)
     : 0;
-  const cancellableUptoHours = getDurationInHours(cancellableUptoMinutes);
-  const reschedulableUptoHours = getDurationInHours(reschedulableUptoMinutes);
+  const cancellableUptoHours = getDurationInHours(
+    Number(cancellableUptoMinutes)
+  );
+  const reschedulableUptoHours = getDurationInHours(
+    Number(reschedulableUptoMinutes)
+  );
   const formattedValidUptoDate = isDateValid(validUptoDate)
     ? dayjs(validUptoDate).locale(lang).format('D MMMM, YYYY')
     : null;
@@ -338,6 +404,7 @@ export const getCancellationPolicyString = ({
       case VALIDITY_TYPES.UNTIL_DATE:
         return strings.formatString(
           localizedStrings.CANCELLATION_POLICY.VALID_UNTIL_DATE,
+          // @ts-expect-error TS(2345): Argument of type 'string | null' is not assignable... Remove this comment to see the full error message
           formattedValidUptoDate
         );
       case VALIDITY_TYPES.UNTIL_DAYS_FROM_PURCHASE:
@@ -372,16 +439,22 @@ export const getCancellationPolicyString = ({
         )
       : strings.formatString(
           localizedStrings.CANCELLATION_POLICY.CANCELLABLE_DAYS,
-          getDurationInDays(cancellableUptoMinutes)
+          getDurationInDays(Number(cancellableUptoMinutes))
         );
   }
+};
+
+type TGetValidityPolicyString = {
+  ticketValidity: Record<string, any>;
+  localizedStrings: Record<string, any>;
+  lang: string;
 };
 
 const getValidityPolicyString = ({
   ticketValidity,
   lang,
   localizedStrings,
-}) => {
+}: TGetValidityPolicyString) => {
   const {
     ticketValidityType: validityType,
     ticketValidityUntilDate: validUptoDate,
@@ -403,6 +476,7 @@ const getValidityPolicyString = ({
     case VALIDITY_TYPES.UNTIL_DATE:
       return strings.formatString(
         localizedStrings.VALIDITY.UNTIL_DATE,
+        // @ts-expect-error TS(2345): Argument of type 'string | null' is not assignable... Remove this comment to see the full error message
         formattedValidUptoDate
       );
     case VALIDITY_TYPES.UNTIL_DAYS_FROM_PURCHASE:
@@ -420,6 +494,16 @@ const getValidityPolicyString = ({
   }
 };
 
+type TStandardizeCancellationPolicy = {
+  highlights: Record<string, any>[];
+  cancellationPolicy: Record<string, any>;
+  reschedulePolicy: Record<string, any>;
+  ticketValidity: Record<string, any>;
+  showValidity: boolean;
+  lang: string;
+  localizedStrings: Record<string, any>;
+};
+
 export const standardizeCancellationPolicy = ({
   highlights = [],
   cancellationPolicy = {},
@@ -428,7 +512,7 @@ export const standardizeCancellationPolicy = ({
   showValidity = true,
   lang,
   localizedStrings,
-}) => {
+}: any) => {
   if (!highlights.length || !localizedStrings) return highlights;
 
   let updatedHighlights = [...highlights];
@@ -459,7 +543,7 @@ export const standardizeCancellationPolicy = ({
 
   // Adding the new cancellation and validity policy to highlights array
   const text = localizedStrings.CANCELLATION_POLICY_HEADING,
-    spans = [],
+    spans: any = [],
     cancellationPolicyString = getCancellationPolicyString({
       cancellationPolicy,
       reschedulePolicy,
@@ -504,7 +588,7 @@ export const standardizeCancellationPolicy = ({
   return updatedHighlights;
 };
 
-export const parseDescriptors = (descriptorArr = []) => {
+export const parseDescriptors = (descriptorArr: Record<string, any>[] = []) => {
   const allowedDescriptors = [
     strings.DESCRIPTORS.INSTANT_CONFIRMATION,
     strings.DESCRIPTORS.MOBILE_TICKET,

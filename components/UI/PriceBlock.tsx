@@ -198,6 +198,7 @@ const PriceBlock = ({
           price={finalPrice}
           precision={precision}
         />
+        {/* @ts-expect-error TS(2532): Object is possibly 'undefined'. */}
         <Conditional if={isLTT && showSavings && save > 0}>
           <SavedTag className={'savedtag-block'}>
             {strings.formatString(

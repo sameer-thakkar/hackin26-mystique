@@ -140,6 +140,7 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
       {showSeeAll && (
         <a
           href={convertUidToUrl({
+            // @ts-expect-error TS(2322): Type 'string | undefined' is not assignable to typ... Remove this comment to see the full error message
             uid: experiencePageUid,
             isDev,
             hostname: host,
@@ -168,7 +169,7 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
   const { GLOBAL_MB: globalMbAR } = ASPECT_RATIO;
 
   if (experienceType === 'Attractions' || experienceType === 'Rides') {
-    ridesAttractionMarkup = cards?.map((card, index) => {
+    ridesAttractionMarkup = cards?.map((card: any, index: number) => {
       const {
         age_group: ageGroup,
         experience_tags: experienceTags,
@@ -178,12 +179,14 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
       } = card;
       const ageGroupTag = ageGroup ? ageGroup?.split(',') : null;
       const experienceTag = experienceTags ? experienceTags?.split(',') : null;
-      const experienceTagMarkup = experienceTag?.map((tag, index) => (
-        <div key={`exp-${index}`} className="tag">
-          {tag}
-        </div>
-      ));
-      const ageGroupMarkup = ageGroupTag?.map((tag, index) => (
+      const experienceTagMarkup = experienceTag?.map(
+        (tag: any, index: number) => (
+          <div key={`exp-${index}`} className="tag">
+            {tag}
+          </div>
+        )
+      );
+      const ageGroupMarkup = ageGroupTag?.map((tag: any, index: number) => (
         <div key={`age-${index}`} className="tag">
           {tag}
         </div>
@@ -213,7 +216,7 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
     });
   }
   if (experienceType === 'Tickets') {
-    ticketsMarkup = cards?.map((card, index) => {
+    ticketsMarkup = cards?.map((card: any, index: number) => {
       const {
         name,
         imageUrl,

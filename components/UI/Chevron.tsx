@@ -29,7 +29,9 @@ const StyledChevron = styled.div`
     -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg);
   }
-  ${({ isActive, activeCursor = true }) => {
+  ${({  
+ // @ts-expect-error TS(2339): Property 'isActive' does not exist on type 'Pick<D... Remove this comment to see the full error message
+ isActive, activeCursor = true }) => {
     return isActive
       ? `&::before {
       -webkit-transform: rotate(-45deg);
@@ -44,7 +46,7 @@ const StyledChevron = styled.div`
   }}
 `;
 
-const Chevron = (props) => {
+const Chevron = (props: any) => {
   return <StyledChevron {...props}></StyledChevron>;
 };
 

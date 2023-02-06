@@ -10,8 +10,12 @@ export const StyledIconCard = styled.div`
   display: grid;
   border-radius: 4px;
   justify-content: left;
-  background: ${({ colorScheme: cs }) => cs.background};
-  color: ${({ colorScheme: cs }) => cs.color};
+  background: ${({  
+ // @ts-expect-error TS(2339): Property 'colorScheme' does not exist on type 'Pic... Remove this comment to see the full error message
+ colorScheme: cs }) => cs.background};
+  color: ${({  
+ // @ts-expect-error TS(2339): Property 'colorScheme' does not exist on type 'Pic... Remove this comment to see the full error message
+ colorScheme: cs }) => cs.color};
 `;
 
 const Icon = styled.div`
@@ -46,8 +50,14 @@ const Description = styled.div`
   line-height: 140%;
 `;
 
-const IconCard = ({ title, description, icon, colorScheme }) => {
+const IconCard = ({
+  title,
+  description,
+  icon,
+  colorScheme
+}: any) => {
   return (
+    // @ts-expect-error TS(2769): No overload matches this call.
     <StyledIconCard colorScheme={colorScheme}>
       <Icon>
         {typeof icon === 'string' ? (

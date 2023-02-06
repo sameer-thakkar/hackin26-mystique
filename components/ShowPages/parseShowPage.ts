@@ -5,14 +5,14 @@ import { strings } from 'const/strings';
 
 dayjs.extend(isSameOrAfter);
 
-export const getObject = (data, filterArray) => {
+export const getObject = (data: any, filterArray: any) => {
   let detailsObjects: { [key: string]: string } = {},
     showType = '',
-    detailObjectHeading,
+    detailObjectHeading: any,
     isSafetyBanner = false,
-    currentObject;
+    currentObject: any;
 
-  data.forEach((element) => {
+  data.forEach((element: any) => {
     if (element.type == 'heading6') {
       // detail object heading
       detailObjectHeading = element.content.text;
@@ -41,7 +41,7 @@ export const getObject = (data, filterArray) => {
           showType = element.content.text;
         }
         if (
-          filterArray.find((x) => {
+          filterArray.find((x: any) => {
             return x === detailObjectHeading;
           })
         ) {
@@ -63,10 +63,10 @@ export const getObject = (data, filterArray) => {
   };
 };
 
-export const safetyChecker = (data) => {
+export const safetyChecker = (data: any) => {
   let isSafetyBanner = false;
 
-  data.forEach((element, index) => {
+  data.forEach((element: any, index: number) => {
     if (
       element.type == 'heading6' &&
       element.text === strings.SHOW_PAGE.SAFETY_BANNER
@@ -86,22 +86,22 @@ export const safetyChecker = (data) => {
   return isSafetyBanner;
 };
 
-export const parseShowPageData = (data) => {
+export const parseShowPageData = (data: any) => {
   let faqHeading,
-    faqSchema = [],
-    tabSchema = [],
-    tabHeading = [],
-    currentObject,
+    faqSchema: any = [],
+    tabSchema: any = [],
+    tabHeading: any = [],
+    currentObject: any,
     detailsObjects = {},
-    DetailObjectHeading,
+    DetailObjectHeading: any,
     tabSectionHeading,
     isSafetyBanner = false,
     specialOffer = {},
-    specialOfferClosingDate,
+    specialOfferClosingDate: any,
     hasSpecialOffer = false,
     mapURL,
-    listicleSchema = [],
-    listicleHeading;
+    listicleSchema: any = [],
+    listicleHeading: any;
 
   const TAB_ALLOWED_HIGHLIGHT = [
     strings.SHOW_PAGE.ABOUT_SHOW,
@@ -125,7 +125,7 @@ export const parseShowPageData = (data) => {
     strings.SHOW_PAGE.AGE_LIMIT,
   ];
 
-  data.forEach((element, index) => {
+  data.forEach((element: any, index: number) => {
     if (element.type == 'heading6') {
       // detail object heading
       DetailObjectHeading = element.content.text;
@@ -177,6 +177,7 @@ export const parseShowPageData = (data) => {
             return x === DetailObjectHeading;
           })
         ) {
+          // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
           detailsObjects[DetailObjectHeading] = element.content.text;
         }
         if (
@@ -245,16 +246,17 @@ export const parseShowPageData = (data) => {
     }
   });
 
-  let tabSchemaHighlight = [];
-  let tabSchemaInfo = [];
-  let tabHeadingHighlight = [];
-  let tabHeadingInfo = [];
+  let tabSchemaHighlight: any = [];
+  let tabSchemaInfo: any = [];
+  let tabHeadingHighlight: any = [];
+  let tabHeadingInfo: any = [];
   let highlightsSection;
   let aboutTheatreSection;
 
+  // @ts-expect-error TS(7006): Parameter 'element' implicitly has an 'any' type.
   tabSchema.forEach((element, index) => {
     if (element.tab_name === strings.SHOW_PAGE.ABOUT_THEATRE) {
-      element.tab_content.forEach((data) => {
+      element.tab_content.forEach((data: any) => {
         if (data.type === 'heading3') {
           data.type = 'heading2';
         }
@@ -270,7 +272,7 @@ export const parseShowPageData = (data) => {
         return x === element.tab_name;
       })
     ) {
-      element.tab_content.forEach((data) => {
+      element.tab_content.forEach((data: any) => {
         if (data.type === 'heading3' || data.type === 'heading4') {
           data.type = 'heading2';
         }
@@ -281,7 +283,7 @@ export const parseShowPageData = (data) => {
     }
 
     if (element.tab_name === strings.SHOW_PAGE.HIGHLIGHTS) {
-      element.tab_content.forEach((data) => {
+      element.tab_content.forEach((data: any) => {
         if (data.type === 'heading3') {
           data.type = 'heading2';
         }
@@ -297,7 +299,7 @@ export const parseShowPageData = (data) => {
         return x === element.tab_name;
       })
     ) {
-      element.tab_content.forEach((data) => {
+      element.tab_content.forEach((data: any) => {
         if (data.type === 'heading3') {
           data.type = 'heading2';
         }

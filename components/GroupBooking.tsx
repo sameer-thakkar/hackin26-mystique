@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import Modal from 'react-modal';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import Select from 'react-select';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import DatePicker from 'react-datepicker';
 import dayjs from 'dayjs';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import styled from 'styled-components';
 import PhoneInput from 'react-phone-input-2';
 import { parsePhoneNumberFromString as parseMobile } from 'libphonenumber-js/mobile';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import { HALYARD } from 'const/ui-constants';
 
@@ -22,7 +26,7 @@ import {
   validateEmail,
   validateFullName,
   isGroupValid,
-  isFeildSelected,
+  isFieldSelected,
   fetchUserGeoLocation,
   createGroupBooking,
 } from '../utils/helper';
@@ -422,7 +426,7 @@ const StyledGroupBooking = styled.div`
   }
 `;
 export default class GroupBooking extends Component<any, any> {
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       fname: '',
@@ -473,7 +477,10 @@ export default class GroupBooking extends Component<any, any> {
     }
   };
 
-  checkPhoneNumberValidity = (phoneWithCountryCode, country) => {
+  checkPhoneNumberValidity = (
+    phoneWithCountryCode: { phone: string; countryDialCode: string },
+    country: any
+  ) => {
     const { phone, countryDialCode } = phoneWithCountryCode;
     if (phone === countryDialCode || !countryDialCode || !phone) {
       return false;
@@ -492,6 +499,7 @@ export default class GroupBooking extends Component<any, any> {
         country.toUpperCase()
       )
     ) {
+      // @ts-expect-error TS(2532): Object is possibly 'undefined'.
       return parseMobile(
         `${phone.substring(countryDialCode.length, phone.length)}`,
         country.toUpperCase()
@@ -500,24 +508,28 @@ export default class GroupBooking extends Component<any, any> {
     return false;
   };
 
-  handleReactSelectChange = (value, state) => this.setState({ [state]: value });
+  handleReactSelectChange = (value: string, state: string) =>
+    this.setState({ [state]: value });
 
-  handleInputChange = (e) => {
+  handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type } = e.target;
-    let finalValue = value;
+    let finalValue: boolean | string = value;
     if (type === 'checkbox') {
       finalValue = e.target.checked;
     }
     this.setState({ [name]: finalValue });
   };
 
-  handlePhoneInputChange = (telNumber, selectedCountry) =>
+  handlePhoneInputChange = (
+    telNumber: string,
+    selectedCountry: Record<string, any>
+  ) =>
     this.setState({
       phone: telNumber,
       countryDialCode: selectedCountry.dialCode,
     });
 
-  handleDateChange = (date) => this.setState({ date });
+  handleDateChange = (date: any) => this.setState({ date });
 
   validateInputData = () => {
     const {
@@ -554,15 +566,15 @@ export default class GroupBooking extends Component<any, any> {
       phoneWithCountryCode,
       this.state.userCountry
     );
-    error.isTourSelected = !isFeildSelected(tour);
+    error.isTourSelected = !isFieldSelected(tour);
     error.isGroupSizeValid = isGroupValid(
       adults,
       children,
       minimumPax,
       maximumPax
     );
-    error.isLangSelected = !isFeildSelected(lang);
-    error.isTimeSelected = !isFeildSelected(time);
+    error.isLangSelected = !isFieldSelected(lang);
+    error.isTimeSelected = !isFieldSelected(time);
     error.isCompanyValid = !(isAgent ? company.length > 0 : true);
     this.setState({ error });
     return (
@@ -577,7 +589,7 @@ export default class GroupBooking extends Component<any, any> {
     );
   };
 
-  handleInputBlur(input) {
+  handleInputBlur(input: string) {
     const {
       fname,
       email,
@@ -611,7 +623,7 @@ export default class GroupBooking extends Component<any, any> {
         this.setState({ error: error });
         return;
       case 'LANG':
-        hasError = !isFeildSelected(lang);
+        hasError = !isFieldSelected(lang);
         error = { ...this.state.error };
         error.isLangSelected = hasError;
         this.setState({ error });
@@ -626,7 +638,7 @@ export default class GroupBooking extends Component<any, any> {
         this.setState({ error });
         return;
       case 'TOUR':
-        hasError = !isFeildSelected(tour);
+        hasError = !isFieldSelected(tour);
         error = { ...this.state.error };
         error.isTourSelected = hasError;
         this.setState({ error });
@@ -638,7 +650,7 @@ export default class GroupBooking extends Component<any, any> {
         this.setState({ error: error });
         return;
       case 'TIME':
-        hasError = !isFeildSelected(time);
+        hasError = !isFieldSelected(time);
         error = { ...this.state.error };
         error.isTimeSelected = hasError;
         this.setState({ error: error });
@@ -698,7 +710,10 @@ export default class GroupBooking extends Component<any, any> {
     }
   };
 
-  getDatesInRange = (startDate, endDate) => {
+  getDatesInRange = (
+    startDate: dayjs.ConfigType,
+    endDate: dayjs.ConfigType
+  ) => {
     const dateRange = [];
     let nextDate = startDate;
 
@@ -710,7 +725,7 @@ export default class GroupBooking extends Component<any, any> {
     return dateRange;
   };
 
-  isDayAvailable = (date, blockedDays = '') => {
+  isDayAvailable = (date: any, blockedDays = '') => {
     const theDay = date.toDateString().slice(0, 2).toLowerCase();
     return blockedDays.toLowerCase().indexOf(theDay) == -1;
   };
@@ -821,7 +836,7 @@ export default class GroupBooking extends Component<any, any> {
                         value={this.state.tour}
                         name="tour"
                         options={this.props.groupBookingTourTitles}
-                        onChange={(value) =>
+                        onChange={(value: any) =>
                           this.handleReactSelectChange(value, 'tour')
                         }
                         placeholder={'Select Tour'}
@@ -871,7 +886,7 @@ export default class GroupBooking extends Component<any, any> {
                           value={this.state.lang}
                           name="lang"
                           options={GROUP_TOUR_PREFERED_LANG}
-                          onChange={(value) =>
+                          onChange={(value: any) =>
                             this.handleReactSelectChange(value, 'lang')
                           }
                           placeholder={'Select Prefered Language'}
@@ -892,7 +907,7 @@ export default class GroupBooking extends Component<any, any> {
                           value={this.state.time}
                           name="time"
                           options={GROUP_TOUR_PREFERED_TIME}
-                          onChange={(value) =>
+                          onChange={(value: any) =>
                             this.handleReactSelectChange(value, 'time')
                           }
                           placeholder={'Select Time'}
@@ -918,7 +933,7 @@ export default class GroupBooking extends Component<any, any> {
                           .toDate()}
                         excludeDates={[...blackoutDateRange]}
                         dateFormat="dd/MM/yyyy"
-                        filterDate={(date) =>
+                        filterDate={(date: any) =>
                           this.isDayAvailable(date, blockedDays)
                         }
                         monthsShown={isMobileDevice() ? 1 : 2}

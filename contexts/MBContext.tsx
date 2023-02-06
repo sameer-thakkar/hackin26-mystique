@@ -36,7 +36,7 @@ export const MBContext = createContext({
   redirectToHeadoutBookingFlow: false,
 });
 
-export const MBContextProvider = (props) => {
+export const MBContextProvider = (props: any) => {
   const {
     uid,
     lang,
@@ -71,7 +71,7 @@ export const MBContextProvider = (props) => {
     type = SIDEBAR_TYPES.DEFAULT,
     onCloseCallback,
     history,
-  }) => {
+  }: any) => {
     const modalState = {
       children,
       title,
@@ -82,6 +82,7 @@ export const MBContextProvider = (props) => {
       history,
     };
 
+    // @ts-expect-error TS(2322): Type '{ children: any; title: any; width: any; sid... Remove this comment to see the full error message
     setSidebarModalStack([...sidebarModalStack, modalState]);
     if (history) {
       const {
@@ -132,12 +133,16 @@ export const MBContextProvider = (props) => {
         lang: getLangObject(lang).code,
         language_full: lang,
         nakedDomain,
+        // @ts-expect-error TS(2322): Type '{ see_more_text: any; }' is not assignable t... Remove this comment to see the full error message
         buttons: buttons,
         design,
         sidebarModal: {
           stack: sidebarModalStack,
+          // @ts-expect-error TS(2322): Type '({ children, title, width, sidePadding, type... Remove this comment to see the full error message
           addToAside,
+          // @ts-expect-error TS(2322): Type '() => void' is not assignable to type 'null'... Remove this comment to see the full error message
           closeAside,
+          // @ts-expect-error TS(2322): Type '() => void' is not assignable to type 'null'... Remove this comment to see the full error message
           resetAside,
         },
         mbTheme,
@@ -160,17 +165,17 @@ export const MBContextProvider = (props) => {
         <AsideModal
           resetAside={resetAside}
           active={sidebarModalStack.length}
-          width={getActiveAside()?.width}
-          sidePadding={getActiveAside()?.sidePadding}
+          width={(getActiveAside() as any)?.width}
+          sidePadding={(getActiveAside() as any)?.sidePadding}
           stack={sidebarModalStack}
-          title={getActiveAside()?.title}
+          title={(getActiveAside() as any)?.title}
           closeModal={closeAside}
-          type={getActiveAside()?.type}
-          onCloseCallback={getActiveAside()?.onCloseCallback}
-          isQueryRestore={getActiveAside()?.history?.isQueryRestore}
+          type={(getActiveAside() as any)?.type}
+          onCloseCallback={(getActiveAside() as any)?.onCloseCallback}
+          isQueryRestore={(getActiveAside() as any)?.history?.isQueryRestore}
           isGlobalMb={isGlobalMb}
         >
-          {getActiveAside()?.children}
+          {(getActiveAside() as any)?.children}
         </AsideModal>
       ) : null}
     </MBContext.Provider>

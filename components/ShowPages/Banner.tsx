@@ -367,7 +367,7 @@ const ShowPageBanner = ({
   tagsArray,
   hostname,
   hasSpecialOffer,
-}) => {
+}: any) => {
   const {
     listingPrice,
     name,
@@ -410,7 +410,9 @@ const ShowPageBanner = ({
   const [showStickyNav, setShowStickyNav] = useState(false);
   const [nextAvailable, setNextAvailable] = useState('');
 
+  // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
   const videoCode = PRODUCT_VIDEOS[tgid] ? PRODUCT_VIDEOS[tgid] : null;
+  // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
   const videoAvailable = !!PRODUCT_VIDEOS[tgid];
   const isTourAvailable = !!listingPrice;
   const ref = useRef(null);
@@ -430,21 +432,26 @@ const ShowPageBanner = ({
           !!detailsObjects[strings.SHOW_PAGE.OPENING_DATE] &&
           !!detailsObjects[strings.SHOW_PAGE.CLOSING_DATE]
         ) {
+          // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
           showDetails['EXTENDED_VALIDITY'] = `${dateToString(
             detailsObjects[strings.SHOW_PAGE.OPENING_DATE]
           )} - ${dateToString(detailsObjects[strings.SHOW_PAGE.CLOSING_DATE])}`;
         }
         break;
       case strings.SHOW_PAGE.DURATION:
+        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         showDetails['DURATION'] = detailsObjects[key];
         break;
       case strings.SHOW_PAGE.AGE_LIMIT:
+        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         showDetails['USER'] = detailsObjects[key];
         break;
     }
   });
-  descriptors?.forEach((descriptor) => {
+  descriptors?.forEach((descriptor: any) => {
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     showDetails[descriptor?.code] =
+      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       strings.DESCRIPTORS[descriptor?.code] || descriptor.name;
   });
 
@@ -502,7 +509,7 @@ const ShowPageBanner = ({
       [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
       [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
       [ANALYTICS_PROPERTIES.TGID]: tgid,
-      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city?.code,
+      [ANALYTICS_PROPERTIES.CITY]: (pageMetaData?.city as any)?.code,
       ...getProductCommonProperties({
         primaryCategory,
         primaryCollection,
@@ -512,6 +519,7 @@ const ShowPageBanner = ({
   };
   const handleScroll = () => {
     const top = window.pageYOffset;
+    // @ts-expect-error TS(2339): Property 'clientHeight' does not exist on type 'nu... Remove this comment to see the full error message
     const { clientHeight, offsetTop } = ref?.current;
 
     if (clientHeight + offsetTop >= top) {
@@ -595,6 +603,7 @@ const ShowPageBanner = ({
                     fill
                     height={500}
                     width={isShowPoster && !isMobile ? 2000 : 1000}
+                    // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
                     quality={null}
                     priority
                     fitCrop={!isShowPoster && !isMobile}
@@ -661,7 +670,7 @@ const ShowPageBanner = ({
                 </Conditional>
               </div>
             </Conditional>
-            {tagsArray.map((element, index) => {
+            {tagsArray.map((element: any, index: number) => {
               if (element) {
                 return (
                   <div className="tags-wrapper" key={index}>
@@ -730,11 +739,13 @@ const ShowPageBanner = ({
         <div className="details-wrapper">
           {Object.keys(showDetails)?.map((key, index) => {
             const ShowDetailsSvg = descriptorIcons[key];
+            // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
             if (!showDetails[key]) {
               return null;
             }
             return (
               <div className="individual-wrapper" key={index}>
+                {/* @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message */}
                 <ShowDetailsSvg /> {showDetails[key]}
               </div>
             );

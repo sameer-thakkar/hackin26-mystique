@@ -15,7 +15,7 @@ const TicketCardsWrapper = styled.div`
   display: grid;
   grid-gap: 24px;
   ${(props) => {
-    if (props.twoColumns) {
+    if ((props as any).twoColumns) {
       return `grid-template-columns: 1fr 1fr;`;
     }
   }}
@@ -123,8 +123,10 @@ const TicketCards: React.FC<TicketCardsProps> = ({
         language: lang,
       }),
     },
+    // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
     id: null,
   });
+  // @ts-expect-error TS(2345): Argument of type '[string | undefined, { fetcher: ... Remove this comment to see the full error message
   const { data: tourListData } = useSWR(tourListEndpoint, {
     fetcher: swrFetcher,
   });
@@ -135,7 +137,7 @@ const TicketCards: React.FC<TicketCardsProps> = ({
         let temp = null;
         const { name, listingPrice } =
           tourListData?.tourGroups?.find(
-            (tour) => tour.id === Number(card.tgid)
+            (tour: any) => tour.id === Number(card.tgid)
           ) ?? {};
         temp = {
           name: name,
@@ -151,6 +153,7 @@ const TicketCards: React.FC<TicketCardsProps> = ({
   return (
     <>
       <h2>{title}</h2>
+      {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <TicketCardsWrapper twoColumns={twoColumns}>
         {data.map(
           (

@@ -162,7 +162,7 @@ const StyledContentPage = styled.div`
 `;
 
 class ContentPage extends Component<any, any> {
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       showGroupBookingModal: false,
@@ -188,8 +188,8 @@ class ContentPage extends Component<any, any> {
     const { microsite, baseLangPageTitle } = data;
     const { all_tours } = microsite?.data;
     const allTourTgids = all_tours
-      .filter((tour_slice) => tour_slice?.primary?.tgid)
-      .map((tour_slice) => tour_slice.primary.tgid);
+      .filter((tour_slice: any) => tour_slice?.primary?.tgid)
+      .map((tour_slice: any) => tour_slice.primary.tgid);
     this.setState({
       ...this.state,
       isMobile: window.innerWidth < 768,
@@ -211,7 +211,7 @@ class ContentPage extends Component<any, any> {
     }
 
     if (legacyBooleanCheck(enableGroupBooking)) {
-      let groupBookingTourTitles = [];
+      let groupBookingTourTitles: any = [];
       let res = await Client().getByIDs([
         this.props.data.microsite_document_ref.id,
       ]);
@@ -220,18 +220,18 @@ class ContentPage extends Component<any, any> {
         body1,
       } = res.results[0].data;
       let tours = body1[0]?.items || [];
-      let filteredTours = tours.filter(function (tour) {
-        return !groupBookingExcludedTgids.find(function (excludedTour) {
+      let filteredTours = tours.filter(function (tour: any) {
+        return !groupBookingExcludedTgids.find(function (excludedTour: any) {
           return tour.tgid === excludedTour.tgid;
         });
       });
       const toursData = await fetchTourListV6({
-        tgids: filteredTours.map((t) => t.tgid),
+        tgids: filteredTours.map((t: any) => t.tgid),
         hostname: window.location.origin,
       });
 
       const groupBookingTourData = toursData?.tourGroups?.reduce(
-        (acc, tour) => {
+        (acc: any, tour: any) => {
           return {
             ...acc,
             [tour.id]: {
@@ -242,7 +242,7 @@ class ContentPage extends Component<any, any> {
         {}
       );
 
-      filteredTours.map(async (tour) => {
+      filteredTours.map(async (tour: any) => {
         if (!tour.tour_title_override) {
           groupBookingTourTitles.push({
             value: groupBookingTourData[tour.tgid].title + ` [${tour.tgid}]`,
@@ -292,7 +292,7 @@ class ContentPage extends Component<any, any> {
     this.setState({ covid19AlertOpen: false });
   };
 
-  handleDropdownToggle = (elementIdentifier, forceBool = null) => {
+  handleDropdownToggle = (elementIdentifier: any, forceBool = null) => {
     switch (elementIdentifier) {
       case DROPDOWN_ELEMENT.HAMBURGER: {
         this.setState({
@@ -364,7 +364,7 @@ class ContentPage extends Component<any, any> {
 
     // START Data extraction for populating head
     const contentPageHasOtherMetaTags = data.other_meta_tags.filter(
-      ({ meta_tag }) => meta_tag
+      ({ meta_tag }: any) => meta_tag
     );
     const strKeys = [
       'title',

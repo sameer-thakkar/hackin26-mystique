@@ -1,7 +1,7 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 const CollectionList = async (req: NextApiRequest, res: NextApiResponse) => {
-  let curPage = +req.query.page || 1;
+  let curPage = Number(req.query.page) || 1;
 
   const perPage = 50;
   try {
@@ -19,12 +19,16 @@ const CollectionList = async (req: NextApiRequest, res: NextApiResponse) => {
     const startIndex = (curPage - 1) * perPage;
     const endIndex = curPage * perPage;
 
-    const collectionsResult = collectionData.slice(startIndex, endIndex);
+    const collectionsResult: Record<string, any>[] = collectionData.slice(
+      startIndex,
+      endIndex
+    );
     res.setHeader('Content-type', 'application/json');
     const response = {
       results_size: totalCollections,
-      results: collectionsResult?.map((items) => {
-        const { id: collectionId, displayName: collectionName } = items || {};
+      results: collectionsResult?.map((collection) => {
+        const { id: collectionId, displayName: collectionName } =
+          collection || {};
         return {
           id: collectionId.toString(),
           title: collectionId.toString(),
@@ -45,9 +49,7 @@ const CollectionList = async (req: NextApiRequest, res: NextApiResponse) => {
       ...response,
     });
   } catch (error) {
-    res.status(500).json({
-      ...error,
-    });
+    res.status(500).json({ error });
   }
 };
 

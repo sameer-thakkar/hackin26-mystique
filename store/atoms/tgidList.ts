@@ -2,10 +2,13 @@ import { atom } from 'recoil';
 
 const TIMER_KEY = 'collection-timer';
 
-const debouncedIsCollectingEffect = ({ setSelf, onSet }) => {
+const debouncedIsCollectingEffect = ({
+  setSelf,
+  onSet
+}: any) => {
   if (typeof window === 'undefined') return;
 
-  onSet((newValue) => {
+  onSet((newValue: any) => {
     if (newValue.isCollecting) {
       const prevTimerId = localStorage.getItem(TIMER_KEY);
       if (prevTimerId) clearTimeout(parseInt(prevTimerId));

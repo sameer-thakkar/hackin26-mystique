@@ -1,4 +1,5 @@
 import React, { ComponentType, useEffect, useState } from 'react';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
@@ -57,7 +58,7 @@ const CoverSlicesWrapper = styled.div`
   margin-bottom: 32px;
 `;
 
-const MicrositeV1 = (props) => {
+const MicrositeV1 = (props: any) => {
   const {
     toursList: uncategorizedToursList,
     tgidToScroll,
@@ -151,7 +152,7 @@ const MicrositeV1 = (props) => {
   const { footer_heading: footerHeadingSFoot, body: slicesSFoot } =
     secondaryFooterData || {};
 
-  const headerCurrencies = currencies_list.filter((c) => c?.currency);
+  const headerCurrencies = currencies_list.filter((c: any) => c?.currency);
 
   const currentLanguage = getLangObject(lang).code;
   const isCategorisedTours = Object.keys(categoryTourListData)?.length > 0;
@@ -220,7 +221,7 @@ const MicrositeV1 = (props) => {
   });
 
   const dropdownLinks =
-    dropdown_menu?.reduce((acc, item) => {
+    dropdown_menu?.reduce((acc: any, item: any) => {
       if (item.link)
         return [...acc, { value: item.link.url, label: item.link_text }];
       else return acc;
@@ -237,7 +238,7 @@ const MicrositeV1 = (props) => {
   const microbrandCardsHeading = microbrandCardsHeadingCMS
     ? microbrandCardsHeadingCMS
     : null;
-  let groupBookingTourTitles = [];
+  let groupBookingTourTitles: any = [];
 
   let alertPopup = null;
   if (alertPopupCMS?.id) {
@@ -246,12 +247,12 @@ const MicrositeV1 = (props) => {
 
   if (showGroupBooking) {
     uncategorizedToursList
-      .filter(function (tour) {
-        return !groupBookingExcludedTgids.find(function (excludedTour) {
+      .filter(function (tour: any) {
+        return !groupBookingExcludedTgids.find(function (excludedTour: any) {
           return tour.tgid === excludedTour.tgid;
         });
       })
-      .forEach((tour) => {
+      .forEach((tour: any) => {
         groupBookingTourTitles.push({
           value:
             (tour.tour_title_override || scorpioData[tour.tgid]?.title) +
@@ -261,10 +262,14 @@ const MicrositeV1 = (props) => {
       });
   }
 
-  const sortTours = (tgidToScroll, toursArray, isCategorisedTours) => {
+  const sortTours = (
+    tgidToScroll: any,
+    toursArray: any,
+    isCategorisedTours: any
+  ) => {
     if (!tgidToScroll) return toursArray;
     if (tgidToScroll) {
-      return toursArray?.reduce((accum = [], item) => {
+      return toursArray?.reduce((accum = [], item: any) => {
         const tgid = isCategorisedTours ? +tgidToScroll : tgidToScroll;
         if (item.tgid === tgid) {
           return [item, ...accum];
@@ -293,14 +298,14 @@ const MicrositeV1 = (props) => {
       : orderedUncategorizedTours;
 
   const orderedTgids = orderedTours?.length
-    ? orderedTours?.map((tour) => tour.tgid)
+    ? orderedTours?.map((tour: any) => tour.tgid)
     : [];
 
   const slices = contentFramework?.data?.body;
   const contentFWSlices = (slices && groupSlices(slices)) || [];
 
   const hasTourListContentFW: boolean = !!contentFWSlices.find(
-    (slice) => slice.slice_type === 'tours_list'
+    (slice: any) => slice.slice_type === 'tours_list'
   );
 
   const isReady = Object.values(scorpioData || {})?.length > 0;
@@ -311,7 +316,7 @@ const MicrositeV1 = (props) => {
 
   const allTours = allToursParser(micrositeData, scorpioData, pricingData);
 
-  let finalBannerImages = bannerImages.map((banner) => {
+  let finalBannerImages = bannerImages.map((banner: any) => {
     return {
       url: banner.image_src.url || banner.uploaded_image.url,
       alt: banner.image_alt || banner.uploaded_image.alt,
@@ -324,7 +329,7 @@ const MicrositeV1 = (props) => {
   if (autoBanner) {
     const tgidArray = csvTgidToArray(tourRanking);
     finalBannerImages = tgidArray
-      .map((tgid) => {
+      .map((tgid: any) => {
         let tour = scorpioData[tgid];
         if (tour)
           return {
@@ -427,7 +432,7 @@ const MicrositeV1 = (props) => {
   };
 
   const availableTours = orderedTours?.filter(
-    (tour) => scorpioData?.[tour?.tgid]?.available
+    (tour: any) => scorpioData?.[tour?.tgid]?.available
   );
 
   const isToursAvailable = availableTours?.length > 0;
@@ -525,7 +530,7 @@ const MicrositeV1 = (props) => {
               options={dropdownLinks}
               host={host}
               isMobile={isMobile}
-              onChange={(option) => {
+              onChange={(option: any) => {
                 window.location.href = option.value;
               }}
               iconPosition={'left'}
@@ -543,6 +548,7 @@ const MicrositeV1 = (props) => {
             bannerSubtext={bannerSubtext}
             showBannerSubtext={baseLangShowBannerSubtext}
             isPartnered={baseLangisPartnered}
+            // @ts-expect-error TS(2322): Type 'string | null' is not assignable to type 'st... Remove this comment to see the full error message
             currentLanguage={currentLanguage ? currentLanguage : null}
             isMobile={isMobile}
             boxed={true}
@@ -580,7 +586,8 @@ const MicrositeV1 = (props) => {
 
         <Conditional
           if={
-            microbrandCards?.filter((mbCard) => mbCard.microbrand_link)?.length
+            microbrandCards?.filter((mbCard: any) => mbCard.microbrand_link)
+              ?.length
           }
         >
           <MicrobrandList

@@ -5,6 +5,8 @@ import React, {
   useEffect,
   useCallback,
 } from 'react';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
+
 import { RichText } from 'prismic-reactjs';
 import dynamic from 'next/dynamic';
 import styled, { css } from 'styled-components';
@@ -69,9 +71,13 @@ const MediaCarousel = dynamic(() => import('UI/MediaCarousel'));
 
 dayjs.extend(advancedFormat);
 
-const isLengthyArray = (item) => Array.isArray(item) && item.length;
+const isLengthyArray = (item: any) => Array.isArray(item) && item.length;
 
-const Container = styled.div`
+const Container = styled.div<{
+  isCardVisible?: boolean;
+  isV3Design?: boolean;
+  indexPosition: number;
+}>`
   display: ${({ isCardVisible }) => (isCardVisible ? 'block' : 'none')};
 
   max-width: 1200px;
@@ -163,7 +169,16 @@ const ctaBlockMobileStyles = (isSticky: boolean) => css`
   }
 `;
 
-const StyledProductCard = styled.div`
+interface IStyledProductCard {
+  isTicketCard: boolean;
+  isMobile: boolean;
+  isV3Design?: boolean;
+  layout?: any;
+  isNewMediaSite?: boolean;
+  isFirstProduct?: boolean;
+}
+
+const StyledProductCard = styled.div<IStyledProductCard>`
   padding: ${({ isTicketCard, theme }) =>
     isTicketCard ? `24px 0px 24px 40px` : theme.productCards.padding.desktop};
   ${({ isTicketCard, theme, isMobile, isV3Design }) =>
@@ -176,7 +191,7 @@ const StyledProductCard = styled.div`
   grid-row-gap: 24px;
   grid-template-columns: 1fr auto;
   grid-template-areas: ${({ layout }) =>
-    layout.desktop.map((row) => `'${row}'`)};
+    layout.desktop.map((row: any) => `'${row}'`)};
   ${StlyedSplit} {
     margin: 0;
     max-width: unset;
@@ -237,7 +252,7 @@ const StyledProductCard = styled.div`
           ? '0'
           : '24px'};
     grid-template-areas: ${({ layout }) =>
-      layout.mobile.map((row) => `'${row}'`)};
+      layout.mobile.map((row: any) => `'${row}'`)};
     width: auto;
     grid-template-columns: 1fr;
 
@@ -308,7 +323,7 @@ const ProductHeader = styled.div`
   display: contents;
 `;
 
-const TourTitle = styled.h2`
+const TourTitle = styled.h2<{ isPopup?: boolean; pageType?: string }>`
   ${expandFontToken('Heading/Large')}
   margin: 0;
   max-width: 768px;
@@ -317,7 +332,10 @@ const TourTitle = styled.h2`
   }
 `;
 
-const TitleWrapper = styled.div`
+const TitleWrapper = styled.div<{
+  hasBorderedTitle?: boolean;
+  $isTicketCard?: boolean;
+}>`
   grid-area: title;
   ${({ hasBorderedTitle }) =>
     hasBorderedTitle
@@ -360,7 +378,7 @@ const BoosterTag = styled.div`
   }
 `;
 
-const TourTags = styled.div`
+const TourTags = styled.div<{ horizontal?: boolean; pageType?: string }>`
   ${expandFontToken('UI/Label Regular')}
   display: grid;
   grid-row-gap: 16px;
@@ -416,7 +434,7 @@ const TourTags = styled.div`
   }
 `;
 
-export const CTAContainer = styled.div`
+export const CTAContainer = styled.div<{ pageType?: any }>`
   grid-area: cta-combo;
   display: grid;
   grid-gap: 16px;
@@ -438,7 +456,10 @@ export const CTAContainer = styled.div`
   }
 `;
 
-const PriceContainer = styled.div`
+const PriceContainer = styled.div<{
+  $hasScratchPrice?: boolean;
+  pageType?: string;
+}>`
   justify-self: center;
   display: grid;
   grid-auto-flow: column;
@@ -493,7 +514,11 @@ const PriceContainer = styled.div`
   }
 `;
 
-const CTABlock = styled.div`
+const CTABlock = styled.div<{
+  isTicketCard?: boolean;
+  isSticky: boolean;
+  shouldOffset?: boolean;
+}>`
   a {
     text-decoration: none;
   }
@@ -542,7 +567,12 @@ const CTABlock = styled.div`
   }
 `;
 
-const ProductBody = styled.div`
+const ProductBody = styled.div<{
+  noOfListItemToShow?: number;
+  hasReadMore?: boolean;
+  defaultOpen?: boolean;
+  collapsed?: boolean;
+}>`
   grid-area: body;
   display: grid;
   grid-row-gap: 8px;
@@ -671,7 +701,7 @@ const ProductOfferBlock = styled.div`
     font-size: 14px;
   }
 `;
-const V1BoosterBlock = styled.div`
+const V1BoosterBlock = styled.div<{ boosterHasIcon?: boolean }>`
   grid-area: booster;
   font-family: ${HALYARD.FONT_STACK};
   font-weight: 400;
@@ -822,7 +852,7 @@ const MoreDetailsBtn = styled(Button)`
 `;
 
 const richtextElements = {
-  hyperlink: function Anchor({ children, data }) {
+  hyperlink: function Anchor({ children, data }: any) {
     return (
       <a href={data?.url} rel="nofollow noreferrer" target="_blank">
         {children}
@@ -843,7 +873,7 @@ const HighlightTabs = ({
   pageType,
   activeTabIndex,
   showCard,
-}) => {
+}: any) => {
   const width = useWindowWidth();
   const [isMobile, setIsMobile] = useState(false);
   const [swiper, updateSwiper] = useState(null);
@@ -856,12 +886,13 @@ const HighlightTabs = ({
       return;
     }
 
+    // @ts-expect-error TS(2531): Object is possibly 'null'.
     updateCurrentIndex(swiper.realIndex);
   }, [swiper, isMobile]);
 
   const updateSliderPosition = useCallback(() => {
-    setIsBeginning(swiper?.isBeginning);
-    setIsEnd(swiper?.isEnd);
+    setIsBeginning((swiper as any)?.isBeginning);
+    setIsEnd((swiper as any)?.isEnd);
   }, [swiper]);
 
   useEffect(() => {
@@ -874,14 +905,14 @@ const HighlightTabs = ({
 
   const goNext = () => {
     if (swiper !== null) {
-      swiper?.slideNext();
+      (swiper as any)?.slideNext();
       updateSliderPosition();
     }
   };
 
   const goPrev = () => {
     if (swiper !== null) {
-      swiper?.slidePrev();
+      (swiper as any)?.slidePrev();
       updateSliderPosition();
     }
   };
@@ -890,7 +921,7 @@ const HighlightTabs = ({
     onTabChange({ tab: tabs[0], index: 0, defaultSelection: true });
   }, []);
 
-  const trackedTabChange = (index) => {
+  const trackedTabChange = (index: number) => {
     onTabChange({ tab: tabs[index], index });
   };
 
@@ -900,10 +931,11 @@ const HighlightTabs = ({
         <TabsWrapper onClick={(e) => e.stopPropagation()}>
           <Swiper
             {...swiperParams}
+            // @ts-expect-error TS(2322): Type 'Dispatch<SetStateAction<null>>' is not assig... Remove this comment to see the full error message
             onSwiper={updateSwiper}
             onSlideChange={updateIndex}
           >
-            {tabs.map((tab, index) => (
+            {tabs.map((tab: any, index: number) => (
               <Tab
                 isActive={activeTabIndex == index}
                 key={index}
@@ -911,6 +943,7 @@ const HighlightTabs = ({
                   e.stopPropagation();
                   trackedTabChange(index);
                 }}
+                // @ts-expect-error TS(2769): No overload matches this call.
                 pageType={pageType}
               >
                 {tab.heading}
@@ -941,7 +974,7 @@ const HighlightTabs = ({
           </SwiperControls>
         </TabsWrapper>
         <TabPanelWrapper>
-          {tabs.map((tab, index) => (
+          {tabs.map((tab: any, index: number) => (
             <TabPanel
               isActive={activeTabIndex == index}
               key={index}
@@ -1031,10 +1064,10 @@ export const Descriptors = ({
   maxDuration,
   lang = 'en',
   isCombo = false,
-}) => {
+}: any) => {
   return (
     <TourTags horizontal={horizontal} pageType={pageType}>
-      {descriptorArray.map((item, index) => {
+      {descriptorArray.map((item: any, index: number) => {
         const DescriptorSVG = descriptorIcons[item];
         if (item === DESCRIPTORS.DURATION && isCombo) return null;
 
@@ -1046,6 +1079,7 @@ export const Descriptors = ({
               {getDuration({ minDuration, maxDuration, lang })}
             </Conditional>
             <Conditional if={item !== DESCRIPTORS.DURATION}>
+              {/* @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message */}
               {strings.DESCRIPTORS?.[item]}
             </Conditional>
           </div>
@@ -1055,7 +1089,7 @@ export const Descriptors = ({
   );
 };
 
-const Product = (props) => {
+const Product = (props: any) => {
   const moreDetailsRef = useRef();
   const {
     tgid,
@@ -1125,6 +1159,7 @@ const Product = (props) => {
     if (pid != tgid) return;
     if (popup === 'combo') {
       if (isMobile && isComboWithMultiVariant) {
+        // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
         addToAside({
           width: '100vw',
           children: (
@@ -1154,9 +1189,11 @@ const Product = (props) => {
       }
     }
     if (popup === 'details') {
+      // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
       addToAside({
         width: '100vw',
         children: (
+          // @ts-expect-error TS(2769): No overload matches this call.
           <ModalCardContainer>
             {getProductCardElements(true)}
           </ModalCardContainer>
@@ -1206,6 +1243,7 @@ const Product = (props) => {
   });
 
   const { data: tourGroupData } = useSWR(
+    // @ts-expect-error TS(2345): Argument of type '[string | null | undefined, { fe... Remove this comment to see the full error message
     isComboWithSingleVariant ? tourGroupEndpoint : null,
     { fetcher: swrFetcher }
   );
@@ -1242,7 +1280,7 @@ const Product = (props) => {
       [ANALYTICS_PROPERTIES.LANGUAGE]: lang,
       [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: cardTitle,
       [ANALYTICS_PROPERTIES.TGID]: tgid,
-      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city?.cityCode,
+      [ANALYTICS_PROPERTIES.CITY]: (pageMetaData?.city as any)?.cityCode,
       ...getProductCommonProperties({
         primaryCategory,
         primaryCollection,
@@ -1302,6 +1340,7 @@ const Product = (props) => {
       document.body.style.overflow = 'hidden';
     }
     if (isMobile && isComboWithMultiVariant) {
+      // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
       addToAside({
         width: '100vw',
         children: (
@@ -1330,17 +1369,21 @@ const Product = (props) => {
     }
   };
 
-  const getDate = (date, currentLanguage) => {
+  const getDate = (date: any, currentLanguage: any) => {
     const today = dayjs().format('YYYY-MM-DD');
     const tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');
     if (date === today) return strings.TODAY;
     if (date === tomorrow) return strings.TOMORROW;
-    return dayjs(date)
-      .locale(currentLanguage)
-      .format(LOCALISED_DATE_FORMATS[currentLanguage].DATE_MONTH);
+    return (
+      dayjs(date)
+        .locale(currentLanguage)
+        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+        .format(LOCALISED_DATE_FORMATS[currentLanguage].DATE_MONTH)
+    );
   };
 
-  const boosterHasIcon = booster?.filter((i) => i.type === 'image').length > 0;
+  const boosterHasIcon =
+    booster?.filter((i: any) => i.type === 'image').length > 0;
   let url = host || window.location.host;
   const currentHost = !isDev ? url : parse(uid, true).pathname;
   const hostName = currentHost.includes('stage')
@@ -1368,7 +1411,7 @@ const Product = (props) => {
     tabs[activeTabIndex]?.contents
   );
 
-  const onTabChange = ({ tab, index, defaultSelection }) => {
+  const onTabChange = ({ tab, index, defaultSelection }: any) => {
     const noOfListItems = getMaxListItemsToShow(tab.contents);
 
     const isTruncated = tab.contents.length > noOfListItems;
@@ -1412,10 +1455,11 @@ const Product = (props) => {
   const hasOffer = isOfferEnabled && offerId;
   const hasBorderedTitle = !hasOffer && !hasV1Booster;
 
-  const onMoreDetailsClick = (e) => {
+  const onMoreDetailsClick = (e: any) => {
     e?.stopPropagation();
     if (mbTheme !== THEMES.MIN_BLUE && isMobile) {
       trackedToggleContent(false);
+      // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
       addToAside({
         width: '100vw',
         children: (
@@ -1447,7 +1491,7 @@ const Product = (props) => {
     isTicketCard: isTicketCard,
     hasPromoCode: promo_code,
   });
-  const trackedToggleContent = (isOpen) => {
+  const trackedToggleContent = (isOpen: any) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.EXPERIENCE_MORE_DETAILS_VIEWED,
       [ANALYTICS_PROPERTIES.TGID]: tgid,
@@ -1465,7 +1509,7 @@ const Product = (props) => {
   };
 
   const getMoreDetailsButton = () => {
-    const keyPressedOnReadMore = (event) => {
+    const keyPressedOnReadMore = (event: any) => {
       if (event.keyCode == 13 && !isMobile) {
         toggleContentOpen(!isContentOpen);
         trackedToggleContent(isContentOpen);
@@ -1498,6 +1542,7 @@ const Product = (props) => {
       </MoreDetailsBtn>
     ) : (
       <div
+        // @ts-expect-error TS(2322): Type 'MutableRefObject<undefined>' is not assignab... Remove this comment to see the full error message
         ref={moreDetailsRef}
         data-open="0"
         onClick={onMoreDetailsClick}
@@ -1512,7 +1557,8 @@ const Product = (props) => {
   };
 
   const hasHighlights =
-    isLengthyArray(highlights) && highlights.filter((item) => item.text).length;
+    isLengthyArray(highlights) &&
+    highlights.filter((item: any) => item.text).length;
   const productBookingUrl = createBookingURL({
     nakedDomain: bookingUrl,
     lang: currentLanguage,
@@ -1546,7 +1592,7 @@ const Product = (props) => {
     </Button>
   );
 
-  const getProductCardElements = (expandContent) => (
+  const getProductCardElements = (expandContent: any) => (
     <>
       <StyledProductCard
         layout={layout}
@@ -1635,7 +1681,7 @@ const Product = (props) => {
           </Conditional>
           {hasOffer &&
             offerId &&
-            productOffer.map((offer, index) => {
+            productOffer.map((offer: any, index: number) => {
               if (offer.id === offerId) {
                 return (
                   <ProductOfferBlock
@@ -1679,7 +1725,7 @@ const Product = (props) => {
             >
               <Conditional if={!isCombo}>
                 <a
-                  target={isMobile ? null : '_blank'}
+                  target={isMobile ? undefined : '_blank'}
                   href={productBookingUrl}
                   rel="nofollow noreferrer"
                 >
@@ -1732,6 +1778,7 @@ const Product = (props) => {
             <div
               className={'tour-description'}
               id={`tour-description-${position}`}
+              // @ts-expect-error TS(2322): Type '((e: MouseEvent<HTMLDivElement, MouseEvent>)... Remove this comment to see the full error message
               onClick={
                 !isMobile && !defaultOpen
                   ? (e) => {

@@ -121,7 +121,7 @@ TODO: Content Tabs with Category
 TODO: Category with TGID and Category
 */
 
-export const HomePage = (props) => {
+export const HomePage = (props: any) => {
   const {
     header,
     footer,
@@ -200,7 +200,7 @@ export const HomePage = (props) => {
 
   const [covid19AlertOpen, setCovid19AlertOpen] = useState(true);
   const { dropdownLinks, enableDropdownLinks, languageProps } = header;
-  const selectorLinkChangeHandler = (option) => {
+  const selectorLinkChangeHandler = (option: any) => {
     window.location.href = option.value;
   };
   const slices = contentFramework?.body;
@@ -226,6 +226,7 @@ export const HomePage = (props) => {
   } = domainConfig || {};
 
   return (
+    // @ts-expect-error TS(2769): No overload matches this call.
     <V2MicrositeWrapper isEntertainmentMb={isEntertainmentMb}>
       <Header
         {...header}
@@ -301,8 +302,8 @@ export const HomePage = (props) => {
         <ProductsContextProvider allTours={allTours} ready={ready}>
           <div className="main-wrapper hero-slice-section">
             {heroSectionSlice
-              .filter((slice) => slice?.slice_type)
-              .map((slice, index) => (
+              .filter((slice: any) => slice?.slice_type)
+              .map((slice: any, index: number) => (
                 <div
                   key={`${slice?.slice_type}-${index}`}
                   className={`slice-block ${slice.slice_type}`}

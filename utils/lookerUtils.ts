@@ -77,7 +77,8 @@ const contentFrameworkSliceCheck = async ({
   const contentFrameworkDoc = await fetchAllMatchingDocs({
     query: [Prismic.Predicates.at(`document.id`, docId)],
   });
-  const { body } = contentFrameworkDoc?.[0]?.data || {};
+  const { body }: { body: Record<string, any>[] } =
+    contentFrameworkDoc?.[0]?.data || {};
   return body?.some((slice) => slice?.slice_type === sliceType);
 };
 
@@ -89,13 +90,17 @@ const getContentFrameworkSlice = async ({
   docId: string;
   sliceType: string;
   findAll?: boolean;
-}): Promise<Record<string, any>> => {
+}): Promise<Record<string, any> | undefined> => {
   const contentFrameworkDoc = await fetchAllMatchingDocs({
     query: [Prismic.Predicates.at(`document.id`, docId)],
   });
-  const { body } = contentFrameworkDoc?.[0]?.data || {};
-  if (findAll) return body?.filter((slice) => slice?.slice_type === sliceType);
-  else return body?.find((slice) => slice?.slice_type === sliceType);
+  const { body }: { body: Record<string, any>[] } =
+    contentFrameworkDoc?.[0]?.data ?? {};
+  if (findAll) {
+    return body?.filter((slice) => slice?.slice_type === sliceType);
+  } else {
+    return body?.find((slice) => slice?.slice_type === sliceType);
+  }
 };
 
 export const shoulderPageTicketsCheck = async ({
@@ -113,10 +118,7 @@ export const shoulderPageTicketsCheck = async ({
   return false;
 };
 
-export const getPageUrl = ({
-  uid,
-  lang,
-}: PrismicDocumentType): string | null => {
+export const getPageUrl = ({ uid, lang }: PrismicDocumentType) => {
   try {
     return convertUidToUrl({ uid, lang: getHeadoutLanguagecode(lang) });
   } catch (e) {
@@ -139,12 +141,19 @@ export const getProductCardsId = ({
   return null;
 };
 
+type TgetTgidsFromProductCards = {
+  productCardsDocId: string;
+  data: Record<string, any>;
+  lang: string;
+  hostname: string;
+};
+
 export const getTgidsFromProductCards = async ({
   productCardsDocId,
   data,
   lang,
   hostname,
-}): Promise<string[]> => {
+}: TgetTgidsFromProductCards): Promise<string[]> => {
   const productCardDocs = await fetchAllMatchingDocs({
     query: [Prismic.Predicates.at(`document.id`, productCardsDocId)],
   });
@@ -155,9 +164,9 @@ export const getTgidsFromProductCards = async ({
     hostname,
     lang,
   });
-  let tgids = [];
+  let tgids: any = [];
   tgids = tgids.concat(
-    parsedData?.orderedTours?.map((tour) => tour?.tgid.toString())
+    parsedData?.orderedTours?.map((tour: any) => tour?.tgid.toString())
   );
   return tgids;
 };
@@ -171,7 +180,7 @@ export const getTgids = async ({
   host: string;
   isStageMode: boolean;
 }): Promise<string[]> => {
-  let tgids = [];
+  let tgids: any[] = [];
   const { type, lang, data } = doc || {};
 
   const isDev = host.includes('localhost');
@@ -183,7 +192,7 @@ export const getTgids = async ({
         //categorised V1 MB
         tgids = tgids.concat(
           (await getTgidsFromProductCards({
-            productCardsDocId: getProductCardsId(doc),
+            productCardsDocId: getProductCardsId(doc) ?? '',
             data,
             lang,
             hostname,
@@ -194,16 +203,16 @@ export const getTgids = async ({
         //non-entertainment V2 MB
         tgids = tgids.concat(
           data?.all_tours
-            ?.filter((tour) => tour?.primary?.tgid)
-            ?.map((tour) => tour?.primary?.tgid) || []
+            ?.filter((tour: any) => tour?.primary?.tgid)
+            ?.map((tour: any) => tour?.primary?.tgid) || []
         );
         break;
       default:
         //uncategorised MB
         tgids = tgids.concat(
           data?.body1?.[0]?.items
-            ?.filter((tour) => tour?.tgid)
-            ?.map((tour) => tour?.tgid) || []
+            ?.filter((tour: any) => tour?.tgid)
+            ?.map((tour: any) => tour?.tgid) || []
         );
     }
   }
@@ -224,7 +233,7 @@ export const getTgids = async ({
       lang,
     });
     tgids = tgids.concat(
-      parsedData?.orderedTours?.map((tour) => tour?.tgid.toString()) || []
+      parsedData?.orderedTours?.map((tour: any) => tour?.tgid.toString()) || []
     );
   }
 
@@ -238,10 +247,12 @@ export const getAvailableLanguages = ({
   doc: PrismicDocumentType;
   language: string;
 }): string[] => {
+  // @ts-expect-error TS(2769): No overload matches this call.
   const alternateLanguages = alternate_languages?.reduce((acc, currentLang) => {
     const formattedLang = currentLang?.lang?.split('-')?.[0]?.toUpperCase();
     return [...acc, formattedLang];
   }, []);
+  // @ts-expect-error TS(2488): Type 'Record<string, string>' must have a '[Symbol... Remove this comment to see the full error message
   return [language, ...alternateLanguages];
 };
 
@@ -255,10 +266,10 @@ export const getParentDomain = (url: URL): string | null => {
 export const uncategorisedToursCheck = ({
   type,
   data,
-}: PrismicDocumentType): boolean => {
+}: PrismicDocumentType) => {
   return (
     type === CUSTOM_TYPES.MICROSITE &&
-    data?.body1?.[0]?.items?.filter((tour) => tour?.tgid).length > 0
+    data?.body1?.[0]?.items?.filter((tour: any) => tour?.tgid).length > 0
   );
 };
 
@@ -276,7 +287,7 @@ export const getMetaImageUrl = ({
   }
 };
 
-const getDefaultFooterDisclaimer = (docData: Record<string, any>): string =>
+const getDefaultFooterDisclaimer = (docData: Record<string, any>) =>
   docData?.show_disclaimer ? DEFAULT_LOOKER_VALUES.FOOTER_DISCLAIMER : '';
 
 type FooterDetailsType = {
@@ -290,7 +301,7 @@ type FooterDetailsType = {
 export const getFooterDetails = async ({
   type,
   data,
-}: PrismicDocumentType): Promise<FooterDetailsType> => {
+}: PrismicDocumentType): Promise<FooterDetailsType | undefined> => {
   const isMicrosite = checkIfMicrosite({ type });
   const {
     footer_ref,
@@ -361,23 +372,22 @@ export const getBannerSubtext = ({
   }
 };
 
-type BreadcrumbsDetailsType = {
-  text: string;
-  url: string;
+type TBreadcrumb = {
+  text: string | null;
+  url: string | null;
 };
 
-export const getBreadcrumbs = async (
-  doc: PrismicDocumentType
-): Promise<Record<string, BreadcrumbsDetailsType>> => {
+export const getBreadcrumbs = async (doc: PrismicDocumentType) => {
   const { type, data, lang } = doc;
-  let breadcrumbsDetails = {},
+  let breadcrumbsDetails: Record<string, TBreadcrumb> = {},
     counter = 0;
 
   switch (true) {
     case type === CUSTOM_TYPES.MICROSITE || type === CUSTOM_TYPES.CONTENT_PAGE:
       const breadcrumbsSlice =
         data?.body2?.find(
-          (slice) => slice?.slice_type === SLICE_TYPES.BREADCRUMBS
+          (slice: Record<string, any>) =>
+            slice?.slice_type === SLICE_TYPES.BREADCRUMBS
         ) ||
         (data?.content_framework?.id &&
           (await getContentFrameworkSlice({
@@ -386,13 +396,15 @@ export const getBreadcrumbs = async (
           })));
 
       if (breadcrumbsSlice) {
-        breadcrumbsSlice?.items?.forEach((level, index) => {
-          counter++;
-          return (breadcrumbsDetails[`level_${index + 1}`] = {
-            text: level?.title || '',
-            url: level?.url?.url || '',
-          });
-        });
+        breadcrumbsSlice?.items?.forEach(
+          (level: Record<string, any>, index: number) => {
+            counter++;
+            return (breadcrumbsDetails[`level_${index + 1}`] = {
+              text: level?.title || '',
+              url: level?.url?.url || '',
+            });
+          }
+        );
 
         breadcrumbsDetails[`level_${counter + 1}`] = {
           text: breadcrumbsSlice?.primary?.current_title || '',
@@ -403,6 +415,7 @@ export const getBreadcrumbs = async (
 
     case type === CUSTOM_TYPES.SHOW_PAGE:
       const pageUrl = getPageUrl(doc);
+      // @ts-expect-error TS(2531): Object is possibly 'null'.
       const isLTT = pageUrl.includes('www.london-theater-tickets.com');
 
       breadcrumbsDetails = {
@@ -479,7 +492,7 @@ export const getHeadings = async ({
   data,
 }: PrismicDocumentType): Promise<Record<string, string[]>> => {
   let mainHeadings = [],
-    lfcHeadings = [];
+    lfcHeadings: any = [];
 
   switch (type) {
     case CUSTOM_TYPES.MICROSITE:
@@ -494,7 +507,7 @@ export const getHeadings = async ({
           if (isEntertainmentMB && isListicle) {
             heading && mainHeadings.push(heading);
           } else if (isEntertainmentMB) {
-            images?.forEach((image) => {
+            images?.forEach((image: any) => {
               image?.main_heading && mainHeadings.push(image?.main_heading);
             });
           }
@@ -546,9 +559,9 @@ export const getHeadings = async ({
       sliceType: SLICE_TYPES.RICH_TEXT,
       findAll: true,
     });
-    richTextSlices?.forEach((slice) => {
-      slice?.items?.forEach((item) => {
-        item?.text?.forEach((textItem) => {
+    richTextSlices?.forEach((slice: any) => {
+      slice?.items?.forEach((item: any) => {
+        item?.text?.forEach((textItem: any) => {
           const { type, text } = textItem || {};
           return type === 'heading1' && text && lfcHeadings.push(text);
         });

@@ -1,10 +1,12 @@
+import type { NextApiRequest, NextApiResponse } from 'next';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'slac... Remove this comment to see the full error message
 import SlackWebhook from 'slack-webhook';
 
 const slack = new SlackWebhook(process.env.SLACK_GRP_BKNG_WEBHOOK);
 
-const makeSlackMsgObj = (data) => {
+const makeSlackMsgObj = (data: Record<string, any>) => {
   let total = 0;
-  data.group.split(',').forEach((type) => {
+  data.group.split(',').forEach((type: any) => {
     total += +type.split(':')[1];
   });
   return {
@@ -62,10 +64,10 @@ const makeSlackMsgObj = (data) => {
   };
 };
 
-const FormHandler = async (req, res) => {
+const FormHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const postBody = JSON.parse(req.body);
-    let MICROBRAND_PAGE_URL = req.headers.referer.split('?')[0];
+    let MICROBRAND_PAGE_URL = req?.headers?.referer?.split('?')?.[0];
     let dateArray = postBody.date.split('/');
     dateArray = new Date(+dateArray[2], +dateArray[1] - 1, +dateArray[0])
       .toDateString()
@@ -89,12 +91,14 @@ const FormHandler = async (req, res) => {
         contact: `+1-347-897-0100`,
       },
       seatSlot:
+        MICROBRAND_PAGE_URL &&
         MICROBRAND_PAGE_URL.search(
           /broadway-show-tickets|london-theater-tickets/g
         ) > -1
           ? 'Seat'
           : 'Slot',
       showTour:
+        MICROBRAND_PAGE_URL &&
         MICROBRAND_PAGE_URL.search(
           /broadway-show-tickets|london-theater-tickets/g
         ) > -1
@@ -117,7 +121,9 @@ const FormHandler = async (req, res) => {
 
     const zenFields = Object.keys(zenMap).map((key) => {
       return {
+        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         id: zenMap[key],
+        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         value: formData[key],
       };
     });
@@ -152,11 +158,11 @@ const FormHandler = async (req, res) => {
     let slackMessageObject = makeSlackMsgObj(formData);
     await slack.send(slackMessageObject);
 
-    res.statusCode = 200;
-    res.json({ status: 'Success', body: data.ticket.id });
+    res.status(200).json({ status: 'Success', body: data.ticket.id });
   } catch (e) {
-    res.statusCode = 400;
-    res.json({ status: 'Error Occured', stack: e || e.trace });
+    res
+      .status(500)
+      .json({ status: 'Error Occured', stack: e || (e as any).trace });
   }
 };
 

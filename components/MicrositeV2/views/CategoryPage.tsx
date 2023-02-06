@@ -6,7 +6,7 @@ import { HALYARD } from 'const/ui-constants';
 import { SortSelector } from '../SortSelector';
 import { ProductsWrapper } from '../ProductsWrapper';
 
-export const CategoryPage = (props) => {
+export const CategoryPage = (props: any) => {
   const [filterDropdown, setFilterDropdown] = useState(false);
   const [activeCategoryArray, setActiveCategory] = useState(null);
 
@@ -27,7 +27,7 @@ export const CategoryPage = (props) => {
     props.changePage({ name: PAGETYPE.SEARCH });
   };
 
-  const changeOrder = (orderKey) => {
+  const changeOrder = (orderKey: any) => {
     let { categories } = props.categoryProps;
     setActiveCategory(categories[props.category].ranking[orderKey]);
   };

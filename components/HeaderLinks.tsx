@@ -7,7 +7,7 @@ import { withTrailingSlash } from 'utils/helper';
 
 import LinkResolver from './LinkResolver';
 
-const StyledHeaderLinksWrapper = styled.div`
+const StyledHeaderLinksWrapper = styled.div<{ show: boolean }>`
   display: flex;
   text-decoration: none;
   div,
@@ -68,7 +68,7 @@ const HeaderLinks: React.FC<any> = ({
 }) => {
   return (
     <StyledHeaderLinksWrapper show={hiddenMobile}>
-      {headerLinks.map((link, index) => (
+      {headerLinks.map((link: any, index: number) => (
         <LinkResolver
           target="_blank"
           url={withTrailingSlash(link?.link_url?.url)}

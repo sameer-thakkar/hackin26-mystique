@@ -16,10 +16,10 @@ const SearchItem: ComponentType<any> = dynamic(
   { ssr: false }
 );
 
-export const SearchPage = (props) => {
+export const SearchPage = (props: any) => {
   const [results, setResults] = useState([]);
   const [searchStarted, setsearchStarted] = useState(false);
-  const handleResults = (results) => {
+  const handleResults = (results: any) => {
     setResults(results);
     setsearchStarted(true);
   };
@@ -27,7 +27,7 @@ export const SearchPage = (props) => {
     props.changePage({ name: PAGETYPE.HOMEPAGE });
   };
 
-  const searchItemClick = (productTgid) => {
+  const searchItemClick = (productTgid: any) => {
     props.changePage({
       name: PAGETYPE.MOBILE_PRODUCT_PAGE,
       tgid: productTgid,
@@ -74,6 +74,7 @@ export const SearchPage = (props) => {
                 <SearchItem
                   key={index}
                   onSearchResultClick={searchItemClick}
+                  // @ts-expect-error TS(2698): Spread types may only be created from object types... Remove this comment to see the full error message
                   {...item}
                 />
               );

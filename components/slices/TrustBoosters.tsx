@@ -52,12 +52,12 @@ const StyledTrustBoosters = styled.div`
   }
 `;
 
-const TrustBoosters = (props) => {
+const TrustBoosters = (props: any) => {
   const { boosters, isMobile } = props;
   if (isMobile) return null;
   return (
     <StyledTrustBoosters className="trust-boosters">
-      {boosters.map((booster, index) => {
+      {boosters.map((booster: any, index: number) => {
         return (
           <div className="trust-booster" key={index}>
             <Image url={booster.image_url} alt={booster.title} />

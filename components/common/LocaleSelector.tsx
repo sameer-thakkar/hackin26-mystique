@@ -104,7 +104,10 @@ const IconWrapper = styled.div`
   display: flex;
   border-radius: 4px;
   cursor: pointer;
-  ${({ $isActive }) =>
+  ${({
+    // @ts-expect-error TS(2339): Property '$isActive' does not exist on type 'Pick<... Remove this comment to see the full error message
+    $isActive,
+  }) =>
     $isActive &&
     `
     background: ${COLORS.GRAY.G8};
@@ -127,7 +130,7 @@ const LocaleSelector = ({
   hasLanguageDropdown = true,
   hasCurrencySelector = true,
   isMobile = false,
-}) => {
+}: any) => {
   const menuItemRef = useRef(null);
   const router = useRouter();
   const currentTabInView = useRef({ trackingLabel: '' });
@@ -174,7 +177,7 @@ const LocaleSelector = ({
     });
   };
 
-  const onTabView = ({ trackingLabel }) => {
+  const onTabView = ({ trackingLabel }: any) => {
     currentTabInView.current.trackingLabel = trackingLabel;
     trackEvent({
       eventName: ANALYTICS_EVENTS.LOCALE_POPUP_VIEWED,
@@ -247,6 +250,7 @@ const LocaleSelector = ({
       body: (
         <RadioList
           onChange={onCurrencyChange}
+          // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string'.
           currentValue={activeCurrency}
           items={(sortedCurrencies ?? []).map((currency) => {
             const { code } = currency;
@@ -297,6 +301,7 @@ const LocaleSelector = ({
     <>
       <IconWrapper
         className="globe-icon"
+        // @ts-expect-error TS(2769): No overload matches this call.
         $isActive={isDrawerActive}
         onClick={onLocaleSelectorClick}
       >
@@ -307,6 +312,7 @@ const LocaleSelector = ({
           $drawerStyles={drawerStyles}
           noMargin
           closeHandler={trackedOnClose}
+          // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'HTMLElement... Remove this comment to see the full error message
           container={menuItemRef?.current}
         >
           <SwipeableTabs tabs={tabsArray} onTabView={onTabView} />

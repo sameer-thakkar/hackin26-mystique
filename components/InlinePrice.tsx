@@ -2,6 +2,7 @@ import React from 'react';
 
 type IPriceProps = {
   tgid: number;
+  'scratch-price'?: any;
 };
 type IPriceState = {
   error: any;
@@ -10,7 +11,7 @@ type IPriceState = {
   showScratchPrice: any;
 };
 class InlinePrice extends React.Component<IPriceProps, IPriceState> {
-  constructor(props) {
+  constructor(props: IPriceProps) {
     super(props);
     this.state = {
       error: null,

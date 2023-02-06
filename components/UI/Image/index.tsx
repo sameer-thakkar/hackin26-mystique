@@ -71,6 +71,7 @@ const Image: React.FC<IImageProps> = ({
 
   mobileImageSrc = generateImageImgixUrl(
     format,
+    // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
     mobileUrl,
     calculatedWidth,
     calculatedHeight,
@@ -85,6 +86,7 @@ const Image: React.FC<IImageProps> = ({
   defaultImageSrc = generateImageImgixUrl(
     format,
     url,
+    // @ts-expect-error TS(2345): Argument of type 'string | number | undefined' is ... Remove this comment to see the full error message
     calculatedWidth,
     calculatedHeight,
     quality,
@@ -116,7 +118,9 @@ const Image: React.FC<IImageProps> = ({
         data-srcset={`${
           mobileUrl ? mobileImageSrc + ' 768w,' : ''
         }${defaultImageSrc}`}
+        // @ts-expect-error TS(2322): Type 'number | null' is not assignable to type 'st... Remove this comment to see the full error message
         width={fillImageProp ? null : Number(calculatedWidth)}
+        // @ts-expect-error TS(2322): Type 'number | null' is not assignable to type 'st... Remove this comment to see the full error message
         height={fillImageProp ? null : Number(calculatedHeight)}
         layout={fillImageProp ? 'fill' : layout}
         alt={alt}
@@ -125,7 +129,6 @@ const Image: React.FC<IImageProps> = ({
         priority={priority}
         objectFit={objectFit}
         unoptimized // We use IMGIX, which does all the optimisation required. Letting Next process images will add to TTFB.
-        // @ts-expect-error
         fetchpriority={fetchPriority}
       />
       <Conditional if={!!attribution}>

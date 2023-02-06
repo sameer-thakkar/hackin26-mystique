@@ -1,4 +1,4 @@
-const quickSvg = (props) => {
+const quickSvg = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -6,7 +6,6 @@ const quickSvg = (props) => {
       height="16"
       fill="none"
       viewBox="0 0 16 16"
-      {...props}
     >
       <path
         stroke="#444"
@@ -18,7 +17,7 @@ const quickSvg = (props) => {
   );
 };
 
-const skipSvg = (props) => {
+const skipSvg = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -26,7 +25,6 @@ const skipSvg = (props) => {
       height="16"
       viewBox="0 0 16 16"
       fill="none"
-      {...props}
     >
       <circle cx="13.5" cy="2.5" r="1.5" stroke="#444444" />
       <path
@@ -52,7 +50,7 @@ const skipSvg = (props) => {
   );
 };
 
-const clockSvg = (props) => {
+const clockSvg = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +58,6 @@ const clockSvg = (props) => {
       height="16"
       fill="none"
       viewBox="0 0 16 16"
-      {...props}
     >
       <path
         stroke="#444"
@@ -78,7 +75,7 @@ const clockSvg = (props) => {
   );
 };
 
-const cancelSvg = (props) => {
+const cancelSvg = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +83,6 @@ const cancelSvg = (props) => {
       height="16"
       fill="none"
       viewBox="0 0 16 16"
-      {...props}
     >
       <g
         stroke="#444"
@@ -106,7 +102,7 @@ const cancelSvg = (props) => {
   );
 };
 
-const transferSvg = (props) => {
+const transferSvg = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -114,7 +110,6 @@ const transferSvg = (props) => {
       height="16"
       fill="none"
       viewBox="0 0 16 16"
-      {...props}
     >
       <path
         stroke="#444"
@@ -128,7 +123,7 @@ const transferSvg = (props) => {
   );
 };
 
-const phoneSvg = (props) => {
+const phoneSvg = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -136,7 +131,6 @@ const phoneSvg = (props) => {
       height="16"
       fill="none"
       viewBox="0 0 16 16"
-      {...props}
     >
       <path
         stroke="#444"
@@ -148,9 +142,9 @@ const phoneSvg = (props) => {
   );
 };
 
-export const StartIcon = (props) => {
+export const StartIcon = () => {
   return (
-    <svg width={16} height={16} viewBox="0 0 16 16" fill="none" {...props}>
+    <svg width={16} height={16} viewBox="0 0 16 16" fill="none">
       <path
         d="M8.167 1.7l2.06 4.173 4.606.674L11.5 9.793l.787 4.587-4.12-2.167-4.12 2.167.786-4.587L1.5 6.547l4.607-.674L8.167 1.7z"
         fill="#FFBC00"
@@ -159,14 +153,13 @@ export const StartIcon = (props) => {
   );
 };
 
-export const StarIcon = (props) => (
+export const StarIcon = () => (
   <svg
     width="19"
     height="18"
     viewBox="0 0 19 18"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    {...props}
   >
     <path
       d="M9.20833 1.125L11.7833 6.34167L17.5417 7.18333L13.375 11.2417L14.3583 16.975L9.20833 14.2667L4.05833 16.975L5.04167 11.2417L0.875 7.18333L6.63333 6.34167L9.20833 1.125Z"
@@ -178,7 +171,7 @@ export const StarIcon = (props) => (
   </svg>
 );
 
-export const hotelSvg = (props) => {
+export const hotelSvg = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -186,7 +179,6 @@ export const hotelSvg = (props) => {
       height="16"
       fill="none"
       viewBox="0 0 14 16"
-      {...props}
     >
       <path
         stroke="#444"
@@ -214,7 +206,7 @@ export const hotelSvg = (props) => {
   );
 };
 
-export const foodSvg = (props) => {
+export const foodSvg = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -222,7 +214,6 @@ export const foodSvg = (props) => {
       height="16"
       fill="none"
       viewBox="0 0 16 16"
-      {...props}
     >
       <path
         stroke="#444"
@@ -238,7 +229,7 @@ export const foodSvg = (props) => {
   );
 };
 
-export const headphonesSvg = (props) => {
+export const headphonesSvg = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -246,7 +237,6 @@ export const headphonesSvg = (props) => {
       height="16"
       fill="none"
       viewBox="0 0 16 16"
-      {...props}
     >
       <path
         stroke="#444"
@@ -264,7 +254,7 @@ export const headphonesSvg = (props) => {
   );
 };
 
-export const guidedTourSvg = (props) => {
+export const guidedTourSvg = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -272,7 +262,6 @@ export const guidedTourSvg = (props) => {
       height="16"
       fill="none"
       viewBox="0 0 16 16"
-      {...props}
     >
       <path
         stroke="#444"
@@ -291,7 +280,7 @@ export const guidedTourSvg = (props) => {
   );
 };
 
-export const validitySvg = (props) => {
+export const validitySvg = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -299,7 +288,6 @@ export const validitySvg = (props) => {
       height="16"
       fill="none"
       viewBox="0 0 16 16"
-      {...props}
     >
       <path
         stroke="#444"
@@ -311,7 +299,7 @@ export const validitySvg = (props) => {
   );
 };
 
-export const userSvg = (props) => {
+export const userSvg = () => {
   return (
     <svg
       width="16"
@@ -319,7 +307,6 @@ export const userSvg = (props) => {
       viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      {...props}
     >
       <g clipPath="url(#clip0_4785_110723)">
         <path
@@ -344,7 +331,7 @@ export const userSvg = (props) => {
   );
 };
 
-export const descriptorIcons = {
+export const descriptorIcons: Record<any, any> = {
   TRANSFERS: transferSvg,
   FREE_CANCELLATION: cancelSvg,
   DURATION: clockSvg,

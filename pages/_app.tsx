@@ -28,7 +28,7 @@ import { getLangObject } from 'utils/helper';
 import { ArabicGlobalStyle } from 'const/globalStyles/ar';
 import ScrollToTop from 'components/common/ScrollToTop';
 
-const App = ({ Component, pageProps, localizedStrings, lang }) => {
+const App = ({ Component, pageProps, localizedStrings, lang }: any) => {
   strings.setContent({
     default: localizedStrings,
   });
@@ -61,7 +61,7 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
     pageTitle = renderShortCodes(pageTitle)?.join?.('');
     const cookieCurrency = cookies?.[COOKIE.CURRENT_CURRENCY];
     const isValidCookieCurrency = cookieCurrency
-      ? currencyList.find((c) => c.code === cookieCurrency)
+      ? currencyList.find((c: any) => c.code === cookieCurrency)
       : false;
     const ssrCurrencyCode = isValidCookieCurrency
       ? cookies?.[COOKIE.CURRENT_CURRENCY]
@@ -111,7 +111,9 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
       pageTitle: pageTitle,
       collectionId: primaryCollectionId,
       collectionName: primaryCollectionName,
+      // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'null'.
       mbName,
+      // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'null'.
       pageType,
     });
     set(appAtom, {
@@ -129,9 +131,10 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
     });
   };
 
-  const getLanguageBasedGlobalStyling = (lang) => {
+  const getLanguageBasedGlobalStyling = (lang: any) => {
     switch (lang) {
       case 'ar':
+        // @ts-expect-error TS(2786): 'ArabicGlobalStyle' cannot be used as a JSX compon... Remove this comment to see the full error message
         return <ArabicGlobalStyle />;
       default:
         return null;
@@ -139,7 +142,9 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
   };
 
   return (
+    // @ts-expect-error TS(2786): 'StyleSheetManager' cannot be used as a JSX compon... Remove this comment to see the full error message
     <StyleSheetManager
+      // @ts-expect-error TS(2769): No overload matches this call.
       stylisPlugins={RTL_LANGUAGE_CODES.includes(lang) ? [rtlPlugin] : []}
     >
       <RecoilRoot initializeState={initRecoil}>
@@ -152,7 +157,7 @@ const App = ({ Component, pageProps, localizedStrings, lang }) => {
   );
 };
 
-App.getInitialProps = async ({ Component, ctx }) => {
+App.getInitialProps = async ({ Component, ctx }: any) => {
   const { asPath, query, res } = ctx;
   const [pathname, ..._query] = asPath.split('?');
   const lang = getLanguageFromPathname({ pathname, query }) || 'en';

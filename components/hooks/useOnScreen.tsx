@@ -28,6 +28,7 @@ export default function useOnScreen({
     return () => {
       observer?.disconnect();
     };
+  // @ts-expect-error TS(2454): Variable 'observer' is used before being assigned.
   }, [observer, ref]);
 
   return isIntersecting;

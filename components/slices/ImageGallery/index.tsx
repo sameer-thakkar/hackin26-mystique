@@ -1,4 +1,6 @@
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
+import type { Swiper as ISwiper } from 'swiper';
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import useWindowSize from 'hooks/useWindowSize';
 import dynamic from 'next/dynamic';
@@ -60,18 +62,21 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
 
   const [isDesktopLightboxOpen, setDesktopLightbox] = useState(false);
   const [isMobileLightboxOpen, setMobileLightbox] = useState(false);
-  const [gallerySwiper, updateGallerySwiper] = useState(null);
-  const [thumbnailSwiper, updateThumbnailSwiper] = useState(null);
+  const [gallerySwiper, updateGallerySwiper] = useState<ISwiper | null>(null);
+  const [thumbnailSwiper, updateThumbnailSwiper] = useState<ISwiper | null>(
+    null
+  );
   const [currentIndex, updateCurrentIndex] = useState(0);
   const modalRef = useRef(null);
-  const controlRef = useRef(null);
+  const controlRef = useRef<HTMLDivElement>(null);
 
+  // @ts-expect-error TS(2532): Object is possibly 'undefined'.
   const isMobile = useWindowSize().width < 768;
 
   const { SHOW_ALL_PHOTOS, CLOSE } = strings || {};
 
   const updateGalleryIndex = useCallback(
-    () => updateCurrentIndex(gallerySwiper.realIndex),
+    () => updateCurrentIndex(gallerySwiper?.realIndex || 0),
     [gallerySwiper]
   );
 
@@ -101,7 +106,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
 
   const gallerySwiperParams: SwiperProps = {
     initialSlide: currentIndex,
-    spaceBetween: isMobile && 10,
+    spaceBetween: isMobile ? 10 : undefined,
     touchRatio: isMobile ? 0.6 : 0,
     onSwiper: updateGallerySwiper,
   };
@@ -118,7 +123,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
   const lightboxImages = JSON.parse(JSON.stringify(images));
 
   /* Truncating the content till 120 characters and separating the reference from 'images' variable */
-  lightboxImages?.forEach((image) => {
+  lightboxImages?.forEach((image: any) => {
     const isShortSummaryRequired = image.content[0]?.text?.length > 120;
     image.isShortSummaryRequired = isShortSummaryRequired;
     if (isShortSummaryRequired) {
@@ -130,7 +135,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
     return image;
   });
 
-  const toggleLightbox = (index) => {
+  const toggleLightbox = (index: number) => {
     updateCurrentIndex(index);
     if (isMobile) {
       setMobileLightbox(!isMobileLightboxOpen);
@@ -139,20 +144,21 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
     }
   };
 
-  const slideNext = (swiper) => {
+  const slideNext = (swiper: ISwiper | null) => {
     if (swiper !== null) {
       swiper.slideNext();
       updateGalleryIndex();
     }
   };
 
-  const slidePrev = (swiper) => {
+  const slidePrev = (swiper: ISwiper | null) => {
     if (swiper !== null) {
       swiper.slidePrev();
       updateGalleryIndex();
     }
   };
 
+  // @ts-ignore
   useCaptureClickOutside(modalRef, () => toggleLightbox(0), [controlRef]);
 
   const activeImage = images[currentIndex];
@@ -312,7 +318,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
                         alt={caption}
                         onClick={() => {
                           updateGalleryIndex();
-                          gallerySwiper.slideTo(index, 200);
+                          gallerySwiper?.slideTo(index, 200);
                         }}
                         className={
                           index === currentIndex

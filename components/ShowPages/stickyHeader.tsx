@@ -13,6 +13,7 @@ import { getProductCommonProperties, trackEvent } from 'utils/analytics';
 import { FONTS } from 'const/fonts';
 
 const BannerContent = styled.div(
+  // @ts-expect-error TS(2339): Property 'showComponent' does not exist on type 'P... Remove this comment to see the full error message
   ({ showComponent }) => `
   z-index: 3;
   background: ${COLORS.BRAND.WHITE};
@@ -167,8 +168,8 @@ const StickyHeader = ({
   nextAvailable,
   showComponent,
   isAvailable,
-  bookingUrl,
-}) => {
+  bookingUrl
+}: any) => {
   const {
     listingPrice,
     name,
@@ -184,25 +185,26 @@ const StickyHeader = ({
   const trackBookNowClick = () => {
     const { originalPrice, finalPrice, currencyCode } = listingPrice ?? {};
     trackEvent({
-      eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,
-      [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
-      [ANALYTICS_PROPERTIES.DISCOUNT]: originalPrice > finalPrice,
-      [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
-      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: name,
-      [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
-      [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
-      [ANALYTICS_PROPERTIES.TGID]: tgid,
-      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city?.code,
-      ...getProductCommonProperties({
+    eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,
+    [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
+    [ANALYTICS_PROPERTIES.DISCOUNT]: originalPrice > finalPrice,
+    [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
+    [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: name,
+    [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
+    [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
+    [ANALYTICS_PROPERTIES.TGID]: tgid,
+    [ANALYTICS_PROPERTIES.CITY]: (pageMetaData?.city as any)?.code,
+    ...getProductCommonProperties({
         primaryCategory,
         primaryCollection,
         primarySubCategory,
-      }),
-    });
+    }),
+});
   };
 
   return (
     <>
+      {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <BannerContent showComponent={showComponent}>
         <BannerContentWrapper>
           <div className="heading-wrapper">

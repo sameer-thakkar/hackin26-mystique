@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import dynamic from 'next/dynamic';
 import Image from 'UI/Image';
@@ -11,7 +12,11 @@ const Slider = dynamic(() => import('UI/Slider'));
 
 const StyledSliderAccordion = styled.div`
   display: grid;
-  grid-template-columns: ${({ isGlobalMb }) => (isGlobalMb ? '528px' : '1fr')} ${({
+  grid-template-columns: ${({
+      // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+      isGlobalMb,
+    }) => (isGlobalMb ? '528px' : '1fr')} ${({
+      // @ts-expect-error TS(2339): Property 'hasImageComponent' does not exist on typ... Remove this comment to see the full error message
       hasImageComponent,
     }) => (hasImageComponent ? `1fr` : ``)};
   grid-gap: 24px;
@@ -21,7 +26,10 @@ const StyledSliderAccordion = styled.div`
   height: max-content;
   width: 100%;
   line-height: 1.4;
-  ${({ isGlobalMb }) =>
+  ${({
+    // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+    isGlobalMb,
+  }) =>
     isGlobalMb &&
     `border: none;
     grid-gap: 84px;
@@ -39,20 +47,35 @@ const StyledSliderAccordion = styled.div`
 const SliderWrapper = styled.div`
   display: grid;
   overflow: hidden;
-  max-height: ${({ isGlobalMb }) => (isGlobalMb ? '326px' : '368px')};
+  max-height: ${({
+    // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+    isGlobalMb,
+  }) => (isGlobalMb ? '326px' : '368px')};
   width: auto;
   display: grid;
   .swiper-slide img {
     width: 100%;
-    height: ${({ isGlobalMb }) => (isGlobalMb ? `326px` : 'auto')};
+    height: ${({
+      // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+      isGlobalMb,
+    }) => (isGlobalMb ? `326px` : 'auto')};
     display: flex;
     object-fit: cover;
-    ${({ isGlobalMb }) => isGlobalMb && `border-radius: 4px;`}
+    ${({
+      // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+      isGlobalMb,
+    }) => isGlobalMb && `border-radius: 4px;`}
   }
   @media (max-width: 768px) {
-    max-height: ${({ isGlobalMb }) => (isGlobalMb ? '212px' : '195px')};
+    max-height: ${({
+      // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+      isGlobalMb,
+    }) => (isGlobalMb ? '212px' : '195px')};
     .swiper-slide img {
-      height: ${({ isGlobalMb }) => (isGlobalMb ? '212px' : '195px')};
+      height: ${({
+        // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+        isGlobalMb,
+      }) => (isGlobalMb ? '212px' : '195px')};
     }
   }
 `;
@@ -67,15 +90,27 @@ const SingleImage = styled.div`
   }
   img {
     width: 100%;
-    height: ${({ isGlobalMb }) => (isGlobalMb ? `326px` : 'auto')};
+    height: ${({
+      // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+      isGlobalMb,
+    }) => (isGlobalMb ? `326px` : 'auto')};
     display: flex;
     object-fit: cover;
-    ${({ isGlobalMb }) => isGlobalMb && `border-radius: 4px;`}
+    ${({
+      // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+      isGlobalMb,
+    }) => isGlobalMb && `border-radius: 4px;`}
   }
   @media (max-width: 768px) {
-    max-height: ${({ isGlobalMb }) => (isGlobalMb ? '212px' : '195px')};
+    max-height: ${({
+      // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+      isGlobalMb,
+    }) => (isGlobalMb ? '212px' : '195px')};
     img {
-      height: ${({ isGlobalMb }) => (isGlobalMb ? '212px' : '195px')};
+      height: ${({
+        // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+        isGlobalMb,
+      }) => (isGlobalMb ? '212px' : '195px')};
     }
   }
 `;
@@ -120,18 +155,18 @@ const SingleImage = styled.div`
  *
  */
 
-const SliderAccordion = (props) => {
+const SliderAccordion = (props: any) => {
   const { faqs: accordions, sliceProps } = props;
   const { isMobile, isGlobalMb } = sliceProps;
 
-  accordions.forEach((accordian) => {
+  accordions.forEach((accordian: any) => {
     if (accordian.images.length == 0)
       accordian.images[0] = accordions[0].images[0];
   });
 
   const [activeAccordionIndex, setActiveAccordionIndex] = useState(0);
   const activeAccordionImages = accordions[activeAccordionIndex].images.filter(
-    (i) => i?.url
+    (i: any) => i?.url
   );
 
   const sliderOptions: SwiperProps = {
@@ -146,10 +181,11 @@ const SliderAccordion = (props) => {
   };
 
   const SliderComponent = (
+    // @ts-expect-error TS(2769): No overload matches this call.
     <SliderWrapper isGlobalMb={isGlobalMb}>
       {activeAccordionImages.length > 1 ? (
         <Slider sliderOptions={sliderOptions} parentOverflowHidden>
-          {activeAccordionImages.map((image, index) => {
+          {activeAccordionImages.map((image: any, index: number) => {
             return (
               <Image
                 key={index}
@@ -162,6 +198,7 @@ const SliderAccordion = (props) => {
           })}
         </Slider>
       ) : (
+        // @ts-expect-error TS(2769): No overload matches this call.
         <SingleImage isGlobalMb={isGlobalMb}>
           <Image
             height={isMobile ? 195 : 375}
@@ -177,12 +214,13 @@ const SliderAccordion = (props) => {
 
   return (
     <StyledSliderAccordion
+      // @ts-expect-error TS(2769): No overload matches this call.
       hasImageComponent={activeAccordionImages.length}
       isGlobalMb={isGlobalMb}
     >
       {!isMobile && activeAccordionIndex >= 0 ? SliderComponent : null}
       <AccordionsWrap>
-        {accordions.map((accordion, index) => {
+        {accordions.map((accordion: any, index: number) => {
           const isOpen = index == activeAccordionIndex;
           const content = (
             <>

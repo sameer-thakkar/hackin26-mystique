@@ -84,8 +84,10 @@ const Booster = styled.div`
 `;
 
 const StyledCustomLinkedTours = styled.div`
-  color: ${({ design }) =>
-    design === DESIGN.V1 ? COLORS.GRAY.G2 : COLORS.GRAY.G1};
+  color: ${({
+    // @ts-expect-error TS(2339): Property 'design' does not exist on type 'Pick<Det... Remove this comment to see the full error message
+    design,
+  }) => (design === DESIGN.V1 ? COLORS.GRAY.G2 : COLORS.GRAY.G1)};
 `;
 
 const TourGrid = styled.div`
@@ -121,7 +123,7 @@ const CustomLinkedTours = ({
   tgids,
   content,
   commonLink,
-}) => {
+}: any) => {
   const {
     isDev,
     host,
@@ -143,14 +145,16 @@ const CustomLinkedTours = ({
         language: lang,
       }),
     },
+    // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
     id: null,
   });
+  // @ts-expect-error TS(2345): Argument of type '[string | undefined, { fetcher: ... Remove this comment to see the full error message
   const { data: tourListData } = useSWR(tourListEndpoint, {
     fetcher: swrFetcher,
   });
   const apiTours = tourListData ? tourListApiParser(tourListData, lang) : {};
 
-  const defaultURL = (tgid, flowType) =>
+  const defaultURL = (tgid: any, flowType: string) =>
     createBookingURL({
       nakedDomain,
       lang,
@@ -160,13 +164,14 @@ const CustomLinkedTours = ({
       flowType,
     });
   return (
+    // @ts-expect-error TS(2769): No overload matches this call.
     <StyledCustomLinkedTours design={design}>
       <TitleTextCombo>
         <RichContent render={content} />
       </TitleTextCombo>
       <TourGrid>
         {apiTours &&
-          tgids.map((tgid: any, index) => {
+          tgids.map((tgid: any, index: number) => {
             const {
               title,
               image,

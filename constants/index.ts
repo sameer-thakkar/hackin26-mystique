@@ -64,7 +64,9 @@ export const SUPPORTED_LOCALE_MAP = {
   ar: 'ar-ae',
 };
 
-export const LANGUAGE_MAP = {
+type TLanguageMap = { displayName: string; locale: string; code: string };
+
+export const LANGUAGE_MAP: Record<string, TLanguageMap> = {
   en: {
     displayName: 'English',
     locale: 'en-us',
@@ -127,7 +129,7 @@ export const LANGUAGE_MAP = {
   },
 };
 
-export const PRISMIC_LANG_TO_ROUTE_PARAM = {
+export const PRISMIC_LANG_TO_ROUTE_PARAM: Record<string, string> = {
   'en-us': 'en',
   'it-it': 'it',
   'es-es': 'es',
@@ -201,7 +203,7 @@ export const CUSTOM_TYPES = {
   HEADOUT_CATEGORY_CONTENT: 'ho_category_content',
 };
 
-export const DOC_TYPES = {
+export const DOC_TYPES: Record<string, string> = {
   microsite: 'Microsite',
   content_page: 'Content Page',
   showpage: 'Showpage',
@@ -214,7 +216,7 @@ export const DOC_TYPES = {
   ho_category_content: 'Headout Content',
 };
 
-export const HEADOUT_CATEGORY_CONTENT_TYPE = {
+export const HEADOUT_CATEGORY_CONTENT_TYPE: Record<string, string> = {
   c: 'Collection',
   ca: 'Category',
   sc: 'Sub-category',

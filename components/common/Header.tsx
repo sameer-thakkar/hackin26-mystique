@@ -14,7 +14,8 @@ import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
 import { POWERED_BY_HEADOUT } from 'assets/SvgIcons';
-import { throttle, withTrailingSlash } from 'utils/helper';
+import { withTrailingSlash } from 'utils/helper';
+import { throttle } from 'utils/gen';
 
 const MultiLevelNav = dynamic(() => import('components/MultiLevelNav'));
 const ResponsiveSelector: ComponentType<any> = dynamic(
@@ -38,7 +39,11 @@ const StyledHeader = styled.header<{
   transition: all 0.2s ease-in;
   position: sticky;
   top: 0;
-  box-shadow: ${({ $isTop, $isEntertainmentMB }) =>
+  box-shadow: ${({
+    // @ts-expect-error TS(2339): Property '$isTop' does not exist on type 'Pick<Det... Remove this comment to see the full error message
+    $isTop,
+    $isEntertainmentMB,
+  }) =>
     !$isTop &&
     !$isEntertainmentMB &&
     '0px -1px 2px rgba(0, 0, 0, 0.08), 0px 4px 8px rgba(0, 0, 0, 0.12)'};
@@ -75,7 +80,10 @@ const StyledHeaderContainer = styled.div`
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: auto;
-  ${({ hasDropdownLinks }) =>
+  ${({
+    // @ts-expect-error TS(2339): Property 'hasDropdownLinks' does not exist on type... Remove this comment to see the full error message
+    hasDropdownLinks,
+  }) =>
     hasDropdownLinks
       ? ` 
       grid-template-columns: auto auto 1fr;
@@ -102,6 +110,7 @@ const StyledHeaderContainer = styled.div`
 `;
 
 const StyledLogo = styled.div(
+  // @ts-expect-error TS(2339): Property 'isEntertainmentMB' does not exist on typ... Remove this comment to see the full error message
   ({ isEntertainmentMB }) => `
   display: grid;
   grid-auto-flow: column;
@@ -214,7 +223,7 @@ const Header: React.FC<any> = (props) => {
 
   const hamburgerIconCheck =
     showGroupBooking ||
-    !!headerLinks?.filter((link) => link.link_url?.url)?.length ||
+    !!headerLinks?.filter((link: any) => link.link_url?.url)?.length ||
     slices.length;
   const hamburgerRef = useRef(null);
   const multiNavRef = useRef(null);
@@ -226,14 +235,16 @@ const Header: React.FC<any> = (props) => {
     () => {
       setHamburgerOpen(false);
     },
+    // @ts-expect-error TS(2322): Type 'MutableRefObject<null>' is not assignable to... Remove this comment to see the full error message
     [multiNavRef]
   );
 
   const convertedRegularMenuItems =
     headerLinks
-      ?.filter((link) => link.link_url?.url)
-      ?.map((link) => ({
+      ?.filter((link: any) => link.link_url?.url)
+      ?.map((link: any) => ({
         slice_type: 'menu_item',
+
         primary: {
           label: link.link_heading,
           url: {
@@ -272,11 +283,14 @@ const Header: React.FC<any> = (props) => {
   return (
     <StyledHeader
       $isSticky={isHeaderSticky}
+      // @ts-expect-error TS(2769): No overload matches this call.
       $isTop={scrollPos <= 80}
       $isEntertainmentMB={isEntertainmentMB}
     >
+      {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <StyledHeaderContainer hasDropdownLinks={!isMobile && hasDropdownLinks}>
         <a href={logoRedirectionURL || '/'}>
+          {/* @ts-expect-error TS(2769): No overload matches this call. */}
           <StyledLogo isEntertainmentMB={isEntertainmentMB}>
             <Image
               url={logoUrl}
@@ -297,11 +311,12 @@ const Header: React.FC<any> = (props) => {
           <div className="header-links">
             <ResponsiveSelector
               options={dropdownLinks}
-              onChange={(option) => (window.location.href = option.value)}
+              onChange={(option: any) => (window.location.href = option.value)}
               customClassName="header-city-selector"
             />
           </div>
         </Conditional>
+        {/* @ts-expect-error TS(2769): No overload matches this call. */}
         <StyledHeaderElements active={hamburgerIconCheck}>
           <Conditional if={!slices && headerLinks}>
             <HeaderLinks
@@ -318,7 +333,7 @@ const Header: React.FC<any> = (props) => {
                 isMobile={isMobile}
                 isActive={hamburgerOpen}
                 slice={slices.filter(
-                  (slice) => slice.slice_type === 'navigation'
+                  (slice: any) => slice.slice_type === 'navigation'
                 )}
                 oldMenuItems={convertedRegularMenuItems}
               />

@@ -67,7 +67,10 @@ const StyledSlider = styled.div`
 
     @media (max-width: 768px) {
       width: 100%;
-      ${({ cardCount }) =>
+      ${({
+        // @ts-expect-error TS(2339): Property 'cardCount' does not exist on type 'Pick<... Remove this comment to see the full error message
+        cardCount,
+      }) =>
         `max-width: calc(((${cardCount} * 11.35rem) / ${
           cardCount / 2
         }) + 1rem)`};
@@ -402,12 +405,14 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
   const myRef = useRef();
 
   const updateIndex = useCallback(() => {
+    // @ts-expect-error TS(2531): Object is possibly 'null'.
     updateCurrentIndex(swiper.realIndex);
+    // @ts-expect-error TS(2531): Object is possibly 'null'.
     if (swiper.swipeDirection === 'next') mWebSwipeTrack(swiper.activeIndex);
   }, [swiper]);
 
-  const mWebSwipeTrack = (activeIndex) => {
-    if (swiper?.isEnd) {
+  const mWebSwipeTrack = (activeIndex: number) => {
+    if ((swiper as any)?.isEnd) {
       for (let i = cards?.length - 1; i <= cards?.length; i++) {
         trackEvent({
           eventName: ANALYTICS_EVENTS.UGC.CARD_VISIBLE,
@@ -434,27 +439,26 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
 
   useEffect(() => {
     if (swiper !== null) {
-      swiper.on('slideChange', updateIndex);
+      (swiper as any).on('slideChange', updateIndex);
     }
     return () => {
       if (swiper !== null) {
-        swiper.off('slideChange', updateIndex);
+        (swiper as any).off('slideChange', updateIndex);
       }
     };
   }, [isMobile, swiper, updateIndex]);
 
   useEffect(() => {
     if (!myRef.current) return;
-    const observerCallback = (entries, observer) => {
+    const observerCallback = (entries: any, observer: any) => {
       const entry = entries[0];
       if (entry.isIntersecting) {
         observer.unobserve(entry.target);
         trackEvent({
           eventName: ANALYTICS_EVENTS.UGC.VIEWED,
         });
-
         const visibleSlides = isMobile ? 2 : Math.min(cards?.length, 6);
-        for (let i = 0; i < swiper?.activeIndex + visibleSlides; i++) {
+        for (let i = 0; i < (swiper as any)?.activeIndex + visibleSlides; i++) {
           trackEvent({
             eventName: ANALYTICS_EVENTS.UGC.CARD_VISIBLE,
             [ANALYTICS_PROPERTIES.RANKING]: i + 1,
@@ -469,10 +473,12 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
     };
   }, [swiper]);
 
-  const changePopup = (e, direction) => {
+  const changePopup = (e: any, direction: any) => {
     e.stopPropagation();
     const changeIndex = direction === 'next' ? 1 : -1;
+    // @ts-expect-error TS(2531): Object is possibly 'null'.
     const cardIndex = modulus(openedIndex + changeIndex, cards?.length);
+    // @ts-expect-error TS(2345): Argument of type 'number' is not assignable to par... Remove this comment to see the full error message
     setOpenedIndex(cardIndex);
     trackEvent({
       eventName: ANALYTICS_EVENTS.UGC.POPUP_VIEWED,
@@ -484,9 +490,13 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
 
   const slideNext = () => {
     if (swiper !== null) {
-      swiper.slideNext();
+      (swiper as any).slideNext();
     }
-    for (let i = swiper?.activeIndex; i < swiper?.activeIndex + 6; i++)
+    for (
+      let i = (swiper as any)?.activeIndex;
+      i < (swiper as any)?.activeIndex + 6;
+      i++
+    )
       trackEvent({
         eventName: ANALYTICS_EVENTS.UGC.CARD_VISIBLE,
         [ANALYTICS_PROPERTIES.RANKING]: i + 1,
@@ -495,11 +505,11 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
 
   const slidePrev = () => {
     if (swiper !== null) {
-      swiper.slidePrev();
+      (swiper as any).slidePrev();
     }
   };
 
-  const popupOpener = (index) => {
+  const popupOpener = (index: any) => {
     if (isMobile) {
       window.history.pushState(null, '');
     }
@@ -508,7 +518,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
     document.body.style.overflow = 'hidden';
   };
 
-  const popupCloser = (index, viaBrowser = false) => {
+  const popupCloser = (index: any, viaBrowser = false) => {
     setOpenedIndex(null);
     setIsOpened(false);
     document.body.style.overflow = 'auto';
@@ -525,7 +535,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
     }
   };
 
-  const trackEmbedClick = (index) => {
+  const trackEmbedClick = (index: number) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.UGC.CARD_CLICKED,
       [ANALYTICS_PROPERTIES.RANKING]: index + 1,
@@ -539,14 +549,14 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
         cards[index]?.instagram_posts?.postType,
     });
   };
-  const trackRedirectToIG = (index, postType) => {
+  const trackRedirectToIG = (index: number, postType: any) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.UGC.REDIRECT_TO_IG,
       [ANALYTICS_PROPERTIES.RANKING]: index + 1,
       [ANALYTICS_PROPERTIES.UGC.CONTENT_TYPE]: postType,
     });
   };
-  const trackUsernameClick = (index, postType, username) => {
+  const trackUsernameClick = (index: number, postType: any, username: any) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.UGC.USERNAME_CLICKED,
       [ANALYTICS_PROPERTIES.RANKING]: index + 1,
@@ -555,13 +565,14 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
     });
   };
 
-  const getPopupModal = (cards, index) => {
+  const getPopupModal = (cards: any, index: any) => {
     const card = cards[index]?.instagram_posts;
     const { username, imageURL, caption, url, postType } = card || {};
     const instagramAccountURL = `https://www.instagram.com/${username}`;
     return (
       <PopupWrapper onClick={() => popupCloser(index)}>
         <PopupContentWrapper>
+          {/* @ts-expect-error TS(2769): No overload matches this call. */}
           <PopupCard onClick={(e) => e.stopPropagation()} isMobile={isMobile}>
             <WrapperHeader>
               <div>
@@ -665,6 +676,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
 
   return (
     <>
+      {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <StyledWrapper ref={myRef}>
         <StyledHeading>
           {heading || strings.UGC.HEADING}
@@ -673,12 +685,15 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
           </div>
         </StyledHeading>
         <SliderContainer>
+          {/* @ts-expect-error TS(2769): No overload matches this call. */}
           <StyledSlider cardCount={cards?.length}>
+            {/* @ts-expect-error TS(2322): Type 'Dispatch<SetStateAction<null>>' is not assig... Remove this comment to see the full error message */}
             <Swiper {...swiperParams} onSwiper={updateSwiper}>
               {cards?.map((card, index) => (
                 <StyledSlide
                   key={index}
                   onClick={() => {
+                    // @ts-expect-error TS(2345): Argument of type 'number' is not assignable to par... Remove this comment to see the full error message
                     setOpenedIndex(index);
                     popupOpener(index);
                     trackEmbedClick(index);
@@ -705,7 +720,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
           </StyledSlider>
           <Conditional if={!isMobile}>
             <Controls>
-              <Conditional if={!swiper?.isBeginning}>
+              <Conditional if={!(swiper as any)?.isBeginning}>
                 <div
                   className="prev-slide"
                   role="button"
@@ -715,7 +730,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
                   {CHEVRON_LEFT_CIRCLE}
                 </div>
               </Conditional>
-              <Conditional if={!swiper?.isEnd}>
+              <Conditional if={!(swiper as any)?.isEnd}>
                 <div
                   className="next-slide"
                   role="button"

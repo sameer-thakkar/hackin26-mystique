@@ -70,7 +70,7 @@ export default class InternalContentCard extends PureComponent<any, any> {
         <h2 className="heading">{title}</h2>
         <div className="divider-1"></div>
         <div className="more-reads-section">
-          {cards.map((card, index) => {
+          {cards.map((card: any, index: number) => {
             const { heading, image_link, image_source, subtext } = card;
             return (
               <a key={index} href={card.card_cta.url}>

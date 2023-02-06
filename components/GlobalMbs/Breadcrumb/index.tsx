@@ -3,6 +3,9 @@ import { CHEVRON_LEFT } from 'assets/SvgIcons';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
 import { BreadcrumbJsonLd } from 'next-seo';
+import React from 'react';
+
+import { IBreadcrumb } from './interface';
 
 const BreadcrumbContainer = styled.div`
   display: grid;
@@ -38,8 +41,8 @@ const StyledChevron = styled.div`
   }
 `;
 
-const Breadcrumb = ({ links }) => {
-  const itemListElements = links?.map((link, index) => {
+const Breadcrumb: React.FC<IBreadcrumb> = ({ links }) => {
+  const itemListElements = links?.map((link, index: number) => {
     const { url: item, text: name } = link;
     const position = index + 1;
     return {
@@ -51,7 +54,7 @@ const Breadcrumb = ({ links }) => {
   return (
     <>
       <BreadcrumbContainer>
-        {links.map((link, index) => {
+        {links?.map((link, index: number) => {
           const { url, text } = link;
           return (
             <StyledBreadcrumb key={index}>
@@ -63,7 +66,9 @@ const Breadcrumb = ({ links }) => {
           );
         })}
       </BreadcrumbContainer>
-      <BreadcrumbJsonLd itemListElements={itemListElements} />
+      {itemListElements ? (
+        <BreadcrumbJsonLd itemListElements={itemListElements} />
+      ) : null}
     </>
   );
 };

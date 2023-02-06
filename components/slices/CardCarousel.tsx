@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import dynamic from 'next/dynamic';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
 import { LinkCard } from 'components/slices/MicrobrandCards';
@@ -102,10 +103,14 @@ const CardCarouselContainer = styled.div`
   }
 `;
 
-type CardCarouselProps = {
-  cards: any[];
-  carouselHeading: string;
+type OwnCardCarouselProps = {
+    cards: any[];
+    carouselHeading: string;
 };
+
+type CardCarouselState = any;
+
+type CardCarouselProps = OwnCardCarouselProps & typeof CardCarousel.defaultProps;
 
 /**
  * A simple carousel of cards displaying different products with prices (using TGIDs)
@@ -133,7 +138,7 @@ type CardCarouselProps = {
  *  - Link which will open on clicking the card
  */
 
-export default class CardCarousel extends Component<CardCarouselProps> {
+export default class CardCarousel extends Component<CardCarouselProps, CardCarouselState> {
   state = {
     isMobile: null,
     isClient: false,
@@ -190,6 +195,7 @@ export default class CardCarousel extends Component<CardCarouselProps> {
       initialSlide: 1,
       spaceBetween: 8,
       slidesPerGroup: slidesPerGroup,
+      // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'boolean | u... Remove this comment to see the full error message
       centeredSlides: isMobile,
       navigation: !isMobile,
       pagination: {

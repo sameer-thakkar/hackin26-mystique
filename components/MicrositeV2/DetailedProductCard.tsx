@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import dynamic from 'next/dynamic';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
 import { greyScheme } from 'style/theme';
@@ -41,7 +42,18 @@ const SafeExperiencesPitch = dynamic(
   }
 );
 
-const DetailedDescriptionCard = styled.div`
+interface IDetailedDescriptionCard {
+  showDescCard?: boolean;
+  isEntertainmentMb?: boolean;
+  isListicle?: boolean;
+  rightBlocksCount?: number;
+  experimentEnabled?: boolean;
+  isBroadway?: boolean;
+  showPageUrl?: string | undefined;
+  cardPosition: number;
+}
+
+const DetailedDescriptionCard = styled.div<IDetailedDescriptionCard>`
   grid-column: 1 / 5;
   display: ${({ showDescCard }) => (showDescCard ? 'grid' : 'none')};
   grid-template-columns: 1fr 0.9fr;
@@ -413,7 +425,7 @@ const IconBoosters = styled.div`
   }
 `;
 
-const DetailedProductCard = (props) => {
+const DetailedProductCard = (props: any) => {
   const closeDescriptionCard = () => {
     props.closeDescription();
   };
@@ -459,9 +471,11 @@ const DetailedProductCard = (props) => {
     listicleWhyWatch,
     flowType,
   } = activeTour || {};
-  const showPageUrl = showPageUid
-    ? convertUidToUrl({ uid: showPageUid, isDev, hostname: host })
-    : null;
+  const showPageUrl = convertUidToUrl({
+    uid: showPageUid,
+    isDev,
+    hostname: host,
+  });
   const rightBlocksCount = contentBlocks?.right?.length;
   const descriptors = parseV2ProductDescriptors({
     hasCategoryTourList,
@@ -480,10 +494,10 @@ const DetailedProductCard = (props) => {
     : activeTour.contentBlocks;
   if (isListicle) {
     productCardContent.left = contentBlocks?.left?.filter(
-      (item) => item.label === strings.SHOW_PAGE.THEATRE_NAME
+      (item: any) => item.label === strings.SHOW_PAGE.THEATRE_NAME
     );
     productCardContent.right = contentBlocks?.left?.filter(
-      (item) => item.label === strings.SHOW_PAGE.DURATION
+      (item: any) => item.label === strings.SHOW_PAGE.DURATION
     );
   }
   const isBroadway = checkBroadway(mbContext?.uid); // TODO: Need to handle this via book_now_text.
@@ -500,8 +514,8 @@ const DetailedProductCard = (props) => {
       [ANALYTICS_PROPERTIES.CATEGORY_NAME]: primaryCategory?.displayName,
       [ANALYTICS_PROPERTIES.SUB_CAT_ID]: primarySubCategory?.id,
       [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: primarySubCategory?.displayName,
-      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city?.cityCode,
-      [ANALYTICS_PROPERTIES.COUNTRY]: pageMetaData?.country?.code,
+      [ANALYTICS_PROPERTIES.CITY]: (pageMetaData?.city as any)?.cityCode,
+      [ANALYTICS_PROPERTIES.COUNTRY]: (pageMetaData?.country as any)?.code,
     });
   }, []);
 
@@ -517,8 +531,8 @@ const DetailedProductCard = (props) => {
       [ANALYTICS_PROPERTIES.CATEGORY_NAME]: primaryCategory?.displayName,
       [ANALYTICS_PROPERTIES.SUB_CAT_ID]: primarySubCategory?.id,
       [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: primarySubCategory?.displayName,
-      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city?.cityCode,
-      [ANALYTICS_PROPERTIES.COUNTRY]: pageMetaData?.country?.code,
+      [ANALYTICS_PROPERTIES.CITY]: (pageMetaData?.city as any)?.cityCode,
+      [ANALYTICS_PROPERTIES.COUNTRY]: (pageMetaData?.country as any)?.code,
     });
   };
 
@@ -532,8 +546,8 @@ const DetailedProductCard = (props) => {
       [ANALYTICS_PROPERTIES.CATEGORY_NAME]: primaryCategory?.displayName,
       [ANALYTICS_PROPERTIES.SUB_CAT_ID]: primarySubCategory?.id,
       [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: primarySubCategory?.displayName,
-      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city?.cityCode,
-      [ANALYTICS_PROPERTIES.COUNTRY]: pageMetaData?.country?.code,
+      [ANALYTICS_PROPERTIES.CITY]: (pageMetaData?.city as any)?.cityCode,
+      [ANALYTICS_PROPERTIES.COUNTRY]: (pageMetaData?.country as any)?.code,
     });
 
     trackEvent({
@@ -547,7 +561,7 @@ const DetailedProductCard = (props) => {
       [ANALYTICS_PROPERTIES.EXPERIENCE_DATE]: null,
       [ANALYTICS_PROPERTIES.LANGUAGE]: lang,
       [ANALYTICS_PROPERTIES.TGID]: tgidClicked,
-      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city?.cityCode,
+      [ANALYTICS_PROPERTIES.CITY]: (pageMetaData?.city as any)?.cityCode,
       ...getProductCommonProperties({
         primaryCategory,
         primaryCollection,
@@ -557,6 +571,7 @@ const DetailedProductCard = (props) => {
   };
 
   const openSafeSidebar = () => {
+    // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
     addToAside({
       width: '41.06vw',
       children: (
@@ -566,7 +581,7 @@ const DetailedProductCard = (props) => {
     });
   };
 
-  const ContentBlock = ({ heading, content, isRightContent = false }) => {
+  const ContentBlock = ({ heading, content, isRightContent = false }: any) => {
     return (
       <div
         className={`${
@@ -685,7 +700,7 @@ const DetailedProductCard = (props) => {
               </Conditional>
               <Conditional if={descriptors?.length}>
                 <div className="v2-descriptors">
-                  {descriptors?.map((descriptor, index) => {
+                  {descriptors?.map((descriptor: string, index: number) => {
                     if (descriptor) {
                       return (
                         <div className="v2-descriptor" key={index}>
@@ -758,7 +773,7 @@ const DetailedProductCard = (props) => {
           </Conditional>
           <div className="v2-desc-columns">
             <div className="v2-desc-left">
-              {productCardContent.left.map((block, index) => {
+              {productCardContent.left.map((block: any, index: number) => {
                 const { heading, label, contents, content } = block;
                 if (heading || label) {
                   return (
@@ -773,7 +788,7 @@ const DetailedProductCard = (props) => {
               })}
             </div>
             <div className="v2-desc-right">
-              {productCardContent.right.map((block, index) => {
+              {productCardContent.right.map((block: any, index: number) => {
                 const { heading, label, contents, content } = block;
                 if (heading || label) {
                   return (
@@ -816,7 +831,7 @@ const DetailedProductCard = (props) => {
             </Conditional>
             <Conditional if={descriptors?.length}>
               <div className="v2-descriptors">
-                {descriptors?.map((descriptor, index) => {
+                {descriptors?.map((descriptor: any, index: number) => {
                   if (descriptor) {
                     return (
                       <div className="v2-descriptor" key={index}>
@@ -852,7 +867,7 @@ const DetailedProductCard = (props) => {
           </Conditional>
           <div className="v2-desc-columns">
             <div className="v2-desc-left">
-              {productCardContent.left.map((block, index) => {
+              {productCardContent.left.map((block: any, index: number) => {
                 const { heading, label, contents, content } = block;
                 if (heading || label) {
                   return (
@@ -867,7 +882,7 @@ const DetailedProductCard = (props) => {
               })}
             </div>
             <div className="v2-desc-right">
-              {productCardContent.right.map((block, index) => {
+              {productCardContent.right.map((block: any, index: number) => {
                 const { heading, label, contents, content } = block;
                 if (heading || label) {
                   return (

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import Conditional from 'components/common/Conditional';
 import RichTextCTA from 'UI/RichTextCTA';
@@ -52,7 +53,12 @@ const Wrapper = styled.div<{
   }
   @media (max-width: 768px) {
     .rich-text {
-      height: ${({ $isExpanded, $contentHeight, $hasCTA }) =>
+      height: ${({
+        $isExpanded,
+        $contentHeight,
+        // @ts-expect-error TS(2339): Property '$hasCTA' does not exist on type 'Pick<De... Remove this comment to see the full error message
+        $hasCTA,
+      }) =>
         $contentHeight && $hasCTA && !$isExpanded
           ? `${2 * $contentHeight}px`
           : '100%'};
@@ -61,7 +67,7 @@ const Wrapper = styled.div<{
   }
 `;
 
-const RichtextWithCTA = (props) => {
+const RichtextWithCTA = (props: any) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleClick = () => {
@@ -70,7 +76,7 @@ const RichtextWithCTA = (props) => {
 
   return (
     <>
-      {props.slices.map((block, index) => {
+      {props.slices.map((block: any, index: number) => {
         const { content_height: contentHeight, cta_text, text: textArray } =
           block || {};
         return (
@@ -78,6 +84,7 @@ const RichtextWithCTA = (props) => {
             key={index}
             $isExpanded={isExpanded}
             $contentHeight={contentHeight}
+            // @ts-expect-error TS(2769): No overload matches this call.
             $hasCTA={cta_text}
           >
             <div className="rich-text">

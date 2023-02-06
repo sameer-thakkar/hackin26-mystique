@@ -23,7 +23,10 @@ const StyledSwiper = styled.div`
     width: 100%;
     margin: auto;
     overflow: hidden;
-    ${({ marginBottom }) => marginBottom && `margin-bottom: ${marginBottom}px;`}
+    ${({
+      // @ts-expect-error TS(2339): Property 'marginBottom' does not exist on type 'Pi... Remove this comment to see the full error message
+      marginBottom,
+    }) => marginBottom && `margin-bottom: ${marginBottom}px;`}
   }
   .swiper-wrapper {
     height: 100%;
@@ -78,6 +81,7 @@ const Carousel = ({
   const [isMobile, setIsMobile] = useState(false);
   const [swiper, updateSwiper] = useState(null);
   const [_currentIndex, updateCurrentIndex] = useState(0);
+  // @ts-expect-error TS(2531): Object is possibly 'null'.
   const updateIndex = useCallback(() => updateCurrentIndex(swiper.realIndex), [
     swiper,
   ]);
@@ -90,12 +94,11 @@ const Carousel = ({
   useEffect(() => {
     if (isMobile) return;
     if (swiper !== null) {
-      swiper.on('slideChange', updateIndex);
+      (swiper as any).on('slideChange', updateIndex);
     }
-
     return () => {
       if (swiper !== null) {
-        swiper.off('slideChange', updateIndex);
+        (swiper as any).off('slideChange', updateIndex);
       }
     };
   }, [isMobile, swiper, updateIndex]);
@@ -103,13 +106,13 @@ const Carousel = ({
   if (!isMobile) {
     const goNext = () => {
       if (swiper !== null) {
-        swiper.slideNext();
+        (swiper as any).slideNext();
       }
     };
 
     const goPrev = () => {
       if (swiper !== null) {
-        swiper.slidePrev();
+        (swiper as any).slidePrev();
       }
     };
 
@@ -125,11 +128,13 @@ const Carousel = ({
     return (
       <div>
         <StyledCarousel>
+          {/* @ts-expect-error TS(2769): No overload matches this call. */}
           <StyledSwiper columnGap={columnGap} marginBottom={marginBottom}>
+            {/* @ts-expect-error TS(2322): Type '{ children: any; slidesPerView: number; spac... Remove this comment to see the full error message */}
             <Swiper {...swiperParams}>{children}</Swiper>
           </StyledSwiper>
           <Controls>
-            <Conditional if={swiper && !swiper?.isBeginning}>
+            <Conditional if={swiper && !(swiper as any)?.isBeginning}>
               <div
                 className="prev-slide"
                 role="button"
@@ -139,7 +144,7 @@ const Carousel = ({
                 {CHEVRON_LEFT_CIRCLE}
               </div>
             </Conditional>
-            <Conditional if={swiper && !swiper?.isEnd}>
+            <Conditional if={swiper && !(swiper as any)?.isEnd}>
               <div
                 className="next-slide"
                 role="button"

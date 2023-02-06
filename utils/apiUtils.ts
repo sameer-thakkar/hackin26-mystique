@@ -3,7 +3,10 @@ import { currencySortFn } from 'utils/gen';
 import { addQueryParams, getDomainFromUid } from 'utils/urlUtils';
 import { CUSTOM_HEADER } from 'const/index';
 
-const objectToQuery = (query) => {
+type TTgids = string[];
+type THost = string;
+
+const objectToQuery = (query: any) => {
   const params = Object.entries(query);
   return params.length
     ? '?' +
@@ -14,7 +17,7 @@ const objectToQuery = (query) => {
     : '';
 };
 
-export const swrFetcher = async (url) => {
+export const swrFetcher = async (url: string) => {
   const res = await fetch(url);
   return res.json();
 };
@@ -39,7 +42,7 @@ export const constructHeaders = ({ cookies = {} }) => {
  * @param urls - An array of URLs to fetch.
  * @returns An array of promises.
  */
-export const swrMultiFetcher = (...urls) => {
+export const swrMultiFetcher = (...urls: string[]) => {
   return Promise.all(urls.map((url) => swrFetcher(url)));
 };
 
@@ -65,7 +68,7 @@ export const getHeadoutApiUrl = ({
   id,
 }: {
   endpoint: HeadoutEndpoints;
-  hostname?: string;
+  hostname?: THost;
   params: { [key: string]: string };
   id: string | number;
 }) => {
@@ -122,7 +125,11 @@ export const getHeadoutApiUrl = ({
   }
 };
 
-export const fetchTourList = ({ tgids, host = '', ...query }) => {
+export const fetchTourList = ({
+  tgids,
+  host = '',
+  ...query
+}: Record<string, any>) => {
   return fetch(
     `${host ? host : ''}/api/tours/v6/tour-groups/${objectToQuery({
       'ids%5B%5D': tgids,
@@ -169,10 +176,12 @@ export const fetchTourListV6 = async ({
       endpoint: HeadoutEndpoints.TourGroupsV6,
       hostname,
       params,
+      // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
       id: null,
     });
     const headers = constructHeaders({ cookies });
 
+    // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
     const res = await fetch(apiUrl, { headers });
     return await res.json();
   } catch (error) {
@@ -205,6 +214,7 @@ export const fetchTourGroupV6 = async ({
     id: tgid,
   });
 
+  // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
   const res = await fetch(apiUrl, { headers });
   return await res.json();
 };
@@ -260,6 +270,7 @@ export const fetchTourGroupsByCategory = async ({
     params,
   });
   try {
+    // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
     const response = await fetch(url, { headers });
     const data = await response.json();
     return data;
@@ -302,6 +313,7 @@ export const fetchCollection = async ({
   });
   const headers = constructHeaders({ cookies });
   try {
+    // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
     const response = await fetch(finalUrl, {
       headers,
     });
@@ -335,11 +347,14 @@ export const fetchCollectionList = async ({
   const finalUrl = getHeadoutApiUrl({
     endpoint: HeadoutEndpoints.Collection,
     hostname,
+    // @ts-expect-error TS(2322): Type '{ currency?: string | undefined; 'ids[]': st... Remove this comment to see the full error message
     params,
+    // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
     id: null,
   });
   const headers = constructHeaders({ cookies });
   try {
+    // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
     const response = await fetch(finalUrl, { headers });
     const data = await response.json();
     return data;
@@ -373,6 +388,7 @@ export const fetchTourGroupReviews = async ({
   });
   try {
     const headers = constructHeaders({ cookies });
+    // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
     const res = await fetch(url, { headers });
     return await res.json();
   } catch (error) {
@@ -430,6 +446,7 @@ export const fetchInventory = async ({
       hostname,
       params,
     });
+    // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
     const response = await fetch(url, { headers });
     const data = await response.json();
     return data;
@@ -468,6 +485,7 @@ export const fetchTourGroupSlots = async ({
       params,
     });
     const headers = constructHeaders({ cookies });
+    // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
     const response = await fetch(url, { headers });
     const data = await response.json();
     return data;
@@ -510,6 +528,7 @@ export const fetchCalendarInventory = async ({
       params,
     });
     const headers = constructHeaders({ cookies });
+    // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
     const response = await fetch(url, { headers });
     const data = await response.json();
     const { dates, metaData } = data ?? {};
@@ -525,7 +544,9 @@ export const fetchCalendarInventory = async ({
 export const fetchDomainConfig = async (uid: string) => {
   const url = getHeadoutApiUrl({
     endpoint: HeadoutEndpoints.DomainConfig,
+    // @ts-expect-error TS(2322): Type 'null' is not assignable to type '{ [key: str... Remove this comment to see the full error message
     params: null,
+    // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
     id: null,
   });
   /**
@@ -535,7 +556,9 @@ export const fetchDomainConfig = async (uid: string) => {
   // eslint-disable-next-line no-console
   console.log('UID, Lang & Host ', uid);
   const domainArray = getDomainFromUid(uid)?.split('.');
+  // @ts-expect-error TS(2532): Object is possibly 'undefined'.
   domainArray[0] = 'book';
+  // @ts-expect-error TS(2532): Object is possibly 'undefined'.
   const whitelabel = `https://${domainArray.join('.')}`;
   const customHeaders = new Headers();
   customHeaders.append(CUSTOM_HEADER.ORIGIN, whitelabel);
@@ -543,6 +566,7 @@ export const fetchDomainConfig = async (uid: string) => {
     headers: customHeaders,
   };
   try {
+    // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
     const response = await fetch(url, requestOptions);
     const data = await response.json();
     return data;

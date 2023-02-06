@@ -84,7 +84,7 @@ export default function PopulateMeta({
   } = prismicData || {};
 
   const pageUrl = convertUidToUrl({
-    uid,
+    uid: uid ?? '',
     lang,
     isDev,
     hostname: host,
@@ -141,6 +141,7 @@ export default function PopulateMeta({
   ];
 
   const languageAlternates = modifiedLanguageAlternates?.reduce(
+    // @ts-expect-error TS(2769): No overload matches this call.
     (acc, altLang) => {
       const { url, lang } = altLang;
       const hrefObj = createHrefLangObj({ lang, href: url });
@@ -206,6 +207,7 @@ export default function PopulateMeta({
     url: modifiedCanonicalLink,
     title,
     description,
+    // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | un... Remove this comment to see the full error message
     locale: language_full,
     site_name: '',
     images: [
@@ -242,10 +244,10 @@ export default function PopulateMeta({
 
   // Header Scripts
   const scriptTags = headerScripts
-    ?.map((script) => script.script_tag)
-    ?.filter((str) => str)
-    ?.map((str) => str.replace('<script>', '').replace('</script>', ''))
-    ?.map((item, index) => (
+    ?.map((script: any) => script.script_tag)
+    ?.filter((str: any) => str)
+    ?.map((str: any) => str.replace('<script>', '').replace('</script>', ''))
+    ?.map((item: any, index: number) => (
       <script key={index} dangerouslySetInnerHTML={{ __html: item }} />
     ));
 
@@ -260,14 +262,17 @@ export default function PopulateMeta({
           originalHost={host}
         />
       </Conditional>
+      {/* @ts-expect-error TS(2322): Type '{ uid: null; lang: string; title: string; lo... Remove this comment to see the full error message */}
       <WebpageJsonLD {...jsonLdProps} />
       <Conditional
         if={
           isNewMediaSite &&
+          // @ts-expect-error TS(2345): Argument of type 'AggregatedRatingDetails | undefi... Remove this comment to see the full error message
           shouldDisplayCollectionRatings(aggregatedRatingDetails)
         }
       >
         <CollectionAggregatedRatingScript
+          // @ts-expect-error TS(2322): Type 'AggregatedRatingDetails | undefined' is not ... Remove this comment to see the full error message
           aggregatedRatingInfo={aggregatedRatingDetails}
         />
       </Conditional>

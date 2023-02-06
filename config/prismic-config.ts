@@ -1,5 +1,5 @@
 import Prismic from 'prismic-javascript';
-
+import type { PrismicDocumentWithUID } from '@prismicio/types';
 // -- Prismic API endpoint
 // Determines which repository to query and fetch data from
 // Configure your site's access point here
@@ -12,12 +12,12 @@ export const accessToken = '';
 // -- Link resolution rules
 // Manages links to internal Prismic documents
 // Modify as your project grows to handle any new routes you've made
-export const linkResolver = (doc) => {
+export const linkResolver = (doc: PrismicDocumentWithUID) => {
   return `/api/resolve?type=${doc.type}&uid=${doc.uid}&lang=${doc.lang}`;
 };
 
 // Additional helper function for Next/Link components
-export const hrefResolver = (doc) => {
+export const hrefResolver = (doc: PrismicDocumentWithUID) => {
   if (doc.type === 'post') {
     return `/post?uid=${doc.uid}`;
   }
@@ -26,7 +26,7 @@ export const hrefResolver = (doc) => {
 
 // -- Client method to query Prismic
 // Avoids reinitializing an API connection for every query, handling instead with a Client object
-let frontClient;
+let frontClient: any;
 
 export const Client = (req = null, parentOptions: any = {}) => {
   if (!req && frontClient) return frontClient; // Prevents generating new instances for client side since we don't need the refreshed request object.

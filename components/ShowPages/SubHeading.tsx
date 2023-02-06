@@ -13,7 +13,9 @@ const SubHeadingText = styled.h2`
   }
 `;
 
-const SubHeading = ({ content }) => {
+const SubHeading = ({
+  content
+}: any) => {
   return <SubHeadingText>{content}</SubHeadingText>;
 };
 

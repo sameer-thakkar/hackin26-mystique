@@ -89,6 +89,7 @@ const PromoCodeBlock = ({
   collectionId: number | null;
 }) => {
   const { currencySymbolMap } = useContext(MBContext);
+  // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
   const currency = currencySymbolMap[Object.keys(currencySymbolMap)[0]];
   const { code: currencyCode } = currency ?? {};
   const isPromoApplied = clickedPromo === indexPosition;
@@ -134,7 +135,7 @@ const PromoCodeBlock = ({
       break;
   }
 
-  const trackCouponClick = (action) => {
+  const trackCouponClick = (action: any) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.CONTENT_PAGE_PROMO_CLICKED,
       [ANALYTICS_PROPERTIES.MB_NAME]: host,
@@ -158,6 +159,7 @@ const PromoCodeBlock = ({
   return (
     <>
       <Conditional if={promo_code}>
+        {/* @ts-expect-error TS(2769): No overload matches this call. */}
         <CTABlock isTicketCard={isTicketCard}>
           <Button
             className={`promo-code-block`}

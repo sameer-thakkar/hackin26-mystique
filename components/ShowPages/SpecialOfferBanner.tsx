@@ -11,7 +11,9 @@ const Wrapper = styled.div`
   margin: auto;
   width: 100%;
   ${StlyedSplit} {
-    margin-top: ${({ marginTop }) => (marginTop ? marginTop : 0)}px;
+    margin-top: ${({    
+ // @ts-expect-error TS(2339): Property 'marginTop' does not exist on type 'Pick<... Remove this comment to see the full error message
+ marginTop }) => (marginTop ? marginTop : 0)}px;
   }
   @media (max-width: 768px) {
     ${StlyedSplit} {
@@ -21,6 +23,7 @@ const Wrapper = styled.div`
 `;
 
 const SpecialOfferBanner = ({
+  // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'number'.
   marginTop = null,
   specialOffer = {},
 }: {
@@ -29,6 +32,7 @@ const SpecialOfferBanner = ({
   isShowPage?: boolean;
 }) => {
   return (
+    // @ts-expect-error TS(2769): No overload matches this call.
     <Wrapper marginTop={marginTop}>
       <Split mobileLayout={'scroll'} count={1}>
         <InfoBanner

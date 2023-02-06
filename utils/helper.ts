@@ -1,31 +1,32 @@
 import parse from 'url-parse';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import * as Sentry from '@sentry/nextjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import { LANGUAGE_MAP } from 'const/index';
 import renderShortCodes from 'utils/shortCodes';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
+import type { NumberField, SelectField } from '@prismicio/types';
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
 
-export const withoutTrailingSlash = (url) =>
+export const withoutTrailingSlash = (url: string) =>
   url?.charAt(url?.length - 1) === '/' ? url?.substr(0, url.length - 1) : url;
 
-export const withTrailingSlash = (url) =>
+export const withTrailingSlash = (url: any) =>
   url && url?.charAt(url?.length - 1) !== '/' ? `${url}/` : url;
 
 export const isMobileDevice = () => {
   return document.documentElement.clientWidth < 768;
 };
 
-export const validateEmail = (email) => {
+export const validateEmail = (email: string) => {
   let regEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return regEx.test(String(email).toLowerCase());
 };
 
-export const validateFullName = (fullName) => {
+export const validateFullName = (fullName: string) => {
   const parts = fullName.trim().split(' ');
   const hasAtLeastTwoParts = parts.length >= 2;
   let hasAtLeastOneNonInitial = false;
@@ -39,9 +40,14 @@ export const validateFullName = (fullName) => {
   return hasAtLeastTwoParts && hasAtLeastOneNonInitial;
 };
 
-export const isFeildSelected = (field) => !(field.length === 0);
+export const isFieldSelected = (field: any) => !(field.length === 0);
 
-export const isGroupValid = (adults, children, minPax, maxPax) => {
+export const isGroupValid = (
+  adults: any,
+  children: any,
+  minPax: any,
+  maxPax: any
+) => {
   return +adults + +children < +minPax
     ? `* Minimum group size is ${minPax} (adult + children)`
     : +adults + +children > +maxPax
@@ -49,7 +55,7 @@ export const isGroupValid = (adults, children, minPax, maxPax) => {
     : '';
 };
 
-export const fetchUserGeoLocation = (url) =>
+export const fetchUserGeoLocation = (url: any) =>
   fetch(url)
     .then((response) => response.json())
     .then((json) => {
@@ -59,7 +65,7 @@ export const fetchUserGeoLocation = (url) =>
       return err;
     });
 
-export const createGroupBooking = (url, data) => {
+export const createGroupBooking = (url: string, data: Record<string, any>) => {
   return fetch(url, {
     method: 'POST',
     body: JSON.stringify(data),
@@ -67,12 +73,11 @@ export const createGroupBooking = (url, data) => {
     .then(() => 'Successful')
     .catch((error) => `Error: ${error}`);
 };
-export const isMobile = () => {
-  return document.documentElement.clientWidth < 768;
-};
+
+export const isMobile = () => document.documentElement.clientWidth < 768;
 
 export const docCookies = {
-  getItem: function (sKey) {
+  getItem: function (sKey: string | number | boolean) {
     if (!sKey) {
       return null;
     }
@@ -89,7 +94,14 @@ export const docCookies = {
       ) || null
     );
   },
-  setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure) {
+  setItem: function (
+    sKey: any,
+    sValue: any,
+    vEnd: any,
+    sPath: any,
+    sDomain: any,
+    bSecure: any
+  ) {
     if (!sKey || /^(?:expires|max-age|path|domain|secure)$/i.test(sKey)) {
       return false;
     }
@@ -129,7 +141,7 @@ export const docCookies = {
       (bSecure ? '; secure' : '');
     return true;
   },
-  removeItem: function (sKey, sPath, sDomain) {
+  removeItem: function (sKey: any, sPath: any, sDomain: any) {
     if (!this.hasItem(sKey)) {
       return false;
     }
@@ -140,7 +152,7 @@ export const docCookies = {
       (sPath ? '; path=' + sPath : '');
     return true;
   },
-  hasItem: function (sKey) {
+  hasItem: function (sKey: any) {
     if (!sKey || /^(?:expires|max-age|path|domain|secure)$/i.test(sKey)) {
       return false;
     }
@@ -161,7 +173,7 @@ export const docCookies = {
   },
 };
 
-export const getUID = (url) => {
+export const getUID = (url: string) => {
   const { hostname, pathname } = parse(url, true);
   const uid = `${hostname}${withoutTrailingSlash(pathname).replace(
     /\//g,
@@ -170,14 +182,14 @@ export const getUID = (url) => {
   return uid;
 };
 
-export const truncate = (string, length) => {
+export const truncate = (string: string, length: number) => {
   if (string.length > length) return string.slice(0, length).trim() + '...';
   return string;
 };
 
 export const wordCount = (string = '') => string?.split(' ')?.length;
 
-const slicesSorter = (a, b) => {
+const slicesSorter = (a: Record<string, any>, b: Record<string, any>) => {
   if (a.slices && b.slices) return 0;
   else if (a.slices) {
     return 1;
@@ -190,16 +202,19 @@ class Stack extends Array {
     return this[this.length - 1];
   }
 }
-const genClosingSlice = (slice_type) => ({
+const genClosingSlice = (slice_type: any) => ({
   slice_type: slice_type.replace(/___start$/, '___end'),
 });
-const getOpeningSlice = (slice_type) => ({
+const getOpeningSlice = (slice_type: any) => ({
   slice_type: slice_type.replace(/___end$/, '___start'),
 });
-const isClosingSlice = (slice_type) => /___end/.exec(slice_type);
+const isClosingSlice = (slice_type: string) => /___end/.exec(slice_type);
 
-const autoClose = (slices, allowImmediateNesting) => {
-  const allSlices = [];
+const autoClose = (
+  slices: Record<string, any>[],
+  allowImmediateNesting: boolean
+) => {
+  const allSlices: Record<string, any>[] = [];
   const sliceTracker = new Stack();
   slices.forEach((slice) => {
     const thisSliceType = slice.slice_type;
@@ -236,12 +251,15 @@ const autoClose = (slices, allowImmediateNesting) => {
   return allSlices;
 };
 
-export const groupSlices = (slices, allowImmediateNesting = false) => {
+export const groupSlices = (
+  slices: Record<string, any>[],
+  allowImmediateNesting = false
+) => {
   const groups = { slices: [] };
   try {
     let ref: any = groups;
     const autoClosedSlices = autoClose(slices, allowImmediateNesting);
-    let repeatables: any = {
+    let repeatables: Record<string, any> = {
       items: [],
     };
     autoClosedSlices.forEach((slice) => {
@@ -283,8 +301,8 @@ export const groupSlices = (slices, allowImmediateNesting = false) => {
 };
 
 export const attachQueryParam = (
-  url,
-  queryString,
+  url: string,
+  queryString: string,
   replaceExistingParams = false
 ) => {
   if (url.includes('?')) {
@@ -296,11 +314,11 @@ export const attachQueryParam = (
   return `${url}?${queryString}`;
 };
 
-export const stringIdfy = (string) => {
+export const stringIdfy = (string: string) => {
   return string?.trim().replace(/\s/g, '-').toLowerCase();
 };
 
-export const csvTgidToArray = (csv) => {
+export const csvTgidToArray = (csv: string) => {
   if (!csv) csv = '';
   return csv
     .split(',')
@@ -308,7 +326,7 @@ export const csvTgidToArray = (csv) => {
     .filter((t) => t > 0);
 };
 
-export const genManualSlice = ({ type, items, primary, extras = {} }) => {
+export const genManualSlice = ({ type, items, primary, extras = {} }: any) => {
   return {
     slice_type: type,
     items,
@@ -317,14 +335,16 @@ export const genManualSlice = ({ type, items, primary, extras = {} }) => {
   };
 };
 
-export const uaIsMobile = (userAgentString) =>
+export const uaIsMobile = (userAgentString: any) =>
   /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile|Kindle|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/.test(
     userAgentString
   );
 
-export const getLangObject = (language) => {
-  return Object.values(LANGUAGE_MAP).find(
-    (lang: any) => lang.locale === language || lang.code === language
+export const getLangObject = (language: string) => {
+  return (
+    Object.values(LANGUAGE_MAP).find(
+      (lang) => lang.locale === language || lang.code === language
+    ) ?? LANGUAGE_MAP.en
   );
 };
 
@@ -352,10 +372,10 @@ export const getHostName = (isStage: boolean, isDev: boolean, host: string) => {
 };
 
 const compareDates = (
-  startMonthDate,
-  endMonthDate,
-  startTourDate,
-  endTourDate
+  startMonthDate: Dayjs,
+  endMonthDate: Dayjs,
+  startTourDate: Dayjs,
+  endTourDate: Dayjs
 ) => {
   return (
     startTourDate.isSameOrBefore(startMonthDate, 'month') &&
@@ -363,7 +383,10 @@ const compareDates = (
   );
 };
 
-export const getTGIDListForMonth = (allTours, displayMonth) => {
+export const getTGIDListForMonth = (
+  allTours: Record<string, any>,
+  displayMonth: any
+): Array<number> => {
   const allToursArray = Object.values(allTours);
 
   const startMonthDate = dayjs(
@@ -378,8 +401,11 @@ export const getTGIDListForMonth = (allTours, displayMonth) => {
   const endMonthNextYearDate = endMonthDate.add(1, 'years');
 
   return allToursArray.reduce((accumulator: any[], element) => {
-    const endTourDate = dayjs(element['closingDate'], 'YYYY-MM-DD');
-    const startTourDate = dayjs(element['reopeningDate'], 'YYYY-MM-DD');
+    const endTourDate = dayjs((element as any)['closingDate'], 'YYYY-MM-DD');
+    const startTourDate = dayjs(
+      (element as any)['reopeningDate'],
+      'YYYY-MM-DD'
+    );
     if (
       compareDates(startMonthDate, endMonthDate, startTourDate, endTourDate) ||
       compareDates(
@@ -395,23 +421,30 @@ export const getTGIDListForMonth = (allTours, displayMonth) => {
   }, []);
 };
 
-export const getDiscountedProducts = (allTours) => {
-  return Object.values(allTours)?.reduce((acc: any[], product: any) => {
-    const { listingPrice, tgid } = product;
-    const { finalPrice, originalPrice } = listingPrice || {};
-    if (listingPrice && (finalPrice < originalPrice || finalPrice < 30)) {
-      return [...acc, tgid];
-    }
-    return acc;
-  }, []);
+export const getDiscountedProducts = (
+  allTours: Record<string, any>
+): number[] => {
+  return Object.values(allTours)?.reduce(
+    (acc: any[], product: Record<string, any>) => {
+      const { listingPrice, tgid } = product;
+      const { finalPrice, originalPrice } = listingPrice || {};
+      if (listingPrice && (finalPrice < originalPrice || finalPrice < 30)) {
+        return [...acc, tgid];
+      }
+      return acc;
+    },
+    []
+  );
 };
 
-export const getPriceSortedDiscountedProducts = (allTours) => {
+export const getPriceSortedDiscountedProducts = (
+  allTours: Record<string, any>
+) => {
   return Object.values(allTours)
-    .sort((a: any, b: any) => {
+    .sort((a: Record<string, any>, b: Record<string, any>) => {
       return a?.listingPrice?.finalPrice - b?.listingPrice?.finalPrice;
     })
-    .reduce((acc: any[], product: any) => {
+    .reduce((acc: any[], product: Record<string, any>) => {
       const { listingPrice, tgid } = product;
       const { finalPrice, originalPrice } = listingPrice || {};
       if (listingPrice && (finalPrice < originalPrice || finalPrice < 30)) {
@@ -421,16 +454,19 @@ export const getPriceSortedDiscountedProducts = (allTours) => {
     }, []);
 };
 
-export const getPriceSortedListicleTgids = (allTours, allowedTours) => {
+export const getPriceSortedListicleTgids = (
+  allTours: Record<string, any>,
+  allowedTours: number[]
+): number[] => {
   return Object.values(allTours)
-    .sort((a: any, b: any) => {
+    .sort((a: Record<string, any>, b: Record<string, any>) => {
       return a?.listingPrice?.finalPrice - b?.listingPrice?.finalPrice;
     })
     .filter(
-      ({ listingPrice, tgid }: any) =>
+      ({ listingPrice, tgid }: Record<string, any>) =>
         listingPrice && allowedTours.includes(tgid)
     )
-    .map(({ tgid }: any) => tgid);
+    .map(({ tgid }: Record<string, any>) => tgid);
 };
 
 /**
@@ -439,9 +475,9 @@ export const getPriceSortedListicleTgids = (allTours, allowedTours) => {
  * @param thresholdTriggerMs time interval in milliseconds after which fn needs to be called.
  * @returns
  */
-export function throttle(callback, thresholdTriggerMs) {
+export function throttle(callback: any, thresholdTriggerMs: any) {
   let lastTime = 0;
-  return function () {
+  return function (this: any) {
     let now = new Date().getTime();
     if (now - lastTime >= thresholdTriggerMs) {
       callback.apply(this, arguments);
@@ -451,13 +487,13 @@ export function throttle(callback, thresholdTriggerMs) {
 }
 
 export const getBuyTicketsUrl = (
-  supply,
-  categoryId,
-  tgid,
-  ticketsPageURL,
-  isDev,
-  host,
-  officialWebsite,
+  supply: SelectField<'Direct' | 'Indirect' | 'No'>,
+  categoryId: NumberField,
+  tgid: NumberField,
+  ticketsPageURL: string,
+  isDev: boolean,
+  host: string,
+  officialWebsite: string,
   lang = 'en'
 ) => {
   const hasTicketsPage = supply === 'Direct' && categoryId;
@@ -477,12 +513,14 @@ export const getBuyTicketsUrl = (
     : getValidUrl(officialWebsite?.trim());
 };
 
-export const checkLTT = (uid) => {
-  return uid?.includes('www.london-theater-tickets.com') ?? false;
+export const checkLTT = (uid: string | null | undefined) => {
+  if (!uid) return false;
+  return uid.includes('www.london-theater-tickets.com');
 };
 
-export const checkBroadway = (uid) => {
-  return uid?.includes('www.broadway-show-tickets.com') ?? false;
+export const checkBroadway = (uid: string | null | undefined) => {
+  if (!uid) return false;
+  uid.includes('www.broadway-show-tickets.com');
 };
 
 export const checkIfGpMotorTickets = (uid: string | undefined) =>

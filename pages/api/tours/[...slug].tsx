@@ -1,9 +1,10 @@
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'cook... Remove this comment to see the full error message
 import Cookies from 'cookies';
 import { COOKIE } from 'const/index';
 import { checkIfCurrencyCodeValid } from 'utils/currency';
 
 const markdownToRichtext = require('@ueno/markdown-to-prismic-richtext');
-const ToursAPI = async (req, res) => {
+const ToursAPI = async (req: any, res: any) => {
   const { useTest } = req?.query;
   const cookies = new Cookies(req, res);
   const blackListQueryParams = ['slug', 'useTest'];
@@ -43,19 +44,27 @@ const ToursAPI = async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', 'https://www.headout.com');
       res.setHeader('Content-type', 'application/json');
       if (data?.tourGroups?.length) {
-        data.tourGroups = data.tourGroups.map((tour) => ({
+        data.tourGroups = data.tourGroups.map((tour: any) => ({
           ...tour,
+
           microBrandsHighlight: markdownToRichtext(
             tour.microBrandsHighlight || ''
-          )?.map((highlight) => ({ ...highlight, ...highlight.content })),
+          )?.map((highlight: any) => ({
+            ...highlight,
+            ...highlight.content
+          }))
         }));
       }
       if (data?.products?.length) {
-        data.products = data.products.map((tour) => ({
+        data.products = data.products.map((tour: any) => ({
           ...tour,
+
           microBrandsHighlight: markdownToRichtext(
             tour.microBrandsHighlight || ''
-          )?.map((highlight) => ({ ...highlight, ...highlight.content })),
+          )?.map((highlight: any) => ({
+            ...highlight,
+            ...highlight.content
+          }))
         }));
       }
       if (data?.microBrandsHighlight) {
@@ -64,25 +73,33 @@ const ToursAPI = async (req, res) => {
         );
       }
       if (data?.pageData?.items?.length) {
-        data.pageData.items = data?.pageData?.items.map((tour) => ({
+        data.pageData.items = data?.pageData?.items.map((tour: any) => ({
           ...tour,
+
           microBrandsHighlight: markdownToRichtext(
             tour.microBrandsHighlight || ''
-          )?.map((highlight) => ({ ...highlight, ...highlight.content })),
+          )?.map((highlight: any) => ({
+            ...highlight,
+            ...highlight.content
+          }))
         }));
       }
       if (data?.sections?.length) {
-        data.sections = data?.sections?.map((section) => {
+        data.sections = data?.sections?.map((section: any) => {
           const { type, tourGroups } = section || {};
           return {
             type,
             tourGroups: {
               ...tourGroups,
-              items: tourGroups?.items.map((tour) => ({
+              items: tourGroups?.items.map((tour: any) => ({
                 ...tour,
+
                 microBrandsHighlight: markdownToRichtext(
                   tour.microBrandsHighlight || ''
-                )?.map((highlight) => ({ ...highlight, ...highlight.content })),
+                )?.map((highlight: any) => ({
+                  ...highlight,
+                  ...highlight.content
+                }))
               })),
             },
           };

@@ -38,7 +38,11 @@ export default class privacy extends Component<any, any> {
     isMobile: false,
   };
 
-  static async getInitialProps({ req, res, query }) {
+  static async getInitialProps({
+    req,
+    res,
+    query
+  }: any) {
     try {
       const isDev = req
         ? !!query.mystique_uid
@@ -52,7 +56,12 @@ export default class privacy extends Component<any, any> {
     }
   }
 
-  static async getData({ req, res, isDev, query }) {
+  static async getData({
+    req,
+    res,
+    isDev,
+    query
+  }: any) {
     let uid;
     const { host } = req ? req.headers : window.location;
     if (isDev) {
@@ -95,7 +104,7 @@ export default class privacy extends Component<any, any> {
     return { response, host, uid };
   }
 
-  handleDropdownToggle = (elementIdentifier) => {
+  handleDropdownToggle = (elementIdentifier: any) => {
     switch (elementIdentifier) {
       case DROPDOWN_ELEMENT.HAMBURGER: {
         this.setState({
@@ -153,7 +162,7 @@ export default class privacy extends Component<any, any> {
       (organization &&
         organization
           .split(' ')
-          .map((word) => word[0])
+          .map((word: any) => word[0])
           .join('')) ||
       'Headout';
 
@@ -162,6 +171,7 @@ export default class privacy extends Component<any, any> {
     const nakedDomain = useDomain ? getNakedDomain(host) : 'headout.com';
 
     return (
+      // @ts-expect-error TS(2786): 'ThemeProvider' cannot be used as a JSX component.
       <ThemeProvider theme={getAppTheme(mbTheme || THEMES.DEFAULT)}>
         <MBContextProvider
           host={host}

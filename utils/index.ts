@@ -30,7 +30,7 @@ export const getLanguageFromPathname = ({
   query = {},
 }: {
   pathname: string;
-  query?: any;
+  query?: Record<string, any>;
 }) => {
   const pathnameSlugs = withoutTrailingSlash(pathname)
     .split('/')
@@ -52,7 +52,13 @@ export const getLanguageFromPathname = ({
 };
 
 // Gets the UID and Language by the host and pathname
-export const getPrismicProps = ({ host, pathname }) => {
+export const getPrismicProps = ({
+  host,
+  pathname,
+}: {
+  host: string;
+  pathname: string;
+}) => {
   const pathnameSlugs = withoutTrailingSlash(pathname)
     .split('/')
     .filter((item) => item);
@@ -78,7 +84,7 @@ export const getPrismicProps = ({ host, pathname }) => {
 };
 
 // Used for redirecting
-export const redirectTo = ({ res, url, type = 302 }) => {
+export const redirectTo = ({ res, url, type = 302 }: any) => {
   if (!type) type = 302;
   if (res) {
     res.writeHead(type, {
@@ -90,6 +96,16 @@ export const redirectTo = ({ res, url, type = 302 }) => {
   }
 };
 
+type TDocumentUidUpdateRedirectHandler = {
+  toUid: string;
+  isDev: boolean;
+  host: string;
+  lang: string;
+  queryParamsString: string;
+  serverResponse: any;
+  redirectType?: number;
+};
+
 export const documentUidUpdateRedirectHandler = ({
   toUid,
   isDev,
@@ -98,15 +114,7 @@ export const documentUidUpdateRedirectHandler = ({
   queryParamsString,
   serverResponse,
   redirectType = 301,
-}: {
-  toUid: string;
-  isDev: boolean;
-  host: string;
-  lang: string;
-  queryParamsString: string;
-  serverResponse: any;
-  redirectType?: number;
-}) => {
+}: TDocumentUidUpdateRedirectHandler) => {
   const url = convertUidToUrl({
     uid: toUid,
     lang: getHeadoutLanguagecode(lang),
@@ -115,41 +123,71 @@ export const documentUidUpdateRedirectHandler = ({
   });
 
   const existingParams = new URLSearchParams(queryParamsString);
-  const urlObject = new URL(url);
-  existingParams.forEach((value, key) => {
-    if (key !== 'mystique_uid' && key !== 'lang') {
-      urlObject.searchParams.set(key, value);
-    }
-  });
 
-  const finalUrl = urlObject.toString();
-  redirectTo({
-    res: serverResponse,
-    url: finalUrl,
-    type: redirectType,
-  });
+  if (url) {
+    const urlObject = new URL(url);
+    existingParams.forEach((value, key) => {
+      if (key !== 'mystique_uid' && key !== 'lang') {
+        urlObject.searchParams.set(key, value);
+      }
+    });
+
+    const finalUrl = urlObject.toString();
+    redirectTo({
+      res: serverResponse,
+      url: finalUrl,
+      type: redirectType,
+    });
+  }
 };
 
 // Reflects promises to avoid running into the catch block
-export const reflect = (promise) =>
+export const reflect = (promise: any) =>
   promise.then(
-    (payload) => ({ payload, status: 'resolved' }),
-    (error) => ({ error, status: 'rejected' })
+    (payload: any) => ({
+      payload,
+      status: 'resolved',
+    }),
+    (error: any) => ({
+      error,
+      status: 'rejected',
+    })
   );
 
-export const isSafetyIncluded = (tags) =>
+export const isSafetyIncluded = (tags: any[]) =>
   tags.filter((x) => x.includes('SAFETY')).length > 0;
 
-export const getDFValidityFromTags = (tags) => {
-  const dateTag = tags.filter((d) => /DF-/.test(d))?.[0];
+export const getDFValidityFromTags = (tags: any[]) => {
+  const dateTag = tags.filter((d: any) => /DF-/.test(d))?.[0];
   if (dateTag) {
     return dayjs(dateTag.replace('DF-', ''), 'YYYY-MM-DD');
   }
   return null;
 };
 
-export const discountOf = ({ originalPrice: a, finalPrice: b }) =>
-  a > b ? (((a - b) / a) * 100).toFixed(0) : 0;
+export const discountOf = ({
+  originalPrice: a,
+  finalPrice: b,
+}: {
+  originalPrice: number;
+  finalPrice: number;
+}) => (a > b ? (((a - b) / a) * 100).toFixed(0) : 0);
+
+type TCreateBookingUrl = {
+  lang: string;
+  nakedDomain: string | null;
+  tgid: string | number;
+  date?: Record<string, any> | null;
+  tourId?: string | null;
+  promoCode?: string | null;
+  biLink?: string | null;
+  isMobile?: boolean;
+  currency?: string | null;
+  bookSubdomain?: string | undefined;
+  redirectToHeadoutBookingFlow?: boolean;
+  ctaSuffix?: string;
+  flowType?: string;
+};
 
 export const createBookingURL = ({
   lang,
@@ -165,7 +203,7 @@ export const createBookingURL = ({
   redirectToHeadoutBookingFlow = false,
   ctaSuffix = '',
   flowType = undefined,
-}) => {
+}: TCreateBookingUrl) => {
   const bookingFlowSubdomain =
     bookSubdomain &&
     typeof bookSubdomain === 'string' &&
@@ -213,7 +251,7 @@ export const createBookingURL = ({
 
   if (hasDateQueryParam) {
     urlObject.searchParams.set('date', date?.startDate);
-    urlObject.searchParams.set('variantId', tourId);
+    tourId && urlObject.searchParams.set('variantId', tourId);
 
     date?.startTime && urlObject.searchParams.set('time', date?.startTime);
   }
@@ -230,41 +268,41 @@ export const createBookingURL = ({
   return urlObject.toString();
 };
 
-export const getNakedDomain = (host) => {
+export const getNakedDomain = (host: string) => {
   return !host.includes('localhost')
     ? host.replace('stage-', '').split('.').slice(1).join('.')
     : HEADOUT_NAKED_DOMAIN;
 };
 
-export const getSavingsPercent = (listingPriceObject) =>
+export const getSavingsPercent = (listingPriceObject: Record<string, any>) =>
   ((listingPriceObject.originalPrice - listingPriceObject.finalPrice) /
     listingPriceObject.originalPrice) *
   100;
 
 const SPECIAL_TLDS = ['co.uk'];
 
-const getMatchingNakedDomainPartsLength = (domain) => {
+const getMatchingNakedDomainPartsLength = (domain: string) => {
   const [tld, ..._other] =
     new RegExp('(' + SPECIAL_TLDS.join('|') + ')', 'g').exec(domain) || [];
   const tldPartsLength = tld ? tld.split('.').length : 1;
   return tldPartsLength + 1; // +1, to account for domain name.
 };
 
-export const isNakedDomain = (host) => {
+export const isNakedDomain = (host: string) => {
   const parts = host.split('.');
   return parts.length === getMatchingNakedDomainPartsLength(host);
 };
 
-export const getHeadoutLanguagecode = (prismicLangCode) => {
+export const getHeadoutLanguagecode = (prismicLangCode: string) => {
   return (
     LANGUAGE_MAP[PRISMIC_LANG_TO_ROUTE_PARAM?.[prismicLangCode]]?.code || 'en'
   );
 };
 
 export const getAlternateLanguages = (
-  alternateLangsArray: any[],
+  alternateLangsArray: Record<string, any>[],
   isDev: boolean,
-  host,
+  host: string,
   currentDocUid = ''
 ) => {
   if (alternateLangsArray?.length) {
@@ -302,10 +340,10 @@ export const getAlternateLanguages = (
 export const genUniqueId = () =>
   `${Math.random().toString().slice(2)}-${Math.random().toString().slice(2)}`;
 
-export const refsArrayToObject = (refArray) => {
+export const refsArrayToObject = (refArray: Record<string, any>[]) => {
   const footers = refArray
-    ?.filter((ref) => ref.type === CUSTOM_TYPES.FOOTER)
-    .reduce((acc, curr) => {
+    ?.filter((ref: any) => ref.type === CUSTOM_TYPES.FOOTER)
+    .reduce((acc: any, curr: any) => {
       if (curr?.data?.is_secondary_footer) {
         return {
           ...acc,
@@ -320,16 +358,16 @@ export const refsArrayToObject = (refArray) => {
     }, {});
   const { commonFooter, secondaryFooter } = footers || {};
   const [contentFramework] = refArray.filter(
-    (ref) => ref.type === CUSTOM_TYPES.CONTENT_FRAMEWORK
+    (ref: any) => ref.type === CUSTOM_TYPES.CONTENT_FRAMEWORK
   );
   const [globalCollection] = refArray.filter(
-    (ref) => ref.type === CUSTOM_TYPES.GLOBAL_COLLECTION
+    (ref: any) => ref.type === CUSTOM_TYPES.GLOBAL_COLLECTION
   );
   const [commonHeader] = refArray.filter(
-    (ref) => ref.type === CUSTOM_TYPES.HEADER
+    (ref: any) => ref.type === CUSTOM_TYPES.HEADER
   );
   const [microsite] = refArray.filter(
-    (ref) => ref.type === CUSTOM_TYPES.MICROSITE
+    (ref: any) => ref.type === CUSTOM_TYPES.MICROSITE
   );
 
   return {
@@ -342,10 +380,23 @@ export const refsArrayToObject = (refArray) => {
   };
 };
 
-export const legacyBooleanCheck = (field): boolean =>
-  typeof field === 'string'
+export const legacyBooleanCheck = (field: string | undefined | boolean) => {
+  if (typeof field === 'undefined') return false;
+  return typeof field === 'string'
     ? field?.toLowerCase() === 'yes' || field?.toLowerCase() === 'true'
     : field;
+};
+
+type TGeneratePromiseForCategoryTours = {
+  arr: any[];
+  hostname: string;
+  city: string;
+  isCollection?: boolean;
+  isCategory?: boolean;
+  isSubCategory?: boolean;
+  lang: string;
+  cookies?: Record<string, string>;
+};
 
 export const generatePromiseForCategoryTours = ({
   arr = [],
@@ -356,16 +407,7 @@ export const generatePromiseForCategoryTours = ({
   isSubCategory = false,
   lang,
   cookies,
-}: {
-  arr: any[];
-  hostname: string;
-  city: string;
-  isCollection?: boolean;
-  isCategory?: boolean;
-  isSubCategory?: boolean;
-  lang: string;
-  cookies?: { [key: string]: string };
-}) => {
+}: TGeneratePromiseForCategoryTours) => {
   const idSet = new Set(arr);
   const allIds = Array.from(idSet);
 
@@ -421,7 +463,7 @@ export const getSinglePrismicSlice = ({
 };
 
 export const getEnglishDocUid = (
-  prismicAlternateLanguages: { [key: string]: string }[]
+  prismicAlternateLanguages: Record<string, any>[]
 ) => {
   if (prismicAlternateLanguages?.length) {
     const { uid } =
@@ -433,11 +475,11 @@ export const getEnglishDocUid = (
 };
 
 export const getCollectionSection = (
-  collectionData,
+  collectionData: Record<string, any>,
   sectionType: 'PINNED_CARDS' | 'GENERIC' | 'HEADOUT_PICKS'
 ) => {
   const section = collectionData?.sections?.find(
-    (section) => section.type === sectionType
+    (section: any) => section.type === sectionType
   );
   return section?.tourGroups?.items;
 };
@@ -457,10 +499,10 @@ export const truncateNumber = (num = 0, truncateAfter = 3) => {
   return truncatedNumber.toString();
 };
 
-const toFixedWithPrecision = (num, precision) => {
+const toFixedWithPrecision = (num: number, precision: number) => {
   const precisionExp = 10 ** precision;
   return Math.trunc(Math.round(num * precisionExp)) / precisionExp;
 };
 
-export const checkIfMicrosite = ({ type }: Record<string, any>): boolean =>
+export const checkIfMicrosite = ({ type }: Record<string, any>) =>
   type === CUSTOM_TYPES.MICROSITE;

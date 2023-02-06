@@ -7,6 +7,7 @@ import builder from 'xmlbuilder';
 import { convertUidToUrl, getLangUID } from 'utils/urlUtils';
 import { fetchAllMatchingDocs } from 'utils/prismicUtils';
 import { getHeadoutLanguagecode, legacyBooleanCheck } from 'utils';
+import { NextPageContext } from 'next';
 
 interface LangData {
   lang: string;
@@ -14,7 +15,7 @@ interface LangData {
   isDefault: boolean;
 }
 
-const createImg = (doc) => {
+const createImg = (doc: any) => {
   if (doc.type === CUSTOM_TYPES.MICROSITE) {
     if (doc.data.image && doc.data.image.url) {
       return {
@@ -28,8 +29,8 @@ const createImg = (doc) => {
   return {};
 };
 
-const createAltLangUrls = (langArr) => {
-  const langLinksArr = langArr.map((langItem) => {
+const createAltLangUrls = (langArr: any) => {
+  const langLinksArr = langArr.map((langItem: any) => {
     const { lang, url } = langItem;
     return {
       '@rel': 'alternate',
@@ -43,7 +44,7 @@ const createAltLangUrls = (langArr) => {
   };
 };
 
-const checkIfinValidUrl = async (url) => {
+const checkIfinValidUrl = async (url: string) => {
   const res = await fetch(url, { method: 'head' });
   const status = res.status;
 
@@ -57,7 +58,11 @@ const checkIfinValidUrl = async (url) => {
   return false;
 };
 
-const getLangData = async (languages, sitemapUrl, uid) => {
+const getLangData = async (
+  languages: Record<string, any>[],
+  sitemapUrl: string,
+  uid: string
+) => {
   const res = [];
   for (const language of languages) {
     const { lang, uid: alternateLanguageUid = uid } = language;
@@ -83,10 +88,10 @@ const getLangData = async (languages, sitemapUrl, uid) => {
 };
 
 const getDefaultLangData = async (
-  defaultUrl,
-  sitemapUrl,
-  defaultLangPrefix
-): Promise<LangData> => {
+  defaultUrl: string,
+  sitemapUrl: string,
+  defaultLangPrefix: string
+): Promise<LangData | undefined> => {
   try {
     const url = new URL(defaultUrl);
     const isUrlInValid = await checkIfinValidUrl(url.href);
@@ -102,7 +107,7 @@ const getDefaultLangData = async (
   }
 };
 
-const createUrlArr = async (doc, sitemapUrl) => {
+const createUrlArr = async (doc: Record<string, any>, sitemapUrl: string) => {
   const {
     alternate_languages: languages = [],
     uid,
@@ -131,18 +136,20 @@ const createUrlArr = async (doc, sitemapUrl) => {
   });
 };
 
-const isSelfReferringCanonical = (doc) => !doc?.data?.canonical_link;
+const isSelfReferringCanonical = (doc: Record<string, any>) =>
+  !doc?.data?.canonical_link;
 
-const isNotIndexed = (doc) => !legacyBooleanCheck(doc?.data?.noindex);
+const isNotIndexed = (doc: Record<string, any>) =>
+  !legacyBooleanCheck(doc?.data?.noindex);
 
 export default class SitemapXml extends Component {
-  static async getInitialProps({ req, res, query }) {
+  static async getInitialProps({ req, res, query }: NextPageContext) {
     let uid;
 
     if (query.mystique_uid) {
       uid = query.mystique_uid;
     } else {
-      uid = req.headers.host.replace('stage-', '');
+      uid = req?.headers?.host?.replace('stage-', '');
     }
     const { uid: langUid } = getLangUID(req, query);
 
@@ -160,6 +167,7 @@ export default class SitemapXml extends Component {
 
     try {
       const response = await fetchAllMatchingDocs({
+        // @ts-ignore
         query: [Prismic.Predicates.at('document.tags', [uid])],
         params: {
           pageSize: 100,
@@ -168,7 +176,7 @@ export default class SitemapXml extends Component {
         },
       });
       const docs = response
-        .filter((doc) =>
+        .filter((doc: Record<string, any>) =>
           [
             CUSTOM_TYPES.MICROSITE,
             CUSTOM_TYPES.CONTENT_PAGE,
@@ -181,7 +189,7 @@ export default class SitemapXml extends Component {
           ].includes(doc.type)
         )
         .reduce(
-          (accum, item) => {
+          (accum: Record<string, any>, item: Record<string, any>) => {
             if (item.type === CUSTOM_TYPES.MICROSITE) {
               return [[...accum[0], item], accum[1]];
             }
@@ -189,13 +197,20 @@ export default class SitemapXml extends Component {
           },
           [[], []]
         )
-        .reduce((accum, item) => [...accum, ...item])
-        .filter((doc) => doc.data.is_excluded_from_sitemap !== 'Yes');
+        .reduce((accum: Record<string, any>[], item: Record<string, any>[]) => [
+          ...accum,
+          ...item,
+        ])
+        .filter(
+          (doc: Record<string, any>) =>
+            doc.data.is_excluded_from_sitemap !== 'Yes'
+        );
 
       for (const doc of docs) {
         if (isSelfReferringCanonical(doc) && isNotIndexed(doc)) {
           try {
             const result = await createUrlArr(doc, langUid);
+            // @ts-ignore
             xmlDoc.urlset.url.push(...result);
           } catch (e) {
             Sentry.captureException(e);
@@ -205,12 +220,12 @@ export default class SitemapXml extends Component {
 
       const xml = builder.create(xmlDoc, { encoding: 'utf-8' });
       const xmlStr = xml.end();
-      res.setHeader('Content-Type', 'application/xml');
-      res.write(xmlStr);
-      res.end();
+      res?.setHeader('Content-Type', 'application/xml');
+      res?.write(xmlStr);
+      res?.end();
     } catch (e) {
       Sentry.captureException(e);
-      res.end();
+      res?.end();
     }
   }
 }

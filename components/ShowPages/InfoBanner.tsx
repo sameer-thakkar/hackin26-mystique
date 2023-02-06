@@ -10,9 +10,13 @@ export const StyledInfoBanner = styled.div`
   border-radius: 0.5rem;
   justify-content: left;
   align-items: center;
-  background: ${({ colorScheme: cs }) => cs.background};
+  background: ${({  
+ // @ts-expect-error TS(2339): Property 'colorScheme' does not exist on type 'Pic... Remove this comment to see the full error message
+ colorScheme: cs }) => cs.background};
   * {
-    color: ${({ colorScheme: cs }) => cs.color};
+    color: ${({    
+ // @ts-expect-error TS(2339): Property 'colorScheme' does not exist on type 'Pic... Remove this comment to see the full error message
+ colorScheme: cs }) => cs.color};
   }
 
   @media (max-width: 768px) {
@@ -22,7 +26,9 @@ export const StyledInfoBanner = styled.div`
 
 const Title = styled.div`
   ${expandFontToken(FONTS.SUBHEADING_LARGE)}
-  margin-bottom: ${({ applyCustomMarginForHeading }) =>
+  margin-bottom: ${({  
+ // @ts-expect-error TS(2339): Property 'applyCustomMarginForHeading' does not ex... Remove this comment to see the full error message
+ applyCustomMarginForHeading }) =>
     applyCustomMarginForHeading};
 
   @media (max-width: 768px) {
@@ -56,10 +62,12 @@ const InfoBanner = ({
   colorScheme,
   emojiSymbol = '🤑',
   emojiLabel = 'money-mouth-face',
-  applyCustomMarginForHeading = '0.5rem',
-}) => {
+  applyCustomMarginForHeading = '0.5rem'
+}: any) => {
   return (
+    // @ts-expect-error TS(2769): No overload matches this call.
     <StyledInfoBanner colorScheme={colorScheme}>
+      {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <Title applyCustomMarginForHeading={applyCustomMarginForHeading}>
         <Emoji symbol={emojiSymbol} label={emojiLabel} /> {title}
       </Title>

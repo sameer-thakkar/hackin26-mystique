@@ -1,4 +1,5 @@
 import React from 'react';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import { FAQPageJsonLd } from 'next-seo';
 import Conditional from 'components/common/Conditional';
@@ -26,7 +27,7 @@ type AccordionGroupProps = {
     content: any;
     heading: string;
   }[];
-  heading: string;
+  heading: string | undefined;
   useSchema: Boolean;
   sliceProps?: any;
   isOpenOverride?: Boolean;

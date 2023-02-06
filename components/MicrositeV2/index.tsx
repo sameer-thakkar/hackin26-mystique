@@ -35,7 +35,7 @@ const MobileProductPage: ComponentType<any> = dynamic(
 );
 
 class MicrositeV2 extends Component<any, any> {
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       isMobile: props.isMobile,
@@ -52,7 +52,7 @@ class MicrositeV2 extends Component<any, any> {
     };
   }
 
-  sendVariableToDataLayer = (JSONObject) => {
+  sendVariableToDataLayer = (JSONObject: any) => {
     if (window && (window as any).dataLayer) {
       (window as any).dataLayer.push(JSONObject);
     }
@@ -61,7 +61,7 @@ class MicrositeV2 extends Component<any, any> {
   componentDidMount() {
     const isMobile = window.innerWidth <= 768;
     const { all_tours: allTours } = this.props.data.data;
-    const allTgids = allTours.map((tour) => tour.primary.tgid);
+    const allTgids = allTours.map((tour: any) => tour.primary.tgid);
     const isLTT = checkLTT(this.props.data.uid);
     const isBroadway = checkBroadway(this.props.data.uid);
     if (allTours.length > 0) {
@@ -97,7 +97,7 @@ class MicrositeV2 extends Component<any, any> {
     });
   }
 
-  changePage = (page) => {
+  changePage = (page: any) => {
     const newState = { ...this.state };
     newState.page = { ...page };
     if (newState.page.name !== PAGETYPE.HOMEPAGE) {
@@ -115,7 +115,7 @@ class MicrositeV2 extends Component<any, any> {
     this.changePage(page);
   };
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps: any) {
     // We have state in top-level component, any state update causes whole page to re-render
     // need to refactor break-down the logic and move it all to their relevant components.
     const { query } = this.props.router;
@@ -179,7 +179,7 @@ class MicrositeV2 extends Component<any, any> {
       languages: alternateLanguages,
     };
 
-    const dropdownLinksArray = dropdownMenu.reduce((acc, item) => {
+    const dropdownLinksArray = dropdownMenu.reduce((acc: any, item: any) => {
       if (item.link)
         return [...acc, { value: item.link.url, label: item.link_text }];
       else return acc;
@@ -202,7 +202,7 @@ class MicrositeV2 extends Component<any, any> {
         (overriddenHeaderData.search_recommend_csv &&
           overriddenHeaderData.search_recommend_csv
             .split(',')
-            .map((tgid) => parseInt(tgid))) ||
+            .map((tgid: any) => parseInt(tgid))) ||
         [],
       enableDropdownLinks: overriddenHeaderData.enable_dropdown == 'Yes',
       dropdownLinks: dropdownLinksArray,
@@ -217,15 +217,15 @@ class MicrositeV2 extends Component<any, any> {
     const groupBooking = {
       hasGroupBooking: enable_group_booking == 'Yes',
       excludedTourIds: group_booking_excluded_tgids
-        .filter((ele) => ele.tgid)
-        .reduce((acc, tour) => {
+        .filter((ele: any) => ele.tgid)
+        .reduce((acc: any, tour: any) => {
           return [...acc, tour.tgid];
         }, []),
     };
 
     const hasCategoryTourList = categoryTourListData
       ? Object.keys(categoryTourListData)?.length > 1 &&
-        CMSBody?.filter((body) => body.slice_type === 'tour_list_category')
+        CMSBody?.filter((body: any) => body.slice_type === 'tour_list_category')
           ?.length > 0
       : false;
     let tourListCategorySortBy,
@@ -235,10 +235,10 @@ class MicrositeV2 extends Component<any, any> {
     // Categour Tour List carousel
     if (hasCategoryTourList) {
       const tourListSlice = CMSBody?.filter(
-        (body) => body.slice_type === 'tour_list_category'
-      )?.reduce((acc, curr) => acc + curr);
+        (body: any) => body.slice_type === 'tour_list_category'
+      )?.reduce((acc: any, curr: any) => acc + curr);
       tourListCategorySortBy = tourListSlice?.primary?.disable_sort_selector;
-      tourListCategories = tourListSlice?.items?.map((item) => {
+      tourListCategories = tourListSlice?.items?.map((item: any) => {
         const {
           collection,
           category,
@@ -255,7 +255,7 @@ class MicrositeV2 extends Component<any, any> {
           categoryTourListData[category] ||
           categoryTourListData[sub_category];
 
-        const filteredData = tgidData?.filter((product) => {
+        const filteredData = tgidData?.filter((product: any) => {
           const { tgid, primaryCategory, primarySubCategory, price } =
             product || {};
           if (collection) {
@@ -286,16 +286,17 @@ class MicrositeV2 extends Component<any, any> {
         });
         let tgids, prices;
         if (filteredData?.length) {
-          tgids = filteredData?.map((d) => d?.tgid);
+          tgids = filteredData?.map((d: any) => d?.tgid);
           prices = filteredData
-            ?.sort((a, b) => {
+            ?.sort((a: any, b: any) => {
               return a?.listingPrice?.finalPrice - b?.listingPrice?.finalPrice;
             })
-            ?.map((data) => data?.tgid);
+            ?.map((data: any) => data?.tgid);
         }
 
-        tgidData?.forEach((data) => {
+        tgidData?.forEach((data: any) => {
           const { tgid } = data;
+          // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
           tourListCategoryAllTours[tgid] = data;
         });
         return {
@@ -331,11 +332,11 @@ class MicrositeV2 extends Component<any, any> {
       : null;
 
     const uncategorizedTours = CMSBody?.filter(
-      (body) => body.slice_type === 'csv_ranking'
+      (body: any) => body.slice_type === 'csv_ranking'
     );
 
     const rawCategory = uncategorizedTours?.length
-      ? uncategorizedTours?.reduce((acc, curr) => acc + curr)
+      ? uncategorizedTours?.reduce((acc: any, curr: any) => acc + curr)
       : {};
 
     const raw_category = (rawCategory && rawCategory?.items) || [];
@@ -344,11 +345,11 @@ class MicrositeV2 extends Component<any, any> {
     let categories;
 
     if (!hasCategoryTourList) {
-      categories = raw_category?.reduce((accum, category) => {
+      categories = raw_category?.reduce((accum: any, category: any) => {
         let tgid_ranking = category.ranking
           ?.split(',')
-          ?.map((tgid) => parseInt(tgid))
-          ?.filter((tgid) => allTours[tgid] && allTours[tgid].available);
+          ?.map((tgid: any) => parseInt(tgid))
+          ?.filter((tgid: any) => allTours[tgid] && allTours[tgid].available);
 
         return [
           ...accum,
@@ -356,7 +357,7 @@ class MicrositeV2 extends Component<any, any> {
             ranking: {
               popularity: tgid_ranking,
               price: isFetched
-                ? tgidsOrderByPrice?.filter((tgid) =>
+                ? tgidsOrderByPrice?.filter((tgid: any) =>
                     tgid_ranking?.includes(tgid)
                   )
                 : null,
@@ -374,7 +375,7 @@ class MicrositeV2 extends Component<any, any> {
     const directCategory = this.props.router.query[QUERY_PARAMS.CATEGORY];
     if (isServer && directCategory) {
       const catRegex = new RegExp(directCategory, 'gi');
-      const index = categories.findIndex((cat) => catRegex.test(cat.name));
+      const index = categories.findIndex((cat: any) => catRegex.test(cat.name));
       if (index > -1) {
         categories[index].rank = 1;
         // categories = categories.sort((catA, catB) => catB.rank - catA.rank);
@@ -385,7 +386,7 @@ class MicrositeV2 extends Component<any, any> {
     if (isServer && directTheater) {
       const theaterNameRegex = new RegExp(directTheater, 'gi');
       const toursArray: any = Object.values(allTours);
-      const tours = toursArray.filter((tour) =>
+      const tours = toursArray.filter((tour: any) =>
         theaterNameRegex.test(tour.content_theater)
       );
       if (tours.length) {
@@ -394,7 +395,7 @@ class MicrositeV2 extends Component<any, any> {
           primary: {
             carousel_heading: tours[0].content_theater,
             carousel_description: '',
-            csv_tgids: tours.map((t) => t.tgid).join(','),
+            csv_tgids: tours.map((t: any) => t.tgid).join(','),
           },
           items: [],
         });
@@ -433,7 +434,7 @@ class MicrositeV2 extends Component<any, any> {
     const { disclaimer, show_disclaimer } = this.props.data.data;
 
     const heroProps = {
-      banners: CMSImages.reduce((accum, image) => {
+      banners: CMSImages.reduce((accum: any, image: any) => {
         return [
           ...accum,
           {
@@ -490,6 +491,7 @@ class MicrositeV2 extends Component<any, any> {
         {...categoryProps}
         queryCategory={directCategory}
       >
+        {/* @ts-expect-error TS(2786): 'MicrositeV2GlobalStyle' cannot be used as a JSX c... Remove this comment to see the full error message */}
         <MicrositeV2GlobalStyle />
         <PopulateMeta
           {...{

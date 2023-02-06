@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import { Client } from 'config/prismic-config';
 import { useWindowWidth } from '@react-hook/window-size';
@@ -73,7 +74,7 @@ const ListicleCommonSummary = styled.div`
   }
 `;
 
-const CategorySlider = styled.div`
+const CategorySlider = styled.div<{ stickCategorySlider?: boolean }>`
   ${(props) => {
     if (props.stickCategorySlider) {
       return `
@@ -105,7 +106,7 @@ const CategorySlider = styled.div`
   }
 `;
 
-const Category = styled.div`
+const Category = styled.div<{ active?: boolean }>`
   font-size: 20px;
   width: max-content;
   text-decoration: none;
@@ -165,12 +166,17 @@ const getToursAvailability = async (tours = []) => {
   let data = await Promise.all(
     tours.map((tour) => {
       return fetch(
-        `${HEADOUT_API_ENDPOINT}/v5/tour-group/slots/get/${tour.data.tgid}?for-days=90`
+        `${HEADOUT_API_ENDPOINT}/v5/tour-group/slots/get/${
+          (tour as any).data.tgid
+        }?for-days=90`
       ).then((r) => r.json());
     })
   );
 
-  data = data.map((item, index) => ({ ...item, tgid: tours[index].uid }));
+  data = data.map((item, index) => ({
+    ...item,
+    tgid: (tours[index] as any).uid,
+  }));
 
   const result = {
     monthOne: [],
@@ -179,14 +185,16 @@ const getToursAvailability = async (tours = []) => {
   };
 
   data.forEach((item) => {
-    item.slots.forEach((slot) => {
+    item.slots.forEach((slot: any) => {
       if (
         dayjs(slot.startDate).isBetween(
           dayjs(),
           dayjs().add(1, 'month').date(0)
         )
       ) {
+        // @ts-expect-error TS(2345): Argument of type 'any' is not assignable to parame... Remove this comment to see the full error message
         if (!result.monthOne.includes(item.tgid)) {
+          // @ts-expect-error TS(2345): Argument of type 'any' is not assignable to parame... Remove this comment to see the full error message
           result.monthOne.push(item.tgid);
         }
       } else if (
@@ -195,7 +203,9 @@ const getToursAvailability = async (tours = []) => {
           dayjs().add(2, 'month').date(1)
         )
       ) {
+        // @ts-expect-error TS(2345): Argument of type 'any' is not assignable to parame... Remove this comment to see the full error message
         if (!result.monthTwo.includes(item.tgid)) {
+          // @ts-expect-error TS(2345): Argument of type 'any' is not assignable to parame... Remove this comment to see the full error message
           result.monthTwo.push(item.tgid);
         }
       } else if (
@@ -204,7 +214,9 @@ const getToursAvailability = async (tours = []) => {
           dayjs().add(3, 'month').date(1)
         )
       ) {
+        // @ts-expect-error TS(2345): Argument of type 'any' is not assignable to parame... Remove this comment to see the full error message
         if (!result.monthTwo.includes(item.tgid)) {
+          // @ts-expect-error TS(2345): Argument of type 'any' is not assignable to parame... Remove this comment to see the full error message
           result.monthTwo.push(item.tgid);
         }
       }
@@ -216,7 +228,7 @@ const getToursAvailability = async (tours = []) => {
   });
 };
 
-const Listicle = (props) => {
+const Listicle = (props: any) => {
   const [tours, setTours] = useState([]);
   const [filteredTours, setFilteredTours] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -235,6 +247,7 @@ const Listicle = (props) => {
   // Slots effect
   useEffect(() => {
     getToursAvailability(tours).then((data) => {
+      // @ts-expect-error TS(2345): Argument of type 'unknown' is not assignable to pa... Remove this comment to see the full error message
       setAvailableTours(data);
     });
   }, [tours, setAvailableTours]);
@@ -317,9 +330,9 @@ const Listicle = (props) => {
     setLoading(true);
     Client()
       .query(Prismic.Predicates.any('document.tags', [uid]), { lang })
-      .then(async (res) => {
+      .then(async (res: any) => {
         const tourData = await Promise.all(
-          res.results.map((tour) => {
+          res.results.map((tour: any) => {
             return fetch(
               `${HEADOUT_API_ENDPOINT}/v5/tour-group/get/${
                 tour.data.tgid
@@ -337,10 +350,12 @@ const Listicle = (props) => {
             bookingUrl,
           };
         });
+        // @ts-expect-error TS(2345): Argument of type 'any[]' is not assignable to para... Remove this comment to see the full error message
         setTours(result);
+        // @ts-expect-error TS(2345): Argument of type 'any[]' is not assignable to para... Remove this comment to see the full error message
         setFilteredTours(result);
       })
-      .catch((err) => {
+      .catch((err: any) => {
         console.log(err); //eslint-disable-line
       });
   }, [
@@ -394,14 +409,15 @@ const Listicle = (props) => {
     bing_site_verification,
   };
 
-  const handleFilter = (month) => {
+  const handleFilter = (month: any) => {
     setActiveFilter(month);
     if (month === 'all') {
       setFilteredTours(tours);
     } else {
       setFilteredTours(
         tours.filter((tour) => {
-          if (availableTours[month].includes(tour.uid)) return true;
+          // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+          if (availableTours[month].includes((tour as any).uid)) return true;
           return false;
         })
       );
@@ -415,6 +431,7 @@ const Listicle = (props) => {
         triggerElement={
           <DropdownTrigger>
             Months
+            {/* @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message */}
             <div>{filterOptions[activeFilter]}</div>
           </DropdownTrigger>
         }
@@ -428,6 +445,7 @@ const Listicle = (props) => {
                 handleFilter(month);
               }}
             >
+              {/* @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message */}
               {filterOptions[month]}
             </DropdownItem>
           );
@@ -467,7 +485,7 @@ const Listicle = (props) => {
       <BannerWrapper>
         {listicleBannerImages.length ? (
           <Banner
-            banners={listicleBannerImages.map(({ image }) => ({
+            banners={listicleBannerImages.map(({ image }: any) => ({
               url: image.url || '',
               alt: image.alt || 'banner-image',
             }))}
@@ -488,7 +506,7 @@ const Listicle = (props) => {
           {isMobile ? (
             <CategorySlider>
               <OverflowScroll>
-                {listicleCategories.map((category, index) => {
+                {listicleCategories.map((category: any, index: number) => {
                   return (
                     <Category
                       key={index}
@@ -513,7 +531,7 @@ const Listicle = (props) => {
                 nextButton={CHEVRON_LEFT_CIRCLE}
                 prevButton={CHEVRON_LEFT_CIRCLE}
               >
-                {listicleCategories.map((category, index) => {
+                {listicleCategories.map((category: any, index: number) => {
                   return (
                     <Category
                       key={index}

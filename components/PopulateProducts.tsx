@@ -76,7 +76,7 @@ const StyledTourListSubHeading = styled.div`
 
 const ProductWrapper = styled.div``;
 
-const PopulateProducts = (props) => {
+const PopulateProducts = (props: any) => {
   const {
     uncategorizedTours: tours,
     uid,
@@ -119,7 +119,8 @@ const PopulateProducts = (props) => {
   );
   const mediaUpgradeExperiment = useRecoilValue(mediaUpgradeExperimentAtom);
 
-  const addToRef = (el) => {
+  const addToRef = (el: any) => {
+    // @ts-expect-error TS(2345): Argument of type 'any' is not assignable to parame... Remove this comment to see the full error message
     productsRef.current.push(el);
   };
 
@@ -132,13 +133,13 @@ const PopulateProducts = (props) => {
     setAllPromoCodes(promoDoc);
   };
 
-  const onPromoClick = async (data) => {
+  const onPromoClick = async (data: any) => {
     setAppliedPromo(data);
   };
 
-  const fetchProductInfo = async (tgids) => {
+  const fetchProductInfo = async (tgids: any) => {
     const tgidData = await fetchTourList({ tgids }).then((res) => res.json());
-    const tourGroupMap = tgidData?.tourGroups?.reduce((acc, el) => {
+    const tourGroupMap = tgidData?.tourGroups?.reduce((acc: any, el: any) => {
       const { id, primaryCollection, cityCode } = el || {};
       return {
         ...acc,
@@ -156,8 +157,8 @@ const PopulateProducts = (props) => {
   useEffect(() => {
     if (!productsRef.current) return;
     try {
-      const observerCallback = (entries, observer) => {
-        entries.forEach((entry) => {
+      const observerCallback = (entries: any, observer: any) => {
+        entries.forEach((entry: any) => {
           if (entry.isIntersecting) {
             observer.unobserve(entry.target);
             const { tgid: stringTgid } = entry.target?.dataset;
@@ -167,7 +168,8 @@ const PopulateProducts = (props) => {
                 eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_VISIBLE,
                 [ANALYTICS_PROPERTIES.TGID]: tgid,
                 [ANALYTICS_PROPERTIES.POSITION]:
-                  availableToursList?.findIndex((t) => t.tgid === tgid) + 1,
+                  availableToursList?.findIndex((t: any) => t.tgid === tgid) +
+                  1,
                 [ANALYTICS_PROPERTIES.IS_TRUNCATED]: !!entry.target?.querySelector?.(
                   '.more-details'
                 ),
@@ -199,7 +201,7 @@ const PopulateProducts = (props) => {
     if (!productsWrapperRef?.current) return;
     try {
       const productsEl = productsWrapperRef.current;
-      const { height, top } = productsEl.getBoundingClientRect();
+      const { height, top } = (productsEl as any).getBoundingClientRect();
       const documentHeight = window.document.body.scrollHeight;
       const percentScrollHeight = ((height + top) / documentHeight) * 100;
       sendVariableToDataLayer({
@@ -213,8 +215,10 @@ const PopulateProducts = (props) => {
   const showNextAvailable = legacyBooleanCheck(enableEarliestAvailability);
 
   useEffect(() => {
-    const fetchEarliestAvailability = async ({ uncategorizedToursList }) => {
-      const requestQueue = uncategorizedToursList.map(({ tgid }) => {
+    const fetchEarliestAvailability = async ({
+      uncategorizedToursList,
+    }: any) => {
+      const requestQueue = uncategorizedToursList.map(({ tgid }: any) => {
         return fetchCalendarInventory({
           tgid,
         });
@@ -235,7 +239,9 @@ const PopulateProducts = (props) => {
           }, {});
         }
       );
+      // @ts-expect-error TS(2345): Argument of type 'any[]' is not assignable to para... Remove this comment to see the full error message
       setEarliestAvailabilityQueue(response);
+      // @ts-expect-error TS(2345): Argument of type 'true' is not assignable to param... Remove this comment to see the full error message
       setShowEarliestAvailability(true);
     };
     if (showNextAvailable || instantCheckout) {
@@ -246,20 +252,21 @@ const PopulateProducts = (props) => {
   }, []);
 
   useEffect(() => {
-    const fetchVariantPrices = async ({ variantTgids, currency }) => {
-      const fetchVariantPrices: Promise<any>[] = variantTgids.map(({ tgid }) =>
-        fetchInventory({
-          tgid,
-          forDays: 2,
-          ...(currency && {
-            currency: `${currency}`,
-          }),
-          hostname,
-        })
+    const fetchVariantPrices = async ({ variantTgids, currency }: any) => {
+      const fetchVariantPrices: Promise<any>[] = variantTgids.map(
+        ({ tgid }: any) =>
+          fetchInventory({
+            tgid,
+            forDays: 2,
+            ...(currency && {
+              currency: `${currency}`,
+            }),
+            hostname,
+          })
       );
       const variants: Array<any> = await Promise.all([...fetchVariantPrices]);
       const mapVariantPrices = variants.map((tourVariant: any, index) => {
-        const inv = tourVariant?.inventoryList?.find((inventoryList) => {
+        const inv = tourVariant?.inventoryList?.find((inventoryList: any) => {
           return inventoryList.tourId == variantTgids[index].tid;
         });
         return {
@@ -280,13 +287,17 @@ const PopulateProducts = (props) => {
       );
       const finalPrices = { ...tourPrices };
       for (const tour in variantPrices) {
+        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         finalPrices[tour]['price'] = variantPrices[tour]?.price;
       }
       setTourPrices(finalPrices);
     };
     const variantTgids = tours
-      ?.filter((t) => t.tgid && t.tid)
-      .map((t) => ({ tgid: t.tgid, tid: t.tid }));
+      ?.filter((t: any) => t.tgid && t.tid)
+      .map((t: any) => ({
+        tgid: t.tgid,
+        tid: t.tid,
+      }));
 
     if (variantTgids?.length) {
       fetchVariantPrices({ variantTgids, currency });
@@ -295,28 +306,27 @@ const PopulateProducts = (props) => {
 
   const uncategorizedTours =
     showEarliestAvailability || instantCheckout
-      ? tours.map((tour) => ({
+      ? tours.map((tour: any) => ({
           ...tour,
           earliestAvailability: earliestAvailabilityQueue[tour.tgid],
         }))
       : tours;
 
   const finalToursList = uncategorizedTours?.filter(
-    (t) => !!scorpioData[t.tgid]
+    (t: any) => !!scorpioData[t.tgid]
   );
   const availableToursList = uncategorizedTours?.filter(
-    (tour) =>
+    (tour: any) =>
       !!scorpioData[tour.tgid]?.available &&
       (scorpioData[tour.tgid]?.highlights?.length ||
         tour?.tour_description_override?.length)
   );
-  const allTgids = availableToursList?.map((el) => el?.tgid);
+  const allTgids = availableToursList?.map((el: any) => el?.tgid);
 
   const filterPromoCodes = () => {
     let filteredPromoCodes = {};
     Object.keys(productInfo ?? {}).forEach((tgid) => {
       let tgidBased, collectionBased, cityBased;
-
       //For each product, filtering out promocodes based on relevant TGID, Collection, City
       const promosForProduct = allPromoCodes?.filter((promo) => {
         const {
@@ -328,35 +338,41 @@ const PopulateProducts = (props) => {
         const tgids = csvTgidToArray(tgidsString);
         const exclusions = csvTgidToArray(exclusionsString);
         return (
-          (tgids?.includes(tgid) ||
-            productInfo[tgid]?.collectionId == collections?.collectionId ||
-            productInfo[tgid]?.city === city_name?.cityCode) &&
-          !exclusions?.includes(tgid)
+          (tgids?.includes(Number(tgid)) ||
+            // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+            productInfo[tgid]?.collectionId ==
+              (collections as any)?.collectionId ||
+            // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+            productInfo[tgid]?.city === (city_name as any)?.cityCode) &&
+          !exclusions?.includes(Number(tgid))
         );
       });
-
       //If any promos found based on above filtering-
       //We find promos specific to TGID -> Collection -> City in the filtered array
       if (promosForProduct?.length) {
         tgidBased = promosForProduct?.find((promo) => {
-          const tgids = csvTgidToArray(promo?.tgids);
-          return tgids?.includes(tgid);
+          const tgids = csvTgidToArray((promo as any)?.tgids);
+          return tgids?.includes(Number(tgid));
         });
         if (!tgidBased) {
           collectionBased = promosForProduct?.find(
             (promo) =>
+              // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
               productInfo[tgid]?.collectionId ==
-              promo?.collections?.collectionId
+              (promo as any)?.collections?.collectionId
           );
-
           if (!collectionBased) {
             cityBased = promosForProduct?.find(
-              (promo) => productInfo[tgid]?.city === promo?.city_name?.cityCode
+              (promo) =>
+                // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+                productInfo[tgid]?.city === (promo as any)?.city_name?.cityCode
             );
           }
         }
+        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         filteredPromoCodes[tgid] = tgidBased || collectionBased || cityBased;
       } else {
+        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         filteredPromoCodes[tgid] = PROMO_CODES.DEFAULT;
       }
     });
@@ -403,7 +419,7 @@ const PopulateProducts = (props) => {
       </Conditional>
       <ProductContainer>
         {availableToursList &&
-          availableToursList.map((tour, index) => {
+          availableToursList.map((tour: any, index: number) => {
             const {
               tgid,
               earliestAvailability,
@@ -421,6 +437,7 @@ const PopulateProducts = (props) => {
               primaryCategory,
               primaryCollection,
               primarySubCategory,
+              // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
             } = productInfo[tgid] ?? {};
 
             const childProps = {
@@ -462,6 +479,7 @@ const PopulateProducts = (props) => {
               pageType,
               clickedPromo,
               setClickedPromo,
+              // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
               finalPromoCode: finalPromoCodes[tgid],
               onPromoClick,
               appliedPromo,

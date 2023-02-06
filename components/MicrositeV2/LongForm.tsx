@@ -5,7 +5,11 @@ import COLORS from 'const/colors';
 import sliceHandler from '../Slices';
 import { FULL_WIDTH_SLICES } from '../../constants';
 
-const StyledLongform = styled.div`
+const StyledLongform = styled.div<{
+  noBorder: boolean;
+  isEntertainmentMb?: boolean;
+  isGlobalMb: boolean;
+}>`
   color: ${COLORS.GRAY.G2};
   border-top: 1px solid ${COLORS.GRAY.G6};
   padding-top: 64px;
@@ -105,7 +109,7 @@ const StyledLongform = styled.div`
   }
 `;
 
-const LongForm = (props) => {
+const LongForm = (props: any) => {
   const { slicesArray, props: sliceProps, hasToursSection } = props;
 
   const { isGlobalMb, isEntertainmentMb } = sliceProps || {};
@@ -116,7 +120,7 @@ const LongForm = (props) => {
       isGlobalMb={isGlobalMb}
       isEntertainmentMb={isEntertainmentMb}
     >
-      {slicesArray.map((slice, index) => (
+      {slicesArray.map((slice: any, index: number) => (
         <div
           key={index}
           className={`${

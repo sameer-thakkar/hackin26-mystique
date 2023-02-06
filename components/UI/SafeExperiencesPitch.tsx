@@ -16,6 +16,7 @@ import { CHEVRON_LEFT_CIRCLE, Shield } from 'assets/SvgIcons';
 import { greyScheme } from 'style/theme';
 import { MBContext } from 'contexts/MBContext';
 import { getSafetyBannerDocument } from 'utils/prismicUtils';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 
 import IconCTA, { StyledIconCTA } from './IconCTA';
@@ -244,7 +245,7 @@ const AttentionStrip = styled.div`
   }
 `;
 
-const renderSafetyDetailsSection = (tags, lang, isMobile) =>
+const renderSafetyDetailsSection = (tags: any, _lang: any, isMobile: any) =>
   Object.entries(strings.SAFE_EXPERIENCE.MODAL.DETAILS).map(
     ([key, { HEADING, DESCRIPTION }]: any) => (
       <Conditional key={key} if={tags.includes(key)}>
@@ -255,6 +256,7 @@ const renderSafetyDetailsSection = (tags, lang, isMobile) =>
           </Content>
           <div className="section-image">
             <Image
+              // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
               url={SAFETY_DETAILS_IMAGES[key]}
               height={120}
               width={isMobile ? 104 : 160}
@@ -266,11 +268,15 @@ const renderSafetyDetailsSection = (tags, lang, isMobile) =>
     )
   );
 
-export const getSafetyDescription = async (countryCode, cityCode, lang?) => {
+export const getSafetyDescription = async (
+  countryCode: any,
+  cityCode: any,
+  lang?: any
+) => {
   const language = LANGUAGE_MAP[lang]?.locale;
   try {
     const options = await getSafetyBannerDocument({ lang: language });
-    const selectedSafetyPitch = options?.find((el) => {
+    const selectedSafetyPitch = options?.find((el: any) => {
       const [, optcountryCode] = el?.country?.split('-');
       if (el?.city?.cityCode === cityCode && optcountryCode === countryCode)
         return true;
@@ -309,36 +315,46 @@ const SafeExperiencesPitch = ({
   const { lang, primaryCountry, primaryCity } = useContext(MBContext);
   const [safetyBannerData, setSafetyBannerData] = useState(null);
   useEffect(() => {
-    getSafetyDescription(primaryCountry?.code, primaryCity, lang).then(
+    getSafetyDescription((primaryCountry as any)?.code, primaryCity, lang).then(
       (data) => {
         data
           ? setSafetyBannerData(data)
-          : setSafetyBannerData(GENERAL_SAFETY_NOTE);
+          : // @ts-expect-error TS(2345): Argument of type '{ description: { spans: never[];... Remove this comment to see the full error message
+            setSafetyBannerData(GENERAL_SAFETY_NOTE);
       }
     );
   }, []);
 
   const { width } = useWindowSize();
+  // @ts-expect-error TS(2532): Object is possibly 'undefined'.
   const isMobile = width < 768;
   let tags = allTags;
   if (generic) {
+    // @ts-expect-error TS(2322): Type 'string[]' is not assignable to type 'never[]... Remove this comment to see the full error message
     tags = Object.keys(strings.SAFE_EXPERIENCE.MODAL.DETAILS).filter(
       (k) => k.indexOf('DEFAULT') > -1
     );
   }
   if (
+    // @ts-expect-error TS(2345): Argument of type 'string' is not assignable to par... Remove this comment to see the full error message
     tags.includes(SAFETY_DETAILS_TYPE.SAFETY_RESTRICTED_CAPACITY) &&
+    // @ts-expect-error TS(2345): Argument of type 'string' is not assignable to par... Remove this comment to see the full error message
     tags.includes(SAFETY_DETAILS_TYPE.SAFETY_SOCIAL_DISTANCING)
   ) {
     tags.splice(
+      // @ts-expect-error TS(2345): Argument of type 'string' is not assignable to par... Remove this comment to see the full error message
       tags.indexOf(SAFETY_DETAILS_TYPE.SAFETY_RESTRICTED_CAPACITY),
       1
     );
   }
   Object.entries(CLUBBED_SAFETY_TAGS).forEach(([, value]) => {
+    // @ts-expect-error TS(2345): Argument of type 'string' is not assignable to par... Remove this comment to see the full error message
     if (tags.includes(value[0]) && tags.includes(value[1])) {
+      // @ts-expect-error TS(2345): Argument of type 'string' is not assignable to par... Remove this comment to see the full error message
       tags.splice(tags.indexOf(value[0]), 1);
+      // @ts-expect-error TS(2345): Argument of type 'string' is not assignable to par... Remove this comment to see the full error message
       tags.splice(tags.indexOf(value[1]), 1);
+      // @ts-expect-error TS(2345): Argument of type 'string' is not assignable to par... Remove this comment to see the full error message
       tags.push(value[2]);
     }
   });
@@ -352,7 +368,7 @@ const SafeExperiencesPitch = ({
             <Section>
               <AttentionStrip>
                 {strings.SAFE_EXPERIENCE.EU_PREFIX}
-                <RichText render={safetyBannerData?.description} />
+                <RichText render={(safetyBannerData as any)?.description} />
               </AttentionStrip>
             </Section>
           </Conditional>
@@ -397,14 +413,14 @@ const SafeExperiencesPitch = ({
       <Section>{renderSafetyDetailsSection(tags, lang, isMobile)}</Section>
 
       {/* <Section>
-        <Heading>{"FAQ's"}</Heading>
-        <FAQGrid>
-          <Accordion 
-            heading={"How does this work?"}
-            content={"Similar to a treasury bond, guests can purchase a $100 “hotel bond” directly from the hotels listed on the Buy Now Stay Later website. After a 60 day maturation period, that $100 bond will be worth $150. Basically, spend $100 and receive a gift certificate for $150. It’s as easy as that. And use it when you want! (after the 60 days of course)."}  
-          />
-        </FAQGrid>
-      </Section> */}
+      <Heading>{"FAQ's"}</Heading>
+      <FAQGrid>
+        <Accordion
+          heading={"How does this work?"}
+          content={"Similar to a treasury bond, guests can purchase a $100 “hotel bond” directly from the hotels listed on the Buy Now Stay Later website. After a 60 day maturation period, that $100 bond will be worth $150. Basically, spend $100 and receive a gift certificate for $150. It’s as easy as that. And use it when you want! (after the 60 days of course)."}
+        />
+      </FAQGrid>
+    </Section> */}
     </PitchGrid>
   );
 };

@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
 export const useCaptureClickOutside = (
-  elementRef,
-  outsideClickHandler,
+  elementRef: any,
+  outsideClickHandler: any,
   exceptionRefs = []
 ) => {
   useEffect(() => {
@@ -12,12 +12,12 @@ export const useCaptureClickOutside = (
     };
   });
 
-  const handleClickOutside = event => {
+  const handleClickOutside = (event: any) => {
     let isException = false;
     exceptionRefs.forEach(ref => {
-      isException =
-        isException || (ref.current && ref.current.contains(event.target));
-    });
+    isException =
+        isException || ((ref as any).current && (ref as any).current.contains(event.target));
+});
     if (
       elementRef.current &&
       !elementRef.current.contains(event.target) &&

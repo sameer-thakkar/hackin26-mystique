@@ -33,6 +33,7 @@ const TextOverlay: React.FC<ITextOverlay> = (props) => {
             <ButtonWrapper>
               <Button
                 fillType="whiteBordered"
+                // @ts-expect-error TS(2769): No overload matches this call.
                 onClick={onButtonClick}
                 fontSize={'1.125rem'}
               >

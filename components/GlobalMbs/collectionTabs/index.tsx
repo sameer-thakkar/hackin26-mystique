@@ -74,6 +74,7 @@ const CollectionCard = ({
         language: lang,
       }),
     },
+    // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
     id: null,
   });
 
@@ -82,6 +83,7 @@ const CollectionCard = ({
       endpoint: HeadoutEndpoints.TourGroupListByCategoryV6,
       hostname,
       params: {
+        // @ts-expect-error TS(2322): Type 'string | undefined' is not assignable to typ... Remove this comment to see the full error message
         city,
         currency: 'USD',
         ...(lang && {
@@ -92,6 +94,7 @@ const CollectionCard = ({
     });
   });
 
+  // @ts-expect-error TS(2345): Argument of type '[string | undefined, { fetcher: ... Remove this comment to see the full error message
   const { data: collectionData } = useSWR(collectionEndpoint, {
     fetcher: swrFetcher,
   });
@@ -100,7 +103,7 @@ const CollectionCard = ({
   });
 
   const collectionPrices = collectionData
-    ? collectionData?.collections?.map((collection) => {
+    ? collectionData?.collections?.map((collection: any) => {
         const { id, startingPrice } = collection ?? {};
         return {
           id,
@@ -146,7 +149,7 @@ const CollectionCard = ({
         (collection) =>
           collection?.data?.primary_category === title ||
           collection?.data?.secondary_categories?.filter(
-            (item) => item?.category == title
+            (item: any) => item?.category == title
           )?.length
       );
 

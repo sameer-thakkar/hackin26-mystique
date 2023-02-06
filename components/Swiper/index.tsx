@@ -31,7 +31,6 @@ const SwiperWrapper: React.FC<ISwiperWrapper> = (props) => {
 
   return (
     <React.Fragment>
-      {/* @ts-ignore */}
       <Swiper {...restProps} modules={modules}>
         {children.map((element, index) =>
           element ? <SwiperSlide key={index}>{element}</SwiperSlide> : null

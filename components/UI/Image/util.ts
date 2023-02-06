@@ -13,6 +13,7 @@ export const generateImageImgixUrl = (
   blurFill: boolean
 ): string => {
   if (!url) {
+    // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string'.
     return null;
   }
 
@@ -82,10 +83,9 @@ const getShimmerStringSVGMarkup = (w = 160, h = 100) => `
   </svg>
 `;
 
-const toBase64 = (str) =>
-  typeof window === 'undefined'
-    ? Buffer.from(str).toString('base64')
-    : window.btoa(str);
+const toBase64 = (str: any) => typeof window === 'undefined'
+  ? Buffer.from(str).toString('base64')
+  : window.btoa(str);
 
 export const getBlurDataUrl = (width: number, height: number) => {
   return `data:image/svg+xml;base64,${toBase64(

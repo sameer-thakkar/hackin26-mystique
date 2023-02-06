@@ -1,7 +1,7 @@
 import React from 'react';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
-const InteractiveImage = props => {
+const InteractiveImage = (props: any) => {
   const { src, alt, isMobile } = props;
   const mobileProps = {
     centerContent: false,

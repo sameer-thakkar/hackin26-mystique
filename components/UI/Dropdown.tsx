@@ -9,10 +9,10 @@ const TriggerElement = styled.div`
   cursor: pointer;
 `;
 
-const DropdownOverlay = styled.div`
+const DropdownOverlay = styled.div `
   position: absolute;
   cursor: pointer;
-  display: ${(props) => (props.showOverlay ? `grid` : `none`)};
+  display: ${(props) => ((props as any).showOverlay ? `grid` : `none`)};
   padding: 20px 15px;
   background: #fff;
   grid-row-gap: 24px;
@@ -25,7 +25,9 @@ const DropdownOverlay = styled.div`
 
 const StyledDropdownItem = styled.div`
   font-size: 14px;
-  ${({ active }) =>
+  ${({  
+ // @ts-expect-error TS(2339): Property 'active' does not exist on type 'Pick<Det... Remove this comment to see the full error message
+ active }) =>
     active
       ? `
       display: grid;
@@ -65,6 +67,7 @@ const Dropdown: React.FC<any> = ({ children, triggerElement }) => {
       >
         {triggerElement}
       </TriggerElement>
+      {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <DropdownOverlay showOverlay={showOverlay}>{children}</DropdownOverlay>
     </div>
   );

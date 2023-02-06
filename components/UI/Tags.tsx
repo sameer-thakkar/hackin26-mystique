@@ -2,14 +2,20 @@ import React from 'react';
 import styled from 'styled-components';
 
 export const Tag = styled.div`
-  ${({ bordered }) => (bordered ? `border: 1px solid #ebebeb;` : ``)}
+  ${({  
+ // @ts-expect-error TS(2339): Property 'bordered' does not exist on type 'Pick<D... Remove this comment to see the full error message
+ bordered }) => (bordered ? `border: 1px solid #ebebeb;` : ``)}
   border-radius: 4px;
   padding: 5px 8px;
   font-size: 12px;
   line-height: 12px;
   margin-right: 8px;
-  ${({ colorProp }) => (colorProp ? `color: ${colorProp};` : ``)}
-  ${({ backgroundColor }) =>
+  ${({  
+ // @ts-expect-error TS(2339): Property 'colorProp' does not exist on type 'Pick<... Remove this comment to see the full error message
+ colorProp }) => (colorProp ? `color: ${colorProp};` : ``)}
+  ${({  
+ // @ts-expect-error TS(2339): Property 'backgroundColor' does not exist on type ... Remove this comment to see the full error message
+ backgroundColor }) =>
     backgroundColor ? `background: ${backgroundColor};` : ``}
 `;
 
@@ -29,6 +35,7 @@ const Tags: React.FC<{
     <StyledTags>
       {tags.map((tag, index) => (
         <Tag
+          // @ts-expect-error TS(2769): No overload matches this call.
           colorProp={color}
           backgroundColor={backgroundColor}
           bordered={bordered}

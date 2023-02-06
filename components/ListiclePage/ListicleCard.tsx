@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
@@ -29,7 +30,7 @@ const CardWrapper = styled.div`
   }
 `;
 
-const CardTop = styled.div`
+const CardTop = styled.div<{ isActive: boolean }>`
   width: 100%;
   height: 160px;
   display: grid;
@@ -60,7 +61,7 @@ const CardTop = styled.div`
   }
 `;
 
-const MobileCardTop = styled.div`
+const MobileCardTop = styled.div<{ imageUrl: string }>`
   background-image: url(${(props) => props.imageUrl});
   background-repeat: no-repeat;
   background-size: cover;
@@ -126,7 +127,7 @@ const ChevronWrapper = styled.div`
   justify-content: flex-end;
 `;
 
-const CardBottom = styled.div`
+const CardBottom = styled.div<{ isOpen: boolean }>`
   display: ${({ isOpen }) => {
     if (isOpen) return `grid`;
     return `none`;
@@ -249,9 +250,9 @@ const ListicleCard: React.FC<ListicleCardProps> = ({
     bookingUrl,
   } = tour;
   const tourCategories = listicleCategories.map(
-    (category) => category.category
+    (category: any) => category.category
   );
-  const tourTags = tags.map((tag) => tag.tag);
+  const tourTags = tags.map((tag: any) => tag.tag);
   const price = `${currency?.localSymbol}${listingPrice?.originalPrice}`;
 
   useEffect(() => {
@@ -260,7 +261,7 @@ const ListicleCard: React.FC<ListicleCardProps> = ({
         .getByUID(CUSTOM_TYPES.POPUP, seatingChartPopup.uid, {
           lang: 'en-us',
         })
-        .then((res) => {
+        .then((res: any) => {
           if (res.data) {
             setPopupData(res.data);
           }

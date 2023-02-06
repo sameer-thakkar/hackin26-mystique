@@ -6,7 +6,7 @@ import { CHEVRON_DOWN, PURPS_TICK_MARK } from 'assets/SvgIcons';
 import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
 
-const StyledSortSelector = styled.div`
+const StyledSortSelector = styled.div<{ isEntertainmentMb: boolean }>`
   margin: 0;
   position: relative;
   .filter-dropdown {
@@ -68,7 +68,7 @@ const StyledSortSelector = styled.div`
   }
 `;
 
-export const SortSelector = (props) => {
+export const SortSelector = (props: any) => {
   let filters = [
     {
       name: 'Popularity',
@@ -100,11 +100,12 @@ export const SortSelector = (props) => {
   };
 
   const selectorRef = useRef(null);
-  const parentRef = useRef(null);
+  const parentRef = useRef<HTMLDivElement>(null);
   const exceptionElementRefs = [parentRef];
   useCaptureClickOutside(
     selectorRef,
     closeFilterDropdown,
+    // @ts-expect-error TS(2345): Argument of type 'MutableRefObject<null>[]' is not... Remove this comment to see the full error message
     exceptionElementRefs
   );
 

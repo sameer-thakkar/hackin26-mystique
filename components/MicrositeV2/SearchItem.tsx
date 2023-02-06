@@ -1,3 +1,4 @@
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import { useRecoilValue } from 'recoil';
 import { searchQueryAtom } from 'store/atoms/searchQuery';
@@ -9,7 +10,7 @@ import Image from 'UI/Image';
 
 import { shortCodeSerializer } from '../../utils/shortCodes';
 
-export const SearchItem = (props) => {
+export const SearchItem = (props: any) => {
   const query = useRecoilValue(searchQueryAtom);
   const {
     tgid,

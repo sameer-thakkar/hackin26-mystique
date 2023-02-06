@@ -1,4 +1,6 @@
-const CurrencyList = async (req, res) => {
+import type { NextApiRequest, NextApiResponse } from 'next';
+
+const CurrencyList = async (_req: NextApiRequest, res: NextApiResponse) => {
   await fetch(`https://api.headout.com/api/v1/currency/list`)
     .then((r) => r.json())
     .then((r) => {
@@ -6,13 +8,16 @@ const CurrencyList = async (req, res) => {
       res.setHeader('Content-type', 'application/json');
       const response = {
         results_size: data.length,
-        results: data.map((currency) => ({
+        results: data.map((currency: any) => ({
           id: currency?.code,
           title: currency?.currencyName,
           description: `${currency?.currencyName} - ${currency?.localSymbol}`,
+
           image_url:
             'https://www.headout.com/static/favicons/favicon-32x32.png',
+
           last_update: new Date().getTime(),
+
           blob: {
             ...currency,
           },

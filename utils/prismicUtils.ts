@@ -53,6 +53,7 @@ import {
   fetchTourListV6,
 } from 'utils/apiUtils';
 
+// @ts-expect-error TS(7023): 'fetchAllMatchingDocs' implicitly has return type ... Remove this comment to see the full error message
 export const fetchAllMatchingDocs = async ({
   query,
   params = { pageSize: 100, page: 1, lang: '*' },
@@ -75,7 +76,7 @@ export const fetchAllMatchingDocs = async ({
   }
 };
 
-export const getSafetyBannerDocument = async ({ lang }) => {
+export const getSafetyBannerDocument = async ({ lang }: any) => {
   const safetyBannerResponse = await Client().query(
     Prismic.Predicates.at('document.type', CUSTOM_TYPES.SAFETY_BANNER),
     { lang: lang }
@@ -101,7 +102,7 @@ export const getPromoCodesDocument = async () => {
   return Promise.reject();
 };
 
-export const getListicleDocument = async ({ req, uid, lang }) => {
+export const getListicleDocument = async ({ req, uid, lang }: any) => {
   const listicleResponse = await Client(req).getByUID(
     CUSTOM_TYPES.LISTICLE,
     uid,
@@ -148,13 +149,13 @@ export const getContentPageDocument = async ({
   queryParamsString,
   serverResponse,
   host,
-}) => {
+}: any) => {
   return await Client(req)
     .getByUID(CUSTOM_TYPES.CONTENT_PAGE, uid, {
       fetchLinks: [...LINKED_MICROSITE_PROPS],
       lang,
     })
-    .then(async (page) => {
+    .then(async (page: any) => {
       if (page) {
         if (page.uid !== uid) {
           let url = convertUidToUrl({
@@ -162,8 +163,9 @@ export const getContentPageDocument = async ({
             lang: getHeadoutLanguagecode(lang),
           });
           if (host.slice(0, 5) === 'stage') {
-            url = url.split('//');
-            url = url.join('//stage-');
+            if (url) {
+              url = url.split('//')?.join('//stage-');
+            }
           }
           redirectTo({
             res: serverResponse,
@@ -221,7 +223,7 @@ export const getContentPageDocument = async ({
               .getByUID(CUSTOM_TYPES.CONTENT_PAGE, baseLangUid || uid, {
                 lang: 'en-us',
               })
-              .then((res) => res)
+              .then((res: any) => res)
           : null;
       const baseLangRefArray = await getRefsArrayByIds(
         [baseLangData?.data?.content_framework?.id],
@@ -288,12 +290,12 @@ export const getMicrositeDocument = async ({
   queryParamsString,
   lang,
   host,
-}): Promise<any> => {
+}: any): Promise<any> => {
   return await Client(req)
     .getByUID(CUSTOM_TYPES.MICROSITE, uid, {
       lang,
     })
-    .then(async (res) => {
+    .then(async (res: any) => {
       let completeMicrosite = { data: res };
       if (completeMicrosite.data) {
         if (completeMicrosite.data.uid !== uid) {
@@ -302,8 +304,9 @@ export const getMicrositeDocument = async ({
             lang: getHeadoutLanguagecode(lang),
           });
           if (host.slice(0, 5) === 'stage') {
-            url = url.split('//');
-            url = url.join('//stage-');
+            if (url) {
+              url = url.split('//').join('//stage-');
+            }
           }
           redirectTo({
             res: serverResponse,
@@ -320,7 +323,7 @@ export const getMicrositeDocument = async ({
                   .getByUID(CUSTOM_TYPES.MICROSITE, baseLangUid || uid, {
                     lang: 'en-us',
                   })
-                  .then((res) => res)
+                  .then((res: any) => res)
               : completeMicrosite.data;
 
           const {
@@ -536,7 +539,7 @@ export const getMicrositeDocument = async ({
     });
 };
 
-export const getGlobalHomepage = async ({ req, uid, lang }) => {
+export const getGlobalHomepage = async ({ req, uid, lang }: any) => {
   const response = await Client(req).getByUID(
     CUSTOM_TYPES.GLOBAL_HOMEPAGE,
     uid,
@@ -603,7 +606,7 @@ export const getGlobalHomepage = async ({ req, uid, lang }) => {
   return Promise.reject();
 };
 
-export const getGlobalCollection = async ({ req, uid, lang }) => {
+export const getGlobalCollection = async ({ req, uid, lang }: any) => {
   const response = await Client(req).getByUID(
     CUSTOM_TYPES.GLOBAL_COLLECTION,
     uid,
@@ -668,11 +671,12 @@ export const getGlobalCollection = async ({ req, uid, lang }) => {
     let ticketsPage, attractionsPage;
     if (subPages?.results?.length) {
       ticketsPage =
-        subPages?.results?.find((page) => page.data.page_type === 'Tickets') ||
-        {};
+        subPages?.results?.find(
+          (page: any) => page.data.page_type === 'Tickets'
+        ) || {};
       attractionsPage =
         subPages?.results?.find(
-          (page) => page.data.page_type === 'Attractions'
+          (page: any) => page.data.page_type === 'Attractions'
         ) || {};
     }
 
@@ -700,7 +704,7 @@ export const getGlobalCollection = async ({ req, uid, lang }) => {
   return Promise.reject();
 };
 
-export const getGlobalCity = async ({ req, uid, lang }) => {
+export const getGlobalCity = async ({ req, uid, lang }: any) => {
   const cityResponse = await Client(req).getByUID(
     CUSTOM_TYPES.GLOBAL_CITY,
     uid,
@@ -761,7 +765,7 @@ export const getGlobalCity = async ({ req, uid, lang }) => {
   return Promise.reject();
 };
 
-export const getGlobalCountry = async ({ req, uid, lang }) => {
+export const getGlobalCountry = async ({ req, uid, lang }: any) => {
   const countryResponse = await Client(req).getByUID(
     CUSTOM_TYPES.GLOBAL_COUNTRY,
     uid,
@@ -836,7 +840,7 @@ export const getGlobalCountry = async ({ req, uid, lang }) => {
   return Promise.reject();
 };
 
-export const getGlobalExperience = async ({ req, uid, lang }) => {
+export const getGlobalExperience = async ({ req, uid, lang }: any) => {
   const response = await Client(req).getByUID(
     CUSTOM_TYPES.GLOBAL_EXPERIENCE,
     uid,
@@ -920,6 +924,7 @@ export const getRefsArrayByIds = async (
   ref_ids: Array<String>,
   req: Request
 ) => {
+  // @ts-expect-error TS(2345): Argument of type 'Request' is not assignable to pa... Remove this comment to see the full error message
   const linkedRefsPromise = Client(req).getByIDs(ref_ids.filter((id) => id));
   return await Promise.resolve(linkedRefsPromise).then((res: any) => {
     return res.results;
@@ -934,7 +939,7 @@ export const getShowPage = async ({
   serverResponse,
   host,
   queryParamsString,
-}) => {
+}: any) => {
   const page = await Client(req).getByUID(CUSTOM_TYPES.SHOW_PAGE, uid, {
     lang,
   });
@@ -959,7 +964,12 @@ export const getShowPage = async ({
   //       .then((res) => res)
   //     : page.data;
 
-  const getCollections = async ({ pageSize = 100, page = 1, prevResults }) => {
+  // @ts-expect-error TS(7023): 'getCollections' implicitly has return type 'any' ... Remove this comment to see the full error message
+  const getCollections = async ({
+    pageSize = 100,
+    page = 1,
+    prevResults,
+  }: any) => {
     const {
       results = [],
       total_results_size: totalDocuments,
@@ -1021,15 +1031,13 @@ export const getPrismicDocument = async ({
   isDev,
   useHostAsUid = false,
   isNewMediaSite = false,
-  cookies = {},
-}): Promise<{
+}: any): Promise<{
   ContentType?: string;
   CMSContent?: any;
   statusCode?: number;
   isDev?: boolean;
   useHostAsUid?: boolean;
   isNewMediaSite?: boolean;
-  cookies?: { [key: string]: string };
 }> => {
   const { host } = req.headers || window.location;
   const { lang } = getLangUID(req, query);
@@ -1078,8 +1086,8 @@ export const getPrismicDocument = async ({
       getGlobalCountry({ req, lang, uid }),
     ]);
   } catch (error) {
-    if (error.errors && Array.isArray(error.errors)) {
-      error.errors.forEach((errorInstance) => {
+    if ((error as any).errors && Array.isArray((error as any).errors)) {
+      (error as any).errors.forEach((errorInstance: any) => {
         // eslint-disable-next-line no-console
         console.error(errorInstance);
       });
@@ -1113,7 +1121,7 @@ export const getPageData = async ({
   query,
   isDev,
   localizedStrings,
-}) => {
+}: any) => {
   const { host } = req.headers || window.location;
   const isStage = host.includes('stage-');
   const cookies = req.cookies;
@@ -1143,7 +1151,7 @@ export const getPageData = async ({
   }
 
   try {
-    let initial_tgids = [];
+    let initial_tgids: any = [];
 
     const { ContentType, CMSContent, statusCode } = (await getPrismicDocument({
       query,
@@ -1163,10 +1171,12 @@ export const getPageData = async ({
       mediaUpgradeExperiment.isNewMediaSite
     ) {
       const { alternate_languages } = CMSContent.data;
-      CMSContent.data.alternate_languages = alternate_languages.map((lang) => {
-        lang.uid = `${lang.uid}.home`;
-        return lang;
-      });
+      CMSContent.data.alternate_languages = alternate_languages.map(
+        (lang: any) => {
+          lang.uid = `${lang.uid}.home`;
+          return lang;
+        }
+      );
       CMSContent.data.data.noindex = true;
       CMSContent.data.data.canonical_link =
         CMSContent.data.data.canonical_link + 'home/';
@@ -1183,7 +1193,7 @@ export const getPageData = async ({
      * and finally gets returned with any other common data for CUSTOM_TYPE
      */
     let scorpioAllTourGroupData: any = {};
-    let tgidsArray = [];
+    let tgidsArray: any = [];
     const queryParams = (function getQueryparams() {
       try {
         const href = req ? `http://${host}${req.url}` : window.location.href;
@@ -1237,7 +1247,7 @@ export const getPageData = async ({
           productCard: productCardData,
           sliceObj,
           hostname,
-          lang,
+          lang: lang ?? LANGUAGE_MAP.en.code,
           cookies,
           localizedStrings,
         });
@@ -1252,7 +1262,7 @@ export const getPageData = async ({
         initial_tgids
       );
 
-      tgidsArray = toursList?.reduce((acc, tour) => {
+      tgidsArray = toursList?.reduce((acc: any, tour: any) => {
         return [...acc, tour.tgid];
       }, []);
       const { activeCurrency, primaryCity, primaryCountry } =
@@ -1280,7 +1290,7 @@ export const getPageData = async ({
 
     if (ContentType === CUSTOM_TYPES.GLOBAL_COLLECTION) {
       let ticketsData, startingPrice, currencyCode;
-      const language = getHeadoutLanguagecode(lang);
+      const language = getHeadoutLanguagecode(lang ?? 'en-us');
       const city = CMSContent?.data?.city_name?.trim()?.split(' ')?.join('_');
       const categoryId = CMSContent?.data?.headout_category_id;
       const collectionId = CMSContent?.data?.headout_collection_id;
@@ -1433,7 +1443,7 @@ export const getPageData = async ({
         const tgidData = await fetchTourGroupV6({
           tgid: CMSContent?.data?.tgid,
           hostname,
-          language: getHeadoutLanguagecode(lang),
+          language: getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale),
           cookies,
         });
 
@@ -1479,18 +1489,21 @@ export const getPageData = async ({
         ? CMSContent.data.microsite
         : CMSContent.data;
     const all_tours_tab_tgids =
-      microsite.data.all_tours.reduce((accum, tour) => {
+      microsite.data.all_tours.reduce((accum: any, tour: any) => {
         return [...accum, parseInt(tour.primary.tgid)];
       }, []) || [];
 
     let labelIds;
     if (all_tours_tab_tgids.length) {
-      labelIds = microsite.data.content_order.reduce((accum, label) => {
-        return [...accum, label.label.id];
-      }, []);
+      labelIds = microsite.data.content_order.reduce(
+        (accum: any, label: any) => {
+          return [...accum, label.label.id];
+        },
+        []
+      );
       microsite.data.labels = await Client(req)
         .getByIDs(labelIds)
-        .then((res) => {
+        .then((res: any) => {
           return res.results;
         });
     }
@@ -1534,10 +1547,11 @@ export const getPageData = async ({
             productCard: productCardData,
             sliceObj: toursTabSlice || localisedCategoryTourListV1,
             hostname,
-            lang,
+            lang: lang ?? 'en',
             cookies,
             localizedStrings,
           });
+          // @ts-expect-error TS(2322): Type 'AggregatedRatingDetails | undefined' is not ... Remove this comment to see the full error message
           aggregatedRatingDetails =
             categoryTourListData.aggregatedRatingDetails;
         } else {
@@ -1546,7 +1560,7 @@ export const getPageData = async ({
             hostname,
             showpages: allShowPages,
             categoryCarousel: categoryCarouselCF,
-            lang,
+            lang: lang ?? 'en',
             localizedStrings,
             cookies,
             MBDesign,
@@ -1558,16 +1572,16 @@ export const getPageData = async ({
         ? toursTabSliceHandler(toursTabFirstSlice)
         : [];
       const offers = prismicTours
-        ?.filter((tour) => tour.offer__free_tour?.id)
-        ?.map((tour) => tour.offer__free_tour?.id);
+        ?.filter((tour: any) => tour.offer__free_tour?.id)
+        ?.map((tour: any) => tour.offer__free_tour?.id);
       const uniqueOfferIds = offers.filter(
-        (id, index) => offers.indexOf(id) === index
+        (id: any, index: any) => offers.indexOf(id) === index
       );
       if (uniqueOfferIds.length)
         (CMSContent as any).offerData = await Client(req)
           .getByIDs(uniqueOfferIds)
-          .then((offerData) => {
-            offerData.results.map((offer) => {
+          .then((offerData: any) => {
+            offerData.results.map((offer: any) => {
               if (parseInt(offer.data.offer_tgid) > 0)
                 initial_tgids.push(offer.data.offer_tgid);
             });
@@ -1579,7 +1593,7 @@ export const getPageData = async ({
         initial_tgids
       );
 
-      tgidsArray = toursList?.reduce((acc, tour) => {
+      tgidsArray = toursList?.reduce((acc: any, tour: any) => {
         return [...acc, tour.tgid];
       }, []);
 
@@ -1600,6 +1614,7 @@ export const getPageData = async ({
         queryParams,
         mbTheme,
         isStage,
+        // @ts-expect-error TS(2454): Variable 'aggregatedRatingDetails' is used before ... Remove this comment to see the full error message
         aggregatedRatingDetails,
         ...(primaryCity && { primaryCity }),
         ...(primaryCountry && { primaryCountry }),
@@ -1611,9 +1626,10 @@ export const getPageData = async ({
 
     const tourGroupAPIResponses = await fetchTourListV6({
       hostname,
-      language: getHeadoutLanguagecode(lang),
+      language: getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale),
       tgids: tgidsArray,
-      fallbackToEnglish: getHeadoutLanguagecode(lang) !== 'en',
+      fallbackToEnglish:
+        getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale) !== 'en',
       currency: scorpioAllTourGroupData?.['queryParams']?.currency ?? null,
       useTest,
       cookies,
@@ -1623,6 +1639,7 @@ export const getPageData = async ({
 
       // if tourGroup API fails, assume all tours as unavailable and render rest of the page.
       return {
+        // @ts-expect-error TS(7006): Parameter 'tgid' implicitly has an 'any' type.
         tourGroups: tgidsArray.map((tgid) => ({
           id: tgid,
           listingPrice: null,
@@ -1631,6 +1648,7 @@ export const getPageData = async ({
     });
 
     const currencySymbolMap = tourGroupAPIResponses?.currencies?.reduce(
+      // @ts-expect-error TS(7006): Parameter 'acc' implicitly has an 'any' type.
       (acc, currency) => ({
         ...acc,
         [currency.code]: { ...currency },
@@ -1677,22 +1695,22 @@ export const getPageData = async ({
           ticketValidity,
           reschedulePolicy,
           cancellationPolicy: cancellationPolicyV2 ?? cancellationPolicy,
-          lang: getHeadoutLanguagecode(lang),
+          lang: getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale),
           localizedStrings,
         });
 
         const { productImages, safetyImages } = media || {};
         const updatedDescriptors = generateDescriptor({
           descriptors,
-          lang: getHeadoutLanguagecode(lang),
+          lang: getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale),
         });
 
         let allTags = allTagsTour || [];
         if (hide_df) {
-          allTags = allTags?.filter((t) => !t.includes('DF-'));
+          allTags = allTags?.filter((t: any) => !t.includes('DF-'));
         }
         if (hide_safe) {
-          allTags = allTags?.filter((t) => !t.includes('SAFE'));
+          allTags = allTags?.filter((t: any) => !t.includes('SAFE'));
         }
         return {
           ...accum,

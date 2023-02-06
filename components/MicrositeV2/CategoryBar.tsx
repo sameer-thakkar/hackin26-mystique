@@ -12,7 +12,7 @@ import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { expandFontToken } from 'const/typography';
 
-const StyledCategoryBar = styled.div`
+const StyledCategoryBar = styled.div<{ isMobile?: boolean }>`
   height: fit-content;
   position: sticky;
   background: ${COLORS.BRAND.WHITE};
@@ -31,7 +31,7 @@ const StyledCategoryBar = styled.div`
   }
 `;
 
-const CategoryBarWrapper = styled.div`
+const CategoryBarWrapper = styled.div<{ isEntertainmentMb?: boolean }>`
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
@@ -127,11 +127,12 @@ const CategoryBarWrapper = styled.div`
     }
   }
 `;
-const CategoryBar = (props) => {
+const CategoryBar = (props: any) => {
+  // @ts-expect-error TS(2339): Property 'changeCategory' does not exist on type '... Remove this comment to see the full error message
   const { changeCategory: changeCategoryHandler, activeCategoryIndex } =
     useContext(InteractionContext) || {};
   const pageMetaData = useRecoilValue(metaAtom);
-  const parent = useRef(null);
+  const parent = useRef<HTMLDivElement>(null);
   const category_bar = useRef(null);
   const scroll_div = useRef(null);
   const [activeCategory, setActiveCategory] = useState(activeCategoryIndex);
@@ -157,7 +158,7 @@ const CategoryBar = (props) => {
       smooth: true,
     });
 
-  const toggleFilterDropdown = (dropdownState) => {
+  const toggleFilterDropdown = (dropdownState: any) => {
     if (!filterDropdownActive)
       trackEvent({
         eventName: ANALYTICS_EVENTS.MB_SORT_BY_CLICKED,
@@ -168,19 +169,19 @@ const CategoryBar = (props) => {
     );
   };
 
-  const changeCategory = (index) => {
+  const changeCategory = (index: number) => {
     let { categories } = props;
     setActiveCategory(index);
     changeCategoryHandler(categories[index].ranking[activeOrder], index);
     const ranking = categories
-      .filter((category) =>
+      .filter((category: any) =>
         category?.ranking?.popularity?.length
           ? category.ranking.popularity.some(
-              (tgid) => allTours[tgid]?.available
+              (tgid: any) => allTours[tgid]?.available
             )
           : false
       )
-      .findIndex((category) => category.name === categories[index].name);
+      .findIndex((category: any) => category.name === categories[index].name);
 
     trackEvent({
       eventName: ANALYTICS_EVENTS.CATEGORY_TAB_CLICKED,
@@ -192,7 +193,7 @@ const CategoryBar = (props) => {
     focusProductList();
   };
 
-  const changeOrder = (orderKey) => {
+  const changeOrder = (orderKey: any) => {
     let { categories } = props;
     setActiveOrder(orderKey);
 
@@ -215,9 +216,10 @@ const CategoryBar = (props) => {
 
     const centerActiveCategory = () => {
       const parentElement = parent.current;
+      // @ts-expect-error TS(2531): Object is possibly 'null'.
       const selectedTab = parentElement.querySelector('.tab.active');
       if (isMobile) {
-        selectedTab.scrollIntoView({
+        selectedTab?.scrollIntoView({
           inline: 'center',
           behavior: 'smooth',
           block: 'nearest',
@@ -227,21 +229,25 @@ const CategoryBar = (props) => {
 
     const getActiveLineDimension = () => {
       const parentElement = parent.current;
-      const tag = parentElement.querySelector('.tab.active');
+      // @ts-expect-error TS(2531): Object is possibly 'null'.
+      const tag: Element = parentElement.querySelector('.tab.active');
       let selectedTab = window.getComputedStyle(tag);
       let width = parseFloat(selectedTab.width);
       let selectedTabDimensions = tag.getBoundingClientRect();
+      // @ts-expect-error TS(2531): Object is possibly 'null'.
       let parentDimensions = parentElement.getBoundingClientRect();
       let activeLineXOffset =
-        parseInt(selectedTabDimensions.x) -
-        parseInt(parentDimensions.left) +
+        parseInt(selectedTabDimensions.x.toString()) -
+        parseInt(parentDimensions.left.toString()) +
         parseInt(selectedTab.paddingLeft);
       if (isMobile) {
+        // @ts-expect-error TS(2531): Object is possibly 'null'.
         activeLineXOffset += parentElement.scrollLeft;
       }
       return { width: width, left: activeLineXOffset };
     };
 
+    // @ts-expect-error TS(2345): Argument of type '{ width: number; left: number; }... Remove this comment to see the full error message
     setIndicatorStyles(getActiveLineDimension());
     if (isMobile && parent.current) centerActiveCategory();
   }, [activeCategory, activeCategoryIndex, parent, isMobile]);
@@ -259,15 +265,18 @@ const CategoryBar = (props) => {
       <StyledCategoryBar ref={category_bar} isMobile={isMobile}>
         <CategoryBarWrapper ref={parent} isEntertainmentMb={isEntertainmentMb}>
           <div className="tabs-wrap">
-            {categories.map((category, index) => {
+            {categories.map((category: any, index: number) => {
               const { ranking, name } = category || {};
               const { popularity } = ranking || {};
-              const availableShows = popularity?.reduce((acc, tgid) => {
-                if (allTours[tgid]?.available) {
-                  acc++;
-                }
-                return acc;
-              }, 0);
+              const availableShows = popularity?.reduce(
+                (acc: any, tgid: any) => {
+                  if (allTours[tgid]?.available) {
+                    acc++;
+                  }
+                  return acc;
+                },
+                0
+              );
               const showCategoryTab = availableShows > 0;
               return (
                 <Conditional if={showCategoryTab} key={index}>
@@ -289,6 +298,7 @@ const CategoryBar = (props) => {
             })}
             <div
               className="active-indicator"
+              // @ts-expect-error TS(2322): Type '{ width: null; left: null; }' is not assigna... Remove this comment to see the full error message
               style={{ ...indicatorStyles }}
             ></div>
           </div>

@@ -23,7 +23,9 @@ const SocialIcon = styled.div`
     height: 20px;
     width: 20px;
     path {
-      fill: ${({ isEntertainmentMb }) =>
+      fill: ${({      
+ // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+ isEntertainmentMb }) =>
         isEntertainmentMb ? COLORS.GRAY.G5 : COLORS.BRAND.WHITE};
     }
   }
@@ -34,12 +36,12 @@ const TWITTER_URL = 'https://www.twitter.com/headout';
 const INSTAGRAM_HEADOUT_URL = 'https://www.instagram.com/headout/';
 const INSTAGRAM_HEADOUT_DUBAI_URL = 'https://www.instagram.com/headoutuae/';
 
-const SocialLinks = (props) => {
+const SocialLinks = (props: any) => {
   const { className, isEntertainmentMb } = props || {};
   const pageMeta = useRecoilValue(metaAtom);
 
   const getInstagramLink = () => {
-    switch (pageMeta?.city?.cityCode) {
+    switch ((pageMeta?.city as any)?.cityCode) {
       case 'DUBAI':
         return INSTAGRAM_HEADOUT_DUBAI_URL;
       default:
@@ -49,16 +51,19 @@ const SocialLinks = (props) => {
 
   return (
     <StyledSocialLinks className={className}>
+      {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <SocialIcon isEntertainmentMb={isEntertainmentMb}>
         <a href={FB_URL} target="_blank" rel="noreferrer noopener">
           {FACEBOOK}
         </a>
       </SocialIcon>
+      {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <SocialIcon isEntertainmentMb={isEntertainmentMb}>
         <a href={TWITTER_URL} target="_blank" rel="noreferrer noopener">
           {TWITTER}
         </a>
       </SocialIcon>
+      {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <SocialIcon isEntertainmentMb={isEntertainmentMb}>
         <a href={getInstagramLink()} target="_blank" rel="noreferrer noopener">
           {INSTAGRAM}

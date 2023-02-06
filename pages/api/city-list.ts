@@ -1,8 +1,8 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiRequest, NextApiResponse } from 'next';
 import { getValidUrl } from 'utils/urlUtils';
 
 const CityList = async (req: NextApiRequest, res: NextApiResponse) => {
-  let curPage = +req.query.page || 1;
+  let curPage = Number(req.query.page) || 1;
   // Display 50 countries per page. Limitation by prismic
   const perPage = 50;
   try {
@@ -16,7 +16,10 @@ const CityList = async (req: NextApiRequest, res: NextApiResponse) => {
     const startIndex = (curPage - 1) * perPage;
     const endIndex = curPage * perPage;
 
-    const citiesResult = cityData.slice(startIndex, endIndex);
+    const citiesResult: Record<string, any>[] = cityData.slice(
+      startIndex,
+      endIndex
+    );
     res.setHeader('Content-type', 'application/json');
     const response = {
       results_size: totalCities,
@@ -47,9 +50,7 @@ const CityList = async (req: NextApiRequest, res: NextApiResponse) => {
       ...response,
     });
   } catch (error) {
-    res.status(500).json({
-      ...error,
-    });
+    res.status(500).json(error);
   }
 };
 

@@ -17,7 +17,7 @@ import DropdownSelector from 'components/common/DropdownSelector';
 import Cookies from 'js-cookie';
 import { getDomainFromUid } from 'utils/urlUtils';
 
-const LanguageSelector = (props) => {
+const LanguageSelector = (props: any) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const { currentLanguage, languages: availableLanguages } = props;
   const { mbTheme, uid, isDev } = useContext(MBContext);
@@ -55,19 +55,21 @@ const LanguageSelector = (props) => {
     () => {
       if (showDropdown) handleClick();
     },
+    // @ts-expect-error TS(2345): Argument of type 'MutableRefObject<null>[]' is not... Remove this comment to see the full error message
     exceptionElementRefs
   );
 
-  const trackLanguageChange = (option) => {
+  const trackLanguageChange = (option: any) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.MB_LANGUGAGE_CHANGED,
       [ANALYTICS_PROPERTIES.LANGUAGE]: option.value,
     });
   };
-  const domain = getDomainFromUid(uid);
+  const domain = getDomainFromUid(uid ?? LANGUAGE_MAP.en.locale);
 
   useEffect(() => {
     Cookies.set('content_lang', currentLanguage, {
+      // @ts-expect-error TS(2322): Type 'string | null | undefined' is not assignable... Remove this comment to see the full error message
       domain: isDev ? null : domain?.replace('www.', ''),
       path: '',
     });
@@ -91,8 +93,10 @@ const LanguageSelector = (props) => {
 
   return (
     <DropdownSelector
+      // @ts-expect-error TS(2322): Type '{ label: any; value: any; itemProps: { href:... Remove this comment to see the full error message
       currentValue={options.find((opt) => opt.value === currentLanguage)}
       onChange={trackLanguageChange}
+      // @ts-expect-error TS(2322): Type '{ label: any; value: any; itemProps: { href:... Remove this comment to see the full error message
       options={options}
       onShowDropdown={trackDropdownShown}
       isCrawlable

@@ -16,7 +16,9 @@ type ImageGridProps = {
 const StyledImageGrid = styled.div`
   display: grid;
   grid-gap: 1.5em;
-  grid-template-columns: repeat(${({ colsProp }) => colsProp}, 1fr);
+  grid-template-columns: repeat(${({  
+ // @ts-expect-error TS(2339): Property 'colsProp' does not exist on type 'Pick<D... Remove this comment to see the full error message
+ colsProp }) => colsProp}, 1fr);
   max-width: 100%;
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -66,6 +68,7 @@ const StyledImageBox = styled.div`
 
 const ImageGrid: React.FC<ImageGridProps> = ({ images, cols }) => {
   return (
+    // @ts-expect-error TS(2769): No overload matches this call.
     <StyledImageGrid colsProp={cols}>
       {images.map((image, index) => (
         <StyledImageBox key={index}>

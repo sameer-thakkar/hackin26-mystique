@@ -332,7 +332,7 @@ width: 80%; */
 export default class FreeTourPopup extends Component<any, any> {
   FTPopupElement: any;
   FTWrapElement: any;
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       isClient: false,
@@ -369,7 +369,11 @@ export default class FreeTourPopup extends Component<any, any> {
     }
   }
 
-  handlePopup = (e, closeType, url) => {
+  handlePopup = (
+    _e: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>,
+    _closeType: string,
+    url: string | null
+  ) => {
     if (url) {
       return (window.location.href = url);
     }
@@ -377,7 +381,7 @@ export default class FreeTourPopup extends Component<any, any> {
     togglePopup();
   };
 
-  renderSlider = (productOffer) => {
+  renderSlider = (productOffer: any) => {
     const params: SwiperProps = {
       direction: 'horizontal',
       pagination: {
@@ -393,7 +397,7 @@ export default class FreeTourPopup extends Component<any, any> {
 
     return (
       <Swiper {...params}>
-        {productOffer.data.carousel_images.map((image, index) => {
+        {productOffer.data.carousel_images.map((image: any, index: number) => {
           return (
             <div key={index} className="swiper-slide">
               <Image
@@ -408,7 +412,7 @@ export default class FreeTourPopup extends Component<any, any> {
     );
   };
 
-  renderImage = (image) => {
+  renderImage = (image: any) => {
     if (image)
       return (
         <Image
@@ -493,9 +497,11 @@ export default class FreeTourPopup extends Component<any, any> {
                 {productOfferHighlights.length ? (
                   <div className="popupv2-list">
                     <ul>
-                      {productOfferHighlights.map((description, index) => {
-                        return <li key={index}>{description.text}</li>;
-                      })}
+                      {productOfferHighlights.map(
+                        (description: any, index: number) => {
+                          return <li key={index}>{description.text}</li>;
+                        }
+                      )}
                     </ul>
                   </div>
                 ) : (

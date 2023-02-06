@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'clas... Remove this comment to see the full error message
 import classNames from 'classnames';
 import COLORS from 'const/colors';
 import { expandFontToken } from 'const/typography';
@@ -13,7 +14,9 @@ const Tabs = styled.div`
   justify-content: left;
   margin: auto;
   border-bottom: 1px solid ${COLORS.GRAY.G6};
-  justify-content: ${({ align }) => {
+  justify-content: ${({  
+ // @ts-expect-error TS(2339): Property 'align' does not exist on type 'Pick<Deta... Remove this comment to see the full error message
+ align }) => {
     switch (align) {
       case 'center':
         return 'space-around';
@@ -76,6 +79,7 @@ const PageTabs = (props: PageTabsProps) => {
   const { tabs, align } = props;
 
   return (
+    // @ts-expect-error TS(2769): No overload matches this call.
     <Tabs align={align}>
       {tabs.map((tab, index) => (
         <LinkResolver key={index} url={tab.tab_link.url}>

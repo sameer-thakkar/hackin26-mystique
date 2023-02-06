@@ -35,7 +35,9 @@ const Wrapper = styled.div`
   margin: 0 auto;
 `;
 
-const TextBanner = ({ bannerHeading }) => {
+const TextBanner = ({
+  bannerHeading
+}: any) => {
   return (
     <Banner>
       <Conditional if={!!bannerHeading}>

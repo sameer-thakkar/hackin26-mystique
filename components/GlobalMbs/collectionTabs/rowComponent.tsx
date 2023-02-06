@@ -1,4 +1,9 @@
-import { FunctionComponent, useLayoutEffect, useRef, useState } from 'react';
+import React, {
+  FunctionComponent,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import styled from 'styled-components';
 import { scroller } from 'react-scroll';
 import { useWindowWidth } from '@react-hook/window-size';
@@ -22,8 +27,8 @@ const RowWrapper = styled.div`
 
 interface RowComponentProps {
   setRow: any;
-  setSectionIndex: any;
-  sectionIndex: any;
+  setSectionIndex?: number;
+  sectionIndex: number;
   cards: any[];
   categoryData: any[];
   ticketPages?: any[];
@@ -42,7 +47,7 @@ const RowComponent: FunctionComponent<RowComponentProps> = ({
   const [activeCardPrice, setActiveCardPrice] = useState(null);
   const [ticketURL, setTicketURl] = useState('');
 
-  const scrollToDetails = (id) => {
+  const scrollToDetails = (id: any) => {
     scroller.scrollTo(id, {
       duration: 1200,
       offset: -78,
@@ -51,15 +56,18 @@ const RowComponent: FunctionComponent<RowComponentProps> = ({
   };
 
   const detailedCardRef = useRef<HTMLDivElement | null>(null);
-  const getPrice = (currentCardCatId) => {
+  const getPrice = (currentCardCatId: any) => {
     return categoryData?.find(
       (category) => category?.id === Number(currentCardCatId)
     );
   };
 
-  const updateActiveCard = (e, active_card) => {
+  const updateActiveCard = (
+    _e: React.MouseEvent<HTMLDivElement>,
+    active_card: any
+  ) => {
     setRow(sectionIndex);
-    if (activeCard?.id !== active_card?.id) {
+    if ((activeCard as any)?.id !== active_card?.id) {
       setActiveCard(active_card);
       const ticketURL = ticketPages?.filter(
         (page) => page.data.collection.id === active_card?.id
@@ -111,8 +119,8 @@ const RowComponent: FunctionComponent<RowComponentProps> = ({
             data={activeCard}
             clickHandler={closeActiveCard}
             isMobile={isMobile}
-            price={activeCardPrice?.startingPrice}
-            currency={activeCardPrice?.currency}
+            price={(activeCardPrice as any)?.startingPrice}
+            currency={(activeCardPrice as any)?.currency}
             ticketURL={ticketURL}
           />
         </Conditional>

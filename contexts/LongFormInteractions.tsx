@@ -3,7 +3,7 @@ import React, { Component, createContext } from 'react';
 export const LongFormInteractionContext = createContext({});
 
 export class LongFormInteractionContextProvider extends Component<any, any> {
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       activeTour: {
@@ -14,7 +14,7 @@ export class LongFormInteractionContextProvider extends Component<any, any> {
     };
   }
 
-  clickTour = (tgid, hoist) => {
+  clickTour = (tgid: any, hoist: any) => {
     if (this.state.activeTour.tgid != tgid) {
       let newState = { ...this.state };
       newState.activeTour = {

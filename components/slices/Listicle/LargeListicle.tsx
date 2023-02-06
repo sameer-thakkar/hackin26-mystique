@@ -1,6 +1,7 @@
 import { HALYARD } from 'const/ui-constants';
 import React, { useState } from 'react';
 import styled from 'styled-components';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import Tags from 'UI/Tags';
 import Image from 'UI/Image';
@@ -109,7 +110,10 @@ const WTTDTSection = styled.div`
 `;
 
 const WTTDTSectionRichText = styled.div`
-  ${({ collapsed }) => (collapsed ? `height: 50px;` : '')}
+  ${({
+    // @ts-expect-error TS(2339): Property 'collapsed' does not exist on type 'Pick<... Remove this comment to see the full error message
+    collapsed,
+  }) => (collapsed ? `height: 50px;` : '')}
   overflow: hidden;
   color: ${COLORS.GRAY.G2};
   line-height: 22px;
@@ -133,11 +137,17 @@ const PriceAndCTASection = styled.div`
 `;
 
 const ReadMore = styled(Button)`
-  width: ${({ fullWidth }) => (fullWidth ? '100%;' : '42%; margin-right: 8px')};
+  width: ${({
+    // @ts-expect-error TS(2339): Property 'fullWidth' does not exist on type 'Pick<... Remove this comment to see the full error message
+    fullWidth,
+  }) => (fullWidth ? '100%;' : '42%; margin-right: 8px')};
 `;
 
 const BookNow = styled(Button)`
-  width: ${({ fullWidth }) => (fullWidth ? '100%' : '55%')};
+  width: ${({
+    // @ts-expect-error TS(2339): Property 'fullWidth' does not exist on type 'Pick<... Remove this comment to see the full error message
+    fullWidth,
+  }) => (fullWidth ? '100%' : '55%')};
 `;
 
 type LargeListicleProps = {
@@ -229,23 +239,25 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
       ) : null}
       {infoItems.length > 0 ? (
         <InfoGrid>
-          {infoItems.map(({ infoTitle, infoDescription }, index) => {
-            return (
-              <div key={index}>
-                <InfoTitle>{infoTitle}</InfoTitle>
-                <RichText
-                  render={infoDescription}
-                  htmlSerializer={shortCodeSerializer}
-                />
-              </div>
-            );
-          })}
+          {infoItems.map(
+            ({ infoTitle, infoDescription }: any, index: number) => {
+              return (
+                <div key={index}>
+                  <InfoTitle>{infoTitle}</InfoTitle>
+                  <RichText
+                    render={infoDescription}
+                    htmlSerializer={shortCodeSerializer}
+                  />
+                </div>
+              );
+            }
+          )}
           {timingsList.length > 0 ? (
             <div>
               <InfoTitle>{timing_heading || strings.TIMINGS}</InfoTitle>
               <InfoTimings>
                 <tbody>
-                  {timingsList.map((timing, index) => {
+                  {timingsList.map((timing: any, index: number) => {
                     return (
                       <tr key={index}>
                         <td>{timing.leftColumn}</td>
@@ -263,6 +275,7 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
       {RichText.asText(why_summary).length > 0 ? (
         <WTTDTSection>
           <div>{why_summary_heading || strings.WHY_TAKE_THIS_DAY_TRIP}</div>
+          {/* @ts-expect-error TS(2769): No overload matches this call. */}
           <WTTDTSectionRichText collapsed={WTTDTCollapsed}>
             <RichText
               render={why_summary}
@@ -296,6 +309,7 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
               rel="noopener noreferrer"
               target="_blank"
             >
+              {/* @ts-expect-error TS(2769): No overload matches this call. */}
               <ReadMore fullWidth={!book_now_link?.url} paddingSides="0px">
                 {strings.READ_MORE}
               </ReadMore>
@@ -308,6 +322,7 @@ const LargeListicle: React.FC<LargeListicleProps> = ({
               target="_blank"
             >
               <BookNow
+                // @ts-expect-error TS(2769): No overload matches this call.
                 fullWidth={!read_more_link?.url}
                 fillType="fillGradient"
                 paddingSides="0px"

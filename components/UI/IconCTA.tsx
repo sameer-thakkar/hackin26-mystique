@@ -12,12 +12,18 @@ export const StyledIconCTA = styled.div`
   grid-column-gap: 8px;
   border-radius: 0px 2px 2px 0px;
   justify-content: left;
-  background: ${({ colorScheme: cs }) => cs.background};
-  color: ${({ colorScheme: cs }) => cs.color};
+  background: ${({  
+ // @ts-expect-error TS(2339): Property 'colorScheme' does not exist on type 'Pic... Remove this comment to see the full error message
+ colorScheme: cs }) => cs.background};
+  color: ${({  
+ // @ts-expect-error TS(2339): Property 'colorScheme' does not exist on type 'Pic... Remove this comment to see the full error message
+ colorScheme: cs }) => cs.color};
   width: max-content;
   cursor: ${({ onClick }) => (onClick ? 'pointer' : '')};
   @media (max-width: 768px) {
-    ${({ showBorder }) => showBorder && `border: 1px solid ${COLORS.GRAY.G6}`}
+    ${({    
+ // @ts-expect-error TS(2339): Property 'showBorder' does not exist on type 'Pick... Remove this comment to see the full error message
+ showBorder }) => showBorder && `border: 1px solid ${COLORS.GRAY.G6}`}
     margin: 0.5rem 1rem;
   }
 `;
@@ -29,7 +35,9 @@ export const Chevron = styled.div`
     width: 12px;
     transform: rotate(180deg);
     path {
-      stroke: ${({ colorScheme: cs }) => cs.color};
+      stroke: ${({      
+ // @ts-expect-error TS(2339): Property 'colorScheme' does not exist on type 'Pic... Remove this comment to see the full error message
+ colorScheme: cs }) => cs.color};
       stroke-width: 2.5px;
     }
   }
@@ -52,7 +60,9 @@ export const Icon = styled.div`
 export const Content = styled.div`
   display: grid;
   grid-row-gap: 8px;
-  color: ${({ colorScheme: cs }) => cs.color};
+  color: ${({  
+ // @ts-expect-error TS(2339): Property 'colorScheme' does not exist on type 'Pic... Remove this comment to see the full error message
+ colorScheme: cs }) => cs.color};
   font-weight: 600;
   font-size: 11px;
   line-height: 14px;
@@ -65,19 +75,22 @@ const IconCTA = ({
   icon,
   ctaOnClick = null,
   colorScheme,
-  showBorder = false,
-}) => {
+  showBorder = false
+}: any) => {
   return (
     <StyledIconCTA
       onClick={ctaOnClick}
+      // @ts-expect-error TS(2769): No overload matches this call.
       colorScheme={colorScheme}
       showBorder={showBorder}
     >
       <Icon className="icon">{icon}</Icon>
+      {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <Content className="text" colorScheme={colorScheme}>
         {text}
       </Content>
       {ctaOnClick ? (
+        // @ts-expect-error TS(2769): No overload matches this call.
         <Chevron className="chevron" colorScheme={colorScheme}>
           {CHEVRON_LEFT}
         </Chevron>

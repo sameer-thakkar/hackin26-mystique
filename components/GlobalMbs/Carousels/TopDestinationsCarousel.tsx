@@ -79,8 +79,8 @@ const TopDestinationsCarousel: FunctionComponent<TopDestinationsCarouselProps> =
     const { data, uid } = city || {};
     const { city_name, country_name, body: slices } = data || {};
     const images = slices
-      ?.filter((slice) => slice?.slice_type === 'banner')
-      ?.reduce((acc, curr) => acc + curr);
+      ?.filter((slice: any) => slice?.slice_type === 'banner')
+      ?.reduce((acc: any, curr: any) => acc + curr);
     const image = images?.items[0]?.banner_image;
     const altText = images?.items[0]?.alt_text;
 

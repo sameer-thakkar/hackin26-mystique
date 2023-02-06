@@ -1,6 +1,7 @@
 import { HALYARD } from 'const/ui-constants';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import { useWindowWidth } from '@react-hook/window-size';
 import Tags from 'UI/Tags';
@@ -30,7 +31,9 @@ const CardTop = styled.div`
   grid-template-columns: 300px auto;
   grid-column-gap: 21px;
   cursor: pointer;
-  ${({ isActive }) =>
+  ${({  
+ // @ts-expect-error TS(2339): Property 'isActive' does not exist on type 'Pick<D... Remove this comment to see the full error message
+ isActive }) =>
     isActive
       ? `  border-bottom: 1px solid ${COLORS.GRAY.G6}; padding-bottom: 24px;`
       : ``}
@@ -86,7 +89,9 @@ const CardTitle = styled.div`
 `;
 
 const CardBottom = styled.div`
-  display: ${({ isOpen }) => {
+  display: ${({  
+ // @ts-expect-error TS(2339): Property 'isOpen' does not exist on type 'Pick<Det... Remove this comment to see the full error message
+ isOpen }) => {
     if (isOpen) return `grid`;
     return `none`;
   }};
@@ -168,11 +173,15 @@ const StyledLink = styled.a`
 `;
 
 const ReadMore = styled(Button)`
-  width: ${({ fullWidth }) => (fullWidth ? '100%;' : '42%; margin-right: 8px')};
+  width: ${({  
+ // @ts-expect-error TS(2339): Property 'fullWidth' does not exist on type 'Pick<... Remove this comment to see the full error message
+ fullWidth }) => (fullWidth ? '100%;' : '42%; margin-right: 8px')};
 `;
 
 const BookNow = styled(Button)`
-  width: ${({ fullWidth }) => (fullWidth ? '100%' : '55%')};
+  width: ${({  
+ // @ts-expect-error TS(2339): Property 'fullWidth' does not exist on type 'Pick<... Remove this comment to see the full error message
+ fullWidth }) => (fullWidth ? '100%' : '55%')};
 `;
 
 type MediumListicleProps = {
@@ -245,6 +254,7 @@ const MediumListicle: React.FC<MediumListicleProps> = ({
             </MobileCardTitleSection>
           </div>
         ) : (
+          // @ts-expect-error TS(2769): No overload matches this call.
           <CardTop onClick={() => setIsOpen((c) => !c)} isActive={isOpen}>
             <Image url={image.url} alt={image.alt} height={192} width={300} />
             <div>
@@ -273,6 +283,7 @@ const MediumListicle: React.FC<MediumListicleProps> = ({
             </div>
           </CardTop>
         )}
+        {/* @ts-expect-error TS(2769): No overload matches this call. */}
         <CardBottom isOpen={isOpen}>
           <CardBottomContent>
             <div className="tags">
@@ -322,6 +333,7 @@ const MediumListicle: React.FC<MediumListicleProps> = ({
                   rel="noopener noreferrer"
                   target="_blank"
                 >
+                  {/* @ts-expect-error TS(2769): No overload matches this call. */}
                   <ReadMore fullWidth={!book_now_link?.url} paddingSides="0px">
                     {strings.READ_MORE}
                   </ReadMore>
@@ -334,6 +346,7 @@ const MediumListicle: React.FC<MediumListicleProps> = ({
                   target="_blank"
                 >
                   <BookNow
+                    // @ts-expect-error TS(2769): No overload matches this call.
                     fullWidth={!read_more_link?.url}
                     fillType="fillGradient"
                     paddingSides="0px"

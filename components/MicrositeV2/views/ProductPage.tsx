@@ -4,6 +4,7 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import parse from 'url-parse';
 import { greyScheme } from 'style/theme';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import { MBContext } from 'contexts/MBContext';
 import InteractionContext from 'contexts/Interaction';
@@ -67,8 +68,10 @@ const IconBoosters = styled.div`
 
 const StyledMobileProductPage = styled.div`
   display: grid;
-  grid-row-gap: ${({ isEntertainmentMb }) =>
-    isEntertainmentMb ? '0' : '24px'};
+  grid-row-gap: ${({
+    // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+    isEntertainmentMb,
+  }) => (isEntertainmentMb ? '0' : '24px')};
   grid-template-rows: 56px 1fr;
   overflow: hidden;
   font-family: ${HALYARD.FONT_STACK};
@@ -81,8 +84,10 @@ const StyledMobileProductPage = styled.div`
     grid-column: 1 / 3;
   }
   .hr-line {
-    margin-top: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '0' : '-8px'};
+    margin-top: ${({
+      // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+      isEntertainmentMb,
+    }) => (isEntertainmentMb ? '0' : '-8px')};
     border-top: 1px solid ${COLORS.GRAY.G7};
   }
   .header {
@@ -90,8 +95,10 @@ const StyledMobileProductPage = styled.div`
     align-items: center;
     padding: 18px 16px;
     box-sizing: border-box;
-    border-bottom: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? 'none' : `1px solid ${COLORS.GRAY.G6}`};
+    border-bottom: ${({
+      // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+      isEntertainmentMb,
+    }) => (isEntertainmentMb ? 'none' : `1px solid ${COLORS.GRAY.G6}`)};
     position: fixed;
     width: 100%;
     z-index: 99;
@@ -110,10 +117,15 @@ const StyledMobileProductPage = styled.div`
     }
     .back {
       display: flex;
-      ${({ isEntertainmentMb }) =>
-        isEntertainmentMb && `justify-content: flex-end;`}
+      ${({
+        // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+        isEntertainmentMb,
+      }) => isEntertainmentMb && `justify-content: flex-end;`}
       path {
-        ${({ isEntertainmentMb }) =>
+        ${({
+          // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+          isEntertainmentMb,
+        }) =>
           isEntertainmentMb && `stroke: ${COLORS.GRAY.G2};stroke-width: 1px;`}
       }
     }
@@ -122,8 +134,10 @@ const StyledMobileProductPage = styled.div`
     display: grid;
     grid-auto-flow: row;
     grid-auto-rows: max-content;
-    grid-gap: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? 'unset' : '24px'};
+    grid-gap: ${({
+      // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+      isEntertainmentMb,
+    }) => (isEntertainmentMb ? 'unset' : '24px')};
   }
   .prod-image {
     max-width: calc(100% - 32px);
@@ -173,8 +187,10 @@ const StyledMobileProductPage = styled.div`
     font-size: 18px;
     font-family: ${HALYARD.FONT_STACK};
     font-weight: 600;
-    color: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? COLORS.GRAY.G2 : COLORS.GRAY.G1};
+    color: ${({
+      // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+      isEntertainmentMb,
+    }) => (isEntertainmentMb ? COLORS.GRAY.G2 : COLORS.GRAY.G1)};
     line-height: 24px;
     text-transform: unset;
     margin-bottom: 0;
@@ -182,10 +198,15 @@ const StyledMobileProductPage = styled.div`
 
   .head {
     display: grid;
-    grid-template-columns: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? 'unset' : '1fr auto'};
+    grid-template-columns: ${({
+      // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+      isEntertainmentMb,
+    }) => (isEntertainmentMb ? 'unset' : '1fr auto')};
     grid-row-gap: 8px;
-    ${({ isEntertainmentMb }) =>
+    ${({
+      // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+      isEntertainmentMb,
+    }) =>
       isEntertainmentMb &&
       `
     grid-auto-flow: row;
@@ -221,10 +242,15 @@ const StyledMobileProductPage = styled.div`
     .price {
       font-family: ${HALYARD.FONT_STACK};
       font-weight: 600;
-      margin-left: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '0' : '16px'};
+      margin-left: ${({
+        // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+        isEntertainmentMb,
+      }) => (isEntertainmentMb ? '0' : '16px')};
       margin-bottom: 0px;
-      ${({ isEntertainmentMb }) => isEntertainmentMb && `padding-top: 8px;`};
+      ${({
+        // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+        isEntertainmentMb,
+      }) => isEntertainmentMb && `padding-top: 8px;`};
       .scratched-price {
         font-weight: 500;
         font-size: 12px;
@@ -246,7 +272,10 @@ const StyledMobileProductPage = styled.div`
         font-weight: 500;
         margin-bottom: 4px;
       }
-      ${({ isEntertainmentMb }) =>
+      ${({
+        // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+        isEntertainmentMb,
+      }) =>
         isEntertainmentMb &&
         `
           display: grid;
@@ -306,9 +335,14 @@ const StyledMobileProductPage = styled.div`
   .content-blocks {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-row-gap: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '24px' : '32px'};
-    ${({ isEntertainmentMb }) => isEntertainmentMb && `padding-bottom: 48px;`}
+    grid-row-gap: ${({
+      // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+      isEntertainmentMb,
+    }) => (isEntertainmentMb ? '24px' : '32px')};
+    ${({
+      // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+      isEntertainmentMb,
+    }) => isEntertainmentMb && `padding-bottom: 48px;`}
   }
   .content-block {
     font-size: 14px;
@@ -317,22 +351,32 @@ const StyledMobileProductPage = styled.div`
     font-weight: 400;
     color: ${COLORS.GRAY.G2};
     display: grid;
-    grid-row-gap: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '8px' : '4px'};
+    grid-row-gap: ${({
+      // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+      isEntertainmentMb,
+    }) => (isEntertainmentMb ? '8px' : '4px')};
     .label-title {
-      font-size: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '14px' : '16px'};
+      font-size: ${({
+        // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+        isEntertainmentMb,
+      }) => (isEntertainmentMb ? '14px' : '16px')};
       font-weight: 600;
       font-family: ${HALYARD.FONT_STACK};
-      line-height: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '20px' : '1.12'};
-      color: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? COLORS.GRAY.G2 : COLORS.GRAY.G1};
+      line-height: ${({
+        // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+        isEntertainmentMb,
+      }) => (isEntertainmentMb ? '20px' : '1.12')};
+      color: ${({
+        // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+        isEntertainmentMb,
+      }) => (isEntertainmentMb ? COLORS.GRAY.G2 : COLORS.GRAY.G1)};
     }
     p {
       margin: 0;
-      line-height: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '20px' : '1.57'};
+      line-height: ${({
+        // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+        isEntertainmentMb,
+      }) => (isEntertainmentMb ? '20px' : '1.57')};
     }
     ul {
       margin: 0;
@@ -400,8 +444,10 @@ const StyledMobileProductPage = styled.div`
         grid-template-columns: unset;
       }
       img {
-        ${({ isEntertainmentMb }) =>
-          isEntertainmentMb && `height: 214px; border-radius: 8px;`}
+        ${({
+          // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+          isEntertainmentMb,
+        }) => isEntertainmentMb && `height: 214px; border-radius: 8px;`}
       }
     }
   }
@@ -416,22 +462,30 @@ const Descriptors = styled.div`
   flex-wrap: wrap;
   &::after {
     content: '';
-    margin-right: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '0' : '32px'};
+    margin-right: ${({
+      // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+      isEntertainmentMb,
+    }) => (isEntertainmentMb ? '0' : '32px')};
     display: block;
   }
   &::-webkit-scrollbar {
     width: 0 !important;
   }
   .descriptor {
-    padding: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '6px 8px' : '7px 12px'};
+    padding: ${({
+      // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+      isEntertainmentMb,
+    }) => (isEntertainmentMb ? '6px 8px' : '7px 12px')};
     background: ${COLORS.GRAY.G8};
     border-radius: 2px;
-    color: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? COLORS.GRAY.G3 : COLORS.GRAY.G1};
-    margin: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '0 4px 4px 0' : '0 8px 8px 0'};
+    color: ${({
+      // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+      isEntertainmentMb,
+    }) => (isEntertainmentMb ? COLORS.GRAY.G3 : COLORS.GRAY.G1)};
+    margin: ${({
+      // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+      isEntertainmentMb,
+    }) => (isEntertainmentMb ? '0 4px 4px 0' : '0 8px 8px 0')};
     &.mr-0 {
       margin-right: 0;
     }
@@ -448,7 +502,10 @@ const CTABlock = styled.div`
   bottom: 0;
   justify-items: center;
   display: flex;
-  ${({ isEntertainmentMb }) =>
+  ${({
+    // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+    isEntertainmentMb,
+  }) =>
     isEntertainmentMb &&
     `
     grid-template-columns: repeat(2, 1fr);
@@ -460,12 +517,18 @@ const CTABlock = styled.div`
   .cta {
     text-decoration: none;
     display: block;
-    width: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '100%' : 'calc(100% - 32px)'};
-    margin-bottom: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '0' : '16px'};
-    border-radius: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '4px' : '2px'};
+    width: ${({
+      // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+      isEntertainmentMb,
+    }) => (isEntertainmentMb ? '100%' : 'calc(100% - 32px)')};
+    margin-bottom: ${({
+      // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+      isEntertainmentMb,
+    }) => (isEntertainmentMb ? '0' : '16px')};
+    border-radius: ${({
+      // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+      isEntertainmentMb,
+    }) => (isEntertainmentMb ? '4px' : '2px')};
     .cta-text {
       padding: 16px;
       font-family: ${HALYARD.FONT_STACK};
@@ -473,10 +536,14 @@ const CTABlock = styled.div`
       font-weight: 600;
       font-style: normal;
       font-stretch: normal;
-      line-height: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '20px' : '1'};
-      letter-spacing: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '0.6px' : 'normal'};
+      line-height: ${({
+        // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+        isEntertainmentMb,
+      }) => (isEntertainmentMb ? '20px' : '1')};
+      letter-spacing: ${({
+        // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+        isEntertainmentMb,
+      }) => (isEntertainmentMb ? '0.6px' : 'normal')};
       text-align: center;
     }
     &.primary {
@@ -497,7 +564,7 @@ const CTABlock = styled.div`
   }
 `;
 
-export const MobileProductPage = (props) => {
+export const MobileProductPage = (props: any) => {
   const {
     tour,
     host,
@@ -549,6 +616,7 @@ export const MobileProductPage = (props) => {
     props.changePage({ name: PAGETYPE.HOMEPAGE });
   };
 
+  // @ts-expect-error TS(2339): Property 'activeCategoryId' does not exist on type... Remove this comment to see the full error message
   const { activeCategoryId } = useContext(InteractionContext) || {};
 
   let url = host || window.location.host;
@@ -571,6 +639,7 @@ export const MobileProductPage = (props) => {
   const isOpeningDateInThePast = isDateInThePast(reopeningDate);
 
   const openSafeSidebar = () => {
+    // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
     addToAside({
       width: '41.06vw',
       children: (
@@ -642,12 +711,13 @@ export const MobileProductPage = (props) => {
       [ANALYTICS_PROPERTIES.CATEGORY_NAME]: primaryCategory?.displayName,
       [ANALYTICS_PROPERTIES.SUB_CAT_ID]: primarySubCategory?.id,
       [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: primarySubCategory?.displayName,
-      [ANALYTICS_PROPERTIES.CITY]: pageMetaData?.city?.cityCode,
-      [ANALYTICS_PROPERTIES.COUNTRY]: pageMetaData?.country?.code,
+      [ANALYTICS_PROPERTIES.CITY]: (pageMetaData?.city as any)?.cityCode,
+      [ANALYTICS_PROPERTIES.COUNTRY]: (pageMetaData?.country as any)?.code,
     });
   };
 
   const CTAMarkup = (
+    // @ts-expect-error TS(2769): No overload matches this call.
     <CTABlock isEntertainmentMb={isEntertainmentMb}>
       <div
         role="button"
@@ -661,6 +731,7 @@ export const MobileProductPage = (props) => {
   );
 
   return (
+    // @ts-expect-error TS(2769): No overload matches this call.
     <StyledMobileProductPage isEntertainmentMb={isEntertainmentMb}>
       <header
         className={`${
@@ -696,7 +767,7 @@ export const MobileProductPage = (props) => {
           </Conditional>
           <Conditional if={images?.length > 1}>
             <Swiper {...carouselProps}>
-              {images?.map((image, index) => {
+              {images?.map((image: any, index: number) => {
                 return (
                   <div
                     key={index}
@@ -813,8 +884,9 @@ export const MobileProductPage = (props) => {
             <Conditional if={isEntertainmentMb}>
               <div className="hr-line full-block"></div>
             </Conditional>
+            {/* @ts-expect-error TS(2769): No overload matches this call. */}
             <Descriptors isEntertainmentMb={isEntertainmentMb}>
-              {descriptors?.map((descriptor, index) => {
+              {descriptors?.map((descriptor: any, index: number) => {
                 const lastItem = index === descriptors?.length - 1;
                 return (
                   <div

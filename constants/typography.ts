@@ -5,7 +5,9 @@
   Last Updated - "Tue May 17 2022 11:49:37 GMT+0530 (India Standard Time)"
 */
 
-const TYPOGRAPHY = {
+import { css } from 'styled-components';
+
+const TYPOGRAPHY: Record<string, Record<string, string | number>> = {
   'Display/Large': {
     fontFamily: 'halyard-display, sans-serif',
     fontSize: 48,
@@ -531,15 +533,15 @@ export function expandFontToken(label: string = 'PARAGRAPH_LARGE') {
     letterSpacing,
   } = TYPOGRAPHY[label];
 
-  const css = `
-	font-family: ${fontFamily};
-	font-size: ${fontSize}px;
-	font-weight: ${fontWeight};
-	font-style: ${fontStyle};
-	font-feature-settings: ${fontFeatureSettings};
-	line-height: ${lineHeight}px;
-	letter-spacing: ${letterSpacing}px;
+  const style = css`
+    font-family: ${fontFamily};
+    font-size: ${fontSize}px;
+    font-weight: ${fontWeight};
+    font-style: ${fontStyle};
+    font-feature-settings: ${fontFeatureSettings};
+    line-height: ${lineHeight}px;
+    letter-spacing: ${letterSpacing}px;
   `;
 
-  return css;
+  return style;
 }

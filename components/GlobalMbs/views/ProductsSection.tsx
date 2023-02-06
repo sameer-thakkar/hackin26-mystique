@@ -3,7 +3,7 @@ import { useWindowWidth } from '@react-hook/window-size';
 import PopulateProducts from 'components/PopulateProducts';
 import { getLangObject } from 'utils/helper';
 
-const ProductsSection = (props) => {
+const ProductsSection = (props: any) => {
   const {
     host,
     currency,
@@ -24,10 +24,14 @@ const ProductsSection = (props) => {
 
   const isCategorisedTours = Object.keys(categoryTourListData)?.length > 0;
 
-  const sortTours = (tgidToScroll, toursArray, isCategorisedTours) => {
+  const sortTours = (
+    tgidToScroll: any,
+    toursArray: any,
+    isCategorisedTours: boolean
+  ) => {
     if (!tgidToScroll) return toursArray;
     if (tgidToScroll) {
-      return toursArray?.reduce((accum = [], item) => {
+      return toursArray?.reduce((accum = [], item: any) => {
         const tgid = isCategorisedTours ? +tgidToScroll : tgidToScroll;
         if (item.tgid === tgid) {
           return [item, ...accum];

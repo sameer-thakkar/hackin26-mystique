@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import { MBContext } from 'contexts/MBContext';
 import useSWR from 'swr';
@@ -136,7 +137,7 @@ const MicrobrandCard = styled.div`
     `}
 `;
 
-export const LinkCardWrapper = (props) => {
+export const LinkCardWrapper = (props: any) => {
   if (props.as === React.Fragment) {
     return (
       <React.Fragment>
@@ -152,7 +153,7 @@ export const LinkCardWrapper = (props) => {
   );
 };
 
-export const LinkCard = (props) => {
+export const LinkCard = (props: any) => {
   const {
     card,
     index,
@@ -209,12 +210,12 @@ export const LinkCard = (props) => {
   );
 };
 
-export const LinkCards = (props) => {
+export const LinkCards = (props: any) => {
   const { cards, isFetched, cardPrices, currencySymbol, cardClassName } = props;
 
   return (
     <>
-      {cards.map((card, index) => (
+      {cards.map((card: any, index: number) => (
         <LinkCard
           card={card}
           key={index}
@@ -290,8 +291,10 @@ const MicrobrandCards: React.FC<MicrobrandCardsProps> = (props) => {
         language: lang,
       }),
     },
+    // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
     id: null,
   });
+  // @ts-expect-error TS(2345): Argument of type '[string | undefined, { fetcher: ... Remove this comment to see the full error message
   const { data: tourListData } = useSWR(tourListEndpoint, {
     fetcher: swrFetcher,
   });

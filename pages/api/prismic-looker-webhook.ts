@@ -1,5 +1,5 @@
+import type { NextApiRequest, NextApiResponse } from 'next';
 import { Client } from 'config/prismic-config';
-import { NextApiRequest, NextApiResponse } from 'next';
 import { legacyBooleanCheck } from 'utils';
 import {
   filterByDocType,
@@ -27,9 +27,9 @@ import {
   SEO_SUBDOMAINS,
 } from 'const/index';
 
-const getUpdatedDocuments = async ({ documentIds, masterRef, req }) => {
+const getUpdatedDocuments = async ({ documentIds, masterRef, req }: any) => {
   const linkedRefsPromise = Client(req, { ref: masterRef }).getByIDs(
-    documentIds.filter((id) => id),
+    documentIds.filter((id: any) => id),
     {
       fetchLinks: 'microsite.body1',
     }
@@ -39,9 +39,9 @@ const getUpdatedDocuments = async ({ documentIds, masterRef, req }) => {
   });
 };
 
-const parseDocuments = async ({ documents: docs, isStageMode, host }) => {
+const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
   const documents = isStageMode
-    ? docs?.filter((doc) => doc?.tags?.includes('[DEV]'))
+    ? docs?.filter((doc: any) => doc?.tags?.includes('[DEV]'))
     : docs;
 
   const {
@@ -107,6 +107,7 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }) => {
     const pageUrl = getPageUrl(doc);
     const language = lang?.split('-')[0].toUpperCase();
     const isSubdomain =
+      // @ts-expect-error TS(2345): Argument of type 'string | null' is not assignable... Remove this comment to see the full error message
       getStructure(new URL(pageUrl)) === PAGE_URL_STRUCTURE.SUBDOMAIN;
 
     if (language !== 'EN') {
@@ -140,8 +141,8 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }) => {
       shoulder_page_type:
         tagged_page_type === 'Shoulder Page' ? shoulder_page_type : null,
       content_type: tagged_content_type
-        ?.map((tag) => tag?.[SLICE_TYPES.CONTENT_TYPE_TAG])
-        ?.filter((tag) => tag),
+        ?.map((tag: any) => tag?.[SLICE_TYPES.CONTENT_TYPE_TAG])
+        ?.filter((tag: any) => tag),
       focus_keyword,
       google_site_verification_id: google_site_verification,
       bing_site_verification_id: bing_site_verification,
@@ -160,10 +161,12 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }) => {
       microsite_doc_footer_disclaimer:
         pageDocFooterDetails?.micrositeDocFooterDisclaimer,
       has_noindex:
+        // @ts-expect-error TS(2345): Argument of type 'string | null' is not assignable... Remove this comment to see the full error message
         isSubdomain && !SEO_SUBDOMAINS.includes(pageUrl)
           ? true
           : !!legacyBooleanCheck(noindex),
       has_nofollow:
+        // @ts-expect-error TS(2345): Argument of type 'string | null' is not assignable... Remove this comment to see the full error message
         isSubdomain && !SEO_SUBDOMAINS.includes(pageUrl)
           ? true
           : !!legacyBooleanCheck(noindex),
@@ -252,8 +255,8 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }) => {
     pageDocs,
     productCardDocs,
     headoutContentDocs,
-    baseLangDocId: baseLangDoc?.id,
-    baseLangDocUid: baseLangDoc?.uid,
+    baseLangDocId: (baseLangDoc as any)?.id,
+    baseLangDocUid: (baseLangDoc as any)?.uid,
     hasDataToPush,
   };
 };
@@ -262,7 +265,7 @@ const createStitchPostRequest = ({
   stitchEndpointToken,
   jsonBody,
   clientId = 121892,
-}) => {
+}: any) => {
   return fetch(
     `https://hooks.stitchdata.com/v1/clients/${clientId}/token/${stitchEndpointToken}`,
     {
@@ -279,6 +282,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { documents: updatedDocumentIds = [], masterRef = null } =
     req?.body || {};
   const { stageMode } = req.query;
+  // @ts-expect-error TS(2532): Object is possibly 'undefined'.
   const isStageMode = stageMode?.length > 0;
   const { host } = req?.headers;
 
@@ -317,7 +321,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   let response = {};
   const requests = [];
-  let baseLangPageDocs = [];
+  let baseLangPageDocs: any = [];
 
   //trigger webhook for base lang doc as well if lang page is published so that available_languages field for base lang doc is updated
   if (baseLangDocId) {
@@ -338,6 +342,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (baseLangDocUid) {
     pageDocs?.forEach((pageDoc: Record<string, any>) => {
       const baseLangPageDoc = baseLangPageDocs?.find(
+        // @ts-expect-error TS(7006): Parameter 'doc' implicitly has an 'any' type.
         (doc) => doc?.uid === baseLangDocUid
       );
       pageDoc.collection_id = baseLangPageDoc?.collection_id;
@@ -387,9 +392,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   if (requests?.length) {
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     response['stitch'] = await Promise.all(requests);
   }
 
+  // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
   response['payload'] = {
     pageDocs: baseLangPageDocs?.length
       ? [...pageDocs, ...baseLangPageDocs]

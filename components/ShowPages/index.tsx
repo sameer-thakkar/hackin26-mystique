@@ -2,8 +2,10 @@ import React, { useEffect, useState, useContext } from 'react';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useRecoilValue } from 'recoil';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import { ProductJsonLd } from 'next-seo';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'loda... Remove this comment to see the full error message
 import cloneDeep from 'lodash.clonedeep';
 import { useWindowWidth } from '@react-hook/window-size';
 import styled from 'styled-components';
@@ -184,7 +186,7 @@ const AboutTheatreSectionWrapper = styled.div`
   }
 `;
 
-const ShowPage = (props) => {
+const ShowPage = (props: any) => {
   const {
     CMSContent,
     host,
@@ -226,6 +228,7 @@ const ShowPage = (props) => {
     primarySubCategory || {};
   const { code: cityCode } = city || {};
 
+  // @ts-expect-error TS(2339): Property 'code' does not exist on type '{}'.
   const { code: currencyCode } = currency || {};
 
   const {
@@ -289,7 +292,7 @@ const ShowPage = (props) => {
   const { commonHeader } = CMSContent;
   const headerLinks = commonHeader?.data?.header_links || [];
   const dropdownLinksArray = commonHeader?.data?.dropdown_menu?.reduce(
-    (acc, item) => {
+    (acc: any, item: any) => {
       if (item.link)
         return [...acc, { value: item.link.url, label: item.link_text }];
       else return acc;
@@ -315,7 +318,7 @@ const ShowPage = (props) => {
     }).then((data) => {
       const { pageData } = data || {};
       const filteredData = pageData?.items?.filter(
-        (element) => element.id !== tgid
+        (element: any) => element.id !== tgid
       );
       if (filteredData?.length) {
         setSimilarProductData(filteredData);
@@ -347,7 +350,7 @@ const ShowPage = (props) => {
         limit: 5,
       });
 
-      const tourGroupReviews = data?.items?.map((review) => ({
+      const tourGroupReviews = data?.items?.map((review: any) => ({
         name: review?.nonCustomerName,
         content: review?.content,
       }));
@@ -418,11 +421,12 @@ const ShowPage = (props) => {
 
   const { addressLine1, addressLine2, postalCode, cityName, state } =
     startLocation || endLocation || {};
-  const productImages = imageUploads?.map((image) => image?.url);
+  const productImages = imageUploads?.map((image: any) => image?.url);
   const showDescription = tabSchemaHighlight?.[0]?.tab_content?.[0]?.text;
+  // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
   const showDuration = detailsObjects?.[strings.SHOW_PAGE.DURATION];
   const showDurationISO = getDurationISO(showDuration);
-  const theatreSeatingCapacity = aboutTheatreSection?.tab_content[1]?.text?.split(
+  const theatreSeatingCapacity = (aboutTheatreSection as any)?.tab_content[1]?.text?.split(
     ' '
   )[2];
   const { nakedDomain } = useContext(MBContext);
@@ -435,10 +439,10 @@ const ShowPage = (props) => {
   });
   const pricingValidFromDate = getPrevDate(inventorySlotData?.fromDate);
 
-  let offerSchema = [];
+  let offerSchema: any = [];
   variants
-    ?.filter((variant) => variant?.listingPrice)
-    ?.map((variant) => {
+    ?.filter((variant: any) => variant?.listingPrice)
+    ?.map((variant: any) => {
       offerSchema.push({
         '@type': 'Offer',
         name: variant?.name,
@@ -466,12 +470,15 @@ const ShowPage = (props) => {
         "name": "${name}",
         "description": "${showDescription}",
         "inLanguage": "English",
-        "image": [${productImages?.map((image) => `"${image}"`)}],
+        "image": [${productImages?.map((image: any) => `"${image}"`)}],
         "startDate": "${startDate}T${startTime}",
         "duration": "${showDurationISO}",
         "endDate": "${startDate}T${endTime}",
         "maximumAttendeeCapacity": "${theatreSeatingCapacity}",
-        "typicalAgeRange": "${detailsObjects?.[strings.SHOW_PAGE.AGE_LIMIT]}",
+        "typicalAgeRange": "${
+          // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+          detailsObjects?.[strings.SHOW_PAGE.AGE_LIMIT]
+        }",
         "url": "${pageUrl}",
         "eventStatus": "https://schema.org/EventScheduled",
         "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
@@ -491,7 +498,10 @@ const ShowPage = (props) => {
           "@type": "TheaterGroup",
           "name": "${name} Cast"
         },
-        "offers": [${offerSchema?.map((variant) => JSON.stringify(variant))}]
+        "offers": [${offerSchema?.map((
+          // @ts-expect-error TS(7006): Parameter 'variant' implicitly has an 'any' type.
+          variant
+        ) => JSON.stringify(variant))}]
       }`;
     })
     ?.join(',');
@@ -518,7 +528,7 @@ const ShowPage = (props) => {
             logoUrl: logoUrl,
           }}
         />
-        {/* @ts-ignore */}
+        {/* @ts-expect-error TS(2322): Type '{ reviews?: { author: { type: string; name: ... Remove this comment to see the full error message */}
         <ProductJsonLd {...productSchema} />
         <Head>
           <script
@@ -561,11 +571,11 @@ const ShowPage = (props) => {
         </Conditional>
         <Wrapper>
           <HighlightsSectionWrapper>
-            <RichText render={highlightsSection?.tab_content} />
+            <RichText render={(highlightsSection as any)?.tab_content} />
           </HighlightsSectionWrapper>
           {isMobile ? (
             <AccordionGroup
-              accordions={tabSchemaHighlight.map((element) => {
+              accordions={tabSchemaHighlight.map((element: any) => {
                 return {
                   heading: element.tab_name,
                   content: element.tab_content,
@@ -586,12 +596,12 @@ const ShowPage = (props) => {
           </Conditional>
           <SubHeading content={tabSectionHeading} />
           <AboutTheatreSectionWrapper>
-            <RichText render={aboutTheatreSection?.tab_content} />
+            <RichText render={(aboutTheatreSection as any)?.tab_content} />
           </AboutTheatreSectionWrapper>
           {isMobile ? (
             <ComponentWrapper>
               <AccordionGroup
-                accordions={tabSchemaInfo.map((element) => {
+                accordions={tabSchemaInfo.map((element: any) => {
                   return {
                     heading: element.tab_name,
                     content: element.tab_content,

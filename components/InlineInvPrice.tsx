@@ -29,7 +29,7 @@ export default class InlineInvPrice extends Component<any, any> {
       ).then((res) => res.json());
       const currencyCode = fetchTour.currency.code;
       const getTIDData = fetchTour.inventoryList.find(
-        (inventoryList) => inventoryList.tourId == this.props.tid
+        (inventoryList: any) => inventoryList.tourId == this.props.tid
       );
       const price = getTIDData.finalPriceProfile.persons[0].price;
       const invScratchPriceId = getTIDData.originalPriceProfileId;

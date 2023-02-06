@@ -13,6 +13,7 @@ import type { SwiperProps } from 'swiper/react';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: true });
 
+// @ts-expect-error TS(2339): Property 'cardsInARow' does not exist on type 'Pic... Remove this comment to see the full error message
 const CardGrid = styled.div(({ cardsInARow }) => {
   let gridTemplateColumns = `100%`;
   gridTemplateColumns = `repeat(${cardsInARow}, 1fr)`;
@@ -42,7 +43,9 @@ const StyledSwiper = styled.div`
   .swiper-wrapper {
     padding: ${(isGlobalMb) => (isGlobalMb ? '12px 0 24px 0' : '25px 0')};
 
-    ${({ hasLessCards }) =>
+    ${({    
+ // @ts-expect-error TS(2339): Property 'hasLessCards' does not exist on type 'Pi... Remove this comment to see the full error message
+ hasLessCards }) =>
       hasLessCards &&
       `
     display:flex;
@@ -58,7 +61,9 @@ const Controls = styled.div`
   .prev-slide,
   .next-slide {
     position: absolute;
-    top: ${({ isGlobalMb }) => (isGlobalMb ? 'calc(100% - 20px)' : '125px')};
+    top: ${({    
+ // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+ isGlobalMb }) => (isGlobalMb ? 'calc(100% - 20px)' : '125px')};
     transform: translateY(-50%);
     left: -20px;
     cursor: pointer;
@@ -95,7 +100,9 @@ const Controls = styled.div`
 
 const ExitDescription = styled.div`
   margin-top: 32px;
-  ${({ isGlobalMb, cardsInARow }) =>
+  ${({  
+ // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+ isGlobalMb, cardsInARow }) =>
     isGlobalMb &&
     cardsInARow === 1 &&
     `border-bottom: 1px solid ${COLORS.GRAY.G6};`};
@@ -163,6 +170,7 @@ const CardSection: React.FC<CardSectionProps> = ({
 
   // Rich Text for ending of the Card Section
   const ExitSection = exitDescription ? (
+    // @ts-expect-error TS(2769): No overload matches this call.
     <ExitDescription isGlobalMb={isGlobalMb} cardsInARow={cardsInARow}>
       <RichContent render={exitDescription} />
     </ExitDescription>
@@ -173,7 +181,7 @@ const CardSection: React.FC<CardSectionProps> = ({
     setIsMobile(width <= 768);
   }, [width, setIsMobile]);
 
-  let finalCardType;
+  let finalCardType: any;
   switch (cardsInARow) {
     case 1:
       finalCardType = 'full-width';
@@ -197,33 +205,33 @@ const CardSection: React.FC<CardSectionProps> = ({
 
   const [swiper, updateSwiper] = useState(null);
   const [_currentIndex, updateCurrentIndex] = useState(0);
+  // @ts-expect-error TS(2531): Object is possibly 'null'.
   const updateIndex = useCallback(() => updateCurrentIndex(swiper.realIndex), [
     swiper,
   ]);
 
   useEffect(() => {
     if (swiper !== null) {
-      swiper.on('slideChange', updateIndex);
+        (swiper as any).on('slideChange', updateIndex);
     }
-
     return () => {
-      if (swiper !== null) {
-        swiper.off('slideChange', updateIndex);
-      }
+        if (swiper !== null) {
+            (swiper as any).off('slideChange', updateIndex);
+        }
     };
-  }, [isMobile, swiper, updateIndex]);
+}, [isMobile, swiper, updateIndex]);
 
   // Carousel (and Overflow Scroll for mobile) Logic
   if (sectionType === 'Carousel') {
     const goNext = () => {
       if (swiper !== null) {
-        swiper.slideNext();
+        (swiper as any).slideNext();
       }
     };
 
     const goPrev = () => {
       if (swiper !== null) {
-        swiper.slidePrev();
+        (swiper as any).slidePrev();
       }
     };
 
@@ -232,52 +240,43 @@ const CardSection: React.FC<CardSectionProps> = ({
       centeredSlides: false,
       initialSlide: 0,
       spaceBetween: isGlobalMb ? 24 : 20,
+      // @ts-expect-error TS(2322): Type 'Dispatch<SetStateAction<null>>' is not assig... Remove this comment to see the full error message
       onSwiper: updateSwiper,
       direction: 'horizontal',
     };
 
-    return (
-      <>
+    return (<>
         {EntrySection}
         <CardCarousel>
+          {/* @ts-expect-error TS(2769): No overload matches this call. */}
           <StyledSwiper hasLessCards={hasLessCards}>
             <Swiper {...swiperParams}>
               {cards.map((card, index) => {
-                return <React.Fragment key={index}>{card}</React.Fragment>;
-              })}
+        return <React.Fragment key={index}>{card}</React.Fragment>;
+    })}
             </Swiper>
           </StyledSwiper>
           <Controls>
-            <Conditional if={!swiper?.isBeginning}>
-              <div
-                className="prev-slide"
-                role="button"
-                tabIndex={0}
-                onClick={goPrev}
-              >
+            <Conditional if={!(swiper as any)?.isBeginning}>
+              <div className="prev-slide" role="button" tabIndex={0} onClick={goPrev}>
                 {CHEVRON_LEFT_CIRCLE}
               </div>
             </Conditional>
-            <Conditional if={!swiper?.isEnd}>
-              <div
-                className="next-slide"
-                role="button"
-                tabIndex={0}
-                onClick={goNext}
-              >
+            <Conditional if={!(swiper as any)?.isEnd}>
+              <div className="next-slide" role="button" tabIndex={0} onClick={goNext}>
                 {CHEVRON_LEFT_CIRCLE}
               </div>
             </Conditional>
           </Controls>
         </CardCarousel>
         {ExitSection}
-      </>
-    );
+      </>);
   }
 
   return (
     <>
       {EntrySection}
+      {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <CardGrid cardsInARow={cardsInARow}>{cards}</CardGrid>
       {ExitSection}
     </>

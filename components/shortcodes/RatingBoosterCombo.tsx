@@ -37,7 +37,7 @@ const BoosterContainer = styled.span`
   }
 `;
 
-const RatingBoosterCombo = (props) => {
+const RatingBoosterCombo = (props: any) => {
   const { tgid, text } = props;
   const { isDev, host, isStage, lang } = useContext(MBContext);
   const hostname = getHostName(isStage, isDev, host);
@@ -51,6 +51,7 @@ const RatingBoosterCombo = (props) => {
     },
     id: tgid,
   });
+  // @ts-expect-error TS(2345): Argument of type '[string | undefined, { fetcher: ... Remove this comment to see the full error message
   const { data: tourGroupData } = useSWR(tourListEndpoint, {
     fetcher: swrFetcher,
   });

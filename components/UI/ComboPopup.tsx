@@ -180,6 +180,7 @@ const ComboPopup = ({
     hostname,
     params,
   });
+  // @ts-expect-error TS(2345): Argument of type '[string | undefined, { fetcher: ... Remove this comment to see the full error message
   const { data: tourGroupData, error } = useSWR(tourGroupEndpoint, {
     fetcher: swrFetcher,
   });
@@ -193,7 +194,7 @@ const ComboPopup = ({
     });
   }, []);
 
-  const variantMarkup = variants?.map((variant) => {
+  const variantMarkup = variants?.map((variant: any) => {
     const {
       id: variantId,
       name: variantName,
@@ -222,6 +223,7 @@ const ComboPopup = ({
   });
 
   return (
+    // @ts-expect-error TS(2769): No overload matches this call.
     <PopupWrapper isMobile={isMobile}>
       <PopupContentWrapper>
         <ProductCard>
@@ -253,6 +255,7 @@ const ComboPopup = ({
             </Conditional>
             <Conditional if={tourGroupData}>
               <Conditional if={!isMobile && !error && variants?.length > 1}>
+                {/* @ts-expect-error TS(2786): 'Carousel' cannot be used as a JSX component. */}
                 <Carousel cardsInARow={4} columnGap={24}>
                   {variantMarkup}
                 </Carousel>

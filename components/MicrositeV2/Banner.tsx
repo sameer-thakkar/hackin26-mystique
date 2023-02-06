@@ -203,14 +203,14 @@ const swiperParams: SwiperProps = {
     delay: 5000,
     disableOnInteraction: false,
   },
-  initialSlide: 0,
+  initialSlide: 1,
   loop: true,
   loopedSlides,
 };
 
 const initialSlide = 3;
 
-const NewBanner = (props) => {
+const NewBanner: React.FC<any> = (props) => {
   const {
     bannerImages,
     isMobile,
@@ -228,7 +228,7 @@ const NewBanner = (props) => {
     [ANALYTICS_PROPERTIES.TGIDS]: availableTours,
   };
 
-  const isSwiperSet = swiper !== null && !swiper?.destroyed;
+  const isSwiperSet = swiper !== null && !(swiper as any)?.destroyed;
 
   useEffect(() => {
     setMounted(true);
@@ -248,12 +248,13 @@ const NewBanner = (props) => {
   const trackBannerClick = () => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.MB_BANNER.CTA_CLICKED,
+      // @ts-expect-error TS(2531): Object is possibly 'null'.
       Ranking: swiper.realIndex + 1,
       ...analyticsParams,
     });
   };
 
-  const scrollToSection = (sectionId) => {
+  const scrollToSection = (sectionId: string) => {
     scroller.scrollTo(sectionId, {
       duration: 1000,
       delay: 4000,
@@ -262,7 +263,7 @@ const NewBanner = (props) => {
     });
   };
 
-  const handleInteraction = (interaction) => {
+  const handleInteraction = (interaction: string) => {
     if (interaction) {
       const [type, target] = interaction.split(':');
       switch (type.toLowerCase().trim()) {
@@ -272,7 +273,7 @@ const NewBanner = (props) => {
     }
   };
 
-  const getShowPageUrl = (image) =>
+  const getShowPageUrl = (image: any) =>
     typeof image?.showPageUrl === 'string'
       ? image?.showPageUrl
       : image?.showPageUrl?.url;
@@ -292,7 +293,7 @@ const NewBanner = (props) => {
     ? BANNER_PARAMS.MOBILE
     : BANNER_PARAMS.DESKTOP;
 
-  const textOverLay = (bannerHeading) => {
+  const textOverLay = (bannerHeading: string) => {
     const parsedBannerHeading = withShortcodes(bannerHeading).join('');
     return (
       <div className="overlay-container">
@@ -372,8 +373,9 @@ const NewBanner = (props) => {
             </Conditional>
           </div>
         ) : (
+          // @ts-expect-error TS(2322): Type 'Dispatch<SetStateAction<null>>' is not assig... Remove this comment to see the full error message
           <Swiper {...swiperParams} onSwiper={updateSwiper}>
-            {bannerImages?.map((image, index) => {
+            {bannerImages?.map((image: any, index: number) => {
               return (
                 <div
                   key={index}

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
@@ -41,7 +42,13 @@ const StyledRow = styled.div`
       display: none;
     }
     grid-template-columns: unset;
-    grid-template-rows: repeat(${({ rowCount }) => rowCount}, auto);
+    grid-template-rows: repeat(
+      ${({
+        // @ts-expect-error TS(2339): Property 'rowCount' does not exist on type 'Pick<D... Remove this comment to see the full error message
+        rowCount,
+      }) => rowCount},
+      auto
+    );
     margin-top: 0;
   }
 `;
@@ -62,7 +69,10 @@ const StyledColumn = styled.div`
     &:nth-of-type(2n) {
       background: ${COLORS.GRAY.G8};
     }
-    &:nth-of-type(${({ colCount }) => colCount + 1}) {
+    &:nth-of-type(${({
+          // @ts-expect-error TS(2339): Property 'colCount' does not exist on type 'Pick<D... Remove this comment to see the full error message
+          colCount,
+        }) => colCount + 1}) {
       grid-column: 1 / 3;
       grid-row: 1;
       font-size: 18px;
@@ -90,7 +100,7 @@ const StyledColumn = styled.div`
  * > PS: On Mobile, The First Row gets transformed as First column, and first column becomes the heading for each row.[Use the canvas tab to visualize this.]
  */
 
-const TableV2 = (props) => {
+const TableV2 = (props: any) => {
   const { rows, title, isMobile, description } = props;
   const headings = isMobile ? rows[0]?.columns : [];
   return (
@@ -99,13 +109,15 @@ const TableV2 = (props) => {
         <h2>{title}</h2>
         {description ? <RichContent render={description} /> : null}
       </TitleTextCombo>
-      {rows.map((row, rowIndex) => {
+      {rows.map((row: any, rowIndex: number) => {
         if (isMobile && rowIndex === 0) return null;
         const actualColumns = [...headings, ...row.columns];
         return (
+          // @ts-expect-error TS(2769): No overload matches this call.
           <StyledRow rowCount={headings.length} key={rowIndex}>
             {actualColumns.map((column, colIndex) => {
               return (
+                // @ts-expect-error TS(2769): No overload matches this call.
                 <StyledColumn colCount={row.columns.length} key={colIndex}>
                   <RichText
                     key={colIndex}

@@ -55,13 +55,18 @@ const Name = styled.div`
   font-size: 16px;
   line-height: 20px;
   font-weight: 600;
-  ${({ isSkeleton }) => isSkeleton && `margin-bottom: 0;`}
+  ${({
+    // @ts-expect-error TS(2339): Property 'isSkeleton' does not exist on type 'Pick... Remove this comment to see the full error message
+    isSkeleton,
+  }) => isSkeleton && `margin-bottom: 0;`}
 `;
 
 const PriceWrapper = styled.div`
   display: grid;
-  grid-template-columns: ${({ isSkeleton }) =>
-    isSkeleton ? `repeat(2, 1fr)` : `repeat(2, max-content)`};
+  grid-template-columns: ${({
+    // @ts-expect-error TS(2339): Property 'isSkeleton' does not exist on type 'Pick... Remove this comment to see the full error message
+    isSkeleton,
+  }) => (isSkeleton ? `repeat(2, 1fr)` : `repeat(2, max-content)`)};
   justify-content: space-between;
 `;
 
@@ -123,14 +128,20 @@ const Button = styled.div`
 
 const Description = styled.div`
   border-radius: 0 0 7px 7px;
-  ${({ isSkeleton }) =>
+  ${({
+    // @ts-expect-error TS(2339): Property 'isSkeleton' does not exist on type 'Pick... Remove this comment to see the full error message
+    isSkeleton,
+  }) =>
     isSkeleton &&
     `
     @media(min-width: 768px) {
       padding-bottom: 112px;
     }
   `}
-  ${({ hasVariantInfo }) =>
+  ${({
+    // @ts-expect-error TS(2339): Property 'hasVariantInfo' does not exist on type '... Remove this comment to see the full error message
+    hasVariantInfo,
+  }) =>
     hasVariantInfo &&
     `
     border-top: 1px solid ${COLORS.GRAY.G7};
@@ -157,12 +168,14 @@ export const VariantCardSkeleton = ({ isMobile }: { isMobile: boolean }) => {
       height="20px"
     >
       <VariantCardWrapper>
+        {/* @ts-expect-error TS(2769): No overload matches this call. */}
         <Name isSkeleton>
           <Skeleton />
           <Conditional if={!isMobile}>
             <Skeleton width="66.55%" />
           </Conditional>
         </Name>
+        {/* @ts-expect-error TS(2769): No overload matches this call. */}
         <PriceWrapper isSkeleton>
           <Price>
             <Skeleton width="30%" />
@@ -176,6 +189,7 @@ export const VariantCardSkeleton = ({ isMobile }: { isMobile: boolean }) => {
           </div>
         </PriceWrapper>
 
+        {/* @ts-expect-error TS(2769): No overload matches this call. */}
         <Description isSkeleton>
           <Skeleton width="75%" />
           <Conditional if={!isMobile}>
@@ -187,10 +201,10 @@ export const VariantCardSkeleton = ({ isMobile }: { isMobile: boolean }) => {
   );
 };
 
-const formatDescription = (desc) =>
+const formatDescription = (desc: any) =>
   desc?.includes('- ') ? (
     <ul className="desc-list">
-      {desc?.split('- ')?.map((line) => (
+      {desc?.split('- ')?.map((line: any) => (
         <Conditional key={line} if={line}>
           <li className="desc-text">{line}</li>
         </Conditional>
@@ -211,7 +225,7 @@ const VariantCard = ({
   tgid,
   hostname,
   isMobile,
-}) => {
+}: any) => {
   const bookUrl = addQueryParams(bookingUrl, {
     variantId,
   });
@@ -238,7 +252,7 @@ const VariantCard = ({
   }, [isContentOpen]);
 
   const getMoreDetailsButton = () => {
-    const keyPressedOnReadMore = (event) => {
+    const keyPressedOnReadMore = (event: any) => {
       if (event.keyCode == 13 && !isMobile) {
         toggleContentOpen(!isContentOpen);
       }
@@ -290,6 +304,7 @@ const VariantCard = ({
           </Button>
         </a>
       </PriceWrapper>
+      {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <Description hasVariantInfo={variantInfo !== null}>
         <Conditional if={!isMobile || isContentOpen}>
           {formatDescription(variantInfo) || ''}

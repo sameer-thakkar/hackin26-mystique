@@ -24,12 +24,14 @@ import {
 import { CURRENCY_SYMBOL_MAP, DESIGN } from 'const/index';
 
 export const uncategorizedToursListParser = (
-  uncategorizedToursList,
-  initialVal
-) => {
-  const initialTgids = initialVal.map((t) => ({ tgid: t }));
+  uncategorizedToursList: any[],
+  initialVal: any[]
+): any[] => {
+  const initialTgids = initialVal.map((t: any) => ({
+    tgid: t,
+  }));
   return uncategorizedToursList.reduce(
-    (accum, tour) => {
+    (accum: any, tour) => {
       const { tgid, tid } = tour;
       return [...accum, { tgid, tid, ...tour }];
     },
@@ -37,12 +39,25 @@ export const uncategorizedToursListParser = (
   );
 };
 
-const extractTgidsFromCategories = (arr) => {
-  if (arr?.length > 0) {
+const extractTgidsFromCategories = (arr: Record<string, any>[]) => {
+  if (!arr || arr.length === 0) return [];
+  if (arr.length > 0) {
     return arr
-      ?.map((data) => data?.items?.map((product) => product?.id) ?? [])
-      ?.flat();
+      .map(
+        (data) =>
+          data?.items?.map((product: Record<string, any>) => product?.id) ?? []
+      )
+      .flat();
   }
+};
+
+type TCategoryTourListParserV1 = {
+  productCard: Record<string, any>;
+  sliceObj: Record<string, any>;
+  hostname: string;
+  lang: string;
+  cookies?: Record<string, any>;
+  localizedStrings?: Record<string, any>;
 };
 
 export const categoryTourListParserV1 = async ({
@@ -52,16 +67,9 @@ export const categoryTourListParserV1 = async ({
   lang,
   cookies = {},
   localizedStrings,
-}: {
-  productCard: { [key: string]: any };
-  sliceObj: { [key: string]: any };
-  hostname: string;
-  lang: string;
-  cookies?: { [key: string]: string };
-  localizedStrings?: { [key: string]: string };
-}) => {
+}: TCategoryTourListParserV1) => {
   let tourData = [],
-    currency;
+    currency: any;
   const { primary, items } = sliceObj || {};
   const {
     locale_ranking,
@@ -133,14 +141,17 @@ export const categoryTourListParserV1 = async ({
       primaryCity = collectionData?.city;
       collectionVideo = collectionData?.collection?.collectionVideo;
       currency = collectionData?.city?.country?.currency;
-      const getCollectionSection = (collectionData, sectionType: string) => {
+      const getCollectionSection = (
+        collectionData: any,
+        sectionType: string
+      ) => {
         return collectionData?.sections
-          ?.filter((section) => {
+          ?.filter((section: any) => {
             if (section?.type === sectionType) {
               return section?.tourGroups?.items;
             }
           })
-          ?.reduce((acc, curr) => curr + acc);
+          ?.reduce((acc: any, curr: any) => curr + acc);
       };
       const pinnedCardsSection = getCollectionSection(
         collectionData,
@@ -160,7 +171,7 @@ export const categoryTourListParserV1 = async ({
         : [...headoutPicksSection?.tourGroups?.items];
       const allProducts = pinnedProducts?.length
         ? finalSections?.filter((product) =>
-            pinnedProducts?.some((p) => product?.id !== p?.id)
+            pinnedProducts?.some((p: any) => product?.id !== p?.id)
           )
         : finalSections;
       tourData.push(...pinnedProducts, ...allProducts);
@@ -209,7 +220,7 @@ export const categoryTourListParserV1 = async ({
     let allTours = [...tourData];
     const intialTgids = tourData?.map((tour) => tour.id);
     const tgidsToFetch = finalRanking?.filter(
-      (tgid) => !intialTgids.includes(tgid)
+      (tgid: any) => !intialTgids.includes(tgid)
     );
     if (tgidsToFetch?.length) {
       const additionalTours = await fetchTourListV6({
@@ -229,7 +240,7 @@ export const categoryTourListParserV1 = async ({
     const tgidsWithHORanking = allTours
       ?.map((tour) => tour.id)
       ?.filter((tgid) => !finalRanking?.includes(tgid));
-    let orderedTGIDRanking;
+    let orderedTGIDRanking: any;
     if (finalRanking?.length && tgidsWithHORanking?.length) {
       orderedTGIDRanking = [...finalRanking, ...tgidsWithHORanking];
     } else if (tgidsWithHORanking?.length) {
@@ -257,7 +268,7 @@ export const categoryTourListParserV1 = async ({
       ?.slice(0, sliceIndex)
       ?.reduce((acc, tour) => {
         const { id, allTags, flowType } = tour || {};
-        const tourObj = items?.find((item) => item.tgid === id);
+        const tourObj = items?.find((item: any) => item.tgid === id);
         const [variantId] =
           getSingleAriesTag(allTags, 'DEFAULT_VARIANT')?.match(/\d+/) || [];
         const finalObj = {
@@ -279,11 +290,11 @@ export const categoryTourListParserV1 = async ({
         return [...acc, finalObj];
       }, []);
     const allMultiVariantTgids = repeatableObj
-      .filter((tour) => tour.variantId)
-      .map((tour) => tour.tgid);
+      .filter((tour: any) => tour.variantId)
+      .map((tour: any) => tour.tgid);
 
     const tgidVariantData: any[] = await Promise.all(
-      allMultiVariantTgids?.map(async (tgid) =>
+      allMultiVariantTgids?.map(async (tgid: any) =>
         fetchTourGroupV6({ tgid, hostname, language, cookies })
       )
     );
@@ -319,7 +330,9 @@ export const categoryTourListParserV1 = async ({
         descriptors,
         lang: language,
       });
-      let { microBrandsHighlight } = tour ?? {};
+      let {
+        microBrandsHighlight,
+      }: { microBrandsHighlight: Record<string, any>[] } = tour ?? {};
       const {
         urlSlugs: _primaryCategoryUrlSlugs,
         ...primaryCategoryWithoutSlugs
@@ -343,7 +356,8 @@ export const categoryTourListParserV1 = async ({
       const [variantId] =
         getSingleAriesTag(allTags, 'DEFAULT_VARIANT')?.match(/\d+/) || [];
       const { listingPrice: variantListingPrice } =
-        variants?.find((variant) => variant?.id === parseInt(variantId)) || {};
+        variants?.find((variant: any) => variant?.id === Number(variantId)) ||
+        {};
       const finalListingPrice = variantListingPrice
         ? variantListingPrice
         : listingPrice;
@@ -388,7 +402,9 @@ export const categoryTourListParserV1 = async ({
       primaryCity,
       orderedTours: repeatableObj,
       activeCurrency: currency,
+      // @ts-expect-error TS(2454): Variable 'aggregatedRatingDetails' is used before ... Remove this comment to see the full error message
       aggregatedRatingDetails,
+      // @ts-expect-error TS(2454): Variable 'collectionVideo' is used before being as... Remove this comment to see the full error message
       collectionVideo,
     };
   } else {
@@ -403,7 +419,7 @@ export const categoryTourListParserV1 = async ({
   }
 };
 
-interface CategoryTourListParserV2 {
+type TCategoryTourListParserV2 = {
   tourListCategory: { [key: string]: any };
   hostname: string;
   showpages: any;
@@ -412,29 +428,26 @@ interface CategoryTourListParserV2 {
   localizedStrings: any;
   cookies?: { [key: string]: string };
   MBDesign?: string;
-}
+};
 
-export const categoryTourListParserV2 = async (
-  obj: CategoryTourListParserV2
-) => {
+export const categoryTourListParserV2 = async ({
+  tourListCategory,
+  hostname,
+  showpages,
+  categoryCarousel,
+  lang,
+  localizedStrings,
+  cookies,
+  MBDesign = '',
+}: TCategoryTourListParserV2) => {
   const categoryIds = [],
-    subCategoryIds = [],
-    collectionIds = [];
-  const {
-    tourListCategory,
-    hostname,
-    showpages,
-    categoryCarousel,
-    lang,
-    localizedStrings,
-    cookies,
-    MBDesign = '',
-  } = obj || {};
+    subCategoryIds: any = [],
+    collectionIds: any = [];
 
   const { primary, items: slices } = tourListCategory || {};
   const city = primary?.city?.cityCode;
   if (slices?.length) {
-    slices?.forEach((c) => {
+    slices?.forEach((c: any) => {
       const { collection, category, sub_category } = c || {};
       if (collection) {
         collectionIds?.push(collection);
@@ -447,18 +460,21 @@ export const categoryTourListParserV2 = async (
       }
     });
   }
+  // @ts-expect-error TS(2532): Object is possibly 'undefined'.
   if (categoryCarousel.primary?.category_id) {
+    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     categoryIds.push(categoryCarousel.primary?.category_id);
   }
 
   let showpageData = {},
     data;
   if (showpages?.length) {
-    showpages?.forEach((page) => {
+    showpages?.forEach((page: any) => {
       const {
         uid,
         data: { tgid },
       } = page || { data: {} };
+      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       showpageData[tgid] = uid;
     });
   }
@@ -483,11 +499,11 @@ export const categoryTourListParserV2 = async (
       const data = await Promise.all(allPromises);
       const collectionData: any = data?.map((c: any) => {
         const { collection, sections } = c || {};
-        const filteredData = sections.filter((curr) => {
+        const filteredData = sections.filter((curr: any) => {
           return curr?.tourGroups?.items?.length;
         });
-        let filterTgids = [];
-        filteredData.forEach((section) => {
+        let filterTgids: any = [];
+        filteredData.forEach((section: any) => {
           if (section?.tourGroups?.items) {
             filterTgids = filterTgids.concat(section.tourGroups.items);
           }
@@ -597,7 +613,8 @@ export const categoryTourListParserV2 = async (
       tgids: Array.from(tgidSet),
     }).then((data) => {
       let formattedData = {};
-      data?.tourGroups?.forEach((tour) => {
+      data?.tourGroups?.forEach((tour: any) => {
+        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         formattedData[tour?.id] = tour;
       });
       return formattedData;
@@ -611,11 +628,12 @@ export const categoryTourListParserV2 = async (
 
       let itemsToRender = items;
       if (MBDesign !== DESIGN.V3) {
-        itemsToRender = items?.filter((product) =>
+        itemsToRender = items?.filter((product: any) =>
           tgidsWithShowPages.includes(String(product.id))
         );
       }
-      finalObj[categoryId] = itemsToRender?.map((product) => {
+      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+      finalObj[categoryId] = itemsToRender?.map((product: any) => {
         const {
           microBrandsDescriptor,
           descriptors: secondaryDescriptors,
@@ -651,6 +669,7 @@ export const categoryTourListParserV2 = async (
           ...primarySubCategoryWithoutSlugs
         } = primarySubCategory ?? {};
         const { finalPrice, originalPrice, currencyCode } = listingPrice || {};
+        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         const currencySymbol = CURRENCY_SYMBOL_MAP[currencyCode];
         const re = /(?:\r\n|\s\|\s)/g;
         const descriptors = microBrandsDescriptor
@@ -724,9 +743,12 @@ export const categoryTourListParserV2 = async (
             labelId: key?.toLowerCase()?.split(' ')?.join('-'),
           };
           isLeftBlock
-            ? contentBlocks?.left?.push(block)
-            : contentBlocks?.right?.push(block);
+            ? // @ts-expect-error TS(2345): Argument of type '{ label: any; content: string | ... Remove this comment to see the full error message
+              contentBlocks?.left?.push(block)
+            : // @ts-expect-error TS(2345): Argument of type '{ label: any; content: string | ... Remove this comment to see the full error message
+              contentBlocks?.right?.push(block);
         }
+        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         const { media, flowType } = allTourGroupData[id] || {};
         const { productImages } = media || {};
         const [, descriptionImage] = productImages || [];
@@ -772,6 +794,7 @@ export const categoryTourListParserV2 = async (
           microBrandsHighlight: highlights,
           listingPrice,
           safetyImages: null,
+          // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
           showPageUid: hasShowPageData ? showpageData[id] : null,
           listicleShowSummary,
           listicleWhyWatch,
@@ -796,71 +819,78 @@ export const categoryTourListParserV2 = async (
   };
 };
 
-export const tourListApiParser = (apiResponse, lang = 'en') => {
+export const tourListApiParser = (
+  apiResponse: Record<string, any>,
+  lang = 'en'
+): Record<number, any> => {
   const currencySymbolMap = apiResponse?.currencies?.reduce(
+    // @ts-expect-error TS(7006): Parameter 'acc' implicitly has an 'any' type.
     (acc, currency) => ({
       ...acc,
       [currency.code]: { ...currency },
     }),
     {}
   );
-  return apiResponse?.tourGroups?.reduce((acc, tour) => {
-    const {
-      id,
-      allTags,
-      descriptors,
-      averageRating,
-      callToAction,
-      highlights,
-      listingPrice,
-      media,
-      imageUrl,
-      microBrandsHighlight,
-      name,
-      reviewCount,
-      primaryCollection,
-      primaryCategory,
-      primarySubCategory,
-      flowType,
-    } = tour || {};
-    const { productImages, safetyImages } = media || {};
-    const updatedDescriptors = generateDescriptor({
-      descriptors,
-      lang,
-    });
-
-    return {
-      ...acc,
-      [id]: {
+  return apiResponse?.tourGroups?.reduce(
+    (acc: Record<string, any>, tour: Record<string, any>) => {
+      const {
+        id,
         allTags,
-        available: !(listingPrice === null),
+        descriptors,
         averageRating,
         callToAction,
-        ctaBooster: callToAction,
-        currency: listingPrice?.currencyCode,
-        descriptors: updatedDescriptors,
-        highlights: microBrandsHighlight,
-        image: imageUrl,
-        images: productImages,
-        listingPrice: {
-          ...listingPrice,
-          ...currencySymbolMap[listingPrice?.currencyCode],
-        },
-        productHighlights: highlights,
-        productTitle: name,
-        price: listingPrice?.finalPrice,
+        highlights,
+        listingPrice,
+        media,
+        imageUrl,
+        microBrandsHighlight,
+        name,
         reviewCount,
-        safetyImages,
-        scratchPrice: listingPrice?.originalPrice,
-        title: name,
-        tgid: id,
         primaryCollection,
         primaryCategory,
         primarySubCategory,
         flowType,
-      },
-    };
-  }, {});
+      } = tour || {};
+      const { productImages, safetyImages } = media || {};
+      const updatedDescriptors = generateDescriptor({
+        descriptors,
+        lang,
+      });
+
+      return {
+        ...acc,
+        [id]: {
+          allTags,
+          available: !(listingPrice === null),
+          averageRating,
+          callToAction,
+          ctaBooster: callToAction,
+          currency: listingPrice?.currencyCode,
+          descriptors: updatedDescriptors,
+          highlights: microBrandsHighlight,
+          image: imageUrl,
+          images: productImages,
+          listingPrice: {
+            ...listingPrice,
+            ...currencySymbolMap[listingPrice?.currencyCode],
+          },
+          productHighlights: highlights,
+          productTitle: name,
+          price: listingPrice?.finalPrice,
+          reviewCount,
+          safetyImages,
+          scratchPrice: listingPrice?.originalPrice,
+          title: name,
+          tgid: id,
+          primaryCollection,
+          primaryCategory,
+          primarySubCategory,
+          flowType,
+        },
+      };
+    },
+    {}
+  );
 };
 
 export const parseV2ProductDescriptors = ({
@@ -889,10 +919,31 @@ export const parseV2ProductDescriptors = ({
         finalDescriptors = descriptors?.split(',');
     }
     return finalDescriptors?.length
-      ? finalDescriptors?.filter((desc) => desc?.length)?.map((d) => d?.trim())
+      ? finalDescriptors
+          ?.filter((desc: any) => desc?.length)
+          ?.map((d: any) => d?.trim())
       : [];
   }
 };
+
+type TGetToursGlobalCollection = {
+  lang: string;
+  collection?: number;
+  sub_category?: number;
+  tgid?: number;
+  commonCtaUrlSuffix?: string;
+  commonScratchPrice?: boolean;
+  hostname?: string;
+  cityName?: string;
+  cookies?: { [key: string]: string };
+};
+type TToursGlobalCollectionObject = ReturnType<
+  () => {
+    scorpioData: Record<string, any>;
+    orderedTours: Record<string, any>;
+    primaryCity: Record<string, any>;
+  }
+>;
 
 export const getToursGlobalCollection = async ({
   collection,
@@ -904,19 +955,9 @@ export const getToursGlobalCollection = async ({
   cityName,
   lang = 'en',
   cookies,
-}: {
-  lang: string;
-  collection?: number;
-  sub_category?: number;
-  tgid?: number;
-  commonCtaUrlSuffix?: string;
-  commonScratchPrice?: boolean;
-  hostname?: string;
-  cityName?: string;
-  cookies?: { [key: string]: string };
-}) => {
+}: TGetToursGlobalCollection): Promise<TToursGlobalCollectionObject> => {
   let tourData = [],
-    currency,
+    currency: any,
     primaryCity;
 
   if (collection) {
@@ -928,14 +969,17 @@ export const getToursGlobalCollection = async ({
       });
       currency = collectionData?.city?.country?.currency;
       primaryCity = collectionData?.city;
-      const getCollectionSection = (collectionData, sectionType: string) => {
+      const getCollectionSection = (
+        collectionData: any,
+        sectionType: string
+      ) => {
         return collectionData?.sections
-          ?.filter((section) => {
+          ?.filter((section: any) => {
             if (section?.type === sectionType) {
               return section?.tourGroups?.items;
             }
           })
-          ?.reduce((acc, curr) => curr + acc);
+          ?.reduce((acc: any, curr: any) => curr + acc);
       };
       const genericSection = getCollectionSection(collectionData, 'GENERIC');
       const headoutPicksSection = getCollectionSection(
@@ -1004,11 +1048,11 @@ export const getToursGlobalCollection = async ({
   }, []);
 
   const allMultiVariantTgids = repeatableObj
-    ?.filter((tour) => tour?.variantId)
-    ?.map((tour) => tour.tgid);
+    ?.filter((tour: any) => tour?.variantId)
+    ?.map((tour: any) => tour.tgid);
 
   const tgidVariantData: any[] = await Promise.all(
-    allMultiVariantTgids?.map(async (tgid) =>
+    allMultiVariantTgids?.map(async (tgid: any) =>
       fetchTourGroupV6({ tgid, hostname })
     )
   );
@@ -1041,7 +1085,7 @@ export const getToursGlobalCollection = async ({
     const [variantId] =
       getSingleAriesTag(allTags, 'DEFAULT_VARIANT')?.match(/\d+/) || [];
     const { listingPrice: variantListingPrice } =
-      variants?.find((variant) => variant?.id === parseInt(variantId)) || {};
+      variants?.find((variant: any) => variant?.id === Number(variantId)) || {};
     const finalListingPrice = variantListingPrice
       ? variantListingPrice
       : listingPrice;

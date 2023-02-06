@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
@@ -12,10 +13,10 @@ type ImageTextProps = {
   cards: any[];
 };
 
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.div `
   display: grid;
   grid-gap: 1.5em;
-  grid-template-columns: repeat(${(props) => props.colsProps}, 1fr);
+  grid-template-columns: repeat(${(props) => (props as any).colsProps}, 1fr);
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
@@ -74,6 +75,7 @@ const StyledComboCard = styled.div`
  */
 
 const ImageTextGrid: React.FC<ImageTextProps> = ({ cards, cols }) => (
+  // @ts-expect-error TS(2769): No overload matches this call.
   <StyledWrapper colsProps={cols}>
     {cards.map((card, index) => (
       <StyledComboCard key={index}>

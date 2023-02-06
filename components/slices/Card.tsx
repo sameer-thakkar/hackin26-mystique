@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useWindowWidth } from '@react-hook/window-size';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import { strings } from 'const/strings';
 import COLORS from 'const/colors';
@@ -51,14 +52,16 @@ const cardImageAspectRatio = {
 };
 
 const StyledCard = styled.div((props) => {
+  // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
   const { isGlobalMb } = props || {};
-  const styles = props.isMobile
+  const styles = (props as any).isMobile
     ? variantStyles.small
-    : variantStyles[props.cardType];
-  const hasSingleCard = props.cardsInARow === 1;
+    : // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+      variantStyles[(props as any).cardType];
+  const hasSingleCard = (props as any).cardsInARow === 1;
   const cardImgHeight = hasSingleCard
     ? '326px'
-    : props.cardsInARow === 4
+    : (props as any).cardsInARow === 4
     ? '180px'
     : '245px';
   return `
@@ -73,7 +76,7 @@ const StyledCard = styled.div((props) => {
   grid-template-columns: ${styles.gridTemplateColumns};
   text-decoration: none;
   height: 100%;
-  ${props.link && `cursor: pointer;`}
+  ${(props as any).link && `cursor: pointer;`}
   .flex{
     display: flex;
   }
@@ -229,7 +232,7 @@ type CardProps = {
  *  - Will take precedence over 'Image Source' alt
  */
 
-const HyperLink = ({ children, data }) => {
+const HyperLink = ({ children, data }: any) => {
   return (
     <a
       href={data.url}
@@ -297,6 +300,7 @@ const Card: React.FC<CardProps> = ({
   };
 
   const aspectRatio =
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     cardImageAspectRatio[isGlobalMb ? 5 : cardsInARow > 4 ? 4 : cardsInARow];
   const fallbackImage = isGlobalMb
     ? FALLBACK_IMAGES.THEMEPARKS
@@ -309,6 +313,7 @@ const Card: React.FC<CardProps> = ({
           url={fallbackImage}
           alt=""
           attribution=""
+          // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
           height={variantStyles[type].img.height}
           aspectRatio={aspectRatio}
           autoCrop={false}
@@ -321,6 +326,7 @@ const Card: React.FC<CardProps> = ({
           url={images[0].url || fallbackImage}
           alt={images[0]?.alt || ''}
           attribution={images[0]?.copyright}
+          // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
           height={variantStyles[type].img.height}
           aspectRatio={aspectRatio}
           autoCrop={false}
@@ -333,7 +339,7 @@ const Card: React.FC<CardProps> = ({
       imageView = (
         <SwiperWrapper>
           <Swiper {...swiperParams}>
-            {images.map((image, index) => {
+            {images.map((image: any, index: number) => {
               return (
                 <Image
                   className="swiper-slide"
@@ -341,6 +347,7 @@ const Card: React.FC<CardProps> = ({
                   url={image.url || fallbackImage}
                   attribution={image?.copyright}
                   alt={image.alt || ''}
+                  // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
                   height={variantStyles[type].img.height}
                   aspectRatio={aspectRatio}
                   autoCrop={false}
@@ -360,7 +367,9 @@ const Card: React.FC<CardProps> = ({
         <ButtonWrapper>
           <object>
             <a
+              // @ts-expect-error TS(2532): Object is possibly 'undefined'.
               href={cta.link.url}
+              // @ts-expect-error TS(2532): Object is possibly 'undefined'.
               target={cta.link.target}
               onClick={(e) => e.stopPropagation()}
             >
@@ -373,7 +382,9 @@ const Card: React.FC<CardProps> = ({
     case 'Link':
       CTA = (
         <CTALink
+          // @ts-expect-error TS(2532): Object is possibly 'undefined'.
           href={cta.link.url}
+          // @ts-expect-error TS(2532): Object is possibly 'undefined'.
           target={cta.link.target}
           onClick={(e) => {
             e.stopPropagation();
@@ -397,6 +408,7 @@ const Card: React.FC<CardProps> = ({
           as: 'a',
           link: true,
         })}
+      // @ts-expect-error TS(2769): No overload matches this call.
       isMobile={isMobile}
       cardType={type}
       isGlobalMb={isGlobalMb}
@@ -412,6 +424,7 @@ const Card: React.FC<CardProps> = ({
                 href: link.url,
                 target: link.target,
               })}
+              // @ts-expect-error TS(2769): No overload matches this call.
               isGlobalMb={isGlobalMb}
             >
               {title}

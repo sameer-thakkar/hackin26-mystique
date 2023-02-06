@@ -123,6 +123,7 @@ const StaticBanner = ({
             </Conditional>
             <Conditional if={bannerVideo}>
               <Video
+                // @ts-expect-error TS(2322): Type 'string | null | undefined' is not assignable... Remove this comment to see the full error message
                 url={bannerVideo}
                 imageId={'banner-image'}
                 imageWidth={BANNER_DIMENSIONS.WIDTH}

@@ -74,6 +74,7 @@ interface CarouselProps {
   children?: any[];
 }
 
+// @ts-expect-error TS(2322): Type '({ cardsInARow, spaceBetween, entrySection, ... Remove this comment to see the full error message
 const Carousel: FunctionComponent<CarouselProps> = ({
   cardsInARow = 1,
   spaceBetween = 24,
@@ -84,6 +85,7 @@ const Carousel: FunctionComponent<CarouselProps> = ({
   const [isMobile, setIsMobile] = useState(false);
   const [swiper, updateSwiper] = useState(null);
   const [_currentIndex, updateCurrentIndex] = useState(0);
+  // @ts-expect-error TS(2531): Object is possibly 'null'.
   const updateIndex = useCallback(() => updateCurrentIndex(swiper.realIndex), [
     swiper,
   ]);
@@ -94,28 +96,28 @@ const Carousel: FunctionComponent<CarouselProps> = ({
   }, [width, setIsMobile]);
 
   useEffect(() => {
-    if (isMobile) return;
+    if (isMobile)
+        return;
     if (swiper !== null) {
-      swiper.on('slideChange', updateIndex);
+        (swiper as any).on('slideChange', updateIndex);
     }
-
     return () => {
-      if (swiper !== null) {
-        swiper.off('slideChange', updateIndex);
-      }
+        if (swiper !== null) {
+            (swiper as any).off('slideChange', updateIndex);
+        }
     };
-  }, [isMobile, swiper, updateIndex]);
+}, [isMobile, swiper, updateIndex]);
 
   if (!isMobile) {
     const goNext = () => {
       if (swiper !== null) {
-        swiper.slideNext();
+        (swiper as any).slideNext();
       }
     };
 
     const goPrev = () => {
       if (swiper !== null) {
-        swiper.slidePrev();
+        (swiper as any).slidePrev();
       }
     };
 
@@ -126,38 +128,27 @@ const Carousel: FunctionComponent<CarouselProps> = ({
       onSwiper: updateSwiper,
     };
 
-    return (
-      <div>
+    return (<div>
         <EntrySection>{entrySection}</EntrySection>
         <StyledCarousel>
           <StyledSwiper>
+            {/* @ts-expect-error TS(2745): This JSX tag's 'children' prop expects type 'React... Remove this comment to see the full error message */}
             <Swiper {...swiperParams}>{children}</Swiper>
           </StyledSwiper>
           <Controls>
-            <Conditional if={!swiper?.isBeginning}>
-              <div
-                className="prev-slide"
-                role="button"
-                tabIndex={0}
-                onClick={goPrev}
-              >
+            <Conditional if={!(swiper as any)?.isBeginning}>
+              <div className="prev-slide" role="button" tabIndex={0} onClick={goPrev}>
                 {CHEVRON_LEFT_CIRCLE}
               </div>
             </Conditional>
-            <Conditional if={!swiper?.isEnd}>
-              <div
-                className="next-slide"
-                role="button"
-                tabIndex={0}
-                onClick={goNext}
-              >
+            <Conditional if={!(swiper as any)?.isEnd}>
+              <div className="next-slide" role="button" tabIndex={0} onClick={goNext}>
                 {CHEVRON_LEFT_CIRCLE}
               </div>
             </Conditional>
           </Controls>
         </StyledCarousel>
-      </div>
-    );
+      </div>);
   }
   if (isMobile) {
     return (
@@ -165,6 +156,7 @@ const Carousel: FunctionComponent<CarouselProps> = ({
         <Conditional if={entrySection}>
           <EntrySection>{entrySection}</EntrySection>
         </Conditional>
+        {/* @ts-expect-error TS(2745): This JSX tag's 'children' prop expects type 'React... Remove this comment to see the full error message */}
         <OverflowScroll minWidthChild="calc(100vw - 93px)" marginBottom={0}>
           {children}
         </OverflowScroll>

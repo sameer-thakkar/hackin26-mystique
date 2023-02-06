@@ -179,10 +179,12 @@ const CardCarouselContainer = styled.div`
   }
 `;
 
-type CardCarouselProps = {
-  cards: any[];
-  isMobile: boolean;
+type OwnCardCarouselProps = {
+    cards: any[];
+    isMobile: boolean;
 };
+
+type CardCarouselProps = OwnCardCarouselProps & typeof CustomerReview.defaultProps;
 
 export default class CustomerReview extends Component<CardCarouselProps> {
   state = {

@@ -1,5 +1,6 @@
-import { forwardRef, FunctionComponent, Ref, useContext } from 'react';
+import React, { forwardRef, Ref, useContext } from 'react';
 import styled from 'styled-components';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import { MBContext } from 'contexts/MBContext';
 import Image from 'UI/Image';
@@ -12,7 +13,7 @@ import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { getLocalisedPrice } from 'utils/currency';
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ isMobile: boolean }>`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 24px;
@@ -233,14 +234,18 @@ const Modal = styled.div`
 interface DetailedCollectionCardProps {
   data: any;
   isMobile: boolean;
-  clickHandler?: (e: any) => void;
+  clickHandler?: (e: React.MouseEvent<HTMLDivElement>) => void;
   ref?: Ref<HTMLDivElement>;
   price?: string;
   currency?: string;
   ticketURL?: string;
 }
 
-const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = forwardRef(
+const DetailedCollectionCard = forwardRef<
+  HTMLDivElement,
+  DetailedCollectionCardProps
+>(
+  // @ts-expect-error TS(2345): Argument of type '({ data, isMobile, clickHandler,... Remove this comment to see the full error message
   ({ data, isMobile, clickHandler, price, currency, ticketURL }, ref) => {
     const {
       data: {
@@ -268,13 +273,17 @@ const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = f
         : null;
 
     const imageUrl = images[0]?.image_url || FALLBACK_IMAGE;
-    const descriptorMarkup = descriptors?.map((descriptor, index) => (
-      <div className="descriptor" key={index}>
-        {descriptor?.tag}
-      </div>
-    ));
+    const descriptorMarkup = descriptors?.map(
+      (descriptor: any, index: number) => (
+        <div className="descriptor" key={index}>
+          {descriptor?.tag}
+        </div>
+      )
+    );
 
-    const ticketLink = convertUidToUrl({ uid: ticketURL });
+    const ticketLink = ticketURL
+      ? convertUidToUrl({ uid: ticketURL })
+      : undefined;
     const hasTicketsPage =
       (collectionId || categoryId) && supply === 'Direct' && ticketLink;
 
@@ -378,7 +387,11 @@ const DetailedCollectionCard: FunctionComponent<DetailedCollectionCardProps> = f
               alt={name}
             />
             <Conditional if={!isMobile}>
-              <CloseButton onClick={(e) => clickHandler(e)}>
+              <CloseButton
+                onClick={(e) => {
+                  clickHandler && clickHandler(e);
+                }}
+              >
                 {CLOSE_WHITE}
               </CloseButton>
             </Conditional>

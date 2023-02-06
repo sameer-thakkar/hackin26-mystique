@@ -1,6 +1,8 @@
 import { stringIdfy } from '../../utils/helper';
 
-const AnchorPoint = ({ id }) => {
+const AnchorPoint = ({
+  id
+}: any) => {
   return <div id={stringIdfy(id)} />;
 };
 

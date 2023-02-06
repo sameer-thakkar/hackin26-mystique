@@ -1,7 +1,7 @@
 import React from 'react';
 import COLORS from 'const/colors';
 
-const Booster = (props) => {
+const Booster: React.FC<{ color: string; text: string }> = (props) => {
   const { color, text } = props;
   return (
     <span className="inline-booster" style={{ color }}>

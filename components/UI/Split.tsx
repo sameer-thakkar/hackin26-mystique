@@ -5,7 +5,9 @@ export const StlyedSplit = styled.div`
   max-width: ${SIZES.MAX_WIDTH};
   margin: 0.5rem auto;
   padding: 0;
-  ${({ colGap, rowGap, count, autoWidth, mobileLayout }) => `
+  ${({  
+ // @ts-expect-error TS(2339): Property 'colGap' does not exist on type 'Pick<Det... Remove this comment to see the full error message
+ colGap, rowGap, count, autoWidth, mobileLayout }) => `
     grid-template-columns: repeat(${count}, ${autoWidth ? 'auto' : '1fr'});
     grid-gap: ${rowGap} ${colGap};
     justify-content: left;
@@ -38,8 +40,8 @@ const Split = ({
   colGap = '24px',
   autoWidth = false,
   children,
-  mobileLayout = '',
-}) => {
+  mobileLayout = ''
+}: any) => {
   return (
     <StlyedSplit {...{ count, rowGap, colGap, autoWidth, mobileLayout }}>
       {children}

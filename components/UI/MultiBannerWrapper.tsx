@@ -9,6 +9,7 @@ import { Shield } from 'assets/SvgIcons';
 import { greyScheme } from 'style/theme';
 import { MBContext } from 'contexts/MBContext';
 import Conditional from 'components/common/Conditional';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 
 import InfoBanner from './InfoBanner';
@@ -25,7 +26,9 @@ const Wrapper = styled.div`
   margin: auto;
   width: 100%;
   ${StlyedSplit} {
-    margin-top: ${({ marginTop }) => (marginTop ? marginTop : 0)}px;
+    margin-top: ${({    
+ // @ts-expect-error TS(2339): Property 'marginTop' does not exist on type 'Pick<... Remove this comment to see the full error message
+ marginTop }) => (marginTop ? marginTop : 0)}px;
   }
   ${({ theme }) =>
     theme.theme === THEMES.DEFAULT
@@ -70,6 +73,7 @@ const Description = styled.div`
 
 const MultiBannerWrapper = ({
   hasSafe = false,
+  // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'number'.
   marginTop = null,
   isMobile: isMobileCloudfront = false,
 }: {
@@ -100,18 +104,18 @@ const MultiBannerWrapper = ({
   const [safetyBannerData, setSafetyBannerData] = useState(null);
   const width = useWindowWidth();
   useEffect(() => {
-    getSafetyDescription(primaryCountry?.code, primaryCity, lang).then(
-      (data) => {
+    getSafetyDescription((primaryCountry as any)?.code, primaryCity, lang).then((data) => {
         data
-          ? setSafetyBannerData(data)
-          : setSafetyBannerData(GENERAL_SAFETY_NOTE);
-      }
-    );
+            ? setSafetyBannerData(data)
+            : // @ts-expect-error TS(2345): Argument of type '{ description: { spans: never[];... Remove this comment to see the full error message
+              setSafetyBannerData(GENERAL_SAFETY_NOTE);
+    });
     setIsMobile(width < 768);
-  }, [width]);
+}, [width]);
 
   if (!hasSafe) return null;
   const openSafeSidebar = () => {
+    // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
     addToAside({
       width: '41.06vw',
       children: [<SafeExperiencesPitch generic={true} key={0} />],
@@ -120,15 +124,14 @@ const MultiBannerWrapper = ({
     });
   };
 
-  const finalHeading = <RichText render={safetyBannerData?.heading} />;
-  const showFullBanner = primaryCountry?.code === 'FR' || !isMobile;
-  const description = (
-    <Description>
-      <RichText render={safetyBannerData?.description} />
-    </Description>
-  );
+  const finalHeading = <RichText render={(safetyBannerData as any)?.heading}/>;
+  const showFullBanner = (primaryCountry as any)?.code === 'FR' || !isMobile;
+  const description = (<Description>
+      <RichText render={(safetyBannerData as any)?.description}/>
+    </Description>);
 
   return (
+    // @ts-expect-error TS(2769): No overload matches this call.
     <Wrapper marginTop={marginTop}>
       <Split mobileLayout={'scroll'} count={1}>
         <Conditional if={showFullBanner}>

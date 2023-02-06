@@ -45,7 +45,7 @@ class NextAvailable extends React.Component<
   NextAvailableProps,
   NextAvailableState
 > {
-  constructor(props) {
+  constructor(props: NextAvailableProps) {
     super(props);
     this.state = {
       error: null,
@@ -54,7 +54,7 @@ class NextAvailable extends React.Component<
     };
   }
 
-  dayjsFormat = (text) => {
+  dayjsFormat = (text: any) => {
     return {
       sameDay: `[${text} Today]`,
       nextDay: `[${text} Tomorrow]`,
@@ -65,7 +65,7 @@ class NextAvailable extends React.Component<
     };
   };
 
-  getFormattedDate = (date) => {
+  getFormattedDate = (date: any) => {
     const dayjsDate = dayjs(date).calendar(
       null,
       this.dayjsFormat(strings.NEXT_AVAILABLE)

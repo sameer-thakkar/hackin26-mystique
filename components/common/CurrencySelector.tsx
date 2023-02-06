@@ -7,7 +7,9 @@ import { metaAtom } from 'store/atoms/meta';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 
-const CurrencySelector = ({ currencies }) => {
+const CurrencySelector = ({
+  currencies
+}: any) => {
   const [activeCurrency, setCurrency] = useRecoilState(currencyAtom);
   const router = useRouter();
   const pageMetaData = useRecoilValue(metaAtom);
@@ -16,27 +18,32 @@ const CurrencySelector = ({ currencies }) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.DROPDOWN_SHOWN,
       [ANALYTICS_PROPERTIES.HEADER]: getDisplayCurrencyString({
-        currencyObj: currencies.find(({ code }) => code === activeCurrency),
+        currencyObj: currencies.find(({
+          code
+        }: any) => code === activeCurrency),
       }),
       ...getCommonEventMetaData(pageMetaData),
     });
   };
 
-  const trackCurrencyChange = (option) => {
+  const trackCurrencyChange = (option: any) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.MB_CURRENCY_CHANGED,
       [ANALYTICS_PROPERTIES.CURRENCY]: option.value,
     });
   };
 
-  const getDisplayCurrencyString = ({ currencyObj, full = false }) => {
+  const getDisplayCurrencyString = ({
+    currencyObj,
+    full = false
+  }: any) => {
     const { currencyName, localSymbol, code } = currencyObj ?? {};
     const finalLocalSymbol = localSymbol === code ? '' : localSymbol;
     return full
       ? `${currencyName} (${finalLocalSymbol}${code})`
       : `${finalLocalSymbol ? finalLocalSymbol + ' ' : ''}${code}`;
   };
-  const options = currencies.map((currency) => {
+  const options = currencies.map((currency: any) => {
     return {
       label: getDisplayCurrencyString({ currencyObj: currency, full: true }),
       value: currency.code,
@@ -46,7 +53,7 @@ const CurrencySelector = ({ currencies }) => {
     };
   });
 
-  const handleChange = (option) => {
+  const handleChange = (option: any) => {
     setCurrency(option.value);
     trackCurrencyChange(option);
 
@@ -58,7 +65,7 @@ const CurrencySelector = ({ currencies }) => {
 
   return (
     <DropdownSelector
-      currentValue={options.find((opt) => opt.value === activeCurrency)}
+      currentValue={options.find((opt: any) => opt.value === activeCurrency)}
       onChange={handleChange}
       options={options}
       onShowDropdown={trackDropdownShown}

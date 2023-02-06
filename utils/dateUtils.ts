@@ -8,7 +8,7 @@ dayjs.extend(customParseFormat);
 dayjs.extend(duration);
 
 export const dateToString = (
-  date,
+  date: string,
   currentLanguage = 'en',
   dateFormat = 'DD MMM YYYY'
 ) => {
@@ -24,16 +24,18 @@ export const dateToString = (
     .format(dateFormat);
 };
 
-export const isDateInThePast = (date) => new Date(date).getTime() < Date.now();
-
-export const getDurationInHours = (duration) => Math.round(duration / 60);
+export const isDateInThePast = (date: string) =>
+  new Date(date).getTime() < Date.now();
 
 export const getDurationInDays = (duration: number) =>
   Math.round(duration / 1440);
 
-export const isDateValid = (date) => dayjs(date).isValid();
+export const getDurationInHours = (duration: number) =>
+  Math.round(duration / 60);
 
-export const getPrevDate = (date) =>
+export const isDateValid = (date: string | null) => dayjs(date).isValid();
+
+export const getPrevDate = (date: string | null) =>
   dayjs(date).subtract(1, 'day').format('YYYY-MM-DD');
 
 /**
@@ -44,19 +46,27 @@ export const getPrevDate = (date) =>
  * @param {string} durationString (eg - "2 hrs, 45 mins with 1 intermission").
  * @return {string} ISO 8601 representation (eg - "PT2H45M").
  */
-export const getDurationISO = (durationString) => {
+export const getDurationISO = (durationString: string) => {
   if (!durationString) return '';
   const durationObject = durationString
     .split(' ')
-    .reduce((accObject, item, index, array) => {
-      if (item.startsWith('hrs')) {
-        accObject['hrs'] = array[index - 1];
-      }
-      if (item.startsWith('mins')) {
-        accObject['mins'] = array[index - 1];
-      }
-      return accObject;
-    }, {});
+    .reduce(
+      (
+        accObject: Record<any, any>,
+        item: string,
+        index: number,
+        array: string[]
+      ) => {
+        if (item.startsWith('hrs')) {
+          accObject['hrs'] = array[index - 1];
+        }
+        if (item.startsWith('mins')) {
+          accObject['mins'] = array[index - 1];
+        }
+        return accObject;
+      },
+      {}
+    );
   return dayjs
     .duration({
       hours: durationObject?.hrs || 0,
@@ -65,5 +75,5 @@ export const getDurationISO = (durationString) => {
     .toISOString();
 };
 
-export const sortDateArray = (dates) =>
+export const sortDateArray = (dates: string[]) =>
   dates.sort((a, b) => new Date(a).getTime() - new Date(b).getTime());

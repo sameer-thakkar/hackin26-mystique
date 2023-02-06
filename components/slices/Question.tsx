@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
@@ -9,7 +10,7 @@ import { CHEVRON_DOWN } from '../../assets/SvgIcons';
 
 const Slider = dynamic(() => import('UI/Slider'));
 
-const Question = (props) => {
+const Question = (props: any) => {
   const {
     question,
     answer,
@@ -22,7 +23,7 @@ const Question = (props) => {
   let isActiveItem = tabIndex == activeItem;
   if (!setActiveItem) isActiveItem = isOpen;
 
-  const normalizedImages = images.reduce((acc, image) => {
+  const normalizedImages = images.reduce((acc: any, image: any) => {
     let img = {
       url: image.upload_image?.url || image.linked_image,
       caption: image.upload_image?.alt || image.image_caption,
@@ -49,7 +50,7 @@ const Question = (props) => {
               }}
               parentOverflowHidden={true}
             >
-              {normalizedImages.map((image, index) => (
+              {normalizedImages.map((image: any, index: number) => (
                 <Image
                   key={index}
                   height={195}

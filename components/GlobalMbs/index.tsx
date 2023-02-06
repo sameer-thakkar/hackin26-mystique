@@ -31,9 +31,9 @@ const LongForm: ComponentType<any> = dynamic(() =>
   import('components/MicrositeV2/LongForm')
 );
 
-const GlobalMB = (props) => {
+const GlobalMB = (props: any) => {
   let attractions,
-    rides = [];
+    rides: any = [];
   const {
     isMobile,
     uid,
@@ -143,8 +143,8 @@ const GlobalMB = (props) => {
   const contentFWSlices = (slices && groupSlices(slices)) || [];
 
   const cityCollectionRanks = cityCollectionsData
-    ?.filter((collection) => collection?.data?.rank)
-    ?.map((data) => data?.data?.rank)
+    ?.filter((collection: any) => collection?.data?.rank)
+    ?.map((data: any) => data?.data?.rank)
     ?.sort();
 
   const homePageProps = {
@@ -167,19 +167,22 @@ const GlobalMB = (props) => {
     images: collectionPageBanner,
     banner_images: homePageBanner,
   } = CMSContent || {};
-  const homePageBannerImages = homePageBanner?.reduce((acc, image) => {
-    const { image_url, alt_text } = image || {};
-    if (Object.keys(image_url)?.length) {
-      return [...acc, { url: image_url?.url, alt: alt_text }];
-    }
-  }, []);
+  const homePageBannerImages = homePageBanner?.reduce(
+    (acc: any, image: any) => {
+      const { image_url, alt_text } = image || {};
+      if (Object.keys(image_url)?.length) {
+        return [...acc, { url: image_url?.url, alt: alt_text }];
+      }
+    },
+    []
+  );
   const { items } =
     getSinglePrismicSlice({
       sliceName: 'banner',
       slices: cityPageSlices,
     }) || {};
 
-  const cityPageBanners = items?.reduce((acc, image) => {
+  const cityPageBanners = items?.reduce((acc: any, image: any) => {
     const { banner_image, alt_text } = image || {};
     if (banner_image) {
       return [
@@ -192,7 +195,7 @@ const GlobalMB = (props) => {
     }
   }, []);
   const collectionPageBannerImages = collectionPageBanner?.reduce(
-    (acc, image) => {
+    (acc: any, image: any) => {
       const { image_url, alt_text } = image || {};
       if (image_url) {
         return [
@@ -224,9 +227,10 @@ const GlobalMB = (props) => {
   const showHeaderlinks = isGlobalCollection || isGlobalExperience;
 
   const collectionLinks = cityCollectionsData
-    ?.filter((collection) => collection?.uid !== uid)
-    ?.map((data) => ({
+    ?.filter((collection: any) => collection?.uid !== uid)
+    ?.map((data: any) => ({
       slice_type: 'menu_item',
+
       primary: {
         label: data?.data?.collection_name,
         url: {
@@ -244,9 +248,10 @@ const GlobalMB = (props) => {
     }));
 
   const collectionCountryLinks = countryCollectionsData
-    ?.filter((collection) => collection?.uid !== uid)
-    ?.map((data) => ({
+    ?.filter((collection: any) => collection?.uid !== uid)
+    ?.map((data: any) => ({
       slice_type: 'menu_item',
+
       primary: {
         label: data?.data?.collection_name,
         url: {
@@ -320,8 +325,8 @@ const GlobalMB = (props) => {
     const hasExperiences = Object.keys(experiencesPage)?.length;
     if (hasExperiences) {
       const experiencesData = experiencesPage?.data?.body
-        ?.filter((slice) => slice?.slice_type === 'experiences')
-        ?.reduce((acc, curr) => acc + curr);
+        ?.filter((slice: any) => slice?.slice_type === 'experiences')
+        ?.reduce((acc: any, curr: any) => acc + curr);
 
       attractions = [
         ...filterByExperienceType(experiencesData?.items, 'Attraction'),
@@ -399,6 +404,7 @@ const GlobalMB = (props) => {
           dropdownLinks={[]}
           logoUrl={logoUrl}
           logoAltText={whiteLabelName || ''}
+          // @ts-expect-error TS(2322): Type 'string | null' is not assignable to type 'st... Remove this comment to see the full error message
           logoRedirectionURL={logoRedirectionUrl}
           enableSearch={false}
           enableBuyTickets={showTicketsCta}
@@ -426,6 +432,7 @@ const GlobalMB = (props) => {
               ...(rides?.length && {
                 rides,
               }),
+              // @ts-expect-error TS(2454): Variable 'attractions' is used before being assign... Remove this comment to see the full error message
               ...(attractions?.length && {
                 attractions,
               }),

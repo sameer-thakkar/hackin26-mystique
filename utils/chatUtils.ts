@@ -16,19 +16,26 @@ const chatLoaded = () => {
   }
 };
 
-const loadLiveChatScript = (isDelayed) => {
+const loadLiveChatScript = (isDelayed: boolean) => {
   const lc = document.createElement('script');
   lc.type = 'text/javascript';
   lc.defer = true;
   lc.src = 'https://cdn.livechatinc.com/tracking.js';
   const s = document.getElementsByTagName('script')[0];
+  // @ts-expect-error TS(2531): Object is possibly 'null'.
   s.parentNode.insertBefore(lc, s);
   if (isDelayed) {
     lc.addEventListener('load', chatLoaded);
   }
 };
 
-export const loadChat = ({ isDelayed, hideChatBubble }: any) => {
+export const loadChat = ({
+  isDelayed,
+  hideChatBubble,
+}: {
+  isDelayed: boolean;
+  hideChatBubble: boolean;
+}) => {
   (window as any).__lc = window.__lc || {};
   window.__lc.license = LIVE_CHAT.LICENCE_KEY;
   if (hideChatBubble) {

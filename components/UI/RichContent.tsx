@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { HALYARD } from 'const/ui-constants';
@@ -15,7 +16,10 @@ export const StyledRichContent = styled.div`
   }
 `;
 
-const RichContent = ({ render, disableShortcodes = false }) => {
+const RichContent = ({
+  render,
+  disableShortcodes = false
+}: any) => {
   if (
     typeof render === 'object' &&
     RichText.asText(render).trim().length === 0

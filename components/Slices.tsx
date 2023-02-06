@@ -58,7 +58,7 @@ const CollectionCarousel = dynamic(() =>
   import('./GlobalMbs/Carousels/CollectionCarousel')
 );
 
-const sliceHandler = (slice, props: any = {}) => {
+const sliceHandler = (slice: any, props: any = {}) => {
   if (slice?.primary?.hide_slice) return null;
   switch (slice.slice_type) {
     case 'rich_text':
@@ -125,7 +125,7 @@ const sliceHandler = (slice, props: any = {}) => {
     case 'category_carousel':
       const tgidArray = slice?.primary?.csv_tgids
         ?.split(',')
-        ?.map((tgid) => parseInt(tgid.trim()));
+        ?.map((tgid: any) => parseInt(tgid.trim()));
       if (props.isMobile)
         return (
           <CategorySection
@@ -150,7 +150,7 @@ const sliceHandler = (slice, props: any = {}) => {
           />
         );
     case 'trust_boosters':
-      let boosters = slice.items.reduce((accum, item) => {
+      let boosters = slice.items.reduce((accum: any, item: any) => {
         let booster = {
           image_url: item.uploaded_icon.url || item.icon_link?.url,
           title: item.booster_title,
@@ -164,7 +164,7 @@ const sliceHandler = (slice, props: any = {}) => {
         <MicrobrandCards cards={slice.items} cardsContent={slice.primary} />
       );
     case 'comparision_table':
-      const orderedLabels = slice.items.reduce((acc: [], label) => {
+      const orderedLabels = slice.items.reduce((acc: [], label: any) => {
         return [
           ...acc,
           {
@@ -173,10 +173,12 @@ const sliceHandler = (slice, props: any = {}) => {
           },
         ];
       }, []);
-      const vendor = slice.primary.csv_vendors?.split(',').map((v) => v.trim());
+      const vendor = slice.primary.csv_vendors
+        ?.split(',')
+        .map((v: any) => v.trim());
       const vendorLinks = slice.primary.csv_vendor_links
         ?.split(',')
-        .map((v) => v.trim());
+        .map((v: any) => v.trim());
       return (
         <TourComparisonTable
           isMobile={props.isMobile}
@@ -197,7 +199,7 @@ const sliceHandler = (slice, props: any = {}) => {
       const alt = primary.uploaded_image.alt || 'Popup Image';
       return <InteractiveImage src={url} alt={alt} isMobile={props.isMobile} />;
     case 'image_links_carousel':
-      const cards = slice.items.reduce((acc, card) => {
+      const cards = slice.items.reduce((acc: any, card: any) => {
         return [
           ...acc,
           {
@@ -222,7 +224,7 @@ const sliceHandler = (slice, props: any = {}) => {
     case 'category_section':
       const tgids = slice.primary.csv_tgids
         .split(',')
-        .map((tgid) => parseInt(tgid.trim()));
+        .map((tgid: any) => parseInt(tgid.trim()));
       return (
         <CategorySection
           {...props}
@@ -235,7 +237,7 @@ const sliceHandler = (slice, props: any = {}) => {
     case 'content_tabs':
       return (
         <ContentTabs
-          tabsArr={slice.primary.tab_list.split(',').map((t) => t.trim())}
+          tabsArr={slice.primary.tab_list.split(',').map((t: any) => t.trim())}
           contentArr={slice.items}
         />
       );
@@ -260,8 +262,8 @@ const sliceHandler = (slice, props: any = {}) => {
         />
       );
     case 'question':
-      const faqs = slice.items.reduce((acc, slice) => {
-        const images = slice.items.reduce((acci, image) => {
+      const faqs = slice.items.reduce((acc: any, slice: any) => {
+        const images = slice.items.reduce((acci: any, image: any) => {
           let img = {
             url: image.upload_image?.url || image.linked_image,
             caption: image.upload_image?.alt || image.image_caption,
@@ -289,8 +291,8 @@ const sliceHandler = (slice, props: any = {}) => {
     case 'table_v2':
       const rows =
         slice.slices
-          .filter((t_slice) => t_slice.slice_type === 'table_rows')[0]
-          ?.items?.reduce((acc, row) => {
+          .filter((t_slice: any) => t_slice.slice_type === 'table_rows')[0]
+          ?.items?.reduce((acc: any, row: any) => {
             return [
               ...acc,
               {
@@ -346,10 +348,10 @@ const sliceHandler = (slice, props: any = {}) => {
         cta_type,
       } = slice.primary;
       const images = slice.items
-        .filter((image) => {
+        .filter((image: any) => {
           if (image.image_source.url || image.image_url.url) return true;
         })
-        .map((image) => ({
+        .map((image: any) => ({
           url: image.image_source.url || image.image_url.url,
           alt: image.image_source.alt || image.image_alt,
           copyright: image.image_source.copyright,
@@ -372,7 +374,7 @@ const sliceHandler = (slice, props: any = {}) => {
     case 'horizontal_line':
       return <HorizontalLine />;
     case 'breadcrumbs':
-      const orderedLinks = slice.items.reduce((acc, crumb) => {
+      const orderedLinks = slice.items.reduce((acc: any, crumb: any) => {
         return [
           ...acc,
           {
@@ -428,8 +430,8 @@ const sliceHandler = (slice, props: any = {}) => {
       );
     case 'custom_linked_tours':
       const { content, common_page_link } = slice.primary;
-      const c_tgids = [];
-      const tours = slice.items.reduce((acc, tour) => {
+      const c_tgids: any = [];
+      const tours = slice.items.reduce((acc: any, tour: any) => {
         c_tgids.push(tour.tgid);
         return {
           ...acc,
@@ -539,7 +541,7 @@ const sliceHandler = (slice, props: any = {}) => {
 
 export default sliceHandler;
 
-export const toursTabSliceHandler = (slice) => {
+export const toursTabSliceHandler = (slice: any) => {
   switch (slice.slice_type) {
     case 'tour_list':
       return slice.items;

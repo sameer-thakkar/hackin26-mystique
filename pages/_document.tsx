@@ -8,7 +8,7 @@ import Conditional from 'components/common/Conditional';
 import { InlineFontFace, PreloadFontLinks } from 'components/common/Font';
 
 class MystiqueDocument extends Document {
-  static async getInitialProps(ctx) {
+  static async getInitialProps(ctx: any) {
     const { asPath, query, req } = ctx;
     const sheet = new ServerStyleSheet();
     const { lang } = getLangUID(req, query);
@@ -16,7 +16,7 @@ class MystiqueDocument extends Document {
     try {
       ctx.renderPage = () =>
         originalRenderPage({
-          enhanceApp: (App) => (props) =>
+          enhanceApp: (App: any) => (props: any) =>
             sheet.collectStyles(<App {...props} />),
         });
 
@@ -40,7 +40,7 @@ class MystiqueDocument extends Document {
   }
 
   render() {
-    // @ts-ignore
+    // @ts-expect-error TS(2339): Property 'lang' does not exist on type 'Readonly<R... Remove this comment to see the full error message
     const { lang } = this.props;
     const textDirection = RTL_LANGUAGE_CODES.includes(getLangObject(lang)?.code)
       ? 'rtl'

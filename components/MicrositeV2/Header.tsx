@@ -47,7 +47,15 @@ const ResponsiveSelector: ComponentType<any> = dynamic(
   { ssr: false }
 );
 
-const StyledHeader = styled.div`
+interface IStyledHeader {
+  isEntertainmentMb: boolean;
+  isGlobalMb: boolean;
+  isEntertainmentMbListicle?: boolean;
+  overlayActive?: boolean;
+  headerHover?: boolean;
+}
+
+const StyledHeader = styled.div<IStyledHeader>`
   .main-wrapper {
     display: grid;
     grid-template-columns: repeat(2, auto);
@@ -173,7 +181,13 @@ const HeaderRight = styled.div`
   }
 `;
 
-const HeaderLeft = styled.div`
+interface IHeaderLeft {
+  isGlobalMb: boolean;
+  isEntertainmentMb: boolean;
+  hasDropdownLinks?: boolean;
+}
+
+const HeaderLeft = styled.div<IHeaderLeft>`
   display: grid;
   grid-template-columns: auto ${({ hasDropdownLinks }) =>
       hasDropdownLinks ? '1fr' : ''} auto;
@@ -329,14 +343,19 @@ const Header: FunctionComponent<HeaderProps> = ({
   const [navActive, toggleNav] = useState(false);
   const [headerHover, setHeaderHover] = useState(false);
 
-  const handleResults = (results) => {
+  const handleResults = (results: any) => {
     setResults(results);
     setResultClicked(false);
   };
   const loadSearchPage = () => {
     changePage({ name: PAGETYPE.SEARCH });
   };
-  const onSearchResultClick = (tgid, showPageUid, flowType) => {
+
+  const onSearchResultClick = (
+    tgid: any,
+    showPageUid: any,
+    flowType: string
+  ) => {
     const bookingURL = createBookingURL({
       nakedDomain,
       lang,
@@ -444,7 +463,9 @@ const Header: FunctionComponent<HeaderProps> = ({
               <div className="header-links">
                 <ResponsiveSelector
                   options={dropdownLinks}
-                  onChange={(option) => (window.location.href = option.value)}
+                  onChange={(option: any) =>
+                    (window.location.href = option.value)
+                  }
                   customClassName="header-city-selector"
                 />
               </div>
@@ -465,6 +486,7 @@ const Header: FunctionComponent<HeaderProps> = ({
                         return (
                           <SearchItem
                             key={index}
+                            // @ts-expect-error TS(2698): Spread types may only be created from object types... Remove this comment to see the full error message
                             {...item}
                             onSearchResultClick={onSearchResultClick}
                           />
@@ -477,9 +499,6 @@ const Header: FunctionComponent<HeaderProps> = ({
             </Conditional>
           </HeaderLeft>
           <HeaderRight
-            hasLanguageDropdown={hasLanguageSelector}
-            hasHamburger={isMobileDevice && hamburgerIconCheck}
-            hasSearch={enableSearch}
             onMouseEnter={() => setHeaderHover(true)}
             onMouseLeave={() => setHeaderHover(false)}
           >

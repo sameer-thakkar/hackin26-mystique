@@ -1,5 +1,6 @@
 import { FunctionComponent, useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
 import Image from 'UI/Image';
@@ -20,6 +21,8 @@ import { strings } from 'const/strings';
 import { getBuyTicketsUrl } from 'utils/helper';
 import { trackEvent } from 'utils/analytics';
 import type { SwiperProps } from 'swiper/react';
+
+import type { ILink } from '../Breadcrumb/interface';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 const Breadcrumb = dynamic(() => import('components/GlobalMbs/Breadcrumb'));
@@ -51,7 +54,13 @@ const SwiperWrapper = styled.div`
   height: max-content;
 `;
 
-const StyledBanner = styled.div((props) => {
+interface IStyledBanner {
+  isTicketPage: boolean;
+  isMobile: boolean;
+  cardType: 'full-width' | 'large' | 'small';
+}
+
+const StyledBanner = styled.div<IStyledBanner>((props) => {
   const styles = props.isMobile
     ? variantStyles.small
     : variantStyles[props.cardType];
@@ -70,7 +79,6 @@ const StyledBanner = styled.div((props) => {
   font-size: 16px;
   line-height: 150%;
   font-weight: 400;
-  ${props.link && `cursor: pointer;`};
   margin-top: 16px;
   img {
     height: ${styles.img.height}px;
@@ -243,7 +251,7 @@ interface BannerProps {
   subText?: string;
   images: any[];
   cardType: BannerLayout;
-  breadcrumbs?: Array<{ url: string; text: string }>;
+  breadcrumbs?: ILink[];
   collection?: any;
   startingPrice?: string;
   isTicketPage?: boolean;
@@ -280,7 +288,7 @@ const Banner: FunctionComponent<BannerProps> = ({
     city,
   } = collection;
   const finalSecondaryCategory = secondaryCategories?.map(
-    (item) => item.category
+    (item: any) => item.category
   );
 
   const [swiper, updateSwiper] = useState(null);
@@ -310,6 +318,7 @@ const Banner: FunctionComponent<BannerProps> = ({
     loop: true,
     initialSlide: 1,
     freeMode: true,
+    // @ts-expect-error TS(2322): Type 'Dispatch<SetStateAction<null>>' is not assig... Remove this comment to see the full error message
     onSwiper: updateSwiper,
   };
   const analyticsParams = {
@@ -319,19 +328,17 @@ const Banner: FunctionComponent<BannerProps> = ({
     [ANALYTICS_PROPERTIES.MB_NAME]: title,
   };
 
-  const isSwiperSet = swiper !== null && !swiper?.destroyed;
+  const isSwiperSet = swiper !== null && !(swiper as any)?.destroyed;
 
   useEffect(() => {
     if (!isSwiperSet) {
       return;
     }
-
     trackEvent({
       eventName: ANALYTICS_EVENTS.MB_BANNER.VISIBLE,
       ...analyticsParams,
     });
-
-    swiper?.on('click', (e) => {
+    (swiper as any)?.on('click', (e: any) => {
       const isPaginationBullet = e.target.matches('.swiper-pagination-bullet');
       if (isPaginationBullet) {
         trackEvent({
@@ -340,8 +347,7 @@ const Banner: FunctionComponent<BannerProps> = ({
         });
       }
     });
-
-    swiper?.on('touchEnd', () => {
+    (swiper as any)?.on('touchEnd', () => {
       trackEvent({
         eventName: ANALYTICS_EVENTS.MB_BANNER.BANNER_SCROLL,
         ...analyticsParams,
@@ -413,6 +419,7 @@ const Banner: FunctionComponent<BannerProps> = ({
   };
 
   return (
+    // @ts-expect-error TS(2769): No overload matches this call.
     <StyledBanner cardType={cardType} isTicketPage={isTicketPage}>
       <div className="card-content-section">
         <Conditional if={breadcrumbs?.length}>
@@ -435,7 +442,7 @@ const Banner: FunctionComponent<BannerProps> = ({
               </Conditional>
               <div className="tag-wrapper">
                 <div className="tag">{primaryCategory}</div>
-                {finalSecondaryCategory?.map((item, idx) => (
+                {finalSecondaryCategory?.map((item: any, idx: number) => (
                   <div className="tag" key={idx}>
                     {item}
                   </div>

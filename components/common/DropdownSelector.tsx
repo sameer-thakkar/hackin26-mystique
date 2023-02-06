@@ -136,13 +136,14 @@ const DropdownSelector = ({
 }) => {
   const [isActive, toggleActive] = useState(false);
 
-  const handleChange = (value) => {
+  const handleChange = (value: any) => {
     toggleActive(!isActive);
     onChange(value);
   };
 
   const onActive = () => {
     toggleActive(true);
+    // @ts-expect-error TS(2722): Cannot invoke an object which is possibly 'undefin... Remove this comment to see the full error message
     onShowDropdown();
   };
 

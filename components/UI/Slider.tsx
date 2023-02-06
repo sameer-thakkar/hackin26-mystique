@@ -9,8 +9,10 @@ const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 const StyledSlider = styled.div`
   display: flex;
   position: relative;
-  ${({ parentOverflowHidden }) =>
-    parentOverflowHidden ? 'overflow: hidden;' : ''}
+  ${({
+    // @ts-expect-error TS(2339): Property 'parentOverflowHidden' does not exist on ... Remove this comment to see the full error message
+    parentOverflowHidden,
+  }) => (parentOverflowHidden ? 'overflow: hidden;' : '')}
   .slider-bullet {
     height: 7px;
     width: 7px;
@@ -105,32 +107,35 @@ const Slider: React.FC<{
   /* Swiper configuration for using external controls starts here */
   const [swiper, updateSwiper] = useState(null);
   const [currentIndex, updateCurrentIndex] = useState(0);
-  const goToSlide = (index) => {
+  const goToSlide = (index: number) => {
     if (swiper !== null) {
-      swiper.slideTo(index);
+      (swiper as any).slideTo(index);
     }
   };
 
   const goNext = () => {
     if (swiper !== null) {
-      swiper.slideNext();
+      (swiper as any).slideNext();
     }
   };
 
   const goPrev = () => {
     if (swiper !== null) {
-      swiper.slidePrev();
+      (swiper as any).slidePrev();
     }
   };
 
+  // @ts-expect-error TS(2531): Object is possibly 'null'.
   const updateIndex = useCallback(() => updateCurrentIndex(swiper.realIndex), [
     swiper,
   ]);
 
   return (
+    // @ts-expect-error TS(2769): No overload matches this call.
     <StyledSlider parentOverflowHidden={parentOverflowHidden}>
       <Swiper
         {...sliderOptions}
+        /* @ts-expect-error TS(2322): Type 'Dispatch<SetStateAction<null>>' is not assig... Remove this comment to see the full error message */
         onSwiper={updateSwiper}
         onSlideChange={updateIndex}
       >
@@ -144,7 +149,7 @@ const Slider: React.FC<{
       </Swiper>
       {nextButton && prevButton ? (
         <Controls>
-          {!swiper?.isBeginning ? (
+          {!(swiper as any)?.isBeginning ? (
             <div
               className="prev-slide"
               role="button"
@@ -154,7 +159,7 @@ const Slider: React.FC<{
               {prevButton}
             </div>
           ) : null}
-          {!swiper?.isEnd ? (
+          {!(swiper as any)?.isEnd ? (
             <div
               className="next-slide"
               role="button"
@@ -170,7 +175,7 @@ const Slider: React.FC<{
         <div
           className={`${paginationClass} slider-pagination swiper-pagination-clickable swiper-pagination-bullets`}
         >
-          {children.map((item, index) => {
+          {children.map((_item, index) => {
             return (
               <span
                 key={index}

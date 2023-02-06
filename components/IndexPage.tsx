@@ -1,3 +1,4 @@
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'cook... Remove this comment to see the full error message
 import ServerCookies from 'cookies';
 import React, { useEffect, useState } from 'react';
 import ErrorPage from 'next/error';
@@ -38,13 +39,13 @@ const Listicle = dynamic(() => import('components/ListiclePage'));
 const ShowPage = dynamic(() => import('components/ShowPages'));
 const GlobalMB = dynamic(() => import('components/GlobalMbs'));
 
-const getValidUrlParams = (query) =>
+const getValidUrlParams = (query: any) =>
   Object.entries(query)
     .filter(([key]) => key !== 'slug')
     .map(([key, val]) => `${key}=${val}`)
     .join('&')
     .trim();
-const Page = (props) => {
+const Page = (props: any) => {
   // Render headout's session-id-setter on mount
   const [showSessionIdSetter, setShowSessionIdSetter] = useState(false);
 
@@ -156,7 +157,7 @@ const Page = (props) => {
     ContentType === CUSTOM_TYPES.GLOBAL_COLLECTION ||
     ContentType === CUSTOM_TYPES.GLOBAL_EXPERIENCE;
 
-  function getPageComponent(pageType) {
+  function getPageComponent(pageType: any) {
     switch (pageType) {
       case CUSTOM_TYPES.MICROSITE + DESIGN.V2:
       case CUSTOM_TYPES.MICROSITE + DESIGN.V3:
@@ -270,6 +271,7 @@ const Page = (props) => {
           windowUrl,
         }}
       >
+        {/* @ts-expect-error TS(2786): 'ThemeProvider' cannot be used as a JSX component. */}
         <ThemeProvider theme={getAppTheme(mbTheme)}>
           <MBContextProvider
             host={host}
@@ -299,7 +301,7 @@ const Page = (props) => {
   );
 };
 
-Page.getInitialProps = async (ctx) => {
+Page.getInitialProps = async (ctx: any) => {
   const { req, query, res, asPath, localizedStrings } = ctx;
   const serverRequestStartTimestamp = Math.floor(new Date().getTime());
   strings.setContent({
@@ -376,7 +378,7 @@ Page.getInitialProps = async (ctx) => {
     [
       Client(req)
         .getByUID(CUSTOM_TYPES.REDIRECT, redirectUID)
-        .then((r) => {
+        .then((r: any) => {
           let redirectURL = r.data?.redirect_to_url?.url;
           if (redirectURL) {
             if (redirectURL[redirectURL.length - 1] === '/')
@@ -452,7 +454,7 @@ const HeadoutSessionIdSetterComponent = () => {
   const setHsid = useSetRecoilState(hsidAtom);
   const setHsidSetFail = useSetRecoilState(hsidSetFailAtom);
 
-  const pushSandboxIDtoDataLayer = (hsid) => {
+  const pushSandboxIDtoDataLayer = (hsid: any) => {
     sendVariableToDataLayer({
       name: ANALYTICS_PROPERTIES.HSID,
       value: hsid,
@@ -460,7 +462,7 @@ const HeadoutSessionIdSetterComponent = () => {
     setHsid(hsid);
   };
   useEffect(() => {
-    const onMessageReceieved = (e) => {
+    const onMessageReceieved = (e: any) => {
       const { origin, data } = e;
       if (origin !== process.env.NEXT_PUBLIC_HEADOUT_DOMAIN) {
         return;

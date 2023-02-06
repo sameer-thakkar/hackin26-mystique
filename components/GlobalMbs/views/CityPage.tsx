@@ -1,18 +1,21 @@
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import Banner, { BannerLayout } from 'components/GlobalMbs/Banners/Banner';
 import CollectionTabs from 'components/GlobalMbs/collectionTabs';
 import Conditional from 'components/common/Conditional';
 
-const CityPage = (props) => {
-  const breadcrumbs = [];
+import type { ILink } from '../Breadcrumb/interface';
+
+const CityPage = (props: any) => {
+  const breadcrumbs: ILink[] = [];
   const { cityCollections, body: slices, ticketPages } = props || {};
   // Banner
   const bannerSlice = slices?.length
     ? slices
-        ?.filter((slice) => slice?.slice_type === 'banner')
-        ?.reduce((acc, curr) => acc + curr)
+        ?.filter((slice: any) => slice?.slice_type === 'banner')
+        ?.reduce((acc: any, curr: any) => acc + curr)
     : [];
-  const bannerImages = cityCollections?.slice(0, 5)?.map((item) => {
+  const bannerImages = cityCollections?.slice(0, 5)?.map((item: any) => {
     return {
       url: item?.data?.images?.[0]?.image_url,
       altText: item?.data?.images?.[0]?.alt_text,

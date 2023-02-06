@@ -1,9 +1,12 @@
 import React from 'react';
-import { STAR_FULL, STAR_EMPTY, STAR_HALF } from '../../assets/SvgIcons';
 import styled from 'styled-components';
 
+import { STAR_FULL, STAR_EMPTY, STAR_HALF } from '../../assets/SvgIcons';
+
 const StyledStar = styled.div`
-  ${({ starSize }) => `width: ${starSize}; height: ${starSize};`}
+  ${({  
+ // @ts-expect-error TS(2339): Property 'starSize' does not exist on type 'Pick<D... Remove this comment to see the full error message
+ starSize }) => `width: ${starSize}; height: ${starSize};`}
 `;
 
 const Star: React.FC<{
@@ -17,6 +20,7 @@ const Star: React.FC<{
   } else if (fillValue < 0.75) {
     svg = <STAR_HALF fillColor={fillColor} />;
   }
+  // @ts-expect-error TS(2769): No overload matches this call.
   return <StyledStar starSize={starSize}>{svg}</StyledStar>;
 };
 

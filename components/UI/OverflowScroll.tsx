@@ -10,8 +10,12 @@ const Wrapper = styled.div`
 `;
 
 const Child = styled.div`
-  min-width: ${({ minWidth }) => (minWidth ? `${minWidth}` : `max-content`)};
-  margin: 0px 10px ${({ marginBottom }) => marginBottom}px 0;
+  min-width: ${({  
+ // @ts-expect-error TS(2339): Property 'minWidth' does not exist on type 'Pick<D... Remove this comment to see the full error message
+ minWidth }) => (minWidth ? `${minWidth}` : `max-content`)};
+  margin: 0px 10px ${({  
+ // @ts-expect-error TS(2339): Property 'marginBottom' does not exist on type 'Pi... Remove this comment to see the full error message
+ marginBottom }) => marginBottom}px 0;
   padding-right: 10px;
 `;
 
@@ -23,6 +27,7 @@ const OverflowScroll: React.FC<{
   return (
     <Wrapper>
       {children?.map((child, index) => (
+        // @ts-expect-error TS(2769): No overload matches this call.
         <Child key={index} minWidth={minWidthChild} marginBottom={marginBottom}>
           {child}
         </Child>

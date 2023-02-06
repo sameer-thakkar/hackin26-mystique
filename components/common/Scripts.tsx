@@ -115,6 +115,7 @@ export const WebpageJsonLD = ({
   const domainName = getDomainFromUid(uid);
   // If no path then we assume it is the homepage. (interim solution)
   const isHomepage =
+    // @ts-expect-error TS(2769): No overload matches this call.
     uid.split(domainName)?.filter((string) => string.length)?.length === 0;
 
   return (

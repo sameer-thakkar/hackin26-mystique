@@ -118,7 +118,7 @@ const Banner = (props: TBannerCarouselProps) => {
     [ANALYTICS_PROPERTIES.MB_NAME]: bannerHeading,
   };
 
-  const isSwiperSet = swiper !== null && !swiper?.destroyed;
+  const isSwiperSet = swiper !== null && !(swiper as any)?.destroyed;
 
   useEffect(() => {
     if (!isSwiperSet) {
@@ -149,7 +149,7 @@ const Banner = (props: TBannerCarouselProps) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.MB_BANNER.CTA_CLICKED,
       ...analyticsParams,
-      Ranking: (swiper?.realIndex || 0) + 1,
+      Ranking: ((swiper as any)?.realIndex || 0) + 1,
     });
   }, [swiper]);
 
@@ -189,6 +189,7 @@ const Banner = (props: TBannerCarouselProps) => {
             <Swiper
               {...swiperParams}
               onTouchEnd={onTouchEnd}
+              // @ts-expect-error TS(2322): Type 'Dispatch<SetStateAction<null>>' is not assig... Remove this comment to see the full error message
               onSwiper={updateSwiper}
             >
               {bannerImages?.map((image: BannerImageProps, index: number) => {
@@ -213,7 +214,7 @@ const Banner = (props: TBannerCarouselProps) => {
                       bannerHeading={bannerHeading}
                       bannerCtaText={bannerCtaText}
                       hideCTA={hideCTA}
-                      isFirst={swiper?.realIndex === index}
+                      isFirst={(swiper as any)?.realIndex === index}
                     />
                   </div>
                 );

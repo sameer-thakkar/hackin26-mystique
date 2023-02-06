@@ -8,17 +8,24 @@ import { getPrismicProps } from 'utils';
 import { fromEntries } from 'utils/gen';
 import { getLangObject } from 'utils/helper';
 
-export const getStringifiedQueryFromObject = (queryJson) =>
+export const getStringifiedQueryFromObject = (queryJson: Record<string, any>) =>
   queryParser.stringify(queryJson);
 
-export const removePageQuery = (query, queryParam, asPath) => {
+export const removePageQuery = (
+  query: Record<string, any>,
+  queryParam: string,
+  asPath: string
+) => {
   const newQuery = fromEntries(
     Object.entries(query).filter(([param]) => param !== queryParam)
   );
   replacePageQuery({ ...newQuery }, asPath);
 };
 
-export const replacePageQuery = (query, asPath) => {
+export const replacePageQuery = (
+  query: Record<string, any>,
+  asPath: string
+) => {
   const locationPathName = asPath.split('?')[0];
   const queryString =
     typeof query === 'string' ? query : getStringifiedQueryFromObject(query);
@@ -29,10 +36,10 @@ export const replacePageQuery = (query, asPath) => {
   );
 };
 
-export const sanitizeURL = (url) =>
+export const sanitizeURL = (url: string) =>
   `https://${url.replace(/(http)?[s]?(:)?(\/\/)?/i, '')}`;
 
-export const getLangUID = (req, query) => {
+export const getLangUID = (req: any, query: Record<string, any>) => {
   let uid, lang;
   const { host } = req?.headers || window?.location;
   const pathname =
@@ -78,7 +85,7 @@ export const getLangUID = (req, query) => {
   return { uid, lang };
 };
 
-export function getValidUrl(url) {
+export function getValidUrl(url: string) {
   if (url) {
     if (url.startsWith('http://')) {
       return url.replace('http://', 'https://');
@@ -93,14 +100,14 @@ export function getValidUrl(url) {
   return url;
 }
 
-export const getValidUrlParams = (query) =>
+export const getValidUrlParams = (query: Record<string, any>) =>
   Object.entries(query)
     .filter(([key]) => key !== 'slug')
     .map(([key, val]) => `${key}=${val}`)
     .join('&')
     .trim();
 
-export const getDomainFromUid = (uid) => {
+export const getDomainFromUid = (uid: string) => {
   const modUid = `${uid}.`; // add trailing . to identify end of UID
   const regex = /[\w\d-]+\.[\w\d-]+\.(([\w]{1,}\.[\w]{1,3}\.)|([\w]{2,}\.))/;
   const domain = modUid.match(regex)?.[0]?.slice(0, -1);
@@ -120,12 +127,12 @@ export const convertUidToUrl = ({
   isDev?: boolean;
   removeLangPath?: boolean;
 }) => {
-  const getUrl = (uid: string, lang, isStage: boolean) => {
-    let url;
+  const getUrl = (uid: string, lang: string, isStage: boolean) => {
+    let url: string = '';
     const modUid = `${uid}.`; // add trailing . to identify end of UID
     const domain = getDomainFromUid(uid);
-    const pathName = modUid.split(domain)?.filter((string) => string.length);
-    if (domain?.length) {
+    if (domain) {
+      const pathName = modUid.split(domain)?.filter((string) => string.length);
       url = `https://${isStage ? 'stage-' : ''}${domain}${
         lang !== 'en' && !removeLangPath ? `/${lang}` : ''
       }`;
@@ -157,14 +164,11 @@ export const convertUidToUrl = ({
     let url = getUrl(uid, lang, false);
     return url;
   } else {
-    return null;
+    return '';
   }
 };
 
-export const addQueryParams = (
-  url: string,
-  params: { [key: string]: string }
-) => {
+export const addQueryParams = (url: string, params: Record<string, string>) => {
   if (url) {
     let theURL = new URL(url);
     if (Object.keys(params).length > 0) {
@@ -206,9 +210,11 @@ export const getLogoRedirectionUrl = ({
   lang?: string;
   isDev?: boolean;
   host?: string;
-}): string | null => {
+}) => {
   const domainArray = getDomainFromUid(uid)?.split('.');
+  // @ts-expect-error TS(2532): Object is possibly 'undefined'.
   domainArray[0] = 'www';
+  // @ts-expect-error TS(2532): Object is possibly 'undefined'.
   const parentDomain = domainArray.join('.');
 
   const isStage = host?.includes('stage-');
@@ -231,18 +237,26 @@ export const getLogoRedirectionUrl = ({
 
 export const addToSearchParams = (
   searchParam: string,
-  params: { [key: string]: string } = {}
+  params: Record<string, string | string[]> = {}
 ) => {
   const searchParams = new URLSearchParams(searchParam);
   Object.entries(params ?? {}).forEach(([key, val]) => {
-    searchParams.set(key, val);
+    searchParams.set(key, String(val));
   });
   const searchParamsString = searchParams.toString();
 
   return `${searchParamsString ? '?' + searchParamsString : ''}`;
 };
 
-export const addUrlParams = ({ urlParams, historyState, replace = false }) => {
+export const addUrlParams = ({
+  urlParams,
+  historyState,
+  replace = false,
+}: {
+  urlParams: Record<string, string | string[]>;
+  historyState: any;
+  replace: boolean;
+}) => {
   const asPath =
     '/' +
     addToSearchParams('', {
