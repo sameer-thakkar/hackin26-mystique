@@ -1,10 +1,18 @@
 import { CUSTOM_TYPES } from 'constants/index';
 
+import * as Sentry from '@sentry/nextjs';
 import { Component } from 'react';
 import Prismic from 'prismic-javascript';
 import builder from 'xmlbuilder';
-import { convertUidToUrl } from 'utils/urlUtils';
+import { convertUidToUrl, getLangUID } from 'utils/urlUtils';
 import { fetchAllMatchingDocs } from 'utils/prismicUtils';
+import { getHeadoutLanguagecode, legacyBooleanCheck } from 'utils';
+
+interface LangData {
+  lang: string;
+  url: string;
+  isDefault: boolean;
+}
 
 const createImg = (doc) => {
   if (doc.type === CUSTOM_TYPES.MICROSITE) {
@@ -35,31 +43,83 @@ const createAltLangUrls = (langArr) => {
   };
 };
 
-const createUrlArr = (doc) => {
-  const {
-    alternate_languages: languages = [],
-    uid,
-    lang: defaultLang = '',
-  } = doc;
+const checkIfinValidUrl = async (url) => {
+  const res = await fetch(url, { method: 'head' });
+  const status = res.status;
 
-  const langData = languages.map((language) => {
+  if (status === 200 && url !== res.url) return true;
+
+  const threeXSeriesStatus = status.toString().charAt(0) === '3';
+
+  if (status === 404 || threeXSeriesStatus) {
+    return true;
+  }
+  return false;
+};
+
+const getLangData = async (languages, sitemapUrl, uid) => {
+  const res = [];
+  for (const language of languages) {
     const { lang, uid: alternateLanguageUid = uid } = language;
-    const langPrefix = lang?.split('-')[0];
-    return {
+    const langPrefix = getHeadoutLanguagecode(lang);
+    const obj = {
       lang: langPrefix,
       url: convertUidToUrl({
         uid: alternateLanguageUid,
         lang: langPrefix,
       }),
     };
-  });
+    try {
+      const url = new URL(obj.url);
+      const isUrlInValid = await checkIfinValidUrl(url.href);
+      if (!isUrlInValid && url.hostname === sitemapUrl) {
+        res.push(obj);
+      }
+    } catch (e) {
+      Sentry.captureException(e);
+    }
+  }
+  return res;
+};
 
+const getDefaultLangData = async (
+  defaultUrl,
+  sitemapUrl,
+  defaultLangPrefix
+): Promise<LangData> => {
+  try {
+    const url = new URL(defaultUrl);
+    const isUrlInValid = await checkIfinValidUrl(url.href);
+    if (url.hostname === sitemapUrl && !isUrlInValid) {
+      return {
+        lang: defaultLangPrefix,
+        url: defaultUrl,
+        isDefault: true,
+      };
+    }
+  } catch (e) {
+    Sentry.captureException(e);
+  }
+};
+
+const createUrlArr = async (doc, sitemapUrl) => {
+  const {
+    alternate_languages: languages = [],
+    uid,
+    lang: defaultLang = '',
+  } = doc;
+
+  const langData = await getLangData(languages, sitemapUrl, uid);
   const defaultLangPrefix = defaultLang.split('-')[0];
-  langData.push({
-    lang: defaultLangPrefix,
-    url: convertUidToUrl({ uid, lang: defaultLangPrefix }),
-    isDefault: true,
-  });
+  const defaultUrl = convertUidToUrl({ uid, lang: defaultLangPrefix });
+
+  const defaultLangObj = await getDefaultLangData(
+    defaultUrl,
+    sitemapUrl,
+    defaultLangPrefix
+  );
+
+  if (defaultLangObj) langData.push(defaultLangObj);
 
   return langData.map((item) => {
     return {
@@ -71,14 +131,20 @@ const createUrlArr = (doc) => {
   });
 };
 
+const isSelfReferringCanonical = (doc) => !doc?.data?.canonical_link;
+
+const isNotIndexed = (doc) => !legacyBooleanCheck(doc?.data?.noindex);
+
 export default class SitemapXml extends Component {
   static async getInitialProps({ req, res, query }) {
     let uid;
+
     if (query.mystique_uid) {
       uid = query.mystique_uid;
     } else {
       uid = req.headers.host.replace('stage-', '');
     }
+    const { uid: langUid } = getLangUID(req, query);
 
     const xmlDoc = {
       urlset: {
@@ -92,52 +158,59 @@ export default class SitemapXml extends Component {
       },
     };
 
-    return fetchAllMatchingDocs({
-      query: [Prismic.Predicates.at('document.tags', [uid])],
-      params: {
-        pageSize: 100,
-        page: 1,
-        lang: 'en-US',
-      },
-    })
-      .then((documents) => {
-        documents
-          .filter((doc) =>
-            [
-              CUSTOM_TYPES.MICROSITE,
-              CUSTOM_TYPES.CONTENT_PAGE,
-              CUSTOM_TYPES.GLOBAL_CITY,
-              CUSTOM_TYPES.GLOBAL_COUNTRY,
-              CUSTOM_TYPES.GLOBAL_HOMEPAGE,
-              CUSTOM_TYPES.GLOBAL_COLLECTION,
-              CUSTOM_TYPES.GLOBAL_EXPERIENCE,
-              CUSTOM_TYPES.SHOW_PAGE,
-            ].includes(doc.type)
-          )
-          .reduce(
-            (accum, item) => {
-              if (item.type === CUSTOM_TYPES.MICROSITE) {
-                return [[...accum[0], item], accum[1]];
-              }
-              return [accum[0], [...accum[1], item]];
-            },
-            [[], []]
-          )
-          .reduce((accum, item) => [...accum, ...item])
-          .filter((doc) => doc.data.is_excluded_from_sitemap !== 'Yes')
-          .forEach((doc) => {
-            if (!doc?.data?.microbrand_url) {
-              xmlDoc.urlset.url.push(...createUrlArr(doc));
-            }
-          });
-        const xml = builder.create(xmlDoc, { encoding: 'utf-8' });
-        const xmlStr = xml.end();
-        res.setHeader('Content-Type', 'application/xml');
-        res.write(xmlStr);
-        res.end();
-      })
-      .catch(() => {
-        res.end();
+    try {
+      const response = await fetchAllMatchingDocs({
+        query: [Prismic.Predicates.at('document.tags', [uid])],
+        params: {
+          pageSize: 100,
+          page: 1,
+          lang: 'en-US',
+        },
       });
+      const docs = response
+        .filter((doc) =>
+          [
+            CUSTOM_TYPES.MICROSITE,
+            CUSTOM_TYPES.CONTENT_PAGE,
+            CUSTOM_TYPES.GLOBAL_CITY,
+            CUSTOM_TYPES.GLOBAL_COUNTRY,
+            CUSTOM_TYPES.GLOBAL_HOMEPAGE,
+            CUSTOM_TYPES.GLOBAL_COLLECTION,
+            CUSTOM_TYPES.GLOBAL_EXPERIENCE,
+            CUSTOM_TYPES.SHOW_PAGE,
+          ].includes(doc.type)
+        )
+        .reduce(
+          (accum, item) => {
+            if (item.type === CUSTOM_TYPES.MICROSITE) {
+              return [[...accum[0], item], accum[1]];
+            }
+            return [accum[0], [...accum[1], item]];
+          },
+          [[], []]
+        )
+        .reduce((accum, item) => [...accum, ...item])
+        .filter((doc) => doc.data.is_excluded_from_sitemap !== 'Yes');
+
+      for (const doc of docs) {
+        if (isSelfReferringCanonical(doc) && isNotIndexed(doc)) {
+          try {
+            const result = await createUrlArr(doc, langUid);
+            xmlDoc.urlset.url.push(...result);
+          } catch (e) {
+            Sentry.captureException(e);
+          }
+        }
+      }
+
+      const xml = builder.create(xmlDoc, { encoding: 'utf-8' });
+      const xmlStr = xml.end();
+      res.setHeader('Content-Type', 'application/xml');
+      res.write(xmlStr);
+      res.end();
+    } catch (e) {
+      Sentry.captureException(e);
+      res.end();
+    }
   }
 }
