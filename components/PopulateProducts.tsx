@@ -210,6 +210,7 @@ const PopulateProducts = (props) => {
       //
     }
   }, [productsWrapperRef]);
+  const showNextAvailable = legacyBooleanCheck(enableEarliestAvailability);
 
   useEffect(() => {
     const fetchEarliestAvailability = async ({ uncategorizedToursList }) => {
@@ -237,11 +238,7 @@ const PopulateProducts = (props) => {
       setEarliestAvailabilityQueue(response);
       setShowEarliestAvailability(true);
     };
-    const showEarliestAvailability = legacyBooleanCheck(
-      enableEarliestAvailability
-    );
-
-    if (showEarliestAvailability || instantCheckout) {
+    if (showNextAvailable || instantCheckout) {
       fetchEarliestAvailability({
         uncategorizedToursList: tours,
       });
@@ -430,6 +427,7 @@ const PopulateProducts = (props) => {
               tgid,
               earliestAvailability,
               showEarliestAvailability,
+              showNextAvailable,
               tid: tour_variant_id,
               title: tour_title_override,
               descriptors: scorpioData?.[tgid]?.descriptors ?? [],

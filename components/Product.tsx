@@ -1080,7 +1080,7 @@ const Product = (props) => {
     boosterTag,
     isMobile,
     instantCheckout,
-    showEarliestAvailability,
+    showNextAvailable,
     isTicketCard = false,
     indexPosition,
     pageType = '',
@@ -1691,7 +1691,7 @@ const Product = (props) => {
               </Conditional>
             </CTABlock>
             <Conditional
-              if={showEarliestAvailability && earliestAvailability?.startDate}
+              if={showNextAvailable && earliestAvailability?.startDate}
             >
               <NextAvailableBlock>
                 <div className="icon">{CALENDAR}</div>
