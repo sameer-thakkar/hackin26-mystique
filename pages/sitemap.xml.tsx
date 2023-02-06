@@ -1,19 +1,11 @@
 import { CUSTOM_TYPES } from 'constants/index';
 
-import * as Sentry from '@sentry/nextjs';
 import { Component } from 'react';
 import Prismic from 'prismic-javascript';
 import builder from 'xmlbuilder';
-import { convertUidToUrl, getLangUID } from 'utils/urlUtils';
+import { convertUidToUrl } from 'utils/urlUtils';
 import { fetchAllMatchingDocs } from 'utils/prismicUtils';
-import { getHeadoutLanguagecode, legacyBooleanCheck } from 'utils';
 import { NextPageContext } from 'next';
-
-interface LangData {
-  lang: string;
-  url: string;
-  isDefault: boolean;
-}
 
 const createImg = (doc: any) => {
   if (doc.type === CUSTOM_TYPES.MICROSITE) {
@@ -44,89 +36,33 @@ const createAltLangUrls = (langArr: any) => {
   };
 };
 
-const checkIfinValidUrl = async (url: string) => {
-  const res = await fetch(url, { method: 'head' });
-  const status = res.status;
-
-  if (status === 200 && url !== res.url) return true;
-
-  const threeXSeriesStatus = status.toString().charAt(0) === '3';
-
-  if (status === 404 || threeXSeriesStatus) {
-    return true;
-  }
-  return false;
-};
-
-const getLangData = async (
-  languages: Record<string, any>[],
-  sitemapUrl: string,
-  uid: string
-) => {
-  const res = [];
-  for (const language of languages) {
-    const { lang, uid: alternateLanguageUid = uid } = language;
-    const langPrefix = getHeadoutLanguagecode(lang);
-    const obj = {
-      lang: langPrefix,
-      url: convertUidToUrl({
-        uid: alternateLanguageUid,
-        lang: langPrefix,
-      }),
-    };
-    try {
-      const url = new URL(obj.url);
-      const isUrlInValid = await checkIfinValidUrl(url.href);
-      if (!isUrlInValid && url.hostname === sitemapUrl) {
-        res.push(obj);
-      }
-    } catch (e) {
-      Sentry.captureException(e);
-    }
-  }
-  return res;
-};
-
-const getDefaultLangData = async (
-  defaultUrl: string,
-  sitemapUrl: string,
-  defaultLangPrefix: string
-): Promise<LangData | undefined> => {
-  try {
-    const url = new URL(defaultUrl);
-    const isUrlInValid = await checkIfinValidUrl(url.href);
-    if (url.hostname === sitemapUrl && !isUrlInValid) {
-      return {
-        lang: defaultLangPrefix,
-        url: defaultUrl,
-        isDefault: true,
-      };
-    }
-  } catch (e) {
-    Sentry.captureException(e);
-  }
-};
-
-const createUrlArr = async (doc: Record<string, any>, sitemapUrl: string) => {
+const createUrlArr = (doc: any): any => {
   const {
     alternate_languages: languages = [],
     uid,
     lang: defaultLang = '',
   } = doc;
 
-  const langData = await getLangData(languages, sitemapUrl, uid);
+  const langData = languages.map((language: any) => {
+    const { lang, uid: alternateLanguageUid = uid } = language;
+    const langPrefix = lang?.split('-')[0];
+    return {
+      lang: langPrefix,
+      url: convertUidToUrl({
+        uid: alternateLanguageUid,
+        lang: langPrefix,
+      }),
+    };
+  });
+
   const defaultLangPrefix = defaultLang.split('-')[0];
-  const defaultUrl = convertUidToUrl({ uid, lang: defaultLangPrefix });
+  langData.push({
+    lang: defaultLangPrefix,
+    url: convertUidToUrl({ uid, lang: defaultLangPrefix }),
+    isDefault: true,
+  });
 
-  const defaultLangObj = await getDefaultLangData(
-    defaultUrl,
-    sitemapUrl,
-    defaultLangPrefix
-  );
-
-  if (defaultLangObj) langData.push(defaultLangObj);
-
-  return langData.map((item) => {
+  return langData.map((item: any) => {
     return {
       loc: item.url,
       lastmod: new Date(doc.last_publication_date).toISOString(),
@@ -136,24 +72,16 @@ const createUrlArr = async (doc: Record<string, any>, sitemapUrl: string) => {
   });
 };
 
-const isSelfReferringCanonical = (doc: Record<string, any>) =>
-  !doc?.data?.canonical_link;
-
-const isNotIndexed = (doc: Record<string, any>) =>
-  !legacyBooleanCheck(doc?.data?.noindex);
-
 export default class SitemapXml extends Component {
   static async getInitialProps({ req, res, query }: NextPageContext) {
     let uid;
-
     if (query.mystique_uid) {
       uid = query.mystique_uid;
     } else {
       uid = req?.headers?.host?.replace('stage-', '');
     }
-    const { uid: langUid } = getLangUID(req, query);
 
-    const xmlDoc = {
+    const xmlDoc: { urlset: any; url?: any[] } = {
       urlset: {
         '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
         '@xmlns:xhtml': 'http://www.w3.org/1999/xhtml',
@@ -165,67 +93,60 @@ export default class SitemapXml extends Component {
       },
     };
 
-    try {
-      const response = await fetchAllMatchingDocs({
-        // @ts-ignore
-        query: [Prismic.Predicates.at('document.tags', [uid])],
-        params: {
-          pageSize: 100,
-          page: 1,
-          lang: 'en-US',
-        },
-      });
-      const docs = response
-        .filter((doc: Record<string, any>) =>
-          [
-            CUSTOM_TYPES.MICROSITE,
-            CUSTOM_TYPES.CONTENT_PAGE,
-            CUSTOM_TYPES.GLOBAL_CITY,
-            CUSTOM_TYPES.GLOBAL_COUNTRY,
-            CUSTOM_TYPES.GLOBAL_HOMEPAGE,
-            CUSTOM_TYPES.GLOBAL_COLLECTION,
-            CUSTOM_TYPES.GLOBAL_EXPERIENCE,
-            CUSTOM_TYPES.SHOW_PAGE,
-          ].includes(doc.type)
-        )
-        .reduce(
-          (accum: Record<string, any>, item: Record<string, any>) => {
-            if (item.type === CUSTOM_TYPES.MICROSITE) {
-              return [[...accum[0], item], accum[1]];
+    return fetchAllMatchingDocs({
+      query: [Prismic.Predicates.at('document.tags', [uid as string])],
+      params: {
+        pageSize: 100,
+        page: 1,
+        lang: 'en-US',
+      },
+    })
+      .then((documents: any) => {
+        documents
+          .filter((doc: any) =>
+            [
+              CUSTOM_TYPES.MICROSITE,
+              CUSTOM_TYPES.CONTENT_PAGE,
+              CUSTOM_TYPES.GLOBAL_CITY,
+              CUSTOM_TYPES.GLOBAL_COUNTRY,
+              CUSTOM_TYPES.GLOBAL_HOMEPAGE,
+              CUSTOM_TYPES.GLOBAL_COLLECTION,
+              CUSTOM_TYPES.GLOBAL_EXPERIENCE,
+              CUSTOM_TYPES.SHOW_PAGE,
+            ].includes(doc.type)
+          )
+          .reduce(
+            (accum: Record<string, any>, item: Record<string, any>) => {
+              if (item.type === CUSTOM_TYPES.MICROSITE) {
+                return [[...accum[0], item], accum[1]];
+              }
+              return [accum[0], [...accum[1], item]];
+            },
+            [[], []]
+          )
+          .reduce(
+            (accum: Record<string, any>[], item: Record<string, any>[]) => [
+              ...accum,
+              ...item,
+            ]
+          )
+          .filter(
+            (doc: Record<string, any>) =>
+              doc.data.is_excluded_from_sitemap !== 'Yes'
+          )
+          .forEach((doc: any) => {
+            if (!doc?.data?.microbrand_url) {
+              xmlDoc.urlset.url.push(...createUrlArr(doc));
             }
-            return [accum[0], [...accum[1], item]];
-          },
-          [[], []]
-        )
-        .reduce((accum: Record<string, any>[], item: Record<string, any>[]) => [
-          ...accum,
-          ...item,
-        ])
-        .filter(
-          (doc: Record<string, any>) =>
-            doc.data.is_excluded_from_sitemap !== 'Yes'
-        );
-
-      for (const doc of docs) {
-        if (isSelfReferringCanonical(doc) && isNotIndexed(doc)) {
-          try {
-            const result = await createUrlArr(doc, langUid);
-            // @ts-ignore
-            xmlDoc.urlset.url.push(...result);
-          } catch (e) {
-            Sentry.captureException(e);
-          }
-        }
-      }
-
-      const xml = builder.create(xmlDoc, { encoding: 'utf-8' });
-      const xmlStr = xml.end();
-      res?.setHeader('Content-Type', 'application/xml');
-      res?.write(xmlStr);
-      res?.end();
-    } catch (e) {
-      Sentry.captureException(e);
-      res?.end();
-    }
+          });
+        const xml = builder.create(xmlDoc, { encoding: 'utf-8' });
+        const xmlStr = xml.end();
+        res?.setHeader('Content-Type', 'application/xml');
+        res?.write(xmlStr);
+        res?.end();
+      })
+      .catch(() => {
+        res?.end();
+      });
   }
 }
