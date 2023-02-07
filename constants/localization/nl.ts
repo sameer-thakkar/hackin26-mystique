@@ -25,6 +25,7 @@ const nl = {
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout is een merk waarop 15 miljoen gasten vertrouwen en dat een gecureerde selectie van de beste ervaringen biedt. Dit is niet de website van de locatie.',
   BOOK_NOW_CTA: 'Reserveer nu',
+  BUY_TICKETS_CTA: 'Koop kaartjes',
   CHECK_AVAIL: 'Controleer beschikbaarheid',
   READ_MORE_TEXT: 'Meer Info',
   SHOW_LESS_TEXT: 'Toon minder',

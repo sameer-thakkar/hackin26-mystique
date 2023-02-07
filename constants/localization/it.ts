@@ -25,6 +25,7 @@ const it = {
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     "Headout è un marchio di riferimento per 15 milioni di ospiti e offre una selezione delle migliori esperienze al mondo. Questo non è il sito web dell'attrazione.",
   BOOK_NOW_CTA: 'Prenota ora',
+  BUY_TICKETS_CTA: 'Scopri le nostre offerte',
   CHECK_AVAIL: 'Verifica disponibilità',
   READ_MORE_TEXT: 'Leggi tutto',
   SHOW_LESS_TEXT: 'Mostra meno',

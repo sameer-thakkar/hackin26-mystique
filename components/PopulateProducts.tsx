@@ -312,9 +312,6 @@ const PopulateProducts = (props: any) => {
         }))
       : tours;
 
-  const finalToursList = uncategorizedTours?.filter(
-    (t: any) => !!scorpioData[t.tgid]
-  );
   const availableToursList = uncategorizedTours?.filter(
     (tour: any) =>
       !!scorpioData[tour.tgid]?.available &&
@@ -470,7 +467,7 @@ const PopulateProducts = (props: any) => {
               ),
               position: index + 1,
               booster: product_booster,
-              defaultOpen: finalToursList.length === 1,
+              defaultOpen: false,
               shortSummary: short_summary,
               boosterTag: tag_booster,
               numberOfTours: tours.length,

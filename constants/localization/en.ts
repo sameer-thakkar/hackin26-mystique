@@ -27,6 +27,7 @@ const en = {
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     "Headout is a brand trusted by 15 million guests offering a curated selection of best experiences. This is not the venue's website.",
   BOOK_NOW_CTA: 'Book now',
+  BUY_TICKETS_CTA: 'Buy Tickets',
   CHECK_AVAIL: 'Check availability',
   READ_MORE_TEXT: 'Read more',
   SHOW_LESS_TEXT: 'Show less',

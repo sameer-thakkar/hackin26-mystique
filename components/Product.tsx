@@ -1064,12 +1064,14 @@ export const Descriptors = ({
   maxDuration,
   lang = 'en',
   isCombo = false,
+  isGpMotorTicketsMb = false,
 }: any) => {
   return (
     <TourTags horizontal={horizontal} pageType={pageType}>
       {descriptorArray.map((item: any, index: number) => {
         const DescriptorSVG = descriptorIcons[item];
-        if (item === DESCRIPTORS.DURATION && isCombo) return null;
+        if (item === DESCRIPTORS.DURATION && (isCombo || isGpMotorTicketsMb))
+          return null;
 
         return item ? (
           <div key={`descriptor-${index}`} className="tour-tag">
@@ -1585,8 +1587,10 @@ const Product = (props: any) => {
       role="button"
       tabIndex={0}
     >
-      {isV3Design || (isGpMotorTicketsMb && isSportsSubCategory) // This is just for the experiment. Will revert this at a later time or figure a better to do this
+      {isV3Design // This is just for the experiment. Will revert this at a later time or figure a better to do this
         ? strings.BOOK_NOW_CTA
+        : isGpMotorTicketsMb && isSportsSubCategory
+        ? strings.BUY_TICKETS_CTA
         : strings.CHECK_AVAIL}
       {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
     </Button>
@@ -1672,6 +1676,7 @@ const Product = (props: any) => {
               maxDuration={maxDuration}
               lang={currentLanguage}
               isCombo={isCombo}
+              isGpMotorTicketsMb={isGpMotorTicketsMb}
             />
           </Conditional>
           <Conditional if={hasV1Booster}>
@@ -1755,6 +1760,7 @@ const Product = (props: any) => {
                 maxDuration={maxDuration}
                 lang={currentLanguage}
                 isCombo={isCombo}
+                isGpMotorTicketsMb={isGpMotorTicketsMb}
               />
             </Conditional>
           </CTAContainer>

@@ -25,6 +25,7 @@ const pt = {
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout é uma marca que tem a confiança de mais de 15 milhões de clientes, oferecendo uma seleção das melhores experiências. Este não é o site da atração.',
   BOOK_NOW_CTA: 'Reserve agora',
+  BUY_TICKETS_CTA: 'Faça sua reserva',
   CHECK_AVAIL: 'Verificar disponibilidade',
   READ_MORE_TEXT: 'Ver mais',
   SHOW_LESS_TEXT: 'Ver menos',

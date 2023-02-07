@@ -24,6 +24,7 @@ const fr = {
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     "Headout est une entreprise de confiance pour 15 millions de visiteurs qui propose une sélection des meilleures expériences. Ceci n'est pas le site web de l'attraction.",
   BOOK_NOW_CTA: 'Réserver',
+  BUY_TICKETS_CTA: 'Voir nos offres',
   CHECK_AVAIL: 'Vérifier la disponibilité',
   READ_MORE_TEXT: 'En savoir plus',
   SHOW_LESS_TEXT: 'Voir moins',
