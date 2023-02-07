@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useWindowWidth } from '@react-hook/window-size';
@@ -18,7 +18,9 @@ import {
 } from 'const/index';
 import Conditional from 'components/common/Conditional';
 import { trackEvent } from 'utils/analytics';
+import { checkIfGpMotorTickets } from 'utils/helper';
 import type { SwiperProps } from 'swiper/react';
+import { MBContext } from 'contexts/MBContext';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -53,7 +55,7 @@ const cardImageAspectRatio = {
 
 const StyledCard = styled.div((props) => {
   // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
-  const { isGlobalMb } = props || {};
+  const { isGlobalMb, isGpMotorTicketsMb } = props || {};
   const styles = (props as any).isMobile
     ? variantStyles.small
     : // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
@@ -64,6 +66,15 @@ const StyledCard = styled.div((props) => {
     : (props as any).cardsInARow === 4
     ? '180px'
     : '245px';
+  let finalCardImgHeight;
+  if (isGpMotorTicketsMb) {
+    finalCardImgHeight = 'unset';
+  } else if (isGlobalMb) {
+    finalCardImgHeight = cardImgHeight;
+  } else {
+    finalCardImgHeight = `${styles.img.height}px`;
+  }
+
   return `
   display: grid;
   position: relative;
@@ -81,9 +92,10 @@ const StyledCard = styled.div((props) => {
     display: flex;
   }
   .image-wrap {
-    height:${isGlobalMb ? cardImgHeight : `${styles.img.height}px`};
+    height: ${finalCardImgHeight};
     width: ${isGlobalMb && hasSingleCard ? '528px' : '100%'};
-    ${isGlobalMb && `border-radius: 4px;`}
+    border-radius: ${isGlobalMb ? '4px' : 'unset'};
+    aspect-ratio: ${isGpMotorTicketsMb ? '16/10' : 'unset'};
 
     span {
       min-width: 100%;
@@ -260,6 +272,7 @@ const Card: React.FC<CardProps> = ({
   const [mounted, setMounted] = useState(false);
 
   const [isMobile, setIsMobile] = React.useState(false);
+  const { uid } = useContext(MBContext);
 
   React.useEffect(() => {
     setMounted(true);
@@ -299,9 +312,18 @@ const Card: React.FC<CardProps> = ({
     });
   };
 
+  const isGpMotorTicketsMb = checkIfGpMotorTickets(uid);
+  let arIndex;
+  if (isGlobalMb || isGpMotorTicketsMb) {
+    arIndex = 5;
+  } else if (cardsInARow > 4) {
+    arIndex = 4;
+  } else {
+    arIndex = cardsInARow;
+  }
   const aspectRatio =
     // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-    cardImageAspectRatio[isGlobalMb ? 5 : cardsInARow > 4 ? 4 : cardsInARow];
+    cardImageAspectRatio[arIndex];
   const fallbackImage = isGlobalMb
     ? FALLBACK_IMAGES.THEMEPARKS
     : FALLBACK_IMAGE;
@@ -413,6 +435,7 @@ const Card: React.FC<CardProps> = ({
       cardType={type}
       isGlobalMb={isGlobalMb}
       cardsInARow={cardsInARow}
+      isGpMotorTicketsMb={isGpMotorTicketsMb}
     >
       {imageView}
       {hasTextContent ? (

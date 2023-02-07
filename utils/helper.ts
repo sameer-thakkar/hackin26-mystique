@@ -523,7 +523,7 @@ export const checkBroadway = (uid: string | null | undefined) => {
   uid.includes('www.broadway-show-tickets.com');
 };
 
-export const checkIfGpMotorTickets = (uid: string | undefined) =>
+export const checkIfGpMotorTickets = (uid: string | null | undefined) =>
   !!uid?.includes('www.gpmotorsportstickets.com');
 
 export const checkIfSportsSubCategory = (
