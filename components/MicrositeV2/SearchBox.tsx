@@ -19,10 +19,11 @@ const StyledSearchBox = styled.div<{ isEntertainmentMb?: boolean }>`
       isEntertainmentMb ? '0.563rem 0' : '0.75rem 0'};
     outline: none;
     padding-left: 2.5rem;
+    padding-right: 2.25rem;
     border-radius: 0.25rem;
     border: 1px solid ${COLORS.GRAY.G6};
     width: calc(100% - 2.5rem);
-    min-width: 17.5rem;
+    min-width: 13rem;
     ${expandFontToken('UI/Label Medium')}
 
     ::placeholder {
@@ -61,7 +62,7 @@ const StyledSearchBox = styled.div<{ isEntertainmentMb?: boolean }>`
 
   .close-icon {
     position: absolute;
-    right: 1.125rem;
+    right: -1.495rem;
     display: flex;
     top: 50%;
     transform: translate(0, -50%);
