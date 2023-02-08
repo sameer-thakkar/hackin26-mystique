@@ -301,6 +301,7 @@ const Header: React.FC<any> = (props) => {
               width="144"
               autoCrop={false}
               className="center"
+              fetchPriority="high"
             />
             <Conditional if={hasPoweredByHeadoutLogo}>
               {POWERED_BY_HEADOUT}

@@ -24,6 +24,8 @@ const nl = {
     'Headout is een erkende en vertrouwde partner van de locatie die een gecureerde selectie biedt van de beste ervaringen om van deze attractie te genieten. Dit is niet de website van de locatie.',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout is een merk waarop 15 miljoen gasten vertrouwen en dat een gecureerde selectie van de beste ervaringen biedt. Dit is niet de website van de locatie.',
+  BANNER_SUBTEXT_DEFAULT_DISCLAIMER:
+    'Headout is een erkende en vertrouwde partner van de locatie die een gecureerde selectie biedt van de beste ervaringen om van deze attractie te genieten.',
   BOOK_NOW_CTA: 'Reserveer nu',
   BUY_TICKETS_CTA: 'Koop kaartjes',
   CHECK_AVAIL: 'Controleer beschikbaarheid',

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { useRecoilValue } from 'recoil';
 import { withShortcodes } from 'utils/helper';
 import { trackEvent } from 'utils/analytics';
@@ -16,25 +17,25 @@ import {
   RatingCountWrapper,
   RatingsWrapper,
 } from 'components/StaticBanner/styles';
-import Video from 'UI/Video';
-import Image from 'UI/Image';
 import { STAR } from 'assets/SvgIcons';
 import COLORS from 'const/colors';
 import { strings } from 'const/strings';
-import { ANALYTICS_EVENTS } from 'const/index';
+import { ANALYTICS_EVENTS, VIDEO_POSITIONS } from 'const/index';
+
+const Image = dynamic(() => import(/* webpackChunkName: "Image" */ 'UI/Image'));
+const Video = dynamic(() => import(/* webpackChunkName: "Video" */ 'UI/Video'));
 
 type StaticBannerProps = {
   bannerHeading: string;
   bannerImages: Array<{ url: string; alt: string }>;
-  aggregatedRatingDetails: AggregatedRatingDetails;
+  collectionDetails: CollectionDetailsTypes;
   bannerVideo?: string | null;
   showBannerSubtext: boolean;
   isMobile: boolean;
-  isExperimentViewedTriggered: boolean;
   isPartnered?: boolean;
 };
 
-export interface AggregatedRatingDetails {
+export type CollectionDetailsTypes = {
   id: number;
   displayName: string;
   metaDescription: string;
@@ -44,11 +45,7 @@ export interface AggregatedRatingDetails {
   currency: string;
   heroImageUrl?: string;
   cardImageUrl?: string;
-}
-
-export interface AggregatedRatingInfo {
-  aggregatedRatingInfo: AggregatedRatingDetails;
-}
+};
 
 const BANNER_DIMENSIONS = {
   WIDTH: 588,
@@ -61,8 +58,7 @@ const StaticBanner = ({
   bannerVideo,
   showBannerSubtext,
   isMobile,
-  aggregatedRatingDetails,
-  isExperimentViewedTriggered,
+  collectionDetails,
   isPartnered,
 }: StaticBannerProps) => {
   const { eventsReady } = useRecoilValue(gtmAtom);
@@ -70,24 +66,22 @@ const StaticBanner = ({
   const bannerHeadingArray = withShortcodes(tempBannerHeading);
   const bannerHeading = bannerHeadingArray?.join(' ');
   const bannerImage = bannerImages?.[0];
-  const { averageRating, ratingsCount } = aggregatedRatingDetails ?? {};
+  const { averageRating, ratingsCount } = collectionDetails ?? {};
 
   useEffect(() => {
-    if (!eventsReady || isMobile || !isExperimentViewedTriggered) return;
+    if (!eventsReady || isMobile) return;
 
     trackEvent({
       eventName: ANALYTICS_EVENTS.MB_BANNER.VISIBLE,
     });
-  }, [eventsReady, isExperimentViewedTriggered, isMobile]);
+  }, [eventsReady, isMobile]);
 
   return (
     <BannerSection>
       <Container>
         <ContentContainer>
           <Heading>{bannerHeading}</Heading>
-          <Conditional
-            if={shouldDisplayCollectionRatings(aggregatedRatingDetails)}
-          >
+          <Conditional if={shouldDisplayCollectionRatings(collectionDetails)}>
             <RatingsWrapper>
               {STAR(COLORS.BRAND.CANDY)}
               <AverageRatingWrapper>
@@ -99,13 +93,13 @@ const StaticBanner = ({
             </RatingsWrapper>
           </Conditional>
 
-          <Conditional if={showBannerSubtext}>
-            <DisclaimerText>
-              {isPartnered
+          <DisclaimerText>
+            {showBannerSubtext
+              ? isPartnered
                 ? strings.PARTNERED_BANNER_SUBTEXT_DISCLAIMER
-                : strings.NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER}
-            </DisclaimerText>
-          </Conditional>
+                : strings.NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER
+              : strings.BANNER_SUBTEXT_DEFAULT_DISCLAIMER}
+          </DisclaimerText>
         </ContentContainer>
 
         <Conditional if={!isMobile}>
@@ -131,6 +125,7 @@ const StaticBanner = ({
                 fallbackImage={bannerImage}
                 dontLazyLoadImage
                 shouldVideoPlay
+                videoPosition={VIDEO_POSITIONS.BANNER}
               />
             </Conditional>
           </MediaContainer>

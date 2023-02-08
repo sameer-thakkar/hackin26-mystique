@@ -26,6 +26,8 @@ const es = {
     'Headout es un socio de confianza de la atracción, autorizado para ofrecer una selección de las mejores experiencias. Este no es el sitio web de la atracción.',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout es una marca en la que confían 15 millones de clientes y que ofrece una selección de las mejores experiencias. Este no es el sitio web oficial de la atracción.',
+  BANNER_SUBTEXT_DEFAULT_DISCLAIMER:
+    'Headout es un socio de confianza de la atracción, autorizado para ofrecer una selección de las mejores experiencias.',
   BOOK_NOW_CTA: 'Reserva ahora',
   BUY_TICKETS_CTA: 'Comprar entradas',
   CHECK_AVAIL: 'Ver disponibilidad',

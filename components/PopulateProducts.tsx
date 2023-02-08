@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
 import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
 import Product from 'components/Product';
 import Conditional from 'components/common/Conditional';
 import HorizontalLine from 'components/slices/HorizontalLine';
@@ -11,6 +10,7 @@ import {
   ANALYTICS_PROPERTIES,
   THEMES,
   PROMO_CODES,
+  DESIGN,
 } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
@@ -21,11 +21,10 @@ import {
   fetchInventory,
   fetchTourList,
 } from 'utils/apiUtils';
-import { legacyBooleanCheck } from 'utils';
+import { isMBDesign, legacyBooleanCheck } from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import { csvTgidToArray, getHostName } from 'utils/helper';
 import { getPromoCodesDocument } from 'utils/prismicUtils';
-import { mediaUpgradeExperimentAtom } from 'store/atoms/mediaupgrade';
 
 const StyledProductsWrapper = styled.div`
   margin: 0 auto;
@@ -101,6 +100,7 @@ const PopulateProducts = (props: any) => {
     pageType = '',
     growthExperiment7Variant,
     bannerVideo,
+    isCollectionMB = false,
   } = props;
   const isDubaiSafariPark = uid === 'www.dubai-safari-park.com';
   const productsRef = useRef([]);
@@ -117,14 +117,13 @@ const PopulateProducts = (props: any) => {
   const [showEarliestAvailability, setShowEarliestAvailability] = useState(
     null
   );
-  const mediaUpgradeExperiment = useRecoilValue(mediaUpgradeExperimentAtom);
 
   const addToRef = (el: any) => {
     // @ts-expect-error TS(2345): Argument of type 'any' is not assignable to parame... Remove this comment to see the full error message
     productsRef.current.push(el);
   };
 
-  const { isStage, isDev, host } = useContext(MBContext);
+  const { isStage, isDev, host, design } = useContext(MBContext);
 
   const hostname = getHostName(isStage, isDev, host);
 
@@ -388,10 +387,14 @@ const PopulateProducts = (props: any) => {
     }
   }, [productInfo, allPromoCodes]);
 
-  const { isNewMediaSite } = mediaUpgradeExperiment;
+  const isV1DesignSite = isMBDesign({
+    currentDesign: design || '',
+    expectedDesign: DESIGN.V1,
+  });
+  const shouldShowHeading = isV1DesignSite ? !isCollectionMB : true;
   return (
     <StyledProductsWrapper ref={productsWrapperRef}>
-      <Conditional if={mbTheme !== THEMES.MIN_BLUE && !isNewMediaSite}>
+      <Conditional if={mbTheme !== THEMES.MIN_BLUE && shouldShowHeading}>
         <div id="tour-list-heading">
           <Conditional
             if={
@@ -485,7 +488,6 @@ const PopulateProducts = (props: any) => {
               primaryCollection,
               primarySubCategory,
               flowType,
-              mediaUpgradeExperiment,
               bannerVideo,
             };
 

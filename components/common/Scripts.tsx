@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import { LogoJsonLd, SiteLinksSearchBoxJsonLd } from 'next-seo';
 import Conditional from 'components/common/Conditional';
+import { CollectionDetailsTypes } from 'components/StaticBanner/index';
 import { convertUidToUrl, getDomainFromUid, getValidUrl } from 'utils/urlUtils';
-import { AggregatedRatingInfo } from 'components/StaticBanner/index';
 
 export const TrackingScripts = ({
   isDev,
@@ -172,8 +172,12 @@ export const MystiquePerfScript = ({
 );
 
 export const CollectionAggregatedRatingScript = ({
-  aggregatedRatingInfo,
-}: AggregatedRatingInfo) => {
+  collectionDetails,
+}: {
+  collectionDetails: CollectionDetailsTypes | undefined;
+}) => {
+  if (!collectionDetails) return null;
+
   const {
     id,
     displayName: name,
@@ -184,7 +188,7 @@ export const CollectionAggregatedRatingScript = ({
     averageRating: ratingValue,
     listingPrice: lowPrice,
     currency: priceCurrency,
-  } = aggregatedRatingInfo;
+  } = collectionDetails;
   const itemList = {
     '@context': 'https://schema.org/',
     '@type': 'Product',

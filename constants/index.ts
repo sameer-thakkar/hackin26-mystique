@@ -311,10 +311,8 @@ export const ANALYTICS_EVENTS = {
     REDIRECT_TO_IG: 'Influencer Content Redirect To Instagram',
   },
   PRODUCT_CARD_IMAGE_VIEWED: 'Product Card Image Viewed',
-  MB_Banner_Video_Played: 'MB Banner Video Played',
-  DEAD_CLICK: 'Dead Click',
-  MB_BANNER_VIDEO_AUTOPLAY_STARTED: 'MB Banner Video Autoplay Started',
-  MB_BANNER_VIDEO_AUTOPLAY_FAILED: 'MB Banner Video Autoplay Failed',
+  VIDEO_AUTOPLAY_STARTED: 'Video Autoplay Started',
+  VIDEO_AUTOPLAY_FAILED: 'Video Autoplay Failed',
   SCROLL_TO_TOP: 'Scroll To Top Button Clicked',
 };
 
@@ -950,43 +948,6 @@ export const DOCUMENT_READY_STATES = {
   COMPLETE: 'complete',
 };
 
-// TO BE REMOVED AFTER MEDIAUPGRADE PROJECT
-export const MEDIAUPGRADE_EXPERIMENT_UIDS = [
-  // UIDs with videos
-  'www.versailles-palace-tickets.com',
-  'www.singapore-tickets.com.gardens-by-the-bay-tickets',
-  'www.visitdubaiframe.com',
-  'www.acropolis-tickets.com',
-  'www.budapest-baths.com',
-  'www.penapalacetickets.com',
-  'casa-mila.barcelona-tickets.com',
-  'www.hagia-sophia-tickets.com',
-  // UIDs without videos
-  'www.tickets-paris.fr.disneyland-paris',
-  'www.tickets-paris.fr.disneyland-parijs',
-  'www.kennedyspacecenter-tickets.com',
-  'www.parkguell-tickets.com',
-  'burj-khalifa.dubai-tickets.co',
-  'www.billetseiffel.fr',
-  'www.eiffeltickets.com',
-  'www.pradomuseumtickets.com',
-  'www.pompeii-tickets.com',
-  'www.dubai-safari-park.com',
-  'www.seine-river-cruises.com',
-  'friedrichstadt-palast.berlin-tickets.com',
-  'www.malaysia-tickets.com.sunway-lagoon',
-  'arc-de-triomphe.tickets-paris.fr',
-  'www.royal-palace-madrid-tickets.com',
-  'empire-state-building.new-york-tickets.com',
-  'www.new-york-tickets.com.summit-one-vanderbilt',
-];
-
-export const MEDIAUPGRADE_EXPERIMENT_PROPERTIES = {
-  NAME: 'Media Upgrade Experiment',
-  TREATMENT: 'Treatment',
-  CONTROL: 'Control',
-};
-
 export const MEDIA_CAROUSEL_IMAGE_LIMIT = 10;
 
 export const DEFAULT_LOOKER_VALUES = {
@@ -996,4 +957,20 @@ export const DEFAULT_LOOKER_VALUES = {
     NON_PARTNERED: 'Default non-partnered banner subtext',
   },
   SHOWPAGE_TITLE: 'Showname - Tickets',
+};
+
+export const VIDEO_POSITIONS = {
+  BANNER: 'Banner',
+  PRODUCT_CARD: 'Product Card',
+};
+
+export const MB_TYPES = {
+  A1_COLLECTION: 'A1 - Collection MB',
+  A1_CITY_GUIDE: 'A1 - City Guide',
+  A1_HOMEPAGE: 'A1 - Home Page',
+  A1_SUB_CATEGORY: 'A1 - Sub Category MB',
+  A1_CATEGORY: 'A1 - Category MB',
+  B1_GLOBAL: 'B1 - Global MB',
+  B1_GLOBAL_HOMEPAGE: 'B1 - Global Home Page',
+  C1_COLLECTION: 'C1 - Collection MB',
 };

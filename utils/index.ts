@@ -1,5 +1,6 @@
 import Router from 'next/router';
 import dayjs from 'dayjs';
+import type { CollectionDetailsTypes } from 'components/StaticBanner';
 import {
   SUPPORTED_LANGUAGES,
   LANGUAGE_MAP,
@@ -8,18 +9,17 @@ import {
   HEADOUT_NAKED_DOMAIN,
   NON_SUPPORTED_LANGUAGES,
   UNIT_ABBREVIATIONS,
+  MB_TYPES,
 } from 'const/index';
 import { BOOKING_FLOW_STAGE, BOOKING_FLOW_TYPE } from 'const/booking';
 import { getLangObject, withoutTrailingSlash } from 'utils/helper';
 import { fetchCollection, fetchTourGroupsByCategory } from 'utils/apiUtils';
 import { convertUidToUrl, getDomainFromUid } from 'utils/urlUtils';
 
-import type { AggregatedRatingDetails } from '../components/StaticBanner';
-
 export const shouldDisplayCollectionRatings = (
-  aggregatedRatingDetails: AggregatedRatingDetails
+  collectionDetails: CollectionDetailsTypes | undefined
 ): boolean => {
-  const { averageRating, ratingsCount } = aggregatedRatingDetails ?? {};
+  const { averageRating, ratingsCount } = collectionDetails ?? {};
 
   if (!averageRating || !ratingsCount) return false;
   return averageRating >= 4 && ratingsCount >= 100;
@@ -506,3 +506,14 @@ const toFixedWithPrecision = (num: number, precision: number) => {
 
 export const checkIfMicrosite = ({ type }: Record<string, any>) =>
   type === CUSTOM_TYPES.MICROSITE;
+
+export const isMBDesign = ({
+  currentDesign,
+  expectedDesign,
+}: {
+  currentDesign: string;
+  expectedDesign: string;
+}) => currentDesign === expectedDesign;
+
+export const isCollectionMB = (mbType: string) =>
+  mbType === MB_TYPES.C1_COLLECTION || mbType === MB_TYPES.A1_COLLECTION;

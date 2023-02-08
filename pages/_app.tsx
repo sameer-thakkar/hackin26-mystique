@@ -7,7 +7,6 @@ import { currencyListAtom } from 'store/atoms/currencyList';
 import { appAtom } from 'store/atoms/app';
 import { currencyAtom } from 'store/atoms/currency';
 import { metaAtom } from 'store/atoms/meta';
-import { mediaUpgradeExperimentAtom } from 'store/atoms/mediaupgrade';
 import LiveChat from 'components/common/LiveChat';
 import {
   PAGETYPE_BY_CUSTOMTYPE,
@@ -48,7 +47,6 @@ const App = ({ Component, pageProps, localizedStrings, lang }: any) => {
       host,
       isDev,
       isStage,
-      mediaUpgradeExperiment,
       cookies = {},
     } = pageProps;
     const { title } = CMSContent?.data ?? {};
@@ -126,9 +124,6 @@ const App = ({ Component, pageProps, localizedStrings, lang }: any) => {
     });
     set(currencyListAtom, currencyList);
     set(currencyAtom, ssrCurrencyCode);
-    set(mediaUpgradeExperimentAtom, {
-      ...mediaUpgradeExperiment,
-    });
   };
 
   const getLanguageBasedGlobalStyling = (lang: any) => {

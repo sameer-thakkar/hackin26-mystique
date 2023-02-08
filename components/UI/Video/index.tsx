@@ -26,6 +26,7 @@ interface VideoTypeProps {
   imageHeight?: string | number;
   shouldVideoPlay?: boolean;
   dontLazyLoadImage?: boolean;
+  videoPosition: string;
 }
 
 const Video: React.FC<VideoTypeProps> = ({
@@ -41,6 +42,7 @@ const Video: React.FC<VideoTypeProps> = ({
   imageHeight,
   imageQuality,
   dontLazyLoadImage = false,
+  videoPosition,
 }) => {
   const videoAutoplayInterval = useRef(null);
   const videoAutoplayTime = useRef(0);
@@ -60,9 +62,10 @@ const Video: React.FC<VideoTypeProps> = ({
 
       if (videoAutoplayInterval.current) {
         trackEvent({
-          eventName: ANALYTICS_EVENTS.MB_BANNER_VIDEO_AUTOPLAY_STARTED,
+          eventName: ANALYTICS_EVENTS.VIDEO_AUTOPLAY_STARTED,
           [ANALYTICS_PROPERTIES.AUTOPLAY_LOAD_TIME]:
             videoAutoplayTime.current / 1000,
+          [ANALYTICS_PROPERTIES.POSITION]: videoPosition,
         });
         clearInterval(videoAutoplayInterval.current);
         videoAutoplayInterval.current = null;
@@ -72,7 +75,8 @@ const Video: React.FC<VideoTypeProps> = ({
       setIsAutoplayDisabled(true);
       setIsVideoPaused(true);
       trackEvent({
-        eventName: ANALYTICS_EVENTS.MB_BANNER_VIDEO_AUTOPLAY_FAILED,
+        eventName: ANALYTICS_EVENTS.VIDEO_AUTOPLAY_FAILED,
+        [ANALYTICS_PROPERTIES.POSITION]: videoPosition,
       });
     }
   };
@@ -84,14 +88,8 @@ const Video: React.FC<VideoTypeProps> = ({
     setIsVideoPaused(false);
     setIsAutoplayDisabled(false);
     trackEvent({
-      eventName: ANALYTICS_EVENTS.MB_Banner_Video_Played,
-    });
-  };
-
-  const handleVideoClick = () => {
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.DEAD_CLICK,
-      [ANALYTICS_PROPERTIES.TYPE]: 'MB Video Banner Clicked',
+      eventName: ANALYTICS_EVENTS.MB_VIDEO_PLAYED,
+      [ANALYTICS_PROPERTIES.POSITION]: videoPosition,
     });
   };
 
@@ -131,6 +129,7 @@ const Video: React.FC<VideoTypeProps> = ({
   }, [shouldVideoPlay, hasVideoLoaded]);
 
   const { url: fallbackImageUrl, altText: imageAltText } = fallbackImage;
+  const showPlayButton = isAutoplayDisabled && isVideoPaused && url;
   return (
     <VideoContainer className={'video-container'} $fadeInVideo={!isVideoPaused}>
       <Conditional if={fallbackImage}>
@@ -147,9 +146,10 @@ const Video: React.FC<VideoTypeProps> = ({
           alt={imageAltText}
           priority={dontLazyLoadImage}
           fetchPriority={dontLazyLoadImage ? 'high' : 'auto'}
+          onClick={showPlayButton ? playVideo : () => {}}
           fill
         />
-        <Conditional if={isAutoplayDisabled && isVideoPaused}>
+        <Conditional if={showPlayButton}>
           <PlayButton onClick={playVideo}>
             <PlaySvg />
           </PlayButton>
@@ -161,7 +161,6 @@ const Video: React.FC<VideoTypeProps> = ({
         loop={isLooped}
         muted={isMuted}
         playsInline
-        onClick={handleVideoClick}
       >
         <source data-src={url} type={'video/mp4'} />
       </StyledVideo>

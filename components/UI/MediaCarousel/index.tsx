@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
+import dynamic from 'next/dynamic';
 import type { Swiper } from 'swiper';
 import type { SwiperProps } from 'swiper/react';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'clas... Remove this comment to see the full error message
@@ -8,7 +9,6 @@ import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
 import SwiperWrapper from 'components/Swiper';
 import Conditional from 'components/common/Conditional';
-import Video from 'UI/Video';
 import Image from 'UI/Image';
 import {
   CarouselContainer,
@@ -16,7 +16,13 @@ import {
   PrevButtonContainer,
 } from 'UI/MediaCarousel/styles';
 import { CHEVRON_LEFT } from 'assets/SvgIcons';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  VIDEO_POSITIONS,
+} from 'const/index';
+
+const Video = dynamic(() => import(/* webpackChunkName: "Video" */ 'UI/Video'));
 
 type MediaCarouselProps = {
   imageList: Array<{ url: string; altText: string }>;
@@ -101,7 +107,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
       clickable: true,
     },
     speed: 600,
-    grabCursor: true,
+    grabCursor: imageList.length > 1,
     preloadImages: false,
     onSlideChangeTransitionStart: updateIndex,
     onSwiper: (swiper) => setSwiperInstance(swiper),
@@ -122,6 +128,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
               imageHeight={imageHeight}
               dontLazyLoadImage={isFirstProduct}
               shouldVideoPlay={currentIndex === 0}
+              videoPosition={VIDEO_POSITIONS.PRODUCT_CARD}
             />
           ) : (
             <Image

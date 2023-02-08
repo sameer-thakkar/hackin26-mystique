@@ -88,7 +88,7 @@ const Page = (props: any) => {
     isStage,
     primaryCountry,
     primaryCity,
-    aggregatedRatingDetails,
+    collectionDetails,
     domainConfig,
   } = props;
   const [{ eventsReady }, setEventsReady] = useRecoilState(gtmAtom);
@@ -185,7 +185,7 @@ const Page = (props: any) => {
             offerData={CMSContent.offerData}
             host={host}
             toursList={toursList}
-            aggregatedRatingDetails={aggregatedRatingDetails}
+            collectionDetails={collectionDetails}
             pathname={pathname}
             isDev={isDev}
             isStage={isStage}

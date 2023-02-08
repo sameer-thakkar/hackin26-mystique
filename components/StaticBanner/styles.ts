@@ -74,41 +74,43 @@ export const DisclaimerText = styled.p`
 export const RatingsWrapper = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 1rem;
-  column-gap: 0.25rem;
+  margin-top: 0.5rem;
+  column-gap: 0;
 
   svg {
-    height: 1rem;
-    width: 1rem;
+    margin-top: 0.0625rem;
+    height: 0.75rem;
+    width: 0.75rem;
   }
 
-  @media (max-width: 768px) {
-    margin-top: 0.5rem;
-    column-gap: 0;
+  @media (min-width: 768px) {
+    margin-top: 1rem;
+    column-gap: 0.25rem;
 
     svg {
-      margin-top: 0.0625rem;
-      height: 12px;
-      width: 12px;
+      margin-top: 0;
+      height: 1rem;
+      width: 1rem;
     }
   }
 `;
 
 export const AverageRatingWrapper = styled.span`
   color: ${COLORS.TEXT.CANDY_1};
-  ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)};
+  margin: 0 0.1875rem 0 0.125rem;
+  ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)};
 
-  @media (max-width: 768px) {
-    margin: 0 0.1875rem 0 0.125rem;
-    ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)};
+  @media (min-width: 768px) {
+    margin: 0;
+    ${expandFontToken(FONTS.UI_LABEL_LARGE_HEAVY)};
   }
 `;
 
 export const RatingCountWrapper = styled.span`
   color: ${COLORS.GRAY.G2};
-  ${expandFontToken(FONTS.UI_LABEL_LARGE)};
+  ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
 
-  @media (max-width: 768px) {
-    ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
+  @media (min-width: 768px) {
+    ${expandFontToken(FONTS.UI_LABEL_LARGE)};
   }
 `;

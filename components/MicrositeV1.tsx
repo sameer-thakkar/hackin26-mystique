@@ -8,19 +8,16 @@ import { useWindowWidth } from '@react-hook/window-size';
 import { useRecoilValue } from 'recoil';
 import { currencyAtom } from 'store/atoms/currency';
 import { gtmAtom } from 'store/atoms/gtm';
-import { mediaUpgradeExperimentAtom } from 'store/atoms/mediaupgrade';
 import { InteractionContextProvider } from 'contexts/Interaction';
 import { ProductsContextProvider } from 'contexts/Products';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
-import LongForm from 'components/common/LongForm';
 import PopulateMeta from 'components/common/NextSeoMeta';
-import PopulateProducts from 'components/PopulateProducts';
-import TextBanner from 'components/TextBanner';
 import Conditional from 'components/common/Conditional';
 import {
   getAlternateLanguages,
   getHeadoutLanguagecode,
+  isCollectionMB,
   legacyBooleanCheck,
 } from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
@@ -33,12 +30,12 @@ import {
   THEMES,
   PAGE_TYPES,
   ANALYTICS_PROPERTIES,
-  MEDIAUPGRADE_EXPERIMENT_PROPERTIES,
 } from 'const/index';
 import { strings } from 'const/strings';
 import renderShortCodes from 'utils/shortCodes';
 import { getLogoRedirectionUrl, convertUidToUrl } from 'utils/urlUtils';
 
+const LongForm = dynamic(() => import('components/common/LongForm'));
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 const MicrobrandList = dynamic(() => import('./MicrobrandsList'));
@@ -51,8 +48,14 @@ const ResponsiveSelector: ComponentType<any> = dynamic(
     ),
   { ssr: false }
 );
-const Banner = dynamic(() => import('components/Banner'));
-const StaticBanner = dynamic(() => import('components/StaticBanner/index'));
+const TextBanner = dynamic(() => import('components/TextBanner'));
+const StaticBanner = dynamic(() =>
+  import(/* webpackChunkName: "StaticBanner" */ 'components/StaticBanner')
+);
+const Banner = dynamic(() =>
+  import(/* webpackChunkName: "Banner" */ 'components/Banner')
+);
+const PopulateProducts = dynamic(() => import('components/PopulateProducts'));
 
 const CoverSlicesWrapper = styled.div`
   margin-bottom: 32px;
@@ -71,22 +74,17 @@ const MicrositeV1 = (props: any) => {
     serverRequestStartTimestamp,
     categoryTourListData,
     domainConfig,
-    aggregatedRatingDetails,
+    collectionDetails,
   } = props;
 
   const [isMobile, setIsMobile] = useState(props?.isMobile);
   const windowWidth = useWindowWidth();
 
   const currency = useRecoilValue(currencyAtom);
-  const mediaUpgradeExperiment = useRecoilValue(mediaUpgradeExperimentAtom);
   const { eventsReady } = useRecoilValue(gtmAtom);
   const [freeTourPopupOpen, toggleFreeTourPopup] = useState(false);
   const [covidAlertActive, toggleCovidAlert] = useState(false);
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
-  const [
-    isExperimentViewedTriggered,
-    setIsExperimentViewedTriggered,
-  ] = useState(false);
 
   const {
     refs,
@@ -96,6 +94,7 @@ const MicrositeV1 = (props: any) => {
     last_publication_date: dateModified,
     data: micrositeData,
     alternate_languages,
+    mbType,
   } = data;
   const {
     contentFramework,
@@ -345,6 +344,7 @@ const MicrositeV1 = (props: any) => {
     : [];
   const finalHeaderLinks =
     headerLinks && !isHeaderInherited ? headerLinks : null;
+  const isCollectionMicrobrand = isCollectionMB(mbType);
 
   useEffect(() => {
     setIsMobile(windowWidth < 768);
@@ -374,31 +374,6 @@ const MicrositeV1 = (props: any) => {
       value: renderedBaseLangPageTitle,
     });
   }, []);
-
-  useEffect(() => {
-    if (!eventsReady) return;
-
-    const { isNewMediaSite, isOldMediaSite } = mediaUpgradeExperiment;
-    if (isNewMediaSite) {
-      trackEvent({
-        eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
-        [ANALYTICS_PROPERTIES.EXPERIMENT_NAME]:
-          MEDIAUPGRADE_EXPERIMENT_PROPERTIES.NAME,
-        [ANALYTICS_PROPERTIES.EXPERIMENT_VARIANT]:
-          MEDIAUPGRADE_EXPERIMENT_PROPERTIES.TREATMENT,
-      });
-      setIsExperimentViewedTriggered(true);
-    } else if (isOldMediaSite) {
-      trackEvent({
-        eventName: ANALYTICS_EVENTS.EXPERIMENT_VIEWED,
-        [ANALYTICS_PROPERTIES.EXPERIMENT_NAME]:
-          MEDIAUPGRADE_EXPERIMENT_PROPERTIES.NAME,
-        [ANALYTICS_PROPERTIES.EXPERIMENT_VARIANT]:
-          MEDIAUPGRADE_EXPERIMENT_PROPERTIES.CONTROL,
-      });
-      setIsExperimentViewedTriggered(true);
-    }
-  }, [eventsReady]);
 
   useEffect(() => {
     if (!eventsReady) return;
@@ -436,7 +411,6 @@ const MicrositeV1 = (props: any) => {
   );
 
   const isToursAvailable = availableTours?.length > 0;
-  const { isNewMediaSite } = mediaUpgradeExperiment;
   const closeGroupBookingModal = () => toggleGroupBookingModal(false);
   const tourListSection = (
     <PopulateProducts
@@ -458,10 +432,11 @@ const MicrositeV1 = (props: any) => {
       mbTheme={mbTheme}
       instantCheckout={instantCheckout}
       enableEarliestAvailability={enableEarliestAvailability}
-      mediaUpgradeExperiment={mediaUpgradeExperiment}
       bannerVideo={collectionVideo}
+      isCollectionMB={isCollectionMicrobrand}
     />
   );
+
   return (
     <div>
       <div className="microsite-container">
@@ -491,9 +466,7 @@ const MicrositeV1 = (props: any) => {
             bannerImages: finalBannerImages,
             faviconUrl,
             logoUrl: logoUrl,
-            ...(isNewMediaSite && {
-              aggregatedRatingDetails,
-            }),
+            collectionDetails,
           }}
         />
         <Header
@@ -540,7 +513,9 @@ const MicrositeV1 = (props: any) => {
             />
           </div>
         </Conditional>
-        <Conditional if={mbTheme !== THEMES.MIN_BLUE && !isNewMediaSite}>
+        <Conditional
+          if={mbTheme !== THEMES.MIN_BLUE && !isCollectionMicrobrand}
+        >
           <Banner
             bannerImages={finalBannerImages ? finalBannerImages : null}
             bannerHeading={bannerHeading ? bannerHeading : null}
@@ -556,15 +531,14 @@ const MicrositeV1 = (props: any) => {
             orderedTgids={orderedTgids}
           />
         </Conditional>
-        <Conditional if={isNewMediaSite}>
+        <Conditional if={mbTheme !== THEMES.MIN_BLUE && isCollectionMicrobrand}>
           <StaticBanner
             bannerVideo={collectionVideo}
             bannerImages={finalBannerImages ? finalBannerImages : null}
             bannerHeading={bannerHeading ? bannerHeading : null}
             showBannerSubtext={baseLangShowBannerSubtext}
             isMobile={isMobile}
-            aggregatedRatingDetails={aggregatedRatingDetails}
-            isExperimentViewedTriggered={isExperimentViewedTriggered}
+            collectionDetails={collectionDetails}
             isPartnered={baseLangisPartnered}
           />
         </Conditional>

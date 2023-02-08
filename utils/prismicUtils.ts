@@ -2,13 +2,12 @@ import { Client } from 'config/prismic-config';
 import Prismic from 'prismic-javascript';
 import * as Sentry from '@sentry/nextjs';
 import { toursTabSliceHandler } from 'components/Slices';
-import type { AggregatedRatingDetails } from 'components/StaticBanner/index';
+import type { CollectionDetailsTypes } from 'components/StaticBanner/index';
 import {
   COMMON_DATA_PROPS_FOR_LISTICLE,
   CUSTOM_TYPES,
   LANGUAGE_MAP,
   LINKED_MICROSITE_PROPS,
-  MEDIAUPGRADE_EXPERIMENT_UIDS,
   MICROSITE_ARRAY_KEYS,
   MICROSITE_OBJECT_KEYS,
   MICROSITE_STRING_KEYS,
@@ -224,7 +223,7 @@ export const getContentPageDocument = async ({
                 lang: 'en-us',
               })
               .then((res: any) => res)
-          : null;
+          : micrositeData;
       const baseLangRefArray = await getRefsArrayByIds(
         [baseLangData?.data?.content_framework?.id],
         req
@@ -232,6 +231,9 @@ export const getContentPageDocument = async ({
       const { contentFramework: baseLangContentFramework } = refsArrayToObject(
         baseLangRefArray
       );
+      const {
+        data: { tagged_mb_type: mbType },
+      } = baseLangData || { data: {} };
 
       let categoryTourListV1 = getSinglePrismicSlice({
         sliceName: 'ticket_card_shoulder_page',
@@ -259,6 +261,7 @@ export const getContentPageDocument = async ({
         ...page,
         data: {
           ...page.data,
+          mbType,
           footer_ref: commonFooter,
           header_ref: commonHeader,
           content_framework: contentFramework,
@@ -330,8 +333,10 @@ export const getMicrositeDocument = async ({
             data: {
               is_entertainment_mb: isEntertainmentMb,
               body: localisedCategoryTourListSlice,
+              tagged_mb_type: mbType,
             },
           } = baseLangData || { data: {} };
+          completeMicrosite.data.mbType = mbType;
 
           let allShowPages, productCardData;
           if (isEntertainmentMb) {
@@ -1018,38 +1023,25 @@ export const getShowPage = async ({
   return Promise.reject();
 };
 
-const removeLastPathFromUID = (uid: string): string => {
-  const tempUid = uid.split('.');
-  tempUid.pop();
-  return tempUid.join('.');
-};
-
 export const getPrismicDocument = async ({
   req,
   serverResponse,
   query,
   isDev,
   useHostAsUid = false,
-  isNewMediaSite = false,
 }: any): Promise<{
   ContentType?: string;
   CMSContent?: any;
   statusCode?: number;
   isDev?: boolean;
   useHostAsUid?: boolean;
-  isNewMediaSite?: boolean;
 }> => {
   const { host } = req.headers || window.location;
   const { lang } = getLangUID(req, query);
-  let uid = useHostAsUid
+  const uid = useHostAsUid
     ? host.replace('stage-', '')
     : getLangUID(req, query)?.uid;
   const queryParamsString = getValidUrlParams(query);
-
-  // Removes '.home' from the uid so a valid prismic document is returned.
-  if (isNewMediaSite) {
-    uid = removeLastPathFromUID(uid);
-  }
 
   try {
     return await Promise.any([
@@ -1125,30 +1117,8 @@ export const getPageData = async ({
   const { host } = req.headers || window.location;
   const isStage = host.includes('stage-');
   const cookies = req.cookies;
-  let { uid, lang } = getLangUID(req, query);
+  const { uid, lang } = getLangUID(req, query);
   const hostname = getHostName(isStage, isDev, host);
-
-  /* Mediaupgrade Experiment */
-  let mediaUpgradeExperiment = { isNewMediaSite: false, isOldMediaSite: false };
-  const experimentUid = MEDIAUPGRADE_EXPERIMENT_UIDS.find((expUid) => {
-    if (uid.includes(expUid)) {
-      return expUid;
-    }
-  });
-  switch (true) {
-    case experimentUid && experimentUid === uid: {
-      mediaUpgradeExperiment.isOldMediaSite = true;
-      break;
-    }
-    case experimentUid && `${experimentUid}.home` === uid: {
-      mediaUpgradeExperiment.isNewMediaSite = true;
-      uid = removeLastPathFromUID(uid);
-      break;
-    }
-    default: {
-      break;
-    }
-  }
 
   try {
     let initial_tgids: any = [];
@@ -1158,29 +1128,9 @@ export const getPageData = async ({
       req,
       serverResponse,
       isDev,
-      isNewMediaSite: mediaUpgradeExperiment.isNewMediaSite,
-      cookies,
     })) || { statusCode: 404 };
     const currencyListPromise = fetchCurrencyList();
     const domainConfigPromise = fetchDomainConfig(uid);
-
-    /* Mutating the alternate lang array so it works for the newMediaSites 
-    - To be removed after mediaUpgrade project */
-    if (
-      ContentType === CUSTOM_TYPES.MICROSITE &&
-      mediaUpgradeExperiment.isNewMediaSite
-    ) {
-      const { alternate_languages } = CMSContent.data;
-      CMSContent.data.alternate_languages = alternate_languages.map(
-        (lang: any) => {
-          lang.uid = `${lang.uid}.home`;
-          return lang;
-        }
-      );
-      CMSContent.data.data.noindex = true;
-      CMSContent.data.data.canonical_link =
-        CMSContent.data.data.canonical_link + 'home/';
-    }
 
     if (statusCode) {
       return {
@@ -1351,7 +1301,6 @@ export const getPageData = async ({
         host,
         currencyList: await currencyListPromise,
         domainConfig: await domainConfigPromise,
-        mediaUpgradeExperiment,
       };
     }
 
@@ -1367,7 +1316,6 @@ export const getPageData = async ({
         host,
         currencyList: await currencyListPromise,
         domainConfig: await domainConfigPromise,
-        mediaUpgradeExperiment,
       };
     }
 
@@ -1385,7 +1333,6 @@ export const getPageData = async ({
         host,
         currencyList: await currencyListPromise,
         domainConfig: await domainConfigPromise,
-        mediaUpgradeExperiment,
       };
     }
 
@@ -1434,7 +1381,6 @@ export const getPageData = async ({
         ...(activeCurrency && { activeCurrency }),
         currencyList: await currencyListPromise,
         domainConfig: await domainConfigPromise,
-        mediaUpgradeExperiment,
       };
     }
 
@@ -1473,7 +1419,6 @@ export const getPageData = async ({
           ...(activeCurrency && { activeCurrency }),
           currencyList: await currencyListPromise,
           domainConfig: await domainConfigPromise,
-          mediaUpgradeExperiment,
         };
       } catch (error) {
         traceError({ error, host: req?.headers?.host, url: req?.url });
@@ -1509,7 +1454,7 @@ export const getPageData = async ({
     }
 
     if (ContentType === CUSTOM_TYPES.MICROSITE) {
-      let aggregatedRatingDetails: AggregatedRatingDetails;
+      let collectionDetails: CollectionDetailsTypes | Object = {};
       const { data } = CMSContent || {};
       const { refs, data: CMSData } = data || {};
       const { contentFramework, productCardData } = refs || {};
@@ -1551,9 +1496,7 @@ export const getPageData = async ({
             cookies,
             localizedStrings,
           });
-          // @ts-expect-error TS(2322): Type 'AggregatedRatingDetails | undefined' is not ... Remove this comment to see the full error message
-          aggregatedRatingDetails =
-            categoryTourListData.aggregatedRatingDetails;
+          collectionDetails = categoryTourListData.collectionDetails ?? {};
         } else {
           categoryTourListData = await categoryTourListParserV2({
             tourListCategory: categoryTourListV2,
@@ -1614,8 +1557,7 @@ export const getPageData = async ({
         queryParams,
         mbTheme,
         isStage,
-        // @ts-expect-error TS(2454): Variable 'aggregatedRatingDetails' is used before ... Remove this comment to see the full error message
-        aggregatedRatingDetails,
+        collectionDetails,
         ...(primaryCity && { primaryCity }),
         ...(primaryCountry && { primaryCountry }),
         ...(activeCurrency && { activeCurrency }),
@@ -1760,7 +1702,6 @@ export const getPageData = async ({
       primaryCountry,
       currencyList: await currencyListPromise,
       domainConfig: await domainConfigPromise,
-      mediaUpgradeExperiment,
     };
   } catch (error) {
     traceError({ error, host: req?.headers?.host, url: req?.url });

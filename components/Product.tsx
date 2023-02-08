@@ -13,6 +13,7 @@ import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import parse from 'url-parse';
+import type { SwiperProps } from 'swiper/react';
 import { MBContext } from 'contexts/MBContext';
 import useSWR from 'swr';
 import { useRecoilValue } from 'recoil';
@@ -26,7 +27,6 @@ import PriceBlock from 'UI/PriceBlock';
 import Chevron from 'UI/Chevron';
 import { StlyedSplit } from 'UI/Split';
 import Button from 'UI/Button';
-import Image from 'UI/Image';
 import PromoCodeBlock from 'UI/PromoCodeBlock';
 import { CALENDAR, BackArrow, CHEVRON_RIGHT_CIRCLE } from 'assets/SvgIcons';
 import COLORS from 'const/colors';
@@ -63,11 +63,15 @@ import {
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { getDuration } from 'utils/timeUtils';
 import { addQueryParams } from 'utils/urlUtils';
-import type { SwiperProps } from 'swiper/react';
 import { FONTS } from 'const/fonts';
 
-const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
-const MediaCarousel = dynamic(() => import('UI/MediaCarousel'));
+const Swiper = dynamic(
+  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper'),
+  { ssr: false }
+);
+const MediaCarousel = dynamic(() =>
+  import(/* webpackChunkName: "MediaCarousel" */ 'UI/MediaCarousel')
+);
 
 dayjs.extend(advancedFormat);
 
@@ -175,7 +179,7 @@ interface IStyledProductCard {
   isV3Design?: boolean;
   layout?: any;
   isNewMediaSite?: boolean;
-  isFirstProduct?: boolean;
+  $isFirstProduct?: boolean;
 }
 
 const StyledProductCard = styled.div<IStyledProductCard>`
@@ -234,13 +238,9 @@ const StyledProductCard = styled.div<IStyledProductCard>`
   grid-auto-rows: min-content;
   column-gap: 1.5rem;
 
-  ${({ isNewMediaSite }) =>
-    isNewMediaSite &&
-    `
-    .card-img {
-      border-radius: 0;
-    }
-  `}
+  .card-img {
+    border-radius: 0;
+  }
 
   @media (max-width: 768px) {
     padding: ${({ theme }) => theme.productCards.padding.mobile};
@@ -283,26 +283,21 @@ const StyledProductCard = styled.div<IStyledProductCard>`
       `}
     }
 
-    ${({ isNewMediaSite }) =>
-      isNewMediaSite &&
-      `
-        .card-img {
-          width: calc(100% + 2rem);
+    .card-img {
+      width: calc(100% + 2rem);
 
-          img {
-            border-radius: 0;
-          }
-        }
+      img {
+        border-radius: 0;
+      }
+    }
 
-        .card-img img {
-          width: 100%;
-        }
-      `}
+    .card-img img {
+      width: 100%;
+    }
 
     
-    ${({ isNewMediaSite, isFirstProduct }) =>
-      isNewMediaSite &&
-      isFirstProduct &&
+    ${({ $isFirstProduct }) =>
+      $isFirstProduct &&
       `
         .card-img {
           height: 22.5rem;
@@ -490,8 +485,6 @@ const PriceContainer = styled.div<{
 
   @media (max-width: 768px) {
     grid-area: price-block;
-    margin-top: ${({ $hasScratchPrice }) =>
-      $hasScratchPrice ? '0' : '-0.25rem'};
     margin-bottom: 0.25rem;
     ${({ theme }) => theme.productCards.priceFontSettings.mobile}
 
@@ -763,6 +756,8 @@ const TabsWrapper = styled.div`
   justify-content: left;
   position: relative;
   overflow: hidden;
+  margin-top: -0.5rem;
+  padding-top: 0.5rem;
 
   .swiper-slide {
     width: auto;
@@ -800,14 +795,14 @@ const SwiperControls = styled.div`
   }
   .prev-slide {
     left: 0;
-    top: -0.5rem;
+    top: -0.2rem;
     svg {
       transform: scaleX(-1);
     }
   }
   .next-slide {
     right: 0;
-    top: -0.5rem;
+    top: -0.2rem;
   }
 `;
 
@@ -989,7 +984,7 @@ const HighlightTabs = ({
   );
 };
 
-const ModalCardContainer = styled.div<{ $isNewMediaSite: boolean }>`
+const ModalCardContainer = styled.div`
   @media (max-width: 768px) {
     background: #fff;
     border-radius: 0.75rem 0.75rem 0 0;
@@ -1002,26 +997,18 @@ const ModalCardContainer = styled.div<{ $isNewMediaSite: boolean }>`
     }
 
     .card-img {
-      width: calc(100% + 3.5rem);
+      width: calc(100% + 3rem);
       margin: -1.5rem -1.5rem -0.5rem;
       max-height: 175px;
     }
 
-    ${({ $isNewMediaSite }) =>
-      $isNewMediaSite &&
-      `
-          .card-img {
-            width: calc(100% + 3rem); 
-          
-            .video-container {
-              height: 11.25rem;
+    .video-container {
+      height: 11.25rem;
 
-              video {
-                height: 11.25rem;
-              }
-            }
-          }
-      `}
+      video {
+        height: 11.25rem;
+      }
+    }
 
     ${TitleWrapper} {
       max-width: calc(100% - 24px);
@@ -1126,7 +1113,6 @@ const Product = (props: any) => {
     primaryCollection,
     primarySubCategory,
     showCard = true,
-    mediaUpgradeExperiment = {},
     flowType,
     bannerVideo,
     isV3Design,
@@ -1195,7 +1181,6 @@ const Product = (props: any) => {
       addToAside({
         width: '100vw',
         children: (
-          // @ts-expect-error TS(2769): No overload matches this call.
           <ModalCardContainer>
             {getProductCardElements(true)}
           </ModalCardContainer>
@@ -1219,7 +1204,6 @@ const Product = (props: any) => {
     multiVariant: isMultiVariant,
     minDuration,
     maxDuration,
-    imageUrl: productImage,
     images,
   } = scorpioData || {};
 
@@ -1229,7 +1213,6 @@ const Product = (props: any) => {
   const descriptorsList = descriptors || scorpioData.descriptors;
   const cardTitle = title || scorpioData.title;
   const { promo_code } = finalPromoCode || {};
-  const { isNewMediaSite } = mediaUpgradeExperiment;
   const isFirstProduct = indexPosition === 0;
 
   const params = {
@@ -1465,7 +1448,7 @@ const Product = (props: any) => {
       addToAside({
         width: '100vw',
         children: (
-          <ModalCardContainer $isNewMediaSite={isNewMediaSite}>
+          <ModalCardContainer>
             {getProductCardElements(true)}
           </ModalCardContainer>
         ),
@@ -1602,35 +1585,10 @@ const Product = (props: any) => {
         layout={layout}
         isTicketCard={isTicketCard}
         isMobile={isMobile}
-        isNewMediaSite={isNewMediaSite}
-        isFirstProduct={isFirstProduct}
+        $isFirstProduct={isFirstProduct}
         isV3Design={isV3Design}
       >
-        <Conditional if={!isTicketCard && productImage && !isNewMediaSite}>
-          <div className="card-img">
-            <Image
-              url={productImage}
-              imageId="card-img"
-              aspectRatio={isMobile ? '21:9' : '3:4'}
-              width={
-                isMobile
-                  ? PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.width
-                  : undefined
-              }
-              height={
-                isMobile
-                  ? undefined
-                  : PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.height
-              }
-              fill={true}
-              objectFit="cover"
-              autoCrop={false}
-              quality={80}
-              alt={cardTitle}
-            />
-          </div>
-        </Conditional>
-        <Conditional if={!isTicketCard && images?.length && isNewMediaSite}>
+        <Conditional if={!isTicketCard && images?.length}>
           <div className="card-img">
             <MediaCarousel
               imageList={images?.slice(0, MEDIA_CAROUSEL_IMAGE_LIMIT)}
@@ -1703,13 +1661,7 @@ const Product = (props: any) => {
               }
             })}
           <CTAContainer pageType={pageType}>
-            <PriceContainer
-              $hasScratchPrice={
-                showScratchPrice &&
-                finalListingPrice.originalPrice > finalListingPrice.finalPrice
-              }
-              pageType={pageType}
-            >
+            <PriceContainer pageType={pageType}>
               <PriceBlock
                 showScratchPrice={showScratchPrice}
                 listingPrice={finalListingPrice}

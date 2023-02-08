@@ -4,7 +4,7 @@ import {
   getObject,
   parseShowPageData,
 } from 'components/ShowPages/parseShowPage';
-import type { AggregatedRatingDetails } from 'components/StaticBanner/index';
+import type { CollectionDetailsTypes } from 'components/StaticBanner/index';
 import {
   generatePromiseForCategoryTours,
   getHeadoutLanguagecode,
@@ -100,8 +100,8 @@ export const categoryTourListParserV1 = async ({
 
   const language = getHeadoutLanguagecode(lang);
   let primaryCity;
-  let collectionVideo: string;
-  let aggregatedRatingDetails: AggregatedRatingDetails;
+  let collectionVideo: string = '';
+  let collectionDetails: CollectionDetailsTypes | Object = {};
 
   if (collection) {
     try {
@@ -117,27 +117,24 @@ export const categoryTourListParserV1 = async ({
         id,
         displayName,
         metaDescription,
-        ratingsInfo,
+        ratingsInfo = {},
         heroImageUrl,
         cardImageUrl,
         startingPrice,
       } = collectionData?.collection ?? {};
+      const { currency: currentCurrency, listingPrice } = startingPrice ?? {};
 
-      const { currency: aggregatedRatingDetailsCurrency, listingPrice } =
-        startingPrice ?? {};
-
-      aggregatedRatingDetails = {
+      collectionDetails = {
         id,
         displayName,
         metaDescription,
-        ratingsCount: ratingsInfo.ratingsCount,
-        averageRating: ratingsInfo.averageRating,
+        ratingsCount: ratingsInfo?.ratingsCount,
+        averageRating: ratingsInfo?.averageRating,
         heroImageUrl,
         cardImageUrl,
         listingPrice,
-        currency: aggregatedRatingDetailsCurrency,
+        currency: currentCurrency,
       };
-
       primaryCity = collectionData?.city;
       collectionVideo = collectionData?.collection?.collectionVideo;
       currency = collectionData?.city?.country?.currency;
@@ -402,9 +399,7 @@ export const categoryTourListParserV1 = async ({
       primaryCity,
       orderedTours: repeatableObj,
       activeCurrency: currency,
-      // @ts-expect-error TS(2454): Variable 'aggregatedRatingDetails' is used before ... Remove this comment to see the full error message
-      aggregatedRatingDetails,
-      // @ts-expect-error TS(2454): Variable 'collectionVideo' is used before being as... Remove this comment to see the full error message
+      collectionDetails,
       collectionVideo,
     };
   } else {

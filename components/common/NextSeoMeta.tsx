@@ -2,7 +2,6 @@ import { useContext } from 'react';
 import { NextSeo, NextSeoProps } from 'next-seo';
 import { OpenGraph, Twitter } from 'next-seo/lib/types';
 import { useRouter } from 'next/router';
-import { useRecoilValue } from 'recoil';
 import { MBContext } from 'contexts/MBContext';
 import { BANNER_PARAMS } from 'components/Banner';
 import Conditional from 'components/common/Conditional';
@@ -12,13 +11,12 @@ import {
   TrackingScripts,
   CollectionAggregatedRatingScript,
 } from 'components/common/Scripts';
-import { AggregatedRatingDetails } from 'components/StaticBanner/index';
+import { CollectionDetailsTypes } from 'components/StaticBanner/index';
 import { legacyBooleanCheck, shouldDisplayCollectionRatings } from 'utils';
 import { createAdditionalMetaTag, createHrefLangObj } from 'utils/headUtils';
 import { withShortcodes } from 'utils/helper';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { getStructure } from 'utils/lookerUtils';
-import { mediaUpgradeExperimentAtom } from 'store/atoms/mediaupgrade';
 import {
   FB_DOMAIN_VERIFICATION,
   QUERY_PARAMS,
@@ -33,7 +31,7 @@ type PopulateMetaProps = {
   dateModified: string;
   serverRequestStartTimestamp: string;
   isMobile: boolean;
-  aggregatedRatingDetails?: AggregatedRatingDetails;
+  collectionDetails?: CollectionDetailsTypes;
   bannerImages: { [key: string]: any }[];
   mbTheme?: string;
   faviconUrl: string;
@@ -48,7 +46,7 @@ export default function PopulateMeta({
   isMobile,
   bannerImages,
   serverRequestStartTimestamp,
-  aggregatedRatingDetails,
+  collectionDetails,
   faviconUrl,
   logoUrl,
 }: PopulateMetaProps) {
@@ -62,7 +60,6 @@ export default function PopulateMeta({
     lang,
     language_full,
   } = useContext(MBContext);
-  const { isNewMediaSite } = useRecoilValue(mediaUpgradeExperimentAtom);
   const { query } = useRouter();
   const {
     [QUERY_PARAMS.LIMIT]: limit,
@@ -264,16 +261,9 @@ export default function PopulateMeta({
       </Conditional>
       {/* @ts-expect-error TS(2322): Type '{ uid: null; lang: string; title: string; lo... Remove this comment to see the full error message */}
       <WebpageJsonLD {...jsonLdProps} />
-      <Conditional
-        if={
-          isNewMediaSite &&
-          // @ts-expect-error TS(2345): Argument of type 'AggregatedRatingDetails | undefi... Remove this comment to see the full error message
-          shouldDisplayCollectionRatings(aggregatedRatingDetails)
-        }
-      >
+      <Conditional if={shouldDisplayCollectionRatings(collectionDetails)}>
         <CollectionAggregatedRatingScript
-          // @ts-expect-error TS(2322): Type 'AggregatedRatingDetails | undefined' is not ... Remove this comment to see the full error message
-          aggregatedRatingInfo={aggregatedRatingDetails}
+          collectionDetails={collectionDetails}
         />
       </Conditional>
       <MystiquePerfScript
