@@ -179,7 +179,7 @@ interface IStyledProductCard {
   isV3Design?: boolean;
   layout?: any;
   isNewMediaSite?: boolean;
-  $isFirstProduct?: boolean;
+  $isBannerCard?: boolean;
 }
 
 const StyledProductCard = styled.div<IStyledProductCard>`
@@ -296,8 +296,8 @@ const StyledProductCard = styled.div<IStyledProductCard>`
     }
 
     
-    ${({ $isFirstProduct }) =>
-      $isFirstProduct &&
+    ${({ $isBannerCard }) =>
+      $isBannerCard &&
       `
         .card-img {
           height: 22.5rem;
@@ -1116,6 +1116,7 @@ const Product = (props: any) => {
     flowType,
     bannerVideo,
     isV3Design,
+    isCollectionMB,
   } = props;
   const {
     mbTheme,
@@ -1213,7 +1214,7 @@ const Product = (props: any) => {
   const descriptorsList = descriptors || scorpioData.descriptors;
   const cardTitle = title || scorpioData.title;
   const { promo_code } = finalPromoCode || {};
-  const isFirstProduct = indexPosition === 0;
+  const isBannerCard = indexPosition === 0 && isCollectionMB;
 
   const params = {
     ...(lang && {
@@ -1585,29 +1586,29 @@ const Product = (props: any) => {
         layout={layout}
         isTicketCard={isTicketCard}
         isMobile={isMobile}
-        $isFirstProduct={isFirstProduct}
+        $isBannerCard={isBannerCard}
         isV3Design={isV3Design}
       >
         <Conditional if={!isTicketCard && images?.length}>
           <div className="card-img">
             <MediaCarousel
               imageList={images?.slice(0, MEDIA_CAROUSEL_IMAGE_LIMIT)}
-              videoUrl={isMobile && isFirstProduct ? bannerVideo : null}
+              videoUrl={isMobile && isBannerCard ? bannerVideo : null}
               imageId="card-img"
               imageAspectRatio={isMobile ? '21:9' : '3:4'}
               imageWidth={
                 isMobile
-                  ? isFirstProduct
+                  ? isBannerCard
                     ? PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.firstProductWidth
                     : PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.width
                   : undefined
               }
               imageHeight={
-                isMobile && !isFirstProduct
+                isMobile && !isBannerCard
                   ? undefined
                   : PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.height
               }
-              isFirstProduct={isFirstProduct}
+              isBannerCard={isBannerCard}
               tgid={tgid}
               isMobile={isMobile}
             />

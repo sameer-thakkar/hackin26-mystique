@@ -489,6 +489,7 @@ const PopulateProducts = (props: any) => {
               primarySubCategory,
               flowType,
               bannerVideo,
+              isCollectionMB,
             };
 
             return (

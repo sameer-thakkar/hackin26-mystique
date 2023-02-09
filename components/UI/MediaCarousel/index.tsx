@@ -31,7 +31,7 @@ type MediaCarouselProps = {
   imageAspectRatio?: string;
   imageWidth?: number;
   imageHeight?: number;
-  isFirstProduct?: boolean; // prevent lazy load on the first image of first product
+  isBannerCard?: boolean; // prevent lazy load on the first image of first product
   tgid: string;
   isMobile: boolean;
 };
@@ -43,7 +43,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
   imageAspectRatio = '',
   imageWidth,
   imageHeight,
-  isFirstProduct,
+  isBannerCard,
   tgid,
   isMobile,
 }) => {
@@ -57,9 +57,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
   const [swiper, setSwiperInstance] = useState<Swiper>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
-  const getImageViewEventProperties = ({
-    rank
-  }: any) => ({
+  const getImageViewEventProperties = ({ rank }: any) => ({
     eventName: ANALYTICS_EVENTS.PRODUCT_CARD_IMAGE_VIEWED,
     [ANALYTICS_PROPERTIES.TGID]: tgid,
     [ANALYTICS_PROPERTIES.RANKING]: rank,
@@ -126,7 +124,7 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
               imageId={imageId}
               imageWidth={imageWidth}
               imageHeight={imageHeight}
-              dontLazyLoadImage={isFirstProduct}
+              dontLazyLoadImage={isBannerCard}
               shouldVideoPlay={currentIndex === 0}
               videoPosition={VIDEO_POSITIONS.PRODUCT_CARD}
             />
@@ -139,9 +137,9 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
               autoCrop={false}
               width={imageWidth}
               height={imageHeight}
-              priority={isMobile && isFirstProduct && index === 0}
+              priority={isMobile && isBannerCard && index === 0}
               fetchPriority={
-                isMobile && isFirstProduct && index === 0 ? 'high' : 'auto'
+                isMobile && isBannerCard && index === 0 ? 'high' : 'auto'
               }
               fill
             />
