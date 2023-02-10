@@ -23,7 +23,7 @@ const it = {
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     "Headout è uno dei partner di fiducia di questa attrazione ufficialmente autorizzati a offrire una selezione delle migliori esperienze disponibili. Questo non è il sito web dell'attrazione.",
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
-    "Headout è un marchio di riferimento per 15 milioni di ospiti e offre una selezione delle migliori esperienze al mondo. Questo non è il sito web dell'attrazione.",
+    "Headout è scelto da oltre 15 milioni di persone per trovare una selezione curata delle migliori esperienze. Questo non è il sito ufficiale dell'attrazione.",
   BANNER_SUBTEXT_DEFAULT_DISCLAIMER:
     'Headout è uno dei partner di fiducia di questa attrazione ufficialmente autorizzati a offrire una selezione delle migliori esperienze disponibili.',
   BOOK_NOW_CTA: 'Prenota ora',

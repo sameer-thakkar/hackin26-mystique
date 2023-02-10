@@ -23,7 +23,7 @@ const pt = {
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout é um parceiro de confiança da atração, autorizado a oferecer uma seleção das melhores experiências. Este não é o site da atração.',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
-    'Headout é uma marca que tem a confiança de mais de 15 milhões de clientes, oferecendo uma seleção das melhores experiências. Este não é o site da atração.',
+    'A Headout já conquistou a confiança de mais de 15 milhões de clientes e oferece uma seleção das melhores experiências. Este não é o site oficial do local da experiência.',
   BANNER_SUBTEXT_DEFAULT_DISCLAIMER:
     'Headout é um parceiro de confiança da atração, autorizado a oferecer uma seleção das melhores experiências.',
   BOOK_NOW_CTA: 'Reserve agora',
