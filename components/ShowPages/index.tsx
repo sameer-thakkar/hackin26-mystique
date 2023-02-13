@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useRecoilValue } from 'recoil';
@@ -9,7 +9,6 @@ import { ProductJsonLd } from 'next-seo';
 import cloneDeep from 'lodash.clonedeep';
 import { useWindowWidth } from '@react-hook/window-size';
 import styled from 'styled-components';
-import { MBContext } from 'contexts/MBContext';
 import { metaAtom } from 'store/atoms/meta';
 import { gtmAtom } from 'store/atoms/gtm';
 import { currencyAtom } from 'store/atoms/currency';
@@ -43,7 +42,6 @@ import {
   getAlternateLanguages,
   getHeadoutLanguagecode,
   legacyBooleanCheck,
-  createBookingURL,
 } from 'utils';
 import { groupSlices, getHostName, checkLTT } from 'utils/helper';
 import {
@@ -219,7 +217,6 @@ const ShowPage = (props: any) => {
     startLocation,
     endLocation,
     variants,
-    flowType,
   } = tourGroupData || {};
 
   const { slots } = inventorySlotData || {};
@@ -429,14 +426,7 @@ const ShowPage = (props: any) => {
   const theatreSeatingCapacity = (aboutTheatreSection as any)?.tab_content[1]?.text?.split(
     ' '
   )[2];
-  const { nakedDomain } = useContext(MBContext);
-  const showBookingUrl = createBookingURL({
-    nakedDomain,
-    lang: currentLanguage,
-    tgid,
-    currency,
-    flowType,
-  });
+
   const pricingValidFromDate = getPrevDate(inventorySlotData?.fromDate);
 
   let offerSchema: any = [];
@@ -449,7 +439,7 @@ const ShowPage = (props: any) => {
         price: variant.listingPrice?.finalPrice,
         priceCurrency: variant.listingPrice?.currencyCode,
         validFrom: pricingValidFromDate,
-        url: showBookingUrl,
+        url: pageUrl,
         availability: 'https://schema.org/InStock',
       });
     });
@@ -460,7 +450,7 @@ const ShowPage = (props: any) => {
   ]);
 
   const eventSchemaMarkup = uniqueDateTimeSlots
-    ?.slice(0, 9)
+    ?.slice(0, 30)
     ?.map((slot) => {
       const { endTime, startTime, startDate } = slot || {};
       return `

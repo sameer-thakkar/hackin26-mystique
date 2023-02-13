@@ -1396,7 +1396,7 @@ export const getPageData = async ({
         const inventorySlotData = await fetchTourGroupSlots({
           tgid: CMSContent?.data?.tgid,
           hostname,
-          forDays: 10,
+          forDays: 20,
           cookies,
         });
 
