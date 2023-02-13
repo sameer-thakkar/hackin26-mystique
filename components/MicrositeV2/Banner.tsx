@@ -353,9 +353,11 @@ const NewBanner: React.FC<any> = (props) => {
             </Conditional>
             <Conditional if={!isEntertainmentMb}>
               <Image
-                width={WIDTH}
                 aspectRatio={ASPECT_RATIO}
                 fill
+                autoCrop={!isMobile ? false : true}
+                fitCrop={!isMobile ? true : false}
+                cropMode={!isMobile ? 'edges' : ''}
                 url={
                   ready &&
                   (isMobile && bannerImages[0].mobile_url
@@ -414,9 +416,11 @@ const NewBanner: React.FC<any> = (props) => {
                   </Conditional>
                   <Conditional if={!isEntertainmentMb}>
                     <Image
-                      width={WIDTH}
                       fill
                       aspectRatio={ASPECT_RATIO}
+                      autoCrop={!isMobile ? false : true}
+                      fitCrop={!isMobile ? true : false}
+                      cropMode={!isMobile ? 'edges' : ''}
                       url={
                         ready &&
                         (isMobile && image.mobile_url

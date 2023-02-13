@@ -967,8 +967,8 @@ const TicketCard = (props: any) => {
   );
 
   const getProductCardElements = () => (
-    <PopupWrapper>
-      <PopupContentWrapper>
+    <PopupWrapper onClick={() => popupCloser()}>
+      <PopupContentWrapper onClick={(e) => e.stopPropagation()}>
         {/* @ts-expect-error TS(2769): No overload matches this call. */}
         <WrapperProductCard layout={layout} isMobile={isMobile}>
           <Conditional if={!isMobile}>

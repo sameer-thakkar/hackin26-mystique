@@ -13,6 +13,16 @@ export interface IImageProps
   height?: number | string;
   imageId?: string;
   fitCrop?: boolean;
+  cropMode?:
+    | 'top'
+    | 'bottom'
+    | 'left'
+    | 'right'
+    | 'faces'
+    | 'focalpoint'
+    | 'edges'
+    | 'entropy'
+    | '';
   fill?: boolean;
   blurFill?: boolean;
   fetchPriority?: 'high' | 'low' | 'auto';

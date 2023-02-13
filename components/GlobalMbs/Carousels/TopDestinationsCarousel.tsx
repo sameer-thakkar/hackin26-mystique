@@ -22,10 +22,14 @@ const StyledCard = styled.a`
   grid-template-rows: repeat(2, max-content);
   row-gap: 12px;
   img {
-    width: 180px;
-    height: 180px;
+    width: 180px !important;
+    height: 180px !important;
     object-fit: cover;
     border-radius: 4px;
+  }
+  .image-wrap > span,
+  img {
+    position: relative !important;
   }
   @media (max-width: 768px) {
     img {

@@ -8,6 +8,7 @@ export const generateImageImgixUrl = (
   quality: number | string,
   aspectRatio: string,
   autoCrop: boolean,
+  cropMode: string,
   addDarkOverlay: boolean,
   fitCrop: boolean,
   blurFill: boolean
@@ -42,6 +43,11 @@ export const generateImageImgixUrl = (
 
   if (autoCrop) {
     imigxOptionsQueryParams.set('crop', 'faces');
+    imigxOptionsQueryParams.delete('fit');
+  }
+
+  if (cropMode) {
+    imigxOptionsQueryParams.set('crop', cropMode);
     imigxOptionsQueryParams.delete('fit');
   }
 
@@ -83,9 +89,10 @@ const getShimmerStringSVGMarkup = (w = 160, h = 100) => `
   </svg>
 `;
 
-const toBase64 = (str: any) => typeof window === 'undefined'
-  ? Buffer.from(str).toString('base64')
-  : window.btoa(str);
+const toBase64 = (str: any) =>
+  typeof window === 'undefined'
+    ? Buffer.from(str).toString('base64')
+    : window.btoa(str);
 
 export const getBlurDataUrl = (width: number, height: number) => {
   return `data:image/svg+xml;base64,${toBase64(

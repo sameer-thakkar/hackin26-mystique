@@ -46,6 +46,7 @@ const Image: React.FC<IImageProps> = ({
   mobileUrl,
   attribution = '',
   autoCrop = true,
+  cropMode = '',
   addDarkOverlay,
   onClick,
   fitCrop = false,
@@ -78,6 +79,7 @@ const Image: React.FC<IImageProps> = ({
     quality,
     aspectRatio,
     autoCrop,
+    cropMode,
     addDarkOverlay,
     fitCrop,
     blurFill
@@ -92,6 +94,7 @@ const Image: React.FC<IImageProps> = ({
     quality,
     aspectRatio,
     autoCrop,
+    cropMode,
     addDarkOverlay,
     fitCrop,
     blurFill

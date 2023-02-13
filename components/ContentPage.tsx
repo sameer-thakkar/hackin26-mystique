@@ -88,11 +88,6 @@ const StyledContentPage = styled.div`
     grid-row-gap: 10px;
   }
 
-  a {
-    text-decoration: none;
-    color: ${COLORS.TEXT.CANDY_1};
-  }
-
   .product {
     display: flex;
     justify-content: space-between;

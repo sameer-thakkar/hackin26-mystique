@@ -11,14 +11,12 @@ import Conditional from 'components/common/Conditional';
 import TextBanner from 'components/TextBanner';
 import MonthTabs from 'components/slices/MonthTabs';
 import DismissAlert from 'UI/DismissAlert';
-import MultiBannerWrapper from 'UI/MultiBannerWrapper';
 import { LOCATION } from 'assets/SvgIcons';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, THEMES } from 'const/index';
 import { strings } from 'const/strings';
 import { SIZES } from 'const/ui-constants';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
-import { isSafetyIncluded } from 'utils';
 import {
   groupSlices,
   getTGIDListForMonth,
@@ -159,7 +157,8 @@ export const HomePage = (props: any) => {
     let priceSortTours;
 
     if (displayMonths === 'ALL') {
-      allowedTours = Object.keys(allTours);
+      allowedTours = Object.keys(allTours).map((tgid) => parseInt(tgid));
+      priceSortTours = getPriceSortedListicleTgids(allTours, allowedTours);
     } else if (isDiscountedPage) {
       allowedTours = getDiscountedProducts(allTours);
       priceSortTours = getPriceSortedDiscountedProducts(allTours);
@@ -214,9 +213,6 @@ export const HomePage = (props: any) => {
   const hasDropdownLinks = enableDropdownLinks && dropdownLinks?.length;
   const { mbTheme } = useContext(MBContext);
   const coverHeading = withShortcodes(heroProps?.coverHeading);
-  const hasSafe = Object.values(allTours).some((tour: any) =>
-    isSafetyIncluded(tour.allTags)
-  );
   const allTgids = Object.keys(allTours);
   const isLTT = checkLTT(uid);
   const isEntertainmentMbListicle = isEntertainmentMb && isListicle;
@@ -294,9 +290,6 @@ export const HomePage = (props: any) => {
         <div className="alert-wrapper">
           <Alert popupUID={alertPopup?.uid} currentLanguage={currentLanguage} />
         </div>
-      </Conditional>
-      <Conditional if={!isEntertainmentMb}>
-        <MultiBannerWrapper hasSafe={hasSafe} marginTop={40} />
       </Conditional>
       <Conditional if={heroSectionSlice.length && !isEntertainmentMbListicle}>
         <ProductsContextProvider allTours={allTours} ready={ready}>

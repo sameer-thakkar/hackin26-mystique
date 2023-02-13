@@ -175,7 +175,8 @@ const PopupCard = styled.div`
   grid-template-columns: 6fr repeat(2, 0) 4fr 0;
   grid-template-rows: min-content 4fr repeat(3, 0);
   max-width: 65vw;
-  max-height: 80vh;
+  max-height: 46.25rem;
+  height: 80vh;
   overflow: hidden;
   background: ${COLORS.BRAND.WHITE};
 

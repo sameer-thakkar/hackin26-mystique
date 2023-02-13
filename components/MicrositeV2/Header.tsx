@@ -194,6 +194,7 @@ const HeaderLeft = styled.div<IHeaderLeft>`
   grid-gap: 24px;
   align-items: center;
   .header-logo {
+    width: 100%;
     height: unset;
     display: grid;
     grid-auto-flow: column;

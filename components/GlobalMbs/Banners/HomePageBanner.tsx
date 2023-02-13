@@ -38,6 +38,9 @@ const SwiperWrapper = styled.div`
     border-radius: 8px;
     width: 100%;
   }
+  .image-wrap > span {
+    display: block !important;
+  }
 
   @media (max-width: 768px) {
     img {

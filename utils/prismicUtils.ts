@@ -1571,7 +1571,7 @@ export const getPageData = async ({
       language: getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale),
       tgids: tgidsArray,
       fallbackToEnglish:
-        getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale) !== 'en',
+        getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale) === 'en',
       currency: scorpioAllTourGroupData?.['queryParams']?.currency ?? null,
       useTest,
       cookies,

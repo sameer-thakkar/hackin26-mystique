@@ -5,7 +5,6 @@ import styled from 'styled-components';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
-import EnvironmentContext from 'contexts/environmentContext';
 import { MBContext } from 'contexts/MBContext';
 import Image from 'UI/Image';
 import Button from 'components/UI/Button';
@@ -85,7 +84,6 @@ const ComparisonTableWrapper = styled.div`
     }
   }
   .cta-table-wrap .row {
-    background: ${COLORS.BRAND.WHITE};
     padding-top: 32px;
     padding-bottom: 32px;
     margin-bottom: -32px; /* This allows the Sticky Header to end early. without crossing over the CTA button. */
@@ -372,15 +370,16 @@ const AutomatedTourComparisonTable = ({
 }: any) => {
   const [isExpanded, setExpand] = useState(false);
 
-  const envContext = useContext(EnvironmentContext);
   const {
     lang,
     host,
     nakedDomain,
     biLink,
     redirectToHeadoutBookingFlow,
+    isDev,
+    isStage,
   } = useContext(MBContext);
-  const currentHost = !envContext.isDev ? `https://${host}` : `http://${host}`;
+  const currentHost = isDev && !isStage ? `http://${host}` : `https://${host}`;
   const orderedLabels = ['maxDuration', 'inclusions', 'cancellationPolicy'];
 
   const getLabelContent = (label: any, tour: any) => {

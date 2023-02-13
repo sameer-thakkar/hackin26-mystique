@@ -20,6 +20,7 @@ import Conditional from 'components/common/Conditional';
 import { trackEvent } from 'utils/analytics';
 import { checkIfGpMotorTickets } from 'utils/helper';
 import type { SwiperProps } from 'swiper/react';
+import { FONTS } from 'const/fonts';
 import { MBContext } from 'contexts/MBContext';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
@@ -164,6 +165,9 @@ const SwiperWrapper = styled.div`
 const ButtonWrapper = styled.div`
   margin: 24px 0 16px 0 !important;
   width: max-content;
+  button {
+    ${expandFontToken(FONTS.BUTTON_MEDIUM)}
+  }
   @media (max-width: 768px) {
     margin-top: 16px;
   }

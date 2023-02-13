@@ -292,7 +292,7 @@ const ProductCard = styled.div<{ isV3Design?: boolean }>`
 
   .product-v2-image img::after {
     content: ' ' attr(alt);
-    position: absolute;
+    position: relative;
     height: calc(100% - 4px);
     width: calc(100% - 10px);
     background: #dadada;
