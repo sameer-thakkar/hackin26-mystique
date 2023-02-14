@@ -35,6 +35,7 @@ export const MediaContainer = styled.div`
   position: relative;
   border-radius: 1rem;
   box-shadow: 0px 12px 40px 12px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
 
   .banner-image {
     display: block;
