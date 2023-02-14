@@ -80,7 +80,7 @@ const StaticBanner = ({
     <BannerSection>
       <Container>
         <ContentContainer>
-          <Heading>{bannerHeading}</Heading>
+          <Heading dangerouslySetInnerHTML={{ __html: bannerHeading }} />
           <Conditional if={shouldDisplayCollectionRatings(collectionDetails)}>
             <RatingsWrapper>
               {STAR(COLORS.BRAND.CANDY)}
