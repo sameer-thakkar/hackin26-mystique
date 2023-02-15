@@ -96,7 +96,7 @@ const StyledCard = styled.div((props) => {
     height: ${finalCardImgHeight};
     width: ${isGlobalMb && hasSingleCard ? '528px' : '100%'};
     border-radius: ${isGlobalMb ? '4px' : 'unset'};
-    aspect-ratio: ${isGpMotorTicketsMb ? '16/10' : 'unset'};
+    aspect-ratio: ${isGpMotorTicketsMb && !hasSingleCard ? '16/10' : 'unset'};
 
     span {
       min-width: 100%;
