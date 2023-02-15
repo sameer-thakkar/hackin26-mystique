@@ -22,6 +22,7 @@ import {
   standardizeCancellationPolicy,
 } from 'utils/productUtils';
 import { CURRENCY_SYMBOL_MAP, DESIGN } from 'const/index';
+import { sendLog } from 'utils/logger';
 
 export const uncategorizedToursListParser = (
   uncategorizedToursList: any[],
@@ -174,6 +175,7 @@ export const categoryTourListParserV1 = async ({
       tourData.push(...pinnedProducts, ...allProducts);
     } catch (err) {
       Sentry.captureException(err);
+      sendLog({ err });
       console.error(err);
     }
   } else if (category) {
@@ -192,6 +194,7 @@ export const categoryTourListParserV1 = async ({
       primaryCity = categoryData?.city;
     } catch (err) {
       Sentry.captureException(err);
+      sendLog({ err });
       console.error(err);
     }
   } else if (sub_category) {
@@ -210,6 +213,7 @@ export const categoryTourListParserV1 = async ({
       tourData.push(...subCategoryData?.pageData?.items);
     } catch (err) {
       Sentry.captureException(err);
+      sendLog({ err });
       console.error(err);
     }
   }
@@ -518,6 +522,7 @@ export const categoryTourListParserV2 = async ({
     } catch (err) {
       console.error(err);
       Sentry.captureException(err);
+      sendLog({ err });
     }
   }
   if (categoryIds?.length) {
@@ -554,6 +559,7 @@ export const categoryTourListParserV2 = async ({
     } catch (err) {
       console.error(err);
       Sentry.captureException(err);
+      sendLog({ err });
     }
   }
   if (subCategoryIds?.length) {
@@ -590,6 +596,7 @@ export const categoryTourListParserV2 = async ({
     } catch (err) {
       console.error(err);
       Sentry.captureException(err);
+      sendLog({ err });
     }
   }
 
@@ -987,6 +994,7 @@ export const getToursGlobalCollection = async ({
       tourData.push(...finalSection);
     } catch (err) {
       Sentry.captureException(err);
+      sendLog({ err });
       console.error(err);
     }
   } else if (sub_category) {
@@ -1003,6 +1011,7 @@ export const getToursGlobalCollection = async ({
       tourData.push(...subCategoryData?.pageData?.items);
     } catch (err) {
       Sentry.captureException(err);
+      sendLog({ err });
       console.error(err);
     }
   } else if (tgid) {
@@ -1017,6 +1026,7 @@ export const getToursGlobalCollection = async ({
       primaryCity = tgidData?.city;
     } catch (err) {
       Sentry.captureException(err);
+      sendLog({ err });
       console.error(err);
     }
   }

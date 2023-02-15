@@ -7,6 +7,7 @@ import { LANGUAGE_MAP } from 'const/index';
 import renderShortCodes from 'utils/shortCodes';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import type { NumberField, SelectField } from '@prismicio/types';
+import { sendLog } from 'utils/logger';
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
@@ -294,6 +295,7 @@ export const groupSlices = (
     return groups.slices;
   } catch (error) {
     Sentry.captureException(error);
+    sendLog({ err: error });
     // eslint-disable-next-line no-console
     console.error({ error });
     return groups.slices;

@@ -51,6 +51,7 @@ import {
   fetchDomainConfig,
   fetchTourListV6,
 } from 'utils/apiUtils';
+import { sendLog } from 'utils/logger';
 
 // @ts-expect-error TS(7023): 'fetchAllMatchingDocs' implicitly has return type ... Remove this comment to see the full error message
 export const fetchAllMatchingDocs = async ({
@@ -1094,7 +1095,7 @@ export const getPrismicDocument = async ({
      *
      * Sentry.captureException(error);
      */
-
+    sendLog({ err: error });
     traceError({
       error,
       host: req?.headers?.host,
@@ -1578,6 +1579,7 @@ export const getPageData = async ({
     }).catch((error) => {
       Sentry.captureException(error);
       traceError({ error, host: req?.headers?.host, url: req?.url });
+      sendLog({ err: error });
 
       // if tourGroup API fails, assume all tours as unavailable and render rest of the page.
       return {

@@ -23,6 +23,7 @@
     "@ueno/markdown-to-prismic-richtext": "^1.2.0",
     "classnames": "^2.2.6",
     "cookies": "^0.8.0",
+    "coralogix-logger": "^1.1.28",
     "dayjs": "^1.10.5",
     "fuse.js": "^5.2.3",
     "isomorphic-unfetch": "^3.0.0",
