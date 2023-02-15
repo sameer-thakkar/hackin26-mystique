@@ -516,4 +516,6 @@ export const isMBDesign = ({
 }) => currentDesign === expectedDesign;
 
 export const isCollectionMB = (mbType: string) =>
-  mbType === MB_TYPES.C1_COLLECTION || mbType === MB_TYPES.A1_COLLECTION;
+  mbType === MB_TYPES.A1_COLLECTION ||
+  mbType === MB_TYPES.B1_GLOBAL ||
+  mbType === MB_TYPES.C1_COLLECTION;
