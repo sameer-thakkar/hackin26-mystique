@@ -7,7 +7,7 @@
   "author": "Aakash Goel",
   "license": "UNLICENSED",
   "scripts": {
-    "dev": "next -p 3001",
+    "dev": "NODE_OPTIONS='--inspect' next -p 3001",
     "start": "NODE_OPTIONS=--max-old-space-size=3072 next start",
     "build": "next build",
     "storybook": "start-storybook -p 6006",
