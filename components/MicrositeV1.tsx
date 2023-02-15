@@ -30,6 +30,7 @@ import {
   THEMES,
   PAGE_TYPES,
   ANALYTICS_PROPERTIES,
+  WANDERFEST_CITIES,
 } from 'const/index';
 import { strings } from 'const/strings';
 import renderShortCodes from 'utils/shortCodes';
@@ -75,6 +76,7 @@ const MicrositeV1 = (props: any) => {
     categoryTourListData,
     domainConfig,
     collectionDetails,
+    primaryCity,
   } = props;
 
   const [isMobile, setIsMobile] = useState(props?.isMobile);
@@ -381,12 +383,18 @@ const MicrositeV1 = (props: any) => {
       baseLangPageTitle
     )?.join?.('');
 
+    const isWanderfestBannerShown =
+      WANDERFEST_CITIES.includes(primaryCity?.cityCode) &&
+      isCollectionMicrobrand &&
+      new Date() < new Date('2023-02-20');
+
     trackEvent({
       eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
       [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.COLLECTION,
       [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
       [ANALYTICS_PROPERTIES.TGIDS]: orderedTgids,
       [ANALYTICS_PROPERTIES.PAGE_TITLE]: renderedBaseLangPageTitle,
+      [ANALYTICS_PROPERTIES.IS_WF_BANNER_SHOWN]: isWanderfestBannerShown,
     });
   }, [eventsReady]);
 

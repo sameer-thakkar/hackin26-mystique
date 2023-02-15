@@ -1,9 +1,17 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useContext,
+  ComponentType,
+} from 'react';
+import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import Product from 'components/Product';
 import Conditional from 'components/common/Conditional';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import TicketCard from 'components/slices/ContentPageTicketsCard';
+import type { TWanderfestBannerProps } from 'components/WanderfestBanner/interface';
 import { MBContext } from 'contexts/MBContext';
 import {
   ANALYTICS_EVENTS,
@@ -21,10 +29,21 @@ import {
   fetchInventory,
   fetchTourList,
 } from 'utils/apiUtils';
-import { isMBDesign, legacyBooleanCheck } from 'utils';
+import {
+  isMBDesign,
+  legacyBooleanCheck,
+  getWanderfestBannerIndex,
+} from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import { csvTgidToArray, getHostName } from 'utils/helper';
 import { getPromoCodesDocument } from 'utils/prismicUtils';
+import { SIZES } from 'const/ui-constants';
+
+const WanderfestBanner: ComponentType<TWanderfestBannerProps> = dynamic(() =>
+  import(
+    /* webpackChunkName: "WanderfestBanner" */ 'components/WanderfestBanner'
+  )
+);
 
 const StyledProductsWrapper = styled.div`
   margin: 0 auto;
@@ -75,6 +94,16 @@ const StyledTourListSubHeading = styled.div`
 
 const ProductWrapper = styled.div``;
 
+const WanderfestBannerContainer = styled.div`
+  width: 100%;
+  max-width: ${SIZES.MAX_WIDTH};
+  margin: 0 auto 2rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 1.5rem;
+  }
+`;
+
 const PopulateProducts = (props: any) => {
   const {
     uncategorizedTours: tours,
@@ -123,7 +152,7 @@ const PopulateProducts = (props: any) => {
     productsRef.current.push(el);
   };
 
-  const { isStage, isDev, host, design } = useContext(MBContext);
+  const { isStage, isDev, host, design, primaryCity } = useContext(MBContext);
 
   const hostname = getHostName(isStage, isDev, host);
 
@@ -392,6 +421,12 @@ const PopulateProducts = (props: any) => {
     expectedDesign: DESIGN.V1,
   });
   const shouldShowHeading = isV1DesignSite ? !isCollectionMB : true;
+  const wanderfestBannerIndex = getWanderfestBannerIndex({
+    productsNumber: availableToursList.length,
+    city: primaryCity,
+    isCollectionMB,
+  });
+
   return (
     <StyledProductsWrapper ref={productsWrapperRef}>
       <Conditional if={mbTheme !== THEMES.MIN_BLUE && shouldShowHeading}>
@@ -498,6 +533,15 @@ const PopulateProducts = (props: any) => {
                 data-tgid={tour.tgid}
                 key={tour.tgid}
               >
+                <Conditional if={index === wanderfestBannerIndex}>
+                  <WanderfestBannerContainer>
+                    <WanderfestBanner
+                      isV1Design={isV1DesignSite}
+                      isMobile={isMobile}
+                    />
+                  </WanderfestBannerContainer>
+                </Conditional>
+
                 {isTicketCard ? (
                   <TicketCard {...childProps} />
                 ) : (

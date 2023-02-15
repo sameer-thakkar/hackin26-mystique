@@ -420,6 +420,12 @@ const en = {
       'These tickets are valid for an extended duration. The exact details will be present on the ticket.',
   },
   RATINGS: 'Ratings',
+  WANDERFEST: {
+    UAE_BEST_EXP: "The UAE's best experiences on SALE",
+    UNBELIEVABLE_DISCOUNTS:
+      "Unbelievable discounts and unmissable offers on the UAE's best attractions, activities and experiences.",
+    SEIZE_THE_DEALS: 'Seize the deals',
+  },
 };
 
 export default en;

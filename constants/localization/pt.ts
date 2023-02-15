@@ -335,6 +335,12 @@ const pt = {
       'Estes ingressos são válidos por uma duração estendida. Os detalhes exatos serão informados no ingresso.',
   },
   RATINGS: 'Avaliações',
+  WANDERFEST: {
+    UAE_BEST_EXP: 'As melhores experiências dos EAU com DESCONTO',
+    UNBELIEVABLE_DISCOUNTS:
+      'Descontos inacreditáveis e ofertas imperdíveis nas melhores atrações, atividades e experiências dos Emirados Árabes Unidos',
+    SEIZE_THE_DEALS: 'Aproveitar as ofertas',
+  },
 };
 
 export default pt;

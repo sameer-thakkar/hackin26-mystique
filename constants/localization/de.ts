@@ -334,6 +334,12 @@ const de = {
       'Diese Tickets sind für einen längeren Zeitraum gültig. Genaue Angaben befinden sich auf dem Ticket.',
   },
   RATINGS: 'Bewertungen',
+  WANDERFEST: {
+    UAE_BEST_EXP: 'Die besten Erlebnisse der VAE im SALE',
+    UNBELIEVABLE_DISCOUNTS:
+      'Unfassbare Rabatte und Angebote für Top-Attraktionen, Aktivitäten und Erlebnisse in den VAE',
+    SEIZE_THE_DEALS: 'Deals sichern',
+  },
 };
 
 export default de;

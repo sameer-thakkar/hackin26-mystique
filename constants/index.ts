@@ -314,6 +314,8 @@ export const ANALYTICS_EVENTS = {
   VIDEO_AUTOPLAY_STARTED: 'Video Autoplay Started',
   VIDEO_AUTOPLAY_FAILED: 'Video Autoplay Failed',
   SCROLL_TO_TOP: 'Scroll To Top Button Clicked',
+  WF_BANNER_VIEWED: 'Wanderfest Banner Viewed',
+  WF_BANNER_CTA_CLICKED: 'Wanderfest Banner CTA Clicked',
 };
 
 export const PAGE_TYPE = {
@@ -703,6 +705,7 @@ export const ANALYTICS_PROPERTIES = {
   L1_BOOSTER_SHOWN: 'L1 Booster Shown',
   TYPE: 'Type',
   AUTOPLAY_LOAD_TIME: 'Autoplay Load Time',
+  IS_WF_BANNER_SHOWN: 'Is Wanderfest Banner Shown',
 };
 
 export const PAGE_TYPES = {
@@ -973,4 +976,11 @@ export const MB_TYPES = {
   B1_GLOBAL: 'B1 - Global MB',
   B1_GLOBAL_HOMEPAGE: 'B1 - Global Home Page',
   C1_COLLECTION: 'C1 - Collection MB',
+};
+
+export const WANDERFEST_CITIES = ['DUBAI', 'ABU_DHABI'];
+
+export const WANDERFEST_ASSETS = {
+  DWEB_LOGO_URL: 'https://cdn-s3.headout.com/assets/lottie/WFLogoDweb.json',
+  MWEB_LOGO_URL: 'https://cdn-s3.headout.com/assets/lottie/WFLogoMweb.json',
 };

@@ -345,6 +345,12 @@ const es = {
       'Estas entradas son válidas durante un periodo de tiempo prolongado. Los detalles exactos se mencionarán en la entrada.',
   },
   RATINGS: 'Calificaciones',
+  WANDERFEST: {
+    UAE_BEST_EXP: 'Las mejores experiencias de los EAU en OFERTA',
+    UNBELIEVABLE_DISCOUNTS:
+      'Descuentos y ofertas increíbles en las mejores atracciones, actividades y experiencias de los EAU',
+    SEIZE_THE_DEALS: 'Aprovecha las ofertas',
+  },
 };
 
 export default es;

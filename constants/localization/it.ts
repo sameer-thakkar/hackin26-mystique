@@ -344,6 +344,12 @@ const it = {
       'Questi biglietti offrono una durata estesa. I dettagli saranno riportati sul biglietto.',
   },
   RATINGS: 'Giudizi',
+  WANDERFEST: {
+    UAE_BEST_EXP: 'Le migliori offerte negli Emirati Arabi Uniti in OFFERTA',
+    UNBELIEVABLE_DISCOUNTS:
+      'Sconti incredibili e offerte da non perdere sulle migliori attrazioni, attività ed esperienze negli Emirati Arabi Uniti.',
+    SEIZE_THE_DEALS: 'Approfitta delle offerte',
+  },
 };
 
 export default it;

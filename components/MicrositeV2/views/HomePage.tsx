@@ -10,9 +10,15 @@ import LttFeatureCard from 'components/ShowPages/FeatureCard';
 import Conditional from 'components/common/Conditional';
 import TextBanner from 'components/TextBanner';
 import MonthTabs from 'components/slices/MonthTabs';
+import type { TWanderfestBannerProps } from 'components/WanderfestBanner/interface';
 import DismissAlert from 'UI/DismissAlert';
 import { LOCATION } from 'assets/SvgIcons';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, THEMES } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  THEMES,
+  WANDERFEST_CITIES,
+} from 'const/index';
 import { strings } from 'const/strings';
 import { SIZES } from 'const/ui-constants';
 import COLORS from 'const/colors';
@@ -53,6 +59,12 @@ const Banner: ComponentType<any> = dynamic(() =>
 );
 const LongForm: ComponentType<any> = dynamic(() =>
   import(/* webpackChunkName: "LongForm" */ 'components/MicrositeV2/LongForm')
+);
+
+const WanderfestBanner: ComponentType<TWanderfestBannerProps> = dynamic(() =>
+  import(
+    /* webpackChunkName: "WanderfestBanner" */ 'components/WanderfestBanner'
+  )
 );
 
 const V2MicrositeWrapper = styled.div`
@@ -112,6 +124,12 @@ const ListicleHeadingWrapper = styled.div`
       ${expandFontToken(FONTS.HEADING_LARGE)}
     }
   }
+`;
+
+const WanderfestBannerContainer = styled.div`
+  width: 100%;
+  max-width: ${SIZES.MAX_WIDTH};
+  margin: 2rem auto;
 `;
 
 /*
@@ -187,16 +205,6 @@ export const HomePage = (props: any) => {
     };
   }
 
-  useEffect(() => {
-    if (eventsReady)
-      trackEvent({
-        eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
-        [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
-        [ANALYTICS_PROPERTIES.TGIDS]: Object.keys(allTours).map(Number),
-        ...getCommonEventMetaData(pageMetaData),
-      });
-  }, [eventsReady]);
-
   const [covid19AlertOpen, setCovid19AlertOpen] = useState(true);
   const { dropdownLinks, enableDropdownLinks, languageProps } = header;
   const selectorLinkChangeHandler = (option: any) => {
@@ -211,7 +219,10 @@ export const HomePage = (props: any) => {
   const { secondaryFooter } = footer;
   const themeOverride = footer?.themeOverride;
   const hasDropdownLinks = enableDropdownLinks && dropdownLinks?.length;
-  const { mbTheme } = useContext(MBContext);
+  const {
+    mbTheme,
+    primaryCity: { cityCode },
+  } = useContext(MBContext) as any; //i know this is a sin, but i really don't want to refactor this for a thing that will be removed in 5 days
   const coverHeading = withShortcodes(heroProps?.coverHeading);
   const allTgids = Object.keys(allTours);
   const isLTT = checkLTT(uid);
@@ -220,6 +231,19 @@ export const HomePage = (props: any) => {
     logo: { logoUrl = '', showPoweredLogo = true } = {},
     name: whiteLabelName,
   } = domainConfig || {};
+  const showWanderfestBanner =
+    WANDERFEST_CITIES.includes(cityCode) && new Date() < new Date('2023-02-20');
+
+  useEffect(() => {
+    if (eventsReady)
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
+        [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
+        [ANALYTICS_PROPERTIES.TGIDS]: Object.keys(allTours).map(Number),
+        [ANALYTICS_PROPERTIES.IS_WF_BANNER_SHOWN]: showWanderfestBanner,
+        ...getCommonEventMetaData(pageMetaData),
+      });
+  }, [eventsReady]);
 
   return (
     // @ts-expect-error TS(2769): No overload matches this call.
@@ -291,7 +315,13 @@ export const HomePage = (props: any) => {
           <Alert popupUID={alertPopup?.uid} currentLanguage={currentLanguage} />
         </div>
       </Conditional>
-      <Conditional if={heroSectionSlice.length && !isEntertainmentMbListicle}>
+      <Conditional
+        if={
+          heroSectionSlice.length &&
+          !isEntertainmentMbListicle &&
+          !showWanderfestBanner
+        }
+      >
         <ProductsContextProvider allTours={allTours} ready={ready}>
           <div className="main-wrapper hero-slice-section">
             {heroSectionSlice
@@ -307,6 +337,13 @@ export const HomePage = (props: any) => {
           </div>
         </ProductsContextProvider>
       </Conditional>
+
+      <Conditional if={showWanderfestBanner}>
+        <WanderfestBannerContainer>
+          <WanderfestBanner isV1Design={false} isMobile={isMobile} />
+        </WanderfestBannerContainer>
+      </Conditional>
+
       <Conditional if={isEntertainmentMbListicle}>
         <ProductsContextProvider allTours={allTours} ready={ready}>
           <div className="main-wrapper hero-slice-section">
@@ -336,6 +373,7 @@ export const HomePage = (props: any) => {
           isDiscountedPage={isDiscountedPage}
         />
       </Conditional>
+
       <ProductsContextProvider allTours={allTours} ready={ready}>
         <div className="main-wrapper v2-long-form">
           <Conditional if={longFormContent}>
