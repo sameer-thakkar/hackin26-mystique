@@ -536,10 +536,10 @@ export const getWanderfestBannerIndex = ({
   if (!WANDERFEST_CITIES.includes(cityCode)) return -1;
 
   switch (true) {
-    case new Date() < new Date('2023-02-17'):
+    case new Date() < new Date('2023-02-16'):
       if (productsNumber === 1) return 0;
       else return productsNumber > 2 ? 2 : 1;
-    case new Date() < new Date('2023-02-20'):
+    case new Date() < new Date('2023-02-19'):
       return 0;
     default:
       return -1;

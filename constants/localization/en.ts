@@ -424,8 +424,9 @@ const en = {
     UAE_BEST_EXP: "The UAE's best experiences on SALE",
     UNBELIEVABLE_DISCOUNTS:
       "Unbelievable discounts and unmissable offers on the UAE's best attractions, activities and experiences.",
-    SEIZE_THE_DEALS: 'Seize the deals',
+    SEIZE_THE_DEALS: 'See the deals',
   },
+  OPEN_DATED_DESCRIPTOR: 'Book with flexibility - no date selection needed',
 };
 
 export default en;

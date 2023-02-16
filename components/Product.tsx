@@ -22,6 +22,7 @@ import { currencyAtom } from 'store/atoms/currency';
 import { metaAtom } from 'store/atoms/meta';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import Conditional from 'components/common/Conditional';
+import Emoji from 'components/common/Emoji';
 import ComboPopup from 'UI/ComboPopup';
 import PriceBlock from 'UI/PriceBlock';
 import Chevron from 'UI/Chevron';
@@ -1043,6 +1044,18 @@ const ModalCardContainer = styled.div`
   }
 `;
 
+const OpenDatedDescriptor = styled.div`
+  margin: 1.25rem 0 -0.25rem;
+  color: ${COLORS.GRAY.G3};
+  ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)};
+
+  @media (max-width: 768px) {
+    grid-area: open-dated-descriptor;
+    margin: -0.5rem 0 0.25rem;
+    ${expandFontToken(FONTS.UI_LABEL_SMALL_HEAVY)};
+  }
+`;
+
 export const Descriptors = ({
   descriptorArray,
   horizontal = false,
@@ -1140,6 +1153,8 @@ const Product = (props: any) => {
 
   const isGpMotorTicketsMb = checkIfGpMotorTickets(uid);
   const isSportsSubCategory = checkIfSportsSubCategory(primarySubCategory?.id);
+
+  const isOpenDated = scorpioData?.allVariantOpenDated;
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -1476,6 +1491,7 @@ const Product = (props: any) => {
     hasNextAvailable: earliestAvailability?.startDate,
     isTicketCard: isTicketCard,
     hasPromoCode: promo_code,
+    isOpenDated,
   });
   const trackedToggleContent = (isOpen: any) => {
     trackEvent({
@@ -1626,6 +1642,12 @@ const Product = (props: any) => {
             <TourTitle isPopup={isContentOpen} pageType={pageType}>
               {cardTitle}
             </TourTitle>
+            <Conditional if={isOpenDated && !isMobile}>
+              <OpenDatedDescriptor>
+                <Emoji symbol="😇" label="blessed-face" />{' '}
+                {strings.OPEN_DATED_DESCRIPTOR}
+              </OpenDatedDescriptor>
+            </Conditional>
           </TitleWrapper>
           <Conditional if={mbTheme === THEMES.MIN_BLUE}>
             <Descriptors
@@ -1695,7 +1717,11 @@ const Product = (props: any) => {
               </Conditional>
             </CTABlock>
             <Conditional
-              if={showNextAvailable && earliestAvailability?.startDate}
+              if={
+                showNextAvailable &&
+                earliestAvailability?.startDate &&
+                !isOpenDated
+              }
             >
               <NextAvailableBlock>
                 <div className="icon">{CALENDAR}</div>
@@ -1704,6 +1730,12 @@ const Product = (props: any) => {
                   {getDate(earliestAvailability?.startDate, currentLanguage)}
                 </div>
               </NextAvailableBlock>
+            </Conditional>
+            <Conditional if={isOpenDated && isMobile}>
+              <OpenDatedDescriptor>
+                <Emoji symbol="😇" label="blessed-face" />{' '}
+                {strings.OPEN_DATED_DESCRIPTOR}
+              </OpenDatedDescriptor>
             </Conditional>
             <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
               <Descriptors
