@@ -348,6 +348,11 @@ const MicrositeV1 = (props: any) => {
     headerLinks && !isHeaderInherited ? headerLinks : null;
   const isCollectionMicrobrand = isCollectionMB(mbType);
 
+  const isWanderfestBannerShown =
+    WANDERFEST_CITIES.includes(primaryCity?.cityCode) &&
+    isCollectionMicrobrand &&
+    new Date() < new Date('2023-02-19');
+
   useEffect(() => {
     setIsMobile(windowWidth < 768);
   }, [windowWidth]);
@@ -382,11 +387,6 @@ const MicrositeV1 = (props: any) => {
     const renderedBaseLangPageTitle = renderShortCodes(
       baseLangPageTitle
     )?.join?.('');
-
-    const isWanderfestBannerShown =
-      WANDERFEST_CITIES.includes(primaryCity?.cityCode) &&
-      isCollectionMicrobrand &&
-      new Date() < new Date('2023-02-20');
 
     trackEvent({
       eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
@@ -556,7 +556,7 @@ const MicrositeV1 = (props: any) => {
         <Conditional if={alertPopup}>
           <Alert popupUID={alertPopup?.uid} currentLanguage={currentLanguage} />
         </Conditional>
-        <Conditional if={coverSlices?.length}>
+        <Conditional if={coverSlices?.length && !isWanderfestBannerShown}>
           <CoverSlicesWrapper>
             <LongForm content={coverSlices} isMobile={isMobile} />
           </CoverSlicesWrapper>

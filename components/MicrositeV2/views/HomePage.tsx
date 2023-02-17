@@ -232,7 +232,7 @@ export const HomePage = (props: any) => {
     name: whiteLabelName,
   } = domainConfig || {};
   const showWanderfestBanner =
-    WANDERFEST_CITIES.includes(cityCode) && new Date() < new Date('2023-02-20');
+    WANDERFEST_CITIES.includes(cityCode) && new Date() < new Date('2023-02-19');
 
   useEffect(() => {
     if (eventsReady)
