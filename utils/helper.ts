@@ -531,3 +531,14 @@ export const checkIfGpMotorTickets = (uid: string | null | undefined) =>
 export const checkIfSportsSubCategory = (
   primarySubcategoryId: number | undefined | null
 ) => primarySubcategoryId === 1042 || primarySubcategoryId === 1109;
+
+export const getWanderfestBooster = (boosterType: 'FLASH_SALE' | 'B1G1') => {
+  switch (boosterType) {
+    case 'FLASH_SALE':
+      return 'FLASH SALE';
+    case 'B1G1':
+      return 'BOGO';
+    default:
+      return '';
+  }
+};

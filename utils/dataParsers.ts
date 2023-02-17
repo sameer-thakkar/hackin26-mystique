@@ -326,6 +326,7 @@ export const categoryTourListParserV1 = async ({
         ticketValidity,
         flowType,
         allVariantOpenDated,
+        wanderfestOfferData,
       } = tour ?? {};
       const { productImages, safetyImages } = media || {};
       const updatedDescriptors = generateDescriptor({
@@ -392,6 +393,7 @@ export const categoryTourListParserV1 = async ({
           primarySubCategory: primarySubCategoryWithoutSlugs,
           flowType,
           allVariantOpenDated,
+          wanderfestOfferData,
         },
       };
     }, {});
