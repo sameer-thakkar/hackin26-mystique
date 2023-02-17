@@ -358,10 +358,10 @@ const BoosterTag = styled.div`
   font-size: 11px;
   font-weight: 600;
   line-height: 13px;
-  color: ${COLORS.BRAND.CANDY};
+  background-color: ${COLORS.BRAND.CANDY};
   text-transform: uppercase;
   letter-spacing: 0.4px;
-  background: ${COLORS.BRAND.WHITE};
+  color: ${COLORS.BRAND.WHITE};
   border-radius: 2px;
   margin-bottom: 7px;
   padding: 2px 4px;
