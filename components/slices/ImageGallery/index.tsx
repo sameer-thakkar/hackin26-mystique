@@ -177,11 +177,11 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
             return (
               <Image
                 key={index}
-                url={image.uploaded_image?.url || image.linked_image?.url}
+                url={image.linked_image?.url || image.uploaded_image?.url}
                 onClick={() => {
                   toggleLightbox(index);
                 }}
-                alt={caption}
+                alt={image.image_alt || caption}
               />
             );
           })}
@@ -201,7 +201,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
               return (
                 <DesktopStyledImage key={index} ref={modalRef}>
                   <Image
-                    url={image.uploaded_image?.url || image.linked_image?.url}
+                    url={image.linked_image?.url || image.uploaded_image?.url}
                   />
                   <Content>
                     <div className="content-wrapper">
@@ -269,8 +269,8 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
                 return (
                   <Image
                     key={index}
-                    url={image.uploaded_image?.url || image.linked_image?.url}
-                    alt={fullImageHeading}
+                    url={image.linked_image?.url || image.uploaded_image?.url}
+                    alt={image.image_alt || fullImageHeading}
                   />
                 );
               })}
@@ -315,7 +315,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
                         url={
                           image.uploaded_image?.url || image.linked_image?.url
                         }
-                        alt={caption}
+                        alt={image.image_alt || caption}
                         onClick={() => {
                           updateGalleryIndex();
                           gallerySwiper?.slideTo(index, 200);

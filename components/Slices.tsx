@@ -152,7 +152,7 @@ const sliceHandler = (slice: any, props: any = {}) => {
     case 'trust_boosters':
       let boosters = slice.items.reduce((accum: any, item: any) => {
         let booster = {
-          image_url: item.uploaded_icon.url || item.icon_link?.url,
+          image_url: item.icon_url.url || item.uploaded_icon.url,
           title: item.booster_title,
           description: item.booster_description,
         };
@@ -265,7 +265,7 @@ const sliceHandler = (slice: any, props: any = {}) => {
       const faqs = slice.items.reduce((acc: any, slice: any) => {
         const images = slice.items.reduce((acci: any, image: any) => {
           let img = {
-            url: image.upload_image?.url || image.linked_image,
+            url: image.linked_image || image.upload_image?.url,
             caption: image.upload_image?.alt || image.image_caption,
             alt: image.alt_text,
           };
@@ -349,11 +349,11 @@ const sliceHandler = (slice: any, props: any = {}) => {
       } = slice.primary;
       const images = slice.items
         .filter((image: any) => {
-          if (image.image_source.url || image.image_url.url) return true;
+          if (image.image_url.url || image.image_source.url) return true;
         })
         .map((image: any) => ({
-          url: image.image_source.url || image.image_url.url,
-          alt: image.image_source.alt || image.image_alt,
+          url: image.image_url.url || image.image_source.url,
+          alt: image.image_alt || image.image_source.alt,
           copyright: image.image_source.copyright,
         }));
 

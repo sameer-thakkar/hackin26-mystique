@@ -15,9 +15,7 @@ const StyledReviews = styled.div`
   width: 690px;
   margin: 0 auto 20px auto;
   position: relative;
-  ${({  
- // @ts-expect-error TS(2339): Property 'reviewType' does not exist on type 'Pick... Remove this comment to see the full error message
- reviewType }) => {
+  ${({ reviewType }: { reviewType: string | null }) => {
     if (reviewType === 'testimonial') {
       return `
         .custom-pagination {
@@ -40,9 +38,7 @@ const StyledReviews = styled.div`
   }
   @media (max-width: 768px) {
     width: 100%;
-    ${({    
- // @ts-expect-error TS(2339): Property 'reviewType' does not exist on type 'Pick... Remove this comment to see the full error message
- reviewType }) => {
+    ${({ reviewType }) => {
       if (reviewType === 'testimonial') {
         return `
         .custom-pagination {
@@ -195,9 +191,13 @@ const Reviews: React.FC<{
         reviewerName: review.reviewer_name,
         reviewerSubtext: review.reviewer_subtext,
         imageUrl:
+          review.reviewer_image_url.url ||
           review.reviewer_image?.url ||
           `https://cdn-s3-open.headout.com/reviews/${n}.jpg`,
-        imageAlt: review.reviewer_image?.alt || 'reviewer-image',
+        imageAlt:
+          review.reviewer_image_alt ||
+          review.reviewer_image?.alt ||
+          'reviewer-image',
         rating: review.rating
           ? review.rating > 5 || 0 > review.rating
             ? 4.5
@@ -210,7 +210,6 @@ const Reviews: React.FC<{
     });
 
   return (
-    // @ts-expect-error TS(2769): No overload matches this call.
     <StyledReviews reviewType={type}>
       <Title>{title}</Title>
       <Quotes>{QUOTES}</Quotes>

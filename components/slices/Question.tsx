@@ -25,7 +25,7 @@ const Question = (props: any) => {
 
   const normalizedImages = images.reduce((acc: any, image: any) => {
     let img = {
-      url: image.upload_image?.url || image.linked_image,
+      url: image.linked_image || image.upload_image?.url,
       caption: image.upload_image?.alt || image.image_caption,
       alt: image.alt_text,
     };

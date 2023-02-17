@@ -109,9 +109,11 @@ const allToursParser = (
         content_theater: tourData.theater_contentblock,
         contentBlocks: orderedBlocks,
         productImage:
+          tourData.product_image_url.url ||
           tourData.product_image_override.url ||
           (scorpioTour?.images?.[0] ? scorpioTour?.images?.[0].url : ''),
         descriptionImage:
+          tourData.description_image_url.url ||
           tourData.description_image_override.url ||
           (scorpioTour?.images?.[1] ? scorpioTour?.images?.[1].url : ''),
         // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message

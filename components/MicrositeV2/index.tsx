@@ -302,7 +302,8 @@ class MicrositeV2 extends Component<any, any> {
         return {
           id: collection || category || sub_category,
           name: category_name,
-          image: category?.category_image?.url,
+          image:
+            category?.category_image_url.url || category?.category_image?.url,
           rank: 0,
           ranking: {
             popularity: tgids?.length ? tgids : [],

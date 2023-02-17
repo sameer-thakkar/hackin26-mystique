@@ -87,6 +87,8 @@ const SmallListicle: React.FC<SmallListicleProps> = ({
     book_now_link,
     seating_chart_link,
     seating_chart_image,
+    seating_chart_image_url,
+    seating_chart_image_alt,
   } = primary;
 
   const productImage = {
@@ -95,8 +97,8 @@ const SmallListicle: React.FC<SmallListicleProps> = ({
   };
 
   const seatingChartImage = {
-    url: seating_chart_image?.url,
-    alt: seating_chart_image?.alt || 'Seating Chart',
+    url: seating_chart_image_url?.url || seating_chart_image?.url,
+    alt: seating_chart_image_alt || seating_chart_image?.alt || 'Seating Chart',
   };
 
   return (

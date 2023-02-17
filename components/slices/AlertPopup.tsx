@@ -101,8 +101,8 @@ const AlertPopup: React.FC<AlertPopupProps> = ({
               <img
                 className="swiper-slide"
                 key={index}
-                src={image.image_source.url}
-                alt="swiper-slide"
+                src={image.image_link.url || image.image_source.url}
+                alt={image.image_alt || 'swiper-slide'}
               />
             );
           })}
