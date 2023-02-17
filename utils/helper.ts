@@ -535,9 +535,9 @@ export const checkIfSportsSubCategory = (
 export const getWanderfestBooster = (boosterType: 'FLASH_SALE' | 'B1G1') => {
   switch (boosterType) {
     case 'FLASH_SALE':
-      return 'FLASH SALE';
+      return 'Flash Sale';
     case 'B1G1':
-      return 'BOGO';
+      return 'Buy 1 Get 1 Free';
     default:
       return '';
   }
