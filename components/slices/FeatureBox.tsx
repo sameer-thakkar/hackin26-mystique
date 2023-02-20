@@ -85,7 +85,7 @@ const FeatureBox: React.FC<FeatureBoxProps> = ({ blocks, lazyLoad }) => (
                 attribution={block.image_source?.copyright}
                 width={580}
                 url={imageURL}
-                alt={`feature-box_${index}`}
+                alt={block.image_alt || `feature-box_${index}`}
               />
             ) : null}
           </div>

@@ -199,13 +199,13 @@ const sliceHandler = (slice: any, props: any = {}) => {
       const alt = primary.uploaded_image.alt || 'Popup Image';
       return <InteractiveImage src={url} alt={alt} isMobile={props.isMobile} />;
     case 'image_links_carousel':
-      const cards = slice.items.reduce((acc: any, card: any) => {
+      const imagesInfo = slice.items.reduce((acc: any, card: any) => {
         return [
           ...acc,
           {
             image: {
-              url: card.uploaded_image.url || card.linked_image.url,
-              alt: card.uploaded_image.alt || card.image_alt,
+              url: card.linked_image.url || card.uploaded_image.url,
+              alt: card.image_alt || card.uploaded_image.alt,
             },
             link: card.card_link,
             card_title: card.card_title,
@@ -217,7 +217,7 @@ const sliceHandler = (slice: any, props: any = {}) => {
           description={slice.primary.carousel_description}
           clickInteraction={slice.primary.click_interaction}
           heading={slice.primary.carousel_heading}
-          cards={cards}
+          images={imagesInfo}
           isMobile={props.isMobile}
         />
       );

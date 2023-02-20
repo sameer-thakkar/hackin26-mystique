@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import useSWR from 'swr';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 import styled from 'styled-components';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error messag
 import { RichText } from 'prismic-reactjs';
 import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
 import { MBContext } from 'contexts/MBContext';

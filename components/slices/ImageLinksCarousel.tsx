@@ -53,9 +53,8 @@ const StyledContent = styled.div`
     font-family: ${HALYARD.FONT_STACK};
     font-size: 24px !important;
     line-height: 33px;
-    color: ${({    
- // @ts-expect-error TS(2339): Property 'design' does not exist on type 'Pick<Det... Remove this comment to see the full error message
- design }) =>
+
+    color: ${({ design }: { design: string | null }) =>
       design === DESIGN.V1 ? COLORS.GRAY.G2 : COLORS.GRAY.G1};
     font-weight: 600;
   }
@@ -168,8 +167,12 @@ const desktopInteraction = (
   {
     card_title,
     isMobile,
-    clickInteraction
-  }: any
+    clickInteraction,
+  }: {
+    card_title: string;
+    isMobile: boolean | null;
+    clickInteraction: string;
+  }
 ) => {
   if (!isMobile && clickInteraction === 'Scroll to Heading') {
     event.preventDefault();
@@ -181,26 +184,51 @@ const desktopInteraction = (
   }
 };
 
-const Slide = (props: any) => <StyledSlide className={props.className}>
-  <a
-    href={props.link.url}
-    target={props.link.target}
-    onClick={(e) => desktopInteraction(e, props)}
-  >
-    <Image
-      url={props.image.url}
-      alt={props.image.alt || props.image.title}
-      width={280}
-      height={250}
-      aspectRatio="5:4"
-    />
-    <div>{props.card_title}</div>
-  </a>
-</StyledSlide>;
+type SlideProps = {
+  className: string;
+  link: {
+    url: string;
+    target: string;
+  };
+  image: {
+    url: string;
+    alt: string;
+    title: string;
+  };
+  card_title: string;
+};
+
+const Slide = (props: any) => {
+  const { className, link, image, card_title }: SlideProps = props;
+  return (
+    <StyledSlide className={className}>
+      <a
+        href={link.url}
+        target={link.target}
+        onClick={(e) => desktopInteraction(e, props)}
+      >
+        <Image
+          url={image.url}
+          alt={image.alt || image.title}
+          width={280}
+          height={250}
+          aspectRatio="5:4"
+        />
+        <div>{card_title}</div>
+      </a>
+    </StyledSlide>
+  );
+};
+
+type Image = {
+  card_title: string | null;
+  image: object;
+  link: object;
+};
 
 type ImageLinksCarouselProps = {
   isMobile: boolean;
-  cards: any[];
+  images: Image[];
   heading: string;
   description: any[];
   clickInteraction: string;
@@ -240,7 +268,7 @@ const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
   const [swiper, updateSwiper] = useState(null);
   const [_currentIndex, updateCurrentIndex] = useState(0);
   const {
-    cards,
+    images,
     heading,
     description,
     isMobile,
@@ -255,25 +283,23 @@ const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
 
   const goPrev = () => {
     if (!swiper || (swiper as any)?.destroyed) return;
-
     (swiper as any).slidePrev();
   };
 
-  // @ts-expect-error TS(2531): Object is possibly 'null'.
-  const updateIndex = useCallback(() => updateCurrentIndex(swiper.realIndex), [
-    swiper,
-  ]);
+  const updateIndex = useCallback(
+    () => updateCurrentIndex((swiper as any).realIndex),
+    [swiper]
+  );
 
   useEffect(() => {
-    if (isMobile || !swiper || (swiper as any)?.destroyed)
-        return;
+    if (isMobile || !swiper || (swiper as any)?.destroyed) return;
     (swiper as any).on('slideChange', updateIndex);
     return () => {
-        if (swiper && !(swiper as any).destroyed) {
-            (swiper as any).off('slideChange', updateIndex);
-        }
+      if (swiper && !(swiper as any).destroyed) {
+        (swiper as any).off('slideChange', updateIndex);
+      }
     };
-}, [swiper, updateIndex, isMobile]);
+  }, [swiper, updateIndex, isMobile]);
 
   const swiperParams: SwiperProps = {
     slidesPerGroup: 4,
@@ -284,33 +310,62 @@ const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
     navigation: true,
   };
 
-  return (<StyledWrapper>
-      {/* @ts-expect-error TS(2769): No overload matches this call. */}
+  return (
+    <StyledWrapper>
       <StyledContent design={design}>
         <h2>{heading}</h2>
         <div>
-          <RichText render={description} htmlSerializer={shortCodeSerializer}/>
+          <RichText render={description} htmlSerializer={shortCodeSerializer} />
         </div>
       </StyledContent>
-      {isMobile ? (<StyledMobileSlider>
-          {cards.map((card, index) => (<Slide key={index} {...card} isMobile={isMobile}/>))}
-        </StyledMobileSlider>) : (<StyledSlider>
+      {isMobile ? (
+        <StyledMobileSlider>
+          {images.map((image, index) => (
+            <Slide key={index} {...image} isMobile={isMobile} />
+          ))}
+        </StyledMobileSlider>
+      ) : (
+        <StyledSlider>
           <div className="slider-container">
             {/* @ts-expect-error TS(2322): Type 'Dispatch<SetStateAction<null>>' is not assig... Remove this comment to see the full error message */}
             <Swiper {...swiperParams} onSwiper={updateSwiper}>
-              {cards.map((card, index) => (<Slide className="swiper-slide" key={index} {...card} isMobile={isMobile} clickInteraction={clickInteraction}/>))}
+              {images.map((image, index) => (
+                <Slide
+                  className="swiper-slide"
+                  key={index}
+                  {...image}
+                  isMobile={isMobile}
+                  clickInteraction={clickInteraction}
+                />
+              ))}
             </Swiper>
           </div>
           <div className="controls">
-            {swiper && !(swiper as any).isBeginning ? (<div className="swiper-btn btn btn-left" role="button" tabIndex={0} onClick={goPrev}>
+            {swiper && !(swiper as any).isBeginning ? (
+              <div
+                className="swiper-btn btn btn-left"
+                role="button"
+                tabIndex={0}
+                onClick={goPrev}
+              >
                 {CHEVRON_LEFT}
-              </div>) : null}
-            {swiper && !(swiper as any).isEnd ? (<div className="swiper-btn btn btn-right" role="button" tabIndex={0} onClick={goNext}>
+              </div>
+            ) : null}
+            {swiper && !(swiper as any).isEnd ? (
+              <div
+                className="swiper-btn btn btn-right"
+                role="button"
+                tabIndex={0}
+                onClick={goNext}
+              >
                 {CHEVRON_LEFT}
-              </div>) : null}
+              </div>
+            ) : null}
           </div>
-        </StyledSlider>)}
-    </StyledWrapper>);
+        </StyledSlider>
+      )}
+    </StyledWrapper>
+  );
 };
 
 export default ImageLinksCarousel;
