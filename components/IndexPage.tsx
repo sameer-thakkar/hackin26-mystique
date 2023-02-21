@@ -8,7 +8,6 @@ import { ThemeProvider } from 'styled-components';
 import EnvironmentContext from 'contexts/environmentContext';
 import { MBContextProvider } from 'contexts/MBContext';
 import { getAppTheme } from 'style/theme';
-import { Client } from 'config/prismic-config';
 import {
   ANALYTICS_PROPERTIES,
   CUSTOM_TYPES,
@@ -35,7 +34,6 @@ import { checkIfCurrencyCodeValid } from 'utils/currency';
 const Microsite = dynamic(() => import('components/MicrositeV1'));
 const ContentPage = dynamic(() => import('components/ContentPage'));
 const MicrositeV2 = dynamic(() => import('components/MicrositeV2'));
-const Listicle = dynamic(() => import('components/ListiclePage'));
 const ShowPage = dynamic(() => import('components/ShowPages'));
 const GlobalMB = dynamic(() => import('components/GlobalMbs'));
 
@@ -216,16 +214,6 @@ const Page = (props: any) => {
             domainConfig={domainConfig}
           />
         );
-      case CUSTOM_TYPES.LISTICLE:
-        return (
-          <Listicle
-            {...CMSContent}
-            isDev={isDev}
-            host={host}
-            serverRequestStartTimestamp={serverRequestStartTimestamp}
-            domainConfig={domainConfig}
-          />
-        );
       case CUSTOM_TYPES.SHOW_PAGE:
         return (
           <ShowPage
@@ -352,54 +340,15 @@ Page.getInitialProps = async (ctx: any) => {
     }
   }
 
-  // Logic to get the redirect uid
-  let redirectUID;
-  if (isDev) {
-    if (req) {
-      redirectUID = query.mystique_uid;
-    } else {
-      const urlParams = new URLSearchParams(window.location.search);
-      redirectUID = urlParams.get('mystique_uid');
-    }
-  } else {
-    if (req) {
-      redirectUID = req.headers.host;
-    } else {
-      redirectUID = window.location.host;
-    }
-  }
-  redirectUID = redirectUID.replace('stage-', '');
-
-  /**
-   * Asynchronously check if a redirect exists for the request
-   * and get the data for microsite or content page
-   */
-  const [_redirect, { payload: props }] = await Promise.all(
-    [
-      Client(req)
-        .getByUID(CUSTOM_TYPES.REDIRECT, redirectUID)
-        .then((r: any) => {
-          let redirectURL = r.data?.redirect_to_url?.url;
-          if (redirectURL) {
-            if (redirectURL[redirectURL.length - 1] === '/')
-              redirectURL = redirectURL.slice(0, -1);
-            redirectTo({
-              res,
-              url: `${redirectURL}${pathname !== '/index' ? pathname : ''}${
-                queryParamsString ? `?${queryParamsString}` : ''
-              }`,
-              type: r.data?.redirect_type,
-            });
-          }
-        }),
-      getPageData({
-        res,
-        req,
-        query,
-        isDev,
-        localizedStrings,
-      }),
-    ].map(reflect)
+  // Asynchronously get the data for microsite or content page
+  const { payload: props } = await reflect(
+    getPageData({
+      res,
+      req,
+      query,
+      isDev,
+      localizedStrings,
+    })
   );
 
   try {

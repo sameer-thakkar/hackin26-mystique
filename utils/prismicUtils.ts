@@ -4,7 +4,6 @@ import * as Sentry from '@sentry/nextjs';
 import { toursTabSliceHandler } from 'components/Slices';
 import type { CollectionDetailsTypes } from 'components/StaticBanner/index';
 import {
-  COMMON_DATA_PROPS_FOR_LISTICLE,
   CUSTOM_TYPES,
   LANGUAGE_MAP,
   LINKED_MICROSITE_PROPS,
@@ -98,46 +97,6 @@ export const getPromoCodesDocument = async () => {
     const [data] = promoCodesResponse?.results;
     const { promos } = data?.data;
     return promos;
-  }
-  return Promise.reject();
-};
-
-export const getListicleDocument = async ({ req, uid, lang }: any) => {
-  const listicleResponse = await Client(req).getByUID(
-    CUSTOM_TYPES.LISTICLE,
-    uid,
-    {
-      fetchLinks: [...COMMON_DATA_PROPS_FOR_LISTICLE],
-      lang,
-    }
-  );
-  if (listicleResponse) {
-    const {
-      common_footer,
-      common_header,
-      content_framework,
-    } = listicleResponse.data;
-
-    const refArray = await getRefsArrayByIds(
-      [common_footer.id, common_header.id, content_framework.id],
-      req
-    );
-    const {
-      commonFooter,
-      commonHeader,
-      contentFramework,
-      secondaryFooter,
-    } = refsArrayToObject(refArray);
-    return {
-      CMSContent: {
-        ...listicleResponse,
-        commonFooter,
-        commonHeader,
-        contentFramework,
-        secondaryFooter,
-      },
-      ContentType: CUSTOM_TYPES.LISTICLE,
-    };
   }
   return Promise.reject();
 };
@@ -1062,7 +1021,6 @@ export const getPrismicDocument = async ({
         queryParamsString,
         uid,
       }),
-      getListicleDocument({ req, lang, uid }),
       getShowPage({
         req,
         lang,
@@ -1322,8 +1280,7 @@ export const getPageData = async ({
 
     if (
       ContentType === CUSTOM_TYPES.GLOBAL_HOMEPAGE ||
-      ContentType === CUSTOM_TYPES.GLOBAL_COUNTRY ||
-      ContentType === CUSTOM_TYPES.LISTICLE
+      ContentType === CUSTOM_TYPES.GLOBAL_COUNTRY
     ) {
       return {
         CMSContent,
