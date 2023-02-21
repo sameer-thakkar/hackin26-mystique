@@ -56,7 +56,6 @@ import {
   checkIfGpMotorTickets,
   checkIfSportsSubCategory,
   getHostName,
-  getWanderfestBooster,
 } from 'utils/helper';
 import {
   extractTabsFromHighlights,
@@ -358,10 +357,10 @@ const BoosterTag = styled.div`
   font-size: 11px;
   font-weight: 600;
   line-height: 13px;
-  background-color: ${COLORS.BRAND.CANDY};
+  color: ${COLORS.BRAND.CANDY};
   text-transform: uppercase;
   letter-spacing: 0.4px;
-  color: ${COLORS.BRAND.WHITE};
+  background: ${COLORS.BRAND.WHITE};
   border-radius: 2px;
   margin-bottom: 7px;
   padding: 2px 4px;
@@ -369,7 +368,7 @@ const BoosterTag = styled.div`
 
   @media (max-width: 768px) {
     position: absolute;
-    margin-top: -22.125rem;
+    margin-top: -2.125rem;
     padding: 5px;
     border-radius: 4px;
   }
@@ -1157,10 +1156,6 @@ const Product = (props: any) => {
 
   const isOpenDated = scorpioData?.allVariantOpenDated;
 
-  const wanderfestBooster = getWanderfestBooster(
-    scorpioData?.wanderfestOfferData?.productBoosterType
-  ); // 🚧 Remove post Wanderfest
-
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const pid = urlParams.get('pid');
@@ -1641,12 +1636,8 @@ const Product = (props: any) => {
             $isTicketCard={isTicketCard}
             hasBorderedTitle={hasBorderedTitle && !tabs.length}
           >
-            <Conditional
-              if={
-                (boosterTag || wanderfestBooster) && mbTheme !== THEMES.MIN_BLUE
-              }
-            >
-              <BoosterTag>{wanderfestBooster || boosterTag}</BoosterTag>
+            <Conditional if={boosterTag && mbTheme !== THEMES.MIN_BLUE}>
+              <BoosterTag>{boosterTag}</BoosterTag>
             </Conditional>
             <TourTitle isPopup={isContentOpen} pageType={pageType}>
               {cardTitle}

@@ -194,7 +194,6 @@ const Page = (props: any) => {
             isMobile={isMobile}
             mbTheme={mbTheme}
             domainConfig={domainConfig}
-            primaryCity={primaryCity}
           />
         );
       case CUSTOM_TYPES.CONTENT_PAGE:

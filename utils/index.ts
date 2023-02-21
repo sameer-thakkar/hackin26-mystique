@@ -10,7 +10,6 @@ import {
   NON_SUPPORTED_LANGUAGES,
   UNIT_ABBREVIATIONS,
   MB_TYPES,
-  WANDERFEST_CITIES,
 } from 'const/index';
 import { BOOKING_FLOW_STAGE, BOOKING_FLOW_TYPE } from 'const/booking';
 import { getLangObject, withoutTrailingSlash } from 'utils/helper';
@@ -520,28 +519,3 @@ export const isCollectionMB = (mbType: string) =>
   mbType === MB_TYPES.A1_COLLECTION ||
   mbType === MB_TYPES.B1_GLOBAL ||
   mbType === MB_TYPES.C1_COLLECTION;
-
-export const getWanderfestBannerIndex = ({
-  productsNumber,
-  city,
-  isCollectionMB,
-}: {
-  productsNumber: number;
-  city: Record<string, any> | null;
-  isCollectionMB: boolean;
-}) => {
-  const { cityCode } = city || {};
-
-  if (!isCollectionMB) return -1;
-  if (!WANDERFEST_CITIES.includes(cityCode)) return -1;
-
-  switch (true) {
-    case new Date() < new Date('2023-02-16'):
-      if (productsNumber === 1) return 0;
-      else return productsNumber > 2 ? 2 : 1;
-    case new Date() < new Date('2023-02-19'):
-      return 0;
-    default:
-      return -1;
-  }
-};

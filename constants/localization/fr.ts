@@ -332,12 +332,6 @@ const fr = {
       'Ces billets sont valables pour une durée prolongée. Les détails exacts seront indiqués sur le billet.',
   },
   RATINGS: 'Notes',
-  WANDERFEST: {
-    UAE_BEST_EXP: 'Les meilleures expériences des E.A.U. à PRIX RÉDUIT',
-    UNBELIEVABLE_DISCOUNTS:
-      'Des réductions incroyables et des offres à ne pas manquer sur les meilleures attractions, activités et expériences des Émirats arabes unis.',
-    SEIZE_THE_DEALS: 'Profitez des offres',
-  },
 };
 
 export default fr;

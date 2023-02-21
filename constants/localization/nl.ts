@@ -335,12 +335,6 @@ const nl = {
       'Deze tickets zijn geldig voor een langere duur. De precieze details staan op het ticket.',
   },
   RATINGS: 'Waarderingen',
-  WANDERFEST: {
-    UAE_BEST_EXP: 'De beste ervaringen in de VAE in de SALE',
-    UNBELIEVABLE_DISCOUNTS:
-      'Ongelooflijke kortingen en niet te missen aanbiedingen voor de beste attracties, activiteiten en ervaringen in de VAE.',
-    SEIZE_THE_DEALS: 'Profiteer van de aanbiedingen',
-  },
 };
 
 export default nl;
