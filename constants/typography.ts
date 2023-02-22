@@ -5,8 +5,6 @@
   Last Updated - "Tue May 17 2022 11:49:37 GMT+0530 (India Standard Time)"
 */
 
-import { css } from 'styled-components';
-
 const TYPOGRAPHY: Record<string, Record<string, string | number>> = {
   'Display/Large': {
     fontFamily: 'halyard-display, sans-serif',
@@ -533,7 +531,7 @@ export function expandFontToken(label: string = 'PARAGRAPH_LARGE') {
     letterSpacing,
   } = TYPOGRAPHY[label];
 
-  const style = css`
+  const style = `
     font-family: ${fontFamily};
     font-size: ${fontSize}px;
     font-weight: ${fontWeight};
