@@ -372,6 +372,9 @@ const NewBanner: React.FC<any> = (props) => {
                 }}
                 alt={bannerImages[0]?.alt || 'banner'}
               />
+              <Conditional if={bannerImages[0].bannerHeading}>
+                {textOverLay(bannerImages[0].bannerHeading)}
+              </Conditional>
             </Conditional>
           </div>
         ) : (
@@ -431,6 +434,9 @@ const NewBanner: React.FC<any> = (props) => {
                       priority
                       imageId={stringIdfy(image.alt || '') + index}
                     />
+                    <Conditional if={image.bannerHeading}>
+                      {textOverLay(image.bannerHeading)}
+                    </Conditional>
                   </Conditional>
                 </div>
               );
