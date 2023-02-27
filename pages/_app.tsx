@@ -48,6 +48,8 @@ const App = ({ Component, pageProps, localizedStrings, lang }: any) => {
       isDev,
       isStage,
       cookies = {},
+      isMobile,
+      uid,
     } = pageProps;
     const { title } = CMSContent?.data ?? {};
     const metaTitle = renderShortCodes(title)?.join?.('');
@@ -115,12 +117,13 @@ const App = ({ Component, pageProps, localizedStrings, lang }: any) => {
       pageType,
     });
     set(appAtom, {
-      isMobile: pageProps.isMobile,
+      isMobile,
       host,
       isDev,
       isStage,
       initialCurrency: ssrCurrencyCode,
       isPageLoaded: false,
+      uid,
     });
     set(currencyListAtom, currencyList);
     set(currencyAtom, ssrCurrencyCode);

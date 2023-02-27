@@ -974,3 +974,19 @@ export const MB_TYPES = {
   B1_GLOBAL_HOMEPAGE: 'B1 - Global Home Page',
   C1_COLLECTION: 'C1 - Collection MB',
 };
+
+export const VIDEO_EXPERIMENT_UIDS = [
+  'www.versailles-palace-tickets.com',
+  'www.acropolis-tickets.com',
+  'www.dubai-tickets.co.museum-of-future',
+  'www.dubai-tickets.co.museo-del-futuro',
+  'www.dubai-tickets.co.musee-du-futur',
+  'www.dubai-tickets.co.museu-do-futuro-dubai',
+  'www.singapore-tickets.com.gardens-by-the-bay-tickets',
+  'www.visitdubaiframe.com',
+  'www.budapest-baths.com',
+  'www.penapalacetickets.com',
+  'www.dubai-tickets.co.burj-khalifa',
+  'burj-khalifa.dubai-tickets.co',
+  'www.palmtowertickets.com',
+];

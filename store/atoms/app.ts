@@ -9,5 +9,6 @@ export const appAtom = atom({
     isStage: false,
     initialCurrency: '',
     isPageLoaded: false,
+    uid: '',
   },
 });

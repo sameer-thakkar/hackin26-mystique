@@ -1,10 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import type { ReactNode } from 'react';
 import dynamic from 'next/dynamic';
 import type { Swiper } from 'swiper';
 import type { SwiperProps } from 'swiper/react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'clas... Remove this comment to see the full error message
-import classNames from 'classnames';
 import useOnScreen from 'hooks/useOnScreen';
 import { trackEvent } from 'utils/analytics';
 import SwiperWrapper from 'components/Swiper';
@@ -47,14 +44,13 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
   tgid,
   isMobile,
 }) => {
-  const carouselRef = useRef<ReactNode>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen({
     ref: carouselRef,
     options: { threshold: 0.75 },
   });
   const [isVisibilityTracked, setIsVisibilityTracked] = useState(false);
-  // @ts-expect-error TS(2345): Argument of type 'null' is not assignable to param... Remove this comment to see the full error message
-  const [swiper, setSwiperInstance] = useState<Swiper>(null);
+  const [swiper, setSwiperInstance] = useState<Swiper | null>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const getImageViewEventProperties = ({ rank }: any) => ({
@@ -110,14 +106,15 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
     onSlideChangeTransitionStart: updateIndex,
     onSwiper: (swiper) => setSwiperInstance(swiper),
   };
+  const imageClassNames = `swiper-lazy ${imageId}`;
 
   return (
-    // @ts-expect-error TS(2769): No overload matches this call.
     <CarouselContainer ref={carouselRef}>
       <SwiperWrapper {...swiperParams}>
         {imageList.map((image, index) => {
           return videoUrl && index === 0 ? (
             <Video
+              key={videoUrl}
               url={videoUrl}
               fallbackImage={image}
               imageAspectRatio={imageAspectRatio}
@@ -130,8 +127,9 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
             />
           ) : (
             <Image
+              key={image.url}
               url={image.url}
-              imageId={classNames({ [imageId]: true, 'swiper-lazy': true })}
+              imageId={imageClassNames}
               alt={image.altText}
               aspectRatio={imageAspectRatio}
               autoCrop={false}
