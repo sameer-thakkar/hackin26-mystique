@@ -283,8 +283,10 @@ const Menu = ({
   const [active, setActive] = useState(false);
   const nestedMobileInteraction = (event: any, clickedLabel: any) => {
     if (!isMobile) return;
-    event.preventDefault();
-    event.stopPropagation();
+    if (slices.length > 0) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
     if (clickedLabel === label) {
       setActive(!active);
       trackHeaderItem();
