@@ -220,6 +220,7 @@ const HeaderLeft = styled.div<IHeaderLeft>`
       width: auto !important;
       padding-right: 5px !important;
       position: relative !important;
+      object-fit: contain;
     }
   }
   .poweredBy svg {

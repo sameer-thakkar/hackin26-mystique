@@ -393,7 +393,7 @@ const PopulateProducts = (props: any) => {
   });
   const shouldShowHeading = isV1DesignSite ? !isCollectionMB : true;
   return (
-    <StyledProductsWrapper ref={productsWrapperRef}>
+    <StyledProductsWrapper id="products-container" ref={productsWrapperRef}>
       <Conditional if={mbTheme !== THEMES.MIN_BLUE && shouldShowHeading}>
         <div id="tour-list-heading">
           <Conditional

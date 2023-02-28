@@ -248,7 +248,10 @@ class MicrositeV2 extends Component<any, any> {
           max_price_filter,
         } = item || {};
         const re = /\s*(?:,)\s*/g;
-        const excludedTgids = exclude_tgids ? exclude_tgids?.split(re) : [];
+        const excludedTgids = exclude_tgids
+          ? exclude_tgids?.replace(/\\n/g, '')?.split(re).map(Number)
+          : [];
+
         const maxPrice = max_price_filter || Number.MAX_VALUE;
         const tgidData =
           categoryTourListData[collection] ||

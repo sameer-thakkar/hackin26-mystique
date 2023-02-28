@@ -343,9 +343,9 @@ const Header: React.FC<any> = (props) => {
           <Conditional if={enableBuyTickets === 'Yes'}>
             <StyledMenuItem
               onClick={() => {
-                scroller.scrollTo('tour-list-heading', {
+                scroller.scrollTo('products-container', {
                   duration: 1200,
-                  offset: isMobile ? -80 : -100,
+                  offset: isMobile ? -20 : -40,
                   smooth: 'easeInOutQuart',
                 });
               }}
