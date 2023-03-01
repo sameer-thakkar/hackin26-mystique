@@ -107,7 +107,7 @@ const Button = styled.div`
   padding: 7px 12px 5px 12px;
   border: 1px solid ${COLORS.BRAND.PURPS};
   border-radius: 4px;
-  width: 65px;
+  min-width: 65px;
   text-align: center;
   background-color: ${COLORS.BRAND.WHITE};
   color: ${COLORS.BRAND.PURPS};

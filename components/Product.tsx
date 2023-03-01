@@ -656,25 +656,23 @@ const ProductBody = styled.div<{
 `;
 
 const NextAvailableBlock = styled.div`
-  ${expandFontToken('Misc/Overline Large')}
   color: ${COLORS.GRAY.G3};
   display: grid;
   grid-column-gap: 8px;
   grid-template-columns: auto auto;
   align-items: center;
   justify-content: center;
-  
+
   .icon {
     display: flex;
   }
-  
+
   ${({ theme }) => theme.productCards?.nextAvailable?.desktop}
-  
+
   @media (max-width: 768px) {
     grid-area: next-available;
     margin-top: -1rem;
     color: ${COLORS.GRAY.G3};
-    ${expandFontToken(FONTS.UI_LABEL_SMALL_HEAVY)};
   }
 `;
 const ProductOfferBlock = styled.div`

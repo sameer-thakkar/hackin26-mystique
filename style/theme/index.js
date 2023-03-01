@@ -2,6 +2,8 @@ import dynamic from 'next/dynamic';
 import COLORS from 'const/colors';
 import { THEMES } from 'const/index';
 import { SavedTag } from 'UI/PriceBlock';
+import { expandFontToken } from 'const/typography';
+import { FONTS } from 'const/fonts';
 
 const CTAContainer = dynamic(() =>
   import('components/Product').then((mod) => mod.CTAContainer)
@@ -152,11 +154,9 @@ const themes = {
       },
       nextAvailable: {
         desktop: `
-          font-weight: 500;
-          font-size: 12px;
+        ${expandFontToken(FONTS.UI_LABEL_SMALL_HEAVY)}
+          
           margin-top: 0;
-          line-height: 16px;
-          letter-spacing: 0.6px;
           justify-content: left;
           .available-text {
             color: ${COLORS.GRAY.G3};
