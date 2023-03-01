@@ -14,7 +14,7 @@ jobs:
           persist-credentials: false
       - name: Install dependencies
         run: |
-          git config --global url."https://${{ github.actor }}:${{ secrets.GHA_PAT }}@github.com/".insteadOf ssh://git@github.com/
+          git config --global url."https://${{ github.actor }}:${{ secrets.HEADOUT_CI_PACKAGE_PAT }}@github.com/".insteadOf ssh://git@github.com/
           yarn add -D semantic-release@19.0.5 @regalstreak/conventional-release-notes --frozen-lockfile
       - name: Release
         env:
