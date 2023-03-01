@@ -93,10 +93,6 @@ const CarouselGallery: React.FC<CarouselGalleryProps> = ({
     onSwiper: (swiper) => setSwiperInstance(swiper),
   };
 
-  const activeSlide = images[currentIndex];
-  const { heading: activeSlideHeading, content, cta_link } = activeSlide;
-  const ctaUrl = cta_link?.url;
-
   return (
     <>
       <Heading id={stringIdfy(heading)}>
@@ -144,22 +140,42 @@ const CarouselGallery: React.FC<CarouselGalleryProps> = ({
               <div className="active-slide">
                 {currentIndex + 1}/{images.length}
               </div>
-              <div className="heading">
-                <RichContent render={activeSlideHeading} />
-              </div>
-              <div className="content">
-                <RichContent render={content} />
-              </div>
-              <Conditional if={ctaUrl}>
-                <div
-                  className="cta"
-                  onClick={() => window.open(ctaUrl, '_blank')}
-                  role="button"
-                  tabIndex={0}
-                >
-                  {strings.READ_MORE}
-                </div>
-              </Conditional>
+              {images.map((imageData, index) => {
+                const {
+                  heading: activeSlideHeading,
+                  content,
+                  cta_link,
+                } = imageData;
+
+                const ctaUrl = cta_link?.url;
+                /* Rendering all headings to make them crawlable */
+                return (
+                  <>
+                    <div
+                      style={{
+                        display: `${currentIndex === index ? 'block' : 'none'}`,
+                      }}
+                    >
+                      <div className="heading">
+                        <RichContent render={activeSlideHeading} />
+                      </div>
+                      <div className="content">
+                        <RichContent render={content} />
+                      </div>
+                      <Conditional if={ctaUrl}>
+                        <div
+                          className="cta"
+                          onClick={() => window.open(ctaUrl, '_blank')}
+                          role="button"
+                          tabIndex={0}
+                        >
+                          {strings.READ_MORE}
+                        </div>
+                      </Conditional>
+                    </div>
+                  </>
+                );
+              })}
             </div>
           </ContentWrapper>
         </Content>
