@@ -1,0 +1,24 @@
+name: Release
+on:
+  push:
+    branches:
+      - master
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+        with:
+          persist-credentials: false
+      - name: Install dependencies
+        run: |
+          git config --global url."https://${{ github.actor }}:${{ secrets.GHA_PAT }}@github.com/".insteadOf ssh://git@github.com/
+          yarn add -D semantic-release@19.0.5 @regalstreak/conventional-release-notes --frozen-lockfile
+      - name: Release
+        env:
+          # I'm using PAT instead of GHA token so that the CI/CD workflow can be triggered for the new release tag
+          # https://github.community/t/github-actions-workflow-not-triggering-with-tag-push/17053
+          GITHUB_TOKEN: ${{ secrets.GHA_PAT }}
+        run: yarn semantic-release
