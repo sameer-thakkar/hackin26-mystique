@@ -26,6 +26,7 @@ const StyledSelector = styled.div`
     border-radius: 4px;
     max-height: 320px;
     overflow-y: scroll;
+    z-index: 1;
     :after {
       height: 10px;
       content: '';
