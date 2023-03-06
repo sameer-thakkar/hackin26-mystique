@@ -975,6 +975,13 @@ export const MB_TYPES = {
   C1_COLLECTION: 'C1 - Collection MB',
 };
 
+export const PARTNERED_AND_SENSITIVE_COMBINATIONS = {
+  PARTNERED_AND_SENSITIVE: 'Partnered and Sensitive',
+  PARTNERED_AND_NON_SENSITIVE: 'Partnered and Non-Sensitive',
+  NON_PARTNERED_AND_SENSITIVE: 'Non-Partnered and Sensitive',
+  NON_PARTNERED_AND_NON_SENSITIVE: 'Non-Partnered and Non-Sensitive',
+};
+
 export const VIDEO_EXPERIMENT_UIDS = [
   'www.versailles-palace-tickets.com',
   'www.acropolis-tickets.com',
@@ -990,3 +997,4 @@ export const VIDEO_EXPERIMENT_UIDS = [
   'burj-khalifa.dubai-tickets.co',
   'www.palmtowertickets.com',
 ];
+

@@ -566,7 +566,6 @@ class ContentPage extends Component<any, any> {
           logoURL={logoUrl}
           logoAlt={whiteLabelName || ''}
           hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
-          showDisclaimer={commonFooter?.data?.show_disclaimer}
           disclaimerText={commonFooter?.data?.disclaimer_text}
           slices={commonFooter?.data?.body || []}
           secondarySlices={secondaryFooter?.data?.body || []}

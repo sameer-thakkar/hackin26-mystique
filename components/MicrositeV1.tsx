@@ -30,6 +30,7 @@ import {
   THEMES,
   PAGE_TYPES,
   ANALYTICS_PROPERTIES,
+  PARTNERED_AND_SENSITIVE_COMBINATIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
 import renderShortCodes from 'utils/shortCodes';
@@ -128,14 +129,17 @@ const MicrositeV1 = (props: any) => {
     microbrand_cards_heading: microbrandCardsHeadingCMS,
     alert_popup: alertPopupCMS,
     disclaimer: disclaimerCMS,
-    show_disclaimer: showDisclaimerCMS,
     theme_override: themeOverrideCMS,
     instant_checkout: instantCheckout = false,
     enable_earliest_availability: enableEarliestAvailability,
     baseLangPageTitle,
     baseLangShowBannerSubtext,
     baseLangisPartnered,
+    baseLangIsPoiMb,
+    baseLangBannerAndFooterCombinations,
   } = micrositeData || {};
+
+  const { BANNER_FOOTER_SUBTEXT, COVID19_ALERT, READ_MORE } = strings;
 
   const pageUrl = convertUidToUrl({ uid, lang: getHeadoutLanguagecode(lang) });
 
@@ -154,7 +158,6 @@ const MicrositeV1 = (props: any) => {
     footer_heading: footerHeadingCFoot,
     theme_override: themeOverrideCFoot,
     disclaimer_text: disclaimerTextCFoot,
-    show_disclaimer: showDisclaimerCFoot,
   } = commonFooterData || {};
   const { footer_heading: footerHeadingSFoot, body: slicesSFoot } =
     secondaryFooterData || {};
@@ -241,7 +244,6 @@ const MicrositeV1 = (props: any) => {
   const hasOffer = productOffer.length > 0;
   const offerPopup = hasOffer ? productOffer[0] : null;
   const disclaimerText = disclaimerTextCFoot || RichText.asText(disclaimerCMS);
-  const showDisclaimer = showDisclaimerCFoot || showDisclaimerCMS;
   const microbrandCardsHeading = microbrandCardsHeadingCMS
     ? microbrandCardsHeadingCMS
     : null;
@@ -430,6 +432,28 @@ const MicrositeV1 = (props: any) => {
     toggleGroupBookingModal(true);
   };
 
+  const getBannerAndFooterSubtext = (() => {
+    if (baseLangIsPoiMb) {
+      switch (baseLangBannerAndFooterCombinations) {
+        case PARTNERED_AND_SENSITIVE_COMBINATIONS.PARTNERED_AND_SENSITIVE:
+          return BANNER_FOOTER_SUBTEXT.PARTNERED_SENSITIVE;
+
+        case PARTNERED_AND_SENSITIVE_COMBINATIONS.PARTNERED_AND_NON_SENSITIVE:
+          return BANNER_FOOTER_SUBTEXT.PARTNERED_NON_SENSITIVE;
+
+        case PARTNERED_AND_SENSITIVE_COMBINATIONS.NON_PARTNERED_AND_SENSITIVE:
+          return BANNER_FOOTER_SUBTEXT.NON_PARTNERED_SENSITIVE;
+
+        case PARTNERED_AND_SENSITIVE_COMBINATIONS.NON_PARTNERED_AND_NON_SENSITIVE:
+          return BANNER_FOOTER_SUBTEXT.NON_PARTNERED_NON_SENSITIVE;
+      }
+    } else if (baseLangIsPoiMb === null) {
+      return BANNER_FOOTER_SUBTEXT.PARTNERED_SENSITIVE;
+    } else {
+      return '';
+    }
+  })();
+
   const availableTours = orderedTours?.filter(
     (tour: any) => scorpioData?.[tour?.tgid]?.available
   );
@@ -514,10 +538,10 @@ const MicrositeV1 = (props: any) => {
         />
         <Conditional if={showCovid19Alert && covidAlertActive}>
           <DismissAlert
-            readMoreLink={strings.COVID19_ALERT.LINK}
-            readMore={strings.READ_MORE}
-            keyText={strings.COVID19_ALERT.KEY_TEXT}
-            text={strings.COVID19_ALERT.TEXT}
+            readMoreLink={COVID19_ALERT.LINK}
+            readMore={READ_MORE}
+            keyText={COVID19_ALERT.KEY_TEXT}
+            text={COVID19_ALERT.TEXT}
             handleClose={onCovidAlertClose}
           />
         </Conditional>
@@ -560,10 +584,9 @@ const MicrositeV1 = (props: any) => {
             bannerVideo={collectionVideo}
             bannerImages={finalBannerImages ? finalBannerImages : null}
             bannerHeading={bannerHeading ? bannerHeading : null}
-            showBannerSubtext={baseLangShowBannerSubtext}
+            bannerSubText={getBannerAndFooterSubtext}
             isMobile={isMobile}
             collectionDetails={collectionDetails}
-            isPartnered={baseLangisPartnered}
           />
         </Conditional>
         <Conditional if={mbTheme === THEMES.MIN_BLUE}>
@@ -610,8 +633,9 @@ const MicrositeV1 = (props: any) => {
           logoURL={logoUrl}
           logoAlt={whiteLabelName || ''}
           hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
-          showDisclaimer={showDisclaimer}
-          disclaimerText={disclaimerText}
+          disclaimerText={
+            isCollectionMicrobrand ? getBannerAndFooterSubtext : disclaimerText
+          }
           slices={!isFooterInherited ? slicesCFoot || [] : []}
           themeOverride={footerThemeOverride}
           secondaryHeading={footerHeadingSFoot}

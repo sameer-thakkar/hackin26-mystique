@@ -19,6 +19,16 @@ const de = {
   },
   READ_MORE: 'Weiterlesen',
   BANNER_CTA: 'Tickets kaufen',
+  BANNER_FOOTER_SUBTEXT: {
+    PARTNERED_SENSITIVE:
+      'Headout ist ein autorisierter und zuverlässiger Partner des Veranstaltungsortes, der ausgewählte Erlebnisse für diese Attraktion anbietet. Dies ist nicht die Website des Veranstaltungsortes.',
+    PARTNERED_NON_SENSITIVE:
+      'Headout ist ein autorisierter und zuverlässiger Partner des Veranstaltungsortes, der ausgewählte Erlebnisse für diese Attraktion anbietet.',
+    NON_PARTNERED_SENSITIVE:
+      'Headout ist ein Unternehmen, dem weltweit Millionen von Gästen vertrauen und das ausgewählte Erlebnisse für diese Attraktion anbietet. Dies ist nicht die Website des Erlebnisortes.',
+    NON_PARTNERED_NON_SENSITIVE:
+      'Headout ist ein Unternehmen, dem weltweit Millionen von Gästen vertrauen und das ausgewählte Erlebnisse für diese Attraktion anbietet.',
+  },
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout ist ein autorisierter und zuverlässiger Partner der Attraktion mit einer Auswahl der besten Erlebnisse. Dies ist nicht die Website der Attraktion.',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:

@@ -90,7 +90,6 @@ const GlobalMB = (props: any) => {
     attraction: footerAttraction,
     footer_heading: footerHeading,
     theme_override: footerThemeOverride,
-    show_disclaimer: showDisclaimer,
     disclaimer_text: disclaimerText,
     body: footerSlices,
   } = footer || {};
@@ -476,7 +475,6 @@ const GlobalMB = (props: any) => {
           attraction={footerAttraction || 'attraction'}
           primaryHeading={footerHeading}
           themeOverride={footerThemeOverride}
-          showDisclaimer={showDisclaimer}
           disclaimerText={disclaimerText}
           slices={footerSlices || []}
           logoURL={logoUrl}

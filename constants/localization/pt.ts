@@ -20,6 +20,16 @@ const pt = {
   READ_MORE: 'Saiba mais',
   VIEW_MORE: 'Ver mais',
   BANNER_CTA: 'Faça sua reserva',
+  BANNER_FOOTER_SUBTEXT: {
+    PARTNERED_SENSITIVE:
+      'Headout é um parceiro autorizado e confiável que oferece experiências selecionadas para esta atração. Este não é o website oficial do local.',
+    PARTNERED_NON_SENSITIVE:
+      'Headout é um parceiro autorizado e confiável que oferece experiências selecionadas para esta atração.',
+    NON_PARTNERED_SENSITIVE:
+      'Headout é uma marca que já conquistou a confiança de milhões de visitantes em todo o mundo oferecendo experiências selecionadas para esta atração. Este não é website oficial do local.',
+    NON_PARTNERED_NON_SENSITIVE:
+      'Headout é uma marca que já conquistou a confiança de milhões de visitantes em todo o mundo oferecendo experiências selecionadas para esta atração.',
+  },
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout é um parceiro de confiança da atração, autorizado a oferecer uma seleção das melhores experiências. Este não é o site da atração.',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:

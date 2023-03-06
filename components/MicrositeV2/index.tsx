@@ -435,7 +435,7 @@ class MicrositeV2 extends Component<any, any> {
       themeOverride === THEMES.INHERIT
         ? commonFooterProps?.theme_override
         : themeOverride;
-    const { disclaimer, show_disclaimer } = this.props.data.data;
+    const { disclaimer } = this.props.data.data;
 
     const heroProps = {
       banners: CMSImages.reduce((accum: any, image: any) => {
@@ -460,7 +460,6 @@ class MicrositeV2 extends Component<any, any> {
     const MBData = {
       footer: {
         themeOverride: themeOverride || THEMES.INHERIT,
-        show_disclaimer,
         disclaimer,
         ...commonFooterProps,
         secondaryFooter,

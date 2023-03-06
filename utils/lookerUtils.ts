@@ -287,8 +287,8 @@ export const getMetaImageUrl = ({
   }
 };
 
-const getDefaultFooterDisclaimer = (docData: Record<string, any>) =>
-  docData?.show_disclaimer ? DEFAULT_LOOKER_VALUES.FOOTER_DISCLAIMER : '';
+const getDefaultFooterDisclaimer = () =>
+  DEFAULT_LOOKER_VALUES.FOOTER_DISCLAIMER;
 
 type FooterDetailsType = {
   hasPrimaryFooter: boolean;
@@ -326,11 +326,10 @@ export const getFooterDetails = async ({
       hasPrimaryFooter,
       hasSecondaryFooter,
       attractionName: attraction || footerDocDataAttraction || '',
-      footerDisclaimer:
-        disclaimer_text || getDefaultFooterDisclaimer(footerDocData),
+      footerDisclaimer: disclaimer_text || getDefaultFooterDisclaimer(),
       micrositeDocFooterDisclaimer:
         (isMicrosite && disclaimer?.[0]?.text) ||
-        (isMicrosite && getDefaultFooterDisclaimer(data)),
+        (isMicrosite && getDefaultFooterDisclaimer()),
     };
   }
   if (isMicrosite) {
@@ -340,7 +339,7 @@ export const getFooterDetails = async ({
       attractionName: attraction || '',
       footerDisclaimer: '',
       micrositeDocFooterDisclaimer:
-        disclaimer?.[0]?.text || getDefaultFooterDisclaimer(data),
+        disclaimer?.[0]?.text || getDefaultFooterDisclaimer(),
     };
   }
 };

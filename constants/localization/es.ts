@@ -22,6 +22,16 @@ const es = {
   SHOW_ALL_PHOTOS: 'Ver todas las fotos',
   VIEW_LESS: 'Ver menos',
   BANNER_CTA: 'Comprar entradas',
+  BANNER_FOOTER_SUBTEXT: {
+    PARTNERED_SENSITIVE:
+      'Headout es un socio autorizado y de confianza que ofrece experiencias seleccionadas para disfrutar de esta atracción. Este no es el sitio web del recinto.',
+    PARTNERED_NON_SENSITIVE:
+      'Headout es un socio autorizado y de confianza que ofrece las mejores experiencias para disfrutar de esta atracción.',
+    NON_PARTNERED_SENSITIVE:
+      'Headout es una marca en la que confían millones de clientes de todo el mundo y que ofrece experiencias seleccionadas para disfrutar de esta atracción. Este no es el sitio web del recinto.',
+    NON_PARTNERED_NON_SENSITIVE:
+      'Headout es una marca en la que confían millones de clientes de todo el mundo y que ofrece las mejores experiencias para disfrutar de esta atracción.',
+  },
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout es un socio de confianza de la atracción, autorizado para ofrecer una selección de las mejores experiencias. Este no es el sitio web de la atracción.',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:

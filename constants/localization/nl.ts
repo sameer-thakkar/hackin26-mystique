@@ -20,6 +20,16 @@ const nl = {
   READ_MORE: 'Meer Info',
   VIEW_MORE: 'Meer Info',
   BANNER_CTA: 'Koop kaartjes',
+  BANNER_FOOTER_SUBTEXT: {
+    PARTNERED_SENSITIVE:
+      'Headout is een erkende en vertrouwde partner van de locatie die een gecureerde selectie biedt van de beste ervaringen om van deze attractie te genieten. Dit is niet de website van de locatie.',
+    PARTNERED_NON_SENSITIVE:
+      'Headout is een erkende en vertrouwde partner van de locatie die een gecureerde selectie biede van de beste ervaringen om van deze attractie te genieten.',
+    NON_PARTNERED_SENSITIVE:
+      'Headout is een merk vertrouwd door miljoenen gasten wereldwijd dat een gecureerde selectie biedt van de beste ervaringen om van deze attractie te genieten. Dit is niet de website van de locatie.',
+    NON_PARTNERED_NON_SENSITIVE:
+      'Headout is een merk vertrouwd door miljoenen gasten wereldwijd dat een gecureerde selectie biedt van de beste ervaringen om van deze attractie te genieten.',
+  },
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout is een erkende en vertrouwde partner van de locatie die een gecureerde selectie biedt van de beste ervaringen om van deze attractie te genieten. Dit is niet de website van de locatie.',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:

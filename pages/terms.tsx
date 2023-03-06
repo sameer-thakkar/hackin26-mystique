@@ -32,11 +32,7 @@ export default class TermsPage extends Component<any, any> {
     isMobile: false,
   };
 
-  static async getInitialProps({
-    req,
-    res,
-    query
-  }: any) {
+  static async getInitialProps({ req, res, query }: any) {
     try {
       const isDev = req
         ? !!query.mystique_uid
@@ -50,12 +46,7 @@ export default class TermsPage extends Component<any, any> {
     }
   }
 
-  static async getData({
-    req,
-    res,
-    isDev,
-    query
-  }: any) {
+  static async getData({ req, res, isDev, query }: any) {
     let uid;
     const { host } = req ? req.headers : window.location;
     if (isDev) {
@@ -490,7 +481,6 @@ export default class TermsPage extends Component<any, any> {
             logoAlt={logoAltText}
             attraction={commonFooter?.data?.attraction || 'attraction'}
             hasPoweredByHeadoutLogo={hasPoweredByHeadoutLogo}
-            showDisclaimer={commonFooter?.data?.show_disclaimer}
             disclaimerText={commonFooter?.data?.disclaimer_text}
             slices={[]}
             themeOverride={themeOverride || THEMES.DEFAULT}

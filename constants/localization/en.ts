@@ -22,6 +22,16 @@ const en = {
   VIEW_LESS: 'View less',
   SEE_MORE_SHOWS: 'See More Shows',
   BANNER_CTA: 'Buy tickets',
+  BANNER_FOOTER_SUBTEXT: {
+    PARTNERED_SENSITIVE:
+      "Headout is an authorized and trusted partner of the venue, offering curated experiences to enjoy this attraction. This is not the venue's website.",
+    PARTNERED_NON_SENSITIVE:
+      'Headout is an authorized and trusted partner of the venue, offering curated experiences to enjoy this attraction.',
+    NON_PARTNERED_SENSITIVE:
+      "Headout is a brand trusted by millions of guests worldwide offering curated experiences to enjoy this attraction. This is not the venue's website.",
+    NON_PARTNERED_NON_SENSITIVE:
+      'Headout is a brand trusted by millions of guests worldwide offering curated experiences to enjoy this attraction.',
+  },
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     "Headout is an authorised and trusted partner of the venue offering a curated selection of the best experiences to enjoy this attraction. This is not the venue's website.",
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:

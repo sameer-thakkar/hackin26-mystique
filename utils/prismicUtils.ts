@@ -482,6 +482,15 @@ export const getMicrositeDocument = async ({
                   lang !== 'en-us'
                     ? baseLangData.data.is_partnered_poi
                     : completeMicrosite.data.data.is_partnered_poi,
+                baseLangIsPoiMb:
+                  lang !== 'en-us'
+                    ? baseLangData.data.is_poi_mb
+                    : completeMicrosite.data.data.is_poi_mb,
+                baseLangBannerAndFooterCombinations:
+                  lang !== 'en-us'
+                    ? baseLangData.data.banner_and_footer_combinations
+                    : completeMicrosite.data.data
+                        .banner_and_footer_combinations,
                 redirect_to_headout_booking_flow:
                   lang !== 'en-us'
                     ? baseLangData.data.redirect_to_headout_booking_flow

@@ -638,7 +638,6 @@ const ShowPage = (props: any) => {
           logoURL={logoUrl}
           logoAlt={whiteLabelName || ''}
           hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
-          showDisclaimer={commonFooter?.data?.show_disclaimer}
           disclaimerText={commonFooter?.data?.disclaimer_text}
           slices={commonFooter?.data?.body || []}
           attraction={commonFooter?.data?.attraction || 'attraction'}

@@ -24,7 +24,6 @@ import {
   getPriceSortedDiscountedProducts,
   getPriceSortedListicleTgids,
   withShortcodes,
-  checkLTT,
 } from 'utils/helper';
 import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
@@ -214,7 +213,6 @@ export const HomePage = (props: any) => {
   const { mbTheme } = useContext(MBContext);
   const coverHeading = withShortcodes(heroProps?.coverHeading);
   const allTgids = Object.keys(allTours);
-  const isLTT = checkLTT(uid);
   const isEntertainmentMbListicle = isEntertainmentMb && isListicle;
   const {
     logo: { logoUrl = '', showPoweredLogo = true } = {},
@@ -377,7 +375,6 @@ export const HomePage = (props: any) => {
         logoURL={logoUrl}
         logoAlt={whiteLabelName || ''}
         hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
-        showDisclaimer={!isLTT && footer.show_disclaimer}
         disclaimerText={footer.disclaimer_text}
         slices={footer.body || []}
         themeOverride={themeOverride}

@@ -30,9 +30,8 @@ type StaticBannerProps = {
   bannerImages: Array<{ url: string; alt: string }>;
   collectionDetails: CollectionDetailsTypes;
   bannerVideo?: string | null;
-  showBannerSubtext: boolean;
+  bannerSubText: string | undefined;
   isMobile: boolean;
-  isPartnered?: boolean;
 };
 
 export type CollectionDetailsTypes = {
@@ -56,10 +55,9 @@ const StaticBanner = ({
   bannerHeading: tempBannerHeading,
   bannerImages,
   bannerVideo,
-  showBannerSubtext,
   isMobile,
   collectionDetails,
-  isPartnered,
+  bannerSubText,
 }: StaticBannerProps) => {
   const { eventsReady } = useRecoilValue(gtmAtom);
 
@@ -93,13 +91,7 @@ const StaticBanner = ({
             </RatingsWrapper>
           </Conditional>
 
-          <DisclaimerText>
-            {showBannerSubtext
-              ? isPartnered
-                ? strings.PARTNERED_BANNER_SUBTEXT_DISCLAIMER
-                : strings.NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER
-              : strings.BANNER_SUBTEXT_DEFAULT_DISCLAIMER}
-          </DisclaimerText>
+          <DisclaimerText>{bannerSubText}</DisclaimerText>
         </ContentContainer>
 
         <Conditional if={!isMobile}>

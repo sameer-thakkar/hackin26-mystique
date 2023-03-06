@@ -327,7 +327,6 @@ type FooterProps = {
   logoURL: string;
   logoAlt: string;
   hasPoweredByHeadoutLogo: boolean;
-  showDisclaimer: boolean;
   disclaimerText: string;
   slices?: Array<any>;
   themeOverride?: string;
@@ -373,7 +372,6 @@ const Footer: React.FC<FooterProps> = ({
   attraction = '',
   logoURL,
   logoAlt,
-  showDisclaimer = false,
   disclaimerText = '',
   hasPoweredByHeadoutLogo,
   slices = [],
@@ -464,9 +462,7 @@ const Footer: React.FC<FooterProps> = ({
                     {POWERED_BY_HEADOUT}
                   </Conditional>
                 </div>
-                <Conditional
-                  if={showDisclaimer && finalThemeName !== THEMES.MIN_BLUE}
-                >
+                <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
                   <div className="disclaimer-text">
                     {disclaimerText
                       ? disclaimerText

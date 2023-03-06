@@ -20,6 +20,16 @@ const it = {
   READ_MORE: 'Leggi tutto',
   VIEW_MORE: 'Leggi tutto',
   BANNER_CTA: 'Scopri le nostre offerte',
+  BANNER_FOOTER_SUBTEXT: {
+    PARTNERED_SENSITIVE:
+      "Headout è un partner autorizzato e fidato dell'attrazione, che offre esperienze di qualità per poterla vivere al meglio. Questo non è il sito web dell'attrazione.",
+    PARTNERED_NON_SENSITIVE:
+      "Headout è un partner autorizzato e fidato dell'attrazione, che offre esperienze di qualità per poterla vivere al meglio.",
+    NON_PARTNERED_SENSITIVE:
+      "Headout è un marchio di cui si fidano milioni di utenti in tutto il mondo, che offre esperienze di qualità per vivere al meglio questa attrazione. Questo non è il sito web dell'attrazione.",
+    NON_PARTNERED_NON_SENSITIVE:
+      'Headout è un marchio di cui si fidano milioni di utenti in tutto il mondo, che offre esperienze di qualità per vivere al meglio questa attrazione.',
+  },
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     "Headout è uno dei partner di fiducia di questa attrazione ufficialmente autorizzati a offrire una selezione delle migliori esperienze disponibili. Questo non è il sito web dell'attrazione.",
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
