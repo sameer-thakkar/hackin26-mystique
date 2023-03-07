@@ -14,23 +14,24 @@ type IFrameProps = {
   height?: string;
 };
 
-const IFrameContainer = styled.div`
+const IFrameContainer = styled.div<{
+  $paddingBottom: string | undefined;
+}>`
   position: relative;
-  padding-bottom: ${({  
- // @ts-expect-error TS(2339): Property 'paddingBottom' does not exist on type 'P... Remove this comment to see the full error message
- paddingBottom }) =>
-    paddingBottom ? paddingBottom : '56.25%'};
+  padding-bottom: ${({ $paddingBottom }) =>
+    $paddingBottom ? $paddingBottom : '56.25%'};
   padding-top: 35px;
   height: 0;
   overflow: hidden;
 `;
 
-const StyledIFrame = styled.iframe`
+const StyledIFrame = styled.iframe<{ $border: number }>`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: ${({ height }) => (height ? height : '100%')};
+  border: ${({ $border }) => `${$border}px`};
 `;
 
 /**
@@ -73,16 +74,17 @@ const IFrame: React.FC<IFrameProps> = ({
   return (
     <>
       <IFrameContainer
-        {...{ paddingBottom: otherProps.height }}
+        {...{ $paddingBottom: otherProps.height }}
         // @ts-expect-error TS(2769): No overload matches this call.
         onClick={isYoutube ? trackVideoPlayed : null}
       >
         <StyledIFrame
           {...(name && { name })}
           src={src}
-          frameBorder={Number(frameborder)}
           allow={allow}
           allowFullScreen={allowFullScreen}
+          loading="lazy"
+          $border={Number(frameborder)}
           {...otherProps}
         />
       </IFrameContainer>

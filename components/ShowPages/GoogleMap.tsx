@@ -10,6 +10,7 @@ const GooglMapWrapper = styled.div`
     width: 100%;
     height: 400px;
     border-radius: 8px;
+    border: 0;
   }
   @media (max-width: 768px) {
     margin-bottom: 48px;
@@ -21,17 +22,15 @@ const GooglMapWrapper = styled.div`
   }
 `;
 
-const GoogleMap = ({
-  mapURL
-}: any) => {
+const GoogleMap = ({ mapURL }: any) => {
   return (
     <Conditional if={mapURL}>
       <GooglMapWrapper>
         <iframe
           title="Google Map"
           src={mapURL}
-          frameBorder="0"
           allowFullScreen
+          loading="lazy"
         />
       </GooglMapWrapper>
     </Conditional>

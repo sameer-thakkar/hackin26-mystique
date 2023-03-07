@@ -13,6 +13,7 @@ class MystiqueDocument extends Document {
     const sheet = new ServerStyleSheet();
     const { lang } = getLangUID(req, query);
     const originalRenderPage = ctx.renderPage;
+    const isPreview = Object.keys(query).includes('previewSession');
     try {
       ctx.renderPage = () =>
         originalRenderPage({
@@ -33,6 +34,7 @@ class MystiqueDocument extends Document {
         asPath,
         query,
         lang,
+        isPreview,
       };
     } finally {
       sheet.seal();
@@ -41,7 +43,8 @@ class MystiqueDocument extends Document {
 
   render() {
     // @ts-expect-error TS(2339): Property 'lang' does not exist on type 'Readonly<R... Remove this comment to see the full error message
-    const { lang } = this.props;
+    const { lang, isPreview } = this.props;
+
     const textDirection = RTL_LANGUAGE_CODES.includes(getLangObject(lang)?.code)
       ? 'rtl'
       : 'ltr';
@@ -65,12 +68,14 @@ class MystiqueDocument extends Document {
         <body>
           <Main />
           <NextScript />
-          <script
-            async
-            defer
-            type="text/javascript"
-            src="https://static.cdn.prismic.io/prismic.js?repo=mystique&amp;new=true"
-          ></script>
+          <Conditional if={isPreview}>
+            <script
+              async
+              defer
+              type="text/javascript"
+              src="https://static.cdn.prismic.io/prismic.js?repo=mystique&amp;new=true"
+            ></script>
+          </Conditional>
         </body>
       </Html>
     );

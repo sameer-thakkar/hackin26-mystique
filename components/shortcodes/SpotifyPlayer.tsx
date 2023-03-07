@@ -14,7 +14,7 @@ const StyledIFrame = styled.iframe`
   top: 0;
   left: 0;
   width: 100%;
-  border: none;
+  border: 0;
   height: ${({ height }) => (height ? height : '100%')};
 `;
 
@@ -52,8 +52,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
         src={`https://open.spotify.com/embed/${
           isPlaylist === '1' ? `playlist` : `album`
         }/${albumid}`}
-        // @ts-expect-error TS(2769): No overload matches this call.
-        border="0"
+        loading="lazy"
         {...otherProps}
       />
     </SpotifyContainer>
