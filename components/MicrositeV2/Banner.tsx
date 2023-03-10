@@ -166,6 +166,7 @@ const StyledBanner = styled.div<IStyledBanner>`
     .single-slide,
     .mb-slide {
       aspect-ratio: 16 / 10;
+      width: 100%;
       height: 13.75rem;
       max-height: 57vw; /** maintaining aspect ratio */
     }
@@ -300,7 +301,7 @@ const NewBanner: React.FC<any> = (props) => {
         <div className={`mb-captions`}>
           <div className={`mb-caption active`}>
             <div className="caption">
-              <h1>{parsedBannerHeading}</h1>
+              <h1 dangerouslySetInnerHTML={{ __html: parsedBannerHeading }} />
             </div>
           </div>
         </div>
