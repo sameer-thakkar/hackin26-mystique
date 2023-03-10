@@ -998,3 +998,4 @@ export const VIDEO_EXPERIMENT_UIDS = [
   'www.palmtowertickets.com',
 ];
 
+export const SHOW_DATE_SELECTION_PAGE_TGIDS = [17637];

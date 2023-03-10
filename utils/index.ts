@@ -10,6 +10,7 @@ import {
   NON_SUPPORTED_LANGUAGES,
   UNIT_ABBREVIATIONS,
   MB_TYPES,
+  SHOW_DATE_SELECTION_PAGE_TGIDS,
 } from 'const/index';
 import { BOOKING_FLOW_STAGE, BOOKING_FLOW_TYPE } from 'const/booking';
 import { getLangObject, withoutTrailingSlash } from 'utils/helper';
@@ -249,7 +250,11 @@ export const createBookingURL = ({
     }`
   );
 
-  if (hasDateQueryParam) {
+  //temporary setup to show date selection page for tgid 17637; will be reverted
+  if (
+    hasDateQueryParam &&
+    !SHOW_DATE_SELECTION_PAGE_TGIDS.includes(Number(tgid))
+  ) {
     urlObject.searchParams.set('date', date?.startDate);
     tourId && urlObject.searchParams.set('variantId', tourId);
 
