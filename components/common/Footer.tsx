@@ -242,6 +242,7 @@ const FooterLegal = styled.div<{
       display: flex;
       .image-wrap {
         width: auto;
+        margin-right: 12px;
         
         span {
           position: relative !important;
