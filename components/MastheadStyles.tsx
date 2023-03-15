@@ -6,16 +6,16 @@ import { FONTS } from 'const/fonts';
 export const StyledMasthead = styled.div<{
   isEntMb: boolean;
   withoutImage: boolean;
+  imageUrl: string | undefined;
 }>`
-  width: 100%;
+  width: 100vw;
   display: flex;
   position: relative;
-
-  ${({ isEntMb, withoutImage }) =>
+  margin-bottom: 2rem;
+  ${({ isEntMb, imageUrl }) =>
     isEntMb
       ? `
     justify-content: center;
-    margin-bottom: 1.25rem;
     overflow-x: hidden;
   
     .image-wrap > span {
@@ -25,15 +25,23 @@ export const StyledMasthead = styled.div<{
     }
     `
       : `
-    margin-bottom: 2rem;
-    height: ${withoutImage ? '9.25rem' : '11.75rem'};
+    height: 13.125rem;
     background: ${COLORS.BRAND.BLACK};
+    background-image: linear-gradient(
+        90.01deg,
+        #111111 16.05%,
+        rgba(17, 17, 17, 0.8) 40.39%,
+        rgba(17, 17, 17, 0) 77.55%
+      ), url(${imageUrl});
+    background-size: 50vw 44.25rem;
+    background-position: right, right;
+    background-repeat: no-repeat;
     img {
-        object-fit: cover;
+      object-fit: cover;
     }`}
 
   @media (max-width: 768px) {
-    ${({ isEntMb, withoutImage }) =>
+    ${({ isEntMb, withoutImage, imageUrl }) =>
       isEntMb
         ? `
         .image-wrap > span {
@@ -42,49 +50,46 @@ export const StyledMasthead = styled.div<{
         }
         `
         : `
-        height: auto;
+        background-image: url(${imageUrl});
+        background-size: 100vw 18.75rem;
         ${
           withoutImage
             ? `
-          background: ${COLORS.BRAND.WHITE};
-          margin-bottom: 0;
+            display:none;
         `
             : `
-          margin-bottom: 1rem;
+          margin-bottom: 0;
           flex-direction: column-reverse;
         `
         }
      `}
   }
 `;
-
-export const ImageWrapper = styled.div`
-  width: 48%;
-  margin-left: auto;
-  position: relative;
-
-  @media (max-width: 768px) {
-    position: static;
-    width: 100%;
-    height: 13.125rem;
-  }
+export const Wrapper = styled.div`
+  width: calc(100% - (5.46vw * 2));
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
 `;
 
-export const TitleWrapper = styled.div<{
-  isEntMb: boolean;
+export const MobileTitle = styled.div<{
   withoutImage: boolean;
 }>`
-  max-width: 38.125rem;
-  margin: auto 0 auto 10rem;
-
-  @media (max-width: 768px) {
-    position: static;
-    margin: 1.5rem;
-    height: auto;
-  }
+  ${({ withoutImage }) => `
+    color: ${withoutImage ? COLORS.BRAND.BLACK : COLORS.BRAND.WHITE};
+    background-color: ${withoutImage ? COLORS.BRAND.WHITE : COLORS.BRAND.BLACK};
+  `}
+  ${expandFontToken(FONTS.HEADING_REGULAR)}
+  padding: 1.5rem;
+  margin-bottom: 1rem;
 `;
 
-export const Title = styled.h1<{ isEntMb: boolean; withoutImage: boolean }>`
+export const TitleWrapper = styled.div`
+  max-width: 38.125rem;
+  margin: auto 0;
+`;
+
+export const Title = styled.h1<{ isEntMb: boolean }>`
   margin: 0;
 
   ${({ isEntMb }) =>
@@ -102,34 +107,4 @@ export const Title = styled.h1<{ isEntMb: boolean; withoutImage: boolean }>`
     color: ${COLORS.GRAY.G8};
     ${expandFontToken(FONTS.DISPLAY_SMALL)};
     `}
-
-  @media (max-width: 768px) {
-    ${({ isEntMb, withoutImage }) =>
-      isEntMb
-        ? `
-      text-align: center;
-      top: 42%;
-      ${expandFontToken(FONTS.HEADING_LARGE)}
-      padding: 0 1rem;
-        `
-        : `
-      color: ${withoutImage ? `${COLORS.GRAY.G1}` : `${COLORS.GRAY.G8}`};
-      ${expandFontToken(FONTS.HEADING_REGULAR)};
-    `}
-  }
-`;
-
-export const GradientWrapper = styled.div`
-  background-image: linear-gradient(
-    90.01deg,
-    #111111 16.05%,
-    rgba(17, 17, 17, 0.8) 40.39%,
-    rgba(17, 17, 17, 0) 77.55%
-  );
-  position: absolute;
-  z-index: 1;
-  width: 64%;
-  height: 100%;
-  left: 0;
-  top: 0;
 `;

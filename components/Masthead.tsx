@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from 'react';
-import Image from 'components/UI/Image';
 import { withShortcodes } from 'utils/helper';
 import { trackEvent } from 'utils/analytics';
 import {
@@ -9,13 +8,14 @@ import {
 } from 'const/index';
 import { MBContext } from 'contexts/MBContext';
 import {
-  GradientWrapper,
-  ImageWrapper,
+  MobileTitle,
+  Wrapper,
   StyledMasthead,
   Title,
   TitleWrapper,
 } from 'components/MastheadStyles';
 import Conditional from 'components/common/Conditional';
+import Image from 'UI/Image';
 
 const Masthead = ({
   title,
@@ -24,9 +24,9 @@ const Masthead = ({
   isEntertainmentMb,
 }: {
   title: string;
-  image: { url: string; alt: string } | null;
   isMobile: boolean;
   isEntertainmentMb: boolean;
+  image: { url: string; alt: string } | null;
 }) => {
   const { lang } = useContext(MBContext);
   const formattedTitle = withShortcodes(title);
@@ -56,28 +56,33 @@ const Masthead = ({
   return (
     <>
       {isEntertainmentMb ? (
-        <StyledMasthead isEntMb={true} withoutImage={false}>
+        <StyledMasthead
+          isEntMb={true}
+          withoutImage={false}
+          imageUrl={image?.url}
+        >
           {getImage()}
-          <Title isEntMb={true} withoutImage={false}>
-            {formattedTitle}
-          </Title>
+          <Title isEntMb>{formattedTitle}</Title>
         </StyledMasthead>
       ) : (
-        <StyledMasthead isEntMb={false} withoutImage={!image}>
-          <TitleWrapper isEntMb={false} withoutImage={!image}>
-            <Title isEntMb={false} withoutImage={!image}>
-              {formattedTitle}
-            </Title>
-          </TitleWrapper>
-          <Conditional if={image}>
-            <ImageWrapper>
-              {getImage()}
-              <Conditional if={!isMobile}>
-                <GradientWrapper />
-              </Conditional>
-            </ImageWrapper>
+        <>
+          <StyledMasthead
+            isEntMb={false}
+            withoutImage={!image}
+            imageUrl={image?.url}
+          >
+            <Conditional if={!isMobile}>
+              <Wrapper>
+                <TitleWrapper>
+                  <Title isEntMb={false}>{formattedTitle}</Title>
+                </TitleWrapper>
+              </Wrapper>
+            </Conditional>
+          </StyledMasthead>
+          <Conditional if={isMobile}>
+            <MobileTitle withoutImage={!image}>{formattedTitle}</MobileTitle>
           </Conditional>
-        </StyledMasthead>
+        </>
       )}
     </>
   );
