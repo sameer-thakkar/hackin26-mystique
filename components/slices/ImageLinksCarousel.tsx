@@ -53,9 +53,8 @@ const StyledContent = styled.div`
     font-family: ${HALYARD.FONT_STACK};
     font-size: 24px !important;
     line-height: 33px;
-
     color: ${({ design }: { design: string | null }) =>
-      design === DESIGN.V1 ? COLORS.GRAY.G2 : COLORS.GRAY.G1};
+    design === DESIGN.V1 ? COLORS.GRAY.G2 : COLORS.GRAY.G1};
     font-weight: 600;
   }
   div {
@@ -307,7 +306,6 @@ const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
     speed: 650,
     slidesPerView: 4,
     spaceBetween: 24,
-    navigation: true,
   };
 
   return (
