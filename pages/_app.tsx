@@ -149,7 +149,7 @@ const App = ({ Component, pageProps, localizedStrings, lang }: any) => {
         {getLanguageBasedGlobalStyling(lang)}
         <Component {...pageProps} />
         <ScrollToTop />
-        <LiveChat />
+        <LiveChat uid={pageProps?.uid} />
       </RecoilRoot>
     </StyleSheetManager>
   );
