@@ -5,7 +5,6 @@ import React, {
   useState,
 } from 'react';
 import type { SwiperOptions } from 'swiper';
-import { strings } from 'const/strings';
 import dynamic from 'next/dynamic';
 import { scroller } from 'react-scroll';
 import Image from 'components/UI/Image';
@@ -67,8 +66,6 @@ type TBannerCarouselProps = {
   bannerHeading: string;
   bannerCtaText: string;
   bannerSubtext: string;
-  showBannerSubtext: boolean;
-  isPartnered: boolean;
   currentLanguage: string;
   isMobile: boolean;
   boxed: boolean;
@@ -86,8 +83,6 @@ const Banner = (props: TBannerCarouselProps) => {
     currentLanguage,
     hideCTA,
     bannerSubtext: tempBannerSubtext,
-    showBannerSubtext,
-    isPartnered,
     bannerCtaText = '',
     orderedTgids,
     isMobile: isMobileFromCDNHeader,
@@ -226,16 +221,7 @@ const Banner = (props: TBannerCarouselProps) => {
 
       <Conditional if={bannerSubtext?.length}>
         <BannerSubtext>
-          <p dangerouslySetInnerHTML={{ __html: bannerSubtext.join(' ') }}></p>
-        </BannerSubtext>
-      </Conditional>
-      <Conditional if={showBannerSubtext && !bannerSubtext?.length}>
-        <BannerSubtext>
-          <p>
-            {isPartnered
-              ? strings.PARTNERED_BANNER_SUBTEXT_DISCLAIMER
-              : strings.NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER}
-          </p>
+          <p>{bannerSubtext}</p>
         </BannerSubtext>
       </Conditional>
     </div>

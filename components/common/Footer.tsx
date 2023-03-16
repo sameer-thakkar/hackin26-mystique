@@ -370,7 +370,6 @@ const LinkSlices = ({ linksTitle, slices, theme, className = '' }: any) => (
 );
 
 const Footer: React.FC<FooterProps> = ({
-  attraction = '',
   logoURL,
   logoAlt,
   disclaimerText = '',
@@ -464,14 +463,7 @@ const Footer: React.FC<FooterProps> = ({
                   </Conditional>
                 </div>
                 <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
-                  <div className="disclaimer-text">
-                    {disclaimerText
-                      ? disclaimerText
-                      : strings.FOOTER.DISCLAIMER.replace(
-                          '<attraction>',
-                          attraction
-                        )}
-                  </div>
+                  <div className="disclaimer-text">{disclaimerText}</div>
                 </Conditional>
                 <Conditional
                   if={finalThemeName === THEMES.MIN_BLUE && !isMobile}

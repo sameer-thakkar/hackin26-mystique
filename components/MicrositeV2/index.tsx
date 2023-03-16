@@ -170,6 +170,8 @@ class MicrositeV2 extends Component<any, any> {
       enable_group_booking,
       group_booking_excluded_tgids,
       body: CMSBody,
+      baseLangIsPoiMb,
+      baseLangBannerAndFooterCombinations,
     } = CMSData || {};
     const currentLanguage = getLangObject(CMSContent.lang).code;
     const { isMobile } = this.state;
@@ -483,7 +485,10 @@ class MicrositeV2 extends Component<any, any> {
       contentFramework: contentFramework?.data,
       alertPopup: CMSContent?.data?.alert_popup,
       showCovid19Alert: CMSContent?.data.show_covid19_alert,
+      mbType: CMSContent.mbType,
       domainConfig,
+      baseLangIsPoiMb,
+      baseLangBannerAndFooterCombinations,
     };
 
     const directTgid = this.props.router.query.tgid;

@@ -119,7 +119,6 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
     const { logo, faviconUrl } = await fetchDomainConfig(uid);
     const pageDocFooterDetails = await getFooterDetails(doc);
     const headingsDetails = await getHeadings(doc);
-
     const metaData = {
       uid,
       document_type: getDocType(type),

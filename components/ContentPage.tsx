@@ -16,6 +16,8 @@ import {
   getAlternateLanguages,
   legacyBooleanCheck,
   getHeadoutLanguagecode,
+  isCollectionMB,
+  getBannerAndFooterSubtext,
 } from 'utils';
 import allToursParser from 'utils/allToursParser';
 import { tourListApiParser } from 'utils/dataParsers';
@@ -335,6 +337,8 @@ class ContentPage extends Component<any, any> {
       footer_ref: commonFooter,
       header_ref: commonHeader,
       content_framework: contentFramework,
+      baseLangIsPoiMb,
+      baseLangBannerAndFooterCombinations,
       microsite,
       body,
       microsite_document_ref,
@@ -392,6 +396,12 @@ class ContentPage extends Component<any, any> {
       ...strValues,
       ...objValues,
     };
+    const { mbType } = micrositeData;
+    const isCollectionMicrobrand = isCollectionMB(mbType);
+    const bannerAndFooterSubtext = getBannerAndFooterSubtext(
+      baseLangIsPoiMb,
+      baseLangBannerAndFooterCombinations
+    );
 
     const pageUrl = convertUidToUrl({
       uid,
@@ -566,7 +576,11 @@ class ContentPage extends Component<any, any> {
           logoURL={logoUrl}
           logoAlt={whiteLabelName || ''}
           hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
-          disclaimerText={commonFooter?.data?.disclaimer_text}
+          disclaimerText={
+            isCollectionMicrobrand
+              ? bannerAndFooterSubtext
+              : commonFooter?.data?.disclaimer_text
+          }
           slices={commonFooter?.data?.body || []}
           secondarySlices={secondaryFooter?.data?.body || []}
           primaryHeading={commonFooter?.data?.footer_heading}

@@ -16,6 +16,7 @@ import PopulateMeta from 'components/common/NextSeoMeta';
 import Conditional from 'components/common/Conditional';
 import {
   getAlternateLanguages,
+  getBannerAndFooterSubtext,
   getHeadoutLanguagecode,
   isCollectionMB,
   legacyBooleanCheck,
@@ -30,7 +31,6 @@ import {
   THEMES,
   PAGE_TYPES,
   ANALYTICS_PROPERTIES,
-  PARTNERED_AND_SENSITIVE_COMBINATIONS,
 } from 'const/index';
 import { strings } from 'const/strings';
 import renderShortCodes from 'utils/shortCodes';
@@ -44,7 +44,6 @@ import { VIDEO_EXPERIMENT_UIDS } from 'const/index';
 const LongForm = dynamic(() => import('components/common/LongForm'));
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
-const MicrobrandList = dynamic(() => import('./MicrobrandsList'));
 const Alert = dynamic(() => import('UI/Alert'), { ssr: false });
 const DismissAlert = dynamic(() => import('UI/DismissAlert'), { ssr: false });
 const ResponsiveSelector: ComponentType<any> = dynamic(
@@ -125,21 +124,17 @@ const MicrositeV1 = (props: any) => {
     body4: coverSlices,
     currencies_list,
     group_booking_excluded_tgids: groupBookingExcludedTgids,
-    microbrand_cards: microbrandCards,
-    microbrand_cards_heading: microbrandCardsHeadingCMS,
     alert_popup: alertPopupCMS,
     disclaimer: disclaimerCMS,
     theme_override: themeOverrideCMS,
     instant_checkout: instantCheckout = false,
     enable_earliest_availability: enableEarliestAvailability,
     baseLangPageTitle,
-    baseLangShowBannerSubtext,
-    baseLangisPartnered,
     baseLangIsPoiMb,
     baseLangBannerAndFooterCombinations,
   } = micrositeData || {};
 
-  const { BANNER_FOOTER_SUBTEXT, COVID19_ALERT, READ_MORE } = strings;
+  const { COVID19_ALERT, READ_MORE } = strings;
 
   const pageUrl = convertUidToUrl({ uid, lang: getHeadoutLanguagecode(lang) });
 
@@ -244,9 +239,6 @@ const MicrositeV1 = (props: any) => {
   const hasOffer = productOffer.length > 0;
   const offerPopup = hasOffer ? productOffer[0] : null;
   const disclaimerText = disclaimerTextCFoot || RichText.asText(disclaimerCMS);
-  const microbrandCardsHeading = microbrandCardsHeadingCMS
-    ? microbrandCardsHeadingCMS
-    : null;
   let groupBookingTourTitles: any = [];
 
   let alertPopup = null;
@@ -431,29 +423,10 @@ const MicrositeV1 = (props: any) => {
 
     toggleGroupBookingModal(true);
   };
-
-  const getBannerAndFooterSubtext = (() => {
-    if (baseLangIsPoiMb) {
-      switch (baseLangBannerAndFooterCombinations) {
-        case PARTNERED_AND_SENSITIVE_COMBINATIONS.PARTNERED_AND_SENSITIVE:
-          return BANNER_FOOTER_SUBTEXT.PARTNERED_SENSITIVE;
-
-        case PARTNERED_AND_SENSITIVE_COMBINATIONS.PARTNERED_AND_NON_SENSITIVE:
-          return BANNER_FOOTER_SUBTEXT.PARTNERED_NON_SENSITIVE;
-
-        case PARTNERED_AND_SENSITIVE_COMBINATIONS.NON_PARTNERED_AND_SENSITIVE:
-          return BANNER_FOOTER_SUBTEXT.NON_PARTNERED_SENSITIVE;
-
-        case PARTNERED_AND_SENSITIVE_COMBINATIONS.NON_PARTNERED_AND_NON_SENSITIVE:
-          return BANNER_FOOTER_SUBTEXT.NON_PARTNERED_NON_SENSITIVE;
-      }
-    } else if (baseLangIsPoiMb === null) {
-      return BANNER_FOOTER_SUBTEXT.PARTNERED_SENSITIVE;
-    } else {
-      return '';
-    }
-  })();
-
+  const bannerAndFooterSubText = getBannerAndFooterSubtext(
+    baseLangIsPoiMb,
+    baseLangBannerAndFooterCombinations
+  );
   const availableTours = orderedTours?.filter(
     (tour: any) => scorpioData?.[tour?.tgid]?.available
   );
@@ -569,8 +542,6 @@ const MicrositeV1 = (props: any) => {
             bannerHeading={bannerHeading ? bannerHeading : null}
             bannerCtaText={bannerCtaText ? bannerCtaText : null}
             bannerSubtext={bannerSubtext}
-            showBannerSubtext={baseLangShowBannerSubtext}
-            isPartnered={baseLangisPartnered}
             // @ts-expect-error TS(2322): Type 'string | null' is not assignable to type 'st... Remove this comment to see the full error message
             currentLanguage={currentLanguage ? currentLanguage : null}
             isMobile={isMobile}
@@ -584,7 +555,7 @@ const MicrositeV1 = (props: any) => {
             bannerVideo={collectionVideo}
             bannerImages={finalBannerImages ? finalBannerImages : null}
             bannerHeading={bannerHeading ? bannerHeading : null}
-            bannerSubText={getBannerAndFooterSubtext}
+            bannerSubText={bannerAndFooterSubText}
             isMobile={isMobile}
             collectionDetails={collectionDetails}
           />
@@ -605,17 +576,6 @@ const MicrositeV1 = (props: any) => {
           {tourListSection}
         </Conditional>
 
-        <Conditional
-          if={
-            microbrandCards?.filter((mbCard: any) => mbCard.microbrand_link)
-              ?.length
-          }
-        >
-          <MicrobrandList
-            microbrandCards={microbrandCards}
-            microbrandCardsHeading={microbrandCardsHeading}
-          />
-        </Conditional>
         <ProductsContextProvider allTours={allTours} ready={isReady}>
           <InteractionContextProvider>
             <Conditional if={longFormContent}>
@@ -634,7 +594,7 @@ const MicrositeV1 = (props: any) => {
           logoAlt={whiteLabelName || ''}
           hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
           disclaimerText={
-            isCollectionMicrobrand ? getBannerAndFooterSubtext : disclaimerText
+            isCollectionMicrobrand ? bannerAndFooterSubText : disclaimerText
           }
           slices={!isFooterInherited ? slicesCFoot || [] : []}
           themeOverride={footerThemeOverride}

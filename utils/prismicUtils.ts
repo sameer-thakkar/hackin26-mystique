@@ -115,6 +115,7 @@ export const getContentPageDocument = async ({
       lang,
     })
     .then(async (page: any) => {
+      const EN_LANG_CODE = 'en-us';
       if (page) {
         if (page.uid !== uid) {
           let url = convertUidToUrl({
@@ -177,13 +178,23 @@ export const getContentPageDocument = async ({
 
       const baseLangUid = getEnglishDocUid(page?.alternate_languages);
       const baseLangData =
-        lang !== 'en-us'
+        lang !== EN_LANG_CODE
           ? await Client(req)
               .getByUID(CUSTOM_TYPES.CONTENT_PAGE, baseLangUid || uid, {
-                lang: 'en-us',
+                lang: EN_LANG_CODE,
               })
               .then((res: any) => res)
           : micrositeData;
+
+      const baseLangMicrositeData =
+        lang !== EN_LANG_CODE
+          ? await Client(req)
+              .getByUID(CUSTOM_TYPES.MICROSITE, micrositeData.uid, {
+                lang: EN_LANG_CODE,
+              })
+              .then((res: any) => res)
+          : micrositeData;
+
       const baseLangRefArray = await getRefsArrayByIds(
         [baseLangData?.data?.content_framework?.id],
         req
@@ -198,7 +209,7 @@ export const getContentPageDocument = async ({
       let categoryTourListV1 = getSinglePrismicSlice({
         sliceName: 'ticket_card_shoulder_page',
         slices:
-          lang !== 'en-us'
+          lang !== EN_LANG_CODE
             ? baseLangContentFramework?.data?.body
             : contentFramework?.data?.body,
       });
@@ -211,7 +222,7 @@ export const getContentPageDocument = async ({
         const { id: productCardsId } = product_cards || {};
         const { data } =
           (await Client(req).getByID(productCardsId, {
-            lang: 'en-us',
+            lang: EN_LANG_CODE,
           })) || {};
         productCardData = data;
         baseLangExperienceLimit = sp_experience_limit;
@@ -229,12 +240,22 @@ export const getContentPageDocument = async ({
           secondaryFooter,
           productCardData,
           noindex:
-            lang !== 'en-us' ? baseLangData.data.noindex : page.data.noindex,
+            lang !== EN_LANG_CODE
+              ? baseLangData.data.noindex
+              : page.data.noindex,
           baseLangExperienceLimit,
           baseLangPageTitle:
-            lang !== 'en-us' ? baseLangData?.data?.title : page.data.title,
+            lang !== EN_LANG_CODE ? baseLangData?.data?.title : page.data.title,
+          baseLangIsPoiMb:
+            lang !== EN_LANG_CODE
+              ? baseLangMicrositeData.data.is_poi_mb
+              : micrositeData.data.is_poi_mb,
+          baseLangBannerAndFooterCombinations:
+            lang !== EN_LANG_CODE
+              ? baseLangMicrositeData.data.banner_and_footer_combinations
+              : micrositeData.data.banner_and_footer_combinations,
           redirect_to_headout_booking_flow:
-            lang !== 'en-us'
+            lang !== EN_LANG_CODE
               ? baseLangData?.data?.redirect_to_headout_booking_flow
               : page.data.redirect_to_headout_booking_flow,
         },
@@ -474,14 +495,6 @@ export const getMicrositeDocument = async ({
                   lang !== 'en-us'
                     ? baseLangData.data.title
                     : completeMicrosite.data.data.title,
-                baseLangShowBannerSubtext:
-                  lang !== 'en-us'
-                    ? baseLangData.data.show_banner_subtext
-                    : completeMicrosite.data.data.show_banner_subtext,
-                baseLangisPartnered:
-                  lang !== 'en-us'
-                    ? baseLangData.data.is_partnered_poi
-                    : completeMicrosite.data.data.is_partnered_poi,
                 baseLangIsPoiMb:
                   lang !== 'en-us'
                     ? baseLangData.data.is_poi_mb

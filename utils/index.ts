@@ -10,12 +10,14 @@ import {
   NON_SUPPORTED_LANGUAGES,
   UNIT_ABBREVIATIONS,
   MB_TYPES,
+  PARTNERED_AND_SENSITIVE_COMBINATIONS,
   SHOW_DATE_SELECTION_PAGE_TGIDS,
 } from 'const/index';
 import { BOOKING_FLOW_STAGE, BOOKING_FLOW_TYPE } from 'const/booking';
 import { getLangObject, withoutTrailingSlash } from 'utils/helper';
 import { fetchCollection, fetchTourGroupsByCategory } from 'utils/apiUtils';
 import { convertUidToUrl, getDomainFromUid } from 'utils/urlUtils';
+import { strings } from 'const/strings';
 
 export const shouldDisplayCollectionRatings = (
   collectionDetails: CollectionDetailsTypes | undefined
@@ -524,3 +526,37 @@ export const isCollectionMB = (mbType: string) =>
   mbType === MB_TYPES.A1_COLLECTION ||
   mbType === MB_TYPES.B1_GLOBAL ||
   mbType === MB_TYPES.C1_COLLECTION;
+
+export const isPartneredMB = (baseLangBannerAndFooterCombinations: string) => {
+  return (
+    baseLangBannerAndFooterCombinations ===
+      PARTNERED_AND_SENSITIVE_COMBINATIONS.PARTNERED_AND_SENSITIVE ||
+    baseLangBannerAndFooterCombinations ===
+      PARTNERED_AND_SENSITIVE_COMBINATIONS.PARTNERED_AND_NON_SENSITIVE
+  );
+};
+
+export const getBannerAndFooterSubtext = (
+  baseLangIsPoiMb: boolean | null,
+  baseLangBannerAndFooterCombinations: string
+) => {
+  if (baseLangIsPoiMb) {
+    switch (baseLangBannerAndFooterCombinations) {
+      case PARTNERED_AND_SENSITIVE_COMBINATIONS.PARTNERED_AND_SENSITIVE:
+        return strings.BANNER_FOOTER_SUBTEXT.PARTNERED_SENSITIVE;
+
+      case PARTNERED_AND_SENSITIVE_COMBINATIONS.PARTNERED_AND_NON_SENSITIVE:
+        return strings.BANNER_FOOTER_SUBTEXT.PARTNERED_NON_SENSITIVE;
+
+      case PARTNERED_AND_SENSITIVE_COMBINATIONS.NON_PARTNERED_AND_SENSITIVE:
+        return strings.BANNER_FOOTER_SUBTEXT.NON_PARTNERED_SENSITIVE;
+
+      case PARTNERED_AND_SENSITIVE_COMBINATIONS.NON_PARTNERED_AND_NON_SENSITIVE:
+        return strings.BANNER_FOOTER_SUBTEXT.NON_PARTNERED_NON_SENSITIVE;
+    }
+  } else if (baseLangIsPoiMb === null) {
+    return strings.BANNER_FOOTER_SUBTEXT.PARTNERED_SENSITIVE;
+  } else {
+    return '';
+  }
+};

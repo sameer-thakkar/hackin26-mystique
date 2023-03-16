@@ -348,18 +348,13 @@ export const getBannerSubtext = ({
   type,
   data,
 }: PrismicDocumentType): string => {
-  const {
-    banner_subtext,
-    banner_sub_text,
-    show_banner_subtext,
-    is_partnered_poi,
-  } = data || {};
+  const { banner_subtext, banner_sub_text, is_partnered_poi } = data || {};
   switch (type) {
     case CUSTOM_TYPES.MICROSITE:
       if (banner_subtext) return banner_subtext;
-      else if (show_banner_subtext && is_partnered_poi)
+      else if (is_partnered_poi)
         return DEFAULT_LOOKER_VALUES.BANNER_SUBTEXT.PARTNERED;
-      else if (show_banner_subtext && !is_partnered_poi)
+      else if (!is_partnered_poi)
         return DEFAULT_LOOKER_VALUES.BANNER_SUBTEXT.NON_PARTNERED;
       else return '';
     case CUSTOM_TYPES.GLOBAL_HOMEPAGE || CUSTOM_TYPES.GLOBAL_EXPERIENCE:

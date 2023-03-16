@@ -30,6 +30,7 @@ import { metaAtom } from 'store/atoms/meta';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { gtmAtom } from 'store/atoms/gtm';
 import { expandFontToken } from 'const/typography';
+import { getBannerAndFooterSubtext, isCollectionMB } from 'utils';
 
 const Alert = dynamic(
   () => import(/* webpackChunkName: "Alert" */ 'UI/Alert'),
@@ -142,6 +143,9 @@ export const HomePage = (props: any) => {
     displayMonths,
     isDev,
     domainConfig,
+    baseLangIsPoiMb,
+    baseLangBannerAndFooterCombinations,
+    mbType,
   } = props;
 
   const pageMetaData = useRecoilValue(metaAtom);
@@ -149,6 +153,12 @@ export const HomePage = (props: any) => {
 
   let { categoryProps } = props;
   const isDiscountedPage = displayMonths === 'Discounted';
+  const bannerAndFooterSubtext = getBannerAndFooterSubtext(
+    baseLangIsPoiMb,
+    baseLangBannerAndFooterCombinations
+  );
+
+  const isCollectionMicrobrand = isCollectionMB(mbType);
 
   if (isListicle || isDiscountedPage) {
     let singleCategory = [];
@@ -375,7 +385,11 @@ export const HomePage = (props: any) => {
         logoURL={logoUrl}
         logoAlt={whiteLabelName || ''}
         hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
-        disclaimerText={footer.disclaimer_text}
+        disclaimerText={
+          isCollectionMicrobrand
+            ? bannerAndFooterSubtext
+            : footer.disclaimer_text
+        }
         slices={footer.body || []}
         themeOverride={themeOverride}
         secondarySlices={secondaryFooter?.data?.body}
