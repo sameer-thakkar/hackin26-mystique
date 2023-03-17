@@ -19,6 +19,10 @@ ImageSitemapXml.getInitialProps = async ({
   localizedStrings,
 }: SitemapContext) => {
   let uid: string;
+
+  // eslint-disable-next-line no-console
+  console.log('uid', req?.headers?.host);
+
   if (query.mystique_uid) {
     uid = query.mystique_uid as string;
   } else {
@@ -46,11 +50,22 @@ ImageSitemapXml.getInitialProps = async ({
         localizedStrings,
       })
     );
-    const pageType = payload.ContentType + (payload.MBDesign || '');
+
+    // eslint-disable-next-line no-console
+    console.log('payload', payload);
+
+    const pageType = payload?.ContentType + (payload?.MBDesign || '');
 
     if (pageType === CUSTOM_TYPES.GLOBAL_HOMEPAGE) {
       const bannerImages = payload?.CMSContent?.data?.banner_images;
-      bannerImages.forEach((item: { image_url: { url: string } }) => {
+
+      // eslint-disable-next-line no-console
+      console.log(
+        'payload?.CMSContent?.data?.banner_images',
+        payload?.CMSContent?.data?.banner_images
+      );
+
+      bannerImages?.forEach((item: { image_url: { url: string } }) => {
         finalImages.push(item.image_url.url);
       });
 
@@ -63,6 +78,9 @@ ImageSitemapXml.getInitialProps = async ({
           (destination: { data: { city_name: string; body: Array<any> } }) =>
             destination?.data?.city_name && destination?.data?.body?.length
         );
+
+        // eslint-disable-next-line no-console
+        console.log('finalCities', finalCities);
 
         finalCities?.forEach((city: { data: { body: any } }) => {
           const { data } = city || {};
@@ -77,6 +95,9 @@ ImageSitemapXml.getInitialProps = async ({
         });
       }
     }
+
+    // eslint-disable-next-line no-console
+    console.log('finalImages', finalImages);
 
     sitemap = `<?xml version="1.0" encoding="UTF-8"?>
                <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
