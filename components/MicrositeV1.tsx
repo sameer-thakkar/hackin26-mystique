@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { scroller } from 'react-scroll';
 import { useWindowWidth } from '@react-hook/window-size';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { currencyAtom } from 'store/atoms/currency';
 import { gtmAtom } from 'store/atoms/gtm';
 import { InteractionContextProvider } from 'contexts/Interaction';
@@ -35,11 +35,6 @@ import {
 import { strings } from 'const/strings';
 import renderShortCodes from 'utils/shortCodes';
 import { getLogoRedirectionUrl, convertUidToUrl } from 'utils/urlUtils';
-import { getABTestingVariant } from 'utils/experiments/experimentUtils';
-import { hsidAtom } from 'store/atoms/hsid';
-import { videoExperimentAtom } from 'store/atoms/videoExperiment';
-import { EXPERIMENT_NAMES } from 'const/experiments';
-import { VIDEO_EXPERIMENT_UIDS } from 'const/index';
 
 const LongForm = dynamic(() => import('components/common/LongForm'));
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
@@ -85,14 +80,11 @@ const MicrositeV1 = (props: any) => {
   const [isMobile, setIsMobile] = useState(props?.isMobile);
   const windowWidth = useWindowWidth();
 
-  const hsid = useRecoilValue(hsidAtom);
   const currency = useRecoilValue(currencyAtom);
   const { eventsReady } = useRecoilValue(gtmAtom);
-  const setVideoExperimentValue = useSetRecoilState(videoExperimentAtom);
   const [freeTourPopupOpen, toggleFreeTourPopup] = useState(false);
   const [covidAlertActive, toggleCovidAlert] = useState(false);
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
-  const [isExperimentTriggered, setIsExperimentTriggered] = useState(false);
 
   const {
     refs,
@@ -378,23 +370,7 @@ const MicrositeV1 = (props: any) => {
   }, []);
 
   useEffect(() => {
-    if (!hsid || !eventsReady || isExperimentTriggered) return;
-
-    const isVideoExperimentUid = VIDEO_EXPERIMENT_UIDS.includes(uid);
-    if (isVideoExperimentUid) {
-      const variant = getABTestingVariant(
-        EXPERIMENT_NAMES.MEDIAUPGRADE_VIDEO_EXPERIMENT,
-        hsid
-      );
-      setVideoExperimentValue({
-        variant,
-      });
-      setIsExperimentTriggered(true);
-    }
-  }, [hsid, eventsReady, isExperimentTriggered]);
-
-  useEffect(() => {
-    if (!eventsReady || !hsid) return;
+    if (!eventsReady) return;
     const renderedBaseLangPageTitle = renderShortCodes(
       baseLangPageTitle
     )?.join?.('');
@@ -406,7 +382,7 @@ const MicrositeV1 = (props: any) => {
       [ANALYTICS_PROPERTIES.TGIDS]: orderedTgids,
       [ANALYTICS_PROPERTIES.PAGE_TITLE]: renderedBaseLangPageTitle,
     });
-  }, [eventsReady, hsid]);
+  }, [eventsReady]);
 
   const onTogglePopup = () => {
     toggleFreeTourPopup(!freeTourPopupOpen);

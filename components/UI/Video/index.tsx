@@ -11,13 +11,7 @@ import {
   VideoContainer,
 } from 'components/UI/Video/styles';
 import { PlaySvg } from 'assets/SvgIcons';
-import { videoExperimentAtom } from 'store/atoms/videoExperiment';
-import {
-  ANALYTICS_EVENTS,
-  ANALYTICS_PROPERTIES,
-  VIDEO_EXPERIMENT_UIDS,
-} from 'const/index';
-import { VARIANTS } from 'const/experiments';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 
 interface VideoTypeProps {
   url: string;
@@ -55,8 +49,7 @@ const Video: React.FC<VideoTypeProps> = ({
   const videoRef = useRef(null);
   const { isDuplicate: isDuplicateSlide } = useSwiperSlide() ?? {};
 
-  const { isPageLoaded, uid } = useRecoilValue(appAtom);
-  const { variant } = useRecoilValue(videoExperimentAtom);
+  const { isPageLoaded } = useRecoilValue(appAtom);
   const [hasVideoLoaded, setHasVideoLoaded] = useState(false);
   const [isAutoplayDisabled, setIsAutoplayDisabled] = useState(false);
   const [isVideoPaused, setIsVideoPaused] = useState(true);
@@ -101,9 +94,6 @@ const Video: React.FC<VideoTypeProps> = ({
   };
 
   useEffect(() => {
-    const isExperimentUid = VIDEO_EXPERIMENT_UIDS.includes(uid);
-    if (isExperimentUid && variant !== VARIANTS.SHOW_VIDEO) return;
-
     /* Later we can club with this intersection observer as well */
     if (isPageLoaded && !hasVideoLoaded) {
       /* to calculate the time between page loaded and video autoplay */
@@ -122,7 +112,7 @@ const Video: React.FC<VideoTypeProps> = ({
       lazyVideo.load();
       setHasVideoLoaded(true);
     }
-  }, [hasVideoLoaded, isDuplicateSlide, isPageLoaded, uid, variant]);
+  }, [hasVideoLoaded, isDuplicateSlide, isPageLoaded]);
 
   useEffect(() => {
     // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'HTMLVideoEl... Remove this comment to see the full error message

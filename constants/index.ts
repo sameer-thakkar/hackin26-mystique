@@ -982,20 +982,4 @@ export const PARTNERED_AND_SENSITIVE_COMBINATIONS = {
   NON_PARTNERED_AND_NON_SENSITIVE: 'Non-Partnered and Non-Sensitive',
 };
 
-export const VIDEO_EXPERIMENT_UIDS = [
-  'www.versailles-palace-tickets.com',
-  'www.acropolis-tickets.com',
-  'www.dubai-tickets.co.museum-of-future',
-  'www.dubai-tickets.co.museo-del-futuro',
-  'www.dubai-tickets.co.musee-du-futur',
-  'www.dubai-tickets.co.museu-do-futuro-dubai',
-  'www.singapore-tickets.com.gardens-by-the-bay-tickets',
-  'www.visitdubaiframe.com',
-  'www.budapest-baths.com',
-  'www.penapalacetickets.com',
-  'www.dubai-tickets.co.burj-khalifa',
-  'burj-khalifa.dubai-tickets.co',
-  'www.palmtowertickets.com',
-];
-
 export const SHOW_DATE_SELECTION_PAGE_TGIDS = [17637];
