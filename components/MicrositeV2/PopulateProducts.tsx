@@ -91,7 +91,9 @@ const PopulateProducts = (props: any) => {
     useContext(InteractionContext) || {};
   const mbContext = useContext(MBContext);
   const { lang } = mbContext;
-  const { query, asPath, push: routerPush, pathname } = useRouter();
+  const { query, asPath, push: routerPush } = useRouter();
+  const slug = asPath.split('?')[0];
+
   const {
     limit = String((rowsToShow || 8) * NO_OF_CARDS_IN_ROW.DESKTOP),
     offset = '0',
@@ -174,7 +176,7 @@ const PopulateProducts = (props: any) => {
         (isMobile ? NO_OF_ROWS_TO_SHOW.MOBILE : NO_OF_ROWS_TO_SHOW.DESKTOP)
     );
     // @ts-expect-error TS(2345): Argument of type 'null' is not assignable to param... Remove this comment to see the full error message
-    routerPush(`${pathname}?${getUpdatedQuery()?.toString()}`, null, {
+    routerPush(`${slug}?${getUpdatedQuery()?.toString()}`, null, {
       shallow: true,
     });
 
@@ -207,7 +209,7 @@ const PopulateProducts = (props: any) => {
 
   const tgidsSubArr = subArrays(finalTgidListToShow, Number(offset));
   const getViewMoreLink = () => {
-    return `${pathname}?${getUpdatedQuery().toString()}`;
+    return `${slug}?${getUpdatedQuery().toString()}`;
   };
 
   return (
