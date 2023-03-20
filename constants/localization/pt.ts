@@ -291,7 +291,7 @@ const pt = {
     THE_STORY: 'A história',
     SHOW_DETAILS: 'Detalhes do espetáculo',
     CAST_AND_CREW: 'Elenco e equipe',
-    TOP_SONGS: 'Elenco e equipe',
+    TOP_SONGS: 'Principais canções',
     AGE_SUITABILITY: 'Faixa etária',
     TICKETS: 'Ingressos',
     TICKETS_REDEMPTION: 'Retirada de ingressos',
