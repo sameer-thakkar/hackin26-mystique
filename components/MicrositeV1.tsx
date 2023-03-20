@@ -36,6 +36,8 @@ import { strings } from 'const/strings';
 import renderShortCodes from 'utils/shortCodes';
 import { getLogoRedirectionUrl, convertUidToUrl } from 'utils/urlUtils';
 
+import SpringTheaterFestBanner from './SpringTheaterFestBanner';
+
 const LongForm = dynamic(() => import('components/common/LongForm'));
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
@@ -339,6 +341,7 @@ const MicrositeV1 = (props: any) => {
   const finalHeaderLinks =
     headerLinks && !isHeaderInherited ? headerLinks : null;
   const isCollectionMicrobrand = isCollectionMB(mbType);
+  const isSpringBannerVisible = uid === 'www.london-tickets.co.uk';
 
   useEffect(() => {
     setIsMobile(windowWidth < 768);
@@ -525,6 +528,9 @@ const MicrositeV1 = (props: any) => {
             hideCTA={isToursAvailable ? hideBannerCTA : true}
             orderedTgids={orderedTgids}
           />
+          <Conditional if={isSpringBannerVisible}>
+            <SpringTheaterFestBanner />
+          </Conditional>
         </Conditional>
         <Conditional if={mbTheme !== THEMES.MIN_BLUE && isCollectionMicrobrand}>
           <StaticBanner
