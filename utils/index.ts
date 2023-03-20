@@ -76,7 +76,11 @@ export const getPrismicProps = ({
     requestedLang = 'en';
   }
 
-  const uid = `${withoutTrailingSlash(`${host}/${pathnameSlugs.join('/')}`)}`
+  const uid = `${
+    pathname?.includes('image-sitemap')
+      ? host
+      : withoutTrailingSlash(`${host}/${pathnameSlugs.join('/')}`)
+  }`
     .replace('stage-', '')
     .replace(/\//g, '.');
 
