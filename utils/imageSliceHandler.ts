@@ -1,0 +1,299 @@
+import { FALLBACK_IMAGE, SLICE_TYPES } from 'const/index';
+import { getCollectionSection } from 'utils';
+
+import { getHeadoutApiUrl, HeadoutEndpoints } from './apiUtils';
+import { tourListApiParser } from './dataParsers';
+import { getHostName, getLangObject } from './helper';
+
+export interface UrlProps {
+  url?: string;
+  imageURL?: string;
+}
+
+export interface ReviewerImageProps {
+  reviewer_image_url?: UrlProps;
+  reviewer_image?: UrlProps;
+}
+
+export interface InstaImageProps {
+  instagram_posts?: UrlProps;
+}
+
+export interface CarouselGalleryImageProps {
+  linked_image?: UrlProps;
+}
+
+export interface ImageGalleryProps extends CarouselGalleryImageProps {
+  uploaded_image?: UrlProps;
+}
+
+export interface InternalContentImageCardProps {
+  image_link?: UrlProps;
+  image_source?: UrlProps;
+}
+
+export interface CardImageProps extends InternalContentImageCardProps {
+  image_url?: UrlProps;
+}
+
+export interface TrustBoosterImageProps {
+  icon_url?: UrlProps;
+  uploaded_icon?: UrlProps;
+}
+
+export interface QuestionImageProps {
+  linked_image?: string;
+  upload_image?: UrlProps;
+}
+export interface ImageProps
+  extends ReviewerImageProps,
+    InstaImageProps,
+    ImageGalleryProps,
+    TrustBoosterImageProps,
+    InternalContentImageCardProps,
+    CardImageProps {}
+
+export const storeImage = ({
+  sliceImages,
+  firstImage,
+  secondImage,
+  thirdImage,
+}: {
+  sliceImages: string[];
+  firstImage?: string;
+  secondImage?: string;
+  thirdImage?: any;
+}) => {
+  let imgUrlObj;
+  try {
+    if (firstImage) {
+      imgUrlObj = new URL(firstImage);
+    } else if (secondImage) {
+      imgUrlObj = new URL(secondImage);
+    }
+    if (imgUrlObj?.hostname) {
+      imgUrlObj.search = '';
+      imgUrlObj.hash = '';
+      const imgUrlWithoutQueryParams = imgUrlObj.toString();
+      sliceImages.push(imgUrlWithoutQueryParams);
+    } else {
+      sliceImages.push(firstImage || secondImage || thirdImage);
+    }
+  } catch (e) {
+    /* tslint:disable:no-empty */
+  }
+};
+
+const fetchData = async (endpoint: any) => {
+  const response = await fetch(endpoint);
+  const data = await response.json();
+  return data;
+};
+
+const sliceHandler = async (
+  slice: any,
+  lang: string | null,
+  isDev: boolean,
+  sliceImages: string[],
+  host?: string,
+  isStage?: boolean
+) => {
+  if (slice?.primary?.hide_slice) return;
+  switch (slice.slice_type) {
+    case SLICE_TYPES.INTERNAL_CONTENT_CARD: {
+      const items = slice?.items;
+      items?.forEach((image: ImageProps) =>
+        storeImage({
+          sliceImages,
+          firstImage: image?.image_link?.url,
+          secondImage: image?.image_source?.url,
+        })
+      );
+      break;
+    }
+
+    case SLICE_TYPES.MICROBRAND_CARDS:
+    case SLICE_TYPES.FEATURE_BOX:
+    case SLICE_TYPES.CARD_CAROUSEL:
+    case SLICE_TYPES.CARD:
+      {
+        const items = slice?.items;
+        items?.forEach((item: ImageProps) =>
+          storeImage({
+            sliceImages,
+            firstImage: item?.image_url?.url,
+            secondImage: item?.image_source?.url,
+            thirdImage: slice.slice_type === SLICE_TYPES.CARD && FALLBACK_IMAGE,
+          })
+        );
+      }
+      break;
+
+    case SLICE_TYPES.TRUST_BOOSTERS: {
+      const items = slice?.items;
+      items?.forEach((item: ImageProps) =>
+        storeImage({
+          sliceImages,
+          firstImage: item?.icon_url?.url,
+          secondImage: item?.uploaded_icon?.url,
+        })
+      );
+      break;
+    }
+
+    case SLICE_TYPES.IMAGE_GALLERY:
+    case SLICE_TYPES.IMAGE_LINKS_CAROUSEL: {
+      const items = slice?.items;
+      items?.forEach((image: ImageProps) =>
+        storeImage({
+          sliceImages,
+          firstImage:
+            slice.slice_type === SLICE_TYPES.IMAGE_LINKS_CAROUSEL
+              ? image?.uploaded_image?.url
+              : image?.linked_image?.url,
+          secondImage:
+            slice.slice_type === SLICE_TYPES.IMAGE_LINKS_CAROUSEL
+              ? image?.linked_image?.url
+              : image?.uploaded_image?.url,
+        })
+      );
+      break;
+    }
+
+    case SLICE_TYPES.CARD_SECTION:
+    case SLICE_TYPES.TAB:
+    case SLICE_TYPES.BACKGROUND:
+    case SLICE_TYPES.TAB_WRAPPER: {
+      const slices = slice?.slices;
+      slices?.forEach((slice: any) =>
+        sliceHandler(slice, lang, isDev, sliceImages, host, isStage)
+      );
+      break;
+    }
+
+    case SLICE_TYPES.QUESTION: {
+      const faqs = slice?.items;
+      faqs?.forEach((faqSlice: any) =>
+        faqSlice?.items?.forEach((image: QuestionImageProps) =>
+          storeImage({
+            sliceImages,
+            firstImage: image?.linked_image,
+            secondImage: image?.upload_image?.url,
+          })
+        )
+      );
+      break;
+    }
+
+    case SLICE_TYPES.UGC_CAROUSEL:
+    case SLICE_TYPES.CAROUSEL_GALLERY: {
+      const items = slice?.items;
+      items?.forEach((image: ImageProps) =>
+        storeImage({
+          sliceImages,
+          firstImage:
+            slice.slice_type === SLICE_TYPES.UGC_CAROUSEL
+              ? image?.instagram_posts?.imageURL
+              : image?.linked_image?.url,
+        })
+      );
+      break;
+    }
+
+    case SLICE_TYPES.AUTOMATED_COMPARISION_TABLE: {
+      const params = {
+        language: getLangObject(lang as string).code,
+        'include-unavailable': 'true',
+      };
+      const endpoint = HeadoutEndpoints.CollectionSections;
+      const id = slice?.primary?.collection_id;
+      const hostname = isDev && !isStage ? `http://${host}` : `https://${host}`;
+
+      const collectionEndpoint = getHeadoutApiUrl({
+        endpoint,
+        hostname,
+        params,
+        id,
+      });
+
+      try {
+        const collectionData = await fetchData(collectionEndpoint);
+        const headoutPicks = collectionData
+          ? getCollectionSection(collectionData, 'HEADOUT_PICKS')
+          : [];
+        const tourGroups =
+          collectionData &&
+          headoutPicks?.filter(
+            (item: any) => item?.language?.toLowerCase() === lang
+          );
+
+        tourGroups?.forEach((tour: { imageUrl?: string }) =>
+          sliceImages.push(tour?.imageUrl as string)
+        );
+      } catch (e) {
+        /* tslint:disable:no-empty */
+      }
+
+      break;
+    }
+
+    case SLICE_TYPES.CUSTOM_LINKED_TOURS: {
+      const tgids: any = [];
+      slice?.items?.reduce((acc: any, tour: any) => {
+        tgids.push(tour.tgid);
+        return {
+          ...acc,
+          [tour.tgid]: { tgid: tour.tgid, ...tour.link_override },
+        };
+      }, {});
+
+      const hostname = getHostName(isStage as boolean, isDev, host as string);
+      const params = {
+        'ids[]': tgids,
+        ...(lang && {
+          language: lang,
+        }),
+      };
+      const tourListEndpoint = getHeadoutApiUrl({
+        endpoint: HeadoutEndpoints.TourGroupsV6,
+        hostname,
+        params,
+        // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
+        id: null,
+      });
+
+      try {
+        const tourListData = await fetchData(tourListEndpoint);
+        const apiTours = tourListData
+          ? tourListApiParser(tourListData, lang as string)
+          : {};
+        if (apiTours && tgids?.length > 0) {
+          tgids?.forEach((item: any) => {
+            sliceImages.push(apiTours[item]?.image);
+          });
+        }
+      } catch (e) {
+        /* tslint:disable:no-empty */
+      }
+      break;
+    }
+
+    case SLICE_TYPES.REVIEWS: {
+      const reviews = slice?.items;
+      reviews?.forEach((image: ImageProps, index: number) => {
+        const n = (index % 202) + 1;
+        storeImage({
+          sliceImages,
+          firstImage: image?.reviewer_image_url?.url,
+          secondImage: image?.reviewer_image?.url,
+          thirdImage: `https://cdn-s3-open.headout.com/reviews/${n}.jpg`,
+        });
+      });
+      break;
+    }
+
+    default:
+  }
+};
+
+export default sliceHandler;
