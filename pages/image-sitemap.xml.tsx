@@ -1,5 +1,4 @@
 import { CUSTOM_TYPES, FALLBACK_IMAGES } from 'constants/index';
-import { LOG_LEVELS } from 'constants/logs';
 
 import { NextPageContext } from 'next';
 import { getPageData } from 'utils/prismicUtils';
@@ -21,8 +20,6 @@ ImageSitemapXml.getInitialProps = async ({
   localizedStrings,
 }: SitemapContext) => {
   let uid: string;
-
-  sendLog({ level: LOG_LEVELS.INFO, message: req?.headers?.host });
 
   if (query.mystique_uid) {
     uid = query.mystique_uid as string;
@@ -52,17 +49,10 @@ ImageSitemapXml.getInitialProps = async ({
       })
     );
 
-    sendLog({ level: LOG_LEVELS.INFO, message: JSON.stringify(payload) });
-
     const pageType = payload?.ContentType + (payload?.MBDesign || '');
 
     if (pageType === CUSTOM_TYPES.GLOBAL_HOMEPAGE) {
       const bannerImages = payload?.CMSContent?.data?.banner_images;
-
-      sendLog({
-        level: LOG_LEVELS.INFO,
-        message: payload?.CMSContent?.data?.banner_images,
-      });
 
       bannerImages?.forEach((item: { image_url: { url: string } }) => {
         finalImages.push(item.image_url.url);
@@ -78,11 +68,6 @@ ImageSitemapXml.getInitialProps = async ({
             destination?.data?.city_name && destination?.data?.body?.length
         );
 
-        sendLog({
-          level: LOG_LEVELS.INFO,
-          message: JSON.stringify(finalCities),
-        });
-
         payload?.CMSContent?.data?.banner_images;
         finalCities?.forEach((city: { data: { body: any } }) => {
           const { data } = city || {};
@@ -97,8 +82,6 @@ ImageSitemapXml.getInitialProps = async ({
         });
       }
     }
-
-    sendLog({ level: LOG_LEVELS.INFO, message: JSON.stringify(finalImages) });
 
     sitemap = `<?xml version="1.0" encoding="UTF-8"?>
                <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">

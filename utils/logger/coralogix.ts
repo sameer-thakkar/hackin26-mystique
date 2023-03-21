@@ -14,7 +14,7 @@ export const getCoralogixSeverity = (level: String) => {
       logSeverity = Severity.error;
       break;
     default:
-      logSeverity = Severity.info;
+      logSeverity = Severity.warning;
   }
   return logSeverity;
 };
