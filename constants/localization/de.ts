@@ -52,12 +52,25 @@ const de = {
   TODAY: 'heute',
   TOMORROW: 'morgen',
   TICKETS: 'Tickets',
-  REOPENING_ON: 'Reopening on',
-  OPENING_ON: 'Opening on',
   REOPENS: 'Endlich wieder ab',
   OPENS: 'Ab',
   NEW: 'NEW',
   SEE_ALL: 'See All',
+  REOPENING_ON: 'Neueröffnung am',
+  OPENING_ON: 'Eröffnung am',
+  SORT_BY: 'Sortieren nach',
+  FEATURE_CARD: {
+    HEADING_CUSTOMER: 'Über 10 Millionen',
+    SUB_HEADING_CUSTOMER: 'zufriedene Kunden bei mehr als 10.000 Erlebnissen',
+    HEADING_RATING: '4,4/5',
+    SUB_HEADING_RATING:
+      'Über 5.000 geprüfte Rezensionen mit 90 % ausgezeichneten Bewertungen',
+    HEADING_SAFE: '100 % sicher',
+    SUB_HEADING_SAFE: 'Alle Outdoor-Aktivitäten sind 100 % sicher',
+    HEADING_SUPPORT: '24-Stunden Support',
+    SUB_HEADING_SUPPORT:
+      'Haben Sie Fragen? Nutzen Sie unseren Live-Chat, jederzeit und überall',
+  },
   UGC: {
     FOLLOW: 'Folgen',
     FOLLOW_IG: 'Auf Instagram folgen',

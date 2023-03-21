@@ -56,6 +56,7 @@ const en = {
   TICKETS: 'Tickets',
   REOPENING: 'Reopening',
   REOPENING_ON: 'Reopening on',
+  SORT_BY: 'Sort by',
   OPENING_ON: 'Opening on',
   REOPENS: 'Reopens',
   OPENS: 'Opens',

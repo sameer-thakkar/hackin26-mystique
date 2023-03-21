@@ -53,8 +53,21 @@ const it = {
   TODAY: 'oggi',
   TOMORROW: 'domani',
   TICKETS: 'Biglietti',
-  REOPENING_ON: 'Reopening on',
-  OPENING_ON: 'Opening on',
+  REOPENING_ON: 'Riapertura',
+  OPENING_ON: 'Apertura',
+  SORT_BY: 'Ordina per',
+  FEATURE_CARD: {
+    HEADING_CUSTOMER: 'Oltre 10 milioni',
+    SUB_HEADING_CUSTOMER: 'Clienti soddisfatti, più di 10.000 esperienze',
+    HEADING_RATING: '4,4/5',
+    SUB_HEADING_RATING:
+      'Oltre 5.000 recensioni verificate, con un giudizio Eccellente nel 90%',
+    HEADING_SAFE: '100% sicuro',
+    SUB_HEADING_SAFE: "Tutte le attività all'esterno sono completamente sicure",
+    HEADING_SUPPORT: 'Assistenza 24/7',
+    SUB_HEADING_SUPPORT:
+      'Hai domande? Chatta dal vivo con i nostri esperti, quando vuoi, da dove vuoi',
+  },
   REOPENS: 'Riapre',
   OPENS: 'Apre',
   NEW: 'NEW',

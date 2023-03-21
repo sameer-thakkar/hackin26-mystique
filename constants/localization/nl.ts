@@ -53,8 +53,21 @@ const nl = {
   TOMORROW: 'Morgen',
   OFF: 'Off',
   TICKETS: 'Kaartjes',
-  REOPENING_ON: 'Reopening on',
-  OPENING_ON: 'Opening on',
+  REOPENING_ON: 'Terugkeer op',
+  OPENING_ON: 'Première op',
+  SORT_BY: 'Sorteer',
+  FEATURE_CARD: {
+    HEADING_CUSTOMER: '10 miljoen +',
+    SUB_HEADING_CUSTOMER: 'Meer dan 10.000 tevreden bezoekers',
+    HEADING_RATING: '4.4/5',
+    SUB_HEADING_RATING:
+      'Meer dan 5000 geverifieerde beoordelingen met een uitstekende score van 90%.',
+    HEADING_SAFE: '100% Veilig',
+    SUB_HEADING_SAFE: 'Alle buitenactiviteiten zijn 100% veilig',
+    HEADING_SUPPORT: '24/7 Ondersteuning',
+    SUB_HEADING_SUPPORT:
+      'Heb je vragen? Chat altijd en overal live met lokale experts',
+  },
   REOPENS: 'Heropent',
   OPENS: 'Opent',
   NEW: 'NEW',

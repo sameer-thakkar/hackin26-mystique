@@ -5,6 +5,7 @@ import Conditional from 'components/common/Conditional';
 import { CHEVRON_DOWN, PURPS_TICK_MARK } from 'assets/SvgIcons';
 import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
+import { strings } from 'const/strings';
 
 const StyledSortSelector = styled.div<{ isEntertainmentMb: boolean }>`
   margin: 0;
@@ -118,7 +119,7 @@ export const SortSelector = (props: any) => {
         tabIndex={0}
       >
         <span>
-          Sort by:{' '}
+          {strings.SORT_BY}:
           <span className="current-filter">{filters[activeFilter].name}</span>
         </span>
         <Conditional if={!isEntertainmentMb}>

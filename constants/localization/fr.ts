@@ -51,8 +51,22 @@ const fr = {
   TODAY: "aujourd'hui",
   TOMORROW: 'demain',
   TICKETS: 'Billets',
-  REOPENING_ON: 'Reopening on',
-  OPENING_ON: 'Opening on',
+  REOPENING_ON: 'Réouverture le',
+  OPENING_ON: 'Ouverture le',
+  SORT_BY: 'Trier par',
+  FEATURE_CARD: {
+    HEADING_CUSTOMER: '+ de 10 millions',
+    SUB_HEADING_CUSTOMER:
+      'de client·es satisfait·es à travers + de 10 000 expériences',
+    HEADING_RATING: '4,4/5',
+    SUB_HEADING_RATING:
+      '+ de 5 000 avis vérifiés avec 90 % de notes excellentes',
+    HEADING_SAFE: '100 % sûr',
+    SUB_HEADING_SAFE: 'Toutes les activités de plein air sont sûres à 100 %',
+    HEADING_SUPPORT: "Centre d'aide 24/7",
+    SUB_HEADING_SUPPORT:
+      'Une question ? Discutez en ligne avec des experts locaux, partout et à tout moment',
+  },
   REOPENS: 'Réouvre',
   OPENS: 'Ouvre',
   NEW: 'NEW',
