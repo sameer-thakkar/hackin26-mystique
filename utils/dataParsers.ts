@@ -21,7 +21,6 @@ import {
   getSingleAriesTag,
   standardizeCancellationPolicy,
 } from 'utils/productUtils';
-import { appendInclusionExclusion } from 'utils/inclusionExclusionUtils';
 import { CURRENCY_SYMBOL_MAP, DESIGN } from 'const/index';
 import { sendLog } from 'utils/logger';
 
@@ -327,8 +326,6 @@ export const categoryTourListParserV1 = async ({
         ticketValidity,
         flowType,
         allVariantOpenDated,
-        inclusionsRichText,
-        exclusionsRichText,
       } = tour ?? {};
       const { productImages, safetyImages } = media || {};
       const updatedDescriptors = generateDescriptor({
@@ -354,12 +351,6 @@ export const categoryTourListParserV1 = async ({
         ticketValidity,
         lang: getHeadoutLanguagecode(lang),
         localizedStrings,
-      });
-
-      microBrandsHighlight = appendInclusionExclusion({
-        highlightArr: microBrandsHighlight,
-        inclusions: inclusionsRichText,
-        exclusions: exclusionsRichText,
       });
 
       const { variants } =

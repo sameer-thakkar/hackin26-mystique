@@ -9,7 +9,6 @@ import {
 import {
   CANCELLATION_POLICY_POSSIBLE_LABELS,
   DESCRIPTORS,
-  HIGHLIGHT_TEXT,
   HIGHLIGHT_TYPES,
   THEMES,
   VALIDITY_TYPES,
@@ -599,9 +598,4 @@ export const parseDescriptors = (descriptorArr: Record<string, any>[] = []) => {
     strings.DESCRIPTORS.MOBILE_TICKET,
   ];
   return descriptorArr.filter(({ name }) => allowedDescriptors.includes(name));
-};
-
-export const isMainHighlightExist = (highlights: Array<Highlight> = []) => {
-  const firstElement = highlights[0];
-  return firstElement.text === HIGHLIGHT_TEXT.HIGHLIGHTS;
 };

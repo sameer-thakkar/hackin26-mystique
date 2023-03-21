@@ -56,7 +56,6 @@
     "stylis-plugin-rtl": "^1",
     "swiper": "8.4.4",
     "swr": "^1.0.1",
-    "turndown": "^7.1.1",
     "url-parse": "^1.4.7",
     "xmlbuilder": "^15.0.0"
   },
@@ -81,7 +80,6 @@
     "@types/react-dom": "^18.0.0",
     "@types/react-scroll": "^1.5.4",
     "@types/styled-components": "^5.1.26",
-    "@types/turndown": "^5.0.1",
     "@types/url-parse": "^1.4.8",
     "@typescript-eslint/eslint-plugin": "^3.3.0",
     "@typescript-eslint/parser": "^3.4.0",

@@ -2,21 +2,8 @@
 import Cookies from 'cookies';
 import { COOKIE } from 'const/index';
 import { checkIfCurrencyCodeValid } from 'utils/currency';
-import TurndownService from 'turndown';
 
 const markdownToRichtext = require('@ueno/markdown-to-prismic-richtext');
-const turndownService = new TurndownService();
-
-const getRichTextFromHtmlContent = (properties: string) => {
-  if (!properties) return '';
-
-  const markedProperties = turndownService.turndown(properties);
-  return markdownToRichtext(markedProperties)?.map((inclusion: Highlight) => ({
-    ...inclusion,
-    ...inclusion.content,
-  }));
-};
-
 const ToursAPI = async (req: any, res: any) => {
   const { useTest } = req?.query;
   const cookies = new Cookies(req, res);
@@ -64,10 +51,8 @@ const ToursAPI = async (req: any, res: any) => {
             tour.microBrandsHighlight || ''
           )?.map((highlight: any) => ({
             ...highlight,
-            ...highlight.content,
-          })),
-          inclusionsRichText: getRichTextFromHtmlContent(tour.inclusions || ''),
-          exclusionsRichText: getRichTextFromHtmlContent(tour.exclusions || ''),
+            ...highlight.content
+          }))
         }));
       }
       if (data?.products?.length) {
@@ -78,10 +63,8 @@ const ToursAPI = async (req: any, res: any) => {
             tour.microBrandsHighlight || ''
           )?.map((highlight: any) => ({
             ...highlight,
-            ...highlight.content,
-          })),
-          inclusionsRichText: getRichTextFromHtmlContent(tour.inclusions || ''),
-          exclusionsRichText: getRichTextFromHtmlContent(tour.exclusions || ''),
+            ...highlight.content
+          }))
         }));
       }
       if (data?.microBrandsHighlight) {
@@ -97,10 +80,8 @@ const ToursAPI = async (req: any, res: any) => {
             tour.microBrandsHighlight || ''
           )?.map((highlight: any) => ({
             ...highlight,
-            ...highlight.content,
-          })),
-          inclusionsRichText: getRichTextFromHtmlContent(tour.inclusions || ''),
-          exclusionsRichText: getRichTextFromHtmlContent(tour.exclusions || ''),
+            ...highlight.content
+          }))
         }));
       }
       if (data?.sections?.length) {
@@ -117,14 +98,8 @@ const ToursAPI = async (req: any, res: any) => {
                   tour.microBrandsHighlight || ''
                 )?.map((highlight: any) => ({
                   ...highlight,
-                  ...highlight.content,
-                })),
-                inclusionsRichText: getRichTextFromHtmlContent(
-                  tour.inclusions || ''
-                ),
-                exclusionsRichText: getRichTextFromHtmlContent(
-                  tour.exclusions || ''
-                ),
+                  ...highlight.content
+                }))
               })),
             },
           };

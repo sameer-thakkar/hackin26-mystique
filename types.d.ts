@@ -5,10 +5,4 @@ declare global {
   interface Window {
     dataLayer: Array<any>;
   }
-  interface Highlight {
-    type: string;
-    content: Object;
-    spans: Array<Object>;
-    text: string;
-  }
 }

@@ -25,7 +25,6 @@ import { isMBDesign, legacyBooleanCheck } from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import { csvTgidToArray, getHostName } from 'utils/helper';
 import { getPromoCodesDocument } from 'utils/prismicUtils';
-import { isMainHighlightExist } from 'utils/productUtils';
 
 const StyledProductsWrapper = styled.div`
   margin: 0 auto;
@@ -312,14 +311,12 @@ const PopulateProducts = (props: any) => {
         }))
       : tours;
 
-  const availableToursList = uncategorizedTours?.filter((tour: any) => {
-    const scorpioHighlights = scorpioData[tour.tgid]?.highlights;
-    return (
+  const availableToursList = uncategorizedTours?.filter(
+    (tour: any) =>
       !!scorpioData[tour.tgid]?.available &&
-      ((scorpioHighlights?.length && isMainHighlightExist(scorpioHighlights)) ||
+      (scorpioData[tour.tgid]?.highlights?.length ||
         tour?.tour_description_override?.length)
-    );
-  });
+  );
   const allTgids = availableToursList?.map((el: any) => el?.tgid);
 
   const filterPromoCodes = () => {

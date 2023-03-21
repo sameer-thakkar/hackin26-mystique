@@ -285,7 +285,6 @@ const es = {
     'Puedes cancelar hasta {hours} horas de antelación para obtener un reembolso total.',
   FLEXIBLE: 'Flexible',
   INCLUSIONS: 'Incluye',
-  EXCLUSIONS: 'No incluye',
   FREE_CANCELLATION: 'Cancelación gratuita',
   PROMO_CODES: {
     APPLY_CODE: 'APLICAR CÓDIGO',
