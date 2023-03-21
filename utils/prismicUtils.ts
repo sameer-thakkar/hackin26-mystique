@@ -1579,8 +1579,12 @@ export const getPageData = async ({
       {}
     );
 
-    const tourGroupData = tourGroupAPIResponses?.tourGroups?.reduce(
-      (accum: {}, tour: any) => {
+    const tourGroupData = tourGroupAPIResponses?.tourGroups
+      ?.filter((tour: Record<string, any>) => {
+        const { hidden } = tour ?? {};
+        return !hidden;
+      })
+      ?.reduce((accum: {}, tour: Record<string, any>) => {
         const { hide_df, hide_safe } = scorpioAllTourGroupData['CMSContent']
           ?.data?.data || {
           hide_df: false,
@@ -1664,9 +1668,7 @@ export const getPageData = async ({
             flowType,
           },
         };
-      },
-      {}
-    );
+      }, {});
 
     const primaryCountry =
       tourGroupAPIResponses?.cities?.[0]?.country ||
