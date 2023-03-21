@@ -259,6 +259,7 @@ const de = {
     'Dieses Ticket kann bis zu {hours} Stunden vor dem Erlebnis gegen eine volle Rückerstattung storniert werden.',
   FLEXIBLE: 'Flexibel',
   INCLUSIONS: 'Inklusive',
+  EXCLUSIONS: 'Nicht enthalten',
   FREE_CANCELLATION: 'Kostenlose Stornierung',
   PROMO_CODES: {
     APPLY_CODE: 'CODE ANWENDEN',

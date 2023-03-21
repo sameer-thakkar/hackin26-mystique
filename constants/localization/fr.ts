@@ -257,6 +257,7 @@ const fr = {
   TICKET_CAN_BE_CANCELED: `Vous pouvez annuler jusqu'à {hours} heures à l'avance pour un remboursement complet.`,
   FLEXIBLE: 'Flexible',
   INCLUSIONS: 'Inclus',
+  EXCLUSIONS: 'Non inclus',
   FREE_CANCELLATION: 'Annulation gratuite',
   PROMO_CODES: {
     APPLY_CODE: 'APPLIQUER LE CODE',

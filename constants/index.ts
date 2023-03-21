@@ -818,6 +818,10 @@ export const HIGHLIGHT_TYPES = {
   LIST_ITEM: 'list-item',
 };
 
+export const HIGHLIGHT_TEXT = {
+  HIGHLIGHTS: 'Highlights',
+};
+
 export const VALIDITY_TYPES = {
   UNTIL_DATE: 'UNTIL_DATE',
   UNTIL_DAYS_FROM_PURCHASE: 'UNTIL_DAYS_FROM_PURCHASE',
