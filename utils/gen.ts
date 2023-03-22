@@ -18,7 +18,7 @@ export const hashCode = (input: string) => {
 };
 
 export const isServer = () => typeof window === 'undefined';
-
+export const isProduction = () => process.env.NODE_ENV === 'production';
 /**
  *
  * @param req request object inside getInitialProps

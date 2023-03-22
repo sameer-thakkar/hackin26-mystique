@@ -26,6 +26,7 @@ import { sendVariablesToDataLayer } from 'utils/analytics';
 import { getLangObject } from 'utils/helper';
 import { ArabicGlobalStyle } from 'const/globalStyles/ar';
 import ScrollToTop from 'components/common/ScrollToTop';
+import Clarity from 'components/common/Clarity';
 
 const App = ({ Component, pageProps, localizedStrings, lang }: any) => {
   strings.setContent({
@@ -139,6 +140,7 @@ const App = ({ Component, pageProps, localizedStrings, lang }: any) => {
     }
   };
 
+  const { host } = pageProps;
   return (
     // @ts-expect-error TS(2786): 'StyleSheetManager' cannot be used as a JSX compon... Remove this comment to see the full error message
     <StyleSheetManager
@@ -150,6 +152,7 @@ const App = ({ Component, pageProps, localizedStrings, lang }: any) => {
         <Component {...pageProps} />
         <ScrollToTop />
         <LiveChat uid={pageProps?.uid} />
+        <Clarity host={host} />
       </RecoilRoot>
     </StyleSheetManager>
   );

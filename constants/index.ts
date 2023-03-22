@@ -16,6 +16,7 @@ export const COOKIE = {
   SANDBOX_ID: 'h-sid',
   CASHBACK_EXP_VIEWED: 'cshbck-exp',
   CURRENT_CURRENCY: 'currentCurrency',
+  CLARITY_PROJECT_ID: 'clarity-pid',
 };
 
 export const TIME = {
@@ -1001,3 +1002,4 @@ export const PARTNERED_AND_SENSITIVE_COMBINATIONS = {
 };
 
 export const SHOW_DATE_SELECTION_PAGE_TGIDS = [17637];
+export const DOMAIN_INITIALS = 'www.';
