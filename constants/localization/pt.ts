@@ -273,6 +273,7 @@ const pt = {
     'Você pode cancelar com até {hours} horas de antecedência da experiência para um reembolso completo.',
   FLEXIBLE: 'Flexível',
   INCLUSIONS: 'Inclusões',
+  EXCLUSIONS: 'Não inclui',
   FREE_CANCELLATION: 'Cancelamento gratuito',
   PROMO_CODES: {
     APPLY_CODE: 'APLICAR CÓDIGO',

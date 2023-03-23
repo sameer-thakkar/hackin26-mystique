@@ -311,12 +311,14 @@ const PopulateProducts = (props: any) => {
         }))
       : tours;
 
-  const availableToursList = uncategorizedTours?.filter(
-    (tour: any) =>
+  const availableToursList = uncategorizedTours?.filter((tour: any) => {
+    const checkIfScorpioHighlightsExist =
+      scorpioData[tour.tgid]?.isMBHighlightsExist;
+    return (
       !!scorpioData[tour.tgid]?.available &&
-      (scorpioData[tour.tgid]?.highlights?.length ||
-        tour?.tour_description_override?.length)
-  );
+      (checkIfScorpioHighlightsExist || tour?.tour_description_override?.length)
+    );
+  });
   const allTgids = availableToursList?.map((el: any) => el?.tgid);
 
   const filterPromoCodes = () => {

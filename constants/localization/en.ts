@@ -345,6 +345,7 @@ const en = {
     'You may cancel up to {hours} hours in advance for a full refund.',
   FLEXIBLE: 'Flexible',
   INCLUSIONS: 'Inclusions',
+  EXCLUSIONS: 'Exclusions',
   FREE_CANCELLATION: 'Free Cancellation',
   PROMO_CODES: {
     APPLY_CODE: 'APPLY CODE',

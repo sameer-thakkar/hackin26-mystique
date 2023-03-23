@@ -281,6 +281,7 @@ const it = {
   TICKET_CAN_BE_CANCELED: `Puoi cancellare fino a {hours} ore in anticipo sull'orario prenotato per ottenere un rimborso completo.`,
   FLEXIBLE: 'Flessibile',
   INCLUSIONS: 'Inclusioni',
+  EXCLUSIONS: 'Servizi esclusi',
   FREE_CANCELLATION: 'Cancellazione gratuita',
   PROMO_CODES: {
     APPLY_CODE: 'APPLICA IL CODICE',

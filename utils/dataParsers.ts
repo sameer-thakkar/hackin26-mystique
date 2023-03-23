@@ -21,6 +21,7 @@ import {
   getSingleAriesTag,
   standardizeCancellationPolicy,
 } from 'utils/productUtils';
+import { appendInclusionExclusion } from 'utils/inclusionExclusionUtils';
 import { CURRENCY_SYMBOL_MAP, DESIGN } from 'const/index';
 import { sendLog } from 'utils/logger';
 
@@ -326,6 +327,8 @@ export const categoryTourListParserV1 = async ({
         ticketValidity,
         flowType,
         allVariantOpenDated,
+        inclusionsRichText,
+        exclusionsRichText,
       } = tour ?? {};
       const { productImages, safetyImages } = media || {};
       const updatedDescriptors = generateDescriptor({
@@ -353,6 +356,13 @@ export const categoryTourListParserV1 = async ({
         localizedStrings,
       });
 
+      const isMBHighlightsExist = microBrandsHighlight?.length > 0;
+      const combinedHighlights = appendInclusionExclusion({
+        highlightArr: microBrandsHighlight,
+        inclusions: inclusionsRichText,
+        exclusions: exclusionsRichText,
+      });
+
       const { variants } =
         tgidVariantData?.find((item: any) => item.id === id) || {};
       const [variantId] =
@@ -371,7 +381,8 @@ export const categoryTourListParserV1 = async ({
           averageRating,
           ctaBooster: callToAction,
           descriptors: updatedDescriptors,
-          highlights: microBrandsHighlight,
+          highlights: combinedHighlights,
+          isMBHighlightsExist,
           imageUrl,
           images: productImages,
           listingPrice: {

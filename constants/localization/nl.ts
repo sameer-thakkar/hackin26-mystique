@@ -273,6 +273,7 @@ const nl = {
     'Je kunt tot {hours} uur van tevoren annuleren voor een volledige terugbetaling.',
   FLEXIBLE: 'Flexibel',
   INCLUSIONS: 'Inclusief',
+  EXCLUSIONS: 'Niet inbegrepen',
   FREE_CANCELLATION: 'Gratis annuleren',
   PROMO_CODES: {
     APPLY_CODE: 'PAS CODE TOE',
