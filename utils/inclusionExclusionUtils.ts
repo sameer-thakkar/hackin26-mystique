@@ -83,8 +83,11 @@ export const appendInclusionExclusion = ({
       content: { text: strings.INCLUSIONS, spans: [] },
     });
 
-    const paraType = { start: 0, end: 10, type: 'strong' };
-
+    const paraType = {
+      start: 0,
+      end: strings.EXCLUSIONS?.length,
+      type: 'strong',
+    };
     if (inclusionItems) {
       inclusionExclusionHighlights.push({
         type: 'paragraph',
