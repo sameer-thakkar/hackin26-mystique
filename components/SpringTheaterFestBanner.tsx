@@ -27,7 +27,7 @@ const SpringTheaterFestBanner = () => {
   return (
     <Wrapper>
       <Container
-        href="https://www.headout.com/spring-theatre-fest-london/"
+        href="https://www.london-theater-tickets.com/spring-theatre-fest/"
         target="_blank"
       ></Container>
     </Wrapper>
