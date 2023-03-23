@@ -361,6 +361,7 @@ export const categoryTourListParserV1 = async ({
         highlightArr: microBrandsHighlight,
         inclusions: inclusionsRichText,
         exclusions: exclusionsRichText,
+        localizedStrings: localizedStrings || {},
       });
 
       const { variants } =

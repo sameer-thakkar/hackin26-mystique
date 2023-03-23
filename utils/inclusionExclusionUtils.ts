@@ -1,7 +1,9 @@
 import { HIGHLIGHT_TYPES } from 'const/index';
-import { strings } from 'const/strings';
 
-const removeCurrentInclusionExclusion = (highlights: Array<Highlight>) => {
+const removeCurrentInclusionExclusion = (
+  highlights: Array<Highlight>,
+  localizedStrings: Record<string, string>
+) => {
   let highlightArr = [...highlights];
   let inclusionsExist = false;
   let inclusionHighlightStartIndex = 0;
@@ -9,7 +11,10 @@ const removeCurrentInclusionExclusion = (highlights: Array<Highlight>) => {
   for (let i = 0; i < highlightArr.length; i++) {
     const currHighlight = highlightArr[i];
     const { type, text } = currHighlight;
-    if (type === HIGHLIGHT_TYPES.H6_HEADING && text === strings.INCLUSIONS) {
+    if (
+      type === HIGHLIGHT_TYPES.H6_HEADING &&
+      text === localizedStrings.INCLUSIONS
+    ) {
       inclusionsExist = true;
       inclusionHighlightStartIndex = i;
       continue;
@@ -61,15 +66,20 @@ type TAppendInclusionExclusion = {
   highlightArr: Array<Highlight> | any;
   inclusions: Array<Highlight>;
   exclusions: Array<Highlight>;
+  localizedStrings: Record<string, any>;
 };
 
 export const appendInclusionExclusion = ({
   highlightArr = [],
   inclusions = [],
   exclusions = [],
+  localizedStrings,
 }: TAppendInclusionExclusion) => {
   let currentHighlights = [...highlightArr];
-  currentHighlights = removeCurrentInclusionExclusion(currentHighlights);
+  currentHighlights = removeCurrentInclusionExclusion(
+    currentHighlights,
+    localizedStrings
+  );
 
   let inclusionExclusionHighlights: Array<Highlight> = [];
   const inclusionItems = inclusions.length;
@@ -78,22 +88,28 @@ export const appendInclusionExclusion = ({
   if (inclusionItems || exclusionsItems) {
     inclusionExclusionHighlights.push({
       type: HIGHLIGHT_TYPES.H6_HEADING,
-      text: strings.INCLUSIONS,
+      text: localizedStrings.INCLUSIONS,
       spans: [],
-      content: { text: strings.INCLUSIONS, spans: [] },
+      content: {
+        text: localizedStrings.INCLUSIONS,
+        spans: [],
+      },
     });
 
     const paraType = {
       start: 0,
-      end: strings.EXCLUSIONS?.length,
+      end: localizedStrings.EXCLUSIONS?.length,
       type: 'strong',
     };
     if (inclusionItems) {
       inclusionExclusionHighlights.push({
         type: 'paragraph',
-        text: strings.INCLUSIONS,
+        text: localizedStrings.INCLUSIONS,
         spans: [paraType],
-        content: { text: strings.INCLUSIONS, spans: [] },
+        content: {
+          text: localizedStrings.INCLUSIONS,
+          spans: [],
+        },
       });
       inclusionExclusionHighlights = inclusionExclusionHighlights.concat(
         inclusions
@@ -102,9 +118,12 @@ export const appendInclusionExclusion = ({
     if (exclusionsItems) {
       inclusionExclusionHighlights.push({
         type: 'paragraph',
-        text: strings.EXCLUSIONS,
+        text: localizedStrings.EXCLUSIONS,
         spans: [paraType],
-        content: { text: strings.EXCLUSIONS, spans: [] },
+        content: {
+          text: localizedStrings.EXCLUSIONS,
+          spans: [],
+        },
       });
       inclusionExclusionHighlights = inclusionExclusionHighlights.concat(
         exclusions
