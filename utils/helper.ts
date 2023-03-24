@@ -526,7 +526,9 @@ export const checkBroadway = (uid: string | null | undefined) => {
 };
 
 export const checkIfGpMotorTickets = (uid: string | null | undefined) =>
-  !!uid?.includes('www.gpmotorsportstickets.com');
+  !!uid?.includes('gpmotorsportstickets.com') ||
+  !!uid?.includes('f1-baku-tickets.com') ||
+  !!uid?.includes('f1-miami-tickets.com');
 
 export const checkIfSportsSubCategory = (
   primarySubcategoryId: number | undefined | null
