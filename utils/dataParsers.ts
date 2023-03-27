@@ -510,22 +510,24 @@ export const categoryTourListParserV2 = async ({
         cookies,
       });
       const data = await Promise.all(allPromises);
-      const collectionData: any = data?.map((c: any) => {
-        const { collection, sections } = c || {};
-        const filteredData = sections.filter((curr: any) => {
-          return curr?.tourGroups?.items?.length;
+      const collectionData: any = data
+        ?.filter((item) => item)
+        ?.map((c: any) => {
+          const { collection, sections } = c || {};
+          const filteredData = sections.filter((curr: any) => {
+            return curr?.tourGroups?.items?.length;
+          });
+          let filterTgids: any = [];
+          filteredData.forEach((section: any) => {
+            if (section?.tourGroups?.items) {
+              filterTgids = filterTgids.concat(section.tourGroups.items);
+            }
+          });
+          return {
+            collection,
+            items: filterTgids,
+          };
         });
-        let filterTgids: any = [];
-        filteredData.forEach((section: any) => {
-          if (section?.tourGroups?.items) {
-            filterTgids = filterTgids.concat(section.tourGroups.items);
-          }
-        });
-        return {
-          collection,
-          items: filterTgids,
-        };
-      });
       if (collectionData?.length) {
         categoriesWithProducts.push(collectionData);
         const tgids = extractTgidsFromCategories(collectionData);
