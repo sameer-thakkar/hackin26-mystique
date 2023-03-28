@@ -53,7 +53,7 @@ import {
 } from 'utils/analytics';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 import {
-  checkIfGpMotorTickets,
+  checkIfGpMotorTicketsMB,
   checkIfSportsSubCategory,
   getHostName,
 } from 'utils/helper';
@@ -401,7 +401,7 @@ const TourTags = styled.div<{ horizontal?: boolean; pageType?: string }>`
     margin-bottom: 0;
     .image-wrap {
       display: flex;
-      align-items: top;
+      align-items: start;
       padding-top: calc(100% / 2);
     }
     img {
@@ -667,7 +667,7 @@ const NextAvailableBlock = styled.div`
     display: flex;
   }
 
-  ${({ theme }) => theme.productCards?.nextAvailable?.desktop}
+  ${({ theme }) => theme.productCards?.nextAvailable?.desktop};
 
   @media (max-width: 768px) {
     grid-area: next-available;
@@ -1149,7 +1149,7 @@ const Product = (props: any) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [showComboVariant, setShowComboVariant] = useState(false);
 
-  const isGpMotorTicketsMb = checkIfGpMotorTickets(uid);
+  const isGpMotorTicketsMb = checkIfGpMotorTicketsMB(uid);
   const isSportsSubCategory = checkIfSportsSubCategory(primarySubCategory?.id);
 
   const isOpenDated = scorpioData?.allVariantOpenDated;
@@ -1242,7 +1242,6 @@ const Product = (props: any) => {
   });
 
   const { data: tourGroupData } = useSWR(
-    // @ts-expect-error TS(2345): Argument of type '[string | null | undefined, { fe... Remove this comment to see the full error message
     isComboWithSingleVariant ? tourGroupEndpoint : null,
     { fetcher: swrFetcher }
   );

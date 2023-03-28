@@ -125,7 +125,7 @@ export const parseShowPageData = (data: any) => {
     strings.SHOW_PAGE.AGE_LIMIT,
   ];
 
-  data.forEach((element: any, index: number) => {
+  data?.forEach((element: any, index: number) => {
     if (element.type == 'heading6') {
       // detail object heading
       DetailObjectHeading = element.content.text;

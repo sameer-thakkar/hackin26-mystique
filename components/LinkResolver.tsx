@@ -42,11 +42,15 @@ interface ILinkResolver
     React.AnchorHTMLAttributes<HTMLAnchorElement>,
     HTMLAnchorElement
   > {
-  url: string;
+  url?: string | null;
 }
 
 const LinkResolver: React.FC<ILinkResolver> = (props) => {
   const { url, children, ...restProps } = props;
+
+  if (!url) {
+    return <>{children}</>;
+  }
 
   return (
     <EnvironmentContext.Consumer>

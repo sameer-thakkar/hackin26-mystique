@@ -6,7 +6,7 @@ import { LANGUAGE_MAP } from 'const/index';
 import queryParser from 'query-string';
 import { getPrismicProps } from 'utils';
 import { fromEntries } from 'utils/gen';
-import { getLangObject } from 'utils/helper';
+import { checkIfLTTMB, getLangObject } from 'utils/helper';
 
 export const getStringifiedQueryFromObject = (queryJson: Record<string, any>) =>
   queryParser.stringify(queryJson);
@@ -52,7 +52,10 @@ export const getLangUID = (req: any, query: Record<string, any>) => {
     if (isDev) {
       const { mystique_uid: queryParamUID, lang: queryParamLang } = query;
       uid = queryParamUID;
-      lang = LANGUAGE_MAP[PRISMIC_LANG_TO_ROUTE_PARAM[queryParamLang]].locale;
+      lang =
+        LANGUAGE_MAP[
+          PRISMIC_LANG_TO_ROUTE_PARAM[queryParamLang] || queryParamLang
+        ]?.locale;
     } else {
       const { uid: reqUID, lang: reqLang } = getPrismicProps({
         host,
@@ -76,12 +79,6 @@ export const getLangUID = (req: any, query: Record<string, any>) => {
       lang = reqLang;
     }
   }
-  /**
-   * Temporary logs to issue:
-   * https://sentry.io/organizations/headout/issues/3811420068/events/c9b34e70f75c45669a3c126523be1d0a/?project=1545593
-   */
-  // eslint-disable-next-line no-console
-  console.log('UID, Lang & Host ', uid, lang, host);
   return { uid, lang };
 };
 
@@ -170,15 +167,20 @@ export const convertUidToUrl = ({
 
 export const addQueryParams = (url: string, params: Record<string, string>) => {
   if (url) {
-    let theURL = new URL(url);
+    let theURL;
+    try {
+      theURL = new URL(url);
+    } catch (e) {
+      //
+    }
     if (Object.keys(params).length > 0) {
       for (const property in params) {
         const key = property;
         const value = params[property];
-        theURL.searchParams.set(key, value);
+        theURL?.searchParams.set(key, value);
       }
     }
-    return theURL.toString();
+    return theURL?.toString();
   }
 };
 
@@ -212,10 +214,8 @@ export const getLogoRedirectionUrl = ({
   host?: string;
 }) => {
   const domainArray = getDomainFromUid(uid)?.split('.');
-  // @ts-expect-error TS(2532): Object is possibly 'undefined'.
-  domainArray[0] = 'www';
-  // @ts-expect-error TS(2532): Object is possibly 'undefined'.
-  const parentDomain = domainArray.join('.');
+  if (domainArray) domainArray[0] = 'www';
+  const parentDomain = domainArray?.join('.');
 
   const isStage = host?.includes('stage-');
 
@@ -265,4 +265,51 @@ export const addUrlParams = ({
   if (replace) window.history.replaceState(historyState, '', asPath);
   else window.history.pushState(historyState, '', asPath);
   return asPath;
+};
+
+export const getFormattedUrlSlug = (
+  urlSlugs: { [x: string]: any },
+  lang = 'en'
+) => {
+  const formattedLang = lang.toUpperCase().replace(/-/g, '_');
+
+  return typeof urlSlugs?.[formattedLang] !== 'undefined' && lang !== 'en'
+    ? `/${lang}/${urlSlugs?.[formattedLang]?.split('/').slice(3).join('/')}`
+    : `/${urlSlugs?.EN?.split('/').slice(2).join('/')}`;
+};
+
+export const getTagPageLink = ({
+  url,
+  lang = 'en',
+  uid,
+}: {
+  url: string | null | undefined;
+  lang: string;
+  uid: string;
+}) =>
+  lang?.toLowerCase() === 'en' && checkIfLTTMB(uid)
+    ? addLanguageParamToUrl({ url, lang: lang?.toLowerCase() })
+    : null;
+
+export const addLanguageParamToUrl = ({
+  url,
+  lang = 'en',
+}: {
+  url: string | null | undefined;
+  lang: string;
+}) => {
+  if (!url) return null;
+
+  if (lang !== 'en') {
+    if (url.startsWith('/')) {
+      return `/${lang}${url}`;
+    } else {
+      const splitUrl = url.split('/');
+      const spliceStartIndex = url.startsWith('http') ? 3 : 1;
+      splitUrl.splice(spliceStartIndex, 0, lang);
+      return splitUrl.join('/');
+    }
+  }
+
+  return url;
 };

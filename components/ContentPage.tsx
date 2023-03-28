@@ -29,7 +29,7 @@ import { strings } from 'const/strings';
 import {
   DROPDOWN_ELEMENT,
   FULL_WIDTH_SLICES,
-  ALLOW_IMMEDIEATE_NESTING,
+  ALLOW_IMMEDIATE_NESTING,
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   PAGE_TYPES,
@@ -519,7 +519,7 @@ class ContentPage extends Component<any, any> {
           openGroupBookingModal={this.openGroupBookingModal}
           slices={groupSlices(
             commonHeader?.data?.body,
-            ALLOW_IMMEDIEATE_NESTING
+            ALLOW_IMMEDIATE_NESTING
           )}
         />
         <Conditional if={showCovid19Alert && this.state.covid19AlertOpen}>

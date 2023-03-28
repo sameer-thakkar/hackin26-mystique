@@ -673,6 +673,7 @@ export const categoryTourListParserV2 = async ({
           maxDuration,
           combo,
           multiVariant,
+          urlSlugs,
         } = product || {};
         const { displayName: collectionName } = primaryCollection || {};
         const { displayName: primaryCategoryName } = primaryCategory || {};
@@ -821,6 +822,7 @@ export const categoryTourListParserV2 = async ({
           maxDuration,
           combo,
           multiVariant,
+          urlSlugs,
         };
       });
     });
@@ -868,6 +870,7 @@ export const tourListApiParser = (
         primaryCategory,
         primarySubCategory,
         flowType,
+        urlSlugs,
       } = tour || {};
       const { productImages, safetyImages } = media || {};
       const updatedDescriptors = generateDescriptor({
@@ -904,6 +907,7 @@ export const tourListApiParser = (
           primaryCategory,
           primarySubCategory,
           flowType,
+          urlSlugs,
         },
       };
     },
@@ -1095,6 +1099,7 @@ export const getToursGlobalCollection = async ({
       name,
       reviewCount,
       combo,
+      urlSlugs,
     } = tour || {};
     const { productImages, safetyImages } = media || {};
     const updatedDescriptors = generateDescriptor({
@@ -1133,6 +1138,7 @@ export const getToursGlobalCollection = async ({
         safetyImages,
         title: name,
         combo,
+        urlSlugs,
       },
     };
   }, {});

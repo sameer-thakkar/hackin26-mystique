@@ -146,6 +146,7 @@ const allToursParser = (
         // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         primarySubCategory: cardPrices?.[tourData.tgid]?.primarySubCategory,
         flowType: scorpioTour?.flowType,
+        urlSlugs: scorpioTour?.urlSlugs,
       },
     };
   }, {});

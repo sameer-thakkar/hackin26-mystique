@@ -69,7 +69,7 @@ const MicrobrandCard = styled.div`
 
   &:hover {
     transform: translate3d(0, -6px, 0);
-    -webkit-perspective: 1000;
+    -webkit-perspective: 1000px;
     -webkit-transform: translate3d(0, -6px, 0);
   }
   .card-image {
@@ -82,8 +82,8 @@ const MicrobrandCard = styled.div`
     border-radius: 6px;
     grid-row: 1 / 2;
     grid-column: 1 / 2;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
   .card-bottom .card-title {
     color: ${COLORS.GRAY.G2};
@@ -294,7 +294,6 @@ const MicrobrandCards: React.FC<MicrobrandCardsProps> = (props) => {
     // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
     id: null,
   });
-  // @ts-expect-error TS(2345): Argument of type '[string | undefined, { fetcher: ... Remove this comment to see the full error message
   const { data: tourListData } = useSWR(tourListEndpoint, {
     fetcher: swrFetcher,
   });

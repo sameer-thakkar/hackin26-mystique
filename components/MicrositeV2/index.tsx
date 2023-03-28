@@ -7,8 +7,8 @@ import PopulateMeta from 'components/common/NextSeoMeta';
 import { getAlternateLanguages } from 'utils';
 import allToursParser from 'utils/allToursParser';
 import { tourListApiParser } from 'utils/dataParsers';
-import { checkBroadway, genManualSlice, getLangObject } from 'utils/helper';
-import { checkLTT } from 'utils/helper';
+import { checkIfBroadwayMB, genManualSlice, getLangObject } from 'utils/helper';
+import { checkIfLTTMB } from 'utils/helper';
 import { MicrositeV2GlobalStyle } from 'const/globalStyles/micrositeV2';
 import { getLogoRedirectionUrl } from 'utils/urlUtils';
 import { PAGETYPE, QUERY_PARAMS, THEMES } from 'const/index';
@@ -62,8 +62,8 @@ class MicrositeV2 extends Component<any, any> {
     const isMobile = window.innerWidth <= 768;
     const { all_tours: allTours } = this.props.data.data;
     const allTgids = allTours.map((tour: any) => tour.primary.tgid);
-    const isLTT = checkLTT(this.props.data.uid);
-    const isBroadway = checkBroadway(this.props.data.uid);
+    const isLTT = checkIfLTTMB(this.props.data.uid);
+    const isBroadway = checkIfBroadwayMB(this.props.data.uid);
     if (allTours.length > 0) {
       fetchTourListV6({
         tgids: allTgids,
@@ -122,8 +122,7 @@ class MicrositeV2 extends Component<any, any> {
     const { query: updatedQuery } = nextProps.router;
     const { limit } = query;
     const { limit: updatedLimit } = updatedQuery;
-    if (limit !== updatedLimit) return false;
-    return true;
+    return limit === updatedLimit;
   }
 
   componentDidUpdate() {
@@ -234,7 +233,7 @@ class MicrositeV2 extends Component<any, any> {
       tourListCategories,
       tourListCategoryAllTours = {};
 
-    // Categour Tour List carousel
+    // Category Tour List carousel
     if (hasCategoryTourList) {
       const tourListSlice = CMSBody?.filter(
         (body: any) => body.slice_type === 'tour_list_category'

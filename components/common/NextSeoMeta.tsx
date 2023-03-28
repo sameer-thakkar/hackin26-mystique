@@ -27,8 +27,8 @@ import {
 type PopulateMetaProps = {
   prismicData: { [key: string]: any };
   languages: { [key: string]: string }[];
-  datePublished: string;
-  dateModified: string;
+  datePublished?: string;
+  dateModified?: string;
   serverRequestStartTimestamp: string;
   isMobile: boolean;
   collectionDetails?: CollectionDetailsTypes;
@@ -36,6 +36,7 @@ type PopulateMetaProps = {
   mbTheme?: string;
   faviconUrl: string;
   logoUrl?: string;
+  uid?: string;
 };
 
 export default function PopulateMeta({
@@ -49,10 +50,11 @@ export default function PopulateMeta({
   collectionDetails,
   faviconUrl,
   logoUrl,
+  uid,
 }: PopulateMetaProps) {
   const {
     noTrack,
-    uid,
+    uid: uidFromMBContext,
     isDev,
     isPreview,
     isStage,
@@ -81,14 +83,15 @@ export default function PopulateMeta({
   } = prismicData || {};
 
   const pageUrl = convertUidToUrl({
-    uid: uid ?? '',
+    uid: uidFromMBContext ?? uid ?? '',
     lang,
     isDev,
     hostname: host,
   });
 
-  const isSubdomain =
-    getStructure(new URL(pageUrl)) === PAGE_URL_STRUCTURE.SUBDOMAIN;
+  const isSubdomain = pageUrl
+    ? getStructure(new URL(pageUrl)) === PAGE_URL_STRUCTURE.SUBDOMAIN
+    : false;
 
   let finalNoIndex =
     isStage || isDev || (isSubdomain && !SEO_SUBDOMAINS.includes(pageUrl))
@@ -99,7 +102,7 @@ export default function PopulateMeta({
       ? true
       : legacyBooleanCheck(noindex);
 
-  const primaryDomainUrl = new URL(pageUrl).hostname;
+  const primaryDomainUrl = pageUrl ? new URL(pageUrl).hostname : '';
   const metaImageUrl = image?.url || logoUrl;
   const title = withShortcodes(rawTitle).join('');
   const description = withShortcodes(rawDescription).join('');
@@ -110,7 +113,7 @@ export default function PopulateMeta({
   const [firstBannerImage] = bannerImages || [];
   const hasSearchEnabled = legacyBooleanCheck(enable_search);
   const jsonLdProps = {
-    uid,
+    uid: uidFromMBContext ?? uid ?? '',
     lang,
     title,
     logo: metaImageUrl,
@@ -259,7 +262,6 @@ export default function PopulateMeta({
           originalHost={host}
         />
       </Conditional>
-      {/* @ts-expect-error TS(2322): Type '{ uid: null; lang: string; title: string; lo... Remove this comment to see the full error message */}
       <WebpageJsonLD {...jsonLdProps} />
       <Conditional if={shouldDisplayCollectionRatings(collectionDetails)}>
         <CollectionAggregatedRatingScript

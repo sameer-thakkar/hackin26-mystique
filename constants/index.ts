@@ -423,7 +423,7 @@ export const CURRENCY_SYMBOL_MAP = {
   TWD: 'NT$',
 };
 
-export const ALLOW_IMMEDIEATE_NESTING = true;
+export const ALLOW_IMMEDIATE_NESTING = true;
 
 export const DONT_AUTO_SCROLL = false;
 
@@ -884,46 +884,158 @@ export const CASHBACK_TYPES = {
   ABSOLUTE: 'ABSOLUTE',
 };
 
-export const LTD_DISCOVERY_EXPERIMENT_CATEGORY_MAP = {
-  Bestsellers: {
-    displayName: '🔥 Bestsellers',
+export const LTT_TAG_PAGE_MAP: any = {
+  Disney: {
+    displayName: 'Disney',
+    url: 'https://www.london-theater-tickets.com/shows-in-london/disney-shows/',
+  },
+  'Romantic West End Shows': {
+    displayName: 'Romantic West End Shows',
     url:
-      'https://www.london-theater-tickets.com/best-west-end-shows-in-london/',
+      'https://www.london-theater-tickets.com/shows-in-london/romantic-theatre-shows/',
+  },
+  Dance: {
+    displayName: 'Dance',
+    url: 'https://www.london-theater-tickets.com/shows-in-london/dance-shows/',
+  },
+  'Theatrical Concerts': {
+    displayName: 'Theatrical Concerts',
+    url:
+      'https://www.london-theater-tickets.com/shows-in-london/concerts-tickets/',
+  },
+  Comedy: {
+    displayName: 'Comedy',
+    url: 'https://www.london-theater-tickets.com/shows-in-london/comedy-shows/',
+  },
+  'Coming Soon': {
+    displayName: 'Coming Soon',
+    url:
+      'https://www.london-theater-tickets.com/shows-in-london/upcoming-shows/',
   },
   'New Arrivals': {
-    displayName: '🥳 New Arrivals',
+    displayName: 'New Arrivals',
     url:
       'https://www.london-theater-tickets.com/shows-in-london/new-west-end-shows/',
   },
-  Christmas: {
-    displayName: '🎄 Christmas Specials',
-    url: 'https://www.london-theater-tickets.com/christmas-shows-in-london/',
-  },
-  Musicals: {
-    displayName: `💃 Musicals`,
-    url: 'https://www.london-theater-tickets.com/london-musicals/',
-  },
   Kids: {
-    displayName: "👶 Kids' Favourites",
+    displayName: 'Kids',
     url:
       'https://www.london-theater-tickets.com/shows-in-london/shows-for-kids/',
   },
+  Cabaret: {
+    displayName: 'Cabaret',
+    url:
+      'https://www.london-theater-tickets.com/shows-in-london/cabaret-shows/',
+  },
+  Musicals: {
+    displayName: 'Musicals',
+    url: 'https://www.london-theater-tickets.com/london-musicals/',
+  },
   Plays: {
-    displayName: '🎭 Plays',
+    displayName: 'Plays',
     url: 'https://www.london-theater-tickets.com/west-end-plays-in-london/',
   },
-  Comedy: {
-    displayName: '🤣 Comedy',
-    url: 'https://www.london-theater-tickets.com/shows-in-london/comedy-shows/',
-  },
   Opera: {
-    displayName: '🎻 Opera',
+    displayName: 'Opera',
     url: 'https://www.london-theater-tickets.com/shows-in-london/opera-shows/',
   },
-  'Coming Soon': {
-    displayName: '💜 Coming Soon',
+  Ballet: {
+    displayName: 'Ballet',
+    url: 'https://www.london-theater-tickets.com/shows-in-london/ballet-shows/',
+  },
+  "Critics' Choice": {
+    displayName: "Critics' Choice",
     url:
-      'https://www.london-theater-tickets.com/shows-in-london/upcoming-shows/',
+      'https://www.london-theater-tickets.com/shows-in-london/critics-choice-london-theatre-shows/',
+  },
+  "Shakespeare's Globe": {
+    displayName: "Shakespeare's Globe",
+    url:
+      'https://www.london-theater-tickets.com/shows-in-london/longest-running-shows/',
+  },
+  Classics: {
+    displayName: 'Classics',
+    url:
+      'https://www.london-theater-tickets.com/shows-in-london/longest-running-shows/',
+  },
+  'Off West End Shows': {
+    displayName: 'Off West End Shows',
+    url:
+      'https://www.london-theater-tickets.com/shows-in-london/off-west-end-shows/',
+  },
+  'Jukebox Musicals': {
+    displayName: 'Jukebox Musicals',
+    url:
+      'https://www.london-theater-tickets.com/shows-in-london/jukebox-musicals/',
+  },
+  'Olivier Award Winners': {
+    displayName: 'Olivier Award Winners',
+    url:
+      'https://www.london-theater-tickets.com/shows-in-london/olivier-award-winners/',
+  },
+  'Magic Shows': {
+    displayName: 'Magic Shows',
+    url: 'https://www.london-theater-tickets.com/shows-in-london/magic-shows/',
+  },
+  'Immersive Theatre': {
+    displayName: 'Immersive Theatre',
+    url:
+      'https://www.london-theater-tickets.com/shows-in-london/immersive-theatre/',
+  },
+  'Fantasy Shows': {
+    displayName: 'Fantasy Shows',
+    url:
+      'https://www.london-theater-tickets.com/shows-in-london/fantasy-shows/',
+  },
+  'Celebrity Performance': {
+    displayName: 'Celebrity Performance',
+    url:
+      'https://www.london-theater-tickets.com/shows-in-london/stars-on-stage/',
+  },
+  'True Story': {
+    displayName: 'True Story',
+    url:
+      'https://www.london-theater-tickets.com/shows-in-london/based-on-a-true-story/',
+  },
+  'English National Ballet': {
+    displayName: 'English National Ballet',
+    url:
+      'https://www.london-theater-tickets.com/shows-in-london/english-national-ballet-tickets/',
+  },
+  'English National Opera': {
+    displayName: 'English National Opera',
+    url:
+      'https://www.london-theater-tickets.com/shows-in-london/english-national-opera-tickets/',
+  },
+  Shakespeare: {
+    displayName: 'Shakespeare',
+    url:
+      'https://www.london-theater-tickets.com/shows-in-london/shakespeare-plays/',
+  },
+  'Circus Shows': {
+    displayName: 'Circus Shows',
+    url: 'https://www.london-theater-tickets.com/shows-in-london/circus-shows/',
+  },
+  'Drama Shows': {
+    displayName: 'Drama Shows',
+    url: 'https://www.london-theater-tickets.com/shows-in-london/drama-shows/',
+  },
+  Pantomimes: {
+    displayName: 'Pantomimes',
+    url: 'https://www.london-theater-tickets.com/pantomimes-in-london/',
+  },
+  'Christmas Shows': {
+    displayName: 'Christmas Shows',
+    url: 'https://www.london-theater-tickets.com/christmas-shows-in-london/',
+  },
+  'Halloween Shows': {
+    displayName: 'Halloween Shows',
+    url:
+      'https://www.london-theater-tickets.com/shows-in-london/halloween-shows/',
+  },
+  Discounts: {
+    displayName: 'Discounts',
+    url: 'https://www.london-theater-tickets.com/discount-west-end-tickets/',
   },
 };
 
@@ -1002,4 +1114,10 @@ export const PARTNERED_AND_SENSITIVE_COMBINATIONS = {
 };
 
 export const SHOW_DATE_SELECTION_PAGE_TGIDS = [17637];
+
+export const DEFAULT_PRISMIC_SHOWPAGE_UID =
+  'www.london-theater-tickets.com.the-lion-king-tickets';
+
+export const DEFAULT_SHOWPAGE_HOSTNAME = 'www.london-theater-tickets.com';
+
 export const DOMAIN_INITIALS = 'www.';

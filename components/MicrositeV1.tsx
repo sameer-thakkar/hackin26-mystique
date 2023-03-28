@@ -27,7 +27,7 @@ import { csvTgidToArray, getLangObject, groupSlices } from 'utils/helper';
 import { LOCATION } from 'assets/SvgIcons';
 import {
   ANALYTICS_EVENTS,
-  ALLOW_IMMEDIEATE_NESTING,
+  ALLOW_IMMEDIATE_NESTING,
   THEMES,
   PAGE_TYPES,
   ANALYTICS_PROPERTIES,
@@ -336,7 +336,7 @@ const MicrositeV1 = (props: any) => {
   }
 
   const finalHeaderSlices = !isHeaderInherited
-    ? groupSlices(headerSlices || [], ALLOW_IMMEDIEATE_NESTING)
+    ? groupSlices(headerSlices || [], ALLOW_IMMEDIATE_NESTING)
     : [];
   const finalHeaderLinks =
     headerLinks && !isHeaderInherited ? headerLinks : null;

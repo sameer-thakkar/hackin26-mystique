@@ -3,7 +3,6 @@ import { currencySortFn } from 'utils/gen';
 import { addQueryParams, getDomainFromUid } from 'utils/urlUtils';
 import { CUSTOM_HEADER } from 'const/index';
 
-type TTgids = string[];
 type THost = string;
 
 const objectToQuery = (query: any) => {
@@ -59,6 +58,7 @@ export enum HeadoutEndpoints {
   CurrencyList,
   CalendarInventory,
   DomainConfig,
+  ProductV6,
 }
 
 export const getHeadoutApiUrl = ({
@@ -69,7 +69,7 @@ export const getHeadoutApiUrl = ({
 }: {
   endpoint: HeadoutEndpoints;
   hostname?: THost;
-  params: { [key: string]: string };
+  params: { [_key: string]: string };
   id: string | number;
 }) => {
   let endpointSlug;
@@ -109,6 +109,10 @@ export const getHeadoutApiUrl = ({
       break;
     case HeadoutEndpoints.DomainConfig:
       endpointSlug = `https://www.headout.com/api/domain/`;
+      break;
+    case HeadoutEndpoints.ProductV6:
+      endpointSlug = `https://api.headout.com/api/v6/tour-groups/${id}/`;
+      break;
   }
 
   let url = endpointSlug;
@@ -119,9 +123,9 @@ export const getHeadoutApiUrl = ({
 
   if (params && Object.keys(params).length) {
     const finalUrl = addQueryParams(url, params);
-    return finalUrl;
+    return finalUrl as string;
   } else {
-    return url;
+    return url as string;
   }
 };
 
@@ -181,7 +185,6 @@ export const fetchTourListV6 = async ({
     });
     const headers = constructHeaders({ cookies });
 
-    // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
     const res = await fetch(apiUrl, { headers });
     return await res.json();
   } catch (error) {
@@ -214,7 +217,6 @@ export const fetchTourGroupV6 = async ({
     id: tgid,
   });
 
-  // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
   const res = await fetch(apiUrl, { headers });
   return await res.json();
 };
@@ -223,8 +225,8 @@ export const fetchCurrencyList = async () => {
   try {
     const res = await fetch('https://api.headout.com/api/v1/currency/list');
     const data = await res.json();
-    const sortedData = data?.sort(currencySortFn);
-    return sortedData;
+
+    return data?.sort(currencySortFn);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('[fetchCurrencyList]', error);
@@ -237,6 +239,41 @@ interface fetchTourGroupsByCategoryProps extends CommonApiProps {
   city?: string;
   limit?: string;
 }
+
+export const fetchProductData = async ({
+  id,
+  lang,
+  hostname,
+  currency,
+  req,
+}: any) => {
+  const params = {
+    language: lang,
+    'use-seatmap-prices': 'false',
+    'fetch-collection-svg': 'false',
+    'fetch-all-listing-prices': '1',
+    'include-unavailable': 'true',
+    ...(currency && { currency }),
+  };
+  const headers = constructHeaders(
+    // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
+    req ? { headers: { cookie: req.headers.cookie } } : {}
+  );
+  const url = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.TourGroupsV6,
+    hostname,
+    id,
+    params,
+  });
+  try {
+    // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
+    const response = await fetch(url, headers);
+    return await response.json();
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(error);
+  }
+};
 
 export const fetchTourGroupsByCategory = async ({
   categoryId,
@@ -270,10 +307,9 @@ export const fetchTourGroupsByCategory = async ({
     params,
   });
   try {
-    // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
     const response = await fetch(url, { headers });
-    const data = await response.json();
-    return data;
+
+    return await response.json();
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('[fetchTGIDsByCategoryV2Obj]', error);
@@ -313,12 +349,11 @@ export const fetchCollection = async ({
   });
   const headers = constructHeaders({ cookies });
   try {
-    // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
     const response = await fetch(finalUrl, {
       headers,
     });
-    const data = await response.json();
-    return data;
+
+    return await response.json();
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('[fetchCollection]', error);
@@ -354,10 +389,9 @@ export const fetchCollectionList = async ({
   });
   const headers = constructHeaders({ cookies });
   try {
-    // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
     const response = await fetch(finalUrl, { headers });
-    const data = await response.json();
-    return data;
+
+    return await response.json();
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('[fetchCollectionList]', error);
@@ -373,7 +407,7 @@ export const fetchTourGroupReviews = async ({
   tgid: string | number;
   hostname: string;
   limit?: number;
-  cookies?: { [key: string]: any };
+  cookies?: { [_key: string]: any };
 }) => {
   const params = {
     ...(limit && {
@@ -388,7 +422,6 @@ export const fetchTourGroupReviews = async ({
   });
   try {
     const headers = constructHeaders({ cookies });
-    // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
     const res = await fetch(url, { headers });
     return await res.json();
   } catch (error) {
@@ -416,7 +449,7 @@ export const fetchInventory = async ({
   language?: string;
   variantId?: number;
   currency?: string | null;
-  cookies?: { [key: string]: any };
+  cookies?: { [_key: string]: any };
 }) => {
   try {
     const params = {
@@ -446,10 +479,9 @@ export const fetchInventory = async ({
       hostname,
       params,
     });
-    // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
     const response = await fetch(url, { headers });
-    const data = await response.json();
-    return data;
+
+    return await response.json();
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('[fetchInventory]', error);
@@ -467,7 +499,7 @@ export const fetchTourGroupSlots = async ({
   hostname: string;
   forDays?: number;
   currency?: string;
-  cookies?: { [key: string]: any };
+  cookies?: { [_key: string]: any };
 }) => {
   try {
     const params = {
@@ -485,10 +517,9 @@ export const fetchTourGroupSlots = async ({
       params,
     });
     const headers = constructHeaders({ cookies });
-    // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
     const response = await fetch(url, { headers });
-    const data = await response.json();
-    return data;
+
+    return await response.json();
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('[fetchTourGroupSlots]', error);
@@ -528,7 +559,6 @@ export const fetchCalendarInventory = async ({
       params,
     });
     const headers = constructHeaders({ cookies });
-    // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
     const response = await fetch(url, { headers });
     const data = await response.json();
     const { dates, metaData } = data ?? {};
@@ -549,12 +579,6 @@ export const fetchDomainConfig = async (uid: string) => {
     // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
     id: null,
   });
-  /**
-   * Temporary logs to issue:
-   * https://sentry.io/organizations/headout/issues/3811420068/events/c9b34e70f75c45669a3c126523be1d0a/?project=1545593
-   */
-  // eslint-disable-next-line no-console
-  console.log('UID, Lang & Host ', uid);
   const domainArray = getDomainFromUid(uid)?.split('.');
   // @ts-expect-error TS(2532): Object is possibly 'undefined'.
   domainArray[0] = 'book';
@@ -566,10 +590,9 @@ export const fetchDomainConfig = async (uid: string) => {
     headers: customHeaders,
   };
   try {
-    // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
     const response = await fetch(url, requestOptions);
-    const data = await response.json();
-    return data;
+
+    return await response.json();
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('[fetchDomainConfig]', error);

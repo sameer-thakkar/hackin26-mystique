@@ -515,17 +515,13 @@ export const getBuyTicketsUrl = (
     : getValidUrl(officialWebsite?.trim());
 };
 
-export const checkLTT = (uid: string | null | undefined) => {
-  if (!uid) return false;
-  return uid.includes('www.london-theater-tickets.com');
-};
+export const checkIfLTTMB = (uid: string | null | undefined) =>
+  !!uid?.includes('www.london-theater-tickets.com');
 
-export const checkBroadway = (uid: string | null | undefined) => {
-  if (!uid) return false;
-  uid.includes('www.broadway-show-tickets.com');
-};
+export const checkIfBroadwayMB = (uid: string | null | undefined) =>
+  !!uid?.includes('www.broadway-show-tickets.com');
 
-export const checkIfGpMotorTickets = (uid: string | null | undefined) =>
+export const checkIfGpMotorTicketsMB = (uid: string | null | undefined) =>
   !!uid?.includes('gpmotorsportstickets.com') ||
   !!uid?.includes('f1-baku-tickets.com') ||
   !!uid?.includes('f1-miami-tickets.com');

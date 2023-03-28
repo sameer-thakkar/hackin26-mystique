@@ -71,12 +71,14 @@ export const WebpageJsonLD = ({
   logo: string;
   favicon: string;
   description: string;
-  datePublished: string;
-  dateModified: string;
+  datePublished?: string;
+  dateModified?: string;
   hasSearchEnabled?: boolean;
 }) => {
   const contentPageUrl = convertUidToUrl({ uid, lang });
-  const microbrandUrl = getValidUrl(new URL(contentPageUrl).hostname);
+  const microbrandUrl = contentPageUrl
+    ? getValidUrl(new URL(contentPageUrl).hostname)
+    : '';
   // NEXT-SEO doesn't have components for webpage/website. Migrate this once they release the same
   const baseSchema = [
     {

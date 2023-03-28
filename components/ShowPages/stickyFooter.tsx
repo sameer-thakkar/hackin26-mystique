@@ -7,7 +7,7 @@ import COLORS from 'const/colors';
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { getProductCommonProperties, trackEvent } from 'utils/analytics';
-import { checkBroadway, checkLTT, isMobile } from 'utils/helper';
+import { checkIfBroadwayMB, checkIfLTTMB, isMobile } from 'utils/helper';
 import { expandFontToken } from 'const/typography';
 import { FONTS } from 'const/fonts';
 
@@ -71,26 +71,26 @@ const StickyFooter = ({
 
   const pageMetaData = useRecoilValue(metaAtom);
 
-  const isLTT = checkLTT(uid);
-  const isBroadway = checkBroadway(uid);
+  const isLTT = checkIfLTTMB(uid);
+  const isBroadway = checkIfBroadwayMB(uid);
   const trackBookNowClick = () => {
     const { originalPrice, finalPrice, currencyCode } = listingPrice ?? {};
     trackEvent({
-    eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,
-    [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
-    [ANALYTICS_PROPERTIES.DISCOUNT]: originalPrice > finalPrice,
-    [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
-    [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: name,
-    [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
-    [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
-    [ANALYTICS_PROPERTIES.TGID]: tgid,
-    [ANALYTICS_PROPERTIES.CITY]: (pageMetaData?.city as any)?.code,
-    ...getProductCommonProperties({
+      eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
+      [ANALYTICS_PROPERTIES.DISCOUNT]: originalPrice > finalPrice,
+      [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: currencyCode,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: name,
+      [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: finalPrice,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
+      [ANALYTICS_PROPERTIES.TGID]: tgid,
+      [ANALYTICS_PROPERTIES.CITY]: (pageMetaData?.city as any)?.code,
+      ...getProductCommonProperties({
         primaryCategory,
         primaryCollection,
         primarySubCategory,
-    }),
-});
+      }),
+    });
   };
 
   return (

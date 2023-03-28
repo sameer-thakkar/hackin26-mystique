@@ -103,6 +103,16 @@ export const redirectTo = ({ res, url, type = 302 }: any) => {
   }
 };
 
+export const renderError = ({ res, statusCode }: any) => {
+  if (res) {
+    res.statusCode = 404;
+
+    return { err: { statusCode: 404 } };
+  }
+
+  return { err: { statusCode } };
+};
+
 type TDocumentUidUpdateRedirectHandler = {
   toUid: string;
   isDev: boolean;
@@ -280,8 +290,8 @@ export const createBookingURL = ({
 };
 
 export const getNakedDomain = (host: string) => {
-  return !host.includes('localhost')
-    ? host.replace('stage-', '').split('.').slice(1).join('.')
+  return !host?.includes('localhost')
+    ? host?.replace('stage-', '').split('.').slice(1).join('.')
     : HEADOUT_NAKED_DOMAIN;
 };
 

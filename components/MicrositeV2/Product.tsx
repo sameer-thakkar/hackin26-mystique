@@ -21,12 +21,12 @@ import { FONTS } from 'const/fonts';
 import { truncate } from 'utils/helper';
 import { dateToString } from 'utils/dateUtils';
 import InteractionContext from 'contexts/Interaction';
-import { convertUidToUrl } from 'utils/urlUtils';
+import { convertUidToUrl, getFormattedUrlSlug } from 'utils/urlUtils';
 import { createBookingURL } from 'utils';
 import { expandFontToken } from 'const/typography';
 import { trackEvent } from 'utils/analytics';
-import { checkLTT } from 'utils/helper';
-import { parseDescriptors } from 'utils/productUtils';
+import { checkIfLTTMB } from 'utils/helper';
+import { parseDescriptors, shouldUseDynamicShowPage } from 'utils/productUtils';
 import { descriptorIcons } from 'const/descriptorIcons';
 
 const ProductCard = styled.div<{ isV3Design?: boolean }>`
@@ -375,8 +375,9 @@ const Product = (props: any) => {
     showPageUid = null,
     secondaryDescriptors = [],
     hasSpecialOffer,
+    urlSlugs,
   } = tour || {};
-  const isLTT = checkLTT(uid);
+  const isLTT = checkIfLTTMB(uid);
   const {
     originalPrice,
     finalPrice,
@@ -423,9 +424,17 @@ const Product = (props: any) => {
     currency,
     flowType,
   });
-  const showPageUrl = showPageUid
-    ? convertUidToUrl({ uid: showPageUid, isDev, hostname: host, lang })
-    : bookingURL;
+  let showPageUrl = bookingURL;
+  if (shouldUseDynamicShowPage()) {
+    showPageUrl = getFormattedUrlSlug(urlSlugs, lang);
+  } else if (showPageUid) {
+    showPageUrl = convertUidToUrl({
+      uid: showPageUid,
+      isDev,
+      hostname: host,
+      lang,
+    });
+  }
 
   const handleProductClick = (
     event:

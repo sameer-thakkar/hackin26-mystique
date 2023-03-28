@@ -12,6 +12,34 @@ const SentryWebpackPluginOptions = {
   // https://github.com/getsentry/sentry-webpack-plugin#options.
 };
 
+const internalRedirects = [
+  {
+    source: '/:lang/tour/:id/:path*/',
+    destination: '/:lang/e-:id/',
+    permanent: true,
+  },
+  {
+    source: '/tour/:id/:path*/',
+    destination: '/e-:id/',
+    permanent: true,
+  },
+];
+
+const internalRewrites = [
+  {
+    source: '/tour/:id',
+    destination: '/en/tour/:id',
+  },
+  {
+    source: '/:lang/(.*)e-:id(\\d+)',
+    destination: '/:lang/tour/:id',
+  },
+  {
+    source: '/(.*)e-:id(\\d+)',
+    destination: '/en/tour/:id',
+  },
+];
+
 const nextConfig = {
   trailingSlash: true,
   headers: async () => {
@@ -39,6 +67,12 @@ const nextConfig = {
       };
     }
     return config;
+  },
+  rewrites: async () => {
+    return internalRewrites;
+  },
+  redirects: async () => {
+    return internalRedirects;
   },
 };
 

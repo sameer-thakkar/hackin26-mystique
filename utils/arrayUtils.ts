@@ -14,11 +14,11 @@ export const getUniqueArrayItemsBy = (
   keyProps: string[]
 ): any[] =>
   Object.values(
-    array.reduce((uniqueMap, item) => {
+    array?.reduce((uniqueMap, item) => {
       const key = keyProps.map((k) => item[k]).join('|');
       if (!(key in uniqueMap)) uniqueMap[key] = item;
       return uniqueMap;
-    }, {})
+    }, {}) || []
   );
 
 export const groupBy = (array: Record<string, any>[], key: string) => {

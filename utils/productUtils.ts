@@ -599,3 +599,6 @@ export const parseDescriptors = (descriptorArr: Record<string, any>[] = []) => {
   ];
   return descriptorArr.filter(({ name }) => allowedDescriptors.includes(name));
 };
+
+// Temporarily disables dynamic show pages
+export const shouldUseDynamicShowPage = () => false;

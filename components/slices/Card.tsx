@@ -18,7 +18,7 @@ import {
 } from 'const/index';
 import Conditional from 'components/common/Conditional';
 import { trackEvent } from 'utils/analytics';
-import { checkIfGpMotorTickets } from 'utils/helper';
+import { checkIfGpMotorTicketsMB } from 'utils/helper';
 import type { SwiperProps } from 'swiper/react';
 import { FONTS } from 'const/fonts';
 import { MBContext } from 'contexts/MBContext';
@@ -316,7 +316,7 @@ const Card: React.FC<CardProps> = ({
     });
   };
 
-  const isGpMotorTicketsMb = checkIfGpMotorTickets(uid);
+  const isGpMotorTicketsMb = checkIfGpMotorTicketsMB(uid);
   let arIndex;
   if (isGlobalMb || isGpMotorTicketsMb) {
     arIndex = 5;

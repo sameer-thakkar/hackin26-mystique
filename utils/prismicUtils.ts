@@ -918,6 +918,32 @@ export const getRefsArrayByIds = async (
   });
 };
 
+// @ts-expect-error TS(7023): 'getShowPageCollections' implicitly has return type 'any' ... Remove this comment to see the full error message
+export const getShowPageCollections = async ({
+  pageSize = 100,
+  page = 1,
+  prevResults,
+}: any) => {
+  const {
+    results = [],
+    total_results_size: totalDocuments,
+  } = await Client().query(
+    [Prismic.Predicates.at('document.type', CUSTOM_TYPES.SHOW_PAGE)],
+    { page, pageSize }
+  );
+  const allResults = [...prevResults, ...results];
+
+  if (allResults.length < totalDocuments) {
+    return getShowPageCollections({
+      pageSize: 100,
+      page: page + 1,
+      prevResults: allResults,
+    });
+  }
+
+  return allResults;
+};
+
 export const getShowPage = async ({
   req,
   lang,
@@ -951,33 +977,7 @@ export const getShowPage = async ({
   //       .then((res) => res)
   //     : page.data;
 
-  // @ts-expect-error TS(7023): 'getCollections' implicitly has return type 'any' ... Remove this comment to see the full error message
-  const getCollections = async ({
-    pageSize = 100,
-    page = 1,
-    prevResults,
-  }: any) => {
-    const {
-      results = [],
-      total_results_size: totalDocuments,
-    } = await Client().query(
-      [Prismic.Predicates.at('document.type', CUSTOM_TYPES.SHOW_PAGE)],
-      { page, pageSize }
-    );
-    const allResults = [...prevResults, ...results];
-
-    if (allResults.length < totalDocuments) {
-      return getCollections({
-        pageSize: 100,
-        page: page + 1,
-        prevResults: allResults,
-      });
-    }
-
-    return allResults;
-  };
-
-  const allDocuments = await getCollections({
+  const allDocuments = await getShowPageCollections({
     pageSize: 100,
     page: 1,
     prevResults: [],

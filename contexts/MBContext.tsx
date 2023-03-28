@@ -122,7 +122,7 @@ export const MBContextProvider = (props: any) => {
   const buttons = {
     see_more_text: microsite?.see_more_text,
   };
-  const nakedDomain = !host.includes('localhost')
+  const nakedDomain = !host?.includes('localhost')
     ? host.replace('stage-', '').split('.').slice(1).join('.')
     : 'headout.com';
 

@@ -51,7 +51,6 @@ const RatingBoosterCombo = (props: any) => {
     },
     id: tgid,
   });
-  // @ts-expect-error TS(2345): Argument of type '[string | undefined, { fetcher: ... Remove this comment to see the full error message
   const { data: tourGroupData } = useSWR(tourListEndpoint, {
     fetcher: swrFetcher,
   });

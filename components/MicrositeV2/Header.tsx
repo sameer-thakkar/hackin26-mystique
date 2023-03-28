@@ -21,7 +21,7 @@ import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
 import {
   PAGETYPE,
-  ALLOW_IMMEDIEATE_NESTING,
+  ALLOW_IMMEDIATE_NESTING,
   THEMES,
   ANALYTICS_EVENTS,
 } from 'const/index';
@@ -383,7 +383,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   const hasDropdownLinks = enableDropdownLinks && dropdownLinks.length;
   const groupedHeaderSlices = groupSlices(
     headerSlices,
-    ALLOW_IMMEDIEATE_NESTING
+    ALLOW_IMMEDIATE_NESTING
   );
   const headerCurrencies = useRecoilValue(currencyListAtom);
   const headerLanguages = languageProps?.languages.length

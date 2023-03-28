@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { MBContext } from 'contexts/MBContext';
@@ -10,15 +10,19 @@ import Conditional from 'components/common/Conditional';
 import Emoji from 'components/common/Emoji';
 import PriceBlock, { SavedTag } from 'UI/PriceBlock';
 import Image from 'UI/Image';
-import { PLAY_CIRCLE, LOCATION, STAR } from 'assets/SvgIcons';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { LOCATION, PLAY_CIRCLE, STAR } from 'assets/SvgIcons';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  LTT_TAG_PAGE_MAP,
+} from 'const/index';
 import { PRODUCT_VIDEOS } from 'const/ShowPageProductVideos';
 import { strings } from 'const/strings';
 import COLORS from 'const/colors';
 import { expandFontToken } from 'const/typography';
 import { descriptorIcons } from 'const/descriptorIcons';
 import { FONTS } from 'const/fonts';
-import { createBookingURL } from 'utils';
+import { createBookingURL, getNakedDomain } from 'utils';
 import { dateToString } from 'utils/dateUtils';
 import { fetchCalendarInventory } from 'utils/apiUtils';
 import {
@@ -26,6 +30,8 @@ import {
   sendVariablesToDataLayer,
   trackEvent,
 } from 'utils/analytics';
+import LinkResolver from 'components/LinkResolver';
+import { getTagPageLink } from 'utils/urlUtils';
 
 const Banner = styled.div`
   width: 100%;
@@ -361,6 +367,7 @@ const SpecialOfferBoosterMobile = styled.div`
 const ShowPageBanner = ({
   detailsObjects,
   tgid,
+  uid,
   isMobile,
   tourGroupData,
   currentLanguage,
@@ -377,17 +384,17 @@ const ShowPageBanner = ({
     primaryCollection,
     descriptors,
     reviewCount,
-    reviewsDetails: { averageRating },
+    reviewsDetails,
     flowType,
   } = tourGroupData ?? {};
-
+  const { averageRating } = reviewsDetails ?? {};
   const { originalPrice, finalPrice } = listingPrice ?? {};
   const save = Math.round(((originalPrice - finalPrice) / originalPrice) * 100);
 
   const currency = useRecoilValue(currencyAtom);
   const pageMetaData = useRecoilValue(metaAtom);
 
-  const productImage = imageUploads.length
+  const productImage = imageUploads?.length
     ? imageUploads[1] || imageUploads[0]
     : null;
   const isShowPoster = imageUploads?.length === 1; //TODO - revert after showpage revamp
@@ -397,7 +404,7 @@ const ShowPageBanner = ({
   );
 
   const bookingUrl = createBookingURL({
-    nakedDomain: nakedDomain,
+    nakedDomain: nakedDomain || getNakedDomain(hostname),
     lang: currentLanguage,
     tgid: tgid,
     biLink: biLink,
@@ -670,12 +677,20 @@ const ShowPageBanner = ({
                 </Conditional>
               </div>
             </Conditional>
-            {tagsArray.map((element: any, index: number) => {
+            {tagsArray.map((element: string, index: number) => {
               if (element) {
                 return (
-                  <div className="tags-wrapper" key={index}>
-                    {element}
-                  </div>
+                  <LinkResolver
+                    url={getTagPageLink({
+                      url: LTT_TAG_PAGE_MAP[element as any]?.url,
+                      lang: currentLanguage,
+                      uid,
+                    })}
+                  >
+                    <div className="tags-wrapper" key={index}>
+                      {element}
+                    </div>
+                  </LinkResolver>
                 );
               }
             })}

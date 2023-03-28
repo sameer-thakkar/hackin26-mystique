@@ -30,7 +30,7 @@ import {
 } from 'utils/analytics';
 import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
-import { checkBroadway, checkLTT } from 'utils/helper';
+import { checkIfBroadwayMB, checkIfLTTMB } from 'utils/helper';
 
 const SafeExperiencesPitch = dynamic(
   () =>
@@ -500,8 +500,8 @@ const DetailedProductCard = (props: any) => {
       (item: any) => item.label === strings.SHOW_PAGE.DURATION
     );
   }
-  const isBroadway = checkBroadway(mbContext?.uid); // TODO: Need to handle this via book_now_text.
-  const isLTT = checkLTT(mbContext.uid);
+  const isBroadway = checkIfBroadwayMB(mbContext?.uid); // TODO: Need to handle this via book_now_text.
+  const isLTT = checkIfLTTMB(mbContext.uid);
   const experimentEnabled = isLTT;
 
   useEffect(() => {

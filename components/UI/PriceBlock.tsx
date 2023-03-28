@@ -8,7 +8,7 @@ import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import { FONTS } from 'const/fonts';
 import { CurrencyDisplayType } from 'utils/currency';
-import { checkLTT } from 'utils/helper';
+import { checkIfLTTMB } from 'utils/helper';
 import { MBContext } from 'contexts/MBContext';
 
 export const StyledPriceBlock = styled.div<{ showScratchPrice: boolean }>`
@@ -141,7 +141,7 @@ const PriceBlock = ({
   isShowPage = false,
 }: PriceBlockProps) => {
   const { uid } = useContext(MBContext);
-  const isLTT = checkLTT(uid);
+  const isLTT = checkIfLTTMB(uid);
 
   if (!listingPrice) {
     return null;

@@ -94,7 +94,6 @@ const CollectionCard = ({
     });
   });
 
-  // @ts-expect-error TS(2345): Argument of type '[string | undefined, { fetcher: ... Remove this comment to see the full error message
   const { data: collectionData } = useSWR(collectionEndpoint, {
     fetcher: swrFetcher,
   });

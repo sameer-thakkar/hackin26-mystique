@@ -2,7 +2,7 @@ import React from 'react';
 import useWindowSize from 'hooks/useWindowSize';
 import { LIVE_CHAT } from 'const/index';
 import { loadChat } from 'utils/chatUtils';
-import { checkIfGpMotorTickets } from 'utils/helper';
+import { checkIfGpMotorTicketsMB } from 'utils/helper';
 
 type LiveChatProps = {
   uid?: string;
@@ -16,7 +16,7 @@ const LiveChat: React.FC<LiveChatProps> = ({ uid }) => {
     setTimeout(() => {
       loadChat({
         isDelayed: false,
-        hideChatBubble: isMobile && !checkIfGpMotorTickets(uid),
+        hideChatBubble: isMobile && !checkIfGpMotorTicketsMB(uid),
       });
     }, LIVE_CHAT.DELAY);
   }, [isMobile, uid]);

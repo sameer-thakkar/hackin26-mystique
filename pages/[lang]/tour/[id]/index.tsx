@@ -1,67 +1,87 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+import ErrorPage from 'next/error';
 import Head from 'next/head';
-import { useRecoilValue } from 'recoil';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'cook... Remove this comment to see the full error message
+import ServerCookies from 'cookies';
+import styled from 'styled-components';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
+import { useRecoilValue } from 'recoil';
 import { ProductJsonLd } from 'next-seo';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'loda... Remove this comment to see the full error message
-import cloneDeep from 'lodash.clonedeep';
 import { useWindowWidth } from '@react-hook/window-size';
-import styled from 'styled-components';
-import { metaAtom } from 'store/atoms/meta';
-import { gtmAtom } from 'store/atoms/gtm';
-import { currencyAtom } from 'store/atoms/currency';
-import { StyledRichContent } from 'UI/RichContent';
-import Footer from 'components/common/Footer';
-import Header from 'components/common/Header';
-import ContentTabs from 'components/ShowPages/ContentTabs';
-import ShowPageBanner from 'components/ShowPages/Banner';
-import CustomerReview from 'components/ShowPages/CustomerReview';
-import FeatureCard from 'components/ShowPages/FeatureCard';
-import GoogleMap from 'components/ShowPages/GoogleMap';
-import Gallery from 'components/ShowPages/Gallery';
-import CategorySlider from 'components/ShowPages/CategorySlider';
-import SubHeading from 'components/ShowPages/SubHeading';
-import SpecialOfferBanner from 'components/ShowPages/SpecialOfferBanner';
-import TitleTextCombo from 'components/UI/TitleTextCombo';
-import Conditional from 'components/common/Conditional';
-import PopulateMeta from 'components/common/NextSeoMeta';
-import { parseShowPageData } from 'components/ShowPages/parseShowPage';
-import { StyledAsideModal } from 'components/UI/AsideModal';
-import { StyledAccordion } from 'components/slices/Accordion';
 import {
   ALLOW_IMMEDIATE_NESTING,
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  COOKIE,
+  CUSTOM_TYPES,
+  DEFAULT_PRISMIC_SHOWPAGE_UID,
+  DEFAULT_SHOWPAGE_HOSTNAME,
   FAVICON_LONDON_THEATRE_TICKETS,
+  LANGUAGE_MAP,
 } from 'const/index';
 import { strings } from 'const/strings';
+import { StyledRichContent } from 'UI/RichContent';
 import { expandFontToken } from 'const/typography';
-import {
-  getAlternateLanguages,
-  getHeadoutLanguagecode,
-  legacyBooleanCheck,
-} from 'utils';
-import { groupSlices, getHostName, checkIfLTTMB } from 'utils/helper';
+import PopulateMeta from 'components/common/NextSeoMeta';
+import { StyledAsideModal } from 'UI/AsideModal';
 import {
   convertUidToUrl,
-  getValidUrl,
-  getShowpageBreadcrumbUid,
+  getFormattedUrlSlug,
   getLogoRedirectionUrl,
+  getShowpageBreadcrumbUid,
+  getValidUrl,
 } from 'utils/urlUtils';
 import {
+  generateDescriptor,
+  shouldUseDynamicShowPage,
+} from 'utils/productUtils';
+import {
+  fetchDomainConfig,
+  fetchProductData,
   fetchTourGroupReviews,
   fetchTourGroupsByCategory,
+  fetchTourGroupSlots,
 } from 'utils/apiUtils';
-import { generateDescriptor } from 'utils/productUtils';
-import { getPrevDate, getDurationISO } from 'utils/dateUtils';
-import { getProductSchema } from 'utils/schemaUtils';
-import { getUniqueArrayItemsBy } from 'utils/arrayUtils';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import { getProductSchema } from 'utils/schemaUtils';
+import { getDurationISO, getPrevDate } from 'utils/dateUtils';
+import { getUniqueArrayItemsBy } from 'utils/arrayUtils';
+import TitleTextCombo from 'UI/TitleTextCombo';
+import { StyledAccordion } from 'components/slices/Accordion';
+import { checkIfLTTMB, getHostName, groupSlices } from 'utils/helper';
+import Header from 'components/common/Header';
+import {
+  createBookingURL,
+  getHeadoutLanguagecode,
+  redirectTo,
+  refsArrayToObject,
+  renderError,
+} from 'utils';
+import ShowPageBanner from 'components/ShowPages/Banner';
+import Conditional from 'components/common/Conditional';
+import SpecialOfferBanner from 'components/ShowPages/SpecialOfferBanner';
+import ContentTabs from 'components/ShowPages/ContentTabs';
+import Gallery from 'components/ShowPages/Gallery';
+import SubHeading from 'components/ShowPages/SubHeading';
+import GoogleMap from 'components/ShowPages/GoogleMap';
+import CustomerReview from 'components/ShowPages/CustomerReview';
+import FeatureCard from 'components/ShowPages/FeatureCard';
+import CategorySlider from 'components/ShowPages/CategorySlider';
+import Footer from 'components/common/Footer';
+import { parseShowPageData } from 'components/ShowPages/parseShowPage';
+import { currencyAtom } from 'store/atoms/currency';
+import { metaAtom } from 'store/atoms/meta';
+import { gtmAtom } from 'store/atoms/gtm';
+import { MBContext } from 'contexts/MBContext';
+import { getRefsArrayByIds, getShowPageCollections } from 'utils/prismicUtils';
+import { Client } from 'config/prismic-config';
 
-const Breadcrumb = dynamic(() => import('./BreadCrumb'));
-const AccordionGroup = dynamic(() => import('../slices/AccordionGroup'));
+const Breadcrumb = dynamic(() => import('components/ShowPages/BreadCrumb'));
+const AccordionGroup = dynamic(() =>
+  import('components/slices/AccordionGroup')
+);
 
 const ShowPageWrapper = styled.div`
   ${StyledAsideModal} {
@@ -77,7 +97,7 @@ const Wrapper = styled.div`
   margin: 64px auto 0;
   padding: 0 16px;
   ${TitleTextCombo} {
-    margin-bottom: 0px;
+    margin-bottom: 0;
   }
   ${StyledAccordion} {
     padding: 24px 0;
@@ -184,25 +204,26 @@ const AboutTheatreSectionWrapper = styled.div`
   }
 `;
 
-const ShowPage = (props: any) => {
-  const {
-    CMSContent,
-    host,
-    tourGroupData: tempTourGroupData,
-    inventorySlotData,
-    isDev,
-    serverRequestStartTimestamp,
-    domainConfig,
-  } = props;
-  const tourGroupData = cloneDeep(tempTourGroupData);
+const ExperiencePage = ({
+  id,
+  lang,
+  host,
+  hostname,
+  uid,
+  isDev,
+  productData,
+  domainConfig,
+  CMSContent,
+  inventorySlotData,
+  serverRequestStartTimestamp,
+}: any) => {
   const [customerReviews, setCustomerReviews] = useState([]);
   const [similarProductData, setSimilarProductData] = useState([]);
-  const isStage = host.includes('stage-');
-  const hostname = getHostName(isStage, isDev, host);
   const currency = useRecoilValue(currencyAtom);
 
-  const [isMobile, setIsMobile] = useState(props?.isMobile);
+  const [isMobile, setIsMobile] = useState(false);
   const width = useWindowWidth();
+  const { nakedDomain } = useContext(MBContext);
 
   const {
     name,
@@ -217,7 +238,8 @@ const ShowPage = (props: any) => {
     startLocation,
     endLocation,
     variants,
-  } = tourGroupData || {};
+    flowType,
+  } = productData || {};
 
   const { slots } = inventorySlotData || {};
 
@@ -233,6 +255,23 @@ const ShowPage = (props: any) => {
     logo: { logoUrl = '', showPoweredLogo = true } = {},
     name: whiteLabelName,
   } = domainConfig || {};
+
+  const { commonHeader, commonFooter, allShowPagesDocuments } =
+    CMSContent || {};
+  const {
+    body: headerSlices,
+    header_links: headerLinks = [],
+    dropdown_menu: dropdownMenu,
+  } = commonHeader?.data || {};
+  const dropdownLinksArray = dropdownMenu?.reduce((acc: any, item: any) => {
+    if (item.link)
+      return [...acc, { value: item.link.url, label: item.link_text }];
+    else return acc;
+  }, []);
+  const finalHeaderSlices = groupSlices(
+    headerSlices || [],
+    ALLOW_IMMEDIATE_NESTING
+  );
 
   const {
     faqHeading,
@@ -250,17 +289,6 @@ const ShowPage = (props: any) => {
     hasSpecialOffer,
   } = parseShowPageData(microBrandsHighlight);
 
-  const { commonFooter, allShowPagesDocuments } = CMSContent;
-
-  const {
-    uid,
-    first_publication_date: datePublished,
-    last_publication_date: dateModified,
-    data: CMSData,
-    alternate_languages,
-    lang,
-  } = CMSContent;
-
   const currentLanguage = getHeadoutLanguagecode(lang);
   const pageMetaData = useRecoilValue(metaAtom);
   const { eventsReady } = useRecoilValue(gtmAtom);
@@ -273,36 +301,6 @@ const ShowPage = (props: any) => {
   });
 
   const tagsArray = [primarySubCategoryName, ...updatedDescriptors];
-  const alternateLanguages = getAlternateLanguages(
-    alternate_languages,
-    isDev,
-    host,
-    uid
-  );
-
-  const {
-    enable_group_booking: enableGroupBooking,
-    tgid,
-    canonical_link,
-  } = CMSData;
-
-  const { commonHeader } = CMSContent;
-  const headerLinks = commonHeader?.data?.header_links || [];
-  const dropdownLinksArray = commonHeader?.data?.dropdown_menu?.reduce(
-    (acc: any, item: any) => {
-      if (item.link)
-        return [...acc, { value: item.link.url, label: item.link_text }];
-      else return acc;
-    },
-    []
-  );
-
-  const { body: headerSlices } = commonHeader?.data || {};
-
-  const finalHeaderSlices = groupSlices(
-    headerSlices || [],
-    ALLOW_IMMEDIATE_NESTING
-  );
 
   useEffect(() => {
     fetchTourGroupsByCategory({
@@ -315,7 +313,7 @@ const ShowPage = (props: any) => {
     }).then((data) => {
       const { pageData } = data || {};
       const filteredData = pageData?.items?.filter(
-        (element: any) => element.id !== tgid
+        (element: any) => element.id !== id
       );
       if (filteredData?.length) {
         setSimilarProductData(filteredData);
@@ -328,7 +326,7 @@ const ShowPage = (props: any) => {
       trackEvent({
         eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
         [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
-        [ANALYTICS_PROPERTIES.TGIDS]: [tgid],
+        [ANALYTICS_PROPERTIES.TGIDS]: [id],
         ...getCommonEventMetaData(pageMetaData),
       });
     }
@@ -342,7 +340,7 @@ const ShowPage = (props: any) => {
   useEffect(() => {
     const reviewTourGroup = async () => {
       const data = await fetchTourGroupReviews({
-        tgid,
+        tgid: id,
         hostname,
         limit: 5,
       });
@@ -356,13 +354,17 @@ const ShowPage = (props: any) => {
     };
 
     reviewTourGroup();
-  }, [tgid]);
+  }, [hostname, id]);
+
+  if (!shouldUseDynamicShowPage()) {
+    return <ErrorPage statusCode={404} />;
+  }
 
   const pageUrl = convertUidToUrl({
     uid,
     lang: currentLanguage,
     isDev,
-    hostname: host,
+    hostname,
   });
   const logoRedirectionUrl = getLogoRedirectionUrl({
     uid,
@@ -380,7 +382,7 @@ const ShowPage = (props: any) => {
         uid: getShowpageBreadcrumbUid('', isLTT),
         lang: currentLanguage,
         isDev,
-        hostname: host,
+        hostname,
       }),
       text: isLTT
         ? strings.ENTERTAINMENT_MB.LTT.MB_NAME
@@ -391,7 +393,7 @@ const ShowPage = (props: any) => {
         uid: getShowpageBreadcrumbUid(primarySubCategoryName, isLTT),
         lang: currentLanguage,
         isDev,
-        hostname: host,
+        hostname,
       }),
       text: primarySubCategoryName,
     },
@@ -407,6 +409,7 @@ const ShowPage = (props: any) => {
       alt: name,
     },
   ];
+
   const productSchema = getProductSchema({
     productName: name,
     price: listingPrice?.finalPrice,
@@ -426,7 +429,13 @@ const ShowPage = (props: any) => {
   const theatreSeatingCapacity = (aboutTheatreSection as any)?.tab_content[1]?.text?.split(
     ' '
   )[2];
-
+  const showBookingUrl = createBookingURL({
+    nakedDomain,
+    lang: currentLanguage,
+    tgid: id,
+    currency,
+    flowType,
+  });
   const pricingValidFromDate = getPrevDate(inventorySlotData?.fromDate);
 
   let offerSchema: any = [];
@@ -439,7 +448,7 @@ const ShowPage = (props: any) => {
         price: variant.listingPrice?.finalPrice,
         priceCurrency: variant.listingPrice?.currencyCode,
         validFrom: pricingValidFromDate,
-        url: pageUrl,
+        url: showBookingUrl,
         availability: 'https://schema.org/InStock',
       });
     });
@@ -450,7 +459,7 @@ const ShowPage = (props: any) => {
   ]);
 
   const eventSchemaMarkup = uniqueDateTimeSlots
-    ?.slice(0, 30)
+    ?.slice(0, 9)
     ?.map((slot) => {
       const { endTime, startTime, startDate } = slot || {};
       return `
@@ -502,20 +511,18 @@ const ShowPage = (props: any) => {
         <PopulateMeta
           {...{
             prismicData: {
-              ...CMSData,
               ...commonHeader?.data,
               ...{
-                canonical_link: canonical_link || selfCanonicalLink,
+                canonical_link: selfCanonicalLink,
               },
             },
-            datePublished,
-            dateModified,
             serverRequestStartTimestamp,
-            languages: alternateLanguages,
+            languages: [],
             isMobile,
             bannerImages,
             faviconUrl: faviconUrl || FAVICON_LONDON_THEATRE_TICKETS,
-            logoUrl: logoUrl,
+            logoUrl,
+            uid,
           }}
         />
         {/* @ts-expect-error TS(2322): Type '{ reviews?: { author: { type: string; name: ... Remove this comment to see the full error message */}
@@ -526,8 +533,8 @@ const ShowPage = (props: any) => {
             type="application/ld+json"
           />
         </Head>
+
         <Header
-          languages={alternateLanguages}
           headerLinks={headerLinks}
           dropdownLinks={dropdownLinksArray}
           currentLanguage={currentLanguage}
@@ -535,7 +542,7 @@ const ShowPage = (props: any) => {
           logoAltText={whiteLabelName || ''}
           uid={uid}
           isMobile={isMobile}
-          showGroupBooking={legacyBooleanCheck(enableGroupBooking)}
+          showGroupBooking={false}
           logoRedirectionURL={logoRedirectionUrl}
           host={host}
           hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
@@ -543,11 +550,11 @@ const ShowPage = (props: any) => {
           isEntertainmentMB={true}
         />
         <ShowPageBanner
-          tgid={tgid}
+          tgid={id}
           uid={uid}
           isMobile={isMobile}
           detailsObjects={detailsObjects}
-          tourGroupData={tourGroupData}
+          tourGroupData={productData}
           currentLanguage={currentLanguage}
           tagsArray={tagsArray}
           hostname={hostname}
@@ -582,8 +589,11 @@ const ShowPage = (props: any) => {
               contentArr={tabSchemaHighlight}
             />
           )}
-          <Conditional if={imageUploads.length >= 5}>
-            <Gallery galleryArray={imageUploads.slice(2)} isMobile={isMobile} />
+          <Conditional if={imageUploads?.length >= 5}>
+            <Gallery
+              galleryArray={imageUploads?.slice(2)}
+              isMobile={isMobile}
+            />
           </Conditional>
           <SubHeading content={tabSectionHeading} />
           <AboutTheatreSectionWrapper>
@@ -617,7 +627,7 @@ const ShowPage = (props: any) => {
             heading={faqHeading}
             useSchema={true}
           />
-          <Conditional if={customerReviews.length}>
+          <Conditional if={customerReviews?.length}>
             <>
               <SubHeading content={strings.CUSTOMER_REVIEW_HEADING} />
               <CustomerReview cards={customerReviews} isMobile={isMobile} />
@@ -650,4 +660,94 @@ const ShowPage = (props: any) => {
   );
 };
 
-export default ShowPage;
+ExperiencePage.getInitialProps = async ({ req, res, query, asPath }: any) => {
+  const serverCookies = new ServerCookies(req, res);
+  const currency = serverCookies?.get(COOKIE.CURRENT_CURRENCY);
+  const { host } = req?.headers || window?.location;
+  const { lang, id } = query;
+  const isStage = host.includes('stage-');
+  const isDev = host.includes('localhost');
+  const hostname = getHostName(isStage, isDev, host);
+  let uid;
+  if (isDev) {
+    uid =
+      (req ? query.host : window.location.search.includes('host')) ||
+      DEFAULT_SHOWPAGE_HOSTNAME;
+  } else {
+    const { host } = req ? req.headers : window.location;
+    uid = host.replace('stage-', '');
+  }
+  const productData = await fetchProductData({
+    id,
+    lang,
+    hostname,
+    currency,
+  }).then((data) => data);
+
+  if (!shouldUseDynamicShowPage()) {
+    return renderError({ res, statusCode: 404 });
+  }
+
+  const { urlSlugs } = productData;
+  const currentUrlPath = asPath.split('?')[0];
+  const queryParams =
+    asPath.indexOf('?') !== -1 ? `?${asPath.split('?')[1]}` : '';
+  const formattedSlug = getFormattedUrlSlug(urlSlugs, lang);
+
+  if (formattedSlug && currentUrlPath !== formattedSlug) {
+    return redirectTo({
+      res,
+      url: `${formattedSlug}${queryParams}`,
+      type: 301,
+    });
+  }
+
+  const domainConfig = await fetchDomainConfig(uid);
+  const allDocuments = await getShowPageCollections({
+    pageSize: 100,
+    page: 1,
+    prevResults: [],
+  });
+  const prismicLang = LANGUAGE_MAP[lang]?.locale || 'en-us';
+  // Adding this temporarily to pull common header and footer data from Prismic
+  const page = await Client(req).getByUID(
+    CUSTOM_TYPES.SHOW_PAGE,
+    DEFAULT_PRISMIC_SHOWPAGE_UID,
+    {
+      lang: prismicLang,
+    }
+  );
+  const { common_footer, common_header } = page?.data || {};
+  const refArray = await getRefsArrayByIds(
+    [common_header.id, common_footer.id],
+    req
+  );
+  const { commonHeader, commonFooter } = refsArrayToObject(refArray);
+  const CMSContent = {
+    commonFooter,
+    commonHeader,
+    allShowPagesDocuments: allDocuments,
+  };
+  const inventorySlotData = await fetchTourGroupSlots({
+    tgid: id,
+    hostname,
+    forDays: 10,
+  });
+  const serverRequestStartTimestamp = Math.floor(new Date().getTime());
+
+  return {
+    id,
+    lang: lang || 'en',
+    host,
+    hostname,
+    uid,
+    isDev,
+    productData,
+    domainConfig,
+    CMSContent,
+    inventorySlotData,
+    serverRequestStartTimestamp,
+  };
+};
+
+export default ExperiencePage;

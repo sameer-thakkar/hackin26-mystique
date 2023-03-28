@@ -65,7 +65,7 @@ const drawerStyles = css`
     }
     ::-webkit-scrollbar-track {
       /* box-shadow: inset 0 0 2px transparent; */
-      border-radius: 2;
+      border-radius: 2px;
     }
     ::-webkit-scrollbar-thumb {
       background: ${COLORS.GRAY.G4};
