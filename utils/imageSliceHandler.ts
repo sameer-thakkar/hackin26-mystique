@@ -1,4 +1,5 @@
 import { FALLBACK_IMAGE, SLICE_TYPES } from 'const/index';
+import { VideoSitemap } from 'pages/video-sitemap.xml';
 import { getCollectionSection } from 'utils';
 
 import { getHeadoutApiUrl, HeadoutEndpoints } from './apiUtils';
@@ -54,12 +55,12 @@ export interface ImageProps
     CardImageProps {}
 
 export const storeImage = ({
-  sliceImages,
+  mediaArray,
   firstImage,
   secondImage,
   thirdImage,
 }: {
-  sliceImages: string[];
+  mediaArray: string[] | VideoSitemap[];
   firstImage?: string;
   secondImage?: string;
   thirdImage?: any;
@@ -75,9 +76,9 @@ export const storeImage = ({
       imgUrlObj.search = '';
       imgUrlObj.hash = '';
       const imgUrlWithoutQueryParams = imgUrlObj.toString();
-      sliceImages.push(imgUrlWithoutQueryParams);
+      (mediaArray as Array<string>).push(imgUrlWithoutQueryParams);
     } else {
-      sliceImages.push(firstImage || secondImage || thirdImage);
+      mediaArray.push(firstImage || secondImage || thirdImage);
     }
   } catch (e) {
     /* tslint:disable:no-empty */
@@ -90,21 +91,60 @@ const fetchData = async (endpoint: any) => {
   return data;
 };
 
-const sliceHandler = async (
-  slice: any,
-  lang: string | null,
-  isDev: boolean,
-  sliceImages: string[],
-  host?: string,
-  isStage?: boolean
-) => {
-  if (slice?.primary?.hide_slice) return;
+const sliceHandler = async ({
+  slice,
+  lang,
+  isDev,
+  mediaArray,
+  host,
+  isStage,
+  isVideoSitemap,
+  videoTitle,
+  videoDescription,
+}: {
+  slice: any;
+  lang?: string | null;
+  isDev?: boolean;
+  mediaArray: string[] | VideoSitemap[];
+  host?: string;
+  isStage?: boolean;
+  isVideoSitemap?: boolean;
+  videoTitle?: string;
+  videoDescription?: string;
+}) => {
+  if (
+    slice?.primary?.hide_slice ||
+    (isVideoSitemap && slice.slice_type !== SLICE_TYPES.RICH_TEXT)
+  )
+    return;
+
   switch (slice.slice_type) {
+    case SLICE_TYPES.RICH_TEXT: {
+      if (isVideoSitemap) {
+        slice?.items?.forEach((item: any) => {
+          item?.text?.forEach((textItem: any) => {
+            if (textItem?.text?.includes('https://www.youtube.com/')) {
+              const urlRegex = /(https?:\/\/[^ ]*)/;
+              let url = textItem?.text?.match(urlRegex)[0]?.split(`"`)[0];
+              const thumbNailUrl = url.split('www.')[1];
+              (mediaArray as Array<VideoSitemap>).push({
+                url,
+                thumbnail: `img.${thumbNailUrl}`,
+                description: videoDescription as string,
+                title: videoTitle as string,
+              });
+            }
+          });
+        });
+      }
+      break;
+    }
+
     case SLICE_TYPES.INTERNAL_CONTENT_CARD: {
       const items = slice?.items;
       items?.forEach((image: ImageProps) =>
         storeImage({
-          sliceImages,
+          mediaArray,
           firstImage: image?.image_link?.url,
           secondImage: image?.image_source?.url,
         })
@@ -120,7 +160,7 @@ const sliceHandler = async (
         const items = slice?.items;
         items?.forEach((item: ImageProps) =>
           storeImage({
-            sliceImages,
+            mediaArray,
             firstImage: item?.image_url?.url,
             secondImage: item?.image_source?.url,
             thirdImage: slice.slice_type === SLICE_TYPES.CARD && FALLBACK_IMAGE,
@@ -133,7 +173,7 @@ const sliceHandler = async (
       const items = slice?.items;
       items?.forEach((item: ImageProps) =>
         storeImage({
-          sliceImages,
+          mediaArray,
           firstImage: item?.icon_url?.url,
           secondImage: item?.uploaded_icon?.url,
         })
@@ -146,7 +186,7 @@ const sliceHandler = async (
       const items = slice?.items;
       items?.forEach((image: ImageProps) =>
         storeImage({
-          sliceImages,
+          mediaArray,
           firstImage:
             slice.slice_type === SLICE_TYPES.IMAGE_LINKS_CAROUSEL
               ? image?.uploaded_image?.url
@@ -166,7 +206,7 @@ const sliceHandler = async (
     case SLICE_TYPES.TAB_WRAPPER: {
       const slices = slice?.slices;
       slices?.forEach((slice: any) =>
-        sliceHandler(slice, lang, isDev, sliceImages, host, isStage)
+        sliceHandler({ slice, lang, isDev, mediaArray, host, isStage })
       );
       break;
     }
@@ -176,7 +216,7 @@ const sliceHandler = async (
       faqs?.forEach((faqSlice: any) =>
         faqSlice?.items?.forEach((image: QuestionImageProps) =>
           storeImage({
-            sliceImages,
+            mediaArray,
             firstImage: image?.linked_image,
             secondImage: image?.upload_image?.url,
           })
@@ -190,7 +230,7 @@ const sliceHandler = async (
       const items = slice?.items;
       items?.forEach((image: ImageProps) =>
         storeImage({
-          sliceImages,
+          mediaArray,
           firstImage:
             slice.slice_type === SLICE_TYPES.UGC_CAROUSEL
               ? image?.instagram_posts?.imageURL
@@ -228,7 +268,7 @@ const sliceHandler = async (
           );
 
         tourGroups?.forEach((tour: { imageUrl?: string }) =>
-          sliceImages.push(tour?.imageUrl as string)
+          (mediaArray as Array<string>).push(tour?.imageUrl as string)
         );
       } catch (e) {
         /* tslint:disable:no-empty */
@@ -247,7 +287,7 @@ const sliceHandler = async (
         };
       }, {});
 
-      const hostname = getHostName(isStage as boolean, isDev, host as string);
+      const hostname = host && getHostName(!!isStage, !!isDev, host);
       const params = {
         'ids[]': tgids,
         ...(lang && {
@@ -269,7 +309,7 @@ const sliceHandler = async (
           : {};
         if (apiTours && tgids?.length > 0) {
           tgids?.forEach((item: any) => {
-            sliceImages.push(apiTours[item]?.image);
+            mediaArray.push(apiTours[item]?.image);
           });
         }
       } catch (e) {
@@ -283,7 +323,7 @@ const sliceHandler = async (
       reviews?.forEach((image: ImageProps, index: number) => {
         const n = (index % 202) + 1;
         storeImage({
-          sliceImages,
+          mediaArray,
           firstImage: image?.reviewer_image_url?.url,
           secondImage: image?.reviewer_image?.url,
           thirdImage: `https://cdn-s3-open.headout.com/reviews/${n}.jpg`,

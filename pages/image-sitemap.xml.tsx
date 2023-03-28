@@ -38,7 +38,14 @@ const extractSliceImages = (
   const longFormSlices = [...contentFWSlices, ...longFormContent];
 
   longFormSlices?.forEach((slice: any) =>
-    imageSliceHandler(slice, lang, isDev, finalImages, host, isStage)
+    imageSliceHandler({
+      slice,
+      lang,
+      isDev,
+      mediaArray: finalImages,
+      host,
+      isStage,
+    })
   );
 };
 
@@ -99,7 +106,7 @@ ImageSitemapXml.getInitialProps = async ({
       bannerImages?.forEach(
         (item: { image_src: UrlProps; uploaded_image: UrlProps }) =>
           storeImage({
-            sliceImages: finalImages,
+            mediaArray: finalImages,
             firstImage: item?.uploaded_image?.url,
             secondImage: item?.image_src?.url,
           })
@@ -178,13 +185,13 @@ ImageSitemapXml.getInitialProps = async ({
           const image = CMSContent?.data?.images[0];
           const firstImage = image?.image_src?.url;
           const secondImage = image?.uploaded_image?.url;
-          storeImage({ sliceImages: finalImages, firstImage, secondImage });
+          storeImage({ mediaArray: finalImages, firstImage, secondImage });
         }
       } else {
         bannerImages?.forEach(
           (item: { image_src: UrlProps; uploaded_image: UrlProps }) => {
             storeImage({
-              sliceImages: finalImages,
+              mediaArray: finalImages,
               firstImage: item?.image_src?.url,
             });
           }
