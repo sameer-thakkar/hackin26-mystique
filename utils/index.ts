@@ -77,7 +77,7 @@ export const getPrismicProps = ({
   }
 
   const uid = `${
-    pathname?.includes('image-sitemap')
+    pathname?.includes('sitemap')
       ? host
       : withoutTrailingSlash(`${host}/${pathnameSlugs.join('/')}`)
   }`
