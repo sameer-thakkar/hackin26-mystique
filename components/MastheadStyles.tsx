@@ -32,7 +32,7 @@ export const StyledMasthead = styled.div<{
         #111111 16.05%,
         rgba(17, 17, 17, 0.8) 40.39%,
         rgba(17, 17, 17, 0) 77.55%
-      ), url(${imageUrl});
+      ), url("${imageUrl}");
     background-size: 50vw 44.25rem;
     background-position: right, right;
     background-repeat: no-repeat;
@@ -50,7 +50,7 @@ export const StyledMasthead = styled.div<{
         }
         `
         : `
-        background-image: url(${imageUrl});
+        background-image: url("${imageUrl}");
         background-size: 100vw 18.75rem;
         ${
           withoutImage
