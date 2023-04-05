@@ -189,9 +189,13 @@ export const getContentPageDocument = async ({
       const baseLangMicrositeData =
         lang !== EN_LANG_CODE
           ? await Client(req)
-              .getByUID(CUSTOM_TYPES.MICROSITE, micrositeData.uid, {
-                lang: EN_LANG_CODE,
-              })
+              .getByUID(
+                CUSTOM_TYPES.MICROSITE,
+                baseLangData?.data?.microsite_document_ref?.uid,
+                {
+                  lang: EN_LANG_CODE,
+                }
+              )
               .then((res: any) => res)
           : micrositeData;
 
