@@ -10,11 +10,16 @@ import { FONTS } from 'const/fonts';
 import { CurrencyDisplayType } from 'utils/currency';
 import { checkIfLTTMB } from 'utils/helper';
 import { MBContext } from 'contexts/MBContext';
+import CashbackBlock from 'UI/CashbackBlock/index';
 
-export const StyledPriceBlock = styled.div<{ showScratchPrice: boolean }>`
+export const StyledPriceBlock = styled.div<{
+  showScratchPrice: boolean;
+  isSportsExperiment?: boolean;
+}>`
   display: grid;
   grid-template-columns: auto auto;
-  grid-row-gap: 4px;
+  grid-row-gap: ${({ isSportsExperiment }) =>
+    isSportsExperiment ? '.125rem' : '.25rem'};
   grid-column-gap: 8px;
   align-items: end;
   text-transform: camelcase;
@@ -44,6 +49,8 @@ export const StyledPriceBlock = styled.div<{ showScratchPrice: boolean }>`
     }
     & .strike-through {
       text-decoration: line-through;
+      color: ${({ isSportsExperiment }) =>
+        isSportsExperiment && `${COLORS.GRAY.G4}`};
     }
   }
   @media (max-width: 768px) {
@@ -55,7 +62,7 @@ export const StyledPriceBlock = styled.div<{ showScratchPrice: boolean }>`
   }
 `;
 
-export const SavedTag = styled.div`
+export const SavedTag = styled.div<{ isSportsExperiment?: boolean }>`
   padding: 0.125rem 0.25rem;
   align-self: center;
   margin-top: 1px; // hack to visually align center.
@@ -67,6 +74,15 @@ export const SavedTag = styled.div`
     theme.theme === THEMES.DEFAULT
       ? theme.primaryText
       : COLORS.TEXT.OKAY_GREEN_3};
+
+  ${({ isSportsExperiment }) =>
+    isSportsExperiment &&
+    `
+    background: ${COLORS.TEXT.OKAY_GREEN_3};
+    color: ${COLORS.BRAND.WHITE};
+    padding: 0.25rem .375rem !important;
+    margin-top: 0;
+    `}
 
   ${expandFontToken(FONTS.MISC_TAG_REGULAR)}
   border-radius: 2px;
@@ -121,6 +137,7 @@ type PriceBlockProps = {
   currencyDisplay?: CurrencyDisplayType;
   lang: string;
   listingPrice: any;
+  isSportsExperiment?: boolean;
   showSavings?: boolean;
   showScratchPrice?: boolean;
   prefix?: boolean;
@@ -132,6 +149,7 @@ type PriceBlockProps = {
 const PriceBlock = ({
   listingPrice,
   lang,
+  isSportsExperiment,
   showScratchPrice: showScratchPriceProp = false,
   prefix = false,
   showSavings,
@@ -160,7 +178,7 @@ const PriceBlock = ({
   const showScratchPrice = originalPrice > finalPrice && showScratchPriceProp;
   const showPrefix = prefix && otherPricesExist;
   const showcashbackElm =
-    showCashback &&
+    (showCashback || isSportsExperiment) &&
     cashbackValue > 0 &&
     cashbackType === CASHBACK_TYPES.PERCENTAGE;
 
@@ -173,54 +191,62 @@ const PriceBlock = ({
   }
 
   return (
-    <StyledPriceBlock
-      className={'styled-price-block'}
-      showScratchPrice={showScratchPrice}
-    >
-      <span className="tour-scratch-price">
-        {showPrefix ? strings.FROM.toLowerCase() + ' ' : ''}
-        <Conditional if={showScratchPrice}>
+    <div>
+      <StyledPriceBlock
+        className={'styled-price-block'}
+        showScratchPrice={showScratchPrice}
+        isSportsExperiment={isSportsExperiment}
+      >
+        <span className="tour-scratch-price">
+          {showPrefix ? strings.FROM.toLowerCase() + ' ' : ''}
+          <Conditional if={showScratchPrice}>
+            <LocalisedPrice
+              currencyCode={currencyCode}
+              currencyDisplay={currencyDisplay}
+              lang={lang}
+              price={originalPrice}
+              precision={precision}
+            />
+          </Conditional>
+        </span>
+        <div className="tour-price-container">
           <LocalisedPrice
+            className="tour-price"
             currencyCode={currencyCode}
             currencyDisplay={currencyDisplay}
             lang={lang}
-            price={originalPrice}
+            price={finalPrice}
             precision={precision}
           />
-        </Conditional>
-      </span>
-      <div className="tour-price-container">
-        <LocalisedPrice
-          className="tour-price"
-          currencyCode={currencyCode}
-          currencyDisplay={currencyDisplay}
-          lang={lang}
-          price={finalPrice}
-          precision={precision}
-        />
-        {/* @ts-expect-error TS(2532): Object is possibly 'undefined'. */}
-        <Conditional if={isLTT && showSavings && save > 0}>
-          <SavedTag className={'savedtag-block'}>
-            {strings.formatString(
-              isShowPage ? strings.SAVE_PERCENT : strings.SAVE_UPTO_PERCENT,
-              `${save}`
-            )}
+          <Conditional if={isLTT && showSavings && save && save > 0}>
+            <SavedTag className={'savedtag-block'}>
+              {strings.formatString(
+                isShowPage ? strings.SAVE_PERCENT : strings.SAVE_UPTO_PERCENT,
+                `${save}`
+              )}
+            </SavedTag>
+          </Conditional>
+          <Conditional if={showcashbackElm && !isSportsExperiment}>
+            <SavedTag className={'savedtag-block'}>
+              {strings.formatString(strings.CASHBACK, `${cashbackValue}`)}
+            </SavedTag>
+          </Conditional>
+        </div>
+        <Conditional
+          if={showSavings && showScratchPrice && !!savingsElementsArray.length}
+        >
+          <SavedTag
+            className={`savedtag-block`}
+            isSportsExperiment={isSportsExperiment}
+          >
+            {savingsElementsArray.join(' + ')}
           </SavedTag>
         </Conditional>
-        <Conditional if={showcashbackElm}>
-          <SavedTag className={'savedtag-block'}>
-            {strings.formatString(strings.CASHBACK, `${cashbackValue}`)}
-          </SavedTag>
-        </Conditional>
-      </div>
-      <Conditional
-        if={showSavings && showScratchPrice && !!savingsElementsArray.length}
-      >
-        <SavedTag className={'savedtag-block'}>
-          {savingsElementsArray.join(' + ')}
-        </SavedTag>
+      </StyledPriceBlock>
+      <Conditional if={showcashbackElm && isSportsExperiment}>
+        <CashbackBlock cashbackValue={cashbackValue} />
       </Conditional>
-    </StyledPriceBlock>
+    </div>
   );
 };
 

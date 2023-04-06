@@ -21,6 +21,8 @@ const tw = {
   READ_MORE_TEXT: '了解更多',
   SHOW_LESS_TEXT: '收起',
   NEXT_AVAILABLE: '下一個可預訂: ',
+  SELECT_SECTION: '選擇 部分',
+  GET_CASHBACK: '得到 {0}% 返現',
   SAVE_UPTO: '節省',
   AVAILABLE: '接受預訂',
   EARLIEST_AVAILABILITY: '最早可預定日期',

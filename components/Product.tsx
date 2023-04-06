@@ -56,6 +56,7 @@ import {
   checkIfGpMotorTicketsMB,
   checkIfSportsSubCategory,
   getHostName,
+  isF1SportsExperiment,
 } from 'utils/helper';
 import {
   extractTabsFromHighlights,
@@ -1056,17 +1057,26 @@ const OpenDatedDescriptor = styled.div`
 
 export const Descriptors = ({
   descriptorArray,
-  horizontal = false,
-  pageType = '',
   minDuration,
   maxDuration,
   lang = 'en',
-  isCombo = false,
   isGpMotorTicketsMb = false,
-}: any) => {
+  isCombo = false,
+  horizontal = false,
+  pageType = '',
+}: {
+  descriptorArray: Array<string>;
+  minDuration: number | null;
+  maxDuration: number | null;
+  lang: string;
+  isGpMotorTicketsMb?: boolean;
+  isCombo?: boolean;
+  horizontal?: boolean;
+  pageType?: string;
+}) => {
   return (
     <TourTags horizontal={horizontal} pageType={pageType}>
-      {descriptorArray.map((item: any, index: number) => {
+      {descriptorArray.map((item: string, index: number) => {
         const DescriptorSVG = descriptorIcons[item];
         if (item === DESCRIPTORS.DURATION && (isCombo || isGpMotorTicketsMb))
           return null;
@@ -1139,6 +1149,7 @@ const Product = (props: any) => {
     sidebarModal: { addToAside },
     redirectToHeadoutBookingFlow,
   } = useContext(MBContext);
+  const isSportsExperiment = isF1SportsExperiment(tgid);
   const pageMetaData = useRecoilValue(metaAtom);
   const currency = useRecoilValue(currencyAtom);
   const hostname = getHostName(isStage, isDev, host);
@@ -1574,6 +1585,19 @@ const Product = (props: any) => {
     flowType,
   });
 
+  const getBookNowButtonText = (): string => {
+    switch (true) {
+      case isV3Design: // This is just for the experiment. Will revert this at a later time or figure a better to do this
+        return strings.BOOK_NOW_CTA;
+      case isSportsExperiment:
+        return strings.SELECT_SECTION;
+      case isGpMotorTicketsMb && isSportsSubCategory:
+        return strings.BUY_TICKETS_CTA;
+      default:
+        return strings.CHECK_AVAIL;
+    }
+  };
+
   const BookNowCta = ({ clickHandler }: { clickHandler: () => void }) => (
     <Button
       className={`tour-book-now-cta`}
@@ -1584,11 +1608,7 @@ const Product = (props: any) => {
       role="button"
       tabIndex={0}
     >
-      {isV3Design // This is just for the experiment. Will revert this at a later time or figure a better to do this
-        ? strings.BOOK_NOW_CTA
-        : isGpMotorTicketsMb && isSportsSubCategory
-        ? strings.BUY_TICKETS_CTA
-        : strings.CHECK_AVAIL}
+      {getBookNowButtonText()}
       {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
     </Button>
   );
@@ -1683,6 +1703,7 @@ const Product = (props: any) => {
           <CTAContainer pageType={pageType}>
             <PriceContainer pageType={pageType}>
               <PriceBlock
+                isSportsExperiment={isSportsExperiment}
                 showScratchPrice={showScratchPrice}
                 listingPrice={finalListingPrice}
                 lang={currentLanguage}

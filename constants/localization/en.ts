@@ -45,6 +45,8 @@ const en = {
   SHOW_LESS_TEXT: 'Show less',
   SELECT_CITY: 'Select city',
   NEXT_AVAILABLE: 'Next available: ',
+  SELECT_SECTION: 'Select Section',
+  GET_CASHBACK: 'Get {0}% Cashback',
   SAVE: 'Save {0}%',
   CASHBACK: '{0}% cashback',
   AVAILABLE: 'Available',

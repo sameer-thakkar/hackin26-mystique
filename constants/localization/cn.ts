@@ -21,6 +21,8 @@ const cn = {
   READ_MORE_TEXT: '了解更多',
   SHOW_LESS_TEXT: '收起',
   NEXT_AVAILABLE: '下一个可预订: ',
+  SELECT_SECTION: '选择部分',
+  GET_CASHBACK: '得到 {0}% 返现',
   SAVE_UPTO: '节省',
   AVAILABLE: '接受预订',
   EARLIEST_AVAILABILITY: '最早可预定日期',

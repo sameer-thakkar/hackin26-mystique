@@ -22,6 +22,8 @@ const ko = {
   READ_MORE_TEXT: '더 알아보기',
   SHOW_LESS_TEXT: '접어보기',
   NEXT_AVAILABLE: '다음 가능 일정: ',
+  SELECT_SECTION: '선택하다 부분',
+  GET_CASHBACK: '얻다 {0}% 캐쉬백',
   SAVE_UPTO: '최고 할인',
   AVAILABLE: '유효',
   EARLIEST_AVAILABILITY: '가장 빠른 가능일',

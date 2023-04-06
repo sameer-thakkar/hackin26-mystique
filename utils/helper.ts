@@ -3,7 +3,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import * as Sentry from '@sentry/nextjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
-import { LANGUAGE_MAP } from 'const/index';
+import { F1_SPORTS_EXPERIMENT_TGIDS, LANGUAGE_MAP } from 'const/index';
 import renderShortCodes from 'utils/shortCodes';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import type { NumberField, SelectField } from '@prismicio/types';
@@ -529,3 +529,6 @@ export const checkIfGpMotorTicketsMB = (uid: string | null | undefined) =>
 export const checkIfSportsSubCategory = (
   primarySubcategoryId: number | undefined | null
 ) => primarySubcategoryId === 1042 || primarySubcategoryId === 1109;
+
+export const isF1SportsExperiment = (tgid: number): boolean =>
+  F1_SPORTS_EXPERIMENT_TGIDS.includes(String(tgid));

@@ -28,6 +28,8 @@ const ar = {
   SHOW_LESS_TEXT: 'عرض أقل',
   SELECT_CITY: 'اختر المدينة',
   NEXT_AVAILABLE: 'المتوفر التالي: ',
+  SELECT_SECTION: 'حدد القسم',
+  GET_CASHBACK: 'يحصل {0}% استرداد النقود',
   SAVE_UPTO: 'وفر لحد',
   SAVE: 'وفر {0}%',
   AVAILABLE: 'متوفر',

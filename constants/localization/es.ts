@@ -44,6 +44,8 @@ const es = {
   READ_MORE_TEXT: 'Leer más',
   SHOW_LESS_TEXT: 'Mostrar menos',
   NEXT_AVAILABLE: 'Próxima disponible: ',
+  SELECT_SECTION: 'Elegir sección',
+  GET_CASHBACK: 'Consigue {0}% en cashback',
   SAVE_UPTO: 'Ahorra hasta un',
   SAVE: 'Ahorra {0}%',
   CASHBACK: '{0}% en Cashback',

@@ -1121,3 +1121,28 @@ export const DEFAULT_PRISMIC_SHOWPAGE_UID =
 export const DEFAULT_SHOWPAGE_HOSTNAME = 'www.london-theater-tickets.com';
 
 export const DOMAIN_INITIALS = 'www.';
+
+export const F1_SPORTS_EXPERIMENT_TGIDS = [
+  '19708',
+  '20016',
+  '20017',
+  '21013',
+  '20159',
+  '19873',
+  '20021',
+  '20026',
+  '6735',
+  '20015',
+  '21816',
+  '20018',
+  '20158',
+  '20160',
+  '20161',
+  '21071',
+  '21078',
+  '21079',
+  '21090',
+  '19877',
+  '21074',
+  '20949',
+];

@@ -44,6 +44,8 @@ const pt = {
   SHOW_ALL_PHOTOS: 'Ver todas as fotos',
   VIEW_LESS: 'Mostrar menos',
   NEXT_AVAILABLE: 'Próxima disponível: ',
+  SELECT_SECTION: 'Escolher setor',
+  GET_CASHBACK: 'Garanta {0}% de cashback',
   SAVE_UPTO: 'Economize até',
   SAVE: 'Economize  {0}%',
   CASHBACK: '{0}% em Cashback',

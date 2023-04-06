@@ -43,6 +43,8 @@ const fr = {
   SHOW_ALL_PHOTOS: 'Afficher toutes les photos',
   VIEW_LESS: 'Voir moins',
   NEXT_AVAILABLE: 'Prochaine disponibilité: ',
+  SELECT_SECTION: 'Sélectionner une tribube',
+  GET_CASHBACK: 'Recevez un cashback de {0}%',
   SAVE_UPTO: "Économisez jusqu'à",
   SAVE: 'Économisez {0} %',
   AVAILABLE: 'Disponible',

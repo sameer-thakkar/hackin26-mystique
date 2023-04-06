@@ -21,6 +21,8 @@ const ja = {
   READ_MORE_TEXT: 'もっと見る',
   SHOW_LESS_TEXT: '戻る',
   NEXT_AVAILABLE: '次に利用可能: ',
+  SELECT_SECTION: '選択する セクション',
+  GET_CASHBACK: '得る {0}% キャッシュバック',
   SAVE_UPTO: '最大 節約',
   AVAILABLE: '予約可能',
   EARLIEST_AVAILABILITY: '最も早い予約可能日',

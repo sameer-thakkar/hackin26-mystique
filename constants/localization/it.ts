@@ -44,6 +44,8 @@ const it = {
   SHOW_ALL_PHOTOS: 'Mostra tutte le foto',
   VIEW_LESS: 'Mostra meno',
   NEXT_AVAILABLE: 'Prossimo disponibile: ',
+  SELECT_SECTION: 'Seleziona tribuna',
+  GET_CASHBACK: 'Ottieni {0}% di cashback',
   SAVE_UPTO: 'Risparmi fino al',
   SAVE: 'Risparmi il  {0}%',
   CASHBACK: '{0}% di Cashback',

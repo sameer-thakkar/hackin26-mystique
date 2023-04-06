@@ -44,6 +44,8 @@ const de = {
   SHOW_ALL_PHOTOS: 'Alle Fotos anzeigen',
   VIEW_LESS: 'Weniger anzeigen',
   NEXT_AVAILABLE: 'Verfügbar ab: ',
+  SELECT_SECTION: 'Tribüne wählen',
+  GET_CASHBACK: '{0}% Cashback sichern',
   SAVE_UPTO: 'Spare',
   SAVE: '{0} % Rabatt',
   AVAILABLE: 'Verfügbar am',

@@ -44,6 +44,8 @@ const nl = {
   SHOW_ALL_PHOTOS: "Laat alle foto's zien",
   VIEW_LESS: 'Bekijk minder',
   NEXT_AVAILABLE: 'Weer beschikbaar: ',
+  SELECT_SECTION: 'Tribune kiezen',
+  GET_CASHBACK: 'Ontvang {0}% cashback',
   SAVE_UPTO: 'Bespaar tot',
   SAVE: 'Bespaar {0}%',
   AVAILABLE: 'Beschikbaar',
