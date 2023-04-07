@@ -44,6 +44,7 @@ import {
   CUSTOM_TYPES,
   DESCRIPTORS,
   MEDIA_CAROUSEL_IMAGE_LIMIT,
+  PRODUCT_CARD_LENGTH_EXP_UIDS,
 } from 'const/index';
 import { createBookingURL } from 'utils';
 import {
@@ -124,7 +125,7 @@ const Container = styled.div<{
 const PRODUCT_CARD_IMAGE_DIMENSIONS = {
   MOBILE: {
     width: 400,
-    firstProductWidth: 650,
+    bannerProductWidth: 650,
   },
   DESKTOP: {
     height: 320,
@@ -1238,7 +1239,10 @@ const Product = (props: any) => {
   const descriptorsList = descriptors || scorpioData.descriptors;
   const cardTitle = title || scorpioData.title;
   const { promo_code } = finalPromoCode || {};
-  const isBannerCard = indexPosition === 0 && isCollectionMB;
+  const isFirstProduct = indexPosition === 0;
+  const isProductCardLengthExpUid = PRODUCT_CARD_LENGTH_EXP_UIDS.includes(uid);
+  const isBannerCard =
+    isFirstProduct && isCollectionMB && !isProductCardLengthExpUid;
 
   const params = {
     ...(lang && {
@@ -1632,7 +1636,7 @@ const Product = (props: any) => {
               imageWidth={
                 isMobile
                   ? isBannerCard
-                    ? PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.firstProductWidth
+                    ? PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.bannerProductWidth
                     : PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.width
                   : undefined
               }
@@ -1641,7 +1645,7 @@ const Product = (props: any) => {
                   ? undefined
                   : PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.height
               }
-              isBannerCard={isBannerCard}
+              isFirstProduct={isFirstProduct}
               tgid={tgid}
               isMobile={isMobile}
             />
