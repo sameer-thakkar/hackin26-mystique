@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
+import { useRive, Layout, Fit, Alignment } from '@rive-app/react-canvas';
 import styled, { ThemeProvider } from 'styled-components';
 import { MBContext } from 'contexts/MBContext';
 import { getAppTheme } from 'style/theme';
@@ -9,12 +10,13 @@ import SocialLinks from 'components/UI/SocialLinks';
 import sliceHandler from 'components/Slices';
 import Conditional from 'components/common/Conditional';
 import { POWERED_BY_HEADOUT, WHITE_BLIP } from 'assets/SvgIcons';
-import { THEMES } from 'const/index';
+import { LTT_EASTER_BANNER, THEMES } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import { FONTS } from 'const/fonts';
 import COLORS from 'const/colors';
 import { metaAtom } from 'store/atoms/meta';
+import { checkIfLTTMB } from 'utils/helper';
 
 const StyledFooter = styled.footer`
   width: 100%;
@@ -216,23 +218,27 @@ const LinkSlicesWrapper = styled.div<{ isEntertainmentMb: boolean }>`
 const FooterLegal = styled.div<{
   isEntertainmentMb: boolean;
   invertLogoColor: boolean;
+  isLtt: boolean;
 }>`
   display: grid;
   align-items: start;
   ${({ theme }) => {
     return theme.theme !== THEMES.MIN_BLUE
       ? `
-        grid-template-areas: 'logo-disclaimer footer-links';
+        grid-template-areas: 'logo-disclaimer footer-links ltt-footer-animation';
         grid-template-columns: minmax(400px, max-content) max-content;
         grid-column-gap: 120px;
       `
       : `
-        grid-template-areas: 'logo-disclaimer . footer-links';
+        grid-template-areas: 'logo-disclaimer . footer-links ltt-footer-animation';
         grid-template-columns: minmax(400px, max-content) 1fr 1fr;
       `;
   }}
   margin: ${({ isEntertainmentMb }) =>
     isEntertainmentMb ? '72px 0 56px 0' : '40px 0 64px 0'};
+
+    ${({ isLtt }) => isLtt && 'margin-bottom: 0px; align-items: center;'};
+
   padding-bottom: ${({ isEntertainmentMb }) =>
     isEntertainmentMb ? '0' : '40px'};
   line-height: 20px;
@@ -240,6 +246,8 @@ const FooterLegal = styled.div<{
     grid-area: logo-disclaimer;
     .logo-wrapper {
       display: flex;
+      ${({ isLtt }) => isLtt && 'align-items: flex-end;'};
+      
       .image-wrap {
         width: auto;
         margin-right: 12px;
@@ -321,6 +329,16 @@ const FooterLegal = styled.div<{
   }
 `;
 
+const FooterLttAnimation = styled.div`
+  width: 229.94px;
+  height: 222.77px;
+  @media (max-width: 768px) {
+    width: 80px;
+    height: 80px;
+    margin-left: 4rem;
+  }
+`;
+
 type FooterProps = {
   linksTitle?: string;
   currentLanguage?: string;
@@ -381,16 +399,25 @@ const Footer: React.FC<FooterProps> = ({
   primaryHeading = '',
   isEntertainmentMb = false,
 }) => {
-  const { mbTheme = THEMES.DEFAULT } = useContext(MBContext);
+  const { mbTheme = THEMES.DEFAULT, uid } = useContext(MBContext);
   const pageMeta = useRecoilValue(metaAtom);
   const width = useWindowWidth();
   const [isMobile, setIsMobile] = useState(width < 768);
   const finalThemeName =
     themeOverride === THEMES.INHERIT ? mbTheme : themeOverride;
+  const isLtt = checkIfLTTMB(uid);
 
   useEffect(() => {
     setIsMobile(width < 768);
   }, [width]);
+
+  const { RiveComponent: FooterAnimation } = useRive({
+    src: LTT_EASTER_BANNER.RIVE_ANIMATION,
+    autoplay: true,
+    stateMachines: 'stateMachine',
+    artboard: LTT_EASTER_BANNER.ARTBOARDS.FOOTER,
+    layout: new Layout({ fit: Fit.Contain, alignment: Alignment.Center }),
+  });
 
   const getContactNo = (removeSpaces: boolean = false) => {
     let phoneNumber: string = '';
@@ -443,6 +470,7 @@ const Footer: React.FC<FooterProps> = ({
             <FooterLegal
               invertLogoColor={finalThemeName !== THEMES.MIN_BLUE}
               isEntertainmentMb={isEntertainmentMb}
+              isLtt={isLtt}
             >
               <div className="logo-disclaimer">
                 <div className="logo-wrapper">
@@ -460,6 +488,11 @@ const Footer: React.FC<FooterProps> = ({
                     }
                   >
                     {POWERED_BY_HEADOUT}
+                  </Conditional>
+                  <Conditional if={isLtt && isMobile}>
+                    <FooterLttAnimation>
+                      <FooterAnimation />
+                    </FooterLttAnimation>
                   </Conditional>
                 </div>
                 <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
@@ -540,7 +573,11 @@ const Footer: React.FC<FooterProps> = ({
                   </LinksWrapper>
                 </div>
               </div>
-
+              <Conditional if={isLtt && !isMobile}>
+                <FooterLttAnimation className="ltt-footer-animation">
+                  <FooterAnimation />
+                </FooterLttAnimation>
+              </Conditional>
               <Conditional if={finalThemeName === THEMES.MIN_BLUE && isMobile}>
                 <div className="chin" style={{ marginTop: '-64px' }}>
                   <div className={'disclaimer-text copyright'}>

@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
+import { useRive, Layout, Fit, Alignment } from '@rive-app/react-canvas';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
@@ -24,9 +25,10 @@ import {
   ALLOW_IMMEDIATE_NESTING,
   THEMES,
   ANALYTICS_EVENTS,
+  LTT_EASTER_BANNER,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { groupSlices, withTrailingSlash } from 'utils/helper';
+import { checkIfLTTMB, groupSlices, withTrailingSlash } from 'utils/helper';
 import { createBookingURL } from 'utils';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { trackEvent } from 'utils/analytics';
@@ -109,8 +111,8 @@ const StyledHeader = styled.div<IStyledHeader>`
         theme === THEMES.DEFAULT ? `1px solid ${COLORS.GRAY.G6}` : 'none'};
     }
     .fixed-wrap {
-      min-height: ${({ isGlobalMb }) => (isGlobalMb ? '48px' : '56px')};
-      height: ${({ isGlobalMb }) => (isGlobalMb ? '48px' : '56px')};
+      min-height: ${({ isGlobalMb }) => (isGlobalMb ? '48px' : '60px')};
+      height: ${({ isGlobalMb }) => (isGlobalMb ? '48px' : '60px')};
     }
     .fixed-offset::after {
       content: '';
@@ -289,6 +291,33 @@ const SearchWrapper = styled.div`
   }
 `;
 
+const LttRiveLogoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+
+  .rive {
+    width: 3.5rem;
+    height: 2.2rem;
+  }
+
+  .london-theatre {
+    width: 117px;
+    height: 36px;
+  }
+
+  @media (max-width: 768px) {
+    .rive {
+      width: 2.59rem;
+      height: 1.7rem;
+    }
+
+    .london-theatre {
+      width: 86px;
+      height: 24px;
+    }
+  }
+`;
+
 interface HeaderProps {
   languageProps: any;
   isMobile: boolean;
@@ -336,7 +365,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   isEntertainmentMbListicle,
   hideCurrencySelector = false,
 }) => {
-  const { lang, nakedDomain, redirectToHeadoutBookingFlow } = useContext(
+  const { lang, nakedDomain, redirectToHeadoutBookingFlow, uid } = useContext(
     MBContext
   );
 
@@ -344,6 +373,8 @@ const Header: FunctionComponent<HeaderProps> = ({
   const [resultClicked, setResultClicked] = useState(false);
   const [navActive, toggleNav] = useState(false);
   const [headerHover, setHeaderHover] = useState(false);
+
+  const isLtt = checkIfLTTMB(uid);
 
   const handleResults = (results: any) => {
     setResults(results);
@@ -427,6 +458,14 @@ const Header: FunctionComponent<HeaderProps> = ({
     );
   }, []);
 
+  const { RiveComponent: RiveLttLogo } = useRive({
+    src: LTT_EASTER_BANNER.RIVE_ANIMATION,
+    autoplay: true,
+    stateMachines: 'stateMachine',
+    artboard: LTT_EASTER_BANNER.ARTBOARDS.LOGO,
+    layout: new Layout({ fit: Fit.Contain, alignment: Alignment.Center }),
+  });
+
   return (
     <StyledHeader
       overlayActive={navActive}
@@ -447,15 +486,35 @@ const Header: FunctionComponent<HeaderProps> = ({
           >
             <a href={logoRedirectionURL || '/'}>
               <div className="header-logo">
-                <Image
-                  url={logoUrl}
-                  alt={logoAltText}
-                  priority
-                  height={isMobileDevice ? '22' : '44'}
-                  width={isMobileDevice ? '87' : '144'}
-                  layout={'fixed'}
-                  className="center"
-                />
+                <Conditional if={!isLtt}>
+                  <Image
+                    url={logoUrl}
+                    alt={logoAltText}
+                    priority
+                    height={isMobileDevice ? '22' : '44'}
+                    width={isMobileDevice ? '87' : '144'}
+                    layout={'fixed'}
+                    className="center"
+                  />
+                </Conditional>
+                <Conditional if={isLtt}>
+                  <LttRiveLogoWrapper>
+                    <div className="rive">
+                      <RiveLttLogo />
+                    </div>
+                    <div className="london-theatre">
+                      <Image
+                        url={LTT_EASTER_BANNER.LTT_LOGO}
+                        alt={logoAltText}
+                        priority
+                        height={isMobileDevice ? '22' : '44'}
+                        width={isMobileDevice ? '87' : '144'}
+                        layout={'fixed'}
+                        className="center"
+                      />
+                    </div>
+                  </LttRiveLogoWrapper>
+                </Conditional>
                 <Conditional if={hasPoweredByHeadoutLogo}>
                   <span className="poweredBy">{POWERED_BY_HEADOUT}</span>
                 </Conditional>

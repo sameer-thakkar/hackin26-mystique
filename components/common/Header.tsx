@@ -1,4 +1,11 @@
-import React, { useRef, useState, useEffect, ComponentType } from 'react';
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  useContext,
+  ComponentType,
+} from 'react';
+import { useRive, Layout, Fit, Alignment } from '@rive-app/react-canvas';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { scroller } from 'react-scroll';
@@ -11,10 +18,12 @@ import HeaderLinks from 'components/HeaderLinks';
 import LocaleSelector from 'components/common/LocaleSelector';
 import Conditional from 'components/common/Conditional';
 import { strings } from 'const/strings';
+import { MBContext } from 'contexts/MBContext';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
+import { LTT_EASTER_BANNER } from 'const/index';
 import { POWERED_BY_HEADOUT } from 'assets/SvgIcons';
-import { withTrailingSlash } from 'utils/helper';
+import { checkIfLTTMB, withTrailingSlash } from 'utils/helper';
 import { throttle } from 'utils/gen';
 
 const MultiLevelNav = dynamic(() => import('components/MultiLevelNav'));
@@ -194,7 +203,34 @@ const StyledMenuItem = styled.div`
   }
 `;
 
+const LttRiveLogoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  .rive {
+    width: 3.5rem;
+    height: 2.2rem;
+  }
+
+  .london-theatre {
+    width: 117px;
+    height: 36px;
+  }
+
+  @media (max-width: 768px) {
+    .rive {
+      width: 2.59rem;
+      height: 1.7rem;
+    }
+
+    .london-theatre {
+      width: 86px;
+      height: 24px;
+    }
+  }
+`;
+
 const Header: React.FC<any> = (props) => {
+  const { uid } = useContext(MBContext);
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
 
   const {
@@ -216,6 +252,9 @@ const Header: React.FC<any> = (props) => {
     showTicketMenu,
     isEntertainmentMB = false,
   } = props;
+
+  const isLtt = checkIfLTTMB(uid);
+
   const headerCurrencies = useRecoilValue(currencyListAtom);
   const headerLanguages = languages?.length
     ? [...languages, { code: currentLanguage }]
@@ -280,6 +319,14 @@ const Header: React.FC<any> = (props) => {
     };
   }, [scrollPos]);
 
+  const { RiveComponent: RiveLttLogo } = useRive({
+    src: LTT_EASTER_BANNER.RIVE_ANIMATION,
+    autoplay: true,
+    stateMachines: 'stateMachine',
+    artboard: LTT_EASTER_BANNER.ARTBOARDS.LOGO,
+    layout: new Layout({ fit: Fit.Contain, alignment: Alignment.Center }),
+  });
+
   return (
     <StyledHeader
       $isSticky={isHeaderSticky}
@@ -292,17 +339,40 @@ const Header: React.FC<any> = (props) => {
         <a href={logoRedirectionURL || '/'}>
           {/* @ts-expect-error TS(2769): No overload matches this call. */}
           <StyledLogo isEntertainmentMB={isEntertainmentMB}>
-            <Image
-              url={logoUrl}
-              alt={logoAltText}
-              priority
-              fill
-              height="44"
-              width="144"
-              autoCrop={false}
-              className="center"
-              fetchPriority="high"
-            />
+            <Conditional if={!isLtt}>
+              <Image
+                url={logoUrl}
+                alt={logoAltText}
+                priority
+                fill
+                height="44"
+                width="144"
+                autoCrop={false}
+                className="center"
+                fetchPriority="high"
+              />
+            </Conditional>
+            <Conditional if={isLtt}>
+              <LttRiveLogoWrapper>
+                <div className="rive">
+                  <RiveLttLogo />
+                </div>
+                <div className="london-theatre">
+                  {' '}
+                  <Image
+                    url={LTT_EASTER_BANNER.LTT_LOGO}
+                    alt={logoAltText}
+                    priority
+                    fill
+                    height="44"
+                    width="80"
+                    autoCrop={false}
+                    className="center"
+                    fetchPriority="high"
+                  />
+                </div>
+              </LttRiveLogoWrapper>
+            </Conditional>
             <Conditional if={hasPoweredByHeadoutLogo}>
               {POWERED_BY_HEADOUT}
             </Conditional>
