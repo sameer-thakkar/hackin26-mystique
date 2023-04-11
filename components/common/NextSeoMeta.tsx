@@ -89,16 +89,27 @@ export default function PopulateMeta({
     hostname: host,
   });
 
-  const isSubdomain = pageUrl
-    ? getStructure(new URL(pageUrl)) === PAGE_URL_STRUCTURE.SUBDOMAIN
+  const baseLangPageUrl = convertUidToUrl({
+    uid: uidFromMBContext ?? uid ?? '',
+    lang: 'en',
+    isDev,
+    hostname: host,
+  });
+
+  const isSubdomain = baseLangPageUrl
+    ? getStructure(new URL(baseLangPageUrl)) === PAGE_URL_STRUCTURE.SUBDOMAIN
     : false;
 
   let finalNoIndex =
-    isStage || isDev || (isSubdomain && !SEO_SUBDOMAINS.includes(pageUrl))
+    isStage ||
+    isDev ||
+    (isSubdomain && !SEO_SUBDOMAINS.includes(baseLangPageUrl))
       ? true
       : legacyBooleanCheck(noindex);
   let finalNoFollow =
-    isStage || isDev || (isSubdomain && !SEO_SUBDOMAINS.includes(pageUrl))
+    isStage ||
+    isDev ||
+    (isSubdomain && !SEO_SUBDOMAINS.includes(baseLangPageUrl))
       ? true
       : legacyBooleanCheck(noindex);
 
