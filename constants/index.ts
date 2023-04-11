@@ -193,6 +193,7 @@ export const CUSTOM_TYPES = {
   LISTICLE: 'page',
   CONTENT_FRAMEWORK: 'content_framework',
   SHOW_PAGE: 'showpage',
+  VENUE_PAGE: 'venue_page',
   GLOBAL_HOMEPAGE: 'global_homepage',
   GLOBAL_CITY: 'global_city',
   GLOBAL_COLLECTION: 'global_collection',
@@ -208,6 +209,7 @@ export const DOC_TYPES: Record<string, string> = {
   microsite: 'Microsite',
   content_page: 'Content Page',
   showpage: 'Showpage',
+  venue_page: 'Venue Page',
   global_homepage: 'Global Homepage',
   global_city: 'Global City',
   global_country: 'Global Country',
@@ -215,6 +217,7 @@ export const DOC_TYPES: Record<string, string> = {
   global_experience: 'Global Experience',
   product_cards: 'Product Cards',
   ho_category_content: 'Headout Content',
+  content_framework: 'Content Framework',
 };
 
 export const HEADOUT_CATEGORY_CONTENT_TYPE: Record<string, string> = {

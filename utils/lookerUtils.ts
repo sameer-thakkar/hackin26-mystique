@@ -1,4 +1,5 @@
 import Prismic from 'prismic-javascript';
+import { PrismicDocumentWithUID } from '@prismicio/types';
 import {
   getSinglePrismicSlice,
   getHeadoutLanguagecode,
@@ -23,25 +24,13 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 
-type PrismicDocumentType = {
-  id: string;
-  uid: string;
-  type: string;
-  alternate_languages: Record<string, string>[];
-  tags: string[];
-  lang: string;
-  first_publication_date: string;
-  last_publication_date: string;
-  data: Record<string, any>;
-};
-
 export const getDocType = (type: string): string | null => {
   return DOC_TYPES[type] || null;
 };
 
 export const filterByDocType = (
-  docs: PrismicDocumentType[]
-): Record<string, PrismicDocumentType[]> => {
+  docs: PrismicDocumentWithUID[]
+): Record<string, PrismicDocumentWithUID[]> => {
   return groupBy(docs, 'type');
 };
 
@@ -106,7 +95,7 @@ const getContentFrameworkSlice = async ({
 export const shoulderPageTicketsCheck = async ({
   type,
   data,
-}: PrismicDocumentType): Promise<boolean> => {
+}: PrismicDocumentWithUID): Promise<boolean> => {
   const contentFrameworkId = data?.content_framework?.id;
   if (type === CUSTOM_TYPES.CONTENT_PAGE && contentFrameworkId) {
     return await contentFrameworkSliceCheck({
@@ -118,7 +107,7 @@ export const shoulderPageTicketsCheck = async ({
   return false;
 };
 
-export const getPageUrl = ({ uid, lang }: PrismicDocumentType) => {
+export const getPageUrl = ({ uid, lang }: PrismicDocumentWithUID) => {
   try {
     return convertUidToUrl({ uid, lang: getHeadoutLanguagecode(lang) });
   } catch (e) {
@@ -129,7 +118,7 @@ export const getPageUrl = ({ uid, lang }: PrismicDocumentType) => {
 export const getProductCardsId = ({
   type,
   data,
-}: PrismicDocumentType): string | null => {
+}: PrismicDocumentWithUID): string | null => {
   if (type === CUSTOM_TYPES.MICROSITE) {
     const categorySlice = getSinglePrismicSlice({
       sliceName: SLICE_TYPES.TOUR_LIST_CATEGORY_V1,
@@ -176,7 +165,7 @@ export const getTgids = async ({
   host,
   isStageMode,
 }: {
-  doc: PrismicDocumentType;
+  doc: PrismicDocumentWithUID;
   host: string;
   isStageMode: boolean;
 }): Promise<string[]> => {
@@ -244,15 +233,17 @@ export const getAvailableLanguages = ({
   doc: { alternate_languages },
   language,
 }: {
-  doc: PrismicDocumentType;
+  doc: PrismicDocumentWithUID;
   language: string;
 }): string[] => {
-  // @ts-expect-error TS(2769): No overload matches this call.
-  const alternateLanguages = alternate_languages?.reduce((acc, currentLang) => {
-    const formattedLang = currentLang?.lang?.split('-')?.[0]?.toUpperCase();
-    return [...acc, formattedLang];
-  }, []);
-  // @ts-expect-error TS(2488): Type 'Record<string, string>' must have a '[Symbol... Remove this comment to see the full error message
+  const alternateLanguages = alternate_languages?.reduce(
+    (acc: string[], currentLang) => {
+      const formattedLang = currentLang?.lang?.split('-')?.[0]?.toUpperCase();
+      return [...acc, formattedLang];
+    },
+    []
+  );
+
   return [language, ...alternateLanguages];
 };
 
@@ -266,7 +257,7 @@ export const getParentDomain = (url: URL): string | null => {
 export const uncategorisedToursCheck = ({
   type,
   data,
-}: PrismicDocumentType) => {
+}: PrismicDocumentWithUID) => {
   return (
     type === CUSTOM_TYPES.MICROSITE &&
     data?.body1?.[0]?.items?.filter((tour: any) => tour?.tgid).length > 0
@@ -276,7 +267,7 @@ export const uncategorisedToursCheck = ({
 export const getMetaImageUrl = ({
   type,
   data,
-}: PrismicDocumentType): string => {
+}: PrismicDocumentWithUID): string => {
   const { image } = data || {};
   switch (type) {
     case CUSTOM_TYPES.MICROSITE:
@@ -301,7 +292,7 @@ type FooterDetailsType = {
 export const getFooterDetails = async ({
   type,
   data,
-}: PrismicDocumentType): Promise<FooterDetailsType | undefined> => {
+}: PrismicDocumentWithUID): Promise<FooterDetailsType | undefined> => {
   const isMicrosite = checkIfMicrosite({ type });
   const {
     footer_ref,
@@ -347,7 +338,7 @@ export const getFooterDetails = async ({
 export const getBannerSubtext = ({
   type,
   data,
-}: PrismicDocumentType): string => {
+}: PrismicDocumentWithUID): string => {
   const { banner_subtext, banner_sub_text } = data || {};
   switch (type) {
     case CUSTOM_TYPES.MICROSITE:
@@ -367,7 +358,7 @@ type TBreadcrumb = {
   url: string | null;
 };
 
-export const getBreadcrumbs = async (doc: PrismicDocumentType) => {
+export const getBreadcrumbs = async (doc: PrismicDocumentWithUID) => {
   const { type, data, lang } = doc;
   let breadcrumbsDetails: Record<string, TBreadcrumb> = {},
     counter = 0;
@@ -405,8 +396,9 @@ export const getBreadcrumbs = async (doc: PrismicDocumentType) => {
 
     case type === CUSTOM_TYPES.SHOW_PAGE:
       const pageUrl = getPageUrl(doc);
-      // @ts-expect-error TS(2531): Object is possibly 'null'.
-      const isLTT = pageUrl.includes('www.london-theater-tickets.com');
+      const isLTT = pageUrl
+        ? pageUrl.includes('www.london-theater-tickets.com')
+        : false;
 
       breadcrumbsDetails = {
         level_1: {
@@ -480,7 +472,7 @@ export const getHeadoutPageDetails = (uid: string): Record<string, string> => {
 export const getHeadings = async ({
   type,
   data,
-}: PrismicDocumentType): Promise<Record<string, string[]>> => {
+}: PrismicDocumentWithUID): Promise<Record<string, string[]>> => {
   let mainHeadings = [],
     lfcHeadings: any = [];
 

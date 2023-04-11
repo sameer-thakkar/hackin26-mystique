@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Client } from 'config/prismic-config';
-import { legacyBooleanCheck } from 'utils';
+import { PrismicDocumentWithUID } from '@prismicio/types';
+import { getHeadoutLanguagecode, legacyBooleanCheck } from 'utils';
 import {
   filterByDocType,
   shoulderPageTicketsCheck,
@@ -48,6 +49,7 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
     [CUSTOM_TYPES.MICROSITE]: microsites = [],
     [CUSTOM_TYPES.CONTENT_PAGE]: contentPages = [],
     [CUSTOM_TYPES.SHOW_PAGE]: showPages = [],
+    [CUSTOM_TYPES.VENUE_PAGE]: venuePages = [],
     [CUSTOM_TYPES.GLOBAL_HOMEPAGE]: globalHomepage = [],
     [CUSTOM_TYPES.GLOBAL_CITY]: globalCity = [],
     [CUSTOM_TYPES.GLOBAL_COUNTRY]: globalCountry = [],
@@ -55,12 +57,14 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
     [CUSTOM_TYPES.GLOBAL_EXPERIENCE]: globalExperience = [],
     [CUSTOM_TYPES.PRODUCT_CARDS]: productCardDocsList = [],
     [CUSTOM_TYPES.HEADOUT_CATEGORY_CONTENT]: headoutContentDocsList = [],
+    [CUSTOM_TYPES.CONTENT_FRAMEWORK]: contentFrameworkDocsList = [],
   } = filterByDocType(documents);
 
   const pageDocsList = [
     ...microsites,
     ...contentPages,
     ...showPages,
+    ...venuePages,
     ...globalHomepage,
     ...globalCity,
     ...globalCountry,
@@ -92,6 +96,7 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
         canonical_link,
         content_framework,
         author_name,
+        is_freelancer,
         tagged_collection,
         tagged_category,
         tagged_sub_category,
@@ -104,10 +109,9 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
       },
     } = doc;
 
-    const pageUrl = getPageUrl(doc);
-    const language = lang?.split('-')[0].toUpperCase();
+    const pageUrl = getPageUrl(doc) || '';
+    const language = getHeadoutLanguagecode(lang).toUpperCase();
     const isSubdomain =
-      // @ts-expect-error TS(2345): Argument of type 'string | null' is not assignable... Remove this comment to see the full error message
       getStructure(new URL(pageUrl)) === PAGE_URL_STRUCTURE.SUBDOMAIN;
 
     if (language !== 'EN') {
@@ -146,6 +150,7 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
       google_site_verification_id: google_site_verification,
       bing_site_verification_id: bing_site_verification,
       author_name: author_name,
+      is_freelancer: !!is_freelancer,
       has_uncategorised_tours: uncategorisedToursCheck(doc),
       banner_subtext: getBannerSubtext(doc),
       layout: type === CUSTOM_TYPES.MICROSITE ? design : null,
@@ -160,12 +165,10 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
       microsite_doc_footer_disclaimer:
         pageDocFooterDetails?.micrositeDocFooterDisclaimer,
       has_noindex:
-        // @ts-expect-error TS(2345): Argument of type 'string | null' is not assignable... Remove this comment to see the full error message
         isSubdomain && !SEO_SUBDOMAINS.includes(pageUrl)
           ? true
           : !!legacyBooleanCheck(noindex),
       has_nofollow:
-        // @ts-expect-error TS(2345): Argument of type 'string | null' is not assignable... Remove this comment to see the full error message
         isSubdomain && !SEO_SUBDOMAINS.includes(pageUrl)
           ? true
           : !!legacyBooleanCheck(noindex),
@@ -222,22 +225,37 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
     const {
       uid,
       type,
+      first_publication_date,
+      last_publication_date,
       lang,
       tags,
-      data: { use_accordion_as_faq_schema, content_framework },
+      data: {
+        use_accordion_as_faq_schema,
+        content_framework,
+        meta_title_override,
+        meta_description_override,
+        is_freelancer,
+      },
     } = doc;
 
     const headoutPageDetails = getHeadoutPageDetails(uid);
+    const language = getHeadoutLanguagecode(lang).toUpperCase();
 
     const metadata = {
       uid,
+      first_publication_date,
+      last_publication_date,
       tags,
       document_type: getDocType(type),
-      language: lang?.split('-')[0].toUpperCase(),
+      language,
+      available_languages: getAvailableLanguages({ doc, language }),
       headout_page_type: headoutPageDetails?.pageType,
       headout_page_id: headoutPageDetails?.pageId,
       accordions_as_faq_and_schema: !!use_accordion_as_faq_schema,
       has_lfc: !!content_framework?.id,
+      meta_title_override,
+      meta_description_override,
+      is_freelancer: !!is_freelancer,
     };
 
     return Object.entries(metadata).reduce(
@@ -246,14 +264,45 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
     );
   });
 
+  const contentFrameworkDocs = contentFrameworkDocsList?.map((doc) => {
+    const {
+      id,
+      type,
+      tags,
+      first_publication_date,
+      last_publication_date,
+      lang,
+      data: { prismic_preview_title },
+    } = doc;
+
+    const language = getHeadoutLanguagecode(lang).toUpperCase();
+
+    return {
+      id,
+      tags,
+      document_type: getDocType(type),
+      first_publication_date,
+      last_publication_date,
+      language,
+      available_languages: getAvailableLanguages({ doc, language }),
+      prismic_preview_title,
+    };
+  });
+
   const pageDocs = await Promise.all(pageDocsPromises);
   const hasDataToPush =
-    [...pageDocs, ...productCardDocs, ...headoutContentDocs].length > 0;
+    [
+      ...pageDocs,
+      ...productCardDocs,
+      ...headoutContentDocs,
+      ...contentFrameworkDocs,
+    ].length > 0;
 
   return {
     pageDocs,
     productCardDocs,
     headoutContentDocs,
+    contentFrameworkDocs,
     baseLangDocId: (baseLangDoc as any)?.id,
     baseLangDocUid: (baseLangDoc as any)?.uid,
     hasDataToPush,
@@ -281,8 +330,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { documents: updatedDocumentIds = [], masterRef = null } =
     req?.body || {};
   const { stageMode } = req.query;
-  // @ts-expect-error TS(2532): Object is possibly 'undefined'.
-  const isStageMode = stageMode?.length > 0;
+  const isStageMode = stageMode ? stageMode?.length > 0 : false;
   const { host } = req?.headers;
 
   if (!updatedDocumentIds?.length)
@@ -302,6 +350,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     pageDocs,
     productCardDocs,
     headoutContentDocs,
+    contentFrameworkDocs,
     baseLangDocId,
     baseLangDocUid,
     hasDataToPush,
@@ -320,6 +369,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   let response = {};
   const requests = [];
+
   let baseLangPageDocs: any = [];
 
   //trigger webhook for base lang doc as well if lang page is published so that available_languages field for base lang doc is updated
@@ -341,8 +391,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (baseLangDocUid) {
     pageDocs?.forEach((pageDoc: Record<string, any>) => {
       const baseLangPageDoc = baseLangPageDocs?.find(
-        // @ts-expect-error TS(7006): Parameter 'doc' implicitly has an 'any' type.
-        (doc) => doc?.uid === baseLangDocUid
+        (doc: PrismicDocumentWithUID) => doc?.uid === baseLangDocUid
       );
       pageDoc.collection_id = baseLangPageDoc?.collection_id;
       pageDoc.category_name = baseLangPageDoc?.category_name;
@@ -390,6 +439,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     );
   }
 
+  if (contentFrameworkDocs.length) {
+    requests.push(
+      createStitchPostRequest({
+        stitchEndpointToken:
+          'b74d3528aa553a34e84a67d4215b606d3d6ab7a6ce963001431704ab23cc7522',
+        jsonBody: contentFrameworkDocs,
+      })
+    );
+  }
+
   if (requests?.length) {
     // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     response['stitch'] = await Promise.all(requests);
@@ -402,6 +461,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       : pageDocs,
     productCardDocs,
     headoutContentDocs,
+    contentFrameworkDocs,
     documents,
   };
 
