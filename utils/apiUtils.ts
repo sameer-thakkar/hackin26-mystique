@@ -584,8 +584,8 @@ export const fetchDomainConfig = async (uid: string) => {
   if(domainArray && domainArray.length > 0){
   domainArray[0] = 'book';
   }
-  // @ts-expect-error TS(2532): Object is possibly 'undefined'.
-  const whitelabel = `https://${domainArray.join('.')}`;
+  
+  const whitelabel = `https://${domainArray?.join('.')}`;
   const customHeaders = new Headers();
   customHeaders.append(CUSTOM_HEADER.ORIGIN, whitelabel);
   const requestOptions = {
