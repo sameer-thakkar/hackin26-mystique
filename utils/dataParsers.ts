@@ -165,9 +165,13 @@ export const categoryTourListParserV1 = async ({
       const pinnedProducts = pinnedCardsSection?.tourGroups?.items?.length
         ? pinnedCardsSection?.tourGroups?.items
         : [];
+
       const finalSections = genericSection?.tourGroups?.items?.length
         ? [...genericSection?.tourGroups?.items]
-        : [...headoutPicksSection?.tourGroups?.items];
+        : headoutPicksSection?.tourGroups?.items?.length
+        ? [...headoutPicksSection?.tourGroups?.items]
+        : [];
+
       const allProducts = pinnedProducts?.length
         ? finalSections?.filter((product) =>
             pinnedProducts?.some((p: any) => product?.id !== p?.id)
