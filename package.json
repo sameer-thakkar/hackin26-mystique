@@ -19,7 +19,6 @@
   "dependencies": {
     "@formatjs/intl-relativetimeformat": "^10.0.1",
     "@react-hook/window-size": "^3.0.6",
-    "@rive-app/react-canvas": "^3.0.41",
     "@sentry/nextjs": "7.14.2",
     "@ueno/markdown-to-prismic-richtext": "^1.2.0",
     "classnames": "^2.2.6",

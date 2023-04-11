@@ -2241,18 +2241,6 @@
     compare-func "^2.0.0"
     q "^1.5.1"
 
-"@rive-app/canvas@1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@rive-app/canvas/-/canvas-1.1.1.tgz#723b3c13d8bdfe333fb8a2ab7d0c00e7e632186f"
-  integrity sha512-YwZigFf4AXoOOfcEd692XTJ++czgq1P33GdZK+lo0IITL3BD1/jSiIkvbcXiA1bH6arAaY7i6fpn9T3mmY4q9g==
-
-"@rive-app/react-canvas@^3.0.41":
-  version "3.0.41"
-  resolved "https://registry.yarnpkg.com/@rive-app/react-canvas/-/react-canvas-3.0.41.tgz#de4ac39cfb7d40ea90d5bc32dbeb7cc8ef86bb92"
-  integrity sha512-co2lW8FWQyOSxRYVuF1Qu4kidwB/iBYM6JWm/SPOgRx9gWYEeVQSptRy9perapUNibbeG5XIwsje73mjU8pj8Q==
-  dependencies:
-    "@rive-app/canvas" "1.1.1"
-
 "@rollup/plugin-sucrase@4.0.4":
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-sucrase/-/plugin-sucrase-4.0.4.tgz#0a3b3d97cdc239ec3399f5a10711f751e9f95d98"

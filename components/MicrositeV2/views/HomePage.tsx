@@ -1,5 +1,4 @@
 import React, { useState, useContext, ComponentType, useEffect } from 'react';
-import Cookies from 'js-cookie';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { ProductsContextProvider } from 'contexts/Products';
@@ -13,12 +12,7 @@ import TextBanner from 'components/TextBanner';
 import MonthTabs from 'components/slices/MonthTabs';
 import DismissAlert from 'UI/DismissAlert';
 import { LOCATION } from 'assets/SvgIcons';
-import {
-  ANALYTICS_EVENTS,
-  ANALYTICS_PROPERTIES,
-  LTT_EASTER_BANNER,
-  THEMES,
-} from 'const/index';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, THEMES } from 'const/index';
 import { strings } from 'const/strings';
 import { SIZES } from 'const/ui-constants';
 import COLORS from 'const/colors';
@@ -37,9 +31,6 @@ import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { gtmAtom } from 'store/atoms/gtm';
 import { expandFontToken } from 'const/typography';
 import { getBannerAndFooterSubtext, isCollectionMB } from 'utils';
-import { getABTestingVariant } from 'utils/experiments/experimentUtils';
-import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
-import { hsidAtom } from 'store/atoms/hsid';
 
 const Alert = dynamic(
   () => import(/* webpackChunkName: "Alert" */ 'UI/Alert'),
@@ -63,8 +54,6 @@ const Banner: ComponentType<any> = dynamic(() =>
 const LongForm: ComponentType<any> = dynamic(() =>
   import(/* webpackChunkName: "LongForm" */ 'components/MicrositeV2/LongForm')
 );
-
-const LttEasterBanner = dynamic(() => import('components/LttEasterBanner'));
 
 const V2MicrositeWrapper = styled.div`
   .alert-wrapper {
@@ -161,7 +150,6 @@ export const HomePage = (props: any) => {
 
   const pageMetaData = useRecoilValue(metaAtom);
   const { eventsReady } = useRecoilValue(gtmAtom);
-  const hsid = useRecoilValue(hsidAtom);
 
   let { categoryProps } = props;
   const isDiscountedPage = displayMonths === 'Discounted';
@@ -176,6 +164,7 @@ export const HomePage = (props: any) => {
     let singleCategory = [];
     let allowedTours;
     let priceSortTours;
+
     if (displayMonths === 'ALL') {
       allowedTours = Object.keys(allTours).map((tgid) => parseInt(tgid));
       priceSortTours = getPriceSortedListicleTgids(allTours, allowedTours);
@@ -222,7 +211,6 @@ export const HomePage = (props: any) => {
   const selectorLinkChangeHandler = (option: any) => {
     window.location.href = option.value;
   };
-  const [showEasterBanner, setShowEasterBanner] = useState(false);
   const slices = contentFramework?.body;
   const contentFWSlices = (slices && groupSlices(slices)) || [];
   const longFormSlices = [...contentFWSlices, ...longFormContent];
@@ -250,17 +238,6 @@ export const HomePage = (props: any) => {
         ...getCommonEventMetaData(pageMetaData),
       });
   }, [eventsReady]);
-
-  useEffect(() => {
-    if (hsid && currentLanguage === 'en') {
-      const variant = getABTestingVariant(
-        EXPERIMENT_NAMES.LTT_EASTER_PHASED_ROLLOUT,
-        hsid
-      );
-      const force = Cookies.get(LTT_EASTER_BANNER.FORCE_BANNER_COOKIE);
-      setShowEasterBanner(variant === VARIANTS.SHOW_BANNER || force === 'true');
-    }
-  }, [hsid]);
 
   return (
     // @ts-expect-error TS(2769): No overload matches this call.
@@ -318,9 +295,7 @@ export const HomePage = (props: any) => {
           availableTours={allTgids}
         />
       </Conditional>
-      <Conditional if={showEasterBanner}>
-        <LttEasterBanner isMobile={isMobile} />
-      </Conditional>
+
       <Conditional if={isEntertainmentMbListicle}>
         <ListicleHeadingWrapper className="main-wrapper">
           <h1>{coverHeading}</h1>

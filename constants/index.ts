@@ -1155,27 +1155,3 @@ export const PRODUCT_CARD_LENGTH_EXP_UIDS = [
   'www.accademia-tickets.com',
   'www.pompeii-tickets.com',
 ];
-
-export const LTT_EASTER_BANNER = {
-  RIVE_ANIMATION:
-    'https://cdn-imgix-open.headout.com/ltt-easter/easter-animation.riv',
-  LTT_LOGO:
-    'https://cdn-imgix-open.headout.com/ltt-easter/ltt-logo.png?w=80&h=44',
-  BANNER_BG: 'https://cdn-imgix-open.headout.com/ltt-easter/banner-bg.svg',
-  MODAL_BG_DWEB:
-    'https://cdn-imgix-open.headout.com/ltt-easter/modal-dweb-bg.svg',
-  MODAL_BG_MWEB:
-    'https://cdn-imgix-open.headout.com/ltt-easter/modal-mweb-bg.svg',
-
-  ARTBOARDS: {
-    LOGO: 'logo',
-    INTERACTION: 'eggInteraction',
-    CLOSED: 'eggClosed',
-    OPEN_DWEB: 'eggOpenDesktop',
-    OPEN_MWEB: 'eggOpenMobile',
-    FOOTER: 'eggFooter',
-  },
-  COUPON_CODE: 'ESTWDBLTF',
-  WAS_PREVIOUSLY_CRACKED_KEY: 'estCrked',
-  FORCE_BANNER_COOKIE: 'estBnnrCk',
-};
