@@ -3,7 +3,11 @@ import dynamic from 'next/dynamic';
 import { useRecoilValue } from 'recoil';
 import { withShortcodes } from 'utils/helper';
 import { trackEvent } from 'utils/analytics';
-import { shouldDisplayCollectionRatings, truncateNumber } from 'utils/index';
+import {
+  getF1MBTrustBoosters,
+  shouldDisplayCollectionRatings,
+  truncateNumber,
+} from 'utils/index';
 import { gtmAtom } from 'store/atoms/gtm';
 import Conditional from 'components/common/Conditional';
 import {
@@ -21,6 +25,7 @@ import { STAR } from 'assets/SvgIcons';
 import COLORS from 'const/colors';
 import { strings } from 'const/strings';
 import { ANALYTICS_EVENTS, VIDEO_POSITIONS } from 'const/index';
+import F1BannerTrustBoosters from 'components/F1BannerTrustBooster';
 
 const Image = dynamic(() => import(/* webpackChunkName: "Image" */ 'UI/Image'));
 const Video = dynamic(() => import(/* webpackChunkName: "Video" */ 'UI/Video'));
@@ -32,6 +37,7 @@ type StaticBannerProps = {
   bannerVideo?: string | null;
   bannerSubText: string | undefined;
   isMobile: boolean;
+  shouldDisplayTrustBoosters?: boolean;
 };
 
 export type CollectionDetailsTypes = {
@@ -58,6 +64,7 @@ const StaticBanner = ({
   isMobile,
   collectionDetails,
   bannerSubText,
+  shouldDisplayTrustBoosters,
 }: StaticBannerProps) => {
   const { eventsReady } = useRecoilValue(gtmAtom);
 
@@ -78,6 +85,11 @@ const StaticBanner = ({
     <BannerSection>
       <Container>
         <ContentContainer>
+          <Conditional if={shouldDisplayTrustBoosters}>
+            <F1BannerTrustBoosters
+              f1TrustBooster={getF1MBTrustBoosters(true)}
+            />
+          </Conditional>
           <Heading dangerouslySetInnerHTML={{ __html: bannerHeading }} />
           <Conditional if={shouldDisplayCollectionRatings(collectionDetails)}>
             <RatingsWrapper>

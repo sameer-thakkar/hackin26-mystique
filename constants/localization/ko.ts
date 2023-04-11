@@ -168,6 +168,23 @@ const ko = {
   SAVE_PERCENT: '{0}% 절약',
   SAVE_UPTO_PERCENT: '최대{0}% 절약',
   RATINGS: '평가',
+  HELP_CENTER: {
+    MAIN_TEXT: '24x7 help center',
+    SUB_TEXT:
+      'Have a question? Want to update your ticket? We’re available on phone, instant chat, and email.',
+  },
+  AUTHORISED_RESELLER: {
+    MAIN_TEXT: 'Authorized reseller',
+    SUB_TEXT: 'Authentic experiences from trusted and verified partners',
+  },
+  FREE_CANCELLATION_SUBTEXT:
+    'We understand plans change, cancel for free up to 72 hours before the event.',
+  HAPPY_CUSTOMER: {
+    MAIN_TEXT: '18+ Million happy customers',
+    SUB_TEXT:
+      'Customer satisfaction is our top priority. Join our happy customer base.',
+  },
+  AUTHORISED_AND_TRUSTED_PARTNER: '공인 및 신뢰할 수 있는 파트너',
 };
 
 export default ko;

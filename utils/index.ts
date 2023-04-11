@@ -18,6 +18,14 @@ import { getLangObject, withoutTrailingSlash } from 'utils/helper';
 import { fetchCollection, fetchTourGroupsByCategory } from 'utils/apiUtils';
 import { convertUidToUrl, getDomainFromUid } from 'utils/urlUtils';
 import { strings } from 'const/strings';
+import {
+  AUTHORISED_BOOSTER,
+  AUTHORIZED_RESELLER_BOOSTER,
+  FREE_CANCELLATION_BOOSTER,
+  HELP_CENTER_BOOSTER,
+  SIMILE_BOOSTER,
+} from 'assets/SvgIcons';
+import { F1TrustBoostersProp } from 'components/F1TrustBoosters/interface';
 
 export const shouldDisplayCollectionRatings = (
   collectionDetails: CollectionDetailsTypes | undefined
@@ -574,3 +582,43 @@ export const getBannerAndFooterSubtext = (
     return '';
   }
 };
+
+export const getF1MBTrustBoosters = (
+  isBannerTrustBooster: boolean
+): F1TrustBoostersProp[] =>
+  isBannerTrustBooster
+    ? [
+        {
+          boosterHeading: strings.AUTHORISED_AND_TRUSTED_PARTNER,
+          boosterSubtext: '',
+          svgIcon: AUTHORISED_BOOSTER(),
+        },
+      ]
+    : [
+        {
+          boosterHeading: strings.HAPPY_CUSTOMER.MAIN_TEXT,
+          boosterSubtext: strings.HAPPY_CUSTOMER.SUB_TEXT,
+          svgIcon: SIMILE_BOOSTER(),
+        },
+        {
+          boosterHeading: strings.HELP_CENTER.MAIN_TEXT,
+          boosterSubtext: strings.HELP_CENTER.SUB_TEXT,
+          svgIcon: HELP_CENTER_BOOSTER(),
+        },
+        {
+          boosterHeading: strings.AUTHORISED_RESELLER.MAIN_TEXT,
+          boosterSubtext: strings.AUTHORISED_RESELLER.SUB_TEXT,
+          svgIcon: AUTHORIZED_RESELLER_BOOSTER(),
+        },
+        {
+          boosterHeading: strings.FREE_CANCELLATION,
+          boosterSubtext: strings.FREE_CANCELLATION_SUBTEXT,
+          svgIcon: FREE_CANCELLATION_BOOSTER(),
+        },
+      ];
+
+export const displayBannerTrustBoosters = (data: Record<string, any>) =>
+  data?.data?.f1_banner_trust_booster;
+
+export const displayProductTrustBoosters = (data: Record<string, any>) =>
+  data?.data?.f1_product_trust_booster;

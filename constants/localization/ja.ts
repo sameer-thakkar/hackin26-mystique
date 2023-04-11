@@ -171,6 +171,23 @@ const ja = {
   SAVE_PERCENT: '{0}%割引',
   SAVE_UPTO_PERCENT: '最大{0}%割引',
   RATINGS: '評価',
+  HELP_CENTER: {
+    MAIN_TEXT: '24x7 help center',
+    SUB_TEXT:
+      'Have a question? Want to update your ticket? We’re available on phone, instant chat, and email.',
+  },
+  AUTHORISED_RESELLER: {
+    MAIN_TEXT: 'Authorized reseller',
+    SUB_TEXT: 'Authentic experiences from trusted and verified partners',
+  },
+  FREE_CANCELLATION_SUBTEXT:
+    'We understand plans change, cancel for free up to 72 hours before the event.',
+  HAPPY_CUSTOMER: {
+    MAIN_TEXT: '18+ Million happy customers',
+    SUB_TEXT:
+      'Customer satisfaction is our top priority. Join our happy customer base.',
+  },
+  AUTHORISED_AND_TRUSTED_PARTNER: '認定された信頼できるパートナー',
 };
 
 export default ja;

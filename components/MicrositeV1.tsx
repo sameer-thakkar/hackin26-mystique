@@ -15,8 +15,11 @@ import Header from 'components/common/Header';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import Conditional from 'components/common/Conditional';
 import {
+  displayBannerTrustBoosters,
+  displayProductTrustBoosters,
   getAlternateLanguages,
   getBannerAndFooterSubtext,
+  getF1MBTrustBoosters,
   getHeadoutLanguagecode,
   isCollectionMB,
   legacyBooleanCheck,
@@ -35,6 +38,7 @@ import {
 import { strings } from 'const/strings';
 import renderShortCodes from 'utils/shortCodes';
 import { getLogoRedirectionUrl, convertUidToUrl } from 'utils/urlUtils';
+import F1TrustBoosters from 'components/F1TrustBoosters/index';
 
 const LongForm = dynamic(() => import('components/common/LongForm'));
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
@@ -434,6 +438,9 @@ const MicrositeV1 = (props: any) => {
     />
   );
 
+  const shouldDisplayProductTrustBoosters = displayProductTrustBoosters(data);
+  const shouldDisplayBannerTrustBoosters = displayBannerTrustBoosters(data);
+
   return (
     <div>
       <div className="microsite-container">
@@ -510,13 +517,14 @@ const MicrositeV1 = (props: any) => {
             />
           </div>
         </Conditional>
+
         <Conditional
           if={mbTheme !== THEMES.MIN_BLUE && !isCollectionMicrobrand}
         >
           <Banner
-            bannerImages={finalBannerImages ? finalBannerImages : null}
-            bannerHeading={bannerHeading ? bannerHeading : null}
-            bannerCtaText={bannerCtaText ? bannerCtaText : null}
+            bannerImages={finalBannerImages || null}
+            bannerHeading={bannerHeading || null}
+            bannerCtaText={bannerCtaText || null}
             bannerSubtext={bannerSubtext}
             // @ts-expect-error TS(2322): Type 'string | null' is not assignable to type 'st... Remove this comment to see the full error message
             currentLanguage={currentLanguage ? currentLanguage : null}
@@ -529,15 +537,16 @@ const MicrositeV1 = (props: any) => {
         <Conditional if={mbTheme !== THEMES.MIN_BLUE && isCollectionMicrobrand}>
           <StaticBanner
             bannerVideo={collectionVideo}
-            bannerImages={finalBannerImages ? finalBannerImages : null}
-            bannerHeading={bannerHeading ? bannerHeading : null}
+            bannerImages={finalBannerImages || null}
+            bannerHeading={bannerHeading || null}
             bannerSubText={bannerAndFooterSubText}
             isMobile={isMobile}
             collectionDetails={collectionDetails}
+            shouldDisplayTrustBoosters={shouldDisplayBannerTrustBoosters}
           />
         </Conditional>
         <Conditional if={mbTheme === THEMES.MIN_BLUE}>
-          <TextBanner bannerHeading={bannerHeading ? bannerHeading : null} />
+          <TextBanner bannerHeading={bannerHeading || null} />
         </Conditional>
         <Conditional if={alertPopup}>
           <Alert popupUID={alertPopup?.uid} currentLanguage={currentLanguage} />
@@ -546,6 +555,13 @@ const MicrositeV1 = (props: any) => {
           <CoverSlicesWrapper>
             <LongForm content={coverSlices} isMobile={isMobile} />
           </CoverSlicesWrapper>
+        </Conditional>
+
+        <Conditional if={shouldDisplayProductTrustBoosters}>
+          <F1TrustBoosters
+            f1TrustBooster={getF1MBTrustBoosters(false)}
+            isMobile={isMobile}
+          />
         </Conditional>
 
         <Conditional if={hasTours && !hasTourListContentFW && isToursAvailable}>

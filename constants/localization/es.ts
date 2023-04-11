@@ -373,6 +373,23 @@ const es = {
       'Estas entradas son válidas durante un periodo de tiempo prolongado. Los detalles exactos se mencionarán en la entrada.',
   },
   RATINGS: 'Calificaciones',
+  HELP_CENTER: {
+    MAIN_TEXT: '24x7 help center',
+    SUB_TEXT:
+      'Have a question? Want to update your ticket? We’re available on phone, instant chat, and email.',
+  },
+  AUTHORISED_RESELLER: {
+    MAIN_TEXT: 'Authorized reseller',
+    SUB_TEXT: 'Authentic experiences from trusted and verified partners',
+  },
+  FREE_CANCELLATION_SUBTEXT:
+    'We understand plans change, cancel for free up to 72 hours before the event.',
+  HAPPY_CUSTOMER: {
+    MAIN_TEXT: '18+ Million happy customers',
+    SUB_TEXT:
+      'Customer satisfaction is our top priority. Join our happy customer base.',
+  },
+  AUTHORISED_AND_TRUSTED_PARTNER: 'Colaborador autorizado y de confianza',
 };
 
 export default es;
