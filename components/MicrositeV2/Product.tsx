@@ -13,6 +13,7 @@ import {
   ANALYTICS_PROPERTIES,
   REOPENING_CATEGORIES,
   CASHBACK_TYPES,
+  LANGUAGE_MAP,
 } from 'const/index';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
@@ -478,7 +479,16 @@ const Product = (props: any) => {
 
   const isNewArrival = allTags.includes('NEWARRIVAL');
 
-  const openingDate = dateToString(reopeningDate, lang, 'DD MMM, YYYY');
+  const openingDate = dateToString(
+    reopeningDate,
+    LANGUAGE_MAP.en.code,
+    'DD MMM, YYYY'
+  );
+  const localisedOpeningDate = dateToString(
+    reopeningDate,
+    lang,
+    'DD MMM, YYYY'
+  );
 
   let OPENING_ON = '';
   if (openingDate === strings.TODAY || openingDate === strings.TOMORROW) {
@@ -692,7 +702,7 @@ const Product = (props: any) => {
                   if={!isBeforeToday && openingDate !== 'Invalid Date'}
                 >
                   <div className="reopening">
-                    {OPENING_ON} {openingDate}
+                    {OPENING_ON} {localisedOpeningDate}
                   </div>
                 </Conditional>
               </div>
