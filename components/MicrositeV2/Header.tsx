@@ -366,12 +366,13 @@ const Header: FunctionComponent<HeaderProps> = ({
       flowType,
     });
     const showPageUrl = showPageUid
-      ? convertUidToUrl({ uid: showPageUid, hostname: host })
+      ? convertUidToUrl({ uid: showPageUid, hostname: host, lang })
       : bookingURL;
 
     window.open(showPageUrl ?? bookingURL, '_self', 'noopener,noreferrer');
     setResultClicked(true);
   };
+
   const buyTicketHandler = () => {
     window.scrollBy({
       top: 540,
