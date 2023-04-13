@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { scroller } from 'react-scroll';
 import { useWindowWidth } from '@react-hook/window-size';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { currencyAtom } from 'store/atoms/currency';
 import { gtmAtom } from 'store/atoms/gtm';
 import { InteractionContextProvider } from 'contexts/Interaction';
@@ -38,6 +38,11 @@ import {
 import { strings } from 'const/strings';
 import renderShortCodes from 'utils/shortCodes';
 import { getLogoRedirectionUrl, convertUidToUrl } from 'utils/urlUtils';
+import { highResVideoExperimentAtom } from 'store/atoms/highResVideoExperiment';
+import { hsidAtom } from 'store/atoms/hsid';
+import { HIGH_RES_VIDEOS } from 'const/highResVideos';
+import { getABTestingVariant } from 'utils/experiments/experimentUtils';
+import { EXPERIMENT_NAMES } from 'const/experiments';
 import F1TrustBoosters from 'components/F1TrustBoosters/index';
 
 const LongForm = dynamic(() => import('components/common/LongForm'));
@@ -53,8 +58,10 @@ const ResponsiveSelector: ComponentType<any> = dynamic(
   { ssr: false }
 );
 const TextBanner = dynamic(() => import('components/TextBanner'));
-const StaticBanner = dynamic(() =>
-  import(/* webpackChunkName: "StaticBanner" */ 'components/StaticBanner')
+const StaticBanner = dynamic(
+  () =>
+    import(/* webpackChunkName: "StaticBanner" */ 'components/StaticBanner'),
+  { ssr: false }
 );
 const Banner = dynamic(() =>
   import(/* webpackChunkName: "Banner" */ 'components/Banner')
@@ -83,12 +90,16 @@ const MicrositeV1 = (props: any) => {
 
   const [isMobile, setIsMobile] = useState(props?.isMobile);
   const windowWidth = useWindowWidth();
-
+  const hsid = useRecoilValue(hsidAtom);
   const currency = useRecoilValue(currencyAtom);
   const { eventsReady } = useRecoilValue(gtmAtom);
   const [freeTourPopupOpen, toggleFreeTourPopup] = useState(false);
   const [covidAlertActive, toggleCovidAlert] = useState(false);
   const [groupBookingModalActive, toggleGroupBookingModal] = useState(false);
+  const setHighResVideoExperimentValue = useSetRecoilState(
+    highResVideoExperimentAtom
+  );
+  const [isExperimentTriggered, setIsExperimentTriggered] = useState(false);
 
   const {
     refs,
@@ -387,6 +398,22 @@ const MicrositeV1 = (props: any) => {
       [ANALYTICS_PROPERTIES.PAGE_TITLE]: renderedBaseLangPageTitle,
     });
   }, [eventsReady]);
+
+  useEffect(() => {
+    if (!hsid || !eventsReady || isExperimentTriggered) return;
+
+    const isVideoExperimentUid = Object.keys(HIGH_RES_VIDEOS).includes(uid);
+    if (isVideoExperimentUid) {
+      const variant = getABTestingVariant(
+        EXPERIMENT_NAMES.IMGIX_EXPERIMENT,
+        hsid
+      );
+      setHighResVideoExperimentValue({
+        variant,
+      });
+      setIsExperimentTriggered(true);
+    }
+  }, [hsid, eventsReady, isExperimentTriggered]);
 
   const onTogglePopup = () => {
     toggleFreeTourPopup(!freeTourPopupOpen);

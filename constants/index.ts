@@ -296,6 +296,8 @@ export const ANALYTICS_EVENTS = {
   EXPERIENCE_CARD_BOOK_NOW_CLICKED: 'Experience Card Book Now Clicked',
   CHECK_AVAILABILITY_CLICKED: 'Check Availability Clicked',
   MB_VIDEO_PLAYED: 'MB Video Played',
+  MB_VIDEO_DURATION: 'MB Video Duration',
+  MB_VIDEO_VIEWED: 'MB Video Viewed',
   MB_LANGUGAGE_CHANGED: 'MB Language Changed',
   MB_CURRENCY_CHANGED: 'MB Currency Changed',
   LP_TO_BOOKING_PAGE: 'LP to booking page',
@@ -642,6 +644,7 @@ export const REOPENING_CATEGORIES: number[] = [3159];
 export const NEW_ARRIVALS_CATEGORIES: number[] = [1351];
 
 export const ANALYTICS_PROPERTIES = {
+  DURATION: 'Duration',
   PLATFORM_NAME: 'Platform Name',
   LANGUAGE: 'Language',
   TGIDS: 'Tour Group IDs',
@@ -707,6 +710,7 @@ export const ANALYTICS_PROPERTIES = {
   L1_BOOSTER_SHOWN: 'L1 Booster Shown',
   TYPE: 'Type',
   AUTOPLAY_LOAD_TIME: 'Autoplay Load Time',
+  TIME_WATCHED: 'Time Watched',
 };
 
 export const PAGE_TYPES = {

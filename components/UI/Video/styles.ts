@@ -31,7 +31,7 @@ export const VideoContainer = styled.div<{ $fadeInVideo: boolean }>`
   ${({ $fadeInVideo }) => $fadeInVideo && fadeInCSS}
 `;
 
-export const StyledVideo = styled.video`
+export const StyledVideoContainer = styled.video`
   width: 100%;
   height: 100%;
   object-fit: cover;
