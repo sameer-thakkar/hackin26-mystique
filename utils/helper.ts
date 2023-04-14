@@ -284,10 +284,12 @@ export const groupSlices = (
           delete repeatables.slice_type;
           repeatables.items = [];
         }
-        const temp = ref.parent;
-        delete ref.parent;
-        ref = temp;
-        if (ref.parent) ref.slices = ref.slices.sort(slicesSorter);
+        if (ref && ref?.parent) {
+          const newRef = ref.parent;
+          delete ref.parent;
+          ref = newRef;
+          if (ref?.slices) ref.slices = ref.slices.sort(slicesSorter);
+        }
       } else {
         ref.slices.push(slice);
       }
