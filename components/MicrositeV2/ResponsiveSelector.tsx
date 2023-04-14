@@ -52,7 +52,6 @@ const ResponsiveSelectWrapper = styled.div<IResponsiveSelectWrapper>`
     cursor: pointer;
     font-size: 16px;
     border: none;
-    text-transform: capitalize;
     display: grid;
     padding: 0;
     grid-template-columns: auto 16px;
