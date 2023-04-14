@@ -42,6 +42,7 @@ const internalRewrites = [
 
 const nextConfig = {
   trailingSlash: true,
+  swcMinify: false,
   headers: async () => {
     return [
       {
@@ -55,6 +56,7 @@ const nextConfig = {
       },
     ];
   },
+
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve = {
