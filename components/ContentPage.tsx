@@ -199,7 +199,7 @@ class ContentPage extends Component<any, any> {
 
       const tourAPIData = tourListApiParser(toursData);
 
-      const currency = toursData?.currencies[0]?.localSymbol;
+      const currency = toursData?.currencies?.[0]?.localSymbol;
       this.setState({
         ...this.state,
         tourAPIData,
