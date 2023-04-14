@@ -204,7 +204,7 @@ class Stack extends Array {
   }
 }
 const genClosingSlice = (slice_type: any) => ({
-  slice_type: slice_type.replace(/___start$/, '___end'),
+  slice_type: slice_type?.replace(/___start$/, '___end'),
 });
 const getOpeningSlice = (slice_type: any) => ({
   slice_type: slice_type.replace(/___end$/, '___start'),
