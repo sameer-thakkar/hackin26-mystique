@@ -146,12 +146,15 @@ const Video: React.FC<VideoTypeProps> = ({
       });
     }
     return () => {
-      if (timer && (!isOnScreen || document.hidden || isVideoPaused)) {
+      if (
+        timer &&
+        (!isOnScreen || (!!document && document.hidden) || isVideoPaused)
+      ) {
         clearInterval(timer);
         setTimer(null);
       }
     };
-  }, [timer, isOnScreen, document, isVideoPaused, lastDurationTracked]);
+  }, [timer, isOnScreen, isVideoPaused, lastDurationTracked]);
 
   const loadVideo = useCallback(async () => {
     const lazyVideo = videoRef.current!;
