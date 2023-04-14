@@ -129,7 +129,8 @@ const Video: React.FC<VideoTypeProps> = ({
   };
 
   useEffect(() => {
-    if (!videoRef.current) return;
+    if (!videoRef.current || !Object.keys(HIGH_RES_VIDEOS).includes(uid))
+      return;
     if (!timer && isOnScreen && !document.hidden && !isVideoPaused) {
       setTimer(() => {
         let durationTracked = lastDurationTracked;
@@ -154,7 +155,7 @@ const Video: React.FC<VideoTypeProps> = ({
         setTimer(null);
       }
     };
-  }, [timer, isOnScreen, isVideoPaused, lastDurationTracked]);
+  }, [timer, isOnScreen, isVideoPaused, lastDurationTracked, uid]);
 
   const loadVideo = useCallback(async () => {
     const lazyVideo = videoRef.current!;
