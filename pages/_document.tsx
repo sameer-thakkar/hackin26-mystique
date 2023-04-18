@@ -1,5 +1,6 @@
 // _document is only rendered on the server side and not on the client side
 import Document, { Html, Head, Main, NextScript } from 'next/document';
+import Script from 'next/script';
 import { ServerStyleSheet } from 'styled-components';
 import { getLangUID } from 'utils/urlUtils';
 import { RTL_LANGUAGE_CODES } from 'const/index';
@@ -69,12 +70,11 @@ class MystiqueDocument extends Document {
           <Main />
           <NextScript />
           <Conditional if={isPreview}>
-            <script
-              async
-              defer
-              type="text/javascript"
+            <Script
+              id="prismic-script"
+              strategy="afterInteractive"
               src="https://static.cdn.prismic.io/prismic.js?repo=mystique&amp;new=true"
-            ></script>
+            />
           </Conditional>
         </body>
       </Html>

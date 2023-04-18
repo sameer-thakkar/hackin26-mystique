@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import React, { useContext, useEffect, useState } from 'react';
 import { scroller } from 'react-scroll';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Image from 'UI/Image';
 import { SIZES } from 'const/ui-constants';
 import COLORS from 'const/colors';
@@ -16,17 +16,33 @@ import {
 import { MBContext } from 'contexts/MBContext';
 import Conditional from 'components/common/Conditional';
 import type { SwiperProps } from 'swiper/react';
+import { Swiper as SwiperClass } from 'swiper/types';
+import { useRecoilValue } from 'recoil';
+import { appAtom } from 'store/atoms/app';
 
 const Swiper = dynamic(() =>
   import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
 
-const loopedSlides = 3;
-
+const swiperDuplicateSlideCount = 3;
+const BANNER_PARAMS = {
+  DESKTOP: {
+    ASPECT_RATIO: '3:1',
+    WIDTH: '1200',
+    HEIGHT: '400',
+  },
+  MOBILE: {
+    ASPECT_RATIO: '16:9',
+    WIDTH: '400',
+    HEIGHT: '225',
+  },
+};
 interface IStyledBanner {
   bannerCount: number;
   isMounted: boolean;
-  loopedSlides: number;
+  isMobile: boolean;
+  duplicateSlideCount: number;
+  initialSlide: number;
 }
 
 const StyledBanner = styled.div<IStyledBanner>`
@@ -39,18 +55,34 @@ const StyledBanner = styled.div<IStyledBanner>`
 
   .swiper-wrapper {
     max-width: 100vw;
-    
-    @media (min-width: 768px) {
-      ${({ isMounted, loopedSlides }) => {
-        const slideWidth = parseInt(SIZES.MAX_WIDTH);
+    ${({ isMounted, duplicateSlideCount, initialSlide, isMobile }) => {
+      // Handles before mount position of active slide. can be removed if loopSlides is off.
+      // Added since it takes few seconds for Swiper to bootup.
+      let slideWidth = '0',
+        partialSlideWidth = '0';
+      if (isMobile) {
+        slideWidth = `(100vw / 1.1)`; // 1.1 => slidesPerView
+        partialSlideWidth = `((100vw - ${slideWidth}))`;
+      } else {
+        slideWidth = `${BANNER_PARAMS.DESKTOP.WIDTH}px`;
+        partialSlideWidth = `(100vw - (100vw - 100%) - ${slideWidth})`; // screenWidth - (scrollbar width) - slide width
+      }
 
-        return isMounted
-          ? ``
-          : `transform: translate(calc(calc(calc(100vw - ${slideWidth}px)/2) - ${
-              loopedSlides * slideWidth
-            }px), 0)`;
-      }}
-    }
+      return !isMounted
+        ? ``
+        : css`
+            transform: translate3d(
+              calc(
+                /*((width of one partial slide) - (offset position px from duplicate slides to active slide)) */
+                  (${partialSlideWidth} / 2) -
+                  (${duplicateSlideCount + initialSlide} * ${slideWidth})
+              ),
+              0,
+              0
+            ) !important;
+          `;
+    }}
+
   }
   
   .swiper-initialized {
@@ -76,6 +108,9 @@ const StyledBanner = styled.div<IStyledBanner>`
   .swiper-slide {
     max-height: 400px;
     max-width: ${SIZES.MAX_WIDTH};
+    .image-wrap {
+      position: unset;
+    }
 
     aspect-ratio: 3;
     background: rgba(34, 34, 34, 0.6);
@@ -150,12 +185,18 @@ const StyledBanner = styled.div<IStyledBanner>`
     top: 0;
   }
 
+  a {
+    display: flex;
+    height: ${BANNER_PARAMS.DESKTOP.HEIGHT}px;
+  }
+
   @media (max-width: 768px) {
     margin: ${({ bannerCount }) => (bannerCount === 1 ? '2rem 0' : '1rem 0')};
     height: 13.75rem;
     .swiper-slide {
       transform: scale(0.95);
       -webkit-transform: scale(0.95);
+      width: calc(100vw / 1.1);
     }
 
     .swiper-slide-active {
@@ -186,8 +227,13 @@ const StyledBanner = styled.div<IStyledBanner>`
       width: 90%;
       z-index: 2;
     }
+    a {
+    height: ${BANNER_PARAMS.MOBILE.HEIGHT}px;
+  }
   }
 `;
+
+const initialSlide = 1;
 
 const swiperParams: SwiperProps = {
   breakpoints: {
@@ -201,27 +247,20 @@ const swiperParams: SwiperProps = {
   speed: 600,
   centeredSlides: true,
   autoplay: {
-    delay: 5000,
+    delay: 6000,
     disableOnInteraction: false,
   },
-  initialSlide: 1,
+  initialSlide,
   loop: true,
-  loopedSlides,
+  loopedSlides: swiperDuplicateSlideCount,
 };
 
-const initialSlide = 3;
-
 const NewBanner: React.FC<any> = (props) => {
-  const {
-    bannerImages,
-    isMobile,
-    ready,
-    isEntertainmentMb,
-    availableTours,
-  } = props;
-  const [swiper, updateSwiper] = useState(null);
+  const { bannerImages, ready, isEntertainmentMb, availableTours } = props;
+  const [swiper, updateSwiper] = useState<SwiperClass>();
   const [isMounted, setMounted] = useState(false);
   const { lang } = useContext(MBContext);
+  const { isMobile } = useRecoilValue(appAtom);
 
   const analyticsParams = {
     [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.COLLECTION,
@@ -229,7 +268,7 @@ const NewBanner: React.FC<any> = (props) => {
     [ANALYTICS_PROPERTIES.TGIDS]: availableTours,
   };
 
-  const isSwiperSet = swiper !== null && !(swiper as any)?.destroyed;
+  const isSwiperSet = swiper && !swiper?.destroyed;
 
   useEffect(() => {
     setMounted(true);
@@ -279,17 +318,6 @@ const NewBanner: React.FC<any> = (props) => {
       ? image?.showPageUrl
       : image?.showPageUrl?.url;
 
-  const BANNER_PARAMS = {
-    DESKTOP: {
-      ASPECT_RATIO: '3:1',
-      WIDTH: '900',
-    },
-    MOBILE: {
-      ASPECT_RATIO: '16:9',
-      WIDTH: '400',
-    },
-  };
-
   const { ASPECT_RATIO, WIDTH } = isMobile
     ? BANNER_PARAMS.MOBILE
     : BANNER_PARAMS.DESKTOP;
@@ -313,8 +341,10 @@ const NewBanner: React.FC<any> = (props) => {
     <div>
       <StyledBanner
         bannerCount={bannerImages?.length}
-        loopedSlides={loopedSlides}
+        duplicateSlideCount={swiperDuplicateSlideCount}
+        initialSlide={initialSlide}
         isMounted={isMounted}
+        isMobile={isMobile}
       >
         {bannerImages?.length === 1 ? (
           <div
@@ -379,7 +409,6 @@ const NewBanner: React.FC<any> = (props) => {
             </Conditional>
           </div>
         ) : (
-          // @ts-expect-error TS(2322): Type 'Dispatch<SetStateAction<null>>' is not assig... Remove this comment to see the full error message
           <Swiper {...swiperParams} onSwiper={updateSwiper}>
             {bannerImages?.map((image: any, index: number) => {
               return (
@@ -410,7 +439,10 @@ const NewBanner: React.FC<any> = (props) => {
                             : image.url)
                         }
                         alt={image?.alt || 'banner'}
-                        priority={index === initialSlide}
+                        priority={[
+                          initialSlide,
+                          bannerImages.length - swiperDuplicateSlideCount,
+                        ].includes(index)}
                         imageId={stringIdfy(image.alt || '') + index}
                       />
                       <Conditional if={image.bannerHeading}>

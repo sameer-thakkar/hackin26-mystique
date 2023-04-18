@@ -467,7 +467,6 @@ export const getMicrositeDocument = async ({
           }
 
           const micrositeData = {
-            completeMicrosite: completeMicrosite,
             ...completeMicrosite,
             data: {
               ...completeMicrosite.data,
@@ -1001,7 +1000,12 @@ export const getShowPage = async ({
         ...page,
         commonFooter,
         commonHeader,
-        allShowPagesDocuments: allDocuments,
+        allShowPagesDocuments: allDocuments.map(
+          (d: { uid: string; data: { tgid: string } }) => ({
+            data: { tgid: d.data.tgid },
+            uid: d.uid,
+          })
+        ),
       },
       ContentType: CUSTOM_TYPES.SHOW_PAGE,
     };
@@ -1359,7 +1363,7 @@ export const getPageData = async ({
         lang,
         isDev,
         host,
-        categoryTourListData,
+        ...categoryTourListData,
         ...(primaryCity && { primaryCity }),
         ...(primaryCountry && { primaryCountry }),
         ...(activeCurrency && { activeCurrency }),
@@ -1452,6 +1456,7 @@ export const getPageData = async ({
         localisedCategoryTourListV1,
         categoryTourListV2,
       } = CMSData || {};
+      delete CMSData.allShowPages;
       const MBDesign = design || '';
       const mbTheme = theme || THEMES.DEFAULT;
       const toursTabSlice = body?.[0];
@@ -1524,14 +1529,61 @@ export const getPageData = async ({
         return [...acc, tour.tgid];
       }, []);
 
-      const activeCurrency = categoryTourListData?.activeCurrency;
-      const primaryCity = categoryTourListData?.primaryCity;
+      const {
+        activeCurrency,
+        primaryCity,
+        isCategoryV2,
+        primaryCountry: _,
+        scorpioData,
+        orderedTours,
+        collectionVideo,
+        ...rawCategories
+      }: any = categoryTourListData ?? {};
+
+      const simplifiedCategoryTourListData = !hasCategoryTourListV1
+        ? Object.entries(rawCategories || {}).reduce<{
+            tourGroupMap: TGIDProductCardMap;
+          }>(
+            (simpleCategoryData: any, [categoryId, productGroups]: any) => {
+              const tgids: Array<number> = [];
+              const productGroupMap: TGIDProductCardMap = productGroups?.reduce(
+                (map: TGIDProductCardMap, productGroup: ProductCard) => {
+                  if (productGroup.showPageUid) {
+                    delete productGroup.highlights;
+                  }
+                  tgids.push(productGroup.tgid);
+                  return {
+                    ...map,
+                    [productGroup.tgid]: productGroup,
+                  };
+                },
+                {}
+              );
+
+              return {
+                ...simpleCategoryData,
+                tourGroupMap: {
+                  ...simpleCategoryData.tourGroupMap,
+                  ...productGroupMap,
+                },
+                [categoryId]: tgids,
+              };
+            },
+            { tourGroupMap: {} }
+          )
+        : {};
       const primaryCountry = primaryCity?.country;
 
       scorpioAllTourGroupData = {
         CMSContent,
         toursList,
-        categoryTourListData,
+        ...(!hasCategoryTourListV1 && { simplifiedCategoryTourListData }),
+        ...(hasCategoryTourListV1 && {
+          scorpioData,
+          orderedTours,
+          collectionVideo,
+        }),
+        isCategoryV2,
         ContentType,
         uid,
         lang,
@@ -1676,7 +1728,7 @@ export const getPageData = async ({
 
     const primaryCountry =
       tourGroupAPIResponses?.cities?.[0]?.country ||
-      scorpioAllTourGroupData?.categoryTourListData?.primaryCountry;
+      scorpioAllTourGroupData?.primaryCountry;
 
     const primaryCity = tourGroupAPIResponses?.cities?.[0];
     const activeCurrency = tourGroupAPIResponses?.currencies?.[0];

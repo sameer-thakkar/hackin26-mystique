@@ -1,4 +1,4 @@
-import { ImageProps } from 'next/image';
+import { ImageProps } from 'next/future/image';
 
 export interface IImageProps
   extends Omit<ImageProps, 'src' | 'width' | 'height'> {

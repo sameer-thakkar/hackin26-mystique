@@ -149,7 +149,6 @@ export default class TermsPage extends Component<any, any> {
     const nakedDomain = useDomain ? getNakedDomain(host) : 'headout.com';
 
     return (
-      // @ts-expect-error TS(2786): 'ThemeProvider' cannot be used as a JSX component.
       <ThemeProvider theme={getAppTheme(mbTheme || THEMES.DEFAULT)}>
         <MBContextProvider
           host={host}

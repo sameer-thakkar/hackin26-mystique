@@ -240,7 +240,7 @@ const Video: React.FC<VideoTypeProps> = ({
           quality={imageQuality}
           imageId={imageId}
           autoCrop={false}
-          alt={imageAltText}
+          alt={imageAltText || ''}
           priority={dontLazyLoadImage}
           fetchPriority={dontLazyLoadImage ? 'high' : 'auto'}
           onClick={showPlayButton ? playVideo : () => {}}

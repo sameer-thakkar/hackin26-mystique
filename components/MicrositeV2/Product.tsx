@@ -337,6 +337,17 @@ const ProductCard = styled.div<{ isV3Design?: boolean }>`
   }
 `;
 
+const IMAGE_DIMENSIONS = {
+  MOBILE: {
+    WIDTH: '171',
+    HEIGHT: '102',
+  },
+  DESKTOP: {
+    WIDTH: '282',
+    HEIGHT: '176',
+  },
+};
+
 const Product = (props: any) => {
   const {
     allTours,
@@ -534,6 +545,10 @@ const Product = (props: any) => {
     } else return null;
   };
 
+  const { HEIGHT: cardImageHeight, WIDTH: cardImageWidth } = isMobile
+    ? IMAGE_DIMENSIONS.MOBILE
+    : IMAGE_DIMENSIONS.DESKTOP;
+
   const cardComponent = (
     <ProductCard
       onClick={handleProductClick}
@@ -548,10 +563,9 @@ const Product = (props: any) => {
         <Image
           url={productImage}
           format="pjpg"
-          width={400}
           imageId={tgid}
-          height={250}
-          layout={'fill'}
+          width={cardImageWidth}
+          height={cardImageHeight}
           alt={title}
         />
         {getBooster()}
@@ -655,10 +669,9 @@ const Product = (props: any) => {
               <Image
                 url={productImage}
                 format="pjpg"
-                width={400}
                 imageId={tgid}
-                height={250}
-                layout={'fill'}
+                width={cardImageWidth}
+                height={cardImageHeight}
                 alt={title}
               />
               {getBooster()}

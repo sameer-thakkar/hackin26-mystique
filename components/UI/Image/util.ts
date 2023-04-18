@@ -30,9 +30,9 @@ export const generateImageImgixUrl = (
   imigxOptionsQueryParams.set('auto', 'compress');
   imigxOptionsQueryParams.set('auto', 'format');
 
-  if (width) imigxOptionsQueryParams.set('w', `${Number(width) * 1.5}`);
-  if (height) imigxOptionsQueryParams.set('h', `${Number(height) * 1.5}`);
-  if (quality) imigxOptionsQueryParams.set('q', `${Number(quality)}`);
+  if (width) imigxOptionsQueryParams.set('w', `${Number(width) * 1.2}`);
+  if (height) imigxOptionsQueryParams.set('h', `${Number(height) * 1.2}`);
+  if (quality) imigxOptionsQueryParams.set('q', `${Number(quality) * 1.2}`);
 
   imigxOptionsQueryParams.set('fit', 'fit');
 

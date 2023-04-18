@@ -1,11 +1,6 @@
 import { LOG_LEVELS } from 'constants/logs';
 
 import { CoralogixLogger, LoggerConfig, Severity } from 'coralogix-logger';
-import { isServer } from 'utils/gen';
-
-export const shouldSendCoralogixLogs = () => {
-  return isServer() && process.env.NODE_ENV === 'production';
-};
 
 export const getCoralogixSeverity = (level: String) => {
   let logSeverity: Severity;

@@ -487,7 +487,6 @@ const AutomatedTourComparisonTable = ({
                       <Image
                         url={tour.imageUrl}
                         height={176}
-                        layout={'responsive'}
                         width={282}
                         alt={tour.name}
                       />

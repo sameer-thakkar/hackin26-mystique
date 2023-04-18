@@ -41,6 +41,7 @@ export const sanitizeURL = (url: string) =>
 
 export const getLangUID = (req: any, query: Record<string, any>) => {
   let uid, lang;
+  if (!req && typeof window === 'undefined') return {}; // next static optimsation flow.
   const { host } = req?.headers || window?.location;
   const pathname =
     req?.url?.split('?')?.[0]?.split('#')?.[0] || window.location.pathname;

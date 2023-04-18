@@ -357,7 +357,6 @@ const Card: React.FC<CardProps> = ({
           aspectRatio={aspectRatio}
           autoCrop={false}
           fill
-          objectFit={'cover'}
         />
       );
       break;

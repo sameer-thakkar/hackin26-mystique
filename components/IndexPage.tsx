@@ -1,4 +1,4 @@
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'cook... Remove this comment to see the full error message
+import { GetServerSideProps } from 'next';
 import ServerCookies from 'cookies';
 import React, { useEffect, useState } from 'react';
 import ErrorPage from 'next/error';
@@ -12,24 +12,32 @@ import {
   ANALYTICS_PROPERTIES,
   CUSTOM_TYPES,
   DESIGN,
-  ANALYTICS_PLATFORM,
   THEMES,
   COOKIE,
-  DOCUMENT_READY_STATES,
+  PAGETYPE_BY_CUSTOMTYPE,
 } from 'const/index';
-import { redirectTo, reflect, isNakedDomain } from 'utils';
+import { reflect, isNakedDomain, getLanguageFromPathname } from 'utils';
 import { getPageData } from 'utils/prismicUtils';
-import { sendVariableToDataLayer } from 'utils/analytics';
+import {
+  sendVariablesToDataLayer,
+  sendVariableToDataLayer,
+} from 'utils/analytics';
 import { removePageQuery } from 'utils/urlUtils';
 import { traceError } from 'utils/logutils';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { MutableSnapshot, RecoilRoot, useSetRecoilState } from 'recoil';
 import { appAtom } from 'store/atoms/app';
-import { gtmAtom } from 'store/atoms/gtm';
 import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
-import { withShortcodes } from 'utils/helper';
+import { getLangObject } from 'utils/helper';
 import { localServerSideIsMobileCheck } from 'utils/gen';
 import { strings } from 'const/strings';
 import { checkIfCurrencyCodeValid } from 'utils/currency';
+import { getLocalizationLabels } from 'utils/localizationUtils';
+import renderShortCodes from 'utils/shortCodes';
+import { metaAtom } from 'store/atoms/meta';
+import { currencyListAtom } from 'store/atoms/currencyList';
+import { currencyAtom } from 'store/atoms/currency';
+
+import Analytics from './Analytics';
 
 const Microsite = dynamic(() => import('components/MicrositeV1'));
 const ContentPage = dynamic(() => import('components/ContentPage'));
@@ -43,10 +51,50 @@ const getValidUrlParams = (query: any) =>
     .map(([key, val]) => `${key}=${val}`)
     .join('&')
     .trim();
-const Page = (props: any) => {
+
+type PageProps = { inventorySlotData: SimplifiedSlotsData; [k: string]: any };
+
+const Page = (props: PageProps) => {
   // Render headout's session-id-setter on mount
   const [showSessionIdSetter, setShowSessionIdSetter] = useState(false);
 
+  const {
+    simplifiedCategoryTourListData,
+    primaryCity,
+    isCategoryV2,
+    primaryCountry,
+    activeCurrency,
+    scorpioData,
+    orderedTours,
+    collectionVideo,
+    categoryTourListData: legacyCategoryTourListData,
+  } = props;
+  const { tourGroupMap, ...rawCategoryTgidMap } =
+    simplifiedCategoryTourListData ?? {};
+  const entityIdToursMap: { [k: string]: Array<ProductCard> } = Object.entries(
+    rawCategoryTgidMap || {}
+  ).reduce((acc, [catId, tgids]: any) => {
+    return {
+      ...acc,
+      [catId]: tgids.map((tgid: any) => tourGroupMap[tgid]),
+    };
+  }, {});
+
+  const categoryTourListData = {
+    ...entityIdToursMap,
+    ...legacyCategoryTourListData,
+    ...(primaryCity && { primaryCity }),
+    ...(primaryCountry && { primaryCountry }),
+    ...(activeCurrency && { activeCurrency }),
+    ...(isCategoryV2 && { isCategoryV2 }),
+    ...(scorpioData && { scorpioData }),
+    ...(orderedTours && { orderedTours }),
+    ...(collectionVideo && { collectionVideo }),
+  };
+
+  strings.setContent({
+    default: props.localizedStrings ?? {},
+  });
   useEffect(() => {
     const { query = {}, asPath } = props;
     const { bi } = query;
@@ -59,6 +107,101 @@ const Page = (props: any) => {
 
     setShowSessionIdSetter(true);
   }, []);
+
+  const initRecoil = ({ set }: MutableSnapshot) => {
+    if (!props?.ContentType) return;
+    const { lang } = props ?? {};
+    const {
+      baseLangPageTitle,
+      isCategoryV2,
+      CMSContent,
+      ContentType: customType,
+      tourGroupData,
+      primaryCity,
+      currencyList,
+      host,
+      isDev,
+      isStage,
+      cookies = {},
+      isMobile,
+      uid,
+    } = props;
+
+    const { title } = CMSContent?.data ?? {};
+    const metaTitle = renderShortCodes(title)?.join?.('');
+    let pageTitle =
+      customType === CUSTOM_TYPES.MICROSITE
+        ? CMSContent?.data?.data?.heading
+        : CMSContent?.data?.featured_title;
+    pageTitle = pageTitle ?? metaTitle;
+    pageTitle = renderShortCodes(pageTitle)?.join?.('');
+    const cookieCurrency = cookies?.[COOKIE.CURRENT_CURRENCY];
+    const isValidCookieCurrency = cookieCurrency
+      ? currencyList.find((c: any) => c.code === cookieCurrency)
+      : false;
+    const ssrCurrencyCode = isValidCookieCurrency
+      ? cookies?.[COOKIE.CURRENT_CURRENCY]
+      : primaryCity?.country?.currency?.code;
+
+    const pageType = PAGETYPE_BY_CUSTOMTYPE[customType];
+    const mbName = renderShortCodes(baseLangPageTitle)?.join?.('');
+    let scorpioData = isCategoryV2
+      ? Object.values(categoryTourListData).reduce(
+          (acc: Array<any>, tours) => acc.concat(tours),
+          []
+        )
+      : categoryTourListData?.scorpioData ?? tourGroupData ?? {};
+    let primaryCollectionName = null,
+      primaryCollectionId = null;
+    if (
+      Object.keys(scorpioData).length > 0 &&
+      customType !== CUSTOM_TYPES.SHOW_PAGE
+    ) {
+      const [firstTour]: any = Object.values(scorpioData);
+      const { primaryCollection } = firstTour ?? {};
+      const { id, name } = primaryCollection ?? {};
+      primaryCollectionName = name;
+      primaryCollectionId = id;
+    } else if (customType === CUSTOM_TYPES.SHOW_PAGE) {
+      const { primaryCollection } = tourGroupData;
+      const { id, displayName } = primaryCollection ?? {};
+      primaryCollectionName = displayName;
+      primaryCollectionId = id;
+    }
+    sendVariablesToDataLayer({
+      [ANALYTICS_PROPERTIES.COLLECTION_ID]: primaryCollectionId,
+      [ANALYTICS_PROPERTIES.CITY]: primaryCity?.displayName,
+      [ANALYTICS_PROPERTIES.COUNTRY]: primaryCity?.country?.displayName,
+      [ANALYTICS_PROPERTIES.COLLECTION_NAME]: primaryCollectionName,
+      [ANALYTICS_PROPERTIES.LANGUAGE]: getLangObject(lang).code,
+      [ANALYTICS_PROPERTIES.CURRENCY]: ssrCurrencyCode,
+      [ANALYTICS_PROPERTIES.MB_NAME]: mbName,
+      [ANALYTICS_PROPERTIES.PAGE_TITLE]: pageTitle,
+      [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageType,
+    });
+
+    set(metaAtom, {
+      city: primaryCity,
+      country: primaryCity?.country,
+      language: getLangObject(lang).code,
+      pageTitle: pageTitle,
+      collectionId: primaryCollectionId,
+      collectionName: primaryCollectionName,
+      mbName,
+      pageType,
+    });
+    set(appAtom, {
+      isMobile,
+      host,
+      isDev,
+      isStage,
+      initialCurrency: ssrCurrencyCode,
+      isPageLoaded: false,
+      uid,
+    });
+    set(currencyListAtom, currencyList);
+    set(currencyAtom, ssrCurrencyCode);
+  };
 
   const {
     CMSContent,
@@ -75,66 +218,16 @@ const Page = (props: any) => {
     lang,
     uid,
     toursList,
-    categoryTourListData = {},
     isMobile,
     mbTheme = THEMES.DEFAULT,
     isPreview,
     currencySymbolMap,
-    activeCurrency,
     queryParams = {},
     biLink,
     isStage,
-    primaryCountry,
-    primaryCity,
     collectionDetails,
     domainConfig,
   } = props;
-  const [{ eventsReady }, setEventsReady] = useRecoilState(gtmAtom);
-  const hsid = useRecoilState(hsidAtom);
-  const [appState, setAppState] = useRecoilState(appAtom);
-
-  useEffect(() => {
-    // GTM Universal Properties
-    const customType = ContentType;
-    if (!customType || !hsid || eventsReady) return;
-
-    sendVariableToDataLayer({
-      name: ANALYTICS_PROPERTIES.PLATFORM_NAME,
-      value:
-        window.outerWidth < 768
-          ? ANALYTICS_PLATFORM.MOBILE
-          : ANALYTICS_PLATFORM.DESKTOP,
-    });
-
-    const pageHeading =
-      customType === CUSTOM_TYPES.MICROSITE
-        ? CMSContent?.data?.data?.heading
-        : CMSContent?.data?.featured_title;
-    sendVariableToDataLayer({
-      name: ANALYTICS_PROPERTIES.PAGE_HEADING,
-      value: withShortcodes(pageHeading).join(''),
-    });
-
-    setEventsReady({ eventsReady: true });
-  }, [hsid]);
-
-  useEffect(() => {
-    const setPageLoaded = () => {
-      setAppState({ ...appState, isPageLoaded: true });
-    };
-
-    /* fix for safari: page getting loaded even before listener was attached */
-    if (
-      document.readyState === DOCUMENT_READY_STATES.INTERACTIVE ||
-      document.readyState === DOCUMENT_READY_STATES.COMPLETE
-    ) {
-      setPageLoaded();
-    } else {
-      window.addEventListener('DOMContentLoaded', setPageLoaded);
-      return () =>
-        window.removeEventListener('DOMContentLoaded', setPageLoaded);
-    }
-  }, []);
 
   const { noTrack, tgidToScroll, bookSubdomain } = queryParams;
 
@@ -210,7 +303,6 @@ const Page = (props: any) => {
             pathname={pathname}
             tgidToScroll={tgidToScroll}
             mbTheme={mbTheme}
-            eventsReady={eventsReady}
             domainConfig={domainConfig}
           />
         );
@@ -253,44 +345,54 @@ const Page = (props: any) => {
 
   return (
     <div id="body-wrap">
-      <EnvironmentContext.Provider
-        value={{
-          isDev,
-          windowUrl,
-        }}
-      >
-        {/* @ts-expect-error TS(2786): 'ThemeProvider' cannot be used as a JSX component. */}
-        <ThemeProvider theme={getAppTheme(mbTheme)}>
-          <MBContextProvider
-            host={host}
-            uid={uid}
-            lang={lang}
-            microsite={microsite}
-            design={MBDesign || DESIGN.V1}
-            mbTheme={mbTheme}
-            isPreview={isPreview}
-            currencySymbolMap={currencySymbolMap}
-            noTrack={!!noTrack || isDev}
-            biLink={biLink}
-            isGlobalMb={isGlobalMb}
-            isDev={isDev}
-            isStage={isStage}
-            bookSubdomain={bookSubdomain}
-            primaryCountry={primaryCountry}
-            primaryCity={primaryCity}
-            redirectToHeadoutBookingFlow={redirectToHeadoutBookingFlow}
-          >
-            {Component}
-            {showSessionIdSetter ? <HeadoutSessionIdSetterComponent /> : null}
-          </MBContextProvider>
-        </ThemeProvider>
-      </EnvironmentContext.Provider>
+      <RecoilRoot initializeState={initRecoil}>
+        <EnvironmentContext.Provider
+          value={{
+            isDev,
+            windowUrl,
+          }}
+        >
+          <ThemeProvider theme={getAppTheme(mbTheme)}>
+            <MBContextProvider
+              host={host}
+              uid={uid}
+              lang={lang}
+              microsite={microsite}
+              design={MBDesign || DESIGN.V1}
+              mbTheme={mbTheme}
+              isPreview={isPreview}
+              currencySymbolMap={currencySymbolMap}
+              noTrack={!!noTrack || isDev}
+              biLink={biLink}
+              isGlobalMb={isGlobalMb}
+              isDev={isDev}
+              isStage={isStage}
+              bookSubdomain={bookSubdomain}
+              primaryCountry={primaryCountry}
+              primaryCity={primaryCity}
+              redirectToHeadoutBookingFlow={redirectToHeadoutBookingFlow}
+            >
+              {Component}
+              {showSessionIdSetter ? <HeadoutSessionIdSetterComponent /> : null}
+              <Analytics cmsContent={CMSContent} contentType={ContentType} />
+            </MBContextProvider>
+          </ThemeProvider>
+        </EnvironmentContext.Provider>
+      </RecoilRoot>
     </div>
   );
 };
 
-Page.getInitialProps = async (ctx: any) => {
-  const { req, query, res, asPath, localizedStrings } = ctx;
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { req, query, res, resolvedUrl: asPath } = ctx;
+  const [pathname] = asPath.split('?') ?? [];
+  const queryParamsString = getValidUrlParams(query);
+
+  const lang = getLanguageFromPathname({ pathname, query }) || 'en';
+  const { host }: { host?: string } = req?.headers || window?.location;
+
+  const localizedStrings = await getLocalizationLabels({ lang });
+
   const serverRequestStartTimestamp = Math.floor(new Date().getTime());
   strings.setContent({
     default: localizedStrings,
@@ -302,17 +404,13 @@ Page.getInitialProps = async (ctx: any) => {
   if (
     typeof window === 'undefined' &&
     !checkIfCurrencyCodeValid({
-      currencyCode: serverCookies.get(COOKIE.CURRENT_CURRENCY),
+      currencyCode: serverCookies.get(COOKIE.CURRENT_CURRENCY) as string,
     })
   ) {
     delete req.cookies[COOKIE.CURRENT_CURRENCY];
     serverCookies.set(COOKIE.CURRENT_CURRENCY);
   }
 
-  const queryParamsString = getValidUrlParams(query);
-  const { host } = req?.headers || window?.location;
-  const pathname =
-    req?.url.split('?')[0].split('#')[0] || window.location.pathname;
   let isMobile = req
     ? req?.headers?.['cloudfront-is-mobile-viewer'] === 'true'
     : window?.outerWidth < 768;
@@ -332,11 +430,18 @@ Page.getInitialProps = async (ctx: any) => {
   const { bi: biLink } = query;
   // Naked Domain to WWW Redirect.
   if (!isDev && req) {
-    if (isNakedDomain(host)) {
+    if (isNakedDomain(host as string)) {
       const redirectURL = `https://www.${host}${pathname}${
         queryParamsString ? `?${queryParamsString}` : ''
       }`;
-      redirectTo({ res, url: redirectURL, type: 301 });
+
+      return {
+        redirect: {
+          destination: redirectURL,
+          permanent: true,
+          type: 301,
+        },
+      };
     }
   }
 
@@ -357,7 +462,14 @@ Page.getInitialProps = async (ctx: any) => {
       props?.CMSContent?.data?.redirect_url?.url;
     if (url) {
       url = `${url}${queryParamsString ? `?${queryParamsString}` : ''}`;
-      redirectTo({ res, url });
+      return {
+        redirect: {
+          destination: url,
+          type: 302,
+          permanent: false,
+          props: {},
+        },
+      };
     }
 
     if (typeof window !== 'undefined')
@@ -367,34 +479,40 @@ Page.getInitialProps = async (ctx: any) => {
         res.statusCode = props.statusCode;
       }
     }
-    if (
-      req &&
-      req.headers.host.startsWith('stage-') &&
-      process.env.GIT_BRANCH
-    ) {
-      res.setHeader('x-git-branch', process.env.GIT_BRANCH);
-      res.setHeader('x-git-actor', process.env.GIT_ACTOR);
-    }
+
     const protocol =
       req && req.headers['referer']
         ? req.headers['referer'].split(':')[0]
         : 'https';
-    return {
-      ...props,
-      serverRequestStartTimestamp,
-      windowUrl: req
-        ? `${protocol}://${req.headers['host']}${req.url}`
-        : window.location.href,
-      isMobile,
-      isPreview,
-      query,
-      asPath,
-      biLink,
-      cookies: req?.cookies ?? {},
+
+    const response = {
+      props: {
+        ...props,
+        localizedStrings,
+        serverRequestStartTimestamp,
+        windowUrl: req
+          ? `${protocol}://${req.headers['host']}${req.url}`
+          : window.location.href,
+        isMobile,
+        isPreview,
+        query,
+        asPath,
+        biLink,
+        cookies: req?.cookies ?? {},
+      },
     };
+    const removeEmpty = (obj: any) => {
+      const strData = JSON.stringify(obj);
+
+      return JSON.parse(strData);
+    };
+
+    return removeEmpty(response);
   } catch (error) {
     traceError({ error, host: req?.headers?.host, url: req?.url });
-    return {};
+    return {
+      props: {},
+    };
   }
 };
 

@@ -30,6 +30,7 @@ import { groupSlices, withTrailingSlash } from 'utils/helper';
 import { createBookingURL } from 'utils';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { trackEvent } from 'utils/analytics';
+import { appAtom } from 'store/atoms/app';
 
 const SearchBox: ComponentType<any> = dynamic(
   () => import('./SearchBox').then((mod) => mod.SearchBox),
@@ -315,7 +316,6 @@ interface HeaderProps {
 
 const Header: FunctionComponent<HeaderProps> = ({
   languageProps,
-  isMobile,
   allTours,
   host,
   enableDropdownLinks,
@@ -339,6 +339,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   const { lang, nakedDomain, redirectToHeadoutBookingFlow } = useContext(
     MBContext
   );
+  const { isMobile } = useRecoilValue(appAtom);
 
   const [results, setResults] = useState([]);
   const [resultClicked, setResultClicked] = useState(false);
@@ -454,7 +455,6 @@ const Header: FunctionComponent<HeaderProps> = ({
                   priority
                   height={isMobileDevice ? '22' : '44'}
                   width={isMobileDevice ? '87' : '144'}
-                  layout={'fixed'}
                   className="center"
                 />
                 <Conditional if={hasPoweredByHeadoutLogo}>

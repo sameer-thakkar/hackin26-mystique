@@ -496,10 +496,12 @@ export const categoryTourListParserV2 = async ({
     });
   }
   let allPromises,
-    categoriesWithProducts = [],
-    allTgids = [],
+    categoriesWithProducts: Array<any> = [],
+    allTgids: Array<number> = [],
     finalObj = {},
     primaryCity;
+
+  const groupedPromises = [];
 
   if (collectionIds?.length) {
     try {
@@ -513,32 +515,37 @@ export const categoryTourListParserV2 = async ({
         lang,
         cookies,
       });
-      const data = await Promise.all(allPromises);
-      const collectionData: any = data
-        ?.filter((item) => item)
-        ?.map((c: any) => {
-          const { collection, sections } = c || {};
-          const filteredData = sections.filter((curr: any) => {
-            return curr?.tourGroups?.items?.length;
+      const collectionPromise = Promise.all(allPromises).then((data) => {
+        const collectionData: any = data
+          ?.filter((item) => item)
+          ?.map((c: any) => {
+            const { collection, sections } = c || {};
+            const filteredData = sections.filter((curr: any) => {
+              return curr?.tourGroups?.items?.length;
+            });
+            let filterTgids: Array<{
+              collection: Record<string, any>;
+              items: Array<string | number>;
+            }> = [];
+            filteredData.forEach((section: any) => {
+              if (section?.tourGroups?.items) {
+                filterTgids = filterTgids.concat(section.tourGroups.items);
+              }
+            });
+            return {
+              collection,
+              items: filterTgids,
+            };
           });
-          let filterTgids: any = [];
-          filteredData.forEach((section: any) => {
-            if (section?.tourGroups?.items) {
-              filterTgids = filterTgids.concat(section.tourGroups.items);
-            }
-          });
-          return {
-            collection,
-            items: filterTgids,
-          };
-        });
-      if (collectionData?.length) {
-        categoriesWithProducts.push(collectionData);
-        const tgids = extractTgidsFromCategories(collectionData);
-        if (tgids?.length) {
-          allTgids.push(tgids);
+        if (collectionData?.length) {
+          categoriesWithProducts.push(collectionData);
+          const tgids = extractTgidsFromCategories(collectionData);
+          if (tgids?.length) {
+            allTgids.push(...tgids);
+          }
         }
-      }
+      });
+      groupedPromises.push(collectionPromise);
     } catch (err) {
       console.error(err);
       Sentry.captureException(err);
@@ -557,25 +564,27 @@ export const categoryTourListParserV2 = async ({
         lang,
         cookies,
       });
-      const data = await Promise.all(allPromises);
-      primaryCity = data?.[0]?.city;
-      const categoryData = data
-        ?.filter((d: any) => d?.pageData?.items?.length)
-        ?.map((cat: any) => {
-          const { category, pageData } = cat || {};
-          const { items } = pageData || {};
-          return {
-            category,
-            items,
-          };
-        });
-      const tgids = extractTgidsFromCategories(categoryData);
-      if (categoryData?.length) {
-        categoriesWithProducts.push(categoryData);
-      }
-      if (tgids?.length) {
-        allTgids.push(tgids);
-      }
+      const categoryPromise = Promise.all(allPromises).then((data) => {
+        primaryCity = data?.[0]?.city;
+        const categoryData = data
+          ?.filter((d: any) => d?.pageData?.items?.length)
+          ?.map((cat: any) => {
+            const { category, pageData } = cat || {};
+            const { items } = pageData || {};
+            return {
+              category,
+              items,
+            };
+          });
+        const tgids = extractTgidsFromCategories(categoryData);
+        if (categoryData?.length) {
+          categoriesWithProducts.push(categoryData);
+        }
+        if (tgids?.length) {
+          allTgids.push(...tgids);
+        }
+      });
+      groupedPromises.push(categoryPromise);
     } catch (err) {
       console.error(err);
       Sentry.captureException(err);
@@ -594,31 +603,35 @@ export const categoryTourListParserV2 = async ({
         lang,
         cookies,
       });
-      const data = await Promise.all(allPromises);
-      primaryCity = data?.[0]?.city;
-      const subCategoryData = data
-        ?.filter((d: any) => d?.pageData?.items?.length)
-        ?.map((cat: any) => {
-          const { subCategory, pageData } = cat || {};
-          const { items } = pageData || {};
-          return {
-            subCategory,
-            items,
-          };
-        });
-      const tgids = extractTgidsFromCategories(subCategoryData);
-      if (subCategoryData?.length) {
-        categoriesWithProducts.push(subCategoryData);
-      }
-      if (tgids?.length) {
-        allTgids.push(tgids);
-      }
+      const subCategoryPromise = Promise.all(allPromises).then((data) => {
+        primaryCity = data?.[0]?.city;
+        const subCategoryData = data
+          ?.filter((d: any) => d?.pageData?.items?.length)
+          ?.map((cat: any) => {
+            const { subCategory, pageData } = cat || {};
+            const { items } = pageData || {};
+            return {
+              subCategory,
+              items,
+            };
+          });
+        const tgids = extractTgidsFromCategories(subCategoryData);
+        if (subCategoryData?.length) {
+          categoriesWithProducts.push(subCategoryData);
+        }
+        if (tgids?.length) {
+          allTgids.push(...tgids);
+        }
+      });
+      groupedPromises.push(subCategoryPromise);
     } catch (err) {
       console.error(err);
       Sentry.captureException(err);
       sendLog({ err });
     }
   }
+
+  await Promise.all(groupedPromises);
 
   const allData = categoriesWithProducts?.flat();
   let currencyObject;
@@ -784,10 +797,6 @@ export const categoryTourListParserV2 = async ({
           primarySubCategory: primarySubCategoryWithoutSlugs,
           descriptors: mbDescriptors,
           secondaryDescriptors,
-          productHighlights: null,
-          cardFooter: null,
-          theater: null,
-          content_theater: null,
           contentBlocks,
           productImage: imageUrl,
           descriptionImage:
@@ -800,11 +809,7 @@ export const categoryTourListParserV2 = async ({
           images: productImages,
           averageRating,
           reviewCount,
-          ctaBooster: null,
-          description: null,
           available: !!listingPrice?.finalPrice,
-          overlayBooster: null,
-          vendor: null,
           allTags,
           reopeningDate: reopeningDate[localizedStrings.SHOW_PAGE.OPENING_DATE],
           closingDate: reopeningDate[localizedStrings.SHOW_PAGE.CLOSING_DATE],
@@ -816,7 +821,6 @@ export const categoryTourListParserV2 = async ({
           },
           microBrandsHighlight: highlights,
           listingPrice,
-          safetyImages: null,
           // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
           showPageUid: hasShowPageData ? showpageData[id] : null,
           listicleShowSummary,

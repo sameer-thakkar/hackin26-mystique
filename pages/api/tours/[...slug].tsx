@@ -1,4 +1,3 @@
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'cook... Remove this comment to see the full error message
 import Cookies from 'cookies';
 import { COOKIE } from 'const/index';
 import { checkIfCurrencyCodeValid } from 'utils/currency';
@@ -25,7 +24,7 @@ const ToursAPI = async (req: any, res: any) => {
   const queryParamsObj = new URLSearchParams();
   const cookieCurrency = cookies.get(COOKIE.CURRENT_CURRENCY);
   const isCookieCurrencyValid = checkIfCurrencyCodeValid({
-    currencyCode: cookieCurrency,
+    currencyCode: cookieCurrency as string,
   });
 
   Object.entries(req.query ?? {}).forEach(([key, value]) => {

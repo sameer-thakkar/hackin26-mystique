@@ -202,6 +202,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
                 <DesktopStyledImage key={index} ref={modalRef}>
                   <Image
                     url={image.linked_image?.url || image.uploaded_image?.url}
+                    alt={RichText.asText(image.heading) || ''}
                   />
                   <Content>
                     <div className="content-wrapper">

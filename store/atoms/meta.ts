@@ -1,15 +1,24 @@
 import { atom } from 'recoil';
 
-export const metaAtom = atom({
+export const metaAtom = atom<{
+  city?: string;
+  country?: string;
+  collectionId?: string;
+  collectionName?: string;
+  mbName?: string;
+  pageTitle?: string;
+  pageType?: string;
+  language?: string;
+}>({
   key: 'meta',
   default: {
-    city: null,
-    country: null,
-    collectionId: null,
-    collectionName: null,
-    mbName: null,
-    pageTitle: null,
-    pageType: null,
+    city: '',
+    country: '',
+    collectionId: '',
+    collectionName: '',
+    mbName: '',
+    pageTitle: '',
+    pageType: '',
     language: 'en',
   },
 });

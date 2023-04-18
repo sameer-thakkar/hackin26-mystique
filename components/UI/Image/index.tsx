@@ -1,12 +1,13 @@
 import React from 'react';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import FutureImage from 'next/image';
+import FutureImage from 'next/future/image';
 import Conditional from 'components/common/Conditional';
 import { INFO_ICON } from 'assets/SvgIcons';
-import { generateImageImgixUrl, getBlurDataUrl } from 'UI/Image/util';
-
-import { IImageProps } from './interface';
-import Tooltip from '../Tooltip';
+import { generateImageImgixUrl } from 'UI/Image/util';
+import { appAtom } from 'store/atoms/app';
+import Tooltip from 'UI/Tooltip';
+import { IImageProps } from 'UI/Image/interface';
 
 export const Wrapper = styled.div`
   position: relative;
@@ -51,16 +52,15 @@ const Image: React.FC<IImageProps> = ({
   onClick,
   fitCrop = false,
   blurFill = false,
-  layout = undefined,
-  objectFit,
   fetchPriority = 'auto',
 }) => {
   let calculatedWidth = width,
     calculatedHeight = height,
     mobileImageSrc,
     defaultImageSrc,
-    blurDataUrl,
     fillImageProp = fill;
+
+  const { isMobile } = useRecoilValue(appAtom);
 
   if (aspectRatio) {
     const [widthRatio, heightRatio] = aspectRatio.split(':').map(Number);
@@ -100,11 +100,6 @@ const Image: React.FC<IImageProps> = ({
     blurFill
   );
 
-  blurDataUrl = getBlurDataUrl(
-    Number(calculatedWidth),
-    Number(calculatedHeight)
-  );
-
   if (!defaultImageSrc?.length) {
     return null;
   }
@@ -117,21 +112,15 @@ const Image: React.FC<IImageProps> = ({
     <Wrapper className={`image-wrap ${className}`} onClick={onClick}>
       <FutureImage
         className={imageId}
-        src={defaultImageSrc}
-        data-srcset={`${
-          mobileUrl ? mobileImageSrc + ' 768w,' : ''
-        }${defaultImageSrc}`}
-        // @ts-expect-error TS(2322): Type 'number | null' is not assignable to type 'st... Remove this comment to see the full error message
-        width={fillImageProp ? null : Number(calculatedWidth)}
-        // @ts-expect-error TS(2322): Type 'number | null' is not assignable to type 'st... Remove this comment to see the full error message
-        height={fillImageProp ? null : Number(calculatedHeight)}
-        layout={fillImageProp ? 'fill' : layout}
+        src={isMobile && mobileImageSrc ? mobileImageSrc : defaultImageSrc}
+        width={fillImageProp ? undefined : Number(calculatedWidth)}
+        height={fillImageProp ? undefined : Number(calculatedHeight)}
         alt={alt}
-        placeholder={'blur'}
-        blurDataURL={blurDataUrl}
+        placeholder={'empty'}
         priority={priority}
-        objectFit={objectFit}
         unoptimized // We use IMGIX, which does all the optimisation required. Letting Next process images will add to TTFB.
+        fill={fillImageProp}
+        // @ts-ignore
         fetchpriority={fetchPriority}
       />
       <Conditional if={!!attribution}>

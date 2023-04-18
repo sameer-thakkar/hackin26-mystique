@@ -138,6 +138,7 @@ class MicrositeV2 extends Component<any, any> {
       scorpioData,
       categoryTourListData,
       domainConfig,
+      isMobile,
     } = this.props;
     const {
       commonFooter,
@@ -173,7 +174,6 @@ class MicrositeV2 extends Component<any, any> {
       baseLangBannerAndFooterCombinations,
     } = CMSData || {};
     const currentLanguage = getLangObject(CMSContent.lang).code;
-    const { isMobile } = this.state;
     const languageProps = {
       uid,
       currentLanguage,
@@ -498,7 +498,6 @@ class MicrositeV2 extends Component<any, any> {
         {...categoryProps}
         queryCategory={directCategory}
       >
-        {/* @ts-expect-error TS(2786): 'MicrositeV2GlobalStyle' cannot be used as a JSX c... Remove this comment to see the full error message */}
         <MicrositeV2GlobalStyle />
         <PopulateMeta
           {...{
@@ -521,7 +520,7 @@ class MicrositeV2 extends Component<any, any> {
         >
           <HomePage
             {...MBData}
-            isMobile={this.state.isMobile}
+            isMobile={isMobile}
             changePage={this.changePage}
             openCategory={this.openCategory}
             longFormContent={longFormContent}

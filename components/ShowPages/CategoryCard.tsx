@@ -94,16 +94,16 @@ const CategoryCard = ({
   element,
   currentLanguage,
   categoryName,
-  isMobile
+  isMobile,
 }: any) => {
   const { listingPrice, name, imageUrl, id, tourGroupUrl } = element;
   const { isDev, host } = useContext(MBContext);
 
-  let cardDocument = allShowPagesDocuments.filter(
+  let cardDocument = allShowPagesDocuments.find(
     (element: any) => element.data.tgid === id
   );
-  const redirectURL = cardDocument.length
-    ? convertUidToUrl({ uid: cardDocument[0].uid, isDev, hostname: host })
+  const redirectURL = cardDocument
+    ? convertUidToUrl({ uid: cardDocument.uid, isDev, hostname: host })
     : `https://www.headout.com${tourGroupUrl}`;
 
   const trackClickEvent = () => {

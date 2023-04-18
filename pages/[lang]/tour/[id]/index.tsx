@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import ErrorPage from 'next/error';
 import Head from 'next/head';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'cook... Remove this comment to see the full error message
 import ServerCookies from 'cookies';
 import styled from 'styled-components';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
@@ -241,7 +240,7 @@ const ExperiencePage = ({
     flowType,
   } = productData || {};
 
-  const { slots } = inventorySlotData || {};
+  const { slots }: SimplifiedSlotsData = inventorySlotData || {};
 
   const { id: primarySubCategoryID, name: primarySubCategoryName } =
     primarySubCategory || {};

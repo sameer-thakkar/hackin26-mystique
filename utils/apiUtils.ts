@@ -3,6 +3,9 @@ import { currencySortFn } from 'utils/gen';
 import { addQueryParams, getDomainFromUid } from 'utils/urlUtils';
 import { CUSTOM_HEADER } from 'const/index';
 
+import { simplifySlotData } from './inventoryUtils';
+
+type TTgids = string[];
 type THost = string;
 
 const objectToQuery = (query: any) => {
@@ -518,8 +521,9 @@ export const fetchTourGroupSlots = async ({
     });
     const headers = constructHeaders({ cookies });
     const response = await fetch(url, { headers });
+    const data = await response.json();
 
-    return await response.json();
+    return simplifySlotData(data);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('[fetchTourGroupSlots]', error);

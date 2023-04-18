@@ -219,7 +219,7 @@ const ShowPage = (props: any) => {
     variants,
   } = tourGroupData || {};
 
-  const { slots } = inventorySlotData || {};
+  const { slots }: SimplifiedSlotsData = inventorySlotData || {};
 
   const { id: primarySubCategoryID, name: primarySubCategoryName } =
     primarySubCategory || {};
