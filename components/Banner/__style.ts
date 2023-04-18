@@ -51,6 +51,7 @@ export const StyledBanner = styled.div<IStyledBanner>`
     min-width: 75rem;
     object-fit: cover;
     object-position: 0% 25%;
+    height: 100%;
   }
 
   .swiper-initialized {

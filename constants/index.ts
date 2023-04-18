@@ -1129,6 +1129,11 @@ export const DEFAULT_SHOWPAGE_HOSTNAME = 'www.london-theater-tickets.com';
 
 export const DOMAIN_INITIALS = 'www.';
 
+export const SENTRY_TAGS = {
+  EXCEPTION_TYPE: 'EXCEPTION_TYPE',
+  PAGE_TYPE: 'PAGE_TYPE',
+};
+
 export const F1_SPORTS_EXPERIMENT_TGIDS = [
   '19708',
   '20016',

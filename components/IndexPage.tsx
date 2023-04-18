@@ -14,28 +14,18 @@ import {
   DESIGN,
   THEMES,
   COOKIE,
-  PAGETYPE_BY_CUSTOMTYPE,
 } from 'const/index';
 import { reflect, isNakedDomain, getLanguageFromPathname } from 'utils';
 import { getPageData } from 'utils/prismicUtils';
-import {
-  sendVariablesToDataLayer,
-  sendVariableToDataLayer,
-} from 'utils/analytics';
+import { sendVariableToDataLayer } from 'utils/analytics';
 import { removePageQuery } from 'utils/urlUtils';
 import { traceError } from 'utils/logutils';
-import { MutableSnapshot, RecoilRoot, useSetRecoilState } from 'recoil';
-import { appAtom } from 'store/atoms/app';
+import { useSetRecoilState } from 'recoil';
 import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
-import { getLangObject } from 'utils/helper';
 import { localServerSideIsMobileCheck } from 'utils/gen';
 import { strings } from 'const/strings';
 import { checkIfCurrencyCodeValid } from 'utils/currency';
 import { getLocalizationLabels } from 'utils/localizationUtils';
-import renderShortCodes from 'utils/shortCodes';
-import { metaAtom } from 'store/atoms/meta';
-import { currencyListAtom } from 'store/atoms/currencyList';
-import { currencyAtom } from 'store/atoms/currency';
 
 import Analytics from './Analytics';
 
@@ -107,101 +97,6 @@ const Page = (props: PageProps) => {
 
     setShowSessionIdSetter(true);
   }, []);
-
-  const initRecoil = ({ set }: MutableSnapshot) => {
-    if (!props?.ContentType) return;
-    const { lang } = props ?? {};
-    const {
-      baseLangPageTitle,
-      isCategoryV2,
-      CMSContent,
-      ContentType: customType,
-      tourGroupData,
-      primaryCity,
-      currencyList,
-      host,
-      isDev,
-      isStage,
-      cookies = {},
-      isMobile,
-      uid,
-    } = props;
-
-    const { title } = CMSContent?.data ?? {};
-    const metaTitle = renderShortCodes(title)?.join?.('');
-    let pageTitle =
-      customType === CUSTOM_TYPES.MICROSITE
-        ? CMSContent?.data?.data?.heading
-        : CMSContent?.data?.featured_title;
-    pageTitle = pageTitle ?? metaTitle;
-    pageTitle = renderShortCodes(pageTitle)?.join?.('');
-    const cookieCurrency = cookies?.[COOKIE.CURRENT_CURRENCY];
-    const isValidCookieCurrency = cookieCurrency
-      ? currencyList.find((c: any) => c.code === cookieCurrency)
-      : false;
-    const ssrCurrencyCode = isValidCookieCurrency
-      ? cookies?.[COOKIE.CURRENT_CURRENCY]
-      : primaryCity?.country?.currency?.code;
-
-    const pageType = PAGETYPE_BY_CUSTOMTYPE[customType];
-    const mbName = renderShortCodes(baseLangPageTitle)?.join?.('');
-    let scorpioData = isCategoryV2
-      ? Object.values(categoryTourListData).reduce(
-          (acc: Array<any>, tours) => acc.concat(tours),
-          []
-        )
-      : categoryTourListData?.scorpioData ?? tourGroupData ?? {};
-    let primaryCollectionName = null,
-      primaryCollectionId = null;
-    if (
-      Object.keys(scorpioData).length > 0 &&
-      customType !== CUSTOM_TYPES.SHOW_PAGE
-    ) {
-      const [firstTour]: any = Object.values(scorpioData);
-      const { primaryCollection } = firstTour ?? {};
-      const { id, name } = primaryCollection ?? {};
-      primaryCollectionName = name;
-      primaryCollectionId = id;
-    } else if (customType === CUSTOM_TYPES.SHOW_PAGE) {
-      const { primaryCollection } = tourGroupData;
-      const { id, displayName } = primaryCollection ?? {};
-      primaryCollectionName = displayName;
-      primaryCollectionId = id;
-    }
-    sendVariablesToDataLayer({
-      [ANALYTICS_PROPERTIES.COLLECTION_ID]: primaryCollectionId,
-      [ANALYTICS_PROPERTIES.CITY]: primaryCity?.displayName,
-      [ANALYTICS_PROPERTIES.COUNTRY]: primaryCity?.country?.displayName,
-      [ANALYTICS_PROPERTIES.COLLECTION_NAME]: primaryCollectionName,
-      [ANALYTICS_PROPERTIES.LANGUAGE]: getLangObject(lang).code,
-      [ANALYTICS_PROPERTIES.CURRENCY]: ssrCurrencyCode,
-      [ANALYTICS_PROPERTIES.MB_NAME]: mbName,
-      [ANALYTICS_PROPERTIES.PAGE_TITLE]: pageTitle,
-      [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageType,
-    });
-
-    set(metaAtom, {
-      city: primaryCity,
-      country: primaryCity?.country,
-      language: getLangObject(lang).code,
-      pageTitle: pageTitle,
-      collectionId: primaryCollectionId,
-      collectionName: primaryCollectionName,
-      mbName,
-      pageType,
-    });
-    set(appAtom, {
-      isMobile,
-      host,
-      isDev,
-      isStage,
-      initialCurrency: ssrCurrencyCode,
-      isPageLoaded: false,
-      uid,
-    });
-    set(currencyListAtom, currencyList);
-    set(currencyAtom, ssrCurrencyCode);
-  };
 
   const {
     CMSContent,
@@ -345,40 +240,38 @@ const Page = (props: PageProps) => {
 
   return (
     <div id="body-wrap">
-      <RecoilRoot initializeState={initRecoil}>
-        <EnvironmentContext.Provider
-          value={{
-            isDev,
-            windowUrl,
-          }}
-        >
-          <ThemeProvider theme={getAppTheme(mbTheme)}>
-            <MBContextProvider
-              host={host}
-              uid={uid}
-              lang={lang}
-              microsite={microsite}
-              design={MBDesign || DESIGN.V1}
-              mbTheme={mbTheme}
-              isPreview={isPreview}
-              currencySymbolMap={currencySymbolMap}
-              noTrack={!!noTrack || isDev}
-              biLink={biLink}
-              isGlobalMb={isGlobalMb}
-              isDev={isDev}
-              isStage={isStage}
-              bookSubdomain={bookSubdomain}
-              primaryCountry={primaryCountry}
-              primaryCity={primaryCity}
-              redirectToHeadoutBookingFlow={redirectToHeadoutBookingFlow}
-            >
-              {Component}
-              {showSessionIdSetter ? <HeadoutSessionIdSetterComponent /> : null}
-              <Analytics cmsContent={CMSContent} contentType={ContentType} />
-            </MBContextProvider>
-          </ThemeProvider>
-        </EnvironmentContext.Provider>
-      </RecoilRoot>
+      <EnvironmentContext.Provider
+        value={{
+          isDev,
+          windowUrl,
+        }}
+      >
+        <ThemeProvider theme={getAppTheme(mbTheme)}>
+          <MBContextProvider
+            host={host}
+            uid={uid}
+            lang={lang}
+            microsite={microsite}
+            design={MBDesign || DESIGN.V1}
+            mbTheme={mbTheme}
+            isPreview={isPreview}
+            currencySymbolMap={currencySymbolMap}
+            noTrack={!!noTrack || isDev}
+            biLink={biLink}
+            isGlobalMb={isGlobalMb}
+            isDev={isDev}
+            isStage={isStage}
+            bookSubdomain={bookSubdomain}
+            primaryCountry={primaryCountry}
+            primaryCity={primaryCity}
+            redirectToHeadoutBookingFlow={redirectToHeadoutBookingFlow}
+          >
+            {Component}
+            {showSessionIdSetter ? <HeadoutSessionIdSetterComponent /> : null}
+            <Analytics cmsContent={CMSContent} contentType={ContentType} />
+          </MBContextProvider>
+        </ThemeProvider>
+      </EnvironmentContext.Provider>
     </div>
   );
 };

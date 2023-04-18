@@ -43,6 +43,7 @@ export default class TermsPage extends Component<any, any> {
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error);
+      return {};
     }
   }
 
@@ -75,7 +76,7 @@ export default class TermsPage extends Component<any, any> {
         footerID = response.data.common_footer.id;
         break;
       case CUSTOM_TYPES.MICROSITE:
-        response = CMSContent.completeMicrosite.data;
+        response = CMSContent.data;
         footerID = response.data.footer_ref.id;
     }
     if (footerID) {

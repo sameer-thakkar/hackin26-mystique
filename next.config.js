@@ -15,12 +15,12 @@ const SentryWebpackPluginOptions = {
 const internalRedirects = [
   {
     source: '/:lang/tour/:id/:path*/',
-    destination: '/:lang/e-:id/',
+    destination: '/:lang/-e-:id/',
     permanent: true,
   },
   {
     source: '/tour/:id/:path*/',
-    destination: '/e-:id/',
+    destination: '/-e-:id/',
     permanent: true,
   },
 ];
@@ -31,11 +31,11 @@ const internalRewrites = [
     destination: '/en/tour/:id',
   },
   {
-    source: '/:lang/(.*)e-:id(\\d+)',
+    source: '/:lang/(.*)-e-:id(\\d+)',
     destination: '/:lang/tour/:id',
   },
   {
-    source: '/(.*)e-:id(\\d+)',
+    source: '/(.*)-e-:id(\\d+)',
     destination: '/en/tour/:id',
   },
 ];
