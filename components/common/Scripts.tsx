@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Script from 'next/script';
 import { LogoJsonLd, SiteLinksSearchBoxJsonLd } from 'next-seo';
 import Conditional from 'components/common/Conditional';
 import { CollectionDetailsTypes } from 'components/StaticBanner/index';
@@ -22,27 +21,36 @@ export const TrackingScripts = ({
   let GTM_ENV = isNonProd ? 'env-27' : 'env-1';
   GTM_AUTH = `&gtm_auth=${GTM_AUTH}`;
   GTM_ENV = `&gtm_preview=${GTM_ENV}&gtm_cookies_win=x`;
+
   return (
     <Head>
-      <Script id="gtm-data-layer">
-        {`//<![CDATA[
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `//<![CDATA[
 				var dataLayer = dataLayer || [];
 			//]]>
-			`}
-      </Script>
-      <Script id="gtm-data-layer-content">
-        {`//<![CDATA[
+			`,
+        }}
+      />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `//<![CDATA[
 				var dataLayer_content = [];
-				dataLayer.push( dataLayer_content );//]]>`}
-      </Script>
-      <Script strategy="afterInteractive" id="gtm-script">{`//<![CDATA[
+				dataLayer.push( dataLayer_content );//]]>`,
+        }}
+      />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `//<![CDATA[
 				(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 				new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 				j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 				'https://www.googletagmanager.com/gtm.js?id='+i+dl+ '${GTM_AUTH || ''}${
-        GTM_ENV || ''
-      }';f.parentNode.insertBefore(j,f);
-				})(window,document,'script','dataLayer','${GTM_CONTAINER_ID}');//]]>`}</Script>
+            GTM_ENV || ''
+          }';f.parentNode.insertBefore(j,f);
+				})(window,document,'script','dataLayer','${GTM_CONTAINER_ID}');//]]>`,
+        }}
+      />
     </Head>
   );
 };

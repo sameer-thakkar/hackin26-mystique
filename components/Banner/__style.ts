@@ -41,9 +41,6 @@ export const StyledBanner = styled.div<IStyledBanner>`
     background: rgba(34, 34, 34, 0.6);
     cursor: pointer;
     position: relative;
-  }
-
-  .mb-slide .image-wrap {
     border-radius: 0.75rem;
   }
 
@@ -52,6 +49,7 @@ export const StyledBanner = styled.div<IStyledBanner>`
     object-fit: cover;
     object-position: 0% 25%;
     height: 100%;
+    border-radius: 0.75rem;
   }
 
   .swiper-initialized {
