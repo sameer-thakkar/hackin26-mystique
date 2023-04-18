@@ -68,7 +68,7 @@ const StyledBanner = styled.div<IStyledBanner>`
         partialSlideWidth = `(100vw - (100vw - 100%) - ${slideWidth})`; // screenWidth - (scrollbar width) - slide width
       }
 
-      return !isMounted
+      return isMounted
         ? ``
         : css`
             transform: translate3d(
