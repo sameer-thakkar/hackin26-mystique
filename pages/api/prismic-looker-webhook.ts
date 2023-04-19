@@ -149,7 +149,7 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
       focus_keyword,
       google_site_verification_id: google_site_verification,
       bing_site_verification_id: bing_site_verification,
-      author_name: author_name,
+      author_name,
       is_freelancer: !!is_freelancer,
       has_uncategorised_tours: uncategorisedToursCheck(doc),
       banner_subtext: getBannerSubtext(doc),
@@ -180,6 +180,7 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
       canonical_link,
       available_languages: getAvailableLanguages({ doc, language }),
       has_longform: !!content_framework?.id,
+      linked_content_framework_id: content_framework?.id || null,
       tgids: await getTgids({ doc, host, isStageMode }),
       parent_domain: pageUrl ? getParentDomain(new URL(pageUrl)) : null,
       language,
@@ -234,6 +235,7 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
         content_framework,
         meta_title_override,
         meta_description_override,
+        author_name,
         is_freelancer,
       },
     } = doc;
@@ -255,6 +257,7 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
       has_lfc: !!content_framework?.id,
       meta_title_override,
       meta_description_override,
+      author_name,
       is_freelancer: !!is_freelancer,
     };
 
