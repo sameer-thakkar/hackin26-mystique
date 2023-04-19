@@ -348,7 +348,7 @@ const en = {
   FLEXIBLE: 'Flexible',
   INCLUSIONS: 'Inclusions',
   EXCLUSIONS: 'Exclusions',
-  FREE_CANCELLATION: 'Free Cancellation',
+  FREE_CANCELLATION: 'Free cancellation',
   PROMO_CODES: {
     APPLY_CODE: 'APPLY CODE',
     REMOVE: 'REMOVE',
