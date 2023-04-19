@@ -1,11 +1,13 @@
 import { Component } from 'react';
 
-const fullDomain = (req: any) => req.headers['x-forwarded-proto'] + '://' + req.headers.host;
+const fullDomain = (req: any) =>
+  req.headers['x-forwarded-proto'] + '://' + req.headers.host;
 
 const robotsContentForStage = () =>
   `User-agent: Screaming Frog SEO Spider\nDisallow:\n\nUser-agent: *\nDisallow: /`;
 
-const robotsContent = (domain: any) => `User-agent: *\n\nSitemap: ${domain}/sitemap.xml\nDisallow: */ja/*`;
+const robotsContent = (domain: any) =>
+  `User-agent: *\n\nSitemap: ${domain}/sitemap.xml\nDisallow: */ja/*`;
 
 const tempRobotsContent = `User-agent: *\nDisallow: /`;
 
@@ -21,6 +23,7 @@ const blackListNoIndex = [
   'venice-tickets.co',
   'naples-tickets.co',
   'tickets-london.co.uk',
+  'entradas-valencia.com',
 ];
 
 const indexDomains = [
@@ -32,10 +35,7 @@ const indexDomains = [
 ];
 
 export default class RobotsTxt extends Component {
-  static async getInitialProps({
-    res,
-    req
-  }: any) {
+  static async getInitialProps({ res, req }: any) {
     const domain = fullDomain(req);
     let content = domain.includes('stage-')
       ? robotsContentForStage()
