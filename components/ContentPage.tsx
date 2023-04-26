@@ -350,7 +350,6 @@ class ContentPage extends Component<any, any> {
       cardPrices: tourAPIData,
       isFetched: apiReady,
     });
-    const { is_entertainment_mb: isEntertainmentMb } = microsite?.data || {};
     const CFWBody = contentFramework?.data?.body;
     const contentFWSlices = groupSlices(CFWBody || []);
 
@@ -536,7 +535,6 @@ class ContentPage extends Component<any, any> {
             title={featuredTitle}
             image={featuredImage?.url ? featuredImage : null}
             isMobile={this.state.isMobile}
-            isEntertainmentMb={isEntertainmentMb}
           />
           <Conditional if={alertPopup}>
             <Alert

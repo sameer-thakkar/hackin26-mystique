@@ -15,17 +15,14 @@ import {
   TitleWrapper,
 } from 'components/MastheadStyles';
 import Conditional from 'components/common/Conditional';
-import Image from 'UI/Image';
 
 const Masthead = ({
   title,
   image,
   isMobile,
-  isEntertainmentMb,
 }: {
   title: string;
   isMobile: boolean;
-  isEntertainmentMb: boolean;
   image: { url: string; alt: string } | null;
 }) => {
   const { lang } = useContext(MBContext);
@@ -40,49 +37,24 @@ const Masthead = ({
     });
   }, []);
 
-  const getImage = () => {
-    return !image?.url ? null : (
-      <Image
-        url={image?.url}
-        alt={image?.alt}
-        width={isMobile ? 800 : 1200}
-        height={isMobile ? 300 : 400}
-        fill
-      />
-    );
-  };
-
   return (
     <>
-      {isEntertainmentMb ? (
-        <StyledMasthead
-          isEntMb={true}
-          withoutImage={false}
-          imageUrl={image?.url}
-        >
-          {getImage()}
-          <Title isEntMb>{formattedTitle}</Title>
-        </StyledMasthead>
-      ) : (
-        <>
-          <StyledMasthead
-            isEntMb={false}
-            withoutImage={!image}
-            imageUrl={image?.url}
-          >
-            <Conditional if={!isMobile}>
-              <Wrapper>
-                <TitleWrapper>
-                  <Title isEntMb={false}>{formattedTitle}</Title>
-                </TitleWrapper>
-              </Wrapper>
-            </Conditional>
-          </StyledMasthead>
-          <Conditional if={isMobile}>
-            <MobileTitle withoutImage={!image}>{formattedTitle}</MobileTitle>
-          </Conditional>
-        </>
-      )}
+      <StyledMasthead
+        isEntMb={false}
+        withoutImage={!image}
+        imageUrl={image?.url}
+      >
+        <Conditional if={!isMobile}>
+          <Wrapper>
+            <TitleWrapper>
+              <Title isEntMb={false}>{formattedTitle}</Title>
+            </TitleWrapper>
+          </Wrapper>
+        </Conditional>
+      </StyledMasthead>
+      <Conditional if={isMobile}>
+        <MobileTitle withoutImage={!image}>{formattedTitle}</MobileTitle>
+      </Conditional>
     </>
   );
 };
