@@ -437,10 +437,7 @@ export const generatePromiseForCategoryTours = ({
   lang,
   cookies,
 }: TGeneratePromiseForCategoryTours) => {
-  const idSet = new Set(arr);
-  const allIds = Array.from(idSet);
-
-  const allPromises = allIds?.map(async (catId) => {
+  const allPromises = arr?.map(async (catId) => {
     let promise;
     switch (true) {
       case isCollection:

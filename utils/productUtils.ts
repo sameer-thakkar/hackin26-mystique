@@ -332,7 +332,7 @@ export const rankDescriptorList = (descriptorList: any) => {
 
 type TGenerateDescriptor = {
   descriptors?: Record<string, string>[];
-  v2Descriptors?: string[];
+  v2Descriptors?: string | string[];
   lang: string;
   isEntertainmentMb?: boolean;
   isShowPage?: boolean;

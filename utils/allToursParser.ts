@@ -3,7 +3,7 @@ import { RichText } from 'prismic-reactjs';
 import { CURRENCY_SYMBOL_MAP } from 'const/index';
 
 type ToursData = {
-  cardPrices: object;
+  cardPrices: Record<number, { listingPrice: { currencyCode: string } }>;
   isFetched: boolean;
 };
 
@@ -89,11 +89,9 @@ const allToursParser = (
       cardPrices &&
       // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       CURRENCY_SYMBOL_MAP[
-        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         cardPrices[tourData.tgid]?.listingPrice?.currencyCode
       ];
     let listingPrice =
-      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       isFetched && cardPrices ? cardPrices[tourData.tgid]?.listingPrice : {};
     const scorpioTour = scorpioData?.[tourData.tgid] || {};
 

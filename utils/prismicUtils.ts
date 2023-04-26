@@ -36,7 +36,6 @@ import {
 } from 'utils/urlUtils';
 import {
   categoryTourListParserV1,
-  categoryTourListParserV2,
   getToursGlobalCollection,
   uncategorizedToursListParser,
 } from 'utils/dataParsers';
@@ -51,6 +50,8 @@ import {
   fetchTourListV6,
 } from 'utils/apiUtils';
 import { sendLog } from 'utils/logger';
+import categoryTourListParserV2 from 'utils/parsers/categoryTourListParserV2/index';
+import { LOG_LEVELS } from 'const/logs';
 
 // @ts-expect-error TS(7023): 'fetchAllMatchingDocs' implicitly has return type ... Remove this comment to see the full error message
 export const fetchAllMatchingDocs = async ({
@@ -1487,6 +1488,7 @@ export const getPageData = async ({
           });
           collectionDetails = categoryTourListData.collectionDetails ?? {};
         } else {
+          const timestampForCoralogix = Date.now();
           categoryTourListData = await categoryTourListParserV2({
             tourListCategory: categoryTourListV2,
             hostname,
@@ -1496,6 +1498,11 @@ export const getPageData = async ({
             localizedStrings,
             cookies,
             MBDesign,
+          });
+          const timestampDeltaForCoralogix = Date.now() - timestampForCoralogix;
+          sendLog({
+            level: LOG_LEVELS.INFO,
+            message: String(timestampDeltaForCoralogix),
           });
         }
       }
