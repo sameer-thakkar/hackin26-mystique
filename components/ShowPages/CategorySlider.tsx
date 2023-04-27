@@ -126,18 +126,22 @@ interface PagesDocuments {
 }
 
 type OwnCardCarouselProps = {
-    cards: any[];
-    isMobile: boolean;
-    allShowPagesDocuments: PagesDocuments[];
-    currentLanguage: string;
-    categoryName: string;
+  cards: any[];
+  isMobile: boolean;
+  allShowPagesDocuments: PagesDocuments[];
+  currentLanguage: string;
+  categoryName: string;
 };
 
 type CardCarouselState = any;
 
-type CardCarouselProps = OwnCardCarouselProps & typeof CategorySlider.defaultProps;
+type CardCarouselProps = OwnCardCarouselProps &
+  typeof CategorySlider.defaultProps;
 
-export default class CategorySlider extends Component<CardCarouselProps, CardCarouselState> {
+export default class CategorySlider extends Component<
+  CardCarouselProps,
+  CardCarouselState
+> {
   state = {
     isMobile: null,
     cardPrices: {},

@@ -103,8 +103,15 @@ const CategoryCard = ({
     (element: any) => element.data.tgid === id
   );
   const redirectURL = cardDocument
-    ? convertUidToUrl({ uid: cardDocument.uid, isDev, hostname: host })
-    : `https://www.headout.com${tourGroupUrl}`;
+    ? convertUidToUrl({
+        uid: cardDocument.uid,
+        isDev,
+        hostname: host,
+        lang: currentLanguage,
+      })
+    : `https://www.headout.com${
+        currentLanguage === 'en' ? '' : `/${currentLanguage}`
+      }${tourGroupUrl}`;
 
   const trackClickEvent = () => {
     trackEvent({

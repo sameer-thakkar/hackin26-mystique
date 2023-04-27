@@ -700,14 +700,15 @@ ExperiencePage.getInitialProps = async ({ req, res, query, asPath }: any) => {
       type: 301,
     });
   }
+  const prismicLang = LANGUAGE_MAP[lang]?.locale || 'en-us';
 
   const domainConfig = await fetchDomainConfig(uid);
   const allDocuments = await getShowPageCollections({
     pageSize: 100,
     page: 1,
     prevResults: [],
+    lang: prismicLang,
   });
-  const prismicLang = LANGUAGE_MAP[lang]?.locale || 'en-us';
   // Adding this temporarily to pull common header and footer data from Prismic
   const page = await Client(req).getByUID(
     CUSTOM_TYPES.SHOW_PAGE,
