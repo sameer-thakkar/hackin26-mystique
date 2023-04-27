@@ -226,7 +226,7 @@ const PriceBlock = ({
               )}
             </SavedTag>
           </Conditional>
-          <Conditional if={showcashbackElm && !isSportsExperiment}>
+          <Conditional if={!save && showcashbackElm && !isSportsExperiment}>
             <SavedTag className={'savedtag-block'}>
               {strings.formatString(strings.CASHBACK, `${cashbackValue}`)}
             </SavedTag>
