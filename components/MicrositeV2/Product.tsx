@@ -30,7 +30,7 @@ import { checkIfLTTMB } from 'utils/helper';
 import { parseDescriptors, shouldUseDynamicShowPage } from 'utils/productUtils';
 import { descriptorIcons } from 'const/descriptorIcons';
 
-const ProductCard = styled.div<{ isV3Design?: boolean }>`
+const ProductCard = styled.div<{ $isV3Design?: boolean }>`
   width: 100%;
   height: 100%;
   max-width: 100%;
@@ -207,7 +207,8 @@ const ProductCard = styled.div<{ isV3Design?: boolean }>`
   }
 
   @media (max-width: 768px) {
-    grid-template-rows: ${({ isV3Design }) => (isV3Design ? '204px' : '102px')} auto;
+    grid-template-rows: ${({ $isV3Design }) =>
+        $isV3Design ? '204px' : '102px'} auto;
     transform: unset;
     transition: unset;
     grid-row-gap: 10px;
@@ -327,7 +328,7 @@ const ProductCard = styled.div<{ isV3Design?: boolean }>`
 
   @media (max-width: 768px) {
     .product-v2-image img {
-      height: 102px;
+      height: ${({ $isV3Design }) => ($isV3Design ? '' : '102px')};
       border-radius: 4px;
     }
 
@@ -339,8 +340,8 @@ const ProductCard = styled.div<{ isV3Design?: boolean }>`
 
 const IMAGE_DIMENSIONS = {
   MOBILE: {
-    WIDTH: '171',
-    HEIGHT: '102',
+    V2: { WIDTH: '171', HEIGHT: '102' },
+    V3: { WIDTH: '327', HEIGHT: '204' },
   },
   DESKTOP: {
     WIDTH: '282',
@@ -546,7 +547,9 @@ const Product = (props: any) => {
   };
 
   const { HEIGHT: cardImageHeight, WIDTH: cardImageWidth } = isMobile
-    ? IMAGE_DIMENSIONS.MOBILE
+    ? isV3Design
+      ? IMAGE_DIMENSIONS.MOBILE.V3
+      : IMAGE_DIMENSIONS.MOBILE.V2
     : IMAGE_DIMENSIONS.DESKTOP;
 
   const cardComponent = (
@@ -557,7 +560,7 @@ const Product = (props: any) => {
       onKeyDown={handleProductClick}
       role="button"
       tabIndex={0}
-      isV3Design={isV3Design}
+      $isV3Design={isV3Design}
     >
       <div className="product-v2-image">
         <Image
