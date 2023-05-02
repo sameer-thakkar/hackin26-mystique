@@ -16,6 +16,7 @@ import {
 } from 'utils/productUtils';
 import { appendInclusionExclusion } from 'utils/inclusionExclusionUtils';
 import { sendLog } from 'utils/logger';
+import { getEncodedUrlSlugs } from 'utils/urlUtils';
 
 export const uncategorizedToursListParser = (
   uncategorizedToursList: any[],
@@ -484,7 +485,7 @@ export const tourListApiParser = (
           primaryCategory,
           primarySubCategory,
           flowType,
-          urlSlugs,
+          urlSlugs: getEncodedUrlSlugs(urlSlugs),
         },
       };
     },
@@ -715,7 +716,7 @@ export const getToursGlobalCollection = async ({
         safetyImages,
         title: name,
         combo,
-        urlSlugs,
+        urlSlugs: getEncodedUrlSlugs(urlSlugs),
       },
     };
   }, {});

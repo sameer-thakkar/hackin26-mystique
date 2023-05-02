@@ -20,6 +20,7 @@ import {
   accumulatingCategoryAndItemsData,
   extractTgidsFromCategories,
 } from 'utils/parser';
+import { getEncodedUrlSlugs } from 'utils/urlUtils';
 
 import type { TCategoryTourListParserV2, TProduct } from './interface';
 
@@ -240,6 +241,7 @@ export default async function categoryTourListParserV2({
           maxDuration,
           combo,
           multiVariant,
+          urlSlugs,
         } = product || {};
         const { displayName: collectionName } = primaryCollection || {};
         const { displayName: primaryCategoryName } = primaryCategory || {};
@@ -391,6 +393,7 @@ export default async function categoryTourListParserV2({
           maxDuration,
           combo,
           multiVariant,
+          urlSlugs: getEncodedUrlSlugs(urlSlugs),
         };
       });
     });

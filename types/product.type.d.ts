@@ -59,9 +59,7 @@ type ProductCard = {
   maxDuration: number;
   combo: boolean;
   multiVariant: boolean;
-  urlSlugs: {
-    [k: string]: string;
-  };
+  urlSlugs: IUrlSlugs;
 };
 
 type PrimaryCategory = {

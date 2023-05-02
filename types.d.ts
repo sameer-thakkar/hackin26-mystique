@@ -11,4 +11,8 @@ declare global {
     spans: Array<Object>;
     text: string;
   }
+
+  interface IUrlSlugs {
+    [key: string]: string;
+  }
 }

@@ -268,15 +268,25 @@ export const addUrlParams = ({
   return asPath;
 };
 
-export const getFormattedUrlSlug = (
-  urlSlugs: { [x: string]: any },
-  lang = 'en'
-) => {
+export const getFormattedUrlSlug = (urlSlugs: IUrlSlugs, lang = 'en') => {
+  // replacing '#' with '/' in all urlSlugs to decode the encoding done
+  // to prevent crawlers from crawling the url
+  const decodedUrlSlugs = Object.entries(urlSlugs).reduce(
+    (acc: IUrlSlugs, [lang, urlSlug]) => {
+      acc[lang] = urlSlug.replaceAll('#', '/');
+      return acc;
+    },
+    {}
+  );
   const formattedLang = lang.toUpperCase().replace(/-/g, '_');
 
-  return typeof urlSlugs?.[formattedLang] !== 'undefined' && lang !== 'en'
-    ? `/${lang}/${urlSlugs?.[formattedLang]?.split('/').slice(3).join('/')}`
-    : `/${urlSlugs?.EN?.split('/').slice(2).join('/')}`;
+  return typeof decodedUrlSlugs?.[formattedLang] !== 'undefined' &&
+    lang !== 'en'
+    ? `/${lang}/${decodedUrlSlugs?.[formattedLang]
+        ?.split('/')
+        .slice(3)
+        .join('/')}`
+    : `/${decodedUrlSlugs?.EN?.split('/').slice(2).join('/')}`;
 };
 
 export const getTagPageLink = ({
@@ -314,3 +324,10 @@ export const addLanguageParamToUrl = ({
 
   return url;
 };
+
+export const getEncodedUrlSlugs = (urlSlugs: IUrlSlugs) =>
+  // replacing '/' with '#' in all urlSlugs to prevent crawlers from crawling the url
+  Object.entries(urlSlugs).reduce((acc: IUrlSlugs, [lang, urlSlug]) => {
+    acc[lang] = urlSlug.replaceAll('/', '#');
+    return acc;
+  }, {});

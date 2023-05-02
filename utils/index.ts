@@ -619,3 +619,29 @@ export const displayBannerTrustBoosters = (data: Record<string, any>) =>
 
 export const displayProductTrustBoosters = (data: Record<string, any>) =>
   data?.data?.f1_product_trust_booster;
+
+export const deepDeleteKeys = ({
+  obj,
+  keys,
+}: {
+  obj: Record<string, any>;
+  keys: string[];
+}): Record<string, any> => {
+  if (!obj || typeof obj !== 'object') return obj;
+
+  if (Array.isArray(obj)) {
+    return obj.map((item) => deepDeleteKeys({ obj: item, keys }));
+  }
+
+  return Object.keys(obj).reduce((acc: Record<string, any>, key) => {
+    if (!keys.includes(key)) {
+      const value = obj[key];
+      if (value && typeof value === 'object') {
+        acc[key] = deepDeleteKeys({ obj: value, keys });
+      } else {
+        acc[key] = value;
+      }
+    }
+    return acc;
+  }, {});
+};

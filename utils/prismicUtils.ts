@@ -21,6 +21,7 @@ import {
   getSinglePrismicSlice,
   redirectTo,
   refsArrayToObject,
+  deepDeleteKeys,
 } from 'utils/index';
 import {
   generateDescriptor,
@@ -1388,6 +1389,14 @@ export const getPageData = async ({
           language: getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale),
           cookies,
         });
+        const tgidDataWithoutUrlSlugs = deepDeleteKeys({
+          obj: tgidData,
+          keys: ['urlSlugs', 'urlSlug'],
+        });
+        const {
+          url: _tgidDataUrl,
+          ...tgidDataWithoutUrls
+        } = tgidDataWithoutUrlSlugs;
 
         const inventorySlotData = await fetchTourGroupSlots({
           tgid: CMSContent?.data?.tgid,
@@ -1396,14 +1405,14 @@ export const getPageData = async ({
           cookies,
         });
 
-        const primaryCountry = tgidData?.city?.country;
-        const primaryCity = tgidData?.city;
+        const primaryCountry = tgidDataWithoutUrls?.city?.country;
+        const primaryCity = tgidDataWithoutUrls?.city;
 
-        const activeCurrency = tgidData?.currency;
+        const activeCurrency = tgidDataWithoutUrls?.currency;
 
         return {
           CMSContent,
-          tourGroupData: tgidData,
+          tourGroupData: tgidDataWithoutUrls,
           inventorySlotData,
           ContentType,
           uid,

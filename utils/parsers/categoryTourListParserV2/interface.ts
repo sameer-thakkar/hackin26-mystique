@@ -60,7 +60,7 @@ export type TProduct = {
     metaTitle: string;
     name: string;
     rank: number;
-    urlSlugs?: string;
+    urlSlugs?: IUrlSlugs;
   };
   primarySubCategory: {
     categoryId: number;
@@ -71,7 +71,7 @@ export type TProduct = {
     metaTitle: string;
     name: string;
     rank: number;
-    urlSlugs?: string;
+    urlSlugs?: IUrlSlugs;
   };
   cancellationPolicy: object;
   cancellationPolicyV2: object;
@@ -83,4 +83,5 @@ export type TProduct = {
   multiVariant: boolean;
   microBrandsHighlight: any;
   currencies?: [];
+  urlSlugs: IUrlSlugs;
 };
