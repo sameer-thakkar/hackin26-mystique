@@ -127,8 +127,8 @@ const StyledSlide = styled.div`
     display: block;
   }
   img {
-    height: 175px !important;
-    width: 380px !important;
+    height: 175px;
+    width: 100%;
     border-radius: 4px;
     object-fit: cover;
   }
