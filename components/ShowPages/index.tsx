@@ -314,8 +314,13 @@ const ShowPage = (props: any) => {
       limit: '100',
     }).then((data) => {
       const { pageData } = data || {};
+
       const filteredData = pageData?.items?.filter(
-        (element: any) => element.id !== tgid
+        (element: any) =>
+          element.id !== tgid &&
+          !!allShowPagesDocuments?.find(
+            (doc: any) => doc.data.tgid === element.id
+          )
       );
       if (filteredData?.length) {
         setSimilarProductData(filteredData);
