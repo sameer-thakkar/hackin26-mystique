@@ -11,6 +11,8 @@ import { FONTS } from 'const/fonts';
 import COLORS from 'const/colors';
 
 const CategoryCardWrapper = styled.div`
+  cursor: pointer;
+
   ${StyledPriceBlock} {
     grid-row-gap: 2px;
     grid-column-gap: 6px;
@@ -119,27 +121,32 @@ const CategoryCard = ({
     });
   };
 
+  const openCategoryPage = () => {
+    window.open(redirectURL, '_blank');
+    trackClickEvent();
+  };
+
   return (
-    <CategoryCardWrapper>
-      <a href={redirectURL} target="blank" onClick={trackClickEvent}>
-        <Image
-          url={imageUrl}
-          alt={name}
-          width={isMobile ? 164 : 282}
-          height={isMobile ? 102 : 176}
-        />
-        <div className="category-name">{categoryName}</div>
+    <CategoryCardWrapper onClick={openCategoryPage}>
+      <Image
+        url={imageUrl}
+        alt={name}
+        width={isMobile ? 164 : 282}
+        height={isMobile ? 102 : 176}
+      />
+      <div className="category-name">{categoryName}</div>
+      <a href={redirectURL} target="_blank" rel="noreferrer">
         <h3>{name}</h3>
-        <div className="priceBlockWrapper">
-          <PriceBlock
-            listingPrice={listingPrice}
-            lang={currentLanguage}
-            showSavings
-            showScratchPrice
-            prefix
-          />
-        </div>
       </a>
+      <div className="priceBlockWrapper">
+        <PriceBlock
+          listingPrice={listingPrice}
+          lang={currentLanguage}
+          showSavings
+          showScratchPrice
+          prefix
+        />
+      </div>
     </CategoryCardWrapper>
   );
 };

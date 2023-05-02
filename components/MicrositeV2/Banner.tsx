@@ -99,7 +99,6 @@ const StyledBanner = styled.div<IStyledBanner>`
   }
 
   .single-slide img {
-    transform: scale(1.1);
     border-radius: 0.75rem;
     object-fit: cover;
     object-position: 0% 50%;
