@@ -47,6 +47,8 @@ const en = {
   NEXT_AVAILABLE: 'Next available: ',
   SELECT_SECTION: 'Select Section',
   GET_CASHBACK: 'Get {0}% Cashback',
+  CASHBACK_INFO:
+    'You will receive {0} cashback when you book this experience. Your cashback will automatically be credited to your Headout account and can be used towards any future booking with Headout.',
   SAVE: 'Save {0}%',
   CASHBACK: '{0}% cashback',
   AVAILABLE: 'Available',

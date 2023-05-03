@@ -45,6 +45,8 @@ const fr = {
   NEXT_AVAILABLE: 'Prochaine disponibilité: ',
   SELECT_SECTION: 'Sélectionner une tribube',
   GET_CASHBACK: 'Recevez un cashback de {0}%',
+  CASHBACK_INFO:
+    'Vous recevrez {0} de crédits Headout en réservant cette activité. Votre réduction sera automatiquement créditée sur votre compte Headout et pourra être utilisée pour toute réservation future avec Headout.',
   SAVE_UPTO: "Économisez jusqu'à",
   SAVE: 'Économisez {0} %',
   AVAILABLE: 'Disponible',

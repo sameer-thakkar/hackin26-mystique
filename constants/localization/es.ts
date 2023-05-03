@@ -46,6 +46,8 @@ const es = {
   NEXT_AVAILABLE: 'Próxima disponible: ',
   SELECT_SECTION: 'Elegir sección',
   GET_CASHBACK: 'Consigue {0}% en cashback',
+  CASHBACK_INFO:
+    'Recibirás {0} en créditos al reservar esta experencia. Los créditos se agregarán automáticamente a tu cuenta de Headout y los podrás usar para futuras reservas con nosotros.',
   SAVE_UPTO: 'Ahorra hasta un',
   SAVE: 'Ahorra {0}%',
   CASHBACK: '{0}% en Cashback',

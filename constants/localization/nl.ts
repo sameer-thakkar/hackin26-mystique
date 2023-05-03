@@ -46,6 +46,8 @@ const nl = {
   NEXT_AVAILABLE: 'Weer beschikbaar: ',
   SELECT_SECTION: 'Tribune kiezen',
   GET_CASHBACK: 'Ontvang {0}% cashback',
+  CASHBACK_INFO:
+    'Je krijgt {0} cashback wanneer uw deze ervaring kiest. Je cashback zal automatisch worden bijgeschreven op je Headout account en kan worden gebruikt voor elke toekomstige reservering.',
   SAVE_UPTO: 'Bespaar tot',
   SAVE: 'Bespaar {0}%',
   AVAILABLE: 'Beschikbaar',

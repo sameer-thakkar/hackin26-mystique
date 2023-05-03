@@ -6,7 +6,6 @@ import React, {
   useCallback,
 } from 'react';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-
 import { RichText } from 'prismic-reactjs';
 import dynamic from 'next/dynamic';
 import styled, { css } from 'styled-components';
@@ -45,6 +44,7 @@ import {
   DESCRIPTORS,
   MEDIA_CAROUSEL_IMAGE_LIMIT,
   PRODUCT_CARD_LENGTH_EXP_UIDS,
+  CASHBACK_EXPERIMENT_TGIDS,
 } from 'const/index';
 import { createBookingURL } from 'utils';
 import {
@@ -1712,6 +1712,8 @@ const Product = (props: any) => {
                 listingPrice={finalListingPrice}
                 lang={currentLanguage}
                 showSavings
+                showCashbackBlock={CASHBACK_EXPERIMENT_TGIDS.includes(tgid)}
+                id={tgid}
                 prefix
                 key={'price-block'}
               />

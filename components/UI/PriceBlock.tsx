@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import Conditional from 'components/common/Conditional';
 import LocalisedPrice from 'UI/LPrice';
 import COLORS from 'const/colors';
@@ -8,9 +8,15 @@ import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import { FONTS } from 'const/fonts';
 import { CurrencyDisplayType } from 'utils/currency';
+import { CashbackExperimentContext } from 'contexts/cashbackExperimentContext';
+import { hsidAtom } from 'store/atoms/hsid';
+import { useRecoilState } from 'recoil';
+import { VARIANTS } from 'const/experiments';
+import CashbackComponent from 'components/common/CashbackComponent';
 import { checkIfLTTMB } from 'utils/helper';
 import { MBContext } from 'contexts/MBContext';
-import CashbackBlock from 'UI/CashbackBlock/index';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 export const StyledPriceBlock = styled.div<{
   showScratchPrice: boolean;
@@ -143,7 +149,9 @@ type PriceBlockProps = {
   prefix?: boolean;
   save?: number;
   showCashback?: boolean;
+  showCashbackBlock?: boolean;
   isShowPage?: boolean;
+  id?: string;
 };
 
 const PriceBlock = ({
@@ -156,8 +164,12 @@ const PriceBlock = ({
   currencyDisplay = 'symbol',
   save,
   showCashback = false,
+  showCashbackBlock = false,
   isShowPage = false,
+  id,
 }: PriceBlockProps) => {
+  const { variant, triggerExperiment } = useContext(CashbackExperimentContext);
+  const hsid = useRecoilState(hsidAtom);
   const { uid } = useContext(MBContext);
   const isLTT = checkIfLTTMB(uid);
 
@@ -178,17 +190,62 @@ const PriceBlock = ({
   const showScratchPrice = originalPrice > finalPrice && showScratchPriceProp;
   const showPrefix = prefix && otherPricesExist;
   const showcashbackElm =
-    (showCashback || isSportsExperiment) &&
+    (showCashback || showCashbackBlock || isSportsExperiment) &&
     cashbackValue > 0 &&
     cashbackType === CASHBACK_TYPES.PERCENTAGE;
 
   const savingsElementsArray = [];
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    if (isSportsExperiment || !showcashbackElm || !hsid || variant) return;
+    triggerExperiment();
+  }, [hsid]);
 
   if (bestDiscount > 0) {
     savingsElementsArray.push(
       strings.formatString(strings.SAVE, `${bestDiscount}`)
     );
   }
+  if (showCashbackBlock && !hsid && !variant)
+    return (
+      <SkeletonTheme
+        baseColor={COLORS.GRAY.G6}
+        highlightColor={COLORS.GRAY.G7}
+        borderRadius={0}
+        height="20px"
+      >
+        <div>
+          <StyledPriceBlock
+            className={'styled-price-block'}
+            showScratchPrice={showScratchPrice}
+            isSportsExperiment={isSportsExperiment}
+          >
+            <span className="tour-scratch-price">
+              <Skeleton width="80px" height="16px" />
+            </span>
+            <div className="tour-price-container">
+              <Skeleton width="80px" height="28px" />
+              <Conditional if={isLTT && showSavings && save && save > 0}>
+                <SavedTag className={'savedtag-block'}>
+                  <Skeleton width="60px" height="18px" />
+                </SavedTag>
+              </Conditional>
+            </div>
+          </StyledPriceBlock>
+          <Conditional
+            if={
+              showcashbackElm &&
+              ((showCashbackBlock &&
+                variant === VARIANTS.SHOW_CASHBACK_COMPONENT) ||
+                isSportsExperiment)
+            }
+          >
+            <Skeleton width="153px" height="16px" />
+          </Conditional>
+        </div>
+      </SkeletonTheme>
+    );
 
   return (
     <div>
@@ -226,7 +283,14 @@ const PriceBlock = ({
               )}
             </SavedTag>
           </Conditional>
-          <Conditional if={!save && showcashbackElm && !isSportsExperiment}>
+          <Conditional
+            if={
+              !save &&
+              showcashbackElm &&
+              !showCashbackBlock &&
+              !isSportsExperiment
+            }
+          >
             <SavedTag className={'savedtag-block'}>
               {strings.formatString(strings.CASHBACK, `${cashbackValue}`)}
             </SavedTag>
@@ -243,8 +307,19 @@ const PriceBlock = ({
           </SavedTag>
         </Conditional>
       </StyledPriceBlock>
-      <Conditional if={showcashbackElm && isSportsExperiment}>
-        <CashbackBlock cashbackValue={cashbackValue} />
+      <Conditional
+        if={
+          showcashbackElm &&
+          ((showCashbackBlock &&
+            variant === VARIANTS.SHOW_CASHBACK_COMPONENT) ||
+            isSportsExperiment)
+        }
+      >
+        <CashbackComponent
+          cashbackAmount={cashbackValue}
+          isSportsExperiment={isSportsExperiment}
+          id={id}
+        />
       </Conditional>
     </div>
   );

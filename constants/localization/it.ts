@@ -46,6 +46,8 @@ const it = {
   NEXT_AVAILABLE: 'Prossimo disponibile: ',
   SELECT_SECTION: 'Seleziona tribuna',
   GET_CASHBACK: 'Ottieni {0}% di cashback',
+  CASHBACK_INFO:
+    'Quando prenoti questa esperienza, riceverai un Cashback del {0}. Il tuo Cashback verrà automaticamente accreditato sul tuo account Headout e potrai utilizzarlo per qualsiasi futura prenotazione con noi.',
   SAVE_UPTO: 'Risparmi fino al',
   SAVE: 'Risparmi il  {0}%',
   CASHBACK: '{0}% di Cashback',

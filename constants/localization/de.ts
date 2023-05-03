@@ -46,6 +46,8 @@ const de = {
   NEXT_AVAILABLE: 'Verfügbar ab: ',
   SELECT_SECTION: 'Tribüne wählen',
   GET_CASHBACK: '{0}% Cashback sichern',
+  CASHBACK_INFO:
+    'Sie erhalten {0} Cashback, wenn Sie dieses Erlebnis buchen. Ihr Cashback wird automatisch Ihrem Headout-Konto gutgeschrieben und kann für zukünftige Buchungen mit Headout verwendet werden.',
   SAVE_UPTO: 'Spare',
   SAVE: '{0} % Rabatt',
   AVAILABLE: 'Verfügbar am',

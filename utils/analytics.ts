@@ -44,6 +44,9 @@ export const sendVariableToDataLayer = ({
   if (typeof window === 'undefined') return;
   const dLRef = typeof window !== 'undefined' ? window.dataLayer : [];
   if (!dLRef) {
+    //  console.group('sendVariableToDataLayer failed!');
+    //  console.log({ name, value });
+    //  console.groupEnd();
     return;
   }
   const lastVariableEntry =

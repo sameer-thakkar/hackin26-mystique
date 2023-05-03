@@ -11,6 +11,9 @@ import { checkIfLTTMB, getLangObject } from 'utils/helper';
 export const getStringifiedQueryFromObject = (queryJson: Record<string, any>) =>
   queryParser.stringify(queryJson);
 
+export const getQueryObject = (location: any): Record<string, any> =>
+  queryParser.parse(location.search);
+
 export const removePageQuery = (
   query: Record<string, any>,
   queryParam: string,
