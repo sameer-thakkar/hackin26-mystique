@@ -169,7 +169,7 @@ const PriceBlock = ({
   id,
 }: PriceBlockProps) => {
   const { variant, triggerExperiment } = useContext(CashbackExperimentContext);
-  const hsid = useRecoilState(hsidAtom);
+  const [hsid] = useRecoilState(hsidAtom);
   const { uid } = useContext(MBContext);
   const isLTT = checkIfLTTMB(uid);
 
