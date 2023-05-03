@@ -198,7 +198,7 @@ const PriceBlock = ({
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
-    if (isSportsExperiment || !showcashbackElm || !hsid || variant) return;
+    if (isSportsExperiment || !showCashbackBlock || !hsid || variant) return;
     triggerExperiment();
   }, [hsid]);
 
