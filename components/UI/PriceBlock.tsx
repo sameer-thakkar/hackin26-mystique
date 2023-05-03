@@ -173,10 +173,6 @@ const PriceBlock = ({
   const { uid } = useContext(MBContext);
   const isLTT = checkIfLTTMB(uid);
 
-  if (!listingPrice) {
-    return null;
-  }
-
   const {
     originalPrice,
     finalPrice,
@@ -196,11 +192,14 @@ const PriceBlock = ({
 
   const savingsElementsArray = [];
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     if (isSportsExperiment || !showCashbackBlock || !hsid || variant) return;
     triggerExperiment();
   }, [hsid]);
+
+  if (!listingPrice) {
+    return null;
+  }
 
   if (bestDiscount > 0) {
     savingsElementsArray.push(
