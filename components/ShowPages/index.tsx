@@ -225,9 +225,6 @@ const ShowPage = (props: any) => {
     primarySubCategory || {};
   const { code: cityCode } = city || {};
 
-  // @ts-expect-error TS(2339): Property 'code' does not exist on type '{}'.
-  const { code: currencyCode } = currency || {};
-
   const {
     faviconUrl,
     logo: { logoUrl = '', showPoweredLogo = true } = {},
@@ -415,7 +412,7 @@ const ShowPage = (props: any) => {
   const productSchema = getProductSchema({
     productName: name,
     price: listingPrice?.finalPrice,
-    currencySymbol: currencyCode,
+    currencySymbol: currency || '',
     images: imageUploads,
     topReviews,
     reviewsDetails,
