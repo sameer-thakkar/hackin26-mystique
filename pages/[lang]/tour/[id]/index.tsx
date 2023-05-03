@@ -18,6 +18,7 @@ import {
   DEFAULT_PRISMIC_SHOWPAGE_UID,
   DEFAULT_SHOWPAGE_HOSTNAME,
   FAVICON_LONDON_THEATRE_TICKETS,
+  LanguagesUnion,
   LANGUAGE_MAP,
 } from 'const/index';
 import { strings } from 'const/strings';
@@ -700,7 +701,7 @@ ExperiencePage.getInitialProps = async ({ req, res, query, asPath }: any) => {
       type: 301,
     });
   }
-  const prismicLang = LANGUAGE_MAP[lang]?.locale || 'en-us';
+  const prismicLang = LANGUAGE_MAP[lang as LanguagesUnion]?.locale || 'en-us';
 
   const domainConfig = await fetchDomainConfig(uid);
   const allDocuments = await getShowPageCollections({
@@ -709,6 +710,7 @@ ExperiencePage.getInitialProps = async ({ req, res, query, asPath }: any) => {
     prevResults: [],
     lang: prismicLang,
   });
+
   // Adding this temporarily to pull common header and footer data from Prismic
   const page = await Client(req).getByUID(
     CUSTOM_TYPES.SHOW_PAGE,

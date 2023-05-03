@@ -47,10 +47,14 @@ export const SUPPORTED_LANGUAGES = [
   'tw',
   'cn',
   'ko',
+  'id',
+  'pl',
   'ar',
-];
+] as const;
 
-export const SUPPORTED_LOCALE_MAP = {
+export type LanguagesUnion = typeof SUPPORTED_LANGUAGES[number];
+
+export const SUPPORTED_LOCALE_MAP: Record<LanguagesUnion, string> = {
   en: 'en-us',
   es: 'es-es',
   it: 'it-it',
@@ -62,12 +66,14 @@ export const SUPPORTED_LOCALE_MAP = {
   cn: 'zh-cn',
   tw: 'zh-tw',
   ko: 'ko-kr',
+  id: 'id-id',
+  pl: 'pl-pl',
   ar: 'ar-ae',
 };
 
 type TLanguageMap = { displayName: string; locale: string; code: string };
 
-export const LANGUAGE_MAP: Record<string, TLanguageMap> = {
+export const LANGUAGE_MAP: Record<LanguagesUnion, TLanguageMap> = {
   en: {
     displayName: 'English',
     locale: 'en-us',
@@ -123,6 +129,16 @@ export const LANGUAGE_MAP: Record<string, TLanguageMap> = {
     locale: 'ko-kr',
     code: 'ko',
   },
+  id: {
+    displayName: 'Indonesian',
+    locale: 'id-id',
+    code: 'id',
+  },
+  pl: {
+    displayName: 'Polish',
+    locale: 'pl-pl',
+    code: 'pl',
+  },
   ar: {
     displayName: 'Arabic',
     locale: 'ar-ae',
@@ -142,10 +158,14 @@ export const PRISMIC_LANG_TO_ROUTE_PARAM: Record<string, string> = {
   'zh-tw': 'tw',
   'ja-jp': 'ja',
   'ko-kr': 'ko',
+  'id-id': 'id',
+  'pl-pl': 'pl',
   'ar-ae': 'ar',
 };
 
-export const LANGUAGE_PARAMS_REGEX = /^(\/)?(en|fr|de|it|nl|pt|es|ja|tw|cn|ko|ar){0,2}(\/)/;
+export const LANGUAGE_PARAMS_REGEX = new RegExp(
+  `^(/)?(${SUPPORTED_LANGUAGES.join('|')}){0,2}(/)`
+);
 
 export const GROUP_TOUR_PREFERED_TOUR = [
   {
@@ -608,9 +628,19 @@ export const LOCALISED_DATE_FORMATS = {
     DATE_MONTH: 'MMM Do',
   },
   ko: {
-    SHORT: 'DD-MMM-YY',
+    SHORT: 'YY-MM-DD',
+    FULL: 'YYYY-MM-DD',
+    DATE_MONTH: 'MM-DD',
+  },
+  id: {
+    SHORT: 'DD/MM/YYYY',
     FULL: 'DD-MMMM-YYYY',
-    DATE_MONTH: 'MMM D',
+    DATE_MONTH: 'DD MMM',
+  },
+  pl: {
+    SHORT: 'DD.MM.YYYY',
+    FULL: 'DD-MMMM-YYYY',
+    DATE_MONTH: 'DD MM',
   },
   ja: {
     SHORT: 'DD-MMM-YY',

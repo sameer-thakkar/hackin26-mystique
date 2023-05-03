@@ -4,6 +4,7 @@ import { GLOBE } from 'assets/SvgIcons';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  LanguagesUnion,
   LANGUAGE_MAP,
   LOCALE_ORDER,
   THEMES,
@@ -19,7 +20,11 @@ import { getDomainFromUid } from 'utils/urlUtils';
 
 const LanguageSelector = (props: any) => {
   const [showDropdown, setShowDropdown] = useState(false);
-  const { currentLanguage, languages: availableLanguages } = props;
+  const {
+    currentLanguage,
+    languages: availableLanguages,
+  }: { currentLanguage: LanguagesUnion; languages: any } = props;
+
   const { mbTheme, uid, isDev } = useContext(MBContext);
 
   const selectorRef = useRef(null);
@@ -76,7 +81,7 @@ const LanguageSelector = (props: any) => {
   }, [currentLanguage]);
 
   const options = sortedLanguages.map(({ code, url }) => ({
-    label: LANGUAGE_MAP[code].displayName,
+    label: LANGUAGE_MAP[code as LanguagesUnion].displayName,
     value: code,
     itemProps: {
       href: url,

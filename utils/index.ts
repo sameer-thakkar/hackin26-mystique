@@ -12,6 +12,7 @@ import {
   MB_TYPES,
   PARTNERED_AND_SENSITIVE_COMBINATIONS,
   SHOW_DATE_SELECTION_PAGE_TGIDS,
+  LanguagesUnion,
 } from 'const/index';
 import { BOOKING_FLOW_STAGE, BOOKING_FLOW_TYPE } from 'const/booking';
 import { getLangObject, withoutTrailingSlash } from 'utils/helper';
@@ -52,7 +53,10 @@ export const getLanguageFromPathname = ({
     requestedLang = PRISMIC_LANG_TO_ROUTE_PARAM[query?.lang];
   }
 
-  const isLangValid = SUPPORTED_LANGUAGES.includes(requestedLang);
+  const isLangValid = SUPPORTED_LANGUAGES.includes(
+    requestedLang as LanguagesUnion
+  );
+
   if (isLangValid) {
     pathnameSlugs.shift();
   } else {
@@ -76,7 +80,9 @@ export const getPrismicProps = ({
 
   let requestedLang = pathnameSlugs[0];
 
-  const isLangValid = SUPPORTED_LANGUAGES.includes(requestedLang);
+  const isLangValid = SUPPORTED_LANGUAGES.includes(
+    requestedLang as LanguagesUnion
+  );
 
   if (isLangValid) {
     pathnameSlugs.shift();
@@ -94,7 +100,7 @@ export const getPrismicProps = ({
 
   return {
     uid,
-    lang: LANGUAGE_MAP[requestedLang].locale,
+    lang: LANGUAGE_MAP[requestedLang as LanguagesUnion].locale,
   };
 };
 
@@ -237,7 +243,9 @@ export const createBookingURL = ({
       : 'book';
   const hasDateQueryParam = typeof date?.startDate !== 'undefined';
   const langRouteParam =
-    lang && lang !== LANGUAGE_MAP.en.code ? '/' + LANGUAGE_MAP[lang].code : '';
+    lang && lang !== LANGUAGE_MAP.en.code
+      ? '/' + LANGUAGE_MAP[lang as LanguagesUnion].code
+      : '';
 
   const domain = redirectToHeadoutBookingFlow
     ? HEADOUT_NAKED_DOMAIN
@@ -324,7 +332,9 @@ export const isNakedDomain = (host: string) => {
 
 export const getHeadoutLanguagecode = (prismicLangCode: string) => {
   return (
-    LANGUAGE_MAP[PRISMIC_LANG_TO_ROUTE_PARAM?.[prismicLangCode]]?.code || 'en'
+    LANGUAGE_MAP[
+      PRISMIC_LANG_TO_ROUTE_PARAM?.[prismicLangCode] as LanguagesUnion
+    ]?.code || 'en'
   );
 };
 

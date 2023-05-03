@@ -1,5 +1,6 @@
 import {
   ENTERTAINMENT_MB_BREADCRUMBS,
+  LanguagesUnion,
   PRISMIC_LANG_TO_ROUTE_PARAM,
 } from 'const/index';
 import { LANGUAGE_MAP } from 'const/index';
@@ -58,7 +59,8 @@ export const getLangUID = (req: any, query: Record<string, any>) => {
       uid = queryParamUID;
       lang =
         LANGUAGE_MAP[
-          PRISMIC_LANG_TO_ROUTE_PARAM[queryParamLang] || queryParamLang
+          (PRISMIC_LANG_TO_ROUTE_PARAM[queryParamLang] as LanguagesUnion) ||
+            queryParamLang
         ]?.locale;
     } else {
       const { uid: reqUID, lang: reqLang } = getPrismicProps({

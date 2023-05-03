@@ -158,7 +158,7 @@ const tw = {
       BADGE_DESCRIPTION: '這個徽章保證行程的安全水平已經得到我們的認證。',
     },
   },
-  RATINGS: '收视率',
+  RATINGS: '{0} 收视率',
 };
 
 export default tw;

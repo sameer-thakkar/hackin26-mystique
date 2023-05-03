@@ -102,7 +102,10 @@ const StaticBanner = ({
                 {averageRating?.toPrecision(2)}
               </AverageRatingWrapper>
               <RatingCountWrapper>
-                ({truncateNumber(ratingsCount).toUpperCase()} {strings.RATINGS})
+                {strings.formatString(
+                  strings.RATINGS,
+                  truncateNumber(ratingsCount).toUpperCase()
+                )}
               </RatingCountWrapper>
             </RatingsWrapper>
           </Conditional>

@@ -1,339 +1,41 @@
 const pt = {
-  TOUR_LIST_HEADING: 'Selecione a experiência desejada',
-  GROUP_TICKETS: 'Ingressos para grupos',
-  LANGUAGE: 'Idioma',
-  CURRENCY: 'Moeda',
-  TOUR_LIST_SUB_HEADING:
-    'Escolha entre diferentes opções de ingressos, excursões e combos de operadores verificados:',
-  SANITARY_ALERT: {
-    KEY_TEXT: 'Sua segurança é nossa prioridade',
-    TEXT:
-      'Tomamos medidas significativas para melhorar a limpeza utilizando desinfetantes com uma limpeza frequente das superfícies. O volume de pessoas também está sendo controlado para evitar aglomerações.',
-  },
-  COVID19_ALERT: {
-    KEY_TEXT: 'Atualização sobre a COVID-19',
-    TEXT:
-      'Você é nossa prioridade. Consulte nossa página de ajuda para encontrar as últimas atualizações sobre nossa política de cancelamento flexível.',
-    LINK:
-      'https://medium.com/headout/surto-coronav%C3%ADrus-pol%C3%ADtica-de-cancelamento-18a2fb65b25',
-  },
-  READ_MORE: 'Saiba mais',
-  VIEW_MORE: 'Ver mais',
-  BANNER_CTA: 'Faça sua reserva',
-  BANNER_FOOTER_SUBTEXT: {
-    PARTNERED_SENSITIVE:
-      'Headout é um parceiro autorizado e confiável que oferece experiências selecionadas para esta atração. Este não é o website oficial do local.',
-    PARTNERED_NON_SENSITIVE:
-      'Headout é um parceiro autorizado e confiável que oferece experiências selecionadas para esta atração.',
-    NON_PARTNERED_SENSITIVE:
-      'Headout é uma marca que já conquistou a confiança de milhões de visitantes em todo o mundo oferecendo experiências selecionadas para esta atração. Este não é website oficial do local.',
-    NON_PARTNERED_NON_SENSITIVE:
-      'Headout é uma marca que já conquistou a confiança de milhões de visitantes em todo o mundo oferecendo experiências selecionadas para esta atração.',
-  },
-  PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
-    'Headout é um parceiro de confiança da atração, autorizado a oferecer uma seleção das melhores experiências. Este não é o site da atração.',
-  NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
-    'A Headout já conquistou a confiança de mais de 15 milhões de clientes e oferece uma seleção das melhores experiências. Este não é o site oficial do local da experiência.',
-  BANNER_SUBTEXT_DEFAULT_DISCLAIMER:
-    'Headout é um parceiro de confiança da atração, autorizado a oferecer uma seleção das melhores experiências.',
-  BOOK_NOW_CTA: 'Reserve agora',
-  BUY_TICKETS_CTA: 'Faça sua reserva',
-  CHECK_AVAIL: 'Verificar disponibilidade',
-  READ_MORE_TEXT: 'Ver mais',
-  SHOW_LESS_TEXT: 'Ver menos',
-  SHOW_ALL_PHOTOS: 'Ver todas as fotos',
-  VIEW_LESS: 'Mostrar menos',
-  NEXT_AVAILABLE: 'Próxima disponível: ',
-  SELECT_SECTION: 'Escolher setor',
-  GET_CASHBACK: 'Garanta {0}% de cashback',
-  CASHBACK_INFO:
-    'Você recebe {0} em cashback ao comprar esta experiência. O valor em cashback será automaticamente adicionado a sua conta Headout e poderá ser utilizado em sua próxima reserva com a Headout.',
-  SAVE_UPTO: 'Economize até',
-  SAVE: 'Economize  {0}%',
-  CASHBACK: '{0}% em Cashback',
-  AVAILABLE: 'Disponível',
-  EARLIEST_AVAILABILITY: 'Próxima disponível: ',
-  UNAVAILABLE: 'Indisponível',
-  TODAY: 'hoje',
-  TOMORROW: 'amanhã',
-  TICKETS: 'Ingressos',
-  REOPENING_ON: 'Reabre em',
-  OPENING_ON: 'Estreia em',
-  SORT_BY: 'Ordenar por',
-  FEATURE_CARD: {
-    HEADING_CUSTOMER: '+10 milhões',
-    SUB_HEADING_CUSTOMER:
-      'de clientes satisfeitos com mais de 10.000 experiências',
-    HEADING_RATING: '4,4/5',
-    SUB_HEADING_RATING: '+5.000 avaliações com 90% de pontuação excelente',
-    HEADING_SAFE: '100% seguro',
-    SUB_HEADING_SAFE: 'Todas as experiências ao ar livre são 100% seguras',
-    HEADING_SUPPORT: 'Atendimento ao cliente 24h',
-    SUB_HEADING_SUPPORT:
-      'Tem uma pergunta? Fale com nossos especialistas locais pelo chat a qualquer hora, de qualquer lugar.',
-  },
-  REOPENS: 'Reabre',
-  OPENS: 'Abre',
-  NEW: 'NEW',
-  SEE_ALL: 'See All',
-  UGC: {
-    FOLLOW: 'Seguir',
-    FOLLOW_IG: 'Seguir no Instagram',
-    HEADING: 'A sua próxima experiência pode ser assim',
-    SUB_HEADING: 'Selecionada com 💜 pela Headout',
-  },
-  COMBO_VARIANT: {
-    SELECT_CTA: 'Selecionar',
-    SELECT_OPTION: 'Selecione a opção deseja',
-    SELECT_TICKET: 'Selecione seu bilhete',
-  },
-  CLOSE: 'Fechar',
-  LISTICLES: {
-    SEATING_CHART: 'Mapa de assentos',
-    KNOW_MORE: 'Saiba mais',
-    WHY_BOOK_FROM_US: 'Por que reservar com a gente?',
-  },
-  PRICES_STARTING: 'Preços a partir de',
-  FROM: 'a partir de',
-  MORE_DETAILS: 'Mais detalhes',
-  OFF: 'Off',
-  FOOTER: {
-    DISCLAIMER:
-      'O site não é a página oficial da atração <attraction>. O site é mantido pela Headout, que trabalha em colaboração com atrações e operadores locais para oferecer experiências incríveis com apenas um clique!',
-    GET_HELP: 'Ajuda',
-    QUICK_LINKS: 'Links diretos',
-    CHAT_WITH_US: 'Chat',
-    CALL_US: 'Telefone',
-    EMAIL_US: 'E-mail',
-    LEGAL: 'Termos Legais',
-    TERMS_AND_CONDITIONS: 'Termos e condições',
-    PRIVACY_POLICY: 'Política de privacidade',
-    COMPANY_DETAILS: 'Sobre a empresa',
-  },
-  COMPARE_ALL_DETAILS: 'Compare os detalhes',
-  WHY_TAKE_THIS_DAY_TRIP: 'Por que vale a pena fazer essa excursão de um dia?',
-  DURATION: 'Duração',
-  THEATRE: 'Teatro',
-  TIMINGS: 'Horários',
-  DESCRIPTORS: {
-    EXTENDED_VALIDITY: 'Validade prolongada',
-    MOBILE_TICKET: 'Ingressos eletrônicos',
-    HOTEL_PICKUP: 'Traslado do hotel',
-    INSTANT_CONFIRMATION: 'Confirmação imediata',
-    SKIP_THE_LINE: 'Sem filas',
-    DURATION: 'Duração: {0}',
-    FREE_CANCELLATION: 'Cancelamento gratuito',
-    AUDIO_GUIDE: 'Audioguia',
-    GUIDED_TOUR: 'Tour guiado',
-    TRANSFERS: 'Inclui translado',
-    MEALS_INCLUDED: 'Refeição incluída',
-    FLEXIBLE_DURATION: 'Duração flexível',
-  },
-  SAFE_EXPERIENCE: {
-    HEADING: 'Melhores medidas de segurança',
-    SHORT_HEADING: 'As melhores medidas de segurança em vigor',
-    MOBILE_HEADING: 'Experiências seguras',
-    EU_HEADING: 'Certificado Covid da UE necessário',
-    EU_PREFIX: 'Atenção: ',
-    IT_PREFIX: 'Atenção: ',
-    DESCRIPTION_CTA: 'Saiba mais.',
-    IT_DESCRIPTION: {
-      TEXT:
-        'A partir de 6 de agosto de 2021, todos os visitantes com 11 anos ou mais devem apresentar um Passe Verde ou um Certificado de COVID da UE.',
-    },
-    EU_DESCRIPTION: {
-      TEXT:
-        'A partir de 21 de julho de 2021, todos os visitantes a partir de 12 anos de idade devem apresentar um Certificado de COVID da UE.',
-    },
-    AU_DESCRIPTION: {
-      TEXT:
-        'Visitantes com idade igual ou superior a 16 anos devem apresentar prova de vacinação da COVID-19 ou isenção médica.',
-    },
-    SG_DESCRIPTION: {
-      TEXT:
-        'A partir de 13 de outubro de 2021, somente visitantes totalmente vacinados poderão entrar em grupos de 2. Você terá que apresentar prova do status de vacinação, um resultado recente negativo de teste COVID-19 e/ou qualquer documentação de recuperação antes da entrada.',
-    },
-    NL_DESCRIPTION: {
-      TEXT:
-        'Visitantes com 13 anos ou mais devem ter (cópia digital ou impressa de) um Certificado COVID que confirme a vacinação, resultado negativo do teste, ou documento que comprove a recuperação da COVID-19. O uso de uma máscara facial é obrigatório.',
-    },
-    BERLIN_DESCRIPTION: {
-      TEXT:
-        'As normas 2G se aplicam: somente visitantes totalmente vacinados e recuperados com prova do mesmo terão acesso. Visitantes menores de 18 anos ou aqueles que não podem ser vacinados por razões médicas devem apresentar um resultado negativo de teste COVID na entrada. Aqueles que não podem ser vacinados por razões médicas também devem comprovar sua impossibilidade de serem vacinados por meio de um certificado médico na entrada.',
-    },
-    AT_DESCRIPTION: {
-      TEXT:
-        'As normas 2G se aplicam: o acesso a acomodações, instituições culturais e restaurantes/bares, entre outros, só é possível com prova de vacinação total ou de infecção nos últimos 6 meses. Um teste Covid-19 negativo não é mais suficiente.',
-    },
-    GENERAL_DESCRIPTION:
-      'Qualquer experiência com este selo foi verificada e segue as melhores medidas de segurança de acordo com as diretrizes de saúde dos governos locais.',
-    CTA_TEXT: 'Detalhes das medidas',
-    BANNER_CTA: 'Saiba mais',
-    EXPERIENCE_DESCRIPTION:
-      'Esta experiência foi verificada para seguir as melhores medidas de segurança de acordo com os regulamentos locais e a OMS',
-    FLAG_TEXT: 'Segurança verificada',
-    MODAL: {
-      HEADING: 'Experiências seguras',
-      SUB_HEADING:
-        'Estamos trabalhando com nossos parceiros em todo o mundo para implementar as melhores medidas de segurança de acordo com as diretrizes da OMS. Todas as medidas tomadas foram verificadas e aqui apresentadas. Está na hora de explorar novamente o mundo à nossa volta!',
-      DETAILS: {
-        SAFETY_MASK_DEFAULT: {
-          HEADING: 'Todos devem usar máscara para sua segurança',
-          DESCRIPTION:
-            'Nossos parceiros, que foram verificados como Experiência Segura, seguem os regulamentos locais em vigor sobre as máscaras faciais. Se obrigatório, todos os visitantes e pessoal usarão máscaras. Todas as medidas possíveis são tomadas para garantir o seu conforto e segurança.',
-        },
-        SAFETY_MASK_STAFF: {
-          HEADING: 'Todos devem usar máscara para sua segurança',
-          DESCRIPTION:
-            'Todos os membros do pessoal desta experiência usam máscaras faciais para garantir que você possa se divertir sem se preocupar.',
-        },
-        SAFETY_MASK_GUEST: {
-          HEADING: 'Todos devem usar máscara para sua segurança',
-          DESCRIPTION:
-            'As máscaras são obrigatórias para todos os visitantes desta experiência, oferecendo diversão com segurança máxima.',
-        },
-        SAFETY_MASK_BOTH: {
-          HEADING: 'Todos devem usar máscara para sua segurança',
-          DESCRIPTION:
-            'As máscaras são obrigatórias para todos os visitantes e membros do pessoal desta experiência, oferecendo diversão com segurança máxima.',
-        },
-        SAFETY_TEMPERATURE_STAFF: {
-          HEADING: 'Verificações de temperatura no local',
-          DESCRIPTION:
-            'A temperatura dos membros do pessoal é verificada várias vezes ao dia. A entrada de pessoas com temperatura além do limite não é permitida e é solicitado que fiquem em casa para se recuperarem.',
-        },
-        SAFETY_TEMPERATURE_GUEST: {
-          HEADING: 'Verificações de temperatura no local',
-          DESCRIPTION:
-            'Os visitantes terão sua temperatura verificada no início da experiência para garantir a segurança de todos. ',
-        },
-        SAFETY_TEMPERATURE_DEFAULT: {
-          HEADING: 'Verificações de temperatura no local',
-          DESCRIPTION:
-            'Os visitantes terão sua temperatura verificada no início da experiência para garantir a segurança de todos. Também é verificada várias vezes ao dia a temperatura dos membros do pessoal.',
-        },
-        SAFETY_HANDWASH: {
-          HEADING: 'Instalações disponíveis para lavagem das mãos e saneamento',
-          DESCRIPTION:
-            'Como uma experiência segura, você terá acesso a estações para lavar as mãos e de saneamento durante o tempo de visita. Oferecemos todo o necessário. ',
-        },
-        SAFETY_CLEANED_EQUIPMENTS: {
-          HEADING: 'Todos os equipamentos e superfícies são higienizados',
-          DESCRIPTION:
-            'Todos os equipamentos disponíveis durante a sua experiência são completamente higienizados após cada utilização. Sempre.',
-        },
-        SAFETY_CLEANED_VEHICLES: {
-          HEADING: 'Todos os veículos são higienizados',
-          DESCRIPTION:
-            'Todos os veículos disponíveis durante a sua experiência são completamente higienizados após cada utilização. Sempre.',
-        },
-        SAFETY_CLEANED_DEFAULT: {
-          HEADING: 'Todos os equipamentos e superfícies são higienizados',
-          DESCRIPTION:
-            'Todos os equipamentos, veículos e superfícies são higienizados após cada utilização. Basta relaxar e desfrutar.',
-        },
-        SAFETY_TRAINED_STAFF: {
-          HEADING: 'A equipe é treinada de acordo com diretrizes da OMS',
-          DESCRIPTION:
-            'O pessoal disponível durante a experiência é treinado de acordo com as diretrizes da OMS e equipado para lidar com qualquer emergência.',
-        },
-        SAFETY_SOCIAL_DISTANCING_DEFAULT: {
-          HEADING: 'Regras de distanciamento social são seguidas',
-          DESCRIPTION:
-            'Regras de distanciamento social estão sendo seguidas a todo momento durante a experiência. Para cumprí-las, pode haver restrições de capacidade e limites no tamanho dos grupos. Fique tranquilo(a).',
-        },
-        SAFETY_SOCIAL_DISTANCING: {
-          HEADING: 'Regras de distanciamento social são seguidas',
-          DESCRIPTION:
-            'Regras de distanciamento social estão sendo seguidas a todo momento durante a experiência.',
-        },
-        SAFETY_RESTRICTED_CAPACITY: {
-          HEADING: 'Regras de distanciamento social são seguidas',
-          DESCRIPTION:
-            'Regras de distanciamento social são seguidas durante a experiência. Existem restrições de capacidade do local para garantir o distanciamento.',
-        },
-        SAFETY_SOCIAL_DISTANCING_NO_GROUPS: {
-          HEADING: 'Regras de distanciamento social são seguidas',
-          DESCRIPTION:
-            'Regras de distanciamento social estão sendo seguidas a todo momento durante a experiência. Portanto, grandes grupos de visitantes não são permitidos.',
-        },
-        SAFETY_RESTRICTED_CAPACITY_NO_GROUPS: {
-          HEADING: 'Regras de distanciamento social são seguidas',
-          DESCRIPTION:
-            'Regras de distanciamento social são seguidas durante a experiência. Existem restrições de capacidade no local para garantir o distanciamento e grandes grupos de visitantes não são permitidos.',
-        },
-      },
-      BADGE_DESCRIPTION:
-        'O selo em uma experiência confirma que as medidas de segurança foram verificadas por nós.',
-    },
-  },
   AUDIO_GUIDE: {
     BANNER: 'Guia de áudio gratuito',
     PRODUCT_SUFFIX: 'e Guia de Áudio',
   },
-  TICKET_CANNOT_BE_CANCELED:
-    'Este ingresso não pode ser cancelado, mas pode ser reagendado mediante solicitação',
-  TICKET_CAN_BE_CANCELED:
-    'Você pode cancelar com até {hours} horas de antecedência da experiência para um reembolso completo.',
-  FLEXIBLE: 'Flexível',
-  INCLUSIONS: 'Inclusões',
-  EXCLUSIONS: 'Não inclui',
-  FREE_CANCELLATION: 'Cancelamento gratuito',
-  PROMO_CODES: {
-    APPLY_CODE: 'APLICAR CÓDIGO',
-    REMOVE: 'REMOVER',
-    DESCRIPTION: {
-      PERCENTAGE: 'Desconto de {0}%',
-      ABSOLUTE: 'Desconto de {0}',
-      CAPPED: 'Desconto de {0}%, até {1}',
-    },
+  AUTHORISED_AND_TRUSTED_PARTNER: 'Parceiro autorizado e de confiança',
+  AUTHORISED_RESELLER: {
+    MAIN_TEXT: 'Authorized reseller',
+    SUB_TEXT: 'Authentic experiences from trusted and verified partners',
   },
-  CANCELLATION_POLICY_HEADING: 'Política de cancelamento',
-  SHOW_PAGE: {
-    SAFETY_BANNER: 'Bandeira de segurança',
-    SHOW_TYPE: 'Tipo de espetáculo',
-    CLOSING_DATE_SPECIAL_OFFER: 'Data de encerramento da oferta especial',
-    SPECIAL_OFFER: 'Oferta especial',
-    OPENING_DATE: 'Data de estreia',
-    CLOSING_DATE: 'Data de encerramento',
-    THEATRE_NAME: 'Nome do teatro',
-    THEATRE_CAPACITY: 'Capacidade do teatro',
-    THEATRE_ADDRESS: 'Endereço do teatro',
-    SHOW_TIMINGS: 'Horários do espetáculo',
-    DURATION: 'Duração',
-    AGE_LIMIT: 'Classificação indicativa',
-    YOUR_TICKETS: 'Seus ingressos',
-    CANCELLATION_POLICY: 'Política de cancelamento',
-    HIGHLIGHTS: 'Destaques',
-    ABOUT_SHOW: 'Sobre o espetáculo',
-    THE_STORY: 'A história',
-    SHOW_DETAILS: 'Detalhes do espetáculo',
-    CAST_AND_CREW: 'Elenco e equipe',
-    TOP_SONGS: 'Principais canções',
-    AGE_SUITABILITY: 'Faixa etária',
-    TICKETS: 'Ingressos',
-    TICKETS_REDEMPTION: 'Retirada de ingressos',
-    CANCELLATION_AND_REFUNDS: 'Cancelamento e reembolso',
-    ABOUT_THEATRE: 'Sobre o teatro',
-    GOOGLE_MAP: 'GoogleMaps',
-    GETTING_THERE: 'Como chegar',
-    FACILITIES_AND_ACCESSIBILITY: 'Serviços e acessibilidade',
-    ADDITIONAL_INFORMATION: 'Informações adicionais',
-    FREQUENTLY_ASKED_QUESTIONS: 'Perguntas frequentes',
-    QUESTION: 'P-',
-    ANSWER: 'R-',
-    LISTICLE_SHOW_SUMMARY: 'Listicle Resumo do show',
-    LISTICLE_SHOW_WHY_WATCH: 'Listicle Show Por que assistir',
-    BLOG_SUMMARY: 'Blog Resumo',
-    BLOG_THEATRE_SEATING_PLAN: 'Blog Mapa de assentos do Teatro',
-    BLOG_THEATRE_PAGE: 'Blog Página do Teatro',
-    BLOG_SHOW_PAGE: 'Blog Página oficial do espetáculo',
-    GETTING_THERE_MAP_LINK: 'Como chegar',
+  AVAILABLE: 'Disponível',
+  BANNER_CTA: 'Faça sua reserva',
+  BANNER_FOOTER_SUBTEXT: {
+    NON_PARTNERED_NON_SENSITIVE:
+      'Headout é uma marca que já conquistou a confiança de milhões de visitantes em todo o mundo oferecendo experiências selecionadas para esta atração.',
+    NON_PARTNERED_SENSITIVE:
+      'Headout é uma marca que já conquistou a confiança de milhões de visitantes em todo o mundo oferecendo experiências selecionadas para esta atração. Este não é website oficial do local.',
+    PARTNERED_NON_SENSITIVE:
+      'Headout é um parceiro autorizado e confiável que oferece experiências selecionadas para esta atração.',
+    PARTNERED_SENSITIVE:
+      'Headout é um parceiro autorizado e confiável que oferece experiências selecionadas para esta atração. Este não é o website oficial do local.',
   },
-  SAVE_PERCENT: 'Economize {0}%',
-  SAVE_UPTO_PERCENT: 'Economize até {0}%',
+  BANNER_SUBTEXT_DEFAULT_DISCLAIMER:
+    'Headout é um parceiro de confiança da atração, autorizado a oferecer uma seleção das melhores experiências.',
+  BOOK_NOW_CTA: 'Reserve agora',
+  BUY_TICKETS_CTA: 'Faça sua reserva',
   CANCELLATION_POLICY: {
+    CANCELLABLE:
+      'Você pode cancelar estes ingressos até {0} horas antes do início da experiência para obter um reembolso total.',
+    CANCELLABLE_ANYTIME:
+      'Cancelamento gratuito a qualquer momento antes do início da sua experiência',
+    CANCELLABLE_DAYS:
+      'Você pode cancelar estes ingressos até {0} dias antes do começo da experiência e receber um reembolso completo.',
+    EXTENDED_BUT_UNKNOWN_VALIDITY:
+      'Estes ingressos não podem ser cancelados. No entanto, eles são válidos por um período estendido.',
     HEADING: 'Política de alteração',
+    NON_CANCELLABLE_BUT_RESCHEDULABLE:
+      'Estes ingressos não podem ser cancelados. No entanto, eles podem ser alterados até {0} horas antes do início da experiência.',
     NON_CANCELLABLE_NON_RESCHEDULABLE:
       'Estes ingressos não podem ser cancelados ou alterados.',
     VALID_UNTIL_DATE:
@@ -342,44 +44,342 @@ const pt = {
       'Estes ingressos não podem ser cancelados. No entanto, você pode utilizá-los a qualquer momento dentro dos próximos {0} dias.',
     VALID_WITHIN_NEXT_MONTHS:
       'Estes ingressos não podem ser cancelados. No entanto, você pode utilizá-los a qualquer momento dentro dos próximos {0} meses.',
-    EXTENDED_BUT_UNKNOWN_VALIDITY:
-      'Estes ingressos não podem ser cancelados. No entanto, eles são válidos por um período estendido.',
-    NON_CANCELLABLE_BUT_RESCHEDULABLE:
-      'Estes ingressos não podem ser cancelados. No entanto, eles podem ser alterados até {0} horas antes do início da experiência.',
-    CANCELLABLE:
-      'Você pode cancelar estes ingressos até {0} horas antes do início da experiência para obter um reembolso total.',
-    CANCELLABLE_ANYTIME:
-      'Cancelamento gratuito a qualquer momento antes do início da sua experiência',
-    CANCELLABLE_DAYS:
-      'Você pode cancelar estes ingressos até {0} dias antes do começo da experiência e receber um reembolso completo.',
   },
-  VALIDITY: {
-    UNTIL_DATE: 'Estes ingressos são válidos até o dia {0}.',
-    UNTIL_DAYS_FROM_PURCHASE:
-      'Estes ingressos são válidos por {0} dias a partir da data da compra.',
-    UNTIL_MONTHS_FROM_PURCHASE:
-      'Estes ingressos são válidos por {0} meses a partir da data da compra.',
-    EXTENDED_BUT_UNKNOWN_VALIDITY:
-      'Estes ingressos são válidos por uma duração estendida. Os detalhes exatos serão informados no ingresso.',
+  CANCELLATION_POLICY_HEADING: 'Política de cancelamento',
+  CASHBACK: '{0}% em Cashback',
+  CASHBACK_INFO:
+    'Você recebe {0} em cashback ao comprar esta experiência. O valor em cashback será automaticamente adicionado a sua conta Headout e poderá ser utilizado em sua próxima reserva com a Headout.',
+  CHECK_AVAIL: 'Verificar disponibilidade',
+  CLOSE: 'Fechar',
+  COMBO_VARIANT: {
+    SELECT_CTA: 'Selecionar',
+    SELECT_OPTION: 'Selecione a opção deseja',
+    SELECT_TICKET: 'Selecione seu bilhete',
   },
-  RATINGS: 'Avaliações',
-  HELP_CENTER: {
-    MAIN_TEXT: '24x7 help center',
-    SUB_TEXT:
-      'Have a question? Want to update your ticket? We’re available on phone, instant chat, and email.',
+  COMPARE_ALL_DETAILS: 'Compare os detalhes',
+  COVID19_ALERT: {
+    KEY_TEXT: 'Atualização sobre a COVID-19',
+    LINK:
+      'https://medium.com/headout/surto-coronav%C3%ADrus-pol%C3%ADtica-de-cancelamento-18a2fb65b25',
+    TEXT:
+      'Você é nossa prioridade. Consulte nossa página de ajuda para encontrar as últimas atualizações sobre nossa política de cancelamento flexível.',
   },
-  AUTHORISED_RESELLER: {
-    MAIN_TEXT: 'Authorized reseller',
-    SUB_TEXT: 'Authentic experiences from trusted and verified partners',
+  CURRENCY: 'Moeda',
+  DESCRIPTORS: {
+    AUDIO_GUIDE: 'Audioguia',
+    DURATION: 'Duração: {0}',
+    EXTENDED_VALIDITY: 'Validade prolongada',
+    FLEXIBLE_DURATION: 'Duração flexível',
+    FREE_CANCELLATION: 'Cancelamento gratuito',
+    GUIDED_TOUR: 'Tour guiado',
+    HOTEL_PICKUP: 'Traslado do hotel',
+    INSTANT_CONFIRMATION: 'Confirmação imediata',
+    MEALS_INCLUDED: 'Refeição incluída',
+    MOBILE_TICKET: 'Ingressos eletrônicos',
+    SKIP_THE_LINE: 'Sem filas',
+    TRANSFERS: 'Inclui translado',
   },
+  DURATION: 'Duração',
+  EARLIEST_AVAILABILITY: 'Próxima disponível: ',
+  EXCLUSIONS: 'Não inclui',
+  FEATURE_CARD: {
+    HEADING_CUSTOMER: '+10 milhões',
+    HEADING_RATING: '4,4/5',
+    HEADING_SAFE: '100% seguro',
+    HEADING_SUPPORT: 'Atendimento ao cliente 24h',
+    SUB_HEADING_CUSTOMER:
+      'de clientes satisfeitos com mais de 10.000 experiências',
+    SUB_HEADING_RATING: '+5.000 avaliações com 90% de pontuação excelente',
+    SUB_HEADING_SAFE: 'Todas as experiências ao ar livre são 100% seguras',
+    SUB_HEADING_SUPPORT:
+      'Tem uma pergunta? Fale com nossos especialistas locais pelo chat a qualquer hora, de qualquer lugar.',
+  },
+  FLEXIBLE: 'Flexível',
+  FOOTER: {
+    CALL_US: 'Telefone',
+    CHAT_WITH_US: 'Chat',
+    COMPANY_DETAILS: 'Sobre a empresa',
+    DISCLAIMER:
+      'O site não é a página oficial da atração <attraction>. O site é mantido pela Headout, que trabalha em colaboração com atrações e operadores locais para oferecer experiências incríveis com apenas um clique!',
+    EMAIL_US: 'E-mail',
+    GET_HELP: 'Ajuda',
+    LEGAL: 'Termos Legais',
+    PRIVACY_POLICY: 'Política de privacidade',
+    QUICK_LINKS: 'Links diretos',
+    TERMS_AND_CONDITIONS: 'Termos e condições',
+  },
+  FREE_CANCELLATION: 'Cancelamento gratuito',
   FREE_CANCELLATION_SUBTEXT:
     'We understand plans change, cancel for free up to 72 hours before the event.',
+  FROM: 'a partir de',
+  GET_CASHBACK: 'Garanta {0}% de cashback',
+  GROUP_TICKETS: 'Ingressos para grupos',
   HAPPY_CUSTOMER: {
     MAIN_TEXT: '18+ Million happy customers',
     SUB_TEXT:
       'Customer satisfaction is our top priority. Join our happy customer base.',
   },
-  AUTHORISED_AND_TRUSTED_PARTNER: 'Parceiro autorizado e de confiança',
+  HELP_CENTER: {
+    MAIN_TEXT: '24x7 help center',
+    SUB_TEXT:
+      'Have a question? Want to update your ticket? We’re available on phone, instant chat, and email.',
+  },
+  INCLUSIONS: 'Inclusões',
+  LANGUAGE: 'Idioma',
+  LISTICLES: {
+    KNOW_MORE: 'Saiba mais',
+    SEATING_CHART: 'Mapa de assentos',
+    WHY_BOOK_FROM_US: 'Por que reservar com a gente?',
+  },
+  MORE_DETAILS: 'Mais detalhes',
+  NEW: 'NEW',
+  NEXT_AVAILABLE: 'Próxima disponível: ',
+  NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
+    'A Headout já conquistou a confiança de mais de 15 milhões de clientes e oferece uma seleção das melhores experiências. Este não é o site oficial do local da experiência.',
+  OFF: 'Off',
+  OPENING_ON: 'Estreia em',
+  OPENS: 'Abre',
+  PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
+    'Headout é um parceiro de confiança da atração, autorizado a oferecer uma seleção das melhores experiências. Este não é o site da atração.',
+  PRICES_STARTING: 'Preços a partir de',
+  PROMO_CODES: {
+    APPLY_CODE: 'APLICAR CÓDIGO',
+    DESCRIPTION: {
+      ABSOLUTE: 'Desconto de {0}',
+      CAPPED: 'Desconto de {0}%, até {1}',
+      PERCENTAGE: 'Desconto de {0}%',
+    },
+    REMOVE: 'REMOVER',
+  },
+  RATINGS: '{0} Avaliações',
+  READ_MORE: 'Saiba mais',
+  READ_MORE_TEXT: 'Ver mais',
+  REOPENING_ON: 'Reabre em',
+  REOPENS: 'Reabre',
+  SAFE_EXPERIENCE: {
+    AT_DESCRIPTION: {
+      TEXT:
+        'As normas 2G se aplicam: o acesso a acomodações, instituições culturais e restaurantes/bares, entre outros, só é possível com prova de vacinação total ou de infecção nos últimos 6 meses. Um teste Covid-19 negativo não é mais suficiente.',
+    },
+    AU_DESCRIPTION: {
+      TEXT:
+        'Visitantes com idade igual ou superior a 16 anos devem apresentar prova de vacinação da COVID-19 ou isenção médica.',
+    },
+    BANNER_CTA: 'Saiba mais',
+    BERLIN_DESCRIPTION: {
+      TEXT:
+        'As normas 2G se aplicam: somente visitantes totalmente vacinados e recuperados com prova do mesmo terão acesso. Visitantes menores de 18 anos ou aqueles que não podem ser vacinados por razões médicas devem apresentar um resultado negativo de teste COVID na entrada. Aqueles que não podem ser vacinados por razões médicas também devem comprovar sua impossibilidade de serem vacinados por meio de um certificado médico na entrada.',
+    },
+    CTA_TEXT: 'Detalhes das medidas',
+    DESCRIPTION_CTA: 'Saiba mais.',
+    EU_DESCRIPTION: {
+      TEXT:
+        'A partir de 21 de julho de 2021, todos os visitantes a partir de 12 anos de idade devem apresentar um Certificado de COVID da UE.',
+    },
+    EU_HEADING: 'Certificado Covid da UE necessário',
+    EU_PREFIX: 'Atenção: ',
+    EXPERIENCE_DESCRIPTION:
+      'Esta experiência foi verificada para seguir as melhores medidas de segurança de acordo com os regulamentos locais e a OMS',
+    FLAG_TEXT: 'Segurança verificada',
+    GENERAL_DESCRIPTION:
+      'Qualquer experiência com este selo foi verificada e segue as melhores medidas de segurança de acordo com as diretrizes de saúde dos governos locais.',
+    HEADING: 'Melhores medidas de segurança',
+    IT_DESCRIPTION: {
+      TEXT:
+        'A partir de 6 de agosto de 2021, todos os visitantes com 11 anos ou mais devem apresentar um Passe Verde ou um Certificado de COVID da UE.',
+    },
+    IT_PREFIX: 'Atenção: ',
+    MOBILE_HEADING: 'Experiências seguras',
+    MODAL: {
+      BADGE_DESCRIPTION:
+        'O selo em uma experiência confirma que as medidas de segurança foram verificadas por nós.',
+      DETAILS: {
+        SAFETY_CLEANED_DEFAULT: {
+          DESCRIPTION:
+            'Todos os equipamentos, veículos e superfícies são higienizados após cada utilização. Basta relaxar e desfrutar.',
+          HEADING: 'Todos os equipamentos e superfícies são higienizados',
+        },
+        SAFETY_CLEANED_EQUIPMENTS: {
+          DESCRIPTION:
+            'Todos os equipamentos disponíveis durante a sua experiência são completamente higienizados após cada utilização. Sempre.',
+          HEADING: 'Todos os equipamentos e superfícies são higienizados',
+        },
+        SAFETY_CLEANED_VEHICLES: {
+          DESCRIPTION:
+            'Todos os veículos disponíveis durante a sua experiência são completamente higienizados após cada utilização. Sempre.',
+          HEADING: 'Todos os veículos são higienizados',
+        },
+        SAFETY_HANDWASH: {
+          DESCRIPTION:
+            'Como uma experiência segura, você terá acesso a estações para lavar as mãos e de saneamento durante o tempo de visita. Oferecemos todo o necessário. ',
+          HEADING: 'Instalações disponíveis para lavagem das mãos e saneamento',
+        },
+        SAFETY_MASK_BOTH: {
+          DESCRIPTION:
+            'As máscaras são obrigatórias para todos os visitantes e membros do pessoal desta experiência, oferecendo diversão com segurança máxima.',
+          HEADING: 'Todos devem usar máscara para sua segurança',
+        },
+        SAFETY_MASK_DEFAULT: {
+          DESCRIPTION:
+            'Nossos parceiros, que foram verificados como Experiência Segura, seguem os regulamentos locais em vigor sobre as máscaras faciais. Se obrigatório, todos os visitantes e pessoal usarão máscaras. Todas as medidas possíveis são tomadas para garantir o seu conforto e segurança.',
+          HEADING: 'Todos devem usar máscara para sua segurança',
+        },
+        SAFETY_MASK_GUEST: {
+          DESCRIPTION:
+            'As máscaras são obrigatórias para todos os visitantes desta experiência, oferecendo diversão com segurança máxima.',
+          HEADING: 'Todos devem usar máscara para sua segurança',
+        },
+        SAFETY_MASK_STAFF: {
+          DESCRIPTION:
+            'Todos os membros do pessoal desta experiência usam máscaras faciais para garantir que você possa se divertir sem se preocupar.',
+          HEADING: 'Todos devem usar máscara para sua segurança',
+        },
+        SAFETY_RESTRICTED_CAPACITY: {
+          DESCRIPTION:
+            'Regras de distanciamento social são seguidas durante a experiência. Existem restrições de capacidade do local para garantir o distanciamento.',
+          HEADING: 'Regras de distanciamento social são seguidas',
+        },
+        SAFETY_RESTRICTED_CAPACITY_NO_GROUPS: {
+          DESCRIPTION:
+            'Regras de distanciamento social são seguidas durante a experiência. Existem restrições de capacidade no local para garantir o distanciamento e grandes grupos de visitantes não são permitidos.',
+          HEADING: 'Regras de distanciamento social são seguidas',
+        },
+        SAFETY_SOCIAL_DISTANCING: {
+          DESCRIPTION:
+            'Regras de distanciamento social estão sendo seguidas a todo momento durante a experiência.',
+          HEADING: 'Regras de distanciamento social são seguidas',
+        },
+        SAFETY_SOCIAL_DISTANCING_DEFAULT: {
+          DESCRIPTION:
+            'Regras de distanciamento social estão sendo seguidas a todo momento durante a experiência. Para cumprí-las, pode haver restrições de capacidade e limites no tamanho dos grupos. Fique tranquilo(a).',
+          HEADING: 'Regras de distanciamento social são seguidas',
+        },
+        SAFETY_SOCIAL_DISTANCING_NO_GROUPS: {
+          DESCRIPTION:
+            'Regras de distanciamento social estão sendo seguidas a todo momento durante a experiência. Portanto, grandes grupos de visitantes não são permitidos.',
+          HEADING: 'Regras de distanciamento social são seguidas',
+        },
+        SAFETY_TEMPERATURE_DEFAULT: {
+          DESCRIPTION:
+            'Os visitantes terão sua temperatura verificada no início da experiência para garantir a segurança de todos. Também é verificada várias vezes ao dia a temperatura dos membros do pessoal.',
+          HEADING: 'Verificações de temperatura no local',
+        },
+        SAFETY_TEMPERATURE_GUEST: {
+          DESCRIPTION:
+            'Os visitantes terão sua temperatura verificada no início da experiência para garantir a segurança de todos. ',
+          HEADING: 'Verificações de temperatura no local',
+        },
+        SAFETY_TEMPERATURE_STAFF: {
+          DESCRIPTION:
+            'A temperatura dos membros do pessoal é verificada várias vezes ao dia. A entrada de pessoas com temperatura além do limite não é permitida e é solicitado que fiquem em casa para se recuperarem.',
+          HEADING: 'Verificações de temperatura no local',
+        },
+        SAFETY_TRAINED_STAFF: {
+          DESCRIPTION:
+            'O pessoal disponível durante a experiência é treinado de acordo com as diretrizes da OMS e equipado para lidar com qualquer emergência.',
+          HEADING: 'A equipe é treinada de acordo com diretrizes da OMS',
+        },
+      },
+      HEADING: 'Experiências seguras',
+      SUB_HEADING:
+        'Estamos trabalhando com nossos parceiros em todo o mundo para implementar as melhores medidas de segurança de acordo com as diretrizes da OMS. Todas as medidas tomadas foram verificadas e aqui apresentadas. Está na hora de explorar novamente o mundo à nossa volta!',
+    },
+    NL_DESCRIPTION: {
+      TEXT:
+        'Visitantes com 13 anos ou mais devem ter (cópia digital ou impressa de) um Certificado COVID que confirme a vacinação, resultado negativo do teste, ou documento que comprove a recuperação da COVID-19. O uso de uma máscara facial é obrigatório.',
+    },
+    SG_DESCRIPTION: {
+      TEXT:
+        'A partir de 13 de outubro de 2021, somente visitantes totalmente vacinados poderão entrar em grupos de 2. Você terá que apresentar prova do status de vacinação, um resultado recente negativo de teste COVID-19 e/ou qualquer documentação de recuperação antes da entrada.',
+    },
+    SHORT_HEADING: 'As melhores medidas de segurança em vigor',
+  },
+  SANITARY_ALERT: {
+    KEY_TEXT: 'Sua segurança é nossa prioridade',
+    TEXT:
+      'Tomamos medidas significativas para melhorar a limpeza utilizando desinfetantes com uma limpeza frequente das superfícies. O volume de pessoas também está sendo controlado para evitar aglomerações.',
+  },
+  SAVE: 'Economize  {0}%',
+  SAVE_PERCENT: 'Economize {0}%',
+  SAVE_UPTO: 'Economize até',
+  SAVE_UPTO_PERCENT: 'Economize até {0}%',
+  SEE_ALL: 'See All',
+  SELECT_SECTION: 'Escolher setor',
+  SHOW_ALL_PHOTOS: 'Ver todas as fotos',
+  SHOW_LESS_TEXT: 'Ver menos',
+  SHOW_PAGE: {
+    ABOUT_SHOW: 'Sobre o espetáculo',
+    ABOUT_THEATRE: 'Sobre o teatro',
+    ADDITIONAL_INFORMATION: 'Informações adicionais',
+    AGE_LIMIT: 'Classificação indicativa',
+    AGE_SUITABILITY: 'Faixa etária',
+    ANSWER: 'R-',
+    BLOG_SHOW_PAGE: 'Blog Página oficial do espetáculo',
+    BLOG_SUMMARY: 'Blog Resumo',
+    BLOG_THEATRE_PAGE: 'Blog Página do Teatro',
+    BLOG_THEATRE_SEATING_PLAN: 'Blog Mapa de assentos do Teatro',
+    CANCELLATION_AND_REFUNDS: 'Cancelamento e reembolso',
+    CANCELLATION_POLICY: 'Política de cancelamento',
+    CAST_AND_CREW: 'Elenco e equipe',
+    CLOSING_DATE: 'Data de encerramento',
+    CLOSING_DATE_SPECIAL_OFFER: 'Data de encerramento da oferta especial',
+    DURATION: 'Duração',
+    FACILITIES_AND_ACCESSIBILITY: 'Serviços e acessibilidade',
+    FREQUENTLY_ASKED_QUESTIONS: 'Perguntas frequentes',
+    GETTING_THERE: 'Como chegar',
+    GETTING_THERE_MAP_LINK: 'Como chegar',
+    GOOGLE_MAP: 'GoogleMaps',
+    HIGHLIGHTS: 'Destaques',
+    LISTICLE_SHOW_SUMMARY: 'Listicle Resumo do show',
+    LISTICLE_SHOW_WHY_WATCH: 'Listicle Show Por que assistir',
+    OPENING_DATE: 'Data de estreia',
+    QUESTION: 'P-',
+    SAFETY_BANNER: 'Bandeira de segurança',
+    SHOW_DETAILS: 'Detalhes do espetáculo',
+    SHOW_TIMINGS: 'Horários do espetáculo',
+    SHOW_TYPE: 'Tipo de espetáculo',
+    SPECIAL_OFFER: 'Oferta especial',
+    THE_STORY: 'A história',
+    THEATRE_ADDRESS: 'Endereço do teatro',
+    THEATRE_CAPACITY: 'Capacidade do teatro',
+    THEATRE_NAME: 'Nome do teatro',
+    TICKETS: 'Ingressos',
+    TICKETS_REDEMPTION: 'Retirada de ingressos',
+    TOP_SONGS: 'Principais canções',
+    YOUR_TICKETS: 'Seus ingressos',
+  },
+  SORT_BY: 'Ordenar por',
+  THEATRE: 'Teatro',
+  TICKET_CAN_BE_CANCELED:
+    'Você pode cancelar com até {hours} horas de antecedência da experiência para um reembolso completo.',
+  TICKET_CANNOT_BE_CANCELED:
+    'Este ingresso não pode ser cancelado, mas pode ser reagendado mediante solicitação',
+  TICKETS: 'Ingressos',
+  TIMINGS: 'Horários',
+  TODAY: 'hoje',
+  TOMORROW: 'amanhã',
+  TOUR_LIST_HEADING: 'Selecione a experiência desejada',
+  TOUR_LIST_SUB_HEADING:
+    'Escolha entre diferentes opções de ingressos, excursões e combos de operadores verificados:',
+  UGC: {
+    FOLLOW: 'Seguir',
+    FOLLOW_IG: 'Seguir no Instagram',
+    HEADING: 'A sua próxima experiência pode ser assim',
+    SUB_HEADING: 'Selecionada com 💜 pela Headout',
+  },
+  UNAVAILABLE: 'Indisponível',
+  VALIDITY: {
+    EXTENDED_BUT_UNKNOWN_VALIDITY:
+      'Estes ingressos são válidos por uma duração estendida. Os detalhes exatos serão informados no ingresso.',
+    UNTIL_DATE: 'Estes ingressos são válidos até o dia {0}.',
+    UNTIL_DAYS_FROM_PURCHASE:
+      'Estes ingressos são válidos por {0} dias a partir da data da compra.',
+    UNTIL_MONTHS_FROM_PURCHASE:
+      'Estes ingressos são válidos por {0} meses a partir da data da compra.',
+  },
+  VIEW_LESS: 'Mostrar menos',
+  VIEW_MORE: 'Ver mais',
+  WHY_TAKE_THIS_DAY_TRIP: 'Por que vale a pena fazer essa excursão de um dia?',
 };
 
 export default pt;

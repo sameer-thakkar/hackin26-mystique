@@ -8,6 +8,7 @@ import {
   SAFETY_DETAILS_TYPE,
   CLUBBED_SAFETY_TAGS,
   LANGUAGE_MAP,
+  LanguagesUnion,
 } from 'const/index';
 import useWindowSize from 'hooks/useWindowSize';
 import Conditional from 'components/common/Conditional';
@@ -273,7 +274,7 @@ export const getSafetyDescription = async (
   cityCode: any,
   lang?: any
 ) => {
-  const language = LANGUAGE_MAP[lang]?.locale;
+  const language = LANGUAGE_MAP[lang as LanguagesUnion]?.locale;
   try {
     const options = await getSafetyBannerDocument({ lang: language });
     const selectedSafetyPitch = options?.find((el: any) => {
