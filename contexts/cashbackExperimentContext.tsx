@@ -18,7 +18,7 @@ const CashbackExperimentContextProvider = ({
 }: CashbackExperimentContextProviderProps) => {
   const [variant, setVariant] = useState<string>('');
   const [track, setTrack] = useState<boolean>(false);
-  const hsid = useRecoilState(hsidAtom);
+  const [hsid] = useRecoilState(hsidAtom);
 
   useEffect(() => {
     if (track) {
