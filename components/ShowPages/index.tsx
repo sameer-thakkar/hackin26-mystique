@@ -264,7 +264,7 @@ const ShowPage = (props: any) => {
 
   const selfCanonicalLink = convertUidToUrl({ uid, lang: currentLanguage });
   const updatedDescriptors = generateDescriptor({
-    v2Descriptors: microBrandsDescriptor?.split('\r\n'),
+    v2Descriptors: microBrandsDescriptor,
     lang: currentLanguage,
     isShowPage: true,
   });

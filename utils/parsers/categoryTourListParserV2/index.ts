@@ -265,12 +265,8 @@ export default async function categoryTourListParserV2({
           currencyCode: string;
         } = listingPrice || {};
         const currencySymbol = CURRENCY_SYMBOL_MAP[currencyCode as keyof {}];
-        const re = /(?:\r\n|\s\|\s)/g;
-        const descriptors = microBrandsDescriptor
-          ? microBrandsDescriptor.split(re)
-          : microBrandsDescriptor;
         const mbDescriptors = generateDescriptor({
-          v2Descriptors: descriptors,
+          v2Descriptors: microBrandsDescriptor,
           lang: 'en',
           isEntertainmentMb: true,
         });

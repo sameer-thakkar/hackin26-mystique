@@ -332,7 +332,7 @@ export const rankDescriptorList = (descriptorList: any) => {
 
 type TGenerateDescriptor = {
   descriptors?: Record<string, string>[];
-  v2Descriptors?: string | string[];
+  v2Descriptors?: string;
   lang: string;
   isEntertainmentMb?: boolean;
   isShowPage?: boolean;
@@ -340,12 +340,13 @@ type TGenerateDescriptor = {
 
 export const generateDescriptor = ({
   descriptors = [],
-  v2Descriptors = [],
+  v2Descriptors = '',
   isEntertainmentMb = false,
   isShowPage = false,
 }: TGenerateDescriptor) => {
   if (isShowPage || isEntertainmentMb) {
-    return v2Descriptors;
+    const regex = isShowPage ? /\r?\n|\r/ : /(?:\r\n|\s\|\s)/g;
+    return v2Descriptors.split(regex).filter(Boolean);
   }
 
   if (!isEntertainmentMb && !isShowPage) {
