@@ -15,15 +15,16 @@ const CityPage = (props: any) => {
         ?.filter((slice: any) => slice?.slice_type === 'banner')
         ?.reduce((acc: any, curr: any) => acc + curr)
     : [];
-  const bannerImages = cityCollections?.slice(0, 5)?.map((item: any) => {
-    return {
-      url: item?.data?.images?.[0]?.image_url,
-      altText: item?.data?.images?.[0]?.alt_text,
-    };
-  });
 
-  const { primary } = bannerSlice || {};
+  const { primary, items: bannerImagesArray } = bannerSlice || {};
   const { banner_sub_text: subText, banner_title: title } = primary || {};
+  const bannerImages =
+    bannerImagesArray?.map(
+      (item: { banner_image?: string; alt_text?: string }) => ({
+        url: item?.banner_image,
+        altText: item?.alt_text,
+      })
+    ) || [];
 
   const bannerSubText = subText ? RichText?.asText(subText) : '';
 

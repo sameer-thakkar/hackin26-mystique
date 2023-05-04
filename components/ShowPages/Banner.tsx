@@ -14,6 +14,7 @@ import { LOCATION, PLAY_CIRCLE, STAR } from 'assets/SvgIcons';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  LANGUAGE_MAP,
   LTT_TAG_PAGE_MAP,
 } from 'const/index';
 import { PRODUCT_VIDEOS } from 'const/ShowPageProductVideos';
@@ -426,8 +427,6 @@ const ShowPageBanner = ({
 
   const { NEXT_AVAILABLE } = strings || {};
   const REOPENING_STRING = `${NEXT_AVAILABLE}`;
-  const BannerTitle = `${name} - ${strings.TICKETS}`;
-
   const theaterName = detailsObjects?.[strings.SHOW_PAGE.THEATRE_NAME];
 
   let showDetails = {};
@@ -474,7 +473,7 @@ const ShowPageBanner = ({
       [ANALYTICS_PROPERTIES.PAGE_TYPE]: pageMetaData?.pageType,
       [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
       [ANALYTICS_PROPERTIES.TGIDS]: [tgid],
-      [ANALYTICS_PROPERTIES.MB_NAME]: BannerTitle,
+      [ANALYTICS_PROPERTIES.MB_NAME]: getBannerTitle(),
       ...getProductCommonProperties({
         primaryCategory,
         primaryCollection,
@@ -504,6 +503,17 @@ const ShowPageBanner = ({
       fetchReopeningDate();
     }
   }, [tgid, isTourAvailable, hostname]);
+
+  const getBannerTitle = () => {
+    switch (currentLanguage) {
+      case LANGUAGE_MAP.de.code:
+        return `${name} ${strings.TICKETS}`;
+      case LANGUAGE_MAP.fr.code:
+        return `${strings.TICKETS}: ${name}`;
+      default:
+        return `${name} - ${strings.TICKETS}`;
+    }
+  };
 
   const trackBookNowClick = () => {
     const { originalPrice, finalPrice, currencyCode } = listingPrice ?? {};
@@ -647,7 +657,7 @@ const ShowPageBanner = ({
         </div>
         <div className="heading-wrapper">
           <div>
-            <h1>{BannerTitle}</h1>
+            <h1>{getBannerTitle()}</h1>
             <Conditional if={isMobile}>
               <div className="theater-wrapper">
                 {LOCATION} {theaterName}
