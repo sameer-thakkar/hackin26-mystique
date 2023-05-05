@@ -46,9 +46,9 @@ const it = {
       'Questi biglietti non possono essere cancellati, ma puoi usarli in qualsiasi momento entro i prossimi {0} mesi.',
   },
   CANCELLATION_POLICY_HEADING: 'Polizza di cancellazione',
-  CASHBACK: '{0}% di Cashback',
+  CASHBACK: '{0} % di Cashback',
   CASHBACK_INFO:
-    'Quando prenoti questa esperienza, riceverai un Cashback del {0}. Il tuo Cashback verrà automaticamente accreditato sul tuo account Headout e potrai utilizzarlo per qualsiasi futura prenotazione con noi.',
+    'Quando prenoti questa esperienza, riceverai un Cashback del {0} %. Il tuo Cashback verrà automaticamente accreditato sul tuo account Headout e potrai utilizzarlo per qualsiasi futura prenotazione con noi.',
   CHECK_AVAIL: 'Verifica disponibilità',
   CLOSE: 'Chiudi',
   COMBO_VARIANT: {

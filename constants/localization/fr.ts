@@ -47,7 +47,7 @@ const fr = {
   },
   CANCELLATION_POLICY_HEADING: "Politique d'annulation",
   CASHBACK_INFO:
-    'Vous recevrez {0} de crédits Headout en réservant cette activité. Votre réduction sera automatiquement créditée sur votre compte Headout et pourra être utilisée pour toute réservation future avec Headout.',
+    'Vous recevrez {0} % de crédits Headout en réservant cette activité. Votre réduction sera automatiquement créditée sur votre compte Headout et pourra être utilisée pour toute réservation future avec Headout.',
   CHECK_AVAIL: 'Vérifier la disponibilité',
   CLOSE: 'Fermer',
   COMBO_VARIANT: {
@@ -299,7 +299,7 @@ const fr = {
       "Nous avons pris des mesures importantes pour améliorer la propreté des lieux au moyen de désinfectants et de nettoyages approfondis et fréquents des surfaces. Nous contrôlons également la fréquentation afin d'éviter tout encombrement.",
   },
   SAVE: 'Économisez {0} %',
-  SAVE_PERCENT: 'Économisez {0}%',
+  SAVE_PERCENT: 'Économisez {0} %',
   SAVE_UPTO: "Économisez jusqu'à",
   SAVE_UPTO_PERCENT: "Économisez jusqu'à {0} %",
   SEE_ALL: 'See All',
