@@ -45,6 +45,7 @@ import {
   MEDIA_CAROUSEL_IMAGE_LIMIT,
   PRODUCT_CARD_LENGTH_EXP_UIDS,
   CASHBACK_EXPERIMENT_TGIDS,
+  CASHBACK_EXPERIMENT_UIDS,
 } from 'const/index';
 import { createBookingURL } from 'utils';
 import {
@@ -1161,6 +1162,9 @@ const Product = (props: any) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [showComboVariant, setShowComboVariant] = useState(false);
 
+  const isCashbackExperimentValid =
+    CASHBACK_EXPERIMENT_TGIDS.includes(tgid) &&
+    CASHBACK_EXPERIMENT_UIDS.includes(uid);
   const isGpMotorTicketsMb = checkIfGpMotorTicketsMB(uid);
   const isSportsSubCategory = checkIfSportsSubCategory(primarySubCategory?.id);
 
@@ -1712,7 +1716,7 @@ const Product = (props: any) => {
                 listingPrice={finalListingPrice}
                 lang={currentLanguage}
                 showSavings
-                showCashbackBlock={CASHBACK_EXPERIMENT_TGIDS.includes(tgid)}
+                showCashbackBlock={isCashbackExperimentValid}
                 id={tgid}
                 prefix
                 key={'price-block'}

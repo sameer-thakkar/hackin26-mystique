@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Conditional from 'components/common/Conditional';
 import LocalisedPrice from 'UI/LPrice';
 import COLORS from 'const/colors';
@@ -173,6 +173,10 @@ const PriceBlock = ({
   const { uid } = useContext(MBContext);
   const isLTT = checkIfLTTMB(uid);
 
+  const [showSkeletalLoader, setSkeletalLoader] = useState(
+    showCashbackBlock && !hsid && !variant
+  );
+
   const {
     originalPrice,
     finalPrice,
@@ -193,8 +197,16 @@ const PriceBlock = ({
   const savingsElementsArray = [];
 
   useEffect(() => {
+    if (showCashbackBlock)
+      setTimeout(() => {
+        setSkeletalLoader(false);
+      }, 2000);
+  });
+
+  useEffect(() => {
     if (isSportsExperiment || !showCashbackBlock || !hsid || variant) return;
     triggerExperiment();
+    setSkeletalLoader(false);
   }, [hsid]);
 
   if (!listingPrice) {
@@ -206,7 +218,7 @@ const PriceBlock = ({
       strings.formatString(strings.SAVE, `${bestDiscount}`)
     );
   }
-  if (showCashbackBlock && !hsid && !variant)
+  if (showSkeletalLoader)
     return (
       <SkeletonTheme
         baseColor={COLORS.GRAY.G6}
