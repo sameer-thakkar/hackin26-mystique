@@ -201,7 +201,7 @@ const PriceBlock = ({
       setTimeout(() => {
         setSkeletalLoader(false);
       }, 2000);
-  });
+  }, []);
 
   useEffect(() => {
     if (isSportsExperiment || !showCashbackBlock || !hsid || variant) return;
