@@ -110,7 +110,7 @@ const fr = {
   FREE_CANCELLATION_SUBTEXT:
     'We understand plans change, cancel for free up to 72 hours before the event.',
   FROM: 'à partir de',
-  GET_CASHBACK: 'Recevez un cashback de {0}%',
+  GET_CASHBACK: 'Recevez un cashback de {0} %',
   GROUP_TICKETS: 'Billets de groupe',
   HAPPY_CUSTOMER: {
     MAIN_TEXT: '18+ Million happy customers',
