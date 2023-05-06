@@ -167,7 +167,8 @@ const MicrositeV1 = (props: any) => {
   const headerCurrencies = currencies_list.filter((c: any) => c?.currency);
 
   const currentLanguage = getLangObject(lang).code;
-  const isCategorisedTours = Object.keys(categoryTourListData)?.length > 0;
+  const isCategorisedTours =
+    Object.keys(categoryTourListData?.scorpioData ?? {})?.length > 0;
   const {
     scorpioData: scorpioDataCategorised,
     orderedTours: categorizedToursList,

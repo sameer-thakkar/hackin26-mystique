@@ -1718,6 +1718,8 @@ export const getPageData = async ({
         if (hide_safe) {
           allTags = allTags?.filter((t: any) => !t.includes('SAFE'));
         }
+
+        const isMBHighlightsExist = microBrandsHighlight?.length > 0;
         return {
           ...accum,
           [id]: {
@@ -1745,6 +1747,7 @@ export const getPageData = async ({
               ...currencySymbolMap[listingPrice?.currencyCode],
             },
             flowType,
+            isMBHighlightsExist,
           },
         };
       }, {});
