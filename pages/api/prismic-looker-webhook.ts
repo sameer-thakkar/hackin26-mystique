@@ -76,6 +76,7 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
 
   const pageDocsPromises = pageDocsList?.map(async (doc) => {
     const {
+      id,
       uid,
       type,
       lang,
@@ -124,6 +125,7 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
     const pageDocFooterDetails = await getFooterDetails(doc);
     const headingsDetails = await getHeadings(doc);
     const metaData = {
+      id,
       uid,
       document_type: getDocType(type),
       first_publication_date,
@@ -210,6 +212,7 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
     } = doc;
 
     return {
+      id,
       city: city?.cityCode,
       collectionId: collection,
       categoryId: category,
@@ -217,13 +220,13 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
       commonRanks: ranking,
       commonExclusions: exclusions,
       experienceLimit: limit,
-      id,
       tags,
     };
   });
 
   const headoutContentDocs = headoutContentDocsList?.map((doc) => {
     const {
+      id,
       uid,
       type,
       first_publication_date,
@@ -244,6 +247,7 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
     const language = getHeadoutLanguagecode(lang).toUpperCase();
 
     const metadata = {
+      id,
       uid,
       first_publication_date,
       last_publication_date,
@@ -255,6 +259,7 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
       headout_page_id: headoutPageDetails?.pageId,
       accordions_as_faq_and_schema: !!use_accordion_as_faq_schema,
       has_lfc: !!content_framework?.id,
+      linked_content_framework_id: content_framework?.id || null,
       meta_title_override,
       meta_description_override,
       author_name,
