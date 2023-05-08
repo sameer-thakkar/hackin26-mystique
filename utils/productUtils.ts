@@ -345,6 +345,8 @@ export const generateDescriptor = ({
   isShowPage = false,
 }: TGenerateDescriptor) => {
   if (isShowPage || isEntertainmentMb) {
+    if (!v2Descriptors) return [];
+
     const regex = isShowPage ? /\r?\n|\r/ : /(?:\r\n|\s\|\s)/g;
     return v2Descriptors.split(regex).filter(Boolean);
   }
