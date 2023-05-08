@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Product from 'components/Product';
 import Conditional from 'components/common/Conditional';
 import HorizontalLine from 'components/slices/HorizontalLine';
@@ -46,8 +46,20 @@ const StyledProductsWrapper = styled.div`
   }
 `;
 
-const ProductContainer = styled.div`
-  display: grid;
+const ticketCardDesktopDisplay = css`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`;
+
+const ProductContainer = styled.div<{
+  isTicketCard: boolean;
+  isMobile: boolean;
+}>`
+${({ isTicketCard, isMobile }) =>
+  isTicketCard && !isMobile
+    ? ` ${ticketCardDesktopDisplay} `
+    : `display: grid;`}
   grid-row-gap: ${({ theme }) => theme.productCards.gap.desktop};
   margin-top: 2.25rem;
   margin-bottom: 2.25rem;
@@ -73,7 +85,9 @@ const StyledTourListSubHeading = styled.div`
   }
 `;
 
-const ProductWrapper = styled.div``;
+const ProductWrapper = styled.div`
+  flex: 0 49%;
+`;
 
 const PopulateProducts = (props: any) => {
   const {
@@ -419,7 +433,7 @@ const PopulateProducts = (props: any) => {
           </Conditional>
         </div>
       </Conditional>
-      <ProductContainer>
+      <ProductContainer isTicketCard={isTicketCard} isMobile={isMobile}>
         {availableToursList &&
           availableToursList.map((tour: any, index: number) => {
             const {

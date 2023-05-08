@@ -238,7 +238,8 @@ const StyledProductCard = styled.div<IStyledProductCard>`
   ${({ isTicketCard }) => (isTicketCard ? null : cardImageStyles)}
 
   grid-template-rows: min-content min-content min-content;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: ${({ isTicketCard }) =>
+    isTicketCard ? `30fr 1fr auto` : `auto 1fr auto`};
   grid-auto-rows: min-content;
   column-gap: 1.5rem;
 
@@ -525,7 +526,7 @@ const CTABlock = styled.div<{
     width: 100%;
     display: block;
     line-height: 1;
-    border-radius: ${({ isTicketCard }) => (isTicketCard ? '4px' : '8px')};
+    border-radius: 8px;
     svg {
       vertical-align: middle;
       margin-left: 24px;
@@ -1723,7 +1724,7 @@ const Product = (props: any) => {
               />
             </PriceContainer>
             <Conditional if={isTicketCard && promo_code}>
-              <PromoCodeBlock {...props} />
+              <PromoCodeBlock {...props} isTicketCardDetailPopup />
             </Conditional>
 
             <CTABlock

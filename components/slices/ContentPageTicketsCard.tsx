@@ -7,24 +7,20 @@ import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import parse from 'url-parse';
 import styled from 'styled-components';
-import React, { useRef, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import {
   ANALYTICS_EVENTS,
   THEMES,
   SIDEBAR_TYPES,
   LOCALISED_DATE_FORMATS,
-  NOS_OF_HIGHLIGHTS_TO_SHOW,
   ANALYTICS_PROPERTIES,
 } from 'const/index';
 import COLORS from 'const/colors';
-import { shortCodeSerializer } from 'utils/shortCodes';
 import { CALENDAR, BackArrow } from 'assets/SvgIcons';
-import { StlyedSplit } from 'UI/Split';
 import { createBookingURL } from 'utils';
 import { MBContext } from 'contexts/MBContext';
 import PriceBlock from 'UI/PriceBlock';
-import Chevron from 'UI/Chevron';
 import {
   extractTabsFromHighlights,
   getProductCardLayout,
@@ -41,6 +37,7 @@ import { getDuration } from 'utils/timeUtils';
 import ComboPopup from 'UI/ComboPopup';
 import { expandFontToken } from 'const/typography';
 import { metaAtom } from 'store/atoms/meta';
+import { FONTS } from 'const/fonts';
 
 dayjs.extend(advancedFormat);
 
@@ -48,61 +45,13 @@ const Container = styled.div`
   max-width: 1200px;
   margin: auto;
   width: 100%;
-`;
-
-const StyledProductCard = styled.div`
-  padding: ${({
-    // @ts-expect-error TS(2339): Property 'isMainCard' does not exist on type 'Pick... Remove this comment to see the full error message
-    isMainCard,
-  }) => (isMainCard ? '24px' : '24px 0px 24px 40px')};
-  display: grid;
-  grid-row-gap: 24px;
-  grid-template-columns: 1fr auto;
-  grid-template-areas: ${({
-    // @ts-expect-error TS(2339): Property 'layout' does not exist on type 'Pick<Det... Remove this comment to see the full error message
-    layout,
-  }) => layout.desktop.map((row: any) => `'${row}'`)};
-  ${StlyedSplit} {
-    margin: 0;
-    max-width: unset;
-    padding: 0;
-  }
-  ${HorizontalLine} {
-    grid-area: line;
-    margin: 8px 0;
-    ${({ theme }) => theme.productCards.lineStyles || ''};
-  }
-  .more-details {
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 15px;
-    margin-left: 1em;
-    margin-top: 16px;
-    cursor: pointer;
-    outline: none;
-    ${({ theme }) => theme.productCards.moreDetailsStyle}
-  }
-  ${({ theme }) => theme.productCards?.styles?.desktop}
-  @media (max-width: 768px) {
-    padding: ${({ theme }) => theme.productCards.padding.mobile};
-    margin: 0;
-    grid-template-areas: ${({ layout }) =>
-      layout.mobile.map((row: any) => `'${row}'`)};
-    width: auto;
-    grid-template-columns: auto;
-    .more-details {
-      margin-top: 0;
-      margin-left: 0;
-      margin-bottom: 0;
-    }
-    ${({ theme }) => theme.productCards?.styles?.mobile}
-  }
+  border: ${({ theme }) => theme.productCards.border};
+  border-radius: 16px;
+  background: ${COLORS.BRAND.WHITE};
 `;
 
 const ProductHeader = styled.div`
-  display: grid;
-  grid-gap: 16px;
-  display: contents;
+  min-height: 10rem;
   @media (max-width: 768px) {
   }
 `;
@@ -123,26 +72,32 @@ const CloseIconWrapper = styled.div`
   }
 `;
 
-const WrapperProductCard = styled.div<{
+const WrapperPopupProductCard = styled.div<{
   isMainCard: boolean;
   isMobile: boolean;
 }>`
   border: ${({ theme }) => theme.productCards.border};
-  border-radius: 8px;
+  border-radius: 16px;
   display: grid;
   grid-template-columns: ${({ isMainCard, isMobile }) =>
     isMainCard || isMobile ? 'auto' : 'auto 40px'};
   overflow: hidden;
-  background: white;
+  background: ${COLORS.BRAND.WHITE};
   @media (max-width: 768px) {
     ${({ isMobile }) => (!isMobile ? 'margin: 0 16px;' : 'border: 0;')};
   }
 `;
 
-const TourTitle = styled.h2`
-  ${expandFontToken('Heading/Large')}
+const WrapperProductCard = styled.div`
+  padding: 1.5rem;
+  & > ${HorizontalLine} {
+    border-bottom-style: dashed;
+  }
+`;
+
+const TourTitle = styled.div`
+  ${expandFontToken(FONTS.HEADING_SMALL)}
   margin: 0 !important;
-  max-width: 768px;
   @media (max-width: 768px) {
     ${({
       // @ts-expect-error TS(2339): Property 'isPopup' does not exist on type 'Pick<De... Remove this comment to see the full error message
@@ -156,11 +111,23 @@ const TourTitle = styled.h2`
 `;
 
 const MoreDetailWrapper = styled.div`
+  display: flex;
+  align-items: baseline;
   color: ${COLORS.TEXT.CANDY_1};
+  padding-bottom: 0.8rem;
   ${expandFontToken('Button/Medium')}
   cursor: pointer;
   @media (max-width: 768px) {
   }
+`;
+
+const MoreDetailsIcon = styled.div`
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-left: 0.125rem;
+  border-top: 2px solid ${COLORS.TEXT.CANDY_1};
+  border-right: 2px solid ${COLORS.TEXT.CANDY_1};
+  transform: rotate(45deg);
 `;
 
 const PopupWrapper = styled.div`
@@ -215,24 +182,25 @@ const ShortSummary = styled.div`
 const TourTags = styled.div(
   // @ts-expect-error TS(2339): Property 'isMainCard' does not exist on type 'Pick... Remove this comment to see the full error message
   ({ isMainCard, isOpened }) => `
-  display: ${isMainCard ? 'inline' : 'grid'};
-  grid-row-gap: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0.9rem 0 0.5rem 0;
   align-items: start;
   align-content: start;
-  margin: 0;
   color: ${COLORS.GRAY.G3};
   .tour-tag-wrapper{
     ${!isOpened ? `display: inline !important;float: left;` : ''}
+    padding-bottom: 0.75rem;
   }
   .tour-tag {
     display: grid;
     grid-auto-flow: column;
-    grid-column-gap: 8px;
-    margin-right: ${isMainCard ? '20px' : '8px'};
+    grid-column-gap: 0.25rem;
+    margin-right: ${isMainCard ? '1.25rem' : '1rem'};
     max-width: 230px;
     justify-content: left;
     align-items: center;
-    ${expandFontToken('UI/Label Medium')}
+    ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
     margin-bottom: ${isMainCard ? '5px' : '0'};
     .image-wrap {
       display: flex;
@@ -262,10 +230,9 @@ const TourTags = styled.div(
 );
 
 export const CTAContainer = styled.div`
-  grid-area: cta-combo;
-  display: grid;
-  grid-gap: 16px;
   align-content: start;
+  padding-top: 0.625rem;
+  justify-content: space-between;
   ${({ theme }) =>
     theme.theme === THEMES.MIN_BLUE
       ? `
@@ -274,31 +241,16 @@ export const CTAContainer = styled.div`
     }
   `
       : ``}
-  ${({
-    // @ts-expect-error TS(2339): Property 'isMainCard' does not exist on type 'Pick... Remove this comment to see the full error message
-    isMainCard,
-  }) =>
-    isMainCard
-      ? `
-    height: 100%;
-    align-items: center;
-    display: flex;
-`
-      : ``}
+  height: 100%;
+  align-items: end;
+  display: flex;
   @media (max-width: 768px) {
     display: contents;
   }
 `;
 
-const CTAWrapper = styled.div`
-  grid-gap: 16px;
-  display: grid;
-  padding-right: 16px;
-`;
-
 const PriceContainer = styled.div`
   justify-self: center;
-  display: grid;
   grid-auto-flow: column;
   align-items: end;
   grid-column-gap: 8px;
@@ -313,7 +265,8 @@ const PriceContainer = styled.div`
   ${({ theme }) => theme.productCards.priceFontSettings.desktop}
   .tour-price {
     display: flex;
-    ${expandFontToken('Heading/Large')}
+    ${expandFontToken(FONTS.HEADING_REGULAR)}
+    margin-bottom: 0.4rem;
   }
   @media (max-width: 768px) {
     justify-self: left;
@@ -327,11 +280,10 @@ const CTABlock = styled.div<{ isSticky: boolean; shouldOffset: boolean }>`
   }
   .tour-book-now-cta {
     margin: auto;
-    min-width: 230px;
+    min-width: 13.5rem;
     width: 100%;
     display: block;
     ${expandFontToken('Button/Medium')}
-    border-radius: 4px;
     svg {
       vertical-align: middle;
       margin-left: 24px;
@@ -364,94 +316,6 @@ const CTABlock = styled.div<{ isSticky: boolean; shouldOffset: boolean }>`
   }
 `;
 
-const ProductBody = styled.div<{
-  noOfListItemToShow: number;
-  defaultOpen: boolean;
-}>`
-  grid-area: body;
-  display: grid;
-  grid-row-gap: 8px;
-  overflow-anchor: none;
-  .tour-description {
-    cursor: ${({
-      // @ts-expect-error TS(2339): Property 'hasReadMore' does not exist on type 'Pic... Remove this comment to see the full error message
-      hasReadMore,
-    }) => (hasReadMore ? 'pointer' : '')};
-    p {
-      margin: 0;
-      font-weight: 500;
-    }
-    ${({ theme }) => theme.productCards.regularFontSettings.desktop}
-    color: ${COLORS.GRAY.G2};
-    opacity: 0.99;
-    display: grid;
-    grid-gap: 0;
-    ${({
-      // @ts-expect-error TS(2339): Property 'collapsed' does not exist on type 'Pick<... Remove this comment to see the full error message
-      collapsed,
-      noOfListItemToShow,
-      defaultOpen,
-    }) =>
-      collapsed && !defaultOpen
-        ? `
-    *:not(div):nth-child(n + ${noOfListItemToShow}),
-    ul li:nth-child(n + ${noOfListItemToShow}) {
-      display: none;
-    }
-    `
-        : ''}
-    ul {
-      padding: 0;
-      padding-left: 1em;
-      display: grid;
-      grid-gap: 12px;
-      li {
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-        line-height: 22px;
-        color: #545454;
-      }
-    }
-  }
-  ul:last-child {
-    margin-bottom: 0;
-  }
-  @media (max-width: 768px) {
-    .show-more-information {
-      p:nth-child(1) {
-        display: block;
-      }
-      ul {
-        li:nth-child(n + 2) {
-          display: list-item;
-        }
-      }
-    }
-    .tour-description {
-      ${({ theme }) => theme.productCards.regularFontSettings.mobile}
-    }
-    ${({
-      // @ts-expect-error TS(2339): Property 'collapsed' does not exist on type 'Pick<... Remove this comment to see the full error message
-      collapsed,
-      defaultOpen,
-    }) =>
-      collapsed && !defaultOpen
-        ? `
-        .tour-description {
-          display: none;
-        }
-    `
-        : ''}
-  }
-  .display-none {
-    display: none;
-  }
-  .display-expand {
-    display: grid;
-  }
-`;
-
 const NextAvailableBlock = styled.div`
   font-size: 14px;
   font-weight: 500;
@@ -472,78 +336,6 @@ const NextAvailableBlock = styled.div`
     ${({ theme }) => theme.productCards?.nextAvailable?.mobile}
   }
 `;
-const ProductOfferBlock = styled.div`
-  grid-area: offer;
-  font-size: 14px;
-  line-height: 15px;
-  font-weight: 400;
-  cursor: pointer;
-  color: ${({ theme: { primaryAccent } }) =>
-    primaryAccent ? primaryAccent : COLORS.BRAND.PURPS};
-  p {
-    margin: 0;
-    color: ${({ theme: { primaryAccent } }) =>
-      primaryAccent ? primaryAccent : COLORS.BRAND.PURPS};
-  }
-  @media (max-width: 768px) {
-    font-size: 14px;
-  }
-`;
-
-const Labels = styled.div`
-  padding: 0 24px;
-  margin-bottom: -11.5px;
-`;
-
-const Label = styled.div`
-  display: inline;
-  margin-right: 12px;
-  padding: 2px 4px;
-  font-size: 10px;
-  font-style: normal;
-  font-weight: normal;
-  line-height: 12px;
-  color: #444444;
-  border-radius: 2px;
-  background: ${COLORS.JOY_MUSTARD.LIGHT_TONE_2};
-`;
-
-const ModalCardContainer = styled.div`
-  @media (max-width: 768px) {
-    background: #fff;
-    border-radius: 10px 10px 0 0;
-    ${StyledProductCard} {
-      margin: 0;
-      border: none;
-      padding: 0 24px;
-      padding-top: 24px;
-    }
-    ${TitleWrapper} {
-      max-width: calc(100% - 24px);
-    }
-    ${ProductBody} {
-      .tour-description {
-        display: block;
-        p {
-          margin-bottom: 12px;
-        }
-        li,
-        p {
-          font-size: 15px;
-          line-height: 23px;
-        }
-      }
-      .more-details {
-        display: none;
-      }
-    }
-    ${CTABlock} {
-      .tour-book-now-cta {
-        border-radius: 8px;
-      }
-    }
-  }
-`;
 
 const Descriptors = ({
   descriptorArray,
@@ -555,7 +347,7 @@ const Descriptors = ({
 }: any) => {
   return (
     // @ts-expect-error TS(2769): No overload matches this call.
-    <TourTags isMainCard={isMainCard} isOpened={isOpened}>
+    <TourTags isOpened={isOpened}>
       {descriptorArray.map((item: any, index: number) => {
         const DescriptorSVG = descriptorIcons[item];
 
@@ -584,12 +376,10 @@ const Descriptors = ({
 };
 
 const TicketCard = (props: any) => {
-  const moreDetailsRef = useRef();
   const {
     tgid,
     position,
     currentLanguage,
-    togglePopup,
     defaultOpen,
     title,
     descriptors,
@@ -597,7 +387,6 @@ const TicketCard = (props: any) => {
     tourPrices,
     uid,
     hasOffer: isOfferEnabled,
-    productOffer,
     offerId,
     isFetched,
     scorpioData,
@@ -626,7 +415,6 @@ const TicketCard = (props: any) => {
   const currency = useRecoilValue(currencyAtom);
   const pageMetaData = useRecoilValue(metaAtom);
   const isTicketCard = true;
-  const [isContentOpen, toggleContentOpen] = useState(defaultOpen);
   const [isOpened, setIsOpened] = useState(false);
   const [showComboVariant, setShowComboVariant] = useState(false);
   const { promo_code } = finalPromoCode || {};
@@ -646,11 +434,6 @@ const TicketCard = (props: any) => {
   } = scorpioData ?? {};
   const descriptorsList = descriptors || tourDescriptors;
   const isComboWithMultiVariant = isCombo && isMultiVariant;
-
-  const noOfListItemToShow = Math.max(
-    NOS_OF_HIGHLIGHTS_TO_SHOW,
-    descriptorsList.length
-  );
 
   const popupOpener = () => {
     trackEvent({
@@ -672,10 +455,6 @@ const TicketCard = (props: any) => {
   const popupCloser = () => {
     setIsOpened(false);
     document.body.style.overflow = 'auto';
-  };
-
-  const handlePopup = () => {
-    togglePopup();
   };
 
   const sendBookNowEvent = () => {
@@ -755,8 +534,8 @@ const TicketCard = (props: any) => {
   const finalShortSummary = isFallbackSummary
     ? mobileFallbackShortSummary
     : shortSummary;
-  const { highlights, tabs } = isMobile
-    ? { highlights: finalHighlights, tabs: [] }
+  const { tabs } = isMobile
+    ? { tabs: [] }
     : extractTabsFromHighlights(finalHighlights);
 
   let { listingPrice } = tourPrices[tgid];
@@ -777,56 +556,6 @@ const TicketCard = (props: any) => {
     isTicketCard,
     hasPromoCode: promo_code,
   });
-  const getMoreDetailsButton = () => {
-    const keyPressedOnReadMore = (event: any) => {
-      if (event.keyCode == 13 && !isMobile) {
-        toggleContentOpen(!isContentOpen);
-      }
-    };
-
-    const innerContent =
-      mbTheme === THEMES.DEFAULT ? (
-        ` ${
-          isContentOpen
-            ? '- ' + strings.SHOW_LESS_TEXT
-            : '+ ' + strings.MORE_DETAILS
-        }`
-      ) : (
-        <>
-          {isContentOpen ? strings.SHOW_LESS_TEXT : strings.MORE_DETAILS}
-          <Chevron isActive={isContentOpen} className={'chevron'} />
-        </>
-      );
-    return (
-      <div
-        // @ts-expect-error TS(2322): Type 'MutableRefObject<undefined>' is not assignab... Remove this comment to see the full error message
-        ref={moreDetailsRef}
-        data-open="0"
-        onClick={() => {
-          if (mbTheme !== THEMES.MIN_BLUE && isMobile) {
-            // @ts-expect-error TS(2721): Cannot invoke an object which is possibly 'null'.
-            addToAside({
-              width: '100vw',
-              children: (
-                <ModalCardContainer>
-                  {getProductCardElements()}
-                </ModalCardContainer>
-              ),
-              type: SIDEBAR_TYPES.PRODUCT_CARD,
-            });
-          } else {
-            toggleContentOpen(!isContentOpen);
-          }
-        }}
-        className="more-details"
-        onKeyDown={keyPressedOnReadMore}
-        role="button"
-        tabIndex={0}
-      >
-        {innerContent}
-      </div>
-    );
-  };
 
   const productBookingUrl = createBookingURL({
     nakedDomain: bookingUrl,
@@ -843,8 +572,6 @@ const TicketCard = (props: any) => {
     ctaSuffix: ctaUrlSuffix,
     flowType,
   });
-
-  const hasReadMore = highlights.flat()?.length >= 3 && !defaultOpen;
 
   const handleCloseComboPopup = () => {
     setShowComboVariant(false);
@@ -898,10 +625,11 @@ const TicketCard = (props: any) => {
           showSavings
           key={'price-block'}
         />
+        <Conditional if={promo_code}>
+          <PromoCodeBlock {...props} />
+        </Conditional>
       </PriceContainer>
-      <Conditional if={promo_code}>
-        <PromoCodeBlock {...props} />
-      </Conditional>
+
       <CTABlock
         isSticky={expandContent}
         shouldOffset={earliestAvailability && mbTheme === THEMES.MIN_BLUE}
@@ -953,16 +681,6 @@ const TicketCard = (props: any) => {
           </div>
         </NextAvailableBlock>
       </Conditional>
-      <Conditional if={mbTheme !== THEMES.MIN_BLUE && (isMobile || isOpened)}>
-        <Descriptors
-          descriptorArray={descriptorsList}
-          isMainCard={true}
-          isOpened={isOpened}
-          minDuration={minDuration}
-          maxDuration={maxDuration}
-          lang={currentLanguage}
-        />
-      </Conditional>
     </>
   );
 
@@ -970,124 +688,60 @@ const TicketCard = (props: any) => {
     <PopupWrapper onClick={() => popupCloser()}>
       <PopupContentWrapper onClick={(e) => e.stopPropagation()}>
         {/* @ts-expect-error TS(2769): No overload matches this call. */}
-        <WrapperProductCard layout={layout} isMobile={isMobile}>
+        <WrapperPopupProductCard layout={layout} isMobile={isMobile}>
           <Conditional if={!isMobile}>
             <Product {...props} isTicketCard={isTicketCard} />
             <CloseIconWrapper onClick={() => popupCloser()}>
               {BLACK_COLOR_CLOSE}
             </CloseIconWrapper>
           </Conditional>
-        </WrapperProductCard>
+        </WrapperPopupProductCard>
       </PopupContentWrapper>
     </PopupWrapper>
   );
 
-  const productOfferBlockMarkup = (productOffers: any) => {
-    return productOffers?.map((offer: any, index: number) => {
-      if (offer.id === offerId) {
-        return (
-          <ProductOfferBlock
-            key={index}
-            onClick={handlePopup}
-            className="tour-offer"
-          >
-            <RichText
-              render={offer.data.offer_title}
-              htmlSerializer={shortCodeSerializer}
-            />
-          </ProductOfferBlock>
-        );
-      }
-    });
-  };
-
   const getProductCard = (expandContent: any, isFallbackSummary = false) => (
     <>
-      <Labels>
-        <Conditional if={boosterTag}>
-          <Label>{boosterTag}</Label>
-        </Conditional>
-      </Labels>
-      {/* @ts-expect-error TS(2769): No overload matches this call. */}
-      <WrapperProductCard layout={layout} isMainCard={true}>
-        {/* @ts-expect-error TS(2769): No overload matches this call. */}
-        <StyledProductCard layout={layout} isMainCard={true}>
-          <ProductHeader>
+      <WrapperProductCard>
+        <ProductHeader>
+          {/* @ts-expect-error TS(2769): No overload matches this call. */}
+          <TitleWrapper hasBorderedTitle={hasBorderedTitle && !tabs.length}>
             {/* @ts-expect-error TS(2769): No overload matches this call. */}
-            <TitleWrapper hasBorderedTitle={hasBorderedTitle && !tabs.length}>
-              {/* @ts-expect-error TS(2769): No overload matches this call. */}
-              <TourTitle isOpened={isOpened} isPopup={isContentOpen}>
-                {cardTitle}
-              </TourTitle>
-            </TitleWrapper>
-            <Conditional
-              if={
-                mbTheme !== THEMES.MIN_BLUE &&
-                !isFallbackSummary &&
-                hasShortSummary
-              }
-            >
-              <ShortSummary>
-                <RichText render={finalShortSummary} />
-              </ShortSummary>
-            </Conditional>
-            <Conditional if={mbTheme === THEMES.MIN_BLUE}>
-              <Descriptors
-                descriptorArray={descriptorsList}
-                isMainCard={true}
-                minDuration={minDuration}
-                maxDuration={maxDuration}
-                lang={currentLanguage}
-              />
-            </Conditional>
-            <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
-              <Descriptors
-                descriptorArray={descriptorsList}
-                isMainCard={true}
-                minDuration={minDuration}
-                maxDuration={maxDuration}
-                lang={currentLanguage}
-              />
-            </Conditional>
-            <Conditional if={!isMobile}>
-              <MoreDetailWrapper
-                onClick={() => {
-                  popupOpener();
-                }}
-              >
-                {strings.MORE_DETAILS} +
-              </MoreDetailWrapper>
-            </Conditional>
-            <Conditional if={hasOffer && offerId}>
-              {productOfferBlockMarkup(productOffer)}
-            </Conditional>
-            {/* @ts-expect-error TS(2769): No overload matches this call. */}
-            <CTAContainer isMainCard={true}>
-              <Conditional if={isMobile}>
-                {getCTABlock(expandContent)}
-              </Conditional>
-              <Conditional if={!isMobile}>
-                <CTAWrapper>{getCTABlock(expandContent)}</CTAWrapper>
-              </Conditional>
-            </CTAContainer>
-          </ProductHeader>
+            <TourTitle isOpened={isOpened} isPopup={defaultOpen}>
+              {cardTitle}
+            </TourTitle>
+          </TitleWrapper>
+          <Conditional
+            if={
+              mbTheme !== THEMES.MIN_BLUE &&
+              !isFallbackSummary &&
+              hasShortSummary
+            }
+          >
+            <ShortSummary>
+              <RichText render={finalShortSummary} />
+            </ShortSummary>
+          </Conditional>
+          <Descriptors
+            descriptorArray={descriptorsList}
+            isMainCard={true}
+            minDuration={minDuration}
+            maxDuration={maxDuration}
+            lang={currentLanguage}
+          />
           <Conditional if={!isMobile}>
-            <HorizontalLine colorProp={COLORS.GRAY.G6} />
-          </Conditional>
-          <Conditional if={isMobile}>
-            <ProductBody
-              // @ts-expect-error TS(2769): No overload matches this call.
-              hasReadMore={hasReadMore}
-              collapsed={!expandContent}
-              noOfListItemToShow={noOfListItemToShow + 1}
-              defaultOpen={defaultOpen}
+            <MoreDetailWrapper
+              onClick={() => {
+                popupOpener();
+              }}
             >
-              <Conditional if={hasReadMore}>
-                {getMoreDetailsButton()}
-              </Conditional>
-            </ProductBody>
+              {strings.MORE_DETAILS}
+              <MoreDetailsIcon />
+            </MoreDetailWrapper>
           </Conditional>
-        </StyledProductCard>
+        </ProductHeader>
+        <HorizontalLine colorProp={COLORS.GRAY.G6} />
+        <CTAContainer>{getCTABlock(expandContent)}</CTAContainer>
       </WrapperProductCard>
       <Conditional if={isOpened && !isMobile}>
         {getProductCardElements()}
@@ -1113,7 +767,7 @@ const TicketCard = (props: any) => {
   return isMobile ? (
     <Product {...props} isTicketCard={isTicketCard} />
   ) : (
-    <Container>{getProductCard(isContentOpen)}</Container>
+    <Container>{getProductCard(defaultOpen)}</Container>
   );
 };
 

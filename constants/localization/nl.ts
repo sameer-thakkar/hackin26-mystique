@@ -143,6 +143,8 @@ const nl = {
   PRICES_STARTING: 'Prijzen',
   PROMO_CODES: {
     APPLY_CODE: 'PAS CODE TOE',
+    APPLIED: 'TOEGEPAST',
+    TOOL_TIP_INFO: 'Deze korting wordt toegepast tijdens het afrekenen',
     DESCRIPTION: {
       ABSOLUTE: 'Krijg {0} korting',
       CAPPED: 'Krijg {0}% korting, tot {1}',

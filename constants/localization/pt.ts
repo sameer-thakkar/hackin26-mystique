@@ -144,6 +144,8 @@ const pt = {
   PRICES_STARTING: 'Preços a partir de',
   PROMO_CODES: {
     APPLY_CODE: 'APLICAR CÓDIGO',
+    APPLIED: 'APLICADO',
+    TOOL_TIP_INFO: 'O desconto será aplicado no momento da compra',
     DESCRIPTION: {
       ABSOLUTE: 'Desconto de {0}',
       CAPPED: 'Desconto de {0}%, até {1}',

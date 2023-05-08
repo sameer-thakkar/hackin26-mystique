@@ -143,6 +143,8 @@ const de = {
   PRICES_STARTING: 'Preise ab',
   PROMO_CODES: {
     APPLY_CODE: 'CODE ANWENDEN',
+    APPLIED: 'ANGEWANDT',
+    TOOL_TIP_INFO: 'Der Rabatt wird an der Kasse angewandt',
     DESCRIPTION: {
       ABSOLUTE: '{0} Rabatt sichern',
       CAPPED: '{0} % Rabatt für bis zu {1}',
