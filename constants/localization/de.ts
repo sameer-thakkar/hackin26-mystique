@@ -47,7 +47,7 @@ const de = {
   CANCELLATION_POLICY_HEADING: 'Stornierungsfrist',
   CASHBACK: '{0} % Cashback',
   CASHBACK_INFO:
-    'Sie erhalten {0} % Cashback, wenn Sie dieses Erlebnis buchen. Ihr Cashback wird automatisch Ihrem Headout-Konto gutgeschrieben und kann für zukünftige Buchungen mit Headout verwendet werden.',
+    'Sie erhalten <strong>{0} %</strong> Cashback, wenn Sie dieses Erlebnis buchen. Ihr Cashback wird automatisch Ihrem Headout-Konto gutgeschrieben und kann für zukünftige Buchungen mit Headout verwendet werden.',
   CHECK_AVAIL: 'Verfügbarkeit prüfen',
   CLOSE: 'Schließen',
   COMBO_VARIANT: {

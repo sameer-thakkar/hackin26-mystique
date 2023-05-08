@@ -47,7 +47,7 @@ const nl = {
   },
   CANCELLATION_POLICY_HEADING: 'Annuleringsbeleid',
   CASHBACK_INFO:
-    'Je krijgt {0} cashback wanneer uw deze ervaring kiest. Je cashback zal automatisch worden bijgeschreven op je Headout account en kan worden gebruikt voor elke toekomstige reservering.',
+    'Je krijgt <strong>{0}%</strong> cashback wanneer uw deze ervaring kiest. Je cashback zal automatisch worden bijgeschreven op je Headout account en kan worden gebruikt voor elke toekomstige reservering.',
   CHECK_AVAIL: 'Controleer beschikbaarheid',
   CLOSE: 'Sluit',
   COMBO_VARIANT: {

@@ -58,7 +58,7 @@ const CashbackComponent = ({
             onHover={trackHover}
             content={`${strings.formatString(
               strings.CASHBACK_INFO,
-              `<strong>${cashbackAmount}</strong>`
+              cashbackAmount
             )}`}
           />
         )}

@@ -48,7 +48,7 @@ const en = {
   CANCELLATION_POLICY_HEADING: 'Cancellation Policy',
   CASHBACK: '{0}% cashback',
   CASHBACK_INFO:
-    'You will receive {0} cashback when you book this experience. Your cashback will automatically be credited to your Headout account and can be used towards any future booking with Headout.',
+    'You will receive <strong>{0}%</strong> cashback when you book this experience. Your cashback will automatically be credited to your Headout account and can be used towards any future booking with Headout.',
   CATEGORY_SLIDER_HEADING: 'Customers Who Booked This Show Also Viewed',
   CHECK_AVAIL: 'Check availability',
   CLOSE: 'Close',

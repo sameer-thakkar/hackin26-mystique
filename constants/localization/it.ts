@@ -48,7 +48,7 @@ const it = {
   CANCELLATION_POLICY_HEADING: 'Polizza di cancellazione',
   CASHBACK: '{0} % di Cashback',
   CASHBACK_INFO:
-    'Quando prenoti questa esperienza, riceverai un Cashback del {0} %. Il tuo Cashback verrà automaticamente accreditato sul tuo account Headout e potrai utilizzarlo per qualsiasi futura prenotazione con noi.',
+    'Quando prenoti questa esperienza, riceverai un Cashback del <strong>{0} %</strong>. Il tuo Cashback verrà automaticamente accreditato sul tuo account Headout e potrai utilizzarlo per qualsiasi futura prenotazione con noi.',
   CHECK_AVAIL: 'Verifica disponibilità',
   CLOSE: 'Chiudi',
   COMBO_VARIANT: {
