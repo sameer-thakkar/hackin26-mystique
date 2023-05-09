@@ -317,7 +317,6 @@ export const ANALYTICS_EVENTS = {
   EXPERIENCE_CARD_BOOK_NOW_CLICKED: 'Experience Card Book Now Clicked',
   CHECK_AVAILABILITY_CLICKED: 'Check Availability Clicked',
   MB_VIDEO_PLAYED: 'MB Video Played',
-  MB_VIDEO_DURATION: 'MB Video Duration',
   MB_VIDEO_VIEWED: 'MB Video Viewed',
   MB_LANGUGAGE_CHANGED: 'MB Language Changed',
   MB_CURRENCY_CHANGED: 'MB Currency Changed',

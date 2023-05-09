@@ -28,11 +28,7 @@ import { ANALYTICS_EVENTS, VIDEO_POSITIONS } from 'const/index';
 import F1BannerTrustBoosters from 'components/F1BannerTrustBooster';
 
 const Image = dynamic(() => import(/* webpackChunkName: "Image" */ 'UI/Image'));
-const Video = dynamic(
-  () => import(/* webpackChunkName: "Video" */ 'UI/Video'),
-  // todo: need to revert this after the high quality video experiment is over
-  { ssr: false }
-);
+const Video = dynamic(() => import(/* webpackChunkName: "Video" */ 'UI/Video'));
 
 type StaticBannerProps = {
   bannerHeading: string;
@@ -136,7 +132,6 @@ const StaticBanner = ({
                 dontLazyLoadImage
                 shouldVideoPlay
                 videoPosition={VIDEO_POSITIONS.BANNER}
-                isMobile={isMobile}
               />
             </Conditional>
           </MediaContainer>

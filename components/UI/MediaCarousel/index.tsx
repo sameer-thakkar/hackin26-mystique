@@ -19,11 +19,7 @@ import {
   VIDEO_POSITIONS,
 } from 'const/index';
 
-const Video = dynamic(
-  () => import(/* webpackChunkName: "Video" */ 'UI/Video'),
-  // todo: need to revert this after the high quality video experiment is over
-  { ssr: false }
-);
+const Video = dynamic(() => import(/* webpackChunkName: "Video" */ 'UI/Video'));
 
 type MediaCarouselProps = {
   imageList: Array<{ url: string; altText: string }>;
@@ -128,7 +124,6 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
               dontLazyLoadImage={isFirstProduct}
               shouldVideoPlay={currentIndex === 0}
               videoPosition={VIDEO_POSITIONS.PRODUCT_CARD}
-              isMobile={isMobile}
             />
           ) : (
             <Image
