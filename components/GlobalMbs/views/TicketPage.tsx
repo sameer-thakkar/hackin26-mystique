@@ -1,4 +1,5 @@
-import Banner, { BannerLayout } from 'components/GlobalMbs/Banners/Banner';
+import { BannerLayout } from 'components/GlobalMbs/Banners/Banner/interface';
+import Banner from 'components/GlobalMbs/Banners/Banner/index';
 import { strings } from 'const/strings';
 import { convertUidToUrl } from 'utils/urlUtils';
 import ProductsSection from 'components/GlobalMbs/views/ProductsSection';

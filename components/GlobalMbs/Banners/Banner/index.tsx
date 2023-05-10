@@ -2,7 +2,6 @@ import { FunctionComponent, useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
-import styled from 'styled-components';
 import Image from 'UI/Image';
 import Conditional from 'components/common/Conditional';
 import {
@@ -12,8 +11,6 @@ import {
   ANALYTICS_PROPERTIES,
   PAGE_TYPES,
 } from 'const/index';
-import { HALYARD } from 'const/ui-constants';
-import COLORS from 'const/colors';
 import { CHEVRON_DOWN } from 'assets/SvgIcons';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { MBContext } from 'contexts/MBContext';
@@ -21,13 +18,19 @@ import { strings } from 'const/strings';
 import { getBuyTicketsUrl } from 'utils/helper';
 import { trackEvent } from 'utils/analytics';
 import type { SwiperProps } from 'swiper/react';
-
-import type { ILink } from '../Breadcrumb/interface';
+import {
+  IBannerProps,
+  IGlobalBannerImage,
+} from 'components/GlobalMbs/Banners/Banner/interface';
+import {
+  StyledBanner,
+  SwiperWrapper,
+} from 'components/GlobalMbs/Banners/Banner/styles';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 const Breadcrumb = dynamic(() => import('components/GlobalMbs/Breadcrumb'));
 
-const variantStyles = {
+export const variantStyles = {
   'full-width': {
     gridTemplateColumns: '1fr 634px',
     img: {
@@ -48,218 +51,7 @@ const variantStyles = {
   },
 };
 
-const SwiperWrapper = styled.div`
-  display: flex;
-  overflow: hidden;
-  height: max-content;
-`;
-
-interface IStyledBanner {
-  isTicketPage: boolean;
-  isMobile: boolean;
-  cardType: 'full-width' | 'large' | 'small';
-}
-
-const StyledBanner = styled.div<IStyledBanner>((props) => {
-  const styles = props.isMobile
-    ? variantStyles.small
-    : variantStyles[props.cardType];
-  const isTicketPage = props.isTicketPage;
-  return `
-  display: grid;
-  align-content: start;
-  background: ${COLORS.BRAND.WHITE};
-  grid-template-columns: ${styles.gridTemplateColumns};
-  column-gap: 80px;
-  height: calc(100% - 2px);
-  max-width: 1200px;
-  margin: 0 auto 72px auto;
-  text-decoration: none;
-  font-family: ${HALYARD.FONT_STACK};
-  font-size: 16px;
-  line-height: 150%;
-  font-weight: 400;
-  margin-top: 16px;
-  img {
-    height: ${styles.img.height}px;
-    object-fit: cover;
-    width: 100%;
-    border-radius: 8px;
-  }
-  .card-content-section {
-    * {
-      margin-top: 0;
-    }
-    .title {
-      font-size: ${isTicketPage ? '46px' : '48px'};
-      line-height: 54px;
-      font-weight: ${isTicketPage ? '600' : '700'};
-      letter-spacing: -0.2px;
-      margin-bottom: ${isTicketPage ? '8px' : '16px'};
-    }
-    .subheading {
-      font-weight: 600;
-      font-size: 24px;
-      line-height: 28px;
-      color: #666666;
-    }
-    .subtext {
-      margin-top: ${isTicketPage ? '24px' : '32px'};
-      font-feature-settings: "ss04";
-    }
-    .rank-wrapper {
-      display: grid;
-      grid-template-rows: repeat(2, max-content);
-      margin-bottom: 24px;
-    }
-    .rank {
-      font-size: 17px;
-      line-height: 29px;
-      margin-bottom: 8px;
-    }
-    .tag-wrapper{
-      display: flex;
-    }
-    .tag {
-      padding: 4px 8px;
-      width: max-content;
-      background-color: ${COLORS.GRAY.G7};
-      color: ${COLORS.GRAY.G3};
-      font-size: 12px;
-      line-height: 12px;
-      border-radius: 2px;
-      margin-right: 5px;
-      margin-bottom: 5px;
-    }
-    .info {
-      margin-bottom: 34px;
-      line-height:200%;
-    }
-    .info p {
-      margin:6px 0;
-    }
-    .tickets {
-      display: flex;
-      justify-content: space-between;
-      .cta {
-        display: flex;
-        align-items: center;
-        padding: 8px 70px;
-        border-radius: 2px;
-        background-color: ${COLORS.BRAND.PURPS};
-        color: ${COLORS.BRAND.WHITE};
-        font-size: 16px;
-        line-height: 24px;
-      }
-      .price-wrapper {
-        display: grid;
-        grid-template-rows: repeat(2, max-content);
-        row-gap: 12px;
-        .starting-from {
-          font-size: 14px;
-          line-height: 16px;
-          color: ${COLORS.GRAY.G4}
-        }
-        .price {
-          font-size: 24px;
-          line-height: 16px;
-          font-weight: 600;
-        }
-      }
-    }
-    .bold {
-      font-weight: 600;
-    }
-    .toggle-timings {
-      cursor: pointer;
-      svg {
-        width: 12px;
-        height: 12px;
-      }
-    }
-    a {
-      color: ${COLORS.TEXT.CANDY_1};
-      word-wrap: break-word;
-    }
-  }
-  .swiper-pagination.swiper-pagination-bullets {
-    top: unset;
-    display: block;
-  }
-  @media (max-width: 1024px) {
-    grid-template-columns: unset;
-    column-gap: unset;
-    grid-template-rows: repeat(2, max-content);
-    row-gap: 24px;
-    font-size: 14px;
-    line-height: 143%;
-    margin: 0 auto 48px auto;
-    img {
-      height: 382px;
-      border-radius: 0;
-      width: 100%;
-      object-fit: cover;
-    }
-    .card-content-section {
-      padding: 0;
-      width: calc(100vw - (5.6vw * 2));
-      box-sizing: border-box;
-      grid-row: 2;
-      margin: 0 auto;
-      .title {
-        font-size: 32px;
-        margin-bottom: 8px;
-      }
-      .rank-wrapper {
-        margin-bottom: 16px;
-      }
-      .rank {
-        font-size: 16px;
-      }
-      .info {
-        margin-bottom: 24px;
-      }
-      .tickets {
-        flex-direction: column;
-        .price-wrapper {
-          margin-bottom: 24px;
-        }
-        .cta {
-          padding: 8px 0;
-          width: 100%;
-          justify-content: center;
-        }
-      }
-    }
-  }
-  @media(max-width: 500px) {
-    img {
-      height: 235px;
-    }
-  }
-`;
-});
-
-export enum BannerLayout {
-  fullWidth = 'full-width',
-  large = 'large',
-  small = 'small',
-}
-
-interface BannerProps {
-  title: string;
-  subText?: string;
-  images: any[];
-  cardType: BannerLayout;
-  breadcrumbs?: ILink[];
-  collection?: any;
-  startingPrice?: string;
-  isTicketPage?: boolean;
-  subHeading?: string;
-  availableTours?: Array<number>;
-}
-
-const Banner: FunctionComponent<BannerProps> = ({
+const Banner: FunctionComponent<IBannerProps> = ({
   title,
   subText = '',
   images,
@@ -378,7 +170,7 @@ const Banner: FunctionComponent<BannerProps> = ({
           className="swiper-slide"
           url={images[0]?.url || FALLBACK_IMAGES.THEMEPARKS}
           attribution={images[0]?.copyright}
-          alt={images[0]?.altText}
+          alt={images[0]?.altText || ''}
           width="650"
           height={variantStyles[cardType].img.height}
           aspectRatio={globalMbAR}
@@ -391,14 +183,14 @@ const Banner: FunctionComponent<BannerProps> = ({
       imageView = (
         <SwiperWrapper>
           <Swiper {...swiperParams}>
-            {images?.map((image, index) => {
+            {images?.map((image: IGlobalBannerImage, index) => {
               return (
                 <Image
                   className="swiper-slide"
                   key={index}
                   url={image?.url || FALLBACK_IMAGES.THEMEPARKS}
                   attribution={image?.copyright}
-                  alt={image?.altText}
+                  alt={image?.altText || ''}
                   width="650"
                   height={variantStyles[cardType]?.img?.height}
                   aspectRatio={globalMbAR}

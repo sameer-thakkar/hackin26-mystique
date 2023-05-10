@@ -1,6 +1,7 @@
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
-import Banner, { BannerLayout } from 'components/GlobalMbs/Banners/Banner';
+import { BannerLayout } from 'components/GlobalMbs/Banners/Banner/interface';
+import Banner from 'components/GlobalMbs/Banners/Banner/index';
 import CollectionTabs from 'components/GlobalMbs/collectionTabs';
 import Conditional from 'components/common/Conditional';
 
