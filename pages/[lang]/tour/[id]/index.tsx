@@ -59,7 +59,7 @@ import {
   refsArrayToObject,
   renderError,
 } from 'utils';
-import ShowPageBanner from 'components/ShowPages/Banner';
+import ShowPageBanner from 'components/ShowPages/Banner/index';
 import Conditional from 'components/common/Conditional';
 import SpecialOfferBanner from 'components/ShowPages/SpecialOfferBanner';
 import ContentTabs from 'components/ShowPages/ContentTabs';

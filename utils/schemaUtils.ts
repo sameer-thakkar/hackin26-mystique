@@ -11,7 +11,7 @@ type reviewArray = {
   content: string;
   [key: string]: any;
 };
-type reviewDetailsType = {
+export type reviewDetailsType = {
   averageRating: number;
   ratingsCount: number;
   reviewsCount: number;

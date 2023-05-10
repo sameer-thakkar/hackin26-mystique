@@ -16,7 +16,7 @@ import { StyledRichContent } from 'UI/RichContent';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
 import ContentTabs from 'components/ShowPages/ContentTabs';
-import ShowPageBanner from 'components/ShowPages/Banner';
+import ShowPageBanner from 'components/ShowPages/Banner/index';
 import CustomerReview from 'components/ShowPages/CustomerReview';
 import FeatureCard from 'components/ShowPages/FeatureCard';
 import GoogleMap from 'components/ShowPages/GoogleMap';
