@@ -224,18 +224,21 @@ export const getLogoRedirectionUrl = ({
   const parentDomain = domainArray?.join('.');
 
   const isStage = host?.includes('stage-');
+  //Note: Temporary logo link override for this particular MB, till we solve for Themeparks MBs
+  const isMoviePark = uid === 'moviepark.themeparkstickets.com';
+  const redirectTo = isMoviePark ? uid : parentDomain;
 
   switch (true) {
     case isDev:
-      return `http://${host}/?mystique_uid=${parentDomain}&lang=${
+      return `http://${host}/?mystique_uid=${redirectTo}&lang=${
         getLangObject(lang)?.locale
       }`;
     case isStage:
-      return `http://stage-microbrands.headout.com/?mystique_uid=${parentDomain}&lang=${
+      return `http://stage-microbrands.headout.com/?mystique_uid=${redirectTo}&lang=${
         getLangObject(lang)?.locale
       }`;
     case !!uid:
-      return `https://${parentDomain}${lang !== 'en' ? `/${lang}` : ''}/`;
+      return `https://${redirectTo}${lang !== 'en' ? `/${lang}` : ''}/`;
     default:
       return null;
   }
