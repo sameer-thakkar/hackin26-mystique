@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import Conditional from 'components/common/Conditional';
 import LocalisedPrice from 'UI/LPrice';
 import COLORS from 'const/colors';
@@ -8,14 +8,9 @@ import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import { FONTS } from 'const/fonts';
 import { CurrencyDisplayType } from 'utils/currency';
-import { CashbackExperimentContext } from 'contexts/cashbackExperimentContext';
-import { hsidAtom } from 'store/atoms/hsid';
-import { useRecoilState } from 'recoil';
-import { VARIANTS } from 'const/experiments';
 import CashbackComponent from 'components/common/CashbackComponent';
 import { checkIfLTTMB } from 'utils/helper';
 import { MBContext } from 'contexts/MBContext';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 export const StyledPriceBlock = styled.div<{
@@ -168,14 +163,8 @@ const PriceBlock = ({
   isShowPage = false,
   id,
 }: PriceBlockProps) => {
-  const { variant, triggerExperiment } = useContext(CashbackExperimentContext);
-  const [hsid] = useRecoilState(hsidAtom);
   const { uid } = useContext(MBContext);
   const isLTT = checkIfLTTMB(uid);
-
-  const [showSkeletalLoader, setSkeletalLoader] = useState(
-    showCashbackBlock && !hsid && !variant
-  );
 
   const {
     originalPrice,
@@ -196,19 +185,6 @@ const PriceBlock = ({
 
   const savingsElementsArray = [];
 
-  useEffect(() => {
-    if (showCashbackBlock)
-      setTimeout(() => {
-        setSkeletalLoader(false);
-      }, 2000);
-  }, []);
-
-  useEffect(() => {
-    if (isSportsExperiment || !showCashbackBlock || !hsid || variant) return;
-    triggerExperiment();
-    setSkeletalLoader(false);
-  }, [hsid]);
-
   if (!listingPrice) {
     return null;
   }
@@ -218,45 +194,6 @@ const PriceBlock = ({
       strings.formatString(strings.SAVE, `${bestDiscount}`)
     );
   }
-  if (showSkeletalLoader)
-    return (
-      <SkeletonTheme
-        baseColor={COLORS.GRAY.G6}
-        highlightColor={COLORS.GRAY.G7}
-        borderRadius={0}
-        height="20px"
-      >
-        <div>
-          <StyledPriceBlock
-            className={'styled-price-block'}
-            showScratchPrice={showScratchPrice}
-            isSportsExperiment={isSportsExperiment}
-          >
-            <span className="tour-scratch-price">
-              <Skeleton width="80px" height="16px" />
-            </span>
-            <div className="tour-price-container">
-              <Skeleton width="80px" height="28px" />
-              <Conditional if={isLTT && showSavings && save && save > 0}>
-                <SavedTag className={'savedtag-block'}>
-                  <Skeleton width="60px" height="18px" />
-                </SavedTag>
-              </Conditional>
-            </div>
-          </StyledPriceBlock>
-          <Conditional
-            if={
-              showcashbackElm &&
-              ((showCashbackBlock &&
-                variant === VARIANTS.SHOW_CASHBACK_COMPONENT) ||
-                isSportsExperiment)
-            }
-          >
-            <Skeleton width="153px" height="16px" />
-          </Conditional>
-        </div>
-      </SkeletonTheme>
-    );
 
   return (
     <div>
@@ -319,12 +256,7 @@ const PriceBlock = ({
         </Conditional>
       </StyledPriceBlock>
       <Conditional
-        if={
-          showcashbackElm &&
-          ((showCashbackBlock &&
-            variant === VARIANTS.SHOW_CASHBACK_COMPONENT) ||
-            isSportsExperiment)
-        }
+        if={showcashbackElm && (showCashbackBlock || isSportsExperiment)}
       >
         <CashbackComponent
           cashbackAmount={cashbackValue}

@@ -25,7 +25,6 @@ import { currencyListAtom } from 'store/atoms/currencyList';
 import { currencyAtom } from 'store/atoms/currency';
 import { appAtom } from 'store/atoms/app';
 import { captureException } from '@sentry/nextjs';
-import CashbackExperimentContextProvider from 'contexts/cashbackExperimentContext';
 
 type PageProps = {
   lang: string;
@@ -172,9 +171,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
     >
       <RecoilRoot initializeState={initRecoil}>
         {getLanguageBasedGlobalStyling(langCode)}
-        <CashbackExperimentContextProvider>
-          <Component {...pageProps} />
-        </CashbackExperimentContextProvider>
+        <Component {...pageProps} />
         <ScrollToTop />
         <LiveChat uid={pageProps?.uid} />
         <Clarity host={host} />
