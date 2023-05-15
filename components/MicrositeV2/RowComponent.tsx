@@ -12,7 +12,9 @@ import { addUrlParams } from 'utils/urlUtils';
 import { useRouter } from 'next/router';
 
 const DetailedProductCard = dynamic(() =>
-  import(/* webpackChunkName: "DetailedProductCard" */ './DetailedProductCard')
+  import(
+    /* webpackChunkName: "DetailedProductCard" */ './DetailedProductCard/index'
+  )
 );
 const V3DetailedProductCard = dynamic(() =>
   import(/* webpackChunkName: "V3DetailedProductCard" */ '../Product')

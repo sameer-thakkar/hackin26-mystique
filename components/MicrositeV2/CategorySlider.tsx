@@ -11,7 +11,7 @@ import Conditional from 'components/common/Conditional';
 const DetailedProductCard = dynamic(
   () =>
     import(
-      /* webpackChunkName: "DetailedProductCard" */ 'components/MicrositeV2/DetailedProductCard'
+      /* webpackChunkName: "DetailedProductCard" */ 'components/MicrositeV2/DetailedProductCard/index'
     ),
   {
     ssr: false,
