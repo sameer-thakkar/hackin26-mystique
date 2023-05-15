@@ -49,6 +49,9 @@ const it = {
   CASHBACK: '{0} % di Cashback',
   CASHBACK_INFO:
     'Quando prenoti questa esperienza, riceverai un Cashback del <strong>{0} %</strong>. Il tuo Cashback verrà automaticamente accreditato sul tuo account Headout e potrai utilizzarlo per qualsiasi futura prenotazione con noi.',
+  CATEGORY_SLIDER_HEADING:
+    'I clienti che hanno prenotato questo spettacolo hanno visto anche',
+
   CHECK_AVAIL: 'Verifica disponibilità',
   CLOSE: 'Chiudi',
   COMBO_VARIANT: {
@@ -65,6 +68,7 @@ const it = {
       'La nostra priorità sei tu. Consulta la nostra pagina di aiuto per trovare gli ultimi aggiornamenti sulle nostre politiche di cancellazione flessibili.',
   },
   CURRENCY: 'Valuta',
+  CUSTOMER_REVIEW_HEADING: 'Recensioni dei clienti',
   DESCRIPTORS: {
     AUDIO_GUIDE: 'Audio-guida',
     DURATION: 'Durata: {0}',
@@ -81,13 +85,21 @@ const it = {
   },
   DURATION: 'Durata',
   EARLIEST_AVAILABILITY: 'Prima disponibilità',
+  ENTERTAINMENT_MB: {
+    BROADWAY: {
+      MB_NAME: 'Biglietti per il teatro a Broadway',
+    },
+    LTT: {
+      MB_NAME: 'Biglietti per il teatro a Londra',
+    },
+  },
   EXCLUSIONS: 'Servizi esclusi',
   FEATURE_CARD: {
     HEADING_CUSTOMER: 'Oltre 10 milioni',
     HEADING_RATING: '4,4/5',
     HEADING_SAFE: '100% sicuro',
     HEADING_SUPPORT: 'Assistenza 24/7',
-    SUB_HEADING_CUSTOMER: 'Clienti soddisfatti, più di 10.000 esperienze',
+    SUB_HEADING_CUSTOMER: 'Di clienti soddisfatti, più di 10.000 esperienze',
     SUB_HEADING_RATING:
       'Oltre 5.000 recensioni verificate, con un giudizio Eccellente nel 90%',
     SUB_HEADING_SAFE: "Tutte le attività all'esterno sono completamente sicure",
@@ -133,14 +145,20 @@ const it = {
   },
   MORE_DETAILS: 'Altri dettagli',
   NEW: 'NEW',
+  NEW_ARRIVAL: 'Nuovi arrivi',
   NEXT_AVAILABLE: 'Prossimo disponibile: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     "Headout è scelto da oltre 15 milioni di persone per trovare una selezione curata delle migliori esperienze. Questo non è il sito ufficiale dell'attrazione.",
   OFF: 'Off',
+  OPEN_DATED_DESCRIPTOR:
+    'Prenota con flessibilità: non è necessario selezionare la data',
+  OPENING_DATE: 'Data di apertura',
   OPENING_ON: 'Apertura',
   OPENS: 'Apre',
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     "Headout è uno dei partner di fiducia di questa attrazione ufficialmente autorizzati a offrire una selezione delle migliori esperienze disponibili. Questo non è il sito web dell'attrazione.",
+  POPULARITY: 'Popolarità',
+  PRICE: 'Prezzo',
   PRICES_STARTING: 'Prezzi a partire da',
   PROMO_CODES: {
     APPLY_CODE: 'APPLICA IL CODICE',
@@ -156,6 +174,8 @@ const it = {
   RATINGS: '{0} Giudizi',
   READ_MORE: 'Leggi tutto',
   READ_MORE_TEXT: 'Leggi tutto',
+  REOPENING: 'Riapertura',
+  REOPENING_DATE: 'Data di riapertura',
   REOPENING_ON: 'Riapertura',
   REOPENS: 'Riapre',
   SAFE_EXPERIENCE: {
@@ -314,9 +334,13 @@ const it = {
   SAVE_PERCENT: 'Risparmia il {0}%',
   SAVE_UPTO: 'Risparmi fino al',
   SAVE_UPTO_PERCENT: 'Risparmia fino al {0}%',
+  SEARCH: 'Cerca',
   SEE_ALL: 'See All',
+  SEE_MORE_SHOWS: 'Guarda altri spettacoli',
+  SELECT_CITY: 'Seleziona città',
   SELECT_SECTION: 'Seleziona tribuna',
   SHOW_ALL_PHOTOS: 'Mostra tutte le foto',
+  SHOW_CLOSED: 'Spettacolo terminato',
   SHOW_LESS_TEXT: 'Mostra meno',
   SHOW_PAGE: {
     ABOUT_SHOW: 'Informazioni sullo spettacolo',
@@ -361,6 +385,7 @@ const it = {
     YOUR_TICKETS: 'I tuoi biglietti',
   },
   SORT_BY: 'Ordina per',
+  SPECIAL_OFFER: 'Offerta speciale',
   THEATRE: 'Teatro',
   TICKET_CAN_BE_CANCELED: `Puoi cancellare fino a {hours} ore in anticipo sull'orario prenotato per ottenere un rimborso completo.`,
   TICKET_CANNOT_BE_CANCELED:
@@ -391,6 +416,7 @@ const it = {
   VIEW_LESS: 'Mostra meno',
   VIEW_MORE: 'Leggi tutto',
   WHY_TAKE_THIS_DAY_TRIP: 'Perché vale la pena partecipare a questa gita?',
+  WHY_WATCH: 'Perché guardarlo',
 };
 
 export default it;

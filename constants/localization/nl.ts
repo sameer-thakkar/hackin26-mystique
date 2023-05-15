@@ -46,8 +46,10 @@ const nl = {
       'Deze tickets kunnen niet geannuleerd worden. Je kunt ze echter op elk moment binnen de komende {0} maanden gebruiken.',
   },
   CANCELLATION_POLICY_HEADING: 'Annuleringsbeleid',
+  CASHBACK: '{0}% cashback',
   CASHBACK_INFO:
     'Je krijgt <strong>{0}%</strong> cashback wanneer uw deze ervaring kiest. Je cashback zal automatisch worden bijgeschreven op je Headout account en kan worden gebruikt voor elke toekomstige reservering.',
+  CATEGORY_SLIDER_HEADING: 'Bezoekers die deze show boekten, bekeken ook',
   CHECK_AVAIL: 'Controleer beschikbaarheid',
   CLOSE: 'Sluit',
   COMBO_VARIANT: {
@@ -64,6 +66,7 @@ const nl = {
       'Jij bent onze prioriteit. Raadpleeg onze hulppagina voor de laatste updates over ons flexibele annuleringsbeleid',
   },
   CURRENCY: 'Valuta',
+  CUSTOMER_REVIEW_HEADING: 'Beoordelingen',
   DESCRIPTORS: {
     AUDIO_GUIDE: 'Audiogids',
     DURATION: 'Duur: {0}',
@@ -80,6 +83,14 @@ const nl = {
   },
   DURATION: 'Looptijd',
   EARLIEST_AVAILABILITY: 'Vroegste beschikbaarheid',
+  ENTERTAINMENT_MB: {
+    BROADWAY: {
+      MB_NAME: 'Broadway Theater Tickets',
+    },
+    LTT: {
+      MB_NAME: 'London Theater Tickets',
+    },
+  },
   EXCLUSIONS: 'Niet inbegrepen',
   FEATURE_CARD: {
     HEADING_CUSTOMER: '10 miljoen +',
@@ -132,29 +143,36 @@ const nl = {
   },
   MORE_DETAILS: 'Meer info',
   NEW: 'NEW',
+  NEW_ARRIVAL: 'Nieuw',
   NEXT_AVAILABLE: 'Weer beschikbaar: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout is een merk waarop 15 miljoen gasten vertrouwen en dat een gecureerde selectie van unieke ervaringen biedt. Dit is niet de website van de locatie.',
   OFF: 'Off',
+  OPEN_DATED_DESCRIPTOR: 'Boek met flexibiliteit - geen datumselectie nodig',
+  OPENING_DATE: 'Openingsdatum',
   OPENING_ON: 'Première op',
   OPENS: 'Opent',
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout is een erkende en vertrouwde partner van de locatie die een gecureerde selectie biedt van de beste ervaringen om van deze attractie te genieten. Dit is niet de website van de locatie.',
+  POPULARITY: 'Populariteit',
+  PRICE: 'Prijs',
   PRICES_STARTING: 'Prijzen',
   PROMO_CODES: {
-    APPLY_CODE: 'PAS CODE TOE',
     APPLIED: 'TOEGEPAST',
-    TOOL_TIP_INFO: 'Deze korting wordt toegepast tijdens het afrekenen',
+    APPLY_CODE: 'PAS CODE TOE',
     DESCRIPTION: {
       ABSOLUTE: 'Krijg {0} korting',
       CAPPED: 'Krijg {0}% korting, tot {1}',
       PERCENTAGE: 'Krijg {0}% korting',
     },
     REMOVE: 'VERWIJDEREN',
+    TOOL_TIP_INFO: 'Deze korting wordt toegepast tijdens het afrekenen',
   },
   RATINGS: '{0} Waarderingen',
   READ_MORE: 'Meer Info',
   READ_MORE_TEXT: 'Meer Info',
+  REOPENING: 'Heropening',
+  REOPENING_DATE: 'Heropeningsdatum',
   REOPENING_ON: 'Terugkeer op',
   REOPENS: 'Heropent',
   SAFE_EXPERIENCE: {
@@ -305,9 +323,13 @@ const nl = {
   SAVE_PERCENT: 'Bespaar {0}%',
   SAVE_UPTO: 'Bespaar tot',
   SAVE_UPTO_PERCENT: 'Bespaar tot {0}%',
+  SEARCH: 'Zoeken',
   SEE_ALL: 'See All',
+  SEE_MORE_SHOWS: 'Zie meer shows',
+  SELECT_CITY: 'Kies stad',
   SELECT_SECTION: 'Tribune kiezen',
   SHOW_ALL_PHOTOS: "Laat alle foto's zien",
+  SHOW_CLOSED: 'Show gesloten',
   SHOW_LESS_TEXT: 'Toon minder',
   SHOW_PAGE: {
     ABOUT_SHOW: 'Over Show',
@@ -351,6 +373,7 @@ const nl = {
     YOUR_TICKETS: 'Je tickets',
   },
   SORT_BY: 'Sorteer',
+  SPECIAL_OFFER: 'Speciale aanbieding',
   THEATRE: 'Theater',
   TICKET_CAN_BE_CANCELED:
     'Je kunt tot {hours} uur van tevoren annuleren voor een volledige terugbetaling.',
@@ -382,6 +405,7 @@ const nl = {
   VIEW_LESS: 'Bekijk minder',
   VIEW_MORE: 'Meer Info',
   WHY_TAKE_THIS_DAY_TRIP: 'Waarom kiezen voor dit uitje?',
+  WHY_WATCH: 'Why kijken',
 };
 
 export default nl;

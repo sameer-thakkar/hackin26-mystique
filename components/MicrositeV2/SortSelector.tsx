@@ -21,8 +21,7 @@ const StyledSortSelector = styled.div<{ isEntertainmentMb: boolean }>`
     line-height: 1;
   }
   .current-filter-toggle {
-    ${expandFontToken('UI/Label Regular')}
-    text-transform: capitalize;
+    ${expandFontToken('UI/Label Regular')};
     cursor: pointer;
     display: grid;
     grid-template-columns: ${({ isEntertainmentMb }) =>
@@ -72,11 +71,11 @@ const StyledSortSelector = styled.div<{ isEntertainmentMb: boolean }>`
 export const SortSelector = (props: any) => {
   let filters = [
     {
-      name: 'Popularity',
+      name: strings.POPULARITY,
       key: 'popularity',
     },
     {
-      name: 'Price',
+      name: strings.PRICE,
       key: 'price',
     },
   ];
@@ -120,7 +119,7 @@ export const SortSelector = (props: any) => {
       >
         <span>
           {strings.SORT_BY}:
-          <span className="current-filter">{filters[activeFilter].name}</span>
+          <span className="current-filter"> {filters[activeFilter].name}</span>
         </span>
         <Conditional if={!isEntertainmentMb}>
           <div className={'icon ' + (dropdownActive ? 'active' : '')}>

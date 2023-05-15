@@ -221,8 +221,11 @@ const ShowPage = (props: any) => {
 
   const { slots }: SimplifiedSlotsData = inventorySlotData || {};
 
-  const { id: primarySubCategoryID, name: primarySubCategoryName } =
-    primarySubCategory || {};
+  const {
+    id: primarySubCategoryID,
+    displayName: primarySubCategoryName,
+    name: nonLocalisedSubCategoryName,
+  } = primarySubCategory || {};
   const { code: cityCode } = city || {};
 
   const {
@@ -390,7 +393,7 @@ const ShowPage = (props: any) => {
     },
     {
       url: convertUidToUrl({
-        uid: getShowpageBreadcrumbUid(primarySubCategoryName, isLTT),
+        uid: getShowpageBreadcrumbUid(nonLocalisedSubCategoryName, isLTT),
         lang: currentLanguage,
         isDev,
         hostname: host,

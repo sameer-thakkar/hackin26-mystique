@@ -49,6 +49,8 @@ const es = {
   CASHBACK: '{0} % en Cashback',
   CASHBACK_INFO:
     'Recibirás <strong>{0} %</strong> en créditos al reservar esta experencia. Los créditos se agregarán automáticamente a tu cuenta de Headout y los podrás usar para futuras reservas con nosotros.',
+  CATEGORY_SLIDER_HEADING:
+    'Los clientes que reservaron este espectáculo también vieron',
   CHECK_AVAIL: 'Ver disponibilidad',
   CLOSE: 'Cerrar',
   COMBO_VARIANT: {
@@ -65,6 +67,7 @@ const es = {
       'Tú eres nuestra prioridad. Por favor, consulta nuestra página de ayuda para conocer las últimas actualizaciones sobre las políticas de cancelación.',
   },
   CURRENCY: 'Monedas',
+  CUSTOMER_REVIEW_HEADING: 'Reseñas de los clientes',
   DESCRIPTORS: {
     AUDIO_GUIDE: 'Audioguía',
     DURATION: 'Duración: {0}',
@@ -81,6 +84,14 @@ const es = {
   },
   DURATION: 'Duración',
   EARLIEST_AVAILABILITY: 'Siguiente disponible',
+  ENTERTAINMENT_MB: {
+    BROADWAY: {
+      MB_NAME: 'Entradas para el teatro en Broadway',
+    },
+    LTT: {
+      MB_NAME: 'Entradas para el teatro en Londres',
+    },
+  },
   EXCLUSIONS: 'No incluye',
   FEATURE_CARD: {
     HEADING_CUSTOMER: 'Más de 10 millones',
@@ -134,29 +145,36 @@ const es = {
   },
   MORE_DETAILS: 'Más detalles',
   NEW: 'NEW',
+  NEW_ARRIVAL: 'Novedades',
   NEXT_AVAILABLE: 'Próxima disponible: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout es una marca en la que confían más de 15 millones de clientes y que ofrece una selección de las mejores experiencias. Este no es el sitio oficial de la sede de la experiencia.',
   OFF: 'Off',
-  OPENING_ON: 'Abre el',
+  OPEN_DATED_DESCRIPTOR: 'Plan flexible: reserva sin fecha fija',
+  OPENING_DATE: 'Fecha de estreno',
+  OPENING_ON: 'Se estrena el',
   OPENS: 'Abre',
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout es un socio de confianza de la atracción, autorizado para ofrecer una selección de las mejores experiencias. Este no es el sitio web de la atracción.',
+  POPULARITY: 'Popularidad',
+  PRICE: 'Precio',
   PRICES_STARTING: 'Precios desde',
   PROMO_CODES: {
-    APPLY_CODE: 'APLICAR CÓDIGO',
     APPLIED: 'APLICADO',
-    TOOL_TIP_INFO: 'El descuento se aplicará al realizar el pago',
+    APPLY_CODE: 'APLICAR CÓDIGO',
     DESCRIPTION: {
       ABSOLUTE: 'Descuento de {0}',
       CAPPED: '{0} % de descuento, hasta {1}',
       PERCENTAGE: '{0} % de descuento',
     },
     REMOVE: 'ELIMINAR',
+    TOOL_TIP_INFO: 'El descuento se aplicará al realizar el pago',
   },
   RATINGS: '{0} Calificaciones',
   READ_MORE: 'Leer más',
   READ_MORE_TEXT: 'Leer más',
+  REOPENING: 'Reapertura',
+  REOPENING_DATE: 'Fecha de reapertura',
   REOPENING_ON: 'Reabre el',
   REOPENS: 'Reabre',
   SAFE_EXPERIENCE: {
@@ -307,6 +325,46 @@ const es = {
     },
     SHORT_HEADING: 'Los mejores estándares de seguridad en vigor',
   },
+  SAFE_EXPERIENCE_NEW: {
+    CTA_TEXT: 'Información de seguridad',
+    EXPERIENCE_DESCRIPTION:
+      'Esta experiencia sigue las normas de seguridad de acuerdo con la normativa local y la OMS',
+    FLAG_TEXT: 'La mejor seguridad',
+    GENERAL_DESCRIPTION:
+      'Este recinto es seguro durante COVID y sigue todas las medidas de sanidad recomendadas por el gobierno para garantizar que disfrutes de una experiencia de teatro segura y con distanciamiento social.',
+    GENERAL_DESCRIPTION_V2:
+      'Hemos desarrollado la marca Asiste con confianza, de modo que cuando los teatros vuelvan a abrir, puedas sentirte confiado y seguro sabiendo que el local es seguro ante COVID y que seguirá las últimas directrices del gobierno y de las artes escénicas.',
+    HEADING: 'Asiste con confianza',
+    MOBILE_HEADING: 'Experiencias seguras',
+    MODAL: {
+      DETAILS: {
+        CONTACTLESS_MEASURES_DEFAULT: {
+          DESCRIPTION:
+            '<li>Solo se aceptarán entradas impresas y entradas electrónicas</li>',
+          HEADING: 'Entradas electrónicas sin contacto',
+        },
+        PREVENTIVE_SAFETY_MEASURES_DEFAULT: {
+          DESCRIPTION:
+            '<li>Es obligatorio el uso de equipos de protección, como mascarillas, para entrar en el recinto.</li>\n            <li>Todos los asistentes serán sometidos a controles de temperatura antes de entrar en el recinto</li>',
+          HEADING: 'Medidas preventivas de seguridad',
+        },
+        SANITIZATION_MEASURES_DEFAULT: {
+          DESCRIPTION:
+            '<li>Es obligatorio el uso de equipos de protección, como mascarillas, para entrar en el recinto.</li>\n            <li>Todos los asistentes serán sometidos a controles de temperatura antes de entrar en el recinto</li>',
+          HEADING: 'Medidas de higiene',
+        },
+        SOCIAL_DISTANCING_MEASURES_DEFAULT: {
+          DESCRIPTION:
+            '<li>El recinto se ha rediseñado para minimizar el contacto entre todos los espectadores</li>\n            <li>Los distintos grupos se sentarán por separado</li>\n            <li>Siempre que sea posible, se facilitará el pedido anticipado de tentempiés en los intermedios.</li>\n            <li>Se recomiendan las transacciones sin efectivo.</li>\n            <li>Se solicita a todos los espectadores que reduzcan al mínimo sus pertenencias, ya que el guardarropa puede estar cerrado.</li>\n            <li>Actividades como hacerse fotos con los artistas o firmar autógrafos pueden estar restringidas</li>\n            ',
+          HEADING: 'Medidas de distanciamiento social',
+        },
+      },
+      HEADING: 'Asiste con confianza',
+      SUB_HEADING:
+        '¿Te preguntas qué medidas se han implementado para garantizar tu seguridad? Infórmate sobre las medidas de higiene y los protocolos de COVID que los teatros han implantado para garantizar tu seguridad.',
+    },
+    SHORT_HEADING: 'Con las mejores normas de seguridad',
+  },
   SANITARY_ALERT: {
     KEY_TEXT: 'Tu seguridad es nuestra prioridad',
     TEXT:
@@ -316,9 +374,13 @@ const es = {
   SAVE_PERCENT: 'Ahorra {0}%',
   SAVE_UPTO: 'Ahorra hasta un',
   SAVE_UPTO_PERCENT: 'Ahorra hasta un {0}%',
+  SEARCH: 'Buscar',
   SEE_ALL: 'See All',
+  SEE_MORE_SHOWS: 'Ver más espectáculos',
+  SELECT_CITY: 'Selecciona una ciudad',
   SELECT_SECTION: 'Elegir sección',
   SHOW_ALL_PHOTOS: 'Ver todas las fotos',
+  SHOW_CLOSED: 'El espectáculo ha finalizado',
   SHOW_LESS_TEXT: 'Mostrar menos',
   SHOW_PAGE: {
     ABOUT_SHOW: 'Sobre el espectáculo',
@@ -362,6 +424,7 @@ const es = {
     YOUR_TICKETS: 'Tus entradas',
   },
   SORT_BY: 'Ordenar por',
+  SPECIAL_OFFER: 'Oferta especial',
   THEATRE: 'Teatro',
   TICKET_CAN_BE_CANCELED:
     'Puedes cancelar hasta {hours} horas de antelación para obtener un reembolso total.',
@@ -393,6 +456,7 @@ const es = {
   VIEW_LESS: 'Ver menos',
   VIEW_MORE: 'Leer más',
   WHY_TAKE_THIS_DAY_TRIP: '¿Por qué vale la pena hacer este viaje de 1 día?',
+  WHY_WATCH: '¿Por qué verlo?',
 };
 
 export default es;

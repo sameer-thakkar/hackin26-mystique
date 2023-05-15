@@ -48,6 +48,8 @@ const de = {
   CASHBACK: '{0} % Cashback',
   CASHBACK_INFO:
     'Sie erhalten <strong>{0} %</strong> Cashback, wenn Sie dieses Erlebnis buchen. Ihr Cashback wird automatisch Ihrem Headout-Konto gutgeschrieben und kann für zukünftige Buchungen mit Headout verwendet werden.',
+  CATEGORY_SLIDER_HEADING:
+    'Was sich Zuschauer dieser Show noch angesehen haben',
   CHECK_AVAIL: 'Verfügbarkeit prüfen',
   CLOSE: 'Schließen',
   COMBO_VARIANT: {
@@ -64,6 +66,7 @@ const de = {
       'Ihr Wohlergehen ist unsere Priorität. Weitere Informationen zu unseren flexiblen Stornierungsbedingungen finden Sie auf der Seite „Hilfe & FAQs“.',
   },
   CURRENCY: 'Währung',
+  CUSTOMER_REVIEW_HEADING: 'Zuschauerbewertungen',
   DESCRIPTORS: {
     AUDIO_GUIDE: 'Audioguide',
     DURATION: 'Dauer: {0}',
@@ -80,6 +83,14 @@ const de = {
   },
   DURATION: 'Dauer',
   EARLIEST_AVAILABILITY: 'Früheste verfügbare',
+  ENTERTAINMENT_MB: {
+    BROADWAY: {
+      MB_NAME: 'Broadway Theater Tickets',
+    },
+    LTT: {
+      MB_NAME: 'London Theater Tickets',
+    },
+  },
   EXCLUSIONS: 'Nicht enthalten',
   FEATURE_CARD: {
     HEADING_CUSTOMER: 'Über 10 Millionen',
@@ -132,14 +143,19 @@ const de = {
   },
   MORE_DETAILS: 'Mehr anzeigen',
   NEW: 'NEW',
+  NEW_ARRIVAL: 'Neuerscheinungen',
   NEXT_AVAILABLE: 'Verfügbar ab: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout ist ein Unternehmen, dem über 15 Millionen Gäste vertrauen und das eine Auswahl der besten Erlebnisse bietet. Dies ist nicht die Website des Erlebnisortes.',
   OFF: 'Off',
+  OPEN_DATED_DESCRIPTOR: 'Flexibel buchen – keine Terminsauswahl nötig',
+  OPENING_DATE: 'Eröffnungsdatum',
   OPENING_ON: 'Eröffnung am',
   OPENS: 'Ab',
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout ist ein autorisierter und zuverlässiger Partner der Attraktion mit einer Auswahl der besten Erlebnisse. Dies ist nicht die Website der Attraktion.',
+  POPULARITY: 'Beliebtheit',
+  PRICE: 'Preis',
   PRICES_STARTING: 'Preise ab',
   PROMO_CODES: {
     APPLY_CODE: 'CODE ANWENDEN',
@@ -155,6 +171,8 @@ const de = {
   RATINGS: '{0} Bewertungen',
   READ_MORE: 'Weiterlesen',
   READ_MORE_TEXT: 'Mehr anzeigen',
+  REOPENING: 'Wiedereröffnung',
+  REOPENING_DATE: 'Wiedereröffnungsdatum',
   REOPENING_ON: 'Neueröffnung am',
   REOPENS: 'Endlich wieder ab',
   SAFE_EXPERIENCE: {
@@ -304,9 +322,13 @@ const de = {
   SAVE_PERCENT: '{0} % Rabatt',
   SAVE_UPTO: 'Spare',
   SAVE_UPTO_PERCENT: 'Bis zu {0} % Rabatt',
+  SEARCH: 'Suchen',
   SEE_ALL: 'See All',
+  SEE_MORE_SHOWS: 'Weitere Shows anzeigen',
+  SELECT_CITY: 'Stadt auswählen',
   SELECT_SECTION: 'Tribüne wählen',
   SHOW_ALL_PHOTOS: 'Alle Fotos anzeigen',
+  SHOW_CLOSED: 'Show geschlossen',
   SHOW_LESS_TEXT: 'Weniger anzeigen',
   SHOW_PAGE: {
     ABOUT_SHOW: 'Die Show',
@@ -350,6 +372,7 @@ const de = {
     YOUR_TICKETS: 'Ihre Tickets',
   },
   SORT_BY: 'Sortieren nach',
+  SPECIAL_OFFER: 'Sonderangebot',
   THEATRE: 'Theater',
   TICKET_CAN_BE_CANCELED:
     'Dieses Ticket kann bis zu {hours} Stunden vor dem Erlebnis gegen eine volle Rückerstattung storniert werden.',
@@ -381,6 +404,7 @@ const de = {
   VIEW_LESS: 'Weniger anzeigen',
   VIEW_MORE: 'Mehr anzeigen',
   WHY_TAKE_THIS_DAY_TRIP: 'Die Vorteile dieses Tagesausflugs',
+  WHY_WATCH: 'Auf einen Blick',
 };
 
 export default de;

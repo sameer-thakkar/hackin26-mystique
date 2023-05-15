@@ -46,9 +46,11 @@ const pt = {
       'Estes ingressos não podem ser cancelados. No entanto, você pode utilizá-los a qualquer momento dentro dos próximos {0} meses.',
   },
   CANCELLATION_POLICY_HEADING: 'Política de cancelamento',
-  CASHBACK: '{0}% em Cashback',
+  CASHBACK: '{0}% de cashback',
   CASHBACK_INFO:
     'Você recebe <strong>{0}%</strong> em cashback ao comprar esta experiência. O valor em cashback será automaticamente adicionado a sua conta Headout e poderá ser utilizado em sua próxima reserva com a Headout.',
+  CATEGORY_SLIDER_HEADING:
+    'Os clientes que reservaram esta experiência também viram',
   CHECK_AVAIL: 'Verificar disponibilidade',
   CLOSE: 'Fechar',
   COMBO_VARIANT: {
@@ -65,6 +67,7 @@ const pt = {
       'Você é nossa prioridade. Consulte nossa página de ajuda para encontrar as últimas atualizações sobre nossa política de cancelamento flexível.',
   },
   CURRENCY: 'Moeda',
+  CUSTOMER_REVIEW_HEADING: 'Avaliações',
   DESCRIPTORS: {
     AUDIO_GUIDE: 'Audioguia',
     DURATION: 'Duração: {0}',
@@ -81,6 +84,14 @@ const pt = {
   },
   DURATION: 'Duração',
   EARLIEST_AVAILABILITY: 'Próxima disponível: ',
+  ENTERTAINMENT_MB: {
+    BROADWAY: {
+      MB_NAME: 'Ingressos para teatro na Broadway',
+    },
+    LTT: {
+      MB_NAME: 'Ingressos para teatro em Londres',
+    },
+  },
   EXCLUSIONS: 'Não inclui',
   FEATURE_CARD: {
     HEADING_CUSTOMER: '+10 milhões',
@@ -133,29 +144,37 @@ const pt = {
   },
   MORE_DETAILS: 'Mais detalhes',
   NEW: 'NEW',
+  NEW_ARRIVAL: 'Novidade',
   NEXT_AVAILABLE: 'Próxima disponível: ',
   NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'A Headout já conquistou a confiança de mais de 15 milhões de clientes e oferece uma seleção das melhores experiências. Este não é o site oficial do local da experiência.',
   OFF: 'Off',
+  OPEN_DATED_DESCRIPTOR:
+    'Reserve com flexibilidade - não é preciso selecionar uma data',
+  OPENING_DATE: 'Data de estreia',
   OPENING_ON: 'Estreia em',
   OPENS: 'Abre',
   PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
     'Headout é um parceiro de confiança da atração, autorizado a oferecer uma seleção das melhores experiências. Este não é o site da atração.',
+  POPULARITY: 'Popularidade',
+  PRICE: 'Preço',
   PRICES_STARTING: 'Preços a partir de',
   PROMO_CODES: {
-    APPLY_CODE: 'APLICAR CÓDIGO',
     APPLIED: 'APLICADO',
-    TOOL_TIP_INFO: 'O desconto será aplicado no momento da compra',
+    APPLY_CODE: 'APLICAR CÓDIGO',
     DESCRIPTION: {
       ABSOLUTE: 'Desconto de {0}',
       CAPPED: 'Desconto de {0}%, até {1}',
       PERCENTAGE: 'Desconto de {0}%',
     },
     REMOVE: 'REMOVER',
+    TOOL_TIP_INFO: 'O desconto será aplicado no momento da compra',
   },
   RATINGS: '{0} Avaliações',
   READ_MORE: 'Saiba mais',
   READ_MORE_TEXT: 'Ver mais',
+  REOPENING: 'Reestreia',
+  REOPENING_DATE: 'Data de reestreia',
   REOPENING_ON: 'Reabre em',
   REOPENS: 'Reabre',
   SAFE_EXPERIENCE: {
@@ -305,9 +324,13 @@ const pt = {
   SAVE_PERCENT: 'Economize {0}%',
   SAVE_UPTO: 'Economize até',
   SAVE_UPTO_PERCENT: 'Economize até {0}%',
+  SEARCH: 'Pesquisar',
   SEE_ALL: 'See All',
+  SEE_MORE_SHOWS: 'Ver mais shows',
+  SELECT_CITY: 'Selecionar cidade',
   SELECT_SECTION: 'Escolher setor',
   SHOW_ALL_PHOTOS: 'Ver todas as fotos',
+  SHOW_CLOSED: 'Show encerrado',
   SHOW_LESS_TEXT: 'Ver menos',
   SHOW_PAGE: {
     ABOUT_SHOW: 'Sobre o espetáculo',
@@ -351,6 +374,7 @@ const pt = {
     YOUR_TICKETS: 'Seus ingressos',
   },
   SORT_BY: 'Ordenar por',
+  SPECIAL_OFFER: 'Oferta especial',
   THEATRE: 'Teatro',
   TICKET_CAN_BE_CANCELED:
     'Você pode cancelar com até {hours} horas de antecedência da experiência para um reembolso completo.',
@@ -382,6 +406,6 @@ const pt = {
   VIEW_LESS: 'Mostrar menos',
   VIEW_MORE: 'Ver mais',
   WHY_TAKE_THIS_DAY_TRIP: 'Por que vale a pena fazer essa excursão de um dia?',
+  WHY_WATCH: 'Por que assistir',
 };
-
 export default pt;

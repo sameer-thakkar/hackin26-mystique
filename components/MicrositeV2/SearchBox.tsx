@@ -10,6 +10,7 @@ import { SEARCH_ICON, CLOSE_WHITE } from 'assets/SvgIcons';
 import { expandFontToken } from 'const/typography';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { strings } from 'const/strings';
 
 const StyledSearchBox = styled.div<{ isEntertainmentMb?: boolean }>`
   position: relative;
@@ -164,7 +165,7 @@ export const SearchBox = (props: any) => {
       <input
         ref={inputRef}
         type="text"
-        placeholder="Search"
+        placeholder={strings.SEARCH}
         value={query}
         onChange={(e) => {
           search(e.currentTarget.value);
