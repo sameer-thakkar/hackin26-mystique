@@ -1,6 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { MBContext } from 'contexts/MBContext';
 import Button from 'UI/Button';
 import Conditional from 'components/common/Conditional';
 import COLORS from 'const/colors';
@@ -111,6 +110,7 @@ const PromoCodeBlock = ({
   host,
   isTicketCardDetailPopup,
   collectionId,
+  currencyCode,
 }: {
   currentLanguage: string;
   isMobile: boolean;
@@ -123,13 +123,9 @@ const PromoCodeBlock = ({
   host: string;
   collectionId: number | null;
   isTicketCardDetailPopup?: boolean;
+  currencyCode: string;
 }) => {
-  const { currencySymbolMap } = useContext(MBContext);
-  // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-  const currency = currencySymbolMap[Object.keys(currencySymbolMap)[0]];
-  const { code: currencyCode } = currency ?? {};
   const isPromoApplied = clickedPromo === indexPosition;
-
   const promo = finalPromoCode;
   const { promo_code, discount_percentage, absolute_discount, capped_value } =
     promo || {};

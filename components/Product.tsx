@@ -1415,12 +1415,14 @@ const Product = (props: any) => {
     : extractTabsFromHighlights(finalHighlights);
 
   const shouldShowMoreDetails =
+    // @ts-ignore
     tabs[activeTabIndex]?.contents.flat()?.length > 3 &&
     showMoreDetailsInTabs &&
     !defaultOpen;
   const hasReadMore = shouldShowMoreDetails || isMobile;
 
   const noOfListItemToShow = getMaxListItemsToShow(
+    // @ts-ignore
     tabs[activeTabIndex]?.contents
   );
 
@@ -1452,7 +1454,7 @@ const Product = (props: any) => {
 
   useEffect(() => {
     if (isMobile) return;
-
+    // @ts-ignore
     const isTruncated = tabs?.[0]?.contents?.length ?? 0 > noOfListItemToShow;
     if (isTruncated) {
       setShowMoreDetails(isTruncated);
@@ -1510,6 +1512,7 @@ const Product = (props: any) => {
       eventName: ANALYTICS_EVENTS.EXPERIENCE_MORE_DETAILS_VIEWED,
       [ANALYTICS_PROPERTIES.TGID]: tgid,
       [ANALYTICS_PROPERTIES.ACTION]: isOpen ? 'Contract' : 'Expand',
+      // @ts-ignore
       [ANALYTICS_PROPERTIES.INFO_HEADING]: tabs[activeTabIndex]?.heading,
       [ANALYTICS_PROPERTIES.POSITION]: indexPosition + 1,
       [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
@@ -1718,7 +1721,11 @@ const Product = (props: any) => {
               />
             </PriceContainer>
             <Conditional if={isTicketCard && promo_code}>
-              <PromoCodeBlock {...props} isTicketCardDetailPopup />
+              <PromoCodeBlock
+                {...props}
+                isTicketCardDetailPopup
+                currencyCode={finalListingPrice?.currencyCode ?? ''}
+              />
             </Conditional>
 
             <CTABlock

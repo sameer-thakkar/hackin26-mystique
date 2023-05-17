@@ -626,7 +626,10 @@ const TicketCard = (props: any) => {
           key={'price-block'}
         />
         <Conditional if={promo_code}>
-          <PromoCodeBlock {...props} />
+          <PromoCodeBlock
+            {...props}
+            currencyCode={listingPrice?.currencyCode ?? ''}
+          />
         </Conditional>
       </PriceContainer>
 
