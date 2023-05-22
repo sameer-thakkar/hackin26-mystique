@@ -43,7 +43,6 @@ import {
   CUSTOM_TYPES,
   DESCRIPTORS,
   MEDIA_CAROUSEL_IMAGE_LIMIT,
-  PRODUCT_CARD_LENGTH_EXP_UIDS,
 } from 'const/index';
 import { createBookingURL } from 'utils';
 import {
@@ -1240,9 +1239,7 @@ const Product = (props: any) => {
   const cardTitle = title || scorpioData.title;
   const { promo_code } = finalPromoCode || {};
   const isFirstProduct = indexPosition === 0;
-  const isProductCardLengthExpUid = PRODUCT_CARD_LENGTH_EXP_UIDS.includes(uid);
-  const isBannerCard =
-    isFirstProduct && isCollectionMB && !isProductCardLengthExpUid;
+  const isBannerCard = isFirstProduct && isCollectionMB && bannerVideo;
 
   const params = {
     ...(lang && {

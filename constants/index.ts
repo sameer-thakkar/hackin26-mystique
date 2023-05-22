@@ -1167,15 +1167,6 @@ export const SENTRY_TAGS = {
   PAGE_TYPE: 'PAGE_TYPE',
 };
 
-export const PRODUCT_CARD_LENGTH_EXP_UIDS = [
-  'www.dubai-safari-park.com',
-  'www.osaka-tickets.com.universal-studios-japan',
-  'skydeck.tickets-melbourne.com',
-  'www.pradomuseumtickets.com',
-  'www.accademia-tickets.com',
-  'www.pompeii-tickets.com',
-];
-
 export const F1_SPORTS_EXPERIMENT_TGIDS = [
   '19708',
   '20016',
