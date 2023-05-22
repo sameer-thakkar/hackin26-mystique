@@ -38,7 +38,7 @@ const StyledProductsWrapper = styled.div`
     }
     h2 {
       color: ${COLORS.GRAY.G2};
-      ${expandFontToken(FONTS.DISPLAY_SMALL)}
+      ${expandFontToken(FONTS.DISPLAY_SMALL)};
       @media (max-width: 768px) {
         ${expandFontToken(FONTS.HEADING_REGULAR)}
       }
