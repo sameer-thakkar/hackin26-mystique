@@ -1,4 +1,10 @@
-import React, { useState, useContext, ComponentType, useEffect } from 'react';
+import React, {
+  useState,
+  useContext,
+  ComponentType,
+  useEffect,
+  useRef,
+} from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { ProductsContextProvider } from 'contexts/Products';
@@ -30,6 +36,7 @@ import { metaAtom } from 'store/atoms/meta';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { gtmAtom } from 'store/atoms/gtm';
 import { expandFontToken } from 'const/typography';
+import useOnScreen from 'hooks/useOnScreen';
 import { getBannerAndFooterSubtext, isCollectionMB } from 'utils';
 
 const Alert = dynamic(
@@ -220,7 +227,7 @@ export const HomePage = (props: any) => {
   const { secondaryFooter } = footer;
   const themeOverride = footer?.themeOverride;
   const hasDropdownLinks = enableDropdownLinks && dropdownLinks?.length;
-  const { mbTheme } = useContext(MBContext);
+  const { mbTheme, isExperimentalBot } = useContext(MBContext);
   const coverHeading = withShortcodes(heroProps?.coverHeading);
   const allTgids = Object.keys(allTours);
   const isEntertainmentMbListicle = isEntertainmentMb && isListicle;
@@ -228,6 +235,18 @@ export const HomePage = (props: any) => {
     logo: { logoUrl = '', showPoweredLogo = true } = {},
     name: whiteLabelName,
   } = domainConfig || {};
+
+  const v2LongFormRef = useRef(null);
+  const lttFeatureCardRef = useRef(null);
+
+  const isV2LongFormIntersecting = useOnScreen({
+    ref: v2LongFormRef,
+    unobserve: true,
+  });
+  const isLTTFeatureCardIntersecting = useOnScreen({
+    ref: lttFeatureCardRef,
+    unobserve: true,
+  });
 
   useEffect(() => {
     if (eventsReady)
@@ -355,8 +374,12 @@ export const HomePage = (props: any) => {
         />
       </Conditional>
       <ProductsContextProvider allTours={allTours} ready={ready}>
-        <div className="main-wrapper v2-long-form">
-          <Conditional if={longFormContent}>
+        <div className="main-wrapper v2-long-form" ref={v2LongFormRef}>
+          <Conditional
+            if={
+              longFormContent && (isExperimentalBot || isV2LongFormIntersecting)
+            }
+          >
             <LongForm
               slicesArray={longFormSlices}
               props={{
@@ -374,11 +397,15 @@ export const HomePage = (props: any) => {
           </Conditional>
         </div>
       </ProductsContextProvider>
+
       <Conditional if={isEntertainmentMb}>
-        <div className="main-wrapper">
-          <LttFeatureCard />
+        <div className="main-wrapper" ref={lttFeatureCardRef}>
+          <Conditional if={isExperimentalBot || isLTTFeatureCardIntersecting}>
+            <LttFeatureCard />
+          </Conditional>
         </div>
       </Conditional>
+
       <Footer
         currentLanguage={currentLanguage}
         attraction={footer.attraction || 'attraction'}

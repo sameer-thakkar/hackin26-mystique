@@ -12,6 +12,7 @@ import {
   MB_TYPES,
   PARTNERED_AND_SENSITIVE_COMBINATIONS,
   SHOW_DATE_SELECTION_PAGE_TGIDS,
+  DYNAMIC_RENDER_UID,
   LanguagesUnion,
 } from 'const/index';
 import { BOOKING_FLOW_STAGE, BOOKING_FLOW_TYPE } from 'const/booking';
@@ -630,6 +631,8 @@ export const displayBannerTrustBoosters = (data: Record<string, any>) =>
 export const displayProductTrustBoosters = (data: Record<string, any>) =>
   data?.data?.f1_product_trust_booster;
 
+export const shouldRenderDynamicPage = (CMSContent: Record<string, any>) =>
+  CMSContent?.data?.uid && DYNAMIC_RENDER_UID.includes(CMSContent.data.uid);
 export const deepDeleteKeys = ({
   obj,
   keys,

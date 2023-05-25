@@ -8,9 +8,11 @@ interface OptionsTypes {
 
 export default function useOnScreen({
   ref,
+  unobserve,
   options,
 }: {
   ref: React.MutableRefObject<any>;
+  unobserve?: boolean;
   options?: OptionsTypes;
 }) {
   const [isIntersecting, setIntersecting] = React.useState(false);
@@ -19,6 +21,9 @@ export default function useOnScreen({
   if (typeof window !== 'undefined') {
     observer = new IntersectionObserver(([entry]) => {
       setIntersecting(entry.isIntersecting);
+      if (entry.isIntersecting && unobserve) {
+        observer.unobserve(ref.current);
+      }
     }, options);
   }
 
@@ -28,7 +33,7 @@ export default function useOnScreen({
     return () => {
       observer?.disconnect();
     };
-  // @ts-expect-error TS(2454): Variable 'observer' is used before being assigned.
+    // @ts-expect-error TS(2454): Variable 'observer' is used before being assigned.
   }, [observer, ref]);
 
   return isIntersecting;

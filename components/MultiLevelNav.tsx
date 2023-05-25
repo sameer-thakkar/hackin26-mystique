@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { strings } from 'const/strings';
 import { useState, useRef, useEffect } from 'react';
@@ -12,6 +12,8 @@ import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
 import { withTrailingSlash } from 'utils/helper';
 import Conditional from 'components/common/Conditional';
+import useOnScreen from 'hooks/useOnScreen';
+import { MBContext } from 'contexts/MBContext';
 
 import LinkResolver from './LinkResolver';
 import { CHEVRON_DOWN } from '../assets/SvgIcons';
@@ -254,20 +256,25 @@ const HeadingMenu = styled(StyledMenuItem)`
 
 const Navigation = (props: any) => {
   const { slices, isMobile, navOpen, id, isGlobalMb = false } = props;
+  const { isExperimentalBot } = useContext(MBContext);
+  const navigationRef = useRef(null);
+  const isIntersecting = useOnScreen({ ref: navigationRef, unobserve: true });
   return (
     <Nav
       className={navOpen ? 'navigation-nav-open' : ''}
       id={id ? id : 'navigation-menu-mobile'}
       {...props}
+      ref={navigationRef}
     >
-      {slices.map((slice: any, index: number) =>
-        HeaderSliceHandler(slice, {
-          index,
-          isMobile,
-          navOpen,
-          isGlobalMb,
-        })
-      )}
+      {(isExperimentalBot || isIntersecting) &&
+        slices.map((slice: any, index: number) =>
+          HeaderSliceHandler(slice, {
+            index,
+            isMobile,
+            navOpen,
+            isGlobalMb,
+          })
+        )}
     </Nav>
   );
 };

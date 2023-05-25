@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
@@ -10,6 +10,7 @@ import { MBContext } from 'contexts/MBContext';
 import Product from 'components/MicrositeV2/Product';
 import { addUrlParams } from 'utils/urlUtils';
 import { useRouter } from 'next/router';
+import useOnScreen from 'hooks/useOnScreen';
 
 const DetailedProductCard = dynamic(() =>
   import(
@@ -51,7 +52,7 @@ export const RowComponent = (props: any) => {
   // @ts-expect-error TS(2339): Property 'activeCategoryId' does not exist on type... Remove this comment to see the full error message
   const { activeCategoryId, activeTour, clickTour, closeTour } =
     useContext(InteractionContext) || {};
-  const { design } = useContext(MBContext);
+  const { design, isExperimentalBot } = useContext(MBContext);
   const isV3Design = design === DESIGN.V3;
   const router = useRouter();
 
@@ -167,50 +168,57 @@ export const RowComponent = (props: any) => {
       });
   }, [activeTgid]);
 
+  const productRef = useRef(null);
+  const isIntersecting = useOnScreen({ ref: productRef, unobserve: true });
+
   return (
-    <>
-      <ProductsRow isV3Design={isV3Design}>
-        {tgidsSubArr.map((tgid: any, index: number) => (
-          <Product
-            tgid={tgid}
-            productClick={handleProductClicked}
-            isEntertainmentMb={isEntertainmentMb}
-            allTours={allTours}
-            isMobile={isMobile}
-            key={index}
-            cardIdPrefix={sectionId}
-            activeCategoryId={activeCategoryId}
-            host={host}
-            uid={uid}
-            isV3Design={isV3Design}
-          />
-        ))}
-        <Conditional if={!isEntertainmentMb && !isV3Design}>
-          {tgidsSubArr.map((tgid: any, index: number) => (
-            <DetailedProductCard
-              showDescCard={tgid === activeTgid}
-              tgidClicked={tgid}
-              allTours={allTours}
-              hasCategoryTourList={hasCategoryTourList}
-              isEntertainmentMb={isEntertainmentMb}
-              currentLanguage={currentLanguage}
-              host={host}
-              uid={uid}
-              key={tgid}
-              cardPosition={index + 1}
-              closeDescription={closeDescription}
-              isListicle={isListicle}
-              isDev={isDev}
-              cardRanking={totalPreviousCardRendered + (index + 1)}
-            />
-          ))}
-        </Conditional>
-      </ProductsRow>
-      <Conditional if={isV3Design}>
-        {tgidsSubArr.map((tgid: any, index: number) => {
-          return getV3DetailedCard(tgid, index);
-        })}
+    <div ref={productRef}>
+      <Conditional if={isExperimentalBot || isIntersecting}>
+        <>
+          <ProductsRow isV3Design={isV3Design}>
+            {tgidsSubArr.map((tgid: any, index: number) => (
+              <Product
+                tgid={tgid}
+                productClick={handleProductClicked}
+                isEntertainmentMb={isEntertainmentMb}
+                allTours={allTours}
+                isMobile={isMobile}
+                key={index}
+                cardIdPrefix={sectionId}
+                activeCategoryId={activeCategoryId}
+                host={host}
+                uid={uid}
+                isV3Design={isV3Design}
+              />
+            ))}
+            <Conditional if={!isEntertainmentMb && !isV3Design}>
+              {tgidsSubArr.map((tgid: any, index: number) => (
+                <DetailedProductCard
+                  showDescCard={tgid === activeTgid}
+                  tgidClicked={tgid}
+                  allTours={allTours}
+                  hasCategoryTourList={hasCategoryTourList}
+                  isEntertainmentMb={isEntertainmentMb}
+                  currentLanguage={currentLanguage}
+                  host={host}
+                  uid={uid}
+                  key={tgid}
+                  cardPosition={index + 1}
+                  closeDescription={closeDescription}
+                  isListicle={isListicle}
+                  isDev={isDev}
+                  cardRanking={totalPreviousCardRendered + (index + 1)}
+                />
+              ))}
+            </Conditional>
+          </ProductsRow>
+          <Conditional if={isV3Design}>
+            {tgidsSubArr.map((tgid: any, index: number) => {
+              return getV3DetailedCard(tgid, index);
+            })}
+          </Conditional>
+        </>
       </Conditional>
-    </>
+    </div>
   );
 };

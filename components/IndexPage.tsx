@@ -15,7 +15,12 @@ import {
   THEMES,
   COOKIE,
 } from 'const/index';
-import { reflect, isNakedDomain, getLanguageFromPathname } from 'utils';
+import {
+  reflect,
+  isNakedDomain,
+  getLanguageFromPathname,
+  shouldRenderDynamicPage,
+} from 'utils';
 import { getPageData } from 'utils/prismicUtils';
 import { sendVariableToDataLayer } from 'utils/analytics';
 import { removePageQuery } from 'utils/urlUtils';
@@ -25,6 +30,7 @@ import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
 import { localServerSideIsMobileCheck } from 'utils/gen';
 import { strings } from 'const/strings';
 import { checkIfCurrencyCodeValid } from 'utils/currency';
+import PlatformUtils from 'utils/platformUtils';
 import { getLocalizationLabels } from 'utils/localizationUtils';
 
 import Analytics from './Analytics';
@@ -123,6 +129,7 @@ const Page = (props: PageProps) => {
     isStage,
     collectionDetails,
     domainConfig,
+    isExperimentalBot,
   } = props;
 
   const { noTrack, tgidToScroll, bookSubdomain } = queryParams;
@@ -266,6 +273,7 @@ const Page = (props: PageProps) => {
             primaryCountry={primaryCountry}
             primaryCity={primaryCity}
             redirectToHeadoutBookingFlow={redirectToHeadoutBookingFlow}
+            isExperimentalBot={isExperimentalBot}
           >
             {Component}
             {showSessionIdSetter ? <HeadoutSessionIdSetterComponent /> : null}
@@ -291,6 +299,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   strings.setContent({
     default: localizedStrings,
   });
+  const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
+  let isExperimentalBot = true;
+
   const serverCookies = new ServerCookies(req, res);
   /**
    * Adding window check below since `serverCookies.get` runs only on server side :/
@@ -350,6 +361,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     })
   );
 
+  if (shouldRenderDynamicPage(props?.CMSContent)) {
+    isExperimentalBot = req
+      ? req.headers['x-bot'] === 'true'
+      : PlatformUtils.isBot(userAgent);
+  }
+
   try {
     let url =
       props?.CMSContent?.data?.data?.redirect_url?.url ||
@@ -382,6 +399,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const response = {
       props: {
         ...props,
+        isExperimentalBot,
         localizedStrings,
         serverRequestStartTimestamp,
         windowUrl: req

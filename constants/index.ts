@@ -1191,3 +1191,7 @@ export const F1_SPORTS_EXPERIMENT_TGIDS = [
   '21074',
   '20949',
 ];
+
+export const DYNAMIC_RENDER_UID = [
+  'www.london-theater-tickets.com.london-musicals',
+];

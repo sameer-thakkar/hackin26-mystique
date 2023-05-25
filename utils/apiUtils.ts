@@ -584,11 +584,11 @@ export const fetchDomainConfig = async (uid: string) => {
     id: null,
   });
   const domainArray = getDomainFromUid(uid)?.split('.');
-  
-  if(domainArray && domainArray.length > 0){
-  domainArray[0] = 'book';
+
+  if (domainArray && domainArray.length > 0) {
+    domainArray[0] = 'book';
   }
-  
+
   const whitelabel = `https://${domainArray?.join('.')}`;
   const customHeaders = new Headers();
   customHeaders.append(CUSTOM_HEADER.ORIGIN, whitelabel);

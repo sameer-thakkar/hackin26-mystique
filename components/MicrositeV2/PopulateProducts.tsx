@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect, ComponentType } from 'react';
-import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import InteractionContext from 'contexts/Interaction';
 import { MBContext } from 'contexts/MBContext';
@@ -16,7 +15,7 @@ import {
 import COLORS from 'const/colors';
 import { expandFontToken } from 'const/typography';
 import { trackEvent } from 'utils/analytics';
-
+import dynamic from 'next/dynamic';
 const RowComponent: ComponentType<any> = dynamic(() =>
   import(/* webpackChunkName: "RowComponent" */ './RowComponent').then(
     (mod) => mod.RowComponent

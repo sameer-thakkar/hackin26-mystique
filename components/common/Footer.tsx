@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled, { ThemeProvider } from 'styled-components';
 import { MBContext } from 'contexts/MBContext';
@@ -15,6 +15,7 @@ import { expandFontToken } from 'const/typography';
 import { FONTS } from 'const/fonts';
 import COLORS from 'const/colors';
 import { metaAtom } from 'store/atoms/meta';
+import useOnScreen from 'hooks/useOnScreen';
 
 const StyledFooter = styled.footer`
   width: 100%;
@@ -381,8 +382,10 @@ const Footer: React.FC<FooterProps> = ({
   primaryHeading = '',
   isEntertainmentMb = false,
 }) => {
-  const { mbTheme = THEMES.DEFAULT } = useContext(MBContext);
+  const { mbTheme = THEMES.DEFAULT, isExperimentalBot } = useContext(MBContext);
   const pageMeta = useRecoilValue(metaAtom);
+  const footerRef = useRef(null);
+  const isFooterIntersecting = useOnScreen({ ref: footerRef, unobserve: true });
   const width = useWindowWidth();
   const [isMobile, setIsMobile] = useState(width < 768);
   const finalThemeName =
@@ -418,158 +421,164 @@ const Footer: React.FC<FooterProps> = ({
     // @ts-expect-error TS(2786): 'ThemeProvider' cannot be used as a JSX component.
     <ThemeProvider theme={getAppTheme(finalThemeName)}>
       {/* @ts-expect-error TS(2769): No overload matches this call. */}
-      <StyledFooter isEntertainmentMb={isEntertainmentMb}>
-        <LinkSlicesWrapper isEntertainmentMb={isEntertainmentMb}>
-          <Conditional if={slices?.length}>
-            <LinkSlices
-              className={'primary-footer'}
-              linksTitle={primaryHeading}
-              slices={slices}
-              theme={finalThemeName}
-            />
-          </Conditional>
-          <Conditional if={secondarySlices?.length}>
-            <LinkSlices
-              className={'secondary-footer'}
-              linksTitle={secondaryHeading}
-              slices={secondarySlices}
-              theme={finalThemeName}
-            />
-          </Conditional>
-        </LinkSlicesWrapper>
-        {/* @ts-expect-error TS(2769): No overload matches this call. */}
-        <FooterLegalWrapper isEntertainmentMb={isEntertainmentMb}>
-          <Container>
-            <FooterLegal
-              invertLogoColor={finalThemeName !== THEMES.MIN_BLUE}
-              isEntertainmentMb={isEntertainmentMb}
-            >
-              <div className="logo-disclaimer">
-                <div className="logo-wrapper">
-                  <Image
-                    fill
-                    url={logoURL}
-                    alt={logoAlt}
-                    height="44"
-                    width="144"
-                  />
-                  <Conditional
-                    if={
-                      hasPoweredByHeadoutLogo &&
-                      finalThemeName !== THEMES.MIN_BLUE
-                    }
-                  >
-                    {POWERED_BY_HEADOUT}
-                  </Conditional>
-                </div>
-                <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
-                  <div className="disclaimer-text">{disclaimerText}</div>
-                </Conditional>
-                <Conditional
-                  if={finalThemeName === THEMES.MIN_BLUE && !isMobile}
-                >
-                  <div className={'disclaimer-text copyright'}>
-                    {`© Copyright ${new Date().getFullYear()}`}
-                  </div>
-                </Conditional>
-              </div>
-              <div className="footer-links">
-                <div className="help">
-                  <LinksWrapper isEntertainmentMb={isEntertainmentMb}>
-                    <div className="header">{strings.FOOTER.GET_HELP}</div>
-                    <div className="links">
-                      <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
-                        <a
-                          href="https://secure.livechatinc.com/licence/8339531/v2/open_chat.cgi?groups=0"
-                          target="_blank"
-                          rel="noreferrer noopener"
-                        >
-                          {strings.FOOTER.CHAT_WITH_US}
-                        </a>
-                      </Conditional>
-                      <a href={`tel:${getContactNo(true)}`}>
-                        <span>
-                          {`${strings.FOOTER.CALL_US} `}
-                          <span className={'hide-mobile'}>
-                            {getContactNo(true)}
-                          </span>
-                        </span>
-                      </a>
-                      <a
-                        href={`mailto:${
-                          finalThemeName !== THEMES.MIN_BLUE
-                            ? 'support@headout.com'
-                            : 'support@online-tickets.co'
-                        }`}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                      >
-                        {strings.FOOTER.EMAIL_US}
-                      </a>
-                    </div>
-                  </LinksWrapper>
-                </div>
-                <div className="legal">
-                  <LinksWrapper isEntertainmentMb={isEntertainmentMb}>
-                    <div className="header">{strings.FOOTER.LEGAL}</div>
-                    <div className="links">
-                      <a
-                        href="/terms/"
-                        target="_blank"
-                        rel="noreferrer noopener"
-                      >
-                        {strings.FOOTER.TERMS_AND_CONDITIONS}
-                      </a>
-                      <a
-                        href="/privacy-policy/"
-                        target="_blank"
-                        rel="noreferrer noopener"
-                      >
-                        {strings.FOOTER.PRIVACY_POLICY}
-                      </a>
-                      <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
-                        <a
-                          href="/company-details/"
-                          target="_blank"
-                          rel="noreferrer noopener"
-                        >
-                          {strings.FOOTER.COMPANY_DETAILS}
-                        </a>
-                      </Conditional>
-                    </div>
-                  </LinksWrapper>
-                </div>
-              </div>
-
-              <Conditional if={finalThemeName === THEMES.MIN_BLUE && isMobile}>
-                <div className="chin" style={{ marginTop: '-64px' }}>
-                  <div className={'disclaimer-text copyright'}>
-                    {`© Copyright ${new Date().getFullYear()}`}
-                  </div>
-                </div>
-              </Conditional>
-            </FooterLegal>
-            <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
-              <div className="footer-chin">
-                <div className="white-line" />
-                <div className="super-brand-logo">
-                  <Conditional if={!isEntertainmentMb}>
-                    {WHITE_BLIP}
-                  </Conditional>
-                  <span>
-                    {isEntertainmentMb
-                      ? `© Headout ${new Date().getFullYear()}`
-                      : `© ${new Date().getFullYear()} Headout`}
-                  </span>
-                </div>
-                <SocialLinks
-                  className="social-links"
-                  isEntertainmentMb={isEntertainmentMb}
+      <StyledFooter isEntertainmentMb={isEntertainmentMb} ref={footerRef}>
+        <Conditional if={isExperimentalBot || isFooterIntersecting}>
+          <>
+            <LinkSlicesWrapper isEntertainmentMb={isEntertainmentMb}>
+              <Conditional if={slices?.length}>
+                <LinkSlices
+                  className={'primary-footer'}
+                  linksTitle={primaryHeading}
+                  slices={slices}
+                  theme={finalThemeName}
                 />
-              </div>
-            </Conditional>
-          </Container>
-        </FooterLegalWrapper>
+              </Conditional>
+              <Conditional if={secondarySlices?.length}>
+                <LinkSlices
+                  className={'secondary-footer'}
+                  linksTitle={secondaryHeading}
+                  slices={secondarySlices}
+                  theme={finalThemeName}
+                />
+              </Conditional>
+            </LinkSlicesWrapper>
+            {/* @ts-expect-error TS(2769): No overload matches this call. */}
+            <FooterLegalWrapper isEntertainmentMb={isEntertainmentMb}>
+              <Container>
+                <FooterLegal
+                  invertLogoColor={finalThemeName !== THEMES.MIN_BLUE}
+                  isEntertainmentMb={isEntertainmentMb}
+                >
+                  <div className="logo-disclaimer">
+                    <div className="logo-wrapper">
+                      <Image
+                        fill
+                        url={logoURL}
+                        alt={logoAlt}
+                        height="44"
+                        width="144"
+                      />
+                      <Conditional
+                        if={
+                          hasPoweredByHeadoutLogo &&
+                          finalThemeName !== THEMES.MIN_BLUE
+                        }
+                      >
+                        {POWERED_BY_HEADOUT}
+                      </Conditional>
+                    </div>
+                    <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
+                      <div className="disclaimer-text">{disclaimerText}</div>
+                    </Conditional>
+                    <Conditional
+                      if={finalThemeName === THEMES.MIN_BLUE && !isMobile}
+                    >
+                      <div className={'disclaimer-text copyright'}>
+                        {`© Copyright ${new Date().getFullYear()}`}
+                      </div>
+                    </Conditional>
+                  </div>
+                  <div className="footer-links">
+                    <div className="help">
+                      <LinksWrapper isEntertainmentMb={isEntertainmentMb}>
+                        <div className="header">{strings.FOOTER.GET_HELP}</div>
+                        <div className="links">
+                          <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
+                            <a
+                              href="https://secure.livechatinc.com/licence/8339531/v2/open_chat.cgi?groups=0"
+                              target="_blank"
+                              rel="noreferrer noopener"
+                            >
+                              {strings.FOOTER.CHAT_WITH_US}
+                            </a>
+                          </Conditional>
+                          <a href={`tel:${getContactNo(true)}`}>
+                            <span>
+                              {`${strings.FOOTER.CALL_US} `}
+                              <span className={'hide-mobile'}>
+                                {getContactNo(true)}
+                              </span>
+                            </span>
+                          </a>
+                          <a
+                            href={`mailto:${
+                              finalThemeName !== THEMES.MIN_BLUE
+                                ? 'support@headout.com'
+                                : 'support@online-tickets.co'
+                            }`}
+                            target="_blank"
+                            rel="noreferrer noopener"
+                          >
+                            {strings.FOOTER.EMAIL_US}
+                          </a>
+                        </div>
+                      </LinksWrapper>
+                    </div>
+                    <div className="legal">
+                      <LinksWrapper isEntertainmentMb={isEntertainmentMb}>
+                        <div className="header">{strings.FOOTER.LEGAL}</div>
+                        <div className="links">
+                          <a
+                            href="/terms/"
+                            target="_blank"
+                            rel="noreferrer noopener"
+                          >
+                            {strings.FOOTER.TERMS_AND_CONDITIONS}
+                          </a>
+                          <a
+                            href="/privacy-policy/"
+                            target="_blank"
+                            rel="noreferrer noopener"
+                          >
+                            {strings.FOOTER.PRIVACY_POLICY}
+                          </a>
+                          <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
+                            <a
+                              href="/company-details/"
+                              target="_blank"
+                              rel="noreferrer noopener"
+                            >
+                              {strings.FOOTER.COMPANY_DETAILS}
+                            </a>
+                          </Conditional>
+                        </div>
+                      </LinksWrapper>
+                    </div>
+                  </div>
+
+                  <Conditional
+                    if={finalThemeName === THEMES.MIN_BLUE && isMobile}
+                  >
+                    <div className="chin" style={{ marginTop: '-64px' }}>
+                      <div className={'disclaimer-text copyright'}>
+                        {`© Copyright ${new Date().getFullYear()}`}
+                      </div>
+                    </div>
+                  </Conditional>
+                </FooterLegal>
+                <Conditional if={finalThemeName !== THEMES.MIN_BLUE}>
+                  <div className="footer-chin">
+                    <div className="white-line" />
+                    <div className="super-brand-logo">
+                      <Conditional if={!isEntertainmentMb}>
+                        {WHITE_BLIP}
+                      </Conditional>
+                      <span>
+                        {isEntertainmentMb
+                          ? `© Headout ${new Date().getFullYear()}`
+                          : `© ${new Date().getFullYear()} Headout`}
+                      </span>
+                    </div>
+                    <SocialLinks
+                      className="social-links"
+                      isEntertainmentMb={isEntertainmentMb}
+                    />
+                  </div>
+                </Conditional>
+              </Container>
+            </FooterLegalWrapper>
+          </>
+        </Conditional>
       </StyledFooter>
     </ThemeProvider>
   );
