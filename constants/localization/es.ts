@@ -453,6 +453,7 @@ const es = {
     UNTIL_MONTHS_FROM_PURCHASE:
       'Estas entradas son válidas durante {0} meses a partir de la fecha de compra.',
   },
+  TABLE_OF_CONTENTS: 'Contenido',
   VIEW_LESS: 'Ver menos',
   VIEW_MORE: 'Leer más',
   WHY_TAKE_THIS_DAY_TRIP: '¿Por qué vale la pena hacer este viaje de 1 día?',

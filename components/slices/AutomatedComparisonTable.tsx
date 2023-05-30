@@ -19,6 +19,7 @@ import { getDuration } from 'utils/timeUtils';
 import { getCancellationPolicyString } from 'utils/productUtils';
 import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
+import { generateSidenavId } from 'utils/helper';
 
 const ComparisonTableWrapper = styled.div`
   width: auto;
@@ -474,7 +475,9 @@ const AutomatedTourComparisonTable = ({
         tourCount={tourGroups?.length}
       >
         <div className="heading-wrapper">
-          <div className="comparison-heading">{heading}</div>
+          <div className="comparison-heading" id={generateSidenavId(heading)}>
+            {heading}
+          </div>
           <div className="comparison-description">{description}</div>
         </div>
         <div className="full-width-wrap">

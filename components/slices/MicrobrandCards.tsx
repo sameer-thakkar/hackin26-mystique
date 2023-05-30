@@ -12,7 +12,7 @@ import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
 import { tourListApiParser } from 'utils/dataParsers';
 import { shortCodeSerializer } from 'utils/shortCodes';
-import { getHostName } from 'utils/helper';
+import { generateSidenavId, getHostName } from 'utils/helper';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 
 const StyledMBCards = styled.div<{ gridAutoCol: boolean }>`
@@ -314,9 +314,22 @@ const MicrobrandCards: React.FC<MicrobrandCardsProps> = (props) => {
     };
   });
 
+  const {
+    content_above_cards: aboveContent,
+    content_below_cards: belowContent,
+  } = cardsContent || {};
+
+  const idArray: Array<string> = [];
+  aboveContent?.forEach((el: TRichTextArray) => {
+    el.type === 'heading2' && idArray.push(generateSidenavId(el?.text));
+  });
+  belowContent?.forEach((el: TRichTextArray) => {
+    el.type === 'heading2' && idArray.push(generateSidenavId(el?.text));
+  });
+
   return (
     <StyledMicrobandCards>
-      <div className="microbrand-cards-content">
+      <div className="microbrand-cards-content" id={idArray?.[0]}>
         <RichText
           render={cardsContent.content_above_cards}
           htmlSerializer={shortCodeSerializer}
@@ -328,7 +341,7 @@ const MicrobrandCards: React.FC<MicrobrandCardsProps> = (props) => {
         cardPrices={cardPrices}
         currencySymbol={currencySymbol}
       />
-      <div className="microbrand-cards-content">
+      <div className="microbrand-cards-content" id={idArray?.[1]}>
         <RichText
           render={cardsContent.content_below_cards}
           htmlSerializer={shortCodeSerializer}

@@ -403,6 +403,7 @@ const pt = {
     UNTIL_MONTHS_FROM_PURCHASE:
       'Estes ingressos são válidos por {0} meses a partir da data da compra.',
   },
+  TABLE_OF_CONTENTS: 'Conteúdo',
   VIEW_LESS: 'Mostrar menos',
   VIEW_MORE: 'Ver mais',
   WHY_TAKE_THIS_DAY_TRIP: 'Por que vale a pena fazer essa excursão de um dia?',

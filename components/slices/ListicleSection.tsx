@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { HALYARD } from 'const/ui-constants';
+import { generateSidenavId } from 'utils/helper';
 
 import sliceHandler from '../Slices';
 
@@ -14,10 +15,10 @@ const StyledListicleSection = styled.div`
 
 const ListicleGrid = styled.div`
   display: grid;
-  grid-template-columns: ${({  
- // @ts-expect-error TS(2339): Property 'listicleType' does not exist on type 'Pi... Remove this comment to see the full error message
- listicleType }) =>
-    listicleType === 'small' ? 'repeat(2, 1fr)' : '1fr'};
+  grid-template-columns: ${({
+    // @ts-expect-error TS(2339): Property 'listicleType' does not exist on type 'Pi... Remove this comment to see the full error message
+    listicleType,
+  }) => (listicleType === 'small' ? 'repeat(2, 1fr)' : '1fr')};
   grid-row-gap: 24px;
   grid-column-gap: 16px;
   @media (max-width: 768px) {
@@ -72,7 +73,7 @@ const ListicleSection: React.FC<ListicleSectionProps> = ({
 }) => {
   return (
     <StyledListicleSection>
-      <Title>{title}</Title>
+      <Title id={generateSidenavId(title)}>{title}</Title>
       {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <ListicleGrid listicleType={type}>
         {slices.map((slice, index) => {

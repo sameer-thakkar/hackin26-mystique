@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, ComponentType } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
@@ -16,6 +16,7 @@ import COLORS from 'const/colors';
 import { POWERED_BY_HEADOUT } from 'assets/SvgIcons';
 import { withTrailingSlash } from 'utils/helper';
 import { throttle } from 'utils/gen';
+import { appAtom } from 'store/atoms/app';
 
 const MultiLevelNav = dynamic(() => import('components/MultiLevelNav'));
 const ResponsiveSelector: ComponentType<any> = dynamic(
@@ -220,6 +221,7 @@ const Header: React.FC<any> = (props) => {
   const headerLanguages = languages?.length
     ? [...languages, { code: currentLanguage }]
     : [];
+  const { isSidenavScroll } = useRecoilValue(appAtom);
 
   const hamburgerIconCheck =
     showGroupBooking ||
@@ -229,6 +231,7 @@ const Header: React.FC<any> = (props) => {
   const multiNavRef = useRef(null);
   const [scrollPos, setScrollPos] = useState(0);
   const [isHeaderSticky, setIsHeaderSticky] = useState(false);
+  const [appState, setAppState] = useRecoilState(appAtom);
 
   useCaptureClickOutside(
     hamburgerRef,
@@ -266,7 +269,7 @@ const Header: React.FC<any> = (props) => {
   useEffect(() => {
     if (!window) return;
     const scrollHandler = () => {
-      const isUpScroll = scrollPos > window.pageYOffset;
+      const isUpScroll = scrollPos > window.pageYOffset && !isSidenavScroll;
       setIsHeaderSticky(isUpScroll);
       setScrollPos(window.pageYOffset);
     };
@@ -279,6 +282,15 @@ const Header: React.FC<any> = (props) => {
       window.removeEventListener('scroll', throttledScrollHandler);
     };
   }, [scrollPos]);
+
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      if (isSidenavScroll) {
+        setAppState({ ...appState, isSidenavScroll: false });
+      }
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [isSidenavScroll]);
 
   return (
     <StyledHeader

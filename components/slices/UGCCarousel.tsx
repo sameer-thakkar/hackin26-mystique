@@ -24,6 +24,7 @@ import { parseCaption } from 'utils/stringUtils';
 import { modulus } from 'utils/integerUtils';
 import { expandFontToken } from 'const/typography';
 import { strings } from 'const/strings';
+import { generateSidenavId } from 'utils/helper';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -679,7 +680,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
     <>
       {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <StyledWrapper ref={myRef}>
-        <StyledHeading>
+        <StyledHeading id={generateSidenavId(heading || strings.UGC.HEADING)}>
           {heading || strings.UGC.HEADING}
           <div className="sub-heading">
             {subHeading || strings.UGC.SUB_HEADING}

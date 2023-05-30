@@ -25,6 +25,7 @@ import { isMBDesign, legacyBooleanCheck } from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import { csvTgidToArray, getHostName } from 'utils/helper';
 import { getPromoCodesDocument } from 'utils/prismicUtils';
+import { generateSidenavId } from 'utils/helper';
 
 const StyledProductsWrapper = styled.div`
   margin: 0 auto;
@@ -418,7 +419,11 @@ const PopulateProducts = (props: any) => {
               (sectionTitle || strings.TOUR_LIST_HEADING)
             }
           >
-            <h2>{isTicketCard ? sectionTitle : strings.TOUR_LIST_HEADING}</h2>
+            <h2
+              id={generateSidenavId(sectionTitle || strings.TOUR_LIST_HEADING)}
+            >
+              {isTicketCard ? sectionTitle : strings.TOUR_LIST_HEADING}
+            </h2>
           </Conditional>
           <Conditional
             if={

@@ -7,6 +7,7 @@ import Accordion from 'components/slices/Accordion';
 import RichContent from 'components/UI/RichContent';
 import TitleTextCombo from 'components/UI/TitleTextCombo';
 import { ESCAPE_REGEX, ESCAPE_REPLACER } from 'const/index';
+import { generateSidenavId } from 'utils/helper';
 
 /**
  *
@@ -57,7 +58,7 @@ const AccordionGroup = ({
       <div>
         <Conditional if={heading}>
           <TitleTextCombo>
-            <h2>{heading}</h2>
+            <h2 id={generateSidenavId(heading || '')}>{heading}</h2>
           </TitleTextCombo>
         </Conditional>
         {accordions.map((accordion, index) => {

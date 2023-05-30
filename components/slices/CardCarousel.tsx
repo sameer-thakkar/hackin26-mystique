@@ -8,6 +8,7 @@ import COLORS from 'const/colors';
 import { tourListApiParser } from 'utils/dataParsers';
 import type { SwiperProps } from 'swiper/react';
 import { fetchTourListV6 } from 'utils/apiUtils';
+import { generateSidenavId } from 'utils/helper';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -104,13 +105,14 @@ const CardCarouselContainer = styled.div`
 `;
 
 type OwnCardCarouselProps = {
-    cards: any[];
-    carouselHeading: string;
+  cards: any[];
+  carouselHeading: Array<{ spans: any; text: string; type: string }>;
 };
 
 type CardCarouselState = any;
 
-type CardCarouselProps = OwnCardCarouselProps & typeof CardCarousel.defaultProps;
+type CardCarouselProps = OwnCardCarouselProps &
+  typeof CardCarousel.defaultProps;
 
 /**
  * A simple carousel of cards displaying different products with prices (using TGIDs)
@@ -138,7 +140,10 @@ type CardCarouselProps = OwnCardCarouselProps & typeof CardCarousel.defaultProps
  *  - Link which will open on clicking the card
  */
 
-export default class CardCarousel extends Component<CardCarouselProps, CardCarouselState> {
+export default class CardCarousel extends Component<
+  CardCarouselProps,
+  CardCarouselState
+> {
   state = {
     isMobile: null,
     isClient: false,
@@ -149,7 +154,7 @@ export default class CardCarousel extends Component<CardCarouselProps, CardCarou
 
   static defaultProps = {
     cards: [],
-    carouselHeading: '',
+    carouselHeading: [],
   };
 
   async componentDidMount() {
@@ -224,9 +229,13 @@ export default class CardCarousel extends Component<CardCarouselProps, CardCarou
   render() {
     const { carouselHeading } = this.props;
     const { isClient } = this.state;
+    const headingId = carouselHeading?.map((el: TRichTextArray) => {
+      if (el.type === 'heading2') return generateSidenavId(el.text);
+    });
+
     return (
       <CardCarouselContainer>
-        <div className="card-carousel-heading">
+        <div className="card-carousel-heading" id={headingId[0]}>
           <RichText render={carouselHeading} />
         </div>
         <div className="carousel-slider">

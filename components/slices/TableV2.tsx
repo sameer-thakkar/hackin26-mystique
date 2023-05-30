@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import { RichText } from 'prismic-reactjs';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
+import { generateSidenavId, stringIdfy } from 'utils/helper';
 
 import RichContent from '../UI/RichContent';
 import { shortCodeSerializer } from '../../utils/shortCodes';
-import { stringIdfy } from '../../utils/helper';
 import TitleTextCombo from '../UI/TitleTextCombo';
 
 const StyledTable = styled.div`
@@ -106,7 +106,7 @@ const TableV2 = (props: any) => {
   return (
     <StyledTable>
       <TitleTextCombo id={stringIdfy(title)}>
-        <h2>{title}</h2>
+        <h2 id={generateSidenavId(title)}>{title}</h2>
         {description ? <RichContent render={description} /> : null}
       </TitleTextCombo>
       {rows.map((row: any, rowIndex: number) => {

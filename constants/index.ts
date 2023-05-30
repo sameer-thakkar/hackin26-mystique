@@ -340,6 +340,8 @@ export const ANALYTICS_EVENTS = {
   VIDEO_AUTOPLAY_STARTED: 'Video Autoplay Started',
   VIDEO_AUTOPLAY_FAILED: 'Video Autoplay Failed',
   SCROLL_TO_TOP: 'Scroll To Top Button Clicked',
+  TOC_OPENED: 'Table Of Contents Opened',
+  TOC_OPTION_SELECTED: 'Table of Contents Option Selected',
   TOOLTIP_VIEWED: 'Tooltip Viewed',
 };
 
@@ -573,6 +575,7 @@ export const SIDEBAR_TYPES = {
   FIXED: 'fixed',
   PRODUCT_CARD: 'product-card',
   COMBO_VARIANT: 'combo-variant',
+  SIDE_NAV: 'side-navigation',
 };
 
 export const DATE_FORMAT_TYPES = {
@@ -899,6 +902,7 @@ export const SLICE_TYPES = {
   CONTENT_TYPE_TAG: 'content_type_tag',
   BANNER: 'banner',
   RICH_TEXT: 'rich_text',
+  RICH_TEXT_ONLY: 'rich_text_only',
   INTERNAL_CONTENT_CARD: 'internal_content_card',
   FEATURE_BOX: 'feature_box',
   CARD_CAROUSEL: 'card_carousel',
@@ -906,9 +910,11 @@ export const SLICE_TYPES = {
   MICROBRAND_CARDS: 'microbrand_cards',
   IMAGE_LINKS_CAROUSEL: 'image_links_carousel',
   TAB_WRAPPER: 'tab_wrapper',
+  TAB_WRAPPER_START: 'tab_wrapper___start',
   TAB: 'tab',
   QUESTION: 'question',
   CARD_SECTION: 'card_section',
+  CARD_SECTION_START: 'card_section___start',
   CARD: 'card',
   IMAGE_GALLERY: 'image_gallery',
   BACKGROUND: 'background',
@@ -917,6 +923,13 @@ export const SLICE_TYPES = {
   CAROUSEL_GALLERY: 'carousel_gallery',
   AUTOMATED_COMPARISION_TABLE: 'automated_comparison_table',
   CUSTOM_LINKED_TOURS: 'custom_linked_tours',
+  IMAGE_TEXT_COMBO_GRID: 'image_text_combo_grid',
+  TABLE: 'table',
+  TABLE_V2_START: 'table_v2___start',
+  TICKET_CARDS: 'ticket_cards',
+  FULL_WIDTH_ACTION_CARD: 'full_width_action_card',
+  ACCORDION: 'accordion',
+  LISTICLE_SECTION_START: 'listicle_section___start',
 };
 
 export const CASHBACK_TYPES = {

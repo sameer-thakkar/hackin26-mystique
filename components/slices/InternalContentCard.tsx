@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import { HALYARD } from 'const/ui-constants';
 import Image from 'UI/Image';
+import { generateSidenavId } from 'utils/helper';
 
 const StyledInternalContentCard = styled.div`
   .more-reads-section {
@@ -67,7 +68,9 @@ export default class InternalContentCard extends PureComponent<any, any> {
     const { title, cards } = this.props;
     return (
       <StyledInternalContentCard>
-        <h2 className="heading">{title}</h2>
+        <h2 className="heading" id={generateSidenavId(title)}>
+          {title}
+        </h2>
         <div className="divider-1"></div>
         <div className="more-reads-section">
           {cards.map((card: any, index: number) => {

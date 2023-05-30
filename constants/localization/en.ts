@@ -453,6 +453,7 @@ const en = {
     UNTIL_MONTHS_FROM_PURCHASE:
       'These tickets are valid for {0} months from the date of purchase.',
   },
+  TABLE_OF_CONTENTS: 'Table of Contents',
   VIEW_LESS: 'View less',
   VIEW_MORE: 'View More',
   WHY_TAKE_THIS_DAY_TRIP: 'Why Take this Day Trip?',

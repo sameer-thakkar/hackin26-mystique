@@ -4,7 +4,7 @@ import type { SwiperProps } from 'swiper/react';
 import type { Swiper } from 'swiper/types';
 import Image from 'UI/Image';
 import RichContent from 'UI/RichContent';
-import { stringIdfy } from 'utils/helper';
+import { generateSidenavId, stringIdfy } from 'utils/helper';
 import { CHEVRON_RIGHT_CIRCLE } from 'assets/SvgIcons';
 import Conditional from 'components/common/Conditional';
 import { strings } from 'const/strings';
@@ -96,7 +96,7 @@ const CarouselGallery: React.FC<CarouselGalleryProps> = ({
   return (
     <>
       <Heading id={stringIdfy(heading)}>
-        <h2>{heading}</h2>
+        <h2 id={generateSidenavId(heading)}>{heading}</h2>
       </Heading>
       <CarouselContainer>
         <ImageGallery>

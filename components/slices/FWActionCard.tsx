@@ -5,6 +5,7 @@ import { RichText } from 'prismic-reactjs';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import Button from 'UI/Button';
 import { HALYARD } from 'const/ui-constants';
+import { generateSidenavId } from 'utils/helper';
 
 type FWActionCardProps = {
   title: string;
@@ -78,7 +79,7 @@ const StyledProductCardRight = styled.div`
 const FWActionCard: React.FC<FWActionCardProps> = ({ title, cards }) => {
   return (
     <>
-      <h2>{title}</h2>
+      <h2 id={generateSidenavId(title)}>{title}</h2>
       {cards.map((card, index) => (
         <StyledProductCard key={index}>
           <StyledProductCardLeft>

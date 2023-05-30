@@ -7,7 +7,7 @@ import PriceBlock from 'UI/PriceBlock';
 import Button from 'UI/Button';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
-import { getHostName } from 'utils/helper';
+import { generateSidenavId, getHostName } from 'utils/helper';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 
 const TicketCardsWrapper = styled.div`
@@ -151,7 +151,7 @@ const TicketCards: React.FC<TicketCardsProps> = ({
 
   return (
     <>
-      <h2>{title}</h2>
+      <h2 id={generateSidenavId(title)}>{title}</h2>
       {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <TicketCardsWrapper twoColumns={twoColumns}>
         {data.map(

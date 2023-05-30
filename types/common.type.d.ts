@@ -17,3 +17,9 @@ type Media = {
   description: string;
   credit: string;
 };
+
+type TRichTextArray = {
+  spans: Array<Object>;
+  type: string;
+  text: string;
+};

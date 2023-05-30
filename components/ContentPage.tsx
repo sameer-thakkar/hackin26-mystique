@@ -37,6 +37,8 @@ import {
 import COLORS from 'const/colors';
 import { expandFontToken } from 'const/typography';
 import { fetchTourListV6 } from 'utils/apiUtils';
+import sideNavHandler from 'utils/sideNavUtils';
+import SideNavModal from 'UI/SideNav';
 
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 
@@ -173,10 +175,35 @@ class ContentPage extends Component<any, any> {
       isMobile: props.isMobile,
       covid19AlertOpen: true,
       pageViewEventSet: false,
+      selectedHeading: '',
     };
   }
 
+  intersectionObserver: IntersectionObserver | null = null;
   async componentDidMount() {
+    const observerOptions = {
+      rootMargin: '0% 0% -80% 0%',
+    };
+    this.intersectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const targetId = entry.target.getAttribute('id');
+        if (entry.intersectionRatio > 0) {
+          this.setState({
+            ...this.state,
+            selectedHeading: targetId,
+          });
+        }
+      });
+    }, observerOptions);
+
+    document
+      .querySelectorAll("div[id^='sidenav'], h2[id^='sidenav']")
+      .forEach((headings) => {
+        if (this.intersectionObserver) {
+          this.intersectionObserver.observe(headings);
+        }
+      });
+
     const {
       enable_group_booking: enableGroupBooking,
     } = this.props.data.header_ref.data;
@@ -281,6 +308,12 @@ class ContentPage extends Component<any, any> {
     }
   }
 
+  componentWillUnmount() {
+    if (this.intersectionObserver) {
+      this?.intersectionObserver.disconnect();
+    }
+  }
+
   openGroupBookingModal = () => this.setState({ showGroupBookingModal: true });
   closeGroupBookingModal = () =>
     this.setState({ showGroupBookingModal: false });
@@ -323,6 +356,7 @@ class ContentPage extends Component<any, any> {
     const {
       alternate_languages,
       data,
+      categoryTourListData,
       first_publication_date: datePublished,
       last_publication_date: dateModified,
       lang,
@@ -343,9 +377,13 @@ class ContentPage extends Component<any, any> {
       body,
       microsite_document_ref,
       secondaryFooter,
+      side_navigation: sideNavToggle,
     } = data;
     const apiReady = tourAPIData !== null;
-
+    const slices = [
+      ...(data?.body || []),
+      ...(data?.content_framework?.data?.body || []),
+    ];
     const allTours = allToursParser(microsite?.data, scorpioData, {
       cardPrices: tourAPIData,
       isFetched: apiReady,
@@ -359,6 +397,10 @@ class ContentPage extends Component<any, any> {
       host,
       uid
     );
+    const sidenavItems = sideNavHandler(slices);
+    const showSideNav = sideNavToggle !== false && sidenavItems?.length > 2;
+    /* Using the condition sideNavToggle !== false because we want to keep side nav enabled by default for all content pages.
+     For new docs, we have set the default value as true, but older docs- the value comes as null. Hence the above condition. */
 
     // START Data extraction for populating head
     const contentPageHasOtherMetaTags = data.other_meta_tags.filter(
@@ -451,7 +493,9 @@ class ContentPage extends Component<any, any> {
       url: featured_image_link.url || featured_image.url,
       alt: featured_image_alt || featured_image.alt,
     };
-
+    const { collectionDetails } = categoryTourListData || {};
+    const { id: collectionId, displayName: collectionName } =
+      collectionDetails || {};
     const showGroupBooking = legacyBooleanCheck(enableGroupBooking);
     const currentLanguage = getLangObject(lang).code;
     const {
@@ -540,6 +584,16 @@ class ContentPage extends Component<any, any> {
             <Alert
               popupUID={alertPopup?.uid}
               currentLanguage={currentLanguage}
+            />
+          </Conditional>
+          <Conditional if={showSideNav}>
+            <SideNavModal
+              items={sidenavItems}
+              isMobile={this.props.isMobile}
+              collectionId={collectionId}
+              collectionName={collectionName}
+              pageTitle={featuredTitle}
+              visibleHeading={this.state.selectedHeading}
             />
           </Conditional>
           <StyledContentPage>

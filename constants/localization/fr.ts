@@ -402,6 +402,7 @@ const fr = {
     UNTIL_MONTHS_FROM_PURCHASE:
       'Ces billets sont valables pendant {0} mois à compter de la date d’achat.',
   },
+  TABLE_OF_CONTENTS: 'Sommaire',
   VIEW_LESS: 'Voir moins',
   VIEW_MORE: 'En savoir plus',
   WHY_TAKE_THIS_DAY_TRIP: 'Les avantages de cette excursion',

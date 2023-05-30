@@ -7,6 +7,7 @@ import Rating from 'UI/Rating';
 import Image from 'UI/Image';
 import COLORS from 'const/colors';
 import { QUOTES } from 'assets/SvgIcons';
+import { generateSidenavId } from 'utils/helper';
 
 const Slider = dynamic(() => import('UI/Slider'));
 dayjs.extend(relativeTime);
@@ -182,7 +183,7 @@ const Reviews: React.FC<{
   reviews: any[];
 }> = ({ type = 'regular', title = '', reviews }) => {
   const reviewSlides = reviews
-    .filter((review) => !!review.review_text.length)
+    .filter((review) => !!review.review_text?.length)
     .map((review, index) => {
       const n = (index % 202) + 1;
 
@@ -211,7 +212,7 @@ const Reviews: React.FC<{
 
   return (
     <StyledReviews reviewType={type}>
-      <Title>{title}</Title>
+      <Title id={generateSidenavId(title)}>{title}</Title>
       <Quotes>{QUOTES}</Quotes>
       <Slider
         sliderOptions={{

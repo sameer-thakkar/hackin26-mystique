@@ -401,6 +401,7 @@ const de = {
     UNTIL_MONTHS_FROM_PURCHASE:
       'Diese Tickets sind ab dem Kaufdatum {0} Monate gültig.',
   },
+  TABLE_OF_CONTENTS: 'Inhaltsverzeichnis',
   VIEW_LESS: 'Weniger anzeigen',
   VIEW_MORE: 'Mehr anzeigen',
   WHY_TAKE_THIS_DAY_TRIP: 'Die Vorteile dieses Tagesausflugs',

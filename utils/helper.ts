@@ -528,3 +528,7 @@ export const checkIfSportsSubCategory = (
 
 export const isF1SportsExperiment = (tgid: number): boolean =>
   F1_SPORTS_EXPERIMENT_TGIDS.includes(String(tgid));
+
+export const generateSidenavId = (heading: string) => {
+  return `sidenav-${stringIdfy(heading)}`;
+};

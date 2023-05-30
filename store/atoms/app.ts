@@ -10,5 +10,6 @@ export const appAtom = atom({
     initialCurrency: '',
     isPageLoaded: false,
     uid: '',
+    isSidenavScroll: false,
   },
 });

@@ -402,6 +402,7 @@ const nl = {
     UNTIL_MONTHS_FROM_PURCHASE:
       'Deze tickets zijn geldig voor {0} maanden vanaf de datum van aankoop.',
   },
+  TABLE_OF_CONTENTS: 'Overzicht',
   VIEW_LESS: 'Bekijk minder',
   VIEW_MORE: 'Meer Info',
   WHY_TAKE_THIS_DAY_TRIP: 'Waarom kiezen voor dit uitje?',

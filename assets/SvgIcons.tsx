@@ -1371,7 +1371,7 @@ export const BLACK_COLOR_CLOSE = (
   </svg>
 );
 
-type TCommonSvgProps = { fillColor: string };
+type TCommonSvgProps = { fillColor?: string; strokeColor?: string };
 
 export const STAR_FULL_NEW = ({ fillColor }: TCommonSvgProps) => (
   <svg
@@ -1585,7 +1585,7 @@ export const PLAY_BUTTON = (
   </svg>
 );
 
-export const TickSvg = () => {
+export const TickSvg = ({ strokeColor = COLORS.GRAY.G3 }) => {
   return (
     <svg
       width="16"
@@ -1596,7 +1596,7 @@ export const TickSvg = () => {
     >
       <path
         d="M14 3.3335L5.75 12.0002L2 8.06077"
-        stroke="#666666"
+        stroke={strokeColor}
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -1734,6 +1734,62 @@ export const CASHBACK_COIN = () => (
     <path
       d="M8.68926 3.71059C6.24463 3.71059 4.25586 5.86699 4.25586 8.51774C4.25586 11.1685 6.24463 13.3247 8.68926 13.3247C11.1339 13.3247 13.1227 11.1683 13.1227 8.51774C13.1227 5.86718 11.1339 3.71059 8.68926 3.71059ZM8.68926 12.4771C6.71206 12.4771 5.10329 10.7009 5.10329 8.51756C5.10329 6.33423 6.71206 4.55802 8.68926 4.55802C10.6665 4.55802 12.2752 6.33423 12.2752 8.51756C12.2752 10.7009 10.6665 12.4771 8.68926 12.4771Z"
       fill="#E29700"
+    />
+  </svg>
+);
+
+export const DOUBLE_CHEVRON = (
+  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none">
+    <path
+      fill="#222"
+      d="M.896 10.646a.5.5 0 1 0 .708.707l4.75-4.75a.5.5 0 0 0 0-.707l-4.75-4.75a.5.5 0 1 0-.708.708L5.293 6.25.896 10.646Zm4.75 0a.5.5 0 1 0 .707.707l4.75-4.75a.5.5 0 0 0 0-.707l-4.75-4.75a.5.5 0 1 0-.707.708l4.397 4.396-4.397 4.396Z"
+    />
+  </svg>
+);
+
+export const LIST_ICON = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+  >
+    <path
+      d="M5.33301 4H13.9997"
+      stroke="#222222"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M5.33301 8H13.9997"
+      stroke="#222222"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M5.33301 12H13.9997"
+      stroke="#222222"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M2 4H2.00667"
+      stroke="#222222"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M2 8H2.00667"
+      stroke="#222222"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M2 12H2.00667"
+      stroke="#222222"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );

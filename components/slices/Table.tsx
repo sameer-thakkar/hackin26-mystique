@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
+import { generateSidenavId } from 'utils/helper';
 
 import { shortCodeSerializer } from '../../utils/shortCodes';
 
@@ -54,7 +55,7 @@ export default class Table extends Component<any, any> {
     const tableColumns = this.subArrays(columnsData);
     return (
       <StyledTableV1>
-        <h3>{title}</h3>
+        <h2 id={generateSidenavId(title)}>{title}</h2>
         <table className="description-table">
           <tbody>
             {tableColumns.map((column: any, index: number) => {

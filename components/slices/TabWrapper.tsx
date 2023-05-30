@@ -14,8 +14,8 @@ import { metaAtom } from 'store/atoms/meta';
 import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
 import type { SwiperProps } from 'swiper/react';
+import { generateSidenavId, stringIdfy } from 'utils/helper';
 
-import { stringIdfy } from '../../utils/helper';
 import sliceHandler from '../Slices';
 import RichContent from '../UI/RichContent';
 import TitleTextCombo from '../UI/TitleTextCombo';
@@ -31,17 +31,19 @@ const StyledTabWrapper = styled.div`
     grid-auto-flow: column;
     grid-auto-columns: auto;
     ${expandFontToken('UI/Label Large')}
-    grid-column-gap: ${({    
- // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
- isGlobalMb }) => (isGlobalMb ? '48px' : '32px')};
+    grid-column-gap: ${({
+      // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+      isGlobalMb,
+    }) => (isGlobalMb ? '48px' : '32px')};
     border-bottom: 1px solid #ebebeb;
     justify-content: left;
     &::-webkit-scrollbar {
       display: none;
     }
-    ${({    
- // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
- isGlobalMb }) =>
+    ${({
+      // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+      isGlobalMb,
+    }) =>
       isGlobalMb &&
       `
       line-height: 20px;
@@ -50,9 +52,10 @@ const StyledTabWrapper = styled.div`
 
   .tab-content-wrap {
     display: grid;
-    ${({    
- // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
- isGlobalMb }) => isGlobalMb && `margin-top: 8px;`}
+    ${({
+      // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+      isGlobalMb,
+    }) => isGlobalMb && `margin-top: 8px;`}
   }
 
   h1,
@@ -66,17 +69,19 @@ const StyledTabWrapper = styled.div`
   }
 
   h2 {
-    ${({    
- // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
- isGlobalMb }) => isGlobalMb && `margin-bottom: 0 !important;`}
+    ${({
+      // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+      isGlobalMb,
+    }) => isGlobalMb && `margin-bottom: 0 !important;`}
   }
   @media (max-width: 768px) {
     .tabs {
       overflow-x: scroll;
       grid-auto-columns: max-content;
-      ${({      
- // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
- isGlobalMb }) => isGlobalMb && `grid-column-gap: 32px;`}
+      ${({
+        // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+        isGlobalMb,
+      }) => isGlobalMb && `grid-column-gap: 32px;`}
     }
   }
 `;
@@ -85,9 +90,10 @@ const StyledTab = styled.div`
   cursor: pointer;
   padding-bottom: 8px;
   width: 100%;
-  ${({  
- // @ts-expect-error TS(2339): Property 'isActive' does not exist on type 'Pick<D... Remove this comment to see the full error message
- isActive }) => {
+  ${({
+    // @ts-expect-error TS(2339): Property 'isActive' does not exist on type 'Pick<D... Remove this comment to see the full error message
+    isActive,
+  }) => {
     return (
       isActive &&
       `
@@ -162,9 +168,10 @@ const SlideControls = styled.div`
     z-index: 2;
     svg {
       fill: ${COLORS.BRAND.WHITE};
-      width: ${({      
- // @ts-expect-error TS(2339): Property 'isMobile' does not exist on type 'Pick<D... Remove this comment to see the full error message
- isMobile }) => (isMobile ? '32px' : 'auto')};
+      width: ${({
+        // @ts-expect-error TS(2339): Property 'isMobile' does not exist on type 'Pick<D... Remove this comment to see the full error message
+        isMobile,
+      }) => (isMobile ? '32px' : 'auto')};
       circle {
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
       }
@@ -182,7 +189,7 @@ const SlideControls = styled.div`
 `;
 
 type TabWrapperProps = {
-  heading: String;
+  heading: string;
   slices: Array<any>;
   sliceProps?: Object;
   description?: any[];
@@ -228,7 +235,9 @@ const TabWrapper = (props: TabWrapperProps) => {
   );
   const [activeTabId, setActiveTab] = useState(defaultTab);
   const [activeTabIndex, setActiveTabIndex] = useState(
-    slices.indexOf((slice: any) => legacyBooleanCheck(slice.primary.is_default)) ?? 0
+    slices.indexOf((slice: any) =>
+      legacyBooleanCheck(slice.primary.is_default)
+    ) ?? 0
   );
   let sliceProps: any = {
     activeTabId,
@@ -259,14 +268,22 @@ const TabWrapper = (props: TabWrapperProps) => {
 
   useEffect(() => {
     const setScrollPosition = () => {
-        // @ts-expect-error TS(2339): Property 'scrollLeft' does not exist on type '{}'.
-        const { scrollLeft, clientWidth, scrollWidth } = tabsContanier?.current ?? {};
-        setIsAtStart(scrollLeft === 0);
-        setIsAtEnd(scrollLeft + clientWidth >= scrollWidth);
+      // @ts-expect-error TS(2339): Property 'scrollLeft' does not exist on type '{}'.
+      const { scrollLeft, clientWidth, scrollWidth } =
+        tabsContanier?.current ?? {};
+      setIsAtStart(scrollLeft === 0);
+      setIsAtEnd(scrollLeft + clientWidth >= scrollWidth);
     };
-    (tabsContanier?.current as any)?.addEventListener('scroll', setScrollPosition);
-    return () => (tabsContanier?.current as any)?.removeEventListener('scroll', setScrollPosition);
-}, []);
+    (tabsContanier?.current as any)?.addEventListener(
+      'scroll',
+      setScrollPosition
+    );
+    return () =>
+      (tabsContanier?.current as any)?.removeEventListener(
+        'scroll',
+        setScrollPosition
+      );
+  }, []);
 
   // isMobile effect
   useEffect(() => {
@@ -274,35 +291,34 @@ const TabWrapper = (props: TabWrapperProps) => {
   }, [width, setIsMobile]);
 
   useEffect(() => {
-    if (isMobile)
-        return;
+    if (isMobile) return;
     updateBeginning((swiper as any)?.isBeginning);
     updateEnd((swiper as any)?.isEnd);
     if (swiper !== null) {
-        (swiper as any).on('slideChange', updateIndex);
+      (swiper as any).on('slideChange', updateIndex);
     }
     return () => {
-        if (swiper !== null) {
-            (swiper as any).off('slideChange', updateIndex);
-        }
+      if (swiper !== null) {
+        (swiper as any).off('slideChange', updateIndex);
+      }
     };
-}, [isMobile, swiper, updateIndex]);
+  }, [isMobile, swiper, updateIndex]);
 
   const onTabClick = ({
     tabId,
     index,
     heading,
     isScrollTab = false,
-    scrollTarget = null
+    scrollTarget = null,
   }: any) => {
     setActiveTab(tabId);
     setActiveTabIndex(index);
 
     if (isScrollTab && scrollTarget) {
       (tabsContanier?.current as any)?.scrollTo({
-    left: scrollTarget.offsetLeft - scrollTarget.offsetWidth / 2,
-    behavior: 'smooth',
-});
+        left: scrollTarget.offsetLeft - scrollTarget.offsetWidth / 2,
+        behavior: 'smooth',
+      });
     }
 
     trackEvent({
@@ -329,7 +345,10 @@ const TabWrapper = (props: TabWrapperProps) => {
 
     setActiveTabIndex(newTabIndex);
     setActiveTab(stringIdfy(slices[newTabIndex]?.primary?.title));
-    (tabsContanier?.current as any)?.scrollBy({ left: width * 0.1, behavior: 'smooth' });
+    (tabsContanier?.current as any)?.scrollBy({
+      left: width * 0.1,
+      behavior: 'smooth',
+    });
   };
 
   if (isGlobalMb && !isMobile) {
@@ -360,7 +379,7 @@ const TabWrapper = (props: TabWrapperProps) => {
         {/* @ts-expect-error TS(2769): No overload matches this call. */}
         <TitleTextCombo noMargin={true}>
           <Conditional if={heading?.length}>
-            <h2>{tabSectionHeading}</h2>
+            <h2 id={generateSidenavId(heading)}>{tabSectionHeading}</h2>
           </Conditional>
           {description ? <RichContent render={description} /> : null}
         </TitleTextCombo>
@@ -432,7 +451,7 @@ const TabWrapper = (props: TabWrapperProps) => {
       {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <TitleTextCombo noMargin={true}>
         <Conditional if={heading?.length}>
-          <h2>{heading}</h2>
+          <h2 id={generateSidenavId(heading)}>{heading}</h2>
         </Conditional>
         {description ? <RichContent render={description} /> : null}
       </TitleTextCombo>

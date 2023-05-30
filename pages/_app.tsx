@@ -158,6 +158,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
       initialCurrency: ssrCurrencyCode,
       isPageLoaded: false,
       uid,
+      isSidenavScroll: false,
     });
     set(currencyListAtom, currencyList);
     set(currencyAtom, ssrCurrencyCode);

@@ -413,6 +413,7 @@ const it = {
     UNTIL_MONTHS_FROM_PURCHASE:
       'Questi biglietti sono validi per {0} mesi a partire dalla data di acquisto.',
   },
+  TABLE_OF_CONTENTS: 'Sommario',
   VIEW_LESS: 'Mostra meno',
   VIEW_MORE: 'Leggi tutto',
   WHY_TAKE_THIS_DAY_TRIP: 'Perché vale la pena partecipare a questa gita?',

@@ -1,13 +1,37 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { createPortal } from 'react-dom';
 import { useRouter } from 'next/router';
-import styled from 'styled-components';
-import { CLOSE_WHITE, BackArrow } from 'assets/SvgIcons';
+import styled, { css, keyframes } from 'styled-components';
+import {
+  CLOSE_WHITE,
+  BackArrow,
+  DOUBLE_CHEVRON,
+  LIST_ICON,
+} from 'assets/SvgIcons';
 import { useState, useEffect, useRef } from 'react';
 import COLORS from 'const/colors';
 import { SIDEBAR_TYPES } from 'const/index';
 import useWindowSize from 'hooks/useWindowSize';
 import { addUrlParams } from 'utils/urlUtils';
+import { expandFontToken } from 'const/typography';
+import { FONTS } from 'const/fonts';
+import Conditional from 'components/common/Conditional';
+import { scroller } from 'react-scroll';
+
+const fadeRight = (from: string, to: string) => keyframes`
+from {
+  transform: translateX(${from});
+  height: 0;
+  width: 10.25rem;
+  opacity: 0;
+}
+to {
+  transform: translateX(${to});
+  height: 90%;
+  width: 14.625rem;
+  opacity: 1;
+}
+`;
 
 export const StyledAsideModal = styled.div`
   position: fixed;
@@ -16,22 +40,39 @@ export const StyledAsideModal = styled.div`
   height: 100vh;
   overflow-y: scroll;
   scroll-behavior: smooth;
-  padding: 20px ${({  
- // @ts-expect-error TS(2339): Property 'sidePadding' does not exist on type 'Pic... Remove this comment to see the full error message
- sidePadding }) => (sidePadding ? sidePadding : '24')}px;
+  padding: 20px
+    ${({ sidePadding }: { sidePadding: number }) =>
+      sidePadding ? sidePadding : '24'}px;
   padding-top: 0;
   max-width: calc(
-    ${({    
- // @ts-expect-error TS(2339): Property 'width' does not exist on type 'Pick<Deta... Remove this comment to see the full error message
- width }) => (width ? (1440 * parseFloat(width)) / 100 : '606')}px -
-      48px
+    ${({ width }: { width: string | null }) =>
+      width ? (1440 * parseFloat(width)) / 100 : '606'}px - 48px
   );
   width: calc(
-    ${({    
- // @ts-expect-error TS(2339): Property 'width' does not exist on type 'Pick<Deta... Remove this comment to see the full error message
- width, sidePadding }) =>
+    ${({ width, sidePadding }: { sidePadding: number; width: string | null }) =>
       `${width ? width : '27.5vw'} - ${sidePadding ? sidePadding * 2 : '48'}px`}
   );
+  ${({
+    // @ts-expect-error TS(2339): Property 'sidebarType' does not exist on type 'Pic... Remove this comment to see the full error message
+    sidebarType,
+  }) =>
+    sidebarType === SIDEBAR_TYPES.SIDE_NAV
+      ? css`
+          animation: ${fadeRight('-2.5rem', '0')} 300ms ease-in-out;
+          padding: 0 0 1.25rem;
+          right: unset;
+          left: 2.5rem;
+          height: 90%;
+          border-radius: 8px;
+          margin-top: 1.5rem;
+          ::-webkit-scrollbar {
+            display: none;
+          }
+          @media (max-width: 768px) {
+            animation: unset;
+          }
+        `
+      : ``}
   background: ${COLORS.BRAND.WHITE};
   z-index: 100;
   @media (max-width: 768px) {
@@ -41,9 +82,10 @@ export const StyledAsideModal = styled.div`
     -webkit-overflow-scrolling: touch;
     max-width: unset;
     width: unset;
-    ${({    
- // @ts-expect-error TS(2339): Property 'sidebarType' does not exist on type 'Pic... Remove this comment to see the full error message
- sidebarType }) =>
+    ${({
+      // @ts-expect-error TS(2339): Property 'sidebarType' does not exist on type 'Pic... Remove this comment to see the full error message
+      sidebarType,
+    }) =>
       sidebarType === SIDEBAR_TYPES.PRODUCT_CARD
         ? `
       height: auto;
@@ -59,6 +101,13 @@ export const StyledAsideModal = styled.div`
       padding: 0;
       background: ${COLORS.BRAND.BLACK};
     `
+        : sidebarType === SIDEBAR_TYPES.SIDE_NAV
+        ? `
+      left: unset;
+      box-sizing: border-box;
+      width: 100%;
+      border-radius: 20px 20px 0 0;
+      `
         : ``}
   }
 `;
@@ -67,13 +116,14 @@ const Header = styled.div`
   grid-template-columns: auto auto;
   padding-top: 20px;
   padding-bottom: 24px;
-  position: ${({  
- // @ts-expect-error TS(2339): Property 'headerType' does not exist on type 'Pick... Remove this comment to see the full error message
- headerType }) =>
-    headerType === SIDEBAR_TYPES.PRODUCT_CARD ? 'unset' : 'sticky'};
-  ${({  
- // @ts-expect-error TS(2339): Property 'headerType' does not exist on type 'Pick... Remove this comment to see the full error message
- headerType }) =>
+  position: ${({
+    // @ts-expect-error TS(2339): Property 'headerType' does not exist on type 'Pick... Remove this comment to see the full error message
+    headerType,
+  }) => (headerType === SIDEBAR_TYPES.PRODUCT_CARD ? 'unset' : 'sticky')};
+  ${({
+    // @ts-expect-error TS(2339): Property 'headerType' does not exist on type 'Pick... Remove this comment to see the full error message
+    headerType,
+  }) =>
     headerType === SIDEBAR_TYPES.PRODUCT_CARD
       ? `
       width: calc(100% - 32px);
@@ -91,20 +141,51 @@ const Header = styled.div`
         }
       }
     `
+      : headerType === SIDEBAR_TYPES.SIDE_NAV
+      ? ` 
+      padding: 0.75rem 1rem;
+      .close-icon {
+        transform: rotate(180deg);
+      }
+        @media (max-width: 768px) {
+          display: grid;
+          grid-template-columns: 1.75rem auto auto;
+          border-bottom: 1px solid ${COLORS.GRAY.G6};
+
+          .close-icon {
+          padding: 0 0.375rem;
+          background: ${COLORS.GRAY.G8};
+          border-radius: 4px;
+          svg {
+            height: 10px;
+            width: 10px;
+          }
+          path {
+            stroke: #545454;
+            stroke-width: 1.8px;
+          }
+        }
+      }
+      `
       : ''}
   top: 0;
-  background: ${({  
- // @ts-expect-error TS(2339): Property 'addBg' does not exist on type 'Pick<Deta... Remove this comment to see the full error message
- addBg, isGlobalMb }) =>
+  background: ${({
+    addBg,
+    isGlobalMb,
+  }: {
+    addBg: boolean;
+    isGlobalMb: boolean;
+  }) =>
     addBg
       ? COLORS.BRAND.WHITE
       : isGlobalMb
       ? COLORS.BRAND.WHITE
       : 'transparent'};
   z-index: 12;
-  ${({  
- // @ts-expect-error TS(2339): Property 'headerType' does not exist on type 'Pick... Remove this comment to see the full error message
- headerType }) =>
+  ${({
+    // @ts-expect-error TS(2339): Property 'headerType' does not exist on type 'Pick... Remove this comment to see the full error message
+    headerType,
+  }) =>
     headerType === SIDEBAR_TYPES.COMBO_VARIANT
       ? `
       width: calc(100% - 32px);
@@ -126,9 +207,7 @@ const Header = styled.div`
   @media (max-width: 768px) {
     &:before,
     &:after {
-      ${({      
- // @ts-expect-error TS(2339): Property 'addBg' does not exist on type 'Pick<Deta... Remove this comment to see the full error message
- addBg }) => (addBg ? `content: '';` : '')};
+      ${({ addBg }) => (addBg ? `content: '';` : '')};
       display: block;
       width: 24px;
       position: absolute;
@@ -143,20 +222,32 @@ const Header = styled.div`
     }
   }
 `;
+
+const StyledIcon = styled.div`
+  padding-top: 0.2rem;
+`;
 const CloseIcon = styled.div`
   justify-self: right;
   cursor: pointer;
-  path {
-    stroke: #545454;
-    stroke-width: 1.8px;
-  }
   z-index: 999;
+  ${({ sidebarType }: { sidebarType: string }) =>
+    sidebarType !== SIDEBAR_TYPES.SIDE_NAV
+      ? `
+      path {
+        stroke: #545454;
+        stroke-width: 1.8px;
+      }`
+      : ''}
 `;
+
 const Title = styled.div`
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 20px;
+  ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)}
+  @media (max-width: 768px) {
+    ${({ sidebarType }: { sidebarType: string }) =>
+      sidebarType === SIDEBAR_TYPES.SIDE_NAV
+        ? `
+    ${expandFontToken(FONTS.HEADING_SMALL)}`
+        : ``}
 `;
 const BackIcon = styled.div`
   grid-column: 1 / 2;
@@ -175,9 +266,13 @@ const Mask = styled.div`
   }
 `;
 const ModalContent = styled.div`
-  ${({  
- // @ts-expect-error TS(2339): Property 'sidebarType' does not exist on type 'Pic... Remove this comment to see the full error message
- sidebarType, windowHeight }) =>
+  ${({
+    sidebarType,
+    windowHeight,
+  }: {
+    sidebarType: string;
+    windowHeight: number;
+  }) =>
     sidebarType === SIDEBAR_TYPES.PRODUCT_CARD
       ? `
   overflow-x: scroll;
@@ -188,6 +283,18 @@ const ModalContent = styled.div`
       ? `
   overflow-x: scroll;
   height: ${windowHeight - 46}px;`
+      : sidebarType === SIDEBAR_TYPES.SIDE_NAV
+      ? `
+      overflow-y: scroll;
+      height: 95%;
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-thumb {
+        border: 4px solid ${COLORS.BRAND.WHITE};
+        border-radius: 1000px;
+        background-color: ${COLORS.GRAY.G4A};
+      }`
       : ``}
 `;
 
@@ -205,7 +312,7 @@ const AsideModal = ({
   type,
   isGlobalMb = false,
   onCloseCallback = null,
-  isQueryRestore = false
+  isQueryRestore = false,
 }: any) => {
   const container = useRef(null);
   // @ts-expect-error TS(2322): Type 'HTMLElement' is not assignable to type 'null... Remove this comment to see the full error message
@@ -219,6 +326,11 @@ const AsideModal = ({
   const router = useRouter();
 
   useEffect(() => {
+    scroller.scrollTo('active-element', {
+      duration: 100,
+      smooth: 'easeInOutQuart',
+      containerId: 'side-container-index',
+    });
     const onPopState = () => {
       onClose(null, { triggeredByPopstate: true });
     };
@@ -294,7 +406,10 @@ const AsideModal = ({
               sidePadding={sidePadding}
               isGlobalMb={isGlobalMb}
             >
-              <Title>{title}</Title>
+              <Conditional if={type === SIDEBAR_TYPES.SIDE_NAV && isMobile}>
+                <StyledIcon>{LIST_ICON}</StyledIcon>
+              </Conditional>
+              <Title sidebarType={type}>{title}</Title>
               {hasBack ? (
                 <BackIcon
                   // @ts-expect-error TS(2769): No overload matches this call.
@@ -303,14 +418,26 @@ const AsideModal = ({
                   {BackArrow}
                 </BackIcon>
               ) : (
-                // @ts-expect-error TS(2769): No overload matches this call.
-                <CloseIcon className={'close-icon'} onClick={onClose}>
-                  {CLOSE_WHITE}
+                <CloseIcon
+                  className={'close-icon'}
+                  /* @ts-expect-error TS(2769): No overload matches this call. */
+                  onClick={
+                    type === SIDEBAR_TYPES.SIDE_NAV ? onCloseAll : onClose
+                  }
+                  sidebarType={type}
+                >
+                  {type === SIDEBAR_TYPES.SIDE_NAV && !isMobile
+                    ? DOUBLE_CHEVRON
+                    : CLOSE_WHITE}
                 </CloseIcon>
               )}
             </Header>
-            {/* @ts-expect-error TS(2769): No overload matches this call. */}
-            <ModalContent windowHeight={windowHeight} sidebarType={type}>
+            <ModalContent
+              /* @ts-expect-error TS(2769): No overload matches this call. */
+              windowHeight={windowHeight}
+              sidebarType={type}
+              id="side-container-index"
+            >
               {children}
             </ModalContent>
           </StyledAsideModal>

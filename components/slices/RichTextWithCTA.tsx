@@ -9,6 +9,7 @@ import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
 import { CHEVRON_DOWN } from 'assets/SvgIcons';
 import { strings } from 'const/strings';
+import { generateSidenavId } from 'utils/helper';
 
 const Wrapper = styled.div<{
   $isExpanded: boolean;
@@ -79,6 +80,16 @@ const RichtextWithCTA = (props: any) => {
       {props.slices.map((block: any, index: number) => {
         const { content_height: contentHeight, cta_text, text: textArray } =
           block || {};
+        const idArray = textArray.reduce(
+          (acc: Array<string>, el: TRichTextArray) => {
+            if (el?.type === 'heading2') {
+              acc.push(generateSidenavId(el?.text));
+            }
+            return acc;
+          },
+          []
+        );
+
         return (
           <Wrapper
             key={index}
@@ -87,7 +98,7 @@ const RichtextWithCTA = (props: any) => {
             // @ts-expect-error TS(2769): No overload matches this call.
             $hasCTA={cta_text}
           >
-            <div className="rich-text">
+            <div className="rich-text" id={idArray?.[0]}>
               <RichText
                 render={textArray}
                 htmlSerializer={shortCodeSerializer}

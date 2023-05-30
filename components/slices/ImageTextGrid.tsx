@@ -5,6 +5,7 @@ import { RichText } from 'prismic-reactjs';
 import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
 import Image from 'UI/Image';
+import { generateSidenavId } from 'utils/helper';
 
 import { shortCodeSerializer } from '../../utils/shortCodes';
 
@@ -13,7 +14,7 @@ type ImageTextProps = {
   cards: any[];
 };
 
-const StyledWrapper = styled.div `
+const StyledWrapper = styled.div`
   display: grid;
   grid-gap: 1.5em;
   grid-template-columns: repeat(${(props) => (props as any).colsProps}, 1fr);
@@ -79,7 +80,9 @@ const ImageTextGrid: React.FC<ImageTextProps> = ({ cards, cols }) => (
   <StyledWrapper colsProps={cols}>
     {cards.map((card, index) => (
       <StyledComboCard key={index}>
-        <h2 className="title">{card.card_title}</h2>
+        <h2 className="title" id={generateSidenavId(card.card_title)}>
+          {card.card_title}
+        </h2>
         <Image
           width={580}
           height={300}

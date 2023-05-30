@@ -15,6 +15,7 @@ import { STAR_FULL } from 'assets/SvgIcons';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
 import { DESIGN } from 'const/index';
+import { generateSidenavId } from 'utils/helper';
 
 const Tour = styled.a`
   display: grid;
@@ -162,10 +163,13 @@ const CustomLinkedTours = ({
       redirectToHeadoutBookingFlow,
       flowType,
     });
+  const headingId = content?.map((el: TRichTextArray) => {
+    if (el.type === 'heading2') return generateSidenavId(el.text);
+  });
   return (
     // @ts-expect-error TS(2769): No overload matches this call.
     <StyledCustomLinkedTours design={design}>
-      <TitleTextCombo>
+      <TitleTextCombo id={headingId?.[0]}>
         <RichContent render={content} />
       </TitleTextCombo>
       <TourGrid>

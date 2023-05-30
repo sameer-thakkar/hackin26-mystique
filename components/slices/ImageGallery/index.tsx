@@ -10,7 +10,7 @@ import Conditional from 'components/common/Conditional';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import { strings } from 'const/strings';
 import { CHEVRON_LEFT_CIRCLE, CLOSE_WHITE, MapSvg } from 'assets/SvgIcons';
-import { stringIdfy, truncate } from 'utils/helper';
+import { generateSidenavId, truncate } from 'utils/helper';
 import type { SwiperProps } from 'swiper/react';
 import GridLayout from 'components/slices/ImageGallery/components/GridLayout';
 import type { ImageGalleryProps } from 'components/slices/ImageGallery/interface';
@@ -166,9 +166,9 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
 
   return (
     <StyledImageGallery>
-      <div className="heading" id={stringIdfy(heading)}>
+      <h2 className="heading" id={generateSidenavId(heading)}>
         {heading}
-      </div>
+      </h2>
 
       <GridLayoutContainer>
         <GridLayout>

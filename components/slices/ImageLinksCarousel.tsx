@@ -13,6 +13,7 @@ import { stringIdfy } from 'utils/helper';
 import { MBContext } from 'contexts/MBContext';
 import { DESIGN } from 'const/index';
 import type { SwiperProps } from 'swiper/react';
+import { generateSidenavId } from 'utils/helper';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
@@ -291,7 +292,7 @@ const ImageLinksCarousel: React.FC<ImageLinksCarouselProps> = (props) => {
   return (
     <StyledWrapper>
       <StyledContent design={design}>
-        <h2>{heading}</h2>
+        <h2 id={generateSidenavId(heading)}>{heading}</h2>
         <div>
           <RichText render={description} htmlSerializer={shortCodeSerializer} />
         </div>
