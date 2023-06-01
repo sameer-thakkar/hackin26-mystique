@@ -30,7 +30,12 @@ import { checkIfLTTMB } from 'utils/helper';
 import { parseDescriptors, shouldUseDynamicShowPage } from 'utils/productUtils';
 import { descriptorIcons } from 'const/descriptorIcons';
 
-const ProductCard = styled.div<{ $isV3Design?: boolean }>`
+const ProductCard = styled.div<{
+  $isV3Design?: boolean;
+  singleCard?: boolean;
+  categoryFontNameStyles?: string;
+  productCardHeight?: number;
+}>`
   width: 100%;
   height: 100%;
   max-width: 100%;
@@ -54,11 +59,6 @@ const ProductCard = styled.div<{ $isV3Design?: boolean }>`
     margin-top: 4px;
     color: ${COLORS.TEXT.BEACH};
     ${expandFontToken(FONTS.UI_LABEL_SMALL)}
-  }
-
-  .product-v2-image {
-    display: block;
-    position: relative;
   }
 
   .overlay-booster {
@@ -114,11 +114,9 @@ const ProductCard = styled.div<{ $isV3Design?: boolean }>`
   }
 
   .descriptors {
+    ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
     display: flex;
     align-items: center;
-    font-weight: 300;
-    font-size: 14px;
-    line-height: 16px;
     padding: 0.2rem 0;
 
     .descSvg {
@@ -207,11 +205,16 @@ const ProductCard = styled.div<{ $isV3Design?: boolean }>`
   }
 
   @media (max-width: 768px) {
-    grid-template-rows: ${({ $isV3Design }) =>
-        $isV3Design ? '204px' : '102px'} auto;
+    grid-template-rows: ${({ $isV3Design, productCardHeight, singleCard }) =>
+        singleCard
+          ? `${productCardHeight}px`
+          : $isV3Design
+          ? '204px'
+          : '102px'} auto;
     transform: unset;
     transition: unset;
     grid-row-gap: 10px;
+
     &:hover {
       transform: unset;
     }
@@ -222,7 +225,11 @@ const ProductCard = styled.div<{ $isV3Design?: boolean }>`
     }
 
     .product-v2-title {
-      ${expandFontToken(FONTS.HEADING_XS)}
+      ${({ singleCard }) => {
+        return singleCard
+          ? `${expandFontToken(FONTS.HEADING_PRODUCT_CARD)}`
+          : `${expandFontToken(FONTS.HEADING_XS)}`;
+      }}
     }
 
     .product-v2-bottom {
@@ -258,7 +265,11 @@ const ProductCard = styled.div<{ $isV3Design?: boolean }>`
     }
 
     .l1-booster-wrapper {
-      ${expandFontToken(FONTS.UI_LABEL_XS)}
+      ${({ singleCard }) => {
+        return singleCard
+          ? `${expandFontToken(FONTS.SUBHEADING_XS)}`
+          : `${expandFontToken(FONTS.UI_LABEL_XS)}`;
+      }}
     }
 
     .avg-rating svg {
@@ -274,40 +285,6 @@ const ProductCard = styled.div<{ $isV3Design?: boolean }>`
     .reopening {
       ${expandFontToken(FONTS.UI_LABEL_XS)}
     }
-  }
-
-  .product-v2-image img {
-    height: auto;
-    max-width: 100%;
-    max-height: 100%;
-    display: block;
-    width: 100%;
-    object-fit: cover;
-    border-radius: 4px;
-    font-family: ${HALYARD.FONT_STACK};
-    background: #ebebeb;
-    font-weight: 600;
-    color: #bababa;
-    position: relative;
-    line-height: 1.4;
-  }
-
-  .product-v2-image img::after {
-    content: ' ' attr(alt);
-    position: relative;
-    height: calc(100% - 4px);
-    width: calc(100% - 10px);
-    background: #dadada;
-    left: 0px;
-    top: 0px;
-    padding-top: 4px;
-    padding-left: 10px;
-    font-size: 14px;
-    text-transform: capitalize;
-  }
-
-  a {
-    text-decoration: none;
   }
 
   .product-v2-boosters p {
@@ -327,13 +304,59 @@ const ProductCard = styled.div<{ $isV3Design?: boolean }>`
   }
 
   @media (max-width: 768px) {
-    .product-v2-image img {
-      height: ${({ $isV3Design }) => ($isV3Design ? '' : '102px')};
-      border-radius: 4px;
-    }
-
     .product-v2-boosters {
       font-size: 12px;
+    }
+  }
+`;
+
+const ProductImage = styled.div<{
+  singleCard?: boolean;
+  categoryFontNameStyles?: string;
+  productCardHeight?: number;
+}>`
+  display: block;
+  position: relative;
+
+  img {
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+    font-family: ${HALYARD.FONT_STACK};
+    background: #ebebeb;
+    font-weight: 600;
+    color: #bababa;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  img::after {
+    content: ' ' attr(alt);
+    position: relative;
+    height: calc(100% - 4px);
+    width: calc(100% - 10px);
+    background: #dadada;
+    left: 0px;
+    top: 0px;
+    padding-top: 4px;
+    padding-left: 10px;
+    font-size: 14px;
+    text-transform: capitalize;
+  }
+  a {
+    text-decoration: none;
+  }
+
+  @media (max-width: 768px) {
+    img {
+      height: ${({ singleCard, productCardHeight }) => {
+        return singleCard ? `${productCardHeight}px` : '102px';
+      }};
+      border-radius: 4px;
     }
   }
 `;
@@ -360,7 +383,11 @@ const Product = (props: any) => {
     host,
     productClick,
     isV3Design,
+    showPriceBlock = true,
+    showSecondaryDescriptors = true,
+    productCardStyles,
   } = props;
+
   const currency = useRecoilValue(currencyAtom);
   const {
     lang,
@@ -376,10 +403,12 @@ const Product = (props: any) => {
   if (!allTours[tgid]) return null;
 
   const { listingPrice, flowType, ...tour } = allTours[tgid] || {};
+
   const {
     allTags,
     productImage,
     title,
+    name,
     vendor,
     category,
     reopeningDate,
@@ -390,13 +419,12 @@ const Product = (props: any) => {
     hasSpecialOffer,
     urlSlugs,
   } = tour || {};
+
+  const { singleCard, productCardHeight } = productCardStyles ?? {};
+
   const isLTT = checkIfLTTMB(uid);
-  const {
-    originalPrice,
-    finalPrice,
-    cashbackType,
-    cashbackValue,
-  } = listingPrice;
+  const { originalPrice, finalPrice, cashbackType, cashbackValue } =
+    listingPrice ?? {};
   const save = Math.round(((originalPrice - finalPrice) / originalPrice) * 100);
 
   const { collectionName, primaryCategoryName, primarySubCategoryName } =
@@ -408,7 +436,8 @@ const Product = (props: any) => {
   const filteredDescriptors = parseDescriptors(secondaryDescriptors);
 
   if (isEntertainmentMb) {
-    categoryName = primarySubCategoryName;
+    categoryName =
+      allTours[tgid]?.primarySubCategory?.name || primarySubCategoryName;
   } else {
     if (collectionId) {
       if (primaryCatId) {
@@ -479,7 +508,7 @@ const Product = (props: any) => {
       [ANALYTICS_PROPERTIES.SUB_CAT_ID]: primarySubCategory?.id,
       [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: primarySubCategory?.displayName,
       [ANALYTICS_PROPERTIES.COLLECTION_ID]: activeCategoryId,
-      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: title,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: title ?? name,
       [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Product Card',
       [ANALYTICS_PROPERTIES.DIV_TYPE]: 'Product List',
       [ANALYTICS_PROPERTIES.CASHBACK_SHOWN]:
@@ -519,7 +548,7 @@ const Product = (props: any) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_EXPANDED,
       [ANALYTICS_PROPERTIES.TGID]: tgid,
-      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: title,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: title ?? name,
       [ANALYTICS_PROPERTIES.CATEGORY_ID]: primaryCategory?.id,
       [ANALYTICS_PROPERTIES.CATEGORY_NAME]: primaryCategory?.displayName,
       [ANALYTICS_PROPERTIES.SUB_CAT_ID]: primarySubCategory?.id,
@@ -561,18 +590,27 @@ const Product = (props: any) => {
       role="button"
       tabIndex={0}
       $isV3Design={isV3Design}
+      singleCard={!!singleCard}
+      productCardHeight={productCardHeight}
     >
-      <div className="product-v2-image">
+      <ProductImage
+        singleCard={!!singleCard}
+        productCardHeight={productCardHeight}
+      >
         <Image
           url={productImage}
           format="pjpg"
           imageId={tgid}
+          alt={title ?? name}
           width={cardImageWidth}
-          height={cardImageHeight}
-          alt={title}
+          height={
+            productCardStyles?.productCardHeight
+              ? productCardStyles.productCardHeight
+              : cardImageHeight
+          }
         />
         {getBooster()}
-      </div>
+      </ProductImage>
       <div className="product-v2-bottom">
         <Conditional if={vendor?.length && isMobile}>
           <div className="vendor-name">{vendor}</div>
@@ -601,7 +639,9 @@ const Product = (props: any) => {
         </div>
         <div className="title-wrap">
           <Conditional if={!showPageExists}>
-            <div className="product-v2-title">{truncate(title, 70)}</div>
+            <div className="product-v2-title">
+              {truncate(title ?? name, 70)}
+            </div>
           </Conditional>
           <Conditional if={showPageExists}>
             <a
@@ -610,10 +650,13 @@ const Product = (props: any) => {
               href={showPageUrl}
               onClick={handleProductClick}
             >
-              <div className="product-v2-title">{truncate(title, 70)}</div>
+              <div className="product-v2-title">
+                {truncate(title ?? name, 70)}
+              </div>
             </a>
           </Conditional>
           {!isLTT &&
+            showSecondaryDescriptors &&
             filteredDescriptors.map((descriptor) => {
               const { code, name } = descriptor;
               if (name && code) {
@@ -639,17 +682,19 @@ const Product = (props: any) => {
             </div>
           </Conditional>
         </div>
-        <div className="product-v2-bottom-left">
-          <PriceBlock
-            prefix
-            showCashback
-            listingPrice={listingPrice}
-            showSavings
-            showScratchPrice
-            lang={lang}
-            save={save}
-          />
-        </div>
+        <Conditional if={showPriceBlock}>
+          <div className="product-v2-bottom-left">
+            <PriceBlock
+              prefix
+              showCashback
+              listingPrice={listingPrice}
+              showSavings
+              showScratchPrice
+              lang={lang}
+              save={save}
+            />
+          </div>
+        </Conditional>
       </div>
     </ProductCard>
   );
@@ -667,18 +712,28 @@ const Product = (props: any) => {
             id={`${cardIdPrefix}-${tgid}`}
             role="button"
             tabIndex={0}
+            $isV3Design={isV3Design}
+            singleCard={!!singleCard}
+            productCardHeight={productCardHeight}
           >
-            <div className="product-v2-image">
+            <ProductImage
+              singleCard={!!singleCard}
+              productCardHeight={productCardHeight}
+            >
               <Image
                 url={productImage}
                 format="pjpg"
                 imageId={tgid}
                 width={cardImageWidth}
-                height={cardImageHeight}
-                alt={title}
+                height={
+                  productCardStyles?.productCardHeight
+                    ? productCardStyles.productCardHeight
+                    : cardImageHeight
+                }
+                alt={title ?? name}
               />
               {getBooster()}
-            </div>
+            </ProductImage>
             <div className="product-v2-bottom">
               <Conditional if={vendor?.length && isMobile}>
                 <div className="vendor-name">{vendor}</div>
@@ -712,7 +767,9 @@ const Product = (props: any) => {
                   href={showPageExists ? showPageUrl : bookingURL}
                   onClick={showPageEvent}
                 >
-                  <div className="product-v2-title">{truncate(title, 70)}</div>
+                  <div className="product-v2-title">
+                    {truncate(title ?? name, 70)}
+                  </div>
                 </a>
                 <Conditional
                   if={!isBeforeToday && openingDate !== 'Invalid Date'}
@@ -722,17 +779,19 @@ const Product = (props: any) => {
                   </div>
                 </Conditional>
               </div>
-              <div className="product-v2-bottom-left">
-                <PriceBlock
-                  prefix
-                  listingPrice={listingPrice}
-                  showSavings
-                  showCashback
-                  showScratchPrice
-                  lang={lang}
-                  save={save}
-                />
-              </div>
+              <Conditional if={showPriceBlock}>
+                <div className="product-v2-bottom-left">
+                  <PriceBlock
+                    prefix
+                    listingPrice={listingPrice}
+                    showSavings
+                    showCashback
+                    showScratchPrice
+                    lang={lang}
+                    save={save}
+                  />
+                </div>
+              </Conditional>
             </div>
           </ProductCard>
         </div>

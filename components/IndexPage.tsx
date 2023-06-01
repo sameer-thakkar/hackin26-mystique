@@ -34,6 +34,7 @@ import PlatformUtils from 'utils/platformUtils';
 import { getLocalizationLabels } from 'utils/localizationUtils';
 
 import Analytics from './Analytics';
+import VenuePage from './VenuePage';
 
 const Microsite = dynamic(() => import('components/MicrositeV1'));
 const ContentPage = dynamic(() => import('components/ContentPage'));
@@ -108,6 +109,7 @@ const Page = (props: PageProps) => {
   const {
     CMSContent,
     tourGroupData,
+    tgidsInPage,
     inventorySlotData,
     ContentType,
     statusCode,
@@ -166,6 +168,20 @@ const Page = (props: PageProps) => {
             serverRequestStartTimestamp={serverRequestStartTimestamp}
             isMobile={isMobile}
             domainConfig={domainConfig}
+          />
+        );
+      case CUSTOM_TYPES.VENUE_PAGE:
+        return (
+          <VenuePage
+            data={CMSContent}
+            isMobile={isMobile}
+            host={host}
+            lang={lang}
+            uid={uid}
+            isDev={isDev}
+            domainConfig={domainConfig}
+            serverRequestStartTimestamp={serverRequestStartTimestamp}
+            tgidsInPage={tgidsInPage}
           />
         );
       case CUSTOM_TYPES.MICROSITE:
@@ -325,7 +341,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     ? !!query.mystique_uid
     : window.location.search.includes('mystique_uid');
 
-  if (query.mystique_uid) {
+  if (host?.includes('localhost')) {
     isMobile = localServerSideIsMobileCheck(req);
   }
 
@@ -411,6 +427,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         asPath,
         biLink,
         cookies: req?.cookies ?? {},
+        headers: JSON.stringify(req?.headers),
       },
     };
     const removeEmpty = (obj: any) => {

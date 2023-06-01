@@ -7,7 +7,13 @@ import Accordion from 'components/slices/Accordion';
 import RichContent from 'components/UI/RichContent';
 import TitleTextCombo from 'components/UI/TitleTextCombo';
 import { ESCAPE_REGEX, ESCAPE_REPLACER } from 'const/index';
+import COLORS from 'const/colors';
+import styled from 'styled-components';
 import { generateSidenavId } from 'utils/helper';
+
+const Divider = styled.div`
+  border: 0.25px solid ${COLORS.GRAY.G7};
+`;
 
 /**
  *
@@ -32,6 +38,10 @@ type AccordionGroupProps = {
   useSchema: Boolean;
   sliceProps?: any;
   isOpenOverride?: Boolean;
+  headingNeedsSeparator?: Boolean;
+  tabData?: [];
+  findBestSeatsCtaCallback?: () => void;
+  isVenuePage?: boolean;
 };
 
 const AccordionGroup = ({
@@ -40,6 +50,10 @@ const AccordionGroup = ({
   useSchema,
   sliceProps,
   isOpenOverride = true,
+  headingNeedsSeparator = false,
+  tabData = [],
+  findBestSeatsCtaCallback,
+  isVenuePage,
 }: AccordionGroupProps) => {
   const isGlobalMb = sliceProps?.isGlobalMb ? sliceProps?.isGlobalMb : false;
   const faqSchemaProps = accordions.map((acc) => {
@@ -57,9 +71,12 @@ const AccordionGroup = ({
     <>
       <div>
         <Conditional if={heading}>
-          <TitleTextCombo>
-            <h2 id={generateSidenavId(heading || '')}>{heading}</h2>
-          </TitleTextCombo>
+          <TitleTextCombo isVenuePage={isVenuePage} />
+          <h2 id={generateSidenavId(heading || '')}>{heading}</h2>
+          <Conditional if={headingNeedsSeparator}>
+            <br />
+            <Divider />
+          </Conditional>
         </Conditional>
         {accordions.map((accordion, index) => {
           const content = <RichContent render={accordion.content} />;
@@ -72,6 +89,9 @@ const AccordionGroup = ({
               heading={accordion.heading}
               isGlobalMb={isGlobalMb}
               useSchema={useSchema}
+              tabData={tabData}
+              isVenuePage={isVenuePage}
+              findBestSeatsCtaCallback={findBestSeatsCtaCallback}
             />
           );
         })}

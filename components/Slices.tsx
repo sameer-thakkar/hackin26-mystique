@@ -1,5 +1,6 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
+import { SLICE_TYPES } from 'const/index';
 
 import HorizontalLine from './slices/HorizontalLine';
 import ContentTabs from './slices/ContentTabs';
@@ -12,6 +13,10 @@ import FooterLinksSection from './slices/FooterLinksSection';
 import TicketCard from './slices/TickerCardSlice';
 import UGCCarousel from './slices/UGCCarousel';
 import RichtextWithCTA from './slices/RichTextWithCTA';
+import ShowsList from './slices/ShowsList';
+import ShowsGrid from './slices/ShowsGrid';
+import GoogleMap from './ShowPages/GoogleMap';
+import VerticalCardsGrid from './slices/VerticalCardsGrid';
 
 // Dynamic imports
 const CustomLinkedTours = dynamic(() => import('./slices/CustomLinkedTours'));
@@ -60,6 +65,7 @@ const CollectionCarousel = dynamic(() =>
 
 const sliceHandler = (slice: any, props: any = {}) => {
   if (slice?.primary?.hide_slice) return null;
+
   switch (slice.slice_type) {
     case 'rich_text':
     case 'rich_text_only':
@@ -447,14 +453,36 @@ const sliceHandler = (slice: any, props: any = {}) => {
         />
       );
     case 'accordion':
-      return (
-        <AccordionGroup
-          accordions={slice.items}
-          heading={slice.primary.heading}
-          useSchema={slice.primary.use_faq_schema || false}
-          sliceProps={props}
-        />
-      );
+    case SLICE_TYPES.TABBED_INFO:
+      const { isMobile, isVenuePage, findBestSeatsCallback } = props;
+
+      if (
+        isVenuePage &&
+        !isMobile &&
+        slice.slice_type === SLICE_TYPES.TABBED_INFO
+      ) {
+        return (
+          <TabWrapper
+            heading={slice?.primary?.heading}
+            sliceProps={''}
+            tabData={slice?.items}
+            findBestSeatsCtaCallback={findBestSeatsCallback}
+          />
+        );
+      } else {
+        return (
+          <AccordionGroup
+            accordions={slice.items}
+            heading={slice.primary.heading}
+            useSchema={slice.primary.use_faq_schema || false}
+            sliceProps={props}
+            headingNeedsSeparator={isVenuePage}
+            tabData={slice?.items}
+            isVenuePage={props.isVenuePage}
+            findBestSeatsCtaCallback={findBestSeatsCallback}
+          />
+        );
+      }
     case 'unspace':
       return <div className="unspace-slice" />;
     case 'listicle_section':
@@ -534,6 +562,42 @@ const sliceHandler = (slice: any, props: any = {}) => {
           cards={slice?.items}
         />
       );
+
+    case SLICE_TYPES.VERTICAL_CARD_GRIDS:
+      return (
+        <VerticalCardsGrid
+          data={slice.items}
+          isMobile={props.isMobile}
+          heading={slice.primary.heading}
+        />
+      );
+
+    case SLICE_TYPES.SHOWS_LIST:
+      return (
+        <ShowsList
+          isMobile={props.isMobile}
+          data={props.nowPlayingShowData}
+          heading={slice.primary.heading}
+        />
+      );
+
+    case SLICE_TYPES.SHOWS_GRID:
+      return (
+        <ShowsGrid
+          isMobile={props.isMobile}
+          heading={slice?.primary?.heading}
+          data={props.pastShowsData}
+        />
+      );
+
+    case SLICE_TYPES.GOOGLE_MAP:
+      return (
+        <GoogleMap
+          mapURL={slice.primary.google_map_url.url}
+          isVenuePage={props.isVenuePage}
+        />
+      );
+
     default:
     // ToDo: Add to Error Logs (Slice)
   }

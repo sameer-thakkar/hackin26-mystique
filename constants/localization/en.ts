@@ -144,6 +144,8 @@ const en = {
   NEW: 'NEW',
   NEW_ARRIVAL: 'New Arrival',
   NEXT_AVAILABLE: 'Next available: ',
+  NON_PARTNERED_BANNER_SUBTEXT_DISCLAIMER:
+    "Headout is a brand trusted by over 15 million guests that offers a curated selection of the best experiences. This is not the venue's website.",
   OFF: 'Off',
   OPEN_DATED_DESCRIPTOR: 'Book with flexibility - no date selection needed',
   OPENING_DATE: 'Opening Date',
@@ -372,8 +374,8 @@ const en = {
   SAVE: 'Save {0}%',
   SAVE_PERCENT: 'Save {0}%',
   SAVE_UPTO_PERCENT: 'Save upto {0}%',
-  SEARCH: 'Search',
   SEE_ALL: 'See all',
+  SEARCH: 'Search',
   POPULARITY: 'Popularity',
   PRICE: 'Price',
   SEE_MORE_SHOWS: 'See More Shows',
@@ -381,7 +383,9 @@ const en = {
   SELECT_SECTION: 'Select Section',
   SHOW_ALL_PHOTOS: 'Show all photos',
   SHOW_CLOSED: 'Show Closed',
+  SHOW_LESS: 'Show less',
   SHOW_LESS_TEXT: 'Show less',
+  SHOW_MORE: 'Show more',
   SHOW_PAGE: {
     ABOUT_SHOW: 'About Show',
     ABOUT_THEATRE: 'About Theatre',
@@ -426,6 +430,12 @@ const en = {
   SORT_BY: 'Sort by',
   SPECIAL_OFFER: 'Special Offer',
   THEATRE: 'Theatre',
+  THEATRE_PAGE: {
+    NEARBY_THEATRES: 'Nearby Theatres',
+    NOW_PLAYING: 'Now Playing',
+    PAST_SHOWS: 'Past Shows',
+    FIND_BEST_SEATS: 'Find Best Seats',
+  },
   TICKET_CAN_BE_CANCELED:
     'You may cancel up to {hours} hours in advance for a full refund.',
   TICKET_CANNOT_BE_CANCELED:

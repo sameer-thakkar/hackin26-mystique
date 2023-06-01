@@ -51,7 +51,6 @@ const it = {
     'Quando prenoti questa esperienza, riceverai un Cashback del <strong>{0} %</strong>. Il tuo Cashback verrà automaticamente accreditato sul tuo account Headout e potrai utilizzarlo per qualsiasi futura prenotazione con noi.',
   CATEGORY_SLIDER_HEADING:
     'I clienti che hanno prenotato questo spettacolo hanno visto anche',
-
   CHECK_AVAIL: 'Verifica disponibilità',
   CLOSE: 'Chiudi',
   COMBO_VARIANT: {
@@ -385,8 +384,14 @@ const it = {
     YOUR_TICKETS: 'I tuoi biglietti',
   },
   SORT_BY: 'Ordina per',
-  SPECIAL_OFFER: 'Offerta speciale',
   THEATRE: 'Teatro',
+  THEATRE_PAGE: {
+    NEARBY_THEATRES: 'Teatri vicini',
+    NOW_PLAYING: 'Spettacoli in corso',
+    PAST_SHOWS: 'Spettacoli passati',
+    FIND_BEST_SEATS: 'Trova i posti migliori',
+  },
+  SPECIAL_OFFER: 'Offerta speciale',
   TICKET_CAN_BE_CANCELED: `Puoi cancellare fino a {hours} ore in anticipo sull'orario prenotato per ottenere un rimborso completo.`,
   TICKET_CANNOT_BE_CANCELED:
     'Questo biglietto non può essere annullato ma può essere riprogrammato su richiesta.',
@@ -419,5 +424,4 @@ const it = {
   WHY_TAKE_THIS_DAY_TRIP: 'Perché vale la pena partecipare a questa gita?',
   WHY_WATCH: 'Perché guardarlo',
 };
-
 export default it;

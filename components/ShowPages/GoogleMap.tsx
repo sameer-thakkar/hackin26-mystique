@@ -2,9 +2,18 @@ import Conditional from 'components/common/Conditional';
 import React from 'react';
 import styled from 'styled-components';
 
-const GooglMapWrapper = styled.div`
-  margin-bottom: 64px;
-  margin-top: 48px;
+const GoogleMapWrapper = styled.div<{
+  isVenuePage?: boolean;
+}>`
+  margin-bottom: 4rem;
+  ${({ isVenuePage }) =>
+    isVenuePage
+      ? `
+      margin: 0.5rem 0;
+      `
+      : `
+       margin-top: 3rem;
+   `}
 
   iframe {
     width: 100%;
@@ -13,8 +22,18 @@ const GooglMapWrapper = styled.div`
     border: 0;
   }
   @media (max-width: 768px) {
-    margin-bottom: 48px;
-    margin-top: 32px;
+    ${({ isVenuePage }) =>
+      isVenuePage
+        ? `&& {
+        margin:0;
+      }
+     `
+        : `
+     && {
+       margin-top: 2rem;
+     }
+     `}
+    margin: 2rem 0 3rem;
 
     iframe {
       height: 343px;
@@ -22,17 +41,17 @@ const GooglMapWrapper = styled.div`
   }
 `;
 
-const GoogleMap = ({ mapURL }: any) => {
+const GoogleMap = ({ mapURL, isVenuePage }: any) => {
   return (
     <Conditional if={mapURL}>
-      <GooglMapWrapper>
+      <GoogleMapWrapper isVenuePage={isVenuePage}>
         <iframe
           title="Google Map"
           src={mapURL}
           allowFullScreen
           loading="lazy"
         />
-      </GooglMapWrapper>
+      </GoogleMapWrapper>
     </Conditional>
   );
 };

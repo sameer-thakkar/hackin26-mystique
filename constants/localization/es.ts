@@ -424,8 +424,14 @@ const es = {
     YOUR_TICKETS: 'Tus entradas',
   },
   SORT_BY: 'Ordenar por',
-  SPECIAL_OFFER: 'Oferta especial',
   THEATRE: 'Teatro',
+  THEATRE_PAGE: {
+    NEARBY_THEATRES: 'Teatros cercanos',
+    NOW_PLAYING: 'En cartelera',
+    PAST_SHOWS: 'Espectáculos pasados',
+    FIND_BEST_SEATS: 'Buscar los mejores asientos',
+  },
+  SPECIAL_OFFER: 'Oferta especial',
   TICKET_CAN_BE_CANCELED:
     'Puedes cancelar hasta {hours} horas de antelación para obtener un reembolso total.',
   TICKET_CANNOT_BE_CANCELED:
@@ -459,5 +465,4 @@ const es = {
   WHY_TAKE_THIS_DAY_TRIP: '¿Por qué vale la pena hacer este viaje de 1 día?',
   WHY_WATCH: '¿Por qué verlo?',
 };
-
 export default es;

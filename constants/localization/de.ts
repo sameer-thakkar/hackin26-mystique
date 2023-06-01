@@ -372,8 +372,14 @@ const de = {
     YOUR_TICKETS: 'Ihre Tickets',
   },
   SORT_BY: 'Sortieren nach',
-  SPECIAL_OFFER: 'Sonderangebot',
   THEATRE: 'Theater',
+  THEATRE_PAGE: {
+    NEARBY_THEATRES: 'Theater in der Nähe',
+    NOW_PLAYING: 'Aktuelle Shows',
+    PAST_SHOWS: 'Vergangene Shows',
+    FIND_BEST_SEATS: 'Bestplätze finden',
+  },
+  SPECIAL_OFFER: 'Sonderangebot',
   TICKET_CAN_BE_CANCELED:
     'Dieses Ticket kann bis zu {hours} Stunden vor dem Erlebnis gegen eine volle Rückerstattung storniert werden.',
   TICKET_CANNOT_BE_CANCELED:

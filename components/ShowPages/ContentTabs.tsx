@@ -105,14 +105,11 @@ const ContentTabs: React.FC<ContentTabsProps> = ({ tabsArr, contentArr }) => {
     }
   }, [tabsArr, contentArr]);
 
-  const trackTabClick = ({
-    tab,
-    index
-  }: any) => {
+  const trackTabClick = ({ tab, index }: any) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.INFO_TAB_CLICKED,
       [ANALYTICS_PROPERTIES.RANKING]: index + 1,
-      [ANALYTICS_PROPERTIES.HEADING]: tab,
+      [ANALYTICS_PROPERTIES.INFO_HEADING]: tab,
       [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Standalone',
       [ANALYTICS_PROPERTIES.SECTION]: 'Longform Content',
       ...getCommonEventMetaData(pageMetaData),

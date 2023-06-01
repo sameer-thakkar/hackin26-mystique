@@ -373,8 +373,14 @@ const nl = {
     YOUR_TICKETS: 'Je tickets',
   },
   SORT_BY: 'Sorteer',
-  SPECIAL_OFFER: 'Speciale aanbieding',
   THEATRE: 'Theater',
+  THEATRE_PAGE: {
+    NEARBY_THEATRES: 'Theaters in de buurt',
+    NOW_PLAYING: 'Huidige shows',
+    PAST_SHOWS: 'Afgelopen shows',
+    FIND_BEST_SEATS: 'Vind de beste plaatsen',
+  },
+  SPECIAL_OFFER: 'Speciale aanbieding',
   TICKET_CAN_BE_CANCELED:
     'Je kunt tot {hours} uur van tevoren annuleren voor een volledige terugbetaling.',
   TICKET_CANNOT_BE_CANCELED:
@@ -408,5 +414,4 @@ const nl = {
   WHY_TAKE_THIS_DAY_TRIP: 'Waarom kiezen voor dit uitje?',
   WHY_WATCH: 'Why kijken',
 };
-
 export default nl;

@@ -374,8 +374,14 @@ const pt = {
     YOUR_TICKETS: 'Seus ingressos',
   },
   SORT_BY: 'Ordenar por',
-  SPECIAL_OFFER: 'Oferta especial',
   THEATRE: 'Teatro',
+  THEATRE_PAGE: {
+    NEARBY_THEATRES: 'Teatros próximos',
+    NOW_PLAYING: 'Em cartaz agora',
+    PAST_SHOWS: 'Espetáculos passados',
+    FIND_BEST_SEATS: 'Encontre os melhores lugares',
+  },
+  SPECIAL_OFFER: 'Oferta especial',
   TICKET_CAN_BE_CANCELED:
     'Você pode cancelar com até {hours} horas de antecedência da experiência para um reembolso completo.',
   TICKET_CANNOT_BE_CANCELED:

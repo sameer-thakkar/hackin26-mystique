@@ -499,6 +499,12 @@ export const getSinglePrismicSlice = ({
   }
 };
 
+export const getTgidsFromShow = (shows: any) => {
+  return shows?.map((show: { tgid: number }) => {
+    return show.tgid;
+  });
+};
+
 export const getEnglishDocUid = (
   prismicAlternateLanguages: Record<string, any>[]
 ) => {

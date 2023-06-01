@@ -367,6 +367,7 @@ class ContentPage extends Component<any, any> {
       scorpioData,
       domainConfig,
     } = this.props;
+
     const {
       footer_ref: commonFooter,
       header_ref: commonHeader,

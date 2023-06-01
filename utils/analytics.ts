@@ -23,7 +23,8 @@ export const trackEvent = ({ eventName, ...labelProps }: TTrackEvent) => {
   if (typeof window === 'undefined') return;
   if (!window.dataLayer) {
     // console.group('trackEvent failed!');
-    // console.log({ eventName, labelProps });
+    // eslint-disable-next-line no-console
+    console.log({ eventName, labelProps });
     // console.groupEnd();
     return;
   }
@@ -42,6 +43,11 @@ export const sendVariableToDataLayer = ({
   value: TDatalayerValue;
 }) => {
   if (typeof window === 'undefined') return;
+
+  if (window.dataLayer === undefined) {
+    window.dataLayer = [];
+  }
+
   const dLRef = typeof window !== 'undefined' ? window.dataLayer : [];
   if (!dLRef) {
     //  console.group('sendVariableToDataLayer failed!');

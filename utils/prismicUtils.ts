@@ -11,6 +11,7 @@ import {
   MICROSITE_OBJECT_KEYS,
   MICROSITE_STRING_KEYS,
   PRISMIC_LANG_TO_ROUTE_PARAM,
+  SLICE_TYPES,
   THEMES,
 } from 'const/index';
 import {
@@ -19,6 +20,7 @@ import {
   getEnglishDocUid,
   getHeadoutLanguagecode,
   getSinglePrismicSlice,
+  getTgidsFromShow,
   redirectTo,
   refsArrayToObject,
   deepDeleteKeys,
@@ -529,6 +531,89 @@ export const getMicrositeDocument = async ({
         return Promise.reject();
       }
     });
+};
+
+export const getVenuePageDocument = async ({ req, uid, lang }: any) => {
+  try {
+    const response = await Client(req).getByUID(CUSTOM_TYPES.VENUE_PAGE, uid, {
+      lang,
+    });
+
+    if (response) {
+      const {
+        header_ref,
+        footer_ref,
+        secondary_footer_ref,
+        seating_capacity,
+        mobile_banner,
+        desktop_banner,
+        theatre_name,
+        theatre_location_url,
+        theatre_location_cta,
+        info,
+        amenities_dropdown,
+        body2,
+        tagged_mb_type,
+        tagged_city,
+        tagged_country,
+        google_map_url,
+        tagged_collection,
+        title,
+        description,
+        image_url,
+      } = response.data;
+      // eslint-disable-next-line no-console
+      console.log('---', response);
+
+      const linkedRefIDs = [];
+      linkedRefIDs.push(header_ref.id, footer_ref.id, secondary_footer_ref.id);
+      const refArray = await getRefsArrayByIds(linkedRefIDs, req);
+      const { commonFooter, commonHeader, secondaryFooter } = refsArrayToObject(
+        refArray
+      );
+
+      const venuePageData = {
+        ...response,
+        data: {
+          refs: {
+            commonHeader,
+            commonFooter,
+            secondaryFooter,
+          },
+          mbType: tagged_mb_type,
+          seatingCapacity: seating_capacity,
+          mobileBanner: mobile_banner,
+          desktopBanner: desktop_banner,
+          theatreName: theatre_name,
+          theatreLocationUrl: theatre_location_url,
+          theatreLocationCta: theatre_location_cta,
+          googleMapUrl: google_map_url,
+          theatreInfo: info,
+          taggedCollection: tagged_collection,
+          city: tagged_city,
+          country: tagged_country,
+          amenitiesDropdown: amenities_dropdown,
+          descriptionSlices: body2,
+          title,
+          description,
+          image_url,
+        },
+      };
+
+      return {
+        CMSContent: venuePageData,
+        ContentType: CUSTOM_TYPES.VENUE_PAGE,
+      };
+    }
+    return Promise.reject();
+  } catch (err) {
+    Sentry.captureException(err);
+    sendLog({
+      err,
+    });
+    // eslint-disable-next-line no-console
+    console.error(err);
+  }
 };
 
 export const getGlobalHomepage = async ({ req, uid, lang }: any) => {
@@ -1052,6 +1137,7 @@ export const getPrismicDocument = async ({
         queryParamsString,
         uid,
       }),
+      getVenuePageDocument({ req, lang, uid }),
       getContentPageDocument({
         req,
         serverResponse,
@@ -1160,6 +1246,54 @@ export const getPageData = async ({
         return {};
       }
     })();
+
+    if (ContentType === CUSTOM_TYPES.VENUE_PAGE) {
+      const [nowPlayingShows, pastShows] = [
+        getSinglePrismicSlice({
+          sliceName: SLICE_TYPES.SHOWS_LIST,
+          slices: CMSContent?.data?.descriptionSlices,
+        }),
+        getSinglePrismicSlice({
+          sliceName: SLICE_TYPES.SHOWS_GRID,
+          slices: CMSContent?.data?.descriptionSlices,
+        }),
+      ];
+      const nowPlayingShowsTgids =
+        getTgidsFromShow(nowPlayingShows?.items) ?? [];
+      const pastShowsTgids = getTgidsFromShow(pastShows?.items) ?? [];
+
+      const showsData = await fetchTourListV6({
+        tgids: [...nowPlayingShowsTgids, ...pastShowsTgids],
+        hostname,
+        language: getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale),
+        cookies,
+      });
+
+      const nowPlayingShowData = showsData?.tourGroups?.slice(
+        0,
+        nowPlayingShowsTgids.length
+      );
+      const pastShowsData = showsData?.tourGroups?.slice(
+        nowPlayingShowsTgids.length,
+        showsData.length
+      );
+
+      return {
+        CMSContent: {
+          ...CMSContent,
+          nowPlayingShowData,
+          pastShowsData,
+        },
+        uid,
+        host,
+        ContentType,
+        lang,
+        isDev,
+        tgidsInPage: [...nowPlayingShowsTgids, ...pastShowsTgids],
+        currencyList: await currencyListPromise,
+        domainConfig: await domainConfigPromise,
+      };
+    }
 
     if (ContentType === CUSTOM_TYPES.CONTENT_PAGE) {
       const { data } = CMSContent || {};

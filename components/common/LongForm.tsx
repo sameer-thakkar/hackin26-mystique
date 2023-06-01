@@ -6,7 +6,9 @@ import COLORS from 'const/colors';
 import sliceHandler from '../Slices';
 import { FULL_WIDTH_SLICES } from '../../constants';
 
-export const StyledLongForm = styled.div`
+export const StyledLongForm = styled.div<{
+  isVenuePage?: boolean;
+}>`
   display: grid;
   grid-row-gap: 56px;
   h1,
@@ -63,7 +65,15 @@ export const StyledLongForm = styled.div`
   }
 
   @media (max-width: 768px) {
-    grid-row-gap: 52px;
+    ${({ isVenuePage }) =>
+      isVenuePage
+        ? `
+      && {
+        grid-row-gap: 40px
+      }`
+        : `
+       grid-row-gap: 52px;
+      `}
     h1 {
       ${expandFontToken('Heading/Large')}
       color: ${COLORS.GRAY.G2};
@@ -96,8 +106,9 @@ export const StyledLongForm = styled.div`
 export default class LongForm extends Component<any, any> {
   render() {
     const { content, ...props } = this.props;
+
     return (
-      <StyledLongForm>
+      <StyledLongForm isVenuePage={props.isVenuePage}>
         {content.map((slice: any, index: number) => (
           <div
             key={`long-form-${slice?.slice_type}-${index}`}

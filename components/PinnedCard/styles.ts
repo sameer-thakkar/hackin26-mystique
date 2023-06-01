@@ -1,0 +1,88 @@
+import COLORS from 'const/colors';
+import { FONTS } from 'const/fonts';
+import { expandFontToken } from 'const/typography';
+import styled from 'styled-components';
+
+export const PinnedCardWrapper = styled.div`
+  width: calc(100vw - (5.46vw * 2));
+  max-width: 1200px;
+  background-color: ${COLORS.GRAY.G8};
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: 1.2fr 1.5fr 0fr 1fr;
+
+  .product-image {
+    img {
+      border-radius: 8px 0 0 8px;
+    }
+    height: 15rem;
+  }
+
+  .product-description {
+    padding: 1.5rem;
+    height: auto;
+    .rating {
+      display: grid;
+      grid-template-columns: repeat(2, max-content);
+      align-items: center;
+      column-gap: 4px;
+      font-size: 14px;
+    }
+
+    .avg-rating {
+      .rating-number {
+        margin-right: 0.125rem;
+        color: ${COLORS.BRAND.CANDY};
+        ${expandFontToken(FONTS.UI_LABEL_MEDIUM_HEAVY)};
+      }
+    }
+
+    .avg-rating svg {
+      position: relative;
+      top: 0.063rem;
+      width: 12px;
+      height: 12px;
+      path {
+        fill: ${COLORS.BRAND.CANDY};
+        stroke: ${COLORS.BRAND.CANDY};
+      }
+    }
+    .total-rating {
+      ${expandFontToken(FONTS.UI_LABEL_SMALL)};
+      color: ${COLORS.GRAY.G4};
+    }
+    .descriptors-list {
+      margin-top: 0.5rem;
+    }
+    .descriptors {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      span {
+        ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
+        margin-left: 0.625rem;
+      }
+    }
+
+    .product-name {
+      h3 {
+        margin: 0;
+        ${expandFontToken(FONTS.HEADING_REGULAR)};
+      }
+    }
+  }
+  .divider {
+    border-left: 1px dashed ${COLORS.GRAY.G6};
+    height: calc(100% - 3rem);
+    width: 1px;
+    align-items: center;
+    margin-top: 1.5rem;
+  }
+
+  .cta-container {
+    padding: 1.5rem;
+    button {
+      margin-top: 1.5rem;
+    }
+  }
+`;

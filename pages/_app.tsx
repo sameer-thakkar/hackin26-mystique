@@ -48,6 +48,7 @@ type PageProps = {
 
 const App = ({ Component, pageProps }: AppProps<PageProps>) => {
   const { lang: locale } = pageProps;
+
   const langCode = getLangObject(locale).code;
   if (langCode !== 'en') initDayJSLocale(langCode);
 
@@ -83,22 +84,28 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
 
     const { title } = CMSContent?.data ?? {};
     const metaTitle = renderShortCodes(title)?.join?.('');
-    let pageTitle =
-      customType === CUSTOM_TYPES.MICROSITE
-        ? CMSContent?.data?.data?.heading
-        : CMSContent?.data?.featured_title;
+    let pageTitle = '';
+    if (customType === CUSTOM_TYPES.MICROSITE) {
+      pageTitle = CMSContent?.data?.data?.heading;
+    } else if (customType === CUSTOM_TYPES.VENUE_PAGE) {
+      pageTitle = CMSContent?.data?.theatreName;
+    } else pageTitle = CMSContent?.data?.featured_title;
+
     pageTitle = pageTitle ?? metaTitle;
     pageTitle = renderShortCodes(pageTitle)?.join?.('');
+
     const cookieCurrency = cookies?.[COOKIE.CURRENT_CURRENCY];
     const isValidCookieCurrency = cookieCurrency
-      ? currencyList.find((c: any) => c.code === cookieCurrency)
+      ? currencyList?.find((c: any) => c.code === cookieCurrency)
       : false;
     const ssrCurrencyCode = isValidCookieCurrency
       ? cookies?.[COOKIE.CURRENT_CURRENCY]
       : primaryCity?.country?.currency?.code;
 
     const pageType = PAGETYPE_BY_CUSTOMTYPE[customType];
+
     const mbName = renderShortCodes(baseLangPageTitle)?.join?.('');
+
     let primaryCollectionName = null,
       primaryCollectionId = null;
 

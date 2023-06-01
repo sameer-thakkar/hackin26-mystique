@@ -374,8 +374,14 @@ const fr = {
     YOUR_TICKETS: 'Vos billets',
   },
   SORT_BY: 'Trier par',
-  SPECIAL_OFFER: 'Offre spéciale',
   THEATRE: 'Théâtre',
+  THEATRE_PAGE: {
+    NEARBY_THEATRES: 'Théâtres dans le coin',
+    NOW_PLAYING: `À l'affiche`,
+    PAST_SHOWS: 'Anciens spectacles',
+    FIND_BEST_SEATS: 'Trouver les meilleures places',
+  },
+  SPECIAL_OFFER: 'Offre spéciale',
   TICKET_CAN_BE_CANCELED: `Vous pouvez annuler jusqu'à {hours} heures à l'avance pour un remboursement complet.`,
   TICKET_CANNOT_BE_CANCELED:
     'Ce billet ne peut être annulé mais peut être reporté sur demande.',

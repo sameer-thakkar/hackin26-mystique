@@ -14,6 +14,10 @@ import { metaAtom } from 'store/atoms/meta';
 import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
 import type { SwiperProps } from 'swiper/react';
+import Image from 'UI/Image';
+import { FONTS } from 'const/fonts';
+import Button from 'UI/Button';
+import { strings } from 'const/strings';
 import { generateSidenavId, stringIdfy } from 'utils/helper';
 
 import sliceHandler from '../Slices';
@@ -56,6 +60,20 @@ const StyledTabWrapper = styled.div`
       // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
       isGlobalMb,
     }) => isGlobalMb && `margin-top: 8px;`}
+    .tabbed-info-image {
+      height: auto;
+      display: flex;
+      align-items: center;
+      .image-wrap {
+        width: auto;
+      }
+      .seatmap-image{
+        margin-right: 1.5rem;
+      }
+      button{
+        margin-top: 1.5rem;
+      }
+    }
   }
 
   h1,
@@ -90,6 +108,7 @@ const StyledTab = styled.div`
   cursor: pointer;
   padding-bottom: 8px;
   width: 100%;
+  ${expandFontToken(FONTS.HEADING_SMALL)};
   ${({
     // @ts-expect-error TS(2339): Property 'isActive' does not exist on type 'Pick<D... Remove this comment to see the full error message
     isActive,
@@ -190,9 +209,11 @@ const SlideControls = styled.div`
 
 type TabWrapperProps = {
   heading: string;
-  slices: Array<any>;
+  slices?: Array<any>;
   sliceProps?: Object;
   description?: any[];
+  tabData?: any[];
+  findBestSeatsCtaCallback?: () => void;
 };
 
 /**
@@ -223,7 +244,15 @@ type TabWrapperProps = {
  *
  */
 const TabWrapper = (props: TabWrapperProps) => {
-  const { heading, slices, sliceProps: parentSliceProps, description } = props;
+  const {
+    heading,
+    slices = [],
+    sliceProps: parentSliceProps,
+    description = [],
+    tabData = [],
+    findBestSeatsCtaCallback,
+  } = props;
+
   // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Obje... Remove this comment to see the full error message
   const { isGlobalMb } = parentSliceProps;
   const defaultFromPrismic = slices.filter(
@@ -231,13 +260,17 @@ const TabWrapper = (props: TabWrapperProps) => {
   );
 
   const defaultTab = stringIdfy(
-    (defaultFromPrismic[0] || slices[0])?.primary?.title || ''
+    tabData[0]?.heading ||
+      (defaultFromPrismic[0] || slices[0])?.primary?.title ||
+      ''
   );
   const [activeTabId, setActiveTab] = useState(defaultTab);
   const [activeTabIndex, setActiveTabIndex] = useState(
-    slices.indexOf((slice: any) =>
-      legacyBooleanCheck(slice.primary.is_default)
-    ) ?? 0
+    tabData.length
+      ? 0
+      : slices.indexOf((slice: any) =>
+          legacyBooleanCheck(slice.primary.is_default)
+        ) ?? 0
   );
   let sliceProps: any = {
     activeTabId,
@@ -310,6 +343,7 @@ const TabWrapper = (props: TabWrapperProps) => {
     heading,
     isScrollTab = false,
     scrollTarget = null,
+    section,
   }: any) => {
     setActiveTab(tabId);
     setActiveTabIndex(index);
@@ -324,9 +358,9 @@ const TabWrapper = (props: TabWrapperProps) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.INFO_TAB_CLICKED,
       [ANALYTICS_PROPERTIES.RANKING]: index + 1,
-      [ANALYTICS_PROPERTIES.HEADING]: heading,
+      [ANALYTICS_PROPERTIES.INFO_HEADING]: heading,
       [ANALYTICS_PROPERTIES.CARD_TYPE]: 'Standalone',
-      [ANALYTICS_PROPERTIES.SECTION]: 'Longform Content',
+      [ANALYTICS_PROPERTIES.SECTION]: section || 'Longform Content',
       ...getCommonEventMetaData(pageMetaData),
     });
   };
@@ -344,7 +378,12 @@ const TabWrapper = (props: TabWrapperProps) => {
     }
 
     setActiveTabIndex(newTabIndex);
-    setActiveTab(stringIdfy(slices[newTabIndex]?.primary?.title));
+    setActiveTab(
+      stringIdfy(
+        tabData[newTabIndex].heading[0].text ||
+          slices[newTabIndex]?.primary?.title
+      )
+    );
     (tabsContanier?.current as any)?.scrollBy({
       left: width * 0.1,
       behavior: 'smooth',
@@ -456,27 +495,55 @@ const TabWrapper = (props: TabWrapperProps) => {
         {description ? <RichContent render={description} /> : null}
       </TitleTextCombo>
       <div ref={tabsContanier} className="tabs">
-        {slices.map((slice, index) => {
-          const tabId = stringIdfy(slice.primary.title);
-          return (
-            <StyledTab
-              key={index}
-              // @ts-expect-error TS(2769): No overload matches this call.
-              isActive={activeTabId == tabId}
-              onClick={(e) =>
-                onTabClick({
-                  tabId,
-                  heading: slice.primary.title,
-                  index,
-                  isScrollTab: true,
-                  scrollTarget: e.target,
-                })
-              }
-            >
-              {slice.primary.title}
-            </StyledTab>
-          );
-        })}
+        <Conditional if={tabData.length}>
+          {tabData.map((tab, index) => {
+            const tabId = stringIdfy(tab.heading);
+            return (
+              <div key={index} className="swiper-slide">
+                <StyledTab
+                  key={index}
+                  // @ts-expect-error TS(2769): No overload matches this call.
+                  isActive={activeTabId == tabId}
+                  onClick={(e) =>
+                    onTabClick({
+                      tabId,
+                      heading: tab.heading,
+                      index,
+                      isScrollTab: false,
+                      scrollTarget: e.target,
+                      section: heading,
+                    })
+                  }
+                >
+                  {tab.heading}
+                </StyledTab>
+              </div>
+            );
+          })}
+        </Conditional>
+        <Conditional if={!tabData.length}>
+          {slices.map((slice, index) => {
+            const tabId = stringIdfy(slice.primary.title);
+            return (
+              <StyledTab
+                key={index}
+                // @ts-expect-error TS(2769): No overload matches this call.
+                isActive={activeTabId === tabId}
+                onClick={(e) =>
+                  onTabClick({
+                    tabId,
+                    heading: slice.primary.title,
+                    index,
+                    isScrollTab: true,
+                    scrollTarget: e.target,
+                  })
+                }
+              >
+                {slice.primary.title}
+              </StyledTab>
+            );
+          })}
+        </Conditional>
         <Conditional if={isMobile}>
           {/* @ts-expect-error TS(2769): No overload matches this call. */}
           <SlideControls isMobile={isMobile}>
@@ -504,9 +571,42 @@ const TabWrapper = (props: TabWrapperProps) => {
         </Conditional>
       </div>
       <div className="tab-content-wrap">
-        {slices.map((slice, keyIndex) => {
-          return sliceHandler(slice, { ...sliceProps, keyIndex });
-        })}
+        <Conditional if={tabData.length}>
+          <div style={{ maxWidth: '894px', fontSize: `15px` }}>
+            <RichContent render={tabData[activeTabIndex]?.content} />
+          </div>
+          <div className="tabbed-info-image">
+            <Image
+              url={tabData[activeTabIndex]?.image_source}
+              height="630"
+              width="485"
+              className="seatmap-image"
+              alt="Seatmap"
+            />
+            <Conditional if={tabData[activeTabIndex]?.legend_image_source}>
+              <div className="legend-image">
+                <Image
+                  url={tabData[activeTabIndex]?.legend_image_source}
+                  height="160"
+                  width="327"
+                  alt="Legend Image"
+                />
+                <Button
+                  fillType="fillGradient"
+                  widthProp="100%"
+                  onClick={findBestSeatsCtaCallback}
+                >
+                  {strings.THEATRE_PAGE.FIND_BEST_SEATS}
+                </Button>
+              </div>
+            </Conditional>
+          </div>
+        </Conditional>
+        <Conditional if={!tabData.length}>
+          {slices.map((slice, keyIndex) => {
+            return sliceHandler(slice, { ...sliceProps, keyIndex });
+          })}
+        </Conditional>
       </div>
     </StyledTabWrapper>
   );

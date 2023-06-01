@@ -204,6 +204,7 @@ export const GROUP_BOOKING_URL = '/api/group-submit-form';
 
 export const CUSTOM_TYPES = {
   MICROSITE: 'microsite',
+  VENUE_PAGE: 'venue_page',
   CONTENT_PAGE: 'content_page',
   FOOTER: 'common_footer',
   HEADER: 'common_header',
@@ -213,7 +214,6 @@ export const CUSTOM_TYPES = {
   LISTICLE: 'page',
   CONTENT_FRAMEWORK: 'content_framework',
   SHOW_PAGE: 'showpage',
-  VENUE_PAGE: 'venue_page',
   GLOBAL_HOMEPAGE: 'global_homepage',
   GLOBAL_CITY: 'global_city',
   GLOBAL_COLLECTION: 'global_collection',
@@ -335,6 +335,11 @@ export const ANALYTICS_EVENTS = {
     POPUP_CLOSED: 'Influencer Content Popup Closed',
     USERNAME_CLICKED: 'Influencer Content Username Clicked',
     REDIRECT_TO_IG: 'Influencer Content Redirect To Instagram',
+  },
+  THEATRE_PAGE: {
+    THEATRE_ADDRESS_CLICKED: 'Theatre Address Clicked',
+    BEST_SEATS_CTA_CLICKED: 'Best Seats CTA Clicked',
+    THEATRE_CARD_CLICKED: 'Theatre Card Clicked',
   },
   PRODUCT_CARD_IMAGE_VIEWED: 'Product Card Image Viewed',
   VIDEO_AUTOPLAY_STARTED: 'Video Autoplay Started',
@@ -746,6 +751,8 @@ export const ANALYTICS_PROPERTIES = {
   TYPE: 'Type',
   AUTOPLAY_LOAD_TIME: 'Autoplay Load Time',
   TIME_WATCHED: 'Time Watched',
+  THEATRE_NAME: 'Theatre Name',
+  THEATRE_ADDRESS: 'Theatre Address',
   TOOLTIP_TYPE: 'Tooltip Type',
 };
 
@@ -753,6 +760,7 @@ export const PAGE_TYPES = {
   COLLECTION: 'Collection',
   CONTENT_PAGE: 'Content Page',
   SHOW_PAGE: 'Show Page',
+  VENUE_PAGE: 'Venue Page',
 };
 
 export const ANALYTICS_PLATFORM = {
@@ -849,6 +857,7 @@ export const PAGETYPE_BY_CUSTOMTYPE = {
   [CUSTOM_TYPES.GLOBAL_EXPERIENCE]: PAGE_TYPES.COLLECTION,
   [CUSTOM_TYPES.GLOBAL_HOMEPAGE]: PAGE_TYPES.COLLECTION,
   [CUSTOM_TYPES.LISTICLE]: PAGE_TYPES.COLLECTION,
+  [CUSTOM_TYPES.VENUE_PAGE]: PAGE_TYPES.VENUE_PAGE,
 };
 
 export const CTA_TYPE = {
@@ -923,6 +932,11 @@ export const SLICE_TYPES = {
   CAROUSEL_GALLERY: 'carousel_gallery',
   AUTOMATED_COMPARISION_TABLE: 'automated_comparison_table',
   CUSTOM_LINKED_TOURS: 'custom_linked_tours',
+  SHOWS_LIST: 'shows_list',
+  SHOWS_GRID: 'shows_grid',
+  GOOGLE_MAP: 'google_map_iframe',
+  VERTICAL_CARD_GRIDS: 'vertical_cards_grid',
+  TABBED_INFO: 'tabbedinfo',
   IMAGE_TEXT_COMBO_GRID: 'image_text_combo_grid',
   TABLE: 'table',
   TABLE_V2_START: 'table_v2___start',

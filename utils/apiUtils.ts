@@ -583,6 +583,7 @@ export const fetchDomainConfig = async (uid: string) => {
     // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
     id: null,
   });
+
   const domainArray = getDomainFromUid(uid)?.split('.');
 
   if (domainArray && domainArray.length > 0) {

@@ -8,6 +8,7 @@ import Conditional from 'components/common/Conditional';
 
 type BreadcrumbProps = {
   orderedLinks: any[];
+  shouldLastNodeBeUnderlined?: boolean;
 };
 
 const BreadcrumbContainer = styled.div`
@@ -31,11 +32,15 @@ const BreadcrumbContainer = styled.div`
   }
 `;
 
-const StyledBreadcrumb = styled.a`
+const StyledBreadcrumb = styled.a<{
+  shouldLastNodeBeUnderlined: boolean;
+}>`
   ${expandFontToken(FONTS.UI_LABEL_REGULAR)};
 
   &:last-child {
-    text-decoration: underline;
+    text-decoration: ${({ shouldLastNodeBeUnderlined }) => {
+      return shouldLastNodeBeUnderlined ? 'underline' : 'none';
+    }};
   }
 
   &#breadcrumb {
@@ -66,7 +71,10 @@ const StyledBreadcrumb = styled.a`
  *  - Title for Respective Level of page
  */
 
-const Breadcrumb: React.FC<BreadcrumbProps> = ({ orderedLinks: links }) => (
+const Breadcrumb: React.FC<BreadcrumbProps> = ({
+  orderedLinks: links,
+  shouldLastNodeBeUnderlined = true,
+}) => (
   <BreadcrumbContainer>
     {links.map((crumb, index) => {
       return (
@@ -76,6 +84,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ orderedLinks: links }) => (
             href={crumb.link?.url}
             target={crumb.link?.target}
             id="breadcrumb"
+            shouldLastNodeBeUnderlined={shouldLastNodeBeUnderlined}
           >
             {crumb.text}
           </StyledBreadcrumb>
