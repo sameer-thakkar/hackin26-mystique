@@ -380,7 +380,7 @@ const TabWrapper = (props: TabWrapperProps) => {
     setActiveTabIndex(newTabIndex);
     setActiveTab(
       stringIdfy(
-        tabData[newTabIndex].heading[0].text ||
+        tabData[newTabIndex]?.heading[0]?.text ||
           slices[newTabIndex]?.primary?.title
       )
     );
