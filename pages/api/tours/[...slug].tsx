@@ -2,6 +2,8 @@ import Cookies from 'cookies';
 import { COOKIE } from 'const/index';
 import { checkIfCurrencyCodeValid } from 'utils/currency';
 import TurndownService from 'turndown';
+import { sendLog } from 'utils/logger';
+import { NextApiHandler } from 'next';
 
 const markdownToRichtext = require('@ueno/markdown-to-prismic-richtext');
 const turndownService = new TurndownService();
@@ -16,7 +18,7 @@ const getRichTextFromHtmlContent = (properties: string) => {
   }));
 };
 
-const ToursAPI = async (req: any, res: any) => {
+const ToursAPI: NextApiHandler = async (req, res) => {
   const { useTest } = req?.query;
   const cookies = new Cookies(req, res);
   const blackListQueryParams = ['slug', 'useTest'];
@@ -46,10 +48,26 @@ const ToursAPI = async (req: any, res: any) => {
 
   const url = `https://api.${
     useTest === 'true' || useTest ? 'test-' : ''
-  }headout.com/api/${req.query.slug.join('/')}/${
+  }headout.com/api/${(req.query.slug as string[])?.join('/')}/${
     queryParamsString ? `?${queryParamsString}` : ''
   }`;
   await fetch(url)
+    .then((apiResponse) => {
+      if (!apiResponse.ok) {
+        sendLog({
+          level: 'INFO',
+          message: {
+            url,
+            message: 'Proxy API Error',
+            statusCode: apiResponse.status,
+          },
+        });
+        res.status(apiResponse.status);
+        throw new Error('Proxy API Error');
+      }
+
+      return apiResponse;
+    })
     .then((r) => r.json())
     .then((r) => {
       let data = r;
@@ -131,6 +149,9 @@ const ToursAPI = async (req: any, res: any) => {
       }
 
       res.write(JSON.stringify(data));
+      res.end();
+    })
+    .catch(() => {
       res.end();
     });
 };

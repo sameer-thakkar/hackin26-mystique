@@ -5,7 +5,7 @@ const shouldSendLogs = () => {
 };
 interface ILogData {
   level?: String;
-  message?: String;
+  message?: string | Object;
   err?: unknown;
 }
 
