@@ -4,6 +4,7 @@ import { checkIfCurrencyCodeValid } from 'utils/currency';
 import TurndownService from 'turndown';
 import { sendLog } from 'utils/logger';
 import { NextApiHandler } from 'next';
+import { LOG_LEVELS } from 'const/logs';
 
 const markdownToRichtext = require('@ueno/markdown-to-prismic-richtext');
 const turndownService = new TurndownService();
@@ -55,8 +56,9 @@ const ToursAPI: NextApiHandler = async (req, res) => {
     .then((apiResponse) => {
       if (!apiResponse.ok) {
         sendLog({
-          level: 'INFO',
+          level: LOG_LEVELS.INFO,
           message: {
+            host: req.headers.host,
             url,
             message: 'Proxy API Error',
             statusCode: apiResponse.status,
