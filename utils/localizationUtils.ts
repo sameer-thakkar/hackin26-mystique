@@ -1,6 +1,5 @@
 import { LanguagesUnion } from 'const/index';
 import EN from 'const/localization/en';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'loda... Remove this comment to see the full error message
 import defaultsDeep from 'lodash/defaultsDeep';
 
 const dayJsLocales = {

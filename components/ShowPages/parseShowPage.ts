@@ -92,7 +92,7 @@ export const parseShowPageData = (data: any) => {
     tabSchema: any = [],
     tabHeading: any = [],
     currentObject: any,
-    detailsObjects = {},
+    detailsObjects: Record<string, any> = {},
     DetailObjectHeading: any,
     tabSectionHeading,
     isSafetyBanner = false,
@@ -177,7 +177,6 @@ export const parseShowPageData = (data: any) => {
             return x === DetailObjectHeading;
           })
         ) {
-          // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
           detailsObjects[DetailObjectHeading] = element.content.text;
         }
         if (
@@ -207,6 +206,12 @@ export const parseShowPageData = (data: any) => {
             };
             hasSpecialOffer = true;
           }
+        }
+        if (
+          DetailObjectHeading === strings.SHOW_PAGE.THEATRE_NAME &&
+          element?.content?.spans?.[0]?.data?.url
+        ) {
+          detailsObjects.theatrePageUrl = element.content.spans[0].data.url;
         }
       } else if (currentObject === 'TAB') {
         // tab content

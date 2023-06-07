@@ -5,7 +5,6 @@ import { useRecoilValue } from 'recoil';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import { ProductJsonLd } from 'next-seo';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'loda... Remove this comment to see the full error message
 import cloneDeep from 'lodash.clonedeep';
 import { useWindowWidth } from '@react-hook/window-size';
 import styled from 'styled-components';
@@ -425,7 +424,6 @@ const ShowPage = (props: any) => {
     startLocation || endLocation || {};
   const productImages = imageUploads?.map((image: any) => image?.url);
   const showDescription = tabSchemaHighlight?.[0]?.tab_content?.[0]?.text;
-  // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
   const showDuration = detailsObjects?.[strings.SHOW_PAGE.DURATION];
   const showDurationISO = getDurationISO(showDuration);
   const theatreSeatingCapacity = (aboutTheatreSection as any)?.tab_content[1]?.text?.split(
@@ -470,10 +468,7 @@ const ShowPage = (props: any) => {
         "duration": "${showDurationISO}",
         "endDate": "${startDate}T${endTime}",
         "maximumAttendeeCapacity": "${theatreSeatingCapacity}",
-        "typicalAgeRange": "${
-          // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-          detailsObjects?.[strings.SHOW_PAGE.AGE_LIMIT]
-        }",
+        "typicalAgeRange": "${detailsObjects?.[strings.SHOW_PAGE.AGE_LIMIT]}",
         "url": "${pageUrl}",
         "eventStatus": "https://schema.org/EventScheduled",
         "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",

@@ -103,7 +103,8 @@ const ShowPageBanner = ({
 
   const { NEXT_AVAILABLE } = strings || {};
   const REOPENING_STRING = `${NEXT_AVAILABLE}`;
-  const theaterName = detailsObjects?.[strings.SHOW_PAGE.THEATRE_NAME];
+  const { [strings.SHOW_PAGE.THEATRE_NAME]: theatreName, theatrePageUrl } =
+    detailsObjects || {};
 
   let showDetails = {};
   Object.keys(detailsObjects)?.forEach((key) => {
@@ -335,9 +336,19 @@ const ShowPageBanner = ({
           <div>
             <h1>{getBannerTitle()}</h1>
             <Conditional if={isMobile}>
-              <div className="theater-wrapper">
-                {LOCATION} {theaterName}
-              </div>
+              <Conditional if={theatrePageUrl}>
+                <a href={theatrePageUrl}>
+                  <div className="theater-wrapper">
+                    {LOCATION} {theatreName}
+                  </div>
+                </a>
+              </Conditional>
+              <Conditional if={!theatrePageUrl}>
+                <div className="theater-wrapper">
+                  {LOCATION} {theatreName}
+                </div>
+              </Conditional>
+
               <div className="priceBlockWrapper">
                 <PriceBlock
                   listingPrice={listingPrice}
@@ -419,9 +430,18 @@ const ShowPageBanner = ({
           </Conditional>
           <Conditional if={!isMobile}>
             <div className="theater-reviews-wrapper">
-              <span>
-                {LOCATION} {theaterName}
-              </span>
+              <Conditional if={theatrePageUrl}>
+                <a href={theatrePageUrl}>
+                  <span>
+                    {LOCATION} {theatreName}
+                  </span>
+                </a>
+              </Conditional>
+              <Conditional if={!theatrePageUrl}>
+                <span>
+                  {LOCATION} {theatreName}
+                </span>
+              </Conditional>
               <Conditional if={reviewCount > 0}>
                 <span>
                   <span className="ratings-wrapper">
