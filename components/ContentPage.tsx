@@ -32,7 +32,6 @@ import {
   ALLOW_IMMEDIATE_NESTING,
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
-  PAGE_TYPES,
 } from 'const/index';
 import COLORS from 'const/colors';
 import { expandFontToken } from 'const/typography';
@@ -292,17 +291,13 @@ class ContentPage extends Component<any, any> {
   }
 
   componentDidUpdate() {
-    const { data, eventsReady } = this.props;
-    const { baseLangPageTitle } = data;
+    const { eventsReady } = this.props;
     const { pageViewEventSet } = this.state;
     if (!eventsReady) return;
 
     if (!pageViewEventSet) {
       trackEvent({
         eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
-        [ANALYTICS_PROPERTIES.PAGE_TYPE]: PAGE_TYPES.CONTENT_PAGE,
-        [ANALYTICS_PROPERTIES.LANGUAGE]: this.props.lang,
-        [ANALYTICS_PROPERTIES.PAGE_TITLE]: baseLangPageTitle,
       });
       this.setState({ pageViewEventSet: true });
     }

@@ -25,13 +25,14 @@ import { getPageData } from 'utils/prismicUtils';
 import { sendVariableToDataLayer } from 'utils/analytics';
 import { removePageQuery } from 'utils/urlUtils';
 import { traceError } from 'utils/logutils';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
 import { localServerSideIsMobileCheck } from 'utils/gen';
 import { strings } from 'const/strings';
 import { checkIfCurrencyCodeValid } from 'utils/currency';
 import PlatformUtils from 'utils/platformUtils';
 import { getLocalizationLabels } from 'utils/localizationUtils';
+import { gtmAtom } from 'store/atoms/gtm';
 
 import Analytics from './Analytics';
 import VenuePage from './VenuePage';
@@ -133,6 +134,7 @@ const Page = (props: PageProps) => {
     domainConfig,
     isExperimentalBot,
   } = props;
+  const { eventsReady } = useRecoilValue(gtmAtom);
 
   const { noTrack, tgidToScroll, bookSubdomain } = queryParams;
 
@@ -223,6 +225,7 @@ const Page = (props: PageProps) => {
             tgidToScroll={tgidToScroll}
             mbTheme={mbTheme}
             domainConfig={domainConfig}
+            eventsReady={eventsReady}
           />
         );
       case CUSTOM_TYPES.SHOW_PAGE:

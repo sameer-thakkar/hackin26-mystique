@@ -80,6 +80,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
       isCategoryV2,
       simplifiedCategoryTourListData,
       scorpioData: scorpioDataProp,
+      categoryTourListData,
     } = pageProps;
 
     const { title } = CMSContent?.data ?? {};
@@ -115,7 +116,11 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
 
     // remove this once we handle exception cases (if any) on Sentry
     try {
-      if (customType !== CUSTOM_TYPES.SHOW_PAGE) {
+      if (customType === CUSTOM_TYPES.CONTENT_PAGE) {
+        const collectionDetails = categoryTourListData?.collectionDetails || {};
+        primaryCollectionId = collectionDetails?.id;
+        primaryCollectionName = collectionDetails?.displayName;
+      } else if (customType !== CUSTOM_TYPES.SHOW_PAGE) {
         const [firstTour]: any = Object.values(scorpioData);
         const { primaryCollection } = firstTour ?? {};
         const { id, name } = primaryCollection ?? {};
