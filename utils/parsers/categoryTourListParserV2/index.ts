@@ -129,13 +129,13 @@ export default async function categoryTourListParserV2({
         if (collectionData.length) {
           const updatedCollectionData = collectionData?.map((c) => {
             const { collection, sections } = c || {};
-            const filteredData = sections.filter(
+            const filteredData = sections?.filter(
               (curr: { tourGroups: { items: [] } }) => {
                 return curr?.tourGroups?.items?.length;
               }
             );
             let filterTgids: [][] = [];
-            filteredData.forEach(
+            filteredData?.forEach(
               (section: {
                 tourGroups: {
                   items: [];
