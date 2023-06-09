@@ -370,6 +370,8 @@ const de = {
     TICKETS_REDEMPTION: 'Ticket-Einlösung',
     TOP_SONGS: 'Top Songs',
     YOUR_TICKETS: 'Ihre Tickets',
+    ABOUT_CONCERT: 'Das Konzert',
+    PROGRAM: 'Programm',
   },
   SORT_BY: 'Sortieren nach',
   THEATRE: 'Theater',

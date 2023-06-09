@@ -426,6 +426,8 @@ const en = {
     TICKETS_REDEMPTION: 'Tickets Redemption',
     TOP_SONGS: 'Top Songs',
     YOUR_TICKETS: 'Your Tickets',
+    ABOUT_CONCERT: 'About Concert',
+    PROGRAM: 'Program',
   },
   SORT_BY: 'Sort by',
   SPECIAL_OFFER: 'Special Offer',

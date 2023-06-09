@@ -422,6 +422,8 @@ const es = {
     TICKETS_REDEMPTION: 'Canje de entradas',
     TOP_SONGS: 'Canciones principales',
     YOUR_TICKETS: 'Tus entradas',
+    ABOUT_CONCERT: 'El concierto',
+    PROGRAM: 'Programa',
   },
   SORT_BY: 'Ordenar por',
   THEATRE: 'Teatro',

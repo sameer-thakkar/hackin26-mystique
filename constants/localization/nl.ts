@@ -371,6 +371,8 @@ const nl = {
     TICKETS_REDEMPTION: 'Tickets Aflossen',
     TOP_SONGS: 'Top Songs',
     YOUR_TICKETS: 'Je tickets',
+    ABOUT_CONCERT: 'Het Concert',
+    PROGRAM: 'Programma',
   },
   SORT_BY: 'Sorteer',
   THEATRE: 'Theater',

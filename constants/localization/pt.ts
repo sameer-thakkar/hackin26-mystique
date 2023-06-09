@@ -372,6 +372,8 @@ const pt = {
     TICKETS_REDEMPTION: 'Retirada de ingressos',
     TOP_SONGS: 'Principais canções',
     YOUR_TICKETS: 'Seus ingressos',
+    ABOUT_CONCERT: 'Sobre o concerto',
+    PROGRAM: 'Programa',
   },
   SORT_BY: 'Ordenar por',
   THEATRE: 'Teatro',

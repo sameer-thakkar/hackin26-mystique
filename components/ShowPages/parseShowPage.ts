@@ -109,6 +109,8 @@ export const parseShowPageData = (data: any) => {
     strings.SHOW_PAGE.AGE_SUITABILITY,
     strings.SHOW_PAGE.TOP_SONGS,
     strings.SHOW_PAGE.TICKETS,
+    strings.SHOW_PAGE.ABOUT_CONCERT,
+    strings.SHOW_PAGE.PROGRAM,
   ];
 
   const TAB_ALLOWED_INFO = [

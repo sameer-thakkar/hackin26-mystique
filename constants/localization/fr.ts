@@ -372,6 +372,8 @@ const fr = {
     TICKETS_REDEMPTION: 'Échange des billets',
     TOP_SONGS: 'Meilleures chansons',
     YOUR_TICKETS: 'Vos billets',
+    ABOUT_CONCERT: 'Le concert',
+    PROGRAM: 'Programme',
   },
   SORT_BY: 'Trier par',
   THEATRE: 'Théâtre',
