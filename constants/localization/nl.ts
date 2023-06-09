@@ -354,8 +354,9 @@ const nl = {
     GETTING_THERE_MAP_LINK: 'Erheen gaan Kaart Link',
     GOOGLE_MAP: 'Google Kaart',
     HIGHLIGHTS: 'Hoogtepunten',
-    LISTICLE_SHOW_SUMMARY: 'Lijstjesshow samenvatting',
-    LISTICLE_SHOW_WHY_WATCH: 'Lijstjesshow Waarom kijken',
+    LISTICLE_SHOW_SUMMARY: 'Listicle Samenvatting voorstelling',
+    LISTICLE_SHOW_WHY_WATCH:
+      'Listicle Waarom moet je deze voorstelling gaan zien?',
     OPENING_DATE: 'Openingsdatum',
     QUESTION: 'Q-',
     SAFETY_BANNER: 'Veiligheidsbanier',
