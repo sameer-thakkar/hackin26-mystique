@@ -53,6 +53,7 @@ export enum HeadoutEndpoints {
   TourGroupsV6,
   TourGroupInventoriesV6,
   TourGroupSlotsV6,
+  TourGroupListByCollectionV6,
   TourGroupListByCategoryV6,
   TourGroupListBySubCategoryV6,
   TourGroupReviewsV2,
@@ -88,6 +89,9 @@ export const getHeadoutApiUrl = ({
       break;
     case HeadoutEndpoints.TourGroupSlotsV6:
       endpointSlug = `/api/tours/v6/tour-groups/slots/get/${id}`;
+      break;
+    case HeadoutEndpoints.TourGroupListByCollectionV6:
+      endpointSlug = `/api/tours/v6/tour-groups/list-by/collection/${id}`;
       break;
     case HeadoutEndpoints.TourGroupListByCategoryV6:
       endpointSlug = `/api/tours/v6/tour-groups/list-by/category/${id}/`;
@@ -236,6 +240,12 @@ export const fetchCurrencyList = async () => {
   }
 };
 
+interface fetchTourGroupsByCollectionProps extends CommonApiProps {
+  collectionId: string | number;
+  city?: string;
+  limit?: string;
+}
+
 interface fetchTourGroupsByCategoryProps extends CommonApiProps {
   categoryId: string | number;
   isSubCategory: boolean;
@@ -275,6 +285,43 @@ export const fetchProductData = async ({
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error);
+  }
+};
+
+export const fetchTourGroupsByCollection = async ({
+  collectionId,
+  hostname,
+  city = '',
+  language = 'en',
+  limit,
+  fallbackToEnglish = false,
+  currency,
+  cookies,
+}: fetchTourGroupsByCollectionProps) => {
+  const params = {
+    language,
+    'use-seatmap-prices': '1',
+    ...(city && { city }),
+    ...(limit && { limit }),
+    ...(currency && { currency }),
+    ...(!fallbackToEnglish &&
+      language !== 'en' && {
+        'fallback-to-english': '0',
+      }),
+  };
+  const headers = constructHeaders({ cookies });
+  const url = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.TourGroupListByCollectionV6,
+    hostname,
+    id: collectionId,
+    params,
+  });
+  try {
+    const response = await fetch(url, { headers });
+    return await response.json();
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[fetchTGIDsByCollectionV6]', error);
   }
 };
 

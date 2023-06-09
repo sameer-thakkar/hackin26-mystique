@@ -4,6 +4,8 @@ import type { CollectionDetailsTypes } from 'components/StaticBanner/index';
 import { getHeadoutLanguagecode } from 'utils/index';
 import {
   fetchCollection,
+  fetchCollectionList,
+  fetchTourGroupsByCollection,
   fetchTourGroupsByCategory,
   fetchTourGroupV6,
   fetchTourListV6,
@@ -88,11 +90,29 @@ export const categoryTourListParserV1 = async ({
 
   if (collection) {
     try {
-      const collectionData = await fetchCollection({
+      const collectionTourGroups = await fetchTourGroupsByCollection({
         collectionId: collection,
         hostname,
+        city: cityCode,
         language,
         limit: finalLimit,
+        cookies,
+      });
+      const {
+        city,
+        currency: currentCurrency,
+        pageData,
+      } = collectionTourGroups;
+
+      primaryCity = city;
+      currency = currentCurrency;
+      tourData.push(...pageData?.items);
+
+      const collectionData = await fetchCollectionList({
+        collectionIds: [collection],
+        hostname,
+        currency: currentCurrency?.code,
+        language,
         cookies,
       });
 
@@ -100,65 +120,26 @@ export const categoryTourListParserV1 = async ({
         id,
         displayName,
         metaDescription,
-        ratingsInfo = {},
+        ratingsInfo,
         heroImageUrl,
         cardImageUrl,
         startingPrice,
-      } = collectionData?.collection ?? {};
-      const { currency: currentCurrency, listingPrice } = startingPrice ?? {};
+        collectionVideo: collectionVideoUrl,
+      } = collectionData?.collections?.[0] || {};
+      const { ratingsCount, averageRating } = ratingsInfo || {};
 
+      collectionVideo = collectionVideoUrl;
       collectionDetails = {
         id,
         displayName,
         metaDescription,
-        ratingsCount: ratingsInfo?.ratingsCount,
-        averageRating: ratingsInfo?.averageRating,
+        ratingsCount,
+        averageRating,
         heroImageUrl,
         cardImageUrl,
-        listingPrice,
-        currency: currentCurrency,
+        listingPrice: startingPrice?.listingPrice,
+        currency: currentCurrency?.code,
       };
-      primaryCity = collectionData?.city;
-      collectionVideo = collectionData?.collection?.collectionVideo;
-      currency = collectionData?.city?.country?.currency;
-      const getCollectionSection = (
-        collectionData: any,
-        sectionType: string
-      ) => {
-        return collectionData?.sections
-          ?.filter((section: any) => {
-            if (section?.type === sectionType) {
-              return section?.tourGroups?.items;
-            }
-          })
-          ?.reduce((acc: any, curr: any) => curr + acc);
-      };
-      const pinnedCardsSection = getCollectionSection(
-        collectionData,
-        'PINNED_CARDS'
-      );
-      const genericSection = getCollectionSection(collectionData, 'GENERIC');
-      const headoutPicksSection = getCollectionSection(
-        collectionData,
-        'HEADOUT_PICKS'
-      );
-
-      const pinnedProducts = pinnedCardsSection?.tourGroups?.items?.length
-        ? pinnedCardsSection?.tourGroups?.items
-        : [];
-
-      const finalSections = genericSection?.tourGroups?.items?.length
-        ? [...genericSection?.tourGroups?.items]
-        : headoutPicksSection?.tourGroups?.items?.length
-        ? [...headoutPicksSection?.tourGroups?.items]
-        : [];
-
-      const allProducts = pinnedProducts?.length
-        ? finalSections?.filter((product) =>
-            pinnedProducts?.some((p: any) => product?.id !== p?.id)
-          )
-        : finalSections;
-      tourData.push(...pinnedProducts, ...allProducts);
     } catch (err) {
       Sentry.captureException(err);
       sendLog({ err });

@@ -1834,4 +1834,3 @@ export const LIST_ICON = (
     />
   </svg>
 );
-
