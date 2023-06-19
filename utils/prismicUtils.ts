@@ -1178,7 +1178,14 @@ export const getPrismicDocument = async ({
      *
      * Sentry.captureException(error);
      */
-    sendLog({ err: error });
+    sendLog({
+      err: error,
+      message: {
+        host: req?.headers?.host,
+        url: req?.url,
+        message: 'Prismic Doc Not Found',
+      },
+    });
     traceError({
       error,
       host: req?.headers?.host,
