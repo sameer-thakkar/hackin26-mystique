@@ -27,3 +27,11 @@ export const titleCase = (str: string) => {
     return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
   });
 };
+
+export const constantCase = (str: string) => {
+  return str
+    .replace(/([a-z])([A-Z])/g, '$1_$2') // convert any camelCase to snake_case
+    .replace(/(\d)/g, '_$1_') // add an underscore before and after any numbers
+    .replace(/[\s.-]+/g, '_') // replace any spaces, dots, or hyphens with underscores
+    .toUpperCase(); // convert all letters to uppercase
+};

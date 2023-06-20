@@ -406,7 +406,7 @@ const PopulateProducts = (props: any) => {
 
   const isV1DesignSite = isMBDesign({
     currentDesign: design || '',
-    expectedDesign: DESIGN.V1,
+    expectedDesign: [DESIGN.V1],
   });
   const shouldShowHeading = isV1DesignSite ? !isCollectionMB : true;
   return (

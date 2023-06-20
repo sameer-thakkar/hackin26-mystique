@@ -108,3 +108,57 @@ export function throttle<F extends (...args: Parameters<F>) => ReturnType<F>>(
     }
   };
 }
+
+export const addToNestedObject = (
+  nestedObject: Record<any, any>,
+  targetKey: keyof typeof nestedObject,
+  objectToAdd: Record<any, any>
+) => {
+  for (const key in nestedObject) {
+    if (key === targetKey) {
+      nestedObject[key] = {
+        ...nestedObject[key],
+        [objectToAdd.label]: objectToAdd,
+      };
+      return;
+    } else if (typeof nestedObject[key] === 'object') {
+      addToNestedObject(nestedObject[key], targetKey, objectToAdd);
+    }
+  }
+};
+
+export const sortObjectByKeys = ({
+  obj,
+  order,
+}: {
+  obj: Record<string, any>;
+  order: string[];
+}) => {
+  const sortedObj: Record<string, any> = {};
+
+  order.forEach((key) => {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      sortedObj[key] = obj[key];
+    }
+  });
+
+  Object.keys(obj).forEach((key) => {
+    if (!Object.prototype.hasOwnProperty.call(sortedObj, key)) {
+      sortedObj[key] = obj[key];
+    }
+  });
+
+  return sortedObj;
+};
+
+export const getObjectNestingCount = (
+  obj: Record<string, any>,
+  level = 0
+): number => {
+  if (typeof obj !== 'object' || obj === null) {
+    return level;
+  }
+  return Math.max(
+    ...Object.values(obj).map((val) => getObjectNestingCount(val, level + 1))
+  );
+};

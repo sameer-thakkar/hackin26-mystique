@@ -1,6 +1,7 @@
 import { Client } from 'config/prismic-config';
 import Prismic from 'prismic-javascript';
 import * as Sentry from '@sentry/nextjs';
+import { PrismicDocumentWithUID } from '@prismicio/types';
 import { toursTabSliceHandler } from 'components/Slices';
 import type { CollectionDetailsTypes } from 'components/StaticBanner/index';
 import {
@@ -13,7 +14,10 @@ import {
   PRISMIC_LANG_TO_ROUTE_PARAM,
   SLICE_TYPES,
   THEMES,
+  MB_CATEGORISATION,
+  PRISMIC_FIELD_ID,
 } from 'const/index';
+import { MISC } from 'const/header';
 import {
   documentUidUpdateRedirectHandler,
   getCollectionSection,
@@ -23,14 +27,15 @@ import {
   getTgidsFromShow,
   redirectTo,
   refsArrayToObject,
+  handleSettledPromiseResults,
   deepDeleteKeys,
-} from 'utils/index';
+} from 'utils';
 import {
   generateDescriptor,
   standardizeCancellationPolicy,
 } from 'utils/productUtils';
 import { traceError } from 'utils/logutils';
-import { getHostName } from 'utils/helper';
+import { getHostName, checkIfCategoryHeaderExists } from 'utils/helper';
 import {
   getLangUID,
   getValidUrlParams,
@@ -52,6 +57,8 @@ import {
   fetchDomainConfig,
   fetchTourListV6,
 } from 'utils/apiUtils';
+import { getCategoryHeaderMenu, getRankedDocuments } from 'utils/headerUtils';
+import type { TCategorisationMetadata } from 'utils/headerUtils';
 import { sendLog } from 'utils/logger';
 import categoryTourListParserV2 from 'utils/parsers/categoryTourListParserV2/index';
 import { LOG_LEVELS } from 'const/logs';
@@ -266,6 +273,10 @@ export const getContentPageDocument = async ({
             lang !== EN_LANG_CODE
               ? baseLangData?.data?.redirect_to_headout_booking_flow
               : page.data.redirect_to_headout_booking_flow,
+          baseLangTaggedCity:
+            lang !== EN_LANG_CODE
+              ? baseLangMicrositeData.data.tagged_city
+              : micrositeData.data.tagged_city,
         },
       };
       return {
@@ -519,6 +530,10 @@ export const getMicrositeDocument = async ({
                 localisedCategoryTourListV1,
                 categoryTourListV2,
                 ...(allShowPages && { allShowPages }),
+                baseLangTaggedCity:
+                  lang !== 'en-us'
+                    ? baseLangData.data.tagged_city
+                    : completeMicrosite.data.data.tagged_city,
               },
             },
           };
@@ -1599,6 +1614,11 @@ export const getPageData = async ({
         });
     }
 
+    const mbType =
+      ContentType === CUSTOM_TYPES.CONTENT_PAGE
+        ? CMSContent?.data?.mbType
+        : microsite?.mbType;
+
     if (ContentType === CUSTOM_TYPES.MICROSITE) {
       let collectionDetails: CollectionDetailsTypes | Object = {};
       const { data } = CMSContent || {};
@@ -1899,6 +1919,22 @@ export const getPageData = async ({
 
     const primaryCity = tourGroupAPIResponses?.cities?.[0];
     const activeCurrency = tourGroupAPIResponses?.currencies?.[0];
+
+    const baseLangMicrositeTaggedCity =
+      ContentType === CUSTOM_TYPES.CONTENT_PAGE
+        ? CMSContent?.data?.baseLangTaggedCity
+        : CMSContent?.data?.data?.baseLangTaggedCity;
+
+    const categoryHeaderMenuExists =
+      checkIfCategoryHeaderExists({
+        mbDesign: microsite?.data?.design,
+        mbType,
+      }) && !!baseLangMicrositeTaggedCity;
+
+    const categoryHeaderMenu = categoryHeaderMenuExists
+      ? await getCategoryHeaderMenu(microsite)
+      : {};
+
     return {
       ...scorpioAllTourGroupData,
       ...(activeCurrency && { activeCurrency }),
@@ -1908,6 +1944,7 @@ export const getPageData = async ({
       primaryCountry,
       currencyList: await currencyListPromise,
       domainConfig: await domainConfigPromise,
+      categoryHeaderMenu,
     };
   } catch (error) {
     traceError({ error, host: req?.headers?.host, url: req?.url });
@@ -1915,4 +1952,145 @@ export const getPageData = async ({
       statusCode: 500,
     };
   }
+};
+
+type TGetClientQueryPromise = {
+  docType: string;
+  mbCity: string | null;
+  mbCollection: string | null;
+  filterMiscDocs?: boolean;
+  lang?: string;
+};
+
+const getClientQueryPromise = ({
+  docType,
+  lang,
+  mbCity,
+  mbCollection,
+  filterMiscDocs,
+}: TGetClientQueryPromise) => {
+  return Client().query(
+    [
+      Prismic.Predicates.not(`document.tags`, ['[DEV]']),
+      mbCity &&
+        Prismic.Predicates.at(
+          `my.${docType}.${PRISMIC_FIELD_ID.TAGGED_CITY}`,
+          mbCity
+        ),
+      mbCollection &&
+        Prismic.Predicates.at(
+          `my.${docType}.${PRISMIC_FIELD_ID.TAGGED_COLLECTION}`,
+          mbCollection
+        ),
+      filterMiscDocs &&
+        Prismic.Predicates.at(
+          `my.${docType}.${PRISMIC_FIELD_ID.SHOULDER_PAGE_TYPE}`,
+          MISC
+        ),
+    ],
+    {
+      pageSize: 100,
+      ...(filterMiscDocs && { lang }),
+    }
+  );
+};
+
+type TGetShoulderPageDocs = {
+  categorisationMetadata: TCategorisationMetadata;
+  filterMiscDocs?: boolean;
+  lang?: string;
+};
+
+export const getShoulderPageDocs = async ({
+  categorisationMetadata,
+  filterMiscDocs,
+  lang,
+}: TGetShoulderPageDocs) => {
+  const {
+    tagged_city: mbCity,
+    tagged_collection: mbCollection,
+  } = categorisationMetadata;
+
+  const micrositesPromises = getClientQueryPromise({
+    docType: CUSTOM_TYPES.MICROSITE,
+    mbCity,
+    mbCollection,
+    filterMiscDocs,
+    lang,
+  });
+
+  const contentPagesPromises = getClientQueryPromise({
+    docType: CUSTOM_TYPES.CONTENT_PAGE,
+    mbCity,
+    mbCollection,
+    filterMiscDocs,
+    lang,
+  });
+
+  const aggregatedPromise = await Promise.allSettled([
+    micrositesPromises,
+    contentPagesPromises,
+  ]);
+
+  const [
+    filteredMicrosites,
+    filteredContentPages,
+  ] = handleSettledPromiseResults(aggregatedPromise);
+
+  const aggregatedDocsStore = [
+    ...filteredMicrosites?.results,
+    ...filteredContentPages?.results,
+  ];
+
+  return getRankedDocuments(aggregatedDocsStore);
+};
+
+export const getCityGuideDocs = async (
+  categorisationMetadata: TCategorisationMetadata
+) => {
+  const { tagged_city: mbCity } = categorisationMetadata;
+
+  const { results: filteredMicrosites } =
+    (await Client().query(
+      [
+        Prismic.Predicates.not(`document.tags`, ['[DEV]']),
+        mbCity &&
+          Prismic.Predicates.at(
+            `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_CITY}`,
+            mbCity
+          ),
+        Prismic.Predicates.at(
+          `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_MB_TYPE}`,
+          MB_CATEGORISATION.MB_TYPE.A1_CITY_GUIDE
+        ),
+      ],
+      { pageSize: 100 }
+    )) || {};
+
+  return getRankedDocuments(filteredMicrosites);
+};
+
+export const getAlternateLanguageDocs = async ({
+  baseLangDocs,
+  lang,
+}: {
+  baseLangDocs: PrismicDocumentWithUID[];
+  lang: string;
+}): Promise<PrismicDocumentWithUID[]> => {
+  const alternateLangDocsIds = baseLangDocs
+    .map((doc) => {
+      const { alternate_languages: alternateLanguages } = doc || {};
+      const { id } = alternateLanguages.find((doc) => doc.lang === lang) || {};
+      return id;
+    })
+    .filter(Boolean);
+
+  const { results: alternateLangDocs } = await Client().getByIDs(
+    alternateLangDocsIds,
+    {
+      pageSize: 100,
+    }
+  );
+
+  return alternateLangDocs;
 };

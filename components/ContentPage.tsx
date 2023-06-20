@@ -21,7 +21,11 @@ import {
 } from 'utils';
 import allToursParser from 'utils/allToursParser';
 import { tourListApiParser } from 'utils/dataParsers';
-import { groupSlices, getLangObject } from 'utils/helper';
+import {
+  groupSlices,
+  getLangObject,
+  checkIfCategoryHeaderExists,
+} from 'utils/helper';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import renderShortCodes from 'utils/shortCodes';
 import { getLogoRedirectionUrl, convertUidToUrl } from 'utils/urlUtils';
@@ -40,6 +44,9 @@ import sideNavHandler from 'utils/sideNavUtils';
 import SideNavModal from 'UI/SideNav';
 
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
+const CategoryHeader = dynamic(() =>
+  import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
+);
 
 const ContentWrapper = styled.main`
   margin-top: 0;
@@ -361,6 +368,8 @@ class ContentPage extends Component<any, any> {
       host,
       scorpioData,
       domainConfig,
+      primaryCity,
+      categoryHeaderMenu,
     } = this.props;
 
     const {
@@ -373,8 +382,11 @@ class ContentPage extends Component<any, any> {
       body,
       microsite_document_ref,
       secondaryFooter,
+      mbType,
+      tagged_city: taggedCity,
       side_navigation: sideNavToggle,
     } = data;
+
     const apiReady = tourAPIData !== null;
     const slices = [
       ...(data?.body || []),
@@ -384,6 +396,8 @@ class ContentPage extends Component<any, any> {
       cardPrices: tourAPIData,
       isFetched: apiReady,
     });
+    const { design: mbDesign } = microsite?.data || {};
+
     const CFWBody = contentFramework?.data?.body;
     const contentFWSlices = groupSlices(CFWBody || []);
 
@@ -433,7 +447,6 @@ class ContentPage extends Component<any, any> {
       ...strValues,
       ...objValues,
     };
-    const { mbType } = micrositeData;
     const isCollectionMicrobrand = isCollectionMB(mbType);
     const bannerAndFooterSubtext = getBannerAndFooterSubtext(
       baseLangIsPoiMb,
@@ -505,6 +518,10 @@ class ContentPage extends Component<any, any> {
       isDev,
       host,
     });
+    const categoryHeaderMenuExists = checkIfCategoryHeaderExists({
+      mbDesign,
+      mbType,
+    });
     return (
       <div className="page-wrapper">
         {this.state.showGroupBookingModal && groupBookingTourTitles && (
@@ -560,7 +577,25 @@ class ContentPage extends Component<any, any> {
             commonHeader?.data?.body,
             ALLOW_IMMEDIATE_NESTING
           )}
+          primaryCity={primaryCity}
+          taggedCity={taggedCity}
+          categoryHeaderMenu={categoryHeaderMenu}
+          categoryHeaderMenuExists={categoryHeaderMenuExists}
         />
+        <Conditional
+          if={
+            categoryHeaderMenuExists &&
+            Object.keys(categoryHeaderMenu).length > 0 &&
+            !this.state.isMobile
+          }
+        >
+          <CategoryHeader
+            categoryHeaderMenu={categoryHeaderMenu}
+            primaryCity={primaryCity}
+            taggedCity={taggedCity}
+            isMobile={false}
+          />
+        </Conditional>
         <Conditional if={showCovid19Alert && this.state.covid19AlertOpen}>
           <DismissAlert
             readMoreLink={strings.COVID19_ALERT.LINK}

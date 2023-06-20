@@ -517,6 +517,25 @@ export const getEnglishDocUid = (
   }
 };
 
+export const getAlternateLanguageDocUid = ({
+  doc,
+  lang,
+}: {
+  doc: Record<string, any>;
+  lang: string;
+}): string | null => {
+  const { alternate_languages: alternateLanguages } = doc || {};
+  if (alternateLanguages?.length) {
+    const { uid } =
+      alternateLanguages?.find(
+        (doc: Record<string, any>) => doc.lang === lang
+      ) || {};
+    return uid;
+  } else {
+    return null;
+  }
+};
+
 export const getCollectionSection = (
   collectionData: Record<string, any>,
   sectionType: 'PINNED_CARDS' | 'GENERIC' | 'HEADOUT_PICKS'
@@ -555,13 +574,27 @@ export const isMBDesign = ({
   expectedDesign,
 }: {
   currentDesign: string;
-  expectedDesign: string;
-}) => currentDesign === expectedDesign;
+  expectedDesign: string[];
+}) => expectedDesign.includes(currentDesign);
 
 export const isCollectionMB = (mbType: string) =>
   mbType === MB_TYPES.A1_COLLECTION ||
   mbType === MB_TYPES.B1_GLOBAL ||
   mbType === MB_TYPES.C1_COLLECTION;
+
+export const handleSettledPromiseResults = (
+  results: PromiseSettledResult<any>[]
+): Record<string, any>[] => {
+  const errors = results.map(
+    (result) => result.status === 'rejected' && result?.reason
+  );
+  if (errors.length) {
+    // todo - handle aggregated errors
+  }
+  return results.map(
+    (result) => result.status === 'fulfilled' && result?.value
+  );
+};
 
 export const isPartneredMB = (baseLangBannerAndFooterCombinations: string) => {
   return (

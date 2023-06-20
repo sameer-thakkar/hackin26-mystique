@@ -138,6 +138,8 @@ class MicrositeV2 extends Component<any, any> {
       scorpioData,
       categoryTourListData,
       domainConfig,
+      primaryCity,
+      categoryHeaderMenu,
       isMobile,
     } = this.props;
     const {
@@ -484,8 +486,12 @@ class MicrositeV2 extends Component<any, any> {
       contentFramework: contentFramework?.data,
       alertPopup: CMSContent?.data?.alert_popup,
       showCovid19Alert: CMSContent?.data.show_covid19_alert,
-      mbType: CMSContent.mbType,
       domainConfig,
+      mbDesign: CMSContent?.data?.design,
+      mbType: CMSContent?.data?.tagged_mb_type,
+      primaryCity,
+      taggedCity: CMSContent?.data?.tagged_city,
+      categoryHeaderMenu,
       baseLangIsPoiMb,
       baseLangBannerAndFooterCombinations,
     };

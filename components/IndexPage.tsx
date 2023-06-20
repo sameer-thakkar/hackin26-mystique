@@ -132,6 +132,7 @@ const Page = (props: PageProps) => {
     isStage,
     collectionDetails,
     domainConfig,
+    categoryHeaderMenu,
     isExperimentalBot,
   } = props;
   const { eventsReady } = useRecoilValue(gtmAtom);
@@ -170,6 +171,8 @@ const Page = (props: PageProps) => {
             serverRequestStartTimestamp={serverRequestStartTimestamp}
             isMobile={isMobile}
             domainConfig={domainConfig}
+            primaryCity={primaryCity}
+            categoryHeaderMenu={categoryHeaderMenu}
           />
         );
       case CUSTOM_TYPES.VENUE_PAGE:
@@ -206,6 +209,8 @@ const Page = (props: PageProps) => {
             isMobile={isMobile}
             mbTheme={mbTheme}
             domainConfig={domainConfig}
+            primaryCity={primaryCity}
+            categoryHeaderMenu={categoryHeaderMenu}
           />
         );
       case CUSTOM_TYPES.CONTENT_PAGE:
@@ -225,6 +230,8 @@ const Page = (props: PageProps) => {
             tgidToScroll={tgidToScroll}
             mbTheme={mbTheme}
             domainConfig={domainConfig}
+            primaryCity={primaryCity}
+            categoryHeaderMenu={categoryHeaderMenu}
             eventsReady={eventsReady}
           />
         );

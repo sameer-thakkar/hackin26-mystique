@@ -5,17 +5,20 @@ import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import { currencyListAtom } from 'store/atoms/currencyList';
+import { metaAtom } from 'store/atoms/meta';
 import Image from 'UI/Image';
 import Hamburger from 'UI/Hamburger';
 import HeaderLinks from 'components/HeaderLinks';
 import LocaleSelector from 'components/common/LocaleSelector';
 import Conditional from 'components/common/Conditional';
+import { withTrailingSlash } from 'utils/helper';
+import { throttle } from 'utils/gen';
+import { trackEvent, getCommonEventMetaData } from 'utils/analytics';
+import { ANALYTICS_EVENTS } from 'const/index';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
 import { POWERED_BY_HEADOUT } from 'assets/SvgIcons';
-import { withTrailingSlash } from 'utils/helper';
-import { throttle } from 'utils/gen';
 import { appAtom } from 'store/atoms/app';
 
 const MultiLevelNav = dynamic(() => import('components/MultiLevelNav'));
@@ -216,17 +219,24 @@ const Header: React.FC<any> = (props) => {
     dropdownLinks,
     showTicketMenu,
     isEntertainmentMB = false,
+    primaryCity,
+    taggedCity,
+    categoryHeaderMenu,
+    categoryHeaderMenuExists = false,
   } = props;
   const headerCurrencies = useRecoilValue(currencyListAtom);
+  const pageMetaData = useRecoilValue(metaAtom);
   const headerLanguages = languages?.length
     ? [...languages, { code: currentLanguage }]
     : [];
   const { isSidenavScroll } = useRecoilValue(appAtom);
 
-  const hamburgerIconCheck =
-    showGroupBooking ||
-    !!headerLinks?.filter((link: any) => link.link_url?.url)?.length ||
-    slices.length;
+  const hamburgerIconCheck = categoryHeaderMenuExists
+    ? Object.keys(categoryHeaderMenu).length > 0
+    : showGroupBooking ||
+      !!headerLinks?.filter((link: any) => link.link_url?.url)?.length ||
+      slices.length;
+
   const hamburgerRef = useRef(null);
   const multiNavRef = useRef(null);
   const [scrollPos, setScrollPos] = useState(0);
@@ -263,25 +273,37 @@ const Header: React.FC<any> = (props) => {
       action: () => {
         openGroupBookingModal();
       },
-      toggleMenu: () => setHamburgerOpen((c) => !c),
+      toggleMenu: () => setHamburgerOpen((hamburgerOpen) => !hamburgerOpen),
     });
 
   useEffect(() => {
     if (!window) return;
-    const scrollHandler = () => {
-      const isUpScroll = scrollPos > window.pageYOffset && !isSidenavScroll;
-      setIsHeaderSticky(isUpScroll);
-      setScrollPos(window.pageYOffset);
-    };
-    const throttledScrollHandler = throttle(scrollHandler, 500);
 
-    window.addEventListener('scroll', throttledScrollHandler, {
-      passive: true,
-    });
-    return () => {
-      window.removeEventListener('scroll', throttledScrollHandler);
-    };
+    if (categoryHeaderMenuExists) {
+      setIsHeaderSticky(true);
+    } else {
+      const scrollHandler = () => {
+        const isUpScroll = scrollPos > window.pageYOffset;
+        setIsHeaderSticky(isUpScroll);
+        setScrollPos(window.pageYOffset);
+      };
+      const throttledScrollHandler = throttle(scrollHandler, 500);
+      window.addEventListener('scroll', throttledScrollHandler, {
+        passive: true,
+      });
+      return () => {
+        window.removeEventListener('scroll', throttledScrollHandler);
+      };
+    }
   }, [scrollPos]);
+
+  const handleHamburgerClick = () => {
+    setHamburgerOpen((hamburgerOpen) => !hamburgerOpen);
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.HAMBURGER_MENU_CLICKED,
+      ...getCommonEventMetaData(pageMetaData),
+    });
+  };
 
   useEffect(() => {
     let timer = setTimeout(() => {
@@ -349,6 +371,10 @@ const Header: React.FC<any> = (props) => {
                   (slice: any) => slice.slice_type === 'navigation'
                 )}
                 oldMenuItems={convertedRegularMenuItems}
+                primaryCity={primaryCity}
+                taggedCity={taggedCity}
+                categoryHeaderMenu={categoryHeaderMenu}
+                categoryHeaderMenuExists={categoryHeaderMenuExists}
               />
             </span>
           </Conditional>
@@ -382,9 +408,7 @@ const Header: React.FC<any> = (props) => {
           <Conditional if={isMobile && hamburgerIconCheck}>
             <div
               ref={hamburgerRef}
-              onClick={() => {
-                setHamburgerOpen((c) => !c);
-              }}
+              onClick={handleHamburgerClick}
               tabIndex={0}
               role="button"
             >

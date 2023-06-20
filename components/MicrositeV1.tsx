@@ -26,7 +26,12 @@ import {
 } from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import allToursParser from 'utils/allToursParser';
-import { csvTgidToArray, getLangObject, groupSlices } from 'utils/helper';
+import {
+  csvTgidToArray,
+  getLangObject,
+  groupSlices,
+  checkIfCategoryHeaderExists,
+} from 'utils/helper';
 import { LOCATION } from 'assets/SvgIcons';
 import {
   ANALYTICS_EVENTS,
@@ -60,6 +65,9 @@ const Banner = dynamic(() =>
   import(/* webpackChunkName: "Banner" */ 'components/Banner')
 );
 const PopulateProducts = dynamic(() => import('components/PopulateProducts'));
+const CategoryHeader = dynamic(() =>
+  import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
+);
 
 const CoverSlicesWrapper = styled.div`
   margin-bottom: 32px;
@@ -79,6 +87,8 @@ const MicrositeV1 = (props: any) => {
     categoryTourListData,
     domainConfig,
     collectionDetails,
+    primaryCity,
+    categoryHeaderMenu,
   } = props;
 
   const [isMobile, setIsMobile] = useState(props?.isMobile);
@@ -99,6 +109,7 @@ const MicrositeV1 = (props: any) => {
     alternate_languages,
     mbType,
   } = data;
+
   const {
     contentFramework,
     commonFooter,
@@ -125,8 +136,10 @@ const MicrositeV1 = (props: any) => {
     instant_checkout: instantCheckout = false,
     enable_earliest_availability: enableEarliestAvailability,
     baseLangPageTitle,
+    design,
     baseLangIsPoiMb,
     baseLangBannerAndFooterCombinations,
+    tagged_city: taggedCity,
   } = micrositeData || {};
 
   const { COVID19_ALERT, READ_MORE } = strings;
@@ -344,6 +357,11 @@ const MicrositeV1 = (props: any) => {
     headerLinks && !isHeaderInherited ? headerLinks : null;
   const isCollectionMicrobrand = isCollectionMB(mbType);
 
+  const categoryHeaderMenuExists = checkIfCategoryHeaderExists({
+    mbDesign: design,
+    mbType,
+  });
+
   useEffect(() => {
     setIsMobile(windowWidth < 768);
   }, [windowWidth]);
@@ -491,7 +509,25 @@ const MicrositeV1 = (props: any) => {
           dropdownLinks={!isHeaderInherited ? dropdownLinks : null}
           hasDropdownLinks={!isHeaderInherited ? hasDropdownLinks : null}
           headerCurrencies={headerCurrencies}
+          primaryCity={primaryCity}
+          taggedCity={taggedCity}
+          categoryHeaderMenu={categoryHeaderMenu}
+          categoryHeaderMenuExists={categoryHeaderMenuExists}
         />
+        <Conditional
+          if={
+            categoryHeaderMenuExists &&
+            Object.keys(categoryHeaderMenu).length > 0 &&
+            !isMobile
+          }
+        >
+          <CategoryHeader
+            categoryHeaderMenu={categoryHeaderMenu}
+            primaryCity={primaryCity}
+            taggedCity={taggedCity}
+            isMobile={false}
+          />
+        </Conditional>
         <Conditional if={showCovid19Alert && covidAlertActive}>
           <DismissAlert
             readMoreLink={COVID19_ALERT.LINK}

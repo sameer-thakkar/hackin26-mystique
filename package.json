@@ -21,6 +21,7 @@
     "@newrelic/next": "^0.5.1",
     "@react-hook/window-size": "^3.0.6",
     "@sentry/nextjs": "7.14.2",
+    "@types/lodash.clonedeep": "^4.5.7",
     "@ueno/markdown-to-prismic-richtext": "^1.2.0",
     "classnames": "^2.2.6",
     "cookies": "^0.8.0",

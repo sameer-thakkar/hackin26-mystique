@@ -146,7 +146,6 @@ const CustomLinkedTours = ({
         language: lang,
       }),
     },
-    // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
     id: null,
   });
   const { data: tourListData } = useSWR(tourListEndpoint, {

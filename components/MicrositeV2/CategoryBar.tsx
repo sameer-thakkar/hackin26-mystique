@@ -17,7 +17,7 @@ const StyledCategoryBar = styled.div<{ isMobile?: boolean }>`
   position: sticky;
   background: ${COLORS.BRAND.WHITE};
   top: ${({ isMobile }) => (isMobile ? '35px' : '56px')};
-  z-index: 10;
+  z-index: 2;
 
   .swiper-container {
     overflow: unset;

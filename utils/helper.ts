@@ -2,11 +2,18 @@ import parse from 'url-parse';
 import dayjs, { Dayjs } from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
-import { F1_SPORTS_EXPERIMENT_TGIDS, LANGUAGE_MAP } from 'const/index';
+import type { NumberField, SelectField } from '@prismicio/types';
+import { isMBDesign } from 'utils';
 import renderShortCodes from 'utils/shortCodes';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
-import type { NumberField, SelectField } from '@prismicio/types';
 import { sendLog } from 'utils/logger';
+import {
+  LANGUAGE_MAP,
+  DESIGN,
+  MB_CATEGORISATION,
+  F1_SPORTS_EXPERIMENT_TGIDS,
+} from 'const/index';
+import { strings } from 'const/strings';
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
@@ -525,6 +532,46 @@ export const checkIfGpMotorTicketsMB = (uid: string | null | undefined) =>
 export const checkIfSportsSubCategory = (
   primarySubcategoryId: number | undefined | null
 ) => primarySubcategoryId === 1042 || primarySubcategoryId === 1109;
+
+export const checkIfCategoryHeaderExists = ({
+  mbDesign,
+  mbType,
+}: {
+  mbDesign: string | undefined | null;
+  mbType: string | undefined | null;
+}) => {
+  const supportedMbTypes = [
+    MB_CATEGORISATION.MB_TYPE.C1_COLLECTION,
+    MB_CATEGORISATION.MB_TYPE.A1_COLLECTION,
+    MB_CATEGORISATION.MB_TYPE.A1_HOMEPAGE,
+    MB_CATEGORISATION.MB_TYPE.A1_CATEGORY,
+    MB_CATEGORISATION.MB_TYPE.A1_SUB_CATEGORY,
+    MB_CATEGORISATION.MB_TYPE.A1_CITY_GUIDE,
+  ];
+  return (
+    isMBDesign({
+      currentDesign: mbDesign || '',
+      expectedDesign: [DESIGN.V1, DESIGN.V3],
+    }) && supportedMbTypes.includes(mbType || '')
+  );
+};
+
+export const getCategoryHeaderMenuLabel = ({
+  label,
+  mbCity,
+}: {
+  label: string;
+  mbCity: string;
+}) => {
+  const formattedLabel = strings.formatString(
+    strings.CATEGORY_HEADER[label as keyof typeof strings.CATEGORY_HEADER],
+    mbCity
+  );
+  const formattedLabelString = Array.isArray(formattedLabel)
+    ? formattedLabel[0]
+    : formattedLabel;
+  return formattedLabelString || label;
+};
 
 export const isF1SportsExperiment = (tgid: number): boolean =>
   F1_SPORTS_EXPERIMENT_TGIDS.includes(String(tgid));

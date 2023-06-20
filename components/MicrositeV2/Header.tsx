@@ -9,6 +9,7 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 import { currencyListAtom } from 'store/atoms/currencyList';
+import { metaAtom } from 'store/atoms/meta';
 import { MBContext } from 'contexts/MBContext';
 import Image from 'components/UI/Image';
 import MultiLevelNav from 'components/MultiLevelNav';
@@ -29,7 +30,7 @@ import { strings } from 'const/strings';
 import { groupSlices, withTrailingSlash } from 'utils/helper';
 import { createBookingURL } from 'utils';
 import { convertUidToUrl } from 'utils/urlUtils';
-import { trackEvent } from 'utils/analytics';
+import { trackEvent, getCommonEventMetaData } from 'utils/analytics';
 import { appAtom } from 'store/atoms/app';
 
 const SearchBox: ComponentType<any> = dynamic(
@@ -63,7 +64,7 @@ const StyledHeader = styled.div<IStyledHeader>`
     justify-content: space-between;
     align-items: center;
     padding: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '20px 0' : '14px 0'};
+      isEntertainmentMb ? '1.25rem 0' : '0.75rem 0 0.625rem'};
     user-select: none;
   }
   .fixed-wrap {
@@ -312,6 +313,10 @@ interface HeaderProps {
   isEntertainmentMb?: boolean;
   isEntertainmentMbListicle?: boolean;
   hideCurrencySelector?: boolean;
+  primaryCity?: string;
+  taggedCity?: string;
+  categoryHeaderMenuExists?: boolean;
+  categoryHeaderMenu?: Record<string, any>;
 }
 
 const Header: FunctionComponent<HeaderProps> = ({
@@ -335,6 +340,10 @@ const Header: FunctionComponent<HeaderProps> = ({
   isEntertainmentMb = false,
   isEntertainmentMbListicle,
   hideCurrencySelector = false,
+  primaryCity,
+  taggedCity,
+  categoryHeaderMenuExists = false,
+  categoryHeaderMenu,
 }) => {
   const { lang, nakedDomain, redirectToHeadoutBookingFlow } = useContext(
     MBContext
@@ -388,6 +397,7 @@ const Header: FunctionComponent<HeaderProps> = ({
     ALLOW_IMMEDIATE_NESTING
   );
   const headerCurrencies = useRecoilValue(currencyListAtom);
+  const pageMetaData = useRecoilValue(metaAtom);
   const headerLanguages = languageProps?.languages.length
     ? [...(languageProps?.languages ?? []), { code: lang }]
     : [];
@@ -405,9 +415,11 @@ const Header: FunctionComponent<HeaderProps> = ({
           },
         },
       })) || [];
-  const hamburgerIconCheck = !!(
-    headerLinks?.filter((link) => link?.link_url)?.length || headerSlices.length
-  );
+  const hamburgerIconCheck =
+    !!(
+      headerLinks?.filter((link) => link?.link_url)?.length ||
+      headerSlices.length
+    ) || categoryHeaderMenuExists;
 
   const [showBuyTickets, setShowBuyTickets] = useState(false);
   const [isMobileDevice, setIsMobileDevice] = useState(isMobile);
@@ -428,6 +440,14 @@ const Header: FunctionComponent<HeaderProps> = ({
       { passive: true }
     );
   }, []);
+
+  const handleHamburgerClick = () => {
+    toggleNav((navActive) => !navActive);
+    trackEvent({
+      eventName: ANALYTICS_EVENTS.HAMBURGER_MENU_CLICKED,
+      ...getCommonEventMetaData(pageMetaData),
+    });
+  };
 
   return (
     <StyledHeader
@@ -520,6 +540,10 @@ const Header: FunctionComponent<HeaderProps> = ({
                 slice={groupedHeaderSlices || []}
                 oldMenuItems={convertedRegularMenuItems}
                 isGlobalMb={isGlobalMb}
+                primaryCity={primaryCity}
+                taggedCity={taggedCity}
+                categoryHeaderMenu={categoryHeaderMenu}
+                categoryHeaderMenuExists={categoryHeaderMenuExists}
               />
             </Conditional>
             <Conditional if={enableBuyTickets}>
@@ -572,7 +596,7 @@ const Header: FunctionComponent<HeaderProps> = ({
               <Hamburger
                 className={'hamburger'}
                 isActive={navActive}
-                onClickFn={() => toggleNav(!navActive)}
+                onClickFn={handleHamburgerClick}
                 isGlobalMb={isGlobalMb}
               />
             </Conditional>

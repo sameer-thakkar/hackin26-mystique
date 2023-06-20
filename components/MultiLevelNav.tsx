@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
+import dynamic from 'next/dynamic';
 import { strings } from 'const/strings';
 import { useState, useRef, useEffect } from 'react';
 import { useWindowWidth } from '@react-hook/window-size';
@@ -17,6 +18,10 @@ import { MBContext } from 'contexts/MBContext';
 
 import LinkResolver from './LinkResolver';
 import { CHEVRON_DOWN } from '../assets/SvgIcons';
+
+const CategoryHeader = dynamic(() =>
+  import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
+);
 
 const StyledMenuItem = styled.li`
   padding: 12px 16px;
@@ -255,7 +260,17 @@ const HeadingMenu = styled(StyledMenuItem)`
 `;
 
 const Navigation = (props: any) => {
-  const { slices, isMobile, navOpen, id, isGlobalMb = false } = props;
+  const {
+    slices,
+    isMobile,
+    navOpen,
+    id,
+    isGlobalMb = false,
+    primaryCity,
+    taggedCity,
+    categoryHeaderMenu,
+    categoryHeaderMenuExists,
+  } = props;
   const { isExperimentalBot } = useContext(MBContext);
   const navigationRef = useRef(null);
   const isIntersecting = useOnScreen({ ref: navigationRef, unobserve: true });
@@ -266,15 +281,25 @@ const Navigation = (props: any) => {
       {...props}
       ref={navigationRef}
     >
-      {(isExperimentalBot || isIntersecting) &&
-        slices.map((slice: any, index: number) =>
-          HeaderSliceHandler(slice, {
-            index,
-            isMobile,
-            navOpen,
-            isGlobalMb,
-          })
-        )}
+      <Conditional if={categoryHeaderMenuExists && isMobile}>
+        <CategoryHeader
+          categoryHeaderMenu={categoryHeaderMenu}
+          primaryCity={primaryCity}
+          taggedCity={taggedCity}
+          isMobile={true}
+        />
+      </Conditional>
+      <Conditional if={!categoryHeaderMenuExists}>
+        {(isExperimentalBot || isIntersecting) &&
+          slices.map((slice: any, index: number) =>
+            HeaderSliceHandler(slice, {
+              index,
+              isMobile,
+              navOpen,
+              isGlobalMb,
+            })
+          )}
+      </Conditional>
     </Nav>
   );
 };
@@ -552,6 +577,10 @@ const MultiLevelNav = ({
   isMobile,
   isActive,
   isGlobalMb = false,
+  primaryCity,
+  taggedCity,
+  categoryHeaderMenu,
+  categoryHeaderMenuExists,
 }: any) => {
   const [firstSlice, secondSlice, ..._ignored_only_two_nav_bar] = slice;
 
@@ -570,6 +599,10 @@ const MultiLevelNav = ({
       isMobile={isMobile}
       slices={withOldMenu}
       isGlobalMb={isGlobalMb}
+      primaryCity={primaryCity}
+      taggedCity={taggedCity}
+      categoryHeaderMenu={categoryHeaderMenu}
+      categoryHeaderMenuExists={categoryHeaderMenuExists}
     />
   );
 };

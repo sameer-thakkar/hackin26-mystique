@@ -59,6 +59,8 @@ export enum HeadoutEndpoints {
   TourGroupReviewsV2,
   Collection,
   CollectionSections,
+  CollectionTop,
+  Category,
   CurrencyList,
   CalendarInventory,
   DomainConfig,
@@ -73,8 +75,8 @@ export const getHeadoutApiUrl = ({
 }: {
   endpoint: HeadoutEndpoints;
   hostname?: THost;
-  params: { [_key: string]: string };
-  id: string | number;
+  params?: { [_key: string]: string };
+  id: string | number | null;
 }) => {
   let endpointSlug;
   switch (endpoint) {
@@ -108,14 +110,20 @@ export const getHeadoutApiUrl = ({
     case HeadoutEndpoints.CollectionSections:
       endpointSlug = `/api/tours/v1/collection/${id}/sections/`;
       break;
+    case HeadoutEndpoints.CollectionTop:
+      endpointSlug = `/api/v1/collection/top/list/`;
+      break;
+    case HeadoutEndpoints.Category:
+      endpointSlug = `/api/v2/category/`;
+      break;
     case HeadoutEndpoints.CurrencyList:
-      endpointSlug = `https://api.headout.com/api/v1/currency/list/`;
+      endpointSlug = `/api/v1/currency/list/`;
       break;
     case HeadoutEndpoints.CalendarInventory:
-      endpointSlug = `https://api.headout.com/api/v7/tour-groups/${id}/calendar/`;
+      endpointSlug = `/api/v7/tour-groups/${id}/calendar/`;
       break;
     case HeadoutEndpoints.DomainConfig:
-      endpointSlug = `https://www.headout.com/api/domain/`;
+      endpointSlug = `/api/domain/`;
       break;
     case HeadoutEndpoints.ProductV6:
       endpointSlug = `https://api.headout.com/api/v6/tour-groups/${id}/`;
@@ -126,6 +134,9 @@ export const getHeadoutApiUrl = ({
 
   if (hostname) {
     url = `${hostname}${endpointSlug}`;
+  } else {
+    const formattedEndpointSlug = endpointSlug.replace('/tours/', '/');
+    url = `https://api.headout.com${formattedEndpointSlug}`;
   }
 
   if (params && Object.keys(params).length) {
@@ -187,7 +198,6 @@ export const fetchTourListV6 = async ({
       endpoint: HeadoutEndpoints.TourGroupsV6,
       hostname,
       params,
-      // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
       id: null,
     });
     const headers = constructHeaders({ cookies });
@@ -434,7 +444,6 @@ export const fetchCollectionList = async ({
     hostname,
     // @ts-expect-error TS(2322): Type '{ currency?: string | undefined; 'ids[]': st... Remove this comment to see the full error message
     params,
-    // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
     id: null,
   });
   const headers = constructHeaders({ cookies });
@@ -445,6 +454,106 @@ export const fetchCollectionList = async ({
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('[fetchCollectionList]', error);
+  }
+};
+
+interface FetchCollectionTopProps
+  extends Omit<CommonApiProps, 'fallbackToEnglish'> {
+  city?: string;
+  categoryId?: string | number;
+  subCategoryId?: string | number;
+  limit?: string | number;
+  offset?: string | number;
+  useSeatmapPrices?: string;
+}
+export const fetchCollectionTop = async ({
+  city,
+  categoryId,
+  subCategoryId,
+  hostname,
+  limit,
+  offset,
+  currency,
+  language = 'en',
+  useSeatmapPrices = '1',
+  cookies = {},
+}: FetchCollectionTopProps) => {
+  const params = {
+    ...(city && { city }),
+    ...(categoryId && { categoryId: categoryId.toString() }),
+    ...(subCategoryId && { subCategoryId: subCategoryId.toString() }),
+    language,
+    ...(limit && { limit: limit.toString() }),
+    ...(offset && { limit: offset.toString() }),
+    ...(currency && {
+      currency,
+    }),
+    ...(useSeatmapPrices && { 'use-seatmap-prices': useSeatmapPrices }),
+  };
+  const finalUrl = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.CollectionTop,
+    hostname,
+    params,
+    id: null,
+  });
+  const headers = constructHeaders({ cookies });
+  try {
+    const response = await fetch(finalUrl, {
+      headers,
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[fetchCollectionTop]', error);
+  }
+};
+
+type FetchCategoryProps = {
+  city?: string;
+  language?: string;
+  filterCategoryActiveProductCount?: number;
+  includeUnavailable?: boolean;
+  includeHidden?: boolean;
+  hostname?: string;
+  cookies?: { [key: string]: string };
+};
+export const fetchCategory = async ({
+  city,
+  hostname,
+  language = 'en',
+  filterCategoryActiveProductCount = 1,
+  includeUnavailable = false,
+  includeHidden = false,
+  cookies = {},
+}: FetchCategoryProps) => {
+  const params = {
+    ...(city && { city }),
+    language,
+    ...(filterCategoryActiveProductCount && {
+      'filter-category-active-product-count': filterCategoryActiveProductCount.toString(),
+    }),
+    ...(includeUnavailable && {
+      'include-unavailable': includeUnavailable.toString(),
+    }),
+    ...(includeHidden && { 'include-hidden': includeHidden.toString() }),
+  };
+  const finalUrl = getHeadoutApiUrl({
+    endpoint: HeadoutEndpoints.Category,
+    hostname,
+    params,
+    id: null,
+  });
+  const headers = constructHeaders({ cookies });
+  try {
+    const response = await fetch(finalUrl, {
+      headers,
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[fetchCategory]', error);
   }
 };
 
@@ -625,9 +734,6 @@ export const fetchCalendarInventory = async ({
 export const fetchDomainConfig = async (uid: string) => {
   const url = getHeadoutApiUrl({
     endpoint: HeadoutEndpoints.DomainConfig,
-    // @ts-expect-error TS(2322): Type 'null' is not assignable to type '{ [key: str... Remove this comment to see the full error message
-    params: null,
-    // @ts-expect-error TS(2322): Type 'null' is not assignable to type 'string | nu... Remove this comment to see the full error message
     id: null,
   });
 

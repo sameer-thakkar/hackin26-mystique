@@ -30,6 +30,7 @@ import {
   getPriceSortedDiscountedProducts,
   getPriceSortedListicleTgids,
   withShortcodes,
+  checkIfCategoryHeaderExists,
 } from 'utils/helper';
 import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
@@ -60,6 +61,9 @@ const Banner: ComponentType<any> = dynamic(() =>
 );
 const LongForm: ComponentType<any> = dynamic(() =>
   import(/* webpackChunkName: "LongForm" */ 'components/MicrositeV2/LongForm')
+);
+const CategoryHeader = dynamic(() =>
+  import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')
 );
 
 const V2MicrositeWrapper = styled.div`
@@ -150,11 +154,14 @@ export const HomePage = (props: any) => {
     displayMonths,
     isDev,
     domainConfig,
+    mbDesign,
+    mbType,
+    primaryCity,
+    taggedCity,
+    categoryHeaderMenu,
     baseLangIsPoiMb,
     baseLangBannerAndFooterCombinations,
-    mbType,
   } = props;
-
   const pageMetaData = useRecoilValue(metaAtom);
   const { eventsReady } = useRecoilValue(gtmAtom);
 
@@ -235,6 +242,10 @@ export const HomePage = (props: any) => {
     logo: { logoUrl = '', showPoweredLogo = true } = {},
     name: whiteLabelName,
   } = domainConfig || {};
+  const categoryHeaderMenuExists = checkIfCategoryHeaderExists({
+    mbDesign,
+    mbType,
+  });
 
   const v2LongFormRef = useRef(null);
   const lttFeatureCardRef = useRef(null);
@@ -274,7 +285,25 @@ export const HomePage = (props: any) => {
         logoUrl={logoUrl}
         logoAltText={whiteLabelName || ''}
         hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
+        primaryCity={primaryCity}
+        taggedCity={taggedCity}
+        categoryHeaderMenu={categoryHeaderMenu}
+        categoryHeaderMenuExists={categoryHeaderMenuExists}
       />
+      <Conditional
+        if={
+          categoryHeaderMenuExists &&
+          Object.keys(categoryHeaderMenu).length > 0 &&
+          !isMobile
+        }
+      >
+        <CategoryHeader
+          categoryHeaderMenu={categoryHeaderMenu}
+          primaryCity={primaryCity}
+          taggedCity={taggedCity}
+          isMobile={false}
+        />
+      </Conditional>
       <Conditional if={isMobile && hasDropdownLinks}>
         <div className="main-wrapper city-selector">
           <ResponsiveSelector

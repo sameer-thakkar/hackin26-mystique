@@ -345,6 +345,7 @@ export const ANALYTICS_EVENTS = {
   VIDEO_AUTOPLAY_STARTED: 'Video Autoplay Started',
   VIDEO_AUTOPLAY_FAILED: 'Video Autoplay Failed',
   SCROLL_TO_TOP: 'Scroll To Top Button Clicked',
+  HAMBURGER_MENU_CLICKED: 'Hamburger Menu Clicked',
   TOC_OPENED: 'Table Of Contents Opened',
   TOC_OPTION_SELECTED: 'Table of Contents Option Selected',
   TOOLTIP_VIEWED: 'Tooltip Viewed',
@@ -750,6 +751,7 @@ export const ANALYTICS_PROPERTIES = {
   L1_BOOSTER_SHOWN: 'L1 Booster Shown',
   TYPE: 'Type',
   AUTOPLAY_LOAD_TIME: 'Autoplay Load Time',
+  LEVEL: 'Level',
   TIME_WATCHED: 'Time Watched',
   THEATRE_NAME: 'Theatre Name',
   THEATRE_ADDRESS: 'Theatre Address',
@@ -1173,6 +1175,42 @@ export const MB_TYPES = {
   C1_COLLECTION: 'C1 - Collection MB',
 };
 
+export const MB_CATEGORISATION = {
+  MB_TYPE: {
+    A1_COLLECTION: 'A1 - Collection MB',
+    A1_CITY_GUIDE: 'A1 - City Guide',
+    A1_HOMEPAGE: 'A1 - Home Page',
+    A1_SUB_CATEGORY: 'A1 - Sub Category MB',
+    A1_CATEGORY: 'A1 - Category MB',
+    B1_GLOBAL: 'B1 - Global MB',
+    B1_GLOBAL_HOMEPAGE: 'B1 - Global Home Page',
+    C1_COLLECTION: 'C1 - Collection MB',
+  },
+  PAGE_TYPE: {
+    LANDING_PAGE: 'Landing Page',
+    SHOULDER_PAGE: 'Shoulder Page',
+  },
+  CATEGORY: {
+    TICKETS: 'Tickets',
+    TOURS: 'Tours',
+    TRANSPORTATION: 'Transportation',
+    TRAVEL_SERVICES: 'Travel Services',
+    CRUISES: 'Cruises',
+    FOOD_DRINK: 'Food & Drink',
+    DAY_TRIPS: 'Day Trips',
+    ENTERTAINMENT: 'Entertainment',
+    ADVENTURE: 'Adventure',
+    AERIAL_SIGHTSEEING: 'Aerial Sightseeing',
+    WATER_SPORTS: 'Water Sports',
+    NATURE_WILDLIFE: 'Nature & Wildlife',
+    WELLNESS: 'Wellness',
+    CLASSES: 'Classes',
+    SPECIALS: 'Specials',
+    RV_RENTALS: 'RV Rentals',
+    STAYCATIONS: 'Staycations',
+    SPORTS: 'Sports',
+  },
+};
 export const PARTNERED_AND_SENSITIVE_COMBINATIONS = {
   PARTNERED_AND_SENSITIVE: 'Partnered and Sensitive',
   PARTNERED_AND_NON_SENSITIVE: 'Partnered and Non-Sensitive',
@@ -1218,6 +1256,19 @@ export const F1_SPORTS_EXPERIMENT_TGIDS = [
   '21074',
   '20949',
 ];
+
+export const PRISMIC_FIELD_ID = {
+  TAGGED_COLLECTION: 'tagged_collection',
+  TAGGED_CATEGORY: 'tagged_category',
+  TAGGED_SUB_CATEGORY: 'tagged_sub_category',
+  TAGGED_CITY: 'tagged_city',
+  TAGGED_COUNTRY: 'tagged_country',
+  TAGGED_MB_TYPE: 'tagged_mb_type',
+  TAGGED_PAGE_TYPE: 'tagged_page_type',
+  SHOULDER_PAGE_TYPE: 'shoulder_page_type',
+  TAGGED_CONTENT_TYPE: 'tagged_content_type',
+  PRIMARY_TAG: 'primary_tag',
+};
 
 export const DYNAMIC_RENDER_UID = [
   'www.london-theater-tickets.com.london-musicals',
