@@ -34,6 +34,7 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   PRISMIC_FIELD_ID,
+  LANGUAGE_MAP,
 } from 'const/index';
 import {
   SUB_ATTRACTIONS,
@@ -78,20 +79,28 @@ export const getRankedDocuments = (
 
 const shouldIncludeinMenu = (doc: PrismicDocumentWithUID) => {
   const { uid, lang, data } = doc || {};
+  const { noindex, redirect_url } = data || {};
   const pageUrl = convertUidToUrl({
     uid,
     lang: getHeadoutLanguagecode(lang),
   });
 
-  if (!pageUrl) return false;
+  if (!pageUrl || !!redirect_url?.url) return false;
 
+  const url = new URL(pageUrl);
   const isSubdomain =
-    getStructure(new URL(pageUrl)) === PAGE_URL_STRUCTURE.SUBDOMAIN ||
-    getStructure(new URL(pageUrl)) === PAGE_URL_STRUCTURE.SUBDOMAIN_SUBFOLDER;
+    getStructure(url) === PAGE_URL_STRUCTURE.SUBDOMAIN ||
+    getStructure(url) === PAGE_URL_STRUCTURE.SUBDOMAIN_SUBFOLDER;
+  const parentDomainUrl = convertUidToUrl({
+    uid: url.hostname,
+    lang: getHeadoutLanguagecode(lang),
+  });
+  const isSeoSubdomain =
+    SEO_SUBDOMAINS.includes(pageUrl) ||
+    SEO_SUBDOMAINS.includes(parentDomainUrl);
+
   const finalNoIndex =
-    isSubdomain && !SEO_SUBDOMAINS.includes(pageUrl)
-      ? true
-      : legacyBooleanCheck(data?.noindex);
+    isSubdomain && !isSeoSubdomain ? true : legacyBooleanCheck(noindex);
 
   return !finalNoIndex;
 };
@@ -105,7 +114,7 @@ const getMenuUrl = ({
 }) => {
   return convertUidToUrl({
     uid:
-      lang === 'en-us'
+      lang === LANGUAGE_MAP.en.locale
         ? docFound.uid
         : getAlternateLanguageDocUid({ doc: docFound, lang }) || '',
     lang: getHeadoutLanguagecode(lang),
@@ -176,6 +185,7 @@ const generateAboutMenuItem = async ({
       doc?.data?.shoulder_page_type === ABOUT.ABOUT.label &&
       shouldIncludeinMenu(doc)
   );
+
   if (docFound && tagged_collection) {
     const { collection: collectionData } =
       (await fetchCollection({
@@ -183,11 +193,25 @@ const generateAboutMenuItem = async ({
         language: getHeadoutLanguagecode(lang),
       })) || {};
     const collectionHeading = collectionData?.heading;
+
+    let shoulderPageLabelOverride;
+    if (lang !== LANGUAGE_MAP.en.locale) {
+      const alternateLanguageDocs = await getAlternateLanguageDocs({
+        baseLangDocs: [docFound],
+        lang,
+      });
+      shoulderPageLabelOverride =
+        alternateLanguageDocs?.[0]?.data?.shoulder_page_custom_label;
+    } else {
+      shoulderPageLabelOverride = docFound?.data?.shoulder_page_custom_label;
+    }
+
+    const finalLabel = shoulderPageLabelOverride || collectionHeading;
     const url = getMenuUrl({ docFound, lang });
 
-    if (collectionHeading && url) {
+    if (finalLabel && url) {
       menu['ABOUT'] = {
-        label: collectionHeading,
+        label: finalLabel,
         url,
       };
     }
@@ -208,7 +232,7 @@ const generateSubAttractionsMenu = async ({
     (doc) => doc?.data?.shoulder_page_type === SUB_ATTRACTIONS
   );
 
-  if (lang === 'en-us') {
+  if (lang === LANGUAGE_MAP.en.locale) {
     subAttractionsDocs = baseLangSubAttractionsDocs;
   } else {
     subAttractionsDocs = await getAlternateLanguageDocs({
@@ -253,7 +277,7 @@ const addMiscMenuItems = async ({
     (doc) => doc?.data?.shoulder_page_type === MISC
   );
 
-  if (lang === 'en-us') {
+  if (lang === LANGUAGE_MAP.en.locale) {
     miscDocs = baseLangMiscDocs;
   } else {
     miscDocs = await getAlternateLanguageDocs({
@@ -357,6 +381,7 @@ const generateCityAttractionsMenu = async ({
 }): Promise<Record<string, any>> => {
   const {
     tagged_city: mbCity,
+    tagged_collection: mbCollection,
     tagged_mb_type: mbType,
   } = categorisationMetadata;
   const menuName = getMenuName({ mbType });
@@ -380,6 +405,11 @@ const generateCityAttractionsMenu = async ({
     (await Client().query(
       [
         Prismic.Predicates.not(`document.tags`, ['[DEV]']),
+        mbCollection &&
+          Prismic.Predicates.not(
+            `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_COLLECTION}`,
+            mbCollection
+          ),
         mbCity &&
           Prismic.Predicates.at(
             `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_CITY}`,
@@ -912,10 +942,10 @@ export const getCategoryHeaderMenu = async (doc: PrismicDocumentWithUID) => {
 
   const baseLangUid = getEnglishDocUid(alternate_languages);
   const baseLangData =
-    lang !== 'en-us'
+    lang !== LANGUAGE_MAP.en.locale
       ? await Client()
           .getByUID(CUSTOM_TYPES.MICROSITE, baseLangUid || uid, {
-            lang: 'en-us',
+            lang: LANGUAGE_MAP.en.locale,
           })
           .then((res: PrismicDocumentWithUID) => res.data)
       : data;

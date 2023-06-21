@@ -32,6 +32,8 @@ const NestedMenuItem: React.FC<NestedMenuItemProps> = (props) => {
             <li key={index} onMouseEnter={handleUnsettingNestedMenu}>
               <a
                 href={url}
+                target="_blank"
+                rel="noreferrer"
                 onClick={(e) =>
                   trackHeaderMenuItemClicked({
                     eventTarget: e.target,

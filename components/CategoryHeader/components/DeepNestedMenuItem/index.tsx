@@ -43,6 +43,8 @@ const DeepNestedMenuItem: React.FC<DeepNestedMenuItemProps> = (props) => {
                           <a
                             key={index}
                             href={url}
+                            target="_blank"
+                            rel="noreferrer"
                             onClick={(e) =>
                               trackHeaderMenuItemClicked({
                                 eventTarget: e.target,
