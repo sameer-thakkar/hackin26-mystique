@@ -120,16 +120,28 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
       setSelectedButtonIndex(clickedIndex);
       const newQuery = { ...router.query };
       delete newQuery.selectedDate;
-      router.replace({
-        query: newQuery,
-      });
+      router.replace(
+        {
+          query: newQuery,
+        },
+        undefined,
+        {
+          shallow: true,
+        }
+      );
     } else {
       if (orderedFilteredTours.length) {
         setOrderedFilteredTours(orderedFilteredTours);
         setSelectedButtonIndex(clickedIndex);
-        router.replace({
-          query: { ...router.query, selectedDate: selectedFilter.value },
-        });
+        router.replace(
+          {
+            query: { ...router.query, selectedDate: selectedFilter.value },
+          },
+          undefined,
+          {
+            shallow: true,
+          }
+        );
       } else {
         setNoAvailabilityDrawerOpen(true);
         trackEvent({
