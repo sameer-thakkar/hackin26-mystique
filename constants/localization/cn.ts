@@ -178,6 +178,13 @@ const cn = {
   TOUR_LIST_SUB_HEADING:
     '从得到认证的运营商提供的不同景点门票、套票以及导览团中为您作出最优选择',
   WHY_TAKE_THIS_DAY_TRIP: '为什么选择这个一日游?',
+  INVENTORY_UNAVAILABLE: {
+    HEADING: 'Uh oh, we’ve a problem',
+    MESSAGE: `Sorry! All experiences for this date are either sold out or
+    unavailable. But we’ve loads of them available on other dates. All
+    you gotta do is be flexible.`,
+  },
+  ALL_DATES: 'All dates',
 };
 
 export default cn;

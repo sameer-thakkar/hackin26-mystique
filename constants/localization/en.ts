@@ -473,6 +473,14 @@ const en = {
   VIEW_MORE: 'View More',
   WHY_TAKE_THIS_DAY_TRIP: 'Why Take this Day Trip?',
   WHY_WATCH: 'Why Watch',
+  INVENTORY_UNAVAILABLE: {
+    HEADING: 'Uh oh, we’ve a problem',
+    MESSAGE: `Sorry! All experiences for this date are either sold out or
+    unavailable. But we’ve loads of them available on other dates. All
+    you gotta do is be flexible.`,
+    CTA: 'View all dates',
+  },
+  ALL_DATES: 'All dates',
   CATEGORY_HEADER: {
     MAIN_MENU: 'Main Menu',
     EXPLORE: 'Explore',

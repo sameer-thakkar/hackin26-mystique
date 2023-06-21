@@ -77,3 +77,12 @@ export const getDurationISO = (durationString: string) => {
 
 export const sortDateArray = (dates: string[]) =>
   dates.sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+
+export const formatDateToString = (
+  date: Date,
+  currentLanguage = 'en',
+  dateFormat = 'DD MMM YYYY'
+) => dayjs(date).locale(currentLanguage).format(dateFormat);
+
+export const addDays = (date: Date | string, nDaysToAdd: number) =>
+  dayjs(date).add(nDaysToAdd, 'days').toDate();

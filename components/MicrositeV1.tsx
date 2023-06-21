@@ -21,6 +21,7 @@ import {
   getBannerAndFooterSubtext,
   getF1MBTrustBoosters,
   getHeadoutLanguagecode,
+  isA1orC1MB,
   isCollectionMB,
   legacyBooleanCheck,
 } from 'utils';
@@ -44,6 +45,7 @@ import { strings } from 'const/strings';
 import renderShortCodes from 'utils/shortCodes';
 import { getLogoRedirectionUrl, convertUidToUrl } from 'utils/urlUtils';
 import F1TrustBoosters from 'components/F1TrustBoosters/index';
+import LastMinuteFilters from 'components/common/LastMinuteFilters';
 
 const LongForm = dynamic(() => import('components/common/LongForm'));
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });
@@ -307,6 +309,10 @@ const MicrositeV1 = (props: any) => {
         })
       : orderedUncategorizedTours;
 
+  const [orderedFilteredTours, setOrderedFilteredTours] = useState(
+    orderedTours
+  );
+
   const orderedTgids = orderedTours?.length
     ? orderedTours?.map((tour: any) => tour.tgid)
     : [];
@@ -434,7 +440,7 @@ const MicrositeV1 = (props: any) => {
   const tourListSection = (
     <PopulateProducts
       currency={currency}
-      uncategorizedTours={orderedTours}
+      uncategorizedTours={orderedFilteredTours}
       scorpioData={scorpioData}
       uncategorizedToursHeading={uncategorizedToursHeading.list_heading}
       uid={uid}
@@ -579,6 +585,12 @@ const MicrositeV1 = (props: any) => {
             isMobile={isMobile}
             collectionDetails={collectionDetails}
             shouldDisplayTrustBoosters={shouldDisplayBannerTrustBoosters}
+          />
+        </Conditional>
+        <Conditional if={isA1orC1MB(mbType) && isMobile}>
+          <LastMinuteFilters
+            setOrderedFilteredTours={setOrderedFilteredTours}
+            orderedTours={orderedTours}
           />
         </Conditional>
         <Conditional if={mbTheme === THEMES.MIN_BLUE}>

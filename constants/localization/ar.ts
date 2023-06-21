@@ -402,6 +402,13 @@ const ar = {
   VIEW_MORE: 'عرض المزيد',
   WHY_TAKE_THIS_DAY_TRIP: 'لماذا تقوم بهذه الرحلة اليوم',
   WHY_WATCH: 'لماذا المشاهدة',
+  INVENTORY_UNAVAILABLE: {
+    HEADING: 'Uh oh, we’ve a problem',
+    MESSAGE: `Sorry! All experiences for this date are either sold out or
+    unavailable. But we’ve loads of them available on other dates. All
+    you gotta do is be flexible.`,
+  },
+  ALL_DATES: 'All dates',
 };
 
 export default ar;

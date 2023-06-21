@@ -65,6 +65,7 @@ export enum HeadoutEndpoints {
   CalendarInventory,
   DomainConfig,
   ProductV6,
+  CalendarInventoryForTourGroupList,
 }
 
 export const getHeadoutApiUrl = ({
@@ -128,6 +129,9 @@ export const getHeadoutApiUrl = ({
     case HeadoutEndpoints.ProductV6:
       endpointSlug = `https://api.headout.com/api/v6/tour-groups/${id}/`;
       break;
+    case HeadoutEndpoints.CalendarInventoryForTourGroupList:
+      endpointSlug = `/api/v7/tour-groups/calendar/`;
+      break;
   }
 
   let url = endpointSlug;
@@ -138,7 +142,6 @@ export const getHeadoutApiUrl = ({
     const formattedEndpointSlug = endpointSlug.replace('/tours/', '/');
     url = `https://api.headout.com${formattedEndpointSlug}`;
   }
-
   if (params && Object.keys(params).length) {
     const finalUrl = addQueryParams(url, params);
     return finalUrl as string;

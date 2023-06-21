@@ -26,6 +26,7 @@ import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import { csvTgidToArray, getHostName } from 'utils/helper';
 import { getPromoCodesDocument } from 'utils/prismicUtils';
 import { generateSidenavId } from 'utils/helper';
+import { useRouter } from 'next/router';
 
 const StyledProductsWrapper = styled.div`
   margin: 0 auto;
@@ -71,7 +72,7 @@ ${({ isTicketCard, isMobile }) =>
     display: none;
   }
   @media (max-width: 768px) {
-    margin-top: 1.5rem;
+    margin-top: 0.5rem;
     margin-bottom: 60px;
     grid-row-gap: ${({ theme }) => theme.productCards.gap.mobile};
   }
@@ -119,6 +120,7 @@ const PopulateProducts = (props: any) => {
   } = props;
   const isDubaiSafariPark = uid === 'www.dubai-safari-park.com';
   const productsRef = useRef([]);
+  productsRef.current = [];
   const productsWrapperRef = useRef(null);
   const [tourPrices, setTourPrices] = useState(scorpioData);
   const [clickedPromo, setClickedPromo] = useState();
@@ -126,6 +128,7 @@ const PopulateProducts = (props: any) => {
   const [allPromoCodes, setAllPromoCodes] = useState([]);
   const [finalPromoCodes, setFinalPromoCodes] = useState({});
   const [productInfo, setproductInfo] = useState({});
+  const router = useRouter();
   const [earliestAvailabilityQueue, setEarliestAvailabilityQueue] = useState(
     []
   );
@@ -135,7 +138,7 @@ const PopulateProducts = (props: any) => {
 
   const addToRef = (el: any) => {
     // @ts-expect-error TS(2345): Argument of type 'any' is not assignable to parame... Remove this comment to see the full error message
-    productsRef.current.push(el);
+    el && productsRef.current.push(el);
   };
 
   const { isStage, isDev, host, design } = useContext(MBContext);
@@ -167,47 +170,6 @@ const PopulateProducts = (props: any) => {
     }, {});
     setproductInfo(tourGroupMap);
   };
-
-  useEffect(() => {
-    if (!productsRef.current) return;
-    try {
-      const observerCallback = (entries: any, observer: any) => {
-        entries.forEach((entry: any) => {
-          if (entry.isIntersecting) {
-            observer.unobserve(entry.target);
-            const { tgid: stringTgid } = entry.target?.dataset;
-            const tgid = parseInt(stringTgid);
-            if (tgid) {
-              trackEvent({
-                eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_VISIBLE,
-                [ANALYTICS_PROPERTIES.TGID]: tgid,
-                [ANALYTICS_PROPERTIES.POSITION]:
-                  availableToursList?.findIndex((t: any) => t.tgid === tgid) +
-                  1,
-                [ANALYTICS_PROPERTIES.IS_TRUNCATED]: !!entry.target?.querySelector?.(
-                  '.more-details'
-                ),
-              });
-            }
-          }
-        });
-      };
-      const observer = new IntersectionObserver(observerCallback, {
-        rootMargin: '0px',
-        threshold: 0.3,
-      });
-
-      productsRef.current.forEach((el) => {
-        observer.observe(el);
-      });
-
-      return () => {
-        observer.disconnect();
-      };
-    } catch (e) {
-      //
-    }
-  }, [productsRef]);
 
   useEffect(() => setTourPrices(scorpioData), [scorpioData]);
 
@@ -334,8 +296,53 @@ const PopulateProducts = (props: any) => {
       (checkIfScorpioHighlightsExist || tour?.tour_description_override?.length)
     );
   });
-  const allTgids = availableToursList?.map((el: any) => el?.tgid);
+  const selectedDate = router.query.selectedDate;
+  useEffect(() => {
+    if (!productsRef.current) return;
 
+    try {
+      const observerCallback = (entries: any, observer: any) => {
+        entries.forEach((entry: any) => {
+          if (entry.isIntersecting) {
+            observer.unobserve(entry.target);
+            const { tgid: stringTgid } = entry.target?.dataset;
+            const tgid = parseInt(stringTgid);
+            if (tgid) {
+              trackEvent({
+                eventName: ANALYTICS_EVENTS.EXPERIENCE_CARD_VISIBLE,
+                [ANALYTICS_PROPERTIES.TGID]: tgid,
+                [ANALYTICS_PROPERTIES.POSITION]:
+                  availableToursList?.findIndex((t: any) => t.tgid === tgid) +
+                  1,
+                [ANALYTICS_PROPERTIES.IS_TRUNCATED]: !!entry.target?.querySelector?.(
+                  '.more-details'
+                ),
+              });
+            }
+          }
+        });
+      };
+
+      const observer = new IntersectionObserver(observerCallback, {
+        rootMargin: '0px',
+        threshold: 0.3,
+      });
+      observer.disconnect();
+      const timer = setTimeout(() => {
+        productsRef.current.forEach((el) => {
+          observer.observe(el);
+        });
+      }, 1000);
+
+      return () => {
+        observer.disconnect();
+        clearTimeout(timer);
+      };
+    } catch (e) {
+      //
+    }
+  }, [productsRef, selectedDate]);
+  const allTgids = availableToursList?.map((el: any) => el?.tgid);
   const filterPromoCodes = () => {
     let filteredPromoCodes = {};
     Object.keys(productInfo ?? {}).forEach((tgid) => {

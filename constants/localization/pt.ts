@@ -494,5 +494,11 @@ const pt = {
     FESTIVALS_EVENTS: 'Festivais e eventos',
   },
   WHY_WATCH: 'Por que assistir',
+  INVENTORY_UNAVAILABLE: {
+    HEADING: 'Opa! Parece que temos um problema',
+    MESSAGE: `Que pena! Todas as experiências estão esgotadas ou indisponíveis nesta data. Mas há muitas outras datas para escolher, confira!`,
+    CTA: 'Ver datas disponíveis',
+  },
+  ALL_DATES: 'Todas as datas',
 };
 export default pt;

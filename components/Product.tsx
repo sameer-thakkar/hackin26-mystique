@@ -65,6 +65,7 @@ import { shortCodeSerializer } from 'utils/shortCodes';
 import { getDuration } from 'utils/timeUtils';
 import { addQueryParams } from 'utils/urlUtils';
 import { FONTS } from 'const/fonts';
+import { useRouter } from 'next/router';
 
 const Swiper = dynamic(
   () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper'),
@@ -1459,7 +1460,7 @@ const Product = (props: any) => {
   }, [tabs, isMobile, noOfListItemToShow]);
 
   const { listingPrice } = tourPrices[tgid];
-
+  const { query } = useRouter();
   if (!listingPrice) return null;
   const finalListingPrice = listingPrice;
   const { tourId } = finalListingPrice || {};
@@ -1573,6 +1574,7 @@ const Product = (props: any) => {
   const hasHighlights =
     isLengthyArray(highlights) &&
     highlights.filter((item: any) => item.text).length;
+
   const productBookingUrl = createBookingURL({
     nakedDomain: bookingUrl,
     lang: currentLanguage,
@@ -1581,7 +1583,10 @@ const Product = (props: any) => {
     promoCode: promo_code === appliedPromo ? appliedPromo : null,
     tourId,
     biLink,
-    date: instantCheckout && earliestAvailability ? earliestAvailability : null,
+    date:
+      instantCheckout && earliestAvailability
+        ? earliestAvailability
+        : { startDate: query.selectedDate },
     isMobile,
     bookSubdomain,
     redirectToHeadoutBookingFlow,

@@ -349,6 +349,9 @@ export const ANALYTICS_EVENTS = {
   TOC_OPENED: 'Table Of Contents Opened',
   TOC_OPTION_SELECTED: 'Table of Contents Option Selected',
   TOOLTIP_VIEWED: 'Tooltip Viewed',
+  DATE_FILTER_APPLIED: 'Date Filter Applied',
+  DATE_UNAVAILABLE_DRAWER_VIEWED: 'Date Unavailable Drawer Viewed',
+  MICROSITE_PAGE_CTA_CLICKED: 'Microsite Page CTA Clicked',
 };
 
 export const PAGE_TYPE = {
@@ -756,6 +759,9 @@ export const ANALYTICS_PROPERTIES = {
   THEATRE_NAME: 'Theatre Name',
   THEATRE_ADDRESS: 'Theatre Address',
   TOOLTIP_TYPE: 'Tooltip Type',
+  CTA_TYPE: 'CTA Type',
+  DATE_RANGE_SELECTED: 'Date Range Selected',
+  EXPERIENCES_AVAILABLE: 'Experiences Available',
 };
 
 export const PAGE_TYPES = {
@@ -866,6 +872,7 @@ export const CTA_TYPE = {
   BUTTON: 'Button CTA',
   TEXT: 'Text CTA',
   SHOW_MORE: 'Show More Button',
+  VIEW_ALL_DATES: 'View all dates',
 };
 
 export const HIGHLIGHT_TYPES = {

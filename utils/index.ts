@@ -282,7 +282,6 @@ export const createBookingURL = ({
       addTrailingSlash ? '/' : ''
     }`
   );
-
   //temporary setup to show date selection page for tgid 17637; will be reverted
   if (
     hasDateQueryParam &&
@@ -604,6 +603,9 @@ export const isPartneredMB = (baseLangBannerAndFooterCombinations: string) => {
       PARTNERED_AND_SENSITIVE_COMBINATIONS.PARTNERED_AND_NON_SENSITIVE
   );
 };
+
+export const isA1orC1MB = (mbType: string) =>
+  mbType === MB_TYPES.A1_COLLECTION || mbType === MB_TYPES.C1_COLLECTION;
 
 export const getBannerAndFooterSubtext = (
   baseLangIsPoiMb: boolean | null,

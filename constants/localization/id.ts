@@ -558,6 +558,13 @@ const id = {
   VIEW_MORE: 'Lihat lainnya',
   WHY_TAKE_THIS_DAY_TRIP: 'Mengapa Melakukan Day Trip Ini?',
   WHY_WATCH: 'Alasan Menonton',
+  INVENTORY_UNAVAILABLE: {
+    HEADING: 'Uh oh, we’ve a problem',
+    MESSAGE: `Sorry! All experiences for this date are either sold out or
+    unavailable. But we’ve loads of them available on other dates. All
+    you gotta do is be flexible.`,
+  },
+  ALL_DATES: 'All dates',
 };
 
 export default id;

@@ -494,5 +494,11 @@ const nl = {
     FESTIVALS_EVENTS: 'Festivals en events',
   },
   WHY_WATCH: 'Why kijken',
+  INVENTORY_UNAVAILABLE: {
+    HEADING: 'Oh oh! We hebben een probleem',
+    MESSAGE: `Sorry! Alle ervaringen op deze datum zijn uitverkocht of niet beschikbaar. Maar we hebben er wel heel veel beschikbaar op andere datums. We vragen je wel om flexibel te zijn.`,
+    CTA: 'Bekijk alle datums',
+  },
+  ALL_DATES: 'Alle datums',
 };
 export default nl;

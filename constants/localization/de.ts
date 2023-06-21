@@ -492,6 +492,12 @@ const de = {
     FESTIVALS_EVENTS: 'Festivals und Events',
   },
   WHY_WATCH: 'Auf einen Blick',
+  INVENTORY_UNAVAILABLE: {
+    HEADING: 'Oh, das hat nicht geklappt',
+    MESSAGE: `Schade! Alle Erlebnisse sind an diesem Datum ausverkauft oder nicht verfügbar. Keine Sorge – wir haben noch viele andere Termine zur Auswahl!`,
+    CTA: 'Alle Daten anzeigen',
+  },
+  ALL_DATES: 'Alle Daten',
 };
 
 export default de;

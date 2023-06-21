@@ -493,5 +493,11 @@ const fr = {
     FESTIVALS_EVENTS: 'Festivals et événements',
   },
   WHY_WATCH: 'Pourquoi faut-il le voir',
+  INVENTORY_UNAVAILABLE: {
+    HEADING: 'Oups, nous avons un problème',
+    MESSAGE: `Oh non ! Toutes les expériences proposées à cette date sont soit épuisées, soit indisponibles. Mais nous pouvons vous en proposer plusieurs à d'autres dates. Vous avez amplement le choix !`,
+    CTA: 'Voir les dates disponibles',
+  },
+  ALL_DATES: 'Toutes les dates',
 };
 export default fr;

@@ -503,5 +503,11 @@ const it = {
     FESTIVALS_EVENTS: 'Festival ed eventi',
   },
   WHY_WATCH: 'Perché guardarlo',
+  INVENTORY_UNAVAILABLE: {
+    HEADING: 'C’è un piccolo problema',
+    MESSAGE: `Oh, no! Tutte le esperienze disponibili per questa data sono esaurite o non disponibili. Ma ci sono tante altre date tra cui scegliere: basta che tu sia flessibile.`,
+    CTA: 'Guarda tutte le date',
+  },
+  ALL_DATES: 'Tutte le date',
 };
 export default it;

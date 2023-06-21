@@ -565,5 +565,12 @@ const ko = {
   VIEW_MORE: '더 보기',
   WHY_TAKE_THIS_DAY_TRIP: '당일치기 여행을 하는 이유는 무엇인가요?',
   WHY_WATCH: '추천 이유',
+  INVENTORY_UNAVAILABLE: {
+    HEADING: 'Uh oh, we’ve a problem',
+    MESSAGE: `Sorry! All experiences for this date are either sold out or
+    unavailable. But we’ve loads of them available on other dates. All
+    you gotta do is be flexible.`,
+  },
+  ALL_DATES: 'All dates',
 };
 export default ko;
