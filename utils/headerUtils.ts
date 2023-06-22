@@ -47,6 +47,7 @@ import {
   COLLECTION_MB_MENU_ORDER,
   NON_COLLECTION_MB_MENU_ORDER,
   NESTED_MENU_ORDER,
+  labels,
 } from 'const/header';
 
 export type TCategorisationMetadata = {
@@ -79,13 +80,14 @@ export const getRankedDocuments = (
 
 const shouldIncludeinMenu = (doc: PrismicDocumentWithUID) => {
   const { uid, lang, data } = doc || {};
-  const { noindex, redirect_url } = data || {};
+  const { noindex, redirect_url, canonical_link } = data || {};
   const pageUrl = convertUidToUrl({
     uid,
     lang: getHeadoutLanguagecode(lang),
   });
+  const isSelfCanonical = !canonical_link || pageUrl === canonical_link;
 
-  if (!pageUrl || !!redirect_url?.url) return false;
+  if (!pageUrl || !!redirect_url?.url || !isSelfCanonical) return false;
 
   const url = new URL(pageUrl);
   const isSubdomain =
@@ -136,7 +138,9 @@ const getMenuName = ({
     case parentCategory === MB_CATEGORISATION.CATEGORY.CRUISES:
       return 'CRUISES';
     case mbType === MB_CATEGORISATION.MB_TYPE.C1_COLLECTION ||
-      mbType === MB_CATEGORISATION.MB_TYPE.A1_COLLECTION:
+      mbType === MB_CATEGORISATION.MB_TYPE.A1_COLLECTION ||
+      mbType === MB_CATEGORISATION.MB_TYPE.A2_CATEGORY ||
+      mbType === MB_CATEGORISATION.MB_TYPE.A2_SUB_CATEGORY:
       return `CITY_ATTRACTIONS`;
     default:
       return `TOP_THINGS_TO_DO`;
@@ -145,10 +149,12 @@ const getMenuName = ({
 
 const isMainMenu = ({
   isCollectionMB,
+  isA2MB,
   menuLabel,
   menu,
 }: {
-  isCollectionMB: boolean;
+  isCollectionMB?: boolean;
+  isA2MB?: boolean;
   menuLabel: string;
   menu: Record<string, any>;
 }) => {
@@ -158,6 +164,14 @@ const isMainMenu = ({
       menuLabel === 'VISIT' ||
       (menuLabel === 'THINGS_TO_DO' && Object.keys(menu).length >= 5) ||
       menuLabel === 'CITY_ATTRACTIONS'
+    );
+  } else if (isA2MB) {
+    return (
+      menuLabel === 'ABOUT' ||
+      menuLabel === 'VISIT' ||
+      (menuLabel === 'THINGS_TO_DO' && Object.keys(menu).length >= 5) ||
+      menuLabel === 'CITY_ATTRACTIONS' ||
+      menuLabel === 'CITY_GUIDE'
     );
   } else {
     return (
@@ -186,13 +200,16 @@ const generateAboutMenuItem = async ({
       shouldIncludeinMenu(doc)
   );
 
-  if (docFound && tagged_collection) {
-    const { collection: collectionData } =
-      (await fetchCollection({
-        collectionId: tagged_collection,
-        language: getHeadoutLanguagecode(lang),
-      })) || {};
-    const collectionHeading = collectionData?.heading;
+  if (docFound) {
+    let collectionHeading;
+    if (tagged_collection) {
+      const { collection: collectionData } =
+        (await fetchCollection({
+          collectionId: tagged_collection,
+          language: getHeadoutLanguagecode(lang),
+        })) || {};
+      collectionHeading = collectionData?.heading;
+    }
 
     let shoulderPageLabelOverride;
     if (lang !== LANGUAGE_MAP.en.locale) {
@@ -292,7 +309,8 @@ const addMiscMenuItems = async ({
       shoulder_page_custom_label: customLabel,
       misc_page_mapping: menuMapping,
     } = data || {};
-    if (customLabel && menuMapping && shouldIncludeinMenu(doc)) {
+    const finalMenuMapping = menuMapping || labels.ABOUT;
+    if (customLabel && shouldIncludeinMenu(doc)) {
       const data = {
         label: customLabel,
         url: convertUidToUrl({
@@ -300,7 +318,7 @@ const addMiscMenuItems = async ({
           lang: getHeadoutLanguagecode(lang),
         }),
       };
-      addToNestedObject(menu, menuMapping, data);
+      addToNestedObject(menu, finalMenuMapping, data);
     }
   });
 
@@ -415,6 +433,10 @@ const generateCityAttractionsMenu = async ({
             `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_CITY}`,
             mbCity
           ),
+        Prismic.Predicates.at(
+          `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_PAGE_TYPE}`,
+          MB_CATEGORISATION.PAGE_TYPE.LANDING_PAGE
+        ),
         Prismic.Predicates.any(
           `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_COLLECTION}`,
           topCollectionsIds || []
@@ -525,9 +547,14 @@ const generateSubCategoryMenu = async ({
           `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_PAGE_TYPE}`,
           MB_CATEGORISATION.PAGE_TYPE.LANDING_PAGE
         ),
-        Prismic.Predicates.at(
+        Prismic.Predicates.any(
           `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_MB_TYPE}`,
-          MB_CATEGORISATION.MB_TYPE.A1_SUB_CATEGORY
+          [
+            MB_CATEGORISATION.MB_TYPE.A1_SUB_CATEGORY,
+            MB_CATEGORISATION.MB_TYPE.A2_SUB_CATEGORY,
+            MB_CATEGORISATION.MB_TYPE.B1_GLOBAL,
+            MB_CATEGORISATION.MB_TYPE.B1_GLOBAL_HOMEPAGE,
+          ]
         ),
         Prismic.Predicates.at(
           `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_CATEGORY}`,
@@ -683,9 +710,11 @@ const applyTransformations = (menu: Record<string, any>) => {
 const sortMenu = ({
   menuObject,
   isCollectionMB,
+  isA2MB,
 }: {
   menuObject: Record<string, any>;
-  isCollectionMB: boolean;
+  isCollectionMB?: boolean;
+  isA2MB?: boolean;
 }) => {
   Object.values(menuObject).forEach((parentMenu: TMenuItem) => {
     if (
@@ -702,9 +731,10 @@ const sortMenu = ({
 
   return sortObjectByKeys({
     obj: menuObject,
-    order: isCollectionMB
-      ? COLLECTION_MB_MENU_ORDER
-      : NON_COLLECTION_MB_MENU_ORDER,
+    order:
+      isCollectionMB || isA2MB
+        ? COLLECTION_MB_MENU_ORDER
+        : NON_COLLECTION_MB_MENU_ORDER,
   });
 };
 
@@ -937,6 +967,256 @@ const getNonCollectionMBMenu = async ({
   return finalMenu;
 };
 
+const getA2CatMBMenu = async ({
+  lang,
+  categorisationMetadata,
+}: {
+  lang: string;
+  categorisationMetadata: TCategorisationMetadata;
+}): Promise<Record<string, any>> => {
+  const shoulderPageDocs = await getShoulderPageDocs({
+    categorisationMetadata,
+    isA2CatMB: true,
+  });
+  const cityGuideDocs = await getCityGuideDocs(categorisationMetadata);
+
+  const categoryApiData = await fetchCategory({
+    language: getHeadoutLanguagecode(lang),
+  });
+
+  const aboutMenuPromise = generateShoulderPageMenu({
+    isAboutMenu: true,
+    menuType: ABOUT,
+    categorisationMetadata,
+    lang,
+    docsStore: shoulderPageDocs,
+  });
+
+  const visitMenuPromise = generateShoulderPageMenu({
+    menuType: VISIT,
+    categorisationMetadata,
+    lang,
+    docsStore: shoulderPageDocs,
+  });
+
+  const thingsToDoMenuPromise = generateShoulderPageMenu({
+    menuType: THINGS_TO_DO,
+    categorisationMetadata,
+    lang,
+    docsStore: shoulderPageDocs,
+  });
+
+  const cityAttractionsMenuPromise = generateCityAttractionsMenu({
+    categorisationMetadata,
+    lang,
+  });
+
+  const cityToursMenuPromise = generateSubCategoryMenu({
+    parentCategory: MB_CATEGORISATION.CATEGORY.TOURS,
+    categorisationMetadata,
+    categoryApiData,
+    lang,
+  });
+
+  const cityGuideMenuPromise = generateCityGuideMenu({
+    menuType: CITY_GUIDE,
+    categorisationMetadata,
+    lang,
+    docsStore: cityGuideDocs,
+  });
+
+  const menuPromiseSettledResults = await Promise.allSettled([
+    aboutMenuPromise,
+    visitMenuPromise,
+    thingsToDoMenuPromise,
+    cityAttractionsMenuPromise,
+    cityToursMenuPromise,
+    cityGuideMenuPromise,
+  ]);
+
+  const [
+    aboutMenu,
+    visitMenu,
+    thingsToDoMenu,
+    cityAttractionsMenu,
+    cityToursMenu,
+    cityGuideMenu,
+  ] = handleSettledPromiseResults(menuPromiseSettledResults);
+
+  const aggregatedMenu = {
+    ...aboutMenu,
+    ...visitMenu,
+    ...thingsToDoMenu,
+    ...cityAttractionsMenu,
+    ...cityToursMenu,
+    ...cityGuideMenu,
+  };
+
+  const menuWithMiscItems = await addMiscMenuItems({
+    menu: cloneDeep(aggregatedMenu),
+    docsStore: shoulderPageDocs,
+    lang,
+    categorisationMetadata,
+  });
+
+  const transformedMenu = applyTransformations(cloneDeep(menuWithMiscItems));
+
+  Object.keys(transformedMenu).forEach((menuKey) => {
+    if (Object.keys(transformedMenu[menuKey]).length === 0) {
+      delete transformedMenu[menuKey];
+    }
+    if (typeof transformedMenu[menuKey] === 'object') {
+      const something = transformedMenu[menuKey];
+      transformedMenu[menuKey] = {
+        label: menuKey,
+        menu: something,
+        mainMenu: isMainMenu({
+          isA2MB: true,
+          menuLabel: menuKey,
+          menu: something,
+        }),
+      };
+    }
+  });
+
+  const finalMenu = sortMenu({
+    menuObject: cloneDeep(transformedMenu),
+    isA2MB: true,
+  });
+
+  return finalMenu;
+};
+
+const getA2SubcatMBMenu = async ({
+  lang,
+  categorisationMetadata,
+}: {
+  lang: string;
+  categorisationMetadata: TCategorisationMetadata;
+}): Promise<Record<string, any>> => {
+  const shoulderPageDocs = await getShoulderPageDocs({
+    categorisationMetadata,
+    isA2SubcatMB: true,
+  });
+  const cityGuideDocs = await getCityGuideDocs(categorisationMetadata);
+
+  const categoryApiData = await fetchCategory({
+    language: getHeadoutLanguagecode(lang),
+  });
+
+  const aboutMenuPromise = generateShoulderPageMenu({
+    isAboutMenu: true,
+    menuType: ABOUT,
+    categorisationMetadata,
+    lang,
+    docsStore: shoulderPageDocs,
+  });
+
+  const visitMenuPromise = generateShoulderPageMenu({
+    menuType: VISIT,
+    categorisationMetadata,
+    lang,
+    docsStore: shoulderPageDocs,
+  });
+
+  const thingsToDoMenuPromise = generateShoulderPageMenu({
+    menuType: THINGS_TO_DO,
+    categorisationMetadata,
+    lang,
+    docsStore: shoulderPageDocs,
+  });
+
+  const cityAttractionsMenuPromise = generateCityAttractionsMenu({
+    categorisationMetadata,
+    lang,
+  });
+
+  const cityToursMenuPromise = generateSubCategoryMenu({
+    parentCategory: MB_CATEGORISATION.CATEGORY.TOURS,
+    categorisationMetadata,
+    categoryApiData,
+    lang,
+  });
+
+  const cruisesMenuPromise = generateSubCategoryMenu({
+    parentCategory: MB_CATEGORISATION.CATEGORY.CRUISES,
+    categorisationMetadata,
+    categoryApiData,
+    lang,
+  });
+
+  const cityGuideMenuPromise = generateCityGuideMenu({
+    menuType: CITY_GUIDE,
+    categorisationMetadata,
+    lang,
+    docsStore: cityGuideDocs,
+  });
+
+  const menuPromiseSettledResults = await Promise.allSettled([
+    aboutMenuPromise,
+    visitMenuPromise,
+    thingsToDoMenuPromise,
+    cityAttractionsMenuPromise,
+    cityToursMenuPromise,
+    cruisesMenuPromise,
+    cityGuideMenuPromise,
+  ]);
+
+  const [
+    aboutMenu,
+    visitMenu,
+    thingsToDoMenu,
+    cityAttractionsMenu,
+    cityToursMenu,
+    cruisesMenu,
+    cityGuideMenu,
+  ] = handleSettledPromiseResults(menuPromiseSettledResults);
+
+  const aggregatedMenu = {
+    ...aboutMenu,
+    ...visitMenu,
+    ...thingsToDoMenu,
+    ...cityAttractionsMenu,
+    ...cityToursMenu,
+    ...cruisesMenu,
+    ...cityGuideMenu,
+  };
+
+  const menuWithMiscItems = await addMiscMenuItems({
+    menu: cloneDeep(aggregatedMenu),
+    docsStore: shoulderPageDocs,
+    lang,
+    categorisationMetadata,
+  });
+
+  const transformedMenu = applyTransformations(cloneDeep(menuWithMiscItems));
+
+  Object.keys(transformedMenu).forEach((menuKey) => {
+    if (Object.keys(transformedMenu[menuKey]).length === 0) {
+      delete transformedMenu[menuKey];
+    }
+    if (typeof transformedMenu[menuKey] === 'object') {
+      const something = transformedMenu[menuKey];
+      transformedMenu[menuKey] = {
+        label: menuKey,
+        menu: something,
+        mainMenu: isMainMenu({
+          isA2MB: true,
+          menuLabel: menuKey,
+          menu: something,
+        }),
+      };
+    }
+  });
+
+  const finalMenu = sortMenu({
+    menuObject: cloneDeep(transformedMenu),
+    isA2MB: true,
+  });
+
+  return finalMenu;
+};
+
 export const getCategoryHeaderMenu = async (doc: PrismicDocumentWithUID) => {
   const { uid, lang, alternate_languages, data } = doc || {};
 
@@ -989,6 +1269,18 @@ export const getCategoryHeaderMenu = async (doc: PrismicDocumentWithUID) => {
     case MB_CATEGORISATION.MB_TYPE.A1_SUB_CATEGORY:
     case MB_CATEGORISATION.MB_TYPE.A1_CITY_GUIDE:
       categoryHeaderMenu = await getNonCollectionMBMenu({
+        lang,
+        categorisationMetadata,
+      });
+      break;
+    case MB_CATEGORISATION.MB_TYPE.A2_CATEGORY:
+      categoryHeaderMenu = await getA2CatMBMenu({
+        lang,
+        categorisationMetadata,
+      });
+      break;
+    case MB_CATEGORISATION.MB_TYPE.A2_SUB_CATEGORY:
+      categoryHeaderMenu = await getA2SubcatMBMenu({
         lang,
         categorisationMetadata,
       });

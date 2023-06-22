@@ -1958,6 +1958,8 @@ type TGetClientQueryPromise = {
   docType: string;
   mbCity: string | null;
   mbCollection: string | null;
+  mbCategory: string | null;
+  mbSubCategory: string | null;
   filterMiscDocs?: boolean;
   lang?: string;
 };
@@ -1967,6 +1969,8 @@ const getClientQueryPromise = ({
   lang,
   mbCity,
   mbCollection,
+  mbCategory,
+  mbSubCategory,
   filterMiscDocs,
 }: TGetClientQueryPromise) => {
   return Client().query(
@@ -1981,6 +1985,16 @@ const getClientQueryPromise = ({
         Prismic.Predicates.at(
           `my.${docType}.${PRISMIC_FIELD_ID.TAGGED_COLLECTION}`,
           mbCollection
+        ),
+      mbCategory &&
+        Prismic.Predicates.at(
+          `my.${docType}.${PRISMIC_FIELD_ID.TAGGED_CATEGORY}`,
+          mbCategory
+        ),
+      mbSubCategory &&
+        Prismic.Predicates.at(
+          `my.${docType}.${PRISMIC_FIELD_ID.TAGGED_SUB_CATEGORY}`,
+          mbSubCategory
         ),
       filterMiscDocs &&
         Prismic.Predicates.at(
@@ -1998,23 +2012,38 @@ const getClientQueryPromise = ({
 type TGetShoulderPageDocs = {
   categorisationMetadata: TCategorisationMetadata;
   filterMiscDocs?: boolean;
+  isA2CatMB?: boolean;
+  isA2SubcatMB?: boolean;
   lang?: string;
 };
 
 export const getShoulderPageDocs = async ({
   categorisationMetadata,
+  isA2CatMB,
+  isA2SubcatMB,
   filterMiscDocs,
   lang,
 }: TGetShoulderPageDocs) => {
   const {
     tagged_city: mbCity,
     tagged_collection: mbCollection,
+    tagged_category: mbCategory,
+    tagged_sub_category: mbSubCategory,
   } = categorisationMetadata;
+
+  if (
+    (!isA2CatMB && !isA2SubcatMB && !mbCollection) ||
+    (isA2CatMB && !mbCategory) ||
+    (isA2SubcatMB && !mbSubCategory)
+  )
+    return [];
 
   const micrositesPromises = getClientQueryPromise({
     docType: CUSTOM_TYPES.MICROSITE,
     mbCity,
-    mbCollection,
+    mbCollection: !isA2CatMB && !isA2SubcatMB ? mbCollection : null,
+    mbCategory: isA2CatMB ? mbCategory : null,
+    mbSubCategory: isA2SubcatMB ? mbSubCategory : null,
     filterMiscDocs,
     lang,
   });
@@ -2022,7 +2051,9 @@ export const getShoulderPageDocs = async ({
   const contentPagesPromises = getClientQueryPromise({
     docType: CUSTOM_TYPES.CONTENT_PAGE,
     mbCity,
-    mbCollection,
+    mbCollection: !isA2CatMB && !isA2SubcatMB ? mbCollection : null,
+    mbCategory: isA2CatMB ? mbCategory : null,
+    mbSubCategory: isA2SubcatMB ? mbSubCategory : null,
     filterMiscDocs,
     lang,
   });

@@ -1189,6 +1189,8 @@ export const MB_CATEGORISATION = {
     A1_HOMEPAGE: 'A1 - Home Page',
     A1_SUB_CATEGORY: 'A1 - Sub Category MB',
     A1_CATEGORY: 'A1 - Category MB',
+    A2_SUB_CATEGORY: 'A2 - Sub Category MB',
+    A2_CATEGORY: 'A2 - Category MB',
     B1_GLOBAL: 'B1 - Global MB',
     B1_GLOBAL_HOMEPAGE: 'B1 - Global Home Page',
     C1_COLLECTION: 'C1 - Collection MB',
