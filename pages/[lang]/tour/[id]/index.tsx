@@ -223,7 +223,7 @@ const ExperiencePage = ({
 
   const [isMobile, setIsMobile] = useState(false);
   const width = useWindowWidth();
-  const { nakedDomain } = useContext(MBContext);
+  const { nakedDomain, isStage } = useContext(MBContext);
 
   const {
     name,
@@ -295,7 +295,7 @@ const ExperiencePage = ({
 
   const selfCanonicalLink = convertUidToUrl({ uid, lang: currentLanguage });
   const updatedDescriptors = generateDescriptor({
-    v2Descriptors: microBrandsDescriptor?.split('\r\n'),
+    v2Descriptors: microBrandsDescriptor,
     lang: currentLanguage,
     isShowPage: true,
   });
@@ -555,6 +555,7 @@ const ExperiencePage = ({
           tagsArray={tagsArray}
           hostname={hostname}
           hasSpecialOffer={hasSpecialOffer}
+          isProd={!isDev && !isStage}
         />
         <Conditional if={hasSpecialOffer}>
           <SpecialOfferBanner

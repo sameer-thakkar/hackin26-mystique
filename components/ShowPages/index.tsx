@@ -552,6 +552,7 @@ const ShowPage = (props: any) => {
           tagsArray={tagsArray}
           hostname={hostname}
           hasSpecialOffer={hasSpecialOffer}
+          isProd={!isDev && !isStage}
         />
         <Conditional if={hasSpecialOffer}>
           <SpecialOfferBanner

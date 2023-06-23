@@ -299,34 +299,44 @@ export const getFormattedUrlSlug = (urlSlugs: IUrlSlugs, lang = 'en') => {
 
 export const getTagPageLink = ({
   url,
-  lang = 'en',
+  lang = LANGUAGE_MAP.en.code,
   uid,
+  isProd,
 }: {
   url: string | null | undefined;
   lang: string;
   uid: string;
+  isProd: boolean;
 }) =>
-  lang?.toLowerCase() === 'en' && checkIfLTTMB(uid)
-    ? addLanguageParamToUrl({ url, lang: lang?.toLowerCase() })
+  checkIfLTTMB(uid)
+    ? addLanguageParamToUrl({
+        url,
+        lang: lang?.toLowerCase(),
+        isProd,
+      })
     : null;
 
 export const addLanguageParamToUrl = ({
   url,
-  lang = 'en',
+  lang = LANGUAGE_MAP.en.code,
+  isProd,
 }: {
   url: string | null | undefined;
   lang: string;
+  isProd: boolean;
 }) => {
   if (!url) return null;
 
-  if (lang !== 'en') {
+  if (lang !== LANGUAGE_MAP.en.code) {
     if (url.startsWith('/')) {
       return `/${lang}${url}`;
     } else {
       const splitUrl = url.split('/');
       const spliceStartIndex = url.startsWith('http') ? 3 : 1;
-      splitUrl.splice(spliceStartIndex, 0, lang);
-      return splitUrl.join('/');
+      if (isProd) splitUrl.splice(spliceStartIndex, 0, lang);
+      return isProd
+        ? splitUrl.join('/')
+        : splitUrl.filter((item) => item !== lang).join('/');
     }
   }
 

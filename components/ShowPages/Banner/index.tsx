@@ -21,7 +21,7 @@ import { MBContext } from 'contexts/MBContext';
 import { currencyAtom } from 'store/atoms/currency';
 import { metaAtom } from 'store/atoms/meta';
 import { getTagPageLink } from 'utils/urlUtils';
-import { createBookingURL, getNakedDomain } from 'utils';
+import { createBookingURL, getTagPageMap, getNakedDomain } from 'utils';
 import { dateToString } from 'utils/dateUtils';
 import { fetchCalendarInventory } from 'utils/apiUtils';
 import {
@@ -37,7 +37,6 @@ import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   LANGUAGE_MAP,
-  LTT_TAG_PAGE_MAP,
 } from 'const/index';
 import { PRODUCT_VIDEOS } from 'const/ShowPageProductVideos';
 
@@ -51,6 +50,7 @@ const ShowPageBanner = ({
   tagsArray,
   hostname,
   hasSpecialOffer,
+  isProd,
 }: IShowPageBannerProps) => {
   const {
     listingPrice,
@@ -93,6 +93,7 @@ const ShowPageBanner = ({
   const [isVideo, setIsVideo] = useState(false);
   const [showStickyNav, setShowStickyNav] = useState(false);
   const [nextAvailable, setNextAvailable] = useState('');
+  const LTT_TAG_PAGE_MAP = getTagPageMap();
 
   // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
   const videoCode = PRODUCT_VIDEOS[tgid] ? PRODUCT_VIDEOS[tgid] : null;
@@ -379,9 +380,10 @@ const ShowPageBanner = ({
                 return (
                   <LinkResolver
                     url={getTagPageLink({
-                      url: LTT_TAG_PAGE_MAP[element]?.url,
+                      url: LTT_TAG_PAGE_MAP[element],
                       lang: currentLanguage,
                       uid,
+                      isProd,
                     })}
                   >
                     <div className="tags-wrapper" key={index}>

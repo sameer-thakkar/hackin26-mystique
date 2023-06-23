@@ -348,7 +348,7 @@ export const generateDescriptor = ({
     if (!v2Descriptors) return [];
 
     const regex = isShowPage ? /\r?\n|\r/ : /(?:\r\n|\s\|\s)/g;
-    return v2Descriptors.split(regex).filter(Boolean);
+    return v2Descriptors?.split(regex).filter(Boolean);
   }
 
   if (!isEntertainmentMb && !isShowPage) {

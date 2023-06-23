@@ -28,4 +28,5 @@ export interface IShowPageBannerProps {
   tagsArray: Array<string>;
   hostname: string;
   hasSpecialOffer: boolean;
+  isProd: boolean;
 }
