@@ -16,6 +16,7 @@ import {
   THEMES,
   MB_CATEGORISATION,
   PRISMIC_FIELD_ID,
+  PRISMIC_DEV_TAG,
 } from 'const/index';
 import { MISC } from 'const/header';
 import {
@@ -342,6 +343,7 @@ export const getMicrositeDocument = async ({
           if (isEntertainmentMb) {
             allShowPages = await fetchAllMatchingDocs({
               query: [
+                Prismic.Predicates.not(`document.tags`, [PRISMIC_DEV_TAG]),
                 Prismic.Predicates.at(`document.type`, CUSTOM_TYPES.SHOW_PAGE),
               ],
               params: { lang },
