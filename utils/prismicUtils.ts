@@ -1401,16 +1401,18 @@ export const getPageData = async ({
       const categoryId = CMSContent?.data?.headout_category_id;
       const collectionId = CMSContent?.data?.headout_collection_id;
       if (collectionId) {
-        const collectionData = await fetchCollection({
-          collectionId,
-          hostname,
-          language,
-          currency: 'USD',
-          cookies,
-        });
+        const collectionData =
+          (await fetchCollection({
+            collectionId,
+            hostname,
+            language,
+            currency: 'USD',
+            cookies,
+          })) ?? {};
         const pinnedCards =
           getCollectionSection(collectionData, 'PINNED_CARDS') ?? [];
-        const genericSection = getCollectionSection(collectionData, 'GENERIC');
+        const genericSection =
+          getCollectionSection(collectionData, 'GENERIC') ?? [];
         const headoutPicks =
           getCollectionSection(collectionData, 'HEADOUT_PICKS') ?? [];
         ticketsData = [...pinnedCards, ...genericSection, ...headoutPicks];
@@ -1428,15 +1430,16 @@ export const getPageData = async ({
         currencyCode = price?.currency;
       }
       if (!collectionId && categoryId) {
-        const categoryData = await fetchTourGroupsByCategory({
-          categoryId,
-          hostname,
-          isSubCategory: false,
-          city,
-          language,
-          currency: 'USD',
-          cookies,
-        });
+        const categoryData =
+          (await fetchTourGroupsByCategory({
+            categoryId,
+            hostname,
+            isSubCategory: false,
+            city,
+            language,
+            currency: 'USD',
+            cookies,
+          })) ?? {};
         ticketsData = categoryData?.pageData?.items;
         startingPrice = categoryData?.unFilteredMetaData?.minPrice;
         currencyCode = categoryData?.currency?.code;
