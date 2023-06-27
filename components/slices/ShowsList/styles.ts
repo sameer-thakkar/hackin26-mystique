@@ -3,15 +3,17 @@ import { expandFontToken } from 'const/typography';
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  margin-top: 2.5rem;
   && {
     h2 {
       margin-bottom: 1rem;
       ${expandFontToken(FONTS.HEADING_REGULAR)};
     }
+    .wrapper {
+      display: grid;
+      grid-gap: 36px;
+    }
   }
   @media (min-width: 768px) {
-    margin-top: 4rem;
     width: calc(100vw - (5.46vw * 2));
     max-width: 1200px;
     && {

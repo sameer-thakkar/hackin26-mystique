@@ -579,8 +579,6 @@ export const getVenuePageDocument = async ({ req, uid, lang }: any) => {
         description,
         image_url,
       } = response.data;
-      // eslint-disable-next-line no-console
-      console.log('---', response);
 
       const linkedRefIDs = [];
       linkedRefIDs.push(header_ref.id, footer_ref.id, secondary_footer_ref.id);
@@ -1272,48 +1270,62 @@ export const getPageData = async ({
     })();
 
     if (ContentType === CUSTOM_TYPES.VENUE_PAGE) {
-      const [nowPlayingShows, pastShows] = [
-        getSinglePrismicSlice({
-          sliceName: SLICE_TYPES.SHOWS_LIST,
-          slices: CMSContent?.data?.descriptionSlices,
+      const [showsListSlices, showsGridSlices] = [
+        CMSContent.data?.descriptionSlices?.filter((slice: any) => {
+          return slice.slice_type === SLICE_TYPES.SHOWS_LIST;
         }),
-        getSinglePrismicSlice({
-          sliceName: SLICE_TYPES.SHOWS_GRID,
-          slices: CMSContent?.data?.descriptionSlices,
+        CMSContent.data?.descriptionSlices?.filter((slice: any) => {
+          return slice.slice_type === SLICE_TYPES.SHOWS_GRID;
         }),
       ];
-      const nowPlayingShowsTgids =
-        getTgidsFromShow(nowPlayingShows?.items) ?? [];
-      const pastShowsTgids = getTgidsFromShow(pastShows?.items) ?? [];
+
+      const showsListSlicesTgids = showsListSlices.reduce(
+        (acc: any[], curr: any) => {
+          const tgids = getTgidsFromShow(curr.items);
+          return (acc = [...acc, ...tgids]);
+        },
+        []
+      );
+      const showsGridSlicesTgids = showsGridSlices.reduce(
+        (acc: any[], curr: any) => {
+          const tgids = getTgidsFromShow(curr.items);
+          return (acc = [...acc, ...tgids]);
+        },
+        []
+      );
 
       const showsData = await fetchTourListV6({
-        tgids: [...nowPlayingShowsTgids, ...pastShowsTgids],
+        tgids: [...showsListSlicesTgids, ...showsGridSlicesTgids],
         hostname,
         language: getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale),
         cookies,
       });
+      // eslint-disable-next-line no-console
+      console.log('---', showsData);
 
-      const nowPlayingShowData = showsData?.tourGroups?.slice(
+      const showsListSlicesData = showsData?.tourGroups?.slice(
         0,
-        nowPlayingShowsTgids.length
+        showsListSlicesTgids.length
       );
-      const pastShowsData = showsData?.tourGroups?.slice(
-        nowPlayingShowsTgids.length,
+      const showsGridSlicesData = showsData?.tourGroups?.slice(
+        showsListSlicesTgids.length,
         showsData.length
       );
+      // eslint-disable-next-line no-console
+      console.log('jfjfj', showsListSlicesData);
 
       return {
         CMSContent: {
           ...CMSContent,
-          nowPlayingShowData,
-          pastShowsData,
+          showsListSlicesData,
+          showsGridSlicesData,
         },
         uid,
         host,
         ContentType,
         lang,
         isDev,
-        tgidsInPage: [...nowPlayingShowsTgids, ...pastShowsTgids],
+        tgidsInPage: [...showsListSlicesTgids, ...showsGridSlicesTgids],
         currencyList: await currencyListPromise,
         domainConfig: await domainConfigPromise,
       };

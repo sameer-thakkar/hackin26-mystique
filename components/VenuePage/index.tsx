@@ -56,8 +56,8 @@ const VenuePage = (props: IVenuePageProps) => {
 
   const {
     data: CMSContent,
-    nowPlayingShowData,
-    pastShowsData,
+    showsListSlicesData,
+    showsGridSlicesData,
     first_publication_date: datePublished,
     last_publication_date: dateModified,
     alternate_languages,
@@ -97,7 +97,7 @@ const VenuePage = (props: IVenuePageProps) => {
     });
   }, []);
 
-  const tgidForFirstShow = nowPlayingShowData[0]?.id;
+  const tgidForFirstShow = showsListSlicesData[0]?.id;
 
   const { SHOW_MORE, SHOW_LESS } = strings;
 
@@ -169,12 +169,12 @@ const VenuePage = (props: IVenuePageProps) => {
     window.open(redirectUrlForTabDataContent);
     trackEvent({
       eventName: ANALYTICS_EVENTS.THEATRE_PAGE.BEST_SEATS_CTA_CLICKED,
-      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: nowPlayingShowData[0].name,
+      [ANALYTICS_PROPERTIES.EXPERIENCE_NAME]: showsListSlicesData[0].name,
       [ANALYTICS_PROPERTIES.CATEGORY_ID]:
-        nowPlayingShowData[0].primaryCategory.id,
-      [ANALYTICS_PROPERTIES.TGID]: nowPlayingShowData[0].id,
+        showsListSlicesData[0].primaryCategory.id,
+      [ANALYTICS_PROPERTIES.TGID]: showsListSlicesData[0].id,
       [ANALYTICS_PROPERTIES.CATEGORY_NAME]:
-        nowPlayingShowData[0].primaryCategory.displayName,
+        showsListSlicesData[0].primaryCategory.displayName,
     });
   };
 
@@ -273,8 +273,8 @@ const VenuePage = (props: IVenuePageProps) => {
       <LongForm
         content={descriptionSlices}
         isMobile={isMobile}
-        nowPlayingShowData={nowPlayingShowData}
-        pastShowsData={pastShowsData}
+        showsListSlicesData={showsListSlicesData}
+        showsGridSlicesData={showsGridSlicesData}
         isVenuePage={true}
         redirectUrlForTabDataContent={redirectUrlForTabDataContent}
         findBestSeatsCallback={onFindBestSeatsCtaClicked}

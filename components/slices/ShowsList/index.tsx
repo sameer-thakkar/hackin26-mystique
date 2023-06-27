@@ -4,21 +4,41 @@ import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 import { Container } from 'components/slices/ShowsList/styles';
 import { ShowsListProps } from 'components/slices/ShowsList/interface';
+import { getTgidsFromShow } from 'utils';
 
 const ShowsList = (props: ShowsListProps) => {
-  const { isMobile, heading, data } = props;
+  const { isMobile, heading, data, sliceData } = props;
+
+  const tgidsSet = new Set(getTgidsFromShow(sliceData));
+
+  const idMap = new Map();
+
+  /* The "data" can have repeating elements(same tgids). Therefore, removing it to prevent showing same product cards */
+  const finalData = data.filter((obj: any) => {
+    if (idMap.has(obj.id)) {
+      return false;
+    } else {
+      idMap.set(obj.id, true);
+      return true;
+    }
+  });
+
+  const showData = finalData.reduce((acc: any, curr: any) => {
+    return (acc = tgidsSet.has(curr.id) ? [...acc, curr] : [...acc]);
+  }, []);
+
   return (
     <Container>
       <h2>{heading}</h2>
       <div className="wrapper">
-        {data?.map((show: any, index: number) => {
+        {showData?.map((show: any, index: number) => {
           const allTours: any = {};
           const tgid = show.id;
           allTours[tgid] = show;
           allTours[tgid].productImage = show.imageUrl;
           allTours[tgid].secondaryDescriptors = show.descriptors ?? [];
 
-          return data.length === 1 && !isMobile ? (
+          return showData.length === 1 && !isMobile ? (
             <PinnedCard key={index} productInfo={show} />
           ) : (
             <div className="product-card" key={index}>

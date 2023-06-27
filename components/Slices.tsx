@@ -576,8 +576,9 @@ const sliceHandler = (slice: any, props: any = {}) => {
       return (
         <ShowsList
           isMobile={props.isMobile}
-          data={props.nowPlayingShowData}
+          data={props.showsListSlicesData}
           heading={slice.primary.heading}
+          sliceData={slice.items}
         />
       );
 
@@ -586,7 +587,8 @@ const sliceHandler = (slice: any, props: any = {}) => {
         <ShowsGrid
           isMobile={props.isMobile}
           heading={slice?.primary?.heading}
-          data={props.pastShowsData}
+          data={props.showsGridSlicesData}
+          sliceData={slice.items}
         />
       );
 

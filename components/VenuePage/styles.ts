@@ -31,6 +31,7 @@ export const VenuePageContainer = styled.div`
 
   .amenities {
     margin-top: 1.5rem;
+    margin-bottom: 2.5rem;
     display: grid;
     grid-auto-flow: row;
     ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
@@ -43,6 +44,7 @@ export const VenuePageContainer = styled.div`
       }
     }
     @media (min-width: 768px) {
+      margin-bottom: 4rem;
       grid-auto-flow: row;
       ${expandFontToken(FONTS.PARAGRAPH_LARGE)}
       grid-template-columns: repeat(auto-fit, minmax(17.875rem, 1fr));

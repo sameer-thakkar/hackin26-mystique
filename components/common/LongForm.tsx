@@ -10,7 +10,7 @@ export const StyledLongForm = styled.div<{
   isVenuePage?: boolean;
 }>`
   display: grid;
-  grid-row-gap: 56px;
+  grid-row-gap: ${({ isVenuePage }) => (isVenuePage ? '64px' : '56px')};
   h1,
   h2,
   h3,
