@@ -263,7 +263,7 @@ const pl = {
     },
     REMOVE: 'USUŃ',
   },
-  RATINGS: '(Oceny: {0})',
+  RATINGS: 'Oceny: {0}',
   READ_MORE: 'Czytaj więcej',
   READ_MORE_TEXT: 'Czytaj więcej',
   REOPENING: 'Ponowne otwarcie',

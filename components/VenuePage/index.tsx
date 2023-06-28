@@ -7,7 +7,7 @@ import Header from 'components/MicrositeV2/Header';
 import Breadcrumb from 'components/slices/Breadcrumb';
 import { strings } from 'const/strings';
 import RichContent from 'UI/RichContent';
-import { getLangObject } from 'utils/helper';
+import { getLangObject, checkIfLTTMB } from 'utils/helper';
 import { amenitiesIcons } from 'const/amenitiesIcons';
 import Conditional from 'components/common/Conditional';
 import {
@@ -118,6 +118,8 @@ const VenuePage = (props: IVenuePageProps) => {
   );
 
   const currentLanguage = getLangObject(lang).code;
+
+  const isLTT = checkIfLTTMB(uid);
 
   const breadcrumbsLinks = [
     {
@@ -237,12 +239,14 @@ const VenuePage = (props: IVenuePageProps) => {
       </Banner>
 
       <VenuePageContainer>
-        <div className="breadcrumb-container">
-          <Breadcrumb
-            orderedLinks={breadcrumbsLinks}
-            shouldLastNodeBeUnderlined={false}
-          />
-        </div>
+        <Conditional if={isLTT}>
+          <div className="breadcrumb-container">
+            <Breadcrumb
+              orderedLinks={breadcrumbsLinks}
+              shouldLastNodeBeUnderlined={false}
+            />
+          </div>
+        </Conditional>
         <div className="theatre-info">
           <RichContent render={theatreInfo} />
         </div>
@@ -280,7 +284,7 @@ const VenuePage = (props: IVenuePageProps) => {
         findBestSeatsCallback={onFindBestSeatsCtaClicked}
       />
       <VenuePageContainer>
-        <Conditional if={isMobile}>
+        <Conditional if={isMobile && isLTT}>
           <Breadcrumb
             orderedLinks={breadcrumbsLinks}
             shouldLastNodeBeUnderlined={false}
