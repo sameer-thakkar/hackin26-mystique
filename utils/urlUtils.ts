@@ -281,7 +281,8 @@ export const getFormattedUrlSlug = (urlSlugs: IUrlSlugs, lang = 'en') => {
   // to prevent crawlers from crawling the url
   const decodedUrlSlugs = Object.entries(urlSlugs).reduce(
     (acc: IUrlSlugs, [lang, urlSlug]) => {
-      acc[lang] = urlSlug.replaceAll('#', '/');
+      if (typeof urlSlug !== 'string') acc[lang] = '';
+      else acc[lang] = urlSlug.replaceAll('#', '/');
       return acc;
     },
     {}
@@ -346,6 +347,7 @@ export const addLanguageParamToUrl = ({
 export const getEncodedUrlSlugs = (urlSlugs: IUrlSlugs) =>
   // replacing '/' with '#' in all urlSlugs to prevent crawlers from crawling the url
   Object.entries(urlSlugs).reduce((acc: IUrlSlugs, [lang, urlSlug]) => {
-    acc[lang] = urlSlug.replaceAll('/', '#');
+    if (typeof urlSlug !== 'string') acc[lang] = '';
+    else acc[lang] = urlSlug.replaceAll('/', '#');
     return acc;
   }, {});
