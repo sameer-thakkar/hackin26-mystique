@@ -1984,7 +1984,7 @@ export const getPageData = async ({
   }
 };
 
-type TGetClientQueryPromise = {
+type TGetShoulerPageClientQueryPromise = {
   docType: string;
   mbCity: string | null;
   mbCollection: string | null;
@@ -1994,7 +1994,7 @@ type TGetClientQueryPromise = {
   lang?: string;
 };
 
-const getClientQueryPromise = ({
+const getShoulderPageClientQueryPromise = ({
   docType,
   lang,
   mbCity,
@@ -2002,8 +2002,8 @@ const getClientQueryPromise = ({
   mbCategory,
   mbSubCategory,
   filterMiscDocs,
-}: TGetClientQueryPromise) => {
-  return Client().query(
+}: TGetShoulerPageClientQueryPromise) =>
+  Client().query(
     [
       Prismic.Predicates.not(`document.tags`, ['[DEV]']),
       mbCity &&
@@ -2037,7 +2037,6 @@ const getClientQueryPromise = ({
       ...(filterMiscDocs && { lang }),
     }
   );
-};
 
 type TGetShoulderPageDocs = {
   categorisationMetadata: TCategorisationMetadata;
@@ -2068,7 +2067,7 @@ export const getShoulderPageDocs = async ({
   )
     return [];
 
-  const micrositesPromises = getClientQueryPromise({
+  const micrositesPromises = getShoulderPageClientQueryPromise({
     docType: CUSTOM_TYPES.MICROSITE,
     mbCity,
     mbCollection: !isA2CatMB && !isA2SubcatMB ? mbCollection : null,
@@ -2078,7 +2077,7 @@ export const getShoulderPageDocs = async ({
     lang,
   });
 
-  const contentPagesPromises = getClientQueryPromise({
+  const contentPagesPromises = getShoulderPageClientQueryPromise({
     docType: CUSTOM_TYPES.CONTENT_PAGE,
     mbCity,
     mbCollection: !isA2CatMB && !isA2SubcatMB ? mbCollection : null,
@@ -2106,29 +2105,60 @@ export const getShoulderPageDocs = async ({
   return getRankedDocuments(aggregatedDocsStore);
 };
 
+const getCityGuideClientQueryPromise = ({
+  docType,
+  mbCity,
+}: {
+  docType: string;
+  mbCity: string | null;
+}) =>
+  Client().query(
+    [
+      Prismic.Predicates.not(`document.tags`, ['[DEV]']),
+      mbCity &&
+        Prismic.Predicates.at(
+          `my.${docType}.${PRISMIC_FIELD_ID.TAGGED_CITY}`,
+          mbCity
+        ),
+      Prismic.Predicates.at(
+        `my.${docType}.${PRISMIC_FIELD_ID.TAGGED_MB_TYPE}`,
+        MB_CATEGORISATION.MB_TYPE.A1_CITY_GUIDE
+      ),
+    ],
+    { pageSize: 100 }
+  );
+
 export const getCityGuideDocs = async (
   categorisationMetadata: TCategorisationMetadata
 ) => {
   const { tagged_city: mbCity } = categorisationMetadata;
 
-  const { results: filteredMicrosites } =
-    (await Client().query(
-      [
-        Prismic.Predicates.not(`document.tags`, ['[DEV]']),
-        mbCity &&
-          Prismic.Predicates.at(
-            `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_CITY}`,
-            mbCity
-          ),
-        Prismic.Predicates.at(
-          `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_MB_TYPE}`,
-          MB_CATEGORISATION.MB_TYPE.A1_CITY_GUIDE
-        ),
-      ],
-      { pageSize: 100 }
-    )) || {};
+  const micrositesPromises = getCityGuideClientQueryPromise({
+    docType: CUSTOM_TYPES.MICROSITE,
+    mbCity,
+  });
 
-  return getRankedDocuments(filteredMicrosites);
+  const contentPagesPromises = getCityGuideClientQueryPromise({
+    docType: CUSTOM_TYPES.CONTENT_PAGE,
+    mbCity,
+  });
+
+  const aggregatedPromise = await Promise.allSettled([
+    micrositesPromises,
+    contentPagesPromises,
+  ]);
+
+  const [
+    filteredMicrosites,
+    filteredContentPages,
+  ] = handleSettledPromiseResults(aggregatedPromise);
+
+  const aggregatedDocsStore = [
+    ...filteredMicrosites?.results,
+    ...filteredContentPages?.results,
+  ];
+
+  return getRankedDocuments(aggregatedDocsStore);
 };
 
 export const getAlternateLanguageDocs = async ({

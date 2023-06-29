@@ -210,12 +210,11 @@ class ContentPage extends Component<any, any> {
         }
       });
 
-    const {
-      enable_group_booking: enableGroupBooking,
-    } = this.props.data.header_ref.data;
     const { data } = this.props;
+    const { header_ref, microsite, baseLangPageTitle } = data;
 
-    const { microsite, baseLangPageTitle } = data;
+    const { enable_group_booking: enableGroupBooking } = header_ref?.data || {};
+
     const { all_tours } = microsite?.data;
     const allTourTgids = all_tours
       .filter((tour_slice: any) => tour_slice?.primary?.tgid)
@@ -486,7 +485,7 @@ class ContentPage extends Component<any, any> {
       group_booking_disclaimer: groupBookingDisclaimer,
       header_links: headerLinks,
       show_ticket_menu: showTicketMenu,
-    } = commonHeader.data;
+    } = commonHeader?.data || {};
 
     const {
       blackout_start_date: blackoutStartDate,
