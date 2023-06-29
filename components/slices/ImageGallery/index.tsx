@@ -1,7 +1,13 @@
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import type { Swiper as ISwiper } from 'swiper';
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useCallback,
+  useRef,
+  RefObject,
+} from 'react';
 import useWindowSize from 'hooks/useWindowSize';
 import dynamic from 'next/dynamic';
 import Image from 'UI/Image';
@@ -31,6 +37,11 @@ import {
   Content,
   DesktopLightboxHeading,
 } from 'components/slices/ImageGallery/style';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { trackEvent } from 'utils/analytics';
+import useOnScreen from 'hooks/useOnScreen';
+import { useRecoilValue } from 'recoil';
+import { gtmAtom } from 'store/atoms/gtm';
 
 const Swiper = dynamic(() =>
   import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
@@ -69,6 +80,21 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
   const [currentIndex, updateCurrentIndex] = useState(0);
   const modalRef = useRef(null);
   const controlRef = useRef<HTMLDivElement>(null);
+  const imageGalleryRef = useRef(null);
+  const { eventsReady } = useRecoilValue(gtmAtom);
+  const isImageGalleryVisible = useOnScreen({
+    ref: imageGalleryRef,
+    unobserve: true,
+    options: { threshold: 0.5 },
+  });
+  const {
+    IMAGE_GALLERY_CLOSED,
+    IMAGE_GALLERY_OPENED,
+    IMAGE_GALLERY_SECTION_VIEWED,
+    IMAGE_VIEWED,
+    IMAGE_GALLERY_PRESENT,
+  } = ANALYTICS_EVENTS.IMAGE_GALLERY;
+  const { RANKING } = ANALYTICS_PROPERTIES;
 
   // @ts-expect-error TS(2532): Object is possibly 'undefined'.
   const isMobile = useWindowSize().width < 768;
@@ -103,6 +129,22 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
       }
     };
   }, [thumbnailSwiper, updateGalleryIndex, isMobile]);
+
+  useEffect(() => {
+    if (!eventsReady) return;
+
+    trackEvent({
+      eventName: IMAGE_GALLERY_PRESENT,
+    });
+  }, [eventsReady]);
+
+  useEffect(() => {
+    if (isImageGalleryVisible) {
+      trackEvent({
+        eventName: IMAGE_GALLERY_SECTION_VIEWED,
+      });
+    }
+  }, [isImageGalleryVisible]);
 
   const gallerySwiperParams: SwiperProps = {
     initialSlide: currentIndex,
@@ -158,14 +200,70 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
     }
   };
 
-  // @ts-ignore
-  useCaptureClickOutside(modalRef, () => toggleLightbox(0), [controlRef]);
+  const handleTrackingEvents = (eventName: any, properties: any) => {
+    trackEvent({
+      eventName,
+      ...properties,
+    });
+  };
+
+  const handleImageClickOnDesktop = (index: number) => {
+    toggleLightbox(index);
+    handleTrackingEvents(IMAGE_GALLERY_OPENED, {
+      [RANKING]: index + 1,
+    });
+    handleTrackingEvents(IMAGE_VIEWED, {
+      [RANKING]: index + 1,
+    });
+  };
+
+  const handleTagClick = () => {
+    toggleLightbox(0);
+    handleTrackingEvents(IMAGE_GALLERY_OPENED, {
+      [RANKING]: null,
+    });
+  };
+
+  const handleSlideClick = (direction: 'prev' | 'next') => {
+    if (direction === 'prev') slidePrev(gallerySwiper);
+    else slideNext(gallerySwiper);
+
+    handleTrackingEvents(IMAGE_VIEWED, {
+      [RANKING]: direction === 'prev' ? currentIndex : currentIndex + 2,
+    });
+  };
+
+  const handleGalleryClose = () => {
+    toggleLightbox(0);
+    handleTrackingEvents(IMAGE_GALLERY_CLOSED, {
+      [RANKING]: currentIndex + 1,
+    });
+  };
+
+  const handleClickOnThumbnailSwiper = (index: number) => {
+    updateGalleryIndex();
+    gallerySwiper?.slideTo(index, 200);
+    handleTrackingEvents(IMAGE_VIEWED, {
+      [RANKING]: index + 1,
+    });
+  };
+
+  useCaptureClickOutside(
+    modalRef,
+    () => {
+      toggleLightbox(0);
+      handleTrackingEvents(IMAGE_GALLERY_CLOSED, {
+        [RANKING]: currentIndex + 1,
+      });
+    },
+    [controlRef]
+  );
 
   const activeImage = images[currentIndex];
   const fullImageHeading = RichText.asText(activeImage.heading);
 
   return (
-    <StyledImageGallery>
+    <StyledImageGallery ref={imageGalleryRef}>
       <h2 className="heading" id={generateSidenavId(heading)}>
         {heading}
       </h2>
@@ -178,16 +276,14 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
               <Image
                 key={index}
                 url={image.linked_image?.url || image.uploaded_image?.url}
-                onClick={() => {
-                  toggleLightbox(index);
-                }}
+                onClick={() => handleImageClickOnDesktop(index)}
                 alt={image.image_alt || caption}
               />
             );
           })}
         </GridLayout>
         <Conditional if={images.length > 2}>
-          <Tag isMobile={isMobile} onClick={() => toggleLightbox(0)}>
+          <Tag isMobile={isMobile} onClick={handleTagClick}>
             <MapSvg />
             {SHOW_ALL_PHOTOS}
           </Tag>
@@ -218,13 +314,13 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
               );
             })}
           </Swiper>
-          <SwiperControls ref={controlRef}>
+          <SwiperControls ref={controlRef as RefObject<HTMLDivElement>}>
             <Conditional if={currentIndex}>
               <div
                 className="prev-slide"
                 role="button"
                 tabIndex={0}
-                onClick={() => slidePrev(gallerySwiper)}
+                onClick={() => handleSlideClick('prev')}
               >
                 {CHEVRON_LEFT_CIRCLE}
               </div>
@@ -234,7 +330,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
                 className="next-slide"
                 role="button"
                 tabIndex={0}
-                onClick={() => slideNext(gallerySwiper)}
+                onClick={() => handleSlideClick('next')}
               >
                 {CHEVRON_LEFT_CIRCLE}
               </div>
@@ -245,7 +341,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
             className="close"
             role="button"
             tabIndex={0}
-            onClick={() => toggleLightbox(0)}
+            onClick={() => handleGalleryClose}
           >
             {CLOSE}
             {CLOSE_WHITE}
@@ -260,7 +356,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
             className="close"
             role="button"
             tabIndex={0}
-            onClick={() => toggleLightbox(0)}
+            onClick={handleGalleryClose}
           >
             {CLOSE_WHITE}
           </div>
@@ -276,13 +372,13 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
                 );
               })}
             </Swiper>
-            <SwiperControls ref={controlRef}>
+            <SwiperControls ref={controlRef as RefObject<HTMLDivElement>}>
               <Conditional if={currentIndex}>
                 <div
                   className="prev-slide"
                   role="button"
                   tabIndex={0}
-                  onClick={() => slidePrev(gallerySwiper)}
+                  onClick={() => handleSlideClick('prev')}
                 >
                   {CHEVRON_LEFT_CIRCLE}
                 </div>
@@ -292,7 +388,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
                   className="next-slide"
                   role="button"
                   tabIndex={0}
-                  onClick={() => slideNext(gallerySwiper)}
+                  onClick={() => handleSlideClick('next')}
                 >
                   {CHEVRON_LEFT_CIRCLE}
                 </div>
@@ -317,10 +413,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
                           image.uploaded_image?.url || image.linked_image?.url
                         }
                         alt={image.image_alt || caption}
-                        onClick={() => {
-                          updateGalleryIndex();
-                          gallerySwiper?.slideTo(index, 200);
-                        }}
+                        onClick={() => handleClickOnThumbnailSwiper(index)}
                         className={
                           index === currentIndex
                             ? 'active-slide'

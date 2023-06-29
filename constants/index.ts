@@ -349,6 +349,13 @@ export const ANALYTICS_EVENTS = {
   TOC_OPENED: 'Table Of Contents Opened',
   TOC_OPTION_SELECTED: 'Table of Contents Option Selected',
   TOOLTIP_VIEWED: 'Tooltip Viewed',
+  IMAGE_GALLERY: {
+    IMAGE_GALLERY_OPENED: 'Image Gallery Opened',
+    IMAGE_VIEWED: 'Image Viewed',
+    IMAGE_GALLERY_CLOSED: 'Image Gallery Closed',
+    IMAGE_GALLERY_SECTION_VIEWED: 'Image Gallery Section Viewed',
+    IMAGE_GALLERY_PRESENT: 'Image Gallery Component Present',
+  },
   DATE_FILTER_APPLIED: 'Date Filter Applied',
   DATE_UNAVAILABLE_DRAWER_VIEWED: 'Date Unavailable Drawer Viewed',
   MICROSITE_PAGE_CTA_CLICKED: 'Microsite Page CTA Clicked',

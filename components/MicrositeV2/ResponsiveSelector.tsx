@@ -203,7 +203,6 @@ export const ResponsiveSelector = (props: any) => {
   const selectorRef = useRef(null);
   const parentRef = useRef(null);
   const exceptionElementRefs = [parentRef];
-  // @ts-expect-error TS(2345): Argument of type 'MutableRefObject<null>[]' is not... Remove this comment to see the full error message
   useCaptureClickOutside(selectorRef, handleMenuToggle, exceptionElementRefs);
 
   useEffect(() => {

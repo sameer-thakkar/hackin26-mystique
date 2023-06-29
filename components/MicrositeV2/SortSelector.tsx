@@ -105,7 +105,6 @@ export const SortSelector = (props: any) => {
   useCaptureClickOutside(
     selectorRef,
     closeFilterDropdown,
-    // @ts-expect-error TS(2345): Argument of type 'MutableRefObject<null>[]' is not... Remove this comment to see the full error message
     exceptionElementRefs
   );
 

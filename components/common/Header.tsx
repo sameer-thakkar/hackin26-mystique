@@ -248,7 +248,6 @@ const Header: React.FC<any> = (props) => {
     () => {
       setHamburgerOpen(false);
     },
-    // @ts-expect-error TS(2322): Type 'MutableRefObject<null>' is not assignable to... Remove this comment to see the full error message
     [multiNavRef]
   );
 
