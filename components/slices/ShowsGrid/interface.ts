@@ -3,4 +3,6 @@ export type ShowsGridProps = {
   heading: string;
   data: any;
   sliceData: any;
+  allShowPageUids: Record<string, string>[];
+  isVenuePage: boolean;
 };

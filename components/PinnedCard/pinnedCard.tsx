@@ -76,9 +76,9 @@ const PinnedCard = (props: any) => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.CHECK_AVAILABILITY_CLICKED,
       [ANALYTICS_PROPERTIES.DISCOUNT]:
-        listingPrice.originalPrice > listingPrice.finalPrice,
-      [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: listingPrice.currencyCode,
-      [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: listingPrice.finalPrice,
+        listingPrice?.originalPrice > listingPrice?.finalPrice,
+      [ANALYTICS_PROPERTIES.DISPLAY_CURRENCY]: listingPrice?.currencyCode,
+      [ANALYTICS_PROPERTIES.DISPLAY_PRICE]: listingPrice?.finalPrice,
       [ANALYTICS_PROPERTIES.RANKING]: 1,
       [ANALYTICS_PROPERTIES.IS_PINNED_CARD]: 'Yes',
       [ANALYTICS_PROPERTIES.TGID]: tgid,

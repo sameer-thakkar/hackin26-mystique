@@ -48,6 +48,12 @@ const StyledBreadcrumb = styled.a<{
     cursor: pointer;
   }
 
+  /* Using "shouldLastNodeBeUnderlined" prop since clickable node will always be underlined */
+  &#breadcrumb :last-child {
+    cursor: ${({ shouldLastNodeBeUnderlined }) => {
+      return shouldLastNodeBeUnderlined ? 'pointer' : 'default';
+    }};
+  }
   &:not(:last-child):hover {
     color: ${COLORS.TEXT.CANDY_1} !important;
   }

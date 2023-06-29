@@ -769,6 +769,7 @@ export const ANALYTICS_PROPERTIES = {
   CTA_TYPE: 'CTA Type',
   DATE_RANGE_SELECTED: 'Date Range Selected',
   EXPERIENCES_AVAILABLE: 'Experiences Available',
+  SHOULDER_PAGE_TYPE: 'Shoulder Page Type',
 };
 
 export const PAGE_TYPES = {

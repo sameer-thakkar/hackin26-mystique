@@ -386,6 +386,8 @@ const Product = (props: any) => {
     showPriceBlock = true,
     showSecondaryDescriptors = true,
     productCardStyles,
+    isVenuePage,
+    showPageUid: showPageUidForVenuePage,
   } = props;
 
   const currency = useRecoilValue(currencyAtom);
@@ -469,9 +471,9 @@ const Product = (props: any) => {
   let showPageUrl = bookingURL;
   if (shouldUseDynamicShowPage()) {
     showPageUrl = getFormattedUrlSlug(urlSlugs, lang);
-  } else if (showPageUid) {
+  } else if (showPageUid || isVenuePage) {
     showPageUrl = convertUidToUrl({
-      uid: showPageUid,
+      uid: isVenuePage ? showPageUidForVenuePage : showPageUid,
       isDev,
       hostname: host,
       lang,

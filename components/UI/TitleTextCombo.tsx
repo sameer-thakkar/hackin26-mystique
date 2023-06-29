@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 const TitleTextCombo = styled.div<{
   isVenuePage?: boolean;
+  noMargin?: boolean;
 }>`
   position: relative;
   h2 {
@@ -22,10 +23,7 @@ const TitleTextCombo = styled.div<{
   }
   display: grid;
   grid-row-gap: 0px;
-  margin-bottom: ${({
-    // @ts-expect-error TS(2339): Property 'noMargin' does not exist on type 'Pick<D... Remove this comment to see the full error message
-    noMargin,
-  }) => (noMargin ? 0 : '20px')};
+  margin-bottom: ${({ noMargin }) => (noMargin ? 0 : '20px')};
   @media (min-width: 768px) {
     && {
       h2 {

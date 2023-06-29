@@ -415,7 +415,6 @@ const TabWrapper = (props: TabWrapperProps) => {
 
     return (
       <>
-        {/* @ts-expect-error TS(2769): No overload matches this call. */}
         <TitleTextCombo noMargin={true}>
           <Conditional if={heading?.length}>
             <h2 id={generateSidenavId(heading)}>{tabSectionHeading}</h2>
@@ -487,7 +486,6 @@ const TabWrapper = (props: TabWrapperProps) => {
   return (
     // @ts-expect-error TS(2769): No overload matches this call.
     <StyledTabWrapper isGlobalMb={isGlobalMb}>
-      {/* @ts-expect-error TS(2769): No overload matches this call. */}
       <TitleTextCombo noMargin={true}>
         <Conditional if={heading?.length}>
           <h2 id={generateSidenavId(heading)}>{heading}</h2>

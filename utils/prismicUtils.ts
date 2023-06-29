@@ -1294,14 +1294,28 @@ export const getPageData = async ({
         []
       );
 
+      const showPageDocuments = await Client().query(
+        Prismic.Predicates.any('my.showpage.tgid', [
+          ...showsListSlicesTgids,
+          ...showsGridSlicesTgids,
+        ])
+      );
+
+      const allShowPageUids = showPageDocuments?.results.map(
+        (document: any) => {
+          const tgid = document.data?.tgid;
+          return {
+            [tgid]: document.uid,
+          };
+        }
+      );
+
       const showsData = await fetchTourListV6({
         tgids: [...showsListSlicesTgids, ...showsGridSlicesTgids],
         hostname,
         language: getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale),
         cookies,
       });
-      // eslint-disable-next-line no-console
-      console.log('---', showsData);
 
       const showsListSlicesData = showsData?.tourGroups?.slice(
         0,
@@ -1311,14 +1325,13 @@ export const getPageData = async ({
         showsListSlicesTgids.length,
         showsData.length
       );
-      // eslint-disable-next-line no-console
-      console.log('jfjfj', showsListSlicesData);
 
       return {
         CMSContent: {
           ...CMSContent,
           showsListSlicesData,
           showsGridSlicesData,
+          allShowPageUids,
         },
         uid,
         host,

@@ -12,7 +12,8 @@ import styled from 'styled-components';
 import { generateSidenavId } from 'utils/helper';
 
 const Divider = styled.div`
-  border: 0.25px solid ${COLORS.GRAY.G7};
+  padding-bottom: 1.5rem;
+  border-bottom: 0.25px solid ${COLORS.GRAY.G7};
 `;
 
 /**
@@ -36,6 +37,7 @@ type AccordionGroupProps = {
   }[];
   heading: string | undefined;
   useSchema: Boolean;
+  isMobile?: Boolean;
   sliceProps?: any;
   isOpenOverride?: Boolean;
   headingNeedsSeparator?: Boolean;
@@ -54,6 +56,7 @@ const AccordionGroup = ({
   tabData = [],
   findBestSeatsCtaCallback,
   isVenuePage,
+  isMobile,
 }: AccordionGroupProps) => {
   const isGlobalMb = sliceProps?.isGlobalMb ? sliceProps?.isGlobalMb : false;
   const faqSchemaProps = accordions.map((acc) => {
@@ -71,9 +74,9 @@ const AccordionGroup = ({
     <>
       <div>
         <Conditional if={heading}>
-          <TitleTextCombo isVenuePage={isVenuePage} />
+          <TitleTextCombo isVenuePage={isVenuePage} noMargin />
           <h2 id={generateSidenavId(heading || '')}>{heading}</h2>
-          <Conditional if={headingNeedsSeparator}>
+          <Conditional if={headingNeedsSeparator && isMobile}>
             <br />
             <Divider />
           </Conditional>

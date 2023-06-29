@@ -58,6 +58,7 @@ const VenuePage = (props: IVenuePageProps) => {
     data: CMSContent,
     showsListSlicesData,
     showsGridSlicesData,
+    allShowPageUids,
     first_publication_date: datePublished,
     last_publication_date: dateModified,
     alternate_languages,
@@ -279,6 +280,7 @@ const VenuePage = (props: IVenuePageProps) => {
         isMobile={isMobile}
         showsListSlicesData={showsListSlicesData}
         showsGridSlicesData={showsGridSlicesData}
+        allShowPageUids={allShowPageUids}
         isVenuePage={true}
         redirectUrlForTabDataContent={redirectUrlForTabDataContent}
         findBestSeatsCallback={onFindBestSeatsCtaClicked}

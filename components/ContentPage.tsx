@@ -295,16 +295,23 @@ class ContentPage extends Component<any, any> {
       name: ANALYTICS_PROPERTIES.PAGE_TITLE,
       value: renderShortCodes(baseLangPageTitle)?.join?.(''),
     });
+
+    sendVariableToDataLayer({
+      name: ANALYTICS_PROPERTIES.SHOULDER_PAGE_TYPE,
+      value: this.props.data.shoulder_page_type,
+    });
   }
 
   componentDidUpdate() {
-    const { eventsReady } = this.props;
+    const { eventsReady, data } = this.props;
+    const { shoulder_page_type } = data;
     const { pageViewEventSet } = this.state;
     if (!eventsReady) return;
 
     if (!pageViewEventSet) {
       trackEvent({
         eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
+        [ANALYTICS_PROPERTIES.SHOULDER_PAGE_TYPE]: shoulder_page_type ?? '',
       });
       this.setState({ pageViewEventSet: true });
     }

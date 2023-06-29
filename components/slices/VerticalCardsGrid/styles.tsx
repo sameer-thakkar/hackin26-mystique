@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
     display: grid;
     grid-auto-flow: column;
     overflow-x: scroll;
-    margin: 1.5rem 0 4rem;
+    margin: 1.5rem 0 1.5rem;
     height: 100%;
     overflow-y: visible;
     .card {

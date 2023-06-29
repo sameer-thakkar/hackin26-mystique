@@ -472,6 +472,7 @@ const sliceHandler = (slice: any, props: any = {}) => {
       } else {
         return (
           <AccordionGroup
+            isMobile={isMobile}
             accordions={slice.items}
             heading={slice.primary.heading}
             useSchema={slice.primary.use_faq_schema || false}
@@ -589,6 +590,8 @@ const sliceHandler = (slice: any, props: any = {}) => {
           heading={slice?.primary?.heading}
           data={props.showsGridSlicesData}
           sliceData={slice.items}
+          allShowPageUids={props.allShowPageUids}
+          isVenuePage={props.isVenuePage}
         />
       );
 

@@ -2,9 +2,19 @@ import Product from 'components/MicrositeV2/Product';
 import { Container } from 'components/slices/ShowsGrid/styles';
 import { ShowsGridProps } from 'components/slices/ShowsGrid/interface';
 import { getTgidsFromShow } from 'utils';
+import { useContext } from 'react';
+import { MBContext } from 'contexts/MBContext';
 
 const ShowsGrid = (props: ShowsGridProps) => {
-  const { data, isMobile, heading, sliceData } = props;
+  const {
+    data,
+    isMobile,
+    heading,
+    sliceData,
+    allShowPageUids,
+    isVenuePage,
+  } = props;
+  const { host } = useContext(MBContext);
 
   const tgidsSet = new Set(getTgidsFromShow(sliceData));
   const idMap = new Map();
@@ -23,6 +33,13 @@ const ShowsGrid = (props: ShowsGridProps) => {
     return (acc = tgidsSet.has(curr.id) ? [...acc, curr] : [...acc]);
   }, []);
 
+  const findUid = (tgid: string) => {
+    return allShowPageUids.reduce((acc: any, curr: any) => {
+      const result = curr[tgid] || '';
+      return (acc = acc + result);
+    }, '');
+  };
+
   return (
     <Container>
       <h2>{heading}</h2>
@@ -32,6 +49,7 @@ const ShowsGrid = (props: ShowsGridProps) => {
           const tgid = show.id;
           allTours[tgid] = show;
           allTours[tgid].productImage = show.imageUrl;
+
           return (
             <div className="show-image" key={index}>
               <Product
@@ -40,12 +58,15 @@ const ShowsGrid = (props: ShowsGridProps) => {
                 isMobile={false}
                 imageId={tgid}
                 isEntertainmentMb={true}
+                host={host}
                 isV3Design={false}
                 showPriceBlock={false}
                 productCardStyles={{
                   singleCard: true,
                   productCardHeight: isMobile ? 168 : 204,
                 }}
+                isVenuePage={isVenuePage}
+                showPageUid={findUid(tgid)}
               />
             </div>
           );
