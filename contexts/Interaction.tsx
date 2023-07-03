@@ -1,5 +1,6 @@
 import { ANALYTICS_PROPERTIES } from 'const/index';
-import { ANALYTICS_EVENTS } from 'const/index';
+import { ANALYTICS_EVENTS,
+  SORT_SELECTOR_FILTERS } from 'const/index';
 import React, { createContext, useState, useEffect } from 'react';
 import { trackEvent } from 'utils/analytics';
 
@@ -34,6 +35,8 @@ export const InteractionContextProvider = (props: any) => {
     initialActiveCategory?.id
   );
   const [sliceData, setSliceData] = useState(null);
+
+  const [activeOrder, setActiveOrder] = useState(SORT_SELECTOR_FILTERS.POPULARITY);
 
   useEffect(() => {
     const categoryId = categories?.[activeCategoryIndex]?.id;
@@ -118,9 +121,11 @@ export const InteractionContextProvider = (props: any) => {
         activeCategoryIndex,
         activeCategoryTgids,
         sliceData,
+        activeOrder,
         clickTour,
         changeCategory,
         closeTour,
+        setActiveOrder,
       }}
     >
       {props.children}

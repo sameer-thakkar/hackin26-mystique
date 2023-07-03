@@ -1137,3 +1137,8 @@ export const DYNAMIC_RENDER_UID = [
 ];
 
 export const PRISMIC_DEV_TAG = '[DEV]';
+
+export const SORT_SELECTOR_FILTERS = {
+  POPULARITY: 'popularity',
+  PRICE: 'price',
+};

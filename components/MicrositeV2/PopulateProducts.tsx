@@ -11,6 +11,7 @@ import {
   ANALYTICS_PROPERTIES,
   CTA_TYPE,
   QUERY_PARAMS,
+  SORT_SELECTOR_FILTERS,
 } from 'const/index';
 import COLORS from 'const/colors';
 import { expandFontToken } from 'const/typography';
@@ -86,7 +87,7 @@ const PopulateProducts = (props: any) => {
     isDiscountedPage,
   } = props;
   // @ts-expect-error TS(2339): Property 'activeCategoryTgids' does not exist on t... Remove this comment to see the full error message
-  const { activeCategoryTgids, activeCategoryIndex, closeTour } =
+  const { activeCategoryTgids, activeCategoryIndex, closeTour, activeOrder } =
     useContext(InteractionContext) || {};
   const mbContext = useContext(MBContext);
   const { lang } = mbContext;
@@ -197,13 +198,13 @@ const PopulateProducts = (props: any) => {
     });
   };
 
-  const categoryPropsPopularityRank =
-    categoryProps?.categories[0]?.ranking.popularity;
+  const categoryPropsRank =
+    categoryProps?.categories[0]?.ranking[activeOrder ?? SORT_SELECTOR_FILTERS.POPULARITY];
   const finalTgidListToShow =
     (isDiscountedPage
-      ? activeCategoryTgids || categoryPropsPopularityRank
+      ? activeCategoryTgids || categoryPropsRank
       : isListicle
-      ? categoryPropsPopularityRank
+      ? categoryPropsRank
       : propTgids || activeCategoryTgids) || [];
 
   const tgidsSubArr = subArrays(finalTgidListToShow, Number(offset));

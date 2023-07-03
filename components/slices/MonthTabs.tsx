@@ -79,7 +79,7 @@ const MonthTabs = (props: MonthTabsProps) => {
 
   const interactionContext = useContext(InteractionContext);
   // @ts-expect-error TS(2339): Property 'changeCategory' does not exist on type '... Remove this comment to see the full error message
-  const { changeCategory } = interactionContext || {};
+  const { changeCategory, setActiveOrder} = interactionContext || {};
 
   const [filterDropdownActive, setFilterDropdownActive] = useState(false);
 
@@ -96,6 +96,7 @@ const MonthTabs = (props: MonthTabsProps) => {
 
   const changeOrder = (orderKey: any) => {
     changeCategory(categories[0].ranking[orderKey], 0);
+    setActiveOrder(orderKey);
   };
 
   return (
