@@ -439,7 +439,7 @@ const Product = (props: any) => {
 
   if (isEntertainmentMb) {
     categoryName =
-      allTours[tgid]?.primarySubCategory?.name || primarySubCategoryName;
+      allTours[tgid]?.primarySubCategory?.displayName || primarySubCategoryName;
   } else {
     if (collectionId) {
       if (primaryCatId) {
