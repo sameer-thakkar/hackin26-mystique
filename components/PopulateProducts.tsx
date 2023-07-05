@@ -27,9 +27,14 @@ import { csvTgidToArray, getHostName } from 'utils/helper';
 import { getPromoCodesDocument } from 'utils/prismicUtils';
 import { generateSidenavId } from 'utils/helper';
 import { useRouter } from 'next/router';
+import Spinner from 'UI/Spinner';
+import { scroller } from 'react-scroll';
 
-const StyledProductsWrapper = styled.div`
+const StyledProductsWrapper = styled.div<{
+  isLoading: boolean;
+}>`
   margin: 0 auto;
+  position: relative;
   #tour-list-heading {
     max-width: 1200px;
     margin: 0 auto;
@@ -45,6 +50,9 @@ const StyledProductsWrapper = styled.div`
         ${expandFontToken(FONTS.HEADING_REGULAR)}
       }
     }
+  }
+  @media (max-width: 768px) {
+    ${({ isLoading }) => (isLoading ? `min-height: 390px;` : '')}
   }
 `;
 
@@ -91,6 +99,12 @@ const ProductWrapper = styled.div`
   flex: 0 49%;
 `;
 
+const SpinnerWrapper = styled.div`
+  position: absolute;
+  left: calc(50% - 23.5px);
+  top: calc(50% - 27.5px);
+`;
+
 const PopulateProducts = (props: any) => {
   const {
     uncategorizedTours: tours,
@@ -117,6 +131,7 @@ const PopulateProducts = (props: any) => {
     growthExperiment7Variant,
     bannerVideo,
     isCollectionMB = false,
+    productsLoading,
   } = props;
   const isDubaiSafariPark = uid === 'www.dubai-safari-park.com';
   const productsRef = useRef([]);
@@ -172,6 +187,16 @@ const PopulateProducts = (props: any) => {
   };
 
   useEffect(() => setTourPrices(scorpioData), [scorpioData]);
+
+  useEffect(() => {
+    if (productsLoading) {
+      scroller.scrollTo('products-container', {
+        duration: 600,
+        offset: -120,
+        smooth: 'easeInOutQuart',
+      });
+    }
+  }, [productsLoading]);
 
   useEffect(() => {
     if (!productsWrapperRef?.current) return;
@@ -417,7 +442,16 @@ const PopulateProducts = (props: any) => {
   });
   const shouldShowHeading = isV1DesignSite ? !isCollectionMB : true;
   return (
-    <StyledProductsWrapper id="products-container" ref={productsWrapperRef}>
+    <StyledProductsWrapper
+      isLoading={productsLoading}
+      id="products-container"
+      ref={productsWrapperRef}
+    >
+      {productsLoading && (
+        <SpinnerWrapper>
+          <Spinner />
+        </SpinnerWrapper>
+      )}
       <Conditional if={mbTheme !== THEMES.MIN_BLUE && shouldShowHeading}>
         <div id="tour-list-heading">
           <Conditional
@@ -445,102 +479,104 @@ const PopulateProducts = (props: any) => {
           </Conditional>
         </div>
       </Conditional>
-      <ProductContainer isTicketCard={isTicketCard} isMobile={isMobile}>
-        {availableToursList &&
-          availableToursList.map((tour: any, index: number) => {
-            const {
-              tgid,
-              earliestAvailability,
-              tour_variant_id,
-              tour_title_override,
-              flowType,
-              tour_description_override,
-              product_booster,
-              short_summary,
-              tag_booster,
-            } = tour || {};
+      <Conditional if={!productsLoading}>
+        <ProductContainer isTicketCard={isTicketCard} isMobile={isMobile}>
+          {availableToursList &&
+            availableToursList.map((tour: any, index: number) => {
+              const {
+                tgid,
+                earliestAvailability,
+                tour_variant_id,
+                tour_title_override,
+                flowType,
+                tour_description_override,
+                product_booster,
+                short_summary,
+                tag_booster,
+              } = tour || {};
 
-            const {
-              collectionId,
-              primaryCategory,
-              primaryCollection,
-              primarySubCategory,
-              // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-            } = productInfo[tgid] ?? {};
+              const {
+                collectionId,
+                primaryCategory,
+                primaryCollection,
+                primarySubCategory,
+                // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+              } = productInfo[tgid] ?? {};
 
-            const childProps = {
-              tgid,
-              earliestAvailability,
-              showEarliestAvailability,
-              showNextAvailable,
-              tid: tour_variant_id,
-              title: tour_title_override,
-              descriptors: scorpioData?.[tgid]?.descriptors ?? [],
-              highlights: tour_description_override,
-              scorpioData: scorpioData?.[tgid],
-              tourPrices,
-              uid,
-              currentLanguage,
-              bookNowText,
-              showLessText,
-              readMoreText,
-              productOffer,
-              hasOffer,
-              togglePopup,
-              offerId: tour.offer__free_tour?.id,
-              popupState,
-              isMobile,
-              pageUrl,
-              host,
-              ctaUrlSuffix: tour.cta_url_suffix || '',
-              isScratchPriceEnabled: legacyBooleanCheck(
-                tour.show_scratch_price
-              ),
-              position: index + 1,
-              booster: product_booster,
-              defaultOpen: false,
-              shortSummary: short_summary,
-              boosterTag: tag_booster,
-              numberOfTours: tours.length,
-              instantCheckout,
-              indexPosition: index,
-              pageType,
-              clickedPromo,
-              setClickedPromo,
-              // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-              finalPromoCode: finalPromoCodes[tgid],
-              onPromoClick,
-              appliedPromo,
-              collectionId,
-              primaryCategory,
-              primaryCollection,
-              primarySubCategory,
-              flowType,
-              bannerVideo,
-              isCollectionMB,
-            };
+              const childProps = {
+                tgid,
+                earliestAvailability,
+                showEarliestAvailability,
+                showNextAvailable,
+                tid: tour_variant_id,
+                title: tour_title_override,
+                descriptors: scorpioData?.[tgid]?.descriptors ?? [],
+                highlights: tour_description_override,
+                scorpioData: scorpioData?.[tgid],
+                tourPrices,
+                uid,
+                currentLanguage,
+                bookNowText,
+                showLessText,
+                readMoreText,
+                productOffer,
+                hasOffer,
+                togglePopup,
+                offerId: tour.offer__free_tour?.id,
+                popupState,
+                isMobile,
+                pageUrl,
+                host,
+                ctaUrlSuffix: tour.cta_url_suffix || '',
+                isScratchPriceEnabled: legacyBooleanCheck(
+                  tour.show_scratch_price
+                ),
+                position: index + 1,
+                booster: product_booster,
+                defaultOpen: false,
+                shortSummary: short_summary,
+                boosterTag: tag_booster,
+                numberOfTours: tours.length,
+                instantCheckout,
+                indexPosition: index,
+                pageType,
+                clickedPromo,
+                setClickedPromo,
+                // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+                finalPromoCode: finalPromoCodes[tgid],
+                onPromoClick,
+                appliedPromo,
+                collectionId,
+                primaryCategory,
+                primaryCollection,
+                primarySubCategory,
+                flowType,
+                bannerVideo,
+                isCollectionMB,
+              };
 
-            return (
-              <ProductWrapper
-                ref={addToRef}
-                data-tgid={tour.tgid}
-                key={tour.tgid}
-              >
-                {isTicketCard ? (
-                  <TicketCard {...childProps} />
-                ) : (
-                  <Product
-                    {...childProps}
-                    growthExperiment7Variant={growthExperiment7Variant}
-                  />
-                )}
-                <Conditional if={mbTheme === THEMES.MIN_BLUE}>
-                  <HorizontalLine colorProp={COLORS.GRAY.G6} />
-                </Conditional>
-              </ProductWrapper>
-            );
-          })}
-      </ProductContainer>
+              return (
+                <ProductWrapper
+                  ref={addToRef}
+                  data-tgid={tour.tgid}
+                  key={tour.tgid}
+                >
+                  {isTicketCard ? (
+                    <TicketCard {...childProps} />
+                  ) : (
+                    <Product
+                      {...childProps}
+                      growthExperiment7Variant={growthExperiment7Variant}
+                    />
+                  )}
+                  <Conditional if={mbTheme === THEMES.MIN_BLUE}>
+                    <HorizontalLine colorProp={COLORS.GRAY.G6} />
+                  </Conditional>
+                </ProductWrapper>
+              );
+            })}
+        </ProductContainer>
+      </Conditional>
     </StyledProductsWrapper>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { HeadoutEndpoints, getHeadoutApiUrl, swrFetcher } from 'utils/apiUtils';
 import { addDays, formatDateToString } from 'utils/dateUtils';
@@ -28,7 +28,7 @@ import {
 import { ILastMinuteFilters } from './interface';
 
 const LastMinuteFilters = (props: ILastMinuteFilters) => {
-  const { orderedTours, setOrderedFilteredTours } = props;
+  const { orderedTours, setOrderedFilteredTours, setProductsLoading } = props;
   const [showFilters, setShowFilters] = useState<boolean | null>(null);
   const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
   const [noAvailabilityDrawerOpen, setNoAvailabilityDrawerOpen] = useState(
@@ -37,6 +37,7 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
   const router = useRouter();
   const selectedDate = router.query?.selectedDate;
   const orderedTgids = orderedTours?.map((tour: any) => tour.tgid) ?? [];
+
   const filters = [
     {
       key: 'all_dates',
@@ -98,6 +99,30 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
     }
   }, [selectedDate, inventoryData]);
 
+  let handleScroll: any;
+  const elRef = useCallback((filtersRef) => {
+    if (filtersRef !== null) {
+      handleScroll = () => {
+        if (window.pageYOffset + 1 >= filtersRef.offsetTop) {
+          filtersRef.classList.add('sticky');
+        } else {
+          filtersRef.classList.remove('sticky');
+        }
+      };
+      window.addEventListener('scroll', handleScroll);
+    }
+  }, []);
+
+  let productsLoadingTimer: NodeJS.Timeout | null = null;
+  useEffect(() => {
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (productsLoadingTimer) {
+        clearTimeout(productsLoadingTimer!);
+      }
+    };
+  }, []);
+
   const viewAllDatesHandler = () => {
     changeFilterHandler(0, true);
     setNoAvailabilityDrawerOpen(false);
@@ -105,6 +130,18 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
       eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_CTA_CLICKED,
       [ANALYTICS_PROPERTIES.CTA_TYPE]: CTA_TYPE.VIEW_ALL_DATES,
     });
+  };
+
+  const setToursWithDelay = (isUserAction: boolean, tours: any[]) => {
+    // Filters data is already loaded but to give sense of
+    // a false load we have added a delay
+    if (isUserAction) {
+      setProductsLoading(true);
+      setOrderedFilteredTours(tours);
+      productsLoadingTimer = setTimeout(() => {
+        setProductsLoading(false);
+      }, 1500);
+    }
   };
 
   const changeFilterHandler = (clickedIndex: number, isUserAction: boolean) => {
@@ -116,7 +153,7 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
       return true;
     });
     if (selectedFilter.key === 'all_dates') {
-      setOrderedFilteredTours(orderedTours);
+      setToursWithDelay(isUserAction, orderedTours);
       setSelectedButtonIndex(clickedIndex);
       const newQuery = { ...router.query };
       delete newQuery.selectedDate;
@@ -131,7 +168,7 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
       );
     } else {
       if (orderedFilteredTours.length) {
-        setOrderedFilteredTours(orderedFilteredTours);
+        setToursWithDelay(isUserAction, orderedFilteredTours);
         setSelectedButtonIndex(clickedIndex);
         router.replace(
           {
@@ -175,10 +212,9 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
       </SkeletonWrapper>
     );
   }
-
   return (
     <>
-      <FiltersWrapper>
+      <FiltersWrapper ref={elRef}>
         <FiltersContainer>
           {inventoryData &&
             filters.map((filter, index) => (

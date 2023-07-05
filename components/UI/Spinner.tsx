@@ -40,7 +40,7 @@ const Text = styled.div`
   margin-top: 8px;
 `;
 
-const Spinner: React.FC<{ children: any }> = ({ children }) => {
+const Spinner: React.FC<{ children?: any }> = ({ children }) => {
   return (
     <Wrapper>
       <StyledSpinner />

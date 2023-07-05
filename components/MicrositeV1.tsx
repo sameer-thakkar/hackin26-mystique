@@ -312,6 +312,7 @@ const MicrositeV1 = (props: any) => {
   const [orderedFilteredTours, setOrderedFilteredTours] = useState(
     orderedTours
   );
+  const [productsLoading, setProductsLoading] = useState(false);
 
   const orderedTgids = orderedTours?.length
     ? orderedTours?.map((tour: any) => tour.tgid)
@@ -459,6 +460,7 @@ const MicrositeV1 = (props: any) => {
       enableEarliestAvailability={enableEarliestAvailability}
       bannerVideo={collectionVideo}
       isCollectionMB={isCollectionMicrobrand}
+      productsLoading={productsLoading}
     />
   );
 
@@ -591,6 +593,7 @@ const MicrositeV1 = (props: any) => {
           <LastMinuteFilters
             setOrderedFilteredTours={setOrderedFilteredTours}
             orderedTours={orderedTours}
+            setProductsLoading={setProductsLoading}
           />
         </Conditional>
         <Conditional if={mbTheme === THEMES.MIN_BLUE}>

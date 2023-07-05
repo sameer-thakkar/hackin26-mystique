@@ -8,23 +8,32 @@ export const FilterButton = styled.div<{ isSelected: boolean }>`
   border-radius: 1.5rem;
   padding: 0.5rem 1rem;
   margin-right: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.7rem;
   height: 1.5rem;
+  flex: 0 0 auto;
 `;
 
 export const FiltersContainer = styled.div`
   display: flex;
   margin: 0 1.5rem;
   font-size: 14px;
-  flex-wrap: wrap;
+  overflow-x: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const FiltersWrapper = styled.div`
-  padding-top: 0.5rem;
+  padding-top: 0.7rem;
   background: white;
   position: sticky;
   top: 0px;
   z-index: 5;
+  &.sticky {
+    box-shadow: 0px 4px 8px 0px #0000001f;
+  }
 `;
 
 export const Footer = styled.div`
