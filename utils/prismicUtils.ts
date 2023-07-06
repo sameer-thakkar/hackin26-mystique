@@ -1348,7 +1348,6 @@ export const getPageData = async ({
       const { data } = CMSContent || {};
       const {
         productCardData,
-        baseLangExperienceLimit,
         content_framework: contentFramework,
         data: CMSData,
       } = data || {};
@@ -1368,11 +1367,6 @@ export const getPageData = async ({
       if (hasCategoryTourListV1) {
         const sliceObj = {
           ...categoryTourListV1,
-          ...(baseLangExperienceLimit && {
-            primary: {
-              sp_experience_limit: baseLangExperienceLimit,
-            },
-          }),
         };
         categoryTourListData = await categoryTourListParserV1({
           productCard: productCardData,
