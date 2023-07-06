@@ -1,6 +1,5 @@
 import { ANALYTICS_PROPERTIES } from 'const/index';
-import { ANALYTICS_EVENTS,
-  SORT_SELECTOR_FILTERS } from 'const/index';
+import { ANALYTICS_EVENTS, SORT_SELECTOR_FILTERS } from 'const/index';
 import React, { createContext, useState, useEffect } from 'react';
 import { trackEvent } from 'utils/analytics';
 
@@ -36,7 +35,9 @@ export const InteractionContextProvider = (props: any) => {
   );
   const [sliceData, setSliceData] = useState(null);
 
-  const [activeOrder, setActiveOrder] = useState(SORT_SELECTOR_FILTERS.POPULARITY);
+  const [activeOrder, setActiveOrder] = useState(
+    SORT_SELECTOR_FILTERS.POPULARITY
+  );
 
   useEffect(() => {
     const categoryId = categories?.[activeCategoryIndex]?.id;
@@ -56,7 +57,12 @@ export const InteractionContextProvider = (props: any) => {
     ...defaultCategory,
   ]);
 
-  const clickTour = (tgid: any, hoist: any, section = 'main', autoScroll = true) => {
+  const clickTour = (
+    tgid: any,
+    hoist: any,
+    section = 'main',
+    autoScroll = true
+  ) => {
     let expand = false;
     if (activeTour.tgid != tgid) {
       if (hoist) {
@@ -92,9 +98,10 @@ export const InteractionContextProvider = (props: any) => {
     });
   };
 
-  const uniqueTgids = (tgidArray: any) => tgidArray.filter((tgid: any, index: any, self: any) => {
-    return self.indexOf(tgid) === index;
-  });
+  const uniqueTgids = (tgidArray: any) =>
+    tgidArray.filter((tgid: any, index: any, self: any) => {
+      return self.indexOf(tgid) === index;
+    });
 
   const changeCategory = (tgidArray: any[], categoryIndex: number) => {
     const categoryId = categories?.[categoryIndex]?.id;

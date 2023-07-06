@@ -67,9 +67,8 @@ import { addQueryParams } from 'utils/urlUtils';
 import { FONTS } from 'const/fonts';
 import { useRouter } from 'next/router';
 
-const Swiper = dynamic(
-  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper'),
-  { ssr: false }
+const Swiper = dynamic(() =>
+  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
 const MediaCarousel = dynamic(() =>
   import(/* webpackChunkName: "MediaCarousel" */ 'UI/MediaCarousel')

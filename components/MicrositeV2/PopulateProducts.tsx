@@ -199,7 +199,9 @@ const PopulateProducts = (props: any) => {
   };
 
   const categoryPropsRank =
-    categoryProps?.categories[0]?.ranking[activeOrder ?? SORT_SELECTOR_FILTERS.POPULARITY];
+    categoryProps?.categories[0]?.ranking[
+      activeOrder ?? SORT_SELECTOR_FILTERS.POPULARITY
+    ];
   const finalTgidListToShow =
     (isDiscountedPage
       ? activeCategoryTgids || categoryPropsRank
