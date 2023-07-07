@@ -3,7 +3,7 @@ import Prismic from 'prismic-javascript';
 import * as Sentry from '@sentry/nextjs';
 import { PrismicDocumentWithUID } from '@prismicio/types';
 import { toursTabSliceHandler } from 'components/Slices';
-import type { CollectionDetailsTypes } from 'components/StaticBanner/index';
+import type { CollectionDetails } from 'components/StaticBanner/index';
 import {
   CUSTOM_TYPES,
   LANGUAGE_MAP,
@@ -1644,7 +1644,7 @@ export const getPageData = async ({
         : microsite?.mbType;
 
     if (ContentType === CUSTOM_TYPES.MICROSITE) {
-      let collectionDetails: CollectionDetailsTypes | Object = {};
+      let collectionDetails: CollectionDetails | Object = {};
       const { data } = CMSContent || {};
       const { refs, data: CMSData } = data || {};
       const { contentFramework, productCardData } = refs || {};
@@ -1744,7 +1744,7 @@ export const getPageData = async ({
         primaryCountry: _,
         scorpioData,
         orderedTours,
-        collectionVideo,
+        collectionVideos,
         ...rawCategories
       }: any = categoryTourListData ?? {};
 
@@ -1789,7 +1789,7 @@ export const getPageData = async ({
         ...(hasCategoryTourListV1 && {
           scorpioData,
           orderedTours,
-          collectionVideo,
+          collectionVideos,
         }),
         isCategoryV2,
         ContentType,

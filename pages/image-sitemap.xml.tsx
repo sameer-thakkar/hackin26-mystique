@@ -176,12 +176,12 @@ ImageSitemapXml.getInitialProps = async ({
       const isCollectionMicrobrand = isCollectionMB(mbType);
       const {
         scorpioData: scorpioDataCategorised,
-        collectionVideo,
+        collectionVideos,
         orderedTours: categorizedToursList,
       } = categoryTourListData || {};
 
       if (isCollectionMicrobrand) {
-        if (!collectionVideo) {
+        if (!collectionVideos?.length) {
           const image = CMSContent?.data?.images[0];
           const firstImage = image?.image_src?.url;
           const secondImage = image?.uploaded_image?.url;

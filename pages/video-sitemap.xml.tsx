@@ -127,10 +127,10 @@ VideoSitemapXml.getInitialProps = async ({
     ) {
       const mbType = payload?.CMSContent?.data?.mbType;
       const isCollectionMicrobrand = isCollectionMB(mbType);
-      const { collectionVideo } = payload?.categoryTourListData || {};
+      const { collectionVideos } = payload?.categoryTourListData || {};
 
       if (isCollectionMicrobrand) {
-        if (collectionVideo) {
+        if (collectionVideos?.length) {
           const image = CMSContent?.data?.images[0];
           const firstImage = image?.image_src?.url;
           const secondImage = image?.uploaded_image?.url;
@@ -138,7 +138,7 @@ VideoSitemapXml.getInitialProps = async ({
             title,
             thumbnail: firstImage || secondImage,
             description,
-            url: collectionVideo,
+            url: collectionVideos[0].url,
           });
         }
       }

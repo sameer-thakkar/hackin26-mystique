@@ -1,6 +1,9 @@
 /* eslint-disable no-console */
 import * as Sentry from '@sentry/nextjs';
-import type { CollectionDetailsTypes } from 'components/StaticBanner/index';
+import type {
+  CollectionDetails,
+  CollectionVideos,
+} from 'components/StaticBanner/index';
 import { getHeadoutLanguagecode } from 'utils/index';
 import {
   fetchCollection,
@@ -85,8 +88,8 @@ export const categoryTourListParserV1 = async ({
 
   const language = getHeadoutLanguagecode(lang);
   let primaryCity;
-  let collectionVideo: string = '';
-  let collectionDetails: CollectionDetailsTypes | Object = {};
+  let collectionVideos: CollectionVideos = [];
+  let collectionDetails: CollectionDetails | Object = {};
 
   if (collection) {
     try {
@@ -124,11 +127,11 @@ export const categoryTourListParserV1 = async ({
         heroImageUrl,
         cardImageUrl,
         startingPrice,
-        collectionVideo: collectionVideoUrl,
+        videos,
       } = collectionData?.collections?.[0] || {};
       const { ratingsCount, averageRating } = ratingsInfo || {};
 
-      collectionVideo = collectionVideoUrl;
+      collectionVideos = videos;
       collectionDetails = {
         id,
         displayName,
@@ -139,6 +142,7 @@ export const categoryTourListParserV1 = async ({
         cardImageUrl,
         listingPrice: startingPrice?.listingPrice,
         currency: currentCurrency?.code,
+        videos,
       };
     } catch (err) {
       Sentry.captureException(err);
@@ -384,7 +388,7 @@ export const categoryTourListParserV1 = async ({
       orderedTours: repeatableObj,
       activeCurrency: currency,
       collectionDetails,
-      collectionVideo,
+      collectionVideos,
     };
   } else {
     return {

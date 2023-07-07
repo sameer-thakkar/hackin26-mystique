@@ -64,7 +64,7 @@ const Page = (props: PageProps) => {
     activeCurrency,
     scorpioData,
     orderedTours,
-    collectionVideo,
+    collectionVideos,
     // Not sure where this is used. Don't see this being passed in `prismicUtils` either
     categoryTourListData: legacyCategoryTourListData,
   } = props;
@@ -88,7 +88,7 @@ const Page = (props: PageProps) => {
     ...(isCategoryV2 && { isCategoryV2 }),
     ...(scorpioData && { scorpioData }),
     ...(orderedTours && { orderedTours }),
-    ...(collectionVideo && { collectionVideo }),
+    ...(collectionVideos && { collectionVideos }),
   };
 
   strings.setContent({

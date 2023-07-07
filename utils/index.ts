@@ -1,6 +1,6 @@
 import Router from 'next/router';
 import dayjs from 'dayjs';
-import type { CollectionDetailsTypes } from 'components/StaticBanner';
+import type { CollectionDetails } from 'components/StaticBanner';
 import {
   SUPPORTED_LANGUAGES,
   LANGUAGE_MAP,
@@ -28,14 +28,33 @@ import {
   SIMILE_BOOSTER,
 } from 'assets/SvgIcons';
 import { F1TrustBoostersProp } from 'components/F1TrustBoosters/interface';
+import { VideoMetaInfo } from 'components/common/Scripts';
 
 export const shouldDisplayCollectionRatings = (
-  collectionDetails: CollectionDetailsTypes | undefined
+  collectionDetails: CollectionDetails | undefined
 ): boolean => {
   const { averageRating, ratingsCount } = collectionDetails ?? {};
 
   if (!averageRating || !ratingsCount) return false;
   return averageRating >= 4 && ratingsCount >= 100;
+};
+
+export const getCollectionVideoMeta = (
+  collectionDetails: CollectionDetails | undefined
+): VideoMetaInfo | null => {
+  const { displayName, heroImageUrl, videos } = collectionDetails || {};
+  const { url, metadata } = videos?.[0] || {};
+  const { videoDuration: duration, uploadDate } = metadata || {};
+
+  if (!url || !duration || !uploadDate) return null;
+
+  return {
+    url,
+    name: displayName!,
+    thumbnailUrl: heroImageUrl!,
+    duration,
+    uploadDate,
+  };
 };
 
 export const getLanguageFromPathname = ({

@@ -10,9 +10,14 @@ import {
   MystiquePerfScript,
   TrackingScripts,
   CollectionAggregatedRatingScript,
+  VideoMetaScript,
 } from 'components/common/Scripts';
-import { CollectionDetailsTypes } from 'components/StaticBanner/index';
-import { legacyBooleanCheck, shouldDisplayCollectionRatings } from 'utils';
+import { CollectionDetails } from 'components/StaticBanner/index';
+import {
+  getCollectionVideoMeta,
+  legacyBooleanCheck,
+  shouldDisplayCollectionRatings,
+} from 'utils';
 import { createAdditionalMetaTag, createHrefLangObj } from 'utils/headUtils';
 import { withShortcodes } from 'utils/helper';
 import { convertUidToUrl } from 'utils/urlUtils';
@@ -31,7 +36,7 @@ type PopulateMetaProps = {
   dateModified?: string;
   serverRequestStartTimestamp: string;
   isMobile: boolean;
-  collectionDetails?: CollectionDetailsTypes;
+  collectionDetails?: CollectionDetails;
   bannerImages: { [key: string]: any }[];
   mbTheme?: string;
   faviconUrl: string;
@@ -262,6 +267,8 @@ export default function PopulateMeta({
       <script key={index} dangerouslySetInnerHTML={{ __html: item }} />
     ));
 
+  const collectionVideoMeta = getCollectionVideoMeta(collectionDetails);
+
   return (
     <>
       <NextSeo {...metaProps} />
@@ -278,6 +285,9 @@ export default function PopulateMeta({
         <CollectionAggregatedRatingScript
           collectionDetails={collectionDetails}
         />
+      </Conditional>
+      <Conditional if={collectionVideoMeta}>
+        <VideoMetaScript videoInfo={collectionVideoMeta} />
       </Conditional>
       <MystiquePerfScript
         serverRequestStartTimestamp={serverRequestStartTimestamp}

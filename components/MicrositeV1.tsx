@@ -175,7 +175,7 @@ const MicrositeV1 = (props: any) => {
   const {
     scorpioData: scorpioDataCategorised,
     orderedTours: categorizedToursList,
-    collectionVideo,
+    collectionVideos,
   } = categoryTourListData || {};
   const tourRanking = uncategorizedTours[0]?.primary?.ranking;
   const hasTours = isCategorisedTours
@@ -438,6 +438,7 @@ const MicrositeV1 = (props: any) => {
 
   const isToursAvailable = availableTours?.length > 0;
   const closeGroupBookingModal = () => toggleGroupBookingModal(false);
+  const collectionVideo: string | undefined = collectionVideos?.[0]?.url;
   const tourListSection = (
     <PopulateProducts
       currency={currency}

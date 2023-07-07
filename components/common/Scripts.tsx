@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { LogoJsonLd, SiteLinksSearchBoxJsonLd } from 'next-seo';
 import Conditional from 'components/common/Conditional';
-import { CollectionDetailsTypes } from 'components/StaticBanner/index';
+import { CollectionDetails } from 'components/StaticBanner/index';
 import { convertUidToUrl, getDomainFromUid, getValidUrl } from 'utils/urlUtils';
 
 export const TrackingScripts = ({
@@ -177,7 +177,7 @@ export const MystiquePerfScript = ({
 export const CollectionAggregatedRatingScript = ({
   collectionDetails,
 }: {
-  collectionDetails: CollectionDetailsTypes | undefined;
+  collectionDetails: CollectionDetails | undefined;
 }) => {
   if (!collectionDetails) return null;
 
@@ -216,6 +216,45 @@ export const CollectionAggregatedRatingScript = ({
     <Head>
       <script
         key={id}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemList) }}
+      />
+    </Head>
+  );
+};
+
+export type VideoMetaInfo = {
+  url: string;
+  name: string;
+  thumbnailUrl: string;
+  duration: number;
+  uploadDate: string;
+};
+
+export const VideoMetaScript = ({
+  videoInfo,
+}: {
+  videoInfo: VideoMetaInfo | null;
+}) => {
+  if (!videoInfo) return null;
+
+  const { name, thumbnailUrl, url, duration, uploadDate } = videoInfo;
+  const formattedVideoDuration = `PT${duration}S`;
+  const formattedUploadDate = new Date(uploadDate).toISOString();
+
+  const itemList = {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name,
+    thumbnailUrl,
+    uploadDate: formattedUploadDate,
+    duration: formattedVideoDuration,
+    contentUrl: url,
+  };
+  return (
+    <Head>
+      <script
+        key={'videoScriptMetadata'}
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemList) }}
       />

@@ -33,14 +33,35 @@ const Video = dynamic(() => import(/* webpackChunkName: "Video" */ 'UI/Video'));
 type StaticBannerProps = {
   bannerHeading: string;
   bannerImages: Array<{ url: string; alt: string }>;
-  collectionDetails: CollectionDetailsTypes;
+  collectionDetails: CollectionDetails;
   bannerVideo?: string | null;
   bannerSubText: string | undefined;
   isMobile: boolean;
   shouldDisplayTrustBoosters?: boolean;
 };
 
-export type CollectionDetailsTypes = {
+type CollectionVideo = {
+  url: string;
+  type: 'VIDEO';
+  metadata: {
+    altText: string | null;
+    height: number | null;
+    width: number | null;
+    videoDuration: number | null;
+    uploadDate: string | null;
+  };
+  info: {
+    sourceType: string;
+    sourceUrl: string;
+    credit: string;
+    filename: string;
+    fileSize: number;
+  };
+};
+
+export type CollectionVideos = Array<CollectionVideo>;
+
+export type CollectionDetails = {
   id: number;
   displayName: string;
   metaDescription: string;
@@ -50,6 +71,7 @@ export type CollectionDetailsTypes = {
   currency: string;
   heroImageUrl?: string;
   cardImageUrl?: string;
+  videos: CollectionVideos;
 };
 
 const BANNER_DIMENSIONS = {
