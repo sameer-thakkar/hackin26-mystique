@@ -40,7 +40,7 @@ const Image: React.FC<IImageProps> = ({
   imageId = '',
   fill = false,
   aspectRatio,
-  format = 'auto',
+  format = 'webp',
   priority = false,
   alt = '',
   className = '',

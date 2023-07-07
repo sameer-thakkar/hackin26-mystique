@@ -8,7 +8,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next -p 3001",
-    "start": "NODE_OPTIONS='--max-old-space-size=3072 -r @newrelic/next' node server.js",
+    "start": "NODE_OPTIONS='--max-old-space-size=3072 -r @newrelic/next' next start --keepAliveTimeout 120000",
     "build": "next build",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",

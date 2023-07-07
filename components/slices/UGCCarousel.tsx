@@ -26,7 +26,7 @@ import { expandFontToken } from 'const/typography';
 import { strings } from 'const/strings';
 import { generateSidenavId } from 'utils/helper';
 
-const Swiper = dynamic(() => import('components/Swiper'));
+const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 
 const StyledWrapper = styled.div`
   max-width: 1200px;
@@ -61,10 +61,6 @@ const SliderContainer = styled.div`
 `;
 
 const StyledSlider = styled.div`
-  :not(.swiper-initialized) .swiper-slide {
-    width: auto;
-    margin-right: 0.6rem;
-  }
   .swiper-initialized {
     width: 90vw;
     padding-top: 0.75rem;
@@ -621,8 +617,7 @@ const UGCCarousel: React.FC<UGCCarouselProps> = (props) => {
               <Image
                 url={imageURL}
                 alt={caption}
-                height={isMobile ? 208 : 240}
-                width={isMobile ? 158 : 180}
+                format="jpg"
                 quality={100}
                 onClick={() => {
                   window.open(url), trackRedirectToIG(index, postType);

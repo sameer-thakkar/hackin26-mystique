@@ -426,12 +426,13 @@ const Card: React.FC<CardProps> = ({
 
   return (
     <StyledCard
-      {...(linkType === 'Full Card' && {
-        target: link?.target,
-        href: link?.url,
-        as: 'a',
-        link: true,
-      })}
+      {...(linkType === 'Full Card' &&
+        mounted && {
+          target: link?.target,
+          href: link?.url,
+          as: 'a',
+          link: true,
+        })}
       // @ts-expect-error TS(2769): No overload matches this call.
       isMobile={isMobile}
       cardType={type}
