@@ -80,8 +80,9 @@ export const MobileTitle = styled.div<{
     background-color: ${withoutImage ? COLORS.BRAND.WHITE : COLORS.BRAND.BLACK};
   `}
   ${expandFontToken(FONTS.HEADING_REGULAR)}
-  padding: 1.5rem;
-  margin-bottom: 1rem;
+  padding: ${({ withoutImage }) =>
+    withoutImage ? '1.5rem 1rem 1rem' : '1.5rem'};
+  ${({ withoutImage }) => !withoutImage && 'margin-bottom: 1rem;'} 
 `;
 
 export const TitleWrapper = styled.div`

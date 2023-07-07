@@ -5,9 +5,9 @@ import { expandFontToken } from 'const/typography';
 
 export const SideNavButton = styled.div`
   display: inline;
-  position: sticky;
+  position: fixed;
   cursor: pointer;
-  top: 9.25rem;
+  top: 22.5rem;
   padding: 0.5rem 0.75rem;
   background: ${COLORS.BRAND.WHITE};
   z-index: 10;

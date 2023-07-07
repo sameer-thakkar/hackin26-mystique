@@ -12,7 +12,6 @@ type BreadcrumbProps = {
 };
 
 const BreadcrumbContainer = styled.div`
-  margin-top: 1.5rem;
   a {
     color: ${COLORS.TEXT.BEACH};
   }

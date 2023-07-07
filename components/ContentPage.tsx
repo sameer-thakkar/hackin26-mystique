@@ -54,7 +54,7 @@ const ContentWrapper = styled.main`
 
 const StyledContentPage = styled.div`
   display: grid;
-  grid-row-gap: 72px;
+  grid-row-gap: 4rem;
   margin-top: 0;
   margin-bottom: 72px;
 
@@ -81,8 +81,17 @@ const StyledContentPage = styled.div`
   .slice-block p {
     ${expandFontToken('Paragraph/Large')}
     color: ${COLORS.GRAY.G2};
-    margin-bottom: 15px;
+    margin-bottom: 1rem;
   }
+
+  .slice-block.breadcrumbs + .slice-block {
+    margin-top: -2rem;
+
+    p {
+      margin: 0;
+    }
+  }
+
 
   .slice-block ul {
     ${expandFontToken('Paragraph/Large')}
@@ -132,7 +141,7 @@ const StyledContentPage = styled.div`
   }
 
   @media (max-width: 768px) {
-    grid-row-gap: 52px;
+    grid-row-gap: 3rem;
     .page_tabs + div {
       margin-top: -48px;
     }
@@ -611,6 +620,7 @@ class ContentPage extends Component<any, any> {
             handleClose={this.handleClose}
           />
         </Conditional>
+
         <ContentWrapper>
           <Masthead
             title={featuredTitle}
