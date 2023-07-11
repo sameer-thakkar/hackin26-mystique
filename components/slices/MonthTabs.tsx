@@ -1,14 +1,13 @@
-import { useEffect, useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'clas... Remove this comment to see the full error message
 import classNames from 'classnames';
+import Conditional from 'components/common/Conditional';
+import { SortSelector } from 'components/MicrositeV2/SortSelector';
+import InteractionContext from 'contexts/Interaction';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
-import { SortSelector } from 'components/MicrositeV2/SortSelector';
-import InteractionContext from 'contexts/Interaction';
-import Conditional from 'components/common/Conditional';
-
 import LinkResolver from '../LinkResolver';
 
 const Tabs = styled.div`

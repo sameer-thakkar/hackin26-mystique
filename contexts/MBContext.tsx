@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { createContext, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { getLangObject } from 'utils/helper';
-import { SIDEBAR_TYPES } from 'const/index';
 import { useRouter } from 'next/router';
+import { getLangObject } from 'utils/helper';
 import { addUrlParams } from 'utils/urlUtils';
+import { SIDEBAR_TYPES } from 'const/index';
 
 const AsideModal = dynamic(() => import('UI/AsideModal'), { ssr: false });
 

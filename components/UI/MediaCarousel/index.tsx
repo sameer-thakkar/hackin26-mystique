@@ -2,22 +2,22 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import type { Swiper } from 'swiper';
 import type { SwiperProps } from 'swiper/react';
-import useOnScreen from 'hooks/useOnScreen';
-import { trackEvent } from 'utils/analytics';
-import SwiperWrapper from 'components/Swiper';
 import Conditional from 'components/common/Conditional';
+import SwiperWrapper from 'components/Swiper';
 import Image from 'UI/Image';
 import {
   CarouselContainer,
   NextButtonContainer,
   PrevButtonContainer,
 } from 'UI/MediaCarousel/styles';
-import { CHEVRON_LEFT } from 'assets/SvgIcons';
+import useOnScreen from 'hooks/useOnScreen';
+import { trackEvent } from 'utils/analytics';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   VIDEO_POSITIONS,
 } from 'const/index';
+import { CHEVRON_LEFT } from 'assets/SvgIcons';
 
 const Video = dynamic(() => import(/* webpackChunkName: "Video" */ 'UI/Video'));
 

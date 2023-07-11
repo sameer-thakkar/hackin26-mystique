@@ -1,8 +1,6 @@
-import { ANALYTICS_EVENTS } from 'const/index';
-import { EXPERIMENTS } from 'const/experiments';
 import { isServer } from 'utils/gen';
-import { VARIANTS } from 'const/experiments';
-
+import { EXPERIMENTS, VARIANTS } from 'const/experiments';
+import { ANALYTICS_EVENTS } from 'const/index';
 import { trackEvent } from '../analytics';
 import type Experiment from './experiment';
 

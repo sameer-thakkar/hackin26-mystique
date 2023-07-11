@@ -1,15 +1,8 @@
 import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { useRecoilValue } from 'recoil';
-import { withShortcodes } from 'utils/helper';
-import { trackEvent } from 'utils/analytics';
-import {
-  getF1MBTrustBoosters,
-  shouldDisplayCollectionRatings,
-  truncateNumber,
-} from 'utils/index';
-import { gtmAtom } from 'store/atoms/gtm';
 import Conditional from 'components/common/Conditional';
+import F1BannerTrustBoosters from 'components/F1BannerTrustBooster';
 import {
   AverageRatingWrapper,
   BannerSection,
@@ -21,11 +14,18 @@ import {
   RatingCountWrapper,
   RatingsWrapper,
 } from 'components/StaticBanner/styles';
-import { STAR } from 'assets/SvgIcons';
+import { trackEvent } from 'utils/analytics';
+import { withShortcodes } from 'utils/helper';
+import {
+  getF1MBTrustBoosters,
+  shouldDisplayCollectionRatings,
+  truncateNumber,
+} from 'utils/index';
+import { gtmAtom } from 'store/atoms/gtm';
 import COLORS from 'const/colors';
-import { strings } from 'const/strings';
 import { ANALYTICS_EVENTS, VIDEO_POSITIONS } from 'const/index';
-import F1BannerTrustBoosters from 'components/F1BannerTrustBooster';
+import { strings } from 'const/strings';
+import { STAR } from 'assets/SvgIcons';
 
 const Image = dynamic(() => import(/* webpackChunkName: "Image" */ 'UI/Image'));
 const Video = dynamic(() => import(/* webpackChunkName: "Video" */ 'UI/Video'));

@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { Client } from 'config/prismic-config';
-import Header from 'components/common/Header';
 import Footer from 'components/common/Footer';
-import ContentContainer from 'components/UI/ContentContainer';
-import Paragraph from 'components/UI/Paragraph';
-import { TopHeading } from 'components/UI/Headings';
+import Header from 'components/common/Header';
 import { MinimalHelmet } from 'components/common/NextSeoMeta';
-import { getPrismicDocument } from 'utils/prismicUtils';
-import { getLogoRedirectionUrl } from 'utils/urlUtils';
+import ContentContainer from 'components/UI/ContentContainer';
+import { TopHeading } from 'components/UI/Headings';
+import Paragraph from 'components/UI/Paragraph';
 import { getHeadoutLanguagecode } from 'utils';
 import { fetchDomainConfig } from 'utils/apiUtils';
+import { getPrismicDocument } from 'utils/prismicUtils';
+import { getLogoRedirectionUrl } from 'utils/urlUtils';
 import { CUSTOM_TYPES, DROPDOWN_ELEMENT } from 'const/index';
 
 export default class companyDetails extends Component<any, any> {

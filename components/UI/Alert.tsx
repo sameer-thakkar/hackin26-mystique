@@ -1,11 +1,10 @@
-import { HALYARD } from 'const/ui-constants';
-import { CUSTOM_TYPES } from 'const/index';
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+import styled from 'styled-components';
+import { CUSTOM_TYPES } from 'const/index';
 import { strings } from 'const/strings';
+import { HALYARD } from 'const/ui-constants';
 import { SHIELD } from 'assets/SvgIcons';
-
 import { Client } from '../../config/prismic-config';
 
 const Popup = dynamic(() => import('../common/Popup'), { ssr: false });
@@ -76,21 +75,27 @@ const Alert: React.FC<AlertProps> = ({ popupUID }) => {
       });
   }, [popupUID, setData]);
 
-  return (<StyledAlert>
-      {active ? <Popup togglePopup={setActive} data={data} alert/> : null}
+  return (
+    <StyledAlert>
+      {active ? <Popup togglePopup={setActive} data={data} alert /> : null}
       <StyledShield>{SHIELD}</StyledShield>
       <StyledTitle>
-        {(data as any)?.body[0]?.primary.alert_title || strings.SANITARY_ALERT.KEY_TEXT}
+        {(data as any)?.body[0]?.primary.alert_title ||
+          strings.SANITARY_ALERT.KEY_TEXT}
       </StyledTitle>
       <StyledContent>
-        {(data as any)?.body[0]?.primary.alert_message || strings.SANITARY_ALERT.TEXT}
+        {(data as any)?.body[0]?.primary.alert_message ||
+          strings.SANITARY_ALERT.TEXT}
       </StyledContent>
-      <StyledReadMore onClick={() => {
-        setActive(true);
-    }}>
+      <StyledReadMore
+        onClick={() => {
+          setActive(true);
+        }}
+      >
         {data ? strings.READ_MORE : null}
       </StyledReadMore>
-    </StyledAlert>);
+    </StyledAlert>
+  );
 };
 
 export default Alert;

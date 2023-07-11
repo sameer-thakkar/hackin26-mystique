@@ -1,35 +1,34 @@
-import { useState, useContext, useEffect } from 'react';
-import { CHEVRON_DOWN, CHEVRON_UP, LocationSvg } from 'assets/SvgIcons';
-import { currencyAtom } from 'store/atoms/currency';
-import Amenities from 'components/VenuePage/components/Amenities';
+import { useContext, useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
+import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
+import LongForm from 'components/common/LongForm';
+import PopulateMeta from 'components/common/NextSeoMeta';
 import Header from 'components/MicrositeV2/Header';
 import Breadcrumb from 'components/slices/Breadcrumb';
-import { strings } from 'const/strings';
+import Amenities from 'components/VenuePage/components/Amenities';
+import { Banner, VenuePageContainer } from 'components/VenuePage/styles';
 import RichContent from 'UI/RichContent';
-import { getLangObject, checkIfLTTMB } from 'utils/helper';
-import { amenitiesIcons } from 'const/amenitiesIcons';
-import Conditional from 'components/common/Conditional';
+import { MBContext } from 'contexts/MBContext';
 import {
   createBookingURL,
   getAlternateLanguages,
   getHeadoutLanguagecode,
 } from 'utils';
-import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
-import { useRecoilValue } from 'recoil';
-import { MBContext } from 'contexts/MBContext';
 import { sendVariablesToDataLayer, trackEvent } from 'utils/analytics';
+import { checkIfLTTMB, getLangObject } from 'utils/helper';
+import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
+import { currencyAtom } from 'store/atoms/currency';
+import { hsidAtom } from 'store/atoms/hsid';
+import { amenitiesIcons } from 'const/amenitiesIcons';
+import { BOOKING_FLOW_TYPE } from 'const/booking';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PLATFORM,
   ANALYTICS_PROPERTIES,
 } from 'const/index';
-import PopulateMeta from 'components/common/NextSeoMeta';
-import LongForm from 'components/common/LongForm';
-import { Banner, VenuePageContainer } from 'components/VenuePage/styles';
-import { BOOKING_FLOW_TYPE } from 'const/booking';
-import { hsidAtom } from 'store/atoms/hsid';
-
+import { strings } from 'const/strings';
+import { CHEVRON_DOWN, CHEVRON_UP, LocationSvg } from 'assets/SvgIcons';
 import { IVenuePageProps } from './interace';
 
 const VenuePage = (props: IVenuePageProps) => {

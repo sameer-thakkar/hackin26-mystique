@@ -1,16 +1,16 @@
+import { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { sendVariableToDataLayer } from 'utils/analytics';
+import { withShortcodes } from 'utils/helper';
+import { appAtom } from 'store/atoms/app';
+import { gtmAtom } from 'store/atoms/gtm';
+import { hsidAtom } from 'store/atoms/hsid';
 import {
   ANALYTICS_PLATFORM,
   ANALYTICS_PROPERTIES,
   CUSTOM_TYPES,
   DOCUMENT_READY_STATES,
 } from 'const/index';
-import { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
-import { appAtom } from 'store/atoms/app';
-import { gtmAtom } from 'store/atoms/gtm';
-import { hsidAtom } from 'store/atoms/hsid';
-import { sendVariableToDataLayer } from 'utils/analytics';
-import { withShortcodes } from 'utils/helper';
 
 const Analytics = ({ contentType, cmsContent }: any) => {
   const [{ eventsReady }, setEventsReady] = useRecoilState(gtmAtom);

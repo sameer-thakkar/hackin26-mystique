@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
-import { HALYARD } from 'const/ui-constants';
+import styled from 'styled-components';
 import COLORS from 'const/colors';
+import { HALYARD } from 'const/ui-constants';
 
 type ContentTabsProps = {
   tabsArr: any[];

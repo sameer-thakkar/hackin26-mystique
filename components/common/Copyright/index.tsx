@@ -1,6 +1,6 @@
 import React from 'react';
-import Emoji from 'components/common/Emoji';
 import { StyledCopyrightContainer } from 'components/common/Copyright/styles';
+import Emoji from 'components/common/Emoji';
 import { strings } from 'const/strings';
 
 const Copyright = () => {

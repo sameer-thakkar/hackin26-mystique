@@ -1,5 +1,5 @@
-import { EXPERIMENT_NAMES } from 'const/experiments';
 import { atom } from 'recoil';
+import { EXPERIMENT_NAMES } from 'const/experiments';
 
 type ExperimentKeys = keyof typeof EXPERIMENT_NAMES;
 

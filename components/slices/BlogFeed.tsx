@@ -1,9 +1,8 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
-import { HALYARD } from 'const/ui-constants';
-import COLORS from 'const/colors';
 import Image from 'UI/Image';
-
+import COLORS from 'const/colors';
+import { HALYARD } from 'const/ui-constants';
 import { CHEVRON_LEFT } from '../../assets/SvgIcons';
 
 const FeedContainer = styled.div`
@@ -85,11 +84,7 @@ const IconLink = styled.a`
  * **Count/No of Items**: You can control number of posts being retrieved using this count.
  */
 
-const BlogFeed = ({
-  feed_url,
-  count = 0,
-  defaultCards = []
-}: any) => {
+const BlogFeed = ({ feed_url, count = 0, defaultCards = [] }: any) => {
   const [cards, setCards] = useState([...defaultCards]);
 
   useEffect(() => {

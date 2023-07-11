@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
-import { trackEvent } from 'utils/analytics';
-import LinkResolver from 'components/LinkResolver';
-import { expandFontToken } from 'const/typography';
-import COLORS from 'const/colors';
-import { withTrailingSlash } from 'utils/helper';
-import { FONTS } from 'const/fonts';
 import Conditional from 'components/common/Conditional';
+import LinkResolver from 'components/LinkResolver';
+import { trackEvent } from 'utils/analytics';
+import { withTrailingSlash } from 'utils/helper';
+import COLORS from 'const/colors';
+import { FONTS } from 'const/fonts';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { expandFontToken } from 'const/typography';
 
 type FooterLinksSectionProps = {
   title: string;
@@ -32,9 +32,10 @@ const FooterLinksSectionWrapper = styled.div`
     padding-right: 0.75rem;
     border-right: 0.063rem solid ${COLORS.GRAY.G6};
     :last-child {
-      border-right: ${({      
- // @ts-expect-error TS(2339): Property 'isLastSlice' does not exist on type 'Pic... Remove this comment to see the full error message
- isLastSlice }) => isLastSlice && 'none'};
+      border-right: ${({
+        // @ts-expect-error TS(2339): Property 'isLastSlice' does not exist on type 'Pic... Remove this comment to see the full error message
+        isLastSlice,
+      }) => isLastSlice && 'none'};
     }
   }
 `;

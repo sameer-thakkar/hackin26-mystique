@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
-import COLORS from 'const/colors';
 import type { SwiperOptions } from 'swiper';
+import COLORS from 'const/colors';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 

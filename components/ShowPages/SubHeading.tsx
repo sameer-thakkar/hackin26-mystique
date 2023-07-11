@@ -1,6 +1,6 @@
-import { expandFontToken } from 'const/typography';
 import React from 'react';
 import styled from 'styled-components';
+import { expandFontToken } from 'const/typography';
 
 const SubHeadingText = styled.h2`
   margin-top: 64px !important;
@@ -13,9 +13,7 @@ const SubHeadingText = styled.h2`
   }
 `;
 
-const SubHeading = ({
-  content
-}: any) => {
+const SubHeading = ({ content }: any) => {
   return <SubHeadingText>{content}</SubHeadingText>;
 };
 

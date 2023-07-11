@@ -1,7 +1,22 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
-import styled from 'styled-components';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
+import styled from 'styled-components';
+import Conditional from 'components/common/Conditional';
+import Button from 'UI/Button';
 import Image from 'UI/Image';
+import { trackEvent } from 'utils/analytics';
+import { generateSidenavId } from 'utils/helper';
+import { modulus } from 'utils/integerUtils';
+import { parseCaption } from 'utils/stringUtils';
+import COLORS from 'const/colors';
+import { FONTS } from 'const/fonts';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  HEADOUT_PURPS_LOGO,
+} from 'const/index';
+import { strings } from 'const/strings';
+import { expandFontToken } from 'const/typography';
 import {
   BLACK_COLOR_CLOSE,
   CHEVRON_LEFT_CIRCLE,
@@ -10,21 +25,6 @@ import {
   PLAY_BUTTON,
   VIDEO_ICON,
 } from 'assets/SvgIcons';
-import {
-  ANALYTICS_EVENTS,
-  ANALYTICS_PROPERTIES,
-  HEADOUT_PURPS_LOGO,
-} from 'const/index';
-import Button from 'UI/Button';
-import { FONTS } from 'const/fonts';
-import { trackEvent } from 'utils/analytics';
-import COLORS from 'const/colors';
-import Conditional from 'components/common/Conditional';
-import { parseCaption } from 'utils/stringUtils';
-import { modulus } from 'utils/integerUtils';
-import { expandFontToken } from 'const/typography';
-import { strings } from 'const/strings';
-import { generateSidenavId } from 'utils/helper';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 

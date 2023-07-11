@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { withTrailingSlash } from 'utils/helper';
+import COLORS from 'const/colors';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
-import COLORS from 'const/colors';
-import { withTrailingSlash } from 'utils/helper';
-
 import LinkResolver from './LinkResolver';
 
 const StyledHeaderLinksWrapper = styled.div<{ show: boolean }>`

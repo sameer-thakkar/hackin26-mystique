@@ -1,13 +1,13 @@
 import React from 'react';
 import {
-  F1TrustBoosterProp,
-  F1TrustBoostersProp,
-} from 'components/F1TrustBoosters/interface';
-import {
   BannerTrustBoosterBox,
   BannerTrustBoosterHeadingBox,
   BannerTrustBoosterTextBox,
 } from 'components/F1BannerTrustBooster/styles';
+import {
+  F1TrustBoosterProp,
+  F1TrustBoostersProp,
+} from 'components/F1TrustBoosters/interface';
 import { HORIZONTAL_LINE } from 'assets/SvgIcons';
 
 const F1BannerTrustBoosters = ({

@@ -1,23 +1,20 @@
-import React, { useContext } from 'react';
-import styled from 'styled-components';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { strings } from 'const/strings';
-import { useState, useRef, useEffect } from 'react';
-import { useWindowWidth } from '@react-hook/window-size';
-import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
-import { ANALYTICS_PROPERTIES } from 'const/index';
-import { ANALYTICS_EVENTS } from 'const/index';
+import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import { metaAtom } from 'store/atoms/meta';
-import { expandFontToken } from 'const/typography';
-import COLORS from 'const/colors';
-import { withTrailingSlash } from 'utils/helper';
+import { useWindowWidth } from '@react-hook/window-size';
 import Conditional from 'components/common/Conditional';
-import useOnScreen from 'hooks/useOnScreen';
 import { MBContext } from 'contexts/MBContext';
-
-import LinkResolver from './LinkResolver';
+import useOnScreen from 'hooks/useOnScreen';
+import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import { withTrailingSlash } from 'utils/helper';
+import { metaAtom } from 'store/atoms/meta';
+import COLORS from 'const/colors';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { strings } from 'const/strings';
+import { expandFontToken } from 'const/typography';
 import { CHEVRON_DOWN } from '../assets/SvgIcons';
+import LinkResolver from './LinkResolver';
 
 const CategoryHeader = dynamic(() =>
   import(/* webpackChunkName: "CategoryHeader" */ 'components/CategoryHeader')

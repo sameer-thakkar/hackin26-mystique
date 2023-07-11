@@ -2,30 +2,30 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { Client } from 'config/prismic-config';
 import { PrismicDocumentWithUID } from '@prismicio/types';
 import { getHeadoutLanguagecode, legacyBooleanCheck } from 'utils';
-import {
-  filterByDocType,
-  shoulderPageTicketsCheck,
-  getDocType,
-  getTgids,
-  getStructure,
-  getProductCardsId,
-  getPageUrl,
-  getAvailableLanguages,
-  getParentDomain,
-  uncategorisedToursCheck,
-  getMetaImageUrl,
-  getFooterDetails,
-  getBannerSubtext,
-  getBreadcrumbs,
-  getHeadoutPageDetails,
-  getHeadings,
-} from 'utils/lookerUtils';
 import { fetchDomainConfig } from 'utils/apiUtils';
 import {
+  filterByDocType,
+  getAvailableLanguages,
+  getBannerSubtext,
+  getBreadcrumbs,
+  getDocType,
+  getFooterDetails,
+  getHeadings,
+  getHeadoutPageDetails,
+  getMetaImageUrl,
+  getPageUrl,
+  getParentDomain,
+  getProductCardsId,
+  getStructure,
+  getTgids,
+  shoulderPageTicketsCheck,
+  uncategorisedToursCheck,
+} from 'utils/lookerUtils';
+import {
   CUSTOM_TYPES,
-  SLICE_TYPES,
   PAGE_URL_STRUCTURE,
   SEO_SUBDOMAINS,
+  SLICE_TYPES,
 } from 'const/index';
 
 const getUpdatedDocuments = async ({ documentIds, masterRef, req }: any) => {

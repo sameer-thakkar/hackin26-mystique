@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import Star from './Star';
 
 const StyledRating = styled.div`
@@ -11,11 +10,7 @@ const StyledRating = styled.div`
   width: max-content;
 `;
 
-const Rating = ({
-  value,
-  starSize = '15px',
-  ...props
-}: any) => {
+const Rating = ({ value, starSize = '15px', ...props }: any) => {
   function getStars() {
     const stars = [];
     for (let i = 1; i <= 5; i++) {

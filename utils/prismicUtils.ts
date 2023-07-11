@@ -1,67 +1,67 @@
-import { Client } from 'config/prismic-config';
 import Prismic from 'prismic-javascript';
-import * as Sentry from '@sentry/nextjs';
+import { Client } from 'config/prismic-config';
 import { PrismicDocumentWithUID } from '@prismicio/types';
+import * as Sentry from '@sentry/nextjs';
 import { toursTabSliceHandler } from 'components/Slices';
 import type { CollectionDetails } from 'components/StaticBanner/index';
 import {
-  CUSTOM_TYPES,
-  LANGUAGE_MAP,
-  LINKED_MICROSITE_PROPS,
-  MICROSITE_ARRAY_KEYS,
-  MICROSITE_OBJECT_KEYS,
-  MICROSITE_STRING_KEYS,
-  PRISMIC_LANG_TO_ROUTE_PARAM,
-  SLICE_TYPES,
-  THEMES,
-  MB_CATEGORISATION,
-  PRISMIC_FIELD_ID,
-  PRISMIC_DEV_TAG,
-} from 'const/index';
-import { MISC } from 'const/header';
-import {
+  deepDeleteKeys,
   documentUidUpdateRedirectHandler,
   getCollectionSection,
   getEnglishDocUid,
   getHeadoutLanguagecode,
   getSinglePrismicSlice,
   getTgidsFromShow,
+  handleSettledPromiseResults,
   redirectTo,
   refsArrayToObject,
-  handleSettledPromiseResults,
-  deepDeleteKeys,
 } from 'utils';
 import {
-  generateDescriptor,
-  standardizeCancellationPolicy,
-} from 'utils/productUtils';
-import { traceError } from 'utils/logutils';
-import { getHostName, checkIfCategoryHeaderExists } from 'utils/helper';
-import {
-  getLangUID,
-  getValidUrlParams,
-  sanitizeURL,
-  convertUidToUrl,
-} from 'utils/urlUtils';
+  fetchCollection,
+  fetchCollectionList,
+  fetchCurrencyList,
+  fetchDomainConfig,
+  fetchTourGroupsByCategory,
+  fetchTourGroupSlots,
+  fetchTourGroupV6,
+  fetchTourListV6,
+} from 'utils/apiUtils';
 import {
   categoryTourListParserV1,
   getToursGlobalCollection,
   uncategorizedToursListParser,
 } from 'utils/dataParsers';
-import {
-  fetchCollection,
-  fetchCollectionList,
-  fetchTourGroupsByCategory,
-  fetchCurrencyList,
-  fetchTourGroupSlots,
-  fetchTourGroupV6,
-  fetchDomainConfig,
-  fetchTourListV6,
-} from 'utils/apiUtils';
-import { getCategoryHeaderMenu, getRankedDocuments } from 'utils/headerUtils';
 import type { TCategorisationMetadata } from 'utils/headerUtils';
+import { getCategoryHeaderMenu, getRankedDocuments } from 'utils/headerUtils';
+import { checkIfCategoryHeaderExists, getHostName } from 'utils/helper';
 import { sendLog } from 'utils/logger';
+import { traceError } from 'utils/logutils';
 import categoryTourListParserV2 from 'utils/parsers/categoryTourListParserV2/index';
+import {
+  generateDescriptor,
+  standardizeCancellationPolicy,
+} from 'utils/productUtils';
+import {
+  convertUidToUrl,
+  getLangUID,
+  getValidUrlParams,
+  sanitizeURL,
+} from 'utils/urlUtils';
+import { MISC } from 'const/header';
+import {
+  CUSTOM_TYPES,
+  LANGUAGE_MAP,
+  LINKED_MICROSITE_PROPS,
+  MB_CATEGORISATION,
+  MICROSITE_ARRAY_KEYS,
+  MICROSITE_OBJECT_KEYS,
+  MICROSITE_STRING_KEYS,
+  PRISMIC_DEV_TAG,
+  PRISMIC_FIELD_ID,
+  PRISMIC_LANG_TO_ROUTE_PARAM,
+  SLICE_TYPES,
+  THEMES,
+} from 'const/index';
 import { LOG_LEVELS } from 'const/logs';
 
 // @ts-expect-error TS(7023): 'fetchAllMatchingDocs' implicitly has return type ... Remove this comment to see the full error message

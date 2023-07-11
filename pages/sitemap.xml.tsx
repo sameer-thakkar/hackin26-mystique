@@ -1,11 +1,10 @@
-import { CUSTOM_TYPES } from 'constants/index';
-
 import { Component } from 'react';
+import { NextPageContext } from 'next';
 import Prismic from 'prismic-javascript';
 import builder from 'xmlbuilder';
-import { convertUidToUrl } from 'utils/urlUtils';
 import { fetchAllMatchingDocs } from 'utils/prismicUtils';
-import { NextPageContext } from 'next';
+import { convertUidToUrl } from 'utils/urlUtils';
+import { CUSTOM_TYPES } from 'constants/index';
 
 const createImg = (doc: any) => {
   if (doc.type === CUSTOM_TYPES.MICROSITE) {

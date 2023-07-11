@@ -1,16 +1,16 @@
-import { SWEIPESHEET_CROSS } from 'assets/SvgIcons';
+import React, { useState } from 'react';
 import Conditional from 'components/common/Conditional';
 import { TooltipProps } from 'components/common/Tooltip/interface';
 import {
-  TooltipContainer,
-  Trigger,
-  Content,
-  TooltipSwipeSheet,
-  TooltipOverlay,
   CloseIcon,
+  Content,
+  TooltipContainer,
+  TooltipOverlay,
+  TooltipSwipeSheet,
+  Trigger,
 } from 'components/common/Tooltip/styles';
-import React, { useState } from 'react';
 import { isMobile } from 'utils/helper';
+import { SWEIPESHEET_CROSS } from 'assets/SvgIcons';
 
 const Tooltip = ({
   trigger,

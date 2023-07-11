@@ -1,12 +1,9 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import PriceBlock from 'UI/PriceBlock';
-import Image from 'UI/Image';
-import StickyHeader from 'components/ShowPages/stickyHeader';
-import StickyFooter from 'components/ShowPages/stickyFooter';
 import Conditional from 'components/common/Conditional';
 import Emoji from 'components/common/Emoji';
 import LinkResolver from 'components/LinkResolver';
+import { IShowPageBannerProps } from 'components/ShowPages/Banner/interface';
 import {
   Banner,
   BannerContent,
@@ -16,29 +13,32 @@ import {
   SpecialOfferBoosterMobile,
   VideoWrapper,
 } from 'components/ShowPages/Banner/styles';
-import { IShowPageBannerProps } from 'components/ShowPages/Banner/interface';
+import StickyFooter from 'components/ShowPages/stickyFooter';
+import StickyHeader from 'components/ShowPages/stickyHeader';
+import Image from 'UI/Image';
+import PriceBlock from 'UI/PriceBlock';
 import { MBContext } from 'contexts/MBContext';
-import { currencyAtom } from 'store/atoms/currency';
-import { metaAtom } from 'store/atoms/meta';
-import { getTagPageLink } from 'utils/urlUtils';
-import { createBookingURL, getTagPageMap, getNakedDomain } from 'utils';
-import { dateToString } from 'utils/dateUtils';
-import { fetchCalendarInventory } from 'utils/apiUtils';
+import { createBookingURL, getNakedDomain, getTagPageMap } from 'utils';
 import {
   getProductCommonProperties,
   sendVariablesToDataLayer,
   trackEvent,
 } from 'utils/analytics';
-import { LOCATION, PLAY_CIRCLE, STAR } from 'assets/SvgIcons';
-import { strings } from 'const/strings';
-import { descriptorIcons } from 'const/descriptorIcons';
+import { fetchCalendarInventory } from 'utils/apiUtils';
+import { dateToString } from 'utils/dateUtils';
+import { getTagPageLink } from 'utils/urlUtils';
+import { currencyAtom } from 'store/atoms/currency';
+import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
+import { descriptorIcons } from 'const/descriptorIcons';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   LANGUAGE_MAP,
 } from 'const/index';
 import { PRODUCT_VIDEOS } from 'const/ShowPageProductVideos';
+import { strings } from 'const/strings';
+import { LOCATION, PLAY_CIRCLE, STAR } from 'assets/SvgIcons';
 
 const ShowPageBanner = ({
   detailsObjects,

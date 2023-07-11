@@ -1,27 +1,27 @@
+import React, { useContext, useRef } from 'react';
+import { scroller } from 'react-scroll';
+import { useRecoilState } from 'recoil';
+import Conditional from 'components/common/Conditional';
+import { ISideNavModalProps } from 'UI/SideNav/interface';
+import {
+  BorderHighlight,
+  SideNavButton,
+  StyledIcon,
+  StyledItem,
+} from 'UI/SideNav/styles';
+import { MBContext } from 'contexts/MBContext';
+import { trackEvent } from 'utils/analytics';
+import { generateSidenavId } from 'utils/helper';
+import { appAtom } from 'store/atoms/app';
+import COLORS from 'const/colors';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   PAGE_TYPES,
   SIDEBAR_TYPES,
 } from 'const/index';
-import { MBContext } from 'contexts/MBContext';
-import React, { useContext, useRef } from 'react';
-import { scroller } from 'react-scroll';
-import Conditional from 'components/common/Conditional';
-import { generateSidenavId } from 'utils/helper';
 import { strings } from 'const/strings';
-import COLORS from 'const/colors';
-import {
-  SideNavButton,
-  StyledItem,
-  StyledIcon,
-  BorderHighlight,
-} from 'UI/SideNav/styles';
 import { DOUBLE_CHEVRON, LIST_ICON, TickSvg } from 'assets/SvgIcons';
-import { useRecoilState } from 'recoil';
-import { appAtom } from 'store/atoms/app';
-import { trackEvent } from 'utils/analytics';
-import { ISideNavModalProps } from 'UI/SideNav/interface';
 
 const SideNavModal: React.FC<ISideNavModalProps> = ({
   items = [],

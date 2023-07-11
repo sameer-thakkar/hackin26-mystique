@@ -1,5 +1,5 @@
-import { Wrapper } from 'components/slices/ImageGallery/style';
 import React from 'react';
+import { Wrapper } from 'components/slices/ImageGallery/style';
 
 // @ts-ignore
 const GridLayout = ({ children }) => {

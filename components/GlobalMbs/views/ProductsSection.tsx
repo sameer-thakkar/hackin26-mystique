@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useWindowWidth } from '@react-hook/window-size';
 import PopulateProducts from 'components/PopulateProducts';
 import { getLangObject } from 'utils/helper';

@@ -1,44 +1,44 @@
 import React, {
-  useState,
-  useContext,
   ComponentType,
+  useContext,
   useEffect,
   useRef,
+  useState,
 } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
-import { ProductsContextProvider } from 'contexts/Products';
-import { MBContext } from 'contexts/MBContext';
+import { useRecoilValue } from 'recoil';
+import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
-import sliceHandler from 'components/Slices';
 import Header from 'components/MicrositeV2/Header';
 import LttFeatureCard from 'components/ShowPages/FeatureCard';
-import Conditional from 'components/common/Conditional';
-import TextBanner from 'components/TextBanner';
+import sliceHandler from 'components/Slices';
 import MonthTabs from 'components/slices/MonthTabs';
+import TextBanner from 'components/TextBanner';
 import DismissAlert from 'UI/DismissAlert';
-import { LOCATION } from 'assets/SvgIcons';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, THEMES } from 'const/index';
-import { strings } from 'const/strings';
-import { SIZES } from 'const/ui-constants';
-import COLORS from 'const/colors';
-import { FONTS } from 'const/fonts';
+import { MBContext } from 'contexts/MBContext';
+import { ProductsContextProvider } from 'contexts/Products';
+import useOnScreen from 'hooks/useOnScreen';
+import { getBannerAndFooterSubtext, isCollectionMB } from 'utils';
+import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import {
-  groupSlices,
-  getTGIDListForMonth,
+  checkIfCategoryHeaderExists,
   getDiscountedProducts,
   getPriceSortedDiscountedProducts,
   getPriceSortedListicleTgids,
+  getTGIDListForMonth,
+  groupSlices,
   withShortcodes,
-  checkIfCategoryHeaderExists,
 } from 'utils/helper';
-import { useRecoilValue } from 'recoil';
-import { metaAtom } from 'store/atoms/meta';
-import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { gtmAtom } from 'store/atoms/gtm';
+import { metaAtom } from 'store/atoms/meta';
+import COLORS from 'const/colors';
+import { FONTS } from 'const/fonts';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, THEMES } from 'const/index';
+import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
-import useOnScreen from 'hooks/useOnScreen';
-import { getBannerAndFooterSubtext, isCollectionMB } from 'utils';
+import { SIZES } from 'const/ui-constants';
+import { LOCATION } from 'assets/SvgIcons';
 
 const Alert = dynamic(
   () => import(/* webpackChunkName: "Alert" */ 'UI/Alert'),

@@ -1,24 +1,26 @@
 import Router from 'next/router';
 import dayjs from 'dayjs';
+import { VideoMetaInfo } from 'components/common/Scripts';
+import { F1TrustBoostersProp } from 'components/F1TrustBoosters/interface';
 import type { CollectionDetails } from 'components/StaticBanner';
-import {
-  SUPPORTED_LANGUAGES,
-  LANGUAGE_MAP,
-  PRISMIC_LANG_TO_ROUTE_PARAM,
-  CUSTOM_TYPES,
-  HEADOUT_NAKED_DOMAIN,
-  NON_SUPPORTED_LANGUAGES,
-  UNIT_ABBREVIATIONS,
-  MB_TYPES,
-  PARTNERED_AND_SENSITIVE_COMBINATIONS,
-  SHOW_DATE_SELECTION_PAGE_TGIDS,
-  DYNAMIC_RENDER_UID,
-  LanguagesUnion,
-} from 'const/index';
-import { BOOKING_FLOW_STAGE, BOOKING_FLOW_TYPE } from 'const/booking';
-import { getLangObject, withoutTrailingSlash } from 'utils/helper';
 import { fetchCollection, fetchTourGroupsByCategory } from 'utils/apiUtils';
+import { getLangObject, withoutTrailingSlash } from 'utils/helper';
 import { convertUidToUrl, getDomainFromUid } from 'utils/urlUtils';
+import { BOOKING_FLOW_STAGE, BOOKING_FLOW_TYPE } from 'const/booking';
+import {
+  CUSTOM_TYPES,
+  DYNAMIC_RENDER_UID,
+  HEADOUT_NAKED_DOMAIN,
+  LANGUAGE_MAP,
+  LanguagesUnion,
+  MB_TYPES,
+  NON_SUPPORTED_LANGUAGES,
+  PARTNERED_AND_SENSITIVE_COMBINATIONS,
+  PRISMIC_LANG_TO_ROUTE_PARAM,
+  SHOW_DATE_SELECTION_PAGE_TGIDS,
+  SUPPORTED_LANGUAGES,
+  UNIT_ABBREVIATIONS,
+} from 'const/index';
 import { strings } from 'const/strings';
 import {
   AUTHORISED_BOOSTER,
@@ -27,8 +29,6 @@ import {
   HELP_CENTER_BOOSTER,
   SIMILE_BOOSTER,
 } from 'assets/SvgIcons';
-import { F1TrustBoostersProp } from 'components/F1TrustBoosters/interface';
-import { VideoMetaInfo } from 'components/common/Scripts';
 
 export const shouldDisplayCollectionRatings = (
   collectionDetails: CollectionDetails | undefined

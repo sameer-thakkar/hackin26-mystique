@@ -1,9 +1,11 @@
 import { FunctionComponent, useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
-import Image from 'UI/Image';
 import type { SwiperProps } from 'swiper/react';
 import Conditional from 'components/common/Conditional';
+import Image from 'UI/Image';
+import { MBContext } from 'contexts/MBContext';
+import { trackEvent } from 'utils/analytics';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -13,8 +15,6 @@ import {
   PAGE_TYPES,
 } from 'const/index';
 import { HALYARD } from 'const/ui-constants';
-import { trackEvent } from 'utils/analytics';
-import { MBContext } from 'contexts/MBContext';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 

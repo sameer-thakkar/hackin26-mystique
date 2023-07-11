@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { MBContext } from 'contexts/MBContext';
-import LocalisedPrice from 'UI/LPrice';
 import Conditional from 'components/common/Conditional';
+import LocalisedPrice from 'UI/LPrice';
+import { MBContext } from 'contexts/MBContext';
 import { getLocalisedPrice } from 'utils/currency';
 
 const InlineScratchPrice = styled.span`

@@ -1,22 +1,22 @@
 import { ComponentType } from 'react';
 import dynamic from 'next/dynamic';
 import Conditional from 'components/common/Conditional';
-import Header from 'components/MicrositeV2/Header';
+import Footer from 'components/common/Footer';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import Tags from 'components/GlobalMbs/Tags';
-import Footer from 'components/common/Footer';
+import Header from 'components/MicrositeV2/Header';
+import {
+  getAlternateLanguages,
+  getHeadoutLanguagecode,
+  getSinglePrismicSlice,
+} from 'utils';
 import { getBuyTicketsUrl, groupSlices } from 'utils/helper';
 import {
   convertUidToUrl,
-  getValidUrl,
   getLogoRedirectionUrl,
+  getValidUrl,
 } from 'utils/urlUtils';
 import { CUSTOM_TYPES } from 'const/index';
-import {
-  getSinglePrismicSlice,
-  getAlternateLanguages,
-  getHeadoutLanguagecode,
-} from 'utils';
 
 const CountryPage = dynamic(() => import('./views/CountryPage'));
 const CityPage: ComponentType<any> = dynamic(() => import('./views/CityPage'));

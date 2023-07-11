@@ -1,28 +1,26 @@
-import {
-  DROPDOWN_ELEMENT,
-  CUSTOM_TYPES,
-  DESIGN,
-  THEMES,
-} from 'constants/index';
-
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import { Client } from 'config/prismic-config';
-import { ThemeProvider } from 'styled-components';
-import { MBContextProvider } from 'contexts/MBContext';
-import Header from 'components/common/Header';
+import styled, { ThemeProvider } from 'styled-components';
+import { getAppTheme } from 'style/theme';
+import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
+import Header from 'components/common/Header';
 import { MinimalHelmet } from 'components/common/NextSeoMeta';
 import ContentContainer from 'components/UI/ContentContainer';
+import { SubHeading, TopHeading } from 'components/UI/Headings';
 import Paragraph from 'components/UI/Paragraph';
 import RichContent from 'UI/RichContent';
-import { TopHeading, SubHeading } from 'components/UI/Headings';
-import Conditional from 'components/common/Conditional';
-import { getAppTheme } from 'style/theme';
-import { getNakedDomain, getHeadoutLanguagecode } from 'utils';
+import { MBContextProvider } from 'contexts/MBContext';
+import { getHeadoutLanguagecode, getNakedDomain } from 'utils';
+import { fetchDomainConfig } from 'utils/apiUtils';
 import { getPrismicDocument } from 'utils/prismicUtils';
 import { getLogoRedirectionUrl } from 'utils/urlUtils';
-import { fetchDomainConfig } from 'utils/apiUtils';
+import {
+  CUSTOM_TYPES,
+  DESIGN,
+  DROPDOWN_ELEMENT,
+  THEMES,
+} from 'constants/index';
 
 const Title = styled.div`
   margin: 10px 0px;

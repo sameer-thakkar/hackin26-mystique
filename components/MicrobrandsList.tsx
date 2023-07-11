@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { HALYARD } from 'const/ui-constants';
-
 import MicrobrandCards from './slices/MicrobrandCards';
 
 const StyledMBList = styled.div`
@@ -34,7 +33,9 @@ const MicrobrandList = (props: any) => {
       )}
       {microbrandCards.length ? <br /> : null}
       <MicrobrandCards
-        cards={microbrandCards.filter((card: any) => card?.microbrand_link?.url)}
+        cards={microbrandCards.filter(
+          (card: any) => card?.microbrand_link?.url
+        )}
         cardsContent={{}}
       />
     </StyledMBList>

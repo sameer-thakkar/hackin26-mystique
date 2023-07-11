@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { CHEVRON_LEFT } from 'assets/SvgIcons';
-import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
+import { HALYARD } from 'const/ui-constants';
+import { CHEVRON_LEFT } from 'assets/SvgIcons';
 
 const BreadcrumbContainer = styled.div`
   display: grid;

@@ -1,7 +1,6 @@
-import { FALLBACK_IMAGE, SLICE_TYPES } from 'const/index';
 import { VideoSitemap } from 'pages/video-sitemap.xml';
 import { getCollectionSection } from 'utils';
-
+import { FALLBACK_IMAGE, SLICE_TYPES } from 'const/index';
 import { getHeadoutApiUrl, HeadoutEndpoints } from './apiUtils';
 import { tourListApiParser } from './dataParsers';
 import { getHostName, getLangObject } from './helper';

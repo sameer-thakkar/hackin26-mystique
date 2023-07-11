@@ -1,47 +1,47 @@
+import React, {
+  RefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import dynamic from 'next/dynamic';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
+import { useRecoilValue } from 'recoil';
 import type { Swiper as ISwiper } from 'swiper';
-import React, {
-  useEffect,
-  useState,
-  useCallback,
-  useRef,
-  RefObject,
-} from 'react';
-import useWindowSize from 'hooks/useWindowSize';
-import dynamic from 'next/dynamic';
-import Image from 'UI/Image';
-import RichContent from 'UI/RichContent';
-import Conditional from 'components/common/Conditional';
-import { useCaptureClickOutside } from 'hooks/ClickOutside';
-import { strings } from 'const/strings';
-import { CHEVRON_LEFT_CIRCLE, CLOSE_WHITE, MapSvg } from 'assets/SvgIcons';
-import { generateSidenavId, truncate } from 'utils/helper';
 import type { SwiperProps } from 'swiper/react';
+import Conditional from 'components/common/Conditional';
 import GridLayout from 'components/slices/ImageGallery/components/GridLayout';
 import type { ImageGalleryProps } from 'components/slices/ImageGallery/interface';
 import {
-  StyledImageGallery,
-  Heading,
-  Description,
-  StyledImage,
-  Lightbox,
-  FullImage,
-  ContentContainer,
-  ThumbnailSwiper,
-  GridLayoutContainer,
-  Tag,
-  DesktopLightBox,
-  SwiperControls,
-  DesktopStyledImage,
   Content,
+  ContentContainer,
+  Description,
+  DesktopLightBox,
   DesktopLightboxHeading,
+  DesktopStyledImage,
+  FullImage,
+  GridLayoutContainer,
+  Heading,
+  Lightbox,
+  StyledImage,
+  StyledImageGallery,
+  SwiperControls,
+  Tag,
+  ThumbnailSwiper,
 } from 'components/slices/ImageGallery/style';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
-import { trackEvent } from 'utils/analytics';
+import Image from 'UI/Image';
+import RichContent from 'UI/RichContent';
+import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import useOnScreen from 'hooks/useOnScreen';
-import { useRecoilValue } from 'recoil';
+import useWindowSize from 'hooks/useWindowSize';
+import { trackEvent } from 'utils/analytics';
+import { generateSidenavId, truncate } from 'utils/helper';
 import { gtmAtom } from 'store/atoms/gtm';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { strings } from 'const/strings';
+import { CHEVRON_LEFT_CIRCLE, CLOSE_WHITE, MapSvg } from 'assets/SvgIcons';
 
 const Swiper = dynamic(() =>
   import(/* webpackChunkName: "Swiper" */ 'components/Swiper')

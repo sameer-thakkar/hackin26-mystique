@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { StyledButton } from 'components/common/ScrollToTop/styles';
 import Conditional from 'components/common/Conditional';
-import { CHEVRON_DOWN } from 'assets/SvgIcons';
+import { StyledButton } from 'components/common/ScrollToTop/styles';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS } from 'const/index';
+import { CHEVRON_DOWN } from 'assets/SvgIcons';
 
 const ScrollToTop = () => {
   const [showButton, setShowButton] = useState(false);

@@ -1,15 +1,14 @@
-import { HALYARD } from 'const/ui-constants';
 import React, { useState } from 'react';
-import styled from 'styled-components';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
-import Tags from 'UI/Tags';
-import Image from 'UI/Image';
+import styled from 'styled-components';
 import Button from 'UI/Button';
-import { strings } from 'const/strings';
+import Image from 'UI/Image';
+import Tags from 'UI/Tags';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import COLORS from 'const/colors';
-
+import { strings } from 'const/strings';
+import { HALYARD } from 'const/ui-constants';
 import Pricing from './Pricing';
 
 const StyledLargeListicle = styled.div`

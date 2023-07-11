@@ -1,13 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
-import { HALYARD } from 'const/ui-constants';
+import styled from 'styled-components';
+import { generateSidenavId } from 'utils/helper';
 import COLORS from 'const/colors';
-import { generateSidenavId, stringIdfy } from 'utils/helper';
-
-import RichContent from '../UI/RichContent';
+import { HALYARD } from 'const/ui-constants';
+import { stringIdfy } from '../../utils/helper';
 import { shortCodeSerializer } from '../../utils/shortCodes';
+import RichContent from '../UI/RichContent';
 import TitleTextCombo from '../UI/TitleTextCombo';
 
 const StyledTable = styled.div`

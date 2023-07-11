@@ -1,21 +1,20 @@
-import { SIZES } from 'const/ui-constants';
-import { THEMES } from 'const/index';
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import styled from 'styled-components';
-import { useWindowWidth } from '@react-hook/window-size';
-import { strings } from 'const/strings';
-import { Shield } from 'assets/SvgIcons';
-import { greyScheme } from 'style/theme';
-import { MBContext } from 'contexts/MBContext';
-import Conditional from 'components/common/Conditional';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
-
-import InfoBanner from './InfoBanner';
-import Split, { StlyedSplit } from './Split';
+import styled from 'styled-components';
+import { useWindowWidth } from '@react-hook/window-size';
+import { greyScheme } from 'style/theme';
+import Conditional from 'components/common/Conditional';
+import { MBContext } from 'contexts/MBContext';
+import { THEMES } from 'const/index';
+import { strings } from 'const/strings';
+import { SIZES } from 'const/ui-constants';
+import { Shield } from 'assets/SvgIcons';
 import IconCTA, { StyledIconCTA } from './IconCTA';
+import InfoBanner from './InfoBanner';
 import { getSafetyDescription } from './SafeExperiencesPitch';
+import Split, { StlyedSplit } from './Split';
 
 const SafeExperiencesPitch = dynamic(() => import('./SafeExperiencesPitch'), {
   ssr: false,
@@ -26,9 +25,10 @@ const Wrapper = styled.div`
   margin: auto;
   width: 100%;
   ${StlyedSplit} {
-    margin-top: ${({    
- // @ts-expect-error TS(2339): Property 'marginTop' does not exist on type 'Pick<... Remove this comment to see the full error message
- marginTop }) => (marginTop ? marginTop : 0)}px;
+    margin-top: ${({
+      // @ts-expect-error TS(2339): Property 'marginTop' does not exist on type 'Pick<... Remove this comment to see the full error message
+      marginTop,
+    }) => (marginTop ? marginTop : 0)}px;
   }
   ${({ theme }) =>
     theme.theme === THEMES.DEFAULT
@@ -104,14 +104,16 @@ const MultiBannerWrapper = ({
   const [safetyBannerData, setSafetyBannerData] = useState(null);
   const width = useWindowWidth();
   useEffect(() => {
-    getSafetyDescription((primaryCountry as any)?.code, primaryCity, lang).then((data) => {
+    getSafetyDescription((primaryCountry as any)?.code, primaryCity, lang).then(
+      (data) => {
         data
-            ? setSafetyBannerData(data)
-            : // @ts-expect-error TS(2345): Argument of type '{ description: { spans: never[];... Remove this comment to see the full error message
-              setSafetyBannerData(GENERAL_SAFETY_NOTE);
-    });
+          ? setSafetyBannerData(data)
+          : // @ts-expect-error TS(2345): Argument of type '{ description: { spans: never[];... Remove this comment to see the full error message
+            setSafetyBannerData(GENERAL_SAFETY_NOTE);
+      }
+    );
     setIsMobile(width < 768);
-}, [width]);
+  }, [width]);
 
   if (!hasSafe) return null;
   const openSafeSidebar = () => {
@@ -124,11 +126,13 @@ const MultiBannerWrapper = ({
     });
   };
 
-  const finalHeading = <RichText render={(safetyBannerData as any)?.heading}/>;
+  const finalHeading = <RichText render={(safetyBannerData as any)?.heading} />;
   const showFullBanner = (primaryCountry as any)?.code === 'FR' || !isMobile;
-  const description = (<Description>
-      <RichText render={(safetyBannerData as any)?.description}/>
-    </Description>);
+  const description = (
+    <Description>
+      <RichText render={(safetyBannerData as any)?.description} />
+    </Description>
+  );
 
   return (
     // @ts-expect-error TS(2769): No overload matches this call.

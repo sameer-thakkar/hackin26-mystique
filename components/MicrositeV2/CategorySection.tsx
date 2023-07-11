@@ -1,13 +1,13 @@
-import dynamic from 'next/dynamic';
 import { useContext, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import styled from 'styled-components';
-import useWindowSize from 'hooks/useWindowSize';
-import ProductsContext from 'contexts/Products';
-import InteractionContext from 'contexts/Interaction';
 import Conditional from 'components/common/Conditional';
-import { HALYARD } from 'const/ui-constants';
+import InteractionContext from 'contexts/Interaction';
+import ProductsContext from 'contexts/Products';
+import useWindowSize from 'hooks/useWindowSize';
 import COLORS from 'const/colors';
 import { DONT_AUTO_SCROLL, DONT_HOIST } from 'const/index';
+import { HALYARD } from 'const/ui-constants';
 
 const PopulateProducts = dynamic(() =>
   import(/* webpackChunkName: "PopulateProducts" */ './PopulateProducts')

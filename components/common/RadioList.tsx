@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { RadioIcon } from 'assets/SvgIcons';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
+import { RadioIcon } from 'assets/SvgIcons';
 
 const RadioListContainer = styled.div``;
 
@@ -18,14 +18,16 @@ const RadioItem = styled.div`
   &:last-child {
     border-bottom: none;
   }
-  ${({  
- // @ts-expect-error TS(2339): Property '$isActive' does not exist on type 'Pick<... Remove this comment to see the full error message
- $isActive }) => $isActive && `pointer-events: none;`}
+  ${({
+    // @ts-expect-error TS(2339): Property '$isActive' does not exist on type 'Pick<... Remove this comment to see the full error message
+    $isActive,
+  }) => $isActive && `pointer-events: none;`}
   .label-text.label-text {
     ${expandFontToken(FONTS.UI_LABEL_MEDIUM)}
-    ${({    
- // @ts-expect-error TS(2339): Property '$isActive' does not exist on type 'Pick<... Remove this comment to see the full error message
- $isActive }) =>
+    ${({
+      // @ts-expect-error TS(2339): Property '$isActive' does not exist on type 'Pick<... Remove this comment to see the full error message
+      $isActive,
+    }) =>
       $isActive &&
       `
         color: ${COLORS.BRAND.PURPS};

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
-
-import sliceHandler from '../Slices';
+import { expandFontToken } from 'const/typography';
 import { FULL_WIDTH_SLICES } from '../../constants';
+import sliceHandler from '../Slices';
 
 export const StyledLongForm = styled.div<{
   isVenuePage?: boolean;

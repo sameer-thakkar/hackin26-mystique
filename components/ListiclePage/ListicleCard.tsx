@@ -1,20 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
+import styled from 'styled-components';
+import COLORS from 'const/colors';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
-import COLORS from 'const/colors';
-
-import Rating from '../UI/Rating';
-import Tags from '../UI/Tags';
-import Chevron from '../UI/Chevron';
-import Button from '../UI/Button';
+import { PIN } from '../../assets/SvgIcons';
 import { Client } from '../../config/prismic-config';
 import { CUSTOM_TYPES } from '../../constants';
-import { PIN } from '../../assets/SvgIcons';
 import { shortCodeSerializer } from '../../utils/shortCodes';
+import Button from '../UI/Button';
+import Chevron from '../UI/Chevron';
+import Rating from '../UI/Rating';
+import Tags from '../UI/Tags';
 
 const Popup = dynamic(() => import('components/common/Popup'), { ssr: false });
 

@@ -1,4 +1,9 @@
 import React, { useState } from 'react';
+import Conditional from 'components/common/Conditional';
+import {
+  F1TrustBoosterProp,
+  F1TrustBoostersProp,
+} from 'components/F1TrustBoosters/interface';
 import {
   F1TrustBoosterContainer,
   F1TrustBoosterWrapper,
@@ -9,11 +14,6 @@ import {
   TrustBoosterSubTextContainer,
   TrustBoosterTextContainer,
 } from 'components/F1TrustBoosters/styles';
-import {
-  F1TrustBoosterProp,
-  F1TrustBoostersProp,
-} from 'components/F1TrustBoosters/interface';
-import Conditional from 'components/common/Conditional';
 
 const F1TrustBoosters = ({
   f1TrustBooster,

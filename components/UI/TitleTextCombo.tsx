@@ -1,6 +1,6 @@
+import styled from 'styled-components';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
-import styled from 'styled-components';
 
 const TitleTextCombo = styled.div<{
   isVenuePage?: boolean;
@@ -23,6 +23,7 @@ const TitleTextCombo = styled.div<{
   }
   display: grid;
   grid-row-gap: 0px;
+  margin-bottom: ${({ noMargin }) => (noMargin ? 0 : '20px')};
   margin-bottom: ${({ noMargin }) => (noMargin ? 0 : '20px')};
   @media (min-width: 768px) {
     && {

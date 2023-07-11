@@ -1,16 +1,16 @@
-import React, { useState, useContext, useRef, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { scroller } from 'react-scroll';
-import InteractionContext from 'contexts/Interaction';
+import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import { SortSelector } from 'components/MicrositeV2/SortSelector';
-import { SIZES } from 'const/ui-constants';
-import COLORS from 'const/colors';
-import { metaAtom } from 'store/atoms/meta';
-import { useRecoilValue } from 'recoil';
+import InteractionContext from 'contexts/Interaction';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import { metaAtom } from 'store/atoms/meta';
+import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { expandFontToken } from 'const/typography';
+import { SIZES } from 'const/ui-constants';
 
 const StyledCategoryBar = styled.div<{ isMobile?: boolean }>`
   height: fit-content;

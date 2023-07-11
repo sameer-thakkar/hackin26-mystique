@@ -1,6 +1,6 @@
+import styled from 'styled-components';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
-import styled from 'styled-components';
 
 export const Container = styled.div`
   && {

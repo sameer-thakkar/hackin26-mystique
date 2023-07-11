@@ -5,10 +5,10 @@ import PriceBlock, { SavedTag, StyledPriceBlock } from 'UI/PriceBlock';
 import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
 import { convertUidToUrl } from 'utils/urlUtils';
+import COLORS from 'const/colors';
+import { FONTS } from 'const/fonts';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { expandFontToken } from 'const/typography';
-import { FONTS } from 'const/fonts';
-import COLORS from 'const/colors';
 
 const CategoryCardWrapper = styled.div`
   cursor: pointer;

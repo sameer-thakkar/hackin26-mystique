@@ -1,9 +1,9 @@
 import { FunctionComponent, useContext } from 'react';
 import styled from 'styled-components';
-import { HALYARD } from 'const/ui-constants';
-import COLORS from 'const/colors';
-import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import { MBContext } from 'contexts/MBContext';
+import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
+import COLORS from 'const/colors';
+import { HALYARD } from 'const/ui-constants';
 
 const TagSection = styled.div`
   max-width: 1200px;

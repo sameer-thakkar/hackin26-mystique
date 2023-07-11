@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useCallback, useRef } from 'react';
+import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import Fuse from 'fuse.js';
 import { useRecoilState } from 'recoil';
-import { searchQueryAtom } from 'store/atoms/searchQuery';
-import InteractionContext from 'contexts/Interaction';
+import Fuse from 'fuse.js';
 import Conditional from 'components/common/Conditional';
-import COLORS from 'const/colors';
-import { SEARCH_ICON, CLOSE_WHITE } from 'assets/SvgIcons';
-import { expandFontToken } from 'const/typography';
+import InteractionContext from 'contexts/Interaction';
 import { trackEvent } from 'utils/analytics';
+import { searchQueryAtom } from 'store/atoms/searchQuery';
+import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
+import { expandFontToken } from 'const/typography';
+import { CLOSE_WHITE, SEARCH_ICON } from 'assets/SvgIcons';
 
 const StyledSearchBox = styled.div<{ isEntertainmentMb?: boolean }>`
   position: relative;

@@ -1,7 +1,7 @@
 import React from 'react';
-
 import SliderAccordion from '../../components/slices/SliderAccordion';
 import ParentWrapper from '../ParentWrapper';
+
 export default {
   title: 'Slices/Question',
   component: SliderAccordion,

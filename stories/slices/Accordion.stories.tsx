@@ -1,7 +1,6 @@
 import React from 'react';
-
-import ParentWrapper from '../ParentWrapper';
 import AccordionGroup from '../../components/slices/AccordionGroup';
+import ParentWrapper from '../ParentWrapper';
 
 export default {
   title: 'Slices/Accordion',

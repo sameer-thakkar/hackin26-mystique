@@ -2,19 +2,23 @@ import React, { useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import styled, { css } from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { currencyAtom } from 'store/atoms/currency';
-import { appAtom } from 'store/atoms/app';
+import Conditional from 'components/common/Conditional';
+import CurrencySelector from 'components/common/CurrencySelector';
 import Drawer from 'components/common/Drawer';
+import LanguageSelector from 'components/common/LanguageSelector';
+import RadioList, { RadioItemArg } from 'components/common/RadioList';
 import SwipeableTabs, {
   Panel,
   Tab,
   TabControl,
 } from 'components/common/SwipeableTabs';
-import RadioList, { RadioItemArg } from 'components/common/RadioList';
-import Conditional from 'components/common/Conditional';
-import CurrencySelector from 'components/common/CurrencySelector';
-import LanguageSelector from 'components/common/LanguageSelector';
-import { GlobeIcon } from 'assets/SvgIcons';
+import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
+import { getLocalisedCurrencySymbol } from 'utils/currency';
+import { getLangObject } from 'utils/helper';
+import { appAtom } from 'store/atoms/app';
+import { currencyAtom } from 'store/atoms/currency';
+import COLORS from 'const/colors';
+import { FONTS } from 'const/fonts';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -22,13 +26,9 @@ import {
   LOCALE_ORDER,
   TOP_CURRENCIES,
 } from 'const/index';
-import { expandFontToken } from 'const/typography';
-import COLORS from 'const/colors';
-import { FONTS } from 'const/fonts';
 import { strings } from 'const/strings';
-import { getLangObject } from 'utils/helper';
-import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
-import { getLocalisedCurrencySymbol } from 'utils/currency';
+import { expandFontToken } from 'const/typography';
+import { GlobeIcon } from 'assets/SvgIcons';
 
 const DrawerTabHeading = styled.div`
   ${expandFontToken(FONTS.SUBHEADING_LARGE)}

@@ -1,24 +1,24 @@
-import dynamic from 'next/dynamic';
 import React, { useContext, useEffect, useState } from 'react';
 import { scroller } from 'react-scroll';
+import dynamic from 'next/dynamic';
 import styled, { css } from 'styled-components';
+import { useRecoilValue } from 'recoil';
+import type { SwiperProps } from 'swiper/react';
+import { Swiper as SwiperClass } from 'swiper/types';
+import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
-import { SIZES } from 'const/ui-constants';
-import COLORS from 'const/colors';
-import { expandFontToken } from 'const/typography';
-import { stringIdfy, withShortcodes } from 'utils/helper';
+import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
+import { stringIdfy, withShortcodes } from 'utils/helper';
+import { appAtom } from 'store/atoms/app';
+import COLORS from 'const/colors';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   PAGE_TYPES,
 } from 'const/index';
-import { MBContext } from 'contexts/MBContext';
-import Conditional from 'components/common/Conditional';
-import type { SwiperProps } from 'swiper/react';
-import { Swiper as SwiperClass } from 'swiper/types';
-import { useRecoilValue } from 'recoil';
-import { appAtom } from 'store/atoms/app';
+import { expandFontToken } from 'const/typography';
+import { SIZES } from 'const/ui-constants';
 
 const Swiper = dynamic(() =>
   import(/* webpackChunkName: "Swiper" */ 'components/Swiper')

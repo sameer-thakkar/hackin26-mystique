@@ -1,8 +1,7 @@
 import React, { MouseEventHandler } from 'react';
-import Button from 'UI/Button';
 import Conditional from 'components/common/Conditional';
+import Button from 'UI/Button';
 import { strings } from 'const/strings';
-
 import { ButtonWrapper } from '../__style';
 import { ITextOverlay } from './interface';
 

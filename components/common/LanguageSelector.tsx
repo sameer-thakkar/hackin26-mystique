@@ -1,22 +1,22 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { GLOBE } from 'assets/SvgIcons';
+import Cookies from 'js-cookie';
+import DropdownSelector from 'components/common/DropdownSelector';
+import { MBContext } from 'contexts/MBContext';
+import { useCaptureClickOutside } from 'hooks/ClickOutside';
+import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import { getLangObject } from 'utils/helper';
+import { getDomainFromUid } from 'utils/urlUtils';
+import { metaAtom } from 'store/atoms/meta';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
-  LanguagesUnion,
   LANGUAGE_MAP,
+  LanguagesUnion,
   LOCALE_ORDER,
   THEMES,
 } from 'const/index';
-import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
-import { metaAtom } from 'store/atoms/meta';
-import { useCaptureClickOutside } from 'hooks/ClickOutside';
-import { getLangObject } from 'utils/helper';
-import { MBContext } from 'contexts/MBContext';
-import DropdownSelector from 'components/common/DropdownSelector';
-import Cookies from 'js-cookie';
-import { getDomainFromUid } from 'utils/urlUtils';
+import { GLOBE } from 'assets/SvgIcons';
 
 const LanguageSelector = (props: any) => {
   const [showDropdown, setShowDropdown] = useState(false);

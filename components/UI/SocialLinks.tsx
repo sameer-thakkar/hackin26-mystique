@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { metaAtom } from 'store/atoms/meta';
-import { FACEBOOK, TWITTER, INSTAGRAM } from 'assets/SvgIcons';
 import COLORS from 'const/colors';
+import { FACEBOOK, INSTAGRAM, TWITTER } from 'assets/SvgIcons';
 
 const StyledSocialLinks = styled.div`
   display: grid;
@@ -23,10 +23,10 @@ const SocialIcon = styled.div`
     height: 20px;
     width: 20px;
     path {
-      fill: ${({      
- // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
- isEntertainmentMb }) =>
-        isEntertainmentMb ? COLORS.GRAY.G5 : COLORS.BRAND.WHITE};
+      fill: ${({
+        // @ts-expect-error TS(2339): Property 'isEntertainmentMb' does not exist on typ... Remove this comment to see the full error message
+        isEntertainmentMb,
+      }) => (isEntertainmentMb ? COLORS.GRAY.G5 : COLORS.BRAND.WHITE)};
     }
   }
 `;

@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PAGETYPE } from 'const/index';
-import { CHEVRON_LEFT, SEARCH_ICON } from 'assets/SvgIcons';
 import { HALYARD } from 'const/ui-constants';
-
-import { SortSelector } from '../SortSelector';
+import { CHEVRON_LEFT, SEARCH_ICON } from 'assets/SvgIcons';
 import { ProductsWrapper } from '../ProductsWrapper';
+import { SortSelector } from '../SortSelector';
 
 export const CategoryPage = (props: any) => {
   const [filterDropdown, setFilterDropdown] = useState(false);

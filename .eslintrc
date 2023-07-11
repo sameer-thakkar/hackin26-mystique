@@ -12,7 +12,8 @@
     "react",
     "react-hooks",
     "jsx-a11y",
-    "import"
+    "import",
+    "simple-import-sort"
   ],
   "rules": {
     "@typescript-eslint/no-unused-vars": [
@@ -26,30 +27,56 @@
     "no-case-declarations": "off",
     "no-console": "error",
     "prettier/prettier": "off",
-    "import/order": [
-      "warn",
+    "simple-import-sort/imports": [
+      "error",
       {
-        "newlines-between": "always",
         "groups": [
-          "builtin",
-          "external",
-          "internal",
-          ["sibling", "parent", "index"]
-        ],
-        "pathGroups": [
-          {
-            "pattern": "atoms/**",
-            "group": "internal",
-            "position": "after"
-          },
-          {
-            "pattern": "selectors/**",
-            "group": "internal",
-            "position": "after"
-          }
+          [
+            //react/next/prismic related packages
+            "^react",
+            "^next",
+            "^prismic",
+            "^config",
+            "^styled",
+            "^recoil",
+            "^(?!@headout)",
+            "^(?!// @ts-expect-error)",
+            "^@?\\w",
+            // internal packages
+            "^@headout",
+            //components
+            "^components",
+            "^(?!components/hooks)",
+            "^UI",
+            //contexts/hooks/utils
+            "^contexts",
+            "^hooks",
+            "^utils",
+            //atoms
+            "^atoms",
+            "^store",
+            //assets/statics/labels/constants
+            "^const",
+            "^constants",
+            "^assets",
+            "^static",
+            //side effect imports.
+            "^\\u0000",
+            //parent imports. put `..` last
+            "^\\.\\.(?!/?$)",
+            "^\\.\\./?$",
+            //other relative imports. put same-folder imports and `.` last
+            "^\\./(?=.*/)(?!/?$)",
+            "^\\.(?!/?$)",
+            "^\\./?$"
+          ]
         ]
       }
-    ]
+    ],
+    "simple-import-sort/exports": "error",
+    "import/first": "error",
+    "import/newline-after-import": "error",
+    "import/no-duplicates": "error"
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {

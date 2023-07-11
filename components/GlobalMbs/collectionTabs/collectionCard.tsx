@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { MBContext } from 'contexts/MBContext';
-import Image from 'UI/Image';
 import Conditional from 'components/common/Conditional';
 import DetailedCollectionCard from 'components/GlobalMbs/collectionTabs/detailedCollectionCard';
-import { ASPECT_RATIO, FALLBACK_IMAGES, SIDEBAR_TYPES } from 'const/index';
-import COLORS from 'const/colors';
+import Image from 'UI/Image';
+import { MBContext } from 'contexts/MBContext';
 import { getLocalisedPrice } from 'utils/currency';
+import COLORS from 'const/colors';
+import { ASPECT_RATIO, FALLBACK_IMAGES, SIDEBAR_TYPES } from 'const/index';
 
 const StyledCard = styled.div`
   display: grid;

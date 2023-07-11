@@ -1,18 +1,18 @@
 import { useContext } from 'react';
+import { useRouter } from 'next/router';
 import { NextSeo, NextSeoProps } from 'next-seo';
 import { OpenGraph, Twitter } from 'next-seo/lib/types';
-import { useRouter } from 'next/router';
-import { MBContext } from 'contexts/MBContext';
 import { BANNER_PARAMS } from 'components/Banner';
 import Conditional from 'components/common/Conditional';
 import {
-  WebpageJsonLD,
+  CollectionAggregatedRatingScript,
   MystiquePerfScript,
   TrackingScripts,
-  CollectionAggregatedRatingScript,
   VideoMetaScript,
+  WebpageJsonLD,
 } from 'components/common/Scripts';
 import { CollectionDetails } from 'components/StaticBanner/index';
+import { MBContext } from 'contexts/MBContext';
 import {
   getCollectionVideoMeta,
   legacyBooleanCheck,
@@ -20,12 +20,12 @@ import {
 } from 'utils';
 import { createAdditionalMetaTag, createHrefLangObj } from 'utils/headUtils';
 import { withShortcodes } from 'utils/helper';
-import { convertUidToUrl } from 'utils/urlUtils';
 import { getStructure } from 'utils/lookerUtils';
+import { convertUidToUrl } from 'utils/urlUtils';
 import {
   FB_DOMAIN_VERIFICATION,
-  QUERY_PARAMS,
   PAGE_URL_STRUCTURE,
+  QUERY_PARAMS,
   SEO_SUBDOMAINS,
 } from 'const/index';
 

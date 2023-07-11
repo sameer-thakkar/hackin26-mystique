@@ -1,21 +1,20 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
 import useSWR from 'swr';
-import { MBContext } from 'contexts/MBContext';
 import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
-import RichContent from 'UI/RichContent';
 import PriceBlock from 'UI/PriceBlock';
+import RichContent from 'UI/RichContent';
 import TitleTextCombo from 'UI/TitleTextCombo';
+import { MBContext } from 'contexts/MBContext';
 import { createBookingURL } from 'utils';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 import { tourListApiParser } from 'utils/dataParsers';
-import { getHostName } from 'utils/helper';
-import { STAR_FULL } from 'assets/SvgIcons';
-import { HALYARD } from 'const/ui-constants';
+import { generateSidenavId, getHostName } from 'utils/helper';
 import COLORS from 'const/colors';
 import { DESIGN } from 'const/index';
-import { generateSidenavId } from 'utils/helper';
+import { HALYARD } from 'const/ui-constants';
+import { STAR_FULL } from 'assets/SvgIcons';
 
 const Tour = styled.a`
   display: grid;

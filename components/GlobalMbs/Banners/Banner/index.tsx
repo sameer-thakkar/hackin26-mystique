@@ -2,22 +2,8 @@ import { FunctionComponent, useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
-import Image from 'UI/Image';
-import Conditional from 'components/common/Conditional';
-import {
-  ANALYTICS_EVENTS,
-  ASPECT_RATIO,
-  FALLBACK_IMAGES,
-  ANALYTICS_PROPERTIES,
-  PAGE_TYPES,
-} from 'const/index';
-import { CHEVRON_DOWN } from 'assets/SvgIcons';
-import { shortCodeSerializer } from 'utils/shortCodes';
-import { MBContext } from 'contexts/MBContext';
-import { strings } from 'const/strings';
-import { getBuyTicketsUrl } from 'utils/helper';
-import { trackEvent } from 'utils/analytics';
 import type { SwiperProps } from 'swiper/react';
+import Conditional from 'components/common/Conditional';
 import {
   IBannerProps,
   IGlobalBannerImage,
@@ -26,6 +12,20 @@ import {
   StyledBanner,
   SwiperWrapper,
 } from 'components/GlobalMbs/Banners/Banner/styles';
+import Image from 'UI/Image';
+import { MBContext } from 'contexts/MBContext';
+import { trackEvent } from 'utils/analytics';
+import { getBuyTicketsUrl } from 'utils/helper';
+import { shortCodeSerializer } from 'utils/shortCodes';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  ASPECT_RATIO,
+  FALLBACK_IMAGES,
+  PAGE_TYPES,
+} from 'const/index';
+import { strings } from 'const/strings';
+import { CHEVRON_DOWN } from 'assets/SvgIcons';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 const Breadcrumb = dynamic(() => import('components/GlobalMbs/Breadcrumb'));

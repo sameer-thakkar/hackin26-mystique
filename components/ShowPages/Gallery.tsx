@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import dynamic from 'next/dynamic';
-import Conditional from 'components/common/Conditional';
-import COLORS from 'const/colors';
-import Image, { Wrapper } from 'UI/Image';
-import { BLACK_CROSS, ALL_PHOTOS } from 'assets/SvgIcons';
-import { trackEvent } from 'utils/analytics';
-import { ANALYTICS_PROPERTIES } from 'const/index';
+import styled from 'styled-components';
 import type { SwiperProps } from 'swiper/react';
+import Conditional from 'components/common/Conditional';
+import Image, { Wrapper } from 'UI/Image';
+import { trackEvent } from 'utils/analytics';
+import COLORS from 'const/colors';
+import { ANALYTICS_PROPERTIES } from 'const/index';
+import { ALL_PHOTOS, BLACK_CROSS } from 'assets/SvgIcons';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 

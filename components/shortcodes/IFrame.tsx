@@ -1,9 +1,9 @@
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import React from 'react';
-import { useRecoilValue } from 'recoil';
-import { metaAtom } from 'store/atoms/meta';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import { trackEvent } from 'utils/analytics';
+import { metaAtom } from 'store/atoms/meta';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 
 type IFrameProps = {
   name?: string;

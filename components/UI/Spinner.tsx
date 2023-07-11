@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
+import { HALYARD } from 'const/ui-constants';
 
 const Wrapper = styled.div`
   width: max-content;

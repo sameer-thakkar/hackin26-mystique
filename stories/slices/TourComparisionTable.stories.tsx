@@ -1,7 +1,6 @@
 import React from 'react';
-
-import TourComparisonTable from '../../components/slices/TourComparision';
 import useWindowSize from '../../components/hooks/useWindowSize';
+import TourComparisonTable from '../../components/slices/TourComparision';
 import { ProductsContextProvider } from '../../contexts/Products';
 import ParentWrapper from '../ParentWrapper';
 

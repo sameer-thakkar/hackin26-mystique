@@ -1,9 +1,9 @@
-import Product from 'components/MicrositeV2/Product';
-import { Container } from 'components/slices/ShowsGrid/styles';
-import { ShowsGridProps } from 'components/slices/ShowsGrid/interface';
-import { getTgidsFromShow } from 'utils';
 import { useContext } from 'react';
+import Product from 'components/MicrositeV2/Product';
+import { ShowsGridProps } from 'components/slices/ShowsGrid/interface';
+import { Container } from 'components/slices/ShowsGrid/styles';
 import { MBContext } from 'contexts/MBContext';
+import { getTgidsFromShow } from 'utils';
 
 const ShowsGrid = (props: ShowsGridProps) => {
   const {

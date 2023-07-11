@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { useWindowWidth } from '@react-hook/window-size';
 import Conditional from 'components/common/Conditional';
 import OverflowScroll from 'UI/OverflowScroll';
-import { SIZES } from 'const/ui-constants';
 import COLORS from 'const/colors';
+import { SIZES } from 'const/ui-constants';
 import { CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });

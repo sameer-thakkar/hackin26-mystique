@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import Emoji from 'components/common/Emoji';
-import { expandFontToken } from 'const/typography';
 import { FONTS } from 'const/fonts';
+import { expandFontToken } from 'const/typography';
 
 export const StyledInfoBanner = styled.div`
   padding: 1.25rem 1.5rem 1.5rem;
@@ -10,13 +10,15 @@ export const StyledInfoBanner = styled.div`
   border-radius: 0.5rem;
   justify-content: left;
   align-items: center;
-  background: ${({  
- // @ts-expect-error TS(2339): Property 'colorScheme' does not exist on type 'Pic... Remove this comment to see the full error message
- colorScheme: cs }) => cs.background};
+  background: ${({
+    // @ts-expect-error TS(2339): Property 'colorScheme' does not exist on type 'Pic... Remove this comment to see the full error message
+    colorScheme: cs,
+  }) => cs.background};
   * {
-    color: ${({    
- // @ts-expect-error TS(2339): Property 'colorScheme' does not exist on type 'Pic... Remove this comment to see the full error message
- colorScheme: cs }) => cs.color};
+    color: ${({
+      // @ts-expect-error TS(2339): Property 'colorScheme' does not exist on type 'Pic... Remove this comment to see the full error message
+      colorScheme: cs,
+    }) => cs.color};
   }
 
   @media (max-width: 768px) {
@@ -26,10 +28,10 @@ export const StyledInfoBanner = styled.div`
 
 const Title = styled.div`
   ${expandFontToken(FONTS.SUBHEADING_LARGE)}
-  margin-bottom: ${({  
- // @ts-expect-error TS(2339): Property 'applyCustomMarginForHeading' does not ex... Remove this comment to see the full error message
- applyCustomMarginForHeading }) =>
-    applyCustomMarginForHeading};
+  margin-bottom: ${({
+    // @ts-expect-error TS(2339): Property 'applyCustomMarginForHeading' does not ex... Remove this comment to see the full error message
+    applyCustomMarginForHeading,
+  }) => applyCustomMarginForHeading};
 
   @media (max-width: 768px) {
     ${expandFontToken(FONTS.SUBHEADING_REGULAR)}
@@ -62,7 +64,7 @@ const InfoBanner = ({
   colorScheme,
   emojiSymbol = '🤑',
   emojiLabel = 'money-mouth-face',
-  applyCustomMarginForHeading = '0.5rem'
+  applyCustomMarginForHeading = '0.5rem',
 }: any) => {
   return (
     // @ts-expect-error TS(2769): No overload matches this call.

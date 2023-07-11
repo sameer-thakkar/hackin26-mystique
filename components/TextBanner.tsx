@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import { SIZES } from 'const/ui-constants';
 import COLORS from 'const/colors';
-
+import { SIZES } from 'const/ui-constants';
 import Conditional from './common/Conditional';
 
 const Banner = styled.div`
@@ -35,9 +34,7 @@ const Wrapper = styled.div`
   margin: 0 auto;
 `;
 
-const TextBanner = ({
-  bannerHeading
-}: any) => {
+const TextBanner = ({ bannerHeading }: any) => {
   return (
     <Banner>
       <Conditional if={!!bannerHeading}>

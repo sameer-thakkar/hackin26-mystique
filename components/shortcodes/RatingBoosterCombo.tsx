@@ -1,14 +1,14 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { MBContext } from 'contexts/MBContext';
 import useSWR from 'swr';
 import Conditional from 'components/common/Conditional';
-import { HALYARD } from 'const/ui-constants';
+import { MBContext } from 'contexts/MBContext';
+import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
+import { getHostName } from 'utils/helper';
 import COLORS from 'const/colors';
 import { strings } from 'const/strings';
+import { HALYARD } from 'const/ui-constants';
 import { STAR } from 'assets/SvgIcons';
-import { getHostName } from 'utils/helper';
-import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
 
 const BoosterContainer = styled.span`
   display: grid;

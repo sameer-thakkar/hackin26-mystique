@@ -1,10 +1,10 @@
 import Cookies from 'js-cookie';
+import { isProduction } from 'utils/gen';
 import {
   CLARITY_PROJECT_ID,
   CLARITY_SUPPORTED_DOMAINS,
 } from 'const/clarityConstants';
 import { COOKIE, DOMAIN_INITIALS } from 'const/index';
-import { isProduction } from 'utils/gen';
 
 export const initializeClarity = (key: string) => {
   (function (

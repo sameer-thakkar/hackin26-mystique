@@ -1,9 +1,9 @@
-import { HALYARD } from 'const/ui-constants';
-import COLORS from 'const/colors';
 import React from 'react';
 import styled from 'styled-components';
 import Image from 'UI/Image';
+import COLORS from 'const/colors';
 import { strings } from 'const/strings';
+import { HALYARD } from 'const/ui-constants';
 
 const StyledSmallListicle = styled.div`
   font-family: ${HALYARD.FONT_STACK};

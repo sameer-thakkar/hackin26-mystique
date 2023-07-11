@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import classNames from 'classnames';
 import COLORS from 'const/colors';
 import { expandFontToken } from 'const/typography';
-
 import LinkResolver from '../LinkResolver';
 
 const Tabs = styled.div`
@@ -14,9 +13,10 @@ const Tabs = styled.div`
   justify-content: left;
   margin: auto;
   border-bottom: 1px solid ${COLORS.GRAY.G6};
-  justify-content: ${({  
- // @ts-expect-error TS(2339): Property 'align' does not exist on type 'Pick<Deta... Remove this comment to see the full error message
- align }) => {
+  justify-content: ${({
+    // @ts-expect-error TS(2339): Property 'align' does not exist on type 'Pick<Deta... Remove this comment to see the full error message
+    align,
+  }) => {
     switch (align) {
       case 'center':
         return 'space-around';

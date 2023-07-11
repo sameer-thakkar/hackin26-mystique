@@ -1,18 +1,18 @@
 import { useContext, useState } from 'react';
 import styled from 'styled-components';
 import useSWR from 'swr';
-import { MBContext } from 'contexts/MBContext';
-import Tabs from 'components/GlobalMbs/Tabs';
 import RowComponent from 'components/GlobalMbs/collectionTabs/rowComponent';
-import { HALYARD } from 'const/ui-constants';
-import { chunkArray } from 'utils/arrayUtils';
+import Tabs from 'components/GlobalMbs/Tabs';
+import { MBContext } from 'contexts/MBContext';
 import {
   getHeadoutApiUrl,
   HeadoutEndpoints,
   swrFetcher,
   swrMultiFetcher,
 } from 'utils/apiUtils';
+import { chunkArray } from 'utils/arrayUtils';
 import { getHostName } from 'utils/helper';
+import { HALYARD } from 'const/ui-constants';
 
 const TitleWrapper = styled.div`
   display: flex;

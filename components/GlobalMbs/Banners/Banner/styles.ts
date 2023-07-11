@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { IStyledBanner } from 'components/GlobalMbs/Banners/Banner/interface';
 import { variantStyles } from 'components/GlobalMbs/Banners/Banner/index';
-import { HALYARD } from 'const/ui-constants';
+import { IStyledBanner } from 'components/GlobalMbs/Banners/Banner/interface';
 import COLORS from 'const/colors';
+import { HALYARD } from 'const/ui-constants';
 
 export const SwiperWrapper = styled.div`
   display: flex;

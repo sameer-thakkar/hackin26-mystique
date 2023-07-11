@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
+import { expandFontToken } from 'const/typography';
 
 export const StyledNestedMenuContainer = styled.ul<{ $isSelected?: boolean }>`
   display: ${({ $isSelected }) => ($isSelected ? 'block' : 'none')};

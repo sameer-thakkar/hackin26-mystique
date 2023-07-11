@@ -1,15 +1,15 @@
-import { CUSTOM_TYPES, DESIGN, FALLBACK_IMAGES } from 'constants/index';
-
 import { NextPageContext } from 'next';
-import { convertUidToUrl, getLangUID } from 'utils/urlUtils';
-import { getPageData } from 'utils/prismicUtils';
+import { getHeadoutLanguagecode, isCollectionMB, reflect } from 'utils';
+import { groupSlices } from 'utils/helper';
 import imageSliceHandler, {
   storeImage,
   UrlProps,
 } from 'utils/imageSliceHandler';
-import { getHeadoutLanguagecode, isCollectionMB, reflect } from 'utils';
-import { groupSlices } from 'utils/helper';
 import { sendLog } from 'utils/logger';
+import { getPageData } from 'utils/prismicUtils';
+import { convertUidToUrl, getLangUID } from 'utils/urlUtils';
+import { CUSTOM_TYPES, DESIGN, FALLBACK_IMAGES } from 'constants/index';
+
 interface SitemapContext extends NextPageContext {
   localizedStrings: any;
 }

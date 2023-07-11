@@ -1,21 +1,21 @@
-import { STAR } from 'assets/SvgIcons';
+import { useContext } from 'react';
+import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
+import { IFilteredDescriptorProps } from 'components/PinnedCard/interface';
+import { PinnedCardWrapper } from 'components/PinnedCard/styles';
+import Button from 'UI/Button';
+import Image from 'UI/Image';
+import PriceBlock from 'UI/PriceBlock';
+import { MBContext } from 'contexts/MBContext';
+import { createBookingURL } from 'utils';
+import { trackEvent } from 'utils/analytics';
+import { parseDescriptors } from 'utils/productUtils';
+import { currencyAtom } from 'store/atoms/currency';
 import COLORS from 'const/colors';
 import { descriptorIcons } from 'const/descriptorIcons';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
-import { MBContext } from 'contexts/MBContext';
-import { useContext } from 'react';
-import { useRecoilValue } from 'recoil';
-import { currencyAtom } from 'store/atoms/currency';
-import Button from 'UI/Button';
-import Image from 'UI/Image';
-import PriceBlock from 'UI/PriceBlock';
-import { createBookingURL } from 'utils';
-import { trackEvent } from 'utils/analytics';
-import { parseDescriptors } from 'utils/productUtils';
-import { PinnedCardWrapper } from 'components/PinnedCard/styles';
-import { IFilteredDescriptorProps } from 'components/PinnedCard/interface';
+import { STAR } from 'assets/SvgIcons';
 
 const DescriptorList = (props: IFilteredDescriptorProps) => {
   const { filteredDescriptor } = props;

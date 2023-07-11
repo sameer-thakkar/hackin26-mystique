@@ -1,17 +1,19 @@
 import React, { useContext, useState } from 'react';
-import styled from 'styled-components';
-import parse from 'url-parse';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
+import styled from 'styled-components';
+import parse from 'url-parse';
+import Conditional from 'components/common/Conditional';
+import Button from 'components/UI/Button';
+import Image from 'UI/Image';
 import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
 import EnvironmentContext from 'contexts/environmentContext';
-import ProductsContext from 'contexts/Products';
 import { MBContext } from 'contexts/MBContext';
-import Image from 'UI/Image';
-import Button from 'components/UI/Button';
+import ProductsContext from 'contexts/Products';
 import { createBookingURL } from 'utils';
+import { trackEvent } from 'utils/analytics';
 import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
-import { CHEVRON_DOWN } from 'assets/SvgIcons';
+import COLORS from 'const/colors';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -19,9 +21,7 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
-import COLORS from 'const/colors';
-import Conditional from 'components/common/Conditional';
-import { trackEvent } from 'utils/analytics';
+import { CHEVRON_DOWN } from 'assets/SvgIcons';
 
 const StyledTourComparisionTable = styled.div`
   width: auto;

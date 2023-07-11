@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { SavedTag } from 'UI/PriceBlock';
-import { expandFontToken } from 'const/typography';
-import { FONTS } from 'const/fonts';
 import COLORS from 'const/colors';
+import { FONTS } from 'const/fonts';
+import { expandFontToken } from 'const/typography';
 
 export const Banner = styled.div`
   width: 100%;

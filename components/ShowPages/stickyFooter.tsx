@@ -1,16 +1,15 @@
-import { useRecoilValue } from 'recoil';
-import { metaAtom } from 'store/atoms/meta';
-import Conditional from 'components/common/Conditional';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
-import { strings } from 'const/strings';
-import COLORS from 'const/colors';
 import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
+import Conditional from 'components/common/Conditional';
 import { getProductCommonProperties, trackEvent } from 'utils/analytics';
 import { checkIfBroadwayMB, checkIfLTTMB, isMobile } from 'utils/helper';
-import { expandFontToken } from 'const/typography';
+import { metaAtom } from 'store/atoms/meta';
+import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
-
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { strings } from 'const/strings';
+import { expandFontToken } from 'const/typography';
 import { MBContext } from '../../contexts/MBContext';
 
 const StickyFooterContentWrapper = styled.div`

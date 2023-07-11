@@ -1,34 +1,60 @@
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import { useRecoilValue } from 'recoil';
+import { ProductJsonLd } from 'next-seo';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
-import { ProductJsonLd } from 'next-seo';
-import cloneDeep from 'lodash.clonedeep';
-import { useWindowWidth } from '@react-hook/window-size';
 import styled from 'styled-components';
-import { metaAtom } from 'store/atoms/meta';
-import { gtmAtom } from 'store/atoms/gtm';
-import { currencyAtom } from 'store/atoms/currency';
-import { StyledRichContent } from 'UI/RichContent';
+import { useRecoilValue } from 'recoil';
+import { useWindowWidth } from '@react-hook/window-size';
+import cloneDeep from 'lodash.clonedeep';
+import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
-import ContentTabs from 'components/ShowPages/ContentTabs';
+import PopulateMeta from 'components/common/NextSeoMeta';
 import ShowPageBanner from 'components/ShowPages/Banner/index';
+import CategorySlider from 'components/ShowPages/CategorySlider';
+import ContentTabs from 'components/ShowPages/ContentTabs';
 import CustomerReview from 'components/ShowPages/CustomerReview';
 import FeatureCard from 'components/ShowPages/FeatureCard';
-import GoogleMap from 'components/ShowPages/GoogleMap';
 import Gallery from 'components/ShowPages/Gallery';
-import CategorySlider from 'components/ShowPages/CategorySlider';
-import SubHeading from 'components/ShowPages/SubHeading';
-import SpecialOfferBanner from 'components/ShowPages/SpecialOfferBanner';
-import TitleTextCombo from 'components/UI/TitleTextCombo';
-import Conditional from 'components/common/Conditional';
-import PopulateMeta from 'components/common/NextSeoMeta';
+import GoogleMap from 'components/ShowPages/GoogleMap';
 import { parseShowPageData } from 'components/ShowPages/parseShowPage';
-import { StyledAsideModal } from 'components/UI/AsideModal';
+import SpecialOfferBanner from 'components/ShowPages/SpecialOfferBanner';
+import SubHeading from 'components/ShowPages/SubHeading';
 import { StyledAccordion } from 'components/slices/Accordion';
+import { StyledAsideModal } from 'components/UI/AsideModal';
+import TitleTextCombo from 'components/UI/TitleTextCombo';
+import { StyledRichContent } from 'UI/RichContent';
+import {
+  getAlternateLanguages,
+  getHeadoutLanguagecode,
+  legacyBooleanCheck,
+} from 'utils';
+import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import {
+  fetchTourGroupReviews,
+  fetchTourGroupsByCategory,
+} from 'utils/apiUtils';
+import { getUniqueArrayItemsBy } from 'utils/arrayUtils';
+import { getDurationISO, getPrevDate } from 'utils/dateUtils';
+import {
+  checkIfBroadwayMB,
+  checkIfLTTMB,
+  getHostName,
+  groupSlices,
+} from 'utils/helper';
+import { generateDescriptor } from 'utils/productUtils';
+import { getProductSchema } from 'utils/schemaUtils';
+import {
+  convertUidToUrl,
+  getLogoRedirectionUrl,
+  getShowpageBreadcrumbUid,
+  getValidUrl,
+} from 'utils/urlUtils';
+import { currencyAtom } from 'store/atoms/currency';
+import { gtmAtom } from 'store/atoms/gtm';
+import { metaAtom } from 'store/atoms/meta';
 import {
   ALLOW_IMMEDIATE_NESTING,
   ANALYTICS_EVENTS,
@@ -37,32 +63,6 @@ import {
 } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
-import {
-  getAlternateLanguages,
-  getHeadoutLanguagecode,
-  legacyBooleanCheck,
-} from 'utils';
-import {
-  groupSlices,
-  getHostName,
-  checkIfLTTMB,
-  checkIfBroadwayMB,
-} from 'utils/helper';
-import {
-  convertUidToUrl,
-  getValidUrl,
-  getShowpageBreadcrumbUid,
-  getLogoRedirectionUrl,
-} from 'utils/urlUtils';
-import {
-  fetchTourGroupReviews,
-  fetchTourGroupsByCategory,
-} from 'utils/apiUtils';
-import { generateDescriptor } from 'utils/productUtils';
-import { getPrevDate, getDurationISO } from 'utils/dateUtils';
-import { getProductSchema } from 'utils/schemaUtils';
-import { getUniqueArrayItemsBy } from 'utils/arrayUtils';
-import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 
 const Breadcrumb = dynamic(() => import('./BreadCrumb'));
 const AccordionGroup = dynamic(() => import('../slices/AccordionGroup'));

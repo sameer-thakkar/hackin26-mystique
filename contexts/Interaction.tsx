@@ -1,7 +1,10 @@
-import { ANALYTICS_PROPERTIES } from 'const/index';
-import { ANALYTICS_EVENTS, SORT_SELECTOR_FILTERS } from 'const/index';
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { trackEvent } from 'utils/analytics';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  SORT_SELECTOR_FILTERS,
+} from 'const/index';
 
 const InteractionContext = createContext(null);
 export default InteractionContext;

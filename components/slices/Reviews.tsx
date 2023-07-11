@@ -3,11 +3,11 @@ import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import Rating from 'UI/Rating';
 import Image from 'UI/Image';
+import Rating from 'UI/Rating';
+import { generateSidenavId } from 'utils/helper';
 import COLORS from 'const/colors';
 import { QUOTES } from 'assets/SvgIcons';
-import { generateSidenavId } from 'utils/helper';
 
 const Slider = dynamic(() => import('UI/Slider'));
 dayjs.extend(relativeTime);

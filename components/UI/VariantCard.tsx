@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import Chevron from 'components/UI/Chevron';
 import LocalisedPrice from 'components/UI/LPrice';
-import { HALYARD } from 'const/ui-constants';
-import { strings } from 'const/strings';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
-import { addQueryParams } from 'utils/urlUtils';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import COLORS from 'const/colors';
-import 'react-loading-skeleton/dist/skeleton.css';
 import { trackEvent } from 'utils/analytics';
+import { addQueryParams } from 'utils/urlUtils';
 import { metaAtom } from 'store/atoms/meta';
-import { useRecoilValue } from 'recoil';
+import COLORS from 'const/colors';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { strings } from 'const/strings';
+import { HALYARD } from 'const/ui-constants';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const VariantCardWrapper = styled.div`
   width: 100%;

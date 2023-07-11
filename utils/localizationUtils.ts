@@ -1,6 +1,6 @@
+import defaultsDeep from 'lodash/defaultsDeep';
 import { LanguagesUnion } from 'const/index';
 import EN from 'const/localization/en';
-import defaultsDeep from 'lodash/defaultsDeep';
 
 const dayJsLocales = {
   de: () => import(`dayjs/locale/de`),

@@ -1,12 +1,12 @@
 // _document is only rendered on the server side and not on the client side
-import Document, { Html, Head, Main, NextScript } from 'next/document';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
 import Script from 'next/script';
 import { ServerStyleSheet } from 'styled-components';
-import { getLangUID } from 'utils/urlUtils';
-import { RTL_LANGUAGE_CODES } from 'const/index';
-import { getLangObject } from 'utils/helper';
 import Conditional from 'components/common/Conditional';
 import { InlineFontFace, PreloadFontLinks } from 'components/common/Font';
+import { getLangObject } from 'utils/helper';
+import { getLangUID } from 'utils/urlUtils';
+import { RTL_LANGUAGE_CODES } from 'const/index';
 
 class MystiqueDocument extends Document {
   static async getInitialProps(ctx: any) {

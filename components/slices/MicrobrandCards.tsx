@@ -1,19 +1,19 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
-import { MBContext } from 'contexts/MBContext';
+import styled from 'styled-components';
 import useSWR from 'swr';
 import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
-import { THEMES } from 'const/index';
 import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
-import { expandFontToken } from 'const/typography';
-import COLORS from 'const/colors';
-import { tourListApiParser } from 'utils/dataParsers';
-import { shortCodeSerializer } from 'utils/shortCodes';
-import { generateSidenavId, getHostName } from 'utils/helper';
+import { MBContext } from 'contexts/MBContext';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
+import { tourListApiParser } from 'utils/dataParsers';
+import { generateSidenavId, getHostName } from 'utils/helper';
+import { shortCodeSerializer } from 'utils/shortCodes';
+import COLORS from 'const/colors';
+import { THEMES } from 'const/index';
+import { expandFontToken } from 'const/typography';
 
 const StyledMBCards = styled.div<{ gridAutoCol: boolean }>`
   display: grid;

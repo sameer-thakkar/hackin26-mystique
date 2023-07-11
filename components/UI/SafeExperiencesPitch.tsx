@@ -1,25 +1,24 @@
 import { useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
+import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
-import { HALYARD } from 'const/ui-constants';
+import { greyScheme } from 'style/theme';
+import Conditional from 'components/common/Conditional';
+import { MBContext } from 'contexts/MBContext';
+import useWindowSize from 'hooks/useWindowSize';
+import { getSafetyBannerDocument } from 'utils/prismicUtils';
 import COLORS from 'const/colors';
 import {
-  SAFETY_DETAILS_IMAGES,
-  SAFETY_DETAILS_TYPE,
   CLUBBED_SAFETY_TAGS,
   LANGUAGE_MAP,
   LanguagesUnion,
+  SAFETY_DETAILS_IMAGES,
+  SAFETY_DETAILS_TYPE,
 } from 'const/index';
-import useWindowSize from 'hooks/useWindowSize';
-import Conditional from 'components/common/Conditional';
 import { strings } from 'const/strings';
+import { HALYARD } from 'const/ui-constants';
 import { CHEVRON_LEFT_CIRCLE, Shield } from 'assets/SvgIcons';
-import { greyScheme } from 'style/theme';
-import { MBContext } from 'contexts/MBContext';
-import { getSafetyBannerDocument } from 'utils/prismicUtils';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
-
 import IconCTA, { StyledIconCTA } from './IconCTA';
 import Image from './Image';
 

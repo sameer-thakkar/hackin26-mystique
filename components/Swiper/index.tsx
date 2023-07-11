@@ -1,8 +1,7 @@
 import React from 'react';
-import { Pagination, Navigation, Autoplay, Lazy } from 'swiper';
+import { Autoplay, Lazy, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperProps, SwiperSlide } from 'swiper/react';
 import Conditional from 'components/common/Conditional';
-
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';

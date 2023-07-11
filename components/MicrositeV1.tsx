@@ -1,19 +1,19 @@
 import React, { ComponentType, useEffect, useState } from 'react';
+import { scroller } from 'react-scroll';
+import dynamic from 'next/dynamic';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
-import dynamic from 'next/dynamic';
 import styled from 'styled-components';
-import { scroller } from 'react-scroll';
-import { useWindowWidth } from '@react-hook/window-size';
 import { useRecoilValue } from 'recoil';
-import { currencyAtom } from 'store/atoms/currency';
-import { gtmAtom } from 'store/atoms/gtm';
-import { InteractionContextProvider } from 'contexts/Interaction';
-import { ProductsContextProvider } from 'contexts/Products';
+import { useWindowWidth } from '@react-hook/window-size';
+import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
+import LastMinuteFilters from 'components/common/LastMinuteFilters';
 import PopulateMeta from 'components/common/NextSeoMeta';
-import Conditional from 'components/common/Conditional';
+import F1TrustBoosters from 'components/F1TrustBoosters/index';
+import { InteractionContextProvider } from 'contexts/Interaction';
+import { ProductsContextProvider } from 'contexts/Products';
 import {
   displayBannerTrustBoosters,
   displayProductTrustBoosters,
@@ -25,27 +25,27 @@ import {
   isCollectionMB,
   legacyBooleanCheck,
 } from 'utils';
-import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import allToursParser from 'utils/allToursParser';
+import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import {
+  checkIfCategoryHeaderExists,
   csvTgidToArray,
   getLangObject,
   groupSlices,
-  checkIfCategoryHeaderExists,
 } from 'utils/helper';
-import { LOCATION } from 'assets/SvgIcons';
+import renderShortCodes from 'utils/shortCodes';
+import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
+import { currencyAtom } from 'store/atoms/currency';
+import { gtmAtom } from 'store/atoms/gtm';
 import {
-  ANALYTICS_EVENTS,
   ALLOW_IMMEDIATE_NESTING,
-  THEMES,
-  PAGE_TYPES,
+  ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  PAGE_TYPES,
+  THEMES,
 } from 'const/index';
 import { strings } from 'const/strings';
-import renderShortCodes from 'utils/shortCodes';
-import { getLogoRedirectionUrl, convertUidToUrl } from 'utils/urlUtils';
-import F1TrustBoosters from 'components/F1TrustBoosters/index';
-import LastMinuteFilters from 'components/common/LastMinuteFilters';
+import { LOCATION } from 'assets/SvgIcons';
 
 const LongForm = dynamic(() => import('components/common/LongForm'));
 const FreeTourPopup = dynamic(() => import('./FreeTourPopup'), { ssr: false });

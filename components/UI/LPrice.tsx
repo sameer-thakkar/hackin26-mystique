@@ -1,6 +1,6 @@
 import React from 'react';
 import Conditional from 'components/common/Conditional';
-import { getLocalisedPrice, CurrencyDisplayType } from 'utils/currency';
+import { CurrencyDisplayType, getLocalisedPrice } from 'utils/currency';
 
 type LocalisedPriceProps = {
   className?: string;

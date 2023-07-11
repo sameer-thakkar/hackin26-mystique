@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { THEMES } from 'const/index';
-import COLORS from 'const/colors';
-import { expandFontToken } from 'const/typography';
 import Conditional from 'components/common/Conditional';
+import COLORS from 'const/colors';
+import { THEMES } from 'const/index';
+import { expandFontToken } from 'const/typography';
 import { TickSvg } from 'assets/SvgIcons';
 
 const StyledSelector = styled.div`

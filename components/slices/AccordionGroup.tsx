@@ -1,15 +1,15 @@
 import React from 'react';
+import { FAQPageJsonLd } from 'next-seo';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
-import { FAQPageJsonLd } from 'next-seo';
+import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
 import Accordion from 'components/slices/Accordion';
 import RichContent from 'components/UI/RichContent';
 import TitleTextCombo from 'components/UI/TitleTextCombo';
-import { ESCAPE_REGEX, ESCAPE_REPLACER } from 'const/index';
-import COLORS from 'const/colors';
-import styled from 'styled-components';
 import { generateSidenavId } from 'utils/helper';
+import COLORS from 'const/colors';
+import { ESCAPE_REGEX, ESCAPE_REPLACER } from 'const/index';
 
 const Divider = styled.div`
   padding-bottom: 1.5rem;

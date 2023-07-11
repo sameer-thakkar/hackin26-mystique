@@ -1,6 +1,6 @@
-import Image from 'UI/Image';
-import { Wrapper } from 'components/slices/VerticalCardsGrid/styles';
 import { TTheatreType } from 'components/slices/VerticalCardsGrid/interface';
+import { Wrapper } from 'components/slices/VerticalCardsGrid/styles';
+import Image from 'UI/Image';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 

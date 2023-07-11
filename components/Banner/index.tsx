@@ -4,20 +4,19 @@ import React, {
   useLayoutEffect,
   useState,
 } from 'react';
-import type { SwiperOptions } from 'swiper';
-import dynamic from 'next/dynamic';
 import { scroller } from 'react-scroll';
-import Image from 'components/UI/Image';
-import Conditional from 'components/common/Conditional';
+import dynamic from 'next/dynamic';
+import type { SwiperOptions } from 'swiper';
 import TextOverlay from 'components/Banner/components/TextOverlay';
-import { withShortcodes } from 'utils/helper';
+import Conditional from 'components/common/Conditional';
+import Image from 'components/UI/Image';
 import { trackEvent } from 'utils/analytics';
+import { withShortcodes } from 'utils/helper';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   PAGE_TYPES,
 } from 'const/index';
-
 import { BannerSubtext, StyledBanner, StyledPlaceHolder } from './__style';
 
 const Swiper = dynamic(() => import('components/Swiper'), {

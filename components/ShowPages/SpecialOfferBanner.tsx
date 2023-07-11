@@ -1,19 +1,20 @@
-import { SIZES } from 'const/ui-constants';
 import styled from 'styled-components';
+import { greenScheme } from 'style/theme';
 import InfoBanner from 'components/ShowPages/InfoBanner';
 import Split, { StlyedSplit } from 'components/UI/Split';
 import { titleCase } from 'utils/stringUtils';
-import { greenScheme } from 'style/theme';
 import COLORS from 'const/colors';
+import { SIZES } from 'const/ui-constants';
 
 const Wrapper = styled.div`
   max-width: ${SIZES.MAX_WIDTH};
   margin: auto;
   width: 100%;
   ${StlyedSplit} {
-    margin-top: ${({    
- // @ts-expect-error TS(2339): Property 'marginTop' does not exist on type 'Pick<... Remove this comment to see the full error message
- marginTop }) => (marginTop ? marginTop : 0)}px;
+    margin-top: ${({
+      // @ts-expect-error TS(2339): Property 'marginTop' does not exist on type 'Pick<... Remove this comment to see the full error message
+      marginTop,
+    }) => (marginTop ? marginTop : 0)}px;
   }
   @media (max-width: 768px) {
     ${StlyedSplit} {

@@ -1,6 +1,6 @@
 import React from 'react';
-import TableV2 from '../../components/slices/TableV2';
 import useWindowSize from '../../components/hooks/useWindowSize';
+import TableV2 from '../../components/slices/TableV2';
 
 export default {
   title: 'Slices/Tables',

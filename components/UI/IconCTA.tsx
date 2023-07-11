@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { CHEVRON_LEFT } from 'assets/SvgIcons';
 import COLORS from 'const/colors';
+import { CHEVRON_LEFT } from 'assets/SvgIcons';
 
 export const StyledIconCTA = styled.div`
   padding: 8px;
@@ -12,18 +12,21 @@ export const StyledIconCTA = styled.div`
   grid-column-gap: 8px;
   border-radius: 0px 2px 2px 0px;
   justify-content: left;
-  background: ${({  
- // @ts-expect-error TS(2339): Property 'colorScheme' does not exist on type 'Pic... Remove this comment to see the full error message
- colorScheme: cs }) => cs.background};
-  color: ${({  
- // @ts-expect-error TS(2339): Property 'colorScheme' does not exist on type 'Pic... Remove this comment to see the full error message
- colorScheme: cs }) => cs.color};
+  background: ${({
+    // @ts-expect-error TS(2339): Property 'colorScheme' does not exist on type 'Pic... Remove this comment to see the full error message
+    colorScheme: cs,
+  }) => cs.background};
+  color: ${({
+    // @ts-expect-error TS(2339): Property 'colorScheme' does not exist on type 'Pic... Remove this comment to see the full error message
+    colorScheme: cs,
+  }) => cs.color};
   width: max-content;
   cursor: ${({ onClick }) => (onClick ? 'pointer' : '')};
   @media (max-width: 768px) {
-    ${({    
- // @ts-expect-error TS(2339): Property 'showBorder' does not exist on type 'Pick... Remove this comment to see the full error message
- showBorder }) => showBorder && `border: 1px solid ${COLORS.GRAY.G6}`}
+    ${({
+      // @ts-expect-error TS(2339): Property 'showBorder' does not exist on type 'Pick... Remove this comment to see the full error message
+      showBorder,
+    }) => showBorder && `border: 1px solid ${COLORS.GRAY.G6}`}
     margin: 0.5rem 1rem;
   }
 `;
@@ -35,9 +38,10 @@ export const Chevron = styled.div`
     width: 12px;
     transform: rotate(180deg);
     path {
-      stroke: ${({      
- // @ts-expect-error TS(2339): Property 'colorScheme' does not exist on type 'Pic... Remove this comment to see the full error message
- colorScheme: cs }) => cs.color};
+      stroke: ${({
+        // @ts-expect-error TS(2339): Property 'colorScheme' does not exist on type 'Pic... Remove this comment to see the full error message
+        colorScheme: cs,
+      }) => cs.color};
       stroke-width: 2.5px;
     }
   }
@@ -60,9 +64,10 @@ export const Icon = styled.div`
 export const Content = styled.div`
   display: grid;
   grid-row-gap: 8px;
-  color: ${({  
- // @ts-expect-error TS(2339): Property 'colorScheme' does not exist on type 'Pic... Remove this comment to see the full error message
- colorScheme: cs }) => cs.color};
+  color: ${({
+    // @ts-expect-error TS(2339): Property 'colorScheme' does not exist on type 'Pic... Remove this comment to see the full error message
+    colorScheme: cs,
+  }) => cs.color};
   font-weight: 600;
   font-size: 11px;
   line-height: 14px;
@@ -75,7 +80,7 @@ const IconCTA = ({
   icon,
   ctaOnClick = null,
   colorScheme,
-  showBorder = false
+  showBorder = false,
 }: any) => {
   return (
     <StyledIconCTA

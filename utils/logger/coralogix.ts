@@ -1,6 +1,5 @@
-import { LOG_LEVELS } from 'constants/logs';
-
 import { CoralogixLogger, LoggerConfig, Severity } from 'coralogix-logger';
+import { LOG_LEVELS } from 'constants/logs';
 
 export const getCoralogixSeverity = (level: String) => {
   let logSeverity: Severity;

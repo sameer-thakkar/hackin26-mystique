@@ -1,13 +1,13 @@
+import { CashbackComponentPropTypes } from 'components/common/CashbackComponent/interface';
 import {
   CashbackLabel,
   CashbackWrapper,
 } from 'components/common/CashbackComponent/styles';
-import { CashbackComponentPropTypes } from 'components/common/CashbackComponent/interface';
-import { CASHBACK_COIN, INFO_ICON_WRAPPED } from 'assets/SvgIcons';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
-import { trackEvent } from 'utils/analytics';
-import { strings } from 'const/strings';
 import Tooltip from 'components/common/Tooltip/index';
+import { trackEvent } from 'utils/analytics';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { strings } from 'const/strings';
+import { CASHBACK_COIN, INFO_ICON_WRAPPED } from 'assets/SvgIcons';
 
 const CashbackComponent = ({
   cashbackAmount,

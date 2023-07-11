@@ -1,9 +1,20 @@
 import { AppProps } from 'next/app';
-import rtlPlugin from 'stylis-plugin-rtl';
 import { StyleSheetManager } from 'styled-components';
-import '@formatjs/intl-relativetimeformat/polyfill';
-import 'public/global.css';
+import { MutableSnapshot, RecoilRoot } from 'recoil';
+import { captureException } from '@sentry/nextjs';
+import rtlPlugin from 'stylis-plugin-rtl';
+import Clarity from 'components/common/Clarity';
 import LiveChat from 'components/common/LiveChat';
+import ScrollToTop from 'components/common/ScrollToTop';
+import { sendVariablesToDataLayer } from 'utils/analytics';
+import { getLangObject } from 'utils/helper';
+import { initDayJSLocale } from 'utils/localizationUtils';
+import renderShortCodes from 'utils/shortCodes';
+import { appAtom } from 'store/atoms/app';
+import { currencyAtom } from 'store/atoms/currency';
+import { currencyListAtom } from 'store/atoms/currencyList';
+import { metaAtom } from 'store/atoms/meta';
+import { ArabicGlobalStyle } from 'const/globalStyles/ar';
 import {
   ANALYTICS_PROPERTIES,
   COOKIE,
@@ -12,19 +23,8 @@ import {
   RTL_LANGUAGE_CODES,
   SENTRY_TAGS,
 } from 'const/index';
-import { initDayJSLocale } from 'utils/localizationUtils';
-import { ArabicGlobalStyle } from 'const/globalStyles/ar';
-import ScrollToTop from 'components/common/ScrollToTop';
-import Clarity from 'components/common/Clarity';
-import { getLangObject } from 'utils/helper';
-import { MutableSnapshot, RecoilRoot } from 'recoil';
-import { metaAtom } from 'store/atoms/meta';
-import { sendVariablesToDataLayer } from 'utils/analytics';
-import renderShortCodes from 'utils/shortCodes';
-import { currencyListAtom } from 'store/atoms/currencyList';
-import { currencyAtom } from 'store/atoms/currency';
-import { appAtom } from 'store/atoms/app';
-import { captureException } from '@sentry/nextjs';
+import '@formatjs/intl-relativetimeformat/polyfill';
+import 'public/global.css';
 
 type PageProps = {
   lang: string;

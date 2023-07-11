@@ -7,16 +7,16 @@ import {
   isDateValid,
 } from 'utils/dateUtils';
 import {
+  DESCRIPTOR_RANKING_LOGIC,
+  MAX_DESCRIPTORS_DISPLAYED,
+} from 'const/descriptors';
+import {
   CANCELLATION_POLICY_POSSIBLE_LABELS,
   DESCRIPTORS,
   HIGHLIGHT_TYPES,
   THEMES,
   VALIDITY_TYPES,
 } from 'const/index';
-import {
-  DESCRIPTOR_RANKING_LOGIC,
-  MAX_DESCRIPTORS_DISPLAYED,
-} from 'const/descriptors';
 import { strings } from 'const/strings';
 
 export const extractTabsFromHighlights = (highlights: Record<string, any>) => {

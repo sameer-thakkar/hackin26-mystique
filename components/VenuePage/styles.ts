@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import COLORS from 'const/colors';
-import { expandFontToken } from 'const/typography';
 import { FONTS } from 'const/fonts';
+import { expandFontToken } from 'const/typography';
 
 export const VenuePageContainer = styled.div`
   width: calc(100% - (5.46vw * 2));

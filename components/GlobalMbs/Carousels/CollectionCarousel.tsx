@@ -1,15 +1,15 @@
 import { FunctionComponent, useContext } from 'react';
-import styled from 'styled-components';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
-import Image from 'UI/Image';
-import Carousel from 'components/GlobalMbs/Carousels/Carousel';
+import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
+import Carousel from 'components/GlobalMbs/Carousels/Carousel';
+import Image from 'UI/Image';
+import { MBContext } from 'contexts/MBContext';
+import { convertUidToUrl } from 'utils/urlUtils';
+import COLORS from 'const/colors';
 import { ASPECT_RATIO, FALLBACK_IMAGE, FALLBACK_IMAGES } from 'const/index';
 import { HALYARD } from 'const/ui-constants';
-import COLORS from 'const/colors';
-import { convertUidToUrl } from 'utils/urlUtils';
-import { MBContext } from 'contexts/MBContext';
 
 const Wrapper = styled.div`
   max-width: 1200px;

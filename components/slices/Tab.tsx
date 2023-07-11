@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import COLORS from 'const/colors';
-
-import sliceHandler from '../Slices';
 import { stringIdfy } from '../../utils/helper';
+import sliceHandler from '../Slices';
 
 const StyledTabPanel = styled.div`
   position: relative;

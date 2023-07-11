@@ -1,5 +1,5 @@
-import { BannerLayout } from 'components/GlobalMbs/Banners/Banner/interface';
 import Banner from 'components/GlobalMbs/Banners/Banner/index';
+import { BannerLayout } from 'components/GlobalMbs/Banners/Banner/interface';
 import { convertUidToUrl } from 'utils/urlUtils';
 
 const CollectionPage = (props: any) => {

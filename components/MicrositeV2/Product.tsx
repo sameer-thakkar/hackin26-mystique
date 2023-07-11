@@ -1,34 +1,33 @@
 import React, { useContext } from 'react';
-import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { currencyAtom } from 'store/atoms/currency';
-import { MBContext } from 'contexts/MBContext';
-import PriceBlock, { PriceSkeleton, StyledPriceBlock } from 'UI/PriceBlock';
+import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
-import Image from 'UI/Image';
 import Emoji from 'components/common/Emoji';
-import { STAR } from 'assets/SvgIcons';
+import Image from 'UI/Image';
+import PriceBlock, { PriceSkeleton, StyledPriceBlock } from 'UI/PriceBlock';
+import InteractionContext from 'contexts/Interaction';
+import { MBContext } from 'contexts/MBContext';
+import { createBookingURL } from 'utils';
+import { trackEvent } from 'utils/analytics';
+import { dateToString } from 'utils/dateUtils';
+import { checkIfLTTMB, truncate } from 'utils/helper';
+import { parseDescriptors, shouldUseDynamicShowPage } from 'utils/productUtils';
+import { convertUidToUrl, getFormattedUrlSlug } from 'utils/urlUtils';
+import { currencyAtom } from 'store/atoms/currency';
+import COLORS from 'const/colors';
+import { descriptorIcons } from 'const/descriptorIcons';
+import { FONTS } from 'const/fonts';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
-  REOPENING_CATEGORIES,
   CASHBACK_TYPES,
   LANGUAGE_MAP,
+  REOPENING_CATEGORIES,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { HALYARD } from 'const/ui-constants';
-import COLORS from 'const/colors';
-import { FONTS } from 'const/fonts';
-import { truncate } from 'utils/helper';
-import { dateToString } from 'utils/dateUtils';
-import InteractionContext from 'contexts/Interaction';
-import { convertUidToUrl, getFormattedUrlSlug } from 'utils/urlUtils';
-import { createBookingURL } from 'utils';
 import { expandFontToken } from 'const/typography';
-import { trackEvent } from 'utils/analytics';
-import { checkIfLTTMB } from 'utils/helper';
-import { parseDescriptors, shouldUseDynamicShowPage } from 'utils/productUtils';
-import { descriptorIcons } from 'const/descriptorIcons';
+import { HALYARD } from 'const/ui-constants';
+import { STAR } from 'assets/SvgIcons';
 
 const ProductCard = styled.div<{
   $isV3Design?: boolean;

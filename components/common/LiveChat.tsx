@@ -1,8 +1,8 @@
 import React from 'react';
 import useWindowSize from 'hooks/useWindowSize';
-import { LIVE_CHAT } from 'const/index';
 import { loadChat } from 'utils/chatUtils';
 import { checkIfGpMotorTicketsMB } from 'utils/helper';
+import { LIVE_CHAT } from 'const/index';
 
 type LiveChatProps = {
   uid?: string;

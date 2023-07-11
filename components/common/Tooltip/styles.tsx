@@ -1,7 +1,7 @@
+import styled from 'styled-components';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
-import styled from 'styled-components';
 
 export const TooltipContainer = styled.div`
   position: relative;

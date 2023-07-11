@@ -2,11 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
-import { CloseIcon } from 'assets/SvgIcons';
 import { throttle } from 'utils/gen';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
+import { CloseIcon } from 'assets/SvgIcons';
+
 const DrawerContainer = styled.div`
   position: fixed;
   z-index: 10;

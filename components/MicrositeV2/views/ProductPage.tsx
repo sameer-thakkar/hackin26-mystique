@@ -1,40 +1,40 @@
 import React, { useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { useRecoilValue } from 'recoil';
-import styled from 'styled-components';
-import parse from 'url-parse';
-import { greyScheme } from 'style/theme';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
-import { MBContext } from 'contexts/MBContext';
-import InteractionContext from 'contexts/Interaction';
+import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
+import { greyScheme } from 'style/theme';
+import parse from 'url-parse';
 import Conditional from 'components/common/Conditional';
-import Image from 'UI/Image';
 import IconCTA from 'UI/IconCTA';
+import Image from 'UI/Image';
 import LocalisedPrice from 'UI/LPrice';
 import Split, { StlyedSplit } from 'UI/Split';
+import InteractionContext from 'contexts/Interaction';
+import { MBContext } from 'contexts/MBContext';
+import { createBookingURL, isSafetyIncluded } from 'utils';
+import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import { parseV2ProductDescriptors } from 'utils/dataParsers';
+import { dateToString, isDateInThePast } from 'utils/dateUtils';
+import { shortCodeSerializer } from 'utils/shortCodes';
+import { metaAtom } from 'store/atoms/meta';
+import COLORS from 'const/colors';
 import {
-  CHEVRON_LEFT,
-  BorderedShield,
-  CLOSE_WHITE,
-  STAR,
-} from 'assets/SvgIcons';
-import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
   NEW_ARRIVALS_CATEGORIES,
   PAGETYPE,
   REOPENING_CATEGORIES,
-  ANALYTICS_PROPERTIES,
-  ANALYTICS_EVENTS,
 } from 'const/index';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
-import COLORS from 'const/colors';
-import { isSafetyIncluded, createBookingURL } from 'utils';
-import { shortCodeSerializer } from 'utils/shortCodes';
-import { dateToString, isDateInThePast } from 'utils/dateUtils';
-import { parseV2ProductDescriptors } from 'utils/dataParsers';
-import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
-import { metaAtom } from 'store/atoms/meta';
+import {
+  BorderedShield,
+  CHEVRON_LEFT,
+  CLOSE_WHITE,
+  STAR,
+} from 'assets/SvgIcons';
 
 const Swiper = dynamic(
   () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper'),

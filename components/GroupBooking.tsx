@@ -1,40 +1,38 @@
 import React, { Component } from 'react';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
+import DatePicker from 'react-datepicker';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import Modal from 'react-modal';
+import PhoneInput from 'react-phone-input-2';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import Select from 'react-select';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
-import DatePicker from 'react-datepicker';
-import dayjs from 'dayjs';
-import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
-import styled from 'styled-components';
-import PhoneInput from 'react-phone-input-2';
-import { parsePhoneNumberFromString as parseMobile } from 'libphonenumber-js/mobile';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
+import styled from 'styled-components';
+import dayjs from 'dayjs';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+import { parsePhoneNumberFromString as parseMobile } from 'libphonenumber-js/mobile';
+import COLORS from 'const/colors';
 import { HALYARD } from 'const/ui-constants';
-
+import 'react-datepicker/dist/react-datepicker.css';
+import 'react-phone-input-2/lib/style.css';
 import {
-  PREFERRED_COUNTRIES_CODES,
-  GROUP_TOUR_PREFERED_TIME,
-  GROUP_TOUR_PREFERED_LANG,
-  GROUP_BOOKING_URL,
-  THEMES,
-} from './../constants';
-import {
+  createGroupBooking,
+  fetchUserGeoLocation,
+  isFieldSelected,
+  isGroupValid,
   isMobileDevice,
   validateEmail,
   validateFullName,
-  isGroupValid,
-  isFieldSelected,
-  fetchUserGeoLocation,
-  createGroupBooking,
 } from '../utils/helper';
-import 'react-datepicker/dist/react-datepicker.css';
-import 'react-phone-input-2/lib/style.css';
+import {
+  GROUP_BOOKING_URL,
+  GROUP_TOUR_PREFERED_LANG,
+  GROUP_TOUR_PREFERED_TIME,
+  PREFERRED_COUNTRIES_CODES,
+  THEMES,
+} from './../constants';
 import Conditional from './common/Conditional';
-
-import COLORS from 'const/colors';
 
 dayjs.extend(isSameOrBefore);
 

@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
-import useSWR from 'swr';
 import styled from 'styled-components';
-import { MBContext } from 'contexts/MBContext';
+import useSWR from 'swr';
 import Conditional from 'components/common/Conditional';
-import PriceBlock from 'UI/PriceBlock';
 import Button from 'UI/Button';
-import { HALYARD } from 'const/ui-constants';
-import COLORS from 'const/colors';
-import { generateSidenavId, getHostName } from 'utils/helper';
+import PriceBlock from 'UI/PriceBlock';
+import { MBContext } from 'contexts/MBContext';
 import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
+import { generateSidenavId, getHostName } from 'utils/helper';
+import COLORS from 'const/colors';
+import { HALYARD } from 'const/ui-constants';
 
 const TicketCardsWrapper = styled.div`
   font-family: ${HALYARD.FONT_STACK};

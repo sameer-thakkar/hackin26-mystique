@@ -1,39 +1,38 @@
-import { GetServerSideProps } from 'next';
-import ServerCookies from 'cookies';
 import React, { useEffect, useState } from 'react';
-import ErrorPage from 'next/error';
+import { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
-import Cookies from 'js-cookie';
+import ErrorPage from 'next/error';
 import { ThemeProvider } from 'styled-components';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import ServerCookies from 'cookies';
+import Cookies from 'js-cookie';
+import { getAppTheme } from 'style/theme';
 import EnvironmentContext from 'contexts/environmentContext';
 import { MBContextProvider } from 'contexts/MBContext';
-import { getAppTheme } from 'style/theme';
+import {
+  getLanguageFromPathname,
+  isNakedDomain,
+  reflect,
+  shouldRenderDynamicPage,
+} from 'utils';
+import { sendVariableToDataLayer } from 'utils/analytics';
+import { checkIfCurrencyCodeValid } from 'utils/currency';
+import { localServerSideIsMobileCheck } from 'utils/gen';
+import { getLocalizationLabels } from 'utils/localizationUtils';
+import { traceError } from 'utils/logutils';
+import PlatformUtils from 'utils/platformUtils';
+import { getPageData } from 'utils/prismicUtils';
+import { removePageQuery } from 'utils/urlUtils';
+import { gtmAtom } from 'store/atoms/gtm';
+import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
 import {
   ANALYTICS_PROPERTIES,
+  COOKIE,
   CUSTOM_TYPES,
   DESIGN,
   THEMES,
-  COOKIE,
 } from 'const/index';
-import {
-  reflect,
-  isNakedDomain,
-  getLanguageFromPathname,
-  shouldRenderDynamicPage,
-} from 'utils';
-import { getPageData } from 'utils/prismicUtils';
-import { sendVariableToDataLayer } from 'utils/analytics';
-import { removePageQuery } from 'utils/urlUtils';
-import { traceError } from 'utils/logutils';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
-import { localServerSideIsMobileCheck } from 'utils/gen';
 import { strings } from 'const/strings';
-import { checkIfCurrencyCodeValid } from 'utils/currency';
-import PlatformUtils from 'utils/platformUtils';
-import { getLocalizationLabels } from 'utils/localizationUtils';
-import { gtmAtom } from 'store/atoms/gtm';
-
 import Analytics from './Analytics';
 import VenuePage from './VenuePage';
 

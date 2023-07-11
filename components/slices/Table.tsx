@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
 import { generateSidenavId } from 'utils/helper';
-
 import { shortCodeSerializer } from '../../utils/shortCodes';
 
 const StyledTableV1 = styled.div`

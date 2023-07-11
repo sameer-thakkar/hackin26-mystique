@@ -1,6 +1,6 @@
 import React from 'react';
-import BlogFeed from '../../components/slices/BlogFeed';
 import { StyledLongForm } from '../../components/common/LongForm';
+import BlogFeed from '../../components/slices/BlogFeed';
 
 export default {
   title: 'Slices/Blog Feed',

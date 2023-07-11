@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
+import Conditional from 'components/common/Conditional';
 import CategoryBar from 'components/MicrositeV2/CategoryBar';
 import InteractionContext from 'contexts/Interaction';
-import { DONT_AUTO_SCROLL } from 'const/index';
-import Conditional from 'components/common/Conditional';
 import { checkIfLTTMB } from 'utils/helper';
+import { DONT_AUTO_SCROLL } from 'const/index';
 
 const PopulateProducts = dynamic(() =>
   import(/* webpackChunkName: "PopulateProducts" */ './PopulateProducts')

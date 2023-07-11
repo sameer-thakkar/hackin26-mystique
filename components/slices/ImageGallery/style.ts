@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
+import { HALYARD } from 'const/ui-constants';
 
 export const StyledImageGallery = styled.div`
   display: grid;

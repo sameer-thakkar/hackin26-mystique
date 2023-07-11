@@ -1,54 +1,54 @@
-import { Client } from 'config/prismic-config';
 import Prismic from 'prismic-javascript';
+import { Client } from 'config/prismic-config';
 import type { PrismicDocumentWithUID } from '@prismicio/types';
 import cloneDeep from 'lodash.clonedeep';
-import { TMenuItem } from 'components/CategoryHeader/interface';
 import { TMenu } from 'components/CategoryHeader/components/ExpandedMenu/interface';
+import { TMenuItem } from 'components/CategoryHeader/interface';
 import {
-  getEnglishDocUid,
   getAlternateLanguageDocUid,
+  getEnglishDocUid,
   getHeadoutLanguagecode,
-  legacyBooleanCheck,
   handleSettledPromiseResults,
+  legacyBooleanCheck,
 } from 'utils';
+import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import {
+  fetchCategory,
   fetchCollection,
   fetchCollectionTop,
-  fetchCategory,
 } from 'utils/apiUtils';
-import { convertUidToUrl } from 'utils/urlUtils';
+import { addToNestedObject, sortObjectByKeys } from 'utils/gen';
 import { getStructure } from 'utils/lookerUtils';
 import {
-  getShoulderPageDocs,
-  getCityGuideDocs,
   getAlternateLanguageDocs,
+  getCityGuideDocs,
+  getShoulderPageDocs,
 } from 'utils/prismicUtils';
 import { constantCase } from 'utils/stringUtils';
-import { addToNestedObject, sortObjectByKeys } from 'utils/gen';
-import { trackEvent, getCommonEventMetaData } from 'utils/analytics';
+import { convertUidToUrl } from 'utils/urlUtils';
 import {
-  CUSTOM_TYPES,
-  PAGE_URL_STRUCTURE,
-  SEO_SUBDOMAINS,
-  MB_CATEGORISATION,
+  ABOUT,
+  CITY_GUIDE,
+  COLLECTION_MB_MENU_ORDER,
+  DOCUMENT_PRIORITY,
+  labels,
+  MISC,
+  NESTED_MENU_ORDER,
+  NON_COLLECTION_MB_MENU_ORDER,
+  SUB_ATTRACTIONS,
+  THINGS_TO_DO,
+  VISIT,
+} from 'const/header';
+import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
-  PRISMIC_FIELD_ID,
+  CUSTOM_TYPES,
   LANGUAGE_MAP,
+  MB_CATEGORISATION,
+  PAGE_URL_STRUCTURE,
+  PRISMIC_FIELD_ID,
+  SEO_SUBDOMAINS,
 } from 'const/index';
-import {
-  SUB_ATTRACTIONS,
-  MISC,
-  ABOUT,
-  VISIT,
-  THINGS_TO_DO,
-  CITY_GUIDE,
-  DOCUMENT_PRIORITY,
-  COLLECTION_MB_MENU_ORDER,
-  NON_COLLECTION_MB_MENU_ORDER,
-  NESTED_MENU_ORDER,
-  labels,
-} from 'const/header';
 
 export type TCategorisationMetadata = {
   tagged_category: string | null;

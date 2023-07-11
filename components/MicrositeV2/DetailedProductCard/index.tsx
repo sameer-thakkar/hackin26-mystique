@@ -2,36 +2,36 @@ import React, { useContext, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
+import { useRecoilValue } from 'recoil';
 import { greyScheme } from 'style/theme';
-import { MBContext } from 'contexts/MBContext';
-import Image from 'UI/Image';
-import IconCTA from 'UI/IconCTA';
-import Split from 'UI/Split';
-import LocalisedPrice from 'UI/LPrice';
 import Conditional from 'components/common/Conditional';
-import { strings } from 'const/strings';
-import { CLOSE_WHITE, Shield } from 'assets/SvgIcons';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
-import { isSafetyIncluded, createBookingURL } from 'utils';
 import {
-  shortCodeSerializerWithParentProps,
-  shortCodeSerializer,
-} from 'utils/shortCodes';
-import { extractContentForProductCard } from 'utils/productUtils';
-import { convertUidToUrl } from 'utils/urlUtils';
-import { parseV2ProductDescriptors } from 'utils/dataParsers';
+  DetailedDescriptionCard,
+  IconBoosters,
+} from 'components/MicrositeV2/DetailedProductCard/styles';
+import IconCTA from 'UI/IconCTA';
+import Image from 'UI/Image';
+import LocalisedPrice from 'UI/LPrice';
+import Split from 'UI/Split';
+import { MBContext } from 'contexts/MBContext';
+import { createBookingURL, isSafetyIncluded } from 'utils';
 import {
   getCommonEventMetaData,
   getProductCommonProperties,
   trackEvent,
 } from 'utils/analytics';
-import { useRecoilValue } from 'recoil';
-import { metaAtom } from 'store/atoms/meta';
+import { parseV2ProductDescriptors } from 'utils/dataParsers';
 import { checkIfBroadwayMB, checkIfLTTMB } from 'utils/helper';
+import { extractContentForProductCard } from 'utils/productUtils';
 import {
-  DetailedDescriptionCard,
-  IconBoosters,
-} from 'components/MicrositeV2/DetailedProductCard/styles';
+  shortCodeSerializer,
+  shortCodeSerializerWithParentProps,
+} from 'utils/shortCodes';
+import { convertUidToUrl } from 'utils/urlUtils';
+import { metaAtom } from 'store/atoms/meta';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { strings } from 'const/strings';
+import { CLOSE_WHITE, Shield } from 'assets/SvgIcons';
 
 const SafeExperiencesPitch = dynamic(
   () =>

@@ -1,10 +1,10 @@
 import Product from 'components/MicrositeV2/Product';
 import PinnedCard from 'components/PinnedCard/pinnedCard';
+import { ShowsListProps } from 'components/slices/ShowsList/interface';
+import { Container } from 'components/slices/ShowsList/styles';
+import { getTgidsFromShow } from 'utils';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
-import { Container } from 'components/slices/ShowsList/styles';
-import { ShowsListProps } from 'components/slices/ShowsList/interface';
-import { getTgidsFromShow } from 'utils';
 
 const ShowsList = (props: ShowsListProps) => {
   const { isMobile, heading, data, sliceData } = props;

@@ -1,21 +1,20 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
 import { SLICE_TYPES } from 'const/index';
-
-import HorizontalLine from './slices/HorizontalLine';
+import GoogleMap from './ShowPages/GoogleMap';
+import Background from './slices/Background';
+import Breadcrumb from './slices/Breadcrumb';
 import ContentTabs from './slices/ContentTabs';
+import FooterLinksSection from './slices/FooterLinksSection';
+import HorizontalLine from './slices/HorizontalLine';
 import PageTabs from './slices/PageTabs';
 import RichTextBox from './slices/RichTextBox';
+import RichtextWithCTA from './slices/RichTextWithCTA';
+import ShowsGrid from './slices/ShowsGrid';
+import ShowsList from './slices/ShowsList';
 import Table from './slices/Table';
-import Breadcrumb from './slices/Breadcrumb';
-import Background from './slices/Background';
-import FooterLinksSection from './slices/FooterLinksSection';
 import TicketCard from './slices/TickerCardSlice';
 import UGCCarousel from './slices/UGCCarousel';
-import RichtextWithCTA from './slices/RichTextWithCTA';
-import ShowsList from './slices/ShowsList';
-import ShowsGrid from './slices/ShowsGrid';
-import GoogleMap from './ShowPages/GoogleMap';
 import VerticalCardsGrid from './slices/VerticalCardsGrid';
 
 // Dynamic imports

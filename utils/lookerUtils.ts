@@ -1,26 +1,26 @@
 import Prismic from 'prismic-javascript';
 import { PrismicDocumentWithUID } from '@prismicio/types';
 import {
-  getSinglePrismicSlice,
-  getHeadoutLanguagecode,
   checkIfMicrosite,
+  getHeadoutLanguagecode,
+  getSinglePrismicSlice,
 } from 'utils';
 import { groupBy } from 'utils/arrayUtils';
-import { convertUidToUrl, getShowpageBreadcrumbUid } from 'utils/urlUtils';
-import { fetchAllMatchingDocs } from 'utils/prismicUtils';
 import {
   categoryTourListParserV1,
   getToursGlobalCollection,
 } from 'utils/dataParsers';
 import { getHostName } from 'utils/helper';
+import { fetchAllMatchingDocs } from 'utils/prismicUtils';
+import { convertUidToUrl, getShowpageBreadcrumbUid } from 'utils/urlUtils';
 import {
   CUSTOM_TYPES,
-  DOC_TYPES,
+  DEFAULT_LOOKER_VALUES,
   DESIGN,
+  DOC_TYPES,
+  HEADOUT_CATEGORY_CONTENT_TYPE,
   LANGUAGE_PARAMS_REGEX,
   SLICE_TYPES,
-  HEADOUT_CATEGORY_CONTENT_TYPE,
-  DEFAULT_LOOKER_VALUES,
 } from 'const/index';
 import { strings } from 'const/strings';
 

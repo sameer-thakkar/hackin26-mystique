@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-
-import { STAR_FULL, STAR_EMPTY, STAR_HALF } from '../../assets/SvgIcons';
+import { STAR_EMPTY, STAR_FULL, STAR_HALF } from '../../assets/SvgIcons';
 
 const StyledStar = styled.div`
-  ${({  
- // @ts-expect-error TS(2339): Property 'starSize' does not exist on type 'Pick<D... Remove this comment to see the full error message
- starSize }) => `width: ${starSize}; height: ${starSize};`}
+  ${({
+    // @ts-expect-error TS(2339): Property 'starSize' does not exist on type 'Pick<D... Remove this comment to see the full error message
+    starSize,
+  }) => `width: ${starSize}; height: ${starSize};`}
 `;
 
 const Star: React.FC<{

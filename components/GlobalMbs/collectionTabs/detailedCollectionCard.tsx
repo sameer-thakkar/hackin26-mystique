@@ -1,17 +1,17 @@
 import React, { forwardRef, Ref, useContext } from 'react';
-import styled from 'styled-components';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
-import { MBContext } from 'contexts/MBContext';
-import Image from 'UI/Image';
+import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
+import Image from 'UI/Image';
+import { MBContext } from 'contexts/MBContext';
+import { getLocalisedPrice } from 'utils/currency';
+import { shortCodeSerializer } from 'utils/shortCodes';
+import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import COLORS from 'const/colors';
-import { CLOSE_WHITE } from 'assets/SvgIcons';
 import { ASPECT_RATIO, FALLBACK_IMAGE } from 'const/index';
 import { strings } from 'const/strings';
-import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
-import { shortCodeSerializer } from 'utils/shortCodes';
-import { getLocalisedPrice } from 'utils/currency';
+import { CLOSE_WHITE } from 'assets/SvgIcons';
 
 const Wrapper = styled.div<{ isMobile: boolean }>`
   display: grid;

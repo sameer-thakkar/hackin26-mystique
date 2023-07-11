@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
-import calendar from 'dayjs/plugin/calendar';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
+import calendar from 'dayjs/plugin/calendar';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
-
 import { HEADOUT_API_ENDPOINT } from '../../constants';
 
 dayjs.extend(calendar);

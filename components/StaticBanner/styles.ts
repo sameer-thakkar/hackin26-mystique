@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import COLORS from 'const/colors';
-import { expandFontToken } from 'const/typography';
 import { FONTS } from 'const/fonts';
+import { expandFontToken } from 'const/typography';
 
 export const BannerSection = styled.div`
   margin: 1.5rem 1.5rem 2rem;

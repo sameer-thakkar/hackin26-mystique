@@ -1,8 +1,8 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
-import { SHORT_CODE_TYPES } from 'const/index';
 import { WrapInLazyComponent } from 'components/common/LazyComponent';
 import DynamicDate from 'components/shortcodes/DynamicDate';
+import { SHORT_CODE_TYPES } from 'const/index';
 
 const InlinePrice = dynamic(() => import('components/InlinePrice'));
 const NextAvailable = dynamic(() =>

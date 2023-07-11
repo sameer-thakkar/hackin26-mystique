@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
-import { HALYARD } from 'const/ui-constants';
 import Image from 'UI/Image';
 import { generateSidenavId } from 'utils/helper';
+import { HALYARD } from 'const/ui-constants';
 
 const StyledInternalContentCard = styled.div`
   .more-reads-section {

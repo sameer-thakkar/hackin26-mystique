@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
-import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
+import { expandFontToken } from 'const/typography';
 import { SIZES } from 'const/ui-constants';
 
 export const StyledExpandedMenu = styled.div<{ $isExpanded: boolean }>`

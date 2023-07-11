@@ -1,8 +1,8 @@
-import { BannerLayout } from 'components/GlobalMbs/Banners/Banner/interface';
 import Banner from 'components/GlobalMbs/Banners/Banner/index';
-import { strings } from 'const/strings';
-import { convertUidToUrl } from 'utils/urlUtils';
+import { BannerLayout } from 'components/GlobalMbs/Banners/Banner/interface';
 import ProductsSection from 'components/GlobalMbs/views/ProductsSection';
+import { convertUidToUrl } from 'utils/urlUtils';
+import { strings } from 'const/strings';
 
 const TicketPage = (props: any) => {
   const {

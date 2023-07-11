@@ -1,7 +1,8 @@
-import React from "react";
+import React from 'react';
+
 const EnvironmentContext = React.createContext({
   isDev: null,
-  windowUrl: ""
+  windowUrl: '',
 });
 
 export default EnvironmentContext;

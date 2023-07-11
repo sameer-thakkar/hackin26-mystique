@@ -1,13 +1,13 @@
-import {
-  ENTERTAINMENT_MB_BREADCRUMBS,
-  LanguagesUnion,
-  PRISMIC_LANG_TO_ROUTE_PARAM,
-} from 'const/index';
-import { LANGUAGE_MAP } from 'const/index';
 import queryParser from 'query-string';
 import { getPrismicProps } from 'utils';
 import { fromEntries } from 'utils/gen';
 import { checkIfLTTMB, getLangObject } from 'utils/helper';
+import {
+  ENTERTAINMENT_MB_BREADCRUMBS,
+  LANGUAGE_MAP,
+  LanguagesUnion,
+  PRISMIC_LANG_TO_ROUTE_PARAM,
+} from 'const/index';
 
 export const getStringifiedQueryFromObject = (queryJson: Record<string, any>) =>
   queryParser.stringify(queryJson);

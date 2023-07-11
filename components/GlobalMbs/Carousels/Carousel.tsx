@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useWindowWidth } from '@react-hook/window-size';
 import Conditional from 'components/common/Conditional';
 import OverflowScroll from 'UI/OverflowScroll';
-import { SIZES, HALYARD } from 'const/ui-constants';
+import { HALYARD, SIZES } from 'const/ui-constants';
 import { CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
@@ -96,17 +96,16 @@ const Carousel: FunctionComponent<CarouselProps> = ({
   }, [width, setIsMobile]);
 
   useEffect(() => {
-    if (isMobile)
-        return;
+    if (isMobile) return;
     if (swiper !== null) {
-        (swiper as any).on('slideChange', updateIndex);
+      (swiper as any).on('slideChange', updateIndex);
     }
     return () => {
-        if (swiper !== null) {
-            (swiper as any).off('slideChange', updateIndex);
-        }
+      if (swiper !== null) {
+        (swiper as any).off('slideChange', updateIndex);
+      }
     };
-}, [isMobile, swiper, updateIndex]);
+  }, [isMobile, swiper, updateIndex]);
 
   if (!isMobile) {
     const goNext = () => {
@@ -128,7 +127,8 @@ const Carousel: FunctionComponent<CarouselProps> = ({
       onSwiper: updateSwiper,
     };
 
-    return (<div>
+    return (
+      <div>
         <EntrySection>{entrySection}</EntrySection>
         <StyledCarousel>
           <StyledSwiper>
@@ -137,18 +137,29 @@ const Carousel: FunctionComponent<CarouselProps> = ({
           </StyledSwiper>
           <Controls>
             <Conditional if={!(swiper as any)?.isBeginning}>
-              <div className="prev-slide" role="button" tabIndex={0} onClick={goPrev}>
+              <div
+                className="prev-slide"
+                role="button"
+                tabIndex={0}
+                onClick={goPrev}
+              >
                 {CHEVRON_LEFT_CIRCLE}
               </div>
             </Conditional>
             <Conditional if={!(swiper as any)?.isEnd}>
-              <div className="next-slide" role="button" tabIndex={0} onClick={goNext}>
+              <div
+                className="next-slide"
+                role="button"
+                tabIndex={0}
+                onClick={goNext}
+              >
                 {CHEVRON_LEFT_CIRCLE}
               </div>
             </Conditional>
           </Controls>
         </StyledCarousel>
-      </div>);
+      </div>
+    );
   }
   if (isMobile) {
     return (

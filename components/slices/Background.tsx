@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
-
-import sliceHandler from '../Slices';
+import { HALYARD } from 'const/ui-constants';
 import { FULL_WIDTH_SLICES } from '../../constants';
+import sliceHandler from '../Slices';
 
 const StyledBackground = styled.div`
   padding: 40px 0;

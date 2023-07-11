@@ -1,13 +1,13 @@
 import React from 'react';
-import { useRecoilValue } from 'recoil';
-import styled from 'styled-components';
 import FutureImage from 'next/future/image';
+import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
-import { INFO_ICON } from 'assets/SvgIcons';
-import { generateImageImgixUrl } from 'UI/Image/util';
-import { appAtom } from 'store/atoms/app';
-import Tooltip from 'UI/Tooltip';
 import { IImageProps } from 'UI/Image/interface';
+import { generateImageImgixUrl } from 'UI/Image/util';
+import Tooltip from 'UI/Tooltip';
+import { appAtom } from 'store/atoms/app';
+import { INFO_ICON } from 'assets/SvgIcons';
 
 export const Wrapper = styled.div`
   position: relative;

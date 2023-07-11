@@ -2,15 +2,15 @@ import React, { useCallback, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useWindowWidth } from '@react-hook/window-size';
+import type { SwiperProps } from 'swiper/react';
+import Conditional from 'components/common/Conditional';
+import sliceHandler from 'components/Slices';
 import RichContent from 'UI/RichContent';
 import TitleTextCombo from 'UI/TitleTextCombo';
-import { CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
-import { SIZES } from 'const/ui-constants';
-import COLORS from 'const/colors';
-import sliceHandler from 'components/Slices';
-import Conditional from 'components/common/Conditional';
-import type { SwiperProps } from 'swiper/react';
 import { generateSidenavId } from 'utils/helper';
+import COLORS from 'const/colors';
+import { SIZES } from 'const/ui-constants';
+import { CHEVRON_LEFT_CIRCLE } from 'assets/SvgIcons';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: true });
 

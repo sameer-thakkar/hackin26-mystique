@@ -1,12 +1,11 @@
-import dynamic from 'next/dynamic';
 import React, { Component } from 'react';
+import dynamic from 'next/dynamic';
 import styled from 'styled-components';
+import type { SwiperProps } from 'swiper/react';
 import Image from 'UI/Image';
 import { isMobile } from 'utils/helper';
 import COLORS from 'const/colors';
 import { HALYARD } from 'const/ui-constants';
-import type { SwiperProps } from 'swiper/react';
-
 import InlinePrice from './InlinePrice';
 
 const Swiper = dynamic(() => import('components/Swiper'));

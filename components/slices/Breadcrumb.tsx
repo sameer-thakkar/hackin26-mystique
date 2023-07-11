@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import Conditional from 'components/common/Conditional';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 import { CHEVRON_RIGHT } from 'assets/SvgIcons';
-import Conditional from 'components/common/Conditional';
 
 type BreadcrumbProps = {
   orderedLinks: any[];

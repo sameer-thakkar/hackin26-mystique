@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
+import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
 import RichTextCTA from 'UI/RichTextCTA';
-import { shortCodeSerializer } from 'utils/shortCodes';
-import styled from 'styled-components';
-import { expandFontToken } from 'const/typography';
-import COLORS from 'const/colors';
-import { CHEVRON_DOWN } from 'assets/SvgIcons';
-import { strings } from 'const/strings';
 import { generateSidenavId } from 'utils/helper';
+import { shortCodeSerializer } from 'utils/shortCodes';
+import COLORS from 'const/colors';
+import { strings } from 'const/strings';
+import { expandFontToken } from 'const/typography';
+import { CHEVRON_DOWN } from 'assets/SvgIcons';
 
 const Wrapper = styled.div<{
   $isExpanded: boolean;

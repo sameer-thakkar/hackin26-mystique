@@ -1,25 +1,25 @@
 import React, { useContext, useState } from 'react';
-import useSWR from 'swr';
-import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
-import styled from 'styled-components';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error messag
 import { RichText } from 'prismic-reactjs';
+import styled from 'styled-components';
+import useSWR from 'swr';
+import Conditional from 'components/common/Conditional';
+import Button from 'components/UI/Button';
+import Image from 'UI/Image';
 import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
 import { MBContext } from 'contexts/MBContext';
-import Image from 'UI/Image';
-import Button from 'components/UI/Button';
 import { createBookingURL, getCollectionSection } from 'utils';
-import { CHEVRON_DOWN, CHECK, CROSS } from 'assets/SvgIcons';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
-import { strings } from 'const/strings';
-import Conditional from 'components/common/Conditional';
 import { trackEvent } from 'utils/analytics';
+import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
+import { generateSidenavId } from 'utils/helper';
+import { getCancellationPolicyString } from 'utils/productUtils';
 import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import { getDuration } from 'utils/timeUtils';
-import { getCancellationPolicyString } from 'utils/productUtils';
-import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
-import { generateSidenavId } from 'utils/helper';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { strings } from 'const/strings';
+import { expandFontToken } from 'const/typography';
+import { CHECK, CHEVRON_DOWN, CROSS } from 'assets/SvgIcons';
 
 const ComparisonTableWrapper = styled.div`
   width: auto;

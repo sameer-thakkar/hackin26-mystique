@@ -2,21 +2,20 @@ import { useCallback, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import type { SwiperProps } from 'swiper/react';
 import type { Swiper } from 'swiper/types';
+import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
 import RichContent from 'UI/RichContent';
 import { generateSidenavId, stringIdfy } from 'utils/helper';
-import { CHEVRON_RIGHT_CIRCLE } from 'assets/SvgIcons';
-import Conditional from 'components/common/Conditional';
 import { strings } from 'const/strings';
-
+import { CHEVRON_RIGHT_CIRCLE } from 'assets/SvgIcons';
+import { CarouselGalleryProps } from '../CarouselGallery/interface';
 import {
-  Heading,
   CarouselContainer,
-  ImageGallery,
   Content,
   ContentWrapper,
+  Heading,
+  ImageGallery,
 } from '../CarouselGallery/styles';
-import { CarouselGalleryProps } from '../CarouselGallery/interface';
 
 const SwiperCarousel = dynamic(() =>
   import(/* webpackChunkName: "Swiper" */ 'components/Swiper')

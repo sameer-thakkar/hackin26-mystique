@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import Button from 'UI/Button';
 import Conditional from 'components/common/Conditional';
-import COLORS from 'const/colors';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
-import { strings } from 'const/strings';
-import { CROSS_ICON_TICKET_CARD, INFO_ICON_TICKET_CARD } from 'assets/SvgIcons';
+import Button from 'UI/Button';
 import { trackEvent } from 'utils/analytics';
 import { getLocalisedPrice } from 'utils/currency';
-import { expandFontToken } from 'const/typography';
+import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { strings } from 'const/strings';
+import { expandFontToken } from 'const/typography';
+import { CROSS_ICON_TICKET_CARD, INFO_ICON_TICKET_CARD } from 'assets/SvgIcons';
 
 const CTABlock = styled.div<{ isTicketCardDetailPopup?: boolean }>`
   display: flex;

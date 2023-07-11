@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { initClarity, isClarityRequired } from 'utils/clarityUtils';
+
 interface IClarityProps {
   host: string;
 }

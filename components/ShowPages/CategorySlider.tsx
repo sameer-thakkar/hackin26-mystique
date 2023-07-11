@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import dynamic from 'next/dynamic';
-import CategoryCard from 'components/ShowPages/CategoryCard';
-import Conditional from 'components/common/Conditional';
+import styled from 'styled-components';
 import type { SwiperProps } from 'swiper/react';
+import Conditional from 'components/common/Conditional';
+import CategoryCard from 'components/ShowPages/CategoryCard';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 

@@ -1,11 +1,11 @@
 import React from 'react';
-import Conditional from 'components/common/Conditional';
-import DeepNestedMenuItem from 'components/CategoryHeader/components/DeepNestedMenuItem';
-import { StyledDeepNestedMenuContainer } from 'components/CategoryHeader/components/DeepNestedMenu/styles';
 import { DeepNestedMenuProps } from 'components/CategoryHeader/components/DeepNestedMenu/interface';
+import { StyledDeepNestedMenuContainer } from 'components/CategoryHeader/components/DeepNestedMenu/styles';
+import DeepNestedMenuItem from 'components/CategoryHeader/components/DeepNestedMenuItem';
+import Conditional from 'components/common/Conditional';
 import { getCategoryHeaderMenuLabel } from 'utils/helper';
-import { CHEVRON_LEFT } from 'assets/SvgIcons';
 import { strings } from 'const/strings';
+import { CHEVRON_LEFT } from 'assets/SvgIcons';
 
 const DeepNestedMenu: React.FC<DeepNestedMenuProps> = (props) => {
   const {

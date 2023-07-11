@@ -1,43 +1,42 @@
+import React, { useContext, useState } from 'react';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
+import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import Button from 'UI/Button';
-import { strings } from 'const/strings';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import parse from 'url-parse';
-import styled from 'styled-components';
-import React, { useState, useContext } from 'react';
+import Conditional from 'components/common/Conditional';
+import Product from 'components/Product';
 import HorizontalLine from 'components/slices/HorizontalLine';
-import {
-  ANALYTICS_EVENTS,
-  THEMES,
-  SIDEBAR_TYPES,
-  LOCALISED_DATE_FORMATS,
-  ANALYTICS_PROPERTIES,
-} from 'const/index';
-import COLORS from 'const/colors';
-import { CALENDAR, BackArrow } from 'assets/SvgIcons';
-import { createBookingURL } from 'utils';
-import { MBContext } from 'contexts/MBContext';
+import Button from 'UI/Button';
+import ComboPopup from 'UI/ComboPopup';
 import PriceBlock from 'UI/PriceBlock';
+import PromoCodeBlock from 'UI/PromoCodeBlock';
+import { MBContext } from 'contexts/MBContext';
+import { createBookingURL } from 'utils';
+import { getProductCommonProperties, trackEvent } from 'utils/analytics';
+import { truncate, wordCount } from 'utils/helper';
 import {
   extractTabsFromHighlights,
   getProductCardLayout,
 } from 'utils/productUtils';
-import { truncate, wordCount } from 'utils/helper';
-import { currencyAtom } from 'store/atoms/currency';
-import { BLACK_COLOR_CLOSE } from 'assets/SvgIcons';
-import Conditional from 'components/common/Conditional';
-import Product from 'components/Product';
-import { getProductCommonProperties, trackEvent } from 'utils/analytics';
-import PromoCodeBlock from 'UI/PromoCodeBlock';
-import { descriptorIcons } from 'const/descriptorIcons';
 import { getDuration } from 'utils/timeUtils';
-import ComboPopup from 'UI/ComboPopup';
-import { expandFontToken } from 'const/typography';
+import { currencyAtom } from 'store/atoms/currency';
 import { metaAtom } from 'store/atoms/meta';
+import COLORS from 'const/colors';
+import { descriptorIcons } from 'const/descriptorIcons';
 import { FONTS } from 'const/fonts';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  LOCALISED_DATE_FORMATS,
+  SIDEBAR_TYPES,
+  THEMES,
+} from 'const/index';
+import { strings } from 'const/strings';
+import { expandFontToken } from 'const/typography';
+import { BackArrow, BLACK_COLOR_CLOSE, CALENDAR } from 'assets/SvgIcons';
 
 dayjs.extend(advancedFormat);
 

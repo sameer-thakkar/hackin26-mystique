@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useWindowWidth } from '@react-hook/window-size';
 import { useRecoilValue } from 'recoil';
-import { currencyAtom } from 'store/atoms/currency';
+import { useWindowWidth } from '@react-hook/window-size';
 import PopulateProducts from 'components/PopulateProducts';
 import { getHeadoutLanguagecode } from 'utils';
-import { csvTgidToArray, getLangObject } from 'utils/helper';
-import { tourListApiParser } from 'utils/dataParsers';
 import { fetchTourList } from 'utils/apiUtils';
+import { tourListApiParser } from 'utils/dataParsers';
+import { csvTgidToArray, getLangObject } from 'utils/helper';
 import { convertUidToUrl } from 'utils/urlUtils';
+import { currencyAtom } from 'store/atoms/currency';
 
 const TicketCard = (props: any) => {
   const {

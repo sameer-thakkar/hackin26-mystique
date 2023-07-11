@@ -1,11 +1,10 @@
-import { CUSTOM_TYPES, DESIGN } from 'constants/index';
-
-import { convertUidToUrl, getLangUID } from 'utils/urlUtils';
-import { getPageData } from 'utils/prismicUtils';
 import { NextPageContext } from 'next';
 import { getHeadoutLanguagecode, isCollectionMB, reflect } from 'utils';
 import { groupSlices } from 'utils/helper';
 import imageSliceHandler from 'utils/imageSliceHandler';
+import { getPageData } from 'utils/prismicUtils';
+import { convertUidToUrl, getLangUID } from 'utils/urlUtils';
+import { CUSTOM_TYPES, DESIGN } from 'constants/index';
 
 interface SitemapContext extends NextPageContext {
   localizedStrings: any;

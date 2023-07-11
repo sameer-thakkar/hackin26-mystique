@@ -1,7 +1,6 @@
 import React from 'react';
-
-import TabWrapper from '../../components/slices/TabWrapper';
 import useWindowSize from '../../components/hooks/useWindowSize';
+import TabWrapper from '../../components/slices/TabWrapper';
 import ParentWrapper from '../ParentWrapper';
 
 export default {

@@ -1,18 +1,22 @@
-import dynamic from 'next/dynamic';
 import React, { Component, ComponentType } from 'react';
+import dynamic from 'next/dynamic';
 import { withRouter } from 'next/router';
-import { InteractionContextProvider } from 'contexts/Interaction';
 import Conditional from 'components/common/Conditional';
 import PopulateMeta from 'components/common/NextSeoMeta';
+import { InteractionContextProvider } from 'contexts/Interaction';
 import { getAlternateLanguages } from 'utils';
 import allToursParser from 'utils/allToursParser';
-import { tourListApiParser } from 'utils/dataParsers';
-import { checkIfBroadwayMB, genManualSlice, getLangObject } from 'utils/helper';
-import { checkIfLTTMB } from 'utils/helper';
-import { MicrositeV2GlobalStyle } from 'const/globalStyles/micrositeV2';
-import { getLogoRedirectionUrl } from 'utils/urlUtils';
-import { PAGETYPE, QUERY_PARAMS, THEMES } from 'const/index';
 import { fetchTourListV6 } from 'utils/apiUtils';
+import { tourListApiParser } from 'utils/dataParsers';
+import {
+  checkIfBroadwayMB,
+  checkIfLTTMB,
+  genManualSlice,
+  getLangObject,
+} from 'utils/helper';
+import { getLogoRedirectionUrl } from 'utils/urlUtils';
+import { MicrositeV2GlobalStyle } from 'const/globalStyles/micrositeV2';
+import { PAGETYPE, QUERY_PARAMS, THEMES } from 'const/index';
 
 const HomePage: ComponentType<any> = dynamic(() =>
   import(/* webpackChunkName: "HomePage" */ './views/HomePage').then(

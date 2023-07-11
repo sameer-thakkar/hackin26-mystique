@@ -1,12 +1,12 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
-import { metaAtom } from 'store/atoms/meta';
-import Conditional from 'components/common/Conditional';
 import { NestedMenuItemProps } from 'components/CategoryHeader/components/NestedMenuItem/interface';
-import { getCategoryHeaderMenuLabel } from 'utils/helper';
+import Conditional from 'components/common/Conditional';
 import { trackHeaderMenuItemClicked } from 'utils/headerUtils';
-import { CHEVRON_RIGHT } from 'assets/SvgIcons';
+import { getCategoryHeaderMenuLabel } from 'utils/helper';
+import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
+import { CHEVRON_RIGHT } from 'assets/SvgIcons';
 
 const NestedMenuItem: React.FC<NestedMenuItemProps> = (props) => {
   const {

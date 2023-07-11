@@ -1,9 +1,8 @@
 import React, { ComponentType, useState } from 'react';
-import { PAGETYPE } from 'const/index';
-import { CLOSE_WHITE } from 'assets/SvgIcons';
-import { HALYARD } from 'const/ui-constants';
 import dynamic from 'next/dynamic';
-
+import { PAGETYPE } from 'const/index';
+import { HALYARD } from 'const/ui-constants';
+import { CLOSE_WHITE } from 'assets/SvgIcons';
 import PopulateProducts from '../PopulateProducts';
 
 const SearchBox: ComponentType<any> = dynamic(

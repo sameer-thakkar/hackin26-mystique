@@ -2,20 +2,20 @@ import { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import useSWR from 'swr';
-import { MBContext } from 'contexts/MBContext';
-import { metaAtom } from 'store/atoms/meta';
 import Conditional from 'components/common/Conditional';
 import { Descriptors } from 'components/Product';
 import Carousel from 'components/UI/Carousel';
 import VariantCard, { VariantCardSkeleton } from 'components/UI/VariantCard';
-import { BLACK_COLOR_CLOSE } from 'assets/SvgIcons';
+import { MBContext } from 'contexts/MBContext';
+import { trackEvent } from 'utils/analytics';
+import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
+import { getHostName } from 'utils/helper';
+import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
-import { trackEvent } from 'utils/analytics';
-import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
-import { getHostName } from 'utils/helper';
+import { BLACK_COLOR_CLOSE } from 'assets/SvgIcons';
 
 const PopupWrapper = styled.div`
   z-index: 16;

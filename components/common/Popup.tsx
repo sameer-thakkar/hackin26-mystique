@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
-
-import sliceHandler from '../Slices';
+import { HALYARD } from 'const/ui-constants';
 import { CLOSE_BLACK } from '../../assets/SvgIcons';
+import sliceHandler from '../Slices';
 
 const Popup = (props: any) => {
   const { data, togglePopup, children } = props;

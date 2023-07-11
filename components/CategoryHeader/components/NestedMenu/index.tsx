@@ -1,7 +1,7 @@
 import React from 'react';
-import NestedMenuItem from 'components/CategoryHeader/components/NestedMenuItem';
-import { StyledNestedMenuContainer } from 'components/CategoryHeader/components/NestedMenu/styles';
 import { NestedMenuProps } from 'components/CategoryHeader/components/NestedMenu/interface';
+import { StyledNestedMenuContainer } from 'components/CategoryHeader/components/NestedMenu/styles';
+import NestedMenuItem from 'components/CategoryHeader/components/NestedMenuItem';
 
 const NestedMenu: React.FC<NestedMenuProps> = (props) => {
   const {

@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import Prismic from 'prismic-javascript';
-
 import { apiEndpoint, linkResolver } from '../../config/prismic-config';
 
 export default function handle(req: NextApiRequest, res: NextApiResponse) {

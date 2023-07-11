@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import handleViewport from 'react-in-viewport';
 

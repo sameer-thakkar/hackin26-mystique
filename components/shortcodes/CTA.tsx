@@ -1,15 +1,15 @@
-import Conditional from 'components/common/Conditional';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import Conditional from 'components/common/Conditional';
 import { legacyBooleanCheck } from 'utils';
-
 import Button from '../UI/Button';
 
 const CTAWrapper = styled.div`
   margin: 30px 0px;
-  text-align: ${({  
- // @ts-expect-error TS(2339): Property 'align' does not exist on type 'Pick<Deta... Remove this comment to see the full error message
- align }) => align};
+  text-align: ${({
+    // @ts-expect-error TS(2339): Property 'align' does not exist on type 'Pick<Deta... Remove this comment to see the full error message
+    align,
+  }) => align};
   a {
     text-decoration: none;
   }

@@ -1,15 +1,14 @@
-import React, { useState, useRef } from 'react';
-import COLORS from 'const/colors';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
+import COLORS from 'const/colors';
 import { PURPS_TICK_MARK } from 'assets/SvgIcons';
-
 import { useCaptureClickOutside } from '../hooks/ClickOutside';
 
 const TriggerElement = styled.div`
   cursor: pointer;
 `;
 
-const DropdownOverlay = styled.div `
+const DropdownOverlay = styled.div`
   position: absolute;
   cursor: pointer;
   display: ${(props) => ((props as any).showOverlay ? `grid` : `none`)};
@@ -25,9 +24,10 @@ const DropdownOverlay = styled.div `
 
 const StyledDropdownItem = styled.div`
   font-size: 14px;
-  ${({  
- // @ts-expect-error TS(2339): Property 'active' does not exist on type 'Pick<Det... Remove this comment to see the full error message
- active }) =>
+  ${({
+    // @ts-expect-error TS(2339): Property 'active' does not exist on type 'Pick<Det... Remove this comment to see the full error message
+    active,
+  }) =>
     active
       ? `
       display: grid;

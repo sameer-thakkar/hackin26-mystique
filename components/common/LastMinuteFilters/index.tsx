@@ -1,31 +1,30 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import useSWR from 'swr';
-import { HeadoutEndpoints, getHeadoutApiUrl, swrFetcher } from 'utils/apiUtils';
-import { addDays, formatDateToString } from 'utils/dateUtils';
-import Button from 'UI/Button';
-import { useRouter } from 'next/router';
-import { getABTestingVariant } from 'utils/experiments/experimentUtils';
-import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
-import { useRecoilState } from 'recoil';
-import { hsidAtom } from 'store/atoms/hsid';
 import Skeleton from 'react-loading-skeleton';
+import { useRouter } from 'next/router';
+import { useRecoilState } from 'recoil';
+import useSWR from 'swr';
+import Button from 'UI/Button';
 import { trackEvent } from 'utils/analytics';
+import { getHeadoutApiUrl, HeadoutEndpoints, swrFetcher } from 'utils/apiUtils';
+import { addDays, formatDateToString } from 'utils/dateUtils';
+import { getABTestingVariant } from 'utils/experiments/experimentUtils';
+import { hsidAtom } from 'store/atoms/hsid';
+import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, CTA_TYPE } from 'const/index';
 import { strings } from 'const/strings';
-
 import Conditional from '../Conditional';
 import Drawer from '../Drawer';
 import Emoji from '../Emoji';
+import { ILastMinuteFilters } from './interface';
 import {
+  DrawerBody,
+  drawerStyles,
   FilterButton,
   FiltersContainer,
   FiltersWrapper,
-  drawerStyles,
   Footer,
-  DrawerBody,
   SkeletonWrapper,
 } from './styles';
-import { ILastMinuteFilters } from './interface';
 
 const LastMinuteFilters = (props: ILastMinuteFilters) => {
   const { orderedTours, setOrderedFilteredTours, setProductsLoading } = props;

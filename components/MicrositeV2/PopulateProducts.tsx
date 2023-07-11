@@ -1,11 +1,13 @@
-import React, { useState, useContext, useEffect, ComponentType } from 'react';
+import React, { ComponentType, useContext, useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import Conditional from 'components/common/Conditional';
+import LinkResolver from 'components/LinkResolver';
 import InteractionContext from 'contexts/Interaction';
 import { MBContext } from 'contexts/MBContext';
-import Conditional from 'components/common/Conditional';
-import { strings } from 'const/strings';
-import LinkResolver from 'components/LinkResolver';
-import { useRouter } from 'next/router';
+import { trackEvent } from 'utils/analytics';
+import COLORS from 'const/colors';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
@@ -13,10 +15,9 @@ import {
   QUERY_PARAMS,
   SORT_SELECTOR_FILTERS,
 } from 'const/index';
-import COLORS from 'const/colors';
+import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
-import { trackEvent } from 'utils/analytics';
-import dynamic from 'next/dynamic';
+
 const RowComponent: ComponentType<any> = dynamic(() =>
   import(/* webpackChunkName: "RowComponent" */ './RowComponent').then(
     (mod) => mod.RowComponent

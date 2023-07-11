@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { metaAtom } from 'store/atoms/meta';
-import NestedMenu from 'components/CategoryHeader/components/NestedMenu';
 import DeepNestedMenu from 'components/CategoryHeader/components/DeepNestedMenu';
+import { ExpandedMenuProps } from 'components/CategoryHeader/components/ExpandedMenu/interface';
 import {
   StyledExpandedMenu,
   StyledExpandedMenuContainer,
-  StyledParentMenu,
   StyledNestedMenu,
+  StyledParentMenu,
 } from 'components/CategoryHeader/components/ExpandedMenu/styles';
-import { ExpandedMenuProps } from 'components/CategoryHeader/components/ExpandedMenu/interface';
-import { trackEvent, getCommonEventMetaData } from 'utils/analytics';
+import NestedMenu from 'components/CategoryHeader/components/NestedMenu';
+import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { getCategoryHeaderMenuLabel } from 'utils/helper';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { CHEVRON_RIGHT } from 'assets/SvgIcons';
 
 const ExpandedMenu: React.FC<ExpandedMenuProps> = (props) => {

@@ -1,22 +1,22 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { scroller } from 'react-scroll';
 import { useRouter } from 'next/router';
 import styled, { css, keyframes } from 'styled-components';
+import Conditional from 'components/common/Conditional';
+import useWindowSize from 'hooks/useWindowSize';
+import { addUrlParams } from 'utils/urlUtils';
+import COLORS from 'const/colors';
+import { FONTS } from 'const/fonts';
+import { SIDEBAR_TYPES } from 'const/index';
+import { expandFontToken } from 'const/typography';
 import {
-  CLOSE_WHITE,
   BackArrow,
+  CLOSE_WHITE,
   DOUBLE_CHEVRON,
   LIST_ICON,
 } from 'assets/SvgIcons';
-import { useState, useEffect, useRef } from 'react';
-import COLORS from 'const/colors';
-import { SIDEBAR_TYPES } from 'const/index';
-import useWindowSize from 'hooks/useWindowSize';
-import { addUrlParams } from 'utils/urlUtils';
-import { expandFontToken } from 'const/typography';
-import { FONTS } from 'const/fonts';
-import Conditional from 'components/common/Conditional';
-import { scroller } from 'react-scroll';
 
 const fadeRight = (from: string, to: string) => keyframes`
 from {
@@ -248,7 +248,9 @@ const Title = styled.div`
         ? `
     ${expandFontToken(FONTS.HEADING_SMALL)}`
         : ``}
+  }
 `;
+
 const BackIcon = styled.div`
   grid-column: 1 / 2;
   cursor: pointer;

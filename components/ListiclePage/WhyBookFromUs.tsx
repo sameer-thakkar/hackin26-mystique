@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
-
 import { CIRCLE_TICK } from '../../assets/SvgIcons';
 
 const WhyBookFromUsWrapper = styled.div`

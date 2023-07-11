@@ -1,6 +1,6 @@
 import React from 'react';
-import ImageGallery from '../../components/slices/ImageGallery';
 import useWindowSize from '../../components/hooks/useWindowSize';
+import ImageGallery from '../../components/slices/ImageGallery';
 
 export default {
   title: 'Slices/Image Gallery',

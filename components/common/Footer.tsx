@@ -1,21 +1,21 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { useRecoilValue } from 'recoil';
 import styled, { ThemeProvider } from 'styled-components';
-import { MBContext } from 'contexts/MBContext';
-import { getAppTheme } from 'style/theme';
+import { useRecoilValue } from 'recoil';
 import { useWindowWidth } from '@react-hook/window-size';
-import Image from 'UI/Image';
-import SocialLinks from 'components/UI/SocialLinks';
-import sliceHandler from 'components/Slices';
+import { getAppTheme } from 'style/theme';
 import Conditional from 'components/common/Conditional';
-import { POWERED_BY_HEADOUT, WHITE_BLIP } from 'assets/SvgIcons';
+import sliceHandler from 'components/Slices';
+import SocialLinks from 'components/UI/SocialLinks';
+import Image from 'UI/Image';
+import { MBContext } from 'contexts/MBContext';
+import useOnScreen from 'hooks/useOnScreen';
+import { metaAtom } from 'store/atoms/meta';
+import COLORS from 'const/colors';
+import { FONTS } from 'const/fonts';
 import { THEMES } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
-import { FONTS } from 'const/fonts';
-import COLORS from 'const/colors';
-import { metaAtom } from 'store/atoms/meta';
-import useOnScreen from 'hooks/useOnScreen';
+import { POWERED_BY_HEADOUT, WHITE_BLIP } from 'assets/SvgIcons';
 
 const StyledFooter = styled.footer`
   width: 100%;

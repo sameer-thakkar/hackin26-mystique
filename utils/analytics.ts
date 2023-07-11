@@ -1,4 +1,4 @@
-import { ANALYTICS_PROPERTIES, ANALYTICS_EVENTS } from 'const/index';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 
 declare global {
   interface Window {

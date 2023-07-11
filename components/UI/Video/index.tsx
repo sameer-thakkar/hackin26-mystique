@@ -1,17 +1,17 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useSwiperSlide } from 'swiper/react';
-import { appAtom } from 'store/atoms/app';
-import { trackEvent } from 'utils/analytics';
 import Conditional from 'components/common/Conditional';
-import Image from 'UI/Image';
 import {
   PlayButton,
   StyledVideoContainer,
   VideoContainer,
 } from 'components/UI/Video/styles';
-import { PlaySvg } from 'assets/SvgIcons';
+import Image from 'UI/Image';
+import { trackEvent } from 'utils/analytics';
+import { appAtom } from 'store/atoms/app';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { PlaySvg } from 'assets/SvgIcons';
 
 interface VideoTypeProps {
   url: string;

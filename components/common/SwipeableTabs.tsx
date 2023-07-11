@@ -1,8 +1,8 @@
 import { FunctionComponent, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { expandFontToken } from 'const/typography';
-import COLORS from 'const/colors';
 import { debounce } from 'utils/gen';
+import COLORS from 'const/colors';
+import { expandFontToken } from 'const/typography';
 
 const TabWrapper = styled.div`
   display: grid;
@@ -35,18 +35,20 @@ export const Tab = styled(SubHeadingLarge)`
   padding-bottom: 12px;
   border-bottom: 2px solid;
 
-  ${({  
- // @ts-expect-error TS(2339): Property 'active' does not exist on type 'Pick<Det... Remove this comment to see the full error message
- active }) =>
+  ${({
+    // @ts-expect-error TS(2339): Property 'active' does not exist on type 'Pick<Det... Remove this comment to see the full error message
+    active,
+  }) =>
     active ? `color: ${COLORS.TEXT.PURPS_3};` : ` border-color: transparent;`};
   transform: translateY(1px);
   cursor: pointer;
 `;
 
 export const Panel = styled.div`
-  display: ${({  
- // @ts-expect-error TS(2339): Property 'active' does not exist on type 'Pick<Det... Remove this comment to see the full error message
- active }) => (active ? 'block' : 'none')};
+  display: ${({
+    // @ts-expect-error TS(2339): Property 'active' does not exist on type 'Pick<Det... Remove this comment to see the full error message
+    active,
+  }) => (active ? 'block' : 'none')};
 `;
 
 interface TabProps {

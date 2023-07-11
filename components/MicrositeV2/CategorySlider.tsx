@@ -1,12 +1,12 @@
-import React, { useState, useContext, useEffect, useCallback } from 'react';
-import dynamic from 'next/dynamic';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { scroller } from 'react-scroll';
+import dynamic from 'next/dynamic';
 import styled from 'styled-components';
-import ProductsContext from 'contexts/Products';
-import { HALYARD } from 'const/ui-constants';
-import COLORS from 'const/colors';
-import { CHEVRON_LEFT } from 'assets/SvgIcons';
 import Conditional from 'components/common/Conditional';
+import ProductsContext from 'contexts/Products';
+import COLORS from 'const/colors';
+import { HALYARD } from 'const/ui-constants';
+import { CHEVRON_LEFT } from 'assets/SvgIcons';
 
 const DetailedProductCard = dynamic(
   () =>

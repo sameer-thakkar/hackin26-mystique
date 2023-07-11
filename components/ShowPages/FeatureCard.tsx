@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { strings } from 'const/strings';
 import { FONTS } from 'const/fonts';
+import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
-import { HEADPHONE, HAPPY_EMOJI, VERIFIED, GOLDEN_STAR } from 'assets/SvgIcons';
+import { GOLDEN_STAR, HAPPY_EMOJI, HEADPHONE, VERIFIED } from 'assets/SvgIcons';
 
 const FeatureCardWrapper = styled.div`
   display: grid;

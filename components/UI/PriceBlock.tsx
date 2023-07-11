@@ -1,16 +1,16 @@
-import styled from 'styled-components';
 import { useContext } from 'react';
+import styled from 'styled-components';
+import CashbackComponent from 'components/common/CashbackComponent';
 import Conditional from 'components/common/Conditional';
 import LocalisedPrice from 'UI/LPrice';
+import { MBContext } from 'contexts/MBContext';
+import { CurrencyDisplayType } from 'utils/currency';
+import { checkIfLTTMB } from 'utils/helper';
 import COLORS from 'const/colors';
-import { THEMES, CASHBACK_TYPES } from 'const/index';
+import { FONTS } from 'const/fonts';
+import { CASHBACK_TYPES, THEMES } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
-import { FONTS } from 'const/fonts';
-import { CurrencyDisplayType } from 'utils/currency';
-import CashbackComponent from 'components/common/CashbackComponent';
-import { checkIfLTTMB } from 'utils/helper';
-import { MBContext } from 'contexts/MBContext';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 export const StyledPriceBlock = styled.div<{

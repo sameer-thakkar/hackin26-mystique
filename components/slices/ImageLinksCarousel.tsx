@@ -1,19 +1,18 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
-import styled from 'styled-components';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
-import { RichText } from 'prismic-reactjs';
-import { HALYARD } from 'const/ui-constants';
-import COLORS from 'const/colors';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
-import Image from 'UI/Image';
-import { CHEVRON_LEFT } from 'assets/SvgIcons';
-import { shortCodeSerializer } from 'utils/shortCodes';
-import { stringIdfy } from 'utils/helper';
-import { MBContext } from 'contexts/MBContext';
-import { DESIGN } from 'const/index';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
+import { RichText } from 'prismic-reactjs';
+import styled from 'styled-components';
 import type { SwiperProps } from 'swiper/react';
-import { generateSidenavId } from 'utils/helper';
+import Image from 'UI/Image';
+import { MBContext } from 'contexts/MBContext';
+import { generateSidenavId, stringIdfy } from 'utils/helper';
+import { shortCodeSerializer } from 'utils/shortCodes';
+import COLORS from 'const/colors';
+import { DESIGN } from 'const/index';
+import { HALYARD } from 'const/ui-constants';
+import { CHEVRON_LEFT } from 'assets/SvgIcons';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 

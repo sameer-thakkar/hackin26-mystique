@@ -1,11 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
-import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import Conditional from 'components/common/Conditional';
-import { CHEVRON_DOWN, PURPS_TICK_MARK } from 'assets/SvgIcons';
-import { expandFontToken } from 'const/typography';
+import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import COLORS from 'const/colors';
 import { strings } from 'const/strings';
+import { expandFontToken } from 'const/typography';
+import { CHEVRON_DOWN, PURPS_TICK_MARK } from 'assets/SvgIcons';
 
 const StyledSortSelector = styled.div<{ isEntertainmentMb: boolean }>`
   margin: 0;

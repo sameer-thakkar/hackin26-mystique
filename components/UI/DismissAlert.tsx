@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { HALYARD } from 'const/ui-constants';
-
 import { CLOSE_YELLOW } from '../../assets/SvgIcons';
 
 const StyledAlert = styled.div`

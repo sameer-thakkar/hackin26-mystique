@@ -1,25 +1,25 @@
-import React, { useRef, useState, useEffect, ComponentType } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import styled from 'styled-components';
+import React, { ComponentType, useEffect, useRef, useState } from 'react';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
+import styled from 'styled-components';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import Conditional from 'components/common/Conditional';
+import LocaleSelector from 'components/common/LocaleSelector';
+import HeaderLinks from 'components/HeaderLinks';
+import Hamburger from 'UI/Hamburger';
+import Image from 'UI/Image';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
+import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import { throttle } from 'utils/gen';
+import { withTrailingSlash } from 'utils/helper';
+import { appAtom } from 'store/atoms/app';
 import { currencyListAtom } from 'store/atoms/currencyList';
 import { metaAtom } from 'store/atoms/meta';
-import Image from 'UI/Image';
-import Hamburger from 'UI/Hamburger';
-import HeaderLinks from 'components/HeaderLinks';
-import LocaleSelector from 'components/common/LocaleSelector';
-import Conditional from 'components/common/Conditional';
-import { withTrailingSlash } from 'utils/helper';
-import { throttle } from 'utils/gen';
-import { trackEvent, getCommonEventMetaData } from 'utils/analytics';
+import COLORS from 'const/colors';
 import { ANALYTICS_EVENTS } from 'const/index';
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
-import COLORS from 'const/colors';
 import { POWERED_BY_HEADOUT } from 'assets/SvgIcons';
-import { appAtom } from 'store/atoms/app';
 
 const MultiLevelNav = dynamic(() => import('components/MultiLevelNav'));
 const ResponsiveSelector: ComponentType<any> = dynamic(

@@ -1,13 +1,13 @@
 import { FunctionComponent, useContext } from 'react';
 import styled from 'styled-components';
+import Conditional from 'components/common/Conditional';
 import Carousel from 'components/GlobalMbs/Carousels/Carousel';
 import Image from 'UI/Image';
 import TitleTextCombo from 'UI/TitleTextCombo';
-import COLORS from 'const/colors';
-import { convertUidToUrl } from 'utils/urlUtils';
-import { FALLBACK_IMAGES } from 'const/index';
 import { MBContext } from 'contexts/MBContext';
-import Conditional from 'components/common/Conditional';
+import { convertUidToUrl } from 'utils/urlUtils';
+import COLORS from 'const/colors';
+import { FALLBACK_IMAGES } from 'const/index';
 
 const Wrapper = styled.div`
   max-width: 1200px;

@@ -4,23 +4,23 @@ import type {
   CollectionDetails,
   CollectionVideos,
 } from 'components/StaticBanner/index';
-import { getHeadoutLanguagecode } from 'utils/index';
 import {
   fetchCollection,
   fetchCollectionList,
-  fetchTourGroupsByCollection,
   fetchTourGroupsByCategory,
+  fetchTourGroupsByCollection,
   fetchTourGroupV6,
   fetchTourListV6,
 } from 'utils/apiUtils';
 import { csvTgidToArray } from 'utils/helper';
+import { appendInclusionExclusion } from 'utils/inclusionExclusionUtils';
+import { getHeadoutLanguagecode } from 'utils/index';
+import { sendLog } from 'utils/logger';
 import {
   generateDescriptor,
   getSingleAriesTag,
   standardizeCancellationPolicy,
 } from 'utils/productUtils';
-import { appendInclusionExclusion } from 'utils/inclusionExclusionUtils';
-import { sendLog } from 'utils/logger';
 import { getEncodedUrlSlugs } from 'utils/urlUtils';
 
 export const uncategorizedToursListParser = (

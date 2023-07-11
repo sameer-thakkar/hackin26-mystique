@@ -1,15 +1,13 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { currencyAtom } from 'store/atoms/currency';
 import DropdownSelector from 'components/common/DropdownSelector';
+import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import { currencyAtom } from 'store/atoms/currency';
 import { metaAtom } from 'store/atoms/meta';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
-import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 
-const CurrencySelector = ({
-  currencies
-}: any) => {
+const CurrencySelector = ({ currencies }: any) => {
   const [activeCurrency, setCurrency] = useRecoilState(currencyAtom);
   const router = useRouter();
   const pageMetaData = useRecoilValue(metaAtom);
@@ -18,9 +16,9 @@ const CurrencySelector = ({
     trackEvent({
       eventName: ANALYTICS_EVENTS.DROPDOWN_SHOWN,
       [ANALYTICS_PROPERTIES.HEADER]: getDisplayCurrencyString({
-        currencyObj: currencies.find(({
-          code
-        }: any) => code === activeCurrency),
+        currencyObj: currencies.find(
+          ({ code }: any) => code === activeCurrency
+        ),
       }),
       ...getCommonEventMetaData(pageMetaData),
     });
@@ -33,10 +31,7 @@ const CurrencySelector = ({
     });
   };
 
-  const getDisplayCurrencyString = ({
-    currencyObj,
-    full = false
-  }: any) => {
+  const getDisplayCurrencyString = ({ currencyObj, full = false }: any) => {
     const { currencyName, localSymbol, code } = currencyObj ?? {};
     const finalLocalSymbol = localSymbol === code ? '' : localSymbol;
     return full

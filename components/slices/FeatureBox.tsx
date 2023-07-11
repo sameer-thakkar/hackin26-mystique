@@ -1,10 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
-import COLORS from 'const/colors';
+import styled from 'styled-components';
 import Image from 'UI/Image';
-
+import COLORS from 'const/colors';
 import { shortCodeSerializer } from '../../utils/shortCodes';
 
 type FeatureBoxProps = {

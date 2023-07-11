@@ -1,12 +1,12 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
-import { metaAtom } from 'store/atoms/meta';
-import { TMenu } from 'components/CategoryHeader/components/ExpandedMenu/interface';
-import { StyledDeepNestedMenuItem } from 'components/CategoryHeader/components/DeepNestedMenuItem/styles';
 import { DeepNestedMenuItemProps } from 'components/CategoryHeader/components/DeepNestedMenuItem/interface';
+import { StyledDeepNestedMenuItem } from 'components/CategoryHeader/components/DeepNestedMenuItem/styles';
+import { TMenu } from 'components/CategoryHeader/components/ExpandedMenu/interface';
+import { getObjectNestingCount } from 'utils/gen';
 import { trackHeaderMenuItemClicked } from 'utils/headerUtils';
 import { getCategoryHeaderMenuLabel } from 'utils/helper';
-import { getObjectNestingCount } from 'utils/gen';
+import { metaAtom } from 'store/atoms/meta';
 
 const DeepNestedMenuItem: React.FC<DeepNestedMenuItemProps> = (props) => {
   const { categoryHeaderMenu, selectedNestedMenu, mbCity } = props;

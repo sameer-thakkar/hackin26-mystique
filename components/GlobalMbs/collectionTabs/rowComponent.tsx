@@ -4,8 +4,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import styled from 'styled-components';
 import { scroller } from 'react-scroll';
+import styled from 'styled-components';
 import { useWindowWidth } from '@react-hook/window-size';
 import Conditional from 'components/common/Conditional';
 import Card from 'components/GlobalMbs/collectionTabs/collectionCard';

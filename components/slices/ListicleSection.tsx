@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { HALYARD } from 'const/ui-constants';
 import { generateSidenavId } from 'utils/helper';
-
+import { HALYARD } from 'const/ui-constants';
 import sliceHandler from '../Slices';
 
 const StyledListicleSection = styled.div`

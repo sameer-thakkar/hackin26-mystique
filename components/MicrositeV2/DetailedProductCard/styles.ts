@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { StlyedSplit } from 'UI/Split';
 import { IDetailedDescriptionCardProps } from 'components/MicrositeV2/DetailedProductCard/interface';
-import { HALYARD } from 'const/ui-constants';
+import { StlyedSplit } from 'UI/Split';
 import COLORS from 'const/colors';
+import { HALYARD } from 'const/ui-constants';
 
 export const DetailedDescriptionCard = styled.div<
   IDetailedDescriptionCardProps

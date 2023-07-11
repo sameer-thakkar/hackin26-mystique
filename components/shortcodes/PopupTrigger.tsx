@@ -1,9 +1,8 @@
-import { CUSTOM_TYPES } from 'const/index';
-import COLORS from 'const/colors';
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-
+import styled from 'styled-components';
+import COLORS from 'const/colors';
+import { CUSTOM_TYPES } from 'const/index';
 import { Client } from '../../config/prismic-config';
 
 const Popup = dynamic(() => import('components/common/Popup'), { ssr: false });

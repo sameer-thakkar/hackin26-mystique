@@ -2,13 +2,67 @@ import React, { useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import ErrorPage from 'next/error';
 import Head from 'next/head';
-import ServerCookies from 'cookies';
-import styled from 'styled-components';
+import { ProductJsonLd } from 'next-seo';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
+import { Client } from 'config/prismic-config';
+import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import { ProductJsonLd } from 'next-seo';
 import { useWindowWidth } from '@react-hook/window-size';
+import ServerCookies from 'cookies';
+import Conditional from 'components/common/Conditional';
+import Footer from 'components/common/Footer';
+import Header from 'components/common/Header';
+import PopulateMeta from 'components/common/NextSeoMeta';
+import ShowPageBanner from 'components/ShowPages/Banner/index';
+import CategorySlider from 'components/ShowPages/CategorySlider';
+import ContentTabs from 'components/ShowPages/ContentTabs';
+import CustomerReview from 'components/ShowPages/CustomerReview';
+import FeatureCard from 'components/ShowPages/FeatureCard';
+import Gallery from 'components/ShowPages/Gallery';
+import GoogleMap from 'components/ShowPages/GoogleMap';
+import { parseShowPageData } from 'components/ShowPages/parseShowPage';
+import SpecialOfferBanner from 'components/ShowPages/SpecialOfferBanner';
+import SubHeading from 'components/ShowPages/SubHeading';
+import { StyledAccordion } from 'components/slices/Accordion';
+import { StyledAsideModal } from 'UI/AsideModal';
+import { StyledRichContent } from 'UI/RichContent';
+import TitleTextCombo from 'UI/TitleTextCombo';
+import { MBContext } from 'contexts/MBContext';
+import {
+  createBookingURL,
+  getHeadoutLanguagecode,
+  redirectTo,
+  refsArrayToObject,
+  renderError,
+} from 'utils';
+import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import {
+  fetchDomainConfig,
+  fetchProductData,
+  fetchTourGroupReviews,
+  fetchTourGroupsByCategory,
+  fetchTourGroupSlots,
+} from 'utils/apiUtils';
+import { getUniqueArrayItemsBy } from 'utils/arrayUtils';
+import { getDurationISO, getPrevDate } from 'utils/dateUtils';
+import { checkIfLTTMB, getHostName, groupSlices } from 'utils/helper';
+import { getRefsArrayByIds, getShowPageCollections } from 'utils/prismicUtils';
+import {
+  generateDescriptor,
+  shouldUseDynamicShowPage,
+} from 'utils/productUtils';
+import { getProductSchema } from 'utils/schemaUtils';
+import {
+  convertUidToUrl,
+  getFormattedUrlSlug,
+  getLogoRedirectionUrl,
+  getShowpageBreadcrumbUid,
+  getValidUrl,
+} from 'utils/urlUtils';
+import { currencyAtom } from 'store/atoms/currency';
+import { gtmAtom } from 'store/atoms/gtm';
+import { metaAtom } from 'store/atoms/meta';
 import {
   ALLOW_IMMEDIATE_NESTING,
   ANALYTICS_EVENTS,
@@ -18,65 +72,11 @@ import {
   DEFAULT_PRISMIC_SHOWPAGE_UID,
   DEFAULT_SHOWPAGE_HOSTNAME,
   FAVICON_LONDON_THEATRE_TICKETS,
-  LanguagesUnion,
   LANGUAGE_MAP,
+  LanguagesUnion,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { StyledRichContent } from 'UI/RichContent';
 import { expandFontToken } from 'const/typography';
-import PopulateMeta from 'components/common/NextSeoMeta';
-import { StyledAsideModal } from 'UI/AsideModal';
-import {
-  convertUidToUrl,
-  getFormattedUrlSlug,
-  getLogoRedirectionUrl,
-  getShowpageBreadcrumbUid,
-  getValidUrl,
-} from 'utils/urlUtils';
-import {
-  generateDescriptor,
-  shouldUseDynamicShowPage,
-} from 'utils/productUtils';
-import {
-  fetchDomainConfig,
-  fetchProductData,
-  fetchTourGroupReviews,
-  fetchTourGroupsByCategory,
-  fetchTourGroupSlots,
-} from 'utils/apiUtils';
-import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
-import { getProductSchema } from 'utils/schemaUtils';
-import { getDurationISO, getPrevDate } from 'utils/dateUtils';
-import { getUniqueArrayItemsBy } from 'utils/arrayUtils';
-import TitleTextCombo from 'UI/TitleTextCombo';
-import { StyledAccordion } from 'components/slices/Accordion';
-import { checkIfLTTMB, getHostName, groupSlices } from 'utils/helper';
-import Header from 'components/common/Header';
-import {
-  createBookingURL,
-  getHeadoutLanguagecode,
-  redirectTo,
-  refsArrayToObject,
-  renderError,
-} from 'utils';
-import ShowPageBanner from 'components/ShowPages/Banner/index';
-import Conditional from 'components/common/Conditional';
-import SpecialOfferBanner from 'components/ShowPages/SpecialOfferBanner';
-import ContentTabs from 'components/ShowPages/ContentTabs';
-import Gallery from 'components/ShowPages/Gallery';
-import SubHeading from 'components/ShowPages/SubHeading';
-import GoogleMap from 'components/ShowPages/GoogleMap';
-import CustomerReview from 'components/ShowPages/CustomerReview';
-import FeatureCard from 'components/ShowPages/FeatureCard';
-import CategorySlider from 'components/ShowPages/CategorySlider';
-import Footer from 'components/common/Footer';
-import { parseShowPageData } from 'components/ShowPages/parseShowPage';
-import { currencyAtom } from 'store/atoms/currency';
-import { metaAtom } from 'store/atoms/meta';
-import { gtmAtom } from 'store/atoms/gtm';
-import { MBContext } from 'contexts/MBContext';
-import { getRefsArrayByIds, getShowPageCollections } from 'utils/prismicUtils';
-import { Client } from 'config/prismic-config';
 
 const Breadcrumb = dynamic(() => import('components/ShowPages/BreadCrumb'));
 const AccordionGroup = dynamic(() =>

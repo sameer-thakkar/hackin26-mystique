@@ -1,8 +1,7 @@
 import React from 'react';
-import Head from 'next/head';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-
+import Head from 'next/head';
 import { getUID } from '../utils/helper';
 
 export default class CreateUID extends React.Component<any, any> {

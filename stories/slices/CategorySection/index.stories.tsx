@@ -1,7 +1,7 @@
 import React from 'react';
 import CategorySection from '../../../components/MicrositeV2/CategorySection';
-import { ProductsContextProvider } from '../../../contexts/Products';
 import { InteractionContextProvider } from '../../../contexts/Interaction';
+import { ProductsContextProvider } from '../../../contexts/Products';
 import tourData from './data.json';
 
 export default {

@@ -1,49 +1,32 @@
 import React, {
-  useRef,
-  useState,
+  useCallback,
   useContext,
   useEffect,
-  useCallback,
+  useRef,
+  useState,
 } from 'react';
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
-import dynamic from 'next/dynamic';
 import styled, { css } from 'styled-components';
-import dayjs from 'dayjs';
-import advancedFormat from 'dayjs/plugin/advancedFormat';
-import parse from 'url-parse';
-import type { SwiperProps } from 'swiper/react';
-import { MBContext } from 'contexts/MBContext';
-import useSWR from 'swr';
 import { useRecoilValue } from 'recoil';
 import { useWindowWidth } from '@react-hook/window-size';
-import { currencyAtom } from 'store/atoms/currency';
-import { metaAtom } from 'store/atoms/meta';
-import HorizontalLine from 'components/slices/HorizontalLine';
+import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+import type { SwiperProps } from 'swiper/react';
+import useSWR from 'swr';
+import parse from 'url-parse';
 import Conditional from 'components/common/Conditional';
 import Emoji from 'components/common/Emoji';
+import HorizontalLine from 'components/slices/HorizontalLine';
+import Button from 'UI/Button';
+import Chevron from 'UI/Chevron';
 import ComboPopup from 'UI/ComboPopup';
 import PriceBlock from 'UI/PriceBlock';
-import Chevron from 'UI/Chevron';
-import { StlyedSplit } from 'UI/Split';
-import Button from 'UI/Button';
 import PromoCodeBlock from 'UI/PromoCodeBlock';
-import { CALENDAR, BackArrow, CHEVRON_RIGHT_CIRCLE } from 'assets/SvgIcons';
-import COLORS from 'const/colors';
-import { descriptorIcons } from 'const/descriptorIcons';
-import { strings } from 'const/strings';
-import { expandFontToken } from 'const/typography';
-import { HALYARD } from 'const/ui-constants';
-import {
-  ANALYTICS_EVENTS,
-  THEMES,
-  SIDEBAR_TYPES,
-  LOCALISED_DATE_FORMATS,
-  ANALYTICS_PROPERTIES,
-  CUSTOM_TYPES,
-  DESCRIPTORS,
-  MEDIA_CAROUSEL_IMAGE_LIMIT,
-} from 'const/index';
+import { StlyedSplit } from 'UI/Split';
+import { MBContext } from 'contexts/MBContext';
 import { createBookingURL } from 'utils';
 import {
   getCommonEventMetaData,
@@ -64,8 +47,25 @@ import {
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { getDuration } from 'utils/timeUtils';
 import { addQueryParams } from 'utils/urlUtils';
+import { currencyAtom } from 'store/atoms/currency';
+import { metaAtom } from 'store/atoms/meta';
+import COLORS from 'const/colors';
+import { descriptorIcons } from 'const/descriptorIcons';
 import { FONTS } from 'const/fonts';
-import { useRouter } from 'next/router';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  CUSTOM_TYPES,
+  DESCRIPTORS,
+  LOCALISED_DATE_FORMATS,
+  MEDIA_CAROUSEL_IMAGE_LIMIT,
+  SIDEBAR_TYPES,
+  THEMES,
+} from 'const/index';
+import { strings } from 'const/strings';
+import { expandFontToken } from 'const/typography';
+import { HALYARD } from 'const/ui-constants';
+import { BackArrow, CALENDAR, CHEVRON_RIGHT_CIRCLE } from 'assets/SvgIcons';
 
 const Swiper = dynamic(
   () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper'),

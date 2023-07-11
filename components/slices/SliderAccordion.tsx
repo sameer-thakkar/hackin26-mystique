@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import dynamic from 'next/dynamic';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
-import dynamic from 'next/dynamic';
+import styled from 'styled-components';
+import type { SwiperProps } from 'swiper/react';
+import Accordion, { StyledAccordion } from 'components/slices/Accordion';
 import Image from 'UI/Image';
 import { shortCodeSerializer } from 'utils/shortCodes';
-import Accordion, { StyledAccordion } from 'components/slices/Accordion';
-import type { SwiperProps } from 'swiper/react';
 
 const Slider = dynamic(() => import('UI/Slider'));
 

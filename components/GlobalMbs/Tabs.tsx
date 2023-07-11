@@ -1,7 +1,7 @@
 import { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
-import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
+import { expandFontToken } from 'const/typography';
 
 const TabWrapper = styled.div`
   display: grid;

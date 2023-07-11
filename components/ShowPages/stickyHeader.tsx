@@ -1,16 +1,15 @@
 import React from 'react';
-import { useRecoilValue } from 'recoil';
-import { metaAtom } from 'store/atoms/meta';
 import styled from 'styled-components';
-import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
-import COLORS from 'const/colors';
-import { strings } from 'const/strings';
+import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
-import { expandFontToken } from 'const/typography';
-import { ANALYTICS_EVENTS } from 'const/index';
-import { ANALYTICS_PROPERTIES } from 'const/index';
+import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
 import { getProductCommonProperties, trackEvent } from 'utils/analytics';
+import { metaAtom } from 'store/atoms/meta';
+import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { strings } from 'const/strings';
+import { expandFontToken } from 'const/typography';
 
 const BannerContent = styled.div(
   // @ts-expect-error TS(2339): Property 'showComponent' does not exist on type 'P... Remove this comment to see the full error message

@@ -1,12 +1,13 @@
-import Cookies from 'cookies';
-import { COOKIE } from 'const/index';
-import { checkIfCurrencyCodeValid } from 'utils/currency';
-import TurndownService from 'turndown';
-import { sendLog } from 'utils/logger';
 import { NextApiHandler } from 'next';
+import Cookies from 'cookies';
+import TurndownService from 'turndown';
+import { checkIfCurrencyCodeValid } from 'utils/currency';
+import { sendLog } from 'utils/logger';
+import { COOKIE } from 'const/index';
 import { LOG_LEVELS } from 'const/logs';
 
 const markdownToRichtext = require('@ueno/markdown-to-prismic-richtext');
+
 const turndownService = new TurndownService();
 
 const getRichTextFromHtmlContent = (properties: string) => {

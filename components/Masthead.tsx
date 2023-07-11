@@ -1,20 +1,20 @@
 import React, { useContext, useEffect } from 'react';
-import { withShortcodes } from 'utils/helper';
+import Conditional from 'components/common/Conditional';
+import {
+  MobileTitle,
+  StyledMasthead,
+  Title,
+  TitleWrapper,
+  Wrapper,
+} from 'components/MastheadStyles';
+import { MBContext } from 'contexts/MBContext';
 import { trackEvent } from 'utils/analytics';
+import { withShortcodes } from 'utils/helper';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   PAGE_TYPES,
 } from 'const/index';
-import { MBContext } from 'contexts/MBContext';
-import {
-  MobileTitle,
-  Wrapper,
-  StyledMasthead,
-  Title,
-  TitleWrapper,
-} from 'components/MastheadStyles';
-import Conditional from 'components/common/Conditional';
 
 const Masthead = ({
   title,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { withKnobs, select } from '@storybook/addon-knobs';
+import { select, withKnobs } from '@storybook/addon-knobs';
 import CardSection from '../../components/slices/CardSection';
 import { repeat } from '../../utils/storybook';
 

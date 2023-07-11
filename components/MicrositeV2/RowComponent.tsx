@@ -1,16 +1,16 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import { scroller } from 'react-scroll';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import InteractionContext from 'contexts/Interaction';
-import { DESCRIPTORS, DESIGN, PAGETYPE } from 'const/index';
 import Conditional from 'components/common/Conditional';
 import { NO_OF_CARDS_IN_ROW } from 'components/MicrositeV2/PopulateProducts';
-import { MBContext } from 'contexts/MBContext';
 import Product from 'components/MicrositeV2/Product';
-import { addUrlParams } from 'utils/urlUtils';
-import { useRouter } from 'next/router';
+import InteractionContext from 'contexts/Interaction';
+import { MBContext } from 'contexts/MBContext';
 import useOnScreen from 'hooks/useOnScreen';
+import { addUrlParams } from 'utils/urlUtils';
+import { DESCRIPTORS, DESIGN, PAGETYPE } from 'const/index';
 
 const DetailedProductCard = dynamic(() =>
   import(

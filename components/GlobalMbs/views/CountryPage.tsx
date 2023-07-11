@@ -1,8 +1,7 @@
+import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
 import CollectionTabs from 'components/GlobalMbs/collectionTabs';
-import styled from 'styled-components';
 import COLORS from 'const/colors';
-
 import TopDestinationsCarousel from '../Carousels/TopDestinationsCarousel';
 
 const SectionWrapper = styled.div``;

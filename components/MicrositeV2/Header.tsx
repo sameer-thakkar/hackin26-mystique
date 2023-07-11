@@ -5,33 +5,33 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { useRecoilValue } from 'recoil';
-import styled from 'styled-components';
 import dynamic from 'next/dynamic';
+import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
+import Conditional from 'components/common/Conditional';
+import LocaleSelector from 'components/common/LocaleSelector';
+import HeaderLinks from 'components/HeaderLinks';
+import MultiLevelNav from 'components/MultiLevelNav';
+import Hamburger from 'components/UI/Hamburger';
+import Image from 'components/UI/Image';
+import { MBContext } from 'contexts/MBContext';
+import { createBookingURL } from 'utils';
+import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import { groupSlices, withTrailingSlash } from 'utils/helper';
+import { convertUidToUrl } from 'utils/urlUtils';
+import { appAtom } from 'store/atoms/app';
 import { currencyListAtom } from 'store/atoms/currencyList';
 import { metaAtom } from 'store/atoms/meta';
-import { MBContext } from 'contexts/MBContext';
-import Image from 'components/UI/Image';
-import MultiLevelNav from 'components/MultiLevelNav';
-import LocaleSelector from 'components/common/LocaleSelector';
-import Hamburger from 'components/UI/Hamburger';
-import HeaderLinks from 'components/HeaderLinks';
-import Conditional from 'components/common/Conditional';
-import { SEARCH_ICON, POWERED_BY_HEADOUT } from 'assets/SvgIcons';
-import { HALYARD } from 'const/ui-constants';
 import COLORS from 'const/colors';
 import {
-  PAGETYPE,
   ALLOW_IMMEDIATE_NESTING,
-  THEMES,
   ANALYTICS_EVENTS,
+  PAGETYPE,
+  THEMES,
 } from 'const/index';
 import { strings } from 'const/strings';
-import { groupSlices, withTrailingSlash } from 'utils/helper';
-import { createBookingURL } from 'utils';
-import { convertUidToUrl } from 'utils/urlUtils';
-import { trackEvent, getCommonEventMetaData } from 'utils/analytics';
-import { appAtom } from 'store/atoms/app';
+import { HALYARD } from 'const/ui-constants';
+import { POWERED_BY_HEADOUT, SEARCH_ICON } from 'assets/SvgIcons';
 
 const SearchBox: ComponentType<any> = dynamic(
   () => import('./SearchBox').then((mod) => mod.SearchBox),

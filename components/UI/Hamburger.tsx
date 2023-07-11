@@ -1,6 +1,6 @@
 import React from 'react';
-import COLORS from 'const/colors';
 import styled from 'styled-components';
+import COLORS from 'const/colors';
 
 const StyledHamburger = styled.div`
   display: none;
@@ -9,9 +9,11 @@ const StyledHamburger = styled.div`
   &:after,
   &:before,
   & div {
-    background-color: ${({    
- // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
- isGlobalMb, theme }) =>
+    background-color: ${({
+      // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
+      isGlobalMb,
+      theme,
+    }) =>
       isGlobalMb ? COLORS.GRAY.G2 : theme.primaryBGText || COLORS.GRAY.G2};
     border-radius: 3px;
     content: '';
@@ -34,9 +36,10 @@ const StyledHamburger = styled.div`
     }
   }
 
-  ${({  
- // @ts-expect-error TS(2339): Property 'isActive' does not exist on type 'Pick<D... Remove this comment to see the full error message
- isActive }) => {
+  ${({
+    // @ts-expect-error TS(2339): Property 'isActive' does not exist on type 'Pick<D... Remove this comment to see the full error message
+    isActive,
+  }) => {
     return (
       isActive &&
       `

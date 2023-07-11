@@ -1,27 +1,26 @@
 /* eslint-disable no-console */
 import * as Sentry from '@sentry/nextjs';
 import {
-  generatePromiseForCategoryTours,
-  getHeadoutLanguagecode,
-} from 'utils/index';
-import { getHostName, normaliseURL } from 'utils/helper';
-import { CURRENCY_SYMBOL_MAP, DESIGN } from 'const/index';
-import {
   getObject,
   parseShowPageData,
 } from 'components/ShowPages/parseShowPage';
-import { sendLog } from 'utils/logger';
 import { fetchTourListV6 } from 'utils/apiUtils';
+import { getHostName, normaliseURL } from 'utils/helper';
 import {
-  generateDescriptor,
-  standardizeCancellationPolicy,
-} from 'utils/productUtils';
+  generatePromiseForCategoryTours,
+  getHeadoutLanguagecode,
+} from 'utils/index';
+import { sendLog } from 'utils/logger';
 import {
   accumulatingCategoryAndItemsData,
   extractTgidsFromCategories,
 } from 'utils/parser';
+import {
+  generateDescriptor,
+  standardizeCancellationPolicy,
+} from 'utils/productUtils';
 import { getEncodedUrlSlugs } from 'utils/urlUtils';
-
+import { CURRENCY_SYMBOL_MAP, DESIGN } from 'const/index';
 import type { TCategoryTourListParserV2, TProduct } from './interface';
 
 export default async function categoryTourListParserV2({

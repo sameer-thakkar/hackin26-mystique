@@ -1,9 +1,9 @@
 import dynamic from 'next/dynamic';
-import COLORS from 'const/colors';
-import { THEMES } from 'const/index';
 import { SavedTag } from 'UI/PriceBlock';
-import { expandFontToken } from 'const/typography';
+import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
+import { THEMES } from 'const/index';
+import { expandFontToken } from 'const/typography';
 
 const CTAContainer = dynamic(() =>
   import('components/Product').then((mod) => mod.CTAContainer)

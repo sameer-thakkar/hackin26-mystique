@@ -1,34 +1,33 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { scroller } from 'react-scroll';
+import { useRouter } from 'next/router';
 import styled, { css } from 'styled-components';
-import Product from 'components/Product';
 import Conditional from 'components/common/Conditional';
-import HorizontalLine from 'components/slices/HorizontalLine';
+import Product from 'components/Product';
 import TicketCard from 'components/slices/ContentPageTicketsCard';
+import HorizontalLine from 'components/slices/HorizontalLine';
+import Spinner from 'UI/Spinner';
 import { MBContext } from 'contexts/MBContext';
-import {
-  ANALYTICS_EVENTS,
-  ANALYTICS_PROPERTIES,
-  THEMES,
-  PROMO_CODES,
-  DESIGN,
-} from 'const/index';
-import { strings } from 'const/strings';
-import { expandFontToken } from 'const/typography';
-import COLORS from 'const/colors';
-import { FONTS } from 'const/fonts';
+import { isMBDesign, legacyBooleanCheck } from 'utils';
+import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import {
   fetchCalendarInventory,
   fetchInventory,
   fetchTourList,
 } from 'utils/apiUtils';
-import { isMBDesign, legacyBooleanCheck } from 'utils';
-import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
-import { csvTgidToArray, getHostName } from 'utils/helper';
+import { csvTgidToArray, generateSidenavId, getHostName } from 'utils/helper';
 import { getPromoCodesDocument } from 'utils/prismicUtils';
-import { generateSidenavId } from 'utils/helper';
-import { useRouter } from 'next/router';
-import Spinner from 'UI/Spinner';
-import { scroller } from 'react-scroll';
+import COLORS from 'const/colors';
+import { FONTS } from 'const/fonts';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  DESIGN,
+  PROMO_CODES,
+  THEMES,
+} from 'const/index';
+import { strings } from 'const/strings';
+import { expandFontToken } from 'const/typography';
 
 const StyledProductsWrapper = styled.div<{
   isLoading: boolean;

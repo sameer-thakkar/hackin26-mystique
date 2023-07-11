@@ -1,8 +1,8 @@
+import { hashCode } from '../gen';
 import {
   isBitSet,
   numberOfSetBits as numberOfSetBitsfromIntegerUtils,
 } from '../integerUtils';
-import { hashCode } from '../gen';
 
 class Experiment {
   experimentName: string;

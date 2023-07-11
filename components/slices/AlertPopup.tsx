@@ -1,10 +1,10 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
-import styled from 'styled-components';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
-import { HALYARD } from 'const/ui-constants';
+import styled from 'styled-components';
 import type { SwiperProps } from 'swiper/react';
+import { HALYARD } from 'const/ui-constants';
 
 const Swiper = dynamic(() => import('components/Swiper'));
 

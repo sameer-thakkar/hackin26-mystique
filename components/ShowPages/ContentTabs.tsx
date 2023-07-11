@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
-import { shortCodeSerializer } from 'utils/shortCodes';
-import { ANALYTICS_EVENTS } from 'const/index';
-import { ANALYTICS_PROPERTIES } from 'const/index';
-import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
+import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import { shortCodeSerializer } from 'utils/shortCodes';
 import { metaAtom } from 'store/atoms/meta';
-import { expandFontToken } from 'const/typography';
 import COLORS from 'const/colors';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { expandFontToken } from 'const/typography';
 
 type ContentTabsProps = {
   tabsArr: any[];

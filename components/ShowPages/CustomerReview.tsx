@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import dynamic from 'next/dynamic';
-import COLORS from 'const/colors';
-import { trackEvent } from 'utils/analytics';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import styled from 'styled-components';
 import type { SwiperProps } from 'swiper/react';
-
+import { trackEvent } from 'utils/analytics';
+import COLORS from 'const/colors';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { BLUE_QUOTES } from '../../assets/SvgIcons';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
@@ -180,11 +179,12 @@ const CardCarouselContainer = styled.div`
 `;
 
 type OwnCardCarouselProps = {
-    cards: any[];
-    isMobile: boolean;
+  cards: any[];
+  isMobile: boolean;
 };
 
-type CardCarouselProps = OwnCardCarouselProps & typeof CustomerReview.defaultProps;
+type CardCarouselProps = OwnCardCarouselProps &
+  typeof CustomerReview.defaultProps;
 
 export default class CustomerReview extends Component<CardCarouselProps> {
   state = {

@@ -1,7 +1,7 @@
-import COLORS from 'const/colors';
-import { CURRENCY_SYMBOL_MAP } from 'const/index';
 import React from 'react';
 import styled from 'styled-components';
+import COLORS from 'const/colors';
+import { CURRENCY_SYMBOL_MAP } from 'const/index';
 import { strings } from 'const/strings';
 
 const StyledPricing = styled.div`
@@ -21,7 +21,7 @@ const StyledPricing = styled.div`
   }
 `;
 
-const Price = styled.span `
+const Price = styled.span`
   font-size: 21px;
   line-height: 20px;
   font-weight: 700;

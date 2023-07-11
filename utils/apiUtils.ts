@@ -2,7 +2,6 @@ import { sortDateArray } from 'utils/dateUtils';
 import { currencySortFn } from 'utils/gen';
 import { addQueryParams, getDomainFromUid } from 'utils/urlUtils';
 import { CUSTOM_HEADER } from 'const/index';
-
 import { simplifySlotData } from './inventoryUtils';
 
 type TTgids = string[];

@@ -1,27 +1,27 @@
 import React, { useContext, useState } from 'react';
 import dynamic from 'next/dynamic';
-import styled from 'styled-components';
-import { useWindowWidth } from '@react-hook/window-size';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
-import { strings } from 'const/strings';
-import COLORS from 'const/colors';
-import { expandFontToken } from 'const/typography';
-import Image from 'UI/Image';
+import styled from 'styled-components';
+import { useWindowWidth } from '@react-hook/window-size';
+import type { SwiperProps } from 'swiper/react';
+import Conditional from 'components/common/Conditional';
 import Button from 'UI/Button';
-import { CHEVRON_LEFT } from 'assets/SvgIcons';
+import Image from 'UI/Image';
+import { MBContext } from 'contexts/MBContext';
+import { trackEvent } from 'utils/analytics';
+import { checkIfGpMotorTicketsMB } from 'utils/helper';
+import COLORS from 'const/colors';
+import { FONTS } from 'const/fonts';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
   FALLBACK_IMAGE,
   FALLBACK_IMAGES,
 } from 'const/index';
-import Conditional from 'components/common/Conditional';
-import { trackEvent } from 'utils/analytics';
-import { checkIfGpMotorTicketsMB } from 'utils/helper';
-import type { SwiperProps } from 'swiper/react';
-import { FONTS } from 'const/fonts';
-import { MBContext } from 'contexts/MBContext';
+import { strings } from 'const/strings';
+import { expandFontToken } from 'const/typography';
+import { CHEVRON_LEFT } from 'assets/SvgIcons';
 
 const Swiper = dynamic(() => import('components/Swiper'), { ssr: false });
 

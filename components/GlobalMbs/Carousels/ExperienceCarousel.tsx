@@ -1,16 +1,16 @@
 import { FunctionComponent, useContext } from 'react';
 import styled from 'styled-components';
-import { MBContext } from 'contexts/MBContext';
-import Image from 'UI/Image';
 import Conditional from 'components/common/Conditional';
 import Carousel from 'components/GlobalMbs/Carousels/Carousel';
+import Image from 'UI/Image';
+import { MBContext } from 'contexts/MBContext';
+import { getLocalisedPrice } from 'utils/currency';
+import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
 import COLORS from 'const/colors';
-import { HALYARD } from 'const/ui-constants';
 import { ASPECT_RATIO } from 'const/index';
 import { strings } from 'const/strings';
+import { HALYARD } from 'const/ui-constants';
 import { CHEVRON_LEFT } from 'assets/SvgIcons';
-import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
-import { getLocalisedPrice } from 'utils/currency';
 
 const StyledCard = styled.div`
   font-family: ${HALYARD.FONT_STACK};

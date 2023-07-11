@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'clas... Remove this comment to see the full error message
 import classNames from 'classnames';
-import styled from 'styled-components';
 import Conditional from 'components/common/Conditional';
 import Chevron from 'components/UI/Chevron';
-import COLORS from 'const/colors';
-import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
-import { useRecoilValue } from 'recoil';
-import { metaAtom } from 'store/atoms/meta';
-import { expandFontToken } from 'const/typography';
-import Image from 'UI/Image';
 import Button from 'UI/Button';
-import { strings } from 'const/strings';
+import Image from 'UI/Image';
+import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import { metaAtom } from 'store/atoms/meta';
+import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { strings } from 'const/strings';
+import { expandFontToken } from 'const/typography';
 
 export const StyledAccordion = styled.div`
   padding: 16px 0;
@@ -67,6 +67,7 @@ const Title = styled.div<{
   display: grid;
   grid-template-columns: 1fr auto;
   grid-column-gap: 10px;
+  ${expandFontToken('Heading/Small')}
   ${({ isVenuePage }) =>
     isVenuePage
       ? `

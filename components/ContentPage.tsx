@@ -1,47 +1,47 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 import { Client } from 'config/prismic-config';
-import { ProductsContextProvider } from 'contexts/Products';
-import { InteractionContextProvider } from 'contexts/Interaction';
-import DismissAlert from 'components/UI/DismissAlert';
-import Alert from 'components/UI/Alert';
+import styled from 'styled-components';
+import Conditional from 'components/common/Conditional';
+import Footer from 'components/common/Footer';
+import Header from 'components/common/Header';
 import PopulateMeta from 'components/common/NextSeoMeta';
 import Masthead from 'components/Masthead';
-import Footer from 'components/common/Footer';
 import sliceHandler from 'components/Slices';
-import Header from 'components/common/Header';
-import Conditional from 'components/common/Conditional';
+import Alert from 'components/UI/Alert';
+import DismissAlert from 'components/UI/DismissAlert';
+import SideNavModal from 'UI/SideNav';
+import { InteractionContextProvider } from 'contexts/Interaction';
+import { ProductsContextProvider } from 'contexts/Products';
 import {
   getAlternateLanguages,
-  legacyBooleanCheck,
+  getBannerAndFooterSubtext,
   getHeadoutLanguagecode,
   isCollectionMB,
-  getBannerAndFooterSubtext,
+  legacyBooleanCheck,
 } from 'utils';
 import allToursParser from 'utils/allToursParser';
+import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
+import { fetchTourListV6 } from 'utils/apiUtils';
 import { tourListApiParser } from 'utils/dataParsers';
 import {
-  groupSlices,
-  getLangObject,
   checkIfCategoryHeaderExists,
+  getLangObject,
+  groupSlices,
 } from 'utils/helper';
-import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import renderShortCodes from 'utils/shortCodes';
-import { getLogoRedirectionUrl, convertUidToUrl } from 'utils/urlUtils';
-import { strings } from 'const/strings';
+import sideNavHandler from 'utils/sideNavUtils';
+import { convertUidToUrl, getLogoRedirectionUrl } from 'utils/urlUtils';
+import COLORS from 'const/colors';
 import {
-  DROPDOWN_ELEMENT,
-  FULL_WIDTH_SLICES,
   ALLOW_IMMEDIATE_NESTING,
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  DROPDOWN_ELEMENT,
+  FULL_WIDTH_SLICES,
 } from 'const/index';
-import COLORS from 'const/colors';
+import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
-import { fetchTourListV6 } from 'utils/apiUtils';
-import sideNavHandler from 'utils/sideNavUtils';
-import SideNavModal from 'UI/SideNav';
 
 const GroupBooking = dynamic(() => import('./GroupBooking'), { ssr: false });
 const CategoryHeader = dynamic(() =>

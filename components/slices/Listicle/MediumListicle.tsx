@@ -1,18 +1,17 @@
-import { HALYARD } from 'const/ui-constants';
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useState } from 'react';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
+import styled from 'styled-components';
 import { useWindowWidth } from '@react-hook/window-size';
-import Tags from 'UI/Tags';
-import Chevron from 'UI/Chevron';
 import Button from 'UI/Button';
-import { strings } from 'const/strings';
-import { CANDY_STAR } from 'assets/SvgIcons';
-import { shortCodeSerializer } from 'utils/shortCodes';
+import Chevron from 'UI/Chevron';
 import Image from 'UI/Image';
+import Tags from 'UI/Tags';
+import { shortCodeSerializer } from 'utils/shortCodes';
 import COLORS from 'const/colors';
-
+import { strings } from 'const/strings';
+import { HALYARD } from 'const/ui-constants';
+import { CANDY_STAR } from 'assets/SvgIcons';
 import Pricing from './Pricing';
 
 const CardWrapper = styled.div`
@@ -31,9 +30,10 @@ const CardTop = styled.div`
   grid-template-columns: 300px auto;
   grid-column-gap: 21px;
   cursor: pointer;
-  ${({  
- // @ts-expect-error TS(2339): Property 'isActive' does not exist on type 'Pick<D... Remove this comment to see the full error message
- isActive }) =>
+  ${({
+    // @ts-expect-error TS(2339): Property 'isActive' does not exist on type 'Pick<D... Remove this comment to see the full error message
+    isActive,
+  }) =>
     isActive
       ? `  border-bottom: 1px solid ${COLORS.GRAY.G6}; padding-bottom: 24px;`
       : ``}
@@ -89,9 +89,10 @@ const CardTitle = styled.div`
 `;
 
 const CardBottom = styled.div`
-  display: ${({  
- // @ts-expect-error TS(2339): Property 'isOpen' does not exist on type 'Pick<Det... Remove this comment to see the full error message
- isOpen }) => {
+  display: ${({
+    // @ts-expect-error TS(2339): Property 'isOpen' does not exist on type 'Pick<Det... Remove this comment to see the full error message
+    isOpen,
+  }) => {
     if (isOpen) return `grid`;
     return `none`;
   }};
@@ -173,15 +174,17 @@ const StyledLink = styled.a`
 `;
 
 const ReadMore = styled(Button)`
-  width: ${({  
- // @ts-expect-error TS(2339): Property 'fullWidth' does not exist on type 'Pick<... Remove this comment to see the full error message
- fullWidth }) => (fullWidth ? '100%;' : '42%; margin-right: 8px')};
+  width: ${({
+    // @ts-expect-error TS(2339): Property 'fullWidth' does not exist on type 'Pick<... Remove this comment to see the full error message
+    fullWidth,
+  }) => (fullWidth ? '100%;' : '42%; margin-right: 8px')};
 `;
 
 const BookNow = styled(Button)`
-  width: ${({  
- // @ts-expect-error TS(2339): Property 'fullWidth' does not exist on type 'Pick<... Remove this comment to see the full error message
- fullWidth }) => (fullWidth ? '100%' : '55%')};
+  width: ${({
+    // @ts-expect-error TS(2339): Property 'fullWidth' does not exist on type 'Pick<... Remove this comment to see the full error message
+    fullWidth,
+  }) => (fullWidth ? '100%' : '55%')};
 `;
 
 type MediumListicleProps = {

@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useRecoilValue } from 'recoil';
-import { metaAtom } from 'store/atoms/meta';
-import Conditional from 'components/common/Conditional';
+import { CategoryHeaderProps } from 'components/CategoryHeader/interface';
 import {
   StyledCategoryHeader,
   StyledCategoryHeaderContainer,
+  StyledDeepNestedMenuWrapper,
   StyledMainMenuItems,
   StyledNestedMenuWrapper,
-  StyledDeepNestedMenuWrapper,
 } from 'components/CategoryHeader/styles';
-import { CategoryHeaderProps } from 'components/CategoryHeader/interface';
-import { trackEvent, getCommonEventMetaData } from 'utils/analytics';
+import Conditional from 'components/common/Conditional';
+import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
 import { getCategoryHeaderMenuLabel } from 'utils/helper';
 import { titleCase } from 'utils/stringUtils';
-import { CHEVRON_RIGHT, HAMBURGER } from 'assets/SvgIcons';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import { labels } from 'const/header';
+import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import { CHEVRON_RIGHT, HAMBURGER } from 'assets/SvgIcons';
 
 const ExpandedMenu = dynamic(() =>
   import(

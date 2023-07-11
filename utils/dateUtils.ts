@@ -1,8 +1,9 @@
 import dayjs from 'dayjs';
-import { strings } from 'const/strings';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import duration from 'dayjs/plugin/duration';
+import { strings } from 'const/strings';
+
 dayjs.extend(advancedFormat);
 dayjs.extend(customParseFormat);
 dayjs.extend(duration);

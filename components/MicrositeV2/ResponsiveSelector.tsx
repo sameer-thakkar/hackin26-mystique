@@ -1,12 +1,12 @@
-import { HALYARD } from 'const/ui-constants';
-import COLORS from 'const/colors';
-import React, { useState, useRef, useEffect } from 'react';
-import { useCaptureClickOutside } from 'hooks/ClickOutside';
-import { strings } from 'const/strings';
-import Image from 'UI/Image';
-import { CHEVRON_DOWN, PURPS_TICK_MARK } from 'assets/SvgIcons';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import Image from 'UI/Image';
+import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import { isSameURL } from 'utils/helper';
+import COLORS from 'const/colors';
+import { strings } from 'const/strings';
+import { HALYARD } from 'const/ui-constants';
+import { CHEVRON_DOWN, PURPS_TICK_MARK } from 'assets/SvgIcons';
 
 interface IResponsiveSelectWrapper {
   hasIcon?: boolean;

@@ -1,5 +1,6 @@
-import COLORS from 'const/colors';
 import styled, { css } from 'styled-components';
+import COLORS from 'const/colors';
+
 export const FilterButton = styled.div<{ isSelected: boolean }>`
   background: ${({ isSelected }) =>
     isSelected ? COLORS.GRAY.G7 : COLORS.BRAND.WHITE};
