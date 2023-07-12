@@ -277,23 +277,22 @@ const Header: React.FC<any> = (props) => {
 
   useEffect(() => {
     if (!window) return;
-
-    if (categoryHeaderMenuExists) {
-      setIsHeaderSticky(true);
-    } else {
-      const scrollHandler = () => {
+    const scrollHandler = () => {
+      setScrollPos(window.pageYOffset);
+      if (!categoryHeaderMenuExists) {
         const isUpScroll = scrollPos > window.pageYOffset;
         setIsHeaderSticky(isUpScroll);
-        setScrollPos(window.pageYOffset);
-      };
-      const throttledScrollHandler = throttle(scrollHandler, 500);
-      window.addEventListener('scroll', throttledScrollHandler, {
-        passive: true,
-      });
-      return () => {
-        window.removeEventListener('scroll', throttledScrollHandler);
-      };
-    }
+      } else {
+        setIsHeaderSticky(true);
+      }
+    };
+    const throttledScrollHandler = throttle(scrollHandler, 500);
+    window.addEventListener('scroll', throttledScrollHandler, {
+      passive: true,
+    });
+    return () => {
+      window.removeEventListener('scroll', throttledScrollHandler);
+    };
   }, [scrollPos]);
 
   const handleHamburgerClick = () => {

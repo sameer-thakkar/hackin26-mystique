@@ -93,11 +93,11 @@ const CategoryBarWrapper = styled.div<{ isEntertainmentMb?: boolean }>`
     overflow-x: scroll;
     -webkit-overflow-scrolling: touch;
     padding-top: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '1.125rem' : '1.188rem'};
+      isEntertainmentMb ? '1.875rem' : '1.188rem'};
     padding-bottom: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '1.10rem' : '1.01rem'};
     margin-top: ${({ isEntertainmentMb }) =>
-      isEntertainmentMb ? '1rem' : '1.5rem'};
+      isEntertainmentMb ? '0' : '1.5rem'};
 
     .tabs-wrap {
       padding-left: 1rem;

@@ -17,6 +17,7 @@ import Image from 'components/UI/Image';
 import { MBContext } from 'contexts/MBContext';
 import { createBookingURL } from 'utils';
 import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import { throttle } from 'utils/gen';
 import { groupSlices, withTrailingSlash } from 'utils/helper';
 import { convertUidToUrl } from 'utils/urlUtils';
 import { appAtom } from 'store/atoms/app';
@@ -32,7 +33,8 @@ import {
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
 import { POWERED_BY_HEADOUT, SEARCH_ICON } from 'assets/SvgIcons';
-
+  
+  
 const SearchBox: ComponentType<any> = dynamic(
   () => import('./SearchBox').then((mod) => mod.SearchBox),
   { ssr: false }
@@ -55,6 +57,7 @@ interface IStyledHeader {
   isEntertainmentMbListicle?: boolean;
   overlayActive?: boolean;
   headerHover?: boolean;
+  isTop?: boolean;
 }
 
 const StyledHeader = styled.div<IStyledHeader>`
@@ -68,6 +71,9 @@ const StyledHeader = styled.div<IStyledHeader>`
     user-select: none;
   }
   .fixed-wrap {
+    box-shadow: ${({ isTop }) =>
+      !isTop &&
+      '0px -1px 2px rgba(0, 0, 0, 0.08), 0px 4px 8px rgba(0, 0, 0, 0.12)'};
     position: fixed;
     width: calc(100vw - (100vw - 100%));
     top: 0;
@@ -354,6 +360,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   const [resultClicked, setResultClicked] = useState(false);
   const [navActive, toggleNav] = useState(false);
   const [headerHover, setHeaderHover] = useState(false);
+  const [scrollPos, setScrollPos] = useState(0);
 
   const handleResults = (results: any) => {
     setResults(results);
@@ -441,6 +448,20 @@ const Header: FunctionComponent<HeaderProps> = ({
     );
   }, []);
 
+  useEffect(() => {
+    if (!window) return;
+    const scrollHandler = () => {
+      setScrollPos(window.pageYOffset);
+    };
+    const throttledScrollHandler = throttle(scrollHandler, 500);
+    window.addEventListener('scroll', throttledScrollHandler, {
+      passive: true,
+    });
+    return () => {
+      window.removeEventListener('scroll', throttledScrollHandler);
+    };
+  }, [scrollPos]);
+
   const handleHamburgerClick = () => {
     toggleNav((navActive) => !navActive);
     trackEvent({
@@ -456,6 +477,7 @@ const Header: FunctionComponent<HeaderProps> = ({
       isGlobalMb={isGlobalMb}
       isEntertainmentMb={isEntertainmentMb}
       isEntertainmentMbListicle={isEntertainmentMbListicle}
+      isTop={scrollPos <= 80}
     >
       <div className="fixed-offset"></div>
       <div className="fixed-wrap">
