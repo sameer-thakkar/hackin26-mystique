@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import LocaleSelector from 'components/common/LocaleSelector';
+import RiveLogoComponent from 'components/common/RiveLogoComponent/index';
 import HeaderLinks from 'components/HeaderLinks';
 import Hamburger from 'UI/Hamburger';
 import Image from 'UI/Image';
@@ -122,9 +123,12 @@ const StyledLogo = styled.div(
   justify-self: left;
   justify-content: left;
   max-width: 350px;
+  height:2rem !important;
+
 
   .center {
     display: flex;
+    padding-top: 0.25rem;
   }
 
   .image-wrap {
@@ -133,7 +137,7 @@ const StyledLogo = styled.div(
       position: relative !important;
     }
     img {
-      height: ${isEntertainmentMB ? `36px` : `44px`} !important;
+      height: ${isEntertainmentMB ? `2.25rem` : `2.5rem`} !important;
       position: relative !important;
       max-width: 100%;
       width: unset !important;
@@ -143,7 +147,7 @@ const StyledLogo = styled.div(
   }
 
   svg {
-    height: ${isEntertainmentMB ? `36px` : `44px`};
+    height: ${isEntertainmentMB ? `2.25rem` : `2.5rem`};
     width: auto;
     margin-left: ${isEntertainmentMB ? '-1px' : '11px'};
   }
@@ -183,6 +187,17 @@ const StyledHeaderElements = styled.div`
     * {
       color: ${COLORS.GRAY.G2};
     }
+  }
+`;
+
+const StyledVerticalDivider = styled.div`
+  border-left: 0.063rem solid ${COLORS.LIGHT_GRAY};
+  height: 2.5rem;
+  margin-left: 0.375rem;
+
+  @media (max-width: 768px) {
+    height: 1.625rem;
+    padding-bottom: 0.25rem;
   }
 `;
 
@@ -230,7 +245,6 @@ const Header: React.FC<any> = (props) => {
     ? [...languages, { code: currentLanguage }]
     : [];
   const { isSidenavScroll } = useRecoilValue(appAtom);
-
   const hamburgerIconCheck = categoryHeaderMenuExists
     ? Object.keys(categoryHeaderMenu).length > 0
     : showGroupBooking ||
@@ -329,13 +343,17 @@ const Header: React.FC<any> = (props) => {
               alt={logoAltText}
               priority
               fill
-              height="44"
-              width="144"
+              height="40"
+              width="130"
               autoCrop={false}
               className="center"
               fetchPriority="high"
             />
-            <Conditional if={hasPoweredByHeadoutLogo}>
+            <Conditional if={hasPoweredByHeadoutLogo && !isEntertainmentMB}>
+              <StyledVerticalDivider />
+              <RiveLogoComponent />
+            </Conditional>
+            <Conditional if={hasPoweredByHeadoutLogo && isEntertainmentMB}>
               {POWERED_BY_HEADOUT}
             </Conditional>
           </StyledLogo>

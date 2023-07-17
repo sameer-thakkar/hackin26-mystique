@@ -21,6 +21,7 @@
     "@formatjs/intl-relativetimeformat": "^10.0.1",
     "@newrelic/next": "^0.5.1",
     "@react-hook/window-size": "^3.0.6",
+    "@rive-app/react-canvas": "^3.0.54",
     "@sentry/nextjs": "7.14.2",
     "@types/lodash.clonedeep": "^4.5.7",
     "@ueno/markdown-to-prismic-richtext": "^1.2.0",

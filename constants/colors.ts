@@ -130,6 +130,7 @@ const COLORS = {
     LIGHT_TONE_1: '#4377f0',
     LIGHT_TONE_3: '#adc6ff',
   },
+  LIGHT_GRAY: '#d9d9d9',
   metadata: {
     generated: 'Tue Jun 15 2021 13:18:23 GMT+0530 (India Standard Time)',
     figma: {
