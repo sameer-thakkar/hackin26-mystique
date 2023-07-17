@@ -348,6 +348,6 @@ export const getEncodedUrlSlugs = (urlSlugs: IUrlSlugs) =>
   // replacing '/' with '#' in all urlSlugs to prevent crawlers from crawling the url
   Object.entries(urlSlugs).reduce((acc: IUrlSlugs, [lang, urlSlug]) => {
     if (typeof urlSlug !== 'string') acc[lang] = '';
-    else acc[lang] = urlSlug.replaceAll('/', '#');
+    else acc[lang] = urlSlug?.replaceAll('/', '#');
     return acc;
   }, {});
