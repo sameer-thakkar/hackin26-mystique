@@ -1235,7 +1235,7 @@ export const getPageData = async ({
       serverResponse,
       isDev,
     })) || { statusCode: 404 };
-    const currencyListPromise = fetchCurrencyList();
+    const currencyListPromise = fetchCurrencyList({ uid, hostname });
     const domainConfigPromise = fetchDomainConfig(uid);
 
     if (statusCode) {

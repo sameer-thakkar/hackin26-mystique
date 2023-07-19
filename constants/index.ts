@@ -1144,3 +1144,18 @@ export const SORT_SELECTOR_FILTERS = {
   POPULARITY: 'popularity',
   PRICE: 'price',
 };
+
+export const UAE_BAN_WHITELIST = [
+  'dubai-tickets.co',
+  'palmtowertickets.com',
+  'visitdubaiframe.com',
+  'desert-safari-dxb.com',
+  'imgworldstickets.com',
+  'dhow-cruise.com',
+  'zipline-tickets.com',
+  'helicopter-tour-dubai.com',
+  'hop-on-hop-off-tickets.com',
+  'aquarium-tickets.com',
+  'go-skydiving.com',
+  'abudhabi-tickets.com',
+];
