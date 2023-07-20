@@ -772,6 +772,7 @@ export const ANALYTICS_PROPERTIES = {
   DATE_RANGE_SELECTED: 'Date Range Selected',
   EXPERIENCES_AVAILABLE: 'Experiences Available',
   SHOULDER_PAGE_TYPE: 'Shoulder Page Type',
+  MB_TYPE: 'MB Type',
 };
 
 export const PAGE_TYPES = {

@@ -21,7 +21,11 @@ import {
   legacyBooleanCheck,
 } from 'utils';
 import allToursParser from 'utils/allToursParser';
-import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
+import {
+  sendVariablesToDataLayer,
+  sendVariableToDataLayer,
+  trackEvent,
+} from 'utils/analytics';
 import { fetchTourListV6 } from 'utils/apiUtils';
 import { tourListApiParser } from 'utils/dataParsers';
 import {
@@ -312,11 +316,28 @@ class ContentPage extends Component<any, any> {
 
   componentDidUpdate() {
     const { eventsReady, data } = this.props;
-    const { shoulder_page_type } = data;
+    const {
+      shoulder_page_type,
+      tagged_category: taggedCategoryName,
+      tagged_sub_category: taggedSubCategoryName,
+      tagged_mb_type: taggedMbType,
+    } = data;
     const { pageViewEventSet } = this.state;
     if (!eventsReady) return;
 
     if (!pageViewEventSet) {
+      sendVariablesToDataLayer({
+        ...(taggedCategoryName && {
+          [ANALYTICS_PROPERTIES.CATEGORY_NAME]: taggedCategoryName,
+        }),
+        ...(taggedSubCategoryName && {
+          [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: taggedSubCategoryName,
+        }),
+        ...(taggedMbType && {
+          [ANALYTICS_PROPERTIES.MB_TYPE]: taggedMbType,
+        }),
+      });
+
       trackEvent({
         eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
         [ANALYTICS_PROPERTIES.SHOULDER_PAGE_TYPE]: shoulder_page_type ?? '',

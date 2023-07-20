@@ -1,13 +1,17 @@
+import dynamic from 'next/dynamic';
 import { CashbackComponentPropTypes } from 'components/common/CashbackComponent/interface';
 import {
   CashbackLabel,
   CashbackWrapper,
 } from 'components/common/CashbackComponent/styles';
-import Tooltip from 'components/common/Tooltip/index';
 import { trackEvent } from 'utils/analytics';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 import { CASHBACK_COIN, INFO_ICON_WRAPPED } from 'assets/SvgIcons';
+
+const Tooltip = dynamic(() => import('components/common/Tooltip/index'), {
+  ssr: false,
+});
 
 const CashbackComponent = ({
   cashbackAmount,

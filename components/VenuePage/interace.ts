@@ -15,3 +15,20 @@ export type IVenuePageProps = {
   serverRequestStartTimestamp: string;
   tgidsInPage: Array<number>;
 };
+
+export type IAccordionSlice = {
+  heading: string;
+  content: string;
+};
+
+export type IVerticalCardsGrid = {
+  nearby_theatre_name: string;
+  theatre_info: string;
+  redirect_url: {
+    url: string;
+  };
+};
+
+export type IAmenity = {
+  amenities_list: string;
+};

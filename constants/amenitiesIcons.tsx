@@ -253,7 +253,7 @@ export const amenitiesIcons: Record<string, JSX.Element> = {
   'Seating Capacity': numberOfSeatsSvg,
   Restaurant: drinksSvg,
   Cafe: drinksSvg,
-  DedicatedParking: parkingSvg,
+  'Dedicated Parking': parkingSvg,
   Elevators: elevatorSvg,
   Lift: elevatorSvg,
   'Wheelchair Accessible': wheelchairSvg,

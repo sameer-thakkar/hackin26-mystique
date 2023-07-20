@@ -26,7 +26,11 @@ import {
   legacyBooleanCheck,
 } from 'utils';
 import allToursParser from 'utils/allToursParser';
-import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
+import {
+  sendVariablesToDataLayer,
+  sendVariableToDataLayer,
+  trackEvent,
+} from 'utils/analytics';
 import {
   checkIfCategoryHeaderExists,
   csvTgidToArray,
@@ -142,6 +146,9 @@ const MicrositeV1 = (props: any) => {
     baseLangIsPoiMb,
     baseLangBannerAndFooterCombinations,
     tagged_city: taggedCity,
+    tagged_category: taggedCategoryName,
+    tagged_sub_category: taggedSubCategoryName,
+    tagged_mb_type: taggedMbType,
   } = micrositeData || {};
 
   const { COVID19_ALERT, READ_MORE } = strings;
@@ -403,6 +410,18 @@ const MicrositeV1 = (props: any) => {
     const renderedBaseLangPageTitle = renderShortCodes(
       baseLangPageTitle
     )?.join?.('');
+
+    sendVariablesToDataLayer({
+      ...(taggedCategoryName && {
+        [ANALYTICS_PROPERTIES.CATEGORY_NAME]: taggedCategoryName,
+      }),
+      ...(taggedSubCategoryName && {
+        [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: taggedSubCategoryName,
+      }),
+      ...(taggedMbType && {
+        [ANALYTICS_PROPERTIES.MB_TYPE]: taggedMbType,
+      }),
+    });
 
     trackEvent({
       eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,

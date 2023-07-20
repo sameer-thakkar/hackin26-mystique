@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { memo, useContext } from 'react';
 import Product from 'components/MicrositeV2/Product';
 import { ShowsGridProps } from 'components/slices/ShowsGrid/interface';
 import { Container } from 'components/slices/ShowsGrid/styles';
@@ -55,7 +55,7 @@ const ShowsGrid = (props: ShowsGridProps) => {
               <Product
                 tgid={tgid}
                 allTours={allTours}
-                isMobile={false}
+                isMobile={isMobile}
                 imageId={tgid}
                 isEntertainmentMb={true}
                 host={host}
@@ -75,4 +75,4 @@ const ShowsGrid = (props: ShowsGridProps) => {
     </Container>
   );
 };
-export default ShowsGrid;
+export default memo(ShowsGrid);

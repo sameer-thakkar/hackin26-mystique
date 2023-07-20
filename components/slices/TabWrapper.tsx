@@ -587,13 +587,15 @@ const TabWrapper = (props: TabWrapperProps) => {
                   width="327"
                   alt="Legend Image"
                 />
-                <Button
-                  fillType="fillGradient"
-                  widthProp="100%"
-                  onClick={findBestSeatsCtaCallback}
-                >
-                  {strings.THEATRE_PAGE.FIND_BEST_SEATS}
-                </Button>
+                <Conditional if={findBestSeatsCtaCallback}>
+                  <Button
+                    fillType="fillGradient"
+                    widthProp="100%"
+                    onClick={findBestSeatsCtaCallback}
+                  >
+                    {strings.THEATRE_PAGE.FIND_BEST_SEATS}
+                  </Button>
+                </Conditional>
               </div>
             </Conditional>
           </div>

@@ -575,10 +575,13 @@ const sliceHandler = (slice: any, props: any = {}) => {
     case SLICE_TYPES.SHOWS_LIST:
       return (
         <ShowsList
+          uid={props.uid}
           isMobile={props.isMobile}
-          data={props.showsListSlicesData}
+          data={props.availableShowsData}
           heading={slice.primary.heading}
           sliceData={slice.items}
+          allShowPageUids={props.allShowPageUids}
+          isVenuePage={props.isVenuePage}
         />
       );
 

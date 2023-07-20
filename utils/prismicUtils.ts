@@ -570,7 +570,6 @@ export const getVenuePageDocument = async ({ req, uid, lang }: any) => {
         info,
         amenities_dropdown,
         body2,
-        tagged_mb_type,
         tagged_city,
         tagged_country,
         google_map_url,
@@ -578,6 +577,9 @@ export const getVenuePageDocument = async ({ req, uid, lang }: any) => {
         title,
         description,
         image_url,
+        tagged_category,
+        tagged_sub_category,
+        tagged_mb_type,
       } = response.data;
 
       const linkedRefIDs = [];
@@ -612,6 +614,8 @@ export const getVenuePageDocument = async ({ req, uid, lang }: any) => {
           title,
           description,
           image_url,
+          taggedCategoryName: tagged_category,
+          taggedSubCategoryName: tagged_sub_category,
         },
       };
 
@@ -1279,14 +1283,19 @@ export const getPageData = async ({
         }),
       ];
 
-      const showsListSlicesTgids = showsListSlices.reduce(
-        (acc: any[], curr: any) => {
+      const showsListSlicesTgids = showsListSlices?.reduce(
+        (
+          acc: any[],
+          curr: {
+            items: [];
+          }
+        ) => {
           const tgids = getTgidsFromShow(curr.items);
           return (acc = [...acc, ...tgids]);
         },
         []
       );
-      const showsGridSlicesTgids = showsGridSlices.reduce(
+      const showsGridSlicesTgids = showsGridSlices?.reduce(
         (acc: any[], curr: any) => {
           const tgids = getTgidsFromShow(curr.items);
           return (acc = [...acc, ...tgids]);
@@ -1301,7 +1310,7 @@ export const getPageData = async ({
         ])
       );
 
-      const allShowPageUids = showPageDocuments?.results.map(
+      const allShowPageUids = showPageDocuments?.results?.map(
         (document: any) => {
           const tgid = document.data?.tgid;
           return {
@@ -1326,12 +1335,30 @@ export const getPageData = async ({
         showsData.length
       );
 
+      const availableShowsData = showsListSlicesData?.filter(
+        (item: { listingPrice: { finalPrice: number } }) => {
+          return item?.listingPrice?.finalPrice;
+        }
+      );
+
+      const tgidForFirstShow = availableShowsData[0];
+
+      const inventorySlotData = tgidForFirstShow
+        ? await fetchTourGroupSlots({
+            tgid: tgidForFirstShow?.id,
+            hostname,
+            forDays: 20,
+            cookies,
+          })
+        : {};
+
       return {
         CMSContent: {
           ...CMSContent,
-          showsListSlicesData,
+          availableShowsData,
           showsGridSlicesData,
           allShowPageUids,
+          inventorySlotData,
         },
         uid,
         host,

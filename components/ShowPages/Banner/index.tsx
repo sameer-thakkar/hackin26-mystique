@@ -67,7 +67,6 @@ const ShowPageBanner = ({
   const { averageRating } = reviewsDetails ?? {};
   const { originalPrice, finalPrice } = listingPrice ?? {};
   const save = Math.round(((originalPrice - finalPrice) / originalPrice) * 100);
-
   const currency = useRecoilValue(currencyAtom);
   const pageMetaData = useRecoilValue(metaAtom);
 

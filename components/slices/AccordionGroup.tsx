@@ -42,7 +42,7 @@ type AccordionGroupProps = {
   isOpenOverride?: Boolean;
   headingNeedsSeparator?: Boolean;
   tabData?: [];
-  findBestSeatsCtaCallback?: () => void;
+  findBestSeatsCtaCallback?: () => void | null;
   isVenuePage?: boolean;
 };
 

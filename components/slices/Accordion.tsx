@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'clas... Remove this comment to see the full error message
@@ -124,6 +124,25 @@ const ContentBlock = styled.div`
   .seatmap-image {
     margin-bottom: 1rem;
   }
+  .tabbed-info-image {
+    .seatmap-image,
+    .legend-image {
+      display: flex;
+      justify-content: center;
+    }
+    .seatmap-image {
+      img {
+        object-fit: contain;
+        margin: 0 auto;
+      }
+    }
+    .legend-image {
+      img {
+        object-fit: contain;
+        margin-bottom: 1.5rem;
+      }
+    }
+  }
 `;
 
 type AccordionProps = {
@@ -138,7 +157,7 @@ type AccordionProps = {
     image_source: string;
     legend_image_source: string;
   }>;
-  findBestSeatsCtaCallback?: () => void;
+  findBestSeatsCtaCallback?: () => void | null;
   isVenuePage?: boolean;
 };
 
@@ -224,19 +243,20 @@ const Accordion = ({
           <div className="tabbed-info-image">
             <Image
               url={tabData[index]?.image_source}
-              height="568"
+              height="500"
               width="327"
               className="seatmap-image"
               alt="Seatmap"
             />
             <Conditional if={tabData[index]?.legend_image_source}>
-              <div className="legend-image">
-                <Image
-                  url={tabData[index]?.legend_image_source}
-                  height="160"
-                  width="327"
-                  alt="Legend"
-                />
+              <Image
+                url={tabData[index]?.legend_image_source}
+                height="190"
+                width="327"
+                alt="Legend"
+                className="legend-image"
+              />
+              <Conditional if={findBestSeatsCtaCallback}>
                 <Button
                   fillType="fillGradient"
                   widthProp="100%"
@@ -244,7 +264,7 @@ const Accordion = ({
                 >
                   {strings.THEATRE_PAGE.FIND_BEST_SEATS}
                 </Button>
-              </div>
+              </Conditional>
             </Conditional>
           </div>
         </Conditional>
@@ -253,4 +273,4 @@ const Accordion = ({
   );
 };
 
-export default Accordion;
+export default memo(Accordion);

@@ -20,7 +20,11 @@ import { MBContext } from 'contexts/MBContext';
 import { ProductsContextProvider } from 'contexts/Products';
 import useOnScreen from 'hooks/useOnScreen';
 import { getBannerAndFooterSubtext, isCollectionMB } from 'utils';
-import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import {
+  getCommonEventMetaData,
+  sendVariablesToDataLayer,
+  trackEvent,
+} from 'utils/analytics';
 import {
   checkIfCategoryHeaderExists,
   getDiscountedProducts,
@@ -158,6 +162,9 @@ export const HomePage = (props: any) => {
     mbType,
     primaryCity,
     taggedCity,
+    taggedCategoryName,
+    taggedSubCategoryName,
+    taggedMbType,
     categoryHeaderMenu,
     baseLangIsPoiMb,
     baseLangBannerAndFooterCombinations,
@@ -210,16 +217,6 @@ export const HomePage = (props: any) => {
     };
   }
 
-  useEffect(() => {
-    if (eventsReady)
-      trackEvent({
-        eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
-        [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
-        [ANALYTICS_PROPERTIES.TGIDS]: Object.keys(allTours).map(Number),
-        ...getCommonEventMetaData(pageMetaData),
-      });
-  }, [eventsReady]);
-
   const [covid19AlertOpen, setCovid19AlertOpen] = useState(true);
   const { dropdownLinks, enableDropdownLinks, languageProps } = header;
   const selectorLinkChangeHandler = (option: any) => {
@@ -260,13 +257,26 @@ export const HomePage = (props: any) => {
   });
 
   useEffect(() => {
-    if (eventsReady)
+    if (eventsReady) {
+      sendVariablesToDataLayer({
+        ...(taggedCategoryName && {
+          [ANALYTICS_PROPERTIES.CATEGORY_NAME]: taggedCategoryName,
+        }),
+        ...(taggedSubCategoryName && {
+          [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: taggedSubCategoryName,
+        }),
+        ...(taggedMbType && {
+          [ANALYTICS_PROPERTIES.MB_TYPE]: taggedMbType,
+        }),
+      });
+
       trackEvent({
         eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
         [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
         [ANALYTICS_PROPERTIES.TGIDS]: Object.keys(allTours).map(Number),
         ...getCommonEventMetaData(pageMetaData),
       });
+    }
   }, [eventsReady]);
 
   return (

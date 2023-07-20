@@ -1,13 +1,25 @@
+import { memo, useContext } from 'react';
+import Conditional from 'components/common/Conditional';
 import Product from 'components/MicrositeV2/Product';
 import PinnedCard from 'components/PinnedCard/pinnedCard';
 import { ShowsListProps } from 'components/slices/ShowsList/interface';
 import { Container } from 'components/slices/ShowsList/styles';
+import { MBContext } from 'contexts/MBContext';
 import { getTgidsFromShow } from 'utils';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
 const ShowsList = (props: ShowsListProps) => {
-  const { isMobile, heading, data, sliceData } = props;
+  const { host } = useContext(MBContext);
+  const {
+    isMobile,
+    heading,
+    data,
+    sliceData,
+    uid,
+    allShowPageUids,
+    isVenuePage,
+  } = props;
 
   const tgidsSet = new Set(getTgidsFromShow(sliceData));
 
@@ -27,42 +39,61 @@ const ShowsList = (props: ShowsListProps) => {
     return (acc = tgidsSet.has(curr.id) ? [...acc, curr] : [...acc]);
   }, []);
 
-  return (
-    <Container>
-      <h2>{heading}</h2>
-      <div className="wrapper">
-        {showData?.map((show: any, index: number) => {
-          const allTours: any = {};
-          const tgid = show.id;
-          allTours[tgid] = show;
-          allTours[tgid].productImage = show.imageUrl;
-          allTours[tgid].secondaryDescriptors = show.descriptors ?? [];
+  const findUid = (tgid: string) => {
+    return allShowPageUids.reduce((acc: any, curr: any) => {
+      const result = curr[tgid] || '';
+      return (acc = acc + result);
+    }, '');
+  };
 
-          return showData.length === 1 && !isMobile ? (
-            <PinnedCard key={index} productInfo={show} />
-          ) : (
-            <div className="product-card" key={index}>
-              <Product
-                tgid={tgid}
-                allTours={allTours}
-                isMobile={isMobile}
-                isEntertainmentMb={true}
-                isV3Design={false}
-                imageId={tgid}
-                showPriceBlock={true}
-                showSecondaryDescriptors={!isMobile}
-                productCardStyles={{
-                  singleCard: true,
-                  categoryFontSize: expandFontToken(FONTS.SUBHEADING_XS),
-                  productCardHeight: isMobile ? '204' : '176',
-                }}
+  return (
+    <Conditional if={showData.length > 0}>
+      <Container>
+        <h2>{heading}</h2>
+        <div className="wrapper">
+          {showData?.map((show: any, index: number) => {
+            const allTours: any = {};
+            const tgid = show.id;
+            allTours[tgid] = show;
+            allTours[tgid].productImage = show.imageUrl;
+            allTours[tgid].secondaryDescriptors = show.descriptors ?? [];
+
+            const showPageUid = findUid(tgid);
+
+            return showData.length === 1 && !isMobile ? (
+              <PinnedCard
+                key={index}
+                productInfo={show}
+                uid={uid}
+                showPageUid={showPageUid}
               />
-            </div>
-          );
-        })}
-      </div>
-    </Container>
+            ) : (
+              <div className="product-card" key={index}>
+                <Product
+                  tgid={tgid}
+                  allTours={allTours}
+                  isMobile={isMobile}
+                  host={host}
+                  isEntertainmentMb={true}
+                  isV3Design={false}
+                  imageId={tgid}
+                  showPriceBlock={true}
+                  showSecondaryDescriptors={!isMobile}
+                  productCardStyles={{
+                    singleCard: true,
+                    categoryFontSize: expandFontToken(FONTS.SUBHEADING_XS),
+                    productCardHeight: isMobile ? '204' : '176',
+                  }}
+                  showPageUid={showPageUid}
+                  isVenuePage={isVenuePage}
+                />
+              </div>
+            );
+          })}
+        </div>
+      </Container>
+    </Conditional>
   );
 };
 
-export default ShowsList;
+export default memo(ShowsList);

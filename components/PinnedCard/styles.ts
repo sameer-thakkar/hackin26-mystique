@@ -21,6 +21,22 @@ export const PinnedCardWrapper = styled.div`
   .product-description {
     padding: 1.5rem;
     height: auto;
+    .tags-wrapper {
+      margin-bottom: 0.25rem;
+      span {
+        ${expandFontToken(FONTS.SUBHEADING_XS)};
+        padding-right: 0.25rem;
+        color: ${COLORS.GRAY.G4};
+      }
+      span::after {
+        content: ' •';
+        color: ${COLORS.GRAY.G4};
+      }
+      > :last-child::after,
+      > :last-child span::after {
+        content: '';
+      }
+    }
     .rating {
       display: grid;
       grid-template-columns: repeat(2, max-content);
@@ -51,8 +67,14 @@ export const PinnedCardWrapper = styled.div`
       ${expandFontToken(FONTS.UI_LABEL_SMALL)};
       color: ${COLORS.GRAY.G4};
     }
+    .date {
+      display: inline-block;
+      margin-top: 0.875rem;
+      ${expandFontToken(FONTS.UI_LABEL_REGULAR_HEAVY)};
+      color: ${COLORS.OCEAN_BLUE.TERTIARY};
+    }
     .descriptors-list {
-      margin-top: 0.5rem;
+      margin-top: 1rem;
     }
     .descriptors {
       display: flex;
@@ -66,7 +88,7 @@ export const PinnedCardWrapper = styled.div`
 
     .product-name {
       h3 {
-        margin: 0;
+        margin: 0 0 0.25rem 0;
         ${expandFontToken(FONTS.HEADING_REGULAR)};
       }
     }
@@ -83,6 +105,10 @@ export const PinnedCardWrapper = styled.div`
     padding: 1.5rem;
     button {
       margin-top: 1.5rem;
+    }
+    .strike-through {
+      ${expandFontToken(FONTS.HEADING_REGULAR)};
+      color: ${COLORS.GRAY.G3};
     }
   }
 `;

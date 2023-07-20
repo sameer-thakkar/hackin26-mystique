@@ -13,7 +13,7 @@ const Amenities = (props: {
         (amenity: { amenities_list: string }, index: number) => {
           return (
             index < (isMobile ? expandedLimit : amenitiesList.length) && (
-              <div className="amenity">
+              <div className="amenity" key={index}>
                 {amenitiesIcons[amenity.amenities_list]}
                 <p key={index}>{amenity.amenities_list}</p>
               </div>

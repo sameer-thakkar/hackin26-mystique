@@ -31,7 +31,11 @@ import {
   getHeadoutLanguagecode,
   legacyBooleanCheck,
 } from 'utils';
-import { getCommonEventMetaData, trackEvent } from 'utils/analytics';
+import {
+  getCommonEventMetaData,
+  sendVariablesToDataLayer,
+  trackEvent,
+} from 'utils/analytics';
 import {
   fetchTourGroupReviews,
   fetchTourGroupsByCategory,
@@ -270,6 +274,7 @@ const ShowPage = (props: any) => {
   const { eventsReady } = useRecoilValue(gtmAtom);
 
   const selfCanonicalLink = convertUidToUrl({ uid, lang: currentLanguage });
+
   const updatedDescriptors = generateDescriptor({
     v2Descriptors: microBrandsDescriptor,
     lang: currentLanguage,
@@ -288,6 +293,9 @@ const ShowPage = (props: any) => {
     enable_group_booking: enableGroupBooking,
     tgid,
     canonical_link,
+    tagged_category: taggedCategoryName,
+    tagged_sub_category: taggedSubCategoryName,
+    tagged_mb_type: taggedMbType,
   } = CMSData;
 
   const { commonHeader } = CMSContent;
@@ -334,6 +342,18 @@ const ShowPage = (props: any) => {
 
   useEffect(() => {
     if (eventsReady) {
+      sendVariablesToDataLayer({
+        ...(taggedCategoryName && {
+          [ANALYTICS_PROPERTIES.CATEGORY_NAME]: taggedCategoryName,
+        }),
+        ...(taggedSubCategoryName && {
+          [ANALYTICS_PROPERTIES.SUB_CAT_NAME]: taggedSubCategoryName,
+        }),
+        ...(taggedMbType && {
+          [ANALYTICS_PROPERTIES.MB_TYPE]: taggedMbType,
+        }),
+      });
+
       trackEvent({
         eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
         [ANALYTICS_PROPERTIES.LANGUAGE]: currentLanguage,
