@@ -424,11 +424,22 @@ export const getMicrositeDocument = async ({
             const { primary } = categoryTourListV1;
             const { product_cards } = primary || {};
             const { id: productCardsId } = product_cards || {};
-            const { data } =
-              (await Client(req).getByID(productCardsId, {
-                lang: 'en-us',
-              })) || {};
-            productCardData = data;
+            if (productCardsId) {
+              try {
+                const { data } =
+                  (await Client(req).getByID(productCardsId, {
+                    lang: 'en-us',
+                  })) || {};
+                productCardData = data;
+              } catch (e) {
+                Sentry.captureException(e);
+                sendLog({
+                  err: e,
+                });
+                // eslint-disable-next-line no-console
+                console.log('productCard-error', e);
+              }
+            }
           }
 
           if (
