@@ -63,11 +63,10 @@ export default class TermsPage extends Component<any, any> {
       isDev,
       useHostAsUid: !isDev,
     });
-    const {
-      faviconUrl,
-      logo: { logoUrl, showPoweredLogo },
-      name: whiteLabelName,
-    } = await fetchDomainConfig(uid);
+    const { faviconUrl, logo, name: whiteLabelName } = await fetchDomainConfig(
+      uid
+    );
+    const { logoUrl, showPoweredLogo } = logo || {};
     let response, footerID;
     switch (ContentType) {
       case CUSTOM_TYPES.GLOBAL_HOMEPAGE:
@@ -123,8 +122,8 @@ export default class TermsPage extends Component<any, any> {
   }
 
   render() {
-    const { response, host, isDev } = this.props;
-    const { uid, data, lang } = response;
+    const { response, host, isDev } = this.props || {};
+    const { uid, data, lang } = response || {};
     const {
       logoUrl,
       logoAltText,
@@ -136,7 +135,7 @@ export default class TermsPage extends Component<any, any> {
       address_line: addressLine,
       organization_name: organization,
       use_domain_email: useDomain,
-    } = data;
+    } = data || {};
     const logoRedirectionUrl = getLogoRedirectionUrl({
       uid,
       lang: getHeadoutLanguagecode(lang),
