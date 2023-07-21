@@ -7,7 +7,6 @@ import {
   LANGUAGE_MAP,
   LanguagesUnion,
   PRISMIC_LANG_TO_ROUTE_PARAM,
-  UAE_BAN_WHITELIST,
 } from 'const/index';
 
 export const getStringifiedQueryFromObject = (queryJson: Record<string, any>) =>
@@ -352,7 +351,3 @@ export const getEncodedUrlSlugs = (urlSlugs: IUrlSlugs) =>
     else acc[lang] = urlSlug?.replaceAll('/', '#');
     return acc;
   }, {});
-
-export const isUaeBannedUrl = (uid: string) => {
-  return UAE_BAN_WHITELIST.some((domain) => uid.includes(domain));
-};

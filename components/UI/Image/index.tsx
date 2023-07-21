@@ -6,8 +6,8 @@ import Conditional from 'components/common/Conditional';
 import { IImageProps } from 'UI/Image/interface';
 import { generateImageImgixUrl } from 'UI/Image/util';
 import Tooltip from 'UI/Tooltip';
-import { isUaeBannedUrl } from 'utils/urlUtils';
 import { appAtom } from 'store/atoms/app';
+import { UAE_COUNTRY_CODE } from 'const/index';
 import { INFO_ICON } from 'assets/SvgIcons';
 
 export const Wrapper = styled.div`
@@ -55,7 +55,7 @@ const Image: React.FC<IImageProps> = ({
   blurFill = false,
   fetchPriority = 'auto',
 }) => {
-  const { uid, isMobile } = useRecoilValue(appAtom);
+  const { isMobile, userCountryCode } = useRecoilValue(appAtom);
   let calculatedWidth = width,
     calculatedHeight = height,
     mobileImageSrc,
@@ -65,7 +65,7 @@ const Image: React.FC<IImageProps> = ({
   let updatedUrl = url;
   let updatedMobileUrl = mobileUrl;
 
-  if (isUaeBannedUrl(uid)) {
+  if (userCountryCode.toLowerCase() === UAE_COUNTRY_CODE) {
     updatedUrl = updatedUrl?.replace(
       'cdn-imgix.headout.com',
       'headout-images.imgix.net'

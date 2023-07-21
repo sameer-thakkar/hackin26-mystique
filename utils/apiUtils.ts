@@ -1,11 +1,7 @@
 import { sortDateArray } from 'utils/dateUtils';
 import { currencySortFn } from 'utils/gen';
-import {
-  addQueryParams,
-  getDomainFromUid,
-  isUaeBannedUrl,
-} from 'utils/urlUtils';
-import { CUSTOM_HEADER } from 'const/index';
+import { addQueryParams, getDomainFromUid } from 'utils/urlUtils';
+import { CUSTOM_HEADER, UAE_COUNTRY_CODE } from 'const/index';
 import { simplifySlotData } from './inventoryUtils';
 
 type TTgids = string[];
@@ -245,16 +241,17 @@ export const fetchTourGroupV6 = async ({
 };
 
 export const fetchCurrencyList = async ({
-  uid,
+  userCountryCode = '',
   hostname,
 }: {
-  uid: string;
+  userCountryCode: string;
   hostname: string;
 }) => {
   try {
-    const url = isUaeBannedUrl(uid)
-      ? `${hostname}/api/tours/v1/currency/list`
-      : 'https://api.headout.com/api/v1/currency/list';
+    const url =
+      userCountryCode.toLowerCase() === UAE_COUNTRY_CODE
+        ? `${hostname}/api/tours/v1/currency/list`
+        : 'https://api.headout.com/api/v1/currency/list';
 
     const res = await fetch(url);
     const data = await res.json();

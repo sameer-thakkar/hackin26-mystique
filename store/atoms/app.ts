@@ -11,5 +11,6 @@ export const appAtom = atom({
     isPageLoaded: false,
     uid: '',
     isSidenavScroll: false,
+    userCountryCode: '',
   },
 });
