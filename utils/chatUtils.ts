@@ -22,8 +22,9 @@ const loadLiveChatScript = (isDelayed: boolean) => {
   lc.defer = true;
   lc.src = 'https://cdn.livechatinc.com/tracking.js';
   const s = document.getElementsByTagName('script')[0];
-  // @ts-expect-error TS(2531): Object is possibly 'null'.
-  s.parentNode.insertBefore(lc, s);
+  if (s) {
+    s?.parentNode?.insertBefore(lc, s);
+  }
   if (isDelayed) {
     lc.addEventListener('load', chatLoaded);
   }
