@@ -1,15 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import { getProductCommonProperties, trackEvent } from 'utils/analytics';
-import { checkIfBroadwayMB, checkIfLTTMB, isMobile } from 'utils/helper';
+import { checkIfBroadwayMB, checkIfLTTMB } from 'utils/helper';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
+import { BUTTON_LOADER_ANIMATION } from 'assets/SvgIcons';
 import { MBContext } from '../../contexts/MBContext';
 
 const StickyFooterContentWrapper = styled.div`
@@ -25,7 +26,6 @@ const StickyFooterContentWrapper = styled.div`
   .unavailable-button {
     display: block;
     margin: 0 auto;
-    padding: 15px 24px;
     width: 100%;
     max-width: 24rem;
     border: none;
@@ -38,8 +38,10 @@ const StickyFooterContentWrapper = styled.div`
     background: ${COLORS.BRAND.PURPS};
     cursor: pointer;
     box-shadow: 0px 8px 15px rgba(128, 0, 255, 0.3);
+    height: 50px;
   }
   .unavailable-button {
+    padding: 15px 24px;
     background: ${COLORS.GRAY.G5};
     color: ${COLORS.BRAND.WHITE};
   }
@@ -69,7 +71,7 @@ const StickyFooter = ({
   } = tourGroupData ?? {};
 
   const pageMetaData = useRecoilValue(metaAtom);
-
+  const [isButtonLoading, setButtonLoading] = useState(false);
   const isLTT = checkIfLTTMB(uid);
   const isBroadway = checkIfBroadwayMB(uid);
   const trackBookNowClick = () => {
@@ -99,15 +101,19 @@ const StickyFooter = ({
           tabIndex={0}
           className="buy-button"
           onClick={() => {
+            if (isButtonLoading) return;
+            setButtonLoading(true);
             trackBookNowClick();
-            let target = '_blank';
-            if (isMobile()) {
-              target = '_self';
-            }
+            let target = '_self';
             window.open(bookingUrl, target, 'noopener, noreferrer');
           }}
         >
-          {isLTT || isBroadway ? strings.CHECK_AVAIL : strings.BANNER_CTA}
+          <Conditional if={!isButtonLoading}>
+            {isLTT || isBroadway ? strings.CHECK_AVAIL : strings.BANNER_CTA}
+          </Conditional>
+          <Conditional if={isButtonLoading}>
+            {BUTTON_LOADER_ANIMATION}
+          </Conditional>
         </button>
       </Conditional>
       <Conditional if={!isAvailable}>

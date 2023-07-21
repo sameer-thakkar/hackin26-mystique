@@ -161,27 +161,31 @@ export const BannerContent = styled.div`
   .buy-button,
   .unavailable-button {
     ${expandFontToken(FONTS.BUTTON_MEDIUM)}
-    padding: 12px 20px;
     border-radius: 8px;
     margin: 0px 16px;
     border: none;
-    max-width: 160px;
     width: 100%;
     display: block;
     text-align: center;
     grid-area: cta;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 12.5rem;
+    height: 2.75rem;
   }
   .buy-button {
     background: ${COLORS.BRAND.PURPS};
     color: ${COLORS.BRAND.WHITE};
-    display: block;
     cursor: pointer;
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow: hidden;
   }
   .unavailable-button {
     background: ${COLORS.GRAY.G5};
     color: ${COLORS.BRAND.WHITE};
     margin: 0;
-    align-items: unset;
     justify-self: end;
   }
 

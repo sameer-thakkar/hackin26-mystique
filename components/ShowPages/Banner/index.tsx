@@ -38,7 +38,12 @@ import {
 } from 'const/index';
 import { PRODUCT_VIDEOS } from 'const/ShowPageProductVideos';
 import { strings } from 'const/strings';
-import { LOCATION, PLAY_CIRCLE, STAR } from 'assets/SvgIcons';
+import {
+  BUTTON_LOADER_ANIMATION,
+  LOCATION,
+  PLAY_CIRCLE,
+  STAR,
+} from 'assets/SvgIcons';
 
 const ShowPageBanner = ({
   detailsObjects,
@@ -89,6 +94,7 @@ const ShowPageBanner = ({
     flowType,
   });
 
+  const [isButtonLoading, setButtonLoading] = useState(false);
   const [isVideo, setIsVideo] = useState(false);
   const [showStickyNav, setShowStickyNav] = useState(false);
   const [nextAvailable, setNextAvailable] = useState('');
@@ -245,6 +251,8 @@ const ShowPageBanner = ({
         showComponent={!isMobile && showStickyNav}
         isAvailable={isTourAvailable}
         bookingUrl={bookingUrl}
+        isButtonLoading={isButtonLoading}
+        setButtonLoading={setButtonLoading}
       />
       <Conditional if={isMobile}>
         <StickyFooter
@@ -415,11 +423,18 @@ const ShowPageBanner = ({
                   tabIndex={0}
                   className="buy-button"
                   onClick={() => {
+                    if (isButtonLoading) return;
+                    setButtonLoading(true);
                     trackBookNowClick();
                     window.open(bookingUrl, '_self', 'noopener, noreferrer');
                   }}
                 >
-                  {strings.CHECK_AVAIL}
+                  <Conditional if={!isButtonLoading}>
+                    {strings.CHECK_AVAIL}
+                  </Conditional>
+                  <Conditional if={isButtonLoading}>
+                    {BUTTON_LOADER_ANIMATION}
+                  </Conditional>
                 </div>
               </Conditional>
               <Conditional if={!listingPrice}>

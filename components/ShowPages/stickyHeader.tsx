@@ -10,6 +10,7 @@ import { FONTS } from 'const/fonts';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
+import { BUTTON_LOADER_ANIMATION } from 'assets/SvgIcons';
 
 const BannerContent = styled.div(
   // @ts-expect-error TS(2339): Property 'showComponent' does not exist on type 'P... Remove this comment to see the full error message
@@ -75,14 +76,20 @@ const BannerContent = styled.div(
     text-align: center;
     border-radius: 4px;
     width: 180px;
-    padding: 12px 0;
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2.75rem;
+    width: 12.5rem;
   }
 
   .buy-button {
     color: ${COLORS.BRAND.WHITE};
     background: ${COLORS.BRAND.PURPS};
     cursor: pointer;
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow: hidden;
   }
   .unavailable-button {
     background: ${COLORS.GRAY.G5};
@@ -168,6 +175,8 @@ const StickyHeader = ({
   showComponent,
   isAvailable,
   bookingUrl,
+  isButtonLoading,
+  setButtonLoading,
 }: any) => {
   const {
     listingPrice,
@@ -231,11 +240,18 @@ const StickyHeader = ({
                   tabIndex={0}
                   className="buy-button"
                   onClick={() => {
+                    if (isButtonLoading) return;
+                    setButtonLoading(true);
                     trackBookNowClick();
-                    window.open(bookingUrl, '_blank', 'noopener, noreferrer');
+                    window.open(bookingUrl, '_self', 'noopener, noreferrer');
                   }}
                 >
-                  {strings.CHECK_AVAIL}
+                  <Conditional if={!isButtonLoading}>
+                    {strings.CHECK_AVAIL}
+                  </Conditional>
+                  <Conditional if={isButtonLoading}>
+                    {BUTTON_LOADER_ANIMATION}
+                  </Conditional>
                 </div>
               </Conditional>
               <Conditional if={!isAvailable}>
