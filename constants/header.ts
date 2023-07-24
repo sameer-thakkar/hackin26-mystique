@@ -682,6 +682,7 @@ export const COLLECTION_MB_MENU_ORDER = [
   'CITY_TOURS',
   'CRUISES',
   'THEMES',
+  'CITY_GUIDE',
 ];
 
 export const NON_COLLECTION_MB_MENU_ORDER = [

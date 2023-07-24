@@ -149,16 +149,26 @@ const getMenuName = ({
 
 const isMainMenu = ({
   isCollectionMB,
+  isA1CollectionMB,
   isA2MB,
   menuLabel,
   menu,
 }: {
   isCollectionMB?: boolean;
+  isA1CollectionMB?: boolean;
   isA2MB?: boolean;
   menuLabel: string;
   menu: Record<string, any>;
 }) => {
-  if (isCollectionMB) {
+  if (isCollectionMB && isA1CollectionMB) {
+    return (
+      menuLabel === 'ABOUT' ||
+      menuLabel === 'VISIT' ||
+      (menuLabel === 'THINGS_TO_DO' && Object.keys(menu).length >= 5) ||
+      menuLabel === 'CITY_ATTRACTIONS' ||
+      menuLabel === 'CITY_GUIDE'
+    );
+  } else if (isCollectionMB && !isA1CollectionMB) {
     return (
       menuLabel === 'ABOUT' ||
       menuLabel === 'VISIT' ||
@@ -551,6 +561,7 @@ const generateSubCategoryMenu = async ({
           `my.${CUSTOM_TYPES.MICROSITE}.${PRISMIC_FIELD_ID.TAGGED_MB_TYPE}`,
           [
             MB_CATEGORISATION.MB_TYPE.A1_SUB_CATEGORY,
+            MB_CATEGORISATION.MB_TYPE.A2_CATEGORY,
             MB_CATEGORISATION.MB_TYPE.A2_SUB_CATEGORY,
             MB_CATEGORISATION.MB_TYPE.B1_GLOBAL,
             MB_CATEGORISATION.MB_TYPE.B1_GLOBAL_HOMEPAGE,
@@ -748,6 +759,7 @@ const getCollectionMBMenu = async ({
   const shoulderPageDocs = await getShoulderPageDocs({
     categorisationMetadata,
   });
+  const cityGuideDocs = await getCityGuideDocs(categorisationMetadata);
 
   const categoryApiData = await fetchCategory({
     language: getHeadoutLanguagecode(lang),
@@ -794,6 +806,13 @@ const getCollectionMBMenu = async ({
     lang,
   });
 
+  const cityGuideMenuPromise = generateCityGuideMenu({
+    menuType: CITY_GUIDE,
+    categorisationMetadata,
+    lang,
+    docsStore: cityGuideDocs,
+  });
+
   const menuPromiseSettledResults = await Promise.allSettled([
     aboutMenuPromise,
     visitMenuPromise,
@@ -801,6 +820,7 @@ const getCollectionMBMenu = async ({
     cityAttractionsMenuPromise,
     cityToursMenuPromise,
     cruisesMenuPromise,
+    cityGuideMenuPromise,
   ]);
 
   const [
@@ -810,6 +830,7 @@ const getCollectionMBMenu = async ({
     cityAttractionsMenu,
     cityToursMenu,
     cruisesMenu,
+    cityGuideMenu,
   ] = handleSettledPromiseResults(menuPromiseSettledResults);
 
   const aggregatedMenu = {
@@ -819,6 +840,7 @@ const getCollectionMBMenu = async ({
     ...cityAttractionsMenu,
     ...cityToursMenu,
     ...cruisesMenu,
+    ...cityGuideMenu,
   };
 
   const menuWithMiscItems = await addMiscMenuItems({
@@ -829,6 +851,8 @@ const getCollectionMBMenu = async ({
   });
 
   const transformedMenu = applyTransformations(cloneDeep(menuWithMiscItems));
+
+  const { tagged_mb_type: taggedMbType } = categorisationMetadata;
 
   Object.keys(transformedMenu).forEach((menuKey) => {
     if (Object.keys(transformedMenu[menuKey]).length === 0) {
@@ -841,6 +865,8 @@ const getCollectionMBMenu = async ({
         menu: something,
         mainMenu: isMainMenu({
           isCollectionMB: true,
+          isA1CollectionMB:
+            taggedMbType === MB_CATEGORISATION.MB_TYPE.A1_COLLECTION,
           menuLabel: menuKey,
           menu: something,
         }),

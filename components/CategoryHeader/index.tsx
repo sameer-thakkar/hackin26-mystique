@@ -46,11 +46,16 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = (props) => {
   const [selectedMainMenu, setSelectedMainMenu] = useState({ label: '' }); // using object as state to force re-render
   const [selectedNestedMenu, setSelectedNestedMenu] = useState('');
 
-  const mainMenu = Object.values(categoryHeaderMenu).filter((menuItem) => {
+  let mainMenu = Object.values(categoryHeaderMenu).filter((menuItem) => {
     if (isMobile) return menuItem;
     const { mainMenu, label } = menuItem;
     return mainMenu && label;
   });
+  if (!isMobile) {
+    const exploreMenu = { label: labels.EXPLORE, menu: {}, mainMenu: true };
+    mainMenu = [exploreMenu, ...mainMenu];
+  }
+
   const mbCity = primaryCity?.displayName || titleCase(taggedCity || '');
   const pageMetaData = useRecoilValue(metaAtom);
 
@@ -167,7 +172,6 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = (props) => {
       <StyledCategoryHeaderContainer onClick={handleClick}>
         {mainMenu.map((menuItem, index, arr) => {
           const { label } = menuItem;
-          const showExplore = label === labels.ABOUT && !isMobile;
 
           if (expandNestedMenu) return null;
           return (
@@ -187,7 +191,7 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = (props) => {
                   {HAMBURGER({ fillColor: COLORS.GRAY.G3 })}
                 </Conditional>
                 {getCategoryHeaderMenuLabel({
-                  label: showExplore ? labels.EXPLORE : label,
+                  label,
                   mbCity,
                 })}
                 <Conditional if={isMobile}>
