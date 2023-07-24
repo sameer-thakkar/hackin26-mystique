@@ -1,8 +1,11 @@
-import { hashCode } from '../gen';
+import Cookies from 'js-cookie';
+import { hashCode } from 'utils/gen';
 import {
   isBitSet,
   numberOfSetBits as numberOfSetBitsfromIntegerUtils,
-} from '../integerUtils';
+} from 'utils/integerUtils';
+import { getQueryObject } from 'utils/urlUtils';
+import { COOKIE } from 'const/index';
 
 class Experiment {
   experimentName: string;
@@ -78,6 +81,18 @@ class Experiment {
   }
 
   getBucket(uniqueId: string | null) {
+    const experimentOverride =
+      typeof window !== 'undefined'
+        ? getQueryObject(window?.location)?.[COOKIE.EXPERIMENT_OVERRIDE] ??
+          Cookies.get(COOKIE.EXPERIMENT_OVERRIDE)
+        : null;
+    if (experimentOverride && this.bucketName?.includes?.(experimentOverride))
+      return experimentOverride;
+    else if (
+      experimentOverride &&
+      this.bucketName?.includes?.(experimentOverride.replaceAll('_', ' '))
+    )
+      return experimentOverride.replaceAll('_', ' ');
     let bucket = this.bucketName[0];
     if (uniqueId !== null) {
       const hsidString = atob(uniqueId);

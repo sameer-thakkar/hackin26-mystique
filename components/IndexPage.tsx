@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
 import ErrorPage from 'next/error';
+import Router from 'next/router';
 import { ThemeProvider } from 'styled-components';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import ServerCookies from 'cookies';
@@ -31,6 +32,7 @@ import {
   CUSTOM_TYPES,
   DESIGN,
   THEMES,
+  TIME,
 } from 'const/index';
 import { strings } from 'const/strings';
 import Analytics from './Analytics';
@@ -458,6 +460,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 };
 
 const HeadoutSessionIdSetterComponent = () => {
+  const experimentOverride = Router.query?.[COOKIE.EXPERIMENT_OVERRIDE];
   const validHsidFromCookie = Cookies.get(COOKIE.SANDBOX_ID);
   const setHsid = useSetRecoilState(hsidAtom);
   const setHsidSetFail = useSetRecoilState(hsidSetFailAtom);
@@ -470,6 +473,17 @@ const HeadoutSessionIdSetterComponent = () => {
     setHsid(hsid);
   };
   useEffect(() => {
+    const nakedDomain = window.location.hostname
+      .replace('stage-', '')
+      .split('.')
+      .slice(1)
+      .join('.');
+    if (experimentOverride)
+      Cookies.set(COOKIE.EXPERIMENT_OVERRIDE, experimentOverride, {
+        domain: nakedDomain,
+        path: '/',
+        expires: TIME.IN_MINUTES,
+      });
     const onMessageReceieved = (e: any) => {
       const { origin, data } = e;
       if (origin !== process.env.NEXT_PUBLIC_HEADOUT_DOMAIN) {
@@ -490,11 +504,6 @@ const HeadoutSessionIdSetterComponent = () => {
         }
 
         if (hsid) {
-          const nakedDomain = window.location.hostname
-            .replace('stage-', '')
-            .split('.')
-            .slice(1)
-            .join('.');
           pushSandboxIDtoDataLayer(hsid);
           Cookies.set(COOKIE.SANDBOX_ID, hsid, {
             domain: nakedDomain,
@@ -508,7 +517,6 @@ const HeadoutSessionIdSetterComponent = () => {
     };
     if (!validHsidFromCookie)
       window.addEventListener('message', onMessageReceieved, true);
-
     if (validHsidFromCookie) {
       pushSandboxIDtoDataLayer(validHsidFromCookie);
     }
