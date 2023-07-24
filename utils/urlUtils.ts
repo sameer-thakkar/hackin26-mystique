@@ -354,5 +354,5 @@ export const getEncodedUrlSlugs = (urlSlugs: IUrlSlugs) =>
 
 export const getLttVerticalPosterLink = (tgid?: number) => {
   if (!tgid) return;
-  return `https://tourlandish.s3.amazonaws.com/assets/images/ltt/vertical-product-cards/${tgid}.png`;
+  return `https://cdn-imgix.headout.com/assets/images/ltt/vertical-product-cards/${tgid}.png`;
 };

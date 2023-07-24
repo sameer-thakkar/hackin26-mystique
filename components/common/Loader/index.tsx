@@ -17,7 +17,7 @@ export const LoaderWrapper = styled.div`
 const Loader = () => {
   const { RiveComponent } = useRive({
     autoplay: true,
-    src: 'https://tourlandish.s3.amazonaws.com/assets/rive/loader.riv',
+    src: 'https://cdn-imgix.headout.com/assets/rive/loader.riv',
     stateMachines: 'stateMachine',
     artboard: 'loader',
   });

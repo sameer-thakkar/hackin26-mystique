@@ -254,7 +254,7 @@ const SpecialSections = ({
       <div className="right-corner-illustration">
         <Image
           url={
-            'https://tourlandish.s3.amazonaws.com/assets/images/ltt/BG+Illustration.png'
+            'https://cdn-imgix.headout.com/assets/images/ltt/BG+Illustration.png'
           }
           alt="right-corner-illustration"
           priority

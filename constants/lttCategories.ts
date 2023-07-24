@@ -47,9 +47,9 @@ export const BANNERS = [
   {
     title: "Step into London's theatrical world",
     mobileVideoLink:
-      'https://tourlandish.s3.amazonaws.com/assets/videos/mobile/ltt_trailer_lower.mp4',
+      'https://cdn-imgix.headout.com/assets/videos/mobile/ltt_trailer_lower.mp4',
     desktopVideoLink:
-      'https://tourlandish.s3.amazonaws.com/assets/videos/desktop/ltt_trailer_higher.mp4',
+      'https://cdn-imgix.headout.com/assets/videos/desktop/ltt_trailer_higher.mp4',
   },
   {
     title: 'The Lion King',

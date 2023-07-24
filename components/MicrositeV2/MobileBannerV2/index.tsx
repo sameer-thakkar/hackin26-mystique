@@ -126,7 +126,7 @@ const MobileBannerV2 = ({ allTours, pinnedTgid }: IBannerProps) => {
                   index={index}
                   item={item}
                   fallbackImage={
-                    'https://tourlandish.s3.amazonaws.com/assets/images/ltt/banner-first.png'
+                    'https://cdn-imgix.headout.com/assets/images/ltt/banner-first.png'
                   }
                   hasSubText={item.desc}
                 />

@@ -156,7 +156,7 @@ const DesktopBannerV2 = ({ allTours, pinnedTgid }: IBannerProps) => {
               <>
                 <Media
                   fallbackImage={
-                    'https://tourlandish.s3.amazonaws.com/assets/images/ltt/banner-first.png'
+                    'https://cdn-imgix.headout.com/assets/images/ltt/banner-first.png?auto=compress'
                   }
                   item={item}
                   index={index}
