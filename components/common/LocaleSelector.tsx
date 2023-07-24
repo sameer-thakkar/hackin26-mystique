@@ -234,11 +234,13 @@ const LocaleSelector = ({
   if (!isMobile) {
     return (
       <>
-        <LanguageSelector
-          languages={sortedLanguages}
-          currentLanguage={currentLanguage}
-          isMobile={isMobile}
-        />
+        <Conditional if={hasLanguageDropdown}>
+          <LanguageSelector
+            languages={sortedLanguages}
+            currentLanguage={currentLanguage}
+            isMobile={isMobile}
+          />
+        </Conditional>
         <CurrencySelector currencies={sortedCurrencies} />
       </>
     );

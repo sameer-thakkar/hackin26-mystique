@@ -8,9 +8,13 @@ import React, {
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
+import Cookies from 'js-cookie';
 import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
+import DesktopBannerV2 from 'components/MicrositeV2/DesktopBannerV2';
 import Header from 'components/MicrositeV2/Header';
+import LttLandingPageV2 from 'components/MicrositeV2/LttLandingPageV2';
+import MobileBannerV2 from 'components/MicrositeV2/MobileBannerV2';
 import LttFeatureCard from 'components/ShowPages/FeatureCard';
 import sliceHandler from 'components/Slices';
 import MonthTabs from 'components/slices/MonthTabs';
@@ -25,8 +29,10 @@ import {
   sendVariablesToDataLayer,
   trackEvent,
 } from 'utils/analytics';
+import { getABTestingVariant } from 'utils/experiments/experimentUtils';
 import {
   checkIfCategoryHeaderExists,
+  checkIfLTTMB,
   getDiscountedProducts,
   getPriceSortedDiscountedProducts,
   getPriceSortedListicleTgids,
@@ -35,8 +41,10 @@ import {
   withShortcodes,
 } from 'utils/helper';
 import { gtmAtom } from 'store/atoms/gtm';
+import { hsidAtom, hsidSetFailAtom } from 'store/atoms/hsid';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
+import { EXPERIMENT_NAMES, VARIANTS } from 'const/experiments';
 import { FONTS } from 'const/fonts';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES, THEMES } from 'const/index';
 import { strings } from 'const/strings';
@@ -62,6 +70,9 @@ const ProductsWrapper: ComponentType<any> = dynamic(() =>
 );
 const Banner: ComponentType<any> = dynamic(() =>
   import(/* webpackChunkName: "Banner" */ 'components/MicrositeV2/Banner')
+);
+const Loader: ComponentType<any> = dynamic(() =>
+  import(/* webpackChunkName: "Loader" */ 'components/common/Loader')
 );
 const LongForm: ComponentType<any> = dynamic(() =>
   import(/* webpackChunkName: "LongForm" */ 'components/MicrositeV2/LongForm')
@@ -178,8 +189,15 @@ export const HomePage = (props: any) => {
     baseLangIsPoiMb,
     baseLangBannerAndFooterCombinations
   );
+  const isLTT = checkIfLTTMB(uid);
+  const hsid = useRecoilValue(hsidAtom);
+  const hsidFail = useRecoilValue(hsidSetFailAtom);
 
   const isCollectionMicrobrand = isCollectionMB(mbType);
+  const [showLttTreatment, setShowLttTreatment] = useState<boolean | null>(
+    null
+  );
+  const [showLoader, setShowLoader] = useState(isLTT);
 
   if (isListicle || isDiscountedPage) {
     let singleCategory = [];
@@ -218,6 +236,7 @@ export const HomePage = (props: any) => {
   }
 
   const [covid19AlertOpen, setCovid19AlertOpen] = useState(true);
+
   const { dropdownLinks, enableDropdownLinks, languageProps } = header;
   const selectorLinkChangeHandler = (option: any) => {
     window.location.href = option.value;
@@ -257,6 +276,23 @@ export const HomePage = (props: any) => {
   });
 
   useEffect(() => {
+    if (!hsid && !hsidFail) return;
+
+    if (isLTT) {
+      const variant = getABTestingVariant(
+        EXPERIMENT_NAMES.LTT_LP_REVAMP_EXPERIMENT,
+        hsid
+      );
+      setShowLttTreatment(
+        (variant === VARIANTS.TREATMENT &&
+          !isListicle &&
+          uid === 'www.london-theater-tickets.com' &&
+          currentLanguage === 'en') ||
+          Cookies.get('lp-ck') === 'true'
+      );
+      setShowLoader(false);
+    }
+    setTimeout(() => setShowLoader(false), 1000);
     if (eventsReady) {
       sendVariablesToDataLayer({
         ...(taggedCategoryName && {
@@ -277,7 +313,9 @@ export const HomePage = (props: any) => {
         ...getCommonEventMetaData(pageMetaData),
       });
     }
-  }, [eventsReady]);
+  }, [eventsReady, hsid, hsidFail]);
+
+  if (showLoader) return <Loader />;
 
   return (
     // @ts-expect-error TS(2769): No overload matches this call.
@@ -295,6 +333,7 @@ export const HomePage = (props: any) => {
         logoUrl={logoUrl}
         logoAltText={whiteLabelName || ''}
         hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
+        isNewLTTLandingPageVisible={showLttTreatment}
         primaryCity={primaryCity}
         taggedCity={taggedCity}
         categoryHeaderMenu={categoryHeaderMenu}
@@ -340,9 +379,26 @@ export const HomePage = (props: any) => {
           }}
         />
       </Conditional>
+      <Conditional if={isMobile && showLttTreatment}>
+        <MobileBannerV2
+          bannerImages={heroProps.banners}
+          allTours={allTours}
+          pinnedTgid={directTgid}
+        />
+      </Conditional>
+      <Conditional if={!isMobile && showLttTreatment}>
+        <DesktopBannerV2
+          bannerImages={heroProps.banners}
+          allTours={allTours}
+          pinnedTgid={directTgid}
+        />
+      </Conditional>
       <Conditional
         if={
-          mbTheme === THEMES.DEFAULT && heroProps.banners.length && !isListicle
+          mbTheme === THEMES.DEFAULT &&
+          heroProps.banners.length &&
+          !isListicle &&
+          !showLttTreatment
         }
       >
         <Banner
@@ -383,6 +439,7 @@ export const HomePage = (props: any) => {
           </div>
         </ProductsContextProvider>
       </Conditional>
+
       <Conditional if={isEntertainmentMbListicle}>
         <ProductsContextProvider allTours={allTours} ready={ready}>
           <div className="main-wrapper hero-slice-section">
@@ -394,7 +451,7 @@ export const HomePage = (props: any) => {
           </div>
         </ProductsContextProvider>
       </Conditional>
-      <Conditional if={hasToursSection}>
+      <Conditional if={hasToursSection && !showLttTreatment}>
         <ProductsWrapper
           availableTGIDs={Object.keys(allTours)}
           hasCategoryTourList={hasCategoryTourList}
@@ -412,6 +469,13 @@ export const HomePage = (props: any) => {
           isDiscountedPage={isDiscountedPage}
         />
       </Conditional>
+      <Conditional if={showLttTreatment}>
+        <LttLandingPageV2
+          isMobile={isMobile}
+          allTours={allTours}
+          categoryProps={categoryProps}
+        />
+      </Conditional>
       <ProductsContextProvider allTours={allTours} ready={ready}>
         <div className="main-wrapper v2-long-form" ref={v2LongFormRef}>
           <Conditional
@@ -420,7 +484,9 @@ export const HomePage = (props: any) => {
             }
           >
             <LongForm
-              slicesArray={longFormSlices}
+              slicesArray={
+                showLttTreatment ? longFormSlices.slice(-1) : longFormSlices
+              }
               props={{
                 allTours,
                 isMobile,
@@ -437,7 +503,7 @@ export const HomePage = (props: any) => {
         </div>
       </ProductsContextProvider>
 
-      <Conditional if={isEntertainmentMb}>
+      <Conditional if={isEntertainmentMb && !showLttTreatment}>
         <div className="main-wrapper" ref={lttFeatureCardRef}>
           <Conditional if={isExperimentalBot || isLTTFeatureCardIntersecting}>
             <LttFeatureCard />

@@ -44,6 +44,10 @@ const StyledSelector = styled.div`
       border-radius: 5px;
     }
   }
+  .right-align {
+    left: 100%;
+    transform: translateX(-100%) !important;
+  }
   &:after {
     /* this adds white space below the active text,
     increasing the hover area
@@ -128,12 +132,14 @@ const DropdownSelector = ({
   onChange,
   onShowDropdown,
   isCrawlable,
+  rightAlignMenu,
 }: {
   options: Array<Option>;
   currentValue: Option;
   onChange: (value: Option) => void;
   onShowDropdown?: () => void;
   isCrawlable?: boolean;
+  rightAlignMenu?: boolean;
 }) => {
   const [isActive, toggleActive] = useState(false);
 
@@ -155,14 +161,14 @@ const DropdownSelector = ({
       onMouseEnter={onActive}
       onMouseLeave={() => toggleActive(false)}
     >
-      <StyledActiveValue>
+      <StyledActiveValue className="styled-active-value">
         {currentValue.activeLabel ?? currentValue.label}
       </StyledActiveValue>
       <Conditional if={isActive || isCrawlable}>
         <div
           className={`selector-dropdown ${
             isActive ? 'selector-dropdown-active' : ''
-          }`}
+          } ${rightAlignMenu ? 'right-align' : ''}`}
         >
           {options.map((option, index) => {
             const isSelected = currentValue.value == option.value;

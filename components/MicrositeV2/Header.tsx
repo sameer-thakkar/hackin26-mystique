@@ -33,8 +33,7 @@ import {
 import { strings } from 'const/strings';
 import { HALYARD } from 'const/ui-constants';
 import { POWERED_BY_HEADOUT, SEARCH_ICON } from 'assets/SvgIcons';
-  
-  
+
 const SearchBox: ComponentType<any> = dynamic(
   () => import('./SearchBox').then((mod) => mod.SearchBox),
   { ssr: false }
@@ -57,6 +56,7 @@ interface IStyledHeader {
   isEntertainmentMbListicle?: boolean;
   overlayActive?: boolean;
   headerHover?: boolean;
+  showLttColoredHeader: boolean;
   isTop?: boolean;
 }
 
@@ -78,6 +78,10 @@ const StyledHeader = styled.div<IStyledHeader>`
     width: calc(100vw - (100vw - 100%));
     top: 0;
     min-height: ${({ isGlobalMb }) => (isGlobalMb ? '64px' : '80px')};
+    border-bottom: ${({ isEntertainmentMb, showLttColoredHeader }) =>
+      isEntertainmentMb &&
+      !showLttColoredHeader &&
+      `1px ${COLORS.GRAY.G6} solid`};
     background-color: ${({ theme: { primaryBackground } }) =>
       primaryBackground ? primaryBackground : '#fff'};
     z-index: ${({ overlayActive: check, headerHover }) =>
@@ -87,6 +91,8 @@ const StyledHeader = styled.div<IStyledHeader>`
     ${({ isEntertainmentMbListicle }) =>
       isEntertainmentMbListicle &&
       `border-bottom: 1px solid ${COLORS.GRAY.G6};`}
+      background:${({ showLttColoredHeader }) =>
+        showLttColoredHeader ? '#150029' : '#fff'}  ;
   }
   .fixed-offset::after {
     content: '';
@@ -94,6 +100,21 @@ const StyledHeader = styled.div<IStyledHeader>`
     height: ${({ theme: { theme } }) =>
       theme === THEMES.DEFAULT ? '88px' : '80px'};
   }
+  ${({ showLttColoredHeader }) =>
+    showLttColoredHeader &&
+    `.fixed-offset::before {
+      content: '';
+      position: fixed;
+      width: 100vw;
+      top: 0;
+      display: block;
+      background-color: #150029;
+      height: 500px;
+      @media (max-width: 789px) {
+        height:300px;
+      }
+    }`}
+  
   .main-wrapper .header-city-selector {
     min-width: 180px;
     font-family: ${HALYARD.FONT_STACK};
@@ -107,6 +128,11 @@ const StyledHeader = styled.div<IStyledHeader>`
     border: 1px solid ${COLORS.GRAY.G2};
   }
 
+  .styled-active-value {
+    color:${({ showLttColoredHeader }) =>
+      showLttColoredHeader ? COLORS.BRAND.WHITE : COLORS.GRAY.G3}
+     
+  }
   @media (max-width: 768px) {
     .main-wrapper {
       margin: unset;
@@ -115,10 +141,13 @@ const StyledHeader = styled.div<IStyledHeader>`
         isEntertainmentMb ? '15px 16px' : '12px 16px'};
       border-bottom: ${({ theme: { theme } }) =>
         theme === THEMES.DEFAULT ? `1px solid ${COLORS.GRAY.G6}` : 'none'};
+      background:${({ showLttColoredHeader }) =>
+        showLttColoredHeader ? '#150029' : '#fff'}  ;
     }
     .fixed-wrap {
       min-height: ${({ isGlobalMb }) => (isGlobalMb ? '48px' : '56px')};
       height: ${({ isGlobalMb }) => (isGlobalMb ? '48px' : '56px')};
+      background-color: transparent;
     }
     .fixed-offset::after {
       content: '';
@@ -133,7 +162,10 @@ const StyledHeader = styled.div<IStyledHeader>`
   }
 `;
 
-const HeaderRight = styled.div`
+const HeaderRight = styled.div<{
+  showLttColoredHeader?: boolean;
+  isDarkMode?: boolean;
+}>`
   display: grid;
   grid-gap: 8px;
   grid-auto-flow: column !important;
@@ -163,9 +195,39 @@ const HeaderRight = styled.div`
       primaryBGText ? primaryBGText : COLORS.GRAY.G2};
   }
   .mobi-search-trigger {
-    height: 20px;
-    width: 20px;
+    height: ${({ isDarkMode }) => (isDarkMode ? '16px' : '20px')};
+    width: ${({ isDarkMode }) => (isDarkMode ? '16px' : '20px')};
+    padding: ${({ isDarkMode }) => (isDarkMode ? '8px' : '0')};
+    background-color: ${({ isDarkMode }) =>
+      isDarkMode ? `${COLORS.BRAND.WHITE}20` : 'transparent'};
+    border-radius: ${({ isDarkMode }) => (isDarkMode ? `50%` : 0)};
+    ${({ isDarkMode, showLttColoredHeader }) =>
+      isDarkMode &&
+      `svg {
+        position: relative;
+        top:-1.5px;
+        path {
+          stroke: ${showLttColoredHeader ? COLORS.BRAND.WHITE : COLORS.GRAY.G2};
+        }
+        height: 16px;
+        width: 16px;
+      }`}
   }
+  .menu-item-text:not(a:has(> .menu-item-text)) {
+    span.label {
+      ${({ showLttColoredHeader }) => showLttColoredHeader && `color: white;`}
+    }
+    svg {
+      path {
+        ${({ showLttColoredHeader }) =>
+          showLttColoredHeader && `stroke: white;`}
+      }
+    }
+  }
+  .link-element a span.label {
+    color: ${COLORS.GRAY.G3} !important;
+  }
+
   @media (max-width: 768px) {
     grid-auto-flow: unset;
     grid-template-columns: repeat(auto-fill, minmax(1.875rem, 1fr));
@@ -193,6 +255,7 @@ interface IHeaderLeft {
   isGlobalMb: boolean;
   isEntertainmentMb: boolean;
   hasDropdownLinks?: boolean;
+  isDarkMode?: boolean;
 }
 
 const HeaderLeft = styled.div<IHeaderLeft>`
@@ -222,6 +285,8 @@ const HeaderLeft = styled.div<IHeaderLeft>`
     }
 
     img {
+      ${({ isDarkMode }) =>
+        isDarkMode && `filter: invert(1) hue-rotate(193deg) brightness(3);`}
       height: 36px !important;
       margin: 0;
       max-width: 160px !important;
@@ -234,6 +299,11 @@ const HeaderLeft = styled.div<IHeaderLeft>`
   .poweredBy svg {
     height: 36px;
     width: auto;
+    ${({ isDarkMode }) =>
+      isDarkMode &&
+      `.cls-1 {
+        fill: #fff;
+      }`}
   }
 
   @media (max-width: 768px) {
@@ -257,17 +327,20 @@ const HeaderLeft = styled.div<IHeaderLeft>`
   }
 `;
 
-const SearchWrapper = styled.div`
+const SearchWrapper = styled.div<{ showLttColoredHeader: boolean }>`
   position: relative;
   .input-icon path {
     stroke-width: 1.5px;
+    ${({ showLttColoredHeader }) =>
+      showLttColoredHeader ? 'opacity: 0.5' : ''}
   }
   .results {
     position: absolute;
     padding: 10px;
-    top: calc(100% + 10px);
+    top: calc(100% + 6px);
     left: 0;
-    width: calc(100% - 20px);
+    border-radius: 6px;
+    width: 100%;
     z-index: 10;
     background: #fff;
     display: grid;
@@ -323,6 +396,7 @@ interface HeaderProps {
   taggedCity?: string;
   categoryHeaderMenuExists?: boolean;
   categoryHeaderMenu?: Record<string, any>;
+  isNewLTTLandingPageVisible?: boolean;
 }
 
 const Header: FunctionComponent<HeaderProps> = ({
@@ -350,6 +424,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   taggedCity,
   categoryHeaderMenuExists = false,
   categoryHeaderMenu,
+  isNewLTTLandingPageVisible = false,
 }) => {
   const { lang, nakedDomain, redirectToHeadoutBookingFlow } = useContext(
     MBContext
@@ -360,6 +435,10 @@ const Header: FunctionComponent<HeaderProps> = ({
   const [resultClicked, setResultClicked] = useState(false);
   const [navActive, toggleNav] = useState(false);
   const [headerHover, setHeaderHover] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  const showLttColoredHeader =
+    isNewLTTLandingPageVisible && !hasScrolled && !navActive;
   const [scrollPos, setScrollPos] = useState(0);
 
   const handleResults = (results: any) => {
@@ -438,6 +517,12 @@ const Header: FunctionComponent<HeaderProps> = ({
     window.addEventListener(
       'scroll',
       () => {
+        if (window.scrollY > 20) {
+          setHasScrolled(true);
+        } else {
+          setHasScrolled(false);
+        }
+
         if (window.pageYOffset > 450) {
           setShowBuyTickets(true);
         } else {
@@ -477,6 +562,7 @@ const Header: FunctionComponent<HeaderProps> = ({
       isGlobalMb={isGlobalMb}
       isEntertainmentMb={isEntertainmentMb}
       isEntertainmentMbListicle={isEntertainmentMbListicle}
+      showLttColoredHeader={showLttColoredHeader}
       isTop={scrollPos <= 80}
     >
       <div className="fixed-offset"></div>
@@ -488,6 +574,7 @@ const Header: FunctionComponent<HeaderProps> = ({
             onMouseLeave={() => setHeaderHover(false)}
             isGlobalMb={isGlobalMb}
             isEntertainmentMb={isEntertainmentMb}
+            isDarkMode={isNewLTTLandingPageVisible && showLttColoredHeader}
           >
             <a href={logoRedirectionURL || '/'}>
               <div className="header-logo">
@@ -516,13 +603,15 @@ const Header: FunctionComponent<HeaderProps> = ({
               </div>
             </Conditional>
             <Conditional if={!isMobileDevice && enableSearch}>
-              <SearchWrapper>
+              <SearchWrapper showLttColoredHeader={showLttColoredHeader}>
                 <SearchBox
                   isMobile={isMobileDevice}
                   handleResults={handleResults}
                   allToursArray={allToursArray}
                   clearSearch={resultClicked}
                   isEntertainmentMb={isEntertainmentMb}
+                  isNewLTTLandingPageVisible={isNewLTTLandingPageVisible}
+                  isDarkMode={showLttColoredHeader}
                 />
                 <Conditional if={results.length}>
                   <div>
@@ -546,6 +635,8 @@ const Header: FunctionComponent<HeaderProps> = ({
           <HeaderRight
             onMouseEnter={() => setHeaderHover(true)}
             onMouseLeave={() => setHeaderHover(false)}
+            showLttColoredHeader={showLttColoredHeader}
+            isDarkMode={isNewLTTLandingPageVisible}
           >
             <Conditional if={!groupedHeaderSlices.length && headerLinks}>
               <HeaderLinks
@@ -610,7 +701,9 @@ const Header: FunctionComponent<HeaderProps> = ({
                 languages={headerLanguages}
                 currencies={headerCurrencies}
                 currentLanguage={lang}
-                hasLanguageDropdown={hasLanguageSelector}
+                hasLanguageDropdown={
+                  hasLanguageSelector && !isNewLTTLandingPageVisible
+                }
                 hasCurrencySelector={hideCurrencySelector}
               />
             </Conditional>
@@ -620,6 +713,8 @@ const Header: FunctionComponent<HeaderProps> = ({
                 isActive={navActive}
                 onClickFn={handleHamburgerClick}
                 isGlobalMb={isGlobalMb}
+                showContainer={isNewLTTLandingPageVisible}
+                isDarkMode={showLttColoredHeader}
               />
             </Conditional>
           </HeaderRight>

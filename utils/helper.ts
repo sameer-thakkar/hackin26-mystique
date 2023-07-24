@@ -581,3 +581,21 @@ export const isF1SportsExperiment = (tgid: number): boolean =>
 export const generateSidenavId = (heading: string) => {
   return `sidenav-${stringIdfy(heading)}`;
 };
+
+export const getCategorySeeAllLink = (category: string) => {
+  switch (category) {
+    case 'Kids':
+      return 'https://www.london-theater-tickets.com/shows-in-london/shows-for-kids/';
+    case 'Couple':
+      return 'https://www.london-theater-tickets.com/shows-in-london/romantic-theatre-shows/';
+    case 'Adults':
+      return 'https://www.london-theater-tickets.com/shows-in-london/romantic-theatre-shows/';
+    case 'new arrivals':
+      return 'https://www.london-theater-tickets.com/shows-in-london/new-west-end-shows/';
+    case 'plays':
+      return 'https://www.london-theater-tickets.com/west-end-plays-in-london/';
+    case 'musicals':
+      return 'https://www.london-theater-tickets.com/london-musicals/';
+  }
+  return '';
+};

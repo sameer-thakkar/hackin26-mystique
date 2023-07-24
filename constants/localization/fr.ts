@@ -498,6 +498,10 @@ const fr = {
     FESTIVALS_EVENTS: 'Festivals et événements',
   },
   WHY_WATCH: 'Pourquoi faut-il le voir',
+  LTT_LANDING_PAGE: {
+    TOP_WEST_END_SHOWS: 'Top West End shows',
+    LOVED_BY_MILLIONS: 'Loved by Millions',
+  },
   TAG_NAME: {
     BALLET: 'Spectacles de ballet',
     CABARET: 'Cabaret',

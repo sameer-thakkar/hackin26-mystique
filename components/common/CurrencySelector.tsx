@@ -64,6 +64,7 @@ const CurrencySelector = ({ currencies }: any) => {
       onChange={handleChange}
       options={options}
       onShowDropdown={trackDropdownShown}
+      rightAlignMenu={true}
     />
   );
 };

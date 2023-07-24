@@ -499,6 +499,10 @@ const nl = {
     FESTIVALS_EVENTS: 'Festivals en events',
   },
   WHY_WATCH: 'Why kijken',
+  LTT_LANDING_PAGE: {
+    TOP_WEST_END_SHOWS: 'Top West End shows',
+    LOVED_BY_MILLIONS: 'Loved by Millions',
+  },
   TAG_NAME: {
     BALLET: 'Ballet',
     CABARET: 'Cabaret',

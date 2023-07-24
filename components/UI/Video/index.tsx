@@ -27,6 +27,9 @@ interface VideoTypeProps {
   shouldVideoPlay?: boolean;
   dontLazyLoadImage?: boolean;
   videoPosition: string;
+  showPlayIcon?: boolean;
+  pauseOnclick?: boolean;
+  eventTracking?: boolean;
 }
 
 const Video: React.FC<VideoTypeProps> = ({
@@ -43,6 +46,9 @@ const Video: React.FC<VideoTypeProps> = ({
   imageQuality,
   dontLazyLoadImage = false,
   videoPosition,
+  showPlayIcon = true,
+  pauseOnclick = false,
+  eventTracking = true,
 }) => {
   const videoAutoplayInterval = useRef(null);
   const videoAutoplayTime = useRef(0);
@@ -61,12 +67,13 @@ const Video: React.FC<VideoTypeProps> = ({
       setIsAutoplayDisabled(false);
 
       if (videoAutoplayInterval.current) {
-        trackEvent({
-          eventName: ANALYTICS_EVENTS.VIDEO_AUTOPLAY_STARTED,
-          [ANALYTICS_PROPERTIES.AUTOPLAY_LOAD_TIME]:
-            videoAutoplayTime.current / 1000,
-          [ANALYTICS_PROPERTIES.POSITION]: videoPosition,
-        });
+        eventTracking &&
+          trackEvent({
+            eventName: ANALYTICS_EVENTS.VIDEO_AUTOPLAY_STARTED,
+            [ANALYTICS_PROPERTIES.AUTOPLAY_LOAD_TIME]:
+              videoAutoplayTime.current / 1000,
+            [ANALYTICS_PROPERTIES.POSITION]: videoPosition,
+          });
         clearInterval(videoAutoplayInterval.current);
         videoAutoplayInterval.current = null;
       }
@@ -74,23 +81,30 @@ const Video: React.FC<VideoTypeProps> = ({
       // video autoplay prevented by the browser
       setIsAutoplayDisabled(true);
       setIsVideoPaused(true);
-      trackEvent({
-        eventName: ANALYTICS_EVENTS.VIDEO_AUTOPLAY_FAILED,
-        [ANALYTICS_PROPERTIES.POSITION]: videoPosition,
-      });
+      eventTracking &&
+        trackEvent({
+          eventName: ANALYTICS_EVENTS.VIDEO_AUTOPLAY_FAILED,
+          [ANALYTICS_PROPERTIES.POSITION]: videoPosition,
+        });
     }
   };
 
   const playVideo = () => {
     if (!videoRef) return;
-    // @ts-expect-error TS(2531): Object is possibly 'null'.
-    videoRef.current.play();
+    videoRef.current?.play();
     setIsVideoPaused(false);
     setIsAutoplayDisabled(false);
-    trackEvent({
-      eventName: ANALYTICS_EVENTS.MB_VIDEO_PLAYED,
-      [ANALYTICS_PROPERTIES.POSITION]: videoPosition,
-    });
+    eventTracking &&
+      trackEvent({
+        eventName: ANALYTICS_EVENTS.MB_VIDEO_PLAYED,
+        [ANALYTICS_PROPERTIES.POSITION]: videoPosition,
+      });
+  };
+
+  const pauseVideo = () => {
+    if (!videoRef) return;
+    videoRef.current?.pause();
+    setIsVideoPaused(true);
   };
 
   useEffect(() => {
@@ -114,19 +128,35 @@ const Video: React.FC<VideoTypeProps> = ({
 
   useEffect(() => {
     const videoElement: HTMLVideoElement = videoRef.current!;
-    if (!hasVideoLoaded) return;
-    videoElement.currentTime = 0;
-
-    if (shouldVideoPlay) {
-      handleVideoPlay(videoElement);
-    } else {
-      videoElement.pause();
-      setIsVideoPaused(true);
-    }
+    const startVideoAutoPlay = () => {
+      if (!hasVideoLoaded) return;
+      videoElement.currentTime = 0;
+      if (videoRef.current) videoRef.current.controls = false;
+      if (shouldVideoPlay) {
+        handleVideoPlay(videoElement);
+      } else {
+        pauseVideo();
+      }
+    };
+    videoElement.addEventListener('loadeddata', startVideoAutoPlay);
+    return () =>
+      videoElement.removeEventListener('loadeddata', startVideoAutoPlay);
   }, [shouldVideoPlay, hasVideoLoaded]);
 
   const { url: fallbackImageUrl, altText: imageAltText } = fallbackImage;
-  const showPlayButton = isAutoplayDisabled && isVideoPaused && url;
+
+  const showPlayButton =
+    showPlayIcon && isAutoplayDisabled && isVideoPaused && url;
+
+  const handleOnClick = () => {
+    if (!pauseOnclick || !videoRef || !videoRef.current) return;
+    if (isVideoPaused) {
+      playVideo();
+    } else {
+      pauseVideo();
+    }
+  };
+
   return (
     <VideoContainer className={'video-container'} $fadeInVideo={!isVideoPaused}>
       <Conditional if={fallbackImage}>
@@ -157,7 +187,8 @@ const Video: React.FC<VideoTypeProps> = ({
         autoPlay={shouldAutoPlay}
         loop={isLooped}
         muted={isMuted}
-        playsInline
+        playsInline={true}
+        onClick={handleOnClick}
       >
         <source data-src={url} type={'video/mp4'} />
       </StyledVideoContainer>

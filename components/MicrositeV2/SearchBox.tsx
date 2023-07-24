@@ -12,17 +12,34 @@ import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import { CLOSE_WHITE, SEARCH_ICON } from 'assets/SvgIcons';
 
-const StyledSearchBox = styled.div<{ isEntertainmentMb?: boolean }>`
+const StyledSearchBox = styled.div<{
+  isEntertainmentMb?: boolean;
+  isNewLTTLandingPageVisible: boolean;
+  isDarkMode?: boolean;
+}>`
   position: relative;
 
   input {
+    ${({ isNewLTTLandingPageVisible, isDarkMode }) => {
+      return isNewLTTLandingPageVisible && isDarkMode
+        ? `
+      background: rgba(255, 255, 255, 0.12);
+      border: none;
+      `
+        : `
+          border: 1px solid ${COLORS.GRAY.G6};
+
+      `;
+    }};
     padding: ${({ isEntertainmentMb }) =>
       isEntertainmentMb ? '0.563rem 0' : '0.75rem 0'};
     outline: none;
-    padding-left: 2.5rem;
-    padding-right: 2.25rem;
-    border-radius: 0.25rem;
-    border: 1px solid ${COLORS.GRAY.G6};
+    padding-left: ${({ isNewLTTLandingPageVisible }) =>
+      isNewLTTLandingPageVisible ? '1.5rem' : ' 2.5rem'};
+    padding-right: ${({ isNewLTTLandingPageVisible }) =>
+      isNewLTTLandingPageVisible ? '2rem' : ' 2.25rem'};
+    border-radius: ${({ isNewLTTLandingPageVisible }) =>
+      isNewLTTLandingPageVisible ? '0.5rem' : ' 0.25rem'};
     width: calc(100% - 2.5rem);
     min-width: 13rem;
     ${expandFontToken('UI/Label Medium')}
@@ -31,6 +48,8 @@ const StyledSearchBox = styled.div<{ isEntertainmentMb?: boolean }>`
       ${({ isEntertainmentMb }) =>
         isEntertainmentMb && `color: ${COLORS.GRAY.G4};`}
     }
+
+    ${({ isDarkMode }) => isDarkMode && `color: ${COLORS.BRAND.WHITE};`}
 
     ${({ isEntertainmentMb }) =>
       isEntertainmentMb &&
@@ -42,7 +61,10 @@ const StyledSearchBox = styled.div<{ isEntertainmentMb?: boolean }>`
 
   .input-icon {
     position: absolute;
-    left: 1rem;
+    left: ${({ isNewLTTLandingPageVisible }) =>
+      !isNewLTTLandingPageVisible && '1rem'};
+    right: ${({ isNewLTTLandingPageVisible }) =>
+      isNewLTTLandingPageVisible && '0'};
     top: 50%;
     transform: translate(0, -50%);
     display: flex;
@@ -51,20 +73,22 @@ const StyledSearchBox = styled.div<{ isEntertainmentMb?: boolean }>`
     svg {
       stroke: ${COLORS.GRAY.G3};
       height: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '1rem' : '1.125rem'};
-      height: ${({ isEntertainmentMb }) =>
-        isEntertainmentMb ? '1rem' : '1.125rem'};
+        isEntertainmentMb ? '1.25rem' : '1.125rem'};
     }
 
     path {
-      stroke: ${COLORS.GRAY.G2};
+      stroke: ${({ isNewLTTLandingPageVisible, isDarkMode }) =>
+        isNewLTTLandingPageVisible && isDarkMode
+          ? COLORS.BRAND.WHITE
+          : COLORS.GRAY.G2};
     }
   }
 
   .close-icon {
     position: absolute;
     right: -1.495rem;
-    display: flex;
+    display: ${({ isNewLTTLandingPageVisible }) =>
+      isNewLTTLandingPageVisible ? 'none' : 'flex'};
     top: 50%;
     transform: translate(0, -50%);
     cursor: pointer;
@@ -109,6 +133,8 @@ export const SearchBox = (props: any) => {
     clearSearch,
     isEntertainmentMb,
     isMobile,
+    isNewLTTLandingPageVisible,
+    isDarkMode,
   } = props || {};
   const [query, setQuery] = useRecoilState(searchQueryAtom);
   const fuse = useRef(null);
@@ -161,7 +187,11 @@ export const SearchBox = (props: any) => {
   }, []);
 
   return (
-    <StyledSearchBox isEntertainmentMb={isEntertainmentMb}>
+    <StyledSearchBox
+      isEntertainmentMb={isEntertainmentMb}
+      isNewLTTLandingPageVisible={isNewLTTLandingPageVisible}
+      isDarkMode={isDarkMode}
+    >
       <input
         ref={inputRef}
         type="text"

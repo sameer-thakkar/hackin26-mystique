@@ -554,6 +554,10 @@ const pl = {
   VIEW_MORE: 'Zobacz więcej',
   WHY_TAKE_THIS_DAY_TRIP: 'Dlaczego wybrać się na tę wycieczkę jednodniową?',
   WHY_WATCH: 'Czemu warto zobaczyć',
+  LTT_LANDING_PAGE: {
+    TOP_WEST_END_SHOWS: 'Top West End shows',
+    LOVED_BY_MILLIONS: 'Loved by Millions',
+  },
   TAG_NAME: {
     BALLET: 'Ballet',
     CABARET: 'Cabaret',

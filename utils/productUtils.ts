@@ -1,7 +1,9 @@
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import dayjs from 'dayjs';
+import { createBookingURL } from 'utils';
 import {
+  dateToString,
   getDurationInDays,
   getDurationInHours,
   isDateValid,
@@ -12,12 +14,16 @@ import {
 } from 'const/descriptors';
 import {
   CANCELLATION_POLICY_POSSIBLE_LABELS,
+  CASHBACK_TYPES,
   DESCRIPTORS,
   HIGHLIGHT_TYPES,
+  LANGUAGE_MAP,
+  REOPENING_CATEGORIES,
   THEMES,
   VALIDITY_TYPES,
 } from 'const/index';
 import { strings } from 'const/strings';
+import { convertUidToUrl, getFormattedUrlSlug } from './urlUtils';
 
 export const extractTabsFromHighlights = (highlights: Record<string, any>) => {
   let tabs: Record<string, any> = [];
@@ -605,3 +611,93 @@ export const parseDescriptors = (descriptorArr: Record<string, any>[] = []) => {
 
 // Temporarily disables dynamic show pages
 export const shouldUseDynamicShowPage = () => false;
+
+export const getOpeningDate = ({
+  categoryId,
+  lang,
+  reopeningDate,
+}: {
+  categoryId: number;
+  lang: string;
+  reopeningDate: string;
+}) => {
+  const openingDate = dateToString(
+    reopeningDate,
+    LANGUAGE_MAP.en.code,
+    'DD MMM, YYYY'
+  );
+  const localisedOpeningDate = dateToString(
+    reopeningDate,
+    lang,
+    'DD MMM, YYYY'
+  );
+  let OPENING_ON = '';
+  if (openingDate === strings.TODAY || openingDate === strings.TOMORROW) {
+    OPENING_ON = REOPENING_CATEGORIES.includes(categoryId)
+      ? strings.REOPENS
+      : strings.OPENS;
+  } else {
+    OPENING_ON = REOPENING_CATEGORIES.includes(categoryId)
+      ? strings.REOPENING_ON
+      : strings.OPENING_ON;
+  }
+
+  const isBeforeToday = new Date().getTime() > new Date(openingDate)?.getTime();
+
+  if (!isBeforeToday && openingDate !== 'Invalid Date')
+    return { localisedOpeningDate, openingDate, OPENING_ON };
+};
+export const getBoosterValueFromListingPrice = (listingPrice: any) => {
+  const { originalPrice, finalPrice, cashbackType, cashbackValue } =
+    listingPrice ?? {};
+  const percentageSaved = Math.round(
+    ((originalPrice - finalPrice) / originalPrice) * 100
+  );
+  const shouldShowcashbackElement =
+    cashbackValue > 0 && cashbackType === CASHBACK_TYPES.PERCENTAGE;
+
+  return {
+    percentageSaved,
+    shouldShowcashbackElement,
+    cashbackValue,
+  };
+};
+
+export const getProductCardDestination = ({
+  nakedDomain,
+  lang,
+  tgid,
+  redirectToHeadoutBookingFlow,
+  currency,
+  flowType,
+  urlSlugs,
+  showPageUid,
+  isVenuePage = false,
+  showPageUidForVenuePage,
+  isDev = false,
+  host,
+}: any) => {
+  const bookingURL = createBookingURL({
+    nakedDomain,
+    lang,
+    tgid,
+    redirectToHeadoutBookingFlow,
+    currency,
+    flowType,
+  });
+  let destinationUrl = bookingURL;
+  if (shouldUseDynamicShowPage()) {
+    destinationUrl = getFormattedUrlSlug(urlSlugs, lang);
+  } else if (showPageUid || isVenuePage) {
+    destinationUrl = convertUidToUrl({
+      uid: isVenuePage ? showPageUidForVenuePage : showPageUid,
+      isDev,
+      hostname: host,
+      lang,
+    });
+  }
+
+  const showPageExists = !destinationUrl.includes('/book');
+
+  return { destinationUrl, showPageExists };
+};

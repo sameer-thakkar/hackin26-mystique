@@ -309,7 +309,9 @@ export const ANALYTICS_EVENTS = {
     VISIBLE: 'MB Banner Visible',
     CTA_CLICKED: 'MB Banner CTA Clicked',
     BANNER_SCROLL: 'MB Banner Scroll',
+    CHEVRON_CLICKED: 'MB Banner Chevron Clicked',
   },
+  CHEVRON_CLICKED: 'Chevron Clicked',
   CATEGORY_TAB_CLICKED: 'Category Tab Clicked',
   MB_SORT_BY_CLICKED: 'MB Sort By Clicked',
   MB_EXPERIENCE_SORTED: 'MB Experiences Sorted',
@@ -360,6 +362,8 @@ export const ANALYTICS_EVENTS = {
   DATE_FILTER_APPLIED: 'Date Filter Applied',
   DATE_UNAVAILABLE_DRAWER_VIEWED: 'Date Unavailable Drawer Viewed',
   MICROSITE_PAGE_CTA_CLICKED: 'Microsite Page CTA Clicked',
+  SEE_ALL_CLICKED: 'See All Clicked',
+  PAGE_SECTION_VIEWED: 'Page Section Viewed',
 };
 
 export const PAGE_TYPE = {
@@ -731,6 +735,7 @@ export const ANALYTICS_PROPERTIES = {
   CATEGORY_NAME: 'Category Name',
   SUB_CAT_ID: 'Sub-Category ID',
   SUB_CAT_NAME: 'Sub-Category Name',
+  CATEGORY: 'Category',
   CITY: 'City',
   COUNTRY: 'Country',
   VARIANT: 'Experiment Variant',

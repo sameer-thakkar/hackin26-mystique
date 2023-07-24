@@ -1,5 +1,5 @@
 import React from 'react';
-import { Autoplay, Lazy, Navigation, Pagination } from 'swiper';
+import { Autoplay, FreeMode, Lazy, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperProps, SwiperSlide } from 'swiper/react';
 import Conditional from 'components/common/Conditional';
 import 'swiper/css';
@@ -12,6 +12,7 @@ interface ISwiperWrapper extends SwiperProps {
   children: React.ReactNode[];
   nextButton?: HTMLElement | React.ReactNode | JSX.Element;
   previousButton?: HTMLElement | React.ReactNode | JSX.Element;
+  isFreeMode?: boolean;
 }
 
 const SwiperWrapper: React.FC<ISwiperWrapper> = (props) => {
@@ -20,13 +21,20 @@ const SwiperWrapper: React.FC<ISwiperWrapper> = (props) => {
     enableAutoplay = props.autoplay,
     isLazy = props.lazy;
 
-  const { nextButton, previousButton, children, ...restProps } = props;
+  const {
+    nextButton,
+    previousButton,
+    children,
+    isFreeMode,
+    ...restProps
+  } = props;
   const modules = [];
 
   showPagination && modules.push(Pagination);
   showNavigation && modules.push(Navigation);
   enableAutoplay && modules.push(Autoplay);
   isLazy && modules.push(Lazy);
+  isFreeMode && modules.push(FreeMode);
 
   return (
     <React.Fragment>

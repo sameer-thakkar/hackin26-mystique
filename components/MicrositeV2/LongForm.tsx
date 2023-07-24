@@ -16,7 +16,7 @@ const StyledLongform = styled.div<{
   display: grid;
   grid-auto-flow: row;
   grid-row-gap: 72px;
-  margin-bottom: 112px;
+  margin-bottom: 72px;
   ${({ noBorder }) =>
     noBorder &&
     `border-top: unset;
@@ -112,7 +112,6 @@ const LongForm = (props: any) => {
   const { slicesArray, props: sliceProps, hasToursSection } = props;
 
   const { isGlobalMb, isEntertainmentMb } = sliceProps || {};
-
   return (
     <StyledLongform
       noBorder={!hasToursSection}

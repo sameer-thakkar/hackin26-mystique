@@ -2,24 +2,41 @@ import React from 'react';
 import styled from 'styled-components';
 import COLORS from 'const/colors';
 
-const StyledHamburger = styled.div`
+const StyledHamburger = styled.div<{
+  isGlobalMb?: boolean;
+  isActive?: boolean;
+  theme: any;
+  showContainer?: boolean;
+  isDarkMode?: boolean;
+}>`
   display: none;
   cursor: pointer;
-  width: 22px;
+  width: ${({ showContainer }) => (showContainer ? '14px' : '22px')};
+  padding: ${({ showContainer, isActive }) =>
+    showContainer && !isActive ? '6.5px 9px' : '0'};
+  border-radius: ${({ showContainer }) => (showContainer ? '50%' : '0')};
+  background-color: ${({ showContainer }) =>
+    showContainer ? `${COLORS.BRAND.WHITE}20` : 'transparent'};
   &:after,
   &:before,
   & div {
-    background-color: ${({
-      // @ts-expect-error TS(2339): Property 'isGlobalMb' does not exist on type 'Pick... Remove this comment to see the full error message
-      isGlobalMb,
-      theme,
-    }) =>
-      isGlobalMb ? COLORS.GRAY.G2 : theme.primaryBGText || COLORS.GRAY.G2};
+    background-color: ${({ isGlobalMb, theme, isDarkMode }) => {
+      switch (true) {
+        case isDarkMode:
+          return COLORS.BRAND.WHITE;
+        case isGlobalMb:
+          return COLORS.GRAY.G2;
+        default:
+          return theme.primaryBGText || COLORS.GRAY.G2;
+      }
+    }};
     border-radius: 3px;
     content: '';
     display: block;
-    height: 2px;
-    margin: 5px 0;
+    height: ${({ showContainer, isActive }) =>
+      showContainer && !isActive ? '1px' : '2px'};
+    margin: ${({ showContainer, isActive }) =>
+      showContainer && !isActive ? '4px 0' : '5px 0'};
     transition: all 0.2s ease-in-out;
   }
 
@@ -36,10 +53,7 @@ const StyledHamburger = styled.div`
     }
   }
 
-  ${({
-    // @ts-expect-error TS(2339): Property 'isActive' does not exist on type 'Pick<D... Remove this comment to see the full error message
-    isActive,
-  }) => {
+  ${({ isActive }) => {
     return (
       isActive &&
       `
@@ -67,10 +81,11 @@ const Hamburger: React.FC<any> = ({
   onClickFn = null,
   className = '',
   isGlobalMb = false,
+  showContainer = false,
+  isDarkMode = false,
 }) => {
   return (
     <StyledHamburger
-      // @ts-expect-error TS(2769): No overload matches this call.
       isActive={isActive}
       onClick={onClickFn}
       className={className}
@@ -78,6 +93,8 @@ const Hamburger: React.FC<any> = ({
       role="button"
       tabIndex={0}
       isGlobalMb={isGlobalMb}
+      showContainer={showContainer}
+      isDarkMode={isDarkMode}
     >
       <div role="button" tabIndex={0} />
     </StyledHamburger>

@@ -2398,6 +2398,11 @@
   dependencies:
     "@rive-app/canvas" "1.2.1"
 
+"@rive-app/webgl@1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@rive-app/webgl/-/webgl-1.2.1.tgz#b628155a676ed6050b1405ea39e2c1feb9ef6517"
+  integrity sha512-PqgAmLcXxn54z5CgwbJTuHjNiJLwHHrUAJeWni0jmOEREQunaI35wDlt3i1L9wYBjnZDqUfOhFkzBZLKIhyRbQ==
+
 "@rollup/plugin-sucrase@4.0.4":
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-sucrase/-/plugin-sucrase-4.0.4.tgz#0a3b3d97cdc239ec3399f5a10711f751e9f95d98"
@@ -14055,6 +14060,14 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
   dependencies:
     hash-base "^3.0.0"
     inherits "^2.0.1"
+
+rive-react@^3.0.54:
+  version "3.0.54"
+  resolved "https://registry.yarnpkg.com/rive-react/-/rive-react-3.0.54.tgz#760cd5d42a6b2eb88fdb7b2afa697cce20af69f6"
+  integrity sha512-N0yi9MaN3SNOdSjQeJ6vkw0S27BoVXbbSutiJuCDKuz9WgSZgxkw8jb7EGxGc+GAqcuCZrlf6+MpIu0iQ1LXjw==
+  dependencies:
+    "@rive-app/canvas" "1.2.1"
+    "@rive-app/webgl" "1.2.1"
 
 rollup@2.78.0:
   version "2.78.0"

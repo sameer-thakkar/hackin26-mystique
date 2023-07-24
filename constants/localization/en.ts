@@ -8,6 +8,9 @@ const en = {
     MAIN_TEXT: 'Authorized reseller',
     SUB_TEXT: 'Authentic experiences from trusted and verified partners',
   },
+  GRAB_YOUR_TICKETS_NOW: 'Grab your tickets now',
+  YOUR_PICKS: 'Your pick',
+  REVIEWS: 'reviews',
   AVAILABLE: 'Available',
   BANNER_CTA: 'Buy tickets',
   BANNER_FOOTER_SUBTEXT: {
@@ -381,7 +384,7 @@ const en = {
   SEARCH: 'Search',
   POPULARITY: 'Popularity',
   PRICE: 'Price',
-  SEE_MORE_SHOWS: 'See More Shows',
+  SEE_MORE_SHOWS: 'See more shows',
   SELECT_CITY: 'Select city',
   SELECT_SECTION: 'Select Section',
   SHOW_ALL_PHOTOS: 'Show all photos',
@@ -473,6 +476,10 @@ const en = {
   VIEW_MORE: 'View More',
   WHY_TAKE_THIS_DAY_TRIP: 'Why Take this Day Trip?',
   WHY_WATCH: 'Why Watch',
+  LTT_LANDING_PAGE: {
+    TOP_WEST_END_SHOWS: 'Top West End shows',
+    LOVED_BY_MILLIONS: 'Loved by Millions',
+  },
   TAG_NAME: {
     BALLET: 'Ballet',
     CABARET: 'Cabaret',

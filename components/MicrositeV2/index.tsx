@@ -458,6 +458,9 @@ class MicrositeV2 extends Component<any, any> {
             alt: image.uploaded_image.alt || image.image_alt,
             showPageUrl: image.onclick_url,
             bannerHeading: image.main_heading,
+            bannerSubText: image.sub_text,
+            desktopVideoLink: image?.desktop_video_link?.url,
+            mobileVideoLink: image?.mobile_video_link?.url,
           },
         ];
       }, []),
