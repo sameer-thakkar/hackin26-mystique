@@ -1152,4 +1152,6 @@ export const SORT_SELECTOR_FILTERS = {
   PRICE: 'price',
 };
 
+export const FLAGS_FOLDER_URL =
+  'https://cdn-imgix-open.headout.com/home/country-flags/4x3/';
 export const UAE_COUNTRY_CODE = 'ae';

@@ -506,6 +506,7 @@ const sliceHandler = (slice: any, props: any = {}) => {
           title={slice.primary.title}
           type={slice.primary.type}
           reviews={slice.items}
+          isMobile={props.isMobile}
         />
       );
     case 'global_experiences':
