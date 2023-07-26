@@ -34,6 +34,8 @@ const CATEGORIES_TO_SHOW_IN_ORDER = [
   'Comedy',
   'Opera',
   'Coming Soon',
+  'Kids',
+  'Discounts',
 ];
 
 const CategoryCarouselSwiper = ({

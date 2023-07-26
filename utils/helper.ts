@@ -584,11 +584,11 @@ export const generateSidenavId = (heading: string) => {
 
 export const getCategorySeeAllLink = (category: string) => {
   switch (category) {
-    case 'Kids':
+    case 'kids':
       return 'https://www.london-theater-tickets.com/shows-in-london/shows-for-kids/';
-    case 'Couple':
+    case 'couple':
       return 'https://www.london-theater-tickets.com/shows-in-london/romantic-theatre-shows/';
-    case 'Adults':
+    case 'adults':
       return 'https://www.london-theater-tickets.com/shows-in-london/romantic-theatre-shows/';
     case 'new arrivals':
       return 'https://www.london-theater-tickets.com/shows-in-london/new-west-end-shows/';
@@ -596,6 +596,8 @@ export const getCategorySeeAllLink = (category: string) => {
       return 'https://www.london-theater-tickets.com/west-end-plays-in-london/';
     case 'musicals':
       return 'https://www.london-theater-tickets.com/london-musicals/';
+    case 'discounts':
+      return 'https://www.london-theater-tickets.com/discount-west-end-tickets/';
   }
   return '';
 };

@@ -97,8 +97,8 @@ export const ProductDetails = styled.div<{ darkTheme: boolean }>`
 
   .tags {
     margin-top: 2px;
-    ${expandFontToken(FONTS.PARAGRAPH_XS)};
-    font-weight: 300;
+    ${expandFontToken(FONTS.UI_LABEL_SMALL)};
+    font-weight: 500;
     color: ${({ darkTheme }) =>
       darkTheme ? COLORS.GRAY.G7 : COLORS.OCEAN_BLUE.TERTIARY};
   }

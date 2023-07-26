@@ -8,7 +8,7 @@ export const CategoriesSection = styled.div`
   flex-direction: column;
   align-items: start;
   justify-content: start;
-
+  background-color: #f8f6ff;
   p {
     ${expandFontToken(FONTS.DISPLAY_REGULAR)};
     color: ${COLORS.GRAY.G2};
