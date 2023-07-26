@@ -67,8 +67,8 @@ const PinnedCard = ({ pinnedTgidData, isMobile }: IPinnedCardProps) => {
 
   let showDetails: Record<string, any> = {};
 
-  showDetails['USER'] = microBrandsHighlight[strings.SHOW_PAGE.DURATION];
-  showDetails['DURATION'] = microBrandsHighlight[strings.SHOW_PAGE.AGE_LIMIT];
+  showDetails['DURATION'] = microBrandsHighlight[strings.SHOW_PAGE.DURATION];
+  showDetails['USER'] = microBrandsHighlight[strings.SHOW_PAGE.AGE_LIMIT];
 
   let descriptors: string[] =
     descriptorsFromProduct.length === 1
