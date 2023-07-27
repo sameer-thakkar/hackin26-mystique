@@ -8,7 +8,6 @@ import React, {
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import Cookies from 'js-cookie';
 import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
 import DesktopBannerV2 from 'components/MicrositeV2/DesktopBannerV2';
@@ -279,18 +278,17 @@ export const HomePage = (props: any) => {
     if (!hsid && !hsidFail) return;
 
     if (isLTT) {
-      const variant = getABTestingVariant(
-        EXPERIMENT_NAMES.LTT_LP_REVAMP_EXPERIMENT,
-        hsid
-      );
-      setShowLttTreatment(
-        (variant === VARIANTS.TREATMENT &&
-          !isListicle &&
-          uid === 'www.london-theater-tickets.com' &&
-          currentLanguage === 'en') ||
-          Cookies.get('lp-ck') === 'true'
-      );
       setShowLoader(false);
+      if (
+        uid === 'www.london-theater-tickets.com' &&
+        currentLanguage === 'en'
+      ) {
+        const variant = getABTestingVariant(
+          EXPERIMENT_NAMES.LTT_LP_REVAMP_EXPERIMENT,
+          hsid
+        );
+        setShowLttTreatment(variant === VARIANTS.TREATMENT);
+      }
     }
     setTimeout(() => setShowLoader(false), 1000);
     if (eventsReady) {
