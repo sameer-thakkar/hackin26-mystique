@@ -128,6 +128,7 @@ const Video: React.FC<VideoTypeProps> = ({
 
   useEffect(() => {
     const videoElement: HTMLVideoElement = videoRef.current!;
+
     const startVideoAutoPlay = () => {
       if (!hasVideoLoaded) return;
       videoElement.currentTime = 0;
@@ -142,6 +143,16 @@ const Video: React.FC<VideoTypeProps> = ({
     return () =>
       videoElement.removeEventListener('loadeddata', startVideoAutoPlay);
   }, [shouldVideoPlay, hasVideoLoaded]);
+
+  useEffect(() => {
+    if (!videoRef.current) return;
+
+    if (isMuted) {
+      videoRef.current.setAttribute('muted', '');
+    } else {
+      videoRef.current.removeAttribute('muted');
+    }
+  }, [isMuted]);
 
   const { url: fallbackImageUrl, altText: imageAltText } = fallbackImage;
 
