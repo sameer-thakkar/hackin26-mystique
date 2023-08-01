@@ -43,6 +43,8 @@ const internalRewrites = [
 const nextConfig = {
   trailingSlash: true,
   swcMinify: false,
+  // Compression responsibility is offloaded to Cloudfront.
+  compress: false,
   headers: async () => {
     return [
       {

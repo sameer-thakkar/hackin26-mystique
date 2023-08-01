@@ -55,7 +55,7 @@ const LinkResolver: React.FC<ILinkResolver> = (props) => {
   return (
     <EnvironmentContext.Consumer>
       {(ctx) => (
-        <a href={resolveLink(url, ctx)} {...restProps}>
+        <a href={resolveLink(url, ctx ?? {})} {...restProps}>
           {children}
         </a>
       )}

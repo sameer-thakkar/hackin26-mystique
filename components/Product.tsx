@@ -67,9 +67,8 @@ import { expandFontToken } from 'const/typography';
 import { HALYARD } from 'const/ui-constants';
 import { BackArrow, CALENDAR, CHEVRON_RIGHT_CIRCLE } from 'assets/SvgIcons';
 
-const Swiper = dynamic(
-  () => import(/* webpackChunkName: "Swiper" */ 'components/Swiper'),
-  { ssr: false }
+const Swiper = dynamic(() =>
+  import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
 );
 const MediaCarousel = dynamic(() =>
   import(/* webpackChunkName: "MediaCarousel" */ 'UI/MediaCarousel')
