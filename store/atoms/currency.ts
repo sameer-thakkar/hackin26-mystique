@@ -2,10 +2,7 @@ import { atom } from 'recoil';
 import Cookies from 'js-cookie';
 import { COOKIE, TIME } from 'const/index';
 
-const cookiesSideEffect = () => ({
-  setSelf,
-  onSet
-}: any) => {
+const cookiesSideEffect = () => ({ setSelf, onSet }: any) => {
   if (typeof window === 'undefined') return;
 
   const savedValue = Cookies.get(COOKIE.CURRENT_CURRENCY);
@@ -32,7 +29,7 @@ const cookiesSideEffect = () => ({
   });
 };
 
-export const currencyAtom = atom({
+export const currencyAtom = atom<string | null>({
   key: 'activeCurrency',
   default: null,
   effects: [cookiesSideEffect()],

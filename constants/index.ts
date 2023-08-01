@@ -451,27 +451,6 @@ export const SLACK_USER_MAP = {
   KARTHIK: 'U6ALFJ4R5',
 };
 
-export const CURRENCY_SYMBOL_MAP = {
-  AED: 'AED ',
-  SGD: 'S$',
-  USD: '$',
-  EUR: '€',
-  GBP: '£',
-  ISK: 'kr',
-  HKD: 'HK$',
-  INR: '₹',
-  AUD: 'AU$',
-  CAD: 'CA$',
-  NZD: 'NZ$',
-  KRW: '₩',
-  CHF: 'CHF ',
-  JPY: '¥',
-  THB: '฿',
-  IDR: 'Rp',
-  CNY: 'NT$',
-  TWD: 'NT$',
-};
-
 export const ALLOW_IMMEDIATE_NESTING = true;
 
 export const DONT_AUTO_SCROLL = false;
@@ -839,35 +818,6 @@ export const LOCALE_ORDER = [
   LANGUAGE_MAP.de.code,
   LANGUAGE_MAP.pt.code,
   LANGUAGE_MAP.nl.code,
-];
-
-export const TOP_CURRENCIES = ['EUR', 'USD', 'AED', 'SGD', 'INR', 'MYR'];
-
-export const CURRENCY_CODES_ORDER = [
-  'AUD',
-  'GBP',
-  'CAD',
-  'CNY',
-  'EGP',
-  'EUR',
-  'HKD',
-  'ISK',
-  'INR',
-  'IDR',
-  'JPY',
-  'MOP',
-  'MYR',
-  'MXN',
-  'NZD',
-  'QAR',
-  'SGD',
-  'ZAR',
-  'KRW',
-  'CHF',
-  'TWD',
-  'THB',
-  'AED',
-  'USD',
 ];
 
 export const FB_DOMAIN_VERIFICATION = 'vrvsgm9rczh57d7fnspfeve29fa6ae';

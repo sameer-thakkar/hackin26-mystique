@@ -1,11 +1,12 @@
 import React from 'react';
+import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
-import { CurrencyDisplayType, getLocalisedPrice } from 'utils/currency';
+import { getLocalisedPrice } from 'utils/currency';
+import { currencyListAtom } from 'store/atoms/currencyList';
 
 type LocalisedPriceProps = {
   className?: string;
-  currencyCode?: string;
-  currencyDisplay?: CurrencyDisplayType;
+  currencyCode: string;
   currencySymbol?: string;
   lang?: string;
   price: number;
@@ -16,19 +17,18 @@ type LocalisedPriceProps = {
 const LocalisedPrice = ({
   className = '',
   currencyCode,
-  currencyDisplay = 'symbol',
   lang = 'en',
   price,
   precision = 2,
   prefix,
 }: LocalisedPriceProps) => {
+  const currencyList = useRecoilValue(currencyListAtom);
   const formattedPrice = getLocalisedPrice({
     price,
-    // @ts-expect-error TS(2322): Type 'string | undefined' is not assignable to typ... Remove this comment to see the full error message
     currencyCode,
     lang,
-    currencyDisplay,
     precision,
+    currencyList,
   });
 
   return (

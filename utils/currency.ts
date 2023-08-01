@@ -1,38 +1,100 @@
+import {
+  CURRENCY_SYMBOL_OVERRIDES,
+  LESSER_KNOWN_CURRENCY_CODES,
+} from 'const/currency';
+
 export type CurrencyDisplayType = 'symbol' | 'code';
+
+export type TCurrencyObj = {
+  code: string;
+  currency: string;
+  currencyName: string;
+  localSymbol: string;
+  precision: number;
+  symbol: string;
+};
 
 export type TGetLocalisedCurrencySymbol = {
   lang?: string;
   currencyCode: string;
-  currencyDisplay?: CurrencyDisplayType;
+  currencyDisplay: CurrencyDisplayType;
 };
 
-export type TGetLocalisedPrice = TGetLocalisedCurrencySymbol & {
+export type TGetLocalisedPrice = Omit<
+  TGetLocalisedCurrencySymbol,
+  'currencyDisplay'
+> & {
   price: number;
   precision?: number;
+  currencyList: Array<TCurrencyObj>;
 };
 
+export const getCurrencyObject = (
+  currencyList: Array<TCurrencyObj>,
+  currencyCode: string
+) => {
+  return currencyList.find((currency) => currency.code === currencyCode);
+};
+
+function getCurrencySymbol(
+  currencyCode: string,
+  language: string,
+  currencyList: Array<TCurrencyObj>
+): string | undefined {
+  if (!currencyCode) return;
+  const overrides = CURRENCY_SYMBOL_OVERRIDES[currencyCode];
+  if (overrides && overrides[language]) {
+    return overrides[language];
+  } else {
+    return getCurrencyObject(currencyList, currencyCode)?.localSymbol;
+  }
+}
+
+/**
+ * The `getLocalisedPrice` function formats a price value with the specified currency code and language, using the Intl.NumberFormat API.
+ */
 export const getLocalisedPrice = ({
   price,
   currencyCode,
   lang = 'en',
-  currencyDisplay = 'symbol',
   precision = 2,
+  currencyList,
 }: TGetLocalisedPrice) => {
-  if (!price && !currencyCode) return '';
+  if ((!price && !isNaN(price)) || !currencyCode) return '';
+
   const isInteger = Number.isInteger(price);
-  const localisedPrice = new Intl.NumberFormat(lang, {
+
+  const formatter = new Intl.NumberFormat(lang, {
+    minimumFractionDigits: isInteger ? 0 : precision,
     style: 'currency',
     currency: currencyCode,
-    currencyDisplay,
-    minimumFractionDigits: isInteger ? 0 : precision,
-  }).format(price);
-  return localisedPrice;
+    currencyDisplay: 'code',
+  });
+
+  const parts = formatter.formatToParts(price);
+
+  // We want to keep the currencySymbol uniform across locales instead of the varying symbols that Web API provides.
+  const formattedValues = parts.map((part) => {
+    switch (part.type) {
+      case 'currency':
+        if (LESSER_KNOWN_CURRENCY_CODES.includes(part.value)) {
+          return part.value;
+        }
+        return (
+          getCurrencySymbol(currencyCode, lang, currencyList) ?? part.value
+        );
+      default:
+        return part.value;
+    }
+  });
+
+  return formattedValues.join('');
 };
 
 /**
  *
  * **Warning**: Intl accepts any 3 Character Code to be valid
- * this is not a comprehensive valiadtion, (only way to know that is to check it against currency list API)
+ * this is not a comprehensive validation, (only way to know that is to check it against currency list API)
  * only ensures the currency code looks like its in ISO Standard.
  *
  */
@@ -65,10 +127,9 @@ export const getLocalisedCurrencySymbol = ({
     currencyDisplay,
     minimumFractionDigits: 0,
   });
-  // @ts-expect-error TS(2532): Object is possibly 'undefined'.
-  const currencyString = numberFormat
-    .formatToParts()
-    .find((c) => c.type === 'currency').value;
+  const parts = numberFormat.formatToParts();
 
-  return currencyString;
+  const currency = parts.find((c) => c.type === 'currency');
+
+  return currency?.value ?? currencyCode;
 };

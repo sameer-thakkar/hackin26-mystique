@@ -1,8 +1,9 @@
 import React from 'react';
 import COLORS from 'const/colors';
 
-const Booster: React.FC<{ color: string; text: string }> = (props) => {
-  const { color, text } = props;
+type TBoosterProps = { color: string; text: string };
+
+const Booster = ({ color, text }: TBoosterProps) => {
   return (
     <span className="inline-booster" style={{ color }}>
       {text}

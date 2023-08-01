@@ -1,11 +1,13 @@
 import { FunctionComponent, useContext } from 'react';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import Carousel from 'components/GlobalMbs/Carousels/Carousel';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
 import { getLocalisedPrice } from 'utils/currency';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
+import { currencyListAtom } from 'store/atoms/currencyList';
 import COLORS from 'const/colors';
 import { ASPECT_RATIO } from 'const/index';
 import { strings } from 'const/strings';
@@ -133,6 +135,7 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
   tickets,
 }) => {
   const { isDev, host } = useContext(MBContext);
+  const currencyList = useRecoilValue(currencyListAtom);
 
   const entrySection = (
     <HeaderWrapper>
@@ -250,6 +253,7 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
                         {getLocalisedPrice({
                           price: originalPrice,
                           currencyCode,
+                          currencyList,
                         })}
                       </Conditional>
                     </span>
@@ -257,7 +261,11 @@ const ExperienceCarousel: FunctionComponent<ExperienceProps> = ({
                 </Conditional>
                 <div className="final-price">
                   <Conditional if={finalPrice}>
-                    {getLocalisedPrice({ price: finalPrice, currencyCode })}
+                    {getLocalisedPrice({
+                      price: finalPrice,
+                      currencyCode,
+                      currencyList,
+                    })}
                   </Conditional>
                   <Conditional if={bestDiscount > 0}>
                     <span className="discount">

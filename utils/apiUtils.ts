@@ -51,6 +51,7 @@ export enum HeadoutEndpoints {
   TourGroupInventoryV5,
   TourGroupsV6,
   TourGroupInventoriesV6,
+  TourGroupInventoriesV7,
   TourGroupSlotsV6,
   TourGroupListByCollectionV6,
   TourGroupListByCategoryV6,
@@ -88,6 +89,9 @@ export const getHeadoutApiUrl = ({
       break;
     case HeadoutEndpoints.TourGroupInventoriesV6:
       endpointSlug = `/api/tours/v6/tour-groups/${id}/inventories/`;
+      break;
+    case HeadoutEndpoints.TourGroupInventoriesV7:
+      endpointSlug = `/api/v7/tour-groups/${id}/inventories/`;
       break;
     case HeadoutEndpoints.TourGroupSlotsV6:
       endpointSlug = `/api/tours/v6/tour-groups/slots/get/${id}`;

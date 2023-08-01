@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import Button from 'UI/Button';
 import { trackEvent } from 'utils/analytics';
 import { getLocalisedPrice } from 'utils/currency';
+import { currencyListAtom } from 'store/atoms/currencyList';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
@@ -125,6 +127,8 @@ const PromoCodeBlock = ({
   isTicketCardDetailPopup?: boolean;
   currencyCode: string;
 }) => {
+  const currencyList = useRecoilValue(currencyListAtom);
+
   const isPromoApplied = clickedPromo === indexPosition;
   const promo = finalPromoCode;
   const { promo_code, discount_percentage, absolute_discount, capped_value } =
@@ -140,6 +144,7 @@ const PromoCodeBlock = ({
           price: capped_value,
           currencyCode,
           lang: currentLanguage,
+          currencyList,
         })
       );
       break;
@@ -151,6 +156,7 @@ const PromoCodeBlock = ({
           price: absolute_discount,
           currencyCode,
           lang: currentLanguage,
+          currencyList,
         })
       );
       break;

@@ -20,7 +20,8 @@ import {
   standardizeCancellationPolicy,
 } from 'utils/productUtils';
 import { getEncodedUrlSlugs } from 'utils/urlUtils';
-import { CURRENCY_SYMBOL_MAP, DESIGN } from 'const/index';
+import { CURRENCY_SYMBOL_MAP } from 'const/currency';
+import { DESIGN } from 'const/index';
 import type { TCategoryTourListParserV2, TProduct } from './interface';
 
 export default async function categoryTourListParserV2({

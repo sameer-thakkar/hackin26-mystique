@@ -18,13 +18,12 @@ import { getLangObject } from 'utils/helper';
 import { appAtom } from 'store/atoms/app';
 import { currencyAtom } from 'store/atoms/currency';
 import COLORS from 'const/colors';
+import { CURRENCY_CODES_ORDER, TOP_CURRENCIES } from 'const/currency';
 import { FONTS } from 'const/fonts';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
-  CURRENCY_CODES_ORDER,
   LOCALE_ORDER,
-  TOP_CURRENCIES,
 } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';

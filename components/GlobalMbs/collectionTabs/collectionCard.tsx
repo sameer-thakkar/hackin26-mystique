@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import DetailedCollectionCard from 'components/GlobalMbs/collectionTabs/detailedCollectionCard';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
 import { getLocalisedPrice } from 'utils/currency';
+import { currencyListAtom } from 'store/atoms/currencyList';
 import COLORS from 'const/colors';
 import { ASPECT_RATIO, FALLBACK_IMAGES, SIDEBAR_TYPES } from 'const/index';
 
@@ -101,12 +103,15 @@ interface CardProps {
 
 const Card = ({ card, clickHandler, isMobile, price, currency }: CardProps) => {
   const { lang } = useContext(MBContext);
+  const currencyList = useRecoilValue(currencyListAtom);
+
   const localisedPrice =
     price && currency
       ? getLocalisedPrice({
           price: Number(price),
           currencyCode: currency,
           lang,
+          currencyList,
         })
       : null;
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import COLORS from 'const/colors';
-import { CURRENCY_SYMBOL_MAP } from 'const/index';
+import { CURRENCY_SYMBOL_MAP } from 'const/currency';
 import { strings } from 'const/strings';
 
 const StyledPricing = styled.div`
@@ -38,7 +38,6 @@ const Pricing: React.FC<PricingProps> = ({
   floatRight = false,
   listingPrice,
 }) => {
-  // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
   const currencySymbol = CURRENCY_SYMBOL_MAP[listingPrice.currencyCode];
   return (
     <StyledPricing>

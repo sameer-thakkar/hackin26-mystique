@@ -1,4 +1,5 @@
-import { CURRENCY_CODES_ORDER, LOCALE_ORDER } from 'const/index';
+import { CURRENCY_CODES_ORDER } from 'const/currency';
+import { LOCALE_ORDER } from 'const/index';
 
 export const fromEntries = (iterable: any) =>
   [...iterable].reduce(

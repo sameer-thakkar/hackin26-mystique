@@ -25,12 +25,14 @@ const SpotifyPlayer = dynamic(() =>
 );
 const Notes = dynamic(() => import('components/shortcodes/Notes'));
 
+type ComponentType<TProps = {}> =
+  | React.ComponentClass<TProps>
+  | React.FunctionComponent<TProps>
+  | React.ComponentType<TProps>;
+
 interface ShortCodeDictionary {
   [key: string]: {
-    component?:
-      | React.ComponentClass
-      | React.FunctionComponent
-      | React.ComponentType;
+    component?: ComponentType<any>;
     function?: Function;
     type?: string;
   };
@@ -38,22 +40,18 @@ interface ShortCodeDictionary {
 
 const shortCodesDict: ShortCodeDictionary = {
   price: {
-    // @ts-expect-error TS(2322): Type 'ComponentType<IPriceProps>' is not assignabl... Remove this comment to see the full error message
     component: InlinePrice,
   },
   'next-available': {
-    // @ts-expect-error TS(2322): Type 'ComponentType<NextAvailableProps>' is not as... Remove this comment to see the full error message
     component: NextAvailable,
   },
   booster: {
-    // @ts-expect-error TS(2322): Type 'ComponentType<NextAvailableProps>' is not as... Remove this comment to see the full error message
     component: Booster,
   },
   'inv-price': {
     component: InlineInvPrice,
   },
   cta: {
-    // @ts-expect-error TS(2322): Type 'ComponentType<CTAProps>' is not assignable t... Remove this comment to see the full error message
     component: CTA,
   },
   'rating-cta': {
@@ -63,7 +61,6 @@ const shortCodesDict: ShortCodeDictionary = {
     component: PopupTrigger,
   },
   iframe: {
-    // @ts-expect-error TS(2322): Type 'ComponentType<IFrameProps>' is not assignabl... Remove this comment to see the full error message
     component: IFrame,
   },
   cross: {

@@ -4,7 +4,6 @@ import CashbackComponent from 'components/common/CashbackComponent';
 import Conditional from 'components/common/Conditional';
 import LocalisedPrice from 'UI/LPrice';
 import { MBContext } from 'contexts/MBContext';
-import { CurrencyDisplayType } from 'utils/currency';
 import { checkIfLTTMB } from 'utils/helper';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
@@ -135,7 +134,6 @@ export const PriceSkeleton = styled.div<{ showScratchPrice: boolean }>`
 `;
 
 type PriceBlockProps = {
-  currencyDisplay?: CurrencyDisplayType;
   lang: string;
   listingPrice: any;
   isSportsExperiment?: boolean;
@@ -156,7 +154,6 @@ const PriceBlock = ({
   showScratchPrice: showScratchPriceProp = false,
   prefix = false,
   showSavings,
-  currencyDisplay = 'symbol',
   save,
   showCashback = false,
   showCashbackBlock = false,
@@ -207,7 +204,6 @@ const PriceBlock = ({
           <Conditional if={showScratchPrice}>
             <LocalisedPrice
               currencyCode={currencyCode}
-              currencyDisplay={currencyDisplay}
               lang={lang}
               price={originalPrice}
               precision={precision}
@@ -218,7 +214,6 @@ const PriceBlock = ({
           <LocalisedPrice
             className="tour-price"
             currencyCode={currencyCode}
-            currencyDisplay={currencyDisplay}
             lang={lang}
             price={finalPrice}
             precision={precision}

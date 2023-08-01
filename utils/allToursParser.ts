@@ -1,7 +1,7 @@
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import { getEncodedUrlSlugs } from 'utils/urlUtils';
-import { CURRENCY_SYMBOL_MAP } from 'const/index';
+import { CURRENCY_SYMBOL_MAP } from 'const/currency';
 
 type ToursData = {
   cardPrices: Record<number, { listingPrice: { currencyCode: string } }>;
@@ -88,7 +88,6 @@ const allToursParser = (
     const currencySymbol =
       isFetched &&
       cardPrices &&
-      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       CURRENCY_SYMBOL_MAP[
         cardPrices[tourData.tgid]?.listingPrice?.currencyCode
       ];

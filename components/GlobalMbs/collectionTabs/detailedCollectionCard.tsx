@@ -2,12 +2,14 @@ import React, { forwardRef, Ref, useContext } from 'react';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
 import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import Conditional from 'components/common/Conditional';
 import Image from 'UI/Image';
 import { MBContext } from 'contexts/MBContext';
 import { getLocalisedPrice } from 'utils/currency';
 import { shortCodeSerializer } from 'utils/shortCodes';
 import { convertUidToUrl, getValidUrl } from 'utils/urlUtils';
+import { currencyListAtom } from 'store/atoms/currencyList';
 import COLORS from 'const/colors';
 import { ASPECT_RATIO, FALLBACK_IMAGE } from 'const/index';
 import { strings } from 'const/strings';
@@ -263,12 +265,15 @@ const DetailedCollectionCard = forwardRef<
       },
     } = data || {};
     const { isDev, host, lang } = useContext(MBContext);
+    const currencyList = useRecoilValue(currencyListAtom);
+
     const localisedPrice =
       price && currency
         ? getLocalisedPrice({
             price: Number(price),
             currencyCode: currency,
             lang,
+            currencyList,
           })
         : null;
 
