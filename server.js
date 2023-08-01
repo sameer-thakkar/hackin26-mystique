@@ -67,6 +67,6 @@ app.prepare().then(() => {
   const serverInstance = server.listen(port, (err) => {
     if (err) throw err;
   });
-  serverInstance.keepAliveTimeout = 61 * 1000;
-  serverInstance.headersTimeout = 62 * 1000;
+  serverInstance.keepAliveTimeout = 65 * 1000;
+  serverInstance.headersTimeout = 66 * 1000;
 });
