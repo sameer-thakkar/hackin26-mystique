@@ -5,8 +5,8 @@ const pt = {
   },
   AUTHORISED_AND_TRUSTED_PARTNER: 'Parceiro autorizado e de confiança',
   AUTHORISED_RESELLER: {
-    MAIN_TEXT: 'Authorized reseller',
-    SUB_TEXT: 'Authentic experiences from trusted and verified partners',
+    MAIN_TEXT: 'Revendedor autorizado',
+    SUB_TEXT: 'Experiências reais de parceiros confiáveis e verificados.',
   },
   AVAILABLE: 'Disponível',
   BANNER_CTA: 'Faça sua reserva',
@@ -124,19 +124,19 @@ const pt = {
   },
   FREE_CANCELLATION: 'Cancelamento gratuito',
   FREE_CANCELLATION_SUBTEXT:
-    'We understand plans change, cancel for free up to 72 hours before the event.',
+    'Se os planos mudarem, cancele gratuitamente até 72h antes do evento. ',
   FROM: 'a partir de',
   GET_CASHBACK: 'Garanta {0}% de cashback',
   GROUP_TICKETS: 'Ingressos para grupos',
   HAPPY_CUSTOMER: {
-    MAIN_TEXT: '18+ Million happy customers',
+    MAIN_TEXT: '18 Milhões de clientes felizes',
     SUB_TEXT:
-      'Customer satisfaction is our top priority. Join our happy customer base.',
+      'A satisfação do cliente é nossa maior prioridade. Faça parte do nosso grupo.',
   },
   HELP_CENTER: {
-    MAIN_TEXT: '24x7 help center',
+    MAIN_TEXT: 'Suporte 24h/7',
     SUB_TEXT:
-      'Have a question? Want to update your ticket? We’re available on phone, instant chat, and email.',
+      'Tem alguma dúvida? Estamos disponíveis por telefone, chat e e-mail.',
   },
   INCLUSIONS: 'Inclusões',
   LANGUAGE: 'Idioma',

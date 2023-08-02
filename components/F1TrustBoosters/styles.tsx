@@ -9,9 +9,13 @@ export const F1TrustBoosterContainer = styled.div`
 `;
 
 export const F1TrustBoosterWrapper = styled.div`
-  display: flex;
+  width: 100%;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(4, 1fr);
   align-items: flex-start;
   overflow-x: auto;
+  gap: 1.5rem;
 
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -21,6 +25,7 @@ export const F1TrustBoosterWrapper = styled.div`
   }
 
   @media (max-width: 768px) {
+    display: flex;
     margin-right: 1.5rem;
   }
 `;
@@ -30,8 +35,7 @@ export const TrustBoosterBox = styled.div<{
   isLastBox: boolean;
 }>`
   display: flex;
-  align-items: center;
-  margin-right: 1.5rem;
+  align-items: flex-start;
 
   @media (max-width: 768px) {
     ${({ isFirstBox }) =>
@@ -42,9 +46,9 @@ export const TrustBoosterBox = styled.div<{
     ${({ isLastBox }) =>
       isLastBox &&
       `
-      margin-right: 0;
+      margin-right: 1.5rem;
   `}
-    flex: 0 0 15.5rem;
+    flex: 0 0 16.625rem;
   }
 `;
 

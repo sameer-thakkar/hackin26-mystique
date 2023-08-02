@@ -5,8 +5,8 @@ const fr = {
   },
   AUTHORISED_AND_TRUSTED_PARTNER: 'Partenaire autorisé et de confiance',
   AUTHORISED_RESELLER: {
-    MAIN_TEXT: 'Authorized reseller',
-    SUB_TEXT: 'Authentic experiences from trusted and verified partners',
+    MAIN_TEXT: 'Revendeur agréé',
+    SUB_TEXT: 'Expériences authentiques de partenaires fiables et vérifiés.',
   },
   AVAILABLE: 'Disponible',
   BANNER_CTA: 'Voir nos offres',
@@ -122,20 +122,19 @@ const fr = {
     ALL_OVER_THE: ' à travers le ',
   },
   FREE_CANCELLATION: 'Annulation gratuite',
-  FREE_CANCELLATION_SUBTEXT:
-    'We understand plans change, cancel for free up to 72 hours before the event.',
+  FREE_CANCELLATION_SUBTEXT: `Nous savons que les plans changent. Annulez jusqu'à 72 h à l'avance.`,
   FROM: 'à partir de',
   GET_CASHBACK: 'Recevez un cashback de {0} %',
   GROUP_TICKETS: 'Billets de groupe',
   HAPPY_CUSTOMER: {
-    MAIN_TEXT: '18+ Million happy customers',
+    MAIN_TEXT: '+ de 18 millions de client·e·s',
     SUB_TEXT:
-      'Customer satisfaction is our top priority. Join our happy customer base.',
+      'La satisfaction de nos client·e·s est notre priorité. Rejoignez le club !',
   },
   HELP_CENTER: {
-    MAIN_TEXT: '24x7 help center',
+    MAIN_TEXT: "Centre d'assistance 24h/7j",
     SUB_TEXT:
-      'Have a question? Want to update your ticket? We’re available on phone, instant chat, and email.',
+      'Une question ? Nous sommes disponibles par téléphone, chat et e-mail.',
   },
   INCLUSIONS: 'Inclus',
   LANGUAGE: 'Langue',

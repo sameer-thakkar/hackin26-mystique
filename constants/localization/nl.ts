@@ -5,8 +5,9 @@ const nl = {
   },
   AUTHORISED_AND_TRUSTED_PARTNER: 'Geautoriseerde & betrouwbare partner',
   AUTHORISED_RESELLER: {
-    MAIN_TEXT: 'Authorized reseller',
-    SUB_TEXT: 'Authentic experiences from trusted and verified partners',
+    MAIN_TEXT: 'Geautoriseerde verkooppartner',
+    SUB_TEXT:
+      'Authentieke ervaringen geleverd door geverifieerde en betrouwbare partners.',
   },
   AVAILABLE: 'Beschikbaar',
   BANNER_CTA: 'Koop kaartjes',
@@ -122,20 +123,17 @@ const nl = {
     ALL_OVER_THE: ' gemaakt over de hele ',
   },
   FREE_CANCELLATION: 'Gratis annuleren',
-  FREE_CANCELLATION_SUBTEXT:
-    'We understand plans change, cancel for free up to 72 hours before the event.',
+  FREE_CANCELLATION_SUBTEXT: 'Je kunt tot 72 uur van tevoren annuleren.',
   FROM: 'Vanaf',
   GET_CASHBACK: 'Ontvang {0}% cashback',
   GROUP_TICKETS: 'Groepskaartjes',
   HAPPY_CUSTOMER: {
-    MAIN_TEXT: '18+ Million happy customers',
-    SUB_TEXT:
-      'Customer satisfaction is our top priority. Join our happy customer base.',
+    MAIN_TEXT: '18+ Miljoen tevreden klanten',
+    SUB_TEXT: 'Je tevredenheid is onze prioriteit. Sluit je bij ons aan.',
   },
   HELP_CENTER: {
-    MAIN_TEXT: '24x7 help center',
-    SUB_TEXT:
-      'Have a question? Want to update your ticket? We’re available on phone, instant chat, and email.',
+    MAIN_TEXT: '24/7 ondersteuning',
+    SUB_TEXT: 'We staan 24 uur per dag voor je klaar.',
   },
   INCLUSIONS: 'Inclusief',
   LANGUAGE: 'Taal',

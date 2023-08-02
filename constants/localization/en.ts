@@ -6,7 +6,7 @@ const en = {
   AUTHORISED_AND_TRUSTED_PARTNER: 'Authorised & Trusted Partner',
   AUTHORISED_RESELLER: {
     MAIN_TEXT: 'Authorized reseller',
-    SUB_TEXT: 'Authentic experiences from trusted and verified partners',
+    SUB_TEXT: 'Authentic experiences from trusted and verified partners.',
   },
   GRAB_YOUR_TICKETS_NOW: 'Grab your tickets now',
   YOUR_PICKS: 'Your pick',
@@ -137,7 +137,7 @@ const en = {
   HELP_CENTER: {
     MAIN_TEXT: '24x7 help center',
     SUB_TEXT:
-      'Have a question? Want to update your ticket? We’re available on phone, instant chat, and email.',
+      'Questions or concerns? We’re here to help 24/7 — on phone, chat, and email.',
   },
   INCLUSIONS: 'Inclusions',
   LANGUAGE: 'Language',

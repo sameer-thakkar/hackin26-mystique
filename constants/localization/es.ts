@@ -5,8 +5,9 @@ const es = {
   },
   AUTHORISED_AND_TRUSTED_PARTNER: 'Colaborador autorizado y de confianza',
   AUTHORISED_RESELLER: {
-    MAIN_TEXT: 'Authorized reseller',
-    SUB_TEXT: 'Authentic experiences from trusted and verified partners',
+    MAIN_TEXT: 'Distribuidor autorizado',
+    SUB_TEXT:
+      'Experiencias auténticas proporcionadas por socios autorizados y de confianza.',
   },
   AVAILABLE: 'Disponible',
   BANNER_CTA: 'Comprar entradas',
@@ -125,19 +126,18 @@ const es = {
   },
   FREE_CANCELLATION: 'Cancelación gratuita',
   FREE_CANCELLATION_SUBTEXT:
-    'We understand plans change, cancel for free up to 72 hours before the event.',
+    'Si cambias de planes, puedes cancelar hasta con 72 horas de antelación.',
   FROM: 'a partir de',
   GET_CASHBACK: 'Consigue {0} % en cashback',
   GROUP_TICKETS: 'Visita en grupo',
   HAPPY_CUSTOMER: {
-    MAIN_TEXT: '18+ Million happy customers',
-    SUB_TEXT:
-      'Customer satisfaction is our top priority. Join our happy customer base.',
+    MAIN_TEXT: '+18 millones de clientes',
+    SUB_TEXT: 'Tu satisfacción es nuestra prioridad. Únete a nosotros.',
   },
   HELP_CENTER: {
-    MAIN_TEXT: '24x7 help center',
+    MAIN_TEXT: 'Atención al cliente 24/7',
     SUB_TEXT:
-      'Have a question? Want to update your ticket? We’re available on phone, instant chat, and email.',
+      '¿Tienes alguna pregunta? Contáctanos por teléfono, chat o correo electrónico.',
   },
   INCLUSIONS: 'Incluye',
   LANGUAGE: 'Idioma',
