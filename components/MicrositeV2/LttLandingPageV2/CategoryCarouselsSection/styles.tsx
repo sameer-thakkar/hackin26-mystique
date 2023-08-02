@@ -18,7 +18,7 @@ export const CategoriesSectionWrapper = styled.div`
 
 export const CategoryCarousel = styled.div`
   padding: 0;
-  margin-bottom: 7rem;
+  margin-bottom: 5rem;
   overflow: hidden;
 
   @media (max-width: 768px) {
