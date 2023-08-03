@@ -176,6 +176,8 @@ const pt = {
   RATINGS: '{0} Avaliações',
   READ_MORE: 'Saiba mais',
   READ_MORE_TEXT: 'Ver mais',
+  READ_LESS: 'Ver menos',
+  VIEW_DETAILS: 'Ver detalhes',
   REOPENING: 'Reestreia',
   REOPENING_DATE: 'Data de reestreia',
   REOPENING_ON: 'Reabre em',

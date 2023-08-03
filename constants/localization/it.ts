@@ -175,6 +175,8 @@ const it = {
   RATINGS: '{0} Giudizi',
   READ_MORE: 'Leggi tutto',
   READ_MORE_TEXT: 'Leggi tutto',
+  READ_LESS: 'Leggi meno',
+  VIEW_DETAILS: 'Visualizza dettagli',
   REOPENING: 'Riapertura',
   REOPENING_DATE: 'Data di riapertura',
   REOPENING_ON: 'Riapertura',

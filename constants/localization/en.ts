@@ -174,6 +174,8 @@ const en = {
   RATINGS: '{0} Ratings',
   READ_MORE: 'Read more',
   READ_MORE_TEXT: 'Read more',
+  READ_LESS: 'Read less',
+  VIEW_DETAILS: 'View Details',
   REOPENING: 'Reopening',
   REOPENING_DATE: 'Reopening Date',
   REOPENING_ON: 'Reopening on',

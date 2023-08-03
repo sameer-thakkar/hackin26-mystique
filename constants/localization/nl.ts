@@ -172,6 +172,8 @@ const nl = {
   RATINGS: '{0} Waarderingen',
   READ_MORE: 'Meer Info',
   READ_MORE_TEXT: 'Meer Info',
+  READ_LESS: 'Toon minder',
+  VIEW_DETAILS: 'Toon details',
   REOPENING: 'Heropening',
   REOPENING_DATE: 'Heropeningsdatum',
   REOPENING_ON: 'Terugkeer op',

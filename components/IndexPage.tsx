@@ -68,6 +68,8 @@ const Page = (props: PageProps) => {
     collectionVideos,
     // Not sure where this is used. Don't see this being passed in `prismicUtils` either
     categoryTourListData: legacyCategoryTourListData,
+    docsForListicles,
+    collectionsInListicles,
   } = props;
   const { tourGroupMap, ...rawCategoryTgidMap } =
     simplifiedCategoryTourListData ?? {};
@@ -221,6 +223,8 @@ const Page = (props: PageProps) => {
             scorpioData={tourGroupData}
             isDev={isDev}
             host={host}
+            prismicDocsForListicle={docsForListicles}
+            collectionsInListicles={collectionsInListicles}
             categoryTourListData={categoryTourListData}
             activeCurrency={activeCurrency}
             serverRequestStartTimestamp={serverRequestStartTimestamp}

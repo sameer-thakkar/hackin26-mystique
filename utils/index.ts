@@ -357,6 +357,13 @@ export const getHeadoutLanguagecode = (prismicLangCode: string) => {
   );
 };
 
+export const getHeadoutLanguagelocale = (prismicLangCode: string) => {
+  return (
+    (LANGUAGE_MAP as Record<any, any>)[prismicLangCode]?.locale ||
+    LANGUAGE_MAP.en.code
+  );
+};
+
 export const getAlternateLanguages = (
   alternateLangsArray: Record<string, any>[],
   isDev: boolean,
@@ -783,3 +790,7 @@ export const getTagPageMap = () => ({
   [strings.TAG_NAME.TRUE_STORY]:
     'https://www.london-theater-tickets.com/shows-in-london/based-on-a-true-story/',
 });
+
+export const isEmptyObject = (obj: Record<any, any>) => {
+  return Object.keys(obj).length === 0;
+};

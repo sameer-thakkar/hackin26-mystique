@@ -54,6 +54,10 @@ const BlogFeed = dynamic(() => import('./slices/BlogFeed'));
 const AccordionGroup = dynamic(() => import('./slices/AccordionGroup'));
 const ListicleSection = dynamic(() => import('./slices/ListicleSection'));
 const Listicle = dynamic(() => import('./slices/Listicle'));
+const ListicleV2 = dynamic(() => import('./slices/ListicleV2/index'));
+const ListicleSectionV2 = dynamic(() =>
+  import('./slices/ListicleSectionV2/index')
+);
 const Reviews = dynamic(() => import('./slices/Reviews'));
 const ExperienceCarousel = dynamic(() =>
   import('./GlobalMbs/Carousels/ExperienceCarousel')
@@ -485,7 +489,8 @@ const sliceHandler = (slice: any, props: any = {}) => {
       }
     case 'unspace':
       return <div className="unspace-slice" />;
-    case 'listicle_section':
+
+    case SLICE_TYPES.LISTICLE_SECTION: {
       const {
         primary: { section_title, listicle_type },
         slices,
@@ -493,13 +498,45 @@ const sliceHandler = (slice: any, props: any = {}) => {
       return (
         <ListicleSection
           title={section_title}
-          type={listicle_type.toLowerCase()}
+          type={listicle_type?.toLowerCase()}
           slices={slices}
         />
       );
-    case 'listicle':
+    }
+
+    case SLICE_TYPES.LISTICLE: {
       const { type, index } = props;
       return <Listicle key={index} type={type} index={index} data={slice} />;
+    }
+
+    case SLICE_TYPES.LISTICLE_SECTION_V2_START: {
+      const {
+        primary: { listicle_title, listicle_type, settings_type },
+        slices,
+      } = slice;
+      const { prismicDocsForListicle, collectionsInListicles } = props;
+      return (
+        <ListicleSectionV2
+          settings={settings_type}
+          title={listicle_title}
+          type={listicle_type?.toLowerCase()}
+          slices={slices}
+          prismicDocsForListicle={prismicDocsForListicle}
+          collectionsInListicles={collectionsInListicles}
+        />
+      );
+    }
+
+    case SLICE_TYPES.LISTICLE_V2:
+      const { type, title } = props;
+      return (
+        <ListicleV2
+          type={type}
+          items={slice?.items}
+          listicleSectionTitle={title}
+        />
+      );
+
     case 'reviews':
       return (
         <Reviews

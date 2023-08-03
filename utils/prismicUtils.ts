@@ -63,6 +63,7 @@ import {
   THEMES,
 } from 'const/index';
 import { LOG_LEVELS } from 'const/logs';
+import { getDocsForListicleSlice } from './contentPageUtils';
 
 // @ts-expect-error TS(7023): 'fetchAllMatchingDocs' implicitly has return type ... Remove this comment to see the full error message
 export const fetchAllMatchingDocs = async ({
@@ -1394,6 +1395,18 @@ export const getPageData = async ({
         data: CMSData,
       } = data || {};
       const { data: contentFrameworkData } = contentFramework || {};
+      const { body: slices } = contentFrameworkData || {};
+
+      const [
+        collectionsInListicles,
+        docsForListicles,
+      ] = await getDocsForListicleSlice({
+        slices,
+        hostname,
+        lang: lang as string,
+        cookies,
+      });
+
       const { design, theme, body1 } = CMSData || {};
       const MBDesign = design || '';
       const mbTheme = theme || THEMES.DEFAULT;
@@ -1401,8 +1414,9 @@ export const getPageData = async ({
 
       const categoryTourListV1 = getSinglePrismicSlice({
         sliceName: 'ticket_card_shoulder_page',
-        slices: contentFrameworkData?.body,
+        slices,
       });
+
       let categoryTourListData;
       const hasCategoryTourListV1 = Object.keys(categoryTourListV1)?.length;
 
@@ -1437,6 +1451,8 @@ export const getPageData = async ({
 
       scorpioAllTourGroupData = {
         CMSContent,
+        collectionsInListicles,
+        docsForListicles,
         toursList,
         categoryTourListData,
         ContentType,
@@ -1673,11 +1689,17 @@ export const getPageData = async ({
         },
         []
       );
-      microsite.data.labels = await Client(req)
-        .getByIDs(labelIds)
-        .then((res: any) => {
-          return res.results;
-        });
+      try {
+        microsite.data.labels = await Client(req)
+          .getByIDs(labelIds)
+          .then((res: any) => {
+            return res.results;
+          });
+      } catch (e) {
+        microsite.data.labels = [];
+        Sentry.captureException(e);
+        sendLog({ err: e });
+      }
     }
 
     const mbType =

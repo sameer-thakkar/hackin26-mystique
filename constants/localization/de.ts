@@ -172,6 +172,8 @@ const de = {
   RATINGS: '{0} Bewertungen',
   READ_MORE: 'Weiterlesen',
   READ_MORE_TEXT: 'Mehr anzeigen',
+  READ_LESS: 'Weniger anzeigen',
+  VIEW_DETAILS: 'Details anzeigen',
   REOPENING: 'Wiedereröffnung',
   REOPENING_DATE: 'Wiedereröffnungsdatum',
   REOPENING_ON: 'Neueröffnung am',

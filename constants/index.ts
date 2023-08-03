@@ -352,6 +352,8 @@ export const ANALYTICS_EVENTS = {
   TOC_OPENED: 'Table Of Contents Opened',
   TOC_OPTION_SELECTED: 'Table of Contents Option Selected',
   TOOLTIP_VIEWED: 'Tooltip Viewed',
+  LISTICLE_READ_MORE_CLICKED: 'Listicle Read More Clicked',
+  LISTICLE_CTA_CLICKED: 'Listicle CTA Clicked',
   IMAGE_GALLERY: {
     IMAGE_GALLERY_OPENED: 'Image Gallery Opened',
     IMAGE_VIEWED: 'Image Viewed',
@@ -753,6 +755,7 @@ export const ANALYTICS_PROPERTIES = {
   THEATRE_NAME: 'Theatre Name',
   THEATRE_ADDRESS: 'Theatre Address',
   TOOLTIP_TYPE: 'Tooltip Type',
+  CARD_SIZE: 'Card Size',
   CTA_TYPE: 'CTA Type',
   DATE_RANGE_SELECTED: 'Date Range Selected',
   EXPERIENCES_AVAILABLE: 'Experiences Available',
@@ -880,6 +883,10 @@ export const LIVE_CHAT = {
 };
 
 export const SLICE_TYPES = {
+  LISTICLE_SECTION: 'listicle_section',
+  LISTICLE: 'listicle',
+  LISTICLE_V2: 'listicle_v2',
+  LISTICLE_SECTION_V2_START: 'listicle_section_v2',
   SHOULDER_PAGE_TICKET_CARD: 'ticket_card_shoulder_page',
   BREADCRUMBS: 'breadcrumbs',
   TOUR_LIST_CATEGORY_V1: 'tour_list_category_v1',
@@ -961,6 +968,13 @@ export const SEO_SUBDOMAINS = [
   'https://sagradafamilia.barcelona-tickets.com/',
 ];
 
+export const SEO_SUBDOMAINS_UID = [
+  'harry-potter.london-studio-tours.com',
+  'catacombs.tickets-paris.fr',
+  'uffizi.tickets-florence.it',
+  'sagradafamilia.barcelona-tickets.com',
+];
+
 export const DOCUMENT_READY_STATES = {
   LOADING: 'loading',
   INTERACTIVE: 'interactive',
@@ -992,6 +1006,8 @@ export const MB_TYPES = {
   B1_GLOBAL: 'B1 - Global MB',
   B1_GLOBAL_HOMEPAGE: 'B1 - Global Home Page',
   C1_COLLECTION: 'C1 - Collection MB',
+  A2_SUB_CATEGORY: 'A2 - Sub Category MB',
+  A2_CATEGORY: 'A2 - Category MB',
 };
 
 export const MB_CATEGORISATION = {
@@ -1077,6 +1093,18 @@ export const F1_SPORTS_EXPERIMENT_TGIDS = [
   '21074',
   '20949',
 ];
+
+export const EXPERIENCES = {
+  COLLECTION: 'Collection',
+  CATEGORY: 'Category',
+  SUBCATEGORY: 'SubCategory',
+};
+
+export const LISTICLE_TYPE = {
+  SMALL: 'small',
+  LARGE: 'large',
+  MEDIUM: 'medium',
+};
 
 export const PRISMIC_FIELD_ID = {
   TAGGED_COLLECTION: 'tagged_collection',

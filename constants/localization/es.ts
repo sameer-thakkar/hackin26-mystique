@@ -176,6 +176,8 @@ const es = {
   RATINGS: '{0} Calificaciones',
   READ_MORE: 'Leer más',
   READ_MORE_TEXT: 'Leer más',
+  READ_LESS: 'Ver menos',
+  VIEW_DETAILS: 'Ver detalles',
   REOPENING: 'Reapertura',
   REOPENING_DATE: 'Fecha de reapertura',
   REOPENING_ON: 'Reabre el',

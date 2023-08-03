@@ -174,6 +174,8 @@ const fr = {
   RATINGS: '{0} Notes',
   READ_MORE: 'En savoir plus',
   READ_MORE_TEXT: 'En savoir plus',
+  READ_LESS: 'Voir moins',
+  VIEW_DETAILS: 'Voir les détails',
   REOPENING: 'Réouverture',
   REOPENING_DATE: 'Date de réouverture',
   REOPENING_ON: 'Réouverture le',
