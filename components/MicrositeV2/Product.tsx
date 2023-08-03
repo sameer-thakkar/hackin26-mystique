@@ -313,6 +313,7 @@ const ProductImage = styled.div<{
   singleCard?: boolean;
   categoryFontNameStyles?: string;
   productCardHeight?: number;
+  $isV3Design: boolean;
 }>`
   display: block;
   position: relative;
@@ -352,9 +353,12 @@ const ProductImage = styled.div<{
 
   @media (max-width: 768px) {
     img {
-      height: ${({ singleCard, productCardHeight }) => {
-        return singleCard ? `${productCardHeight}px` : '102px';
-      }};
+      height: ${({ $isV3Design, productCardHeight, singleCard }) =>
+        singleCard
+          ? `${productCardHeight}px`
+          : $isV3Design
+          ? '204px'
+          : '102px'};
       border-radius: 4px;
     }
   }
@@ -595,6 +599,7 @@ const Product = (props: any) => {
       productCardHeight={productCardHeight}
     >
       <ProductImage
+        $isV3Design={isV3Design}
         singleCard={!!singleCard}
         productCardHeight={productCardHeight}
       >
@@ -718,6 +723,7 @@ const Product = (props: any) => {
             productCardHeight={productCardHeight}
           >
             <ProductImage
+              $isV3Design={isV3Design}
               singleCard={!!singleCard}
               productCardHeight={productCardHeight}
             >

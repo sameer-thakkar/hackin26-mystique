@@ -184,6 +184,11 @@ const ComboPopup = ({
     fetcher: swrFetcher,
   });
   const { variants } = tourGroupData ?? {};
+
+  const availableVariants =
+    variants?.filter((variant: Record<string, any>) => variant.listingPrice) ??
+    [];
+
   useEffect(() => {
     trackEvent({
       eventName: ANALYTICS_EVENTS.COMBO_VARIANT.POPUP_VIEWED,
@@ -193,7 +198,7 @@ const ComboPopup = ({
     });
   }, []);
 
-  const variantMarkup = variants?.map((variant: any) => {
+  const variantMarkup = availableVariants?.map((variant: any) => {
     const {
       id: variantId,
       name: variantName,
