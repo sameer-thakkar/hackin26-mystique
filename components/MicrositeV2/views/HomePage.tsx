@@ -285,7 +285,8 @@ export const HomePage = (props: any) => {
       ) {
         const variant = getABTestingVariant(
           EXPERIMENT_NAMES.LTT_LP_REVAMP_EXPERIMENT,
-          hsid
+          hsid,
+          true
         );
         setShowLttTreatment(variant === VARIANTS.TREATMENT);
       }
