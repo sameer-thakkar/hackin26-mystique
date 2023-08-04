@@ -1,6 +1,102 @@
 import React from 'react';
 import COLORS from 'const/colors';
 
+export const PRACTICAL_INFO_CALENDAR = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none">
+    <path
+      stroke="#444"
+      d="M12.667 2.667H3.333C2.597 2.667 2 3.263 2 4v9.333c0 .737.597 1.333 1.333 1.333h9.334c.736 0 1.333-.596 1.333-1.333V4c0-.737-.597-1.333-1.333-1.333ZM10.667 1.333V4M5.333 1.333V4M2 6.667h12"
+    />
+  </svg>
+);
+
+export const LISTICLE_CHEVRON_UP = () => (
+  <svg
+    width="13"
+    height="14"
+    viewBox="0 0 13 14"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M11.9168 9.7085L6.50016 4.29183L1.0835 9.7085"
+      stroke="#666666"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+export const ARROW_DOWN = () => (
+  <svg
+    width="14"
+    height="14"
+    viewBox="0 0 14 14"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g clipPath="url(#clip0_7864_53283)">
+      <path
+        d="M1.58317 4.29175L6.99984 9.70841L12.4165 4.29175"
+        stroke="#FF007A"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </g>
+    <defs>
+      <clipPath id="clip0_7864_53283">
+        <rect
+          width="13"
+          height="13"
+          fill="white"
+          transform="translate(0.5 0.5)"
+        />
+      </clipPath>
+    </defs>
+  </svg>
+);
+
+export const SEASON = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none">
+    <g stroke="#444">
+      <path d="M10 14.167a4.167 4.167 0 1 0 0-8.334 4.167 4.167 0 0 0 0 8.334ZM10 .833V2.5M10 17.5v1.667M3.517 3.517 4.7 4.7M15.3 15.3l1.183 1.183M.833 10H2.5M17.5 10h1.667M3.517 16.483 4.7 15.3M15.3 4.7l1.183-1.183" />
+    </g>
+  </svg>
+);
+
+export const DOT = () => (
+  <svg
+    width="2"
+    height="2"
+    viewBox="0 0 2 2"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle cx="1" cy="1" r="1" fill="#444444" />
+  </svg>
+);
+
+export const DISTANCE = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none">
+    <path
+      stroke="#444"
+      d="M2.5 10h15M15 7.5l2.5 2.5-2.5 2.5M5 12.5 2.5 10 5 7.5"
+    />
+  </svg>
+);
+
+export const TIMING = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none">
+    <path
+      stroke="#444"
+      d="M10 18.333a8.333 8.333 0 1 0 0-16.666 8.333 8.333 0 0 0 0 16.666Z"
+    />
+    <path stroke="#444" d="M9.375 5v5l5 2.5" />
+  </svg>
+);
+
 export const COIN = () => (
   <svg
     width="16"

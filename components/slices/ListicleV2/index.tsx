@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useRecoilValue } from 'recoil';
 import { IListicleTypeProps } from 'components/slices/ListicleV2/interfaces';
+import MediumListicle from 'components/slices/ListicleV2/MediumListicle/index';
 import SmallListicle from 'components/slices/ListicleV2/SmallListicle/index';
 import { MBContext } from 'contexts/MBContext';
 import { getLocalisedPrice } from 'utils/currency';
@@ -8,18 +9,42 @@ import { getLangObject } from 'utils/helper';
 import { getExperienceType } from 'utils/listicle';
 import { currencyAtom } from 'store/atoms/currency';
 import { currencyListAtom } from 'store/atoms/currencyList';
-import { EXPERIENCES, LISTICLE_TYPE } from 'const/index';
+import { EXPERIENCES, LISTICLE_TYPE, SETTINGS_TYPE } from 'const/index';
 import { strings } from 'const/strings';
 
 const ListicleV2 = ({
   type = LISTICLE_TYPE.SMALL,
   items,
+  settings = SETTINGS_TYPE.SETTINGS_ONE,
   listicleSectionTitle,
 }: IListicleTypeProps) => {
   const { lang } = useContext(MBContext);
   const currencyList = useRecoilValue(currencyListAtom);
   const currentLanguage = getLangObject(lang).code;
   const currency = useRecoilValue(currencyAtom);
+
+  const getPracticalInfo = (data: Record<any, any>): PracticalInfo => {
+    if (type !== LISTICLE_TYPE.MEDIUM) return {} as PracticalInfo;
+    const {
+      practical_info_location: location,
+      practical_info_opening_hours: openingHours,
+      practical_info_distance: distance,
+      practical_info_duration: duration,
+      practical_info_season: season,
+      practical_info_calendar: calendar,
+      practical_info_find_it_on_map_link,
+    } = data;
+    const { url: findItOnMap } = practical_info_find_it_on_map_link;
+    return {
+      location,
+      findItOnMap,
+      openingHours,
+      distance,
+      duration,
+      season,
+      calendar,
+    };
+  };
 
   const getCTAText = (ctaText: string) => {
     if (ctaText === strings.VIEW_DETAILS || !ctaText)
@@ -74,12 +99,21 @@ const ListicleV2 = ({
           richTextData: rich_text,
           experienceName:
             experienceType === EXPERIENCES.SUBCATEGORY ? subcategory : category,
+          practicalInfo: getPracticalInfo(data),
         };
       }
     );
   };
 
   switch (type) {
+    case LISTICLE_TYPE.MEDIUM:
+      return (
+        <MediumListicle
+          items={getListicleData(items) || []}
+          settings={settings}
+          listicleSectionTitle={listicleSectionTitle}
+        />
+      );
     case LISTICLE_TYPE.SMALL:
       return (
         <SmallListicle
@@ -91,6 +125,6 @@ const ListicleV2 = ({
       break;
   }
 
-  return <></>;
+  return null;
 };
 export default ListicleV2;

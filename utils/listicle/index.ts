@@ -94,6 +94,28 @@ export const trackCTAClickEvent = ({
   trackEvent(data);
 };
 
+export const trackMapClickEvent = ({
+  cardSize,
+  experienceType,
+  experienceId,
+  listicleSectionTitle,
+  heading,
+  experienceName,
+  index,
+}: IDataEventProps) => {
+  const data = getTrackingData(
+    cardSize,
+    ANALYTICS_EVENTS.MAP_LINK_CLICKED,
+    experienceType,
+    experienceId,
+    listicleSectionTitle,
+    heading,
+    experienceName,
+    index
+  );
+  trackEvent(data);
+};
+
 export const getExperienceType = (experience: Record<any, any>) => {
   if (experience?.collection_id) return EXPERIENCES.COLLECTION;
   else if (experience?.subcategory) return EXPERIENCES.SUBCATEGORY;

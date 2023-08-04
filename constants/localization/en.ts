@@ -478,6 +478,7 @@ const en = {
   VIEW_MORE: 'View More',
   WHY_TAKE_THIS_DAY_TRIP: 'Why Take this Day Trip?',
   WHY_WATCH: 'Why Watch',
+  FIND_ON_MAP: 'Find On Map',
   LTT_LANDING_PAGE: {
     TOP_WEST_END_SHOWS: 'Top West End shows',
     LOVED_BY_MILLIONS: 'Loved by Millions',

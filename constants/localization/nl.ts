@@ -499,6 +499,7 @@ const nl = {
     FESTIVALS_EVENTS: 'Festivals en events',
   },
   WHY_WATCH: 'Why kijken',
+  FIND_ON_MAP: 'Kaart',
   LTT_LANDING_PAGE: {
     TOP_WEST_END_SHOWS: 'Top West End shows',
     LOVED_BY_MILLIONS: 'Loved by Millions',

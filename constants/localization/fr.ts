@@ -499,6 +499,7 @@ const fr = {
     FESTIVALS_EVENTS: 'Festivals et événements',
   },
   WHY_WATCH: 'Pourquoi faut-il le voir',
+  FIND_ON_MAP: 'Trouver sur la carte',
   LTT_LANDING_PAGE: {
     TOP_WEST_END_SHOWS: 'Top West End shows',
     LOVED_BY_MILLIONS: 'Loved by Millions',

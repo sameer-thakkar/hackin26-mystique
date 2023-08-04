@@ -501,6 +501,7 @@ const pt = {
     FESTIVALS_EVENTS: 'Festivais e eventos',
   },
   WHY_WATCH: 'Por que assistir',
+  FIND_ON_MAP: 'Ver no mapa',
   LTT_LANDING_PAGE: {
     TOP_WEST_END_SHOWS: 'Top West End shows',
     LOVED_BY_MILLIONS: 'Loved by Millions',

@@ -354,6 +354,7 @@ export const ANALYTICS_EVENTS = {
   TOOLTIP_VIEWED: 'Tooltip Viewed',
   LISTICLE_READ_MORE_CLICKED: 'Listicle Read More Clicked',
   LISTICLE_CTA_CLICKED: 'Listicle CTA Clicked',
+  MAP_LINK_CLICKED: 'Map Link Clicked',
   IMAGE_GALLERY: {
     IMAGE_GALLERY_OPENED: 'Image Gallery Opened',
     IMAGE_VIEWED: 'Image Viewed',
@@ -1104,6 +1105,12 @@ export const LISTICLE_TYPE = {
   SMALL: 'small',
   LARGE: 'large',
   MEDIUM: 'medium',
+};
+
+export const SETTINGS_TYPE = {
+  SETTINGS_ONE: 'SettingsOne',
+  SETTINGS_TWO: 'SettingsTwo',
+  SETTINGS_THREE: 'SettingsThree',
 };
 
 export const PRISMIC_FIELD_ID = {

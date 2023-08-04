@@ -1,12 +1,11 @@
 type PracticalInfo = {
   location: string;
   findItOnMap: string;
-  timings: any;
+  openingHours: Array<any>;
   distance: string;
-  time: string;
+  duration: string;
   season: string;
-  title: string;
-  content: string;
+  calendar: string;
 };
 
 type Experience = {
@@ -17,9 +16,9 @@ type Experience = {
   ctaText: string;
   ctaUrl: string;
   categoryTags: Array<string>;
-  richTextData: any;
+  richTextData: Array<any>;
   experienceId?: string;
   practicalInfo?: PracticalInfo;
   experienceName?: string;
-  slices?: any;
+  slices?: Record<any, any>;
 };

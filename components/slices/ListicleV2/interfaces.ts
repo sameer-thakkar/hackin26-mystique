@@ -1,15 +1,16 @@
 export interface IListicleTypeProps {
-  items: any[];
+  items: Experience[];
   listicleSectionTitle: string;
   type?: string;
+  settings?: string;
 }
 
 export interface IDataEventProps {
   cardSize: string;
   experienceType: string;
-  experienceId: string;
+  index: number;
   listicleSectionTitle: string;
   heading: string;
   experienceName: string;
-  index: number;
+  experienceId: string;
 }

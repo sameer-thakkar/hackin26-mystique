@@ -406,6 +406,8 @@ class ContentPage extends Component<any, any> {
       domainConfig,
       primaryCity,
       categoryHeaderMenu,
+      prismicDocsForListicle,
+      collectionsInListicles,
     } = this.props;
 
     const {
@@ -679,6 +681,8 @@ class ContentPage extends Component<any, any> {
                     >
                       {sliceHandler(slice, {
                         isMobile: this.state.isMobile,
+                        prismicDocsForListicle,
+                        collectionsInListicles,
                         ...this.props,
                       })}
                     </div>
