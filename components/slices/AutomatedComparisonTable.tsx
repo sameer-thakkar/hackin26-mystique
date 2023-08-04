@@ -90,7 +90,7 @@ const ComparisonTableWrapper = styled.div`
     margin-bottom: -32px; /* This allows the Sticky Header to end early. without crossing over the CTA button. */
     position: sticky;
     bottom: 0;
-    z-index: 15;
+    z-index: 3;
   }
   .tour-booster {
     align-self: end;
