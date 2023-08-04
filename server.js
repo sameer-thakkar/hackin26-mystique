@@ -68,5 +68,5 @@ app.prepare().then(() => {
     if (err) throw err;
   });
   serverInstance.keepAliveTimeout = 65 * 1000;
-  serverInstance.headersTimeout = 66 * 1000;
+  serverInstance.headersTimeout = 70 * 1000;
 });
