@@ -86,6 +86,10 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
     } = pageProps;
 
     const { title } = CMSContent?.data ?? {};
+
+    let { tagged_collection: primaryCollectionId } =
+      CMSContent?.data?.data || {};
+
     const metaTitle = renderShortCodes(title)?.join?.('');
     let pageTitle = '';
     if (customType === CUSTOM_TYPES.MICROSITE) {
@@ -109,8 +113,7 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
 
     const mbName = renderShortCodes(baseLangPageTitle)?.join?.('');
 
-    let primaryCollectionName = null,
-      primaryCollectionId = null;
+    let primaryCollectionName = null;
 
     let scorpioData = isCategoryV2
       ? simplifiedCategoryTourListData?.tourGroupMap ?? {}
@@ -120,19 +123,16 @@ const App = ({ Component, pageProps }: AppProps<PageProps>) => {
     try {
       if (customType === CUSTOM_TYPES.CONTENT_PAGE) {
         const collectionDetails = categoryTourListData?.collectionDetails || {};
-        primaryCollectionId = collectionDetails?.id;
         primaryCollectionName = collectionDetails?.displayName;
       } else if (customType !== CUSTOM_TYPES.SHOW_PAGE) {
         const [firstTour]: any = Object.values(scorpioData);
         const { primaryCollection } = firstTour ?? {};
-        const { id, name } = primaryCollection ?? {};
+        const { name } = primaryCollection ?? {};
         primaryCollectionName = name;
-        primaryCollectionId = id;
       } else if (customType === CUSTOM_TYPES.SHOW_PAGE) {
         const { primaryCollection } = tourGroupData;
-        const { id, displayName } = primaryCollection ?? {};
+        const { displayName } = primaryCollection ?? {};
         primaryCollectionName = displayName;
-        primaryCollectionId = id;
       }
     } catch (e) {
       captureException(e, {
