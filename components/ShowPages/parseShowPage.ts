@@ -227,21 +227,23 @@ export const parseShowPageData = (data: any) => {
         });
       } else {
         // faq content
-        if (element.content.text.startsWith(strings.SHOW_PAGE.QUESTION)) {
-          // Question
+        const question = strings.SHOW_PAGE.QUESTION.find((item) =>
+          element.content.text.includes(item)
+        );
 
+        if (element.content.text.startsWith(question)) {
+          // Question
           faqSchema.push({
-            heading: element.content.text.replace(
-              strings.SHOW_PAGE.QUESTION,
-              ''
-            ),
+            heading: element.content.text.replace(question, ''),
             content: [],
           });
         } else {
           // Answer
-          element.content.text = element.content.text
-            .replace(strings.SHOW_PAGE.ANSWER, '')
-            .replace('A-', '');
+          const answer = strings.SHOW_PAGE.ANSWER.find((item) =>
+            element.content.text.includes(item)
+          );
+
+          element.content.text = element.content.text.replace(answer, '');
           element.content.type = element.type;
           for (let i = 0; i < element.content.spans.length; i++) {
             element.content.spans[i].start = element.content.spans[i].start - 2;

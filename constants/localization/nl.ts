@@ -340,7 +340,7 @@ const nl = {
     ADDITIONAL_INFORMATION: 'Extra informatie',
     AGE_LIMIT: 'Leeftijdsgrens',
     AGE_SUITABILITY: 'Geschiktheid voor de leeftijd',
-    ANSWER: 'A-',
+    ANSWER: ['A-'],
     BLOG_SHOW_PAGE: 'Blog Toon Pagina',
     BLOG_SUMMARY: 'Blog Samenvatting',
     BLOG_THEATRE_PAGE: 'Blog Theater Pagina',
@@ -361,7 +361,7 @@ const nl = {
     LISTICLE_SHOW_WHY_WATCH:
       'Listicle Waarom moet je deze voorstelling gaan zien?',
     OPENING_DATE: 'Openingsdatum',
-    QUESTION: 'Q-',
+    QUESTION: ['Q-', 'V-'],
     SAFETY_BANNER: 'Veiligheidsbanier',
     SHOW_DETAILS: 'Toon Details',
     SHOW_TIMINGS: 'Voorstellingstijden',
