@@ -1319,6 +1319,7 @@ const Product = (props: any) => {
 
   const handleShowComboPopup = () => {
     const { variants } = tourGroupData || {};
+    sendBookNowEvent();
     if (tourGroupData && isComboWithSingleVariant) {
       if (typeof window !== 'undefined') {
         const { id: variantId } = variants[0];
@@ -1345,7 +1346,6 @@ const Product = (props: any) => {
       }
     }
     setShowComboVariant(true);
-    sendBookNowEvent();
     if (!isMobile) {
       document.body.style.overflow = 'hidden';
     }
