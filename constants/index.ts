@@ -319,6 +319,9 @@ export const ANALYTICS_EVENTS = {
   EXPERIENCE_CARD_MORE_DETAILS_CLICKED: 'Experience Card More Details Clicked',
   EXPERIENCE_CARD_BOOK_NOW_CLICKED: 'Experience Card Book Now Clicked',
   CHECK_AVAILABILITY_CLICKED: 'Check Availability Clicked',
+  YT_VIDEO_PLAYED: 'Video Played',
+  YT_VIDEO_VIEWED: 'Video Viewed',
+  YT_VIDEO_LOADED: 'Youtube Video Section Viewed',
   MB_VIDEO_PLAYED: 'MB Video Played',
   MB_VIDEO_VIEWED: 'MB Video Viewed',
   MB_LANGUGAGE_CHANGED: 'MB Language Changed',
@@ -762,6 +765,8 @@ export const ANALYTICS_PROPERTIES = {
   EXPERIENCES_AVAILABLE: 'Experiences Available',
   SHOULDER_PAGE_TYPE: 'Shoulder Page Type',
   MB_TYPE: 'MB Type',
+  VIDEO_TITLE: 'Video Title',
+  PERCENT_VIEWED: 'Percentage Viewed',
 };
 
 export const PAGE_TYPES = {
