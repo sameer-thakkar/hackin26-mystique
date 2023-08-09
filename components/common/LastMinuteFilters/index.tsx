@@ -140,6 +140,8 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
       productsLoadingTimer = setTimeout(() => {
         setProductsLoading(false);
       }, 1500);
+    } else {
+      setOrderedFilteredTours(tours);
     }
   };
 
