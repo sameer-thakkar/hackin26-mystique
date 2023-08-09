@@ -1235,7 +1235,6 @@ export const getPageData = async ({
   query,
   isDev,
   localizedStrings,
-  userCountryCode,
 }: any) => {
   const { host } = req.headers || window.location;
   const isStage = host.includes('stage-');
@@ -1252,10 +1251,7 @@ export const getPageData = async ({
       serverResponse,
       isDev,
     })) || { statusCode: 404 };
-    const currencyListPromise = fetchCurrencyList({
-      userCountryCode,
-      hostname,
-    });
+    const currencyListPromise = fetchCurrencyList();
     const domainConfigPromise = fetchDomainConfig(uid);
 
     if (statusCode) {

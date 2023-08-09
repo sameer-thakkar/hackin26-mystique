@@ -7,7 +7,6 @@ import { IImageProps } from 'UI/Image/interface';
 import { generateImageImgixUrl } from 'UI/Image/util';
 import Tooltip from 'UI/Tooltip';
 import { appAtom } from 'store/atoms/app';
-import { UAE_COUNTRY_CODE } from 'const/index';
 import { INFO_ICON } from 'assets/SvgIcons';
 
 export const Wrapper = styled.div`
@@ -55,35 +54,13 @@ const Image: React.FC<IImageProps> = ({
   blurFill = false,
   fetchPriority = 'auto',
 }) => {
-  const { isMobile, userCountryCode } = useRecoilValue(appAtom);
   let calculatedWidth = width,
     calculatedHeight = height,
     mobileImageSrc,
     defaultImageSrc,
     fillImageProp = fill;
 
-  let updatedUrl = url;
-  let updatedMobileUrl = mobileUrl;
-
-  if (userCountryCode.toLowerCase() === UAE_COUNTRY_CODE) {
-    updatedUrl = updatedUrl?.replace(
-      'cdn-imgix.headout.com',
-      'headout-images.imgix.net'
-    );
-    updatedUrl = updatedUrl?.replace(
-      'cdn-imgix-open.headout.com',
-      'headout-open.imgix.net'
-    );
-
-    updatedMobileUrl = updatedMobileUrl?.replace(
-      'cdn-imgix.headout.com',
-      'headout-images.imgix.net'
-    );
-    updatedMobileUrl = updatedMobileUrl?.replace(
-      'cdn-imgix-open.headout.com',
-      'headout-open.imgix.net'
-    );
-  }
+  const { isMobile } = useRecoilValue(appAtom);
 
   if (aspectRatio) {
     const [widthRatio, heightRatio] = aspectRatio.split(':').map(Number);
@@ -96,7 +73,7 @@ const Image: React.FC<IImageProps> = ({
   mobileImageSrc = generateImageImgixUrl(
     format,
     // @ts-expect-error TS(2345): Argument of type 'string | undefined' is not assig... Remove this comment to see the full error message
-    updatedMobileUrl,
+    mobileUrl,
     calculatedWidth,
     calculatedHeight,
     quality,
@@ -110,7 +87,7 @@ const Image: React.FC<IImageProps> = ({
 
   defaultImageSrc = generateImageImgixUrl(
     format,
-    updatedUrl,
+    url,
     // @ts-expect-error TS(2345): Argument of type 'string | number | undefined' is ... Remove this comment to see the full error message
     calculatedWidth,
     calculatedHeight,

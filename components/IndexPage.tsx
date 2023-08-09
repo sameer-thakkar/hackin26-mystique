@@ -350,7 +350,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   let isMobile = req
     ? req?.headers?.['cloudfront-is-mobile-viewer'] === 'true'
     : window?.outerWidth < 768;
-  const userCountryCode = req.headers['cloudfront-viewer-country'];
 
   // Checking if mystique is running in dev or is a preview
   const isDev = req
@@ -390,7 +389,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       query,
       isDev,
       localizedStrings,
-      userCountryCode,
     })
   );
 
@@ -439,7 +437,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           ? `${protocol}://${req.headers['host']}${req.url}`
           : window.location.href,
         isMobile,
-        userCountryCode,
         isPreview,
         query,
         asPath,

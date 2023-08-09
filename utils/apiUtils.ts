@@ -1,7 +1,7 @@
 import { sortDateArray } from 'utils/dateUtils';
 import { currencySortFn } from 'utils/gen';
 import { addQueryParams, getDomainFromUid } from 'utils/urlUtils';
-import { CUSTOM_HEADER, UAE_COUNTRY_CODE } from 'const/index';
+import { CUSTOM_HEADER } from 'const/index';
 import { simplifySlotData } from './inventoryUtils';
 
 type TTgids = string[];
@@ -244,20 +244,9 @@ export const fetchTourGroupV6 = async ({
   return await res.json();
 };
 
-export const fetchCurrencyList = async ({
-  userCountryCode = '',
-  hostname,
-}: {
-  userCountryCode: string;
-  hostname: string;
-}) => {
+export const fetchCurrencyList = async () => {
   try {
-    const url =
-      userCountryCode.toLowerCase() === UAE_COUNTRY_CODE
-        ? `${hostname}/api/tours/v1/currency/list`
-        : 'https://api.headout.com/api/v1/currency/list';
-
-    const res = await fetch(url);
+    const res = await fetch('https://api.headout.com/api/v1/currency/list');
     const data = await res.json();
 
     return data?.sort(currencySortFn);
