@@ -295,9 +295,18 @@ export const createBookingURL = ({
   }
 
   addTrailingSlash = bookingStageSuffix.length > 0;
+  let finalHost = `${bookingFlowSubdomain}.${domain}`;
+
+  if (
+    process.env.NEXT_PUBLIC_ODE_NAMESPACE &&
+    process.env.NEXT_PUBLIC_ODE_NAMESPACE.length &&
+    process.env.APP_ENV !== 'production'
+  ) {
+    finalHost = `${process.env.NEXT_PUBLIC_ODE_NAMESPACE}.deimos.test-headout.com`;
+  }
 
   const urlObject = new URL(
-    `https://${bookingFlowSubdomain}.${domain}${langRouteParam}/book/${tgid}/${bookingStageSuffix}${
+    `https://${finalHost}${langRouteParam}/book/${tgid}/${bookingStageSuffix}${
       addTrailingSlash ? '/' : ''
     }`
   );

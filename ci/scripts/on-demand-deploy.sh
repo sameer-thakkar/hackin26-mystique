@@ -26,4 +26,5 @@ helm pull  ${HELM_REPOSITORY}/mystique
 tar -xvf mystique-0.1.0.tgz
 helm upgrade -i mystique mystique -n ${DEPLOY_NAMESPACE} -f mystique/config/ondemand-values.yaml --set image.repository="999499138329.dkr.ecr.us-east-1.amazonaws.com/headout/mystique" --set image.tag=${MYSTIQUE_V} \
  --set environmentVariables.NEXT_PUBLIC_BASE_URL=https://${DEPLOY_NAMESPACE}.deimos.test-headout.com \
- --set environmentVariables.NEXT_PUBLIC_HEADOUT_API_DOMAIN=https://${DEPLOY_NAMESPACE}.calipso.test-headout.com
+ --set environmentVariables.NEXT_PUBLIC_HEADOUT_API_DOMAIN=https://${DEPLOY_NAMESPACE}.calipso.test-headout.com \
+ --set environmentVariables.NEXT_PUBLIC_ODE_NAMESPACE=${DEPLOY_NAMESPACE}
