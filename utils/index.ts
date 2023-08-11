@@ -8,6 +8,7 @@ import { getLangObject, withoutTrailingSlash } from 'utils/helper';
 import { convertUidToUrl, getDomainFromUid } from 'utils/urlUtils';
 import { BOOKING_FLOW_STAGE, BOOKING_FLOW_TYPE } from 'const/booking';
 import {
+  BY_HO_BRAND_SCREEN_ENABLE,
   CUSTOM_TYPES,
   DYNAMIC_RENDER_UID,
   HEADOUT_NAKED_DOMAIN,
@@ -295,6 +296,7 @@ export const createBookingURL = ({
   }
 
   addTrailingSlash = bookingStageSuffix.length > 0;
+
   let finalHost = `${bookingFlowSubdomain}.${domain}`;
 
   if (
@@ -330,6 +332,11 @@ export const createBookingURL = ({
       urlObject.searchParams.set(key, value);
     }
   }
+  const brandScreenEnabled: boolean =
+    isMobile &&
+    BY_HO_BRAND_SCREEN_ENABLE.includes(urlObject?.hostname || urlObject?.host);
+  if (brandScreenEnabled) urlObject.searchParams.set('byHO', 'true');
+
   return urlObject.toString();
 };
 
