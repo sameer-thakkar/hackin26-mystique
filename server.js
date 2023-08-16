@@ -14,6 +14,11 @@ const BOTS_STATIC_HTML_EXPERIMENT_DOMAINS = [
   'colosseum-rome-tickets.com',
 ];
 
+const TIME = {
+  DAY_IN_SECONDS: 60 * 60 * 24,
+  HOUR_IN_SECONDS: 60 * 60,
+};
+
 const removeScripts = (html) => {
   // Regular expression pattern to match script tags
   const scriptTagPattern = /<script[\s\S]*?>[\s\S\n]*?<\/script>/gi;
@@ -51,7 +56,11 @@ app.prepare().then(() => {
         data &&
         res.getHeader('content-type')?.includes('text/html')
       ) {
-        const modifiedData = removeScripts(data);
+        let modifiedData = removeScripts(data);
+        const maxAge = `max-age=${TIME.HOUR_IN_SECONDS * 1}`;
+        const swr = `stale-while-revalidate=${TIME.DAY_IN_SECONDS * 2}`;
+        const swe = `stale-if-error=${TIME.DAY_IN_SECONDS * 2}`;
+        res.setHeader('Cache-Control', `public, ${maxAge}, ${swr}, ${swe}`);
         res.setHeader('Content-Length', getByteLength(modifiedData));
         data = modifiedData;
       }
