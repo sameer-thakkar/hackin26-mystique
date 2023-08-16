@@ -764,3 +764,62 @@ export const fetchDomainConfig = async (uid: string) => {
     console.error('[fetchDomainConfig]', error);
   }
 };
+
+type TFetchBatchedCalendarInventory = {
+  tgids: Array<string> | Array<number>;
+  currency?: string;
+  minPax?: number;
+  fromDate: string;
+  toDate: string;
+  cookies?: Record<string, any>;
+};
+
+export const fetchBatchedCalendarInventory = async ({
+  tgids,
+  currency,
+  minPax = 1,
+  fromDate = '',
+  toDate = '',
+  cookies,
+}: TFetchBatchedCalendarInventory) => {
+  try {
+    const params = {
+      'tour-group-ids': tgids?.join(','),
+      ...(fromDate && {
+        'from-date': fromDate,
+      }),
+      ...(toDate && {
+        'to-date': toDate,
+      }),
+      ...(currency && {
+        currency,
+      }),
+      ...(minPax && {
+        'min-pax': String(minPax),
+      }),
+    };
+    const url = getHeadoutApiUrl({
+      endpoint: HeadoutEndpoints.CalendarInventoryForTourGroupList,
+      id: null,
+      params,
+    });
+    const headers = constructHeaders({ cookies });
+    const response = await fetch(url, { headers });
+    const { data = {} } = (await response.json()) || {};
+
+    const inventory = Object.keys(data).reduce((acc, tgid) => {
+      const { dates, metadata } = data[tgid] || {};
+      const sortedInventoryDates = sortDateArray(Object.keys(dates) || []);
+
+      return {
+        ...acc,
+        [tgid]: { sortedInventoryDates, metadata, dates },
+      };
+    }, {});
+
+    return inventory;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log('[fetchBatchedCalendarInventory]', error);
+  }
+};

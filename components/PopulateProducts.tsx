@@ -11,10 +11,11 @@ import { MBContext } from 'contexts/MBContext';
 import { isMBDesign, legacyBooleanCheck } from 'utils';
 import { sendVariableToDataLayer, trackEvent } from 'utils/analytics';
 import {
-  fetchCalendarInventory,
+  fetchBatchedCalendarInventory,
   fetchInventory,
   fetchTourList,
 } from 'utils/apiUtils';
+import { addDays, formatDateToString } from 'utils/dateUtils';
 import { csvTgidToArray, generateSidenavId, getHostName } from 'utils/helper';
 import { getPromoCodesDocument } from 'utils/prismicUtils';
 import COLORS from 'const/colors';
@@ -143,11 +144,11 @@ const PopulateProducts = (props: any) => {
   const [finalPromoCodes, setFinalPromoCodes] = useState({});
   const [productInfo, setproductInfo] = useState({});
   const router = useRouter();
-  const [earliestAvailabilityQueue, setEarliestAvailabilityQueue] = useState(
-    []
+  const [earliestAvailabilityStore, setEarliestAvailabilityStore] = useState(
+    {}
   );
   const [showEarliestAvailability, setShowEarliestAvailability] = useState(
-    null
+    false
   );
 
   const addToRef = (el: any) => {
@@ -215,39 +216,52 @@ const PopulateProducts = (props: any) => {
   const showNextAvailable = legacyBooleanCheck(enableEarliestAvailability);
 
   useEffect(() => {
-    const fetchEarliestAvailability = async ({
-      uncategorizedToursList,
-    }: any) => {
-      const requestQueue = uncategorizedToursList.map(({ tgid }: any) => {
-        return fetchCalendarInventory({
-          tgid,
-        });
-      });
-      const response: Array<any> = await Promise.all(requestQueue).then(
-        (res): any => {
-          return res.reduce((acc: any, tour: any, index) => {
-            const tgid = uncategorizedToursList[index].tgid;
-            const { sortedInventoryDates } = tour ?? {};
-            const [firstAvailableDate] = sortedInventoryDates ?? [];
-
-            return {
-              ...acc,
-              [tgid]: {
-                startDate: firstAvailableDate,
-              },
-            };
-          }, {});
-        }
+    const fetchEarliestAvailability = async (
+      uncategorizedToursList: Array<Record<string, any>>
+    ) => {
+      const tgids = uncategorizedToursList.reduce(
+        (acc: Array<number>, tours) => {
+          const { tgid } = tours;
+          if (!tgid) return acc;
+          return [...acc, tgid];
+        },
+        []
       );
-      // @ts-expect-error TS(2345): Argument of type 'any[]' is not assignable to para... Remove this comment to see the full error message
-      setEarliestAvailabilityQueue(response);
-      // @ts-expect-error TS(2345): Argument of type 'true' is not assignable to param... Remove this comment to see the full error message
+
+      const inventory: Record<number, any> =
+        (await fetchBatchedCalendarInventory({
+          tgids,
+          fromDate: formatDateToString(new Date(), 'en', 'YYYY-MM-DD'),
+          toDate: formatDateToString(
+            addDays(new Date(), 30),
+            'en',
+            'YYYY-MM-DD'
+          ),
+        })) || {};
+
+      const earliestAvailabilityData = Object.keys(inventory).reduce(
+        (acc: Record<number, any>, tgid) => {
+          const tour = inventory?.[Number(tgid) as keyof typeof inventory];
+          const { sortedInventoryDates } = tour || {};
+          const [firstAvailableDate] = sortedInventoryDates || [];
+
+          if (!firstAvailableDate) return acc;
+
+          return {
+            ...acc,
+            [tgid]: {
+              startDate: firstAvailableDate,
+            },
+          };
+        },
+        {}
+      );
+
+      setEarliestAvailabilityStore(earliestAvailabilityData);
       setShowEarliestAvailability(true);
     };
     if (showNextAvailable || instantCheckout) {
-      fetchEarliestAvailability({
-        uncategorizedToursList: tours,
-      });
+      fetchEarliestAvailability(tours);
     }
   }, []);
 
@@ -308,7 +322,10 @@ const PopulateProducts = (props: any) => {
     showEarliestAvailability || instantCheckout
       ? tours.map((tour: any) => ({
           ...tour,
-          earliestAvailability: earliestAvailabilityQueue[tour.tgid],
+          earliestAvailability:
+            earliestAvailabilityStore[
+              tour.tgid as keyof typeof earliestAvailabilityStore
+            ],
         }))
       : tours;
 

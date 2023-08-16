@@ -54,6 +54,7 @@ type TGetProductCardLayout = {
   mbTheme?: string | null;
   hasOffer?: boolean;
   hasV1Booster?: boolean;
+  showEarliestAvailability?: boolean;
   hasNextAvailable?: boolean;
   isTicketCard?: boolean;
   hasPromoCode?: boolean;
@@ -64,6 +65,7 @@ export const getProductCardLayout = ({
   mbTheme,
   hasOffer,
   hasV1Booster,
+  showEarliestAvailability,
   hasNextAvailable,
   isTicketCard = false,
   hasPromoCode = false,
@@ -104,6 +106,8 @@ export const getProductCardLayout = ({
           'body',
           // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           'cta-block',
+          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
+          !showEarliestAvailability && 'next-available-skeleton',
           // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           hasNextAvailable && 'next-available',
         ],
@@ -149,6 +153,10 @@ export const getProductCardLayout = ({
           'price-block price-block',
           // @ts-expect-error TS(2322): Type 'string' is not assignable to type 'never'.
           isOpenDated && 'open-dated-descriptor open-dated-descriptor',
+          // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
+          !showEarliestAvailability &&
+            !isOpenDated &&
+            'next-available-skeleton next-available-skeleton',
           // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.
           hasNextAvailable && !isOpenDated && 'next-available next-available',
           // @ts-expect-error TS(2322): Type 'any' is not assignable to type 'never'.

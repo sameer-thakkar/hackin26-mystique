@@ -5,6 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 // @ts-expect-error TS(7016): Could not find a declaration file for module 'pris... Remove this comment to see the full error message
@@ -676,6 +677,19 @@ const NextAvailableBlock = styled.div`
     color: ${COLORS.GRAY.G3};
   }
 `;
+
+const NextAvailableBlockSkeletonWrapper = styled.div`
+  display: grid;
+  align-items: center;
+  justify-content: start;
+  height: 1rem;
+
+  @media (max-width: 768px) {
+    grid-area: next-available-skeleton;
+    margin-top: -1rem;
+  }
+`;
+
 const ProductOfferBlock = styled.div`
   grid-area: offer;
   font-size: 14px;
@@ -1118,6 +1132,7 @@ const Product = (props: any) => {
     scorpioData,
     host,
     earliestAvailability = {},
+    showEarliestAvailability,
     ctaUrlSuffix,
     isScratchPriceEnabled,
     booster,
@@ -1499,6 +1514,7 @@ const Product = (props: any) => {
     hasOffer,
     hasV1Booster,
     mbTheme,
+    showEarliestAvailability,
     hasNextAvailable: earliestAvailability?.startDate,
     isTicketCard: isTicketCard,
     hasPromoCode: promo_code,
@@ -1747,9 +1763,15 @@ const Product = (props: any) => {
                 <BookNowCta clickHandler={handleShowComboPopup} />
               </Conditional>
             </CTABlock>
+            <Conditional if={showNextAvailable && !showEarliestAvailability}>
+              <NextAvailableBlockSkeletonWrapper>
+                <Skeleton height="1rem" width="9rem" />
+              </NextAvailableBlockSkeletonWrapper>
+            </Conditional>
             <Conditional
               if={
                 showNextAvailable &&
+                showEarliestAvailability &&
                 earliestAvailability?.startDate &&
                 !isOpenDated
               }
