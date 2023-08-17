@@ -72,7 +72,7 @@ export const Wrapper = styled.div`
   display: flex;
 `;
 
-export const MobileTitle = styled.div<{
+export const MobileTitle = styled.h1<{
   withoutImage: boolean;
 }>`
   ${({ withoutImage }) => `
@@ -82,7 +82,7 @@ export const MobileTitle = styled.div<{
   ${expandFontToken(FONTS.HEADING_REGULAR)}
   padding: ${({ withoutImage }) =>
     withoutImage ? '1.5rem 1rem 1rem' : '1.5rem'};
-  ${({ withoutImage }) => !withoutImage && 'margin-bottom: 1rem;'} 
+  ${({ withoutImage }) => !withoutImage && 'margin: 0 0 1rem 0'} 
 `;
 
 export const TitleWrapper = styled.div`
