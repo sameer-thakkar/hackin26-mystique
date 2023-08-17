@@ -14,9 +14,18 @@ const BOTS_STATIC_HTML_EXPERIMENT_DOMAINS = [
   'colosseum-rome-tickets.com',
 ];
 
+const SWR_ENABLED_DOMAINS = [
+  ...BOTS_STATIC_HTML_EXPERIMENT_DOMAINS,
+  'tickets-paris.fr',
+  'ticket-madrid.com',
+  'versailles-palace-tickets.com',
+  'aquarium-tickets.com',
+  'pradomuseumtickets.com',
+];
+
 const TIME = {
-  DAY_IN_SECONDS: 60 * 60 * 24,
-  HOUR_IN_SECONDS: 60 * 60,
+  SECONDS_IN_DAY: 60 * 60 * 24,
+  SECONDS_IN_HOUR: 60 * 60,
 };
 
 const removeScripts = (html) => {
@@ -57,15 +66,35 @@ app.prepare().then(() => {
         res.getHeader('content-type')?.includes('text/html')
       ) {
         let modifiedData = removeScripts(data);
-        const maxAge = `max-age=${TIME.HOUR_IN_SECONDS * 1}`;
-        const swr = `stale-while-revalidate=${TIME.DAY_IN_SECONDS * 2}`;
-        const swe = `stale-if-error=${TIME.DAY_IN_SECONDS * 2}`;
-        res.setHeader('Cache-Control', `public, ${maxAge}, ${swr}, ${swe}`);
         res.setHeader('Content-Length', getByteLength(modifiedData));
         data = modifiedData;
       }
       originalEnd.call(res, data, encoding);
     };
+    next();
+  });
+
+  server.use((req, res, next) => {
+    const isAPIRoute = /\/(fe)?api\//.test(req.path);
+    const isSWREnabledDomain =
+      SWR_ENABLED_DOMAINS.findIndex((d) => req.hostname.includes(d)) > -1;
+    if (!isAPIRoute && isSWREnabledDomain) {
+      const isBot = req.headers['x-bot'] === 'true';
+      const sweTTL = TIME.SECONDS_IN_DAY * 1;
+      let swrTTL = TIME.SECONDS_IN_DAY * 1; // regular user staleness ttl
+
+      if (isBot) {
+        swrTTL = TIME.SECONDS_IN_DAY * 2;
+      }
+
+      const swrCacheCtrl = `stale-while-revalidate=${swrTTL}`;
+      const sweCacheCtrl = `stale-if-error=${sweTTL}`;
+
+      res.setHeader(
+        'Cache-Control',
+        `public, ${swrCacheCtrl}, ${sweCacheCtrl}`
+      );
+    }
     next();
   });
 
