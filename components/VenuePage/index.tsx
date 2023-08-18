@@ -41,6 +41,7 @@ import {
   IVerticalCardsGrid,
 } from './interace';
 import { Banner, VenuePageContainer } from './styles';
+import { findFirstIndexOfAccordion, getShowsBasedOnTimestamp } from './utils';
 
 const VenuePage = (props: IVenuePageProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -67,7 +68,6 @@ const VenuePage = (props: IVenuePageProps) => {
   const {
     data: CMSContent,
     availableShowsData,
-    showsGridSlicesData,
     allShowPageUids,
     inventorySlotData,
     first_publication_date: datePublished,
@@ -122,8 +122,6 @@ const VenuePage = (props: IVenuePageProps) => {
       eventName: ANALYTICS_EVENTS.MICROSITE_PAGE_VIEWED,
     });
   }, []);
-
-  const tgidForFirstShow = availableShowsData[0]?.id;
 
   const { SHOW_MORE, SHOW_LESS } = strings;
 
@@ -183,10 +181,27 @@ const VenuePage = (props: IVenuePageProps) => {
     });
   };
 
+  const {
+    nowPlayingShows,
+    upcomingShows,
+    pastShows,
+  } = getShowsBasedOnTimestamp(availableShowsData);
+
+  let tgidForFirstShow;
+  switch (true) {
+    case nowPlayingShows.length > 0:
+      tgidForFirstShow = nowPlayingShows[0].id;
+      break;
+
+    case upcomingShows.length > 0:
+      tgidForFirstShow = upcomingShows[0].id;
+      break;
+  }
+
   const redirectUrlForTabDataContent = createBookingURL({
     nakedDomain,
     lang: localeCode,
-    tgid: tgidForFirstShow,
+    tgid: tgidForFirstShow ?? '',
     redirectToHeadoutBookingFlow,
     currency,
     flowType: BOOKING_FLOW_TYPE.SEATMAP,
@@ -213,6 +228,35 @@ const VenuePage = (props: IVenuePageProps) => {
       }),
     });
   };
+
+  const metaTitle =
+    CMSContent.title +
+    (nowPlayingShows.length > 0
+      ? ` | ${strings.THEATRE_PAGE.NOW_PLAYING}: ${nowPlayingShows[0].name}`
+      : '');
+
+  let modifiedDescriptionSlices = JSON.parse(JSON.stringify(descriptionSlices));
+
+  /* Hardcoding the position of ShowsGrid slice after Accordion slice. */
+  if (pastShows.length > 0) {
+    const indexOfAccordion = descriptionSlices.findIndex(
+      findFirstIndexOfAccordion
+    );
+
+    const items = pastShows.map((show) => ({
+      tgid: show.id,
+    }));
+
+    const pastShowSlice = {
+      primary: {
+        heading: strings.THEATRE_PAGE.PAST_SHOWS,
+      },
+      slice_type: 'shows_grid',
+      items,
+    };
+
+    modifiedDescriptionSlices?.splice(indexOfAccordion + 1, 0, pastShowSlice);
+  }
 
   const uniqueDateTimeSlots = getUniqueArrayItemsBy(slots, [
     'startDate',
@@ -316,6 +360,7 @@ const VenuePage = (props: IVenuePageProps) => {
           prismicData: {
             ...CMSContent,
             canonical_link: selfCanonicalLink,
+            title: metaTitle,
           },
           datePublished,
           dateModified,
@@ -344,7 +389,7 @@ const VenuePage = (props: IVenuePageProps) => {
         enableSearch={false}
         enableBuyTickets={false}
         isGlobalMb={false}
-        headerSlices={commonHeader.data.body}
+        headerSlices={commonHeader?.data?.body}
         hasLanguageSelector={true}
         languageProps={{
           uid,
@@ -409,11 +454,13 @@ const VenuePage = (props: IVenuePageProps) => {
         </div>
       </VenuePageContainer>
       <LongForm
-        content={descriptionSlices}
+        content={modifiedDescriptionSlices}
         uid={uid}
         isMobile={isMobile}
         availableShowsData={availableShowsData}
-        showsGridSlicesData={showsGridSlicesData}
+        nowPlayingShows={nowPlayingShows}
+        upcomingShows={upcomingShows}
+        pastShows={pastShows}
         allShowPageUids={allShowPageUids}
         isVenuePage={true}
         redirectUrlForTabDataContent={redirectUrlForTabDataContent}
@@ -435,7 +482,7 @@ const VenuePage = (props: IVenuePageProps) => {
         logoURL={logoUrl}
         logoAlt={whiteLabelName || ''}
         hasPoweredByHeadoutLogo={showPoweredLogo ?? true}
-        disclaimerText={commonFooter.data.disclaimer_text}
+        disclaimerText={commonFooter?.data?.disclaimer_text}
         slices={commonFooter?.data?.body || []}
         secondarySlices={secondaryFooter?.data?.body || []}
         primaryHeading={commonFooter?.data?.footer_heading}

@@ -2,7 +2,9 @@ import styled from 'styled-components';
 import { FONTS } from 'const/fonts';
 import { expandFontToken } from 'const/typography';
 
-export const Container = styled.div`
+export const Container = styled.div<{
+  $isMarginBottomNeeded: boolean | undefined;
+}>`
   && {
     h2 {
       margin-bottom: 1rem;
@@ -13,9 +15,15 @@ export const Container = styled.div`
       grid-gap: 36px;
     }
   }
+  margin-bottom: ${({ $isMarginBottomNeeded }) =>
+    $isMarginBottomNeeded ? '2.5rem' : '0'};
+
   @media (min-width: 768px) {
     width: calc(100vw - (5.46vw * 2));
     max-width: 1200px;
+    margin-bottom: ${({ $isMarginBottomNeeded }) =>
+      $isMarginBottomNeeded ? '4rem' : '0'};
+
     && {
       h2 {
         margin-bottom: 1.5rem;
@@ -24,9 +32,8 @@ export const Container = styled.div`
     }
     .wrapper {
       display: grid;
-      grid-auto-flow: column;
       grid-template-columns: repeat(4, 1fr);
-      grid-gap: 1.5rem;
+      gap: 1.5rem;
     }
   }
 `;

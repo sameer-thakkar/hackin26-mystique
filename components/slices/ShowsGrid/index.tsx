@@ -4,16 +4,10 @@ import { ShowsGridProps } from 'components/slices/ShowsGrid/interface';
 import { Container } from 'components/slices/ShowsGrid/styles';
 import { MBContext } from 'contexts/MBContext';
 import { getTgidsFromShow } from 'utils';
+import { strings } from 'const/strings';
 
 const ShowsGrid = (props: ShowsGridProps) => {
-  const {
-    data,
-    isMobile,
-    heading,
-    sliceData,
-    allShowPageUids,
-    isVenuePage,
-  } = props;
+  const { data, isMobile, sliceData, allShowPageUids, isVenuePage } = props;
   const { host } = useContext(MBContext);
 
   const tgidsSet = new Set(getTgidsFromShow(sliceData));
@@ -42,7 +36,7 @@ const ShowsGrid = (props: ShowsGridProps) => {
 
   return (
     <Container>
-      <h2>{heading}</h2>
+      <h2>{strings.THEATRE_PAGE.PAST_SHOWS}</h2>
       <div className="wrapper">
         {showData?.map((show: Record<string, string>, index: number) => {
           const allTours: any = {};

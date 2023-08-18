@@ -616,7 +616,8 @@ const sliceHandler = (slice: any, props: any = {}) => {
         <ShowsList
           uid={props.uid}
           isMobile={props.isMobile}
-          data={props.availableShowsData}
+          nowPlayingShows={props.nowPlayingShows}
+          upcomingShows={props.upcomingShows}
           heading={slice.primary.heading}
           sliceData={slice.items}
           allShowPageUids={props.allShowPageUids}
@@ -628,8 +629,7 @@ const sliceHandler = (slice: any, props: any = {}) => {
       return (
         <ShowsGrid
           isMobile={props.isMobile}
-          heading={slice?.primary?.heading}
-          data={props.showsGridSlicesData}
+          data={props.pastShows}
           sliceData={slice.items}
           allShowPageUids={props.allShowPageUids}
           isVenuePage={props.isVenuePage}

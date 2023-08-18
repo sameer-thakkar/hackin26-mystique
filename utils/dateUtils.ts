@@ -81,7 +81,7 @@ export const sortDateArray = (dates: string[]) =>
 
 export const formatDateToString = (
   date: Date,
-  currentLanguage = 'en',
+  currentLanguage: any,
   dateFormat = 'DD MMM YYYY'
 ) => dayjs(date).locale(currentLanguage).format(dateFormat);
 

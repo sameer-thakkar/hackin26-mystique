@@ -443,6 +443,7 @@ const en = {
   THEATRE_PAGE: {
     NEARBY_THEATRES: 'Nearby Theatres',
     NOW_PLAYING: 'Now Playing',
+    UPCOMING_SHOWS: 'Upcoming Shows',
     PAST_SHOWS: 'Past Shows',
     FIND_BEST_SEATS: 'Find Best Seats',
   },

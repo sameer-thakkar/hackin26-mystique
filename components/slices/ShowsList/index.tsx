@@ -2,16 +2,44 @@ import { memo, useContext } from 'react';
 import Conditional from 'components/common/Conditional';
 import Product from 'components/MicrositeV2/Product';
 import PinnedCard from 'components/PinnedCard/pinnedCard';
-import { ShowsListProps } from 'components/slices/ShowsList/interface';
 import { Container } from 'components/slices/ShowsList/styles';
 import { MBContext } from 'contexts/MBContext';
 import { getTgidsFromShow } from 'utils';
 import { FONTS } from 'const/fonts';
+import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
+import { IShowsListProps, IShowsListUIProps } from './interface';
 
-const ShowsList = (props: ShowsListProps) => {
+const ShowsList = (props: IShowsListProps) => {
+  const { nowPlayingShows, upcomingShows } = props;
+  const { THEATRE_PAGE } = strings;
+
+  return (
+    <>
+      {nowPlayingShows?.length > 0 ? (
+        <ShowsListUI
+          {...props}
+          data={nowPlayingShows}
+          isMarginBottomNeeded={upcomingShows.length > 0}
+          heading={THEATRE_PAGE.NOW_PLAYING}
+        />
+      ) : null}
+      {upcomingShows?.length > 0 ? (
+        <ShowsListUI
+          {...props}
+          data={upcomingShows}
+          isMarginBottomNeeded={false}
+          heading={THEATRE_PAGE.UPCOMING_SHOWS}
+        />
+      ) : null}
+    </>
+  );
+};
+
+const ShowsListUI = (props: IShowsListUIProps) => {
   const { host } = useContext(MBContext);
   const {
+    isMarginBottomNeeded,
     isMobile,
     heading,
     data,
@@ -26,7 +54,7 @@ const ShowsList = (props: ShowsListProps) => {
   const idMap = new Map();
 
   /* The "data" can have repeating elements(same tgids). Therefore, removing it to prevent showing same product cards */
-  const finalData = data.filter((obj: any) => {
+  const finalData = data?.filter((obj: any) => {
     if (idMap.has(obj.id)) {
       return false;
     } else {
@@ -35,7 +63,7 @@ const ShowsList = (props: ShowsListProps) => {
     }
   });
 
-  const showData = finalData.reduce((acc: any, curr: any) => {
+  const showData = finalData?.reduce((acc: any, curr: any) => {
     return (acc = tgidsSet.has(curr.id) ? [...acc, curr] : [...acc]);
   }, []);
 
@@ -47,8 +75,8 @@ const ShowsList = (props: ShowsListProps) => {
   };
 
   return (
-    <Conditional if={showData.length > 0}>
-      <Container>
+    <Conditional if={showData?.length > 0}>
+      <Container $isMarginBottomNeeded={isMarginBottomNeeded}>
         <h2>{heading}</h2>
         <div className="wrapper">
           {showData?.map((show: any, index: number) => {
@@ -60,7 +88,7 @@ const ShowsList = (props: ShowsListProps) => {
 
             const showPageUid = findUid(tgid);
 
-            return showData.length === 1 && !isMobile ? (
+            return showData?.length === 1 && !isMobile ? (
               <PinnedCard
                 key={index}
                 productInfo={show}
@@ -95,5 +123,4 @@ const ShowsList = (props: ShowsListProps) => {
     </Conditional>
   );
 };
-
 export default memo(ShowsList);

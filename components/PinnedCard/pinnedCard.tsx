@@ -47,7 +47,7 @@ const PinnedCard = (props: any) => {
   const { productInfo, uid, showPageUid } = props;
 
   const filterHighlights = [
-    strings.OPENING_DATE,
+    strings.SHOW_PAGE.OPENING_DATE,
     strings.SHOW_PAGE.CLOSING_DATE,
   ];
 

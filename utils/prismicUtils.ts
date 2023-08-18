@@ -1286,14 +1286,11 @@ export const getPageData = async ({
     })();
 
     if (ContentType === CUSTOM_TYPES.VENUE_PAGE) {
-      const [showsListSlices, showsGridSlices] = [
-        CMSContent.data?.descriptionSlices?.filter((slice: any) => {
+      const showsListSlices = CMSContent.data?.descriptionSlices?.filter(
+        (slice: any) => {
           return slice.slice_type === SLICE_TYPES.SHOWS_LIST;
-        }),
-        CMSContent.data?.descriptionSlices?.filter((slice: any) => {
-          return slice.slice_type === SLICE_TYPES.SHOWS_GRID;
-        }),
-      ];
+        }
+      );
 
       const showsListSlicesTgids = showsListSlices?.reduce(
         (
@@ -1307,20 +1304,15 @@ export const getPageData = async ({
         },
         []
       );
-      const showsGridSlicesTgids = showsGridSlices?.reduce(
-        (acc: any[], curr: any) => {
-          const tgids = getTgidsFromShow(curr.items);
-          return (acc = [...acc, ...tgids]);
-        },
-        []
-      );
 
-      const showPageDocuments = await Client().query(
-        Prismic.Predicates.any('my.showpage.tgid', [
-          ...showsListSlicesTgids,
-          ...showsGridSlicesTgids,
-        ])
-      );
+      const showPageDocuments =
+        showsListSlicesTgids.length > 0
+          ? await Client().query(
+              Prismic.Predicates.any('my.showpage.tgid', [
+                ...showsListSlicesTgids,
+              ])
+            )
+          : [];
 
       const allShowPageUids = showPageDocuments?.results?.map(
         (document: any) => {
@@ -1332,26 +1324,14 @@ export const getPageData = async ({
       );
 
       const showsData = await fetchTourListV6({
-        tgids: [...showsListSlicesTgids, ...showsGridSlicesTgids],
+        tgids: [...showsListSlicesTgids],
         hostname,
         language: getHeadoutLanguagecode(lang ?? LANGUAGE_MAP.en.locale),
         cookies,
       });
 
-      const showsListSlicesData = showsData?.tourGroups?.slice(
-        0,
-        showsListSlicesTgids.length
-      );
-      const showsGridSlicesData = showsData?.tourGroups?.slice(
-        showsListSlicesTgids.length,
-        showsData.length
-      );
-
-      const availableShowsData = showsListSlicesData?.filter(
-        (item: { listingPrice: { finalPrice: number } }) => {
-          return item?.listingPrice?.finalPrice;
-        }
-      );
+      const showsListSlicesData = showsData?.tourGroups;
+      const availableShowsData = showsListSlicesData;
 
       const tgidForFirstShow = availableShowsData[0];
 
@@ -1368,7 +1348,6 @@ export const getPageData = async ({
         CMSContent: {
           ...CMSContent,
           availableShowsData,
-          showsGridSlicesData,
           allShowPageUids,
           inventorySlotData,
         },
@@ -1377,7 +1356,7 @@ export const getPageData = async ({
         ContentType,
         lang,
         isDev,
-        tgidsInPage: [...showsListSlicesTgids, ...showsGridSlicesTgids],
+        tgidsInPage: [...showsListSlicesTgids],
         currencyList: await currencyListPromise,
         domainConfig: await domainConfigPromise,
       };
