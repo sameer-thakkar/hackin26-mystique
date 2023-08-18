@@ -1545,20 +1545,12 @@ const Product = (props: any) => {
         trackedToggleContent(isContentOpen);
       }
     };
-    const innerContent =
-      mbTheme === THEMES.DEFAULT &&
-      pageType != CUSTOM_TYPES.GLOBAL_EXPERIENCE ? (
-        <>
-          {isContentOpen
-            ? '- ' + strings.SHOW_LESS_TEXT
-            : '+ ' + strings.MORE_DETAILS}
-        </>
-      ) : (
-        <>
-          {isContentOpen ? strings.SHOW_LESS_TEXT : strings.MORE_DETAILS}
-          <Chevron isActive={isContentOpen} className={'chevron'} />
-        </>
-      );
+    const innerContent = (
+      <>
+        {isContentOpen ? strings.SHOW_LESS_TEXT : strings.MORE_DETAILS}
+        <Chevron isActive={isContentOpen} className={'chevron'} />
+      </>
+    );
     return isMobile ? (
       <MoreDetailsBtn
         fillType="secondaryFill"
