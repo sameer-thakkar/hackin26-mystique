@@ -64,17 +64,20 @@ export const getLocalisedPrice = ({
 
   const isInteger = Number.isInteger(price);
 
-  const formatter = new Intl.NumberFormat(lang, {
-    minimumFractionDigits: isInteger ? 0 : precision,
+  const formatOptions: Intl.NumberFormatOptions = {
+    maximumFractionDigits: isInteger ? 0 : precision,
     style: 'currency',
     currency: currencyCode,
     currencyDisplay: 'code',
-  });
+    useGrouping: true,
+  };
+
+  const formatter = new Intl.NumberFormat(lang, formatOptions);
 
   const parts = formatter.formatToParts(price);
 
   // We want to keep the currencySymbol uniform across locales instead of the varying symbols that Web API provides.
-  const formattedValues = parts.map((part) => {
+  let formattedParts = parts.map((part) => {
     switch (part.type) {
       case 'currency':
         if (LESSER_KNOWN_CURRENCY_CODES.includes(part.value)) {
@@ -88,7 +91,18 @@ export const getLocalisedPrice = ({
     }
   });
 
-  return formattedValues.join('');
+  const hasCurrencyCode = formattedParts.includes(currencyCode);
+
+  /* This is done to remove any extra whitespace added by the Intl API when using the 'code' option for currency display. This applies ONLY for English and if the currency Symbol is present*/
+  if (lang === 'en' && !hasCurrencyCode) {
+    formattedParts = formattedParts.filter((p) => {
+      const regex = /\s/;
+      if (!regex.test(p)) {
+        return p;
+      }
+    });
+  }
+  return formattedParts.join('');
 };
 
 /**

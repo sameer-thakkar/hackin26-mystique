@@ -57,7 +57,6 @@ const ListicleV2 = ({
       currencyCode: currency || 'USD',
       lang: currentLanguage,
       currencyList,
-      precision: 2,
     })}`;
   };
 
