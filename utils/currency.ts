@@ -65,11 +65,12 @@ export const getLocalisedPrice = ({
   const isInteger = Number.isInteger(price);
 
   const formatOptions: Intl.NumberFormatOptions = {
-    maximumFractionDigits: isInteger ? 0 : precision,
     style: 'currency',
     currency: currencyCode,
     currencyDisplay: 'code',
     useGrouping: true,
+    minimumFractionDigits: 0,
+    maximumFractionDigits: isInteger ? 0 : precision,
   };
 
   const formatter = new Intl.NumberFormat(lang, formatOptions);
