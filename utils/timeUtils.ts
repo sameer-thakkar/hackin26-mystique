@@ -51,6 +51,9 @@ export const localisedRelativeTimeFormat = ({
     : rtf.format(value, unit);
 };
 
+export function roundOffTo(num: number, roundingFactor: number) {
+  return Math.round(num / roundingFactor) * roundingFactor;
+}
 export function convertMillisecondsToHours(milliseconds: number | null) {
   if (!milliseconds)
     return {
@@ -58,7 +61,10 @@ export function convertMillisecondsToHours(milliseconds: number | null) {
       minute: null,
     };
   const hour = Math.floor(milliseconds / 1000 / 60 / 60);
-  const minute = Math.floor((milliseconds / 1000 / 60 / 60 - hour) * 60);
+  const minute = roundOffTo(
+    Math.round((milliseconds / 1000 / 60 / 60 - hour) * 60),
+    5
+  );
   return {
     hour,
     minute,

@@ -399,7 +399,7 @@ const Header: React.FC<any> = (props) => {
               onClick={() => {
                 scroller.scrollTo('products-container', {
                   duration: 1200,
-                  offset: isMobile ? -20 : -40,
+                  offset: isMobile ? -130 : -100,
                   smooth: 'easeInOutQuart',
                 });
               }}
