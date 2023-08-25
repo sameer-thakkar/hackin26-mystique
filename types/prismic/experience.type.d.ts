@@ -8,6 +8,11 @@ type PracticalInfo = {
   calendar: string;
 };
 
+type LargeListicleTabData = {
+  title: string;
+  text: string;
+};
+
 type Experience = {
   experienceType: string;
   heading: string;
@@ -17,6 +22,7 @@ type Experience = {
   ctaUrl: string;
   categoryTags: Array<string>;
   richTextData: Array<any>;
+  tabData?: Array<LargeListicleTabData>;
   experienceId?: string;
   practicalInfo?: PracticalInfo;
   experienceName?: string;

@@ -547,6 +547,7 @@ const sliceHandler = (slice: any, props: any = {}) => {
           isMobile={props.isMobile}
         />
       );
+
     case 'global_experiences':
       const experienceCarouselTitle =
         props?.isGlobalCollection &&

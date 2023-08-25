@@ -584,6 +584,7 @@ export const SIDEBAR_TYPES = {
   PRODUCT_CARD: 'product-card',
   COMBO_VARIANT: 'combo-variant',
   SIDE_NAV: 'side-navigation',
+  LISTICLE_CARD: 'listicle-card',
 };
 
 export const DATE_FORMAT_TYPES = {

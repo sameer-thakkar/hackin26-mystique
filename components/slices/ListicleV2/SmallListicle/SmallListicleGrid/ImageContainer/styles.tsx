@@ -6,7 +6,7 @@ import { expandFontToken } from 'const/typography';
 export const ImageWrapper = styled.div`
   width: 144px;
   height: 100%;
-  border-radius: 8px 0px 0px 8px;
+  border-radius: 8px 0 0 8px;
   overflow: hidden;
   position: relative;
 `;

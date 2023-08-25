@@ -1,12 +1,14 @@
 import React, { useContext } from 'react';
 import { useRecoilValue } from 'recoil';
 import { IListicleTypeProps } from 'components/slices/ListicleV2/interfaces';
+import LargeListicle from 'components/slices/ListicleV2/LargeListicle/index';
 import MediumListicle from 'components/slices/ListicleV2/MediumListicle/index';
 import SmallListicle from 'components/slices/ListicleV2/SmallListicle/index';
 import { MBContext } from 'contexts/MBContext';
 import { getLocalisedPrice } from 'utils/currency';
 import { getLangObject } from 'utils/helper';
 import { getExperienceType } from 'utils/listicle';
+import { LISTICLE_TAB_FIELDS } from 'utils/listicle/constants';
 import { currencyAtom } from 'store/atoms/currency';
 import { currencyListAtom } from 'store/atoms/currencyList';
 import { EXPERIENCES, LISTICLE_TYPE, SETTINGS_TYPE } from 'const/index';
@@ -24,7 +26,7 @@ const ListicleV2 = ({
   const currency = useRecoilValue(currencyAtom);
 
   const getPracticalInfo = (data: Record<any, any>): PracticalInfo => {
-    if (type !== LISTICLE_TYPE.MEDIUM) return {} as PracticalInfo;
+    if (type === LISTICLE_TYPE.SMALL) return {} as PracticalInfo;
     const {
       practical_info_location: location,
       practical_info_opening_hours: openingHours,
@@ -58,6 +60,18 @@ const ListicleV2 = ({
       lang: currentLanguage,
       currencyList,
     })}`;
+  };
+
+  const getTabData = (data: Record<any, any>) => {
+    const tabData = Object.entries(data)
+      .filter((item) => LISTICLE_TAB_FIELDS.includes(item[0]))
+      .map((item) => item[1]);
+
+    return tabData
+      .map((item, index) => {
+        if (index % 2 === 0) return { title: item, text: tabData[index + 1] };
+      })
+      .filter((item) => item?.title || item?.text);
   };
 
   const getListicleData = (listicleData: Array<any>): Experience[] => {
@@ -99,12 +113,20 @@ const ListicleV2 = ({
           experienceName:
             experienceType === EXPERIENCES.SUBCATEGORY ? subcategory : category,
           practicalInfo: getPracticalInfo(data),
+          tabData: getTabData(data) as Array<LargeListicleTabData>,
         };
       }
     );
   };
 
   switch (type) {
+    case LISTICLE_TYPE.LARGE:
+      return (
+        <LargeListicle
+          items={getListicleData(items) || []}
+          listicleSectionTitle={listicleSectionTitle}
+        />
+      );
     case LISTICLE_TYPE.MEDIUM:
       return (
         <MediumListicle

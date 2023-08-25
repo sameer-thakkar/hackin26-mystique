@@ -85,30 +85,42 @@ export const StyledAsideModal = styled.div`
     ${({
       // @ts-expect-error TS(2339): Property 'sidebarType' does not exist on type 'Pic... Remove this comment to see the full error message
       sidebarType,
-    }) =>
-      sidebarType === SIDEBAR_TYPES.PRODUCT_CARD
-        ? `
-      height: auto;
-      padding: 0;
-      background: unset;
-      top: 0;
-      overflow-y: unset;
-      max-width: unset;
-    `
-        : sidebarType === SIDEBAR_TYPES.COMBO_VARIANT
-        ? `
-      height: auto;
-      padding: 0;
-      background: ${COLORS.BRAND.BLACK};
-    `
-        : sidebarType === SIDEBAR_TYPES.SIDE_NAV
-        ? `
-      left: unset;
-      box-sizing: border-box;
-      width: 100%;
-      border-radius: 20px 20px 0 0;
-      `
-        : ``}
+    }) => {
+      switch (sidebarType) {
+        case SIDEBAR_TYPES.PRODUCT_CARD:
+          return `
+          height: auto;
+          padding: 0;
+          background: unset;
+          top: 0;
+          overflow-y: unset;
+          max-width: unset;
+        `;
+        case SIDEBAR_TYPES.COMBO_VARIANT:
+          return `height: auto;
+          padding: 0;
+          background: ${COLORS.BRAND.BLACK};
+        `;
+        case SIDEBAR_TYPES.SIDE_NAV:
+          return `
+          left: unset;
+          box-sizing: border-box;
+          width: 100%;
+          border-radius: 20px 20px 0 0;
+          `;
+        case SIDEBAR_TYPES.LISTICLE_CARD:
+          return `
+          height: auto;
+          padding: 0;
+          background: unset;
+          top: 0;
+          overflow-y: unset;
+          max-width: unset;
+        `;
+        default:
+          return ``;
+      }
+    }}
   }
 `;
 const Header = styled.div`
@@ -124,7 +136,8 @@ const Header = styled.div`
     // @ts-expect-error TS(2339): Property 'headerType' does not exist on type 'Pick... Remove this comment to see the full error message
     headerType,
   }) =>
-    headerType === SIDEBAR_TYPES.PRODUCT_CARD
+    headerType === SIDEBAR_TYPES.PRODUCT_CARD ||
+    headerType === SIDEBAR_TYPES.LISTICLE_CARD
       ? `
       width: calc(100% - 32px);
       padding: 0 16px;
@@ -280,6 +293,14 @@ const ModalContent = styled.div`
   overflow-x: scroll;
   height: ${windowHeight - 46}px;
   border-radius: 10px 10px 0 0;
+  `
+      : sidebarType === SIDEBAR_TYPES.LISTICLE_CARD
+      ? `
+  overflow-x: scroll;
+  height: ${windowHeight - 46}px;
+  border-radius: 16px 16px 0 0;
+  width: 100vw;
+  max-width: 100vw;
   `
       : sidebarType === SIDEBAR_TYPES.COMBO_VARIANT
       ? `

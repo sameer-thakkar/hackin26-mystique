@@ -25,6 +25,21 @@ const SpotifyPlayer = dynamic(() =>
 );
 const Notes = dynamic(() => import('components/shortcodes/Notes'));
 
+const Train = dynamic(() => import('components/shortcodes/Train'));
+const Bus = dynamic(() => import('components/shortcodes/Bus'));
+const Car = dynamic(() => import('components/shortcodes/Car'));
+const Plane = dynamic(() => import('components/shortcodes/Plane'));
+const Ship = dynamic(() => import('components/shortcodes/Ship'));
+const Snow = dynamic(() => import('components/shortcodes/Snow'));
+const Location = dynamic(() => import('components/shortcodes/Location'));
+const Timings = dynamic(() => import('components/shortcodes/Timings'));
+const Map = dynamic(() => import('components/shortcodes/Map'));
+const Weather = dynamic(() => import('components/shortcodes/Weather'));
+const Rain = dynamic(() => import('components/shortcodes/Rain'));
+const Drizzle = dynamic(() => import('components/shortcodes/Drizzle'));
+const Distance = dynamic(() => import('components/shortcodes/Distance'));
+const Calendar = dynamic(() => import('components/shortcodes/Calendar'));
+const Ticket = dynamic(() => import('components/shortcodes/Ticket'));
 type ComponentType<TProps = {}> =
   | React.ComponentClass<TProps>
   | React.FunctionComponent<TProps>
@@ -80,6 +95,63 @@ const shortCodesDict: ShortCodeDictionary = {
   notes: {
     component: Notes,
     type: SHORT_CODE_TYPES.COMPONENT,
+  },
+  train: {
+    component: Train,
+  },
+  bus: {
+    component: Bus,
+  },
+  car: {
+    component: Car,
+  },
+  plane: {
+    component: Plane,
+  },
+  ship: {
+    component: Ship,
+  },
+  snow: {
+    component: Snow,
+  },
+  location: {
+    component: Location,
+  },
+  address: {
+    component: Location,
+  },
+  ticket: {
+    component: Ticket,
+  },
+  drizzle: {
+    component: Drizzle,
+  },
+  rain: {
+    component: Rain,
+  },
+  weather: {
+    component: Weather,
+  },
+  season: {
+    component: Weather,
+  },
+  sun: {
+    component: Weather,
+  },
+  map: {
+    component: Map,
+  },
+  calendar: {
+    component: Calendar,
+  },
+  distance: {
+    component: Distance,
+  },
+  timings: {
+    component: Timings,
+  },
+  duration: {
+    component: Timings,
   },
 };
 
