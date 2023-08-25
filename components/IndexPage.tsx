@@ -381,6 +381,20 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   }
 
+  if (query?.amp) {
+    const queryParams = new URLSearchParams(queryParamsString);
+    queryParams.delete('amp');
+    const queryStr = queryParams.toString();
+    const url = `https://${host}${pathname}${queryStr ? `?${queryStr}` : ''}`;
+    return {
+      redirect: {
+        destination: url,
+        permanent: true,
+        type: 301,
+      },
+    };
+  }
+
   // Asynchronously get the data for microsite or content page
   const { payload: props } = await reflect(
     getPageData({
