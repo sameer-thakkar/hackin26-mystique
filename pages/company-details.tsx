@@ -3,7 +3,7 @@ import { Client } from 'config/prismic-config';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
 import { MinimalHelmet } from 'components/common/NextSeoMeta';
-import ContentContainer from 'components/UI/ContentContainer';
+import { ContentContainer } from 'components/UI/ContentContainer';
 import { TopHeading } from 'components/UI/Headings';
 import Paragraph from 'components/UI/Paragraph';
 import { getHeadoutLanguagecode } from 'utils';

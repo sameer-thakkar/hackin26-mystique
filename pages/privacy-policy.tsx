@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import { Client } from 'config/prismic-config';
-import styled, { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import { getAppTheme } from 'style/theme';
-import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
 import { MinimalHelmet } from 'components/common/NextSeoMeta';
-import ContentContainer from 'components/UI/ContentContainer';
+import { PrivacyContentContainer } from 'components/UI/ContentContainer';
 import { SubHeading, TopHeading } from 'components/UI/Headings';
 import Paragraph from 'components/UI/Paragraph';
-import RichContent from 'UI/RichContent';
 import { MBContextProvider } from 'contexts/MBContext';
-import { getHeadoutLanguagecode, getNakedDomain } from 'utils';
+import { getHeadoutLanguagecode } from 'utils';
 import { fetchDomainConfig } from 'utils/apiUtils';
 import { getPrismicDocument } from 'utils/prismicUtils';
 import { getLogoRedirectionUrl } from 'utils/urlUtils';
@@ -21,11 +19,6 @@ import {
   DROPDOWN_ELEMENT,
   THEMES,
 } from 'constants/index';
-
-const Title = styled.div`
-  margin: 10px 0px;
-  font-size: 18px;
-`;
 
 export default class privacy extends Component<any, any> {
   state = {
@@ -137,9 +130,6 @@ export default class privacy extends Component<any, any> {
       commonFooter,
       theme_override: footerTheme,
       theme: mbTheme,
-      address_line: addressLine,
-      organization_name: organization,
-      use_domain_email: useDomain,
     } = data;
     const logoRedirectionUrl = getLogoRedirectionUrl({
       uid,
@@ -147,17 +137,9 @@ export default class privacy extends Component<any, any> {
       isDev,
       host,
     });
-    const abbreviatedOrganization =
-      (organization &&
-        organization
-          .split(' ')
-          .map((word: any) => word[0])
-          .join('')) ||
-      'Headout';
 
     const themeOverride =
       footerTheme === THEMES.INHERIT ? mbTheme : footerTheme;
-    const nakedDomain = useDomain ? getNakedDomain(host) : 'headout.com';
 
     return (
       <ThemeProvider theme={getAppTheme(mbTheme || THEMES.DEFAULT)}>
@@ -186,313 +168,660 @@ export default class privacy extends Component<any, any> {
             dropdown={this.state.dropdown}
             handleDropdownToggle={this.handleDropdownToggle}
           />
-          <ContentContainer>
-            <TopHeading h1>Privacy Policy</TopHeading>
-            <Paragraph>
-              This document represents a legal document that serves as our
-              privacy policy (“Privacy Policy”). It governs the privacy terms of
-              our Website. Our Privacy Policy is part of our Legal Terms.
-              Capitalized terms, unless otherwise defined below, have the
-              meaning specified within the Definitions section our Terms of Use.{' '}
-              <br />
-              The last update to our Privacy Policy was posted on {host}
-              /privacy-policy
-            </Paragraph>
-            <SubHeading>Your Privacy</SubHeading>
-            <Paragraph>
-              {organization} (“{abbreviatedOrganization}
-              ”/”We”/”Us”) follows all legal requirements to protect your
-              protect your privacy. Our Privacy Policy is a legal statement that
-              explains how we may collect information from you, how we may share
-              your information, and how you can limit our sharing of your
-              information.
-            </Paragraph>
-            <Paragraph as="div">
-              We break up the types of information you share into Non Personal
-              Information and Personally Identifiable Information.
-              <ul>
-                <li>
-                  {`"Non Personal Information" is information that is not personally
-                  identifiable to you and that we automatically collect when you
-                  access our Website with a web browser.`}
-                </li>
-                <li>
-                  {`"Personally Identifiable Information" is non-public information
-                  that is personally identifiable to you and obtained in order for
-                  us to provide you within access to certain features of our
-                  Website. This can include information about your Entity as a
-                  Provider or as a User when making purchases from a Provider.
-                  Personally Identifiable Information may include information such
-                  as your email address, physical location, business name, and
-                  other related information that you provide to us or that we
-                  obtain about you. It may also include any images that upload
-                  when using our Website as well as credit card or other payment
-                  information that you may present when making a purchase from a
-                  Provider through our Website (please note the important
-                  exception below under Online Purchases regarding payment
-                  information provided through our Website).`}
-                </li>
-              </ul>
-            </Paragraph>
-            <SubHeading>Information We Collect</SubHeading>
-            <Paragraph>
-              Generally, you control the amount and type of information you
-              provide to {abbreviatedOrganization} when using our Website. As a
-              Visitor, you can browse our Website to find out more about our
-              Website a You are not required to provide us with any Personally
-              Identifiable Information as a Visitor.
-              <Paragraph>
-                However, if registered as a Member or a Customer, you must
-                provide Personally Identifiable Information to{' '}
-                {abbreviatedOrganization} in order for us to provide you with
-                certain features our Website. We collect your Personally
-                Identifiable Information in the following ways:
-              </Paragraph>
-            </Paragraph>
-            <Title>At Member Registration</Title>
-            <Paragraph>
-              When you register for membership, we collect your name and email
-              address so that we can communicate with you about our Website.
-            </Paragraph>
-            <Title>Participation in Our Website</Title>
-            <Paragraph>
-              You can upload Member Content as part of using our Website. You
-              should take great care in what you may upload so as not to
-              infringe on your own privacy or that of others. We don’t have a
-              duty to review what you upload.
-            </Paragraph>
-            <Title>Online Purchases</Title>
-            <Paragraph>
-              Members and Visitors can make purchases of products/services from
-              a Provider through our Website. The payment information you
-              provide clearly contains Personally Identifiable Information.
-              However, any payment information that you give to a Provider
-              outside of our Website is not subject to this Privacy Policy.
-            </Paragraph>
-            <Title>Online Forms</Title>
-            <Paragraph>
-              There may be online forms used in our Website. The information you
-              enter into these online forms may contain Personally Identifiable
-              Information.
-            </Paragraph>
-            <Title>Computer Information Collected</Title>
-            <Paragraph>
-              When you use our Website, we automatically collect certain
-              computer information by the interaction of your mobile phone or
-              web browser with our Website. Such information is typically
-              considered Non Personal Information. We also collect the
-              following:
-            </Paragraph>
-            <Title>Cookies</Title>
-            <Paragraph>
-              Our Website uses “Cookies” to identify the areas of our Website
-              that you have visited. A Cookie is a small piece of data stored on
-              your computer or mobile device by your web browser. We use Cookies
-              to personalize the Content that you see on our Website. Most web
-              browsers can be set to disable the use of Cookies. However, if you
-              disable Cookies, you may not be able to access functionality on
-              our Website correctly or at all. We never place Personally
-              Identifiable Information in Cookies.
-            </Paragraph>
-            <Title>Web Beacons</Title>
-            <Paragraph>
-              We may also use a technology called, web beacons, to collect
-              general information about your use of our Website and your use of
-              special promotions or newsletters (“Web Beacons”). The information
-              we collect by Web Beacons allows us to statistically monitor the
-              number of people that open our emails. Web Beacons are not used to
-              track your activity outside of our Website. We do not link Non
-              Personal Information from the Web Beacons to Personally
-              Identifiable Information without your permission.
-            </Paragraph>
-            <Title>Automatic Information</Title>
-            <Paragraph>
-              We automatically receive information from your web browser or
-              mobile device. This information includes the name of the Website
-              from which you entered our Website, if any, as well as the name of
-              the Website to which you’re headed when you leave our Website.
-              This information also includes the IP address of your
-              computer/proxy server that you use to access the Internet, your
-              Internet Website provider name, web browser type, type of mobile
-              device, and computer operating system. We use all of this
-              information to analyze trends among our Users to help improve our
-              Website.
-            </Paragraph>
-            <SubHeading>How We Use Your Information</SubHeading>
-            <Paragraph>
-              We use the information we receive from you as follows:
-            </Paragraph>
-            <Title>Providing and Improving Our Website</Title>
-            <Paragraph>
-              We may use the Personally Identifiable information you provide to
-              us along with any computer information we receive to provide our
-              Website to you as well as to make improvements to it.
-            </Paragraph>
-            <SubHeading>Communications and Email Alerts</SubHeading>
-            <Paragraph>
-              When we communicate with you about our Website, we will use the
-              email address you provided when registering as a Member. We may
-              also send you Website alerts regarding your use of our Website.
-              Finally, we may also send you emails with promotional information
-              about us, unless you have opted out of receiving such information.
-              You can change contact preferences at any time through your
-              account. While you can opt-out of promotional messages, you cannot
-              opt-out of receiving Website alerts.
-            </Paragraph>
-            <Title>
-              Sharing Information with Affiliates and Other Third Parties
-            </Title>
-            <Paragraph>
-              We do not sell, rent, or otherwise provide your Personally
-              Identifiable Information to third parties for marketing purposes.
-              We may provide your Personally Identifiable Information to
-              affiliates that provide services to us with regards to our Website
-              (i.e. payment processors, webhosting companies, etc.); such
-              affiliates will only receive information necessary to provide the
-              respective services and will be bound by confidentiality
-              agreements limiting the use of such information.
-            </Paragraph>
-            <SubHeading>Legally Required Releases of Information</SubHeading>
-            <Paragraph>
-              We may be legally required to disclose your Personally
-              Identifiable Information, if such disclosure is (a) required by
-              subpoena, law, or other legal process; (b) necessary to assist law
-              enforcement officials or government enforcement agencies; (c)
-              necessary to investigate violations of or otherwise enforce our
-              Legal Terms; (d) necessary to protect us from legal action or
-              claims from third parties including you and/or other Members;
-              and/or (e) necessary to protect the legal rights, personal/real
-              property, or personal safety
-              {abbreviatedOrganization}, our Users, employees, and affiliates.
-            </Paragraph>
-            <SubHeading>Disclosures to Successors</SubHeading>
-            <Paragraph>
-              If we are acquired or merge, in whole or in part, with another
-              business that would become responsible for providing the Website
-              to you, we retain the right to transfer your Personally
-              Identifiable Information to the new business. The new business
-              would retain the right to use your Personally Identifiable
-              Information according to the terms of this Privacy Policy as well
-              as to any changes to this Privacy Policy as instituted by the new
-              business.
-            </Paragraph>
-            <SubHeading>Protecting Your Child’s Privacy</SubHeading>
-            <Paragraph>
-              We want to protect your Child’s privacy. Even though our Website
-              is not designed for use by a Child, we realize that a Child may
-              attempt to access our Website. We do not knowingly collect
-              Personally Identifiable Information from a Child. If you are a
-              parent or guardian and believe your Child is using our Website,
-              please contact us. We may ask for proof of identification before
-              we remove any information to prevent malicious removal of account
-              information. If we discover on our own that a Child is accessing
-              our Website, we will delete the information as soon as we discover
-              it, we will not use the information for any purpose, and we will
-              not disclose the information to third parties. You acknowledge
-              that we do not verify the age of our users nor do we have any
-              liability to do so. If you are a Child, please do not access our
-              Website.
-            </Paragraph>
-            <SubHeading>
-              Protecting the Privacy Rights of Third Parties
-            </SubHeading>
-            <Paragraph>
-              We believe in everyone’s right to privacy. If any Member Content
-              you upload to our Website contain the images of third parties
-              (i.e. bystanders), you need to make sure you have permission to
-              include them in your image. While we are not legally liable for
-              the actions of our Users, we will remove any images for which we
-              are notified that such images violate the privacy rights of
-              others.
-            </Paragraph>
-            <SubHeading>Links to Other Websites</SubHeading>
-            <Paragraph>
-              Our Website may contain links to other websites (“Third Party
-              Websites”). You agree that we have no control over such Third
-              Party Websites and that such Third Party Websites are NOT subject
-              to this Privacy Policy. These Third Party Websites may have their
-              own privacy policies and other legal documents. It is your sole
-              responsibility to verify the privacy policies and other legal
-              documents of such Third Party Websites to see how they treat your
-              personal information. You acknowledge that your use and access of
-              these Websites is solely at your own risk.
-            </Paragraph>
-            <SubHeading>Our Email Policy</SubHeading>
-            <Paragraph>
-              We and our affiliates fully comply with international laws
-              regarding SPAM. You can always opt out of receipt of further email
-              correspondence from us and/or our affiliates. We agree that we
-              will not sell, rent, or trade your email address to any
-              unaffiliated third-party without your permission.
-            </Paragraph>
-            <SubHeading>Our Security Policy</SubHeading>
-            <Paragraph>
-              We have constructed our Website using industry standard encryption
-              and authentication tools to protect your Personally Identifiable
-              Information. When we collect your Personally Identifiable
-              Information through our Website, we encrypt this information and
-              attempt to prevent unauthorized access to it by using industry
-              standard technologies, such as encryption software, routers and
-              firewalls. Unfortunately, due to the nature of the Internet, we
-              cannot completely guarantee that your Personally Identifiable
-              Information is completely protected. We strongly urge you to
-              protect any password you may have for our Website and to not share
-              it with anyone. You should always log out of our Website when not
-              in use, especially if you are sharing a computer or mobile device
-              with someone else or are using a public computer.
-            </Paragraph>
-            <SubHeading>Privacy Policy Updates</SubHeading>
-            <Paragraph>
-              {`We reserves the right to modify this Privacy Policy at any time. You
-              should review this Privacy Policy frequently. If we make material
-              changes to this policy, we will notify you here, by email, or by
-              means of a notice on our home page. We will also change the "Last
-              Updated" date at the beginning of this Privacy Policy. Any changes
-              we make to our Privacy Policy are effective as of this Last Updated
-              date and replace any prior Privacy Policies.`}
-            </Paragraph>
-            <SubHeading>Changing Your Information</SubHeading>
-            <Paragraph>
-              You may change your email address or other Personally Identifiable
-              Information at any time using the account management features
-              found on our Website.
-            </Paragraph>
-            <SubHeading>
-              Questions About Our Privacy Practices or This Privacy Policy
-            </SubHeading>
-            <Paragraph>
-              If you have any questions about our Privacy Practices or this
-              Policy, please contact us by email at privacy@{nakedDomain}
-            </Paragraph>
-            <SubHeading>Your California Privacy Rights</SubHeading>
-            <Paragraph>
-              Your California Privacy Rights identifies the practices of{' '}
-              {abbreviatedOrganization}
-              as they relate to the use and sharing of personal information
-              California residents collected through this website. Under the law
-              of the State of California, California residents who provide
-              personal information via a website or other online service, such
-              as this website, may request and obtain from us, once each
-              calendar year, information about the personal information we have
-              shared, if any, with other businesses for their own direct
-              marketing uses. Where applicable, this information would include
-              the categories of personal information, and the names and
-              addresses of those businesses with which we have shared personal
-              information for the prior calendar year. To obtain from us the
-              information specified by California law, please contact:
-              <br />
-              <Paragraph>You can contact us at - </Paragraph>
-              <Paragraph>By E-mail: support@{nakedDomain}</Paragraph>
-              <Paragraph>By Mail: {organization || `Headout Inc.`}</Paragraph>
-              <Conditional if={addressLine}>
-                <RichContent render={addressLine} />
-              </Conditional>
-              <Conditional if={!addressLine}>
-                <Paragraph>311 W 43d St, Suite 12036</Paragraph>
-                <Paragraph>New York, NY 10036</Paragraph>
-              </Conditional>
-            </Paragraph>
-          </ContentContainer>
+          <PrivacyContentContainer>
+            <TopHeading h1>Headout&apos;s Privacy Policy</TopHeading>
+            <ol>
+              <li>
+                <SubHeading>Why this Privacy Policy?</SubHeading>
+                <Paragraph>
+                  Headout is vigilant and committed towards the protection and
+                  management of User’s Personal Information. Thus, Headout has
+                  implemented this Privacy Policy that aims to safeguard the
+                  Personal Information of all the User(s).
+                </Paragraph>
+                <Paragraph>
+                  This Policy, which is an integral part of Headout’s{' '}
+                  <a href="/terms">Terms of Use</a>, describes inter alia
+                  Headout’s procedures for the collection, processing,
+                  disclosure and protection of the User’s Personal Information
+                  when the User uses Our Platform. This Policy also intended to
+                  guide User(s) about their privacy rights. Under this Policy,
+                  we have also suggested how a User can contact Us in case they
+                  have any issues/doubts.
+                </Paragraph>
+                <Paragraph>
+                  Please note that We use User’s Personal Information to inter
+                  alia provide them with the service(s) available on the
+                  Platform in the best possible manner, improvise the overall
+                  usage of the Platform and to carry out other processing
+                  activities outlined in this Policy.
+                </Paragraph>
+                <Paragraph>
+                  This Privacy Policy shall not be applicable to third-party
+                  websites/apps that may be linked to Our Platform. Users are
+                  requested to refer to respective third-party
+                  websites/apps&apos; privacy policies to understand how their
+                  Personal Information will be collected and processed by such
+                  websites/apps.
+                </Paragraph>
+                <Paragraph>
+                  This Privacy Policy shall be read along with the Terms of Use
+                  and all capitalized terms used, but not defined herein, shall
+                  have the respective meanings as ascribed to them in the Terms
+                  of Use.
+                </Paragraph>
+              </li>
+              <li>
+                <SubHeading>
+                  How are You bound by the terms of this Privacy Policy?
+                </SubHeading>
+                <Paragraph>
+                  By using or accessing the Platform, You agree to the
+                  collection and use/processing of Personal Information in
+                  accordance with this Privacy Policy. This collection of
+                  information is necessary to provide the services on our
+                  Platform. If you do not share those, we will not be in a
+                  position to provide services. In case of any doubt reach out
+                  to us on{' '}
+                  <a href="mailto:privacy@headout.com">privacy@headout.com</a>.
+                </Paragraph>
+              </li>
+              <li>
+                <SubHeading>Terms referred to in Privacy Policy</SubHeading>
+                <Paragraph>
+                  For the purposes of this Privacy Policy:
+                  <ol>
+                    <li>
+                      <b>Account</b> means a unique account created for You on
+                      the Platform to access Our service or parts of Our
+                      service.
+                    </li>
+                    <li>
+                      <b>Company</b> (referred to as either &quot;Headout&quot;,
+                      &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or
+                      &quot;Our&quot; in this Agreement) refers to Headout.
+                      Inc., its affiliates, subsidiaries and/or any other body
+                      corporate related to Headout.
+                    </li>
+                    <li>
+                      <b>Cookies</b> are small files that are placed on Your
+                      computer, mobile device, or any other device by
+                      Website/Platform, containing the details of Your browsing
+                      history among its many uses.
+                    </li>
+                    <li>
+                      <b>Device</b> means any device that can be used to access
+                      the Platform such as a computer, a cellphone, or a digital
+                      tablet.
+                    </li>
+                    <li>
+                      <b>Personal Information</b> is any information that
+                      relates to an identified or identifiable User who is a
+                      natural person and that is shared by such User while
+                      availing services available on the Platform. Headout
+                      collects this from the User for the purpose of providing
+                      services on the Platform and fulfilling its different
+                      legal obligations. Please refer to pointer 5 (What type of
+                      Personal Information is collected by Headout?) for
+                      detailed information.
+                    </li>
+                    <li>
+                      <b>Platform</b> means Website and other related webpages,
+                      mobile applications and mobile site.
+                    </li>
+                    <li>
+                      <b>Privacy Policy/Policy</b> means and includes this
+                      document and amendments that may be made to this document
+                      in future. This shall also include any other document that
+                      Headout may come up with in future around this policy.
+                    </li>
+                    <li>
+                      <b>Social Media Platforms</b> refer to platforms like
+                      Facebook, Instagram etc. that are used to communicate with
+                      the Company in different scenarios and/or to create a
+                      login account on the Platform.
+                    </li>
+                    <li>
+                      <b>Service Providers</b> refers to the sellers listed on
+                      Headout’s Platform including affiliates and other business
+                      partners.
+                    </li>
+                    <li>
+                      <b>Third Party Vendors</b> refers to third-party companies
+                      or individuals that may be engaged by the Company for the
+                      smooth and error-free performance of the Platform. These
+                      third parties may also be engaged by the Company for
+                      better facilitation of services available on the Platform
+                      which includes analysing Your usage of the Platform.
+                    </li>
+                    <li>
+                      <b>Website</b> refers to{' '}
+                      <a href="https://headout.com">www.headout.com</a>
+                    </li>
+                    <li>
+                      <b>You/Your</b> shall mean the User.
+                    </li>
+                  </ol>
+                </Paragraph>
+              </li>
+              <li>
+                <SubHeading>
+                  Why does Headout collect Your Personal Information?
+                </SubHeading>
+                <Paragraph>
+                  Headout is a platform that connects a User with the Service
+                  Provider and facilitates bookings of different experiences and
+                  events listed on the Platform by the Service Provider.
+                  Accordingly, the Personal Information and other related
+                  information are collected by Us to inter alia help Us provide
+                  You the services available on the Platform and also to carry
+                  out other processing activities outlined in this Policy.
+                </Paragraph>
+              </li>
+              <li>
+                <SubHeading>
+                  What type of information is collected by Headout?
+                </SubHeading>
+                <Paragraph>
+                  <ol>
+                    <li>
+                      Personal Information:
+                      <ol>
+                        <li>
+                          The Personal Information that We collect about You
+                          depends on various variables including but not limited
+                          to the context of Your interactions with Us, the
+                          products, services, and features that You use, Your
+                          location, and the applicable laws. The Personal
+                          Information collected by Us can be divided into two
+                          heads i.e. Non-Identifiable Personal Information and
+                          Personally Identifiable Information.
+                        </li>
+                        <li>
+                          &quot;Non-Identifiable Personal Information&quot; is
+                          information that cannot be used to identify You or a
+                          person in specific. This data could also be anonymous
+                          in nature. This data includes but is not limited to
+                          aggregated data around the use of services available
+                          on the Platform, masked IP addresses etc. <br />
+                          &quot;Personally Identifiable Information&quot; is
+                          information that is personally identifiable to You and
+                          that can be used to distinguish or trace Your
+                          identity. This information is also collected by Us in
+                          order to provide You with access to certain features
+                          of Our Platform. This information includes but is not
+                          limited to information such as name, social security
+                          number, date and place of birth, phone number,
+                          address, email ID, payment/card details etc.
+                        </li>
+                      </ol>
+                    </li>
+                    <li>
+                      Automated Information:
+                      <ol>
+                        <li>
+                          When You access Our Platform, some of Your information
+                          gets automatically captured. This automated
+                          information that We capture falls under the
+                          Non-Identifiable Personal Information category.
+                          Following are the broad types of information that get
+                          automatically captured:
+                          <ul>
+                            <li>
+                              Device information such as the browser used for
+                              accessing the Platform, the device used for
+                              accessing the Platform, operating system,
+                              application version number etc.
+                            </li>
+                            <li>
+                              IP information is also captured when You access
+                              the Platform.
+                            </li>
+                            <li>
+                              Behavioural information i.e. how You are accessing
+                              Our Platform, What different sections of the
+                              Platform You access, duration of Your access etc.
+                            </li>
+                            <li>Date and time when You access Our Platform.</li>
+                          </ul>
+                        </li>
+                        <li>
+                          All the aforesaid information captured automatically
+                          is used for the following purposes:
+                          <ul>
+                            <li>
+                              To ensure the security of Our IT systems, for
+                              example, to defend against specific attacks on Our
+                              systems and to recognize attack patterns;
+                            </li>
+                            <li>
+                              To load balance, i.e., to distribute access to Our
+                              Platform across several devices and to be able to
+                              offer You the fastest loading times;
+                            </li>
+                            <li>
+                              To understand Your demographics, interests, and
+                              behaviour so that the best services can be
+                              provided to You;
+                            </li>
+                            <li>
+                              In the event of specific indications of criminal
+                              offences, to enable criminal prosecution,
+                              avoidance of harm, or legal punishment;
+                            </li>
+                          </ul>
+                        </li>
+                      </ol>
+                    </li>
+                    <li>
+                      Cookies:
+                      <ol>
+                        <li>
+                          Additionally, We also use different types of cookies
+                          to track Your usage of Our Platform and store certain
+                          information that further helps us to provide You with
+                          more personalized services. There are certain cookies
+                          that may get placed on Your Device because of Your
+                          usage of any services available on Our Platform.
+                        </li>
+                        <li>
+                          Broadly, We use two different sets of technologies
+                          under this head i.e.:
+                          <ul>
+                            <li>
+                              <b>Cookies or Browser Cookies.</b> it is a small
+                              file that automatically gets placed on Your Device
+                              when You access Our Platform. You can instruct
+                              Your browser to refuse all Cookies or to indicate
+                              when a cookie should be saved. In case, if You do
+                              not accept Our Cookies, You may not be able to use
+                              some parts of Our Platform.{' '}
+                            </li>
+                            <li>
+                              <b>Web Beacons.</b> Also referred to as clear
+                              gifs, pixel tags, and single-pixel gifs that are
+                              attached in various sections of Our Platform and
+                              Our emails that permit us to monitor and
+                              understand the activity of Users.
+                            </li>
+                          </ul>
+                        </li>
+                        <li>
+                          These Cookies stored on Your Device can be
+                          &quot;Persistent&quot; or &quot;Session&quot; Cookies.
+                          Persistent Cookies are the ones that remain on Your
+                          Device even when You go offline, whereas, Session
+                          Cookies are automatically deleted as soon as You close
+                          Your web browser.
+                        </li>
+                        <li>
+                          We use both Session and Persistent Cookies for the
+                          purposes set out below:
+                          <ul>
+                            <li>
+                              <b>Necessary / Essential Cookies</b>
+                              <Paragraph className="reduced-margin-top">
+                                <span className="italic-underline">Type:</span>{' '}
+                                Session Cookies
+                              </Paragraph>
+                              <Paragraph className="reduced-margin-top">
+                                <span className="italic-underline">
+                                  Purpose:
+                                </span>{' '}
+                                These Cookies are essential for You to access
+                                different sections of the Platform and if these
+                                are not allowed You may not be able to access
+                                the services available on the Platform. These
+                                cookies further help us to authenticate the
+                                Users and prevent any sort of fraudulent
+                                activity on the Platform.
+                              </Paragraph>
+                            </li>
+                            <li>
+                              <b>Cookies Policy / Notice Acceptance Cookies</b>
+                              <Paragraph className="reduced-margin-top">
+                                <span className="italic-underline">Type:</span>{' '}
+                                Persistent Cookies
+                              </Paragraph>
+                              <Paragraph className="reduced-margin-top">
+                                <span className="italic-underline">
+                                  Purpose:
+                                </span>{' '}
+                                These Cookies identify if Users have accepted
+                                the use of Cookies.
+                              </Paragraph>
+                            </li>
+                            <li>
+                              <b>Functionality Cookies</b>
+                              <Paragraph className="reduced-margin-top">
+                                <span className="italic-underline">Type:</span>{' '}
+                                Persistent Cookies
+                              </Paragraph>
+                              <Paragraph className="reduced-margin-top">
+                                <span className="italic-underline">
+                                  Purpose:
+                                </span>{' '}
+                                These Cookies allow us to remember choices You
+                                make when You use the Platform, such as
+                                remembering Your login details or language
+                                preference. The larger purpose of these Cookies
+                                is to provide You with a more personalized
+                                experience every time You use the Platform.
+                              </Paragraph>
+                            </li>
+                          </ul>
+                        </li>
+                      </ol>
+                    </li>
+                  </ol>
+                </Paragraph>
+              </li>
+              <li>
+                <SubHeading>
+                  For what do We use Your Personal Information and with whom do
+                  We share it?
+                </SubHeading>
+                <Paragraph>
+                  <ol>
+                    <li>
+                      Your Personal Information collected while You access Our
+                      Platform is used only for lawful purposes and with an aim
+                      to provide You the services. We do not sell or rent this
+                      information to anyone nor do We share Your information
+                      with any third party, unless otherwise provided under the
+                      applicable law and specified in this Privacy Policy and/or
+                      other than as necessary to fulfil Your request.
+                    </li>
+                    <li>
+                      The Personal Information collected from You is used in the
+                      following manner:
+                      <ol>
+                        <li>
+                          <span className="italic-underline">
+                            For booking purposes:
+                          </span>{' '}
+                          We use Your Personal Information, which may include
+                          Your name, email ID, payment details etc., to ensure
+                          that You and Your fellow travellers, if any, can
+                          complete and secure a booking.
+                        </li>
+                        <li>
+                          <span className="italic-underline">
+                            For marketing purposes:
+                          </span>{' '}
+                          We do run marketing and promotional campaigns along
+                          with the Service Providers and/or any other third
+                          parties and We may use Personal Information, which may
+                          include name, email ID, contact details etc., to
+                          ensure that requisite benefits are passed on to You
+                          under such marketing and promotional campaigns.
+                          Additionally, You may also receive
+                          emails/notifications regarding marketing campaigns,
+                          newsletters, reward programs and exclusive promotions
+                          offering special deals.
+                        </li>
+                        <li>
+                          For other reasons: We may also use Your Personal
+                          Information for several other reasons that include but
+                          are not limited to –
+                          <ul>
+                            <li>
+                              Provide, maintain and improvise Our services;
+                            </li>
+                            <li>
+                              Communicate with You for different purposes
+                              including but not limited to keep You informed
+                              about any updates around the booking made by You;
+                            </li>
+                            <li>Any changes made on the Platform;</li>
+                            <li>For customer service purposes;</li>
+                            <li>For seeking reviews of services;</li>
+                            <li>For survey purposes;</li>
+                            <li>For banking purposes.</li>
+                          </ul>
+                        </li>
+                      </ol>
+                    </li>
+                    <li>
+                      We share Your information with various third parties,
+                      including parties in third countries outside the United
+                      States of America, for purposes as mentioned hereinbelow:
+                      <ol>
+                        <li>
+                          <b>With Third Party Vendors:</b> We may share Your
+                          Personal Information with Third Party Vendors to
+                          monitor and analyze the use of Our Service, and to
+                          contact You.
+                        </li>
+                        <li>
+                          <b>With affiliates:</b> We may share Your Personal
+                          Information with Our affiliates, in which case We will
+                          require those affiliates to honour this Privacy
+                          Policy. Affiliates include Our parent company and any
+                          other subsidiaries, joint venture partners, or other
+                          companies that We control or that are under common
+                          control with Us.
+                        </li>
+                        <li>
+                          <b>With payment partners:</b> for completing a booking
+                          on Our Platform You will be required to make a payment
+                          and while doing so, We will process the relevant
+                          Personal Information required in each case depending
+                          on the selected payment method. Similarly, some of
+                          Your Personal Information will be processed by parties
+                          who assist in the processing of the payment including
+                          but not limited to payment gateways, banking partners
+                          or any other third party that may be engaged in such
+                          process.{' '}
+                        </li>
+                        <li>
+                          <b>With service providers/business partners:</b> We
+                          may share Your Personal Information with Our business
+                          partners to offer You certain products, services, or
+                          promotions.
+                        </li>
+                        <li>
+                          <b>With a corporate:</b> We may share or transfer Your
+                          Personal Information with a corporate in connection
+                          with, or during negotiations of, any merger, sale of
+                          Company assets, financing, or acquisition of all or a
+                          portion of Our business to another company.
+                        </li>
+                        <li>
+                          <b>With other users:</b> when You share Personal
+                          Information or otherwise interact in the public with
+                          other Users on Our Platform or any other
+                          third-party/social media platforms, such information
+                          may be viewed by all users and may be publicly
+                          distributed outside. If You interact with other Users
+                          or register through third-party/social media
+                          platforms, Your contacts on the third-party/social
+                          media platforms may see Your name, profile, pictures,
+                          and description of Your activity. Similarly, other
+                          users will be able to view descriptions of Your
+                          activity, communicate with You, and view Your profile.
+                        </li>
+                        <li>
+                          Apart from the scenarios enumerated hereinabove, Your
+                          Personal Information may further be disclosed, if
+                          required:
+                          <ul>
+                            <li>
+                              By law, by court order, by any enforcement
+                              authority or in reference to any legal purposes;
+                            </li>
+                            <li>For audit and compliance purposes;</li>
+                            <li>
+                              For any other purpose that is in the larger
+                              interest of You as a User.
+                            </li>
+                          </ul>
+                        </li>
+                      </ol>
+                    </li>
+                    <li>
+                      Some of the third parties/vendors may choose to retain
+                      some of Your Personal Information. However, that is for
+                      limited purposes to provide You with services in
+                      compliance with the Terms of Use. Please note that these
+                      third parties/vendors have informed us that they are
+                      compliant with respective privacy laws and have a detailed
+                      privacy policy in place. If You want to know about these
+                      third parties/vendors you can raise a request by writing
+                      on{' '}
+                      <a href="mailto:privacy@headout.com">
+                        privacy@headout.com
+                      </a>{' '}
+                      and we will try to address such requests in best possible
+                      manner.
+                    </li>
+                  </ol>
+                </Paragraph>
+              </li>
+              <li>
+                <SubHeading>
+                  User generated content and social media platforms:
+                </SubHeading>
+                <Paragraph>
+                  <ol>
+                    <li>
+                      Any content that is uploaded, submitted and/or posted by
+                      Users including but not limited to reviews, ratings, chats
+                      or discussions on the Platform or any social media
+                      platform is collectively referred to as,{' '}
+                      <b>&quot;User Content&quot;</b>. User shall be solely
+                      responsible for the authenticity and correctness of all
+                      the User Content.
+                    </li>
+                    <li>
+                      User Content posted by any User is visible to the other
+                      Users accessing the Platform or the social media platform
+                      where such User Content is posted. User agrees to have no
+                      objection regarding the same.
+                    </li>
+                    <li>
+                      We may allow Users to create an account on the Platform
+                      using their personal social media accounts such as
+                      Facebook, Google etc. In such a scenario, We may capture
+                      some of Your Personal Information from Your social media
+                      account like Your first name, last name, email address,
+                      phone number, etc.
+                    </li>
+                    <li>
+                      Further, when You interact with us on social media or
+                      through Our posts, We may collect and process the
+                      information that You may provide us during such
+                      interactions. This may happen when You &quot;Like&quot;,
+                      &quot;Share&quot;, or &quot;Retweet&quot; a post, leave a
+                      comment, or submit other content on Our social media
+                      platform. The processing of data in this regard is done in
+                      compliance with relevant privacy laws and to provide You
+                      with the best of services. Please also note that upon such
+                      usage of social media platforms, the privacy policies of
+                      those social media platforms and the privacy settings You
+                      have made with those social media platforms will also
+                      apply.
+                    </li>
+                  </ol>
+                </Paragraph>
+              </li>
+              <li>
+                <SubHeading>Data collection from Children</SubHeading>
+                <Paragraph>
+                  As per Our Terms of Use, We suggest that only a person who has
+                  attained the age of majority shall make the booking on the
+                  Platform. However, there could be certain scenarios where a
+                  booking will be made for children by a person who has attained
+                  the age of majority. For such scenarios, We would like to
+                  state that at Headout We value the privacy of everyone
+                  including children. If We receive the Personal Information of
+                  a child/ minor, We ensure that such information is processed
+                  lawfully and to the extent that consent is received for
+                  processing such information from a person of majority. In the
+                  event Headout becomes aware that the User is a minor or below
+                  the legal age to consent in the jurisdiction concerned,
+                  Headout reserves its right to terminate all services to such
+                  User/ Account without any prior notice.
+                </Paragraph>
+              </li>
+              <li>
+                <SubHeading>
+                  For how long do We keep Your Personal Information?
+                </SubHeading>
+                <Paragraph>
+                  Your Personal Information is retained on Our servers for such
+                  a period as may be required to meet the purpose for which such
+                  information was collected. However, We may retain Your
+                  Personal Information for a longer period, if in case required
+                  by law. Where Your personal data is no longer required We will
+                  ensure it is either securely deleted or stored in a way which
+                  means it will no longer be used by the business.
+                </Paragraph>
+              </li>
+              <li>
+                <SubHeading>
+                  How do We protect Your Personal Information?
+                </SubHeading>
+                <Paragraph>
+                  We have put in place reasonable security measures to keep Your
+                  Personal Information guarded against any form of unauthorized
+                  access. Under this process of keeping Your Personal
+                  Information guarded, We have deployed security protocols as
+                  well as technical and physical limitations on access. Please
+                  be assured that Your Personal Information can only be accessed
+                  by authorized personnel who are permitted to access Personal
+                  Information in the course of their work.
+                </Paragraph>
+              </li>
+              <li>
+                <SubHeading>
+                  Where do We store Your Personal Information?
+                </SubHeading>
+                <Paragraph>
+                  Your Personal Information is stored in personnel files or
+                  within the electronic records (on servers in the USA or other
+                  countries) of Headout.
+                </Paragraph>
+              </li>
+              <li>
+                <SubHeading>
+                  Your rights towards Your Personal Information
+                </SubHeading>
+                <Paragraph>
+                  If You have a data privacy request, such as a request to
+                  delete or access Your data, please contact us at{' '}
+                  <a href="mailto:privacy@headout.com">privacy@headout.com</a>.
+                  We shall appropriately address Your request and respond to the
+                  same within the relevant statutory timeline. You may also
+                  request a copy of the information that We hold about You by
+                  sending Your request by email to{' '}
+                  <a href="mailto:privacy@headout.com">privacy@headout.com</a>.
+                  In case You have a complaint regarding the processing of Your
+                  Personal Information You can reach out to us on the same email
+                  ID.
+                </Paragraph>
+                <Paragraph>
+                  When handling any of these requests described above, We have
+                  the right to check the identity of the requester to ensure
+                  that he/she is the person entitled to make the request. In
+                  case of any complaint/disputes, You have the right to contact
+                  the supervisory authority of Your choice.
+                </Paragraph>
+              </li>
+              <li>
+                <SubHeading>Changes to Our Privacy Policy</SubHeading>
+                <Paragraph>
+                  We may update Our Privacy Policy from time to time. We will
+                  notify You of any changes by posting the new Privacy Policy on
+                  this page. We will also put a &quot;Last updated&quot; date
+                  tag at the top of this Policy, whenever it stands updated. You
+                  are advised to review this Privacy Policy periodically for any
+                  changes. Changes to this Privacy Policy are effective when
+                  they are posted on this page.
+                </Paragraph>
+              </li>
+            </ol>
+          </PrivacyContentContainer>
           <br />
           <br />
           <br />

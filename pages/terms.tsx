@@ -6,7 +6,7 @@ import Conditional from 'components/common/Conditional';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
 import { MinimalHelmet } from 'components/common/NextSeoMeta';
-import ContentContainer from 'components/UI/ContentContainer';
+import { ContentContainer } from 'components/UI/ContentContainer';
 import { SubHeading, TopHeading } from 'components/UI/Headings';
 import Paragraph from 'components/UI/Paragraph';
 import RichContent from 'UI/RichContent';
