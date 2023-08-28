@@ -1,16 +1,16 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import Conditional from 'components/common/Conditional';
+import { Button } from '@headout/aer';
 import { getProductCommonProperties, trackEvent } from 'utils/analytics';
 import { checkIfBroadwayMB, checkIfLTTMB } from 'utils/helper';
 import { metaAtom } from 'store/atoms/meta';
-import COLORS from 'const/colors';
-import { FONTS } from 'const/fonts';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  BUTTON_LOADING_DURATION,
+} from 'const/index';
 import { strings } from 'const/strings';
-import { expandFontToken } from 'const/typography';
-import { BUTTON_LOADER_ANIMATION } from 'assets/SvgIcons';
 import { MBContext } from '../../contexts/MBContext';
 
 const StickyFooterContentWrapper = styled.div`
@@ -22,28 +22,16 @@ const StickyFooterContentWrapper = styled.div`
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1), 0px 2px 8px rgba(0, 0, 0, 0.1);
   padding: 1rem 1.5rem;
   box-sizing: border-box;
-  .buy-button,
-  .unavailable-button {
+  .buy-button-wrapper {
     display: block;
     margin: 0 auto;
     width: 100%;
+    height: 3.125rem;
     max-width: 24rem;
-    border: none;
-    border-radius: 8px;
-    text-align: center;
-    ${expandFontToken(FONTS.BUTTON_MEDIUM)}
-  }
-  .buy-button {
-    color: ${COLORS.BRAND.WHITE};
-    background: ${COLORS.BRAND.PURPS};
-    cursor: pointer;
-    box-shadow: 0px 8px 15px rgba(128, 0, 255, 0.3);
-    height: 50px;
-  }
-  .unavailable-button {
-    padding: 15px 24px;
-    background: ${COLORS.GRAY.G5};
-    color: ${COLORS.BRAND.WHITE};
+    button {
+      cursor: pointer;
+      border: none;
+    }
   }
 `;
 
@@ -94,33 +82,37 @@ const StickyFooter = ({
     });
   };
 
+  const getCTAText = () => {
+    switch (true) {
+      case !isAvailable:
+        return strings.UNAVAILABLE;
+      case isLTT || isBroadway:
+        return strings.CHECK_AVAIL;
+      default:
+        return strings.BANNER_CTA;
+    }
+  };
+
   return (
     <StickyFooterContentWrapper>
-      <Conditional if={isAvailable}>
-        <button
+      <div className="buy-button-wrapper">
+        <Button
           tabIndex={0}
-          className="buy-button"
+          size="medium"
+          color="purps"
+          variant="primary"
+          isLoading={isButtonLoading}
+          disabled={!isAvailable}
           onClick={() => {
             if (isButtonLoading) return;
             setButtonLoading(true);
+            setTimeout(() => setButtonLoading(false), BUTTON_LOADING_DURATION);
             trackBookNowClick();
-            let target = '_self';
-            window.open(bookingUrl, target, 'noopener, noreferrer');
+            window.open(bookingUrl, '_self', 'noopener, noreferrer');
           }}
-        >
-          <Conditional if={!isButtonLoading}>
-            {isLTT || isBroadway ? strings.CHECK_AVAIL : strings.BANNER_CTA}
-          </Conditional>
-          <Conditional if={isButtonLoading}>
-            {BUTTON_LOADER_ANIMATION}
-          </Conditional>
-        </button>
-      </Conditional>
-      <Conditional if={!isAvailable}>
-        <button disabled className="unavailable-button">
-          {strings.UNAVAILABLE}
-        </button>
-      </Conditional>
+          text={getCTAText()}
+        />
+      </div>
     </StickyFooterContentWrapper>
   );
 };

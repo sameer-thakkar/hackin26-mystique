@@ -3,8 +3,9 @@ import React, { useContext, useState } from 'react';
 import { RichText } from 'prismic-reactjs';
 import styled from 'styled-components';
 import useSWR from 'swr';
+import { Button } from '@headout/aer';
 import Conditional from 'components/common/Conditional';
-import Button from 'components/UI/Button';
+import UIButton from 'components/UI/Button';
 import Image from 'UI/Image';
 import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
 import { MBContext } from 'contexts/MBContext';
@@ -16,12 +17,20 @@ import { getCancellationPolicyString } from 'utils/productUtils';
 import { shortCodeSerializerWithParentProps } from 'utils/shortCodes';
 import { getDuration } from 'utils/timeUtils';
 import COLORS from 'const/colors';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  BUTTON_LOADING_DURATION,
+} from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import { CHECK, CHEVRON_DOWN, CROSS } from 'assets/SvgIcons';
 
-const ComparisonTableWrapper = styled.div`
+const ComparisonTableWrapper = styled.div<{
+  tourCount?: string;
+  isExpanded?: boolean;
+  isMobile?: boolean;
+}>`
   width: auto;
   display: grid;
   line-height: 1.3;
@@ -70,10 +79,8 @@ const ComparisonTableWrapper = styled.div`
     width: calc(100%);
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: repeat(3, 1fr) ${({
-      // @ts-expect-error TS(2339): Property 'isMobile' does not exist on type 'Pick<D... Remove this comment to see the full error message
-      isMobile,
-    }) => (isMobile ? '16px' : '')};
+    grid-template-columns: repeat(3, 1fr) ${({ isMobile }) =>
+      isMobile ? '16px' : ''};
     grid-column-gap: 24px;
     border-bottom: 1px solid ${COLORS.GRAY.G6};
     padding-bottom: 24px;
@@ -206,10 +213,8 @@ const ComparisonTableWrapper = styled.div`
       max-width: 100vw;
       width: 100% !important;
       grid-column-gap: 16px;
-      grid-template-columns: 0px repeat(${({
-        // @ts-expect-error TS(2339): Property 'tourCount' does not exist on type 'Pick<... Remove this comment to see the full error message
-        tourCount,
-      }) => tourCount}, 164px) 4px;
+      grid-template-columns: 0px repeat(${({ tourCount }) =>
+        tourCount}, 164px) 4px;
       position: relative;
     }
     .row::before {
@@ -370,6 +375,7 @@ const AutomatedTourComparisonTable = ({
   collectionId,
 }: any) => {
   const [isExpanded, setExpand] = useState(false);
+  const [isButtonLoading, setButtonLoading] = useState(-1);
 
   const {
     lang,
@@ -469,7 +475,6 @@ const AutomatedTourComparisonTable = ({
   return (
     <Conditional if={tourGroups?.length}>
       <ComparisonTableWrapper
-        // @ts-expect-error TS(2769): No overload matches this call.
         isExpanded={isExpanded}
         isMobile={isMobile}
         tourCount={tourGroups?.length}
@@ -543,19 +548,26 @@ const AutomatedTourComparisonTable = ({
                   return (
                     <Column key={index}>
                       <div className="tour-cta">
-                        <a
-                          href={ctaProps.link.url}
-                          onClick={() =>
+                        <Button
+                          size="medium"
+                          variant="primary"
+                          color="purps"
+                          text={strings.BOOK_NOW_CTA}
+                          isLoading={isButtonLoading === index}
+                          height="2.75rem"
+                          onClick={() => {
+                            setButtonLoading(index);
+                            setTimeout(
+                              () => setButtonLoading(-1),
+                              BUTTON_LOADING_DURATION
+                            );
+                            window.open(ctaProps.link.url, '_self');
                             onBookNowClick({
                               tgid: tour.tgid,
                               position: index + 1,
-                            })
-                          }
-                        >
-                          <Button widthProp="100%">
-                            {strings.BOOK_NOW_CTA}
-                          </Button>
-                        </a>
+                            });
+                          }}
+                        />
                       </div>
                     </Column>
                   );
@@ -644,19 +656,26 @@ const AutomatedTourComparisonTable = ({
                 return (
                   <Column key={index}>
                     <div className="tour-cta">
-                      <a
-                        href={ctaProps.link.url}
-                        onClick={() =>
+                      <Button
+                        size="medium"
+                        variant="primary"
+                        color="purps"
+                        isLoading={isButtonLoading === index}
+                        text={strings.BOOK_NOW_CTA}
+                        height="2.75rem"
+                        onClick={() => {
+                          setButtonLoading(index);
+                          setTimeout(
+                            () => setButtonLoading(-1),
+                            BUTTON_LOADING_DURATION
+                          );
+                          window.open(ctaProps.link.url, '_self');
                           onBookNowClick({
                             tgid: tour.tgid,
                             position: index + 1,
-                          })
-                        }
-                      >
-                        <Button fillType="fill" widthProp="100%">
-                          {strings.BOOK_NOW_CTA}
-                        </Button>
-                      </a>
+                          });
+                        }}
+                      />
                     </div>
                   </Column>
                 );
@@ -665,14 +684,14 @@ const AutomatedTourComparisonTable = ({
           </div>
         </div>
         <Conditional if={isMobile && !isExpanded}>
-          <Button
+          <UIButton
             onClick={() => setExpand(true)}
             id="compare-all-details-button"
           >
             <div className="start-compare-icon">
               {strings.COMPARE_ALL_DETAILS} {CHEVRON_DOWN}
             </div>
-          </Button>
+          </UIButton>
         </Conditional>
       </ComparisonTableWrapper>
     </Conditional>

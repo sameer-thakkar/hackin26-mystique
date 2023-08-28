@@ -1150,3 +1150,5 @@ export const BY_HO_BRAND_SCREEN_ENABLE = [
   'book.hochiminh-city.com',
   'book.cruises-halongbay.com',
 ];
+
+export const BUTTON_LOADING_DURATION = 45000;

@@ -1,5 +1,6 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
+import { Button } from '@headout/aer';
 import Conditional from 'components/common/Conditional';
 import Emoji from 'components/common/Emoji';
 import LinkResolver from 'components/LinkResolver';
@@ -34,16 +35,12 @@ import { descriptorIcons } from 'const/descriptorIcons';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  BUTTON_LOADING_DURATION,
   LANGUAGE_MAP,
 } from 'const/index';
 import { PRODUCT_VIDEOS } from 'const/ShowPageProductVideos';
 import { strings } from 'const/strings';
-import {
-  BUTTON_LOADER_ANIMATION,
-  LOCATION,
-  PLAY_CIRCLE,
-  STAR,
-} from 'assets/SvgIcons';
+import { LOCATION, PLAY_CIRCLE, STAR } from 'assets/SvgIcons';
 
 const ShowPageBanner = ({
   detailsObjects,
@@ -417,31 +414,29 @@ const ShowPageBanner = ({
                   />
                 </div>
               </Conditional>
-              <Conditional if={listingPrice}>
-                <div
-                  role="button"
+              <div className="buy-button-wrapper">
+                <Button
                   tabIndex={0}
-                  className="buy-button"
+                  size="medium"
+                  color="purps"
+                  variant="primary"
+                  isLoading={isButtonLoading}
+                  disabled={!listingPrice}
                   onClick={() => {
                     if (isButtonLoading) return;
                     setButtonLoading(true);
+                    setTimeout(
+                      () => setButtonLoading(false),
+                      BUTTON_LOADING_DURATION
+                    );
                     trackBookNowClick();
                     window.open(bookingUrl, '_self', 'noopener, noreferrer');
                   }}
-                >
-                  <Conditional if={!isButtonLoading}>
-                    {strings.CHECK_AVAIL}
-                  </Conditional>
-                  <Conditional if={isButtonLoading}>
-                    {BUTTON_LOADER_ANIMATION}
-                  </Conditional>
-                </div>
-              </Conditional>
-              <Conditional if={!listingPrice}>
-                <button className="unavailable-button" disabled>
-                  {strings.UNAVAILABLE}
-                </button>
-              </Conditional>
+                  text={
+                    listingPrice ? strings.CHECK_AVAIL : strings.UNAVAILABLE
+                  }
+                />
+              </div>
             </div>
           </Conditional>
           <Conditional if={!isMobile}>

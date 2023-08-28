@@ -18,10 +18,11 @@ import advancedFormat from 'dayjs/plugin/advancedFormat';
 import type { SwiperProps } from 'swiper/react';
 import useSWR from 'swr';
 import parse from 'url-parse';
+import { Button } from '@headout/aer';
 import Conditional from 'components/common/Conditional';
 import Emoji from 'components/common/Emoji';
 import HorizontalLine from 'components/slices/HorizontalLine';
-import Button from 'UI/Button';
+import StyledButton from 'UI/Button';
 import Chevron from 'UI/Chevron';
 import ComboPopup from 'UI/ComboPopup';
 import PriceBlock from 'UI/PriceBlock';
@@ -56,6 +57,7 @@ import { FONTS } from 'const/fonts';
 import {
   ANALYTICS_EVENTS,
   ANALYTICS_PROPERTIES,
+  BUTTON_LOADING_DURATION,
   CUSTOM_TYPES,
   DESCRIPTORS,
   LOCALISED_DATE_FORMATS,
@@ -165,14 +167,6 @@ const cardImageStyles = css`
 const ctaBlockMobileStyles = (isSticky: boolean) => css`
   grid-column: 1;
   width: ${isSticky ? '84vw' : 'auto'};
-  .tour-book-now-cta {
-    line-height: 125%;
-    padding: 0.75rem;
-    border-radius: 8px;
-    min-width: auto;
-    letter-spacing: 0.6px;
-    font-size: 0.875rem;
-  }
 `;
 
 interface IStyledProductCard {
@@ -441,14 +435,10 @@ export const CTAContainer = styled.div<{ pageType?: any }>`
   ${({ theme }) =>
     theme.theme === THEMES.MIN_BLUE &&
     `
-    button.tour-book-now-cta {
+    button.tour-book-now-cta-container {
       width: 100%;
     }
   `}
-
-  button.tour-book-now-cta {
-    ${expandFontToken('Button/Medium')}
-  }
   @media (max-width: 768px) {
     display: contents;
   }
@@ -518,13 +508,14 @@ const CTABlock = styled.div<{
   a {
     text-decoration: none;
   }
-  .tour-book-now-cta {
+  .tour-book-now-cta-container {
     margin: auto;
-    min-width: 230px;
+    min-width: 14.375rem;
     width: 100%;
-    display: block;
-    line-height: 1;
-    border-radius: 8px;
+    height: 2.75rem;
+    button {
+      border: none;
+    }
     svg {
       vertical-align: middle;
       margin-left: 24px;
@@ -550,8 +541,7 @@ const CTABlock = styled.div<{
       z-index: 2;
     `
         : ``}
-    .tour-book-now-cta {
-      justify-content: center;
+    .tour-book-now-cta-container {
       width: 100%;
     }
 
@@ -854,7 +844,7 @@ const TabPanel = styled.div<{ isActive: boolean; pageType: string }>`
       : ''}
 `;
 
-const MoreDetailsBtn = styled(Button)`
+const MoreDetailsBtn = styled(StyledButton)`
   width: 100%;
   grid-area: cta-block;
   margin-top: -1rem;
@@ -1050,9 +1040,6 @@ const ModalCardContainer = styled.div`
     ${CTABlock} {
       width: 100%;
       grid-column: 1 / span 2;
-      .tour-book-now-cta {
-        border-radius: 8px;
-      }
     }
   }
 `;
@@ -1173,6 +1160,7 @@ const Product = (props: any) => {
     defaultOpen || false
   );
   const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [showComboVariant, setShowComboVariant] = useState(false);
 
   const isGpMotorTicketsMb = checkIfGpMotorTicketsMB(uid);
@@ -1615,18 +1603,28 @@ const Product = (props: any) => {
   };
 
   const BookNowCta = ({ clickHandler }: { clickHandler: () => void }) => (
-    <Button
-      className={`tour-book-now-cta`}
-      paddingSides={isMobile ? '14px' : '8px'}
-      fillType="fill"
-      onClick={clickHandler}
-      onKeyDown={clickHandler}
-      role="button"
-      tabIndex={0}
-    >
-      {getBookNowButtonText()}
-      {mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
-    </Button>
+    <div className="tour-book-now-cta-container">
+      <Button
+        size="medium"
+        color="purps"
+        variant="primary"
+        isLoading={isButtonLoading}
+        onClick={() => {
+          if (isMobile) {
+            setIsButtonLoading(true);
+            setTimeout(
+              () => setIsButtonLoading(false),
+              BUTTON_LOADING_DURATION
+            );
+          }
+          clickHandler?.();
+        }}
+        tabIndex={0}
+        text={getBookNowButtonText()}
+        icon={mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
+        iconPosition="back"
+      />
+    </div>
   );
 
   const getProductCardElements = (expandContent: any) => (

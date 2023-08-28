@@ -1,16 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import Conditional from 'components/common/Conditional';
+import { Button } from '@headout/aer';
 import PriceBlock, { StyledPriceBlock } from 'UI/PriceBlock';
 import { getProductCommonProperties, trackEvent } from 'utils/analytics';
 import { metaAtom } from 'store/atoms/meta';
 import COLORS from 'const/colors';
 import { FONTS } from 'const/fonts';
-import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
+import {
+  ANALYTICS_EVENTS,
+  ANALYTICS_PROPERTIES,
+  BUTTON_LOADING_DURATION,
+} from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
-import { BUTTON_LOADER_ANIMATION } from 'assets/SvgIcons';
 
 const BannerContent = styled.div(
   // @ts-expect-error TS(2339): Property 'showComponent' does not exist on type 'P... Remove this comment to see the full error message
@@ -66,35 +69,24 @@ const BannerContent = styled.div(
     justify-content: right;
   }
 
-  .buy-button,
-  .unavailable-button {
+  .buy-button-wrapper {
     margin: 0px 16px;
-    color: #ffffff;
-    border: none;
-    ${expandFontToken('Button/Medium')}
-    display: block;
-    text-align: center;
-    border-radius: 4px;
-    width: 180px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 2.75rem;
     width: 12.5rem;
+    button {
+      border: none;
+      cursor: pointer;
   }
-
-  .buy-button {
-    color: ${COLORS.BRAND.WHITE};
-    background: ${COLORS.BRAND.PURPS};
-    cursor: pointer;
-    box-sizing: border-box;
-    white-space: nowrap;
-    overflow: hidden;
   }
   .unavailable-button {
     background: ${COLORS.GRAY.G5};
     color: ${COLORS.BRAND.WHITE};
+    }
+  .unavailable-button {
+    background: ${COLORS.GRAY.G5};
+    color: ${COLORS.BRAND.WHITE};
   }
+
   .details-container {
     display: grid;
     grid-template-columns: auto auto auto auto;
@@ -234,31 +226,27 @@ const StickyHeader = ({
                   prefix
                 />
               </div>
-              <Conditional if={isAvailable}>
-                <div
-                  role="button"
+              <div className="buy-button-wrapper">
+                <Button
                   tabIndex={0}
-                  className="buy-button"
+                  size="medium"
+                  color="purps"
+                  variant="primary"
+                  isLoading={isButtonLoading}
+                  disabled={!isAvailable}
                   onClick={() => {
                     if (isButtonLoading) return;
                     setButtonLoading(true);
+                    setTimeout(
+                      () => setButtonLoading(false),
+                      BUTTON_LOADING_DURATION
+                    );
                     trackBookNowClick();
                     window.open(bookingUrl, '_self', 'noopener, noreferrer');
                   }}
-                >
-                  <Conditional if={!isButtonLoading}>
-                    {strings.CHECK_AVAIL}
-                  </Conditional>
-                  <Conditional if={isButtonLoading}>
-                    {BUTTON_LOADER_ANIMATION}
-                  </Conditional>
-                </div>
-              </Conditional>
-              <Conditional if={!isAvailable}>
-                <button className="unavailable-button" disabled>
-                  {strings.UNAVAILABLE}
-                </button>
-              </Conditional>
+                  text={isAvailable ? strings.CHECK_AVAIL : strings.UNAVAILABLE}
+                />
+              </div>
             </div>
           </div>
         </BannerContentWrapper>

@@ -11,6 +11,10 @@ jobs:
       APP_ENV: 'production'
     steps:
       - uses: actions/checkout@v2
+        with:
+          # Why this? No idea ¯_(ツ)_/¯
+          # Refer - https://github.community/t/how-to-install-private-github-repository-via-npm-through-git-https-github-actions-workflow-ci/124302
+          persist-credentials: false
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
@@ -30,7 +34,9 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
       - name: Install Packages
-        run: yarn
+        run: |
+          git config --global url."https://${{ github.actor }}:${{ secrets.HEADOUT_CI_PACKAGE_PAT }}@github.com/".insteadOf ssh://git@github.com/
+          yarn
       - name: Cache built NEXT
         uses: actions/cache@v2
         with:

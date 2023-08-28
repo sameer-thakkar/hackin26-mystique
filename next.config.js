@@ -1,4 +1,7 @@
+const moduleTranspiler = require('next-transpile-modules');
+
 const { withSentryConfig } = require('@sentry/nextjs');
+
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
@@ -40,6 +43,8 @@ const internalRewrites = [
   },
 ];
 
+const withTM = moduleTranspiler(['@headout/aer']);
+
 const nextConfig = {
   trailingSlash: true,
   swcMinify: false,
@@ -80,6 +85,6 @@ const nextConfig = {
   },
 };
 
-module.exports = withBundleAnalyzer(
-  withSentryConfig(nextConfig, SentryWebpackPluginOptions)
+module.exports = withTM(
+  withBundleAnalyzer(withSentryConfig(nextConfig, SentryWebpackPluginOptions))
 );

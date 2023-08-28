@@ -158,35 +158,15 @@ export const BannerContent = styled.div`
     text-align: left;
   }
 
-  .buy-button,
-  .unavailable-button {
-    ${expandFontToken(FONTS.BUTTON_MEDIUM)}
-    border-radius: 8px;
+  .buy-button-wrapper {
     margin: 0px 16px;
-    border: none;
-    width: 100%;
     display: block;
-    text-align: center;
-    grid-area: cta;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 12.5rem;
     height: 2.75rem;
-  }
-  .buy-button {
-    background: ${COLORS.BRAND.PURPS};
-    color: ${COLORS.BRAND.WHITE};
-    cursor: pointer;
-    box-sizing: border-box;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-  .unavailable-button {
-    background: ${COLORS.GRAY.G5};
-    color: ${COLORS.BRAND.WHITE};
-    margin: 0;
-    justify-self: end;
+    button {
+      border: none;
+      cursor: pointer;
+    }
   }
 
   .theater-reviews-wrapper {
