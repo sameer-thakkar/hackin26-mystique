@@ -14,15 +14,6 @@ const BOTS_STATIC_HTML_EXPERIMENT_DOMAINS = [
   'colosseum-rome-tickets.com',
 ];
 
-const SWR_ENABLED_DOMAINS = [
-  ...BOTS_STATIC_HTML_EXPERIMENT_DOMAINS,
-  'tickets-paris.fr',
-  'ticket-madrid.com',
-  'versailles-palace-tickets.com',
-  'aquarium-tickets.com',
-  'pradomuseumtickets.com',
-];
-
 const TIME = {
   SECONDS_IN_DAY: 60 * 60 * 24,
   SECONDS_IN_HOUR: 60 * 60,
@@ -76,9 +67,7 @@ app.prepare().then(() => {
 
   server.use((req, res, next) => {
     const isAPIRoute = /\/(fe)?api\//.test(req.path);
-    const isSWREnabledDomain =
-      SWR_ENABLED_DOMAINS.findIndex((d) => req.hostname.includes(d)) > -1;
-    if (!isAPIRoute && isSWREnabledDomain) {
+    if (!isAPIRoute) {
       const isBot = req.headers['x-bot'] === 'true';
       const sweTTL = TIME.SECONDS_IN_DAY * 1;
       let swrTTL = TIME.SECONDS_IN_DAY * 1; // regular user staleness ttl
