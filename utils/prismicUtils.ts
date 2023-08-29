@@ -245,6 +245,14 @@ export const getContentPageDocument = async ({
         baseLangExperienceLimit = sp_experience_limit;
       }
 
+      const { data } = baseLangData ?? {};
+      const {
+        tagged_collection,
+        tagged_category,
+        tagged_sub_category,
+        tagged_mb_type,
+      } = data ?? {};
+
       let completePage = {
         ...page,
         data: {
@@ -279,6 +287,10 @@ export const getContentPageDocument = async ({
             lang !== EN_LANG_CODE
               ? baseLangMicrositeData.data.tagged_city
               : micrositeData.data.tagged_city,
+          tagged_collection,
+          tagged_category,
+          tagged_sub_category,
+          tagged_mb_type,
         },
       };
       return {
@@ -330,7 +342,6 @@ export const getMicrositeDocument = async ({
                   })
                   .then((res: any) => res)
               : completeMicrosite.data;
-
           const {
             data: {
               is_entertainment_mb: isEntertainmentMb,
@@ -494,6 +505,17 @@ export const getMicrositeDocument = async ({
           } catch (e) {
             // invalid url entered
           }
+          const baseData =
+            lang !== LANGUAGE_MAP.en.locale
+              ? baseLangData.data
+              : completeMicrosite.data.data;
+
+          const {
+            tagged_collection,
+            tagged_category,
+            tagged_sub_category,
+            tagged_mb_type,
+          } = baseData ?? {};
 
           const micrositeData = {
             ...completeMicrosite,
@@ -544,6 +566,10 @@ export const getMicrositeDocument = async ({
                 localisedCategoryTourListV1,
                 categoryTourListV2,
                 ...(allShowPages && { allShowPages }),
+                tagged_collection,
+                tagged_category,
+                tagged_sub_category,
+                tagged_mb_type,
                 baseLangTaggedCity:
                   lang !== 'en-us'
                     ? baseLangData.data.tagged_city
