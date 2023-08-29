@@ -32,28 +32,31 @@ export const Wrapper = styled.div`
   }
 `;
 
-const Image: React.FC<IImageProps> = ({
-  url,
-  width,
-  height,
-  quality = 75,
-  imageId = '',
-  fill = false,
-  aspectRatio,
-  format = 'auto',
-  priority = false,
-  alt = '',
-  className = '',
-  mobileUrl,
-  attribution = '',
-  autoCrop = true,
-  cropMode = '',
-  addDarkOverlay,
-  onClick,
-  fitCrop = false,
-  blurFill = false,
-  fetchPriority = 'auto',
-}) => {
+const Image: React.ForwardRefRenderFunction<HTMLDivElement, IImageProps> = (
+  {
+    url,
+    width,
+    height,
+    quality = 75,
+    imageId = '',
+    fill = false,
+    aspectRatio,
+    format = 'auto',
+    priority = false,
+    alt = '',
+    className = '',
+    mobileUrl,
+    attribution = '',
+    autoCrop = true,
+    cropMode = '',
+    addDarkOverlay,
+    onClick,
+    fitCrop = false,
+    blurFill = false,
+    fetchPriority = 'auto',
+  },
+  ref
+) => {
   let calculatedWidth = width,
     calculatedHeight = height,
     mobileImageSrc,
@@ -109,7 +112,7 @@ const Image: React.FC<IImageProps> = ({
   }
 
   return (
-    <Wrapper className={`image-wrap ${className}`} onClick={onClick}>
+    <Wrapper className={`image-wrap ${className}`} onClick={onClick} ref={ref}>
       <FutureImage
         className={imageId}
         src={isMobile && mobileImageSrc ? mobileImageSrc : defaultImageSrc}
@@ -130,4 +133,4 @@ const Image: React.FC<IImageProps> = ({
   );
 };
 
-export default Image;
+export default React.forwardRef(Image);

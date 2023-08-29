@@ -333,7 +333,7 @@ const fr = {
   SEE_MORE_SHOWS: 'Voir plus de spectacles',
   SELECT_CITY: 'Sélectionner une ville',
   SELECT_SECTION: 'Sélectionner une tribube',
-  SHOW_ALL_PHOTOS: 'Afficher toutes les photos',
+  SEE_ALL_PHOTOS: 'Voir toutes les photos',
   SHOW_CLOSED: 'Spectacle terminé',
   SHOW_LESS_TEXT: 'Voir moins',
   SHOW_PAGE: {

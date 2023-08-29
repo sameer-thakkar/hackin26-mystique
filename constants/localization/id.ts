@@ -481,7 +481,7 @@ const id = {
   SEE_ALL: 'Lihat semua',
   SEE_MORE_SHOWS: 'Lihat Pertunjukan Lainnya',
   SELECT_CITY: 'Pilih kota',
-  SHOW_ALL_PHOTOS: 'Tampilkan semua foto',
+  SEE_ALL_PHOTOS: 'Tampilkan semua foto',
   SHOW_CLOSED: 'Pertunjukan Ditutup',
   SHOW_LESS_TEXT: 'Tampilkan lebih sedikit',
   SHOW_PAGE: {

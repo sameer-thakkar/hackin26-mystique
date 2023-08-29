@@ -41,6 +41,47 @@ export const StyledImageGallery = styled.div`
   }
 `;
 
+export const CaptionedImageWrapper = styled.div`
+  position: relative;
+
+  .image-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 2rem 1rem 1rem;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.4) 39.31%,
+      rgba(0, 0, 0, 0.75) 77.91%
+    );
+
+    h4 {
+      margin: 0;
+      font-family: ${HALYARD.DISPLAY};
+      font-size: 1.125rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 1.5rem;
+      letter-spacing: 0.0375rem;
+      color: ${COLORS.BRAND.WHITE};
+    }
+
+    p {
+      margin: 0;
+      ${expandFontToken(FONTS.UI_LABEL_REGULAR)}
+      color: ${COLORS.BRAND.WHITE};
+    }
+  }
+`;
+
 export const Heading = styled.div`
   /* Higher Specificity Styles - https://styled-components.com/docs/faqs#how-can-i-override-styles-with-higher-specificity */
   &&& {
@@ -192,20 +233,47 @@ export const GridLayoutContainer = styled.div`
   margin: 0 auto;
 `;
 
-export const Tag = styled.div<{ isMobile: boolean }>`
+export const TagContainer = styled.div<{
+  $ctaContainerWidth: number;
+  $ctaContainerHeight: number;
+}>`
   position: absolute;
-  top: ${({ isMobile }) => (isMobile ? '10px' : '')};
-  bottom: ${({ isMobile }) => (isMobile ? '' : '10px')};
-  display: flex;
+  bottom: 10px;
   right: 10px;
-  width: 6.25rem;
-  height: 1.5rem;
-  font-size: 10px;
+  display: flex;
   justify-content: space-evenly;
   align-items: center;
-  background: rgba(255, 255, 255, 0.9);
+
+  @media (max-width: 767px) {
+    width: ${({ $ctaContainerWidth }) =>
+      $ctaContainerWidth > 0 ? $ctaContainerWidth : '175'}px;
+    height: ${({ $ctaContainerHeight }) =>
+      $ctaContainerHeight > 0 ? $ctaContainerHeight : '110'}px;
+    bottom: 0;
+    right: 0;
+  }
+`;
+
+export const Tag = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.38rem 0.5rem;
   border-radius: 4px;
+  background: rgba(255, 255, 255, 0.9);
+  ${expandFontToken(FONTS.HEADING_XS)};
+  color: ${COLORS.GRAY.G2};
   cursor: pointer;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  @media (max-width: 767px) {
+    max-width: 8.125rem;
+  }
 `;
 
 export const DesktopLightBox = styled.div`
@@ -399,14 +467,16 @@ export const Wrapper = styled.div<{ noOfImages: number }>`
     ${({ noOfImages }) => {
       if (noOfImages === 4) {
         return `
-            div:nth-last-child(-n + 1){
-                display: none;   
+            div:not(.captioned-image, .image-overlay):nth-last-child(-n + 1){
+                display: none;
             }
         `;
       } else if (noOfImages > 4) {
         return `
-            div:nth-last-child(-n + ${noOfImages - 5}){
-                display: none;   
+            div:not(.captioned-image, .image-overlay):nth-last-child(-n + ${
+              noOfImages - 5
+            }){
+              display: none;
             }
         `;
       }
@@ -430,7 +500,7 @@ export const Wrapper = styled.div<{ noOfImages: number }>`
         if (noOfImages > 5) {
           return `
               div:nth-last-child(-n + ${noOfImages - 5}){
-                  display: none;        
+                  display: none;      
               }
           `;
         } else if (noOfImages > 2 && noOfImages % 2 == 0) {

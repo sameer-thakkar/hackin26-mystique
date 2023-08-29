@@ -384,7 +384,7 @@ const es = {
   SEE_MORE_SHOWS: 'Ver más espectáculos',
   SELECT_CITY: 'Selecciona una ciudad',
   SELECT_SECTION: 'Elegir sección',
-  SHOW_ALL_PHOTOS: 'Ver todas las fotos',
+  SEE_ALL_PHOTOS: 'Ver todas las fotos',
   SHOW_CLOSED: 'El espectáculo ha finalizado',
   SHOW_LESS_TEXT: 'Mostrar menos',
   SHOW_PAGE: {

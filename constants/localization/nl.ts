@@ -331,7 +331,7 @@ const nl = {
   SEE_MORE_SHOWS: 'Zie meer shows',
   SELECT_CITY: 'Kies stad',
   SELECT_SECTION: 'Tribune kiezen',
-  SHOW_ALL_PHOTOS: "Laat alle foto's zien",
+  SEE_ALL_PHOTOS: "Alle foto's weergeven",
   SHOW_CLOSED: 'Show gesloten',
   SHOW_LESS_TEXT: 'Toon minder',
   SHOW_PAGE: {

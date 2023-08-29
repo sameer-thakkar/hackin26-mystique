@@ -490,7 +490,7 @@ const ko = {
   SEE_MORE_SHOWS: '다른 쇼 보기',
   SELECT_CITY: '도시 선택',
   SELECT_SECTION: '선택하다 부분',
-  SHOW_ALL_PHOTOS: '전체 사진 보기',
+  SEE_ALL_PHOTOS: '전체 사진 보기',
   SHOW_CLOSED: '공연 종료',
   SHOW_LESS_TEXT: '닫기',
   SHOW_PAGE: {

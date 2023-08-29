@@ -2,6 +2,7 @@ import React, {
   RefObject,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
 } from 'react';
@@ -15,6 +16,7 @@ import Conditional from 'components/common/Conditional';
 import GridLayout from 'components/slices/ImageGallery/components/GridLayout';
 import type { ImageGalleryProps } from 'components/slices/ImageGallery/interface';
 import {
+  CaptionedImageWrapper,
   Content,
   ContentContainer,
   Description,
@@ -29,19 +31,19 @@ import {
   StyledImageGallery,
   SwiperControls,
   Tag,
+  TagContainer,
   ThumbnailSwiper,
 } from 'components/slices/ImageGallery/style';
 import Image from 'UI/Image';
 import RichContent from 'UI/RichContent';
 import { useCaptureClickOutside } from 'hooks/ClickOutside';
 import useOnScreen from 'hooks/useOnScreen';
-import useWindowSize from 'hooks/useWindowSize';
 import { trackEvent } from 'utils/analytics';
 import { generateSidenavId, truncate } from 'utils/helper';
 import { gtmAtom } from 'store/atoms/gtm';
 import { ANALYTICS_EVENTS, ANALYTICS_PROPERTIES } from 'const/index';
 import { strings } from 'const/strings';
-import { CHEVRON_LEFT_CIRCLE, CLOSE_WHITE, MapSvg } from 'assets/SvgIcons';
+import { CHEVRON_LEFT_CIRCLE, CLOSE_WHITE, GRID_ICON } from 'assets/SvgIcons';
 
 const Swiper = dynamic(() =>
   import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
@@ -69,7 +71,7 @@ const Swiper = dynamic(() =>
  */
 
 const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
-  const { images, heading } = props;
+  const { images, heading, isMobile } = props;
 
   const [isDesktopLightboxOpen, setDesktopLightbox] = useState(false);
   const [isMobileLightboxOpen, setMobileLightbox] = useState(false);
@@ -78,9 +80,12 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
     null
   );
   const [currentIndex, updateCurrentIndex] = useState(0);
+  const [ctaContainerWidth, setCtaContainerWidth] = useState(0);
+  const [ctaContainerHeight, setCtaContainerHeight] = useState(0);
   const modalRef = useRef(null);
   const controlRef = useRef<HTMLDivElement>(null);
   const imageGalleryRef = useRef(null);
+  const lastVisibleImageRef = useRef<HTMLDivElement>(null);
   const { eventsReady } = useRecoilValue(gtmAtom);
   const isImageGalleryVisible = useOnScreen({
     ref: imageGalleryRef,
@@ -95,11 +100,6 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
     IMAGE_GALLERY_PRESENT,
   } = ANALYTICS_EVENTS.IMAGE_GALLERY;
   const { RANKING } = ANALYTICS_PROPERTIES;
-
-  // @ts-expect-error TS(2532): Object is possibly 'undefined'.
-  const isMobile = useWindowSize().width < 768;
-
-  const { SHOW_ALL_PHOTOS, CLOSE } = strings || {};
 
   const updateGalleryIndex = useCallback(
     () => updateCurrentIndex(gallerySwiper?.realIndex || 0),
@@ -145,6 +145,12 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
       });
     }
   }, [isImageGalleryVisible]);
+
+  useLayoutEffect(() => {
+    if (!lastVisibleImageRef.current) return;
+    setCtaContainerWidth(lastVisibleImageRef.current.offsetWidth);
+    setCtaContainerHeight(lastVisibleImageRef.current.offsetHeight);
+  }, []);
 
   const gallerySwiperParams: SwiperProps = {
     initialSlide: currentIndex,
@@ -272,21 +278,55 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
         <GridLayout>
           {images.map((image, index) => {
             const caption = RichText.asText(image.heading);
+            const description = RichText.asText(image.content);
+            const showCaptionOverlay =
+              index === 0 && images.length > 2 && !isMobile;
+            const isImageUnderCta =
+              images.length < 5 ? index + 1 === 3 : index + 1 === 5;
+
             return (
-              <Image
-                key={index}
-                url={image.linked_image?.url || image.uploaded_image?.url}
-                onClick={() => handleImageClickOnDesktop(index)}
-                alt={image.image_alt || caption}
-              />
+              <React.Fragment key={index}>
+                <Conditional if={showCaptionOverlay}>
+                  <CaptionedImageWrapper
+                    role="figure"
+                    aria-labelledby="title"
+                    aria-describedby="description"
+                  >
+                    <Image
+                      url={image.linked_image?.url || image.uploaded_image?.url}
+                      onClick={() => handleImageClickOnDesktop(index)}
+                      alt={image.image_alt || caption}
+                      className="captioned-image"
+                    />
+                    <div className="image-overlay">
+                      <h4 id="title">{caption}</h4>
+                      <p id="description">{description}</p>
+                    </div>
+                  </CaptionedImageWrapper>
+                </Conditional>
+                <Conditional if={!showCaptionOverlay}>
+                  <Image
+                    url={image.linked_image?.url || image.uploaded_image?.url}
+                    onClick={() => handleImageClickOnDesktop(index)}
+                    alt={image.image_alt || caption}
+                    addDarkOverlay={isImageUnderCta}
+                    {...(isImageUnderCta && { ref: lastVisibleImageRef })}
+                  />
+                </Conditional>
+              </React.Fragment>
             );
           })}
         </GridLayout>
         <Conditional if={images.length > 2}>
-          <Tag isMobile={isMobile} onClick={handleTagClick}>
-            <MapSvg />
-            {SHOW_ALL_PHOTOS}
-          </Tag>
+          <TagContainer
+            $ctaContainerWidth={ctaContainerWidth}
+            $ctaContainerHeight={ctaContainerHeight}
+          >
+            <Tag onClick={handleTagClick}>
+              <GRID_ICON />
+              {strings.SEE_ALL_PHOTOS}
+            </Tag>
+          </TagContainer>
         </Conditional>
       </GridLayoutContainer>
 
@@ -343,7 +383,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = (props) => {
             tabIndex={0}
             onClick={() => handleGalleryClose}
           >
-            {CLOSE}
+            {strings.CLOSE}
             {CLOSE_WHITE}
           </div>
         </DesktopLightBox>

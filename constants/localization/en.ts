@@ -389,7 +389,7 @@ const en = {
   SEE_MORE_SHOWS: 'See more shows',
   SELECT_CITY: 'Select city',
   SELECT_SECTION: 'Select Section',
-  SHOW_ALL_PHOTOS: 'Show all photos',
+  SEE_ALL_PHOTOS: 'See all photos',
   SHOW_CLOSED: 'Show Closed',
   SHOW_LESS: 'Show less',
   SHOW_LESS_TEXT: 'Show less',

@@ -334,7 +334,7 @@ const pt = {
   SEE_MORE_SHOWS: 'Ver mais shows',
   SELECT_CITY: 'Selecionar cidade',
   SELECT_SECTION: 'Escolher setor',
-  SHOW_ALL_PHOTOS: 'Ver todas as fotos',
+  SEE_ALL_PHOTOS: 'Ver todas as fotos',
   SHOW_CLOSED: 'Show encerrado',
   SHOW_LESS_TEXT: 'Ver menos',
   SHOW_PAGE: {

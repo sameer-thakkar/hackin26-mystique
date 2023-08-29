@@ -330,7 +330,7 @@ const de = {
   SEE_MORE_SHOWS: 'Weitere Shows anzeigen',
   SELECT_CITY: 'Stadt auswählen',
   SELECT_SECTION: 'Tribüne wählen',
-  SHOW_ALL_PHOTOS: 'Alle Fotos anzeigen',
+  SEE_ALL_PHOTOS: 'Alle Fotos anzeigen',
   SHOW_CLOSED: 'Show geschlossen',
   SHOW_LESS_TEXT: 'Weniger anzeigen',
   SHOW_PAGE: {

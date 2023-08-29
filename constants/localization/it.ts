@@ -342,7 +342,7 @@ const it = {
   SEE_MORE_SHOWS: 'Guarda altri spettacoli',
   SELECT_CITY: 'Seleziona città',
   SELECT_SECTION: 'Seleziona tribuna',
-  SHOW_ALL_PHOTOS: 'Mostra tutte le foto',
+  SEE_ALL_PHOTOS: 'Vedi tutte le foto',
   SHOW_CLOSED: 'Spettacolo terminato',
   SHOW_LESS_TEXT: 'Mostra meno',
   SHOW_PAGE: {

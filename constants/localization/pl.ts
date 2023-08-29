@@ -477,7 +477,7 @@ const pl = {
   SEE_ALL: 'Zobacz wszystko',
   SEE_MORE_SHOWS: 'Zobacz więcej przedstawień',
   SELECT_CITY: 'Wybierz miasto',
-  SHOW_ALL_PHOTOS: 'Pokaż wszystkie zdjęcia',
+  SEE_ALL_PHOTOS: 'Pokaż wszystkie zdjęcia',
   SHOW_CLOSED: 'Pokaż zamknięte',
   SHOW_LESS_TEXT: 'Pokaż mniej',
   SHOW_PAGE: {

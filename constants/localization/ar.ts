@@ -367,7 +367,7 @@ const ar = {
   SEE_MORE_SHOWS: 'مشاهدة المزيد من العروض',
   SELECT_CITY: 'اختر المدينة',
   SELECT_SECTION: 'حدد القسم',
-  SHOW_ALL_PHOTOS: 'عرض جميع الصور',
+  SEE_ALL_PHOTOS: 'عرض جميع الصور',
   SHOW_CLOSED: 'عرض مغلق',
   SHOW_LESS_TEXT: 'عرض أقل',
   SPECIAL_OFFER: 'عرض خاص',
