@@ -403,6 +403,12 @@ const it = {
     'Questo biglietto non può essere annullato ma può essere riprogrammato su richiesta.',
   TICKETS: 'Biglietti',
   TIMINGS: 'Orari',
+  SPECIAL_PRODUCT_HEADING: 'Esperienze più amate',
+  SPECIAL_PRODUCT_DESCRIPTORS: {
+    LOCAL_GUIDES: 'Guide locali esperte',
+    ENGAGING_STORIES: 'Storie coinvolgenti',
+    TOP_RATED: 'Esperienze popolari',
+  },
   TODAY: 'oggi',
   TOMORROW: 'domani',
   TOUR_LIST_HEADING: 'Seleziona la tua esperienza',

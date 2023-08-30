@@ -393,6 +393,12 @@ const fr = {
     'Ce billet ne peut être annulé mais peut être reporté sur demande.',
   TICKETS: 'Billets',
   TIMINGS: 'Horaires',
+  SPECIAL_PRODUCT_HEADING: 'Expérience adorée',
+  SPECIAL_PRODUCT_DESCRIPTORS: {
+    LOCAL_GUIDES: 'Guides expert·es',
+    ENGAGING_STORIES: 'Récits captivants',
+    TOP_RATED: 'La mieux notée',
+  },
   TODAY: "aujourd'hui",
   TOMORROW: 'demain',
   TOUR_LIST_HEADING: `Sélectionnez l'offre qui vous plaît`,

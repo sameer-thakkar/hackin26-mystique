@@ -445,6 +445,12 @@ const es = {
     'Estas entradas no pueden ser canceladas, pero pueden ser reprogramadas si se solicita.',
   TICKETS: 'Entradas',
   TIMINGS: 'Horarios',
+  SPECIAL_PRODUCT_HEADING: 'Lo más recomendado',
+  SPECIAL_PRODUCT_DESCRIPTORS: {
+    LOCAL_GUIDES: 'Guías locales expertos',
+    ENGAGING_STORIES: 'Historias cautivadoras',
+    TOP_RATED: 'Con mejor valoración',
+  },
   TODAY: 'hoy',
   TOMORROW: 'mañana',
   TOUR_LIST_HEADING: 'Selecciona tu experiencia',

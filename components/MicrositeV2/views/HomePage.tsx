@@ -283,11 +283,11 @@ export const HomePage = (props: any) => {
         uid === 'www.london-theater-tickets.com' &&
         currentLanguage === 'en'
       ) {
-        const variant = getABTestingVariant(
-          EXPERIMENT_NAMES.LTT_LP_REVAMP_EXPERIMENT,
+        const variant = getABTestingVariant({
+          expName: EXPERIMENT_NAMES.LTT_LP_REVAMP_EXPERIMENT,
           hsid,
-          true
-        );
+          noTrack: true,
+        });
         setShowLttTreatment(variant === VARIANTS.TREATMENT);
       }
     }

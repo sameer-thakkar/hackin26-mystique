@@ -634,7 +634,6 @@ const MicrositeV1 = (props: any) => {
             isMobile={isMobile}
           />
         </Conditional>
-
         <Conditional if={hasTours && !hasTourListContentFW && isToursAvailable}>
           {tourListSection}
         </Conditional>

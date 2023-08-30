@@ -1,6 +1,6 @@
 import { isServer } from 'utils/gen';
 import { EXPERIMENTS, VARIANTS } from 'const/experiments';
-import { ANALYTICS_EVENTS } from 'const/index';
+import { ANALYTICS_EVENTS, TOUR_RANKING_EXPERIMENT } from 'const/index';
 import { trackEvent } from '../analytics';
 import type Experiment from './experiment';
 
@@ -19,13 +19,20 @@ const mobileVariants = {
   [VARIANTS.CHECKOUT_REDIRECT]: 'LP to booking page',
 };
 
-export const getABTestingVariant = (
-  EXPERIMENT_TYPE: string,
-  hsid: any,
+export const getABTestingVariant = ({
+  expName,
+  hsid,
   noTrack = false,
-  mobileName = false
-) => {
-  const experiment = EXPERIMENTS[EXPERIMENT_TYPE];
+  mobileName = false,
+  eventProperties = {},
+}: {
+  expName: string;
+  hsid: any;
+  noTrack?: boolean;
+  mobileName?: boolean;
+  eventProperties?: Record<string, any>;
+}) => {
+  const experiment = EXPERIMENTS[expName];
   const variant = resolveBucket(experiment, hsid);
 
   if (!noTrack && !isServer()) {
@@ -36,6 +43,7 @@ export const getABTestingVariant = (
           ? mobileVariants[experiment.experimentName]
           : experiment.experimentName,
       'Experiment Variant': variant,
+      ...eventProperties,
     });
   }
 
@@ -46,3 +54,45 @@ export const getExperimentVariables = (experimentName: string) =>
   ((window as any)?.experiments &&
     (window as any).experiments[experimentName]) ??
   {};
+
+export const reorderProducts = ({
+  productList,
+  uid,
+  tourRankingExpVariant,
+}: {
+  productList: any[];
+  uid: string;
+  tourRankingExpVariant?: string | null;
+}) => {
+  if (
+    !Object.keys(TOUR_RANKING_EXPERIMENT).includes(uid) ||
+    tourRankingExpVariant === VARIANTS.CONTROL
+  )
+    return productList;
+  if (!tourRankingExpVariant) return productList;
+  let reorderedArray = [
+    ...productList.filter(
+      ({ tgid }: { tgid: number }) => TOUR_RANKING_EXPERIMENT[uid] === tgid
+    ),
+    ...productList.filter(
+      ({ tgid }: { tgid: number }) => TOUR_RANKING_EXPERIMENT[uid] !== tgid
+    ),
+  ];
+  return reorderedArray.map((product: { tgid: number }) => {
+    if (TOUR_RANKING_EXPERIMENT[uid] === product.tgid)
+      return { ...product, isSpecialTour: true };
+    return product;
+  });
+};
+
+export const getProductRanking = ({
+  products,
+  uid,
+}: {
+  products: any[];
+  uid: string;
+}) => {
+  return products.findIndex(
+    ({ tgid }: { tgid: number }) => TOUR_RANKING_EXPERIMENT[uid] === tgid
+  );
+};

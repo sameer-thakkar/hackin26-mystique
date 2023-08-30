@@ -61,10 +61,11 @@ const LastMinuteFilters = (props: ILastMinuteFilters) => {
     let timerId: NodeJS.Timeout;
     if (hsid) {
       const showLastMinuteFilters =
-        getABTestingVariant(
-          EXPERIMENT_NAMES.LAST_MINUTE_FILTERS_EXPERIMENT,
-          hsid
-        ) === VARIANTS.TREATMENT;
+        getABTestingVariant({
+          expName: EXPERIMENT_NAMES.LAST_MINUTE_FILTERS_EXPERIMENT,
+          hsid,
+          noTrack: true,
+        }) === VARIANTS.TREATMENT;
       setShowFilters(showLastMinuteFilters);
     } else {
       timerId = setTimeout(() => setShowFilters(true), 2000);

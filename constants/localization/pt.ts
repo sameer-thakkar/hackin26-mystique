@@ -395,6 +395,12 @@ const pt = {
     'Este ingresso não pode ser cancelado, mas pode ser reagendado mediante solicitação',
   TICKETS: 'Ingressos',
   TIMINGS: 'Horários',
+  SPECIAL_PRODUCT_HEADING: 'Experiências amadas',
+  SPECIAL_PRODUCT_DESCRIPTORS: {
+    LOCAL_GUIDES: 'Guias especializados',
+    ENGAGING_STORIES: 'Histórias envolventes',
+    TOP_RATED: 'Bem avaliadas',
+  },
   TODAY: 'hoje',
   TOMORROW: 'amanhã',
   TOUR_LIST_HEADING: 'Selecione a experiência desejada',

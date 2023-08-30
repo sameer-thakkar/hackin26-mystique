@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
 import CashbackComponent from 'components/common/CashbackComponent';
 import Conditional from 'components/common/Conditional';
@@ -10,7 +11,6 @@ import { FONTS } from 'const/fonts';
 import { CASHBACK_TYPES, THEMES } from 'const/index';
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
-import 'react-loading-skeleton/dist/skeleton.css';
 
 export const StyledPriceBlock = styled.div<{
   showScratchPrice: boolean;
@@ -145,6 +145,8 @@ type PriceBlockProps = {
   showCashbackBlock?: boolean;
   isShowPage?: boolean;
   id?: string;
+  isLoading?: boolean;
+  isMobile?: boolean;
 };
 
 const PriceBlock = ({
@@ -159,6 +161,8 @@ const PriceBlock = ({
   showCashbackBlock = false,
   isShowPage = false,
   id,
+  isLoading = false,
+  isMobile = false,
 }: PriceBlockProps) => {
   const { uid } = useContext(MBContext);
   const isLTT = checkIfLTTMB(uid);
@@ -191,6 +195,35 @@ const PriceBlock = ({
       strings.formatString(strings.SAVE, `${bestDiscount}`)
     );
   }
+
+  if (isLoading)
+    return (
+      <div>
+        <StyledPriceBlock
+          className={'styled-price-block'}
+          showScratchPrice={showScratchPrice}
+          isSportsExperiment={isSportsExperiment}
+        >
+          <span className="tour-scratch-price">
+            <Skeleton
+              width={isMobile ? '4.625rem' : '6.359375rem'}
+              height={isMobile ? '0.75rem' : '0.8625rem'}
+            />
+          </span>
+          <div className="tour-price-container">
+            <Skeleton
+              width={isMobile ? '8.3125rem' : '8.75rem'}
+              height={isMobile ? '0.875rem' : '1.20625rem'}
+            />
+            <Conditional if={isLTT && showSavings && save && save > 0}>
+              <SavedTag className={'savedtag-block'}>
+                <Skeleton width="60px" height="18px" />
+              </SavedTag>
+            </Conditional>
+          </div>
+        </StyledPriceBlock>
+      </div>
+    );
 
   return (
     <div>

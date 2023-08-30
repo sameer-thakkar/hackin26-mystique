@@ -21,7 +21,9 @@ import parse from 'url-parse';
 import { Button } from '@headout/aer';
 import Conditional from 'components/common/Conditional';
 import Emoji from 'components/common/Emoji';
+import { GuidedTourLabel } from 'components/Product/styles';
 import HorizontalLine from 'components/slices/HorizontalLine';
+import SpecialProduct from 'components/SpecialProduct';
 import StyledButton from 'UI/Button';
 import Chevron from 'UI/Chevron';
 import ComboPopup from 'UI/ComboPopup';
@@ -68,7 +70,12 @@ import {
 import { strings } from 'const/strings';
 import { expandFontToken } from 'const/typography';
 import { HALYARD } from 'const/ui-constants';
-import { BackArrow, CALENDAR, CHEVRON_RIGHT_CIRCLE } from 'assets/SvgIcons';
+import {
+  BackArrow,
+  CALENDAR,
+  CHEVRON_RIGHT_CIRCLE,
+  GuidedTourLabelBackground,
+} from 'assets/SvgIcons';
 
 const Swiper = dynamic(() =>
   import(/* webpackChunkName: "Swiper" */ 'components/Swiper')
@@ -139,6 +146,7 @@ const cardImageStyles = css`
     width: 258px;
     height: 344px;
     border-radius: 0.5rem;
+    position: relative;
 
     img {
       height: 100%;
@@ -176,9 +184,11 @@ interface IStyledProductCard {
   layout?: any;
   isNewMediaSite?: boolean;
   $isBannerCard?: boolean;
+  $isGuidedTour: boolean;
 }
 
 const StyledProductCard = styled.div<IStyledProductCard>`
+  background-color: white;
   padding: ${({ isTicketCard, theme }) =>
     isTicketCard ? `24px 0px 24px 40px` : theme.productCards.padding.desktop};
   ${({ isTicketCard, theme, isMobile, isV3Design }) =>
@@ -238,6 +248,13 @@ const StyledProductCard = styled.div<IStyledProductCard>`
   .card-img {
     border-radius: 0;
   }
+  ${({ $isGuidedTour }) =>
+    $isGuidedTour &&
+    `
+      .swiper-pagination {
+        transform: translateY(-1.5625rem);
+      }
+  `}
 
   @media (max-width: 768px) {
     padding: ${({ theme }) => theme.productCards.padding.mobile};
@@ -872,6 +889,7 @@ const HighlightTabs = ({
   pageType,
   activeTabIndex,
   showCard,
+  isLoading = false,
 }: any) => {
   const width = useWindowWidth();
   const [isMobile, setIsMobile] = useState(false);
@@ -979,7 +997,23 @@ const HighlightTabs = ({
               key={index}
               pageType={pageType}
             >
-              <RichText render={tab.contents} elements={richtextElements} />
+              <Conditional if={!isLoading}>
+                <RichText render={tab.contents} elements={richtextElements} />
+              </Conditional>
+              <Conditional if={isLoading}>
+                <div>
+                  <Skeleton height="0.9375rem" borderRadius={2} />
+                  <Skeleton height="0.9375rem" width="60%" borderRadius={2} />
+                </div>
+                <div>
+                  <Skeleton height="0.9375rem" borderRadius={2} />
+                  <Skeleton height="0.9375rem" width="60%" borderRadius={2} />
+                </div>
+                <div>
+                  <Skeleton height="0.9375rem" borderRadius={2} />
+                  <Skeleton height="0.9375rem" width="60%" borderRadius={2} />
+                </div>
+              </Conditional>
             </TabPanel>
           ))}
         </TabPanelWrapper>
@@ -1064,6 +1098,7 @@ export const Descriptors = ({
   isGpMotorTicketsMb = false,
   isCombo = false,
   horizontal = false,
+  isLoading = false,
   pageType = '',
 }: {
   descriptorArray: Array<string>;
@@ -1071,10 +1106,25 @@ export const Descriptors = ({
   maxDuration: number | null;
   lang: string;
   isGpMotorTicketsMb?: boolean;
+  isLoading?: boolean;
   isCombo?: boolean;
   horizontal?: boolean;
   pageType?: string;
 }) => {
+  if (isLoading)
+    return (
+      <TourTags horizontal={horizontal} pageType={pageType}>
+        {Array.apply(null, Array(4)).map((_item: any, index: number) => {
+          return (
+            <div key={`descriptor-${index}`} className="tour-tag">
+              <Skeleton width="1rem" height="1rem" borderRadius="2px" />
+              <Skeleton height="1rem" width="8rem" borderRadius="2px" />
+            </div>
+          );
+        })}
+      </TourTags>
+    );
+
   return (
     <TourTags horizontal={horizontal} pageType={pageType}>
       {descriptorArray.map((item: string, index: number) => {
@@ -1140,6 +1190,9 @@ const Product = (props: any) => {
     bannerVideo,
     isV3Design,
     isCollectionMB,
+    isGuidedTour,
+    isSpecialTour,
+    isLoading = false,
   } = props;
   const {
     mbTheme,
@@ -1633,32 +1686,45 @@ const Product = (props: any) => {
         layout={layout}
         isTicketCard={isTicketCard}
         isMobile={isMobile}
-        $isBannerCard={isBannerCard}
+        $isBannerCard={isBannerCard && !isSpecialTour && !isLoading}
         isV3Design={isV3Design}
+        $isGuidedTour={isGuidedTour}
+        className="product-card"
       >
         <Conditional if={!isTicketCard && images?.length}>
           <div className="card-img">
-            <MediaCarousel
-              imageList={images?.slice(0, MEDIA_CAROUSEL_IMAGE_LIMIT)}
-              videoUrl={isMobile && isBannerCard ? bannerVideo : null}
-              imageId="card-img"
-              imageAspectRatio={isMobile ? '21:9' : '3:4'}
-              imageWidth={
-                isMobile
-                  ? isBannerCard
-                    ? PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.bannerProductWidth
-                    : PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.width
-                  : undefined
-              }
-              imageHeight={
-                isMobile && !isBannerCard
-                  ? undefined
-                  : PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.height
-              }
-              isFirstProduct={isFirstProduct}
-              tgid={tgid}
-              isMobile={isMobile}
-            />
+            {isGuidedTour && (
+              <GuidedTourLabel>
+                <GuidedTourLabelBackground isMobile={isMobile} />
+                {strings.DESCRIPTORS.GUIDED_TOUR}
+              </GuidedTourLabel>
+            )}
+            <Conditional if={!isLoading}>
+              <MediaCarousel
+                imageList={images?.slice(0, MEDIA_CAROUSEL_IMAGE_LIMIT)}
+                videoUrl={isMobile && isBannerCard ? bannerVideo : null}
+                imageId="card-img"
+                imageAspectRatio={isMobile ? '21:9' : '3:4'}
+                imageWidth={
+                  isMobile
+                    ? isBannerCard
+                      ? PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.bannerProductWidth
+                      : PRODUCT_CARD_IMAGE_DIMENSIONS.MOBILE.width
+                    : undefined
+                }
+                imageHeight={
+                  isMobile && !isBannerCard
+                    ? undefined
+                    : PRODUCT_CARD_IMAGE_DIMENSIONS.DESKTOP.height
+                }
+                isFirstProduct={isFirstProduct}
+                tgid={tgid}
+                isMobile={isMobile}
+              />
+            </Conditional>
+            <Conditional if={isLoading}>
+              <Skeleton height="100%" borderRadius={8} />
+            </Conditional>
           </div>
         </Conditional>
 
@@ -1671,7 +1737,17 @@ const Product = (props: any) => {
               <BoosterTag>{boosterTag}</BoosterTag>
             </Conditional>
             <TourTitle isPopup={isContentOpen} pageType={pageType}>
-              {cardTitle}
+              <Conditional if={!isLoading}>{cardTitle}</Conditional>
+              <Conditional if={isLoading}>
+                <Skeleton
+                  height={isMobile ? '1rem' : '1.25rem'}
+                  borderRadius={2}
+                />
+                <Skeleton
+                  height={isMobile ? '1rem' : '1.25rem'}
+                  borderRadius={2}
+                />
+              </Conditional>
             </TourTitle>
             <Conditional if={isOpenDated && !isMobile}>
               <OpenDatedDescriptor>
@@ -1682,6 +1758,7 @@ const Product = (props: any) => {
           </TitleWrapper>
           <Conditional if={mbTheme === THEMES.MIN_BLUE}>
             <Descriptors
+              isLoading={isLoading}
               descriptorArray={descriptorsList}
               pageType={pageType}
               minDuration={minDuration}
@@ -1717,6 +1794,8 @@ const Product = (props: any) => {
           <CTAContainer pageType={pageType}>
             <PriceContainer pageType={pageType}>
               <PriceBlock
+                isMobile={isMobile}
+                isLoading={isLoading}
                 isSportsExperiment={isSportsExperiment}
                 showScratchPrice={showScratchPrice}
                 listingPrice={finalListingPrice}
@@ -1753,13 +1832,16 @@ const Product = (props: any) => {
                 <BookNowCta clickHandler={handleShowComboPopup} />
               </Conditional>
             </CTABlock>
-            <Conditional if={showNextAvailable && !showEarliestAvailability}>
+            <Conditional
+              if={showNextAvailable && !showEarliestAvailability && isLoading}
+            >
               <NextAvailableBlockSkeletonWrapper>
                 <Skeleton height="1rem" width="9rem" />
               </NextAvailableBlockSkeletonWrapper>
             </Conditional>
             <Conditional
               if={
+                !isLoading &&
                 showNextAvailable &&
                 showEarliestAvailability &&
                 earliestAvailability?.startDate &&
@@ -1782,6 +1864,7 @@ const Product = (props: any) => {
             </Conditional>
             <Conditional if={mbTheme !== THEMES.MIN_BLUE}>
               <Descriptors
+                isLoading={isLoading}
                 descriptorArray={descriptorsList}
                 pageType={pageType}
                 minDuration={minDuration}
@@ -1832,6 +1915,7 @@ const Product = (props: any) => {
               </Conditional>
               <Conditional if={tabs.length}>
                 <HighlightTabs
+                  isLoading={isLoading}
                   onTabChange={onTabChange}
                   hasRegularHighlights={hasHighlights}
                   tabs={tabs}
@@ -1876,7 +1960,7 @@ const Product = (props: any) => {
     }
   };
 
-  return (
+  const ProductCard = (
     <Container
       isV3Design={isV3Design}
       indexPosition={indexPosition}
@@ -1888,6 +1972,19 @@ const Product = (props: any) => {
       {getProductCardElements(isContentOpen)}
     </Container>
   );
+
+  if (isSpecialTour)
+    return (
+      <Container
+        isV3Design={isV3Design}
+        indexPosition={indexPosition}
+        isCardVisible={getIsCardVisible()}
+      >
+        <SpecialProduct Product={ProductCard} isMobile={isMobile} />
+      </Container>
+    );
+
+  return ProductCard;
 };
 
 export default Product;

@@ -391,6 +391,12 @@ const de = {
     'Dieses Ticket kann nicht storniert, aber auf Anfrage verschoben werden.',
   TICKETS: 'Tickets',
   TIMINGS: 'Zeiten',
+  SPECIAL_PRODUCT_HEADING: 'Beliebtestes Erlebnis',
+  SPECIAL_PRODUCT_DESCRIPTORS: {
+    LOCAL_GUIDES: 'Lokale Experten',
+    ENGAGING_STORIES: 'Packende Stories',
+    TOP_RATED: 'Top-Bewertungen',
+  },
   TODAY: 'heute',
   TOMORROW: 'morgen',
   TOUR_LIST_HEADING: 'Wählen Sie Ihr Erlebnis',

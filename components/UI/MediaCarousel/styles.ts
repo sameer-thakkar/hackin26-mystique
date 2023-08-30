@@ -104,6 +104,6 @@ export const NextButtonContainer = styled.div`
   ${NavigationContainerStyles}
 
   button {
-    margin-right: 0.25rem;
+    margin-left: 0.25rem;
   }
 `;

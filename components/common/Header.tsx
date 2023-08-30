@@ -40,7 +40,7 @@ const StyledHeader = styled.header<{
   background-color: ${({ theme: { primaryBackground } }) =>
     primaryBackground ? primaryBackground : '#fff'};
   display: flex;
-  z-index: 4;
+  z-index: 11;
   transition: all 0.2s ease-in;
   position: sticky;
   top: 0;

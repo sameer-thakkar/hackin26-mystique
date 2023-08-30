@@ -393,6 +393,12 @@ const nl = {
     'Dit ticket kan niet worden geannuleerd, maar kan op verzoek worden verplaatst',
   TICKETS: 'Kaartjes',
   TIMINGS: 'Tijdstippen',
+  SPECIAL_PRODUCT_HEADING: 'Sterk aanbevolen',
+  SPECIAL_PRODUCT_DESCRIPTORS: {
+    LOCAL_GUIDES: 'Ervaren gidsen',
+    ENGAGING_STORIES: 'Boeiende verhalen',
+    TOP_RATED: 'Top beoordeeld',
+  },
   TODAY: 'Vandaag',
   TOMORROW: 'Morgen',
   TOUR_LIST_HEADING: 'Kies je ervaring',

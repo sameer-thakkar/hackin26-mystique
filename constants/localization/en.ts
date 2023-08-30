@@ -453,6 +453,12 @@ const en = {
     'This ticket cannot be canceled but can be rescheduled upon request.',
   TICKETS: 'Tickets',
   TIMINGS: 'Timings',
+  SPECIAL_PRODUCT_HEADING: 'Most Loved',
+  SPECIAL_PRODUCT_DESCRIPTORS: {
+    LOCAL_GUIDES: 'Expert Local Guides',
+    ENGAGING_STORIES: 'Engaging Stories',
+    TOP_RATED: 'Top-Rated',
+  },
   TODAY: 'Today',
   TOMORROW: 'Tomorrow',
   TOUR_LIST_HEADING: 'Select Your Experience',

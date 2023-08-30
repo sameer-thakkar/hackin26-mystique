@@ -11,6 +11,7 @@ export const EXPERIMENT_NAMES = {
   LTD_LP_Experiment: 'LTD LP Experiment',
   LTT_LP_REVAMP_EXPERIMENT: 'LTT Landing Page Revamp Experiment',
   LAST_MINUTE_FILTERS_EXPERIMENT: 'Last Minute Filters Experiment',
+  TOUR_RANKING_EXPERIMENT: 'Guided Tours Ranking Experiment',
 };
 
 export const EXPERIMENTS = {
@@ -28,5 +29,10 @@ export const EXPERIMENTS = {
     EXPERIMENT_NAMES.LAST_MINUTE_FILTERS_EXPERIMENT,
     [VARIANTS.CONTROL, VARIANTS.TREATMENT],
     [0, 100]
+  ),
+  [EXPERIMENT_NAMES.TOUR_RANKING_EXPERIMENT]: new Experiment(
+    EXPERIMENT_NAMES.TOUR_RANKING_EXPERIMENT,
+    [VARIANTS.CONTROL, VARIANTS.TREATMENT],
+    [99, 1]
   ),
 };
