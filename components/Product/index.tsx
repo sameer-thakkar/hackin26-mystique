@@ -24,7 +24,6 @@ import Emoji from 'components/common/Emoji';
 import { GuidedTourLabel } from 'components/Product/styles';
 import HorizontalLine from 'components/slices/HorizontalLine';
 import SpecialProduct from 'components/SpecialProduct';
-import StyledButton from 'UI/Button';
 import Chevron from 'UI/Chevron';
 import ComboPopup from 'UI/ComboPopup';
 import PriceBlock from 'UI/PriceBlock';
@@ -533,15 +532,6 @@ const CTABlock = styled.div<{
     button {
       border: none;
     }
-    svg {
-      vertical-align: middle;
-      margin-left: 24px;
-      transform: rotate(180deg);
-      path {
-        stroke: ${({ theme }) => theme.primaryBGText};
-        stroke-width: 1.5px;
-      }
-    }
   }
 
   @media (max-width: 768px) {
@@ -861,7 +851,7 @@ const TabPanel = styled.div<{ isActive: boolean; pageType: string }>`
       : ''}
 `;
 
-const MoreDetailsBtn = styled(StyledButton)`
+const MoreDetailsBtnWrapper = styled.div`
   width: 100%;
   grid-area: cta-block;
   margin-top: -1rem;
@@ -1067,7 +1057,7 @@ const ModalCardContainer = styled.div`
       .more-details {
         display: none;
       }
-      ${MoreDetailsBtn} {
+      ${MoreDetailsBtnWrapper} {
         display: none;
       }
     }
@@ -1150,6 +1140,44 @@ export const Descriptors = ({
   );
 };
 
+const BookNowCta = ({
+  clickHandler,
+  isMobile,
+  ctaText,
+  mbTheme,
+}: {
+  clickHandler: () => void;
+  isMobile: boolean;
+  ctaText: string;
+  mbTheme: string | null;
+}) => {
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
+  return (
+    <div className="tour-book-now-cta-container">
+      <Button
+        size="medium"
+        color="purps"
+        variant="primary"
+        isLoading={isButtonLoading}
+        onClick={() => {
+          if (isMobile) {
+            setIsButtonLoading(true);
+            setTimeout(
+              () => setIsButtonLoading(false),
+              BUTTON_LOADING_DURATION
+            );
+          }
+          clickHandler?.();
+        }}
+        tabIndex={0}
+        text={ctaText}
+        icon={mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
+        iconPosition="back"
+      />
+    </div>
+  );
+};
+
 const Product = (props: any) => {
   const moreDetailsRef = useRef();
   const {
@@ -1213,7 +1241,6 @@ const Product = (props: any) => {
     defaultOpen || false
   );
   const [activeTabIndex, setActiveTabIndex] = useState(0);
-  const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [showComboVariant, setShowComboVariant] = useState(false);
 
   const isGpMotorTicketsMb = checkIfGpMotorTicketsMB(uid);
@@ -1593,16 +1620,17 @@ const Product = (props: any) => {
       </>
     );
     return isMobile ? (
-      <MoreDetailsBtn
-        fillType="secondaryFill"
-        onClick={onMoreDetailsClick}
-        onKeyDown={keyPressedOnReadMore}
-        role="button"
-        data-open="0"
-        tabIndex={0}
-      >
-        {strings.MORE_DETAILS}
-      </MoreDetailsBtn>
+      <MoreDetailsBtnWrapper>
+        <Button
+          color="purps"
+          size="medium"
+          variant="tertiary"
+          onClick={onMoreDetailsClick}
+          data-open="0"
+          tabIndex={0}
+          text={strings.MORE_DETAILS}
+        />
+      </MoreDetailsBtnWrapper>
     ) : (
       <div
         // @ts-expect-error TS(2322): Type 'MutableRefObject<undefined>' is not assignab... Remove this comment to see the full error message
@@ -1654,31 +1682,6 @@ const Product = (props: any) => {
         return strings.CHECK_AVAIL;
     }
   };
-
-  const BookNowCta = ({ clickHandler }: { clickHandler: () => void }) => (
-    <div className="tour-book-now-cta-container">
-      <Button
-        size="medium"
-        color="purps"
-        variant="primary"
-        isLoading={isButtonLoading}
-        onClick={() => {
-          if (isMobile) {
-            setIsButtonLoading(true);
-            setTimeout(
-              () => setIsButtonLoading(false),
-              BUTTON_LOADING_DURATION
-            );
-          }
-          clickHandler?.();
-        }}
-        tabIndex={0}
-        text={getBookNowButtonText()}
-        icon={mbTheme === THEMES.MIN_BLUE ? BackArrow : null}
-        iconPosition="back"
-      />
-    </div>
-  );
 
   const getProductCardElements = (expandContent: any) => (
     <>
@@ -1821,15 +1824,25 @@ const Product = (props: any) => {
             >
               <Conditional if={!isCombo}>
                 <a
-                  target={isMobile ? undefined : '_blank'}
+                  target={isMobile ? '_self' : '_blank'}
                   href={productBookingUrl}
                   rel="nofollow noreferrer"
                 >
-                  <BookNowCta clickHandler={sendBookNowEvent} />
+                  <BookNowCta
+                    clickHandler={sendBookNowEvent}
+                    isMobile={isMobile}
+                    mbTheme={mbTheme}
+                    ctaText={getBookNowButtonText()}
+                  />
                 </a>
               </Conditional>
               <Conditional if={isCombo}>
-                <BookNowCta clickHandler={handleShowComboPopup} />
+                <BookNowCta
+                  clickHandler={handleShowComboPopup}
+                  isMobile={isMobile}
+                  mbTheme={mbTheme}
+                  ctaText={getBookNowButtonText()}
+                />
               </Conditional>
             </CTABlock>
             <Conditional

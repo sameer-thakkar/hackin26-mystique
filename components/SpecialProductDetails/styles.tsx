@@ -23,6 +23,7 @@ export const SpecialProductDetailsWrapper = styled.div<{
     .special-product-header {
       ${expandFontToken(FONTS.HEADING_LARGE)};
       color: #570101;
+      margin-right: -0.125rem;
     }
   }
   .special-product-details-labels {
@@ -30,10 +31,10 @@ export const SpecialProductDetailsWrapper = styled.div<{
     align-items: center;
     gap: 0.75rem;
     .special-product-details-separator {
-      height: 0.125rem;
-      width: 0.125rem;
+      height: 0.25rem;
+      width: 0.25rem;
       border-radius: 50%;
-      background-color: #570101;
+      background-color: rgb(87 1 1 / 24%);
     }
     .swiper-wrapper {
       transition-timing-function: linear !important;
@@ -87,6 +88,7 @@ export const SpecialProductDetailsWrapper = styled.div<{
         height: 1.75rem;
       }
       .special-product-header {
+        margin-right: -0.0625rem;
         ${expandFontToken(FONTS.HEADING_SMALL)};
       }
     }

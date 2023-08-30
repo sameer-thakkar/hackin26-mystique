@@ -4,7 +4,7 @@ import { expandFontToken } from 'const/typography';
 
 export const SpecialProductDetailLabelWrapper = styled.div`
   height: 1.25rem;
-  gap: 0.5rem;
+  gap: 0.375rem;
   display: flex;
   width: fit-content;
   svg {

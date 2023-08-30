@@ -45,10 +45,10 @@ export const SpecialProductWrapper = styled.div`
     #e3bc83 61.98%,
     #f3dfc3 100%
   );
-  animation: ${openingAnimationDesktop} 400ms cubic-bezier(0.7, 0, 0.3, 1) 1.4s
+  animation: ${openingAnimationDesktop} 400ms cubic-bezier(0.7, 0, 0.3, 1) 800ms
     forwards;
   &::after {
-    animation: ${shineDesktop} 1200ms cubic-bezier(0.7, 0, 0.3, 1) 1805ms;
+    animation: ${shineDesktop} 1200ms cubic-bezier(0.7, 0, 0.3, 1) 1205ms;
     animation-fill-mode: forwards;
     content: '';
     position: absolute;
@@ -70,13 +70,13 @@ export const SpecialProductWrapper = styled.div`
     );
   }
   @media (max-width: 768px) {
-    animation: ${openingAnimationMobile} 400ms cubic-bezier(0.7, 0, 0.3, 1) 2s
-      forwards;
+    animation: ${openingAnimationMobile} 400ms cubic-bezier(0.7, 0, 0.3, 1)
+      800ms forwards;
     margin: 0 1.5rem;
     &::after {
       left: -80%;
       width: 11.1875rem;
-      animation: ${shineMobile} 1200ms cubic-bezier(0.7, 0, 0.3, 1) 2405ms;
+      animation: ${shineMobile} 1200ms cubic-bezier(0.7, 0, 0.3, 1) 1205ms;
     }
     .product-card {
       border: none;
