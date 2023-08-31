@@ -191,7 +191,7 @@ const ShowPageBanner = ({
       case LANGUAGE_MAP.fr.code:
         return `${strings.TICKETS}: ${name}`;
       default:
-        return `${name} - ${strings.TICKETS}`;
+        return `${name} ${strings.TICKETS}`;
     }
   };
 
