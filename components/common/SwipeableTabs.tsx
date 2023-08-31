@@ -69,6 +69,8 @@ const SwipeableTabs: FunctionComponent<TabProps> = ({
   const swipeRef = useRef({
     touchStartX: 0,
     touchEndX: 0,
+    touchStartY: 0,
+    touchEndY: 0,
     eventAttached: false,
     activeTab: defaultActiveIndex,
   });
@@ -86,14 +88,26 @@ const SwipeableTabs: FunctionComponent<TabProps> = ({
   useEffect(() => {
     const onSwipeStart = debounce((e: any) => {
       swipeRef.current.touchStartX = e.changedTouches[0].screenX;
+      swipeRef.current.touchStartY = e.changedTouches[0].screenY;
     }, 250);
 
     const onSwipeEnd = debounce((e: any) => {
       swipeRef.current.touchEndX = e.changedTouches[0].screenX;
-      const { touchEndX, touchStartX, activeTab } = swipeRef.current;
-      const delta = touchStartX - touchEndX;
-      if (Math.abs(delta) > SWIPE_THRESHOLD) {
-        const isSwipeLeft = delta > 0;
+      swipeRef.current.touchEndY = e.changedTouches[0].screenY;
+      const {
+        touchEndX,
+        touchStartX,
+        activeTab,
+        touchStartY,
+        touchEndY,
+      } = swipeRef.current;
+      const horizontalDelta = touchStartX - touchEndX;
+      const verticalDelta = touchStartY - touchEndY;
+      if (
+        Math.abs(horizontalDelta) > SWIPE_THRESHOLD &&
+        Math.abs(verticalDelta) < SWIPE_THRESHOLD
+      ) {
+        const isSwipeLeft = horizontalDelta > 0;
         const len = tabs.length;
         if (!isSwipeLeft) {
           const newTabIndex = (activeTab - 1) % len;
