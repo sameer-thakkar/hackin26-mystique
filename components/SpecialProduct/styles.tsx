@@ -45,10 +45,10 @@ export const SpecialProductWrapper = styled.div`
     #e3bc83 61.98%,
     #f3dfc3 100%
   );
-  animation: ${openingAnimationDesktop} 400ms cubic-bezier(0.7, 0, 0.3, 1) 800ms
-    forwards;
+  animation: ${openingAnimationDesktop} 400ms cubic-bezier(0.7, 0, 0.3, 1)
+    1600ms forwards;
   &::after {
-    animation: ${shineDesktop} 1200ms cubic-bezier(0.7, 0, 0.3, 1) 1205ms;
+    animation: ${shineDesktop} 1200ms cubic-bezier(0.7, 0, 0.3, 1) 2005ms;
     animation-fill-mode: forwards;
     content: '';
     position: absolute;
@@ -71,12 +71,12 @@ export const SpecialProductWrapper = styled.div`
   }
   @media (max-width: 768px) {
     animation: ${openingAnimationMobile} 400ms cubic-bezier(0.7, 0, 0.3, 1)
-      800ms forwards;
+      1600ms forwards;
     margin: 0 1.5rem;
     &::after {
       left: -80%;
       width: 11.1875rem;
-      animation: ${shineMobile} 1200ms cubic-bezier(0.7, 0, 0.3, 1) 1205ms;
+      animation: ${shineMobile} 1200ms cubic-bezier(0.7, 0, 0.3, 1) 2005ms;
     }
     .product-card {
       border: none;
