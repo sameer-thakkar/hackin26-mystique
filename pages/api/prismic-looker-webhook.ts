@@ -1,21 +1,26 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Client } from 'config/prismic-config';
-import { PrismicDocumentWithUID } from '@prismicio/types';
+import { AlternateLanguage, PrismicDocumentWithUID } from '@prismicio/types';
 import { getHeadoutLanguagecode, legacyBooleanCheck } from 'utils';
 import { fetchDomainConfig } from 'utils/apiUtils';
 import {
+  attachedContentFrameworkData,
+  baseLangMicrositeDataForContentPage,
+  fetchBaseLangData,
   filterByDocType,
   getAvailableLanguages,
   getBannerSubtext,
   getBreadcrumbs,
   getDocType,
   getFooterDetails,
+  getFooterSubtext,
   getHeadings,
   getHeadoutPageDetails,
   getMetaImageUrl,
   getPageUrl,
   getParentDomain,
   getProductCardsId,
+  getSlicesFromContentFramework,
   getStructure,
   getTgids,
   shoulderPageTicketsCheck,
@@ -70,9 +75,10 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
     ...globalCountry,
     ...globalCollection,
     ...globalExperience,
+    ...headoutContentDocsList,
   ];
 
-  let baseLangDoc = null;
+  let baseLangDoc: (PrismicDocumentWithUID | AlternateLanguage) | null = null;
 
   const pageDocsPromises = pageDocsList?.map(async (doc) => {
     const {
@@ -107,9 +113,18 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
         tagged_page_type,
         tagged_content_type,
         shoulder_page_type,
+        shoulder_page_custom_label,
+        misc_page_mapping,
+        is_entertainment_mb,
+        primary_tag,
+        disclaimer,
+        banner_subtext,
+        category_heading_override,
+        category_subtext_override,
       },
     } = doc;
 
+    const contentFrameworkId = content_framework?.id;
     const pageUrl = getPageUrl(doc) || '';
     const language = getHeadoutLanguagecode(lang).toUpperCase();
     const isSubdomain =
@@ -121,9 +136,30 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
       )[0];
     }
 
+    /* Data for content framework attached in Microsite or Content Page doc */
+    const contentFrameworkData = await attachedContentFrameworkData(
+      contentFrameworkId
+    );
+    let baseLangData = await fetchBaseLangData(language, baseLangDoc, doc);
+    baseLangData =
+      type === CUSTOM_TYPES.CONTENT_PAGE
+        ? await baseLangMicrositeDataForContentPage(type, baseLangData)
+        : baseLangData;
+
+    const {
+      is_poi_mb: baseLangIsPoiMb,
+      banner_and_footer_combinations: baseLangBannerAndFooterCombinations,
+      tagged_mb_type: baseLangMbType,
+    } = baseLangData[0]?.data || {};
+
+    const slicesInsideContentFramework =
+      contentFrameworkData?.length > 0
+        ? contentFrameworkData[0]?.data?.body
+        : [];
     const { logo, faviconUrl } = await fetchDomainConfig(uid);
     const pageDocFooterDetails = await getFooterDetails(doc);
     const headingsDetails = await getHeadings(doc);
+
     const metaData = {
       id,
       uid,
@@ -154,7 +190,19 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
       author_name,
       is_freelancer: !!is_freelancer,
       has_uncategorised_tours: uncategorisedToursCheck(doc),
-      banner_subtext: getBannerSubtext(doc),
+      banner_subtext: await getBannerSubtext(
+        doc,
+        baseLangIsPoiMb,
+        baseLangBannerAndFooterCombinations
+      ),
+      footer_subtext: await getFooterSubtext(
+        doc,
+        baseLangIsPoiMb,
+        baseLangBannerAndFooterCombinations,
+        baseLangMbType,
+        disclaimer
+      ),
+      custom_banner_subtext: banner_subtext,
       layout: type === CUSTOM_TYPES.MICROSITE ? design : null,
       favicon_url: faviconUrl,
       meta_image_url: getMetaImageUrl(doc),
@@ -162,6 +210,12 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
       footer_logo_url: logo?.logoUrl,
       has_primary_footer: pageDocFooterDetails?.hasPrimaryFooter,
       has_secondary_footer: pageDocFooterDetails?.hasSecondaryFooter,
+      disclaimer_type: baseLangBannerAndFooterCombinations,
+      is_poi_mb: baseLangIsPoiMb,
+      is_entertainment_mb:
+        type === CUSTOM_TYPES.SHOW_PAGE || type === CUSTOM_TYPES.VENUE_PAGE
+          ? true
+          : is_entertainment_mb,
       attraction_name: pageDocFooterDetails?.attractionName,
       footer_disclaimer: pageDocFooterDetails?.footerDisclaimer,
       microsite_doc_footer_disclaimer:
@@ -188,6 +242,14 @@ const parseDocuments = async ({ documents: docs, isStageMode, host }: any) => {
       language,
       product_cards_id: getProductCardsId(doc),
       tags,
+      slices_in_url: getSlicesFromContentFramework(
+        slicesInsideContentFramework
+      ),
+      shoulder_page_custom_label,
+      misc_page_mapping,
+      primary_tag,
+      category_heading_override,
+      category_subtext_override,
     };
 
     return Object.entries(metaData).reduce(
@@ -337,6 +399,7 @@ const createStitchPostRequest = ({
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { documents: updatedDocumentIds = [], masterRef = null } =
     req?.body || {};
+
   const { stageMode } = req.query;
   const isStageMode = stageMode ? stageMode?.length > 0 : false;
   const { host } = req?.headers;

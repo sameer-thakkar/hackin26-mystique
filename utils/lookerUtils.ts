@@ -1,9 +1,11 @@
 import Prismic from 'prismic-javascript';
-import { PrismicDocumentWithUID } from '@prismicio/types';
+import { AlternateLanguage, PrismicDocumentWithUID } from '@prismicio/types';
 import {
   checkIfMicrosite,
+  getBannerAndFooterSubtext,
   getHeadoutLanguagecode,
   getSinglePrismicSlice,
+  isCollectionMB,
 } from 'utils';
 import { groupBy } from 'utils/arrayUtils';
 import {
@@ -298,18 +300,21 @@ export const getFooterDetails = async ({
     footer_ref,
     common_footer,
     secondary_footer: secondaryFooterDocRef,
+    secondary_footer_ref: secondaryFooterDocRefForVenuePage,
     attraction,
     disclaimer,
   } = data || {};
   const footerDocRef = footer_ref || common_footer;
   const hasPrimaryFooter = !!footerDocRef?.id;
-  const hasSecondaryFooter = !!secondaryFooterDocRef?.id;
+  const hasSecondaryFooter =
+    !!secondaryFooterDocRef?.id || secondaryFooterDocRefForVenuePage?.id;
 
   if (hasPrimaryFooter) {
     const { id: footerDocId } = footerDocRef || {};
     const footerDocs = await fetchAllMatchingDocs({
       query: [Prismic.Predicates.at(`document.id`, footerDocId)],
     });
+
     const { data: footerDocData } = footerDocs?.[0] || {};
     const { footerDocDataAttraction, disclaimer_text } = footerDocData || {};
 
@@ -335,19 +340,63 @@ export const getFooterDetails = async ({
   }
 };
 
-export const getBannerSubtext = ({
-  type,
-  data,
-}: PrismicDocumentWithUID): string => {
-  const { banner_subtext, banner_sub_text } = data || {};
+export const getBannerSubtext = async (
+  { type, data }: PrismicDocumentWithUID,
+  baseLangIsPoiMb: boolean,
+  baseLangBannerAndFooterCombinations: string
+): Promise<string> => {
+  const { banner_subtext, banner_sub_text, tagged_mb_type } = data || {};
+
+  const isCollectionMicrobrand = isCollectionMB(tagged_mb_type);
+
   switch (type) {
     case CUSTOM_TYPES.MICROSITE:
-      if (banner_subtext) return banner_subtext;
-      else return '';
-    case CUSTOM_TYPES.GLOBAL_HOMEPAGE || CUSTOM_TYPES.GLOBAL_EXPERIENCE:
+      if (!isCollectionMicrobrand) {
+        return banner_subtext;
+      } else {
+        return (
+          getBannerAndFooterSubtext(
+            baseLangIsPoiMb,
+            baseLangBannerAndFooterCombinations
+          ) || ''
+        );
+      }
+    case CUSTOM_TYPES.GLOBAL_HOMEPAGE:
+    case CUSTOM_TYPES.GLOBAL_EXPERIENCE:
       return banner_subtext;
     case CUSTOM_TYPES.GLOBAL_CITY:
       return banner_sub_text;
+    default:
+      return '';
+  }
+};
+
+export const getFooterSubtext = async (
+  { type }: PrismicDocumentWithUID,
+  baseLangIsPoiMb: boolean,
+  baseLangBannerAndFooterCombinations: string,
+  baseLangMbType: string,
+  disclaimer: string
+) => {
+  const isCollectionMicrobrand = isCollectionMB(baseLangMbType);
+
+  switch (type) {
+    case CUSTOM_TYPES.MICROSITE:
+    case CUSTOM_TYPES.CONTENT_PAGE:
+      if (isCollectionMicrobrand)
+        return getBannerAndFooterSubtext(
+          baseLangIsPoiMb,
+          baseLangBannerAndFooterCombinations
+        );
+      else return disclaimer;
+
+    case CUSTOM_TYPES.GLOBAL_HOMEPAGE:
+    case CUSTOM_TYPES.GLOBAL_EXPERIENCE:
+    case CUSTOM_TYPES.SHOW_PAGE:
+    case CUSTOM_TYPES.VENUE_PAGE:
+    case CUSTOM_TYPES.GLOBAL_CITY:
+      return disclaimer;
+
     default:
       return '';
   }
@@ -555,4 +604,63 @@ export const getHeadings = async ({
     mainHeadings,
     lfcHeadings,
   };
+};
+
+export const getSlicesFromContentFramework = (slices: []) => {
+  return slices.reduce(
+    (acc: Record<string, number>, curr: { slice_type: string }) => {
+      const sliceType = curr?.slice_type;
+      const currentSliceCount = acc[sliceType];
+
+      return (acc = {
+        ...acc,
+        ...(acc[sliceType] && {
+          [sliceType]: currentSliceCount + 1,
+        }),
+        ...(!acc[sliceType] && {
+          [sliceType]: 1,
+        }),
+      });
+    },
+    {}
+  );
+};
+
+export const attachedContentFrameworkData = async (
+  contentFrameworkId: string
+) => {
+  return contentFrameworkId
+    ? await fetchAllMatchingDocs({
+        query: [Prismic.Predicates.at(`document.id`, contentFrameworkId)],
+      })
+    : null;
+};
+
+export const baseLangMicrositeDataForContentPage = async (
+  type: string,
+  baseLangData: [PrismicDocumentWithUID]
+): Promise<[PrismicDocumentWithUID]> => {
+  return type === CUSTOM_TYPES.CONTENT_PAGE &&
+    baseLangData[0]?.data?.microsite_document_ref?.id
+    ? await fetchAllMatchingDocs({
+        query: [
+          Prismic.Predicates.at(
+            `document.id`,
+            baseLangData[0]?.data?.microsite_document_ref?.id
+          ),
+        ],
+      })
+    : [];
+};
+
+export const fetchBaseLangData = async (
+  language: string,
+  baseLangDoc: (PrismicDocumentWithUID | AlternateLanguage) | null,
+  doc: PrismicDocumentWithUID
+): Promise<[PrismicDocumentWithUID]> => {
+  return language !== 'EN'
+    ? await fetchAllMatchingDocs({
+        query: [Prismic.Predicates.at(`document.id`, baseLangDoc!.id)],
+      })
+    : [doc];
 };
